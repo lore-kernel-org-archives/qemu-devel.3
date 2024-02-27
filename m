@@ -4,62 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC47CC54E41
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 10:40:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FC67C54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 10:41:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reurt-00014M-DR; Tue, 27 Feb 2024 05:39:25 -0500
+	id 1reutF-0001zl-SC; Tue, 27 Feb 2024 05:40:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1reurn-00013X-Pz
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 05:39:19 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1reurl-00087u-CO
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 05:39:19 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TkYlx5dHPz6K6f2;
- Tue, 27 Feb 2024 18:35:25 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 51CD1140D26;
- Tue, 27 Feb 2024 18:39:10 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Tue, 27 Feb
- 2024 10:39:09 +0000
-Date: Tue, 27 Feb 2024 10:39:09 +0000
-To: fan <nifan.cxl@gmail.com>
-CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
- <gregory.price@memverge.com>, <ira.weiny@intel.com>,
- <dan.j.williams@intel.com>, <a.manzanares@samsung.com>, <dave@stgolabs.net>,
- <nmtadam.samsung@gmail.com>, <jim.harris@samsung.com>, Fan Ni
- <fan.ni@samsung.com>
-Subject: Re: [PATCH v4 08/10] hw/cxl/cxl-mailbox-utils: Add mailbox commands
- to support add/release dynamic capacity response
-Message-ID: <20240227103909.00002a92@Huawei.com>
-In-Reply-To: <Zd00YhCejwN6NuU6@debian>
-References: <20240221182020.1086096-1-nifan.cxl@gmail.com>
- <20240221182020.1086096-9-nifan.cxl@gmail.com>
- <20240226180417.00004dc4@Huawei.com> <Zd00YhCejwN6NuU6@debian>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
-MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1reutE-0001ys-HI; Tue, 27 Feb 2024 05:40:48 -0500
+Received: from mail-il1-x131.google.com ([2607:f8b0:4864:20::131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1reutA-0000I8-PV; Tue, 27 Feb 2024 05:40:47 -0500
+Received: by mail-il1-x131.google.com with SMTP id
+ e9e14a558f8ab-365138d9635so14085915ab.3; 
+ Tue, 27 Feb 2024 02:40:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1709030443; x=1709635243; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yjMRO3XZsQh6m/JqvwwEiXBbkgypITmT6/qhO1w0rSs=;
+ b=VnZKBk8H2Z2bhq5YKpPOdhKP7LMr4/3BB3ZLthy0mR6XF1hVCNKMvM6oZye0qOIWcC
+ /s+iGESQagcnPtI6ZU3ETQ4BLfqDpvL466Fe6cBM5LufKdbcD5THkkMzAKehnHjWHRo1
+ HWWeiqFSsDDI4CnB9qVmoFsNYW/xfOqNJUFNe8/9fuXyLiiE4717BgyDGtEXMxQsqX0C
+ fw0Tvr+cntxgBPjl2Phl6Ayxs6cTdMMSMw+e2IVh+X4+3wS2Pmh4/exSWXT78FHxv9bY
+ T9NOGKUcSr4KxwEHgnY6JhSoQXu2O1UucQAKyCBPy/ja/02fPeSQRcQS7myAFUY+kOhG
+ fvqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709030443; x=1709635243;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=yjMRO3XZsQh6m/JqvwwEiXBbkgypITmT6/qhO1w0rSs=;
+ b=P5Pw9m4/X0NwjXeYJJhvJv0pghefKE679/q/L9O7CjoSy8v0OIFVqLwJV1faUY/K1M
+ hvUoyeGrNfRL9qQKTdVNy+6FleHqkRcpWdLYbABeaS10DAcrqydBpHCAzM/rijKbQSTX
+ 387SxTKwyHv47zkScteVzoLYkLN/6onfQrxFF47+3dJqP7E6bL0bzKmglsD3uVWntk+y
+ 10t0ipuGZUKgxfxlK0q9nYhZI8y+5h8gAC/FuJf3q9IaNxBtoyJHaAxH61kCEJLZKSCI
+ sRecuvyWQ59c7o1bb+srReppDbMfRDnJDYehgbLYrE5yn97EzeL1DfCC9SQ4aoyMF3++
+ nk4Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXdulb5rPeW13XaKiViacCl9iCRiD+F4zMoYSs57/5pn8JnRdSdJoBLcvwMbN8nU7qWaW1J/B6J2vZe+/hiPtfXpL4aQKZjfshV4w2NqtyAWAlL9SB4BId9ZJM=
+X-Gm-Message-State: AOJu0Yw7OytS/Z+Ggsz4Qd7vJyLX+FMIjbCBIGN5PAKsihsRLqNcasSd
+ mMQqRTJF1AELCz/DJkEjbROQyfgr0iWE2cGGiOQgbxUNJpmdauna
+X-Google-Smtp-Source: AGHT+IG6Z6fn+sHBjIpoLk2uwmnxu74gKl4SLcqFpW7kQTJgU4UHRCQpvG30ms3kN4okGEncfIElbA==
+X-Received: by 2002:a92:dd11:0:b0:364:2328:22ba with SMTP id
+ n17-20020a92dd11000000b00364232822bamr10088620ilm.12.1709030443101; 
+ Tue, 27 Feb 2024 02:40:43 -0800 (PST)
+Received: from localhost ([1.146.52.18]) by smtp.gmail.com with ESMTPSA id
+ hq18-20020a056a00681200b006e465504e14sm5562326pfb.2.2024.02.27.02.40.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 Feb 2024 02:40:42 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 27 Feb 2024 20:40:36 +1000
+Message-Id: <CZFSQ7RA8KH3.ACBBLHG82NDV@wheely>
+Cc: <clegoate@redhat.com>, <mikey@neuling.org>,
+ <amachhiw@linux.vnet.ibm.com>, <vaibhav@linux.ibm.com>,
+ <sbhat@linux.ibm.com>, <danielhb413@gmail.com>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v4 04/15] spapr: nested: keep nested-hv related code
+ restricted to its API.
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Harsh Prateek Bora" <harshpb@linux.ibm.com>, <qemu-ppc@nongnu.org>
+X-Mailer: aerc 0.15.2
+References: <20240220083609.748325-1-harshpb@linux.ibm.com>
+ <20240220083609.748325-5-harshpb@linux.ibm.com>
+ <CZFQHBO2FUX6.30O1PDW79JW97@wheely>
+ <992d980a-da74-4c61-843b-888facc5f813@linux.ibm.com>
+In-Reply-To: <992d980a-da74-4c61-843b-888facc5f813@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::131;
+ envelope-from=npiggin@gmail.com; helo=mail-il1-x131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,206 +96,92 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 26 Feb 2024 17:01:22 -0800
-fan <nifan.cxl@gmail.com> wrote:
+On Tue Feb 27, 2024 at 7:45 PM AEST, Harsh Prateek Bora wrote:
+>
+>
+> On 2/27/24 14:24, Nicholas Piggin wrote:
+> > On Tue Feb 20, 2024 at 6:35 PM AEST, Harsh Prateek Bora wrote:
+> >> spapr_exit_nested and spapr_get_pate_nested_hv contains code which
+> >> is specific to nested-hv API. Isolating code flows based on API
+> >> helps extending it to be used with different API as well.
+> >>
+> >> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> >> Suggested-by: Nicholas Piggin <npiggin@gmail.com>
+> >> ---
+> >>   include/hw/ppc/spapr_nested.h |  4 ++++
+> >>   hw/ppc/spapr.c                |  7 ++++++-
+> >>   hw/ppc/spapr_caps.c           |  1 +
+> >>   hw/ppc/spapr_nested.c         | 27 ++++++++++++++++++++++++---
+> >>   4 files changed, 35 insertions(+), 4 deletions(-)
+> >>
+> >> diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nest=
+ed.h
+> >> index 2488ea98da..3f07c81c3d 100644
+> >> --- a/include/hw/ppc/spapr_nested.h
+> >> +++ b/include/hw/ppc/spapr_nested.h
+> >> @@ -5,6 +5,8 @@
+> >>  =20
+> >>   typedef struct SpaprMachineStateNested {
+> >>       uint64_t ptcr;
+> >> +    uint8_t api;
+> >> +#define NESTED_API_KVM_HV  1
+> >>   } SpaprMachineStateNested;
+> >>  =20
+> >>   /*
+> >> @@ -103,4 +105,6 @@ void spapr_exit_nested(PowerPCCPU *cpu, int excp);
+> >>   typedef struct SpaprMachineState SpaprMachineState;
+> >>   bool spapr_get_pate_nested_hv(SpaprMachineState *spapr, PowerPCCPU *=
+cpu,
+> >>                                 target_ulong lpid, ppc_v3_pate_t *entr=
+y);
+> >> +void spapr_nested_init(SpaprMachineState *spapr);
+> >> +uint8_t spapr_nested_api(SpaprMachineState *spapr);
+> >>   #endif /* HW_SPAPR_NESTED_H */
+> >> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+> >> index 97b69c0e42..51a1be027a 100644
+> >> --- a/hw/ppc/spapr.c
+> >> +++ b/hw/ppc/spapr.c
+> >> @@ -1376,7 +1376,11 @@ static bool spapr_get_pate(PPCVirtualHypervisor=
+ *vhyp, PowerPCCPU *cpu,
+> >>           entry->dw1 =3D spapr->patb_entry;
+> >>           return true;
+> >>       } else {
+> >> -        return spapr_get_pate_nested_hv(spapr, cpu, lpid, entry);
+> >> +        assert(spapr_nested_api(spapr));
+> >> +        if (spapr_nested_api(spapr) =3D=3D NESTED_API_KVM_HV) {
+> >> +            return spapr_get_pate_nested_hv(spapr, cpu, lpid, entry);
+> >> +        }
+> >> +        return false;
+> >>       }
+> >>   }
+> >>  =20
+> >> @@ -3443,6 +3447,7 @@ static void spapr_instance_init(Object *obj)
+> >>           spapr_get_host_serial, spapr_set_host_serial);
+> >>       object_property_set_description(obj, "host-serial",
+> >>           "Host serial number to advertise in guest device tree");
+> >> +    spapr_nested_init(spapr);
+> >=20
+> > I would maybe make this init a reset instead, and then it could do
+> > the hypercall unregistering as well? You could rework that part of
+> > it into patch 1 (or reorder the patches).
+>
+> If we do unregistering here, we still hit the assert during
+> spapr_machine_reset which tries to reapply the caps and thus re-register
+> hcalls. Also, We cant register hcalls in this since the caps havent been
+> applied when init is called here. So we can do as you have previously
+> suggested, reset in spapr_machine_reset based on caps applied.
+> Let me know if you think otherwise?
 
-> On Mon, Feb 26, 2024 at 06:04:17PM +0000, Jonathan Cameron wrote:
-> > On Wed, 21 Feb 2024 10:16:01 -0800
-> > nifan.cxl@gmail.com wrote:
-> >   
-> > > From: Fan Ni <fan.ni@samsung.com>
-> > > 
-> > > Per CXL spec 3.1, two mailbox commands are implemented:
-> > > Add Dynamic Capacity Response (Opcode 4802h) 8.2.9.9.9.3, and
-> > > Release Dynamic Capacity (Opcode 4803h) 8.2.9.9.9.4.
-> > > 
-> > > Signed-off-by: Fan Ni <fan.ni@samsung.com>  
-> > 
-> > Hi Fan, 
-> > 
-> > Comments on this are all about corner cases. If we can I think we need
-> > to cover a few more.  Linux won't hit them (I think) so it will be
-> > a bit of a pain to test but maybe raw commands enabled and some
-> > userspace code will let us exercise the corner cases?
-> > 
-> > Jonathan
-> > 
-> > 
-> >   
-> > > +
-> > > +/*
-> > > + * CXL r3.1 section 8.2.9.9.9.4: Release Dynamic Capacity (opcode 4803h)
-> > > + */
-> > > +static CXLRetCode cmd_dcd_release_dyn_cap(const struct cxl_cmd *cmd,
-> > > +                                          uint8_t *payload_in,
-> > > +                                          size_t len_in,
-> > > +                                          uint8_t *payload_out,
-> > > +                                          size_t *len_out,
-> > > +                                          CXLCCI *cci)
-> > > +{
-> > > +    CXLUpdateDCExtentListInPl *in = (void *)payload_in;
-> > > +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-> > > +    CXLDCExtentList *extent_list = &ct3d->dc.extents;
-> > > +    CXLDCExtent *ent;
-> > > +    uint32_t i;
-> > > +    uint64_t dpa, len;
-> > > +    CXLRetCode ret;
-> > > +
-> > > +    if (in->num_entries_updated == 0) {
-> > > +        return CXL_MBOX_INVALID_INPUT;
-> > > +    }
-> > > +
-> > > +    ret = cxl_detect_malformed_extent_list(ct3d, in);
-> > > +    if (ret != CXL_MBOX_SUCCESS) {
-> > > +        return ret;
-> > > +    }
-> > > +
-> > > +    for (i = 0; i < in->num_entries_updated; i++) {
-> > > +        bool found = false;
-> > > +
-> > > +        dpa = in->updated_entries[i].start_dpa;
-> > > +        len = in->updated_entries[i].len;
-> > > +
-> > > +        QTAILQ_FOREACH(ent, extent_list, node) {
-> > > +            if (ent->start_dpa <= dpa &&
-> > > +                dpa + len <= ent->start_dpa + ent->len) {
-> > > +                /*
-> > > +                 * If an incoming extent covers a portion of an extent
-> > > +                 * in the device extent list, remove only the overlapping
-> > > +                 * portion, meaning
-> > > +                 * 1. the portions that are not covered by the incoming
-> > > +                 *    extent at both end of the original extent will become
-> > > +                 *    new extents and inserted to the extent list; and
-> > > +                 * 2. the original extent is removed from the extent list;
-> > > +                 * 3. dc extent count is updated accordingly.
-> > > +                 */
-> > > +                uint64_t ent_start_dpa = ent->start_dpa;
-> > > +                uint64_t ent_len = ent->len;
-> > > +                uint64_t len1 = dpa - ent_start_dpa;
-> > > +                uint64_t len2 = ent_start_dpa + ent_len - dpa - len;
-> > > +
-> > > +                found = true;
-> > > +                cxl_remove_extent_from_extent_list(extent_list, ent);
-> > > +                ct3d->dc.total_extent_count -= 1;
-> > > +
-> > > +                if (len1) {
-> > > +                    cxl_insert_extent_to_extent_list(extent_list,
-> > > +                                                     ent_start_dpa, len1,
-> > > +                                                     NULL, 0);
-> > > +                    ct3d->dc.total_extent_count += 1;
-> > > +                }
-> > > +                if (len2) {
-> > > +                    cxl_insert_extent_to_extent_list(extent_list, dpa + len,
-> > > +                                                     len2, NULL, 0);
-> > > +                    ct3d->dc.total_extent_count += 1;  
-> > 
-> > There is a non zero chance that we'll overflow however many extents we claim
-> > to support. So we need to check that and fail the remove if it happens.
-> > Could ignore this for now though as that value is (I think!) conservative
-> > to allow for complex extent list tracking implementations.  Succeeding
-> > when a naive solution would fail due to running out of extents that it can
-> > manage is not (I think) a bug.  
-> 
-> Yeah. spec r3.1 mentioned about the overflow issue that adding/releasing
-> extent requests can raise. We should fail the operation if running out of
-> extents and report resource exhausted.
-> 
-> >   
-> > > +                }
-> > > +                break;
-> > > +                /*Currently we reject the attempt to remove a superset*/  
-> > 
-> > Space after /* and before */
-> > 
-> > I think we need to fix this. Linux isn't going to do it any time soon, but
-> > I think it's allowed to allocate two extents next to each other then free them
-> > in one go.  Isn't this case easy to do or are there awkward corners?
-> > If it's sufficiently nasty (maybe because only part of extent provided exists?)
-> > then maybe we can leave it for now.
-> > 
-> > I worry about something like
-> > 
-> > |  EXTENT TO FREE                                        |
-> > | Exists    |   gap   | Exists                           |
-> > Where we have to check for gap before removing anything?
-> > Does the spec address this? Not that I can find.
-> > I think the implication is we have to do a validation pass, then a free
-> > pass after we know whole of requested extent is valid.
-> > Nasty to test if nothing else :(  Would look much like your check
-> > on malformed extent lists.
-> >   
-> 
-> I cannot find anything specific to this in the specification either.
-> Since we have already detected the case where the extent range across
-> multiple regions, the only case we need to capture here is one/multiple
-> portions of an extents getting released and causing extent overflow.
-> I think we can handle it after we introduce the bitmaps (PATCH 10) which
-> indicates DPA ranges mapped by valid extents in the device.
-> 
-> With that, The release workflow would be
-> 
-> 1) detecting malformed extent lists; if passed
-> 2) do cxl_detect_extent_overflow {
->     delta = 0;
->     make a copy of the bitmap as bitmap_copy;
->     for each extent in the updated_extent_list; do
->         if (extent range not fully set in the bitmap_copy)
->             return error;
->         else {
->             if gap at the front based on the bitmap_copy:
->                 delta += 1;
->             if gap at the end based on the bitmap_copy:
->                 delta += 1;
->             delta -= 1;
->             // NOTE: current_extent_count will not be updated in the
->             // loop since delta will track the whole loop
->             if (delta + current_extent_count > max_extent_count)
->                 return resource exhausted;
->             update bitmap_copy to clear the range covered by the extent
->             under consideration;
->         }
->     done
-> 
-> }; if pass
-> 3. do real release: in the pass, we will not need to detect extent
-> errors;
-> 
-> Does the above solution sound reasonable? If so, do we want to go this
-> way? do we need to introduce the bitmap earlier in the series?
+Not unregistering here, I mean make it a spapr_nested_reset() call and
+call it from spapr_machine_reset().
 
-Yes, something along these lines should work nicely.
+If you call it after spapr_caps_apply() then you don't need to do the
+hcall registering in the caps functions, just do it in the
+reset.
 
-Jonathan
-
-
-> 
-> Thanks,
-> Fan
-> 
-> 
-> 
-> >   
-> > > +            } else if ((dpa < ent->start_dpa + ent->len &&
-> > > +                        dpa + len > ent->start_dpa + ent->len) ||
-> > > +                       (dpa < ent->start_dpa && dpa + len > ent->start_dpa)) {
-> > > +                return CXL_MBOX_INVALID_EXTENT_LIST;
-> > > +            }
-> > > +        }
-> > > +
-> > > +        if (!found) {
-> > > +            /* Try to remove a non-existing extent */
-> > > +            return CXL_MBOX_INVALID_PA;
-> > > +        }
-> > > +    }
-> > > +
-> > > +    return CXL_MBOX_SUCCESS;
-> > > +}  
-> > 
-> >   
-
+Thanks,
+Nick
 
