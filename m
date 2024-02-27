@@ -4,74 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0744C5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 16:05:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60776C54E49
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 16:16:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rezx7-0005Vj-9F; Tue, 27 Feb 2024 11:05:09 -0500
+	id 1rf07R-0001Rk-JK; Tue, 27 Feb 2024 11:15:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rezx3-0005Se-Ae
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 11:05:05 -0500
-Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rezx0-0002sv-FV
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 11:05:05 -0500
-Received: by mail-lj1-x229.google.com with SMTP id
- 38308e7fff4ca-2d1094b5568so51020741fa.1
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 08:05:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709049900; x=1709654700; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=adtmBOcP+29W7dZmFXERayPMGxwMBowqt+9qJZbAajA=;
- b=dA+sN5kRpww7Yd3e3aR4bNTgME2eHhLLgPVpVDRaOr1mFMXBxXTKK3lOX+Q5Ad4zKm
- VH5tATatTJuhJrR4VG+R/sVBEhtLhGzhje9crk+LwSBmdnC2Loj5LV+uN26qluVH4sFa
- HQvK4ji5WGN7g4iOxXPeNJw8ewZzW/ttWlcT7AuZcr3ImtPplalkYPcb7rgBkCj6GHND
- HL1Pe74+f6K2fnMcTpePHmgwbd1m7ip0ZimRct+Z2YwFXQYepMF7Kswx/kXqDc7McLx/
- 4eFCcKlKruNGR6lHvfnmPAl11PcN+DCNg1b7wGaK8lTDUGr3UGZXK6c5FrwFWq9j1c8M
- rM1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709049900; x=1709654700;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=adtmBOcP+29W7dZmFXERayPMGxwMBowqt+9qJZbAajA=;
- b=iYJT+/2+xG++3sTzINyvkXbRJ8/RIGtxWkN/RH6oY8oe3R95lJ9awd8a36trO/aATO
- xFzFJAzs93CHLnAN22ocE2hAjKjs1aIkBjueNFviPRZ+kvkKKG0meP88eLNJ2doIBkhM
- e1ZLHNK+Z2/652iXq3JwD3cRRVeE+iHvN4kz3c/bIuPN9yHv/YgBt/8RK1NZkYY+wc5v
- j0U6oov87MEjLZJlTEinhHMO04PTEPETgt3tdjO3d8KYU63uRPZbxpZhkBdW12dGcZoE
- sGCeAvVjwjgBR/urkzSf47icTprHgA5mb+SryDZ+ygTGXxhiPeu+CFhMv6ucGDWUKnAt
- F6yQ==
-X-Gm-Message-State: AOJu0Ywy3+Gt11/UD6DOeJcRPhDO3Oi7xUs6QnISmbULoq8X3z8Pgba/
- K3PR+aay6q8Ja7cPGtRY3Io+XSmW70CZaT6otsQZ+YhzOWQwgYayAygnjwBbrQFiiLGxFHPpWKK
- IzVB3SfX2mU2jncnDJJEOq+8tRJknn+1NB7FEbw==
-X-Google-Smtp-Source: AGHT+IEyCcu8kmW4ZainAQ2YEsCQq7zTIpuanFDV0x5xkiU5yYQ/plaD751j+2ZjkMbVQB2JYNGEU7O6xpTP5YTB6U0=
-X-Received: by 2002:a05:6512:acc:b0:512:f892:7f0c with SMTP id
- n12-20020a0565120acc00b00512f8927f0cmr5042714lfu.38.1709049900098; Tue, 27
- Feb 2024 08:05:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <SRS0=hhKj=KE=kaod.org=clg@ozlabs.org>)
+ id 1rf07K-0001LU-R1; Tue, 27 Feb 2024 11:15:46 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=hhKj=KE=kaod.org=clg@ozlabs.org>)
+ id 1rf07H-0005QN-RV; Tue, 27 Feb 2024 11:15:41 -0500
+Received: from gandalf.ozlabs.org (mail.ozlabs.org
+ [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TkjJH0C7hz4wyf;
+ Wed, 28 Feb 2024 03:15:27 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TkjJF0nSyz4wyh;
+ Wed, 28 Feb 2024 03:15:24 +1100 (AEDT)
+Message-ID: <c084d751-fc21-4e9f-ab28-fc5889b8d9af@kaod.org>
+Date: Tue, 27 Feb 2024 17:15:20 +0100
 MIME-Version: 1.0
-References: <CAEEPdR4v8G6CHDCCO-fLcWs-iBqoyKTGQzio_C0P-1ur0vgX0w@mail.gmail.com>
-In-Reply-To: <CAEEPdR4v8G6CHDCCO-fLcWs-iBqoyKTGQzio_C0P-1ur0vgX0w@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 27 Feb 2024 16:04:48 +0000
-Message-ID: <CAFEAcA_h8OCgRhUefGbH9MR=JxUhW_Py6BhbWBa5DYzNA0kLxg@mail.gmail.com>
-Subject: Re: Does cortex-m55 in qemu have PMU?
-To: Archith P <archith100@gmail.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::229;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x229.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] ppc/pnv: Fix pervasive topology calculation for P10
+Content-Language: en-US, fr
+To: Caleb Schlossin <calebs@linux.vnet.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, fbarrat@linux.ibm.com
+References: <20240227144844.23606-1-calebs@linux.vnet.ibm.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240227144844.23606-1-calebs@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=hhKj=KE=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,37 +64,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 27 Feb 2024 at 15:55, Archith P <archith100@gmail.com> wrote:
-> I am trying to run code on mps3-an547 (QEMU Emulator)
-> and want to check if it has PMU (Performance Monitoring Unit)
-> Enabled.
+Hello Caleb,
 
-No, we don't emulate the PMU on M-profile CPUs.
+On 2/27/24 15:48, Caleb Schlossin wrote:
+> Pervasive topology(PIR) calculation for core, thread ID was
+> wrong for big cores (SMT8). Fixing for P10.
+> 
+> Based on: <20240123195005.8965-1-calebs@linux.vnet.ibm.com>
+> Signed-off-by: Caleb Schlossin <calebs@linux.vnet.ibm.com>
 
-> [I am getting PMU value from  ARM_PMU_Get_CCNTR() always zero]
->
-> I tried using the QMP command query-cpu-model-expansion
-> Is this a proper way to find out?
-> {
->     "execute": "query-cpu-model-expansion",
->     "arguments": {
->         "type": "full",
->         "model": {
->             "name": "cortex-m55"
->         }
->     }
-> }
-> Gives:
-> {"return": {"model": {"name": "cortex-m55"}}}
+Since the initial patch [1] is not merged yet, you can simply send a v2
+with the update. There is still some time before soft freeze [2].
 
-No, because we don't track individual processor features this way.
+The Subject of this patch [PATCH 2/2] seems to refer to a series. Is
+there a patch 1/2 ?
 
-> Is there other way to find? Need Help.
+Thanks,
 
-In your guest, if you read the PMU_TYPE register that will tell
-you whether the PMU is implemented (and more specifically, if
-the CC bit is set then the cycle counter is implemented). For
-QEMU it will read as zero.
+C.
 
--- PMM
+
+
+[1] https://lore.kernel.org/all/20240123195005.8965-1-calebs@linux.vnet.ibm.com/
+[2] https://wiki.qemu.org/Planning/9.0
+
+> ---
+>   hw/ppc/pnv.c | 15 +++++++++++++--
+>   1 file changed, 13 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> index 2f53883916..aa5aba60b4 100644
+> --- a/hw/ppc/pnv.c
+> +++ b/hw/ppc/pnv.c
+> @@ -1068,12 +1068,23 @@ static uint32_t pnv_chip_pir_p9(PnvChip *chip, uint32_t core_id,
+>       }
+>   }
+>   
+> +/*
+> + *    0:48  Reserved - Read as zeroes
+> + *   49:52  Node ID
+> + *   53:55  Chip ID
+> + *   56     Reserved - Read as zero
+> + *   57:59  Quad ID
+> + *   60     Core Chiplet Pair ID
+> + *   61:63  Thread/Core Chiplet ID t0-t2
+> + *
+> + * We only care about the lower bits. uint32_t is fine for the moment.
+> + */
+>   static uint32_t pnv_chip_pir_p10(PnvChip *chip, uint32_t core_id,
+>                                    uint32_t thread_id)
+>   {
+>       if (chip->nr_threads == 8) {
+> -        return (chip->chip_id << 8) | ((thread_id & 1) << 2) | (core_id << 3) |
+> -               (thread_id >> 1);
+> +        return (chip->chip_id << 8) | ((core_id / 4) << 4) |
+> +               ((core_id % 2) << 3) | thread_id;
+>       } else {
+>           return (chip->chip_id << 8) | (core_id << 2) | thread_id;
+>       }
+
 
