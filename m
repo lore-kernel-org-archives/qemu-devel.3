@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB575C5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 08:43:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A55AC5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 08:44:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ret0s-0006Kc-GF; Tue, 27 Feb 2024 03:40:34 -0500
+	id 1ret2c-0003TH-90; Tue, 27 Feb 2024 03:42:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ret0q-0006Gz-Lk
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:40:32 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ret2a-0003Ne-Rk
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:42:20 -0500
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ret0m-0007m2-Lj
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:40:32 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-412a390347dso15440125e9.3
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 00:40:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ret2Y-0008MP-56
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:42:20 -0500
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a3122b70439so482055266b.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 00:42:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709023226; x=1709628026; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709023336; x=1709628136; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vsQjpNWm982u5XBOq7wYo0dWEjdVwmwHsexBrMcBwNc=;
- b=Rvjr6+DU3dQC41Ae7eoHfoWyzEnJRjAp/YYZ3SbM/fUnZ3nyCG4GO/L4JiRL/XzM/S
- JG5mC4wmdYCGc8sm8j2GOAzY7q8Jz6DzA/8bjSaDyhM8g78K8q6KWNfs5ojgsJAImMNN
- 65HCK3pdkmoE6PcZVPOPgJRR5wGGWJJyu51VhUmHhbve6FGq2XCL7dajqFRPmXrTLlT3
- 7ub+AP3Gv50xYZPnWVL+Q0SBQaS/YsjxxhXpmmJTgmzlUuI/EcqYtJfA/qJ7/uVXeEl/
- RRZmKkbYKGjDWpoVqecc4of/VFgcQ9qVA3kXHCX0H5EjXtCoev+jScNsjIvgPlJFGoEJ
- nRtA==
+ bh=SMgxNB+QPGXCEfWk+9rOGkNmwlpFY1sXlU4z6trziko=;
+ b=Um9Gm5mKbkYa9S+8ajIcML0zxcgRN4VOKd6aAmzZSGARRzyrOlgJQwhCmCd8prmvM4
+ Mqt061HBFkuzrInGsAS4pJwkhyBR2OambTXWAQB5ftVB5kTVbqU/cxxpey0FKGuy25/U
+ RibjKHLNO1k5LjtpDqNqNBdR9/vosdTqWOIWtaoScz7IrzJ2ffpQ6LYkIMINEyzmL3u/
+ MsNgFy61JuqhAX8M7dwpNwnvH0qDjPXw22ttNhZOFiwQPqLdatMr0iKE1LWCV+7vIzWA
+ Z0TKojRXYiIySiSZsUmLLlGUKgB2eh6CeZOGYYG0t2Xx9dVV0K7kND9W1v0TAtxIa+IE
+ z16A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709023227; x=1709628027;
+ d=1e100.net; s=20230601; t=1709023336; x=1709628136;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vsQjpNWm982u5XBOq7wYo0dWEjdVwmwHsexBrMcBwNc=;
- b=muDhs35AO7fQB7ersMjzrI+A/3RSC/oxaoqKMXb7mEyYzo1rNZ2hzxQCkxJHnMDvO+
- 1kfNfKiO5+Kw7BS7OmsxDQk3OULbxP51WJ3bT5GfaH7v273yRSSg4nX9/lzIKH9LE9Kw
- RehFizC9rlXF6kyeRnlGJXPxFFdnUSwMEaEjHuS2AB7jd8k4RISz2SYhfwwbdQ8zFiBl
- nvdrNPwmrAiIlzTD8a/DtdtdzUd7m2UACOGwl0ODEiDK6/zJDLmkxp22SH1XFR3LL5hO
- INYGLSlQWoOTUcwkKhTmmH1vQpRVntxD1i5TROR+8+rNUEmSLscG6+7PXIbQJTFYe6sP
- 3c/g==
-X-Gm-Message-State: AOJu0Yx53OmLz3vUeezLBN482UCt14T2MoHRvpEXUZPh7DxWT5UKuz1T
- kSd/wnLSr4DUTs4Ph48Oayi2HXSS98xW3BhrptS6q8Zax+yv7YMLQGaAPama7/LZunnojFdPutO
- Z
-X-Google-Smtp-Source: AGHT+IErJBBmx4zjFABE1Uqqw2nQRDhjrWUBL+1wOBFLgxhyGfVsFze/IcvH0x++arNzbU4bYe99Zw==
-X-Received: by 2002:a05:600c:1546:b0:412:a2c7:9d13 with SMTP id
- f6-20020a05600c154600b00412a2c79d13mr4064489wmg.6.1709023226656; 
- Tue, 27 Feb 2024 00:40:26 -0800 (PST)
+ bh=SMgxNB+QPGXCEfWk+9rOGkNmwlpFY1sXlU4z6trziko=;
+ b=iPTd45ErBZQ0BXPNQUNVQBVDBJkannJK4WBsUiU4/o+Whlf7MBCaK3n5i69bgDtvUX
+ +6Kfxg+RdqSqoH/q7gTKPhVKlwhhXk4lC2A1DuuWTD0mih87cY7HW43/HRv+dYDfhDU7
+ UmCotTKXYYmMeJ7QhXv4UP8h19kJ2QG2V7iOv/vXYfZiL0nY/69kGgTyvf9W4/SJ+8qO
+ R+tk2TGVSA2CKHbTUwhZ0zbYZrBr92nYy7GLketTuTp1SSXtGEANaP+jy0KIRPshWbYP
+ 3OjdtXUk0hZ93NbuP7OJMN+W4f32kjnSyDp2hRU3kQXkKH1rdNCBCmRzFHTIEKZsOGDg
+ vK+A==
+X-Gm-Message-State: AOJu0YxbbKFTBhgDHRq1k3cGa4lphLoG5ihY1WNokT5GDnCwc7gG7fMp
+ hG3eJ0Ah1TL/J/6FJ7rS/mrmA2kAPFZq4ISohELkr4N2cp7+T3EcZxSAeStOlJW6ULEylmb2Xrw
+ t
+X-Google-Smtp-Source: AGHT+IHxUIaibn4q+A/VJCnSG6EuEJLplZETvzp1M+/mn3zX/TbW2Soh1ct8HiXtyeWfkxoiCc5G6w==
+X-Received: by 2002:a17:906:1854:b0:a3e:b726:20ef with SMTP id
+ w20-20020a170906185400b00a3eb72620efmr5739587eje.34.1709023336228; 
+ Tue, 27 Feb 2024 00:42:16 -0800 (PST)
 Received: from m1x-phil.lan (mic92-h03-176-184-33-214.dsl.sta.abo.bbox.fr.
  [176.184.33.214]) by smtp.gmail.com with ESMTPSA id
- v13-20020a05600c444d00b0041294d015fbsm10703245wmn.40.2024.02.27.00.40.25
+ lt16-20020a170906fa9000b00a3d99415705sm539438ejb.73.2024.02.27.00.42.14
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 27 Feb 2024 00:40:26 -0800 (PST)
+ Tue, 27 Feb 2024 00:42:15 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-block@nongnu.org, qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 06/30] hw/sysbus: Remove now unused sysbus_address_space()
-Date: Tue, 27 Feb 2024 09:39:22 +0100
-Message-ID: <20240227083948.5427-7-philmd@linaro.org>
+Subject: [PULL 23/30] hw/i386/q35: Include missing 'hw/acpi/acpi.h' header
+Date: Tue, 27 Feb 2024 09:39:39 +0100
+Message-ID: <20240227083948.5427-24-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240227083948.5427-1-philmd@linaro.org>
 References: <20240227083948.5427-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,44 +99,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-sysbus_address_space() is not more used, remove it.
+"hw/acpi/acpi.h" is implicitly included. Include it
+explicitly to avoid the following error when refactoring
+headers:
+
+hw/i386/pc_q35.c:209:43: error: use of undeclared identifier 'ACPI_PM_PROP_ACPI_PCIHP_BRIDGE'
+                              ACPI_PM_PROP_ACPI_PCIHP_BRIDGE,
+                              ^
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240216153517.49422-7-philmd@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Message-Id: <20240226090600.31952-3-philmd@linaro.org>
 ---
- include/hw/sysbus.h | 1 -
- hw/core/sysbus.c    | 5 -----
- 2 files changed, 6 deletions(-)
+ hw/i386/pc_q35.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/hw/sysbus.h b/include/hw/sysbus.h
-index 14dbc22d0c..3cb29a480e 100644
---- a/include/hw/sysbus.h
-+++ b/include/hw/sysbus.h
-@@ -83,7 +83,6 @@ void sysbus_mmio_map(SysBusDevice *dev, int n, hwaddr addr);
- void sysbus_mmio_map_overlap(SysBusDevice *dev, int n, hwaddr addr,
-                              int priority);
- void sysbus_mmio_unmap(SysBusDevice *dev, int n);
--MemoryRegion *sysbus_address_space(SysBusDevice *dev);
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index c89ff63579..3c80f37ead 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -30,6 +30,7 @@
  
- bool sysbus_realize(SysBusDevice *dev, Error **errp);
- bool sysbus_realize_and_unref(SysBusDevice *dev, Error **errp);
-diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
-index 9f1d5b2d6d..ad34fb7344 100644
---- a/hw/core/sysbus.c
-+++ b/hw/core/sysbus.c
-@@ -298,11 +298,6 @@ static char *sysbus_get_fw_dev_path(DeviceState *dev)
-     return g_strdup(qdev_fw_name(dev));
- }
- 
--MemoryRegion *sysbus_address_space(SysBusDevice *dev)
--{
--    return get_system_memory();
--}
--
- static void sysbus_device_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *k = DEVICE_CLASS(klass);
+ #include "qemu/osdep.h"
+ #include "qemu/units.h"
++#include "hw/acpi/acpi.h"
+ #include "hw/char/parallel-isa.h"
+ #include "hw/loader.h"
+ #include "hw/i2c/smbus_eeprom.h"
 -- 
 2.41.0
 
