@@ -4,98 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 728E7C54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 20:48:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 338EDC5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 20:48:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rf4KV-0005WD-DB; Tue, 27 Feb 2024 15:45:35 -0500
+	id 1rf4KW-0005Zx-4D; Tue, 27 Feb 2024 15:45:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rf15G-0004BY-SD
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 12:17:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1)
+ (envelope-from <SRS0=GitP=KE=redhat.com=clg@ozlabs.org>)
+ id 1rf1ol-00049O-Nd
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 13:04:39 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rf15F-0000JD-At
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 12:17:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709054255;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=N0W6NjHy1O3beFA83G2xH6CBA5TI/HWbpIhKHp3KIHk=;
- b=evdzJt3az6tth10Rhet0fLNxKRTVSRze625sQiyOI46LNd3FmtivgQ89nzIbdVTb9Ea7Qk
- o+1pP5ut7g+pewyIvXSwrBxLUvnx/CzyhvqiCQV/AfmovnP0ZMaG+YOosy/6m0Czvzm1B/
- fxoQgvKu/1kSawZ3no+MQtzY7f7aDsY=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-596-5vUU9NCMOPqKzwCGML3WyA-1; Tue, 27 Feb 2024 12:17:33 -0500
-X-MC-Unique: 5vUU9NCMOPqKzwCGML3WyA-1
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-42e3fa7e328so53412781cf.1
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 09:17:33 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709054253; x=1709659053;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=N0W6NjHy1O3beFA83G2xH6CBA5TI/HWbpIhKHp3KIHk=;
- b=kp9OrtArYOwomQrg1oelR3pafUc/39FFd4CsfHCCVlT3qQ+b+qZ6HJxOq9mUfG59ib
- xa6zWUrSShk7b6kgigPAKwh5aHUqbOgERosCSRGUuRRsWt/smyS+YRhW7Bn/IIal4hZJ
- InZv8gQG1thafld5mUIiYrTZIjZnXf8MCazaWEMOk056hBi+IlJOUntPsT9f58krGNlj
- 23gQDR+WkXiCw1maRn5ZjgjsSwAfYUKS0xnhqeuOlbmJeGevUvtRYTWq6Bnbz14gKO/3
- 5CKDExS0NHVN0vR00iiyppo51WfMyUCe935rsdScG11qWh9naoxM0s5hjWMo8WprC8SP
- mqOQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX4EW9X/XBwn0tcYHKnd9i8jWSvqt8bhSgIf4OXKQsRSob57KM4ZP+J2fj/SawL+yK5jO0B/HafxoB4mkYiC5tH8eg9N1Y=
-X-Gm-Message-State: AOJu0YyYj0puAWEpNziZ3KXBCfejND13npGVuHC5DD7HYCURjO4gAOfQ
- Wwp/XdqHYRt4a3ZOtZRrQ0X7TIR2wiK7NQKxjozRilsD8bx1/RwGb9EFvqGE+KSm2NXwwogvPaw
- 721KpVE/8DbPdkJbRtPS+88UVRjHijKZQpz9nzz+6rtoGy5NyoQO/
-X-Received: by 2002:a05:622a:113:b0:42d:feeb:64df with SMTP id
- u19-20020a05622a011300b0042dfeeb64dfmr11952233qtw.36.1709054252751; 
- Tue, 27 Feb 2024 09:17:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFh8sVj+p4iqtjKvqGhJP2V9uS34S1iv0f/rdInoHJBaPReu+sOm9R8LtdBiwXKkeKSLDtkIw==
-X-Received: by 2002:a05:622a:113:b0:42d:feeb:64df with SMTP id
- u19-20020a05622a011300b0042dfeeb64dfmr11952200qtw.36.1709054252402; 
- Tue, 27 Feb 2024 09:17:32 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- fp7-20020a05622a508700b0042e6d2dd6bbsm3711686qtb.11.2024.02.27.09.17.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Feb 2024 09:17:31 -0800 (PST)
-Message-ID: <2259fba1-4c57-420b-bcab-ecf202d10819@redhat.com>
-Date: Tue, 27 Feb 2024 18:17:29 +0100
+ (Exim 4.90_1)
+ (envelope-from <SRS0=GitP=KE=redhat.com=clg@ozlabs.org>)
+ id 1rf1oi-0001XD-Op
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 13:04:39 -0500
+Received: from gandalf.ozlabs.org (mail.ozlabs.org
+ [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TklkB5Jcbz4wyx;
+ Wed, 28 Feb 2024 05:04:34 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Tklk812QSz4wyj;
+ Wed, 28 Feb 2024 05:04:31 +1100 (AEDT)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v2 10/21] migration: Modify ram_init_bitmaps() to report dirty
+ tracking errors
+Date: Tue, 27 Feb 2024 19:03:34 +0100
+Message-ID: <20240227180345.548960-11-clg@redhat.com>
+X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240227180345.548960-1-clg@redhat.com>
+References: <20240227180345.548960-1-clg@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/4] hw: Set virtio-iommu aw-bits default value on
- pc_q35 and arm virt
-Content-Language: en-US, fr
-To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, jean-philippe@linaro.org,
- mst@redhat.com, peter.maydell@linaro.org, zhenzhong.duan@intel.com,
- yanghliu@redhat.com
-Cc: alex.williamson@redhat.com, jasowang@redhat.com
-References: <20240215084315.863897-1-eric.auger@redhat.com>
- <20240215084315.863897-4-eric.auger@redhat.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240215084315.863897-4-eric.auger@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=GitP=KE=redhat.com=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 27 Feb 2024 15:45:23 -0500
+X-Mailman-Approved-At: Tue, 27 Feb 2024 15:45:32 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -110,149 +73,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Eric,
+The .save_setup() handler has now an Error** argument that we can use
+to propagate errors reported by the .log_global_start() handler. Do
+that for the RAM. The caller qemu_savevm_state_setup() will store the
+error under the migration stream for later detection in the migration
+sequence.
 
-On 2/15/24 09:42, Eric Auger wrote:
-> Currently the default input range can extend to 64 bits. On x86,
-> when the virtio-iommu protects vfio devices, the physical iommu
-> may support only 39 bits. Let's set the default to 39, as done
-> for the intel-iommu. On ARM we set 48b as a default (matching
-> SMMUv3 SMMU_IDR5.VAX == 0).
-> 
-> We use hw_compat_8_2 to handle the compatibility for machines
-> before 9.0 which used to have a virtio-iommu default input range
-> of 64 bits.
-> 
-> Of course if aw-bits is set from the command line, the default
-> is overriden.
-> 
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> Tested-by: Yanghang Liu<yanghliu@redhat.com>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ migration/ram.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-We need a property fixup for pseries also:
-
-$ build/ppc64-softmmu/qemu-system-ppc64 -M pseries  -device virtio-iommu-pci,addr=04.0
-qemu-system-ppc64: -device virtio-iommu-pci,addr=04.0: aw-bits must be within [32,64]
-
-
-Thanks,
-
-C.
-
-
-
-> ---
-> 
-> v3 -> v4:
-> - update the qos test to relax the check on the max input IOVA
-> 
-> v2 -> v3:
-> - collected Zhenzhong's R-b
-> - use &error_abort instead of NULL error handle
->    on object_property_get_uint() call (Cédric)
-> - use VTD_HOST_AW_39BIT (Cédric)
-> 
-> v1 -> v2:
-> - set aw-bits to 48b on ARM
-> - use hw_compat_8_2 to handle the compat for older machines
->    which used 64b as a default
-> ---
->   hw/arm/virt.c                   | 6 ++++++
->   hw/core/machine.c               | 5 ++++-
->   hw/i386/pc.c                    | 6 ++++++
->   hw/virtio/virtio-iommu.c        | 2 +-
->   tests/qtest/virtio-iommu-test.c | 2 +-
->   5 files changed, 18 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index 368c2a415a..0994f2a560 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -2716,10 +2716,16 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
->       } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
->           virtio_md_pci_pre_plug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), errp);
->       } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
-> +        uint8_t aw_bits = object_property_get_uint(OBJECT(dev),
-> +                                                   "aw-bits", &error_abort);
->           hwaddr db_start = 0, db_end = 0;
->           QList *reserved_regions;
->           char *resv_prop_str;
->   
-> +        if (!aw_bits) {
-> +            qdev_prop_set_uint8(dev, "aw-bits", 48);
-> +        }
-> +
->           if (vms->iommu != VIRT_IOMMU_NONE) {
->               error_setg(errp, "virt machine does not support multiple IOMMUs");
->               return;
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index fb5afdcae4..70ac96954c 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -30,9 +30,12 @@
->   #include "exec/confidential-guest-support.h"
->   #include "hw/virtio/virtio-pci.h"
->   #include "hw/virtio/virtio-net.h"
-> +#include "hw/virtio/virtio-iommu.h"
->   #include "audio/audio.h"
->   
-> -GlobalProperty hw_compat_8_2[] = {};
-> +GlobalProperty hw_compat_8_2[] = {
-> +    { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "64" },
-> +};
->   const size_t hw_compat_8_2_len = G_N_ELEMENTS(hw_compat_8_2);
->   
->   GlobalProperty hw_compat_8_1[] = {
-> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> index 196827531a..ee2d379c90 100644
-> --- a/hw/i386/pc.c
-> +++ b/hw/i386/pc.c
-> @@ -1456,6 +1456,8 @@ static void pc_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
->       } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
->           virtio_md_pci_pre_plug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), errp);
->       } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
-> +        uint8_t aw_bits = object_property_get_uint(OBJECT(dev),
-> +                                                   "aw-bits", &error_abort);
->           /* Declare the APIC range as the reserved MSI region */
->           char *resv_prop_str = g_strdup_printf("0xfee00000:0xfeefffff:%d",
->                                                 VIRTIO_IOMMU_RESV_MEM_T_MSI);
-> @@ -1464,6 +1466,10 @@ static void pc_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
->           qlist_append_str(reserved_regions, resv_prop_str);
->           qdev_prop_set_array(dev, "reserved-regions", reserved_regions);
->   
-> +        if (!aw_bits) {
-> +            qdev_prop_set_uint8(dev, "aw-bits", VTD_HOST_AW_39BIT);
-> +        }
-> +
->           g_free(resv_prop_str);
->       }
->   
-> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-> index 8b541de850..2ec5ef3cd1 100644
-> --- a/hw/virtio/virtio-iommu.c
-> +++ b/hw/virtio/virtio-iommu.c
-> @@ -1526,7 +1526,7 @@ static Property virtio_iommu_properties[] = {
->       DEFINE_PROP_LINK("primary-bus", VirtIOIOMMU, primary_bus,
->                        TYPE_PCI_BUS, PCIBus *),
->       DEFINE_PROP_BOOL("boot-bypass", VirtIOIOMMU, boot_bypass, true),
-> -    DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 64),
-> +    DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 0),
->       DEFINE_PROP_END_OF_LIST(),
->   };
->   
-> diff --git a/tests/qtest/virtio-iommu-test.c b/tests/qtest/virtio-iommu-test.c
-> index 068e7a9e6c..0f36381acb 100644
-> --- a/tests/qtest/virtio-iommu-test.c
-> +++ b/tests/qtest/virtio-iommu-test.c
-> @@ -34,7 +34,7 @@ static void pci_config(void *obj, void *data, QGuestAllocator *t_alloc)
->       uint8_t bypass = qvirtio_config_readb(dev, 36);
->   
->       g_assert_cmpint(input_range_start, ==, 0);
-> -    g_assert_cmphex(input_range_end, ==, UINT64_MAX);
-> +    g_assert_cmphex(input_range_end, >=, 32);
->       g_assert_cmpint(domain_range_start, ==, 0);
->       g_assert_cmpint(domain_range_end, ==, UINT32_MAX);
->       g_assert_cmpint(bypass, ==, 1);
+diff --git a/migration/ram.c b/migration/ram.c
+index 9fb1875aad73b2fa009199bdfa8960339df7287d..23f4df4779309bbbe164c56c1436b60d65749860 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -2802,9 +2802,8 @@ static void migration_bitmap_clear_discarded_pages(RAMState *rs)
+     }
+ }
+ 
+-static void ram_init_bitmaps(RAMState *rs)
++static bool ram_init_bitmaps(RAMState *rs, Error **errp)
+ {
+-    Error *local_err = NULL;
+     bool ret = true;
+ 
+     qemu_mutex_lock_ramlist();
+@@ -2813,10 +2812,8 @@ static void ram_init_bitmaps(RAMState *rs)
+         ram_list_init_bitmaps();
+         /* We don't use dirty log with background snapshots */
+         if (!migrate_background_snapshot()) {
+-            ret = memory_global_dirty_log_start(GLOBAL_DIRTY_MIGRATION,
+-                                                &local_err);
++            ret = memory_global_dirty_log_start(GLOBAL_DIRTY_MIGRATION, errp);
+             if (!ret) {
+-                error_report_err(local_err);
+                 goto out_unlock;
+             }
+             migration_bitmap_sync_precopy(rs, false);
+@@ -2826,7 +2823,7 @@ out_unlock:
+     qemu_mutex_unlock_ramlist();
+ 
+     if (!ret) {
+-        return;
++        return false;
+     }
+ 
+     /*
+@@ -2834,9 +2831,10 @@ out_unlock:
+      * containing all 1s to exclude any discarded pages from migration.
+      */
+     migration_bitmap_clear_discarded_pages(rs);
++    return true;
+ }
+ 
+-static int ram_init_all(RAMState **rsp)
++static int ram_init_all(RAMState **rsp, Error **errp)
+ {
+     if (ram_state_init(rsp)) {
+         return -1;
+@@ -2847,7 +2845,9 @@ static int ram_init_all(RAMState **rsp)
+         return -1;
+     }
+ 
+-    ram_init_bitmaps(*rsp);
++    if (!ram_init_bitmaps(*rsp, errp)) {
++        return -1;
++    }
+ 
+     return 0;
+ }
+@@ -2961,7 +2961,7 @@ static int ram_save_setup(QEMUFile *f, void *opaque, Error **errp)
+ 
+     /* migration has already setup the bitmap, reuse it. */
+     if (!migration_in_colo_state()) {
+-        if (ram_init_all(rsp) != 0) {
++        if (ram_init_all(rsp, errp) != 0) {
+             compress_threads_save_cleanup();
+             return -1;
+         }
+-- 
+2.43.2
 
 
