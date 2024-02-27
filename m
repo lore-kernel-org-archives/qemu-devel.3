@@ -4,47 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FDBDC54E41
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 19:49:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FDC5C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 20:22:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rf3Ri-0003GZ-Rk; Tue, 27 Feb 2024 14:48:59 -0500
+	id 1rf3xJ-0004I6-UE; Tue, 27 Feb 2024 15:21:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rf3Rf-0003Fo-N7; Tue, 27 Feb 2024 14:48:55 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1rf3xG-0004HF-3j; Tue, 27 Feb 2024 15:21:34 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rf3Rd-0003zH-LS; Tue, 27 Feb 2024 14:48:55 -0500
+ id 1rf3xC-0001Iw-In; Tue, 27 Feb 2024 15:21:32 -0500
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 343A24E6005;
- Tue, 27 Feb 2024 20:48:50 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 06C034E6005;
+ Tue, 27 Feb 2024 21:21:23 +0100 (CET)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id dOzEJFA9Nywz; Tue, 27 Feb 2024 20:48:48 +0100 (CET)
+ with ESMTP id 1WK-OEfFdpKw; Tue, 27 Feb 2024 21:21:21 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id F28694E6013; Tue, 27 Feb 2024 20:48:47 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id F10E67456FE;
- Tue, 27 Feb 2024 20:48:47 +0100 (CET)
-Date: Tue, 27 Feb 2024 20:48:47 +0100 (CET)
+ id 0F47A4E6012; Tue, 27 Feb 2024 21:21:21 +0100 (CET)
+Message-Id: <e045e3f22df2c441aab7f1f0f555069c083c3f01.1709045654.git.balaton@eik.bme.hu>
+In-Reply-To: <cover.1709045654.git.balaton@eik.bme.hu>
+References: <cover.1709045654.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: TCG change broke MorphOS boot on sam460ex
-In-Reply-To: <48e5e0b8-9b0a-4c9f-9f3e-c30e2fddc502@linaro.org>
-Message-ID: <f4dda347-da2d-c8aa-a330-dafc00aae277@eik.bme.hu>
-References: <fe59ceb1-e8cd-f488-d6f0-6372923a8a33@eik.bme.hu>
- <48e5e0b8-9b0a-4c9f-9f3e-c30e2fddc502@linaro.org>
+Subject: [PATCH v7 10/10] target/ppc: Remove interrupt handler wrapper
+ functions
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1226931963-1709063327=:34540"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+To: qemu-devel@nongnu.org,
+    qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, clg@kaod.org
+Date: Tue, 27 Feb 2024 21:21:21 +0100 (CET)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -65,66 +63,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+These wrappers call out to handle POWER7 and newer in separate
+functions but reduce to the generic case when TARGET_PPC64 is not
+defined. It is easy enough to include the switch in the beginning of
+the generic functions to branch out to the specific functions and get
+rid of these wrappers. This avoids one indirection and entirely
+compiles out the switch without TARGET_PPC64.
 
---3866299591-1226931963-1709063327=:34540
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+---
+ target/ppc/excp_helper.c | 67 +++++++++++++++++-----------------------
+ 1 file changed, 28 insertions(+), 39 deletions(-)
 
-On Tue, 27 Feb 2024, Philippe Mathieu-Daudé wrote:
-> Hi Zoltan,
->
-> On 27/2/24 17:47, BALATON Zoltan wrote:
->> Hello,
->> 
->> Commit 18a536f1f8 (accel/tcg: Always require can_do_io) broke booting 
->> MorphOS on sam460ex (this was before 8.2.0 and I thought I've verified it 
->> before that release but apparently missed it back then). It can be 
->> reproduced with https://www.morphos-team.net/morphos-3.18.iso and following 
->> command:
->> 
->> qemu-system-ppc -M sam460ex -serial stdio -d unimp,guest_errors \
->>    -drive if=none,id=cd,format=raw,file=morphos-3.18.iso \
->>    -device ide-cd,drive=cd,bus=ide.1
->> 
->> before:
->> Invalid read at addr 0xC08001216, size 1, region '(null)', reason: rejected
->> Invalid read at addr 0x216, size 1, region '(null)', reason: rejected
->> Invalid read at addr 0x4FDF6BFB0, size 4, region '(null)', reason: rejected
->> Invalid write at addr 0xE10000014, size 4, region '(null)', reason: 
->> rejected
->> Invalid write at addr 0xE10000214, size 4, region '(null)', reason: 
->> rejected
->> Invalid write at addr 0xE30000014, size 4, region '(null)', reason: 
->> rejected
->> Invalid write at addr 0xE30000214, size 4, region '(null)', reason: 
->> rejected
->> 8.440| sam460_i2c_write: Error while writing, sts 34
->> 8.463|
->> 8.463|
->> 8.463| ABox 1.30 (2.7.2018)...
->> 
->> after:
->> Invalid read at addr 0xC08001216, size 1, region '(null)', reason: rejected
->> Invalid read at addr 0x216, size 1, region '(null)', reason: rejected
->> Invalid read at addr 0x4F0C01374, size 4, region '(null)', reason: rejected
->> invalid/unsupported opcode: 00 - 00 - 00 - 00 (00000000) 00c01374
->> Invalid read at addr 0x4F0000700, size 4, region '(null)', reason: rejected
->> invalid/unsupported opcode: 00 - 00 - 00 - 00 (00000000) 00000700
->> 
->> Not sure what it's trying to do here, maybe decompressing some code and 
->> then trying to execute it? Any idea what could be the problem or what to 
->> check further?
->
-> Are you testing with commit cf9b5790db ("accel/tcg: Remove CF_LAST_IO")
-> included?
+diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+index f5e1e641ac..efb8082348 100644
+--- a/target/ppc/excp_helper.c
++++ b/target/ppc/excp_helper.c
+@@ -1928,8 +1928,21 @@ static int p9_next_unmasked_interrupt(CPUPPCState *env)
+ }
+ #endif /* TARGET_PPC64 */
+ 
+-static int ppc_next_unmasked_interrupt_generic(CPUPPCState *env)
++static int ppc_next_unmasked_interrupt(CPUPPCState *env)
+ {
++#ifdef TARGET_PPC64
++    switch (env->excp_model) {
++    case POWERPC_EXCP_POWER7:
++        return p7_next_unmasked_interrupt(env);
++    case POWERPC_EXCP_POWER8:
++        return p8_next_unmasked_interrupt(env);
++    case POWERPC_EXCP_POWER9:
++    case POWERPC_EXCP_POWER10:
++        return p9_next_unmasked_interrupt(env);
++    default:
++        break;
++    }
++#endif
+     bool async_deliver;
+ 
+     /* External reset */
+@@ -2040,23 +2053,6 @@ static int ppc_next_unmasked_interrupt_generic(CPUPPCState *env)
+     return 0;
+ }
+ 
+-static int ppc_next_unmasked_interrupt(CPUPPCState *env)
+-{
+-    switch (env->excp_model) {
+-#ifdef TARGET_PPC64
+-    case POWERPC_EXCP_POWER7:
+-        return p7_next_unmasked_interrupt(env);
+-    case POWERPC_EXCP_POWER8:
+-        return p8_next_unmasked_interrupt(env);
+-    case POWERPC_EXCP_POWER9:
+-    case POWERPC_EXCP_POWER10:
+-        return p9_next_unmasked_interrupt(env);
+-#endif
+-    default:
+-        return ppc_next_unmasked_interrupt_generic(env);
+-    }
+-}
+-
+ /*
+  * Sets CPU_INTERRUPT_HARD if there is at least one unmasked interrupt to be
+  * delivered and clears CPU_INTERRUPT_HARD otherwise.
+@@ -2286,8 +2282,21 @@ static void p9_deliver_interrupt(CPUPPCState *env, int interrupt)
+ }
+ #endif /* TARGET_PPC64 */
+ 
+-static void ppc_deliver_interrupt_generic(CPUPPCState *env, int interrupt)
++static void ppc_deliver_interrupt(CPUPPCState *env, int interrupt)
+ {
++#ifdef TARGET_PPC64
++    switch (env->excp_model) {
++    case POWERPC_EXCP_POWER7:
++        return p7_deliver_interrupt(env, interrupt);
++    case POWERPC_EXCP_POWER8:
++        return p8_deliver_interrupt(env, interrupt);
++    case POWERPC_EXCP_POWER9:
++    case POWERPC_EXCP_POWER10:
++        return p9_deliver_interrupt(env, interrupt);
++    default:
++        break;
++    }
++#endif
+     PowerPCCPU *cpu = env_archcpu(env);
+ 
+     switch (interrupt) {
+@@ -2390,26 +2399,6 @@ static void ppc_deliver_interrupt_generic(CPUPPCState *env, int interrupt)
+     }
+ }
+ 
+-static void ppc_deliver_interrupt(CPUPPCState *env, int interrupt)
+-{
+-    switch (env->excp_model) {
+-#ifdef TARGET_PPC64
+-    case POWERPC_EXCP_POWER7:
+-        p7_deliver_interrupt(env, interrupt);
+-        break;
+-    case POWERPC_EXCP_POWER8:
+-        p8_deliver_interrupt(env, interrupt);
+-        break;
+-    case POWERPC_EXCP_POWER9:
+-    case POWERPC_EXCP_POWER10:
+-        p9_deliver_interrupt(env, interrupt);
+-        break;
+-#endif
+-    default:
+-        ppc_deliver_interrupt_generic(env, interrupt);
+-    }
+-}
+-
+ void ppc_cpu_do_system_reset(CPUState *cs)
+ {
+     PowerPCCPU *cpu = POWERPC_CPU(cs);
+-- 
+2.30.9
 
-The issue happens starting with commit 18a536f1f8 and present even in 
-current master. The commit before it (200c1f904f accel/tcg: Always set 
-CF_LAST_IO with CF_NOIRQ) still works. Commit cf9b5790db does not work.
-
-Regards,
-BALATON Zoltan
---3866299591-1226931963-1709063327=:34540--
 
