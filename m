@@ -4,102 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77827C5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 14:52:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A7ECC5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 14:52:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reynN-0006I2-4v; Tue, 27 Feb 2024 09:51:01 -0500
+	id 1reyir-0000cU-TE; Tue, 27 Feb 2024 09:46:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1reynM-0006Ez-6X
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:51:00 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1reyhK-0006Zn-79
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:44:49 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1reynK-0004UV-AU
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:50:59 -0500
-Received: from imap2.dmz-prg2.suse.org (imap2.dmz-prg2.suse.org [10.150.64.98])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 89AAB1FD29;
- Tue, 27 Feb 2024 14:50:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1709045456; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PflRvIM5LsP226NFmY6iS2xQP7pucpMpsMtYkQZGSp8=;
- b=aHheO45MZiJndLuiy1befOilaqE1380G0l3U+T1KeTNVNRKVLEYz9NauT6SyGnkVkxcePK
- 3hT9zwoQ0zwqkDxQbeHMTGSN60aqLQJ3KxzkzWaG4OsB31L2CfWJ/o9rW1TLCglnzUJCVc
- cjrRy9GMPQq0TlY9cqSw8XyqjbEwHJ8=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1709045456; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PflRvIM5LsP226NFmY6iS2xQP7pucpMpsMtYkQZGSp8=;
- b=aHheO45MZiJndLuiy1befOilaqE1380G0l3U+T1KeTNVNRKVLEYz9NauT6SyGnkVkxcePK
- 3hT9zwoQ0zwqkDxQbeHMTGSN60aqLQJ3KxzkzWaG4OsB31L2CfWJ/o9rW1TLCglnzUJCVc
- cjrRy9GMPQq0TlY9cqSw8XyqjbEwHJ8=
-Received: from imap2.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap2.dmz-prg2.suse.org (Postfix) with ESMTPS id C6FDF13ABC;
- Tue, 27 Feb 2024 14:50:55 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap2.dmz-prg2.suse.org with ESMTPSA id GHU6Ls/23WXMAQAAn2gu4w
- (envelope-from <roy.hopkins@suse.com>); Tue, 27 Feb 2024 14:50:55 +0000
-From: Roy Hopkins <roy.hopkins@suse.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1reygT-00027i-8n
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:44:44 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-412a4848f0dso15769115e9.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 06:43:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709045032; x=1709649832; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eZ1nEd8NJNCNQAO45v/M0dXLXOT0Wd7jVxF+jov+Saw=;
+ b=moX9ko5jz78GmLtVK5GwTfNhzqgruARbryvL624+RbpY6Oe0JzgEK7MKNeOdq2+SjN
+ 7oQcy8l9iW+lLSoXZiW512GWhlrbkFQyllDFsJCpaaf8qge7LV6V+mzYhp883Z5TtqS2
+ +VkIH7lMmFlnYX/pzjg8zazGjplsX49ph58xFAxQsOAvBWfn5ofX8NC9Ryl/jmKbB2vF
+ 84hxbff9VcnmysrnJ9G8Xa9lXTFZEeS/ZYwj7revyguWZGiaYClGVAvppdbEGHhW891j
+ wvQfI5k02fEHFyVOlZWNIIVF87b84ntetrgjXFOkVlaY1hcq/KoS5y18sBKQc65qIO1E
+ qhrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709045032; x=1709649832;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=eZ1nEd8NJNCNQAO45v/M0dXLXOT0Wd7jVxF+jov+Saw=;
+ b=J+zBXHAyuvPK1NjxK44GU3D9qdR19XstufQeoR7AQTAoOzaV1mEZV4W4GcUvnOZbWP
+ 1GFhgYTB2RcSLG7BKJR1Vh4pyXJ9YlaZrtLjNka4LP/7fQ8Tc5S6rKL8eCYPAeiu+1Xf
+ mP8XcIsCWO6vk05Dk/rQ5D6lF+yFE+RZEg/GXqQKd0FfllSLg3K0UHcEUOO9z1gM6onh
+ wrMQy6uEmG++MmB1VvhTTUu12lfA455uLxxLjPJLipGw6RQmMycgXkTI5E8VwL250tRM
+ sdKvWbUlm+FS1LaLlrTqAdD5371xLBtRnlTg9PSc9CnZKBQteMPJIfHwa1TGAjaud0LO
+ Nk0g==
+X-Gm-Message-State: AOJu0Yy/AZCGJtQihjPmrWgwdEtRNZeK+eDt8YVS9QP575gemnE8Ce0E
+ pESWzAA/yw5hkFfNCufZxZCLLgJrbcH+Ze+fst0yJZUm/M1nzAfo2amYFeoaYU0=
+X-Google-Smtp-Source: AGHT+IGz44XdYBYFBIZ3a+ovorB9gaLTI4VHaTdRMlNQO1YUc5hQ77oi3syl9h6WC9lGy9kzmXm31w==
+X-Received: by 2002:adf:f882:0:b0:33d:e3d8:ee47 with SMTP id
+ u2-20020adff882000000b0033de3d8ee47mr2745402wrp.27.1709045031881; 
+ Tue, 27 Feb 2024 06:43:51 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ n17-20020a5d4211000000b0033d97bd5ddasm11556120wrq.85.2024.02.27.06.43.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 Feb 2024 06:43:48 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id DE1375F92C;
+ Tue, 27 Feb 2024 14:43:37 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+Cc: qemu-ppc@nongnu.org, Yoshinori Sato <ysato@users.sourceforge.jp>,
+ qemu-arm@nongnu.org, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Michael Rolnik <mrolnik@gmail.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Song Gao <gaosong@loongson.cn>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Laurent Vivier <laurent@vivier.eu>, Warner Losh <imp@bsdimp.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ qemu-s390x@nongnu.org, Kyle Evans <kevans@freebsd.org>,
+ Brad Smith <brad@comstyle.com>, Nicholas Piggin <npiggin@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ John Snow <jsnow@redhat.com>, Alistair Francis <alistair.francis@wdc.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Brian Cain <bcain@quicinc.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-riscv@nongnu.org, Bin Meng <bin.meng@windriver.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Weiwei Li <liwei1518@gmail.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>,
- =?UTF-8?q?J=C3=B6rg=20Roedel?= <jroedel@suse.com>
-Subject: [PATCH 1/9] meson: Add optional dependency on IGVM library
-Date: Tue, 27 Feb 2024 14:50:07 +0000
-Message-ID: <2a942d99cf8aa0f86dec4a5112582299d36ec36b.1709044754.git.roy.hopkins@suse.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1709044754.git.roy.hopkins@suse.com>
-References: <cover.1709044754.git.roy.hopkins@suse.com>
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Subject: [PATCH v4 25/29] contrib/plugins: fix imatch
+Date: Tue, 27 Feb 2024 14:43:31 +0000
+Message-Id: <20240227144335.1196131-26-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240227144335.1196131-1-alex.bennee@linaro.org>
+References: <20240227144335.1196131-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spamd-Result: default: False [2.20 / 50.00]; RCVD_VIA_SMTP_AUTH(0.00)[];
- TO_DN_SOME(0.00)[]; R_MISSING_CHARSET(2.50)[];
- BROKEN_CONTENT_TYPE(1.50)[];
- R_RATELIMIT(0.00)[to_ip_from(RLy64u1trr5nq3nwidnuusmct1)];
- RCVD_COUNT_THREE(0.00)[3]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- FROM_EQ_ENVFROM(0.00)[]; MIME_TRACE(0.00)[0:+];
- BAYES_HAM(-3.00)[100.00%]; ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; TAGGED_RCPT(0.00)[];
- MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
- DKIM_SIGNED(0.00)[suse.com:s=susede1];
- RCPT_COUNT_TWELVE(0.00)[16]; MID_CONTAINS_FROM(1.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:email];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- FREEMAIL_CC(0.00)[suse.com,redhat.com,gmail.com,habkost.net,alistair23.me,amd.com];
- RCVD_TLS_ALL(0.00)[]; SUSPICIOUS_RECIPS(1.50)[]
-Received-SPF: pass client-ip=195.135.223.131;
- envelope-from=roy.hopkins@suse.com; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,108 +122,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The IGVM library allows Isolated Guest Virtual Machine files to be
-parsed and processed. IGVM files are used to configure guest memory
-layout, initial processor state and other configuration pertaining to
-secure virtual machines.
+We can't directly save the ephemeral imatch from argv as that memory
+will get recycled.
 
-This adds the --enable-igvm configure option, enabled by default, which
-attempts to locate and link against the IGVM library via pkgconfig and
-sets CONFIG_IGVM if found.
-
-The library is added to the system_ss target in backends/meson.build
-where the IGVM parsing will be performed by the ConfidentialGuestSupport
-object.
-
-Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
+Message-Id: <20240103173349.398526-40-alex.bennee@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- backends/meson.build          | 3 +++
- meson.build                   | 8 ++++++++
- meson_options.txt             | 2 ++
- scripts/meson-buildoptions.sh | 3 +++
- 4 files changed, 16 insertions(+)
+ contrib/plugins/execlog.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/backends/meson.build b/backends/meson.build
-index 8b2b111497..d550ac19f7 100644
---- a/backends/meson.build
-+++ b/backends/meson.build
-@@ -30,5 +30,8 @@ if have_vhost_user_crypto
- endif
- system_ss.add(when: gio, if_true: files('dbus-vmstate.c'))
- system_ss.add(when: 'CONFIG_SGX', if_true: files('hostmem-epc.c'))
-+if igvm.found()
-+  system_ss.add(igvm)
-+endif
+diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
+index 82dc2f584e2..f262e5555eb 100644
+--- a/contrib/plugins/execlog.c
++++ b/contrib/plugins/execlog.c
+@@ -199,7 +199,7 @@ static void parse_insn_match(char *match)
+     if (!imatches) {
+         imatches = g_ptr_array_new();
+     }
+-    g_ptr_array_add(imatches, match);
++    g_ptr_array_add(imatches, g_strdup(match));
+ }
  
- subdir('tpm')
-diff --git a/meson.build b/meson.build
-index 0ef1654e86..d4949693b0 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1230,6 +1230,12 @@ if host_os == 'linux' and (have_system or have_tools)
-                        method: 'pkg-config',
-                        required: get_option('libudev'))
- endif
-+igvm = not_found
-+if not get_option('igvm').auto() or have_system
-+  igvm = dependency('igvm',
-+                       method: 'pkg-config',
-+                       required: get_option('igvm'))
-+endif
- 
- mpathlibs = [libudev]
- mpathpersist = not_found
-@@ -2314,6 +2320,7 @@ config_host_data.set('CONFIG_CFI', get_option('cfi'))
- config_host_data.set('CONFIG_SELINUX', selinux.found())
- config_host_data.set('CONFIG_XEN_BACKEND', xen.found())
- config_host_data.set('CONFIG_LIBDW', libdw.found())
-+config_host_data.set('CONFIG_IGVM', igvm.found())
- if xen.found()
-   # protect from xen.version() having less than three components
-   xen_version = xen.version().split('.') + ['0', '0']
-@@ -4433,6 +4440,7 @@ summary_info += {'seccomp support':   seccomp}
- summary_info += {'GlusterFS support': glusterfs}
- summary_info += {'hv-balloon support': hv_balloon}
- summary_info += {'TPM support':       have_tpm}
-+summary_info += {'IGVM support':      igvm}
- summary_info += {'libssh support':    libssh}
- summary_info += {'lzo support':       lzo}
- summary_info += {'snappy support':    snappy}
-diff --git a/meson_options.txt b/meson_options.txt
-index 0a99a059ec..4eaba64f4b 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -109,6 +109,8 @@ option('dbus_display', type: 'feature', value: 'auto',
-        description: '-display dbus support')
- option('tpm', type : 'feature', value : 'auto',
-        description: 'TPM support')
-+option('igvm', type: 'feature', value: 'auto',
-+       description: 'Independent Guest Virtual Machine (IGVM) file support')
- 
- # Do not enable it by default even for Mingw32, because it doesn't
- # work on Wine.
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index 680fa3f581..38a8183625 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -126,6 +126,7 @@ meson_options_help() {
-   printf "%s\n" '  hv-balloon      hv-balloon driver (requires Glib 2.68+ GTree API)'
-   printf "%s\n" '  hvf             HVF acceleration support'
-   printf "%s\n" '  iconv           Font glyph conversion support'
-+  printf "%s\n" '  igvm            IGVM file support'
-   printf "%s\n" '  jack            JACK sound support'
-   printf "%s\n" '  keyring         Linux keyring support'
-   printf "%s\n" '  kvm             KVM acceleration support'
-@@ -342,6 +343,8 @@ _meson_option_parse() {
-     --iasl=*) quote_sh "-Diasl=$2" ;;
-     --enable-iconv) printf "%s" -Diconv=enabled ;;
-     --disable-iconv) printf "%s" -Diconv=disabled ;;
-+    --enable-igvm) printf "%s" -Digvm=enabled ;;
-+    --disable-igvm) printf "%s" -Digvm=disabled ;;
-     --includedir=*) quote_sh "-Dincludedir=$2" ;;
-     --enable-install-blobs) printf "%s" -Dinstall_blobs=true ;;
-     --disable-install-blobs) printf "%s" -Dinstall_blobs=false ;;
+ static void parse_vaddr_match(char *match)
 -- 
-2.43.0
+2.39.2
 
 
