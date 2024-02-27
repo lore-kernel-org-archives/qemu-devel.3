@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F32C1C5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 14:49:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5695C54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 14:49:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reygx-0005zc-1F; Tue, 27 Feb 2024 09:44:23 -0500
+	id 1reygm-0005a8-BE; Tue, 27 Feb 2024 09:44:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1reygv-0005vM-Da
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:44:21 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1reygk-0005Yg-M6
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:44:10 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1reygL-00020O-Eq
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:44:21 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-33de4d3483eso1130487f8f.3
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 06:43:44 -0800 (PST)
+ id 1reygK-00020b-Cf
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:44:10 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-33dc3fe739aso1718264f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 06:43:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1709045022; x=1709649822; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hxDVqDXi3LGJSJYkq05RZi8ehgH06PAsi/NzuX8UMrA=;
- b=ugwl+HgRfQh7bL7L0lBDQyRpjUE7qomkfF2LbCJ2wNetpEq3uCSPNdW8xm1PFnhIlV
- lYWUVM2fcYU5Zt9qUq/HlGsnfYrpJtQ2cVnOePVRFJFgDuq56R2Uv/uTP6tkJChc3+Qr
- 8ydTCcSX4uW1+D/Bz08yA3yNJTOwxNOfsBRxc0vk1i6n6esykdw7JCvVeezoZ6Ha2AQa
- Lnf6RWeGWzVbLUJghezzJ/ssWQidMJ96/ticvh8dUtWQvqYxsNQeL0z+2Ci7vxqNSWSq
- 4ruIt8yzTU0xmXx9M0Okt3PtDvZvNx1nK9cztSyP671LMRb6KZtnlyY44ejNMg3jCsMg
- YBnw==
+ bh=sYddgSiv4TdBqJm1PnHuh0lKMNJczxN97MFaER3IoIY=;
+ b=PVpfK/J5bG06QD3WWztQQ3QFD5ZszBY8g0Sgg6Nfx/c4qelzoMtq35y7Gp29mNgceS
+ yd842+cObNK9L5JEpoaH9tdjTxVq3K0GforJ/lnXIJSM2uGTiE1Zj7q8AF1FCYX0ud4P
+ BqTWODwC2BPxl6X4EF+CAsdfIZNqDMIuTYYvS3jnYSRzMO0hHRE6BZNEAGcHX6p5Ht3c
+ 3cZrztvXhbGuDJJwAYhHSgZwpqWjz7/6lQsSEwtAk73voBMcflISZrcgUjrhneXa7SRr
+ 2v03QUYsnt7/d5pY7G/tQpVyxIzCxZI4gBn8sQG0bJxC5NSh2a5XWYa+y9HzuN+MZBLV
+ AwKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1709045022; x=1709649822;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hxDVqDXi3LGJSJYkq05RZi8ehgH06PAsi/NzuX8UMrA=;
- b=Ozs35ryfs37hRdPRye3OY/WxvGwcMYfXp+u/b5T3QxR4BRrI3CFkpJ4ichMQ82R36R
- gQQ0fpuo0Letm7m1De57EL3toGJvQgd48GOd7xKdjNqa0FetSRZE+XBITk1RP3OIHqR2
- Ci+XS2Yau76CgagXVZhODm4q87da/jfx7LbLVmaD+Hcs7jgbqKPwu6L1IU5lK+GEzsXA
- AGQr0YkbtRyBTIqHAlhv1GOk0M9ASPdbZddQfzpnMhYXkio1j7RKT4w+A15mV4IT5viJ
- DvkvXxDSxz+enKomywkR4Qb7tLvm9wHqchyjQOUzd1s1uPDVqnYJ9wbasthwOZbWlELQ
- AdlQ==
-X-Gm-Message-State: AOJu0YxZidwozrO6BWRSPJtqLnOAmRSFZXy088i/Du895M87bi+znomD
- eOVkSLgroyCQXPBFtrJSnJcsA/+0rLYX1A6ot6cDiHqCVHr13XINI4l85OC3oiE=
-X-Google-Smtp-Source: AGHT+IEacG6jW3pkVUqXRpBiljitqFwKN4RhVp1BxiQrkK9uyPw+9aYn2eOY4WuGvU4uG/rtrDLgXA==
-X-Received: by 2002:adf:ef87:0:b0:33d:a011:ae42 with SMTP id
- d7-20020adfef87000000b0033da011ae42mr6990698wro.38.1709045022399; 
+ bh=sYddgSiv4TdBqJm1PnHuh0lKMNJczxN97MFaER3IoIY=;
+ b=TNxd/TLRFDFjYNhMGz96q4ouZp3ZvyExBDNIBu+u/30egjViGwcOUe3/Ff2zNYzACV
+ UXPDFOOOiDlo2oitle3MRMwDK+72gHOsYKhBmScslzknApTfTITMO8VsfTFdwFcErwxY
+ 6pTxWYdbRWtkEmSuAZKe8S57KEj5x7FCVVfrwgACsx+H1UM+j3N3uFozUybao8w5rdzN
+ YXXVEDqTIMxTL83o1i/RUj5mdQ4T16U3GVdzcrQxfKs3Xg4pNKucotuQivP9UoUv2O/a
+ rk9XfJ6eG1izZ5W9VzDegz+kquKEkOOy3jFJPwr/Wn4745kqzUaHAlaC3/x2T/8kYoHX
+ SH2g==
+X-Gm-Message-State: AOJu0YwlQ9qr6MfFDdOrUkQ79kBovtnEz+wRouhVH18EBo9RJSKI0faX
+ lighvLw7S37liTpCBCSHbDfxXCQRAbF8L8B8V9XRg/Oan+merIPVu7FIGo90A8A=
+X-Google-Smtp-Source: AGHT+IECzYG42nEazD+SUl9ftmRSFHb5xRFlboJn/nUFM0jQC+F2d8P+jg5nIhzavhVImsFa+l4Bew==
+X-Received: by 2002:a5d:4bc5:0:b0:33d:d793:a210 with SMTP id
+ l5-20020a5d4bc5000000b0033dd793a210mr5838575wrt.6.1709045022645; 
  Tue, 27 Feb 2024 06:43:42 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- d14-20020a5d538e000000b0033d4deb2356sm11489452wrv.56.2024.02.27.06.43.37
+ n1-20020a05600c4f8100b004127ead18aasm11648171wmq.22.2024.02.27.06.43.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 27 Feb 2024 06:43:40 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 88BCC5F90B;
+ by draig.lan (Postfix) with ESMTP id 4B0CA5F909;
  Tue, 27 Feb 2024 14:43:36 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -90,17 +90,17 @@ Cc: qemu-ppc@nongnu.org, Yoshinori Sato <ysato@users.sourceforge.jp>,
  Palmer Dabbelt <palmer@dabbelt.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>,
  Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH v4 11/29] gdbstub: Simplify XML lookup
-Date: Tue, 27 Feb 2024 14:43:17 +0000
-Message-Id: <20240227144335.1196131-12-alex.bennee@linaro.org>
+Subject: [PATCH v4 09/29] gdbstub: Use GDBFeature for GDBRegisterState
+Date: Tue, 27 Feb 2024 14:43:15 +0000
+Message-Id: <20240227144335.1196131-10-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240227144335.1196131-1-alex.bennee@linaro.org>
 References: <20240227144335.1196131-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -125,255 +125,83 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Now we know all instances of GDBFeature that is used in CPU so we can
-traverse them to find XML. This removes the need for a CPU-specific
-lookup function for dynamic XMLs.
+Simplify GDBRegisterState by replacing num_regs and xml members with
+one member that points to GDBFeature.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240103173349.398526-33-alex.bennee@linaro.org>
-Message-Id: <20231213-gdb-v17-7-777047380591@daynix.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20240103173349.398526-31-alex.bennee@linaro.org>
+Message-Id: <20231213-gdb-v17-5-777047380591@daynix.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- include/exec/gdbstub.h |   6 +++
- gdbstub/gdbstub.c      | 118 +++++++++++++++++++++--------------------
- hw/core/cpu-common.c   |   5 +-
- 3 files changed, 69 insertions(+), 60 deletions(-)
+ gdbstub/gdbstub.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
-index bcaab1bc750..82a8afa237f 100644
---- a/include/exec/gdbstub.h
-+++ b/include/exec/gdbstub.h
-@@ -27,6 +27,12 @@ typedef struct GDBFeatureBuilder {
- typedef int (*gdb_get_reg_cb)(CPUState *cpu, GByteArray *buf, int reg);
- typedef int (*gdb_set_reg_cb)(CPUState *cpu, uint8_t *buf, int reg);
- 
-+/**
-+ * gdb_init_cpu(): Initialize the CPU for gdbstub.
-+ * @cpu: The CPU to be initialized.
-+ */
-+void gdb_init_cpu(CPUState *cpu);
-+
- /**
-  * gdb_register_coprocessor() - register a supplemental set of registers
-  * @cpu - the CPU associated with registers
 diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 486ceb52d2e..d573f808d2e 100644
+index 256599c8dfb..0ea417b2c9a 100644
 --- a/gdbstub/gdbstub.c
 +++ b/gdbstub/gdbstub.c
-@@ -352,6 +352,7 @@ static const char *get_feature_xml(const char *p, const char **newp,
- {
-     CPUState *cpu = gdb_get_first_cpu_in_process(process);
-     CPUClass *cc = CPU_GET_CLASS(cpu);
-+    GDBRegisterState *r;
-     size_t len;
+@@ -47,10 +47,9 @@
  
-     /*
-@@ -365,7 +366,6 @@ static const char *get_feature_xml(const char *p, const char **newp,
-     /* Is it the main target xml? */
-     if (strncmp(p, "target.xml", len) == 0) {
-         if (!process->target_xml) {
--            GDBRegisterState *r;
-             g_autoptr(GPtrArray) xml = g_ptr_array_new_with_free_func(g_free);
+ typedef struct GDBRegisterState {
+     int base_reg;
+-    int num_regs;
+     gdb_get_reg_cb get_reg;
+     gdb_set_reg_cb set_reg;
+-    const char *xml;
++    const GDBFeature *feature;
+ } GDBRegisterState;
  
-             g_ptr_array_add(
-@@ -380,18 +380,12 @@ static const char *get_feature_xml(const char *p, const char **newp,
-                     g_markup_printf_escaped("<architecture>%s</architecture>",
-                                             cc->gdb_arch_name(cpu)));
-             }
--            g_ptr_array_add(
--                xml,
--                g_markup_printf_escaped("<xi:include href=\"%s\"/>",
--                                        cc->gdb_core_xml_file));
--            if (cpu->gdb_regs) {
--                for (guint i = 0; i < cpu->gdb_regs->len; i++) {
--                    r = &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
--                    g_ptr_array_add(
--                        xml,
--                        g_markup_printf_escaped("<xi:include href=\"%s\"/>",
--                                                r->feature->xmlname));
--                }
-+            for (guint i = 0; i < cpu->gdb_regs->len; i++) {
-+                r = &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
-+                g_ptr_array_add(
-+                    xml,
-+                    g_markup_printf_escaped("<xi:include href=\"%s\"/>",
-+                                            r->feature->xmlname));
+ GDBState gdbserver_state;
+@@ -391,7 +390,7 @@ static const char *get_feature_xml(const char *p, const char **newp,
+                     g_ptr_array_add(
+                         xml,
+                         g_markup_printf_escaped("<xi:include href=\"%s\"/>",
+-                                                r->xml));
++                                                r->feature->xmlname));
+                 }
              }
              g_ptr_array_add(xml, g_strdup("</target>"));
-             g_ptr_array_add(xml, NULL);
-@@ -400,20 +394,11 @@ static const char *get_feature_xml(const char *p, const char **newp,
+@@ -513,7 +512,7 @@ static int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg)
+     if (cpu->gdb_regs) {
+         for (guint i = 0; i < cpu->gdb_regs->len; i++) {
+             r = &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
+-            if (r->base_reg <= reg && reg < r->base_reg + r->num_regs) {
++            if (r->base_reg <= reg && reg < r->base_reg + r->feature->num_regs) {
+                 return r->get_reg(env, buf, reg - r->base_reg);
+             }
          }
-         return process->target_xml;
-     }
--    /* Is it dynamically generated by the target? */
--    if (cc->gdb_get_dynamic_xml) {
--        g_autofree char *xmlname = g_strndup(p, len);
--        const char *xml = cc->gdb_get_dynamic_xml(cpu, xmlname);
--        if (xml) {
--            return xml;
--        }
--    }
--    /* Is it one of the encoded gdb-xml/ files? */
--    for (int i = 0; gdb_static_features[i].xmlname; i++) {
--        const char *name = gdb_static_features[i].xmlname;
--        if ((strncmp(name, p, len) == 0) &&
--            strlen(name) == len) {
--            return gdb_static_features[i].xml;
-+    /* Is it one of the features? */
-+    for (guint i = 0; i < cpu->gdb_regs->len; i++) {
-+        r = &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
-+        if (strncmp(p, r->feature->xmlname, len) == 0) {
-+            return r->feature->xml;
+@@ -534,7 +533,7 @@ static int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg)
+     if (cpu->gdb_regs) {
+         for (guint i = 0; i < cpu->gdb_regs->len; i++) {
+             r =  &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
+-            if (r->base_reg <= reg && reg < r->base_reg + r->num_regs) {
++            if (r->base_reg <= reg && reg < r->base_reg + r->feature->num_regs) {
+                 return r->set_reg(env, mem_buf, reg - r->base_reg);
+             }
          }
-     }
- 
-@@ -508,12 +493,10 @@ static int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg)
-         return cc->gdb_read_register(cpu, buf, reg);
-     }
- 
--    if (cpu->gdb_regs) {
--        for (guint i = 0; i < cpu->gdb_regs->len; i++) {
--            r = &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
--            if (r->base_reg <= reg && reg < r->base_reg + r->feature->num_regs) {
--                return r->get_reg(cpu, buf, reg - r->base_reg);
--            }
-+    for (guint i = 0; i < cpu->gdb_regs->len; i++) {
-+        r = &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
-+        if (r->base_reg <= reg && reg < r->base_reg + r->feature->num_regs) {
-+            return r->get_reg(cpu, buf, reg - r->base_reg);
+@@ -553,7 +552,7 @@ void gdb_register_coprocessor(CPUState *cpu,
+         for (i = 0; i < cpu->gdb_regs->len; i++) {
+             /* Check for duplicates.  */
+             s = &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
+-            if (strcmp(s->xml, feature->xmlname) == 0) {
++            if (s->feature == feature) {
+                 return;
+             }
          }
-     }
-     return 0;
-@@ -528,51 +511,70 @@ static int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg)
-         return cc->gdb_write_register(cpu, mem_buf, reg);
-     }
- 
--    if (cpu->gdb_regs) {
--        for (guint i = 0; i < cpu->gdb_regs->len; i++) {
--            r =  &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
--            if (r->base_reg <= reg && reg < r->base_reg + r->feature->num_regs) {
--                return r->set_reg(cpu, mem_buf, reg - r->base_reg);
--            }
-+    for (guint i = 0; i < cpu->gdb_regs->len; i++) {
-+        r =  &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
-+        if (r->base_reg <= reg && reg < r->base_reg + r->feature->num_regs) {
-+            return r->set_reg(cpu, mem_buf, reg - r->base_reg);
-         }
-     }
-     return 0;
- }
- 
-+static void gdb_register_feature(CPUState *cpu, int base_reg,
-+                                 gdb_get_reg_cb get_reg, gdb_set_reg_cb set_reg,
-+                                 const GDBFeature *feature)
-+{
-+    GDBRegisterState s = {
-+        .base_reg = base_reg,
-+        .get_reg = get_reg,
-+        .set_reg = set_reg,
-+        .feature = feature
-+    };
-+
-+    g_array_append_val(cpu->gdb_regs, s);
-+}
-+
-+void gdb_init_cpu(CPUState *cpu)
-+{
-+    CPUClass *cc = CPU_GET_CLASS(cpu);
-+    const GDBFeature *feature;
-+
-+    cpu->gdb_regs = g_array_new(false, false, sizeof(GDBRegisterState));
-+
-+    if (cc->gdb_core_xml_file) {
-+        feature = gdb_find_static_feature(cc->gdb_core_xml_file);
-+        gdb_register_feature(cpu, 0,
-+                             cc->gdb_read_register, cc->gdb_write_register,
-+                             feature);
-+    }
-+
-+    cpu->gdb_num_regs = cpu->gdb_num_g_regs = cc->gdb_num_core_regs;
-+}
-+
- void gdb_register_coprocessor(CPUState *cpu,
-                               gdb_get_reg_cb get_reg, gdb_set_reg_cb set_reg,
-                               const GDBFeature *feature, int g_pos)
- {
-     GDBRegisterState *s;
-     guint i;
-+    int base_reg = cpu->gdb_num_regs;
- 
--    if (cpu->gdb_regs) {
--        for (i = 0; i < cpu->gdb_regs->len; i++) {
--            /* Check for duplicates.  */
--            s = &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
--            if (s->feature == feature) {
--                return;
--            }
-+    for (i = 0; i < cpu->gdb_regs->len; i++) {
-+        /* Check for duplicates.  */
-+        s = &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
-+        if (s->feature == feature) {
-+            return;
-         }
--    } else {
--        cpu->gdb_regs = g_array_new(false, false, sizeof(GDBRegisterState));
--        i = 0;
-     }
- 
--    g_array_set_size(cpu->gdb_regs, i + 1);
--    s = &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
--    s->base_reg = cpu->gdb_num_regs;
--    s->get_reg = get_reg;
--    s->set_reg = set_reg;
--    s->feature = feature;
-+    gdb_register_feature(cpu, base_reg, get_reg, set_reg, feature);
+@@ -565,10 +564,9 @@ void gdb_register_coprocessor(CPUState *cpu,
+     g_array_set_size(cpu->gdb_regs, i + 1);
+     s = &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
+     s->base_reg = cpu->gdb_num_regs;
+-    s->num_regs = feature->num_regs;
+     s->get_reg = get_reg;
+     s->set_reg = set_reg;
+-    s->xml = feature->xml;
++    s->feature = feature;
  
      /* Add to end of list.  */
      cpu->gdb_num_regs += feature->num_regs;
-     if (g_pos) {
--        if (g_pos != s->base_reg) {
-+        if (g_pos != base_reg) {
-             error_report("Error: Bad gdb register numbering for '%s', "
--                         "expected %d got %d", feature->xml,
--                         g_pos, s->base_reg);
-+                         "expected %d got %d", feature->xml, g_pos, base_reg);
-         } else {
-             cpu->gdb_num_g_regs = cpu->gdb_num_regs;
-         }
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index 67db07741d7..fe16d0d9df8 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -27,6 +27,7 @@
- #include "qemu/main-loop.h"
- #include "exec/log.h"
- #include "exec/cpu-common.h"
-+#include "exec/gdbstub.h"
- #include "qemu/error-report.h"
- #include "qemu/qemu-print.h"
- #include "sysemu/tcg.h"
-@@ -240,11 +241,10 @@ static void cpu_common_unrealizefn(DeviceState *dev)
- static void cpu_common_initfn(Object *obj)
- {
-     CPUState *cpu = CPU(obj);
--    CPUClass *cc = CPU_GET_CLASS(obj);
- 
-+    gdb_init_cpu(cpu);
-     cpu->cpu_index = UNASSIGNED_CPU_INDEX;
-     cpu->cluster_index = UNASSIGNED_CLUSTER_INDEX;
--    cpu->gdb_num_regs = cpu->gdb_num_g_regs = cc->gdb_num_core_regs;
-     /* user-mode doesn't have configurable SMP topology */
-     /* the default value is changed by qemu_init_vcpu() for system-mode */
-     cpu->nr_cores = 1;
-@@ -264,6 +264,7 @@ static void cpu_common_finalize(Object *obj)
- {
-     CPUState *cpu = CPU(obj);
- 
-+    g_array_free(cpu->gdb_regs, TRUE);
-     qemu_lockcnt_destroy(&cpu->in_ioctl_lock);
-     qemu_mutex_destroy(&cpu->work_mutex);
- }
 -- 
 2.39.2
 
