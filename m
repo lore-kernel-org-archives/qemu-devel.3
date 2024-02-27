@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33930C54E4A
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 12:11:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE6E3C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 12:22:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rewHW-0003sn-Ru; Tue, 27 Feb 2024 07:09:58 -0500
+	id 1rewSq-0006aF-LK; Tue, 27 Feb 2024 07:21:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rewHU-0003sW-73
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 07:09:56 -0500
-Received: from mgamail.intel.com ([192.198.163.13])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rewHR-0003fc-KY
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 07:09:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709035794; x=1740571794;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=LcBc2xeaJTxXGy7RWmHyOmRx6954AwBxc525s+oHjKc=;
- b=cgByaTdOEmbUjCGsqVeh0Wtg2Nr/+sJihS0//UxTljeqKVg+Z5F8xw6G
- l6iZvCwc/QmYVTLnxUEzY2bj6rlp9lfN/lxpbInJnz6a9VwPCAAlsyKZb
- I0hBs2pXQvux7O3R+9xJBtHAwlCikNWUYibvSrsr8k3boTLFWhYa+P+XP
- DWEqNRgeemcJU+vwhfYhXGQKqI2Sn8TEhDxGwWqZ6xq/Qs2tfTw4PWFzM
- d2AP6WxR7zNZ0LGJ+Bz1Dy4fvINJEdt6tkvIaa/LnTf5f4BZ0ZNsx5+c3
- vNfHF7KOcOpkGJMHs6dHxhvxAMQIQu7afOVbPiQI9vsZo2rqVf3wHPF+J w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10996"; a="6319314"
-X-IronPort-AV: E=Sophos;i="6.06,187,1705392000"; 
-   d="scan'208";a="6319314"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Feb 2024 04:09:49 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,187,1705392000"; 
-   d="scan'208";a="7001290"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.125.243.127])
- ([10.125.243.127])
- by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Feb 2024 04:09:44 -0800
-Message-ID: <09c5fd9b-be96-45b6-b48e-772d5b5aad16@intel.com>
-Date: Tue, 27 Feb 2024 20:09:41 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 53/66] i386/tdx: Wire TDX_REPORT_FATAL_ERROR with
- GuestPanic facility
-Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand
- <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Cornelia Huck <cohuck@redhat.com>,
- =?UTF-8?Q?Daniel_P=2EBerrang=C3=A9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Michael Roth <michael.roth@amd.com>, Sean Christopherson
- <seanjc@google.com>, Claudio Fontana <cfontana@suse.de>,
- Gerd Hoffmann <kraxel@redhat.com>, Isaku Yamahata
- <isaku.yamahata@gmail.com>, Chenyi Qiang <chenyi.qiang@intel.com>
-References: <20240125032328.2522472-1-xiaoyao.li@intel.com>
- <20240125032328.2522472-54-xiaoyao.li@intel.com>
- <87v86kehts.fsf@pond.sub.org>
- <1d7f7c1b-cfaa-4de6-80a0-8d1104440f54@intel.com>
- <87le76dt1g.fsf@pond.sub.org>
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <87le76dt1g.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.13; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.599, HK_RANDOM_FROM=0.999, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rewSp-0006Zc-1T; Tue, 27 Feb 2024 07:21:39 -0500
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rewSm-0005qq-67; Tue, 27 Feb 2024 07:21:37 -0500
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-6e5562158a8so260b3a.3; 
+ Tue, 27 Feb 2024 04:21:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1709036494; x=1709641294; darn=nongnu.org;
+ h=in-reply-to:references:cc:to:from:subject:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lkCS7sMvEqhguoKnYki94Kfyn8T2LKKQdJNAbymol/w=;
+ b=Z1jOaGARAwHfTmalgA4AMKfchG9oi638Y0uPlSeQkWKIx6SRL5NwNxE6u2QwaDm+gf
+ KcuAXBM74Xll+krWvCIZHwe8k12UZWU/6Pmc1wWHLC6eK/2h2hPrMosI7LLYJzRcj1we
+ C3Le91EtBEHetzIJKJQGkeO+KaA2bnv0I3EWc+vGLAzkq/EhgsUxapOoe3QkGfQNYYhT
+ uMdsrEsFANT0eOAri8OluXQuLElhRIlcznKY6c4jAZU0BiSVbwQm3Q9n78WfHaMjoAIj
+ TqefyOmHvgUSFX04pMnGJaV8Uk4kpLlE/bTRtzOPKl8o5BGrf/eKv7UtBw+TvVz04IDV
+ 85VA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709036494; x=1709641294;
+ h=in-reply-to:references:cc:to:from:subject:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=lkCS7sMvEqhguoKnYki94Kfyn8T2LKKQdJNAbymol/w=;
+ b=GWO0lQSVslwBetU7FU8rNfyrLtdcGFZJYm23WOFAOeCR1MreGO40gaFaqXPW9cJUo/
+ T8YShqNC7yBqcsGXtQcq5Iw8qwL0hUr3iHYl6Fwdi//PY+qxc2AV/d53Tk23yZT33f0/
+ TArF5XycRfHl43i4+KN+q6gkpkm4WKDRbZ7xcKft+f3IVw7JMzGdhC/nK8oexzx5CT27
+ QIvDGu07u4VEO6oYadNONm4Nqw6WHtXaTi3KCCKH1WB4QvAFeh2inehDVZ05W9m2GwJp
+ J3Xy3AqbzB0HtVBY4ztaPmOPoGEjtB+W5C17URD90tlD+1Ncgk61nMrfYVcvddd7q6bv
+ iA4A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUJcnqjEjmOsy+czSpOn9lx6oNpo6/t2f54CG0DAwBJAND67HjIqiN3Z7A/f0eJZLUELGk8YBUHvFPV3K5LIXIcUumHBaQp/j+BdcgGWdz8LdpQNxKzxeCldqU=
+X-Gm-Message-State: AOJu0Yx7NlLL5BmiQCT7LNPytHkOiJp5KWfiYxTuXKPz9TUzglF8b/GX
+ eABKdK2g0GXKqapY+tbtWOPi2Z8k41adHrDBib4Vh8OkFqAG9pFl
+X-Google-Smtp-Source: AGHT+IFNmgiJ3feZhOOuXLA64DzfU1EGlypxneaw1HY6nxX8QiMCv181QV4xZtmHoYrV6OdGfye+2g==
+X-Received: by 2002:a05:6a21:3482:b0:1a1:101c:7c70 with SMTP id
+ yo2-20020a056a21348200b001a1101c7c70mr991048pzb.59.1709036490010; 
+ Tue, 27 Feb 2024 04:21:30 -0800 (PST)
+Received: from localhost (110-175-163-154.tpgi.com.au. [110.175.163.154])
+ by smtp.gmail.com with ESMTPSA id
+ z25-20020a631919000000b005dc85821c80sm5567163pgl.12.2024.02.27.04.21.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 Feb 2024 04:21:29 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 27 Feb 2024 22:21:23 +1000
+Message-Id: <CZFUVDPGK7OU.1CBJ2TIMJ719P@wheely>
+Subject: Re: [PATCH v8 2/2] ppc: spapr: Enable 2nd DAWR on Power10 pSeries
+ machine
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Shivaprasad G Bhat" <sbhat@linux.ibm.com>, <danielhb413@gmail.com>,
+ <qemu-ppc@nongnu.org>, <david@gibson.dropbear.id.au>,
+ <harshpb@linux.ibm.com>, <clg@kaod.org>, <groug@kaod.org>
+Cc: <pbonzini@redhat.com>, <kvm@vger.kernel.org>, <qemu-devel@nongnu.org>
+X-Mailer: aerc 0.15.2
+References: <170679876639.188422.11634974895844092362.stgit@ltc-boston1.aus.stglabs.ibm.com>
+ <170679878985.188422.6745903342602285494.stgit@ltc-boston1.aus.stglabs.ibm.com>
+In-Reply-To: <170679878985.188422.6745903342602285494.stgit@ltc-boston1.aus.stglabs.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,139 +98,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/27/2024 7:51 PM, Markus Armbruster wrote:
-> Xiaoyao Li <xiaoyao.li@intel.com> writes:
-> 
->> On 2/19/2024 8:53 PM, Markus Armbruster wrote:
->>> Xiaoyao Li <xiaoyao.li@intel.com> writes:
->>>
->>>> Integrate TDX's TDX_REPORT_FATAL_ERROR into QEMU GuestPanic facility
->>>>
->>>> Originated-from: Isaku Yamahata <isaku.yamahata@intel.com>
->>>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->>>> ---
->>>> Changes in v4:
->>>> - refine the documentation; (Markus)
->>>>
->>>> Changes in v3:
->>>> - Add docmentation of new type and struct; (Daniel)
->>>> - refine the error message handling; (Daniel)
->>>> ---
->>>>    qapi/run-state.json   | 28 ++++++++++++++++++++--
->>>>    system/runstate.c     | 54 +++++++++++++++++++++++++++++++++++++++++++
->>>>    target/i386/kvm/tdx.c | 24 ++++++++++++++++++-
->>>>    3 files changed, 103 insertions(+), 3 deletions(-)
->>>>
->>>> diff --git a/qapi/run-state.json b/qapi/run-state.json
->>>> index 08bc99cb8561..5429116679e3 100644
->>>> --- a/qapi/run-state.json
->>>> +++ b/qapi/run-state.json
->>>> @@ -485,10 +485,12 @@
->>>>   #
->>>>   # @s390: s390 guest panic information type (Since: 2.12)
->>>>   #
->>>> +# @tdx: tdx guest panic information type (Since: 8.2)
->>>> +#
->>>>   # Since: 2.9
->>>>   ##
->>>>   { 'enum': 'GuestPanicInformationType',
->>>> -  'data': [ 'hyper-v', 's390' ] }
->>>> +  'data': [ 'hyper-v', 's390', 'tdx' ] }
->>>>    
->>>>   ##
->>>>   # @GuestPanicInformation:
->>>> @@ -503,7 +505,8 @@
->>>>     'base': {'type': 'GuestPanicInformationType'},
->>>>     'discriminator': 'type',
->>>>     'data': {'hyper-v': 'GuestPanicInformationHyperV',
->>>> -          's390': 'GuestPanicInformationS390'}}
->>>> +          's390': 'GuestPanicInformationS390',
->>>> +          'tdx' : 'GuestPanicInformationTdx'}}
->>>>    
->>>>   ##
->>>>   # @GuestPanicInformationHyperV:
->>>> @@ -566,6 +569,27 @@
->>>>              'psw-addr': 'uint64',
->>>>              'reason': 'S390CrashReason'}}
->>>>    
->>>> +##
->>>> +# @GuestPanicInformationTdx:
->>>> +#
->>>> +# TDX Guest panic information specific to TDX GCHI
->>>> +# TDG.VP.VMCALL<ReportFatalError>.
->>>> +#
->>>> +# @error-code: TD-specific error code
->>>
->>> Where could a user find information on these error codes?
->>
->> TDX GHCI (Guset-host-communication-Interface)spec. It defines all the
->> TDVMCALL leaves.
->>
->> 0: panic;
->> 0x1 - 0xffffffff: reserved.
-> 
-> Would it make sense to add a reference?
+On Fri Feb 2, 2024 at 12:46 AM AEST, Shivaprasad G Bhat wrote:
+> As per the PAPR, bit 0 of byte 64 in pa-features property
+> indicates availability of 2nd DAWR registers. i.e. If this bit is set, 2n=
+d
+> DAWR is present, otherwise not. Use KVM_CAP_PPC_DAWR1 capability to find
+> whether kvm supports 2nd DAWR or not. If it's supported, allow user to se=
+t
+> the pa-feature bit in guest DT using cap-dawr1 machine capability.
+>
+> Signed-off-by: Ravi Bangoria <ravi.bangoria@linux.ibm.com>
+> Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+> ---
+>  hw/ppc/spapr.c         |    7 ++++++-
+>  hw/ppc/spapr_caps.c    |   36 ++++++++++++++++++++++++++++++++++++
+>  hw/ppc/spapr_hcall.c   |   25 ++++++++++++++++---------
+>  include/hw/ppc/spapr.h |    6 +++++-
+>  target/ppc/kvm.c       |   12 ++++++++++++
+>  target/ppc/kvm_ppc.h   |   12 ++++++++++++
+>  6 files changed, 87 insertions(+), 11 deletions(-)
+>
+> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+> index e8dabc8614..91a97d72e7 100644
+> --- a/hw/ppc/spapr.c
+> +++ b/hw/ppc/spapr.c
+> @@ -262,7 +262,7 @@ static void spapr_dt_pa_features(SpaprMachineState *s=
+papr,
+>          0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 48 - 53 */
+>          /* 54: DecFP, 56: DecI, 58: SHA */
+>          0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 54 - 59 */
+> -        /* 60: NM atomic, 62: RNG */
+> +        /* 60: NM atomic, 62: RNG, 64: DAWR1 (ISA 3.1) */
+>          0x80, 0x00, 0x80, 0x00, 0x00, 0x00, /* 60 - 65 */
+>      };
+>      uint8_t *pa_features =3D NULL;
+> @@ -303,6 +303,9 @@ static void spapr_dt_pa_features(SpaprMachineState *s=
+papr,
+>           * in pa-features. So hide it from them. */
+>          pa_features[40 + 2] &=3D ~0x80; /* Radix MMU */
+>      }
+> +    if (spapr_get_cap(spapr, SPAPR_CAP_DAWR1)) {
+> +        pa_features[66] |=3D 0x80;
+> +    }
+> =20
+>      _FDT((fdt_setprop(fdt, offset, "ibm,pa-features", pa_features, pa_si=
+ze)));
+>  }
+> @@ -2138,6 +2141,7 @@ static const VMStateDescription vmstate_spapr =3D {
+>          &vmstate_spapr_cap_fwnmi,
+>          &vmstate_spapr_fwnmi,
+>          &vmstate_spapr_cap_rpt_invalidate,
+> +        &vmstate_spapr_cap_dawr1,
+>          NULL
+>      }
+>  };
+> @@ -4717,6 +4721,7 @@ static void spapr_machine_class_init(ObjectClass *o=
+c, void *data)
+>      smc->default_caps.caps[SPAPR_CAP_CCF_ASSIST] =3D SPAPR_CAP_ON;
+>      smc->default_caps.caps[SPAPR_CAP_FWNMI] =3D SPAPR_CAP_ON;
+>      smc->default_caps.caps[SPAPR_CAP_RPT_INVALIDATE] =3D SPAPR_CAP_OFF;
+> +    smc->default_caps.caps[SPAPR_CAP_DAWR1] =3D SPAPR_CAP_OFF;
+> =20
+>      /*
+>       * This cap specifies whether the AIL 3 mode for
+> diff --git a/hw/ppc/spapr_caps.c b/hw/ppc/spapr_caps.c
+> index e889244e52..677f17cea6 100644
+> --- a/hw/ppc/spapr_caps.c
+> +++ b/hw/ppc/spapr_caps.c
+> @@ -655,6 +655,32 @@ static void cap_ail_mode_3_apply(SpaprMachineState *=
+spapr,
+>      }
+>  }
+> =20
+> +static void cap_dawr1_apply(SpaprMachineState *spapr, uint8_t val,
+> +                               Error **errp)
+> +{
+> +    ERRP_GUARD();
+> +
+> +    if (!val) {
+> +        return; /* Disable by default */
+> +    }
+> +
+> +    if (!ppc_type_check_compat(MACHINE(spapr)->cpu_type,
+> +                               CPU_POWERPC_LOGICAL_3_10, 0,
+> +                               spapr->max_compat_pvr)) {
+> +        warn_report("DAWR1 supported only on POWER10 and later CPUs");
+> +    }
 
-https://cdrdv2.intel.com/v1/dl/getContent/726792
+Should this be an error?
 
->>>> +#
->>>> +# @gpa: guest-physical address of a page that contains additional
->>>> +#     error data, in forms of zero-terminated string.
->>>
->>> "in the form of a zero-terminated string"
->>
->> fixed.
->>
->>>> +#
->>>> +# @message: Human-readable error message provided by the guest. Not
->>>> +#     to be trusted.
->>>
->>> How is this message related to the one pointed to by @gpa?
->>
->> In general, @message contains a brief message of the error. While @gpa
->> (when valid) contains a verbose message.
->>
->> The reason why we need both is because sometime when TD guest hits a
->> fatal error, its memory may get corrupted so we cannot pass information
->> via @gpa. Information in @message is passed through GPRs.
-> 
-> Well, we do pass information via @gpa, always.  I guess it page's
-> contents can be corrupted.
+Should the dawr1 cap be enabled by default for POWER10 machines?
 
-No. It's not always. the bit 63 of the error code is "GPA valid" bit. 
-@gpa is valid only when bit 63 of error code is 1.
+> +
+> +    if (kvm_enabled()) {
+> +        if (!kvmppc_has_cap_dawr1()) {
+> +            error_setg(errp, "DAWR1 not supported by KVM.");
+> +            error_append_hint(errp, "Try appending -machine cap-dawr1=3D=
+off");
+> +        } else if (kvmppc_set_cap_dawr1(val) < 0) {
+> +            error_setg(errp, "Error enabling cap-dawr1 with KVM.");
+> +            error_append_hint(errp, "Try appending -machine cap-dawr1=3D=
+off");
+> +        }
+> +    }
+> +}
+> +
+>  SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] =3D {
+>      [SPAPR_CAP_HTM] =3D {
+>          .name =3D "htm",
+> @@ -781,6 +807,15 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] =
+=3D {
+>          .type =3D "bool",
+>          .apply =3D cap_ail_mode_3_apply,
+>      },
+> +    [SPAPR_CAP_DAWR1] =3D {
+> +        .name =3D "dawr1",
+> +        .description =3D "Allow 2nd Data Address Watchpoint Register (DA=
+WR1)",
+> +        .index =3D SPAPR_CAP_DAWR1,
+> +        .get =3D spapr_cap_get_bool,
+> +        .set =3D spapr_cap_set_bool,
+> +        .type =3D "bool",
+> +        .apply =3D cap_dawr1_apply,
+> +    },
+>  };
+> =20
+>  static SpaprCapabilities default_caps_with_cpu(SpaprMachineState *spapr,
+> @@ -923,6 +958,7 @@ SPAPR_CAP_MIG_STATE(large_decr, SPAPR_CAP_LARGE_DECRE=
+MENTER);
+>  SPAPR_CAP_MIG_STATE(ccf_assist, SPAPR_CAP_CCF_ASSIST);
+>  SPAPR_CAP_MIG_STATE(fwnmi, SPAPR_CAP_FWNMI);
+>  SPAPR_CAP_MIG_STATE(rpt_invalidate, SPAPR_CAP_RPT_INVALIDATE);
+> +SPAPR_CAP_MIG_STATE(dawr1, SPAPR_CAP_DAWR1);
+> =20
+>  void spapr_caps_init(SpaprMachineState *spapr)
+>  {
+> diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
+> index fcefd1d1c7..34c1c77c95 100644
+> --- a/hw/ppc/spapr_hcall.c
+> +++ b/hw/ppc/spapr_hcall.c
+> @@ -814,11 +814,12 @@ static target_ulong h_set_mode_resource_set_ciabr(P=
+owerPCCPU *cpu,
+>      return H_SUCCESS;
+>  }
+> =20
+> -static target_ulong h_set_mode_resource_set_dawr0(PowerPCCPU *cpu,
+> -                                                  SpaprMachineState *spa=
+pr,
+> -                                                  target_ulong mflags,
+> -                                                  target_ulong value1,
+> -                                                  target_ulong value2)
+> +static target_ulong h_set_mode_resource_set_dawr(PowerPCCPU *cpu,
+> +                                                     SpaprMachineState *=
+spapr,
+> +                                                     target_ulong mflags=
+,
+> +                                                     target_ulong resour=
+ce,
+> +                                                     target_ulong value1=
+,
+> +                                                     target_ulong value2=
+)
 
-And current Linux TD guest implementation doesn't use @gpa at all.
-https://github.com/torvalds/linux/blob/45ec2f5f6ed3ec3a79ba1329ad585497cdcbe663/arch/x86/coco/tdx/tdx.c#L131 
+Did the text alignment go wrong here?
 
+Aside from those things,
 
-> Perhaps something like
-> 
->      # @message: Human-readable error message provided by the guest.  Not
->      #     to be trusted.
->      #
->      # @gpa: guest-physical address of a page that contains more verbose
->      #     error information, as zero-terminated string.  Note that guest
->      #     memory corruption can corrupt the page's contents.
-> 
->>>> +#
->>>> +# Since: 9.0
->>>> +##
->>>> +{'struct': 'GuestPanicInformationTdx',
->>>> + 'data': {'error-code': 'uint64',
->>>> +          'gpa': 'uint64',
->>>> +          'message': 'str'}}
-> 
-> Note that my proposed doc string has the members in a different order.
-> Recommend to use the same order here.
-> 
->>>> +
->>>>    ##
->>>>    # @MEMORY_FAILURE:
->>>>    #
->>>
->>> [...]
->>>
-> 
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
+Thanks,
+Nick
 
