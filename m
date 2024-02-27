@@ -4,78 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76F5BC54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 17:26:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 973CCC5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 17:36:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rf1Cy-0000oP-CR; Tue, 27 Feb 2024 12:25:36 -0500
+	id 1rf1Mo-0005ha-1G; Tue, 27 Feb 2024 12:35:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rf1Cp-0000kI-Dj
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 12:25:28 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rf1Cf-0001s8-Q6
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 12:25:19 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-563d56ee65cso6122321a12.2
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 09:25:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709054716; x=1709659516; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=kcxG98UeYhB/BNiA6TOJimNtm6g2wl9X2q8dfRlYshQ=;
- b=Rt9caXYX7DmPzfQ688UXA5YBAH/b2ij+dPCt2D+phFkaQLp83Ocym5GyPq/WyNdYHE
- tUoFzLxi6b+c4UgNLyMo0kWRi6I6zAZdkT2/oUEq1F7QuN8WLpoVodaG4Uy1df1KvXXG
- MFTh1WZcnhUPoGwOZHfcYQm3E722FfMk4HIy2HVO+UZpRR2vCRgGXkrUVmUJBs3Axj7l
- Tpfx9a9mEJ5vU/n4YxNZS88MMquRu6ysD00/ijXH3h8UgtY7IvoGVpqODUXupU9Tck2G
- obW7OEsD1NvPGJZelKY4onNONB/2KodCumg4mPtQAXCCMkazJ8Bb89MCIhhh0W813kSL
- LZ2g==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rf1Ma-0005Vx-6X
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 12:35:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rf1MM-0003xn-2h
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 12:35:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709055316;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=u9Rjeknrs+RY5x8Yrgrerm6euSG7pdM8wNjDsb38uTE=;
+ b=EzDnN1VuxXYDw3k+YO/dUvMNApdvnZVZPeDyXb3ypSnmtzYuIOjQm9rGyEkS+30qNUIMMV
+ 74+IO2z3OXQUL7GkDwGiZCVcRa6rG+3lBIEIBNAV1EnxGJ8HSjVwIJQ+4PaPP1aFcwj/Ps
+ 05gZ4WBuBOWwk6Nb0jJF1uw0YCdOSQI=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-1-U6dAut_rMiOGPHm3hl4nUQ-1; Tue, 27 Feb 2024 12:35:15 -0500
+X-MC-Unique: U6dAut_rMiOGPHm3hl4nUQ-1
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-787bd92c7c7so442655485a.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 09:35:15 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709054716; x=1709659516;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kcxG98UeYhB/BNiA6TOJimNtm6g2wl9X2q8dfRlYshQ=;
- b=vyZSBSNbbvslQkAANHDsNw8xguh715UFMSB6a0CJGCOWMlUqmlPqHtUZMaSp+ClPZj
- Bj6W2V1ilbOsvTnbzCz53uxKdcx6pOOihtYvMhnEjwVtkwxloW/5QHpQiO0WsQkQEbIp
- mEGf4eivefSS3Uo3/Tj8p/WPeAocx8D9tRq7vZMQSVXJFGj5S4OHB/YMi6SgVkOu3jMM
- UK/gzYEeZZ0APbi/8oFDJjX1MpERuiamPCg3PN8XhOTsFk2eJzDtCk6/yqcpCZ5Sy1pH
- oJ971ccxXFgOMHA9GdjOpl9mSsouTkU4cYePGC0qeqrtJSiTQdKu/GgDLF4W6neiIvXN
- TwhA==
+ d=1e100.net; s=20230601; t=1709055314; x=1709660114;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=u9Rjeknrs+RY5x8Yrgrerm6euSG7pdM8wNjDsb38uTE=;
+ b=UBYUqg7IhinhCG7RUyIpnUfFHafFHc/xNMleoizw4V/1VhxoCnuvpWLjQGHwXrhpS8
+ y9eQKhTH37EPkVTQjOZXnHavIFU/9+4w+6h35YAYD/FYwRD3qq0gDKkXF8XgaT7ZccIv
+ xW3ClcECt1oSr8W5LvtZzQBsKu5A0tXFr/73bRXO44njyyqUJv48rP6TgJByOyFwJJSC
+ i/CWC2uRYc7ju8Hjx3jmdKa2Z4cJv14izb/k9+YMDSb6h8mIFGnaundahZ8W4+R3x9o+
+ SkmeStcsM1O70pO2ehpL8hwR3NOTEsq+CtPCy6M0i8w229OfYXRR8Ez4h2DEBVNSqFRG
+ QoaA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW5SsScjE9pf8Rv2x2GiY3jZOBIAXswTumhmkbZQJ6PfZQKvM3lkuhXlJflLfezOMv57YXyrQKZZglsJKGQotlWdieLuFU=
-X-Gm-Message-State: AOJu0Yyu2LuSZg4GhXmHxDxtL8evkrfB2ylWGBj5/BHj3fU2YdfEvNwX
- 1sTGUzwMCQpW8Mw31+x0G++1T4ULbHDbN+OqMkz+VXG4O9LXaKl7Bh+fKrX/uMr6DhN+lc8Dwaq
- Q8dPW+t3ipvYxSdzkH6a09YSoAuc+cobpyzwMFw==
-X-Google-Smtp-Source: AGHT+IGnQb7TojBacz0J7c/6ngRDfLoycD7shaR0U50hlZNlgnyICjBoCXLEI7hu91TG/ya6fcPH4tVlSYJNPJTOvyw=
-X-Received: by 2002:a05:6402:5188:b0:565:965f:b0f2 with SMTP id
- q8-20020a056402518800b00565965fb0f2mr9283821edd.5.1709054715970; Tue, 27 Feb
- 2024 09:25:15 -0800 (PST)
+ AJvYcCW4JGtaX9q1hMl/XEgyFfmaGB+vpsboW+YxS4+7B2NnZJhX/7KlD83Oavu7+yx1b8EdKcwFJnP9ZnR+a109DuCSI73XyoQ=
+X-Gm-Message-State: AOJu0YxbcvyjZN4UlHskXHKf1bwLdLXodSKn6KZJ8pQ8jIYjwWjBKbtI
+ p8ZN60/Tw4HlAr48e8rvDuJ/xdpOc/ZX+Q0emD/B0HmwGgUcA4vQmZkROi0YkjeIXmdwv/elAvz
+ WL4pA3kjux4xbxIGAHLidFwLl5uDP/V7zX3MT0pWvhY5WN4KEhEzs
+X-Received: by 2002:a05:620a:2a08:b0:787:76dc:652e with SMTP id
+ o8-20020a05620a2a0800b0078776dc652emr3058659qkp.33.1709055314633; 
+ Tue, 27 Feb 2024 09:35:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGNXfrEgx2TcKy4wEbbiVOPSQVsNgDlYlMu+yuG6OkeMJGo15hYP1dd2OQx+3Y9niSHuyWIuQ==
+X-Received: by 2002:a05:620a:2a08:b0:787:76dc:652e with SMTP id
+ o8-20020a05620a2a0800b0078776dc652emr3058626qkp.33.1709055314320; 
+ Tue, 27 Feb 2024 09:35:14 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-178-133.web.vodafone.de.
+ [109.43.178.133]) by smtp.gmail.com with ESMTPSA id
+ y22-20020a05620a09d600b00787a02d31d3sm3792506qky.44.2024.02.27.09.35.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 Feb 2024 09:35:14 -0800 (PST)
+Message-ID: <731bb838-83be-4057-aa76-4107d45f28e8@redhat.com>
+Date: Tue, 27 Feb 2024 18:35:06 +0100
 MIME-Version: 1.0
-References: <20240226000259.2752893-1-sergey.kambalin@auriga.com>
- <CAFEAcA_oSeqGAPNpemhbyVkuMYtwbr-TG2QNQ7=DSZv0s0h7XA@mail.gmail.com>
-In-Reply-To: <CAFEAcA_oSeqGAPNpemhbyVkuMYtwbr-TG2QNQ7=DSZv0s0h7XA@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 27 Feb 2024 17:25:04 +0000
-Message-ID: <CAFEAcA8GVZNt_0w=C+jEtp7uGt_h1SLJvZM3iGJAF_+8fDwi_A@mail.gmail.com>
-Subject: Re: [PATCH v6 00/41] Raspberry Pi 4B machine
-To: Sergey Kambalin <serg.oker@gmail.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- Sergey Kambalin <sergey.kambalin@auriga.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 04/29] tests/vm: update openbsd image to 7.4
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Yoshinori Sato <ysato@users.sourceforge.jp>,
+ qemu-arm@nongnu.org, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Michael Rolnik <mrolnik@gmail.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Song Gao <gaosong@loongson.cn>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Laurent Vivier <laurent@vivier.eu>, Warner Losh <imp@bsdimp.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-s390x@nongnu.org,
+ Kyle Evans <kevans@freebsd.org>, Brad Smith <brad@comstyle.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, John Snow
+ <jsnow@redhat.com>, Alistair Francis <alistair.francis@wdc.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Brian Cain <bcain@quicinc.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, qemu-riscv@nongnu.org, Bin Meng
+ <bin.meng@windriver.com>, Daniel Henrique Barboza
+ <dbarboza@ventanamicro.com>, Weiwei Li <liwei1518@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20240227144335.1196131-1-alex.bennee@linaro.org>
+ <20240227144335.1196131-5-alex.bennee@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240227144335.1196131-5-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,37 +169,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 27 Feb 2024 at 15:22, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> On Mon, 26 Feb 2024 at 00:04, Sergey Kambalin <serg.oker@gmail.com> wrote:
-> >
-> > Introducing Raspberry Pi 4B model.
-> > It contains new BCM2838 SoC, PCIE subsystem,
-> > RNG200, Thermal sensor and Genet network controller.
-> >
-> > It can work with recent linux kernels 6.x.x.
-> > Two avocado tests was added to check that.
-> >
-> > Unit tests has been made as read/write operations
-> > via mailbox properties.
-> >
-> > Genet integration test is under development.
-> >
-> > Every single commit
-> > 1) builds without errors
-> > 2) passes regression tests
-> > 3) passes style check*
-> > *the only exception is bcm2838-mbox-property-test.c file
-> > containing heavy macros usage which cause a lot of
-> > false-positives of checkpatch.pl.
->
-> Hi; I had to drop the qtest patches from what I'm going to
-> apply upstream, because it turns out that they don't pass
-> if the host system is big-endian.
+On 27/02/2024 15.43, Alex Bennée wrote:
+> The old links are dead so even if we have the ISO cached we can't
+> finish the install. Update to the current stable and tweak the install
+> strings.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2192
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Tested-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   tests/vm/openbsd | 9 +++++----
+>   1 file changed, 5 insertions(+), 4 deletions(-)
 
-The parts of this series that I was able to take are now
-in upstream git, so if you like you can rebase your
-series on that.
+FWIW, changes looks sane, so:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
--- PMM
+
 
