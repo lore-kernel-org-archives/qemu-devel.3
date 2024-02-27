@@ -4,106 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD97AC54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 10:17:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83DFFC5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 10:17:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reuV6-0001wh-CQ; Tue, 27 Feb 2024 05:15:53 -0500
+	id 1reuVq-0002Im-U0; Tue, 27 Feb 2024 05:16:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1reuUo-0001md-HL
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 05:15:35 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1reuVm-0002Gg-D2; Tue, 27 Feb 2024 05:16:34 -0500
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1reuUi-0002Mq-AL
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 05:15:32 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1d93edfa76dso35040605ad.1
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 02:15:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1reuVk-0002Yc-Rb; Tue, 27 Feb 2024 05:16:34 -0500
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-6e4ca46ab04so2419908b3a.3; 
+ Tue, 27 Feb 2024 02:16:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709028925; x=1709633725;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Fx9hfe20Iig0ZK24L+ZonhivY18ZcsqsCbKd+RliBUI=;
- b=jQRo+vGvjda3XtMrxXp+Ovr5+wUBe/Iw3lcJyaDqSHcUmcFKEBDdUOqpu6hKTZwyZN
- TVHfty1DnIeJfLGyKVoBV4UCM+uWPKa3eDLBRBfPZpAQ2GFikUGXf0Zxerxc4CU6dgE5
- P11NG7vK+LbbM60RIF292HPOxViVRWI/OuwJiLNkiNo6fSo9WJUei1LXR3Fg5qoB8oy/
- DA/2Ib5LM3xWFXoDNWuYLrRAhcOt9rDIRpoCeAo26T8ugciFs3h7yC1JpA7W+72lapuM
- 7Vi2suO0PA51p8bHZUeMoEsvJBUCsUtWCpM8FNrA6ML7z/a6qYH4sVFhVWmPGXpYaw2r
- J0ww==
+ d=gmail.com; s=20230601; t=1709028989; x=1709633789; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/YgmlfO+LcGqdSIv++XkkpSprmSjpq+Zmhi8g37iXdU=;
+ b=M48MZgzxeOLjGA/CsouWgn1gXvUcH6KKeBwHYudkLUcB3V81/9PEcymTrwYFGwTobz
+ pnX6FB9ReC9t3YmsMxwE/9WNqd+PmUfBnDO9S/qLifPBklzHDfU/B+2F0GjONfEBwCya
+ NugnZ9+b/juFkeVkv4kVgqfjt3YdgV7vPUOww/EAsCBUlgLOGbDUK0XDSWj/ikGyY8k2
+ EDvS7z3snn7v5hurg8550gDywJPrK8hosv69T2Rovmoqq/EvepYa3Yy5v7UjxLc2IcEd
+ wQ3eT0+d76ATRSYcyKaAFeQ6r+C0RCjKiDHw8+SrnwWBLFIgzBHCnW/jTaGM24xlAepX
+ k0FA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709028925; x=1709633725;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Fx9hfe20Iig0ZK24L+ZonhivY18ZcsqsCbKd+RliBUI=;
- b=SEgvMVLDEznjVriOtRBngdUnrNwGy1jL+IB4VVIPPkPXN3LytQH5OYxepNZMQarzP6
- UVE09zFC9ESFTSXSLcsVGE76aIBKdKEYU6iUSnwsFWjMgI/hVut3JTnd/UffHE0pbj8B
- n8RGvF4TNA4+tqoipjrF/Bgcem/s8DDnya4InJpdOiAO2+zCcEk8tJO+XeF/mYfn8S7s
- Zc2Pu+s/G0EvE8qIMkCznHpfr1omipn07J/pjYJS/o12iIC+5OuEtch2UIMIAMwFuIv6
- iKeNluENUulc8+4yZF35XYpWuLQFRuqwWn6HkUYQ+AQ5JNv+CrcwesSLAFGtwtw9ddzS
- 64yg==
-X-Gm-Message-State: AOJu0YypNo1qaYZ5NtsBRuW5fGFJ0LT+ecoiGBei94+l2KBLP/NdImBf
- LcAOA1TgSJyBS4nrUwbbEej2e+6kZYw4wMzEM3Ms/pmfQAJl8n1kP09bxrGjLA0=
-X-Google-Smtp-Source: AGHT+IGGyYlErA9kk8nMdcFcEbGt4QH298QVBJTxJGbBkIKqaaIPTH8dfJ9RDIhR8DJM5hC3k8xACg==
-X-Received: by 2002:a17:902:d587:b0:1dc:ae92:7e9 with SMTP id
- k7-20020a170902d58700b001dcae9207e9mr4236692plh.62.1709028924773; 
- Tue, 27 Feb 2024 02:15:24 -0800 (PST)
-Received: from [157.82.203.206] ([157.82.203.206])
- by smtp.gmail.com with ESMTPSA id
- kn15-20020a170903078f00b001dbb0348733sm1193150plb.67.2024.02.27.02.15.17
+ d=1e100.net; s=20230601; t=1709028989; x=1709633789;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=/YgmlfO+LcGqdSIv++XkkpSprmSjpq+Zmhi8g37iXdU=;
+ b=tj9rEXfZ6CIli18u/XR/fGHSEhVoRtzYdpXtPYOyv7e1pELZfbU+oNZohEoMrKjMAI
+ skAxBdhersqYxq0JbL5zy8Y8REYCvhd5/S33CDC6aX/vbS2hUCyI7hSua9A6jnfRwJ2s
+ 8IxvZFnmcgYGgvmoh0dORSQ4oq1AKQMf908lrUbCttU+APVfJsKv+ob6LY+cmnashl/5
+ FFKjzykSwTyRR12WtLXQY21+G26LAssrm6mRUSvvrKlqSvM6biR5qYgvUaDLXXzulP8X
+ B07XwTg2GeKo4TcE2D8/F4pUcW7zlHGVg2G5fOijRcuF3RNegQEiH3lHEZRVCf6zEL8d
+ EIJg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUDxK3/c2XJHmmTtDDdDEfxrSoDDC7KZbfMX9w1c2WU1tIj3wt2YEyhdSn+grLhVnxQEw7CPil3Gvj82Fno6HTBG6R3uEJvoTedU0yQzbswRlpA2TeAIn/dsWA=
+X-Gm-Message-State: AOJu0YxBAqhACf5Vh/zaIzqkReih67ITjgTHpZr9YT/MPq+7mgq6TOxU
+ H5etcWbdHrBxQxCZZmSSsGQ+cFzriEbtkrpsZujjcBl3WeX961OK
+X-Google-Smtp-Source: AGHT+IHJHup29eL9tlDzFqbo2FdfQO+ir3xCdcZeqm3qpLzX6mzkAf13hjv5Eg1PgF8zt4ITW6LYGA==
+X-Received: by 2002:a05:6a00:23cc:b0:6e4:cdb2:636f with SMTP id
+ g12-20020a056a0023cc00b006e4cdb2636fmr12771032pfc.4.1709028989401; 
+ Tue, 27 Feb 2024 02:16:29 -0800 (PST)
+Received: from localhost ([1.146.52.18]) by smtp.gmail.com with ESMTPSA id
+ p18-20020a056a0026d200b006e45b910a98sm5576251pfw.6.2024.02.27.02.16.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Feb 2024 02:15:24 -0800 (PST)
-Message-ID: <485e6093-54e9-4ce4-ae01-c44525b202ef@daynix.com>
-Date: Tue, 27 Feb 2024 19:15:15 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 21/27] plugins: add an API to read registers
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
- qemu-riscv@nongnu.org, Michael Rolnik <mrolnik@gmail.com>,
- Song Gao <gaosong@loongson.cn>, Alexandre Iooss <erdnaxe@crans.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- David Hildenbrand <david@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, John Snow
- <jsnow@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, qemu-arm@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- qemu-s390x@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Thomas Huth <thuth@redhat.com>, Yoshinori Sato <ysato@users.sourceforge.jp>,
- Yanan Wang <wangyanan55@huawei.com>, Brian Cain <bcain@quicinc.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Bin Meng <bin.meng@windriver.com>, Laurent Vivier <laurent@vivier.eu>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>
-References: <20240226165646.425600-1-alex.bennee@linaro.org>
- <20240226165646.425600-22-alex.bennee@linaro.org>
- <b7aac53e-cde5-4596-b0fc-d39f52d4ceb8@daynix.com>
- <878r36dxsv.fsf@draig.linaro.org>
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <878r36dxsv.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::630;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x630.google.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SCC_BODY_URI_ONLY=2.699, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ Tue, 27 Feb 2024 02:16:29 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 27 Feb 2024 20:16:22 +1000
+Message-Id: <CZFS7NVV22F1.11DDO9RYBJG5P@wheely>
+Cc: <clegoate@redhat.com>, <mikey@neuling.org>,
+ <amachhiw@linux.vnet.ibm.com>, <vaibhav@linux.ibm.com>,
+ <sbhat@linux.ibm.com>, <danielhb413@gmail.com>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v4 12/15] spapr: nested: Use correct source for parttbl
+ info for nested PAPR API.
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Harsh Prateek Bora" <harshpb@linux.ibm.com>, <qemu-ppc@nongnu.org>
+X-Mailer: aerc 0.15.2
+References: <20240220083609.748325-1-harshpb@linux.ibm.com>
+ <20240220083609.748325-13-harshpb@linux.ibm.com>
+In-Reply-To: <20240220083609.748325-13-harshpb@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,55 +97,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/02/27 19:08, Alex Bennée wrote:
-> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
-> 
->> On 2024/02/27 1:56, Alex Bennée wrote:
->>> We can only request a list of registers once the vCPU has been
->>> initialised so the user needs to use either call the get function on
->>> vCPU initialisation or during the translation phase.
->>> We don't expose the reg number to the plugin instead hiding it
->>> behind
->>> an opaque handle. For now this is just the gdb_regnum encapsulated in
->>> an anonymous GPOINTER but in future as we add more state for plugins
->>> to track we can expand it.
->>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1706
->>> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
->>> Message-Id: <20240103173349.398526-39-alex.bennee@linaro.org>
->>> Based-on: <20231025093128.33116-18-akihiko.odaki@daynix.com>
->>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
->>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>
->> Hi,
->>
->> Mostly looks good. I have a few trivial comments so please have a look
->> at them.
-> 
-> Done
-> 
-> <snip>
->>> +        g_array_append_val(find_data, desc);
->>> +    }
->>> +
->>> +    return find_data;
->>> +}
->>> +
->>> +GArray *qemu_plugin_get_registers(void)
->>> +{
->>> +    g_assert(current_cpu);
->>> +
->>> +    g_autoptr(GArray) regs = gdb_get_register_list(current_cpu);
->>> +    return regs->len ? create_register_handles(current_cpu, regs) : NULL;
->>
->> Why do you need regs->len check?
-> 
-> Not all guests expose register to gdb so we need to catch that:
-> 
->    TEST    catch-syscalls-with-libinsn.so on alpha
-> **
-> ERROR:../../plugins/api.c:459:qemu_plugin_get_registers: assertion failed: (regs->len)
-> Aborted
-Certainly regs->len can be 0, but why do you need to return NULL in that 
-case? Can't qemu_plugin_get_registers() return an empty array just as 
-gdb_get_register_list() does?
+On Tue Feb 20, 2024 at 6:36 PM AEST, Harsh Prateek Bora wrote:
+> For nested PAPR API, we use SpaprMachineStateNestedGuest struct to store
+> partition table info, use the same in spapr_get_pate_nested() via
+> helper.
+>
+> Signed-off-by: Michael Neuling <mikey@neuling.org>
+> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> ---
+>  include/hw/ppc/spapr_nested.h |  4 ++++
+>  hw/ppc/spapr.c                |  2 ++
+>  hw/ppc/spapr_nested.c         | 20 +++++++++++++++++++-
+>  3 files changed, 25 insertions(+), 1 deletion(-)
+>
+> diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.=
+h
+> index 1b7e55f12a..da918d2dd0 100644
+> --- a/include/hw/ppc/spapr_nested.h
+> +++ b/include/hw/ppc/spapr_nested.h
+> @@ -511,4 +511,8 @@ bool spapr_get_pate_nested_hv(SpaprMachineState *spap=
+r, PowerPCCPU *cpu,
+>  void spapr_nested_init(SpaprMachineState *spapr);
+>  uint8_t spapr_nested_api(SpaprMachineState *spapr);
+>  void spapr_nested_gsb_init(void);
+> +bool spapr_get_pate_nested_papr(SpaprMachineState *spapr, PowerPCCPU *cp=
+u,
+> +                                target_ulong lpid, ppc_v3_pate_t *entry)=
+;
+> +SpaprMachineStateNestedGuest *spapr_get_nested_guest(SpaprMachineState *=
+spapr,
+> +                                                     target_ulong lpid);
+>  #endif /* HW_SPAPR_NESTED_H */
+> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+> index 51a1be027a..3453b30a57 100644
+> --- a/hw/ppc/spapr.c
+> +++ b/hw/ppc/spapr.c
+> @@ -1379,6 +1379,8 @@ static bool spapr_get_pate(PPCVirtualHypervisor *vh=
+yp, PowerPCCPU *cpu,
+>          assert(spapr_nested_api(spapr));
+>          if (spapr_nested_api(spapr) =3D=3D NESTED_API_KVM_HV) {
+>              return spapr_get_pate_nested_hv(spapr, cpu, lpid, entry);
+> +        } else if (spapr_nested_api(spapr) =3D=3D NESTED_API_PAPR) {
+> +            return spapr_get_pate_nested_papr(spapr, cpu, lpid, entry);
+>          }
+>          return false;
+>      }
+
+BTW. I would change these asserts to } else { g_assert_not_reached(); }
+
+> diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
+> index aba4b25da6..0edb362709 100644
+> --- a/hw/ppc/spapr_nested.c
+> +++ b/hw/ppc/spapr_nested.c
+> @@ -52,6 +52,19 @@ bool spapr_get_pate_nested_hv(SpaprMachineState *spapr=
+, PowerPCCPU *cpu,
+>      return true;
+>  }
+> =20
+> +bool spapr_get_pate_nested_papr(SpaprMachineState *spapr, PowerPCCPU *cp=
+u,
+> +                                target_ulong lpid, ppc_v3_pate_t *entry)
+> +{
+> +    SpaprMachineStateNestedGuest *guest;
+> +    assert(lpid !=3D 0);
+> +    guest =3D spapr_get_nested_guest(spapr, lpid);
+> +    assert(guest !=3D NULL);
+> +
+> +    entry->dw0 =3D guest->parttbl[0];
+> +    entry->dw1 =3D guest->parttbl[1];
+> +    return true;
+> +}
+
+Asserts should not need to be changed to proper error handling, right?
+
+Thanks,
+Nick
 
