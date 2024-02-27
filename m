@@ -4,63 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B784C5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 21:55:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3F0BC54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 22:25:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rf5PB-0000EU-Q2; Tue, 27 Feb 2024 16:54:30 -0500
+	id 1rf5sE-0006tu-CS; Tue, 27 Feb 2024 17:24:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rf5P9-0000Dm-GP
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 16:54:27 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rf5P6-00075x-Ut
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 16:54:27 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 7EC064E6012;
- Tue, 27 Feb 2024 22:54:21 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id ms3SCURVnVbr; Tue, 27 Feb 2024 22:54:19 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 82E2E4E6005; Tue, 27 Feb 2024 22:54:19 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 817397456FE;
- Tue, 27 Feb 2024 22:54:19 +0100 (CET)
-Date: Tue, 27 Feb 2024 22:54:19 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Bernhard Beschow <shentey@gmail.com>
-cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Aurelien Jarno <aurelien@aurel32.net>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>
-Subject: Re: [PATCH 3/5] hw/isa: Embed TYPE_PORT92 in south bridges used in
- PC machines
-In-Reply-To: <F3980E89-7FE5-443A-9287-DB0350B159D9@gmail.com>
-Message-ID: <f25bdf58-2fc0-9f04-ef6c-c8d1cff02405@eik.bme.hu>
-References: <20240218131701.91132-1-shentey@gmail.com>
- <20240218131701.91132-4-shentey@gmail.com>
- <6a2333d7-9dea-4a0e-9d91-0889e6205128@ilande.co.uk>
- <F3980E89-7FE5-443A-9287-DB0350B159D9@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from
+ <3FmHeZQcKCocvzxwzotrzzrwp.nzx1px5-op6pwyzyry5.z2r@flex--komlodi.bounces.google.com>)
+ id 1rf5sD-0006tM-3E
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 17:24:29 -0500
+Received: from mail-pg1-x54a.google.com ([2607:f8b0:4864:20::54a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3FmHeZQcKCocvzxwzotrzzrwp.nzx1px5-op6pwyzyry5.z2r@flex--komlodi.bounces.google.com>)
+ id 1rf5sA-0008IS-IT
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 17:24:28 -0500
+Received: by mail-pg1-x54a.google.com with SMTP id
+ 41be03b00d2f7-5dc91de351fso205518a12.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 14:24:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1709072664; x=1709677464; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=oJDukn7jW1vPTXeJS7ppBd1/pnfVtWKCS5OuUBMJ9W8=;
+ b=stNPHNeOUJytjz4xgYZRJWK3fzMjITnr3s9vu/bS8lAEWYxmdWNCbWqhncplYsuNfn
+ pXyrjWlkTunl67hiLqy36WVKYnNAf6VUMH4mRFguPZGb07bhI9g0CYaMfODGdhu7CWsu
+ 8RdVu1tS9FMGgNoM7kav9OgZG6uIJhAcSYvGKifsoy1Eh1I6LJLCK8+jLugnUrs+o7hV
+ dihbjTgC6BZKIFYvbMPA0KmmzEEngQOaoJTGPBVBhxnvp8xiLect+KQfBmYBAZanvl+G
+ qMGcMU2iZGN24m3URw0wqGYWMi8/N0IxrHmUDqRz1FL1wcH0qz2olU7otptd2nB0mAvE
+ pu7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709072664; x=1709677464;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=oJDukn7jW1vPTXeJS7ppBd1/pnfVtWKCS5OuUBMJ9W8=;
+ b=GXqKEmNsyvCjN70FAJ6umv/77ZUmdzCl43jUDmU4IG58hOKU9+xu+6IDa0AP+Zs8H2
+ GyJZekYqwQ7YKwfBSUPAJwK3ySJXx9W95JayTFYRyzfRsy6dknxDF/wCTLKACAzDtMgE
+ +itTxDvje0SJp9B/E23+i237UGEzYbql0emyZR1pNYCzWVKJbW0hhDXDLy+m2oiM60SR
+ nVCGbC8A10AYS7PDPkMYGZVzFDDYb/eJZjmgqj1TvzdMmWJDohHVxRtZvSPXasTwAycp
+ Z/tvv+S3It5POYQE1pCXPw7Y2EuGP96N63ESB4YzrwHFDByQoZmbn1ZFIeGSh0vZZS4g
+ sWkA==
+X-Gm-Message-State: AOJu0YzV2nQQvjBguDdkfCpA7wj06RnhfynOJdPhbJiUlDR47KLxJAwY
+ +C7X35gF28xBfNOa5LFiEHz+Zyn/0OZZtCIRDbqNyW+gVLacNhl3jEItJQK9fCDU9F4FUlmy1HZ
+ 195XuAJw6EASv04bRcQEt72Ye3+m2iikOZkn3DUSF0DmtITH41q0YWf6ISf1UsTTeFi74xPvXTm
+ rZVCe12WLjjFRPxBSn74O1i0gnFo9zxes51xAY
+X-Google-Smtp-Source: AGHT+IErXylakRUR7HUDs3S+pqp50CQbxUZaWDGFRtWotdrZ4SwK1kkj4mavYgHJcx6+pAr1SXPphY27Di+O
+X-Received: from komlodi.c.googlers.com
+ ([fda3:e722:ac3:cc00:7f:e700:c0a8:35ee])
+ (user=komlodi job=sendgmr) by 2002:a65:6956:0:b0:5dc:36c7:6ceb with SMTP id
+ w22-20020a656956000000b005dc36c76cebmr1761pgq.1.1709072662472; Tue, 27 Feb
+ 2024 14:24:22 -0800 (PST)
+Date: Tue, 27 Feb 2024 22:24:14 +0000
+In-Reply-To: <20240227222417.929367-1-komlodi@google.com>
+Mime-Version: 1.0
+References: <20240227222417.929367-1-komlodi@google.com>
+X-Mailer: git-send-email 2.44.0.rc1.240.g4c46232300-goog
+Message-ID: <20240227222417.929367-3-komlodi@google.com>
+Subject: [RFC PATCH 2/5] memattrs: Fix target_tlb_bit whitespace
+From: Joe Komlodi <komlodi@google.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, peterx@redhat.com, david@redhat.com, 
+ peter.maydell@linaro.org, marcel.apfelbaum@gmail.com, mst@redhat.com, 
+ philmd@linaro.org, roqueh@google.com, slongfield@google.com, 
+ komlodi@google.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::54a;
+ envelope-from=3FmHeZQcKCocvzxwzotrzzrwp.nzx1px5-op6pwyzyry5.z2r@flex--komlodi.bounces.google.com;
+ helo=mail-pg1-x54a.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,91 +97,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 27 Feb 2024, Bernhard Beschow wrote:
-> Am 21. Februar 2024 11:53:21 UTC schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
->> On 18/02/2024 13:16, Bernhard Beschow wrote:
->>> Port 92 is an integral part of the PIIX and ICH south bridges, so instantiate it
->>> there. The isapc machine now needs to instantiate it explicitly, analoguous to
->>> the RTC.
->>>
->>> Note that due to migration compatibility, port92 is optional in the south
->>> bridges. It is always instantiated the isapc machine for simplicity.
->>>
->>> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
->>> ---
->>>   include/hw/i386/pc.h          |  2 +-
->>>   include/hw/southbridge/ich9.h |  4 ++++
->>>   include/hw/southbridge/piix.h |  3 +++
->>>   hw/i386/pc.c                  | 18 ++++++++++++------
->>>   hw/i386/pc_piix.c             |  9 +++++++--
->>>   hw/i386/pc_q35.c              |  8 +++++---
->>>   hw/isa/lpc_ich9.c             |  9 +++++++++
->>>   hw/isa/piix.c                 |  9 +++++++++
->>>   hw/isa/Kconfig                |  2 ++
->>>   9 files changed, 52 insertions(+), 12 deletions(-)
->>
->> I had a look at this (and did a bit of revision around 8042 and A20), 
->> and I am starting to wonder if the PORT92 device isn't something that 
->> belongs to the southbridge, but more specifically to the superio chip?
->
-> If there is agreement to model real hardware in QEMU, then I think that
+checkpatch.pl doesn't like these spaces around the colon, so we may as
+well fix it up.
 
-I think there's no such agreement and QEMU is more lax about it both for 
-historical reasons and to simplify machine models. Indeed, QEMU sometimes 
-models non-existing machines (e.g. the mac99 or virt boards) that don't 
-correspond to real hardware but allow guest OSes to boot. Even when 
-modelllng real hardware it's ofren modelled just enough for guests to work 
-and unused details are omitted for simplicity. It is recommended to follow 
-what real hardware does when modelling real hardware but not always 
-required. Although it might help both with verifying a device model and to 
-compose machines with these models to try to follow the real hardware.
+No functional change.
 
-> port 92 belongs into any device model where the hardware has one. All 
-> our PC-like southbridges (PIIX, ICH, VIA) have port 92. Many FDC37xxxx 
-> including the FDC37M81x as used in the Malta board have one, too -- 
-> where it must first be enabled.
+Signed-off-by: Joe Komlodi <komlodi@google.com>
+---
+ include/exec/memattrs.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-So port92 is not a real hardware but a QEMU abstraction or model of some 
-functionality found in some machines. Real chips probably implement this 
-in different ways so we could either model this in these chips 
-independently the same way as real hardware does or use the abstracted 
-model anywhere in our machine model. Since this does not exist in real 
-hardware as this abstract model it also does not belong anywhere so we are 
-free to put it where it's most convenient or simple to do.
+diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
+index d04170aa27..942b721be8 100644
+--- a/include/exec/memattrs.h
++++ b/include/exec/memattrs.h
+@@ -61,9 +61,9 @@ typedef struct MemTxAttrs {
+      * and has unused bits.  These fields will be read by target-specific
+      * helpers using env->iotlb[mmu_idx][tlb_index()].attrs.target_tlb_bitN.
+      */
+-    unsigned int target_tlb_bit0 : 1;
+-    unsigned int target_tlb_bit1 : 1;
+-    unsigned int target_tlb_bit2 : 1;
++    unsigned int target_tlb_bit0:1;
++    unsigned int target_tlb_bit1:1;
++    unsigned int target_tlb_bit2:1;
+ } MemTxAttrs;
+ 
+ /* Bus masters which don't specify any attributes will get this,
+-- 
+2.44.0.rc0.258.g7320e95886-goog
 
->> A couple of thoughts as to why I came to this conclusion: firstly the 
->> superio chip is generally considered to be a single integrated 
->> implementation of legacy IO devices, so this feels like a natural home 
->> for the PORT92 device.
->
->> Secondly the value of the "has-port92" property is controlled by 
->> pcms->i8042_enabled, and this value is already passed into functions 
->> such as pc_superio_init() for example.
->
-> Rhight. There, it also controls the presence of port 92. If we move port 
-> 92 into the southbridges, we have to respect this command line switch 
-> there to preserve backward compatibility.
->
-> I wonder what `-M i8042` is supposed to do. If it is for modeling a 
-> stripped-down x86 system, why not use the microvm instead? How is it 
-> possible to omit an essential piece of hardware needed to boot x86 
-> systems? Don't we need at least either one (i8042 or port 92)?
-
-Try git log -p 4ccd5fe22fe (found it via git blame and see what added that 
-property).
-
->> I think this would also help reduce the changes required for the 
->> individual machines, however the devil is always in the details 
->> particularly when migration is involved.
->
-> As stated above, this series is more about modeling real hardware, in 
-> the hope that this will lend itself for configuration-driven machine 
-> creation. It is also about identifying obstacles towards this goal. Does 
-> it make sense to deprecate some machine-specific options such as i8042?
-
-Only if you want to break downsteam users of those options but maybe they 
-won't be happy about that.
-
-Regards,
-BALATON Zoltan
 
