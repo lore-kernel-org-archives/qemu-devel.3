@@ -4,52 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7FBAC54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 14:51:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77827C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 14:52:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reynO-0006Ka-N1; Tue, 27 Feb 2024 09:51:02 -0500
+	id 1reynN-0006I2-4v; Tue, 27 Feb 2024 09:51:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1reynM-0006HJ-La
+ id 1reynM-0006Ez-6X
  for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:51:00 -0500
 Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1reynK-0004UL-9y
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:51:00 -0500
-Received: from imap2.dmz-prg2.suse.org (imap2.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:98])
+ id 1reynK-0004UV-AU
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:50:59 -0500
+Received: from imap2.dmz-prg2.suse.org (imap2.dmz-prg2.suse.org [10.150.64.98])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id C0C831F460;
- Tue, 27 Feb 2024 14:50:55 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 89AAB1FD29;
+ Tue, 27 Feb 2024 14:50:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1709045455; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=v82oTOj/P1Rmn3WLRdHU78q+ddfcnPDjbhT+i40BBnY=;
- b=kCcmJ2lRAY/ZEvHqhb+4f/1mPbfZZYpjAMT/vMnPGWEQKvnem655b/gBdbQKUP1N1waX6k
- nfCjB5KK54sicVGe5xr3tLG4+y/EXAE8E2HxEe61AKHLVlSYoJfTrRQa3czzwbut6UiWdi
- BbQcuJFGP0O72yXmKhRriKcCOk3DBgg=
+ t=1709045456; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PflRvIM5LsP226NFmY6iS2xQP7pucpMpsMtYkQZGSp8=;
+ b=aHheO45MZiJndLuiy1befOilaqE1380G0l3U+T1KeTNVNRKVLEYz9NauT6SyGnkVkxcePK
+ 3hT9zwoQ0zwqkDxQbeHMTGSN60aqLQJ3KxzkzWaG4OsB31L2CfWJ/o9rW1TLCglnzUJCVc
+ cjrRy9GMPQq0TlY9cqSw8XyqjbEwHJ8=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1709045455; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=v82oTOj/P1Rmn3WLRdHU78q+ddfcnPDjbhT+i40BBnY=;
- b=kCcmJ2lRAY/ZEvHqhb+4f/1mPbfZZYpjAMT/vMnPGWEQKvnem655b/gBdbQKUP1N1waX6k
- nfCjB5KK54sicVGe5xr3tLG4+y/EXAE8E2HxEe61AKHLVlSYoJfTrRQa3czzwbut6UiWdi
- BbQcuJFGP0O72yXmKhRriKcCOk3DBgg=
+ t=1709045456; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PflRvIM5LsP226NFmY6iS2xQP7pucpMpsMtYkQZGSp8=;
+ b=aHheO45MZiJndLuiy1befOilaqE1380G0l3U+T1KeTNVNRKVLEYz9NauT6SyGnkVkxcePK
+ 3hT9zwoQ0zwqkDxQbeHMTGSN60aqLQJ3KxzkzWaG4OsB31L2CfWJ/o9rW1TLCglnzUJCVc
+ cjrRy9GMPQq0TlY9cqSw8XyqjbEwHJ8=
 Received: from imap2.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap2.dmz-prg2.suse.org (Postfix) with ESMTPS id E71B513419;
- Tue, 27 Feb 2024 14:50:54 +0000 (UTC)
+ by imap2.dmz-prg2.suse.org (Postfix) with ESMTPS id C6FDF13ABC;
+ Tue, 27 Feb 2024 14:50:55 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap2.dmz-prg2.suse.org with ESMTPSA id 0ibnNc723WXMAQAAn2gu4w
- (envelope-from <roy.hopkins@suse.com>); Tue, 27 Feb 2024 14:50:54 +0000
+ by imap2.dmz-prg2.suse.org with ESMTPSA id GHU6Ls/23WXMAQAAn2gu4w
+ (envelope-from <roy.hopkins@suse.com>); Tue, 27 Feb 2024 14:50:55 +0000
 From: Roy Hopkins <roy.hopkins@suse.com>
 To: qemu-devel@nongnu.org
 Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -62,35 +65,32 @@ Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Tom Lendacky <thomas.lendacky@amd.com>,
  Michael Roth <michael.roth@amd.com>,
  =?UTF-8?q?J=C3=B6rg=20Roedel?= <jroedel@suse.com>
-Subject: [PATCH 0/9] Introduce support for IGVM files
-Date: Tue, 27 Feb 2024 14:50:06 +0000
-Message-ID: <cover.1709044754.git.roy.hopkins@suse.com>
+Subject: [PATCH 1/9] meson: Add optional dependency on IGVM library
+Date: Tue, 27 Feb 2024 14:50:07 +0000
+Message-ID: <2a942d99cf8aa0f86dec4a5112582299d36ec36b.1709044754.git.roy.hopkins@suse.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1709044754.git.roy.hopkins@suse.com>
+References: <cover.1709044754.git.roy.hopkins@suse.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.com header.s=susede1 header.b=kCcmJ2lR
-X-Spamd-Result: default: False [-0.31 / 50.00]; RCVD_VIA_SMTP_AUTH(0.00)[];
+	none
+X-Spamd-Result: default: False [2.20 / 50.00]; RCVD_VIA_SMTP_AUTH(0.00)[];
  TO_DN_SOME(0.00)[]; R_MISSING_CHARSET(2.50)[];
  BROKEN_CONTENT_TYPE(1.50)[];
- R_RATELIMIT(0.00)[to_ip_from(RL1cdfboiju7js16zrknyuzw5d)];
- RCVD_COUNT_THREE(0.00)[3]; DKIM_TRACE(0.00)[suse.com:+];
- MX_GOOD(-0.01)[]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; BAYES_HAM(-3.00)[100.00%];
- ARC_NA(0.00)[]; R_DKIM_ALLOW(-0.20)[suse.com:s=susede1];
- FROM_HAS_DN(0.00)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ R_RATELIMIT(0.00)[to_ip_from(RLy64u1trr5nq3nwidnuusmct1)];
+ RCVD_COUNT_THREE(0.00)[3]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ FROM_EQ_ENVFROM(0.00)[]; MIME_TRACE(0.00)[0:+];
+ BAYES_HAM(-3.00)[100.00%]; ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com];
  TO_MATCH_ENVRCPT_ALL(0.00)[]; TAGGED_RCPT(0.00)[];
- MIME_GOOD(-0.10)[text/plain];
- DWL_DNSWL_HI(-3.50)[suse.com:dkim];
+ MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
  DKIM_SIGNED(0.00)[suse.com:s=susede1];
  RCPT_COUNT_TWELVE(0.00)[16]; MID_CONTAINS_FROM(1.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:dkim];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:email];
  FUZZY_BLOCKED(0.00)[rspamd.com];
  FREEMAIL_CC(0.00)[suse.com,redhat.com,gmail.com,habkost.net,alistair23.me,amd.com];
  RCVD_TLS_ALL(0.00)[]; SUSPICIOUS_RECIPS(1.50)[]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: C0C831F460
-X-Spamd-Bar: /
 Received-SPF: pass client-ip=195.135.223.131;
  envelope-from=roy.hopkins@suse.com; helo=smtp-out2.suse.de
 X-Spam_score_int: -43
@@ -115,117 +115,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi everyone,
+The IGVM library allows Isolated Guest Virtual Machine files to be
+parsed and processed. IGVM files are used to configure guest memory
+layout, initial processor state and other configuration pertaining to
+secure virtual machines.
 
-This initial patch series submission adds the capability to configure
-confidential guests using files that conform to the Independent Guest Virtual
-Machine (IGVM) file format. The series is based on the master branch commit
-1b330da. Alternatively, the series is available here:
-https://github.com/roy-hopkins/qemu/tree/igvm_master_v1
+This adds the --enable-igvm configure option, enabled by default, which
+attempts to locate and link against the IGVM library via pkgconfig and
+sets CONFIG_IGVM if found.
 
-I look forward to welcoming your comments!
+The library is added to the system_ss target in backends/meson.build
+where the IGVM parsing will be performed by the ConfidentialGuestSupport
+object.
 
-Why do we need Independent Guest Virtual Machine (IGVM) files?
-==============================================================
+Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
+---
+ backends/meson.build          | 3 +++
+ meson.build                   | 8 ++++++++
+ meson_options.txt             | 2 ++
+ scripts/meson-buildoptions.sh | 3 +++
+ 4 files changed, 16 insertions(+)
 
-IGVM files describe, using a set of directives, the memory layout and initial
-configuration of a guest that supports isolation technologies such as AMD
-SEV-SNP and Intel TDX. By encapsulating all of this information in a single
-configuration file and applying the directives in the order they are specified
-when the guest is initialized, it becomes straightforward to pre-calculate the
-cryptographic measurement of the guest initial state, thus aiding in remote
-attestation processes.
-
-IGVM files can also be used to configure non-standard guest memory layouts,
-payloads or startup configurations. A good example of this is to use IGVM to
-deploy and configure an SVSM module in the guest which supports running at
-multiple VMPLs. The SVSM can be configured to start directly into 32-bit or
-64-bit code. This patch series was developed with this purpose in mind to
-support the COCONUT-SVSM project:
-https://github.com/coconut-svsm/svsm
-
-More information and background on the IGVM file format can be found on the
-project page at:
-https://github.com/microsoft/igvm
-
-What this patch series introduces
-=================================
-
-This series adds a build-time configuration option (--enable-igvm) to add
-support for launching a guest using an IGVM file. It extends the current
-ConfidentialGuestSupport object to allow an IGVM filename to be specified.
-
-The directives in the IGVM file are parsed and the confidential guest is
-configured through new virtual methods added to the ConfidentialGuestSupport
-object. These virtual functions have been implemented for AMD SEV and AMD
-SEV-ES.
-
-Many of the IGVM directives require capabilities that are not supported in SEV
-and SEV-ES, so support for IGVM directives will need to be considered when
-support for SEV-SNP, TDX or other technologies is introduced to QEMU. Any
-directive that is not currently supported results in an error report.
-
-Dependencies
-============
-
-In order to enable IGVM support, you will need the IGVM library installed.
-Instructions on building and installing it can be found here:
-https://github.com/microsoft/igvm/tree/main/igvm_c
-
-As mentioned above, this series was developed as part of the effort for
-COCONUT-SVSM. COCONUT-SVSM requires support for AMD SEV-SNP which is not
-available in current QEMU. Therefore this series has also been applied on top of
-the AMD SEV-SNP branch (https://github.com/AMDESE/qemu/tree/snp-v3-wip). You can
-find that version of the series here:
-https://github.com/roy-hopkins/qemu/commits/snp-v3-wip-igvm_v2/
-
-Generating IGVM files
-=====================
-
-To try this out you will need to generate an IGVM file that is compatible with
-the SEV platform you are testing on. I've created a tool that can create a
-simple IGVM file that packages an OVMF binary for AMD SEV or AMD SEV-ES. The
-tool is available here:
-https://github.com/roy-hopkins/buildigvm
-
-I have tested this on an AMD EPYC Genoa system configured to support SEV. Both
-SEV and SEV-ES have been tested using IGVM files generated using the buildigvm
-tool. The SEV-SNP alternative patch set has also been tested using COCONUT-SVSM.
-
-Roy Hopkins (9):
-  meson: Add optional dependency on IGVM library
-  backends/confidential-guest-support: Add IGVM file parameter
-  backends/confidential-guest-support: Add functions to support IGVM
-  backends/igvm: Implement parsing and processing of IGVM files
-  i386/pc: Process IGVM file during PC initialization if present
-  i386/pc: Skip initialization of system FW when using IGVM
-  i386/sev: Refactor setting of reset vector and initial CPU state
-  i386/sev: Implement ConfidentialGuestSupport functions for SEV
-  docs/system: Add documentation on support for IGVM
-
- backends/confidential-guest-support.c     |  69 +++
- backends/igvm.c                           | 718 ++++++++++++++++++++++
- backends/meson.build                      |   4 +
- docs/system/igvm.rst                      |  58 ++
- docs/system/index.rst                     |   1 +
- hw/i386/pc.c                              |  12 +-
- hw/i386/pc_piix.c                         |   4 +
- hw/i386/pc_q35.c                          |   4 +
- include/exec/confidential-guest-support.h | 107 ++++
- include/exec/igvm.h                       |  35 ++
- meson.build                               |   8 +
- meson_options.txt                         |   2 +
- qapi/qom.json                             |  13 +
- qemu-options.hx                           |   8 +-
- scripts/meson-buildoptions.sh             |   3 +
- target/i386/sev.c                         | 365 ++++++++++-
- target/i386/sev.h                         | 110 ++++
- 17 files changed, 1489 insertions(+), 32 deletions(-)
- create mode 100644 backends/igvm.c
- create mode 100644 docs/system/igvm.rst
- create mode 100644 include/exec/igvm.h
-
---
+diff --git a/backends/meson.build b/backends/meson.build
+index 8b2b111497..d550ac19f7 100644
+--- a/backends/meson.build
++++ b/backends/meson.build
+@@ -30,5 +30,8 @@ if have_vhost_user_crypto
+ endif
+ system_ss.add(when: gio, if_true: files('dbus-vmstate.c'))
+ system_ss.add(when: 'CONFIG_SGX', if_true: files('hostmem-epc.c'))
++if igvm.found()
++  system_ss.add(igvm)
++endif
+ 
+ subdir('tpm')
+diff --git a/meson.build b/meson.build
+index 0ef1654e86..d4949693b0 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1230,6 +1230,12 @@ if host_os == 'linux' and (have_system or have_tools)
+                        method: 'pkg-config',
+                        required: get_option('libudev'))
+ endif
++igvm = not_found
++if not get_option('igvm').auto() or have_system
++  igvm = dependency('igvm',
++                       method: 'pkg-config',
++                       required: get_option('igvm'))
++endif
+ 
+ mpathlibs = [libudev]
+ mpathpersist = not_found
+@@ -2314,6 +2320,7 @@ config_host_data.set('CONFIG_CFI', get_option('cfi'))
+ config_host_data.set('CONFIG_SELINUX', selinux.found())
+ config_host_data.set('CONFIG_XEN_BACKEND', xen.found())
+ config_host_data.set('CONFIG_LIBDW', libdw.found())
++config_host_data.set('CONFIG_IGVM', igvm.found())
+ if xen.found()
+   # protect from xen.version() having less than three components
+   xen_version = xen.version().split('.') + ['0', '0']
+@@ -4433,6 +4440,7 @@ summary_info += {'seccomp support':   seccomp}
+ summary_info += {'GlusterFS support': glusterfs}
+ summary_info += {'hv-balloon support': hv_balloon}
+ summary_info += {'TPM support':       have_tpm}
++summary_info += {'IGVM support':      igvm}
+ summary_info += {'libssh support':    libssh}
+ summary_info += {'lzo support':       lzo}
+ summary_info += {'snappy support':    snappy}
+diff --git a/meson_options.txt b/meson_options.txt
+index 0a99a059ec..4eaba64f4b 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -109,6 +109,8 @@ option('dbus_display', type: 'feature', value: 'auto',
+        description: '-display dbus support')
+ option('tpm', type : 'feature', value : 'auto',
+        description: 'TPM support')
++option('igvm', type: 'feature', value: 'auto',
++       description: 'Independent Guest Virtual Machine (IGVM) file support')
+ 
+ # Do not enable it by default even for Mingw32, because it doesn't
+ # work on Wine.
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index 680fa3f581..38a8183625 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -126,6 +126,7 @@ meson_options_help() {
+   printf "%s\n" '  hv-balloon      hv-balloon driver (requires Glib 2.68+ GTree API)'
+   printf "%s\n" '  hvf             HVF acceleration support'
+   printf "%s\n" '  iconv           Font glyph conversion support'
++  printf "%s\n" '  igvm            IGVM file support'
+   printf "%s\n" '  jack            JACK sound support'
+   printf "%s\n" '  keyring         Linux keyring support'
+   printf "%s\n" '  kvm             KVM acceleration support'
+@@ -342,6 +343,8 @@ _meson_option_parse() {
+     --iasl=*) quote_sh "-Diasl=$2" ;;
+     --enable-iconv) printf "%s" -Diconv=enabled ;;
+     --disable-iconv) printf "%s" -Diconv=disabled ;;
++    --enable-igvm) printf "%s" -Digvm=enabled ;;
++    --disable-igvm) printf "%s" -Digvm=disabled ;;
+     --includedir=*) quote_sh "-Dincludedir=$2" ;;
+     --enable-install-blobs) printf "%s" -Dinstall_blobs=true ;;
+     --disable-install-blobs) printf "%s" -Dinstall_blobs=false ;;
+-- 
 2.43.0
 
 
