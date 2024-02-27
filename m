@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57507C54798
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B13FC54E4A
 	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 13:34:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rexaD-0000gA-JE; Tue, 27 Feb 2024 08:33:21 -0500
+	id 1rexaI-0000jS-HO; Tue, 27 Feb 2024 08:33:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rexaC-0000fg-7k
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:20 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1rexaF-0000hS-9B
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:23 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rexaA-0002pZ-Mf
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:19 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-412af664954so3095865e9.0
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 05:33:18 -0800 (PST)
+ id 1rexaD-0002qH-IX
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:23 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-41241f64c6bso33249095e9.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 05:33:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709040796; x=1709645596; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709040800; x=1709645600; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=HnAhjwsLeVDki2L/dt5NeuP6uPlgrzrYPZ3yiJ+bVUI=;
- b=DnON/gmSoxwumDZLHdcn4hXFbVV9C1NrkczKnNSDJvAe6xfGmvRa1dhlMNLsMB4eFc
- 2t9MrRFXfhTorqdkMyTrdfkInIgRyDhcxXkyK2LpywqScGSI1CfGowDAvlWSPjr8YrvB
- w4ygDaXWmJi0tNxk2+0pxdtEi26AemXCLMbfvBojoRSCNwb6MOc7PrqFHvqktKo71kOY
- A1Q1puwOYDD81WuCA1sluDNFohXx71xnCBX+bMbzOQzcd4KmExBHFjDKZTfP0COSGW01
- ghRiVcqCO6QE7Y9WmyLTVM+w66ofXq5dY/wKo/dIK3iCpOjNYSFgk9F+ZaQpbRRxyE56
- c0Lg==
+ :reply-to; bh=oFeKXeW31Su0U94AYEZ3ImMqkHFM46i1mg2K/MGn0p4=;
+ b=IKo9Xfbqd6xBBFW2ES10/te3r9MPNLAbDh64E/nD/EynTB9XPfFf4ot4hIFV9AQ7Pi
+ z44GH8oIF5A2/A0Thjl2Zh+eULztx5uSocmwO2UqQ/nfw7X9w2RwzuYuLWm0EcjksCf6
+ lGxxGf2Raz3EjE4QIkeaOS1x488N8A/zCKRQCQcImnOizMhnhCAI3zHU4jQDN7yYx95u
+ W7Fl922jPHtH4nkmsWoOYqkkeWwJUz4aNZ9LRCYb5jV03FwDr2YrEpMmtl4mb65qlKIv
+ ota1QrDVzf1brLxDO4hyhNb/3LHAvBqp+1i/y/mzdsEyhmRKKO9cPgGKYFunMWEvt9ZB
+ /c8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709040796; x=1709645596;
+ d=1e100.net; s=20230601; t=1709040800; x=1709645600;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HnAhjwsLeVDki2L/dt5NeuP6uPlgrzrYPZ3yiJ+bVUI=;
- b=vnqRZKc7KF/CTkasa5E0S9eUb4j+d2CgIFKBMkPZS6VP+Sbe0ttP5HtByiCgdvPe+H
- H8kZpyBuRBtrW7zY3ptbmdPq/221DRYefpXMrdiFCshZiNuzT3O61a5bCal4RA856iJ1
- c8/ckVvyeKaLpaAcsakEpLup9uzCGQPmieBiC5A6+trk82virZ9099SIB9HpNAZ0+AP8
- YDplFu3yHrmmuAyKmqRqOAqf5DbuZZxhfuk1KzL1ReIM33JG9xhbdApB8M8v+8xZrzbj
- OGWT7iRhWSujZpypF0yu0fbwfkJDDxhiA1icYkHPh194Q2X+6yl1q1I2OAfOfJ5EUvpt
- Vqqw==
-X-Gm-Message-State: AOJu0YzHKZ+5jde2/dBmxd43e6/MHNIHWwvmPyi3/xu/tra/JIfG6RZv
- thcqaMfxoyd9Mznw6hT2BsyWNHRfilxwp/OU8yA8j0EJl1tNeCWWwQRhXZ+dFgqRA6BBuDNJg1X
- v
-X-Google-Smtp-Source: AGHT+IFwdTz/xOYJKLaGei6mAibgcCxZd4rKmG1CWam5qiFe4d7eYuvS1vL8WIOjQsCU9WWC93SkbA==
-X-Received: by 2002:a05:600c:5114:b0:412:9830:a259 with SMTP id
- o20-20020a05600c511400b004129830a259mr7500297wms.25.1709040796713; 
- Tue, 27 Feb 2024 05:33:16 -0800 (PST)
+ bh=oFeKXeW31Su0U94AYEZ3ImMqkHFM46i1mg2K/MGn0p4=;
+ b=jAHOJQU/qy0bUAS0g9LFTn8Ac4UrBUCnFF873GLtw7IA6iLwL9lKUrDnoGgKh4TjeA
+ 9DLUWjhDszca0Bdh7vgA61Iojq7re+AuRfSM8Da+/X97pfzB3ns4DAZ1YPgWVo9rMfYB
+ ukup7RPnD9YzVebOWcX6PH4oOC28F6BcErLijikpFr9IpALxHMPtALN9QAKHyPB8EZlM
+ CyJ+FMiIkU9v4n72JUtrn3YFPOlKK6jf0SViSSRv9CuYj4HZCzrFZcLon/9LBOSJx2al
+ AIx5D7c6pY5y8igE5vTB105/m50cAcQtLSJZKCogZ7ALDXLDXKkJl7EV+LoNzAnT9x4M
+ Es1g==
+X-Gm-Message-State: AOJu0YxvSr7N93i9ldw3Wvy4x4L5XWc/ALbdoTk/3XFEXI8Q0N/efy6z
+ 5QwJUkBJrVSk3XzfrdoAHjx3tSZ0otJc82LhJ5PttLVglLbxbIcCjAqGp+Ducd3sCePt9mouPOv
+ 6
+X-Google-Smtp-Source: AGHT+IHwp1FYswkHO/xPjoKizp+HsZ74Qic/xrfzWIcUhovQsO2riALGCDiVZ4AYdnfP8ZR5kjEXOg==
+X-Received: by 2002:adf:f3c4:0:b0:33d:5a6f:a856 with SMTP id
+ g4-20020adff3c4000000b0033d5a6fa856mr7517558wrp.30.1709040799974; 
+ Tue, 27 Feb 2024 05:33:19 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- i13-20020adfe48d000000b0033ae7d768b2sm11319552wrm.117.2024.02.27.05.33.16
+ i13-20020adfe48d000000b0033ae7d768b2sm11319552wrm.117.2024.02.27.05.33.19
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Feb 2024 05:33:16 -0800 (PST)
+ Tue, 27 Feb 2024 05:33:19 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/45] hw/arm/sbsa-ref: Simplify init since PCIe is always
- enabled
-Date: Tue, 27 Feb 2024 13:32:30 +0000
-Message-Id: <20240227133314.1721857-2-peter.maydell@linaro.org>
+Subject: [PULL 08/45] tests/qtest: Check that EXTI fan-in irqs are correctly
+ connected
+Date: Tue, 27 Feb 2024 13:32:37 +0000
+Message-Id: <20240227133314.1721857-9-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240227133314.1721857-1-peter.maydell@linaro.org>
 References: <20240227133314.1721857-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,35 +95,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+From: Inès Varhol <ines.varhol@telecom-paris.fr>
 
-There is no point in checking do we have PCIe if first thing after check
-is adding PCIe card without checking.
+This commit adds a QTest that verifies each input line of a specific
+EXTI OR gate can influence the output line.
 
-Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240215153311.186772-1-marcin.juszkiewicz@linaro.org
+Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20240220184145.106107-3-ines.varhol@telecom-paris.fr
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/sbsa-ref.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ tests/qtest/stm32l4x5_exti-test.c | 37 +++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
-index 13dde50cba2..f5709d6c141 100644
---- a/hw/arm/sbsa-ref.c
-+++ b/hw/arm/sbsa-ref.c
-@@ -664,9 +664,8 @@ static void create_pcie(SBSAMachineState *sms)
-     }
+diff --git a/tests/qtest/stm32l4x5_exti-test.c b/tests/qtest/stm32l4x5_exti-test.c
+index c3900777139..81830be8aea 100644
+--- a/tests/qtest/stm32l4x5_exti-test.c
++++ b/tests/qtest/stm32l4x5_exti-test.c
+@@ -31,6 +31,7 @@
  
-     pci = PCI_HOST_BRIDGE(dev);
--    if (pci->bus) {
--        pci_init_nic_devices(pci->bus, mc->default_nic);
--    }
+ #define EXTI0_IRQ 6
+ #define EXTI1_IRQ 7
++#define EXTI5_9_IRQ 23
+ #define EXTI35_IRQ 1
+ 
+ static void enable_nvic_irq(unsigned int n)
+@@ -499,6 +500,40 @@ static void test_interrupt(void)
+     g_assert_false(check_nvic_pending(EXTI1_IRQ));
+ }
+ 
++static void test_orred_interrupts(void)
++{
++    /*
++     * For lines EXTI5..9 (fanned-in to NVIC irq 23),
++     * test that raising the line pends interrupt
++     * 23 in NVIC.
++     */
++    enable_nvic_irq(EXTI5_9_IRQ);
++    /* Check that there are no interrupts already pending in PR */
++    g_assert_cmpuint(exti_readl(EXTI_PR1), ==, 0x00000000);
++    /* Check that this specific interrupt isn't pending in NVIC */
++    g_assert_false(check_nvic_pending(EXTI5_9_IRQ));
 +
-+    pci_init_nic_devices(pci->bus, mc->default_nic);
++    /* Enable interrupt lines EXTI[5..9] */
++    exti_writel(EXTI_IMR1, (0x1F << 5));
++
++    /* Configure interrupt on rising edge */
++    exti_writel(EXTI_RTSR1, (0x1F << 5));
++
++    /* Raise GPIO line i, check that the interrupt is pending */
++    for (unsigned i = 5; i < 10; i++) {
++        exti_set_irq(i, 1);
++        g_assert_cmpuint(exti_readl(EXTI_PR1), ==, 1 << i);
++        g_assert_true(check_nvic_pending(EXTI5_9_IRQ));
++
++        exti_writel(EXTI_PR1, 1 << i);
++        g_assert_cmpuint(exti_readl(EXTI_PR1), ==, 0x00000000);
++        g_assert_true(check_nvic_pending(EXTI5_9_IRQ));
++
++        unpend_nvic_irq(EXTI5_9_IRQ);
++        g_assert_false(check_nvic_pending(EXTI5_9_IRQ));
++    }
++}
++
+ int main(int argc, char **argv)
+ {
+     int ret;
+@@ -515,6 +550,8 @@ int main(int argc, char **argv)
+     qtest_add_func("stm32l4x5/exti/masked_interrupt", test_masked_interrupt);
+     qtest_add_func("stm32l4x5/exti/interrupt", test_interrupt);
+     qtest_add_func("stm32l4x5/exti/test_edge_selector", test_edge_selector);
++    qtest_add_func("stm32l4x5/exti/test_orred_interrupts",
++                   test_orred_interrupts);
  
-     pci_create_simple(pci->bus, -1, "bochs-display");
- 
+     qtest_start("-machine b-l475e-iot01a");
+     ret = g_test_run();
 -- 
 2.34.1
 
