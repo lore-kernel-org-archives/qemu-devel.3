@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 665A8C5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 18:50:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0473AC54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 18:50:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rf2VT-0006X5-UJ; Tue, 27 Feb 2024 13:48:48 -0500
+	id 1rf2Vh-0006bp-9V; Tue, 27 Feb 2024 13:49:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rf2VS-0006WP-BW
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 13:48:46 -0500
-Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
+ id 1rf2Vf-0006at-3N
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 13:48:59 -0500
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rf2VQ-0001TX-VG
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 13:48:46 -0500
-Received: by mail-ot1-x32c.google.com with SMTP id
- 46e09a7af769-6e445b4f80bso2587881a34.0
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 10:48:44 -0800 (PST)
+ id 1rf2Vc-0001W6-Df
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 13:48:58 -0500
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-6e435542d41so3144896b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 10:48:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709059723; x=1709664523; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709059734; x=1709664534; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0IQWSjcLXc40VTcQlmdhU2o876C5B7NqB15Y8LB3+3A=;
- b=SaZFfP9rtg11C3ruHczOU9+wbj+9BQi/geWUqoL1W6ZJZT3Eupta3nxSXayim1Krpb
- roRxh8n9iUjlGiOyebxG24VzxjYYOlYJDPcqI2es0tLJsXcvT8+VOLkCT36B1LNt8lIX
- rjVRl24JRgigYlB4OMCP4WWoUHE0nVkX59Bvb0C4wCclav+99mw6Ea+jCl8GQL+/KR3g
- BFJ8lNZ1TccAGeefkyRLbieLTmd5EHvcqCnRbeNCS7z9mb2K1TzLdHPi0dsKJP+OWKjz
- USGbef61hRO0JDczE43pUYcg0W2EBROWpCmsijtreHA+CLMiAuJgm/VVrLQ8FOqhUUAw
- O67g==
+ bh=mVP5ZXMph2vIaMrgjNZyRxPQx2YhCwiWw0i2ONELss0=;
+ b=jUonchxBXfrSUgZCvU/gMSmnrOX8R+aToUhjCvv+aKLMma35dd4WNy1SQnxbb+Yzoo
+ wWroeel3cAnOVXDM7BnfNf0cyGlK1Hi0SDkC5MZbJr9DsaLwWre30wch95vhMpsTpOCO
+ 3K2RKSAPykzeVT8fp9jRujiKTfAXGEX2nsxpeZF/y3B//FHXz8j/wO8gNmahl5G6Yv/T
+ QNWasrvLHjkoVXyVMeKOmGgBzU95PirffRSNB1y3aGLp5u2TsM9ReO9r5zpmI4XhqR0y
+ Q3zKRctNZiESXfG0boE9xVgZrwJSVCD4k0Aman6UF2hm72vyQ1b762/ipjZZa8zOcpJ1
+ czZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709059723; x=1709664523;
+ d=1e100.net; s=20230601; t=1709059734; x=1709664534;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0IQWSjcLXc40VTcQlmdhU2o876C5B7NqB15Y8LB3+3A=;
- b=QNFg/Ky1TSVyzeNJ311HFDv1cfkz8+6GgL0T6VUTGetcA8AX58k1Yh0gzbzdwSIm4e
- vUZWSJKiWciP+xkr11Mv38Gi/tgu9AGOMhhSsAUuEUbuxuEG8xOB79I/nbs8cZrmGx2k
- j3pEC8Rsj5qvkKJaE8ukmk9vlXjA21+19MV7gbqSPYKIzMU8cs8NyolbPxqxKCcMgq1Y
- PW8p5HsS+qAObwephQ0Cuo27WUudr2wQRPE42vK6pRT6b3ChxpQg59QOaKHZLdQvTSkG
- f1ZjS8jF7RI79UnzHOP13e8P7Mkf+eNyICwLrXK5AxZWk3Bt2ghPqeyO596zN6eYBSiB
- C2MA==
-X-Gm-Message-State: AOJu0Yxi5KmwInBn8Iz06HjdZcPpOe58cJ/JU2EDcihNkB78AYTpyVyL
- U8sKQ7xiu21lz8yH/3tpbznHAEQ0RgxaFnXwPskIixbSVz20WaTmdF5Q5N8CA+P1Pl2n/4scl39
- y
-X-Google-Smtp-Source: AGHT+IEyLVLD8uA5G6PJo6Aq97EcdNVif9Qz06281L7bF3lKNKunHKBbpGUimCpxu1FmLRAAzy88VA==
-X-Received: by 2002:a05:6870:700e:b0:21f:c705:7d8c with SMTP id
- u14-20020a056870700e00b0021fc7057d8cmr13325878oae.26.1709059723679; 
- Tue, 27 Feb 2024 10:48:43 -0800 (PST)
+ bh=mVP5ZXMph2vIaMrgjNZyRxPQx2YhCwiWw0i2ONELss0=;
+ b=KcOcSykjbbjROfn6/uEpqFOLitB5EgC/0PfEGPwvKjP2Ih77lLfrEjCy4w2k+wyjCr
+ 0PxcoJqcpimo6kxHwDL0/XcAT35YGoo1QOLoWbRpthDVUzOLXu7YSIsHUAuz7lug8lqb
+ 4w1pv42WKGPMzAzehkYnkMq/UTqqvKrq59Ak2v8EtaJwD7NO0di5q7csy2UialsDFiSR
+ q2/n3syh9nzlqpBNZT57+RiDDpzqC/Zl4GUuuE2Um2gm8/JovQwXQ7L/MxrxSLu2v9PA
+ W5Fz+HrLoeZ6TWIsRH7KyFU6Fs6ZX0A6oXmYZ5rsJZ2N8x+8h5oqbLW/GcF/eorNlbxR
+ +5Cw==
+X-Gm-Message-State: AOJu0Yy19uirgv0wLdKEhsyG34MceaatDNysU5fBUEvNEwp2eYoiUO9O
+ 0jLL1qi1Tqy7IvrlvXNGOOJhQ43VLbV4n0sVcYUhqKjagJWB9yHt8Wb9qswFjsWnzoH3wMOAeGQ
+ G
+X-Google-Smtp-Source: AGHT+IG3YxJfLjCHbKg5/1vujJkbfQ9aeAmCAeauWlz6fvOGadlc+Qwdve8vlJFO42irzafhzJuPZw==
+X-Received: by 2002:a05:6a00:1ac7:b0:6e4:d198:6d66 with SMTP id
+ f7-20020a056a001ac700b006e4d1986d66mr13089692pfv.7.1709059734358; 
+ Tue, 27 Feb 2024 10:48:54 -0800 (PST)
 Received: from stoup.. (098-147-055-211.res.spectrum.com. [98.147.55.211])
  by smtp.gmail.com with ESMTPSA id
- h26-20020aa786da000000b006e555d40951sm533465pfo.188.2024.02.27.10.48.42
+ h26-20020aa786da000000b006e555d40951sm533465pfo.188.2024.02.27.10.48.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Feb 2024 10:48:43 -0800 (PST)
+ Tue, 27 Feb 2024 10:48:53 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org
-Subject: [PATCH 05/14] linux-user/elfload: Latch errno before cleanup in
- elf_core_dump
-Date: Tue, 27 Feb 2024 08:48:24 -1000
-Message-Id: <20240227184833.193836-6-richard.henderson@linaro.org>
+Subject: [PATCH 13/14] linux-user/elfload: Rely on walk_memory_regions for vmas
+Date: Tue, 27 Feb 2024 08:48:32 -1000
+Message-Id: <20240227184833.193836-14-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240227184833.193836-1-richard.henderson@linaro.org>
 References: <20240227184833.193836-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,51 +94,333 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On the off-chance that one of the cleanup functions changes
-errno, latch the errno that we want to return beforehand.
+Rather than creating new data structures for vma,
+rely on the IntervalTree used by walk_memory_regions.
 
-Flush errno to 0 upon success, rather than at the beginning.
-No need to avoid negation of 0.
+Use PAGE_* constants, per the page table api, rather
+than PROT_* constants, per the mmap api.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/elfload.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ linux-user/elfload.c | 213 ++++++++++++++++---------------------------
+ 1 file changed, 78 insertions(+), 135 deletions(-)
 
 diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 98b82b1a49..39d9ef9acc 100644
+index 47b5ce3005..ae0abc4931 100644
 --- a/linux-user/elfload.c
 +++ b/linux-user/elfload.c
-@@ -4634,8 +4634,7 @@ static int elf_core_dump(int signr, const CPUArchState *env)
-     off_t offset = 0, data_offset = 0;
-     int segs = 0;
-     int fd = -1;
--
--    errno = 0;
-+    int ret;
+@@ -4041,29 +4041,6 @@ struct target_elf_prpsinfo {
+     char    pr_psargs[ELF_PRARGSZ]; /* initial part of arg list */
+ };
  
-     if (prctl(PR_GET_DUMPABLE) == 0) {
-         return 0;
-@@ -4755,15 +4754,14 @@ static int elf_core_dump(int signr, const CPUArchState *env)
-                 goto out;
-         }
-     }
-+    errno = 0;
- 
-  out:
-+    ret = -errno;
-     free_note_info(&info);
-     vma_delete(&mm);
--    (void) close(fd);
+-struct vm_area_struct {
+-    target_ulong   vma_start;  /* start vaddr of memory region */
+-    target_ulong   vma_end;    /* end vaddr of memory region */
+-    abi_ulong      vma_flags;  /* protection etc. flags for the region */
+-    QTAILQ_ENTRY(vm_area_struct) vma_link;
+-};
 -
--    if (errno != 0)
--        return (-errno);
+-struct mm_struct {
+-    QTAILQ_HEAD(, vm_area_struct) mm_mmap;
+-    int mm_count;           /* number of mappings */
+-};
+-
+-static void vma_init(struct mm_struct *);
+-static void vma_delete(struct mm_struct *);
+-static int vma_add_mapping(struct mm_struct *, target_ulong,
+-                           target_ulong, abi_ulong);
+-static int vma_get_mapping_count(const struct mm_struct *);
+-static struct vm_area_struct *vma_first(const struct mm_struct *);
+-static struct vm_area_struct *vma_next(struct vm_area_struct *);
+-static abi_ulong vma_dump_size(const struct vm_area_struct *);
+-static int vma_walker(void *priv, target_ulong start, target_ulong end,
+-                      unsigned long flags);
+-
+ #ifdef BSWAP_NEEDED
+ static void bswap_prstatus(struct target_elf_prstatus *prstatus)
+ {
+@@ -4105,69 +4082,14 @@ static inline void bswap_psinfo(struct target_elf_prpsinfo *p) {}
+ static inline void bswap_note(struct elf_note *en) { }
+ #endif /* BSWAP_NEEDED */
+ 
+-/*
+- * Minimal support for linux memory regions.  These are needed
+- * when we are finding out what memory exactly belongs to
+- * emulated process.  No locks needed here, as long as
+- * thread that received the signal is stopped.
+- */
+-
+-static void vma_init(struct mm_struct *mm)
+-{
+-    mm->mm_count = 0;
+-    QTAILQ_INIT(&mm->mm_mmap);
+-}
+-
+-static void vma_delete(struct mm_struct *mm)
+-{
+-    struct vm_area_struct *vma;
+-
+-    while ((vma = vma_first(mm)) != NULL) {
+-        QTAILQ_REMOVE(&mm->mm_mmap, vma, vma_link);
+-        g_free(vma);
+-    }
+-}
+-
+-static int vma_add_mapping(struct mm_struct *mm, target_ulong start,
+-                           target_ulong end, abi_ulong flags)
+-{
+-    struct vm_area_struct *vma;
+-
+-    if ((vma = g_malloc0(sizeof (*vma))) == NULL)
+-        return (-1);
+-
+-    vma->vma_start = start;
+-    vma->vma_end = end;
+-    vma->vma_flags = flags;
+-
+-    QTAILQ_INSERT_TAIL(&mm->mm_mmap, vma, vma_link);
+-    mm->mm_count++;
+-
 -    return (0);
-+    close(fd);
-+    return ret;
- }
- #endif /* USE_ELF_CORE_DUMP */
+-}
+-
+-static struct vm_area_struct *vma_first(const struct mm_struct *mm)
+-{
+-    return (QTAILQ_FIRST(&mm->mm_mmap));
+-}
+-
+-static struct vm_area_struct *vma_next(struct vm_area_struct *vma)
+-{
+-    return (QTAILQ_NEXT(vma, vma_link));
+-}
+-
+-static int vma_get_mapping_count(const struct mm_struct *mm)
+-{
+-    return (mm->mm_count);
+-}
+-
+ /*
+  * Calculate file (dump) size of given memory region.
+  */
+-static abi_ulong vma_dump_size(const struct vm_area_struct *vma)
++static size_t vma_dump_size(target_ulong start, target_ulong end,
++                            unsigned long flags)
+ {
+     /* The area must be readable. */
+-    if (!(vma->vma_flags & PROT_READ)) {
++    if (!(flags & PAGE_READ)) {
+         return 0;
+     }
  
+@@ -4176,22 +4098,13 @@ static abi_ulong vma_dump_size(const struct vm_area_struct *vma)
+      * non-writable code that debugger can read directly from
+      * target library etc. If there is no elf header, we dump it.
+      */
+-    if (!(vma->vma_flags & PROT_WRITE) &&
+-        (vma->vma_flags & PROT_EXEC) &&
+-        memcmp(g2h_untagged(vma->vma_start), ELFMAG, SELFMAG) == 0) {
++    if (!(flags & PAGE_WRITE_ORG) &&
++        (flags & PAGE_EXEC) &&
++        memcmp(g2h_untagged(start), ELFMAG, SELFMAG) == 0) {
+         return 0;
+     }
+ 
+-    return vma->vma_end - vma->vma_start;
+-}
+-
+-static int vma_walker(void *priv, target_ulong start, target_ulong end,
+-                      unsigned long flags)
+-{
+-    struct mm_struct *mm = (struct mm_struct *)priv;
+-
+-    vma_add_mapping(mm, start, end, flags);
+-    return (0);
++    return end - start;
+ }
+ 
+ static size_t size_note(const char *name, size_t datasz)
+@@ -4367,6 +4280,61 @@ static int dump_write(int fd, const void *ptr, size_t size)
+     return (0);
+ }
+ 
++typedef struct {
++    unsigned count;
++    size_t size;
++} CountAndSizeRegions;
++
++static int wmr_count_and_size_regions(void *opaque, target_ulong start,
++                                      target_ulong end, unsigned long flags)
++{
++    CountAndSizeRegions *css = opaque;
++
++    css->count++;
++    css->size += vma_dump_size(start, end, flags);
++    return 0;
++}
++
++typedef struct {
++    struct elf_phdr *phdr;
++    off_t offset;
++} FillRegionPhdr;
++
++static int wmr_fill_region_phdr(void *opaque, target_ulong start,
++                                target_ulong end, unsigned long flags)
++{
++    FillRegionPhdr *d = opaque;
++    struct elf_phdr *phdr = d->phdr;
++
++    phdr->p_type = PT_LOAD;
++    phdr->p_vaddr = start;
++    phdr->p_paddr = 0;
++    phdr->p_filesz = vma_dump_size(start, end, flags);
++    phdr->p_offset = d->offset;
++    d->offset += phdr->p_filesz;
++    phdr->p_memsz = end - start;
++    phdr->p_flags = (flags & PAGE_READ ? PF_R : 0)
++                  | (flags & PAGE_WRITE_ORG ? PF_W : 0)
++                  | (flags & PAGE_EXEC ? PF_X : 0);
++    phdr->p_align = ELF_EXEC_PAGESIZE;
++
++    bswap_phdr(phdr, 1);
++    d->phdr = phdr + 1;
++    return 0;
++}
++
++static int wmr_write_region(void *opaque, target_ulong start,
++                            target_ulong end, unsigned long flags)
++{
++    int fd = *(int *)opaque;
++    size_t size = vma_dump_size(start, end, flags);
++
++    if (!size) {
++        return 0;
++    }
++    return dump_write(fd, g2h_untagged(start), size);
++}
++
+ /*
+  * Write out ELF coredump.
+  *
+@@ -4414,12 +4382,11 @@ static int elf_core_dump(int signr, const CPUArchState *env)
+ {
+     const CPUState *cpu = env_cpu((CPUArchState *)env);
+     const TaskState *ts = (const TaskState *)cpu->opaque;
+-    struct vm_area_struct *vma;
+     struct rlimit dumpsize;
+-    struct mm_struct mm;
++    CountAndSizeRegions css;
+     off_t offset, note_offset, data_offset;
+     size_t note_size;
+-    int segs, cpus, ret;
++    int cpus, ret;
+     int fd = -1;
+     CPUState *cpu_iter;
+ 
+@@ -4438,9 +4405,8 @@ static int elf_core_dump(int signr, const CPUArchState *env)
+      * Walk through target process memory mappings and
+      * set up structure containing this information.
+      */
+-    vma_init(&mm);
+-    walk_memory_regions(&mm, vma_walker);
+-    segs = vma_get_mapping_count(&mm);
++    memset(&css, 0, sizeof(css));
++    walk_memory_regions(&css, wmr_count_and_size_regions);
+ 
+     cpus = 0;
+     CPU_FOREACH(cpu_iter) {
+@@ -4448,22 +4414,18 @@ static int elf_core_dump(int signr, const CPUArchState *env)
+     }
+ 
+     offset = sizeof(struct elfhdr);
+-    offset += (segs + 1) * sizeof(struct elf_phdr);
++    offset += (css.count + 1) * sizeof(struct elf_phdr);
+     note_offset = offset;
+ 
+     offset += size_note("CORE", ts->info->auxv_len);
+     offset += size_note("CORE", sizeof(struct target_elf_prpsinfo));
+     offset += size_note("CORE", sizeof(struct target_elf_prstatus)) * cpus;
+     note_size = offset - note_offset;
+-    offset = ROUND_UP(offset, ELF_EXEC_PAGESIZE);
+-    data_offset = offset;
+-
+-    for (vma = vma_first(&mm); vma != NULL; vma = vma_next(vma)) {
+-        offset += vma_dump_size(vma);
+-    }
++    data_offset = ROUND_UP(offset, ELF_EXEC_PAGESIZE);
+ 
+     /* Do not dump if the corefile size exceeds the limit. */
+-    if (dumpsize.rlim_cur != RLIM_INFINITY && dumpsize.rlim_cur < offset) {
++    if (dumpsize.rlim_cur != RLIM_INFINITY
++        && dumpsize.rlim_cur < data_offset + css.size) {
+         errno = 0;
+         goto out;
+     }
+@@ -4485,36 +4447,22 @@ static int elf_core_dump(int signr, const CPUArchState *env)
+      */
+     {
+         g_autofree void *header = g_malloc0(data_offset);
++        FillRegionPhdr frp;
+         void *hptr, *dptr;
+ 
+         /* Create elf file header. */
+         hptr = header;
+-        fill_elf_header(hptr, segs + 1, ELF_MACHINE, 0);
++        fill_elf_header(hptr, css.count + 1, ELF_MACHINE, 0);
+         hptr += sizeof(struct elfhdr);
+ 
+         /* Create elf program headers. */
+         fill_elf_note_phdr(hptr, note_size, note_offset);
+         hptr += sizeof(struct elf_phdr);
+ 
+-        offset = data_offset;
+-        for (vma = vma_first(&mm); vma != NULL; vma = vma_next(vma)) {
+-            struct elf_phdr *phdr = hptr;
+-
+-            phdr->p_type = PT_LOAD;
+-            phdr->p_offset = offset;
+-            phdr->p_vaddr = vma->vma_start;
+-            phdr->p_paddr = 0;
+-            phdr->p_filesz = vma_dump_size(vma);
+-            offset += phdr->p_filesz;
+-            phdr->p_memsz = vma->vma_end - vma->vma_start;
+-            phdr->p_flags = (vma->vma_flags & PROT_READ ? PF_R : 0)
+-                          | (vma->vma_flags & PROT_WRITE ? PF_W : 0)
+-                          | (vma->vma_flags & PROT_EXEC ? PF_X : 0);
+-            phdr->p_align = ELF_EXEC_PAGESIZE;
+-
+-            bswap_phdr(phdr, 1);
+-            hptr += sizeof(struct elf_phdr);
+-        }
++        frp.phdr = hptr;
++        frp.offset = data_offset;
++        walk_memory_regions(&frp, wmr_fill_region_phdr);
++        hptr = frp.phdr;
+ 
+         /* Create the notes. */
+         dptr = fill_note(&hptr, NT_AUXV, "CORE", ts->info->auxv_len);
+@@ -4539,12 +4487,8 @@ static int elf_core_dump(int signr, const CPUArchState *env)
+     /*
+      * Finally write process memory into the corefile as well.
+      */
+-    for (vma = vma_first(&mm); vma != NULL; vma = vma_next(vma)) {
+-        size_t size = vma_dump_size(vma);
+-
+-        if (size && dump_write(fd, g2h_untagged(vma->vma_start), size) < 0) {
+-            goto out;
+-        }
++    if (walk_memory_regions(&fd, wmr_write_region) < 0) {
++        goto out;
+     }
+     errno = 0;
+ 
+@@ -4552,7 +4496,6 @@ static int elf_core_dump(int signr, const CPUArchState *env)
+     ret = -errno;
+     mmap_unlock();
+     cpu_list_unlock();
+-    vma_delete(&mm);
+     close(fd);
+     return ret;
+ }
 -- 
 2.34.1
 
