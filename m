@@ -4,101 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 660DFC54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 14:02:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DFF3C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 14:07:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rey0s-0002LJ-Dl; Tue, 27 Feb 2024 09:00:54 -0500
+	id 1rey66-00041a-RM; Tue, 27 Feb 2024 09:06:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rey0q-0002Jf-Ht
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:00:53 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rey0o-0001Dj-7L
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:00:52 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 8B0041FB96;
- Tue, 27 Feb 2024 14:00:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709042447; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=5wqHdM5g7GOHtXa4QCRDvVkR8pbLz0z2eeAgVKjHzag=;
- b=0X2pvXzeBnjeUHAk7SWhmgxY+AtcqyjqyY3aXsboxt8O0Ti3i3ekcVpWzMnUPDKZ3EhVBt
- Il5+/G9TyBDyTBjmFocGMoYe/Pp6eHA64CLdY3jHuWdJJnU4tlZyPZgESlk9dLKRTCBjFX
- 1FjqS9klOvpQcK7FBnTrpqcOasEwjNk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709042447;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=5wqHdM5g7GOHtXa4QCRDvVkR8pbLz0z2eeAgVKjHzag=;
- b=jS2u+uTHpIocwc97S/Q3NP6x1QQTAiWo/tzMYeImO4nTt/j2GSgQ6TCgS0aIBmB4FW4jbU
- wsgS+KAbI6esiYCg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709042447; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=5wqHdM5g7GOHtXa4QCRDvVkR8pbLz0z2eeAgVKjHzag=;
- b=0X2pvXzeBnjeUHAk7SWhmgxY+AtcqyjqyY3aXsboxt8O0Ti3i3ekcVpWzMnUPDKZ3EhVBt
- Il5+/G9TyBDyTBjmFocGMoYe/Pp6eHA64CLdY3jHuWdJJnU4tlZyPZgESlk9dLKRTCBjFX
- 1FjqS9klOvpQcK7FBnTrpqcOasEwjNk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709042447;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=5wqHdM5g7GOHtXa4QCRDvVkR8pbLz0z2eeAgVKjHzag=;
- b=jS2u+uTHpIocwc97S/Q3NP6x1QQTAiWo/tzMYeImO4nTt/j2GSgQ6TCgS0aIBmB4FW4jbU
- wsgS+KAbI6esiYCg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 10E3813A65;
- Tue, 27 Feb 2024 14:00:46 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id fcdbMg7r3WVtNwAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 27 Feb 2024 14:00:46 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com, Claudio
- Fontana <cfontana@suse.de>
-Subject: Re: [PATCH v4 22/34] migration/multifd: Prepare multifd sync for
- fixed-ram migration
-In-Reply-To: <Zd1cj4jkIpUktu6k@x1n>
-References: <20240220224138.24759-1-farosas@suse.de>
- <20240220224138.24759-23-farosas@suse.de> <ZdxCLmKFirsXPia-@x1n>
- <87y1b6alej.fsf@suse.de> <Zd1cj4jkIpUktu6k@x1n>
-Date: Tue, 27 Feb 2024 11:00:44 -0300
-Message-ID: <87plwivwfn.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rey65-00040q-Ug
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:06:18 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rey63-0002F5-B8
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:06:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709042772;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=V33Mk0sfOJYeiKgma44q2Moyss5uABVS1hIVsG92JbA=;
+ b=EjDbHnmEylK1CGiOQqzHiGJSPWb5ns/biYDD13AwXKOQYCe2UgTpd9U+V19y7obZuQsp64
+ B+1DKV6/6tPXibop6ynSE2QgjjkdQv9w9Ziyg9Z6xqdrzqbOqBLyNsDNcYvfRhjLs3jvI3
+ VmvLacVa+BiTqAbY31zxCp0PWx+MUlU=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-139-UNa1xEo4M0uVf7POQkBCmQ-1; Tue, 27 Feb 2024 09:06:11 -0500
+X-MC-Unique: UNa1xEo4M0uVf7POQkBCmQ-1
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7830ab8fb5aso568561585a.2
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 06:06:11 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709042771; x=1709647571;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=V33Mk0sfOJYeiKgma44q2Moyss5uABVS1hIVsG92JbA=;
+ b=jOyHv1ElySnx2dtoZy+Bw0oGDafsnDgmiBabNIS8TotXZIBEFcIBd74cPSfnVS7iqN
+ G5bDCqeSLK0tR55riYl+mM/15zTlgdbzuHU0N3f7BNhYQ63EwZc0vZpdw8TXIUkTeVms
+ 5K0wKwOUILkbfs/Dynz6G7ZbAn/+m9KFm7n5QAUZKX5TzGdSMWZLlIEUc1AR0lqnZGDC
+ 5viZx827Y4wXgy8QZF68fRDke0j/muvJCIukcuGcVvqbq6nOXYbRoVh5urJFgD3J6dz8
+ nzMOSmGZ9Kt6tDQWwSkupl67wET0khf6RFN3OYvArOSedSXmPLTkJuzaYRnWpEIgzBh8
+ sJjg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX33/pPKMDP5orhQK3P93mTjqBiQM63Q7QP5mxgLzmO0WTNGMRQZwjQelZ+lS7Uys/FavdXZ43dI/q98zMrIigsDs/JlTg=
+X-Gm-Message-State: AOJu0Yw5dWvOImGk3ACgAjNjZKFycnWpcWSvM/82ZWW+/WOyqqRMpuet
+ VVC7TaWVvT/9BsOqlLCgZ14WP3GFdGd3cK7cLRoMo6fpxUpsgu7ja7UN775Qay/uipHQEcn0vKa
+ JySvxwyxP528fEuhH/RKcmOQIE3cJ00ssX9GI/WIcX/Cep41wun/V
+X-Received: by 2002:a0c:9781:0:b0:68f:f701:e357 with SMTP id
+ l1-20020a0c9781000000b0068ff701e357mr1958826qvd.12.1709042770932; 
+ Tue, 27 Feb 2024 06:06:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IErKzOVBrJZBVYfMzcCxe0dUXWLXcDhpnSJvVtPkZ7AtsdpH6NAWC/aZN5S39lOfW51VUwkjA==
+X-Received: by 2002:a0c:9781:0:b0:68f:f701:e357 with SMTP id
+ l1-20020a0c9781000000b0068ff701e357mr1958797qvd.12.1709042770631; 
+ Tue, 27 Feb 2024 06:06:10 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-178-133.web.vodafone.de.
+ [109.43.178.133]) by smtp.gmail.com with ESMTPSA id
+ ol8-20020a0562143d0800b0068fb9bdd7absm4216921qvb.74.2024.02.27.06.06.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 Feb 2024 06:06:10 -0800 (PST)
+Message-ID: <10ba2151-fd32-4aec-8bba-75c5c59c5b02@redhat.com>
+Date: Tue, 27 Feb 2024 15:06:08 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spamd-Result: default: False [-3.10 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
- RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/ide/ahci: Rename ahci_internal.h to ahci-internal.h
+Content-Language: en-US
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org
+Cc: John Snow <jsnow@redhat.com>, philmd@linaro.org,
+ QEMU Trivial <qemu-trivial@nongnu.org>
+References: <20240227131310.C24EB4E6005@zero.eik.bme.hu>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240227131310.C24EB4E6005@zero.eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,263 +147,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On 27/02/2024 14.13, BALATON Zoltan wrote:
+> Other headers now use dash instead of underscore. Rename
+> ahci_internal.h accordingly for consistency.
+> 
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> ---
+>   hw/ide/{ahci_internal.h => ahci-internal.h} | 0
+>   hw/ide/ahci.c                               | 2 +-
+>   hw/ide/ich.c                                | 2 +-
+>   3 files changed, 2 insertions(+), 2 deletions(-)
+>   rename hw/ide/{ahci_internal.h => ahci-internal.h} (100%)
+> 
+> diff --git a/hw/ide/ahci_internal.h b/hw/ide/ahci-internal.h
+> similarity index 100%
+> rename from hw/ide/ahci_internal.h
+> rename to hw/ide/ahci-internal.h
+> diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
+> index b8123bc73d..bfefad2965 100644
+> --- a/hw/ide/ahci.c
+> +++ b/hw/ide/ahci.c
+> @@ -37,7 +37,7 @@
+>   #include "hw/ide/pci.h"
+>   #include "hw/ide/ahci-pci.h"
+>   #include "hw/ide/ahci-sysbus.h"
+> -#include "ahci_internal.h"
+> +#include "ahci-internal.h"
+>   #include "ide-internal.h"
+>   
+>   #include "trace.h"
+> diff --git a/hw/ide/ich.c b/hw/ide/ich.c
+> index 3ea793d790..9b909c87f3 100644
+> --- a/hw/ide/ich.c
+> +++ b/hw/ide/ich.c
+> @@ -70,7 +70,7 @@
+>   #include "sysemu/dma.h"
+>   #include "hw/ide/pci.h"
+>   #include "hw/ide/ahci-pci.h"
+> -#include "ahci_internal.h"
+> +#include "ahci-internal.h"
+>   
+>   #define ICH9_MSI_CAP_OFFSET     0x80
+>   #define ICH9_SATA_CAP_OFFSET    0xA8
 
-> On Mon, Feb 26, 2024 at 07:52:20PM -0300, Fabiano Rosas wrote:
->> Peter Xu <peterx@redhat.com> writes:
->> 
->> > On Tue, Feb 20, 2024 at 07:41:26PM -0300, Fabiano Rosas wrote:
->> >> The fixed-ram migration can be performed live or non-live, but it is
->> >> always asynchronous, i.e. the source machine and the destination
->> >> machine are not migrating at the same time. We only need some pieces
->> >> of the multifd sync operations.
->> >> 
->> >> multifd_send_sync_main()
->> >> ------------------------
->> >>   Issued by the ram migration code on the migration thread, causes the
->> >>   multifd send channels to synchronize with the migration thread and
->> >>   makes the sending side emit a packet with the MULTIFD_FLUSH flag.
->> >> 
->> >>   With fixed-ram we want to maintain the sync on the sending side
->> >>   because that provides ordering between the rounds of dirty pages when
->> >>   migrating live.
->> >> 
->> >> MULTIFD_FLUSH
->> >> -------------
->> >>   On the receiving side, the presence of the MULTIFD_FLUSH flag on a
->> >>   packet causes the receiving channels to start synchronizing with the
->> >>   main thread.
->> >> 
->> >>   We're not using packets with fixed-ram, so there's no MULTIFD_FLUSH
->> >>   flag and therefore no channel sync on the receiving side.
->> >> 
->> >> multifd_recv_sync_main()
->> >> ------------------------
->> >>   Issued by the migration thread when the ram migration flag
->> >>   RAM_SAVE_FLAG_MULTIFD_FLUSH is received, causes the migration thread
->> >>   on the receiving side to start synchronizing with the recv
->> >>   channels. Due to compatibility, this is also issued when
->> >>   RAM_SAVE_FLAG_EOS is received.
->> >> 
->> >>   For fixed-ram we only need to synchronize the channels at the end of
->> >>   migration to avoid doing cleanup before the channels have finished
->> >>   their IO.
->> >> 
->> >> Make sure the multifd syncs are only issued at the appropriate
->> >> times. Note that due to pre-existing backward compatibility issues, we
->> >> have the multifd_flush_after_each_section property that enables an
->> >> older behavior of synchronizing channels more frequently (and
->> >> inefficiently). Fixed-ram should always run with that property
->> >> disabled (default).
->> >
->> > What if the user enables multifd_flush_after_each_section=true?
->> >
->> > IMHO we don't necessarily need to attach the fixed-ram loading flush to any
->> > flag in the stream.  For fixed-ram IIUC all the loads will happen in one
->> > shot of ram_load() anyway when parsing the ramblock list, so.. how about we
->> > decouple the fixed-ram load flush from the stream by always do a sync in
->> > ram_load() unconditionally?
->> 
->> I would like to. But it's not possible because ram_load() is called once
->> per section. So once for each EOS flag on the stream. We'll have at
->> least two calls to ram_load(), once due to qemu_savevm_state_iterate()
->> and another due to qemu_savevm_state_complete_precopy().
->> 
->> The fact that fixed-ram can use just one load doesn't change the fact
->> that we perform more than one "save". So we'll need to use the FLUSH
->> flag in this case unfortunately.
->
-> After I re-read it, I found one more issue.
->
-> Now recv side sync is "once and for all" - it doesn't allow a second time
-> to sync_main because it syncs only until quits.  That is IMHO making the
-> code much harder to maintain, and we'll need rich comment to explain why is
-> that happening.
->
-> Ideally any "sync main" for recv threads can be called multiple times.  And
-> IMHO it's not really hard.  Actually it can make the code much cleaner by
-> merging some logic between socket-based and file-based from that regard.
->
-> I tried to play with your branch and propose something like this, just to
-> show what I meant. This should allow all new fixed-ram test to pass here,
-> meanwhile it should allow sync main on recv side to be re-entrant, sharing
-> the logic with socket-based as much as possible:
->
-> =====
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index a0202b5661..28480f6cfe 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -86,10 +86,8 @@ struct {
->      /* number of created threads */
->      int count;
->      /*
-> -     * For sockets: this is posted once for each MULTIFD_FLAG_SYNC flag.
-> -     *
-> -     * For files: this is only posted at the end of the file load to mark
-> -     *            completion of the load process.
-> +     * This is always posted by the recv threads, the main thread uses it
-> +     * to wait for recv threads to finish assigned tasks.
->       */
->      QemuSemaphore sem_sync;
->      /* global number of generated multifd packets */
-> @@ -1316,38 +1314,55 @@ void multifd_recv_cleanup(void)
->      multifd_recv_cleanup_state();
->  }
->  
-> -
-> -/*
-> - * Wait until all channels have finished receiving data. Once this
-> - * function returns, cleanup routines are safe to run.
-> - */
-> -static void multifd_file_recv_sync(void)
-> +static void multifd_recv_file_sync_request(void)
->  {
->      int i;
->  
->      for (i = 0; i < migrate_multifd_channels(); i++) {
->          MultiFDRecvParams *p = &multifd_recv_state->params[i];
->  
-> -        trace_multifd_recv_sync_main_wait(p->id);
-> -
-> +        /*
-> +         * We play a trick here: instead of using a separate pending_sync
-> +         * to send a sync request (like what we do on senders), we simply
-> +         * kick the recv thread once without setting pending_job.
-> +         *
-> +         * If there's already a pending_job, the thread will only see it
-> +         * after it processed the current.  If there's no pending_job,
-> +         * it'll see this immediately.
-> +         */
->          qemu_sem_post(&p->sem);
-> -
->          trace_multifd_recv_sync_main_signal(p->id);
-> -        qemu_sem_wait(&p->sem_sync);
->      }
-> -    return;
->  }
->  
-> +/*
-> + * Request a sync for all the multifd recv threads.
-> + *
-> + * For socket-based, sync request is much more complicated, which relies on
-> + * collaborations between both explicit RAM_SAVE_FLAG_MULTIFD_FLUSH in the
-> + * main stream, and MULTIFD_FLAG_SYNC flag in per-channel protocol.  Here
-> + * it should be invoked by the main stream request.
-> + *
-> + * For file-based, it is much simpler, because there's no need for a strong
-> + * sync semantics between the main thread and the recv threads.  What we
-> + * need is only to make sure all recv threads finished their tasks.
-> + */
->  void multifd_recv_sync_main(void)
->  {
-> +    bool file_based = !multifd_use_packets();
->      int i;
->  
->      if (!migrate_multifd()) {
->          return;
->      }
->  
-> -    if (!multifd_use_packets()) {
-> -        return multifd_file_recv_sync();
-> +    if (file_based) {
-> +        /*
-> +         * File-based multifd requires an explicit sync request because
-> +         * tasks are assigned by the main recv thread, rather than parsed
-> +         * through the multifd channels.
-> +         */
-> +        multifd_recv_file_sync_request();
->      }
->  
->      for (i = 0; i < migrate_multifd_channels(); i++) {
-> @@ -1356,6 +1371,11 @@ void multifd_recv_sync_main(void)
->          trace_multifd_recv_sync_main_wait(p->id);
->          qemu_sem_wait(&multifd_recv_state->sem_sync);
->      }
-> +
-> +    if (file_based) {
-> +        return;
-> +    }
-> +
->      for (i = 0; i < migrate_multifd_channels(); i++) {
->          MultiFDRecvParams *p = &multifd_recv_state->params[i];
->  
-> @@ -1420,11 +1440,12 @@ static void *multifd_recv_thread(void *opaque)
->              }
->  
->              /*
-> -             * Migration thread did not send work, break and signal
-> -             * sem_sync so it knows we're not lagging behind.
-> +             * Migration thread did not send work, this emulates
-> +             * pending_sync, post sem_sync to notify the main thread.
->               */
->              if (!qatomic_read(&p->pending_job)) {
-> -                break;
-> +                qemu_sem_post(&multifd_recv_state->sem_sync);
-> +                continue;
->              }
->  
->              has_data = !!p->data->size;
-> @@ -1449,10 +1470,6 @@ static void *multifd_recv_thread(void *opaque)
->          }
->      }
->  
-> -    if (!use_packets) {
-> -        qemu_sem_post(&p->sem_sync);
-> -    }
-> -
->      if (local_err) {
->          multifd_recv_terminate_threads(local_err);
->          error_free(local_err);
->
-> ==========
->
-> Note that I used multifd_recv_state->sem_sync to send the message rather
-> than p->sem, not only because socket-based has similar logic on using that
-> sem, but also because main thread shouldn't care about "which" recv thread
-> has finished, but "all recv threads are idle".
->
-> Do you think this should work out for us in a nicer way?
->
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-I don't really like the interleaving of file and socket logic at
-multifd_recv_sync_main(), but I can live with it.
-
-Waiting on multifd_recv_state->sem_sync is problematic because if the
-thread has an error, that will hang forever.
-
-Actually, I don't even see this being handled in _current_ code
-anywhere, we probably have a bug there. I guess we need to add one more
-"post this sem just because" somewhere. multifd_recv_kick_main probably.
-
-> Then we talk about the other issue, on whether we should rely on migration
-> stream to flush recv threads.  My answer is still hopefully a no.
->
-> In the ideal case, fixed-ram image format should even be tailed to not use
-> a live stream protocol.  For example, currently during ram iterations we
-> should flush quite a lot of ram QEMU_VM_SECTION_PART sections contains
-> mostly rubbish but then ending that with RAM_SAVE_FLAG_EOS. Then we keep
-> doing this in the iteration loop.  Here the real meat is during processing
-> of QEMU_VM_SECTION_PART, the src QEMU will update the guest pages with
-> fixed offsets in the file.  That however doesn't really contribute to
-> anything valuable in the migration stream itself (things sent over
-> to_dst_file).
->
-> AFAIU we chose to still use that logic only for simplicity, even if we know
-> those EOSs and all RAM streams are garbage.  Now we tend to add one
-> dependency on part of the garbage, which is RAM_SAVE_FLAG_MULTIFD_FLUSH in
-> this case; which is useful in socket-based but shouldn't be necessary for
-> file.
->
-> I think I have a solution besides ram_load(): ultimately fixed-ram stores
-> all guest mem in the QEMU_VM_SECTION_START section of the ram, through all
-> of the RAM_SAVE_FLAG_MEM_SIZE (which leads to parse_ramblocks()).  If so,
-> perhaps we can do one shot sync for file at the end of parse_ramblocks()?
-> Then we decouple sync_main on recv for file-based completely against all
-> stream flags.
-
-Yeah, that could work. I think I'll blacklist all unused flags using the
-invalid_flags logic.
-
-Thanks
 
