@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4B9CC54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 19:41:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07366C54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 19:43:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rf3KE-0008Rn-Pi; Tue, 27 Feb 2024 14:41:14 -0500
+	id 1rf3Lu-0000wi-LW; Tue, 27 Feb 2024 14:42:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rf3KB-0008RI-OR
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 14:41:12 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1rf3Lt-0000wG-Bj
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 14:42:57 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rf3K2-0002aO-V5
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 14:41:10 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-412a9a61545so12962265e9.2
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 11:41:02 -0800 (PST)
+ id 1rf3Lr-0002mr-W2
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 14:42:57 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-412a38e2adaso19962615e9.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 11:42:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709062860; x=1709667660; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709062974; x=1709667774; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Scz2vpORuLNSCcLlA89er8nXpE5G+w6OMsWbMAQTqEs=;
- b=EmkMrXaBNsBGZkkVTGsJTjonsyY6Qoc7mXKV2sQzMHsAeEj1APlzczKHP/v9FnSRW6
- BvjOFiUZDaJRkwqSNUVxkvR381OOdhAkAQ5HA8r4jGZzPcV0iBb5Vv0IYv2eCSScToHI
- dqJOxOiKCBlNX20SpP6hNu4Ms2l3LTF0aEwrxKPiJuOL6lRMycP8lO6/a27HN85n2+qH
- zSvM4+XRobe7DVnNWv9eyUm1wbU/IipPtYLjlUsjofQP5usjCf03KvlHsJf89W6QHRMZ
- rxfKpB2i8wJ66Iw0Ry8Fh2Dl1Z91oRthwB+MmtAj8xCVxPOcJsslvga3HSCgTROVpcNR
- +LEA==
+ bh=nUQpIw0J7gYJntdrF3+fYQvrBvEG+S/20aOM1DWuFCc=;
+ b=JSbunR1cAXcQgXxOPCHi/o51V2u4peBNXWsRXE4CMVdnLLUvUzy3ukVrv4YWZKaQg8
+ PK+mGxnxPOmR9E3d0vWoSTnnrwOYuhCyAn6+sGNKBb7FME8tisEQxyGkUlDSArYJ9FNp
+ 43OIh2eMoR6IS1usA86m7a7mS7h8S4CQkas0fWmGvdGVOt0jReBLZZIJSfpzqiKevQ1r
+ wWV0Y7pY8bsvdxS6i31WsEDswosOsuGjvWAgfvljJNIm8KEtwUqVTbi0+tI/ScfIiGzV
+ Sh1merMvvwjfMOZ/3wAs414IjDGur4yaStBIApByD1n9mkrMcR2nA0/l5wr5ijO5vGBn
+ +FXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709062860; x=1709667660;
+ d=1e100.net; s=20230601; t=1709062974; x=1709667774;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Scz2vpORuLNSCcLlA89er8nXpE5G+w6OMsWbMAQTqEs=;
- b=j7zLgQwhozOxT65xOu6kCMH8erEmhrn3AWs/yxfork/hAh1rd2oS+pZWfMSdEHa27C
- SdYhM7dGg4Yh48ruzYsLy6yY8U1fmUupJgkPGEJpPvHrkUrs2UQdGDbm7uJTVQ1LwfH4
- GXgBcmr9kzOI83+ay2yRiW5MpDC6ikjVlKzT/pv9a8zygkdUm7mCJ1zoKL9kAi0RmYTl
- eO6gD75GGD5zXJEg5nUtr8nCQHds3wjoNXPxUtDO+tmnqqqCR+6StPVVbIT8cPrCll7e
- DBvfN03v0T4yAMAICIdyxRUTQL+KEBf1P1L2alKTCNjuNdLq0R/6oao2B6wkWnHW7Mdr
- ASbw==
-X-Gm-Message-State: AOJu0YyFz2RGI1r5KRTI6f8Cbl1v/eiKP5g89R06mJ0dtS+JbtTvyXz5
- 33R2DlidsYhK3lOt6NMq5bP4tTli53bGVTpe590W4QiGfyU+9bTOKrTzDlJWtqOHqiWG+JGwyt3
- Z
-X-Google-Smtp-Source: AGHT+IHS8xBInE/mTwTfgTOE2EUGnhA3arBXzjGfdc5b2iwDC/IiJYkbzFv/WG9jAPHHuAjJfAI8AA==
-X-Received: by 2002:adf:fd87:0:b0:33d:b2d7:6264 with SMTP id
- d7-20020adffd87000000b0033db2d76264mr7418628wrr.51.1709062860199; 
- Tue, 27 Feb 2024 11:41:00 -0800 (PST)
+ bh=nUQpIw0J7gYJntdrF3+fYQvrBvEG+S/20aOM1DWuFCc=;
+ b=idwyTpwyKTgLovifEN/cWlCuJ/q5olQdW5mZqxbBm4WxRf72l/dkilIvlzUSou/vvv
+ 585ScV9SHoMHSOs493csJc+kPlwXZ5HEaLgXmtAmLQdlH9h8jfnzNXeHOV9xWCsOxECX
+ zi6rF9WDopggg//23gaGElbLyCSlHpyctSgTDgsOREOTW9ytXLs7KbqEJfHD/aLCi7C5
+ jsoXMazP1FnN7FAIPSSttA8rijpb0FRQZRwWTLsYwGC1B3uWjSdaHgenGThNdoUDaC/o
+ cLxDmw6cEn9+ftwZx14Nc6lUoNM62VwZ93pFElZjlClTxXasfyeKt1VqOCHmcis96P9f
+ V/8Q==
+X-Gm-Message-State: AOJu0Yy2nTmWzIvk4WynLBWySryk/mCo5Uhuk7lUxOs/KNUIz66puGgw
+ wSoZaiCEdlFJIKxcpK5wUp/q3BssFcGkSRr/OdWLuC97zAVz+QzBvnNea7gvzaGNBy5S51Jj262
+ h
+X-Google-Smtp-Source: AGHT+IF0hizc1kqLIiZuA2WenhWxnHqHbO4SLOJ9Vi7m9r/JQqx2G7pg49765nNDxSpkDZQqr1KIjg==
+X-Received: by 2002:adf:e284:0:b0:33d:3098:c1f with SMTP id
+ v4-20020adfe284000000b0033d30980c1fmr7877830wri.44.1709062974565; 
+ Tue, 27 Feb 2024 11:42:54 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- g16-20020adffc90000000b0033d3b8820f8sm12165740wrr.109.2024.02.27.11.40.59
+ bt21-20020a056000081500b0033b48190e5esm12611582wrb.67.2024.02.27.11.42.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Feb 2024 11:40:59 -0800 (PST)
+ Tue, 27 Feb 2024 11:42:54 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7F2DC5F7AE;
- Tue, 27 Feb 2024 19:40:59 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id E539B5F753;
+ Tue, 27 Feb 2024 19:42:53 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 01/14] linux-user/elfload: Disable core dump if
- getrlimit fails
-In-Reply-To: <20240227184833.193836-2-richard.henderson@linaro.org> (Richard
- Henderson's message of "Tue, 27 Feb 2024 08:48:20 -1000")
+Subject: Re: [PATCH 02/14] linux-user/elfload: Merge init_note_info and
+ fill_note_info
+In-Reply-To: <20240227184833.193836-3-richard.henderson@linaro.org> (Richard
+ Henderson's message of "Tue, 27 Feb 2024 08:48:21 -1000")
 References: <20240227184833.193836-1-richard.henderson@linaro.org>
- <20240227184833.193836-2-richard.henderson@linaro.org>
+ <20240227184833.193836-3-richard.henderson@linaro.org>
 User-Agent: mu4e 1.12.0; emacs 29.1
-Date: Tue, 27 Feb 2024 19:40:59 +0000
-Message-ID: <87y1b5bsqc.fsf@draig.linaro.org>
+Date: Tue, 27 Feb 2024 19:42:53 +0000
+Message-ID: <87sf1dbsn6.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,10 +102,6 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Richard Henderson <richard.henderson@linaro.org> writes:
 
-> Do not dump core at all if getrlimit fails; this ensures
-> that dumpsize is valid throughout the function, not just
-> for the initial test vs rlim_cur.
->
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
 Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
