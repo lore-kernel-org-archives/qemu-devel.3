@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23872C5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 22:36:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7945CC5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 22:36:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rf62e-00050N-Hz; Tue, 27 Feb 2024 17:35:16 -0500
+	id 1rf62o-00052i-81; Tue, 27 Feb 2024 17:35:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vikram.garhwal@amd.com>)
- id 1rf62c-0004zt-HW
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 17:35:14 -0500
-Received: from mail-co1nam11on20600.outbound.protection.outlook.com
- ([2a01:111:f403:2416::600]
- helo=NAM11-CO1-obe.outbound.protection.outlook.com)
+ id 1rf62n-00052T-F8
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 17:35:25 -0500
+Received: from mail-bn8nam11on20600.outbound.protection.outlook.com
+ ([2a01:111:f403:2414::600]
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vikram.garhwal@amd.com>)
- id 1rf62Z-0002Zj-RN
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 17:35:14 -0500
+ id 1rf62k-0002f1-UM
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 17:35:25 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Ma1XM4V0driY+zgOvBwiplwPAu/vSBfYhK+v3V5e4VKPLyqxQ6xoZRlMfexbwSoqSirO0LSDMsgTJWWF8H2Dr90gqyMWUUCAGKduXLKtrmIL8ZiAAs8oe5IRyC84o27/veaMrhB8A0Nj8p0VBbWLJArKNHx/0nnh8nDx+L5Zfg5RNc6w/XlQixTqkSE1BzrMVNBbKjPwdC8KKSk9cb6tA29Hilw+iLivbu0XyAzSFqPT1KE+B+y31tfs2DwOtDd/Cwqx/CgL1hS/rUiZtmF3xdSKzOgRmH7Ftj+qxIAQTqcSsugTmS78qOnaNb1Vgjuphu55ZFBJKFr2GdNSr+BCxw==
+ b=DqrLQcdXHv/CjdR7VN/GoH4OP9IDQXk/v5FepoDm26pfAticCtxhQFi+fPPBB03EOijIbxiG/8LHK9hoetuKspl2QPNCwUim3+60QSZdE6xgm/YAMg359oBZ779RmMZpM4OYYxBhoFttf/kjkjap7i6emLLo15dKeLjYKTsUMYHV1QZvb/7Nl2V1REt7Vxd3l/OqaIQ41REoeZSxM8nrNYQpE3q1jNCurIQdt/suhAMqhjz+n8xjJmrgUs30RaeZIiAo0IrFXneGcj+l8nCf3aiHsNo9igQNMz1A6/q/YMDPQpCDng+wb4KbvNX5YBBJSCeleuOD3RxEsNsGpFX3zw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=IDrI3N58J7SFiy9JJ9en+2EcReLLK7/jTUf6/gRoIlg=;
- b=O3o3Bfa3cBV1Q+LgFK0eFoM6KvkonQx9Zl2zEf4HCQcbE6Df6WxNRGwsR3vgZ4zrCSIymJU2xusQlyBvMpiuZMCdZxDB61/u6q4ZTDsTJG8hdNqa2io97gIFDnhf70oDEIb9Bg5tmk+owUEhiJSpz0Q0F/ZCQ9qVPb9RjVJ2yDsoiqqwpZWhjV36Q247+cew5Zb6sO4YeDfpZYbXq6M+Pr9gIPxgYKVxwC4vLcfGcljqE/Gm/1Z97qmIqawwOd397xjpeu/Q9qYXjS+7gbu3zjqG8sXu6qcK3TsQeRkL8YOja94m8hEkFYQvc0kTxKrHVVmQJy1o3ELnWZ3+itcNtw==
+ bh=4EUODE8Te6vqif3czPfW2F2AieavOD9cQNiVAhzYX3Q=;
+ b=gWR3sCNOzlxD0EDklAYI5OIAZIBD0oVL0AV96BZa0H6iuznLIS3n2ZfRWRO3pTIMG35RUUZDzhnUA1IVZmF/sX3j2E9t0xJqzrMoqOMDRCfBrh0EZ3wFcYgRADhp/DwsO/+Rv/Cn9BGb6zWU4gFKVYdL/KCOJ3XuhAnS+gPVy2usQbxDHqCnGh7Zz1dTmeIu75sO9xP/nI+Rd4gKlAaC2exnto3NQ44uyMh2vz+FVgH/1Gg8bByuLmx7qUhuC7EEEji3XnJKQkVCiUT7vgC7+BOpfaTVMSQEC9Unq5gPNqs54a/jZqXDzEntw8z9f4SCU5YZ2KeHWJNihnqOY+4TsQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IDrI3N58J7SFiy9JJ9en+2EcReLLK7/jTUf6/gRoIlg=;
- b=LnNBBrZ4cVVej34kt8ZXcDuU7UyT22IS2o4p6LXiX/BVPOzmFkC+qPtwzdp1YjG96G/z4jimSzE+vDPE4LF0tW5Wg3+M9Ydi+G/smxMgwt1pqEpydpfd4c2gnukc2jYm7uAV0YO9qyLfnv6X7963LoLhphL97WbrE5RN6bJrGII=
-Received: from BN0PR04CA0162.namprd04.prod.outlook.com (2603:10b6:408:eb::17)
- by DM4PR12MB5229.namprd12.prod.outlook.com (2603:10b6:5:398::12) with
+ bh=4EUODE8Te6vqif3czPfW2F2AieavOD9cQNiVAhzYX3Q=;
+ b=2fSb/J66bYWR+R761ie20WlgsZFVcQyTTMzttpi+yVoo2E41zDv7J4FWUaWt9Zb9BnXxCkaFvn77/mdo7rLPACaQoJBb/5rbdKYchOMYqjDBZGHhAuxyoPsoq7Eykm26eiU5aH3M7v16Zkr3Aw3Gi+TtOlCjMJaPolDfPNVS/9A=
+Received: from DS7PR05CA0059.namprd05.prod.outlook.com (2603:10b6:8:2f::32) by
+ SN7PR12MB6958.namprd12.prod.outlook.com (2603:10b6:806:262::15) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.34; Tue, 27 Feb
- 2024 22:35:07 +0000
-Received: from BN3PEPF0000B078.namprd04.prod.outlook.com
- (2603:10b6:408:eb:cafe::64) by BN0PR04CA0162.outlook.office365.com
- (2603:10b6:408:eb::17) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.50 via Frontend
- Transport; Tue, 27 Feb 2024 22:35:07 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.39; Tue, 27 Feb
+ 2024 22:35:20 +0000
+Received: from CY4PEPF0000FCC3.namprd03.prod.outlook.com
+ (2603:10b6:8:2f:cafe::23) by DS7PR05CA0059.outlook.office365.com
+ (2603:10b6:8:2f::32) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7339.25 via Frontend
+ Transport; Tue, 27 Feb 2024 22:35:20 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -54,25 +54,27 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
 Received: from SATLEXMB04.amd.com (165.204.84.17) by
- BN3PEPF0000B078.mail.protection.outlook.com (10.167.243.123) with Microsoft
+ CY4PEPF0000FCC3.mail.protection.outlook.com (10.167.242.105) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7292.25 via Frontend Transport; Tue, 27 Feb 2024 22:35:07 +0000
+ 15.20.7292.25 via Frontend Transport; Tue, 27 Feb 2024 22:35:20 +0000
 Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 27 Feb
- 2024 16:35:06 -0600
+ 2024 16:35:11 -0600
 Received: from xsjfnuv50.xilinx.com (10.180.168.240) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.35 via Frontend
- Transport; Tue, 27 Feb 2024 16:35:06 -0600
+ Transport; Tue, 27 Feb 2024 16:35:11 -0600
 From: Vikram Garhwal <vikram.garhwal@amd.com>
 To: <qemu-devel@nongnu.org>
 CC: <sstabellini@kernel.org>, <vikram.garhwal@amd.com>, <jgross@suse.com>,
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, "David
  Hildenbrand" <david@redhat.com>, =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-Subject: [QEMU][PATCH v3 1/7] softmmu: physmem: Split ram_block_add()
-Date: Tue, 27 Feb 2024 14:34:55 -0800
-Message-ID: <20240227223501.28475-2-vikram.garhwal@amd.com>
+ <philmd@linaro.org>, "open list:X86 Xen CPUs"
+ <xen-devel@lists.xenproject.org>
+Subject: [QEMU][PATCH v3 6/7] xen: add map and unmap callbacks for grant region
+Date: Tue, 27 Feb 2024 14:35:00 -0800
+Message-ID: <20240227223501.28475-7-vikram.garhwal@amd.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20240227223501.28475-1-vikram.garhwal@amd.com>
 References: <20240227223501.28475-1-vikram.garhwal@amd.com>
@@ -82,34 +84,34 @@ Received-SPF: None (SATLEXMB04.amd.com: vikram.garhwal@amd.com does not
  designate permitted sender hosts)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF0000B078:EE_|DM4PR12MB5229:EE_
-X-MS-Office365-Filtering-Correlation-Id: b44d4d1a-7a5c-4c58-692d-08dc37e45996
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000FCC3:EE_|SN7PR12MB6958:EE_
+X-MS-Office365-Filtering-Correlation-Id: 23d5ea88-1602-40cc-631f-08dc37e46126
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 3Jnnd64S77UGOIsCLWvrKQ02zHtEOsLrfbdPjj5ku65IBmp6dJkltrifOuMCav8R2L9m/YFYiosJ6lFnVyby/ATF1d9UtqbEa+2/CPanvWtL5UguH7QGHXGPHO4N6ggk9ghM2Q5FvIoYNtj/aUuerOqM2TzRv8BZGujPjNqOX8i5q6sJV2BmBaO0EL8zOeOkkvXyC3hrQIsU6ku2uRkdR7yr0SjPIcYYOgbT9gEyghbQiZ0g4KUoMq71vY2TsuXx8rIvS8ZVJHF0RJ9JRN11lfMJxLrpGzqft1XNy4joKw6t0niREWuk5Q2boGDh3L5fK3ufW5hi3JN7dK7a3zgj4gjF8V7cRbVYk2F344XuZnTvxJZJpvsMDwFNgrK4Qijyzc7lsx5Xx2xE5C7AGokWRVmWpcBu2YUmjd3VHv/NPCBBKg17UP6zRLy5WKay0Sv1ODkviDifh8V6ywkUltEoaOgXBZ9LXbkX+G68lSnMPeKa9nLrau/CwUM/4HcJ0ODNjazzY5eJ3a3b735Unc3SXy0tPym72NRb3Kt8Wb6ygg73r1FAdJp5vFlmD7h/7WcW8WAC9ikorRMBGJmrcR+h0EtZyI9Dws+trwOBL0nuxXyGery8QN1lzKor6A6FmB/8XdBYJItJdU9yc4RmuAtXXhsAvjOPfLHernloerS999DCpTyEGlpPVaET85uGppF2njAiAq3eFoqXeKxd+P3J43DZ+0LGE68CRmYXQIRv5bRNQZXcQTy0X39XTQHaBtz/
+X-Microsoft-Antispam-Message-Info: 62q64bDcZSgQSaqGlQ9flbe+pzxZmlJSnIu4UO2fS1KGw3KhDoflniJQBoloCX9p22lvQ1KCLEGCLMdxS1UxoDZXxeUn7xrHm9QiFGg89IkUio8Op3ZfnxXel4GvBt+0idrGQ8XAiaYkLarHL+RWEmL0Iqn50YzdcWdf05DPcAK02lu7tG1JtuQlVQ0PFSOmlr+QWcsgyz1ldMqGva34sVv9CsyKqiC1+hX79YQvbtG06DLMiZ9xaVJi2J8+t2GsvVmAvGr86gk1vApbZdA55mBDF+mJ+xlPZgN+dlD5sLlS9spAWcdyfy3hgrGwqmXf3BBQGz1NNOb4vHyNUEDEduxEhW4WyBieKfMWWOni61DlZ04QmPi75GvwO91L2viq966nwRRe/Gq82qfVzjhOTb9zddPgp+ekVqW/wP4AcWPEnL399yHFZxONjbs0HBeh1/jwD7ozy0qPNwKbJpDoljzgi+mkkD9DpdIaDGizPlPJ20NpsHynDXlCo7n4NqghQuTNCgYMgZqmrnw5VqiHwc3evCUilampLRjoWTr4eBl9nknimwWJ4XmQ7bNUKpnLnBRVaRAGKongZaVBJB/HEb7d4ECDfoWiJOxWb/ssSpU/zpBeRqMCCZ9e6Hx28VJCUrDBzA98lMwH6TIUnn22auzWBYFaoqWP/dl3tKrOyXSS5F2KoU7m27reXVbynrW/SeePlMJUUg/ioXGCc09vJaQPJ2LDJvMMPmu1mZB6n+xABsYDKlrOOYK8TRrfyU9H
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
  SFS:(13230031)(36860700004)(82310400014); DIR:OUT; SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Feb 2024 22:35:07.4399 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: b44d4d1a-7a5c-4c58-692d-08dc37e45996
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Feb 2024 22:35:20.0650 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 23d5ea88-1602-40cc-631f-08dc37e46126
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B078.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000FCC3.namprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB5229
-Received-SPF: softfail client-ip=2a01:111:f403:2416::600;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB6958
+Received-SPF: softfail client-ip=2a01:111:f403:2414::600;
  envelope-from=vikram.garhwal@amd.com;
- helo=NAM11-CO1-obe.outbound.protection.outlook.com
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,115 +128,262 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extract ram block list update to a new function ram_block_add_list(). This is
-done to support grant mappings which adds a memory region for granted memory and
-updates the ram_block list.
+From: Juergen Gross <jgross@suse.com>
+
+Add the callbacks for mapping/unmapping guest memory via grants to the
+special grant memory region.
 
 Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Vikram Garhwal <vikram.garhwal@amd.com>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
 ---
- include/exec/ram_addr.h |  1 +
- system/physmem.c        | 62 ++++++++++++++++++++++++++---------------
- 2 files changed, 40 insertions(+), 23 deletions(-)
+ hw/xen/xen-mapcache.c | 176 +++++++++++++++++++++++++++++++++++++++++-
+ system/physmem.c      |  11 ++-
+ 2 files changed, 182 insertions(+), 5 deletions(-)
 
-diff --git a/include/exec/ram_addr.h b/include/exec/ram_addr.h
-index 90676093f5..c0b5f9a7d0 100644
---- a/include/exec/ram_addr.h
-+++ b/include/exec/ram_addr.h
-@@ -139,6 +139,7 @@ void qemu_ram_free(RAMBlock *block);
- int qemu_ram_resize(RAMBlock *block, ram_addr_t newsize, Error **errp);
+diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
+index 179b7e95b2..2e4c9b4947 100644
+--- a/hw/xen/xen-mapcache.c
++++ b/hw/xen/xen-mapcache.c
+@@ -9,6 +9,8 @@
+  */
  
- void qemu_ram_msync(RAMBlock *block, ram_addr_t start, ram_addr_t length);
-+void ram_block_add_list(RAMBlock *new_block);
+ #include "qemu/osdep.h"
++#include "qemu/queue.h"
++#include "qemu/thread.h"
+ #include "qemu/units.h"
+ #include "qemu/error-report.h"
  
- /* Clear whole block of mem */
- static inline void qemu_ram_block_writeback(RAMBlock *block)
-diff --git a/system/physmem.c b/system/physmem.c
-index e3ebc19eef..84f3022099 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1803,12 +1803,47 @@ static void dirty_memory_extend(ram_addr_t old_ram_size,
-     }
+@@ -23,6 +25,8 @@
+ #include "sysemu/xen-mapcache.h"
+ #include "trace.h"
+ 
++#include <xenevtchn.h>
++#include <xengnttab.h>
+ 
+ #if HOST_LONG_BITS == 32
+ #  define MCACHE_BUCKET_SHIFT 16
+@@ -377,7 +381,7 @@ uint8_t *xen_map_cache(hwaddr phys_addr, hwaddr size,
+     return p;
  }
  
-+static void ram_block_add_list_locked(RAMBlock *new_block)
-+ {
-+     RAMBlock *block;
-+     RAMBlock *last_block = NULL;
+-ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
++static ram_addr_t xen_ram_addr_from_mapcache_try(void *ptr)
+ {
+     MapCacheEntry *entry = NULL;
+     MapCacheRev *reventry;
+@@ -588,10 +592,179 @@ uint8_t *xen_replace_cache_entry(hwaddr old_phys_addr,
+     return p;
+ }
+ 
++struct XENMappedGrantRegion {
++    void *addr;
++    unsigned int pages;
++    unsigned int refs;
++    unsigned int prot;
++    uint32_t idx;
++    QLIST_ENTRY(XENMappedGrantRegion) list;
++};
 +
-+    /*
-+     * Keep the list sorted from biggest to smallest block.  Unlike QTAILQ,
-+     * QLIST (which has an RCU-friendly variant) does not have insertion at
-+     * tail, so save the last element in last_block.
-+     */
-+    RAMBLOCK_FOREACH(block) {
-+        last_block = block;
-+        if (block->max_length < new_block->max_length) {
++static xengnttab_handle *xen_region_gnttabdev;
++static QLIST_HEAD(GrantRegionList, XENMappedGrantRegion) xen_grant_mappings =
++    QLIST_HEAD_INITIALIZER(xen_grant_mappings);
++static QemuMutex xen_map_mutex;
++
++static void *xen_map_grant_dyn(MemoryRegion **mr, hwaddr addr, hwaddr *plen,
++                               bool is_write, MemTxAttrs attrs)
++{
++    unsigned int page_off = addr & (XC_PAGE_SIZE - 1);
++    unsigned int i;
++    unsigned int total_grants = 0;
++    unsigned int nrefs = (page_off + *plen + XC_PAGE_SIZE - 1) >> XC_PAGE_SHIFT;
++    uint32_t ref = (addr - XEN_GRANT_ADDR_OFF) >> XC_PAGE_SHIFT;
++    uint32_t *refs = NULL;
++    unsigned int prot = PROT_READ;
++    struct XENMappedGrantRegion *mgr = NULL;
++
++    if (is_write) {
++        prot |= PROT_WRITE;
++    }
++
++    qemu_mutex_lock(&xen_map_mutex);
++
++    QLIST_FOREACH(mgr, &xen_grant_mappings, list) {
++        if (mgr->idx == ref &&
++            mgr->pages == nrefs &&
++            (mgr->prot & prot) == prot) {
++            break;
++        }
++
++        total_grants += mgr->pages;
++    }
++
++    if (!mgr) {
++        if (nrefs + total_grants >= XEN_MAX_VIRTIO_GRANTS) {
++            qemu_mutex_unlock(&xen_map_mutex);
++            return NULL;
++        }
++
++        mgr = g_new(struct XENMappedGrantRegion, 1);
++
++        if (nrefs == 1) {
++            refs = &ref;
++        } else {
++            refs = g_new(uint32_t, nrefs);
++            for (i = 0; i < nrefs; i++) {
++                refs[i] = ref + i;
++            }
++        }
++        mgr->addr = xengnttab_map_domain_grant_refs(xen_region_gnttabdev, nrefs,
++                                                    xen_domid, refs, prot);
++        if (mgr->addr) {
++            mgr->pages = nrefs;
++            mgr->refs = 1;
++            mgr->prot = prot;
++            mgr->idx = ref;
++
++            QLIST_INSERT_HEAD(&xen_grant_mappings, mgr, list);
++        } else {
++            g_free(mgr);
++            mgr = NULL;
++        }
++    } else {
++        mgr->refs++;
++    }
++
++    qemu_mutex_unlock(&xen_map_mutex);
++
++    if (nrefs > 1) {
++        g_free(refs);
++    }
++
++    return mgr ? mgr->addr + page_off : NULL;
++}
++
++static void xen_unmap_grant_dyn(MemoryRegion *mr, void *buffer, ram_addr_t addr,
++                                hwaddr len, bool is_write, hwaddr access_len)
++{
++    unsigned int page_off = (unsigned long)buffer & (XC_PAGE_SIZE - 1);
++    unsigned int nrefs = (page_off + len + XC_PAGE_SIZE - 1) >> XC_PAGE_SHIFT;
++    unsigned int prot = PROT_READ;
++    struct XENMappedGrantRegion *mgr = NULL;
++
++    if (is_write) {
++        prot |= PROT_WRITE;
++    }
++
++    qemu_mutex_lock(&xen_map_mutex);
++
++    QLIST_FOREACH(mgr, &xen_grant_mappings, list) {
++        if (mgr->addr == buffer - page_off &&
++            mgr->pages == nrefs &&
++            (mgr->prot & prot) == prot) {
 +            break;
 +        }
 +    }
-+    if (block) {
-+        QLIST_INSERT_BEFORE_RCU(block, new_block, next);
-+    } else if (last_block) {
-+        QLIST_INSERT_AFTER_RCU(last_block, new_block, next);
-+    } else { /* list is empty */
-+        QLIST_INSERT_HEAD_RCU(&ram_list.blocks, new_block, next);
++    if (mgr) {
++        mgr->refs--;
++        if (!mgr->refs) {
++            xengnttab_unmap(xen_region_gnttabdev, mgr->addr, nrefs);
++
++            QLIST_REMOVE(mgr, list);
++            g_free(mgr);
++        }
++    } else {
++        error_report("xen_unmap_grant_dyn() trying to unmap unknown buffer");
 +    }
-+    ram_list.mru_block = NULL;
 +
-+    /* Write list before version */
-+    smp_wmb();
-+    ram_list.version++;
++    qemu_mutex_unlock(&xen_map_mutex);
 +}
 +
-+void ram_block_add_list(RAMBlock *new_block)
++static ram_addr_t xen_ram_addr_from_grant_cache(void *ptr)
 +{
-+    qemu_mutex_lock_ramlist();
-+    ram_block_add_list_locked(new_block);
-+    qemu_mutex_unlock_ramlist();
++    unsigned int page_off = (unsigned long)ptr & (XC_PAGE_SIZE - 1);
++    struct XENMappedGrantRegion *mgr = NULL;
++    ram_addr_t raddr = RAM_ADDR_INVALID;
++
++    qemu_mutex_lock(&xen_map_mutex);
++
++    QLIST_FOREACH(mgr, &xen_grant_mappings, list) {
++        if (mgr->addr == ptr - page_off) {
++            break;
++        }
++    }
++
++    if (mgr) {
++        raddr = (mgr->idx << XC_PAGE_SHIFT) + page_off + XEN_GRANT_ADDR_OFF;
++    }
++
++    qemu_mutex_unlock(&xen_map_mutex);
++
++    return raddr;
 +}
 +
- static void ram_block_add(RAMBlock *new_block, Error **errp)
- {
-     const bool noreserve = qemu_ram_is_noreserve(new_block);
-     const bool shared = qemu_ram_is_shared(new_block);
--    RAMBlock *block;
--    RAMBlock *last_block = NULL;
-     ram_addr_t old_ram_size, new_ram_size;
-     Error *err = NULL;
- 
-@@ -1846,28 +1881,9 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-     if (new_ram_size > old_ram_size) {
-         dirty_memory_extend(old_ram_size, new_ram_size);
-     }
--    /* Keep the list sorted from biggest to smallest block.  Unlike QTAILQ,
--     * QLIST (which has an RCU-friendly variant) does not have insertion at
--     * tail, so save the last element in last_block.
--     */
--    RAMBLOCK_FOREACH(block) {
--        last_block = block;
--        if (block->max_length < new_block->max_length) {
--            break;
--        }
--    }
--    if (block) {
--        QLIST_INSERT_BEFORE_RCU(block, new_block, next);
--    } else if (last_block) {
--        QLIST_INSERT_AFTER_RCU(last_block, new_block, next);
--    } else { /* list is empty */
--        QLIST_INSERT_HEAD_RCU(&ram_list.blocks, new_block, next);
--    }
--    ram_list.mru_block = NULL;
- 
--    /* Write list before version */
--    smp_wmb();
--    ram_list.version++;
-+    ram_block_add_list_locked(new_block);
++ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
++{
++    ram_addr_t raddr;
 +
-     qemu_mutex_unlock_ramlist();
++    raddr = xen_ram_addr_from_mapcache_try(ptr);
++    if (raddr == RAM_ADDR_INVALID) {
++        raddr = xen_ram_addr_from_grant_cache(ptr);
++    }
++
++    return raddr;
++}
++
++static const struct MemoryRegionOps xen_grant_mr_ops = {
++    .map = xen_map_grant_dyn,
++    .unmap = xen_unmap_grant_dyn,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++};
++
+ MemoryRegion *xen_init_grant_ram(void)
+ {
+     RAMBlock *block;
  
-     cpu_physical_memory_set_dirty_range(new_block->offset,
++    qemu_mutex_init(&xen_map_mutex);
++
++    xen_region_gnttabdev = xengnttab_open(NULL, 0);
++    if (xen_region_gnttabdev == NULL) {
++        fprintf(stderr, "can't open gnttab device\n");
++        return NULL;
++    }
++
+     memory_region_init(&ram_grants, NULL, "xen.grants",
+                        XEN_MAX_VIRTIO_GRANTS * XC_PAGE_SIZE);
+     block = g_malloc0(sizeof(*block));
+@@ -606,6 +779,7 @@ MemoryRegion *xen_init_grant_ram(void)
+     ram_grants.ram_block = block;
+     ram_grants.ram = true;
+     ram_grants.terminates = true;
++    ram_grants.ops = &xen_grant_mr_ops;
+     ram_block_add_list(block);
+     memory_region_add_subregion(get_system_memory(), XEN_GRANT_ADDR_OFF,
+                                 &ram_grants);
+diff --git a/system/physmem.c b/system/physmem.c
+index d989e9fc1f..e6fc075d8f 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -2232,13 +2232,16 @@ RAMBlock *qemu_ram_block_from_host(void *ptr, bool round_offset,
+ 
+     if (xen_enabled()) {
+         ram_addr_t ram_addr;
++
+         RCU_READ_LOCK_GUARD();
+         ram_addr = xen_ram_addr_from_mapcache(ptr);
+-        block = qemu_get_ram_block(ram_addr);
+-        if (block) {
+-            *offset = ram_addr - block->offset;
++        if (ram_addr != RAM_ADDR_INVALID) {
++            block = qemu_get_ram_block(ram_addr);
++            if (block) {
++                *offset = ram_addr - block->offset;
++            }
++            return block;
+         }
+-        return block;
+     }
+ 
+     RCU_READ_LOCK_GUARD();
 -- 
 2.17.1
 
