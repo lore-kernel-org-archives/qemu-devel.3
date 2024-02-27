@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3110DC54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 14:54:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F71EC54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 14:54:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reypQ-0003Qy-N9; Tue, 27 Feb 2024 09:53:09 -0500
+	id 1reypW-00040T-If; Tue, 27 Feb 2024 09:53:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1reypO-0003DW-6S
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:53:06 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1reypP-0003QL-Ug
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:53:08 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1reypD-0004mv-5b
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:53:05 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-412a9a61545so10667755e9.2
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 06:52:52 -0800 (PST)
+ id 1reypE-0004nr-Qw
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:53:07 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-412a9e9c776so7273985e9.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 06:52:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709045571; x=1709650371; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709045573; x=1709650373; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LY87PsqI5CseL6bunSV/a+wwJBYv7wofoTM3s0oA7jk=;
- b=WpE3xPi+wpaqIEdhOzo5JmMHLxtVyQ+fI4mWd0vJVyu4f70mJQeMd06BPOqVss4UT8
- YSmo82IEC/z/jLWQOrebAdtdwu1l0m9mfzYsX5mN+rKvVOncRZAQzgEKnPX/ACcE1eRt
- E/x8YZ7B3dbj8FhorCCVHQLH91+n9H0eChPuDuTUEqYIDN/kojz7eaSoAdF+WPX93T6e
- LCb5IKrnk+EJEk8DpNn2hMvAUGL30oNxsh3pFHe6DzZJ2+dlTQTtA8EPC/n1tefwgiFI
- nuuGG5SOKlAabK5/TNe4avv3aErFWmaHhkcSYzeH6rc3L2z8KsqCEJV9jWGGG5SF7NA7
- MgGg==
+ bh=t+Lu1aUTzILJv+8PeOqcfRU9ypZOJg6L0bg1/V/uBfw=;
+ b=kekDdyQJViVGT60DTUr/E5cnT3ZjN3UAmwMuAd84hClAyg1wLUu9spvHV1ompmRwsC
+ oDHXMS7juodoZE2FYB2E67ptvqv+loGZyG+1otO4AC5qSFCK7itXSzasMIdxYDZA9Ind
+ Y3FqBOD+tCt6masdAF63sJ1reMluUrkBT80Alt6EkMF51nNParKxqHdjIvJOhctEVDRn
+ ZBLAJ0Cp8NsB8e08ILhWnGLfVJd36XF8C1Mzzi5QM74LMXO8dnL32mJKR+AaIlMfE8Go
+ pW4fss3pwOxwlaTOUETBoBOF8YWlBccjNgd/rekC06FW+KeniPtIn0JDGri0sq4w50Gx
+ yUNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709045571; x=1709650371;
+ d=1e100.net; s=20230601; t=1709045573; x=1709650373;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LY87PsqI5CseL6bunSV/a+wwJBYv7wofoTM3s0oA7jk=;
- b=sI5CGYcJX37IcdiYFkOHJVJ9uIpepPidg6FO+i3RfqnbJ1xDKw5nEJhqBs19iphfh+
- lSPaodJs3i2K+VmQIqf+WR4+A8/iEY/dNJ0YPCxol2d6FBJGSo2tBJwCrWaufLAOeFro
- Zz9OdDtTidYa81F3vV5mMlW34qJ/+hvUXn1Z5G9uUyLZLEmTCZGgkX4EE48LhQ1VF7hx
- CuLXozvWawdIqnINwvBwlgj8+Og9yrb/kFmCO04dT5Z8KgnZx+qW1Cit3rqDRMYHZAxF
- rfsOb0N/BZ1gsKjtKkgBcSX+P9KOSCyMHaSzPtTQFHaKGcb3cn2qypb0kJit26A5DvnZ
- 4X6Q==
-X-Gm-Message-State: AOJu0YwodEIodZ8dfIpHV+iIR0mPNqxmrz4TC5SQeJaO9DbROuKjesL1
- QTHLU2SRWOQg0CsW/5bUb/zdQDa4sYaYFkDewZUSlu/CL46Ifxj/AWa4vA71RsQ=
-X-Google-Smtp-Source: AGHT+IHbvfRK+W3sbbX597Xd664p4Zgx2ror9Jp92I+pRQYcvikt8w0hNQFgUIQxsFqNpf4Gton/9g==
-X-Received: by 2002:a05:600c:5021:b0:412:a451:d32f with SMTP id
- n33-20020a05600c502100b00412a451d32fmr4857772wmr.20.1709045571014; 
- Tue, 27 Feb 2024 06:52:51 -0800 (PST)
+ bh=t+Lu1aUTzILJv+8PeOqcfRU9ypZOJg6L0bg1/V/uBfw=;
+ b=V75iZfgpm04aMEiG1B0xklRs5OXpY5Dm2LCZBuDQOibdktgIjYCUK88zoniWyvutzi
+ ToWH3OWMA8LH93wD333uGik5hIatOXPYPchkJzu4wQrvtvSphITwDSiQE/8gG7OKSz09
+ zsZISzJc0A/DH0THMS2u96l7c1xdmmHg7kYwwp02u0LYzQ0SBUxL/HjK8P+Gb1GtUtTy
+ M1hTJtMhG+oX7SnhhV/+rMjiNA92T3zoBt251THoduRFXeRJWXFj03z0AKy9pKHX1vCL
+ sILrcRZR5wdRDvbhcj3IQ/x1PegYtdI1hWXZcF+GEeSbilxMvlzS4/KF+QwdEf7W0PdO
+ sOBg==
+X-Gm-Message-State: AOJu0YzdFfDW9tTGlmtc4kwRwXyRdaTATRmmc/Q64nXlLbOMCFIzcrsg
+ k4cTagZ8y+Doju4+dw0O1yO4c0UVRaVyM+6iysYewLjHcD5zRXbwtZxpwWkqIE0=
+X-Google-Smtp-Source: AGHT+IEMrcrsgzx9LyhtNiRdk9m57oKDvZT3irFofG/fsSiWwA23AS/x3JXsWUqiaHcu52nQ7xf35A==
+X-Received: by 2002:adf:ead2:0:b0:33d:1ece:d618 with SMTP id
+ o18-20020adfead2000000b0033d1eced618mr9437170wrn.8.1709045573434; 
+ Tue, 27 Feb 2024 06:52:53 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- co2-20020a0560000a0200b0033d70dd0e04sm11964404wrb.8.2024.02.27.06.52.50
+ bt21-20020a056000081500b0033b48190e5esm11960506wrb.67.2024.02.27.06.52.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Feb 2024 06:52:50 -0800 (PST)
+ Tue, 27 Feb 2024 06:52:51 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5B1915F923;
- Tue, 27 Feb 2024 14:43:37 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 14A105F92E;
+ Tue, 27 Feb 2024 14:43:38 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Yoshinori Sato <ysato@users.sourceforge.jp>,
@@ -89,17 +89,17 @@ Cc: qemu-ppc@nongnu.org, Yoshinori Sato <ysato@users.sourceforge.jp>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Palmer Dabbelt <palmer@dabbelt.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PATCH v4 19/29] cpu: call plugin init hook asynchronously
-Date: Tue, 27 Feb 2024 14:43:25 +0000
-Message-Id: <20240227144335.1196131-20-alex.bennee@linaro.org>
+Subject: [PATCH v4 27/29] docs/devel: lift example and plugin API sections up
+Date: Tue, 27 Feb 2024 14:43:33 +0000
+Message-Id: <20240227144335.1196131-28-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240227144335.1196131-1-alex.bennee@linaro.org>
 References: <20240227144335.1196131-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,54 +122,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+This makes them a bit more visible in the TCG emulation menu rather
+than hiding them away bellow the ToC limit.
 
-This ensures we run during a cpu_exec, which allows to call start/end
-exclusive from this init hook (needed for new scoreboard API introduced
-later).
-
-async work is run before any tb is translated/executed, so we can
-guarantee plugin init will be called before any other hook.
-
-The previous change made sure that any idle/resume cb call will not be
-done before initializing plugin for a given vcpu.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20240213094009.150349-5-pierrick.bouvier@linaro.org>
+Message-Id: <20240103173349.398526-43-alex.bennee@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/core/cpu-common.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ docs/devel/tcg-plugins.rst | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index fe16d0d9df8..68786360ea5 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -194,6 +194,11 @@ static void cpu_common_parse_features(const char *typename, char *features,
-     }
- }
+diff --git a/docs/devel/tcg-plugins.rst b/docs/devel/tcg-plugins.rst
+index fa7421279f5..535a74684c5 100644
+--- a/docs/devel/tcg-plugins.rst
++++ b/docs/devel/tcg-plugins.rst
+@@ -143,7 +143,7 @@ requested. The plugin isn't completely uninstalled until the safe work
+ has executed while all vCPUs are quiescent.
  
-+static void qemu_plugin_vcpu_init__async(CPUState *cpu, run_on_cpu_data unused)
-+{
-+    qemu_plugin_vcpu_init_hook(cpu);
-+}
-+
- static void cpu_common_realizefn(DeviceState *dev, Error **errp)
- {
-     CPUState *cpu = CPU(dev);
-@@ -217,9 +222,9 @@ static void cpu_common_realizefn(DeviceState *dev, Error **errp)
-         cpu_resume(cpu);
-     }
+ Example Plugins
+----------------
++===============
  
--    /* Plugin initialization must wait until the cpu is fully realized. */
-+    /* Plugin initialization must wait until the cpu start executing code */
-     if (tcg_enabled()) {
--        qemu_plugin_vcpu_init_hook(cpu);
-+        async_run_on_cpu(cpu, qemu_plugin_vcpu_init__async, RUN_ON_CPU_NULL);
-     }
+ There are a number of plugins included with QEMU and you are
+ encouraged to contribute your own plugins plugins upstream. There is a
+@@ -591,8 +591,8 @@ The plugin has a number of arguments, all of them are optional:
+   configuration arguments implies ``l2=on``.
+   (default: N = 2097152 (2MB), B = 64, A = 16)
  
-     /* NOTE: latest generic point where the cpu is fully realized */
+-API
+----
++Plugin API
++==========
+ 
+ The following API is generated from the inline documentation in
+ ``include/qemu/qemu-plugin.h``. Please ensure any updates to the API
 -- 
 2.39.2
 
