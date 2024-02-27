@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62993C54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 12:54:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9956FC5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 13:01:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rewy6-0001Jd-MJ; Tue, 27 Feb 2024 07:53:58 -0500
+	id 1rex4g-0005XK-Kg; Tue, 27 Feb 2024 08:00:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rewxb-0000mx-SW; Tue, 27 Feb 2024 07:53:29 -0500
+ id 1rex4X-0005Vt-1T; Tue, 27 Feb 2024 08:00:39 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rewxZ-0002sa-9D; Tue, 27 Feb 2024 07:53:27 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Tkck22Wthz6K5hF;
- Tue, 27 Feb 2024 20:48:58 +0800 (CST)
+ id 1rex4T-0004NJ-Jj; Tue, 27 Feb 2024 08:00:36 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TkctC13Zmz6K6Cg;
+ Tue, 27 Feb 2024 20:56:03 +0800 (CST)
 Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 12A731400CD;
- Tue, 27 Feb 2024 20:53:20 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id DA18E141677;
+ Tue, 27 Feb 2024 21:00:24 +0800 (CST)
 Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
  (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Tue, 27 Feb
- 2024 12:53:18 +0000
-Date: Tue, 27 Feb 2024 12:53:17 +0000
+ 2024 13:00:24 +0000
+Date: Tue, 27 Feb 2024 13:00:23 +0000
 To: <ankita@nvidia.com>
 CC: <jgg@nvidia.com>, <alex.williamson@redhat.com>, <clg@redhat.com>,
  <shannon.zhaosl@gmail.com>, <peter.maydell@linaro.org>, <ani@anisinha.ca>,
@@ -39,11 +39,11 @@ CC: <jgg@nvidia.com>, <alex.williamson@redhat.com>, <clg@redhat.com>,
  <cjia@nvidia.com>, <kwankhede@nvidia.com>, <targupta@nvidia.com>,
  <vsethi@nvidia.com>, <acurrid@nvidia.com>, <dnigam@nvidia.com>,
  <udhoke@nvidia.com>, <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v7 2/2] hw/acpi: Implement the SRAT GI affinity structure
-Message-ID: <20240227125317.00001cf8@Huawei.com>
-In-Reply-To: <20240223124223.800078-3-ankita@nvidia.com>
+Subject: Re: [PATCH v7 1/2] qom: new object to associate device to numa node
+Message-ID: <20240227130023.00000744@Huawei.com>
+In-Reply-To: <20240223124223.800078-2-ankita@nvidia.com>
 References: <20240223124223.800078-1-ankita@nvidia.com>
- <20240223124223.800078-3-ankita@nvidia.com>
+ <20240223124223.800078-2-ankita@nvidia.com>
 Organization: Huawei Technologies Research and Development (UK) Ltd.
 X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
@@ -77,39 +77,16 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 23 Feb 2024 12:42:23 +0000
-<ankita@nvidia.com> wrote:
 
-> From: Ankit Agrawal <ankita@nvidia.com>
-> 
-> ACPI spec provides a scheme to associate "Generic Initiators" [1]
-> (e.g. heterogeneous processors and accelerators, GPUs, and I/O devices with
-> integrated compute or DMA engines GPUs) with Proximity Domains. This is
-> achieved using Generic Initiator Affinity Structure in SRAT. During bootup,
-> Linux kernel parse the ACPI SRAT to determine the PXM ids and create a NUMA
-> node for each unique PXM ID encountered. Qemu currently do not implement
-> these structures while building SRAT.
-> 
-> Add GI structures while building VM ACPI SRAT. The association between
-> device and node are stored using acpi-generic-initiator object. Lookup
-> presence of all such objects and use them to build these structures.
-> 
-> The structure needs a PCI device handle [2] that consists of the device BDF.
-> The vfio-pci device corresponding to the acpi-generic-initiator object is
-> located to determine the BDF.
-> 
-> [1] ACPI Spec 6.3, Section 5.2.16.6
-> [2] ACPI Spec 6.3, Table 5.80
-> 
-> Signed-off-by: Ankit Agrawal <ankita@nvidia.com>
-> ---
->  hw/acpi/acpi-generic-initiator.c         | 84 ++++++++++++++++++++++++
->  hw/arm/virt-acpi-build.c                 |  3 +
->  include/hw/acpi/acpi-generic-initiator.h | 26 ++++++++
-A few more comments.
+> diff --git a/include/hw/acpi/acpi-generic-initiator.h b/include/hw/acpi/acpi-generic-initiator.h
+> new file mode 100644
+> index 0000000000..2f183b029a
+> --- /dev/null
+> +++ b/include/hw/acpi/acpi-generic-initiator.h
 
-Maybe _ rather than - as more common for acpi include naming.
-
-I also wonder if we need the acpi prefix for file names given context?
+> +typedef struct AcpiGenericInitiatorClass {
+> +        ObjectClass parent_class;
+Too indented.
+> +} AcpiGenericInitiatorClass;
 
 
