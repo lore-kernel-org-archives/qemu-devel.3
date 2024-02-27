@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18057C5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 10:21:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BF89C54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 10:21:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reuZY-0007SV-Jq; Tue, 27 Feb 2024 05:20:28 -0500
+	id 1reuZr-0000UH-Sj; Tue, 27 Feb 2024 05:20:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1reuZX-0007H8-89
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 05:20:27 -0500
+ id 1reuZp-0000Fz-NU
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 05:20:46 -0500
 Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1reuZU-0003fW-Os
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 05:20:26 -0500
+ id 1reuZn-0003jr-Ju
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 05:20:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709029224; x=1740565224;
+ t=1709029243; x=1740565243;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=GaJJDFD6rI5U7zAx6T8Zldi9r5OL5Do0sCk1mGN9KHw=;
- b=BUGf/3gBTtN/SL6T+AvquYjkzCV9sBsf0XnNp1PO9h3aJOBblKC0GkW5
- zL5yEz4VziQQsCRbXBCu/a5MTzAlgOSWbQhaw06uo7VhSGzBeAaLCwlmX
- L7wVmYb4+1aYyzhzIM3QgjA0ytAvkReuOVR5L2tB/pByDsobZX3m4kf9M
- JiD3SCD8vanAWf/gewYfXG/mRh/njXeDafIF0chUbw0C8aUCOzW255+sL
- os4L9SxfxzwAAB3sQxA7VI+95vNE4FCOkeZYTeg7G/HCXR/5TicUyvWum
- X4zbZJ1z8w0In+dQemBDARPBbF+vQMEtbMeWjd3bCiMlkUGxtak7Y1+NB A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10996"; a="6310387"
+ bh=WKMpdedVITUQ6ZgjAWs6AFYbXSAJZv6us+WenYjObC8=;
+ b=gcHdOnyCnIWRqEPZvScSmqXmfHECqGz9LNag8zJ2STvlxGqnLJ1sdAkr
+ kgzWjdjV3lgJcw/V+NMGKQS/8eFkkUoDMS67LmRZOkEd4aiqGYoCqRo2L
+ v/8Yl3JCPOjH9Z00eBrvOMWdZ3eucXUe4OxkKT1nEknaPYfy7UmdIBxQJ
+ 9J1RN7wuUP/sleTG32In8GZWuqQAaHTiXWNO+PQzTXptGYZYu7Q7Rr5Fe
+ xAhHn1xDBXanBAfrPpLLgWdEV2aDru5SGEZMh2EwOcPzu3oplWBWU4puE
+ 8I02WwV0LRA+bZHJ0ZhNcvaGe2VfkUXcModJQl+ChDqyS5fdLOi6eAWVU g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10996"; a="6310487"
 X-IronPort-AV: E=Sophos;i="6.06,187,1705392000"; 
-   d="scan'208";a="6310387"
+   d="scan'208";a="6310487"
 Received: from fmviesa010.fm.intel.com ([10.60.135.150])
  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Feb 2024 02:20:02 -0800
+ 27 Feb 2024 02:20:32 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,187,1705392000"; 
-   d="scan'208";a="6954960"
+   d="scan'208";a="6955254"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa010.fm.intel.com with ESMTP; 27 Feb 2024 02:19:57 -0800
+ by fmviesa010.fm.intel.com with ESMTP; 27 Feb 2024 02:20:27 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -59,9 +59,10 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Zhuocheng Ding <zhuocheng.ding@intel.com>, Babu Moger <babu.moger@amd.com>,
  Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v9 14/21] i386: Expose module level in CPUID[0x1F]
-Date: Tue, 27 Feb 2024 18:32:24 +0800
-Message-Id: <20240227103231.1556302-15-zhao1.liu@linux.intel.com>
+Subject: [PATCH v9 20/21] i386/cpu: Use CPUCacheInfo.share_level to encode
+ CPUID[4]
+Date: Tue, 27 Feb 2024 18:32:30 +0800
+Message-Id: <20240227103231.1556302-21-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
 References: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
@@ -92,114 +93,190 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-Linux kernel (from v6.4, with commit edc0a2b595765 ("x86/topology: Fix
-erroneous smp_num_siblings on Intel Hybrid platforms") is able to
-handle platforms with Module level enumerated via CPUID.1F.
+CPUID[4].EAX[bits 25:14] is used to represent the cache topology for
+Intel CPUs.
 
-Expose the module level in CPUID[0x1F] if the machine has more than 1
-modules.
+After cache models have topology information, we can use
+CPUCacheInfo.share_level to decide which topology level to be encoded
+into CPUID[4].EAX[bits 25:14].
+
+And since with the helper max_processor_ids_for_cache(), the filed
+CPUID[4].EAX[bits 25:14] (original virable "num_apic_ids") is parsed
+based on cpu topology levels, which are verified when parsing -smp, it's
+no need to check this value by "assert(num_apic_ids > 0)" again, so
+remove this assert().
+
+Additionally, wrap the encoding of CPUID[4].EAX[bits 31:26] into a
+helper to make the code cleaner.
 
 Tested-by: Yongwei Ma <yongwei.ma@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
 Changes since v7:
- * Mapped x86 module to smp module instead of cluster.
+ * Renamed max_processor_ids_for_cache() to max_thread_ids_for_cache().
+   (Xiaoyao)
  * Dropped Michael/Babu's ACKed/Tested tags since the code change.
  * Re-added Yongwei's Tested tag For his re-testing.
 
-Changes since v3:
- * New patch to expose module level in 0x1F.
- * Added Tested-by tag from Yongwei.
+Changes since v1:
+ * Used "enum CPUTopoLevel share_level" as the parameter in
+   max_processor_ids_for_cache().
+ * Made cache_into_passthrough case also use
+   max_processor_ids_for_cache() and max_core_ids_in_package() to
+   encode CPUID[4]. (Yanan)
+ * Renamed the title of this patch (the original is "i386: Use
+   CPUCacheInfo.share_level to encode CPUID[4].EAX[bits 25:14]").
 ---
- hw/i386/x86.c              | 2 +-
- include/hw/i386/topology.h | 6 ++++--
- target/i386/cpu.c          | 6 ++++++
- target/i386/cpu.h          | 1 +
- 4 files changed, 12 insertions(+), 3 deletions(-)
+ target/i386/cpu.c | 76 ++++++++++++++++++++++++++++-------------------
+ 1 file changed, 45 insertions(+), 31 deletions(-)
 
-diff --git a/hw/i386/x86.c b/hw/i386/x86.c
-index 566ed7f5f771..b668cd537cec 100644
---- a/hw/i386/x86.c
-+++ b/hw/i386/x86.c
-@@ -322,7 +322,7 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
- 
-     if (ms->smp.modules > 1) {
-         env->nr_modules = ms->smp.modules;
--        /* TODO: Expose module level in CPUID[0x1F]. */
-+        set_bit(CPU_TOPO_LEVEL_MODULE, env->avail_cpu_topo);
-     }
- 
-     if (ms->smp.dies > 1) {
-diff --git a/include/hw/i386/topology.h b/include/hw/i386/topology.h
-index 7622d806932c..ea871045779d 100644
---- a/include/hw/i386/topology.h
-+++ b/include/hw/i386/topology.h
-@@ -71,6 +71,7 @@ enum CPUTopoLevel {
-     CPU_TOPO_LEVEL_INVALID,
-     CPU_TOPO_LEVEL_SMT,
-     CPU_TOPO_LEVEL_CORE,
-+    CPU_TOPO_LEVEL_MODULE,
-     CPU_TOPO_LEVEL_DIE,
-     CPU_TOPO_LEVEL_PACKAGE,
-     CPU_TOPO_LEVEL_MAX,
-@@ -198,11 +199,12 @@ static inline apic_id_t x86_apicid_from_cpu_idx(X86CPUTopoInfo *topo_info,
- }
- 
- /*
-- * Check whether there's extended topology level (die)?
-+ * Check whether there's extended topology level (module or die)?
-  */
- static inline bool x86_has_extended_topo(unsigned long *topo_bitmap)
- {
--    return test_bit(CPU_TOPO_LEVEL_DIE, topo_bitmap);
-+    return test_bit(CPU_TOPO_LEVEL_MODULE, topo_bitmap) ||
-+           test_bit(CPU_TOPO_LEVEL_DIE, topo_bitmap);
- }
- 
- #endif /* HW_I386_TOPOLOGY_H */
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 8e2c54a063c0..f27249df5b52 100644
+index 3da2c5be9fa5..07cd729c3524 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -277,6 +277,8 @@ static uint32_t num_threads_by_topo_level(X86CPUTopoInfo *topo_info,
-         return 1;
-     case CPU_TOPO_LEVEL_CORE:
-         return topo_info->threads_per_core;
-+    case CPU_TOPO_LEVEL_MODULE:
-+        return topo_info->threads_per_core * topo_info->cores_per_module;
-     case CPU_TOPO_LEVEL_DIE:
-         return topo_info->threads_per_core * topo_info->cores_per_module *
-                topo_info->modules_per_die;
-@@ -297,6 +299,8 @@ static uint32_t apicid_offset_by_topo_level(X86CPUTopoInfo *topo_info,
-         return 0;
-     case CPU_TOPO_LEVEL_CORE:
-         return apicid_core_offset(topo_info);
-+    case CPU_TOPO_LEVEL_MODULE:
-+        return apicid_module_offset(topo_info);
-     case CPU_TOPO_LEVEL_DIE:
-         return apicid_die_offset(topo_info);
-     case CPU_TOPO_LEVEL_PACKAGE:
-@@ -316,6 +320,8 @@ static uint32_t cpuid1f_topo_type(enum CPUTopoLevel topo_level)
-         return CPUID_1F_ECX_TOPO_LEVEL_SMT;
-     case CPU_TOPO_LEVEL_CORE:
-         return CPUID_1F_ECX_TOPO_LEVEL_CORE;
-+    case CPU_TOPO_LEVEL_MODULE:
-+        return CPUID_1F_ECX_TOPO_LEVEL_MODULE;
-     case CPU_TOPO_LEVEL_DIE:
-         return CPUID_1F_ECX_TOPO_LEVEL_DIE;
-     default:
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 375d63d05ed2..f77b3dd66cb0 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -1025,6 +1025,7 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
- #define CPUID_1F_ECX_TOPO_LEVEL_INVALID  CPUID_B_ECX_TOPO_LEVEL_INVALID
- #define CPUID_1F_ECX_TOPO_LEVEL_SMT      CPUID_B_ECX_TOPO_LEVEL_SMT
- #define CPUID_1F_ECX_TOPO_LEVEL_CORE     CPUID_B_ECX_TOPO_LEVEL_CORE
-+#define CPUID_1F_ECX_TOPO_LEVEL_MODULE   3
- #define CPUID_1F_ECX_TOPO_LEVEL_DIE      5
+@@ -235,22 +235,53 @@ static uint8_t cpuid2_cache_descriptor(CPUCacheInfo *cache)
+                        ((t) == UNIFIED_CACHE) ? CACHE_TYPE_UNIFIED : \
+                        0 /* Invalid value */)
  
- /* MSR Feature Bits */
++static uint32_t max_thread_ids_for_cache(X86CPUTopoInfo *topo_info,
++                                         enum CPUTopoLevel share_level)
++{
++    uint32_t num_ids = 0;
++
++    switch (share_level) {
++    case CPU_TOPO_LEVEL_CORE:
++        num_ids = 1 << apicid_core_offset(topo_info);
++        break;
++    case CPU_TOPO_LEVEL_DIE:
++        num_ids = 1 << apicid_die_offset(topo_info);
++        break;
++    case CPU_TOPO_LEVEL_PACKAGE:
++        num_ids = 1 << apicid_pkg_offset(topo_info);
++        break;
++    default:
++        /*
++         * Currently there is no use case for SMT and MODULE, so use
++         * assert directly to facilitate debugging.
++         */
++        g_assert_not_reached();
++    }
++
++    return num_ids - 1;
++}
++
++static uint32_t max_core_ids_in_package(X86CPUTopoInfo *topo_info)
++{
++    uint32_t num_cores = 1 << (apicid_pkg_offset(topo_info) -
++                               apicid_core_offset(topo_info));
++    return num_cores - 1;
++}
+ 
+ /* Encode cache info for CPUID[4] */
+ static void encode_cache_cpuid4(CPUCacheInfo *cache,
+-                                int num_apic_ids, int num_cores,
++                                X86CPUTopoInfo *topo_info,
+                                 uint32_t *eax, uint32_t *ebx,
+                                 uint32_t *ecx, uint32_t *edx)
+ {
+     assert(cache->size == cache->line_size * cache->associativity *
+                           cache->partitions * cache->sets);
+ 
+-    assert(num_apic_ids > 0);
+     *eax = CACHE_TYPE(cache->type) |
+            CACHE_LEVEL(cache->level) |
+            (cache->self_init ? CACHE_SELF_INIT_LEVEL : 0) |
+-           ((num_cores - 1) << 26) |
+-           ((num_apic_ids - 1) << 14);
++           (max_core_ids_in_package(topo_info) << 26) |
++           (max_thread_ids_for_cache(topo_info, cache->share_level) << 14);
+ 
+     assert(cache->line_size > 0);
+     assert(cache->partitions > 0);
+@@ -6247,10 +6278,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+                (cpuid2_cache_descriptor(env->cache_info_cpuid2.l1i_cache) <<  8) |
+                (cpuid2_cache_descriptor(env->cache_info_cpuid2.l2_cache));
+         break;
+-    case 4: {
+-        int addressable_cores_width;
+-        int addressable_threads_width;
+-
++    case 4:
+         /* cache info: needed for Core compatibility */
+         if (cpu->cache_info_passthrough) {
+             x86_cpu_get_cache_cpuid(index, count, eax, ebx, ecx, edx);
+@@ -6262,55 +6290,42 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+                 int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
+ 
+                 if (cores_per_pkg > 1) {
+-                    addressable_cores_width = apicid_pkg_offset(&topo_info) -
+-                                              apicid_core_offset(&topo_info);
+-
+                     *eax &= ~0xFC000000;
+-                    *eax |= ((1 << addressable_cores_width) - 1) << 26;
++                    *eax |= max_core_ids_in_package(&topo_info) << 26;
+                 }
+                 if (host_vcpus_per_cache > threads_per_pkg) {
+-                    /* Share the cache at package level. */
+-                    addressable_threads_width = apicid_pkg_offset(&topo_info);
+-
+                     *eax &= ~0x3FFC000;
+-                    *eax |= ((1 << addressable_threads_width) - 1) << 14;
++
++                    /* Share the cache at package level. */
++                    *eax |= max_thread_ids_for_cache(&topo_info,
++                                CPU_TOPO_LEVEL_PACKAGE) << 14;
+                 }
+             }
+         } else if (cpu->vendor_cpuid_only && IS_AMD_CPU(env)) {
+             *eax = *ebx = *ecx = *edx = 0;
+         } else {
+             *eax = 0;
+-            addressable_cores_width = apicid_pkg_offset(&topo_info) -
+-                                      apicid_core_offset(&topo_info);
+ 
+             switch (count) {
+             case 0: /* L1 dcache info */
+-                addressable_threads_width = apicid_core_offset(&topo_info);
+                 encode_cache_cpuid4(env->cache_info_cpuid4.l1d_cache,
+-                                    (1 << addressable_threads_width),
+-                                    (1 << addressable_cores_width),
++                                    &topo_info,
+                                     eax, ebx, ecx, edx);
+                 break;
+             case 1: /* L1 icache info */
+-                addressable_threads_width = apicid_core_offset(&topo_info);
+                 encode_cache_cpuid4(env->cache_info_cpuid4.l1i_cache,
+-                                    (1 << addressable_threads_width),
+-                                    (1 << addressable_cores_width),
++                                    &topo_info,
+                                     eax, ebx, ecx, edx);
+                 break;
+             case 2: /* L2 cache info */
+-                addressable_threads_width = apicid_core_offset(&topo_info);
+                 encode_cache_cpuid4(env->cache_info_cpuid4.l2_cache,
+-                                    (1 << addressable_threads_width),
+-                                    (1 << addressable_cores_width),
++                                    &topo_info,
+                                     eax, ebx, ecx, edx);
+                 break;
+             case 3: /* L3 cache info */
+                 if (cpu->enable_l3_cache) {
+-                    addressable_threads_width = apicid_die_offset(&topo_info);
+                     encode_cache_cpuid4(env->cache_info_cpuid4.l3_cache,
+-                                        (1 << addressable_threads_width),
+-                                        (1 << addressable_cores_width),
++                                        &topo_info,
+                                         eax, ebx, ecx, edx);
+                     break;
+                 }
+@@ -6321,7 +6336,6 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+             }
+         }
+         break;
+-    }
+     case 5:
+         /* MONITOR/MWAIT Leaf */
+         *eax = cpu->mwait.eax; /* Smallest monitor-line size in bytes */
 -- 
 2.34.1
 
