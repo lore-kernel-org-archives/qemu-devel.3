@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1966C5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 10:19:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 223BBC5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 10:20:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reuYy-0004bq-Bp; Tue, 27 Feb 2024 05:19:52 -0500
+	id 1reuYP-00049Z-Mw; Tue, 27 Feb 2024 05:19:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1reuYY-0004Dy-Vz
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 05:19:30 -0500
+ id 1reuYM-00048c-Fk
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 05:19:15 -0500
 Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1reuYX-00036Z-0q
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 05:19:26 -0500
+ id 1reuYK-00035x-CF
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 05:19:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709029165; x=1740565165;
+ t=1709029152; x=1740565152;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=DMBdMP1ZcAduP8fMWAepK1Lqbpik6T3gKGb2N74I2hw=;
- b=jgi/P+cWn8CpTY6PDvXfJ/8345jo8LOpdCbA/N7lzRdiPvtMhAOSzHPa
- YBHWO94vv+Kls8nePXd4F5+dyZRaIaT9/+3U5FDZ04dAldBIehM6wI0Zu
- OkhHBkT3XEVSg3JLQKDEtQfNPxYJg62KH7P5sk/qglftfbExg47Ud9l3t
- mGBX17EK1EJ8kCW78hC8g6tcD0R53BBL6sHLjsAigdb7CAp55d3b/3uR7
- BwBkSTe+CtkzdYa0VU1nO08lnEdd+iJ7VKkZnoalbMn8VymbeKPS4U0Yy
- C1spD679GR87rwsmO7+8V00PixplI9+3gS0KR1u1Og/LR24JMINjT51Jt w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10996"; a="6310267"
+ bh=mKdfzIPsOw63Y6tcpFyHMTH04ZZmgqO/zY17ht70xyQ=;
+ b=iVMgtRmrBpmQpOEs3aDZvRAcT6aWGc94zbg97yh0D3hx3MZqdWEdrT+X
+ oe01yOcySGztKd//ySzkfF3BNLKoICWpIc7UdoFfURBKBY0r+BrclPax1
+ PaR6dUNtOp7C0YqyYEjMM3bkVa4sJngMJ5YbcpxcvchsWhkHnPhpDOk8p
+ rSkbe5fxZPAvzwgDLKJ2yjQFwBCF5DjwSZ1I+8OJsn5OP08gwPpCSYJzL
+ ntZObeDN4WnYn0w1QkMlz9rXBJiiqbe4qG3jY8oR6WoCSeqTeoUuRy95+
+ gQ+S/ihUrqUtPx1Om20ZDOgZeaIZmKWcHcrOBZR8W4oxa85BKI9rYmuFb Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10996"; a="6310224"
 X-IronPort-AV: E=Sophos;i="6.06,187,1705392000"; 
-   d="scan'208";a="6310267"
+   d="scan'208";a="6310224"
 Received: from fmviesa010.fm.intel.com ([10.60.135.150])
  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Feb 2024 02:19:24 -0800
+ 27 Feb 2024 02:19:10 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,187,1705392000"; 
-   d="scan'208";a="6954783"
+   d="scan'208";a="6954765"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa010.fm.intel.com with ESMTP; 27 Feb 2024 02:19:19 -0800
+ by fmviesa010.fm.intel.com with ESMTP; 27 Feb 2024 02:19:05 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -58,12 +58,10 @@ To: Eduardo Habkost <eduardo@habkost.net>,
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Zhuocheng Ding <zhuocheng.ding@intel.com>, Babu Moger <babu.moger@amd.com>,
- Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
- Robert Hoo <robert.hu@linux.intel.com>
-Subject: [PATCH v9 06/21] i386/cpu: Use APIC ID info to encode cache topo in
- CPUID[4]
-Date: Tue, 27 Feb 2024 18:32:16 +0800
-Message-Id: <20240227103231.1556302-7-zhao1.liu@linux.intel.com>
+ Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v9 03/21] hw/core: Introduce module-id as the topology subindex
+Date: Tue, 27 Feb 2024 18:32:13 +0800
+Message-Id: <20240227103231.1556302-4-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
 References: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
@@ -94,164 +92,58 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-Refer to the fixes of cache_info_passthrough ([1], [2]) and SDM, the
-CPUID.04H:EAX[bits 25:14] and CPUID.04H:EAX[bits 31:26] should use the
-nearest power-of-2 integer.
+Add module-id in CpuInstanceProperties, to locate the CPU with module
+level.
 
-The nearest power-of-2 integer can be calculated by pow2ceil() or by
-using APIC ID offset/width (like L3 topology using 1 << die_offset [3]).
-
-But in fact, CPUID.04H:EAX[bits 25:14] and CPUID.04H:EAX[bits 31:26]
-are associated with APIC ID. For example, in linux kernel, the field
-"num_threads_sharing" (Bits 25 - 14) is parsed with APIC ID. And for
-another example, on Alder Lake P, the CPUID.04H:EAX[bits 31:26] is not
-matched with actual core numbers and it's calculated by:
-"(1 << (pkg_offset - core_offset)) - 1".
-
-Therefore the topology information of APIC ID should be preferred to
-calculate nearest power-of-2 integer for CPUID.04H:EAX[bits 25:14] and
-CPUID.04H:EAX[bits 31:26]:
-1. d/i cache is shared in a core, 1 << core_offset should be used
-   instead of "cs->nr_threads" in encode_cache_cpuid4() for
-   CPUID.04H.00H:EAX[bits 25:14] and CPUID.04H.01H:EAX[bits 25:14].
-2. L2 cache is supposed to be shared in a core as for now, thereby
-   1 << core_offset should also be used instead of "cs->nr_threads" in
-   encode_cache_cpuid4() for CPUID.04H.02H:EAX[bits 25:14].
-3. Similarly, the value for CPUID.04H:EAX[bits 31:26] should also be
-   calculated with the bit width between the package and SMT levels in
-   the APIC ID (1 << (pkg_offset - core_offset) - 1).
-
-In addition, use APIC ID bits calculations to replace "pow2ceil()" for
-cache_info_passthrough case.
-
-[1]: efb3934adf9e ("x86: cpu: make sure number of addressable IDs for processor cores meets the spec")
-[2]: d7caf13b5fcf ("x86: cpu: fixup number of addressable IDs for logical processors sharing cache")
-[3]: d65af288a84d ("i386: Update new x86_apicid parsing rules with die_offset support")
-
-Fixes: 7e3482f82480 ("i386: Helpers to encode cache information consistently")
-Suggested-by: Robert Hoo <robert.hu@linux.intel.com>
+Suggested-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Tested-by: Yongwei Ma <yongwei.ma@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
 Changes since v7:
- * Fixed calculations in cache_info_passthrough case. (Xiaoyao)
- * Renamed variables as *_width. (Xiaoyao)
- * Unified variable names for encoding cache_info_passthrough case and
-   non-cache_info_passthrough case as addressable_cores_width and
-   addressable_threads_width.
- * Fixed typos in commit message. (Xiaoyao)
- * Dropped Michael/Babu's ACKed/Tested tags since the code change.
- * Re-added Yongwei's Tested tag For his re-testing.
-
-Changes since v3:
- * Fixed compile warnings. (Babu)
- * Fixed spelling typo.
-
-Changes since v1:
- * Used APIC ID offset to replace "pow2ceil()" for cache_info_passthrough
-   case. (Yanan)
- * Split the L1 cache fix into a separate patch.
- * Renamed the title of this patch (the original is "i386/cpu: Fix number
-   of addressable IDs in CPUID.04H").
+ * New commit to introduce module_id to locate the CPU with module
+   level.
 ---
- target/i386/cpu.c | 37 ++++++++++++++++++++++++++++---------
- 1 file changed, 28 insertions(+), 9 deletions(-)
+ hw/core/machine-hmp-cmds.c | 4 ++++
+ qapi/machine.json          | 4 ++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 81d9046167e8..c77bcbc44d59 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -6014,7 +6014,6 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
- {
-     X86CPU *cpu = env_archcpu(env);
-     CPUState *cs = env_cpu(env);
--    uint32_t die_offset;
-     uint32_t limit;
-     uint32_t signature[3];
-     X86CPUTopoInfo topo_info;
-@@ -6086,7 +6085,10 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-                (cpuid2_cache_descriptor(env->cache_info_cpuid2.l1i_cache) <<  8) |
-                (cpuid2_cache_descriptor(env->cache_info_cpuid2.l2_cache));
-         break;
--    case 4:
-+    case 4: {
-+        int addressable_cores_width;
-+        int addressable_threads_width;
-+
-         /* cache info: needed for Core compatibility */
-         if (cpu->cache_info_passthrough) {
-             x86_cpu_get_cache_cpuid(index, count, eax, ebx, ecx, edx);
-@@ -6098,39 +6100,55 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-                 int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
-                 int vcpus_per_socket = cs->nr_cores * cs->nr_threads;
-                 if (cs->nr_cores > 1) {
-+                    addressable_cores_width = apicid_pkg_offset(&topo_info) -
-+                                              apicid_core_offset(&topo_info);
-+
-                     *eax &= ~0xFC000000;
--                    *eax |= (pow2ceil(cs->nr_cores) - 1) << 26;
-+                    *eax |= ((1 << addressable_cores_width) - 1) << 26;
-                 }
-                 if (host_vcpus_per_cache > vcpus_per_socket) {
-+                    /* Share the cache at package level. */
-+                    addressable_threads_width = apicid_pkg_offset(&topo_info);
-+
-                     *eax &= ~0x3FFC000;
--                    *eax |= (pow2ceil(vcpus_per_socket) - 1) << 14;
-+                    *eax |= ((1 << addressable_threads_width) - 1) << 14;
-                 }
-             }
-         } else if (cpu->vendor_cpuid_only && IS_AMD_CPU(env)) {
-             *eax = *ebx = *ecx = *edx = 0;
-         } else {
-             *eax = 0;
-+            addressable_cores_width = apicid_pkg_offset(&topo_info) -
-+                                      apicid_core_offset(&topo_info);
-+
-             switch (count) {
-             case 0: /* L1 dcache info */
-+                addressable_threads_width = apicid_core_offset(&topo_info);
-                 encode_cache_cpuid4(env->cache_info_cpuid4.l1d_cache,
--                                    cs->nr_threads, cs->nr_cores,
-+                                    (1 << addressable_threads_width),
-+                                    (1 << addressable_cores_width),
-                                     eax, ebx, ecx, edx);
-                 break;
-             case 1: /* L1 icache info */
-+                addressable_threads_width = apicid_core_offset(&topo_info);
-                 encode_cache_cpuid4(env->cache_info_cpuid4.l1i_cache,
--                                    cs->nr_threads, cs->nr_cores,
-+                                    (1 << addressable_threads_width),
-+                                    (1 << addressable_cores_width),
-                                     eax, ebx, ecx, edx);
-                 break;
-             case 2: /* L2 cache info */
-+                addressable_threads_width = apicid_core_offset(&topo_info);
-                 encode_cache_cpuid4(env->cache_info_cpuid4.l2_cache,
--                                    cs->nr_threads, cs->nr_cores,
-+                                    (1 << addressable_threads_width),
-+                                    (1 << addressable_cores_width),
-                                     eax, ebx, ecx, edx);
-                 break;
-             case 3: /* L3 cache info */
--                die_offset = apicid_die_offset(&topo_info);
-                 if (cpu->enable_l3_cache) {
-+                    addressable_threads_width = apicid_die_offset(&topo_info);
-                     encode_cache_cpuid4(env->cache_info_cpuid4.l3_cache,
--                                        (1 << die_offset), cs->nr_cores,
-+                                        (1 << addressable_threads_width),
-+                                        (1 << addressable_cores_width),
-                                         eax, ebx, ecx, edx);
-                     break;
-                 }
-@@ -6141,6 +6159,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-             }
+diff --git a/hw/core/machine-hmp-cmds.c b/hw/core/machine-hmp-cmds.c
+index a6ff6a487583..8701f00cc7cc 100644
+--- a/hw/core/machine-hmp-cmds.c
++++ b/hw/core/machine-hmp-cmds.c
+@@ -87,6 +87,10 @@ void hmp_hotpluggable_cpus(Monitor *mon, const QDict *qdict)
+             monitor_printf(mon, "    cluster-id: \"%" PRIu64 "\"\n",
+                            c->cluster_id);
          }
-         break;
-+    }
-     case 5:
-         /* MONITOR/MWAIT Leaf */
-         *eax = cpu->mwait.eax; /* Smallest monitor-line size in bytes */
++        if (c->has_module_id) {
++            monitor_printf(mon, "    module-id: \"%" PRIu64 "\"\n",
++                           c->module_id);
++        }
+         if (c->has_core_id) {
+             monitor_printf(mon, "    core-id: \"%" PRIu64 "\"\n", c->core_id);
+         }
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 5233a8947556..32b583ad187f 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -933,6 +933,9 @@
+ # @cluster-id: cluster number within the parent container the CPU
+ #     belongs to (since 7.1)
+ #
++# @module-id: module number within the parent container the CPU
++#     belongs to (since 9.0)
++#
+ # @core-id: core number within the parent container the CPU
+ #     belongs to
+ #
+@@ -951,6 +954,7 @@
+             '*socket-id': 'int',
+             '*die-id': 'int',
+             '*cluster-id': 'int',
++            '*module-id': 'int',
+             '*core-id': 'int',
+             '*thread-id': 'int'
+   }
 -- 
 2.34.1
 
