@@ -4,107 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F220CC54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 22:40:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6928DC5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 23:26:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rf67X-000207-Ba; Tue, 27 Feb 2024 17:40:19 -0500
+	id 1rf6q0-0002AC-Rj; Tue, 27 Feb 2024 18:26:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vikram.garhwal@amd.com>)
- id 1rf67T-0001yf-Jp
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 17:40:16 -0500
-Received: from mail-bn8nam12on2053.outbound.protection.outlook.com
- ([40.107.237.53] helo=NAM12-BN8-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rf6q0-0002A2-2Y
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 18:26:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vikram.garhwal@amd.com>)
- id 1rf67R-0003Z2-8S
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 17:40:15 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=AcWE7DEMKDsASQKk1Jpbac1wXeeO4/LG964aXQOj5CwEQ5w9c5+fJwuA7v6MV6GCXgevbtxBrwTzSWZceNxm9GPxwbKnXh7MDU3FVOBR8SZtJEJVdoPQ7CkCduq0JRO/0Vcj/07EmPvCAHWAzJvqJNYcmbQyMt2jExaK2VFPOQKhDbkh+vj9EeliTJiBFT0pdC5sMB8lkQhj/mSG+MEbnz8Ty19sStVbMCukkm4BNy/ok73bfPypLf1QwH1VdALOTA9miVJuKq9PioTQvy9xRR5+KZ43Xo8sn/eKJiyd0ZB71Hiwg5ucNmLE/2xGSdO/Brg17w8OLaWLLYiUYJy2WA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=JUD4ZGMFU0i38ZU5gCCcFQkjxFH5k3l43obvPxs0h4M=;
- b=OvoeD69PeGa8tm2sMWlv3865+TNcw1f+dnbTSg0b6y9XORYp22LCl81AAZPoZOuOqG+pQKjgo/KoIP/J/CaZurRLGSpiwICqru5eU3UgHE/z/OEebAJqIIB9A2oqguE30spthE/1gt39ZVILiw+v2h1N2BYB+vHETYioMQUOOtfIWh2IG4AV3i5kfZbnbnKb5ISG+HcPkv0Q2yS3SKPqBB0FvDqMvTePgOMDFnWeryEAuYM0Padz+vnIBtaq4HULbCJx19qZkQQFi5DUFtFWocGnk+207F14uYzm2T9AmUo/XiHWQkvQxJDTJfUJciVsxroEOWUjUkXr1SbiKAqWDQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=JUD4ZGMFU0i38ZU5gCCcFQkjxFH5k3l43obvPxs0h4M=;
- b=3Mzqh36yHsWdKekGsIwo6ptOo7Q3JurPvvHeLU2RSXHG+gKGSn/G0G8mPNO6nM8EadMaZ5ppGmeS3Vy/LzgbQcYPkaUfUfFAqFsRjdBtLNp+BCQ7vVtJmIY4/r+pN68sSUYOtMj0KRbzi/yGqqrbPqaCsxzLyGeW+AZ1WFiBxNo=
-Received: from BN0PR04CA0156.namprd04.prod.outlook.com (2603:10b6:408:eb::11)
- by DM4PR12MB6493.namprd12.prod.outlook.com (2603:10b6:8:b6::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.24; Tue, 27 Feb
- 2024 22:35:06 +0000
-Received: from BN3PEPF0000B075.namprd04.prod.outlook.com
- (2603:10b6:408:eb:cafe::11) by BN0PR04CA0156.outlook.office365.com
- (2603:10b6:408:eb::11) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.50 via Frontend
- Transport; Tue, 27 Feb 2024 22:35:06 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- BN3PEPF0000B075.mail.protection.outlook.com (10.167.243.120) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7292.25 via Frontend Transport; Tue, 27 Feb 2024 22:35:06 +0000
-Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 27 Feb
- 2024 16:35:05 -0600
-Received: from xsjfnuv50.xilinx.com (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.35 via Frontend
- Transport; Tue, 27 Feb 2024 16:35:05 -0600
-From: Vikram Garhwal <vikram.garhwal@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: <sstabellini@kernel.org>, <vikram.garhwal@amd.com>, <jgross@suse.com>
-Subject: [QEMU][PATCH v3 0/7] Xen: support grant mappings.
-Date: Tue, 27 Feb 2024 14:34:54 -0800
-Message-ID: <20240227223501.28475-1-vikram.garhwal@amd.com>
-X-Mailer: git-send-email 2.17.1
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rf6pw-0002kR-UX
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 18:26:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709076371;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Igx5r/1+mLXyO9KYz2bzrP9NwD2WD/t56myINSWYNeQ=;
+ b=Sk6VoUnUHXJGHtigHAMKbwS9tYBRWQx0udtbhDEgr49eKqlYfJQR2bKD2NtrZSvE3ITqnR
+ fBHY/pGPGf2idUQ6kSZE2z1JiT3WeWH4EibtO4PzKEDd+4uTcQg6g6UW4/cAtselHm0ZGT
+ 9mJUqjshliY9c0mal1mGaibHStovuKw=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-314-bNLYv12IO0qglxM1xEVQFA-1; Tue, 27 Feb 2024 18:26:08 -0500
+X-MC-Unique: bNLYv12IO0qglxM1xEVQFA-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-5116e86c080so3842232e87.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 15:26:08 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709076365; x=1709681165;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Igx5r/1+mLXyO9KYz2bzrP9NwD2WD/t56myINSWYNeQ=;
+ b=wR7r5oGCvN+15zSOS9ktm5LxhdCGOAx/N905U4kWSDeBYBmpaAybiCzGDe8EiKUf8p
+ xT88ElOdmMlGKo3NJB0kiLw6EigNgHXDZj2OP4J0jp3tJxWnY/12dcxLdYRI7UMi8iSF
+ sw2aOL2MRPxi1qWHtRn7eaPdqIJdywiV5cqbKYf7Agp+2c9fTZfqQ+s/h1tkRLxBoYAw
+ yQizxZ65XRk2oDY+mIaYPEofjz1XzO8YZ3ECTy6odn/MxDF++CNk3J40sYMgym9XOBz+
+ 3hvmmpYaE27lcTdy19+cZXxK4YcdQxkCkruUtmqt2UGJBmL71kGpn97rK9fDFLUuxj99
+ iqgA==
+X-Gm-Message-State: AOJu0YxHSZD/68Q16fs/s6DA9lWoeBCYVEmhD6QnHzMShf7LYxFCv8JJ
+ 8gYSJskGWCJmllHS2R7gPZwuBwALP+Q1xln+QB40ri0YGm60+41XN8kQg+RP6eSl8sQNqcvCKcl
+ MD7xpmgFKWkz/8D6qd4xqRc2Y+t2MmV6tCqHS1mDYhrzFjhNWfxnwSsmkTovJ8K2c47FxpMacAw
+ UN5dHx5fw0CTbEJDtlHutR1h6dtnT+meaYKWEY
+X-Received: by 2002:a05:6512:2309:b0:513:b8:fd51 with SMTP id
+ o9-20020a056512230900b0051300b8fd51mr5058917lfu.45.1709076365292; 
+ Tue, 27 Feb 2024 15:26:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFb9BdbdgwS/ErAzq8RdU4Rb5tjtTlfEkkaqfkBruCzFE/VUPjoiUmMlFA+MNNQ9DVAqXXtMQ==
+X-Received: by 2002:a05:6512:2309:b0:513:b8:fd51 with SMTP id
+ o9-20020a056512230900b0051300b8fd51mr5058909lfu.45.1709076364836; 
+ Tue, 27 Feb 2024 15:26:04 -0800 (PST)
+Received: from [192.168.10.118] ([2001:b07:6468:f312:5e2c:eb9a:a8b6:fd3e])
+ by smtp.gmail.com with ESMTPSA id
+ j20-20020a1709066dd400b00a3d665c6778sm1242800ejt.12.2024.02.27.15.26.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 Feb 2024 15:26:04 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org
+Subject: [PATCH] mips: do not list individual devices from configs/
+Date: Wed, 28 Feb 2024 00:26:03 +0100
+Message-ID: <20240227232603.240365-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.43.2
 MIME-Version: 1.0
-Content-Type: text/plain
-Received-SPF: None (SATLEXMB04.amd.com: vikram.garhwal@amd.com does not
- designate permitted sender hosts)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF0000B075:EE_|DM4PR12MB6493:EE_
-X-MS-Office365-Filtering-Correlation-Id: b6488d6b-4eaa-4465-7a81-08dc37e458da
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: MHfU80uLP7n53oah5NDk7hkgq37wJy0VrCb1kIlFYujp/2vc/Z2rzk7iaYnmO8bDL/H9zyZ9uQTzFXKplNL/edM154W0t6LJBtbkBTjInhb8vJExjsBITNJ9ZsUcDrwN5CFzJnJrqIYPrCAie2ESwOCdUvKBw6EP2gjWmlRqWKfat5/vvCJ52KD3CgQMcF9Tj2eirO+Rt+qAtSHPodWSgsiCp2oU6JJo/MOSx0U72QK/lGpyurB4CfzEPqIskWPCL2XIWLfHpNwmEkmiRoaFU3FqHVpp+CUZbAdBKzfby2NoUS169tmsctU8nrofXlm0ke1Cm7NBvFA6Pe9Ph0EBLCwiej/DWeZYAR5lKXzUy9vZyhysrY+QWU6UD2wCSta6En9o35KKiM6n0CUMCyYOVQWvwFF7lRlfqj2HCVbmGnJGrcRT6Vskc2xZYeD37HXz40YhpylACkF/h1/fgpONT4tlpb0eyc1oPtLpvDJm9DK/RWXfDFm3N6LcxZzg6iFRIQJ3WEu/NVVVhUcLVl2Y4QnNxXRMUxesTxpDNKXd1VgVf3pytHKYnR70LggYl8Wyn/dnWD+3ZeUwL9WP2DnS6jZLgszWGIkb1j3DJ3c1zr8BvPBWiz2Vw98v9BAexH0mrh3dx2qr/KcJ79rPNIlpg62zS6HvphJKT4QlN3w+Ggp+WgnKBYlLm8PTD/j12JGzpR+RzICNpvTIh3k+8Q6uGKJmxZg2tjsYEtBY4o+fAVdNb46ZKrEzwDwfbgchL0qa
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230031)(36860700004)(82310400014); DIR:OUT; SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Feb 2024 22:35:06.2239 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: b6488d6b-4eaa-4465-7a81-08dc37e458da
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B075.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6493
-Received-SPF: softfail client-ip=40.107.237.53;
- envelope-from=vikram.garhwal@amd.com;
- helo=NAM12-BN8-obe.outbound.protection.outlook.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,55 +100,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-This patch series add support for grant mappings as a pseudo RAM region for Xen.
+Add new "select" and "imply" directives if needed.  The resulting
+config-devices.mak files are the same as before.
 
-Enabling grant mappings patches(first 6) are written by Juergen in 2021.
+Note that builds without default devices will become much smaller
+than before; for this reason, it's necessary to use only the bare
+minimum of USB functions, in particular only those that are inlined.
+For this reason, usb_bus_find() must be removed, as it only exists
+if CONFIG_USB is selected by a host controller.
 
-QEMU Virtio device provides an emulated backends for Virtio frontned devices
-in Xen.
-Please set "iommu_platform=on" option when invoking QEMU. As this will set
-VIRTIO_F_ACCESS_PLATFORM feature which will be used by virtio frontend in Xen
-to know whether backend supports grants or not.
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ configs/devices/mips-softmmu/common.mak      | 28 +++-----------------
+ configs/devices/mips64el-softmmu/default.mak |  3 ---
+ .gitlab-ci.d/buildtest.yml                   |  2 +-
+ hw/display/Kconfig                           |  2 +-
+ hw/mips/Kconfig                              | 20 +++++++++++++-
+ 5 files changed, 25 insertions(+), 30 deletions(-)
 
-Changelog:
-v2->v3:
-    Drop patch 1/7. This was done because device unplug is an x86-only case.
-    Add missing qemu_mutex_unlock() before return.
-v1->v2:
-    Split patch 2/7 to keep phymem.c changes in a separate.
-    In patch "xen: add map and unmap callbacks for grant" add check for total
-        allowed grant < XEN_MAX_VIRTIO_GRANTS.
-    Fix formatting issues and re-based with master latest.
-
-Regards,
-Vikram
-
-Juergen Gross (5):
-  xen: add pseudo RAM region for grant mappings
-  softmmu: let qemu_map_ram_ptr() use qemu_ram_ptr_length()
-  xen: let xen_ram_addr_from_mapcache() return -1 in case of not found
-    entry
-  memory: add MemoryRegion map and unmap callbacks
-  xen: add map and unmap callbacks for grant region
-
-Vikram Garhwal (2):
-  softmmu: physmem: Split ram_block_add()
-  hw: arm: Add grant mapping.
-
- hw/arm/xen_arm.c                |   3 +
- hw/i386/xen/xen-hvm.c           |   3 +
- hw/xen/xen-hvm-common.c         |   4 +-
- hw/xen/xen-mapcache.c           | 214 ++++++++++++++++++++++++++++++--
- include/exec/memory.h           |  21 ++++
- include/exec/ram_addr.h         |   1 +
- include/hw/xen/xen-hvm-common.h |   2 +
- include/hw/xen/xen_pvdev.h      |   3 +
- include/sysemu/xen-mapcache.h   |   3 +
- system/physmem.c                | 179 +++++++++++++++-----------
- 10 files changed, 351 insertions(+), 82 deletions(-)
-
+diff --git a/configs/devices/mips-softmmu/common.mak b/configs/devices/mips-softmmu/common.mak
+index 1a853841b27..416a5d353e8 100644
+--- a/configs/devices/mips-softmmu/common.mak
++++ b/configs/devices/mips-softmmu/common.mak
+@@ -1,28 +1,8 @@
+ # Common mips*-softmmu CONFIG defines
+ 
+-CONFIG_ISA_BUS=y
+-CONFIG_PCI=y
+-CONFIG_PCI_DEVICES=y
+-CONFIG_VGA_ISA=y
+-CONFIG_VGA_MMIO=y
+-CONFIG_VGA_CIRRUS=y
+-CONFIG_VMWARE_VGA=y
+-CONFIG_SERIAL=y
+-CONFIG_SERIAL_ISA=y
+-CONFIG_PARALLEL=y
+-CONFIG_I8254=y
+-CONFIG_PCSPK=y
+-CONFIG_PCKBD=y
+-CONFIG_FDC=y
+-CONFIG_I8257=y
+-CONFIG_IDE_ISA=y
+-CONFIG_PFLASH_CFI01=y
+-CONFIG_I8259=y
+-CONFIG_MC146818RTC=y
+-CONFIG_MIPS_CPS=y
+-CONFIG_MIPS_ITU=y
++# Uncomment the following lines to disable these optional devices:
++# CONFIG_PCI_DEVICES=n
++# CONFIG_TEST_DEVICES=n
++
+ CONFIG_MALTA=y
+-CONFIG_PCNET_PCI=y
+ CONFIG_MIPSSIM=y
+-CONFIG_SMBUS_EEPROM=y
+-CONFIG_TEST_DEVICES=y
+diff --git a/configs/devices/mips64el-softmmu/default.mak b/configs/devices/mips64el-softmmu/default.mak
+index d5188f7ea58..88a37cf27f1 100644
+--- a/configs/devices/mips64el-softmmu/default.mak
++++ b/configs/devices/mips64el-softmmu/default.mak
+@@ -3,8 +3,5 @@
+ include ../mips-softmmu/common.mak
+ CONFIG_FULOONG=y
+ CONFIG_LOONGSON3V=y
+-CONFIG_ATI_VGA=y
+-CONFIG_RTL8139_PCI=y
+ CONFIG_JAZZ=y
+-CONFIG_VT82C686=y
+ CONFIG_MIPS_BOSTON=y
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index a1c030337b1..901265af95d 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -659,7 +659,7 @@ build-without-defaults:
+       --disable-pie
+       --disable-qom-cast-debug
+       --disable-strip
+-    TARGETS: avr-softmmu mips64-softmmu s390x-softmmu sh4-softmmu
++    TARGETS: avr-softmmu s390x-softmmu sh4-softmmu
+       sparc64-softmmu hexagon-linux-user i386-linux-user s390x-linux-user
+     MAKE_CHECK_ARGS: check
+ 
+diff --git a/hw/display/Kconfig b/hw/display/Kconfig
+index 07acb37dc66..234c7de027c 100644
+--- a/hw/display/Kconfig
++++ b/hw/display/Kconfig
+@@ -55,7 +55,7 @@ config VGA_MMIO
+ 
+ config VMWARE_VGA
+     bool
+-    default y if PCI_DEVICES && PC_PCI
++    default y if PCI_DEVICES && (PC_PCI || MIPS)
+     depends on PCI
+     select VGA
+ 
+diff --git a/hw/mips/Kconfig b/hw/mips/Kconfig
+index e57db4f6412..5c83ef49cf6 100644
+--- a/hw/mips/Kconfig
++++ b/hw/mips/Kconfig
+@@ -1,8 +1,15 @@
+ config MALTA
+     bool
++    imply PCNET_PCI
++    imply PCI_DEVICES
++    imply TEST_DEVICES
+     select FDC37M81X
+     select GT64120
++    select MIPS_CPS
+     select PIIX
++    select PFLASH_CFI01
++    select SERIAL
++    select SMBUS_EEPROM
+ 
+ config MIPSSIM
+     bool
+@@ -31,17 +38,26 @@ config JAZZ
+ 
+ config FULOONG
+     bool
++    imply PCI_DEVICES
++    imply TEST_DEVICES
++    imply ATI_VGA
++    imply RTL8139_PCI
+     select PCI_BONITO
++    select SMBUS_EEPROM
+     select VT82C686
+ 
+ config LOONGSON3V
+     bool
++    imply PCI_DEVICES
++    imply TEST_DEVICES
++    imply VIRTIO_PCI
++    imply VIRTIO_NET
+     imply VIRTIO_VGA
+     imply QXL if SPICE
++    imply USB_OHCI_PCI
+     select SERIAL
+     select GOLDFISH_RTC
+     select LOONGSON_LIOINTC
+-    select PCI_DEVICES
+     select PCI_EXPRESS_GENERIC_BRIDGE
+     select MSI_NONBROKEN
+     select FW_CFG_MIPS
+@@ -53,6 +69,8 @@ config MIPS_CPS
+ 
+ config MIPS_BOSTON
+     bool
++    imply PCI_DEVICES
++    imply TEST_DEVICES
+     select FITLOADER
+     select MIPS_CPS
+     select PCI_EXPRESS_XILINX
 -- 
-2.17.1
+2.43.2
 
 
