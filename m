@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 742A8C47DD9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B23C3C54E49
 	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 12:38:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfJBR-0005f4-Cl; Wed, 28 Feb 2024 07:37:13 -0500
+	id 1rfJC0-0005sC-4D; Wed, 28 Feb 2024 07:37:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rfJBP-0005cz-7Q
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 07:37:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rfJBx-0005r4-PV
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 07:37:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rfJBN-0001kz-LY
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 07:37:10 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rfJBv-00026j-UP
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 07:37:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709123828;
+ s=mimecast20190719; t=1709123862;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=TRbHu0IyoINOPUwo8bCb35ebFaUMAVVlXB12u/DtRS4=;
- b=LjYDaRSoJCY5rF8lB3mI4RYT98Bmyi/4i/SR8Rjc7yZr51p5ZCnF+WX/osjUUPM0tmoM6r
- /FGeaAGsDMWOFst6mE/x8mm+TmJJYCNcxErev9gHC86x3eufNSBZszxF9UE8P9S268yEp/
- Vl3lq6ZAY8D0X1MpMmz9zDBu5UaK/Ss=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-57-u6Y3QPPSPxayE00N4PbhTg-1; Wed, 28 Feb 2024 07:37:04 -0500
-X-MC-Unique: u6Y3QPPSPxayE00N4PbhTg-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
+ bh=1pRlnr1TC+bhw3nzslDecYtQ2vqZ6i2Z+6FbuVOBw2w=;
+ b=jLnt+XrX7ZehFJ0qUETqASmJXWmgfU5zlMF1qm226xcUQAgzxa4nGm3FPwQ34XtzMf4IB6
+ 7/9dl+4JO2hPq5mtU6fARR5dIKE9XcBAXQta9+wBc86/UZcIBc94zWHdrC6tr9RxugsaVO
+ yMmm2SBjQiQbRbyAL7S99I8TXiJea3s=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-118-2MfQB2rjMD6mFwMRzJ9HaQ-1; Wed,
+ 28 Feb 2024 07:37:36 -0500
+X-MC-Unique: 2MfQB2rjMD6mFwMRzJ9HaQ-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9530285A59D;
- Wed, 28 Feb 2024 12:37:03 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2A4F038143A1;
+ Wed, 28 Feb 2024 12:37:36 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.193.4])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 384B9492BE8;
- Wed, 28 Feb 2024 12:37:03 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 0350F1C06532;
+ Wed, 28 Feb 2024 12:37:36 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1C88321E66F4; Wed, 28 Feb 2024 13:36:57 +0100 (CET)
+ id BB2D421E6767; Wed, 28 Feb 2024 13:37:33 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>
 Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  "Michael
@@ -56,28 +56,27 @@ Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  "Michael
  Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,  Jason Wang
  <jasowang@redhat.com>,  Keith Busch <kbusch@kernel.org>,  Klaus Jensen
  <its@irrelevant.dk>,  qemu-devel@nongnu.org,  qemu-block@nongnu.org
-Subject: Re: [PATCH v8 13/15] hw/pci: Use UINT32_MAX as a default value for
- rombar
-In-Reply-To: <20240228-reuse-v8-13-282660281e60@daynix.com> (Akihiko Odaki's
- message of "Wed, 28 Feb 2024 20:33:24 +0900")
+Subject: Re: [PATCH v8 14/15] hw/pci: Determine if rombar is explicitly enabled
+In-Reply-To: <20240228-reuse-v8-14-282660281e60@daynix.com> (Akihiko Odaki's
+ message of "Wed, 28 Feb 2024 20:33:25 +0900")
 References: <20240228-reuse-v8-0-282660281e60@daynix.com>
- <20240228-reuse-v8-13-282660281e60@daynix.com>
-Date: Wed, 28 Feb 2024 13:36:57 +0100
-Message-ID: <87zfvkvk7q.fsf@pond.sub.org>
+ <20240228-reuse-v8-14-282660281e60@daynix.com>
+Date: Wed, 28 Feb 2024 13:37:33 +0100
+Message-ID: <87v868vk6q.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,40 +94,20 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Akihiko Odaki <akihiko.odaki@daynix.com> writes:
 
-> Currently there is no way to distinguish the case that rombar is
-> explicitly specified as 1 and the case that rombar is not specified.
+> vfio determines if rombar is explicitly enabled by inspecting QDict.
+> Inspecting QDict is not nice because QDict is untyped and depends on the
+> details on the external interface. Add an infrastructure to determine if
+> rombar is explicitly enabled to hw/pci.
 >
-> Set rombar UINT32_MAX by default to distinguish these cases just as it
-> is done for addr and romsize. It was confirmed that changing the default
-> value to UINT32_MAX will not change the behavior by looking at
-> occurences of rom_bar.
->
-> $ git grep -w rom_bar
-> hw/display/qxl.c:328:    QXLRom *rom = memory_region_get_ram_ptr(&d->rom_bar);
-> hw/display/qxl.c:431:    qxl_set_dirty(&qxl->rom_bar, 0, qxl->rom_size);
-> hw/display/qxl.c:1048:    QXLRom *rom = memory_region_get_ram_ptr(&qxl->rom_bar);
-> hw/display/qxl.c:2131:    memory_region_init_rom(&qxl->rom_bar, OBJECT(qxl), "qxl.vrom",
-> hw/display/qxl.c:2154: PCI_BASE_ADDRESS_SPACE_MEMORY, &qxl->rom_bar);
-> hw/display/qxl.h:101:    MemoryRegion       rom_bar;
-> hw/pci/pci.c:74:    DEFINE_PROP_UINT32("rombar",  PCIDevice, rom_bar, 1),
-> hw/pci/pci.c:2329:    if (!pdev->rom_bar) {
-> hw/vfio/pci.c:1019:    if (vdev->pdev.romfile || !vdev->pdev.rom_bar) {
-> hw/xen/xen_pt_load_rom.c:29:    if (dev->romfile || !dev->rom_bar) {
-> include/hw/pci/pci_device.h:150:    uint32_t rom_bar;
->
-> rom_bar refers to a different variable in qxl. It is only tested if
-> the value is 0 or not in the other places.
->
-> If a user explicitly set UINT32_MAX, we still cannot distinguish that
-> from the implicit default. However, it is unlikely to be a problem as
-> nobody would type literal UINT32_MAX (0xffffffff or 4294967295) by
-> chance.
+> This changes the semantics of UINT32_MAX, which has always been a valid
+> value to explicitly say rombar is enabled to denote the implicit default
+> value. Nobody should have been set UINT32_MAX to rombar however,
+> considering that its meaning was no different from 1 and typing a
+> literal UINT32_MAX (0xffffffff or 4294967295) is more troublesome.
 >
 > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Not exactly elegant, but I believe we have similar "default value means
-not set by user (good enough because the default value is sufficiently
-odd)" logic elsewhere.
+Remark on the previous patch applies.
 
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
