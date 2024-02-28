@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9CC5C5478C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 13:01:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9AFAC47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 13:03:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfJXw-0008LB-Vz; Wed, 28 Feb 2024 08:00:29 -0500
+	id 1rfJaf-0001RC-CA; Wed, 28 Feb 2024 08:03:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1rfJXm-0008EC-CN
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 08:00:18 -0500
-Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122])
+ id 1rfJZp-00016o-KC
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 08:02:27 -0500
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1rfJXg-0001X9-Az
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 08:00:17 -0500
-Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
- [209.85.208.200])
+ id 1rfJZn-00027Z-UM
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 08:02:25 -0500
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 46D2A3FE49
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 13:00:09 +0000 (UTC)
+ by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id BA7093F684
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 13:02:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20210705; t=1709125209;
- bh=5nHIlTiIrOAQkUS14+L0as1rnVYvFgw3GZJu5GYwssY=;
- h=From:To:Cc:Subject:Date:Message-ID:MIME-Version;
- b=HydQB1Vs/oYAz5fBUEMCtibzkbQSVaZSOPPKYWh8/mLrLVBFwBon76ANQmR+IQqz9
- gc1sstEwUQSGyUoQY+kB0U1sAClhcdQsmPAs2nm8C/sB5FKZmQvhFa/FHURkLz+cIe
- g4dC41pZHRncuOu+GRo8prKKzA+Z9UJa938c9FknDp0UA8cm7rV/kgt5z/jHGRVxyu
- 5ILIFDdjleTE5B8/sxbHDw+D3Rlr4JYXDOr5h9/BGfaBVGzeqHprALRosfb0kK2A/5
- rFWAhDNPes+3HONiDO4kGYm/dr4zDl4JQ2gucPe8rPeZo67RUdvpYOgqLglir8Gd9S
- 3L2Qajpm+mS2g==
-Received: by mail-lj1-f200.google.com with SMTP id
- 38308e7fff4ca-2d2b326f17fso8441471fa.1
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 05:00:09 -0800 (PST)
+ s=20210705; t=1709125338;
+ bh=ni2u1AG8RMtTNfLfQmkSAT4tDdbgi7wr6UQOOcXLq0g=;
+ h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+ In-Reply-To:Content-Type;
+ b=c7zBY/tHDzTCku/+q8Ivlc3NCi4IvRqr6vyjlObEp3tMl2+ogaMBNUi4Drq2rtnge
+ 78YcLBx7UEJOPfe7j3PjQrkod9Fgqg2SjXrHn0ZUJHlTTQOppIniIXVL4RdRJjo/uO
+ TRODPkg4GYlceSMk8bLy5t4ZMqcisEy6/vE2+kB7fkxMYq5DOrzeDZygUODXlQO4iD
+ avWTAHeN7Pp8X1KUnVhJLk6o7r9LXM8ACUnzIoKOPH+B1dIBXrtchwNHOIu7YA2jS8
+ 7uGknFUjN6T+55InZurrAbjhjmEBTXoyG7U/ZweSD+fcp2dfm+1Cyw0CQF2eZPj7Wo
+ gsNx8LjL3jHQA==
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-40e40126031so29185425e9.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 05:02:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709125208; x=1709730008;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=5nHIlTiIrOAQkUS14+L0as1rnVYvFgw3GZJu5GYwssY=;
- b=jjgqHUOrxxtANU8A1Ufj1QjzUYE2NzUYtDT0m2KMeZPo1pDxxcYDZt/x0pS+cDaT5R
- gVg6Kr5UHVfAUYXedagcjbRsx5/m+3CM5tCMTUsr6KcPdn6eQ0w72qrLmVfObhsvr2uw
- d8QOuP4AYLJUDXcVLKu3wjmcHfglCi0p2E8iiuYROaWHD4vFqIqYHerlU7xKwZPBIl6r
- NDJSJR9TmoOmshzi3cmjkWb5T7PE5jjMnHY5kk6hJO7i8M8QvIlrZ9dbX+Wp+tIWtNT6
- DnmPV5XDXHO1wcJVAzIHGUmhY+4vEmqMr++dhSj0YaGoY5DyDc0VU1CnKY1EPVNguiQz
- hVTA==
+ d=1e100.net; s=20230601; t=1709125338; x=1709730138;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ni2u1AG8RMtTNfLfQmkSAT4tDdbgi7wr6UQOOcXLq0g=;
+ b=RV3yDZIhwmvQsyBaf/M3k1hw4bX3HwcPRvQYRSy2Q8Q0zbVhRajdE4TKlyi1uzdNqM
+ tp25/K2DjGjSHsAyEqcEfQEP0ZskscMoZzX2tEC3TYfDDxxE4v1whf1eJZTzKX8Nflap
+ z/dP9/LCtBt7Yr2JlJFCNTTc3plbiLr+TNoxtkrY9pTLsZH2iejBuiT2+70qtr6X5s+Y
+ 9hQBwRiC/VzCXjdlsl7XaWAFAN1INRo2/5H7tho5lnW1nRPL1ZLCaJeTwzVgcTlGFJtl
+ G7vHPuz1rYnpZkDbFMtxGxTv8HmDqveLpeMRUrdmG/kx5QNvik22ZLN2n4fOjLWlhaEC
+ B4lA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUD1NhTr99FCN9pRClg5ol/PDMUlx0GX4x8Calnr0wQc88FEayoy9V8dNjlxNOs+LYLHJF3ZrQpWTL5pB+MgSN3gl2rgGk=
-X-Gm-Message-State: AOJu0YwVAUYse2EA6Oez9jqTRq+yN+2ID3W3CTl6B2OzSIZgbNP8X3Vd
- KQr0l4VvC/Ubi2psKd+xUmEvGN9kCyIgfdMZ0BgWhsxDAccPO+u7ztuZo92ian3fqJrN/kaWmem
- V2h3VI8/v+6O8VycrN+KpwS9zuGgvCIRWV9qNLMB8CkFAzAWB85LJWWzZOgLP1G5zSVZE
-X-Received: by 2002:a19:5512:0:b0:513:1957:de76 with SMTP id
- n18-20020a195512000000b005131957de76mr1216818lfe.48.1709125208587; 
- Wed, 28 Feb 2024 05:00:08 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG9TxzdMLEpbqkxCswqMsnbJxB8FpPVD7qm/1dJWVev2q70/gm+qQ1LBttB7aeQD1Dn2jBzeg==
-X-Received: by 2002:a19:5512:0:b0:513:1957:de76 with SMTP id
- n18-20020a195512000000b005131957de76mr1216795lfe.48.1709125208210; 
- Wed, 28 Feb 2024 05:00:08 -0800 (PST)
-Received: from workstation5.fritz.box
- (ip-095-222-037-056.um34.pools.vodafone-ip.de. [95.222.37.56])
- by smtp.gmail.com with ESMTPSA id
- p1-20020adf9d81000000b0033e0567e90bsm64893wre.5.2024.02.28.05.00.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Feb 2024 05:00:07 -0800 (PST)
-From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+ AJvYcCUr/JhE51fERS2d0uC4Yag3K6X3o5Y1ywqjl/zCbzJwvBwLatY/824TESA+HbRUjy5SWt0l4b/QiGPooQ0ATlfcOw33YXE=
+X-Gm-Message-State: AOJu0YzeVGUISgCeEmYLupSHOb88W0XD2aEvbRWLtlUAZhsf0trK5mFQ
+ +RlRMa+5EHEXclrXwSjQlbs+Ex/uAPWndczWe0S2X+34kWQH3pHYOjNGUrHO84YCXZvsaha24GT
+ vTNnQntGiRVRPNG3z9j9dxYGmW4tA26PrRo1gZ6G6tz6OHQPPoRM2prHoKwCREwSGSMVR
+X-Received: by 2002:a5d:4741:0:b0:33d:63c0:3b7f with SMTP id
+ o1-20020a5d4741000000b0033d63c03b7fmr8620057wrs.42.1709125338304; 
+ Wed, 28 Feb 2024 05:02:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG90EZuD3juGYNd9HabvanKfmqbwKW/jaW+nwqFojp/JrtkBpiM1gtv2X7LrhkBMYvnQ9/PiQ==
+X-Received: by 2002:a5d:4741:0:b0:33d:63c0:3b7f with SMTP id
+ o1-20020a5d4741000000b0033d63c03b7fmr8620029wrs.42.1709125337900; 
+ Wed, 28 Feb 2024 05:02:17 -0800 (PST)
+Received: from [192.168.123.67] (ip-095-222-037-056.um34.pools.vodafone-ip.de.
+ [95.222.37.56]) by smtp.gmail.com with ESMTPSA id
+ t4-20020a0560001a4400b0033d06dfcf84sm14325334wry.100.2024.02.28.05.02.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 28 Feb 2024 05:02:17 -0800 (PST)
+Message-ID: <84ddd754-5b54-423a-8383-04b0b47cf051@canonical.com>
+Date: Wed, 28 Feb 2024 14:02:16 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] physmem: avoid bounce buffer too small
 To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  David Hildenbrand <david@redhat.com>
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org,
- Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Subject: [PATCH, v2] physmem: avoid bounce buffer too small
-Date: Wed, 28 Feb 2024 13:59:39 +0100
-Message-ID: <20240228125939.56925-1-heinrich.schuchardt@canonical.com>
-X-Mailer: git-send-email 2.43.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.125.188.122;
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20240228124638.55752-1-heinrich.schuchardt@canonical.com>
+Content-Language: en-US
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+In-Reply-To: <20240228124638.55752-1-heinrich.schuchardt@canonical.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=185.125.188.123;
  envelope-from=heinrich.schuchardt@canonical.com;
- helo=smtp-relay-internal-0.canonical.com
+ helo=smtp-relay-internal-1.canonical.com
 X-Spam_score_int: -44
 X-Spam_score: -4.5
 X-Spam_bar: ----
@@ -107,46 +110,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtqueue_map_desc() is called with values of sz exceeding that may exceed
-TARGET_PAGE_SIZE. sz = 0x2800 has been observed.
+On 28.02.24 13:46, Heinrich Schuchardt wrote:
+> virtqueue_map_desc() is called with values of sz exceeding that may exceed
+> TARGET_PAGE_SIZE. sz = 0x2800 has been observed.
+> 
+> We only support a single bounce buffer. We have to avoid
+> virtqueue_map_desc() calling address_space_map() multiple times. Otherwise
+> we see an error
+> 
+>      qemu: virtio: bogus descriptor or out of resources
+> 
+> Increase the minimum size of the bounce buffer to 0x10000 which matches
+> the largest value of TARGET_PAGE_SIZE for all architectures.
+> 
+> Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+> ---
+>   roms/edk2         | 2 +-
+>   roms/seabios-hppa | 2 +-
+>   system/physmem.c  | 8 ++++++--
+>   3 files changed, 8 insertions(+), 4 deletions(-)
+> 
+> diff --git a/roms/edk2 b/roms/edk2
+> index edc6681206..b8a3eec88c 160000
+> --- a/roms/edk2
+> +++ b/roms/edk2
+> @@ -1 +1 @@
+> -Subproject commit edc6681206c1a8791981a2f911d2fb8b3d2f5768
+> +Subproject commit b8a3eec88cc74bbfe7fb389d026cc7d1d8a989c8
 
-We only support a single bounce buffer. We have to avoid
-virtqueue_map_desc() calling address_space_map() multiple times. Otherwise
-we see an error
+I have resent v2 of the patch w/o this unrelated change.
 
-    qemu: virtio: bogus descriptor or out of resources
-
-Increase the minimum size of the bounce buffer to 0x10000 which matches
-the largest value of TARGET_PAGE_SIZE for all architectures.
-
-Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
----
-v2:
-	remove unrelated change
----
- system/physmem.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/system/physmem.c b/system/physmem.c
-index e3ebc19eef..3c82da1c86 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -3151,8 +3151,12 @@ void *address_space_map(AddressSpace *as,
-             *plen = 0;
-             return NULL;
-         }
--        /* Avoid unbounded allocations */
--        l = MIN(l, TARGET_PAGE_SIZE);
-+        /*
-+         * There is only one bounce buffer. The largest occuring value of
-+         * parameter sz of virtqueue_map_desc() must fit into the bounce
-+         * buffer.
-+         */
-+        l = MIN(l, 0x10000);
-         bounce.buffer = qemu_memalign(TARGET_PAGE_SIZE, l);
-         bounce.addr = addr;
-         bounce.len = l;
--- 
-2.43.0
+> diff --git a/roms/seabios-hppa b/roms/seabios-hppa
+> index 03774edaad..e4eac85880 160000
+> --- a/roms/seabios-hppa
+> +++ b/roms/seabios-hppa
+> @@ -1 +1 @@
+> -Subproject commit 03774edaad3bfae090ac96ca5450353c641637d1
+> +Subproject commit e4eac85880e8677f96d8b9e94de9f2eec9c0751f
+> diff --git a/system/physmem.c b/system/physmem.c
+> index e3ebc19eef..3c82da1c86 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -3151,8 +3151,12 @@ void *address_space_map(AddressSpace *as,
+>               *plen = 0;
+>               return NULL;
+>           }
+> -        /* Avoid unbounded allocations */
+> -        l = MIN(l, TARGET_PAGE_SIZE);
+> +        /*
+> +         * There is only one bounce buffer. The largest occuring value of
+> +         * parameter sz of virtqueue_map_desc() must fit into the bounce
+> +         * buffer.
+> +         */
+> +        l = MIN(l, 0x10000);
+>           bounce.buffer = qemu_memalign(TARGET_PAGE_SIZE, l);
+>           bounce.addr = addr;
+>           bounce.len = l;
 
 
