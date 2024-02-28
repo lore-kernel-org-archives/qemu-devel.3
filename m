@@ -4,38 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59B58C5478C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 20:38:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C86AC47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 20:38:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfQes-00057t-1T; Wed, 28 Feb 2024 15:36:08 -0500
+	id 1rfQfJ-0005ow-Aj; Wed, 28 Feb 2024 15:36:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rfQeS-00053o-LA; Wed, 28 Feb 2024 15:35:40 -0500
+ id 1rfQfH-0005gh-Fm; Wed, 28 Feb 2024 15:36:31 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rfQeR-0001Ht-1N; Wed, 28 Feb 2024 15:35:40 -0500
+ id 1rfQfE-0001Oo-OF; Wed, 28 Feb 2024 15:36:30 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 468405176F;
- Wed, 28 Feb 2024 23:35:58 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0170351779;
+ Wed, 28 Feb 2024 23:35:59 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id D7FB18BA77;
- Wed, 28 Feb 2024 23:35:21 +0300 (MSK)
-Received: (nullmailer pid 267620 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 95EED8BA81;
+ Wed, 28 Feb 2024 23:35:22 +0300 (MSK)
+Received: (nullmailer pid 267650 invoked by uid 1000);
  Wed, 28 Feb 2024 20:35:21 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
+Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.10 37/47] .gitlab-ci.d/windows.yml: Drop msys2-32bit job
-Date: Wed, 28 Feb 2024 23:35:05 +0300
-Message-Id: <20240228203521.267565-4-mjt@tls.msk.ru>
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.10 47/47] tests/vm: avoid re-building the VM images all
+ the time
+Date: Wed, 28 Feb 2024 23:35:15 +0300
+Message-Id: <20240228203521.267565-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.10-20240228233111@cover.tls.msk.ru>
 References: <qemu-stable-7.2.10-20240228233111@cover.tls.msk.ru>
@@ -65,77 +64,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-MSYS2 is dropping support for 32-bit Windows.  This shows up for us
-as various packages we were using in our CI job no longer being
-available to install, which causes the job to fail.  In commit
-8e31b744fdf we dropped the dependency on libusb and spice, but the
-dtc package has also now been removed.
+The main problem is that "check-venv" is a .PHONY target will always
+evaluate and trigger a full re-build of the VM images. While its
+tempting to drop it from the dependencies that does introduce a
+breakage on freshly configured builds.
 
-For us as QEMU upstream, "32 bit x86 hosts for system emulation" have
-already been deprecated as of QEMU 8.0, so we are ready to drop them
-anyway.
+Fortunately we do have the otherwise redundant --force flag for the
+script which up until now was always on. If we make the usage of
+--force conditional on dependencies other than check-venv triggering
+the update we can avoid the costly rebuild and still run cleanly on a
+fresh checkout.
 
-Drop the msys2-32bit CI job, as the first step in doing this.
-
-This is cc'd to stable, because this job will also be broken for CI
-on the stable branches.  We can't drop 32-bit support entirely there,
-but we will still be covering at least compilation for 32-bit Windows
-via the cross-win32-system job.
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2118
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-id: 20240220165602.135695-1-peter.maydell@linaro.org
-(cherry picked from commit 5cd3ae4903e33982e7a9bbd04674af517e796d6e)
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20240227144335.1196131-4-alex.bennee@linaro.org>
+(cherry picked from commit 151b7dba391fab64cc008a1fdba6ddcf6f8c39c8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: in 7.2 the piece being removed is different but the job has to go anyway)
 
-diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
-index a3e7a37022..0180261b7f 100644
---- a/.gitlab-ci.d/windows.yml
-+++ b/.gitlab-ci.d/windows.yml
-@@ -63,37 +63,3 @@ msys2-64bit:
-       --enable-capstone --without-default-devices'
-   - .\msys64\usr\bin\bash -lc 'make'
-   - .\msys64\usr\bin\bash -lc 'make check || { cat build/meson-logs/testlog.txt; exit 1; } ;'
--
--msys2-32bit:
--  extends: .shared_msys2_builder
--  script:
--  - .\msys64\usr\bin\bash -lc "pacman -Sy --noconfirm --needed
--      bison diffutils flex
--      git grep make sed
--      mingw-w64-i686-capstone
--      mingw-w64-i686-curl
--      mingw-w64-i686-cyrus-sasl
--      mingw-w64-i686-gcc
--      mingw-w64-i686-glib2
--      mingw-w64-i686-gnutls
--      mingw-w64-i686-gtk3
--      mingw-w64-i686-libgcrypt
--      mingw-w64-i686-libjpeg-turbo
--      mingw-w64-i686-libssh
--      mingw-w64-i686-libtasn1
--      mingw-w64-i686-libusb
--      mingw-w64-i686-lzo2
--      mingw-w64-i686-ninja
--      mingw-w64-i686-pixman
--      mingw-w64-i686-pkgconf
--      mingw-w64-i686-python
--      mingw-w64-i686-snappy
--      mingw-w64-i686-usbredir "
--  - $env:CHERE_INVOKING = 'yes'  # Preserve the current working directory
--  - $env:MSYSTEM = 'MINGW32'     # Start a 32-bit MinG environment
--  - $env:MSYS = 'winsymlinks:native' # Enable native Windows symlink
--  - mkdir output
--  - cd output
--  - ..\msys64\usr\bin\bash -lc "../configure --target-list=ppc64-softmmu"
--  - ..\msys64\usr\bin\bash -lc 'make'
--  - ..\msys64\usr\bin\bash -lc 'make check || { cat meson-logs/testlog.txt; exit 1; } ;'
+diff --git a/tests/vm/Makefile.include b/tests/vm/Makefile.include
+index 2cc2203d09..e332fd13c3 100644
+--- a/tests/vm/Makefile.include
++++ b/tests/vm/Makefile.include
+@@ -103,7 +103,7 @@ $(IMAGES_DIR)/%.img:	$(SRC_PATH)/tests/vm/% \
+ 		$(if $(LOG_CONSOLE),--log-console) \
+ 		--source-path $(SRC_PATH) \
+ 		--image "$@" \
+-		--force \
++		$(if $(filter-out check-venv, $?), --force) \
+ 		--build-image $@, \
+ 		"  VM-IMAGE $*")
+ 
+diff --git a/tests/vm/basevm.py b/tests/vm/basevm.py
+index 2276364c42..6a54d9d4e0 100644
+--- a/tests/vm/basevm.py
++++ b/tests/vm/basevm.py
+@@ -634,9 +634,9 @@ def main(vmcls, config=None):
+         vm = vmcls(args, config=config)
+         if args.build_image:
+             if os.path.exists(args.image) and not args.force:
+-                sys.stderr.writelines(["Image file exists: %s\n" % args.image,
++                sys.stderr.writelines(["Image file exists, skipping build: %s\n" % args.image,
+                                       "Use --force option to overwrite\n"])
+-                return 1
++                return 0
+             return vm.build_image(args.image)
+         if args.build_qemu:
+             vm.add_source_dir(args.build_qemu)
 -- 
 2.39.2
 
