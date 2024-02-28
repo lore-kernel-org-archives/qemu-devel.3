@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9019CC47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 05:14:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 102DDC54E51
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 05:14:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfCGL-00064w-2r; Wed, 28 Feb 2024 00:13:49 -0500
+	id 1rfCGB-00063S-GC; Wed, 28 Feb 2024 00:13:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfCGG-00064F-Hi
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 00:13:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfCG9-00062k-4R
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 00:13:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfCGD-0006XO-9K
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 00:13:43 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfCG4-0006WH-Uh
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 00:13:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709097220;
+ s=mimecast20190719; t=1709097209;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=nKBXyoo6H3FnuIUhAhVzSn4lKRTtLIfs/jNVHpKxL/g=;
- b=SNlENMxhe0Ue9PqKWhxpafDv6wLKSgR+t2puliZJkuX9V4lFilcOUVaMNd4wTjLMNpbHxL
- wxcS/ebv/ycbARtnlMA8bQvstNo1bw4RMmSsFy6F2NrPbHWy1IEuHLhZCPQaIfl5znO9E7
- B6jW/gqwv1XaTsvUWsOO2R4Iin5NC2c=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-407-57A-BRE0P7qF5I2Bg3_h0g-1; Wed,
- 28 Feb 2024 00:13:35 -0500
-X-MC-Unique: 57A-BRE0P7qF5I2Bg3_h0g-1
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=o3qhdxDc0d3ksjtSkq+XYmFK/Oy1Jae1/0UB18XPaA0=;
+ b=dqPhUbBFbYVKg68FLn59xQvRT8hAZRZz0CQFw/RqMbUfBwyFLfGVO6B/NaC/JPisA1XQjV
+ nxk0Wo4BW/i/rC62F1oUkygixqXmz1hM+aDVJ3uQTtk7PytdqCMlYs6h/WjSzJpRovhv75
+ 8ChLtk1HfIbRo4aVcau30j7JXjIJ9/g=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-346-pA110dNRN-qIb09LamHL8Q-1; Wed, 28 Feb 2024 00:13:26 -0500
+X-MC-Unique: pA110dNRN-qIb09LamHL8Q-1
 Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
  [10.11.54.7])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4D17B3816D8A;
- Wed, 28 Feb 2024 05:13:35 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id F0B37185A788;
+ Wed, 28 Feb 2024 05:13:25 +0000 (UTC)
 Received: from x1n.redhat.com (unknown [10.72.116.12])
- by smtp.corp.redhat.com (Postfix) with ESMTP id A57FB1C117A0;
- Wed, 28 Feb 2024 05:13:26 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id C82701C14B2E;
+ Wed, 28 Feb 2024 05:13:17 +0000 (UTC)
 From: peterx@redhat.com
 To: Peter Maydell <peter.maydell@linaro.org>,
 	qemu-devel@nongnu.org
@@ -55,23 +54,23 @@ Cc: David Hildenbrand <david@redhat.com>, Eric Blake <eblake@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Jason Wang <jasowang@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>, Peter Xu <peterx@redhat.com>
-Subject: [PULL 01/25] docs/devel/migration.rst: Document the file transport
-Date: Wed, 28 Feb 2024 13:12:51 +0800
-Message-ID: <20240228051315.400759-2-peterx@redhat.com>
-In-Reply-To: <20240228051315.400759-1-peterx@redhat.com>
-References: <20240228051315.400759-1-peterx@redhat.com>
+Subject: [PULL 00/25] Migration next patches
+Date: Wed, 28 Feb 2024 13:12:50 +0800
+Message-ID: <20240228051315.400759-1-peterx@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,34 +86,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: Peter Xu <peterx@redhat.com>
 
-When adding the support for file migration with the file: transport,
-we missed adding documentation for it.
+The following changes since commit 158a054c4d1a40179f5e83cd7e1cfe65de457b92:
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/r/20240220224138.24759-2-farosas@suse.de
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- docs/devel/migration/main.rst | 4 ++++
- 1 file changed, 4 insertions(+)
+  Merge tag 'pull-target-arm-20240227-1' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-02-27 15:34:41 +0000)
 
-diff --git a/docs/devel/migration/main.rst b/docs/devel/migration/main.rst
-index 331252a92c..8024275d6d 100644
---- a/docs/devel/migration/main.rst
-+++ b/docs/devel/migration/main.rst
-@@ -41,6 +41,10 @@ over any transport.
- - exec migration: do the migration using the stdin/stdout through a process.
- - fd migration: do the migration using a file descriptor that is
-   passed to QEMU.  QEMU doesn't care how this file descriptor is opened.
-+- file migration: do the migration using a file that is passed to QEMU
-+  by path. A file offset option is supported to allow a management
-+  application to add its own metadata to the start of the file without
-+  QEMU interference.
- 
- In addition, support is included for migration using RDMA, which
- transports the page data using ``RDMA``, where the hardware takes care of
+are available in the Git repository at:
+
+  https://gitlab.com/peterx/qemu.git tags/migration-next-pull-request
+
+for you to fetch changes up to 9425ef3f990a42b98329d5059362f40714e70442:
+
+  migration: Use migrate_has_error() in close_return_path_on_source() (2024-02-28 11:31:28 +0800)
+
+----------------------------------------------------------------
+Migration pull request
+
+- Fabiano's fixed-ram patches (1-5 only)
+- Peter's cleanups on multifd tls IOC referencing
+- Steve's cpr patches for vfio (migration patches only)
+- Fabiano's fix on mbps stats racing with COMPLETE state
+- Fabiano's fix on return path thread hang
+
+----------------------------------------------------------------
+
+Cédric Le Goater (1):
+  migration: Use migrate_has_error() in close_return_path_on_source()
+
+Fabiano Rosas (7):
+  docs/devel/migration.rst: Document the file transport
+  tests/qtest/migration: Rename fd_proto test
+  tests/qtest/migration: Add a fd + file test
+  migration/multifd: Remove p->quit from recv side
+  migration/multifd: Release recv sem_sync earlier
+  migration: Fix qmp_query_migrate mbps value
+  migration: Join the return path thread before releasing to_dst_file
+
+Peter Xu (5):
+  migration/multifd: Cleanup TLS iochannel referencing
+  migration/multifd: Drop registered_yank
+  migration/multifd: Make multifd_channel_connect() return void
+  migration/multifd: Cleanup outgoing_args in state destroy
+  migration/multifd: Drop unnecessary helper to destroy IOC
+
+Steve Sistare (12):
+  notify: pass error to notifier with return
+  migration: remove error from notifier data
+  migration: convert to NotifierWithReturn
+  migration: MigrationEvent for notifiers
+  migration: remove postcopy_after_devices
+  migration: MigrationNotifyFunc
+  migration: per-mode notifiers
+  migration: refactor migrate_fd_connect failures
+  migration: notifier error checking
+  migration: stop vm for cpr
+  migration: update cpr-reboot description
+  migration: options incompatible with cpr
+
+ docs/devel/migration/main.rst  |   4 +
+ qapi/migration.json            |  37 ++++---
+ include/hw/vfio/vfio-common.h  |   2 +-
+ include/hw/virtio/virtio-net.h |   2 +-
+ include/migration/misc.h       |  47 +++++++-
+ include/qemu/notify.h          |   8 +-
+ migration/migration.h          |   4 -
+ migration/multifd.h            |   2 -
+ migration/postcopy-ram.h       |   1 -
+ migration/socket.h             |   3 +-
+ hw/net/virtio-net.c            |  13 ++-
+ hw/vfio/migration.c            |  13 +--
+ hw/virtio/vhost-user.c         |  10 +-
+ hw/virtio/virtio-balloon.c     |   3 +-
+ migration/migration.c          | 196 +++++++++++++++++++++------------
+ migration/multifd.c            | 111 ++++++++++---------
+ migration/postcopy-ram.c       |   3 +-
+ migration/ram.c                |   3 +-
+ migration/socket.c             |  19 ++--
+ net/vhost-vdpa.c               |  14 +--
+ tests/qtest/migration-test.c   |  46 +++++++-
+ ui/spice-core.c                |  17 ++-
+ util/notify.c                  |   5 +-
+ hw/vfio/trace-events           |   2 +-
+ 24 files changed, 354 insertions(+), 211 deletions(-)
+
 -- 
 2.43.0
 
