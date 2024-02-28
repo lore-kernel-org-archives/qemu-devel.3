@@ -4,72 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1451C5478C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 11:47:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FB27C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 11:47:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfIOW-0006B1-3c; Wed, 28 Feb 2024 06:46:40 -0500
+	id 1rfIPR-0008Gy-Io; Wed, 28 Feb 2024 06:47:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1rfIO9-0005ta-EI; Wed, 28 Feb 2024 06:46:22 -0500
-Received: from zproxy2.enst.fr ([2001:660:330f:2::dd])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1rfIO7-0002BL-8u; Wed, 28 Feb 2024 06:46:16 -0500
-Received: from localhost (localhost [IPv6:::1])
- by zproxy2.enst.fr (Postfix) with ESMTP id 87EA280659;
- Wed, 28 Feb 2024 12:46:08 +0100 (CET)
-Received: from zproxy2.enst.fr ([IPv6:::1])
- by localhost (zproxy2.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id vW1iydv7yZSb; Wed, 28 Feb 2024 12:46:03 +0100 (CET)
-Received: from localhost (localhost [IPv6:::1])
- by zproxy2.enst.fr (Postfix) with ESMTP id C1A10806DC;
- Wed, 28 Feb 2024 12:46:03 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy2.enst.fr C1A10806DC
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1709120763;
- bh=9yCAa2IaqsNHr0V/8Z3CfJJGrYjFNpZ6MWKqMGjZhOM=;
- h=From:To:Date:Message-ID:MIME-Version;
- b=OWH4l5pEtz924socZpLC2c0Ta7j/UP6wmodIAHZYbn8cW9j93VIxMl6Fyxhs9d3ce
- RTI1BYbFcy2mSdtpzzXsVmOmnpDArbYusuD+IQw0Owy742S7JveHQBLRDtNbaAZSoy
- 0wxs941IMs4Qqc9y+A8/z6jMHHhojl+L99wiE2fY=
-X-Virus-Scanned: amavis at enst.fr
-Received: from zproxy2.enst.fr ([IPv6:::1])
- by localhost (zproxy2.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id NZa0-mnXQD5g; Wed, 28 Feb 2024 12:46:03 +0100 (CET)
-Received: from localhost.localdomain (74.0.125.80.rev.sfr.net [80.125.0.74])
- by zproxy2.enst.fr (Postfix) with ESMTPSA id 3BAB1806C9;
- Wed, 28 Feb 2024 12:46:03 +0100 (CET)
-From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
- Alistair Francis <alistair@alistair23.me>,
- Samuel Tardieu <sam@rfc1149.net>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2 4/5] hw/arm : Connect DM163 to B-L475E-IOT01A
-Date: Wed, 28 Feb 2024 12:32:02 +0100
-Message-ID: <20240228114555.192175-5-ines.varhol@telecom-paris.fr>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240228114555.192175-1-ines.varhol@telecom-paris.fr>
-References: <20240228114555.192175-1-ines.varhol@telecom-paris.fr>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rfIPP-00083d-Cm
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:47:35 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rfIPN-0002Rp-MK
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:47:35 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-412b6a3326cso1590025e9.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 03:47:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709120852; x=1709725652; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MBlfxNw3gAKpxrdSQ9Qug4ldN7qkY9TndOwoeLSAcIA=;
+ b=LnJXySRHJK8urjVsCOROaA5yNartJiLauFOanI7GkeokTcaYp+M+GynYV8aNhdut+O
+ eEgjW85bmK0ZRXSFlG1JiFsWC8m5OlMGW1Z/gVgAFShh0PRR8xZYRmWBaAAMqEypcbIf
+ /MQ+E9g9+lRrPsO4Ffi3/WDRWFMGtPJG4sWmfYruxOm3/6sGFLAfDb1GmxE4JwU+MckR
+ 3DvZafmA0fdMmQv3m4E4Po2RhZzOq2lkqXhLzo2n3MsrxOPwedV46mr0hrQfH8Jl6ku/
+ PDD2JBTUl37wWDXV6wjqcnhM3Nc0f/Dd0fqq7MLYMaSZqwL4ykuCpMS6/NJKa7VyYFYj
+ Cfjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709120852; x=1709725652;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=MBlfxNw3gAKpxrdSQ9Qug4ldN7qkY9TndOwoeLSAcIA=;
+ b=TJBx71oe97pXbRAEcBA9pSwnwRD2Pr34E86052PfUk0UrQADZlw5e5+YtTh4UeKavW
+ 0m9fth8Sw8bL+5LZMBi9BYr+V84WNYf5v6MNJznXEnpTSfdaBh1+01WcUR4Feuvxsmgd
+ 1CMn1j7yKgcmgIFieNbnTLGPOiZuJJM0oKZCSMMdo1CLK+baqrE9Ern/XNB+qr56zpNf
+ tJELmAZrzIwiyYaMlI3qZmkFtm6o6Oec7zQLu3lZRvZgxdv4BRibA1u1EgdZ3XiKv/8M
+ eJHlArpSra9VU1O/0hFdDtZ0+k9FX3TrTTAeBnqjtSZUPCYTzIENB/49qHVxr927gsgx
+ CfHg==
+X-Gm-Message-State: AOJu0YyEuqLgGcnrewXzT4or9LmHZmfs1GI4/9ESqVeebZ98hAeotimS
+ g9e2zmla9rxMorC3qDHB+1NvaMf5GMdlTrO5KVToVSf2V/ow9uqr7nAGhqY0614=
+X-Google-Smtp-Source: AGHT+IHieIOuCNIOBc2G/kBji2uPgrMFKDRkuLZkqLwZY6K7zXvJp+lgqMDWPUx9I3U/U7Tzlh7j4w==
+X-Received: by 2002:a05:600c:1988:b0:412:aec6:484f with SMTP id
+ t8-20020a05600c198800b00412aec6484fmr2125123wmq.15.1709120851988; 
+ Wed, 28 Feb 2024 03:47:31 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ l18-20020a05600c1d1200b00412a30cd127sm1962513wms.7.2024.02.28.03.47.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 28 Feb 2024 03:47:30 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 291D05F7A0;
+ Wed, 28 Feb 2024 11:47:30 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Joe Komlodi <komlodi@google.com>
+Cc: qemu-devel@nongnu.org,  pbonzini@redhat.com,  peterx@redhat.com,
+ david@redhat.com,  peter.maydell@linaro.org,  marcel.apfelbaum@gmail.com,
+ mst@redhat.com,  philmd@linaro.org,  roqueh@google.com,
+ slongfield@google.com
+Subject: Re: [RFC PATCH 3/5] memattrs: Add user-defined attribute
+In-Reply-To: <20240227222417.929367-4-komlodi@google.com> (Joe Komlodi's
+ message of "Tue, 27 Feb 2024 22:24:15 +0000")
+References: <20240227222417.929367-1-komlodi@google.com>
+ <20240227222417.929367-4-komlodi@google.com>
+User-Agent: mu4e 1.12.0; emacs 29.1
+Date: Wed, 28 Feb 2024 11:47:30 +0000
+Message-ID: <87h6hsbyjx.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2001:660:330f:2::dd;
- envelope-from=ines.varhol@telecom-paris.fr; helo=zproxy2.enst.fr
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,121 +101,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
----
- hw/arm/b-l475e-iot01a.c | 59 +++++++++++++++++++++++++++++++++++++++--
- hw/arm/Kconfig          |  1 +
- 2 files changed, 58 insertions(+), 2 deletions(-)
+Joe Komlodi <komlodi@google.com> writes:
 
-diff --git a/hw/arm/b-l475e-iot01a.c b/hw/arm/b-l475e-iot01a.c
-index 2b570b3e09..6f0bf68ca6 100644
---- a/hw/arm/b-l475e-iot01a.c
-+++ b/hw/arm/b-l475e-iot01a.c
-@@ -27,10 +27,37 @@
- #include "hw/boards.h"
- #include "hw/qdev-properties.h"
- #include "qemu/error-report.h"
--#include "hw/arm/stm32l4x5_soc.h"
- #include "hw/arm/boot.h"
-+#include "hw/core/split-irq.h"
-+#include "hw/arm/stm32l4x5_soc.h"
-+#include "hw/gpio/stm32l4x5_gpio.h"
-+#include "hw/display/dm163.h"
-+
-+/* B-L475E-IOT01A implementation is inspired from netduinoplus2 and ardu=
-ino */
-=20
--/* B-L475E-IOT01A implementation is derived from netduinoplus2 */
-+/*
-+ * There are actually 14 input pins in the DM163 device.
-+ * Here the DM163 input pin EN isn't connected to the STM32L4x5
-+ * GPIOs as the IM120417002 colors shield doesn't actually use
-+ * this pin to drive the RGB matrix.
-+ */
-+#define NUM_DM163_INPUTS 13
-+
-+static const int dm163_input[NUM_DM163_INPUTS] =3D {
-+    1 * GPIO_NUM_PINS + 2,  /* ROW0  PB2       */
-+    0 * GPIO_NUM_PINS + 15, /* ROW1  PA15      */
-+    0 * GPIO_NUM_PINS + 2,  /* ROW2  PA2       */
-+    0 * GPIO_NUM_PINS + 7,  /* ROW3  PA7       */
-+    0 * GPIO_NUM_PINS + 6,  /* ROW4  PA6       */
-+    0 * GPIO_NUM_PINS + 5,  /* ROW5  PA5       */
-+    1 * GPIO_NUM_PINS + 0,  /* ROW6  PB0       */
-+    0 * GPIO_NUM_PINS + 3,  /* ROW7  PA3       */
-+    0 * GPIO_NUM_PINS + 4,  /* SIN (SDA) PA4   */
-+    1 * GPIO_NUM_PINS + 1,  /* DCK (SCK) PB1   */
-+    2 * GPIO_NUM_PINS + 3,  /* RST_B (RST) PC3 */
-+    2 * GPIO_NUM_PINS + 4,  /* LAT_B (LAT) PC4 */
-+    2 * GPIO_NUM_PINS + 5,  /* SELBK (SB)  PC5 */
-+};
-=20
- #define TYPE_B_L475E_IOT01A MACHINE_TYPE_NAME("b-l475e-iot01a")
- OBJECT_DECLARE_SIMPLE_TYPE(Bl475eMachineState, B_L475E_IOT01A)
-@@ -39,12 +66,16 @@ typedef struct Bl475eMachineState {
-     MachineState parent_obj;
-=20
-     Stm32l4x5SocState soc;
-+    SplitIRQ gpio_splitters[NUM_DM163_INPUTS];
-+    DM163State dm163;
- } Bl475eMachineState;
-=20
- static void bl475e_init(MachineState *machine)
- {
-     Bl475eMachineState *s =3D B_L475E_IOT01A(machine);
-     const Stm32l4x5SocClass *sc;
-+    DeviceState *dev, *gpio_out_splitter;
-+    int gpio, pin;
-=20
-     object_initialize_child(OBJECT(machine), "soc", &s->soc,
-                             TYPE_STM32L4X5XG_SOC);
-@@ -53,6 +84,30 @@ static void bl475e_init(MachineState *machine)
-     sc =3D STM32L4X5_SOC_GET_CLASS(&s->soc);
-     armv7m_load_kernel(ARM_CPU(first_cpu),
-         machine->kernel_filename, 0, sc->flash_size);
-+
-+    if (object_class_by_name("dm163")) {
-+        object_initialize_child(OBJECT(machine), "dm163",
-+                                &s->dm163, TYPE_DM163);
-+        dev =3D DEVICE(&s->dm163);
-+        qdev_realize(dev, NULL, &error_abort);
-+
-+        for (unsigned i =3D 0; i < NUM_DM163_INPUTS; i++) {
-+            object_initialize_child(OBJECT(machine), "gpio-out-splitters=
-[*]",
-+                                    &s->gpio_splitters[i], TYPE_SPLIT_IR=
-Q);
-+            gpio_out_splitter =3D DEVICE(&s->gpio_splitters[i]);
-+            qdev_prop_set_uint32(gpio_out_splitter, "num-lines", 2);
-+            qdev_realize(gpio_out_splitter, NULL, &error_fatal);
-+
-+            qdev_connect_gpio_out(gpio_out_splitter, 0,
-+                qdev_get_gpio_in(DEVICE(&s->soc), dm163_input[i]));
-+            qdev_connect_gpio_out(gpio_out_splitter, 1,
-+                qdev_get_gpio_in(dev, i));
-+            gpio =3D dm163_input[i] / GPIO_NUM_PINS;
-+            pin =3D dm163_input[i] % GPIO_NUM_PINS;
-+            qdev_connect_gpio_out(DEVICE(&s->soc.gpio[gpio]), pin,
-+                qdev_get_gpio_in(DEVICE(gpio_out_splitter), 0));
-+        }
-+    }
- }
-=20
- static void bl475e_machine_init(ObjectClass *oc, void *data)
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 5776dbb19f..6c05bac99b 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -458,6 +458,7 @@ config B_L475E_IOT01A
-     default y
-     depends on TCG && ARM
-     select STM32L4X5_SOC
-+    imply DM163
-=20
- config STM32L4X5_SOC
-     bool
+> These are used to represent implementation-specific data.
+> These are based off of AMBA-AXI user signals, but can be used in any
+> implementation.
+>
+> The length of 4-bits is arbitrary.
+>
+> Signed-off-by: Joe Komlodi <komlodi@google.com>
+> ---
+>  include/exec/memattrs.h | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
+> index 942b721be8..a38645f881 100644
+> --- a/include/exec/memattrs.h
+> +++ b/include/exec/memattrs.h
+> @@ -64,6 +64,8 @@ typedef struct MemTxAttrs {
+>      unsigned int target_tlb_bit0:1;
+>      unsigned int target_tlb_bit1:1;
+>      unsigned int target_tlb_bit2:1;
+> +    /* User-defined bits represent data that is implementation defined. =
+*/
+> +    unsigned int user_defined:4;
+>  } MemTxAttrs;
+>=20=20
+>  /* Bus masters which don't specify any attributes will get this,
+
+This reminds me of the concept of MACHINE for impdef bits I proposed in:
+
+  Message-Id: <20221111182535.64844-1-alex.bennee@linaro.org>
+  Date: Fri, 11 Nov 2022 18:25:15 +0000
+  Subject: [PATCH for 8.0 v5 00/20] use MemTxAttrs to avoid current_cpu in =
+hw/
+  From: =3D?UTF-8?q?Alex=3D20Benn=3DC3=3DA9e?=3D <alex.bennee@linaro.org>
+
+which I unfortunately ran out of steam on. Surveying the list I see
+there are other patches for MemTxAttrs for IOMMU ids so I wonder if we
+are going to run out of bits soon.
+
 --=20
-2.43.2
-
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
