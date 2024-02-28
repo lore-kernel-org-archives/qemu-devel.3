@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1086C54E4A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 05:15:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78FC7C54E41
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 05:15:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfCHR-0006vq-Pr; Wed, 28 Feb 2024 00:14:57 -0500
+	id 1rfCHM-0006gD-Pv; Wed, 28 Feb 2024 00:14:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfCHQ-0006lY-9d
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 00:14:56 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfCHL-0006eq-Ka
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 00:14:51 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfCHO-0006eo-Ky
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 00:14:55 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfCHG-0006dk-Uc
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 00:14:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709097292;
+ s=mimecast20190719; t=1709097283;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iKLOjP6Vqfp6rSbYaqpDtf5DO20+UXqF1gUTY7yRzzY=;
- b=YmS7iti6VNV1kBpGpnGp1BMStc94z+lKla0ivOWxeIw7g4j4igMwC/5ZCoC+uZBQ9E7vRh
- 9oXbfCLpElOW2T6pt1UzX6aiFnllqx29BMa/dOrKwl6gewQdvKKThfG5LYpXxXxwcizk35
- Aknlb0swDuPa0cCk06nPtPxhdtVtcNU=
+ bh=MyuZGRl81JGzv7LwUgH1Jmnf+FHnqS6dNGM75RP2SxY=;
+ b=c1ecsQzLmOcansLHCx/pSr5RY1nbZMxvDTRBrWB7RgjKi0/16iGWPhst53XYCD/Wwehc0n
+ WyDo9I3VyzIsF7GeUtEdoxKLeYPEjLsAFzSglnRe22/11TbmtrPnUdpqgdhrUXveaxWMtJ
+ K8+Ad9gUclwFODy8CGLDEw0sKItoV9s=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-217-bVEClmLnPWGe0xlk4dLQjQ-1; Wed, 28 Feb 2024 00:14:49 -0500
-X-MC-Unique: bVEClmLnPWGe0xlk4dLQjQ-1
+ us-mta-255-zycjznXENaqSK05ZT_WfLw-1; Wed, 28 Feb 2024 00:14:40 -0500
+X-MC-Unique: zycjznXENaqSK05ZT_WfLw-1
 Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
  [10.11.54.7])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id BE6D285A58A;
- Wed, 28 Feb 2024 05:14:48 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DFC151071CE0;
+ Wed, 28 Feb 2024 05:14:39 +0000 (UTC)
 Received: from x1n.redhat.com (unknown [10.72.116.12])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 99AA81C060AF;
- Wed, 28 Feb 2024 05:14:40 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 47A8F1C060AF;
+ Wed, 28 Feb 2024 05:14:30 +0000 (UTC)
 From: peterx@redhat.com
 To: Peter Maydell <peter.maydell@linaro.org>,
 	qemu-devel@nongnu.org
@@ -54,10 +54,12 @@ Cc: David Hildenbrand <david@redhat.com>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Jason Wang <jasowang@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>, Peter Xu <peterx@redhat.com>
-Subject: [PULL 09/25] migration/multifd: Cleanup outgoing_args in state destroy
-Date: Wed, 28 Feb 2024 13:12:59 +0800
-Message-ID: <20240228051315.400759-10-peterx@redhat.com>
+ Alex Williamson <alex.williamson@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>
+Subject: [PULL 08/25] migration/multifd: Make multifd_channel_connect() return
+ void
+Date: Wed, 28 Feb 2024 13:12:58 +0800
+Message-ID: <20240228051315.400759-9-peterx@redhat.com>
 In-Reply-To: <20240228051315.400759-1-peterx@redhat.com>
 References: <20240228051315.400759-1-peterx@redhat.com>
 MIME-Version: 1.0
@@ -89,73 +91,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Xu <peterx@redhat.com>
 
-outgoing_args is a global cache of socket address to be reused in multifd.
-Freeing the cache in per-channel destructor is more or less a hack.  Move
-it to multifd_send_cleanup_state() so it only get checked once.  Use a
-small helper to do so because it's internal of socket.c.
+It never fails, drop the retval and also the Error**.
 
+Suggested-by: Avihai Horon <avihaih@nvidia.com>
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20240222095301.171137-5-peterx@redhat.com
+Link: https://lore.kernel.org/r/20240222095301.171137-4-peterx@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/socket.h  |  2 ++
- migration/multifd.c |  1 +
- migration/socket.c  | 12 ++++++++----
- 3 files changed, 11 insertions(+), 4 deletions(-)
+ migration/multifd.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/migration/socket.h b/migration/socket.h
-index 5e4c33b8ea..5f52eddd4c 100644
---- a/migration/socket.h
-+++ b/migration/socket.h
-@@ -29,4 +29,6 @@ void socket_start_incoming_migration(SocketAddress *saddr, Error **errp);
- 
- void socket_start_outgoing_migration(MigrationState *s,
-                                      SocketAddress *saddr, Error **errp);
-+void socket_cleanup_outgoing_migration(void);
-+
- #endif
 diff --git a/migration/multifd.c b/migration/multifd.c
-index af89e05915..fa33fd98b4 100644
+index 1d039a4840..af89e05915 100644
 --- a/migration/multifd.c
 +++ b/migration/multifd.c
-@@ -689,6 +689,7 @@ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
- 
- static void multifd_send_cleanup_state(void)
- {
-+    socket_cleanup_outgoing_migration();
-     qemu_sem_destroy(&multifd_send_state->channels_created);
-     qemu_sem_destroy(&multifd_send_state->channels_ready);
-     g_free(multifd_send_state->params);
-diff --git a/migration/socket.c b/migration/socket.c
-index 98e3ea1514..3184c7c3c1 100644
---- a/migration/socket.c
-+++ b/migration/socket.c
-@@ -64,10 +64,6 @@ int socket_send_channel_destroy(QIOChannel *send)
- {
-     /* Remove channel */
-     object_unref(OBJECT(send));
--    if (outgoing_args.saddr) {
--        qapi_free_SocketAddress(outgoing_args.saddr);
--        outgoing_args.saddr = NULL;
--    }
-     return 0;
+@@ -943,9 +943,7 @@ static bool multifd_tls_channel_connect(MultiFDSendParams *p,
+     return true;
  }
  
-@@ -137,6 +133,14 @@ void socket_start_outgoing_migration(MigrationState *s,
-                                      NULL);
+-static bool multifd_channel_connect(MultiFDSendParams *p,
+-                                    QIOChannel *ioc,
+-                                    Error **errp)
++static void multifd_channel_connect(MultiFDSendParams *p, QIOChannel *ioc)
+ {
+     qio_channel_set_delay(ioc, false);
+ 
+@@ -956,7 +954,6 @@ static bool multifd_channel_connect(MultiFDSendParams *p,
+     p->thread_created = true;
+     qemu_thread_create(&p->thread, p->name, multifd_send_thread, p,
+                        QEMU_THREAD_JOINABLE);
+-    return true;
  }
  
-+void socket_cleanup_outgoing_migration(void)
-+{
-+    if (outgoing_args.saddr) {
-+        qapi_free_SocketAddress(outgoing_args.saddr);
-+        outgoing_args.saddr = NULL;
-+    }
-+}
-+
- static void socket_accept_incoming_migration(QIONetListener *listener,
-                                              QIOChannelSocket *cioc,
-                                              gpointer opaque)
+ /*
+@@ -988,7 +985,8 @@ static void multifd_new_send_channel_async(QIOTask *task, gpointer opaque)
+             return;
+         }
+     } else {
+-        ret = multifd_channel_connect(p, ioc, &local_err);
++        multifd_channel_connect(p, ioc);
++        ret = true;
+     }
+ 
+ out:
 -- 
 2.43.0
 
