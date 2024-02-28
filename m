@@ -4,67 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16A56C47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 16:30:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BD8FC5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 16:30:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfMow-0000ih-7p; Wed, 28 Feb 2024 11:30:14 -0500
+	id 1rfMpA-0000p5-PG; Wed, 28 Feb 2024 11:30:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rfMor-0000ho-TW; Wed, 28 Feb 2024 11:30:10 -0500
-Received: from forwardcorp1c.mail.yandex.net ([178.154.239.200])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rfMp7-0000o4-Hj
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 11:30:25 -0500
+Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rfMop-0002C1-F0; Wed, 28 Feb 2024 11:30:09 -0500
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c14:750a:0:640:e46:0])
- by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id 29DB660A3E;
- Wed, 28 Feb 2024 19:30:03 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:a519::1:3a] (unknown
- [2a02:6b8:b081:a519::1:3a])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 0UcMgs2IhSw0-fwBlKGqM; Wed, 28 Feb 2024 19:30:02 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1709137802;
- bh=nVruYL75zVY2TbFoancKixAS45BHB5tvTgxsfuoWl2k=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=QnMfOKy8T9bOo9SrMrAjozq5VLdP+mFWIGnKw1vKUKKG9CSpGmidUqCNv7EbOciYL
- 8ZqEKn96FGHpH81iD+VgdpSejq4nqdIVfNV6vG0JTTYe3q7RWeDWI3feA7/nNYUU6s
- sglajcR0HYiviKSw8va9q+zwO05Rk5oInbHDjdV0=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <217e42c9-a316-4b98-9050-fd5967e825f3@yandex-team.ru>
-Date: Wed, 28 Feb 2024 19:30:00 +0300
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rfMp5-0002Gq-MP
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 11:30:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1709137823; x=1740673823;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=XWF3+dBBS9EOok61+0ZKnd1zVf0L8+4O443jR/wQhMk=;
+ b=NGYJskWLN6KELQthFTeDkKaV/QhvY9qQKIppwcEdPpuGPesUW7hMGdcx
+ rvKccOpUBmhrAOvs6ZIAYNWHNNfh6wQsniVY5xYDD+iZ1+sM1UbhsKkJ3
+ Xe/l22l1+h6ADnzqQr+CL6IcMsQcJNa70oDKwzUn42r7NRvotjOv1hH4X
+ 99vACqY6xsnQCfzBcTP0po9LJx/1Ts5b4opAxqp8+CssGMLcmG8yPO0xI
+ 7bFakb887I/GhZb3LnfsCFInBd6XyNyqv4qQ26Qh7oqPBmjzi+UyTD3H5
+ /f8ZqchkE4Mi5UnIz53SDRC5jzSXwUn0r+aTIrQJoiK4gov7NVgh6WOO3 g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3712517"
+X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; 
+   d="scan'208";a="3712517"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Feb 2024 08:30:20 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="38328629"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa002.jf.intel.com with ESMTP; 28 Feb 2024 08:30:16 -0800
+Date: Thu, 29 Feb 2024 00:43:59 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+ Anton Johansson <anjo@rev.ng>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Laszlo Ersek <lersek@redhat.com>
+Subject: Re: [RFC PATCH 4/5] hw/i386/q35: Wire virtual SMI# lines to ICH9
+ chipset
+Message-ID: <Zd9iz9aIwM3cOqwt@intel.com>
+References: <20240226164913.94077-1-philmd@linaro.org>
+ <20240226164913.94077-5-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/16] block/cbw: Fix missing ERRP_GUARD() for
- error_prepend()
-Content-Language: en-US
-To: Zhao Liu <zhao1.liu@linux.intel.com>,
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Michael Tokarev <mjt@tls.msk.ru>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
-References: <20240228163723.1775791-1-zhao1.liu@linux.intel.com>
- <20240228163723.1775791-5-zhao1.liu@linux.intel.com>
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20240228163723.1775791-5-zhao1.liu@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240226164913.94077-5-philmd@linaro.org>
+Received-SPF: pass client-ip=192.198.163.14; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,53 +92,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28.02.24 19:37, Zhao Liu wrote:
-> From: Zhao Liu<zhao1.liu@intel.com>
-> 
-> As the comment in qapi/error, passing @errp to error_prepend() requires
-> ERRP_GUARD():
-> 
-> * = Why, when and how to use ERRP_GUARD() =
-> *
-> * Without ERRP_GUARD(), use of the @errp parameter is restricted:
-> ...
-> * - It should not be passed to error_prepend(), error_vprepend() or
-> *   error_append_hint(), because that doesn't work with &error_fatal.
-> * ERRP_GUARD() lifts these restrictions.
-> *
-> * To use ERRP_GUARD(), add it right at the beginning of the function.
-> * @errp can then be used without worrying about the argument being
-> * NULL or &error_fatal.
-> 
-> ERRP_GUARD() could avoid the case when @errp is the pointer of
-> error_fatal, the user can't see this additional information, because
-> exit() happens in error_setg earlier than information is added [1].
-> 
-> The cbw_open() passes @errp to error_prepend() without ERRP_GUARD().
-> 
-> Though it is the BlockDriver.bdrv_open() method, and currently its
-> @errp parameter only points to callers' local_err, to follow the
-> requirement of @errp, add missing ERRP_GUARD() at the beginning of this
-> function.
-> 
-> [1]: Issue description in the commit message of commit ae7c80a7bd73
->       ("error: New macro ERRP_GUARD()").
-> 
-> Cc: John Snow<jsnow@redhat.com>
-> Cc: Vladimir Sementsov-Ogievskiy<vsementsov@yandex-team.ru>
-> Cc: Kevin Wolf<kwolf@redhat.com>
-> Cc: Hanna Reitz<hreitz@redhat.com>
-> Signed-off-by: Zhao Liu<zhao1.liu@intel.com>
+Hi Philippe,
 
-Your actual email is at linux.intel.com, is it all OK?
+> +/*
+> + * Real ICH9 contains a single SMI output line and doesn't broadcast CPUs.
+> + * Virtualized ICH9 allows broadcasting upon negatiation with guest, see
+> + * commit 5ce45c7a2b.
+> + */
+> +enum {
+> +    ICH9_VIRT_SMI_BROADCAST,
+> +    ICH9_VIRT_SMI_CURRENT,
+> +#define ICH9_VIRT_SMI_COUNT 2
+> +};
+> +
 
-I'd prefer not to abbreviate copy-before-write in subject, but anyway:
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Just quick look here. Shouldn't ICH9_VIRT_SMI_COUNT be defined outside of
+enum {}?
 
-Thanks for fixing!
-
--- 
-Best regards,
-Vladimir
+-Zhao
 
 
