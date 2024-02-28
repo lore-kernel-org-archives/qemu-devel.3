@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48236C5478C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 16:25:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 342DAC47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 16:25:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfMjM-0004PC-H2; Wed, 28 Feb 2024 11:24:28 -0500
+	id 1rfMjN-0004Q4-5F; Wed, 28 Feb 2024 11:24:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfMjK-0004Lu-Ip; Wed, 28 Feb 2024 11:24:26 -0500
+ id 1rfMjL-0004OJ-KW; Wed, 28 Feb 2024 11:24:27 -0500
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfMjI-0000pW-P6; Wed, 28 Feb 2024 11:24:26 -0500
+ id 1rfMjK-0000sx-1T; Wed, 28 Feb 2024 11:24:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709137465; x=1740673465;
+ t=1709137466; x=1740673466;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=f4WdEAP88HmKKD0w3J+So2kEwEw+Dq4DuWbImglfdPQ=;
- b=Wcp1pmAWeS4d7W36MO4DVARygOfAtOHVLwaHCI0q8Vd1Av9W3E5jkFW5
- lTpKFgolRW65UHZ+kNxHQ8rohY4Prc9qK+lv856aQcNc2mNAZrefXKAOr
- RxfAWV9hkAiZ5KQZRWwXEBIdW1elXKcdUaaCRdfgRGh1wwRvPWI6INDin
- lsmj/ak4F/5PUydJqXvRRQaKuEA0evJ42XRr7C1UZiP9GD4wdKyAm+fgz
- tP+OQQ0mN8HTMv4pep3ilXN54V4F63HaLR91DTeEzVD9EJyIlZuaq1LTL
- +1Z83ySvvsVs4Rrg48uz5vuSJG8GoY4ZI0XbCkAn/S8qLUkfGC/V7EwS0 g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="28982553"
-X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="28982553"
+ bh=se7iaBg2YM4bDU1t5iF+ZzwdJjnzwm4fgLQ2Wyzhwuw=;
+ b=fLlY9V60XoY97Z0P/0LFl5zrFdms/IFU7sIsHh9Dztd/59Xgp99N4sfZ
+ rU6xtecXRoH5AyUm9TR31lgel3ySDuiMp5qjYobr/2sgnaXydIuAYaZGQ
+ 3CnQ2EPnRRxH1/P4ro+YMWpdGDpqg3MmvsfKKMGycNm2WdiM7+DIyaG6z
+ JgAblhc59fImAIZ2I4pKvSP3LrwqqGbYDietLhEUiablyFuT2usikrSTz
+ Qfi/VPylQJB9UvmLDPF8sOlXzT0j4EZ3hndj7nnIpex8XdS6ExjuXF2fn
+ CWT0M4UiU3aC1QMVE0QxpI3iKFmy+r21te8kmhvkSDZAoKtTQURQXL6/F g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="28982562"
+X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="28982562"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Feb 2024 08:24:17 -0800
+ 28 Feb 2024 08:24:21 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="12144995"
+X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="12145008"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa004.jf.intel.com with ESMTP; 28 Feb 2024 08:24:15 -0800
+ by orviesa004.jf.intel.com with ESMTP; 28 Feb 2024 08:24:17 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Michael Tokarev <mjt@tls.msk.ru>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH 10/16] block/snapshot: Fix missing ERRP_GUARD() for
- error_prepend()
-Date: Thu, 29 Feb 2024 00:37:17 +0800
-Message-Id: <20240228163723.1775791-11-zhao1.liu@linux.intel.com>
+ Stefan Weil <sw@weilnetz.de>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>
+Subject: [PATCH 11/16] block/vdi: Fix missing ERRP_GUARD() for error_prepend()
+Date: Thu, 29 Feb 2024 00:37:18 +0800
+Message-Id: <20240228163723.1775791-12-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240228163723.1775791-1-zhao1.liu@linux.intel.com>
 References: <20240228163723.1775791-1-zhao1.liu@linux.intel.com>
@@ -100,47 +100,36 @@ ERRP_GUARD() could avoid the case when @errp is the pointer of
 error_fatal, the user can't see this additional information, because
 exit() happens in error_setg earlier than information is added [1].
 
-In block/snapshot.c, there're 2 functions passing @errp to
-error_prepend() without ERRP_GUARD():
- - bdrv_all_delete_snapshot()
- - bdrv_all_goto_snapshot()
+The vdi_co_do_create() passes @errp to error_prepend() without
+ERRP_GUARD(), and its @errp parameter is so widely sourced that it is
+necessary to protect it with ERRP_GUARD().
 
-As the APIs exposed in include/block/snapshot.h, they could be called
-by other modules.
-
-To avoid potential issues as [1] said, add missing ERRP_GUARD() at the
-beginning of these 2 functions.
+To avoid the potential issues as [1] said, add missing ERRP_GUARD() at
+the beginning of this function.
 
 [1]: Issue description in the commit message of commit ae7c80a7bd73
      ("error: New macro ERRP_GUARD()").
 
+Cc: Stefan Weil <sw@weilnetz.de>
 Cc: Kevin Wolf <kwolf@redhat.com>
 Cc: Hanna Reitz <hreitz@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- block/snapshot.c | 2 ++
- 1 file changed, 2 insertions(+)
+ block/vdi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/block/snapshot.c b/block/snapshot.c
-index 8694fc0a3eba..8242b4abac41 100644
---- a/block/snapshot.c
-+++ b/block/snapshot.c
-@@ -566,6 +566,7 @@ int bdrv_all_delete_snapshot(const char *name,
-                              bool has_devices, strList *devices,
-                              Error **errp)
+diff --git a/block/vdi.c b/block/vdi.c
+index 3b57becb9fe0..6363da08cee9 100644
+--- a/block/vdi.c
++++ b/block/vdi.c
+@@ -738,6 +738,7 @@ static int coroutine_fn GRAPH_UNLOCKED
+ vdi_co_do_create(BlockdevCreateOptions *create_options, size_t block_size,
+                  Error **errp)
  {
 +    ERRP_GUARD();
-     g_autoptr(GList) bdrvs = NULL;
-     GList *iterbdrvs;
- 
-@@ -605,6 +606,7 @@ int bdrv_all_goto_snapshot(const char *name,
-                            bool has_devices, strList *devices,
-                            Error **errp)
- {
-+    ERRP_GUARD();
-     g_autoptr(GList) bdrvs = NULL;
-     GList *iterbdrvs;
-     int ret;
+     BlockdevCreateOptionsVdi *vdi_opts;
+     int ret = 0;
+     uint64_t bytes = 0;
 -- 
 2.34.1
 
