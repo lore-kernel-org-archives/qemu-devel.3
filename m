@@ -4,40 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C8A1C5478C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 20:37:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59B58C5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 20:38:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfQf9-0005e2-2T; Wed, 28 Feb 2024 15:36:23 -0500
+	id 1rfQes-00057t-1T; Wed, 28 Feb 2024 15:36:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rfQer-0005DQ-3A; Wed, 28 Feb 2024 15:36:05 -0500
+ id 1rfQeS-00053o-LA; Wed, 28 Feb 2024 15:35:40 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rfQeo-0001Jy-2i; Wed, 28 Feb 2024 15:36:03 -0500
+ id 1rfQeR-0001Ht-1N; Wed, 28 Feb 2024 15:35:40 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C815151776;
+ by isrv.corpit.ru (Postfix) with ESMTP id 468405176F;
  Wed, 28 Feb 2024 23:35:58 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 5D6958BA7E;
- Wed, 28 Feb 2024 23:35:22 +0300 (MSK)
-Received: (nullmailer pid 267641 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id D7FB18BA77;
+ Wed, 28 Feb 2024 23:35:21 +0300 (MSK)
+Received: (nullmailer pid 267620 invoked by uid 1000);
  Wed, 28 Feb 2024 20:35:21 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.10 44/47] target/i386: remove unnecessary/wrong
- application of the A20 mask
-Date: Wed, 28 Feb 2024 23:35:12 +0300
-Message-Id: <20240228203521.267565-11-mjt@tls.msk.ru>
+Subject: [Stable-7.2.10 37/47] .gitlab-ci.d/windows.yml: Drop msys2-32bit job
+Date: Wed, 28 Feb 2024 23:35:05 +0300
+Message-Id: <20240228203521.267565-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.10-20240228233111@cover.tls.msk.ru>
 References: <qemu-stable-7.2.10-20240228233111@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,109 +65,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-If ptw_translate() does a MMU_PHYS_IDX access, the A20 mask is already
-applied in get_physical_address(), which is called via probe_access_full()
-and x86_cpu_tlb_fill().
+MSYS2 is dropping support for 32-bit Windows.  This shows up for us
+as various packages we were using in our CI job no longer being
+available to install, which causes the job to fail.  In commit
+8e31b744fdf we dropped the dependency on libusb and spice, but the
+dtc package has also now been removed.
 
-If ptw_translate() on the other hand does a MMU_NESTED_IDX access,
-the A20 mask must not be applied to the address that is looked up in
-the nested page tables; it must be applied only to the addresses that
-hold the NPT entries (which is achieved via MMU_PHYS_IDX, per the
-previous paragraph).
+For us as QEMU upstream, "32 bit x86 hosts for system emulation" have
+already been deprecated as of QEMU 8.0, so we are ready to drop them
+anyway.
 
-Therefore, we can remove A20 masking from the computation of the page
-table entry's address, and let get_physical_address() or mmu_translate()
-apply it when they know they are returning a host-physical address.
+Drop the msys2-32bit CI job, as the first step in doing this.
+
+This is cc'd to stable, because this job will also be broken for CI
+on the stable branches.  We can't drop 32-bit support entirely there,
+but we will still be covering at least compilation for 32-bit Windows
+via the cross-win32-system job.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 4a1e9d4d11c ("target/i386: Use atomic operations for pte updates", 2022-10-18)
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit a28fe7dc1939333c81b895cdced81c69eb7c5ad0)
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20240220165602.135695-1-peter.maydell@linaro.org
+(cherry picked from commit 5cd3ae4903e33982e7a9bbd04674af517e796d6e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: in 7.2 the piece being removed is different but the job has to go anyway)
 
-diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
-index 389a0d6912..61b8d2fdde 100644
---- a/target/i386/tcg/sysemu/excp_helper.c
-+++ b/target/i386/tcg/sysemu/excp_helper.c
-@@ -162,8 +162,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-                 /*
-                  * Page table level 5
-                  */
--                pte_addr = ((in->cr3 & ~0xfff) +
--                            (((addr >> 48) & 0x1ff) << 3)) & a20_mask;
-+                pte_addr = (in->cr3 & ~0xfff) + (((addr >> 48) & 0x1ff) << 3);
-                 if (!ptw_translate(&pte_trans, pte_addr)) {
-                     return false;
-                 }
-@@ -187,8 +186,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-             /*
-              * Page table level 4
-              */
--            pte_addr = ((pte & PG_ADDRESS_MASK) +
--                        (((addr >> 39) & 0x1ff) << 3)) & a20_mask;
-+            pte_addr = (pte & PG_ADDRESS_MASK) + (((addr >> 39) & 0x1ff) << 3);
-             if (!ptw_translate(&pte_trans, pte_addr)) {
-                 return false;
-             }
-@@ -208,8 +206,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-             /*
-              * Page table level 3
-              */
--            pte_addr = ((pte & PG_ADDRESS_MASK) +
--                        (((addr >> 30) & 0x1ff) << 3)) & a20_mask;
-+            pte_addr = (pte & PG_ADDRESS_MASK) + (((addr >> 30) & 0x1ff) << 3);
-             if (!ptw_translate(&pte_trans, pte_addr)) {
-                 return false;
-             }
-@@ -236,7 +233,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-             /*
-              * Page table level 3
-              */
--            pte_addr = ((in->cr3 & 0xffffffe0ULL) + ((addr >> 27) & 0x18)) & a20_mask;
-+            pte_addr = (in->cr3 & 0xffffffe0ULL) + ((addr >> 27) & 0x18);
-             if (!ptw_translate(&pte_trans, pte_addr)) {
-                 return false;
-             }
-@@ -258,8 +255,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-         /*
-          * Page table level 2
-          */
--        pte_addr = ((pte & PG_ADDRESS_MASK) +
--                    (((addr >> 21) & 0x1ff) << 3)) & a20_mask;
-+        pte_addr = (pte & PG_ADDRESS_MASK) + (((addr >> 21) & 0x1ff) << 3);
-         if (!ptw_translate(&pte_trans, pte_addr)) {
-             return false;
-         }
-@@ -285,8 +281,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-         /*
-          * Page table level 1
-          */
--        pte_addr = ((pte & PG_ADDRESS_MASK) +
--                    (((addr >> 12) & 0x1ff) << 3)) & a20_mask;
-+        pte_addr = (pte & PG_ADDRESS_MASK) + (((addr >> 12) & 0x1ff) << 3);
-         if (!ptw_translate(&pte_trans, pte_addr)) {
-             return false;
-         }
-@@ -304,7 +299,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-         /*
-          * Page table level 2
-          */
--        pte_addr = ((in->cr3 & 0xfffff000ULL) + ((addr >> 20) & 0xffc)) & a20_mask;
-+        pte_addr = (in->cr3 & 0xfffff000ULL) + ((addr >> 20) & 0xffc);
-         if (!ptw_translate(&pte_trans, pte_addr)) {
-             return false;
-         }
-@@ -333,7 +328,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-         /*
-          * Page table level 1
-          */
--        pte_addr = ((pte & ~0xfffu) + ((addr >> 10) & 0xffc)) & a20_mask;
-+        pte_addr = (pte & ~0xfffu) + ((addr >> 10) & 0xffc);
-         if (!ptw_translate(&pte_trans, pte_addr)) {
-             return false;
-         }
+diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
+index a3e7a37022..0180261b7f 100644
+--- a/.gitlab-ci.d/windows.yml
++++ b/.gitlab-ci.d/windows.yml
+@@ -63,37 +63,3 @@ msys2-64bit:
+       --enable-capstone --without-default-devices'
+   - .\msys64\usr\bin\bash -lc 'make'
+   - .\msys64\usr\bin\bash -lc 'make check || { cat build/meson-logs/testlog.txt; exit 1; } ;'
+-
+-msys2-32bit:
+-  extends: .shared_msys2_builder
+-  script:
+-  - .\msys64\usr\bin\bash -lc "pacman -Sy --noconfirm --needed
+-      bison diffutils flex
+-      git grep make sed
+-      mingw-w64-i686-capstone
+-      mingw-w64-i686-curl
+-      mingw-w64-i686-cyrus-sasl
+-      mingw-w64-i686-gcc
+-      mingw-w64-i686-glib2
+-      mingw-w64-i686-gnutls
+-      mingw-w64-i686-gtk3
+-      mingw-w64-i686-libgcrypt
+-      mingw-w64-i686-libjpeg-turbo
+-      mingw-w64-i686-libssh
+-      mingw-w64-i686-libtasn1
+-      mingw-w64-i686-libusb
+-      mingw-w64-i686-lzo2
+-      mingw-w64-i686-ninja
+-      mingw-w64-i686-pixman
+-      mingw-w64-i686-pkgconf
+-      mingw-w64-i686-python
+-      mingw-w64-i686-snappy
+-      mingw-w64-i686-usbredir "
+-  - $env:CHERE_INVOKING = 'yes'  # Preserve the current working directory
+-  - $env:MSYSTEM = 'MINGW32'     # Start a 32-bit MinG environment
+-  - $env:MSYS = 'winsymlinks:native' # Enable native Windows symlink
+-  - mkdir output
+-  - cd output
+-  - ..\msys64\usr\bin\bash -lc "../configure --target-list=ppc64-softmmu"
+-  - ..\msys64\usr\bin\bash -lc 'make'
+-  - ..\msys64\usr\bin\bash -lc 'make check || { cat meson-logs/testlog.txt; exit 1; } ;'
 -- 
 2.39.2
 
