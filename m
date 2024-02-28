@@ -4,86 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DA7BC5478C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 20:47:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A04C0C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 21:12:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfQpN-0001Fr-8w; Wed, 28 Feb 2024 15:46:57 -0500
+	id 1rfRDl-0002lu-U4; Wed, 28 Feb 2024 16:12:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rfQpL-0001FV-UO
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 15:46:55 -0500
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rfQpH-0006FJ-7V
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 15:46:55 -0500
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-5dbf7b74402so120570a12.0
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 12:46:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
+ id 1rfRDj-0002lO-Ja
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 16:12:07 -0500
+Received: from catfish.pear.relay.mailchannels.net ([23.83.216.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
+ id 1rfRDh-0007CT-By
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 16:12:07 -0500
+X-Sender-Id: _forwarded-from|134.3.94.10
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+ by relay.mailchannels.net (Postfix) with ESMTP id 5469E81DD7
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 21:12:03 +0000 (UTC)
+Received: from outbound5c.eu.mailhop.org (unknown [127.0.0.6])
+ (Authenticated sender: duocircle)
+ by relay.mailchannels.net (Postfix) with ESMTPA id 5E10481F74
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 21:12:02 +0000 (UTC)
+ARC-Seal: i=2; s=arc-2022; d=mailchannels.net; t=1709154722; a=rsa-sha256;
+ cv=pass;
+ b=5ktkBITgyzobefFYo2+ACH9FQkcHeQDW1mM7zPYcQIa4RAi/Limak4JG97ZBX+eXXoqP2J
+ aiizqqDVev2O32XT8eXkBglQP2vTvu+yIo8DLjS9hAP7S+VkrS+m4Gaqj5jC4slUvkyw45
+ qj1GEiyW3WGQFqnGmw3smEMm0MVGSod8rceKlRM5k3kr+YeUSu42GyAGo6lEOZkZ6BPW0M
+ MO0azny9uRyFBZGXVwEiSi2V8fdLPSyJVjVNJUAgQAPOS7C6UOqZGtzqzQKZP5zUuPUYyV
+ YUU2FFZQTvJDmf0bKqMxfdrn7q2/6alGcwkMd4dBc4YCzTOb43F2U4wbsskXgg==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net; s=arc-2022; t=1709154722;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:dkim-signature;
+ bh=gTzT/twa5H3YQV2QlnLJvOosc2pvMMPAeQaUSq60Ihc=;
+ b=Ftk3hjRt/Q90vRM6z8gCq/aOtwvTUmQ7/rEvvqBIwwtQfXeLadtilf2roxKQ19nCXLUWRd
+ 53BbW/S3zRVi926e6bpj3zxZFdkJSzWF+v5ZOZcsfs0tar/qsxPa7rtFLd71Iip1tn0umm
+ o+M7Ntk4wnuEuui+y+Vm2lSBpP35pruply3iTy/iPiBl3Z1C6LTs0I2+y5Qu+ukmYZLOCS
+ A4wMuupG0e4ojQFGKItesUFjprVifjBMX+EiKiZ0LueEmF7u6XwrkpQ39zrj6omytt/6Fg
+ WW/Ga6uVU6lHwWChqbyBQ00LP6Ht/nRRf+rU2Z1G5bJ18qu1DgOPs+/bE8thOg==
+ARC-Authentication-Results: i=2; rspamd-7f9dd9fb96-vb5pv;
+ arc=pass ("outbound.mailhop.org:s=arc-outbound20181012:i=1");
+ auth=pass smtp.auth=duocircle smtp.mailfrom=svens@stackframe.org
+X-Sender-Id: _forwarded-from|134.3.94.10
+X-MC-Relay: Forwarding
+X-MailChannels-SenderId: _forwarded-from|134.3.94.10
+X-MailChannels-Auth-Id: duocircle
+X-Versed-Eight: 3b3beb6e5eb0dba3_1709154722882_2672629435
+X-MC-Loop-Signature: 1709154722882:549450154
+X-MC-Ingress-Time: 1709154722882
+Received: from outbound5c.eu.mailhop.org (outbound5c.eu.mailhop.org
+ [3.125.148.246]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+ by 100.102.58.46 (trex/6.9.2); Wed, 28 Feb 2024 21:12:02 +0000
+ARC-Seal: i=1; a=rsa-sha256; t=1709154696; cv=none;
+ d=outbound.mailhop.org; s=arc-outbound20181012;
+ b=PX4oBjRJgBaySeI6aPuhHajKrNnKZSLw56CaPgvS0SUquxEodI/qq34iO2s+gUZGtc77u/ZVT2jmT
+ eodyQ6BYTSzQuiLj8UEKheWjanWBiUBEmxvtPUueJ6/AOcBp/gDpOivrSviF9PBdv7/ffBpUpvM+iG
+ 6QmdLWvAs1edPf1aXWqvBclNJjqabp+fsNCUWdo001YorFiSYMOiJ3JCg6cEFSAwkrgznFzKsinkqN
+ acBj9UkRnmEoQE/eWRQfmD4xJHegD/yCiZEcnJSiW/u8GK90yhiZ+s+ySUqg3qNBOS7J84aHlJK1qG
+ hFy4R489Yh4rkfr3zNFV3ZUv4eXzzWQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=outbound.mailhop.org; s=arc-outbound20181012;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc:to:from:
+ dkim-signature:dkim-signature:dkim-signature:from;
+ bh=gTzT/twa5H3YQV2QlnLJvOosc2pvMMPAeQaUSq60Ihc=;
+ b=GusIiTnll8cbifKnGdh8SKWW41/IaDshZY5QbEIjt6u4m46GKt+LXYfXXrVEUQA0++NdhjSGBsJTe
+ 5HlYIjkhh+QjjpcN0pz+wUVzuDqSMlIGSwsPWVRqDV/UmktsWST2V5FneIzfesjgquDFVKCVeHccUB
+ KacBJptHyUF9iEhJW8Q7ibQbCjcgZHmuvZfVTUE9Fm7ANsbrxeiVFzh4HrX09sROX4U0MIrMF3101e
+ GGevbynDEIK7cPCNinL4SARZHyX/r+60rYyPNYpjw+DoPWPfA9ohmwJfbcLrC1m2ZdQMR9jfB3rdym
+ e3kjvILbGGlsiPMI/7xCf86JgGwaL+Q==
+ARC-Authentication-Results: i=1; outbound3.eu.mailhop.org;
+ spf=pass smtp.mailfrom=stackframe.org smtp.remote-ip=130.180.31.158;
+ dkim=pass header.d=stackframe.org header.s=dkim1 header.a=rsa-sha256
+ header.b=llocov76; 
+ dmarc=none header.from=stackframe.org;
+ arc=none header.oldest-pass=0;
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709153210; x=1709758010; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=TPxX/CUHl7rtq5FN36qC1/v31dE3yPDzQam09K7oiq4=;
- b=s4KMfwg0zmjsdmY/Uw/qVvRG9vcnEqGh9ltkqPIYPoCzGh87AL+q6EZgPSBmWqPmN/
- +EbAn3Fy9L+OK3b8JkJIbi5xSDxbNpuqclaImJPHAvXTvVN+r17tlYJOasvrw7Ms+Jdy
- s9VKpX7JEjZ3rnF7hhh5ZBXYOq4bUW6ehkDk9naUZdOQS/kOMAFx2P6Po5Kz9wbXRA8Y
- u/kKQQQ+poVbvVe/Y+Q8fHgqLp21LqI1slfnzO9A0/6tQMeRLlBosUv0uBmSTN74ggd+
- M3DFYJ5TAzdCZ6fJeaOpSsGaTAwStuIvR/Z2uDVRx2iQtH3E5NDuDWgPtWYXBaOqXL3A
- JRzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709153210; x=1709758010;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TPxX/CUHl7rtq5FN36qC1/v31dE3yPDzQam09K7oiq4=;
- b=PUCNjezuXwouuPb0hArxIZqtx0uhfb2uEm7lvb62DA48MGsGiJKMNDRBUoPAXlgNvv
- C7kkiflyuxmMXjf3XBK1MRNK4oADFBu0oBtJmI33wGXeTTBEbV8Ieoej40K8MmDnI+f7
- B8bjNaBAP32QXzjDKAIpsbN9fPn+afTFmHYNZrp20ZrlystPtRzvK4KhO3zUjKWYrB0m
- bViiC3j2tzsNZtHDjyl4rUWQ7u517PRu/fyLdfosDf3gbgmqZ6iz2dZs4gHPdwDJWL+1
- vPRymos97hhFgmI2/Tj5B8bqhEnxw1lopYzOud1RO70LTlGPn/IZvsjjxPX748kxYYt9
- acIg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXhdjR7+Qg0Xvv9qmoDEYxrwwtXNAbiGTlUS3y2RmdJiTV2GWqfKHDUOEsxhQB6LTvJ5gRv66gZmX5FO0VpPNCoxQVjkBQ=
-X-Gm-Message-State: AOJu0YwVYtK014PK2hG3BcCzdwkkDd4merTNT6AXSrQw69XPlumnzu0L
- F3uqgrocotAO7MxAzbROKFC5qslKmh0TKkSA18/8QWNDcCOTxfCyCG8mQTABttE=
-X-Google-Smtp-Source: AGHT+IE4Wph5kFVjho2hWKEJuRWD4AXAfcXTuJKgT4+inNFwOo1IqLwFbReFWTYz4nAV+i1StrFTag==
-X-Received: by 2002:a17:90a:d184:b0:29a:be15:9c90 with SMTP id
- fu4-20020a17090ad18400b0029abe159c90mr316304pjb.34.1709153209786; 
- Wed, 28 Feb 2024 12:46:49 -0800 (PST)
-Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
- [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- st3-20020a17090b1fc300b00299ef19177dsm2168045pjb.8.2024.02.28.12.46.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Feb 2024 12:46:49 -0800 (PST)
-Message-ID: <e8af9c95-0d63-4c2e-82ed-f129ba79774e@linaro.org>
-Date: Wed, 28 Feb 2024 10:46:46 -1000
+ d=stackframe.org; s=duo-1634547266507-560c42ae;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc:to:from:
+ from; bh=gTzT/twa5H3YQV2QlnLJvOosc2pvMMPAeQaUSq60Ihc=;
+ b=bsPt3n986f55ZyXxwYwkT4UeieL7QH9zcq8zo148f/Z0uWKrqzBK9G3Fc8jq5pwL1bak+FrSTGrTK
+ Ed1rOiezX874efh2E3keHhGSXlfS4L6TlaPZfIyTiqBH3xJ2zXBZ8A1Xn1d/Vy6N220T4Fdd25zrPK
+ Gb2VfX+e0CMl4VqI=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=outbound.mailhop.org; s=dkim-high;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc:to:from:
+ from; bh=gTzT/twa5H3YQV2QlnLJvOosc2pvMMPAeQaUSq60Ihc=;
+ b=iRqrnRAjCTP68d6rkRjJGok0L5pAmHvXxIAQVimb4yN1KkVBtWT+IWxc0o428WJzTAxia+WvHdZsp
+ QOpuV6yb/rKFvXpvQDLYPfrk4l8zcBFxpQs5Z0IU7sI6XdidT6CKoWy7PCGAMsM+xCrykvZVPuTtwp
+ +wXo9uJj5o4NL9/OtbO7pzHLU9NpQChKy5p+o/cQ9yjx4rKmh7mlrzJnYwBWCO4ebnfjxXBSgi3V3U
+ atdtwPNh27KdVvoMKR73txPmZx7MxWnHmU8RY1+lJu5TPpahnWTIoqzSEIcXSfjMKacpgetyy4UmGY
+ hMULsxxppjZ0DcX9fYOMXQUdsRGQzaA==
+X-Originating-IP: 130.180.31.158
+X-MHO-RoutePath: dG9ta2lzdG5lcm51
+X-MHO-User: f2c58600-d67d-11ee-af95-eda7e384987e
+X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
+X-Mail-Handler: DuoCircle Outbound SMTP
+Received: from mail.duncanthrax.net (mail.duncanthrax.net [130.180.31.158])
+ by outbound3.eu.mailhop.org (Halon) with ESMTPSA
+ id f2c58600-d67d-11ee-af95-eda7e384987e;
+ Wed, 28 Feb 2024 21:11:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=stackframe.org; s=dkim1; h=Content-Transfer-Encoding:MIME-Version:
+ Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=gTzT/twa5H3YQV2QlnLJvOosc2pvMMPAeQaUSq60Ihc=; b=llocov76Tk0mNAwVIIWSSqXHG1
+ edqFiSTQOov783ZLR7PzNIZMSeb+EXAaJNhorsUe1Y2tYtYlIa40KW2+vpvP7+DgsWAn0iOkWLfz+
+ WOuy0bo6t3Z/A/HBtDKmA9UI2t1i4IIUW7jYZ0QibgdtkS7NfKWJwBPCuCLGHyxF4iozAwj5o7Tkl
+ EgB75bOApXM8huqDdXz6zSQLwjyR1Cbk/oXr36aqppNS8PlwRoT3vdHJ0MwLbiU4dbC70OCvj8GWH
+ ue6ZFHpgEXD3jll8dQKwyLTG63YF/OFlU68TkzOYEBC8ENkWUHvgX+AFfmoDkk1p1GpryjhYpaTEc
+ HB2/dEHg==;
+Received: from ip-134-003-094-010.um41.pools.vodafone-ip.de ([134.3.94.10]
+ helo=t14.stackframe.org)
+ by mail.duncanthrax.net with esmtpa (Exim 4.96)
+ (envelope-from <svens@stackframe.org>) id 1rfRDY-000EKk-0T;
+ Wed, 28 Feb 2024 22:11:56 +0100
+From: Sven Schnelle <svens@stackframe.org>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+	Fam Zheng <fam@euphon.net>
+Cc: qemu-devel@nongnu.org, deller@gmx.de, Sven Schnelle <svens@stackframe.org>
+Subject: [PATCH] hw/scsi/lsi53c895a: add hack to prevent scsi timeouts in
+ HP-UX 10.20
+Date: Wed, 28 Feb 2024 22:11:49 +0100
+Message-ID: <20240228211149.1533426-1-svens@stackframe.org>
+X-Mailer: git-send-email 2.43.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 05/22] target/arm: Support MSR access to ALLINT
-Content-Language: en-US
-To: Jinjie Ruan <ruanjinjie@huawei.com>, peter.maydell@linaro.org,
- eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
-References: <20240228092946.1768728-1-ruanjinjie@huawei.com>
- <20240228092946.1768728-6-ruanjinjie@huawei.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240228092946.1768728-6-ruanjinjie@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=23.83.216.32; envelope-from=svens@stackframe.org;
+ helo=catfish.pear.relay.mailchannels.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,26 +160,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/27/24 23:29, Jinjie Ruan via wrote:
-> Support ALLINT msr access as follow:
-> 	mrs <xt>, ALLINT	// read allint
-> 	msr ALLINT, <xt>	// write allint with imm
-> 
-> Signed-off-by: Jinjie Ruan<ruanjinjie@huawei.com>
-> ---
-> v4:
-> - Remove arm_is_el2_enabled() check in allint_check().
-> - Change to env->pstate instead of env->allint.
-> v3:
-> - Remove EL0 check in aa64_allint_access() which alreay checks in .access
->    PL1_RW.
-> - Use arm_hcrx_el2_eff() in aa64_allint_access() instead of env->cp15.hcrx_el2.
-> - Make ALLINT msr access function controlled by aa64_nmi.
-> ---
->   target/arm/helper.c | 34 ++++++++++++++++++++++++++++++++++
->   1 file changed, 34 insertions(+)
+HP-UX 10.20 seems to make the lsi53c895a spinning on a memory location
+under certain circumstances. As the SCSI controller and CPU are not
+running at the same time this loop will never finish. After some
+time, the check loop interrupts with a unexpected device disconnect.
+This works, but is slow because the kernel resets the scsi controller.
+Instead of signaling UDC, add an option 'hpux-spin-workaround' which
+emulates a INTERRUPT 2 script instruction. This instruction tells the
+kernel that the request was fulfilled. With this change, SCSI speeds
+improves significantly.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+The option can be enabled by adding
 
-r~
+-global lsi53c895a.hpux-spin-workaround=on
+
+to the qemu commandline.
+
+Signed-off-by: Sven Schnelle <svens@stackframe.org>
+---
+ hw/scsi/lsi53c895a.c | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
+
+diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
+index d607a5f9fb..20c353f594 100644
+--- a/hw/scsi/lsi53c895a.c
++++ b/hw/scsi/lsi53c895a.c
+@@ -304,6 +304,7 @@ struct LSIState {
+     uint32_t adder;
+ 
+     uint8_t script_ram[2048 * sizeof(uint32_t)];
++    bool hpux_spin_workaround;
+ };
+ 
+ #define TYPE_LSI53C810  "lsi53c810"
+@@ -1156,8 +1157,17 @@ again:
+             qemu_log_mask(LOG_GUEST_ERROR,
+                           "lsi_scsi: inf. loop with UDC masked");
+         }
+-        lsi_script_scsi_interrupt(s, LSI_SIST0_UDC, 0);
+-        lsi_disconnect(s);
++        if (s->hpux_spin_workaround) {
++            /*
++             * Workaround for HP-UX 10.20: Instead of disconnecting, which
++             * causes a long delay, emulate a INTERRUPT 2 instruction.
++             */
++            s->dsps = 2;
++            lsi_script_dma_interrupt(s, LSI_DSTAT_SIR);
++        } else {
++            lsi_script_scsi_interrupt(s, LSI_SIST0_UDC, 0);
++            lsi_disconnect(s);
++        }
+         trace_lsi_execute_script_stop();
+         reentrancy_level--;
+         return;
+@@ -2339,6 +2349,11 @@ static void lsi_scsi_exit(PCIDevice *dev)
+     address_space_destroy(&s->pci_io_as);
+ }
+ 
++static Property lsi_props[] = {
++    DEFINE_PROP_BOOL("hpux-spin-workaround", LSIState, hpux_spin_workaround,
++                     false),
++};
++
+ static void lsi_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -2353,6 +2368,7 @@ static void lsi_class_init(ObjectClass *klass, void *data)
+     dc->reset = lsi_scsi_reset;
+     dc->vmsd = &vmstate_lsi_scsi;
+     set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
++    device_class_set_props(dc, lsi_props);
+ }
+ 
+ static const TypeInfo lsi_info = {
+-- 
+2.43.2
+
 
