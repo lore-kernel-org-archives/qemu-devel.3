@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87D02C54E55
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 09:33:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79F76C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 09:33:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfGHa-0001CA-Jo; Wed, 28 Feb 2024 04:31:22 -0500
+	id 1rfGHW-00015l-Cf; Wed, 28 Feb 2024 04:31:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rfGHL-00011U-RE; Wed, 28 Feb 2024 04:31:09 -0500
-Received: from szxga05-in.huawei.com ([45.249.212.191])
+ id 1rfGHJ-00010w-Fk; Wed, 28 Feb 2024 04:31:07 -0500
+Received: from szxga01-in.huawei.com ([45.249.212.187])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rfGHJ-0001fj-K2; Wed, 28 Feb 2024 04:31:07 -0500
-Received: from mail.maildlp.com (unknown [172.19.88.214])
- by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4Tl8Dc2K8Wz1h0wX;
- Wed, 28 Feb 2024 17:28:48 +0800 (CST)
+ id 1rfGHF-0001P1-WF; Wed, 28 Feb 2024 04:31:04 -0500
+Received: from mail.maildlp.com (unknown [172.19.162.254])
+ by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4Tl8DT1hMjzvVyH;
+ Wed, 28 Feb 2024 17:28:41 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 178BB1A016C;
- Wed, 28 Feb 2024 17:31:03 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 1E97718006C;
+ Wed, 28 Feb 2024 17:30:51 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Wed, 28 Feb
- 2024 17:31:02 +0800
+ 2024 17:30:50 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [RFC PATCH v4 15/22] hw/intc/arm_gicv3: Implement GICD_INMIR
-Date: Wed, 28 Feb 2024 09:29:39 +0000
-Message-ID: <20240228092946.1768728-16-ruanjinjie@huawei.com>
+Subject: [RFC PATCH v4 01/22] target/arm: Handle HCR_EL2 accesses for bits
+ introduced with FEAT_NMI
+Date: Wed, 28 Feb 2024 09:29:25 +0000
+Message-ID: <20240228092946.1768728-2-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240228092946.1768728-1-ruanjinjie@huawei.com>
 References: <20240228092946.1768728-1-ruanjinjie@huawei.com>
@@ -44,14 +45,14 @@ Content-Type: text/plain
 X-Originating-IP: [10.67.174.55]
 X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
  kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.191;
- envelope-from=ruanjinjie@huawei.com; helo=szxga05-in.huawei.com
+Received-SPF: pass client-ip=45.249.212.187;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga01-in.huawei.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,93 +70,57 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add GICD_INMIR, GICD_INMIRnE register and support access GICD_INMIR0.
+FEAT_NMI defines another three new bits in HCRX_EL2: TALLINT, HCRX_VINMI and
+HCRX_VFNMI. When the feature is enabled, allow these bits to be written in
+HCRX_EL2.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
 v4:
-- Make the GICD_INMIR implementation more clearer.
-- Udpate the commit message.
+- Update the comment for FEAT_NMI in hcrx_write().
+- Update the commit message, s/thress/three/g.
 v3:
 - Add Reviewed-by.
+- Add HCRX_VINMI and HCRX_VFNMI support in HCRX_EL2.
+- Upate the commit messsage.
 ---
- hw/intc/arm_gicv3_dist.c | 34 ++++++++++++++++++++++++++++++++++
- hw/intc/gicv3_internal.h |  2 ++
- 2 files changed, 36 insertions(+)
+ target/arm/cpu-features.h | 5 +++++
+ target/arm/helper.c       | 5 +++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/hw/intc/arm_gicv3_dist.c b/hw/intc/arm_gicv3_dist.c
-index 35e850685c..9739404e35 100644
---- a/hw/intc/arm_gicv3_dist.c
-+++ b/hw/intc/arm_gicv3_dist.c
-@@ -89,6 +89,29 @@ static int gicd_ns_access(GICv3State *s, int irq)
-     return extract32(s->gicd_nsacr[irq / 16], (irq % 16) * 2, 2);
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 7567854db6..2ad1179be7 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -681,6 +681,11 @@ static inline bool isar_feature_aa64_sme(const ARMISARegisters *id)
+     return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, SME) != 0;
  }
  
-+static void gicd_write_bitmap_reg(GICv3State *s, MemTxAttrs attrs,
-+                                  uint32_t *bmp, maskfn *maskfn,
-+                                  int offset, uint32_t val)
++static inline bool isar_feature_aa64_nmi(const ARMISARegisters *id)
 +{
-+    /*
-+     * Helper routine to implement writing to a "set" register
-+     * (GICD_INMIR, etc).
-+     * Semantics implemented here:
-+     * RAZ/WI for SGIs, PPIs, unimplemented IRQs
-+     * Bits corresponding to Group 0 or Secure Group 1 interrupts RAZ/WI.
-+     * offset should be the offset in bytes of the register from the start
-+     * of its group.
-+     */
-+    int irq = offset * 8;
-+
-+    if (irq < GIC_INTERNAL || irq >= s->num_irq) {
-+        return;
-+    }
-+    val &= mask_group_and_nsacr(s, attrs, maskfn, irq);
-+    *gic_bmp_ptr32(bmp, irq) = val;
-+    gicv3_update(s, irq, 32);
++    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, NMI) != 0;
 +}
 +
- static void gicd_write_set_bitmap_reg(GICv3State *s, MemTxAttrs attrs,
-                                       uint32_t *bmp,
-                                       maskfn *maskfn,
-@@ -543,6 +566,11 @@ static bool gicd_readl(GICv3State *s, hwaddr offset,
-         /* RAZ/WI since affinity routing is always enabled */
-         *data = 0;
-         return true;
-+    case GICD_INMIR ... GICD_INMIR + 0x7f:
-+        *data = (!s->nmi_support) ? 0 :
-+                gicd_read_bitmap_reg(s, attrs, s->superprio, NULL,
-+                                     offset - GICD_INMIR);
-+        return true;
-     case GICD_IROUTER ... GICD_IROUTER + 0x1fdf:
-     {
-         uint64_t r;
-@@ -752,6 +780,12 @@ static bool gicd_writel(GICv3State *s, hwaddr offset,
-     case GICD_SPENDSGIR ... GICD_SPENDSGIR + 0xf:
-         /* RAZ/WI since affinity routing is always enabled */
-         return true;
-+    case GICD_INMIR ... GICD_INMIR + 0x7f:
-+        if (s->nmi_support) {
-+            gicd_write_bitmap_reg(s, attrs, s->superprio, NULL,
-+                                  offset - GICD_INMIR, value);
-+        }
-+        return true;
-     case GICD_IROUTER ... GICD_IROUTER + 0x1fdf:
-     {
-         uint64_t r;
-diff --git a/hw/intc/gicv3_internal.h b/hw/intc/gicv3_internal.h
-index f35b7d2f03..a1fc34597e 100644
---- a/hw/intc/gicv3_internal.h
-+++ b/hw/intc/gicv3_internal.h
-@@ -52,6 +52,8 @@
- #define GICD_SGIR            0x0F00
- #define GICD_CPENDSGIR       0x0F10
- #define GICD_SPENDSGIR       0x0F20
-+#define GICD_INMIR           0x0F80
-+#define GICD_INMIRnE         0x3B00
- #define GICD_IROUTER         0x6000
- #define GICD_IDREGS          0xFFD0
+ static inline bool isar_feature_aa64_tgran4_lpa2(const ARMISARegisters *id)
+ {
+     return FIELD_SEX64(id->id_aa64mmfr0, ID_AA64MMFR0, TGRAN4) >= 1;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 90c4fb72ce..affa493141 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -6056,6 +6056,11 @@ static void hcrx_write(CPUARMState *env, const ARMCPRegInfo *ri,
+         valid_mask |= HCRX_MSCEN | HCRX_MCE2;
+     }
  
++    /* FEAT_NMI adds TALLINT, VINMI and VFNMI */
++    if (cpu_isar_feature(aa64_nmi, env_archcpu(env))) {
++        valid_mask |= HCRX_TALLINT | HCRX_VINMI | HCRX_VFNMI;
++    }
++
+     /* Clear RES0 bits.  */
+     env->cp15.hcrx_el2 = value & valid_mask;
+ }
 -- 
 2.34.1
 
