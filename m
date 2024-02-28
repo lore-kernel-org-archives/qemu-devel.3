@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 377AFC47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 09:57:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 956F0C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 09:57:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfGgQ-0007TY-RI; Wed, 28 Feb 2024 04:57:02 -0500
+	id 1rfGgj-0008Cj-1h; Wed, 28 Feb 2024 04:57:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rfGgH-0007Lb-Sd
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 04:56:54 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rfGgh-00088u-Fp
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 04:57:19 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rfGgG-0003as-GU
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 04:56:53 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rfGgg-0003ga-5o
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 04:57:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709114211;
+ s=mimecast20190719; t=1709114236;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=c08ZVTu7WMCexIeTAilRWGnCaG1JQhYHaW9QSRRnGaQ=;
- b=BnzEPlKn5wmoKASMIAUTg5ApmXW22Gbmn/1KfIM4ynYulPZdOswg3osc6DFFoorhXLk7xK
- 6aGTvaAkAeihE3oiuAHd2y0Ss75v5Zm+uxejlT1QjvhgtT5Yl6RWJrAWwRAW5aMJJ5PG7y
- hoIAKbYepxdds3ZTXl9/UDdXIGTDn7I=
+ bh=CcbeAJp80KVmz3aYAB63nVgtI5ts2lCKBLqbf4p9u/M=;
+ b=inaaQXXex2y3iOibz7P/DMgCP8Sg27exWTpJsBSLWTZg2E9kwaMZCFC54dbtbDtXU8J5Z6
+ qZdke1nKrxWUFgGdc8fh8QXsZbE1zJGtNaqZoh50VhfdzMlUy7F/v2UKSRumPP6JjWTGTV
+ zWHv7hvhkMB0y2ABoGPwgKEKRWGj/4A=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-438-RsRko6unP86Tw6VHFT0Tuw-1; Wed,
- 28 Feb 2024 04:56:45 -0500
-X-MC-Unique: RsRko6unP86Tw6VHFT0Tuw-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-260-1AGoZHF4OdiTeK4bp1B_lg-1; Wed,
+ 28 Feb 2024 04:57:13 -0500
+X-MC-Unique: 1AGoZHF4OdiTeK4bp1B_lg-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id AC4A01C09833;
- Wed, 28 Feb 2024 09:56:44 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9459B1C0983E;
+ Wed, 28 Feb 2024 09:57:12 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.193.4])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 46E4CC01644;
- Wed, 28 Feb 2024 09:56:44 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 6CBC2401CB7B;
+ Wed, 28 Feb 2024 09:57:12 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 38B5A21E66F9; Wed, 28 Feb 2024 10:56:43 +0100 (CET)
+ id 1476921E66F9; Wed, 28 Feb 2024 10:57:11 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: Zhao Liu <zhao1.liu@linux.intel.com>
 Cc: Eduardo Habkost <eduardo@habkost.net>,  Marcel Apfelbaum
@@ -59,17 +59,18 @@ Cc: Eduardo Habkost <eduardo@habkost.net>,  Marcel Apfelbaum
  <zhenyu.z.wang@intel.com>,  Zhuocheng Ding <zhuocheng.ding@intel.com>,
  Babu Moger <babu.moger@amd.com>,  Yongwei Ma <yongwei.ma@intel.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v9 02/21] hw/core/machine: Support modules in -smp
-In-Reply-To: <20240227103231.1556302-3-zhao1.liu@linux.intel.com> (Zhao Liu's
- message of "Tue, 27 Feb 2024 18:32:12 +0800")
+Subject: Re: [PATCH v9 03/21] hw/core: Introduce module-id as the topology
+ subindex
+In-Reply-To: <20240227103231.1556302-4-zhao1.liu@linux.intel.com> (Zhao Liu's
+ message of "Tue, 27 Feb 2024 18:32:13 +0800")
 References: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
- <20240227103231.1556302-3-zhao1.liu@linux.intel.com>
-Date: Wed, 28 Feb 2024 10:56:43 +0100
-Message-ID: <87plwgzzc4.fsf@pond.sub.org>
+ <20240227103231.1556302-4-zhao1.liu@linux.intel.com>
+Date: Wed, 28 Feb 2024 10:57:11 +0100
+Message-ID: <87le74zzbc.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -99,7 +100,8 @@ Zhao Liu <zhao1.liu@linux.intel.com> writes:
 
 > From: Zhao Liu <zhao1.liu@intel.com>
 >
-> Add "modules" parameter parsing support in -smp.
+> Add module-id in CpuInstanceProperties, to locate the CPU with module
+> level.
 >
 > Suggested-by: Xiaoyao Li <xiaoyao.li@intel.com>
 > Tested-by: Yongwei Ma <yongwei.ma@intel.com>
