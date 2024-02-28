@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B76EEC47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 18:37:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4087C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 18:39:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfOnF-0001rA-58; Wed, 28 Feb 2024 13:36:37 -0500
+	id 1rfOpu-0002iK-0m; Wed, 28 Feb 2024 13:39:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1rfOnE-0001qz-4F
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 13:36:36 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rfOpt-0002i9-6N
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 13:39:21 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1rfOnB-0002jC-Qo
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 13:36:35 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-55a179f5fa1so197253a12.0
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 10:36:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rfOpr-0002w9-Aw
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 13:39:20 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-565d1656c12so98886a12.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 10:39:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1709145390; x=1709750190; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709145557; x=1709750357; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=R+VoYO7aWK51+6HarDNv2G92hElLZ47gJLXgoInfemY=;
- b=CzG5R/9a6g9gPl3ptTKKtNpXuVk5JLhBp+ewlUN8ztRxgnWN5FqeokEPGuyu0iF3UY
- eRmtw3QTKVog5jxLZZQDOyfLw6E32ufA0exidBZpGJ/rBgjMSa9EYIj4lA30mVkn2Et1
- AywvkyNRjc+KOkpxYRQUSVU37Ju3digBXhjZDsNJidZXPDE4h+QuEyNqPvRcdqoAFSGB
- 3d2yfpHaKkvuFsCooD741+6spJbV+aTSL92m5bKWB75/KuWxcQBsGE+mJVLDZvO369Zv
- jBLBvJr1QV/Xuo2ANSLF6tPkwkXKsQ6Z35H0EuwsWBOKHY1A4/swwoRi8zhtV9KOKuua
- B4rQ==
+ bh=lT9hn+57uOhXenoDpKTmFM2J3VdE58lV77AMQTr9jjk=;
+ b=CDY015nJbtmyVMbeTpSb53VevgLISqzbe2YsO7BZgnMOer4jLfu9uKhLace+J8ptzy
+ 6IxEs1xpIn/7ETtvGa1j6tqlxdVxfLiCDnXhftFr5TYujwcHrkXy/IV4a/wf05lpMKI8
+ 2k2p8gqmQ5a2yy2HM0bk05NW4eQev+OkxyHeH5K0WvNwgIK6JVuT2K1vw7m8PhUN85PR
+ GkuWQCWlg3yoO0SdNzzE6yZ9+HxcxqktW4trleFGSRGXknyZxFZTXuPPh1YtkSup6p67
+ 87n5GxlPt5Fa4SQagXEB+irxvkJf3kuadx+UqyJDRw4f+w50TLpcdIQDOKbkG2AtVWC3
+ PbvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709145390; x=1709750190;
+ d=1e100.net; s=20230601; t=1709145557; x=1709750357;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=R+VoYO7aWK51+6HarDNv2G92hElLZ47gJLXgoInfemY=;
- b=ej8vVwbUAgxijNjh8zFTo71nx+UcHA1jqdgaquODFYUerSkGHY6neE9CyBTSSi0Vhf
- Lcnpq8YHMxZnmfaFl664SnygoUBQrldFBniNDYQXa56OFf93mijldj5dM76fLeTARVRc
- SKIgmMiARr50nEO0RvuhhocZrJB/BnHJwXqyuNecRJqjDyvTRwB6yMPl4ZfyN8EtKxoT
- ir0M5v3iOnwGYE7lO4HXFVicaedCpyaBI6torXWiTYTXwdndHl4xZblncgujO1o/KN50
- OoWrpoOnqGgi7Ih2iTcHWCK2KJ4yIEFyanJM5oP43ikhcGm9WAkFre4nJoys8DNIjAMz
- sEdw==
+ bh=lT9hn+57uOhXenoDpKTmFM2J3VdE58lV77AMQTr9jjk=;
+ b=FkAZgJgKWzEgIP2+LuPB5muwUcUYtlON2JqiFBIopDlEqfTPaU0LT635kfJVijGaTm
+ r/hhLByN0TbcM+GEksC1AHz7eXW54Zgs37uJfU1YRzlMUxdL+l8fFphbVrTJ0MTx/w/z
+ EgmF22tkWnGJ03y5fv0OLAdi9oXsBraaz5bkQce7nJnNsjXIsYcdqgyk8XqqaMF6VNSv
+ 9vXOSINtsJ/vOQEWCdqB7ouoAZmBqNWKndLKJx/Eg5hVB3Fmel25e1RSsFeb5HdPpaLB
+ Qi0jc3MqTMO776CAXX9zVOcivltb8Y4UZk8TREutqy/xYfA1hNAD/PkazZRrmhXXgNGn
+ ediw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU/MuQc82ptmdmLbwlwIv25KvhDRR/slEcDEfAIiEBODS4lBk9cH6edSXSqdPicpInx7iwcFDObryH7Ws/CC7kEkQEYWpw=
-X-Gm-Message-State: AOJu0YyLVU1hTqzOSplBYk1Q2OQNKlXvUqGo3vO4YHrxgYWiEkxh2gIF
- agCG5pqFDIq7gi2mlbYy9DUPBr8B+SbmgFwO0hVA0+rVyqpx5WuY1Gqk4vkJ046c7jKGCSCmAqi
- 4yAGSB18t5VjJsiIeoxVNgnhqBz4S8p4w5vkpfg==
-X-Google-Smtp-Source: AGHT+IFNDH/baItZSZvkuDlR0kZJv3QgX5bozVnh1bdVClameVxkXji3x9ggrtL0ur6sud9M7+rvS55qCxyUVFO/c0I=
-X-Received: by 2002:a05:6402:1619:b0:565:ec92:bec8 with SMTP id
- f25-20020a056402161900b00565ec92bec8mr179207edv.7.1709145390041; Wed, 28 Feb
- 2024 10:36:30 -0800 (PST)
+ AJvYcCU0UiBqLstepYKb0KX8Os1+pN4Z+FYBhIHUsL2Nak89Y8K0ogpSdBwwhbf0dnTIC5ZheHIzMfS2JlPF2zE/+pVzxXPddww=
+X-Gm-Message-State: AOJu0Yxe5iJk7gNd4E8HX/0o83Ju68Jfow9OoTjVKXcSxtHyIzzxR7mc
+ blPQLeBHF10/KdwTTZtVej2MG1ybr/zPGfF6ObKJI+MBEFcNiyii6zcTN40pl4ZgHAN456oSU7f
+ xdCyyjvDNm6IuKnBogCokExa3ybGTceTgb3kC8g==
+X-Google-Smtp-Source: AGHT+IF6940PIyG47+HlGfNAU69tMz9J66v3a7t7CQ0jzwNz4N4uXNMlP95bFft7ovedMt7nsp9VSeQxiVBJYiq8yYs=
+X-Received: by 2002:a05:6402:2156:b0:565:a5aa:22e7 with SMTP id
+ bq22-20020a056402215600b00565a5aa22e7mr80554edb.2.1709145557651; Wed, 28 Feb
+ 2024 10:39:17 -0800 (PST)
 MIME-Version: 1.0
-References: <20240226195654.934709-1-hao.xiang@bytedance.com>
- <20240226195654.934709-7-hao.xiang@bytedance.com>
- <87wmqozzjn.fsf@pond.sub.org>
-In-Reply-To: <87wmqozzjn.fsf@pond.sub.org>
-From: Hao Xiang <hao.xiang@bytedance.com>
-Date: Wed, 28 Feb 2024 10:36:19 -0800
-Message-ID: <CAAYibXicsMkZ+QaFtjgSbjk_eL3waOp1fiJQ7M9b5SRXCRa+ig@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH v3 6/7] migration/multifd: Add zero pages
- and zero bytes counter to migration status interface.
-To: Markus Armbruster <armbru@redhat.com>
-Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net, 
- peterx@redhat.com, farosas@suse.de, eblake@redhat.com, thuth@redhat.com, 
- lvivier@redhat.com, jdenemar@redhat.com, marcel.apfelbaum@gmail.com, 
- philmd@linaro.org, wangyanan55@huawei.com, qemu-devel@nongnu.org
+References: <20240228125939.56925-1-heinrich.schuchardt@canonical.com>
+ <fb6ef90d-4a3e-4bdd-8516-8b15c1f2329f@linaro.org>
+ <b9937680-8c0b-46f6-86ef-55139562e2c4@canonical.com>
+In-Reply-To: <b9937680-8c0b-46f6-86ef-55139562e2c4@canonical.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 28 Feb 2024 18:39:06 +0000
+Message-ID: <CAFEAcA_Bshua2BQTfOb3D1aF27ayELEt9TcQM8hkQdKaih3xHw@mail.gmail.com>
+Subject: Re: [PATCH, v2] physmem: avoid bounce buffer too small
+To: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=hao.xiang@bytedance.com; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,51 +96,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 28, 2024 at 1:52=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
+On Wed, 28 Feb 2024 at 18:28, Heinrich Schuchardt
+<heinrich.schuchardt@canonical.com> wrote:
 >
-> Hao Xiang <hao.xiang@bytedance.com> writes:
->
-> > This change extends the MigrationStatus interface to track zero pages
-> > and zero bytes counter.
+> On 28.02.24 16:06, Philippe Mathieu-Daud=C3=A9 wrote:
+> > Hi Heinrich,
 > >
-> > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
+> > On 28/2/24 13:59, Heinrich Schuchardt wrote:
+> >> virtqueue_map_desc() is called with values of sz exceeding that may
+> >> exceed
+> >> TARGET_PAGE_SIZE. sz =3D 0x2800 has been observed.
+> >>
+> >> We only support a single bounce buffer. We have to avoid
+> >> virtqueue_map_desc() calling address_space_map() multiple times.
+> >> Otherwise
+> >> we see an error
+> >>
+> >>      qemu: virtio: bogus descriptor or out of resources
+> >>
+> >> Increase the minimum size of the bounce buffer to 0x10000 which matche=
+s
+> >> the largest value of TARGET_PAGE_SIZE for all architectures.
+> >>
+> >> Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+> >> ---
+> >> v2:
+> >>     remove unrelated change
+> >> ---
+> >>   system/physmem.c | 8 ++++++--
+> >>   1 file changed, 6 insertions(+), 2 deletions(-)
+> >>
+> >> diff --git a/system/physmem.c b/system/physmem.c
+> >> index e3ebc19eef..3c82da1c86 100644
+> >> --- a/system/physmem.c
+> >> +++ b/system/physmem.c
+> >> @@ -3151,8 +3151,12 @@ void *address_space_map(AddressSpace *as,
+> >>               *plen =3D 0;
+> >>               return NULL;
+> >>           }
+> >> -        /* Avoid unbounded allocations */
+> >> -        l =3D MIN(l, TARGET_PAGE_SIZE);
+> >> +        /*
+> >> +         * There is only one bounce buffer. The largest occuring
+> >> value of
+> >> +         * parameter sz of virtqueue_map_desc() must fit into the bou=
+nce
+> >> +         * buffer.
+> >> +         */
+> >> +        l =3D MIN(l, 0x10000);
+> >
+> > Please define this magic value. Maybe ANY_TARGET_PAGE_SIZE or
+> > TARGETS_BIGGEST_PAGE_SIZE?
+> >
+> > Then along:
+> >    QEMU_BUILD_BUG_ON(TARGET_PAGE_SIZE <=3D TARGETS_BIGGEST_PAGE_SIZE);
 >
-> [...]
+> Thank you Philippe for reviewing.
 >
-> > diff --git a/qapi/migration.json b/qapi/migration.json
-> > index a0a85a0312..171734c07e 100644
-> > --- a/qapi/migration.json
-> > +++ b/qapi/migration.json
-> > @@ -63,6 +63,10 @@
-> >  #     between 0 and @dirty-sync-count * @multifd-channels.  (since
-> >  #     7.1)
-> >  #
-> > +# @zero-pages: number of zero pages (since 9.0)
-> > +#
-> > +# @zero-bytes: number of zero bytes sent (since 9.0)
-> > +#
+> TARGETS_BIGGEST_PAGE_SIZE does not fit as the value is not driven by the
+> page size.
+> How about MIN_BOUNCE_BUFFER_SIZE?
+> Is include/exec/memory.h the right include for the constant?
 >
-> Awfully terse.  How are these two related?
+> I don't think that TARGET_PAGE_SIZE has any relevance for setting the
+> bounce buffer size. I only mentioned it to say that we are not
+> decreasing the value on any existing architecture.
+>
+> I don't know why TARGET_PAGE_SIZE ever got into this piece of code.
+> e3127ae0cdcd ("exec: reorganize address_space_map") does not provide a
+> reason for this choice. Maybe Paolo remembers.
 
-Sorry I forgot to address the same feedback from the last version.
-zero-pages are the number of pages being detected as all "zero" and
-hence the payload isn't sent over the network. zero-bytes is basically
-zero-pages * page_size. It's the number of bytes migrated (but not
-actually sent through the network) because they are all "zero". These
-two are related to the existing interface below. normal and
-normal-bytes are the same representation of pages who are not all
-"zero" and are actually sent through the network.
+The limitation to a page dates back to commit 6d16c2f88f2a in 2009,
+which was the first implementation of this function. I don't think
+there's a particular reason for that value beyond that it was
+probably a convenient value that was assumed to be likely "big enough".
 
-# @normal: number of normal pages (since 1.2)
-#
-# @normal-bytes: number of normal bytes sent (since 1.2)
+I think the idea with this bounce-buffer has always been that this
+isn't really a code path we expected to end up in very often --
+it's supposed to be for when devices are doing DMA, which they
+will typically be doing to memory (backed by host RAM), not
+devices (backed by MMIO and needing a bounce buffer). So the
+whole mechanism is a bit "last fallback to stop things breaking
+entirely".
 
->
-> >  # Features:
-> >  #
-> >  # @deprecated: Member @skipped is always zero since 1.5.3
->
-> [...]
->
+The address_space_map() API says that it's allowed to return
+a subset of the range you ask for, so if the virtio code doesn't
+cope with the minimum being set to TARGET_PAGE_SIZE then either
+we need to fix that virtio code or we need to change the API
+of this function. (But I think you will also get a reduced
+range if you try to use it across a boundary between normal
+host-memory-backed RAM and a device MemoryRegion.)
+
+thanks
+-- PMM
 
