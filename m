@@ -4,59 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E45A2C5478C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 16:28:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE4F2C5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 16:28:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfMkR-0005mY-Nk; Wed, 28 Feb 2024 11:25:35 -0500
+	id 1rfMix-0003yn-TN; Wed, 28 Feb 2024 11:24:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfMjo-00052N-Ou; Wed, 28 Feb 2024 11:24:59 -0500
+ id 1rfMiw-0003vp-Ff; Wed, 28 Feb 2024 11:24:02 -0500
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfMjl-0000tl-AM; Wed, 28 Feb 2024 11:24:55 -0500
+ id 1rfMiu-0000oF-SK; Wed, 28 Feb 2024 11:24:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709137493; x=1740673493;
+ t=1709137441; x=1740673441;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=yMTWaY/sS/jyModr1jZtevzt+KtVPqAcOTyAOHQmGhc=;
- b=MsDeTrYOk1f0O8EbDbJG0toC4GHUlZks3ydNCVt40NKsdTRDUdBRqSeq
- 82gUNV91L0WjHBbaakwgOsW5d7CV8A5Wp+0TTvcWSOltfQlaABBhRUtXs
- E76gIcxheMACrxzVyrkSXRMzwflJKKrAdRcpOe/Bap7oC2p8ePZO00OaV
- 7s7coDEbIn3H918MhFE82ORSJ3X0CrY1bau+52doXZCfgMeQS3kKwOuon
- Nd2STrOSioFDH9bvt32A4J4UQIB5YXLHWjRklEXVCskDwYvJzSGnMHrv/
- GKTJtRl0kRVTQ9181TGsrwGGTura+FzMfMJjL6c1m6PS3YjpoIkJeYkLD w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="28982663"
-X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="28982663"
+ bh=QAn6+MUVu1rKDjC913XhAj1KDjxffFbQY2JrVSnn4uQ=;
+ b=J2BXMY4zkd24SHTTypzlbokPBK/XgrcXHDW2ggDo0ymVwav/Z7J5ZARe
+ SESpbsLDjNRQ3oHDcVQTkYKhckKFBWhkz2dAA1Sm0Hp7uvoha8VL7eQn6
+ hwh97oPDUhYF9WxijwIRGlnms+Whp8qOTj/iCqHpI7O25XFSnevOzO6Zd
+ PWG0z9NT5RMCvviXW/5DJl7L/HR4lbX/OAqYdtZmgxQAG2eu6sVdmGRQ9
+ prDcweQtM0qPwc9LLOktI/sVwXsT0JH2bA3dvIhZ0yZ1sxljdcYb1Fp1I
+ sjIux3d8pXB4HPSHKo6I+qmj5komN+jeSXB25n0ugUv9zyAnMhJuKn/y2 w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="28982446"
+X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="28982446"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Feb 2024 08:24:35 -0800
+ 28 Feb 2024 08:23:59 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="12145086"
+X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="12144897"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa004.jf.intel.com with ESMTP; 28 Feb 2024 08:24:32 -0800
+ by orviesa004.jf.intel.com with ESMTP; 28 Feb 2024 08:23:56 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Michael Tokarev <mjt@tls.msk.ru>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH 16/16] hw/core/qdev-properties-system: Fix missing
- ERRP_GUARD() for error_prepend()
-Date: Thu, 29 Feb 2024 00:37:23 +0800
-Message-Id: <20240228163723.1775791-17-zhao1.liu@linux.intel.com>
+ John Snow <jsnow@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Subject: [PATCH 04/16] block/cbw: Fix missing ERRP_GUARD() for error_prepend()
+Date: Thu, 29 Feb 2024 00:37:11 +0800
+Message-Id: <20240228163723.1775791-5-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240228163723.1775791-1-zhao1.liu@linux.intel.com>
 References: <20240228163723.1775791-1-zhao1.liu@linux.intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: none client-ip=192.198.163.7;
  envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
@@ -103,37 +101,37 @@ ERRP_GUARD() could avoid the case when @errp is the pointer of
 error_fatal, the user can't see this additional information, because
 exit() happens in error_setg earlier than information is added [1].
 
-The set_chr() passes @errp to error_prepend() without ERRP_GUARD().
+The cbw_open() passes @errp to error_prepend() without ERRP_GUARD().
 
-As a PropertyInfo.set method, the @errp passed to set_chr() is so widely
-sourced that it is necessary to protect it with ERRP_GUARD().
-
-To avoid the issue like [1] said, add missing ERRP_GUARD() at the
-beginning of this function.
+Though it is the BlockDriver.bdrv_open() method, and currently its
+@errp parameter only points to callers' local_err, to follow the
+requirement of @errp, add missing ERRP_GUARD() at the beginning of this
+function.
 
 [1]: Issue description in the commit message of commit ae7c80a7bd73
      ("error: New macro ERRP_GUARD()").
 
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: "Daniel P. Berrangé" <berrange@redhat.com>
-Cc: Eduardo Habkost <eduardo@habkost.net>
+Cc: John Snow <jsnow@redhat.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Kevin Wolf <kwolf@redhat.com>
+Cc: Hanna Reitz <hreitz@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/core/qdev-properties-system.c | 1 +
+ block/copy-before-write.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-index 1a396521d51f..545c3ceff7c9 100644
---- a/hw/core/qdev-properties-system.c
-+++ b/hw/core/qdev-properties-system.c
-@@ -242,6 +242,7 @@ static void get_chr(Object *obj, Visitor *v, const char *name, void *opaque,
- static void set_chr(Object *obj, Visitor *v, const char *name, void *opaque,
+diff --git a/block/copy-before-write.c b/block/copy-before-write.c
+index 0842a1a6dfbe..8aba27a71d6d 100644
+--- a/block/copy-before-write.c
++++ b/block/copy-before-write.c
+@@ -407,6 +407,7 @@ out:
+ static int cbw_open(BlockDriverState *bs, QDict *options, int flags,
                      Error **errp)
  {
 +    ERRP_GUARD();
-     Property *prop = opaque;
-     CharBackend *be = object_field_prop_ptr(obj, prop);
-     Chardev *s;
+     BDRVCopyBeforeWriteState *s = bs->opaque;
+     BdrvDirtyBitmap *bitmap = NULL;
+     int64_t cluster_size;
 -- 
 2.34.1
 
