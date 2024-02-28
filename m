@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 251CAC47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 11:35:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE3A8C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 11:35:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfICi-0001R1-F0; Wed, 28 Feb 2024 06:34:28 -0500
+	id 1rfID1-00022N-Dq; Wed, 28 Feb 2024 06:34:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rfICg-0001Qe-F3
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:34:26 -0500
-Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
+ id 1rfICz-00020D-RR
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:34:45 -0500
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rfICd-0007G6-Ph
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:34:26 -0500
-Received: by mail-ot1-x32d.google.com with SMTP id
- 46e09a7af769-6e4b03f0903so696715a34.3
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 03:34:23 -0800 (PST)
+ id 1rfICy-0007LC-7z
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:34:45 -0500
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-5e42b4bbfa4so3862375a12.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 03:34:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709120062; x=1709724862;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709120082; x=1709724882;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=53XyZW+eFVvoAPfI8083D4zbyq4zLHK5w/Vl/6iTbj0=;
- b=x+bvAwc2UYIy5z7TykwnOxdqo6y6AxoLtRZrVtDWwj5axCvenOqBMdVAe2gK2rgTV/
- 7OIaK8U26RnPyB6Fnw5AznIGSjCb3oNLCl00Ysmck3YhrxnymRZ7R4xn/RDObTZuSKlf
- CdpMmtgV+QIaPJ+VTFJPJayGxjl1kzKNGcO9+W4Hs9n8qcCy8O6iZyi3gzNFc1VaIOUM
- FUexy3NIYiDiCikDCuGTkMWuU47VRWJclUS49yHVQdediGLsxBmrbI6vi4tn8NowkWaE
- m01l1FhuJZxI9wLBsdw4jyhL8uOHLgXvs1torArAqFJfJ5k4ekL+OB8Ki4sAedHRzEvE
- jJ0A==
+ :reply-to; bh=FEXfVsaC8WiwQLHzBhL9P9YmKLGvJ5rGOGPmQWC7dng=;
+ b=j998qUCsPx+oitD0HEn8CCWBacETt2AnJ/6Y5e73bxocx5DYGz2N+cas/zoATmF2ds
+ IoKCbl8yZpO1Y3j2m9aYA/pqcStbfbWhUPgjaQXWO+xL38tv22p+nyR2r3HBxGzvwJDw
+ zfT2XfJwesgK5S1GPzMXc9jKfJnF48uzDG3q5pcxtehSR4C3At/p/VGL1JDA7tx8SZtD
+ jPkhov1W3VvFiiX2jG1ImXRLpFgyDPEgv+6w3c96nrFYpNXA5QuJ9EpeRdKovM3SVgj6
+ RpFeaGMzB+L2NfvXVfuecC2ko9J5jRqxovI1LcVpa0D8rMs460dDjTg4lZR1CEg/nfoo
+ wZvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709120062; x=1709724862;
+ d=1e100.net; s=20230601; t=1709120082; x=1709724882;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=53XyZW+eFVvoAPfI8083D4zbyq4zLHK5w/Vl/6iTbj0=;
- b=qOX3IYZVrRtG5miYpOlPt7AgZl2iSbXftnGo7Ayg+7xn3MEbCIJ0NUmQL+/aNeyKL9
- CYQZtJkidgZLwosdOVGmsJKhapKuk9NRWu+xhEOOwSo+F+qH89J1LE8IYGpuzD/pHHub
- VQVPWrOfpaQ/zKIQm5zoxhtQ/PadZ85XT4Tt/OWVP4T+icFKPase7X1E/cvv3NjuINgQ
- Y0BbrOQnJhRzABis7q+kdC3o5xa9sv0s6wG2eFvbQmFV017hv1npRbMJqkRVAhQ6Aj2R
- FnTcrOupvBdxo807dtzF+RgKevJCJAknEWyRS9zyKMjAWuoykmMeAnVDoIa9p4so7QqD
- R3rA==
-X-Gm-Message-State: AOJu0YxKL3DIZM7mk8yUgC1km3z4Fx0FnMHRFQHmid/jxbNAb5xQqDPL
- Z2kyTFLirT5cu5rDY8X00JAHBYw9KUVUyo/WsUJh9mSxHw2dstAAG92IvC74BjY=
-X-Google-Smtp-Source: AGHT+IFIt/H0kJ6j7elWz2sy8w2zoDCZSYOwdSHkT59AjYX5MGpCW+olhyG2Et+2a8z11ebapiqUOQ==
-X-Received: by 2002:a05:6830:144d:b0:6e4:696d:14e0 with SMTP id
- w13-20020a056830144d00b006e4696d14e0mr12703758otp.37.1709120062354; 
- Wed, 28 Feb 2024 03:34:22 -0800 (PST)
+ bh=FEXfVsaC8WiwQLHzBhL9P9YmKLGvJ5rGOGPmQWC7dng=;
+ b=LQwOO+CvOhGC3VaxXGhgRHJulBkKEK5i1C73rgyR1WYNQWJyfA/QsnUpNNGMm647Zu
+ VlnlwG6YNSLFs8Z1hDXzKwqoS/8PumzAw4wHi/LKseS3SSR3a5/Yn0Z6xZxb/lMAVxew
+ ITRUB0biXCXa90Pl3aJ2791ioKSkrEpwmXrvLN4JHxfp5mBAHmyXu5jOFRsVx+Q+jcZ1
+ qnS4IDMmng1qr066IiNTuKEq0MMo68lnICzq5D78KIs33PzP55EzGk0Rb1bAa7zVURPh
+ RYpdkAI4B0bZcBxjKeeF7E6jD5fs9gkYmuED14IBlWl/zrgUuGz6gH0Zn8HNxnH9ZIiT
+ Ljtg==
+X-Gm-Message-State: AOJu0Yy7Xi8+k5ba/bxBWgEY3moc2q5iwvJnxVXbDei77qtFB2A7v7uQ
+ J56RmDq1PVR5x6UoowJ2CXEpXW3nFNNWxAaCWNzPRHzpBBi6Cxthou8w8NFxG/0=
+X-Google-Smtp-Source: AGHT+IFFd17WvflZaq66nmdvXhJak2r01wCePE4lRX4MR4ZFwBxkTQzNFqyfuq2L79jN7Ut3HwhauA==
+X-Received: by 2002:a17:90a:2e88:b0:29a:b6d7:be22 with SMTP id
+ r8-20020a17090a2e8800b0029ab6d7be22mr7253532pjd.17.1709120081958; 
+ Wed, 28 Feb 2024 03:34:41 -0800 (PST)
 Received: from localhost ([157.82.203.206])
  by smtp.gmail.com with UTF8SMTPSA id
- c2-20020a63a402000000b005e45b337b34sm7432721pgf.0.2024.02.28.03.34.19
+ m14-20020a17090ade0e00b0029a4efc0231sm1373952pjv.56.2024.02.28.03.34.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Feb 2024 03:34:22 -0800 (PST)
+ Wed, 28 Feb 2024 03:34:41 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Wed, 28 Feb 2024 20:33:22 +0900
-Subject: [PATCH v8 11/15] pcie_sriov: Register VFs after migration
+Date: Wed, 28 Feb 2024 20:33:26 +0900
+Subject: [PATCH v8 15/15] hw/qdev: Remove opts member
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240228-reuse-v8-11-282660281e60@daynix.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20240228-reuse-v8-15-282660281e60@daynix.com>
 References: <20240228-reuse-v8-0-282660281e60@daynix.com>
 In-Reply-To: <20240228-reuse-v8-0-282660281e60@daynix.com>
 To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
@@ -81,15 +81,14 @@ To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::32d;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-ot1-x32d.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,72 +104,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-pcie_sriov doesn't have code to restore its state after migration, but
-igb, which uses pcie_sriov, naively claimed its migration capability.
+It is no longer used.
 
-Add code to register VFs after migration and fix igb migration.
-
-Fixes: 3a977deebe6b ("Intrdocue igb device emulation")
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 ---
- include/hw/pci/pcie_sriov.h | 2 ++
- hw/pci/pci.c                | 7 +++++++
- hw/pci/pcie_sriov.c         | 7 +++++++
- 3 files changed, 16 insertions(+)
+ include/hw/qdev-core.h |  4 ----
+ hw/core/qdev.c         |  1 -
+ system/qdev-monitor.c  | 12 +++++++-----
+ 3 files changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
-index 793d03c5f12e..d576a8c6be19 100644
---- a/include/hw/pci/pcie_sriov.h
-+++ b/include/hw/pci/pcie_sriov.h
-@@ -57,6 +57,8 @@ void pcie_sriov_pf_add_sup_pgsize(PCIDevice *dev, uint16_t opt_sup_pgsize);
- void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
-                              uint32_t val, int len);
- 
-+void pcie_sriov_pf_post_load(PCIDevice *dev);
-+
- /* Reset SR/IOV */
- void pcie_sriov_pf_reset(PCIDevice *dev);
- 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 750c2ba696d1..54b375da2d26 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -733,10 +733,17 @@ static bool migrate_is_not_pcie(void *opaque, int version_id)
-     return !pci_is_express((PCIDevice *)opaque);
- }
- 
-+static int pci_post_load(void *opaque, int version_id)
-+{
-+    pcie_sriov_pf_post_load(opaque);
-+    return 0;
-+}
-+
- const VMStateDescription vmstate_pci_device = {
-     .name = "PCIDevice",
-     .version_id = 2,
-     .minimum_version_id = 1,
-+    .post_load = pci_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_INT32_POSITIVE_LE(version_id, PCIDevice),
-         VMSTATE_BUFFER_UNSAFE_INFO_TEST(config, PCIDevice,
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index fb48c1a18c9a..09a53ed30027 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -239,6 +239,13 @@ void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
+diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+index 9228e96c87e9..5954404dcbfe 100644
+--- a/include/hw/qdev-core.h
++++ b/include/hw/qdev-core.h
+@@ -237,10 +237,6 @@ struct DeviceState {
+      * @pending_deleted_expires_ms: optional timeout for deletion events
+      */
+     int64_t pending_deleted_expires_ms;
+-    /**
+-     * @opts: QDict of options for the device
+-     */
+-    QDict *opts;
+     /**
+      * @hotplugged: was device added after PHASE_MACHINE_READY?
+      */
+diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+index c68d0f7c512f..7349c9a86be8 100644
+--- a/hw/core/qdev.c
++++ b/hw/core/qdev.c
+@@ -706,7 +706,6 @@ static void device_finalize(Object *obj)
+         dev->canonical_path = NULL;
      }
+ 
+-    qobject_unref(dev->opts);
+     g_free(dev->id);
  }
  
-+void pcie_sriov_pf_post_load(PCIDevice *dev)
-+{
-+    if (dev->exp.sriov_cap) {
-+        register_vfs(dev);
-+    }
-+}
-+
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index a13db763e5dd..71c00f62ee38 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -625,6 +625,7 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
+     char *id;
+     DeviceState *dev = NULL;
+     BusState *bus = NULL;
++    QDict *properties;
  
- /* Reset SR/IOV */
- void pcie_sriov_pf_reset(PCIDevice *dev)
+     driver = qdict_get_try_str(opts, "driver");
+     if (!driver) {
+@@ -705,13 +706,14 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
+     }
+ 
+     /* set properties */
+-    dev->opts = qdict_clone_shallow(opts);
+-    qdict_del(dev->opts, "driver");
+-    qdict_del(dev->opts, "bus");
+-    qdict_del(dev->opts, "id");
++    properties = qdict_clone_shallow(opts);
++    qdict_del(properties, "driver");
++    qdict_del(properties, "bus");
++    qdict_del(properties, "id");
+ 
+-    object_set_properties_from_keyval(&dev->parent_obj, dev->opts, from_json,
++    object_set_properties_from_keyval(&dev->parent_obj, properties, from_json,
+                                       errp);
++    qobject_unref(properties);
+     if (*errp) {
+         goto err_del_dev;
+     }
 
 -- 
 2.43.2
