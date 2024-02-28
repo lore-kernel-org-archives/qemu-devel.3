@@ -4,78 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DCAAC47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 10:23:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20E64C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 10:26:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfH5i-0002qG-TN; Wed, 28 Feb 2024 05:23:10 -0500
+	id 1rfH8J-00041S-Gt; Wed, 28 Feb 2024 05:25:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rfH5h-0002lV-Hq
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 05:23:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <alexander.ivanov@virtuozzo.com>)
+ id 1rfH8D-00040z-Ml; Wed, 28 Feb 2024 05:25:45 -0500
+Received: from mail-am7eur03on20700.outbound.protection.outlook.com
+ ([2a01:111:f403:260e::700]
+ helo=EUR03-AM7-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rfH5f-0000hq-Dw
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 05:23:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709115786;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qGDEq3FcrYO8uUlw0kWQI1LKH48smjUAdnW9oIAGBLk=;
- b=El6QHXvp/dZuUoPhLEcdMnRdfkPkzwhgDwpqFCCPhB1karrpdElaibvvl+aiM/V55WR0kk
- mtT2tzUgrrvpb9EmK9FLiIa+yWwBwmmR7yh8KUbrbPDAZ+h14QVEPCOAOxs6M3pCfnaiCS
- Ix9lgG+2ZaGWrdDINHlt2cqbj9FVWxw=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-442-dM-cTS4zOVK9OXzpBhLK-w-1; Wed, 28 Feb 2024 05:23:04 -0500
-X-MC-Unique: dM-cTS4zOVK9OXzpBhLK-w-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0DC3E870823;
- Wed, 28 Feb 2024 10:23:04 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.37])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 26EDE1C060AF;
- Wed, 28 Feb 2024 10:23:03 +0000 (UTC)
-Date: Wed, 28 Feb 2024 10:23:01 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>,
- Yong Huang <yong.huang@smartx.com>, qemu-devel@nongnu.org,
- Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH] qapi: Craft the BlockdevCreateOptionsLUKS comment
-Message-ID: <Zd8JhTXhT8HvS55A@redhat.com>
-References: <91c52e03e46ff0a96559b4e7d66ded582b2ec4e1.1708486450.git.yong.huang@smartx.com>
- <874je22u83.fsf@pond.sub.org>
- <CAK9dgmZkLZiT_W0UjB+=EN9_vAK5Qy5XKRMBhHBQ98sRBbiAQw@mail.gmail.com>
- <875xyiz0ho.fsf@pond.sub.org>
- <CAK9dgmZOEqd=EgBjsiZZoK3R+VQRMqSdUrK_WwKHfP7LiWzQMQ@mail.gmail.com>
- <87v8693x7c.fsf@pond.sub.org> <Zd8IQShNrGeXEnLz@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+ (Exim 4.90_1) (envelope-from <alexander.ivanov@virtuozzo.com>)
+ id 1rfH8B-0002ul-4e; Wed, 28 Feb 2024 05:25:45 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=QKV8JnSQ0l/qG24RdeZAfkuRs8DzKCj7E5ayJ8VirU2UnGp/6XekOWNs7c/D6yCdwhQAtnH/2gptUU0C/0QVbsque5jd+b+SL+4XX9tVPu8IaMIThyDo5JfJNHv9SdXEa7zj2oHTOaQfxWV1lf397XSqdscPmHScVgMPGI8HSEnJJDlrTfBugcL73SVz2MHwpcmpQFWxmjVbbpY2DHalvYQ+jpswhgWkwupMYB9E9QA3Ef963vYEYdxR1x2eoVKue3kzPpvKeKFiZLkYQiZmlfWIN0XUQ0wKEkNeUc/xQ9pRCO+5QyI7RsbDXjlKkmFe/t4QrxmMAojAdDxdrW61CQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=bkuVm1/q7f/IfDsEHpEHPLDsh8LbilGteOvM5IAckUM=;
+ b=WAjiLuI6Myn1RyzwLIDV6F3WsDzpfb+smFgdb7Y/pYxqDs7Ye8MukY4kHOnHU8Mz7oKoJHTIZkPPKXqdjqBOTIZJ8h6aUYmDM8t3bEtbvmewp0h43z00tXD8PNItzAzSdShNJLPjV9piHUT7xZwHHhirV9NBX6LoiUwcUVF2eURcsxzvTGXmXZjQqXb/BslCPZAp2VbSkLN1gWJ2uHgclPOwkTQnv2muDZnrPvuKDA3mN15QDHrmXs11cdhIHEF4CfRG0DUuWioAY+DsdbcHO9I8w/5up2zaQ4lJSQRUaq5KAnaIRV/jqmsgRGwI0QK88cMQi7emRS0OUDCbV+7eow==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=bkuVm1/q7f/IfDsEHpEHPLDsh8LbilGteOvM5IAckUM=;
+ b=aOtngFs5qwZVJyjafWEQRCpQF/RAkA15YH/ScQ9FzBBZHb4ajOgbLwkf8+QH3rG7M57CN67biR6gIw0L9IIZUntgjMPbgYGUhaoq0l/ijOiBGHGRPiXO9JTQSSuF1tNDwFQAl0tcfXltGPQ2uwynm8MOsSSB+s2mBJYDXFyfW81cutFbw/pe5epBEWNzE+GfU388bc7LWs+3RNaZY16Woh7t0PrmoD8jjepTLB5B3EfVZ3U61EaAXUg260k0E1KTCi0kSNfYQOtyHl4XYv6BBl1tS9XrgAMJ50JuIL5v1d2JPpvMHWqVcGRF4x7jKeyxz2yrlJ/lAKw7tztzcEuaZA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from VI0PR08MB10743.eurprd08.prod.outlook.com
+ (2603:10a6:800:205::19) by PA4PR08MB6206.eurprd08.prod.outlook.com
+ (2603:10a6:102:ea::9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.36; Wed, 28 Feb
+ 2024 10:25:36 +0000
+Received: from VI0PR08MB10743.eurprd08.prod.outlook.com
+ ([fe80::c946:79b5:94bf:e8c4]) by VI0PR08MB10743.eurprd08.prod.outlook.com
+ ([fe80::c946:79b5:94bf:e8c4%4]) with mapi id 15.20.7316.034; Wed, 28 Feb 2024
+ 10:25:36 +0000
+Message-ID: <42466483-7583-497d-89f5-cbd447f5647e@virtuozzo.com>
+Date: Wed, 28 Feb 2024 11:25:28 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 12/21] parallels: Let image extensions work in RW mode
+Content-Language: en-US
+To: "Denis V. Lunev" <den@virtuozzo.com>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, stefanha@redhat.com, vsementsov@yandex-team.ru,
+ kwolf@redhat.com, hreitz@redhat.com
+References: <20231228101232.372142-1-alexander.ivanov@virtuozzo.com>
+ <20231228101232.372142-13-alexander.ivanov@virtuozzo.com>
+ <a9791fbd-e07a-4757-bb54-b4283bd7f4ad@virtuozzo.com>
+ <99fd7075-fd25-4ccd-806d-6d2c0f3e33f0@virtuozzo.com>
+From: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+In-Reply-To: <99fd7075-fd25-4ccd-806d-6d2c0f3e33f0@virtuozzo.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Zd8IQShNrGeXEnLz@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+X-ClientProxiedBy: FR0P281CA0223.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:ac::16) To VI0PR08MB10743.eurprd08.prod.outlook.com
+ (2603:10a6:800:205::19)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10743:EE_|PA4PR08MB6206:EE_
+X-MS-Office365-Filtering-Correlation-Id: de56691a-9265-455f-0f55-08dc38479a54
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: u92F0Q7bUECxDFLoWrcG3J5CRvgx2TnOUrLXzm8eZt8LpVTHC5WzAjMsAMU1d9gQRVP+CpxGW3BzONX08N5rhGMSJqpv9VT+RelKJWsEBi59WAjcj3hG4ig1lC7Cp6V63fx8CDSRdbT7X2u0kxM2ZZEcfH5H2GNX7vC04808njBiq7Hrg5jFzpb4W1MURC+OmsyNz4rQ3eaMwns2gsVSmi7nN7QKqg0cWrCkHonrsLRsO2UrUs+PYe3nZuezcwiGdVY/oGcdBxHOqtiHi19Uf7jLhGLpcPo1HZRupQyODXXSdZ47cB1ePlinwielUNwl4E1fMoCxxcJZwnBwypT0/stgE1bhfB3PskpKpB0lW4Hsa7puDZbUBcUo2sd6qTMbP4f4LM3x8G+CaHoU512E3QH5uy9sHOmVm+s8cXdf50lVU3XNNpNvQaI+A8VewwD2wfTOtGStTM18gP63mbWHXpQqv+yaHJ+PCl8+Ro+kSyC10TIssMJ9yRPs8DJvqJQkKiOntQYeSj3Puc/38dRKB/eIVRcUmzckU8pUA2VZdw9ByhN4vqaOao32JShgvslRDC67Pm3CYqx2z5288f+CQKAPGzCLPPYYoZSx2jTTJVuFPb3/GiBu1wbmFN2wwEpBPzxUFs3ATKeLzaB9HrnJTSpCPjpI5J3yu62Q1JIj1Vs=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI0PR08MB10743.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(230273577357003); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZzBYcTd3ZW1ybzg1N0xETUdDUGxLeVpOZmJsWDNza1dFVTd3UXVBbjMrSFgw?=
+ =?utf-8?B?V0Q2ZkRNVk5xbG52UHUzK0ZyRlFZVldJL08xN2dqZElYZHpTeXN0aFQ0QTc2?=
+ =?utf-8?B?cDN4TWRiVkFsQ0M3Z1MvWDc0bVZvSm5vU3pwWTFpVHZDdWdUTW90VEg3aHAx?=
+ =?utf-8?B?dlVjVG1Od1U3c0thaXBCME03WDRKTmlZVlF2NlQ0Q05TZHdmV3pveHhlOUh6?=
+ =?utf-8?B?NmJPSFFJMERvemdTRFRBSTl6U2c1LzlxYXJTUEJZRGd1QXdlQStCTlpRdExF?=
+ =?utf-8?B?TkdWTkwrQkNmQzM1NWg1RmpPR0NFL2FyWG1pZURRckZMdDNubEJNWDh4djUv?=
+ =?utf-8?B?UDR1WUxYTXl4L1hoSlRxOGlVRnlMTHNqNVQzeEJWYVhzRTBidDJFVm9HTUU1?=
+ =?utf-8?B?bUJGSDIzeXVzVGxBSTNrZHFIdW1rL2puaFJNL2VlOEU3UXp0UU1GSktjRUVU?=
+ =?utf-8?B?TndYV0FmbjBWM3ZUR2tlZmVQR2IxYktyRTdjeTFoZUl5VUtBWTdYVWx0RHB3?=
+ =?utf-8?B?MzZvb1hnanZjNW1JM2tRSE9qeE84NjRnYzlVQURkQUZUbnZTWS9TWWRhckpj?=
+ =?utf-8?B?ZWRlQXdBdk8ya1U0NkVTeExwVXpvMEVtdVVDNHdnOEJpaGw2YldTelFwZjMv?=
+ =?utf-8?B?SVYzaTg4M0pBOEZGblJPSUVQTmlEMlM4ck04VDRTc2gyTUZ5VVRsbjVPOUxW?=
+ =?utf-8?B?aUpxM21JTUUzNllMNjhiRmFsR2tpN0ZFNnQ1VC85S1B3TzhvbXRIV3Fydkhk?=
+ =?utf-8?B?Q1E2RDdQR0UyZHJobGZOcmhtcUg2YVVCOVlBVXdOQVhJUWxlTUJpMmJMUHJi?=
+ =?utf-8?B?VWo3Yi9ib09tNGZ1bVlDNGVXM1p0a2xDcENBV1FFSlJ0QUVnaG5scGRhdWV4?=
+ =?utf-8?B?bTZQWFllQ2cyZ1hzeHN0LzZCY2RiQ3Z6TEFxSjJvdStPb05ZWGVFUHVsTDFY?=
+ =?utf-8?B?Rk5OVThrNXVtR2RNWHFKQkNCS041NTNveE5vYk80cVBzNVdablV2Zk1XTk9W?=
+ =?utf-8?B?NVhtcXhvdUN4WGJjU1RlVW1FZzdTcm5oK3h1bk9KY0VnRzB4RE5iT211YWh5?=
+ =?utf-8?B?MjRndjRvRS9GMVhERVFyNktlNnAvRGY2U0dBZUw5MGRadEdUcktqOEZuWldF?=
+ =?utf-8?B?VkZqZE1xTUx6RWZzcWJ6aWczNlh6Wk1sbHpXRkVWMHFXN3RhdUtOOENuVXB1?=
+ =?utf-8?B?WFA2Z2VqTVFVVEhlSFh2Rm5rcHRTY015V3YvRDdyZ1FMS2pUa2JsOFErbHBB?=
+ =?utf-8?B?M1lCQWRDRmF1QjhFV3J1eU5iNXB0cWdXbEh5NU53blVhTDNJa0xpSXc2TXZR?=
+ =?utf-8?B?bUQyZFk5bUt0OXpUZU9FTU9uRTduTDdWcUFwZXdva2h4QTFIQkZsMk11bldM?=
+ =?utf-8?B?aFhqUHJqZndNRzZrZlpCMEMrYTlYd29TMUF2MzBtaitpb1ZJWlcyMmxCdG56?=
+ =?utf-8?B?cjRwMjd6cllqZEJVMzdhbjZ2bzVCR0szSnc0c0JIKzFTYzdsZzVCU3p3L2x4?=
+ =?utf-8?B?UE40SmdxZXk2SURwUTlwL2dXbEhvMFprSEd6MHljME1QMlB4enhTdUZXendM?=
+ =?utf-8?B?QzZ2aVF5VHdTcmhnRUpqd2VFMUJsVURKUlVtdmlSR3FEZjc3ZDlRU1hGaUFz?=
+ =?utf-8?B?VXZUTHo5eXN1SThPZGtvdGFUUHd4eFhubnRFQlJGbGZiR2NKeUgwVkxkVzRm?=
+ =?utf-8?B?aUNpUDBtUng4dENWRlQ0NUQyYU1QNnRYcHBVVlRtZmozbGxiSFltVGlEQ2R3?=
+ =?utf-8?B?OS9KbTRqTDdlWjR0SlN0Y3JpZ1oxK2l3eDgyK1dqaFlsTW9QQ3BmTnEzdm5r?=
+ =?utf-8?B?NWs4ejdlQ1NJMnA5V2d5NWExZG1pa0VTZUdlZ25MNDl0cUV1TUJrT2lBTW9G?=
+ =?utf-8?B?bVdMRnVzNlp6V2RmQzFwY3hNWmJIdE1VRXMvVXgveHZndDY0NlRqaG5iZmww?=
+ =?utf-8?B?dHE5VWtOV0Y2dm5VOWJxY3ppeU1yWFlPY1Z2RUJISVVqQ2p1VXVVdUJzQ2R2?=
+ =?utf-8?B?cDVXRTFsY1R4Y0ZuOUpnOHNwSUxPYzR6S1ZBN0VkK05RNFVmWEh4N1hOS1Z1?=
+ =?utf-8?B?V0QrWGxiek5aMzFwTTZpbDRTTkJXUStJTGxqVER1dXE1YlpLbnlwY3RTRVhj?=
+ =?utf-8?B?T3MzZjV3dnFHT29SeFRlbnJqK1JyaFVkalJRcE5qMmljeXlwSXY4RzZTZi9F?=
+ =?utf-8?Q?dOWWIc8X0rpOQtRgdVsLEzE=3D?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: de56691a-9265-455f-0f55-08dc38479a54
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10743.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Feb 2024 10:25:36.4189 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: lOcQtJf0WGZA2G20KA6kURdb05YA9KiqmuCdBDiaGR2XDfLOv8EPey00FrM1G0YMgYcfSVemCEcDrD9+vwrFCjr8yqc7jQOoT1B9BBI6um0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR08MB6206
+Received-SPF: pass client-ip=2a01:111:f403:260e::700;
+ envelope-from=alexander.ivanov@virtuozzo.com;
+ helo=EUR03-AM7-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,189 +146,93 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 28, 2024 at 11:17:37AM +0100, Kevin Wolf wrote:
-> Am 28.02.2024 um 07:43 hat Markus Armbruster geschrieben:
-> > Yong Huang <yong.huang@smartx.com> writes:
-> > 
-> > > On Wed, Feb 21, 2024 at 4:26 PM Markus Armbruster <armbru@redhat.com> wrote:
-> > >
-> > >> Yong Huang <yong.huang@smartx.com> writes:
-> > >>
-> > >> > On Wed, Feb 21, 2024 at 2:43 PM Markus Armbruster <armbru@redhat.com>
-> > >> wrote:
-> > >> >
-> > >> >> Hyman Huang <yong.huang@smartx.com> writes:
-> > >> >>
-> > >> >> > Add comment in detail for commit 433957bb7f (qapi:
-> > >> >> > Make parameter 'file' optional for
-> > >> >> > BlockdevCreateOptionsLUKS).
-> > >> >> >
-> > >> >> > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
-> > >> >> > ---
-> > >> >> >  qapi/block-core.json | 20 +++++++++++++++++++-
-> > >> >> >  1 file changed, 19 insertions(+), 1 deletion(-)
-> > >> >> >
-> > >> >> > diff --git a/qapi/block-core.json b/qapi/block-core.json
-> > >> >> > index ab5a93a966..42b0840d43 100644
-> > >> >> > --- a/qapi/block-core.json
-> > >> >> > +++ b/qapi/block-core.json
-> > >> >> > @@ -4973,7 +4973,25 @@
-> > >> >> >  ##
-> > >> >> >  # @BlockdevCreateOptionsLUKS:
-> > >> >> >  #
-> > >> >> > -# Driver specific image creation options for LUKS.
-> > >> >> > +# Driver specific image creation options for LUKS. Note that
-> > >> >> > +# @file is required if @preallocation is specified and equals
-> > >> >> > +# PREALLOC_MODE_ON. The following three scenarios determine how
-> > >> >> > +# creation logic behaves when @preallocation is either equal to
-> > >> >> > +# PREALLOC_MODE_OFF or is not given:
-> > >> >> > +#
-> > >> >> > +#  1) When @file is given only, format the block device referenced
-> > >> >> > +#     by @file as the LUKS specification and trunk it to the @size.
-> > >> >>
-> > >> >> Do you mean "truncate it to @size"?
-> > >> >>
-> > >> > Yes, :( sorry for the spelling mistake.
-> > >>
-> > >> Writing good documentation in a second language is *hard*.  All we can
-> > >> reasonably expect from contributors to try their best.  And then we
-> > >> improve the text together in review.  Just like we do for code :)
-> > >>
-> > >> >> > +#     In this case, the @size should reflect amount of space made
-> > >> >> > +#     available to the guest, so the trunk size must take account
-> > >> >> > +#     of that which will be used by the crypto header.
-> > >> >> > +#
-> > >> >> > +#  2) When @header is given only, just format the block device
-> > >> >> > +#     referenced by @header as the LUKS specification.
-> > >> >> > +#
-> > >> >> > +#  3) When both @file and @header are given, block device
-> > >> >> > +#     referenced by @file should be trunked to @size, and block
-> > >> >> > +#     device referenced by @header should be formatted as the LUKS
-> > >> >> > +#     specification.
-> > >> >> >  #
-> > >> >> >  # @file: Node to create the image format on, mandatory except when
-> > >> >> >  #        'preallocation' is not requested
-> > >> >>
-> > >> >> Let's see whether I understand.
-> > >> >>
-> > >> >> blockdev-create with "driver": "luks" can work in three different ways:
-> > >> >>
-> > >> >> 1. Create an image with a LUKS header
-> > >> >>
-> > >> >> 2. Create just a detached LUKS header
-> > >> >>
-> > >> >> 3. Create an image and a detached LUKS header
-> > >> >>
-> > >> >> Correct?
-> > >> >>
-> > >> >
-> > >> > Yes
-> > >> >
-> > >> >
-> > >> >> @file and @header are BlockdevRef, which means they refer to existing
-> > >> >> images with arbitrary driver.  Could be "file", "qcow2", or anything.
-> > >> >>
-> > >> >> Correct?
-> > >> >>
-> > >> > Yes
-> > >> >
-> > >> >
-> > >> >>
-> > >> >> To get 1., specify @file, but not @header.
-> > >> >>
-> > >> >> To get 2., specify @header, but not @file.
-> > >> >>
-> > >> >> To get 3., specify both.
-> > >> >>
-> > >> >> Specifying neither is an error.
-> > >> >>
-> > >> >> Correct?
-> > >> >>
-> > >> >
-> > >> > Yes
-> > >> >
-> > >> >
-> > >> >> In any case, @size is the logical size of the image (how much data it
-> > >> >> can hold).
-> > >> >>
-> > >> >
-> > >> > Yes
-> > >> >
-> > >> >
-> > >> >>
-> > >> >> With 1., the actual image size is a bit larger due to the LUKS header.
-> > >> >> The @file image is resized to that size: if it's shorter, it's grown, if
-> > >> >> it's longer, it's truncated.
-> > >> >>
-> > >> >
-> > >> > Yes
-> > >> >
-> > >> >
-> > >> >> With 2., @size is merely recorded in the detached LUKS header.
-> > >> >>
-> > >> >
-> > >> > In LUKS1 specification, payload data size is not contained in the header,
-> > >> > so in this case, @size is not recorded in the detached LUKS header.
-> > >> > The creation logic just does the LUKS header formatting only.
-> > >>
-> > >> Is @size unused then?
-> > >>
-> > >
-> > > IIUC, yes. Creation logic will ignore the @size. See the following code
-> > > in function block_crypto_co_create_luks:
-> > >
-> > >     if (luks_opts->header) {
-> > >         /* LUKS volume with detached header */
-> > >         hdr_bs = bdrv_co_open_blockdev_ref(luks_opts->header, errp);
-> > >         if (hdr_bs == NULL) {
-> > >             return -EIO;
-> > >         }
-> > >
-> > >         cflags |= QCRYPTO_BLOCK_CREATE_DETACHED;
-> > >
-> > >         /* Format the LUKS header node, here just ignore the size
-> > >           * and passed zero to block_crypto_co_create_generic */
-> > >         ret = block_crypto_co_create_generic(hdr_bs, 0, &create_opts,
-> > >                                              PREALLOC_MODE_OFF, cflags, errp);
-> > >         if (ret < 0) {
-> > >             goto fail;
-> > >         }
-> > >
-> > >         /* Format the LUKS payload node */
-> > >         if (luks_opts->file) {
-> > >             ret = block_crypto_co_format_luks_payload(luks_opts, errp);
-> > >             if (ret < 0) {
-> > >                 goto fail;
-> > >             }
-> > >         }
-> > 
-> > @size is a required argument, but silently ignored when @header is
-> > present and @file is absent (2. Create just a detached LUKS header).
-> > Feels awkward.
-> > 
-> > Should @size be optional, absent when and only when @header is present
-> > and @file is absent?
-> > 
-> > Kevin or Hanna, got an opinion?
-> 
-> What is the use case for creating a header without a corresponding
-> image?
-
-eg you're creating a detached LUKS header that will be used in
-combination with a block device, or an NBD export, or some other
-storage that was pre-created in some manner, and onto which you
-now want to store LUKS encrypted data.
 
 
-With regards,
-Daniel
+On 1/18/24 14:31, Denis V. Lunev wrote:
+> On 1/16/24 15:45, Denis V. Lunev wrote:
+>> On 12/28/23 11:12, Alexander Ivanov wrote:
+>>> Now we support extensions saving and can let to work with them in
+>>> read-write mode.
+>>>
+>>> Signed-off-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+>>> ---
+>>>   block/parallels-ext.c |  4 ----
+>>>   block/parallels.c     | 17 ++++-------------
+>>>   2 files changed, 4 insertions(+), 17 deletions(-)
+>>>
+>>> diff --git a/block/parallels-ext.c b/block/parallels-ext.c
+>>> index c83d1ea393..195b01b109 100644
+>>> --- a/block/parallels-ext.c
+>>> +++ b/block/parallels-ext.c
+>>> @@ -175,10 +175,6 @@ parallels_load_bitmap(BlockDriverState *bs, 
+>>> uint8_t *data, size_t data_size,
+>>>           return NULL;
+>>>       }
+>>>   -    /* We support format extension only for RO parallels images. */
+>>> -    assert(!(bs->open_flags & BDRV_O_RDWR));
+>>> -    bdrv_dirty_bitmap_set_readonly(bitmap, true);
+>>> -
+>>>       return bitmap;
+>>>   }
+>>>   diff --git a/block/parallels.c b/block/parallels.c
+>>> index a49922c6a7..d5d87984cf 100644
+>>> --- a/block/parallels.c
+>>> +++ b/block/parallels.c
+>>> @@ -1374,19 +1374,10 @@ static int parallels_open(BlockDriverState 
+>>> *bs, QDict *options, int flags,
+>>>       }
+>>>         if (ph.ext_off) {
+>>> -        if (flags & BDRV_O_RDWR) {
+>>> -            /*
+>>> -             * It's unsafe to open image RW if there is an 
+>>> extension (as we
+>>> -             * don't support it). But parallels driver in QEMU 
+>>> historically
+>>> -             * ignores the extension, so print warning and don't care.
+>>> -             */
+>>> -            warn_report("Format Extension ignored in RW mode");
+>>> -        } else {
+>>> -            ret = parallels_read_format_extension(
+>>> -                    bs, le64_to_cpu(ph.ext_off) << 
+>>> BDRV_SECTOR_BITS, errp);
+>>> -            if (ret < 0) {
+>>> -                goto fail;
+>>> -            }
+>>> +        ret = parallels_read_format_extension(
+>>> +                bs, le64_to_cpu(ph.ext_off) << BDRV_SECTOR_BITS, 
+>>> errp);
+>>> +        if (ret < 0) {
+>>> +            goto fail;
+>>>           }
+>>>       }
+>> Reviewed-by: Denis V. Lunev <den@openvz.org>
+> This patch also deserves a note, what will happen with
+> format extensions clusters. According to the current
+> policy, we have only transient extensions, i.e.
+> CBT. Cluster allocation mechanism will reuse these
+> clusters as they are not marked as used.
+> Thus we should either set format extension offset
+> in the header to 0 or perform any other correct
+> measures to properly handle this.
+Yes, all the clusters used by extensions are marked as unused
+on loading. In further work they can be reallocated for other
+purposes.
+Agree that we need to set ext_off to zero.
+>
+> It should also be noted, that on any QEMU crash
+> appropriate format extensions are to be properly
+> treated. We could not make them RW until this would
+> not be addressed as we could easily mess up with
+> trashed metadata.
+If QEMU crashes after extensions loading there will be
+zero in the ext_off field and an inappropriate dirty bitmap
+will be ignored.
+
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Best regards,
+Alexander Ivanov
 
 
