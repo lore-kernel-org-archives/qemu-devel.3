@@ -4,145 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1867C47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 21:28:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D896CC5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 22:10:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfRSY-0002e1-7x; Wed, 28 Feb 2024 16:27:26 -0500
+	id 1rfS6o-0005rA-NW; Wed, 28 Feb 2024 17:09:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
- id 1rfRSV-0002dA-5f
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 16:27:23 -0500
-Received: from mail-dm6nam11on2051.outbound.protection.outlook.com
- ([40.107.223.51] helo=NAM11-DM6-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
- id 1rfRSL-0002E6-Iw
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 16:27:22 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=MJYxWM/CS9dqA50jCfL4bsx9OMNuYxRO5o2788XkoGOhMSRFa9wNiYsR/S4EAfgVAu72Pn64OtNDDQQadckT6XOR/ncA+U3WV6QfRR3leNZVGUabsn8KHimlSTOYT4wKUjViz5sUW/LqiCnBWODGKVebZvKTk4V4pcD4mltqGv4F5cry6sjY0AvTSWLzMk0FJ+UhUaNEfHu3fcIhJHwitGxJwfR7iRg8LyZuoqYcsUBacdujWz8fsZ91vDHmN1szrq2do9SkJrWNOjwqNp1eiJuqMwkT5dIv0hS19/qOLpJnfu2hd8DKDXBOTXZquYhzJUiOhYYvb4O8inPnbftT2w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Dj75PmMLN5A6l2He9dZLS881z0useZOtqJ78v8QVRTs=;
- b=PxREaTS2fSd86boqWUJL0eC42kdIGmn16wq9EWkhgIRCR7Jo4tkBHFuMGqGVZF1UYEXT/z2kEj2e8vK4rsDOM0k0NflixBKqY1mDRI+/km90DanafXViKjkyeixROhgALQGg08VSILKYngsjcF9UEfOSds0a/NhWUC8CcvTmn1Vh12Bx5Rg/N0787UMHZlWg3VdWfrN6hkR4YN/cBuWR/CWMVS6qbx7s3j750BQEXBmnL6RdrpsHr3cAtiuV2f/5LWA3Po0rTYWe9vj35JVpae6HRDUlQZG7q2dm0uN5nI3SxYAEPoFDEutE+5Eo31hWB7AYiveFXAq121dmCvwMUA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Dj75PmMLN5A6l2He9dZLS881z0useZOtqJ78v8QVRTs=;
- b=W/6n1Ujf9V/2mlth7mF71g5/+i7tCdOfhAPIYj2gdPf04stULiIm5C+cfL2HY7/VzKHFbRkuGlZH+r1AVz6CvX9aBJ++SU/yn5t2KeUO3cjLkhQ/ChjcAiKAAOk8QJ9lvmOwM3sEAx+tcVVCG+t4FqeC01rW2otoSXwotP4VPvw=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from MW3PR12MB4553.namprd12.prod.outlook.com (2603:10b6:303:2c::19)
- by CH3PR12MB9217.namprd12.prod.outlook.com (2603:10b6:610:195::10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.34; Wed, 28 Feb
- 2024 21:22:07 +0000
-Received: from MW3PR12MB4553.namprd12.prod.outlook.com
- ([fe80::b49d:bb81:38b6:ce54]) by MW3PR12MB4553.namprd12.prod.outlook.com
- ([fe80::b49d:bb81:38b6:ce54%4]) with mapi id 15.20.7316.039; Wed, 28 Feb 2024
- 21:22:07 +0000
-Message-ID: <3ab53ea9-be77-4ee7-9247-d89c0ec62346@amd.com>
-Date: Wed, 28 Feb 2024 15:22:03 -0600
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 18/21] hw/i386/pc: Support smp.modules for x86 PC
- machine
-Content-Language: en-US
-To: Zhao Liu <zhao1.liu@linux.intel.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Zhuocheng Ding <zhuocheng.ding@intel.com>, Yongwei Ma
- <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-References: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
- <20240227103231.1556302-19-zhao1.liu@linux.intel.com>
-From: "Moger, Babu" <babu.moger@amd.com>
-In-Reply-To: <20240227103231.1556302-19-zhao1.liu@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: DM5PR07CA0092.namprd07.prod.outlook.com
- (2603:10b6:4:ae::21) To MW3PR12MB4553.namprd12.prod.outlook.com
- (2603:10b6:303:2c::19)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rfS6h-0005px-RZ
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 17:08:56 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rfS6f-000356-BT
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 17:08:54 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-33de6da5565so166707f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 14:08:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709158129; x=1709762929; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Lvmy+rOcg9VVqsqPTj8iy9BHcyK5TGpuqT86Iuj6Lbk=;
+ b=x6TESe4GZNAQwGD2r5BCoaqACcnJTGdga/2flu4ZcovTJPnxg2rHKZW5RDyILSahw9
+ rtwP0g5aVmt8X/l/avrROZJOP95FqkHhSpceFo617YA9S0vuI4otqC1KSkE24wqRO2dM
+ N3wNwIiCrRujDf02IX5d1Ezs6o0o9rRMf0irjcTpPF94iBdTGeHligF6mtI7/UsRP0Vm
+ qSd1Qk2bm/zqtZPvr5CdXvIu/GOzpvARMxG3l8jEJK2c0byksKDBruVFAp6o+edLRLZL
+ KGHs3bbllCRmm7PwtOSmt4BoMqVwcGt7w0tSLCDJZ2pCRsAHh7NaM0O1WZqQTwa/oR/H
+ MIAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709158129; x=1709762929;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Lvmy+rOcg9VVqsqPTj8iy9BHcyK5TGpuqT86Iuj6Lbk=;
+ b=QzEe/rprLfKfeCwfJ4MHqWhzeieh9V8YcshD28dm3abo43SuSUpI6nSYeYBSpkB8/z
+ RSeupNPWJ7fYk1zxlMaHzWWemqnxRjX25Z0MESN0AVyIdm7/4V/ualKZ2uHLAGcru1Pf
+ R7A6VMRDVFQvCvEUjvKSejE7njv9bqiZ8R4hoIUekCCL/Nroh2zSEKllkfBCysnncfCx
+ R9Jba4ApXt0W8L/9fAMwNKtxKjd9EpHK4Bwx11NHXGXe3CjgzEL9uKNw/5xD4ODHXbNZ
+ RTXzaBqcbYTu/pryH2I3Qh1wqSUVmxi3hI4AA2uKM4x9qdQCLWpYsK7BWViwKd5IE2TU
+ SodQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXZO6m3DkbQsLUaxbMszsJKihUvCKfG0anQpjGTFYpxwzxaV63xTnlbKEmn++h7VPYh63aXQyvMfCJR+1JeJ+WmGlpO0dQ=
+X-Gm-Message-State: AOJu0YyUo+yH86GZbFc0I/UEaj2NH6lwuAkw24SZrImy2+qiGRh9W+A5
+ csE7+51vDYGuyUOlwgL835f9pBQqko/352sgrggLEoY1PGIEecJFAmEo+GUag1k=
+X-Google-Smtp-Source: AGHT+IFFMWGtboMHbBb1Do3OceH/7YJNHNV92OwJyONqkPhpHpPeo2gta6rrYM7x8L5KkL3DoLHswQ==
+X-Received: by 2002:a5d:5246:0:b0:33d:50cd:4672 with SMTP id
+ k6-20020a5d5246000000b0033d50cd4672mr115117wrc.21.1709158129591; 
+ Wed, 28 Feb 2024 14:08:49 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ bo14-20020a056000068e00b0033d6bc17d0esm16530092wrb.74.2024.02.28.14.08.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 28 Feb 2024 14:08:48 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id D25605F863;
+ Wed, 28 Feb 2024 22:08:47 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Luc Michel <luc.michel@amd.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ <qemu-devel@nongnu.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,  "Marcel Apfelbaum"
+ <marcel.apfelbaum@gmail.com>,  Yanan Wang <wangyanan55@huawei.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,  Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH v5 06/12] tests/plugin/mem: migrate to new per_vcpu API
+In-Reply-To: <Zd2sxjxegajy7ZbF@luc-work-vm> (Luc Michel's message of "Tue, 27
+ Feb 2024 10:35:02 +0100")
+References: <20240226091446.479436-1-pierrick.bouvier@linaro.org>
+ <20240226091446.479436-7-pierrick.bouvier@linaro.org>
+ <Zd2sxjxegajy7ZbF@luc-work-vm>
+User-Agent: mu4e 1.12.0; emacs 29.1
+Date: Wed, 28 Feb 2024 22:08:47 +0000
+Message-ID: <875xy8b5sg.fsf@draig.linaro.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MW3PR12MB4553:EE_|CH3PR12MB9217:EE_
-X-MS-Office365-Filtering-Correlation-Id: e9ca65e5-003f-4ce4-70ce-08dc38a35111
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: eQCzzp3EtMzcFaeJpkf2zjcUAUHfN8Irc4Ccpemc39Wmo8b4mSuge352qkl25C8zLeee+sX70B1oNrXgNpHIlBT9IoqDKQAKWyo368OayQf2cOyXj90AqQikOfcY+aj2HvBo1K7xG7/xpsvBvD/qm4i2yNbsAWxI6dI+NWrJSVHZoPFjk3An6tnaO3qo2Lp3NdOF7Kj2nc6PXYZ31EvsBof+AeIh+MFfzggLJSBJiT0wyiaTZL0XjRDiR9m8wloUVmEVBaNN+vBOxi+xJS5zJvtjJfuRjRYh0ppTwwk04ZAfaVh8QCsiBU/r2TSQh8iD0dwuyqJMMyicdlyFMtJh5sqwK9NJnUIyidwdsJzgn6pqMoP36ihVcXS1J/ZRbSPFEZcQpCkxotfJDhd0be5KWNuGgm9yTLdHQT5diz241fx7zhJJLRwItv0fcmdDmiTrhETtNeo1dnSgph59ZfZjg+t0NKdQ0X8gAlAJM0nCkDJ8jTsY7rkxDY/Yprk8kgM0Krw3hCnrDAQ7RmcOqymlH1Jm8bpZTtzJzbVQsEcLay7I5qwt47hMWKgRDfPbGEJYEdClCSr/i7SoQ6hRBkmeLDh8sglAH5t1keiBPZ4CWDIsG6rocEUCRkwNSQwRmsYVpY6PeOspeE4xqR/W09oSNlOjeyUZ6aefKV/xQpUM1xa6J0GDGcfatGcOH0qdfnscA+1xnHDN4RBY8G+7g3yV+g==
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:MW3PR12MB4553.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(921011); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?S0NRU0VYMlZDSzVQcXA3azhGY1BscFROdk8ycnd6cVd0enppZWsyYmRwRVBC?=
- =?utf-8?B?Wlp0WGtzYzBEWG5Zb2F6K01tMitnWmdwR1ZjUUJmZWp4M0xSVVN6eng0d3Ny?=
- =?utf-8?B?ejAva1VFM1U1bCt1Tm05UGpVSzhGWXhFU0NnS2ZsYzJQb3A2bVRRZ2hNTFBj?=
- =?utf-8?B?c1RWRm5LTGhnU1IwckVKUDBVZE45OFhyMnpDenpSbTgxWThiRENhblhCMVpP?=
- =?utf-8?B?dzEvTW5tYkdLMjcvdFN4WlJNOE9ZQXBWem1rdDVaKzdvL0NvZ1E4bDV4bFRU?=
- =?utf-8?B?VFJPMFVrNUhXK0xiQ2F6QWI3Qng5NzB0RFZ2QktpeVduc2s0T0ROam9qbTdh?=
- =?utf-8?B?VnlOcnIzWXFyUnY3VDQxRFQ2Z2dMSnZhakVTM3RQYU80VDZXOS8wZEFuUmds?=
- =?utf-8?B?K3hPRjhWWTV1UU1iMmt1SFRrQjA1Nkd0T2NGQjB3a1V1Zms1ZU9QT2RzcDI1?=
- =?utf-8?B?WmpLeXp0cDY5L3Uvcyt2VlhyVFVEeVh6SU9ZMTNGQmU5SUNGMG9tVVdjVDJJ?=
- =?utf-8?B?a3h6b2hCYytLUFZtTWRUbG1MMzIzU0tvV1YvQ2huelNQNmgxWlZPamp2Y1Zx?=
- =?utf-8?B?RzVyTHJNT3VMdCtsVkVsVjNUMlZ2dkxmd1ZHWFM1d3hMdHAvdERLTDYwYUkw?=
- =?utf-8?B?MS9jSjFMemJUdzJIT3ZrNmJML2hIZUR4KzdQS0NESTlId1BkUTBrRDQ4UGs3?=
- =?utf-8?B?YmNvWDNJTVFjZEdJelJGdzJqUDVWaWRZdlBwRVRLWllrQitSQnRtMEVpUG02?=
- =?utf-8?B?RlJmRi8yZmVyNURSNWE2TzdCQzlVdnpHRjRRMmdickVjY21hRUtLZWdFbzNz?=
- =?utf-8?B?Y0xDVGtERlY2ekdPK0xoOTZRQnVqTzAvSEM1VHlIVTljanlUZDR4SjlmWTBR?=
- =?utf-8?B?dE9tUXFaenBLZW9RTWkrY3lCb0l0dWlmQkFwQUFFaFVZeHdhYTdPZGFyQWpT?=
- =?utf-8?B?LzlraGNxYjJ5dFNTK092Z3JUTnNyajc5SFZ0d1lqRXhqc0N0T1VldFhGU2Q3?=
- =?utf-8?B?elJiQmFOWUd2Z0EvVlRLck1DUlNrTnAweTRlRXVqa1lUZ1V1YzZocFpKci92?=
- =?utf-8?B?eTQ3Um5TOXQ0N0Q2YkNjbTNjemxKWkk1S2pxRzJUZDVvN0o3cW13anF2N1V4?=
- =?utf-8?B?OFRuV0J6dFFGaEhNTWhGVXFSVGpRS2FyV0lwNUxBL0FJZEhVYnVYeDQyUUVi?=
- =?utf-8?B?S01DU09rMk5seFdZU0tuSTYvZklwQVo1Y0ZFYURYZkFTM3A3ZjNkNDEwRzRU?=
- =?utf-8?B?d2k4NUdwaVJBWFQybXFRclJQNC9RazRaN1A3ZElzdmJwMGYyMW5YTHFJSURq?=
- =?utf-8?B?eFppNmJmRDRLMW1hVlY4SWFleWZqa0lQS28xeHNXb3JDOTlYdGZxWVVuZTBu?=
- =?utf-8?B?eUdBWkhoSTRPazRFdjNsK0tJOTZTQURTSmphb2hxMTJ5VFlQM0dTTGk3aGpp?=
- =?utf-8?B?NVNXcEh5aFRrSEE3SDVUNGJOcEQ5OUo5NzdFeVFFQ0NYWUlVTVJOTnlWTlE3?=
- =?utf-8?B?akxsVjloYi9Od3B5cGJHQ2lTd2V5RWloa3UrY3U2VU9kMGFsckRBanFzZ05R?=
- =?utf-8?B?ZVBzb2VSdWtEWjdnb1RIMHdlRWE1YjNQbE80cFdMZ29BbjhQT1BWcktmalpV?=
- =?utf-8?B?RWdkY1o5YzFPRk1BZTN5RzBFVWFLbWovOTNONE5aZ09zeWlUK1NQYXU2R2Jx?=
- =?utf-8?B?Ukg4RmI4bWVaV3d2U3RrVXZXanJXdW5ENjlzVmI3TU5tcW40NXpPbzcyK0xi?=
- =?utf-8?B?SjZDS3kzdEhPQVpIeUY1RmlWcVByUUFaR3FkRE5lcjVEN3RuOWxMOURpKzRM?=
- =?utf-8?B?ZGNIUjVnQmh4OEs5b2wrR0p1Y3dzOHZaU1lsbWxJNWhkaVdJZUpHSjFROWpx?=
- =?utf-8?B?RnppejFNeU53b01uSjBEVlgzWkxBMW1CN0d0dnF0eS9Gd0dIV0pUUzlwRkxl?=
- =?utf-8?B?eXhlTm13aXl3SmZsNElmSGtBdk0reHE1VlFlZW1ra1ExU0o5UldKMlI5NWdD?=
- =?utf-8?B?b0NHMllpN09LWUtPdS9YWStkVG9EQUJrNDc2elNlem9ucVRRYkRlY0l4cHZw?=
- =?utf-8?B?SWJwRjlHdjgvSUhkNlI1dDFlUytURjh5WkdXV3lLQTVUTFU3K3R4UGZkcWpn?=
- =?utf-8?Q?4Boo=3D?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e9ca65e5-003f-4ce4-70ce-08dc38a35111
-X-MS-Exchange-CrossTenant-AuthSource: MW3PR12MB4553.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Feb 2024 21:22:07.3634 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: f4fF4gN96j4xNOCo2bWrzYxchvLxs0rqyw5ddebghqSDt0JdhvWUSX1TZe1Zwt2U
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9217
-Received-SPF: softfail client-ip=40.107.223.51;
- envelope-from=Babu.Moger@amd.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,111 +104,167 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: babu.moger@amd.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhao,
+Luc Michel <luc.michel@amd.com> writes:
 
-On 2/27/24 04:32, Zhao Liu wrote:
-> From: Zhao Liu <zhao1.liu@intel.com>
-> 
-> As module-level topology support is added to X86CPU, now we can enable
-> the support for the modules parameter on PC machines. With this support,
-> we can define a 5-level x86 CPU topology with "-smp":
-> 
-> -smp cpus=*,maxcpus=*,sockets=*,dies=*,modules=*,cores=*,threads=*.
-> 
-> Additionally, add the 5-level topology example in description of "-smp".
-> 
-> Tested-by: Yongwei Ma <yongwei.ma@intel.com>
-> Co-developed-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
-> Signed-off-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
-> Changes since v8:
->  * Add missing "modules" parameter in -smp example.
-> 
-> Changes since v7:
->  * Supported modules instead of clusters for PC.
->  * Dropped Michael/Babu/Yanan's ACKed/Tested/Reviewed tags since the
->    code change.
->  * Re-added Yongwei's Tested tag For his re-testing.
-> ---
->  hw/i386/pc.c    |  1 +
->  qemu-options.hx | 18 ++++++++++--------
->  2 files changed, 11 insertions(+), 8 deletions(-)
-> 
-> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> index f8eb684a4926..b270a66605fc 100644
-> --- a/hw/i386/pc.c
-> +++ b/hw/i386/pc.c
-> @@ -1830,6 +1830,7 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
->      mc->default_cpu_type = TARGET_DEFAULT_CPU_TYPE;
->      mc->nvdimm_supported = true;
->      mc->smp_props.dies_supported = true;
-> +    mc->smp_props.modules_supported = true;
->      mc->default_ram_id = "pc.ram";
->      pcmc->default_smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_64;
->  
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index 9be1e5817c7d..b5784fda32cb 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -281,7 +281,8 @@ ERST
->  
->  DEF("smp", HAS_ARG, QEMU_OPTION_smp,
->      "-smp [[cpus=]n][,maxcpus=maxcpus][,drawers=drawers][,books=books][,sockets=sockets]\n"
-> -    "               [,dies=dies][,clusters=clusters][,cores=cores][,threads=threads]\n"
-> +    "               [,dies=dies][,clusters=clusters][,modules=modules][,cores=cores]\n"
-> +    "               [,threads=threads]\n"
->      "                set the number of initial CPUs to 'n' [default=1]\n"
->      "                maxcpus= maximum number of total CPUs, including\n"
->      "                offline CPUs for hotplug, etc\n"
-> @@ -290,7 +291,8 @@ DEF("smp", HAS_ARG, QEMU_OPTION_smp,
->      "                sockets= number of sockets in one book\n"
->      "                dies= number of dies in one socket\n"
->      "                clusters= number of clusters in one die\n"
-> -    "                cores= number of cores in one cluster\n"
-> +    "                modules= number of modules in one cluster\n"
-> +    "                cores= number of cores in one module\n"
->      "                threads= number of threads in one core\n"
->      "Note: Different machines may have different subsets of the CPU topology\n"
->      "      parameters supported, so the actual meaning of the supported parameters\n"
-> @@ -306,7 +308,7 @@ DEF("smp", HAS_ARG, QEMU_OPTION_smp,
->      "      must be set as 1 in the purpose of correct parsing.\n",
->      QEMU_ARCH_ALL)
->  SRST
-> -``-smp [[cpus=]n][,maxcpus=maxcpus][,sockets=sockets][,dies=dies][,clusters=clusters][,cores=cores][,threads=threads]``
-> +``-smp [[cpus=]n][,maxcpus=maxcpus][,drawers=drawers][,books=books][,sockets=sockets][,dies=dies][,clusters=clusters][,modules=modules][,cores=cores][,threads=threads]``
+> Hi Pierrick,
+>
+> On 13:14 Mon 26 Feb     , Pierrick Bouvier wrote:
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>  tests/plugin/mem.c | 40 +++++++++++++++++++++++++---------------
+>>  1 file changed, 25 insertions(+), 15 deletions(-)
+>>=20
+>> diff --git a/tests/plugin/mem.c b/tests/plugin/mem.c
+>> index 44e91065ba7..d4729f5e015 100644
+>> --- a/tests/plugin/mem.c
+>> +++ b/tests/plugin/mem.c
+>> @@ -16,9 +16,14 @@
+>>=20
+>>  QEMU_PLUGIN_EXPORT int qemu_plugin_version =3D QEMU_PLUGIN_VERSION;
+>>=20
+>> -static uint64_t inline_mem_count;
+>> -static uint64_t cb_mem_count;
+>> -static uint64_t io_count;
+>> +typedef struct {
+>> +    uint64_t mem_count;
+>> +    uint64_t io_count;
+>> +} CPUCount;
+>> +
+>> +static struct qemu_plugin_scoreboard *counts;
+>> +static qemu_plugin_u64 mem_count;
+>> +static qemu_plugin_u64 io_count;
+>
+> I see that you merged inline and callback counts into the same variable.
+>
+> I wonder... For this test don't you want to keep a plain uint64_t for
+> callback counts? I have the feeling that this test was made so one can
+> make sure inline and callback counts match.
 
-You have added drawers, books here. Were they missing before?
+Indeed the problem now is double counting:
 
->      Simulate a SMP system with '\ ``n``\ ' CPUs initially present on
->      the machine type board. On boards supporting CPU hotplug, the optional
->      '\ ``maxcpus``\ ' parameter can be set to enable further CPUs to be
-> @@ -345,14 +347,14 @@ SRST
->          -smp 8,sockets=2,cores=2,threads=2,maxcpus=8
->  
->      The following sub-option defines a CPU topology hierarchy (2 sockets
-> -    totally on the machine, 2 dies per socket, 2 cores per die, 2 threads
-> -    per core) for PC machines which support sockets/dies/cores/threads.
-> -    Some members of the option can be omitted but their values will be
-> -    automatically computed:
-> +    totally on the machine, 2 dies per socket, 2 modules per die, 2 cores per
-> +    module, 2 threads per core) for PC machines which support sockets/dies
-> +    /modules/cores/threads. Some members of the option can be omitted but
-> +    their values will be automatically computed:
->  
->      ::
->  
-> -        -smp 16,sockets=2,dies=2,cores=2,threads=2,maxcpus=16
-> +        -smp 32,sockets=2,dies=2,modules=2,cores=2,threads=2,maxcpus=32
->  
->      The following sub-option defines a CPU topology hierarchy (2 sockets
->      totally on the machine, 2 clusters per socket, 2 cores per cluster,
+  =E2=9E=9C  ./qemu-hppa -plugin ./tests/plugin/libmem.so,inline=3Dtrue -d =
+plugin  ./tests/tcg/hppa-linux-user/sha512
+  1..10
+  ok 1 - do_test(&tests[i])
+  ok 2 - do_test(&tests[i])
+  ok 3 - do_test(&tests[i])
+  ok 4 - do_test(&tests[i])
+  ok 5 - do_test(&tests[i])
+  ok 6 - do_test(&tests[i])
+  ok 7 - do_test(&tests[i])
+  ok 8 - do_test(&tests[i])
+  ok 9 - do_test(&tests[i])
+  ok 10 - do_test(&tests[i])
+  mem accesses: 262917
+  =F0=9F=95=9922:06:57 alex@draig:qemu.git/builds/all  on =EE=82=A0 plugins=
+/next [$?]=20
+  =E2=9E=9C  ./qemu-hppa -plugin ./tests/plugin/libmem.so,inline=3Dtrue,cal=
+lback=3Dtrue -d plugin  ./tests/tcg/hppa-linux-user/sha512
+  1..10
+  ok 1 - do_test(&tests[i])
+  ok 2 - do_test(&tests[i])
+  ok 3 - do_test(&tests[i])
+  ok 4 - do_test(&tests[i])
+  ok 5 - do_test(&tests[i])
+  ok 6 - do_test(&tests[i])
+  ok 7 - do_test(&tests[i])
+  ok 8 - do_test(&tests[i])
+  ok 9 - do_test(&tests[i])
+  ok 10 - do_test(&tests[i])
+  mem accesses: 525834
 
--- 
-Thanks
-Babu Moger
+although perhaps it would just be simpler for the plugin to only accept
+one or the other method.
+
+>
+> Luc
+>
+>>  static bool do_inline, do_callback;
+>>  static bool do_haddr;
+>>  static enum qemu_plugin_mem_rw rw =3D QEMU_PLUGIN_MEM_RW;
+>> @@ -27,16 +32,16 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
+>>  {
+>>      g_autoptr(GString) out =3D g_string_new("");
+>>=20
+>> -    if (do_inline) {
+>> -        g_string_printf(out, "inline mem accesses: %" PRIu64 "\n", inli=
+ne_mem_count);
+>> -    }
+>> -    if (do_callback) {
+>> -        g_string_append_printf(out, "callback mem accesses: %" PRIu64 "=
+\n", cb_mem_count);
+>> +    if (do_inline || do_callback) {
+>> +        g_string_printf(out, "mem accesses: %" PRIu64 "\n",
+>> +                        qemu_plugin_u64_sum(mem_count));
+>>      }
+>>      if (do_haddr) {
+>> -        g_string_append_printf(out, "io accesses: %" PRIu64 "\n", io_co=
+unt);
+>> +        g_string_append_printf(out, "io accesses: %" PRIu64 "\n",
+>> +                               qemu_plugin_u64_sum(io_count));
+>>      }
+>>      qemu_plugin_outs(out->str);
+>> +    qemu_plugin_scoreboard_free(counts);
+>>  }
+>>=20
+>>  static void vcpu_mem(unsigned int cpu_index, qemu_plugin_meminfo_t memi=
+nfo,
+>> @@ -46,12 +51,12 @@ static void vcpu_mem(unsigned int cpu_index, qemu_pl=
+ugin_meminfo_t meminfo,
+>>          struct qemu_plugin_hwaddr *hwaddr;
+>>          hwaddr =3D qemu_plugin_get_hwaddr(meminfo, vaddr);
+>>          if (qemu_plugin_hwaddr_is_io(hwaddr)) {
+>> -            io_count++;
+>> +            qemu_plugin_u64_add(io_count, cpu_index, 1);
+>>          } else {
+>> -            cb_mem_count++;
+>> +            qemu_plugin_u64_add(mem_count, cpu_index, 1);
+>>          }
+>>      } else {
+>> -        cb_mem_count++;
+>> +        qemu_plugin_u64_add(mem_count, cpu_index, 1);
+>>      }
+>>  }
+>>=20
+>> @@ -64,9 +69,10 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct=
+ qemu_plugin_tb *tb)
+>>          struct qemu_plugin_insn *insn =3D qemu_plugin_tb_get_insn(tb, i=
+);
+>>=20
+>>          if (do_inline) {
+>> -            qemu_plugin_register_vcpu_mem_inline(insn, rw,
+>> -                                                 QEMU_PLUGIN_INLINE_ADD=
+_U64,
+>> -                                                 &inline_mem_count, 1);
+>> +            qemu_plugin_register_vcpu_mem_inline_per_vcpu(
+>> +                insn, rw,
+>> +                QEMU_PLUGIN_INLINE_ADD_U64,
+>> +                mem_count, 1);
+>>          }
+>>          if (do_callback) {
+>>              qemu_plugin_register_vcpu_mem_cb(insn, vcpu_mem,
+>> @@ -117,6 +123,10 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plu=
+gin_id_t id,
+>>          }
+>>      }
+>>=20
+>> +    counts =3D qemu_plugin_scoreboard_new(sizeof(CPUCount));
+>> +    mem_count =3D qemu_plugin_scoreboard_u64_in_struct(
+>> +        counts, CPUCount, mem_count);
+>> +    io_count =3D qemu_plugin_scoreboard_u64_in_struct(counts, CPUCount,=
+ io_count);
+>>      qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>>      qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+>>      return 0;
+>> --
+>> 2.43.0
+>>=20
+>>=20
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
