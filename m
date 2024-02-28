@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72F5AC5478C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 23:00:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 380C2C5475B
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 23:01:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfSpm-0005We-Vj; Wed, 28 Feb 2024 17:55:31 -0500
+	id 1rfSqL-0005zx-4n; Wed, 28 Feb 2024 17:56:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rfSpb-0005TS-Q8; Wed, 28 Feb 2024 17:55:20 -0500
+ id 1rfSqC-0005s5-Dm; Wed, 28 Feb 2024 17:55:57 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rfSpY-0000Yj-Le; Wed, 28 Feb 2024 17:55:18 -0500
+ id 1rfSq8-0000nm-4C; Wed, 28 Feb 2024 17:55:55 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D2F735180D;
- Thu, 29 Feb 2024 01:55:32 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6291B51814;
+ Thu, 29 Feb 2024 01:55:33 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 444228BB40;
+ by tsrv.corpit.ru (Postfix) with SMTP id C7E128BB47;
  Thu, 29 Feb 2024 01:54:56 +0300 (MSK)
-Received: (nullmailer pid 274137 invoked by uid 1000);
+Received: (nullmailer pid 274159 invoked by uid 1000);
  Wed, 28 Feb 2024 22:54:55 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.2 68/78] update edk2 binaries to edk2-stable202402
-Date: Thu, 29 Feb 2024 01:54:44 +0300
-Message-Id: <20240228225455.274062-8-mjt@tls.msk.ru>
+Subject: [Stable-8.2.2 75/78] target/i386: leave the A20 bit set in the final
+ NPT walk
+Date: Thu, 29 Feb 2024 01:54:51 +0300
+Message-Id: <20240228225455.274062-15-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.2-20240229000326@cover.tls.msk.ru>
 References: <qemu-stable-8.2.2-20240229000326@cover.tls.msk.ru>
@@ -61,39 +62,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-(cherry picked from commit 658178c3d4e95b3f4106e25ec5a209356e339032)
+The A20 mask is only applied to the final memory access.  Nested
+page tables are always walked with the raw guest-physical address.
+
+Unlike the previous patch, in this one the masking must be kept, but
+it was done too early.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 4a1e9d4d11c ("target/i386: Use atomic operations for pte updates", 2022-10-18)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit b5a9de3259f4c791bde2faff086dd5737625e41e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/pc-bios/edk2-aarch64-code.fd.bz2 b/pc-bios/edk2-aarch64-code.fd.bz2
-index fdcf89022a..5d0a57173d 100644
-Binary files a/pc-bios/edk2-aarch64-code.fd.bz2 and b/pc-bios/edk2-aarch64-code.fd.bz2 differ
-diff --git a/pc-bios/edk2-arm-code.fd.bz2 b/pc-bios/edk2-arm-code.fd.bz2
-index 9d829f4f08..af49559f34 100644
-Binary files a/pc-bios/edk2-arm-code.fd.bz2 and b/pc-bios/edk2-arm-code.fd.bz2 differ
-diff --git a/pc-bios/edk2-i386-code.fd.bz2 b/pc-bios/edk2-i386-code.fd.bz2
-index 1a9d392574..ecd0c6b1ae 100644
-Binary files a/pc-bios/edk2-i386-code.fd.bz2 and b/pc-bios/edk2-i386-code.fd.bz2 differ
-diff --git a/pc-bios/edk2-i386-secure-code.fd.bz2 b/pc-bios/edk2-i386-secure-code.fd.bz2
-index fab0a77b30..983e1778c4 100644
-Binary files a/pc-bios/edk2-i386-secure-code.fd.bz2 and b/pc-bios/edk2-i386-secure-code.fd.bz2 differ
-diff --git a/pc-bios/edk2-riscv-code.fd.bz2 b/pc-bios/edk2-riscv-code.fd.bz2
-index 6394fbfff3..b6cd3c6f74 100644
-Binary files a/pc-bios/edk2-riscv-code.fd.bz2 and b/pc-bios/edk2-riscv-code.fd.bz2 differ
-diff --git a/pc-bios/edk2-riscv-vars.fd.bz2 b/pc-bios/edk2-riscv-vars.fd.bz2
-index 40da6591ad..36435a1046 100644
-Binary files a/pc-bios/edk2-riscv-vars.fd.bz2 and b/pc-bios/edk2-riscv-vars.fd.bz2 differ
-diff --git a/pc-bios/edk2-x86_64-code.fd.bz2 b/pc-bios/edk2-x86_64-code.fd.bz2
-index 0d325bd483..8707f695ef 100644
-Binary files a/pc-bios/edk2-x86_64-code.fd.bz2 and b/pc-bios/edk2-x86_64-code.fd.bz2 differ
-diff --git a/pc-bios/edk2-x86_64-microvm.fd.bz2 b/pc-bios/edk2-x86_64-microvm.fd.bz2
-index 829429082b..334da49917 100644
-Binary files a/pc-bios/edk2-x86_64-microvm.fd.bz2 and b/pc-bios/edk2-x86_64-microvm.fd.bz2 differ
-diff --git a/pc-bios/edk2-x86_64-secure-code.fd.bz2 b/pc-bios/edk2-x86_64-secure-code.fd.bz2
-index c6b039819c..abeb60bcf3 100644
-Binary files a/pc-bios/edk2-x86_64-secure-code.fd.bz2 and b/pc-bios/edk2-x86_64-secure-code.fd.bz2 differ
+diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
+index 89df61eec6..e16d3a69d1 100644
+--- a/target/i386/tcg/sysemu/excp_helper.c
++++ b/target/i386/tcg/sysemu/excp_helper.c
+@@ -134,7 +134,6 @@ static inline bool ptw_setl(const PTETranslate *in, uint32_t old, uint32_t set)
+ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
+                           TranslateResult *out, TranslateFault *err)
+ {
+-    const int32_t a20_mask = x86_get_a20_mask(env);
+     const target_ulong addr = in->addr;
+     const int pg_mode = in->pg_mode;
+     const bool is_user = (in->mmu_idx == MMU_USER_IDX);
+@@ -417,10 +416,13 @@ do_check_protect_pse36:
+         }
+     }
+ 
+-    /* align to page_size */
+-    paddr = (pte & a20_mask & PG_ADDRESS_MASK & ~(page_size - 1))
+-          | (addr & (page_size - 1));
++    /* merge offset within page */
++    paddr = (pte & PG_ADDRESS_MASK & ~(page_size - 1)) | (addr & (page_size - 1));
+ 
++    /*
++     * Note that NPT is walked (for both paging structures and final guest
++     * addresses) using the address with the A20 bit set.
++     */
+     if (in->ptw_idx == MMU_NESTED_IDX) {
+         CPUTLBEntryFull *full;
+         int flags, nested_page_size;
+@@ -459,7 +461,7 @@ do_check_protect_pse36:
+         }
+     }
+ 
+-    out->paddr = paddr;
++    out->paddr = paddr & x86_get_a20_mask(env);
+     out->prot = prot;
+     out->page_size = page_size;
+     return true;
 -- 
 2.39.2
 
