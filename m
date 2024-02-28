@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 342DAC47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 16:25:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CA81C5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 16:25:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfMjN-0004Q4-5F; Wed, 28 Feb 2024 11:24:29 -0500
+	id 1rfMis-0003rU-7d; Wed, 28 Feb 2024 11:23:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfMjL-0004OJ-KW; Wed, 28 Feb 2024 11:24:27 -0500
+ id 1rfMip-0003qZ-Ux; Wed, 28 Feb 2024 11:23:55 -0500
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfMjK-0000sx-1T; Wed, 28 Feb 2024 11:24:27 -0500
+ id 1rfMio-0000kj-2e; Wed, 28 Feb 2024 11:23:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709137466; x=1740673466;
+ t=1709137434; x=1740673434;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=se7iaBg2YM4bDU1t5iF+ZzwdJjnzwm4fgLQ2Wyzhwuw=;
- b=fLlY9V60XoY97Z0P/0LFl5zrFdms/IFU7sIsHh9Dztd/59Xgp99N4sfZ
- rU6xtecXRoH5AyUm9TR31lgel3ySDuiMp5qjYobr/2sgnaXydIuAYaZGQ
- 3CnQ2EPnRRxH1/P4ro+YMWpdGDpqg3MmvsfKKMGycNm2WdiM7+DIyaG6z
- JgAblhc59fImAIZ2I4pKvSP3LrwqqGbYDietLhEUiablyFuT2usikrSTz
- Qfi/VPylQJB9UvmLDPF8sOlXzT0j4EZ3hndj7nnIpex8XdS6ExjuXF2fn
- CWT0M4UiU3aC1QMVE0QxpI3iKFmy+r21te8kmhvkSDZAoKtTQURQXL6/F g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="28982562"
-X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="28982562"
+ bh=ph7yx45DpHdKw7PwqnWGdtJMzif59rJ5VMJHMtnScN4=;
+ b=etBsxr4UU4Uo5lqwRzhw7r4amZ6R3zPQmRZGFqN7xYoK9f/12hpdopSE
+ kbqRAZ/2MEEcj8B3tp3Yjq8cPop0d+Wr/61bGa+LmLzfOFPaklWbAFXKX
+ lZwIMFYjHXq9xi67Qt7o1Zk3mDYpRfjBgLlY+1FOQqVBMHrthXzrLG0Iz
+ WGyTlub3U0o55ow9xZ3XnA+q3A+ZyeotFieSuuwO1Ht+EEQ7N1qwVxGNL
+ kpErF4ggkISBCWrro7b1RmviYPNNRGwvM2vQfRviyq9O8JyHvGlle9aKG
+ gNX3HbWOBjYIdTnICZGtjV0VwBeU1oG0XgfQ2/wheL1TCGHV8NV/2GoEi Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="28982411"
+X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="28982411"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Feb 2024 08:24:21 -0800
+ 28 Feb 2024 08:23:50 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="12145008"
+X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="12144802"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa004.jf.intel.com with ESMTP; 28 Feb 2024 08:24:17 -0800
+ by orviesa004.jf.intel.com with ESMTP; 28 Feb 2024 08:23:48 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Michael Tokarev <mjt@tls.msk.ru>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Stefan Weil <sw@weilnetz.de>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH 11/16] block/vdi: Fix missing ERRP_GUARD() for error_prepend()
-Date: Thu, 29 Feb 2024 00:37:18 +0800
-Message-Id: <20240228163723.1775791-12-zhao1.liu@linux.intel.com>
+Cc: qemu-trivial@nongnu.org,
+	Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH 01/16] error: Add error_vprepend() in comment of ERRP_GUARD()
+ rules
+Date: Thu, 29 Feb 2024 00:37:08 +0800
+Message-Id: <20240228163723.1775791-2-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240228163723.1775791-1-zhao1.liu@linux.intel.com>
 References: <20240228163723.1775791-1-zhao1.liu@linux.intel.com>
@@ -57,13 +57,13 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: none client-ip=192.198.163.7;
  envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H2=-0.001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,55 +81,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-As the comment in qapi/error, passing @errp to error_prepend() requires
-ERRP_GUARD():
+The error_vprepend() should use ERRP_GUARD() just as the documentation
+of ERRP_GUARD() says:
 
-* = Why, when and how to use ERRP_GUARD() =
-*
-* Without ERRP_GUARD(), use of the @errp parameter is restricted:
-...
-* - It should not be passed to error_prepend(), error_vprepend() or
-*   error_append_hint(), because that doesn't work with &error_fatal.
-* ERRP_GUARD() lifts these restrictions.
-*
-* To use ERRP_GUARD(), add it right at the beginning of the function.
-* @errp can then be used without worrying about the argument being
-* NULL or &error_fatal.
+> It must be used when the function dereferences @errp or passes
+> @errp to error_prepend(), error_vprepend(), or error_append_hint().
 
-ERRP_GUARD() could avoid the case when @errp is the pointer of
-error_fatal, the user can't see this additional information, because
-exit() happens in error_setg earlier than information is added [1].
+Considering that error_vprepend() is also an API provided in error.h,
+it is necessary to add it to the description of the rules for using
+ERRP_GUARD().
 
-The vdi_co_do_create() passes @errp to error_prepend() without
-ERRP_GUARD(), and its @errp parameter is so widely sourced that it is
-necessary to protect it with ERRP_GUARD().
-
-To avoid the potential issues as [1] said, add missing ERRP_GUARD() at
-the beginning of this function.
-
-[1]: Issue description in the commit message of commit ae7c80a7bd73
-     ("error: New macro ERRP_GUARD()").
-
-Cc: Stefan Weil <sw@weilnetz.de>
-Cc: Kevin Wolf <kwolf@redhat.com>
-Cc: Hanna Reitz <hreitz@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- block/vdi.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/qapi/error.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/vdi.c b/block/vdi.c
-index 3b57becb9fe0..6363da08cee9 100644
---- a/block/vdi.c
-+++ b/block/vdi.c
-@@ -738,6 +738,7 @@ static int coroutine_fn GRAPH_UNLOCKED
- vdi_co_do_create(BlockdevCreateOptions *create_options, size_t block_size,
-                  Error **errp)
- {
-+    ERRP_GUARD();
-     BlockdevCreateOptionsVdi *vdi_opts;
-     int ret = 0;
-     uint64_t bytes = 0;
+diff --git a/include/qapi/error.h b/include/qapi/error.h
+index f21a231bb1a6..b1b389967f92 100644
+--- a/include/qapi/error.h
++++ b/include/qapi/error.h
+@@ -207,7 +207,7 @@
+  *
+  * Without ERRP_GUARD(), use of the @errp parameter is restricted:
+  * - It must not be dereferenced, because it may be null.
+- * - It should not be passed to error_prepend() or
++ * - It should not be passed to error_prepend(), error_vprepend() or
+  *   error_append_hint(), because that doesn't work with &error_fatal.
+  * ERRP_GUARD() lifts these restrictions.
+  *
 -- 
 2.34.1
 
