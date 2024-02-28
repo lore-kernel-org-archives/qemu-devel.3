@@ -4,80 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1A9BC5478C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 12:16:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6991C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 12:21:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfIoI-0007pI-Jz; Wed, 28 Feb 2024 07:13:18 -0500
+	id 1rfIvk-0002rT-JL; Wed, 28 Feb 2024 07:21:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hrak1529@gmail.com>)
- id 1rfF1Z-0000ce-VB
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 03:10:46 -0500
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hrak1529@gmail.com>)
- id 1rfF1Q-0001Ey-FU
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 03:10:44 -0500
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-29ae4c7da02so1117083a91.2
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 00:10:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709107833; x=1709712633; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=bsaU8JD9jxD/cGGe3poa35jZsZ40xIaHJJ2cPGHgjLE=;
- b=kEFOemvIZyVsM+GMEwMWEXt17Jlrb7BGA6T+Ynl64bpUrpnJkgtlj3bD2WMFTBw5et
- DJ3tm9Vh59MlseTXQmuzez5ph6j3JCGA5HlLSDGHKcFQsMOXS2XblK3+i01kIPQD2Olv
- Pw90xFIT5Bxn9S0mInppBlhu+cO0ck94kpSzgG0Zuh0A3q8rFmGdEfjnoNFlrDlH/SlN
- 3MYeKos9UB7Vzab1WApY6Oh6JJ3t9XdeugBpWM3VHrnuf4ZwM3SQ7p0ylykRGqpO/yqI
- DdzijLgEi4kOSJiS2WvuANcRGS+z1GnYUVRa3Fewzo8XkV9G44mL0IOEJwIjukyHtsFv
- LK6g==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rfIvj-0002r6-2Y
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 07:20:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rfIvh-0003G3-Dd
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 07:20:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709122856;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=RdqPNhH1TnLEU64MPLqdasWP5r888PJhqms85ItiB9A=;
+ b=TynfnKAxVbvXoRGHLEryFvEGZQzatEJfBafo+ALmyO83IgRV+SuGUOljm2F2YeSR5itB+N
+ 0fLKyI2EORd6dotj4JMoas3+MxLoEFFUaS7N+oXJUUxO3TN5CQ2CnC5HyWhlUEVjcYbs9e
+ en3cvDlnOq9WigtpDQ9M0VGSpkj9gMg=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-530-xL53c30ZPTmilBSMj4v3hw-1; Wed, 28 Feb 2024 07:20:55 -0500
+X-MC-Unique: xL53c30ZPTmilBSMj4v3hw-1
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-512e58cf80eso3870282e87.3
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 04:20:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709107833; x=1709712633;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bsaU8JD9jxD/cGGe3poa35jZsZ40xIaHJJ2cPGHgjLE=;
- b=jrTE2A/1hcySK9KZPf7Syu5cQL1FFucE/NRS4LmXeG2apBXnaOhCHrwxzSoR79TEGg
- W4S5HhuYxJIZYsWfBwVd7IdRMSJvrInzDAkHJkvO+mLhf5uOTdrwJAntrONq9KvRIRPt
- q5eoV3y2FCU4UJOn31s5S2e9z5//ofCZpnmSiBMaDNzlvEo8RSHJDmowBo6AR1DXftEq
- GoZrLyUs18+szIbTGeJ2DIw2MwnndBEvQPXPk5rd4R/mUpZEGGi40OZuwnwTdnLxTlRR
- 51gOfgCfJrTCZxQhHlhKdWhTPQCSLlOsK8i405Yv+yKdJVXJG4LytXNPEOf3nXhKEuhf
- civg==
-X-Gm-Message-State: AOJu0YynkqArkIk2HTtJVnsWyjRfJnyOlekIjcfhY8MShU77VcA1DAaC
- 5Zg2g351HzfsSLEctJDO2Hl79R7xop41lgwAhJk+H71nyiHSreDUbISzAezq
-X-Google-Smtp-Source: AGHT+IFF9Fir0UebcEWIHYKiQPGHnCtK4ZOIGuVfhH5LT4Raym+EhKOiGL5zvSekbPUSWuT6h071Wg==
-X-Received: by 2002:a17:90b:4f84:b0:29a:f9ad:a096 with SMTP id
- qe4-20020a17090b4f8400b0029af9ada096mr200830pjb.35.1709107832623; 
- Wed, 28 Feb 2024 00:10:32 -0800 (PST)
-Received: from tpp14s.i.sslab.ics.keio.ac.jp (sslab-relay.ics.keio.ac.jp.
- [131.113.126.173]) by smtp.gmail.com with ESMTPSA id
- pq1-20020a17090b3d8100b0029a9eebf941sm918345pjb.11.2024.02.28.00.10.31
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Feb 2024 00:10:32 -0800 (PST)
-From: Hiroaki Yamamoto <hrak1529@gmail.com>
-To: qemu-devel@nongnu.org
-Subject: [PATCH] target/riscv: Fix privilege mode of G-stage translation for
- debugging
-Date: Wed, 28 Feb 2024 17:10:28 +0900
-Message-ID: <20240228081028.35081-1-hrak1529@gmail.com>
-X-Mailer: git-send-email 2.43.2
+ d=1e100.net; s=20230601; t=1709122853; x=1709727653;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=RdqPNhH1TnLEU64MPLqdasWP5r888PJhqms85ItiB9A=;
+ b=pZf3BR8+g5KKXPsMdS+DVhKkFoqeBtWyWghnQbHx9Cw9tW3pDQRqcSTGdxBeUiZCHD
+ HUbMws2uUQsmEWAHy0KhNZYHNPl/CogkIAs2+Pnu18A2e3m3WiVWME66LXS+2mudTAB6
+ EPKcDjpDMKnLirttU6caoDAqG0+6HCB9cKlG/hvQAxC5u+XWWQKNkVAOjo1k8g2mCPa2
+ W6F/+BDk88O9hM94+6WWTsPWoCu+Z76KuBsyLF8WNJgJ3vxZJHv7b+vaCbA2DtunuX9A
+ 1ZPafmiQZEijK40VFYaUznBhQciZEV0jsORcsqxfZszU4hUTGuFtFazKPWUUK8P2snbO
+ ZNqQ==
+X-Gm-Message-State: AOJu0Ywh69sLN7cQ7gzFJyO+0ke8A/1rD2E6S0g0eDgFMpF1SewdTR/m
+ 540PgvRz41m8p24mEjdOl9Lbl6gQAdqRFYBrg5Urcjs5R1b92RxIlED6WgkIrnK4ADK4XLrcPdh
+ VHYI/KXSSKRiV/dXD862R7ffOFMFTeZRKD/S1WKtOproMRG3se/Hox/5jdAzilw7LNlbmzWj0f+
+ HTgblR1Wrpdr8ocQm/tLKlqfkn0oD3idpVNRI=
+X-Received: by 2002:ac2:4833:0:b0:512:ccd2:5cb0 with SMTP id
+ 19-20020ac24833000000b00512ccd25cb0mr8205043lft.29.1709122852875; 
+ Wed, 28 Feb 2024 04:20:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFv3qqOmGrKGarQcd08RU8p9NAAZVUSKjdh1LsP3LjxKrtCqKZTJG4Dmxmv+oJqVitvKKYTsrmAHlC2Dbizq+o=
+X-Received: by 2002:ac2:4833:0:b0:512:ccd2:5cb0 with SMTP id
+ 19-20020ac24833000000b00512ccd25cb0mr8205030lft.29.1709122852496; Wed, 28 Feb
+ 2024 04:20:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=hrak1529@gmail.com; helo=mail-pj1-x1032.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20240228110641.287205-1-pbonzini@redhat.com>
+ <1f179ee4-cab6-49c8-a625-2ac9dbe4e3d2@linaro.org>
+In-Reply-To: <1f179ee4-cab6-49c8-a625-2ac9dbe4e3d2@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 28 Feb 2024 13:20:40 +0100
+Message-ID: <CABgObfaZPp_wAE4u70+_ShmtFpEf69RjyRyqZEQ8TjDkue_Q-g@mail.gmail.com>
+Subject: Re: [PATCH] tcg/optimize: fix uninitialized variable
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 28 Feb 2024 07:12:21 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,29 +98,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-G-stage translation should be considered to be user-level access in riscv_cpu_get_phys_page_debug(), as already done in riscv_cpu_tlb_fill().
+On Wed, Feb 28, 2024 at 12:19=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> On 28/2/24 12:06, Paolo Bonzini wrote:
+> > The variables uext_opc and sext_opc are used without initialization if
+> > TCG_TARGET_extract_i{32,64}_valid returns false.  The result, depending
+> > on the compiler, might be the generation of extract and sextract opcode=
+s
+>
+> Shouldn't compilers bark?
 
-This fixes a bug that prevents gdb from reading memory while the VM is running in VS-mode.
+I expected that too...
 
-Signed-off-by: Hiroaki Yamamoto <hrak1529@gmail.com>
----
- target/riscv/cpu_helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Paolo
 
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index d462d95ee1..6e13069da7 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1212,7 +1212,7 @@ hwaddr riscv_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
- 
-     if (env->virt_enabled) {
-         if (get_physical_address(env, &phys_addr, &prot, phys_addr, NULL,
--                                 0, mmu_idx, false, true, true)) {
-+                                 0, MMUIdx_U, false, true, true)) {
-             return -1;
-         }
-     }
--- 
-2.43.2
+> > with invalid offset and count, or just random data in the TCG opcode
+> > stream.
+> >
+> > Fixes: ceb9ee06b71 ("tcg/optimize: Handle TCG_COND_TST{EQ,NE}", 2024-02=
+-03)
+> > Cc: Richard Henderson <pbonzini@redhat.com>
+> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> > ---
+> >   tcg/optimize.c | 3 ++-
+> >   1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>
 
 
