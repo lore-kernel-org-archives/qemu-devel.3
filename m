@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DA1FC54E41
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 08:08:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D89B7C54E41
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 08:08:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfEyJ-0001VY-9O; Wed, 28 Feb 2024 03:07:23 -0500
+	id 1rfEyL-0001XA-TS; Wed, 28 Feb 2024 03:07:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rfEyH-0001V0-SJ
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 03:07:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1rfEyK-0001Vy-5X
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 03:07:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rfEy8-0000Ug-1X
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 03:07:21 -0500
+ id 1rfEyD-0000WP-1m
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 03:07:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709107630;
+ s=mimecast20190719; t=1709107636;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=s1yTfF9AGvoZg3IPbtvgG6CiruJp7O4UqyUWNdatiPc=;
- b=PTQgNSVXfEnUhffUNxTpO2EPWk6XQic4Bt2W+f9jf5cTgzkc2Go8C2z/5j4FebdaicxEoc
- C8KywFBn1gFx1Hu+ENlzbRmq+Jd1HqRY7rDdFxly2H8PNpbdI1RGjG6YZNX4BTdRVvZ/MI
- cCkGG2e/TZWi8+016hTW6tnXcndgS9A=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=S/Q8c4npc2nOjD6fpmMrOfyZKvHziSh6p17Z9qCoc8w=;
+ b=dkA70K6qNasVukJSS8wi3tCOkyqlVs+SEiH1yRSPmCGmWcE69KzeeoKZjuqKIK/JwLhSkP
+ hqZGi8v3zstLZEeTktvzQFtb6hixKSmlKg3dxRefb2z+S4WW+fGyT3RJTg5md+p9vHF1s5
+ Bj5qnafC01DEgQZbHWdV28UIzXUS9nc=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-378-aD5WQxfwMl64t6Ifk6vqww-1; Wed, 28 Feb 2024 03:07:09 -0500
-X-MC-Unique: aD5WQxfwMl64t6Ifk6vqww-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-56588555f0bso2381467a12.0
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 00:07:09 -0800 (PST)
+ us-mta-137-rM7LAW0pOeaWZ60iRJWbWw-1; Wed, 28 Feb 2024 03:07:14 -0500
+X-MC-Unique: rM7LAW0pOeaWZ60iRJWbWw-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-56451e5801dso2476837a12.3
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 00:07:14 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709107627; x=1709712427;
+ d=1e100.net; s=20230601; t=1709107633; x=1709712433;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=s1yTfF9AGvoZg3IPbtvgG6CiruJp7O4UqyUWNdatiPc=;
- b=RxgcxTfe8VtYDEVBcOk9W15FYctybXLs1Uh0LrQSNFPk7b0yoqSYigO6D3GTXIPW5l
- jvlF0TFDu4cAcHj35fULYvE2OMzLSuE7G0PWiWNbdyj7PQ0cKOpPPy3fMj9o8y6gzs3C
- Q4zjAzY+W7oSU3ol97KVywuYDX/+dMNTWAIlumTQpJIuE1ljJY9kntLEMaQQDwv4PIK2
- UB1o59mMH6kUieuSnI9qtEtwlGiiu52Q7NDH+LPGPY0k7gy0PGlNMOK9mBN2eKcqGjDG
- bW8KFR/jOL0/nEhDJIEZTonTxanl521PLLkAqpYvCizPx1YnKZ92UQRNe/zES7713RYz
- zluw==
-X-Gm-Message-State: AOJu0YxeNYXO8cnekLEcKMRws3sX3bRNi9+oKOCxMUwB5izXMSq8r54W
- 2hrtWc48VJh+EJJEc+0WIfkmMegy4Bu3RhcVdl+6qG9CsMVOaOlruHNPQnVmday1hzwR2o4F5kE
- nQ3xwdKwsqDNi6w7M+gB8rVw+hoq5If3gO8LTug036iqeSWTqJ1iIu+E68P7SJpI9rV30YQK+8O
- 0tn+VgQG/KfeOCSMeR7kRWLxhTLrYllmCsMQMz
-X-Received: by 2002:aa7:d512:0:b0:566:3f3e:3a23 with SMTP id
- y18-20020aa7d512000000b005663f3e3a23mr2669150edq.1.1709107627738; 
- Wed, 28 Feb 2024 00:07:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEU8vtr1k3uZioNqXPSfBOX5lv+ZTqbemj61B0odAq3Ro9tEzJOwU8X4frSry+4MkFO4l4MJg==
-X-Received: by 2002:aa7:d512:0:b0:566:3f3e:3a23 with SMTP id
- y18-20020aa7d512000000b005663f3e3a23mr2669133edq.1.1709107627360; 
- Wed, 28 Feb 2024 00:07:07 -0800 (PST)
+ bh=S/Q8c4npc2nOjD6fpmMrOfyZKvHziSh6p17Z9qCoc8w=;
+ b=UwKUi75KLgxlww0lfbv24cjGZCk4IUnTRnlf0pgrU9f5AmmZNFQbrQY2tjUDeesbtg
+ IabZprUzsAMtc4jrKVNGMiUhU1OFeO6Oz0S6BEqzpnSfUYsIlnMkSN16UZQdUMSNICUE
+ 22T1FYiNmiIrzxRDtqZ+tERWZtl3OnIAXYPDV047gLG7vSEE9dc0QuMSON1RyYKvBQ42
+ 6MNKMSOtKwi8HsFQQuey7zzX6SbRKQMs8fSFF3GHvcd1yj0fU0UJg1/vVP8XGB1JsHeH
+ jmo47AST54Ex0BL4y9EOxuIhPPnx8U1Mm9gt2xJIu7xzXrTWl7BdWJaE6pDX6nH72ijP
+ nEhA==
+X-Gm-Message-State: AOJu0YzGODCwmNXeAwkkH0XCJGfDRrDhwOOrVHwaE2BrG7AIMIPpFkfa
+ 3Xv8VZstkqVV6Iv9MuJ3oGDB1ZnI5P60MkiYWa/BdS+vZ64T2vckSgKKZYG36L0uXLT2c9O2GpZ
+ VsqyTXRvVRX/HAGzGxTHcK5kSF8MyHNvSRLBNyRsSeqZR/0ziFRiV29vG6EKQ0H6AehjZpgI8gT
+ nCSHbMEkKVU5wAL6YdsMs7beKy7zn+J3JSgKFz
+X-Received: by 2002:a05:6402:713:b0:566:348:fc4a with SMTP id
+ w19-20020a056402071300b005660348fc4amr5072180edx.32.1709107632783; 
+ Wed, 28 Feb 2024 00:07:12 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFtNxyecOQn8+QzP+khnduSvVcUXo8KLTi58N0a+Vuyd9EhjCEbYWQr4OdOMY/4U8rKUyR54Q==
+X-Received: by 2002:a05:6402:713:b0:566:348:fc4a with SMTP id
+ w19-20020a056402071300b005660348fc4amr5072160edx.32.1709107632447; 
+ Wed, 28 Feb 2024 00:07:12 -0800 (PST)
 Received: from [192.168.10.118] ([93.56.170.180])
  by smtp.gmail.com with ESMTPSA id
- ec31-20020a0564020d5f00b0056650cd0156sm860084edb.66.2024.02.28.00.07.04
+ s21-20020aa7cb15000000b005645961ad39sm1535566edt.47.2024.02.28.00.07.10
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Feb 2024 00:07:05 -0800 (PST)
+ Wed, 28 Feb 2024 00:07:10 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-Subject: [PULL 03/10] target/i386: check validity of VMCB addresses
-Date: Wed, 28 Feb 2024 09:06:39 +0100
-Message-ID: <20240228080646.261365-4-pbonzini@redhat.com>
+Subject: [PULL 05/10] target/i386: use separate MMU indexes for 32-bit accesses
+Date: Wed, 28 Feb 2024 09:06:41 +0100
+Message-ID: <20240228080646.261365-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240228080646.261365-1-pbonzini@redhat.com>
 References: <20240228080646.261365-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,105 +102,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MSR_VM_HSAVE_PA bits 0-11 are reserved, as are the bits above the
-maximum physical address width of the processor.  Setting them to
-1 causes a #GP (see "15.30.4 VM_HSAVE_PA MSR" in the AMD manual).
+Accesses from a 32-bit environment (32-bit code segment for instruction
+accesses, EFER.LMA==0 for processor accesses) have to mask away the
+upper 32 bits of the address.  While a bit wasteful, the easiest way
+to do so is to use separate MMU indexes.  These days, QEMU anyway is
+compiled with a fixed value for NB_MMU_MODES.  Split MMU_USER_IDX,
+MMU_KSMAP_IDX and MMU_KNOSMAP_IDX in two.
 
-The same is true of VMCB addresses passed to VMRUN/VMLOAD/VMSAVE,
-even though the manual is not clear on that.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 4a1e9d4d11c ("target/i386: Use atomic operations for pte updates", 2022-10-18)
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/sysemu/misc_helper.c |  3 +++
- target/i386/tcg/sysemu/svm_helper.c  | 27 +++++++++++++++++++++------
- 2 files changed, 24 insertions(+), 6 deletions(-)
+ target/i386/cpu.h                    | 34 ++++++++++++++++++++--------
+ target/i386/cpu.c                    | 11 +++++----
+ target/i386/tcg/sysemu/excp_helper.c |  3 ++-
+ 3 files changed, 33 insertions(+), 15 deletions(-)
 
-diff --git a/target/i386/tcg/sysemu/misc_helper.c b/target/i386/tcg/sysemu/misc_helper.c
-index 7de0a6e866d..edb7c3d8940 100644
---- a/target/i386/tcg/sysemu/misc_helper.c
-+++ b/target/i386/tcg/sysemu/misc_helper.c
-@@ -212,6 +212,9 @@ void helper_wrmsr(CPUX86State *env)
-         tlb_flush(cs);
-         break;
-     case MSR_VM_HSAVE_PA:
-+        if (val & (0xfff | ((~0ULL) << env_archcpu(env)->phys_bits))) {
-+            goto error;
-+        }
-         env->vm_hsave = val;
-         break;
- #ifdef TARGET_X86_64
-diff --git a/target/i386/tcg/sysemu/svm_helper.c b/target/i386/tcg/sysemu/svm_helper.c
-index 32ff0dbb13c..5d6de2294fa 100644
---- a/target/i386/tcg/sysemu/svm_helper.c
-+++ b/target/i386/tcg/sysemu/svm_helper.c
-@@ -164,14 +164,19 @@ void helper_vmrun(CPUX86State *env, int aflag, int next_eip_addend)
-     uint64_t new_cr3;
-     uint64_t new_cr4;
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 8c271ca62e5..ee4ad372021 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2299,27 +2299,41 @@ uint64_t cpu_get_tsc(CPUX86State *env);
+ #define cpu_list x86_cpu_list
  
--    cpu_svm_check_intercept_param(env, SVM_EXIT_VMRUN, 0, GETPC());
--
-     if (aflag == 2) {
-         addr = env->regs[R_EAX];
-     } else {
-         addr = (uint32_t)env->regs[R_EAX];
-     }
- 
-+    /* Exceptions are checked before the intercept.  */
-+    if (addr & (0xfff | ((~0ULL) << env_archcpu(env)->phys_bits))) {
-+        raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
-+    }
+ /* MMU modes definitions */
+-#define MMU_KSMAP_IDX   0
+-#define MMU_USER_IDX    1
+-#define MMU_KNOSMAP_IDX 2
+-#define MMU_NESTED_IDX  3
+-#define MMU_PHYS_IDX    4
++#define MMU_KSMAP64_IDX    0
++#define MMU_KSMAP32_IDX    1
++#define MMU_USER64_IDX     2
++#define MMU_USER32_IDX     3
++#define MMU_KNOSMAP64_IDX  4
++#define MMU_KNOSMAP32_IDX  5
++#define MMU_PHYS_IDX       6
++#define MMU_NESTED_IDX     7
 +
-+    cpu_svm_check_intercept_param(env, SVM_EXIT_VMRUN, 0, GETPC());
-+
-     qemu_log_mask(CPU_LOG_TB_IN_ASM, "vmrun! " TARGET_FMT_lx "\n", addr);
++#ifdef CONFIG_USER_ONLY
++#ifdef TARGET_X86_64
++#define MMU_USER_IDX MMU_USER64_IDX
++#else
++#define MMU_USER_IDX MMU_USER32_IDX
++#endif
++#endif
  
-     env->vm_vmcb = addr;
-@@ -463,14 +468,19 @@ void helper_vmload(CPUX86State *env, int aflag)
-     int mmu_idx = MMU_PHYS_IDX;
-     target_ulong addr;
+ static inline bool is_mmu_index_smap(int mmu_index)
+ {
+-    return mmu_index == MMU_KSMAP_IDX;
++    return (mmu_index & ~1) == MMU_KSMAP64_IDX;
+ }
  
--    cpu_svm_check_intercept_param(env, SVM_EXIT_VMLOAD, 0, GETPC());
--
-     if (aflag == 2) {
-         addr = env->regs[R_EAX];
-     } else {
-         addr = (uint32_t)env->regs[R_EAX];
-     }
+ static inline bool is_mmu_index_user(int mmu_index)
+ {
+-    return mmu_index == MMU_USER_IDX;
++    return (mmu_index & ~1) == MMU_USER64_IDX;
+ }
  
-+    /* Exceptions are checked before the intercept.  */
-+    if (addr & (0xfff | ((~0ULL) << env_archcpu(env)->phys_bits))) {
-+        raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
-+    }
+ static inline int cpu_mmu_index_kernel(CPUX86State *env)
+ {
+-    return !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP_IDX :
+-        ((env->hflags & HF_CPL_MASK) < 3 && (env->eflags & AC_MASK))
+-        ? MMU_KNOSMAP_IDX : MMU_KSMAP_IDX;
++    int mmu_index_32 = (env->hflags & HF_LMA_MASK) ? 1 : 0;
++    int mmu_index_base =
++        !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP64_IDX :
++        ((env->hflags & HF_CPL_MASK) < 3 && (env->eflags & AC_MASK)) ? MMU_KNOSMAP64_IDX : MMU_KSMAP64_IDX;
 +
-+    cpu_svm_check_intercept_param(env, SVM_EXIT_VMLOAD, 0, GETPC());
-+
-     if (virtual_vm_load_save_enabled(env, SVM_EXIT_VMLOAD, GETPC())) {
-         mmu_idx = MMU_NESTED_IDX;
-     }
-@@ -519,14 +529,19 @@ void helper_vmsave(CPUX86State *env, int aflag)
-     int mmu_idx = MMU_PHYS_IDX;
-     target_ulong addr;
++    return mmu_index_base + mmu_index_32;
+ }
  
--    cpu_svm_check_intercept_param(env, SVM_EXIT_VMSAVE, 0, GETPC());
--
-     if (aflag == 2) {
-         addr = env->regs[R_EAX];
-     } else {
-         addr = (uint32_t)env->regs[R_EAX];
-     }
+ #define CC_DST  (env->cc_dst)
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 7f908236767..647371198c7 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -7732,13 +7732,16 @@ static bool x86_cpu_has_work(CPUState *cs)
+     return x86_cpu_pending_interrupt(cs, cs->interrupt_request) != 0;
+ }
  
-+    /* Exceptions are checked before the intercept.  */
-+    if (addr & (0xfff | ((~0ULL) << env_archcpu(env)->phys_bits))) {
-+        raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
-+    }
-+
-+    cpu_svm_check_intercept_param(env, SVM_EXIT_VMSAVE, 0, GETPC());
-+
-     if (virtual_vm_load_save_enabled(env, SVM_EXIT_VMSAVE, GETPC())) {
-         mmu_idx = MMU_NESTED_IDX;
-     }
+-static int x86_cpu_mmu_index(CPUState *cs, bool ifetch)
++static int x86_cpu_mmu_index(CPUState *env, bool ifetch)
+ {
+     CPUX86State *env = cpu_env(cs);
++    int mmu_index_32 = (env->hflags & HF_CS64_MASK) ? 1 : 0;
++    int mmu_index_base =
++        (env->hflags & HF_CPL_MASK) == 3 ? MMU_USER64_IDX :
++        !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP64_IDX :
++        (env->eflags & AC_MASK) ? MMU_KNOSMAP64_IDX : MMU_KSMAP64_IDX;
+ 
+-    return (env->hflags & HF_CPL_MASK) == 3 ? MMU_USER_IDX :
+-        (!(env->hflags & HF_SMAP_MASK) || (env->eflags & AC_MASK))
+-        ? MMU_KNOSMAP_IDX : MMU_KSMAP_IDX;
++    return mmu_index_base + mmu_index_32;
+ }
+ 
+ static void x86_disas_set_info(CPUState *cs, disassemble_info *info)
+diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
+index a0d5ce39300..b2c525e1a92 100644
+--- a/target/i386/tcg/sysemu/excp_helper.c
++++ b/target/i386/tcg/sysemu/excp_helper.c
+@@ -545,7 +545,8 @@ static bool get_physical_address(CPUX86State *env, vaddr addr,
+         if (likely(use_stage2)) {
+             in.cr3 = env->nested_cr3;
+             in.pg_mode = env->nested_pg_mode;
+-            in.mmu_idx = MMU_USER_IDX;
++            in.mmu_idx =
++                env->nested_pg_mode & PG_MODE_LMA ? MMU_USER64_IDX : MMU_USER32_IDX;
+             in.ptw_idx = MMU_PHYS_IDX;
+ 
+             if (!mmu_translate(env, &in, out, err)) {
 -- 
 2.43.2
 
