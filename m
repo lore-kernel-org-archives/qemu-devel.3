@@ -4,78 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4581C47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 17:12:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39491C5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 17:13:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfNST-00016b-08; Wed, 28 Feb 2024 12:11:05 -0500
+	id 1rfNU2-0001rF-63; Wed, 28 Feb 2024 12:12:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rfNSR-00013s-7k
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 12:11:03 -0500
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rfNSO-00024Y-M5
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 12:11:02 -0500
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-5131f3fc695so481714e87.1
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 09:11:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709140259; x=1709745059; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lH0XgKtLoDdjDUuAYVHTFnAR2gtUqskjk3f+6UbeqU8=;
- b=GXGURHopuonvpB30FfuGUDfgEMEsumLX4d3CI/DBNo+eY80F/yWNfHDBQCe9ztOiTH
- 03CyYBzv89fWVpS8HnjBh9vRvhmH0JTdJ+DwhZuYm8lvSDP9g4hrh1omzvqM0XsZxx2+
- BMEOuzbiXDW/LM2fOtUU5kbdcq2RoXbWiwPBbTBeXe/NMrx4baUXFUx+gkQrqbn2cClz
- eZIu0S3VJlC8prQqO0l7kICzso2qHpUEnzA7+bws8w7MGWQot7VuWMHDvgaJlUyjLJZ+
- x0QU/IuGSitVqr62rYu9kEy67AkG22aDJcpzJ8gInrIIY83RxOiXfDQfKEVinqzEfqn7
- 3BCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709140259; x=1709745059;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lH0XgKtLoDdjDUuAYVHTFnAR2gtUqskjk3f+6UbeqU8=;
- b=PfUnYfCtcvroLd+jHBPIeX93DWuyGRYvV/MlfbEs3WSIuk4CrEeGXstELLCs5j8bW4
- fytXbUzTF7jgTZAmm2wLo5cTOOLl/SfZYxedTr1gS3rqckSbWwffyfFRrswdq6okPvm6
- 6wK3esDUdOq7Bc0Qzk4ZLLo+48r41YCKqV5NrLa4tL7kH8TdueWSzhrdseeVYb8v2miQ
- P5UR2twa2nn+p8jVEPLTayh3ucR69wrVqisT7sf+FQwI+sKAWGen3ZgB8YGYNilJWAg6
- TzYjBk0E13jSSe4juHtyMgchtz8uhOsM5O7Aaa20B1Kc+4ank6fJVEQI7qoGvvWka7kp
- wY3Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVuRshpfc6oPcL6p7iMiSX4h/DVB6TOLvpAkpsmrKxyahUMefqcKl8aOXNoX9jCI+EBRjwFW8pKjuTJmISGZxMEg8nDIUY=
-X-Gm-Message-State: AOJu0Yz4l3tAAsQLggl8iLOiWw6YWNYOPojArbZMFCeBhjUq6d29QxT1
- l8eHlWSaZjMAHXEM7+uoDfJ3inv2scvA0w5c4Z4gsoUw4tJ6uqYqsx7I3VR/9A051Gx2jBib7Ak
- WyV8=
-X-Google-Smtp-Source: AGHT+IFgwMehDdoXwEtKWiRuG0gweswiwO3hxYrbRP9OZQmEhXVWX1TxR1cXMByiMc4t/1Fspcc+dA==
-X-Received: by 2002:a19:ad48:0:b0:513:2027:27db with SMTP id
- s8-20020a19ad48000000b00513202727dbmr194882lfd.17.1709140258867; 
- Wed, 28 Feb 2024 09:10:58 -0800 (PST)
-Received: from [192.168.61.175] ([92.88.171.132])
- by smtp.gmail.com with ESMTPSA id
- fa7-20020a05600c518700b00412b9e4af05sm40715wmb.0.2024.02.28.09.10.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Feb 2024 09:10:58 -0800 (PST)
-Message-ID: <e44d140a-d5b2-4bbb-a344-f964981734f3@linaro.org>
-Date: Wed, 28 Feb 2024 18:10:56 +0100
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rfNTs-0001pX-RY
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 12:12:34 -0500
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rfNTn-0002B4-H3
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 12:12:32 -0500
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c2a:3dc:0:640:1e66:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 9FABE60BA2;
+ Wed, 28 Feb 2024 20:12:19 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:a519::1:3a] (unknown
+ [2a02:6b8:b081:a519::1:3a])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id ICdGwr1i08c0-bvvO5QSD; Wed, 28 Feb 2024 20:12:19 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1709140339;
+ bh=53ffgVKFnnlgdScA8X95YFpe40nr2SQKkVphESXwSRA=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=qLiPBY+T6YfhBaB4Jx1v2iOaRY7dCQls/y1GJe/OZNCoGihAbtFQFvGHixGKI5aR1
+ ip9mkMzJK8lsUIbf1ZWjwr55Dd+T05O7l1ZLXh/SRK52JCkC+aEJL3wbpMTynBDG8O
+ lPFe34LW2JtU+SeMnQrDs6xi3WVNbbosflY9o4mg=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <5fa5fe8a-fb2a-4b4f-8509-6cebae37a87f@yandex-team.ru>
+Date: Wed, 28 Feb 2024 20:12:18 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Update Sriram Yagnaraman mail address
+Subject: Re: [PATCH] system/qdev-monitor: move drain_call_rcu call under if
+ (!dev) in qmp_device_add()
 Content-Language: en-US
-To: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-References: <20240228080625.2412372-1-sriram.yagnaraman@ericsson.com>
- <3ac7d304-6bf4-49fa-b19e-74925409e736@linaro.org>
- <AS4PR07MB841212D830F253167DEBFFD890582@AS4PR07MB8412.eurprd07.prod.outlook.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <AS4PR07MB841212D830F253167DEBFFD890582@AS4PR07MB8412.eurprd07.prod.outlook.com>
+To: Dmitrii Gavrilov <ds-gavr@yandex-team.ru>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
+ mlevitsk@redhat.com, yc-core@yandex-team.ru
+References: <20231103105602.90475-1-ds-gavr@yandex-team.ru>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20231103105602.90475-1-ds-gavr@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x131.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -86,7 +68,6 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -98,53 +79,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/2/24 16:33, Sriram Yagnaraman wrote:
-> Hi Philippe,
-> 
->> -----Original Message-----
->> From: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Sent: Wednesday, 28 February 2024 16:25
->> To: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>; qemu-
->> devel@nongnu.org
->> Subject: Re: [PATCH] MAINTAINERS: Update Sriram Yagnaraman mail address
->>
->> Hi Sriram,
->>
->> On 28/2/24 09:06, Sriram Yagnaraman wrote:
->>> Due to company policies, I have changed my mail address. Updating
->>> MAINTAINERS and .mailmap to show my latest mail address.
->>>
->>> Signed-off-by: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
->>> ---
->>>    .mailmap    | 1 +
->>>    MAINTAINERS | 2 +-
->>>    2 files changed, 2 insertions(+), 1 deletion(-)
->>
->>
->>> diff --git a/MAINTAINERS b/MAINTAINERS index 65dfdc9677..0a3294f698
->>> 100644
->>> --- a/MAINTAINERS
->>> +++ b/MAINTAINERS
->>> @@ -2474,7 +2474,7 @@ F: tests/qtest/libqos/e1000e.*
->>>
->>>    igb
->>>    M: Akihiko Odaki <akihiko.odaki@daynix.com>
->>> -R: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
->>
->> Could you confirm this from your <sriram.yagnaraman@est.tech> address?
-> 
-> Unfortunately, I don't have access to that mail address anymore.
-> It was a chicken and egg situation for me, I was not allowed to be a reviewer with @ericsson.com when I still had @est.tech. :/
-> 
-> Is there any other way to prove I am the same person?
+ping.
 
-I suppose for a 'R:' tag this isn't an issue...
+Hi again!
 
+Paolo could you please take a look? Could we merge that? It still applies to master branch.
+
+On 03.11.23 13:56, Dmitrii Gavrilov wrote:
+> Original goal of addition of drain_call_rcu to qmp_device_add was to cover
+> the failure case of qdev_device_add. It seems call of drain_call_rcu was
+> misplaced in 7bed89958bfbf40df what led to waiting for pending RCU callbacks
+> under happy path too. What led to overall performance degradation of
+> qmp_device_add.
 > 
->>
->>> +R: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
->>>    S: Maintained
->>>    F: docs/system/devices/igb.rst
->>>    F: hw/net/igb*
+> In this patch call of drain_call_rcu moved under handling of failure of
+> qdev_device_add.
+> 
+> Signed-off-by: Dmitrii Gavrilov <ds-gavr@yandex-team.ru>
+> ---
+>   system/qdev-monitor.c | 23 +++++++++++------------
+>   1 file changed, 11 insertions(+), 12 deletions(-)
+> 
+> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+> index 1b8005a..dc7b02d 100644
+> --- a/system/qdev-monitor.c
+> +++ b/system/qdev-monitor.c
+> @@ -856,19 +856,18 @@ void qmp_device_add(QDict *qdict, QObject **ret_data, Error **errp)
+>           return;
+>       }
+>       dev = qdev_device_add(opts, errp);
+> -
+> -    /*
+> -     * Drain all pending RCU callbacks. This is done because
+> -     * some bus related operations can delay a device removal
+> -     * (in this case this can happen if device is added and then
+> -     * removed due to a configuration error)
+> -     * to a RCU callback, but user might expect that this interface
+> -     * will finish its job completely once qmp command returns result
+> -     * to the user
+> -     */
+> -    drain_call_rcu();
+> -
+>       if (!dev) {
+> +        /*
+> +         * Drain all pending RCU callbacks. This is done because
+> +         * some bus related operations can delay a device removal
+> +         * (in this case this can happen if device is added and then
+> +         * removed due to a configuration error)
+> +         * to a RCU callback, but user might expect that this interface
+> +         * will finish its job completely once qmp command returns result
+> +         * to the user
+> +         */
+> +        drain_call_rcu();
+> +
+>           qemu_opts_del(opts);
+>           return;
+>       }
+
+-- 
+Best regards,
+Vladimir
 
 
