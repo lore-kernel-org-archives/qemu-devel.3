@@ -4,78 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C82F4C54E49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BC70C47DD9
 	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 11:59:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfIYh-0005hS-TJ; Wed, 28 Feb 2024 06:57:11 -0500
+	id 1rfIYm-0005qh-40; Wed, 28 Feb 2024 06:57:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rfIYf-0005es-Ip
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:57:09 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1rfIYk-0005mz-8T
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:57:14 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rfIYb-0005hg-MQ
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:57:09 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-412b434effaso3737105e9.2
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 03:57:04 -0800 (PST)
+ id 1rfIYf-0005jA-IT
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:57:13 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-33d6f26ff33so3694635f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 03:57:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709121423; x=1709726223; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709121428; x=1709726228; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BHV/xSviQ+mksdG51pmI4mQIX2turcSeLOZCoK5M7sg=;
- b=l9S9IMzDxy9+OL3L2W3b1aoEzV9VAVdh95fQotjqCEpPN5jwA1e7cMgJ+X7AkVq6c0
- IU3hQNS4HyHpssItGBRPsmh2M+lHVDHYRFKKPJi8KumDq15YzqIuwxdgaoc6VKBsOOlh
- 4edpedVAZMdKHT5vMQVKlP70B1CrxvmkXTRVIycKdKS0hlKKnmTrqXXccU3AwjoyMWba
- 08JqXhfgyK4OkhyXuprb4NUhmS7xUqMcCkQJnaHcN9cyTkFtPjiqxqMEHwIzmpTuZ1QL
- 0hR1mEeR0h4ixhi2Zo9OKPYoP3DUGD/CfscTtseS+uH9GR2g/Nox4Q0msx1Dw0wcuVp3
- H/Ow==
+ bh=8sM8dwb0jrcajUThrx/FFIuuSH/69cUsX7EmmYQ2YL8=;
+ b=zweQDmK7wn7iP7+LiUzHVEGNYKAfr8buBlXhtEOcnGWmeY31YqY6/ZApnz+FZ+zw1p
+ uh+eEoYW+IqCIj+cRkSCS+fDUakTH7FFiieAb9zqXd/vxIL9w87WSz5F2dP8mnPRJ9ty
+ j5SXiw9HzMe4A6h3RCSykLCa353Xh42KMlfN6K6AMGCRWy9cmTl+Evpj5sAN4bVII8kr
+ ZL4wtQd82aRnqbLoUDLI9+7DHyMn4zOI67ggLLsSOguAydxEQlPhXakG7+jmaMoPAavp
+ YapxIuqS9ti5DZtf5d6l2ojk25S9F9g5nCcZzLzC9mUblIgsHNB9yroaSCiev82/20o2
+ 2n4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709121423; x=1709726223;
+ d=1e100.net; s=20230601; t=1709121428; x=1709726228;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BHV/xSviQ+mksdG51pmI4mQIX2turcSeLOZCoK5M7sg=;
- b=QwsWXRZW5yt1GkMa5WMWYBxOdpvTzA+O376/ERU10O30bL+dhNV8ewKjvDKXkAk1Oq
- 2enEPC0AU62JisG8RE6lwQrqArv4WeJF9A9fh/cZvJdhr86zFustwwtFsMrId29ncIKM
- HSG6p7rfXThsDQXsYojT/NFlMEl/IhyirbaDJsqncTcg3a653uW5rqtUq4ELVup121zN
- yy7qLW8RMliq7Lmdr3u9v2oMcRjrcYcJgbeff1MDW6V2KfDfOHH60NYGo7q8lHLTlT+Z
- YAqUPWy4K0ZHSTKGJdnsWZTm70zPnBKBTdoPre414XAP9nl7IZKJEIkiQpLHNT3MRaIS
- Fh5Q==
-X-Gm-Message-State: AOJu0YwkVrhiAgVCD2gH5L4J/8uQtXSfojnAQGKCyBTjdTMXIr5aTcOe
- +7GlS4N7kV9ayqHQ/pPqfBMFTsOxk5O0/OqpIwJle8L4h+3TDw27MVq8CejXius=
-X-Google-Smtp-Source: AGHT+IH3KWBdhpampjnJ11TdGZH3IuZIrJPtwksjMveiXG0eEX0zFV7ifrNUq/WTdlz6c8n5bXgKTA==
-X-Received: by 2002:a5d:4fd2:0:b0:33c:dd02:f652 with SMTP id
- h18-20020a5d4fd2000000b0033cdd02f652mr9238497wrw.10.1709121423348; 
- Wed, 28 Feb 2024 03:57:03 -0800 (PST)
+ bh=8sM8dwb0jrcajUThrx/FFIuuSH/69cUsX7EmmYQ2YL8=;
+ b=hlRXCiN2MNRUqkqx46USiHgli6eEvFvYxMD4jqWo7/t40DeRRrB48jKUqTwHLNOit5
+ pIl2xjbY29YiXTFL21NuMDS1/rMqAYgIdd/Mnt25G8rsvN9xk/K2kNnbbgadgvOT82Mf
+ oIpEw5d0+4rAfgnz/ZCy4HMLymMoekXCGIrWBknSbuyPOeojVSGD2Tg0ZSZyQqXm7ZD2
+ 1OG7/XnPfq3DQPMloqjubpeSP/pUxJv3nvQw3I/elb4WkhRJuvvTUOVT9vqSVWSkdtgx
+ v7NlXLLo6x03DeS5phNAdNRciTdVTcHlLrVPLYcJZRBw7OqFgPXg8z/OBWkhmeBJjpAZ
+ KFIA==
+X-Gm-Message-State: AOJu0YxSo2crR7w9h0Cpsxug/Nslt6m/0IKhCc/f6f7uMF7NGdwKr7pd
+ CxDozXtQ6NzaH9jBXVR5uUB9kcNtcNStTWGbbg64KVIzQ3Ode4AT8ORYZsq3DJY=
+X-Google-Smtp-Source: AGHT+IGrEUZ5nndIiaIFQzeXocAi6l8pyxzpFe3XN1F9/g0CAic9lw4jgIk1en2QyJdjYuOhsWxxSQ==
+X-Received: by 2002:adf:e6c8:0:b0:33d:6334:e14 with SMTP id
+ y8-20020adfe6c8000000b0033d63340e14mr8413517wrm.11.1709121428107; 
+ Wed, 28 Feb 2024 03:57:08 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- f14-20020adff98e000000b0033cf60e268fsm14397650wrr.116.2024.02.28.03.57.02
+ f14-20020adff98e000000b0033cf60e268fsm14397679wrr.116.2024.02.28.03.57.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Feb 2024 03:57:02 -0800 (PST)
+ Wed, 28 Feb 2024 03:57:06 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1A0B25F8F7;
+ by draig.lan (Postfix) with ESMTP id 7010B5F900;
  Wed, 28 Feb 2024 11:57:02 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 02/29] tests/tcg: bump TCG test timeout to 120s
-Date: Wed, 28 Feb 2024 11:56:34 +0000
-Message-Id: <20240228115701.1416107-3-alex.bennee@linaro.org>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ qemu-ppc@nongnu.org (open list:PowerPC TCG CPUs)
+Subject: [PULL 06/29] target/ppc: Use GDBFeature for dynamic XML
+Date: Wed, 28 Feb 2024 11:56:38 +0000
+Message-Id: <20240228115701.1416107-7-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240228115701.1416107-1-alex.bennee@linaro.org>
 References: <20240228115701.1416107-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,33 +102,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is less than ideal but easier than making sure we get all the
-iterations of the memory test. Update the comment accordingly.
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+In preparation for a change to use GDBFeature as a parameter of
+gdb_register_coprocessor(), convert the internal representation of
+dynamic feature from plain XML to GDBFeature.
+
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20231213-gdb-v17-2-777047380591@daynix.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240227144335.1196131-3-alex.bennee@linaro.org>
+Message-Id: <20240227144335.1196131-7-alex.bennee@linaro.org>
 
-diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
-index 8cf65f68dd8..a4c25908fb7 100644
---- a/tests/tcg/Makefile.target
-+++ b/tests/tcg/Makefile.target
-@@ -93,12 +93,9 @@ QEMU_OPTS=
+diff --git a/target/ppc/cpu-qom.h b/target/ppc/cpu-qom.h
+index 0241609efef..8247fa23367 100644
+--- a/target/ppc/cpu-qom.h
++++ b/target/ppc/cpu-qom.h
+@@ -20,6 +20,7 @@
+ #ifndef QEMU_PPC_CPU_QOM_H
+ #define QEMU_PPC_CPU_QOM_H
  
++#include "exec/gdbstub.h"
+ #include "hw/core/cpu.h"
  
- # If TCG debugging, or TCI is enabled things are a lot slower
--# ??? Makefile no longer has any indication that TCI is enabled,
--# but for the record:
--#   15s    original default
--#   60s    with --enable-debug
--#   90s    with --enable-tcg-interpreter
--TIMEOUT=90
-+# so we have to set our timeout for that. The current worst case
-+# offender is the system memory test running under TCI.
-+TIMEOUT=120
+ #ifdef TARGET_PPC64
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index ec14574d142..c66989a5e60 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -1492,8 +1492,7 @@ struct PowerPCCPUClass {
+     int bfd_mach;
+     uint32_t l1_dcache_size, l1_icache_size;
+ #ifndef CONFIG_USER_ONLY
+-    unsigned int gdb_num_sprs;
+-    const char *gdb_spr_xml;
++    GDBFeature gdb_spr;
+ #endif
+     const PPCHash64Options *hash64_opts;
+     struct ppc_radix_page_info *radix_page_info;
+@@ -1546,7 +1545,6 @@ int ppc_cpu_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg);
+ int ppc_cpu_gdb_write_register_apple(CPUState *cpu, uint8_t *buf, int reg);
+ #ifndef CONFIG_USER_ONLY
+ hwaddr ppc_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
+-void ppc_gdb_gen_spr_xml(PowerPCCPU *cpu);
+ const char *ppc_gdb_get_dynamic_xml(CPUState *cs, const char *xml_name);
+ #endif
+ int ppc64_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 9bccddb350c..5f0ecf443d8 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -6682,10 +6682,6 @@ static void init_ppc_proc(PowerPCCPU *cpu)
+     /* PowerPC implementation specific initialisations (SPRs, timers, ...) */
+     (*pcc->init_proc)(env);
  
- ifeq ($(filter %-softmmu, $(TARGET)),)
- # The order we include is important. We include multiarch first and
+-#if !defined(CONFIG_USER_ONLY)
+-    ppc_gdb_gen_spr_xml(cpu);
+-#endif
+-
+     /* MSR bits & flags consistency checks */
+     if (env->msr_mask & (1 << 25)) {
+         switch (env->flags & (POWERPC_FLAG_SPE | POWERPC_FLAG_VRE)) {
+diff --git a/target/ppc/gdbstub.c b/target/ppc/gdbstub.c
+index dfe31d0f47f..c4c55961083 100644
+--- a/target/ppc/gdbstub.c
++++ b/target/ppc/gdbstub.c
+@@ -300,15 +300,23 @@ int ppc_cpu_gdb_write_register_apple(CPUState *cs, uint8_t *mem_buf, int n)
+ }
+ 
+ #ifndef CONFIG_USER_ONLY
+-void ppc_gdb_gen_spr_xml(PowerPCCPU *cpu)
++static void gdb_gen_spr_feature(CPUState *cs)
+ {
+-    PowerPCCPUClass *pcc = POWERPC_CPU_GET_CLASS(cpu);
++    PowerPCCPUClass *pcc = POWERPC_CPU_GET_CLASS(cs);
++    PowerPCCPU *cpu = POWERPC_CPU(cs);
+     CPUPPCState *env = &cpu->env;
+-    GString *xml;
+-    char *spr_name;
++    GDBFeatureBuilder builder;
+     unsigned int num_regs = 0;
+     int i;
+ 
++    if (pcc->gdb_spr.xml) {
++        return;
++    }
++
++    gdb_feature_builder_init(&builder, &pcc->gdb_spr,
++                             "org.qemu.power.spr", "power-spr.xml",
++                             cs->gdb_num_regs);
++
+     for (i = 0; i < ARRAY_SIZE(env->spr_cb); i++) {
+         ppc_spr_t *spr = &env->spr_cb[i];
+ 
+@@ -326,35 +334,13 @@ void ppc_gdb_gen_spr_xml(PowerPCCPU *cpu)
+          */
+         spr->gdb_id = num_regs;
+         num_regs++;
+-    }
+-
+-    if (pcc->gdb_spr_xml) {
+-        return;
+-    }
+ 
+-    xml = g_string_new("<?xml version=\"1.0\"?>");
+-    g_string_append(xml, "<!DOCTYPE target SYSTEM \"gdb-target.dtd\">");
+-    g_string_append(xml, "<feature name=\"org.qemu.power.spr\">");
+-
+-    for (i = 0; i < ARRAY_SIZE(env->spr_cb); i++) {
+-        ppc_spr_t *spr = &env->spr_cb[i];
+-
+-        if (!spr->name) {
+-            continue;
+-        }
+-
+-        spr_name = g_ascii_strdown(spr->name, -1);
+-        g_string_append_printf(xml, "<reg name=\"%s\"", spr_name);
+-        g_free(spr_name);
+-
+-        g_string_append_printf(xml, " bitsize=\"%d\"", TARGET_LONG_BITS);
+-        g_string_append(xml, " group=\"spr\"/>");
++        gdb_feature_builder_append_reg(&builder, g_ascii_strdown(spr->name, -1),
++                                       TARGET_LONG_BITS, num_regs,
++                                       "int", "spr");
+     }
+ 
+-    g_string_append(xml, "</feature>");
+-
+-    pcc->gdb_num_sprs = num_regs;
+-    pcc->gdb_spr_xml = g_string_free(xml, false);
++    gdb_feature_builder_end(&builder);
+ }
+ 
+ const char *ppc_gdb_get_dynamic_xml(CPUState *cs, const char *xml_name)
+@@ -362,7 +348,7 @@ const char *ppc_gdb_get_dynamic_xml(CPUState *cs, const char *xml_name)
+     PowerPCCPUClass *pcc = POWERPC_CPU_GET_CLASS(cs);
+ 
+     if (strcmp(xml_name, "power-spr.xml") == 0) {
+-        return pcc->gdb_spr_xml;
++        return pcc->gdb_spr.xml;
+     }
+     return NULL;
+ }
+@@ -635,7 +621,8 @@ void ppc_gdb_init(CPUState *cs, PowerPCCPUClass *pcc)
+                                  32, "power-vsx.xml", 0);
+     }
+ #ifndef CONFIG_USER_ONLY
++    gdb_gen_spr_feature(cs);
+     gdb_register_coprocessor(cs, gdb_get_spr_reg, gdb_set_spr_reg,
+-                             pcc->gdb_num_sprs, "power-spr.xml", 0);
++                             pcc->gdb_spr.num_regs, "power-spr.xml", 0);
+ #endif
+ }
 -- 
 2.39.2
 
