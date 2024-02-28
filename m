@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FBD6C47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 05:17:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51B38C54E4A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 05:17:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfCIN-0000Yy-93; Wed, 28 Feb 2024 00:16:05 -0500
+	id 1rfCHJ-0006dE-KU; Wed, 28 Feb 2024 00:14:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfCHt-0008Re-1T
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 00:15:28 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfCHH-0006YA-9k
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 00:14:47 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfCHq-0006tv-49
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 00:15:24 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfCGp-0006bf-UF
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 00:14:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709097321;
+ s=mimecast20190719; t=1709097256;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7WmBFm2fHdY4EPa57HeU0g1kLg5q4DnLUdY/1J2BYCE=;
- b=PbxEInpzh8pRXvWTwSwN84Ztl/XVsRuOOlnSDbpfhVizDio0JV2gv3pjXgBtxIMuaNXZp9
- mbRDdKV0yHLL5VLM2IMid9d7g1R9c1yvNb9c9uxuLAp7jEW1O+LG1EphF7n9ohuVnTFZaH
- m7CgRqY5ZsTmM4I7XG/KqpIWaXAmtNs=
+ bh=MBrazfDRoZkEUceQ/1b+YmkYOb1klxQSqOkJeUMhIFY=;
+ b=dcCEmmkM5bgHZkODoXW711aZhSfW5tW7IRKGnI5mXuekt0ELU2l5VBHReD2biJ/XhwGDjA
+ LgD3LXSyE8CKQnR3VEuFGFMM2NjERj6PwsI8O3mMdHoOtUHCRM8df8T6Hh0ucdVqhL7UsS
+ 1BpSU+tyLamwWlGwDQmiQQ0q/TQReV8=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-629-Ui_mVdT7PM2OA9tdUHblrA-1; Wed, 28 Feb 2024 00:15:17 -0500
-X-MC-Unique: Ui_mVdT7PM2OA9tdUHblrA-1
+ us-mta-197-anuIpOtrOVKrTRPiKInttg-1; Wed, 28 Feb 2024 00:14:12 -0500
+X-MC-Unique: anuIpOtrOVKrTRPiKInttg-1
 Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
  [10.11.54.7])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 605C7185A787;
- Wed, 28 Feb 2024 05:15:17 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7299E811E79;
+ Wed, 28 Feb 2024 05:14:12 +0000 (UTC)
 Received: from x1n.redhat.com (unknown [10.72.116.12])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 8A6911C060AF;
- Wed, 28 Feb 2024 05:15:08 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id B6C4A1C060AF;
+ Wed, 28 Feb 2024 05:14:03 +0000 (UTC)
 From: peterx@redhat.com
 To: Peter Maydell <peter.maydell@linaro.org>,
 	qemu-devel@nongnu.org
@@ -54,11 +54,10 @@ Cc: David Hildenbrand <david@redhat.com>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Jason Wang <jasowang@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>, Peter Xu <peterx@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PULL 12/25] migration: remove error from notifier data
-Date: Wed, 28 Feb 2024 13:13:02 +0800
-Message-ID: <20240228051315.400759-13-peterx@redhat.com>
+ Alex Williamson <alex.williamson@redhat.com>, Peter Xu <peterx@redhat.com>
+Subject: [PULL 05/25] migration/multifd: Release recv sem_sync earlier
+Date: Wed, 28 Feb 2024 13:12:55 +0800
+Message-ID: <20240228051315.400759-6-peterx@redhat.com>
 In-Reply-To: <20240228051315.400759-1-peterx@redhat.com>
 References: <20240228051315.400759-1-peterx@redhat.com>
 MIME-Version: 1.0
@@ -88,101 +87,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Steve Sistare <steven.sistare@oracle.com>
+From: Fabiano Rosas <farosas@suse.de>
 
-Remove the error object from opaque data passed to notifiers.
-Use the new error parameter passed to the notifier instead.
+Now that multifd_recv_terminate_threads() is called only once, release
+the recv side sem_sync earlier like we do for the send side.
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
 Reviewed-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Link: https://lore.kernel.org/r/1708622920-68779-3-git-send-email-steven.sistare@oracle.com
+Link: https://lore.kernel.org/r/20240220224138.24759-6-farosas@suse.de
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- include/migration/misc.h | 1 -
- migration/postcopy-ram.h | 1 -
- hw/virtio/vhost-user.c   | 8 ++++----
- migration/postcopy-ram.c | 1 -
- migration/ram.c          | 1 -
- 5 files changed, 4 insertions(+), 8 deletions(-)
+ migration/multifd.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/include/migration/misc.h b/include/migration/misc.h
-index 1bc8902e6d..5e65c18f1a 100644
---- a/include/migration/misc.h
-+++ b/include/migration/misc.h
-@@ -31,7 +31,6 @@ typedef enum PrecopyNotifyReason {
+diff --git a/migration/multifd.c b/migration/multifd.c
+index fba00b9e8f..43f0820996 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -1104,6 +1104,12 @@ static void multifd_recv_terminate_threads(Error *err)
+     for (i = 0; i < migrate_multifd_channels(); i++) {
+         MultiFDRecvParams *p = &multifd_recv_state->params[i];
  
- typedef struct PrecopyNotifyData {
-     enum PrecopyNotifyReason reason;
--    Error **errp;
- } PrecopyNotifyData;
++        /*
++         * multifd_recv_thread may hung at MULTIFD_FLAG_SYNC handle code,
++         * however try to wakeup it without harm in cleanup phase.
++         */
++        qemu_sem_post(&p->sem_sync);
++
+         /*
+          * We could arrive here for two reasons:
+          *  - normal quit, i.e. everything went fine, just finished
+@@ -1162,12 +1168,6 @@ void multifd_recv_cleanup(void)
+     for (i = 0; i < migrate_multifd_channels(); i++) {
+         MultiFDRecvParams *p = &multifd_recv_state->params[i];
  
- void precopy_infrastructure_init(void);
-diff --git a/migration/postcopy-ram.h b/migration/postcopy-ram.h
-index 442ab89752..ecae941211 100644
---- a/migration/postcopy-ram.h
-+++ b/migration/postcopy-ram.h
-@@ -128,7 +128,6 @@ enum PostcopyNotifyReason {
- 
- struct PostcopyNotifyData {
-     enum PostcopyNotifyReason reason;
--    Error **errp;
- };
- 
- void postcopy_add_notifier(NotifierWithReturn *nn);
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index f502345f37..a1eea8547e 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -2096,20 +2096,20 @@ static int vhost_user_postcopy_notifier(NotifierWithReturn *notifier,
-         if (!virtio_has_feature(dev->protocol_features,
-                                 VHOST_USER_PROTOCOL_F_PAGEFAULT)) {
-             /* TODO: Get the device name into this error somehow */
--            error_setg(pnd->errp,
-+            error_setg(errp,
-                        "vhost-user backend not capable of postcopy");
-             return -ENOENT;
+-        /*
+-         * multifd_recv_thread may hung at MULTIFD_FLAG_SYNC handle code,
+-         * however try to wakeup it without harm in cleanup phase.
+-         */
+-        qemu_sem_post(&p->sem_sync);
+-
+         if (p->thread_created) {
+             qemu_thread_join(&p->thread);
          }
-         break;
- 
-     case POSTCOPY_NOTIFY_INBOUND_ADVISE:
--        return vhost_user_postcopy_advise(dev, pnd->errp);
-+        return vhost_user_postcopy_advise(dev, errp);
- 
-     case POSTCOPY_NOTIFY_INBOUND_LISTEN:
--        return vhost_user_postcopy_listen(dev, pnd->errp);
-+        return vhost_user_postcopy_listen(dev, errp);
- 
-     case POSTCOPY_NOTIFY_INBOUND_END:
--        return vhost_user_postcopy_end(dev, pnd->errp);
-+        return vhost_user_postcopy_end(dev, errp);
- 
-     default:
-         /* We ignore notifications we don't know */
-diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index 3ab2f6b8fd..0273dc6a94 100644
---- a/migration/postcopy-ram.c
-+++ b/migration/postcopy-ram.c
-@@ -77,7 +77,6 @@ int postcopy_notify(enum PostcopyNotifyReason reason, Error **errp)
- {
-     struct PostcopyNotifyData pnd;
-     pnd.reason = reason;
--    pnd.errp = errp;
- 
-     return notifier_with_return_list_notify(&postcopy_notifier_list,
-                                             &pnd, errp);
-diff --git a/migration/ram.c b/migration/ram.c
-index 5b6b09edd9..45a00b45ed 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -426,7 +426,6 @@ int precopy_notify(PrecopyNotifyReason reason, Error **errp)
- {
-     PrecopyNotifyData pnd;
-     pnd.reason = reason;
--    pnd.errp = errp;
- 
-     return notifier_with_return_list_notify(&precopy_notifier_list, &pnd, errp);
- }
 -- 
 2.43.0
 
