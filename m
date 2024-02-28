@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27BF5C47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 09:47:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D893BC47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 09:48:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfGWx-00062Z-GB; Wed, 28 Feb 2024 04:47:15 -0500
+	id 1rfGWl-0005Re-C7; Wed, 28 Feb 2024 04:47:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rfGWv-0005ud-2j
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 04:47:14 -0500
+ id 1rfGWj-0005LO-NY
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 04:47:01 -0500
 Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rfGWs-0002AQ-QG
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 04:47:12 -0500
+ id 1rfGWh-0002AQ-3N
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 04:47:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709113631; x=1740649631;
+ t=1709113619; x=1740649619;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=yx9WnW6FzZkOMX5scTMftIZD9XRWJ/2axLjB+XskyEI=;
- b=XRWid4vpS1vKFbYw7WtpCvhLbGo2IxvKD3lsmj0iZqLi6in84vz48/At
- ekz9saQC9vUwLHf2LHg6NVrRkWOwmLOpRxZXEiuf80sqyhFoC6x56uEIz
- HomlQM3BtP/8OvriwGOg/vuOxygfsVgrLTUtrO8JzMS8DFA08Zm72wVds
- 2qv+IzMVvKVDkDtzD+CWgk/5wdvPQtwtB9gCQNceiPcbghYGxW9PYFfLt
- m0XCPGFAJYD8Z7HRtAZAIH1WpoN5BMsZw/caYTyvZbOWkv2MAKJn3Ncz0
- CvylBey8fELtC/e4TnttmXoS18xi9hUMYiI08IbpfnP74xHYBOo/PERpd w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10996"; a="25970016"
-X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="25970016"
+ bh=zzQtmneALoan6h7kPxfiyycxQTue6ulWrRA2sEohjFA=;
+ b=YTzrWl5oWGxzLrAcBfI95tDrkq6sRfFGkn3minAORhsU0TKcT5OQ1g1D
+ 9ly9mltOaS8M1OfOQHRdYQPcHyNFO//YvuaEuBvECaqkKIoc6yUFdtB8w
+ plhCFdSIAoz3PWHFzpIgiUQ5WLflL1i5JSwsM/eavhCeCQsA/7yCAyBUQ
+ X07U/1J+r1MwsYvzIWqZxBajENEIvRExlti5ztTab86XUUDHagsNbLbHh
+ l9dPbuCr4AVZrx1o7Z4y2rXTvO3wqHToZ5BwBjcIpLxxCtjt8FP4IVfm9
+ fjZWZYjH9mER9vbioJxyktVB1c5gbZDcAxi2MZJ5iP17ub60FXytSLr8q A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10996"; a="25969996"
+X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="25969996"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Feb 2024 01:47:10 -0800
+ 28 Feb 2024 01:46:58 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; 
-   d="scan'208";a="7810092"
+   d="scan'208";a="7810012"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.124])
  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Feb 2024 01:47:05 -0800
+ 28 Feb 2024 01:46:53 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  peterx@redhat.com, jasowang@redhat.com, mst@redhat.com, jgg@nvidia.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com, kevin.tian@intel.com,
  yi.l.liu@intel.com, yi.y.sun@intel.com, chao.p.peng@intel.com,
+ Yi Sun <yi.y.sun@linux.intel.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH v1 5/6] intel_iommu: Use mgaw instead of s->aw_bits
-Date: Wed, 28 Feb 2024 17:44:31 +0800
-Message-Id: <20240228094432.1092748-6-zhenzhong.duan@intel.com>
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH v1 3/6] intel_iommu: Add a framework to check and sync host
+ IOMMU cap/ecap
+Date: Wed, 28 Feb 2024 17:44:29 +0800
+Message-Id: <20240228094432.1092748-4-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240228094432.1092748-1-zhenzhong.duan@intel.com>
 References: <20240228094432.1092748-1-zhenzhong.duan@intel.com>
@@ -87,193 +88,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Because vIOMMU mgaw can be updated based on host IOMMU mgaw, s->aw_bits
-does't necessarily represent the final mgaw now but the mgaw field in
-s->cap does.
+From: Yi Liu <yi.l.liu@intel.com>
 
-Replace reference to s->aw_bits with a MACRO S_AW_BITS to fetch mgaw
-from s->cap. There are two exceptions on this, aw_bits value sanity
-check and s->cap initialization.
+Add a framework to check and synchronize host IOMMU cap/ecap with
+vIOMMU cap/ecap.
 
-ACPI DMAR table is also updated with right mgaw value.
+The sequence will be:
 
+vtd_cap_init() initializes iommu->cap/ecap.
+vtd_check_hdev() update iommu->cap/ecap based on host cap/ecap.
+iommu->cap_frozen set when machine create done, iommu->cap/ecap become readonly.
+
+Implementation details for different backends will be in following patches.
+
+Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/i386/acpi-build.c  |  3 ++-
- hw/i386/intel_iommu.c | 44 ++++++++++++++++++++++---------------------
- 2 files changed, 25 insertions(+), 22 deletions(-)
+ include/hw/i386/intel_iommu.h |  1 +
+ hw/i386/intel_iommu.c         | 50 ++++++++++++++++++++++++++++++++++-
+ 2 files changed, 50 insertions(+), 1 deletion(-)
 
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index edc979379c..6467157686 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -2159,7 +2159,8 @@ build_dmar_q35(GArray *table_data, BIOSLinker *linker, const char *oem_id,
+diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
+index bbc7b96add..c71a133820 100644
+--- a/include/hw/i386/intel_iommu.h
++++ b/include/hw/i386/intel_iommu.h
+@@ -283,6 +283,7 @@ struct IntelIOMMUState {
  
-     acpi_table_begin(&table, table_data);
-     /* Host Address Width */
--    build_append_int_noprefix(table_data, intel_iommu->aw_bits - 1, 1);
-+    build_append_int_noprefix(table_data,
-+                              VTD_MGAW_FROM_CAP(intel_iommu->cap), 1);
-     build_append_int_noprefix(table_data, dmar_flags, 1); /* Flags */
-     g_array_append_vals(table_data, rsvd10, sizeof(rsvd10)); /* Reserved */
+     uint64_t cap;                   /* The value of capability reg */
+     uint64_t ecap;                  /* The value of extended capability reg */
++    bool cap_frozen;                /* cap/ecap become read-only after frozen */
  
+     uint32_t context_cache_gen;     /* Should be in [1,MAX] */
+     GHashTable *iotlb;              /* IOTLB */
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 2a55268538..e474284e43 100644
+index ffa1ad6429..a9f9dfd6a7 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -42,6 +42,8 @@
+@@ -35,6 +35,8 @@
+ #include "sysemu/kvm.h"
+ #include "sysemu/dma.h"
+ #include "sysemu/sysemu.h"
++#include "hw/vfio/vfio-common.h"
++#include "sysemu/iommufd.h"
+ #include "hw/i386/apic_internal.h"
+ #include "kvm/kvm_i386.h"
  #include "migration/vmstate.h"
- #include "trace.h"
+@@ -3819,6 +3821,38 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
+     return vtd_dev_as;
+ }
  
-+#define S_AW_BITS (VTD_MGAW_FROM_CAP(s->cap) + 1)
++static int vtd_check_legacy_hdev(IntelIOMMUState *s,
++                                 IOMMULegacyDevice *ldev,
++                                 Error **errp)
++{
++    return 0;
++}
 +
- /* context entry operations */
- #define VTD_CE_GET_RID2PASID(ce) \
-     ((ce)->val[1] & VTD_SM_CONTEXT_ENTRY_RID2PASID_MASK)
-@@ -1410,13 +1412,13 @@ static int vtd_root_entry_rsvd_bits_check(IntelIOMMUState *s,
++static int vtd_check_iommufd_hdev(IntelIOMMUState *s,
++                                  IOMMUFDDevice *idev,
++                                  Error **errp)
++{
++    return 0;
++}
++
++static int vtd_check_hdev(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hdev,
++                          Error **errp)
++{
++    HostIOMMUDevice *base_dev = vtd_hdev->dev;
++    IOMMUFDDevice *idev;
++
++    if (base_dev->type == HID_LEGACY) {
++        IOMMULegacyDevice *ldev = container_of(base_dev,
++                                               IOMMULegacyDevice, base);
++
++        return vtd_check_legacy_hdev(s, ldev, errp);
++    }
++
++    idev = container_of(base_dev, IOMMUFDDevice, base);
++
++    return vtd_check_iommufd_hdev(s, idev, errp);
++}
++
+ static int vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+                                     HostIOMMUDevice *base_dev, Error **errp)
  {
-     /* Legacy Mode reserved bits check */
-     if (!s->root_scalable &&
--        (re->hi || (re->lo & VTD_ROOT_ENTRY_RSVD(s->aw_bits))))
-+        (re->hi || (re->lo & VTD_ROOT_ENTRY_RSVD(S_AW_BITS))))
-         goto rsvd_err;
- 
-     /* Scalable Mode reserved bits check */
-     if (s->root_scalable &&
--        ((re->lo & VTD_ROOT_ENTRY_RSVD(s->aw_bits)) ||
--         (re->hi & VTD_ROOT_ENTRY_RSVD(s->aw_bits))))
-+        ((re->lo & VTD_ROOT_ENTRY_RSVD(S_AW_BITS)) ||
-+         (re->hi & VTD_ROOT_ENTRY_RSVD(S_AW_BITS))))
-         goto rsvd_err;
- 
-     return 0;
-@@ -1433,7 +1435,7 @@ static inline int vtd_context_entry_rsvd_bits_check(IntelIOMMUState *s,
- {
-     if (!s->root_scalable &&
-         (ce->hi & VTD_CONTEXT_ENTRY_RSVD_HI ||
--         ce->lo & VTD_CONTEXT_ENTRY_RSVD_LO(s->aw_bits))) {
-+         ce->lo & VTD_CONTEXT_ENTRY_RSVD_LO(S_AW_BITS))) {
-         error_report_once("%s: invalid context entry: hi=%"PRIx64
-                           ", lo=%"PRIx64" (reserved nonzero)",
-                           __func__, ce->hi, ce->lo);
-@@ -1441,7 +1443,7 @@ static inline int vtd_context_entry_rsvd_bits_check(IntelIOMMUState *s,
-     }
- 
-     if (s->root_scalable &&
--        (ce->val[0] & VTD_SM_CONTEXT_ENTRY_RSVD_VAL0(s->aw_bits) ||
-+        (ce->val[0] & VTD_SM_CONTEXT_ENTRY_RSVD_VAL0(S_AW_BITS) ||
-          ce->val[1] & VTD_SM_CONTEXT_ENTRY_RSVD_VAL1 ||
-          ce->val[2] ||
-          ce->val[3])) {
-@@ -1572,7 +1574,7 @@ static int vtd_sync_shadow_page_table_range(VTDAddressSpace *vtd_as,
-         .hook_fn = vtd_sync_shadow_page_hook,
-         .private = (void *)&vtd_as->iommu,
-         .notify_unmap = true,
--        .aw = s->aw_bits,
-+        .aw = S_AW_BITS,
-         .as = vtd_as,
-         .domain_id = vtd_get_domain_id(s, ce, vtd_as->pasid),
+@@ -3829,6 +3863,7 @@ static int vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+         .devfn = devfn,
      };
-@@ -1991,7 +1993,7 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
-     }
+     struct vtd_as_key *new_key;
++    int ret;
  
-     ret_fr = vtd_iova_to_slpte(s, &ce, addr, is_write, &slpte, &level,
--                               &reads, &writes, s->aw_bits, pasid);
-+                               &reads, &writes, S_AW_BITS, pasid);
-     if (ret_fr) {
-         vtd_report_fault(s, -ret_fr, is_fpd_set, source_id,
-                          addr, is_write, pasid != PCI_NO_PASID, pasid);
-@@ -2005,7 +2007,7 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
- out:
-     vtd_iommu_unlock(s);
-     entry->iova = addr & page_mask;
--    entry->translated_addr = vtd_get_slpte_addr(slpte, s->aw_bits) & page_mask;
-+    entry->translated_addr = vtd_get_slpte_addr(slpte, S_AW_BITS) & page_mask;
-     entry->addr_mask = ~page_mask;
-     entry->perm = access_flags;
-     return true;
-@@ -2022,7 +2024,7 @@ error:
- static void vtd_root_table_setup(IntelIOMMUState *s)
- {
-     s->root = vtd_get_quad_raw(s, DMAR_RTADDR_REG);
--    s->root &= VTD_RTADDR_ADDR_MASK(s->aw_bits);
-+    s->root &= VTD_RTADDR_ADDR_MASK(S_AW_BITS);
+     assert(base_dev);
  
-     vtd_update_scalable_state(s);
+@@ -3848,6 +3883,13 @@ static int vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+     vtd_hdev->iommu_state = s;
+     vtd_hdev->dev = base_dev;
  
-@@ -2040,7 +2042,7 @@ static void vtd_interrupt_remap_table_setup(IntelIOMMUState *s)
-     uint64_t value = 0;
-     value = vtd_get_quad_raw(s, DMAR_IRTA_REG);
-     s->intr_size = 1UL << ((value & VTD_IRTA_SIZE_MASK) + 1);
--    s->intr_root = value & VTD_IRTA_ADDR_MASK(s->aw_bits);
-+    s->intr_root = value & VTD_IRTA_ADDR_MASK(S_AW_BITS);
-     s->intr_eime = value & VTD_IRTA_EIME;
++    ret = vtd_check_hdev(s, vtd_hdev, errp);
++    if (ret) {
++        g_free(vtd_hdev);
++        vtd_iommu_unlock(s);
++        return ret;
++    }
++
+     new_key = g_malloc(sizeof(*new_key));
+     new_key->bus = bus;
+     new_key->devfn = devfn;
+@@ -4083,7 +4125,9 @@ static void vtd_init(IntelIOMMUState *s)
+     s->iq_dw = false;
+     s->next_frcd_reg = 0;
  
-     /* Notify global invalidation */
-@@ -2323,7 +2325,7 @@ static void vtd_handle_gcmd_qie(IntelIOMMUState *s, bool en)
-     trace_vtd_inv_qi_enable(en);
+-    vtd_cap_init(s);
++    if (!s->cap_frozen) {
++        vtd_cap_init(s);
++    }
  
-     if (en) {
--        s->iq = iqa_val & VTD_IQA_IQA_MASK(s->aw_bits);
-+        s->iq = iqa_val & VTD_IQA_IQA_MASK(S_AW_BITS);
-         /* 2^(x+8) entries */
-         s->iq_size = 1UL << ((iqa_val & VTD_IQA_QS) + 8 - (s->iq_dw ? 1 : 0));
-         s->qi_enabled = true;
-@@ -3966,12 +3968,12 @@ static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n)
-      * VT-d spec), otherwise we need to consider overflow of 64 bits.
-      */
- 
--    if (end > VTD_ADDRESS_SIZE(s->aw_bits) - 1) {
-+    if (end > VTD_ADDRESS_SIZE(S_AW_BITS) - 1) {
-         /*
-          * Don't need to unmap regions that is bigger than the whole
-          * VT-d supported address space size
-          */
--        end = VTD_ADDRESS_SIZE(s->aw_bits) - 1;
-+        end = VTD_ADDRESS_SIZE(S_AW_BITS) - 1;
-     }
- 
-     assert(start <= end);
-@@ -3979,7 +3981,7 @@ static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n)
- 
-     while (remain >= VTD_PAGE_SIZE) {
-         IOMMUTLBEvent event;
--        uint64_t mask = dma_aligned_pow2_mask(start, end, s->aw_bits);
-+        uint64_t mask = dma_aligned_pow2_mask(start, end, S_AW_BITS);
-         uint64_t size = mask + 1;
- 
-         assert(size);
-@@ -4058,7 +4060,7 @@ static void vtd_iommu_replay(IOMMUMemoryRegion *iommu_mr, IOMMUNotifier *n)
-                 .hook_fn = vtd_replay_hook,
-                 .private = (void *)n,
-                 .notify_unmap = false,
--                .aw = s->aw_bits,
-+                .aw = S_AW_BITS,
-                 .as = vtd_as,
-                 .domain_id = vtd_get_domain_id(s, &ce, vtd_as->pasid),
-             };
-@@ -4161,15 +4163,15 @@ static void vtd_init(IntelIOMMUState *s)
+     /*
       * Rsvd field masks for spte
-      */
-     vtd_spte_rsvd[0] = ~0ULL;
--    vtd_spte_rsvd[1] = VTD_SPTE_PAGE_L1_RSVD_MASK(s->aw_bits,
-+    vtd_spte_rsvd[1] = VTD_SPTE_PAGE_L1_RSVD_MASK(S_AW_BITS,
-                                                   x86_iommu->dt_supported);
--    vtd_spte_rsvd[2] = VTD_SPTE_PAGE_L2_RSVD_MASK(s->aw_bits);
--    vtd_spte_rsvd[3] = VTD_SPTE_PAGE_L3_RSVD_MASK(s->aw_bits);
--    vtd_spte_rsvd[4] = VTD_SPTE_PAGE_L4_RSVD_MASK(s->aw_bits);
-+    vtd_spte_rsvd[2] = VTD_SPTE_PAGE_L2_RSVD_MASK(S_AW_BITS);
-+    vtd_spte_rsvd[3] = VTD_SPTE_PAGE_L3_RSVD_MASK(S_AW_BITS);
-+    vtd_spte_rsvd[4] = VTD_SPTE_PAGE_L4_RSVD_MASK(S_AW_BITS);
+@@ -4254,6 +4298,10 @@ static int vtd_machine_done_notify_one(Object *child, void *unused)
  
--    vtd_spte_rsvd_large[2] = VTD_SPTE_LPAGE_L2_RSVD_MASK(s->aw_bits,
-+    vtd_spte_rsvd_large[2] = VTD_SPTE_LPAGE_L2_RSVD_MASK(S_AW_BITS,
-                                                     x86_iommu->dt_supported);
--    vtd_spte_rsvd_large[3] = VTD_SPTE_LPAGE_L3_RSVD_MASK(s->aw_bits,
-+    vtd_spte_rsvd_large[3] = VTD_SPTE_LPAGE_L3_RSVD_MASK(S_AW_BITS,
-                                                     x86_iommu->dt_supported);
- 
-     if (s->scalable_mode || s->snoop_control) {
+ static void vtd_machine_done_hook(Notifier *notifier, void *unused)
+ {
++    IntelIOMMUState *iommu = INTEL_IOMMU_DEVICE(x86_iommu_get_default());
++
++    iommu->cap_frozen = true;
++
+     object_child_foreach_recursive(object_get_root(),
+                                    vtd_machine_done_notify_one, NULL);
+ }
 -- 
 2.34.1
 
