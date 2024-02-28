@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47FE9C47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 11:59:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C82F4C54E49
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 11:59:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfIYz-00064h-D0; Wed, 28 Feb 2024 06:57:29 -0500
+	id 1rfIYh-0005hS-TJ; Wed, 28 Feb 2024 06:57:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rfIYv-000607-1L
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:57:25 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1rfIYf-0005es-Ip
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:57:09 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rfIYm-0005me-IZ
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:57:24 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-412b41a1294so4052685e9.3
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 03:57:16 -0800 (PST)
+ id 1rfIYb-0005hg-MQ
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:57:09 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-412b434effaso3737105e9.2
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 03:57:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709121435; x=1709726235; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709121423; x=1709726223; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qW+nKetcRkdRlQHCRkk2cCjPEjxiMk24CyxL/Jk2Csc=;
- b=c8zGHcdbjr1R0E1uK8cDFQty5RDs+AiBtegyqngFSNz8dYJmHxG2IcBBhLTG0amSZu
- Dc+AANi7quOgZ+OZNDZSIwDFSsiekD3lIxE+nlVoJFmPvqE0PkH5/maeBiNdWDJXHaMB
- jbFfl6Ton5xiNWOtWdrHNjVQanuXixwNtpFdNlxnWd1zXEkjhobSp310BjFZbMfDoW+C
- RscvGNXpp+63y9/ikrfHw87PJkLHF7epIex8DPKmN8BECyObhX0HMdqbCcOxQI+Y7kCo
- G86Wc0P36Hxc7DMUEWRCWVdTz5W7jYs0oeHP9peDnxO2XyXewxlwSGO1yG69Q8xQrXHa
- RVmA==
+ bh=BHV/xSviQ+mksdG51pmI4mQIX2turcSeLOZCoK5M7sg=;
+ b=l9S9IMzDxy9+OL3L2W3b1aoEzV9VAVdh95fQotjqCEpPN5jwA1e7cMgJ+X7AkVq6c0
+ IU3hQNS4HyHpssItGBRPsmh2M+lHVDHYRFKKPJi8KumDq15YzqIuwxdgaoc6VKBsOOlh
+ 4edpedVAZMdKHT5vMQVKlP70B1CrxvmkXTRVIycKdKS0hlKKnmTrqXXccU3AwjoyMWba
+ 08JqXhfgyK4OkhyXuprb4NUhmS7xUqMcCkQJnaHcN9cyTkFtPjiqxqMEHwIzmpTuZ1QL
+ 0hR1mEeR0h4ixhi2Zo9OKPYoP3DUGD/CfscTtseS+uH9GR2g/Nox4Q0msx1Dw0wcuVp3
+ H/Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709121435; x=1709726235;
+ d=1e100.net; s=20230601; t=1709121423; x=1709726223;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qW+nKetcRkdRlQHCRkk2cCjPEjxiMk24CyxL/Jk2Csc=;
- b=IjabVp78fgJeNvKPiJpPhIC+0kKUGs3bZV83aECSygbGyB2CfXL7GNu6WjR6aXuWtO
- kW55JPblzgIsl42zHDNAEzZCeBHZl2znwP13QAOMy5JW1sjhY+hWs8LncZSmlbUnxQiM
- L4UiASHF4FzKJszRf9CV4WqQeNA3QOxTFmdwci/wgUHnrvSkgso7Z0iYY11NW2rM2Z9U
- hsHtfPvM6SA/oXWKiBSn/E3XKgx85Xlowh2Y49fpWr75XbGM7Ofqu8ioybUHueuJlc6K
- /CsDcVgVUQ/jBz0nnl5ODrjulrNeyj76cnGZjjKMmwFBwFWCtKMltV2YP7VK0MPraaj1
- zOvQ==
-X-Gm-Message-State: AOJu0YyU/HRAdRNp8+rPdA4FNOKtRzS589Yx0cSnQnJ+M48g0aZD8HLM
- 8BksWz8XAD0rjWnGWHm15UkcSW9QoIbjVKGSzqaTUnYeKwlLgGfJCnsc65wjh2U=
-X-Google-Smtp-Source: AGHT+IHoQDDVsuykLT2jifs18DwZKkR5dWr8W+UfJYWlBMqfsspSquUG1QeC9vSGfY/hQVsl2BMYGA==
-X-Received: by 2002:a05:600c:4202:b0:411:e2bf:73b9 with SMTP id
- x2-20020a05600c420200b00411e2bf73b9mr8189620wmh.39.1709121435246; 
- Wed, 28 Feb 2024 03:57:15 -0800 (PST)
+ bh=BHV/xSviQ+mksdG51pmI4mQIX2turcSeLOZCoK5M7sg=;
+ b=QwsWXRZW5yt1GkMa5WMWYBxOdpvTzA+O376/ERU10O30bL+dhNV8ewKjvDKXkAk1Oq
+ 2enEPC0AU62JisG8RE6lwQrqArv4WeJF9A9fh/cZvJdhr86zFustwwtFsMrId29ncIKM
+ HSG6p7rfXThsDQXsYojT/NFlMEl/IhyirbaDJsqncTcg3a653uW5rqtUq4ELVup121zN
+ yy7qLW8RMliq7Lmdr3u9v2oMcRjrcYcJgbeff1MDW6V2KfDfOHH60NYGo7q8lHLTlT+Z
+ YAqUPWy4K0ZHSTKGJdnsWZTm70zPnBKBTdoPre414XAP9nl7IZKJEIkiQpLHNT3MRaIS
+ Fh5Q==
+X-Gm-Message-State: AOJu0YwkVrhiAgVCD2gH5L4J/8uQtXSfojnAQGKCyBTjdTMXIr5aTcOe
+ +7GlS4N7kV9ayqHQ/pPqfBMFTsOxk5O0/OqpIwJle8L4h+3TDw27MVq8CejXius=
+X-Google-Smtp-Source: AGHT+IH3KWBdhpampjnJ11TdGZH3IuZIrJPtwksjMveiXG0eEX0zFV7ifrNUq/WTdlz6c8n5bXgKTA==
+X-Received: by 2002:a5d:4fd2:0:b0:33c:dd02:f652 with SMTP id
+ h18-20020a5d4fd2000000b0033cdd02f652mr9238497wrw.10.1709121423348; 
+ Wed, 28 Feb 2024 03:57:03 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- n6-20020a05600c4f8600b0041273fc463csm1910772wmq.17.2024.02.28.03.57.03
+ f14-20020adff98e000000b0033cf60e268fsm14397650wrr.116.2024.02.28.03.57.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Feb 2024 03:57:06 -0800 (PST)
+ Wed, 28 Feb 2024 03:57:02 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B95645F909;
+ by draig.lan (Postfix) with ESMTP id 1A0B25F8F7;
  Wed, 28 Feb 2024 11:57:02 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 09/29] gdbstub: Use GDBFeature for GDBRegisterState
-Date: Wed, 28 Feb 2024 11:56:41 +0000
-Message-Id: <20240228115701.1416107-10-alex.bennee@linaro.org>
+Subject: [PULL 02/29] tests/tcg: bump TCG test timeout to 120s
+Date: Wed, 28 Feb 2024 11:56:34 +0000
+Message-Id: <20240228115701.1416107-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240228115701.1416107-1-alex.bennee@linaro.org>
 References: <20240228115701.1416107-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,82 +98,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+This is less than ideal but easier than making sure we get all the
+iterations of the memory test. Update the comment accordingly.
 
-Simplify GDBRegisterState by replacing num_regs and xml members with
-one member that points to GDBFeature.
-
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20231213-gdb-v17-5-777047380591@daynix.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240227144335.1196131-10-alex.bennee@linaro.org>
+Message-Id: <20240227144335.1196131-3-alex.bennee@linaro.org>
 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 256599c8dfb..0ea417b2c9a 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -47,10 +47,9 @@
+diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
+index 8cf65f68dd8..a4c25908fb7 100644
+--- a/tests/tcg/Makefile.target
++++ b/tests/tcg/Makefile.target
+@@ -93,12 +93,9 @@ QEMU_OPTS=
  
- typedef struct GDBRegisterState {
-     int base_reg;
--    int num_regs;
-     gdb_get_reg_cb get_reg;
-     gdb_set_reg_cb set_reg;
--    const char *xml;
-+    const GDBFeature *feature;
- } GDBRegisterState;
  
- GDBState gdbserver_state;
-@@ -391,7 +390,7 @@ static const char *get_feature_xml(const char *p, const char **newp,
-                     g_ptr_array_add(
-                         xml,
-                         g_markup_printf_escaped("<xi:include href=\"%s\"/>",
--                                                r->xml));
-+                                                r->feature->xmlname));
-                 }
-             }
-             g_ptr_array_add(xml, g_strdup("</target>"));
-@@ -513,7 +512,7 @@ static int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg)
-     if (cpu->gdb_regs) {
-         for (guint i = 0; i < cpu->gdb_regs->len; i++) {
-             r = &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
--            if (r->base_reg <= reg && reg < r->base_reg + r->num_regs) {
-+            if (r->base_reg <= reg && reg < r->base_reg + r->feature->num_regs) {
-                 return r->get_reg(env, buf, reg - r->base_reg);
-             }
-         }
-@@ -534,7 +533,7 @@ static int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg)
-     if (cpu->gdb_regs) {
-         for (guint i = 0; i < cpu->gdb_regs->len; i++) {
-             r =  &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
--            if (r->base_reg <= reg && reg < r->base_reg + r->num_regs) {
-+            if (r->base_reg <= reg && reg < r->base_reg + r->feature->num_regs) {
-                 return r->set_reg(env, mem_buf, reg - r->base_reg);
-             }
-         }
-@@ -553,7 +552,7 @@ void gdb_register_coprocessor(CPUState *cpu,
-         for (i = 0; i < cpu->gdb_regs->len; i++) {
-             /* Check for duplicates.  */
-             s = &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
--            if (strcmp(s->xml, feature->xmlname) == 0) {
-+            if (s->feature == feature) {
-                 return;
-             }
-         }
-@@ -565,10 +564,9 @@ void gdb_register_coprocessor(CPUState *cpu,
-     g_array_set_size(cpu->gdb_regs, i + 1);
-     s = &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
-     s->base_reg = cpu->gdb_num_regs;
--    s->num_regs = feature->num_regs;
-     s->get_reg = get_reg;
-     s->set_reg = set_reg;
--    s->xml = feature->xml;
-+    s->feature = feature;
+ # If TCG debugging, or TCI is enabled things are a lot slower
+-# ??? Makefile no longer has any indication that TCI is enabled,
+-# but for the record:
+-#   15s    original default
+-#   60s    with --enable-debug
+-#   90s    with --enable-tcg-interpreter
+-TIMEOUT=90
++# so we have to set our timeout for that. The current worst case
++# offender is the system memory test running under TCI.
++TIMEOUT=120
  
-     /* Add to end of list.  */
-     cpu->gdb_num_regs += feature->num_regs;
+ ifeq ($(filter %-softmmu, $(TARGET)),)
+ # The order we include is important. We include multiarch first and
 -- 
 2.39.2
 
