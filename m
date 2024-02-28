@@ -4,72 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 504B8C5478C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 12:24:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF76FC47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 12:33:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfIyO-0005XR-11; Wed, 28 Feb 2024 07:23:44 -0500
+	id 1rfJ75-0001u4-67; Wed, 28 Feb 2024 07:32:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1rfIyM-0005X1-G4
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 07:23:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rfJ6t-0001rG-KX
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 07:32:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1rfIyK-00050n-M5
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 07:23:42 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rfJ6o-0008Rh-Vo
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 07:32:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709123019;
+ s=mimecast20190719; t=1709123543;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+sBRzvzSbCgm0ublMDE+ChC477Y3BzXWR1Cb3LCmqKM=;
- b=gcYkzaSskPKth7FXI2eAyGtm2oM6jMgN2NHYTUr+klIq1gyHsncVhQZWQ9sPwklbiBK+We
- HENZiZ499zCENm084vtuqqG4H0GqWiG1X2j8wU+e/pQVbTEnlRBAM+MmETUkNr5uTd8zFo
- F9NJ4uVTpWOWqo5tzO2mP5+K/r5/BEE=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-318-EwEvlbjsN-avqIwI4mqjgA-1; Wed,
- 28 Feb 2024 07:23:38 -0500
-X-MC-Unique: EwEvlbjsN-avqIwI4mqjgA-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
+ bh=3phnP5v7W3Ds21SEGFmKyr0YeItnA0S46yr5ZB4aU9I=;
+ b=Nqw+p8Hms8rW3oel1RD3llyG4whyecJxHEefVbaBISCYmDmSPE/17PlNGzHvSTzYOUYglE
+ 8xFrAPiqaAYC640VFa3T1+lbmcAbA3yOmTnQoAXH0Mq5MiQmTGdHN580z064WFAuYtt4Xt
+ zV6mOG112X9rtOJ/WfhPb9kP+kQGcDc=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-341-iQe1CziZPxOLKQpL3dJfDg-1; Wed, 28 Feb 2024 07:32:20 -0500
+X-MC-Unique: iQe1CziZPxOLKQpL3dJfDg-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id F3E9F282D3C6
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 12:23:37 +0000 (UTC)
-Received: from localhost (unknown [10.39.208.45])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 7F8A72026D0A;
- Wed, 28 Feb 2024 12:23:35 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, sebott@redhat.com,
- "Michael S. Tsirkin" <mst@redhat.com>, peterx@redhat.com,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2 2/2] virtio-gpu: fix scanout migration post-load
-Date: Wed, 28 Feb 2024 16:23:23 +0400
-Message-ID: <20240228122323.962826-3-marcandre.lureau@redhat.com>
-In-Reply-To: <20240228122323.962826-1-marcandre.lureau@redhat.com>
-References: <20240228122323.962826-1-marcandre.lureau@redhat.com>
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C3FF2185A784;
+ Wed, 28 Feb 2024 12:32:18 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.193.4])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 9D931C185C0;
+ Wed, 28 Feb 2024 12:32:18 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 73D3721E66F4; Wed, 28 Feb 2024 13:32:17 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-block@nongnu.org,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Thomas
+ Huth <thuth@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>,  Jason
+ Wang <jasowang@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,  Eric
+ Blake <eblake@redhat.com>,  Coiby Xu <Coiby.Xu@gmail.com>,  slp@redhat.com,
+ Eduardo Habkost <eduardo@habkost.net>,  Hanna Reitz <hreitz@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,  Raphael Norwitz
+ <raphael@enfabrica.net>,  Kevin Wolf <kwolf@redhat.com>,  David
+ Hildenbrand <david@redhat.com>,  stefanha@redhat.com, gmaglione@redhat.com
+Subject: Re: [PATCH 9/9] hostmem-file: support POSIX shm_open()
+In-Reply-To: <20240228114759.44758-10-sgarzare@redhat.com> (Stefano
+ Garzarella's message of "Wed, 28 Feb 2024 12:47:59 +0100")
+References: <20240228114759.44758-1-sgarzare@redhat.com>
+ <20240228114759.44758-10-sgarzare@redhat.com>
+Date: Wed, 28 Feb 2024 13:32:17 +0100
+Message-ID: <874jdswyzy.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,175 +93,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+Stefano Garzarella <sgarzare@redhat.com> writes:
 
-The current post-loading code for scanout has a FIXME: it doesn't take
-the resource region/rect into account. But there is more, when adding
-blob migration support in commit f66767f75c9, I didn't realize that blob
-resources could be used for scanouts. This situationn leads to a crash
-during post-load, as they don't have an associated res->image.
+> Add a new `shm` bool option for `-object memory-backend-file`.
+>
+> When this option is set to true, the POSIX shm_open(3) is used instead
+> of open(2).
+>
+> So a file will not be created in the filesystem, but a "POSIX shared
+> memory object" will be instantiated. In Linux this turns into a file
+> in /dev/shm, but in other OSes this may not happen (for example in
+> macOS or FreeBSD nothing is shown in any filesystem).
+>
+> This new feature is useful when we need to share guest memory with
+> another process (e.g. vhost-user backend), but we don't have
+> memfd_create() or any special filesystems (e.g. /dev/shm) available
+> as in macOS.
+>
+> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+> ---
+> I am not sure this is the best way to support shm_open() in QEMU.
+>
+> Other solutions I had in mind were:
+>
+> - create a new memory-backend-shm
 
-virtio_gpu_do_set_scanout() handle all cases, but requires the
-associated virtio_gpu_framebuffer, which is currently not saved during
-migration.
+How would that look like?  Would it involve duplicating code?
 
-Add a v2 of "virtio-gpu-one-scanout" with the framebuffer fields, so we
-can restore blob scanouts, as well as fixing the existing FIXME.
+> - extend memory-backend-memfd to use shm_open() on systems where memfd is
+> not available (problem: shm_open wants a name to assign to the object, but
+> we can do a workaround by using a random name and do the unlink right away)
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Sebastian Ott <sebott@redhat.com>
----
- include/hw/virtio/virtio-gpu.h |  1 +
- hw/display/virtio-gpu.c        | 51 +++++++++++++++++++++++++++-------
- 2 files changed, 42 insertions(+), 10 deletions(-)
+Hmm.  Too much magic?  I don't know...
 
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index b28e7ef0d2..ed44cdad6b 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -81,6 +81,7 @@ struct virtio_gpu_scanout {
-     uint32_t resource_id;
-     struct virtio_gpu_update_cursor cursor;
-     QEMUCursor *current_cursor;
-+    struct virtio_gpu_framebuffer fb;
- };
- 
- struct virtio_gpu_requested_state {
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index ccbe31d759..78d5a4f164 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -600,6 +600,7 @@ static void virtio_unref_resource(pixman_image_t *image, void *data)
- static void virtio_gpu_update_scanout(VirtIOGPU *g,
-                                       uint32_t scanout_id,
-                                       struct virtio_gpu_simple_resource *res,
-+                                      struct virtio_gpu_framebuffer *fb,
-                                       struct virtio_gpu_rect *r)
- {
-     struct virtio_gpu_simple_resource *ores;
-@@ -617,9 +618,10 @@ static void virtio_gpu_update_scanout(VirtIOGPU *g,
-     scanout->y = r->y;
-     scanout->width = r->width;
-     scanout->height = r->height;
-+    scanout->fb = *fb;
- }
- 
--static void virtio_gpu_do_set_scanout(VirtIOGPU *g,
-+static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
-                                       uint32_t scanout_id,
-                                       struct virtio_gpu_framebuffer *fb,
-                                       struct virtio_gpu_simple_resource *res,
-@@ -645,7 +647,7 @@ static void virtio_gpu_do_set_scanout(VirtIOGPU *g,
-                       r->x, r->y, r->width, r->height,
-                       fb->width, fb->height);
-         *error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
--        return;
-+        return false;
-     }
- 
-     g->parent_obj.enable = 1;
-@@ -653,11 +655,12 @@ static void virtio_gpu_do_set_scanout(VirtIOGPU *g,
-     if (res->blob) {
-         if (console_has_gl(scanout->con)) {
-             if (!virtio_gpu_update_dmabuf(g, scanout_id, res, fb, r)) {
--                virtio_gpu_update_scanout(g, scanout_id, res, r);
-+                virtio_gpu_update_scanout(g, scanout_id, res, fb, r);
-             } else {
-                 *error = VIRTIO_GPU_RESP_ERR_OUT_OF_MEMORY;
-+                return false;
-             }
--            return;
-+            return true;
-         }
- 
-         data = res->blob;
-@@ -693,7 +696,8 @@ static void virtio_gpu_do_set_scanout(VirtIOGPU *g,
-                                 scanout->ds);
-     }
- 
--    virtio_gpu_update_scanout(g, scanout_id, res, r);
-+    virtio_gpu_update_scanout(g, scanout_id, res, fb, r);
-+    return true;
- }
- 
- static void virtio_gpu_set_scanout(VirtIOGPU *g,
-@@ -1164,7 +1168,8 @@ static void virtio_gpu_cursor_bh(void *opaque)
- 
- static const VMStateDescription vmstate_virtio_gpu_scanout = {
-     .name = "virtio-gpu-one-scanout",
--    .version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 1,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32(resource_id, struct virtio_gpu_scanout),
-         VMSTATE_UINT32(width, struct virtio_gpu_scanout),
-@@ -1176,6 +1181,12 @@ static const VMStateDescription vmstate_virtio_gpu_scanout = {
-         VMSTATE_UINT32(cursor.hot_y, struct virtio_gpu_scanout),
-         VMSTATE_UINT32(cursor.pos.x, struct virtio_gpu_scanout),
-         VMSTATE_UINT32(cursor.pos.y, struct virtio_gpu_scanout),
-+        VMSTATE_UINT32_V(fb.format, struct virtio_gpu_scanout, 2),
-+        VMSTATE_UINT32_V(fb.bytes_pp, struct virtio_gpu_scanout, 2),
-+        VMSTATE_UINT32_V(fb.width, struct virtio_gpu_scanout, 2),
-+        VMSTATE_UINT32_V(fb.height, struct virtio_gpu_scanout, 2),
-+        VMSTATE_UINT32_V(fb.stride, struct virtio_gpu_scanout, 2),
-+        VMSTATE_UINT32_V(fb.offset, struct virtio_gpu_scanout, 2),
-         VMSTATE_END_OF_LIST()
-     },
- };
-@@ -1347,6 +1358,7 @@ static int virtio_gpu_blob_save(QEMUFile *f, void *opaque, size_t size,
-         if (!res->blob_size) {
-             continue;
-         }
-+        assert(!res->image);
-         qemu_put_be32(f, res->resource_id);
-         qemu_put_be32(f, res->blob_size);
-         qemu_put_be32(f, res->iov_cnt);
-@@ -1409,21 +1421,40 @@ static int virtio_gpu_post_load(void *opaque, int version_id)
-     int i;
- 
-     for (i = 0; i < g->parent_obj.conf.max_outputs; i++) {
--        /* FIXME: should take scanout.r.{x,y} into account */
-         scanout = &g->parent_obj.scanout[i];
-         if (!scanout->resource_id) {
-             continue;
-         }
-+
-         res = virtio_gpu_find_resource(g, scanout->resource_id);
-         if (!res) {
-             return -EINVAL;
-         }
--        scanout->ds = qemu_create_displaysurface_pixman(res->image);
-+
-+        if (scanout->fb.format != 0) {
-+            uint32_t error = 0;
-+            struct virtio_gpu_rect r = {
-+                .x = scanout->x,
-+                .y = scanout->y,
-+                .width = scanout->width,
-+                .height = scanout->height
-+            };
-+
-+            if (!virtio_gpu_do_set_scanout(g, i, &scanout->fb, res, &r, &error)) {
-+                return -EINVAL;
-+            }
-+        } else {
-+            /* legacy v1 migration support */
-+            if (!res->image) {
-+                return -EINVAL;
-+            }
-+            scanout->ds = qemu_create_displaysurface_pixman(res->image);
- #ifdef WIN32
--        qemu_displaysurface_win32_set_handle(scanout->ds, res->handle, 0);
-+            qemu_displaysurface_win32_set_handle(scanout->ds, res->handle, 0);
- #endif
-+            dpy_gfx_replace_surface(scanout->con, scanout->ds);
-+        }
- 
--        dpy_gfx_replace_surface(scanout->con, scanout->ds);
-         dpy_gfx_update_full(scanout->con);
-         if (scanout->cursor.resource_id) {
-             update_cursor(g, &scanout->cursor);
--- 
-2.43.2
+> Any preference/suggestion?
+
+[...]
+
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index 2a6e49365a..bfb01b909f 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -682,6 +682,9 @@
+   # @mem-path: the path to either a shared memory or huge page
+   #     filesystem mount
+
+Does this need adjustment?
+
+[...]
+
+>  #       writable RAM instead of ROM, and want to set this property to 'off'.
+>  #       (default: auto, since 8.2)
+>  #
+> +# @shm: if true, shm_open(3) is used to create/open POSIX shared memory
+> +#       object; if false, an open(2) is used. (default: false) (since 9.0)
+> +#
+
+Please format like this for consistency:
+
+# @shm: if true, shm_open(3) is used to create/open POSIX shared memory
+#     object; if false, an open(2) is used (default: false) (since 9.0)
+
+>  # Since: 2.1
+>  ##
+>  { 'struct': 'MemoryBackendFileProperties',
+> @@ -692,6 +695,7 @@
+>              'mem-path': 'str',
+>              '*pmem': { 'type': 'bool', 'if': 'CONFIG_LIBPMEM' },
+>              '*readonly': 'bool',
+> +            '*shm': 'bool',
+>              '*rom': 'OnOffAuto' } }
+>  
+>  ##
+
+[...]
 
 
