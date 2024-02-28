@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 382E9C54E41
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 08:07:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3129DC47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 08:08:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfEy8-0001Sa-Am; Wed, 28 Feb 2024 03:07:12 -0500
+	id 1rfEyS-0001fu-7r; Wed, 28 Feb 2024 03:07:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rfEy4-0001Rc-8l
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 03:07:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1rfEyQ-0001f1-Sa
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 03:07:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rfEy1-0000Pg-M5
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 03:07:07 -0500
+ id 1rfEyM-0000YQ-G8
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 03:07:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709107622;
+ s=mimecast20190719; t=1709107645;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:  content-type:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=OIDX2c2v9PiLO7gzWFWLlGQmuBZReadMu0m/kxNSeeo=;
- b=Ei8wYH2b1GzS4H/afDt1uCy3I5RR8sbwRBkrsXhIlxbA5VaMxNE6rnzqyC5bP6LNPg2b3r
- srz54z+eaNta77tmqmj0+vY7L2wD01Iym6SBPeR60cg3xwneKPx9Eg8vqgu7NXkuuFnduW
- avUHKwisgzjf2q5Yz4+8Iq/pWle1l8U=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6FOwAaHjkgtd1Obqs7Hvk+sV/XW9OPoHUZIDnhZ07Wo=;
+ b=TwbwWzK0XO7Cq3Y5gbmi83SG/x6HBBdO8koMmI/A98L/JmmStsrebae1cuHLBz51Ajnf6Q
+ 7EM/WBrAvh+dieg5reOBSckLwIm6u/ZfiibIVO7ShURdI/4jQqTLDikMt/PLkhs+esOkR7
+ p7po8w75lt3B0UON3BudYGZySR17Olc=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-618-cvRSJbDQNQet8NAqfPAuyQ-1; Wed, 28 Feb 2024 03:07:00 -0500
-X-MC-Unique: cvRSJbDQNQet8NAqfPAuyQ-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-564753be3deso2601162a12.3
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 00:07:00 -0800 (PST)
+ us-mta-651-AphdRWmYM5ed1pCkcJHyyQ-1; Wed, 28 Feb 2024 03:07:22 -0500
+X-MC-Unique: AphdRWmYM5ed1pCkcJHyyQ-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-56421fd7029so2821514a12.3
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 00:07:22 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709107618; x=1709712418;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OIDX2c2v9PiLO7gzWFWLlGQmuBZReadMu0m/kxNSeeo=;
- b=BfuexXRB0jPsZa/RIsog9DtHLcluhSBZW/55DO7kribblrpNrkOM3u96oPMpJ/DLQM
- XyQ/C6TmSlj7CPZ4nLoG0NUESLoovMcqbIawPDZnCWHb/2rRT7VL21A0uxgFZTK2Gc8o
- A5Vfd/TBFxMMCbMnRPwkDHPFKQFyzCq6VS7xNkQScKBUWtOcDuyaUL7TPqSkXoFTTJPG
- vUNFVjgxBAOJTDnrYgOAAH/GfkmICyuFYU0azlt/3/6xH/JrPuCghWpzABhFPuqIa6U5
- 4UlP1Cn9KgdgUWOdZHodArbArXkOaJ0Oj1HAMlChh9ZcbyI/0TysFdYgUBytlchOupzp
- Jfaw==
-X-Gm-Message-State: AOJu0YwBYdRRW5qvOxnIBo1wkp6PymexjKj4Vv5MSbZ01omniHdKlcxj
- UaLd9yrluqPzgKGQ3afP2RqdVHUSDrJVutcA9MlQaCmJhZsl3ClYmMwOfMhE4rmYF/1l+4IxpxD
- 0nGbyqy6jatNSzamJDj/e8Yz4jeu0dNLBYITUCWtVTVKW40RqQTKKvvDR25zeYc8Dz7qUpHTK8b
- a4WcmsQ2Ra/ujMT6KFIylizmeZWOHoMHEKkceQ
-X-Received: by 2002:aa7:d35a:0:b0:565:e084:a84d with SMTP id
- m26-20020aa7d35a000000b00565e084a84dmr5652833edr.24.1709107618591; 
- Wed, 28 Feb 2024 00:06:58 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH+HIE/cpgxcoo251U2Xhl0wYNDI8j3gJchCevW3WXb8TEVxcTWuPfCSq1odHh/+/Wp88Xj4w==
-X-Received: by 2002:aa7:d35a:0:b0:565:e084:a84d with SMTP id
- m26-20020aa7d35a000000b00565e084a84dmr5652812edr.24.1709107618058; 
- Wed, 28 Feb 2024 00:06:58 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709107641; x=1709712441;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6FOwAaHjkgtd1Obqs7Hvk+sV/XW9OPoHUZIDnhZ07Wo=;
+ b=LHXf+d1ewjMGRwuwg24nqOj3xVX3RvzNPckWDU+avdVM3hh9hXRlCmIGNnk6J5QC+L
+ bugeaFz2Z0sxconBYZy8lxb/nS1mojpoGG0xcxehxSdIXC1srEF2YfYI/fLhuwG5TYkM
+ fHMNWIOUUZvWRpntDAdMYL1veqlyLIzQcmlfGqywEOmrxRRYJYAw/P+Wi7pSgVdaZFsy
+ xqiMhtKPN/zYT4EBcc8fnPIQpIuoacl7ll/zG9t/y38Wucy3uBFlyu2rkhIDYKSMKTsM
+ CAB+gzr25teJDSfRKbQs4Y6WAVOe76Z7NLmJdAVVGcTkp+IXMHcNn+nKxGVby6Z8Tqg9
+ tRMA==
+X-Gm-Message-State: AOJu0YyLP/N8ZpJzDdcIxTdVsxk3b8OAdcgBaEQMc6VKHvzs7ubfVeXS
+ SSbwQe0+RI/iXkaWZh2qDNUvu+JcV7jKhoxlsj7z8VQOW/TXaoWvN093SXwzoJfSij7xWgfB3F2
+ Tm36JxF19Kj/ztyCYvv+gnZpL9iU5tcRawyVAHh6wTCm+wDTD+hPZ30FEQbwTV3hv9TurMhsWzi
+ oFaJKLQh94wkZcB3ABr++dHZLAXq/0tql4u07f
+X-Received: by 2002:aa7:c657:0:b0:565:9b18:8af5 with SMTP id
+ z23-20020aa7c657000000b005659b188af5mr8474053edr.39.1709107641106; 
+ Wed, 28 Feb 2024 00:07:21 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHYJ4jor1+MprrPcUB0AIt6MuocBS55h3tWFcoctHRgbt9LKrirvM3TAPunIaDvQZ6S+EfYlg==
+X-Received: by 2002:aa7:c657:0:b0:565:9b18:8af5 with SMTP id
+ z23-20020aa7c657000000b005659b188af5mr8474035edr.39.1709107640775; 
+ Wed, 28 Feb 2024 00:07:20 -0800 (PST)
 Received: from [192.168.10.118] ([93.56.170.180])
  by smtp.gmail.com with ESMTPSA id
- h10-20020a0564020e0a00b005617a858f21sm1543253edh.93.2024.02.28.00.06.57
- for <qemu-devel@nongnu.org>
+ p13-20020a056402500d00b005648b000e91sm1535758eda.92.2024.02.28.00.07.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Feb 2024 00:06:57 -0800 (PST)
+ Wed, 28 Feb 2024 00:07:19 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/10] pc, target/i486 changes for 2024-02-27
-Date: Wed, 28 Feb 2024 09:06:36 +0100
-Message-ID: <20240228080646.261365-1-pbonzini@redhat.com>
+Cc: qemu-stable@nongnu.org
+Subject: [PULL 08/10] target/i386: leave the A20 bit set in the final NPT walk
+Date: Wed, 28 Feb 2024 09:06:44 +0100
+Message-ID: <20240228080646.261365-9-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240228080646.261365-1-pbonzini@redhat.com>
+References: <20240228080646.261365-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,51 +103,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit dd88d696ccecc0f3018568f8e281d3d526041e6f:
+The A20 mask is only applied to the final memory access.  Nested
+page tables are always walked with the raw guest-physical address.
 
-  Merge tag 'pull-request-2024-02-23' of https://gitlab.com/thuth/qemu into staging (2024-02-24 16:12:51 +0000)
+Unlike the previous patch, in this one the masking must be kept, but
+it was done too early.
 
-are available in the Git repository at:
+Cc: qemu-stable@nongnu.org
+Fixes: 4a1e9d4d11c ("target/i386: Use atomic operations for pte updates", 2022-10-18)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/i386/tcg/sysemu/excp_helper.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream
-
-for you to fetch changes up to e7028c36f0e4cb8e357b627eabfe6efee5cb4ed9:
-
-  ide, vl: turn -win2k-hack into a property on IDE devices (2024-02-26 10:17:16 +0100)
-
-----------------------------------------------------------------
-* target/i386: Fix physical address truncation on 32-bit PAE
-* Remove globals for options -no-fd-bootchk and -win2k-hack
-
-----------------------------------------------------------------
-Paolo Bonzini (10):
-      vl, pc: turn -no-fd-bootchk into a machine property
-      target/i386: mask high bits of CR3 in 32-bit mode
-      target/i386: check validity of VMCB addresses
-      target/i386: introduce function to query MMU indices
-      target/i386: use separate MMU indexes for 32-bit accesses
-      target/i386: Fix physical address truncation
-      target/i386: remove unnecessary/wrong application of the A20 mask
-      target/i386: leave the A20 bit set in the final NPT walk
-      ide: collapse parameters to ide_init_drive
-      ide, vl: turn -win2k-hack into a property on IDE devices
-
- include/hw/i386/pc.h                 |  2 +-
- include/hw/ide/ide-dev.h             |  2 ++
- include/hw/ide/internal.h            |  6 +----
- include/sysemu/sysemu.h              |  1 -
- target/i386/cpu.h                    | 46 +++++++++++++++++++++++++------
- hw/i386/pc.c                         | 31 +++++++++++++++++----
- hw/ide/core.c                        | 43 ++++++++++++++---------------
- hw/ide/ide-dev.c                     |  6 ++---
- system/globals.c                     |  2 --
- system/vl.c                          |  4 +--
- target/i386/cpu.c                    |  9 ++++---
- target/i386/tcg/sysemu/excp_helper.c | 52 +++++++++++++++++-------------------
- target/i386/tcg/sysemu/misc_helper.c |  3 +++
- target/i386/tcg/sysemu/svm_helper.c  | 27 ++++++++++++++-----
- qemu-options.hx                      |  5 ++--
- 15 files changed, 149 insertions(+), 90 deletions(-)
+diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
+index 2ddc08b4bb6..8f7011d9663 100644
+--- a/target/i386/tcg/sysemu/excp_helper.c
++++ b/target/i386/tcg/sysemu/excp_helper.c
+@@ -134,7 +134,6 @@ static inline bool ptw_setl(const PTETranslate *in, uint32_t old, uint32_t set)
+ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
+                           TranslateResult *out, TranslateFault *err)
+ {
+-    const int32_t a20_mask = x86_get_a20_mask(env);
+     const target_ulong addr = in->addr;
+     const int pg_mode = in->pg_mode;
+     const bool is_user = is_mmu_index_user(in->mmu_idx);
+@@ -417,10 +416,13 @@ do_check_protect_pse36:
+         }
+     }
+ 
+-    /* align to page_size */
+-    paddr = (pte & a20_mask & PG_ADDRESS_MASK & ~(page_size - 1))
+-          | (addr & (page_size - 1));
++    /* merge offset within page */
++    paddr = (pte & PG_ADDRESS_MASK & ~(page_size - 1)) | (addr & (page_size - 1));
+ 
++    /*
++     * Note that NPT is walked (for both paging structures and final guest
++     * addresses) using the address with the A20 bit set.
++     */
+     if (in->ptw_idx == MMU_NESTED_IDX) {
+         CPUTLBEntryFull *full;
+         int flags, nested_page_size;
+@@ -459,7 +461,7 @@ do_check_protect_pse36:
+         }
+     }
+ 
+-    out->paddr = paddr;
++    out->paddr = paddr & x86_get_a20_mask(env);
+     out->prot = prot;
+     out->page_size = page_size;
+     return true;
 -- 
 2.43.2
 
