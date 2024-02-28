@@ -4,43 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D260BC47DD9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D499EC5478C
 	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 20:37:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfQeP-00051A-Hy; Wed, 28 Feb 2024 15:35:37 -0500
+	id 1rfQeT-00053Z-0x; Wed, 28 Feb 2024 15:35:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rfQeM-00050Y-FS; Wed, 28 Feb 2024 15:35:34 -0500
+ id 1rfQeQ-00052S-PT; Wed, 28 Feb 2024 15:35:39 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rfQeD-0001GQ-PJ; Wed, 28 Feb 2024 15:35:34 -0500
+ id 1rfQeO-0001Hb-BP; Wed, 28 Feb 2024 15:35:38 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 146515176C;
+ by isrv.corpit.ru (Postfix) with ESMTP id 33D1F5176E;
  Wed, 28 Feb 2024 23:35:58 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id A8F6C8BA74;
+ by tsrv.corpit.ru (Postfix) with SMTP id C86A58BA76;
  Wed, 28 Feb 2024 23:35:21 +0300 (MSK)
-Received: (nullmailer pid 267611 invoked by uid 1000);
+Received: (nullmailer pid 267617 invoked by uid 1000);
  Wed, 28 Feb 2024 20:35:21 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.10 33/47] meson: ensure dbus-display generated code is
- built before other units
-Date: Wed, 28 Feb 2024 23:35:02 +0300
-Message-Id: <20240228203521.267565-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Tianlan Zhou <bobby825@126.com>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.10 36/47] system/vl: Update description for input grab key
+Date: Wed, 28 Feb 2024 23:35:04 +0300
+Message-Id: <20240228203521.267565-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.10-20240228233111@cover.tls.msk.ru>
 References: <qemu-stable-7.2.10-20240228233111@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -65,43 +61,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Tianlan Zhou <bobby825@126.com>
 
-It's simply by luck that dbus-display header is built first before the
-other units using it.
+Input grab key should be Ctrl-Alt-g, not just Ctrl-Alt.
 
-With sourceset, I can't find an easier way out than declaring an extra
-dependency for dbus-display1 generate code.
-
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-(cherry picked from commit 1222070e772833c6875e0ca63565db12c22df39e)
+Fixes: f8d2c9369b ("sdl: use ctrl-alt-g as grab hotkey")
+Signed-off-by: Tianlan Zhou <bobby825@126.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(cherry picked from commit 185311130f54ead75c407cdf83004d575829b5d2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/meson.build b/ui/meson.build
-index c1b137bf33..76c6644b3f 100644
---- a/ui/meson.build
-+++ b/ui/meson.build
-@@ -81,7 +81,9 @@ if dbus_display
-                                           '--interface-prefix', 'org.qemu.',
-                                           '--c-namespace', 'QemuDBus',
-                                           '--generate-c-code', '@BASENAME@'])
--  dbus_ss.add(when: [gio, pixman, opengl, gbm],
-+  dbus_display1_lib = static_library('dbus-display1', dbus_display1, dependencies: gio)
-+  dbus_display1_dep = declare_dependency(link_with: dbus_display1_lib, include_directories: include_directories('.'))
-+  dbus_ss.add(when: [gio, pixman, opengl, gbm, dbus_display1_dep],
-               if_true: [files(
-                 'dbus-chardev.c',
-                 'dbus-clipboard.c',
-@@ -89,7 +91,7 @@ if dbus_display
-                 'dbus-error.c',
-                 'dbus-listener.c',
-                 'dbus.c',
--              ), dbus_display1])
-+              )])
-   ui_modules += {'dbus' : dbus_ss}
- endif
- 
+diff --git a/softmmu/vl.c b/softmmu/vl.c
+index ab4394c53d..38d76d6e51 100644
+--- a/softmmu/vl.c
++++ b/softmmu/vl.c
+@@ -856,7 +856,7 @@ static void help(int exitcode)
+     printf("\nDuring emulation, the following keys are useful:\n"
+            "ctrl-alt-f      toggle full screen\n"
+            "ctrl-alt-n      switch to virtual console 'n'\n"
+-           "ctrl-alt        toggle mouse and keyboard grab\n"
++           "ctrl-alt-g      toggle mouse and keyboard grab\n"
+            "\n"
+            "When using -nographic, press 'ctrl-a h' to get some help.\n"
+            "\n"
 -- 
 2.39.2
 
