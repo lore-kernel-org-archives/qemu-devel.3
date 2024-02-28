@@ -4,69 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C751AC5478C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E222CC47DD9
 	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 17:27:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfNi6-00039j-R7; Wed, 28 Feb 2024 12:27:14 -0500
+	id 1rfNhx-000367-Fe; Wed, 28 Feb 2024 12:27:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rfNi5-00039E-Ez
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 12:27:13 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ id 1rfNht-00035I-OM
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 12:27:03 -0500
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rfNi3-00012F-NO
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 12:27:13 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-564fd9eea75so14123a12.3
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 09:27:10 -0800 (PST)
+ id 1rfNho-0000zb-SU
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 12:27:01 -0500
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-565a3910f86so26833a12.3
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 09:26:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709141229; x=1709746029; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aEA7fDq3W20uaqnBu7x7mszqB8YQe35fmemnTM8fyqo=;
- b=iAhJ7z9nhusmapRlqaJTGgqUTvCV8lkdZEA/hf3WAPaqjn/oBxRxLz5n8g2MgPp+LF
- 9dspZsCbb1WqWhxOl0o3GFoDolDNkBtCD9Poj78eQ+Cuzqr1oFRY+E83wGp4X+ecCdiU
- I2PieVHlDL3obnLXt1vFppHjqjvHst+6RFp6m/BZTbEPT/cf0ImSWMdtH/fKLUWK9mUq
- MSW5kbz/FVJhG3fMpwEvh9t5/k6hHOSXSEqGd7r1yR+YNvzympjwObugIJF0Ko5WQ37Q
- XdCG05q2HcAJP/+EMg+a9LdrCq3ZGw+nd3YjOKbL/k6SaLa5glY1wKuencqJdA5w0qT4
- dBFA==
+ d=linaro.org; s=google; t=1709141212; x=1709746012; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=nMu6mEziTJzS5nsqLZQuNOUmGFWK6fwWXtFp1gfLnrs=;
+ b=KSsMJfJsMSKWaNLq4OU7aaS+Lsh2LQqcGkjFbePNTLR/ytew5ObUybyw950rn8dTqf
+ RsLCtsrDk3aWjU9lygxmSRWYrozf84O0Zo5M3TLjNTJPnEvw448Nb1VhQUlKS2BVtDat
+ T60htsUJHrU5YsUWHn56GiSlaOSuzxUTm/9JMxOafMBYli008HAm1FDMn4Q0+BRcb0bX
+ zKTdq/5YFSw+JardTKPo19RXJREP/7RFGLTq/+AOqYzaFlAb+IJk6SCW5+UkRwuqmf5K
+ dc5wUxSphoKR/zyjat5mFhvlh57SbSUyje1NA0n9tguO+zJTWCzksqXkfasdtAWZIbhe
+ +kOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709141229; x=1709746029;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=aEA7fDq3W20uaqnBu7x7mszqB8YQe35fmemnTM8fyqo=;
- b=ESWbS6BYpK0YSRG+TGzHrspBDQW4jGyGSBh6Re4EEIiBnlaVeDEqgjYQYNEweguoC8
- S1znfQgA1RL64vO6ssDOpWQEirUZWtpB17rKVDLp13PYI/mc+zl7XnQyOWlafFGk8hou
- tGv6fmjTalGY/7m2h7qVtifNhiCyz9fiys6VkUR4lbwbyuyBpHaFrpLAR0/6eTjXHgLE
- gXZm99bbqNYc2qR9wrIDK36sTR0icGQJg7uMKVoeV1Im03g4eoAvL0t9aeVCT/cAhp48
- bz66F2EHJ9wndEJz4Gx7Oxhv1Y78kcHyx6bOjp8UILslZNjNP9Bh6umjlNYRpNbnhpUp
- LuCA==
-X-Gm-Message-State: AOJu0YypaGymGunt7Tii6i1pmw4yH63XruAOaGAsOtyoRILaamGxq1Hs
- MYG40nkuVy5kocQRCZy049qnObw8HHmsUBZhFEfLDU6D4td9UZA1keNs4Ejp2FrUnersGfR34Yi
- V2d6Y/9BB/hxpGSlA9BvmjYuUVoBGkaOySoBVKyQQYvjIc7dr
-X-Google-Smtp-Source: AGHT+IG7QkLl9ASAJNNfYET7ec0lAw6YHo5UXIuWU/1yElhf6vXTGdeo0OHk6CKPRd0fUUSBwKi9+GuHkkjRc1dWq3k=
-X-Received: by 2002:aa7:d14b:0:b0:565:7b61:4c86 with SMTP id
- r11-20020aa7d14b000000b005657b614c86mr62825edo.6.1709141228981; Wed, 28 Feb
- 2024 09:27:08 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709141212; x=1709746012;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nMu6mEziTJzS5nsqLZQuNOUmGFWK6fwWXtFp1gfLnrs=;
+ b=umPeXnuvq/GfREEoBIVD5At11Y2KaZD2UpvXx2RpA/iXdZKzjSmc4UoxFtDqOEOcm0
+ yVt117UdTSE0MnBKE1Vsd7HnVZ1A0pe7iw9p/GnpsZn1zn5BByfqNYoSOlxgXulVkqVn
+ F2Td1axf1cAUIMGBzr0ipMLTPoTykfFML5xobhchTIEGb9TttAekvOe7PQoBidATenK+
+ fYGje2gBaDxcc3GGybfIJizSnV/2lpf6d7M/k9v+F+8mo5EGHIoW29o+dJRoOWpjgmvT
+ zy4q5+umgL4UfBEQIAaH6Yj6OH1CFY8JNqqyMGXaN7gBFo2dxnko5edX47upEPLEnu/F
+ QVUw==
+X-Gm-Message-State: AOJu0YzOTykhBYwqZTPbq5GPG4TX2fyf9KxspmTdX+CHfFUe81d2Msso
+ 9Kf22j/FUiGmuEtYie8caB0DikRTKuChVhArIfCL2zleXSbF1A+f1tA2/R3MN+YA641ssGgKSuD
+ VhAAmOFxDkM4yZh+C1G1ZVCoaK04qvLOy64SJAw==
+X-Google-Smtp-Source: AGHT+IGDKjwgygxaU+uSx37JKEX/+IziE52f/i8mQR3bwY8c1Bojssfxxkrguo45qSbws7JLu24wGSFr4kCgX2RGiyQ=
+X-Received: by 2002:aa7:c349:0:b0:564:3b2e:2a2e with SMTP id
+ j9-20020aa7c349000000b005643b2e2a2emr56173edr.9.1709141211853; Wed, 28 Feb
+ 2024 09:26:51 -0800 (PST)
 MIME-Version: 1.0
-References: <20240228115701.1416107-1-alex.bennee@linaro.org>
-In-Reply-To: <20240228115701.1416107-1-alex.bennee@linaro.org>
+References: <20240228080646.261365-1-pbonzini@redhat.com>
+In-Reply-To: <20240228080646.261365-1-pbonzini@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 28 Feb 2024 17:26:58 +0000
-Message-ID: <CAFEAcA9y3z_=ARgc0VFn1hf-CsvR4oUwmprsyr-NtTiAu+-shg@mail.gmail.com>
-Subject: Re: [PULL 00/29] testing, gdbstub and plugin updates
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Date: Wed, 28 Feb 2024 17:26:40 +0000
+Message-ID: <CAFEAcA__SHnm6K8GS3Ae4nqkTCEAM5owab=80OEYVb3etgVx5Q@mail.gmail.com>
+Subject: Re: [PULL 00/10] pc, target/i486 changes for 2024-02-27
+To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,43 +87,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 28 Feb 2024 at 11:58, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
+On Wed, 28 Feb 2024 at 08:07, Paolo Bonzini <pbonzini@redhat.com> wrote:
 >
-> The following changes since commit 158a054c4d1a40179f5e83cd7e1cfe65de457b=
-92:
+> The following changes since commit dd88d696ccecc0f3018568f8e281d3d526041e6f:
 >
->   Merge tag 'pull-target-arm-20240227-1' of https://git.linaro.org/people=
-/pmaydell/qemu-arm into staging (2024-02-27 15:34:41 +0000)
+>   Merge tag 'pull-request-2024-02-23' of https://gitlab.com/thuth/qemu into staging (2024-02-24 16:12:51 +0000)
 >
 > are available in the Git repository at:
 >
->   https://gitlab.com/stsquad/qemu.git tags/pull-maintainer-updates-280224=
--1
+>   https://gitlab.com/bonzini/qemu.git tags/for-upstream
 >
-> for you to fetch changes up to 02ca5ec15089c8717d435d8a842360f15afa7d20:
+> for you to fetch changes up to e7028c36f0e4cb8e357b627eabfe6efee5cb4ed9:
 >
->   docs/devel: plugins can trigger a tb flush (2024-02-28 09:11:42 +0000)
->
-> ----------------------------------------------------------------
-> Testing, gdbstub and plugin updates:
->
->   - fix some test/tcg license headers to GPLv2+
->   - bump up check-tcg timeout to 120s
->   - avoid re-building VM images too often
->   - update OpenBSD to 7.4
->   - use GDBFeature to build gdbstub XML
->   - unify plugin vcpu count under qemu_plugin_num_vcpus
->   - avoid spurious idle/resume callbacks on new vCPUs
->   - ensure nios2-linux-user processes async work
->   - call vcpu_init plugin callback through async work
->   - define plugin helpers when registers being read
->   - add plugin API for reading register values
->   - add support for register tracking to execlog
->   - update plugin docs with assumptions
->   - mention plugins can trigger tb_flush in mttcg design doc
+>   ide, vl: turn -win2k-hack into a property on IDE devices (2024-02-26 10:17:16 +0100)
 >
 > ----------------------------------------------------------------
+> * target/i386: Fix physical address truncation on 32-bit PAE
+> * Remove globals for options -no-fd-bootchk and -win2k-hack
 
 
 Applied, thanks.
