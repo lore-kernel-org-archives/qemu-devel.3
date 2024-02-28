@@ -4,174 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0E37C5478C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 02:15:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0463FC5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 03:05:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rf9TG-0002WJ-0s; Tue, 27 Feb 2024 21:14:58 -0500
+	id 1rfAFg-0007Gn-S6; Tue, 27 Feb 2024 22:05:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rf9TC-0002Vp-AR
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 21:14:54 -0500
-Received: from mgamail.intel.com ([192.198.163.19])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfAFe-0007GK-Ik
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 22:04:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rf9Sw-0001n5-Mk
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 21:14:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709086479; x=1740622479;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=HSC7Va9AKVxiQD2MCnwvy1ZnqRQEbw6t1BXRs5M4ki8=;
- b=CqWxqvwuVgtEwCQm88HlyCMNFQ/Ily7BylgG9G5ddSpjac9BLnOOCXnZ
- 4M7DooxcvNsF8U5DL54MDctacrgObsB2heyUw/oSIHWg3olrEbbXSYMLK
- C8LXxBCk5f49NcOgABrgHlbS3QrxlK3cNwS3gL3bYRYENd4ZwRN2yQ9GY
- nk7F/xd91fMcHsITw6i8bBftmB8+cdP1vgw0IbK5/g00J5MBbMxoM4rnZ
- KtDOLXAlB7p/sYywrPjMoxYuerP9oweiiG4QG6YcZjx86tL3e7kgg960t
- akUmD4RvlTPhSwjK8y4j54OxDSy37irEZh0uKmk3CHdI3pDco/v8Q77D+ w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10996"; a="3330677"
-X-IronPort-AV: E=Sophos;i="6.06,189,1705392000"; 
-   d="scan'208";a="3330677"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Feb 2024 18:14:34 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,189,1705392000"; d="scan'208";a="30445411"
-Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
- by fmviesa002.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 27 Feb 2024 18:14:34 -0800
-Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Tue, 27 Feb 2024 18:14:33 -0800
-Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
- fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Tue, 27 Feb 2024 18:14:33 -0800
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.168)
- by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Tue, 27 Feb 2024 18:14:33 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=nNaZvaQGHVEcegMzBtvKEjjTIQx+dLrui6sNJgSPIR4Ww5oMTfiZDHWMjs2D/UZian6LiZL46oc9G7OwGoQQRYbbu+P4Dl/mxyGzSoChLtx0t78Ep1I2Nk4Byxro0I2aOGRhjdS8lm9Z1Peq4zd8WxKeHRpEMr0dmFXl01dezpf0y1MXva/IC+kR0eABWF7rLs3E+njM/bcecAzd45tDZV7QAMM12M4snkjPLbgVK56eBUaKjKobFeT/8Bs+//J/4+2IYDA5pmje8amqJTQMk0AE8hlQchGdiJl49Gxcj9yFIWBIvbZL/JpsV4CLJBVejO2CiJUsfKJ0biEz7BxcHA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HSC7Va9AKVxiQD2MCnwvy1ZnqRQEbw6t1BXRs5M4ki8=;
- b=lcrUJ90AtsGXiL+NvK5hhr3iKCpaZROM9sijHwrEuZwMBS5DU0OwrBLiBrjKCdyRinS2R33iRGQaePFIl+zt5nZ+3cS7b2lTZG+luxnumlugnJt5SHuiZDCJphQrOqv3thf+MM+e+7VN4RgkGpZq0aFMuHmkI+ie6mKZ8rRlSkXEosNGIgew2tbQxgOB7oi0z3K31hraltDOQPEw0+pMibkT2CKpv94mKmnj7p+1oGoSH9//OGO2IGTWUjb/q+dwMOEcmMnpRnXFurEtXQ6c1f42fcYGsrSlXfcHqjUsy5ZHlkvhRP1RUzKVKUhX92IFKGPWsaQ5DKi+3jKtzSZdoQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
- by SJ0PR11MB5939.namprd11.prod.outlook.com (2603:10b6:a03:42e::21)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7339.23; Wed, 28 Feb
- 2024 02:14:31 +0000
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::c0f3:15d4:d7f6:a72a]) by SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::c0f3:15d4:d7f6:a72a%4]) with mapi id 15.20.7339.009; Wed, 28 Feb 2024
- 02:14:31 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: Joao Martins <joao.m.martins@oracle.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>, "eric.auger@redhat.com"
- <eric.auger@redhat.com>, "peterx@redhat.com" <peterx@redhat.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>, "mst@redhat.com"
- <mst@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
- <nicolinc@nvidia.com>, "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L"
- <yi.l.liu@intel.com>, "Sun, Yi Y" <yi.y.sun@intel.com>, "Peng, Chao P"
- <chao.p.peng@intel.com>, Paolo Bonzini <pbonzini@redhat.com>, "Richard
- Henderson" <richard.henderson@linaro.org>, Eduardo Habkost
- <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: RE: [PATCH rfcv2 18/18] intel_iommu: Block migration if cap is updated
-Thread-Topic: [PATCH rfcv2 18/18] intel_iommu: Block migration if cap is
- updated
-Thread-Index: AQHaVOC9sC8O2ye14U6f5euIaQuiIrEILJaAgBV15iCAAI5RgIAA+swg
-Date: Wed, 28 Feb 2024 02:14:31 +0000
-Message-ID: <SJ0PR11MB6744EFB8DA0649DA6DA3271892582@SJ0PR11MB6744.namprd11.prod.outlook.com>
-References: <20240201072818.327930-1-zhenzhong.duan@intel.com>
- <20240201072818.327930-19-zhenzhong.duan@intel.com>
- <72642921-98d4-4c4f-8117-868d2ae29eb0@oracle.com>
- <SJ0PR11MB6744BF58C9C21D5778A2D15792592@SJ0PR11MB6744.namprd11.prod.outlook.com>
- <2446ce38-29c4-4593-afa1-014299bdc740@oracle.com>
-In-Reply-To: <2446ce38-29c4-4593-afa1-014299bdc740@oracle.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|SJ0PR11MB5939:EE_
-x-ms-office365-filtering-correlation-id: 3401f561-fb24-432e-a056-08dc38030003
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: eyNtRui+Rz4+AY+LVbNUlLeYg3FiYsO4Ex2X/3MUDwAplfTqsMtibveR7AK+/ar0MTChOBVRK72MlZU0M5BUrEZMAjYYfkEreswtDJtEkD6piP6duWaHSWflf/jtH5t5n3Nlij+stP7pIB78vq1COPPf3X9GgUFosTAy2fzeH2jDbuhFlh40ezHfjw3gJYBZ+0gjJD0Bih4vIwDa3mr4CvjTqAAKdrwGlSWOCIDVWTOd6WFMbtnvhB+nenSHT8lUwMKq1MHdA0IPj9ZME1ND9FCtiE2R2gdDiBANtvDkSWcutQqRAYQB25a8DhbqZi9mH8nXVuzFS+JT83MwwzDreE3wW4/I6evwsQVyuUsGdNqdtqr3Y+WA0yu0acGi/gfFtPlKeIqUND99D5LbWXFKSXYrOP1AdyOZfTc3ZlQ5Z8jw8p7MHpEco3KVdO6GDMQJ2IYpkoYPwZ5r6iuxeRacJOGfuDhRhISEgHRR/1owaHZ6wI/95dsW8v5y1L73aMsIWP5v7i/0ejhlKi4qfZ4SkyGjUqhrWVM9r7O40M9AVXCO+1hVNbUrJLRlTosN2mQWcrU2hM90DPkWFPFfYDY+Ltr/z+qTtdCQExSzOcqxic8tzLnWBHhZP2NTg+Qak2gagtjY6TUtbjJxNWfrsVtT3MRG1gPgqk91rXqTpuyALWU4aJ4TJqDNTsh+uvhH8SAHj+0vYz2IBVQelf+CTOeghONbrHYlCK+ryAzQueyXyHQ=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(38070700009); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?TURXUEJFQTJoUFF4cnVUVmplSzg4NEpROHBrZ0p4ekJUNlJ1Q0dqbjJaZjBL?=
- =?utf-8?B?QVY2cjRNSjdmcHk3YjBjbE5VL09nb3BYclpQTGtDcFZYUkZ0Z2xEc3FhTFhZ?=
- =?utf-8?B?MFN0Z0daaE0wWVR6WlBmMU9uUmFtZWMyNk9rNG5CQjJRdGVjYXhicjJUd0NM?=
- =?utf-8?B?aXpsY3ZlMS9ET1loc21FKzdmVEVvVGROQnIxd1dNVHNMQlFjb3ZWNXlIQ3Vo?=
- =?utf-8?B?L01CeWxQQklpVm1mcVAyY0U0Y2VWT0s0RkFNV3h0NmVYSDFWb3R6ZjluVEF2?=
- =?utf-8?B?bFI2V1BHVjZNNTBNSHZMbFVuVllRMy9XNE5Pd0lLMVdFT3pHb3MyYjUxdmJh?=
- =?utf-8?B?b0taZVdleHVHQ2puTnhrVzdBTlFmVmF1VzI1TkFZZXpURUVRVnh5VUxLRXhG?=
- =?utf-8?B?R3h3OWpybjkxS01yRWZCQ1VoWVB5b08wZGpJWU10L1p5MFhHb1BkU1J5T2Nn?=
- =?utf-8?B?aTEreVVRN1Y0cisyZ3dibXhLb1ozNHJjWHQzekZvT3k5V3g3cmQ5T21xZklD?=
- =?utf-8?B?ZEUzbzJpTnBjczNEVCtLRXlXU2h5aTVBWmF0empjcklUbTZYMDBCMDRSNWgv?=
- =?utf-8?B?YmYvVG1NKzFOdjI1eHVpMVVpVDJiRGo5d05HdVVOVFhYZWRIVWxYMEV6OHln?=
- =?utf-8?B?TlhjYlcyelEya0dleUVkdEpuWVdGdGRaSmh5TTc2K1l1dGdvOUlIUkF5WW5F?=
- =?utf-8?B?ZnBsMDRpQmkzVVhaVGRlcEpneHRTalBxNjJzQm5iQnRnWCtnajB2WWNjdzk0?=
- =?utf-8?B?a1k4L1g2NXFhQWtVQVE3UklFbXJiR2JhWTZTSkFsR0srWExrczBLMytwTUVk?=
- =?utf-8?B?WlN5QkpSUG1xZFc3MG9rbCtGK01peklEelNLazNIUXNLUHREK2M1aWxPaVpl?=
- =?utf-8?B?eDZvZlg4QUVKQlI4dnE2NnJVcWxEVjNyOUhyeWZYM2tpUk8rbXhSM0o0cnVj?=
- =?utf-8?B?bTJtQ29pUnJjd0pSWUpGSEFaNis4cHFkb0VaV2wyeGsyN2l0S3RuT3dYaUZT?=
- =?utf-8?B?Y0lpRW9VRFNmcEk1bitLbE5hQkVrT2RnUHJONUNaeWs4dVRlVXFoeTFXSk5h?=
- =?utf-8?B?NHhud0lQOFE3eUpseUhxZFhXTlVFR0U0R0JxMjh4SzJIa0ZvZ2VoK05PUUdI?=
- =?utf-8?B?ZndjUEQzNVpGY2RyOTF0aXpMeW80eHdPdXJFdVVPNlZCeVBmUnBuM0pKVkQ5?=
- =?utf-8?B?cDhvbWtNWi95NEZJRzRNR3djQzR2TGkrb2tqMWRGd3RONW9lREZBSkR0UGZI?=
- =?utf-8?B?Q0ZuaVc5RkJCY3lBU01DRWFjTnFpMytLUlNRMFJYZGtPM3pPdWR6aGVFdUV6?=
- =?utf-8?B?dU8zdDJMTEFaR1JqTGVCYWN3RWRPTThGZjAxdjh0NWlZWHZFZXVFemlhMTRx?=
- =?utf-8?B?Z1J5SjlGUHM5TXN2K3B1aHNSY0ZGUG5NOGNuTkxXM0NXL2V4UTk5YVMvTW5h?=
- =?utf-8?B?Q2NSUVdpVW5FWU5zaWNQN2FLQXBxWm9NbG5PZklLeWRpN3pNNlBWWnJ1ZEph?=
- =?utf-8?B?ZDRXaGNtOUd2RHI5c1dZUWxhZml0M3BINWw2ekMvUWlJNVVvdjczSGo4RzFT?=
- =?utf-8?B?c1lLM29WZGExRzl3VVVuT0xCSzhMd3BIZGhNUFBLNU9xNUI1cUNjQytWYmlE?=
- =?utf-8?B?OTJaSXZpK3NxTUNNMmtOYkFSdjZ6cGhvdnUyM0FZT2F2NjAwUEl1OE43TVZo?=
- =?utf-8?B?UGh4cFdzSS9lUVlEd0FLZFMwRE5vOFl4Z1FxalNXL01wRnJZaVJjcTRjdDla?=
- =?utf-8?B?ZU41Z3A4cTBjRlh6UGZyK0tTdno4SHgzR2tWam5EekFYMFdMSThmcTlod2Fr?=
- =?utf-8?B?K0ovVENYdVBQbUNqQ1ZvWHZEeVcvaFYvREViQ2J6Zk1GVldXN3JWaDFoem9x?=
- =?utf-8?B?N29MQlZWc2RJNlZiYjB6VDJiSnpacWFjRW1pcXFVY0RRaDZRY3QyMmdGUGpK?=
- =?utf-8?B?YTA4WFhXdFlsRW12ZzNPWENZZXFDblQ1bU9ucmZCb0s2Z1pkYUE3OVgrOHVQ?=
- =?utf-8?B?cGhaZE9udTlUZ08rV3oxcHJiTG0weWxkR3hDMlN0bnl4Vno5eTJlRVVhbDFO?=
- =?utf-8?B?NGo4Y1FVSVFwTE1TeFBvUXVucjJIYWZSY3hUMHUwQ3hXKzhzSnU3VWhlSkxF?=
- =?utf-8?Q?No0ec46iZ1xeh0v8GWEIR+Gox?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfAFU-0003hn-As
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 22:04:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709089486;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0r9+asa547b/ZJ3pw0mTzprn0otZB9Bmtfe9rG5O0mQ=;
+ b=aM3GdUDXAFHa2meVp0PhuMAEQatJAX13qz6EXqW0B4axJgovIOFI8M/lRw6UAPEC1XTfNZ
+ f3jYXFIxxuAuanEE2hG2sVsTL2JmxE4vYdKLZuZWX27z2icXhT7E5MOPwAjnB7m2C6Y7yR
+ NHpmAImd82EQXb1HIkIr2a1LhnArg8M=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-104-92P0hIPPPi2txQyplH3gFQ-1; Tue, 27 Feb 2024 22:04:44 -0500
+X-MC-Unique: 92P0hIPPPi2txQyplH3gFQ-1
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-1dc2d4c7310so10141205ad.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 19:04:44 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709089483; x=1709694283;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0r9+asa547b/ZJ3pw0mTzprn0otZB9Bmtfe9rG5O0mQ=;
+ b=GBYbPCWJxm1t+c32CqSqelwmlw/o9LFxLNwVuA+Ird862RuNybgRTG+Vlaroh76Jfk
+ 5cxwagsQ7WzlbCKBf+6w0CVnJPdIixKMdyMBYdJBR5tRodw1Q63ToQsqldw6p6qeGiWx
+ QzyWfPbY/SN6PdqR6MEaRjAfR5qXD1Z3vMUy8Bwp5rQr5ryJJlDIg/nHrwySbMlAUPqG
+ udYEmf8C3neHWVIa8Kp+N3ZJ0dx/n8JnHzmRnibdDMaGwoB86lHi6A4V/odYETLIsJyk
+ FkLrFQpxoJy2Thn2OWcuTptxPt7rcMQ6iWMLTCPUCuZNLAtOYvab5ejQpY1xuJcIiI7H
+ hAFQ==
+X-Gm-Message-State: AOJu0Yzz/6gSrpGQYeOAccI9FO2IvbvEzrHRKawycFQQ+rxT/jFI3Ewf
+ g66Gz/2R9tdE2aUbmWjtOF2i72pjw/TGlQ1NNI85HaYq81rsgiGlywfuMGG4RSVUoNG+UjotQpo
+ 7644RGnQXLFKXpFIe3RO0UCrxyOuoAdUAsjdvb6NPEwQwdgiuerP+
+X-Received: by 2002:a17:902:eec6:b0:1dc:83b3:99a5 with SMTP id
+ h6-20020a170902eec600b001dc83b399a5mr11127817plb.0.1709089483140; 
+ Tue, 27 Feb 2024 19:04:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHKQ9I0w7Pve4T/Fi3e0j4Nrk2rnry8OEoXWdWIzl1+eGM0vejDjBqUgMO9h6F1NuEz/djcuw==
+X-Received: by 2002:a17:902:eec6:b0:1dc:83b3:99a5 with SMTP id
+ h6-20020a170902eec600b001dc83b399a5mr11127804plb.0.1709089482737; 
+ Tue, 27 Feb 2024 19:04:42 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ mn4-20020a1709030a4400b001dcb4a4e461sm2217365plb.163.2024.02.27.19.04.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 Feb 2024 19:04:42 -0800 (PST)
+Date: Wed, 28 Feb 2024 11:04:35 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Avihai Horon <avihaih@nvidia.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Joao Martins <joao.m.martins@oracle.com>,
+ Jan Kiszka <jan.kiszka@siemens.com>
+Subject: Re: [PATCH] migration: Don't serialize migration while can't
+ switchover
+Message-ID: <Zd6iw9dBhW6wKNxx@x1n>
+References: <20240222155627.14563-1-avihaih@nvidia.com> <Zd2SPGPVhW80b1Hu@x1n>
+ <f7fb1999-4400-446b-812d-184fa502627f@nvidia.com>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3401f561-fb24-432e-a056-08dc38030003
-X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Feb 2024 02:14:31.5638 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: KrqPuUJpeEeaDtbumLNtNVTwNXae3lQF/mvE/opBA5ztqKmbHUutjXSnqKuG0MhXUMTbetHo4vUpvWWAZTfQpOqs0tNyxRvYL8SnafGcKR0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB5939
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.19;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <f7fb1999-4400-446b-812d-184fa502627f@nvidia.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -189,35 +101,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IEpvYW8gTWFydGlucyA8am9h
-by5tLm1hcnRpbnNAb3JhY2xlLmNvbT4NCj5TdWJqZWN0OiBSZTogW1BBVENIIHJmY3YyIDE4LzE4
-XSBpbnRlbF9pb21tdTogQmxvY2sgbWlncmF0aW9uIGlmIGNhcCBpcw0KPnVwZGF0ZWQNCj4NCj5P
-biAyNy8wMi8yMDI0IDAyOjQxLCBEdWFuLCBaaGVuemhvbmcgd3JvdGU6DQo+Pg0KPj4NCj4+PiAt
-LS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPj4+IEZyb206IEpvYW8gTWFydGlucyA8am9hby5t
-Lm1hcnRpbnNAb3JhY2xlLmNvbT4NCj4+PiBTdWJqZWN0OiBSZTogW1BBVENIIHJmY3YyIDE4LzE4
-XSBpbnRlbF9pb21tdTogQmxvY2sgbWlncmF0aW9uIGlmIGNhcCBpcw0KPj4+IHVwZGF0ZWQNCj4+
-Pg0KPj4+IE9uIDAxLzAyLzIwMjQgMDc6MjgsIFpoZW56aG9uZyBEdWFuIHdyb3RlOg0KPj4+PiBX
-aGVuIHRoZXJlIGlzIFZGSU8gZGV2aWNlIGFuZCB2SU9NTVUgY2FwL2VjYXAgaXMgdXBkYXRlZCBi
-YXNlZCBvbg0KPj4+IGhvc3QNCj4+Pj4gSU9NTVUgY2FwL2VjYXAsIG1pZ3JhdGlvbiBzaG91bGQg
-YmUgYmxvY2tlZC4NCj4+Pj4NCj4+Pj4gU2lnbmVkLW9mZi1ieTogWmhlbnpob25nIER1YW4gPHpo
-ZW56aG9uZy5kdWFuQGludGVsLmNvbT4NCj4+Pg0KPj4+IElzIHRoaXMgcmVhbGx5IG5lZWRlZCBj
-b25zaWRlcmluZyBtaWdyYXRpb24gd2l0aCB2SU9NTVUgaXMgYWxyZWFkeQ0KPmJsb2NrZWQNCj4+
-PiBhbnl3YXlzPw0KPj4NCj4+IFZGSU8gZGV2aWNlIGNhbiBiZSBob3QgdW5wbHVnZ2VkLCB0aGVu
-IGJsb2NrZXIgZHVlIHRvIHZJT01NVSBpcw0KPnJlbW92ZWQsDQo+PiBidXQgd2Ugc3RpbGwgbmVl
-ZCBhIGJsb2NrZXIgZm9yIGNhcC9lY2FwIHVwZGF0ZS4NCj4+DQo+DQo+UmlnaHQgd2hpY2ggdGhl
-biB0aGUgYmxvY2tlciBnZXRzIHJlLWFkZGVkIGFmdGVyIHlvdSBhZGQgb25lIFZGSU8gZGV2aWNl
-Lg0KPlRoZQ0KPmNvbW1pdCBtZXNzYWdlIHJlZmVycyB4cGxpY2l0bHkgVkZJTyBkZXZpY2UsIHdo
-eSB3b3VsZCB5b3UgY2FyZSBhYm91dA0KPmJsb2NraW5nDQo+bWlncmF0aW9uIG9uIHZJT01NVSB3
-aXRob3V0IHZmaW8gZGV2aWNlcyBwcmVzZW50PyBNYXliZSB0aGVyZSdzIGFub3RoZXINCj5yZWFz
-b24NCj5idXQgdGhhdCB0aGUgY29tbWl0IG1lc3NhZ2VzIGRvZXNuJ3QgY292ZXI/IGxpa2UgZ3Vl
-c3QgTUdBVyBiZWluZyBiaWdnZXINCj50aGFuDQo+aG9zdCBNR0FXIG9yIHNvbWV0aGluZyBsaWtl
-IHRoYXQ/DQoNCklmIHFlbXUgc3RhcnRzIHdpdGggY29sZCBwbHVnZ2VkIHZmaW8gZGV2aWNlLCB0
-aGF0IHZmaW8gZGV2aWNlIG1heSB1cGRhdGUgY2FwL2VjYXAuDQpFdmVuIGlmIHRoYXQgdmZpbyBk
-ZXZpY2UgaXMgdW5wbHVnZ2VkIGF0IHJ1bnRpbWUsIHRoZSBjaGFuZ2VkIGNhcC9lY2FwIGlzIGtl
-cHQuDQpJbiB0aGlzIGNhc2Ugc291cmNlIGFuZCBkZXN0IHdpbGwgaGF2ZSBpbmNvbXBhdGlibGUg
-Y2FwL2VjYXAgY29uZmlnLg0KU28gSSBibG9jayBtaWdyYXRpb24gaWYgdGhlcmUgaXMgY2FwL2Vj
-YXAgdXBkYXRlIG9uIHNvdXJjZSBzaWRlLg0KDQpUaGlzIHBhdGNoIGlzIHRvIGRlYWwgd2l0aCB0
-aGUgY2FzZSB0aGF0IHRoZXJlIGlzIGNvbGQgcGx1Z2dlZCB2ZmlvIGRldmljZSB3aGljaCBpcw0K
-dW5wbHVnZ2VkIGF0IHJ1bnRpbWUgYW5kIHRoZW4gbWlncmF0aW9uIGhhcHBlbi4NCg0KVGhhbmtz
-DQpaaGVuemhvbmcNCg==
+On Wed, Feb 28, 2024 at 02:00:26AM +0200, Avihai Horon wrote:
+> 
+> On 27/02/2024 9:41, Peter Xu wrote:
+> > External email: Use caution opening links or attachments
+> > 
+> > 
+> > On Thu, Feb 22, 2024 at 05:56:27PM +0200, Avihai Horon wrote:
+> > > Currently, migration code serializes device data sending during pre-copy
+> > > iterative phase. As noted in the code comment, this is done to prevent
+> > > faster changing device from sending its data over and over.
+> > Frankly speaking I don't understand the rational behind 90697be889 ("live
+> > migration: Serialize vmstate saving in stage 2").  I don't even think I
+> > noticed this logic before even if I worked on migration for a few years...
+> > 
+> > I was thinking all devices should always get its chance to run for some
+> > period during iterations.  Do you know the reasoning behind?  And I must
+> > confess I also know little on block migration, which seems to be relevant
+> > to this change.  Anyway, I also copy Jan just in case he'll be able to chim
+> > in.
+> 
+> I am not 100% sure either, but I can guess:
+> This commit is pretty old (dates to 2009), so maybe back then the only
+> iterative devices were block devices and RAM.
+> Block devices didn't change as fast as RAM (and were probably much bigger
+> than RAM), so it made sense to send them first and only then send RAM, which
+> changed constantly.
+
+Makes sense.  For some reason I read it the other way round previously.
+
+> 
+> > 
+> > If there is a fast changing device, even if we don't proceed with other
+> > device iterators and we stick with the current one, assuming it can finally
+> > finish dumping all data, but then we'll proceed with other devices and the
+> > fast changing device can again accumulate dirty information?
+> 
+> I guess this logic only makes sense for the case where we only have block
+> devices and a RAM device, because the block devices wouldn't change that
+> much?
+> 
+> > 
+> > > However, with switchover-ack capability enabled, this behavior can be
+> > > problematic and may prevent migration from converging. The problem lies
+> > > in the fact that an earlier device may never finish sending its data and
+> > > thus block other devices from sending theirs.
+> > Yes, this is a problem.
+> > 
+> > > This bug was observed in several VFIO migration scenarios where some
+> > > workload on the VM prevented RAM from ever reaching a hard zero, not
+> > > allowing VFIO initial pre-copy data to be sent, and thus destination
+> > > could not ack switchover. Note that the same scenario, but without
+> > > switchover-ack, would converge.
+> > > 
+> > > Fix it by not serializing device data sending during pre-copy iterative
+> > > phase if switchover was not acked yet.
+> > I am still not fully convinced that it's even legal that one device can
+> > consume all iterator's bandwidth, ignoring the rest..  Though again it's
+> > not about this patch, but about commit 90697be889.
+> 
+> Yes, I agree. As I wrote above, maybe this was valid back then when the only
+> iterative devices were block and RAM.
+> 
+> > 
+> > I'm thinking whether we should allow each device to have its own portion of
+> > chance to push data for each call to qemu_savevm_state_iterate(),
+> > irrelevant of vfio's switchover-ack capability.
+> 
+> I wasn't sure for 100% why we have this logic in the first place, so I wrote
+> my patch as little invasive as possible, keeping migration behavior as is
+> (except for switchover-ack).
+> But I tend to agree with you for three reasons:
+> 
+> 1. I think block migration is deprecated (see commits 66db46ca83b8,
+> 40101f320d6b and 8846b5bfca76).
+> Instead, users are instructed to use blockdev-mirror and co. [1]. If I'm not
+> mistaken, this operates using a different infrastructure than migration.
+> So this logic is not relevant anymore.
+> 
+> 2. As you pointed out earlier, the fast changing device can accumulate dirty
+> data over and over. VFIO devices come after RAM, so this logic doesn't
+> achieve its goal in this case (we may sync fast changing RAM over and over).
+> 
+> 3. My fix in this patch won't solve a similar problem that could happen,
+> where a VFIO device with a lot of pre-copy data (not necessarily initial
+> data) may never be able to send it, thus not realizing the full potential of
+> pre-copy for VFIO.
+> (I personally have not encountered this problem yet, but maybe it can happen
+> with a vGPU).
+
+Thanks for a summary.
+
+> 
+> 
+> If you agree, I can send a v2 that simply removes this logic and gives every
+> device an equal chance to send its data (like Joao showed) with some
+> explanation why we do it.
+
+Let's see whether others have an opinion, but to me I think we can give it
+a shot.  In that case we can "break" in the previous "ret < 0" check
+already.
+
+One more thing to mention is then I think we need to calculate the case of
+"all iterators returned 1" (aka, "all completes") scenario.  With the old
+check it is guaranteed if the loop iterates over all iterators then all
+iterators have completed.  Now we allow ret==0 to keep iterating, then the
+check needs to be done explicitly.
+
+In general, it could be something like:
+
+  all_done = 1;
+  loop {
+    ...
+    ret = se->ops->save_live_iterate(f, se->opaque);
+    if (ret < 0) {
+      /* error handling.. */
+      ...
+      break;
+    } else if (ret == 0) {
+      all_done = 0;
+    }
+  }
+  return all_done;
+
+> We could also give RAM precedence over other devices only during the first
+> iteration of sending RAM (i.e., only until first dirty sync), but I don't
+> know how much benefit this would give.
+
+That sounds a bit tricky.  We can leave that for later until justified to
+be anything useful.
+
+Now when I checked VFIO code I found that VFIO still may have two issues:
+
+====
+1) VFIO doesn't yet respect migration_rate_exceeded()
+
+That's the knob we use to limit send throughput when user specified the bw
+to be something not zero, then throttling will apply.  Currently it seems
+VFIO always sends limited data per iteration - a little bit more than
+1MB-ish?  I'm mostly only looking at VFIO_MIG_DEFAULT_DATA_BUFFER_SIZE,
+which seems fine, because in qemu_savevm_state_iterate() there's one more
+migration_rate_exceeded() check anyway:
+
+        if (migration_rate_exceeded(f)) {
+            return 0;
+        }
+
+However it may be good that VFIO will also use migration_rate_exceeded()
+inside the iterator (before we can have some better way to do throttling..).
+
+2) vfio_save_iterate() always return 1
+
+IIUC right now "1" means "all data is sent"?  But that seems not true for
+VFIO if returned 1 every time.
+
+I think it's not a major issue, e.g. the main migration routine even
+ignored the retval of qemu_savevm_state_iterate(), the rest VFIO data
+should rely on the upcoming loops over ->save_live_complete_precopy().
+
+However I think it could already break bg_migration_iteration_run() as it
+doesn't do that (it stores device state _before_ normal iterators).  But I
+agree bg-snapshot is never ready with VFIO anyway and the feature itself is
+probably still flaky, so not a major concern.  Just want to raise it up
+when we're there.
+====
+
+Besides all above, I think we are just still not good enough to do proper
+bandwidth provisioning over the iterators if the max-bandwidth is set
+pretty low: even with above change to allow iterators to proceed with
+ret==0, we can also hit the case where RAM is very busy, it consumes all
+bandwidth, and migration_rate_exceeded() reported true, then VFIO will be
+skipped again as it's after RAM iterators.  We may at least want to
+remember the last time we iterated here, and then for the next iteration we
+go with the handler next to it.  But that should not happen with high /
+unlimited bandwidth setup, and can be another story.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
