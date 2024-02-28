@@ -4,72 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEDB8C47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 11:48:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15697C5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 11:48:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfIOV-00068v-3y; Wed, 28 Feb 2024 06:46:39 -0500
+	id 1rfIQK-0002DC-HE; Wed, 28 Feb 2024 06:48:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1rfIO6-0005sv-DD; Wed, 28 Feb 2024 06:46:19 -0500
-Received: from zproxy2.enst.fr ([137.194.2.221])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1rfIQ3-0001xI-Rt
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:48:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1rfIO1-0002AM-8K; Wed, 28 Feb 2024 06:46:14 -0500
-Received: from localhost (localhost [IPv6:::1])
- by zproxy2.enst.fr (Postfix) with ESMTP id 9CD1380648;
- Wed, 28 Feb 2024 12:46:04 +0100 (CET)
-Received: from zproxy2.enst.fr ([IPv6:::1])
- by localhost (zproxy2.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id ZT4YcjCa5vHQ; Wed, 28 Feb 2024 12:46:04 +0100 (CET)
-Received: from localhost (localhost [IPv6:::1])
- by zproxy2.enst.fr (Postfix) with ESMTP id EBE4C806C9;
- Wed, 28 Feb 2024 12:46:03 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy2.enst.fr EBE4C806C9
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1709120763;
- bh=wUjU5ICK8Sk1nbjQeDu+2SP06XX77Cz79lHH17Weh+U=;
- h=From:To:Date:Message-ID:MIME-Version;
- b=QJBbKk0uNBeXYGR7CxwWE6Ay7b6uZzTTZq1sPckKdN9KqkXSeG8nbv2FnCTdxM/TR
- qbF33F+T2P7k4j9G8dOAAx/HaJMMPi17IkyODOzZOkW+IIquciuraOLfXbCfc57V5o
- Cx7cKnNYDmI4/L5hw279Dpn6tI63mR1su7dIvd7Q=
-X-Virus-Scanned: amavis at enst.fr
-Received: from zproxy2.enst.fr ([IPv6:::1])
- by localhost (zproxy2.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id SfdPLoy0qzBh; Wed, 28 Feb 2024 12:46:03 +0100 (CET)
-Received: from localhost.localdomain (74.0.125.80.rev.sfr.net [80.125.0.74])
- by zproxy2.enst.fr (Postfix) with ESMTPSA id 8CB9380660;
- Wed, 28 Feb 2024 12:46:03 +0100 (CET)
-From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1rfIPx-0002iU-Ae
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:48:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709120887;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=BXPvZYGOhLWhC4Y9yW5OYZI7C8hPCevKDeLYnOM7TZ0=;
+ b=EslrXjeQa9AMhTSe360/xQ2WFVmHpDSyMbze6RbmTAmhi4v2c7MVimP3Fg5MI019ky/oRP
+ g9cOUE/svaDxPLQY84ZZI+zMLpldVsHbSZ10Y+bhwEhLM128vGmrbb+iyh8H78+f039ieq
+ yQxpztNCWeflSJOofP83ItrD3nKsdoQ=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-557-zTRokmotMby1rmS1Bg58Ew-1; Wed, 28 Feb 2024 06:48:06 -0500
+X-MC-Unique: zTRokmotMby1rmS1Bg58Ew-1
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-787a18ce7e2so526545085a.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 03:48:06 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709120886; x=1709725686;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=BXPvZYGOhLWhC4Y9yW5OYZI7C8hPCevKDeLYnOM7TZ0=;
+ b=dqjM0bblbZhZgnmhtg8pyhTt7OMOhq0kSEqY5+pgMUuZzcwdCrgfsgM1d663RGDAtI
+ LZDVwm9WBk+usdOinAHL9Kx/uYk7V7KI1RqPVD2cWIcpFftqus1lPVci2GccT9BMTAKb
+ MIdDzYbZuuS9JJ0fIpdS3Z3bPKodJTY+9XJIXQSDiUkVkzFJK4T3XOS1IVr9gp5f4Qqv
+ weH9iVFrL00/jHmrli+o5lF6I7/m9/bPC47Q38SzAUF5HDNgacudcSXuL20xrcHQa+WS
+ 0y/9IYlEVLEz1DcMxk8EofqCijRFoX6ICjyrnOiYNQZcWBMxJRGCDYmp1Mb+5X+gnYMe
+ DuPA==
+X-Gm-Message-State: AOJu0YzWohI4W8mOt+G7NBLhD0lJxoUHdCrCR8HDoFLFFTGTd8Hx/mDJ
+ 9s9VilslGx0CnZrmWpgKrnGNXGiu1Dv1jGsuntz4+qGkXaz+df6gg2v9M05loRk0MX9xzsFj1fl
+ KMrTHBvivU1u3TmHU5kGiZog5PFhn58NVLRXdH4fCkjI531TFWbgmICp24Jma3BSgWKPPpRW8v1
+ MADGJU2m5YXI1wkzA3Cny9cj4qNVgPa6Ck/8rK
+X-Received: by 2002:a37:c40c:0:b0:787:9e79:6f5c with SMTP id
+ d12-20020a37c40c000000b007879e796f5cmr4669608qki.49.1709120885986; 
+ Wed, 28 Feb 2024 03:48:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEe5FfDKl78yC+rFIJrYjtmi95q3FezM55EHfUsXTzEvvlRYSgC7k3ekw6Qfsq6DorYzBqnLQ==
+X-Received: by 2002:a37:c40c:0:b0:787:9e79:6f5c with SMTP id
+ d12-20020a37c40c000000b007879e796f5cmr4669574qki.49.1709120885589; 
+ Wed, 28 Feb 2024 03:48:05 -0800 (PST)
+Received: from step1.redhat.com (host-82-57-51-64.retail.telecomitalia.it.
+ [82.57.51.64]) by smtp.gmail.com with ESMTPSA id
+ b12-20020a05620a0f8c00b00787c1102df8sm4492315qkn.127.2024.02.28.03.48.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 28 Feb 2024 03:48:04 -0800 (PST)
+From: Stefano Garzarella <sgarzare@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>,
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
- Alistair Francis <alistair@alistair23.me>,
- Samuel Tardieu <sam@rfc1149.net>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2 5/5] tests/qtest : Add testcase for DM163
-Date: Wed, 28 Feb 2024 12:32:03 +0100
-Message-ID: <20240228114555.192175-6-ines.varhol@telecom-paris.fr>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Coiby Xu <Coiby.Xu@gmail.com>, slp@redhat.com,
+ Eduardo Habkost <eduardo@habkost.net>, Hanna Reitz <hreitz@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Raphael Norwitz <raphael@enfabrica.net>, Kevin Wolf <kwolf@redhat.com>,
+ David Hildenbrand <david@redhat.com>, stefanha@redhat.com,
+ gmaglione@redhat.com, Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PATCH 0/9] vhost-user: support any POSIX system (tested on macOS and
+ FreeBSD)
+Date: Wed, 28 Feb 2024 12:47:50 +0100
+Message-ID: <20240228114759.44758-1-sgarzare@redhat.com>
 X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240228114555.192175-1-ines.varhol@telecom-paris.fr>
-References: <20240228114555.192175-1-ines.varhol@telecom-paris.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=137.194.2.221;
- envelope-from=ines.varhol@telecom-paris.fr; helo=zproxy2.enst.fr
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,255 +113,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-`test_dm163_bank()`
-Checks that the pin "sout" of the DM163 led driver outputs the values
-received on pin "sin" with the expected latency (depending on the bank).
+The vhost-user protocol is not really Linux-specific, so let's try support
+QEMU's frontends and backends (including libvhost-user) in any POSIX system
+with this series. The main use case is to be able to use virtio devices that
+we don't have built-in in QEMU (e.g. virtiofsd, vhost-user-vsock, etc.) even
+in non-Linux systems.
 
-`test_dm163_gpio_connection()`
-Check that changes to relevant STM32L4x5 GPIO pins are propagated to the
-DM163 device.
+The first 5 patches are more like fixes discovered at runtime on macOS or
+FreeBSD that could go even independently of this series.
 
-Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
----
- tests/qtest/dm163-test.c | 192 +++++++++++++++++++++++++++++++++++++++
- tests/qtest/meson.build  |   5 +
- 2 files changed, 197 insertions(+)
- create mode 100644 tests/qtest/dm163-test.c
+Patches 6, 7, and 8 enable building of frontends and backends (including
+libvhost-user) with associated code changes to succeed in compilation.
 
-diff --git a/tests/qtest/dm163-test.c b/tests/qtest/dm163-test.c
-new file mode 100644
-index 0000000000..6f88ceef44
---- /dev/null
-+++ b/tests/qtest/dm163-test.c
-@@ -0,0 +1,192 @@
-+/*
-+ * QTest testcase for DM163
-+ *
-+ * Copyright (C) 2024 Samuel Tardieu <sam@rfc1149.net>
-+ * Copyright (C) 2024 Arnaud Minier <arnaud.minier@telecom-paris.fr>
-+ * Copyright (C) 2024 In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+
-+#define SIN 8
-+#define DCK 9
-+#define RST_B 10
-+#define LAT_B 11
-+#define SELBK 12
-+#define EN_B 13
-+
-+#define DEVICE_NAME "/machine/dm163"
-+#define GPIO_OUT(name, value) qtest_set_irq_in(qts, DEVICE_NAME, NULL, n=
-ame,   \
-+                                               value)
-+#define GPIO_PULSE(name)                                                =
-       \
-+  do {                                                                  =
-       \
-+    GPIO_OUT(name, 1);                                                  =
-       \
-+    GPIO_OUT(name, 0);                                                  =
-       \
-+  } while (0)
-+
-+
-+static void rise_gpio_pin_dck(QTestState *qts)
-+{
-+    /* Configure output mode for pin PB1 */
-+    qtest_writel(qts, 0x48000400, 0xFFFFFEB7);
-+    /* Write 1 in ODR for PB1 */
-+    qtest_writel(qts, 0x48000414, 0x00000002);
-+}
-+
-+static void lower_gpio_pin_dck(QTestState *qts)
-+{
-+    /* Configure output mode for pin PB1 */
-+    qtest_writel(qts, 0x48000400, 0xFFFFFEB7);
-+    /* Write 0 in ODR for PB1 */
-+    qtest_writel(qts, 0x48000414, 0x00000000);
-+}
-+
-+static void rise_gpio_pin_selbk(QTestState *qts)
-+{
-+    /* Configure output mode for pin PC5 */
-+    qtest_writel(qts, 0x48000800, 0xFFFFF7FF);
-+    /* Write 1 in ODR for PC5 */
-+    qtest_writel(qts, 0x48000814, 0x00000020);
-+}
-+
-+static void lower_gpio_pin_selbk(QTestState *qts)
-+{
-+    /* Configure output mode for pin PC5 */
-+    qtest_writel(qts, 0x48000800, 0xFFFFF7FF);
-+    /* Write 0 in ODR for PC5 */
-+    qtest_writel(qts, 0x48000814, 0x00000000);
-+}
-+
-+static void rise_gpio_pin_lat_b(QTestState *qts)
-+{
-+    /* Configure output mode for pin PC4 */
-+    qtest_writel(qts, 0x48000800, 0xFFFFFDFF);
-+    /* Write 1 in ODR for PC4 */
-+    qtest_writel(qts, 0x48000814, 0x00000010);
-+}
-+
-+static void lower_gpio_pin_lat_b(QTestState *qts)
-+{
-+    /* Configure output mode for pin PC4 */
-+    qtest_writel(qts, 0x48000800, 0xFFFFFDFF);
-+    /* Write 0 in ODR for PC4 */
-+    qtest_writel(qts, 0x48000814, 0x00000000);
-+}
-+
-+static void rise_gpio_pin_rst_b(QTestState *qts)
-+{
-+    /* Configure output mode for pin PC3 */
-+    qtest_writel(qts, 0x48000800, 0xFFFFFF7F);
-+    /* Write 1 in ODR for PC3 */
-+    qtest_writel(qts, 0x48000814, 0x00000008);
-+}
-+
-+static void lower_gpio_pin_rst_b(QTestState *qts)
-+{
-+    /* Configure output mode for pin PC3 */
-+    qtest_writel(qts, 0x48000800, 0xFFFFFF7F);
-+    /* Write 0 in ODR for PC3 */
-+    qtest_writel(qts, 0x48000814, 0x00000000);
-+}
-+
-+static void rise_gpio_pin_sin(QTestState *qts)
-+{
-+    /* Configure output mode for pin PA4 */
-+    qtest_writel(qts, 0x48000000, 0xFFFFFDFF);
-+    /* Write 1 in ODR for PA4 */
-+    qtest_writel(qts, 0x48000014, 0x00000010);
-+}
-+
-+static void lower_gpio_pin_sin(QTestState *qts)
-+{
-+    /* Configure output mode for pin PA4 */
-+    qtest_writel(qts, 0x48000000, 0xFFFFFDFF);
-+    /* Write 0 in ODR for PA4 */
-+    qtest_writel(qts, 0x48000014, 0x00000000);
-+}
-+
-+static void test_dm163_bank(const void *opaque)
-+{
-+    const long bank =3D (uintptr_t) opaque;
-+    const int width =3D bank ? 192 : 144;
-+
-+    QTestState *qts =3D qtest_initf("-M b-l475e-iot01a");
-+    qtest_irq_intercept_out_named(qts, DEVICE_NAME, "sout");
-+    GPIO_OUT(RST_B, 1);
-+    GPIO_OUT(EN_B, 0);
-+    GPIO_OUT(DCK, 0);
-+    GPIO_OUT(SELBK, bank);
-+    GPIO_OUT(LAT_B, 1);
-+
-+    /* Fill bank with zeroes */
-+    GPIO_OUT(SIN, 0);
-+    for (int i =3D 0; i < width; i++) {
-+        GPIO_PULSE(DCK);
-+    }
-+    /* Fill bank with ones, check that we get the previous zeroes */
-+    GPIO_OUT(SIN, 1);
-+    for (int i =3D 0; i < width; i++) {
-+        GPIO_PULSE(DCK);
-+        g_assert(!qtest_get_irq(qts, 0));
-+    }
-+
-+    /* Pulse one more bit in the bank, check that we get a one */
-+    GPIO_PULSE(DCK);
-+    g_assert(qtest_get_irq(qts, 0));
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_dm163_gpio_connection(void)
-+{
-+    QTestState *qts =3D qtest_init("-M b-l475e-iot01a");
-+    qtest_irq_intercept_in(qts, DEVICE_NAME);
-+
-+    g_assert_false(qtest_get_irq(qts, SIN));
-+    g_assert_false(qtest_get_irq(qts, DCK));
-+    g_assert_false(qtest_get_irq(qts, RST_B));
-+    g_assert_false(qtest_get_irq(qts, LAT_B));
-+    g_assert_false(qtest_get_irq(qts, SELBK));
-+
-+    rise_gpio_pin_dck(qts);
-+    g_assert_true(qtest_get_irq(qts, DCK));
-+    lower_gpio_pin_dck(qts);
-+    g_assert_false(qtest_get_irq(qts, DCK));
-+
-+    rise_gpio_pin_lat_b(qts);
-+    g_assert_true(qtest_get_irq(qts, LAT_B));
-+    lower_gpio_pin_lat_b(qts);
-+    g_assert_false(qtest_get_irq(qts, LAT_B));
-+
-+    rise_gpio_pin_selbk(qts);
-+    g_assert_true(qtest_get_irq(qts, SELBK));
-+    lower_gpio_pin_selbk(qts);
-+    g_assert_false(qtest_get_irq(qts, SELBK));
-+
-+    rise_gpio_pin_rst_b(qts);
-+    g_assert_true(qtest_get_irq(qts, RST_B));
-+    lower_gpio_pin_rst_b(qts);
-+    g_assert_false(qtest_get_irq(qts, RST_B));
-+
-+    rise_gpio_pin_sin(qts);
-+    g_assert_true(qtest_get_irq(qts, SIN));
-+    lower_gpio_pin_sin(qts);
-+    g_assert_false(qtest_get_irq(qts, SIN));
-+
-+    g_assert_false(qtest_get_irq(qts, DCK));
-+    g_assert_false(qtest_get_irq(qts, LAT_B));
-+    g_assert_false(qtest_get_irq(qts, SELBK));
-+    g_assert_false(qtest_get_irq(qts, RST_B));
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+    qtest_add_data_func("/dm163/bank0", (void *)0, test_dm163_bank);
-+    qtest_add_data_func("/dm163/bank1", (void *)1, test_dm163_bank);
-+    qtest_add_func("/dm163/gpio_connection", test_dm163_gpio_connection)=
-;
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 2db5b0329e..0cc7406aed 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -205,6 +205,9 @@ qtests_stm32l4x5 =3D \
-    'stm32l4x5_rcc-test',
-    'stm32l4x5_gpio-test']
-=20
-+qtests_dm163 =3D \
-+  ['dm163-test']
-+
- qtests_arm =3D \
-   (config_all_devices.has_key('CONFIG_MPS2') ? ['sse-timer-test'] : []) =
-+ \
-   (config_all_devices.has_key('CONFIG_CMSDK_APB_DUALTIMER') ? ['cmsdk-ap=
-b-dualtimer-test'] : []) + \
-@@ -219,6 +222,8 @@ qtests_arm =3D \
-   (config_all_devices.has_key('CONFIG_VEXPRESS') ? ['test-arm-mptimer'] =
-: []) + \
-   (config_all_devices.has_key('CONFIG_MICROBIT') ? ['microbit-test'] : [=
-]) + \
-   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') ? qtests_stm32l4x5=
- : []) + \
-+  (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') and
-+   config_all_devices.has_key('CONFIG_DM163')? qtests_dm163 : []) + \
-   ['arm-cpu-features',
-    'boot-serial-test']
-=20
---=20
+The latest patch (9) adds support for the POSIX shm_open() API to create
+shared memory which is identified by an fd that can be shared with vhost-user
+backends. This is useful on those systems (like macOS) where we don't have
+memfd_create() or special filesystems like "/dev/shm".
+
+I put the whole series in RFC because I have some questions especially in
+patch 6 and 9, but in general any comment/suggestion/test are really welcome.
+
+Maybe the first 5 patches can go separately, but I only discovered those
+problems after testing patches 6 - 9, so I have included them in this series
+for now. Please let me know if you prefer that I send them separately.
+
+For now I tested this series using vhost-user-blk and QSD on
+macOS Sonoma 14.3.1 (aarch64), FreeBSD 14 (x86_64), and Fedora 39 (x86_64)
+in this way:
+
+- Start vhost-user-blk or QSD (same commands for all systems)
+
+  vhost-user-blk -s /tmp/vhost.socket \
+    -b Fedora-Cloud-Base-39-1.5.x86_64.raw
+
+  qemu-storage-daemon \
+    --blockdev file,filename=Fedora-Cloud-Base-39-1.5.x86_64.qcow2,node-name=file \
+    --blockdev qcow2,file=file,node-name=qcow2 \
+    --export vhost-user-blk,addr.type=unix,addr.path=/tmp/vhost.socket,id=vub,num-queues=1,node-name=qcow2,writable=on
+
+- macOS (aarch64): start QEMU (using hvf accelerator)
+
+  qemu-system-aarch64 -smp 2 -cpu host -M virt,accel=hvf,memory-backend=mem \
+    -drive file=./build/pc-bios/edk2-aarch64-code.fd,if=pflash,format=raw,readonly=on \
+    -device virtio-net-device,netdev=net0 -netdev user,id=net0 \
+    -device ramfb -device usb-ehci -device usb-kbd \
+    -object memory-backend-file,mem-path="/mem0",shm=on,share=on,id=mem,size=512M \
+    -device vhost-user-blk-pci,num-queues=1,disable-legacy=on,chardev=char0 \
+    -chardev socket,id=char0,path=/tmp/vhost.socket
+
+- FreeBSD (x86_64): start QEMU (no accelerators available)
+
+  qemu-system-x86_64 -smp 2 -M q35,memory-backend=mem \
+    -object memory-backend-file,mem-path="/mem0",shm=on,share=on,id=mem,size="512M" \
+    -device vhost-user-blk-pci,num-queues=1,chardev=char0 \
+    -chardev socket,id=char0,path=/tmp/vhost.socket
+
+- Fedora (x86_64): start QEMU (using kvm accelerator)
+
+  qemu-system-x86_64 -smp 2 -M q35,accel=kvm,memory-backend=mem \
+    -object memory-backend-file,mem-path="/mem0",shm=on,share=on,id=mem,size="512M" \
+    -device vhost-user-blk-pci,num-queues=1,chardev=char0 \
+    -chardev socket,id=char0,path=/tmp/vhost.socket
+
+Thanks,
+Stefano
+
+Stefano Garzarella (9):
+  libvhost-user: set msg.msg_control to NULL when it is empty
+  libvhost-user: fail vu_message_write() if sendmsg() is failing
+  libvhost-user: mask F_INFLIGHT_SHMFD if memfd is not supported
+  vhost-user-server: don't abort if we can't set fd non-blocking
+  contrib/vhost-user-blk: fix bind() using the right size of the address
+  vhost-user: enable frontends on any POSIX system
+  libvhost-user: enable it on any POSIX system
+  contrib/vhost-user-blk: enabled it on any POSIX system
+  hostmem-file: support POSIX shm_open()
+
+ meson.build                               |  5 +-
+ qapi/qom.json                             |  4 ++
+ subprojects/libvhost-user/libvhost-user.h |  2 +-
+ backends/hostmem-file.c                   | 57 ++++++++++++++++-
+ contrib/vhost-user-blk/vhost-user-blk.c   | 23 +++++--
+ hw/net/vhost_net.c                        |  8 ++-
+ subprojects/libvhost-user/libvhost-user.c | 76 ++++++++++++++++++++++-
+ util/vhost-user-server.c                  |  6 +-
+ backends/meson.build                      |  2 +-
+ hw/block/Kconfig                          |  2 +-
+ qemu-options.hx                           | 10 ++-
+ util/meson.build                          |  4 +-
+ 12 files changed, 179 insertions(+), 20 deletions(-)
+
+-- 
 2.43.2
 
 
