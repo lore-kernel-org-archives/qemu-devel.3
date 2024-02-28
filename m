@@ -4,97 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9AFAC47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 13:03:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F6D7C5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 13:05:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfJaf-0001RC-CA; Wed, 28 Feb 2024 08:03:24 -0500
+	id 1rfJcI-0002VH-U1; Wed, 28 Feb 2024 08:05:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1rfJZp-00016o-KC
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 08:02:27 -0500
-Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rfJaa-0001WJ-5K
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 08:03:23 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1rfJZn-00027Z-UM
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 08:02:25 -0500
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id BA7093F684
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 13:02:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20210705; t=1709125338;
- bh=ni2u1AG8RMtTNfLfQmkSAT4tDdbgi7wr6UQOOcXLq0g=;
- h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
- In-Reply-To:Content-Type;
- b=c7zBY/tHDzTCku/+q8Ivlc3NCi4IvRqr6vyjlObEp3tMl2+ogaMBNUi4Drq2rtnge
- 78YcLBx7UEJOPfe7j3PjQrkod9Fgqg2SjXrHn0ZUJHlTTQOppIniIXVL4RdRJjo/uO
- TRODPkg4GYlceSMk8bLy5t4ZMqcisEy6/vE2+kB7fkxMYq5DOrzeDZygUODXlQO4iD
- avWTAHeN7Pp8X1KUnVhJLk6o7r9LXM8ACUnzIoKOPH+B1dIBXrtchwNHOIu7YA2jS8
- 7uGknFUjN6T+55InZurrAbjhjmEBTXoyG7U/ZweSD+fcp2dfm+1Cyw0CQF2eZPj7Wo
- gsNx8LjL3jHQA==
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-40e40126031so29185425e9.0
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 05:02:18 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709125338; x=1709730138;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ni2u1AG8RMtTNfLfQmkSAT4tDdbgi7wr6UQOOcXLq0g=;
- b=RV3yDZIhwmvQsyBaf/M3k1hw4bX3HwcPRvQYRSy2Q8Q0zbVhRajdE4TKlyi1uzdNqM
- tp25/K2DjGjSHsAyEqcEfQEP0ZskscMoZzX2tEC3TYfDDxxE4v1whf1eJZTzKX8Nflap
- z/dP9/LCtBt7Yr2JlJFCNTTc3plbiLr+TNoxtkrY9pTLsZH2iejBuiT2+70qtr6X5s+Y
- 9hQBwRiC/VzCXjdlsl7XaWAFAN1INRo2/5H7tho5lnW1nRPL1ZLCaJeTwzVgcTlGFJtl
- G7vHPuz1rYnpZkDbFMtxGxTv8HmDqveLpeMRUrdmG/kx5QNvik22ZLN2n4fOjLWlhaEC
- B4lA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUr/JhE51fERS2d0uC4Yag3K6X3o5Y1ywqjl/zCbzJwvBwLatY/824TESA+HbRUjy5SWt0l4b/QiGPooQ0ATlfcOw33YXE=
-X-Gm-Message-State: AOJu0YzeVGUISgCeEmYLupSHOb88W0XD2aEvbRWLtlUAZhsf0trK5mFQ
- +RlRMa+5EHEXclrXwSjQlbs+Ex/uAPWndczWe0S2X+34kWQH3pHYOjNGUrHO84YCXZvsaha24GT
- vTNnQntGiRVRPNG3z9j9dxYGmW4tA26PrRo1gZ6G6tz6OHQPPoRM2prHoKwCREwSGSMVR
-X-Received: by 2002:a5d:4741:0:b0:33d:63c0:3b7f with SMTP id
- o1-20020a5d4741000000b0033d63c03b7fmr8620057wrs.42.1709125338304; 
- Wed, 28 Feb 2024 05:02:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG90EZuD3juGYNd9HabvanKfmqbwKW/jaW+nwqFojp/JrtkBpiM1gtv2X7LrhkBMYvnQ9/PiQ==
-X-Received: by 2002:a5d:4741:0:b0:33d:63c0:3b7f with SMTP id
- o1-20020a5d4741000000b0033d63c03b7fmr8620029wrs.42.1709125337900; 
- Wed, 28 Feb 2024 05:02:17 -0800 (PST)
-Received: from [192.168.123.67] (ip-095-222-037-056.um34.pools.vodafone-ip.de.
- [95.222.37.56]) by smtp.gmail.com with ESMTPSA id
- t4-20020a0560001a4400b0033d06dfcf84sm14325334wry.100.2024.02.28.05.02.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Feb 2024 05:02:17 -0800 (PST)
-Message-ID: <84ddd754-5b54-423a-8383-04b0b47cf051@canonical.com>
-Date: Wed, 28 Feb 2024 14:02:16 +0100
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rfJaU-0002rB-Ma
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 08:03:11 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id C98534E6006;
+ Wed, 28 Feb 2024 14:02:57 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id f9nAGhP6hhsf; Wed, 28 Feb 2024 14:02:55 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id C1BB04E6012; Wed, 28 Feb 2024 14:02:55 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id C04207456B4;
+ Wed, 28 Feb 2024 14:02:55 +0100 (CET)
+Date: Wed, 28 Feb 2024 14:02:55 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Bernhard Beschow <shentey@gmail.com>
+cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>
+Subject: Re: [PATCH 3/5] hw/isa: Embed TYPE_PORT92 in south bridges used in
+ PC machines
+In-Reply-To: <e2299f9a-47bb-48a1-84fb-85f171c4e480@eik.bme.hu>
+Message-ID: <cff0513f-80ca-7f24-9af3-55acb059464c@eik.bme.hu>
+References: <20240218131701.91132-1-shentey@gmail.com>
+ <20240218131701.91132-4-shentey@gmail.com>
+ <6a2333d7-9dea-4a0e-9d91-0889e6205128@ilande.co.uk>
+ <F3980E89-7FE5-443A-9287-DB0350B159D9@gmail.com>
+ <f25bdf58-2fc0-9f04-ef6c-c8d1cff02405@eik.bme.hu>
+ <241AE060-27EF-4A36-92C8-7563256273A9@gmail.com>
+ <e2299f9a-47bb-48a1-84fb-85f171c4e480@eik.bme.hu>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] physmem: avoid bounce buffer too small
-To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20240228124638.55752-1-heinrich.schuchardt@canonical.com>
-Content-Language: en-US
-From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-In-Reply-To: <20240228124638.55752-1-heinrich.schuchardt@canonical.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=185.125.188.123;
- envelope-from=heinrich.schuchardt@canonical.com;
- helo=smtp-relay-internal-1.canonical.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,61 +79,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28.02.24 13:46, Heinrich Schuchardt wrote:
-> virtqueue_map_desc() is called with values of sz exceeding that may exceed
-> TARGET_PAGE_SIZE. sz = 0x2800 has been observed.
-> 
-> We only support a single bounce buffer. We have to avoid
-> virtqueue_map_desc() calling address_space_map() multiple times. Otherwise
-> we see an error
-> 
->      qemu: virtio: bogus descriptor or out of resources
-> 
-> Increase the minimum size of the bounce buffer to 0x10000 which matches
-> the largest value of TARGET_PAGE_SIZE for all architectures.
-> 
-> Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-> ---
->   roms/edk2         | 2 +-
->   roms/seabios-hppa | 2 +-
->   system/physmem.c  | 8 ++++++--
->   3 files changed, 8 insertions(+), 4 deletions(-)
-> 
-> diff --git a/roms/edk2 b/roms/edk2
-> index edc6681206..b8a3eec88c 160000
-> --- a/roms/edk2
-> +++ b/roms/edk2
-> @@ -1 +1 @@
-> -Subproject commit edc6681206c1a8791981a2f911d2fb8b3d2f5768
-> +Subproject commit b8a3eec88cc74bbfe7fb389d026cc7d1d8a989c8
+On Wed, 28 Feb 2024, BALATON Zoltan wrote:
+> On Tue, 27 Feb 2024, Bernhard Beschow wrote:
+>> Am 27. Februar 2024 21:54:19 UTC schrieb BALATON Zoltan 
+>> <balaton@eik.bme.hu>:
+>>> On Tue, 27 Feb 2024, Bernhard Beschow wrote:
+>>>> Am 21. Februar 2024 11:53:21 UTC schrieb Mark Cave-Ayland 
+>>>> <mark.cave-ayland@ilande.co.uk>:
+>>>>> On 18/02/2024 13:16, Bernhard Beschow wrote:
+>>>>>> Port 92 is an integral part of the PIIX and ICH south bridges, so 
+>>>>>> instantiate it
+>>>>>> there. The isapc machine now needs to instantiate it explicitly, 
+>>>>>> analoguous to
+>>>>>> the RTC.
+>>>>>> 
+>>>>>> Note that due to migration compatibility, port92 is optional in the 
+>>>>>> south
+>>>>>> bridges. It is always instantiated the isapc machine for simplicity.
+>>>>>> 
+>>>>>> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+>>>>>> ---
+>>>>>>   include/hw/i386/pc.h          |  2 +-
+>>>>>>   include/hw/southbridge/ich9.h |  4 ++++
+>>>>>>   include/hw/southbridge/piix.h |  3 +++
+>>>>>>   hw/i386/pc.c                  | 18 ++++++++++++------
+>>>>>>   hw/i386/pc_piix.c             |  9 +++++++--
+>>>>>>   hw/i386/pc_q35.c              |  8 +++++---
+>>>>>>   hw/isa/lpc_ich9.c             |  9 +++++++++
+>>>>>>   hw/isa/piix.c                 |  9 +++++++++
+>>>>>>   hw/isa/Kconfig                |  2 ++
+>>>>>>   9 files changed, 52 insertions(+), 12 deletions(-)
+>>>>> 
+>>>>> I had a look at this (and did a bit of revision around 8042 and A20), 
+>>>>> and I am starting to wonder if the PORT92 device isn't something that 
+>>>>> belongs to the southbridge, but more specifically to the superio chip?
+>>>> 
+>>>> If there is agreement to model real hardware in QEMU, then I think that
+>>> 
+>>> I think there's no such agreement and QEMU is more lax about it both for 
+>>> historical reasons and to simplify machine models. Indeed, QEMU sometimes 
+>>> models non-existing machines (e.g. the mac99 or virt boards) that don't 
+>>> correspond to real hardware but allow guest OSes to boot. Even when 
+>>> modelllng real hardware it's ofren modelled just enough for guests to work 
+>>> and unused details are omitted for simplicity. It is recommended to follow 
+>>> what real hardware does when modelling real hardware but not always 
+>>> required. Although it might help both with verifying a device model and to 
+>>> compose machines with these models to try to follow the real hardware.
+>> 
+>> Composing real machines and verifying device models is exactly what I'm 
+>> after. I'm aware that QEMU provides virt machines such as the microvm, and 
+>> from the context I didn't refer to these.
+>
+> Even without pure virt machines currently a lot of QEMU machines don't 
+> exactly model real hardware. They may roughly follow real hardware but not 
+> exactly such as mac99 is a non-existent Mac and the pc machines also use some 
+> parts that don't exist in real life such as PIIX4-PIIX3 hybrid you've been 
+> working on resolving. Some of these however are restricted by backward 
+> compatibilty requirements. But you probably aware of all of that but this 
+> means the argument that real hardware should be followed is not enough. At 
+> least it should not break backward compatibility too much and that's more 
+> important than exactly modelling real machine. Also having a simple model may 
+> be more important than modeling every detail even when not used just to 
+> follow real hardware.
+>
+>>>> port 92 belongs into any device model where the hardware has one. All our 
+>>>> PC-like southbridges (PIIX, ICH, VIA) have port 92. Many FDC37xxxx 
+>>>> including the FDC37M81x as used in the Malta board have one, too -- where 
+>>>> it must first be enabled.
+>>> 
+>>> So port92 is not a real hardware but a QEMU abstraction or model of some 
+>>> functionality found in some machines. Real chips probably implement this 
+>>> in different ways so we could either model this in these chips 
+>>> independently the same way as real hardware does or use the abstracted 
+>>> model anywhere in our machine model. Since this does not exist in real 
+>>> hardware as this abstract model it also does not belong anywhere so we are 
+>>> free to put it where it's most convenient or simple to do.
+>> 
+>> As mentioned already, port 92 is an integral part of PIIX, ICH, and VIA 
+>> southbridges.
+>
+> Mark argued that more specifically it's part of the superio within those 
+> couthbridges. That makes sense, considering this port92 is related to 
+> functionality that was in the keyboard contorller before which is part of the 
+> superio. I don't know PC hardware too well but reading about this fast gate 
+> A20 feature looks like original PC and XT had only a 1 MB address space but 
+> addresses above 1 MB wrapped to 0 and some software depended on that. Then AT 
+> added more memory but then it needed a way to control if addresses above 1 MB 
+> would wrap or access high memory. This was done with some free part of the 
+> keyboard controller but that was too slow so an alternative fast way was 
+> added with this port92 device. But then the old keyboard controller and this 
+> port92 stuff are interacting so may need to consider both. Apart from that 
+> all of this is not relevant to other machines that don't use this 
+> functionality.
+>
+> QEMU decided to model it as a separate QOM object that is now instantiated by 
+> the machines that use it. This is not real hardware but a QEMU implementation 
+> detail. What's wrong with that? It seems you just want to simplify the pc 
+> machine creation and push this object that does not correspond to some real 
+> hardware somewhere else. But this belongs nowhere as it does not model a real 
+> hardware.
+>
+>> That's why I want to move it there. My goal is to create different PC 
+>> machines in a data-driven manner which model real boards. I want to see how 
+>> low-level guests interact with the hardware, including e.g. how they set up 
+>> the memory map.
+>
+> Then I think the port92 as a QOM object should be gone completely and 
+> implemented separately in south bridges beacause in real machine there's no 
+> such port 92 thing, only a south briege so if you need to create port92 in a 
+> data driver machine description then that's not modeling real hardware but 
+> reflects QEMU implementation of it. However the QOM object could be retained
 
-I have resent v2 of the patch w/o this unrelated change.
+So in real VIA vt8231 chip there's a pin that should be connected to the 
+CPU. The docs say for this pin: "A20M# A20 Mask. Connect to A20 mask input 
+of the CPU to control address bit-20 generation. Logical combination of 
+the A20GATE input (from internal or external keyboard controller) and Port 
+92 bit-1 (Fast A20). See Device 0 Function 0 Rx59[1]."
 
-> diff --git a/roms/seabios-hppa b/roms/seabios-hppa
-> index 03774edaad..e4eac85880 160000
-> --- a/roms/seabios-hppa
-> +++ b/roms/seabios-hppa
-> @@ -1 +1 @@
-> -Subproject commit 03774edaad3bfae090ac96ca5450353c641637d1
-> +Subproject commit e4eac85880e8677f96d8b9e94de9f2eec9c0751f
-> diff --git a/system/physmem.c b/system/physmem.c
-> index e3ebc19eef..3c82da1c86 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -3151,8 +3151,12 @@ void *address_space_map(AddressSpace *as,
->               *plen = 0;
->               return NULL;
->           }
-> -        /* Avoid unbounded allocations */
-> -        l = MIN(l, TARGET_PAGE_SIZE);
-> +        /*
-> +         * There is only one bounce buffer. The largest occuring value of
-> +         * parameter sz of virtqueue_map_desc() must fit into the bounce
-> +         * buffer.
-> +         */
-> +        l = MIN(l, 0x10000);
->           bounce.buffer = qemu_memalign(TARGET_PAGE_SIZE, l);
->           bounce.addr = addr;
->           bounce.len = l;
+There's another pin: "KBCK / A20GATE
+MultiFunction Pin (Internal keyboard controller enabled by F0 Rx51[0])
+Rx51[0]=1 Keyboard Clock. From internal keyboard controller
+Rx51[0]=0 Gate A20. Input from external keyboard controller."
 
+To model this in QEMU following what hardware does these should be named 
+gpios that the machine code connects. The functionality seems to be a 
+qemu_irq that is either ORed to the similar output from the KBC or not 
+depending on register settings. So it seems the KBC model that's embedded 
+in the superio should also expose such pin then what uses it should 
+connect it somewhere (either forward to other components or combine it 
+with its own A20 output).
+
+If you want to follow real hardware then this should be implemented and 
+the port92 QOM object should be removed. Also need to check what other 
+southbridges do as those may be different at least in how they control the 
+qemu_irq so I'm not sure one implementation can be shared between all 
+these south bridges that way. It moay be simpler for now to leave it as it 
+is.
+
+Regards,
+BALATON Zoltan
 
