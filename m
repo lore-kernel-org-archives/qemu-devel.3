@@ -4,66 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A697C47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 16:27:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0B1CC5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 16:27:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfMjW-0004i2-Bt; Wed, 28 Feb 2024 11:24:38 -0500
+	id 1rfMkO-0005Zq-N7; Wed, 28 Feb 2024 11:25:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfMjM-0004Q0-V7; Wed, 28 Feb 2024 11:24:28 -0500
-Received: from mgamail.intel.com ([192.198.163.7])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rfMjd-0004p9-NP; Wed, 28 Feb 2024 11:24:47 -0500
+Received: from forwardcorp1c.mail.yandex.net
+ ([2a02:6b8:c03:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfMjL-0000pW-By; Wed, 28 Feb 2024 11:24:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709137467; x=1740673467;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=bf/R70ToG/GS2DWSCokskMMh3cdw5G5KJa0QQxj8uYs=;
- b=lqe0VGgOATGWOMfnPEZ5EWgYbaaJrr6Nu5+9uNM+prZie+kRW4FwK8LN
- fyai2tNng58VL7WLaXKK4dOFU0sWWqsx/GP4E0Sqna/nY6vkIh6ePKyuS
- 8n4Yg2jj4SYlIiIPdq2AKgsQfAIWfk33XJK2C0K3SVoG8dRHfASx6f0Kt
- 0/yaRc6phAdHz+3r0ULkr3HR38QAuATj1e0nYWKPY+RF526zChqI1+2x2
- zxuAfnVgGICPM/nPI5sUeAebXHpL5mkX0s4zW4qyux8fYjWKbvaoKuByc
- lQiPihpgVjlzdC6e4ldglgLIQt3BIWpOKmvpnT+4mfygnjFMfYonMovWx A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="28982596"
-X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="28982596"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Feb 2024 08:24:23 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="12145026"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa004.jf.intel.com with ESMTP; 28 Feb 2024 08:24:20 -0800
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Fam Zheng <fam@euphon.net>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH 12/16] block/vmdk: Fix missing ERRP_GUARD() for error_prepend()
-Date: Thu, 29 Feb 2024 00:37:19 +0800
-Message-Id: <20240228163723.1775791-13-zhao1.liu@linux.intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240228163723.1775791-1-zhao1.liu@linux.intel.com>
-References: <20240228163723.1775791-1-zhao1.liu@linux.intel.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rfMjb-0000ui-Ch; Wed, 28 Feb 2024 11:24:45 -0500
+Received: from mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net
+ [IPv6:2a02:6b8:c12:621c:0:640:f00b:0])
+ by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id 52C8960DB7;
+ Wed, 28 Feb 2024 19:24:36 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:a519::1:3a] (unknown
+ [2a02:6b8:b081:a519::1:3a])
+ by mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id ZOcqeV1IkuQ0-LPgPPo8A; Wed, 28 Feb 2024 19:24:35 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1709137475;
+ bh=Dts6lp1y93tKuAOeU+UyWR4MbDFpSCKIHvmD1zm9fB8=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=iYA84NI+VI9dS4HLoWOtxon3cByIJF/MAz4D3fTT3MR/6ovr39sN2uCNn0LR1xqO7
+ 7TrHqTTdBh/aUwbmgMQH0rSsOwlbBI4BKkS90gO8U+sOoxnFLTyffsB1amZNr2+oXE
+ 9nPIoxJjFWAYj39qy8DREK70vRzEaF81YlpIW5/E=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <217803cb-fced-4dce-87f3-9892b2f97dce@yandex-team.ru>
+Date: Wed, 28 Feb 2024 19:24:35 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=192.198.163.7;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 0/4] mirror: implement incremental and bitmap modes
+Content-Language: en-US
+To: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, armbru@redhat.com, eblake@redhat.com,
+ hreitz@redhat.com, kwolf@redhat.com, jsnow@redhat.com,
+ f.gruenbichler@proxmox.com, t.lamprecht@proxmox.com,
+ mahaocong@didichuxing.com
+References: <20240216105513.309901-1-f.ebner@proxmox.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20240216105513.309901-1-f.ebner@proxmox.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c03:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H2=-0.001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,59 +77,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+On 16.02.24 13:55, Fiona Ebner wrote:
+> Previous discussion from when this was sent upstream [0] (it's been a
+> while). I rebased the patches and re-ordered and squashed like
+> suggested back then [1].
+> 
+> This implements two new mirror modes:
+> 
+> - bitmap mirror mode with always/on-success/never bitmap sync mode
+> - incremental mirror mode as sugar for bitmap + on-success
+> 
+> Use cases:
+> * Possibility to resume a failed mirror later.
+> * Possibility to only mirror deltas to a previously mirrored volume.
+> * Possibility to (efficiently) mirror an drive that was previously
+>    mirrored via some external mechanism (e.g. ZFS replication).
+> 
+> We are using the last one in production without any issues since about
+> 4 years now. In particular, like mentioned in [2]:
+> 
+>> - create bitmap(s)
+>> - (incrementally) replicate storage volume(s) out of band (using ZFS)
+>> - incrementally drive mirror as part of a live migration of VM
+>> - drop bitmap(s)
 
-As the comment in qapi/error, passing @errp to error_prepend() requires
-ERRP_GUARD():
+Actually which mode you use, "never", "always" or "conditional"? Or in downstream you have different approach?
 
-* = Why, when and how to use ERRP_GUARD() =
-*
-* Without ERRP_GUARD(), use of the @errp parameter is restricted:
-...
-* - It should not be passed to error_prepend(), error_vprepend() or
-*   error_append_hint(), because that doesn't work with &error_fatal.
-* ERRP_GUARD() lifts these restrictions.
-*
-* To use ERRP_GUARD(), add it right at the beginning of the function.
-* @errp can then be used without worrying about the argument being
-* NULL or &error_fatal.
+Why am I asking:
 
-ERRP_GUARD() could avoid the case when @errp is the pointer of
-error_fatal, the user can't see this additional information, because
-exit() happens in error_setg earlier than information is added [1].
+These modes (for backup) were developed prior to block-dirty-bitmap-merge command, which allowed to copy bitmaps as you want. With that API, we actually don't need all these modes, instead it's enough to pass a bitmap, which would be _actually_ used by mirror.
 
-The vmdk_parse_extents() passes @errp to error_prepend(), and its @errp
-is from vmdk_open().
+So, if you need "never" mode, you just copy your bitmap by block-dirty-bitmap-add + block-dirty-bitmap-merge, and pass a copy to mirror job.
 
-Though, vmdk_open(), as a BlockDriver.bdrv_open(), gets the @errp
-parameter which is pointer of its caller's local_err, to follow the
-requirement of @errp, add missing ERRP_GUARD() at the beginning of this
-function.
+Or, you pass your bitmap to mirror-job, and have a "always" mode.
 
-[1]: Issue description in the commit message of commit ae7c80a7bd73
-     ("error: New macro ERRP_GUARD()").
+And I don't see, why we need a "conditional" mode, which actually just drops away the progress we actually made. (OK, we failed, but why to drop the progress of successfully copied clusters?)
 
-Cc: Fam Zheng <fam@euphon.net>
-Cc: Kevin Wolf <kwolf@redhat.com>
-Cc: Hanna Reitz <hreitz@redhat.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- block/vmdk.c | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/block/vmdk.c b/block/vmdk.c
-index bf78e1238351..3b82979fdf42 100644
---- a/block/vmdk.c
-+++ b/block/vmdk.c
-@@ -1147,6 +1147,7 @@ static int GRAPH_RDLOCK
- vmdk_parse_extents(const char *desc, BlockDriverState *bs, QDict *options,
-                    Error **errp)
- {
-+    ERRP_GUARD();
-     int ret;
-     int matches;
-     char access[11];
+Using user-given bitmap in the mirror job has also an additional advantage of live progress: up to visualization of disk copying by visualization of the dirty bitmap contents.
+
 -- 
-2.34.1
+Best regards,
+Vladimir
 
 
