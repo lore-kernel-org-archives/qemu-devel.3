@@ -4,97 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEC74C47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 18:28:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9854BC5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 18:30:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfOek-0007OM-07; Wed, 28 Feb 2024 13:27:50 -0500
+	id 1rfOgj-0008E3-MC; Wed, 28 Feb 2024 13:29:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1rfOeg-0007Ne-RA
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 13:27:46 -0500
-Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122])
+ (Exim 4.90_1) (envelope-from <peter@pjd.dev>) id 1rfOgh-0008Dl-Bs
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 13:29:51 -0500
+Received: from fhigh8-smtp.messagingengine.com ([103.168.172.159])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1rfOee-0006a8-90
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 13:27:46 -0500
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 97AF23FA51
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 18:27:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20210705; t=1709144861;
- bh=kZvENfPhbSwqdNEm6dXborXlxbm5KH21OpV2E2o9eT4=;
- h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
- In-Reply-To:Content-Type;
- b=jENBPOXXyT7PRVs3Q11g69e4qKC6x0b971N8sGhm5tP7eYOj3EPaHcAjkFMC9Zsn8
- CS8FVJcs9lfj+t4kX+yjCSwbzgwOktNl0g0mHidIbBCWAc8w2hRii6iP16/IhrKhM2
- cUpakqpWKknyKI8IwBjQAdHH0z2MV+n7/bnk28tnwTAHUrZXcZbDCKEcFu+cjWvXTz
- 7HAp1/5TKeo6kIT9lW2RjhYleaK0TxJHwfRZ4VYuONUbPTQdmPvB8RfZ2E+krVvUc5
- lld62hBSk3zD7t0g/zsOxrxFPMKi3TU+dSThaUP2DtO9hOMvX+6LuNN75CVsfnRykr
- 7I9vOFhv4JwRA==
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-5664cac7b14so102580a12.0
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 10:27:41 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709144861; x=1709749661;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kZvENfPhbSwqdNEm6dXborXlxbm5KH21OpV2E2o9eT4=;
- b=qLEpj/JknpNKBASqZo+Pk5yRmtIhJM9l62gQQTHbJsIaKMlYw4SVtS4P0h54J891dw
- Sc0HXg6SvPQCg8VY+NZszqR73W9osPM5kKv67qp7SDRnfrxzUuZY2r8B7i4x7MEP0jXY
- X/KsQAWLcLDLno9g3/bkCMDCMhbzqI/bn0I9v2f04LoBU4QqfVm3xknJ0PTKDRxLL+Ow
- nIqxOhpWsJAiVMPMuNTjN0u4K/WO5BkZkSrPO/kPywLZsmsnlhnw7JPwMAKF7xwRnpLU
- QUqDmFytz+FPhjVsLzRs7m4YzRAxk9V5H3qLoWs9wUm5fuM+dEj5uxGcDimEmT3iH3uA
- 8gLg==
-X-Gm-Message-State: AOJu0YyyLvAe8epKGNu5LmGdaSR+uRfgxacJYU5I56FR3nnGUBEK7+Em
- Cx48+8V4WuScXAJDJqNCSAWhDxZ9ORMKNA1uHjYZls6A+By/k8i30v3N0MQKjdYyYlXhQNvqnEV
- kYYg3awB1FKdQobhAvBfBYrONkxk+AUkAs53vM1GvIDz73yYjvCABYy/LV3QCdEo2wJYQ
-X-Received: by 2002:aa7:c442:0:b0:564:54c6:6903 with SMTP id
- n2-20020aa7c442000000b0056454c66903mr161368edr.7.1709144861242; 
- Wed, 28 Feb 2024 10:27:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFdacuHXKISpgSoFjoH+LjHC96HeVq7xexBKu2WF4uDHoR/OFTYnSFFVsUdgWAf8QH2BIF0/Q==
-X-Received: by 2002:aa7:c442:0:b0:564:54c6:6903 with SMTP id
- n2-20020aa7c442000000b0056454c66903mr161357edr.7.1709144860857; 
- Wed, 28 Feb 2024 10:27:40 -0800 (PST)
-Received: from ?IPV6:2a00:20:10:8f6:59d8:16c:6bf7:73e4?
- ([2a00:20:10:8f6:59d8:16c:6bf7:73e4])
- by smtp.gmail.com with ESMTPSA id
- s21-20020aa7cb15000000b005645961ad39sm2021834edt.47.2024.02.28.10.27.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Feb 2024 10:27:40 -0800 (PST)
-Message-ID: <b9937680-8c0b-46f6-86ef-55139562e2c4@canonical.com>
-Date: Wed, 28 Feb 2024 19:27:38 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH, v2] physmem: avoid bounce buffer too small
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20240228125939.56925-1-heinrich.schuchardt@canonical.com>
- <fb6ef90d-4a3e-4bdd-8516-8b15c1f2329f@linaro.org>
-From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-In-Reply-To: <fb6ef90d-4a3e-4bdd-8516-8b15c1f2329f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.125.188.122;
- envelope-from=heinrich.schuchardt@canonical.com;
- helo=smtp-relay-internal-0.canonical.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <peter@pjd.dev>) id 1rfOge-0006s2-4l
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 13:29:51 -0500
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+ by mailfhigh.nyi.internal (Postfix) with ESMTP id CF9481140084;
+ Wed, 28 Feb 2024 13:29:45 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute6.internal (MEProxy); Wed, 28 Feb 2024 13:29:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pjd.dev; h=cc:cc
+ :content-transfer-encoding:content-type:content-type:date:date
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to; s=fm2; t=1709144985; x=1709231385; bh=TsPjkHBJygap3
+ 7cRuTpCQBI1U2BypmTxAUkUzYlptt8=; b=OgxTX3qyRLfeRejawo+b1Jx1E79Mj
+ rpJAYSMK4P+vjxCWRkc06HkM5UdZGsRSAKz/flI583jDolahfrivzWGIZYFjwc/Y
+ DI+4zbBm47E/eQNfldO7S8++akk+Rb9AvIMC/O12HAZ1fGyk2T9LOVn6tYupdO/8
+ 4oXnaL/PmQiN8wlvat3qUBS/3DEooVV7jfaBZQEGfCvSVuv6eAsXcDH+6zgHruJV
+ cnFvHcIyIZ1gfSwSBllFpb4/GU+cmqDurKDNPL+LdrCJUt+Rr8Dfef/0DlGER58k
+ bqnB7NVyuoEZIxwQGlNxb9Ly3u6U04A6m2q6pSpvgq+APLcZYOFU3hBgA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm1; t=1709144985; x=1709231385; bh=TsPjkHBJygap3
+ 7cRuTpCQBI1U2BypmTxAUkUzYlptt8=; b=jWn0wqXwKPRHZCvPhztlSVq+OdzMU
+ cdmH8zdtqFASFGM0Ay04zD/HgE1TB7qMCUVn9xcCC3jlf/XC91XnH08Dz2OoZ9W7
+ 0TQdkD3vmNliSAk0NDQRmofggu6v2164gVg3JCbA8jEYOjwBDGHeZukklYimnJe0
+ dWKZzoQhjHaSl2xcywoA/wp8OZBSbUlFRRbgR+BPvshGm2ALQTN9WpID6e7DkJ12
+ fHAMyE5pOR2Y4Ahb+ddp1/br+SCY3Z0TVd4Zmg9SBzwNDG6NvR67bAl30sEnaXdR
+ dJLX4FqSc6U1SbH8ckkPi171J4kEH4hKAm+UkXIiqljZye9O8HYIrGX3w==
+X-ME-Sender: <xms:mXvfZUm7Fd2vwXbSn-tWBoFRrdeE9L7M1XpMbHvJZWehnj0vlcXI9A>
+ <xme:mXvfZT1wxuWHLQlRt2Iikqqkr6PrnkNLJ7KSGV6u40bwUwDXXKPEvI5OwJss2qVbR
+ XbTI8nQyKSiImLo-SA>
+X-ME-Received: <xmr:mXvfZSrw8HOY3JJi_1ufQHrl1P936uxHsDGhlICgxVM1pvnkijgN8LtUaR1T5zs5ykiRrQ7ySeaqFgxIAxB4-Ln5_QtKhMPRwN3AYYwPvQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrgeejgddutdekucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenuchmihhsshhinhhgucfvqfcufhhivghlugculdeftd
+ dmnecujfgurhephfgtgfgguffkffevofesthhqmhdthhdtjeenucfhrhhomheprfgvthgv
+ rhcuffgvlhgvvhhorhihrghsuceophgvthgvrhesphhjugdruggvvheqnecuggftrfgrth
+ htvghrnhepjeffvdeigfevgfefhfeutdeijeekieehfeefvdefhedtfefhhfdutdefieeh
+ geevnecuffhomhgrihhnpehstghhvggurdgtohhmpdhqvghmuhdrohhrghdpghhithhhuh
+ gsrdgtohhmpdhkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgr
+ rhgrmhepmhgrihhlfhhrohhmpehpvghtvghrsehpjhgurdguvghv
+X-ME-Proxy: <xmx:mXvfZQlq9-xvJ4sbfiIGfDWaiXp0jkzNdWj_A_-TGveCZbdejRfQ8Q>
+ <xmx:mXvfZS0ALPkaZQuibMXDcDwcLMkBKr_EAQlHqKhUUcdgeJdkOZpypg>
+ <xmx:mXvfZXsdR1B7YT63VC3sJMJLcnAcSWqK60huyNC5TBZl377_qeMitA>
+ <xmx:mXvfZcqEfDZnBoQsxsNqTNowBnj8eqcSB66nfJEtJx6sNW-szSFHjQ>
+Feedback-ID: i9e814621:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 28 Feb 2024 13:29:44 -0500 (EST)
+From: Peter Delevoryas <peter@pjd.dev>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.400.31\))
+Subject: [q&a] Status of IOMMU virtualization for nested virtualization
+ (userspace PCI drivers in VMs)
+Message-Id: <3D96D76D-85D2-47B5-B4C1-D6F95061D7D6@pjd.dev>
+Date: Wed, 28 Feb 2024 10:29:32 -0800
+Cc: qemu-devel <qemu-devel@nongnu.org>, suravee.suthikulpanit@amd.com,
+ iommu@lists.linux.dev, alex.williamson@redhat.com, kvm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+X-Mailer: Apple Mail (2.3774.400.31)
+Received-SPF: pass client-ip=103.168.172.159; envelope-from=peter@pjd.dev;
+ helo=fhigh8-smtp.messagingengine.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, MISSING_HEADERS=1.021,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,79 +102,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28.02.24 16:06, Philippe Mathieu-Daudé wrote:
-> Hi Heinrich,
-> 
-> On 28/2/24 13:59, Heinrich Schuchardt wrote:
->> virtqueue_map_desc() is called with values of sz exceeding that may 
->> exceed
->> TARGET_PAGE_SIZE. sz = 0x2800 has been observed.
->>
->> We only support a single bounce buffer. We have to avoid
->> virtqueue_map_desc() calling address_space_map() multiple times. 
->> Otherwise
->> we see an error
->>
->>      qemu: virtio: bogus descriptor or out of resources
->>
->> Increase the minimum size of the bounce buffer to 0x10000 which matches
->> the largest value of TARGET_PAGE_SIZE for all architectures.
->>
->> Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
->> ---
->> v2:
->>     remove unrelated change
->> ---
->>   system/physmem.c | 8 ++++++--
->>   1 file changed, 6 insertions(+), 2 deletions(-)
->>
->> diff --git a/system/physmem.c b/system/physmem.c
->> index e3ebc19eef..3c82da1c86 100644
->> --- a/system/physmem.c
->> +++ b/system/physmem.c
->> @@ -3151,8 +3151,12 @@ void *address_space_map(AddressSpace *as,
->>               *plen = 0;
->>               return NULL;
->>           }
->> -        /* Avoid unbounded allocations */
->> -        l = MIN(l, TARGET_PAGE_SIZE);
->> +        /*
->> +         * There is only one bounce buffer. The largest occuring 
->> value of
->> +         * parameter sz of virtqueue_map_desc() must fit into the bounce
->> +         * buffer.
->> +         */
->> +        l = MIN(l, 0x10000);
-> 
-> Please define this magic value. Maybe ANY_TARGET_PAGE_SIZE or
-> TARGETS_BIGGEST_PAGE_SIZE?
-> 
-> Then along:
->    QEMU_BUILD_BUG_ON(TARGET_PAGE_SIZE <= TARGETS_BIGGEST_PAGE_SIZE);
+Hey guys,
 
-Thank you Philippe for reviewing.
+I=E2=80=99m having a little trouble reading between the lines on various =
+docs, mailing list threads, KVM presentations, github forks, etc, so I =
+figured I=E2=80=99d just ask:
 
-TARGETS_BIGGEST_PAGE_SIZE does not fit as the value is not driven by the 
-page size.
-How about MIN_BOUNCE_BUFFER_SIZE?
-Is include/exec/memory.h the right include for the constant?
+What is the status of IOMMU virtualization, like in the case where I =
+want a VM guest to have a virtual IOMMU?
 
-I don't think that TARGET_PAGE_SIZE has any relevance for setting the 
-bounce buffer size. I only mentioned it to say that we are not 
-decreasing the value on any existing architecture.
+I found this great presentation from KVM Forum 2021: [1]
 
-I don't know why TARGET_PAGE_SIZE ever got into this piece of code. 
-e3127ae0cdcd ("exec: reorganize address_space_map") does not provide a 
-reason for this choice. Maybe Paolo remembers.
+1. I=E2=80=99m using -device intel-iommu right now. This has performance =
+implications and large DMA transfers hit the vfio_iommu_type1 =
+dma_entry_limit on the host because of how the mappings are made.
 
-Best regards
+2. -device virtio-iommu is an improvement, but it doesn=E2=80=99t seem =
+compatible with -device vfio-pci? I was only able to test this with =
+cloud-hypervisor, and it has a better vfio mapping pattern (avoids =
+hitting dma_entry_limit).
 
-Heinrich
+3. -object iommufd [2] I haven=E2=80=99t tried this quite yet, planning =
+to: if it=E2=80=99s using iommufd, and I have all the right kernel =
+features in the guest and host, I assume it=E2=80=99s implementing the =
+passthrough mode that AMD has described in their talk? Because I imagine =
+that would be the best solution for me, I=E2=80=99m just having trouble =
+understanding if it=E2=80=99s actually related or orthogonal. I see AMD =
+has -device amd-viommu here [3], is that ever going to be upstreamed or =
+is that what -object iommufd is abstracting? I also found this mailing =
+list submission [4], and the context and changes there imply this is all =
+about that (exposing iommu virtualization to the guest)
 
-> 
->>           bounce.buffer = qemu_memalign(TARGET_PAGE_SIZE, l);
->>           bounce.addr = addr;
->>           bounce.len = l;
-> 
+Thanks!
+Peter
+=20
+[1] =
+https://static.sched.com/hosted_files/kvmforum2021/da/vIOMMU%20KVM%20Forum=
+%202021%20-%20v4.pdf
+[2] https://www.qemu.org/docs/master/devel/vfio-iommufd.html
+[3] =
+https://github.com/AMDESE/qemu/commit/ee056455c411ee3369a47c65ba8a54783b5d=
+2814
+[4] =
+https://lore.kernel.org/lkml/20230621235508.113949-1-suravee.suthikulpanit=
+@amd.com/
 
 
