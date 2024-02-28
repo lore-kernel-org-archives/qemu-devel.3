@@ -4,83 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B10F1C47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 20:26:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A93BC5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 20:26:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfQUc-0007zu-UP; Wed, 28 Feb 2024 15:25:30 -0500
+	id 1rfQUZ-0007yU-5M; Wed, 28 Feb 2024 15:25:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rfQUb-0007zK-E7
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 15:25:29 -0500
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1rfQUW-0007yD-TU
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 15:25:24 -0500
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rfQUW-0007Lz-9f
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 15:25:29 -0500
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-29ab78237d2so67946a91.1
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 12:25:23 -0800 (PST)
+ id 1rfQUV-0007Lu-3O
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 15:25:24 -0500
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-29a6dcfdd30so83043a91.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 12:25:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709151923; x=1709756723; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FeF7fzEyCne6DT9i0AjI3AaZvbjspKahuYDo6eT9HQw=;
- b=djshCp09lGMTHPRQQcwLiau1Qa3WG+Ao+Hk5wINjaQRphv8GGz6sSLssGtH8Ibeetz
- JCQvpno+ODI25AmCRgyQNcvxyCIKNtB/tqHl9RtR98e32lMTHbru00cBbyIQoBpdixcz
- XdzdexUOFwGRI86rfJ8sX9eT4Lg/yXDSRiLB4vfQh/596BhLBeNml1WPgw0Bxm76dUYY
- sU2TWP7jfvFbXjjsAE6fyWARsr6h6w48n6KkkaRwKW7j9iq0Kt1NtQAEBYW2jj+Q+KGz
- IEeRnlz9/XQ8r/9ECc5fM9C8NhEK6sLB0BidoWKuUzOezDSXXYXQp0dg9Mu2txkYGNR4
- znJQ==
+ d=linaro.org; s=google; t=1709151921; x=1709756721; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=R78jNI3rLibNEjtOaGTlNz6g97kDn+JovIEvILiHK7Q=;
+ b=znQ3y1csU6bp5A6J6DJ6lfTQ1vGHq/7rb5IbeOC9TzZhEGP9W67tXAiMX+btAeIdLY
+ rcxO6/aNEvtYR090yVf3YO3iU6/hdiGZfP0+6SHQEVmEjQUsPXbPQO8hfHZa1whvLNco
+ 5PqUoovA3GVDESkratc9QZuE+EmxIsqGBQUZh7+2vL3/S8wWPZa0yxo/0GNfsbV1cs4p
+ 7miNzf0daRUeYEsLECdBza9hpGV6CDj4gU9PqNTHquN1DqNzVUnLzR8J/p2lZUxqF3gu
+ ckp5wWIUuOLWbVgw1C6YnNzD4z7TXrkBpQEtAyjeuQ4hpLkIo8BuIt9hJWxs6kxWpU+Q
+ N8rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709151923; x=1709756723;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=FeF7fzEyCne6DT9i0AjI3AaZvbjspKahuYDo6eT9HQw=;
- b=IY/xJnOftuJHpMAWiUHgcE27JeC+h5vmkPGHPyFHk6W80ngtpe3U3J1LGkOYyueTVW
- 30AqCp7we6XrLaN328dpjrY+ur1yha8MK9mP6D2h2LhtN/HlROBwb868BNZbnH7ytUKP
- RnwAWArhZfpCfofzHTcJbpE1C83TdnyDqHrpRD5+dCiahthUZktQI7CazutgYncld6g7
- TYekPPH/InC8GOHrUokWzntzwgn3rRnOAnc2KScVkPISi7wI/Yfq2Ndwpt9q2Bf8KH7O
- qCRli3GxO8AtVN29mgdNHVMWZnpLRBdbcrR23pV3y/j4UiBg5zVgFH2P0Hj+aNKAZ+Yd
- LtEA==
-X-Gm-Message-State: AOJu0YzlwYXgI8yvwu0aWc8en0bubEBBPkuqOxHNsosXLDHZuVc59aB7
- 8lksixizHkWIQWoLAQ9BB4Cv2+e3R1cM43PLrDPqSvrJlE2o28MAXEQdRO3osixOHFf2/RQfuOJ
- z
-X-Google-Smtp-Source: AGHT+IE5XRJrqoVYo7frj9BME26umkgmV05D9tvxvaRCOJcPoPZVG8hS/uHc7cW7L8R37iOnq87MQQ==
-X-Received: by 2002:a17:90b:3791:b0:29a:a436:4dda with SMTP id
- mz17-20020a17090b379100b0029aa4364ddamr332457pjb.0.1709151922839; 
- Wed, 28 Feb 2024 12:25:22 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709151921; x=1709756721;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=R78jNI3rLibNEjtOaGTlNz6g97kDn+JovIEvILiHK7Q=;
+ b=sVNWFPRaOmtNSP1Prdu6so/49bCjUSJykeNQ1UN7cuh17Jjmpc+5+hCrb6oB3ij0UV
+ QBGzPvhiyLlUEDEZVJETPw7LgCRZT3zQPBM+3rQRot3v/1qewQL0ZOoHRjyC9dzNnV9Z
+ NqsCxjxc8v0pxjlIDjNcBD0v3nFqEVfkYMt1wGlNcXnx0XVFmCGyWA1e177wR9RjXSxG
+ d7ElcYiE+N/vJqsrkw6sVP6Ffh/B5JQ8740WZIum5/65kiku34E6rhgo8qi86mkqac8V
+ 4pPRpCFS6fZCSqbxj1R228sOw9UHKBjWZlGNFclnZb9sr4QGzWhhHiLWj9KVr2Om+fJw
+ FAqQ==
+X-Gm-Message-State: AOJu0YwzNR8Ezn9Pr8hvy4Q34l5xurbpwiL1RT8Lzu5oShrSHaNffSWV
+ 5aro89anKR80b+8hhhCakQ/fHsDyCM3d6HWol1w6QDtwyWiHLrucLzMDvXdFG/QYmx6dJ7rkR73
+ d
+X-Google-Smtp-Source: AGHT+IFDtD4q2TNroYCoH1ZL2WxskTVsT9xdRh5x+Y0L2T0KAov688azsH4QT79rHRYh9HGIzhDdlg==
+X-Received: by 2002:a17:90a:9315:b0:29a:68ad:b77e with SMTP id
+ p21-20020a17090a931500b0029a68adb77emr232425pjo.19.1709151921247; 
+ Wed, 28 Feb 2024 12:25:21 -0800 (PST)
 Received: from stoup.. (098-147-055-211.res.spectrum.com. [98.147.55.211])
  by smtp.gmail.com with ESMTPSA id
- oh5-20020a17090b3a4500b0029ab712f648sm2118499pjb.38.2024.02.28.12.25.21
+ oh5-20020a17090b3a4500b0029ab712f648sm2118499pjb.38.2024.02.28.12.25.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Feb 2024 12:25:22 -0800 (PST)
+ Wed, 28 Feb 2024 12:25:20 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: laurent@vivier.eu, richard.purdie@linuxfoundation.org, mjt@tls.msk.ru,
  iii@linux.ibm.com
-Subject: [PATCH v2 1/5] linux-user/x86_64: Handle the vsyscall page in
- open_self_maps_{2, 4}
-Date: Wed, 28 Feb 2024 10:25:14 -1000
-Message-Id: <20240228202518.33180-2-richard.henderson@linaro.org>
+Subject: [PATCH v2 0/5] linux-user: Rewrite target_shmat
+Date: Wed, 28 Feb 2024 10:25:13 -1000
+Message-Id: <20240228202518.33180-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240228202518.33180-1-richard.henderson@linaro.org>
-References: <20240228202518.33180-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,50 +92,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is the only case in which we expect to have no host memory backing
-for a guest memory page, because in general linux user processes cannot
-map any pages in the top half of the 64-bit address space.
+There are multiple issues with the implementation of shmat().
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2170
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/syscall.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+(1) With reserved_va, which is the default for 32-on-64-bit, we mmap the
+    entire guest address space.  Unlike mmap, shmat refuses to replace an
+    existing mapping without setting SHM_REMAP.  This is the original
+    subject of issue #115, though it quicky gets distracted by
+    something else.
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index e384e14248..bc8c06522f 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -7994,6 +7994,10 @@ static void open_self_maps_4(const struct open_self_maps_data *d,
-         path = "[heap]";
-     } else if (start == info->vdso) {
-         path = "[vdso]";
-+#ifdef TARGET_X86_64
-+    } else if (start == TARGET_VSYSCALL_PAGE) {
-+        path = "[vsyscall]";
-+#endif
-     }
- 
-     /* Except null device (MAP_ANON), adjust offset for this fragment. */
-@@ -8082,6 +8086,18 @@ static int open_self_maps_2(void *opaque, target_ulong guest_start,
-     uintptr_t host_start = (uintptr_t)g2h_untagged(guest_start);
-     uintptr_t host_last = (uintptr_t)g2h_untagged(guest_end - 1);
- 
-+#ifdef TARGET_X86_64
-+    /*
-+     * Because of the extremely high position of the page within the guest
-+     * virtual address space, this is not backed by host memory at all.
-+     * Therefore the loop below would fail.  This is the only instance
-+     * of not having host backing memory.
-+     */
-+    if (guest_start == TARGET_VSYSCALL_PAGE) {
-+        return open_self_maps_3(opaque, guest_start, guest_end, flags);
-+    }
-+#endif
-+
-     while (1) {
-         IntervalTreeNode *n =
-             interval_tree_iter_first(d->host_maps, host_start, host_start);
+(2) With target page size > host page size, and a shm area
+    that is not a multiple of the target page size, we leave
+    an unmapped hole that the target expects to be mapped.
+    This is the subject of 
+
+	https://lore.kernel.org/qemu-devel/2no4imvz2zrar5kchz2l3oddqbgpj77jgwcuf7aritkn2ok763@i2mvpcihztho/
+
+    wherein qemu itself expects a mapping to exist, and
+    dies in open_self_maps_2.
+
+So: reimplement the thing.
+
+Changes for v2:
+  - Include Ilya's test case, which caught extra errors: Yay!
+  - Include x86_64 /proc/self/maps fix, which the test triggers.
+  - Dropped r-b for the shmat rewrite due to number of changes.
+
+
+r~
+
+
+Based-on: <20240222204323.268539-1-richard.henderson@linaro.org>
+("[PULL 00/39] tcg and linux-user patch queue")
+(Which is technically now out of date, waiting on the coredump
+rewrite to solve -Wvla werrors.)
+
+
+
+
+Ilya Leoshkevich (1):
+  tests/tcg: Check that shmat() does not break /proc/self/maps
+
+Richard Henderson (4):
+  linux-user/x86_64: Handle the vsyscall page in open_self_maps_{2,4}
+  linux-user/loongarch64: Remove TARGET_FORCE_SHMLBA
+  linux-user: Add strace for shmat
+  linux-user: Rewrite target_shmat
+
+ linux-user/loongarch64/target_syscall.h      |   7 -
+ linux-user/mmap.c                            | 172 +++++++++++++++----
+ linux-user/strace.c                          |  23 +++
+ linux-user/syscall.c                         |  16 ++
+ tests/tcg/multiarch/linux/linux-shmat-maps.c |  55 ++++++
+ linux-user/strace.list                       |   2 +-
+ 6 files changed, 231 insertions(+), 44 deletions(-)
+ create mode 100644 tests/tcg/multiarch/linux/linux-shmat-maps.c
+
 -- 
 2.34.1
 
