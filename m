@@ -4,82 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 956EBC47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 20:27:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E797C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 20:30:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfQUh-00080q-CN; Wed, 28 Feb 2024 15:25:35 -0500
+	id 1rfQZP-0003dD-2P; Wed, 28 Feb 2024 15:30:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rfQUe-000806-Sm
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 15:25:32 -0500
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rfQUa-0007MR-0L
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 15:25:32 -0500
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-5d8b276979aso96657a12.2
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 12:25:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709151926; x=1709756726; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0U9PMwHiZszNU3T0CkEUezw6dw3Df8531lwjpQDns4A=;
- b=PbS9FMiRrGu4V+2whtbxugrsiDpcpFs0Y4PA7EVVH7mBeMGg3saF6BFjgYf3M48RLE
- 2Tjr0DM2vh6iwvvYm7dk+J7IjfOnuNPMZrsBrLzgQMWDtmzdu99kqPoul5bS12TXG9ER
- 7TmyifQDHt3JOsPN4h4vTRc5LT5C5unUhXlN7J+NXbhrio+Qr1y54KVfPjQzy9bPeQgK
- x9aWpWuUj72IWjMLb0XRIwX8i5D9U31HGQo9JQ0Tbapj5eKXbQ+o6B6JphGsWhGOjnP4
- /wBTvz+wfwpYkyFfJ3brcyaTBRCXCephq7d5Ps8hkc45fxVfsObugibGAQ0SbOgWrmUR
- bOXQ==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rfQZK-0003cR-DG
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 15:30:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rfQZI-0000TF-M5
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 15:30:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709152217;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1QW82QujdXbG3JxzkU/eLku3CZ1MEf03sIG23EM9vWI=;
+ b=GSa4DsAhT6F8tlQwGWkUxqwglvQXVQea7V9YA1a8SRTzvEs1qY2TblLfvIRiu0zNlF5Pje
+ DeeS1rF7G5vIYQpM2Av8SYg8cZvJUKk4hnA6WaTIMMff/F7r4mKlUvpwUEHhQvHF/2nPKR
+ zym0+Q5yZ5Ra0mF3OVyE7Ru+I9H5I3k=
+Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
+ [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-549-gNXS264kNx-fdR-4fxQ6bA-1; Wed, 28 Feb 2024 15:30:16 -0500
+X-MC-Unique: gNXS264kNx-fdR-4fxQ6bA-1
+Received: by mail-lf1-f69.google.com with SMTP id
+ 2adb3069b0e04-50e91f9d422so67408e87.2
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 12:30:15 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709151926; x=1709756726;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0U9PMwHiZszNU3T0CkEUezw6dw3Df8531lwjpQDns4A=;
- b=hEWk/D4PZ6RatyB3njt/4K+buA78YLCZ8s6YD20WhMCN82Fry51hsSuTAkfFdI4w1U
- ImqLjMA6xbHETlSGf1ZQBuhslX6xOJ9GIWhxm2SCfYc+lUNmOsU6KPs86XRS4xWRlJ0v
- GovoQtrkNqibiSbSUDmg4PsURHwuj0BkzF3OevxpvbdvYPNtdMSTtTgZzrhY9nUzWdP2
- P60iIu1yfJg4Kx9FCSw2I5HZmVEj7WligsjeSZygs+ndWHhBZgY5GPiZML8DP0d4ZX3k
- 8r3/kpBI98vB+6gmaxS2DK+in9TQB2Gx4t0ASierpUyolD1aKpWsNeCyZ34Iby7rRu7l
- R7qg==
-X-Gm-Message-State: AOJu0YwCzyFcdxmx9if5ViPmwdFXCqYA5f2UO6RjizCEBlY1kLaOnUwL
- kQ7l7hOkiIpvu5buOjPwDwiMlmje2n6li4uOVK5CiUxIi6eSBOh382OgVyqqbA1QhiVOBhyf35y
- i
-X-Google-Smtp-Source: AGHT+IGrFJIJTQgrMZlXVgIQeNd1TLRU+Oed90gJbzNNR97eRW8DTu3VIIaMmArgH+gnle4paNkhTQ==
-X-Received: by 2002:a17:90b:3753:b0:299:a5a1:46e2 with SMTP id
- ne19-20020a17090b375300b00299a5a146e2mr244104pjb.25.1709151926253; 
- Wed, 28 Feb 2024 12:25:26 -0800 (PST)
-Received: from stoup.. (098-147-055-211.res.spectrum.com. [98.147.55.211])
+ d=1e100.net; s=20230601; t=1709152214; x=1709757014;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1QW82QujdXbG3JxzkU/eLku3CZ1MEf03sIG23EM9vWI=;
+ b=fPlQURkjGaHcg+koGmOsRib0EJJsuga0Xpo0GO61XoJGIzhSTDfA+vg3vWW7chqsYU
+ jhbweDLaUqyXCqgUOtZzqWHVuDaFWSwdE2fD4Z5/SGK7ZE7sJx/vN7RIFH9tE1nYlzJC
+ bnf1B9kZFGX73P6ETu0/ByiKjrPF54Oa8/IHK8sMeDDef1NeZGNUlqVNg9yMHlNo4Fbl
+ JF5yD8iR9lEDPUsbOFCPtgEkbDyKm9dzP/jPX7JvUYXq6qtcxzCwotZWu5UgvAvOOXM5
+ 2gVvfRsXKlWV0P6avBuvkHs6ljEB4E7xHdTqekcLK6nspIqz+v+p417rarnCb39zfaoD
+ T9Ag==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVpF41IirtR2RcT2nSA/kmJEuxAUiRFYg01ajvqytGn0VKhobJtMXf1RaTJFo3XyNiKJshRlXDUEBTkfkIaUdV6fAgSRVg=
+X-Gm-Message-State: AOJu0YwFMaVv7I0KnWxL4aW/tiPXpdYjEFg8OvbFuRfB6PRbT9eOPPSg
+ ev6f2sy2EiuRVjT3kbWGwDxhBnsxlkiVTCEELw9g30pcWakUIwxLSlfwshwFo5ax/YNgOu0dOOy
+ fkTVUmSfxoRrR4ihWkMeKi7NoMoxAc8WX7m1ZtLfdLQ0eRCyhYGco
+X-Received: by 2002:ac2:52b2:0:b0:512:e58c:7bf1 with SMTP id
+ r18-20020ac252b2000000b00512e58c7bf1mr48345lfm.40.1709152214582; 
+ Wed, 28 Feb 2024 12:30:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFTnZ99e3qAETe6P3a1/HERVWYZxhR1xioIFDpadmN359iXseUttYyekkHW1nGkc3OgtoU0Aw==
+X-Received: by 2002:ac2:52b2:0:b0:512:e58c:7bf1 with SMTP id
+ r18-20020ac252b2000000b00512e58c7bf1mr48337lfm.40.1709152214224; 
+ Wed, 28 Feb 2024 12:30:14 -0800 (PST)
+Received: from redhat.com ([2a02:14f:178:d6b0:a21c:61c4:2098:5db])
  by smtp.gmail.com with ESMTPSA id
- oh5-20020a17090b3a4500b0029ab712f648sm2118499pjb.38.2024.02.28.12.25.24
+ c2-20020a5d4142000000b0033cf453f2bbsm15415833wrq.35.2024.02.28.12.30.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Feb 2024 12:25:25 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: laurent@vivier.eu, richard.purdie@linuxfoundation.org, mjt@tls.msk.ru,
- iii@linux.ibm.com
-Subject: [PATCH v2 3/5] linux-user: Add strace for shmat
-Date: Wed, 28 Feb 2024 10:25:16 -1000
-Message-Id: <20240228202518.33180-4-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240228202518.33180-1-richard.henderson@linaro.org>
-References: <20240228202518.33180-1-richard.henderson@linaro.org>
+ Wed, 28 Feb 2024 12:30:13 -0800 (PST)
+Date: Wed, 28 Feb 2024 15:30:09 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Zhao Liu <zhao1.liu@linux.intel.com>
+Cc: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Michael Tokarev <mjt@tls.msk.ru>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Subject: Re: [PATCH 13/16] block/virtio-blk: Fix missing ERRP_GUARD() for
+ error_prepend()
+Message-ID: <20240228152955-mutt-send-email-mst@kernel.org>
+References: <20240228163723.1775791-1-zhao1.liu@linux.intel.com>
+ <20240228163723.1775791-14-zhao1.liu@linux.intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240228163723.1775791-14-zhao1.liu@linux.intel.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,67 +106,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/strace.c    | 23 +++++++++++++++++++++++
- linux-user/strace.list |  2 +-
- 2 files changed, 24 insertions(+), 1 deletion(-)
+On Thu, Feb 29, 2024 at 12:37:20AM +0800, Zhao Liu wrote:
+> From: Zhao Liu <zhao1.liu@intel.com>
+> 
+> As the comment in qapi/error, passing @errp to error_prepend() requires
+> ERRP_GUARD():
+> 
+> * = Why, when and how to use ERRP_GUARD() =
+> *
+> * Without ERRP_GUARD(), use of the @errp parameter is restricted:
+> ...
+> * - It should not be passed to error_prepend(), error_vprepend() or
+> *   error_append_hint(), because that doesn't work with &error_fatal.
+> * ERRP_GUARD() lifts these restrictions.
+> *
+> * To use ERRP_GUARD(), add it right at the beginning of the function.
+> * @errp can then be used without worrying about the argument being
+> * NULL or &error_fatal.
+> 
+> ERRP_GUARD() could avoid the case when @errp is the pointer of
+> error_fatal, the user can't see this additional information, because
+> exit() happens in error_setg earlier than information is added [1].
+> 
+> The virtio_blk_vq_aio_context_init() passes @errp to error_prepend().
+> 
+> Though its @errp points its caller's local @err variable, to follow the
+> requirement of @errp, add missing ERRP_GUARD() at the beginning of
+> virtio_blk_vq_aio_context_init().
+> 
+> [1]: Issue description in the commit message of commit ae7c80a7bd73
+>      ("error: New macro ERRP_GUARD()").
+> 
+> Cc: "Michael S. Tsirkin" <mst@redhat.com>
+> Cc: Stefan Hajnoczi <stefanha@redhat.com>
+> Cc: Kevin Wolf <kwolf@redhat.com>
+> Cc: Hanna Reitz <hreitz@redhat.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index cf26e55264..47d6ec3263 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -670,6 +670,25 @@ print_semctl(CPUArchState *cpu_env, const struct syscallname *name,
- }
- #endif
- 
-+static void
-+print_shmat(CPUArchState *cpu_env, const struct syscallname *name,
-+            abi_long arg0, abi_long arg1, abi_long arg2,
-+            abi_long arg3, abi_long arg4, abi_long arg5)
-+{
-+    static const struct flags shmat_flags[] = {
-+        FLAG_GENERIC(SHM_RND),
-+        FLAG_GENERIC(SHM_REMAP),
-+        FLAG_GENERIC(SHM_RDONLY),
-+        FLAG_GENERIC(SHM_EXEC),
-+    };
-+
-+    print_syscall_prologue(name);
-+    print_raw_param(TARGET_ABI_FMT_ld, arg0, 0);
-+    print_pointer(arg1, 0);
-+    print_flags(shmat_flags, arg2, 1);
-+    print_syscall_epilogue(name);
-+}
-+
- #ifdef TARGET_NR_ipc
- static void
- print_ipc(CPUArchState *cpu_env, const struct syscallname *name,
-@@ -683,6 +702,10 @@ print_ipc(CPUArchState *cpu_env, const struct syscallname *name,
-         print_ipc_cmd(arg3);
-         qemu_log(",0x" TARGET_ABI_FMT_lx ")", arg4);
-         break;
-+    case IPCOP_shmat:
-+        print_shmat(cpu_env, &(const struct syscallname){ .name = "shmat" },
-+                    arg1, arg4, arg2, 0, 0, 0);
-+        break;
-     default:
-         qemu_log(("%s("
-                   TARGET_ABI_FMT_ld ","
-diff --git a/linux-user/strace.list b/linux-user/strace.list
-index 6655d4f26d..dfd4237d14 100644
---- a/linux-user/strace.list
-+++ b/linux-user/strace.list
-@@ -1398,7 +1398,7 @@
- { TARGET_NR_sgetmask, "sgetmask" , NULL, NULL, NULL },
- #endif
- #ifdef TARGET_NR_shmat
--{ TARGET_NR_shmat, "shmat" , NULL, NULL, print_syscall_ret_addr },
-+{ TARGET_NR_shmat, "shmat" , NULL, print_shmat, print_syscall_ret_addr },
- #endif
- #ifdef TARGET_NR_shmctl
- { TARGET_NR_shmctl, "shmctl" , NULL, NULL, NULL },
--- 
-2.34.1
+
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+
+merge with other things please.
+
+> ---
+>  hw/block/virtio-blk.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+> index 738cb2ac367d..92de315f17f7 100644
+> --- a/hw/block/virtio-blk.c
+> +++ b/hw/block/virtio-blk.c
+> @@ -1682,6 +1682,7 @@ static bool apply_iothread_vq_mapping(
+>  /* Context: BQL held */
+>  static bool virtio_blk_vq_aio_context_init(VirtIOBlock *s, Error **errp)
+>  {
+> +    ERRP_GUARD();
+>      VirtIODevice *vdev = VIRTIO_DEVICE(s);
+>      VirtIOBlkConf *conf = &s->conf;
+>      BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
+> -- 
+> 2.34.1
 
 
