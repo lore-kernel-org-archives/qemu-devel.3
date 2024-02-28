@@ -4,83 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4087C47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 18:39:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79E00C5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 18:43:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfOpu-0002iK-0m; Wed, 28 Feb 2024 13:39:22 -0500
+	id 1rfOsr-0003bD-Ec; Wed, 28 Feb 2024 13:42:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rfOpt-0002i9-6N
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 13:39:21 -0500
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rfOpr-0002w9-Aw
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 13:39:20 -0500
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-565d1656c12so98886a12.1
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 10:39:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709145557; x=1709750357; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lT9hn+57uOhXenoDpKTmFM2J3VdE58lV77AMQTr9jjk=;
- b=CDY015nJbtmyVMbeTpSb53VevgLISqzbe2YsO7BZgnMOer4jLfu9uKhLace+J8ptzy
- 6IxEs1xpIn/7ETtvGa1j6tqlxdVxfLiCDnXhftFr5TYujwcHrkXy/IV4a/wf05lpMKI8
- 2k2p8gqmQ5a2yy2HM0bk05NW4eQev+OkxyHeH5K0WvNwgIK6JVuT2K1vw7m8PhUN85PR
- GkuWQCWlg3yoO0SdNzzE6yZ9+HxcxqktW4trleFGSRGXknyZxFZTXuPPh1YtkSup6p67
- 87n5GxlPt5Fa4SQagXEB+irxvkJf3kuadx+UqyJDRw4f+w50TLpcdIQDOKbkG2AtVWC3
- PbvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709145557; x=1709750357;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lT9hn+57uOhXenoDpKTmFM2J3VdE58lV77AMQTr9jjk=;
- b=FkAZgJgKWzEgIP2+LuPB5muwUcUYtlON2JqiFBIopDlEqfTPaU0LT635kfJVijGaTm
- r/hhLByN0TbcM+GEksC1AHz7eXW54Zgs37uJfU1YRzlMUxdL+l8fFphbVrTJ0MTx/w/z
- EgmF22tkWnGJ03y5fv0OLAdi9oXsBraaz5bkQce7nJnNsjXIsYcdqgyk8XqqaMF6VNSv
- 9vXOSINtsJ/vOQEWCdqB7ouoAZmBqNWKndLKJx/Eg5hVB3Fmel25e1RSsFeb5HdPpaLB
- Qi0jc3MqTMO776CAXX9zVOcivltb8Y4UZk8TREutqy/xYfA1hNAD/PkazZRrmhXXgNGn
- ediw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU0UiBqLstepYKb0KX8Os1+pN4Z+FYBhIHUsL2Nak89Y8K0ogpSdBwwhbf0dnTIC5ZheHIzMfS2JlPF2zE/+pVzxXPddww=
-X-Gm-Message-State: AOJu0Yxe5iJk7gNd4E8HX/0o83Ju68Jfow9OoTjVKXcSxtHyIzzxR7mc
- blPQLeBHF10/KdwTTZtVej2MG1ybr/zPGfF6ObKJI+MBEFcNiyii6zcTN40pl4ZgHAN456oSU7f
- xdCyyjvDNm6IuKnBogCokExa3ybGTceTgb3kC8g==
-X-Google-Smtp-Source: AGHT+IF6940PIyG47+HlGfNAU69tMz9J66v3a7t7CQ0jzwNz4N4uXNMlP95bFft7ovedMt7nsp9VSeQxiVBJYiq8yYs=
-X-Received: by 2002:a05:6402:2156:b0:565:a5aa:22e7 with SMTP id
- bq22-20020a056402215600b00565a5aa22e7mr80554edb.2.1709145557651; Wed, 28 Feb
- 2024 10:39:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1rfOsp-0003b4-AH
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 13:42:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1rfOsn-0003XK-KX
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 13:42:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709145738;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=sU+3X0AHn456pNTAT2xSU6kPLCizdVrPJ8hAbycWptw=;
+ b=B6UDo58kO8p/XYoTzE5DPjpLrRM44QCwmwnhofNBCEdTs2dU4jEYaXZcVH84Q7GqB/Cjb3
+ x+yrs2ZBmePSDjj5K2ndemewfNhbXkRWA9WzbAFCrjcstfmECJNnY7hZZzDXztoXtxsCnL
+ Q/i2iuBMnSrqVQr1s7bshVNZJ9hQwY8=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-695-ooyQuhUBMA24T815POlQAA-1; Wed,
+ 28 Feb 2024 13:42:16 -0500
+X-MC-Unique: ooyQuhUBMA24T815POlQAA-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A7B4A2824798;
+ Wed, 28 Feb 2024 18:42:15 +0000 (UTC)
+Received: from localhost (unknown [10.39.192.165])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 1127A20169C6;
+ Wed, 28 Feb 2024 18:42:13 +0000 (UTC)
+Date: Wed, 28 Feb 2024 13:42:12 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Zhao Liu <zhao1.liu@linux.intel.com>
+Cc: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Michael Tokarev <mjt@tls.msk.ru>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>, Fam Zheng <fam@euphon.net>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Subject: Re: [PATCH 06/16] block/nvme: Fix missing ERRP_GUARD() for
+ error_prepend()
+Message-ID: <20240228184212.GB641417@fedora>
+References: <20240228163723.1775791-1-zhao1.liu@linux.intel.com>
+ <20240228163723.1775791-7-zhao1.liu@linux.intel.com>
 MIME-Version: 1.0
-References: <20240228125939.56925-1-heinrich.schuchardt@canonical.com>
- <fb6ef90d-4a3e-4bdd-8516-8b15c1f2329f@linaro.org>
- <b9937680-8c0b-46f6-86ef-55139562e2c4@canonical.com>
-In-Reply-To: <b9937680-8c0b-46f6-86ef-55139562e2c4@canonical.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 28 Feb 2024 18:39:06 +0000
-Message-ID: <CAFEAcA_Bshua2BQTfOb3D1aF27ayELEt9TcQM8hkQdKaih3xHw@mail.gmail.com>
-Subject: Re: [PATCH, v2] physmem: avoid bounce buffer too small
-To: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="NF1acaMMLvtcxaWo"
+Content-Disposition: inline
+In-Reply-To: <20240228163723.1775791-7-zhao1.liu@linux.intel.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,97 +88,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 28 Feb 2024 at 18:28, Heinrich Schuchardt
-<heinrich.schuchardt@canonical.com> wrote:
->
-> On 28.02.24 16:06, Philippe Mathieu-Daud=C3=A9 wrote:
-> > Hi Heinrich,
-> >
-> > On 28/2/24 13:59, Heinrich Schuchardt wrote:
-> >> virtqueue_map_desc() is called with values of sz exceeding that may
-> >> exceed
-> >> TARGET_PAGE_SIZE. sz =3D 0x2800 has been observed.
-> >>
-> >> We only support a single bounce buffer. We have to avoid
-> >> virtqueue_map_desc() calling address_space_map() multiple times.
-> >> Otherwise
-> >> we see an error
-> >>
-> >>      qemu: virtio: bogus descriptor or out of resources
-> >>
-> >> Increase the minimum size of the bounce buffer to 0x10000 which matche=
-s
-> >> the largest value of TARGET_PAGE_SIZE for all architectures.
-> >>
-> >> Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-> >> ---
-> >> v2:
-> >>     remove unrelated change
-> >> ---
-> >>   system/physmem.c | 8 ++++++--
-> >>   1 file changed, 6 insertions(+), 2 deletions(-)
-> >>
-> >> diff --git a/system/physmem.c b/system/physmem.c
-> >> index e3ebc19eef..3c82da1c86 100644
-> >> --- a/system/physmem.c
-> >> +++ b/system/physmem.c
-> >> @@ -3151,8 +3151,12 @@ void *address_space_map(AddressSpace *as,
-> >>               *plen =3D 0;
-> >>               return NULL;
-> >>           }
-> >> -        /* Avoid unbounded allocations */
-> >> -        l =3D MIN(l, TARGET_PAGE_SIZE);
-> >> +        /*
-> >> +         * There is only one bounce buffer. The largest occuring
-> >> value of
-> >> +         * parameter sz of virtqueue_map_desc() must fit into the bou=
-nce
-> >> +         * buffer.
-> >> +         */
-> >> +        l =3D MIN(l, 0x10000);
-> >
-> > Please define this magic value. Maybe ANY_TARGET_PAGE_SIZE or
-> > TARGETS_BIGGEST_PAGE_SIZE?
-> >
-> > Then along:
-> >    QEMU_BUILD_BUG_ON(TARGET_PAGE_SIZE <=3D TARGETS_BIGGEST_PAGE_SIZE);
->
-> Thank you Philippe for reviewing.
->
-> TARGETS_BIGGEST_PAGE_SIZE does not fit as the value is not driven by the
-> page size.
-> How about MIN_BOUNCE_BUFFER_SIZE?
-> Is include/exec/memory.h the right include for the constant?
->
-> I don't think that TARGET_PAGE_SIZE has any relevance for setting the
-> bounce buffer size. I only mentioned it to say that we are not
-> decreasing the value on any existing architecture.
->
-> I don't know why TARGET_PAGE_SIZE ever got into this piece of code.
-> e3127ae0cdcd ("exec: reorganize address_space_map") does not provide a
-> reason for this choice. Maybe Paolo remembers.
 
-The limitation to a page dates back to commit 6d16c2f88f2a in 2009,
-which was the first implementation of this function. I don't think
-there's a particular reason for that value beyond that it was
-probably a convenient value that was assumed to be likely "big enough".
+--NF1acaMMLvtcxaWo
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think the idea with this bounce-buffer has always been that this
-isn't really a code path we expected to end up in very often --
-it's supposed to be for when devices are doing DMA, which they
-will typically be doing to memory (backed by host RAM), not
-devices (backed by MMIO and needing a bounce buffer). So the
-whole mechanism is a bit "last fallback to stop things breaking
-entirely".
+On Thu, Feb 29, 2024 at 12:37:13AM +0800, Zhao Liu wrote:
+> From: Zhao Liu <zhao1.liu@intel.com>
+>=20
+> As the comment in qapi/error, passing @errp to error_prepend() requires
+> ERRP_GUARD():
+>=20
+> * =3D Why, when and how to use ERRP_GUARD() =3D
+> *
+> * Without ERRP_GUARD(), use of the @errp parameter is restricted:
+> ...
+> * - It should not be passed to error_prepend(), error_vprepend() or
+> *   error_append_hint(), because that doesn't work with &error_fatal.
+> * ERRP_GUARD() lifts these restrictions.
+> *
+> * To use ERRP_GUARD(), add it right at the beginning of the function.
+> * @errp can then be used without worrying about the argument being
+> * NULL or &error_fatal.
+>=20
+> ERRP_GUARD() could avoid the case when @errp is the pointer of
+> error_fatal, the user can't see this additional information, because
+> exit() happens in error_setg earlier than information is added [1].
+>=20
+> In nvme.c, there're 3 functions passing @errp to error_prepend()
+> without ERRP_GUARD():
+> - nvme_init_queue()
+> - nvme_create_queue_pair()
+> - nvme_identify()
+>=20
+> All these 3 functions take their @errp parameters from the
+> nvme_file_open(), which is a BlockDriver.bdrv_nvme() method and its
+> @errp points to its caller's local_err.
+>=20
+> Though these 3 cases haven't trigger the issue like [1] said, to
+> follow the requirement of @errp, add missing ERRP_GUARD() at their
+> beginning.
+>=20
+> [1]: Issue description in the commit message of commit ae7c80a7bd73
+>      ("error: New macro ERRP_GUARD()").
+>=20
+> Cc: Stefan Hajnoczi <stefanha@redhat.com>
+> Cc: Fam Zheng <fam@euphon.net>
+> Cc: "Philippe Mathieu-Daud=E9" <philmd@linaro.org>
+> Cc: Kevin Wolf <kwolf@redhat.com>
+> Cc: Hanna Reitz <hreitz@redhat.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>  block/nvme.c | 3 +++
+>  1 file changed, 3 insertions(+)
 
-The address_space_map() API says that it's allowed to return
-a subset of the range you ask for, so if the virtio code doesn't
-cope with the minimum being set to TARGET_PAGE_SIZE then either
-we need to fix that virtio code or we need to change the API
-of this function. (But I think you will also get a reduced
-range if you try to use it across a boundary between normal
-host-memory-backed RAM and a device MemoryRegion.)
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-thanks
--- PMM
+--NF1acaMMLvtcxaWo
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmXffoQACgkQnKSrs4Gr
+c8gzIgf/dM25JEOFRp2w9Rq06Tewm5rA3O+zyTz7QWsy2BUYSk1fzAJNLYN0sCvu
+LJ4cOk66oR05Tu/jZ0sBEep03lCvqNvQ2sYif3SgCFO7KwpDywCeokmX2OQIaKIX
+efWuDvEC813LeHWJ9S3UKB+JrDseXwcC0Vv5/LGEt4Z0y0RbGZwUL4anH71E1ZiZ
+TNE4a2Vyd1jey9Su0CiDR22Y8EXytQc1dfDMY7ssPGknSzwuipUxrwM39bLag31K
+sq7L4iLeULQ+iMhT5h+55TWv/ihz7LuqHUv+KgUQKT+YitYm05nKML26JK1C4rYz
+2Td/v0xpUHhzPAa0cmgkjhrwzBfAzQ==
+=3U1B
+-----END PGP SIGNATURE-----
+
+--NF1acaMMLvtcxaWo--
+
 
