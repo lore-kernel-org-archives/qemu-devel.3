@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE4F2C5478C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 16:28:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1249BC54E4A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 16:28:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfMix-0003yn-TN; Wed, 28 Feb 2024 11:24:03 -0500
+	id 1rfMkP-0005dP-IA; Wed, 28 Feb 2024 11:25:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfMiw-0003vp-Ff; Wed, 28 Feb 2024 11:24:02 -0500
+ id 1rfMjw-0005Ag-Iq; Wed, 28 Feb 2024 11:25:07 -0500
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfMiu-0000oF-SK; Wed, 28 Feb 2024 11:24:02 -0500
+ id 1rfMjp-0000uO-3v; Wed, 28 Feb 2024 11:25:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709137441; x=1740673441;
+ t=1709137497; x=1740673497;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=QAn6+MUVu1rKDjC913XhAj1KDjxffFbQY2JrVSnn4uQ=;
- b=J2BXMY4zkd24SHTTypzlbokPBK/XgrcXHDW2ggDo0ymVwav/Z7J5ZARe
- SESpbsLDjNRQ3oHDcVQTkYKhckKFBWhkz2dAA1Sm0Hp7uvoha8VL7eQn6
- hwh97oPDUhYF9WxijwIRGlnms+Whp8qOTj/iCqHpI7O25XFSnevOzO6Zd
- PWG0z9NT5RMCvviXW/5DJl7L/HR4lbX/OAqYdtZmgxQAG2eu6sVdmGRQ9
- prDcweQtM0qPwc9LLOktI/sVwXsT0JH2bA3dvIhZ0yZ1sxljdcYb1Fp1I
- sjIux3d8pXB4HPSHKo6I+qmj5komN+jeSXB25n0ugUv9zyAnMhJuKn/y2 w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="28982446"
-X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="28982446"
+ bh=F1IuRZawaJ2NHOUI3QO3od9jdb42E1bkkqWXt4qynek=;
+ b=Yr2MHjt31e0PPo/mPj1/oZfIRMud2o18iJr2maeTNRLZ9LDQCgyStmO4
+ n5XznHl/FiOOC+RLLOdm0BofRPZE+W7ago1eu0pf++61c92KIUH20qBCn
+ 6K/sA4rYq50WC6R1wNa2jV6NpM7iy6Ea1e3oJLHjUbWQPN2QK4eqfWJTL
+ 6vEgFE1Tx3AlCzQixj45WPn1sjhQRQGsx8N5aafqj4p6lrresnfK+ny7o
+ nAfvhMgGQgyFsw48yITE88b4wzDdP2ARmhbkya8sR6H7et9nXKczQgy80
+ Tybitb1grGoiwFdYjKIByuh66LHkAxQiRdr6Rncd1n6nw/dsm7AaS7184 w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="28982649"
+X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="28982649"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Feb 2024 08:23:59 -0800
+ 28 Feb 2024 08:24:32 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="12144897"
+X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="12145073"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa004.jf.intel.com with ESMTP; 28 Feb 2024 08:23:56 -0800
+ by orviesa004.jf.intel.com with ESMTP; 28 Feb 2024 08:24:30 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Michael Tokarev <mjt@tls.msk.ru>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- John Snow <jsnow@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH 04/16] block/cbw: Fix missing ERRP_GUARD() for error_prepend()
-Date: Thu, 29 Feb 2024 00:37:11 +0800
-Message-Id: <20240228163723.1775791-5-zhao1.liu@linux.intel.com>
+ Paul Burton <paulburton@kernel.org>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
+Subject: [PATCH 15/16] hw/core/loader-fit: Fix missing ERRP_GUARD() for
+ error_prepend()
+Date: Thu, 29 Feb 2024 00:37:22 +0800
+Message-Id: <20240228163723.1775791-16-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240228163723.1775791-1-zhao1.liu@linux.intel.com>
 References: <20240228163723.1775791-1-zhao1.liu@linux.intel.com>
@@ -101,37 +101,47 @@ ERRP_GUARD() could avoid the case when @errp is the pointer of
 error_fatal, the user can't see this additional information, because
 exit() happens in error_setg earlier than information is added [1].
 
-The cbw_open() passes @errp to error_prepend() without ERRP_GUARD().
+In hw/core/loader-fit.c, there're 2 functions passing @errp to
+error_prepend() without ERRP_GUARD():
+ - fit_load_kernel()
+ - fit_load_fdt()
 
-Though it is the BlockDriver.bdrv_open() method, and currently its
-@errp parameter only points to callers' local_err, to follow the
-requirement of @errp, add missing ERRP_GUARD() at the beginning of this
-function.
+Their @errp parameters are both the pointers of the local @err virable
+in load_fit().
+
+Though they don't cause the issue like [1] said, to follow the
+requirement of @errp, add missing ERRP_GUARD() at their beginning.
 
 [1]: Issue description in the commit message of commit ae7c80a7bd73
      ("error: New macro ERRP_GUARD()").
 
-Cc: John Snow <jsnow@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: Kevin Wolf <kwolf@redhat.com>
-Cc: Hanna Reitz <hreitz@redhat.com>
+Cc: Paul Burton <paulburton@kernel.org>
+Cc: Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- block/copy-before-write.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/core/loader-fit.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/block/copy-before-write.c b/block/copy-before-write.c
-index 0842a1a6dfbe..8aba27a71d6d 100644
---- a/block/copy-before-write.c
-+++ b/block/copy-before-write.c
-@@ -407,6 +407,7 @@ out:
- static int cbw_open(BlockDriverState *bs, QDict *options, int flags,
-                     Error **errp)
+diff --git a/hw/core/loader-fit.c b/hw/core/loader-fit.c
+index b7c7b3ba94d4..9f20007dbb51 100644
+--- a/hw/core/loader-fit.c
++++ b/hw/core/loader-fit.c
+@@ -120,6 +120,7 @@ static int fit_load_kernel(const struct fit_loader *ldr, const void *itb,
+                            int cfg, void *opaque, hwaddr *pend,
+                            Error **errp)
  {
 +    ERRP_GUARD();
-     BDRVCopyBeforeWriteState *s = bs->opaque;
-     BdrvDirtyBitmap *bitmap = NULL;
-     int64_t cluster_size;
+     const char *name;
+     const void *data;
+     const void *load_data;
+@@ -178,6 +179,7 @@ static int fit_load_fdt(const struct fit_loader *ldr, const void *itb,
+                         int cfg, void *opaque, const void *match_data,
+                         hwaddr kernel_end, Error **errp)
+ {
++    ERRP_GUARD();
+     Error *err = NULL;
+     const char *name;
+     const void *data;
 -- 
 2.34.1
 
