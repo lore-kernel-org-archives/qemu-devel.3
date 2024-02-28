@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9CDEC54E41
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCC0FC5478C
 	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 18:43:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfOtF-0003gB-1b; Wed, 28 Feb 2024 13:42:49 -0500
+	id 1rfOtP-0003vW-OT; Wed, 28 Feb 2024 13:43:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rfOtC-0003el-6v
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 13:42:46 -0500
+ id 1rfOtO-0003uJ-0V
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 13:42:58 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rfOtA-0003do-RM
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 13:42:45 -0500
+ id 1rfOtM-0003f3-Lo
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 13:42:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709145764;
+ s=mimecast20190719; t=1709145776;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=YhrqX7psku9eSHrEeMEdRERJSXqzbaTU3tVB6hTVYOM=;
- b=R31F3jmmBDJ00i2LN+Lg1VQ2rlMN1S3u2NMgXWKznzvBWtuQJWuexl83hQa9LP1OcA8wLb
- DAUM94hBw86e+NfKtRxf8tTzdkrz4pUEjvcaZ34dLt5ytK1js7avKU87yjcjQTP1zveV64
- PY1/ufNOiSQSYGDQ4tCegrZ9i2enPDc=
+ bh=ET1NgOdeWneMQ1PHl0KDPLtXl24Onf2QtZInGOrabPs=;
+ b=Lp/aB4EgnWxwhHaC+IL05HObbag8xOKLuZdPKxzQcuXsIqvJMiVKgpWaCVbOV9q8KNyzD4
+ LNZK1iPTLAjP+uCUK0Af3TN9nx20d1OOZ4wJ6yzhiW189N9QU9k/+xRIq4C+abzugZJixo
+ g6PiwxBF0m2xVcP+fxM36PXIYVveL5U=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-oxZztMv2OjGC4FznD0upxA-1; Wed,
- 28 Feb 2024 13:42:39 -0500
-X-MC-Unique: oxZztMv2OjGC4FznD0upxA-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-46-PbvAgWdJMO-MtJy9oiqYLA-1; Wed,
+ 28 Feb 2024 13:42:51 -0500
+X-MC-Unique: PbvAgWdJMO-MtJy9oiqYLA-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B1B49380670E;
- Wed, 28 Feb 2024 18:42:38 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 269583C23FC8;
+ Wed, 28 Feb 2024 18:42:51 +0000 (UTC)
 Received: from localhost (unknown [10.39.192.165])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 3C095A20;
- Wed, 28 Feb 2024 18:42:38 +0000 (UTC)
-Date: Wed, 28 Feb 2024 13:42:36 -0500
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 544F7C185C0;
+ Wed, 28 Feb 2024 18:42:50 +0000 (UTC)
+Date: Wed, 28 Feb 2024 13:42:49 -0500
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: Zhao Liu <zhao1.liu@linux.intel.com>
 Cc: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Michael Tokarev <mjt@tls.msk.ru>,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH 09/16] block/qed: Fix missing ERRP_GUARD() for
+ Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Subject: Re: [PATCH 13/16] block/virtio-blk: Fix missing ERRP_GUARD() for
  error_prepend()
-Message-ID: <20240228184236.GC641417@fedora>
+Message-ID: <20240228184249.GD641417@fedora>
 References: <20240228163723.1775791-1-zhao1.liu@linux.intel.com>
- <20240228163723.1775791-10-zhao1.liu@linux.intel.com>
+ <20240228163723.1775791-14-zhao1.liu@linux.intel.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="8omULJJLgKe+ToR0"
+ protocol="application/pgp-signature"; boundary="Fv5HQytso+iiyk1p"
 Content-Disposition: inline
-In-Reply-To: <20240228163723.1775791-10-zhao1.liu@linux.intel.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
+In-Reply-To: <20240228163723.1775791-14-zhao1.liu@linux.intel.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -90,12 +90,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---8omULJJLgKe+ToR0
+--Fv5HQytso+iiyk1p
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Feb 29, 2024 at 12:37:16AM +0800, Zhao Liu wrote:
+On Thu, Feb 29, 2024 at 12:37:20AM +0800, Zhao Liu wrote:
 > From: Zhao Liu <zhao1.liu@intel.com>
 >=20
 > As the comment in qapi/error, passing @errp to error_prepend() requires
@@ -117,42 +117,41 @@ On Thu, Feb 29, 2024 at 12:37:16AM +0800, Zhao Liu wrote:
 > error_fatal, the user can't see this additional information, because
 > exit() happens in error_setg earlier than information is added [1].
 >=20
-> The bdrv_qed_co_invalidate_cache() passes @errp to error_prepend()
-> without ERRP_GUARD().
+> The virtio_blk_vq_aio_context_init() passes @errp to error_prepend().
 >=20
-> Though it is a BlockDriver.bdrv_co_invalidate_cache() method, and
-> currently its @errp parameter only points to callers' local_err, to
-> follow the requirement of @errp, add missing ERRP_GUARD() at the
-> beginning of this function.
+> Though its @errp points its caller's local @err variable, to follow the
+> requirement of @errp, add missing ERRP_GUARD() at the beginning of
+> virtio_blk_vq_aio_context_init().
 >=20
 > [1]: Issue description in the commit message of commit ae7c80a7bd73
 >      ("error: New macro ERRP_GUARD()").
 >=20
+> Cc: "Michael S. Tsirkin" <mst@redhat.com>
 > Cc: Stefan Hajnoczi <stefanha@redhat.com>
 > Cc: Kevin Wolf <kwolf@redhat.com>
 > Cc: Hanna Reitz <hreitz@redhat.com>
 > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
->  block/qed.c | 1 +
+>  hw/block/virtio-blk.c | 1 +
 >  1 file changed, 1 insertion(+)
 
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
---8omULJJLgKe+ToR0
+--Fv5HQytso+iiyk1p
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmXffpwACgkQnKSrs4Gr
-c8jFZgf8C0jop7R9vrqAsAAX1WKn663UR+MDD6oOr6YZru4e2cn3sFI2dyMAbuqo
-QEGZ9Zon7OgcwsEPs6CB0LFRQp+PRLz6rC+Dya1zHs7JKVpt07NldCB6Ru+TcUU3
-u6wJsPHVjv6fNsaw6jNRAw3js/rjb0N5mmxdGW6x8x50WAtkL+VFbklZrnL9S3dF
-5/dOwhbiLz8apFQlgjIc9AvuVVYAbFKaalQ7vAFYMiiKB+bLnE9jiCuaSyFDAOfj
-d+qVT+Z4fVwxP2907tzdyNuOWvzo7R1owxEoRSkAkF8jhe7T6rzTlaOrsuLNysLc
-5awN9LCp3jBVi2cH7lcBpA+sVjbegw==
-=NW/o
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmXffqkACgkQnKSrs4Gr
+c8gfEggAlUYjhE50HdIX3OGx77Ec191xZuNw9mzbb+qzrqEQ9VmO3t/GJgTNMN4N
+ifRdnd4X5rrptndDIMcb1qxO643jKkH74LOkH/WyK0MgcSd6LjbhFiI/O2wMfQ+0
+JGuIDXf8F+xJ7JqDMKKucLlHkerm1L0Oqkp39tsLZjdYT+8E2EsHImInAiswjmaR
+2XC5kdhFZ0RednaNXoOJk9ubQiDIf/YAUrAYa1bdlZTqEEVw7c8+zW9CUErs8x3o
+DLv6fsgjGKX6c+xET0FISggIiRc4oyjUeZ6Brl5bnm4yDq+DxWU7SjmV1sg9LARm
++0PkUAS2Sj5GhPrMr/1T/eWM7U+zug==
+=Jqmz
 -----END PGP SIGNATURE-----
 
---8omULJJLgKe+ToR0--
+--Fv5HQytso+iiyk1p--
 
 
