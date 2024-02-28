@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F570C54E4A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A6C6C54E41
 	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 09:34:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfGHp-0001P9-7u; Wed, 28 Feb 2024 04:31:37 -0500
+	id 1rfGHY-00019x-K8; Wed, 28 Feb 2024 04:31:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rfGHQ-000159-V8; Wed, 28 Feb 2024 04:31:17 -0500
-Received: from szxga07-in.huawei.com ([45.249.212.35])
+ id 1rfGHL-00011S-Kp; Wed, 28 Feb 2024 04:31:09 -0500
+Received: from szxga02-in.huawei.com ([45.249.212.188])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rfGHO-0001lS-7k; Wed, 28 Feb 2024 04:31:12 -0500
-Received: from mail.maildlp.com (unknown [172.19.88.163])
- by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4Tl8Dg0vkDz1Q9P9;
- Wed, 28 Feb 2024 17:28:51 +0800 (CST)
+ id 1rfGHJ-0001ds-Sv; Wed, 28 Feb 2024 04:31:07 -0500
+Received: from mail.maildlp.com (unknown [172.19.163.252])
+ by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4Tl8GQ1t9NzLqlW;
+ Wed, 28 Feb 2024 17:30:22 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 67E1E18002F;
- Wed, 28 Feb 2024 17:31:06 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 7240C18005C;
+ Wed, 28 Feb 2024 17:31:01 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Wed, 28 Feb
- 2024 17:31:05 +0800
+ 2024 17:31:00 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [RFC PATCH v4 19/22] hw/intc/arm_gicv3: Report the NMI interrupt in
- gicv3_cpuif_update()
-Date: Wed, 28 Feb 2024 09:29:43 +0000
-Message-ID: <20240228092946.1768728-20-ruanjinjie@huawei.com>
+Subject: [RFC PATCH v4 13/22] hw/intc/arm_gicv3: Add irq superpriority
+ information
+Date: Wed, 28 Feb 2024 09:29:37 +0000
+Message-ID: <20240228092946.1768728-14-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240228092946.1768728-1-ruanjinjie@huawei.com>
 References: <20240228092946.1768728-1-ruanjinjie@huawei.com>
@@ -45,8 +45,8 @@ Content-Type: text/plain
 X-Originating-IP: [10.67.174.55]
 X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
  kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.35; envelope-from=ruanjinjie@huawei.com;
- helo=szxga07-in.huawei.com
+Received-SPF: pass client-ip=45.249.212.188;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga02-in.huawei.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
@@ -70,48 +70,55 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In CPU Interface, if the IRQ has the superpriority property, report
-NMI to the corresponding PE.
+A SPI, PPI or SGI interrupt can have a superpriority property. So
+maintain superpriority information in PendingIrq and GICR/GICD.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
 ---
-v4:
-- Swap the ordering of the IFs.
 v3:
-- Remove handling nmi_is_irq flag.
+- Place this ahead of implement GICR_INMIR.
+- Add Acked-by.
 ---
- hw/intc/arm_gicv3_cpuif.c | 4 ++++
+ include/hw/intc/arm_gicv3_common.h | 4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
-index df82a413c6..afba98ad87 100644
---- a/hw/intc/arm_gicv3_cpuif.c
-+++ b/hw/intc/arm_gicv3_cpuif.c
-@@ -938,6 +938,7 @@ void gicv3_cpuif_update(GICv3CPUState *cs)
-     /* Tell the CPU about its highest priority pending interrupt */
-     int irqlevel = 0;
-     int fiqlevel = 0;
-+    int nmilevel = 0;
-     ARMCPU *cpu = ARM_CPU(cs->cpu);
-     CPUARMState *env = &cpu->env;
+diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
+index 7324c7d983..df4380141d 100644
+--- a/include/hw/intc/arm_gicv3_common.h
++++ b/include/hw/intc/arm_gicv3_common.h
+@@ -146,6 +146,7 @@ typedef struct {
+     int irq;
+     uint8_t prio;
+     int grp;
++    bool superprio;
+ } PendingIrq;
  
-@@ -976,6 +977,8 @@ void gicv3_cpuif_update(GICv3CPUState *cs)
+ struct GICv3CPUState {
+@@ -172,6 +173,7 @@ struct GICv3CPUState {
+     uint32_t gicr_ienabler0;
+     uint32_t gicr_ipendr0;
+     uint32_t gicr_iactiver0;
++    uint32_t gicr_isuperprio;
+     uint32_t edge_trigger; /* ICFGR0 and ICFGR1 even bits */
+     uint32_t gicr_igrpmodr0;
+     uint32_t gicr_nsacr;
+@@ -274,6 +276,7 @@ struct GICv3State {
+     GIC_DECLARE_BITMAP(active);       /* GICD_ISACTIVER */
+     GIC_DECLARE_BITMAP(level);        /* Current level */
+     GIC_DECLARE_BITMAP(edge_trigger); /* GICD_ICFGR even bits */
++    GIC_DECLARE_BITMAP(superprio);    /* GICD_INMIR */
+     uint8_t gicd_ipriority[GICV3_MAXIRQ];
+     uint64_t gicd_irouter[GICV3_MAXIRQ];
+     /* Cached information: pointer to the cpu i/f for the CPUs specified
+@@ -313,6 +316,7 @@ GICV3_BITMAP_ACCESSORS(pending)
+ GICV3_BITMAP_ACCESSORS(active)
+ GICV3_BITMAP_ACCESSORS(level)
+ GICV3_BITMAP_ACCESSORS(edge_trigger)
++GICV3_BITMAP_ACCESSORS(superprio)
  
-         if (isfiq) {
-             fiqlevel = 1;
-+        } else if (cs->hppi.superprio) {
-+            nmilevel = 1;
-         } else {
-             irqlevel = 1;
-         }
-@@ -985,6 +988,7 @@ void gicv3_cpuif_update(GICv3CPUState *cs)
- 
-     qemu_set_irq(cs->parent_fiq, fiqlevel);
-     qemu_set_irq(cs->parent_irq, irqlevel);
-+    qemu_set_irq(cs->parent_nmi, nmilevel);
- }
- 
- static uint64_t icc_pmr_read(CPUARMState *env, const ARMCPRegInfo *ri)
+ #define TYPE_ARM_GICV3_COMMON "arm-gicv3-common"
+ typedef struct ARMGICv3CommonClass ARMGICv3CommonClass;
 -- 
 2.34.1
 
