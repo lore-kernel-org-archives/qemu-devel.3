@@ -4,99 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2A0DC5478C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 12:01:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6A45C5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 12:02:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfIZ0-00065l-78; Wed, 28 Feb 2024 06:57:30 -0500
+	id 1rfIdQ-0003GY-I2; Wed, 28 Feb 2024 07:02:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rfIYx-00063M-V6
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:57:27 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rfIYo-0005nI-BX
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:57:27 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-33d90dfe73cso450815f8f.0
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 03:57:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709121437; x=1709726237; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=507xwnvGyp+RzNtpx1Atflfg7HETTICpDRubw47grLo=;
- b=EvqjAqcE4B+VwMRN4TmWkwOZ9/5NYVlBe6q7ZFLrQt7GeW2zDciKSQGx8Kusf1N2eN
- okMBixz9Ge37COOh9uGJqka0EX2vOgpSGXfsS1/KwhfbFfvlKQpOh7ZpWH+hCkyH1COK
- SNKQa0FYQ5fTRcX/qEJjn5oFxENEjI1rwGqMx3L7gIbljiQCLjTgq9Apx6cGuX9UNxx6
- /c83IWDkUxXu8uEmIpQ2xSNBn/6ZNZvmM3lcnigiysQa6kZTJ5vwkZcrP/1cL4h2OgtQ
- lrBdeOaBy7K3nW5H7hVngou8rwj//TwY5nHQ3faRhtJqYElbfP4ect6rTY+FIfKxf4jl
- aY4Q==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rfIdP-0003GH-Lk
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 07:02:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rfIdN-0002vF-NL
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 07:02:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709121720;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=aWRwAn9NIQRn5Xz9QITdQ9YGgC39gu54Twx4ltMtZFU=;
+ b=Cs55XV2ROhQxnHdRIXEdy9hctMrex32Zw5mMOH0GESmHY0p/TDY/6zcMsjJHuGoCrskFt9
+ 04+p1kb8a/tRz2hFeHUrzZrVDp++udndzDaKxe5KiYge41g7V/CIf6KcyhoZTlG+jywEav
+ mA55NUg2mmRhX4VBQmiJGYVyUETanBw=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-464-D3q8d1FlMJSg0C8Df_LOHw-1; Wed, 28 Feb 2024 07:01:58 -0500
+X-MC-Unique: D3q8d1FlMJSg0C8Df_LOHw-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-33d782af89dso2133555f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 04:01:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709121437; x=1709726237;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=507xwnvGyp+RzNtpx1Atflfg7HETTICpDRubw47grLo=;
- b=U4qTB6CNJ2NEHf/+NZAPW7ZPEG289h7BXtisTcDS1lgV3KLpnz1sIM8yBVr0uL21O2
- rWGp1g3eMICc9iL8gwUSp2w2EAWwGvDFMW5zyfUEEfTtmoqj2XdYG7utu0ZhpGhfzefJ
- RucrbWC8My3i3B8ulfrCWemC3UzlJ109MamC49JBUNGHY5HyO7Pfh/LpQF9PNKvywvBf
- uGnrRYlT+r0SmJrfY/CVpo8OF5J5At8CU9wjAfD7vVMhubieIxFyKHr5UIULt1d5Gq1i
- 3Sw0fKwg2qib2osoAhE1lD6dL5ApJLnCCSqG83yR6xZ8t6m2jUqxq6RSVDGLBY/SA5NJ
- weag==
-X-Gm-Message-State: AOJu0YxxgKsMBEDScN90O+14e2drD3CFFyjhC4rD18AaDFq/Lv9BK5bP
- pIZRg+evtKYNedosVjWl1UxW9XDLXW1RxuN3byclkV66aAF1zAVITHSWWr1wjLU=
-X-Google-Smtp-Source: AGHT+IGViQJzD+1XDJXptcgLGmkM1gT6FUiReRx0hytCh2LzB9xM5yhtU+8f924tZmm2MF5gDEHkVQ==
-X-Received: by 2002:a5d:50c5:0:b0:33d:545b:a33e with SMTP id
- f5-20020a5d50c5000000b0033d545ba33emr1990207wrt.13.1709121436810; 
- Wed, 28 Feb 2024 03:57:16 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- f1-20020adfe901000000b0033d8b1ace25sm14456814wrm.2.2024.02.28.03.57.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Feb 2024 03:57:15 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 486005F90D;
- Wed, 28 Feb 2024 11:57:03 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-arm@nongnu.org (open list:ARM TCG CPUs),
- qemu-ppc@nongnu.org (open list:PowerPC TCG CPUs),
- qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
-Subject: [PULL 13/29] hw/core/cpu: Remove gdb_get_dynamic_xml member
-Date: Wed, 28 Feb 2024 11:56:45 +0000
-Message-Id: <20240228115701.1416107-14-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240228115701.1416107-1-alex.bennee@linaro.org>
-References: <20240228115701.1416107-1-alex.bennee@linaro.org>
+ d=1e100.net; s=20230601; t=1709121717; x=1709726517;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
+ :references:cc:to:content-language:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aWRwAn9NIQRn5Xz9QITdQ9YGgC39gu54Twx4ltMtZFU=;
+ b=cvUfoQpNpkrLmJXlAaIo+r2F1JPT0AwYkuMVNfhyIXBXDDHwJD/L3idOVIWT7HBywj
+ ckux4x7gKqYJnJW8RczWPdR+D+QLkbAnMKFHKvSf5F671kCJrFzUN4b6KAZUQ6BfgoUa
+ UfD9CVwdSrRAvDPHqApHs6fnT7L9lX3/3z4OzC6g2lGEh9uA+GnAkhaLyh2Lv4Azj6zm
+ fjA8a09zq+vVVXEsti4xwED/m8PTS3TtS1AzuVo0B6V21kIa64ldx0oo78UUPhcD4zxF
+ I6dt5rd0ViTYHXDNnrjUxJ+g9iriAaT4T9cQdm6+Vo7iTYekCEz6D+zxWGAg6vgvmZp8
+ iK2Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUpMmx5GjqG26u+JO9aocxKzargCOY3+x6N0PRdjSneTT6K5qm+JCOf3ItrR/ny7rpIcx1aX7tC0cC0P3/tk87nXjzjAM0=
+X-Gm-Message-State: AOJu0YzqGFgCtTN6up8Fid0ccn9KRIGY2OVdSXHnrGqap3JKmpkmQzlB
+ Q89spH1ZJ8X3etT4MQZqkJ/7vuI/tZTDoJj/Gr+cRF3yoZImjIh6jZeBfDc2uRlHxV99V8ngXkA
+ MuIEJa5XvSleA7ZoCizxS/QD/oko2ak4PCRltkMTMog6ZH+/5m3zf
+X-Received: by 2002:a05:6000:229:b0:33d:2f2f:b135 with SMTP id
+ l9-20020a056000022900b0033d2f2fb135mr7871074wrz.46.1709121717550; 
+ Wed, 28 Feb 2024 04:01:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF5hZiWqLnn7BnaBukrv23hA6d6SJCFYEFUr6XgF+pqUUal56M9waHofdAaZREQzZ/BJPHNQw==
+X-Received: by 2002:a05:6000:229:b0:33d:2f2f:b135 with SMTP id
+ l9-20020a056000022900b0033d2f2fb135mr7871037wrz.46.1709121717037; 
+ Wed, 28 Feb 2024 04:01:57 -0800 (PST)
+Received: from [10.32.64.237] (nat-pool-muc-t.redhat.com. [149.14.88.26])
+ by smtp.gmail.com with ESMTPSA id
+ ck12-20020a5d5e8c000000b0033d9f0dcb35sm14753990wrb.87.2024.02.28.04.01.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 28 Feb 2024 04:01:56 -0800 (PST)
+Message-ID: <1dbd722f-d8e2-43a2-a76d-7889e002f7d8@redhat.com>
+Date: Wed, 28 Feb 2024 13:01:55 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 9/9] hostmem-file: support POSIX shm_open()
+Content-Language: en-US
+To: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Coiby Xu <Coiby.Xu@gmail.com>,
+ slp@redhat.com, Eduardo Habkost <eduardo@habkost.net>,
+ Hanna Reitz <hreitz@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Raphael Norwitz <raphael@enfabrica.net>, Kevin Wolf <kwolf@redhat.com>,
+ stefanha@redhat.com, gmaglione@redhat.com
+References: <20240228114759.44758-1-sgarzare@redhat.com>
+ <20240228114759.44758-10-sgarzare@redhat.com>
+From: David Hildenbrand <david@redhat.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20240228114759.44758-10-sgarzare@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,176 +160,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+On 28.02.24 12:47, Stefano Garzarella wrote:
+> Add a new `shm` bool option for `-object memory-backend-file`.
+> 
+> When this option is set to true, the POSIX shm_open(3) is used instead
+> of open(2).
+> 
+> So a file will not be created in the filesystem, but a "POSIX shared
+> memory object" will be instantiated. In Linux this turns into a file
+> in /dev/shm, but in other OSes this may not happen (for example in
+> macOS or FreeBSD nothing is shown in any filesystem).
+> 
+> This new feature is useful when we need to share guest memory with
+> another process (e.g. vhost-user backend), but we don't have
+> memfd_create() or any special filesystems (e.g. /dev/shm) available
+> as in macOS.
+> 
+> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+> ---
+> I am not sure this is the best way to support shm_open() in QEMU.
+> 
+> Other solutions I had in mind were:
+> 
+> - create a new memory-backend-shm
+> 
+> - extend memory-backend-memfd to use shm_open() on systems where memfd is
+> not available (problem: shm_open wants a name to assign to the object, but
+> we can do a workaround by using a random name and do the unlink right away)
+> 
+> Any preference/suggestion?
 
-This function is no longer used.
+Both sound like reasonable options, and IMHO better than hostmem-file 
+with things that are not necessarily "real" files.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20231213-gdb-v17-9-777047380591@daynix.com>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240227144335.1196131-14-alex.bennee@linaro.org>
+Regarding memory-backend-memfd, we similarly have to pass a name to 
+memfd_create(), although for different purpose: "The  name  supplied in 
+name is used as a filename and will be displayed as the target of the 
+corresponding symbolic link in the directory /proc/self/fd/".
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 1bbf21b2201..4b659799b00 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -133,9 +133,6 @@ struct SysemuCPUOps;
-  *           before the insn which triggers a watchpoint rather than after it.
-  * @gdb_arch_name: Optional callback that returns the architecture name known
-  * to GDB. The caller must free the returned string with g_free.
-- * @gdb_get_dynamic_xml: Callback to return dynamically generated XML for the
-- *   gdb stub. Returns a pointer to the XML contents for the specified XML file
-- *   or NULL if the CPU doesn't have a dynamically generated content for it.
-  * @disas_set_info: Setup architecture specific components of disassembly info
-  * @adjust_watchpoint_address: Perform a target-specific adjustment to an
-  * address before attempting to match it against watchpoints.
-@@ -167,7 +164,6 @@ struct CPUClass {
- 
-     const char *gdb_core_xml_file;
-     const gchar * (*gdb_arch_name)(CPUState *cpu);
--    const char * (*gdb_get_dynamic_xml)(CPUState *cpu, const char *xmlname);
- 
-     void (*disas_set_info)(CPUState *cpu, disassemble_info *info);
- 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 508a9c1e0d6..a5b3d8f7da7 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1159,12 +1159,6 @@ hwaddr arm_cpu_get_phys_page_attrs_debug(CPUState *cpu, vaddr addr,
- int arm_cpu_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
- int arm_cpu_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg);
- 
--/* Returns the dynamically generated XML for the gdb stub.
-- * Returns a pointer to the XML contents for the specified XML file or NULL
-- * if the XML name doesn't match the predefined one.
-- */
--const char *arm_gdb_get_dynamic_xml(CPUState *cpu, const char *xmlname);
--
- int arm_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
-                              int cpuid, DumpState *s);
- int arm_cpu_write_elf32_note(WriteCoreDumpFunction f, CPUState *cs,
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index c66989a5e60..0133da4e079 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -1545,7 +1545,6 @@ int ppc_cpu_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg);
- int ppc_cpu_gdb_write_register_apple(CPUState *cpu, uint8_t *buf, int reg);
- #ifndef CONFIG_USER_ONLY
- hwaddr ppc_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
--const char *ppc_gdb_get_dynamic_xml(CPUState *cs, const char *xml_name);
- #endif
- int ppc64_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
-                                int cpuid, DumpState *s);
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 84887084d95..b2ea5d65132 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -2516,7 +2516,6 @@ static void arm_cpu_class_init(ObjectClass *oc, void *data)
-     cc->sysemu_ops = &arm_sysemu_ops;
- #endif
-     cc->gdb_arch_name = arm_gdb_arch_name;
--    cc->gdb_get_dynamic_xml = arm_gdb_get_dynamic_xml;
-     cc->gdb_stop_before_watchpoint = true;
-     cc->disas_set_info = arm_disas_set_info;
- 
-diff --git a/target/arm/gdbstub.c b/target/arm/gdbstub.c
-index 059d84f98e5..a3bb73cfa7c 100644
---- a/target/arm/gdbstub.c
-+++ b/target/arm/gdbstub.c
-@@ -474,24 +474,6 @@ static GDBFeature *arm_gen_dynamic_m_secextreg_feature(CPUState *cs,
- #endif
- #endif /* CONFIG_TCG */
- 
--const char *arm_gdb_get_dynamic_xml(CPUState *cs, const char *xmlname)
--{
--    ARMCPU *cpu = ARM_CPU(cs);
--
--    if (strcmp(xmlname, "system-registers.xml") == 0) {
--        return cpu->dyn_sysreg_feature.desc.xml;
--    } else if (strcmp(xmlname, "sve-registers.xml") == 0) {
--        return cpu->dyn_svereg_feature.desc.xml;
--    } else if (strcmp(xmlname, "arm-m-system.xml") == 0) {
--        return cpu->dyn_m_systemreg_feature.desc.xml;
--#ifndef CONFIG_USER_ONLY
--    } else if (strcmp(xmlname, "arm-m-secext.xml") == 0) {
--        return cpu->dyn_m_secextreg_feature.desc.xml;
--#endif
--    }
--    return NULL;
--}
--
- void arm_cpu_register_gdb_regs_for_features(ARMCPU *cpu)
- {
-     CPUState *cs = CPU(cpu);
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 5f0ecf443d8..1d3d1db7c31 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -7385,9 +7385,6 @@ static void ppc_cpu_class_init(ObjectClass *oc, void *data)
- #endif
- 
-     cc->gdb_num_core_regs = 71;
--#ifndef CONFIG_USER_ONLY
--    cc->gdb_get_dynamic_xml = ppc_gdb_get_dynamic_xml;
--#endif
- #ifdef USE_APPLE_GDB
-     cc->gdb_read_register = ppc_cpu_gdb_read_register_apple;
-     cc->gdb_write_register = ppc_cpu_gdb_write_register_apple;
-diff --git a/target/ppc/gdbstub.c b/target/ppc/gdbstub.c
-index 43f61130c5f..122ea9d0c00 100644
---- a/target/ppc/gdbstub.c
-+++ b/target/ppc/gdbstub.c
-@@ -342,16 +342,6 @@ static void gdb_gen_spr_feature(CPUState *cs)
- 
-     gdb_feature_builder_end(&builder);
- }
--
--const char *ppc_gdb_get_dynamic_xml(CPUState *cs, const char *xml_name)
--{
--    PowerPCCPUClass *pcc = POWERPC_CPU_GET_CLASS(cs);
--
--    if (strcmp(xml_name, "power-spr.xml") == 0) {
--        return pcc->gdb_spr.xml;
--    }
--    return NULL;
--}
- #endif
- 
- #if !defined(CONFIG_USER_ONLY)
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index dd8a0e94897..5ff0192c527 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -2300,19 +2300,6 @@ static const gchar *riscv_gdb_arch_name(CPUState *cs)
-     }
- }
- 
--static const char *riscv_gdb_get_dynamic_xml(CPUState *cs, const char *xmlname)
--{
--    RISCVCPU *cpu = RISCV_CPU(cs);
--
--    if (strcmp(xmlname, "riscv-csr.xml") == 0) {
--        return cpu->dyn_csr_feature.xml;
--    } else if (strcmp(xmlname, "riscv-vector.xml") == 0) {
--        return cpu->dyn_vreg_feature.xml;
--    }
--
--    return NULL;
--}
--
- #ifndef CONFIG_USER_ONLY
- static int64_t riscv_get_arch_id(CPUState *cs)
- {
-@@ -2359,7 +2346,6 @@ static void riscv_cpu_common_class_init(ObjectClass *c, void *data)
-     cc->get_arch_id = riscv_get_arch_id;
- #endif
-     cc->gdb_arch_name = riscv_gdb_arch_name;
--    cc->gdb_get_dynamic_xml = riscv_gdb_get_dynamic_xml;
- 
-     device_class_set_props(dc, riscv_cpu_properties);
- }
+So we simply pass TYPE_MEMORY_BACKEND_MEMFD.
+
+Likely, memory-backend-shm that directly maps to shm_open() and only 
+provides properties reasonable for shm_open() is the cleanest approach. 
+So that would currently be my preference :)
+
 -- 
-2.39.2
+Cheers,
+
+David / dhildenb
 
 
