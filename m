@@ -4,53 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 628F5C47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 07:51:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33FAAC54E41
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 07:57:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfEhh-0004Lt-S4; Wed, 28 Feb 2024 02:50:14 -0500
+	id 1rfEnW-0006aE-PE; Wed, 28 Feb 2024 02:56:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=pmdY=KF=kaod.org=clg@ozlabs.org>)
- id 1rfEhd-0004LS-Bf; Wed, 28 Feb 2024 02:50:09 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
- helo=gandalf.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1rfEnU-0006Za-QV
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 02:56:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=pmdY=KF=kaod.org=clg@ozlabs.org>)
- id 1rfEhX-0002Il-15; Wed, 28 Feb 2024 02:50:05 -0500
-Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Tl62S2ZpKz4wc1;
- Wed, 28 Feb 2024 18:49:52 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Tl62P4ffdz4wcF;
- Wed, 28 Feb 2024 18:49:49 +1100 (AEDT)
-Message-ID: <aa21f094-ad0f-4405-a9d4-8bce12a9e904@kaod.org>
-Date: Wed, 28 Feb 2024 08:49:45 +0100
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1rfEnQ-0003r9-9z
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 02:56:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709106966;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DgMhDI3M6UU/Uhu9LJSXX0T0MQoB3Ph/lit6XoXns0I=;
+ b=EuLqJLe72FCSrCAMSCX1MUbOASx2N/dMFr81mTj/eBTqkCSRm37RYwtE/dCK5LDtKXb1RE
+ 43kxYAw7DA5NkdNaNKcRn38/90Bs/+1QHyZxpydNPqK0OPz8RpbjNWxA6YQkpI6+5vzZ8/
+ BlHdHRol/BVblQUIgtjyvRp+cWYUpLc=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-656-x5DyO3UnN_CGBuZXVFpezg-1; Wed, 28 Feb 2024 02:56:05 -0500
+X-MC-Unique: x5DyO3UnN_CGBuZXVFpezg-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-5642bbddd01so2586066a12.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 23:56:04 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709106964; x=1709711764;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=DgMhDI3M6UU/Uhu9LJSXX0T0MQoB3Ph/lit6XoXns0I=;
+ b=omo4YswIkX1P5+9aNUXzh7h/aMpwkLIL9jlYyyVpG6I2QsdhDKm5cAcSGWK0xOgjs/
+ TQQK+jmEhBpDmGO4MPYPoSfW7MnxKZmG4LxtnlP7icYhbVvz8xpQ/A+zQimUUp5wGh1u
+ esO1vzGkhT4U70o1vNQu0VGJvKPOl6jT9YnXSLoJ882F04OFdoRCxRZ0KbxK1nTmr+Sj
+ aiy4C8Cvd86wcgp0KZXG8hTxjUHMSzpAoD5/jKay5vowbonbUvtKmtKmLCB61zquGvTF
+ +K2ZrDWowQUOEGzgE7HPDCq4Fez5ykjhxjl05sExvhudHPsPbm35AzYqZrw7lO5MEU84
+ pYyQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVv1VCS5XgL18v5saZKAZYeZHLlF7bcK4xlBI2k9zyEDTZuta/LEepUwO0+ewORw2mkER//ufj7yXwgju0KZ92FADrqnsU=
+X-Gm-Message-State: AOJu0YzhOjbEb2h/tuhxQLw05I+JsKx4a29kg8MM5wiqti7ZnGRrKZEE
+ THMOQ0yAdDElsNqb6q7y6kgI2MAc0Mg8RW5blYlZ2FcT5nV6nYYbRntgAwzLslVWF7XEMMyzB+F
+ 0mDKi1KmFWPwLx3+pKIGIKTSBWSLkGvDV73Xd7pkylbtBaJ/ljoY5Og/6HXput3gRDVfLgg3yR5
+ cu8DnWhR1Sj41JoSw5Llq3C3QUxu8=
+X-Received: by 2002:a05:6402:1a5c:b0:565:874:8534 with SMTP id
+ bf28-20020a0564021a5c00b0056508748534mr8512402edb.29.1709106963832; 
+ Tue, 27 Feb 2024 23:56:03 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF4rvn+l1fpEqMMyXBsqLh/tmcXgxX8GukGH79o0idiRwhQIGO5bPv7rRkfnO9nCMI6E2LSjKH5n1DB9On9Mng=
+X-Received: by 2002:a05:6402:1a5c:b0:565:874:8534 with SMTP id
+ bf28-20020a0564021a5c00b0056508748534mr8512387edb.29.1709106963490; Tue, 27
+ Feb 2024 23:56:03 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] ppc/pnv: Improve pervasive topology calculation for
- big-core
-Content-Language: en-US, fr
-To: Caleb Schlossin <calebs@linux.vnet.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, fbarrat@linux.ibm.com,
- danielhb413@gmail.com
-References: <20240227203623.31714-1-calebs@linux.vnet.ibm.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240227203623.31714-1-calebs@linux.vnet.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=pmdY=KF=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+References: <20240226165642.807350-1-andrey.drobyshev@virtuozzo.com>
+ <20240226165642.807350-2-andrey.drobyshev@virtuozzo.com>
+ <CAPMcbCqf_fh67zRvarH2Y3tD-HPY=+O4nDC=6af+TGuMm1yj_Q@mail.gmail.com>
+ <51cd548f-856e-402b-96b4-c8cfe1db30ef@virtuozzo.com>
+In-Reply-To: <51cd548f-856e-402b-96b4-c8cfe1db30ef@virtuozzo.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Wed, 28 Feb 2024 11:55:51 +0400
+Message-ID: <CAMxuvaxwAqLyk6qF_=EHw0m-UOEcg6jRjVY-6=LdRdpYF16gvg@mail.gmail.com>
+Subject: Re: [PATCH 1/7] qga/commands-posix: return fsinfo values directly as
+ reported by statvfs
+To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Cc: Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-devel@nongnu.org,
+ michael.roth@amd.com, den@virtuozzo.com,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,301 +105,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/27/24 21:36, Caleb Schlossin wrote:
-> Big (SMT8) cores have a complicated function to map the core, thread ID
-> to pervasive topology (PIR). Fix this for power8, power9, and power10.
-> 
-> Signed-off-by: Caleb Schlossin <calebs@linux.vnet.ibm.com>
-> ---
-> 
-> Version 2 fixes the PIR calculation for core, thread ID
-> for power10 big cores (SMT8).
+Hi
 
-Looks good for SMT4 and this change prepares ground SMT8. We would need
-a new CPU definition to activate big cores. It can come later.
+On Tue, Feb 27, 2024 at 4:38=E2=80=AFPM Andrey Drobyshev
+<andrey.drobyshev@virtuozzo.com> wrote:
+>
+>
+>
+> On 2/26/24 20:50, Konstantin Kostiuk wrote:
+> >
+> > Best Regards,
+> > Konstantin Kostiuk.
+> >
+> >
+> > On Mon, Feb 26, 2024 at 7:02=E2=80=AFPM Andrey Drobyshev
+> > <andrey.drobyshev@virtuozzo.com <mailto:andrey.drobyshev@virtuozzo.com>=
+>
+> > wrote:
+> >
+> >     Since the commit 25b5ff1a86 ("qga: add mountpoint usage info to
+> >     GuestFilesystemInfo") we have 2 values reported in guest-get-fsinfo=
+:
+> >     used =3D (f_blocks - f_bfree), total =3D (f_blocks - f_bfree + f_ba=
+vail).
+> >     These calculations might be obscure for the end user and require on=
+e to
+> >     actually get into QGA source to understand how they're obtained. Le=
+t's
+> >     just report the values f_blocks, f_bfree, f_bavail (in bytes) from
+> >     statvfs() as they are, letting the user decide how to process them
+> >     further.
+> >
+> >     Originally-by: Yuri Pudgorodskiy <yur@virtuozzo.com
+> >     <mailto:yur@virtuozzo.com>>
+> >     Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com
+> >     <mailto:andrey.drobyshev@virtuozzo.com>>
+> >     ---
+> >      qga/commands-posix.c | 16 +++++++---------
+> >      qga/qapi-schema.json | 11 +++++++----
+> >      2 files changed, 14 insertions(+), 13 deletions(-)
+> >
+> >     diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+> >     index 26008db497..752ef509d0 100644
+> >     --- a/qga/commands-posix.c
+> >     +++ b/qga/commands-posix.c
+> >     @@ -1554,8 +1554,7 @@ static GuestFilesystemInfo
+> >     *build_guest_fsinfo(strua5a0239ce5ct FsMount *mount,
+> >                                                     Error **errp)
+> >      {
+> >          GuestFilesystemInfo *fs =3D g_malloc0(sizeof(*fs));
+> >     -    struct statvfs buf;
+> >     -    unsigned long used, nonroot_total, fr_size;
+> >     +    struct statvfs st;
+> >          char *devpath =3D g_strdup_printf("/sys/dev/block/%u:%u",
+> >                                          mount->devmajor, mount->devmin=
+or);
+> >
+> >     @@ -1563,15 +1562,14 @@ static GuestFilesystemInfo
+> >     *build_guest_fsinfo(struct FsMount *mount,
+> >          fs->type =3D g_strdup(mount->devtype);
+> >          build_guest_fsinfo_for_device(devpath, fs, errp);
+> >
+> >     -    if (statvfs(fs->mountpoint, &buf) =3D=3D 0) {
+> >     -        fr_size =3D buf.f_frsize;
+> >     -        used =3D buf.f_blocks - buf.f_bfree;
+> >     -        nonroot_total =3D used + buf.f_bavail;
+> >     -        fs->used_bytes =3D used * fr_size;
+> >     -        fs->total_bytes =3D nonroot_total * fr_size;
+> >     +    if (statvfs(fs->mountpoint, &st) =3D=3D 0) {
+> >     +        fs->total_bytes =3D st.f_blocks * st.f_frsize;
+> >     +        fs->free_bytes =3D st.f_bfree * st.f_frsize;
+> >     +        fs->avail_bytes =3D st.f_bavail * st.f_frsize;
+> >
+> >              fs->has_total_bytes =3D true;
+> >     -        fs->has_used_bytes =3D true;
+> >     +        fs->has_free_bytes =3D true;
+> >     +        fs->has_avail_bytes =3D true;
+> >          }
+> >
+> >          g_free(devpath);
+> >     diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+> >     index b8efe31897..1cce3c1df5 100644
+> >     --- a/qga/qapi-schema.json
+> >     +++ b/qga/qapi-schema.json
+> >     @@ -1030,9 +1030,12 @@
+> >      #
+> >      # @type: file system type string
+> >      #
+> >     -# @used-bytes: file system used bytes (since 3.0)
+> >     +# @total-bytes: total file system size in bytes (since 8.3)
+> >      #
+> >     -# @total-bytes: non-root file system total bytes (since 3.0)
+> >     +# @free-bytes: amount of free space in file system in bytes (since=
+ 8.3)
+> >
+> >
+> > I don't agree with this as it breaks backward compatibility. If we want
+> > to get
+> > these changes we should release a new version with both old and new fie=
+lds
+> > and mark old as deprecated to get a time for everyone who uses this
+> > API updates its solutions.
+> >
+> > A similar thing was with replacing the 'blacklist' command line.
+> > https://gitlab.com/qemu-project/qemu/-/commit/582a098e6ca00dd42f317dad8=
+affd13e5a20bc42 <https://gitlab.com/qemu-project/qemu/-/commit/582a098e6ca0=
+0dd42f317dad8affd13e5a20bc42>
+> > Currently, we support both 'blacklist' and 'block-rpcs' command line op=
+tions
+> > but the first one wrote a warning.
+> >
+>
+> I agree that marking the old values as deprecated does make sense.
+> Although my original intent with this patch is to make more sense of the
+> existing names (e.g. total-bytes to indicate true fs size instead of
+> just non-root fs).  If so, we'd eventually have to replace the original
+> total-bytes value with the one having new semantics.  Or we could rename
+> the existing value to smth like "total-bytes-nonroot".  But either way
+> breaks backward compatibility after all.  How would you suggest to
+> resolve it?
 
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
 
-Thanks,
+Why break backward compatibility? Don't break other systems (win32)
+when you propose a patch.
 
-C.
+QGA API aims to be cross-platform. Any system should be able to report
+some kind of meaningful used and total disk space. I don't see much
+reason to change that.
 
+If we need Posix-specific values reported by statvfs(), we can have
+extra optional struct/fields.
 
-
-> 
->   include/hw/ppc/pnv_chip.h |  2 +-
->   include/hw/ppc/pnv_core.h |  1 +
->   hw/ppc/pnv.c              | 71 ++++++++++++++++++++++++++++-----------
->   hw/ppc/pnv_core.c         |  8 ++---
->   target/ppc/misc_helper.c  |  3 --
->   5 files changed, 57 insertions(+), 28 deletions(-)
-> 
-> diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
-> index af4cd7a8b8..8589f3291e 100644
-> --- a/include/hw/ppc/pnv_chip.h
-> +++ b/include/hw/ppc/pnv_chip.h
-> @@ -147,7 +147,7 @@ struct PnvChipClass {
->   
->       DeviceRealize parent_realize;
->   
-> -    uint32_t (*core_pir)(PnvChip *chip, uint32_t core_id);
-> +    uint32_t (*chip_pir)(PnvChip *chip, uint32_t core_id, uint32_t thread_id);
->       void (*intc_create)(PnvChip *chip, PowerPCCPU *cpu, Error **errp);
->       void (*intc_reset)(PnvChip *chip, PowerPCCPU *cpu);
->       void (*intc_destroy)(PnvChip *chip, PowerPCCPU *cpu);
-> diff --git a/include/hw/ppc/pnv_core.h b/include/hw/ppc/pnv_core.h
-> index 4db21229a6..c6d62fd145 100644
-> --- a/include/hw/ppc/pnv_core.h
-> +++ b/include/hw/ppc/pnv_core.h
-> @@ -36,6 +36,7 @@ struct PnvCore {
->       /*< public >*/
->       PowerPCCPU **threads;
->       uint32_t pir;
-> +    uint32_t hwid;
->       uint64_t hrmor;
->       PnvChip *chip;
->   
-> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> index 0b47b92baa..aa5aba60b4 100644
-> --- a/hw/ppc/pnv.c
-> +++ b/hw/ppc/pnv.c
-> @@ -141,8 +141,10 @@ static void pnv_dt_core(PnvChip *chip, PnvCore *pc, void *fdt)
->       int smt_threads = CPU_CORE(pc)->nr_threads;
->       CPUPPCState *env = &cpu->env;
->       PowerPCCPUClass *pcc = POWERPC_CPU_GET_CLASS(cs);
-> +    PnvChipClass *pnv_cc = PNV_CHIP_GET_CLASS(chip);
->       g_autofree uint32_t *servers_prop = g_new(uint32_t, smt_threads);
->       int i;
-> +    uint32_t pir;
->       uint32_t segs[] = {cpu_to_be32(28), cpu_to_be32(40),
->                          0xffffffff, 0xffffffff};
->       uint32_t tbfreq = PNV_TIMEBASE_FREQ;
-> @@ -158,15 +160,17 @@ static void pnv_dt_core(PnvChip *chip, PnvCore *pc, void *fdt)
->       char *nodename;
->       int cpus_offset = get_cpus_node(fdt);
->   
-> -    nodename = g_strdup_printf("%s@%x", dc->fw_name, pc->pir);
-> +    pir = pnv_cc->chip_pir(chip, pc->hwid, 0);
-> +
-> +    nodename = g_strdup_printf("%s@%x", dc->fw_name, pir);
->       offset = fdt_add_subnode(fdt, cpus_offset, nodename);
->       _FDT(offset);
->       g_free(nodename);
->   
->       _FDT((fdt_setprop_cell(fdt, offset, "ibm,chip-id", chip->chip_id)));
->   
-> -    _FDT((fdt_setprop_cell(fdt, offset, "reg", pc->pir)));
-> -    _FDT((fdt_setprop_cell(fdt, offset, "ibm,pir", pc->pir)));
-> +    _FDT((fdt_setprop_cell(fdt, offset, "reg", pir)));
-> +    _FDT((fdt_setprop_cell(fdt, offset, "ibm,pir", pir)));
->       _FDT((fdt_setprop_string(fdt, offset, "device_type", "cpu")));
->   
->       _FDT((fdt_setprop_cell(fdt, offset, "cpu-version", env->spr[SPR_PVR])));
-> @@ -241,15 +245,17 @@ static void pnv_dt_core(PnvChip *chip, PnvCore *pc, void *fdt)
->   
->       /* Build interrupt servers properties */
->       for (i = 0; i < smt_threads; i++) {
-> -        servers_prop[i] = cpu_to_be32(pc->pir + i);
-> +        servers_prop[i] = cpu_to_be32(pnv_cc->chip_pir(chip, pc->hwid, i));
->       }
->       _FDT((fdt_setprop(fdt, offset, "ibm,ppc-interrupt-server#s",
->                          servers_prop, sizeof(*servers_prop) * smt_threads)));
->   }
->   
-> -static void pnv_dt_icp(PnvChip *chip, void *fdt, uint32_t pir,
-> +static void pnv_dt_icp(PnvChip *chip, void *fdt, uint32_t hwid,
->                          uint32_t nr_threads)
->   {
-> +    PnvChipClass *pcc = PNV_CHIP_GET_CLASS(chip);
-> +    uint32_t pir = pcc->chip_pir(chip, hwid, 0);
->       uint64_t addr = PNV_ICP_BASE(chip) | (pir << 12);
->       char *name;
->       const char compat[] = "IBM,power8-icp\0IBM,ppc-xicp";
-> @@ -263,6 +269,7 @@ static void pnv_dt_icp(PnvChip *chip, void *fdt, uint32_t pir,
->       rsize = sizeof(uint64_t) * 2 * nr_threads;
->       reg = g_malloc(rsize);
->       for (i = 0; i < nr_threads; i++) {
-> +        /* We know P8 PIR is linear with thread id */
->           reg[i * 2] = cpu_to_be64(addr | ((pir + i) * 0x1000));
->           reg[i * 2 + 1] = cpu_to_be64(0x1000);
->       }
-> @@ -315,7 +322,7 @@ static void pnv_chip_power8_dt_populate(PnvChip *chip, void *fdt)
->           pnv_dt_core(chip, pnv_core, fdt);
->   
->           /* Interrupt Control Presenters (ICP). One per core. */
-> -        pnv_dt_icp(chip, fdt, pnv_core->pir, CPU_CORE(pnv_core)->nr_threads);
-> +        pnv_dt_icp(chip, fdt, pnv_core->hwid, CPU_CORE(pnv_core)->nr_threads);
->       }
->   
->       if (chip->ram_size) {
-> @@ -995,9 +1002,10 @@ static void pnv_init(MachineState *machine)
->    *   25:28  Core number
->    *   29:31  Thread ID
->    */
-> -static uint32_t pnv_chip_core_pir_p8(PnvChip *chip, uint32_t core_id)
-> +static uint32_t pnv_chip_pir_p8(PnvChip *chip, uint32_t core_id,
-> +                                uint32_t thread_id)
->   {
-> -    return (chip->chip_id << 7) | (core_id << 3);
-> +    return (chip->chip_id << 7) | (core_id << 3) | thread_id;
->   }
->   
->   static void pnv_chip_power8_intc_create(PnvChip *chip, PowerPCCPU *cpu,
-> @@ -1049,14 +1057,37 @@ static void pnv_chip_power8_intc_print_info(PnvChip *chip, PowerPCCPU *cpu,
->    *
->    * We only care about the lower bits. uint32_t is fine for the moment.
->    */
-> -static uint32_t pnv_chip_core_pir_p9(PnvChip *chip, uint32_t core_id)
-> +static uint32_t pnv_chip_pir_p9(PnvChip *chip, uint32_t core_id,
-> +                                uint32_t thread_id)
->   {
-> -    return (chip->chip_id << 8) | (core_id << 2);
-> +    if (chip->nr_threads == 8) {
-> +        return (chip->chip_id << 8) | ((thread_id & 1) << 2) | (core_id << 3) |
-> +               (thread_id >> 1);
-> +    } else {
-> +        return (chip->chip_id << 8) | (core_id << 2) | thread_id;
-> +    }
->   }
->   
-> -static uint32_t pnv_chip_core_pir_p10(PnvChip *chip, uint32_t core_id)
-> +/*
-> + *    0:48  Reserved - Read as zeroes
-> + *   49:52  Node ID
-> + *   53:55  Chip ID
-> + *   56     Reserved - Read as zero
-> + *   57:59  Quad ID
-> + *   60     Core Chiplet Pair ID
-> + *   61:63  Thread/Core Chiplet ID t0-t2
-> + *
-> + * We only care about the lower bits. uint32_t is fine for the moment.
-> + */
-> +static uint32_t pnv_chip_pir_p10(PnvChip *chip, uint32_t core_id,
-> +                                 uint32_t thread_id)
->   {
-> -    return (chip->chip_id << 8) | (core_id << 2);
-> +    if (chip->nr_threads == 8) {
-> +        return (chip->chip_id << 8) | ((core_id / 4) << 4) |
-> +               ((core_id % 2) << 3) | thread_id;
-> +    } else {
-> +        return (chip->chip_id << 8) | (core_id << 2) | thread_id;
-> +    }
->   }
->   
->   static void pnv_chip_power9_intc_create(PnvChip *chip, PowerPCCPU *cpu,
-> @@ -1235,7 +1266,7 @@ static void pnv_chip_icp_realize(Pnv8Chip *chip8, Error **errp)
->           int core_hwid = CPU_CORE(pnv_core)->core_id;
->   
->           for (j = 0; j < CPU_CORE(pnv_core)->nr_threads; j++) {
-> -            uint32_t pir = pcc->core_pir(chip, core_hwid) + j;
-> +            uint32_t pir = pcc->chip_pir(chip, core_hwid, j);
->               PnvICPState *icp = PNV_ICP(xics_icp_get(chip8->xics, pir));
->   
->               memory_region_add_subregion(&chip8->icp_mmio, pir << 12,
-> @@ -1348,7 +1379,7 @@ static void pnv_chip_power8e_class_init(ObjectClass *klass, void *data)
->       k->chip_cfam_id = 0x221ef04980000000ull;  /* P8 Murano DD2.1 */
->       k->cores_mask = POWER8E_CORE_MASK;
->       k->num_phbs = 3;
-> -    k->core_pir = pnv_chip_core_pir_p8;
-> +    k->chip_pir = pnv_chip_pir_p8;
->       k->intc_create = pnv_chip_power8_intc_create;
->       k->intc_reset = pnv_chip_power8_intc_reset;
->       k->intc_destroy = pnv_chip_power8_intc_destroy;
-> @@ -1372,7 +1403,7 @@ static void pnv_chip_power8_class_init(ObjectClass *klass, void *data)
->       k->chip_cfam_id = 0x220ea04980000000ull; /* P8 Venice DD2.0 */
->       k->cores_mask = POWER8_CORE_MASK;
->       k->num_phbs = 3;
-> -    k->core_pir = pnv_chip_core_pir_p8;
-> +    k->chip_pir = pnv_chip_pir_p8;
->       k->intc_create = pnv_chip_power8_intc_create;
->       k->intc_reset = pnv_chip_power8_intc_reset;
->       k->intc_destroy = pnv_chip_power8_intc_destroy;
-> @@ -1396,7 +1427,7 @@ static void pnv_chip_power8nvl_class_init(ObjectClass *klass, void *data)
->       k->chip_cfam_id = 0x120d304980000000ull;  /* P8 Naples DD1.0 */
->       k->cores_mask = POWER8_CORE_MASK;
->       k->num_phbs = 4;
-> -    k->core_pir = pnv_chip_core_pir_p8;
-> +    k->chip_pir = pnv_chip_pir_p8;
->       k->intc_create = pnv_chip_power8_intc_create;
->       k->intc_reset = pnv_chip_power8_intc_reset;
->       k->intc_destroy = pnv_chip_power8_intc_destroy;
-> @@ -1669,7 +1700,7 @@ static void pnv_chip_power9_class_init(ObjectClass *klass, void *data)
->   
->       k->chip_cfam_id = 0x220d104900008000ull; /* P9 Nimbus DD2.0 */
->       k->cores_mask = POWER9_CORE_MASK;
-> -    k->core_pir = pnv_chip_core_pir_p9;
-> +    k->chip_pir = pnv_chip_pir_p9;
->       k->intc_create = pnv_chip_power9_intc_create;
->       k->intc_reset = pnv_chip_power9_intc_reset;
->       k->intc_destroy = pnv_chip_power9_intc_destroy;
-> @@ -1981,7 +2012,7 @@ static void pnv_chip_power10_class_init(ObjectClass *klass, void *data)
->   
->       k->chip_cfam_id = 0x120da04900008000ull; /* P10 DD1.0 (with NX) */
->       k->cores_mask = POWER10_CORE_MASK;
-> -    k->core_pir = pnv_chip_core_pir_p10;
-> +    k->chip_pir = pnv_chip_pir_p10;
->       k->intc_create = pnv_chip_power10_intc_create;
->       k->intc_reset = pnv_chip_power10_intc_reset;
->       k->intc_destroy = pnv_chip_power10_intc_destroy;
-> @@ -2071,8 +2102,8 @@ static void pnv_chip_core_realize(PnvChip *chip, Error **errp)
->                                   chip->nr_threads, &error_fatal);
->           object_property_set_int(OBJECT(pnv_core), CPU_CORE_PROP_CORE_ID,
->                                   core_hwid, &error_fatal);
-> -        object_property_set_int(OBJECT(pnv_core), "pir",
-> -                                pcc->core_pir(chip, core_hwid), &error_fatal);
-> +        object_property_set_int(OBJECT(pnv_core), "hwid", core_hwid,
-> +                                &error_fatal);
->           object_property_set_int(OBJECT(pnv_core), "hrmor", pnv->fw_load_addr,
->                                   &error_fatal);
->           object_property_set_link(OBJECT(pnv_core), "chip", OBJECT(chip),
-> diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
-> index 8c7afe037f..f40ab721d6 100644
-> --- a/hw/ppc/pnv_core.c
-> +++ b/hw/ppc/pnv_core.c
-> @@ -226,7 +226,7 @@ static void pnv_core_cpu_realize(PnvCore *pc, PowerPCCPU *cpu, Error **errp,
->                                    int thread_index)
->   {
->       CPUPPCState *env = &cpu->env;
-> -    int core_pir;
-> +    int core_hwid;
->       ppc_spr_t *pir = &env->spr_cb[SPR_PIR];
->       ppc_spr_t *tir = &env->spr_cb[SPR_TIR];
->       Error *local_err = NULL;
-> @@ -242,10 +242,10 @@ static void pnv_core_cpu_realize(PnvCore *pc, PowerPCCPU *cpu, Error **errp,
->           return;
->       }
->   
-> -    core_pir = object_property_get_uint(OBJECT(pc), "pir", &error_abort);
-> +    core_hwid = object_property_get_uint(OBJECT(pc), "hwid", &error_abort);
->   
->       tir->default_value = thread_index;
-> -    pir->default_value = core_pir + thread_index;
-> +    pir->default_value = pcc->chip_pir(pc->chip, core_hwid, thread_index);
->   
->       /* Set time-base frequency to 512 MHz */
->       cpu_ppc_tb_init(env, PNV_TIMEBASE_FREQ);
-> @@ -342,7 +342,7 @@ static void pnv_core_unrealize(DeviceState *dev)
->   }
->   
->   static Property pnv_core_properties[] = {
-> -    DEFINE_PROP_UINT32("pir", PnvCore, pir, 0),
-> +    DEFINE_PROP_UINT32("hwid", PnvCore, hwid, 0),
->       DEFINE_PROP_UINT64("hrmor", PnvCore, hrmor, 0),
->       DEFINE_PROP_LINK("chip", PnvCore, chip, TYPE_PNV_CHIP, PnvChip *),
->       DEFINE_PROP_END_OF_LIST(),
-> diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
-> index a9d41d2802..58e808dc96 100644
-> --- a/target/ppc/misc_helper.c
-> +++ b/target/ppc/misc_helper.c
-> @@ -49,9 +49,6 @@ void helper_spr_core_write_generic(CPUPPCState *env, uint32_t sprn,
->       CPUState *cs = env_cpu(env);
->       CPUState *ccs;
->       uint32_t nr_threads = cs->nr_threads;
-> -    uint32_t core_id = env->spr[SPR_PIR] & ~(nr_threads - 1);
-> -
-> -    assert(core_id == env->spr[SPR_PIR] - env->spr[SPR_TIR]);
->   
->       if (nr_threads == 1) {
->           env->spr[sprn] = val;
+Fwiw, I find it more obscure to report statvfs values :) Perhaps we
+should simply document better where those values are coming from,
+instead of reporting more system-specific details.
 
 
