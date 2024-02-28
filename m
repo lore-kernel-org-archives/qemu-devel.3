@@ -4,53 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FEC1C5478C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 16:24:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48236C5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 16:25:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfMj5-00042W-N3; Wed, 28 Feb 2024 11:24:11 -0500
+	id 1rfMjM-0004PC-H2; Wed, 28 Feb 2024 11:24:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfMj4-00041f-6C; Wed, 28 Feb 2024 11:24:10 -0500
+ id 1rfMjK-0004Lu-Ip; Wed, 28 Feb 2024 11:24:26 -0500
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfMiz-0000pW-Gk; Wed, 28 Feb 2024 11:24:09 -0500
+ id 1rfMjI-0000pW-P6; Wed, 28 Feb 2024 11:24:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709137445; x=1740673445;
+ t=1709137465; x=1740673465;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=c8vV9pNHPUOnOnJVX+pG0YsfcZFGOOeEdh7NHsDFh5U=;
- b=KOz8XP6zrw+WH9WYDN71nNiRkr5yDidpCEoSd6yQCeQpg/uNNPWUajXl
- liyXR18meGvcXOaA4USR3kZ4jaLKE7PNYR6QPTPKlKNU49VeVhDO3UKEf
- OGQd/koQ62WJCo5NIMWWsJj7J+mehyzU6P9b7ucfvuSQSqIMEfOstbcP5
- 5BWyMzUR5cXKtnBSkEKpR0hkdRAKfzPSWAUhMaQtSgWT/9KYD8hVQxf1h
- xxv1jzBMNgi01fXThkib2stgyGwPzf4q9dAhjS+apZJ5UraIstpzwUN4T
- EBg95JVf+KQspNKICu7l8GYZUHtjKu+xc9v9BKoqYj+3EysSdLn9M1Jrj A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="28982459"
-X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="28982459"
+ bh=f4WdEAP88HmKKD0w3J+So2kEwEw+Dq4DuWbImglfdPQ=;
+ b=Wcp1pmAWeS4d7W36MO4DVARygOfAtOHVLwaHCI0q8Vd1Av9W3E5jkFW5
+ lTpKFgolRW65UHZ+kNxHQ8rohY4Prc9qK+lv856aQcNc2mNAZrefXKAOr
+ RxfAWV9hkAiZ5KQZRWwXEBIdW1elXKcdUaaCRdfgRGh1wwRvPWI6INDin
+ lsmj/ak4F/5PUydJqXvRRQaKuEA0evJ42XRr7C1UZiP9GD4wdKyAm+fgz
+ tP+OQQ0mN8HTMv4pep3ilXN54V4F63HaLR91DTeEzVD9EJyIlZuaq1LTL
+ +1Z83ySvvsVs4Rrg48uz5vuSJG8GoY4ZI0XbCkAn/S8qLUkfGC/V7EwS0 g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="28982553"
+X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="28982553"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Feb 2024 08:24:02 -0800
+ 28 Feb 2024 08:24:17 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="12144914"
+X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; d="scan'208";a="12144995"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa004.jf.intel.com with ESMTP; 28 Feb 2024 08:24:00 -0800
+ by orviesa004.jf.intel.com with ESMTP; 28 Feb 2024 08:24:15 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Michael Tokarev <mjt@tls.msk.ru>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH 05/16] block/nbd: Fix missing ERRP_GUARD() for error_prepend()
-Date: Thu, 29 Feb 2024 00:37:12 +0800
-Message-Id: <20240228163723.1775791-6-zhao1.liu@linux.intel.com>
+Subject: [PATCH 10/16] block/snapshot: Fix missing ERRP_GUARD() for
+ error_prepend()
+Date: Thu, 29 Feb 2024 00:37:17 +0800
+Message-Id: <20240228163723.1775791-11-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240228163723.1775791-1-zhao1.liu@linux.intel.com>
 References: <20240228163723.1775791-1-zhao1.liu@linux.intel.com>
@@ -63,8 +62,8 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H2=-0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,35 +100,47 @@ ERRP_GUARD() could avoid the case when @errp is the pointer of
 error_fatal, the user can't see this additional information, because
 exit() happens in error_setg earlier than information is added [1].
 
-The nbd_co_do_receive_one_chunk() passes @errp to error_prepend()
-without ERRP_GUARD(), and though its @errp parameter points to its
-caller's local_err, to follow the requirement of @errp, add missing
-ERRP_GUARD() at the beginning of this function.
+In block/snapshot.c, there're 2 functions passing @errp to
+error_prepend() without ERRP_GUARD():
+ - bdrv_all_delete_snapshot()
+ - bdrv_all_goto_snapshot()
+
+As the APIs exposed in include/block/snapshot.h, they could be called
+by other modules.
+
+To avoid potential issues as [1] said, add missing ERRP_GUARD() at the
+beginning of these 2 functions.
 
 [1]: Issue description in the commit message of commit ae7c80a7bd73
      ("error: New macro ERRP_GUARD()").
 
-Cc: Eric Blake <eblake@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Cc: Kevin Wolf <kwolf@redhat.com>
 Cc: Hanna Reitz <hreitz@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- block/nbd.c | 1 +
- 1 file changed, 1 insertion(+)
+ block/snapshot.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/block/nbd.c b/block/nbd.c
-index b9d4f935e017..ef05f7cdfd65 100644
---- a/block/nbd.c
-+++ b/block/nbd.c
-@@ -852,6 +852,7 @@ static coroutine_fn int nbd_co_do_receive_one_chunk(
-         BDRVNBDState *s, uint64_t cookie, bool only_structured,
-         int *request_ret, QEMUIOVector *qiov, void **payload, Error **errp)
+diff --git a/block/snapshot.c b/block/snapshot.c
+index 8694fc0a3eba..8242b4abac41 100644
+--- a/block/snapshot.c
++++ b/block/snapshot.c
+@@ -566,6 +566,7 @@ int bdrv_all_delete_snapshot(const char *name,
+                              bool has_devices, strList *devices,
+                              Error **errp)
  {
 +    ERRP_GUARD();
+     g_autoptr(GList) bdrvs = NULL;
+     GList *iterbdrvs;
+ 
+@@ -605,6 +606,7 @@ int bdrv_all_goto_snapshot(const char *name,
+                            bool has_devices, strList *devices,
+                            Error **errp)
+ {
++    ERRP_GUARD();
+     g_autoptr(GList) bdrvs = NULL;
+     GList *iterbdrvs;
      int ret;
-     int i = COOKIE_TO_INDEX(cookie);
-     void *local_payload = NULL;
 -- 
 2.34.1
 
