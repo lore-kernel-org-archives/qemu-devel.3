@@ -4,139 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5E43C54E49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 12:09:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0390EC54E56
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 12:09:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfIkI-0003Aq-LF; Wed, 28 Feb 2024 07:09:15 -0500
+	id 1rfIeY-00053x-05; Wed, 28 Feb 2024 07:03:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfIjg-0002eH-Pp
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 07:08:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfIjd-0004np-Ii
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 07:08:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709122107;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=QdPALHojxgwn5EqucwFptg2gqDaj4pL0aF8Zm3MbBnU=;
- b=Ak6ZgjPhriTzJq8LdUmVv5CxJZzl5QK9DUHlGDO+hUOfAktkyHGN5v+WlHb2LrrcmdWLgS
- QobuhN9P8bYWD47tduaRHVACgBgMqwyslnDGNaeWskDMk44x5tvC9BS0rjaMls1+nNcnpP
- KWAd52x6zPD82CypxPoogfkgndiJFY0=
-Received: from mail-oa1-f72.google.com (mail-oa1-f72.google.com
- [209.85.160.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-147-LUHTkvTTPJiEkZBBNn3GkA-1; Wed, 28 Feb 2024 07:08:24 -0500
-X-MC-Unique: LUHTkvTTPJiEkZBBNn3GkA-1
-Received: by mail-oa1-f72.google.com with SMTP id
- 586e51a60fabf-21e70fb3333so5486986fac.3
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 04:08:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rfIeR-0004qm-La
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 07:03:09 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rfIeM-00035S-Jj
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 07:03:07 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-412a14299a4so30083385e9.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 04:03:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709121781; x=1709726581; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2cnCNv8y43FexcD7a6Rtr0pLIxQ1zciWAgu6ycEDUXY=;
+ b=HQfM91uZaFBNHPv4q42sC2CTcSwBQGZLSkMsUnM1BHvfLYO2vbw/f0hxXadl5gpJq1
+ i2/B+7dXrEywiZXBC4YyVaHm4wlCId2BBHCihkIAmGF7AiLZblZRjX8BlCkclCt9a6Wd
+ kbUqSm9tM2il2F9FsUTssoVCs+MhWKlU0z9spcoeOLcZH1ztx3lLdfNPi8/6dPp/JoPG
+ ao6ZTeRHsygrXaXFImCKACpDcJ6iAd1hWieTjVq/u/plXo7TPBSEv0Qi48dUNZ9o+fF1
+ uG/D1YFbUDadMbVXiHSP87LWDwtMfduZoRaaw9O65Db+1T9cxnA8W4Xuq+ZbCb80O3wL
+ aDGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709122103; x=1709726903;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QdPALHojxgwn5EqucwFptg2gqDaj4pL0aF8Zm3MbBnU=;
- b=jIaqCLrkAdnrJtt6iIJ6mgcXe6U+HoiO4nqp8OmU1F7ZkmOYrRryRbSavmU0vYYopW
- kj8Re08hVbNGA6xS4POXP901BmngAHCmnDrzho/sjA/ZuiPfc+bzeiM7C4/+CA+azLxF
- URS24oML6X2AkP7kc8+kXG5e8AZ/ZMV8xdUtpcr0uu+GlFCRWy9Pvm8IHeG3VGgwmNSA
- 7J4cskwv5lCPBjf02qRpXKdAVDu/Oo2GtoOMYpiaUerJtPaNc2x2UKvFIkIRBoUDj0G3
- 3OvffTUPVknUTaXZIWk7Ur8I4yFZ9gNlA54jRi+8KdHhNj3DowbOQs4X1nMqQynuy/0r
- loIA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX4rbqzn5cZ9kQRhgQErU+AC7ACCdohjghci0ZVtUQa/AZj2w78gdGPWloYHxxBpCsXMw5XtyymaFKd+h76kSNRMwW9Bsc=
-X-Gm-Message-State: AOJu0YzCfTIiKp+2NX2Tj7UrCVzR9pQESKAeziOLRuMaqrESR+aUoth4
- f9tpHFd+k4O1qwKNis3UPgq3OIb8BMVCcs6RRd+f7GgIaiXOJgy7jbOnwD1hk4PmN1KxM4F67Eb
- VZwO+nNQJQZkpm8F/H6lSCqy8F/vo1MqtcYaSAaqG7KfQjxH7/X+2
-X-Received: by 2002:a05:6871:7990:b0:21e:5c6a:7f7e with SMTP id
- pb16-20020a056871799000b0021e5c6a7f7emr13862171oac.51.1709122103798; 
- Wed, 28 Feb 2024 04:08:23 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFqAMuvJIpwcjFPLF36l8aBWuHUc9b9Wod5TTPMKDz2CRkirZJEenXSKwXlniGgqkaAiVEygQ==
-X-Received: by 2002:a05:6871:7990:b0:21e:5c6a:7f7e with SMTP id
- pb16-20020a056871799000b0021e5c6a7f7emr13862150oac.51.1709122103521; 
- Wed, 28 Feb 2024 04:08:23 -0800 (PST)
-Received: from [10.33.192.181] (nat-pool-str-t.redhat.com. [149.14.88.106])
- by smtp.gmail.com with ESMTPSA id
- n24-20020a05620a223800b00787bb45cf5asm4511521qkh.117.2024.02.28.04.08.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Feb 2024 04:08:23 -0800 (PST)
-Message-ID: <1c52a320-649c-4b83-8c88-724442e0b5ca@redhat.com>
-Date: Wed, 28 Feb 2024 13:08:21 +0100
+ d=1e100.net; s=20230601; t=1709121781; x=1709726581;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2cnCNv8y43FexcD7a6Rtr0pLIxQ1zciWAgu6ycEDUXY=;
+ b=taJ86oxmDAj8Imqb9wiC9gpp9ixNkTqhbVK9nvmNc9lDMhQ3qeWM4IOlc2J0HBwYP1
+ +iUKdSixJ3mQL2+PszyvLKKjo80kXlhx81F2L/XjSh9a4ok8WG5pAu0p+R0Nj4cXDvPM
+ wgjKqDhTl/mk45KbYIJIL7LLQ0XgP43PMJBdGybCjF+95dPAWgpUYfKRnu023sX75ygT
+ 2Dbgk3Q3+m07P3iZ3W7crL81E6nRgRpfGuYZx6qlKPTvPaq4PTIOg2nY86+ewv9guxMR
+ a0ePP++5chZkkM6xjUuJYbcvG60ljb4ROTX85EMazLE5adnPx+EgPc0H3piOdbtmEQEd
+ wFMw==
+X-Gm-Message-State: AOJu0YzaQS5z6cCrl+piyOMDmNjY/IBJvSjV+L4okaoKRdDAcMs0TtQZ
+ uUdC5VaLWOPaGzY5KDK9Z6z60EmUX+vs5KiZbM5hkbSqv0KTjqG8EF+mrj13ndA=
+X-Google-Smtp-Source: AGHT+IG1n88UEjPJO45t7opgDRZwz7qJrlyZRM6/Fn5rgfBilw2L/RB+y93V2DAati0ZQwrpineQeg==
+X-Received: by 2002:a5d:484a:0:b0:33d:b01e:c4d6 with SMTP id
+ n10-20020a5d484a000000b0033db01ec4d6mr8741219wrs.17.1709121781204; 
+ Wed, 28 Feb 2024 04:03:01 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ bw1-20020a0560001f8100b0033af3a43e91sm14608368wrb.46.2024.02.28.04.02.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 28 Feb 2024 04:02:59 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 3CCA15F92B;
+ Wed, 28 Feb 2024 11:57:04 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 24/29] tests/tcg: expand insn test case to exercise register API
+Date: Wed, 28 Feb 2024 11:56:56 +0000
+Message-Id: <20240228115701.1416107-25-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240228115701.1416107-1-alex.bennee@linaro.org>
+References: <20240228115701.1416107-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] tests/qtest : Add testcase for DM163
-Content-Language: en-US
-To: =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair@alistair23.me>, Samuel Tardieu <sam@rfc1149.net>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20240228114555.192175-1-ines.varhol@telecom-paris.fr>
- <20240228114555.192175-6-ines.varhol@telecom-paris.fr>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240228114555.192175-6-ines.varhol@telecom-paris.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SORBS_WEB=1.5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,23 +99,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/02/2024 12.32, Inès Varhol wrote:
-> `test_dm163_bank()`
-> Checks that the pin "sout" of the DM163 led driver outputs the values
-> received on pin "sin" with the expected latency (depending on the bank).
-> 
-> `test_dm163_gpio_connection()`
-> Check that changes to relevant STM32L4x5 GPIO pins are propagated to the
-> DM163 device.
-> 
-> Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-> Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
-> ---
->   tests/qtest/dm163-test.c | 192 +++++++++++++++++++++++++++++++++++++++
->   tests/qtest/meson.build  |   5 +
->   2 files changed, 197 insertions(+)
->   create mode 100644 tests/qtest/dm163-test.c
+This ensure we at least read every register the plugin API reports at
+least once during the check-tcg checks.
 
-Acked-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20240227144335.1196131-25-alex.bennee@linaro.org>
+
+diff --git a/tests/plugin/insn.c b/tests/plugin/insn.c
+index 5fd3017c2b3..54da06fcf26 100644
+--- a/tests/plugin/insn.c
++++ b/tests/plugin/insn.c
+@@ -46,6 +46,25 @@ typedef struct {
+     char *disas;
+ } Instruction;
+ 
++/*
++ * Initialise a new vcpu with reading the register list
++ */
++static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
++{
++    g_autoptr(GArray) reg_list = qemu_plugin_get_registers();
++    g_autoptr(GByteArray) reg_value = g_byte_array_new();
++
++    if (reg_list) {
++        for (int i = 0; i < reg_list->len; i++) {
++            qemu_plugin_reg_descriptor *rd = &g_array_index(
++                reg_list, qemu_plugin_reg_descriptor, i);
++            int count = qemu_plugin_read_register(rd->handle, reg_value);
++            g_assert(count > 0);
++        }
++    }
++}
++
++
+ static void vcpu_insn_exec_before(unsigned int cpu_index, void *udata)
+ {
+     unsigned int i = cpu_index % MAX_CPUS;
+@@ -212,6 +231,8 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+         sizes = g_array_new(true, true, sizeof(unsigned long));
+     }
+ 
++    /* Register init, translation block and exit callbacks */
++    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
+     qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+     return 0;
+-- 
+2.39.2
 
 
