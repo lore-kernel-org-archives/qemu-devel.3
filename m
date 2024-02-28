@@ -4,48 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 380C2C5475B
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 23:01:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC4CBC5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 23:11:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfSqL-0005zx-4n; Wed, 28 Feb 2024 17:56:05 -0500
+	id 1rfT4G-0004Li-AR; Wed, 28 Feb 2024 18:10:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rfSqC-0005s5-Dm; Wed, 28 Feb 2024 17:55:57 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rfSq8-0000nm-4C; Wed, 28 Feb 2024 17:55:55 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6291B51814;
- Thu, 29 Feb 2024 01:55:33 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id C7E128BB47;
- Thu, 29 Feb 2024 01:54:56 +0300 (MSK)
-Received: (nullmailer pid 274159 invoked by uid 1000);
- Wed, 28 Feb 2024 22:54:55 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.2 75/78] target/i386: leave the A20 bit set in the final
- NPT walk
-Date: Thu, 29 Feb 2024 01:54:51 +0300
-Message-Id: <20240228225455.274062-15-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.2.2-20240229000326@cover.tls.msk.ru>
-References: <qemu-stable-8.2.2-20240229000326@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rfT4E-0004LN-MH
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 18:10:26 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rfT4D-0005bE-5S
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 18:10:26 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1dca3951ad9so3322815ad.3
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 15:10:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709161823; x=1709766623; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=R/iapAsCSFQsA7/1+PUhSsUM8WUIqY8pXhaEMASUFrk=;
+ b=theCTlaNlTmgeeNTl1vmE6YW6axWNyihloGwj7E7DXuIUNoBIV/VF7ivCP27rdH9BT
+ 5TheR019PMuMokssqkSFCn0QyoBN0P8U/W3/ufb9aMV76OtXwxen6cPlGxy9YneldMjy
+ 1NCSncYa65IM74DCpbTnpcN8gnLD9uX2TAGwUD7Z143KGprXKX2Ja4NlrmYIiyYoudyC
+ Qz6JVamjOhnpRbv9s+SNBl9ku7dMg9kNrq1YvRHG7xAjlILDHc4V5S43J0Ice/bwr8wX
+ TncRrTXROzbbbBAr9Iz0Rq7JIc5j5gCclSlDwkGtVWeXeNpnoccPtS1J7LrTsQwDpQ8h
+ oPJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709161823; x=1709766623;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=R/iapAsCSFQsA7/1+PUhSsUM8WUIqY8pXhaEMASUFrk=;
+ b=WfAgLrliVZt1YMy8mkj7Si6JYxkfG2ZJme4Nnjdl82LTCKQZUDc114DTBK+INaAMzN
+ lFEov+7s/ogE//lK9sP1BAtAWvWD5scQQTOdVPbJjVLD7L3q6oh214pilbI7kfCmjllo
+ 9BCgnP5065LuHV6R/yPIf9pg3j28Plmjs1JyYH84dtCaQo4j9e+3O2p0dd3hIyRhB9eY
+ xirgCAyhZAHSmFJa9k0T29ISO4M9c+Jc1eb08K7RM7bz1QFFzwHoFCfxbE5u89QjoZRt
+ 2cfFPNrUyV2/R+RQJaoxKfd960Gj8a80NMPmBayWVA9hgFqB4fP2zbIVrGhQxJd4Dorv
+ jRVg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUFOpPG7nrF6v5M2nKEKLlYpMdPabpiuvY7x/vDBlJAdEa9Qy8+h/mwf/aBhoQmzMG3Q+MSOPR/yRtUIH77rv/G93mq5yU=
+X-Gm-Message-State: AOJu0YwC1TH/jXZkujCkz4Va+KfX2QcLLck3R8uTbBl/ET+CijjO7gCs
+ B/3iEcjKW9NrPABQI396+/G84Wh9NiAsCUHJpFVZGVkF5P0om3iDK9+/2x33mdw=
+X-Google-Smtp-Source: AGHT+IGUtu6qYhC2rYhNr/tLkTDuKHQdK8It+W95aa+a6vpCnUnMyW+ZmMh54IoLK0275qgK5cg/5g==
+X-Received: by 2002:a17:902:650c:b0:1dc:b173:f27b with SMTP id
+ b12-20020a170902650c00b001dcb173f27bmr358850plk.32.1709161823308; 
+ Wed, 28 Feb 2024 15:10:23 -0800 (PST)
+Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
+ [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
+ kn11-20020a170903078b00b001d6f29c12f7sm3797754plb.135.2024.02.28.15.10.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 28 Feb 2024 15:10:22 -0800 (PST)
+Message-ID: <4362aeec-ae18-4515-a3ec-6aba811e17d1@linaro.org>
+Date: Wed, 28 Feb 2024 13:10:19 -1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] tcg/optimize: optimize TSTNE using smask and zmask
+Content-Language: en-US
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20240228111151.287738-1-pbonzini@redhat.com>
+ <20240228111151.287738-5-pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240228111151.287738-5-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -62,59 +97,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+On 2/28/24 01:11, Paolo Bonzini wrote:
+> -    /* TSTNE x,sign -> LT x,0 */
+> -    if (arg_is_const_val(*p2, (ctx->type == TCG_TYPE_I32
+> -                               ? INT32_MIN : INT64_MIN))) {
+> +    /* TSTNE x,i -> LT x,0 if i only includes sign bit copies */
+> +    if (arg_is_const(*p2) && (arg_info(*p2)->val & ~i1->s_mask) == 0) {
 
-The A20 mask is only applied to the final memory access.  Nested
-page tables are always walked with the raw guest-physical address.
+This is a good idea, but s_mask isn't defined like you think -- it is *repetitions* of the 
+sign bit, but not including the sign bit itself.  For INT64_MIN, s_mask == 0.
 
-Unlike the previous patch, in this one the masking must be kept, but
-it was done too early.
+So for TSTNE min,min, (min & ~0) != 0, so the test won't pass.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 4a1e9d4d11c ("target/i386: Use atomic operations for pte updates", 2022-10-18)
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit b5a9de3259f4c791bde2faff086dd5737625e41e)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
-index 89df61eec6..e16d3a69d1 100644
---- a/target/i386/tcg/sysemu/excp_helper.c
-+++ b/target/i386/tcg/sysemu/excp_helper.c
-@@ -134,7 +134,6 @@ static inline bool ptw_setl(const PTETranslate *in, uint32_t old, uint32_t set)
- static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-                           TranslateResult *out, TranslateFault *err)
- {
--    const int32_t a20_mask = x86_get_a20_mask(env);
-     const target_ulong addr = in->addr;
-     const int pg_mode = in->pg_mode;
-     const bool is_user = (in->mmu_idx == MMU_USER_IDX);
-@@ -417,10 +416,13 @@ do_check_protect_pse36:
-         }
-     }
- 
--    /* align to page_size */
--    paddr = (pte & a20_mask & PG_ADDRESS_MASK & ~(page_size - 1))
--          | (addr & (page_size - 1));
-+    /* merge offset within page */
-+    paddr = (pte & PG_ADDRESS_MASK & ~(page_size - 1)) | (addr & (page_size - 1));
- 
-+    /*
-+     * Note that NPT is walked (for both paging structures and final guest
-+     * addresses) using the address with the A20 bit set.
-+     */
-     if (in->ptw_idx == MMU_NESTED_IDX) {
-         CPUTLBEntryFull *full;
-         int flags, nested_page_size;
-@@ -459,7 +461,7 @@ do_check_protect_pse36:
-         }
-     }
- 
--    out->paddr = paddr;
-+    out->paddr = paddr & x86_get_a20_mask(env);
-     out->prot = prot;
-     out->page_size = page_size;
-     return true;
--- 
-2.39.2
-
+r~
 
