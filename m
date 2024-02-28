@@ -4,60 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAD85C54E4A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF420C54E51
 	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 05:09:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfCBC-000359-61; Wed, 28 Feb 2024 00:08:30 -0500
+	id 1rfCBN-00037p-Th; Wed, 28 Feb 2024 00:08:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pavel.dovgalyuk@ispras.ru>)
- id 1rfCB9-00034R-0e
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 00:08:28 -0500
-Received: from mail.ispras.ru ([83.149.199.84])
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pavel.dovgalyuk@ispras.ru>)
- id 1rfCB4-00053m-IR
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 00:08:26 -0500
-Received: from [10.12.10.172] (unknown [78.37.10.254])
- by mail.ispras.ru (Postfix) with ESMTPSA id 3101C4076747;
- Wed, 28 Feb 2024 05:07:55 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru 3101C4076747
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
- s=default; t=1709096875;
- bh=sTCmqZZkEpLe0jud6IibJdv7Jwg6njB69o0+VLvJoiU=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=Hzf9sl/54yCHOF24AS7Bh/nZU8ki7dGWgmIBwXHlJJHkpxANzw4AhFjY2udwh8Pfp
- mcmTn4cEflqnnf5R2BsSfsY13HN9J7A1wpB1PdKGQizdsD28f0syDMY332Pixf0eqL
- TmSrQ+yFb/ZpApHtIlTLmsm65vvD8wdJkks+OtxM=
-Message-ID: <b212b1a1-eca9-40ae-992b-ff24f41844e3@ispras.ru>
-Date: Wed, 28 Feb 2024 08:07:55 +0300
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rfCBM-00037O-Fq
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 00:08:40 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rfCBF-00059S-Lz
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 00:08:40 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1dc418fa351so3654715ad.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 21:08:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709096910; x=1709701710;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DMPgVNvmzalgvHPBuzD3V/ryvEAYg9lKZEfro7Y6HD8=;
+ b=RKB+aedK9HojP/r4MQu+smK/+lIujEAekWDi9Z9iIZi9+G3QFehevDB+ZM1wROEO89
+ yKAHo6TGyXHkBmjLDWPen+zEBHsj2dPXV9hi725lHGcAFxP8Z54LLyPiJ5RkQ0QHue5f
+ 1dom2T0Rbqg4Y9jnTDZsfRu655RVTn7U41oza7bilDEgtBP19y97ypLJ71C8Os3T9o6T
+ 9glyvFKSdkoQxfu3Tjz6LMm1QgRUpgL0hgSvUoid4DIg/2ZPg5eLwiNzF0DY2R1+jOng
+ 1f474M2rIbEGKGEN6b6rabS4Sk+TXGz3JzWAriUrB7KCUydSaIm4HcoZm5gj60mblGL5
+ QMPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709096910; x=1709701710;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DMPgVNvmzalgvHPBuzD3V/ryvEAYg9lKZEfro7Y6HD8=;
+ b=Ja9nhevYk3PTpF51YmBU7K0hhzi14VDPrpOREoZs9fjMLB/BcyVg8FW7bhAnTbkHk3
+ TcZLH+Sp/uP0D26JfCNmLPAeunN9/6fy1xo70N1sMHYkhqgecRnqIOzr3ZiLGqrUYmyS
+ 1JpD309enI3STlafOiKMITufbB3/tfYxSStEIpKp40y9OD++YyJbKH7pIB+Wf/zbX3Ld
+ b9Z8+qKrqWNr0fw9VT+MDUHxCFOX5bsNzcJ7e87GGSSKEREaxMfT+uYH+hvP5EHrK9L7
+ 7m9r/4a/L07UtSn9VAM6WM027GiXTsuiT/+3z0qpAMcLsxoQx9oNhmQ4kd9+dmOrqQNr
+ LFUg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVCXuavr/OIjkhLHf8MG9seOqpyYaW0aY1AnDGeUXRHWV5Hz7TuEuffVpusNh2YuPWUSaF3vV349i3vWYOHMWpVFVFHr4Q=
+X-Gm-Message-State: AOJu0YwouaED+sZCfVB5AS0FnZXDBHD1RUsGPhYXYuTyqxMNQHlZ98cF
+ UcuTO7SJWYo42u0cHtqLEPPUahPBFuzzjuIUIVkkqgaYkXnJj9WTM7z0i7MAt98=
+X-Google-Smtp-Source: AGHT+IEASog9cnsCWy8p3XNTrP9WJ0KoOIuMXN7jhz5aBYD8n85WMe6uvXvLTYvc/MQDDe+LD2m5Xw==
+X-Received: by 2002:a17:902:b682:b0:1dc:9bb5:cb5 with SMTP id
+ c2-20020a170902b68200b001dc9bb50cb5mr1541958pls.28.1709096910144; 
+ Tue, 27 Feb 2024 21:08:30 -0800 (PST)
+Received: from [157.82.203.206] ([157.82.203.206])
+ by smtp.gmail.com with ESMTPSA id
+ km13-20020a17090327cd00b001db5ecb2899sm2376359plb.162.2024.02.27.21.08.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 Feb 2024 21:08:29 -0800 (PST)
+Message-ID: <69da287a-90c2-46e9-b1f2-4fb899bedbbe@daynix.com>
+Date: Wed, 28 Feb 2024 14:08:21 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] replay: simple auto-snapshot mode for record
+Subject: Re: [PATCH v4 23/29] plugins: add an API to read registers
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Yoshinori Sato <ysato@users.sourceforge.jp>,
+ qemu-arm@nongnu.org, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Michael Rolnik <mrolnik@gmail.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Song Gao <gaosong@loongson.cn>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Laurent Vivier <laurent@vivier.eu>, Warner Losh <imp@bsdimp.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-s390x@nongnu.org,
+ Kyle Evans <kevans@freebsd.org>, Brad Smith <brad@comstyle.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, John Snow
+ <jsnow@redhat.com>, Alistair Francis <alistair.francis@wdc.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Brian Cain <bcain@quicinc.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-riscv@nongnu.org, Bin Meng <bin.meng@windriver.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20240227144335.1196131-1-alex.bennee@linaro.org>
+ <20240227144335.1196131-24-alex.bennee@linaro.org>
 Content-Language: en-US
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
- Cleber Rosa <crosa@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, qemu-devel@nongnu.org
-References: <20230814163135.187882-1-npiggin@gmail.com>
- <20230814163135.187882-5-npiggin@gmail.com>
- <95adc4ea-225c-bcd5-cec2-9edf1c2cf496@ispras.ru>
- <CZEU6LST3QJK.25NCID08671V5@wheely>
-From: Pavel Dovgalyuk <pavel.dovgalyuk@ispras.ru>
-In-Reply-To: <CZEU6LST3QJK.25NCID08671V5@wheely>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240227144335.1196131-24-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=83.149.199.84;
- envelope-from=pavel.dovgalyuk@ispras.ru; helo=mail.ispras.ru
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::636;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,150 +124,223 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26.02.2024 10:36, Nicholas Piggin wrote:
-> On Fri Aug 18, 2023 at 2:36 PM AEST, Pavel Dovgalyuk wrote:
->> On 14.08.2023 19:31, Nicholas Piggin wrote:
->>> record makes an initial snapshot when the machine is created, to enable
->>> reverse-debugging. Often the issue being debugged appears near the end of
->>> the trace, so it is important for performance to keep snapshots close to
->>> the end.
->>>
->>> This implements a periodic snapshot mode that keeps a rolling set of
->>> recent snapshots.
->>>
->>> Arguably this should be done by the debugger or a program that talks to
->>> QMP, but for setting up simple scenarios and tests, it is convenient to
->>> have this feature.
+On 2024/02/27 23:43, Alex Bennée wrote:
+> We can only request a list of registers once the vCPU has been
+> initialised so the user needs to use either call the get function on
+> vCPU initialisation or during the translation phase.
 > 
-> I'm looking at resurrecting this to help add a bit of testing...
+> We don't expose the reg number to the plugin instead hiding it behind
+> an opaque handle. For now this is just the gdb_regnum encapsulated in
+> an anonymous GPOINTER but in future as we add more state for plugins
+> to track we can expand it.
 > 
-> [snip]
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1706
+> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Message-Id: <20240103173349.398526-39-alex.bennee@linaro.org>
+> Based-on: <20231025093128.33116-18-akihiko.odaki@daynix.com>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > 
->>> +static void replay_snapshot_timer_cb(void *opaque)
->>> +{
->>> +    Error *err = NULL;
->>> +    char *name;
->>> +
->>> +    if (!replay_can_snapshot()) {
->>> +        /* Try again soon */
->>> +        timer_mod(replay_snapshot_timer,
->>> +                  qemu_clock_get_ms(QEMU_CLOCK_REALTIME) +
->>> +                  replay_snapshot_periodic_delay / 10);
->>> +        return;
->>> +    }
->>> +
->>> +    name = g_strdup_printf("%s-%d", replay_snapshot, replay_snapshot_count);
->>> +    if (!save_snapshot(name,
->>> +                       true, NULL, false, NULL, &err)) {
->>> +        error_report_err(err);
->>> +        error_report("Could not create periodic snapshot "
->>> +                     "for icount record, disabling");
->>> +        g_free(name);
->>> +        return;
->>> +    }
->>> +    g_free(name);
->>> +    replay_snapshot_count++;
->>> +
->>> +    if (replay_snapshot_periodic_nr_keep >= 1 &&
->>> +        replay_snapshot_count > replay_snapshot_periodic_nr_keep) {
->>> +        int del_nr;
->>> +
->>> +        del_nr = replay_snapshot_count - replay_snapshot_periodic_nr_keep - 1;
->>> +        name = g_strdup_printf("%s-%d", replay_snapshot, del_nr);
->>> +        if (!delete_snapshot(name, false, NULL, &err)) {
->>> +            error_report_err(err);
->>> +            error_report("Could not delete periodic snapshot "
->>> +                         "for icount record");
->>> +        }
->>> +        g_free(name);
->>> +    }
->>> +
->>> +    timer_mod(replay_snapshot_timer,
->>> +              qemu_clock_get_ms(QEMU_CLOCK_REALTIME) +
->>> +              replay_snapshot_periodic_delay);
->>
->> I'm not sure that realtime is not the best choice for such of a timer.
->> Virtual machine may be stopped or slowed down for some reason.
+> ---
+> v4
+>    - the get/read_registers functions are now implicitly for current
+>    vCPU only to accidental cpu != current_cpu uses.
+> v5
+>    - make reg_handles as per-CPUPluginState variable.
+> v6
+>    - for now just wrap gdb_regnum
+> v7
+>    - minor style fixes
+> ---
+>   include/qemu/qemu-plugin.h   | 48 +++++++++++++++++++++++++++++--
+>   plugins/api.c                | 55 ++++++++++++++++++++++++++++++++++++
+>   plugins/qemu-plugins.symbols |  2 ++
+>   3 files changed, 103 insertions(+), 2 deletions(-)
 > 
-> My thinking was that, say if you snapshot every 10 seconds of real time
-> executed, then you should have an upper limit on the order of 10 seconds
-> to perform a reverse-debug operation (so long as you don't exceed your
-> nr_keep limit).
+> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+> index 93981f8f89f..6c5580f4428 100644
+> --- a/include/qemu/qemu-plugin.h
+> +++ b/include/qemu/qemu-plugin.h
+> @@ -11,6 +11,7 @@
+>   #ifndef QEMU_QEMU_PLUGIN_H
+>   #define QEMU_QEMU_PLUGIN_H
+>   
+> +#include <glib.h>
+>   #include <inttypes.h>
+>   #include <stdbool.h>
+>   #include <stddef.h>
+> @@ -229,8 +230,8 @@ struct qemu_plugin_insn;
+>    * @QEMU_PLUGIN_CB_R_REGS: callback reads the CPU's regs
+>    * @QEMU_PLUGIN_CB_RW_REGS: callback reads and writes the CPU's regs
+>    *
+> - * Note: currently unused, plugins cannot read or change system
+> - * register state.
+> + * Note: currently QEMU_PLUGIN_CB_RW_REGS is unused, plugins cannot change
+> + * system register state.
+>    */
+>   enum qemu_plugin_cb_flags {
+>       QEMU_PLUGIN_CB_NO_REGS,
+> @@ -707,4 +708,47 @@ uint64_t qemu_plugin_end_code(void);
+>   QEMU_PLUGIN_API
+>   uint64_t qemu_plugin_entry_code(void);
+>   
+> +/** struct qemu_plugin_register - Opaque handle for register access */
+> +struct qemu_plugin_register;
+> +
+> +/**
+> + * typedef qemu_plugin_reg_descriptor - register descriptions
+> + *
+> + * @handle: opaque handle for retrieving value with qemu_plugin_read_register
+> + * @name: register name
+> + * @feature: optional feature descriptor, can be NULL
+> + */
+> +typedef struct {
+> +    struct qemu_plugin_register *handle;
+> +    const char *name;
+> +    const char *feature;
+> +} qemu_plugin_reg_descriptor;
+> +
+> +/**
+> + * qemu_plugin_get_registers() - return register list for current vCPU
+> + *
+> + * Returns a potentially empty GArray of qemu_plugin_reg_descriptor.
+> + * Caller frees the array (but not the const strings).
+> + *
+> + * Should be used from a qemu_plugin_register_vcpu_init_cb() callback
+> + * after the vCPU is initialised, i.e. in the vCPU context.
+> + */
 
-But in some cases savevm itself could take more than 10 seconds.
-We'll have infinite saving in this case. That's why I propose using 
-virtual clock with the QEMU_TIMER_ATTR_EXTERNAL attribute.
+Qualify with QEMU_PLUGIN_API, which was apparently added after this 
+patch was authored.
 
-> 
-> Is it worth worrying about complexity of slowdowns and vm pausing?
-> Maybe it could stop snapshotting on a host pause.
-> 
->>> +}
->>> +
->>>    void replay_vmstate_init(void)
->>>    {
->>>        Error *err = NULL;
->>> @@ -81,6 +128,16 @@ void replay_vmstate_init(void)
->>>                    error_report("Could not create snapshot for icount record");
->>>                    exit(1);
->>>                }
->>> +
->>> +            if (replay_snapshot_mode == REPLAY_SNAPSHOT_MODE_PERIODIC) {
->>> +                replay_snapshot_timer = timer_new_ms(QEMU_CLOCK_REALTIME,
->>> +                                                     replay_snapshot_timer_cb,
->>> +                                                     NULL);
->>> +                timer_mod(replay_snapshot_timer,
->>> +                          qemu_clock_get_ms(QEMU_CLOCK_REALTIME) +
->>> +                          replay_snapshot_periodic_delay);
->>> +            }
->>> +
->>
->> Please also delete placeholder comment for the snapshotting timer
->> in replay_enable function.
-> 
-> Wil do.
-> 
->>>            } else if (replay_mode == REPLAY_MODE_PLAY) {
->>>                if (!load_snapshot(replay_snapshot, NULL, false, NULL, &err)) {
->>>                    error_report_err(err);
->>> diff --git a/replay/replay.c b/replay/replay.c
->>> index e64f71209a..fa5930700d 100644
->>> --- a/replay/replay.c
->>> +++ b/replay/replay.c
->>> @@ -29,6 +29,10 @@
->>>    ReplayMode replay_mode = REPLAY_MODE_NONE;
->>>    char *replay_snapshot;
->>>    
->>> +ReplaySnapshotMode replay_snapshot_mode;
->>> +uint64_t replay_snapshot_periodic_delay;
->>> +int replay_snapshot_periodic_nr_keep;
->>> +
->>>    /* Name of replay file  */
->>>    static char *replay_filename;
->>>    ReplayState replay_state;
->>> @@ -313,6 +317,27 @@ void replay_configure(QemuOpts *opts)
->>>        }
->>>    
->>>        replay_snapshot = g_strdup(qemu_opt_get(opts, "rrsnapshot"));
->>> +    if (replay_snapshot && mode == REPLAY_MODE_RECORD) {
->>
->> Can such a snapshotting may be useful in replay mode?
-> 
-> Does snapshotting do anything in replay mode? 
+> +GArray *qemu_plugin_get_registers(void);
+> +
+> +/**
+> + * qemu_plugin_read_register() - read register for current vCPU
+> + *
+> + * @handle: a @qemu_plugin_reg_handle handle
+> + * @buf: A GByteArray for the data owned by the plugin
+> + *
+> + * This function is only available in a context that register read access is
+> + * explicitly requested via the QEMU_PLUGIN_CB_R_REGS flag.
+> + *
+> + * Returns the size of the read register. The content of @buf is in target byte
+> + * order. On failure returns -1
 
-Yes, you can create as many snapshots as you want if 'snapshot=on'
-option of the disk image was not used.
+Add a period after -1.
 
-> I assume if we did
-> snapshotting based on the machine timer then we'd have to support
-> it here so the timer events get replayed properly, at least. But
-> I was trying to get by with minimum complexity :)
+> + */
+> +int qemu_plugin_read_register(struct qemu_plugin_register *handle,
+> +                              GByteArray *buf);
+> +
+> +
+>   #endif /* QEMU_QEMU_PLUGIN_H */
+> diff --git a/plugins/api.c b/plugins/api.c
+> index 54df72c1c00..908fe7e6fa3 100644
+> --- a/plugins/api.c
+> +++ b/plugins/api.c
+> @@ -8,6 +8,7 @@
+>    *
+>    *  qemu_plugin_tb
+>    *  qemu_plugin_insn
+> + *  qemu_plugin_register
+>    *
+>    * Which can then be passed back into the API to do additional things.
+>    * As such all the public functions in here are exported in
+> @@ -35,10 +36,12 @@
+>    */
+>   
+>   #include "qemu/osdep.h"
+> +#include "qemu/main-loop.h"
+>   #include "qemu/plugin.h"
+>   #include "qemu/log.h"
+>   #include "tcg/tcg.h"
+>   #include "exec/exec-all.h"
+> +#include "exec/gdbstub.h"
+>   #include "exec/ram_addr.h"
+>   #include "disas/disas.h"
+>   #include "plugin.h"
+> @@ -410,3 +413,55 @@ uint64_t qemu_plugin_entry_code(void)
+>   #endif
+>       return entry;
+>   }
+> +
+> +/*
+> + * Create register handles.
+> + *
+> + * We need to create a handle for each register so the plugin
+> + * infrastructure can call gdbstub to read a register. They are
+> + * currently just a pointer encapsulation of the gdb_regnum but in
 
-Use QEMU_TIMER_ATTR_EXTERNAL attribute for the timer and then its
-events will not affect the replay.
+s/gdb_regnum/gdb_reg/
 
-> 
-> Thanks,
-> Nick
+With all comments fixed,
 
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+
+> + * future may hold internal plugin state so its important plugin
+> + * authors are not tempted to treat them as numbers.
+> + *
+> + * We also construct a result array with those handles and some
+> + * ancillary data the plugin might find useful.
+> + */
+> +
+> +static GArray *create_register_handles(GArray *gdbstub_regs)
+> +{
+> +    GArray *find_data = g_array_new(true, true,
+> +                                    sizeof(qemu_plugin_reg_descriptor));
+> +
+> +    for (int i = 0; i < gdbstub_regs->len; i++) {
+> +        GDBRegDesc *grd = &g_array_index(gdbstub_regs, GDBRegDesc, i);
+> +        qemu_plugin_reg_descriptor desc;
+> +
+> +        /* skip "un-named" regs */
+> +        if (!grd->name) {
+> +            continue;
+> +        }
+> +
+> +        /* Create a record for the plugin */
+> +        desc.handle = GINT_TO_POINTER(grd->gdb_reg);
+> +        desc.name = g_intern_string(grd->name);
+> +        desc.feature = g_intern_string(grd->feature_name);
+> +        g_array_append_val(find_data, desc);
+> +    }
+> +
+> +    return find_data;
+> +}
+> +
+> +GArray *qemu_plugin_get_registers(void)
+> +{
+> +    g_assert(current_cpu);
+> +
+> +    g_autoptr(GArray) regs = gdb_get_register_list(current_cpu);
+> +    return create_register_handles(regs);
+> +}
+> +
+> +int qemu_plugin_read_register(struct qemu_plugin_register *reg, GByteArray *buf)
+> +{
+> +    g_assert(current_cpu);
+> +
+> +    return gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg));
+> +}
+> diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
+> index adb67608598..27fe97239be 100644
+> --- a/plugins/qemu-plugins.symbols
+> +++ b/plugins/qemu-plugins.symbols
+> @@ -3,6 +3,7 @@
+>     qemu_plugin_end_code;
+>     qemu_plugin_entry_code;
+>     qemu_plugin_get_hwaddr;
+> +  qemu_plugin_get_registers;
+>     qemu_plugin_hwaddr_device_name;
+>     qemu_plugin_hwaddr_is_io;
+>     qemu_plugin_hwaddr_phys_addr;
+> @@ -19,6 +20,7 @@
+>     qemu_plugin_num_vcpus;
+>     qemu_plugin_outs;
+>     qemu_plugin_path_to_binary;
+> +  qemu_plugin_read_register;
+>     qemu_plugin_register_atexit_cb;
+>     qemu_plugin_register_flush_cb;
+>     qemu_plugin_register_vcpu_exit_cb;
 
