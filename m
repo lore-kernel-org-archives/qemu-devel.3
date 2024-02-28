@@ -4,69 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7068C47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 18:08:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3401C5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 18:14:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfOKr-0007rl-Ly; Wed, 28 Feb 2024 13:07:17 -0500
+	id 1rfORc-0001Ce-Dj; Wed, 28 Feb 2024 13:14:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rfOKq-0007rQ-2U; Wed, 28 Feb 2024 13:07:16 -0500
-Received: from forwardcorp1c.mail.yandex.net ([178.154.239.200])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rfORa-0001CI-3b; Wed, 28 Feb 2024 13:14:14 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rfOKn-0006pp-0t; Wed, 28 Feb 2024 13:07:15 -0500
-Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c08:6c2d:0:640:316f:0])
- by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id 1ADFA608CE;
- Wed, 28 Feb 2024 21:07:04 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:a519::1:3a] (unknown
- [2a02:6b8:b081:a519::1:3a])
- by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 27eQ2K2Id4Y0-R3ZKl2qm; Wed, 28 Feb 2024 21:07:03 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1709143623;
- bh=RKcA0N+j6C3zT0o/8lb7nZFYAaQCAE7Co8hswU3MiWo=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=ao4hKmu48el7h90GHeN6rTl/DtNL37y49WnvL6tQHcd89IWRGsJ1NvHneNLYwd8xp
- hAtQG0KS4gyZYrAI0yyV0xj1HX0jDjY99UDw5CIpMBPl9nDHtKBkq1ngThAdpoT7Ik
- +CbJ+Cq6rLANoqQqwz9Zxv17QkxM9DeuSB1MY9Nc=
-Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <1310efb0-e211-46f5-b166-d7d529507a43@yandex-team.ru>
-Date: Wed, 28 Feb 2024 21:07:02 +0300
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rfORV-00025E-4S; Wed, 28 Feb 2024 13:14:13 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id A0ACF51709;
+ Wed, 28 Feb 2024 21:14:33 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 56C018B9A7;
+ Wed, 28 Feb 2024 21:13:57 +0300 (MSK)
+Message-ID: <22b4b31b-ff24-4c54-b523-3fdc5479aacf@tls.msk.ru>
+Date: Wed, 28 Feb 2024 21:13:57 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/10] mirror: allow switching from background to
- active mode
+Subject: Re: [PULL 06/10] target/i386: Fix physical address truncation
 Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>
-Cc: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, eblake@redhat.com, hreitz@redhat.com,
- jsnow@redhat.com, den@virtuozzo.com, t.lamprecht@proxmox.com,
- alexander.ivanov@virtuozzo.com
-References: <20231009094619.469668-1-f.ebner@proxmox.com>
- <a5c48627-0bef-46cd-9426-587b358fe32d@yandex-team.ru>
- <993bfa5d-1a91-4b32-9bd8-165b7abba4f0@proxmox.com>
- <99dd287b-816b-4f4f-b156-32f94bbb62c2@yandex-team.ru>
- <87o7gbyy8w.fsf@pond.sub.org> <ZUTffE0wfjLH2u+e@redhat.com>
- <87cywqn84g.fsf@pond.sub.org>
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <87cywqn84g.fsf@pond.sub.org>
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Michael Brown <mcb30@ipxe.org>
+References: <20240228080646.261365-1-pbonzini@redhat.com>
+ <20240228080646.261365-7-pbonzini@redhat.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240228080646.261365-7-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,109 +85,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03.11.23 18:56, Markus Armbruster wrote:
-> Kevin Wolf<kwolf@redhat.com>  writes:
-> 
->> Am 03.11.2023 um 10:36 hat Markus Armbruster geschrieben:
->>> Vladimir Sementsov-Ogievskiy<vsementsov@yandex-team.ru>  writes:
->>>
->>>> On 11.10.23 13:18, Fiona Ebner wrote:
->>>>> Am 10.10.23 um 19:55 schrieb Vladimir Sementsov-Ogievskiy:
->>>>>> On 09.10.23 12:46, Fiona Ebner wrote:
->>>>>>> Initially, I tried to go for a more general 'job-change' command, but
->>>>>>> I couldn't figure out a way to avoid mutual inclusion between
->>>>>>> block-core.json and job.json.
->>>>>>>
->>>>>> What is the problem with it? I still think that job-change would be better.
->>>>>>
->>>>> If going for job-change in job.json, the dependencies would be
->>>>> job-change -> JobChangeOptions -> JobChangeOptionsMirror -> MirrorCopyMode
->>>>> query-jobs -> JobInfo -> JobInfoMirror
->>>>> and we can't include block-core.json in job.json, because an inclusion
->>>>> loop gives a build error.
->>> Let me try to understand this.
->>>
->>> Command job-change needs its argument type JobChangeOptions.
->>>
->>> JobChangeOptions is a union, and JobChangeOptionsMirror is one of its
->>> branches.
->>>
->>> JobChangeOptionsMirror needs MirrorCopyMode from block-core.json.
->>>
->>> block-core.json needs job.json for JobType and JobStatus.
->>>
->>>>> Could be made to work by moving MirrorCopyMode (and
->>>>> JobChangeOptionsMirror, JobInfoMirror) to job.json or some place that
->>>>> can be included by both job.json and block-core.json. Moving the
->>>>> type-specific definitions to the general job.json didn't feel right to
->>>>> me. Including another file with type-specific definitions in job.json
->>>>> feels slightly less wrong, but still not quite right and I didn't want
->>>>> to create a new file just for MirrorCopyMode (and
->>>>> JobChangeOptionsMirror, JobInfoMirror).
->>>>> And going further and moving all mirror-related things to a separate
->>>>> file would require moving along things like NewImageMode with it or
->>>>> create yet another file for such general things used by multiple block-jobs.
->>>>> If preferred, I can try and go with some version of the above.
->>>>>
->>>> OK, I see the problem. Seems, that all requires some good refactoring. But that's a preexisting big work, and should not hold up your series. I'm OK to proceed with block-job-change.
->>> Saving ourselves some internal refactoring is a poor excuse for
->>> undesirable external interfaces.
->> I'm not sure how undesirable it is. We have block-job-* commands for
->> pretty much every other operation, so it's only consistent to have
->> block-job-change, too.
-> Is the job abstraction a failure?
-> 
-> We have
-> 
->      block-job- command      since   job- command    since
->      -----------------------------------------------------
->      block-job-set-speed     1.1
->      block-job-cancel        1.1     job-cancel      3.0
->      block-job-pause         1.3     job-pause       3.0
->      block-job-resume        1.3     job-resume      3.0
->      block-job-complete      1.3     job-complete    3.0
->      block-job-dismiss       2.12    job-dismiss     3.0
->      block-job-finalize      2.12    job-finalize    3.0
->      block-job-change        8.2
->      query-block-jobs        1.1     query-jobs
-> 
-> I was under the impression that we added the (more general) job-
-> commands to replace the (less general) block-job commands, and we're
-> keeping the latter just for compatibility.  Am I mistaken?
-> 
-> Which one should be used?
-> 
-> Why not deprecate the one that shouldn't be used?
-> 
-> The addition of block-job-change without even trying to do job-change
-> makes me wonder: have we given up on the job- interface?
-> 
-> I'm okay with giving up on failures.  All I want is clarity.  Right now,
-> I feel thoroughly confused about the status block-jobs and jobs, and how
-> they're related.
+28.02.2024 11:06, Paolo Bonzini:
 
-Hi! I didn't notice, that the series was finally merged.
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 647371198c7..ba6d7b80a7f 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -7732,7 +7732,7 @@ static bool x86_cpu_has_work(CPUState *cs)
+>       return x86_cpu_pending_interrupt(cs, cs->interrupt_request) != 0;
+>   }
+>   
+> -static int x86_cpu_mmu_index(CPUState *env, bool ifetch)
+> +static int x86_cpu_mmu_index(CPUState *cs, bool ifetch)
+>   {
+>       CPUX86State *env = cpu_env(cs);
+>       int mmu_index_32 = (env->hflags & HF_CS64_MASK) ? 1 : 0;
 
-About the APIs, I think, of course we should deprecate block-job-* API, because we already have jobs which are not block-jobs, so we can't deprecate job-* API.
 
-So I suggest a plan:
+This is an interesting change.  It looks like previous patch
+broke this very line, and this patch restored it.
 
-1. Add job-change command simply in block-core.json, as a simple copy of block-job-change, to not care with resolving inclusion loops. (ha we could simply name our block-job-change to be job-change and place it in block-core.json, but now is too late)
+This is an unrelated change to the problem at hand.
 
-2. Support changing speed in a new job-chage command. (or both in block-job-change and job-change, keeping them equal)
+But the status-quo is restored anyway :)
 
-3. Deprecate block-job-* APIs
+FWIW.
 
-4. Wait 3 releases
-
-5. Drop block-job-* APIs
-
-6. Move all job-related stuff to job.json, drop `{ 'include': 'job.json' }` from block-core.json, and instead include block-core.json into job.json
-
-If it's OK, I can go through the steps.
-
--- 
-Best regards,
-Vladimir
-
+/mjt
 
