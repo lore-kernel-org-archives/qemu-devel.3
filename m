@@ -4,87 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE055C47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 20:19:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0679C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 20:26:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfQNm-0002tV-3l; Wed, 28 Feb 2024 15:18:26 -0500
+	id 1rfQUb-0007zJ-8P; Wed, 28 Feb 2024 15:25:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rfQNi-0002sE-Vo
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 15:18:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rfQNd-0004jI-Tv
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 15:18:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709151496;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7V1Yw4M0UNjoVEOnQCXCEjVsqFjY7WDyGGYkQ1+l5QY=;
- b=EHv2NghJB+Zwxx7+RVtgXLCfE4UO2JIXeUgAmd3iF5A7yMoufUi3yCQFwxDCWYg6VB6Q8c
- ZePdfvnNc4iNIQxjkrpkqLhVk/Hv7wtV3gRaHKNXu9SgsGN1XaWAVAH1OljFmGGnkKphRB
- gUGLeIILpRY50Ssc0LLZju/ZeaZ00xU=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-563-U-VxMpYYMJOREGXli3nNKg-1; Wed, 28 Feb 2024 15:18:15 -0500
-X-MC-Unique: U-VxMpYYMJOREGXli3nNKg-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-41297aeece5so523705e9.2
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 12:18:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rfQUZ-0007yq-Qy
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 15:25:27 -0500
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rfQUX-0007M9-VB
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 15:25:27 -0500
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-299b92948a6so74154a91.3
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 12:25:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709151924; x=1709756724; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uYpmvWcDo9XJ8PEub2Zz6TVzblWCi4U6QK1BUlbCzJU=;
+ b=ZuiSzcsiVV3QK5uuxZKUMgcV8OG6xgt/60HjQFzFp6hccCjzyV8xBW51LIaB12d1vX
+ fiP8bu7BbADetVeD7mzEKXA9EZqUCu7JjXBeCVlNVMgIbEGE0Bxk+mQhy8eefBz6Sccl
+ E3ic4+BYcp+BaAgplHV4zBjC3aBpae0GjSFyD9/yDAg0jWyrrhqjUlcjtEe07t7IdOWh
+ X15k1qe7YgImLGZLTanlpvlEdW47S7dXmsS0QFk8HleIv9MzN1AK8IN9utzGyfsbmDD+
+ opsC/W3a8cR6Vf+/Z/8PviNaOh77hQznlbpgno/1E9WzXj/L5b805Dw9+3LOfkvgwhNu
+ kxqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709151494; x=1709756294;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1709151924; x=1709756724;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7V1Yw4M0UNjoVEOnQCXCEjVsqFjY7WDyGGYkQ1+l5QY=;
- b=QWKlQaX7W72q43C58jl/gVsB8DqQxdnNRnT69SrFG6VAAjUlqNDg1tUcmxpaLx7S7q
- WMI/JhEcSWd0wnvT9IpfyQV0mOGmcIB0DSR1PAZXVPMV+pw/thP1p0nvqjVx6/H85Yvy
- aCWMggtdEjgaHTZsNIBy7qc6hAfjarUuBtbMLBDfaGPQwA9HoYNRAA0sSzYJ/W49RRFf
- R1pqPvkxFbUoBMpr18bax7YwCqQypyqItAfnZg0xougE2eKIj5ZgDJsvSAVx96n5YNG2
- i21rrx2hjn65sbQSg9ukImKN4z1jVX090k4TUVYyg+0uFHM6PPeW3kosiSUSu3Gfaxzs
- k0SA==
-X-Gm-Message-State: AOJu0Yz8vSNPJNtykwTXQRgINHdQUT52FYgf15qUiEvVd4Pd3t15QdAh
- wolewbjFNhBYuVly7U5lS9j0wz42DK7W8sTA+Gm2LXVjKA6F+qgp2RdhC/9aRWzOx3lq6N/Zt2T
- lgJ9ZP1CDGD8pWaJBm2gd7CcZNiGJA4Pzt+FAp3cVRXWVbz6zepKti0HlEe5P2nEkOyfbNQYO2k
- ArMYyfH7ofJryhiB9iJR/hcXbSDNT0njhDUok=
-X-Received: by 2002:adf:e703:0:b0:33d:2b3d:a02e with SMTP id
- c3-20020adfe703000000b0033d2b3da02emr502043wrm.46.1709151494015; 
- Wed, 28 Feb 2024 12:18:14 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGnEAHHFEDSk7a/SqEIggqj6n0GxCv7yAK48ucZzWDz0xx3u76pDh+4AM12FP/2HQ2m4AjGWtzlLX+UN9LbQUo=
-X-Received: by 2002:adf:e703:0:b0:33d:2b3d:a02e with SMTP id
- c3-20020adfe703000000b0033d2b3da02emr502033wrm.46.1709151493728; Wed, 28 Feb
- 2024 12:18:13 -0800 (PST)
+ bh=uYpmvWcDo9XJ8PEub2Zz6TVzblWCi4U6QK1BUlbCzJU=;
+ b=LJ/1kIjiiwnImNAwBFcn1Sm5+nKgZc6b3jhmwDZiaxfM7z6cc/UKN5q1qEojKvYgYy
+ bjKv9IHhP+rATr2xoueOlIuIuI+nYDr/7yC7M58xaeOQSh7gDY26NIOx9NY4piwQQhUt
+ Z8bsIXMN6CEOsJd8dcvtcwBXiGVHDPchMxD3jcWV4KtIwYBlLima7BUq5noGSUcmh7G9
+ z4bDsJe13amGQpvrWS6NUhNpqaw3uCK1gYEAdvPqCWFhb22MZcoVdbAUwOm3BG/ZEXhV
+ 7KETXjBOTksnms/W5Am4BPvFn+tP5qwO+gyG9R21j7jCH8L2PcGjDRW5xM/626XOWKTg
+ g/aA==
+X-Gm-Message-State: AOJu0Yz/0ZadDiFYp334BqeoIfL1Con2lPkVk6cf5MKegFWcW1mKQ2pW
+ o/NyomlCDGUKmlz4vno//aYNoVQ1f2IifOyXmOwsnDYaimeZtoeWPVUIKcn9+6dRCAmphqfNNVo
+ E
+X-Google-Smtp-Source: AGHT+IG2gks6tKbJ90ttA2XGR+baKFdv/JDAyktePlU80AHYmmIZdyEEfNK+0Rr9rJvHp8QcrP+H7A==
+X-Received: by 2002:a17:90b:1c07:b0:299:4f5a:62d5 with SMTP id
+ oc7-20020a17090b1c0700b002994f5a62d5mr291809pjb.18.1709151924493; 
+ Wed, 28 Feb 2024 12:25:24 -0800 (PST)
+Received: from stoup.. (098-147-055-211.res.spectrum.com. [98.147.55.211])
+ by smtp.gmail.com with ESMTPSA id
+ oh5-20020a17090b3a4500b0029ab712f648sm2118499pjb.38.2024.02.28.12.25.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 28 Feb 2024 12:25:24 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: laurent@vivier.eu, richard.purdie@linuxfoundation.org, mjt@tls.msk.ru,
+ iii@linux.ibm.com, Song Gao <gaosong@loongson.cn>
+Subject: [PATCH v2 2/5] linux-user/loongarch64: Remove TARGET_FORCE_SHMLBA
+Date: Wed, 28 Feb 2024 10:25:15 -1000
+Message-Id: <20240228202518.33180-3-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240228202518.33180-1-richard.henderson@linaro.org>
+References: <20240228202518.33180-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-References: <20240228080646.261365-1-pbonzini@redhat.com>
- <20240228080646.261365-7-pbonzini@redhat.com>
- <22b4b31b-ff24-4c54-b523-3fdc5479aacf@tls.msk.ru>
-In-Reply-To: <22b4b31b-ff24-4c54-b523-3fdc5479aacf@tls.msk.ru>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 28 Feb 2024 21:18:02 +0100
-Message-ID: <CABgObfZ00ufqvYZXDKXNzgpC2=-bh3Ltu8eCJmfgAnkgoS_xuQ@mail.gmail.com>
-Subject: Re: [PULL 06/10] target/i386: Fix physical address truncation
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
- Michael Brown <mcb30@ipxe.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,34 +95,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 28, 2024 at 7:14=E2=80=AFPM Michael Tokarev <mjt@tls.msk.ru> wr=
-ote:
->
-> 28.02.2024 11:06, Paolo Bonzini:
->
-> > diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> > index 647371198c7..ba6d7b80a7f 100644
-> > --- a/target/i386/cpu.c
-> > +++ b/target/i386/cpu.c
-> > @@ -7732,7 +7732,7 @@ static bool x86_cpu_has_work(CPUState *cs)
-> >       return x86_cpu_pending_interrupt(cs, cs->interrupt_request) !=3D =
-0;
-> >   }
-> >
-> > -static int x86_cpu_mmu_index(CPUState *env, bool ifetch)
-> > +static int x86_cpu_mmu_index(CPUState *cs, bool ifetch)
-> >   {
-> >       CPUX86State *env =3D cpu_env(cs);
-> >       int mmu_index_32 =3D (env->hflags & HF_CS64_MASK) ? 1 : 0;
->
->
-> This is an interesting change.  It looks like previous patch
-> broke this very line, and this patch restored it.
->
-> This is an unrelated change to the problem at hand.
+The kernel abi was changed with
 
-It's a rebase hiccup, indeed. :(
+    commit d23b77953f5a4fbf94c05157b186aac2a247ae32
+    Author: Huacai Chen <chenhuacai@kernel.org>
+    Date:   Wed Jan 17 12:43:08 2024 +0800
 
-Paolo
+        LoongArch: Change SHMLBA from SZ_64K to PAGE_SIZE
+
+during the v6.8 cycle.
+
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ linux-user/loongarch64/target_syscall.h | 7 -------
+ 1 file changed, 7 deletions(-)
+
+diff --git a/linux-user/loongarch64/target_syscall.h b/linux-user/loongarch64/target_syscall.h
+index 8b5de52124..39f229bb9c 100644
+--- a/linux-user/loongarch64/target_syscall.h
++++ b/linux-user/loongarch64/target_syscall.h
+@@ -38,11 +38,4 @@ struct target_pt_regs {
+ #define TARGET_MCL_FUTURE  2
+ #define TARGET_MCL_ONFAULT 4
+ 
+-#define TARGET_FORCE_SHMLBA
+-
+-static inline abi_ulong target_shmlba(CPULoongArchState *env)
+-{
+-    return 64 * KiB;
+-}
+-
+ #endif
+-- 
+2.34.1
 
 
