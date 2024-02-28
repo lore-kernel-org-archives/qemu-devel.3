@@ -4,79 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CEE7C47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 15:57:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6319DC47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 16:01:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfMHw-00005s-8Y; Wed, 28 Feb 2024 10:56:08 -0500
+	id 1rfMML-0003jQ-Ef; Wed, 28 Feb 2024 11:00:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfMHt-0008VS-Bw; Wed, 28 Feb 2024 10:56:05 -0500
-Received: from mgamail.intel.com ([198.175.65.21])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rfMM3-0003ir-Qg; Wed, 28 Feb 2024 11:00:24 -0500
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfMHp-0004Jk-F7; Wed, 28 Feb 2024 10:56:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709135761; x=1740671761;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=fNVWwNQheie9mBpZcQ8dmgIOe23qPbQo9xV4snxQxi4=;
- b=DFZ4FgXUkTfkQAwUZ4gi5/uETi8NRisLh1kGtTuz/zHfsCW+MvYdanOR
- Xop4yxQzkxs9d3SOzWeOapPNHAREgJJ2r9U0g04saaFgQAAo1cCW6r8S7
- eVC2AskxjZMWMzV7jUuAJxoMtznPl6VV41SbXKcjr1QqnByyHONM2YoHn
- ej9d5X14ie/34FFck/ORM3/Mpem6FtdO3g0w1UR7SAkRqNtVZ9gqqXpFZ
- ECkPztI8jVPvreB2a/bz1EidfX3lTRdj34q64yrRbTYBIhTMdGZftSgz6
- MRzMzd3C6UG8pFqEKr4Nf2et+0Toh2KMgJkZLMPvloD0/DBQdJWz9EMkR w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3464015"
-X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; 
-   d="scan'208";a="3464015"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Feb 2024 07:55:55 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,190,1705392000"; 
-   d="scan'208";a="8040864"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa008.jf.intel.com with ESMTP; 28 Feb 2024 07:55:52 -0800
-Date: Thu, 29 Feb 2024 00:09:34 +0800
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Jonathan Cameron <jonathan.cameron@huawei.com>,
- Fan Ni <fan.ni@samsung.com>, Laurent Vivier <laurent@vivier.eu>,
- Alistair Francis <alistair@alistair23.me>,
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, qemu-trivial@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v2 1/7] hw/cxl/cxl-host: Fix missing ERRP_GUARD() in
- cxl_fixed_memory_window_config()
-Message-ID: <Zd9avh8nPazzTSsN@intel.com>
-References: <20240223085653.1255438-1-zhao1.liu@linux.intel.com>
- <20240223085653.1255438-2-zhao1.liu@linux.intel.com>
- <877cip3v24.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rfMM0-0007N7-Ng; Wed, 28 Feb 2024 11:00:22 -0500
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:4da0:0:640:817e:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 5E83F60AFB;
+ Wed, 28 Feb 2024 19:00:14 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:a519::1:3a] (unknown
+ [2a02:6b8:b081:a519::1:3a])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id C0caoi2IkqM0-RvF3i7Cg; Wed, 28 Feb 2024 19:00:13 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1709136013;
+ bh=R7VUUE61sBm7YPubx9sK+XCHeQRXQnw579QVsWPEirA=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=CKjeMx3gPxzhPNt/afZA+PP0Ijs9AvTB/dJ+CwZQbXLn4G5fHeJc3ZP/Mnj5RBMY1
+ ahowfa2oc8SmeErF9b4YKjEMH6zTmdf3aOEw6+5IvUp2wk0+CAAuy3UNQkqWvH5PoS
+ VGwN2y6uMXmAQtDODodh8BIRdJ5cgAI0tbxu2Keo=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <cf086f76-1f47-4f45-aba5-fc021ad090da@yandex-team.ru>
+Date: Wed, 28 Feb 2024 19:00:12 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <877cip3v24.fsf@pond.sub.org>
-Received-SPF: none client-ip=198.175.65.21;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 0/4] mirror: implement incremental and bitmap modes
+Content-Language: en-US
+To: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, armbru@redhat.com, eblake@redhat.com,
+ hreitz@redhat.com, kwolf@redhat.com, jsnow@redhat.com,
+ f.gruenbichler@proxmox.com, t.lamprecht@proxmox.com,
+ mahaocong@didichuxing.com
+References: <20240216105513.309901-1-f.ebner@proxmox.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20240216105513.309901-1-f.ebner@proxmox.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,24 +78,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> No need to quote the dereferences in full.
+On 16.02.24 13:55, Fiona Ebner wrote:
+> Previous discussion from when this was sent upstream [0] (it's been a
+> while). I rebased the patches and re-ordered and squashed like
+> suggested back then [1].
 > 
->   But in cxl_fixed_memory_window_config(), @errp is dereferenced in 2
->   places without ERRP_GUARD().
+> This implements two new mirror modes:
 > 
->   In these two places, we check "*errp", because neither function
+> - bitmap mirror mode with always/on-success/never bitmap sync mode
+> - incremental mirror mode as sugar for bitmap + on-success
 > 
-> would do.
+> Use cases:
+> * Possibility to resume a failed mirror later.
+> * Possibility to only mirror deltas to a previously mirrored volume.
+> * Possibility to (efficiently) mirror an drive that was previously
+>    mirrored via some external mechanism (e.g. ZFS replication).
 > 
-> Same for the other commit messages.
+> We are using the last one in production without any issues since about
+> 4 years now. In particular, like mentioned in [2]:
 > 
-> Hardly worth a respin, though :)
+>> - create bitmap(s)
+>> - (incrementally) replicate storage volume(s) out of band (using ZFS)
+>> - incrementally drive mirror as part of a live migration of VM
+>> - drop bitmap(s)
+> 
+> 
+> Now, the IO test added in patch 4/4 actually contains yet another use
+> case, namely doing incremental mirrors to stand-alone qcow2 "diff"
+> images, that only contain the delta and can be rebased later. I had to
+> adapt the IO test, because its output expected the mirror bitmap to
+> still be dirty, but nowadays the mirror is apparently already done
+> when the bitmaps are queried. So I thought, I'll just use
+> 'write-blocking' mode to avoid any potential timing issues.
+> 
+> But this exposed an issue with the diff image approach. If a write is
+> not aligned to the granularity of the mirror target, then rebasing the
+> diff image onto a backing image will not yield the desired result,
+> because the full cluster is considered to be allocated and will "hide"
+> some part of the base/backing image. The failure can be seen by either
+> using 'write-blocking' mode in the IO test or setting the (bitmap)
+> granularity to 32 KiB rather than the current 64 KiB.
+> 
+> The question is how to deal with these edge cases? Some possibilities
+> that would make sense to me:
+> 
+> For 'background' mode:
+> * prohibit if target's cluster size is larger than the bitmap
+>    granularity
+> * document the limitation
+> 
+> For 'write-blocking' mode:
+> * disallow in combination with bitmap mode (would not be happy about
+>    it, because I'd like to use this without diff images)
+
+why not just require the same: bitmap granularity must be >= target granularity
+
+> * for writes that are not aligned to the target's cluster size, read
+>    the relevant/missing parts from the source image to be able to write
+>    whole target clusters (seems rather complex)
+
+There is another approach: consider and unaligned part of the request, fit in one cluster (we can always split any request to "aligned" middle part, and at most two small "unligned" parts, each fit into one cluster).
+
+We have two possibilities:
+
+1. the cluster is dirty (marked dirty in the bitmap used by background process)
+
+We can simply ignore this part and rely on background process. This will not affect the convergence of the mirror job.
+
+2. the cluster is clear (i.e. background process, or some previous write already copied it)
+
+In this case, we are safe to do unaligned write, as target cluster must be allocated.
+
+(for bitmap-mode, I don't consider here clusters that are clear from the start, which we shouldn't copy in any case)
+
+> * document the limitation
+> 
+> 
+> [0]: https://lore.kernel.org/qemu-devel/20200218100740.2228521-1-f.gruenbichler@proxmox.com/
+> [1]: https://lore.kernel.org/qemu-devel/d35a76de-78d5-af56-0b34-f7bd2bbd3733@redhat.com/
+> [2]: https://lore.kernel.org/qemu-devel/1599127031.9uxdp5h9o2.astroid@nora.none/
+> 
+> 
+> Fabian Grünbichler (2):
+>    mirror: move some checks to qmp
+>    iotests: add test for bitmap mirror
+> 
+> John Snow (2):
+>    drive-mirror: add support for sync=bitmap mode=never
+>    drive-mirror: add support for conditional and always bitmap sync modes
+> 
+>   block/mirror.c                                |   94 +-
+>   blockdev.c                                    |   70 +-
+>   include/block/block_int-global-state.h        |    4 +-
+>   qapi/block-core.json                          |   25 +-
+>   tests/qemu-iotests/tests/bitmap-sync-mirror   |  550 ++++
+>   .../qemu-iotests/tests/bitmap-sync-mirror.out | 2810 +++++++++++++++++
+>   tests/unit/test-block-iothread.c              |    4 +-
+>   7 files changed, 3527 insertions(+), 30 deletions(-)
+>   create mode 100755 tests/qemu-iotests/tests/bitmap-sync-mirror
+>   create mode 100644 tests/qemu-iotests/tests/bitmap-sync-mirror.out
 > 
 
-I over-understood your reply. I'll pay attention to that in the follow
-up.
-
-Thanks,
-Zhao
+-- 
+Best regards,
+Vladimir
 
 
