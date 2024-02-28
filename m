@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F09DC47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 18:31:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B76EEC47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 18:37:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfOhY-00009r-71; Wed, 28 Feb 2024 13:30:44 -0500
+	id 1rfOnF-0001rA-58; Wed, 28 Feb 2024 13:36:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1rfOhW-00009I-Rc
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 13:30:42 -0500
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ id 1rfOnE-0001qz-4F
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 13:36:36 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1rfOhT-0007Dn-5Q
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 13:30:41 -0500
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-a441d7c6125so11617866b.2
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 10:30:36 -0800 (PST)
+ id 1rfOnB-0002jC-Qo
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 13:36:35 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-55a179f5fa1so197253a12.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 10:36:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1709145035; x=1709749835; darn=nongnu.org;
+ d=bytedance.com; s=google; t=1709145390; x=1709750190; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6RFypXQ3BBJIjuIyOU4J/RMmaoxT3ProJqii1MZaUTk=;
- b=PSFBqzoh4d+jpTlvzV1XFP5tJY+bO4eHUrfJXUKTdU2Jp+MjQRRH1EKKJ8nFbD5pBY
- wXWSFQPhI2Ncba5IOzqGTz+AAbyIIKTUX+tVO23WunBXPnG0Y+MzBWnrV6QST96WUn39
- pWzOD01t1Oj/LIGBBCD1rxnDJKxYW/H7vID5FbppabxtKiVNMGjzNJCMBwJjVjHCcgeE
- PKuVjADxYj3k5SKBUgI4fCopABxQhfSfupQ7reFckW7hmxOR4pt412vDb3ebiEju5wCi
- 3nfUps7rkKXq9KRYZXm7xdGtIh/9j85g8fAHO68N5jMRmkh5HD3Nleg9uRGuD2/wsgLf
- aBTw==
+ bh=R+VoYO7aWK51+6HarDNv2G92hElLZ47gJLXgoInfemY=;
+ b=CzG5R/9a6g9gPl3ptTKKtNpXuVk5JLhBp+ewlUN8ztRxgnWN5FqeokEPGuyu0iF3UY
+ eRmtw3QTKVog5jxLZZQDOyfLw6E32ufA0exidBZpGJ/rBgjMSa9EYIj4lA30mVkn2Et1
+ AywvkyNRjc+KOkpxYRQUSVU37Ju3digBXhjZDsNJidZXPDE4h+QuEyNqPvRcdqoAFSGB
+ 3d2yfpHaKkvuFsCooD741+6spJbV+aTSL92m5bKWB75/KuWxcQBsGE+mJVLDZvO369Zv
+ jBLBvJr1QV/Xuo2ANSLF6tPkwkXKsQ6Z35H0EuwsWBOKHY1A4/swwoRi8zhtV9KOKuua
+ B4rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709145035; x=1709749835;
+ d=1e100.net; s=20230601; t=1709145390; x=1709750190;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6RFypXQ3BBJIjuIyOU4J/RMmaoxT3ProJqii1MZaUTk=;
- b=Y/JqGvxn4fcseBRFBWfkyqs2B7NTUVf9xxKuyCpAMs38iwdUhUUrcCdyIv2B6vdt+F
- RwA2C1t9KlulJVdEVB5hfcZg3OVI/kBGise5aS/H2pvt+peDCsmhCVchPnXP0jJJdUqz
- 5JxqPwKasjH5tIWPOjsoxOl990aoBSE/WHUX7020NnBXaZvx55tUGh/tGgJFiqTnPWaE
- KE63HD18w+jJWUiVhVm8EZkx47rcm/0CKIUfcxlMENQzWxXfvto6M0LylmS9Bvv4OHG5
- V1gJr0s4WezWXWfpv/p8cj+2FOHLMkCnXAOoTop7YqY2/UXKx/TwcVq8/YJljdzhTRJp
- Ylqg==
+ bh=R+VoYO7aWK51+6HarDNv2G92hElLZ47gJLXgoInfemY=;
+ b=ej8vVwbUAgxijNjh8zFTo71nx+UcHA1jqdgaquODFYUerSkGHY6neE9CyBTSSi0Vhf
+ Lcnpq8YHMxZnmfaFl664SnygoUBQrldFBniNDYQXa56OFf93mijldj5dM76fLeTARVRc
+ SKIgmMiARr50nEO0RvuhhocZrJB/BnHJwXqyuNecRJqjDyvTRwB6yMPl4ZfyN8EtKxoT
+ ir0M5v3iOnwGYE7lO4HXFVicaedCpyaBI6torXWiTYTXwdndHl4xZblncgujO1o/KN50
+ OoWrpoOnqGgi7Ih2iTcHWCK2KJ4yIEFyanJM5oP43ikhcGm9WAkFre4nJoys8DNIjAMz
+ sEdw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUjKIF0B7CiZQ4K6d0xNsUsRZ9LCOd5HM2S/JIQ4QvrSLg2REexN4uAvN/xIHrmCynbfwbbOGluupW0bRcaFypDNiYyFJE=
-X-Gm-Message-State: AOJu0YzWS/h5/E5GjC0Fg0TQLLgi58SZ+lEmn0OSW2+PuyEMeBf3w/s2
- HNsZ49Cr+L5BgzcPCPMiA/bTLr9C2wGJJznNIcYI8bDfB8G1ptGxmYZkpe8XdskRKItpjPZ3Boh
- ShiX5CfNyVm4+rCrF4Jph+0oevyg+sC5TYeBz8bOU3Cv4pFLHpyM=
-X-Google-Smtp-Source: AGHT+IEMBv5xmF4mvNzZUAwibfR5SKglrBEaavmY4IcdwbRr8VYpgORx8LJhnxJWpuf6zzcdc8YFk83IXvQmxtzISBY=
-X-Received: by 2002:a17:906:5785:b0:a43:f927:4432 with SMTP id
- k5-20020a170906578500b00a43f9274432mr352145ejq.77.1709145035171; Wed, 28 Feb
- 2024 10:30:35 -0800 (PST)
+ AJvYcCU/MuQc82ptmdmLbwlwIv25KvhDRR/slEcDEfAIiEBODS4lBk9cH6edSXSqdPicpInx7iwcFDObryH7Ws/CC7kEkQEYWpw=
+X-Gm-Message-State: AOJu0YyLVU1hTqzOSplBYk1Q2OQNKlXvUqGo3vO4YHrxgYWiEkxh2gIF
+ agCG5pqFDIq7gi2mlbYy9DUPBr8B+SbmgFwO0hVA0+rVyqpx5WuY1Gqk4vkJ046c7jKGCSCmAqi
+ 4yAGSB18t5VjJsiIeoxVNgnhqBz4S8p4w5vkpfg==
+X-Google-Smtp-Source: AGHT+IFNDH/baItZSZvkuDlR0kZJv3QgX5bozVnh1bdVClameVxkXji3x9ggrtL0ur6sud9M7+rvS55qCxyUVFO/c0I=
+X-Received: by 2002:a05:6402:1619:b0:565:ec92:bec8 with SMTP id
+ f25-20020a056402161900b00565ec92bec8mr179207edv.7.1709145390041; Wed, 28 Feb
+ 2024 10:36:30 -0800 (PST)
 MIME-Version: 1.0
 References: <20240226195654.934709-1-hao.xiang@bytedance.com>
- <20240226195654.934709-2-hao.xiang@bytedance.com>
- <87msrk2abr.fsf@pond.sub.org>
-In-Reply-To: <87msrk2abr.fsf@pond.sub.org>
+ <20240226195654.934709-7-hao.xiang@bytedance.com>
+ <87wmqozzjn.fsf@pond.sub.org>
+In-Reply-To: <87wmqozzjn.fsf@pond.sub.org>
 From: Hao Xiang <hao.xiang@bytedance.com>
-Date: Wed, 28 Feb 2024 10:30:24 -0800
-Message-ID: <CAAYibXjwBTcBFmUUs=L2BfTKgxi3Pym5S-5w-JOsZDmGdb9sgg@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH v3 1/7] migration/multifd: Add new
- migration option zero-page-detection.
+Date: Wed, 28 Feb 2024 10:36:19 -0800
+Message-ID: <CAAYibXicsMkZ+QaFtjgSbjk_eL3waOp1fiJQ7M9b5SRXCRa+ig@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH v3 6/7] migration/multifd: Add zero pages
+ and zero bytes counter to migration status interface.
 To: Markus Armbruster <armbru@redhat.com>
 Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net, 
  peterx@redhat.com, farosas@suse.de, eblake@redhat.com, thuth@redhat.com, 
@@ -73,8 +73,8 @@ Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
  philmd@linaro.org, wangyanan55@huawei.com, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=hao.xiang@bytedance.com; helo=mail-ej1-x634.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=hao.xiang@bytedance.com; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,143 +97,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 28, 2024 at 1:43=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+On Wed, Feb 28, 2024 at 1:52=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
 m> wrote:
 >
 > Hao Xiang <hao.xiang@bytedance.com> writes:
 >
-> > This new parameter controls where the zero page checking is running.
-> > 1. If this parameter is set to 'legacy', zero page checking is
-> > done in the migration main thread.
-> > 2. If this parameter is set to 'none', zero page checking is disabled.
+> > This change extends the MigrationStatus interface to track zero pages
+> > and zero bytes counter.
 > >
 > > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
 >
 > [...]
 >
 > > diff --git a/qapi/migration.json b/qapi/migration.json
-> > index 5a565d9b8d..1e66272f8f 100644
+> > index a0a85a0312..171734c07e 100644
 > > --- a/qapi/migration.json
 > > +++ b/qapi/migration.json
-> > @@ -653,6 +653,18 @@
-> >  { 'enum': 'MigMode',
-> >    'data': [ 'normal', 'cpr-reboot' ] }
-> >
-> > +##
-> > +# @ZeroPageDetection:
-> > +#
-> > +# @none: Do not perform zero page checking.
-> > +#
-> > +# @legacy: Perform zero page checking from main migration thread.
-> > +#
-> > +# Since: 9.0
-> > +##
-> > +{ 'enum': 'ZeroPageDetection',
-> > +  'data': [ 'none', 'legacy' ] }
-> > +
-> >  ##
-> >  # @BitmapMigrationBitmapAliasTransform:
+> > @@ -63,6 +63,10 @@
+> >  #     between 0 and @dirty-sync-count * @multifd-channels.  (since
+> >  #     7.1)
 > >  #
-> > @@ -874,6 +886,9 @@
-> >  # @mode: Migration mode. See description in @MigMode. Default is 'norm=
-al'.
-> >  #        (Since 8.2)
-> >  #
-> > +# @zero-page-detection: Whether and how to detect zero pages. More det=
-ails
-> > +#     see description in @ZeroPageDetection. Default is 'legacy'.  (si=
-nce 9.0)
+> > +# @zero-pages: number of zero pages (since 9.0)
+> > +#
+> > +# @zero-bytes: number of zero bytes sent (since 9.0)
 > > +#
 >
-> I'm not sure we need to point to the member's type.  If we want to, we
-> better fix the prose: "For additional information, see
-> @ZeroPageDetection" or similar.
+> Awfully terse.  How are these two related?
 
-This is mimicking what was done for the "mode" migration option. There
-aren't many enumeration types on the interface I can learn from.
+Sorry I forgot to address the same feedback from the last version.
+zero-pages are the number of pages being detected as all "zero" and
+hence the payload isn't sent over the network. zero-bytes is basically
+zero-pages * page_size. It's the number of bytes migrated (but not
+actually sent through the network) because they are all "zero". These
+two are related to the existing interface below. normal and
+normal-bytes are the same representation of pages who are not all
+"zero" and are actually sent through the network.
 
-Existing code
-
+# @normal: number of normal pages (since 1.2)
 #
-# @mode: Migration mode. See description in @MigMode. Default is 'normal'.
-# (Since 8.2)
-
->
-> Two spaces between sentences for consistency, please.  Also, limit line
-> length 70 characters.
->
-> Together:
->
->    # @zero-page-detection: Whether and how to detect zero pages.  For
->    #     additional information, see @ZeroPageDetection.  Default is
->    #     'multifd'.  (since 9.0)
->
-> Same for the other two copies.
-
-Will change that.
+# @normal-bytes: number of normal bytes sent (since 1.2)
 
 >
 > >  # Features:
 > >  #
-> >  # @deprecated: Member @block-incremental is deprecated.  Use
-> > @@ -907,7 +922,8 @@
-> >             'block-bitmap-mapping',
-> >             { 'name': 'x-vcpu-dirty-limit-period', 'features': ['unstab=
-le'] },
-> >             'vcpu-dirty-limit',
-> > -           'mode'] }
-> > +           'mode',
-> > +           'zero-page-detection'] }
-> >
-> >  ##
-> >  # @MigrateSetParameters:
-> > @@ -1066,6 +1082,9 @@
-> >  # @mode: Migration mode. See description in @MigMode. Default is 'norm=
-al'.
-> >  #        (Since 8.2)
-> >  #
-> > +# @zero-page-detection: Whether and how to detect zero pages. More det=
-ails
-> > +#     see description in @ZeroPageDetection. Default is 'legacy'.  (si=
-nce 9.0)
-> > +#
-> >  # Features:
-> >  #
-> >  # @deprecated: Member @block-incremental is deprecated.  Use
-> > @@ -1119,7 +1138,8 @@
-> >              '*x-vcpu-dirty-limit-period': { 'type': 'uint64',
-> >                                              'features': [ 'unstable' ]=
- },
-> >              '*vcpu-dirty-limit': 'uint64',
-> > -            '*mode': 'MigMode'} }
-> > +            '*mode': 'MigMode',
-> > +            '*zero-page-detection': 'ZeroPageDetection'} }
-> >
-> >  ##
-> >  # @migrate-set-parameters:
-> > @@ -1294,6 +1314,9 @@
-> >  # @mode: Migration mode. See description in @MigMode. Default is 'norm=
-al'.
-> >  #        (Since 8.2)
-> >  #
-> > +# @zero-page-detection: Whether and how to detect zero pages. More det=
-ails
-> > +#     see description in @ZeroPageDetection. Default is 'legacy'.  (si=
-nce 9.0)
-> > +#
-> >  # Features:
-> >  #
-> >  # @deprecated: Member @block-incremental is deprecated.  Use
-> > @@ -1344,7 +1367,8 @@
-> >              '*x-vcpu-dirty-limit-period': { 'type': 'uint64',
-> >                                              'features': [ 'unstable' ]=
- },
-> >              '*vcpu-dirty-limit': 'uint64',
-> > -            '*mode': 'MigMode'} }
-> > +            '*mode': 'MigMode',
-> > +            '*zero-page-detection': 'ZeroPageDetection'} }
-> >
-> >  ##
-> >  # @query-migrate-parameters:
+> >  # @deprecated: Member @skipped is always zero since 1.5.3
+>
+> [...]
 >
 
