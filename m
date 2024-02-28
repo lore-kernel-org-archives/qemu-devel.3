@@ -4,95 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CCDEC47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 11:51:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D748C54E49
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 11:58:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfITJ-0002Jr-PF; Wed, 28 Feb 2024 06:51:38 -0500
+	id 1rfIZA-0006Ap-Gk; Wed, 28 Feb 2024 06:57:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1rfITE-0002H0-5o
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:51:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1rfITC-0004do-DH
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:51:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709121089;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=W4e+t0o6V0jdtfmIXye7cHCq9n4R1J5CLWq3Jm4x+Vc=;
- b=GHL9glofMZcI/amL3uuTJ8FBip4Y8JBvkKH55hjbdgufUcKAdAyN8Y7obvUHC6crqIHQB9
- 7EuGtMrukCKZzr5z7TsLROweP3J6E8zhSQ82zi3hmL3zHEwlZz4o5pcaFFkhdriS4atpt3
- JLBHYg3JGs/l06tH5qUUFopY1xKnPQI=
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-27-iXieX4h_OoGZ9rJG2Luhvg-1; Wed, 28 Feb 2024 06:51:28 -0500
-X-MC-Unique: iXieX4h_OoGZ9rJG2Luhvg-1
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-60804b369c7so58085587b3.2
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 03:51:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rfIZ6-00069o-C5
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:57:36 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rfIYr-0005oJ-Hz
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:57:36 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-33aeb088324so3402905f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 03:57:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709121440; x=1709726240; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Onyf0n7PQDnbuNd7HujOMaHnjKe5rcDTFcPdFWfXURM=;
+ b=pG4BuZ/Bj1149mqlfTGDl2fS7v6f+3RtH3bKu/cB6TEiyz6enByafnkIz1Sfgy/IPj
+ /d0j42l3v9FwN3om+ZBydejv19kn9T42G7EGF2rQOf7VvOprBjWOeJOniYbVLNhErIVl
+ DJO60CyDiumWxO2ojFq0clP4yeAWT6uRi5tOXer2E7gL80b6VdWEcEWALG8QrC/Da3YP
+ zVW64mDBK6vlsE32Yk9DVtWuuHw1KWsRzZM3wWgfAcjcy12SrZsOXzycHHzXCtP3aJL6
+ T/YTUtoygoCQDBRxKaXoHV3lXfqO8b6OmepPefrGU/MRlgH2RtpjEoLH/AWKzv6h/eAn
+ WkcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709121088; x=1709725888;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1709121440; x=1709726240;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=W4e+t0o6V0jdtfmIXye7cHCq9n4R1J5CLWq3Jm4x+Vc=;
- b=gJ6mVaED5EFMAFw8S12jk+IRnXMTeakgFpX42e9MV57KiWCsGSGIV20vnKYamODJvL
- YezO+87qCIcCTiFsT59HCwwus0USV4TBVTtfICEw4p3XbPUU9wEUIs3135khCfiLnKqq
- fd33V64vhoAR2JUItT/qP8lZ6ayBiTIkvsVIChLCxIzliqsJAYhXzIv0XnPL86bebyU7
- lNSLJq1S7l3cwb8zkT/+AybBgxcfYYry1w5ncS8uHUxy8T4/H5h0xM8ECeFvUWiz27XW
- 8FnC9SvJJlt9y5CcrO8eSAOstxh6d6eQ+TqqoRSn++/4P68rJ600HRjSghXxbCU2wByy
- fiug==
-X-Gm-Message-State: AOJu0YyJoJIJ9XqUUvYde88s2tJeOj6YDBVWm6OZSXetPO451hNaH7Vn
- bwVTtY947EszxurH1+MW+8gurrYXGjIg5uA/o18pHo5vfx4NCmSrTc5qOPow9gO1tImyxEUDTWb
- bZG7KxDlblIHfAV7I1MhyItyva7Wl60GATiEsR4KTrK9rp8p0vIglOkgupzM/vr/OtYnKlpEQJj
- //OxD2Ljnd2qScaaDX+hb1ZImK2PhEVhviHytYSg==
-X-Received: by 2002:a81:dc06:0:b0:609:2333:9579 with SMTP id
- h6-20020a81dc06000000b0060923339579mr5021751ywj.4.1709121087892; 
- Wed, 28 Feb 2024 03:51:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGKpZOoZIJTvHgNLuNKy6ghL7VelPtksGeWf7xtMZmfev9TMDwp2ZlY5jKN3E1gqWFWVmwUNqIkQ68cn+/+xiU=
-X-Received: by 2002:a81:dc06:0:b0:609:2333:9579 with SMTP id
- h6-20020a81dc06000000b0060923339579mr5021720ywj.4.1709121087572; Wed, 28 Feb
- 2024 03:51:27 -0800 (PST)
-MIME-Version: 1.0
-References: <20240228114759.44758-1-sgarzare@redhat.com>
-In-Reply-To: <20240228114759.44758-1-sgarzare@redhat.com>
-From: Stefano Garzarella <sgarzare@redhat.com>
-Date: Wed, 28 Feb 2024 12:51:16 +0100
-Message-ID: <CAGxU2F79465w97vY8G51MEe5e+-wRHNB2AyuPYG_tVEOhuOOnQ@mail.gmail.com>
-Subject: Re: [PATCH 0/9] vhost-user: support any POSIX system (tested on macOS
- and FreeBSD)
+ bh=Onyf0n7PQDnbuNd7HujOMaHnjKe5rcDTFcPdFWfXURM=;
+ b=iX3r+DKgSYgDyx9s6NP4P/TRcdV36zQoDSdzKj42LycfTNaw7QtApD7zO6nKLzVp3K
+ VRk89ziDqF0dhHzIJrnrmmIPfytpPCNrmtdryCJPKkGrhLxodvg/lmA+mgg6cVZ3Bu3k
+ bhQJMrYFcZfjkM6vECxrbiOFx1y3mitHKZqCqBjyuVnr+FE8dyfGu6giuMPCoiv+9+yG
+ Bw3uq4t6rO0h0cmVE70lqFqZhblk7Hkp1V5JK6IuOLsSVSLd7lhOJvFfpk3zc9THzXyL
+ sdbARr2nVkybNHViBUuyeU295DRL9Kj8toK6IF/eiayCaFARX9Zc+2qW+76XgfUqItSm
+ KRTQ==
+X-Gm-Message-State: AOJu0YxddWMe2m6aQgREiGXD/cJNarVDUWirIAYQ7oh1lkCnS8xcLO+W
+ 8QS8PVm7tpT24RmfyKSRyv9KeVIHDfdElmt6AmZ83l0CKU1wVPelte5rAJVHGqQ=
+X-Google-Smtp-Source: AGHT+IGqQwyo39CO/xsxgDd9/ny7RY8YUGxFJUavJ7ojzTVqrVTU0MmiDYdxOqWP6s3pnLthV/golg==
+X-Received: by 2002:a5d:4392:0:b0:33b:8050:291f with SMTP id
+ i18-20020a5d4392000000b0033b8050291fmr8383359wrq.32.1709121439915; 
+ Wed, 28 Feb 2024 03:57:19 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ b3-20020a5d4b83000000b0033df1f1dabcsm4516862wrt.90.2024.02.28.03.57.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 28 Feb 2024 03:57:16 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 4FD285F92C;
+ Wed, 28 Feb 2024 11:57:04 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Jason Wang <jasowang@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
- Coiby Xu <Coiby.Xu@gmail.com>, 
- slp@redhat.com, Eduardo Habkost <eduardo@habkost.net>,
- Hanna Reitz <hreitz@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>, Raphael Norwitz <raphael@enfabrica.net>, 
- Kevin Wolf <kwolf@redhat.com>, David Hildenbrand <david@redhat.com>,
- stefanha@redhat.com, gmaglione@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 25/29] contrib/plugins: fix imatch
+Date: Wed, 28 Feb 2024 11:56:57 +0000
+Message-Id: <20240228115701.1416107-26-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240228115701.1416107-1-alex.bennee@linaro.org>
+References: <20240228115701.1416107-1-alex.bennee@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,123 +99,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I just noticed that I forgot to add RFC tag and fix Author to match
-SOB in some patches, sorry!
+We can't directly save the ephemeral imatch from argv as that memory
+will get recycled.
 
-Stefano
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20240227144335.1196131-26-alex.bennee@linaro.org>
 
-On Wed, Feb 28, 2024 at 12:48=E2=80=AFPM Stefano Garzarella <sgarzare@redha=
-t.com> wrote:
->
-> The vhost-user protocol is not really Linux-specific, so let's try suppor=
-t
-> QEMU's frontends and backends (including libvhost-user) in any POSIX syst=
-em
-> with this series. The main use case is to be able to use virtio devices t=
-hat
-> we don't have built-in in QEMU (e.g. virtiofsd, vhost-user-vsock, etc.) e=
-ven
-> in non-Linux systems.
->
-> The first 5 patches are more like fixes discovered at runtime on macOS or
-> FreeBSD that could go even independently of this series.
->
-> Patches 6, 7, and 8 enable building of frontends and backends (including
-> libvhost-user) with associated code changes to succeed in compilation.
->
-> The latest patch (9) adds support for the POSIX shm_open() API to create
-> shared memory which is identified by an fd that can be shared with vhost-=
-user
-> backends. This is useful on those systems (like macOS) where we don't hav=
-e
-> memfd_create() or special filesystems like "/dev/shm".
->
-> I put the whole series in RFC because I have some questions especially in
-> patch 6 and 9, but in general any comment/suggestion/test are really welc=
-ome.
->
-> Maybe the first 5 patches can go separately, but I only discovered those
-> problems after testing patches 6 - 9, so I have included them in this ser=
-ies
-> for now. Please let me know if you prefer that I send them separately.
->
-> For now I tested this series using vhost-user-blk and QSD on
-> macOS Sonoma 14.3.1 (aarch64), FreeBSD 14 (x86_64), and Fedora 39 (x86_64=
-)
-> in this way:
->
-> - Start vhost-user-blk or QSD (same commands for all systems)
->
->   vhost-user-blk -s /tmp/vhost.socket \
->     -b Fedora-Cloud-Base-39-1.5.x86_64.raw
->
->   qemu-storage-daemon \
->     --blockdev file,filename=3DFedora-Cloud-Base-39-1.5.x86_64.qcow2,node=
--name=3Dfile \
->     --blockdev qcow2,file=3Dfile,node-name=3Dqcow2 \
->     --export vhost-user-blk,addr.type=3Dunix,addr.path=3D/tmp/vhost.socke=
-t,id=3Dvub,num-queues=3D1,node-name=3Dqcow2,writable=3Don
->
-> - macOS (aarch64): start QEMU (using hvf accelerator)
->
->   qemu-system-aarch64 -smp 2 -cpu host -M virt,accel=3Dhvf,memory-backend=
-=3Dmem \
->     -drive file=3D./build/pc-bios/edk2-aarch64-code.fd,if=3Dpflash,format=
-=3Draw,readonly=3Don \
->     -device virtio-net-device,netdev=3Dnet0 -netdev user,id=3Dnet0 \
->     -device ramfb -device usb-ehci -device usb-kbd \
->     -object memory-backend-file,mem-path=3D"/mem0",shm=3Don,share=3Don,id=
-=3Dmem,size=3D512M \
->     -device vhost-user-blk-pci,num-queues=3D1,disable-legacy=3Don,chardev=
-=3Dchar0 \
->     -chardev socket,id=3Dchar0,path=3D/tmp/vhost.socket
->
-> - FreeBSD (x86_64): start QEMU (no accelerators available)
->
->   qemu-system-x86_64 -smp 2 -M q35,memory-backend=3Dmem \
->     -object memory-backend-file,mem-path=3D"/mem0",shm=3Don,share=3Don,id=
-=3Dmem,size=3D"512M" \
->     -device vhost-user-blk-pci,num-queues=3D1,chardev=3Dchar0 \
->     -chardev socket,id=3Dchar0,path=3D/tmp/vhost.socket
->
-> - Fedora (x86_64): start QEMU (using kvm accelerator)
->
->   qemu-system-x86_64 -smp 2 -M q35,accel=3Dkvm,memory-backend=3Dmem \
->     -object memory-backend-file,mem-path=3D"/mem0",shm=3Don,share=3Don,id=
-=3Dmem,size=3D"512M" \
->     -device vhost-user-blk-pci,num-queues=3D1,chardev=3Dchar0 \
->     -chardev socket,id=3Dchar0,path=3D/tmp/vhost.socket
->
-> Thanks,
-> Stefano
->
-> Stefano Garzarella (9):
->   libvhost-user: set msg.msg_control to NULL when it is empty
->   libvhost-user: fail vu_message_write() if sendmsg() is failing
->   libvhost-user: mask F_INFLIGHT_SHMFD if memfd is not supported
->   vhost-user-server: don't abort if we can't set fd non-blocking
->   contrib/vhost-user-blk: fix bind() using the right size of the address
->   vhost-user: enable frontends on any POSIX system
->   libvhost-user: enable it on any POSIX system
->   contrib/vhost-user-blk: enabled it on any POSIX system
->   hostmem-file: support POSIX shm_open()
->
->  meson.build                               |  5 +-
->  qapi/qom.json                             |  4 ++
->  subprojects/libvhost-user/libvhost-user.h |  2 +-
->  backends/hostmem-file.c                   | 57 ++++++++++++++++-
->  contrib/vhost-user-blk/vhost-user-blk.c   | 23 +++++--
->  hw/net/vhost_net.c                        |  8 ++-
->  subprojects/libvhost-user/libvhost-user.c | 76 ++++++++++++++++++++++-
->  util/vhost-user-server.c                  |  6 +-
->  backends/meson.build                      |  2 +-
->  hw/block/Kconfig                          |  2 +-
->  qemu-options.hx                           | 10 ++-
->  util/meson.build                          |  4 +-
->  12 files changed, 179 insertions(+), 20 deletions(-)
->
-> --
-> 2.43.2
->
+diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
+index 82dc2f584e2..f262e5555eb 100644
+--- a/contrib/plugins/execlog.c
++++ b/contrib/plugins/execlog.c
+@@ -199,7 +199,7 @@ static void parse_insn_match(char *match)
+     if (!imatches) {
+         imatches = g_ptr_array_new();
+     }
+-    g_ptr_array_add(imatches, match);
++    g_ptr_array_add(imatches, g_strdup(match));
+ }
+ 
+ static void parse_vaddr_match(char *match)
+-- 
+2.39.2
 
 
