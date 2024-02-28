@@ -4,75 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3709AC5478C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 11:30:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 234E0C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 11:32:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfI8d-0007Nj-Ec; Wed, 28 Feb 2024 06:30:15 -0500
+	id 1rfIAJ-00089w-9F; Wed, 28 Feb 2024 06:31:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rfI8b-0007NF-Fe
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:30:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rfI8Z-0001Y7-UA
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:30:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709119811;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=kVnO8YXt66aJWVJeRey7Nig2WtBn7GfwwGiTJ7t9jdI=;
- b=N5O8kzCCY3pf+3TdwgJYnSi2eGeSeGTW8C0uSgbvPK+DfsB/2HprzE5RMlxR6Aij79IN0K
- a/dT/YHREMNInHdSABGE5BDJHCdULVj0YO3MpUnyvkDKzFYbE9c5E9F+goDYAdY4n3csZu
- 1lXYHSGxwRCJbGLcXo/AAFT+qBMYbgs=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-93-OrM7u0cFM6eWKNIEoXEXWQ-1; Wed, 28 Feb 2024 06:30:07 -0500
-X-MC-Unique: OrM7u0cFM6eWKNIEoXEXWQ-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4FC5B85CBA3;
- Wed, 28 Feb 2024 11:30:07 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.37])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 7B3E02166AF7;
- Wed, 28 Feb 2024 11:30:06 +0000 (UTC)
-Date: Wed, 28 Feb 2024 11:30:00 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>,
- Yong Huang <yong.huang@smartx.com>, qemu-devel@nongnu.org,
- Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH] qapi: Craft the BlockdevCreateOptionsLUKS comment
-Message-ID: <Zd8ZOHJxhgrmbIWc@redhat.com>
-References: <91c52e03e46ff0a96559b4e7d66ded582b2ec4e1.1708486450.git.yong.huang@smartx.com>
- <874je22u83.fsf@pond.sub.org>
- <CAK9dgmZkLZiT_W0UjB+=EN9_vAK5Qy5XKRMBhHBQ98sRBbiAQw@mail.gmail.com>
- <875xyiz0ho.fsf@pond.sub.org>
- <CAK9dgmZOEqd=EgBjsiZZoK3R+VQRMqSdUrK_WwKHfP7LiWzQMQ@mail.gmail.com>
- <87v8693x7c.fsf@pond.sub.org> <Zd8IQShNrGeXEnLz@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rfIAH-00089P-VD
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:31:58 -0500
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rfI9u-0001v1-8o
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 06:31:55 -0500
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-5131a9b3d5bso700160e87.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 03:31:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709119885; x=1709724685; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=nwrrCNP7m7XWANN8T5JR4dCc1oxKkbG1oGFrIaZYcco=;
+ b=AL9cWXPvrbe9UPOYLLXFudUvo5Le7jDkEzGLfY6ZQDv32i8hW0+JG15XQOLzQXkv94
+ J/umduB/DCZ7X8gG6+w4zfx1QpcBTZqoTCm7cOTq9psD4fdAMZzQNveuD0MGOyZcIJRt
+ b1YiaC2qLYSuPuqkYaoJJ6KjZ4925PMoBnXukLW7DRBg8k7PJhuDWvGjwm2vGtiWdtXO
+ xx0jmoVQsGeJLcU4sBaQjtekWV+egvhdNry/sNBTxVGLQlWkCgFdGIXdZDGVYn0F8GdC
+ rMBy/DJ2jb8R1og8vXPsjIcRLEnGIAdIjCIL32O/Nkvcdi5GnfcqtOHtRgcfmUoRSdGa
+ 2bFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709119885; x=1709724685;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nwrrCNP7m7XWANN8T5JR4dCc1oxKkbG1oGFrIaZYcco=;
+ b=bHeMvaR1WHHSVlri3A0dbDWC6RlKTsMuxvLEgFAcvbWKmv5lbrsoUFPVgFyYlQvpLM
+ oLfebCtcT1MuIoPIWBQbTGBQDR/HQxIuEwVWw/hEyLWgkiZx80bfBzrvFuPKOzZsE2mg
+ H+tTcxcMbhg0DD6rY1qKvmeAKdpAA04dt/6zs8MrCEu/GJySssjyA4El3QmQTlRpPPHH
+ CHS/PmfoLL0FHWZ4hBt3AJQUbw8V4nNvsXhngZXKFGXYWmUqD9bWEZn6U5I6veHpxLc0
+ /BYw7+Ucz8S1ERKvm7HpAuofQlgNBPjyM/oVhpdDY+pXMwTxJeRwsLcnLhkz6EuzLgQK
+ h01w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUiWG5IQ8bqSuFRva3pY/9kiIhXIwGjBteXyv6GZbSOQFpmtbgwsBDHFvWpCZPuNQaWttw2R8lsFF4hMae/FsV5X3umbJ0=
+X-Gm-Message-State: AOJu0YxUacXG4MOiIpEqc6bEtNtu62FnZjHWe6bEmvCyOHMKCI2RfFsM
+ 5K4l1vVWwgjWgaPEv7p43ylYauMFVX2M3XCsTFYezYlmIvaDt2MoITKrylOtzyo=
+X-Google-Smtp-Source: AGHT+IE2wbIs5c5LK5eB315tlCGdqProPWYhyhhw2RwOsfb5DdInipwnqTX0oEP9hHhHs4oo9NdZ4A==
+X-Received: by 2002:a05:6512:1589:b0:512:e061:e35d with SMTP id
+ bp9-20020a056512158900b00512e061e35dmr10231876lfb.53.1709119885289; 
+ Wed, 28 Feb 2024 03:31:25 -0800 (PST)
+Received: from [192.168.169.175] ([92.88.171.236])
+ by smtp.gmail.com with ESMTPSA id
+ ck19-20020a5d5e93000000b0033db9383e70sm14477490wrb.81.2024.02.28.03.31.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 28 Feb 2024 03:31:24 -0800 (PST)
+Message-ID: <ef28a548-6aa6-4948-8f14-f1adc451653a@linaro.org>
+Date: Wed, 28 Feb 2024 12:31:12 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Zd8IQShNrGeXEnLz@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] tests/vm: update openbsd image to 7.4
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Brad Smith <brad@comstyle.com>
+References: <20240226224843.487256-1-alex.bennee@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240226224843.487256-1-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12d.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,30 +95,20 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 28, 2024 at 11:17:37AM +0100, Kevin Wolf wrote:
-> Until now, @size has been mandatory for creating images with every
-> driver. Maybe we should even have put it into BlockdevCreateOptions's
-> base, because without a size, you're not really creating an image.
+On 26/2/24 23:48, Alex Bennée wrote:
+> The old links are dead so even if we have the ISO cached we can't
+> finish the install. Update to the current stable and tweak the install
+> strings.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2192
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   tests/vm/openbsd | 9 +++++----
+>   1 file changed, 5 insertions(+), 4 deletions(-)
 
-NB, @size isn't mandatory for creating images. It isn't required
-when creating qcow2 files with backing stores, as the size is
-acquired from the backing file instead.
-
-$ qemu-img create demo.raw 1g
-Formatting 'demo.raw', fmt=raw size=1073741824
-$ qemu-img create -o backing_file=demo.raw -o backing_fmt=raw -f qcow2 demo.qcow2
-Formatting 'demo.qcow2', fmt=qcow2 cluster_size=65536 extended_l2=off compression_type=zlib size=1073741824 backing_file=demo.raw backing_fmt=raw lazy_refcounts=off refcount_bits=16
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
