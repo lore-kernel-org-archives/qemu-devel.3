@@ -4,71 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82693C5478C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 12:06:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DED67C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 12:07:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfIdw-00049d-Mb; Wed, 28 Feb 2024 07:02:36 -0500
+	id 1rfIie-0000IY-Kf; Wed, 28 Feb 2024 07:07:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1rfIdr-00044E-91; Wed, 28 Feb 2024 07:02:32 -0500
-Received: from zproxy3.enst.fr ([137.194.2.222])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfIhm-0008CC-9T
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 07:06:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1rfIdm-0002zE-KK; Wed, 28 Feb 2024 07:02:30 -0500
-Received: from localhost (localhost [IPv6:::1])
- by zproxy3.enst.fr (Postfix) with ESMTP id 14D46A06ED;
- Wed, 28 Feb 2024 13:02:25 +0100 (CET)
-Received: from zproxy3.enst.fr ([IPv6:::1])
- by localhost (zproxy3.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id hpKzuRUedvMv; Wed, 28 Feb 2024 13:02:24 +0100 (CET)
-Received: from localhost (localhost [IPv6:::1])
- by zproxy3.enst.fr (Postfix) with ESMTP id 77824A0645;
- Wed, 28 Feb 2024 13:02:24 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy3.enst.fr 77824A0645
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1709121744;
- bh=Bcc8HBjuK+e32MtJJBC2ZwkLwi/bcHfcbiq9hbx5Q30=;
- h=From:To:Date:Message-ID:MIME-Version;
- b=p7vhQQ85i1SsQJ9kozIxhppTLeOAl/mCW9iYv5xtUAunNt3+hCCD8r+NdJlmthv3S
- /adhnC28km3j5Io3rTQFh9+gtazPTLG+1pspJZnZi6LLUNA3NqwqwWRCMDTqyaSvyp
- TzqSg6iz2wmoakSgf5N0+qxjvJPrX8cCI5vYkk+o=
-X-Virus-Scanned: amavis at enst.fr
-Received: from zproxy3.enst.fr ([IPv6:::1])
- by localhost (zproxy3.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id x_d-Xy7V8Z8F; Wed, 28 Feb 2024 13:02:24 +0100 (CET)
-Received: from localhost.localdomain (74.0.125.80.rev.sfr.net [80.125.0.74])
- by zproxy3.enst.fr (Postfix) with ESMTPSA id 1E6BEA06DE;
- Wed, 28 Feb 2024 13:02:24 +0100 (CET)
-From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Samuel Tardieu <sam@rfc1149.net>,
- Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Alistair Francis <alistair@alistair23.me>, qemu-arm@nongnu.org,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 5/5] tests/qtest : Add testcase for DM163
-Date: Wed, 28 Feb 2024 13:01:08 +0100
-Message-ID: <20240228120215.277717-6-ines.varhol@telecom-paris.fr>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240228120215.277717-1-ines.varhol@telecom-paris.fr>
-References: <20240228120215.277717-1-ines.varhol@telecom-paris.fr>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfIhj-0004Gl-D3
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 07:06:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709121985;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=BL/54CtAPj7J/HPpNmalyW6JbEk+lwX9pFy6xWP8SLQ=;
+ b=SMBbKOg7V57m/jss4ul0Nso3nh+9JLHIPGIwwcJ92fm2k/HI3UbvrRSXhrpO0c9H3pzCa0
+ s7MlcdAwlw/MAaXNYSWgyZQkcAHb5QMXx8jJPVPXRvlJ6a6VeYDkV9aR6Kx3ZslCCWYuOu
+ hdyfrbjJA4lz2aQt3Sd3MOp/FsDJyOE=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-595-DjgyDVORPia_IA43e4XrIw-1; Wed, 28 Feb 2024 07:06:24 -0500
+X-MC-Unique: DjgyDVORPia_IA43e4XrIw-1
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-787c04e48a7so498842585a.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 04:06:24 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709121984; x=1709726784;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BL/54CtAPj7J/HPpNmalyW6JbEk+lwX9pFy6xWP8SLQ=;
+ b=TQI6qVLJ/OJtd9apHRNVWNCJBf8sYPhENIaR2H7qE2nEMuZGlf5hZbOYnZkHV/CEni
+ OM1H79FXSKt43FsglqLb+GIz/DYCG2FyCdwKGnJVzArP8IX+fel8Re1+a+w2MI7TdSvP
+ 5dDXvtUh0FsUgr280kNoDQZQv961bmXM97kw9nT2Eygza4AS2n1Pnp+U+B51l5TXNjQI
+ m/NdFY4NmCFyeFi9G9vj5qlAZgUjOLRAXP6F8r1iJv4H1pLZQX+EOqYqcIr373D4QyLd
+ 9rmCuHtfzop3bzMUh197p829d1XzHaW3lN9aJbByRSYK7Wp3XcQReMF52AF09zCCd4Kb
+ 2oEw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVhoK79sOEk5EgFShJVicpy4EAKlIWD/dpOjXVwR5vebPemiSNikGlspvSlfjQbnLZ+Ka0DbkhfpZgTNX4jLLeEvLOapOg=
+X-Gm-Message-State: AOJu0YzUekrfUMk4b/kMB9b13vCttG5RATI47fZ1FYK6Wletrbl4khR+
+ FBd4/Bzq3hdd3d3kvWF439im4V6Ee8INpp5A2p/f/Yis/Bd2zXwlQTTUKN9NgnK6NEqHMUZWMKe
+ e5+mElGz9IcA4gRx94u9iK8RoyNbVVf6N6CjTpoCDO45+xRaDj26e
+X-Received: by 2002:a05:620a:1187:b0:787:24a7:78ff with SMTP id
+ b7-20020a05620a118700b0078724a778ffmr5030563qkk.11.1709121984066; 
+ Wed, 28 Feb 2024 04:06:24 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF7bnOdQcduImmYm/ENn04XHMEypibigHQxOnTliB21hwG3sOF6DHAoiTBMm81J/nVxPUUGAQ==
+X-Received: by 2002:a05:620a:1187:b0:787:24a7:78ff with SMTP id
+ b7-20020a05620a118700b0078724a778ffmr5030545qkk.11.1709121983759; 
+ Wed, 28 Feb 2024 04:06:23 -0800 (PST)
+Received: from [10.33.192.181] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ by smtp.gmail.com with ESMTPSA id
+ t10-20020a05620a034a00b00787e11574c5sm1803384qkm.125.2024.02.28.04.06.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 28 Feb 2024 04:06:23 -0800 (PST)
+Message-ID: <54fe3a53-5bb8-4907-94ca-817c3000048d@redhat.com>
+Date: Wed, 28 Feb 2024 13:06:21 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=137.194.2.222;
- envelope-from=ines.varhol@telecom-paris.fr; helo=zproxy3.enst.fr
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/5] Add device DM163 (led driver, matrix colors shield
+ & display)
+Content-Language: en-US
+To: =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair@alistair23.me>, Samuel Tardieu <sam@rfc1149.net>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20240228114555.192175-1-ines.varhol@telecom-paris.fr>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240228114555.192175-1-ines.varhol@telecom-paris.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,255 +151,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-`test_dm163_bank()`
-Checks that the pin "sout" of the DM163 led driver outputs the values
-received on pin "sin" with the expected latency (depending on the bank).
+On 28/02/2024 12.31, Inès Varhol wrote:
+> This device implements the IM120417002 colors shield v1.1 for Arduino
+> (which relies on the DM163 8x3-channel led driving logic) and features
+> a simple display of an 8x8 RGB matrix. This color shield can be plugged
+> on the Arduino board (or the B-L475E-IOT01A board) to drive an 8x8
+> RGB led matrix. This RGB led matrix takes advantage of retinal persistance
+> to seemingly display different colors in each row.
+> 
+> 
+> 
+> I'm stuck on some issues with this implementation :
+> 
+> 1. Tests
+> 
+> TLDR: how can I provide a test or an example?
+> 
+> I've tested the display by running custom executables and
+> comparing to the result on the real board, but I don't
+> know how to test it using a QTest.
+> 
+> `qtest_init_internal` sets `-display none`
+> so there's no way to test the display visually.
+> 
+> There's no `visit_type_*` for arrays so accessing the DM163
+> buffer to check its content is complicated. I could technically
+> access all the elements in the array (returning a different element
+> each time in the getter for example), but that seems sketchy.
 
-`test_dm163_gpio_connection()`
-Check that changes to relevant STM32L4x5 GPIO pins are prpagated to the
-DM163 device.
+I'd suggest to try to take a screenshot via QMP or HMP. If you need a third 
+party binary to get something on the screen, it's maybe best to write an 
+avocado test instead of a qtest. See for example 
+tests/avocado/machine_m68k_nextcube.py - it takes a screenshot and then 
+converts the console messages from it via Tessaract to text and looks for 
+the expected strings there. Alternatively, have a look at 
+tests/avocado/machine_s390_ccw_virtio.py - it boots a Linux in the guest 
+that writes a string into the /dev/fb0 framebuffer, then takes a screendump 
+and then tries to find the string in the file. The latter could maybe also 
+be done via a qtest if you know how to set up the framebuffer without a 
+guest kernel.
 
-Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
----
- tests/qtest/dm163-test.c | 192 +++++++++++++++++++++++++++++++++++++++
- tests/qtest/meson.build  |   5 +
- 2 files changed, 197 insertions(+)
- create mode 100644 tests/qtest/dm163-test.c
-
-diff --git a/tests/qtest/dm163-test.c b/tests/qtest/dm163-test.c
-new file mode 100644
-index 0000000000..6f88ceef44
---- /dev/null
-+++ b/tests/qtest/dm163-test.c
-@@ -0,0 +1,192 @@
-+/*
-+ * QTest testcase for DM163
-+ *
-+ * Copyright (C) 2024 Samuel Tardieu <sam@rfc1149.net>
-+ * Copyright (C) 2024 Arnaud Minier <arnaud.minier@telecom-paris.fr>
-+ * Copyright (C) 2024 In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+
-+#define SIN 8
-+#define DCK 9
-+#define RST_B 10
-+#define LAT_B 11
-+#define SELBK 12
-+#define EN_B 13
-+
-+#define DEVICE_NAME "/machine/dm163"
-+#define GPIO_OUT(name, value) qtest_set_irq_in(qts, DEVICE_NAME, NULL, n=
-ame,   \
-+                                               value)
-+#define GPIO_PULSE(name)                                                =
-       \
-+  do {                                                                  =
-       \
-+    GPIO_OUT(name, 1);                                                  =
-       \
-+    GPIO_OUT(name, 0);                                                  =
-       \
-+  } while (0)
-+
-+
-+static void rise_gpio_pin_dck(QTestState *qts)
-+{
-+    /* Configure output mode for pin PB1 */
-+    qtest_writel(qts, 0x48000400, 0xFFFFFEB7);
-+    /* Write 1 in ODR for PB1 */
-+    qtest_writel(qts, 0x48000414, 0x00000002);
-+}
-+
-+static void lower_gpio_pin_dck(QTestState *qts)
-+{
-+    /* Configure output mode for pin PB1 */
-+    qtest_writel(qts, 0x48000400, 0xFFFFFEB7);
-+    /* Write 0 in ODR for PB1 */
-+    qtest_writel(qts, 0x48000414, 0x00000000);
-+}
-+
-+static void rise_gpio_pin_selbk(QTestState *qts)
-+{
-+    /* Configure output mode for pin PC5 */
-+    qtest_writel(qts, 0x48000800, 0xFFFFF7FF);
-+    /* Write 1 in ODR for PC5 */
-+    qtest_writel(qts, 0x48000814, 0x00000020);
-+}
-+
-+static void lower_gpio_pin_selbk(QTestState *qts)
-+{
-+    /* Configure output mode for pin PC5 */
-+    qtest_writel(qts, 0x48000800, 0xFFFFF7FF);
-+    /* Write 0 in ODR for PC5 */
-+    qtest_writel(qts, 0x48000814, 0x00000000);
-+}
-+
-+static void rise_gpio_pin_lat_b(QTestState *qts)
-+{
-+    /* Configure output mode for pin PC4 */
-+    qtest_writel(qts, 0x48000800, 0xFFFFFDFF);
-+    /* Write 1 in ODR for PC4 */
-+    qtest_writel(qts, 0x48000814, 0x00000010);
-+}
-+
-+static void lower_gpio_pin_lat_b(QTestState *qts)
-+{
-+    /* Configure output mode for pin PC4 */
-+    qtest_writel(qts, 0x48000800, 0xFFFFFDFF);
-+    /* Write 0 in ODR for PC4 */
-+    qtest_writel(qts, 0x48000814, 0x00000000);
-+}
-+
-+static void rise_gpio_pin_rst_b(QTestState *qts)
-+{
-+    /* Configure output mode for pin PC3 */
-+    qtest_writel(qts, 0x48000800, 0xFFFFFF7F);
-+    /* Write 1 in ODR for PC3 */
-+    qtest_writel(qts, 0x48000814, 0x00000008);
-+}
-+
-+static void lower_gpio_pin_rst_b(QTestState *qts)
-+{
-+    /* Configure output mode for pin PC3 */
-+    qtest_writel(qts, 0x48000800, 0xFFFFFF7F);
-+    /* Write 0 in ODR for PC3 */
-+    qtest_writel(qts, 0x48000814, 0x00000000);
-+}
-+
-+static void rise_gpio_pin_sin(QTestState *qts)
-+{
-+    /* Configure output mode for pin PA4 */
-+    qtest_writel(qts, 0x48000000, 0xFFFFFDFF);
-+    /* Write 1 in ODR for PA4 */
-+    qtest_writel(qts, 0x48000014, 0x00000010);
-+}
-+
-+static void lower_gpio_pin_sin(QTestState *qts)
-+{
-+    /* Configure output mode for pin PA4 */
-+    qtest_writel(qts, 0x48000000, 0xFFFFFDFF);
-+    /* Write 0 in ODR for PA4 */
-+    qtest_writel(qts, 0x48000014, 0x00000000);
-+}
-+
-+static void test_dm163_bank(const void *opaque)
-+{
-+    const long bank =3D (uintptr_t) opaque;
-+    const int width =3D bank ? 192 : 144;
-+
-+    QTestState *qts =3D qtest_initf("-M b-l475e-iot01a");
-+    qtest_irq_intercept_out_named(qts, DEVICE_NAME, "sout");
-+    GPIO_OUT(RST_B, 1);
-+    GPIO_OUT(EN_B, 0);
-+    GPIO_OUT(DCK, 0);
-+    GPIO_OUT(SELBK, bank);
-+    GPIO_OUT(LAT_B, 1);
-+
-+    /* Fill bank with zeroes */
-+    GPIO_OUT(SIN, 0);
-+    for (int i =3D 0; i < width; i++) {
-+        GPIO_PULSE(DCK);
-+    }
-+    /* Fill bank with ones, check that we get the previous zeroes */
-+    GPIO_OUT(SIN, 1);
-+    for (int i =3D 0; i < width; i++) {
-+        GPIO_PULSE(DCK);
-+        g_assert(!qtest_get_irq(qts, 0));
-+    }
-+
-+    /* Pulse one more bit in the bank, check that we get a one */
-+    GPIO_PULSE(DCK);
-+    g_assert(qtest_get_irq(qts, 0));
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_dm163_gpio_connection(void)
-+{
-+    QTestState *qts =3D qtest_init("-M b-l475e-iot01a");
-+    qtest_irq_intercept_in(qts, DEVICE_NAME);
-+
-+    g_assert_false(qtest_get_irq(qts, SIN));
-+    g_assert_false(qtest_get_irq(qts, DCK));
-+    g_assert_false(qtest_get_irq(qts, RST_B));
-+    g_assert_false(qtest_get_irq(qts, LAT_B));
-+    g_assert_false(qtest_get_irq(qts, SELBK));
-+
-+    rise_gpio_pin_dck(qts);
-+    g_assert_true(qtest_get_irq(qts, DCK));
-+    lower_gpio_pin_dck(qts);
-+    g_assert_false(qtest_get_irq(qts, DCK));
-+
-+    rise_gpio_pin_lat_b(qts);
-+    g_assert_true(qtest_get_irq(qts, LAT_B));
-+    lower_gpio_pin_lat_b(qts);
-+    g_assert_false(qtest_get_irq(qts, LAT_B));
-+
-+    rise_gpio_pin_selbk(qts);
-+    g_assert_true(qtest_get_irq(qts, SELBK));
-+    lower_gpio_pin_selbk(qts);
-+    g_assert_false(qtest_get_irq(qts, SELBK));
-+
-+    rise_gpio_pin_rst_b(qts);
-+    g_assert_true(qtest_get_irq(qts, RST_B));
-+    lower_gpio_pin_rst_b(qts);
-+    g_assert_false(qtest_get_irq(qts, RST_B));
-+
-+    rise_gpio_pin_sin(qts);
-+    g_assert_true(qtest_get_irq(qts, SIN));
-+    lower_gpio_pin_sin(qts);
-+    g_assert_false(qtest_get_irq(qts, SIN));
-+
-+    g_assert_false(qtest_get_irq(qts, DCK));
-+    g_assert_false(qtest_get_irq(qts, LAT_B));
-+    g_assert_false(qtest_get_irq(qts, SELBK));
-+    g_assert_false(qtest_get_irq(qts, RST_B));
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+    qtest_add_data_func("/dm163/bank0", (void *)0, test_dm163_bank);
-+    qtest_add_data_func("/dm163/bank1", (void *)1, test_dm163_bank);
-+    qtest_add_func("/dm163/gpio_connection", test_dm163_gpio_connection)=
-;
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 2db5b0329e..0cc7406aed 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -205,6 +205,9 @@ qtests_stm32l4x5 =3D \
-    'stm32l4x5_rcc-test',
-    'stm32l4x5_gpio-test']
-=20
-+qtests_dm163 =3D \
-+  ['dm163-test']
-+
- qtests_arm =3D \
-   (config_all_devices.has_key('CONFIG_MPS2') ? ['sse-timer-test'] : []) =
-+ \
-   (config_all_devices.has_key('CONFIG_CMSDK_APB_DUALTIMER') ? ['cmsdk-ap=
-b-dualtimer-test'] : []) + \
-@@ -219,6 +222,8 @@ qtests_arm =3D \
-   (config_all_devices.has_key('CONFIG_VEXPRESS') ? ['test-arm-mptimer'] =
-: []) + \
-   (config_all_devices.has_key('CONFIG_MICROBIT') ? ['microbit-test'] : [=
-]) + \
-   (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') ? qtests_stm32l4x5=
- : []) + \
-+  (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') and
-+   config_all_devices.has_key('CONFIG_DM163')? qtests_dm163 : []) + \
-   ['arm-cpu-features',
-    'boot-serial-test']
-=20
---=20
-2.43.2
+  HTH,
+   Thomas
 
 
