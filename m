@@ -4,98 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9DBBC5478C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 21:19:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1867C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 21:28:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfRK9-0005F5-Py; Wed, 28 Feb 2024 16:18:45 -0500
+	id 1rfRSY-0002e1-7x; Wed, 28 Feb 2024 16:27:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dfaggioli@suse.com>)
- id 1rfRK8-0005Em-03
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 16:18:44 -0500
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dfaggioli@suse.com>)
- id 1rfRK4-0000g7-Rz
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 16:18:43 -0500
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-a4417fa396fso36874066b.1
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 13:18:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=suse.com; s=google; t=1709155118; x=1709759918; darn=nongnu.org;
- h=mime-version:user-agent:organization:autocrypt:date:cc:to:from
- :subject:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=RSOKWB6cPhkB3HS4cZ6MoKlVadLwoUYEvBZ/c6fS3hY=;
- b=SGNzlDgGk5kwiGnIocdptTEVTpaU5VsqmS2jhPcEptmHOo9y1Kwm5u/5wQTqeOltRU
- mRbC+FjR6kms61czyeiWSlxyndmYzd7fmUC9G8N4uh8Rm4OWvBa4u5XhpMeF0r/rKcUf
- oAypqxuuPZxIr0HOKbJZZjQcaJiVb0a1UOWF7AratYzZiL8TeOEE9TbTbsoUFtsL3laH
- 6xE1hFrxMpe9Id2O7X/2iO8f8sEC165tRWkQJDZf/JoXqn6rSRIirFvnJYsnjTUo5KOw
- PIUGqrpNq5NxkHZu/CYZQXAmatQAdSWb+bxraNLLJrWeWAedKP35rsnrUJMmJEWFczZJ
- Ry+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709155118; x=1709759918;
- h=mime-version:user-agent:organization:autocrypt:date:cc:to:from
- :subject:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RSOKWB6cPhkB3HS4cZ6MoKlVadLwoUYEvBZ/c6fS3hY=;
- b=uPS24kySGd/KHfc/zEP8abaaaA+N29bGdDYe9HLfhcfZLKdrsyotYZTYKeQfeiDLUV
- +AkThJBoT7zeuyGUUiCcDriQF2rE7ySnEH2iYYStJ6PtVrpfHDweTf8P/BaFDIsbxbqi
- kJQUUo8SakvYK+DagRFB4EFaH0+p81jVPqfAVn9O/Dri1HsDc72JxtOTYNuAWmyy6ppV
- TOi7yn7YXtpEw+myMuLkB2F6L1iHLf1EH2GfElD5lvOcAlGo4GWZIpAPuIHfLx67V0Uc
- /DZsgdD2ugu8A34iQRTQ1Yt+AjIwufmiFxcT6eV2T8leEDjwu6vG/rIlQm8tmK8y6+Sy
- xMiw==
-X-Gm-Message-State: AOJu0Yy7RMGqHQf0Wq5BINt4EThbY51cYrLP3FKhnijhgvdDC5mGkY2t
- s8hU/5cQ9U8m/XKKoRZxlvCjcHbyAPcQrpXs1giug7wXkPGno4tAP8aUR9RaYk+ZWZAhCFoBm0s
- Ucq0=
-X-Google-Smtp-Source: AGHT+IEy0Mdwo8k+rFF9Ea+ocpKJMll6sw6ja/U9mHq0vniFrluah7mXQMs6kbb9+0F+Cacx4oJBCA==
-X-Received: by 2002:a17:906:495a:b0:a3f:384a:73ab with SMTP id
- f26-20020a170906495a00b00a3f384a73abmr80178ejt.71.1709155117788; 
- Wed, 28 Feb 2024 13:18:37 -0800 (PST)
-Received: from [192.168.0.30] (87.78.186.89.cust.ip.kpnqwest.it.
- [89.186.78.87]) by smtp.gmail.com with ESMTPSA id
- un6-20020a170907cb8600b00a3f0dbdf106sm2237310ejc.105.2024.02.28.13.18.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Feb 2024 13:18:37 -0800 (PST)
-Message-ID: <88e2bebdbfa4a9e29cedcfdb08537f2eb9654ce3.camel@suse.com>
-Subject: No virtio devices in SeaBIOS VMs
-From: Dario Faggioli <dfaggioli@suse.com>
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, Claudio Fontana <cfontana@suse.de>
-Date: Wed, 28 Feb 2024 22:18:23 +0100
-Autocrypt: addr=dfaggioli@suse.com; prefer-encrypt=mutual;
- keydata=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
-Organization: SUSE Software Solutions Italy S.r.l.
-Content-Type: multipart/signed; micalg="pgp-sha256";
- protocol="application/pgp-signature"; boundary="=-Fuvz2/cFA3H4kB+YCBm0"
-User-Agent: Evolution 3.50.4 (by Flathub.org) 
+ (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
+ id 1rfRSV-0002dA-5f
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 16:27:23 -0500
+Received: from mail-dm6nam11on2051.outbound.protection.outlook.com
+ ([40.107.223.51] helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
+ id 1rfRSL-0002E6-Iw
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 16:27:22 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=MJYxWM/CS9dqA50jCfL4bsx9OMNuYxRO5o2788XkoGOhMSRFa9wNiYsR/S4EAfgVAu72Pn64OtNDDQQadckT6XOR/ncA+U3WV6QfRR3leNZVGUabsn8KHimlSTOYT4wKUjViz5sUW/LqiCnBWODGKVebZvKTk4V4pcD4mltqGv4F5cry6sjY0AvTSWLzMk0FJ+UhUaNEfHu3fcIhJHwitGxJwfR7iRg8LyZuoqYcsUBacdujWz8fsZ91vDHmN1szrq2do9SkJrWNOjwqNp1eiJuqMwkT5dIv0hS19/qOLpJnfu2hd8DKDXBOTXZquYhzJUiOhYYvb4O8inPnbftT2w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Dj75PmMLN5A6l2He9dZLS881z0useZOtqJ78v8QVRTs=;
+ b=PxREaTS2fSd86boqWUJL0eC42kdIGmn16wq9EWkhgIRCR7Jo4tkBHFuMGqGVZF1UYEXT/z2kEj2e8vK4rsDOM0k0NflixBKqY1mDRI+/km90DanafXViKjkyeixROhgALQGg08VSILKYngsjcF9UEfOSds0a/NhWUC8CcvTmn1Vh12Bx5Rg/N0787UMHZlWg3VdWfrN6hkR4YN/cBuWR/CWMVS6qbx7s3j750BQEXBmnL6RdrpsHr3cAtiuV2f/5LWA3Po0rTYWe9vj35JVpae6HRDUlQZG7q2dm0uN5nI3SxYAEPoFDEutE+5Eo31hWB7AYiveFXAq121dmCvwMUA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Dj75PmMLN5A6l2He9dZLS881z0useZOtqJ78v8QVRTs=;
+ b=W/6n1Ujf9V/2mlth7mF71g5/+i7tCdOfhAPIYj2gdPf04stULiIm5C+cfL2HY7/VzKHFbRkuGlZH+r1AVz6CvX9aBJ++SU/yn5t2KeUO3cjLkhQ/ChjcAiKAAOk8QJ9lvmOwM3sEAx+tcVVCG+t4FqeC01rW2otoSXwotP4VPvw=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from MW3PR12MB4553.namprd12.prod.outlook.com (2603:10b6:303:2c::19)
+ by CH3PR12MB9217.namprd12.prod.outlook.com (2603:10b6:610:195::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.34; Wed, 28 Feb
+ 2024 21:22:07 +0000
+Received: from MW3PR12MB4553.namprd12.prod.outlook.com
+ ([fe80::b49d:bb81:38b6:ce54]) by MW3PR12MB4553.namprd12.prod.outlook.com
+ ([fe80::b49d:bb81:38b6:ce54%4]) with mapi id 15.20.7316.039; Wed, 28 Feb 2024
+ 21:22:07 +0000
+Message-ID: <3ab53ea9-be77-4ee7-9247-d89c0ec62346@amd.com>
+Date: Wed, 28 Feb 2024 15:22:03 -0600
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 18/21] hw/i386/pc: Support smp.modules for x86 PC
+ machine
+Content-Language: en-US
+To: Zhao Liu <zhao1.liu@linux.intel.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Zhuocheng Ding <zhuocheng.ding@intel.com>, Yongwei Ma
+ <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
+References: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
+ <20240227103231.1556302-19-zhao1.liu@linux.intel.com>
+From: "Moger, Babu" <babu.moger@amd.com>
+In-Reply-To: <20240227103231.1556302-19-zhao1.liu@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: DM5PR07CA0092.namprd07.prod.outlook.com
+ (2603:10b6:4:ae::21) To MW3PR12MB4553.namprd12.prod.outlook.com
+ (2603:10b6:303:2c::19)
 MIME-Version: 1.0
-Received-SPF: permerror client-ip=2a00:1450:4864:20::632;
- envelope-from=dfaggioli@suse.com; helo=mail-ej1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MW3PR12MB4553:EE_|CH3PR12MB9217:EE_
+X-MS-Office365-Filtering-Correlation-Id: e9ca65e5-003f-4ce4-70ce-08dc38a35111
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: eQCzzp3EtMzcFaeJpkf2zjcUAUHfN8Irc4Ccpemc39Wmo8b4mSuge352qkl25C8zLeee+sX70B1oNrXgNpHIlBT9IoqDKQAKWyo368OayQf2cOyXj90AqQikOfcY+aj2HvBo1K7xG7/xpsvBvD/qm4i2yNbsAWxI6dI+NWrJSVHZoPFjk3An6tnaO3qo2Lp3NdOF7Kj2nc6PXYZ31EvsBof+AeIh+MFfzggLJSBJiT0wyiaTZL0XjRDiR9m8wloUVmEVBaNN+vBOxi+xJS5zJvtjJfuRjRYh0ppTwwk04ZAfaVh8QCsiBU/r2TSQh8iD0dwuyqJMMyicdlyFMtJh5sqwK9NJnUIyidwdsJzgn6pqMoP36ihVcXS1J/ZRbSPFEZcQpCkxotfJDhd0be5KWNuGgm9yTLdHQT5diz241fx7zhJJLRwItv0fcmdDmiTrhETtNeo1dnSgph59ZfZjg+t0NKdQ0X8gAlAJM0nCkDJ8jTsY7rkxDY/Yprk8kgM0Krw3hCnrDAQ7RmcOqymlH1Jm8bpZTtzJzbVQsEcLay7I5qwt47hMWKgRDfPbGEJYEdClCSr/i7SoQ6hRBkmeLDh8sglAH5t1keiBPZ4CWDIsG6rocEUCRkwNSQwRmsYVpY6PeOspeE4xqR/W09oSNlOjeyUZ6aefKV/xQpUM1xa6J0GDGcfatGcOH0qdfnscA+1xnHDN4RBY8G+7g3yV+g==
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:MW3PR12MB4553.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(921011); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?S0NRU0VYMlZDSzVQcXA3azhGY1BscFROdk8ycnd6cVd0enppZWsyYmRwRVBC?=
+ =?utf-8?B?Wlp0WGtzYzBEWG5Zb2F6K01tMitnWmdwR1ZjUUJmZWp4M0xSVVN6eng0d3Ny?=
+ =?utf-8?B?ejAva1VFM1U1bCt1Tm05UGpVSzhGWXhFU0NnS2ZsYzJQb3A2bVRRZ2hNTFBj?=
+ =?utf-8?B?c1RWRm5LTGhnU1IwckVKUDBVZE45OFhyMnpDenpSbTgxWThiRENhblhCMVpP?=
+ =?utf-8?B?dzEvTW5tYkdLMjcvdFN4WlJNOE9ZQXBWem1rdDVaKzdvL0NvZ1E4bDV4bFRU?=
+ =?utf-8?B?VFJPMFVrNUhXK0xiQ2F6QWI3Qng5NzB0RFZ2QktpeVduc2s0T0ROam9qbTdh?=
+ =?utf-8?B?VnlOcnIzWXFyUnY3VDQxRFQ2Z2dMSnZhakVTM3RQYU80VDZXOS8wZEFuUmds?=
+ =?utf-8?B?K3hPRjhWWTV1UU1iMmt1SFRrQjA1Nkd0T2NGQjB3a1V1Zms1ZU9QT2RzcDI1?=
+ =?utf-8?B?WmpLeXp0cDY5L3Uvcyt2VlhyVFVEeVh6SU9ZMTNGQmU5SUNGMG9tVVdjVDJJ?=
+ =?utf-8?B?a3h6b2hCYytLUFZtTWRUbG1MMzIzU0tvV1YvQ2huelNQNmgxWlZPamp2Y1Zx?=
+ =?utf-8?B?RzVyTHJNT3VMdCtsVkVsVjNUMlZ2dkxmd1ZHWFM1d3hMdHAvdERLTDYwYUkw?=
+ =?utf-8?B?MS9jSjFMemJUdzJIT3ZrNmJML2hIZUR4KzdQS0NESTlId1BkUTBrRDQ4UGs3?=
+ =?utf-8?B?YmNvWDNJTVFjZEdJelJGdzJqUDVWaWRZdlBwRVRLWllrQitSQnRtMEVpUG02?=
+ =?utf-8?B?RlJmRi8yZmVyNURSNWE2TzdCQzlVdnpHRjRRMmdickVjY21hRUtLZWdFbzNz?=
+ =?utf-8?B?Y0xDVGtERlY2ekdPK0xoOTZRQnVqTzAvSEM1VHlIVTljanlUZDR4SjlmWTBR?=
+ =?utf-8?B?dE9tUXFaenBLZW9RTWkrY3lCb0l0dWlmQkFwQUFFaFVZeHdhYTdPZGFyQWpT?=
+ =?utf-8?B?LzlraGNxYjJ5dFNTK092Z3JUTnNyajc5SFZ0d1lqRXhqc0N0T1VldFhGU2Q3?=
+ =?utf-8?B?elJiQmFOWUd2Z0EvVlRLck1DUlNrTnAweTRlRXVqa1lUZ1V1YzZocFpKci92?=
+ =?utf-8?B?eTQ3Um5TOXQ0N0Q2YkNjbTNjemxKWkk1S2pxRzJUZDVvN0o3cW13anF2N1V4?=
+ =?utf-8?B?OFRuV0J6dFFGaEhNTWhGVXFSVGpRS2FyV0lwNUxBL0FJZEhVYnVYeDQyUUVi?=
+ =?utf-8?B?S01DU09rMk5seFdZU0tuSTYvZklwQVo1Y0ZFYURYZkFTM3A3ZjNkNDEwRzRU?=
+ =?utf-8?B?d2k4NUdwaVJBWFQybXFRclJQNC9RazRaN1A3ZElzdmJwMGYyMW5YTHFJSURq?=
+ =?utf-8?B?eFppNmJmRDRLMW1hVlY4SWFleWZqa0lQS28xeHNXb3JDOTlYdGZxWVVuZTBu?=
+ =?utf-8?B?eUdBWkhoSTRPazRFdjNsK0tJOTZTQURTSmphb2hxMTJ5VFlQM0dTTGk3aGpp?=
+ =?utf-8?B?NVNXcEh5aFRrSEE3SDVUNGJOcEQ5OUo5NzdFeVFFQ0NYWUlVTVJOTnlWTlE3?=
+ =?utf-8?B?akxsVjloYi9Od3B5cGJHQ2lTd2V5RWloa3UrY3U2VU9kMGFsckRBanFzZ05R?=
+ =?utf-8?B?ZVBzb2VSdWtEWjdnb1RIMHdlRWE1YjNQbE80cFdMZ29BbjhQT1BWcktmalpV?=
+ =?utf-8?B?RWdkY1o5YzFPRk1BZTN5RzBFVWFLbWovOTNONE5aZ09zeWlUK1NQYXU2R2Jx?=
+ =?utf-8?B?Ukg4RmI4bWVaV3d2U3RrVXZXanJXdW5ENjlzVmI3TU5tcW40NXpPbzcyK0xi?=
+ =?utf-8?B?SjZDS3kzdEhPQVpIeUY1RmlWcVByUUFaR3FkRE5lcjVEN3RuOWxMOURpKzRM?=
+ =?utf-8?B?ZGNIUjVnQmh4OEs5b2wrR0p1Y3dzOHZaU1lsbWxJNWhkaVdJZUpHSjFROWpx?=
+ =?utf-8?B?RnppejFNeU53b01uSjBEVlgzWkxBMW1CN0d0dnF0eS9Gd0dIV0pUUzlwRkxl?=
+ =?utf-8?B?eXhlTm13aXl3SmZsNElmSGtBdk0reHE1VlFlZW1ra1ExU0o5UldKMlI5NWdD?=
+ =?utf-8?B?b0NHMllpN09LWUtPdS9YWStkVG9EQUJrNDc2elNlem9ucVRRYkRlY0l4cHZw?=
+ =?utf-8?B?SWJwRjlHdjgvSUhkNlI1dDFlUytURjh5WkdXV3lLQTVUTFU3K3R4UGZkcWpn?=
+ =?utf-8?Q?4Boo=3D?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e9ca65e5-003f-4ce4-70ce-08dc38a35111
+X-MS-Exchange-CrossTenant-AuthSource: MW3PR12MB4553.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Feb 2024 21:22:07.3634 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: f4fF4gN96j4xNOCo2bWrzYxchvLxs0rqyw5ddebghqSDt0JdhvWUSX1TZe1Zwt2U
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9217
+Received-SPF: softfail client-ip=40.107.223.51;
+ envelope-from=Babu.Moger@amd.com;
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,90 +155,111 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: babu.moger@amd.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Zhao,
 
---=-Fuvz2/cFA3H4kB+YCBm0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 2/27/24 04:32, Zhao Liu wrote:
+> From: Zhao Liu <zhao1.liu@intel.com>
+> 
+> As module-level topology support is added to X86CPU, now we can enable
+> the support for the modules parameter on PC machines. With this support,
+> we can define a 5-level x86 CPU topology with "-smp":
+> 
+> -smp cpus=*,maxcpus=*,sockets=*,dies=*,modules=*,cores=*,threads=*.
+> 
+> Additionally, add the 5-level topology example in description of "-smp".
+> 
+> Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+> Co-developed-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
+> Signed-off-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+> Changes since v8:
+>  * Add missing "modules" parameter in -smp example.
+> 
+> Changes since v7:
+>  * Supported modules instead of clusters for PC.
+>  * Dropped Michael/Babu/Yanan's ACKed/Tested/Reviewed tags since the
+>    code change.
+>  * Re-added Yongwei's Tested tag For his re-testing.
+> ---
+>  hw/i386/pc.c    |  1 +
+>  qemu-options.hx | 18 ++++++++++--------
+>  2 files changed, 11 insertions(+), 8 deletions(-)
+> 
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index f8eb684a4926..b270a66605fc 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -1830,6 +1830,7 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
+>      mc->default_cpu_type = TARGET_DEFAULT_CPU_TYPE;
+>      mc->nvdimm_supported = true;
+>      mc->smp_props.dies_supported = true;
+> +    mc->smp_props.modules_supported = true;
+>      mc->default_ram_id = "pc.ram";
+>      pcmc->default_smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_64;
+>  
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index 9be1e5817c7d..b5784fda32cb 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -281,7 +281,8 @@ ERST
+>  
+>  DEF("smp", HAS_ARG, QEMU_OPTION_smp,
+>      "-smp [[cpus=]n][,maxcpus=maxcpus][,drawers=drawers][,books=books][,sockets=sockets]\n"
+> -    "               [,dies=dies][,clusters=clusters][,cores=cores][,threads=threads]\n"
+> +    "               [,dies=dies][,clusters=clusters][,modules=modules][,cores=cores]\n"
+> +    "               [,threads=threads]\n"
+>      "                set the number of initial CPUs to 'n' [default=1]\n"
+>      "                maxcpus= maximum number of total CPUs, including\n"
+>      "                offline CPUs for hotplug, etc\n"
+> @@ -290,7 +291,8 @@ DEF("smp", HAS_ARG, QEMU_OPTION_smp,
+>      "                sockets= number of sockets in one book\n"
+>      "                dies= number of dies in one socket\n"
+>      "                clusters= number of clusters in one die\n"
+> -    "                cores= number of cores in one cluster\n"
+> +    "                modules= number of modules in one cluster\n"
+> +    "                cores= number of cores in one module\n"
+>      "                threads= number of threads in one core\n"
+>      "Note: Different machines may have different subsets of the CPU topology\n"
+>      "      parameters supported, so the actual meaning of the supported parameters\n"
+> @@ -306,7 +308,7 @@ DEF("smp", HAS_ARG, QEMU_OPTION_smp,
+>      "      must be set as 1 in the purpose of correct parsing.\n",
+>      QEMU_ARCH_ALL)
+>  SRST
+> -``-smp [[cpus=]n][,maxcpus=maxcpus][,sockets=sockets][,dies=dies][,clusters=clusters][,cores=cores][,threads=threads]``
+> +``-smp [[cpus=]n][,maxcpus=maxcpus][,drawers=drawers][,books=books][,sockets=sockets][,dies=dies][,clusters=clusters][,modules=modules][,cores=cores][,threads=threads]``
 
-Hello everyone,
+You have added drawers, books here. Were they missing before?
 
-With QEMU 8.2, guests that:
- - use SeaBIOS
- - use something different than "-cpu host" OR don't use "host-phys-
-bits=3Don"
- - have more than 2815 MB of RAM
+>      Simulate a SMP system with '\ ``n``\ ' CPUs initially present on
+>      the machine type board. On boards supporting CPU hotplug, the optional
+>      '\ ``maxcpus``\ ' parameter can be set to enable further CPUs to be
+> @@ -345,14 +347,14 @@ SRST
+>          -smp 8,sockets=2,cores=2,threads=2,maxcpus=8
+>  
+>      The following sub-option defines a CPU topology hierarchy (2 sockets
+> -    totally on the machine, 2 dies per socket, 2 cores per die, 2 threads
+> -    per core) for PC machines which support sockets/dies/cores/threads.
+> -    Some members of the option can be omitted but their values will be
+> -    automatically computed:
+> +    totally on the machine, 2 dies per socket, 2 modules per die, 2 cores per
+> +    module, 2 threads per core) for PC machines which support sockets/dies
+> +    /modules/cores/threads. Some members of the option can be omitted but
+> +    their values will be automatically computed:
+>  
+>      ::
+>  
+> -        -smp 16,sockets=2,dies=2,cores=2,threads=2,maxcpus=16
+> +        -smp 32,sockets=2,dies=2,modules=2,cores=2,threads=2,maxcpus=32
+>  
+>      The following sub-option defines a CPU topology hierarchy (2 sockets
+>      totally on the machine, 2 clusters per socket, 2 cores per cluster,
 
-have problems with their virtio devices and, hence, malfunction in
-various ways (e.g., if they're using a virtio disk, they don't find it,
-and the VM does not boot).
-
-This broke all of a sudden, as soon as we updated QEMU to 8.2.0 in
-openSUSE, and we got some bugreports about it. E.g., this one [1]
-includes some logs and info, but I can provide more, if helpful.
-
-I did try master (instead of 8.2, although it was master as of last
-week), but the problem was still there.
-
-I've then bisected it to SeaBIOS commit:
-96a8d130a8c2e908e357ce62cd713f2cc0b0a2eb ("be less conservative with
-the 64bit pci io window"). In fact, falling back to an earlier SeaBIOS
-version, before that commit, or even just reverting it [1], solves the
-issue.
-
-UEFI guests seem not to be affected in any way, no matter amount of RAM
-or CPU model (well, of course, since it's a SeaBIOS commit! :-D What I
-mean is that there seems to be nothing in edk2 that induces the same
-behavior).
-
-A way of working this around (beside switching to UEFI or to cpu=3Dhost)
-is to turn on host-phys-bits, e.g., with '<maxphysaddr
-mode=3D"passthrough"/>' in the XML.
-
-It is, however, a bit impractical to have to do this for all the VMs
-that one may have... Especially if they're a lot! :-)
-
-I know that there have been issues and discussions (and they were also
-related to virtio, I think) about these changes already. I don't know
-if it's the same or a related problem but is there a way to avoid
-having to ask people to change all their VMs' config?
-
-Thanks and Regards,
-Dario
-
-[1] https://bugzilla.suse.com/show_bug.cgi?id=3D1219977
-[2] well, I actually reverted a6ed6b701f0a57db0569ab98b0661c12a6ec3ff8
-too, for convenience
---=20
-Dario Faggioli, Ph.D
-http://about.me/dario.faggioli
-Virtualization Software Engineer
-SUSE Labs, SUSE https://www.suse.com/
--------------------------------------------------------------------
-<<This happens because _I_ choose it to happen!>> (Raistlin Majere)
-
---=-Fuvz2/cFA3H4kB+YCBm0
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEES5ssOj3Vhr0WPnOLFkJ4iaW4c+4FAmXfox8ACgkQFkJ4iaW4
-c+6QIhAApPHN7/ZpeBfmPQTvzBQvyFVPdYXNRyX1fwwA4AMpo3Sy+Wy2QGx/V7Iy
-ETVm68JFOkxLsU4Sb4iesoqLNrj/xSwC0Hs92eg90IuJ6NWvx+YHLkdZYJuLadIJ
-W0ffiBmhuQw61Cq02vpIceB/Qm4J3sXPfAWyhcW/QFY3iyYiBm0vfc5Ncfo1GXj7
-fJWnJXvbSMxGDsM9g0ebxi0Mv2tSyGj9xsoVxwHSNDjXFHwLpoUow+1YsJ15a7XJ
-qO5+KjhFwMADylRzjOoUXA1768gjZayx3VGQ5ylQZFOVV/gLwcXHTBkJrKdc6sf6
-Qidb16Z0+KXg8VvCn/MAJ+mZyBoYnzQpWUc/r6PUxHXasny/3JTWbD2HHKyrlgtX
-87ukT6rreqAPMQ7D0eGsoqZJhzZBA5ODMsOwfa9N3OsLr5UdYqw7/wJijbg97/oK
-gnt2xKJdub+TLdKcgWqiJPLcimIJLwgJx9Lk4wE0xZRYLLj7uy1RMGqtBFqdpzQi
-/LW7nIY2J/lp9yba1LBxPjkxzP8vTZ0+s3AvGd+WUeqiDqr07oZDC4WlybjazMTi
-om8fzPwj2P2aLl23Kn0U1kk1SvBptj1Jwfcou39MbhYnbeWNJKVDkYSQZf63sJo9
-U/s3gME+WeroRUH8z0GNDV2tQrvFGFiWKb87ubq32fN4gHrHXow=
-=LbkX
------END PGP SIGNATURE-----
-
---=-Fuvz2/cFA3H4kB+YCBm0--
+-- 
+Thanks
+Babu Moger
 
