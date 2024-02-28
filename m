@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7D98C47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 05:17:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 677E0C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 05:19:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfCHy-0008N6-36; Wed, 28 Feb 2024 00:15:30 -0500
+	id 1rfCJz-0002iW-B0; Wed, 28 Feb 2024 00:17:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfCHa-0007vO-PZ
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 00:15:08 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfCJN-0001Os-2U
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 00:17:03 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfCHW-0006fs-ML
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 00:15:05 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfCJF-0007W5-Rh
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 00:16:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709097301;
+ s=mimecast20190719; t=1709097409;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=J1Vi2VYmdQgFvbilKpbKfSDnUAxZu1Rt48EmQaB8wVw=;
- b=YVjA0/X91jOzwgGUPqOH2EjzpBUSi2zg/U6rUFBIvd9RP4DrF5CYLT/yhA04MV72YdRMST
- 6u4tecUULGhauinXXI8veG73e694aODaQeX4Fd49Voa69avTA1KVuBbpbp9HLcdciKg5T7
- dNJt4NB0+pGjiXbyG5G96nC1VGfpbbQ=
+ bh=SP3OexboYkgrsNQ0WmIkQllrjA/g1P+GKoEKbQpmMiw=;
+ b=iBslPpQX+ZR2Oi2n0nt16ZgQ/mT+b0VpmXrLTd+8tjT+KK53ZAzvgQvlwC/Y/4ehicHCWj
+ dv0YcSxZZ7kQ67o8Bd0PVqtVAy1zs9S95ZqajhhOk8mYx10MBCUulNbYpX0fET73mjDxMg
+ QBHnt8gTqV8mciVwjPvTDZ7d5/k+2N8=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-467-Y0Y3uIZxOCyGVOoMa7C-wg-1; Wed, 28 Feb 2024 00:14:58 -0500
-X-MC-Unique: Y0Y3uIZxOCyGVOoMa7C-wg-1
+ us-mta-613-X9QrUcU-MAmsnq4tb49NFA-1; Wed, 28 Feb 2024 00:16:45 -0500
+X-MC-Unique: X9QrUcU-MAmsnq4tb49NFA-1
 Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
  [10.11.54.7])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 177C5811E79;
- Wed, 28 Feb 2024 05:14:58 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 393CB185A784;
+ Wed, 28 Feb 2024 05:16:45 +0000 (UTC)
 Received: from x1n.redhat.com (unknown [10.72.116.12])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 7F01F1C060B1;
- Wed, 28 Feb 2024 05:14:49 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 1D1BD1C060AF;
+ Wed, 28 Feb 2024 05:16:35 +0000 (UTC)
 From: peterx@redhat.com
 To: Peter Maydell <peter.maydell@linaro.org>,
 	qemu-devel@nongnu.org
@@ -54,10 +54,11 @@ Cc: David Hildenbrand <david@redhat.com>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Jason Wang <jasowang@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>, Peter Xu <peterx@redhat.com>
-Subject: [PULL 10/25] migration/multifd: Drop unnecessary helper to destroy IOC
-Date: Wed, 28 Feb 2024 13:13:00 +0800
-Message-ID: <20240228051315.400759-11-peterx@redhat.com>
+ Alex Williamson <alex.williamson@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PULL 21/25] migration: update cpr-reboot description
+Date: Wed, 28 Feb 2024 13:13:11 +0800
+Message-ID: <20240228051315.400759-22-peterx@redhat.com>
 In-Reply-To: <20240228051315.400759-1-peterx@redhat.com>
 References: <20240228051315.400759-1-peterx@redhat.com>
 MIME-Version: 1.0
@@ -87,74 +88,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+From: Steve Sistare <steven.sistare@oracle.com>
 
-Both socket_send_channel_destroy() and multifd_send_channel_destroy() are
-unnecessary wrappers to destroy an IOC, as the only thing to do is to
-release the final IOC reference.  We have plenty of code that destroys an
-IOC using direct unref() already; keep that style.
+Clarify qapi for cpr-reboot migration mode, and add vfio support.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20240222095301.171137-6-peterx@redhat.com
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Link: https://lore.kernel.org/r/1708622920-68779-14-git-send-email-steven.sistare@oracle.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/socket.h  | 1 -
- migration/multifd.c | 7 +------
- migration/socket.c  | 7 -------
- 3 files changed, 1 insertion(+), 14 deletions(-)
+ qapi/migration.json | 35 ++++++++++++++++++++++-------------
+ 1 file changed, 22 insertions(+), 13 deletions(-)
 
-diff --git a/migration/socket.h b/migration/socket.h
-index 5f52eddd4c..46c233ecd2 100644
---- a/migration/socket.h
-+++ b/migration/socket.h
-@@ -23,7 +23,6 @@
- 
- void socket_send_channel_create(QIOTaskFunc f, void *data);
- QIOChannel *socket_send_channel_create_sync(Error **errp);
--int socket_send_channel_destroy(QIOChannel *send);
- 
- void socket_start_incoming_migration(SocketAddress *saddr, Error **errp);
- 
-diff --git a/migration/multifd.c b/migration/multifd.c
-index fa33fd98b4..6c07f19af1 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -659,16 +659,11 @@ static void multifd_send_terminate_threads(void)
-     }
- }
- 
--static int multifd_send_channel_destroy(QIOChannel *send)
--{
--    return socket_send_channel_destroy(send);
--}
--
- static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
- {
-     if (p->c) {
-         migration_ioc_unregister_yank(p->c);
--        multifd_send_channel_destroy(p->c);
-+        object_unref(OBJECT(p->c));
-         p->c = NULL;
-     }
-     qemu_sem_destroy(&p->sem);
-diff --git a/migration/socket.c b/migration/socket.c
-index 3184c7c3c1..9ab89b1e08 100644
---- a/migration/socket.c
-+++ b/migration/socket.c
-@@ -60,13 +60,6 @@ QIOChannel *socket_send_channel_create_sync(Error **errp)
-     return QIO_CHANNEL(sioc);
- }
- 
--int socket_send_channel_destroy(QIOChannel *send)
--{
--    /* Remove channel */
--    object_unref(OBJECT(send));
--    return 0;
--}
--
- struct SocketConnectData {
-     MigrationState *s;
-     char *hostname;
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 7303e57e8e..bee5e71fe3 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -636,19 +636,28 @@
+ #
+ # @normal: the original form of migration. (since 8.2)
+ #
+-# @cpr-reboot: The migrate command saves state to a file, allowing one to
+-#              quit qemu, reboot to an updated kernel, and restart an updated
+-#              version of qemu.  The caller must specify a migration URI
+-#              that writes to and reads from a file.  Unlike normal mode,
+-#              the use of certain local storage options does not block the
+-#              migration, but the caller must not modify guest block devices
+-#              between the quit and restart.  To avoid saving guest RAM to the
+-#              file, the memory backend must be shared, and the @x-ignore-shared
+-#              migration capability must be set.  Guest RAM must be non-volatile
+-#              across reboot, such as by backing it with a dax device, but this
+-#              is not enforced.  The restarted qemu arguments must match those
+-#              used to initially start qemu, plus the -incoming option.
+-#              (since 8.2)
++# @cpr-reboot: The migrate command stops the VM and saves state to the URI.
++#     After quitting qemu, the user resumes by running qemu -incoming.
++#
++#     This mode allows the user to quit qemu, and restart an updated version
++#     of qemu.  The user may even update and reboot the OS before restarting,
++#     as long as the URI persists across a reboot.
++#
++#     Unlike normal mode, the use of certain local storage options does not
++#     block the migration, but the user must not modify guest block devices
++#     between the quit and restart.
++#
++#     This mode supports vfio devices provided the user first puts the guest
++#     in the suspended runstate, such as by issuing guest-suspend-ram to the
++#     qemu guest agent.
++#
++#     Best performance is achieved when the memory backend is shared and the
++#     @x-ignore-shared migration capability is set, but this is not required.
++#     Further, if the user reboots before restarting such a configuration, the
++#     shared backend must be be non-volatile across reboot, such as by backing
++#     it with a dax device.
++#
++#     (since 8.2)
+ ##
+ { 'enum': 'MigMode',
+   'data': [ 'normal', 'cpr-reboot' ] }
 -- 
 2.43.0
 
