@@ -4,61 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB3A3C5478C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 14:17:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D78CEC5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 14:19:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfKim-0003y4-TZ; Wed, 28 Feb 2024 09:15:45 -0500
+	id 1rfKmJ-0001ND-S8; Wed, 28 Feb 2024 09:19:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rfKic-0003qO-N1; Wed, 28 Feb 2024 09:15:38 -0500
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1rfKmI-0001MP-G9
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 09:19:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rfKiV-0002Gp-IC; Wed, 28 Feb 2024 09:15:34 -0500
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c18:486:0:640:cf34:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 0B2426090C;
- Wed, 28 Feb 2024 17:15:21 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:a522::1:14])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 4FaAWa1Of0U0-wtWc0lXY; Wed, 28 Feb 2024 17:15:20 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1709129720;
- bh=Dwj8LSWlSbfVFEAeaG2oeScyzQx6/lTEouwrjgOLpHE=;
- h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=on5o3PXLOy8deJvJ/BeXROXbjd/nFdGjzDNMW+mldrWSWGNQIvLTJJAQ/yze9h0+x
- WyEJIcCgIjY+8vPeZb/PYQ76GlKlw08JWZssCbNfiWGlNa873A0hHD9rto7LM2qgfX
- Iz5uKkeguGi3kKOJM8LCK2UccaHJwgFm5kY9WW44=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, eblake@redhat.com,
- xiechanglong.d@gmail.com, wencongyang2@huawei.com, hreitz@redhat.com,
- kwolf@redhat.com, vsementsov@yandex-team.ru, jsnow@redhat.com,
- f.ebner@proxmox.com, den@virtuozzo.com, alexander.ivanov@virtuozzo.com
-Subject: [PATCH v3 4/5] qapi: blockdev-backup: add discard-source parameter
-Date: Wed, 28 Feb 2024 17:15:00 +0300
-Message-Id: <20240228141501.455989-5-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240228141501.455989-1-vsementsov@yandex-team.ru>
-References: <20240228141501.455989-1-vsementsov@yandex-team.ru>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1rfKm5-0002rs-LM
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 09:19:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709129947;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=T9gsHcaIXWgebE1TFLUlGT0eDuaJ1smlcNOq4J3sI5w=;
+ b=Pz5zKwZPo5EHse2nbPQ9j4wbm6+xZaDdx7m1trHb3LP2minga51LK2Vy0TkpVflx+0crGz
+ yU6JRF5TeZ3J+jG4ktz7z7XQHqmRw8l8o09wvI+pTz5Xabn9v5Jq/YR3kKxq6Lfv6aHmOy
+ 1W+R/IhOTpdXJX9daXAR+jRHTN37qoo=
+Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
+ [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-128-B1Pk6NNcPw6obibdKgUGQA-1; Wed, 28 Feb 2024 09:19:05 -0500
+X-MC-Unique: B1Pk6NNcPw6obibdKgUGQA-1
+Received: by mail-io1-f70.google.com with SMTP id
+ ca18e2360f4ac-7c7ee7fa1caso131084739f.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 06:19:05 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709129945; x=1709734745;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=T9gsHcaIXWgebE1TFLUlGT0eDuaJ1smlcNOq4J3sI5w=;
+ b=vZ8bp5kQHvwlFkosQKNXURowEPJFAqZkVx8ChnUQyXt11vRly1P4ZpECq5VQqFqTaf
+ n4C+fXMKT1wYQcsTbU6OUV5V7a3XlYyiitFs/1/juWrUlr7KEmOC218petMrQsUGWeRR
+ 6guvfqsXgT6R2pZn7UrS6fmur+vusIgQiB3U1l2s6fWYJuwnBgFaUI9d39EyEfxn1ayi
+ bi56Ajmohk8f5fM80XTZzRVelu3U3uWkTWLqrEW/6gT6AhdFdM9RDNU2Qb3P9vjUfvFY
+ TamDO8tiAeUpBJkFoMwKi+QYa4PlDCF3pO+lLcy34r30YSMKks9JrPULT7+/kay36gwb
+ 0AcA==
+X-Gm-Message-State: AOJu0Yx2rw78ptYaZ5QQg5tdj/KQWR1eztUnBB+iuxmDO0YAcw/mclO/
+ RHWzlmsdkTZUeMLTjlY7xIBKxngEcwWiTX1uqeb6GzaEp1fxXb6RyVdxw6Ahd5QDNyUitolDjlW
+ L9+igGn/PUOS+d0f7pA0f+Es51mAVEf8qwYQdctXUazTbJ20NhaGH
+X-Received: by 2002:a92:d64d:0:b0:363:c4b9:d931 with SMTP id
+ x13-20020a92d64d000000b00363c4b9d931mr12990313ilp.20.1709129945123; 
+ Wed, 28 Feb 2024 06:19:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFRTfUno1/9G5BXSAr8hQfPguffcPGArfDBiIYVkj2Lw+6vYb2wduwuOQakdtaINs+W5X/K8w==
+X-Received: by 2002:a92:d64d:0:b0:363:c4b9:d931 with SMTP id
+ x13-20020a92d64d000000b00363c4b9d931mr12990285ilp.20.1709129944853; 
+ Wed, 28 Feb 2024 06:19:04 -0800 (PST)
+Received: from smtpclient.apple ([115.96.143.215])
+ by smtp.gmail.com with ESMTPSA id
+ z20-20020aa785d4000000b006e45dce37basm7844002pfn.220.2024.02.28.06.18.59
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 28 Feb 2024 06:19:04 -0800 (PST)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.400.31\))
+Subject: Re: [PATCH 03/19] tests: smbios: add test for legacy mode CLI options
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <20240227154749.1818189-4-imammedo@redhat.com>
+Date: Wed, 28 Feb 2024 19:48:47 +0530
+Cc: QEMU Developers <qemu-devel@nongnu.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Song Gao <gaosong@loongson.cn>,
+ Alistair Francis <alistair.francis@wdc.com>, palmer@dabbelt.com,
+ bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, qemu-arm@nongnu.org,
+ qemu-riscv@nongnu.org, f.ebner@proxmox.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <A54DF112-5A08-43E2-A30E-BA32FE330320@redhat.com>
+References: <20240227154749.1818189-1-imammedo@redhat.com>
+ <20240227154749.1818189-4-imammedo@redhat.com>
+To: Igor Mammedov <imammedo@redhat.com>
+X-Mailer: Apple Mail (2.3774.400.31)
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,277 +113,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a parameter that enables discard-after-copy. That is mostly useful
-in "push backup with fleecing" scheme, when source is snapshot-access
-format driver node, based on copy-before-write filter snapshot-access
-API:
 
-[guest]      [snapshot-access] ~~ blockdev-backup ~~> [backup target]
-   |            |
-   | root       | file
-   v            v
-[copy-before-write]
-   |             |
-   | file        | target
-   v             v
-[active disk]   [temp.img]
 
-In this case discard-after-copy does two things:
+> On 27-Feb-2024, at 21:17, Igor Mammedov <imammedo@redhat.com> wrote:
+>=20
+> Unfortunately having 2.0 machine type deprecated is not enough
+> to get rid of legacy SMBIOS handling since 'isapc' also uses
+> that and it's staying around.
+>=20
+> Hence add test for CLI options handling to be sure that it
+> ain't broken during SMBIOS code refactoring.
+>=20
+> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
 
- - discard data in temp.img to save disk space
- - avoid further copy-before-write operation in discarded area
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
 
-Note that we have to declare WRITE permission on source in
-copy-before-write filter, for discard to work. Still we can't take it
-unconditionally, as it will break normal backup from RO source. So, we
-have to add a parameter and pass it thorough bdrv_open flags.
-
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- block/backup.c                         |  5 +++--
- block/block-copy.c                     |  9 +++++++++
- block/copy-before-write.c              | 15 +++++++++++++--
- block/copy-before-write.h              |  1 +
- block/replication.c                    |  4 ++--
- blockdev.c                             |  2 +-
- include/block/block-common.h           |  2 ++
- include/block/block-copy.h             |  1 +
- include/block/block_int-global-state.h |  2 +-
- qapi/block-core.json                   |  4 ++++
- 10 files changed, 37 insertions(+), 8 deletions(-)
-
-diff --git a/block/backup.c b/block/backup.c
-index ec29d6b810..3dd2e229d2 100644
---- a/block/backup.c
-+++ b/block/backup.c
-@@ -356,7 +356,7 @@ BlockJob *backup_job_create(const char *job_id, BlockDriverState *bs,
-                   BlockDriverState *target, int64_t speed,
-                   MirrorSyncMode sync_mode, BdrvDirtyBitmap *sync_bitmap,
-                   BitmapSyncMode bitmap_mode,
--                  bool compress,
-+                  bool compress, bool discard_source,
-                   const char *filter_node_name,
-                   BackupPerf *perf,
-                   BlockdevOnError on_source_error,
-@@ -457,7 +457,8 @@ BlockJob *backup_job_create(const char *job_id, BlockDriverState *bs,
-         goto error;
-     }
- 
--    cbw = bdrv_cbw_append(bs, target, filter_node_name, &bcs, errp);
-+    cbw = bdrv_cbw_append(bs, target, filter_node_name, discard_source,
-+                          &bcs, errp);
-     if (!cbw) {
-         goto error;
-     }
-diff --git a/block/block-copy.c b/block/block-copy.c
-index 8fca2c3698..7e3b378528 100644
---- a/block/block-copy.c
-+++ b/block/block-copy.c
-@@ -137,6 +137,7 @@ typedef struct BlockCopyState {
-     CoMutex lock;
-     int64_t in_flight_bytes;
-     BlockCopyMethod method;
-+    bool discard_source;
-     BlockReqList reqs;
-     QLIST_HEAD(, BlockCopyCallState) calls;
-     /*
-@@ -353,6 +354,7 @@ static int64_t block_copy_calculate_cluster_size(BlockDriverState *target,
- BlockCopyState *block_copy_state_new(BdrvChild *source, BdrvChild *target,
-                                      BlockDriverState *copy_bitmap_bs,
-                                      const BdrvDirtyBitmap *bitmap,
-+                                     bool discard_source,
-                                      Error **errp)
- {
-     ERRP_GUARD();
-@@ -418,6 +420,7 @@ BlockCopyState *block_copy_state_new(BdrvChild *source, BdrvChild *target,
-                                     cluster_size),
-     };
- 
-+    s->discard_source = discard_source;
-     block_copy_set_copy_opts(s, false, false);
- 
-     ratelimit_init(&s->rate_limit);
-@@ -589,6 +592,12 @@ static coroutine_fn int block_copy_task_entry(AioTask *task)
-     co_put_to_shres(s->mem, t->req.bytes);
-     block_copy_task_end(t, ret);
- 
-+    if (s->discard_source && ret == 0) {
-+        int64_t nbytes =
-+            MIN(t->req.offset + t->req.bytes, s->len) - t->req.offset;
-+        bdrv_co_pdiscard(s->source, t->req.offset, nbytes);
-+    }
-+
-     return ret;
- }
- 
-diff --git a/block/copy-before-write.c b/block/copy-before-write.c
-index 44a9385aa7..dac57481c5 100644
---- a/block/copy-before-write.c
-+++ b/block/copy-before-write.c
-@@ -44,6 +44,7 @@ typedef struct BDRVCopyBeforeWriteState {
-     BdrvChild *target;
-     OnCbwError on_cbw_error;
-     uint32_t cbw_timeout_ns;
-+    bool discard_source;
- 
-     /*
-      * @lock: protects access to @access_bitmap, @done_bitmap and
-@@ -357,6 +358,8 @@ cbw_child_perm(BlockDriverState *bs, BdrvChild *c, BdrvChildRole role,
-                uint64_t perm, uint64_t shared,
-                uint64_t *nperm, uint64_t *nshared)
- {
-+    BDRVCopyBeforeWriteState *s = bs->opaque;
-+
-     if (!(role & BDRV_CHILD_FILTERED)) {
-         /*
-          * Target child
-@@ -381,6 +384,10 @@ cbw_child_perm(BlockDriverState *bs, BdrvChild *c, BdrvChildRole role,
-              * start
-              */
-             *nperm = *nperm | BLK_PERM_CONSISTENT_READ;
-+            if (s->discard_source) {
-+                *nperm = *nperm | BLK_PERM_WRITE;
-+            }
-+
-             *nshared &= ~(BLK_PERM_WRITE | BLK_PERM_RESIZE);
-         }
-     }
-@@ -467,7 +474,9 @@ static int cbw_open(BlockDriverState *bs, QDict *options, int flags,
-             ((BDRV_REQ_FUA | BDRV_REQ_MAY_UNMAP | BDRV_REQ_NO_FALLBACK) &
-              bs->file->bs->supported_zero_flags);
- 
--    s->bcs = block_copy_state_new(bs->file, s->target, bs, bitmap, errp);
-+    s->discard_source = flags & BDRV_O_CBW_DISCARD_SOURCE;
-+    s->bcs = block_copy_state_new(bs->file, s->target, bs, bitmap,
-+                                  flags & BDRV_O_CBW_DISCARD_SOURCE, errp);
-     if (!s->bcs) {
-         error_prepend(errp, "Cannot create block-copy-state: ");
-         return -EINVAL;
-@@ -534,12 +543,14 @@ static BlockDriver bdrv_cbw_filter = {
- BlockDriverState *bdrv_cbw_append(BlockDriverState *source,
-                                   BlockDriverState *target,
-                                   const char *filter_node_name,
-+                                  bool discard_source,
-                                   BlockCopyState **bcs,
-                                   Error **errp)
- {
-     BDRVCopyBeforeWriteState *state;
-     BlockDriverState *top;
-     QDict *opts;
-+    int flags = BDRV_O_RDWR | (discard_source ? BDRV_O_CBW_DISCARD_SOURCE : 0);
- 
-     assert(source->total_sectors == target->total_sectors);
-     GLOBAL_STATE_CODE();
-@@ -552,7 +563,7 @@ BlockDriverState *bdrv_cbw_append(BlockDriverState *source,
-     qdict_put_str(opts, "file", bdrv_get_node_name(source));
-     qdict_put_str(opts, "target", bdrv_get_node_name(target));
- 
--    top = bdrv_insert_node(source, opts, BDRV_O_RDWR, errp);
-+    top = bdrv_insert_node(source, opts, flags, errp);
-     if (!top) {
-         return NULL;
-     }
-diff --git a/block/copy-before-write.h b/block/copy-before-write.h
-index 6e72bb25e9..01af0cd3c4 100644
---- a/block/copy-before-write.h
-+++ b/block/copy-before-write.h
-@@ -39,6 +39,7 @@
- BlockDriverState *bdrv_cbw_append(BlockDriverState *source,
-                                   BlockDriverState *target,
-                                   const char *filter_node_name,
-+                                  bool discard_source,
-                                   BlockCopyState **bcs,
-                                   Error **errp);
- void bdrv_cbw_drop(BlockDriverState *bs);
-diff --git a/block/replication.c b/block/replication.c
-index ca6bd0a720..0415a5e8b7 100644
---- a/block/replication.c
-+++ b/block/replication.c
-@@ -582,8 +582,8 @@ static void replication_start(ReplicationState *rs, ReplicationMode mode,
- 
-         s->backup_job = backup_job_create(
-                                 NULL, s->secondary_disk->bs, s->hidden_disk->bs,
--                                0, MIRROR_SYNC_MODE_NONE, NULL, 0, false, NULL,
--                                &perf,
-+                                0, MIRROR_SYNC_MODE_NONE, NULL, 0, false, false,
-+                                NULL, &perf,
-                                 BLOCKDEV_ON_ERROR_REPORT,
-                                 BLOCKDEV_ON_ERROR_REPORT, JOB_INTERNAL,
-                                 backup_job_completed, bs, NULL, &local_err);
-diff --git a/blockdev.c b/blockdev.c
-index f8bb0932f8..daceb50460 100644
---- a/blockdev.c
-+++ b/blockdev.c
-@@ -2726,7 +2726,7 @@ static BlockJob *do_backup_common(BackupCommon *backup,
- 
-     job = backup_job_create(backup->job_id, bs, target_bs, backup->speed,
-                             backup->sync, bmap, backup->bitmap_mode,
--                            backup->compress,
-+                            backup->compress, backup->discard_source,
-                             backup->filter_node_name,
-                             &perf,
-                             backup->on_source_error,
-diff --git a/include/block/block-common.h b/include/block/block-common.h
-index a846023a09..338fe5ff7a 100644
---- a/include/block/block-common.h
-+++ b/include/block/block-common.h
-@@ -243,6 +243,8 @@ typedef enum {
-                                       read-write fails */
- #define BDRV_O_IO_URING    0x40000 /* use io_uring instead of the thread pool */
- 
-+#define BDRV_O_CBW_DISCARD_SOURCE 0x80000 /* for copy-before-write filter */
-+
- #define BDRV_O_CACHE_MASK  (BDRV_O_NOCACHE | BDRV_O_NO_FLUSH)
- 
- 
-diff --git a/include/block/block-copy.h b/include/block/block-copy.h
-index 8b41643bfa..bdc703bacd 100644
---- a/include/block/block-copy.h
-+++ b/include/block/block-copy.h
-@@ -27,6 +27,7 @@ typedef struct BlockCopyCallState BlockCopyCallState;
- BlockCopyState *block_copy_state_new(BdrvChild *source, BdrvChild *target,
-                                      BlockDriverState *copy_bitmap_bs,
-                                      const BdrvDirtyBitmap *bitmap,
-+                                     bool discard_source,
-                                      Error **errp);
- 
- /* Function should be called prior any actual copy request */
-diff --git a/include/block/block_int-global-state.h b/include/block/block_int-global-state.h
-index d2201e27f4..eb2d92a226 100644
---- a/include/block/block_int-global-state.h
-+++ b/include/block/block_int-global-state.h
-@@ -193,7 +193,7 @@ BlockJob *backup_job_create(const char *job_id, BlockDriverState *bs,
-                             MirrorSyncMode sync_mode,
-                             BdrvDirtyBitmap *sync_bitmap,
-                             BitmapSyncMode bitmap_mode,
--                            bool compress,
-+                            bool compress, bool discard_source,
-                             const char *filter_node_name,
-                             BackupPerf *perf,
-                             BlockdevOnError on_source_error,
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 22b8634422..9cbe3988b4 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -1611,6 +1611,9 @@
- #     node specified by @drive.  If this option is not given, a node
- #     name is autogenerated.  (Since: 4.2)
- #
-+# @discard-source: Discard blocks on source which are already copied
-+#     to the target.  (Since 9.0)
-+#
- # @x-perf: Performance options.  (Since 6.0)
- #
- # Features:
-@@ -1632,6 +1635,7 @@
-             '*on-target-error': 'BlockdevOnError',
-             '*auto-finalize': 'bool', '*auto-dismiss': 'bool',
-             '*filter-node-name': 'str',
-+            '*discard-source': 'bool',
-             '*x-perf': { 'type': 'BackupPerf',
-                          'features': [ 'unstable' ] } } }
- 
--- 
-2.34.1
+> ---
+> tests/data/smbios/type11_blob.legacy | Bin 0 -> 10 bytes
+> tests/qtest/bios-tables-test.c       |  17 +++++++++++++++++
+> 2 files changed, 17 insertions(+)
+> create mode 100644 tests/data/smbios/type11_blob.legacy
+>=20
+> diff --git a/tests/data/smbios/type11_blob.legacy =
+b/tests/data/smbios/type11_blob.legacy
+> new file mode 100644
+> index =
+0000000000000000000000000000000000000000..aef463aab903405958b0a85f85c59806=
+71c08bee
+> GIT binary patch
+> literal 10
+> Rcmd;PW!S(N;u;*n000Tp0s;U4
+>=20
+> literal 0
+> HcmV?d00001
+>=20
+> diff --git a/tests/qtest/bios-tables-test.c =
+b/tests/qtest/bios-tables-test.c
+> index a116f88e1d..d1ff4db7a2 100644
+> --- a/tests/qtest/bios-tables-test.c
+> +++ b/tests/qtest/bios-tables-test.c
+> @@ -2106,6 +2106,21 @@ static void test_acpi_pc_smbios_blob(void)
+>     free_test_data(&data);
+> }
+>=20
+> +static void test_acpi_isapc_smbios_legacy(void)
+> +{
+> +    uint8_t req_type11[] =3D { 1, 11 };
+> +    test_data data =3D {
+> +        .machine =3D "isapc",
+> +        .variant =3D ".pc_smbios_legacy",
+> +        .required_struct_types =3D req_type11,
+> +        .required_struct_types_len =3D ARRAY_SIZE(req_type11),
+> +    };
+> +
+> +    test_smbios("-smbios file=3Dtests/data/smbios/type11_blob.legacy =
+"
+> +                "-smbios type=3D1,family=3DTEST", &data);
+> +    free_test_data(&data);
+> +}
+> +
+> static void test_oem_fields(test_data *data)
+> {
+>     int i;
+> @@ -2261,6 +2276,8 @@ int main(int argc, char *argv[])
+>                            test_acpi_pc_smbios_options);
+>             qtest_add_func("acpi/piix4/smbios-blob",
+>                            test_acpi_pc_smbios_blob);
+> +            qtest_add_func("acpi/piix4/smbios-legacy",
+> +                           test_acpi_isapc_smbios_legacy);
+>         }
+>         if (qtest_has_machine(MACHINE_Q35)) {
+>             qtest_add_func("acpi/q35", test_acpi_q35_tcg);
+> --=20
+> 2.39.3
+>=20
 
 
