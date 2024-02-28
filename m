@@ -4,78 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B23C3C54E49
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 12:38:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3A42C5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 12:47:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfJC0-0005sC-4D; Wed, 28 Feb 2024 07:37:48 -0500
+	id 1rfJLD-0002BR-Hw; Wed, 28 Feb 2024 07:47:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rfJBx-0005r4-PV
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 07:37:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1rfJKu-00021i-KO
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 07:47:03 -0500
+Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rfJBv-00026j-UP
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 07:37:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709123862;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=1pRlnr1TC+bhw3nzslDecYtQ2vqZ6i2Z+6FbuVOBw2w=;
- b=jLnt+XrX7ZehFJ0qUETqASmJXWmgfU5zlMF1qm226xcUQAgzxa4nGm3FPwQ34XtzMf4IB6
- 7/9dl+4JO2hPq5mtU6fARR5dIKE9XcBAXQta9+wBc86/UZcIBc94zWHdrC6tr9RxugsaVO
- yMmm2SBjQiQbRbyAL7S99I8TXiJea3s=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-118-2MfQB2rjMD6mFwMRzJ9HaQ-1; Wed,
- 28 Feb 2024 07:37:36 -0500
-X-MC-Unique: 2MfQB2rjMD6mFwMRzJ9HaQ-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1rfJKs-0006fQ-9V
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 07:46:59 -0500
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2A4F038143A1;
- Wed, 28 Feb 2024 12:37:36 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.193.4])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 0350F1C06532;
- Wed, 28 Feb 2024 12:37:36 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id BB2D421E6767; Wed, 28 Feb 2024 13:37:33 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  "Michael
- S. Tsirkin"
- <mst@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,  Alex
- Williamson <alex.williamson@redhat.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eduardo Habkost
- <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,  Jason Wang
- <jasowang@redhat.com>,  Keith Busch <kbusch@kernel.org>,  Klaus Jensen
- <its@irrelevant.dk>,  qemu-devel@nongnu.org,  qemu-block@nongnu.org
-Subject: Re: [PATCH v8 14/15] hw/pci: Determine if rombar is explicitly enabled
-In-Reply-To: <20240228-reuse-v8-14-282660281e60@daynix.com> (Akihiko Odaki's
- message of "Wed, 28 Feb 2024 20:33:25 +0900")
-References: <20240228-reuse-v8-0-282660281e60@daynix.com>
- <20240228-reuse-v8-14-282660281e60@daynix.com>
-Date: Wed, 28 Feb 2024 13:37:33 +0100
-Message-ID: <87v868vk6q.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 68FA73FE49
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 12:46:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20210705; t=1709124413;
+ bh=2SSCG3X1bVbuFpRmxXaV7Lr4Tk+xfFRydGm79EzyPfo=;
+ h=From:To:Cc:Subject:Date:Message-ID:MIME-Version;
+ b=L1t3J7y7iAmNcIwRN4dmz4lfK+hn4VuOkqVd2mZ5DGs6OU03dbMYZVQETkA2udWT0
+ CY/VyIHF1o4H3p7zWzIvpn8V069jnchH45i/16lefelM+9ikjkx1udNsQMFVkelv1J
+ vtFUgGjs7meHa+jEjBBppfVlOmsOhJNfhM3GdR+xdG/47onQ167RSTlMdHkyYACZmo
+ 1R4J7N4VvX63bMB0uFJXqPfeIrk2RrMhJ8+sB3iJ4tttEvLPQOX/9Oo8xemCP13+Gr
+ kUPIR4xGrgmHHhOSvIkNR3Nng+OPNxDwrZL/Wna6AYX6bVul3jnc2ojiHCbAjL7atH
+ WAtWLarrVDQwQ==
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-33d5e518991so2892879f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 04:46:53 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709124413; x=1709729213;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2SSCG3X1bVbuFpRmxXaV7Lr4Tk+xfFRydGm79EzyPfo=;
+ b=IlyHH3nxCTP1z49ubsYuTZZwwJcr1zFlFpbyrlzLFtRlB4j1/128VgQkuNrPa+eHpB
+ 4PyzcXEWQO+GMsmYWCu2eNzR9tWBDGGas9N2gEMclT7uuoIyhbdztGO06W5frN/EGyme
+ KleANKoEQYjkN4mLi7SxWDKJpcCjVudHyHnPgB9T684BgvXBD4wWxNay7CCO3ZcU6Xkb
+ F/cEUzp3XdFF/oc+SY0OQ1YII3NGFrG1f183i2wTIBXzw1cHyyz/5ZB+EMIXlDjP4dOE
+ Yoh77uPtNNlbyuQTfGKiELYm95aUUFZbFIMHRErEBJ99QzaOSNY8oXaK8uvIpmfRqpDT
+ x5CA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWcU0bVWD7x7GEUk+b1YieBAKYtC0SusRcKccLkdqsAB1TLGSvB4xpL7FHTM/L9TLx5MQLs4M0YMsSUKSvGMnFT7vKRItw=
+X-Gm-Message-State: AOJu0YwdW9vXIeB9wc0kwbwQIb2G6Qsmp3WhwO+gsRq59OXre1A0ApEu
+ pr4eF8WQ1iJhXXbNYqb3I218C3v2Bf/TdbCXNGN/gIwm6guFcV/e+1oy+jv/uiegiyk10RHeXwC
+ MfEXNfBFz0GCbs2SDng5Vw8Juxe5GBZPnsVCD9c+2yi4qpvE/mqg14h7gJq4Vunw4l8lRVhMGkt
+ mR
+X-Received: by 2002:a5d:4147:0:b0:33d:3b72:d2c8 with SMTP id
+ c7-20020a5d4147000000b0033d3b72d2c8mr8994585wrq.71.1709124413056; 
+ Wed, 28 Feb 2024 04:46:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGUMl+R8fh/R+6N6eo1PSxJOAeNs4a1Goclti/kddSkfadayfYPTz7zhsMeqIWgT8AQW0NMYA==
+X-Received: by 2002:a5d:4147:0:b0:33d:3b72:d2c8 with SMTP id
+ c7-20020a5d4147000000b0033d3b72d2c8mr8994573wrq.71.1709124412681; 
+ Wed, 28 Feb 2024 04:46:52 -0800 (PST)
+Received: from workstation5.fritz.box
+ (ip-095-222-037-056.um34.pools.vodafone-ip.de. [95.222.37.56])
+ by smtp.gmail.com with ESMTPSA id
+ v17-20020adfe291000000b0033d56aa4f45sm14199129wri.112.2024.02.28.04.46.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 28 Feb 2024 04:46:52 -0800 (PST)
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org,
+ Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Subject: [PATCH 1/1] physmem: avoid bounce buffer too small
+Date: Wed, 28 Feb 2024 13:46:38 +0100
+Message-ID: <20240228124638.55752-1-heinrich.schuchardt@canonical.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=185.125.188.122;
+ envelope-from=heinrich.schuchardt@canonical.com;
+ helo=smtp-relay-internal-0.canonical.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ HEXHASH_WORD=1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,23 +108,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+virtqueue_map_desc() is called with values of sz exceeding that may exceed
+TARGET_PAGE_SIZE. sz = 0x2800 has been observed.
 
-> vfio determines if rombar is explicitly enabled by inspecting QDict.
-> Inspecting QDict is not nice because QDict is untyped and depends on the
-> details on the external interface. Add an infrastructure to determine if
-> rombar is explicitly enabled to hw/pci.
->
-> This changes the semantics of UINT32_MAX, which has always been a valid
-> value to explicitly say rombar is enabled to denote the implicit default
-> value. Nobody should have been set UINT32_MAX to rombar however,
-> considering that its meaning was no different from 1 and typing a
-> literal UINT32_MAX (0xffffffff or 4294967295) is more troublesome.
->
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+We only support a single bounce buffer. We have to avoid
+virtqueue_map_desc() calling address_space_map() multiple times. Otherwise
+we see an error
 
-Remark on the previous patch applies.
+    qemu: virtio: bogus descriptor or out of resources
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Increase the minimum size of the bounce buffer to 0x10000 which matches
+the largest value of TARGET_PAGE_SIZE for all architectures.
+
+Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+---
+ roms/edk2         | 2 +-
+ roms/seabios-hppa | 2 +-
+ system/physmem.c  | 8 ++++++--
+ 3 files changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/roms/edk2 b/roms/edk2
+index edc6681206..b8a3eec88c 160000
+--- a/roms/edk2
++++ b/roms/edk2
+@@ -1 +1 @@
+-Subproject commit edc6681206c1a8791981a2f911d2fb8b3d2f5768
++Subproject commit b8a3eec88cc74bbfe7fb389d026cc7d1d8a989c8
+diff --git a/roms/seabios-hppa b/roms/seabios-hppa
+index 03774edaad..e4eac85880 160000
+--- a/roms/seabios-hppa
++++ b/roms/seabios-hppa
+@@ -1 +1 @@
+-Subproject commit 03774edaad3bfae090ac96ca5450353c641637d1
++Subproject commit e4eac85880e8677f96d8b9e94de9f2eec9c0751f
+diff --git a/system/physmem.c b/system/physmem.c
+index e3ebc19eef..3c82da1c86 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3151,8 +3151,12 @@ void *address_space_map(AddressSpace *as,
+             *plen = 0;
+             return NULL;
+         }
+-        /* Avoid unbounded allocations */
+-        l = MIN(l, TARGET_PAGE_SIZE);
++        /*
++         * There is only one bounce buffer. The largest occuring value of
++         * parameter sz of virtqueue_map_desc() must fit into the bounce
++         * buffer.
++         */
++        l = MIN(l, 0x10000);
+         bounce.buffer = qemu_memalign(TARGET_PAGE_SIZE, l);
+         bounce.addr = addr;
+         bounce.len = l;
+-- 
+2.43.0
 
 
