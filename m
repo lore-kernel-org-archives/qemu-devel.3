@@ -4,113 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C86BC5478C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 15:25:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61556C5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 15:25:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfLko-0006Yr-BG; Wed, 28 Feb 2024 10:21:54 -0500
+	id 1rfLnr-00009B-M2; Wed, 28 Feb 2024 10:25:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rfLkm-0006Y6-5p
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 10:21:52 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rfLno-0008Er-ES
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 10:25:00 -0500
+Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rfLkg-0004wD-No
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 10:21:51 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 5DFF4225C1;
- Wed, 28 Feb 2024 15:21:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709133705; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Vz6kqLJueuVTa+GtEWacyywR44TTJZO/ykZXIpzwQmQ=;
- b=Xs82udfj6di4X6TDpbVHRX+2kEv5ww9oWJ68jwvo8wPn00EZxk3bN1ej6uVG24u73dXPE/
- iEG0+tqmjjrBYvmJA2m1VdYYVjD5ycdR/B9NfY7g3uu+yQ5A8NhQ0yJHKq4Ab0CoRvsD82
- OkBP5PZbHYS1tS6BMLiOhMo09vhKCLg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709133705;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Vz6kqLJueuVTa+GtEWacyywR44TTJZO/ykZXIpzwQmQ=;
- b=AIULPLIS1NrDATfEWvHGgAUyWKzZOsKWd8W6g4ca/b4d2/u58Rj36izoUK0qAd7+yii+nS
- ZCCxBgZLlt8tcVBQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709133705; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Vz6kqLJueuVTa+GtEWacyywR44TTJZO/ykZXIpzwQmQ=;
- b=Xs82udfj6di4X6TDpbVHRX+2kEv5ww9oWJ68jwvo8wPn00EZxk3bN1ej6uVG24u73dXPE/
- iEG0+tqmjjrBYvmJA2m1VdYYVjD5ycdR/B9NfY7g3uu+yQ5A8NhQ0yJHKq4Ab0CoRvsD82
- OkBP5PZbHYS1tS6BMLiOhMo09vhKCLg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709133705;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Vz6kqLJueuVTa+GtEWacyywR44TTJZO/ykZXIpzwQmQ=;
- b=AIULPLIS1NrDATfEWvHGgAUyWKzZOsKWd8W6g4ca/b4d2/u58Rj36izoUK0qAd7+yii+nS
- ZCCxBgZLlt8tcVBQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BE2E113A5D;
- Wed, 28 Feb 2024 15:21:43 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id yJ8NIYdP32UPAwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 28 Feb 2024 15:21:43 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
- Claudio Fontana <cfontana@suse.de>
-Subject: [PATCH v5 06/23] migration/qemu-file: add utility methods for working
- with seekable channels
-Date: Wed, 28 Feb 2024 12:21:10 -0300
-Message-Id: <20240228152127.18769-7-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20240228152127.18769-1-farosas@suse.de>
-References: <20240228152127.18769-1-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rfLnk-0006Fd-BA
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 10:25:00 -0500
+Received: by mail-lj1-x229.google.com with SMTP id
+ 38308e7fff4ca-2d228a132acso76524341fa.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 07:24:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709133894; x=1709738694; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Jp+7AFRf/5bdQKKYqATGX4V0b2scFyEtgy5iAi36glE=;
+ b=rFslL10UoPA7hdZkhIaEY5r70JrZ0QHOEr+yGPGwK5N74ngIvDkdNq6PesHgFNLcZV
+ FJlrTsULdsN23EvlHaeFGpzOJB1n6JtI1HbH53vLLYtG7ZZX/F0gvMWigOQkci9lZxBF
+ K/ZXtrDLo6L10yiAPWJ4R1iH8w7N5+RuDcKGTyzCWjL7ep+y9wmDK8WY6F89Q4O0kTKB
+ f9iTJfZpcTcUfK1vkjRts/xjyjcQNugvmyXQBZh0Rdv/CuzTwHKVEy+Lg3Zl/qXUCp9N
+ z3Ea7er59cLK75BQ/VmFfhi3coiMf3ahCEFd4T7j82kRE18ZhzhIkUIofpN3nNYPktTX
+ lx2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709133894; x=1709738694;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Jp+7AFRf/5bdQKKYqATGX4V0b2scFyEtgy5iAi36glE=;
+ b=Gy3i79VzSm29qgsjS6/Z5NyKnt7dDhCImDNV8gkjwQzl1/Q38248wRD89b5lCbiKmT
+ mnJCcplfcBQ0Mzj1NoOfifFj0IktvbaUmtpnhlN1ihJe2BALXg/EWGmEoKE+Hm7+SDBH
+ 6HChGpk5eFBfK4Ohea8wdJy9+2pmdROCJ+3qnjo18om+6MAPeFbWKR+5S+M/Cmk2Hq3b
+ gAaQzi6QFY2dCvfK2R1TgBQkzIH/DuFlq0ENN1v8/JRc3/hngyjOyl9tY0K5huVDDGI3
+ YGz0D8LnS2o1ZISEhqxflGSDN6wr+VvPALbRTPr/krFavC4moOTnFm1hvk+KuJ2D22i4
+ B3sw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUHfoHZWSUzxf9rWN2i1hZxjGz7YV9uqFiXFTgdJxfkLLzPZw+ues+L0AR2uD57V5Alm2U3N+Pb74jhiodUsCzsu0UYxPE=
+X-Gm-Message-State: AOJu0YycOFeFfNN2iVutKhkeo0IvwxlswolBAd77/PDDUBtbMUiHqS2X
+ 211PKWJ9JGnxePySCQRNWPBlp3EVr5vsnnCgOqdRhDoh6g3lcbfUvuChXvFIL83xt7szrIBQJjZ
+ klpc=
+X-Google-Smtp-Source: AGHT+IGxlAJjnC29Qqi/PJZRbDZGihp0vIaZK8TgT6oXKDxbgDfFxcf7FQ7CMh/do9csxvYbCMRZKA==
+X-Received: by 2002:a2e:9982:0:b0:2d2:a3ae:b339 with SMTP id
+ w2-20020a2e9982000000b002d2a3aeb339mr3061015lji.48.1709133894200; 
+ Wed, 28 Feb 2024 07:24:54 -0800 (PST)
+Received: from [192.168.61.175] (122.red-88-29-183.dynamicip.rima-tde.net.
+ [88.29.183.122]) by smtp.gmail.com with ESMTPSA id
+ o30-20020a05600c511e00b0041294d015fbsm2487516wms.40.2024.02.28.07.24.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 28 Feb 2024 07:24:52 -0800 (PST)
+Message-ID: <3ac7d304-6bf4-49fa-b19e-74925409e736@linaro.org>
+Date: Wed, 28 Feb 2024 16:24:47 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Xs82udfj;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=AIULPLIS
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-3.51 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_FIVE(0.00)[5];
- RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
- MID_CONTAINS_FROM(1.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- RCVD_TLS_ALL(0.00)[]; BAYES_HAM(-3.00)[100.00%]
-X-Rspamd-Queue-Id: 5DFF4225C1
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] MAINTAINERS: Update Sriram Yagnaraman mail address
+Content-Language: en-US
+To: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, qemu-devel@nongnu.org
+References: <20240228080625.2412372-1-sriram.yagnaraman@ericsson.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240228080625.2412372-1-sriram.yagnaraman@ericsson.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::229;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x229.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,179 +95,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add utility methods that will be needed when implementing 'mapped-ram'
-migration capability.
+Hi Sriram,
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
----
- include/migration/qemu-file-types.h |   2 +
- migration/qemu-file.c               | 106 ++++++++++++++++++++++++++++
- migration/qemu-file.h               |   6 ++
- 3 files changed, 114 insertions(+)
+On 28/2/24 09:06, Sriram Yagnaraman wrote:
+> Due to company policies, I have changed my mail address. Updating
+> MAINTAINERS and .mailmap to show my latest mail address.
+> 
+> Signed-off-by: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
+> ---
+>   .mailmap    | 1 +
+>   MAINTAINERS | 2 +-
+>   2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/migration/qemu-file-types.h b/include/migration/qemu-file-types.h
-index 9ba163f333..adec5abc07 100644
---- a/include/migration/qemu-file-types.h
-+++ b/include/migration/qemu-file-types.h
-@@ -50,6 +50,8 @@ unsigned int qemu_get_be16(QEMUFile *f);
- unsigned int qemu_get_be32(QEMUFile *f);
- uint64_t qemu_get_be64(QEMUFile *f);
- 
-+bool qemu_file_is_seekable(QEMUFile *f);
-+
- static inline void qemu_put_be64s(QEMUFile *f, const uint64_t *pv)
- {
-     qemu_put_be64(f, *pv);
-diff --git a/migration/qemu-file.c b/migration/qemu-file.c
-index 94231ff295..b10c882629 100644
---- a/migration/qemu-file.c
-+++ b/migration/qemu-file.c
-@@ -33,6 +33,7 @@
- #include "options.h"
- #include "qapi/error.h"
- #include "rdma.h"
-+#include "io/channel-file.h"
- 
- #define IO_BUF_SIZE 32768
- #define MAX_IOV_SIZE MIN_CONST(IOV_MAX, 64)
-@@ -255,6 +256,10 @@ static void qemu_iovec_release_ram(QEMUFile *f)
-     memset(f->may_free, 0, sizeof(f->may_free));
- }
- 
-+bool qemu_file_is_seekable(QEMUFile *f)
-+{
-+    return qio_channel_has_feature(f->ioc, QIO_CHANNEL_FEATURE_SEEKABLE);
-+}
- 
- /**
-  * Flushes QEMUFile buffer
-@@ -447,6 +452,107 @@ void qemu_put_buffer(QEMUFile *f, const uint8_t *buf, size_t size)
-     }
- }
- 
-+void qemu_put_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
-+                        off_t pos)
-+{
-+    Error *err = NULL;
-+    size_t ret;
-+
-+    if (f->last_error) {
-+        return;
-+    }
-+
-+    qemu_fflush(f);
-+    ret = qio_channel_pwrite(f->ioc, (char *)buf, buflen, pos, &err);
-+
-+    if (err) {
-+        qemu_file_set_error_obj(f, -EIO, err);
-+        return;
-+    }
-+
-+    if ((ssize_t)ret == QIO_CHANNEL_ERR_BLOCK) {
-+        qemu_file_set_error_obj(f, -EAGAIN, NULL);
-+        return;
-+    }
-+
-+    if (ret != buflen) {
-+        error_setg(&err, "Partial write of size %zu, expected %zu", ret,
-+                   buflen);
-+        qemu_file_set_error_obj(f, -EIO, err);
-+        return;
-+    }
-+
-+    stat64_add(&mig_stats.qemu_file_transferred, buflen);
-+
-+    return;
-+}
-+
-+
-+size_t qemu_get_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
-+                          off_t pos)
-+{
-+    Error *err = NULL;
-+    size_t ret;
-+
-+    if (f->last_error) {
-+        return 0;
-+    }
-+
-+    ret = qio_channel_pread(f->ioc, (char *)buf, buflen, pos, &err);
-+
-+    if ((ssize_t)ret == -1 || err) {
-+        qemu_file_set_error_obj(f, -EIO, err);
-+        return 0;
-+    }
-+
-+    if ((ssize_t)ret == QIO_CHANNEL_ERR_BLOCK) {
-+        qemu_file_set_error_obj(f, -EAGAIN, NULL);
-+        return 0;
-+    }
-+
-+    if (ret != buflen) {
-+        error_setg(&err, "Partial read of size %zu, expected %zu", ret, buflen);
-+        qemu_file_set_error_obj(f, -EIO, err);
-+        return 0;
-+    }
-+
-+    return ret;
-+}
-+
-+void qemu_set_offset(QEMUFile *f, off_t off, int whence)
-+{
-+    Error *err = NULL;
-+    off_t ret;
-+
-+    if (qemu_file_is_writable(f)) {
-+        qemu_fflush(f);
-+    } else {
-+        /* Drop all cached buffers if existed; will trigger a re-fill later */
-+        f->buf_index = 0;
-+        f->buf_size = 0;
-+    }
-+
-+    ret = qio_channel_io_seek(f->ioc, off, whence, &err);
-+    if (ret == (off_t)-1) {
-+        qemu_file_set_error_obj(f, -EIO, err);
-+    }
-+}
-+
-+off_t qemu_get_offset(QEMUFile *f)
-+{
-+    Error *err = NULL;
-+    off_t ret;
-+
-+    qemu_fflush(f);
-+
-+    ret = qio_channel_io_seek(f->ioc, 0, SEEK_CUR, &err);
-+    if (ret == (off_t)-1) {
-+        qemu_file_set_error_obj(f, -EIO, err);
-+    }
-+    return ret;
-+}
-+
-+
- void qemu_put_byte(QEMUFile *f, int v)
- {
-     if (f->last_error) {
-diff --git a/migration/qemu-file.h b/migration/qemu-file.h
-index 8aec9fabf7..32fd4a34fd 100644
---- a/migration/qemu-file.h
-+++ b/migration/qemu-file.h
-@@ -75,6 +75,12 @@ QEMUFile *qemu_file_get_return_path(QEMUFile *f);
- int qemu_fflush(QEMUFile *f);
- void qemu_file_set_blocking(QEMUFile *f, bool block);
- int qemu_file_get_to_fd(QEMUFile *f, int fd, size_t size);
-+void qemu_set_offset(QEMUFile *f, off_t off, int whence);
-+off_t qemu_get_offset(QEMUFile *f);
-+void qemu_put_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
-+                        off_t pos);
-+size_t qemu_get_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
-+                          off_t pos);
- 
- QIOChannel *qemu_file_get_ioc(QEMUFile *file);
- 
--- 
-2.35.3
+
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 65dfdc9677..0a3294f698 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2474,7 +2474,7 @@ F: tests/qtest/libqos/e1000e.*
+>   
+>   igb
+>   M: Akihiko Odaki <akihiko.odaki@daynix.com>
+> -R: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
+
+Could you confirm this from your <sriram.yagnaraman@est.tech>
+address?
+
+> +R: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
+>   S: Maintained
+>   F: docs/system/devices/igb.rst
+>   F: hw/net/igb*
 
 
