@@ -4,43 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5AB3C5478C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 22:56:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82824C5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 22:57:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfSpa-0005RR-Kg; Wed, 28 Feb 2024 17:55:20 -0500
+	id 1rfSqB-0005mg-8v; Wed, 28 Feb 2024 17:55:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rfSpT-0005PN-5B; Wed, 28 Feb 2024 17:55:11 -0500
+ id 1rfSq3-0005j8-Sy; Wed, 28 Feb 2024 17:55:47 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rfSpQ-0000Vf-60; Wed, 28 Feb 2024 17:55:09 -0500
+ id 1rfSpw-0000g9-7u; Wed, 28 Feb 2024 17:55:47 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8782C51809;
- Thu, 29 Feb 2024 01:55:32 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 44B1D51812;
+ Thu, 29 Feb 2024 01:55:33 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id E849A8BB3C;
- Thu, 29 Feb 2024 01:54:55 +0300 (MSK)
-Received: (nullmailer pid 274125 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 9D6258BB45;
+ Thu, 29 Feb 2024 01:54:56 +0300 (MSK)
+Received: (nullmailer pid 274152 invoked by uid 1000);
  Wed, 28 Feb 2024 22:54:55 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.2 64/78] .gitlab-ci.d/windows.yml: Drop msys2-32bit job
-Date: Thu, 29 Feb 2024 01:54:40 +0300
-Message-Id: <20240228225455.274062-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Brown <mcb30@ipxe.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.2 73/78] target/i386: Fix physical address truncation
+Date: Thu, 29 Feb 2024 01:54:49 +0300
+Message-Id: <20240228225455.274062-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.2-20240229000326@cover.tls.msk.ru>
 References: <qemu-stable-8.2.2-20240229000326@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -65,51 +61,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-MSYS2 is dropping support for 32-bit Windows.  This shows up for us
-as various packages we were using in our CI job no longer being
-available to install, which causes the job to fail.  In commit
-8e31b744fdf we dropped the dependency on libusb and spice, but the
-dtc package has also now been removed.
+The address translation logic in get_physical_address() will currently
+truncate physical addresses to 32 bits unless long mode is enabled.
+This is incorrect when using physical address extensions (PAE) outside
+of long mode, with the result that a 32-bit operating system using PAE
+to access memory above 4G will experience undefined behaviour.
 
-For us as QEMU upstream, "32 bit x86 hosts for system emulation" have
-already been deprecated as of QEMU 8.0, so we are ready to drop them
-anyway.
+The truncation code was originally introduced in commit 33dfdb5 ("x86:
+only allow real mode to access 32bit without LMA"), where it applied
+only to translations performed while paging is disabled (and so cannot
+affect guests using PAE).
 
-Drop the msys2-32bit CI job, as the first step in doing this.
+Commit 9828198 ("target/i386: Add MMU_PHYS_IDX and MMU_NESTED_IDX")
+rearranged the code such that the truncation also applied to the use
+of MMU_PHYS_IDX and MMU_NESTED_IDX.  Commit 4a1e9d4 ("target/i386: Use
+atomic operations for pte updates") brought this truncation into scope
+for page table entry accesses, and is the first commit for which a
+Windows 10 32-bit guest will reliably fail to boot if memory above 4G
+is present.
 
-This is cc'd to stable, because this job will also be broken for CI
-on the stable branches.  We can't drop 32-bit support entirely there,
-but we will still be covering at least compilation for 32-bit Windows
-via the cross-win32-system job.
+The truncation code however is not completely redundant.  Even though the
+maximum address size for any executed instruction is 32 bits, helpers for
+operations such as BOUND, FSAVE or XSAVE may ask get_physical_address()
+to translate an address outside of the 32-bit range, if invoked with an
+argument that is close to the 4G boundary.  Likewise for processor
+accesses, for example TSS or IDT accesses, when EFER.LMA==0.
 
+So, move the address truncation in get_physical_address() so that it
+applies to 32-bit MMU indexes, but not to MMU_PHYS_IDX and MMU_NESTED_IDX.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2040
+Fixes: 4a1e9d4d11c ("target/i386: Use atomic operations for pte updates", 2022-10-18)
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-id: 20240220165602.135695-1-peter.maydell@linaro.org
-(cherry picked from commit 5cd3ae4903e33982e7a9bbd04674af517e796d6e)
+Co-developed-by: Michael Brown <mcb30@ipxe.org>
+Signed-off-by: Michael Brown <mcb30@ipxe.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit b1661801c184119a10ad6cbc3b80330fc22e7b2c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: drop unrelated change in target/i386/cpu.c)
 
-diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
-index 5c1e385dc8..8fc08218d2 100644
---- a/.gitlab-ci.d/windows.yml
-+++ b/.gitlab-ci.d/windows.yml
-@@ -131,12 +131,3 @@ msys2-64bit:
-     # qTests don't run successfully with "--without-default-devices",
-     # so let's exclude the qtests from CI for now.
-     TEST_ARGS: --no-suite qtest
--
--msys2-32bit:
--  extends: .shared_msys2_builder
--  variables:
--    MINGW_TARGET: mingw-w64-i686
--    MSYSTEM: MINGW32
--    EXTRA_PACKAGES:
--    CONFIGURE_ARGS:  --target-list=ppc64-softmmu -Ddebug=false -Doptimization=0
--    TEST_ARGS: --no-suite qtest
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index ef987f344c..705d925e6c 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2302,6 +2302,12 @@ static inline int cpu_mmu_index(CPUX86State *env, bool ifetch)
+         ? MMU_KNOSMAP_IDX : MMU_KSMAP_IDX;
+ }
+ 
++static inline bool is_mmu_index_32(int mmu_index)
++{
++    assert(mmu_index < MMU_PHYS_IDX);
++    return mmu_index & 1;
++}
++
+ static inline int cpu_mmu_index_kernel(CPUX86State *env)
+ {
+     return !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP_IDX :
+diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
+index 11126c860d..38c313abc9 100644
+--- a/target/i386/tcg/sysemu/excp_helper.c
++++ b/target/i386/tcg/sysemu/excp_helper.c
+@@ -557,6 +557,10 @@ static bool get_physical_address(CPUX86State *env, vaddr addr,
+         break;
+ 
+     default:
++        if (is_mmu_index_32(mmu_idx)) {
++            addr = (uint32_t)addr;
++        }
++
+         if (likely(env->cr[0] & CR0_PG_MASK)) {
+             in.cr3 = env->cr[3];
+             in.mmu_idx = mmu_idx;
+@@ -580,14 +584,8 @@ static bool get_physical_address(CPUX86State *env, vaddr addr,
+         break;
+     }
+ 
+-    /* Translation disabled. */
++    /* No translation needed. */
+     out->paddr = addr & x86_get_a20_mask(env);
+-#ifdef TARGET_X86_64
+-    if (!(env->hflags & HF_LMA_MASK)) {
+-        /* Without long mode we can only address 32bits in real mode */
+-        out->paddr = (uint32_t)out->paddr;
+-    }
+-#endif
+     out->prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+     out->page_size = TARGET_PAGE_SIZE;
+     return true;
 -- 
 2.39.2
 
