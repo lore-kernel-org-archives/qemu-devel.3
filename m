@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30050C54E49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24BBBC5478C
 	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 12:03:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfIdu-00046W-5T; Wed, 28 Feb 2024 07:02:34 -0500
+	id 1rfIdv-00047Q-0A; Wed, 28 Feb 2024 07:02:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1rfIdo-00042V-CH; Wed, 28 Feb 2024 07:02:28 -0500
-Received: from zproxy3.enst.fr ([137.194.2.222])
+ id 1rfIdq-00044C-WD; Wed, 28 Feb 2024 07:02:32 -0500
+Received: from zproxy3.enst.fr ([2001:660:330f:2::de])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1rfIdm-0002z8-5o; Wed, 28 Feb 2024 07:02:28 -0500
+ id 1rfIdm-0002yy-61; Wed, 28 Feb 2024 07:02:29 -0500
 Received: from localhost (localhost [IPv6:::1])
- by zproxy3.enst.fr (Postfix) with ESMTP id 8DE0EA06DE;
- Wed, 28 Feb 2024 13:02:24 +0100 (CET)
+ by zproxy3.enst.fr (Postfix) with ESMTP id 7A427A06BE;
+ Wed, 28 Feb 2024 13:02:23 +0100 (CET)
 Received: from zproxy3.enst.fr ([IPv6:::1])
  by localhost (zproxy3.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id Ua5Yg_UeMUj6; Wed, 28 Feb 2024 13:02:24 +0100 (CET)
+ id a2QUqr8VwY_6; Wed, 28 Feb 2024 13:02:22 +0100 (CET)
 Received: from localhost (localhost [IPv6:::1])
- by zproxy3.enst.fr (Postfix) with ESMTP id EAD9AA06F8;
- Wed, 28 Feb 2024 13:02:23 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy3.enst.fr EAD9AA06F8
+ by zproxy3.enst.fr (Postfix) with ESMTP id D6253A05ED;
+ Wed, 28 Feb 2024 13:02:22 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy3.enst.fr D6253A05ED
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1709121744;
- bh=j1OLjRXz8cKZbnXoeuqFRRV9nutmUnwXbF7aVzmCyuQ=;
+ s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1709121742;
+ bh=81OPFLabJjQLGoGF7rqIGlf7aZpPyHQQQLV+Wf1sKSs=;
  h=From:To:Date:Message-ID:MIME-Version;
- b=Ogeqrkaor5arS7qHnATgmwcVHJTgX2U/dTcFuuic5sQZoBO7SrjtRan2LBW+RKl4I
- a6n8OwPLVKwE3/3grx5ZpfrD5Il5edYKWVgh2MguS+70V//GPTytXCOStrgAM5ls45
- vRyk2Ou+/BE+Za4FONyc3DrYst73SIa4uOUFt3Ko=
+ b=S7nyRucmrlNMYTJ71In+phBNA5pL83Gz8hXR2/V5qbS+3AyZljJnxndY3QteXZk6V
+ Op5RV6DWWnPx1l7QnNEW1z6P8jS8GCv7BwuGn/b3BKugbY1MJv6DeGm65sF7GToCSV
+ zdPumHBcgFhtiCeTs/NiZrMcKmrCn6dokJF6MIMA=
 X-Virus-Scanned: amavis at enst.fr
 Received: from zproxy3.enst.fr ([IPv6:::1])
  by localhost (zproxy3.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id hKOGb5A2vy-p; Wed, 28 Feb 2024 13:02:23 +0100 (CET)
+ id ILa6BLElPGGt; Wed, 28 Feb 2024 13:02:22 +0100 (CET)
 Received: from localhost.localdomain (74.0.125.80.rev.sfr.net [80.125.0.74])
- by zproxy3.enst.fr (Postfix) with ESMTPSA id 7F334A06DE;
- Wed, 28 Feb 2024 13:02:23 +0100 (CET)
+ by zproxy3.enst.fr (Postfix) with ESMTPSA id 376C2A054C;
+ Wed, 28 Feb 2024 13:02:22 +0100 (CET)
 From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
@@ -53,16 +53,15 @@ Cc: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
  Alistair Francis <alistair@alistair23.me>, qemu-arm@nongnu.org,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 3/5] hw/arm : Create Bl475eMachineState
-Date: Wed, 28 Feb 2024 13:01:06 +0100
-Message-ID: <20240228120215.277717-4-ines.varhol@telecom-paris.fr>
+Subject: [PATCH v3 0/5] Add device DM163 (led driver,
+ matrix colors shield & display)
+Date: Wed, 28 Feb 2024 13:01:03 +0100
+Message-ID: <20240228120215.277717-1-ines.varhol@telecom-paris.fr>
 X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240228120215.277717-1-ines.varhol@telecom-paris.fr>
-References: <20240228120215.277717-1-ines.varhol@telecom-paris.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=137.194.2.222;
+Received-SPF: pass client-ip=2001:660:330f:2::de;
  envelope-from=ines.varhol@telecom-paris.fr; helo=zproxy3.enst.fr
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -85,90 +84,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This device implements the IM120417002 colors shield v1.1 for Arduino
+(which relies on the DM163 8x3-channel led driving logic) and features
+a simple display of an 8x8 RGB matrix. This color shield can be plugged
+on the Arduino board (or the B-L475E-IOT01A board) to drive an 8x8
+RGB led matrix. This RGB led matrix takes advantage of retinal persistanc=
+e
+to seemingly display different colors in each row.
+
+
+
+I'm stuck on some issues with this implementation :
+
+1. Tests
+
+TLDR: how can I provide a test or an example?
+
+I've tested the display by running custom executables and
+comparing to the result on the real board, but I don't
+know how to test it using a QTest.
+
+`qtest_init_internal` sets `-display none`
+so there's no way to test the display visually.
+
+There's no `visit_type_*` for arrays so accessing the DM163
+buffer to check its content is complicated. I could technically
+access all the elements in the array (returning a different element
+each time in the getter for example), but that seems sketchy.
+
+2. Frame Rate
+
+It'd be convenient to set the QEMU console's refresh rate
+in order to ensure that the delay before turning off rows
+(4 frames currently) isn't too short. However
+`dpy_ui_info_supported(s->console)` returns false.
+
+
+
+Changes from v2 : Corrected typo in the Based-on message id
+
+Changes from v1 :
+- moving the DM163 from the SoC to the B-L475E-IOT01A machine
+(changing config files and tests accordingly)
+- restricting DM163 test to ARM & DM163 availability
+- using `object_class_by_name()` to check for DM163 presence at run-time
+- exporting SYSCFG inputs to the SoC (and adapting tests accordingly)
+
+Thank you for your review Philippe :)
+
+Based-on: 20240224105417.195674-1-ines.varhol@telecom-paris.fr
+([PATCH v6 0/3] Add device STM32L4x5 GPIO)
+
 Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
 Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
----
- hw/arm/b-l475e-iot01a.c | 44 +++++++++++++++++++++++++++++------------
- 1 file changed, 31 insertions(+), 13 deletions(-)
 
-diff --git a/hw/arm/b-l475e-iot01a.c b/hw/arm/b-l475e-iot01a.c
-index d862aa43fc..2b570b3e09 100644
---- a/hw/arm/b-l475e-iot01a.c
-+++ b/hw/arm/b-l475e-iot01a.c
-@@ -2,8 +2,8 @@
-  * B-L475E-IOT01A Discovery Kit machine
-  * (B-L475E-IOT01A IoT Node)
-  *
-- * Copyright (c) 2023 Arnaud Minier <arnaud.minier@telecom-paris.fr>
-- * Copyright (c) 2023 In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-+ * Copyright (c) 2024 Arnaud Minier <arnaud.minier@telecom-paris.fr>
-+ * Copyright (c) 2024 In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-  *
-  * SPDX-License-Identifier: GPL-2.0-or-later
-  *
-@@ -32,33 +32,51 @@
-=20
- /* B-L475E-IOT01A implementation is derived from netduinoplus2 */
-=20
--static void b_l475e_iot01a_init(MachineState *machine)
-+#define TYPE_B_L475E_IOT01A MACHINE_TYPE_NAME("b-l475e-iot01a")
-+OBJECT_DECLARE_SIMPLE_TYPE(Bl475eMachineState, B_L475E_IOT01A)
-+
-+typedef struct Bl475eMachineState {
-+    MachineState parent_obj;
-+
-+    Stm32l4x5SocState soc;
-+} Bl475eMachineState;
-+
-+static void bl475e_init(MachineState *machine)
- {
-+    Bl475eMachineState *s =3D B_L475E_IOT01A(machine);
-     const Stm32l4x5SocClass *sc;
--    DeviceState *dev;
-=20
--    dev =3D qdev_new(TYPE_STM32L4X5XG_SOC);
--    object_property_add_child(OBJECT(machine), "soc", OBJECT(dev));
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    object_initialize_child(OBJECT(machine), "soc", &s->soc,
-+                            TYPE_STM32L4X5XG_SOC);
-+    sysbus_realize(SYS_BUS_DEVICE(&s->soc), &error_fatal);
-=20
--    sc =3D STM32L4X5_SOC_GET_CLASS(dev);
-+    sc =3D STM32L4X5_SOC_GET_CLASS(&s->soc);
-     armv7m_load_kernel(ARM_CPU(first_cpu),
--                       machine->kernel_filename,
--                       0, sc->flash_size);
-+        machine->kernel_filename, 0, sc->flash_size);
- }
-=20
--static void b_l475e_iot01a_machine_init(MachineClass *mc)
-+static void bl475e_machine_init(ObjectClass *oc, void *data)
- {
-+    MachineClass *mc =3D MACHINE_CLASS(oc);
-     static const char *machine_valid_cpu_types[] =3D {
-         ARM_CPU_TYPE_NAME("cortex-m4"),
-         NULL
-     };
-     mc->desc =3D "B-L475E-IOT01A Discovery Kit (Cortex-M4)";
--    mc->init =3D b_l475e_iot01a_init;
-+    mc->init =3D bl475e_init;
-     mc->valid_cpu_types =3D machine_valid_cpu_types;
-=20
-     /* SRAM pre-allocated as part of the SoC instantiation */
-     mc->default_ram_size =3D 0;
- }
-=20
--DEFINE_MACHINE("b-l475e-iot01a", b_l475e_iot01a_machine_init)
-+static const TypeInfo bl475e_machine_type[] =3D {
-+    {
-+        .name           =3D TYPE_B_L475E_IOT01A,
-+        .parent         =3D TYPE_MACHINE,
-+        .instance_size  =3D sizeof(Bl475eMachineState),
-+        .class_init     =3D bl475e_machine_init,
-+    }
-+};
-+
-+DEFINE_TYPES(bl475e_machine_type)
+In=C3=A8s Varhol (5):
+  hw/display : Add device DM163
+  hw/arm : Pass STM32L4x5 SYSCFG gpios to STM32L4x5 SoC
+  hw/arm : Create Bl475eMachineState
+  hw/arm : Connect DM163 to B-L475E-IOT01A
+  tests/qtest : Add testcase for DM163
+
+ docs/system/arm/b-l475e-iot01a.rst  |   3 +-
+ include/hw/display/dm163.h          |  57 +++++
+ hw/arm/b-l475e-iot01a.c             | 103 ++++++++--
+ hw/arm/stm32l4x5_soc.c              |   6 +-
+ hw/display/dm163.c                  | 308 ++++++++++++++++++++++++++++
+ tests/qtest/dm163-test.c            | 192 +++++++++++++++++
+ tests/qtest/stm32l4x5_gpio-test.c   |  12 +-
+ tests/qtest/stm32l4x5_syscfg-test.c |  16 +-
+ hw/arm/Kconfig                      |   1 +
+ hw/display/Kconfig                  |   3 +
+ hw/display/meson.build              |   1 +
+ hw/display/trace-events             |  13 ++
+ tests/qtest/meson.build             |   5 +
+ 13 files changed, 690 insertions(+), 30 deletions(-)
+ create mode 100644 include/hw/display/dm163.h
+ create mode 100644 hw/display/dm163.c
+ create mode 100644 tests/qtest/dm163-test.c
+
 --=20
 2.43.2
 
