@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F24CFC48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 23:06:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 626D5C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 23:10:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfpT2-00078c-I1; Thu, 29 Feb 2024 18:05:32 -0500
+	id 1rfpWq-0008NN-Gj; Thu, 29 Feb 2024 18:09:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rfpT1-00075H-2k
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 18:05:31 -0500
-Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
+ id 1rfpWn-0008Kt-2Z
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 18:09:25 -0500
+Received: from mail-oa1-x2f.google.com ([2001:4860:4864:20::2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rfpSx-00074q-MK
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 18:05:30 -0500
-Received: by mail-ot1-x331.google.com with SMTP id
- 46e09a7af769-6e432514155so728127a34.1
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 15:05:27 -0800 (PST)
+ id 1rfpWk-0007cS-9F
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 18:09:23 -0500
+Received: by mail-oa1-x2f.google.com with SMTP id
+ 586e51a60fabf-21eea6aab5eso900822fac.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 15:09:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709247926; x=1709852726; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709248160; x=1709852960; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=SVG6G/jUwC5ZGCxbB2nYaoKt15Hm73i6FrQGjWZf71Q=;
- b=xha83Qe2PvKi9Rfvtba1JEQC5j59u4RFXaQX6pXV85rh6a1RduFC0pdLBlPuSY0ZyF
- 5SVxwp7+gi8M/H2JupQkVhOCIyb1WfUzfj9tY8gV7xvbF41au5jaIMO3YvP8NP2qc4rJ
- DE3FISmUJD5dcyb3lUuNTr7zV6qtDgGQnE8WtYQXkLM3Ybqs3gCzM5OasQ3MSPG+Ci13
- yrVUagUCB/2aS8KsZUqjcOO0wGL6MpzmT2jRbFh50EYCGkzImegqnTUwSsvXt81Cnt9w
- iFL54yI2dIGFWdeh5GTjJBEPvdKoYzErZtbpQdS0CvxiCYAg9dykznXeM2UBXGHWI0UC
- ODRQ==
+ bh=q4Zks7rS4NPMc826tI+OvfXrAECpt++NHSHMSdDgNRw=;
+ b=Y+7GPmFGZ9xcChpa88y53Ps4dFrQmII74hAf3F8UXJvZdEHjqf+UnpsVcNGDdbRjkI
+ kzebRqdkEWzJtglV3C85dmkYFNlRTTEjzvTJf6meEHLp00iJ2wb0fv1C7+t1AgguBhRy
+ zugD0V0u+VsylMdeD1vsrZzt2R5VQ2kKRQ5q4R+EyRIOH5T+LPo7t8NpHinaNmKP/cX8
+ dkon5S90Z2hIJ3MeyxT4E7Ad/H8914djJH+TVVQbWO1MynWO/Rc8/pU89fgHic1uSZKA
+ /zgyU5VqbmdwtFBiKAuvjYXNr/sY5DolGNU6vZnA7cSp5nCsN9szLBqzkPv+/qaxeeif
+ 7YEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709247926; x=1709852726;
+ d=1e100.net; s=20230601; t=1709248160; x=1709852960;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SVG6G/jUwC5ZGCxbB2nYaoKt15Hm73i6FrQGjWZf71Q=;
- b=N6TYSx2jRdrXq8CLA8xyABdlsabEnfDENlacJHzsJWX2A6vLtDWTEfy20PZF02GSgJ
- 8ge+etqn8zkHnlDFjxt0r1Nbwkc03cR4maNbPC9c1c98svzwV/9j+YJ5Zmg6Q2P90Uwg
- jc8IP5eIUmRQiDF+o/msoztOI1jCTsXXVv46eiDoN0qQAfkPzXihKz2jtfL1+d5lpsMF
- /2pdsIE3s2noJKxf4p7wmS+1vpNGX/E9+5zEgS8lYceYPbEOxruMsOTcqN5loWrCiGGK
- HIUpT7LYR0g/V5I//S+0S5fa9ABLwPX6RM/FCNps28Poz1BVY3J4smXjUfNbPjM51dCq
- UpZw==
+ bh=q4Zks7rS4NPMc826tI+OvfXrAECpt++NHSHMSdDgNRw=;
+ b=uN0KbA/5OixHhCT1NGDlQUHLC5Q12E4PJJcAQRODUDgi4Cnc9DBiWPouzjzkpx4JNA
+ QPrJK9krTLC5/MpZjKw6n0RltxDoR1u5b+N5TxKNpUZwAojHy6TYdeESZ7JrMdMLg2Js
+ sglLnwZN2k5pGOxC50CDX5EBW2SBVqy7HuxCxqWC0LKch4pL6h6n4vlOvo9mwNFKOPfm
+ sx/Rc0Jk0NkU6J5oE7NY1w8KgfB7XdhXblLXm0o+WHjl1l3l8mrTSTsQ1DMO53WM48E/
+ it1zAs0hRBb0yhhY+Rq5T/Z8RiEmeUCCC1dYP1bQCbZXow6FpFWcMbUiXFBc6+LJyiZx
+ KPrA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVJC/ssdKDf7K2HgUcW/Mm1SZERIE9CM08rRS9+4T7XqEz3Jwh9DfOrl9pYoiEvvrk1QNqSZdi80YCx4TBfdtSB/DFhggI=
-X-Gm-Message-State: AOJu0Yw1YIL0AM7cSkEuBQoHJ/gydbwAWh52qfWIaEMwDJD2rJAJ79d7
- smIjuoApW5Gf50pSk6wN64YQFdyrxljQfHUW35bIJSN28O2A2g4UIdCmzNKrNxE=
-X-Google-Smtp-Source: AGHT+IHDtAGTgQxfLRRpGZqDMKDqxQ03dkLktuiYjbzDoqfmIT7dS5PtD0+CKM7eUD4UDgNq8nwtEQ==
-X-Received: by 2002:a05:6830:1db7:b0:6e4:8caa:6b13 with SMTP id
- z23-20020a0568301db700b006e48caa6b13mr130716oti.4.1709247926584; 
- Thu, 29 Feb 2024 15:05:26 -0800 (PST)
+ AJvYcCXsmARyq2VsLZ92uoqPfZxfeQgTXA8oaHh1ySCLcpZcQZ3haJLWRb0WJe5VUi8WM3xoLEAMLYbpq6XcOs6aAO4Rc5E5K2k=
+X-Gm-Message-State: AOJu0YziRafSaOriyDixtiqE3FVXz4YqtU5DtyTG3wGaRd8DZak0RVkh
+ 4aQnLhLAErCxnWUz/7+GvsWqK3o/3PCnk3J8LEXKuFZoHzQertMlDu6HNiXh1u4=
+X-Google-Smtp-Source: AGHT+IE5k4szT7KekWPPUMAumtRNVedgTUTdTu014ISPFCGWby1UGHVoATxaRFlGODWLcuknYprTsg==
+X-Received: by 2002:a05:6870:9585:b0:21f:dc71:c3f4 with SMTP id
+ k5-20020a056870958500b0021fdc71c3f4mr4074275oao.43.1709248160555; 
+ Thu, 29 Feb 2024 15:09:20 -0800 (PST)
 Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
  [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- i37-20020a635865000000b005dc5289c4edsm1817304pgm.64.2024.02.29.15.05.24
+ du6-20020a056a002b4600b006e5933a0da9sm1733399pfb.165.2024.02.29.15.09.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Feb 2024 15:05:26 -0800 (PST)
-Message-ID: <886af10e-2534-4d97-a705-573bf95793be@linaro.org>
-Date: Thu, 29 Feb 2024 13:05:22 -1000
+ Thu, 29 Feb 2024 15:09:20 -0800 (PST)
+Message-ID: <e7fd1fba-ee1d-4b78-b743-128fa8217ed8@linaro.org>
+Date: Thu, 29 Feb 2024 13:09:16 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v5 08/22] target/arm: Handle IS/FS in ISR_EL1 for NMI
+Subject: Re: [RFC PATCH v5 12/22] target/arm: Handle NMI in
+ arm_cpu_do_interrupt_aarch64()
 Content-Language: en-US
 To: Jinjie Ruan <ruanjinjie@huawei.com>, peter.maydell@linaro.org,
  eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
  wangyanan55@huawei.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
 References: <20240229131039.1868904-1-ruanjinjie@huawei.com>
- <20240229131039.1868904-9-ruanjinjie@huawei.com>
+ <20240229131039.1868904-13-ruanjinjie@huawei.com>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240229131039.1868904-9-ruanjinjie@huawei.com>
+In-Reply-To: <20240229131039.1868904-13-ruanjinjie@huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x331.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,18 +101,52 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/29/24 03:10, Jinjie Ruan via wrote:
->       if (hcr_el2 & HCR_FMO) {
->           if (cs->interrupt_request & CPU_INTERRUPT_VFIQ) {
->               ret |= CPSR_F;
-> +
-> +            if (env->cp15.hcrx_el2 & HCRX_VFNMI) {
-> +                ret |= ISR_FS;
-> +            }
+> According to Arm GIC section 4.6.3 Interrupt superpriority, the interrupt
+> with superpriority is always IRQ, never FIQ, so the NMI exception trap entry
+> behave like IRQ. However, VNMI can be IRQ or FIQ, FIQ can only come from
+> hcrx_el2.HCRX_VFNMI bit, IRQ can be raised from the GIC or come from the
+> hcrx_el2.HCRX_VINMI bit.
+> 
+> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+> ---
+> v4:
+> - Also handle VNMI in arm_cpu_do_interrupt_aarch64().
+> v3:
+> - Remove the FIQ NMI handle.
+> ---
+>   target/arm/helper.c | 9 +++++++++
+>   1 file changed, 9 insertions(+)
+> 
+> diff --git a/target/arm/helper.c b/target/arm/helper.c
+> index b796dbdf21..bd34b3506a 100644
+> --- a/target/arm/helper.c
+> +++ b/target/arm/helper.c
+> @@ -11459,12 +11459,21 @@ static void arm_cpu_do_interrupt_aarch64(CPUState *cs)
+>           break;
+>       case EXCP_IRQ:
+>       case EXCP_VIRQ:
+> +    case EXCP_NMI:
+>           addr += 0x80;
+>           break;
+>       case EXCP_FIQ:
+>       case EXCP_VFIQ:
+>           addr += 0x100;
+>           break;
+> +    case EXCP_VNMI:
+> +        if (env->irq_line_state & CPU_INTERRUPT_VNMI ||
+> +            env->cp15.hcrx_el2 & HCRX_VINMI) {
+> +            addr += 0x80;
+> +        } else if (env->cp15.hcrx_el2 & HCRX_VFNMI) {
+> +            addr += 0x100;
+> +        }
+> +        break;
 
-VFIO can be raised one of two ways: from the GIC and from HCR_EL2.VF.
-But superpriority can only be added with HCRX_EL2.VFNMI.
+By not combining VFNMI with CPU_INTERRUPT_VNMI, you don't need this complication.
+Just
 
-You need to verify that HCR_EL2.VF is set before checking VFNMI.
+      case EXCP_IRQ:
+      case EXCP_VIRQ:
++    case EXCP_NMI:
 
 
 r~
