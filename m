@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13977C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 17:26:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66F65C54E49
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 17:26:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfkAI-0001gD-GS; Thu, 29 Feb 2024 12:25:50 -0500
+	id 1rfkAv-0002QG-0D; Thu, 29 Feb 2024 12:26:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfkAG-0001en-PR
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 12:25:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfkAs-0002Pb-Mi
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 12:26:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfkAF-0006EN-9o
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 12:25:48 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfkAr-0006Il-As
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 12:26:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709227546;
+ s=mimecast20190719; t=1709227584;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=XJZErUVEv56pqvavD+0nHECUt2PbW/A43FUbSGjbACE=;
- b=IkRlg1zyitNb3W1WMFJtO96bP+k2Tw2iinlZEdrTR6UUNvxLtuK99O6hpPa7MeC8fg3emD
- Yjerpmr9AyJGOYYnCHv8NXfl7Bop1pvIufiwhNwCsGiGx0zVprBwOMQUx1rM61QAHxeYEl
- 3IfsAyuR8m5CmbLmbpNAyaE/isgAP2E=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=eEJ+heazH42dGukRZbPG9kUKNB/KnVc0BR4eDpbRwy4=;
+ b=arySoZFZlrUjkYGNv21OLptTeyXxTfLUYUH2OZnPM1n+EaixVamR6bt00dsgQzdTp3whHw
+ Vykn1+PgVTImALdYOk8zNYu4O3pJbXtJbirSgmdfyorM6xaEutbe5VKetbk7X3AM6N/AkR
+ /eLIlGmZAXj3UvhJUYKTFCC3mRXPcVc=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-607-2BNr2TSHOgmrCIhTHJFmrA-1; Thu, 29 Feb 2024 12:25:44 -0500
-X-MC-Unique: 2BNr2TSHOgmrCIhTHJFmrA-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-565862cc48fso1471294a12.1
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 09:25:44 -0800 (PST)
+ us-mta-266-E5erl3MoN3G4P2DN27C9qQ-1; Thu, 29 Feb 2024 12:26:20 -0500
+X-MC-Unique: E5erl3MoN3G4P2DN27C9qQ-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-564901924f4so1026930a12.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 09:26:20 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709227543; x=1709832343;
+ d=1e100.net; s=20230601; t=1709227578; x=1709832378;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XJZErUVEv56pqvavD+0nHECUt2PbW/A43FUbSGjbACE=;
- b=e4G7iX3FL3s6ty++6aHgthIFlfxFKShA1JWTzXMz3M00RczYLjR/iYabaEzS3wQqgc
- TygHAWPidFz5Y2Js7f7KlNEj7ErQh4lHmwXMPfueqbevRNwBOjsToWRDlx7XDQauPEuR
- a2+tswl/bP7sdv2WmPyjvoeU0dQScS9DObntd+DlBxXlEZpj+w9RJH1J42y2SWEDzDPY
- ui+K65CnO45yG1iHwWny0q0FBEl08a7yd7QJ9ny8K/wt/x1eUQt7JgY6po+/OLUJ60e1
- B8SPyooIWMidcOfKntdAYAFjHrhkvdFC4ontuvQHV3z6zue8pLCWQcUCLpKkM6X7O1zF
- Dkiw==
+ bh=eEJ+heazH42dGukRZbPG9kUKNB/KnVc0BR4eDpbRwy4=;
+ b=PoI/z++RR8wLEJzAN7v7P7S4cMUOWCiNKOxjNfiXUPTwiyX5WdqO0LEgR8tWl/PdoV
+ yiWvLI5Yfosv7L/+6Wab5JNmvADX/VAD2WwoO9W9T7kCb9d/STWATfQtIKcxvqk5AzCb
+ HbtHPiquBi1lINspCYHDsWAASO8n29cu6l+yIC/XKbhyqET//N4DzofkmwOFLzH+VTIO
+ /Z7AzEw72OMOlom4qr9QDbDNX0Ly7Rv12ChvH4TQXdMV3+YkP+z+aEAJs9UC6+ttI4tj
+ RlRoaCRr5UoHI0QdJe8veThLXQzcn3qB/Cr+6sSGhQ5TBgOZGAgVKklD+U9xDZoFKuO+
+ JRew==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXVqq7ZLYsVuRxdZ2YUQzEStfU7EBAW3LfwH8zsGzwolYa7GaDzAcnz3TVtHWM4IPktez4jDujayq3pnAWvU2kQTT+zde8=
-X-Gm-Message-State: AOJu0Yx9gR/njM2nLlHNqZ+6tLu1t7tzM1CJTFnDgPeFYXzcMN7W8DB1
- A5FzEEzSF9MvgZQC0WGhV9Ef1efVu2iX4MJuawQRFKKHloKVY6GstoG+bBT+m6z1Mvs8SZp0ggL
- SCXKIc5n+9rkTkeByQnmYL2DmlVXlSQ+43YWskgf2/oPZ3mWmycUL
-X-Received: by 2002:a50:bb23:0:b0:563:e9c9:adc3 with SMTP id
- y32-20020a50bb23000000b00563e9c9adc3mr1944488ede.10.1709227543634; 
- Thu, 29 Feb 2024 09:25:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEnC6gThiH7tS1gh3mhnGTfG02x97X6rF56PMIJFT0ojqro3NHrZFCNL6MSxXK55+kzWzz2nA==
-X-Received: by 2002:a50:bb23:0:b0:563:e9c9:adc3 with SMTP id
- y32-20020a50bb23000000b00563e9c9adc3mr1944475ede.10.1709227543369; 
- Thu, 29 Feb 2024 09:25:43 -0800 (PST)
+ AJvYcCUdeeMOR5ur5kCoAWyV98+EOachESOdTmcmCJ90OEMN/fk2eqv5aG49+AlKhvlELVDFhbnSveWCo5yiQgF3dTwjc0Fudk4=
+X-Gm-Message-State: AOJu0YzE68cDKa6On8uQMhhZCjRC7Z4VrwSmww/4OARqJHhmMaWO5jqh
+ YMT4cWqww/WKIXDiGnRWizn4dwWR3xyrICKzqIv0YnUTPFiNkWx6lm0CSGTmy3Rpa0Zw0U5q33G
+ 1/YouqssNgffL8rsQJGftPpEfTOnJvtCNmCUvdnEFWbbAUPYOZT5E
+X-Received: by 2002:a50:8d86:0:b0:565:f90c:1263 with SMTP id
+ r6-20020a508d86000000b00565f90c1263mr2151809edh.9.1709227578346; 
+ Thu, 29 Feb 2024 09:26:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHAvd7nKsEDJ4JQXo+6iHx1UV5OphanDDs7p1vYVEKi6oTpq7Xv19lGJBLf1Gv7CyNSX8Uagw==
+X-Received: by 2002:a50:8d86:0:b0:565:f90c:1263 with SMTP id
+ r6-20020a508d86000000b00565f90c1263mr2151802edh.9.1709227578057; 
+ Thu, 29 Feb 2024 09:26:18 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-178-133.web.vodafone.de.
  [109.43.178.133]) by smtp.gmail.com with ESMTPSA id
- es17-20020a056402381100b005666aaf340dsm787884edb.21.2024.02.29.09.25.41
+ es17-20020a056402381100b005666aaf340dsm787884edb.21.2024.02.29.09.26.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Feb 2024 09:25:42 -0800 (PST)
-Message-ID: <b353cdec-2d6e-4ab6-bd4e-3e9cee5091a1@redhat.com>
-Date: Thu, 29 Feb 2024 18:25:40 +0100
+ Thu, 29 Feb 2024 09:26:17 -0800 (PST)
+Message-ID: <02c6275c-ad12-4bac-b1d3-b61330c434e6@redhat.com>
+Date: Thu, 29 Feb 2024 18:26:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/17] hw/net/xen_nic: Fix missing ERRP_GUARD() for
- error_prepend()
+Subject: Re: [PATCH 03/17] hw/remote/remote-obj: hw/misc/ivshmem: Fix missing
+ ERRP_GUARD() for error_prepend()
 Content-Language: en-US
 To: Zhao Liu <zhao1.liu@linux.intel.com>,
  Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Michael Tokarev <mjt@tls.msk.ru>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
  <philmd@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
- Jason Wang <jasowang@redhat.com>
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>
 References: <20240229143914.1977550-1-zhao1.liu@linux.intel.com>
- <20240229143914.1977550-3-zhao1.liu@linux.intel.com>
+ <20240229143914.1977550-4-zhao1.liu@linux.intel.com>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -125,18 +124,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240229143914.1977550-3-zhao1.liu@linux.intel.com>
+In-Reply-To: <20240229143914.1977550-4-zhao1.liu@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,7 +152,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/02/2024 15.38, Zhao Liu wrote:
+On 29/02/2024 15.39, Zhao Liu wrote:
 > From: Zhao Liu <zhao1.liu@intel.com>
 > 
 > As the comment in qapi/error, passing @errp to error_prepend() requires
@@ -174,36 +174,34 @@ On 29/02/2024 15.38, Zhao Liu wrote:
 > error_fatal, the user can't see this additional information, because
 > exit() happens in error_setg earlier than information is added [1].
 > 
-> The xen_netdev_connect() passes @errp to error_prepend(), and its @errp
-> parameter is from xen_device_frontend_changed().
+> The remote_object_set_fd() passes @errp to error_prepend(), and as a
+> PropertyInfo.set method, its @errp is so widely sourced that it is
+> necessary to protect it with ERRP_GUARD().
 > 
-> Though its @errp points to @local_err of xen_device_frontend_changed(),
-> to follow the requirement of @errp, add missing ERRP_GUARD() at the
+> To avoid the issue like [1] said, add missing ERRP_GUARD() at the
 > beginning of this function.
 > 
 > [1]: Issue description in the commit message of commit ae7c80a7bd73
 >       ("error: New macro ERRP_GUARD()").
 > 
-> Cc: Stefano Stabellini <sstabellini@kernel.org>
-> Cc: Anthony Perard <anthony.perard@citrix.com>
-> Cc: Paul Durrant <paul@xen.org>
-> Cc: Jason Wang <jasowang@redhat.com>
+> Cc: Elena Ufimtseva <elena.ufimtseva@oracle.com>
+> Cc: Jagannathan Raman <jag.raman@oracle.com>
 > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
->   hw/net/xen_nic.c | 1 +
+>   hw/remote/remote-obj.c | 1 +
 >   1 file changed, 1 insertion(+)
 > 
-> diff --git a/hw/net/xen_nic.c b/hw/net/xen_nic.c
-> index 453fdb981983..89487b49baf9 100644
-> --- a/hw/net/xen_nic.c
-> +++ b/hw/net/xen_nic.c
-> @@ -351,6 +351,7 @@ static bool net_event(void *_xendev)
+> diff --git a/hw/remote/remote-obj.c b/hw/remote/remote-obj.c
+> index 65b6f7cc863f..dc27cc8da1f3 100644
+> --- a/hw/remote/remote-obj.c
+> +++ b/hw/remote/remote-obj.c
+> @@ -49,6 +49,7 @@ struct RemoteObject {
 >   
->   static bool xen_netdev_connect(XenDevice *xendev, Error **errp)
+>   static void remote_object_set_fd(Object *obj, const char *str, Error **errp)
 >   {
 > +    ERRP_GUARD();
->       XenNetDev *netdev = XEN_NET_DEVICE(xendev);
->       unsigned int port, rx_copy;
+>       RemoteObject *o = REMOTE_OBJECT(obj);
+>       int fd = -1;
 >   
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
