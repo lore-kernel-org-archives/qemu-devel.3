@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DFC4C54E49
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 18:23:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17696C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 18:24:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfl49-0005IW-Sd; Thu, 29 Feb 2024 13:23:33 -0500
+	id 1rfl4l-0005yn-Be; Thu, 29 Feb 2024 13:24:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rfl48-0005BV-MY
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 13:23:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rfl4f-0005sf-FF
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 13:24:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rfl45-0003wM-OH
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 13:23:32 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rfl4d-00046k-4p
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 13:24:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709231009;
+ s=mimecast20190719; t=1709231042;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qastcp8CQGXthHZuPdOFfJywS2j1TI3CPTiTjAPpUq0=;
- b=McPfRkg0yaX3fNaxaSjfc/43Yt2zf8P27lhTOftSMKzNC1n46AvWC1xmZqsFk+lanUuNLu
- rgFHmq203i6I9AnM+ZcVnTqekssaMN7YCFgzTOGFdmUmCn8ftpguuSX0Ky+VNsdHcUvgih
- 2vbQ9xc78MZYKFbab9YIEh9QlJNAQg4=
-Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com
- [209.85.161.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=F3pIRz+zVLrKRYcSc+itWPqUw50CxhlRnpCLFrGPO6A=;
+ b=HgQiDObTN1gk7MHea24IPmLIHKpikr9xZc52V0nAEk4OOwod73RED7FzfpzTUU6cGtCT0M
+ cduWCYjFy2HThNXj2WkM2Fw4Pp+3rPAKXD5/h5VxQ3l1GsD9eztZ3lmAW3YvdRyhpR+K4E
+ ISadPfl7vL3U3FEC18P9VeOb4sQAB1Q=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-377-xZ47ssOuNeCG2C982yEJpQ-1; Thu, 29 Feb 2024 13:23:27 -0500
-X-MC-Unique: xZ47ssOuNeCG2C982yEJpQ-1
-Received: by mail-oo1-f70.google.com with SMTP id
- 006d021491bc7-5a0b99d6f2bso1123908eaf.0
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 10:23:27 -0800 (PST)
+ us-mta-292-86Zg6f8xOUanssxplteaRA-1; Thu, 29 Feb 2024 13:24:01 -0500
+X-MC-Unique: 86Zg6f8xOUanssxplteaRA-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-68fd31a5cafso9989386d6.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 10:24:01 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709231006; x=1709835806;
+ d=1e100.net; s=20230601; t=1709231040; x=1709835840;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qastcp8CQGXthHZuPdOFfJywS2j1TI3CPTiTjAPpUq0=;
- b=iLaIvgV7Y/tdu4n8CKqCwu88FcN6O8ky4hej5NrtLtR90DVHYsNprsIqZKQ8IXpPCt
- EbYF8TDRO2EXB4rLuMjlBbZFH6dXALvKqwAYuY0gEiW7HzsjSkuBdToAuA/nVvqq0glH
- ot4G5qsF5nKECeZjsMMszlIz6Ft/cbYWsikZXjjiWoAHl22tdvy0rrQHgXNlHoR5yd1E
- yhXoHApuXDDHhpssQDVlLs2P+M4B6cFGt4sMu3XfQWLCDuMXjzk7A77gA2fq74mxztk/
- 5vOSSwKCMogCd9wCwcik7mSjBIhdkrUaRrBY24mxkEoymLt1qOWVsG+16hMUwe8OZY7g
- tR7Q==
+ bh=F3pIRz+zVLrKRYcSc+itWPqUw50CxhlRnpCLFrGPO6A=;
+ b=UsgHtPOaiRL8dZoKgtM4x6SFlsSpcbQBZSSK4XKsG9fDXdZEaqIX/lYeMe+uaHTn6H
+ ybP9LxuHu4aHGuTmH0aIGkopLYuIAf1anl0sFXZQWgFO5rx9rxjsE85E0uQfeneBcTbF
+ tWanvFhcSrsjQmQC0GQOXSIO/ztLIulgZsqLIwzIgn041X7txbKCHNNEbnU0kkHYnc6Y
+ Sjbun/5DOKBwY1e/+lBuVDh4RNkrEBNpL+T0zvrgRHd21MdQvcGv81g3fDKbs7x8FEO7
+ KFOjGrGQChYxZZSGlrr/PzTrH9ak4XNBDNJqd5AJfaR+HarKVy1OlMWac/PN4bjd6QBJ
+ NxSQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXWU2vJMVJmJT1mbkXiP8PReaoEZejmZHNk42IvHXGcTUKULQBNZ09vs0l2tKMj1Lg8fRYizuhdx7KlUqcAyJYsTHuhOO0=
-X-Gm-Message-State: AOJu0YxeT5HtjQkuOARHS2dwKUk9VMMFiElt1y0RD+oIrTV3xnZMJPyb
- 9urSm92xUNSCx+DW2nax+YJtjgqXK0wqfyCALtqvVxFIK4VJxg+Nng1OlDHgVupeq5LyWw8oOr2
- wqfmWkLnZ78cXukpMLWLgCN5GCiHZUVRjYBk3OwNVE/XA+rQw3Nsq
-X-Received: by 2002:a05:6358:7e85:b0:17b:b830:2809 with SMTP id
- o5-20020a0563587e8500b0017bb8302809mr3618422rwn.19.1709231006274; 
- Thu, 29 Feb 2024 10:23:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEBmcvqtDdbJG2GiWKBOMOx9PjmZCYsFOJbH35xdHtSvRX5Q/EAL6eZObabWPj6FVjgY8PgCw==
-X-Received: by 2002:a05:6358:7e85:b0:17b:b830:2809 with SMTP id
- o5-20020a0563587e8500b0017bb8302809mr3618410rwn.19.1709231006007; 
- Thu, 29 Feb 2024 10:23:26 -0800 (PST)
+ AJvYcCXU0BhSPLBZhR11iX1ncHxNaXv9Sj+FfoWLq0ZXH0r+1YJOm3XPFmHi7TH6ZS41CTnv4tg7sapOcVZTlUGbUHwnO395mTM=
+X-Gm-Message-State: AOJu0YzTHybzd8P0Y7hzjYS9Ui7Q9fOxPVlQ/5baaeL3cR7/BIGMdt09
+ Qd1ipJFACLieCkQsV8eMzlUfl+CkmFZfdeZ+42iFdJx0pDrcFZK+wJj1yNCv61J4Fn0utnNAwNk
+ LnQeB/3X9JzeJWrd7r6NyYanNNZRriBX7+CxkNCRPC34W8FhScV4p
+X-Received: by 2002:a05:6214:1083:b0:690:4de5:8483 with SMTP id
+ o3-20020a056214108300b006904de58483mr1506488qvr.37.1709231040683; 
+ Thu, 29 Feb 2024 10:24:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH/ODcYrlub94A9B4Gl6SZs3Mz2ZNeh+hvr0h2H5MfHFgl1D6PyYOWt9onu0KzKHwI4bfOaJA==
+X-Received: by 2002:a05:6214:1083:b0:690:4de5:8483 with SMTP id
+ o3-20020a056214108300b006904de58483mr1506474qvr.37.1709231040409; 
+ Thu, 29 Feb 2024 10:24:00 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- qp11-20020a056214598b00b0068fef74fdb3sm994819qvb.59.2024.02.29.10.23.24
+ qp11-20020a056214598b00b0068fef74fdb3sm994819qvb.59.2024.02.29.10.23.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Feb 2024 10:23:25 -0800 (PST)
-Message-ID: <dd68947e-5edd-41d7-893e-6e75df2086b8@redhat.com>
-Date: Thu, 29 Feb 2024 19:23:23 +0100
+ Thu, 29 Feb 2024 10:23:59 -0800 (PST)
+Message-ID: <389190e1-cf8c-4cc5-bae0-3ce93c00f495@redhat.com>
+Date: Thu, 29 Feb 2024 19:23:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/17] hw/vfio/iommufd: Fix missing ERRP_GUARD() for
+Subject: Re: [PATCH 09/17] hw/vfio/pci-quirks: Fix missing ERRP_GUARD() for
  error_prepend()
 Content-Language: en-US, fr
 To: Zhao Liu <zhao1.liu@linux.intel.com>,
@@ -80,21 +80,21 @@ To: Zhao Liu <zhao1.liu@linux.intel.com>,
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
  Alex Williamson <alex.williamson@redhat.com>
 References: <20240229143914.1977550-1-zhao1.liu@linux.intel.com>
- <20240229143914.1977550-9-zhao1.liu@linux.intel.com>
+ <20240229143914.1977550-10-zhao1.liu@linux.intel.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240229143914.1977550-9-zhao1.liu@linux.intel.com>
+In-Reply-To: <20240229143914.1977550-10-zhao1.liu@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,9 +132,13 @@ On 2/29/24 15:39, Zhao Liu wrote:
 > error_fatal, the user can't see this additional information, because
 > exit() happens in error_setg earlier than information is added [1].
 > 
-> The iommufd_cdev_getfd() passes @errp to error_prepend(). Its @errp is
-> from vfio_attach_device(), which @errp parameter is so widely sourced
-> that it is necessary to protect it with ERRP_GUARD().
+> In hw/vfio/pci-quirks.c, there're 2 functions passing @errp to
+> error_prepend() without ERRP_GUARD():
+> - vfio_add_nv_gpudirect_cap()
+> - vfio_add_vmd_shadow_cap()
+> 
+> Their @errp parameters are so widely sourced that it is necessary to
+> protect them with ERRP_GUARD().
 > 
 > To avoid the issue like [1] said, add missing ERRP_GUARD() at the
 > beginning of this function.
@@ -155,20 +159,28 @@ C.
 
 
 > ---
->   hw/vfio/iommufd.c | 1 +
->   1 file changed, 1 insertion(+)
+>   hw/vfio/pci-quirks.c | 2 ++
+>   1 file changed, 2 insertions(+)
 > 
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index 9bfddc136089..7baf49e6ee9e 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -116,6 +116,7 @@ static void iommufd_cdev_unbind_and_disconnect(VFIODevice *vbasedev)
+> diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
+> index 84b1a7b9485c..496fd1ee86bd 100644
+> --- a/hw/vfio/pci-quirks.c
+> +++ b/hw/vfio/pci-quirks.c
+> @@ -1538,6 +1538,7 @@ static bool is_valid_std_cap_offset(uint8_t pos)
 >   
->   static int iommufd_cdev_getfd(const char *sysfs_path, Error **errp)
+>   static int vfio_add_nv_gpudirect_cap(VFIOPCIDevice *vdev, Error **errp)
 >   {
 > +    ERRP_GUARD();
->       long int ret = -ENOTTY;
->       char *path, *vfio_dev_path = NULL, *vfio_path = NULL;
->       DIR *dir = NULL;
+>       PCIDevice *pdev = &vdev->pdev;
+>       int ret, pos;
+>       bool c8_conflict = false, d4_conflict = false;
+> @@ -1630,6 +1631,7 @@ static int vfio_add_nv_gpudirect_cap(VFIOPCIDevice *vdev, Error **errp)
+>   #define VMD_SHADOW_CAP_LEN 24
+>   static int vfio_add_vmd_shadow_cap(VFIOPCIDevice *vdev, Error **errp)
+>   {
+> +    ERRP_GUARD();
+>       uint8_t membar_phys[16];
+>       int ret, pos = 0xE8;
+>   
 
 
