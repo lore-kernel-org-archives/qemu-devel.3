@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFE14C54E41
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 14:27:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 854F7C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 14:27:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfhMt-0007SJ-NW; Thu, 29 Feb 2024 09:26:39 -0500
+	id 1rfhMv-0007dB-SZ; Thu, 29 Feb 2024 09:26:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfhMn-0007BW-Js; Thu, 29 Feb 2024 09:26:33 -0500
+ id 1rfhMn-0007Cc-VK; Thu, 29 Feb 2024 09:26:34 -0500
 Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfhMl-0005ee-Tu; Thu, 29 Feb 2024 09:26:33 -0500
+ id 1rfhMl-0005c2-8g; Thu, 29 Feb 2024 09:26:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709216792; x=1740752792;
+ t=1709216791; x=1740752791;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=wPeEnKkJYPPIgo94FX+zh/eKLbECzV39wf2hQuNxEqw=;
- b=jpwVpbAV5bZaCj4da+FFeaPmQgZz5e1KI9dvt3TK/6ZgJTo22HwZdLQl
- JOfHBPcFbpQooyKNL68r+6VwcPnLNbKpf4G8GgOGSbNL4frhra075zZI5
- +bdurFoH1afpsB9471kqyvCsoaUeM9rE1hj/WAr/benfv03i+AlY5WCNM
- zNTX1jFc1IjbvYqlwQsZED6dGxDoObVH7Ws8bVrGNl2Fi8b3WvdtzDD8R
- f6K5nkZEEIptjjB3qIDxiVAx5VhIwOTVS2Jv34b5TFcEW1SCzjESlXVpn
- wWgjCLf1qutpz2gGyRit9zP5be9eHff4+qD5U2o3n6LyTo6AWaHFeFQsP g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="14322841"
-X-IronPort-AV: E=Sophos;i="6.06,194,1705392000"; d="scan'208";a="14322841"
+ bh=1uR8nwqYf2xyCLjXffYB8T2F9oXrqWJ3oP/O8Q6/HKo=;
+ b=gMlMKNaXg4BLiZoh70WoMxC/M5uPve3plIjsEXCHECmWzereL0uFHAt5
+ jHZ4DuxpZyJK2EGAbp2I3gC70SKACjZ9qEy94cBsbz5Yp5EN23syGp72+
+ qYVmwAR8q/EVvXAIjtE0gvwT5ZAr+5e1w9uyjGT5+1nIYjokfmbcnU20f
+ LSpQjdAmV4Qf7lJYP78RiPo+hOHkIpL0zrdMIIOu5qEjQ/0g9TRpeSbOA
+ q00dmChj/PmvzfpEz+XZr4BPHi8NaXtdOZtSRrpcfi35YC31hCyAfozW1
+ /CjqDBhFhxQ7thePciKHuC+wzm45v0y7+CkxGdsskk/tcYtslGi2j6woY Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="14322890"
+X-IronPort-AV: E=Sophos;i="6.06,194,1705392000"; d="scan'208";a="14322890"
 Received: from fmviesa010.fm.intel.com ([10.60.135.150])
  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Feb 2024 06:26:09 -0800
+ 29 Feb 2024 06:26:14 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,194,1705392000"; 
-   d="scan'208";a="7793892"
+   d="scan'208";a="7793917"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa010.fm.intel.com with ESMTP; 29 Feb 2024 06:26:07 -0800
+ by fmviesa010.fm.intel.com with ESMTP; 29 Feb 2024 06:26:12 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Michael Tokarev <mjt@tls.msk.ru>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH 14/17] migration/option: Fix missing ERRP_GUARD() for
+ Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
+Subject: [PATCH 16/17] target/i386/sev: Fix missing ERRP_GUARD() for
  error_prepend()
-Date: Thu, 29 Feb 2024 22:39:11 +0800
-Message-Id: <20240229143914.1977550-15-zhao1.liu@linux.intel.com>
+Date: Thu, 29 Feb 2024 22:39:13 +0800
+Message-Id: <20240229143914.1977550-17-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240229143914.1977550-1-zhao1.liu@linux.intel.com>
 References: <20240229143914.1977550-1-zhao1.liu@linux.intel.com>
@@ -100,38 +100,35 @@ ERRP_GUARD() could avoid the case when @errp is the pointer of
 error_fatal, the user can't see this additional information, because
 exit() happens in error_setg earlier than information is added [1].
 
-The migrate_params_check() passes @errp to error_prepend() without
-ERRP_GUARD(), and it could be called from migration_object_init(),
-where the passed @errp points to @error_fatal.
+The sev_inject_launch_secret() passes @errp to error_prepend(), and as
+an APIs defined in target/i386/sev.h, it is necessary to protect its
+@errp with ERRP_GUARD().
 
-Therefore, the error message echoed in error_prepend() will be lost
-because of the above issue.
-
-To fix this, add missing ERRP_GUARD() at the beginning of this function.
+To avoid the issue like [1] said, add missing ERRP_GUARD() at the
+beginning of this function.
 
 [1]: Issue description in the commit message of commit ae7c80a7bd73
      ("error: New macro ERRP_GUARD()").
 
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Marcelo Tosatti <mtosatti@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- migration/options.c | 2 ++
- 1 file changed, 2 insertions(+)
+ target/i386/sev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/migration/options.c b/migration/options.c
-index 3e3e0b93b439..b98cd639979e 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -1057,6 +1057,8 @@ void migrate_params_init(MigrationParameters *params)
-  */
- bool migrate_params_check(MigrationParameters *params, Error **errp)
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 173de91afe7d..72930ff0dcc5 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -1044,6 +1044,7 @@ sev_encrypt_flash(uint8_t *ptr, uint64_t len, Error **errp)
+ int sev_inject_launch_secret(const char *packet_hdr, const char *secret,
+                              uint64_t gpa, Error **errp)
  {
 +    ERRP_GUARD();
-+
-     if (params->has_compress_level &&
-         (params->compress_level > 9)) {
-         error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "compress_level",
+     struct kvm_sev_launch_secret input;
+     g_autofree guchar *data = NULL, *hdr = NULL;
+     int error, ret = 1;
 -- 
 2.34.1
 
