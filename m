@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFA4EC54E41
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 17:23:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D87FC54E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 17:24:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfk70-0008Fn-GR; Thu, 29 Feb 2024 12:22:26 -0500
+	id 1rfk8M-0000dC-O3; Thu, 29 Feb 2024 12:23:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfk6z-0008Ek-6d
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 12:22:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfk8K-0000cY-Ff
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 12:23:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfk6x-0005aa-Lc
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 12:22:24 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfk8I-0005iY-R5
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 12:23:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709227342;
+ s=mimecast20190719; t=1709227426;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=I87VSXgw5DiLnm3tveFXeiIdN9mUJJ50N/+2Xr0MgO8=;
- b=TAD6eJQ8PevyeHLztv6y8Lc4hrX8KtGHxaIuDwZONOW1cLJZldwexbuq7J26z0V/k+hpLq
- VpG74kOTCfK/swE3eGRjdwJMTkzq0k4M3ZRiYT9UXgloM5RJBnqkwoGwsz9Y4d7g1wwol0
- xHj6HqMc1aPDr4/xLCmuptYAOcM1/50=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=AF958iBVDvVZ6Sh/biVmlFGVJWkuLgohM5B9kQ2u/+4=;
+ b=TP0TUmh6OqoclV6+D7INXFZsNv7Zbv9T0kU6AN6FLdORvXunYT+sdynT0hiMPseiBOm4+S
+ AW8l+2Yjl9rXlvRlk5R4we5uYUw5r1FuZQeyJTXi5vBsy+UpuWFHWVAo0FYP/3EJoLYDL4
+ U21kVvs/LYHwQ5sCISYDo/wV798pyhA=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-553-WuHM4Lp5OLeu2HDW4IIsxw-1; Thu, 29 Feb 2024 12:22:20 -0500
-X-MC-Unique: WuHM4Lp5OLeu2HDW4IIsxw-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a3f52ebbb6cso83655166b.0
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 09:22:20 -0800 (PST)
+ us-mta-488-lpY-fYYbN1GdLyuxQfJCfw-1; Thu, 29 Feb 2024 12:23:44 -0500
+X-MC-Unique: lpY-fYYbN1GdLyuxQfJCfw-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a30f9374db7so245659166b.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 09:23:44 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709227339; x=1709832139;
+ d=1e100.net; s=20230601; t=1709227423; x=1709832223;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=I87VSXgw5DiLnm3tveFXeiIdN9mUJJ50N/+2Xr0MgO8=;
- b=L0rayKllTTnxybHsPamv9UqRdccpyI961/NhWiC3zQUk7sWpUrRqqb0eGlv12QlMqQ
- 7HpmM+WGXWV6PlLV6d5NtsLgdX46mTUY4YXhBUWWeH5CjjbTKmdwTTDUqTt3UclNbyY6
- HIFNp4A9nJCmVwAHqW0O0zbS64r/R6ELj5d14hKPjpYhZP1BUeijMMlkZKhqGPwjWjv+
- hlX1xcVa29cAf7JcCWf/1BqMetBBMBsOSBUUHicHUioFA4SqdEu22jJgcSR4h9M14mA7
- 0kFt3V/AZDw2x7GNQJrzpuB03pp2F26K0u1aaTGax+TwIiijvMQGIVEk4iC6aTcIBuPs
- r7/g==
+ bh=AF958iBVDvVZ6Sh/biVmlFGVJWkuLgohM5B9kQ2u/+4=;
+ b=RNNrSwWfsUAQrJte90RrRUAHnXZ7bwA4WE+1loFQU2tEjeBvcMTm4LEAIXBLzN8u/E
+ 1XoiipcHyWRIPyjKcbG1xg2suBaVsB7m3E2sQhT+OyPP7JnGvIdPaj4Y28vp6fdjLSXm
+ bdsO6icNxrZ3OKVPNsrnmVFV/NfzCzI2I9n5EmJrzwVAS4xhpYeaXKvhMfCE4+27bxK2
+ QyxyyjGIrvmZvYOTGSZU4g5zme3SgS7cMwFkKEA8rtslOqAol/L+L1VG6ZU1Q+frEG7l
+ 7f3zX4JvRsTd5hSx6y41zb+fIGiL29IARcmTmudWotplpXufVgTBNEKmBSzo5xms/CzU
+ df4g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCURiZ1MpXAp/MK4zaIbg3uZirNaah+m30OOfpG6D/OtFYnMdAEfGfDbFlyH/o8+JoNJkekiWw89WOJvCHhZii8kDMSb2VU=
-X-Gm-Message-State: AOJu0YxvZh5EFIA3LD3NfcquroKd6w8xCfVoA5HjvSZSO+nc0Ma/zdtC
- XJxymNxAsHM/x8ptMfXPaJrMjqxg7sz7nANhCEk+F7eIBom3OSdhM9f3zOeN25X/fBDWI/DdW9f
- UVdT3NMPR+0K90v6I3uP786cW/mEpt640IiE2k8T0qF46Ofxc+aja
-X-Received: by 2002:a17:906:474c:b0:a44:553e:5a1d with SMTP id
- j12-20020a170906474c00b00a44553e5a1dmr1301169ejs.20.1709227339279; 
- Thu, 29 Feb 2024 09:22:19 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE+fFkUO8a5JlVVHtzmkJUzOMVOgtG313p4igEx3fDHzvASGc4g8ko6jCxL8yvzcd/X+xklXQ==
-X-Received: by 2002:a17:906:474c:b0:a44:553e:5a1d with SMTP id
- j12-20020a170906474c00b00a44553e5a1dmr1301157ejs.20.1709227338988; 
- Thu, 29 Feb 2024 09:22:18 -0800 (PST)
+ AJvYcCX+6Abnild+2PK7PnPVGMLAW8QuUfNC8hrHHcz0mwEemOkEwtU+VvS59QNsYOd0dgai8TJp0y8ET7Fkxqd9AvnwBFKszsg=
+X-Gm-Message-State: AOJu0YxGQDL+tdTMg5+McVlSJR5GH3PqLh1eEgRh6f0G+iK05v0CJepa
+ gVlGgJMYp9mvg0GjA9B4fy2niotw3nbwheO0W6VulVLrxbaY2Z4zo+JZxQx7hhIYRgQ/kSuRzSZ
+ TGYsLuto8/A51s+pjNg0BzPNJxsDBoRblW1alRYT+EKsbj1a3XyWF
+X-Received: by 2002:a17:907:6d0d:b0:a3f:f8a7:e1f7 with SMTP id
+ sa13-20020a1709076d0d00b00a3ff8a7e1f7mr2378693ejc.5.1709227423205; 
+ Thu, 29 Feb 2024 09:23:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG95jIFqYIOzwFg4A1wbseviLXAH5IUH9KiHRH5XWy2W4LcH4HdYp+M9la2m+RJ6J1Tq5rl1w==
+X-Received: by 2002:a17:907:6d0d:b0:a3f:f8a7:e1f7 with SMTP id
+ sa13-20020a1709076d0d00b00a3ff8a7e1f7mr2378666ejc.5.1709227422865; 
+ Thu, 29 Feb 2024 09:23:42 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-178-133.web.vodafone.de.
  [109.43.178.133]) by smtp.gmail.com with ESMTPSA id
- ks27-20020a170906f85b00b00a442124bd2dsm881520ejb.37.2024.02.29.09.22.17
+ ks27-20020a170906f85b00b00a442124bd2dsm881520ejb.37.2024.02.29.09.23.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Feb 2024 09:22:18 -0800 (PST)
-Message-ID: <def17d13-34b2-40ee-a237-a80fe8002f81@redhat.com>
-Date: Thu, 29 Feb 2024 18:22:16 +0100
+ Thu, 29 Feb 2024 09:23:42 -0800 (PST)
+Message-ID: <dec70521-cacc-419c-8405-44780b39f84a@redhat.com>
+Date: Thu, 29 Feb 2024 18:23:41 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/17] hw/scsi/vhost-scsi: Fix missing ERRP_GUARD() for
+Subject: Re: [PATCH 01/17] hw/misc/ivshmem: Fix missing ERRP_GUARD() for
  error_prepend()
 Content-Language: en-US
 To: Zhao Liu <zhao1.liu@linux.intel.com>,
@@ -77,10 +77,11 @@ To: Zhao Liu <zhao1.liu@linux.intel.com>,
  Michael Tokarev <mjt@tls.msk.ru>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
  <philmd@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Fam Zheng <fam@euphon.net>
+ Juan Quintela <quintela@trasno.org>,
+ Steve Sistare <steven.sistare@oracle.com>,
+ Michael Galaxy <mgalaxy@akamai.com>
 References: <20240229143914.1977550-1-zhao1.liu@linux.intel.com>
- <20240229143914.1977550-5-zhao1.liu@linux.intel.com>
+ <20240229143914.1977550-2-zhao1.liu@linux.intel.com>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -124,18 +125,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240229143914.1977550-5-zhao1.liu@linux.intel.com>
+In-Reply-To: <20240229143914.1977550-2-zhao1.liu@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,7 +153,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/02/2024 15.39, Zhao Liu wrote:
+On 29/02/2024 15.38, Zhao Liu wrote:
 > From: Zhao Liu <zhao1.liu@intel.com>
 > 
 > As the comment in qapi/error, passing @errp to error_prepend() requires
@@ -173,10 +175,9 @@ On 29/02/2024 15.39, Zhao Liu wrote:
 > error_fatal, the user can't see this additional information, because
 > exit() happens in error_setg earlier than information is added [1].
 > 
-> The vhost_scsi_realize() passes @errp to error_prepend(), and as a
-> VirtioDeviceClass.realize method, its @errp is from DeviceClass.realize
-> so that there is no guarantee that the @errp won't point to
-> @error_fatal.
+> The ivshmem_common_realize() passes @errp to error_prepend(), and as a
+> DeviceClass.realize method, its @errp is so widely sourced that it is
+> necessary to protect it with ERRP_GUARD().
 > 
 > To avoid the issue like [1] said, add missing ERRP_GUARD() at the
 > beginning of this function.
@@ -184,30 +185,30 @@ On 29/02/2024 15.39, Zhao Liu wrote:
 > [1]: Issue description in the commit message of commit ae7c80a7bd73
 >       ("error: New macro ERRP_GUARD()").
 > 
-> Cc: "Michael S. Tsirkin" <mst@redhat.com>
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Fam Zheng <fam@euphon.net>
+> Cc: Juan Quintela <quintela@trasno.org>
+> Cc: Steve Sistare <steven.sistare@oracle.com>
+> Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org>
+> Cc: Michael Galaxy <mgalaxy@akamai.com>
 > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
->   hw/scsi/vhost-scsi.c | 1 +
+>   hw/misc/ivshmem.c | 1 +
 >   1 file changed, 1 insertion(+)
 > 
-> diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
-> index 58a00336c2db..ae26bc19a457 100644
-> --- a/hw/scsi/vhost-scsi.c
-> +++ b/hw/scsi/vhost-scsi.c
-> @@ -220,6 +220,7 @@ static int vhost_scsi_set_workers(VHostSCSICommon *vsc, bool per_virtqueue)
+> diff --git a/hw/misc/ivshmem.c b/hw/misc/ivshmem.c
+> index a2fd0bc36544..de49d1b8a826 100644
+> --- a/hw/misc/ivshmem.c
+> +++ b/hw/misc/ivshmem.c
+> @@ -832,6 +832,7 @@ static void ivshmem_write_config(PCIDevice *pdev, uint32_t address,
 >   
->   static void vhost_scsi_realize(DeviceState *dev, Error **errp)
+>   static void ivshmem_common_realize(PCIDevice *dev, Error **errp)
 >   {
 > +    ERRP_GUARD();
->       VirtIOSCSICommon *vs = VIRTIO_SCSI_COMMON(dev);
->       VHostSCSICommon *vsc = VHOST_SCSI_COMMON(dev);
+>       IVShmemState *s = IVSHMEM_COMMON(dev);
 >       Error *err = NULL;
 
-I think you could remove the "err" variable and the error_propagate stuff in 
-here now.
+Please remove "err" and the error_propagate in here now.
 
   Thomas
+
 
 
