@@ -4,29 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C72FCC54798
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 07:24:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF736C54E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 07:24:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfaln-0003vO-28; Thu, 29 Feb 2024 02:23:56 -0500
+	id 1rfalu-0004Ez-LI; Thu, 29 Feb 2024 02:24:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1rfalQ-0003io-Vo; Thu, 29 Feb 2024 02:23:35 -0500
+ id 1rfalY-0003nv-7N; Thu, 29 Feb 2024 02:23:43 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX02.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_CBC_SHA1:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1rfalP-0008LL-2Y; Thu, 29 Feb 2024 02:23:32 -0500
-Received: from TWMBX03.aspeed.com (192.168.0.62) by TWMBX02.aspeed.com
- (192.168.0.25) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 29 Feb
- 2024 15:23:18 +0800
-Received: from TWMBX02.aspeed.com (192.168.0.24) by TWMBX03.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 29 Feb
- 2024 15:24:15 +0800
+ id 1rfalV-0008LL-Gw; Thu, 29 Feb 2024 02:23:39 -0500
+Received: from TWMBX02.aspeed.com (192.168.0.24) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 29 Feb
+ 2024 15:23:20 +0800
 Received: from twmbx02.aspeed.com (192.168.10.10) by TWMBX02.aspeed.com
  (192.168.0.24) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
- Transport; Thu, 29 Feb 2024 15:23:18 +0800
+ Transport; Thu, 29 Feb 2024 15:23:20 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
  Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>,
@@ -34,15 +31,19 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  here" <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <jamin_lin@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 3/8] aspeed/sdmc: Add AST2700 support
-Date: Thu, 29 Feb 2024 15:23:10 +0800
-Message-ID: <20240229072315.743963-4-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 7/8] aspeed/soc: Add AST2700 support
+Date: Thu, 29 Feb 2024 15:23:14 +0800
+Message-ID: <20240229072315.743963-8-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240229072315.743963-1-jamin_lin@aspeedtech.com>
 References: <20240229072315.743963-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
+Received-SPF: Fail (TWMBX02.aspeed.com: domain of jamin_lin@aspeedtech.com
+ does not designate 192.168.10.10 as permitted sender)
+ receiver=TWMBX02.aspeed.com; client-ip=192.168.10.10;
+ helo=twmbx02.aspeed.com;
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX02.aspeed.com
 X-Spam_score_int: -18
@@ -67,349 +68,594 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The SDRAM memory controller(DRAMC) controls the access to external
-DDR4 and DDR5 SDRAM and power up to DDR4 and DDR5 PHY.
+Initial definitions for a simple machine using an AST2700 SOC (Cortex-a35 CPU).
 
-The DRAM memory controller of AST2700 is not backward compatible
-to previous chips such AST2600, AST2500 and AST2400.
+AST2700 SOC and its interrupt controller are too complex to handle
+in the common Aspeed SoC framework. We introduce a new ast2700
+class with instance_init and realize handlers.
 
-Max memory is now 8GiB on the AST2700. Introduce new
-aspeed_2700_sdmc and class with read/write operation and
-reset handlers.
+AST2700 is a 64 bits quad core cpus and support 8 watchdog.
+Update maximum ASPEED_CPUS_NUM to 4 and ASPEED_WDTS_NUM to 8.
+In addition, update AspeedSocState to support scuio, sli, sliio and intc.
 
-Define DRAMC necessary protected registers and
-unprotected registers for AST2700 and increase
-the register set to 0x1000.
+Update silicon_rev data type to 64bits from AspeedSoCClass and
+add TYPE_ASPEED27X0_SOC machine type.
 
 Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/misc/aspeed_sdmc.c         | 215 ++++++++++++++++++++++++++++++----
- include/hw/misc/aspeed_sdmc.h |   4 +-
- 2 files changed, 198 insertions(+), 21 deletions(-)
+ hw/arm/aspeed_ast27x0.c     | 462 ++++++++++++++++++++++++++++++++++++
+ hw/arm/meson.build          |   1 +
+ include/hw/arm/aspeed_soc.h |  26 +-
+ 3 files changed, 486 insertions(+), 3 deletions(-)
+ create mode 100644 hw/arm/aspeed_ast27x0.c
 
-diff --git a/hw/misc/aspeed_sdmc.c b/hw/misc/aspeed_sdmc.c
-index 64cd1a81dc..a5bdda0f60 100644
---- a/hw/misc/aspeed_sdmc.c
-+++ b/hw/misc/aspeed_sdmc.c
-@@ -27,6 +27,7 @@
- #define   PROT_SOFTLOCKED    0x00
- 
- #define   PROT_KEY_UNLOCK     0xFC600309
-+#define   PROT_2700_KEY_UNLOCK  0x1688A8A8
- #define   PROT_KEY_HARDLOCK   0xDEADDEAD /* AST2600 */
- 
- /* Configuration Register */
-@@ -54,6 +55,46 @@
- #define R_DRAM_TIME       (0x8c / 4)
- #define R_ECC_ERR_INJECT  (0xb4 / 4)
- 
-+/* AST2700 Register */
-+#define R_2700_PROT                 (0x00 / 4)
-+#define R_INT_STATUS                (0x04 / 4)
-+#define R_INT_CLEAR                 (0x08 / 4)
-+#define R_INT_MASK                  (0x0c / 4)
-+#define R_MAIN_CONF                 (0x10 / 4)
-+#define R_MAIN_CONTROL              (0x14 / 4)
-+#define R_MAIN_STATUS               (0x18 / 4)
-+#define R_ERR_STATUS                (0x1c / 4)
-+#define R_ECC_FAIL_STATUS           (0x78 / 4)
-+#define R_ECC_FAIL_ADDR             (0x7c / 4)
-+#define R_ECC_TESTING_CONTROL       (0x80 / 4)
-+#define R_PROT_REGION_LOCK_STATUS   (0x94 / 4)
-+#define R_TEST_FAIL_ADDR            (0xd4 / 4)
-+#define R_TEST_FAIL_D0              (0xd8 / 4)
-+#define R_TEST_FAIL_D1              (0xdc / 4)
-+#define R_TEST_FAIL_D2              (0xe0 / 4)
-+#define R_TEST_FAIL_D3              (0xe4 / 4)
-+#define R_DBG_STATUS                (0xf4 / 4)
-+#define R_PHY_INTERFACE_STATUS      (0xf8 / 4)
-+#define R_GRAPHIC_MEM_BASE_ADDR     (0x10c / 4)
-+#define R_PORT0_INTERFACE_MONITOR0  (0x240 / 4)
-+#define R_PORT0_INTERFACE_MONITOR1  (0x244 / 4)
-+#define R_PORT0_INTERFACE_MONITOR2  (0x248 / 4)
-+#define R_PORT1_INTERFACE_MONITOR0  (0x2c0 / 4)
-+#define R_PORT1_INTERFACE_MONITOR1  (0x2c4 / 4)
-+#define R_PORT1_INTERFACE_MONITOR2  (0x2c8 / 4)
-+#define R_PORT2_INTERFACE_MONITOR0  (0x340 / 4)
-+#define R_PORT2_INTERFACE_MONITOR1  (0x344 / 4)
-+#define R_PORT2_INTERFACE_MONITOR2  (0x348 / 4)
-+#define R_PORT3_INTERFACE_MONITOR0  (0x3c0 / 4)
-+#define R_PORT3_INTERFACE_MONITOR1  (0x3c4 / 4)
-+#define R_PORT3_INTERFACE_MONITOR2  (0x3c8 / 4)
-+#define R_PORT4_INTERFACE_MONITOR0  (0x440 / 4)
-+#define R_PORT4_INTERFACE_MONITOR1  (0x444 / 4)
-+#define R_PORT4_INTERFACE_MONITOR2  (0x448 / 4)
-+#define R_PORT5_INTERFACE_MONITOR0  (0x4c0 / 4)
-+#define R_PORT5_INTERFACE_MONITOR1  (0x4c4 / 4)
-+#define R_PORT5_INTERFACE_MONITOR2  (0x4c8 / 4)
-+
- /*
-  * Configuration register Ox4 (for Aspeed AST2400 SOC)
-  *
-@@ -76,10 +117,6 @@
- #define     ASPEED_SDMC_VGA_32MB            0x2
- #define     ASPEED_SDMC_VGA_64MB            0x3
- #define ASPEED_SDMC_DRAM_SIZE(x)        (x & 0x3)
--#define     ASPEED_SDMC_DRAM_64MB           0x0
--#define     ASPEED_SDMC_DRAM_128MB          0x1
--#define     ASPEED_SDMC_DRAM_256MB          0x2
--#define     ASPEED_SDMC_DRAM_512MB          0x3
- 
- #define ASPEED_SDMC_READONLY_MASK                       \
-     (ASPEED_SDMC_RESERVED | ASPEED_SDMC_VGA_COMPAT |    \
-@@ -100,22 +137,24 @@
- #define ASPEED_SDMC_CACHE_ENABLE        (1 << 10) /* differs from AST2400 */
- #define ASPEED_SDMC_DRAM_TYPE           (1 << 4)  /* differs from AST2400 */
- 
--/* DRAM size definitions differs */
--#define     ASPEED_SDMC_AST2500_128MB       0x0
--#define     ASPEED_SDMC_AST2500_256MB       0x1
--#define     ASPEED_SDMC_AST2500_512MB       0x2
--#define     ASPEED_SDMC_AST2500_1024MB      0x3
--
--#define     ASPEED_SDMC_AST2600_256MB       0x0
--#define     ASPEED_SDMC_AST2600_512MB       0x1
--#define     ASPEED_SDMC_AST2600_1024MB      0x2
--#define     ASPEED_SDMC_AST2600_2048MB      0x3
--
- #define ASPEED_SDMC_AST2500_READONLY_MASK                               \
-     (ASPEED_SDMC_HW_VERSION(0xf) | ASPEED_SDMC_CACHE_INITIAL_DONE |     \
-      ASPEED_SDMC_AST2500_RESERVED | ASPEED_SDMC_VGA_COMPAT |            \
-      ASPEED_SDMC_VGA_APERTURE(ASPEED_SDMC_VGA_64MB))
- 
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+new file mode 100644
+index 0000000000..c120994e5c
+--- /dev/null
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -0,0 +1,462 @@
 +/*
-+ * Main Configuration register Ox10 (for Aspeed AST2700 SOC and higher)
++ * ASPEED SoC 27x0 family
 + *
++ * Copyright (C) 2024 ASPEED Technology Inc.
++ *
++ * This code is licensed under the GPL version 2 or later.  See
++ * the COPYING file in the top-level directory.
++ *
++ * Implementation extracted from the AST2600 and adapted for AST27x0.
 + */
-+#define ASPEED_SDMC_AST2700_RESERVED        0xFFFF2082 /* 31:16, 13, 7, 1 */
-+#define ASPEED_SDMC_AST2700_DATA_SCRAMBLE           (1 << 8)
-+#define ASPEED_SDMC_AST2700_ECC_ENABLE              (1 << 6)
-+#define ASPEED_SDMC_AST2700_PAGE_MATCHING_ENABLE    (1 << 5)
-+#define ASPEED_SDMC_AST2700_DRAM_SIZE(x)            ((x & 0x7) << 2)
 +
-+#define ASPEED_SDMC_AST2700_READONLY_MASK   \
-+     (ASPEED_SDMC_AST2700_RESERVED)
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "hw/misc/unimp.h"
++#include "hw/arm/aspeed_soc.h"
++#include "qemu/module.h"
++#include "qemu/error-report.h"
++#include "hw/i2c/aspeed_i2c.h"
++#include "net/net.h"
++#include "sysemu/sysemu.h"
++#include "hw/intc/arm_gicv3.h"
++#include "qapi/qmp/qlist.h"
 +
- static uint64_t aspeed_sdmc_read(void *opaque, hwaddr addr, unsigned size)
- {
-     AspeedSDMCState *s = ASPEED_SDMC(opaque);
-@@ -231,7 +270,10 @@ static void aspeed_sdmc_realize(DeviceState *dev, Error **errp)
-     AspeedSDMCState *s = ASPEED_SDMC(dev);
-     AspeedSDMCClass *asc = ASPEED_SDMC_GET_CLASS(s);
- 
--    assert(asc->max_ram_size < 4 * GiB); /* 32-bit address bus */
-+    if (!asc->is_aarch64) {
-+        assert(asc->max_ram_size < 4 * GiB); /* 32-bit address bus */
-+    }
-+
-     s->max_ram_size = asc->max_ram_size;
- 
-     memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_sdmc_ops, s,
-@@ -311,7 +353,8 @@ static void aspeed_2400_sdmc_write(AspeedSDMCState *s, uint32_t reg,
-                                    uint32_t data)
- {
-     if (reg == R_PROT) {
--        s->regs[reg] = (data == PROT_KEY_UNLOCK) ? PROT_UNLOCKED : PROT_SOFTLOCKED;
-+        s->regs[reg] =
-+            (data == PROT_KEY_UNLOCK) ? PROT_UNLOCKED : PROT_SOFTLOCKED;
-         return;
-     }
- 
-@@ -369,7 +412,8 @@ static void aspeed_2500_sdmc_write(AspeedSDMCState *s, uint32_t reg,
-                                    uint32_t data)
- {
-     if (reg == R_PROT) {
--        s->regs[reg] = (data == PROT_KEY_UNLOCK) ? PROT_UNLOCKED : PROT_SOFTLOCKED;
-+        s->regs[reg] =
-+            (data == PROT_KEY_UNLOCK) ? PROT_UNLOCKED : PROT_SOFTLOCKED;
-         return;
-     }
- 
-@@ -449,8 +493,9 @@ static void aspeed_2600_sdmc_write(AspeedSDMCState *s, uint32_t reg,
-     }
- 
-     if (s->regs[R_PROT] == PROT_HARDLOCKED) {
--        qemu_log_mask(LOG_GUEST_ERROR, "%s: SDMC is locked until system reset!\n",
--                __func__);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: SDMC is locked until system reset!\n",
-+                      __func__);
-         return;
-     }
- 
-@@ -512,12 +557,142 @@ static const TypeInfo aspeed_2600_sdmc_info = {
-     .class_init = aspeed_2600_sdmc_class_init,
- };
- 
-+static void aspeed_2700_sdmc_reset(DeviceState *dev)
-+{
-+    AspeedSDMCState *s = ASPEED_SDMC(dev);
-+    AspeedSDMCClass *asc = ASPEED_SDMC_GET_CLASS(s);
-+
-+    memset(s->regs, 0, sizeof(s->regs));
-+
-+    /* Set ram size bit and defaults values */
-+    s->regs[R_MAIN_CONF] = asc->compute_conf(s, 0);
-+    s->regs[R_2700_PROT] = PROT_UNLOCKED;
-+}
-+
-+static uint32_t aspeed_2700_sdmc_compute_conf(AspeedSDMCState *s, uint32_t data)
-+{
-+    uint32_t fixed_conf = ASPEED_SDMC_AST2700_PAGE_MATCHING_ENABLE |
-+        ASPEED_SDMC_AST2700_DRAM_SIZE(aspeed_sdmc_get_ram_bits(s));
-+
-+    /* Make sure readonly bits are kept */
-+    data &= ~ASPEED_SDMC_AST2700_READONLY_MASK;
-+
-+    return data | fixed_conf;
-+}
-+
-+static void aspeed_2700_sdmc_write(AspeedSDMCState *s, uint32_t reg,
-+                                   uint32_t data)
-+{
-+    /* Unprotected registers */
-+    switch (reg) {
-+    case R_INT_STATUS:
-+    case R_INT_CLEAR:
-+    case R_INT_MASK:
-+    case R_MAIN_STATUS:
-+    case R_ERR_STATUS:
-+    case R_ECC_FAIL_STATUS:
-+    case R_ECC_FAIL_ADDR:
-+    case R_PROT_REGION_LOCK_STATUS:
-+    case R_TEST_FAIL_ADDR:
-+    case R_TEST_FAIL_D0:
-+    case R_TEST_FAIL_D1:
-+    case R_TEST_FAIL_D2:
-+    case R_TEST_FAIL_D3:
-+    case R_DBG_STATUS:
-+    case R_PHY_INTERFACE_STATUS:
-+    case R_GRAPHIC_MEM_BASE_ADDR:
-+    case R_PORT0_INTERFACE_MONITOR0:
-+    case R_PORT0_INTERFACE_MONITOR1:
-+    case R_PORT0_INTERFACE_MONITOR2:
-+    case R_PORT1_INTERFACE_MONITOR0:
-+    case R_PORT1_INTERFACE_MONITOR1:
-+    case R_PORT1_INTERFACE_MONITOR2:
-+    case R_PORT2_INTERFACE_MONITOR0:
-+    case R_PORT2_INTERFACE_MONITOR1:
-+    case R_PORT2_INTERFACE_MONITOR2:
-+    case R_PORT3_INTERFACE_MONITOR0:
-+    case R_PORT3_INTERFACE_MONITOR1:
-+    case R_PORT3_INTERFACE_MONITOR2:
-+    case R_PORT4_INTERFACE_MONITOR0:
-+    case R_PORT4_INTERFACE_MONITOR1:
-+    case R_PORT4_INTERFACE_MONITOR2:
-+    case R_PORT5_INTERFACE_MONITOR0:
-+    case R_PORT5_INTERFACE_MONITOR1:
-+    case R_PORT5_INTERFACE_MONITOR2:
-+        s->regs[reg] = data;
-+        return;
-+    }
-+
-+    if (s->regs[R_2700_PROT] == PROT_HARDLOCKED) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: SDMC is locked until system reset!\n",
-+                      __func__);
-+        return;
-+    }
-+
-+    if (reg != R_2700_PROT && s->regs[R_2700_PROT] == PROT_SOFTLOCKED) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: SDMC is locked! (write to MCR%02x blocked)\n",
-+                      __func__, reg * 4);
-+        return;
-+    }
-+
-+    switch (reg) {
-+    case R_2700_PROT:
-+        if (data == PROT_2700_KEY_UNLOCK)  {
-+            data = PROT_UNLOCKED;
-+        } else if (data == PROT_KEY_HARDLOCK) {
-+            data = PROT_HARDLOCKED;
-+        } else {
-+            data = PROT_SOFTLOCKED;
-+        }
-+        break;
-+    case R_MAIN_CONF:
-+        data = aspeed_2700_sdmc_compute_conf(s, data);
-+        break;
-+    case R_MAIN_STATUS:
-+        /* Will never return 'busy'. */
-+        data &= ~PHY_BUSY_STATE;
-+        break;
-+    default:
-+        break;
-+    }
-+
-+    s->regs[reg] = data;
-+}
-+
-+static const uint64_t
-+    aspeed_2700_ram_sizes[] = { 256 * MiB, 512 * MiB, 1024 * MiB,
-+                                2048 * MiB, 4096 * MiB, 8192 * MiB, 0};
-+
-+static void aspeed_2700_sdmc_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    AspeedSDMCClass *asc = ASPEED_SDMC_CLASS(klass);
-+
-+    dc->desc = "ASPEED 2700 SDRAM Memory Controller";
-+    dc->reset = aspeed_2700_sdmc_reset;
-+
-+    asc->is_aarch64 = true;
-+    asc->max_ram_size = 8 * GiB;
-+    asc->compute_conf = aspeed_2700_sdmc_compute_conf;
-+    asc->write = aspeed_2700_sdmc_write;
-+    asc->valid_ram_sizes = aspeed_2700_ram_sizes;
-+}
-+
-+static const TypeInfo aspeed_2700_sdmc_info = {
-+    .name = TYPE_ASPEED_2700_SDMC,
-+    .parent = TYPE_ASPEED_SDMC,
-+    .class_init = aspeed_2700_sdmc_class_init,
++static const hwaddr aspeed_soc_ast2700_memmap[] = {
++    [ASPEED_DEV_SPI_BOOT]  =  0x400000000,
++    [ASPEED_DEV_SRAM]      =  0x10000000,
++    [ASPEED_DEV_SDMC]      =  0x12C00000,
++    [ASPEED_DEV_SCU]       =  0x12C02000,
++    [ASPEED_DEV_SCUIO]     =  0x14C02000,
++    [ASPEED_DEV_UART0]     =  0X14C33000,
++    [ASPEED_DEV_UART1]     =  0X14C33100,
++    [ASPEED_DEV_UART2]     =  0X14C33200,
++    [ASPEED_DEV_UART3]     =  0X14C33300,
++    [ASPEED_DEV_UART4]     =  0X12C1A000,
++    [ASPEED_DEV_UART5]     =  0X14C33400,
++    [ASPEED_DEV_UART6]     =  0X14C33500,
++    [ASPEED_DEV_UART7]     =  0X14C33600,
++    [ASPEED_DEV_UART8]     =  0X14C33700,
++    [ASPEED_DEV_UART9]     =  0X14C33800,
++    [ASPEED_DEV_UART10]    =  0X14C33900,
++    [ASPEED_DEV_UART11]    =  0X14C33A00,
++    [ASPEED_DEV_UART12]    =  0X14C33B00,
++    [ASPEED_DEV_WDT]       =  0x14C37000,
++    [ASPEED_DEV_VUART]     =  0X14C30000,
++    [ASPEED_DEV_FMC]       =  0x14000000,
++    [ASPEED_DEV_SPI0]      =  0x14010000,
++    [ASPEED_DEV_SPI1]      =  0x14020000,
++    [ASPEED_DEV_SPI2]      =  0x14030000,
++    [ASPEED_DEV_SDRAM]     =  0x400000000,
++    [ASPEED_DEV_MII1]      =  0x14040000,
++    [ASPEED_DEV_MII2]      =  0x14040008,
++    [ASPEED_DEV_MII3]      =  0x14040010,
++    [ASPEED_DEV_ETH1]      =  0x14050000,
++    [ASPEED_DEV_ETH2]      =  0x14060000,
++    [ASPEED_DEV_ETH3]      =  0x14070000,
++    [ASPEED_DEV_EMMC]      =  0x12090000,
++    [ASPEED_DEV_VIC]       =  0x12100000,
++    [ASPEED_DEV_SLI]       =  0x12C17000,
++    [ASPEED_DEV_SLIIO]     =  0x14C1E000,
++    [ASPEED_GIC_DIST]      =  0x12200000,
++    [ASPEED_GIC_REDIST]    =  0x12280000,
 +};
 +
- static void aspeed_sdmc_register_types(void)
- {
-     type_register_static(&aspeed_sdmc_info);
-     type_register_static(&aspeed_2400_sdmc_info);
-     type_register_static(&aspeed_2500_sdmc_info);
-     type_register_static(&aspeed_2600_sdmc_info);
-+    type_register_static(&aspeed_2700_sdmc_info);
- }
++#define AST2700_MAX_IRQ 288
++
++/* Shared Peripheral Interrupt values below are offset by -32 from datasheet */
++static const int aspeed_soc_ast2700_irqmap[] = {
++    [ASPEED_DEV_UART0]     = 132,
++    [ASPEED_DEV_UART1]     = 132,
++    [ASPEED_DEV_UART2]     = 132,
++    [ASPEED_DEV_UART3]     = 132,
++    [ASPEED_DEV_UART4]     = 8,
++    [ASPEED_DEV_UART5]     = 132,
++    [ASPEED_DEV_UART6]     = 132,
++    [ASPEED_DEV_UART7]     = 132,
++    [ASPEED_DEV_UART8]     = 132,
++    [ASPEED_DEV_UART9]     = 132,
++    [ASPEED_DEV_UART10]    = 132,
++    [ASPEED_DEV_UART11]    = 132,
++    [ASPEED_DEV_UART12]    = 132,
++    [ASPEED_DEV_FMC]       = 131,
++    [ASPEED_DEV_SDMC]      = 0,
++    [ASPEED_DEV_SCU]       = 12,
++    [ASPEED_DEV_ADC]       = 130,
++    [ASPEED_DEV_XDMA]      = 5,
++    [ASPEED_DEV_EMMC]      = 15,
++    [ASPEED_DEV_GPIO]      = 11,
++    [ASPEED_DEV_GPIO_1_8V] = 130,
++    [ASPEED_DEV_RTC]       = 13,
++    [ASPEED_DEV_TIMER1]    = 16,
++    [ASPEED_DEV_TIMER2]    = 17,
++    [ASPEED_DEV_TIMER3]    = 18,
++    [ASPEED_DEV_TIMER4]    = 19,
++    [ASPEED_DEV_TIMER5]    = 20,
++    [ASPEED_DEV_TIMER6]    = 21,
++    [ASPEED_DEV_TIMER7]    = 22,
++    [ASPEED_DEV_TIMER8]    = 23,
++    [ASPEED_DEV_WDT]       = 131,
++    [ASPEED_DEV_PWM]       = 131,
++    [ASPEED_DEV_LPC]       = 128,
++    [ASPEED_DEV_IBT]       = 128,
++    [ASPEED_DEV_I2C]       = 130,
++    [ASPEED_DEV_PECI]      = 133,
++    [ASPEED_DEV_ETH1]      = 132,
++    [ASPEED_DEV_ETH2]      = 132,
++    [ASPEED_DEV_ETH3]      = 132,
++    [ASPEED_DEV_HACE]      = 4,
++    [ASPEED_DEV_KCS]       = 128,
++    [ASPEED_DEV_DP]        = 28,
++    [ASPEED_DEV_I3C]       = 131,
++};
++
++static qemu_irq aspeed_soc_ast2700_get_irq(AspeedSoCState *s, int dev)
++{
++    Aspeed27x0SoCState *a = ASPEED27X0_SOC(s);
++    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
++
++    return qdev_get_gpio_in(a->intc.gic, sc->irqmap[dev]);
++}
++
++static void aspeed_soc_ast2700_init(Object *obj)
++{
++    Aspeed27x0SoCState *a = ASPEED27X0_SOC(obj);
++    AspeedSoCState *s = ASPEED_SOC(obj);
++    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
++    int i;
++    char socname[8];
++    char typename[64];
++
++    if (sscanf(sc->name, "%7s", socname) != 1) {
++        g_assert_not_reached();
++    }
++
++    for (i = 0; i < sc->num_cpus; i++) {
++        object_initialize_child(obj, "cpu[*]", &a->cpu[i],
++                                aspeed_soc_cpu_type(sc));
++    }
++
++    object_initialize_child(obj, "scu", &s->scu, TYPE_ASPEED_2700_SCU);
++    qdev_prop_set_uint32(DEVICE(&s->scu), "silicon-rev",
++                         sc->silicon_rev);
++    object_property_add_alias(obj, "hw-strap1", OBJECT(&s->scu),
++                              "hw-strap1");
++    object_property_add_alias(obj, "hw-strap2", OBJECT(&s->scu),
++                              "hw-strap2");
++    object_property_add_alias(obj, "hw-prot-key", OBJECT(&s->scu),
++                              "hw-prot-key");
++
++    object_initialize_child(obj, "scuio", &s->scuio, TYPE_ASPEED_2700_SCUIO);
++    qdev_prop_set_uint32(DEVICE(&s->scuio), "silicon-rev",
++                         sc->silicon_rev);
++
++    snprintf(typename, sizeof(typename), "aspeed.fmc-%s", socname);
++    object_initialize_child(obj, "fmc", &s->fmc, typename);
++
++    for (i = 0; i < sc->spis_num; i++) {
++        snprintf(typename, sizeof(typename), "aspeed.spi%d-%s", i, socname);
++        object_initialize_child(obj, "spi[*]", &s->spi[i], typename);
++    }
++
++    snprintf(typename, sizeof(typename), "aspeed.sdmc-%s", socname);
++    object_initialize_child(obj, "sdmc", &s->sdmc, typename);
++    object_property_add_alias(obj, "ram-size", OBJECT(&s->sdmc),
++                              "ram-size");
++
++    for (i = 0; i < sc->wdts_num; i++) {
++        snprintf(typename, sizeof(typename), "aspeed.wdt-%s", socname);
++        object_initialize_child(obj, "wdt[*]", &s->wdt[i], typename);
++    }
++
++    for (i = 0; i < sc->macs_num; i++) {
++        object_initialize_child(obj, "ftgmac100[*]", &s->ftgmac100[i],
++                                TYPE_FTGMAC100);
++
++        object_initialize_child(obj, "mii[*]", &s->mii[i], TYPE_ASPEED_MII);
++    }
++
++    for (i = 0; i < sc->uarts_num; i++) {
++        object_initialize_child(obj, "uart[*]", &s->uart[i], TYPE_SERIAL_MM);
++    }
++
++    object_initialize_child(obj, "sli", &s->sli, TYPE_ASPEED_2700_SLI);
++    object_initialize_child(obj, "sliio", &s->sliio, TYPE_ASPEED_2700_SLIIO);
++    object_initialize_child(obj, "intc", &a->intc, TYPE_ASPEED_INTC);
++}
++
++/*
++ * ASPEED ast2700 has 0xf as cluster ID
++ *
++ * https://developer.arm.com/documentation/ddi0388/e/the-system-control-coprocessors/summary-of-system-control-coprocessor-registers/multiprocessor-affinity-register
++ */
++static uint64_t aspeed_calc_affinity(int cpu)
++{
++    return (0x0 << ARM_AFF1_SHIFT) | cpu;
++}
++
++static void aspeed_soc_ast2700_gic(DeviceState *dev, Error **errp)
++{
++    Aspeed27x0SoCState *a = ASPEED27X0_SOC(dev);
++    AspeedSoCState *s = ASPEED_SOC(dev);
++    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
++    SysBusDevice *gicbusdev;
++    QList *redist_region_count;
++    int i;
++
++    a->intc.gic = qdev_new(gicv3_class_name());
++    qdev_prop_set_uint32(a->intc.gic, "revision", 3);
++    qdev_prop_set_uint32(a->intc.gic, "num-cpu", sc->num_cpus);
++    qdev_prop_set_uint32(a->intc.gic, "num-irq", AST2700_MAX_IRQ);
++
++    redist_region_count = qlist_new();
++    qlist_append_int(redist_region_count, sc->num_cpus);
++    qdev_prop_set_array(a->intc.gic, "redist-region-count",
++                            redist_region_count);
++
++    gicbusdev = SYS_BUS_DEVICE(a->intc.gic);
++    sysbus_realize_and_unref(gicbusdev, errp);
++    sysbus_mmio_map(gicbusdev, 0, sc->memmap[ASPEED_GIC_DIST]);
++    sysbus_mmio_map(gicbusdev, 1, sc->memmap[ASPEED_GIC_REDIST]);
++
++    for (i = 0; i < sc->num_cpus; i++) {
++        DeviceState *cpudev = DEVICE(qemu_get_cpu(i));
++        int NUM_IRQS = 256, ARCH_GIC_MAINT_IRQ = 9, VIRTUAL_PMU_IRQ = 7;
++        int ppibase = NUM_IRQS + i * GIC_INTERNAL + GIC_NR_SGIS;
++
++        const int timer_irq[] = {
++            [GTIMER_PHYS] = 14,
++            [GTIMER_VIRT] = 11,
++            [GTIMER_HYP]  = 10,
++            [GTIMER_SEC]  = 13,
++        };
++        int j;
++
++        for (j = 0; j < ARRAY_SIZE(timer_irq); j++) {
++            qdev_connect_gpio_out(cpudev, j,
++                    qdev_get_gpio_in(a->intc.gic, ppibase + timer_irq[j]));
++        }
++
++        qemu_irq irq = qdev_get_gpio_in(a->intc.gic,
++                                        ppibase + ARCH_GIC_MAINT_IRQ);
++        qdev_connect_gpio_out_named(cpudev, "gicv3-maintenance-interrupt",
++                                    0, irq);
++        qdev_connect_gpio_out_named(cpudev, "pmu-interrupt", 0,
++                qdev_get_gpio_in(a->intc.gic, ppibase + VIRTUAL_PMU_IRQ));
++
++        sysbus_connect_irq(gicbusdev, i, qdev_get_gpio_in(cpudev, ARM_CPU_IRQ));
++        sysbus_connect_irq(gicbusdev, i + sc->num_cpus,
++                           qdev_get_gpio_in(cpudev, ARM_CPU_FIQ));
++        sysbus_connect_irq(gicbusdev, i + 2 * sc->num_cpus,
++                           qdev_get_gpio_in(cpudev, ARM_CPU_VIRQ));
++        sysbus_connect_irq(gicbusdev, i + 3 * sc->num_cpus,
++                           qdev_get_gpio_in(cpudev, ARM_CPU_VFIQ));
++    }
++}
++
++static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
++{
++    int i;
++    Aspeed27x0SoCState *a = ASPEED27X0_SOC(dev);
++    AspeedSoCState *s = ASPEED_SOC(dev);
++    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
++    g_autofree char *sram_name = NULL;
++
++    /* Default boot region (SPI memory or ROMs) */
++    memory_region_init(&s->spi_boot_container, OBJECT(s),
++                       "aspeed.spi_boot_container", 0x400000000);
++    memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SPI_BOOT],
++                                &s->spi_boot_container);
++
++    /* CPU */
++    for (i = 0; i < sc->num_cpus; i++) {
++        object_property_set_int(OBJECT(&a->cpu[i]), "mp-affinity",
++                                aspeed_calc_affinity(i), &error_abort);
++
++        object_property_set_int(OBJECT(&a->cpu[i]), "cntfrq", 1125000000,
++                                &error_abort);
++        object_property_set_link(OBJECT(&a->cpu[i]), "memory",
++                                 OBJECT(s->memory), &error_abort);
++
++        if (!qdev_realize(DEVICE(&a->cpu[i]), NULL, errp)) {
++            return;
++        }
++    }
++
++    /* GIC */
++    aspeed_soc_ast2700_gic(dev, errp);
++
++    /* INTC */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc), errp)) {
++        return;
++    }
++
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->intc), 0, sc->memmap[ASPEED_DEV_VIC]);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&a->intc), 0,
++                       qdev_get_gpio_in(DEVICE(&a->cpu), ARM_CPU_IRQ));
++    sysbus_connect_irq(SYS_BUS_DEVICE(&a->intc), 1,
++                       qdev_get_gpio_in(DEVICE(&a->cpu), ARM_CPU_FIQ));
++
++    /* SRAM */
++    sram_name = g_strdup_printf("aspeed.sram.%d", CPU(&a->cpu[0])->cpu_index);
++    if (!memory_region_init_ram(&s->sram, OBJECT(s), sram_name, sc->sram_size,
++                                 errp)) {
++        return;
++    }
++    memory_region_add_subregion(s->memory,
++                                sc->memmap[ASPEED_DEV_SRAM], &s->sram);
++
++    /* SCU */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {
++        return;
++    }
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->scu), 0, sc->memmap[ASPEED_DEV_SCU]);
++
++    /* SCU1 */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->scuio), errp)) {
++        return;
++    }
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->scuio), 0,
++                    sc->memmap[ASPEED_DEV_SCUIO]);
++
++    /* UART */
++    if (!aspeed_soc_uart_realize(s, errp)) {
++        return;
++    }
++
++    /* FMC, The number of CS is set at the board level */
++    object_property_set_link(OBJECT(&s->fmc), "dram", OBJECT(s->dram_mr),
++                             &error_abort);
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->fmc), errp)) {
++        return;
++    }
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->fmc), 0, sc->memmap[ASPEED_DEV_FMC]);
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->fmc), 1,
++                    ASPEED_SMC_GET_CLASS(&s->fmc)->flash_window_base);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->fmc), 0,
++                       aspeed_soc_get_irq(s, ASPEED_DEV_FMC));
++
++    /* Set up an alias on the FMC CE0 region (boot default) */
++    MemoryRegion *fmc0_mmio = &s->fmc.flashes[0].mmio;
++    memory_region_init_alias(&s->spi_boot, OBJECT(s), "aspeed.spi_boot",
++                             fmc0_mmio, 0, memory_region_size(fmc0_mmio));
++    memory_region_add_subregion(&s->spi_boot_container, 0x0, &s->spi_boot);
++
++    /* SPI */
++    for (i = 0; i < sc->spis_num; i++) {
++        object_property_set_link(OBJECT(&s->spi[i]), "dram",
++                                 OBJECT(s->dram_mr), &error_abort);
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->spi[i]), errp)) {
++            return;
++        }
++        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->spi[i]), 0,
++                        sc->memmap[ASPEED_DEV_SPI0 + i]);
++        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->spi[i]), 1,
++                        ASPEED_SMC_GET_CLASS(&s->spi[i])->flash_window_base);
++    }
++
++    /* SDMC - SDRAM Memory Controller */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->sdmc), errp)) {
++        return;
++    }
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->sdmc), 0,
++                    sc->memmap[ASPEED_DEV_SDMC]);
++
++    /* RAM */
++    if (!aspeed_soc_dram_init(s, errp)) {
++        return;
++    }
++
++    for (i = 0; i < sc->macs_num; i++) {
++        object_property_set_bool(OBJECT(&s->ftgmac100[i]), "aspeed", true,
++                                 &error_abort);
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->ftgmac100[i]), errp)) {
++            return;
++        }
++        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->ftgmac100[i]), 0,
++                        sc->memmap[ASPEED_DEV_ETH1 + i]);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->ftgmac100[i]), 0,
++                           aspeed_soc_get_irq(s, ASPEED_DEV_ETH1 + i));
++
++        object_property_set_link(OBJECT(&s->mii[i]), "nic",
++                                 OBJECT(&s->ftgmac100[i]), &error_abort);
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->mii[i]), errp)) {
++            return;
++        }
++
++        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->mii[i]), 0,
++                        sc->memmap[ASPEED_DEV_MII1 + i]);
++    }
++
++    /* Watch dog */
++    for (i = 0; i < sc->wdts_num; i++) {
++        AspeedWDTClass *awc = ASPEED_WDT_GET_CLASS(&s->wdt[i]);
++        hwaddr wdt_offset = sc->memmap[ASPEED_DEV_WDT] + i * awc->iosize;
++
++        object_property_set_link(OBJECT(&s->wdt[i]), "scu", OBJECT(&s->scu),
++                                 &error_abort);
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->wdt[i]), errp)) {
++            return;
++        }
++        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->wdt[i]), 0, wdt_offset);
++    }
++
++    /* SLI */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->sli), errp)) {
++        return;
++    }
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->sli), 0, sc->memmap[ASPEED_DEV_SLI]);
++
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->sliio), errp)) {
++        return;
++    }
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->sliio), 0,
++                    sc->memmap[ASPEED_DEV_SLIIO]);
++
++    create_unimplemented_device("ast2700.dpmcu", 0x11000000, 0x40000);
++    create_unimplemented_device("ast2700.iomem0", 0x12000000, 0x01000000);
++    create_unimplemented_device("ast2700.iomem1", 0x14000000, 0x01000000);
++    create_unimplemented_device("ast2700.ltpi", 0x30000000, 0x1000000);
++    create_unimplemented_device("ast2700.io", 0x0, 0x4000000);
++}
++
++static void aspeed_soc_ast2700_class_init(ObjectClass *oc, void *data)
++{
++    static const char * const valid_cpu_types[] = {
++        ARM_CPU_TYPE_NAME("cortex-a35"),
++        NULL
++    };
++    DeviceClass *dc = DEVICE_CLASS(oc);
++    AspeedSoCClass *sc = ASPEED_SOC_CLASS(oc);
++
++    dc->realize      = aspeed_soc_ast2700_realize;
++
++    sc->name         = "ast2700-a0";
++    sc->valid_cpu_types = valid_cpu_types;
++    sc->silicon_rev  = AST2700_A0_SILICON_REV;
++    sc->sram_size    = 0x20000;
++    sc->spis_num     = 3;
++    sc->wdts_num     = 8;
++    sc->macs_num     = 1;
++    sc->uarts_num    = 13;
++    sc->num_cpus     = 4;
++    sc->uarts_base   = ASPEED_DEV_UART0;
++    sc->irqmap       = aspeed_soc_ast2700_irqmap;
++    sc->memmap       = aspeed_soc_ast2700_memmap;
++    sc->get_irq      = aspeed_soc_ast2700_get_irq;
++}
++
++static const TypeInfo aspeed_soc_ast27x0_types[] = {
++    {
++        .name           = TYPE_ASPEED27X0_SOC,
++        .parent         = TYPE_ASPEED_SOC,
++        .instance_size  = sizeof(Aspeed27x0SoCState),
++        .abstract       = true,
++    }, {
++        .name           = "ast2700-a0",
++        .parent         = TYPE_ASPEED27X0_SOC,
++        .instance_init  = aspeed_soc_ast2700_init,
++        .class_init     = aspeed_soc_ast2700_class_init,
++    },
++};
++
++DEFINE_TYPES(aspeed_soc_ast27x0_types)
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 6808135c1f..1e3295a423 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -46,6 +46,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+   'aspeed_soc_common.c',
+   'aspeed_ast2400.c',
+   'aspeed_ast2600.c',
++  'aspeed_ast27x0.c',
+   'aspeed_ast10x0.c',
+   'aspeed_eeprom.c',
+   'fby35.c'))
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index c60fac900a..fab5abff9e 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -26,6 +26,7 @@
+ #include "hw/ssi/aspeed_smc.h"
+ #include "hw/misc/aspeed_hace.h"
+ #include "hw/misc/aspeed_sbc.h"
++#include "hw/misc/aspeed_sli.h"
+ #include "hw/watchdog/wdt_aspeed.h"
+ #include "hw/net/ftgmac100.h"
+ #include "target/arm/cpu.h"
+@@ -41,8 +42,8 @@
  
- type_init(aspeed_sdmc_register_types);
-diff --git a/include/hw/misc/aspeed_sdmc.h b/include/hw/misc/aspeed_sdmc.h
-index ec2d59a14f..0ce6567806 100644
---- a/include/hw/misc/aspeed_sdmc.h
-+++ b/include/hw/misc/aspeed_sdmc.h
-@@ -17,6 +17,7 @@ OBJECT_DECLARE_TYPE(AspeedSDMCState, AspeedSDMCClass, ASPEED_SDMC)
- #define TYPE_ASPEED_2400_SDMC TYPE_ASPEED_SDMC "-ast2400"
- #define TYPE_ASPEED_2500_SDMC TYPE_ASPEED_SDMC "-ast2500"
- #define TYPE_ASPEED_2600_SDMC TYPE_ASPEED_SDMC "-ast2600"
-+#define TYPE_ASPEED_2700_SDMC TYPE_ASPEED_SDMC "-ast2700"
+ #define ASPEED_SPIS_NUM  2
+ #define ASPEED_EHCIS_NUM 2
+-#define ASPEED_WDTS_NUM  4
+-#define ASPEED_CPUS_NUM  2
++#define ASPEED_WDTS_NUM  8
++#define ASPEED_CPUS_NUM  4
+ #define ASPEED_MACS_NUM  4
+ #define ASPEED_UARTS_NUM 13
+ #define ASPEED_JTAG_NUM  2
+@@ -61,6 +62,7 @@ struct AspeedSoCState {
+     AspeedI2CState i2c;
+     AspeedI3CState i3c;
+     AspeedSCUState scu;
++    AspeedSCUState scuio;
+     AspeedHACEState hace;
+     AspeedXDMAState xdma;
+     AspeedADCState adc;
+@@ -68,6 +70,8 @@ struct AspeedSoCState {
+     AspeedSMCState spi[ASPEED_SPIS_NUM];
+     EHCISysBusState ehci[ASPEED_EHCIS_NUM];
+     AspeedSBCState sbc;
++    AspeedSLIState sli;
++    AspeedSLIState sliio;
+     MemoryRegion secsram;
+     UnimplementedDeviceState sbc_unimplemented;
+     AspeedSDMCState sdmc;
+@@ -117,6 +121,16 @@ struct Aspeed2600SoCState {
+ #define TYPE_ASPEED2600_SOC "aspeed2600-soc"
+ OBJECT_DECLARE_SIMPLE_TYPE(Aspeed2600SoCState, ASPEED2600_SOC)
  
- /*
-  * SDMC has 174 documented registers. In addition the u-boot device tree
-@@ -29,7 +30,7 @@ OBJECT_DECLARE_TYPE(AspeedSDMCState, AspeedSDMCClass, ASPEED_SDMC)
-  * time, and the other is in the DDR-PHY IP which is used during DDR-PHY
-  * training.
-  */
--#define ASPEED_SDMC_NR_REGS (0x500 >> 2)
-+#define ASPEED_SDMC_NR_REGS (0x1000 >> 2)
++struct Aspeed27x0SoCState {
++    AspeedSoCState parent;
++
++    ARMCPU cpu[ASPEED_CPUS_NUM];
++    AspeedINTCState intc;
++};
++
++#define TYPE_ASPEED27X0_SOC "aspeed27x0-soc"
++OBJECT_DECLARE_SIMPLE_TYPE(Aspeed27x0SoCState, ASPEED27X0_SOC)
++
+ struct Aspeed10x0SoCState {
+     AspeedSoCState parent;
  
- struct AspeedSDMCState {
-     /*< private >*/
-@@ -51,6 +52,7 @@ struct AspeedSDMCClass {
-     const uint64_t *valid_ram_sizes;
-     uint32_t (*compute_conf)(AspeedSDMCState *s, uint32_t data);
-     void (*write)(AspeedSDMCState *s, uint32_t reg, uint32_t data);
-+    uint32_t is_aarch64;
+@@ -132,7 +146,7 @@ struct AspeedSoCClass {
+     const char *name;
+     /** valid_cpu_types: NULL terminated array of a single CPU type. */
+     const char * const *valid_cpu_types;
+-    uint32_t silicon_rev;
++    uint64_t silicon_rev;
+     uint64_t sram_size;
+     uint64_t secsram_size;
+     int spis_num;
+@@ -168,6 +182,7 @@ enum {
+     ASPEED_DEV_UART13,
+     ASPEED_DEV_VUART,
+     ASPEED_DEV_FMC,
++    ASPEED_DEV_SPI0,
+     ASPEED_DEV_SPI1,
+     ASPEED_DEV_SPI2,
+     ASPEED_DEV_EHCI1,
+@@ -222,6 +237,11 @@ enum {
+     ASPEED_DEV_JTAG1,
+     ASPEED_DEV_FSI1,
+     ASPEED_DEV_FSI2,
++    ASPEED_DEV_SCUIO,
++    ASPEED_DEV_SLI,
++    ASPEED_DEV_SLIIO,
++    ASPEED_GIC_DIST,
++    ASPEED_GIC_REDIST,
  };
  
- #endif /* ASPEED_SDMC_H */
+ qemu_irq aspeed_soc_get_irq(AspeedSoCState *s, int dev);
 -- 
 2.25.1
 
