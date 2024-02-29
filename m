@@ -4,53 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 854F7C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 14:27:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59FB7C54E49
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 14:29:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfhMv-0007dB-SZ; Thu, 29 Feb 2024 09:26:41 -0500
+	id 1rfhMI-0006IH-U6; Thu, 29 Feb 2024 09:26:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfhMn-0007Cc-VK; Thu, 29 Feb 2024 09:26:34 -0500
+ id 1rfhM5-0005xl-7U; Thu, 29 Feb 2024 09:25:50 -0500
 Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfhMl-0005c2-8g; Thu, 29 Feb 2024 09:26:33 -0500
+ id 1rfhM3-0005O2-Bl; Thu, 29 Feb 2024 09:25:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709216791; x=1740752791;
+ t=1709216747; x=1740752747;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=1uR8nwqYf2xyCLjXffYB8T2F9oXrqWJ3oP/O8Q6/HKo=;
- b=gMlMKNaXg4BLiZoh70WoMxC/M5uPve3plIjsEXCHECmWzereL0uFHAt5
- jHZ4DuxpZyJK2EGAbp2I3gC70SKACjZ9qEy94cBsbz5Yp5EN23syGp72+
- qYVmwAR8q/EVvXAIjtE0gvwT5ZAr+5e1w9uyjGT5+1nIYjokfmbcnU20f
- LSpQjdAmV4Qf7lJYP78RiPo+hOHkIpL0zrdMIIOu5qEjQ/0g9TRpeSbOA
- q00dmChj/PmvzfpEz+XZr4BPHi8NaXtdOZtSRrpcfi35YC31hCyAfozW1
- /CjqDBhFhxQ7thePciKHuC+wzm45v0y7+CkxGdsskk/tcYtslGi2j6woY Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="14322890"
-X-IronPort-AV: E=Sophos;i="6.06,194,1705392000"; d="scan'208";a="14322890"
+ bh=PuIkkbjrFZHQWrlHk+V1lHEGDSQ4p//0zIRr95rqpiw=;
+ b=Jom9ORGqtHWhovYuHhZcYVNgiHMgliYtSCzfPhNGZ5p5k7gpIppGf9uY
+ UjHeV0KG5ji3jX3W1PsJiaOQl6TD6qkhnXupBw1SYX35awB7lAvrEK/Qb
+ XAXw38vSsYk3i8kZMnDDgoYsQ3wEO+losGZdtJTQm9sgzf/DygDASwNXg
+ tkbdig1r9+smyDe1VmqumYZqKNOJPi+zJC4zfXgMJ8cI1VZJZ/3zjpx3v
+ eDSFlLjzM2XMQobDKeuU7Iky6VWq3JE5xY6JVE5HRGK0kltMrfxHKgK3t
+ PhJ2rMimw5/mCTlDwzLXCmYOlloJidCE5vBu4QuMOZ8VvTuLbmGcO/GQP g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="14322746"
+X-IronPort-AV: E=Sophos;i="6.06,194,1705392000"; d="scan'208";a="14322746"
 Received: from fmviesa010.fm.intel.com ([10.60.135.150])
  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Feb 2024 06:26:14 -0800
+ 29 Feb 2024 06:25:45 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,194,1705392000"; 
-   d="scan'208";a="7793917"
+   d="scan'208";a="7793820"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa010.fm.intel.com with ESMTP; 29 Feb 2024 06:26:12 -0800
+ by fmviesa010.fm.intel.com with ESMTP; 29 Feb 2024 06:25:42 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Michael Tokarev <mjt@tls.msk.ru>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
-Subject: [PATCH 16/17] target/i386/sev: Fix missing ERRP_GUARD() for
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>
+Subject: [PATCH 04/17] hw/scsi/vhost-scsi: Fix missing ERRP_GUARD() for
  error_prepend()
-Date: Thu, 29 Feb 2024 22:39:13 +0800
-Message-Id: <20240229143914.1977550-17-zhao1.liu@linux.intel.com>
+Date: Thu, 29 Feb 2024 22:39:01 +0800
+Message-Id: <20240229143914.1977550-5-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240229143914.1977550-1-zhao1.liu@linux.intel.com>
 References: <20240229143914.1977550-1-zhao1.liu@linux.intel.com>
@@ -100,9 +101,10 @@ ERRP_GUARD() could avoid the case when @errp is the pointer of
 error_fatal, the user can't see this additional information, because
 exit() happens in error_setg earlier than information is added [1].
 
-The sev_inject_launch_secret() passes @errp to error_prepend(), and as
-an APIs defined in target/i386/sev.h, it is necessary to protect its
-@errp with ERRP_GUARD().
+The vhost_scsi_realize() passes @errp to error_prepend(), and as a
+VirtioDeviceClass.realize method, its @errp is from DeviceClass.realize
+so that there is no guarantee that the @errp won't point to
+@error_fatal.
 
 To avoid the issue like [1] said, add missing ERRP_GUARD() at the
 beginning of this function.
@@ -110,25 +112,26 @@ beginning of this function.
 [1]: Issue description in the commit message of commit ae7c80a7bd73
      ("error: New macro ERRP_GUARD()").
 
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Marcelo Tosatti <mtosatti@redhat.com>
+Cc: Fam Zheng <fam@euphon.net>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/sev.c | 1 +
+ hw/scsi/vhost-scsi.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 173de91afe7d..72930ff0dcc5 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -1044,6 +1044,7 @@ sev_encrypt_flash(uint8_t *ptr, uint64_t len, Error **errp)
- int sev_inject_launch_secret(const char *packet_hdr, const char *secret,
-                              uint64_t gpa, Error **errp)
+diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
+index 58a00336c2db..ae26bc19a457 100644
+--- a/hw/scsi/vhost-scsi.c
++++ b/hw/scsi/vhost-scsi.c
+@@ -220,6 +220,7 @@ static int vhost_scsi_set_workers(VHostSCSICommon *vsc, bool per_virtqueue)
+ 
+ static void vhost_scsi_realize(DeviceState *dev, Error **errp)
  {
 +    ERRP_GUARD();
-     struct kvm_sev_launch_secret input;
-     g_autofree guchar *data = NULL, *hdr = NULL;
-     int error, ret = 1;
+     VirtIOSCSICommon *vs = VIRTIO_SCSI_COMMON(dev);
+     VHostSCSICommon *vsc = VHOST_SCSI_COMMON(dev);
+     Error *err = NULL;
 -- 
 2.34.1
 
