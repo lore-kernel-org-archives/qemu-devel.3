@@ -4,54 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61096C54E49
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 13:17:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79ED2C54E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 13:18:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfgDD-0006JA-SU; Thu, 29 Feb 2024 08:12:35 -0500
+	id 1rfgIq-0004tu-Kd; Thu, 29 Feb 2024 08:18:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rfgCd-0005ea-Kn; Thu, 29 Feb 2024 08:11:59 -0500
-Received: from szxga01-in.huawei.com ([45.249.212.187])
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1rfgIj-0004sI-On; Thu, 29 Feb 2024 08:18:17 -0500
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rfgCa-0002fE-NB; Thu, 29 Feb 2024 08:11:59 -0500
-Received: from mail.maildlp.com (unknown [172.19.163.174])
- by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4Tls5Q4WJszpVXG;
- Thu, 29 Feb 2024 21:10:02 +0800 (CST)
-Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id C3783140499;
- Thu, 29 Feb 2024 21:11:52 +0800 (CST)
-Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
- (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Thu, 29 Feb
- 2024 21:11:52 +0800
-To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
- <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
- <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-CC: <ruanjinjie@huawei.com>
-Subject: [RFC PATCH v5 14/22] hw/intc/arm_gicv3_redist: Implement GICR_INMIR0
-Date: Thu, 29 Feb 2024 13:10:31 +0000
-Message-ID: <20240229131039.1868904-15-ruanjinjie@huawei.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240229131039.1868904-1-ruanjinjie@huawei.com>
-References: <20240229131039.1868904-1-ruanjinjie@huawei.com>
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1rfgIh-0003hS-PD; Thu, 29 Feb 2024 08:18:17 -0500
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 6D5A147F90;
+ Thu, 29 Feb 2024 14:18:12 +0100 (CET)
+Message-ID: <60950146-7b79-465d-9e33-3c485cc00504@proxmox.com>
+Date: Thu, 29 Feb 2024 14:18:11 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.67.174.55]
-X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
- kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.187;
- envelope-from=ruanjinjie@huawei.com; helo=szxga01-in.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/19] Workaround Windows failing to find 64bit SMBIOS
+ entry point with SeaBIOS
+Content-Language: en-US
+To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, pbonzini@redhat.com, mst@redhat.com,
+ gaosong@loongson.cn, alistair.francis@wdc.com, palmer@dabbelt.com,
+ bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com, anisinha@redhat.com, philmd@linaro.org,
+ wangyanan55@huawei.com, eblake@redhat.com, armbru@redhat.com,
+ qemu-arm@nongnu.org, qemu-riscv@nongnu.org
+References: <20240227154749.1818189-1-imammedo@redhat.com>
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <20240227154749.1818189-1-imammedo@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,79 +59,35 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
-From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add GICR_INMIR0 register and support access GICR_INMIR0.
+Am 27.02.24 um 16:47 schrieb Igor Mammedov:
+> Windows (10) bootloader when running on top of SeaBIOS, fails to find            
+> SMBIOSv3 entry point. Tracing it shows that it looks for v2 anchor markers       
+> only and not v3. Tricking it into believing that entry point is found            
+> lets Windows successfully locate and parse SMBIOSv3 tables. Whether it           
+> will be fixed on Windows side is not clear so here goes a workaround.            
+>                                                                                  
+> Idea is to try build v2 tables if QEMU configuration permits,                    
+> and fallback to v3 tables otherwise. That will mask Windows issue                
+> form majority of users.                                                          
+> However if VM configuration can't be described (typically large VMs)             
+> by v2 tables, QEMU will use SMBIOSv3 and Windows will hit the issue              
+> again. In this case complain to Microsoft and/or use UEFI instead of             
+> SeaBIOS (requires reinstall).                                                    
+>                                                                                  
+> Default compat setting of smbios-entry-point-type after series                   
+> for pc/q35 machines:                                                             
+>   * 9.0-newer: 'auto'                                                            
+>   * 8.1-8.2: '64'                                                                
+>   * 8.0-older: '32'                                                              
+>                                                                                  
+> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2008                        
 
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
----
-v4:
-- Make the GICR_INMIR0 implementation more clearer.
----
- hw/intc/arm_gicv3_redist.c | 19 +++++++++++++++++++
- hw/intc/gicv3_internal.h   |  1 +
- 2 files changed, 20 insertions(+)
+Thank you! I'm happy to confirm that this series works around the issue :)
 
-diff --git a/hw/intc/arm_gicv3_redist.c b/hw/intc/arm_gicv3_redist.c
-index 8153525849..7a16a058b1 100644
---- a/hw/intc/arm_gicv3_redist.c
-+++ b/hw/intc/arm_gicv3_redist.c
-@@ -35,6 +35,15 @@ static int gicr_ns_access(GICv3CPUState *cs, int irq)
-     return extract32(cs->gicr_nsacr, irq * 2, 2);
- }
- 
-+static void gicr_write_bitmap_reg(GICv3CPUState *cs, MemTxAttrs attrs,
-+                                  uint32_t *reg, uint32_t val)
-+{
-+    /* Helper routine to implement writing to a "set" register */
-+    val &= mask_group(cs, attrs);
-+    *reg = val;
-+    gicv3_redist_update(cs);
-+}
-+
- static void gicr_write_set_bitmap_reg(GICv3CPUState *cs, MemTxAttrs attrs,
-                                       uint32_t *reg, uint32_t val)
- {
-@@ -406,6 +415,10 @@ static MemTxResult gicr_readl(GICv3CPUState *cs, hwaddr offset,
-         *data = value;
-         return MEMTX_OK;
-     }
-+    case GICR_INMIR0:
-+        *data = cs->gic->nmi_support ?
-+                gicr_read_bitmap_reg(cs, attrs, cs->gicr_isuperprio) : 0;
-+        return MEMTX_OK;
-     case GICR_ICFGR0:
-     case GICR_ICFGR1:
-     {
-@@ -555,6 +568,12 @@ static MemTxResult gicr_writel(GICv3CPUState *cs, hwaddr offset,
-         gicv3_redist_update(cs);
-         return MEMTX_OK;
-     }
-+    case GICR_INMIR0:
-+        if (cs->gic->nmi_support) {
-+            gicr_write_bitmap_reg(cs, attrs, &cs->gicr_isuperprio, value);
-+        }
-+        return MEMTX_OK;
-+
-     case GICR_ICFGR0:
-         /* Register is all RAZ/WI or RAO/WI bits */
-         return MEMTX_OK;
-diff --git a/hw/intc/gicv3_internal.h b/hw/intc/gicv3_internal.h
-index 29d5cdc1b6..f35b7d2f03 100644
---- a/hw/intc/gicv3_internal.h
-+++ b/hw/intc/gicv3_internal.h
-@@ -109,6 +109,7 @@
- #define GICR_ICFGR1           (GICR_SGI_OFFSET + 0x0C04)
- #define GICR_IGRPMODR0        (GICR_SGI_OFFSET + 0x0D00)
- #define GICR_NSACR            (GICR_SGI_OFFSET + 0x0E00)
-+#define GICR_INMIR0           (GICR_SGI_OFFSET + 0x0F80)
- 
- /* VLPI redistributor registers, offsets from VLPI_base */
- #define GICR_VPROPBASER       (GICR_VLPI_OFFSET + 0x70)
--- 
-2.34.1
+Best Regards,
+Fiona
 
 
