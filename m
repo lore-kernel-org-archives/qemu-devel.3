@@ -4,88 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F6A2C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 12:35:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C650C54E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 12:48:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rffcw-00071k-V6; Thu, 29 Feb 2024 07:35:06 -0500
+	id 1rffp5-0004Kq-Fh; Thu, 29 Feb 2024 07:47:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rffcv-00071U-LW
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 07:35:05 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rffct-0000IV-C4
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 07:35:05 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-565a3910f86so1355270a12.3
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 04:35:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709210100; x=1709814900; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=QsW6yhR7XApu1msK5N/EYtXk7TTWXJpMR9V2i7yEhNg=;
- b=k4+xh01P1VJ/U/QsFkM8wOwCJLyzrwm1lWXtZ5c5nS4vSEibzhPE9oT4i7bAlHLHcB
- Di+2YS16/A7AhSeMRbuyogL0MViKBkZlXyRK7/Tio4hnOnVe0bYH/fhdXiPJft5eaEVA
- AOdCNsEHRSVgO0+HAY2zUrP9DgAS7AM2A/qhWnW0FigK+i+d+qpndu/f+g8KZxCTVF4P
- Wd56hMogBwNuDqatUWTLo7Ap7zdtS671CAm7EE9GGS/KnusJK33Mx+o8IYonQhxUsdGH
- AA+GhwmJofZPr9NGkFEA5zrH7MexY8hsvJYpZ+e8Vr5BHRF0+OJuSsu2Tc1F6fyhpQJf
- 9BVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709210100; x=1709814900;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QsW6yhR7XApu1msK5N/EYtXk7TTWXJpMR9V2i7yEhNg=;
- b=mGO4188/3LyF9n3Ei87KhqYj8cl4jC4FOhaLCGK215HKGWZSIbSYApy0IpULL6zCea
- jUhAUk381xBveKoft316HnGADOO2ikG3ztZ2+i5FvzRP8gB465XRDdJVFgVGgPZKooZ1
- F9EEaH5RwHpxa21QvzabXXjzYDSJBMy4s8IS18A3ulwWTFmersagU0QCftdGjdDUaD9j
- fOAeyNU/OjzpH2i1FhvIQiApqoHKbyozKeXiUBNcv/HoFhqrfuc7keULxYYkz6oX6V6m
- iyYWeWGft9unK+dmujG+FRZXJmLoccCOo2359DXfFnt57WhhyziWPJPaQQnrqV1zUkQk
- /hCw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWAhTuUM8HvWOrMvKhpLhmRtUqmBukurQG5NAceWps87/IhPKBIRCvAmiQfFYmJYDOrh7nchCP1xFA0kmtLVHGo3SgjAYo=
-X-Gm-Message-State: AOJu0Yzu5aq7SVseCnjsItDL+9LaPzQah9nejuOsZFfqSR20ARnO82Fc
- Jyf0koASTqsQfwzSQh8lZ95DihKm3VGdK0x2EvioadyALG9fZx4t/OmSie3ax+ueqV/V6SvstJr
- kt68BT8yEw4kiRPLyuHenF+oqjBTDNi7abyY0nw==
-X-Google-Smtp-Source: AGHT+IHfu9zRkBsAM+Sxqti+GmYUh4ES/5yRRro1upqVi3mGT14nvwLombxBHr3woGb/R+JtNLgv24JoVBujQyJXtSo=
-X-Received: by 2002:a05:6402:230e:b0:565:ee3c:8c7d with SMTP id
- l14-20020a056402230e00b00565ee3c8c7dmr1387446eda.31.1709210100421; Thu, 29
- Feb 2024 04:35:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1rffoy-0004KI-W7; Thu, 29 Feb 2024 07:47:33 -0500
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1rffow-0004fF-Tq; Thu, 29 Feb 2024 07:47:32 -0500
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 8B89B47F8D;
+ Thu, 29 Feb 2024 13:47:27 +0100 (CET)
+Message-ID: <0a3b3d62-5374-4219-a5fa-f087f93d85d8@proxmox.com>
+Date: Thu, 29 Feb 2024 13:47:26 +0100
 MIME-Version: 1.0
-References: <20240228125939.56925-1-heinrich.schuchardt@canonical.com>
- <fb6ef90d-4a3e-4bdd-8516-8b15c1f2329f@linaro.org>
- <b9937680-8c0b-46f6-86ef-55139562e2c4@canonical.com>
- <CAFEAcA_Bshua2BQTfOb3D1aF27ayELEt9TcQM8hkQdKaih3xHw@mail.gmail.com>
- <9c64be5c-25b8-421d-966a-bdac03dfe37c@canonical.com>
- <CAFEAcA92s+3Q3ud=zOjsyvuqZ=BjwXt3OY0n5mO_iDXovQpoRQ@mail.gmail.com>
- <20240229105900.0000490e@Huawei.com>
- <CAFEAcA_O2QPwCPE0HS9g0saEA3XbuVS_UGtRpe_o4tLRrc6Ksg@mail.gmail.com>
- <bf3e44c8-a6ad-48b6-8825-ba8ce0dd19f8@canonical.com>
-In-Reply-To: <bf3e44c8-a6ad-48b6-8825-ba8ce0dd19f8@canonical.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 29 Feb 2024 12:34:48 +0000
-Message-ID: <CAFEAcA85nwJ-qfzFVYBY0kiD7mEtr5UHRD_X_s=Vv7eaoHD_bA@mail.gmail.com>
-Subject: Re: [PATCH, v2] physmem: avoid bounce buffer too small
-To: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Mattias Nissler <mnissler@rivosinc.com>, 
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 0/4] mirror: implement incremental and bitmap modes
+Content-Language: en-US
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, armbru@redhat.com, eblake@redhat.com,
+ hreitz@redhat.com, kwolf@redhat.com, jsnow@redhat.com,
+ f.gruenbichler@proxmox.com, t.lamprecht@proxmox.com,
+ mahaocong@didichuxing.com
+References: <20240216105513.309901-1-f.ebner@proxmox.com>
+ <cf086f76-1f47-4f45-aba5-fc021ad090da@yandex-team.ru>
+ <8a84f7f2-6765-49f6-9469-908bcfdc7437@yandex-team.ru>
+ <5ded1c2d-5aa8-440a-9f01-a3529e07abf0@proxmox.com>
+ <b737130a-2a01-4b1c-945a-b0d574345d0e@yandex-team.ru>
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <b737130a-2a01-4b1c-945a-b0d574345d0e@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,31 +64,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 29 Feb 2024 at 11:17, Heinrich Schuchardt
-<heinrich.schuchardt@canonical.com> wrote:
-> > But yes, I'm not surprised that CXL runs into this. Heinrich,
-> > are you doing CXL testing, or is this some other workload?
->
-> I am running the UEFI Self-Certification Tests (SCT) on EDK 2 using:
->
-> qemu-system-riscv64 \
->        -M virt,acpi=off -accel tcg -m 4096 \
->        -serial mon:stdio \
->        -device virtio-gpu-pci \
->        -device qemu-xhci \
->        -device usb-kbd \
->        -drive
-> if=pflash,format=raw,unit=0,file=RISCV_VIRT_CODE.fd,readonly=on \
->        -drive if=pflash,format=raw,unit=1,file=RISCV_VIRT_VARS.fd \
->        -drive file=sct.img,format=raw,if=virtio \
->        -device virtio-net-device,netdev=net0 \
->        -netdev user,id=net0
->
-> This does not invoke any CXL related stuff.
+Am 29.02.24 um 12:48 schrieb Vladimir Sementsov-Ogievskiy:
+> On 29.02.24 13:11, Fiona Ebner wrote:
+>>
+>> The iotest creates a new target image for each incremental sync which
+>> only records the diff relative to the previous mirror and those diff
+>> images are later rebased onto each other to get the full picture.
+>>
+>> Thus, it can be that a previous mirror job (not just background process
+>> or previous write) already copied a cluster, and in particular, copied
+>> it to a different target!
+> 
+> Aha understand.
+> 
+> For simplicity, let's consider case, when source "cluster size" = "job
+> cluster size" = "bitmap granularity" = "target cluster size".
+> 
+> Which types of clusters we should consider, when we want to handle guest
+> write?
+> 
+> 1. Clusters, that should be copied by background process
+> 
+> These are dirty clusters from user-given bitmap, or if we do a full-disk
+> mirror, all clusters, not yet copied by background process.
+> 
+> For such clusters we simply ignore the unaligned write. We can even
+> ignore the aligned write too: less disturbing the guest by delays.
+> 
 
-Hmm, that doesn't seem like it ought to be running into this.
-What underlying memory region is the guest trying to do
-the virtio queue access to?
+Since do_sync_target_write() currently doesn't ignore aligned writes, I
+wouldn't change it. Of course they can count towards the "done_bitmap"
+you propose below.
 
--- PMM
+> 2. Clusters, already copied by background process during this mirror job
+> and not dirtied by guest since this time.
+> 
+> For such clusters we are safe to do unaligned write, as target cluster
+> must be allocated.
+> 
+
+Right.
+
+> 3. Clusters, not marked initially by dirty bitmap.
+> 
+> What to do with them? We can't do unaligned write. I see two variants:
+> 
+> - do additional read from source, to fill the whole cluster, which seems
+> a bit too heavy
+> 
+
+Yes, I'd rather only do that as a last resort.
+
+> - just mark the cluster as dirty for background job. So we behave like
+> in "background" mode. But why not? The maximum count of such "hacks" is
+> limited to number of "clear" clusters at start of mirror job, which
+> means that we don't seriously affect the convergence. Mirror is
+> guaranteed to converge anyway. And the whole sense of "write-blocking"
+> mode is to have a guaranteed convergence. What do you think?
+> 
+
+It could lead to a lot of flips between job->actively_synced == true and
+== false. AFAIU, currently, we only switch back from true to false when
+an error happens. While I don't see a concrete issue with it, at least
+it might be unexpected to users, so it better be documented.
+
+I'll try going with this approach, thanks!
+
+> 
+> ----
+> 
+> Of course, we can't distinguish 3 types by on dirty bitmap, so we need
+> the second one. For example "done_bitmap", where we can mark clusters
+> that were successfully copied. That would be a kind of block-status of
+> target image. But using bitmap is a lot better than querying
+> block-status from target.
+
+Best Regards,
+Fiona
+
 
