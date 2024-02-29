@@ -4,83 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC4CBC5478C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Feb 2024 23:11:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB901C5475B
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 01:12:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfT4G-0004Li-AR; Wed, 28 Feb 2024 18:10:28 -0500
+	id 1rfUy0-0008Nx-6x; Wed, 28 Feb 2024 20:12:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rfT4E-0004LN-MH
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 18:10:26 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rfT4D-0005bE-5S
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 18:10:26 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1dca3951ad9so3322815ad.3
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 15:10:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709161823; x=1709766623; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=R/iapAsCSFQsA7/1+PUhSsUM8WUIqY8pXhaEMASUFrk=;
- b=theCTlaNlTmgeeNTl1vmE6YW6axWNyihloGwj7E7DXuIUNoBIV/VF7ivCP27rdH9BT
- 5TheR019PMuMokssqkSFCn0QyoBN0P8U/W3/ufb9aMV76OtXwxen6cPlGxy9YneldMjy
- 1NCSncYa65IM74DCpbTnpcN8gnLD9uX2TAGwUD7Z143KGprXKX2Ja4NlrmYIiyYoudyC
- Qz6JVamjOhnpRbv9s+SNBl9ku7dMg9kNrq1YvRHG7xAjlILDHc4V5S43J0Ice/bwr8wX
- TncRrTXROzbbbBAr9Iz0Rq7JIc5j5gCclSlDwkGtVWeXeNpnoccPtS1J7LrTsQwDpQ8h
- oPJg==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfUxy-0008Ng-9u
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 20:12:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfUxw-0005mY-Ft
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 20:12:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709169123;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aUzMz0fg2zMtCCfqhZs/aP6ZIRc5VyOH7QSpwvXOIWQ=;
+ b=ZlKD2O/ViOcrwsNVoCYauw1z6TJuOtMD80u4OiYIsWHlSD8HnSqqw3j1VRYUd6/zGSoqHO
+ eP30FqhOvNApLGtp7519tlMuaEz5Gd9orbbD/IoQA7Lx4JGRXQHBmTNlgtu7V7ncITwaNl
+ gRl5PLkTbcqnFjfFZUyxfI2VHLM3dcY=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-664-dqFMm3F2NbqWom6f3gpbrg-1; Wed, 28 Feb 2024 20:12:01 -0500
+X-MC-Unique: dqFMm3F2NbqWom6f3gpbrg-1
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-563de65ac5dso97813a12.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 17:12:01 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709161823; x=1709766623;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1709169120; x=1709773920;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=R/iapAsCSFQsA7/1+PUhSsUM8WUIqY8pXhaEMASUFrk=;
- b=WfAgLrliVZt1YMy8mkj7Si6JYxkfG2ZJme4Nnjdl82LTCKQZUDc114DTBK+INaAMzN
- lFEov+7s/ogE//lK9sP1BAtAWvWD5scQQTOdVPbJjVLD7L3q6oh214pilbI7kfCmjllo
- 9BCgnP5065LuHV6R/yPIf9pg3j28Plmjs1JyYH84dtCaQo4j9e+3O2p0dd3hIyRhB9eY
- xirgCAyhZAHSmFJa9k0T29ISO4M9c+Jc1eb08K7RM7bz1QFFzwHoFCfxbE5u89QjoZRt
- 2cfFPNrUyV2/R+RQJaoxKfd960Gj8a80NMPmBayWVA9hgFqB4fP2zbIVrGhQxJd4Dorv
- jRVg==
+ bh=aUzMz0fg2zMtCCfqhZs/aP6ZIRc5VyOH7QSpwvXOIWQ=;
+ b=ojFqphKjFSBQK3Y6mEMUXO3q90VZ2Zp1ZIgwNyl7G3SKhjanxBek6tjYcTBTzRniIL
+ c496Vv6kyitRQ45vGdY8bjXw24NluT4qa1b5xP8jzo8UJQWQiY/ClrXDzfbHi/6tlpx7
+ UP35P7wCWWEwPyYVfnPykNw4moqgA382A5naJkRN/pbJ3vYZLmo6Sx8ymhcLFqCUHLtC
+ Gdt/Hrgeamjqd5a/FYc/NL44QKYgCvqDUwZIFPlB14bFAIbqXhfcFWiVWMm/azwLW3rj
+ 0ErU4pXdNuEX16IkWn3+Mf0gni5x/GxHe2WittPl/ufhRFsA+pNYraJxT2WmrqsSalql
+ t3Pw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUFOpPG7nrF6v5M2nKEKLlYpMdPabpiuvY7x/vDBlJAdEa9Qy8+h/mwf/aBhoQmzMG3Q+MSOPR/yRtUIH77rv/G93mq5yU=
-X-Gm-Message-State: AOJu0YwC1TH/jXZkujCkz4Va+KfX2QcLLck3R8uTbBl/ET+CijjO7gCs
- B/3iEcjKW9NrPABQI396+/G84Wh9NiAsCUHJpFVZGVkF5P0om3iDK9+/2x33mdw=
-X-Google-Smtp-Source: AGHT+IGUtu6qYhC2rYhNr/tLkTDuKHQdK8It+W95aa+a6vpCnUnMyW+ZmMh54IoLK0275qgK5cg/5g==
-X-Received: by 2002:a17:902:650c:b0:1dc:b173:f27b with SMTP id
- b12-20020a170902650c00b001dcb173f27bmr358850plk.32.1709161823308; 
- Wed, 28 Feb 2024 15:10:23 -0800 (PST)
-Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
- [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- kn11-20020a170903078b00b001d6f29c12f7sm3797754plb.135.2024.02.28.15.10.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Feb 2024 15:10:22 -0800 (PST)
-Message-ID: <4362aeec-ae18-4515-a3ec-6aba811e17d1@linaro.org>
-Date: Wed, 28 Feb 2024 13:10:19 -1000
+ AJvYcCWgoG31I1FQpW9vjqVr05kV9wlUUBceZzP9RRItSfbfefO3aXsABgxeDfY7t5q5EEHfoDqHpAhXldGaOpfJuH8SS7Fl/J0=
+X-Gm-Message-State: AOJu0Yx8vecnfTAdhzMynudHyXfDotQADk9noU3IFL23RbfzPCdlTO03
+ MnGYw1df8sbSwYXjtZP78tkzgFCAXpql5Cz6jGsXKdin7+FUwZAL6AK8wsFuZBQM1o3d9COifQT
+ UNe51Pqf1RpgLtNopE0zuODLa87dS8LMWxxpjHvajwxf+racnUzlo
+X-Received: by 2002:a17:902:b181:b0:1dc:7721:94c2 with SMTP id
+ s1-20020a170902b18100b001dc772194c2mr680166plr.0.1709169120681; 
+ Wed, 28 Feb 2024 17:12:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE7e/LR+JXcGsCHo9PMy8WkrS+6Lzo9CLYqlHi4XVgAvmQpjOQfnDORsgPLHTGM3hJkuUd7CA==
+X-Received: by 2002:a17:902:b181:b0:1dc:7721:94c2 with SMTP id
+ s1-20020a170902b18100b001dc772194c2mr680149plr.0.1709169120283; 
+ Wed, 28 Feb 2024 17:12:00 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ w16-20020a1709026f1000b001dc90b62393sm88054plk.216.2024.02.28.17.11.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 28 Feb 2024 17:11:59 -0800 (PST)
+Date: Thu, 29 Feb 2024 09:11:53 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Mattias Nissler <mnissler@rivosinc.com>
+Subject: Re: [PATCH, v2] physmem: avoid bounce buffer too small
+Message-ID: <Zd_Z2f-5_l3rXNbp@x1n>
+References: <20240228125939.56925-1-heinrich.schuchardt@canonical.com>
+ <fb6ef90d-4a3e-4bdd-8516-8b15c1f2329f@linaro.org>
+ <b9937680-8c0b-46f6-86ef-55139562e2c4@canonical.com>
+ <CAFEAcA_Bshua2BQTfOb3D1aF27ayELEt9TcQM8hkQdKaih3xHw@mail.gmail.com>
+ <9c64be5c-25b8-421d-966a-bdac03dfe37c@canonical.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] tcg/optimize: optimize TSTNE using smask and zmask
-Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240228111151.287738-1-pbonzini@redhat.com>
- <20240228111151.287738-5-pbonzini@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240228111151.287738-5-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9c64be5c-25b8-421d-966a-bdac03dfe37c@canonical.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,17 +109,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/28/24 01:11, Paolo Bonzini wrote:
-> -    /* TSTNE x,sign -> LT x,0 */
-> -    if (arg_is_const_val(*p2, (ctx->type == TCG_TYPE_I32
-> -                               ? INT32_MIN : INT64_MIN))) {
-> +    /* TSTNE x,i -> LT x,0 if i only includes sign bit copies */
-> +    if (arg_is_const(*p2) && (arg_info(*p2)->val & ~i1->s_mask) == 0) {
+On Wed, Feb 28, 2024 at 08:07:47PM +0100, Heinrich Schuchardt wrote:
+> On 28.02.24 19:39, Peter Maydell wrote:
+> > On Wed, 28 Feb 2024 at 18:28, Heinrich Schuchardt
+> > <heinrich.schuchardt@canonical.com> wrote:
+> > > 
+> > > On 28.02.24 16:06, Philippe Mathieu-Daudé wrote:
+> > > > Hi Heinrich,
+> > > > 
+> > > > On 28/2/24 13:59, Heinrich Schuchardt wrote:
+> > > > > virtqueue_map_desc() is called with values of sz exceeding that may
+> > > > > exceed
+> > > > > TARGET_PAGE_SIZE. sz = 0x2800 has been observed.
 
-This is a good idea, but s_mask isn't defined like you think -- it is *repetitions* of the 
-sign bit, but not including the sign bit itself.  For INT64_MIN, s_mask == 0.
+Pure (and can also be stupid) question: why virtqueue_map_desc() would map
+to !direct mem?  Shouldn't those buffers normally allocated from guest RAM?
 
-So for TSTNE min,min, (min & ~0) != 0, so the test won't pass.
+> > > > > 
+> > > > > We only support a single bounce buffer. We have to avoid
+> > > > > virtqueue_map_desc() calling address_space_map() multiple times.
+> > > > > Otherwise
+> > > > > we see an error
+> > > > > 
+> > > > >       qemu: virtio: bogus descriptor or out of resources
+> > > > > 
+> > > > > Increase the minimum size of the bounce buffer to 0x10000 which matches
+> > > > > the largest value of TARGET_PAGE_SIZE for all architectures.
+> > > > > 
+> > > > > Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+> > > > > ---
+> > > > > v2:
+> > > > >      remove unrelated change
+> > > > > ---
+> > > > >    system/physmem.c | 8 ++++++--
+> > > > >    1 file changed, 6 insertions(+), 2 deletions(-)
+> > > > > 
+> > > > > diff --git a/system/physmem.c b/system/physmem.c
+> > > > > index e3ebc19eef..3c82da1c86 100644
+> > > > > --- a/system/physmem.c
+> > > > > +++ b/system/physmem.c
+> > > > > @@ -3151,8 +3151,12 @@ void *address_space_map(AddressSpace *as,
+> > > > >                *plen = 0;
+> > > > >                return NULL;
+> > > > >            }
+> > > > > -        /* Avoid unbounded allocations */
+> > > > > -        l = MIN(l, TARGET_PAGE_SIZE);
+> > > > > +        /*
+> > > > > +         * There is only one bounce buffer. The largest occuring
+> > > > > value of
+> > > > > +         * parameter sz of virtqueue_map_desc() must fit into the bounce
+> > > > > +         * buffer.
+> > > > > +         */
+> > > > > +        l = MIN(l, 0x10000);
+> > > > 
+> > > > Please define this magic value. Maybe ANY_TARGET_PAGE_SIZE or
+> > > > TARGETS_BIGGEST_PAGE_SIZE?
+> > > > 
+> > > > Then along:
+> > > >     QEMU_BUILD_BUG_ON(TARGET_PAGE_SIZE <= TARGETS_BIGGEST_PAGE_SIZE);
+> > > 
+> > > Thank you Philippe for reviewing.
+> > > 
+> > > TARGETS_BIGGEST_PAGE_SIZE does not fit as the value is not driven by the
+> > > page size.
+> > > How about MIN_BOUNCE_BUFFER_SIZE?
+> > > Is include/exec/memory.h the right include for the constant?
+> > > 
+> > > I don't think that TARGET_PAGE_SIZE has any relevance for setting the
+> > > bounce buffer size. I only mentioned it to say that we are not
+> > > decreasing the value on any existing architecture.
+> > > 
+> > > I don't know why TARGET_PAGE_SIZE ever got into this piece of code.
+> > > e3127ae0cdcd ("exec: reorganize address_space_map") does not provide a
+> > > reason for this choice. Maybe Paolo remembers.
+> > 
+> > The limitation to a page dates back to commit 6d16c2f88f2a in 2009,
+> > which was the first implementation of this function. I don't think
+> > there's a particular reason for that value beyond that it was
+> > probably a convenient value that was assumed to be likely "big enough".
+> > 
+> > I think the idea with this bounce-buffer has always been that this
+> > isn't really a code path we expected to end up in very often --
+> > it's supposed to be for when devices are doing DMA, which they
+> > will typically be doing to memory (backed by host RAM), not
+> > devices (backed by MMIO and needing a bounce buffer). So the
+> > whole mechanism is a bit "last fallback to stop things breaking
+> > entirely".
+> > 
+> > The address_space_map() API says that it's allowed to return
+> > a subset of the range you ask for, so if the virtio code doesn't
+> > cope with the minimum being set to TARGET_PAGE_SIZE then either
+> > we need to fix that virtio code or we need to change the API
+> > of this function. (But I think you will also get a reduced
+> > range if you try to use it across a boundary between normal
+> > host-memory-backed RAM and a device MemoryRegion.)
+> 
+> If we allow a bounce buffer only to be used once (via the in_use flag), why
+> do we allow only a single bounce buffer?
+> 
+> Could address_space_map() allocate a new bounce buffer on every call and
+> address_space_unmap() deallocate it?
+> 
+> Isn't the design with a single bounce buffer bound to fail with a
+> multi-threaded client as collision can be expected?
 
-r~
+See:
+
+https://lore.kernel.org/r/20240212080617.2559498-1-mnissler@rivosinc.com
+
+For some reason that series didn't land, but it seems to be helpful in this
+case too if e.g. there can be multiple of such devices.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
