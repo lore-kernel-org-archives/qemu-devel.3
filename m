@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FC05C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 06:49:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B1EEC54798
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 06:49:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfa9h-0004Hn-EV; Thu, 29 Feb 2024 01:44:33 -0500
+	id 1rfa83-0000dN-3y; Thu, 29 Feb 2024 01:42:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rfa9d-0003w8-Th
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:44:30 -0500
+ id 1rfa7s-0000Q6-CS
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:42:40 -0500
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rfa9c-0005ON-3J
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:44:29 -0500
+ id 1rfa7q-0004qw-Q9
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:42:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709189068; x=1740725068;
+ t=1709188958; x=1740724958;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=w43m/q1K3tjH9BzdhhpNxp1BomsI63/42OLw0r7ykq0=;
- b=RpHJ+9L3+2hTMsnQ1QssvDAWZKlzRI6UiVX5z/fiXp08goMMfqIFeLsC
- +qL71pJbqFHOS0+2FaAdJQ78Mrcxs0iza0/Eus00OraY1LCpFDENMks0g
- xE0P9qlX87pw3eojFo3gFpSR2pukIAQzby/yN6JiNqg1C1xLIoSpxmysY
- WlIVjKVn9cL2AZ9hsgAyRA9sgld83az9kUpwQ5rAv/18jixG50fd3mV2X
- /Xp54HBFQT3wLTgdXZKrmpvEAaIJvjkeT1ItraA2bIXrzkWNP3YQNKzhj
- dsyoBX5ouoKEunEVyLme+5Fz/ai6CRMOLPZr4QQKwzd/NTV5+ysEBCRFW Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3803328"
+ bh=opdbuBrxZYW0fFAi+dKWsqVfJde3vAaaouAKABSOYvw=;
+ b=HtVViutBkgRVtxMnN4hGMY2IW+8AHylBYtO7aA48DZ6E2eQ+4cjiOz8c
+ +yMgkHBClik4P0b75PSiPje/Xqz9bRLA4S1LeM25C7HfOKG62YDmEyO78
+ yc4lrT8gP6vNHb2C4gEAd2MDQWDLkTLMa77LNHbrZCSgRFiInAgIFr+Q8
+ GCX2XWdALqctW3+44sZRgJwe2xfFaSW28FayU46H+yfBsP2XAfbeLenri
+ HlHd1BCYcNBr+REZZIsOS1JqzMBSkh8dRSZgqDhdhYmxfdWqulzDCXuGK
+ X9XZE0OrfS9nwCoo0W6q51V4W9DfnP93NnOKpjA9PICSXvutqab+FHrvC Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3803053"
 X-IronPort-AV: E=Sophos;i="6.06,192,1705392000"; 
-   d="scan'208";a="3803328"
+   d="scan'208";a="3803053"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Feb 2024 22:44:25 -0800
+ 28 Feb 2024 22:42:37 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,192,1705392000"; 
-   d="scan'208";a="8076549"
+   d="scan'208";a="8076067"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa007.jf.intel.com with ESMTP; 28 Feb 2024 22:44:20 -0800
+ by orviesa007.jf.intel.com with ESMTP; 28 Feb 2024 22:42:31 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -60,9 +60,10 @@ Cc: kvm@vger.kernel.org, qemu-devel@nongnu.org,
  Gerd Hoffmann <kraxel@redhat.com>,
  Isaku Yamahata <isaku.yamahata@gmail.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>, xiaoyao.li@intel.com
-Subject: [PATCH v5 63/65] i386/tdx: Skip kvm_put_apicbase() for TDs
-Date: Thu, 29 Feb 2024 01:37:24 -0500
-Message-Id: <20240229063726.610065-64-xiaoyao.li@intel.com>
+Subject: [PATCH v5 46/65] i386/tdx: Call KVM_TDX_INIT_VCPU to initialize TDX
+ vcpu
+Date: Thu, 29 Feb 2024 01:37:07 -0500
+Message-Id: <20240229063726.610065-47-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240229063726.610065-1-xiaoyao.li@intel.com>
 References: <20240229063726.610065-1-xiaoyao.li@intel.com>
@@ -93,30 +94,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-KVM doesn't allow wirting to MSR_IA32_APICBASE for TDs.
+TDX vcpu needs to be initialized by SEAMCALL(TDH.VP.INIT) and KVM
+provides vcpu level IOCTL KVM_TDX_INIT_VCPU for it.
+
+KVM_TDX_INIT_VCPU needs the address of the HOB as input. Invoke it for
+each vcpu after HOB list is created.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- target/i386/kvm/kvm.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ target/i386/kvm/tdx.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index d23f94b77257..31aed1c9aae0 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -3052,6 +3052,11 @@ void kvm_put_apicbase(X86CPU *cpu, uint64_t value)
- {
-     int ret;
- 
-+    /* TODO: Allow accessing guest state for debug TDs. */
-+    if (is_tdx_vm()) {
-+        return;
-+    }
-+
-     ret = kvm_put_one_msr(cpu, MSR_IA32_APICBASE, value);
-     assert(ret == 1);
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index dcabe359eda5..4625f806920e 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -591,6 +591,22 @@ static void tdx_init_ram_entries(void)
+     tdx_guest->nr_ram_entries = j;
  }
+ 
++static void tdx_post_init_vcpus(void)
++{
++    TdxFirmwareEntry *hob;
++    CPUState *cpu;
++    int r;
++
++    hob = tdx_get_hob_entry(tdx_guest);
++    CPU_FOREACH(cpu) {
++        r = tdx_vcpu_ioctl(cpu, KVM_TDX_INIT_VCPU, 0, (void *)hob->address);
++        if (r < 0) {
++            error_report("KVM_TDX_INIT_VCPU failed %s", strerror(-r));
++            exit(1);
++        }
++    }
++}
++
+ static void tdx_finalize_vm(Notifier *notifier, void *unused)
+ {
+     TdxFirmware *tdvf = &tdx_guest->tdvf;
+@@ -623,6 +639,8 @@ static void tdx_finalize_vm(Notifier *notifier, void *unused)
+ 
+     tdvf_hob_create(tdx_guest, tdx_get_hob_entry(tdx_guest));
+ 
++    tdx_post_init_vcpus();
++
+     for_each_tdx_fw_entry(tdvf, entry) {
+         struct kvm_memory_mapping mapping = {
+             .base_gfn = entry->address >> 12,
 -- 
 2.34.1
 
