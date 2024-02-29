@@ -4,92 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41DA4C54E41
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 12:53:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90F31C54E49
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 13:02:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rffu2-0007AZ-Ks; Thu, 29 Feb 2024 07:52:46 -0500
+	id 1rfg1f-0000vx-H2; Thu, 29 Feb 2024 08:00:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1rffu0-0007AC-EC
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 07:52:44 -0500
-Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1rffty-0005SX-QP
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 07:52:44 -0500
-Received: by mail-ot1-x332.google.com with SMTP id
- 46e09a7af769-6e49518f375so338588a34.1
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 04:52:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1709211159; x=1709815959;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oHTVTTDri3Dv7ne75aSXP/TxxAgMlWxOwcQ4Dft0o6c=;
- b=r+2I9QLf2W1WTuckD+JB3PyHJ51V0rhe6+CeY5LpyP7w8tR26EULD7iKqDBMNyrQxs
- 4GjqwvXEZX+V5UxHz4VbU3JzfDvsVzi2YwZKBRzhhIZEXkHmgv+sGovH5B0SrHFIffVb
- 6oU28bbok7yIq3LzbWfCVWVVgwokQpiV574Lye3c1fOUAKcKv5TjM85GmWV3vti19Ax5
- k2Xx56G9s9ataUrG3WW5cAQAzTlYgLBlQ+P4IPEL7WGaZepPhGUhf/4ZHoI2CtC7VKem
- Bn5rK+pSe5db7eAfkoJRQGec9Kb29tTYLqkOmKnOtNZtskIGXXXqj4f0LSah6Lm7D23A
- kTVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709211159; x=1709815959;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oHTVTTDri3Dv7ne75aSXP/TxxAgMlWxOwcQ4Dft0o6c=;
- b=EpU3n7I+Cwa5PUAiuqGTuSuq9NvAz90HMq7B4Ke+cGS4TLKQ0XSOC6zZU/2L1zmlCV
- 2JdITgzs91mZf0SIHKakvnHcEJD/MZAeTlsLe1kNx/BZjZn8MwjhmF6q0dgZlDhX/brS
- aDRuXiBa72mPhIXsYJbKqqZYXPPOQWe8F343XkXgI3z1NDrvRN4lMQ1nso8A1qp8Mao5
- ppjavD4e4w0xlFAS6V8mXhYBp+MV9Sl6P/LY+DLY7lxj3Tor/Cq7rf8x91OJp3/1R5tk
- 2VTwoCicegi8b08EBN5eY5ThewajvFfPKU9owlC9eWUYPA+fWGdy+TE/bEvFmljtzQgc
- yFRw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUFjCBhtqSke6DeYhfufeheQm6QeqS9gU9gMq9gG1UZ3HCy0SatevomIlUYS/PvsLPx03b82wYkmP6CguIMLzGrk1KROnM=
-X-Gm-Message-State: AOJu0YyedT52jpMscelax2MJuGOpJ6pDbEHKHLGNuMl1rDAjDr7J8y1w
- /AFQqYe4XOJ80hOBptWG2JPMnjmfwfXs68kWgWYCUbo/dwIa1FbjP5Y+tFylAxuKXNTEokSFdS+
- OrwR6JMeWeykGzeVcXLedybu8dZ28rmBNxhdcUw==
-X-Google-Smtp-Source: AGHT+IHNopRgw+xQyI6kWsZiMeHj/6D/OSVhJ0jG5RxP44GxhUlCzzcRpmKKr+y9FURachF6TjLhs9a7tk2ajXaWEtQ=
-X-Received: by 2002:a05:6870:b601:b0:220:8d0d:e25e with SMTP id
- cm1-20020a056870b60100b002208d0de25emr2050143oab.47.1709211159314; Thu, 29
- Feb 2024 04:52:39 -0800 (PST)
-MIME-Version: 1.0
-References: <20240228125939.56925-1-heinrich.schuchardt@canonical.com>
- <fb6ef90d-4a3e-4bdd-8516-8b15c1f2329f@linaro.org>
- <b9937680-8c0b-46f6-86ef-55139562e2c4@canonical.com>
- <CAFEAcA_Bshua2BQTfOb3D1aF27ayELEt9TcQM8hkQdKaih3xHw@mail.gmail.com>
- <9c64be5c-25b8-421d-966a-bdac03dfe37c@canonical.com>
- <CAFEAcA92s+3Q3ud=zOjsyvuqZ=BjwXt3OY0n5mO_iDXovQpoRQ@mail.gmail.com>
- <20240229105900.0000490e@Huawei.com>
- <CAFEAcA_O2QPwCPE0HS9g0saEA3XbuVS_UGtRpe_o4tLRrc6Ksg@mail.gmail.com>
- <bf3e44c8-a6ad-48b6-8825-ba8ce0dd19f8@canonical.com>
- <CAFEAcA85nwJ-qfzFVYBY0kiD7mEtr5UHRD_X_s=Vv7eaoHD_bA@mail.gmail.com>
-In-Reply-To: <CAFEAcA85nwJ-qfzFVYBY0kiD7mEtr5UHRD_X_s=Vv7eaoHD_bA@mail.gmail.com>
-From: Mattias Nissler <mnissler@rivosinc.com>
-Date: Thu, 29 Feb 2024 13:52:28 +0100
-Message-ID: <CAGNS4TbE8dyUv0OkwwY=g2=qea_mxj07=0W4macVRXsBMicgCA@mail.gmail.com>
-Subject: Re: [PATCH, v2] physmem: avoid bounce buffer too small
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <ankita@nvidia.com>)
+ id 1rfg1b-0000uY-LQ; Thu, 29 Feb 2024 08:00:35 -0500
+Received: from mail-bn8nam12on20600.outbound.protection.outlook.com
+ ([2a01:111:f403:2418::600]
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ankita@nvidia.com>)
+ id 1rfg1Z-0007za-Jt; Thu, 29 Feb 2024 08:00:35 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=DZ4NiAzZ7Wg2revZ3ihYO5M7ZssffWtXmA3tZ3f3pNlD7TsCU+XaTkhV14PykMk98mKXSese/koZmd8QNvOiB2dKOyFpyisPZQ7t2efdbltRgmxrBNohcXYSdwe8XVxiuPWUzGTDRCf5NGIOgp9MqRIftkPmgYzDd+izmn2s0jGyBd6+y+Do5mCIdu5mikIPNPMvWEHZRNNCQ0b+MYQaPYafCIsYD8euqqt4prbER/LjZ12coINliGmdrOhfGeYvuhaltMriDuvC1yQF7yMgIx1rMnkjFzY/ksrlq0k4MoR80DqVTPqFDKCFfBFi6auOMr7sK8bN7LxmnTgl1oHKFw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rieHtQfVbEX5HoYvHWayXRVnirS7OSuur2kb3mlYyys=;
+ b=EcLryChizSap8M9iObx2LMg93BcV9MR8hj+ISA92dqKyrulHKRlhfRmLrTe78Ud2DGU+9l5i0gd6yyhMwD0Ndc0/rYH/a/DwaywA3wX8gJmB/+tD3jsoudEPe7TZL+omzkBRQRDH6h8fNfd2lDaM7EigfE1MHCuQjT76o3JKOa8topzHxp6Zxp4JMUxh6iMIhFggOj/2QxPEbqOZ4KUb98eqSyWa1lniw/uptYuW24tCth1MCUhrbZrwXaVycstse3Ka69Mlf0v9quvf8hqJwNJ6eSv2NumnkoodAJ0jHM8N80gX5pJiBdn9z1/p5MWNzVxtkzA52CmnXshQ4MsyTQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rieHtQfVbEX5HoYvHWayXRVnirS7OSuur2kb3mlYyys=;
+ b=YLBkW1MKLtABZQeW1IF3wv43vurvvOBvDeBmRWBb8h6x7OjOYMjxixJPAfAGRMCoHeBaz5fGxkDz9q5rE9IRax2m2CvaNZ6dVIL4XvZ5IZ/wvfflKWbbWfLvjXv0MtJyHdZyD+4JpvIw2g0A8OJDAQudnKrjsjQj5LJhGHdBmsH7TT6w6KDoMblsOG/xXGPw5ANF1LqCbVFYep/zPxx8yHbz0PVLwohf1KR73swzB/NhMqCLMEgyJ8b6frbn9OkM44tajNpvGBJ2OMNbEjhPwYWbQf7E9txaGqMJ57d/TSOUSoURbFeHjtWFkUkIUwZ5mn9ta3i4kirMFQaFhBUxag==
+Received: from SA1PR12MB7199.namprd12.prod.outlook.com (2603:10b6:806:2bc::21)
+ by CY8PR12MB7515.namprd12.prod.outlook.com (2603:10b6:930:93::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7339.32; Thu, 29 Feb
+ 2024 13:00:27 +0000
+Received: from SA1PR12MB7199.namprd12.prod.outlook.com
+ ([fe80::284c:211f:16dc:f7b2]) by SA1PR12MB7199.namprd12.prod.outlook.com
+ ([fe80::284c:211f:16dc:f7b2%5]) with mapi id 15.20.7316.032; Thu, 29 Feb 2024
+ 13:00:27 +0000
+From: Ankit Agrawal <ankita@nvidia.com>
+To: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+CC: Markus Armbruster <armbru@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>,
+ "alex.williamson@redhat.com" <alex.williamson@redhat.com>, "clg@redhat.com"
+ <clg@redhat.com>, "shannon.zhaosl@gmail.com" <shannon.zhaosl@gmail.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "ani@anisinha.ca"
+ <ani@anisinha.ca>, "berrange@redhat.com" <berrange@redhat.com>,
+ "eduardo@habkost.net" <eduardo@habkost.net>, "imammedo@redhat.com"
+ <imammedo@redhat.com>, "mst@redhat.com" <mst@redhat.com>, "eblake@redhat.com"
+ <eblake@redhat.com>, "david@redhat.com" <david@redhat.com>,
+ "gshan@redhat.com" <gshan@redhat.com>, Zhi Wang <zhiw@nvidia.com>, Matt Ochs
+ <mochs@nvidia.com>, "pbonzini@redhat.com" <pbonzini@redhat.com>, Aniket
+ Agashe <aniketa@nvidia.com>, Neo Jia <cjia@nvidia.com>, Kirti Wankhede
+ <kwankhede@nvidia.com>, "Tarun Gupta (SW-GPU)" <targupta@nvidia.com>, Vikram
+ Sethi <vsethi@nvidia.com>, Andy Currid <acurrid@nvidia.com>, Dheeraj Nigam
+ <dnigam@nvidia.com>, Uday Dhoke <udhoke@nvidia.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v7 1/2] qom: new object to associate device to numa node
+Thread-Topic: [PATCH v7 1/2] qom: new object to associate device to numa node
+Thread-Index: AQHaZlXRpHP8fv3NL0CqBnE3t10aOLEfZKrYgABqHwCAACU5hYAAC4X6gAEmMwCAACTghA==
+Date: Thu, 29 Feb 2024 13:00:27 +0000
+Message-ID: <SA1PR12MB71993D9D99F4756C17CAE9DBB05F2@SA1PR12MB7199.namprd12.prod.outlook.com>
+References: <20240223124223.800078-1-ankita@nvidia.com>
+ <20240223124223.800078-2-ankita@nvidia.com>	<8734td3uty.fsf@pond.sub.org>
+ <20240228135504.00005d12@Huawei.com>	<87bk80vaft.fsf@pond.sub.org>
+ <SA1PR12MB7199F868F1C300B1E795CD39B0582@SA1PR12MB7199.namprd12.prod.outlook.com>
+ <20240229102230.00004277@Huawei.com>
+In-Reply-To: <20240229102230.00004277@Huawei.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SA1PR12MB7199:EE_|CY8PR12MB7515:EE_
+x-ms-office365-filtering-correlation-id: 51fc21d8-bdac-4722-b4ab-08dc392666d4
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 6sXAr1oIKPxuqfpUafOHq2lrzE7CmnRLp+zy3M5J4LN2l3YkPtDioV/M6Gq0P5Em0yqu9KR1KArtOLl3LdqPtl8OrWOUuIoEnHseombDIRoyqxroRgeVW0VW3fJDTaUmqn9dF+oYDhA7mQ54N1xLE+6XpyompFG3kwK8t1vfmNwAMLVpEnMquhJZ6vPwicz3LZDJbTKNr4BZl4PWrAY4jrpMAYWT76RYgkbP018uMefbb8EpjOx2t8FhKFA8zNE/FDa+Q27+mufuL7M9Zeq0WoAaTvqDLV6+NOxsCGAODlgI4E7pU3i6wWPXzHzFz+UftYAWwP5T2R/gRt4hhvvLFK0ThWqKm1YTXGYkf/OakfY8RzPnrq3bFyvg+t2KcTV8hD12uwlP6kA0xIXG7zq7Fbde8TtWnUCcZ36ApIeCfuPdMlGm2vmTH3W93RW+a6DeuVeMFly2wkU6qKAXI9neDO2kZ+Hof02Zf2JQJ29EI+iSZHRSfI/EgW1O4BOk1dVgLQyr474gzHgcE5PxKPGUeHE46IBapfH7efff9paTP9sFmf7DQ3vi/hnz81rHcc4ooC8MHtD2p0nEV3JF8MLkg1A3Rx/nuLJwwI/QOlp5UFedd415wUPoHgeGfEdLX4xthvYzDZGaFSvkNPK2Nb24kC9mp9KfcBc/YtHaGPc3diRhL1olTDlIa2udxcCXHEYvkLFDc9bUzCgIo/PRO0ddCwHx8Khwq0DICDysEZKwWcA=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SA1PR12MB7199.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(38070700009); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?scCblnm0WhxqoLUPSYR/OB3aTU2cXuh+UeOgMtd5kl4Uz9AHdrrZEzEIKw?=
+ =?iso-8859-1?Q?FVNWCEAJ0XptTNIjJw4D619OtgUwZ0oISxsJj2g1rY+5R9ABuZ5G2JhlMd?=
+ =?iso-8859-1?Q?iCuJlkIqGuG95DIZwFNodKpbYl44AQ9SQdcRR8o4Y2BK9UUqs6ti2iXza5?=
+ =?iso-8859-1?Q?mEaj0ANToDedgn1p5FtNSkvWVE8ZKiPvezN6cu1SUu2l2J5UQNNihUJGUp?=
+ =?iso-8859-1?Q?/4VDwiayjjDSSuLKQvlPECL1cxhkgRr6rwfMRpJRoWJM23lFzysMslFh/l?=
+ =?iso-8859-1?Q?TIy2t1oyH/F6hSc+OKxM7lBUjyReoBSQhLPdyN0iw5NcK0K666dFa73n25?=
+ =?iso-8859-1?Q?bUDbZNFs7k+HPV6nqBd9clbKMBq9iNZtqU29oqMSM0sorP5wdCSNDNNj7W?=
+ =?iso-8859-1?Q?GBnClV8Xt4UPpd+UTgTVKzsnJ2svOa7uHQ7WtuP41E2xhaEdzEVVc7o8Th?=
+ =?iso-8859-1?Q?0iDhnU5YXW1TlkVMlJPICVPZvgvIVdhZ0D4U6Jky47n4zMmZpRYMGGXZdC?=
+ =?iso-8859-1?Q?FEeyB+opXpvN0hsGzaERe9l8TV72+ZkgfXxXzHeuWT0mThYcDzIs4VCsBw?=
+ =?iso-8859-1?Q?GHNij+S8SbwDQnPGyG86wJb18/hNcYyN+4Fvyg5jMjGhEn2JvdfMGU0sCC?=
+ =?iso-8859-1?Q?pkv/D+yhus3DY6lpvZ+9Qf5rYiZlTjO2hJnTXf5d5nBl4QQ9/j12ruAlj3?=
+ =?iso-8859-1?Q?J7tFDwkq5WKrMKPJeIE2NC4wViC75G/quhhjvfIy/QTkYe5v6xZ/9pF/Tx?=
+ =?iso-8859-1?Q?bHsc6CdBsa/cqiA4XKCtrWqivB9Z6FhpAshvPRTPZB+uIWGyV+pIjnvXb8?=
+ =?iso-8859-1?Q?7a6RsPrmyMR6td34wrPzdSU6aY0yka1dYduvxCEPSlJzsEOq2EgzVfrJBG?=
+ =?iso-8859-1?Q?8+uK/Jp8N2yEuDlWtuk9iZSTWAtj9/erRQkFb+2gh9EqUQPhs5/U+56myc?=
+ =?iso-8859-1?Q?mcF8kdYoQ1MhGOVVhG8cbkxcnYO53sS5BOTTDhQepm5sPBZSxAZDBKzUve?=
+ =?iso-8859-1?Q?THJ0LinsHgNQ/4f5GH1t9Gv5BVXQGVQC31fOa2JaMql4Fxi4TBt7X+oRi1?=
+ =?iso-8859-1?Q?1McaLKefbUsRmWaA6d29x3ZAu+nTl5Re9kShR8P48kxJyWyVNrD1n/4Wxg?=
+ =?iso-8859-1?Q?jpM3zXcrRzr5k0eKXeqUAD/htCh8N9cUptCBiUihZJlbe8FDOzuyzpC7gz?=
+ =?iso-8859-1?Q?D1SsL7iUpOmBynhpNzoR0ATIHEmoLIVRougroiq5JhhpPEDj9qDhA+mdEe?=
+ =?iso-8859-1?Q?n4PGVKsnBvR8nIaDXCbJhNBtgf1LOJepfbZX7Sw8fSf/x+Vm6iJfYW8JiH?=
+ =?iso-8859-1?Q?8GOpcClO9sFiKkMOa2wrTOJgY4sYF+T3SiCyZf9lsr1bVA+OCKAJqQBqQG?=
+ =?iso-8859-1?Q?ZBrPTpzORN2daumdT8ksuHbbLUwDxUN6BLu4d1+YAoDb+iV0o/QHVLbeTF?=
+ =?iso-8859-1?Q?x4WSoRPoao2KabrQJoD5XWH5W4mpXOG7QEMKwF+3VO2wdP5U6+h3GzmA60?=
+ =?iso-8859-1?Q?OdUdl/QOKKox5x0rBo+zHNre26U2Heo7IIaAY3ylxK5LEnq06WGPdQhFdB?=
+ =?iso-8859-1?Q?p3MescGn9SR02QlfVOs1ty5Zfl9QSWaLDn7zG5paHoPMjI409F/1XrRc6k?=
+ =?iso-8859-1?Q?pat+lQgYSsjPM=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::332;
- envelope-from=mnissler@rivosinc.com; helo=mail-ot1-x332.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+MIME-Version: 1.0
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SA1PR12MB7199.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 51fc21d8-bdac-4722-b4ab-08dc392666d4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Feb 2024 13:00:27.6177 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: tDu2ktjMU7zyQVCFspb/iYnmrOj6LewZAzdQ/J5d2Q+LeD1rS6isMaphcSsu+2gdNPqlvWXpJZy1lvDt8Rbn0w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB7515
+Received-SPF: softfail client-ip=2a01:111:f403:2418::600;
+ envelope-from=ankita@nvidia.com;
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,40 +156,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 29, 2024 at 1:35=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
->
-> On Thu, 29 Feb 2024 at 11:17, Heinrich Schuchardt
-> <heinrich.schuchardt@canonical.com> wrote:
-> > > But yes, I'm not surprised that CXL runs into this. Heinrich,
-> > > are you doing CXL testing, or is this some other workload?
-> >
-> > I am running the UEFI Self-Certification Tests (SCT) on EDK 2 using:
-> >
-> > qemu-system-riscv64 \
-> >        -M virt,acpi=3Doff -accel tcg -m 4096 \
-> >        -serial mon:stdio \
-> >        -device virtio-gpu-pci \
-> >        -device qemu-xhci \
-> >        -device usb-kbd \
-> >        -drive
-> > if=3Dpflash,format=3Draw,unit=3D0,file=3DRISCV_VIRT_CODE.fd,readonly=3D=
-on \
-> >        -drive if=3Dpflash,format=3Draw,unit=3D1,file=3DRISCV_VIRT_VARS.=
-fd \
-> >        -drive file=3Dsct.img,format=3Draw,if=3Dvirtio \
-> >        -device virtio-net-device,netdev=3Dnet0 \
-> >        -netdev user,id=3Dnet0
-> >
-> > This does not invoke any CXL related stuff.
->
-> Hmm, that doesn't seem like it ought to be running into this.
-> What underlying memory region is the guest trying to do
-> the virtio queue access to?
-
-FWIW, I have seen multiple bounce buffer usage with the generic net TX
-path as well as the XHCI controller, so it might be either of these.
-Bounce buffering should only take place when the memory region can't
-be accessed directly though - I don't see why that's the case for the
-given command line.
+>> >>> Jonathan, you pointed out interface design issues in your review of =
+v2.>=0A=
+>> >> Are you fully satisfied with the interface in v3?=0A=
+>> >>=0A=
+>> >> Yes. I'm fine with the interface in this version (though it's v7, so =
+I'm lost=0A=
+>> >> on v2 vs v3!)=0A=
+>> >=0A=
+>> > Looks like I can't count to 7!=0A=
+>> >=0A=
+>> > With NUMA capitalized in the doc comment, QAPI schema=0A=
+>> > Acked-by: Markus Armbruster <armbru@redhat.com>=0A=
+>> >=0A=
+>> > Thanks!=0A=
+>>=0A=
+>> Thanks! Will fix that in the next version.=0A=
+>=0A=
+> The following is really me arguing with myself, so can probably be=0A=
+> ignored, but maybe it will spark an idea from someone else!=0A=
+>=0A=
+> One trivial tweak that might make our life easier if anyone adds=0A=
+> support in the future for the other device handle type might be to go=0A=
+> with simply dev rather than pci-dev.=0A=
+>=0A=
+> There is a sticky corner though if a device is a PCI device=0A=
+> and in ACPI DSDT so maybe we are better off adding acpi-dev=0A=
+> to take either pci-dev or acpi-dev?=0A=
+=0A=
+That use case does complicate the situation. Do you of any such=0A=
+use case for generic initiator?=0A=
+=0A=
+As for your suggestion of using acpi-dev as the arg to take both=0A=
+pci-dev and acpi-dev.. Would that mean sending a pure pci device=0A=
+(not the corner case you mentioned) through the acpi-dev argument=0A=
+as well? Not sure if that would appropriate.=0A=
+=0A=
+> Annoyingly for generic ports, (I'm reusing this infrastructure here)=0A=
+> the kernel code currently only deals with the ACPI form (for CXL host=0A=
+> bridges).=A0 Given I point that at the bus of a PXB_CXL it is both=0A=
+> a PCI device, and the only handle we have for getting to the=0A=
+> Root Bridge ACPI handle.=0A=
+=0A=
+So IIUC, you need to pass a PCI device to the generic port object, but use=
+=0A=
+that to reach the ACPI handle and build the Generic port affinity structure=
+=0A=
+for an ACPI device?=0A=
+=0A=
+> So I think I've argued myself around to thinking we need to extend=0A=
+> the interface with another optional parameter if we ever do support=0A=
+> the ACPI handle for generic initiators :(=0A=
+>=0A=
+> Jonathan=
 
