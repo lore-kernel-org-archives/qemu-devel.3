@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 181F9C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 06:55:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE9E8C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 06:55:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfa6x-0006E4-Gq; Thu, 29 Feb 2024 01:41:43 -0500
+	id 1rfa7y-0000XI-Tq; Thu, 29 Feb 2024 01:42:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rfa6a-0005iM-IT
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:41:25 -0500
+ id 1rfa7o-0000Ns-2q
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:42:37 -0500
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rfa6Y-0004qw-UP
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:41:20 -0500
+ id 1rfa7l-0004qw-8T
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:42:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709188879; x=1740724879;
+ t=1709188953; x=1740724953;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=uZvEeQRwcg5hfdsq1aVm4Uu/EiX+YrSVEsATsRjn5FQ=;
- b=IenfqoqhxX/r54ZIvtc+RDSs1pJDBQQMhx79Dtvh9BYzvmuBLovVSCTT
- S0ECHFLLUJtdtYQPdnigIN/axf+3Abp5bTpyOpPNvkuVheKGrlt+zEQ9Q
- HGroX6/6p6sSgp+IDmO6iTH3m4mNjjbPthpwkSM2jsHp0hkK/6zVUPiEC
- tJh/8jQzeY0QzkwNEP1kcWj22ef9aexgsfWKFwOzxD3KJbQyfulc7ADNF
- hFASiMHB9T1YAWELL5ppiQWr35ReLtRr4ynj9SPDm+HjWzS75OqLiZYlz
- Y3SgszCM6wukfTfImonDJ4Y1gDImC5F5nKlS1/R2MQ4PoR1yuRPbouvbh w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3802876"
+ bh=z/FfjECQSUX/uPyyzFkqQxNReR6RwWQF44mKqaJHFI0=;
+ b=dC6SzoAi7bSVAzS4af/piFN3tiS09wILJDRF0pegjXskXAYXqYAVTZXB
+ x2OdGH0FOavPHvhIgOKduopTnMysnAQKgZHn4KDi7aP3F4yuDOH+GRtP2
+ I35ad4mJKUhSfiyKl4+QuTrKhE2wC3q2KIERa4FQI1oF7L3gMdi02Y/CV
+ kCMG9gG3/8aVL+cLila+2K/sUieAisngjNkWwnyI5iPeQM09qRqVPq8ra
+ 0YOvk9S0mZZWAKUUn5VoAinHEH9K3xsaUYfD+sVSnoH+vuG9YZeQHYrNt
+ xn10BIA24r3V9wxgBhbcXupGHtNqeYpvALjkwGcqbla1VUEvUQkjPtuux Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3803033"
 X-IronPort-AV: E=Sophos;i="6.06,192,1705392000"; 
-   d="scan'208";a="3802876"
+   d="scan'208";a="3803033"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Feb 2024 22:41:17 -0800
+ 28 Feb 2024 22:42:30 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,192,1705392000"; 
-   d="scan'208";a="8075640"
+   d="scan'208";a="8076054"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa007.jf.intel.com with ESMTP; 28 Feb 2024 22:41:11 -0800
+ by orviesa007.jf.intel.com with ESMTP; 28 Feb 2024 22:42:24 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -60,10 +60,10 @@ Cc: kvm@vger.kernel.org, qemu-devel@nongnu.org,
  Gerd Hoffmann <kraxel@redhat.com>,
  Isaku Yamahata <isaku.yamahata@gmail.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>, xiaoyao.li@intel.com
-Subject: [PATCH v5 34/65] kvm/tdx: Ignore memory conversion to shared of
- unassigned region
-Date: Thu, 29 Feb 2024 01:36:55 -0500
-Message-Id: <20240229063726.610065-35-xiaoyao.li@intel.com>
+Subject: [PATCH v5 45/65] i386/tdx: Populate TDVF private memory via
+ KVM_MEMORY_MAPPING
+Date: Thu, 29 Feb 2024 01:37:06 -0500
+Message-Id: <20240229063726.610065-46-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240229063726.610065-1-xiaoyao.li@intel.com>
 References: <20240229063726.610065-1-xiaoyao.li@intel.com>
@@ -96,47 +96,91 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Isaku Yamahata <isaku.yamahata@intel.com>
 
-TDX requires vMMIO region to be shared.  For KVM, MMIO region is the region
-which kvm memslot isn't assigned to (except in-kernel emulation).
-qemu has the memory region for vMMIO at each device level.
+TDVF firmware (CODE and VARS) needs to be copied to TD's private
+memory, as well as TD HOB and TEMP memory.
 
-While OVMF issues MapGPA(to-shared) conservatively on 32bit PCI MMIO
-region, qemu doesn't find corresponding vMMIO region because it's before
-PCI device allocation and memory_region_find() finds the device region, not
-PCI bus region.  It's safe to ignore MapGPA(to-shared) because when guest
-accesses those region they use GPA with shared bit set for vMMIO.  Ignore
-memory conversion request of non-assigned region to shared and return
-success.  Otherwise OVMF is confused and panics there.
+If the TDVF section has TDVF_SECTION_ATTRIBUTES_MR_EXTEND set in the
+flag, calling KVM_TDX_EXTEND_MEMORY to extend the measurement.
+
+After populating the TDVF memory, the original image located in shared
+ramblock can be discarded.
 
 Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
----
- accel/kvm/kvm-all.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index d533e2611ad8..9dc17a1b5f43 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -2953,6 +2953,18 @@ static int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
-     section = memory_region_find(get_system_memory(), start, size);
-     mr = section.mr;
-     if (!mr) {
-+        /*
-+         * Ignore converting non-assigned region to shared.
-+         *
-+         * TDX requires vMMIO region to be shared to inject #VE to guest.
-+         * OVMF issues conservatively MapGPA(shared) on 32bit PCI MMIO region,
-+         * and vIO-APIC 0xFEC00000 4K page.
-+         * OVMF assigns 32bit PCI MMIO region to
-+         * [top of low memory: typically 2GB=0xC000000,  0xFC00000)
-+         */
-+        if (!to_private) {
-+            return 0;
-+        }
-         return -1;
-     }
+---
+Changes in v1:
+  - rename variable @metadata to @flags
+---
+ target/i386/kvm/tdx.c | 47 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
+
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index fb9c60172fde..dcabe359eda5 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -595,6 +595,8 @@ static void tdx_finalize_vm(Notifier *notifier, void *unused)
+ {
+     TdxFirmware *tdvf = &tdx_guest->tdvf;
+     TdxFirmwareEntry *entry;
++    RAMBlock *ram_block;
++    int r;
  
+     tdx_init_ram_entries();
+ 
+@@ -620,6 +622,51 @@ static void tdx_finalize_vm(Notifier *notifier, void *unused)
+           sizeof(TdxRamEntry), &tdx_ram_entry_compare);
+ 
+     tdvf_hob_create(tdx_guest, tdx_get_hob_entry(tdx_guest));
++
++    for_each_tdx_fw_entry(tdvf, entry) {
++        struct kvm_memory_mapping mapping = {
++            .base_gfn = entry->address >> 12,
++            .nr_pages = entry->size >> 12,
++            .source = (__u64)entry->mem_ptr,
++        };
++
++        do {
++            r = kvm_vcpu_ioctl(first_cpu, KVM_MEMORY_MAPPING, &mapping);
++        } while (r == -EAGAIN);
++
++        if (r < 0) {
++             error_report("KVM_MEMORY_MAPPING failed %s", strerror(-r));
++             exit(1);
++        }
++
++        if (entry->attributes & TDVF_SECTION_ATTRIBUTES_MR_EXTEND) {
++            mapping = (struct kvm_memory_mapping) {
++                .base_gfn = entry->address >> 12,
++                .nr_pages = entry->size >> 12,
++            };
++
++            do {
++                r = tdx_vm_ioctl(KVM_TDX_EXTEND_MEMORY, 0, &mapping);
++            } while (r == -EAGAIN);
++            if (r < 0) {
++                error_report("KVM_TDX_EXTEND_MEMORY failed %s", strerror(-r));
++                exit(1);
++            }
++        }
++
++        if (entry->type == TDVF_SECTION_TYPE_TD_HOB ||
++            entry->type == TDVF_SECTION_TYPE_TEMP_MEM) {
++            qemu_ram_munmap(-1, entry->mem_ptr, entry->size);
++            entry->mem_ptr = NULL;
++        }
++    }
++
++    /*
++     * TDVF image has been copied into private region above via
++     * KVM_MEMORY_MAPPING. It becomes useless.
++     */
++    ram_block = tdx_guest->tdvf_mr->ram_block;
++    ram_block_discard_range(ram_block, 0, ram_block->max_length);
+ }
+ 
+ static Notifier tdx_machine_done_notify = {
 -- 
 2.34.1
 
