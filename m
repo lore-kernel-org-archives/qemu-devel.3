@@ -4,73 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21246C54E41
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 16:33:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 081D3C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 16:36:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfjKx-0003BU-G7; Thu, 29 Feb 2024 11:32:47 -0500
+	id 1rfjNv-0004QE-Q8; Thu, 29 Feb 2024 11:35:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rfjKt-0003BF-3j; Thu, 29 Feb 2024 11:32:43 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rfjKp-0000JK-MW; Thu, 29 Feb 2024 11:32:41 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TlxTg0hB2z6J9bM;
- Fri,  1 Mar 2024 00:27:51 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id AC0391408FE;
- Fri,  1 Mar 2024 00:32:33 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Thu, 29 Feb
- 2024 16:32:33 +0000
-Date: Thu, 29 Feb 2024 16:32:32 +0000
-To: Ankit Agrawal <ankita@nvidia.com>
-CC: Markus Armbruster <armbru@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>,
- "alex.williamson@redhat.com" <alex.williamson@redhat.com>, "clg@redhat.com"
- <clg@redhat.com>, "shannon.zhaosl@gmail.com" <shannon.zhaosl@gmail.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "ani@anisinha.ca"
- <ani@anisinha.ca>, "berrange@redhat.com" <berrange@redhat.com>,
- "eduardo@habkost.net" <eduardo@habkost.net>, "imammedo@redhat.com"
- <imammedo@redhat.com>, "mst@redhat.com" <mst@redhat.com>, "eblake@redhat.com"
- <eblake@redhat.com>, "david@redhat.com" <david@redhat.com>,
- "gshan@redhat.com" <gshan@redhat.com>, Zhi Wang <zhiw@nvidia.com>, Matt Ochs
- <mochs@nvidia.com>, "pbonzini@redhat.com" <pbonzini@redhat.com>, Aniket
- Agashe <aniketa@nvidia.com>, Neo Jia <cjia@nvidia.com>, Kirti Wankhede
- <kwankhede@nvidia.com>, "Tarun Gupta (SW-GPU)" <targupta@nvidia.com>, Vikram
- Sethi <vsethi@nvidia.com>, "Andy Currid" <acurrid@nvidia.com>, Dheeraj Nigam
- <dnigam@nvidia.com>, Uday Dhoke <udhoke@nvidia.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v7 1/2] qom: new object to associate device to numa node
-Message-ID: <20240229163232.0000478d@Huawei.com>
-In-Reply-To: <SA1PR12MB71993D9D99F4756C17CAE9DBB05F2@SA1PR12MB7199.namprd12.prod.outlook.com>
-References: <20240223124223.800078-1-ankita@nvidia.com>
- <20240223124223.800078-2-ankita@nvidia.com>
- <8734td3uty.fsf@pond.sub.org> <20240228135504.00005d12@Huawei.com>
- <87bk80vaft.fsf@pond.sub.org>
- <SA1PR12MB7199F868F1C300B1E795CD39B0582@SA1PR12MB7199.namprd12.prod.outlook.com>
- <20240229102230.00004277@Huawei.com>
- <SA1PR12MB71993D9D99F4756C17CAE9DBB05F2@SA1PR12MB7199.namprd12.prod.outlook.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rfjNt-0004Pv-QJ
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 11:35:50 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rfjNq-0001iV-6n
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 11:35:49 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-412aec2505dso8029175e9.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 08:35:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709224544; x=1709829344; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=s8uTOQgKsA7bCx09AJjxg+5wg60RelH6pHrEr+OKszE=;
+ b=ufzGg2xf9gvg2mhN+sLTypl7tEvpTmkBmsY00uzf1Dr+/cLPCixiIViHsoyEun6dOM
+ dB2R59+4kgB1rzwOlQbrhrljhAFwMzGkiYu4C0O7iO9XbZp/5x5HS5jWBkM8710udKPr
+ edV6z7N/ObN6gJ9IoDFmRcxYPBDqQ3Ar0oRzs4uZmPheyDk3JM86uIe607vRBHo3y5WJ
+ KQE5IuCKvGdfbX/42n8UP7cFkrtm06NFyiV1zwMZumOQJuj/I16RJRt7sggfIW9AbbLF
+ LhpQaZ9CGGtWIyQTZZJXGQqoLZnDGrjhYSOJqZXpIzh/BImhld64eYobnh0LkEc7G9/L
+ iSqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709224544; x=1709829344;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=s8uTOQgKsA7bCx09AJjxg+5wg60RelH6pHrEr+OKszE=;
+ b=a30ufH3kTkWJHCmgGeJGY4njed5Eo/j76e89M8Zm1wylh1XamleSDaFb9VVRCGTCS9
+ KeUrxJPMeNMqy2PXz1Nx5M8fcVeoudvZgQ1Ilkv3cChXGCEnhhMt0IcNuLJen1QHg0Mk
+ x9Z96KKlqndyx77CCWEEPTCGmW1Ui8tS+n3aKF79Orb7rJsfXEfbO3lM8CmPyViw4wFn
+ Nb1BjNMEEIP1mF1OskKZMzSz8KyuR0EFvDQaas0K2SUsbea6wM5qPEDdp2cQKJdfZHyn
+ a//4GnuLoqI1rX16RJymJdCNu2K37vzmzRQR/82+Y1gfk5DnxnQg0iUzRccB66LbpbX4
+ 1rvA==
+X-Gm-Message-State: AOJu0YyWMjYRlm/Ks+Ms2VuCRwxk26Mf13O8TvWOzCEGqtUFCkQGgQ4J
+ asSQf7nmCP0neN9U1MchzWeNM9WRbAGeZTnbP53QSGuc5L0Ks9NpfCYr/uQkGVc=
+X-Google-Smtp-Source: AGHT+IGbu5/1ao23qYeGZ+wGdVY3nj8sImXjyo8qr18nnnBMKvjveqtcdI4Yxi7KdLdgrg6KzF+h2A==
+X-Received: by 2002:a05:600c:5494:b0:411:c329:6515 with SMTP id
+ iv20-20020a05600c549400b00411c3296515mr2041841wmb.24.1709224544237; 
+ Thu, 29 Feb 2024 08:35:44 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ m17-20020a056000009100b0033e17341ebesm655666wrx.117.2024.02.29.08.35.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 29 Feb 2024 08:35:43 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 1ACBB5F873;
+ Thu, 29 Feb 2024 16:35:43 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Nicolas Eder <nicolas.eder@lauterbach.com>
+Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, "Christian Boenig" <christian.boenig@lauterbach.com>
+Subject: Re: [PATCH v5 04/18] gdbstub: DebugClass added to system mode.
+In-Reply-To: <20231220162555.19545-5-nicolas.eder@lauterbach.com> (Nicolas
+ Eder's message of "Wed, 20 Dec 2023 17:25:41 +0100")
+References: <20231220162555.19545-1-nicolas.eder@lauterbach.com>
+ <20231220162555.19545-5-nicolas.eder@lauterbach.com>
+User-Agent: mu4e 1.12.0; emacs 29.1
+Date: Thu, 29 Feb 2024 16:35:43 +0000
+Message-ID: <8734tb8bz4.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml100004.china.huawei.com (7.191.162.219) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,80 +96,128 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 29 Feb 2024 13:00:27 +0000
-Ankit Agrawal <ankita@nvidia.com> wrote:
+Nicolas Eder <nicolas.eder@lauterbach.com> writes:
 
-> >> >>> Jonathan, you pointed out interface design issues in your review o=
-f v2.> =20
-> >> >> Are you fully satisfied with the interface in v3?
-> >> >>
-> >> >> Yes. I'm fine with the interface in this version (though it's v7, s=
-o I'm lost
-> >> >> on v2 vs v3!) =20
-> >> >
-> >> > Looks like I can't count to 7!
-> >> >
-> >> > With NUMA capitalized in the doc comment, QAPI schema
-> >> > Acked-by: Markus Armbruster <armbru@redhat.com>
-> >> >
-> >> > Thanks! =20
-> >>
-> >> Thanks! Will fix that in the next version. =20
-> >
-> > The following is really me arguing with myself, so can probably be
-> > ignored, but maybe it will spark an idea from someone else!
-> >
-> > One trivial tweak that might make our life easier if anyone adds
-> > support in the future for the other device handle type might be to go
-> > with simply dev rather than pci-dev.
-> >
-> > There is a sticky corner though if a device is a PCI device
-> > and in ACPI DSDT so maybe we are better off adding acpi-dev
-> > to take either pci-dev or acpi-dev? =20
->=20
-> That use case does complicate the situation. Do you of any such
-> use case for generic initiator?
+> This class is used to abstract debug features between different debuggers
+> ---
+>  debug/common/debug.c     | 33 +++++++++++++++++++++++++++++++++
+>  debug/common/meson.build |  1 +
+>  debug/gdbstub/system.c   | 18 ++++++++++++++++++
+>  debug/meson.build        |  1 +
+>  include/hw/boards.h      |  1 +
+>  include/qemu/debug.h     | 20 ++++++++++++++++++++
+>  include/qemu/typedefs.h  |  2 ++
+>  system/cpus.c            |  9 ++++++++-
+>  8 files changed, 84 insertions(+), 1 deletion(-)
+>
+> diff --git a/debug/common/debug.c b/debug/common/debug.c
+> index c24aaf1202..476c969c98 100644
+> --- a/debug/common/debug.c
+> +++ b/debug/common/debug.c
+> @@ -16,3 +16,36 @@
+>   *
+>   * SPDX-License-Identifier: LGPL-2.0+
+>   */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/debug.h"
+> +#include "qom/object_interfaces.h"
+> +
+> +static void debug_instance_init(Object *obj)
+> +{
+> +}
+> +
+> +static void debug_finalize(Object *obj)
+> +{
+> +}
+> +
+> +static void debug_class_init(ObjectClass *oc, void *data)
+> +{
+> +}
+> +
+> +static const TypeInfo debug_info =3D {
+> +    .name =3D TYPE_DEBUG,
+> +    .parent =3D TYPE_OBJECT,
+> +    .instance_size =3D sizeof(DebugState),
+> +    .instance_init =3D debug_instance_init,
+> +    .instance_finalize =3D debug_finalize,
+> +    .class_size =3D sizeof(DebugClass),
+> +    .class_init =3D debug_class_init
+> +};
+> +
+> +static void debug_register_types(void)
+> +{
+> +    type_register_static(&debug_info);
+> +}
 
-In physical systems yes - in QEMU not yet, though it's a quirk
-of the available ids to get to the ACPI devices (which oddly
-are PCI devices :()
+You shouldn't need empty functions if you are not using them. Moreover
+you should use the inheritance feature and have something like:
 
->=20
-> As for your suggestion of using acpi-dev as the arg to take both
-> pci-dev and acpi-dev.. Would that mean sending a pure pci device
-> (not the corner case you mentioned) through the acpi-dev argument
-> as well? Not sure if that would appropriate.
+static void gdb_debug_class_init(ObjectClass *klass, void *data)
+{
+    DebugClass *dc =3D DEBUG_CLASS(klass);
+    dc->set_stop_cpu =3D gdb_set_stop_cpu;
+};
 
-Ah, looking up my description is unclear. I meant two optional parameters
-pci-dev or acpi-dev - which one was supplied would indicate the type
-of handle to be used.
+static const TypeInfo debug_info[] =3D {
+    {
+        .name =3D TYPE_DEBUG,
+        .parent =3D TYPE_OBJECT,
+        .instance_size =3D sizeof(DebugState),
+        .class_size =3D sizeof(DebugClass),
+        .abstract =3D true,
+    },
+    {
+        .name =3D TYPE_GDB_DEBUG,
+        .parent =3D TYPE_DEBUG,
+        .class_init =3D gdb_debug_class_init,
+    },
+};
 
->=20
-> > Annoyingly for generic ports, (I'm reusing this infrastructure here)
-> > the kernel code currently only deals with the ACPI form (for CXL host
-> > bridges).=A0 Given I point that at the bus of a PXB_CXL it is both
-> > a PCI device, and the only handle we have for getting to the
-> > Root Bridge ACPI handle. =20
->=20
-> So IIUC, you need to pass a PCI device to the generic port object, but use
-> that to reach the ACPI handle and build the Generic port affinity structu=
-re
-> for an ACPI device?
+DEFINE_TYPES(debug_info)
 
-Yes.  Slightly shortcut is that the UID is the bus number for all the
-relevant devices so I can abuse that.  QEMU doesn't keep track of
-the ACPI handles directly so this is the current cleanest solution.
 
->=20
-> > So I think I've argued myself around to thinking we need to extend
-> > the interface with another optional parameter if we ever do support
-> > the ACPI handle for generic initiators :(
-> >
-> > Jonatha =20
+> +
+<snip>
+>=20=20
+> +/**
+> + * gdb_init_debug_class() - initialize gdb-specific DebugClass
+> + */
+> +static void gdb_init_debug_class(void)
+> +{
+> +    Object *obj;
+> +    obj =3D object_new(TYPE_DEBUG);
+> +    DebugState *ds =3D DEBUG(obj);
+> +    DebugClass *dc =3D DEBUG_GET_CLASS(ds);
+> +    dc->set_stop_cpu =3D gdb_set_stop_cpu;
 
+This should be part of the class init above
+
+> +    MachineState *ms =3D MACHINE(qdev_get_machine());
+> +    ms->debug_state =3D ds;
+> +}
+>          }
+>      } else {
+> -        gdb_set_stop_cpu(cpu);
+> +        MachineState *ms =3D MACHINE(qdev_get_machine());
+> +        DebugState *ds =3D ms->debug_state;
+> +        DebugClass *dc =3D DEBUG_GET_CLASS(ds);
+> +
+> +        if (dc->set_stop_cpu) {
+> +            dc->set_stop_cpu(cpu);
+> +        }
+
+If there is no explicit state perhaps we should just save the class
+rather than the instance.
+
+>          qemu_system_debug_request();
+>          cpu->stopped =3D true;
+>      }
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
