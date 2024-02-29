@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCAE8C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 23:21:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 195BDC48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 23:33:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfphh-0005fB-B0; Thu, 29 Feb 2024 18:20:41 -0500
+	id 1rfpt9-0008Mr-Ub; Thu, 29 Feb 2024 18:32:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rfphb-0005dn-I4
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 18:20:37 -0500
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ id 1rfpt6-0008L3-J2
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 18:32:29 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rfpha-0001rs-0q
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 18:20:35 -0500
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-5d3907ff128so1381901a12.3
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 15:20:33 -0800 (PST)
+ id 1rfpt4-00040L-By
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 18:32:28 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-1dcb3e6ff3fso1782965ad.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 15:32:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709248832; x=1709853632; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709249544; x=1709854344; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=6COM1MC9rUSv2H45BWoHYXE5IVjCLgCxq76Q7GO/s8w=;
- b=AMlkRuvJAVzs3aOTgEP8ROMirfXIFUBBUOCLgHsoy4sUGns30TXRE4MTS+1Q78DV6d
- qE98gCcvWRRQKdAMadNe7IZS6PiZHrN/qMLkvwQRABULzQFCTlpm/WRMe8wu3Nk5TInf
- VlkxeVnPexEj5mBkDGFaefPQ/440YUZsyTv0R5fcCTQSTHKFJOfPbLOflKQptbYHK2UA
- Hkhr9EXkZ02O5pLf/XUeAeYTi9RF1I8HnJ4FIUbWjc+JcviNNnJWnVkDfWNI//AYvh8T
- mVUE2QDgexJSmtVA/uPxEuINnQJoR1mboMyRqVeeINGoaHwVKSRrOdiBkQRdZPuQ46Kb
- VuEA==
+ bh=XC3ZUqZdD8nYmcGUxZY7dPczGSWPL9ciFcyvzCDVRT8=;
+ b=v0IiDAigJODEEBwrEOVPIDQR3ThGdY5jpB4SbNGB8rxz+AhwLZ1U364T+Ch85y+P/w
+ t3vU24b9SA7i9mdt3VSlzR8XABXaJVRXPph3GMKbf6gsUuDTR1I16NMa2duy69t7X5Ys
+ OIQCQ1Anbm+MOmJ5QzDnwv9DOdDqimyQ9BWDIzMhaHGkswBVFr34shLFYa2yObLOrSdG
+ l9vhz2t/9xEK/br9xOjAXTuwPa8x5rfLUb+2GysQKLdO/BL2HJxJF0eHu1ttmHwxhGiX
+ sr8S5vW9rvoUqFeLKtzA33b/q4Ez7ksQ1q+IBB204KGXRYWzV5TuyznA114H0rFFefqE
+ x0Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709248832; x=1709853632;
+ d=1e100.net; s=20230601; t=1709249544; x=1709854344;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6COM1MC9rUSv2H45BWoHYXE5IVjCLgCxq76Q7GO/s8w=;
- b=EoV4N1b+scfQ5j1MbLJwItaERpfEmxaWkV4l8j6YOeBkvlJjKimASqyfLYaWnI2FGe
- 3GZBC69AWuNBmZ41yn9fT088tA9kZZQtGi/qV1cLvnXdL6S8XEMm83McEK4NL+8tBkJA
- kttebUN3uOMhnUI2xHxodyEbTzOENjEo2enUSA3mIEAMTIz8LPxhSXoKjqD2Qi4Uzhg7
- IRKqadz83EVm4i2nl83Lwp9IkskmFSo2G9+MjNw3tf2bgfErREHjDo8AArdK/M/2tYsZ
- 5R12LJ+jz/I73km82ipBk0rXohmgPbvQAf27Xf3yAkINESfdYevs/JZHCUquxiRLLo0m
- /T7Q==
+ bh=XC3ZUqZdD8nYmcGUxZY7dPczGSWPL9ciFcyvzCDVRT8=;
+ b=FhoNKXpuVknuFFl9YLCkrpgLGYso/xowKU09zAetcKFM9rhui/YL27bM5zvaaD3wd2
+ b+d3qmS70vkcGrj8Y8ip4RrhrfGEtYG/NXwRd72JOdyVLi7TupD+biZUM3wRagwDZxKe
+ UqTZlOZJNesx4wg0Wawk4Tz7hR3L/WBQX9ASKkF1ptpcUU5O2VJns1LfrPin05gfhTsN
+ bJEdXT3GVuXr6bo9piogYztUSzSDLkxRMPAksPkkmvhgEx5u5Y6aVHBHIBgR7l4oMhhA
+ yRxD19/NxwqqjwP/Qm2p3Gb8yNDVAxeoAKXT3Bj3f6Bq5EnDmRuWsusH+RDNfetI4tPr
+ Zfpg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVHm8NFeAOnop+Z6bElGD9IzCrbG4bWm99330zaC4jrIINkPTD8TGBbAhxlQZy6xFrXfADHneNO7jr4GRWiym64Ypwfyls=
-X-Gm-Message-State: AOJu0Yw4a3kABG5MScug4xneffnDt80XHqx4dhLa+Y5fohp/YGx0mjPq
- BYRQR86v4UrW+mFZy/DR1+bTpJwlSAD302XhNyFqxdXqNviMZvQ8hZboF7hgprU=
-X-Google-Smtp-Source: AGHT+IGJJ8NVgo71Mq+o3gL08Cfihb67j99rLDlmbgE2u3g1hEdgjB41AHwIgOw+tnVezlVJ/O8oPg==
-X-Received: by 2002:a05:6a20:9f87:b0:1a0:6c85:b48b with SMTP id
- mm7-20020a056a209f8700b001a06c85b48bmr4390933pzb.0.1709248832480; 
- Thu, 29 Feb 2024 15:20:32 -0800 (PST)
+ AJvYcCUAZbUlAc3R7rgVZnPqtc7a3f2EOzwAYQYATfa6hfEvA7/Q4RzJj97NQfkDFZvGkP/nGTTNulkLUarJEyJC4KoxmqWXTeo=
+X-Gm-Message-State: AOJu0YwxKIcRzGeWWYGD+UXqbCn5jTrrD/jn61IxpW0cdwMtK10QagFR
+ z7NOu224PURomE2sqOpf7idK/LXIlajFZO3ygwdmrPbIkjAEs6UGAS4/YRvz6FI=
+X-Google-Smtp-Source: AGHT+IFhEOZymvw0hm4rdlLY0NH8acf4crWg1lmtE1TDV7rBcmnRzr3u3fVpczPjlEijt4QvobZRJQ==
+X-Received: by 2002:a17:902:da8f:b0:1dc:d515:79cb with SMTP id
+ j15-20020a170902da8f00b001dcd51579cbmr43286plx.3.1709249544634; 
+ Thu, 29 Feb 2024 15:32:24 -0800 (PST)
 Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
  [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- p8-20020a63e648000000b005d68962e1a7sm1874596pgj.24.2024.02.29.15.20.30
+ g5-20020a170902c38500b001dc78455383sm2071495plg.223.2024.02.29.15.32.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Feb 2024 15:20:32 -0800 (PST)
-Message-ID: <6a04120d-a26c-4473-8196-bf9a9b814d15@linaro.org>
-Date: Thu, 29 Feb 2024 13:20:28 -1000
+ Thu, 29 Feb 2024 15:32:24 -0800 (PST)
+Message-ID: <eb98644a-aff0-4188-924f-6ca64e99b2a4@linaro.org>
+Date: Thu, 29 Feb 2024 13:32:20 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v5 20/22] hw/intc/arm_gicv3: Report the VNMI interrupt
+Subject: Re: [RFC PATCH v5 17/22] hw/intc/arm_gicv3: Add NMI handling CPU
+ interface registers
 Content-Language: en-US
 To: Jinjie Ruan <ruanjinjie@huawei.com>, peter.maydell@linaro.org,
  eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
  wangyanan55@huawei.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
 References: <20240229131039.1868904-1-ruanjinjie@huawei.com>
- <20240229131039.1868904-21-ruanjinjie@huawei.com>
+ <20240229131039.1868904-18-ruanjinjie@huawei.com>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240229131039.1868904-21-ruanjinjie@huawei.com>
+In-Reply-To: <20240229131039.1868904-18-ruanjinjie@huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,16 +101,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/29/24 03:10, Jinjie Ruan via wrote:
-> In vCPU Interface, if the vIRQ has the superpriority property, report
-> vNMI to the corresponding vPE.
-> 
-> Signed-off-by: Jinjie Ruan<ruanjinjie@huawei.com>
-> ---
->   hw/intc/arm_gicv3_cpuif.c | 14 ++++++++++++--
->   hw/intc/gicv3_internal.h  |  1 +
->   2 files changed, 13 insertions(+), 2 deletions(-)
+> +static uint64_t icv_nmiar1_read(CPUARMState *env, const ARMCPRegInfo *ri)
+> +{
+> +    /* todo */
+> +    uint64_t intid = INTID_SPURIOUS;
+> +    return intid;
+> +}
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+You're going to need to fill this in.
+
+It's like icv_iar_read() but only affects irqs with superpriority.
+
 
 r~
 
