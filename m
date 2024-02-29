@@ -4,83 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AA62C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 18:11:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84D1DC48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 18:22:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfksB-0006pa-00; Thu, 29 Feb 2024 13:11:11 -0500
+	id 1rfl2X-0003fc-0s; Thu, 29 Feb 2024 13:21:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rfks9-0006ov-Un
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 13:11:09 -0500
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rfks8-0001Xy-DZ
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 13:11:09 -0500
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-29a61872f4eso883384a91.2
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 10:11:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709230266; x=1709835066; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=UelL58jthzWgr2ZVzsw8napWUszC3JHoy2BxbwYp6Qg=;
- b=AgJcVwv87S/4kv+32dYTXm/zM265SBJ6izT00XrtrGACPnBKyiY3H7cfhH355XE5P9
- rW/TF3iPqTa1h1DZJ+v7USgSZc8YAXIwKtYzUUQ47E1Sf0UZer7L0AnW202YUL6Oup7o
- SVOsuHGf3BXTQDsVjPcy1qRooqlttsbRnaTnx/6LOEbWEvYqD2fPVK4I+/KoOCuFrAOm
- brNI2uBdbm62iYnWw1o1anEAZswBGpPRQ5myrFXixRXp/PTGpSKgSpiMGoHEdrgAYJV9
- riMv2UCd+dhyJCLWg4LitEJqBKuvFL8bpTSyHQczWt+X6KduWilkHMtbVQFjui9N6rNE
- pGRg==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rfl2V-0003f3-Gp
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 13:21:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rfl2T-0003fS-St
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 13:21:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709230908;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=RbMWHEYWHtVmlvSOvu966micuAkdr7/UpmcVXaQJzMo=;
+ b=hx6o50DaBQ6Lzm5oOChDHHrfstF0CJCDsWvI1eCHJQUcmXu7Rf4PUn3FlnQ15MCJusvcp5
+ lgUGN2eqj0vw8JS7lMuz/0SULCE+8oShBsgleGYGL+9QSKA79ck0fW0/VSmaJeIXpTYW59
+ wOveMb791ERudfs8E8AjA9V3EX9pgPE=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-650--zUlQwa9NPmCqOWNCbGGpA-1; Thu, 29 Feb 2024 13:21:47 -0500
+X-MC-Unique: -zUlQwa9NPmCqOWNCbGGpA-1
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-68f7572bc3dso18193306d6.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 10:21:47 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709230266; x=1709835066;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1709230907; x=1709835707;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UelL58jthzWgr2ZVzsw8napWUszC3JHoy2BxbwYp6Qg=;
- b=pr3vvz6WcYDtbAtfuW5qc6SXJ2Mp97OUiQUxOoMTpm3GRQ0/Jdn1i+1slUQ9pip6Nh
- msIkVsiNY1SveNtaD9KIQJ4SKsRWXXue46nz0i5zbHjcO/GTouafw4g2Zw6x0GgK0Y52
- RlZIPK1gXE2ML9aTIxL3rdS1pI/6vL9tVLVldLw71uqqPjdWihNmJlPdJGhcWZemYG+A
- bYVF7li3cjx/uHNcST3qB+wxupneO9QkV1vgfASduA8nSDa2nff4S62UHm6UI5u84rjE
- a6bBgf2ZjGNqZea+LYLibXfj85/NHjB9GlmZynjsR7mT2oWg4F/rw6hbfh7xBnrVhSm2
- frnA==
+ bh=RbMWHEYWHtVmlvSOvu966micuAkdr7/UpmcVXaQJzMo=;
+ b=ZstC29jELjwB/A7gIoe+yZXkX227QR2qVWwqWXnw2kUvFrrcHtt+VMFliQid80Pf5z
+ tfzvij0wIqwPiU3dPz38WdDYVJpLELV/pLNuf6YB/ZBG5jpmfnY4Xcx8st6gAk9L1xdp
+ VNUx6v9kPW+F0ZGsBPq7Ul5b965bbNWWHcVkfUKw0PlhelnU20Or5MVoBT98Q0jHmcKy
+ p88qL0GPW52NtFud9OMaUI/0vBowFs7+a5frCjyB/vH0qIzYW5dFeaJx/XJ7rUqYw0TK
+ mnH2Wnssxf00a7yAuolCxDJGoYHhx0+H9RqRwfvm09CAnoNbz4lZDBmBRL/zdNZzbW1c
+ bcQg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXJlf5pADnXBmpJaX/X7hFzsGloLTN6Ot1032uo219Wv8eOG+ywQ0tK9yFn5C8fbYANVxl1+ol+rkIIdswnw/w2JcUJEiQ=
-X-Gm-Message-State: AOJu0YwAVDY7eBfdRkn4fL0NtrmX2Mxo2DtXJZjzDEexxCCDFIZnzL5o
- eaXd8m2IsmZr0xyFKtJCwvW7+RrLoBuUDsYwcXSbwri9UPRRMH8O/5ZlqRBnnY8=
-X-Google-Smtp-Source: AGHT+IFx6SjZHuvQ9g8+x6HlWwGZfO5VKoP4ipGkepMsRvzyDGRcwu2mDHI5EGbA059+6B3rVBV9uQ==
-X-Received: by 2002:a17:90a:aa88:b0:299:7824:6a06 with SMTP id
- l8-20020a17090aaa8800b0029978246a06mr3075879pjq.8.1709230266630; 
- Thu, 29 Feb 2024 10:11:06 -0800 (PST)
-Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
- [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- gf18-20020a17090ac7d200b0029a45b28d43sm1799647pjb.14.2024.02.29.10.11.05
+ AJvYcCVCBA2bD0MG1pNWKSOsVurnOkzNIozFMTIvwWrxJTuvfox+kOWEbONTcbvGD5GSdtmMHOBz6vH96ZtEzJeM4P0TzlGzfMk=
+X-Gm-Message-State: AOJu0YxVsShBtQIBg2ONYsWkzJayK4k5dHf83R59TuK0tg3ea6B8MCAy
+ 4RKt8HGdhRsjsoK8vkxepDXbO1c8BZiWAKwBVhL5XrHV/xoqlIAZ99LmGcj/8Pz58DHwTsltu/+
+ 1vmlwOGpQmHqushtZPTqB5y1czZFctzRxtgjjYeXwGzd5NW9B+Lxa
+X-Received: by 2002:a0c:ca86:0:b0:690:2f5c:f0ce with SMTP id
+ a6-20020a0cca86000000b006902f5cf0cemr3196696qvk.24.1709230907008; 
+ Thu, 29 Feb 2024 10:21:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IElb3G+f3YJZitPdHbC7Mf21S763T133zK3rE7+5zBIEC9pU5FNT6kLUx/lsAJEvKMPQeCnFw==
+X-Received: by 2002:a0c:ca86:0:b0:690:2f5c:f0ce with SMTP id
+ a6-20020a0cca86000000b006902f5cf0cemr3196672qvk.24.1709230906726; 
+ Thu, 29 Feb 2024 10:21:46 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ qp11-20020a056214598b00b0068fef74fdb3sm994819qvb.59.2024.02.29.10.21.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Feb 2024 10:11:06 -0800 (PST)
-Message-ID: <fdde1d3b-6578-4ba8-9567-f2a79ae2ec3b@linaro.org>
-Date: Thu, 29 Feb 2024 08:11:02 -1000
+ Thu, 29 Feb 2024 10:21:46 -0800 (PST)
+Message-ID: <f085db0b-a174-4c51-bc4a-db8dbd2f28f9@redhat.com>
+Date: Thu, 29 Feb 2024 19:21:43 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] disas/hppa: drop raw opcode dump
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-References: <20240229140557.1749767-1-alex.bennee@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240229140557.1749767-1-alex.bennee@linaro.org>
+Subject: Re: [PATCH 06/17] hw/vfio/container: Fix missing ERRP_GUARD() for
+ error_prepend()
+To: Zhao Liu <zhao1.liu@linux.intel.com>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Michael Tokarev <mjt@tls.msk.ru>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>
+References: <20240229143914.1977550-1-zhao1.liu@linux.intel.com>
+ <20240229143914.1977550-7-zhao1.liu@linux.intel.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240229143914.1977550-7-zhao1.liu@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,39 +110,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/29/24 04:05, Alex Bennée wrote:
-> The hppa disassembly is different from the others due to leading with
-> the raw opcode data. This confuses plugins looking for instruction
-> prefixes to match instructions. For plugins like execlog there is
-> another mechanism for getting the instruction byte data.
+Hello,
+
+On 2/29/24 15:39, Zhao Liu wrote:
+> From: Zhao Liu <zhao1.liu@intel.com>
 > 
-> For the sake of consistently just present the instruction assembly
-> code.
+> As the comment in qapi/error, passing @errp to error_prepend() requires
+> ERRP_GUARD():
 > 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   disas/hppa.c | 4 ----
->   1 file changed, 4 deletions(-)
+> * = Why, when and how to use ERRP_GUARD() =
+> *
+> * Without ERRP_GUARD(), use of the @errp parameter is restricted:
+> ...
+> * - It should not be passed to error_prepend(), error_vprepend() or
+> *   error_append_hint(), because that doesn't work with &error_fatal.
+> * ERRP_GUARD() lifts these restrictions.
+> *
+> * To use ERRP_GUARD(), add it right at the beginning of the function.
+> * @errp can then be used without worrying about the argument being
+> * NULL or &error_fatal.
 > 
-> diff --git a/disas/hppa.c b/disas/hppa.c
-> index 22dce9b41bb..dd34cce211b 100644
-> --- a/disas/hppa.c
-> +++ b/disas/hppa.c
-> @@ -1972,10 +1972,6 @@ print_insn_hppa (bfd_vma memaddr, disassemble_info *info)
->   
->     insn = bfd_getb32 (buffer);
->   
-> -  info->fprintf_func(info->stream, " %02x %02x %02x %02x   ",
-> -                (insn >> 24) & 0xff, (insn >> 16) & 0xff,
-> -                (insn >>  8) & 0xff, insn & 0xff);
-> -
+> ERRP_GUARD() could avoid the case when @errp is the pointer of
+> error_fatal, the user can't see this additional information, because
+> exit() happens in error_setg earlier than information is added [1].
+> 
+> The vfio_get_group() passes @errp to error_prepend(). Its @errp is
+> from vfio_attach_device(), which @errp parameter is so widely sourced
+> that it is necessary to protect it with ERRP_GUARD().
+> 
+> To avoid the issue like [1] said, add missing ERRP_GUARD() at the
+> beginning of this function.
+> 
+> [1]: Issue description in the commit message of commit ae7c80a7bd73
+>       ("error: New macro ERRP_GUARD()").
+> 
+> Cc: Alex Williamson <alex.williamson@redhat.com>
+> Cc: "Cédric Le Goater" <clg@redhat.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 
-It's hardly the only one doing this.  Our capstone dumper does this, and glancing at some 
-others riscv.c does as well.
 
-When you say "the others", I think you mean "everything using capstone", which has uses a 
-different print function entirely for plugins just to avoid the dump.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
+Thanks,
 
-r~
+C.
+
 
