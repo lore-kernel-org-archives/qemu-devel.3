@@ -4,86 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54459C54E41
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 15:35:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13834C54E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 15:36:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfiPo-0001cs-GG; Thu, 29 Feb 2024 10:33:51 -0500
+	id 1rfiMn-0005VV-Pw; Thu, 29 Feb 2024 10:30:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rfiPD-0001C0-Rh
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:33:13 -0500
-Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rfiMm-0005Uf-1Y
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:30:36 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rfiP9-0006fb-US
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:33:06 -0500
-Received: by mail-lf1-x132.google.com with SMTP id
- 2adb3069b0e04-512b700c8ebso1131903e87.0
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 07:33:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709220781; x=1709825581; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ekHpLpZjmvcgCA4auEMMYD11PMa17T0/pncCrTum3Os=;
- b=E1eAjSYNMKwJ8fk2M3yzGfQTDSJSN/n80DTd9UKRQHKEwIY/XE0crItMaE/UnkBT7L
- kP9fEjcoJQAyvLTLjISDMZKkhibD6vOL45LWM9dF1C67x724dzpbGyIsBfVgzvP5ncsj
- mEtCYkvNVXexyohWO/Lp2VLVS7wts3EB67Zez72MObntSTPIDOeghDeRVyxCiskxdAd2
- pOue3af9xhytpb4x8PPB7haNJlE5dFmTIFXLsw4vc2XHygPBv4FAMvL4wRjDOLVQWZy6
- dvhWahDm3QUB+uyLkftAM7fyoeQPoWO56U17XLLwfUog2skCpxsGJ1s2gu6u4EFjvxRF
- YjRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709220781; x=1709825581;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ekHpLpZjmvcgCA4auEMMYD11PMa17T0/pncCrTum3Os=;
- b=SiVc3bvnzvc95ixB7DNLiFYVztzOWlf0sEBUI2fNKMcHrQ+C+vc1ad2exQP8MrhU/f
- zmedYpebzrUIRs2lUOCxqEvIPZt/8R5s5OPhdLHsvv9yMIcRbQWM2iPPpSWw0fPPkNZL
- 3euHOq9VJTBagNe54DqJbxmkImBGeRvOaUuUH+p6NvgGwGvOGxo8Tr3PF1b1ziGoIMG9
- f/Gw0wQnQDvTcc1X1beMY4261alUe/8hAQPYJW00oz4Pnxk8Fhtoheazd6ki5xnZV0hR
- 8xNr0ZYPKIOrY7L10ERqclYWKOoeYMYVeyAjcLBxBg3Aly8/WgmTgWJn6fo+tUWGQjPS
- DrHA==
-X-Gm-Message-State: AOJu0YxKx11z5YKENPCRVOCwXQBkDQZbPAl4yJ6w2A3XBENMCOQzCUhT
- ZuveipsoDU+y/LFyLN1pETNOP4MwkYtzKqF7FimtSRLOPNF4ADV8lDfz2UeS/c8=
-X-Google-Smtp-Source: AGHT+IG46HNo8S6Ao8reA7QgBgePrHnGjQU22roLw/a0DlEEYAd7nlGBPLjXO93Qh0HunSsCufD2NA==
-X-Received: by 2002:a05:6512:1255:b0:513:2c6c:4cc8 with SMTP id
- fb21-20020a056512125500b005132c6c4cc8mr351848lfb.63.1709220781015; 
- Thu, 29 Feb 2024 07:33:01 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- t14-20020a1c770e000000b00411e1574f7fsm5439966wmi.44.2024.02.29.07.33.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Feb 2024 07:33:00 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 506CC5F78A;
- Thu, 29 Feb 2024 15:33:00 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Nicolas Eder <nicolas.eder@lauterbach.com>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, "Christian Boenig" <christian.boenig@lauterbach.com>
-Subject: Re: [PATCH v5 01/18] gdbstub, mcdstub: file and build structure
- adapted to accomodate for the mcdstub
-In-Reply-To: <20231220162555.19545-2-nicolas.eder@lauterbach.com> (Nicolas
- Eder's message of "Wed, 20 Dec 2023 17:25:38 +0100")
-References: <20231220162555.19545-1-nicolas.eder@lauterbach.com>
- <20231220162555.19545-2-nicolas.eder@lauterbach.com>
-User-Agent: mu4e 1.12.0; emacs 29.1
-Date: Thu, 29 Feb 2024 15:33:00 +0000
-Message-ID: <87edcv8evn.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rfiMk-0005vv-JP
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:30:35 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 03E4A1F7F7;
+ Thu, 29 Feb 2024 15:30:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1709220633; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Yei0QUkdknw0DkZwKKRyp+HpBHZX5C0CfiFOhKXCH40=;
+ b=Ah1Gc1XPcuudv9QtDbr5LydolnwNaBgpfMC3XtGiA+E4fPxeUve3ZlPHeinnRz/1Ig/uz4
+ YNAFIQEaPKq3Nggkzpjryf1u/em6kA+PswkVfFpn23d9HwmQHYAAHrEwLws4O2G7ztHYOv
+ mpvj8MrjzcPwwjzNIrNmtWcMgBp9PPE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1709220633;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Yei0QUkdknw0DkZwKKRyp+HpBHZX5C0CfiFOhKXCH40=;
+ b=wFg8q6JTaccfRwdUCppOxs0PngkEE7mWMhfgCITIOdZFo/bpRz9nZLxWUvee5UoV+SE4D0
+ NUZyAbYwFGfT3EDg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1709220633; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Yei0QUkdknw0DkZwKKRyp+HpBHZX5C0CfiFOhKXCH40=;
+ b=Ah1Gc1XPcuudv9QtDbr5LydolnwNaBgpfMC3XtGiA+E4fPxeUve3ZlPHeinnRz/1Ig/uz4
+ YNAFIQEaPKq3Nggkzpjryf1u/em6kA+PswkVfFpn23d9HwmQHYAAHrEwLws4O2G7ztHYOv
+ mpvj8MrjzcPwwjzNIrNmtWcMgBp9PPE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1709220633;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Yei0QUkdknw0DkZwKKRyp+HpBHZX5C0CfiFOhKXCH40=;
+ b=wFg8q6JTaccfRwdUCppOxs0PngkEE7mWMhfgCITIOdZFo/bpRz9nZLxWUvee5UoV+SE4D0
+ NUZyAbYwFGfT3EDg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 600F113503;
+ Thu, 29 Feb 2024 15:30:31 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([10.150.64.162])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id aOsQChej4GU/MAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 29 Feb 2024 15:30:31 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
+ Claudio Fontana <cfontana@suse.de>
+Subject: [PATCH v6 05/23] io: fsync before closing a file channel
+Date: Thu, 29 Feb 2024 12:29:59 -0300
+Message-Id: <20240229153017.2221-6-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20240229153017.2221-1-farosas@suse.de>
+References: <20240229153017.2221-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::132;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x132.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Authentication-Results: smtp-out2.suse.de;
+	none
+X-Spamd-Result: default: False [-2.47 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-0.998]; MID_CONTAINS_FROM(1.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ BAYES_HAM(-2.17)[96.01%]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,15 +119,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nicolas Eder <nicolas.eder@lauterbach.com> writes:
+Make sure the data is flushed to disk before closing file
+channels. This is to ensure data is on disk and not lost in the event
+of a host crash.
 
-> mcdstub files created including the shared header between the mcd shared =
-library and the mcdstub.
-> MAINTAINERS file updated
+This is currently being implemented to affect the migration code when
+migrating to a file, but all QIOChannelFile users should benefit from
+the change.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Acked-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ io/channel-file.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+diff --git a/io/channel-file.c b/io/channel-file.c
+index a6ad7770c6..d4706fa592 100644
+--- a/io/channel-file.c
++++ b/io/channel-file.c
+@@ -242,6 +242,11 @@ static int qio_channel_file_close(QIOChannel *ioc,
+ {
+     QIOChannelFile *fioc = QIO_CHANNEL_FILE(ioc);
+ 
++    if (qemu_fdatasync(fioc->fd) < 0) {
++        error_setg_errno(errp, errno,
++                         "Unable to synchronize file data with storage device");
++        return -1;
++    }
+     if (qemu_close(fioc->fd) < 0) {
+         error_setg_errno(errp, errno,
+                          "Unable to close file");
+-- 
+2.35.3
+
 
