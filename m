@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23B51C54798
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 06:39:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D125C54798
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 06:39:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfa3Z-0000Wa-7W; Thu, 29 Feb 2024 01:38:13 -0500
+	id 1rfa4X-0002Uf-FD; Thu, 29 Feb 2024 01:39:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rfa3W-0000TA-Pc
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:38:10 -0500
+ id 1rfa4T-0002Nc-48
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:39:09 -0500
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rfa3U-0004LA-Q0
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:38:10 -0500
+ id 1rfa4Q-0004LA-SR
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:39:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709188688; x=1740724688;
+ t=1709188746; x=1740724746;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=EWLhJI7UsDU95YOAR41znBh8Q4uI8RUhebjB3mliaJA=;
- b=cuRkzxLwoT3m6UuYK+CzLHX6Qw9kPJB3+o8tP+BrE/UZS8bj5xAnPQow
- Nuc/MMcbAqqyPXsrwp8ANMEOS+JF9yd1nWXlfiVkZP24D53uqehjkkLE6
- jXIVlS3v9Hx+0CTpe3ef5dInC5Yv3dUnCogus6hdka+K3Iu67m2IIU1+D
- f+7OeMOgyXPPDBuep1OhlGFRfSBapScJ3UETfiwziYNbHDu1ZoKZ9L9OY
- WLvQ9ZL9c3O5dVBgOXrHcVYmfOBkeRg6JXF/6ENM+DJgeeEILMT+OOh+r
- qbyE4XgaH9XuLImB/Obc4x9NdzzcWCELYlUX4nRRaKuMFJM/uf23lceV9 g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3802482"
+ bh=mU0otVJn1bEwIQ9Zyr9mBs1D769YAuu9+hQHU1VV6MY=;
+ b=n7/hMX/EnL/CpPXHoTEateD2te9U30tvZGJSAagZlmdGqlwgeYzmcqpy
+ iWrx5Cq1qVKowr0d1KD1AnCcXKLnzQF8MlVFmvGBDMJuwXfeD53Jlgbsc
+ U+kAcwv5m6sWE8UhSmOqTwFY1qd/HRfFBF65ihvAcR0VUFJ6WuKZabVDQ
+ 3xtsv8e9e8yGDvGCJz4/AMp4xiXBiS4wPJ6d58HXtpT+spUGoZom2r+2O
+ B2ObqGE0BNxGMctuZVL7W3+VHg3Xz9M/HmaiUBhwV1llcsBm8CE3BFhY5
+ pUeQgeik5B2FnIMFCE8xj85pj4c0uEJRVUD9x9V8GtXmnKts9yKpaKfQf Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3802598"
 X-IronPort-AV: E=Sophos;i="6.06,192,1705392000"; 
-   d="scan'208";a="3802482"
+   d="scan'208";a="3802598"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Feb 2024 22:38:07 -0800
+ 28 Feb 2024 22:39:05 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,192,1705392000"; 
-   d="scan'208";a="8074826"
+   d="scan'208";a="8075059"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa007.jf.intel.com with ESMTP; 28 Feb 2024 22:38:00 -0800
+ by orviesa007.jf.intel.com with ESMTP; 28 Feb 2024 22:39:00 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -60,9 +60,10 @@ Cc: kvm@vger.kernel.org, qemu-devel@nongnu.org,
  Gerd Hoffmann <kraxel@redhat.com>,
  Isaku Yamahata <isaku.yamahata@gmail.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>, xiaoyao.li@intel.com
-Subject: [PATCH v5 05/65] kvm: Enable KVM_SET_USER_MEMORY_REGION2 for memslot
-Date: Thu, 29 Feb 2024 01:36:26 -0500
-Message-Id: <20240229063726.610065-6-xiaoyao.li@intel.com>
+Subject: [PATCH v5 14/65] i386/tdx: Implement tdx_kvm_init() to initialize TDX
+ VM context
+Date: Thu, 29 Feb 2024 01:36:35 -0500
+Message-Id: <20240229063726.610065-15-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240229063726.610065-1-xiaoyao.li@intel.com>
 References: <20240229063726.610065-1-xiaoyao.li@intel.com>
@@ -93,154 +94,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chao Peng <chao.p.peng@linux.intel.com>
+Implement TDX specific ConfidentialGuestSupportClass::kvm_init()
+callback, tdx_kvm_init().
 
-Switch to KVM_SET_USER_MEMORY_REGION2 when supported by KVM.
+Set ms->require_guest_memfd to true to require private guest memfd
+allocation for any memory backend.
 
-With KVM_SET_USER_MEMORY_REGION2, QEMU can set up memory region that
-backend'ed both by hva-based shared memory and guest memfd based private
-memory.
+More TDX specific initialization will be added later.
 
-Signed-off-by: Chao Peng <chao.p.peng@linux.intel.com>
-Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 ---
-Changes in v4:
-- update KVM_MEM_PRIVATE to KVM_MEM_GUEST_MEMFD; (Isaku)
+Changes in v5:
+ - remove Acked-by from Gerd since the patch changed due to use
+   ConfidentialGuestSupportClass::kvm_init();
 ---
- accel/kvm/kvm-all.c      | 56 ++++++++++++++++++++++++++++++++++------
- accel/kvm/trace-events   |  2 +-
- include/sysemu/kvm_int.h |  2 ++
- 3 files changed, 51 insertions(+), 9 deletions(-)
+ target/i386/kvm/kvm.c | 11 +----------
+ target/i386/kvm/tdx.c | 13 +++++++++++++
+ 2 files changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 6c36c452d60b..cd0aa7545a1f 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -283,35 +283,69 @@ int kvm_physical_memory_addr_from_host(KVMState *s, void *ram,
- static int kvm_set_user_memory_region(KVMMemoryListener *kml, KVMSlot *slot, bool new)
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 898f8fb30c61..52d99d30bdc8 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -2550,16 +2550,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+     Error *local_err = NULL;
+ 
+     /*
+-     * Initialize SEV context, if required
+-     *
+-     * If no memory encryption is requested (ms->cgs == NULL) this is
+-     * a no-op.
+-     *
+-     * It's also a no-op if a non-SEV confidential guest support
+-     * mechanism is selected.  SEV is the only mechanism available to
+-     * select on x86 at present, so this doesn't arise, but if new
+-     * mechanisms are supported in future (e.g. TDX), they'll need
+-     * their own initialization either here or elsewhere.
++     * Initialize confidential guest (SEV/TDX) context, if required
+      */
+     if (ms->cgs) {
+         ret = confidential_guest_kvm_init(ms->cgs, &local_err);
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index d3792d4a3d56..d9a1dd46dc69 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -14,8 +14,18 @@
+ #include "qemu/osdep.h"
+ #include "qom/object_interfaces.h"
+ 
++#include "hw/i386/x86.h"
+ #include "tdx.h"
+ 
++static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
++{
++    MachineState *ms = MACHINE(qdev_get_machine());
++
++    ms->require_guest_memfd = true;
++
++    return 0;
++}
++
+ /* tdx guest */
+ OBJECT_DEFINE_TYPE_WITH_INTERFACES(TdxGuest,
+                                    tdx_guest,
+@@ -37,4 +47,7 @@ static void tdx_guest_finalize(Object *obj)
+ 
+ static void tdx_guest_class_init(ObjectClass *oc, void *data)
  {
-     KVMState *s = kvm_state;
--    struct kvm_userspace_memory_region mem;
-+    struct kvm_userspace_memory_region2 mem;
-+    static int cap_user_memory2 = -1;
-     int ret;
- 
-+    if (cap_user_memory2 == -1) {
-+        cap_user_memory2 = kvm_check_extension(s, KVM_CAP_USER_MEMORY2);
-+    }
++    ConfidentialGuestSupportClass *klass = CONFIDENTIAL_GUEST_SUPPORT_CLASS(oc);
 +
-+    if (!cap_user_memory2 && slot->guest_memfd >= 0) {
-+        error_report("%s, KVM doesn't support KVM_CAP_USER_MEMORY2,"
-+                     " which is required by guest memfd!", __func__);
-+        exit(1);
-+    }
-+
-     mem.slot = slot->slot | (kml->as_id << 16);
-     mem.guest_phys_addr = slot->start_addr;
-     mem.userspace_addr = (unsigned long)slot->ram;
-     mem.flags = slot->flags;
-+    mem.guest_memfd = slot->guest_memfd;
-+    mem.guest_memfd_offset = slot->guest_memfd_offset;
- 
-     if (slot->memory_size && !new && (mem.flags ^ slot->old_flags) & KVM_MEM_READONLY) {
-         /* Set the slot size to 0 before setting the slot to the desired
-          * value. This is needed based on KVM commit 75d61fbc. */
-         mem.memory_size = 0;
--        ret = kvm_vm_ioctl(s, KVM_SET_USER_MEMORY_REGION, &mem);
-+
-+        if (cap_user_memory2) {
-+            ret = kvm_vm_ioctl(s, KVM_SET_USER_MEMORY_REGION2, &mem);
-+        } else {
-+            ret = kvm_vm_ioctl(s, KVM_SET_USER_MEMORY_REGION, &mem);
-+        }
-         if (ret < 0) {
-             goto err;
-         }
-     }
-     mem.memory_size = slot->memory_size;
--    ret = kvm_vm_ioctl(s, KVM_SET_USER_MEMORY_REGION, &mem);
-+    if (cap_user_memory2) {
-+        ret = kvm_vm_ioctl(s, KVM_SET_USER_MEMORY_REGION2, &mem);
-+    } else {
-+        ret = kvm_vm_ioctl(s, KVM_SET_USER_MEMORY_REGION, &mem);
-+    }
-     slot->old_flags = mem.flags;
- err:
-     trace_kvm_set_user_memory(mem.slot >> 16, (uint16_t)mem.slot, mem.flags,
-                               mem.guest_phys_addr, mem.memory_size,
--                              mem.userspace_addr, ret);
-+                              mem.userspace_addr, mem.guest_memfd,
-+                              mem.guest_memfd_offset, ret);
-     if (ret < 0) {
--        error_report("%s: KVM_SET_USER_MEMORY_REGION failed, slot=%d,"
--                     " start=0x%" PRIx64 ", size=0x%" PRIx64 ": %s",
--                     __func__, mem.slot, slot->start_addr,
--                     (uint64_t)mem.memory_size, strerror(errno));
-+        if (cap_user_memory2) {
-+                error_report("%s: KVM_SET_USER_MEMORY_REGION2 failed, slot=%d,"
-+                        " start=0x%" PRIx64 ", size=0x%" PRIx64 ","
-+                        " flags=0x%" PRIx32 ", guest_memfd=%" PRId32 ","
-+                        " guest_memfd_offset=0x%" PRIx64 ": %s",
-+                        __func__, mem.slot, slot->start_addr,
-+                        (uint64_t)mem.memory_size, mem.flags,
-+                        mem.guest_memfd, (uint64_t)mem.guest_memfd_offset,
-+                        strerror(errno));
-+        } else {
-+                error_report("%s: KVM_SET_USER_MEMORY_REGION failed, slot=%d,"
-+                            " start=0x%" PRIx64 ", size=0x%" PRIx64 ": %s",
-+                            __func__, mem.slot, slot->start_addr,
-+                            (uint64_t)mem.memory_size, strerror(errno));
-+        }
-     }
-     return ret;
++    klass->kvm_init = tdx_kvm_init;
  }
-@@ -466,6 +500,9 @@ static int kvm_mem_flags(MemoryRegion *mr)
-     if (readonly && kvm_readonly_mem_allowed) {
-         flags |= KVM_MEM_READONLY;
-     }
-+    if (memory_region_has_guest_memfd(mr)) {
-+        flags |= KVM_MEM_GUEST_MEMFD;
-+    }
-     return flags;
- }
- 
-@@ -1363,6 +1400,9 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml,
-         mem->ram_start_offset = ram_start_offset;
-         mem->ram = ram;
-         mem->flags = kvm_mem_flags(mr);
-+        mem->guest_memfd = mr->ram_block->guest_memfd;
-+        mem->guest_memfd_offset = (uint8_t*)ram - mr->ram_block->host;
-+
-         kvm_slot_init_dirty_bitmap(mem);
-         err = kvm_set_user_memory_region(kml, mem, true);
-         if (err) {
-diff --git a/accel/kvm/trace-events b/accel/kvm/trace-events
-index 9f599abc172c..e8c52cb9e7a1 100644
---- a/accel/kvm/trace-events
-+++ b/accel/kvm/trace-events
-@@ -15,7 +15,7 @@ kvm_irqchip_update_msi_route(int virq) "Updating MSI route virq=%d"
- kvm_irqchip_release_virq(int virq) "virq %d"
- kvm_set_ioeventfd_mmio(int fd, uint64_t addr, uint32_t val, bool assign, uint32_t size, bool datamatch) "fd: %d @0x%" PRIx64 " val=0x%x assign: %d size: %d match: %d"
- kvm_set_ioeventfd_pio(int fd, uint16_t addr, uint32_t val, bool assign, uint32_t size, bool datamatch) "fd: %d @0x%x val=0x%x assign: %d size: %d match: %d"
--kvm_set_user_memory(uint16_t as, uint16_t slot, uint32_t flags, uint64_t guest_phys_addr, uint64_t memory_size, uint64_t userspace_addr, int ret) "AddrSpace#%d Slot#%d flags=0x%x gpa=0x%"PRIx64 " size=0x%"PRIx64 " ua=0x%"PRIx64 " ret=%d"
-+kvm_set_user_memory(uint16_t as, uint16_t slot, uint32_t flags, uint64_t guest_phys_addr, uint64_t memory_size, uint64_t userspace_addr, uint32_t fd, uint64_t fd_offset, int ret) "AddrSpace#%d Slot#%d flags=0x%x gpa=0x%"PRIx64 " size=0x%"PRIx64 " ua=0x%"PRIx64 " guest_memfd=%d" " guest_memfd_offset=0x%" PRIx64 " ret=%d"
- kvm_clear_dirty_log(uint32_t slot, uint64_t start, uint32_t size) "slot#%"PRId32" start 0x%"PRIx64" size 0x%"PRIx32
- kvm_resample_fd_notify(int gsi) "gsi %d"
- kvm_dirty_ring_full(int id) "vcpu %d"
-diff --git a/include/sysemu/kvm_int.h b/include/sysemu/kvm_int.h
-index 882e37e12c5b..cad763e240c1 100644
---- a/include/sysemu/kvm_int.h
-+++ b/include/sysemu/kvm_int.h
-@@ -30,6 +30,8 @@ typedef struct KVMSlot
-     int as_id;
-     /* Cache of the offset in ram address space */
-     ram_addr_t ram_start_offset;
-+    int guest_memfd;
-+    hwaddr guest_memfd_offset;
- } KVMSlot;
- 
- typedef struct KVMMemoryUpdate {
 -- 
 2.34.1
 
