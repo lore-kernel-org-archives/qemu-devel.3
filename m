@@ -4,150 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03755C54798
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 21:21:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE19DC48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 21:23:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfnpl-0004sw-Bk; Thu, 29 Feb 2024 16:20:53 -0500
+	id 1rfnrd-00007J-Tm; Thu, 29 Feb 2024 16:22:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gedwards@ddn.com>) id 1rfmeq-0001tO-HZ
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 15:05:32 -0500
-Received: from outbound-ip168b.ess.barracuda.com ([209.222.82.102])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rfnrb-00004s-0X
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 16:22:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gedwards@ddn.com>) id 1rfmek-0001YI-Mf
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 15:05:31 -0500
-Received: from NAM04-DM6-obe.outbound.protection.outlook.com
- (mail-dm6nam04lp2041.outbound.protection.outlook.com [104.47.73.41]) by
- mx-outbound22-148.us-east-2b.ess.aws.cudaops.com (version=TLSv1.2
- cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 29 Feb 2024 20:05:09 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Kz5B0WimP1jW86YGRmdCvjLBWeqy6T01dv5vEYxBlORqLGVYCsH3cY4JfRyTA0w2BijuS84bADA+5wBsFo1pmjk68UwWXj3TnsAV1Z3PaKehYGSnFyGc1PMTJEXs2eirIpnFCcACzDtfTR2gI9rSgATl4Y/dntqPk/CsHchL1TSNWAP0hQ4yPOtmOkQh+2RY+Hs9bCxCEfyE+6be7qo1Pxp9T8l1wyIs1CTdz17Zm2dPb+Ta87i8NTU2NIAiaTVVRMqXI9vb4+ca/6vteQaztOAU8QVxyJsgjHZ+c5ie9Uhr84PpOc9trSoBtcnjImwCF1D7OWNLkXp22K1j8Tgzzg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=NM9GDr5F4YESR/Tguk90YK+8co5a0C/wrXg5QShdB+M=;
- b=llaLETU+qO2WhnEXUNsHfXT7XmrF4tJixdpzgI9Zr+VVc0L9GUCCKLMzKeS/Cztggn7Kmxbde6y8JliRSaO2RFV0OezVC2Qn0BDeyQL7vshCkabXqZEc+qVAH9OMKXTSjx/sP+FQIm2ci2I89Jfz4mrAZWW2+yvG6cAQu8yy0dRJE9gQc0W/KpvaIkT4Nlbzj3lyXIoEd2PlRTFbllocsFYAIFFSIEWyvVfUok8ntYx2d40bxtTqayZFwxZ34e1t+/kCF6nP9XXuw3pGVU0wTMxOg0hM7867D/gSXC5m2gSqHW9F4rxZDiM1wtiGDr10Vv2WQmH8nrzaTaLTwRtBwA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=ddn.com; dmarc=pass action=none header.from=ddn.com; dkim=pass
- header.d=ddn.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ddn.com; s=selector2; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NM9GDr5F4YESR/Tguk90YK+8co5a0C/wrXg5QShdB+M=;
- b=oTLih9UulBXdvUcpHXSkpxcIAOvoOFkYezlRXqiCWETsRa/ONX1jFtAaQY95E6EYAjtdWm/BXhtLv+vjRooXj9LbV301Vp0TMwPNDYLMK1d0iLIaUGgCiz2blbfIkzY+pBs15R/653beAfB3EMaBQTdQOym/BmsZmTsFNZECp1g=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=ddn.com;
-Received: from SA3PR19MB8193.namprd19.prod.outlook.com (2603:10b6:806:37e::18)
- by SA1PR19MB6645.namprd19.prod.outlook.com (2603:10b6:806:258::17)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.41; Thu, 29 Feb
- 2024 20:05:06 +0000
-Received: from SA3PR19MB8193.namprd19.prod.outlook.com
- ([fe80::6eed:df87:b510:6c5]) by SA3PR19MB8193.namprd19.prod.outlook.com
- ([fe80::6eed:df87:b510:6c5%7]) with mapi id 15.20.7316.039; Thu, 29 Feb 2024
- 20:05:06 +0000
-Date: Thu, 29 Feb 2024 13:05:02 -0700
-From: Greg Edwards <gedwards@ddn.com>
-To: Matthew Wilcox <willy@infradead.org>
-Cc: Jens Axboe <axboe@kernel.dk>, Andrew Morton <akpm@linux-foundation.org>,
- "Kirill A . Shutemov" <kirill.shutemov@linux.intel.com>,
- Hugh Dickins <hughd@google.com>, linux-mm@kvack.org,
- linux-block@vger.kernel.org, linux-fsdevel@vger.kernel.org,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH] block: Remove special-casing of compound pages
-Message-ID: <20240229200502.GA20814@bobdog.home.arpa>
-References: <20230814144100.596749-1-willy@infradead.org>
- <170198306635.1954272.10907610290128291539.b4-ty@kernel.dk>
- <20240229182513.GA17355@bobdog.home.arpa>
- <ZeDc50LQSItEeXY8@casper.infradead.org>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZeDc50LQSItEeXY8@casper.infradead.org>
-X-ClientProxiedBy: SN7PR04CA0062.namprd04.prod.outlook.com
- (2603:10b6:806:121::7) To SA3PR19MB8193.namprd19.prod.outlook.com
- (2603:10b6:806:37e::18)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rfnrY-00024K-7G
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 16:22:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709241755;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=it+CtIQlk3o18x+CJIDj+Q+OorEziAbyIrIFFTk6w2o=;
+ b=BRjwVYmNy7d23BM8S+63cubJrS3lgtA3TEfuzoYOaq3SMcQeDVhcL2n6ImtjNegNogUp0r
+ 1PY7ENsqVjHDc4ZxE7zJkdPj5aQ5u8qP7RxL/dGu3g1BKie7RHbXNia9E7ZdQt5Lth2Zwy
+ kE6iUcS8vnoJ8imU48/jk0ZGF6OHz1M=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-445-oCAjYNcwPx6Z90mtuYdTww-1; Thu, 29 Feb 2024 16:22:32 -0500
+X-MC-Unique: oCAjYNcwPx6Z90mtuYdTww-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-33e1d994f53so3623f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 13:22:32 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709241751; x=1709846551;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=it+CtIQlk3o18x+CJIDj+Q+OorEziAbyIrIFFTk6w2o=;
+ b=uMoc5BEaPRIx79WPUGczmzbsoeE0dHpGc3Sj6+8VHuZMzPLMK+zCcDm7nU0PjAmNpB
+ dNCli8q04J70BgCStU7SYaA3jx3FSrwtBDOvkHTO+3xhDM6PX8jOUIl7P8k11UEAbJel
+ 9kVIi95UN3AEcbNLHlSvt/IGVgGgl93w6H3jANzeRzEeLUzNu1E707P/BRcT/INXRSq1
+ TcGrc8TQyKY2zF9QObMnqdRl782HKH+8cBsL5/LHiPM9mVSx2Hg3MDvStDzVUTtF3xLD
+ nchdVjXuHQoesyslFdRr6sbUi6Ryxkxc59kjGbnvECcFnEfHOxXM1Yymp5BkMKV96v5Z
+ I/yQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUFOGB1U6YQeTJQr14yEelovU/uoYYPESHuolmAnKW5UhTDhSh4ptW39DQhtLyfiKRgTEjyKGHmRpCl1OtjVVZHCcAY/sE=
+X-Gm-Message-State: AOJu0YwQVFhqgd7M4EuwZE1+AXAePaWRC11L0+ITc6+MHPw91Lq0T6eI
+ HwMzUiDz9vwy49FstisJUF7fvCVLacg97AQPq96rXDkdvzSgh0thVMI5i5ebHarah5zkSZfSWGi
+ 5nid/MwK9GSSM96Je2tNnhGlMxUpIByNlEHsWvySjKht6/gvvEN0ZFPHVrNYLUD5Aq0SjUOIK7G
+ iWW7jDU97+oJOQO7MVcW9hMm00KvE=
+X-Received: by 2002:adf:f709:0:b0:33d:f1d4:37eb with SMTP id
+ r9-20020adff709000000b0033df1d437ebmr144699wrp.9.1709241751703; 
+ Thu, 29 Feb 2024 13:22:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGvi3jGwM/lBbzoM5IZuDl/TVwHG6MCPJLzBrd6GEHpgM07EZyh4G+/JsWe8GT40HF+2/mxx9pPWsWRX7bF1KE=
+X-Received: by 2002:adf:f709:0:b0:33d:f1d4:37eb with SMTP id
+ r9-20020adff709000000b0033df1d437ebmr144695wrp.9.1709241751338; Thu, 29 Feb
+ 2024 13:22:31 -0800 (PST)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA3PR19MB8193:EE_|SA1PR19MB6645:EE_
-X-MS-Office365-Filtering-Correlation-Id: 16a6d1a4-5fd2-479b-52de-08dc3961b921
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: t2B67p/nBNVSlqiIjId2W/RWSF34/hgo1fv+9mO/fwYsIK8+u69Z4AzSE6vUxxH3meYsSe/UCH6uWwwiM3V9hOl+S0z2gH4U5amY6bwy3VFIKmbuWli8HD9yF/VNX1vqBpcKnK64qssvVX+HMIB0s5pN8f8P4JQxI3lwTvs7x66tesJpSxl1FldMybSzEmJygDWKeNpeF0RCFraww2N1KFgMIDeF75A80JzrfJnbGvynhlMhm0P7A/OW4tqF6eNbwtmw3zutl+XIodubrZn6OAxCNwsKPiGIPWML1jGg6IiQ9d6+JTa8wDnTEnubqvKf67K67stYwbqX0E5ylKq0tXJjhrp27UfpuV0hxPRkqt+C5P3Mr/TIEZoThznv4zR34XOlXR6E7GZcIoiOLNat13BSRAqlDlT26o0aQx3WXW5PZgzHAnj5YJ5NgZkhxsJNyr1C/+C0Mpde1sTgOecE/sS9gR0onSNK8OciH9o8wlQewl3iOL7NowiJ8BCRN4EcZaETh0tj4pj0QQKvSMOV9G8S44zF2Mj+cJHr6hfgc5Oy0Km4VFlv5IOmgzQeF2Nh
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SA3PR19MB8193.namprd19.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?1QhV6nL8CcMrwZ13cZaL26DAtA4VKjBNlnuSQNiEx75BdTC0FGluhz0gq5Ww?=
- =?us-ascii?Q?HDjnhD4i3z4qt09R1cHw45HF1iSWmto/M2R0FBTFJgX30jIjQYHHNKs0qyoj?=
- =?us-ascii?Q?juUV0BkEs07kbMVOkAgYj55wcrNNtSK1jPDpDlKOhs5cT4/K8EjWagxait85?=
- =?us-ascii?Q?4URtXkgUr/f9d6VaedT+engVpWYd7ujtCyVcpN7S/q02f3uJ8lp0bwWWbjP9?=
- =?us-ascii?Q?6JxznjZOvv5Orfvt+f1H9l5SGqrXlkk07ioPQIhkw5Ijz3vCTvVLQ151NRV7?=
- =?us-ascii?Q?A7LLXo2ERZKT6U8iDgmJZ3boFT7ArnG5PWWI5LDPO8Tyiy1l5qkIyCyfNQ88?=
- =?us-ascii?Q?1Narw5+tMSfvpJZ8lTW47QWhRQcbQN5lwLP2Aoew3dxZNjbR4Q2TrqQLSuc6?=
- =?us-ascii?Q?ani5vSUfyUS2YPHjtN9fF+pTUqj8qS2zqPSx0b1NBkCNJbIV9k0ejzICS0uy?=
- =?us-ascii?Q?OnXMRbI92LLcd5vZ72n1z3BUdUy5DQQ32xKYf5ZJedUb7vbyFWI6JOoMqwsd?=
- =?us-ascii?Q?NX8PcuRaXa3pIVwrUS/grFUct6KWxSfUwxi0PDQL1dtHeyvuG48VKSPZneM0?=
- =?us-ascii?Q?AZrx1RO4prhthr+MBQCIwn+BWSegCvEppZmGkJdCGTz1swaDefXC2pwhFbu0?=
- =?us-ascii?Q?3zdORvH3215szOWahLvVvEkJaW2XVA/w3zJu9QMvHFNA6gD5xE1zpKHBUTN0?=
- =?us-ascii?Q?oTgBu9Z8s32GTN63KtGDH56F92wDlkBuAYMtUTGhO1nU6vfMbutY1V0/YBsj?=
- =?us-ascii?Q?chdDFZfr0QAB0fASo2hz4xeEFUX0vlITzGQ6NGPEy3g4SMLN42ou+oG1aGIA?=
- =?us-ascii?Q?IeCyPGn6QT5vGypCCjDZd97AAdFI2rTyGK3FHGs1id8f66hNofSFX21Mtawq?=
- =?us-ascii?Q?Z1YyAyTeHnNxNAo9BxCKPfAesYa/muIXPjuhDnACOOMDeQaxS7Y0PAEn8SZl?=
- =?us-ascii?Q?iVVja8MplAYy+MTjkrM8h6IRZSA71DUhjNFQAblANnIo1DasYh1Btn+qiKjX?=
- =?us-ascii?Q?//P6cEBEiPg88YXQaije1lJVphY4m/hnXPkTUjYID+lp/F2ncXRVl27qhwnO?=
- =?us-ascii?Q?qrIOS2VJ7N+wJjEwiFIb+0nJUINiZKqIMBkX0Jysy/CY3LBEx7TL/O5a2Flt?=
- =?us-ascii?Q?gV35DvggDJlDMyVYMs4hmERjsArDmcJRgxa2lSJQwLOIWDGSCw78u1l/2oQ1?=
- =?us-ascii?Q?aE1QXMRIvX8d2liSILetKSvuvKEX5OzGlLASZSDBhjB42MmutaWUG3Fcg6iB?=
- =?us-ascii?Q?fb2sBUkgQZzwrr16f6pRssGMR+PAjTh8rK2CJVxM/8mLWIjMVjozlnoANwsi?=
- =?us-ascii?Q?stgPNnOYZJuhIFqVzLQmF6B0pL/qd7eL8H33KbC9ZAoovG/obYZzXB0e8SML?=
- =?us-ascii?Q?z2FSO8D/+M/FCWbkaEY7LusuhsrTxMjjg2ENQWWWBp2X7bcfgJBICRLjHPaT?=
- =?us-ascii?Q?HG7EFxF4CEdtm2krmceIY7Yy5IAPxJRdAWSkOHvxLHRc7y1VEUSG9zO6s5kg?=
- =?us-ascii?Q?pFfkXnp5dnhLzO38u7fygxYE9vd4uXyNheCc8LiF3FJWnh/jg1UAEN2+9m7J?=
- =?us-ascii?Q?UzI2P0sC9scXcizq9u50OhEdCtSnmjoVm/Ehpg3OWqRydHnIL/1JNhI/q+s1?=
- =?us-ascii?Q?Aw=3D=3D?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: SMBBtk9Ixfp3RZECiaCnnk5W883k4p9vi5HC7T4MUISmbpSlvbPToluJ0w+AFIlH16NFo4+2+FdCImx4rmvHAI0wxiyuA5oecWa7nK+Q8lurPJzmmMIlcaP1N64JzC1lwZlrrqJ+mKtcge2vkoA63aEM3/tBGhvUhMhUaU5vtkDqF1tlKseqaPkPrZ/KC3c2Fpq+vOQXz4HDLipZuIZO+O5TKZMzBD23NFQawe8TI4hz1C5uXfBiG/KFcE4O/XY5ocDZgvNQoELROENGbeiaARKatFwbD0/pwJ+CRrjqV71BCj7L4d47sBwl4O6XSClKturaoqkQSyYcsmCiReoo0rmL88evXBvESQW72+a6iCdXdbGNqBltRzjcUyH77QxZF+izwjtkix65/qP+zVt9g0MyIbFyynmS3sug93pJlFyApLNLnHsrdxvei6TYcg7CpUzxDnQiK1YQS3Zhd1OQGr+9VIIIGY8s383H1FnOeuSJTBnK3ViZ3oNxzShPbr3XCKcoEB1CoBMu1HnFezk4umN3U04Hisd9x09GyxcuYJ0ahjT/98UwHjEifOWY3yi0lbORbExAy2UQIUpICYrIzSDvrQVhWenPlnK5JhOTgLd2P6hGav3YIJLh0vEiJgHxF2/VdcWPG+iOihrrVEFKWA==
-X-OriginatorOrg: ddn.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 16a6d1a4-5fd2-479b-52de-08dc3961b921
-X-MS-Exchange-CrossTenant-AuthSource: SA3PR19MB8193.namprd19.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Feb 2024 20:05:06.2028 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 753b6e26-6fd3-43e6-8248-3f1735d59bb4
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Q+s23MY/4h6Nr8BRqZeLNVf0Ek5a4g2R+wL5He6Ggz83ynqikNWpn2ABZ1M2tv1kdyVVVoZS77gv7lB7gncqCA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR19MB6645
-X-BESS-ID: 1709237109-105780-11268-6-1
-X-BESS-VER: 2019.1_20240227.2356
-X-BESS-Apparent-Source-IP: 104.47.73.41
-X-BESS-Parts: H4sIAAAAAAACA4uuVkqtKFGyUioBkjpK+cVKVoYG5qZAVgZQMNXIwtTE0DjV0N
- TSyNTU3Nwy2SAtNckw2cLU0sTU1NhIqTYWABfRfzVBAAAA
-X-BESS-Outbound-Spam-Score: 0.40
-X-BESS-Outbound-Spam-Report: Code version 3.2,
- rules version 3.2.2.254556 [from 
- cloudscan21-235.us-east-2b.ess.aws.cudaops.com]
- Rule breakdown below
- pts rule name              description
- ---- ---------------------- --------------------------------
- 0.40 BSF_SC0_SA085b         META: Custom Rule SA085b 
- 0.00 BSF_BESS_OUTBOUND      META: BESS Outbound 
-X-BESS-Outbound-Spam-Status: SCORE=0.40 using account:ESS124931 scores of
- KILL_LEVEL=7.0 tests=BSF_SC0_SA085b, BSF_BESS_OUTBOUND
-X-BESS-BRTS-Status: 1
-Received-SPF: pass client-ip=209.222.82.102; envelope-from=gedwards@ddn.com;
- helo=outbound-ip168b.ess.barracuda.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <MW4PR12MB69979E8A2E0F9B62D6C2A703A05F2@MW4PR12MB6997.namprd12.prod.outlook.com>
+ <87frxb6w5m.fsf@draig.linaro.org>
+In-Reply-To: <87frxb6w5m.fsf@draig.linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 29 Feb 2024 22:22:19 +0100
+Message-ID: <CABgObfbj4RvVw=WtKx3qDQSK74-KzqPuawVhfwHFasUshREByQ@mail.gmail.com>
+Subject: Re: What is the correct way to add linker dependency to QEMU build
+ system?
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: Paz Offer <poffer@nvidia.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 29 Feb 2024 16:20:32 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -162,29 +101,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 29, 2024 at 07:37:11PM +0000, Matthew Wilcox wrote:
-> On Thu, Feb 29, 2024 at 11:25:13AM -0700, Greg Edwards wrote:
->>> [1/1] block: Remove special-casing of compound pages
->>>       commit: 1b151e2435fc3a9b10c8946c6aebe9f3e1938c55
->>
->> This commit results in a change of behavior for QEMU VMs backed by hugepages
->> that open their VM disk image file with O_DIRECT (QEMU cache=none or
->> cache.direct=on options).  When the VM shuts down and the QEMU process exits,
->> one or two hugepages may fail to free correctly.  It appears to be a race, as
->> it doesn't happen every time.
+On Thu, Feb 29, 2024 at 6:02=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linar=
+o.org> wrote:
 >
-> By sheer coincidence the very next email after this one was:
+> Paz Offer <poffer@nvidia.com> writes:
 >
-> https://lore.kernel.org/linux-mm/86e592a9-98d4-4cff-a646-0c0084328356@cybernetics.com/T/#u
+> > Hi,
+> >
+> > I want to add library 'libdl' to be linked with QEMU build for a partic=
+ular target (e.g. - qemu-system-arm).
+> > Using meson I would typically do 'compiler.find_library(...)', and late=
+r add the returned dependency to the binary
+> > dependencies list.
+> > However, in QEMU I understand that these configurations are done in
+> > the './configure' file?
 >
-> Can you try Tony's patch and see if it fixes your problem?
-> I haven't even begun to analyse either your email or his patch,
-> but there's a strong likelihood that they're the same thing.
+> No I'm pretty sure all the library finding is done in meson now:
 
-This does appear to fix it.  Thank you!
+Yes, indeed. The documentation lists the tasks of the configure script:
 
-I'll do some more testing on it today, then add a Tested-by: tag if it
-holds up.
+- detect the host architecture
 
-Greg
+- list the targets for which to build emulators; the list of targets
+also affects which firmware binaries and tests to build
+
+- find the compilers (native and cross) used to build executables,
+firmware and tests.  The results are written as either Makefile
+fragments (``config-host.mak``) or a Meson machine file
+(``config-meson.cross``)
+
+- create a virtual environment in which all Python code runs during
+the build, and possibly install packages into it from PyPI
+
+- invoke Meson in the virtual environment, to perform the actual
+configuration step for the emulator build
+
+Anything related to 1) building executables and documentation 2)
+installing is done in meson.
+
+Generally, non-Meson parts of the bulid system are limited to stuff
+that has to be cross compiled. The exception is
+contrib/plugins/Makefile (which I mention because you might be
+interested in it as well), but that's just for documentation purposes,
+so that it can be lifted out of the QEMU tree and used to build custom
+plugins.
+
+Paolo
+
 
