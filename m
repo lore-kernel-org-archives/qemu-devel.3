@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BF06C54798
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FAFDC54E41
 	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 07:04:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfaRw-0002n7-RR; Thu, 29 Feb 2024 02:03:24 -0500
+	id 1rfaRM-0002Df-93; Thu, 29 Feb 2024 02:02:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1rfaRh-0002Xu-BV; Thu, 29 Feb 2024 02:03:09 -0500
+ id 1rfaRK-0002AS-Hv; Thu, 29 Feb 2024 02:02:46 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX02.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_CBC_SHA1:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1rfaRS-0003DK-9e; Thu, 29 Feb 2024 02:03:09 -0500
+ id 1rfaRH-0003DK-TS; Thu, 29 Feb 2024 02:02:46 -0500
 Received: from TWMBX02.aspeed.com (192.168.0.24) by TWMBX02.aspeed.com
  (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 29 Feb
- 2024 15:02:37 +0800
+ 2024 15:02:35 +0800
 Received: from twmbx02.aspeed.com (192.168.10.10) by TWMBX02.aspeed.com
  (192.168.0.24) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
- Transport; Thu, 29 Feb 2024 15:02:37 +0800
+ Transport; Thu, 29 Feb 2024 15:02:35 +0800
 To: <qemu-devel@nongnu.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
  <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>, Andrew Jeffery
  <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "Alistair
@@ -31,9 +31,9 @@ To: <qemu-devel@nongnu.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
  <qemu-arm@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <jamin_lin@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 6/8] aspeed/intc: Add AST2700 support
-Date: Thu, 29 Feb 2024 15:02:31 +0800
-Message-ID: <20240229070233.463502-7-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 2/8] aspeed/sli: Add AST2700 support
+Date: Thu, 29 Feb 2024 15:02:27 +0800
+Message-ID: <20240229070233.463502-3-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240229070233.463502-1-jamin_lin@aspeedtech.com>
 References: <20240229070233.463502-1-jamin_lin@aspeedtech.com>
@@ -68,36 +68,32 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-AST2700 interrupt controller(INTC) provides hardware interrupt interfaces
-to interrupt of processors PSP, SSP and TSP. In INTC, each interrupt of
-INT 128 to INT136 combines 32 interrupts.
+AST2700 SLI engine is designed to accelerate the
+throughput between cross-die connections.
+It have CPU_SLI at CPU die and IO_SLI at IO die.
 
-Introduce a new aspeed_intc class with instance_init and realize handlers.
-
-QEMU supports ARM Generic Interrupt Controller, version 3(GICv3)
-but not support Shared Peripheral Interrupt (SPI), yet.
-This patch added work around to set GICINT132[18] which was BMC UART interrupt
-if it received GICINT132, so users are able to type any key from keyboard to
-trigger GICINT132 interrupt until AST2700 boot into login prompt.
-It is a temporary solution.
+Introduce new ast2700_sli and ast2700_sliio class
+with instance_init and realize handlers.
 
 Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/intc/aspeed_intc.c        | 135 +++++++++++++++++++++++++++++++++++
- hw/intc/meson.build          |   1 +
- include/hw/intc/aspeed_vic.h |  29 ++++++++
- 3 files changed, 165 insertions(+)
- create mode 100644 hw/intc/aspeed_intc.c
+ hw/misc/aspeed_sli.c         | 179 +++++++++++++++++++++++++++++++++++
+ hw/misc/meson.build          |   3 +-
+ hw/misc/trace-events         |   7 ++
+ include/hw/misc/aspeed_sli.h |  32 +++++++
+ 4 files changed, 220 insertions(+), 1 deletion(-)
+ create mode 100644 hw/misc/aspeed_sli.c
+ create mode 100644 include/hw/misc/aspeed_sli.h
 
-diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
+diff --git a/hw/misc/aspeed_sli.c b/hw/misc/aspeed_sli.c
 new file mode 100644
-index 0000000000..851d43363b
+index 0000000000..4af42f145c
 --- /dev/null
-+++ b/hw/intc/aspeed_intc.c
-@@ -0,0 +1,135 @@
++++ b/hw/misc/aspeed_sli.c
+@@ -0,0 +1,179 @@
 +/*
-+ * ASPEED INTC Controller
++ * ASPEED SLI Controller
 + *
 + * Copyright (C) 2024 ASPEED Technology Inc.
 + *
@@ -106,188 +102,242 @@ index 0000000000..851d43363b
 + */
 +
 +#include "qemu/osdep.h"
-+#include "hw/intc/aspeed_vic.h"
-+#include "hw/irq.h"
-+#include "migration/vmstate.h"
-+#include "qemu/bitops.h"
 +#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "hw/intc/arm_gicv3.h"
++#include "qemu/error-report.h"
++#include "hw/qdev-properties.h"
++#include "hw/misc/aspeed_sli.h"
++#include "qapi/error.h"
++#include "migration/vmstate.h"
 +#include "trace.h"
 +
-+#define ASPEED_INTC_NR_IRQS 128
-+#define ASPEED_INTC_SIZE 0x4000
-+#define TO_REG(N) (N >> 2)
++#define SLI_REGION_SIZE 0x500
++#define TO_REG(addr) ((addr) >> 2)
 +
-+uint64_t regs[ASPEED_INTC_SIZE];
-+
-+static void aspeed_intc_set_irq(void *opaque, int irq, int level)
++static uint64_t aspeed_sli_read(void *opaque, hwaddr addr, unsigned int size)
 +{
-+}
++    AspeedSLIState *s = ASPEED_SLI(opaque);
++    int reg = TO_REG(addr);
 +
-+static uint64_t aspeed_intc_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    AspeedINTCState *s = ASPEED_INTC(opaque);
-+    GICv3State *gic = ARM_GICV3(s->gic);
-+
-+    uint64_t value = 0;
-+    switch (TO_REG(offset)) {
-+    case TO_REG(0x1404):
-+        /* BMC UART interript is GICINT132[18] */
-+        if (gic && gicv3_gicd_level_test(gic, 164)) {
-+            value = BIT(18);
-+        }
-+        break;
-+    default:
-+        value = regs[TO_REG(offset)];
-+        break;
++    if (reg >= ARRAY_SIZE(s->regs)) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "\n",
++                      __func__, addr);
++        return 0;
 +    }
 +
-+    return value;
++    trace_aspeed_sli_read(addr, size, s->regs[reg]);
++    return s->regs[reg];
 +}
 +
-+static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
-+                                        unsigned size)
++static void aspeed_sli_write(void *opaque, hwaddr addr, uint64_t data,
++                              unsigned int size)
 +{
-+    AspeedINTCState *s = ASPEED_INTC(opaque);
-+    GICv3State *gic = ARM_GICV3(s->gic);
++    AspeedSLIState *s = ASPEED_SLI(opaque);
++    int reg = TO_REG(addr);
 +
-+    switch (TO_REG(offset)) {
-+    case TO_REG(0x1400):
-+        regs[TO_REG(offset)] = data;
-+        if (regs[TO_REG(offset)]) {
-+            gicv3_gicd_enabled_set(gic, 164);
-+        } else {
-+            gicv3_gicd_enabled_clear(gic, 164);
-+        }
-+        break;
-+    case TO_REG(0x1404):
-+        regs[TO_REG(offset)] &= ~(data);
-+        gicv3_gicd_level_clear(gic, 164);
-+        break;
-+    default:
-+        regs[TO_REG(offset)] = data;
-+        break;
++    if (reg >= ARRAY_SIZE(s->regs)) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
++                      __func__, addr);
++        return;
 +    }
++
++    trace_aspeed_sli_write(addr, size, data);
++    s->regs[reg] = data;
 +}
 +
-+static const MemoryRegionOps aspeed_intc_ops = {
-+    .read = aspeed_intc_read,
-+    .write = aspeed_intc_write,
++static uint64_t aspeed_sliio_read(void *opaque, hwaddr addr, unsigned int size)
++{
++    AspeedSLIState *s = ASPEED_SLI(opaque);
++    int reg = TO_REG(addr);
++
++    if (reg >= ARRAY_SIZE(s->regs)) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "\n",
++                      __func__, addr);
++        return 0;
++    }
++
++    trace_aspeed_sliio_read(addr, size, s->regs[reg]);
++    return s->regs[reg];
++}
++
++static void aspeed_sliio_write(void *opaque, hwaddr addr, uint64_t data,
++                              unsigned int size)
++{
++    AspeedSLIState *s = ASPEED_SLI(opaque);
++    int reg = TO_REG(addr);
++
++    if (reg >= ARRAY_SIZE(s->regs)) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
++                      __func__, addr);
++        return;
++    }
++
++    trace_aspeed_sliio_write(addr, size, data);
++    s->regs[reg] = data;
++}
++
++static const MemoryRegionOps aspeed_sli_ops = {
++    .read = aspeed_sli_read,
++    .write = aspeed_sli_write,
 +    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid.min_access_size = 4,
-+    .valid.max_access_size = 4,
-+    .valid.unaligned = false,
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 4,
++    },
 +};
 +
-+static void aspeed_intc_realize(DeviceState *dev, Error **errp)
++static const MemoryRegionOps aspeed_sliio_ops = {
++    .read = aspeed_sliio_read,
++    .write = aspeed_sliio_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 4,
++    },
++};
++
++static void aspeed_sli_realize(DeviceState *dev, Error **errp)
 +{
++    AspeedSLIState *s = ASPEED_SLI(dev);
 +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+    AspeedINTCState *s = ASPEED_INTC(dev);
 +
-+    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_intc_ops, s,
-+                          TYPE_ASPEED_INTC, ASPEED_INTC_SIZE);
-+
++    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_sli_ops, s,
++                          TYPE_ASPEED_SLI, SLI_REGION_SIZE);
 +    sysbus_init_mmio(sbd, &s->iomem);
-+
-+    qdev_init_gpio_in(dev, aspeed_intc_set_irq, ASPEED_INTC_NR_IRQS);
-+    sysbus_init_irq(sbd, &s->irq);
-+    sysbus_init_irq(sbd, &s->fiq);
 +}
 +
-+static void aspeed_intc_reset(DeviceState *dev)
++static void aspeed_sliio_realize(DeviceState *dev, Error **errp)
 +{
-+    AspeedINTCState *s = ASPEED_INTC(dev);
++    AspeedSLIState *s = ASPEED_SLI(dev);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
 +
-+    s->level = 0;
-+    s->raw = 0;
-+    s->select = 0;
-+    s->enable = 0;
-+    s->trigger = 0;
-+    s->sense = 0x1F07FFF8FFFFULL;
-+    s->dual_edge = 0xF800070000ULL;
-+    s->event = 0x5F07FFF8FFFFULL;
++    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_sliio_ops, s,
++                          TYPE_ASPEED_SLI, SLI_REGION_SIZE);
++    sysbus_init_mmio(sbd, &s->iomem);
 +}
 +
-+static void aspeed_intc_class_init(ObjectClass *klass, void *data)
++static void aspeed_sli_class_init(ObjectClass *klass, void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(klass);
-+    dc->realize = aspeed_intc_realize;
-+    dc->reset = aspeed_intc_reset;
-+    dc->desc = "ASPEED Interrupt Controller for AST27x0";
-+    dc->vmsd = NULL;
++
++    dc->desc = "Aspeed SLI Controller";
++    dc->realize = aspeed_sli_realize;
 +}
 +
-+static const TypeInfo aspeed_intc_info = {
-+    .name = TYPE_ASPEED_INTC,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(AspeedINTCState),
-+    .class_init = aspeed_intc_class_init,
++static const TypeInfo aspeed_sli_info = {
++    .name          = TYPE_ASPEED_SLI,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(AspeedSLIState),
++    .class_init    = aspeed_sli_class_init,
++    .class_size    = sizeof(AspeedSLIClass),
++    .abstract      = true,
 +};
 +
-+static void aspeed_intc_register_types(void)
++static void aspeed_2700_sli_class_init(ObjectClass *klass, void *data)
 +{
-+    type_register_static(&aspeed_intc_info);
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->desc = "AST2700 SLI Controller";
 +}
 +
-+type_init(aspeed_intc_register_types);
-diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index ed355941d1..f5c574f584 100644
---- a/hw/intc/meson.build
-+++ b/hw/intc/meson.build
-@@ -14,6 +14,7 @@ system_ss.add(when: 'CONFIG_ARM_GICV3_TCG', if_true: files(
- ))
- system_ss.add(when: 'CONFIG_ALLWINNER_A10_PIC', if_true: files('allwinner-a10-pic.c'))
- system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_vic.c'))
-+system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_intc.c'))
- system_ss.add(when: 'CONFIG_ETRAXFS', if_true: files('etraxfs_pic.c'))
- system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210_gic.c', 'exynos4210_combiner.c'))
- system_ss.add(when: 'CONFIG_GOLDFISH_PIC', if_true: files('goldfish_pic.c'))
-diff --git a/include/hw/intc/aspeed_vic.h b/include/hw/intc/aspeed_vic.h
-index 68d6ab997a..673a11d7fd 100644
---- a/include/hw/intc/aspeed_vic.h
-+++ b/include/hw/intc/aspeed_vic.h
-@@ -17,6 +17,7 @@
- #include "qom/object.h"
- 
- #define TYPE_ASPEED_VIC "aspeed.vic"
-+#define TYPE_ASPEED_INTC "aspeed.intc"
- OBJECT_DECLARE_SIMPLE_TYPE(AspeedVICState, ASPEED_VIC)
- 
- #define ASPEED_VIC_NR_IRQS 51
-@@ -46,4 +47,32 @@ struct AspeedVICState {
-     uint64_t event;
- };
- 
-+OBJECT_DECLARE_SIMPLE_TYPE(AspeedINTCState, ASPEED_INTC)
++static void aspeed_2700_sliio_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
 +
-+struct AspeedINTCState {
-+    /*< private >*/
-+    SysBusDevice parent_obj;
-+    DeviceState *gic;
++    dc->desc = "AST2700 I/O SLI Controller";
++    dc->realize = aspeed_sliio_realize;
++}
 +
-+    /*< public >*/
-+    MemoryRegion iomem;
-+    qemu_irq irq;
-+    qemu_irq fiq;
-+
-+    uint64_t level;
-+    uint64_t raw;
-+    uint64_t select;
-+    uint64_t enable;
-+    uint64_t trigger;
-+
-+    /* 0=edge, 1=level */
-+    uint64_t sense;
-+
-+    /* 0=single-edge, 1=dual-edge */
-+    uint64_t dual_edge;
-+
-+    /* 0=low-sensitive/falling-edge, 1=high-sensitive/rising-edge */
-+    uint64_t event;
++static const TypeInfo aspeed_2700_sli_info = {
++    .name           = TYPE_ASPEED_2700_SLI,
++    .parent         = TYPE_ASPEED_SLI,
++    .class_init     = aspeed_2700_sli_class_init,
 +};
 +
- #endif /* ASPEED_VIC_H */
++static const TypeInfo aspeed_2700_sliio_info = {
++    .name           = TYPE_ASPEED_2700_SLIIO,
++    .parent         = TYPE_ASPEED_SLI,
++    .class_init     = aspeed_2700_sliio_class_init,
++};
++
++static void aspeed_sli_register_types(void)
++{
++    type_register_static(&aspeed_sli_info);
++    type_register_static(&aspeed_2700_sli_info);
++    type_register_static(&aspeed_2700_sliio_info);
++}
++
++type_init(aspeed_sli_register_types);
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 746686835b..790f05525a 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -137,7 +137,8 @@ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+   'aspeed_sbc.c',
+   'aspeed_sdmc.c',
+   'aspeed_xdma.c',
+-  'aspeed_peci.c'))
++  'aspeed_peci.c',
++  'aspeed_sli.c'))
+ 
+ system_ss.add(when: 'CONFIG_MSF2', if_true: files('msf2-sysreg.c'))
+ system_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_rng.c'))
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+index 5f5bc92222..07010a7ea6 100644
+--- a/hw/misc/trace-events
++++ b/hw/misc/trace-events
+@@ -341,3 +341,10 @@ djmemc_write(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRI
+ # iosb.c
+ iosb_read(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRIx64" size=%u"
+ iosb_write(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRIx64" size=%u"
++
++# aspeed_sli.c
++aspeed_sli_write(uint64_t offset, unsigned int size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
++aspeed_sli_read(uint64_t offset, unsigned int size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
++aspeed_sliio_write(uint64_t offset, unsigned int size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
++aspeed_sliio_read(uint64_t offset, unsigned int size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
++
+diff --git a/include/hw/misc/aspeed_sli.h b/include/hw/misc/aspeed_sli.h
+new file mode 100644
+index 0000000000..15892950e2
+--- /dev/null
++++ b/include/hw/misc/aspeed_sli.h
+@@ -0,0 +1,32 @@
++/*
++ * ASPEED SLI Controller
++ *
++ * Copyright (C) 2024 ASPEED Technology Inc.
++ *
++ * This code is licensed under the GPL version 2 or later.  See
++ * the COPYING file in the top-level directory.
++ */
++#ifndef ASPEED_SLI_H
++#define ASPEED_SLI_H
++
++#include "hw/sysbus.h"
++
++#define TYPE_ASPEED_SLI "aspeed.sli"
++#define TYPE_ASPEED_2700_SLI TYPE_ASPEED_SLI "-ast2700"
++#define TYPE_ASPEED_2700_SLIIO TYPE_ASPEED_SLI "io" "-ast2700"
++OBJECT_DECLARE_TYPE(AspeedSLIState, AspeedSLIClass, ASPEED_SLI)
++
++#define ASPEED_SLI_NR_REGS  (0x500 >> 2)
++
++struct AspeedSLIState {
++    SysBusDevice parent;
++    MemoryRegion iomem;
++
++    uint32_t regs[ASPEED_SLI_NR_REGS];
++};
++
++struct AspeedSLIClass {
++    SysBusDeviceClass parent_class;
++};
++
++#endif /* ASPEED_SLI_H */
 -- 
 2.25.1
 
