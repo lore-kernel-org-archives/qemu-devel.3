@@ -4,59 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EE66C54E49
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 14:26:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16A4EC48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 14:27:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfhML-0006Ns-4Q; Thu, 29 Feb 2024 09:26:05 -0500
+	id 1rfhMq-0007Fp-GO; Thu, 29 Feb 2024 09:26:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfhMA-00064e-5p; Thu, 29 Feb 2024 09:25:54 -0500
+ id 1rfhMl-000798-QH; Thu, 29 Feb 2024 09:26:33 -0500
 Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfhM7-0005O2-H0; Thu, 29 Feb 2024 09:25:53 -0500
+ id 1rfhMk-0005cJ-7x; Thu, 29 Feb 2024 09:26:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709216751; x=1740752751;
+ t=1709216790; x=1740752790;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=tm2TfL8tCatkLG6f9ax0h2DVCNI++sDtZFIjXdGxA2U=;
- b=hDBnCndeof+cuNUvpJWLttT0db/Bls1FNs1AzXz2rbabSa1DTIFvJXS0
- t4RoAphuki0rZmb3IeW6Hg7fI1OWJXq7ATHcaZiiolyn0/bsAluMzftUC
- maDzAzXOHzhgPCpW1mjSaba8OguZdSKrbH8MRje+w/zWQV7k7IALNQccI
- hvTEiT9WekbF9+J64fvKay3V5dg3E320UJtaJ5Wkf7mg33oAOxylv6RuD
- AhOJXBlmomeA8hcDHp2bVxYFzZl/dSbjTyP6nCeBqZcTwzb4Hc60v2CD1
- JEIy8338fR891qVS6Kl4hOUh0XY0FeaXG7PPCuv4vGf3GFXZM4PHapxxP Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="14322767"
-X-IronPort-AV: E=Sophos;i="6.06,194,1705392000"; d="scan'208";a="14322767"
+ bh=wARfCODNefZRcg7ugBVxhGmYWq5sTblq3roBF65heH0=;
+ b=ZENqIgkJQxHP08lDcmxfN28cK44925pj5n/lAcB6MaZ0Rcb59KkECaB1
+ dfRRL48vmw/3EliiWibGdM/xbKtuCUbZuPW33cxZnSdkHU+ROoOQOPqnC
+ qpJAZPDEgiuozDTFJpyawIojve6bTBJ3In2i7lj1pcp+7VP/6k7WNKdLA
+ toQW/HN5DP5OCs/S7jsAPuO9Ct79MsxWx1OhYHGjiPM/lb81RHO/rzof6
+ L1rIXsAFjfDGXXtF4CAWTT7CemKo66kT4D3k8QZojUgKerj5+gKRk/IyI
+ XPE/rsfKRLhMZZu+lfehXh0mNFB8Qf92IuYdT5wi2GKGr+57fZ6179KDB Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="14322863"
+X-IronPort-AV: E=Sophos;i="6.06,194,1705392000"; d="scan'208";a="14322863"
 Received: from fmviesa010.fm.intel.com ([10.60.135.150])
  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Feb 2024 06:25:50 -0800
+ 29 Feb 2024 06:26:12 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,194,1705392000"; 
-   d="scan'208";a="7793832"
+   d="scan'208";a="7793903"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa010.fm.intel.com with ESMTP; 29 Feb 2024 06:25:48 -0800
+ by fmviesa010.fm.intel.com with ESMTP; 29 Feb 2024 06:26:10 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Michael Tokarev <mjt@tls.msk.ru>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH 06/17] hw/vfio/container: Fix missing ERRP_GUARD() for
+ Jason Wang <jasowang@redhat.com>
+Subject: [PATCH 15/17] net/vhost-vdpa: Fix missing ERRP_GUARD() for
  error_prepend()
-Date: Thu, 29 Feb 2024 22:39:03 +0800
-Message-Id: <20240229143914.1977550-7-zhao1.liu@linux.intel.com>
+Date: Thu, 29 Feb 2024 22:39:12 +0800
+Message-Id: <20240229143914.1977550-16-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240229143914.1977550-1-zhao1.liu@linux.intel.com>
 References: <20240229143914.1977550-1-zhao1.liu@linux.intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: none client-ip=192.198.163.11;
  envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
@@ -102,35 +100,38 @@ ERRP_GUARD() could avoid the case when @errp is the pointer of
 error_fatal, the user can't see this additional information, because
 exit() happens in error_setg earlier than information is added [1].
 
-The vfio_get_group() passes @errp to error_prepend(). Its @errp is
-from vfio_attach_device(), which @errp parameter is so widely sourced
-that it is necessary to protect it with ERRP_GUARD().
+The net_init_vhost_vdpa() passes @errp to error_prepend(), and as a
+member of net_client_init_fun[], it's called in net_client_init1() and
+gets @errp from this caller.
 
-To avoid the issue like [1] said, add missing ERRP_GUARD() at the
-beginning of this function.
+But because netdev_init_modern() passes &error_fatal to
+net_client_init1(), then @errp parameter of net_init_vhost_vdpa() would
+point to @error_fatal. This causes the error message in error_prepend()
+to be lost because of the above issue.
+
+To fix this, add missing ERRP_GUARD() at the beginning of this function.
 
 [1]: Issue description in the commit message of commit ae7c80a7bd73
      ("error: New macro ERRP_GUARD()").
 
-Cc: Alex Williamson <alex.williamson@redhat.com>
-Cc: "Cédric Le Goater" <clg@redhat.com>
+Cc: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/vfio/container.c | 1 +
+ net/vhost-vdpa.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index bd25b9fbad2e..f66bb01f5b18 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -719,6 +719,7 @@ static void vfio_disconnect_container(VFIOGroup *group)
- 
- static VFIOGroup *vfio_get_group(int groupid, AddressSpace *as, Error **errp)
+diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+index 3726ee5d6763..6c1fa396aae1 100644
+--- a/net/vhost-vdpa.c
++++ b/net/vhost-vdpa.c
+@@ -1751,6 +1751,7 @@ static int vhost_vdpa_get_max_queue_pairs(int fd, uint64_t features,
+ int net_init_vhost_vdpa(const Netdev *netdev, const char *name,
+                         NetClientState *peer, Error **errp)
  {
 +    ERRP_GUARD();
-     VFIOGroup *group;
-     char path[32];
-     struct vfio_group_status status = { .argsz = sizeof(status) };
+     const NetdevVhostVDPAOptions *opts;
+     uint64_t features;
+     int vdpa_device_fd;
 -- 
 2.34.1
 
