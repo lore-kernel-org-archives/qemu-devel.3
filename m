@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F529C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 06:06:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30A93C54E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 06:33:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfZYC-0006ZO-4k; Thu, 29 Feb 2024 01:05:51 -0500
+	id 1rfZyU-0006Kd-Qw; Thu, 29 Feb 2024 01:32:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rfZY4-0006Yd-N3
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:05:42 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rfZyH-0006Iq-Iy
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:32:46 -0500
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rfZY2-0002QL-Q7
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:05:40 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-412b99eb5cfso3303855e9.3
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 22:05:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rfZyF-00039G-Bs
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:32:45 -0500
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-5c6bd3100fcso405067a12.3
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 22:32:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709186736; x=1709791536; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xJMjIISEWK7/3igvOYV4aFBNaNXSPI1c7u6l3wTJ3vo=;
- b=CSqw1soggrY/C8T5XTGpSdbT8XIKa7parC32Hi6UTrVGn4wGXQMBRHevyaJ8W3Yr1q
- RD33fLGmEJpKN0T4eDuoK0InklKiqrvfHahk4Z9HE4w1qMC3c9RwlsVE1IQlZtJlRhda
- OKtgjWPIm1KrlHLZ/kJ3CfGxqOo9b5tib8aU1VzFbYKF17VSBicJIzEkBw+3iaFHnagc
- taY+kIhGSNcsWZLACtxY6g9g8Pn596m7fpNpRAsh+0JaffODO8mDjo3dkYnJhqbQxAle
- N4xElUouTxeSwyOjOOTjxh9w7y8VEVjCBSeBjeZz6MN2W6rfhzZR5hcQ4LIQVTOeoNcP
- j51Q==
+ d=gmail.com; s=20230601; t=1709188361; x=1709793161; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kIkCQPTzxFyPomA2xFUg32rW5D7p+7yyPlvA7i7ygzM=;
+ b=cSGQfbrTxDeHonR3EWwrSvvHPDeYEadTBkbIY6M78dOSmfKJT97D1Bz62xAS6Pfxba
+ OE3qVYde86hc3Jfv2TZzCOktTsRlrt99Rn7M/OwuQgIcWrW3yzYdLn9Kb9etUcqeRhJk
+ wl7+CVOZuaRhCYb+24/h3OkYzZ2z6dMmNmavuSYfiZmbPm3Gp2T/+B+DLu57UtRUYnrm
+ MJ4xT0MLYAuSLZvBed/DR6XFy9jA1K11LQmN0DZjwCtSLX9iD8axincWlBSxIpWDFiUC
+ lLNp+f2HMtxPJ6bYSvy9X4CYbOV1J2Uv5inDqk9kX4ubnRv82ICqQWPCXZXdnUvrgQeT
+ cAeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709186736; x=1709791536;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xJMjIISEWK7/3igvOYV4aFBNaNXSPI1c7u6l3wTJ3vo=;
- b=qD+XMAHYJi3mI9E5AUTxtBHPzpSqJ/oLyRcu9gR+gI4Gd6JTr8YEfTD2jYPp0Lqy5c
- 9LxNSb/NH//cUgjUvuCdtuNBHz2hS6JCE5bWgaAPUEs1vhlAtqEGQNg1wyI7bpkjIE1c
- ZfpMzrTMj060xpC8LqLHEO6/sLSyAxDjV2laYjggzHkmZGs6N/0m/vGyPxBb2EbFscFE
- NdqK0s4Zqj9EfeAUizSGZCiY0ge2ncnrtPIWclyviS0O0Wibn1ZlaK1gB5sd78i4J0lJ
- hKRvK8dP26Uf7h1xvw1asv2eE2TFKn30aoqgW4mLZc1BsPD2rHYZC852RhkXpDJqdBaX
- JC+A==
-X-Gm-Message-State: AOJu0YxLSu1UT4JGqh4CX4HNi2askB8uHFR68JW9hyeVIVOvJOqIye1a
- yYopYjjFtFYVuMSR58Vz4fgLqYq9gbP6PoCbep3QZYHPpVmTlyCIBifJCxKsVGZAb8GZ0TiaCz2
- Zh3k=
-X-Google-Smtp-Source: AGHT+IEZJMz17YIVy4xlwsKEjxfAPy34M9SZwgOB1bC+t0Fg9ORMlTIvB41293dui8EGCXIkbNqMOg==
-X-Received: by 2002:a05:600c:1da2:b0:412:9868:97ed with SMTP id
- p34-20020a05600c1da200b00412986897edmr886580wms.9.1709186736232; 
- Wed, 28 Feb 2024 22:05:36 -0800 (PST)
-Received: from [192.168.1.24] ([102.35.208.160])
+ d=1e100.net; s=20230601; t=1709188361; x=1709793161;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=kIkCQPTzxFyPomA2xFUg32rW5D7p+7yyPlvA7i7ygzM=;
+ b=OfZWSbdKdX3ndN8MI2T6/rY1+lspqhuMQp3EJojCw1Bg623q0WL4WHREeqXKMv8WvK
+ qialWenlQ+lL6djX8SQ8re6imToEVkIkfF7PMphSs5AbjBrcb2T4lsaXnw71xAZuxkUC
+ 78JMq21rOTA1LG7xARAKBNVEW1eKfdk2GZh3lDeYFBQuiK0adro566u9cZ4rTu3M8Tlu
+ 8j587doQ621nQCPkqnOK/gVQJoVqUhFuS4ba1swyeji+LLLH2MCKl598/IINpjaPipFE
+ 9Dkt8EBgA6r4YtLvF5pO1/+eJqtft3r6Sl8xraob4a3gOBXOkrrxupoEV8ARXQpkN+rg
+ TA/w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXihlZZHZQtYyMZiLrlpthwd3akiEoCBnSMkFcH5A5LkddFaEmsvAMilND5M0QaiBXHhSAm2V6XlPYMNaUs84h9iA76Plk=
+X-Gm-Message-State: AOJu0Yx3RmtpHrGd9L9uGoyrYaEq3La+UPYFMqOOBdb9+YGoLNidvtaW
+ 2JZsG1xyuuNXXgImoNfQuiQkgLfV8JIyqsQSs0LgIII5mP01YdaB
+X-Google-Smtp-Source: AGHT+IFVujuJ+aHqJPEPoOvHVAJFllFGDdlud9w64meJKuClC/rBfD9p7UQnjx2yMxFAL4ks0Na4LA==
+X-Received: by 2002:a05:6a21:1394:b0:19e:9c82:b139 with SMTP id
+ oa20-20020a056a21139400b0019e9c82b139mr1575538pzb.45.1709188361483; 
+ Wed, 28 Feb 2024 22:32:41 -0800 (PST)
+Received: from localhost (220-235-220-130.tpgi.com.au. [220.235.220.130])
  by smtp.gmail.com with ESMTPSA id
- dn6-20020a05600c654600b004126ca2a1cbsm4042097wmb.48.2024.02.28.22.05.34
+ s8-20020a17090aa10800b0029a7bebed04sm594411pjp.6.2024.02.28.22.32.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Feb 2024 22:05:35 -0800 (PST)
-Message-ID: <8b87d401-833f-42eb-b06d-839bcdbb50b4@linaro.org>
-Date: Thu, 29 Feb 2024 10:05:32 +0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] plugins/execlog: add data address match and address
- range support
-Content-Language: en-US
-To: Sven Schnelle <svens@stackframe.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-Cc: qemu-devel@nongnu.org, deller@gmx.de
-References: <20240228200211.1512816-1-svens@stackframe.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20240228200211.1512816-1-svens@stackframe.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x336.google.com
+ Wed, 28 Feb 2024 22:32:41 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 29 Feb 2024 16:32:35 +1000
+Message-Id: <CZHCPES6J8NQ.3HAYN1CS2UVRC@wheely>
+Cc: "Paolo Bonzini" <pbonzini@redhat.com>, "John Snow" <jsnow@redhat.com>,
+ "Cleber Rosa" <crosa@redhat.com>, =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, "Wainer dos Santos Moschetta" <wainersm@redhat.com>,
+ "Beraldo Leal" <bleal@redhat.com>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 4/4] replay: simple auto-snapshot mode for record
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Pavel Dovgalyuk" <pavel.dovgalyuk@ispras.ru>
+X-Mailer: aerc 0.15.2
+References: <20230814163135.187882-1-npiggin@gmail.com>
+ <20230814163135.187882-5-npiggin@gmail.com>
+ <95adc4ea-225c-bcd5-cec2-9edf1c2cf496@ispras.ru>
+ <CZEU6LST3QJK.25NCID08671V5@wheely>
+ <b212b1a1-eca9-40ae-992b-ff24f41844e3@ispras.ru>
+In-Reply-To: <b212b1a1-eca9-40ae-992b-ff24f41844e3@ispras.ru>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,41 +101,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Sven, thanks for your series.
+On Wed Feb 28, 2024 at 3:07 PM AEST, Pavel Dovgalyuk wrote:
+> On 26.02.2024 10:36, Nicholas Piggin wrote:
+> > On Fri Aug 18, 2023 at 2:36 PM AEST, Pavel Dovgalyuk wrote:
+> >> On 14.08.2023 19:31, Nicholas Piggin wrote:
+> >>> record makes an initial snapshot when the machine is created, to enab=
+le
+> >>> reverse-debugging. Often the issue being debugged appears near the en=
+d of
+> >>> the trace, so it is important for performance to keep snapshots close=
+ to
+> >>> the end.
+> >>>
+> >>> This implements a periodic snapshot mode that keeps a rolling set of
+> >>> recent snapshots.
+> >>>
+> >>> Arguably this should be done by the debugger or a program that talks =
+to
+> >>> QMP, but for setting up simple scenarios and tests, it is convenient =
+to
+> >>> have this feature.
+> >=20
+> > I'm looking at resurrecting this to help add a bit of testing...
+> >=20
+> > [snip]
+> >=20
+> >>> +static void replay_snapshot_timer_cb(void *opaque)
+> >>> +{
+> >>> +    Error *err =3D NULL;
+> >>> +    char *name;
+> >>> +
+> >>> +    if (!replay_can_snapshot()) {
+> >>> +        /* Try again soon */
+> >>> +        timer_mod(replay_snapshot_timer,
+> >>> +                  qemu_clock_get_ms(QEMU_CLOCK_REALTIME) +
+> >>> +                  replay_snapshot_periodic_delay / 10);
+> >>> +        return;
+> >>> +    }
+> >>> +
+> >>> +    name =3D g_strdup_printf("%s-%d", replay_snapshot, replay_snapsh=
+ot_count);
+> >>> +    if (!save_snapshot(name,
+> >>> +                       true, NULL, false, NULL, &err)) {
+> >>> +        error_report_err(err);
+> >>> +        error_report("Could not create periodic snapshot "
+> >>> +                     "for icount record, disabling");
+> >>> +        g_free(name);
+> >>> +        return;
+> >>> +    }
+> >>> +    g_free(name);
+> >>> +    replay_snapshot_count++;
+> >>> +
+> >>> +    if (replay_snapshot_periodic_nr_keep >=3D 1 &&
+> >>> +        replay_snapshot_count > replay_snapshot_periodic_nr_keep) {
+> >>> +        int del_nr;
+> >>> +
+> >>> +        del_nr =3D replay_snapshot_count - replay_snapshot_periodic_=
+nr_keep - 1;
+> >>> +        name =3D g_strdup_printf("%s-%d", replay_snapshot, del_nr);
+> >>> +        if (!delete_snapshot(name, false, NULL, &err)) {
+> >>> +            error_report_err(err);
+> >>> +            error_report("Could not delete periodic snapshot "
+> >>> +                         "for icount record");
+> >>> +        }
+> >>> +        g_free(name);
+> >>> +    }
+> >>> +
+> >>> +    timer_mod(replay_snapshot_timer,
+> >>> +              qemu_clock_get_ms(QEMU_CLOCK_REALTIME) +
+> >>> +              replay_snapshot_periodic_delay);
+> >>
+> >> I'm not sure that realtime is not the best choice for such of a timer.
+> >> Virtual machine may be stopped or slowed down for some reason.
+> >=20
+> > My thinking was that, say if you snapshot every 10 seconds of real time
+> > executed, then you should have an upper limit on the order of 10 second=
+s
+> > to perform a reverse-debug operation (so long as you don't exceed your
+> > nr_keep limit).
+>
+> But in some cases savevm itself could take more than 10 seconds.
+> We'll have infinite saving in this case. That's why I propose using=20
+> virtual clock with the QEMU_TIMER_ATTR_EXTERNAL attribute.
 
-Yesterday, series for new API to access registers from plugins was 
-merged. As part of it, execlog plugin was extended to support this [1].
-This conflict with the changes presented here.
+It shouldn't do that because it sets the next timer after
+end of snapshot time + delay.
 
-Could you please rebase this series on top of master?
+With virtual time, won't an idle machine just keep warping
+the time to the next snapshot save and that *could* cause
+infinite snapshotting. I worry that icount time is difficult
+to predict and understand. Both have issues but I think real
+time is better.
+
+> >=20
+> > Is it worth worrying about complexity of slowdowns and vm pausing?
+> > Maybe it could stop snapshotting on a host pause.
+> >=20
+> >>> +}
+> >>> +
+> >>>    void replay_vmstate_init(void)
+> >>>    {
+> >>>        Error *err =3D NULL;
+> >>> @@ -81,6 +128,16 @@ void replay_vmstate_init(void)
+> >>>                    error_report("Could not create snapshot for icount=
+ record");
+> >>>                    exit(1);
+> >>>                }
+> >>> +
+> >>> +            if (replay_snapshot_mode =3D=3D REPLAY_SNAPSHOT_MODE_PER=
+IODIC) {
+> >>> +                replay_snapshot_timer =3D timer_new_ms(QEMU_CLOCK_RE=
+ALTIME,
+> >>> +                                                     replay_snapshot=
+_timer_cb,
+> >>> +                                                     NULL);
+> >>> +                timer_mod(replay_snapshot_timer,
+> >>> +                          qemu_clock_get_ms(QEMU_CLOCK_REALTIME) +
+> >>> +                          replay_snapshot_periodic_delay);
+> >>> +            }
+> >>> +
+> >>
+> >> Please also delete placeholder comment for the snapshotting timer
+> >> in replay_enable function.
+> >=20
+> > Wil do.
+> >=20
+> >>>            } else if (replay_mode =3D=3D REPLAY_MODE_PLAY) {
+> >>>                if (!load_snapshot(replay_snapshot, NULL, false, NULL,=
+ &err)) {
+> >>>                    error_report_err(err);
+> >>> diff --git a/replay/replay.c b/replay/replay.c
+> >>> index e64f71209a..fa5930700d 100644
+> >>> --- a/replay/replay.c
+> >>> +++ b/replay/replay.c
+> >>> @@ -29,6 +29,10 @@
+> >>>    ReplayMode replay_mode =3D REPLAY_MODE_NONE;
+> >>>    char *replay_snapshot;
+> >>>   =20
+> >>> +ReplaySnapshotMode replay_snapshot_mode;
+> >>> +uint64_t replay_snapshot_periodic_delay;
+> >>> +int replay_snapshot_periodic_nr_keep;
+> >>> +
+> >>>    /* Name of replay file  */
+> >>>    static char *replay_filename;
+> >>>    ReplayState replay_state;
+> >>> @@ -313,6 +317,27 @@ void replay_configure(QemuOpts *opts)
+> >>>        }
+> >>>   =20
+> >>>        replay_snapshot =3D g_strdup(qemu_opt_get(opts, "rrsnapshot"))=
+;
+> >>> +    if (replay_snapshot && mode =3D=3D REPLAY_MODE_RECORD) {
+> >>
+> >> Can such a snapshotting may be useful in replay mode?
+> >=20
+> > Does snapshotting do anything in replay mode?=20
+>
+> Yes, you can create as many snapshots as you want if 'snapshot=3Don'
+> option of the disk image was not used.
+
+Oh, so it will make real snapshots? I just assumed it would
+"replay" the motions of the snapshot.
+
+In that case actually that could be useful if your recording
+didn't have snapshots and you want to debug it. I'll try it.
 
 Thanks,
-Pierrick
-
-[1] 
-https://gitlab.com/qemu-project/qemu/-/commit/af6e4e0a22c18a7cc97650caec56ed99c9899dd7
-
-On 2/29/24 12:02 AM, Sven Schnelle wrote:
-> Hi List,
-> 
-> this patchset adds a new -dfilter option and address range matching. With this
-> execlog can match only a certain range of address for both instruction and
-> data adresses.
-> 
-> Example usage:
-> 
-> qemu-system-xxx <other options> -d plugin -plugin libexeclog.so,afilter=0x1000-0x2000,dfilter=0x388
-> 
-> This would only log instruction in the address range 0x1000 to 0x2000
-> and accessing data at address 0x388.
-> 
-> Sven Schnelle (4):
->    plugins/execlog: add struct execlog_ctx
->    plugins/execlog: pass matches array to parse_vaddr_match
->    plugins/execlog: add data address match
->    plugins/execlog: add address range matching
-> 
->   contrib/plugins/execlog.c | 102 ++++++++++++++++++++++++++++++--------
->   1 file changed, 82 insertions(+), 20 deletions(-)
-> 
+Nick
 
