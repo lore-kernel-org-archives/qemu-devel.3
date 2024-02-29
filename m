@@ -4,60 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CBBBC48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 14:26:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31A3EC54E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 14:26:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfhM5-0005wF-2d; Thu, 29 Feb 2024 09:25:50 -0500
+	id 1rfhMB-000676-AG; Thu, 29 Feb 2024 09:25:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfhLy-0005vM-DP; Thu, 29 Feb 2024 09:25:42 -0500
+ id 1rfhM2-0005wM-HC; Thu, 29 Feb 2024 09:25:47 -0500
 Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfhLv-0005OB-NM; Thu, 29 Feb 2024 09:25:42 -0500
+ id 1rfhLz-0005O2-1V; Thu, 29 Feb 2024 09:25:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709216739; x=1740752739;
+ t=1709216743; x=1740752743;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=/FOMjXZewsc+joBIJ6M4Jgn+QHL0sPsnLHD+cs/NNWw=;
- b=E1ZuINaeyfJZKiRmACM1Jmax8Wwoir2x++0qKxOgDkC6cYbXZQtpkQoo
- 62k2CKctOxlXRCnhToIvKlMw6UJPEBKTQsf3KTn1/vJQp2kByIdQawQvM
- utykZE+ohxAoQmbhX4WWkeXA29Es7Mvo4tbAyMiqtlY5uDmz355FKdyQh
- 9x7RZT/sLXMbtTPDz2+uKp4aEnZgn7wRLEewaP6pV6PmqXL+kQ7hpTyOP
- sc9wwBrH/rBmrUzkQRbFmHkEf5rSjXiYHekQSXPJCIxxyZUqGLkgSY9kN
- YpFXylRR2L7AxYt6x/5M0l3WyzrJ8KBC5xQLZSuvQAa2Li/uz2nO0PnIH A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="14322720"
-X-IronPort-AV: E=Sophos;i="6.06,194,1705392000"; d="scan'208";a="14322720"
+ bh=Vhw4H2qazZXZnap7nSADMm3siBGa2at5w2Ed72IArQ0=;
+ b=f8mDf+9PIsyFFCVpotOqZWQShhwl4PVvCRqFQqTBpJwpsnWAyFA8zjnP
+ VEXWXYrGItYDV1lmy9ORdbaVkuTt/DSnypfhGlbMmCgUJQLbuK2nQe6fz
+ BhXj2FO3aZi49tDY2GJHj2TfgHCrvLRon09r82jUPJB1HHUz6+mAyGJTA
+ 0cOUJFgSMSUGk0OjwcTS7RkjWuWHun1XZzrNO1xmLq7bBldb/b3r8fRrQ
+ UOZwtFyqUxbcqgjURxDuuuH5mdo8ad6QN2pGz3adFihAtBQYIrcP3Whxd
+ ycsbXdibNc7PTf9N74eYkT+pb8kbnZy7eq5NfNed1pPabKyL24HCxnpbn g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="14322740"
+X-IronPort-AV: E=Sophos;i="6.06,194,1705392000"; d="scan'208";a="14322740"
 Received: from fmviesa010.fm.intel.com ([10.60.135.150])
  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Feb 2024 06:25:37 -0800
+ 29 Feb 2024 06:25:42 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,194,1705392000"; 
-   d="scan'208";a="7793789"
+   d="scan'208";a="7793808"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa010.fm.intel.com with ESMTP; 29 Feb 2024 06:25:34 -0800
+ by fmviesa010.fm.intel.com with ESMTP; 29 Feb 2024 06:25:39 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Michael Tokarev <mjt@tls.msk.ru>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Juan Quintela <quintela@trasno.org>,
- Steve Sistare <steven.sistare@oracle.com>,
- Michael Galaxy <mgalaxy@akamai.com>
-Subject: [PATCH 01/17] hw/misc/ivshmem: Fix missing ERRP_GUARD() for
- error_prepend()
-Date: Thu, 29 Feb 2024 22:38:58 +0800
-Message-Id: <20240229143914.1977550-2-zhao1.liu@linux.intel.com>
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>
+Subject: [PATCH 03/17] hw/remote/remote-obj: hw/misc/ivshmem: Fix missing
+ ERRP_GUARD() for error_prepend()
+Date: Thu, 29 Feb 2024 22:39:00 +0800
+Message-Id: <20240229143914.1977550-4-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240229143914.1977550-1-zhao1.liu@linux.intel.com>
 References: <20240229143914.1977550-1-zhao1.liu@linux.intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: none client-ip=192.198.163.11;
  envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
@@ -103,8 +101,8 @@ ERRP_GUARD() could avoid the case when @errp is the pointer of
 error_fatal, the user can't see this additional information, because
 exit() happens in error_setg earlier than information is added [1].
 
-The ivshmem_common_realize() passes @errp to error_prepend(), and as a
-DeviceClass.realize method, its @errp is so widely sourced that it is
+The remote_object_set_fd() passes @errp to error_prepend(), and as a
+PropertyInfo.set method, its @errp is so widely sourced that it is
 necessary to protect it with ERRP_GUARD().
 
 To avoid the issue like [1] said, add missing ERRP_GUARD() at the
@@ -113,27 +111,25 @@ beginning of this function.
 [1]: Issue description in the commit message of commit ae7c80a7bd73
      ("error: New macro ERRP_GUARD()").
 
-Cc: Juan Quintela <quintela@trasno.org>
-Cc: Steve Sistare <steven.sistare@oracle.com>
-Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org>
-Cc: Michael Galaxy <mgalaxy@akamai.com>
+Cc: Elena Ufimtseva <elena.ufimtseva@oracle.com>
+Cc: Jagannathan Raman <jag.raman@oracle.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/misc/ivshmem.c | 1 +
+ hw/remote/remote-obj.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/hw/misc/ivshmem.c b/hw/misc/ivshmem.c
-index a2fd0bc36544..de49d1b8a826 100644
---- a/hw/misc/ivshmem.c
-+++ b/hw/misc/ivshmem.c
-@@ -832,6 +832,7 @@ static void ivshmem_write_config(PCIDevice *pdev, uint32_t address,
+diff --git a/hw/remote/remote-obj.c b/hw/remote/remote-obj.c
+index 65b6f7cc863f..dc27cc8da1f3 100644
+--- a/hw/remote/remote-obj.c
++++ b/hw/remote/remote-obj.c
+@@ -49,6 +49,7 @@ struct RemoteObject {
  
- static void ivshmem_common_realize(PCIDevice *dev, Error **errp)
+ static void remote_object_set_fd(Object *obj, const char *str, Error **errp)
  {
 +    ERRP_GUARD();
-     IVShmemState *s = IVSHMEM_COMMON(dev);
-     Error *err = NULL;
-     uint8_t *pci_conf;
+     RemoteObject *o = REMOTE_OBJECT(obj);
+     int fd = -1;
+ 
 -- 
 2.34.1
 
