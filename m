@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A19B8C5478C
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 02:21:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24134C5475B
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 02:29:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfW2o-0006IJ-0B; Wed, 28 Feb 2024 21:21:10 -0500
+	id 1rfWA8-0007fS-8H; Wed, 28 Feb 2024 21:28:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfW2l-0006Hr-DZ
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 21:21:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfWA6-0007eu-9z
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 21:28:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfW2j-0002QA-TA
- for qemu-devel@nongnu.org; Wed, 28 Feb 2024 21:21:07 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfWA4-00054B-Ru
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 21:28:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709173264;
+ s=mimecast20190719; t=1709173719;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=8vaRYlnOtP80bYwCaGLHzJKOlLJro7WwJHheZp33Jo0=;
- b=fXqERnZwnAGATe1lz/7Rxk4kHKNdL18K4LNH3T3+r7sYxz/qJwvXYaxKsAQ3BLp5mJp7kB
- VuF0Y/KOFLzrDUkDDVtOClUfS2lV+73AJfI+Kyz4lHv76WN7ZdRTzWUXi2bMmL0KoHp9Mp
- 9CQhMvDS8/83vHRhY+/N9vmZ063MXRw=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XTyA4OZb0B4UYkQAu38+eY+E85H3nCKeHw/oZpwohDE=;
+ b=cJklQIiHo8eG262WqkRzE16n255G+q3U2fPUSG/g61VgouOJdDTL0NCVhymR0pxXODtPk8
+ G+SnyIE3kkOP+ezDwzNTCAF3D9u4MuiLmmIOQNRCQKSzR6ii+R3LWAS0F+0ulrOMZg12JG
+ xFpYT/Izfw8io9PtNwf7YAUPuY+VlK0=
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-500-ijy7fR3PMl-E-WGTlEVRCg-1; Wed, 28 Feb 2024 21:21:01 -0500
-X-MC-Unique: ijy7fR3PMl-E-WGTlEVRCg-1
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-1da0dd1dec4so900655ad.1
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 18:21:00 -0800 (PST)
+ us-mta-341-yFeUJZfnNFGpK4UmFZNjYw-1; Wed, 28 Feb 2024 21:28:38 -0500
+X-MC-Unique: yFeUJZfnNFGpK4UmFZNjYw-1
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-5cfccde4a54so66706a12.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 18:28:38 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709173259; x=1709778059;
+ d=1e100.net; s=20230601; t=1709173717; x=1709778517;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8vaRYlnOtP80bYwCaGLHzJKOlLJro7WwJHheZp33Jo0=;
- b=Sv4FzNsLZ4CxhhhiZFRp21v83zls9cnFLfVTO6MS4mUN8LVizZkM7pReDVu10hgZTM
- ICSm01gIQtmY5H4qn3JR3wGzb1iN1JlFu2KqfUspp3laNVeLg00/Lj2WKQoxuBrLEDM2
- RtrzT6T4bbKu/x+Bo529292TeD/SXMEP9JxjhjJj/VUY5LDfsl/87VnXHFLKLvTj5Xxg
- W0iUtRm7FKc2BOv0RYx8o2KR1/x3xAHxGraju/i9iQ1jii147OtaPo8YcRRRdQx466F7
- ceBeJZK21hMRRy9zFxhvlaTterPPdjLKRbRvAbKct6UE/g18TSBUZF93x70Ddr2arQ1v
- 61qw==
-X-Gm-Message-State: AOJu0YzZbMqlcHIZUirFpqCp14xtH95sQTxbkPlr2d5YCRd4/rX4G6EZ
- ZCm7w0kxawgRpAb5Z6DqQ0H5AJ6PYOJeZRN3NoM8MESKsrvZtE6Lde/k8HPbY5aU9zEbp73Hpw0
- FmiABJ7xOqZsVJGSRXp33aoYXxVib0azxPBEcC4fErWgbQ+/G5FQds54SIgVWNVM=
-X-Received: by 2002:a17:902:b68f:b0:1dc:51ac:88ef with SMTP id
- c15-20020a170902b68f00b001dc51ac88efmr740141pls.6.1709173259542; 
- Wed, 28 Feb 2024 18:20:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFFfRyXFJhka511ahY8Ui8izgE5tUNaw+hKrtrSUESz5/hK988qLHlGiJeMlKenIcHH4DhB9w==
-X-Received: by 2002:a17:902:b68f:b0:1dc:51ac:88ef with SMTP id
- c15-20020a170902b68f00b001dc51ac88efmr740120pls.6.1709173259182; 
- Wed, 28 Feb 2024 18:20:59 -0800 (PST)
+ bh=XTyA4OZb0B4UYkQAu38+eY+E85H3nCKeHw/oZpwohDE=;
+ b=hyTBo3LgjNP3k2Zpb77V58YTW6SIFsWFgp0j1mZAW5S9w1SaMbv83Z8rAenR+xoIUc
+ qjSTbAr7fTFTnVD5hLtmicM4/Ki+VLYJK32Lf/i/855vvohbckGb/SKio3tUj8JEyexo
+ EhUghPgsI8cuvfM3EPY5L3o+kPXoBYorYhaMxfLBnkmB1KOkPFhb+fNS7MmMI/ys5eII
+ 2dnw6eryohURBcB8oFjdY3hdPsjbpgXnGaWemdYdL3EOAGuDgvCU4j2TS22aViN8ZUiT
+ 3lFMoiIXnyaEDrM/8TjYCxjuqpkQyRkQWCNdFMl1xd3YezBG21yQJHaRQwsZf9kWShZv
+ XH3A==
+X-Gm-Message-State: AOJu0YwSpTAxQ/92TgjRR/OmGTHMrTnrC+KHNTXrk0HmutW1MyQepxuP
+ yO3tM1mJchTK3/Y3ghF1dtxrYuusD/u3TOfl4tmGAb580bf+RgPXkmDuocPy9lf0SMbns3HRDA3
+ OlewsZ3DhjqSulMO+tX8hy3gALqfQhLXPRIOLpG4EVfPV3IbAJnPL
+X-Received: by 2002:a17:90b:3014:b0:298:cc02:4fd2 with SMTP id
+ hg20-20020a17090b301400b00298cc024fd2mr930252pjb.2.1709173717354; 
+ Wed, 28 Feb 2024 18:28:37 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGayQ0mNfdgNshTVrDPhb2qhHLAULQ37fg18pt2TfwUyoP9fWKO7Wx/VGHnJmJ1nZ88TkXQpA==
+X-Received: by 2002:a17:90b:3014:b0:298:cc02:4fd2 with SMTP id
+ hg20-20020a17090b301400b00298cc024fd2mr930241pjb.2.1709173716962; 
+ Wed, 28 Feb 2024 18:28:36 -0800 (PST)
 Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- l5-20020a170902d34500b001d9bd8fa492sm140014plk.211.2024.02.28.18.20.57
+ qi17-20020a17090b275100b0029ad1df1661sm2363853pjb.52.2024.02.28.18.28.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Feb 2024 18:20:58 -0800 (PST)
-Date: Thu, 29 Feb 2024 10:20:52 +0800
+ Wed, 28 Feb 2024 18:28:36 -0800 (PST)
+Date: Thu, 29 Feb 2024 10:28:28 +0800
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
  Claudio Fontana <cfontana@suse.de>
-Subject: Re: [PATCH v5 14/23] migration/multifd: Allow multifd without packets
-Message-ID: <Zd_qBGHXCT7YQB4d@x1n>
+Subject: Re: [PATCH v5 15/23] migration/multifd: Allow receiving pages
+ without packets
+Message-ID: <Zd_rzCMiNqAMyGI-@x1n>
 References: <20240228152127.18769-1-farosas@suse.de>
- <20240228152127.18769-15-farosas@suse.de>
+ <20240228152127.18769-16-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240228152127.18769-15-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20240228152127.18769-16-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SORBS_WEB=1.5,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,43 +100,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 28, 2024 at 12:21:18PM -0300, Fabiano Rosas wrote:
-> For the upcoming support to the new 'mapped-ram' migration stream
-> format, we cannot use multifd packets because each write into the
-> ramblock section in the migration file is expected to contain only the
-> guest pages. They are written at their respective offsets relative to
-> the ramblock section header.
+On Wed, Feb 28, 2024 at 12:21:19PM -0300, Fabiano Rosas wrote:
+> Currently multifd does not need to have knowledge of pages on the
+> receiving side because all the information needed is within the
+> packets that come in the stream.
 > 
-> There is no space for the packet information and the expected gains
-> from the new approach come partly from being able to write the pages
-> sequentially without extraneous data in between.
+> We're about to add support to mapped-ram migration, which cannot use
+> packets because it expects the ramblock section in the migration file
+> to contain only the guest pages data.
 > 
-> The new format also simply doesn't need the packets and all necessary
-> information can be taken from the standard migration headers with some
-> (future) changes to multifd code.
+> Add a data structure to transfer pages between the ram migration code
+> and the multifd receiving threads.
 > 
-> Use the presence of the mapped-ram capability to decide whether to
-> send packets.
+> We don't want to reuse MultiFDPages_t for two reasons:
 > 
-> This only moves code under multifd_use_packets(), it has no effect for
-> now as mapped-ram cannot yet be enabled with multifd.
+> a) multifd threads don't really need to know about the data they're
+>    receiving.
+> 
+> b) the receiving side has to be stopped to load the pages, which means
+>    we can experiment with larger granularities than page size when
+>    transferring data.
 > 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
-> - added multifd_send_prepare_iovs
-
-I saw that you also moved p->next_packet_size setup into it.  IMHO it
-doesn't need to be there; it'll also be tiny bit confusing to setup
-next_packet_size when !use_packet to me.
-
-But I think I get your point on putting that together with IOV setups.
-Not a big deal.
-
-> - posted channels_created at file.c as well
-
-This is done in the other patch ("migration/multifd: Add outgoing
-QIOChannelFile support").  It won't appear when it's merged anyway, so
-that's fine.
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
 
