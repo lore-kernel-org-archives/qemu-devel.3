@@ -4,68 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F1CDC54E41
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 14:29:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A1B4C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 14:29:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfhMM-0006SR-EK; Thu, 29 Feb 2024 09:26:06 -0500
+	id 1rfhPm-0002Nj-TQ; Thu, 29 Feb 2024 09:29:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfhMC-00069f-Q9; Thu, 29 Feb 2024 09:25:57 -0500
-Received: from mgamail.intel.com ([192.198.163.11])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1rfhPi-0001zO-Rk
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 09:29:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfhMB-0005Zy-4C; Thu, 29 Feb 2024 09:25:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709216755; x=1740752755;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=tQ5IiIRAKEqm+pxP3vIA++0AE538b0btx11JF7Z59QU=;
- b=JHUHqXTtXKqYiyJQ3XsgzQjT0n/MNu1hRTIkBBq81eLN6Nfm/4xEDV00
- qW60kgUGAZuzSuibuDFzqwVpkYPe6H0oBLiPFdkFKzFwLFMvqPZlTbPxC
- I+nccMV22oyTtBaQsY6KTBPIdIRChKyRCU5yCQd18pjLHn+HBVwL/GlBK
- rLnfG6oqCg7SS9TXg9M1TJLW/Kjmf1JLqJLuHHgAyLX4NBXtIcsNUdW+b
- QNcba6xFkfX72jCtTEhHsU4EVEy2co3WMrZPmyEautbz6lTh8LnaAzFl8
- OZSpRIMblarNJZ1hN52VSPYQSa8OE2jpbYIoSqcK3RtAmKdDJvrbT8n7a w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="14322777"
-X-IronPort-AV: E=Sophos;i="6.06,194,1705392000"; d="scan'208";a="14322777"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Feb 2024 06:25:53 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,194,1705392000"; 
-   d="scan'208";a="7793838"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa010.fm.intel.com with ESMTP; 29 Feb 2024 06:25:50 -0800
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH 07/17] hw/vfio/helpers: Fix missing ERRP_GUARD() for
- error_prepend()
-Date: Thu, 29 Feb 2024 22:39:04 +0800
-Message-Id: <20240229143914.1977550-8-zhao1.liu@linux.intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240229143914.1977550-1-zhao1.liu@linux.intel.com>
-References: <20240229143914.1977550-1-zhao1.liu@linux.intel.com>
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1rfhPd-00068s-TK
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 09:29:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709216968;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=StbiZXwla8vIuHHbeT4VZbIjdaKRKNSm18LQtWP/rZQ=;
+ b=K8eqRpa7JQ6Phq9D9odBnPhbAUAilzL5XUD+Ree4tS0MkCV62GTlZOwOW/rjhZBc0T1lND
+ WgHkMiWvX1rrjoA+VOuMNzQropwINsvCHvgExsch8ayr90FdMN102LGoo8W4M+uzPjbBBy
+ tf+3YMANppyfub2sr89Uu0QFZtLh6m0=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-460-1c8xQ0cHNIaEQ0odqm8nPQ-1; Thu, 29 Feb 2024 09:29:27 -0500
+X-MC-Unique: 1c8xQ0cHNIaEQ0odqm8nPQ-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-33d256ca4c8so549145f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 06:29:26 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709216966; x=1709821766;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=StbiZXwla8vIuHHbeT4VZbIjdaKRKNSm18LQtWP/rZQ=;
+ b=EgKEN8ie35xyTkz8gC2uurhWvwxxPj7Mox2iscati9QR43mu5LZgbFpPz9kRxXf0WH
+ O0G1Voy1CZLxLTR+U4HavOutpJ2Bf2KwMkkGsmYSaLkZwN0/cvEzFEBTjIsuRFvyjK0L
+ cSJN1aV8DsiDZE8K7jB0H/cEr9/1Ezr+KjPoBs4f0sGURa7UxLSh2kbbEN5j5xv+idBN
+ pACF5BZAASGap/5WrKWpcvy+hMK84lzj07tMv7K5PudeqyqgfCxro9cBGKfd8WMDKUXF
+ J/4gelHOsJM7/JGRqUuamxzCaQ2+d8F3lDHKfkrjjVzQyCOxMa4tJod6wlXOETS5fzB4
+ q9Wg==
+X-Gm-Message-State: AOJu0Yxo31KdzvCSBptcLYktZvFVJ+xVnmV7Cyp8rHxmxCplC2m1nk8I
+ mouD0o85La3KJNxomtWCJ8xhLdxxI+k+viLgT9bRxVSw2wQnmwxFkYlPEJqOKR+eYZsp9ilU6Hs
+ vyToK8/FuFLoJyHKRWU7kXbBIi34biKZQca0u0JwZudh3IJxMlSiO
+X-Received: by 2002:a05:600c:1c0d:b0:412:ace9:9d85 with SMTP id
+ j13-20020a05600c1c0d00b00412ace99d85mr2219370wms.3.1709216965746; 
+ Thu, 29 Feb 2024 06:29:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFF8tCz7L/WxQDM3B1qriCeSoM8c7kJ324p+93qr8j2fs1rmLR43Yjf7/+lBceVIN2D/TTzLg==
+X-Received: by 2002:a05:600c:1c0d:b0:412:ace9:9d85 with SMTP id
+ j13-20020a05600c1c0d00b00412ace99d85mr2219349wms.3.1709216965338; 
+ Thu, 29 Feb 2024 06:29:25 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ bw1-20020a0560001f8100b0033db0c866f7sm1954508wrb.11.2024.02.29.06.29.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 29 Feb 2024 06:29:24 -0800 (PST)
+Date: Thu, 29 Feb 2024 15:29:23 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Ani Sinha <anisinha@redhat.com>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, "Michael
+ S. Tsirkin" <mst@redhat.com>, Song Gao <gaosong@loongson.cn>, Alistair
+ Francis <alistair.francis@wdc.com>, palmer@dabbelt.com,
+ bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com, Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?=
+ <philmd@linaro.org>, Yanan Wang <wangyanan55@huawei.com>, Eric Blake
+ <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ qemu-arm@nongnu.org, qemu-riscv@nongnu.org, f.ebner@proxmox.com
+Subject: Re: [PATCH 06/19] smbios: get rid of smbios_legacy global
+Message-ID: <20240229152923.46919312@imammedo.users.ipa.redhat.com>
+In-Reply-To: <0129FA3E-A566-481A-85A6-439E72C5594B@redhat.com>
+References: <20240227154749.1818189-1-imammedo@redhat.com>
+ <20240227154749.1818189-7-imammedo@redhat.com>
+ <0129FA3E-A566-481A-85A6-439E72C5594B@redhat.com>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=192.198.163.11;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,78 +112,197 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+On Thu, 29 Feb 2024 16:23:21 +0530
+Ani Sinha <anisinha@redhat.com> wrote:
 
-As the comment in qapi/error, passing @errp to error_prepend() requires
-ERRP_GUARD():
+> > On 27-Feb-2024, at 21:17, Igor Mammedov <imammedo@redhat.com> wrote:
+> > 
+> > clean up smbios_set_defaults() which is reused by legacy
+> > and non legacy machines from being aware of 'legacy' notion
+> > and need to turn it off. And push legacy handling up to
+> > PC machine code where it's relevant.
+> > 
+> > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> > ---
+> > PS: I've moved/kept legacy smbios_entries to smbios_get_tables()
+> > but it at least is not visible to API users. To get rid of it
+> > as well, it would be necessary to change how '-smbios' CLI
+> > option is processed. Which is done later in the series.
+> > ---
+> > include/hw/firmware/smbios.h |  2 +-
+> > hw/arm/virt.c                |  2 +-
+> > hw/i386/fw_cfg.c             |  7 ++++---
+> > hw/loongarch/virt.c          |  2 +-
+> > hw/riscv/virt.c              |  2 +-
+> > hw/smbios/smbios.c           | 35 +++++++++++++++--------------------
+> > 6 files changed, 23 insertions(+), 27 deletions(-)
+> > 
+> > diff --git a/include/hw/firmware/smbios.h b/include/hw/firmware/smbios.h
+> > index a187fbbd3d..0818184834 100644
+> > --- a/include/hw/firmware/smbios.h
+> > +++ b/include/hw/firmware/smbios.h
+> > @@ -293,7 +293,7 @@ struct smbios_type_127 {
+> > void smbios_entry_add(QemuOpts *opts, Error **errp);
+> > void smbios_set_cpuid(uint32_t version, uint32_t features);
+> > void smbios_set_defaults(const char *manufacturer, const char *product,
+> > -                         const char *version, bool legacy_mode,
+> > +                         const char *version,
+> >                          bool uuid_encoded, SmbiosEntryPointType ep_type);
+> > void smbios_set_default_processor_family(uint16_t processor_family);
+> > uint8_t *smbios_get_table_legacy(uint32_t expected_t4_count, size_t *length);
+> > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> > index 0af1943697..8588681f27 100644
+> > --- a/hw/arm/virt.c
+> > +++ b/hw/arm/virt.c
+> > @@ -1633,7 +1633,7 @@ static void virt_build_smbios(VirtMachineState *vms)
+> >     }
+> > 
+> >     smbios_set_defaults("QEMU", product,
+> > -                        vmc->smbios_old_sys_ver ? "1.0" : mc->name, false,
+> > +                        vmc->smbios_old_sys_ver ? "1.0" : mc->name,
+> >                         true, SMBIOS_ENTRY_POINT_TYPE_64);
+> > 
+> >     /* build the array of physical mem area from base_memmap */
+> > diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
+> > index fcb4fb0769..c1e9c0fd9c 100644
+> > --- a/hw/i386/fw_cfg.c
+> > +++ b/hw/i386/fw_cfg.c
+> > @@ -63,15 +63,16 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg)
+> >     if (pcmc->smbios_defaults) {
+> >         /* These values are guest ABI, do not change */
+> >         smbios_set_defaults("QEMU", mc->desc, mc->name,
+> > -                            pcmc->smbios_legacy_mode, pcmc->smbios_uuid_encoded,
+> > +                            pcmc->smbios_uuid_encoded,
+> >                             pcms->smbios_entry_point_type);
+> >     }
+> > 
+> >     /* tell smbios about cpuid version and features */
+> >     smbios_set_cpuid(cpu->env.cpuid_version, cpu->env.features[FEAT_1_EDX]);
+> > 
+> > -    smbios_tables = smbios_get_table_legacy(ms->smp.cpus, &smbios_tables_len);
+> > -    if (smbios_tables) {
+> > +    if (pcmc->smbios_legacy_mode) {
+> > +        smbios_tables = smbios_get_table_legacy(ms->smp.cpus,
+> > +                                                &smbios_tables_len);
+> >         fw_cfg_add_bytes(fw_cfg, FW_CFG_SMBIOS_ENTRIES,
+> >                          smbios_tables, smbios_tables_len);
+> >         return;
+> > diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+> > index 0ad7d8c887..73fb3522ba 100644
+> > --- a/hw/loongarch/virt.c
+> > +++ b/hw/loongarch/virt.c
+> > @@ -320,7 +320,7 @@ static void virt_build_smbios(LoongArchMachineState *lams)
+> >         return;
+> >     }
+> > 
+> > -    smbios_set_defaults("QEMU", product, mc->name, false,
+> > +    smbios_set_defaults("QEMU", product, mc->name,
+> >                         true, SMBIOS_ENTRY_POINT_TYPE_64);
+> > 
+> >     smbios_get_tables(ms, NULL, 0, &smbios_tables, &smbios_tables_len,
+> > diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> > index fd35c74781..e2c9529df2 100644
+> > --- a/hw/riscv/virt.c
+> > +++ b/hw/riscv/virt.c
+> > @@ -1235,7 +1235,7 @@ static void virt_build_smbios(RISCVVirtState *s)
+> >         product = "KVM Virtual Machine";
+> >     }
+> > 
+> > -    smbios_set_defaults("QEMU", product, mc->name, false,
+> > +    smbios_set_defaults("QEMU", product, mc->name,
+> >                         true, SMBIOS_ENTRY_POINT_TYPE_64);
+> > 
+> >     if (riscv_is_32bit(&s->soc[0])) {
+> > diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
+> > index 15339d8dbe..c46fc93357 100644
+> > --- a/hw/smbios/smbios.c
+> > +++ b/hw/smbios/smbios.c
+> > @@ -54,7 +54,6 @@ struct smbios_table {
+> > 
+> > static uint8_t *smbios_entries;
+> > static size_t smbios_entries_len;
+> > -static bool smbios_legacy = true;
+> > static bool smbios_uuid_encoded = true;
+> > /* end: legacy structures & constants for <= 2.0 machines */
+> > 
+> > @@ -570,9 +569,16 @@ static void smbios_build_type_1_fields(void)
+> > 
+> > uint8_t *smbios_get_table_legacy(uint32_t expected_t4_count, size_t *length)
+> > {
+> > -    if (!smbios_legacy) {
+> > -        *length = 0;
+> > -        return NULL;
+> > +    /* drop unwanted version of command-line file blob(s) */
+> > +    g_free(smbios_tables);
+> > +    smbios_tables = NULL;
+> > +
+> > +    /* also complain if fields were given for types > 1 */
+> > +    if (find_next_bit(have_fields_bitmap,
+> > +                      SMBIOS_MAX_TYPE + 1, 2) < SMBIOS_MAX_TYPE + 1) {
+> > +        error_report("can't process fields for smbios "
+> > +                     "types > 1 on machine versions < 2.1!");
+> > +        exit(1);
+> >     }
+> > 
+> >     if (!smbios_immutable) {
+> > @@ -1006,28 +1012,13 @@ void smbios_set_default_processor_family(uint16_t processor_family)
+> > }
+> > 
+> > void smbios_set_defaults(const char *manufacturer, const char *product,
+> > -                         const char *version, bool legacy_mode,
+> > +                         const char *version,
+> >                          bool uuid_encoded, SmbiosEntryPointType ep_type)
+> > {
+> >     smbios_have_defaults = true;
+> > -    smbios_legacy = legacy_mode;
+> >     smbios_uuid_encoded = uuid_encoded;
+> >     smbios_ep_type = ep_type;
+> > 
+> > -    /* drop unwanted version of command-line file blob(s) */
+> > -    if (smbios_legacy) {
+> > -        g_free(smbios_tables);
+> > -        /* in legacy mode, also complain if fields were given for types > 1 */
+> > -        if (find_next_bit(have_fields_bitmap,
+> > -                          SMBIOS_MAX_TYPE+1, 2) < SMBIOS_MAX_TYPE+1) {
+> > -            error_report("can't process fields for smbios "
+> > -                         "types > 1 on machine versions < 2.1!");
+> > -            exit(1);
+> > -        }
+> > -    } else {
+> > -        g_free(smbios_entries);
+> > -    }
+> > -
+> >     SMBIOS_SET_DEFAULT(type1.manufacturer, manufacturer);
+> >     SMBIOS_SET_DEFAULT(type1.product, product);
+> >     SMBIOS_SET_DEFAULT(type1.version, version);
+> > @@ -1103,6 +1094,10 @@ void smbios_get_tables(MachineState *ms,
+> > {
+> >     unsigned i, dimm_cnt, offset;
+> > 
+> > +    /* drop unwanted (legacy) version of command-line file blob(s) */
+> > +    g_free(smbios_entries);
+> > +    smbios_entries = NULL;
+> > +  
+> 
+> Can you please explain why you do this unconditionally without checking for legacy mode? Seems wrong?
 
-* = Why, when and how to use ERRP_GUARD() =
-*
-* Without ERRP_GUARD(), use of the @errp parameter is restricted:
-...
-* - It should not be passed to error_prepend(), error_vprepend() or
-*   error_append_hint(), because that doesn't work with &error_fatal.
-* ERRP_GUARD() lifts these restrictions.
-*
-* To use ERRP_GUARD(), add it right at the beginning of the function.
-* @errp can then be used without worrying about the argument being
-* NULL or &error_fatal.
+with this patch legacy tables build is moved to fw_cfg_build_smbios(),
+however at this point QEMU still has option processing that fills
+both new and legacy smbios_entries blobs. 
 
-ERRP_GUARD() could avoid the case when @errp is the pointer of
-error_fatal, the user can't see this additional information, because
-exit() happens in error_setg earlier than information is added [1].
+this hunk cleanups not needed blob smbios_entries when building
+modern tables, and smbios_get_table_legacy() has a corresponding
+smbios_tables cleanup since modern is not needed there.
 
-In hw/vfio/helpers.c, there're 3 functions passing @errp to
-error_prepend() without ERRP_GUARD():
- - vfio_set_irq_signaling()
- - vfio_device_get_name()
- - vfio_device_set_fd()
+[7/19] removes this in favor of a single blob.
 
-As the widely used helpers, their @errp parameters are so widely sourced
-that it is necessary to protect them with ERRP_GUARD().
-
-To avoid the issue like [1] said, add missing ERRP_GUARD() at their
-beginning.
-
-[1]: Issue description in the commit message of commit ae7c80a7bd73
-     ("error: New macro ERRP_GUARD()").
-
-Cc: Alex Williamson <alex.williamson@redhat.com>
-Cc: "Cédric Le Goater" <clg@redhat.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- hw/vfio/helpers.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-index 678987080228..47b4096c05ee 100644
---- a/hw/vfio/helpers.c
-+++ b/hw/vfio/helpers.c
-@@ -110,6 +110,7 @@ static const char *index_to_str(VFIODevice *vbasedev, int index)
- int vfio_set_irq_signaling(VFIODevice *vbasedev, int index, int subindex,
-                            int action, int fd, Error **errp)
- {
-+    ERRP_GUARD();
-     struct vfio_irq_set *irq_set;
-     int argsz, ret = 0;
-     const char *name;
-@@ -613,6 +614,7 @@ bool vfio_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_type)
- 
- int vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
- {
-+    ERRP_GUARD();
-     struct stat st;
- 
-     if (vbasedev->fd < 0) {
-@@ -644,6 +646,7 @@ int vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
- 
- void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp)
- {
-+    ERRP_GUARD();
-     int fd = monitor_fd_param(monitor_cur(), str, errp);
- 
-     if (fd < 0) {
--- 
-2.34.1
+> 
+> >     if (!smbios_immutable) {
+> >         smbios_build_type_0_table();
+> >         smbios_build_type_1_table();
+> > -- 
+> > 2.39.3
+> >   
+> 
 
 
