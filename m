@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2DAFC48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 13:14:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72747C54E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 13:14:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfgDC-0006EF-Sx; Thu, 29 Feb 2024 08:12:34 -0500
+	id 1rfgCc-0005cM-57; Thu, 29 Feb 2024 08:11:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rfgCb-0005aV-2h; Thu, 29 Feb 2024 08:11:57 -0500
-Received: from szxga04-in.huawei.com ([45.249.212.190])
+ id 1rfgCZ-0005Ym-M3; Thu, 29 Feb 2024 08:11:55 -0500
+Received: from szxga08-in.huawei.com ([45.249.212.255])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rfgCZ-0002eq-BI; Thu, 29 Feb 2024 08:11:56 -0500
-Received: from mail.maildlp.com (unknown [172.19.163.44])
- by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4Tls4v6wXjz2BdtL;
- Thu, 29 Feb 2024 21:09:35 +0800 (CST)
+ id 1rfgCW-0002dM-V0; Thu, 29 Feb 2024 08:11:55 -0500
+Received: from mail.maildlp.com (unknown [172.19.163.174])
+ by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4Tls5D6zHDz1Q97d;
+ Thu, 29 Feb 2024 21:09:52 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id E80911402CE;
- Thu, 29 Feb 2024 21:11:51 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id EE1B1140499;
+ Thu, 29 Feb 2024 21:11:42 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Thu, 29 Feb
- 2024 21:11:51 +0800
+ 2024 21:11:42 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [RFC PATCH v5 13/22] hw/intc/arm_gicv3: Add irq superpriority
- information
-Date: Thu, 29 Feb 2024 13:10:30 +0000
-Message-ID: <20240229131039.1868904-14-ruanjinjie@huawei.com>
+Subject: [RFC PATCH v5 03/22] target/arm: Add support for FEAT_NMI,
+ Non-maskable Interrupt
+Date: Thu, 29 Feb 2024 13:10:20 +0000
+Message-ID: <20240229131039.1868904-4-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240229131039.1868904-1-ruanjinjie@huawei.com>
 References: <20240229131039.1868904-1-ruanjinjie@huawei.com>
@@ -45,14 +45,14 @@ Content-Type: text/plain
 X-Originating-IP: [10.67.174.55]
 X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
  kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.190;
- envelope-from=ruanjinjie@huawei.com; helo=szxga04-in.huawei.com
+Received-SPF: pass client-ip=45.249.212.255;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga08-in.huawei.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,55 +70,33 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A SPI, PPI or SGI interrupt can have a superpriority property. So
-maintain superpriority information in PendingIrq and GICR/GICD.
+Add support for FEAT_NMI. NMI (FEAT_NMI) is an mandatory feature in
+ARMv8.8-A and ARM v9.3-A.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
 v3:
-- Place this ahead of implement GICR_INMIR.
-- Add Acked-by.
+- Add Reviewed-by.
+- Adjust to before the MSR patches.
 ---
- include/hw/intc/arm_gicv3_common.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ target/arm/internals.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
-index 7324c7d983..df4380141d 100644
---- a/include/hw/intc/arm_gicv3_common.h
-+++ b/include/hw/intc/arm_gicv3_common.h
-@@ -146,6 +146,7 @@ typedef struct {
-     int irq;
-     uint8_t prio;
-     int grp;
-+    bool superprio;
- } PendingIrq;
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 50bff44549..fee65caba5 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1078,6 +1078,9 @@ static inline uint32_t aarch64_pstate_valid_mask(const ARMISARegisters *id)
+     if (isar_feature_aa64_mte(id)) {
+         valid |= PSTATE_TCO;
+     }
++    if (isar_feature_aa64_nmi(id)) {
++        valid |= PSTATE_ALLINT;
++    }
  
- struct GICv3CPUState {
-@@ -172,6 +173,7 @@ struct GICv3CPUState {
-     uint32_t gicr_ienabler0;
-     uint32_t gicr_ipendr0;
-     uint32_t gicr_iactiver0;
-+    uint32_t gicr_isuperprio;
-     uint32_t edge_trigger; /* ICFGR0 and ICFGR1 even bits */
-     uint32_t gicr_igrpmodr0;
-     uint32_t gicr_nsacr;
-@@ -274,6 +276,7 @@ struct GICv3State {
-     GIC_DECLARE_BITMAP(active);       /* GICD_ISACTIVER */
-     GIC_DECLARE_BITMAP(level);        /* Current level */
-     GIC_DECLARE_BITMAP(edge_trigger); /* GICD_ICFGR even bits */
-+    GIC_DECLARE_BITMAP(superprio);    /* GICD_INMIR */
-     uint8_t gicd_ipriority[GICV3_MAXIRQ];
-     uint64_t gicd_irouter[GICV3_MAXIRQ];
-     /* Cached information: pointer to the cpu i/f for the CPUs specified
-@@ -313,6 +316,7 @@ GICV3_BITMAP_ACCESSORS(pending)
- GICV3_BITMAP_ACCESSORS(active)
- GICV3_BITMAP_ACCESSORS(level)
- GICV3_BITMAP_ACCESSORS(edge_trigger)
-+GICV3_BITMAP_ACCESSORS(superprio)
- 
- #define TYPE_ARM_GICV3_COMMON "arm-gicv3-common"
- typedef struct ARMGICv3CommonClass ARMGICv3CommonClass;
+     return valid;
+ }
 -- 
 2.34.1
 
