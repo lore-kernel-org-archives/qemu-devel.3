@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23A77C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 16:57:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4C12C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 17:03:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfjiR-00054y-13; Thu, 29 Feb 2024 11:57:03 -0500
+	id 1rfjoA-0001PZ-Ii; Thu, 29 Feb 2024 12:03:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rfjiP-00054M-0A
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 11:57:01 -0500
-Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
+ id 1rfjo3-0001LU-8V
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 12:02:51 -0500
+Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rfjiN-0006pT-2f
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 11:57:00 -0500
-Received: by mail-lj1-x233.google.com with SMTP id
- 38308e7fff4ca-2d09cf00214so13746571fa.0
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 08:56:58 -0800 (PST)
+ id 1rfjo1-0000MK-9R
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 12:02:50 -0500
+Received: by mail-lj1-x236.google.com with SMTP id
+ 38308e7fff4ca-2d2ab9c5e83so12687531fa.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 09:02:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709225817; x=1709830617; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709226166; x=1709830966; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cF/w8l1gfNWDsqyxGTnLtbgrYR4tq0E41Cdtc2y9MLI=;
- b=wOKaqi+ciThyiNH7jijVfpH7TqF4fMxO7x70xQWrNO+om+oAHMikR6zWr8Om/WIU9p
- FjyOC55akN9UiDgl6+ppGv5w9AYd0+FllRglDmY0rO33XgWQr9tONS5lUS9YG5U+sNav
- Yr5CVd9MwIQMB/Npa60he/ZaKmuFonaYnirjo78TDTRsDVhtlZrIEyyMlOwpGpk/1z/b
- cV0i2pZpaqmZ8Iv2E7hZBWbrn+t6jv+iqUAalDNPE9JO5VfjrkWLMnF4HXypt5ytY5a6
- yqPwgOZ9wAFNfmghhaVXCMGKJuKdZqBPVZ2E3/9f5AfXlxEjHHnyg98N3AciGovusRL8
- Hfug==
+ bh=sKc83gjhF/N5xX0Rbjj2fPfsii6qz50uemvQoLlKB/k=;
+ b=mVXxIHQqbCmoaMH8JBhzfc8cjV0OtjKOAdZIo+K0DywGkdl2basawO/I0K0m8+XjHX
+ ZWYNms1F84IpvLwo01kMdlu6riA+ZuQUCa4QDUbu8MG0N/F2eH8IMg4zLX/O8WQDEh73
+ IHAacyac88MrTychS3szOIG+LcOCE0iDI80o17iOwj0IEgKoVC9P30/Oc21aqhA49KMu
+ mrFCeZr9706WabkxaEV8tz1O07oRc+pcsoeeMUUlETThxRIMCdpi25NHORXYtA+z/CNY
+ pGG/w8Fy5kMeLPiDUOZZT/cSxzxbsIt7y98R1kFthZSDLmE4SGs64TazEtn14BZNKGjL
+ qJqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709225817; x=1709830617;
+ d=1e100.net; s=20230601; t=1709226166; x=1709830966;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=cF/w8l1gfNWDsqyxGTnLtbgrYR4tq0E41Cdtc2y9MLI=;
- b=K/LlnStRSCa+5INGAo/MUFq1PkqG8PpsUGZ/xKXx3dT5HgCopQz+WbIT7o/a1IuV2Q
- B6AaD8SJMWqpAWg9ErMH44UYnnomrptNs363mN7pTBr7RbP14e660vXcSd+/Dzc005iL
- V+pNKZKsKzAP+cAUfa/JHAcjpmdGvgnKq7MBEfhbL0c1GjALcZm7IG4pkMdePMl9hjaL
- a8PiJDvtoVqedOh5N2hPtk5CccB0dl4kSNaNkzDGIslJaEvdLN76STUPeTX53KVDJDag
- k67ak+KlEQsR8VLrERQx9ewLQN+6LJVtYMCCPyNxnPOzFQuJyUDpaDuHfarzjodoJ+Jb
- vUUQ==
-X-Gm-Message-State: AOJu0Yz+/6bFupLvkegFP5iLY0ssl0/hfM6U24IQjT3ei32z/wuX6aaH
- cf/hmzfAcaT600R9mMWcZABMr+Qxefa0TQ+SnSLaza+w3s/l0/8xj3/iPi9xBus=
-X-Google-Smtp-Source: AGHT+IGPJqMg+IqO16jycHNJX0GXsUkw+GZlBILoW6Kp/SIaAifrxBQwDhHqwtGVIMPTRslPcYI0OQ==
-X-Received: by 2002:a2e:8743:0:b0:2d2:29c2:e7ea with SMTP id
- q3-20020a2e8743000000b002d229c2e7eamr1747989ljj.24.1709225816601; 
- Thu, 29 Feb 2024 08:56:56 -0800 (PST)
+ bh=sKc83gjhF/N5xX0Rbjj2fPfsii6qz50uemvQoLlKB/k=;
+ b=r4ujp41xzFFSuj1MZ5QCeu/kRXGGHDdHzwiXQIIrb798adQsQE8HZ/y1UHRnNXLWth
+ LhNnLnDb4VNB0mAaFi1EVPAKthJqPF/Og0Vxc8WRbitTPsVEB1chqNHXeRpkfFTvAKrx
+ 50YEh2tsa7fiKH/Lfxa5oVOI0tjxLYByVP8Wranjhf6W97JlmJ7OBw1otxexM7M2L485
+ CjZoc8c7Y0KsXrc3ti97tT4upDpUhl9zISWx3kDBmBdfRICC99L8mSZcpDHLOMP+SlHV
+ AQXksJZu0JuH9MRsc54NmJiwtr2Nz+xEFx/PhglUrRWGt8CuiR2Gayb+D5ARY7sK2alP
+ lHpg==
+X-Gm-Message-State: AOJu0YwmKYyxXLF6QLKUT2E1uzmXOSRksaGG3ysYvGC1M6t5CM1uONqr
+ OV3wx/ov0Ci9zXoY/u39UMUzhgvBu1ro05lb9QZ48ga6pS/pJSTCc1p721BdFQGNtiaERGyh9PX
+ P
+X-Google-Smtp-Source: AGHT+IHX/yiPmwkjZnXm448MVIdvZp1lRTREvzjMrVPqF/QE+y8OAc37ihvG8KhhKreMKX3Vi5VKsA==
+X-Received: by 2002:a2e:7206:0:b0:2d2:936a:f8af with SMTP id
+ n6-20020a2e7206000000b002d2936af8afmr1524273ljc.48.1709226166266; 
+ Thu, 29 Feb 2024 09:02:46 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- bn26-20020a056000061a00b0033e032bc26bsm2272084wrb.82.2024.02.29.08.56.56
+ da8-20020a056000196800b0033b87c2725csm2206884wrb.104.2024.02.29.09.02.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Feb 2024 08:56:56 -0800 (PST)
+ Thu, 29 Feb 2024 09:02:45 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id DF9C15F7D9;
- Thu, 29 Feb 2024 16:56:55 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 83A135F863;
+ Thu, 29 Feb 2024 17:02:45 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Nicolas Eder <nicolas.eder@lauterbach.com>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, "Christian Boenig" <christian.boenig@lauterbach.com>
-Subject: Re: [PATCH v5 05/18] mcdstub: memory helper functions added
-In-Reply-To: <20231220162555.19545-6-nicolas.eder@lauterbach.com> (Nicolas
- Eder's message of "Wed, 20 Dec 2023 17:25:42 +0100")
-References: <20231220162555.19545-1-nicolas.eder@lauterbach.com>
- <20231220162555.19545-6-nicolas.eder@lauterbach.com>
+To: Paz Offer <poffer@nvidia.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Paolo Bonzini
+ <pbonzini@redhat.com>
+Subject: Re: What is the correct way to add linker dependency to QEMU build
+ system?
+In-Reply-To: <MW4PR12MB69979E8A2E0F9B62D6C2A703A05F2@MW4PR12MB6997.namprd12.prod.outlook.com>
+ (Paz Offer's message of "Thu, 29 Feb 2024 16:09:03 +0000")
+References: <MW4PR12MB69979E8A2E0F9B62D6C2A703A05F2@MW4PR12MB6997.namprd12.prod.outlook.com>
 User-Agent: mu4e 1.12.0; emacs 29.1
-Date: Thu, 29 Feb 2024 16:56:55 +0000
-Message-ID: <87r0gv6wfc.fsf@draig.linaro.org>
+Date: Thu, 29 Feb 2024 17:02:45 +0000
+Message-ID: <87frxb6w5m.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::233;
- envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x233.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::236;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x236.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,128 +100,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nicolas Eder <nicolas.eder@lauterbach.com> writes:
+Paz Offer <poffer@nvidia.com> writes:
 
-> ---
->  include/exec/cpu-common.h |  3 +++
->  include/exec/memory.h     |  9 +++++++++
->  system/memory.c           | 11 +++++++++++
->  system/physmem.c          | 26 ++++++++++++++++++++++++++
->  4 files changed, 49 insertions(+)
+> Hi,
 >
-> diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-> index 41115d8919..dd989b5ab2 100644
-> --- a/include/exec/cpu-common.h
-> +++ b/include/exec/cpu-common.h
-> @@ -182,6 +182,9 @@ int ram_block_discard_range(RAMBlock *rb, uint64_t st=
-art, size_t length);
->  int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
->                          void *ptr, size_t len, bool is_write);
->=20=20
-> +int cpu_memory_get_physical_address(CPUState *cpu, vaddr *addr, size_t *=
-len);
-> +
-> +
->  /* vl.c */
->  void list_cpus(void);
->=20=20
-> diff --git a/include/exec/memory.h b/include/exec/memory.h
-> index 831f7c996d..174de807d5 100644
-> --- a/include/exec/memory.h
-> +++ b/include/exec/memory.h
-> @@ -3142,6 +3142,15 @@ bool ram_block_discard_is_disabled(void);
->   */
->  bool ram_block_discard_is_required(void);
->=20=20
-> +/*
-> + * mcd_find_address_space() - Find the address spaces with the correspon=
-ding
-> + * name.
-> + *
-> + * Currently only used by the mcd debugger.
-> + * @as_name: Name to look for.
-> + */
-> +AddressSpace *mcd_find_address_space(const char *as_name);
-> +
+> I want to add library 'libdl' to be linked with QEMU build for a particul=
+ar target (e.g. - qemu-system-arm).
+> Using meson I would typically do 'compiler.find_library(...)', and later =
+add the returned dependency to the binary
+> dependencies list.
+> However, in QEMU I understand that these configurations are done in
+> the './configure' file?
 
-Don't hard code this for mcd - maybe address_space_find_byname()?
+No I'm pretty sure all the library finding is done in meson now:
 
->  #endif
->=20=20
->  #endif
-> diff --git a/system/memory.c b/system/memory.c
-> index 798b6c0a17..9a8fa79e0c 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -3562,6 +3562,17 @@ void mtree_info(bool flatview, bool dispatch_tree,=
- bool owner, bool disabled)
->      }
->  }
->=20=20
-> +AddressSpace *mcd_find_address_space(const char *as_name)
-> +{
-> +    AddressSpace *as;
-> +    QTAILQ_FOREACH(as, &address_spaces, address_spaces_link) {
-> +        if (strcmp(as->name, as_name) =3D=3D 0) {
-> +            return as;
-> +        }
-> +    }
-> +    return NULL;
-> +}
-> +
->  void memory_region_init_ram(MemoryRegion *mr,
->                              Object *owner,
->                              const char *name,
-> diff --git a/system/physmem.c b/system/physmem.c
-> index a63853a7bc..70733c67c7 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -3422,6 +3422,32 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
->      return 0;
->  }
->=20=20
-> +int cpu_memory_get_physical_address(CPUState *cpu, vaddr *addr, size_t *=
-len)
-> +{
-> +    hwaddr phys_addr;
-> +    vaddr l, page;
-> +
-> +    cpu_synchronize_state(cpu);
-> +    MemTxAttrs attrs;
-> +
-> +    page =3D *addr & TARGET_PAGE_MASK;
-> +    phys_addr =3D cpu_get_phys_page_attrs_debug(cpu, page, &attrs);
-> +    /* if no physical page mapped, return an error */
-> +    if (phys_addr =3D=3D -1) {
-> +        return -1;
-> +    }
-> +    l =3D (page + TARGET_PAGE_SIZE) - *addr;
-> +    if (l > *len) {
-> +        l =3D *len;
-> +    }
-> +    phys_addr +=3D (*addr & ~TARGET_PAGE_MASK);
-> +
-> +    /* set output values */
-> +    *addr =3D phys_addr;
-> +    *len =3D l;
-> +    return 0;
-> +}
+  21:elf =3D cc.find_library('elf', required: true)=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
+  22:procstat =3D cc.find_library('procstat', required: true)=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
+  23:kvm =3D cc.find_library('kvm', required: true)=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
+  663:libm =3D cc.find_library('m', required: false)=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
+  665:util =3D cc.find_library('util', required: false)=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
+  679:  pathcch =3D cc.find_library('pathcch')=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20
+  680:  socket =3D cc.find_library('ws2_32')=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20
+  681:  winmm =3D cc.find_library('winmm')=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20
+  693:  socket =3D [cc.find_library('socket'),=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20
+  694:            cc.find_library('nsl'),=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20
+  695:            cc.find_library('resolv')]=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20
+  697:  socket =3D [cc.find_library('posix_error_mapper'),=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
+  698:            cc.find_library('network'),=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20
+  699:            cc.find_library('bsd')]=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20
+  735:  nvmm =3D cc.find_library('nvmm', required: get_option('nvmm'))=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20
+  827:          xen_deps +=3D { l: cc.find_library(l, required: false) }=20=
+=20=20=20=20=20=20=20=20=20=20=20
+  986:  libaio =3D cc.find_library('aio', has_headers: ['libaio.h'],=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20
+  1029:    libattr =3D cc.find_library('attr', has_headers: ['attr/xattr.h'=
+],=20=20=20=20=20=20=20
+  1075:  libcap_ng =3D cc.find_library('cap-ng', has_headers: ['cap-ng.h'],=
+=20=20=20=20=20=20=20=20=20
+  1122:  vde =3D cc.find_library('vdeplug', has_headers: ['libvdeplug.h'],=
+=20=20=20=20=20=20=20=20=20=20
+  1187:rt =3D cc.find_library('rt', required: false)=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
+  1254:  libmpathpersist =3D cc.find_library('mpathpersist',=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
+  1259:      mpathlibs +=3D cc.find_library('devmapper',=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
+  1262:    mpathlibs +=3D cc.find_library('multipath',=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
+  1332:        libcurses =3D cc.find_library(curses_libname,=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
+  1382:  brlapi =3D cc.find_library('brlapi', has_headers: ['brlapi.h'],=20=
+=20=20=20=20=20=20=20=20=20=20=20
+  1425:  librados =3D cc.find_library('rados', required: get_option('rbd'))=
+=20=20=20=20=20=20=20=20=20
+  1426:  librbd =3D cc.find_library('rbd', has_headers: ['rbd/librbd.h'],=
+=20=20=20=20=20=20=20=20=20=20=20
+  1519:  libbzip2 =3D cc.find_library('bz2', has_headers: ['bzlib.h'],=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20
+  1535:  liblzfse =3D cc.find_library('lzfse', has_headers: ['lzfse.h'],=20=
+=20=20=20=20=20=20=20=20=20=20=20
+  1554:    oss =3D cc.find_library('ossaudio', required: get_option('oss'))=
+=20=20=20=20=20=20=20=20=20
+  1660:         cc.find_library('gpg-error', required: true)],=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
+  1774:  sasl =3D cc.find_library('sasl2', has_headers: ['sasl/sasl.h'],=20=
+=20=20=20=20=20=20=20=20=20=20=20
+  1784:  pam =3D cc.find_library('pam', has_headers: ['security/pam_appl.h'=
+],=20=20=20=20=20=20=20
+  1808:  snappy =3D cc.find_library('snappy', has_headers: ['snappy-c.h'],=
+=20=20=20=20=20=20=20=20=20=20
+  1824:  lzo =3D cc.find_library('lzo2', has_headers: ['lzo/lzo1x.h'],=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20
+  1840:  numa =3D cc.find_library('numa', has_headers: ['numa.h'],=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
+  1857:  libumad =3D cc.find_library('ibumad', required: get_option('rdma')=
+)=20=20=20=20=20=20=20=20
+  1858:  rdma_libs =3D [cc.find_library('rdmacm', has_headers: ['rdma/rdma_=
+cma.h'],=20
+  1860:               cc.find_library('ibverbs', required: get_option('rdma=
+')),=20=20=20
+  1933:  malloc =3D cc.find_library(get_option('malloc'), required: true)=
+=20=20=20=20=20=20=20=20=20=20=20
+  2420:  inotify =3D cc.find_library('inotify')=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20
+  3164:    fdt =3D cc.find_library('fdt', required: fdt_opt =3D=3D 'system'=
+)=20=20=20=20=20=20=20=20=20=20=20=20
+  18:    cc.find_library('ole32'),=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20
+  19:    cc.find_library('oleaut32'),=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20
+  20:    cc.find_library('shlwapi'),=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20
+  21:    cc.find_library('uuid'),=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20
+  22:    cc.find_library('intl')=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20
 
-I think there is some scope to re-factor some code that is shared with
-cpu_memory_rw_debug. In fact rather than using this to feed
-mcd_read_write_memory() maybe you really just want a
-cpu_physical_memory_rw_debug()?
 
-Although as you are going from vaddr anyway where does
-cpu_memory_rw_debug() fail for you?
-
-> +
->  /*
->   * Allows code that needs to deal with migration bitmaps etc to still be=
- built
->   * target independent.
+>
+> What would be the correct way to do this?
+>
+> Thanks,
+> Paz
 
 --=20
 Alex Benn=C3=A9e
 Virtualisation Tech Lead @ Linaro
+Date: Thu, 29 Feb 2024 17:02:44 +0000
 
