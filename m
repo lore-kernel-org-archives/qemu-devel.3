@@ -4,38 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A23CC54E41
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 13:14:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD30C54E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 13:14:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfgCc-0005d3-Q1; Thu, 29 Feb 2024 08:11:58 -0500
+	id 1rfgD7-0005vu-RG; Thu, 29 Feb 2024 08:12:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rfgCZ-0005YS-G0; Thu, 29 Feb 2024 08:11:55 -0500
-Received: from szxga04-in.huawei.com ([45.249.212.190])
+ id 1rfgCb-0005ai-67; Thu, 29 Feb 2024 08:11:57 -0500
+Received: from szxga06-in.huawei.com ([45.249.212.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rfgCW-0002d5-UG; Thu, 29 Feb 2024 08:11:55 -0500
-Received: from mail.maildlp.com (unknown [172.19.88.234])
- by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4Tls4j24zqz2BdYB;
- Thu, 29 Feb 2024 21:09:25 +0800 (CST)
+ id 1rfgCZ-0002dc-8T; Thu, 29 Feb 2024 08:11:56 -0500
+Received: from mail.maildlp.com (unknown [172.19.163.44])
+ by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4Tls6g0hPGzqhth;
+ Thu, 29 Feb 2024 21:11:07 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 42804140390;
- Thu, 29 Feb 2024 21:11:41 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id BBA0B1402CE;
+ Thu, 29 Feb 2024 21:11:44 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Thu, 29 Feb
- 2024 21:11:40 +0800
+ 2024 21:11:44 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [RFC PATCH v5 01/22] target/arm: Handle HCR_EL2 accesses for bits
- introduced with FEAT_NMI
-Date: Thu, 29 Feb 2024 13:10:18 +0000
-Message-ID: <20240229131039.1868904-2-ruanjinjie@huawei.com>
+Subject: [RFC PATCH v5 05/22] target/arm: Support MSR access to ALLINT
+Date: Thu, 29 Feb 2024 13:10:22 +0000
+Message-ID: <20240229131039.1868904-6-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240229131039.1868904-1-ruanjinjie@huawei.com>
 References: <20240229131039.1868904-1-ruanjinjie@huawei.com>
@@ -45,8 +44,8 @@ Content-Type: text/plain
 X-Originating-IP: [10.67.174.55]
 X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
  kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.190;
- envelope-from=ruanjinjie@huawei.com; helo=szxga04-in.huawei.com
+Received-SPF: pass client-ip=45.249.212.32; envelope-from=ruanjinjie@huawei.com;
+ helo=szxga06-in.huawei.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
@@ -70,57 +69,79 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FEAT_NMI defines another three new bits in HCRX_EL2: TALLINT, HCRX_VINMI and
-HCRX_VFNMI. When the feature is enabled, allow these bits to be written in
-HCRX_EL2.
+Support ALLINT msr access as follow:
+	mrs <xt>, ALLINT	// read allint
+	msr ALLINT, <xt>	// write allint with imm
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
-v4:
-- Update the comment for FEAT_NMI in hcrx_write().
-- Update the commit message, s/thress/three/g.
-v3:
+v5:
 - Add Reviewed-by.
-- Add HCRX_VINMI and HCRX_VFNMI support in HCRX_EL2.
-- Upate the commit messsage.
+v4:
+- Remove arm_is_el2_enabled() check in allint_check().
+- Change to env->pstate instead of env->allint.
+v3:
+- Remove EL0 check in aa64_allint_access() which alreay checks in .access
+  PL1_RW.
+- Use arm_hcrx_el2_eff() in aa64_allint_access() instead of env->cp15.hcrx_el2.
+- Make ALLINT msr access function controlled by aa64_nmi.
 ---
- target/arm/cpu-features.h | 5 +++++
- target/arm/helper.c       | 5 +++++
- 2 files changed, 10 insertions(+)
+ target/arm/helper.c | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 7567854db6..2ad1179be7 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -681,6 +681,11 @@ static inline bool isar_feature_aa64_sme(const ARMISARegisters *id)
-     return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, SME) != 0;
- }
- 
-+static inline bool isar_feature_aa64_nmi(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, NMI) != 0;
-+}
-+
- static inline bool isar_feature_aa64_tgran4_lpa2(const ARMISARegisters *id)
- {
-     return FIELD_SEX64(id->id_aa64mmfr0, ID_AA64MMFR0, TGRAN4) >= 1;
 diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 90c4fb72ce..affa493141 100644
+index affa493141..497b6e4bdf 100644
 --- a/target/arm/helper.c
 +++ b/target/arm/helper.c
-@@ -6056,6 +6056,11 @@ static void hcrx_write(CPUARMState *env, const ARMCPRegInfo *ri,
-         valid_mask |= HCRX_MSCEN | HCRX_MCE2;
-     }
- 
-+    /* FEAT_NMI adds TALLINT, VINMI and VFNMI */
-+    if (cpu_isar_feature(aa64_nmi, env_archcpu(env))) {
-+        valid_mask |= HCRX_TALLINT | HCRX_VINMI | HCRX_VFNMI;
-+    }
-+
-     /* Clear RES0 bits.  */
-     env->cp15.hcrx_el2 = value & valid_mask;
+@@ -4618,6 +4618,36 @@ static void aa64_daif_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     env->daif = value & PSTATE_DAIF;
  }
+ 
++static void aa64_allint_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                              uint64_t value)
++{
++    env->pstate = (env->pstate & ~PSTATE_ALLINT) | (value & PSTATE_ALLINT);
++}
++
++static uint64_t aa64_allint_read(CPUARMState *env, const ARMCPRegInfo *ri)
++{
++    return env->pstate & PSTATE_ALLINT;
++}
++
++static CPAccessResult aa64_allint_access(CPUARMState *env,
++                                         const ARMCPRegInfo *ri, bool isread)
++{
++    if (arm_current_el(env) == 1 && (arm_hcrx_el2_eff(env) & HCRX_TALLINT)) {
++        return CP_ACCESS_TRAP_EL2;
++    }
++    return CP_ACCESS_OK;
++}
++
++static const ARMCPRegInfo nmi_reginfo[] = {
++    { .name = "ALLINT", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 0, .opc2 = 0, .crn = 4, .crm = 3,
++      .type = ARM_CP_NO_RAW,
++      .access = PL1_RW, .accessfn = aa64_allint_access,
++      .fieldoffset = offsetof(CPUARMState, pstate),
++      .writefn = aa64_allint_write, .readfn = aa64_allint_read,
++      .resetfn = arm_cp_reset_ignore },
++};
++
+ static uint64_t aa64_pan_read(CPUARMState *env, const ARMCPRegInfo *ri)
+ {
+     return env->pstate & PSTATE_PAN;
+@@ -9724,6 +9754,10 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+     if (cpu_isar_feature(aa64_nv2, cpu)) {
+         define_arm_cp_regs(cpu, nv2_reginfo);
+     }
++
++    if (cpu_isar_feature(aa64_nmi, cpu)) {
++        define_arm_cp_regs(cpu, nmi_reginfo);
++    }
+ #endif
+ 
+     if (cpu_isar_feature(any_predinv, cpu)) {
 -- 
 2.34.1
 
