@@ -4,84 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02C4CC54798
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 09:29:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A79D0C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 09:36:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfci7-0003NQ-LF; Thu, 29 Feb 2024 04:28:15 -0500
+	id 1rfcpF-000591-6L; Thu, 29 Feb 2024 04:35:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rfci5-0003NI-Nh
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 04:28:13 -0500
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rfci0-0002sK-3p
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 04:28:13 -0500
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-5c6bd3100fcso495338a12.3
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 01:28:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709198887; x=1709803687;
- darn=nongnu.org; 
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=XYYMhwPjKWKZ+gKXxv+a+ugdek5N1Vy0cwNUDZ8NyR8=;
- b=SMrD9xV2VpL7eDI1xXUmQpLWK7IY3ghrVN/RqXXI+3BnQk6sw8wYqhImIkZ9N2PFEC
- ksmt4Ja0tCjQhD3PP15nfbHA8zJR0Y/wOcw4x/+y1LWTPB1euy04iBIkVGwpE3KsGpi6
- 0KoHUw9/ErRJg8z/p0TLGpOqI8Qvm1GDTT5JfA3dYCXF1XH2Lqssqc5oWmWQsK/ygL61
- KKOgRVxQne9wXMnhuPBBm+BuFyy6Vgh7vLVpSumqPUrPrRRVA9Xa6jvNKH7bUkl0ScY2
- qb2pD6I9eHw/biEfJLBeGFtLWbz8zzWHmtZHacZK9vMVZjqUWzE4wMbNtLJgUP1HbMW+
- PFuw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rfcpC-00057s-W2
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 04:35:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rfcp9-0005JZ-EA
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 04:35:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709199329;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=3a2ciMxSgcnuQof6zbJQOdIZu3T1nChKA+xWpQP27IU=;
+ b=C0d6zTtWtwuxMdfTDcsvp6KnhuVosVJzZGZzf4G4ujJtp3vcjwNiPbZB738E2h6kN5FIPn
+ mkNxcKFOKTRVG//XACbheCk6NAa5r1I6k75oegfiWz3BGWhvZsrumLfv7h0y0V2jRVOCSE
+ ye0kJJSGk+2Bc5aim7T+T7MJVmTFNa0=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-202-_kQHvkhHP62TbxEQ3Qk9gw-1; Thu, 29 Feb 2024 04:35:28 -0500
+X-MC-Unique: _kQHvkhHP62TbxEQ3Qk9gw-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a3e42733561so48322566b.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 01:35:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709198887; x=1709803687;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XYYMhwPjKWKZ+gKXxv+a+ugdek5N1Vy0cwNUDZ8NyR8=;
- b=fcdNApQYoMH13vTndbnr1LS1/UdBb5zdeL1zu0hZPMxZzVJHWojsc/ADtmUwTt4N/i
- 8o4JXXbE1iUCyNcFh9tVm6ye7FooC3zVSfHnJqsTWQj2Z97WprYMWgylv7Kdoz4RqfbF
- NiuF3yUUJDBFj+oc5uVyqbQE0Vf4Z63MieFzHNUYbGsogks3cO7/uBji25ru+s51GdBo
- sTzhKjTIRzvygfskeXiiSRgpvVUgvHfDCqelBq1++IdTUVrp9bONXVrONZbF5ivvCXWe
- FUNl65lkxk/dqdvrPyxUtaY1pabfmyQr6k4cA3Gnrg87nORSXSsnm3hhSkmIL1OWCavN
- PX6w==
-X-Gm-Message-State: AOJu0YxgTb6IS/DA4vINbc4fMBsl+tc++9EISAEaW5cadJGnatWpbiSb
- YwfJGrmuPG/amA3J1875coICdS1Oznq0pwpVGQg/m7oI7u4PzJI+HRCpZhzoDB4=
-X-Google-Smtp-Source: AGHT+IHMPhuDh9kEIoUBHPXxPioKrN6lsAZgug0XNBGlsDFqp31TR+JVGNX3UyuO8ioJp4kpD28Wfw==
-X-Received: by 2002:a05:6a21:1786:b0:1a1:209b:fb87 with SMTP id
- nx6-20020a056a21178600b001a1209bfb87mr1836057pzb.37.1709198886629; 
- Thu, 29 Feb 2024 01:28:06 -0800 (PST)
-Received: from localhost ([157.82.203.206])
- by smtp.gmail.com with UTF8SMTPSA id
- g10-20020a17090a714a00b0029ab460019asm978804pjs.1.2024.02.29.01.28.04
+ d=1e100.net; s=20230601; t=1709199327; x=1709804127;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3a2ciMxSgcnuQof6zbJQOdIZu3T1nChKA+xWpQP27IU=;
+ b=XLs0dh2VcM/GWx8arb6fd3RGOaOe4ZXUEc3e9gqUYgQ9RhBc8gf9NaqwWv+FWVf1aq
+ lNLQYbMEZ2/K207TKNMCuriVWfRpZTuUOMw4S1rqgGIN8tTGhmzAX2m5K7Y0sYeChSCW
+ 6rg1JLi8o+hmWQwq+5MGnqRlKxB7kT7M65X29RuFkh6BTjNYnS8dEzr0COyN+iwIRMup
+ mU70925YvwBPebMJLzzMyAxaz+j+vGGg5ad3wiSEnFYGpQxUK+Fmv1bMmOAjGXpAsdop
+ MLACIuzobR6xqThIIBS0bXJ5vCE6b968fbarLeBNMZ6UHsRdyZlpxEi6KhBD8zJa/l68
+ 3Y0w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUiRrwXmOXWJi2T6xYbkhzmEh/kXGb35LuP8wzYO6AMWTm7aWlCnpOaI1Slmlv/rKl7pndPtabMB9ZKNYI4S3zV4uhWQgo=
+X-Gm-Message-State: AOJu0YwsLlRN2HQJXmBv07GnQ20dj1ZoDJNl/3p3PBEhQq+Ihn1uvK04
+ FzxCTk7iNjDuXUF2H7Ml8UwTw73Fi9s9VpcBXqxXKQmOQD4m3Drci+ZizmSyk1h/vBZ42EGlo+e
+ PnMphGzIrny4/rJTgiTXsUn21AcXTWJtNXOSs1z6EfspDUHuAXYkz
+X-Received: by 2002:a50:cbc1:0:b0:566:5897:b3ba with SMTP id
+ l1-20020a50cbc1000000b005665897b3bamr933238edi.3.1709199326910; 
+ Thu, 29 Feb 2024 01:35:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHFHFgrqpI5EA/y/BC2pGipYwU2YDCqvi06nC3v+7hf17uU5WRcGNy2uJhSd6UzjVDZt7e1ow==
+X-Received: by 2002:a50:cbc1:0:b0:566:5897:b3ba with SMTP id
+ l1-20020a50cbc1000000b005665897b3bamr933224edi.3.1709199326544; 
+ Thu, 29 Feb 2024 01:35:26 -0800 (PST)
+Received: from ?IPV6:2001:b07:6468:f312:5e2c:eb9a:a8b6:fd3e?
+ ([2001:b07:6468:f312:5e2c:eb9a:a8b6:fd3e])
+ by smtp.googlemail.com with ESMTPSA id
+ a10-20020a50ff0a000000b005665a6e07fcsm439543edu.30.2024.02.29.01.35.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Feb 2024 01:28:06 -0800 (PST)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Thu, 29 Feb 2024 18:28:00 +0900
-Subject: [PATCH] plugins: Ensure register handles are not NULL
+ Thu, 29 Feb 2024 01:35:26 -0800 (PST)
+Message-ID: <8c623e70-80ab-4058-b898-8eb38e95f1e3@redhat.com>
+Date: Thu, 29 Feb 2024 10:35:20 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240229-null-v1-1-e716501d981e@daynix.com>
-X-B4-Tracking: v=1; b=H4sIAB9O4GUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDIyNL3bzSnBxdCxPD1LREAyPjZEtjJaDSgqLUtMwKsDHRsbW1AHHY85Z
- WAAAA
-To: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Alexandre Iooss <erdnaxe@crans.org>, 
- Mahmoud Mandour <ma.mandourr@gmail.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::52c;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x52c.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] tcg/optimize: optimize TSTNE using smask and zmask
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20240228111151.287738-1-pbonzini@redhat.com>
+ <20240228111151.287738-5-pbonzini@redhat.com>
+ <4362aeec-ae18-4515-a3ec-6aba811e17d1@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <4362aeec-ae18-4515-a3ec-6aba811e17d1@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,41 +142,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ensure register handles are not NULL so that a plugin can assume NULL is
-invalid as a register handle.
+On 2/29/24 00:10, Richard Henderson wrote:
+> On 2/28/24 01:11, Paolo Bonzini wrote:
+>> -    /* TSTNE x,sign -> LT x,0 */
+>> -    if (arg_is_const_val(*p2, (ctx->type == TCG_TYPE_I32
+>> -                               ? INT32_MIN : INT64_MIN))) {
+>> +    /* TSTNE x,i -> LT x,0 if i only includes sign bit copies */
+>> +    if (arg_is_const(*p2) && (arg_info(*p2)->val & ~i1->s_mask) == 0) {
+> 
+> This is a good idea, but s_mask isn't defined like you think -- it is 
+> *repetitions* of the sign bit, but not including the sign bit itself.  
+> For INT64_MIN, s_mask == 0.
+> 
+> So for TSTNE min,min, (min & ~0) != 0, so the test won't pass.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- plugins/api.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Oh! So I have to squash:
 
-diff --git a/plugins/api.c b/plugins/api.c
-index 81f43c9ce8a4..74e24f0697cd 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -442,7 +442,7 @@ static GArray *create_register_handles(GArray *gdbstub_regs)
-         }
- 
-         /* Create a record for the plugin */
--        desc.handle = GINT_TO_POINTER(grd->gdb_reg);
-+        desc.handle = GINT_TO_POINTER(grd->gdb_reg + 1);
-         desc.name = g_intern_string(grd->name);
-         desc.feature = g_intern_string(grd->feature_name);
-         g_array_append_val(find_data, desc);
-@@ -463,5 +463,5 @@ int qemu_plugin_read_register(struct qemu_plugin_register *reg, GByteArray *buf)
- {
-     g_assert(current_cpu);
- 
--    return gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg));
-+    return gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg) - 1);
- }
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index ab976a5bbe7..44d1b1a6d8a 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -140,6 +140,12 @@ static inline bool arg_is_const_val(TCGArg arg, uint64_t val)
+      return ts_is_const_val(arg_temp(arg), val);
+  }
+  
++/* Calculate all the copies of the sign bit, both redundant and not. */
++static inline uint64_t all_sign_bit_copies(TempOptInfo *info)
++{
++    return (info->s_mask >> 1) | INT64_MIN;
++}
++
+  static inline bool ts_is_copy(TCGTemp *ts)
+  {
+      return ts_info(ts)->next_copy != ts;
+@@ -825,7 +831,7 @@ static int do_constant_folding_cond1(OptContext *ctx, TCGOp *op, TCGArg dest,
+      }
+  
+      /* TSTNE x,i -> LT x,0 if i only includes sign bit copies */
+-    if (arg_is_const(*p2) && (arg_info(*p2)->val & ~i1->s_mask) == 0) {
++    if (arg_is_const(*p2) && (arg_info(*p2)->val & ~all_sign_bit_copies(i1)) == 0) {
+          *p2 = arg_new_constant(ctx, 0);
+          *pcond = tcg_tst_ltge_cond(cond);
+          return -1;
 
----
-base-commit: bfe8020c814a30479a4241aaa78b63960655962b
-change-id: 20240229-null-841efa023c93
 
-Best regards,
--- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+I tested with
+
+    movq $0xffffffff80000000, %rbx
+    test %ebx, %ebx
+    js y
+
+and I get
+
+  brcond_i64 cc_dst,$0x80000000,tstne,$L1
+
+which works and matches your explanation:
+
+  i1.s_mask == 0xffffffff00000000
+  i2.val == 0x80000000
+  all_sign_bit_copies(i1) == 0xffffffff80000000
+  u2.val & ~all_sign_bit_copies(i1) == 0
+
+Thanks!
+
+Paolo
 
 
