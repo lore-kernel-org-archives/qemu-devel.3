@@ -4,94 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5181C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 15:31:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C3A2C54E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 15:31:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfiMl-0005TQ-RM; Thu, 29 Feb 2024 10:30:35 -0500
+	id 1rfiN1-0005YW-30; Thu, 29 Feb 2024 10:30:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rfiMh-0005R7-9Y
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:30:31 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rfiMy-0005Y6-78
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:30:48 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rfiMb-0005qZ-RG
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:30:30 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rfiMw-0005yH-Bb
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:30:47 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id D8C361F7F6;
- Thu, 29 Feb 2024 15:30:21 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id DA6512200C;
+ Thu, 29 Feb 2024 15:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709220622; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=WeZKMKYZrEXwJ12mXttpzW480bpIspYp3MAFmFvfwwA=;
- b=YURW8xlw++RdlHW7JVXoMEAQZ0F8yz3gcFmP9G4Fe3qDwDRqPMuXx+5gvJsQ+Ytn6P2Dg7
- RXbE7xhgPIAYetVxBUzql37Gxzyy8/Bfevr9tWABKHElQFr7wIBkCOs6flciBLK+d5W1/7
- veK4vMYf4Nqx1U47gNphqIviguyFS4E=
+ t=1709220644; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=pC13tBeXORti+dcydaM//5PqpaE/nmYEgsRjjtZwzWc=;
+ b=VOXsZiOuiTcLBUKlk3wtVP02ICR/9TY28YICl6GHHM+2O+0zOoHCGXN76ost8szmLitKfX
+ VO6q0eLYcAxO+KDB5QrTzBmMGqJ2le+J2/swOECPPk+oBMfSUoEWOqcNah3ILkmkROaFss
+ Lnz0S+djDsLvcTnsfCPalL/z5YPq0+M=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709220622;
+ s=susede2_ed25519; t=1709220644;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=WeZKMKYZrEXwJ12mXttpzW480bpIspYp3MAFmFvfwwA=;
- b=JDm7Dij4CxFAwiXIILE/gV3ulgzK5ne4S3rwxecppTJsD2himtU8KtLLvSNk7M4YquhD0l
- vXPcdF+m+1ClxUDA==
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=pC13tBeXORti+dcydaM//5PqpaE/nmYEgsRjjtZwzWc=;
+ b=6qRkFdmTkx6S6VVqfEZCHgz3d69SXhNaXFOzIi+4KBh+4pYfMGHLr6H/htumD5RUfI78Qe
+ k+7avZTVmcwqLkDQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709220621; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=WeZKMKYZrEXwJ12mXttpzW480bpIspYp3MAFmFvfwwA=;
- b=BqwhZuVT1YUukGA7ZziV/Fbg8FwKVvu7goB/rUFeIB7bJHuvfAyuTZ60f4bvrqkvszVA6G
- FDsgnx5oq3DPdfdgBYtX1YYuIcvtwL4RzB7kyFVJZkfVPLIqFMLkf/3GuZXzCFTU6PQjUV
- 9ocYoLs8LlP8pP6Z/JKuciifMCftYT8=
+ t=1709220644; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=pC13tBeXORti+dcydaM//5PqpaE/nmYEgsRjjtZwzWc=;
+ b=VOXsZiOuiTcLBUKlk3wtVP02ICR/9TY28YICl6GHHM+2O+0zOoHCGXN76ost8szmLitKfX
+ VO6q0eLYcAxO+KDB5QrTzBmMGqJ2le+J2/swOECPPk+oBMfSUoEWOqcNah3ILkmkROaFss
+ Lnz0S+djDsLvcTnsfCPalL/z5YPq0+M=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709220621;
+ s=susede2_ed25519; t=1709220644;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=WeZKMKYZrEXwJ12mXttpzW480bpIspYp3MAFmFvfwwA=;
- b=tcjsj2v4CnfYPjBgPj0AISgoerkuS0ewSVCB+qgedHUCczrp2He4vUPJLtADXy3LpZnszp
- QxHtQ1DUrYNxQpDw==
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=pC13tBeXORti+dcydaM//5PqpaE/nmYEgsRjjtZwzWc=;
+ b=6qRkFdmTkx6S6VVqfEZCHgz3d69SXhNaXFOzIi+4KBh+4pYfMGHLr6H/htumD5RUfI78Qe
+ k+7avZTVmcwqLkDQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 42E1C13503;
- Thu, 29 Feb 2024 15:30:20 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0A25613503;
+ Thu, 29 Feb 2024 15:30:42 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id Yw6yAgyj4GU/MAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 29 Feb 2024 15:30:20 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id eFmtMCKj4GU/MAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 29 Feb 2024 15:30:42 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
- Claudio Fontana <cfontana@suse.de>
-Subject: [PATCH v6 00/23] migration: File based migration with multifd and
- mapped-ram
-Date: Thu, 29 Feb 2024 12:29:54 -0300
-Message-Id: <20240229153017.2221-1-farosas@suse.de>
+ Claudio Fontana <cfontana@suse.de>, Nikolay Borisov <nborisov@suse.com>
+Subject: [PATCH v6 10/23] migration/ram: Add incoming 'mapped-ram' migration
+Date: Thu, 29 Feb 2024 12:30:04 -0300
+Message-Id: <20240229153017.2221-11-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20240229153017.2221-1-farosas@suse.de>
+References: <20240229153017.2221-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Authentication-Results: smtp-out2.suse.de;
+Authentication-Results: smtp-out1.suse.de;
 	none
-X-Spamd-Result: default: False [-2.10 / 50.00]; ARC_NA(0.00)[];
+X-Spamd-Result: default: False [1.90 / 50.00]; ARC_NA(0.00)[];
  RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_FIVE(0.00)[5];
+ TO_DN_SOME(0.00)[]; R_MISSING_CHARSET(2.50)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
+ BROKEN_CONTENT_TYPE(1.50)[]; RCPT_COUNT_FIVE(0.00)[6];
  RCVD_COUNT_THREE(0.00)[3];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  MID_CONTAINS_FROM(1.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.com:email];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
  MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
  BAYES_HAM(-3.00)[100.00%]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -114,152 +119,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Based-on: 74aa0fb297 (migration: options incompatible with cpr) # peterx/migration-next
+Add the necessary code to parse the format changes for the
+'mapped-ram' capability.
 
-Hi,
+One of the more notable changes in behavior is that in the
+'mapped-ram' case ram pages are restored in one go rather than
+constantly looping through the migration stream.
 
-In this v6:
+Signed-off-by: Nikolay Borisov <nborisov@suse.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ migration/ram.c | 143 +++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 141 insertions(+), 2 deletions(-)
 
-- Minor fixes to 17/23 and 19/23
-
-CI run: https://gitlab.com/farosas/qemu/-/pipelines/1195796010
-
-Series structure
-================
-
-This series enables mapped-ram in steps:
-
-0) Cleanups                           [1]
-1) QIOChannel interfaces              [2-6]
-2) Mapped-ram format for precopy      [7-11]
-3) Multifd adaptation without packets [12-15]
-4) Mapped-ram format for multifd      [16-23]
-
-* below will be sent separately *
-5) Direct-io generic support          [TODO]
-6) Direct-io for mapped-ram multifd with file: URI  [TODO]
-7) Fdset interface for mapped-ram multifd  [TODO]
-
-About mapped-ram
-================
-
-Mapped-ram is a new stream format for the RAM section designed to
-supplement the existing ``file:`` migration and make it compatible
-with ``multifd``. This enables parallel migration of a guest's RAM to
-a file.
-
-The core of the feature is to map RAM pages to migration file
-offsets. This enables the ``multifd`` threads to write exclusively to
-those offsets even if the guest is constantly dirtying pages
-(i.e. live migration).
-
-Another benefit is that the resulting file will have a bounded size,
-since pages which are dirtied multiple times will always go to a fixed
-location in the file, rather than constantly being added to a
-sequential stream.
-
-Having the pages at fixed offsets also allows the usage of O_DIRECT
-for save/restore of the migration stream as the pages are ensured to
-be written respecting O_DIRECT alignment restrictions.
-
-Latest numbers (unchanged from v4)
-==============
-
-=> guest: 128 GB RAM - 120 GB dirty - 1 vcpu in tight loop dirtying memory
-=> host: 128 CPU AMD EPYC 7543 - 2 NVMe disks in RAID0 (8586 MiB/s) - xfs
-=> pinned vcpus w/ NUMA shortest distances - average of 3 runs - results
-   from query-migrate
-
-non-live           | time (ms)   pages/s   mb/s   MB/s
--------------------+-----------------------------------
-file               |    110512    256258   9549   1193
-  + bg-snapshot    |    245660    119581   4303    537
--------------------+-----------------------------------
-mapped-ram         |    157975    216877   6672    834
-  + multifd 8 ch.  |     95922    292178  10982   1372
-     + direct-io   |     23268   1936897  45330   5666
--------------------------------------------------------
-
-live               | time (ms)   pages/s   mb/s   MB/s
--------------------+-----------------------------------
-file               |         -         -      -      - (file grew 4x the VM size)
-  + bg-snapshot    |    357635    141747   2974    371
--------------------+-----------------------------------
-mapped-ram         |         -         -      -      - (no convergence in 5 min)
-  + multifd 8 ch.  |    230812    497551  14900   1862
-     + direct-io   |     27475   1788025  46736   5842
--------------------------------------------------------
-
-v5:
-https://lore.kernel.org/r/20240228152127.18769-1-farosas@suse.de
-v4:
-https://lore.kernel.org/r/20240220224138.24759-1-farosas@suse.de
-v3:
-https://lore.kernel.org/r/20231127202612.23012-1-farosas@suse.de
-v2:
-https://lore.kernel.org/r/20231023203608.26370-1-farosas@suse.de
-v1:
-https://lore.kernel.org/r/20230330180336.2791-1-farosas@suse.de
-
-Fabiano Rosas (20):
-  migration/multifd: Cleanup multifd_recv_sync_main
-  io: fsync before closing a file channel
-  migration/qemu-file: add utility methods for working with seekable
-    channels
-  migration/ram: Introduce 'mapped-ram' migration capability
-  migration: Add mapped-ram URI compatibility check
-  migration/ram: Add outgoing 'mapped-ram' migration
-  migration/ram: Add incoming 'mapped-ram' migration
-  tests/qtest/migration: Add tests for mapped-ram file-based migration
-  migration/multifd: Rename MultiFDSend|RecvParams::data to
-    compress_data
-  migration/multifd: Decouple recv method from pages
-  migration/multifd: Allow multifd without packets
-  migration/multifd: Allow receiving pages without packets
-  migration/multifd: Add a wrapper for channels_created
-  migration/multifd: Add outgoing QIOChannelFile support
-  migration/multifd: Add incoming QIOChannelFile support
-  migration/multifd: Prepare multifd sync for mapped-ram migration
-  migration/multifd: Support outgoing mapped-ram stream format
-  migration/multifd: Support incoming mapped-ram stream format
-  migration/multifd: Add mapped-ram support to fd: URI
-  tests/qtest/migration: Add a multifd + mapped-ram migration test
-
-Nikolay Borisov (3):
-  io: add and implement QIO_CHANNEL_FEATURE_SEEKABLE for channel file
-  io: Add generic pwritev/preadv interface
-  io: implement io_pwritev/preadv for QIOChannelFile
-
- docs/devel/migration/features.rst   |   1 +
- docs/devel/migration/mapped-ram.rst | 138 ++++++++++
- include/exec/ramblock.h             |  13 +
- include/io/channel.h                |  83 ++++++
- include/migration/qemu-file-types.h |   2 +
- include/qemu/bitops.h               |  13 +
- io/channel-file.c                   |  69 +++++
- io/channel.c                        |  58 ++++
- migration/fd.c                      |  44 +++
- migration/fd.h                      |   2 +
- migration/file.c                    | 149 +++++++++-
- migration/file.h                    |   8 +
- migration/migration.c               |  56 +++-
- migration/multifd-zlib.c            |  26 +-
- migration/multifd-zstd.c            |  26 +-
- migration/multifd.c                 | 405 ++++++++++++++++++++++------
- migration/multifd.h                 |  27 +-
- migration/options.c                 |  35 +++
- migration/options.h                 |   1 +
- migration/qemu-file.c               | 106 ++++++++
- migration/qemu-file.h               |   6 +
- migration/ram.c                     | 345 ++++++++++++++++++++++--
- migration/ram.h                     |   1 +
- migration/savevm.c                  |   1 +
- migration/trace-events              |   2 +-
- qapi/migration.json                 |   6 +-
- tests/qtest/migration-test.c        | 127 +++++++++
- 27 files changed, 1607 insertions(+), 143 deletions(-)
- create mode 100644 docs/devel/migration/mapped-ram.rst
-
+diff --git a/migration/ram.c b/migration/ram.c
+index f807824d49..18620784c6 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -106,6 +106,12 @@
+  */
+ #define MAPPED_RAM_FILE_OFFSET_ALIGNMENT 0x100000
+ 
++/*
++ * When doing mapped-ram migration, this is the amount we read from
++ * the pages region in the migration file at a time.
++ */
++#define MAPPED_RAM_LOAD_BUF_SIZE 0x100000
++
+ XBZRLECacheStats xbzrle_counters;
+ 
+ /* used by the search for pages to send */
+@@ -2998,6 +3004,35 @@ static void mapped_ram_setup_ramblock(QEMUFile *file, RAMBlock *block)
+     qemu_set_offset(file, block->pages_offset + block->used_length, SEEK_SET);
+ }
+ 
++static bool mapped_ram_read_header(QEMUFile *file, MappedRamHeader *header,
++                                   Error **errp)
++{
++    size_t ret, header_size = sizeof(MappedRamHeader);
++
++    ret = qemu_get_buffer(file, (uint8_t *)header, header_size);
++    if (ret != header_size) {
++        error_setg(errp, "Could not read whole mapped-ram migration header "
++                   "(expected %zd, got %zd bytes)", header_size, ret);
++        return false;
++    }
++
++    /* migration stream is big-endian */
++    header->version = be32_to_cpu(header->version);
++
++    if (header->version > MAPPED_RAM_HDR_VERSION) {
++        error_setg(errp, "Migration mapped-ram capability version not "
++                   "supported (expected <= %d, got %d)", MAPPED_RAM_HDR_VERSION,
++                   header->version);
++        return false;
++    }
++
++    header->page_size = be64_to_cpu(header->page_size);
++    header->bitmap_offset = be64_to_cpu(header->bitmap_offset);
++    header->pages_offset = be64_to_cpu(header->pages_offset);
++
++    return true;
++}
++
+ /*
+  * Each of ram_save_setup, ram_save_iterate and ram_save_complete has
+  * long-running RCU critical section.  When rcu-reclaims in the code
+@@ -3899,22 +3934,126 @@ void colo_flush_ram_cache(void)
+     trace_colo_flush_ram_cache_end();
+ }
+ 
++static bool read_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
++                                     long num_pages, unsigned long *bitmap,
++                                     Error **errp)
++{
++    ERRP_GUARD();
++    unsigned long set_bit_idx, clear_bit_idx;
++    ram_addr_t offset;
++    void *host;
++    size_t read, unread, size;
++
++    for (set_bit_idx = find_first_bit(bitmap, num_pages);
++         set_bit_idx < num_pages;
++         set_bit_idx = find_next_bit(bitmap, num_pages, clear_bit_idx + 1)) {
++
++        clear_bit_idx = find_next_zero_bit(bitmap, num_pages, set_bit_idx + 1);
++
++        unread = TARGET_PAGE_SIZE * (clear_bit_idx - set_bit_idx);
++        offset = set_bit_idx << TARGET_PAGE_BITS;
++
++        while (unread > 0) {
++            host = host_from_ram_block_offset(block, offset);
++            if (!host) {
++                error_setg(errp, "page outside of ramblock %s range",
++                           block->idstr);
++                return false;
++            }
++
++            size = MIN(unread, MAPPED_RAM_LOAD_BUF_SIZE);
++
++            read = qemu_get_buffer_at(f, host, size,
++                                      block->pages_offset + offset);
++            if (!read) {
++                goto err;
++            }
++            offset += read;
++            unread -= read;
++        }
++    }
++
++    return true;
++
++err:
++    qemu_file_get_error_obj(f, errp);
++    error_prepend(errp, "(%s) failed to read page " RAM_ADDR_FMT
++                  "from file offset %" PRIx64 ": ", block->idstr, offset,
++                  block->pages_offset + offset);
++    return false;
++}
++
++static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
++                                      ram_addr_t length, Error **errp)
++{
++    g_autofree unsigned long *bitmap = NULL;
++    MappedRamHeader header;
++    size_t bitmap_size;
++    long num_pages;
++
++    if (!mapped_ram_read_header(f, &header, errp)) {
++        return;
++    }
++
++    block->pages_offset = header.pages_offset;
++
++    /*
++     * Check the alignment of the file region that contains pages. We
++     * don't enforce MAPPED_RAM_FILE_OFFSET_ALIGNMENT to allow that
++     * value to change in the future. Do only a sanity check with page
++     * size alignment.
++     */
++    if (!QEMU_IS_ALIGNED(block->pages_offset, TARGET_PAGE_SIZE)) {
++        error_setg(errp,
++                   "Error reading ramblock %s pages, region has bad alignment",
++                   block->idstr);
++        return;
++    }
++
++    num_pages = length / header.page_size;
++    bitmap_size = BITS_TO_LONGS(num_pages) * sizeof(unsigned long);
++
++    bitmap = g_malloc0(bitmap_size);
++    if (qemu_get_buffer_at(f, (uint8_t *)bitmap, bitmap_size,
++                           header.bitmap_offset) != bitmap_size) {
++        error_setg(errp, "Error reading dirty bitmap");
++        return;
++    }
++
++    if (!read_ramblock_mapped_ram(f, block, num_pages, bitmap, errp)) {
++        return;
++    }
++
++    /* Skip pages array */
++    qemu_set_offset(f, block->pages_offset + length, SEEK_SET);
++
++    return;
++}
++
+ static int parse_ramblock(QEMUFile *f, RAMBlock *block, ram_addr_t length)
+ {
+     int ret = 0;
+     /* ADVISE is earlier, it shows the source has the postcopy capability on */
+     bool postcopy_advised = migration_incoming_postcopy_advised();
++    Error *local_err = NULL;
+ 
+     assert(block);
+ 
++    if (migrate_mapped_ram()) {
++        parse_ramblock_mapped_ram(f, block, length, &local_err);
++        if (local_err) {
++            error_report_err(local_err);
++            return -EINVAL;
++        }
++        return 0;
++    }
++
+     if (!qemu_ram_is_migratable(block)) {
+         error_report("block %s should not be migrated !", block->idstr);
+         return -EINVAL;
+     }
+ 
+     if (length != block->used_length) {
+-        Error *local_err = NULL;
+-
+         ret = qemu_ram_resize(block, length, &local_err);
+         if (local_err) {
+             error_report_err(local_err);
 -- 
 2.35.3
 
