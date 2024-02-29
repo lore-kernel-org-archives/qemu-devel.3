@@ -4,142 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F81FC48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 10:36:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE1CDC54798
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 10:36:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfdle-0003xY-FF; Thu, 29 Feb 2024 05:35:58 -0500
+	id 1rfdlz-0004JJ-RP; Thu, 29 Feb 2024 05:36:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfdlc-0003ty-4Z
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 05:35:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfdla-0000gZ-D1
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 05:35:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709202953;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=r4oz9F+Ibm56901DLXPnEbrgzctCTXqHWRDl5gV5M18=;
- b=Gj2PLbPrDlNiScWBi0K9pZcw05t2Dd0X2LtJ/H9jmSkw7RtGAGUFFsaILNNAQNYhJLyL+4
- MEIHl3mLFeT4JqHvQLBwZBbtShMneGmHAQdHWIbl+tLPWjDJgkLuri1+9TOnOEMFysOnXC
- NmpAc6TsjO7eQdSnItbQ2ukjfuuOFvU=
-Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com
- [209.85.161.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-680-bVXu8XuQOCeASZvThKQ82A-1; Thu, 29 Feb 2024 05:35:51 -0500
-X-MC-Unique: bVXu8XuQOCeASZvThKQ82A-1
-Received: by mail-oo1-f70.google.com with SMTP id
- 006d021491bc7-59907104d88so770025eaf.3
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 02:35:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
+ id 1rfdlx-0004Hs-Qt
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 05:36:17 -0500
+Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
+ id 1rfdlv-0000nQ-G6
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 05:36:17 -0500
+Received: by mail-ot1-x329.google.com with SMTP id
+ 46e09a7af769-6ddf26eba3cso483582a34.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 02:36:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1709202974; x=1709807774;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=werhXj+q+CY+aPjoduq/4UbLxgq/dfx2/xywUI7Y9WA=;
+ b=zi0vse6H54lJ3/XT3XDArFkU9QDXDI5h5E+MWaVhiBQquANuAMgVGK8nHQeKNBvytJ
+ /WU5di2rMaP8S0xt9NnRYyNyDcJ+qmo0CmVywOJsn9xGFnDpJXqEXg7NbnnBhDzBLT/b
+ 7LTQu4iaaG3/B7qXms2kKxAbVIDMV5ymzdeVItcO9loD2VqWAf5eiAObFRXetzOe7icA
+ hqK/AHPPn5AIKGV/R22GercBhj+Ejp4KX1DG/Gs1p4VI95YHhb6rrJ76Kd7RTN5TiT3s
+ z/mVij3lOkWmIkif5WRzhTyETcCBX4I35XruhbY7+w5qJLhsMDvL5ksP9+sIR9+E489Z
+ Gq6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709202951; x=1709807751;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=r4oz9F+Ibm56901DLXPnEbrgzctCTXqHWRDl5gV5M18=;
- b=Z0zSY9dCuv3hfoB4ypIWWSWNbOmCFq9INHF/fLasUnAetesFdXsDHtJry4uyvtbi8N
- 1itM5dOYchUJHD+SPFtGbFlsUtIHAgffP2yAEkHyw7yVfZES9L3KMVMvpitO1bo9txQD
- 5ed7NW7MopKVFKQcIPD5R0mm/q3cckqHXJMBM6aN6sJRwGx37bLMls4gEmExRPzBisNg
- f/7YGdS644Y38kTVKnq8KkvhlPZld1CpJ7oOzURVVJStba9fiCO4eSNyv+l9XnWoiLLL
- BPvGlTd5EQ97i+IlwYqmllSJhNCjzM862qKmEuxEsaOoGbbglM/bVXGq/CD9GtE9XEzL
- L2Mw==
-X-Gm-Message-State: AOJu0Yw82Sy1RGD+32FW4gULmXTIRfqVezxiHfmXmXwqlZJgdnObIzbv
- 6bRouVzcXHCtaWy10WeCXF95v52Y8FFQYafdQ8rFKzpqow0deOaJ6afk3VcSx0MPoS/l9zFYGTR
- 77kmJ6CTDHqpAZ+UclA91ZHNOD1KK6iyJV7sZWJFTrYLBIP7ABFdZ
-X-Received: by 2002:a05:6359:4581:b0:17b:570c:92ba with SMTP id
- no1-20020a056359458100b0017b570c92bamr1479047rwb.21.1709202950733; 
- Thu, 29 Feb 2024 02:35:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEOhGtNnSw1Rb5f66pPyiq6lySfu6i3c2kgD0Xa0uNDPM+pvzvzISFVOO6So/Cc1/VU4L1igA==
-X-Received: by 2002:a05:6359:4581:b0:17b:570c:92ba with SMTP id
- no1-20020a056359458100b0017b570c92bamr1479026rwb.21.1709202950344; 
- Thu, 29 Feb 2024 02:35:50 -0800 (PST)
-Received: from [192.168.0.9] (ip-109-43-178-133.web.vodafone.de.
- [109.43.178.133]) by smtp.gmail.com with ESMTPSA id
- r13-20020ac85e8d000000b0042e703a8d74sm574557qtx.56.2024.02.29.02.35.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Feb 2024 02:35:49 -0800 (PST)
-Message-ID: <bea4ca16-a2ea-4a06-bb8d-27b485d63cc1@redhat.com>
-Date: Thu, 29 Feb 2024 11:35:44 +0100
+ d=1e100.net; s=20230601; t=1709202974; x=1709807774;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=werhXj+q+CY+aPjoduq/4UbLxgq/dfx2/xywUI7Y9WA=;
+ b=hzI6/qASa0+PAGZ68CRKVuDqNdYwQD4fL3i44cL0HkTkts6Jz8NvoRLTs7L+stK8al
+ gRKa5VoC1cup6BXNU+PcCprQKHjYmCatl4qrkDbZcFaM3SQiu7Hf3oVT3oUc3Zgo09qC
+ v5k1S/cGlsF5W2IePX1Xz2DVxFh0+07NR6xwbBU+RhnGq/+Zoap/bdTxVFDYBJBMG5WZ
+ Zt7qFB7kl3rmq0ooy2XcjWtWPiJYwPYICDu3qLxSFL3zk7FE0EQwLdUARZ3W1mAlnpHm
+ AmUcPXxcJoBGZT6Gam4g4M8JaNfP6b3Amq2ULNRDWGyACZ5/jBP8Zja/j5Y2PKDV/wMm
+ r3Aw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXJQxVS4Hserzv99EHIyRmcJNrXtq9MkV8exiEANRzsU0A+hR0seCRAjmz13VcBVaLm/y9x+1xiqYYMgeCGAy2i2W0VbyQ=
+X-Gm-Message-State: AOJu0Yx5TzLMBUmPiLsJF4PxoOCO+8wX6NZDASjCiZEOd5JMA72LP8eL
+ GbbvcEhq9CO+wY5E7SWMALpSjNx8dtwG9h46qOJWwCrZL2eCxD7afiuFNbT1UVoKvxb7qGeIja2
+ cC/Pa8wiu8kxVXnpTPstAwBwzSjU0qczAb990GA==
+X-Google-Smtp-Source: AGHT+IH28XGLrKTvZwzzWKhaJHJpCecMQcB96taW/729JJ2mub246CtaVEGEM4j63fRy2WrhO/xzJO/+HrYNGGXYjfY=
+X-Received: by 2002:a05:6870:b61d:b0:220:8c16:fe1b with SMTP id
+ cm29-20020a056870b61d00b002208c16fe1bmr1731201oab.40.1709202973837; Thu, 29
+ Feb 2024 02:36:13 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/21] migration: Add Error** argument to .save_setup()
- handler
-Content-Language: en-US
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Markus Armbruster <armbru@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Alex Williamson
- <alex.williamson@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Halil Pasic
- <pasic@linux.ibm.com>, Eric Blake <eblake@redhat.com>,
- John Snow <jsnow@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-References: <20240227180345.548960-1-clg@redhat.com>
- <20240227180345.548960-7-clg@redhat.com> <87zfvj3hnd.fsf@pond.sub.org>
- <86d70a2e-7250-440b-bcd6-7877fe3b3dba@yandex-team.ru>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <86d70a2e-7250-440b-bcd6-7877fe3b3dba@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240228125939.56925-1-heinrich.schuchardt@canonical.com>
+ <fb6ef90d-4a3e-4bdd-8516-8b15c1f2329f@linaro.org>
+ <b9937680-8c0b-46f6-86ef-55139562e2c4@canonical.com>
+ <CAFEAcA_Bshua2BQTfOb3D1aF27ayELEt9TcQM8hkQdKaih3xHw@mail.gmail.com>
+ <9c64be5c-25b8-421d-966a-bdac03dfe37c@canonical.com> <Zd_Z2f-5_l3rXNbp@x1n>
+ <2a07005c-6465-47da-ae89-dd6151e8ed74@canonical.com>
+In-Reply-To: <2a07005c-6465-47da-ae89-dd6151e8ed74@canonical.com>
+From: Mattias Nissler <mnissler@rivosinc.com>
+Date: Thu, 29 Feb 2024 11:36:02 +0100
+Message-ID: <CAGNS4TaYD8mZYCOiW0423BrHsuaBsEAQKE33UjHa_ku=MUH4pg@mail.gmail.com>
+Subject: Re: [PATCH, v2] physmem: avoid bounce buffer too small
+To: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Cc: Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::329;
+ envelope-from=mnissler@rivosinc.com; helo=mail-ot1-x329.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,90 +99,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/02/2024 08.20, Vladimir Sementsov-Ogievskiy wrote:
-> On 29.02.24 09:32, Markus Armbruster wrote:
->> Cédric Le Goater <clg@redhat.com> writes:
->>
->>> The purpose is to record a potential error in the migration stream if
->>> qemu_savevm_state_setup() fails. Most of the current .save_setup()
->>> handlers can be modified to use the Error argument instead of managing
->>> their own and calling locally error_report(). The following patches
->>> will introduce such changes for VFIO first.
->>>
->>> Cc: Nicholas Piggin <npiggin@gmail.com>
->>> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
->>> Cc: Halil Pasic <pasic@linux.ibm.com>
->>> Cc: Thomas Huth <thuth@redhat.com>
->>> Cc: Eric Blake <eblake@redhat.com>
->>> Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>> Cc: John Snow <jsnow@redhat.com>
->>> Cc: Stefan Hajnoczi <stefanha@redhat.com>
->>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> Reviewed-by: Peter Xu <peterx@redhat.com>
->>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->>> ---
->>
->> [...]
->>
->>> diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
->>> index 
->>> c483b62a9b5f71772639fc180bdad15ecb6711cb..c934df424a555d83d2198f5ddfc0cbe0ea98e9ec 100644
->>> --- a/hw/s390x/s390-stattrib.c
->>> +++ b/hw/s390x/s390-stattrib.c
->>> @@ -166,7 +166,7 @@ static int cmma_load(QEMUFile *f, void *opaque, int 
->>> version_id)
->>>       return ret;
->>>   }
->>> -static int cmma_save_setup(QEMUFile *f, void *opaque)
->>> +static int cmma_save_setup(QEMUFile *f, void *opaque, Error **errp)
->>>   {
->>>       S390StAttribState *sas = S390_STATTRIB(opaque);
->>>       S390StAttribClass *sac = S390_STATTRIB_GET_CLASS(sas);
->>         int res;
->>         /*
->>          * Signal that we want to start a migration, thus needing PGSTE dirty
->>          * tracking.
->>          */
->>         res = sac->set_migrationmode(sas, 1);
->>         if (res) {
->>             return res;
->>
->> I believe this is a failure return.
->>
->> Anti-pattern: fail without setting an error.  There might be more
->> elsewhere in the series.
->>
->> qapi/error.h's big comment:
->>
->>   * - On success, the function should not touch *errp.  On failure, it
->>   *   should set a new error, e.g. with error_setg(errp, ...), or
->>   *   propagate an existing one, e.g. with error_propagate(errp, ...).
->>   *
->>   * - Whenever practical, also return a value that indicates success /
->>   *   failure.  This can make the error checking more concise, and can
->>   *   avoid useless error object creation and destruction.  Note that
->>   *   we still have many functions returning void.  We recommend
->>   *   • bool-valued functions return true on success / false on failure,
->>   *   • pointer-valued functions return non-null / null pointer, and
->>   *   • integer-valued functions return non-negative / negative.
->>
->>         }
->>         qemu_put_be64(f, STATTR_FLAG_EOS);
->>         return 0;
->>     }
->>
->> When adding Error **errp to a function, you must also add code to set an
->> error on failure to every failure path.  Adding it in a later patch in
->> the same series can be okay,
-> 
-> Personally, I'd prefer not doing so. Creating wrong commits and fixing them 
-> in same series - better to merge all fixes into bad commit:)
+On Thu, Feb 29, 2024 at 11:22=E2=80=AFAM Heinrich Schuchardt
+<heinrich.schuchardt@canonical.com> wrote:
+>
+> On 29.02.24 02:11, Peter Xu wrote:
+> > On Wed, Feb 28, 2024 at 08:07:47PM +0100, Heinrich Schuchardt wrote:
+> >> On 28.02.24 19:39, Peter Maydell wrote:
+> >>> On Wed, 28 Feb 2024 at 18:28, Heinrich Schuchardt
+> >>> <heinrich.schuchardt@canonical.com> wrote:
+> >>>>
+> >>>> On 28.02.24 16:06, Philippe Mathieu-Daud=C3=A9 wrote:
+> >>>>> Hi Heinrich,
+> >>>>>
+> >>>>> On 28/2/24 13:59, Heinrich Schuchardt wrote:
+> >>>>>> virtqueue_map_desc() is called with values of sz exceeding that ma=
+y
+> >>>>>> exceed
+> >>>>>> TARGET_PAGE_SIZE. sz =3D 0x2800 has been observed.
+> >
+> > Pure (and can also be stupid) question: why virtqueue_map_desc() would =
+map
+> > to !direct mem?  Shouldn't those buffers normally allocated from guest =
+RAM?
+> >
+> >>>>>>
+> >>>>>> We only support a single bounce buffer. We have to avoid
+> >>>>>> virtqueue_map_desc() calling address_space_map() multiple times.
+> >>>>>> Otherwise
+> >>>>>> we see an error
+> >>>>>>
+> >>>>>>        qemu: virtio: bogus descriptor or out of resources
+> >>>>>>
+> >>>>>> Increase the minimum size of the bounce buffer to 0x10000 which ma=
+tches
+> >>>>>> the largest value of TARGET_PAGE_SIZE for all architectures.
+> >>>>>>
+> >>>>>> Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.=
+com>
+> >>>>>> ---
+> >>>>>> v2:
+> >>>>>>       remove unrelated change
+> >>>>>> ---
+> >>>>>>     system/physmem.c | 8 ++++++--
+> >>>>>>     1 file changed, 6 insertions(+), 2 deletions(-)
+> >>>>>>
+> >>>>>> diff --git a/system/physmem.c b/system/physmem.c
+> >>>>>> index e3ebc19eef..3c82da1c86 100644
+> >>>>>> --- a/system/physmem.c
+> >>>>>> +++ b/system/physmem.c
+> >>>>>> @@ -3151,8 +3151,12 @@ void *address_space_map(AddressSpace *as,
+> >>>>>>                 *plen =3D 0;
+> >>>>>>                 return NULL;
+> >>>>>>             }
+> >>>>>> -        /* Avoid unbounded allocations */
+> >>>>>> -        l =3D MIN(l, TARGET_PAGE_SIZE);
+> >>>>>> +        /*
+> >>>>>> +         * There is only one bounce buffer. The largest occuring
+> >>>>>> value of
+> >>>>>> +         * parameter sz of virtqueue_map_desc() must fit into the=
+ bounce
+> >>>>>> +         * buffer.
+> >>>>>> +         */
+> >>>>>> +        l =3D MIN(l, 0x10000);
+> >>>>>
+> >>>>> Please define this magic value. Maybe ANY_TARGET_PAGE_SIZE or
+> >>>>> TARGETS_BIGGEST_PAGE_SIZE?
+> >>>>>
+> >>>>> Then along:
+> >>>>>      QEMU_BUILD_BUG_ON(TARGET_PAGE_SIZE <=3D TARGETS_BIGGEST_PAGE_S=
+IZE);
+> >>>>
+> >>>> Thank you Philippe for reviewing.
+> >>>>
+> >>>> TARGETS_BIGGEST_PAGE_SIZE does not fit as the value is not driven by=
+ the
+> >>>> page size.
+> >>>> How about MIN_BOUNCE_BUFFER_SIZE?
+> >>>> Is include/exec/memory.h the right include for the constant?
+> >>>>
+> >>>> I don't think that TARGET_PAGE_SIZE has any relevance for setting th=
+e
+> >>>> bounce buffer size. I only mentioned it to say that we are not
+> >>>> decreasing the value on any existing architecture.
+> >>>>
+> >>>> I don't know why TARGET_PAGE_SIZE ever got into this piece of code.
+> >>>> e3127ae0cdcd ("exec: reorganize address_space_map") does not provide=
+ a
+> >>>> reason for this choice. Maybe Paolo remembers.
+> >>>
+> >>> The limitation to a page dates back to commit 6d16c2f88f2a in 2009,
+> >>> which was the first implementation of this function. I don't think
+> >>> there's a particular reason for that value beyond that it was
+> >>> probably a convenient value that was assumed to be likely "big enough=
+".
+> >>>
+> >>> I think the idea with this bounce-buffer has always been that this
+> >>> isn't really a code path we expected to end up in very often --
+> >>> it's supposed to be for when devices are doing DMA, which they
+> >>> will typically be doing to memory (backed by host RAM), not
+> >>> devices (backed by MMIO and needing a bounce buffer). So the
+> >>> whole mechanism is a bit "last fallback to stop things breaking
+> >>> entirely".
+> >>>
+> >>> The address_space_map() API says that it's allowed to return
+> >>> a subset of the range you ask for, so if the virtio code doesn't
+> >>> cope with the minimum being set to TARGET_PAGE_SIZE then either
+> >>> we need to fix that virtio code or we need to change the API
+> >>> of this function. (But I think you will also get a reduced
+> >>> range if you try to use it across a boundary between normal
+> >>> host-memory-backed RAM and a device MemoryRegion.)
+> >>
+> >> If we allow a bounce buffer only to be used once (via the in_use flag)=
+, why
+> >> do we allow only a single bounce buffer?
+> >>
+> >> Could address_space_map() allocate a new bounce buffer on every call a=
+nd
+> >> address_space_unmap() deallocate it?
+> >>
+> >> Isn't the design with a single bounce buffer bound to fail with a
+> >> multi-threaded client as collision can be expected?
+> >
+> > See:
+> >
+> > https://lore.kernel.org/r/20240212080617.2559498-1-mnissler@rivosinc.co=
+m
+> >
+> > For some reason that series didn't land, but it seems to be helpful in =
+this
+> > case too if e.g. there can be multiple of such devices.
+> >
+> > Thanks,
+> >
+>
+> Hello Peter Xu,
+>
+> thanks for pointing to your series. What I like about it is that it
+> removes the limit of a single bounce buffer per AddressSpace.
+>
+> Unfortunately it does not solve my problem. You limit the sum of all of
+> the allocations for a single AddressSpcace to
+> DEFAULT_MAX_BOUNCE_BUFFER_SIZE =3D 4096 which is too small for my use cas=
+e.
 
-I agree - that might create issues with bisecting later. Please fix it in 
-this patch here already!
+Note that the limit is configured for address spaces attached to PCI
+devices with a parameter.
 
-  Thanks,
-   Thomas
+>
+> Why do we need a limit?
 
+The rationale is to prevent a guest from allocating unlimited amounts
+of host memory.
 
+> Why is it so tiny?
+
+Nobody has come up with a good way to determine a "sufficient" amount
+that works with all use cases, while at the same time addressing the
+concern due to malicious guest behavior mentioned above.
+
+(Note that I'm merely reciting previous conversations as the author of
+the series Peter pointed you at)
+
+>
+> Best regards
+>
+> Heinrich
+>
+>
+>
 
