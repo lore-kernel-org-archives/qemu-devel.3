@@ -4,90 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AC01C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 21:25:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A95F2C54798
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 21:38:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfntI-0002oy-NF; Thu, 29 Feb 2024 16:24:32 -0500
+	id 1rfo5u-0005AZ-G9; Thu, 29 Feb 2024 16:37:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rfntG-0002oZ-75
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 16:24:30 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rfntE-0002Hb-TR
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 16:24:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709241867;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=R6ylsqxEX6xNDxT59BN5b7ey5tgWYc1homrvmSzpuYG6UgjYBtYUSuLz/zTlWnJYaAPqO+
- dBHFfDXunIfiFTm60YikTzbnlMWw2kprvoSMFDlB1hAse2JWdMEMEHTuYYeg5OUfu0wIM1
- 5ZGOVyd1Zxj39CfMkk29oZXeBcmcSWU=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-647-Q_ux92vnO8aZtXZJJQ157Q-1; Thu, 29 Feb 2024 16:24:26 -0500
-X-MC-Unique: Q_ux92vnO8aZtXZJJQ157Q-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-56484d05dcaso821571a12.0
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 13:24:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rfo5s-0005AJ-LJ
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 16:37:32 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rfo5r-0005nv-4K
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 16:37:32 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1dc09556599so13241385ad.1
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 13:37:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709242649; x=1709847449; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ZWJTFI90UfE25LdpQG6TSbOwe27NKeoirmtHq4Y1/UA=;
+ b=OOpWfmK/ZE+jUxk6dN0l/TSD40FCvVvsce81/+IXZ7epFha+CNTFak94mxiMjIMPWv
+ a2BJDVbB3AWovi/rN5Zp3w/ZTFxabRGO8ZevTfNCuhUdacmgYWRF7IrufRWHH6iUBodh
+ b56pVFPPel/6QAHq727j1MQcIaPtiXwRI/a3ntvb/WSoTTSFJWefg4NdAALbNXJ2F9wQ
+ CVMbfNq3DsYR5N8PZYPqxg/ddEk7GndgEPpBnc4l5cRFZeLZl/IAqcho5DLq2MW9+Cz4
+ RC9qUTca9NZex6dgvBk64a133ImeIebma5LERuqsDa+hpoh96BDroEwB8PlBhhvxb5yH
+ SBnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709241864; x=1709846664;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=UA1l8+UZoSkderpr7PmHETuTnVNGDo6YdS1gR1HhG9UQrUlbclvfLJq82JV9buAs4B
- p0EPvbw05XkNUH9SeCt08U+ZvZgU+L16EQ1FrDiM3WwUtjX8UIzhU3yAK2mAp58dLXEg
- 0Kaum2sHVM0XYSuCfnEbl6ZoQ9aAUSf3nHrmvWPaXG1mWHEIq3OiTjxuGFb80HzbICN6
- v+lZHMys/gI2ZbMteEQsSPg5WxEAZMMpuqTfINnkk2mmaeJxin4Kv4oAWW8NkADIf+Hp
- 2VtWXIGv3HuIOsSbAZOtRW0kFevGzpMc8tMK2LO3CkshcGDIBmKJ7ip/f4TJ6lOEKrTo
- Br4Q==
-X-Gm-Message-State: AOJu0YyVCYCPD/BVhRUO1oXB+HXI8Gj1nI8RxhXWy/W2t57Esfru87ev
- HEXOG1isGa2XRXdeBf7VwLgZYdNfdzqqdtqrVuXGE63hEMmpoxZC4WkMoqN3BD/mQiaVVncAuiv
- 4iktoy0PkciPUitW9Ja5khQmhI//H7xMfVxD9PwfE4zDdAZLm4x0e17CwZZl2
-X-Received: by 2002:a05:6402:312a:b0:566:51fa:3647 with SMTP id
- dd10-20020a056402312a00b0056651fa3647mr85166edb.10.1709241864733; 
- Thu, 29 Feb 2024 13:24:24 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHEQ8Gkizz+SMyc7fmLHV6/4D6SfB/QvICnkA2h097X3zrgzL2D1zMx4chKYzxNJEOP7SOUIA==
-X-Received: by 2002:a05:6402:312a:b0:566:51fa:3647 with SMTP id
- dd10-20020a056402312a00b0056651fa3647mr85159edb.10.1709241864457; 
- Thu, 29 Feb 2024 13:24:24 -0800 (PST)
-Received: from [192.168.10.118] ([2001:b07:6468:f312:63a7:c72e:ea0e:6045])
- by smtp.gmail.com with ESMTPSA id
- s25-20020a05640217d900b005661a50b7c5sm945401edy.13.2024.02.29.13.24.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Feb 2024 13:24:23 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Dmitrii Gavrilov <ds-gavr@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, berrange@redhat.com,
- eduardo@habkost.net, mlevitsk@redhat.com, vsementsov@yandex-team.ru,
- yc-core@yandex-team.ru
-Subject: Re: [PATCH] system/qdev-monitor: move drain_call_rcu call under if
- (!dev) in qmp_device_add()
-Date: Thu, 29 Feb 2024 22:24:21 +0100
-Message-ID: <20240229212421.16204-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20231103105602.90475-1-ds-gavr@yandex-team.ru>
-References: 
+ d=1e100.net; s=20230601; t=1709242649; x=1709847449;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZWJTFI90UfE25LdpQG6TSbOwe27NKeoirmtHq4Y1/UA=;
+ b=jn2V6dz2Cy0mWuGvs/RT/BpASrpwS9Bt/3cljX2+34L5OsPrPiFzas0RdSvz4q0ZHT
+ +6UCnXIrcm3E/5re4SptoxaNyk8DHUFqXVahoBtT3FpPlbwRMa6kn/GcfG0uW84cPVFS
+ cJ7ywKs1PBX3Koq60xfCaloMLEOCqU6CwBz6+Uy3aER2kbYOYtDHitt2VE+dMaiZNBDf
+ is77uCnyINzXgFGrVnLqWEFBp7P7e6GJ/s6L7tj5zoFuJT/0E12qcx9K5Vh/Pjs6zrNF
+ kyA3rMEQCR3z1i6estt54f+JqW0R+Hw1HRo/BvZDIXcVOz34PxmNpPSoqKOKVtKp9yM7
+ wArg==
+X-Gm-Message-State: AOJu0YwpY3+DjyHOqd6i3zsR5AodpdlqcF5u6qVzBOKji3QU+mRploPW
+ SlhByaqLU+TV2F+8uJsHsCl43fn/oNUb5hq9Vgw0LiXH+jkKYRh4VuBPwiyjJLeH6Urzy6u/5S2
+ S
+X-Google-Smtp-Source: AGHT+IF6ejUJSL6c0h6gcHoV0aKMbJ4gvuXTTjguNnVD6HWOT2ziI+ATbN4C4+S+3CnCQVmnmq20qA==
+X-Received: by 2002:a17:902:dac6:b0:1db:fa84:9be3 with SMTP id
+ q6-20020a170902dac600b001dbfa849be3mr4355598plx.8.1709242649002; 
+ Thu, 29 Feb 2024 13:37:29 -0800 (PST)
+Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
+ [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
+ u2-20020a17090341c200b001dcb560d7f0sm1986310ple.11.2024.02.29.13.37.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 29 Feb 2024 13:37:28 -0800 (PST)
+Message-ID: <98cfbdca-96d4-4d7a-838e-f71684d4cbae@linaro.org>
+Date: Thu, 29 Feb 2024 11:37:25 -1000
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tcg/optimize: fix uninitialized variable
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20240228110641.287205-1-pbonzini@redhat.com>
+ <1f179ee4-cab6-49c8-a625-2ac9dbe4e3d2@linaro.org>
+ <CABgObfaZPp_wAE4u70+_ShmtFpEf69RjyRyqZEQ8TjDkue_Q-g@mail.gmail.com>
+ <86e5043a-ec20-4e8c-84bc-e63ecb982bff@linaro.org>
+In-Reply-To: <86e5043a-ec20-4e8c-84bc-e63ecb982bff@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,8 +100,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2/28/24 09:29, Richard Henderson wrote:
+> On 2/28/24 02:20, Paolo Bonzini wrote:
+>> On Wed, Feb 28, 2024 at 12:19 PM Philippe Mathieu-Daudé
+>> <philmd@linaro.org> wrote:
+>>>
+>>> On 28/2/24 12:06, Paolo Bonzini wrote:
+>>>> The variables uext_opc and sext_opc are used without initialization if
+>>>> TCG_TARGET_extract_i{32,64}_valid returns false.  The result, depending
+>>>> on the compiler, might be the generation of extract and sextract opcodes
+>>>
+>>> Shouldn't compilers bark?
+>>
+>> I expected that too...
+> 
+> Weird.  Anyhoo,
+> 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
 Queued, thanks.
 
-Paolo
-
+r~
 
