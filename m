@@ -4,143 +4,177 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF4DEC48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 15:15:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E630FC54E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 15:22:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfi7p-0000p9-CG; Thu, 29 Feb 2024 10:15:09 -0500
+	id 1rfiE3-0006Ru-Ni; Thu, 29 Feb 2024 10:21:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
- id 1rfi7c-0000l3-GS
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:14:57 -0500
-Received: from mail-co1nam11on20600.outbound.protection.outlook.com
- ([2a01:111:f403:2416::600]
- helo=NAM11-CO1-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1rfiDx-0006RS-W5
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:21:30 -0500
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
- id 1rfi7Z-0001EK-Ri
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:14:56 -0500
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1rfiDv-0004L0-5e
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:21:29 -0500
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41T9rbsY012454; Thu, 29 Feb 2024 15:21:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
+ h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=corp-2023-11-20;
+ bh=9+Tj0kL5TDmETMfEFVO0AgEedGha45oAIaJSimiT1/4=;
+ b=DruBCi5mGE1WMl1ZObXzxHbZZGIT6F/w40dRs02SD0XSrFiNg6Iua8vpDcwnUWtVptac
+ GPZHh6AUPTG4UclxCZXiRlKfMoxptkMfNHh0ORaQUh4b5xMOaYv+pJDTGP3sgVzcFdgj
+ FHiL5/XQlEGkqytwAE16uyKqkeWFr0Pb5qvGhn1uwj2OMFS5XW2Fvpy9zRgpM1m1o4hQ
+ twA3CrE3zgvi9OT1e07BXtDSzgQpkUMw1/5/egk+k8QlPgLgB/F/D7SDr+1PCU9440GF
+ 6cac6+Xp4heF6wrzPy+Ix3cr/3fH04fCk9Am1zFH3nsmeRRA1FZSXBKbEMoJo79SwrAd qA== 
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wf82udg5y-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 29 Feb 2024 15:21:22 +0000
+Received: from pps.filterd
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 41TE7LUV009588; Thu, 29 Feb 2024 15:21:21 GMT
+Received: from nam10-dm6-obe.outbound.protection.outlook.com
+ (mail-dm6nam10lp2101.outbound.protection.outlook.com [104.47.58.101])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 3wjrqkanny-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 29 Feb 2024 15:21:21 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=OmuR8ZAuNcmW+s9fFgGvC2o4urj397br3Z/By7WqDUsmYsJhbLi/Q3hKtFwPDWpyk+ko5fvZzW5aNXSljv707HZWR5KgN+kNVYC5ypuzAZD5Zdwi9Sl/s5RlLPb0Um0IsLYKjtbylpsXhlUoTuMxPp/VzlqIs7Ub4hAtio7Q68Aeok3tnJ8fWyGol0QWNOGrSYc1fjblS8pNgLHHkwUurM3Zy1BdBa2boehr6QSGQHsgnZdMZJs5AkC20GuYuM8mg1iPnnLSXubpRf/pVD3bsdieM7BsFnmjZWCi8xVG7HMoxCVTvQeRGI9lpvSfoViodmbGlqFj+7+2Xei08JrP7w==
+ b=EPTXshT2hc7/sspCjyF3IHXowjygm4BXurOaicHwncPf4lf75I3yYdpn+D3t3DLWrG/RGVfaRv66v9FDMNvUbqnAX1t/KqDxgglOqbHmHoagLuG6Krt8j3xcbVWZOWLmiqem3s/VPocwnTdOgD66MudlHSItuvpBCq2Sktm4kInHkLv6UW6dGX7kfGnxjFPXycmHxypDtZX/396WDYff2bbKUtOHQFfMSzw503huhrgo3HTFUreckkHRoz0P6PLjwril0gXiqau7fzWUAdLykv5vM9gwkspV06VpKe9z+8tSaqvOOlZfXoOibGD3ptoeQFbYpu7/qUwD7sHLRZAjjw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=IxMWNYTLFEO0/rJt1hoii6KtnNpX62z4XxAB0Tvx+dg=;
- b=X3bDpcgr0QUKP0z7+F/QwrSDicjHRjRY+wbPTDSK1jTC/t8UwglrpyJ8P0WGYpkRFfYErO6yDCBWdRy4FH9G1NOxXZy7NHi/+L2NEasGGwFRyW4oTSHVfMqp+ozGNVdsOQ3n9bLtmFI8I9DKnZQPJOYqsqXg3OCfPH/ErRHj4hd+tFYL88ABKNjyf91Vmb5m8V9yn99hWsYHItkSlFqxzu0/J8y2TcpIlawjof8I7zCzW2wDc7k3jWqH1zeyVVjUyxp15Sl6slmKQgP3rCSUFtxLnZmdUVc6YNWoEWQVzyoRXe7dHXrmu8pHDkSfZIbJNGDP4/UjIDAoamiuNfFBIA==
+ bh=9+Tj0kL5TDmETMfEFVO0AgEedGha45oAIaJSimiT1/4=;
+ b=QWujq+urFEeQGZ094ZLiDsLIZzkGOjS3Ni+4u6nS0AfVICORplaDqgfH/DB9DUK0zivs3Fs84JSLfGKOq3da93EtzbcCZHtXHKa5/j4WPqmqRq757djtFDoArEU3lvqUrITdlZ2t9kPVr+i3zrAR0+goYCXBR606vbc0GHqPTpRFmg4qhsf9Pc/3qM7/+2tLkQsipUwTmMBqKNrIoglMjkn/Sf7Hz50tcbQbtUySKwUXiyJ8twzWBRKcbCN5ozX1gcGedsgk9QAyuDGLQYbxxEU9jg4CKqn/k1M557dOHTKNlO+sfB/k/Wn79EYDmy4O9m+jsO1aBcLfv30+nkdoPw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IxMWNYTLFEO0/rJt1hoii6KtnNpX62z4XxAB0Tvx+dg=;
- b=UtrslPk9kw3+i9sPFTCyolqqQ8swgaSvPWuPtiiasKLZVoOiEvUn2B7kRbwyGQ1BkXpoZeAYqk4x+5MoxqKv/kBLeSljtCnyMhWkx7CobBZRYKvEn0N7UDKGDkUR9kDrtZevwHghzCC5cSoeauncMd0wv6tuTV75vy6ciuwvGpY=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from MW3PR12MB4553.namprd12.prod.outlook.com (2603:10b6:303:2c::19)
- by PH7PR12MB5734.namprd12.prod.outlook.com (2603:10b6:510:1e1::6)
+ bh=9+Tj0kL5TDmETMfEFVO0AgEedGha45oAIaJSimiT1/4=;
+ b=E5Z3a81qoBFOoEEAHSUPQca4pMTq8WiYpbMfp2wtVS0U9z+KsIsQ4+VcRpxyzUZS/3mplmOGNr8vP0vNvMT/QZZ55/eQUrcdgk4VuoVwWnSUnebUreA75/CQ5+4P838mr9LI88XFcQ91MyR5GgD3r2LjSgsOHpDC1n4KsX+FwHw=
+Received: from SA2PR10MB4684.namprd10.prod.outlook.com (2603:10b6:806:119::14)
+ by CH3PR10MB7986.namprd10.prod.outlook.com (2603:10b6:610:1cc::20)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.41; Thu, 29 Feb
- 2024 15:14:48 +0000
-Received: from MW3PR12MB4553.namprd12.prod.outlook.com
- ([fe80::b49d:bb81:38b6:ce54]) by MW3PR12MB4553.namprd12.prod.outlook.com
- ([fe80::b49d:bb81:38b6:ce54%4]) with mapi id 15.20.7316.039; Thu, 29 Feb 2024
- 15:14:48 +0000
-Message-ID: <0306b83f-b183-45d2-91c2-7a4df6dba1aa@amd.com>
-Date: Thu, 29 Feb 2024 09:14:46 -0600
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.36; Thu, 29 Feb
+ 2024 15:21:19 +0000
+Received: from SA2PR10MB4684.namprd10.prod.outlook.com
+ ([fe80::c3ce:7c28:7db1:656b]) by SA2PR10MB4684.namprd10.prod.outlook.com
+ ([fe80::c3ce:7c28:7db1:656b%6]) with mapi id 15.20.7316.039; Thu, 29 Feb 2024
+ 15:21:19 +0000
+Message-ID: <9d560585-8f3b-4ad4-82e6-333e8c74b496@oracle.com>
+Date: Thu, 29 Feb 2024 10:21:14 -0500
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 00/21] Introduce smp.modules for x86 in QEMU
+Subject: Re: [PATCH V4 10/14] migration: stop vm for cpr
 Content-Language: en-US
-To: Zhao Liu <zhao1.liu@linux.intel.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Zhuocheng Ding <zhuocheng.ding@intel.com>, Yongwei Ma
- <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-References: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
-From: "Moger, Babu" <babu.moger@amd.com>
-In-Reply-To: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Marc-Andre Lureau <marcandre.lureau@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+References: <1708622920-68779-1-git-send-email-steven.sistare@oracle.com>
+ <1708622920-68779-11-git-send-email-steven.sistare@oracle.com>
+ <ZdvyuazPp6Lrn5Mr@x1n>
+From: Steven Sistare <steven.sistare@oracle.com>
+Organization: Oracle Corporation
+In-Reply-To: <ZdvyuazPp6Lrn5Mr@x1n>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: DS7PR03CA0077.namprd03.prod.outlook.com
- (2603:10b6:5:3bb::22) To MW3PR12MB4553.namprd12.prod.outlook.com
- (2603:10b6:303:2c::19)
+X-ClientProxiedBy: BLAPR03CA0077.namprd03.prod.outlook.com
+ (2603:10b6:208:329::22) To SA2PR10MB4684.namprd10.prod.outlook.com
+ (2603:10b6:806:119::14)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MW3PR12MB4553:EE_|PH7PR12MB5734:EE_
-X-MS-Office365-Filtering-Correlation-Id: b6c41fa2-9b9d-48b2-9ad2-08dc39392b35
+X-MS-TrafficTypeDiagnostic: SA2PR10MB4684:EE_|CH3PR10MB7986:EE_
+X-MS-Office365-Filtering-Correlation-Id: f7e405d2-c8c2-42c9-198d-08dc393a1469
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: DFI3Hjsw/PN7ZJZby7TZBopKc2Xb12SnGOsjNmT9T2XZajVC4TadozzukExMbYhx2rhTmLcuCwl1F2axSQGGhTtvZ93N35JedY86a5OoER7gsYE5hJpBYSF4x+uWSGpHbGhVGqClHCadaECkh36WIWXG5241lyg5IWFba7a7J4gsMPIk+zXLA1jDXMceRKLwRqYBiJaQBcjJ+bUcGqz9jKb0rfIN+v5vI3h2VIXvzi9in5mPKkQl6LOiRJtUQ4qs5rOb7vmh0nHZQsqmCXwDTeSjg/TCnib8nhCsVuxa7KTbzjx1bLylrL1uRS06tQrKL01Ye45qZVqbTF6w8LdTK/ZDvhz6VLghvXIoG7dyN7mSBmr0M4MaFF38NiBAh+o1g7DURCkYu+cDHuo9a9dj8DECD21KkVEmJ9UDugvUN/y6sYT3FQkEa9Escli+fyfqIPta3eIYHIC9qVJWKvvrY9VI0voru6hVNdhvQEH/DFN0cfUx5FGk4RMcQk4ddfdaFVlOKdBBBtlvYpqUU57ksuWcVHEwWqQ/B+B1KaHTDV4l0XBT1i1TJjVOmltRIJ6kyHNX15W2ToTdImHYW5pyczDdBYnAyWYt1PDhHQ4d46cp1qFa7Xyd+F3qtDmCJVz0r98Ryoru0Gg70n4Pr+kw1HrITWPPOwyuAHfH0FQufCE=
+X-Microsoft-Antispam-Message-Info: 83vv2sy/us7dtcc4G9UCGMvsDDRdpgySBACvUaPSHwROhKlWSWlwu2S/dN/CWVtzTcnz62sp6+vxmRZVLdlOpQrS4tWqXq3iz47gsAvCC81tWxgQkmvKAw8G60P6q+snAs+ZKSlUr9an/FKgKQ9c0I4FqMP96MswICLVebwfRQhr0UGW+nZkAXKB8Ap3k8Krkml4d88Ahj3aeqTOdOsNQCBlbuyBrsQ7c5mtKugIB8PaYpZ3X5UfIyXeYm/G2AFMJmWhjG8Qvdxfr45dP9xU74p9lXcU8nwxh0G+iX3aX0nbHp6xE6FOE6bvqW76Meq9gUYwiFj9CggTBawMKR/43KZrJwjtK9LQe5dQsaF1rqWMlSxhBoz2YEMQKWc3bQAZC5H6RLHvFVey2Gniz7BC6sJRQRv5Cmr47B3pzAIrhdn+VubzipGYF2JfHTiaXsrF+oICTaDYYBaZt+E5nhKNvB1tZPnLI6f1eef0iTsmM5IHnFuevkoLFk0JaHmkXuOGcKalKw0ZldAcVOaaeuEc/T6WQcahlLMLAIF+08NueM4S2rwaZsHyiwtxDcCFNPCNHl5FHHgsGQKpojorjMIsMX4vlxSMWGCLFz5Zq0f1o2O778nJZrdYx6innSojaaqfqON5zkjSGO/NMDagHchASw==
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:MW3PR12MB4553.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(921011); DIR:OUT; SFP:1101; 
+ IPV:NLI; SFV:NSPM; H:SA2PR10MB4684.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?S00rNFUyVi9HT0dEWVkrczh5VWd0SHhuSEdNd2Vnem9jdlV3VzVIVFZ4OUg2?=
- =?utf-8?B?MVNFVXRqbGk0QWRRWW9UcytNejdnUDRZenQwU0RiT3VVZXlrWnBLN0gydDNo?=
- =?utf-8?B?WDlDVE1hQmdxYmV6TmxIZlNqeDMzeFI3Y2U3Tmg2ejhSbGFIaWcyZCtlNmNG?=
- =?utf-8?B?NjBFZ1d0UWZDUkoxelM2WDFPNm1LYmRQSHJzdjNUSWU2WXIwL05LSS9jY2ty?=
- =?utf-8?B?ajcvT3Fnd0RUOThkeVN6a2xhRlFFMDNkMmlVY0huRVJLeUF6bEVrL01VeTBl?=
- =?utf-8?B?V2VRYU1GUHVWUkU1ci9uWXdod3ZnenFCdWxHaE14Wk14QnovOXViQUlmUFRi?=
- =?utf-8?B?WFp0ZldmdEdXTWVCSnVQdHVUUzFWREhLc3ZuRGlrM2VlaHpqY2xoQlZlZHha?=
- =?utf-8?B?U3B0clRIK0hVR0lSL0lPZnlBVW9wVzAzMjNXd3o0c2tqOGxpOHlJZGlsS1Nu?=
- =?utf-8?B?Mmtrc0VKc2N4eWw0K0FRUCtwZHpHOUxHdk9qOGxVM3V2QUxkNFFFc0gvNVM4?=
- =?utf-8?B?QXhIUThhb2NZK3ovbGJaRmk2djIyVFR6MGRqOGNJYXNlNmZ2K3NXN3ZNY0g3?=
- =?utf-8?B?MFI0MWdIZmNnN3dNdkRHNnZuMDljNXhzVGFLU0Y1S2hsVW5FNmFDMUFzbmMv?=
- =?utf-8?B?dWhKeFhGM0ZIeFc5R2t0Yk9uS28rV3g4TnY5aVlCbC93TzBWeWJPay8zRGpO?=
- =?utf-8?B?YVZrSWNQTW9CRTgxa1N4VkF3R2pDWFpyZnUrYmNKaDdBb3RrcjE2cFFMMEtE?=
- =?utf-8?B?enhkVFBhb2FMZnMzWDFzdEtlSzVzNUF4cW9KekQxUVB4eDhHK2lQeE8zd1pU?=
- =?utf-8?B?K0QxdzJKamFuNzUxckRET1JoOHNxNnpoU1U5WUxFR0Vza2xmc2Ewa3lweVZq?=
- =?utf-8?B?MURoSDJvS0l1Qmh2My9jOGxtMWY3QjJab0Vjdmp4SVBrRkdGb25HOFRLck11?=
- =?utf-8?B?MnM3Nkw4YlIxSThqV0wzK2o2RDNDcFdaQ1Yvb1N4bmI0MW5qVU1waGRjcmJL?=
- =?utf-8?B?SFY2RFJUWnk4TkxVVHdCb2tIYi9seUJNeGd0d3V2RjJMSWtMSG5vYzRNTU5x?=
- =?utf-8?B?VVV2SGlmaWJhTWh1cExqbDgxSERXUTZ1YWNkcy8xRDZTTTZvSldVbG0yL05k?=
- =?utf-8?B?RWRFNG1md1ZZekticHJ6dWQyMWZpRC9OY3FLNm45bERuNkhCVDJaK0ZSb0JE?=
- =?utf-8?B?QU16VUpES2JiY0RsVWZHV1B3Qi9BZ3BQWVgwZ1RYTmRveUxVU1VvUGxjRW1E?=
- =?utf-8?B?K1BMcWVxMDAzVTZVRkxmd1lZWmxsdE1HUk9NalcxNVVTWGJmblRLeGVwUnI0?=
- =?utf-8?B?T1cza3B6ZWlvMHhPZVNaVkxiVzVzRjdubWQ2VVd3TmlwZGtuemV0cExDSVJt?=
- =?utf-8?B?NUNwTlpocnl1Y0EybFZLR0FJYmlEYjRsV1NoMy9ac3phKytVbGcvUFYvUlpR?=
- =?utf-8?B?bTZGeHRJQW95TGNrVGgxQlZsSHlFOWFtK2RTOGVRQzZJdlVYbHhsRXo0T2k4?=
- =?utf-8?B?Ni96YVN5S3RpaVZ6MHR2ZWZWbUZlQ29ZQUNMV2JoTlY5N3duYnV2SnhLRk9m?=
- =?utf-8?B?U1lwOVBtZlY1LzIxZi90aTdZK1Flbi9MZGxkc2MyMmpwLzlaRHFOay9pTU5q?=
- =?utf-8?B?MlVFaXJLeVRlM0s0OVgrdG9GRXdMaVZtSWpBS2FIa0RseHRoTDZpWHZ3Y2Vy?=
- =?utf-8?B?T1FqalFoclczN3NmRUd4bGRTUHBrOEhNMHcxcVFqaWE1MlJWRTI0c3FoTUNn?=
- =?utf-8?B?NnVQMEJvcVE4cFhHV0Exb2FOZ25HTzIxay9pemtTeE1rSllOMU5SaUJwZVRG?=
- =?utf-8?B?NEdYbjZwVGNiWlVkUkNScmNvLzRsRlgvYlErTFdFVUdIQnBwTmFyYWtwSi9n?=
- =?utf-8?B?Zk01Wk9vSDQ5YzBkOTQ0TjI3RzhWQlZ1SmJvVllkK3kweGtBYTlwWEJJN1Uy?=
- =?utf-8?B?OEYxZ2NUUDdWVDh6K0NUcGtPTERpalBmbDRXdUFqNmlSeGtOL0dURnErSmRj?=
- =?utf-8?B?N3haaVc4dDhkemNoMUU0RU90QkFWYngyNHYva3R1TTVSWHhnRjd1eWN4eWxj?=
- =?utf-8?B?dXV2ajlBbVlxU1dwL0NSOEpYVGZjMERLU29CaXdBK0tZOU9UZUdmZktZMTRN?=
- =?utf-8?Q?KqqA=3D?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b6c41fa2-9b9d-48b2-9ad2-08dc39392b35
-X-MS-Exchange-CrossTenant-AuthSource: MW3PR12MB4553.namprd12.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?czlnL3JDY1NTeDJYUTVETHhkSlFmWkZFWEZLTWl3eHVoeG44dWVVcmd4a0pk?=
+ =?utf-8?B?QnBGbUNHN1ltang4ZFNhMkRzaHVtWmdHS1l5UWowWGJsSW0zMXNSbm9FdjRi?=
+ =?utf-8?B?ckdwbmpDRUplalgzYVoxcnRnclc3UWtFN1JxU1VzZnRHSmx5T1N5K2VqQTE4?=
+ =?utf-8?B?YUpVN3lUcldXS0MwaURscHd5cTFlbVdOWjVWUXRqeUFVdHFVZFAyQ3lERHVG?=
+ =?utf-8?B?TEQ1cTJCQU9JNEk0NWlMbXhiR2h6bXN5UWIrOUpPclAxL01JcWV6c28xdm1T?=
+ =?utf-8?B?eERoUXJkdW9EZFA5ZmdqQVFoZXNLQmlEbE84L1ZZT0Z1N0NoU0IvTWFXdEJ4?=
+ =?utf-8?B?WVJoZ21ONzEzWjJ5bCtORTUrRFhtTS96WFNWblRFYllJTEJLeUdBMmhlQ0ZM?=
+ =?utf-8?B?NlROQk9ScENyVkpvb20vSkk2aHlRc1ZqTDBtZVhuSlkzQVpzdGRJeXkxTzRw?=
+ =?utf-8?B?MlYwdlNpWDlBMzg3WWdTQ1NnOG9yeFFCb2dTQVN5OVlhSHEyWDNqZFlicTBu?=
+ =?utf-8?B?NWNaTTAvc2hrSHhpNEZLR0pJdlJyeEtQZWFydUVoanBINjk1VkU2a1lnUVh0?=
+ =?utf-8?B?T1gwSUVsVW9kSkR5WXZ1RmViUnZuc1VweUlDR3l2eXEza2R0TTE3c1pEb2hR?=
+ =?utf-8?B?SWlDNlMzZ2Eydmh2VnZRQXBrOVhpQVkyczFhZlZhYVJRSXRMSUxRc2lES21R?=
+ =?utf-8?B?NzlPRzV6Y0ZjZFVlRUN5WlI2SGY2bG9BTFlVQk9QT3Q3UEZodHdHbkFFN2dN?=
+ =?utf-8?B?dzRybUtRZ2d2dTJWZkJUNC9SQVloR0pKeW1GaGpmaUZHd1FUK1dRZHBkVlVn?=
+ =?utf-8?B?MU96U21RZnNvUm9UTWMrSG55dDhydUw4bUV1SzJEUFNOOWFZbWFJMlJSbE5h?=
+ =?utf-8?B?WDloVnZzLzhYMkw3cE5wSkN1K0NZcVhuMHF3OUhxR0RmdTc3R3U0REJKdUtB?=
+ =?utf-8?B?OFMvSVo4V3JLclBlZytpTkV0WmR4MGYxZ0orRWNIcHBHMVd4UzRoSXcxV3V3?=
+ =?utf-8?B?ekZGRU1ZczRvajFzcVpQV0dWL1dsT0dnLzQ5OU82N1FxdmJHWGlCYm1ESzdw?=
+ =?utf-8?B?K0ljbEJqQkJXR3hJaEZaczRVUzlzYnN4SG8xaVJJYXU0K2wrVzAyTzVjMTgw?=
+ =?utf-8?B?YXkwdEVhNmp6c0l1ci9EMkRlVzVKTHZNaEI4YVE3TGVzUTlHNm9PK2htUjE0?=
+ =?utf-8?B?RGk1eThySm40YjZLeFJaN2M2N0hQYklRT2o0d2liNjZOdFkrbU5wV3AxVEdh?=
+ =?utf-8?B?RW9wbmQvek1TZWhPb3QyK1R1MGllb1hDTWE3VHpoUVExT2JUcGtpRzNjL2Yr?=
+ =?utf-8?B?NjJHdWM5cVRFbHJ3WDB1c1R0d3QrdXY4Uy9Ha2ZobTJzTmdOVFhLb2tRRDFL?=
+ =?utf-8?B?M3hMVmZTOThQWFJndHB0ZHVyN01XaVJJTkJjd0lmN3pTR0tIVUZLUWcvaTRi?=
+ =?utf-8?B?b2lEUStsa1RiNU1ET2xWL2dlblN2YS95Szh2azNxd1U1WkRVcXd3SllsSWps?=
+ =?utf-8?B?UGhwQlRmdXB0UUdCSCtkakFtSTdhbHNrcUJjVFFZZGZ4ZUQ0UWxTeXlKYmI0?=
+ =?utf-8?B?d0RKMEFBOStiL05jdkdhbjBoSWZJeHVYVWxwdmFyc0dLQzFtVDJUQ1Bsc2FL?=
+ =?utf-8?B?bmtlY2RVbFpvdWZtZ1VPUjdSSEhpb0pXTldsZEZxUFYvUWpnQW5xdTMwQTBs?=
+ =?utf-8?B?UFNhVVoxSXNHYTV2bzRNQW1TWDgrSVhlV3NVR0tGU25GcWhPVzYvMUx1Ujlm?=
+ =?utf-8?B?eTJUQldZeGZwdkJpMzEyS1FFbk5WMWc4MUZVUk5EWk1BSHVTQzRnNW9QT0sx?=
+ =?utf-8?B?WW92ZGVrQzhBM0tpZzVQU29NdEd5TDU2ZlJSdnl3d0xwNFdENFE0YVN5aXdZ?=
+ =?utf-8?B?dWF0Y21ldDRJWlIwZS8yemJ3Z3E0ZUhGc3lpa1NGY2U0SzRvMW5pRmZhdTho?=
+ =?utf-8?B?RnZ4K0ZSVlFLNGNBZ2FIVzBseWNtQzJJYzRrMnRBUEIwWmF6ZU13WnpEaHZi?=
+ =?utf-8?B?cUltRnkvNG92RXloZlNKRGhpRmhyakl1S0d4UkllMm1GRGtONUFrNzN4NG1T?=
+ =?utf-8?B?UDAza1IvQVJTSUVTTksxOFNhbFlpaE5WV1E1aDM5K0MvVGQyNi9peVlEWE5j?=
+ =?utf-8?B?SHgxNnMwNjRqVHZoTHhvWWhOQ3RNbVpFcjVuZ0c0NCtwdFA0S2JJcGtNVVFn?=
+ =?utf-8?B?Q3c9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: TmqT3ZB8UB10nAxzcLyaLGauaBOpB/xsgXP20cZdpt2/FM5XANkicECbz2ihaI+59JR9wgJjiPb7U4KmtoNfV/7SBxATGfh8r10STDt+m8zkNukOOb+8SYHR2t/HnzFnVe8mpf1drZXzQLJ/2A1EgLC7xJEy5fQlvKJniLNbj9Z5slm6oGwj1xjwXc2Zn53dzrk0X8I4+QyKJihJCmMkehfdTgxjwm9rSIqg16WgzCCgaGkeS3ZtqjxUTXIZNLxoGkEG0sHPXs19kHasfS82v+jaU94RRGYPl5cpf+uV648FxPwGbdatBaQRtnSY1MKxTJETexQjBysSNchXzPjbyZBxwmwzeV6WDKkR/B9W2ypqcJ9Gy/E9khIosWB0HWgGE//DY4pg9+Usgv6z/nxNkgFrnaa+E1GWHtQVt7/Yx3DnR3Xr0YV20Fg2AP3EBpxZn77t3L6yfHM1qIxdAMrIozVDPwcuKzqypiZLpUqllLmLTEx3Rjmc3lbXBX5ikIN5OylLPpFXIEOJ6eOT+rR/NkQCBWfjaR7L1688i/POqTsrmwmB1u9UXwLW79WtMe3x7otEuewW45KOp9FfgpriAqArzuxmSqAgAgFz8npKrHA=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f7e405d2-c8c2-42c9-198d-08dc393a1469
+X-MS-Exchange-CrossTenant-AuthSource: SA2PR10MB4684.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Feb 2024 15:14:48.1367 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Feb 2024 15:21:19.4398 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TUVfTwVi2jut1yBfIqDo6m7vKHnjZNL0CT/i0fB/DW8Iohlq9ZIK3Nh16txd4tlu
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5734
-Received-SPF: softfail client-ip=2a01:111:f403:2416::600;
- envelope-from=Babu.Moger@amd.com;
- helo=NAM11-CO1-obe.outbound.protection.outlook.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+X-MS-Exchange-CrossTenant-UserPrincipalName: 0j7Ae8TFbs780RtbE4e8QWT6L1P+pQ7qgHr9ixplt5GxPpFYcQ0ArOWZZAqqUE/2ARxYFLoSezpP8UOC9Wev8DUAjbhDIgQzG9LxZRrPdeI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR10MB7986
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-29_02,2024-02-29_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ bulkscore=0 suspectscore=0
+ spamscore=0 phishscore=0 malwarescore=0 mlxscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
+ definitions=main-2402290117
+X-Proofpoint-GUID: cuWoxswg3ibcEHQf3rY8NENNW7b9D0wi
+X-Proofpoint-ORIG-GUID: cuWoxswg3ibcEHQf3rY8NENNW7b9D0wi
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -154,234 +188,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: babu.moger@amd.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sanity tested on AMD machine. Looks good.
+On 2/25/2024 9:08 PM, Peter Xu wrote:
+> On Thu, Feb 22, 2024 at 09:28:36AM -0800, Steve Sistare wrote:
+>> When migration for cpr is initiated, stop the vm and set state
+>> RUN_STATE_FINISH_MIGRATE before ram is saved.  This eliminates the
+>> possibility of ram and device state being out of sync, and guarantees
+>> that a guest in the suspended state remains suspended, because qmp_cont
+>> rejects a cont command in the RUN_STATE_FINISH_MIGRATE state.
+>>
+>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> 
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+> 
+> cpr-reboot mode keeps changing behavior.
+> 
+> Could we declare it "experimental" until it's solid?  Maybe a patch to
+> document this?
+> 
+> Normally IMHO we shouldn't merge a feature if it's not complete, however
+> cpr-reboot is so special that the mode itself is already merged in 8.2
+> before I started to merge patches, and it keeps changing things.  I don't
+> know what else we can do here besides declaring it experimental and not
+> declare it a stable feature.
 
-Tested-by: Babu Moger <babu.moger@amd.com>
+Hi Peter, the planned/committed functionality for cpr-reboot changed only once, in:
+    migration: stop vm for cpr
 
-On 2/27/24 04:32, Zhao Liu wrote:
-> From: Zhao Liu <zhao1.liu@intel.com>
-> 
-> Hi list,
-> 
-> This is the our v9 patch series, rebased on the master branch at the
-> commit 03d496a992d9 ("Merge tag 'pull-qapi-2024-02-26' of
-> https://repo.or.cz/qemu/armbru into staging").
-> 
-> Compared with v8 [1], v9 mainly added more module description in commit
-> message and added missing smp.modules description/documentation.
-> 
-> With the general introduction (with origial cluster level) of this
-> secries in v7 [2] cover letter, the following sections are mainly about
-> the description of the newly added smp.modules (since v8, changed x86
-> cluster support to module) as supplement.
-> 
-> Since v4 [3], we've dropped the original L2 cache command line option
-> (to configure L2 cache topology) and now we have the new RFC [4] to
-> support the general cache topology configuration (as the supplement to
-> this series).
-> 
-> Welcome your comments!
-> 
-> 
-> Why We Need a New CPU Topology Level
-> ====================================
-> 
-> For the discussion in v7 about whether we should reuse current
-> smp.clusters for x86 module, the core point is what's the essential
-> differences between x86 module and general cluster.
-> 
-> Since, cluster (for ARM/riscv) lacks a comprehensive and rigorous
-> hardware definition, and judging from the description of smp.clusters
-> [5] when it was introduced by QEMU, x86 module is very similar to
-> general smp.clusters: they are all a layer above existing core level
-> to organize the physical cores and share L2 cache.
-> 
-> But there are following reasons that drive us to introduce the new
-> smp.modules:
-> 
->   * As the CPU topology abstraction in device tree [6], cluster supports
->     nesting (though currently QEMU hasn't support that). In contrast,
->     (x86) module does not support nesting.
-> 
->   * Due to nesting, there is great flexibility in sharing resources
->     on cluster, rather than narrowing cluster down to sharing L2 (and
->     L3 tags) as the lowest topology level that contains cores.
-> 
->   * Flexible nesting of cluster allows it to correspond to any level
->     between the x86 package and core.
-> 
->   * In Linux kernel, x86's cluster only represents the L2 cache domain
->     but QEMU's smp.clusters is the CPU topology level. Linux kernel will
->     also expose module level topology information in sysfs for x86. To
->     avoid cluster ambiguity and keep a consistent CPU topology naming
->     style with the Linux kernel, we introduce module level for x86.
-> 
-> Based on the above considerations, and in order to eliminate the naming
-> confusion caused by the mapping between general cluster and x86 module,
-> we now formally introduce smp.modules as the new topology level.
-> 
-> 
-> Where to Place Module in Existing Topology Levels
-> =================================================
-> 
-> The module is, in existing hardware practice, the lowest layer that
-> contains the core, while the cluster is able to have a higher topological
-> scope than the module due to its nesting.
-> 
-> Therefore, we place the module between the cluster and the core:
-> 
->     drawer/book/socket/die/cluster/module/core/thread
-> 
-> 
-> Additional Consideration on CPU Topology
-> ========================================
-> 
-> Beyond this patchset, nowadays, different arches have different topology
-> requirements, and maintaining arch-agnostic general topology in SMP
-> becomes to be an increasingly difficult thing due to differences in
-> sharing resources and special flexibility (e.g., nesting):
-> 
->   * It becomes difficult to put together all CPU topology hierarchies of
->     different arches to define complete topology order.
-> 
->   * It also becomes complex to ensure the correctness of the topology
->     calculations.
->       - Now the max_cpus is calculated by multiplying all topology
->         levels, and too many topology levels can easily cause omissions.
-> 
-> Maybe we should consider implementing arch-specfic topology hierarchies.
-> 
-> 
-> [1]: https://lore.kernel.org/qemu-devel/20240131101350.109512-1-zhao1.liu@linux.intel.com/
-> [2]: https://lore.kernel.org/qemu-devel/20240108082727.420817-1-zhao1.liu@linux.intel.com/
-> [3]: https://lore.kernel.org/qemu-devel/20231003085516-mutt-send-email-mst@kernel.org/
-> [4]: https://lore.kernel.org/qemu-devel/20240220092504.726064-1-zhao1.liu@linux.intel.com/
-> [5]: https://lore.kernel.org/qemu-devel/c3d68005-54e0-b8fe-8dc1-5989fe3c7e69@huawei.com/
-> [6]: https://www.kernel.org/doc/Documentation/devicetree/bindings/cpu/cpu-topology.txt
-> 
-> Thanks and Best Regards,
-> Zhao
-> ---
-> Changelog:
-> 
-> Changes since v8:
->  * Add the reason of why a new module level is needed in commit message.
->    (Markus).
->  * Add the description about how Linux kernel supports x86 module level
->    in commit message. (Daniel)
->  * Add module description in qemu_smp_opts.
->  * Add missing "modules" parameter of -smp example in documentation.
->  * Add Philippe's reviewed-by tag.
-> 
-> Changes since v7 (main changes):
->  * Introduced smp.modules as a new CPU topology level. (Xiaoyao)
->  * Fixed calculations of cache_info_passthrough case in the
->    patch "i386/cpu: Use APIC ID info to encode cache topo in
->    CPUID[4]". (Xiaoyao)
->  * Moved the patch "i386/cpu: Use APIC ID info get NumSharingCache
->    for CPUID[0x8000001D].EAX[bits 25:14]" after CPUID[4]'s similar
->    change ("i386/cpu: Use APIC ID offset to encode cache topo in
->    CPUID[4]"). (Xiaoyao)
->  * Introduced a bitmap in CPUX86State to cache available CPU topology
->    levels.
->  * Refactored the encode_topo_cpuid1f() to use traversal to search the
->    encoded level and avoid using static variables.
->  * Mapped x86 module to smp module instead of cluster.
->  * Dropped Michael/Babu's ACKed/Tested tags for most patches since the
->    code change.
-> 
-> Changes since v6:
->  * Updated the comment when check cluster-id. Since there's no
->    v8.2, the cluster-id support should at least start from v9.0.
->  * Rebased on commit d328fef93ae7 ("Merge tag 'pull-20231230' of
->    https://gitlab.com/rth7680/qemu into staging").
-> 
-> Changes since v5:
->  * The first four patches of v5 [1] have been merged, v6 contains
->    the remaining patches.
->  * Reabsed on the latest master.
->  * Updated the comment when check cluster-id. Since current QEMU is
->    v8.2, the cluster-id support should at least start from v8.3.
-> 
-> Changes since v4:
->  * Dropped the "x-l2-cache-topo" option. (Michael)
->  * Added A/R/T tags.
-> 
-> Changes since v3 (main changes):
->  * Exposed module level in CPUID[0x1F].
->  * Fixed compile warnings. (Babu)
->  * Fixed cache topology uninitialization bugs for some AMD CPUs. (Babu)
-> 
-> Changes since v2:
->  * Added "Tested-by", "Reviewed-by" and "ACKed-by" tags.
->  * Used newly added wrapped helper to get cores per socket in
->    qemu_init_vcpu().
-> 
-> Changes since v1:
->  * Reordered patches. (Yanan)
->  * Deprecated the patch to fix comment of machine_parse_smp_config().
->    (Yanan)
->  * Renamed test-x86-cpuid.c to test-x86-topo.c. (Yanan)
->  * Split the intel's l1 cache topology fix into a new separate patch.
->    (Yanan)
->  * Combined module_id and APIC ID for module level support into one
->    patch. (Yanan)
->  * Made cache_into_passthrough case of cpuid 0x04 leaf in
->  * cpu_x86_cpuid() used max_processor_ids_for_cache() and
->    max_core_ids_in_package() to encode CPUID[4]. (Yanan)
->  * Added the prefix "CPU_TOPO_LEVEL_*" for CPU topology level names.
->    (Yanan)
-> ---
-> Zhao Liu (20):
->   hw/core/machine: Introduce the module as a CPU topology level
->   hw/core/machine: Support modules in -smp
->   hw/core: Introduce module-id as the topology subindex
->   hw/core: Support module-id in numa configuration
->   i386/cpu: Fix i/d-cache topology to core level for Intel CPU
->   i386/cpu: Use APIC ID info to encode cache topo in CPUID[4]
->   i386/cpu: Use APIC ID info get NumSharingCache for
->     CPUID[0x8000001D].EAX[bits 25:14]
->   i386/cpu: Consolidate the use of topo_info in cpu_x86_cpuid()
->   i386/cpu: Introduce bitmap to cache available CPU topology levels
->   i386: Split topology types of CPUID[0x1F] from the definitions of
->     CPUID[0xB]
->   i386/cpu: Decouple CPUID[0x1F] subleaf with specific topology level
->   i386: Introduce module level cpu topology to CPUX86State
->   i386: Support modules_per_die in X86CPUTopoInfo
->   i386: Expose module level in CPUID[0x1F]
->   i386: Support module_id in X86CPUTopoIDs
->   i386/cpu: Introduce module-id to X86CPU
->   hw/i386/pc: Support smp.modules for x86 PC machine
->   i386: Add cache topology info in CPUCacheInfo
->   i386/cpu: Use CPUCacheInfo.share_level to encode CPUID[4]
->   i386/cpu: Use CPUCacheInfo.share_level to encode
->     CPUID[0x8000001D].EAX[bits 25:14]
-> 
-> Zhuocheng Ding (1):
->   tests: Add test case of APIC ID for module level parsing
-> 
->  hw/core/machine-hmp-cmds.c |   4 +
->  hw/core/machine-smp.c      |  41 +++--
->  hw/core/machine.c          |  18 +++
->  hw/i386/pc.c               |   1 +
->  hw/i386/x86.c              |  67 ++++++--
->  include/hw/boards.h        |   4 +
->  include/hw/i386/topology.h |  60 +++++++-
->  qapi/machine.json          |   7 +
->  qemu-options.hx            |  18 ++-
->  system/vl.c                |   3 +
->  target/i386/cpu.c          | 304 +++++++++++++++++++++++++++++--------
->  target/i386/cpu.h          |  29 +++-
->  target/i386/kvm/kvm.c      |   3 +-
->  tests/unit/test-x86-topo.c |  56 ++++---
->  14 files changed, 489 insertions(+), 126 deletions(-)
-> 
+Suspension to support vfio is an enhancement which adds to the basic functionality,
+it does not change it.  This was planned all along, but submitted as a separate 
+series to manage complexity, as I outlined in my qemu community presentation,
+which I emailed you at the time.
 
--- 
-Thanks
-Babu Moger
+Other "changes" that arose during review were just clarifications and explanations.
+
+So, I don't think cpr-reboot deserves to be condemned to experimental limbo.
+
+- Steve
+
 
