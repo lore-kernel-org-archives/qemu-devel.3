@@ -4,41 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F10ACC48BF6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F10FAC54E49
 	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 16:26:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfjEK-0006Z0-M0; Thu, 29 Feb 2024 11:25:56 -0500
+	id 1rfjEp-0006me-F5; Thu, 29 Feb 2024 11:26:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rfjEI-0006X3-1e
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 11:25:54 -0500
+ id 1rfjEj-0006m2-VB
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 11:26:22 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rfjEF-0006ju-H5
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 11:25:53 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TlxKq0Cccz6JBQg;
- Fri,  1 Mar 2024 00:21:03 +0800 (CST)
+ id 1rfjEh-0006zA-Mj
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 11:26:21 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TlxMS6PsKz6K8sx;
+ Fri,  1 Mar 2024 00:22:28 +0800 (CST)
 Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 14536141870;
- Fri,  1 Mar 2024 00:25:46 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id A4880140B63;
+ Fri,  1 Mar 2024 00:26:16 +0800 (CST)
 Received: from SecurePC-101-06.china.huawei.com (10.122.247.231) by
  lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Thu, 29 Feb 2024 16:25:45 +0000
+ 15.1.2507.35; Thu, 29 Feb 2024 16:26:16 +0000
 To: Liu Jingqi <jingqi.liu@intel.com>, <qemu-devel@nongnu.org>,
  <ankita@nvidia.com>, "Michael S . Tsirkin" <mst@redhat.com>, Igor Mammedov
  <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
 CC: <linuxarm@huawei.com>, Markus Armbruster <armbru@redhat.com>, Daniel Black
  <daniel@linux.ibm.com>, <linux-cxl@vger.kernel.org>
-Subject: [PATCH 0/2 qemu] hw/acpi/hmat: Misc fixes
-Date: Thu, 29 Feb 2024 16:25:43 +0000
-Message-ID: <20240229162545.7887-1-Jonathan.Cameron@huawei.com>
+Subject: [PATCH 1/2] hmat acpi: Do not add Memory Proximity Domain Attributes
+ Structure targetting non existent memory.
+Date: Thu, 29 Feb 2024 16:25:44 +0000
+Message-ID: <20240229162545.7887-2-Jonathan.Cameron@huawei.com>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240229162545.7887-1-Jonathan.Cameron@huawei.com>
+References: <20240229162545.7887-1-Jonathan.Cameron@huawei.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -70,68 +73,39 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Two unrelated fixes here:
-1) Linux really doesn't like it when you claim non existent memory
-   is directly connected to an initiator (here a CPU).
-   It is a nonsense entry, though I also plan to try and get
-   a relaxation of the condition into the kernel.
-   Maybe we need to care about migration, but I suspect no one
-   cares about this corner case (hence no one noticed the
-   problem!)
+If qemu is started with a proximity node containing CPUs alone,
+it will provide one of these structures to say memory in this
+node is directly connected to itself.
 
-2) An access outside of the allocated array when building the
-   the latency and bandwidth tables.  Given this crashes QEMU
-   for me, I think we are fine with the potential table change.
+This description is arguably pointless even if there is memory
+in the node.  If there is no memory present, and hence no SRAT
+entry it breaks Linux HMAT passing and the table is rejected.
 
-Some notes on 1:
-- This structure is almost entirely pointless in general - most
-  of the fields were removed in HMAT v2.
-  What remains, is meant to convey memory controller location
-  when the memory is in a different Proximity Domain from the
-  memory controller (e.g. a SoC with both HBM and DDR will present
-  2 NUMA domains but memory controllers will be wherever we describe
-  the CPUs as being - typically with the DDR)
-  Currently QEMU creates these to indicate direct connection between
-  a CPU domain and memory in the same domain. Using the Proximity
-  domain in SRAT conveys the same. This adds no information.
+https://elixir.bootlin.com/linux/latest/source/drivers/acpi/numa/hmat.c#L444
 
-Notes on 2:
-- I debated a follow up patch removing the entires in the table
-  for initiators on nodes that don't have any initiators.
-  QEMU won't let you use them as initiators in the LB entries
-  anyway so there is no way to set those entries and they
-  end up reported as 0. OK for Bandwidth as no one is going to use
-  the zero bandwidth channel, but that's a very attractive latency,
-  but that's fine as no one will read the number as there are
-  no initiators? (right?)
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+---
+ hw/acpi/hmat.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-  There is a corner case in ACPI that bites us here.
-  ACPI Proximity domains are only defined in SRAT, but nothing says
-  they need to be fully defined.  Generic Initiators are optional
-  afterall (newish feature) so it was common to use _PXM in DSDT
-  to define where various platform devices were (and PCI but that's
-  still not read by Linux - a story of pain and broken systems for
-  another day). That's fine if they are in a node with CPUs
-  (initiators) but not so much if they   happen to be in a memory
-  only node. Today I think the only thing we can make hit this
-  condition in QEMU is a PCI Expander Bridge which doesn't initiate
-  transactions. But things behind it do and there are drivers out
-  there that do buffer placement based on SLIT distances. I'd
-  expect HMAT users to follow soon.
-
-  It would be nice to think all such systems will use Generic Port
-  Affinity Structures (and I have patches for those to follow shortly)
-  but that's overly optimistic beyond CXL where the kernel will use
-  them and which drove their introduction.
-
-Jonathan Cameron (2):
-  hmat acpi: Do not add Memory Proximity Domain Attributes Structure
-    targetting non existent memory.
-  hmat acpi: Fix out of bounds access due to missing use of indirection
-
- hw/acpi/hmat.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
-
+diff --git a/hw/acpi/hmat.c b/hw/acpi/hmat.c
+index 3042d223c8..723ae28d32 100644
+--- a/hw/acpi/hmat.c
++++ b/hw/acpi/hmat.c
+@@ -204,6 +204,13 @@ static void hmat_build_table_structs(GArray *table_data, NumaState *numa_state)
+     build_append_int_noprefix(table_data, 0, 4); /* Reserved */
+ 
+     for (i = 0; i < numa_state->num_nodes; i++) {
++        /*
++         * Linux rejects whole HMAT table if a node with no memory
++         * has one of these structures listing it as a target.
++         */
++        if (!numa_state->nodes[i].node_mem) {
++            continue;
++        }
+         flags = 0;
+ 
+         if (numa_state->nodes[i].initiator < MAX_NODES) {
 -- 
 2.39.2
 
