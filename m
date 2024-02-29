@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09F58C54798
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 08:01:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E506C54798
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 08:01:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfbLU-0001hE-NC; Thu, 29 Feb 2024 03:00:48 -0500
+	id 1rfbLY-0001nP-4l; Thu, 29 Feb 2024 03:00:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1rfbLM-0001Rr-S7; Thu, 29 Feb 2024 03:00:43 -0500
+ id 1rfbLR-0001YC-KB; Thu, 29 Feb 2024 03:00:45 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX02.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_CBC_SHA1:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1rfbLB-00033a-SZ; Thu, 29 Feb 2024 03:00:40 -0500
+ id 1rfbLN-00033a-NP; Thu, 29 Feb 2024 03:00:43 -0500
 Received: from TWMBX02.aspeed.com (192.168.0.25) by TWMBX02.aspeed.com
  (192.168.0.25) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 29 Feb
- 2024 16:00:16 +0800
+ 2024 16:00:18 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX02.aspeed.com
  (192.168.0.24) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
- Transport; Thu, 29 Feb 2024 16:00:16 +0800
+ Transport; Thu, 29 Feb 2024 16:00:18 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
  Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>,
@@ -31,9 +31,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  here" <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <jamin_lin@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 2/8] aspeed/sli: Add AST2700 support
-Date: Thu, 29 Feb 2024 16:00:08 +0800
-Message-ID: <20240229080014.1235018-3-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 5/8] aspeed/scu: Add AST2700 support
+Date: Thu, 29 Feb 2024 16:00:11 +0800
+Message-ID: <20240229080014.1235018-6-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240229080014.1235018-1-jamin_lin@aspeedtech.com>
 References: <20240229080014.1235018-1-jamin_lin@aspeedtech.com>
@@ -68,276 +68,499 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-AST2700 SLI engine is designed to accelerate the
-throughput between cross-die connections.
-It have CPU_SLI at CPU die and IO_SLI at IO die.
+AST2700 have two SCU controllers which are SCU and SCUIO.
+Both SCU and SCUIO registers are not compatible previous SOCs
+, introduces new registers and adds ast2700 scu, sucio class init handler.
 
-Introduce new ast2700_sli and ast2700_sliio class
-with instance_init and realize handlers.
+The pclk divider selection of SCUIO is defined in SCUIO280[20:18] and
+the pclk divider selection of SCU is defined in SCU280[25:23].
+Both of them are not compatible AST2600 SOCs, adds a get_apb_freq function
+and trace-event for AST2700 SCU and SCUIO.
 
 Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/misc/aspeed_sli.c         | 179 +++++++++++++++++++++++++++++++++++
- hw/misc/meson.build          |   3 +-
- hw/misc/trace-events         |   7 ++
- include/hw/misc/aspeed_sli.h |  32 +++++++
- 4 files changed, 220 insertions(+), 1 deletion(-)
- create mode 100644 hw/misc/aspeed_sli.c
- create mode 100644 include/hw/misc/aspeed_sli.h
+ hw/misc/aspeed_scu.c         | 306 ++++++++++++++++++++++++++++++++++-
+ hw/misc/trace-events         |   4 +
+ include/hw/misc/aspeed_scu.h |  47 +++++-
+ 3 files changed, 351 insertions(+), 6 deletions(-)
 
-diff --git a/hw/misc/aspeed_sli.c b/hw/misc/aspeed_sli.c
-new file mode 100644
-index 0000000000..4af42f145c
---- /dev/null
-+++ b/hw/misc/aspeed_sli.c
-@@ -0,0 +1,179 @@
-+/*
-+ * ASPEED SLI Controller
-+ *
-+ * Copyright (C) 2024 ASPEED Technology Inc.
-+ *
-+ * This code is licensed under the GPL version 2 or later.  See
-+ * the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "qemu/error-report.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/misc/aspeed_sli.h"
-+#include "qapi/error.h"
-+#include "migration/vmstate.h"
-+#include "trace.h"
-+
-+#define SLI_REGION_SIZE 0x500
-+#define TO_REG(addr) ((addr) >> 2)
-+
-+static uint64_t aspeed_sli_read(void *opaque, hwaddr addr, unsigned int size)
-+{
-+    AspeedSLIState *s = ASPEED_SLI(opaque);
-+    int reg = TO_REG(addr);
-+
-+    if (reg >= ARRAY_SIZE(s->regs)) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "\n",
-+                      __func__, addr);
-+        return 0;
-+    }
-+
-+    trace_aspeed_sli_read(addr, size, s->regs[reg]);
-+    return s->regs[reg];
-+}
-+
-+static void aspeed_sli_write(void *opaque, hwaddr addr, uint64_t data,
-+                              unsigned int size)
-+{
-+    AspeedSLIState *s = ASPEED_SLI(opaque);
-+    int reg = TO_REG(addr);
-+
-+    if (reg >= ARRAY_SIZE(s->regs)) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
-+                      __func__, addr);
-+        return;
-+    }
-+
-+    trace_aspeed_sli_write(addr, size, data);
-+    s->regs[reg] = data;
-+}
-+
-+static uint64_t aspeed_sliio_read(void *opaque, hwaddr addr, unsigned int size)
-+{
-+    AspeedSLIState *s = ASPEED_SLI(opaque);
-+    int reg = TO_REG(addr);
-+
-+    if (reg >= ARRAY_SIZE(s->regs)) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "\n",
-+                      __func__, addr);
-+        return 0;
-+    }
-+
-+    trace_aspeed_sliio_read(addr, size, s->regs[reg]);
-+    return s->regs[reg];
-+}
-+
-+static void aspeed_sliio_write(void *opaque, hwaddr addr, uint64_t data,
-+                              unsigned int size)
-+{
-+    AspeedSLIState *s = ASPEED_SLI(opaque);
-+    int reg = TO_REG(addr);
-+
-+    if (reg >= ARRAY_SIZE(s->regs)) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
-+                      __func__, addr);
-+        return;
-+    }
-+
-+    trace_aspeed_sliio_write(addr, size, data);
-+    s->regs[reg] = data;
-+}
-+
-+static const MemoryRegionOps aspeed_sli_ops = {
-+    .read = aspeed_sli_read,
-+    .write = aspeed_sli_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 4,
-+    },
-+};
-+
-+static const MemoryRegionOps aspeed_sliio_ops = {
-+    .read = aspeed_sliio_read,
-+    .write = aspeed_sliio_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 4,
-+    },
-+};
-+
-+static void aspeed_sli_realize(DeviceState *dev, Error **errp)
-+{
-+    AspeedSLIState *s = ASPEED_SLI(dev);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+
-+    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_sli_ops, s,
-+                          TYPE_ASPEED_SLI, SLI_REGION_SIZE);
-+    sysbus_init_mmio(sbd, &s->iomem);
-+}
-+
-+static void aspeed_sliio_realize(DeviceState *dev, Error **errp)
-+{
-+    AspeedSLIState *s = ASPEED_SLI(dev);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+
-+    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_sliio_ops, s,
-+                          TYPE_ASPEED_SLI, SLI_REGION_SIZE);
-+    sysbus_init_mmio(sbd, &s->iomem);
-+}
-+
-+static void aspeed_sli_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->desc = "Aspeed SLI Controller";
-+    dc->realize = aspeed_sli_realize;
-+}
-+
-+static const TypeInfo aspeed_sli_info = {
-+    .name          = TYPE_ASPEED_SLI,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(AspeedSLIState),
-+    .class_init    = aspeed_sli_class_init,
-+    .class_size    = sizeof(AspeedSLIClass),
-+    .abstract      = true,
-+};
-+
-+static void aspeed_2700_sli_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->desc = "AST2700 SLI Controller";
-+}
-+
-+static void aspeed_2700_sliio_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->desc = "AST2700 I/O SLI Controller";
-+    dc->realize = aspeed_sliio_realize;
-+}
-+
-+static const TypeInfo aspeed_2700_sli_info = {
-+    .name           = TYPE_ASPEED_2700_SLI,
-+    .parent         = TYPE_ASPEED_SLI,
-+    .class_init     = aspeed_2700_sli_class_init,
-+};
-+
-+static const TypeInfo aspeed_2700_sliio_info = {
-+    .name           = TYPE_ASPEED_2700_SLIIO,
-+    .parent         = TYPE_ASPEED_SLI,
-+    .class_init     = aspeed_2700_sliio_class_init,
-+};
-+
-+static void aspeed_sli_register_types(void)
-+{
-+    type_register_static(&aspeed_sli_info);
-+    type_register_static(&aspeed_2700_sli_info);
-+    type_register_static(&aspeed_2700_sliio_info);
-+}
-+
-+type_init(aspeed_sli_register_types);
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 746686835b..790f05525a 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -137,7 +137,8 @@ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_sbc.c',
-   'aspeed_sdmc.c',
-   'aspeed_xdma.c',
--  'aspeed_peci.c'))
-+  'aspeed_peci.c',
-+  'aspeed_sli.c'))
+diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
+index 1ac04b6cb0..eb38ea8e19 100644
+--- a/hw/misc/aspeed_scu.c
++++ b/hw/misc/aspeed_scu.c
+@@ -134,6 +134,48 @@
  
- system_ss.add(when: 'CONFIG_MSF2', if_true: files('msf2-sysreg.c'))
- system_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_rng.c'))
+ #define AST2600_CLK TO_REG(0x40)
+ 
++#define AST2700_SILICON_REV       TO_REG(0x00)
++#define AST2700_HW_STRAP1         TO_REG(0x10)
++#define AST2700_HW_STRAP1_CLR     TO_REG(0x14)
++#define AST2700_HW_STRAP1_LOCK    TO_REG(0x20)
++#define AST2700_HW_STRAP1_SEC1    TO_REG(0x24)
++#define AST2700_HW_STRAP1_SEC2    TO_REG(0x28)
++#define AST2700_HW_STRAP1_SEC3    TO_REG(0x2C)
++
++#define AST2700_SCU_CLK_SEL_1       TO_REG(0x280)
++#define AST2700_SCU_HPLL_PARAM      TO_REG(0x300)
++#define AST2700_SCU_HPLL_EXT_PARAM  TO_REG(0x304)
++#define AST2700_SCU_DPLL_PARAM      TO_REG(0x308)
++#define AST2700_SCU_DPLL_EXT_PARAM  TO_REG(0x30c)
++#define AST2700_SCU_MPLL_PARAM      TO_REG(0x310)
++#define AST2700_SCU_MPLL_EXT_PARAM  TO_REG(0x314)
++#define AST2700_SCU_D1CLK_PARAM     TO_REG(0x320)
++#define AST2700_SCU_D2CLK_PARAM     TO_REG(0x330)
++#define AST2700_SCU_CRT1CLK_PARAM   TO_REG(0x340)
++#define AST2700_SCU_CRT2CLK_PARAM   TO_REG(0x350)
++#define AST2700_SCU_MPHYCLK_PARAM   TO_REG(0x360)
++#define AST2700_SCU_FREQ_CNTR       TO_REG(0x3b0)
++#define AST2700_SCU_CPU_SCRATCH_0   TO_REG(0x780)
++#define AST2700_SCU_CPU_SCRATCH_1   TO_REG(0x784)
++
++#define AST2700_SCUIO_CLK_STOP_CTL_1    TO_REG(0x240)
++#define AST2700_SCUIO_CLK_STOP_CLR_1    TO_REG(0x244)
++#define AST2700_SCUIO_CLK_STOP_CTL_2    TO_REG(0x260)
++#define AST2700_SCUIO_CLK_STOP_CLR_2    TO_REG(0x264)
++#define AST2700_SCUIO_CLK_SEL_1         TO_REG(0x280)
++#define AST2700_SCUIO_CLK_SEL_2         TO_REG(0x284)
++#define AST2700_SCUIO_HPLL_PARAM        TO_REG(0x300)
++#define AST2700_SCUIO_HPLL_EXT_PARAM    TO_REG(0x304)
++#define AST2700_SCUIO_APLL_PARAM        TO_REG(0x310)
++#define AST2700_SCUIO_APLL_EXT_PARAM    TO_REG(0x314)
++#define AST2700_SCUIO_DPLL_PARAM        TO_REG(0x320)
++#define AST2700_SCUIO_DPLL_EXT_PARAM    TO_REG(0x324)
++#define AST2700_SCUIO_DPLL_PARAM_READ   TO_REG(0x328)
++#define AST2700_SCUIO_DPLL_EXT_PARAM_READ TO_REG(0x32c)
++#define AST2700_SCUIO_UARTCLK_GEN       TO_REG(0x330)
++#define AST2700_SCUIO_HUARTCLK_GEN      TO_REG(0x334)
++#define AST2700_SCUIO_CLK_DUTY_MEAS_RST TO_REG(0x388)
++
+ #define SCU_IO_REGION_SIZE 0x1000
+ 
+ static const uint32_t ast2400_a0_resets[ASPEED_SCU_NR_REGS] = {
+@@ -244,6 +286,25 @@ static uint32_t aspeed_1030_scu_get_apb_freq(AspeedSCUState *s)
+         / asc->apb_divider;
+ }
+ 
++static uint32_t aspeed_2700_scu_get_apb_freq(AspeedSCUState *s)
++{
++    AspeedSCUClass *asc = ASPEED_SCU_GET_CLASS(s);
++    uint32_t hpll = asc->calc_hpll(s, s->regs[AST2700_SCU_HPLL_PARAM]);
++
++    return hpll / (SCU_CLK_GET_PCLK_DIV(s->regs[AST2700_SCU_CLK_SEL_1]) + 1)
++           / asc->apb_divider;
++}
++
++static uint32_t aspeed_2700_scuio_get_apb_freq(AspeedSCUState *s)
++{
++    AspeedSCUClass *asc = ASPEED_SCU_GET_CLASS(s);
++    uint32_t hpll = asc->calc_hpll(s, s->regs[AST2700_SCUIO_HPLL_PARAM]);
++
++    return hpll /
++        (SCUIO_AST2700_CLK_GET_PCLK_DIV(s->regs[AST2700_SCUIO_CLK_SEL_1]) + 1)
++        / asc->apb_divider;
++}
++
+ static uint64_t aspeed_scu_read(void *opaque, hwaddr offset, unsigned size)
+ {
+     AspeedSCUState *s = ASPEED_SCU(opaque);
+@@ -258,7 +319,8 @@ static uint64_t aspeed_scu_read(void *opaque, hwaddr offset, unsigned size)
+ 
+     switch (reg) {
+     case RNG_DATA:
+-        /* On hardware, RNG_DATA works regardless of
++        /*
++         * On hardware, RNG_DATA works regardless of
+          * the state of the enable bit in RNG_CTRL
+          */
+         s->regs[RNG_DATA] = aspeed_scu_get_random();
+@@ -494,6 +556,9 @@ static uint32_t aspeed_silicon_revs[] = {
+     AST2600_A3_SILICON_REV,
+     AST1030_A0_SILICON_REV,
+     AST1030_A1_SILICON_REV,
++    AST2700_A0_SILICON_REV,
++    AST2720_A0_SILICON_REV,
++    AST2750_A0_SILICON_REV,
+ };
+ 
+ bool is_supported_silicon_rev(uint32_t silicon_rev)
+@@ -783,6 +848,243 @@ static const TypeInfo aspeed_2600_scu_info = {
+     .class_init = aspeed_2600_scu_class_init,
+ };
+ 
++static uint64_t aspeed_ast2700_scu_read(void *opaque, hwaddr offset,
++                                        unsigned size)
++{
++    AspeedSCUState *s = ASPEED_SCU(opaque);
++    int reg = TO_REG(offset);
++
++    if (reg >= ASPEED_AST2700_SCU_NR_REGS) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "\n",
++                __func__, offset);
++        return 0;
++    }
++
++    switch (reg) {
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Unhandled read at offset 0x%" HWADDR_PRIx "\n",
++                      __func__, offset);
++    }
++
++    trace_aspeed_ast2700_scu_read(offset, size, s->regs[reg]);
++    return s->regs[reg];
++}
++
++static void aspeed_ast2700_scu_write(void *opaque, hwaddr offset,
++                                     uint64_t data64, unsigned size)
++{
++    AspeedSCUState *s = ASPEED_SCU(opaque);
++    int reg = TO_REG(offset);
++    /* Truncate here so bitwise operations below behave as expected */
++    uint32_t data = data64;
++
++    if (reg >= ASPEED_AST2700_SCU_NR_REGS) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
++                __func__, offset);
++        return;
++    }
++
++    trace_aspeed_ast2700_scu_write(offset, size, data);
++
++    switch (reg) {
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Unhandeled write at offset 0x%" HWADDR_PRIx "\n",
++                      __func__, offset);
++        break;
++    }
++
++    s->regs[reg] = data;
++}
++
++static const MemoryRegionOps aspeed_ast2700_scu_ops = {
++    .read = aspeed_ast2700_scu_read,
++    .write = aspeed_ast2700_scu_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid.min_access_size = 1,
++    .valid.max_access_size = 8,
++    .valid.unaligned = false,
++};
++
++static const uint32_t ast2700_a0_resets[ASPEED_AST2700_SCU_NR_REGS] = {
++    [AST2700_SILICON_REV]           = AST2700_A0_SILICON_REV,
++    [AST2700_HW_STRAP1]             = 0x00000800,
++    [AST2700_HW_STRAP1_CLR]         = 0xFFF0FFF0,
++    [AST2700_HW_STRAP1_LOCK]        = 0x00000FFF,
++    [AST2700_HW_STRAP1_SEC1]        = 0x000000FF,
++    [AST2700_HW_STRAP1_SEC2]        = 0x00000000,
++    [AST2700_HW_STRAP1_SEC3]        = 0x1000408F,
++    [AST2700_SCU_HPLL_PARAM]        = 0x0000009f,
++    [AST2700_SCU_HPLL_EXT_PARAM]    = 0x8000004f,
++    [AST2700_SCU_DPLL_PARAM]        = 0x0080009f,
++    [AST2700_SCU_DPLL_EXT_PARAM]    = 0x8000004f,
++    [AST2700_SCU_MPLL_PARAM]        = 0x00000040,
++    [AST2700_SCU_MPLL_EXT_PARAM]    = 0x80000000,
++    [AST2700_SCU_D1CLK_PARAM]       = 0x00050002,
++    [AST2700_SCU_D2CLK_PARAM]       = 0x00050002,
++    [AST2700_SCU_CRT1CLK_PARAM]     = 0x00050002,
++    [AST2700_SCU_CRT2CLK_PARAM]     = 0x00050002,
++    [AST2700_SCU_MPHYCLK_PARAM]     = 0x0000004c,
++    [AST2700_SCU_FREQ_CNTR]         = 0x000375eb,
++    [AST2700_SCU_CPU_SCRATCH_0]     = 0x00000000,
++    [AST2700_SCU_CPU_SCRATCH_1]     = 0x00000004,
++};
++
++static void aspeed_ast2700_scu_reset(DeviceState *dev)
++{
++    AspeedSCUState *s = ASPEED_SCU(dev);
++    AspeedSCUClass *asc = ASPEED_SCU_GET_CLASS(dev);
++
++    memcpy(s->regs, asc->resets, asc->nr_regs * 4);
++}
++
++static void aspeed_2700_scu_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    AspeedSCUClass *asc = ASPEED_SCU_CLASS(klass);
++
++    dc->desc = "ASPEED 2700 System Control Unit";
++    dc->reset = aspeed_ast2700_scu_reset;
++    asc->resets = ast2700_a0_resets;
++    asc->calc_hpll = aspeed_2600_scu_calc_hpll;
++    asc->get_apb = aspeed_2700_scu_get_apb_freq;
++    asc->apb_divider = 4;
++    asc->nr_regs = ASPEED_AST2700_SCU_NR_REGS;
++    asc->clkin_25Mhz = true;
++    asc->ops = &aspeed_ast2700_scu_ops;
++}
++
++static uint64_t aspeed_ast2700_scuio_read(void *opaque, hwaddr offset,
++                                        unsigned size)
++{
++    AspeedSCUState *s = ASPEED_SCU(opaque);
++    int reg = TO_REG(offset);
++    if (reg >= ASPEED_AST2700_SCU_NR_REGS) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Out-of-bounds read at offset 0x%" HWADDR_PRIx "\n",
++                __func__, offset);
++        return 0;
++    }
++
++    switch (reg) {
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Unhandled read at offset 0x%" HWADDR_PRIx "\n",
++                      __func__, offset);
++    }
++
++    trace_aspeed_ast2700_scuio_read(offset, size, s->regs[reg]);
++    return s->regs[reg];
++}
++
++static void aspeed_ast2700_scuio_write(void *opaque, hwaddr offset,
++                                     uint64_t data64, unsigned size)
++{
++    AspeedSCUState *s = ASPEED_SCU(opaque);
++    int reg = TO_REG(offset);
++    /* Truncate here so bitwise operations below behave as expected */
++    uint32_t data = data64;
++    bool updated = false;
++
++    if (reg >= ASPEED_AST2700_SCU_NR_REGS) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Out-of-bounds write at offset 0x%" HWADDR_PRIx "\n",
++                __func__, offset);
++        return;
++    }
++
++    trace_aspeed_ast2700_scuio_write(offset, size, data);
++
++    switch (reg) {
++    case AST2700_SCUIO_CLK_STOP_CTL_1:
++    case AST2700_SCUIO_CLK_STOP_CTL_2:
++        s->regs[reg] |= data;
++        updated = true;
++        break;
++    case AST2700_SCUIO_CLK_STOP_CLR_1:
++    case AST2700_SCUIO_CLK_STOP_CLR_2:
++        s->regs[reg - 1] ^= data;
++        updated = true;
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Unhandeled write at offset 0x%" HWADDR_PRIx "\n",
++                      __func__, offset);
++        break;
++    }
++
++    if (!updated) {
++        s->regs[reg] = data;
++    }
++}
++
++static const MemoryRegionOps aspeed_ast2700_scuio_ops = {
++    .read = aspeed_ast2700_scuio_read,
++    .write = aspeed_ast2700_scuio_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid.min_access_size = 1,
++    .valid.max_access_size = 8,
++    .valid.unaligned = false,
++};
++
++static const uint32_t ast2700_a0_resets_io[ASPEED_AST2700_SCU_NR_REGS] = {
++    [AST2700_SILICON_REV]               = 0x06000003,
++    [AST2700_HW_STRAP1]                 = 0x00000504,
++    [AST2700_HW_STRAP1_CLR]             = 0xFFF0FFF0,
++    [AST2700_HW_STRAP1_LOCK]            = 0x00000FFF,
++    [AST2700_HW_STRAP1_SEC1]            = 0x000000FF,
++    [AST2700_HW_STRAP1_SEC2]            = 0x00000000,
++    [AST2700_HW_STRAP1_SEC3]            = 0x1000408F,
++    [AST2700_SCUIO_CLK_STOP_CTL_1]      = 0xffff8400,
++    [AST2700_SCUIO_CLK_STOP_CTL_2]      = 0x00005f30,
++    [AST2700_SCUIO_CLK_SEL_1]           = 0x86900000,
++    [AST2700_SCUIO_CLK_SEL_2]           = 0x00400000,
++    [AST2700_SCUIO_HPLL_PARAM]          = 0x10000027,
++    [AST2700_SCUIO_HPLL_EXT_PARAM]      = 0x80000014,
++    [AST2700_SCUIO_APLL_PARAM]          = 0x1000001f,
++    [AST2700_SCUIO_APLL_EXT_PARAM]      = 0x8000000f,
++    [AST2700_SCUIO_DPLL_PARAM]          = 0x106e42ce,
++    [AST2700_SCUIO_DPLL_EXT_PARAM]      = 0x80000167,
++    [AST2700_SCUIO_DPLL_PARAM_READ]     = 0x106e42ce,
++    [AST2700_SCUIO_DPLL_EXT_PARAM_READ] = 0x80000167,
++    [AST2700_SCUIO_UARTCLK_GEN]         = 0x00014506,
++    [AST2700_SCUIO_HUARTCLK_GEN]        = 0x000145c0,
++    [AST2700_SCUIO_CLK_DUTY_MEAS_RST]   = 0x0c9100d2,
++};
++
++static void aspeed_2700_scuio_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    AspeedSCUClass *asc = ASPEED_SCU_CLASS(klass);
++
++    dc->desc = "ASPEED 2700 System Control Unit I/O";
++    dc->reset = aspeed_ast2700_scu_reset;
++    asc->resets = ast2700_a0_resets_io;
++    asc->calc_hpll = aspeed_2600_scu_calc_hpll;
++    asc->get_apb = aspeed_2700_scuio_get_apb_freq;
++    asc->apb_divider = 2;
++    asc->nr_regs = ASPEED_AST2700_SCU_NR_REGS;
++    asc->clkin_25Mhz = true;
++    asc->ops = &aspeed_ast2700_scuio_ops;
++}
++
++static const TypeInfo aspeed_2700_scu_info = {
++    .name = TYPE_ASPEED_2700_SCU,
++    .parent = TYPE_ASPEED_SCU,
++    .instance_size = sizeof(AspeedSCUState),
++    .class_init = aspeed_2700_scu_class_init,
++};
++
++static const TypeInfo aspeed_2700_scuio_info = {
++    .name = TYPE_ASPEED_2700_SCUIO,
++    .parent = TYPE_ASPEED_SCU,
++    .instance_size = sizeof(AspeedSCUState),
++    .class_init = aspeed_2700_scuio_class_init,
++};
++
+ static const uint32_t ast1030_a1_resets[ASPEED_AST2600_SCU_NR_REGS] = {
+     [AST2600_SYS_RST_CTRL]      = 0xFFC3FED8,
+     [AST2600_SYS_RST_CTRL2]     = 0x09FFFFFC,
+@@ -841,6 +1143,8 @@ static void aspeed_scu_register_types(void)
+     type_register_static(&aspeed_2500_scu_info);
+     type_register_static(&aspeed_2600_scu_info);
+     type_register_static(&aspeed_1030_scu_info);
++    type_register_static(&aspeed_2700_scu_info);
++    type_register_static(&aspeed_2700_scuio_info);
+ }
+ 
+ type_init(aspeed_scu_register_types);
 diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index 5f5bc92222..07010a7ea6 100644
+index 07010a7ea6..5e5cd77420 100644
 --- a/hw/misc/trace-events
 +++ b/hw/misc/trace-events
-@@ -341,3 +341,10 @@ djmemc_write(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRI
- # iosb.c
- iosb_read(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRIx64" size=%u"
- iosb_write(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRIx64" size=%u"
-+
-+# aspeed_sli.c
-+aspeed_sli_write(uint64_t offset, unsigned int size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
-+aspeed_sli_read(uint64_t offset, unsigned int size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
-+aspeed_sliio_write(uint64_t offset, unsigned int size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
-+aspeed_sliio_read(uint64_t offset, unsigned int size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
-+
-diff --git a/include/hw/misc/aspeed_sli.h b/include/hw/misc/aspeed_sli.h
-new file mode 100644
-index 0000000000..15892950e2
---- /dev/null
-+++ b/include/hw/misc/aspeed_sli.h
-@@ -0,0 +1,32 @@
+@@ -93,6 +93,10 @@ slavio_led_mem_readw(uint32_t ret) "Read diagnostic LED 0x%04x"
+ # aspeed_scu.c
+ aspeed_scu_write(uint64_t offset, unsigned size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
+ aspeed_scu_read(uint64_t offset, unsigned size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
++aspeed_ast2700_scu_write(uint64_t offset, unsigned size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
++aspeed_ast2700_scu_read(uint64_t offset, unsigned size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
++aspeed_ast2700_scuio_write(uint64_t offset, unsigned size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
++aspeed_ast2700_scuio_read(uint64_t offset, unsigned size, uint32_t data) "To 0x%" PRIx64 " of size %u: 0x%" PRIx32
+ 
+ # mps2-scc.c
+ mps2_scc_read(uint64_t offset, uint64_t data, unsigned size) "MPS2 SCC read: offset 0x%" PRIx64 " data 0x%" PRIx64 " size %u"
+diff --git a/include/hw/misc/aspeed_scu.h b/include/hw/misc/aspeed_scu.h
+index 7cb6018dbc..58db28db45 100644
+--- a/include/hw/misc/aspeed_scu.h
++++ b/include/hw/misc/aspeed_scu.h
+@@ -19,10 +19,13 @@ OBJECT_DECLARE_TYPE(AspeedSCUState, AspeedSCUClass, ASPEED_SCU)
+ #define TYPE_ASPEED_2400_SCU TYPE_ASPEED_SCU "-ast2400"
+ #define TYPE_ASPEED_2500_SCU TYPE_ASPEED_SCU "-ast2500"
+ #define TYPE_ASPEED_2600_SCU TYPE_ASPEED_SCU "-ast2600"
++#define TYPE_ASPEED_2700_SCU TYPE_ASPEED_SCU "-ast2700"
++#define TYPE_ASPEED_2700_SCUIO TYPE_ASPEED_SCU "io" "-ast2700"
+ #define TYPE_ASPEED_1030_SCU TYPE_ASPEED_SCU "-ast1030"
+ 
+ #define ASPEED_SCU_NR_REGS (0x1A8 >> 2)
+ #define ASPEED_AST2600_SCU_NR_REGS (0xE20 >> 2)
++#define ASPEED_AST2700_SCU_NR_REGS (0xE20 >> 2)
+ 
+ struct AspeedSCUState {
+     /*< private >*/
+@@ -31,7 +34,7 @@ struct AspeedSCUState {
+     /*< public >*/
+     MemoryRegion iomem;
+ 
+-    uint32_t regs[ASPEED_AST2600_SCU_NR_REGS];
++    uint32_t regs[ASPEED_AST2700_SCU_NR_REGS];
+     uint32_t silicon_rev;
+     uint32_t hw_strap1;
+     uint32_t hw_strap2;
+@@ -48,6 +51,9 @@ struct AspeedSCUState {
+ #define AST2600_A3_SILICON_REV   0x05030303U
+ #define AST1030_A0_SILICON_REV   0x80000000U
+ #define AST1030_A1_SILICON_REV   0x80010000U
++#define AST2700_A0_SILICON_REV   0x06000103U
++#define AST2720_A0_SILICON_REV   0x06000203U
++#define AST2750_A0_SILICON_REV   0x06000003U
+ 
+ #define ASPEED_IS_AST2500(si_rev)     ((((si_rev) >> 24) & 0xff) == 0x04)
+ 
+@@ -87,7 +93,8 @@ uint32_t aspeed_scu_get_apb_freq(AspeedSCUState *s);
+  *       1. 2012/12/29 Ryan Chen Create
+  */
+ 
+-/* SCU08   Clock Selection Register
 +/*
-+ * ASPEED SLI Controller
++ * SCU08   Clock Selection Register
+  *
+  *  31     Enable Video Engine clock dynamic slow down
+  *  30:28  Video Engine clock slow down setting
+@@ -109,7 +116,8 @@ uint32_t aspeed_scu_get_apb_freq(AspeedSCUState *s);
+  */
+ #define SCU_CLK_GET_PCLK_DIV(x)                    (((x) >> 23) & 0x7)
+ 
+-/* SCU24   H-PLL Parameter Register (for Aspeed AST2400 SOC)
++/*
++ * SCU24   H-PLL Parameter Register (for Aspeed AST2400 SOC)
+  *
+  *  18     H-PLL parameter selection
+  *           0: Select H-PLL by strapping resistors
+@@ -127,7 +135,8 @@ uint32_t aspeed_scu_get_apb_freq(AspeedSCUState *s);
+ #define SCU_AST2400_H_PLL_BYPASS_EN                (0x1 << 17)
+ #define SCU_AST2400_H_PLL_OFF                      (0x1 << 16)
+ 
+-/* SCU24   H-PLL Parameter Register (for Aspeed AST2500 SOC)
++/*
++ * SCU24   H-PLL Parameter Register (for Aspeed AST2500 SOC)
+  *
+  *  21     Enable H-PLL reset
+  *  20     Enable H-PLL bypass mode
+@@ -144,7 +153,8 @@ uint32_t aspeed_scu_get_apb_freq(AspeedSCUState *s);
+ #define SCU_H_PLL_BYPASS_EN                        (0x1 << 20)
+ #define SCU_H_PLL_OFF                              (0x1 << 19)
+ 
+-/* SCU70  Hardware Strapping Register definition (for Aspeed AST2400 SOC)
++/*
++ * SCU70  Hardware Strapping Register definition (for Aspeed AST2400 SOC)
+  *
+  * 31:29  Software defined strapping registers
+  * 28:27  DRAM size setting (for VGA driver use)
+@@ -361,4 +371,31 @@ uint32_t aspeed_scu_get_apb_freq(AspeedSCUState *s);
+  */
+ #define SCU_AST1030_CLK_GET_PCLK_DIV(x)                    (((x) >> 8) & 0xf)
+ 
++/*
++ * SCU280   Clock Selection 1 Register (for Aspeed AST2700 SCUIO)
 + *
-+ * Copyright (C) 2024 ASPEED Technology Inc.
-+ *
-+ * This code is licensed under the GPL version 2 or later.  See
-+ * the COPYING file in the top-level directory.
++ *  31:29  MHCLK_DIV
++ *  28     Reserved
++ *  27:25  RGMIICLK_DIV
++ *  24     Reserved
++ *  23:21  RMIICLK_DIV
++ *  20:18  PCLK_DIV
++ *  17:14  SDCLK_DIV
++ *  13     SDCLK_SEL
++ *  12     UART13CLK_SEL
++ *  11     UART12CLK_SEL
++ *  10     UART11CLK_SEL
++ *  9      UART10CLK_SEL
++ *  8      UART9CLK_SEL
++ *  7      UART8CLK_SEL
++ *  6      UART7CLK_SEL
++ *  5      UART6CLK_SEL
++ *  4      UARTDBCLK_SEL
++ *  3      UART4CLK_SEL
++ *  2      UART3CLK_SEL
++ *  1      UART2CLK_SEL
++ *  0      UART1CLK_SEL
 + */
-+#ifndef ASPEED_SLI_H
-+#define ASPEED_SLI_H
++#define SCUIO_AST2700_CLK_GET_PCLK_DIV(x)                    (((x) >> 18) & 0x7)
 +
-+#include "hw/sysbus.h"
-+
-+#define TYPE_ASPEED_SLI "aspeed.sli"
-+#define TYPE_ASPEED_2700_SLI TYPE_ASPEED_SLI "-ast2700"
-+#define TYPE_ASPEED_2700_SLIIO TYPE_ASPEED_SLI "io" "-ast2700"
-+OBJECT_DECLARE_TYPE(AspeedSLIState, AspeedSLIClass, ASPEED_SLI)
-+
-+#define ASPEED_SLI_NR_REGS  (0x500 >> 2)
-+
-+struct AspeedSLIState {
-+    SysBusDevice parent;
-+    MemoryRegion iomem;
-+
-+    uint32_t regs[ASPEED_SLI_NR_REGS];
-+};
-+
-+struct AspeedSLIClass {
-+    SysBusDeviceClass parent_class;
-+};
-+
-+#endif /* ASPEED_SLI_H */
+ #endif /* ASPEED_SCU_H */
 -- 
 2.25.1
 
