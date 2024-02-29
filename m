@@ -4,81 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55F72C54E49
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 15:12:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 017BEC54E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 15:14:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfi5B-0006Jn-Be; Thu, 29 Feb 2024 10:12:26 -0500
+	id 1rfi6h-00081A-Sv; Thu, 29 Feb 2024 10:13:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rfi57-0006J8-0B
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:12:21 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rfi55-0000aO-DI
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:12:20 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-33e162b1b71so254112f8f.1
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 07:12:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1709219537; x=1709824337; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=/BJCypZDYOEbOHfjNS0azTsDa0tFh+QHIlxmEgB+bks=;
- b=IPZTJolsmOAdzHPtHlUULn64YiP13y9Oo1OWUOgFbqU6WqrqVFYSoYO66AOouQghvB
- YfaR84jTBvlN8Jyaw+/TgvLACH01dFNbv4iaYwz2GVz7fudauU/MdMhQ6peCkYNrN5N8
- vlXH49lgVpJFNbXs+x9SObRyaU6goUg7UsGOlhNd7OgzFtBaTQbQcj9PdzMCqL38Bvhk
- B+giHp47K4oTIap55FMC7fO2DE5lf5jdC6qPx0YlelPK6PUdnhtHzGIRPqsYQlaBol3e
- GX/vetJ/Nw6X8fO306i2HOOowX70FGm7mp8/thinhHNgW5ahDhJSlepkd+5sRRqAHpHX
- cLVw==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rfi6f-00080Q-OR
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:13:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rfi6d-00017s-0R
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:13:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709219632;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QvjcG7KZUodmzJCNAxhgQUbZqmF7Ym8DC/WMmuWofkU=;
+ b=LqXmHgeYtaZqFX0u+OjZm1UeyK4dUY6KkEukZKNBcBIxW2oecNUWsDJ11uhKqzDnC6SThI
+ 2Mt8k2xHdrxr31OWutpKkpEMhWiClqXmGX1KiX2rRqB67Ry+LxtxOXWgfe4ORnNwNiiQw+
+ mcecIEih1qHfkzX+6Ky5V/JcJO8P5Dg=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-341-etyrX-YHP9OIHC90G6tCMg-1; Thu, 29 Feb 2024 10:13:48 -0500
+X-MC-Unique: etyrX-YHP9OIHC90G6tCMg-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6903ea40d25so9355526d6.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 07:13:48 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709219537; x=1709824337;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/BJCypZDYOEbOHfjNS0azTsDa0tFh+QHIlxmEgB+bks=;
- b=rBnoL0zea3v+W0MaWseVbg7s2zo2YksfKIzpZYDfVptBZ0EBANQpo6LTXDye4nZLO3
- snHzMyxUv8qcnGFF1oawAIjzqn0gWgTUVZao6JteaKeDVnxbnqe3VWm+NJs9PqqnTP+a
- bVnMS26jcBmGQeuF+h0Z4ncBuWGwEPNexZq3z/+LCVBALIapGNhGRn2Wu5TFLjnsmmvs
- pR7jcq1M2dfP//GERW1csihfPXLkMNzruCRoVDO9rm6BXc96hMP/Nto8NPSc0ZsXAoRT
- OBCBAR3c6Cc2C5Ha7C96ySix2bA7TgQ5XtXkI8wWthQgAQ/hlvQW1nBaXsT1+4sj4JLP
- i/Vg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX5PaQ1CG62bsYDWDSLNnU5/oTtNcC9RYM+trRGkhAJsKdZbTPcZY/obfouZj1XeMFO+D7de3jYqtw89eQAf73p5FARty0=
-X-Gm-Message-State: AOJu0Ywbsnmnk8C4uGyU5iylAg383uQttxFcat74M/8mgPVwq5tHkLX7
- cuc2A+1RM1Sn01hTo4jBFzIcRo+LoyC8HZzFNsC8JlepVBAPWLx6Mmqf/XxW8gY=
-X-Google-Smtp-Source: AGHT+IGrx1jJ7dTQYXKOyViuZQgGwHJB01jZAH+CFrlqyJdZcarps7x6pzjBZViQeeqxS15yU38K2w==
-X-Received: by 2002:adf:e742:0:b0:33e:1802:92f0 with SMTP id
- c2-20020adfe742000000b0033e180292f0mr200228wrn.14.1709219537560; 
- Thu, 29 Feb 2024 07:12:17 -0800 (PST)
-Received: from localhost (cst2-173-16.cust.vodafone.cz. [31.30.173.16])
+ d=1e100.net; s=20230601; t=1709219628; x=1709824428;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=QvjcG7KZUodmzJCNAxhgQUbZqmF7Ym8DC/WMmuWofkU=;
+ b=vCPbSeBh7lLw7kWlrFC4hDgzizWVImcTTvbHAkyw9bIXPBnoBp0GsxZjQWGHc+QIt7
+ veLjpwqJr4MmWUmd9xU0DSAzjXufDQtEPcCKN46LC7xnWtnI2KsuFSO32COScV6RzDT8
+ 7t/NElQtYFAARt81kB+K1uiNEQqGqfD787IRYc0QweToJDgdALWmcjal+Rs5GvTutHxS
+ itUgXYAC8Vegd2ed1iPM5YP8MtcQhexXY//0D90WZURghv5k5uRX6GTs4Z7BX+zwHzKr
+ ZxJ3/8o6ldhYShpUIQb7j22Rx/G9nKc1sG6E0RHZhZy8js2Res/aa2gPJtF2rOOBAqKs
+ Bl9g==
+X-Gm-Message-State: AOJu0Yz3xxThZdbRUWkIiKmutXjdPUtCmOhtQzGs9uLPHmJcTrruAn53
+ K7QKCo3K/9cWXPoebl3AHbM44ZYAfMiPxIoYKUo7zAVQY5qXT8iyf/G9Recymn5anAxrDvUlqxg
+ G6GAaaSwEXL9GCwag2Mm0UZI483LtsC1EXLKYElmGiFBoxUNqBL7l
+X-Received: by 2002:a0c:ca83:0:b0:68f:e19a:7633 with SMTP id
+ a3-20020a0cca83000000b0068fe19a7633mr2454198qvk.50.1709219628035; 
+ Thu, 29 Feb 2024 07:13:48 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHiRe7j6tZTAzrlJgnA96ikj2K/cdR6sxxZ3Bo6LzsVMnkP50mdz966O0yVX3QqYkL9UnxEDQ==
+X-Received: by 2002:a0c:ca83:0:b0:68f:e19a:7633 with SMTP id
+ a3-20020a0cca83000000b0068fe19a7633mr2454182qvk.50.1709219627784; 
+ Thu, 29 Feb 2024 07:13:47 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- bo30-20020a056000069e00b0033d6bd4eab9sm2107507wrb.1.2024.02.29.07.12.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Feb 2024 07:12:17 -0800 (PST)
-Date: Thu, 29 Feb 2024 16:12:15 +0100
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Himanshu Chauhan <hchauhan@ventanamicro.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 0/2] Export debug triggers as an extension
-Message-ID: <20240229-92706c0ccb3d6a6e8b725815@orel>
-References: <20240229133745.771154-1-hchauhan@ventanamicro.com>
+ pj4-20020a0562144b0400b006904a076f01sm542460qvb.114.2024.02.29.07.13.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 29 Feb 2024 07:13:46 -0800 (PST)
+Message-ID: <e08c2a88-a5db-4766-bf69-6ffd23a67e0c@redhat.com>
+Date: Thu, 29 Feb 2024 16:13:44 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240229133745.771154-1-hchauhan@ventanamicro.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=ajones@ventanamicro.com; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 11/21] migration: Fix migration termination
+Content-Language: en-US, fr
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20240227180345.548960-1-clg@redhat.com>
+ <20240227180345.548960-12-clg@redhat.com> <ZeAXbNy22xq4_SPm@x1n>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <ZeAXbNy22xq4_SPm@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,52 +105,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 29, 2024 at 07:07:43PM +0530, Himanshu Chauhan wrote:
-> All the CPUs may or may not implement the debug triggers (sdtrig)
-> extension. The presence of it should be dynamically detectable.
-> This patch exports the debug triggers as an extension which
-> can be turned on or off by sdtrig=<true/false> option. It is
-> turned on by default.
+On 2/29/24 06:34, Peter Xu wrote:
+> On Tue, Feb 27, 2024 at 07:03:35PM +0100, Cédric Le Goater wrote:
+>> Handle migration termination when in SETUP state. This can happen if
+>> qemu_savevm_state_setup() fails.
+>>
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>> ---
+>>   migration/migration.c | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+>> diff --git a/migration/migration.c b/migration/migration.c
+>> index c1a62b696f62c0d5aca0505e58bc4dc0ff561fde..63294417ff9cae868ad8a167094a795fc30e4da0 100644
+>> --- a/migration/migration.c
+>> +++ b/migration/migration.c
+>> @@ -3161,6 +3161,8 @@ static void migration_iteration_finish(MigrationState *s)
+>>               }
+>>           }
+>>           break;
+>> +    case MIGRATION_STATUS_SETUP:
+>> +        break;
+>>   
+>>       default:
+>>           /* Should not reach here, but if so, forgive the VM. */
+>> @@ -3192,6 +3194,8 @@ static void bg_migration_iteration_finish(MigrationState *s)
+>>       case MIGRATION_STATUS_CANCELLED:
+>>       case MIGRATION_STATUS_CANCELLING:
+>>           break;
+>> +    case MIGRATION_STATUS_SETUP:
+>> +        break;
+>>   
+>>       default:
+>>           /* Should not reach here, but if so, forgive the VM. */
 > 
-> "sdtrig" is concatenated to ISA string when it is enabled.
-> Like so:
->     rv64imafdch_zicbom_*_sdtrig_*_sstc_svadu
+> Would this cause "query-migrate" to keep reporting "SETUP" even if setup()
+> failed?
 > 
-> Changes from v1:
->    - Replaced the debug property with ext_sdtrig
->    - Marked it experimenatal by naming it x-sdtrig
->    - x-sdtrig is added to ISA string
->    - Reversed the patch order
-> 
-> Changes from v2:
->    - Mark debug property as deprecated and replace internally with sdtrig extension
+> IIUC we may need to set state to FAILED when setup() failed.  If so, this
+> patch might not be needed.
 
-I'm getting lost in our discussions, but I thought we needed both in case
-a machine only implements debug 0.13, since sdtrig is at least 'more than'
-debug, even if backwards compatible (which I also wasn't sure was the
-case). If, OTOH, QEMU's debug implementation exactly implements sdtrig's
-specification, then I'm in favor of deprecating the 'debug' extension.
+Oh yes. you are right. I will see how that can be done.
 
-Thanks,
-drew
+Thanks for the feedback.
+
+C.
 
 
->    - setting/unsetting debug property shows warning and sets/unsets ext_sdtrig
->    - sdtrig is added to ISA string as RISC-V debug specification is frozen
-> 
-> Himanshu Chauhan (2):
->   target/riscv: Mark debug property as deprecated
->   target/riscv: Export sdtrig in ISA string
-> 
->  target/riscv/cpu.c        | 38 +++++++++++++++++++++++++++++++++++---
->  target/riscv/cpu_cfg.h    |  2 +-
->  target/riscv/cpu_helper.c |  2 +-
->  target/riscv/csr.c        |  2 +-
->  target/riscv/machine.c    |  2 +-
->  5 files changed, 39 insertions(+), 7 deletions(-)
-> 
-> -- 
-> 2.34.1
-> 
-> 
 
