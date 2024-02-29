@@ -4,99 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C3A2C54E41
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 15:31:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D8B2C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 15:32:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfiN1-0005YW-30; Thu, 29 Feb 2024 10:30:51 -0500
+	id 1rfiNJ-0005kd-81; Thu, 29 Feb 2024 10:31:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rfiMy-0005Y6-78
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:30:48 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rfiND-0005bG-9k
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:31:03 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rfiMw-0005yH-Bb
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:30:47 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rfiNB-0005zq-Eq
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:31:03 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id DA6512200C;
- Thu, 29 Feb 2024 15:30:44 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 483161F7F9;
+ Thu, 29 Feb 2024 15:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709220644; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1709220660; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pC13tBeXORti+dcydaM//5PqpaE/nmYEgsRjjtZwzWc=;
- b=VOXsZiOuiTcLBUKlk3wtVP02ICR/9TY28YICl6GHHM+2O+0zOoHCGXN76ost8szmLitKfX
- VO6q0eLYcAxO+KDB5QrTzBmMGqJ2le+J2/swOECPPk+oBMfSUoEWOqcNah3ILkmkROaFss
- Lnz0S+djDsLvcTnsfCPalL/z5YPq0+M=
+ bh=nwxuS4BuKpDu4nigubqWJr2XGQ+GRbQV6pxOe9P2P5g=;
+ b=ryy58I2rte/+83p/VB/0knEMA9ljCZQ7ug0vW2qV8dA2xfDTO07nI41E2nckiarisc5Asi
+ 4g5J0u6PYJR7EfY2LJ6N0smaFlptb/KKJB9fZpxFVEl2WuaXf99tm81FMyFdWNcXb+Rhre
+ n71QFU3Bw7uwENVxYopDROGxHAT0lMo=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709220644;
+ s=susede2_ed25519; t=1709220660;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pC13tBeXORti+dcydaM//5PqpaE/nmYEgsRjjtZwzWc=;
- b=6qRkFdmTkx6S6VVqfEZCHgz3d69SXhNaXFOzIi+4KBh+4pYfMGHLr6H/htumD5RUfI78Qe
- k+7avZTVmcwqLkDQ==
+ bh=nwxuS4BuKpDu4nigubqWJr2XGQ+GRbQV6pxOe9P2P5g=;
+ b=u1GZwM3/O0F6jRtoKdkH4Iqd1is37MpH4COBgLviAz+/p2gedXql9e4JdV/H3TtsbTpxfb
+ +YYhenToS68jcCAw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709220644; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1709220660; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pC13tBeXORti+dcydaM//5PqpaE/nmYEgsRjjtZwzWc=;
- b=VOXsZiOuiTcLBUKlk3wtVP02ICR/9TY28YICl6GHHM+2O+0zOoHCGXN76ost8szmLitKfX
- VO6q0eLYcAxO+KDB5QrTzBmMGqJ2le+J2/swOECPPk+oBMfSUoEWOqcNah3ILkmkROaFss
- Lnz0S+djDsLvcTnsfCPalL/z5YPq0+M=
+ bh=nwxuS4BuKpDu4nigubqWJr2XGQ+GRbQV6pxOe9P2P5g=;
+ b=ryy58I2rte/+83p/VB/0knEMA9ljCZQ7ug0vW2qV8dA2xfDTO07nI41E2nckiarisc5Asi
+ 4g5J0u6PYJR7EfY2LJ6N0smaFlptb/KKJB9fZpxFVEl2WuaXf99tm81FMyFdWNcXb+Rhre
+ n71QFU3Bw7uwENVxYopDROGxHAT0lMo=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709220644;
+ s=susede2_ed25519; t=1709220660;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pC13tBeXORti+dcydaM//5PqpaE/nmYEgsRjjtZwzWc=;
- b=6qRkFdmTkx6S6VVqfEZCHgz3d69SXhNaXFOzIi+4KBh+4pYfMGHLr6H/htumD5RUfI78Qe
- k+7avZTVmcwqLkDQ==
+ bh=nwxuS4BuKpDu4nigubqWJr2XGQ+GRbQV6pxOe9P2P5g=;
+ b=u1GZwM3/O0F6jRtoKdkH4Iqd1is37MpH4COBgLviAz+/p2gedXql9e4JdV/H3TtsbTpxfb
+ +YYhenToS68jcCAw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0A25613503;
- Thu, 29 Feb 2024 15:30:42 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A19BA13503;
+ Thu, 29 Feb 2024 15:30:58 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id eFmtMCKj4GU/MAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 29 Feb 2024 15:30:42 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id YJ3ZGTKj4GU/MAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 29 Feb 2024 15:30:58 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
- Claudio Fontana <cfontana@suse.de>, Nikolay Borisov <nborisov@suse.com>
-Subject: [PATCH v6 10/23] migration/ram: Add incoming 'mapped-ram' migration
-Date: Thu, 29 Feb 2024 12:30:04 -0300
-Message-Id: <20240229153017.2221-11-farosas@suse.de>
+ Claudio Fontana <cfontana@suse.de>
+Subject: [PATCH v6 17/23] migration/multifd: Add outgoing QIOChannelFile
+ support
+Date: Thu, 29 Feb 2024 12:30:11 -0300
+Message-Id: <20240229153017.2221-18-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240229153017.2221-1-farosas@suse.de>
 References: <20240229153017.2221-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Authentication-Results: smtp-out1.suse.de;
+Authentication-Results: smtp-out2.suse.de;
 	none
-X-Spamd-Result: default: False [1.90 / 50.00]; ARC_NA(0.00)[];
+X-Spamd-Result: default: False [0.70 / 50.00]; ARC_NA(0.00)[];
  RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_HAS_DN(0.00)[];
  TO_DN_SOME(0.00)[]; R_MISSING_CHARSET(2.50)[];
  TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
- BROKEN_CONTENT_TYPE(1.50)[]; RCPT_COUNT_FIVE(0.00)[6];
- RCVD_COUNT_THREE(0.00)[3];
+ BROKEN_CONTENT_TYPE(1.50)[]; RCPT_COUNT_FIVE(0.00)[5];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; RCVD_COUNT_THREE(0.00)[3];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MID_CONTAINS_FROM(1.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.com:email];
+ NEURAL_HAM_SHORT(-0.20)[-0.997]; MID_CONTAINS_FROM(1.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
  MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
  BAYES_HAM(-3.00)[100.00%]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -119,202 +120,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the necessary code to parse the format changes for the
-'mapped-ram' capability.
+Allow multifd to open file-backed channels. This will be used when
+enabling the mapped-ram migration stream format which expects a
+seekable transport.
 
-One of the more notable changes in behavior is that in the
-'mapped-ram' case ram pages are restored in one go rather than
-constantly looping through the migration stream.
+The QIOChannel read and write methods will use the preadv/pwritev
+versions which don't update the file offset at each call so we can
+reuse the fd without re-opening for every channel.
 
-Signed-off-by: Nikolay Borisov <nborisov@suse.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Contrary to the socket migration, the file migration doesn't need an
+asynchronous channel creation process, so expose
+multifd_channel_connect() and call it directly.
+
+Note that this is just setup code and multifd cannot yet make use of
+the file channels.
+
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/ram.c | 143 +++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 141 insertions(+), 2 deletions(-)
+- fix spurious hunk
+- use error_abort in qio_channel_close
+---
+ migration/file.c    | 37 +++++++++++++++++++++++++++++++++++++
+ migration/file.h    |  4 ++++
+ migration/multifd.c | 18 +++++++++++++++---
+ migration/multifd.h |  1 +
+ 4 files changed, 57 insertions(+), 3 deletions(-)
 
-diff --git a/migration/ram.c b/migration/ram.c
-index f807824d49..18620784c6 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -106,6 +106,12 @@
-  */
- #define MAPPED_RAM_FILE_OFFSET_ALIGNMENT 0x100000
+diff --git a/migration/file.c b/migration/file.c
+index 22d052a71f..a350dd61f0 100644
+--- a/migration/file.c
++++ b/migration/file.c
+@@ -12,12 +12,17 @@
+ #include "channel.h"
+ #include "file.h"
+ #include "migration.h"
++#include "multifd.h"
+ #include "io/channel-file.h"
+ #include "io/channel-util.h"
+ #include "trace.h"
  
-+/*
-+ * When doing mapped-ram migration, this is the amount we read from
-+ * the pages region in the migration file at a time.
-+ */
-+#define MAPPED_RAM_LOAD_BUF_SIZE 0x100000
+ #define OFFSET_OPTION ",offset="
+ 
++static struct FileOutgoingArgs {
++    char *fname;
++} outgoing_args;
 +
- XBZRLECacheStats xbzrle_counters;
+ /* Remove the offset option from @filespec and return it in @offsetp. */
  
- /* used by the search for pages to send */
-@@ -2998,6 +3004,35 @@ static void mapped_ram_setup_ramblock(QEMUFile *file, RAMBlock *block)
-     qemu_set_offset(file, block->pages_offset + block->used_length, SEEK_SET);
+ int file_parse_offset(char *filespec, uint64_t *offsetp, Error **errp)
+@@ -37,6 +42,36 @@ int file_parse_offset(char *filespec, uint64_t *offsetp, Error **errp)
+     return 0;
  }
  
-+static bool mapped_ram_read_header(QEMUFile *file, MappedRamHeader *header,
-+                                   Error **errp)
++void file_cleanup_outgoing_migration(void)
 +{
-+    size_t ret, header_size = sizeof(MappedRamHeader);
-+
-+    ret = qemu_get_buffer(file, (uint8_t *)header, header_size);
-+    if (ret != header_size) {
-+        error_setg(errp, "Could not read whole mapped-ram migration header "
-+                   "(expected %zd, got %zd bytes)", header_size, ret);
-+        return false;
-+    }
-+
-+    /* migration stream is big-endian */
-+    header->version = be32_to_cpu(header->version);
-+
-+    if (header->version > MAPPED_RAM_HDR_VERSION) {
-+        error_setg(errp, "Migration mapped-ram capability version not "
-+                   "supported (expected <= %d, got %d)", MAPPED_RAM_HDR_VERSION,
-+                   header->version);
-+        return false;
-+    }
-+
-+    header->page_size = be64_to_cpu(header->page_size);
-+    header->bitmap_offset = be64_to_cpu(header->bitmap_offset);
-+    header->pages_offset = be64_to_cpu(header->pages_offset);
-+
-+    return true;
++    g_free(outgoing_args.fname);
++    outgoing_args.fname = NULL;
 +}
 +
- /*
-  * Each of ram_save_setup, ram_save_iterate and ram_save_complete has
-  * long-running RCU critical section.  When rcu-reclaims in the code
-@@ -3899,22 +3934,126 @@ void colo_flush_ram_cache(void)
-     trace_colo_flush_ram_cache_end();
- }
- 
-+static bool read_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
-+                                     long num_pages, unsigned long *bitmap,
-+                                     Error **errp)
++bool file_send_channel_create(gpointer opaque, Error **errp)
 +{
-+    ERRP_GUARD();
-+    unsigned long set_bit_idx, clear_bit_idx;
-+    ram_addr_t offset;
-+    void *host;
-+    size_t read, unread, size;
++    QIOChannelFile *ioc;
++    int flags = O_WRONLY;
++    bool ret = true;
 +
-+    for (set_bit_idx = find_first_bit(bitmap, num_pages);
-+         set_bit_idx < num_pages;
-+         set_bit_idx = find_next_bit(bitmap, num_pages, clear_bit_idx + 1)) {
-+
-+        clear_bit_idx = find_next_zero_bit(bitmap, num_pages, set_bit_idx + 1);
-+
-+        unread = TARGET_PAGE_SIZE * (clear_bit_idx - set_bit_idx);
-+        offset = set_bit_idx << TARGET_PAGE_BITS;
-+
-+        while (unread > 0) {
-+            host = host_from_ram_block_offset(block, offset);
-+            if (!host) {
-+                error_setg(errp, "page outside of ramblock %s range",
-+                           block->idstr);
-+                return false;
-+            }
-+
-+            size = MIN(unread, MAPPED_RAM_LOAD_BUF_SIZE);
-+
-+            read = qemu_get_buffer_at(f, host, size,
-+                                      block->pages_offset + offset);
-+            if (!read) {
-+                goto err;
-+            }
-+            offset += read;
-+            unread -= read;
-+        }
++    ioc = qio_channel_file_new_path(outgoing_args.fname, flags, 0, errp);
++    if (!ioc) {
++        ret = false;
++        goto out;
 +    }
 +
-+    return true;
++    multifd_channel_connect(opaque, QIO_CHANNEL(ioc));
 +
-+err:
-+    qemu_file_get_error_obj(f, errp);
-+    error_prepend(errp, "(%s) failed to read page " RAM_ADDR_FMT
-+                  "from file offset %" PRIx64 ": ", block->idstr, offset,
-+                  block->pages_offset + offset);
-+    return false;
-+}
-+
-+static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
-+                                      ram_addr_t length, Error **errp)
-+{
-+    g_autofree unsigned long *bitmap = NULL;
-+    MappedRamHeader header;
-+    size_t bitmap_size;
-+    long num_pages;
-+
-+    if (!mapped_ram_read_header(f, &header, errp)) {
-+        return;
-+    }
-+
-+    block->pages_offset = header.pages_offset;
-+
++out:
 +    /*
-+     * Check the alignment of the file region that contains pages. We
-+     * don't enforce MAPPED_RAM_FILE_OFFSET_ALIGNMENT to allow that
-+     * value to change in the future. Do only a sanity check with page
-+     * size alignment.
++     * File channel creation is synchronous. However posting this
++     * semaphore here is simpler than adding a special case.
 +     */
-+    if (!QEMU_IS_ALIGNED(block->pages_offset, TARGET_PAGE_SIZE)) {
-+        error_setg(errp,
-+                   "Error reading ramblock %s pages, region has bad alignment",
-+                   block->idstr);
-+        return;
-+    }
++    multifd_send_channel_created();
 +
-+    num_pages = length / header.page_size;
-+    bitmap_size = BITS_TO_LONGS(num_pages) * sizeof(unsigned long);
-+
-+    bitmap = g_malloc0(bitmap_size);
-+    if (qemu_get_buffer_at(f, (uint8_t *)bitmap, bitmap_size,
-+                           header.bitmap_offset) != bitmap_size) {
-+        error_setg(errp, "Error reading dirty bitmap");
-+        return;
-+    }
-+
-+    if (!read_ramblock_mapped_ram(f, block, num_pages, bitmap, errp)) {
-+        return;
-+    }
-+
-+    /* Skip pages array */
-+    qemu_set_offset(f, block->pages_offset + length, SEEK_SET);
-+
-+    return;
++    return ret;
 +}
 +
- static int parse_ramblock(QEMUFile *f, RAMBlock *block, ram_addr_t length)
+ void file_start_outgoing_migration(MigrationState *s,
+                                    FileMigrationArgs *file_args, Error **errp)
  {
-     int ret = 0;
-     /* ADVISE is earlier, it shows the source has the postcopy capability on */
-     bool postcopy_advised = migration_incoming_postcopy_advised();
-+    Error *local_err = NULL;
- 
-     assert(block);
- 
-+    if (migrate_mapped_ram()) {
-+        parse_ramblock_mapped_ram(f, block, length, &local_err);
-+        if (local_err) {
-+            error_report_err(local_err);
-+            return -EINVAL;
-+        }
-+        return 0;
-+    }
-+
-     if (!qemu_ram_is_migratable(block)) {
-         error_report("block %s should not be migrated !", block->idstr);
-         return -EINVAL;
+@@ -53,6 +88,8 @@ void file_start_outgoing_migration(MigrationState *s,
+         return;
      }
  
-     if (length != block->used_length) {
--        Error *local_err = NULL;
--
-         ret = qemu_ram_resize(block, length, &local_err);
-         if (local_err) {
-             error_report_err(local_err);
++    outgoing_args.fname = g_strdup(filename);
++
+     ioc = QIO_CHANNEL(fioc);
+     if (offset && qio_channel_io_seek(ioc, offset, SEEK_SET, errp) < 0) {
+         return;
+diff --git a/migration/file.h b/migration/file.h
+index 37d6a08bfc..4577f9efdd 100644
+--- a/migration/file.h
++++ b/migration/file.h
+@@ -9,10 +9,14 @@
+ #define QEMU_MIGRATION_FILE_H
+ 
+ #include "qapi/qapi-types-migration.h"
++#include "io/task.h"
++#include "channel.h"
+ 
+ void file_start_incoming_migration(FileMigrationArgs *file_args, Error **errp);
+ 
+ void file_start_outgoing_migration(MigrationState *s,
+                                    FileMigrationArgs *file_args, Error **errp);
+ int file_parse_offset(char *filespec, uint64_t *offsetp, Error **errp);
++void file_cleanup_outgoing_migration(void);
++bool file_send_channel_create(gpointer opaque, Error **errp);
+ #endif
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 3574fd3953..caef1076ca 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -17,6 +17,7 @@
+ #include "exec/ramblock.h"
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
++#include "file.h"
+ #include "ram.h"
+ #include "migration.h"
+ #include "migration-stats.h"
+@@ -28,6 +29,7 @@
+ #include "threadinfo.h"
+ #include "options.h"
+ #include "qemu/yank.h"
++#include "io/channel-file.h"
+ #include "io/channel-socket.h"
+ #include "yank_functions.h"
+ 
+@@ -694,6 +696,7 @@ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
+ {
+     if (p->c) {
+         migration_ioc_unregister_yank(p->c);
++        qio_channel_close(p->c, &error_abort);
+         object_unref(OBJECT(p->c));
+         p->c = NULL;
+     }
+@@ -715,6 +718,7 @@ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
+ 
+ static void multifd_send_cleanup_state(void)
+ {
++    file_cleanup_outgoing_migration();
+     socket_cleanup_outgoing_migration();
+     qemu_sem_destroy(&multifd_send_state->channels_created);
+     qemu_sem_destroy(&multifd_send_state->channels_ready);
+@@ -977,7 +981,7 @@ static bool multifd_tls_channel_connect(MultiFDSendParams *p,
+     return true;
+ }
+ 
+-static void multifd_channel_connect(MultiFDSendParams *p, QIOChannel *ioc)
++void multifd_channel_connect(MultiFDSendParams *p, QIOChannel *ioc)
+ {
+     qio_channel_set_delay(ioc, false);
+ 
+@@ -1045,9 +1049,14 @@ out:
+     error_free(local_err);
+ }
+ 
+-static void multifd_new_send_channel_create(gpointer opaque)
++static bool multifd_new_send_channel_create(gpointer opaque, Error **errp)
+ {
++    if (!multifd_use_packets()) {
++        return file_send_channel_create(opaque, errp);
++    }
++
+     socket_send_channel_create(multifd_new_send_channel_async, opaque);
++    return true;
+ }
+ 
+ bool multifd_send_setup(void)
+@@ -1096,7 +1105,10 @@ bool multifd_send_setup(void)
+         p->page_size = qemu_target_page_size();
+         p->page_count = page_count;
+         p->write_flags = 0;
+-        multifd_new_send_channel_create(p);
++
++        if (!multifd_new_send_channel_create(p, &local_err)) {
++            return false;
++        }
+     }
+ 
+     /*
+diff --git a/migration/multifd.h b/migration/multifd.h
+index 1d8bbaf96b..db8887f088 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -227,5 +227,6 @@ static inline void multifd_send_prepare_header(MultiFDSendParams *p)
+     p->iovs_num++;
+ }
+ 
++void multifd_channel_connect(MultiFDSendParams *p, QIOChannel *ioc);
+ 
+ #endif
 -- 
 2.35.3
 
