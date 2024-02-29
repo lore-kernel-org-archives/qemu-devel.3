@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2892FC54E49
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 18:02:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CA5AC48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 18:05:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfkjh-0001uO-Pw; Thu, 29 Feb 2024 13:02:26 -0500
+	id 1rfklp-0002sz-BP; Thu, 29 Feb 2024 13:04:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
- id 1rfkjQ-0001hv-3V
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 13:02:20 -0500
-Received: from cat.pear.relay.mailchannels.net ([23.83.216.31])
+ id 1rfklg-0002nx-Mx
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 13:04:29 -0500
+Received: from snake.cherry.relay.mailchannels.net ([23.83.223.171])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
- id 1rfkjM-0007t5-67
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 13:02:07 -0500
+ id 1rfklY-00082S-1Y
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 13:04:28 -0500
 X-Sender-Id: _forwarded-from|134.3.94.10
 Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id 58004502FDB
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 18:02:01 +0000 (UTC)
-Received: from outbound5f.eu.mailhop.org (unknown [127.0.0.6])
+ by relay.mailchannels.net (Postfix) with ESMTP id 0DD6183495
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 18:04:17 +0000 (UTC)
+Received: from outbound3.eu.mailhop.org (unknown [127.0.0.6])
  (Authenticated sender: duocircle)
- by relay.mailchannels.net (Postfix) with ESMTPA id A057F502915
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 18:02:00 +0000 (UTC)
-ARC-Seal: i=2; s=arc-2022; d=mailchannels.net; t=1709229720; a=rsa-sha256;
+ by relay.mailchannels.net (Postfix) with ESMTPA id 3011783CF0
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 18:04:16 +0000 (UTC)
+ARC-Seal: i=2; s=arc-2022; d=mailchannels.net; t=1709229856; a=rsa-sha256;
  cv=pass;
- b=WxbhE3B76yvRI/I8YFceJtfCzvO3IcwCD/mdNf9RVa1nEsKBdhlkuPpjyPEJeiDYrxGJpO
- c3F4ytRSwPlhb5z+5uVaw9CKV+RDnqBpAt/8fhcBi+321p3FXqL0ebUj4hqzvUqisxQlCh
- O5yi9H1487Ku2bAkBicrOmlsBqTP0wdBeQI13p1IIpMIDAK9KdEiMErKcNN7EMtwQHxsM0
- en0SDTQ5s1MIqhZF/rqFR90it1BLFr7EgAwN0wp323Uy8q8fjRVnTJX9J7YMmpeKT36exC
- GHckgnCYMcIqJM5udwNWxiTeamFLr/PPh5gdHHDBobYlKST4xaHsMrQTeJmFWA==
+ b=Et76rEYc7oSupiYqp540EnZDDZagjBdC7Qhuf50x3+Rt0kVI7EZYjMatITXbX/A6Oo1rJF
+ 6nYXfN04Vj4ollW14uzCzJt63hTBOJi+VQbx9U4Swiz5q3z7eE9j+wxTWWZ022RxdnMmkx
+ jtPuQafjSDdkLuo2GM2CvkGgeUCI1a1zLGmGeinG+lofd0UktpiiPnGZq7uakA3OTi9NUq
+ cKk3XYctTZ7cJNa6y6BkYXaiXnhrzQ8gGhER+nYmOGaFqlDYZJQbrhl+pMQWuFPucryoiJ
+ gX0b+YIhETY3u1gVGHiCeLeH8lMcAtiid5Y9IUjTuLugrUVvajLHr6/7xfssJg==
 ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net; s=arc-2022; t=1709229720;
+ d=mailchannels.net; s=arc-2022; t=1709229856;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:dkim-signature;
- bh=RjUi/PeDAxmenFIyq3fsCYS/2p389XMDTViSE8RPfd4=;
- b=ER3qPGLri0KKta61jhpYvsKOnhG6mJ0Uo2O2EInXKSOU2IUzYLPO66ksOw2dcEqPy2Y8we
- 1aGTe7L0qqsxCNN0SJyZXfJVGsdzexbpoWKcZ4qmCYWTyG4qRmGr2zKmesF1wXx5y8l/Jb
- +YndXuc3RSgAfB9Jsb4J7cvgR2wtQWqKss+HAVCycWnGVJlrfuRfdum8q6DrRM0fD7Yg3J
- RRB7fIe3DO3aaq+tVT8vtsOig3DNzWnWCIlQo2cvOeU5i0OR+JNnOqhDsyk3ZWn/xxO+H+
- 2oikbIFx8DlRQuSBL52rUTCDIUIYy9FqTzZjJBAFCmV+wtnGCyiIm4eyfsfubA==
+ bh=/wumxogzyOumUdTcGyRHuGOW8RASzXcjGdXHeiNMITE=;
+ b=gcQU11sMUwRYu19AzN9EZD7QpAAwwZCcDmQeQBUgu2QNPg8/DfoJEWsuVWsQEkEUYHg+0Z
+ UNC3x01GJDMzDbika5PVzYS4aaP+Ylfpl90VxVbInSLlILQ4yV0D+Munkm5fLOIxWl9Hc8
+ WHbdMR7LA+L3L3Jr4VibI60opCfZ8pc193R7gA9KXWMA/fi5sZkvgVyy7JxDBPrFw+UhBE
+ ne7X0f9w2WS9zb6eoF5nsqvjyquXIhfnd9sKPwR0rPngXJEHfAU0WWAzOQLiRkzE9kbOZ8
+ +ZbFtqq1LV5JuE/lU0bkMfLoLnxQamPoJrZOAo6Y5SnbDecRtMbH+o1lwN+o3w==
 ARC-Authentication-Results: i=2; rspamd-7f9dd9fb96-smqdl;
  arc=pass ("outbound.mailhop.org:s=arc-outbound20181012:i=1");
  auth=pass smtp.auth=duocircle smtp.mailfrom=svens@stackframe.org
@@ -53,96 +54,99 @@ X-Sender-Id: _forwarded-from|134.3.94.10
 X-MC-Relay: Forwarding
 X-MailChannels-SenderId: _forwarded-from|134.3.94.10
 X-MailChannels-Auth-Id: duocircle
-X-Lonely-Towering: 36cc18795b6abb9e_1709229721168_3977930561
-X-MC-Loop-Signature: 1709229721168:3319174320
-X-MC-Ingress-Time: 1709229721168
-Received: from outbound5f.eu.mailhop.org (outbound5f.eu.mailhop.org
- [3.127.8.113]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.117.49.214 (trex/6.9.2); Thu, 29 Feb 2024 18:02:01 +0000
-ARC-Seal: i=1; a=rsa-sha256; t=1709229630; cv=none;
+X-Harbor-Harbor: 594b42c262c546b3_1709229856686_3153848249
+X-MC-Loop-Signature: 1709229856686:594268258
+X-MC-Ingress-Time: 1709229856685
+Received: from outbound3.eu.mailhop.org (outbound3.eu.mailhop.org
+ [52.29.21.168]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+ by 100.102.58.46 (trex/6.9.2); Thu, 29 Feb 2024 18:04:16 +0000
+ARC-Seal: i=1; a=rsa-sha256; t=1709229831; cv=none;
  d=outbound.mailhop.org; s=arc-outbound20181012;
- b=Ozzc+SdvG++3vfgmgWOhqTx2TRgSWpYUnH8eqwtW7SfobBlEF5q/18HWpyStElBDcP33EK7z5SJLg
- YOMgoFk+GgsLLeCZ4xwc6wZE/fR6bgzAJglkFKawVmNeFgVGZaaNXmX9OCmE71+7W+SkozAQmjC9lF
- OHchspRXYdzyQyO1NMOvAdMGsJNFiCS1AbB5wh2f8Rx4TOyz3iS7U0+Lb7O7oWOlcUMvcWBSU5kvSz
- KjtNDeLqUwoeBP+wjlUlQK7YdAYfZcrHhRhj6RtSsQh36EeU63Ee5tYdXAEkjsfcsci0mauoFLXr3K
- /jQfd+AaWyNd1nFmAw1pX4F+Z7jojRQ==
+ b=Y6nCpJ/aK/YVC36kkCP/GDmhGtKtE7cAogvQE30895FBDEo6pKiCtVaLgunkcNaGHbN+SWvCEzBKO
+ W8WzhHZObrZYe+ckpbyBbm1Jtupg++vCSPjwUEh0wfAJYrv7cjjbu21qCOV+d5SXzgwtzVBxB3oAUq
+ C8ZwCfarmU/q8+Ru/9NuboO44vCVnZs1lxetBSTbdVVZs4QbZHN+nzsZniKoVW5tVIcqvB+WKOm4jf
+ LALFuJ7ttbQ8fTm4/+vsgL0dnGHbePkCD4yxnJeb0HJgd7DBiLyVuY5xd+lR2jc73A/wn3VDzR9sgk
+ UlYgPvozU8/Rw+oJNFAgdGWULhRlTVQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
  d=outbound.mailhop.org; s=arc-outbound20181012;
- h=content-type:mime-version:message-id:date:references:in-reply-to:subject:cc:
- to:from:dkim-signature:dkim-signature:dkim-signature:from;
- bh=RjUi/PeDAxmenFIyq3fsCYS/2p389XMDTViSE8RPfd4=;
- b=Xu2uwTObgen02/fDDxoCUadAj18Z361V4JlLW5kmIydk/KeZkxUhoT+3iyYUhjMOPyIJIw0SobDDE
- oHOF4C978FNd95Zii1cFoRE/XoEBQvMqkShrscJaICbgg9IJbfo0asX5558CP+Cmruy0+XRLFi6xTW
- D6isVw95xoXPRvrjiYVFvaW/1ktmQdBrSBveqAbSO30l7UAIVjRdNzA0/Dq9QpMCl2ntm3BLKYsGXl
- HqLrhMkAwI9Vw1E5SUT/ZZM34UwvHcu9Ygx9oJ5o2vXZlfFWu/P4Ct4PnqE4sHiaKJpcYTNaI4sYP1
- s8clry71GsXonyuBUmh/4knrBM5MeQA==
-ARC-Authentication-Results: i=1; outbound2.eu.mailhop.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date:
+ references:in-reply-to:subject:cc:to:from:dkim-signature:dkim-signature:
+ dkim-signature:from;
+ bh=/wumxogzyOumUdTcGyRHuGOW8RASzXcjGdXHeiNMITE=;
+ b=K7DlSvSeQNBawoTEaJVWphfbQ5tuIvfs7pmuCph3um5ink2scY06Aj2JE91AqKri2tfZCrU7i+EZP
+ QYvxEXuWdheBubV5xkii6UIrGsjSxw7+PJSZRF4rwoPdhrZEDjN81G59T5iDJupSX3DoLbS7jvmF/8
+ aqsqbPg9m/uvFuNWu0ZqQMX8Z67BSufWoRk82tjgIFWt2xxqui59j41LBg2DRyHS5g2T/XiA+o6Xjp
+ zriAQ9tb8xuhEP9Kbm3qAV422E7Ddi86gnbo7q7Xy/l6OMe9T2R6oqMw1rXebGll8esshQ5GGDVw2c
+ 1NpmroTabXR4X3NkqjgG3aVdDN0oB6A==
+ARC-Authentication-Results: i=1; outbound3.eu.mailhop.org;
  spf=pass smtp.mailfrom=stackframe.org smtp.remote-ip=130.180.31.158;
  dkim=pass header.d=stackframe.org header.s=dkim1 header.a=rsa-sha256
- header.b=Gdd9CnSe; 
+ header.b=J0U6mcZd; 
  dmarc=none header.from=stackframe.org;
  arc=none header.oldest-pass=0;
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=stackframe.org; s=duo-1634547266507-560c42ae;
- h=content-type:mime-version:message-id:date:references:in-reply-to:subject:cc:
- to:from:from; bh=RjUi/PeDAxmenFIyq3fsCYS/2p389XMDTViSE8RPfd4=;
- b=h4Jy4Iry/58w6CqslhxJ2Nysbz4p0AP+arb/QYN+nGfT8vMbeu9+YqD2t1Yy8DZx6R3wo9X/UWztd
- ad/yjEDmVJMq86aXYuQJlCUV1p6B8Zo8BUxMJnhiSQJwAwi65Dkzffx2lQqJ53uH4lW8G8mXsvCBso
- TmdcRpmBV+QtFnzk=
+ h=content-transfer-encoding:content-type:mime-version:message-id:date:
+ references:in-reply-to:subject:cc:to:from:from;
+ bh=/wumxogzyOumUdTcGyRHuGOW8RASzXcjGdXHeiNMITE=;
+ b=ZXzzSDrDpVYQ2TtneN0inUFdGsqbLMGT3tHWlyros60aH9PHOYxOZHZxtNZgL3XRHuSFFNL27AiUr
+ sdojN5ZXW463T0g+bd7ILVrMK/Xl7LeYrw7M1ulwToIm6lY35vL+Smuh6JA109qzg7c3R2yU/VtuDp
+ FSpUioIn7KRAhxN4=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=outbound.mailhop.org; s=dkim-high;
- h=content-type:mime-version:message-id:date:references:in-reply-to:subject:cc:
- to:from:from; bh=RjUi/PeDAxmenFIyq3fsCYS/2p389XMDTViSE8RPfd4=;
- b=BUiok26oL3YiTus1ZoRNjPF2qysyCqblotYlwt4vPZRUomnu3KOzEDKPR3LRmb24gDsgRf3DptKG+
- IneqrTo1gkYbIYdXoln5igrJDhBK2O236d2D5fOqMLKPJyQpoAz+vP9FD83kc07xw/ww++fbskx96a
- PmwQb9cWR3Y90zu+7r0YLDDRBIVSU6urEbbkdnmUKt+1KNnOHExABVjWz0+4MblQx2TUvHySMHh/oe
- J3KjzWEcZIoc/3BThgPA3grWcWPadFthMmmy+ekULY7YHmloa+Mo9HBgoMNT/nWK3nmu+Mh4TwszrU
- i9WjdMquns0iuIsD4JuBZM5A1+nCD5g==
+ h=content-transfer-encoding:content-type:mime-version:message-id:date:
+ references:in-reply-to:subject:cc:to:from:from;
+ bh=/wumxogzyOumUdTcGyRHuGOW8RASzXcjGdXHeiNMITE=;
+ b=FtIBBgTpO3zEsFf6IDdaoZjNhyvq7j4zwo0AAueDpFXUiov6OQ1//sTKOOyPhldn+hkFoCvDMULcd
+ PHXSgJdHLBnCb0PKAHV170scwA829uoJna6iWcDR+rePqRtBv/YSIbku4oDQIKFGVI7euJTw+bDTk0
+ WjX9HFkH4L4uTxlg/POy9xLOE3CmHgZ+XnagsVHRTJkTJK5C2y7BVj353i841cDMvse5gVRxowMoD6
+ nRbn0vSphfnrx9jNurDVeVDgPYLHOobddTO9Y1NFu6Z7FSMrFgeXuqKuv2h/mIh0F3zoaJwNvWJB7V
+ GNa+orByPpyqTEEigT3AD+nipzLVWHA==
 X-Originating-IP: 130.180.31.158
 X-MHO-RoutePath: dG9ta2lzdG5lcm51
-X-MHO-User: 6a229436-d72c-11ee-b65f-9b9d9be6ef2c
+X-MHO-User: e14fe26a-d72c-11ee-afbc-eda7e384987e
 X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
 X-Mail-Handler: DuoCircle Outbound SMTP
 Received: from mail.duncanthrax.net (mail.duncanthrax.net [130.180.31.158])
- by outbound2.eu.mailhop.org (Halon) with ESMTPSA
- id 6a229436-d72c-11ee-b65f-9b9d9be6ef2c;
- Thu, 29 Feb 2024 18:00:26 +0000 (UTC)
+ by outbound3.eu.mailhop.org (Halon) with ESMTPSA
+ id e14fe26a-d72c-11ee-afbc-eda7e384987e;
+ Thu, 29 Feb 2024 18:03:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=stackframe.org; s=dkim1; h=Content-Type:MIME-Version:Message-ID:Date:
- References:In-Reply-To:Subject:Cc:To:From:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
- Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
- List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=RjUi/PeDAxmenFIyq3fsCYS/2p389XMDTViSE8RPfd4=; b=Gdd9CnSeV8hHbSETdzol1FjVHa
- IvOi2IsgM6ZjCmuXJZJqxfwI57jSzWsiYXaukvH+E0xhkXNV8H3NE1WKXCcKCo2cYPlQuTMpwIA22
- i7ms74di8tPXXDZYO+LPjOanERsoxbyRpBD3gzPoe4UlP3BoximXR2VWyKMkn1eP/L0rwCJjHeBCN
- oKegeOzW+BDCBda7yJ9DIWCjaqEJLuO+FyHMsvMfYUKhcaDrI+JfTXZO5nI+e3sanPSV7Qb237PBY
- aHpyinOhwhx2fChbt6gDYUqpEFvhyqCQi65EcUiQ0D6qLOd/fJDy1Rf1cgCOYGJf9eUQawcX6b4SA
- zL1yNbeA==;
+ d=stackframe.org; s=dkim1; h=Content-Transfer-Encoding:Content-Type:
+ MIME-Version:Message-ID:Date:References:In-Reply-To:Subject:Cc:To:From:Sender
+ :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+ Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+ List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=/wumxogzyOumUdTcGyRHuGOW8RASzXcjGdXHeiNMITE=; b=J0U6mcZdVCknG5g7YXnAcFw3JZ
+ iGiRWA0HtqPywZYMgcF48xRBz/GB6uQIm6MWQ92BS0qJzvDy36h3IxJ8NKVZvuDPD9N8wwD3DrwIU
+ uJgUr1a9wqHtPC3S6byVFXTape6QG3AZsAfTaR8EsenlWh/4+D5uSotM8fQeUYARO8K6KylOQnA0K
+ 6COHF8lY9tEODoYf+LzNWHvoLn7WCM2JtRGOuOoJKjQISJet4Sn70qTiBO3+981JCTAvazfi6ZEZE
+ OPtok3/9irf30c5I3L/194cp/aMFsw0E86ncz8EtqzOvSFpjnLPU2BGNR3VqOBlKGGdwT+LENZ4FI
+ GNOgBNHQ==;
 Received: from ip-134-003-094-010.um41.pools.vodafone-ip.de ([134.3.94.10]
  helo=t14.stackframe.org.stackframe.org)
  by mail.duncanthrax.net with esmtpsa (TLS1.3) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
- (envelope-from <svens@stackframe.org>) id 1rfkjC-000Mvh-0S;
- Thu, 29 Feb 2024 19:01:54 +0100
+ (envelope-from <svens@stackframe.org>) id 1rfklN-000MxS-0Y;
+ Thu, 29 Feb 2024 19:04:09 +0100
 From: Sven Schnelle <svens@stackframe.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,  Fam Zheng <fam@euphon.net>,
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Alexandre Iooss <erdnaxe@crans.org>,  Mahmoud Mandour
+ <ma.mandourr@gmail.com>,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  qemu-devel@nongnu.org,  deller@gmx.de
-Subject: Re: [PATCH] hw/scsi/lsi53c895a: add hack to prevent scsi timeouts
- in HP-UX 10.20
-In-Reply-To: <CAFEAcA8tbtrtoZSO2MmLHr+7+mcys63z15qFEVYm=nAO4cUMmQ@mail.gmail.com>
- (Peter Maydell's message of "Thu, 29 Feb 2024 17:26:53 +0000")
-References: <20240228211149.1533426-1-svens@stackframe.org>
- <CAFEAcA-KioRCJ97dbaiSf0f5uM0=+nAb=oLbFiRg=EPGwd57sw@mail.gmail.com>
- <87r0gvxlce.fsf@t14.stackframe.org>
- <CAFEAcA8tbtrtoZSO2MmLHr+7+mcys63z15qFEVYm=nAO4cUMmQ@mail.gmail.com>
-Date: Thu, 29 Feb 2024 19:01:53 +0100
-Message-ID: <87msrjxi7i.fsf@t14.stackframe.org>
+Subject: Re: [PATCH 3/3] plugins/execlog: add address range matching
+In-Reply-To: <874jdr6vp5.fsf@draig.linaro.org> ("Alex =?utf-8?Q?Benn=C3=A9?=
+ =?utf-8?Q?e=22's?= message of "Thu, 29 Feb 2024 17:12:38 +0000")
+References: <20240229150729.1620410-1-svens@stackframe.org>
+ <20240229150729.1620410-4-svens@stackframe.org>
+ <874jdr6vp5.fsf@draig.linaro.org>
+Date: Thu, 29 Feb 2024 19:04:08 +0100
+Message-ID: <87il27xi3r.fsf@t14.stackframe.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-Received-SPF: pass client-ip=23.83.216.31; envelope-from=svens@stackframe.org;
- helo=cat.pear.relay.mailchannels.net
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=23.83.223.171; envelope-from=svens@stackframe.org;
+ helo=snake.cherry.relay.mailchannels.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -165,47 +169,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+Hi Alex,
 
-> On Thu, 29 Feb 2024 at 16:54, Sven Schnelle <svens@stackframe.org> wrote:
->>
->> Peter Maydell <peter.maydell@linaro.org> writes:
->>
->> > On Wed, 28 Feb 2024 at 21:12, Sven Schnelle <svens@stackframe.org> wrote:
->> >>
->> >> HP-UX 10.20 seems to make the lsi53c895a spinning on a memory location
->> >> under certain circumstances. As the SCSI controller and CPU are not
->> >> running at the same time this loop will never finish. After some
->> >> time, the check loop interrupts with a unexpected device disconnect.
->> >> This works, but is slow because the kernel resets the scsi controller.
->> >> Instead of signaling UDC, add an option 'hpux-spin-workaround' which
->> >> emulates a INTERRUPT 2 script instruction. This instruction tells the
->> >> kernel that the request was fulfilled. With this change, SCSI speeds
->> >> improves significantly.
->> >> [..]
->> > I see we already have a hacky workaround for other OSes
->> > that do something similar. The ideal fix for both of these
->> > I think would be for lsi_execute_script() to, instead of stopping,
->> > arrange to defer executing more script instructions until
->> > after the guest has had a chance to run a bit more.
->> > I think setting a timer that calls lsi_resume_script() after
->> > a while would have that effect.
->>
->> Thanks, good idea. So something like this?
+Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+
+> Sven Schnelle <svens@stackframe.org> writes:
+>> +static void parse_vaddr_match(GArray **matches, char *token)
+>>  {
+>> -    uint64_t v =3D g_ascii_strtoull(match, NULL, 16);
+>> +    uint64_t low, high;
+>> +    gchar *endp;
+>>=20=20
+>> -    if (!matches) {
+>> -        *matches =3D g_array_new(false, true, sizeof(uint64_t));
+>> +    low =3D g_ascii_strtoull(token, &endp, 16);
+>> +    if (endp =3D=3D token) {
+>> +        fprintf(stderr, "Invalid address(range) specified: %s\n", token=
+);
+>> +        return;
+>> +    }
+>> +
+>> +    if (*endp !=3D '-') {
+>> +        high =3D low;
+>> +    } else {
+>> +        high =3D g_ascii_strtoull(endp + 1, &endp, 16);
+>> +        if (endp =3D=3D token) {
+>> +            fprintf(stderr, "Invalid address(range) specified: %s\n", t=
+oken);
+>> +            return;
+>> +        }
+>> +    }
+>> +
+>> +    if (!*matches) {
+>> +        *matches =3D g_array_new(false, true, sizeof(struct address_mat=
+ch));
+>>      }
+>> -    g_array_append_val(*matches, v);
+>> +    struct address_match *match =3D g_new(struct address_match, 1);
+>> +    match->low =3D low;
+>> +    match->high =3D high;
+>> +    g_array_append_val(*matches, match);
 >
-> Yeah, something like that I think. (You probably want to delete
-> the timer on reset, and you need to handle migration -- you can
-> either put the timer state in a new vmstate section, or else
-> in post-load if the state is 'LSI_WAIT_SCRIPTS' arm the timer.)
+> This is almost but not quite qemu_set_dfilter_ranges(). I wonder if it
+> would be worth a light re-factoring and then exposing the parser as a
+> helper function?
 
-> Does it work? :-)
-
-Yes it does. I only did a quick hack without caring about things like
-reset, freeing the timer and migration. I successfully booted HP-UX 10.20
-without any scsi errors in the dmesg. So i think this is much better
-than the commandline option. I'll prepare a proper patch in the next
-days and submit it.
-
-Thanks!
-Sven
+Thanks, I'll take a look. I wasn't aware of qemu_set_dfilter_ranges().
 
