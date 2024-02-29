@@ -4,150 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46364C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 16:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23A77C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 16:57:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfjfr-0003e6-W6; Thu, 29 Feb 2024 11:54:24 -0500
+	id 1rfjiR-00054y-13; Thu, 29 Feb 2024 11:57:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
- id 1rfjfq-0003V2-5Z
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 11:54:22 -0500
-Received: from khaki.cherry.relay.mailchannels.net ([23.83.223.96])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
- id 1rfjfo-0005zT-5C
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 11:54:21 -0500
-X-Sender-Id: _forwarded-from|134.3.94.10
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id 9C0C23629CA
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 16:54:17 +0000 (UTC)
-Received: from outbound2.eu.mailhop.org (unknown [127.0.0.6])
- (Authenticated sender: duocircle)
- by relay.mailchannels.net (Postfix) with ESMTPA id E3A8D3624D7
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 16:54:16 +0000 (UTC)
-ARC-Seal: i=2; s=arc-2022; d=mailchannels.net; t=1709225657; a=rsa-sha256;
- cv=pass;
- b=1shaI0/2HyCKpQVf95gAbAt5nrZN84k2MtbVSLLUjnjDenGC9KttMafD9umLYz/naRPYNm
- WNNav/jbrT12mb2yyadxtu0gZqsHGa9nVk8XIbq+qEDWssExi+KSXUVBF0KXMHpbZBa7Q1
- EZHBXBKaTfYt//ecEvR3ze7zCAsTNVBGY61HK56EAasztil6YXgkooMdyXbDZzz+rbk6mN
- HdlIW5zZIKwFx09ssYktauHUWycUxrwSOefNhY0KZHFoGZGy1HGeDzCvLEGbMqT2j2/3q4
- Hq8a7878M+JcEwEm6w3yY8XWKplxFRFuDk8QVRqVA9Yrh/4643p/lxoJ0qziUg==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net; s=arc-2022; t=1709225657;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references:dkim-signature;
- bh=nA2xkDuqCCgz0FfbxhW9l31Tfc4Ww2nLCHcUmt0s7jc=;
- b=Ox8mG3bu9UJY+KDNuWcY0PHjStVZ74EgxlOBV9/8ExTuQodErIg6vnb02U5MBn+EK8sU+7
- DMOQEvpeuO4z27Bil3AjjX7/RMZHUp6vGAXWEf8f/xjc+xxwkRczJG/tvuqRcp0VhDimB4
- fyP3jTOgR5Ioq0vEbv5/woK39pgFKctuhIwAlL+XBUopS761Ow7WFCZAtsAbuWdI7yL9cI
- C5hXWJxq9GU1K2radGuzTQTZTR4rouMiJSPDyWISQZ/mONCrF6B7ZyiyhJcusrD+RgaBz9
- 5YO4Uq6xUWjCYXBySw/a21dTRLywOW+vcDz9/oKZHUuss/wXwAZ2Wjkf8owumA==
-ARC-Authentication-Results: i=2; rspamd-55b4bfd7cb-9l492;
- arc=pass ("outbound.mailhop.org:s=arc-outbound20181012:i=1");
- auth=pass smtp.auth=duocircle smtp.mailfrom=svens@stackframe.org
-X-Sender-Id: _forwarded-from|134.3.94.10
-X-MC-Relay: Forwarding
-X-MailChannels-SenderId: _forwarded-from|134.3.94.10
-X-MailChannels-Auth-Id: duocircle
-X-Juvenile-Bubble: 0896042a42aef846_1709225657432_1650489422
-X-MC-Loop-Signature: 1709225657432:3975064172
-X-MC-Ingress-Time: 1709225657432
-Received: from outbound2.eu.mailhop.org (outbound2.eu.mailhop.org
- [35.157.29.171]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.101.14.227 (trex/6.9.2); Thu, 29 Feb 2024 16:54:17 +0000
-ARC-Seal: i=1; a=rsa-sha256; t=1709225566; cv=none;
- d=outbound.mailhop.org; s=arc-outbound20181012;
- b=XIQ/ZkhU46cii25I8nh0NKB6irxvQDhogyrsx+tVVxcYZLWhbCqJupDTWWk2/liJxZeiUDxXn6IRh
- wUwD5t2NxKUapYilenhRyaCERG611Ns3QJKuOIdcK4dngv9hQUDdEyUD355pUzxRVIdMRjGZZgFDWA
- VTkG1vGgJdnqA+TaA5pqeU8G/UoCYgyqAPFz4oLlaj87XW8Isq1EwWYXjK2+v0o2xJXSkPgE6tOseX
- 9CsM0Wf/YSlchiOZT7AMfSAQrQkBCQ1s0yBRUz8KqjVd/qXiU78TWDKCW12M4y7X4xvcVJrf4q4Ndy
- LsKSZGnKc2ln4lThNlsMKcdmZoz93Aw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=outbound.mailhop.org; s=arc-outbound20181012;
- h=content-type:mime-version:message-id:date:references:in-reply-to:subject:cc:
- to:from:dkim-signature:dkim-signature:dkim-signature:from;
- bh=nA2xkDuqCCgz0FfbxhW9l31Tfc4Ww2nLCHcUmt0s7jc=;
- b=mZtLb8ozR7zd3dZAdWvjb8sQbo7OJjmsxebPeyk8Je83OSn0SAjZeOtZW2I6R06GN6qJjEd3z2O04
- p9tk4jA2NASWw3e1MRChMFn88ABLvNVQOsFrNQIoXW4So4SSe4dc65yw5XZE9AUBjZi2ApoxE/AaEi
- Ee+/1/FwVpU9mjXsStMnvLusjBMu4x3VU+dhZETnpFz6yGE0HehF0BXj3ZTueLhjoG3/+uZRmSWvYU
- lBEhIZBl1kScPFNJE9VR4A9Wc+BJgi9xgvosUfR93X1icFUkYj+BY4VIRTwO1pkYt+4VHp4x/jJ+9k
- MuwguV1ylf0iI+EpzcE9fF389hSnWAQ==
-ARC-Authentication-Results: i=1; outbound2.eu.mailhop.org;
- spf=pass smtp.mailfrom=stackframe.org smtp.remote-ip=130.180.31.158;
- dkim=pass header.d=stackframe.org header.s=dkim1 header.a=rsa-sha256
- header.b=ezHgkVNq; 
- dmarc=none header.from=stackframe.org;
- arc=none header.oldest-pass=0;
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rfjiP-00054M-0A
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 11:57:01 -0500
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rfjiN-0006pT-2f
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 11:57:00 -0500
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-2d09cf00214so13746571fa.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 08:56:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=stackframe.org; s=duo-1634547266507-560c42ae;
- h=content-type:mime-version:message-id:date:references:in-reply-to:subject:cc:
- to:from:from; bh=nA2xkDuqCCgz0FfbxhW9l31Tfc4Ww2nLCHcUmt0s7jc=;
- b=UU+l5CE7OGIlvu974YoGtgE2z2uY9HA9fBBV33jDdI6qKFPvpzT5vbs/r3YHLthk2yHF1Eae3oTB4
- HfaodS/d/8pXjCmVIXmmn2umXl/V7LHODRDSjcOeuNlRCjeiKwkHND8FOdYmboIUxm++mZ9wIoEiX2
- PgqmVMxqOCd6vtBE=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=outbound.mailhop.org; s=dkim-high;
- h=content-type:mime-version:message-id:date:references:in-reply-to:subject:cc:
- to:from:from; bh=nA2xkDuqCCgz0FfbxhW9l31Tfc4Ww2nLCHcUmt0s7jc=;
- b=eA7UQjkGzQDPDhW850I21G0MNNXBCK32x7u8105ztZ63iYOWbsGV+BK1fAKJESX8jPzZtO8GdyLfa
- SfQIGAddLmrmmWlF3Krca14VOGKX2cLAVpUFpZOLdH0iAC/72N31n9KIogJ8HGlASJNvXIo4WRfDKP
- y5GfjhSqXqE9t8ilqHrQF9jTISLZcPw9+xF4DNWXL9ONO/b0laBoIEKVtehwyPfi4QDoAoKc785DD8
- EWm71Gg+W8/mTAJE0tqsndGFx86fZKnllXRkp+PnzpkRtqWmjBvh/pgBGhYOBpnMamy5Rxh+hecIPf
- p9FBZN7yvNRtML5uwfJ8MytviXBUILQ==
-X-Originating-IP: 130.180.31.158
-X-MHO-RoutePath: dG9ta2lzdG5lcm51
-X-MHO-User: f39ef256-d722-11ee-b65e-9b9d9be6ef2c
-X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
-X-Mail-Handler: DuoCircle Outbound SMTP
-Received: from mail.duncanthrax.net (mail.duncanthrax.net [130.180.31.158])
- by outbound2.eu.mailhop.org (Halon) with ESMTPSA
- id f39ef256-d722-11ee-b65e-9b9d9be6ef2c;
- Thu, 29 Feb 2024 16:52:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=stackframe.org; s=dkim1; h=Content-Type:MIME-Version:Message-ID:Date:
- References:In-Reply-To:Subject:Cc:To:From:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
- Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
- List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=nA2xkDuqCCgz0FfbxhW9l31Tfc4Ww2nLCHcUmt0s7jc=; b=ezHgkVNqhUjJVhJpNVhydhcgu2
- rn/hJGRdAtSFFDW0SbW9d2fbJdU91rp/zTmAsUgivsxBu5c3S7cch9gxigwddXXIBvRSRj6Y9Ph84
- nkzzRBBGzLt7gJtUjPTY/VjJiOp/jwLRi3BgHoCa+xl5KD/crWrxAjMaTqSo8U8yhrH+IoqFGMCSx
- VFAecXyNidXzFmVGSnTcDyQHxQNxuhlGyQYNNiLRh732zo8zx5pD0/phzxB4C/YOx3rkEjtJN8ygo
- Fc4fcarJyjzgkNUU3LLs50FeHhY+T85ukMBtVWMy3Xhs4FJ5F7nn0+1X14KoXwqlt9aQGCp0Qdpdl
- LYn2Dm5g==;
-Received: from ip-134-003-094-010.um41.pools.vodafone-ip.de ([134.3.94.10]
- helo=t14.stackframe.org.stackframe.org)
- by mail.duncanthrax.net with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
- (envelope-from <svens@stackframe.org>) id 1rfjfd-000MVz-2d;
- Thu, 29 Feb 2024 17:54:09 +0100
-From: Sven Schnelle <svens@stackframe.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,  Fam Zheng <fam@euphon.net>,
- qemu-devel@nongnu.org,  deller@gmx.de
-Subject: Re: [PATCH] hw/scsi/lsi53c895a: add hack to prevent scsi timeouts
- in HP-UX 10.20
-In-Reply-To: <CAFEAcA-KioRCJ97dbaiSf0f5uM0=+nAb=oLbFiRg=EPGwd57sw@mail.gmail.com>
- (Peter Maydell's message of "Thu, 29 Feb 2024 09:36:38 +0000")
-References: <20240228211149.1533426-1-svens@stackframe.org>
- <CAFEAcA-KioRCJ97dbaiSf0f5uM0=+nAb=oLbFiRg=EPGwd57sw@mail.gmail.com>
-Date: Thu, 29 Feb 2024 17:54:09 +0100
-Message-ID: <87r0gvxlce.fsf@t14.stackframe.org>
+ d=linaro.org; s=google; t=1709225817; x=1709830617; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cF/w8l1gfNWDsqyxGTnLtbgrYR4tq0E41Cdtc2y9MLI=;
+ b=wOKaqi+ciThyiNH7jijVfpH7TqF4fMxO7x70xQWrNO+om+oAHMikR6zWr8Om/WIU9p
+ FjyOC55akN9UiDgl6+ppGv5w9AYd0+FllRglDmY0rO33XgWQr9tONS5lUS9YG5U+sNav
+ Yr5CVd9MwIQMB/Npa60he/ZaKmuFonaYnirjo78TDTRsDVhtlZrIEyyMlOwpGpk/1z/b
+ cV0i2pZpaqmZ8Iv2E7hZBWbrn+t6jv+iqUAalDNPE9JO5VfjrkWLMnF4HXypt5ytY5a6
+ yqPwgOZ9wAFNfmghhaVXCMGKJuKdZqBPVZ2E3/9f5AfXlxEjHHnyg98N3AciGovusRL8
+ Hfug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709225817; x=1709830617;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cF/w8l1gfNWDsqyxGTnLtbgrYR4tq0E41Cdtc2y9MLI=;
+ b=K/LlnStRSCa+5INGAo/MUFq1PkqG8PpsUGZ/xKXx3dT5HgCopQz+WbIT7o/a1IuV2Q
+ B6AaD8SJMWqpAWg9ErMH44UYnnomrptNs363mN7pTBr7RbP14e660vXcSd+/Dzc005iL
+ V+pNKZKsKzAP+cAUfa/JHAcjpmdGvgnKq7MBEfhbL0c1GjALcZm7IG4pkMdePMl9hjaL
+ a8PiJDvtoVqedOh5N2hPtk5CccB0dl4kSNaNkzDGIslJaEvdLN76STUPeTX53KVDJDag
+ k67ak+KlEQsR8VLrERQx9ewLQN+6LJVtYMCCPyNxnPOzFQuJyUDpaDuHfarzjodoJ+Jb
+ vUUQ==
+X-Gm-Message-State: AOJu0Yz+/6bFupLvkegFP5iLY0ssl0/hfM6U24IQjT3ei32z/wuX6aaH
+ cf/hmzfAcaT600R9mMWcZABMr+Qxefa0TQ+SnSLaza+w3s/l0/8xj3/iPi9xBus=
+X-Google-Smtp-Source: AGHT+IGPJqMg+IqO16jycHNJX0GXsUkw+GZlBILoW6Kp/SIaAifrxBQwDhHqwtGVIMPTRslPcYI0OQ==
+X-Received: by 2002:a2e:8743:0:b0:2d2:29c2:e7ea with SMTP id
+ q3-20020a2e8743000000b002d229c2e7eamr1747989ljj.24.1709225816601; 
+ Thu, 29 Feb 2024 08:56:56 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ bn26-20020a056000061a00b0033e032bc26bsm2272084wrb.82.2024.02.29.08.56.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 29 Feb 2024 08:56:56 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id DF9C15F7D9;
+ Thu, 29 Feb 2024 16:56:55 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Nicolas Eder <nicolas.eder@lauterbach.com>
+Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, "Christian Boenig" <christian.boenig@lauterbach.com>
+Subject: Re: [PATCH v5 05/18] mcdstub: memory helper functions added
+In-Reply-To: <20231220162555.19545-6-nicolas.eder@lauterbach.com> (Nicolas
+ Eder's message of "Wed, 20 Dec 2023 17:25:42 +0100")
+References: <20231220162555.19545-1-nicolas.eder@lauterbach.com>
+ <20231220162555.19545-6-nicolas.eder@lauterbach.com>
+User-Agent: mu4e 1.12.0; emacs 29.1
+Date: Thu, 29 Feb 2024 16:56:55 +0000
+Message-ID: <87r0gv6wfc.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-Received-SPF: pass client-ip=23.83.223.96; envelope-from=svens@stackframe.org;
- helo=khaki.cherry.relay.mailchannels.net
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x233.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -164,113 +99,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+Nicolas Eder <nicolas.eder@lauterbach.com> writes:
 
-> On Wed, 28 Feb 2024 at 21:12, Sven Schnelle <svens@stackframe.org> wrote:
->>
->> HP-UX 10.20 seems to make the lsi53c895a spinning on a memory location
->> under certain circumstances. As the SCSI controller and CPU are not
->> running at the same time this loop will never finish. After some
->> time, the check loop interrupts with a unexpected device disconnect.
->> This works, but is slow because the kernel resets the scsi controller.
->> Instead of signaling UDC, add an option 'hpux-spin-workaround' which
->> emulates a INTERRUPT 2 script instruction. This instruction tells the
->> kernel that the request was fulfilled. With this change, SCSI speeds
->> improves significantly.
->> [..]
-> I see we already have a hacky workaround for other OSes
-> that do something similar. The ideal fix for both of these
-> I think would be for lsi_execute_script() to, instead of stopping,
-> arrange to defer executing more script instructions until
-> after the guest has had a chance to run a bit more.
-> I think setting a timer that calls lsi_resume_script() after
-> a while would have that effect.
+> ---
+>  include/exec/cpu-common.h |  3 +++
+>  include/exec/memory.h     |  9 +++++++++
+>  system/memory.c           | 11 +++++++++++
+>  system/physmem.c          | 26 ++++++++++++++++++++++++++
+>  4 files changed, 49 insertions(+)
+>
+> diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+> index 41115d8919..dd989b5ab2 100644
+> --- a/include/exec/cpu-common.h
+> +++ b/include/exec/cpu-common.h
+> @@ -182,6 +182,9 @@ int ram_block_discard_range(RAMBlock *rb, uint64_t st=
+art, size_t length);
+>  int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+>                          void *ptr, size_t len, bool is_write);
+>=20=20
+> +int cpu_memory_get_physical_address(CPUState *cpu, vaddr *addr, size_t *=
+len);
+> +
+> +
+>  /* vl.c */
+>  void list_cpus(void);
+>=20=20
+> diff --git a/include/exec/memory.h b/include/exec/memory.h
+> index 831f7c996d..174de807d5 100644
+> --- a/include/exec/memory.h
+> +++ b/include/exec/memory.h
+> @@ -3142,6 +3142,15 @@ bool ram_block_discard_is_disabled(void);
+>   */
+>  bool ram_block_discard_is_required(void);
+>=20=20
+> +/*
+> + * mcd_find_address_space() - Find the address spaces with the correspon=
+ding
+> + * name.
+> + *
+> + * Currently only used by the mcd debugger.
+> + * @as_name: Name to look for.
+> + */
+> +AddressSpace *mcd_find_address_space(const char *as_name);
+> +
 
-Thanks, good idea. So something like this?
+Don't hard code this for mcd - maybe address_space_find_byname()?
 
-diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
-index d607a5f9fb..9931799d44 100644
---- a/hw/scsi/lsi53c895a.c
-+++ b/hw/scsi/lsi53c895a.c
-@@ -188,7 +188,7 @@ static const char *names[] = {
- #define LSI_TAG_VALID     (1 << 16)
- 
- /* Maximum instructions to process. */
--#define LSI_MAX_INSN    10000
-+#define LSI_MAX_INSN    1000
- 
- typedef struct lsi_request {
-     SCSIRequest *req;
-@@ -205,6 +205,7 @@ enum {
-     LSI_WAIT_RESELECT, /* Wait Reselect instruction has been issued */
-     LSI_DMA_SCRIPTS, /* processing DMA from lsi_execute_script */
-     LSI_DMA_IN_PROGRESS, /* DMA operation is in progress */
-+    LSI_WAIT_SCRIPTS, /* SCRIPTS where stopped because of instruction count limit */
- };
- 
- enum {
-@@ -224,6 +225,7 @@ struct LSIState {
-     MemoryRegion ram_io;
-     MemoryRegion io_io;
-     AddressSpace pci_io_as;
-+    QEMUTimer *scripts_timer;
- 
-     int carry; /* ??? Should this be an a visible register somewhere?  */
-     int status;
-@@ -1152,13 +1154,9 @@ again:
-      * which should be enough for all valid use cases).
-      */
-     if (++insn_processed > LSI_MAX_INSN || reentrancy_level > 8) {
--        if (!(s->sien0 & LSI_SIST0_UDC)) {
--            qemu_log_mask(LOG_GUEST_ERROR,
--                          "lsi_scsi: inf. loop with UDC masked");
--        }
--        lsi_script_scsi_interrupt(s, LSI_SIST0_UDC, 0);
--        lsi_disconnect(s);
--        trace_lsi_execute_script_stop();
-+        s->waiting = LSI_WAIT_SCRIPTS;
-+        timer_mod(s->scripts_timer, qemu_clock_get_us(QEMU_CLOCK_VIRTUAL) + 500);
-+        trace_lsi_scripts_timer_arm();
-         reentrancy_level--;
-         return;
-     }
-@@ -2294,6 +2292,17 @@ static const struct SCSIBusInfo lsi_scsi_info = {
-     .cancel = lsi_request_cancelled
- };
- 
-+static void scripts_timer_cb(void *opaque)
-+{
-+    LSIState *s = opaque;
-+
-+    trace_lsi_scripts_timer_triggered();
-+    if (s->waiting == LSI_WAIT_SCRIPTS) {
-+        s->waiting = 0;
-+        lsi_execute_script(s);
-+    }
-+}
-+
- static void lsi_scsi_realize(PCIDevice *dev, Error **errp)
- {
-     LSIState *s = LSI53C895A(dev);
-@@ -2313,6 +2322,7 @@ static void lsi_scsi_realize(PCIDevice *dev, Error **errp)
-                           "lsi-ram", 0x2000);
-     memory_region_init_io(&s->io_io, OBJECT(s), &lsi_io_ops, s,
-                           "lsi-io", 256);
-+    s->scripts_timer = timer_new_us(QEMU_CLOCK_VIRTUAL, scripts_timer_cb, s);
- 
-     /*
-      * Since we use the address-space API to interact with ram_io, disable the
-diff --git a/hw/scsi/trace-events b/hw/scsi/trace-events
-index d72f741ed8..4456a08ab0 100644
---- a/hw/scsi/trace-events
-+++ b/hw/scsi/trace-events
-@@ -302,6 +302,8 @@ lsi_execute_script_stop(void) "SCRIPTS execution stopped"
- lsi_awoken(void) "Woken by SIGP"
- lsi_reg_read(const char *name, int offset, uint8_t ret) "Read reg %s 0x%x = 0x%02x"
- lsi_reg_write(const char *name, int offset, uint8_t val) "Write reg %s 0x%x = 0x%02x"
-+lsi_scripts_timer_triggered(void) "SCRIPTS timer triggered"
-+lsi_scripts_timer_arm(void) "SCRIPTS timer armed"
- 
- # virtio-scsi.c
- virtio_scsi_cmd_req(int lun, uint32_t tag, uint8_t cmd) "virtio_scsi_cmd_req lun=%u tag=0x%x cmd=0x%x"
+>  #endif
+>=20=20
+>  #endif
+> diff --git a/system/memory.c b/system/memory.c
+> index 798b6c0a17..9a8fa79e0c 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -3562,6 +3562,17 @@ void mtree_info(bool flatview, bool dispatch_tree,=
+ bool owner, bool disabled)
+>      }
+>  }
+>=20=20
+> +AddressSpace *mcd_find_address_space(const char *as_name)
+> +{
+> +    AddressSpace *as;
+> +    QTAILQ_FOREACH(as, &address_spaces, address_spaces_link) {
+> +        if (strcmp(as->name, as_name) =3D=3D 0) {
+> +            return as;
+> +        }
+> +    }
+> +    return NULL;
+> +}
+> +
+>  void memory_region_init_ram(MemoryRegion *mr,
+>                              Object *owner,
+>                              const char *name,
+> diff --git a/system/physmem.c b/system/physmem.c
+> index a63853a7bc..70733c67c7 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -3422,6 +3422,32 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+>      return 0;
+>  }
+>=20=20
+> +int cpu_memory_get_physical_address(CPUState *cpu, vaddr *addr, size_t *=
+len)
+> +{
+> +    hwaddr phys_addr;
+> +    vaddr l, page;
+> +
+> +    cpu_synchronize_state(cpu);
+> +    MemTxAttrs attrs;
+> +
+> +    page =3D *addr & TARGET_PAGE_MASK;
+> +    phys_addr =3D cpu_get_phys_page_attrs_debug(cpu, page, &attrs);
+> +    /* if no physical page mapped, return an error */
+> +    if (phys_addr =3D=3D -1) {
+> +        return -1;
+> +    }
+> +    l =3D (page + TARGET_PAGE_SIZE) - *addr;
+> +    if (l > *len) {
+> +        l =3D *len;
+> +    }
+> +    phys_addr +=3D (*addr & ~TARGET_PAGE_MASK);
+> +
+> +    /* set output values */
+> +    *addr =3D phys_addr;
+> +    *len =3D l;
+> +    return 0;
+> +}
+
+I think there is some scope to re-factor some code that is shared with
+cpu_memory_rw_debug. In fact rather than using this to feed
+mcd_read_write_memory() maybe you really just want a
+cpu_physical_memory_rw_debug()?
+
+Although as you are going from vaddr anyway where does
+cpu_memory_rw_debug() fail for you?
+
+> +
+>  /*
+>   * Allows code that needs to deal with migration bitmaps etc to still be=
+ built
+>   * target independent.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
