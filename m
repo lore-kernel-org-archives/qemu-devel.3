@@ -4,100 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D183C54E41
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 13:35:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C53AFC54E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 13:39:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfgYu-0001hA-Bh; Thu, 29 Feb 2024 08:35:00 -0500
+	id 1rfgcZ-0002pI-PD; Thu, 29 Feb 2024 08:38:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rfgYp-0001gj-1o
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 08:34:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rfgYn-0007xX-Jx
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 08:34:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709213692;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4SFQQ8w1spVd62vbY4/5U8qHsMT56nqDaW1rgsbR5gU=;
- b=VeRYzYbN8jliaeQSX1dd/r5DHb0VXDn0FWwDdmPsGxCP51vF5WVJdKbzBBN3pxoBGnub1v
- wbrtTkYEa5BCMKrAoUYKY+QPOrmNTEGu2Hm5wNhU4dDC4U4OtxBOmYpVuF0DhTJSbyMQfU
- 78JcnkqLWWzTdFjVA30E9ZhT7Hi4nEQ=
-Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
- [209.85.222.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-496-aPOQPYtzO3aOYagqbJ7q2w-1; Thu, 29 Feb 2024 08:34:51 -0500
-X-MC-Unique: aPOQPYtzO3aOYagqbJ7q2w-1
-Received: by mail-ua1-f70.google.com with SMTP id
- a1e0cc1a2514c-7ce706ba435so405633241.2
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 05:34:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <hchauhan@ventanamicro.com>)
+ id 1rfgcW-0002oe-W0
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 08:38:45 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hchauhan@ventanamicro.com>)
+ id 1rfgcV-0000DD-5n
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 08:38:44 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1d3ae9d1109so526315ad.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 05:38:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1709213921; x=1709818721; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=WsGoSdEkaUDhp8Tvx9F41Q//SHdKUbQKZ6C//jZPrGs=;
+ b=GxoPw9RPe5zyh0dD6G1SSdOu2mSOkHQ8I4Q5o6bSaBf1PUHTk1jDjksnw14x3775A8
+ jdKlwGP+GBkrY3YX8hx2yAhArPvW5U9rk6SBwPZmCHvsZ0hm68vUyBZSzNMjXlaOT/7H
+ wHIsaInSU/fwGaZQB/5U81alsoTvRJ86Zb/WpadDMTLWe6J/aPS22+JQtd6+yz0dxH2j
+ fGXmS/EM7jXRjWquEDWf2WmDy7mFlh/ZY6X5DHadj5FQ/Lh/Jjiw98KnyrL7liVnGlO+
+ KYj7f1ALj32k1HWbW2UAdLIUht7XOK0+Ht1IEhmvAzOU4ZwE+lmaCzhwAdORx44BZ3Bm
+ MuOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709213690; x=1709818490;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4SFQQ8w1spVd62vbY4/5U8qHsMT56nqDaW1rgsbR5gU=;
- b=Dspt4c/3oqvOPrfJVJf0LV7oVHLoKzpYW5dt9K3uMMU0/0ncd1s1E/2sNVzsa2u07n
- wBYLYF3RKPPN4IykOYEpd/dLJaLM0BRRs32OrYdJPBY0taRZCL1obkasaRfxm/OmqpGT
- wqqkxBvcyz89Z2xg3E5SdCrmIvaBNgOqam2ZcK4aTTA0iZHNPWy/Heeums8cr+xXGKQX
- z10H92c4SRyr/+xLIH9B/C8fsObVzetKI2d8pnz6p1ME8+zqzZCSS4ZoTdu+t/eheHpl
- 5Jj2grpy0W/sJ6TuJK7cvUM19A84fhZ5QuV6Hcwdw0HDMz8Q2OtVRmaKGrBIC8VANfFY
- CDWQ==
-X-Gm-Message-State: AOJu0Yw90BfRd9SK162B9Gf54o90vcnt9d2jpUXdFLSjTk0B37f38/47
- 0A+rXuivxbvu03Kc4qFtKEBX1DIG5CHiXcAEWJVenDLe1PH3m/BBdC9VXlk4GClCI5HR+TFnCio
- l5fwvt7M+yZssrUgStZdQPQmFECKuJbAmAKhDpAOOtjOgEKd07tEo
-X-Received: by 2002:a05:6102:508c:b0:472:5960:9e9b with SMTP id
- bl12-20020a056102508c00b0047259609e9bmr2160004vsb.29.1709213690582; 
- Thu, 29 Feb 2024 05:34:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG+hVbRlB+7ofyQFY8JtVGLNRxXcUgD17o0CWG6D+Yl4wG+kGBGJID3HI8cR9Fn8qoen1wQIw==
-X-Received: by 2002:a05:6102:508c:b0:472:5960:9e9b with SMTP id
- bl12-20020a056102508c00b0047259609e9bmr2159980vsb.29.1709213690315; 
- Thu, 29 Feb 2024 05:34:50 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ d=1e100.net; s=20230601; t=1709213921; x=1709818721;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=WsGoSdEkaUDhp8Tvx9F41Q//SHdKUbQKZ6C//jZPrGs=;
+ b=I09BCnJWJ/MsCf4KijpJ7mR3imr1VYW0YMYsJ5RcSAh4dOLy2LJ4eBTetFQY6yl3cs
+ WBLuRzQUwGPbHcS3G63aKma9HGkKbQRZR9vIkRd5g2NzblBi9vqNrj+n15nWRvR9NUJn
+ OVmYE0jFJN5yiPzS/+KFyJ/vlwciwF7Rx1GZXDnXR87KwlJS/DJTEZygMfBaaH95KIoF
+ LeFOU62UBAAdrSqwbCXTNTajDj8jcnl10NYKL/ZY09Ui3Pqpc9jv0B7FOJt+FP9jP/V1
+ bBo0KFo1qSfsDyOCx2a9yH73HRWq7eYEJnLpGOMoJKxXTB1r8XEeMROwlMKLfh4hz0lc
+ ejvQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXTkQ0cRPRxcARmY+LYL6J3OELAo/lmeDNI3I6vCpgEx0q2bQRepu3a22dB+yk/vpW5wkh0+reI6t07i1amJ3z0CH3ux4U=
+X-Gm-Message-State: AOJu0YwkpSjXiqyLo43ezK4n1AIYSSyTj+GOOXPi0QFc4sQMf+3ArF5H
+ 5bLcgcKbEo0Y7w1DG6joPB4atYq+b3K6brfQ6Dv4bIQCbK29qjPRlxHNuj/0yyw=
+X-Google-Smtp-Source: AGHT+IHsp39wTaXzqSwW7kN+5//ri90olKBS6bpKUeBqJ3UJkZOhl/sWsnX85p85zNIBduWzrWCbLw==
+X-Received: by 2002:a17:902:ee0c:b0:1dc:96c9:a122 with SMTP id
+ z12-20020a170902ee0c00b001dc96c9a122mr1967866plb.5.1709213921055; 
+ Thu, 29 Feb 2024 05:38:41 -0800 (PST)
+Received: from localhost.localdomain ([49.37.249.67])
  by smtp.gmail.com with ESMTPSA id
- ia21-20020a0561024b1500b0047065173094sm224148vsb.1.2024.02.29.05.34.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Feb 2024 05:34:49 -0800 (PST)
-Message-ID: <356b2acd-cdbd-4517-a4e0-624f9b9484cc@redhat.com>
-Date: Thu, 29 Feb 2024 14:34:27 +0100
+ g1-20020a170902fe0100b001dc941f145dsm1454918plj.253.2024.02.29.05.38.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 29 Feb 2024 05:38:40 -0800 (PST)
+From: Himanshu Chauhan <hchauhan@ventanamicro.com>
+To: qemu-riscv@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Himanshu Chauhan <hchauhan@ventanamicro.com>
+Subject: [PATCH v3 0/2] Export debug triggers as an extension
+Date: Thu, 29 Feb 2024 19:07:43 +0530
+Message-Id: <20240229133745.771154-1-hchauhan@ventanamicro.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/21] migration: Add Error** argument to .save_setup()
- handler
-Content-Language: en-US, fr
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Alex Williamson
- <alex.williamson@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Halil Pasic
- <pasic@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-References: <20240227180345.548960-1-clg@redhat.com>
- <20240227180345.548960-7-clg@redhat.com> <87zfvj3hnd.fsf@pond.sub.org>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <87zfvj3hnd.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=hchauhan@ventanamicro.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,90 +93,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/29/24 07:32, Markus Armbruster wrote:
-> Cédric Le Goater <clg@redhat.com> writes:
-> 
->> The purpose is to record a potential error in the migration stream if
->> qemu_savevm_state_setup() fails. Most of the current .save_setup()
->> handlers can be modified to use the Error argument instead of managing
->> their own and calling locally error_report(). The following patches
->> will introduce such changes for VFIO first.
->>
->> Cc: Nicholas Piggin <npiggin@gmail.com>
->> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
->> Cc: Halil Pasic <pasic@linux.ibm.com>
->> Cc: Thomas Huth <thuth@redhat.com>
->> Cc: Eric Blake <eblake@redhat.com>
->> Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> Cc: John Snow <jsnow@redhat.com>
->> Cc: Stefan Hajnoczi <stefanha@redhat.com>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Reviewed-by: Peter Xu <peterx@redhat.com>
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->> ---
-> 
-> [...]
-> 
->> diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
->> index c483b62a9b5f71772639fc180bdad15ecb6711cb..c934df424a555d83d2198f5ddfc0cbe0ea98e9ec 100644
->> --- a/hw/s390x/s390-stattrib.c
->> +++ b/hw/s390x/s390-stattrib.c
->> @@ -166,7 +166,7 @@ static int cmma_load(QEMUFile *f, void *opaque, int version_id)
->>       return ret;
->>   }
->>   
->> -static int cmma_save_setup(QEMUFile *f, void *opaque)
->> +static int cmma_save_setup(QEMUFile *f, void *opaque, Error **errp)
->>   {
->>       S390StAttribState *sas = S390_STATTRIB(opaque);
->>       S390StAttribClass *sac = S390_STATTRIB_GET_CLASS(sas);
->         int res;
->         /*
->          * Signal that we want to start a migration, thus needing PGSTE dirty
->          * tracking.
->          */
->         res = sac->set_migrationmode(sas, 1);
->         if (res) {
->             return res;
-> 
-> I believe this is a failure return.
-> 
-> Anti-pattern: fail without setting an error.  There might be more
-> elsewhere in the series.
-> 
-> qapi/error.h's big comment:
-> 
->   * - On success, the function should not touch *errp.  On failure, it
->   *   should set a new error, e.g. with error_setg(errp, ...), or
->   *   propagate an existing one, e.g. with error_propagate(errp, ...).
->   *
->   * - Whenever practical, also return a value that indicates success /
->   *   failure.  This can make the error checking more concise, and can
->   *   avoid useless error object creation and destruction.  Note that
->   *   we still have many functions returning void.  We recommend
->   *   • bool-valued functions return true on success / false on failure,
->   *   • pointer-valued functions return non-null / null pointer, and
->   *   • integer-valued functions return non-negative / negative.
-> 
->         }
->         qemu_put_be64(f, STATTR_FLAG_EOS);
->         return 0;
->     }
-> 
-> When adding Error **errp to a function, you must also add code to set an
-> error on failure to every failure path.  Adding it in a later patch in
-> the same series can be okay, but I'd add a TODO comment to the function
-> then, and mention it in the commit message.
+All the CPUs may or may not implement the debug triggers (sdtrig)
+extension. The presence of it should be dynamically detectable.
+This patch exports the debug triggers as an extension which
+can be turned on or off by sdtrig=<true/false> option. It is
+turned on by default.
 
-Indeed. I will check the other changes.
+"sdtrig" is concatenated to ISA string when it is enabled.
+Like so:
+    rv64imafdch_zicbom_*_sdtrig_*_sstc_svadu
 
-> Questions?
+Changes from v1:
+   - Replaced the debug property with ext_sdtrig
+   - Marked it experimenatal by naming it x-sdtrig
+   - x-sdtrig is added to ISA string
+   - Reversed the patch order
 
-Perfectly clear.
+Changes from v2:
+   - Mark debug property as deprecated and replace internally with sdtrig extension
+   - setting/unsetting debug property shows warning and sets/unsets ext_sdtrig
+   - sdtrig is added to ISA string as RISC-V debug specification is frozen
 
-Thanks,
+Himanshu Chauhan (2):
+  target/riscv: Mark debug property as deprecated
+  target/riscv: Export sdtrig in ISA string
 
-C.
+ target/riscv/cpu.c        | 38 +++++++++++++++++++++++++++++++++++---
+ target/riscv/cpu_cfg.h    |  2 +-
+ target/riscv/cpu_helper.c |  2 +-
+ target/riscv/csr.c        |  2 +-
+ target/riscv/machine.c    |  2 +-
+ 5 files changed, 39 insertions(+), 7 deletions(-)
 
+-- 
+2.34.1
 
 
