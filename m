@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7D03C54798
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 06:44:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64BC0C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 06:45:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfa56-00045R-PN; Thu, 29 Feb 2024 01:39:48 -0500
+	id 1rfa9Q-0003Yl-LG; Thu, 29 Feb 2024 01:44:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rfa4n-0003i7-Mr
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:39:29 -0500
+ id 1rfa9M-0003US-7e
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:44:13 -0500
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rfa4k-0004LA-Ta
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:39:29 -0500
+ id 1rfa9J-0005ON-Oi
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:44:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709188766; x=1740724766;
+ t=1709189049; x=1740725049;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=XOdt3C+3fz8v+v7p9iueyFKqJMOu1Z6Te4esgr/ao4A=;
- b=ecPloxK31CBlTMzCULC/mlTGhboPs4Lvdl6h3cfNqx4D9pJ/1unuYL3q
- q78tcokrkxbG2khpy9sa2zj1UXBwQjTfl8uJCIyzmsOhq8KUBIX6mbv5e
- nYnPmrpllmt8dkEbrm97AZDzD1lBd1JLy74n4tBB/ucXR6PlN3SM7a8Jj
- xSdKqxhnjqBpitSaeVmnuURsXailzpT/YTHLlmpwXzOkdorzQf/X4+Ywp
- sixgxIcUkROzgFyHDTK+zbFG1W3tWllw0LFS9KQhROoa0tmUJYb0nZNjc
- p9zBs+Dg9M+6LkEyHDZXxEoN8RtkYm/53DV3cHRaOoGHWweM9yePDnODs g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3802635"
+ bh=KznjdvH3kuXEv/1tkBP3lz4cJ1FU6WY/9gVj9V1KPcg=;
+ b=PydihxZI29E9192UTAGD14Yv848opckdFkQsC1qMi9NnC86JLtwmJsMI
+ 5gYjZhMA8G4GGUT+VTmgGzX3MvQ33veqd3C0S2ltyB4ATWbzxsohQ/KK0
+ qx45CC/8xR+TCfBclf3OM5s657stnU1IkHb5GrAQNU2TNB1Ir+QFORrqV
+ JrPqmWqyaIvURXN4mCxRjeNEa0He9EcR4oXrAHWVqX+nt9tiMhhlorIWh
+ T64j5RROMmr61rKxIbso1sy97SLfkarH3oKn+ZM2p81hEcVFc9zN9l4c6
+ BzotuLD4CPLiovoDFVJQhrk4jEW/HeK+ibiObrXni+vtLAAgpcJUS0Hhd g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3803275"
 X-IronPort-AV: E=Sophos;i="6.06,192,1705392000"; 
-   d="scan'208";a="3802635"
+   d="scan'208";a="3803275"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Feb 2024 22:39:25 -0800
+ 28 Feb 2024 22:44:07 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,192,1705392000"; 
-   d="scan'208";a="8075141"
+   d="scan'208";a="8076477"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa007.jf.intel.com with ESMTP; 28 Feb 2024 22:39:19 -0800
+ by orviesa007.jf.intel.com with ESMTP; 28 Feb 2024 22:44:01 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -60,10 +60,10 @@ Cc: kvm@vger.kernel.org, qemu-devel@nongnu.org,
  Gerd Hoffmann <kraxel@redhat.com>,
  Isaku Yamahata <isaku.yamahata@gmail.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>, xiaoyao.li@intel.com
-Subject: [PATCH v5 17/65] i386/tdx: Adjust the supported CPUID based on TDX
- restrictions
-Date: Thu, 29 Feb 2024 01:36:38 -0500
-Message-Id: <20240229063726.610065-18-xiaoyao.li@intel.com>
+Subject: [PATCH v5 60/65] hw/i386: add option to forcibly report edge trigger
+ in acpi tables
+Date: Thu, 29 Feb 2024 01:37:21 -0500
+Message-Id: <20240229063726.610065-61-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240229063726.610065-1-xiaoyao.li@intel.com>
 References: <20240229063726.610065-1-xiaoyao.li@intel.com>
@@ -94,470 +94,288 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to Chapter "CPUID Virtualization" in TDX module spec, CPUID
-bits of TD can be classified into 6 types:
+From: Isaku Yamahata <isaku.yamahata@intel.com>
 
-------------------------------------------------------------------------
-1 | As configured | configurable by VMM, independent of native value;
-------------------------------------------------------------------------
-2 | As configured | configurable by VMM if the bit is supported natively
-    (if native)   | Otherwise it equals as native(0).
-------------------------------------------------------------------------
-3 | Fixed         | fixed to 0/1
-------------------------------------------------------------------------
-4 | Native        | reflect the native value
-------------------------------------------------------------------------
-5 | Calculated    | calculated by TDX module.
-------------------------------------------------------------------------
-6 | Inducing #VE  | get #VE exception
-------------------------------------------------------------------------
+When level trigger isn't supported on x86 platform,
+forcibly report edge trigger in acpi tables.
 
-Note:
-1. All the configurable XFAM related features and TD attributes related
-   features fall into type #2. And fixed0/1 bits of XFAM and TD
-   attributes fall into type #3.
-
-2. For CPUID leaves not listed in "CPUID virtualization Overview" table
-   in TDX module spec, TDX module injects #VE to TDs when those are
-   queried. For this case, TDs can request CPUID emulation from VMM via
-   TDVMCALL and the values are fully controlled by VMM.
-
-Due to TDX module has its own virtualization policy on CPUID bits, it leads
-to what reported via KVM_GET_SUPPORTED_CPUID diverges from the supported
-CPUID bits for TDs. In order to keep a consistent CPUID configuration
-between VMM and TDs. Adjust supported CPUID for TDs based on TDX
-restrictions.
-
-Currently only focus on the CPUID leaves recognized by QEMU's
-feature_word_info[] that are indexed by a FeatureWord.
-
-Introduce a TDX CPUID lookup table, which maintains 1 entry for each
-FeatureWord. Each entry has below fields:
-
- - tdx_fixed0/1: The bits that are fixed as 0/1;
-
- - depends_on_vmm_cap: The bits that are configurable from the view of
-		       TDX module. But they requires emulation of VMM
-		       when configured as enabled. For those, they are
-		       not supported if VMM doesn't report them as
-		       supported. So they need be fixed up by checking
-		       if VMM supports them.
-
- - inducing_ve: TD gets #VE when querying this CPUID leaf. The result is
-                totally configurable by VMM.
-
- - supported_on_ve: It's valid only when @inducing_ve is true. It represents
-		    the maximum feature set supported that be emulated
-		    for TDs.
-
-By applying TDX CPUID lookup table and TDX capabilities reported from
-TDX module, the supported CPUID for TDs can be obtained from following
-steps:
-
-- get the base of VMM supported feature set;
-
-- if the leaf is not a FeatureWord just return VMM's value without
-  modification;
-
-- if the leaf is an inducing_ve type, applying supported_on_ve mask and
-  return;
-
-- include all native bits, it covers type #2, #4, and parts of type #1.
-  (it also includes some unsupported bits. The following step will
-   correct it.)
-
-- apply fixed0/1 to it (it covers #3, and rectifies the previous step);
-
-- add configurable bits (it covers the other part of type #1);
-
-- fix the ones in vmm_fixup;
-
-(Calculated type is ignored since it's determined at runtime).
-
-Co-developed-by: Chenyi Qiang <chenyi.qiang@intel.com>
-Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- target/i386/cpu.h     |  16 +++
- target/i386/kvm/kvm.c |   4 +
- target/i386/kvm/tdx.c | 263 ++++++++++++++++++++++++++++++++++++++++++
- target/i386/kvm/tdx.h |   3 +
- 4 files changed, 286 insertions(+)
+ hw/i386/acpi-build.c  | 99 ++++++++++++++++++++++++++++---------------
+ hw/i386/acpi-common.c | 45 +++++++++++++++-----
+ 2 files changed, 101 insertions(+), 43 deletions(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 952174bb6f52..7bd604f802a1 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -787,6 +787,8 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index 15242b9096b5..8b493a2e9605 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -964,7 +964,8 @@ static void build_dbg_aml(Aml *table)
+     aml_append(table, scope);
+ }
  
- /* Support RDFSBASE/RDGSBASE/WRFSBASE/WRGSBASE */
- #define CPUID_7_0_EBX_FSGSBASE          (1U << 0)
-+/* Support for TSC adjustment MSR 0x3B */
-+#define CPUID_7_0_EBX_TSC_ADJUST        (1U << 1)
- /* Support SGX */
- #define CPUID_7_0_EBX_SGX               (1U << 2)
- /* 1st Group of Advanced Bit Manipulation Extensions */
-@@ -805,8 +807,12 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
- #define CPUID_7_0_EBX_INVPCID           (1U << 10)
- /* Restricted Transactional Memory */
- #define CPUID_7_0_EBX_RTM               (1U << 11)
-+/* Cache QoS Monitoring */
-+#define CPUID_7_0_EBX_PQM               (1U << 12)
- /* Memory Protection Extension */
- #define CPUID_7_0_EBX_MPX               (1U << 14)
-+/* Resource Director Technology Allocation */
-+#define CPUID_7_0_EBX_RDT_A             (1U << 15)
- /* AVX-512 Foundation */
- #define CPUID_7_0_EBX_AVX512F           (1U << 16)
- /* AVX-512 Doubleword & Quadword Instruction */
-@@ -862,10 +868,16 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
- #define CPUID_7_0_ECX_AVX512VNNI        (1U << 11)
- /* Support for VPOPCNT[B,W] and VPSHUFBITQMB */
- #define CPUID_7_0_ECX_AVX512BITALG      (1U << 12)
-+/* Intel Total Memory Encryption */
-+#define CPUID_7_0_ECX_TME               (1U << 13)
- /* POPCNT for vectors of DW/QW */
- #define CPUID_7_0_ECX_AVX512_VPOPCNTDQ  (1U << 14)
-+/* Placeholder for bit 15 */
-+#define CPUID_7_0_ECX_FZM               (1U << 15)
- /* 5-level Page Tables */
- #define CPUID_7_0_ECX_LA57              (1U << 16)
-+/* MAWAU for MPX */
-+#define CPUID_7_0_ECX_MAWAU             (31U << 17)
- /* Read Processor ID */
- #define CPUID_7_0_ECX_RDPID             (1U << 22)
- /* Bus Lock Debug Exception */
-@@ -876,6 +888,8 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
- #define CPUID_7_0_ECX_MOVDIRI           (1U << 27)
- /* Move 64 Bytes as Direct Store Instruction */
- #define CPUID_7_0_ECX_MOVDIR64B         (1U << 28)
-+/* ENQCMD and ENQCMDS instructions */
-+#define CPUID_7_0_ECX_ENQCMD            (1U << 29)
- /* Support SGX Launch Control */
- #define CPUID_7_0_ECX_SGX_LC            (1U << 30)
- /* Protection Keys for Supervisor-mode Pages */
-@@ -893,6 +907,8 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
- #define CPUID_7_0_EDX_SERIALIZE         (1U << 14)
- /* TSX Suspend Load Address Tracking instruction */
- #define CPUID_7_0_EDX_TSX_LDTRK         (1U << 16)
-+/* PCONFIG instruction */
-+#define CPUID_7_0_EDX_PCONFIG           (1U << 18)
- /* Architectural LBRs */
- #define CPUID_7_0_EDX_ARCH_LBR          (1U << 19)
- /* AMX_BF16 instruction */
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 0e68e80f4291..389b631c03dd 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -520,6 +520,10 @@ uint32_t kvm_arch_get_supported_cpuid(KVMState *s, uint32_t function,
-         ret |= 1U << KVM_HINTS_REALTIME;
+-static Aml *build_link_dev(const char *name, uint8_t uid, Aml *reg)
++static Aml *build_link_dev(const char *name, uint8_t uid, Aml *reg,
++                           bool level_trigger_unsupported)
+ {
+     Aml *dev;
+     Aml *crs;
+@@ -976,7 +977,10 @@ static Aml *build_link_dev(const char *name, uint8_t uid, Aml *reg)
+     aml_append(dev, aml_name_decl("_UID", aml_int(uid)));
+ 
+     crs = aml_resource_template();
+-    aml_append(crs, aml_interrupt(AML_CONSUMER, AML_LEVEL, AML_ACTIVE_HIGH,
++    aml_append(crs, aml_interrupt(AML_CONSUMER,
++                                  level_trigger_unsupported ?
++                                  AML_EDGE : AML_LEVEL,
++                                  AML_ACTIVE_HIGH,
+                                   AML_SHARED, irqs, ARRAY_SIZE(irqs)));
+     aml_append(dev, aml_name_decl("_PRS", crs));
+ 
+@@ -1000,7 +1004,8 @@ static Aml *build_link_dev(const char *name, uint8_t uid, Aml *reg)
+     return dev;
+  }
+ 
+-static Aml *build_gsi_link_dev(const char *name, uint8_t uid, uint8_t gsi)
++static Aml *build_gsi_link_dev(const char *name, uint8_t uid,
++                               uint8_t gsi, bool level_trigger_unsupported)
+ {
+     Aml *dev;
+     Aml *crs;
+@@ -1013,7 +1018,10 @@ static Aml *build_gsi_link_dev(const char *name, uint8_t uid, uint8_t gsi)
+ 
+     crs = aml_resource_template();
+     irqs = gsi;
+-    aml_append(crs, aml_interrupt(AML_CONSUMER, AML_LEVEL, AML_ACTIVE_HIGH,
++    aml_append(crs, aml_interrupt(AML_CONSUMER,
++                                  level_trigger_unsupported ?
++                                  AML_EDGE : AML_LEVEL,
++                                  AML_ACTIVE_HIGH,
+                                   AML_SHARED, &irqs, 1));
+     aml_append(dev, aml_name_decl("_PRS", crs));
+ 
+@@ -1032,7 +1040,7 @@ static Aml *build_gsi_link_dev(const char *name, uint8_t uid, uint8_t gsi)
+ }
+ 
+ /* _CRS method - get current settings */
+-static Aml *build_iqcr_method(bool is_piix4)
++static Aml *build_iqcr_method(bool is_piix4, bool level_trigger_unsupported)
+ {
+     Aml *if_ctx;
+     uint32_t irqs;
+@@ -1040,7 +1048,9 @@ static Aml *build_iqcr_method(bool is_piix4)
+     Aml *crs = aml_resource_template();
+ 
+     irqs = 0;
+-    aml_append(crs, aml_interrupt(AML_CONSUMER, AML_LEVEL,
++    aml_append(crs, aml_interrupt(AML_CONSUMER,
++                                  level_trigger_unsupported ?
++                                  AML_EDGE : AML_LEVEL,
+                                   AML_ACTIVE_HIGH, AML_SHARED, &irqs, 1));
+     aml_append(method, aml_name_decl("PRR0", crs));
+ 
+@@ -1074,7 +1084,7 @@ static Aml *build_irq_status_method(void)
+     return method;
+ }
+ 
+-static void build_piix4_pci0_int(Aml *table)
++static void build_piix4_pci0_int(Aml *table, bool level_trigger_unsupported)
+ {
+     Aml *dev;
+     Aml *crs;
+@@ -1087,12 +1097,16 @@ static void build_piix4_pci0_int(Aml *table)
+     aml_append(sb_scope, pci0_scope);
+ 
+     aml_append(sb_scope, build_irq_status_method());
+-    aml_append(sb_scope, build_iqcr_method(true));
++    aml_append(sb_scope, build_iqcr_method(true, level_trigger_unsupported));
+ 
+-    aml_append(sb_scope, build_link_dev("LNKA", 0, aml_name("PRQ0")));
+-    aml_append(sb_scope, build_link_dev("LNKB", 1, aml_name("PRQ1")));
+-    aml_append(sb_scope, build_link_dev("LNKC", 2, aml_name("PRQ2")));
+-    aml_append(sb_scope, build_link_dev("LNKD", 3, aml_name("PRQ3")));
++    aml_append(sb_scope, build_link_dev("LNKA", 0, aml_name("PRQ0"),
++                                        level_trigger_unsupported));
++    aml_append(sb_scope, build_link_dev("LNKB", 1, aml_name("PRQ1"),
++                                        level_trigger_unsupported));
++    aml_append(sb_scope, build_link_dev("LNKC", 2, aml_name("PRQ2"),
++                                        level_trigger_unsupported));
++    aml_append(sb_scope, build_link_dev("LNKD", 3, aml_name("PRQ3"),
++                                        level_trigger_unsupported));
+ 
+     dev = aml_device("LNKS");
+     {
+@@ -1101,7 +1115,9 @@ static void build_piix4_pci0_int(Aml *table)
+ 
+         crs = aml_resource_template();
+         irqs = 9;
+-        aml_append(crs, aml_interrupt(AML_CONSUMER, AML_LEVEL,
++        aml_append(crs, aml_interrupt(AML_CONSUMER,
++                                      level_trigger_unsupported ?
++                                      AML_EDGE : AML_LEVEL,
+                                       AML_ACTIVE_HIGH, AML_SHARED,
+                                       &irqs, 1));
+         aml_append(dev, aml_name_decl("_PRS", crs));
+@@ -1187,7 +1203,7 @@ static Aml *build_q35_routing_table(const char *str)
+     return pkg;
+ }
+ 
+-static void build_q35_pci0_int(Aml *table)
++static void build_q35_pci0_int(Aml *table, bool level_trigger_unsupported)
+ {
+     Aml *method;
+     Aml *sb_scope = aml_scope("_SB");
+@@ -1226,25 +1242,41 @@ static void build_q35_pci0_int(Aml *table)
+     aml_append(sb_scope, pci0_scope);
+ 
+     aml_append(sb_scope, build_irq_status_method());
+-    aml_append(sb_scope, build_iqcr_method(false));
++    aml_append(sb_scope, build_iqcr_method(false, level_trigger_unsupported));
+ 
+-    aml_append(sb_scope, build_link_dev("LNKA", 0, aml_name("PRQA")));
+-    aml_append(sb_scope, build_link_dev("LNKB", 1, aml_name("PRQB")));
+-    aml_append(sb_scope, build_link_dev("LNKC", 2, aml_name("PRQC")));
+-    aml_append(sb_scope, build_link_dev("LNKD", 3, aml_name("PRQD")));
+-    aml_append(sb_scope, build_link_dev("LNKE", 4, aml_name("PRQE")));
+-    aml_append(sb_scope, build_link_dev("LNKF", 5, aml_name("PRQF")));
+-    aml_append(sb_scope, build_link_dev("LNKG", 6, aml_name("PRQG")));
+-    aml_append(sb_scope, build_link_dev("LNKH", 7, aml_name("PRQH")));
++    aml_append(sb_scope, build_link_dev("LNKA", 0, aml_name("PRQA"),
++                                        level_trigger_unsupported));
++    aml_append(sb_scope, build_link_dev("LNKB", 1, aml_name("PRQB"),
++                                        level_trigger_unsupported));
++    aml_append(sb_scope, build_link_dev("LNKC", 2, aml_name("PRQC"),
++                                        level_trigger_unsupported));
++    aml_append(sb_scope, build_link_dev("LNKD", 3, aml_name("PRQD"),
++                                        level_trigger_unsupported));
++    aml_append(sb_scope, build_link_dev("LNKE", 4, aml_name("PRQE"),
++                                        level_trigger_unsupported));
++    aml_append(sb_scope, build_link_dev("LNKF", 5, aml_name("PRQF"),
++                                        level_trigger_unsupported));
++    aml_append(sb_scope, build_link_dev("LNKG", 6, aml_name("PRQG"),
++                                        level_trigger_unsupported));
++    aml_append(sb_scope, build_link_dev("LNKH", 7, aml_name("PRQH"),
++                                        level_trigger_unsupported));
+ 
+-    aml_append(sb_scope, build_gsi_link_dev("GSIA", 0x10, 0x10));
+-    aml_append(sb_scope, build_gsi_link_dev("GSIB", 0x11, 0x11));
+-    aml_append(sb_scope, build_gsi_link_dev("GSIC", 0x12, 0x12));
+-    aml_append(sb_scope, build_gsi_link_dev("GSID", 0x13, 0x13));
+-    aml_append(sb_scope, build_gsi_link_dev("GSIE", 0x14, 0x14));
+-    aml_append(sb_scope, build_gsi_link_dev("GSIF", 0x15, 0x15));
+-    aml_append(sb_scope, build_gsi_link_dev("GSIG", 0x16, 0x16));
+-    aml_append(sb_scope, build_gsi_link_dev("GSIH", 0x17, 0x17));
++    aml_append(sb_scope, build_gsi_link_dev("GSIA", 0x10, 0x10,
++                                            level_trigger_unsupported));
++    aml_append(sb_scope, build_gsi_link_dev("GSIB", 0x11, 0x11,
++                                            level_trigger_unsupported));
++    aml_append(sb_scope, build_gsi_link_dev("GSIC", 0x12, 0x12,
++                                            level_trigger_unsupported));
++    aml_append(sb_scope, build_gsi_link_dev("GSID", 0x13, 0x13,
++                                            level_trigger_unsupported));
++    aml_append(sb_scope, build_gsi_link_dev("GSIE", 0x14, 0x14,
++                                            level_trigger_unsupported));
++    aml_append(sb_scope, build_gsi_link_dev("GSIF", 0x15, 0x15,
++                                            level_trigger_unsupported));
++    aml_append(sb_scope, build_gsi_link_dev("GSIG", 0x16, 0x16,
++                                            level_trigger_unsupported));
++    aml_append(sb_scope, build_gsi_link_dev("GSIH", 0x17, 0x17,
++                                            level_trigger_unsupported));
+ 
+     aml_append(table, sb_scope);
+ }
+@@ -1426,6 +1458,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+     PCMachineState *pcms = PC_MACHINE(machine);
+     PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(machine);
+     X86MachineState *x86ms = X86_MACHINE(machine);
++    bool level_trigger_unsupported = x86ms->eoi_intercept_unsupported;
+     AcpiMcfgInfo mcfg;
+     bool mcfg_valid = !!acpi_get_mcfg(&mcfg);
+     uint32_t nr_mem = machine->ram_slots;
+@@ -1458,7 +1491,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+         if (pm->pcihp_bridge_en || pm->pcihp_root_en) {
+             build_x86_acpi_pci_hotplug(dsdt, pm->pcihp_io_base);
+         }
+-        build_piix4_pci0_int(dsdt);
++        build_piix4_pci0_int(dsdt, level_trigger_unsupported);
+     } else if (q35) {
+         sb_scope = aml_scope("_SB");
+         dev = aml_device("PCI0");
+@@ -1502,7 +1535,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+         if (pm->pcihp_bridge_en) {
+             build_x86_acpi_pci_hotplug(dsdt, pm->pcihp_io_base);
+         }
+-        build_q35_pci0_int(dsdt);
++        build_q35_pci0_int(dsdt, level_trigger_unsupported);
      }
  
-+    if (is_tdx_vm()) {
-+        tdx_get_supported_cpuid(function, index, reg, &ret);
-+    }
-+
-     return ret;
- }
+     if (misc->has_hpet) {
+diff --git a/hw/i386/acpi-common.c b/hw/i386/acpi-common.c
+index 20f19269da40..d93281b13758 100644
+--- a/hw/i386/acpi-common.c
++++ b/hw/i386/acpi-common.c
+@@ -103,6 +103,7 @@ void acpi_build_madt(GArray *table_data, BIOSLinker *linker,
+     const CPUArchIdList *apic_ids = mc->possible_cpu_arch_ids(MACHINE(x86ms));
+     AcpiTable table = { .sig = "APIC", .rev = 3, .oem_id = oem_id,
+                         .oem_table_id = oem_table_id };
++    bool level_trigger_unsupported = x86ms->eoi_intercept_unsupported;
  
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 756058f2ed4a..85d96140b450 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -15,11 +15,129 @@
- #include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "qom/object_interfaces.h"
-+#include "standard-headers/asm-x86/kvm_para.h"
- #include "sysemu/kvm.h"
-+#include "sysemu/sysemu.h"
+     acpi_table_begin(&table, table_data);
+     /* Local APIC Address */
+@@ -122,18 +123,42 @@ void acpi_build_madt(GArray *table_data, BIOSLinker *linker,
+                      IO_APIC_SECONDARY_ADDRESS, IO_APIC_SECONDARY_IRQBASE);
+     }
  
- #include "hw/i386/x86.h"
- #include "kvm_i386.h"
- #include "tdx.h"
-+#include "../cpu-internal.h"
+-    if (x86mc->apic_xrupt_override) {
+-        build_xrupt_override(table_data, 0, 2,
+-            0 /* Flags: Conforms to the specifications of the bus */);
+-    }
++    if (level_trigger_unsupported) {
++        /* Force edge trigger */
++        if (x86mc->apic_xrupt_override) {
++            build_xrupt_override(table_data, 0, 2,
++                                 /* Flags: active high, edge triggered */
++                                 1 | (1 << 2));
++        }
 +
-+#define TDX_SUPPORTED_KVM_FEATURES  ((1U << KVM_FEATURE_NOP_IO_DELAY) | \
-+                                     (1U << KVM_FEATURE_PV_UNHALT) | \
-+                                     (1U << KVM_FEATURE_PV_TLB_FLUSH) | \
-+                                     (1U << KVM_FEATURE_PV_SEND_IPI) | \
-+                                     (1U << KVM_FEATURE_POLL_CONTROL) | \
-+                                     (1U << KVM_FEATURE_PV_SCHED_YIELD) | \
-+                                     (1U << KVM_FEATURE_MSI_EXT_DEST_ID))
++        for (i = x86mc->apic_xrupt_override ? 1 : 0; i < 16; i++) {
++            build_xrupt_override(table_data, i, i,
++                                 /* Flags: active high, edge triggered */
++                                 1 | (1 << 2));
++        }
 +
-+typedef struct KvmTdxCpuidLookup {
-+    uint32_t tdx_fixed0;
-+    uint32_t tdx_fixed1;
-+
-+    /*
-+     * The CPUID bits that are configurable from the view of TDX module
-+     * but require VMM's support when wanting to enable them.
-+     *
-+     * For those bits, they cannot be enabled if VMM (KVM/QEMU) doesn't support
-+     * them.
-+     */
-+    uint32_t depends_on_vmm_cap;
-+
-+    bool inducing_ve;
-+    /*
-+     * The maximum supported feature set for given inducing-#VE leaf.
-+     * It's valid only when .inducing_ve is true.
-+     */
-+    uint32_t supported_value_on_ve;
-+} KvmTdxCpuidLookup;
-+
-+ /*
-+  * QEMU maintained TDX CPUID lookup tables, which reflects how CPUIDs are
-+  * virtualized for guest TDs based on "CPUID virtualization" of TDX spec.
-+  *
-+  * Note:
-+  *
-+  * This table will be updated runtime by tdx_caps reported by KVM.
-+  *
-+  */
-+static KvmTdxCpuidLookup tdx_cpuid_lookup[FEATURE_WORDS] = {
-+    [FEAT_1_EDX] = {
-+        .tdx_fixed0 =
-+            BIT(10) /* Reserved */ | BIT(20) /* Reserved */ | CPUID_IA64,
-+        .tdx_fixed1 =
-+            CPUID_MSR | CPUID_PAE | CPUID_MCE | CPUID_APIC |
-+            CPUID_MTRR | CPUID_MCA | CPUID_CLFLUSH | CPUID_DTS,
-+        .depends_on_vmm_cap =
-+            CPUID_ACPI | CPUID_PBE,
-+    },
-+    [FEAT_1_ECX] = {
-+        .tdx_fixed0 =
-+            CPUID_EXT_VMX | CPUID_EXT_SMX | BIT(16) /* Reserved */,
-+        .tdx_fixed1 =
-+            CPUID_EXT_CX16 | CPUID_EXT_PDCM | CPUID_EXT_X2APIC |
-+            CPUID_EXT_AES | CPUID_EXT_XSAVE | CPUID_EXT_RDRAND |
-+            CPUID_EXT_HYPERVISOR,
-+        .depends_on_vmm_cap =
-+            CPUID_EXT_EST | CPUID_EXT_TM2 | CPUID_EXT_XTPR | CPUID_EXT_DCA,
-+    },
-+    [FEAT_8000_0001_EDX] = {
-+        .tdx_fixed1 =
-+            CPUID_EXT2_NX | CPUID_EXT2_PDPE1GB | CPUID_EXT2_RDTSCP |
-+            CPUID_EXT2_LM,
-+    },
-+    [FEAT_7_0_EBX] = {
-+        .tdx_fixed0 =
-+            CPUID_7_0_EBX_TSC_ADJUST | CPUID_7_0_EBX_SGX | CPUID_7_0_EBX_MPX,
-+        .tdx_fixed1 =
-+            CPUID_7_0_EBX_FSGSBASE | CPUID_7_0_EBX_RTM |
-+            CPUID_7_0_EBX_RDSEED | CPUID_7_0_EBX_SMAP |
-+            CPUID_7_0_EBX_CLFLUSHOPT | CPUID_7_0_EBX_CLWB |
-+            CPUID_7_0_EBX_SHA_NI,
-+        .depends_on_vmm_cap =
-+            CPUID_7_0_EBX_PQM | CPUID_7_0_EBX_RDT_A,
-+    },
-+    [FEAT_7_0_ECX] = {
-+        .tdx_fixed0 =
-+            CPUID_7_0_ECX_FZM | CPUID_7_0_ECX_MAWAU |
-+            CPUID_7_0_ECX_ENQCMD | CPUID_7_0_ECX_SGX_LC,
-+        .tdx_fixed1 =
-+            CPUID_7_0_ECX_MOVDIR64B | CPUID_7_0_ECX_BUS_LOCK_DETECT,
-+        .depends_on_vmm_cap =
-+            CPUID_7_0_ECX_TME,
-+    },
-+    [FEAT_7_0_EDX] = {
-+        .tdx_fixed1 =
-+            CPUID_7_0_EDX_SPEC_CTRL | CPUID_7_0_EDX_ARCH_CAPABILITIES |
-+            CPUID_7_0_EDX_CORE_CAPABILITY | CPUID_7_0_EDX_SPEC_CTRL_SSBD,
-+        .depends_on_vmm_cap =
-+            CPUID_7_0_EDX_PCONFIG,
-+    },
-+    [FEAT_8000_0008_EBX] = {
-+        .tdx_fixed0 =
-+            ~CPUID_8000_0008_EBX_WBNOINVD,
-+        .tdx_fixed1 =
-+            CPUID_8000_0008_EBX_WBNOINVD,
-+    },
-+    [FEAT_XSAVE] = {
-+        .tdx_fixed1 =
-+            CPUID_XSAVE_XSAVEOPT | CPUID_XSAVE_XSAVEC |
-+            CPUID_XSAVE_XSAVES,
-+    },
-+    [FEAT_6_EAX] = {
-+        .inducing_ve = true,
-+        .supported_value_on_ve = CPUID_6_EAX_ARAT,
-+    },
-+    [FEAT_8000_0007_EDX] = {
-+        .inducing_ve = true,
-+        .supported_value_on_ve = -1U,
-+    },
-+    [FEAT_KVM] = {
-+        .inducing_ve = true,
-+        .supported_value_on_ve = TDX_SUPPORTED_KVM_FEATURES,
-+    },
-+};
- 
- static TdxGuest *tdx_guest;
- 
-@@ -31,6 +149,151 @@ bool is_tdx_vm(void)
-     return !!tdx_guest;
- }
- 
-+static inline uint32_t host_cpuid_reg(uint32_t function,
-+                                      uint32_t index, int reg)
-+{
-+    uint32_t eax, ebx, ecx, edx;
-+    uint32_t ret = 0;
-+
-+    host_cpuid(function, index, &eax, &ebx, &ecx, &edx);
-+
-+    switch (reg) {
-+    case R_EAX:
-+        ret = eax;
-+        break;
-+    case R_EBX:
-+        ret = ebx;
-+        break;
-+    case R_ECX:
-+        ret = ecx;
-+        break;
-+    case R_EDX:
-+        ret = edx;
-+        break;
-+    }
-+    return ret;
-+}
-+
-+/*
-+ * get the configurable cpuid bits (can be set to 0 or 1) reported by TDX module
-+ * from tdx_caps.
-+ */
-+static inline uint32_t tdx_cap_cpuid_config(uint32_t function,
-+                                            uint32_t index, int reg)
-+{
-+    struct kvm_tdx_cpuid_config *cpuid_c;
-+    int ret = 0;
-+    int i;
-+
-+    if (tdx_caps->nr_cpuid_configs <= 0) {
-+        return ret;
-+    }
-+
-+    for (i = 0; i < tdx_caps->nr_cpuid_configs; i++) {
-+        cpuid_c = &tdx_caps->cpuid_configs[i];
-+        /* 0xffffffff in sub_leaf means the leaf doesn't require a sublesf */
-+        if (cpuid_c->leaf == function &&
-+            (cpuid_c->sub_leaf == 0xffffffff || cpuid_c->sub_leaf == index)) {
-+            switch (reg) {
-+            case R_EAX:
-+                ret = cpuid_c->eax;
-+                break;
-+            case R_EBX:
-+                ret = cpuid_c->ebx;
-+                break;
-+            case R_ECX:
-+                ret = cpuid_c->ecx;
-+                break;
-+            case R_EDX:
-+                ret = cpuid_c->edx;
-+                break;
-+            default:
-+                return 0;
++        if (x86ms->ioapic2) {
++            for (i = 0; i < 16; i++) {
++                build_xrupt_override(table_data, IO_APIC_SECONDARY_IRQBASE + i,
++                                     IO_APIC_SECONDARY_IRQBASE + i,
++                                     /* Flags: active high, edge triggered */
++                                     1 | (1 << 2));
 +            }
 +        }
-+    }
-+    return ret;
-+}
-+
-+static FeatureWord get_cpuid_featureword_index(uint32_t function,
-+                                               uint32_t index, int reg)
-+{
-+    FeatureWord w;
-+
-+    for (w = 0; w < FEATURE_WORDS; w++) {
-+        FeatureWordInfo *f = &feature_word_info[w];
-+
-+        if (f->type == MSR_FEATURE_WORD || f->cpuid.eax != function ||
-+            f->cpuid.reg != reg ||
-+            (f->cpuid.needs_ecx && f->cpuid.ecx != index)) {
-+            continue;
++    } else {
++        if (x86mc->apic_xrupt_override) {
++            build_xrupt_override(table_data, 0, 2,
++                    0 /* Flags: Conforms to the specifications of the bus */);
 +        }
-+
-+        return w;
-+    }
-+
-+    return w;
-+}
-+
-+/*
-+ * TDX supported CPUID varies from what KVM reports. Adjust the result by
-+ * applying the TDX restrictions.
-+ */
-+void tdx_get_supported_cpuid(uint32_t function, uint32_t index, int reg,
-+                             uint32_t *ret)
-+{
-+    /*
-+     * it's KVMM + QEMU 's capabilities of what CPUID bits is supported or
-+     * can be emulated as supported.
-+     */
-+    uint32_t vmm_cap = *ret;
-+    FeatureWord w;
-+
-+    /* Only handle features leaves that recognized by feature_word_info[] */
-+    w = get_cpuid_featureword_index(function, index, reg);
-+    if (w == FEATURE_WORDS) {
-+        return;
-+    }
-+
-+    if (tdx_cpuid_lookup[w].inducing_ve) {
-+        *ret &= tdx_cpuid_lookup[w].supported_value_on_ve;
-+        return;
-+    }
-+
-+    /*
-+     * Include all the native bits as first step. It covers types
-+     * - As configured (if native)
-+     * - Native
-+     * - XFAM related and Attributes realted
-+     *
-+     * It also has side effect to enable unsupported bits, e.g., the
-+     * bits of "fixed0" type while present natively. It's safe because
-+     * the unsupported bits will be masked off by .fixed0 later.
-+     */
-+    *ret |= host_cpuid_reg(function, index, reg);
-+
-+    /* Adjust according to "fixed" type in tdx_cpuid_lookup. */
-+    *ret |= tdx_cpuid_lookup[w].tdx_fixed1;
-+    *ret &= ~tdx_cpuid_lookup[w].tdx_fixed0;
-+
-+    /*
-+     * Configurable cpuids are supported unconditionally. It's mainly to
-+     * include those configurable regardless of native existence.
-+     */
-+    *ret |= tdx_cap_cpuid_config(function, index, reg);
-+
-+    /*
-+     * clear the configurable bits that require VMM emulation and VMM doesn't
-+     * report the support.
-+     */
-+    *ret &= ~(tdx_cpuid_lookup[w].depends_on_vmm_cap & ~vmm_cap);
-+
-+    /* special handling */
-+    if (function == 1 && reg == R_ECX && !enable_cpu_pm) {
-+        *ret &= ~CPUID_EXT_MONITOR;
-+    }
-+}
-+
- enum tdx_ioctl_level{
-     TDX_VM_IOCTL,
-     TDX_VCPU_IOCTL,
-diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
-index d5b4c179fbf7..f62fe8ece982 100644
---- a/target/i386/kvm/tdx.h
-+++ b/target/i386/kvm/tdx.h
-@@ -26,4 +26,7 @@ bool is_tdx_vm(void);
- #define is_tdx_vm() 0
- #endif /* CONFIG_TDX */
  
-+void tdx_get_supported_cpuid(uint32_t function, uint32_t index, int reg,
-+                             uint32_t *ret);
-+
- #endif /* QEMU_I386_TDX_H */
+-    for (i = 1; i < 16; i++) {
+-        if (!(x86ms->pci_irq_mask & (1 << i))) {
+-            /* No need for a INT source override structure. */
+-            continue;
++        for (i = 1; i < 16; i++) {
++            if (!(x86ms->pci_irq_mask & (1 << i))) {
++                /* No need for a INT source override structure. */
++                continue;
++            }
++            build_xrupt_override(table_data, i, i,
++                0xd /* Flags: Active high, Level Triggered */);
+         }
+-        build_xrupt_override(table_data, i, i,
+-            0xd /* Flags: Active high, Level Triggered */);
+     }
+ 
+     if (x2apic_mode) {
 -- 
 2.34.1
 
