@@ -4,26 +4,29 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2511C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 07:23:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C72FCC54798
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 07:24:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfalf-0003rz-8I; Thu, 29 Feb 2024 02:23:47 -0500
+	id 1rfaln-0003vO-28; Thu, 29 Feb 2024 02:23:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1rfalL-0003bu-Hp; Thu, 29 Feb 2024 02:23:27 -0500
+ id 1rfalQ-0003io-Vo; Thu, 29 Feb 2024 02:23:35 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX02.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_CBC_SHA1:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1rfalG-0008LL-D5; Thu, 29 Feb 2024 02:23:26 -0500
-Received: from TWMBX02.aspeed.com (192.168.0.24) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 29 Feb
- 2024 15:23:16 +0800
+ id 1rfalP-0008LL-2Y; Thu, 29 Feb 2024 02:23:32 -0500
+Received: from TWMBX03.aspeed.com (192.168.0.62) by TWMBX02.aspeed.com
+ (192.168.0.25) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 29 Feb
+ 2024 15:23:18 +0800
+Received: from TWMBX02.aspeed.com (192.168.0.24) by TWMBX03.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 29 Feb
+ 2024 15:24:15 +0800
 Received: from twmbx02.aspeed.com (192.168.10.10) by TWMBX02.aspeed.com
  (192.168.0.24) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
- Transport; Thu, 29 Feb 2024 15:23:16 +0800
+ Transport; Thu, 29 Feb 2024 15:23:18 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
  Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>,
@@ -31,17 +34,15 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  here" <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <jamin_lin@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 0/8] Add AST2700 support
-Date: Thu, 29 Feb 2024 15:23:07 +0800
-Message-ID: <20240229072315.743963-1-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 3/8] aspeed/sdmc: Add AST2700 support
+Date: Thu, 29 Feb 2024 15:23:10 +0800
+Message-ID: <20240229072315.743963-4-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20240229072315.743963-1-jamin_lin@aspeedtech.com>
+References: <20240229072315.743963-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-Received-SPF: Fail (TWMBX02.aspeed.com: domain of jamin_lin@aspeedtech.com
- does not designate 192.168.10.10 as permitted sender)
- receiver=TWMBX02.aspeed.com; client-ip=192.168.10.10;
- helo=twmbx02.aspeed.com;
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX02.aspeed.com
 X-Spam_score_int: -18
@@ -66,102 +67,349 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Changes from v1:
-The patch series supports WDT, SDMC, SMC, SCU, SLI and INTC for AST2700 SoC.
+The SDRAM memory controller(DRAMC) controls the access to external
+DDR4 and DDR5 SDRAM and power up to DDR4 and DDR5 PHY.
 
-Test steps:
-1. Download openbmc image for AST2700 from
-   https://github.com/AspeedTech-BMC/openbmc/releases/tag/v09.00
-   https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.00/
-   ast2700-default-obmc.tar.gz
-2. untar ast2700-default-obmc.tar.gz
-   ```
-   tar -xf ast2700-default-obmc.tar.gz
-   ```
-3. Run and the contents of scripts as following
-IMGDIR=ast2700-default
-UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
-UBOOT_DTB_ADDR=$((0x400000000 + ${UBOOT_SIZE}))
+The DRAM memory controller of AST2700 is not backward compatible
+to previous chips such AST2600, AST2500 and AST2400.
 
-qemu-system-aarch64 -M ast2700-evb -nographic -m 8G\
- -device loader,addr=0x400000000,file=${IMGDIR}/u-boot-nodtb.bin,force-raw=on\
- -device loader,addr=${UBOOT_DTB_ADDR},file=${IMGDIR}/u-boot.dtb,force-raw=on\
- -device loader,addr=0x430000000,file=${IMGDIR}/bl31.bin,force-raw=on\
- -device loader,addr=0x430080000,file=${IMGDIR}/optee/tee-raw.bin,force-raw=on\
- -device loader,addr=0x430000000,cpu-num=0\
- -device loader,addr=0x430000000,cpu-num=1\
- -device loader,addr=0x430000000,cpu-num=2\
- -device loader,addr=0x430000000,cpu-num=3\
- -smp 4\
- -drive file=${IMGDIR}/image-bmc,format=raw,if=mtd\
- -serial mon:stdio\
- -snapshot
+Max memory is now 8GiB on the AST2700. Introduce new
+aspeed_2700_sdmc and class with read/write operation and
+reset handlers.
 
-Known Issue:
-1. QEMU supports ARM Generic Interrupt Controller, version 3(GICv3)
-but not support Shared Peripheral Interrupt (SPI), yet.
-Added work around in INTC patch to set GICINT132[18]
-which was BMC UART interrupt if it received GICINT132, so users are
-able to type any key from keyboard to trigger GICINT132 interrupt
-until AST2700 boot into login prompt. It is a temporary solution.
-If users encounter boot stck and no booting log,
-please type any key from keyboard.
+Define DRAMC necessary protected registers and
+unprotected registers for AST2700 and increase
+the register set to 0x1000.
 
-2. It is required to add "-m 8G" to set the dram size 8G.
-AST2700 dram size calculation is not compatible AST2600.
-According to the DDR hardware capacity behavior, if users write the
-data at address which is over than the supported size, it would set
-the data at address 0.
-For example:
-a. sdram base address "0x4 00000000"
-b. sdram size is 1GiB
-The available address range is from "0x4 00000000" to "0x4 40000000".
-If users write 0xdeadbeef at address "0x6 00000000", the value of
-DRAM address 0 (base address 0x4 00000000) should be 0xdeadbeef.
-Please see ast2700_sdrammc_calc_size in
-https://github.com/AspeedTech-BMC/u-boot/blob/v00.05.00/drivers/ram/aspeed/
-sdram_ast2700.c
+Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+---
+ hw/misc/aspeed_sdmc.c         | 215 ++++++++++++++++++++++++++++++----
+ include/hw/misc/aspeed_sdmc.h |   4 +-
+ 2 files changed, 198 insertions(+), 21 deletions(-)
 
-It seems we should create a new function instead of aspeed_soc_dram_init
-to support AST2700.
-https://github.com/qemu/qemu/blob/master/hw/arm/aspeed_soc_common.c
-
-Jamin Lin (8):
-  aspeed/wdt: Add AST2700 support
-  aspeed/sli: Add AST2700 support
-  aspeed/sdmc: Add AST2700 support
-  aspeed/smc: Add AST2700 support
-  aspeed/scu: Add AST2700 support
-  aspeed/intc: Add AST2700 support
-  aspeed/soc: Add AST2700 support
-  aspeed: Add an AST2700 eval board
-
- hw/arm/aspeed.c                  |  32 +++
- hw/arm/aspeed_ast27x0.c          | 462 +++++++++++++++++++++++++++++++
- hw/arm/meson.build               |   1 +
- hw/intc/aspeed_intc.c            | 135 +++++++++
- hw/intc/meson.build              |   1 +
- hw/misc/aspeed_scu.c             | 306 +++++++++++++++++++-
- hw/misc/aspeed_sdmc.c            | 215 ++++++++++++--
- hw/misc/aspeed_sli.c             | 179 ++++++++++++
- hw/misc/meson.build              |   3 +-
- hw/misc/trace-events             |  11 +
- hw/ssi/aspeed_smc.c              | 326 ++++++++++++++++++++--
- hw/ssi/trace-events              |   2 +-
- hw/watchdog/wdt_aspeed.c         |  24 ++
- include/hw/arm/aspeed_soc.h      |  26 +-
- include/hw/intc/aspeed_vic.h     |  29 ++
- include/hw/misc/aspeed_scu.h     |  47 +++-
- include/hw/misc/aspeed_sdmc.h    |   4 +-
- include/hw/misc/aspeed_sli.h     |  32 +++
- include/hw/ssi/aspeed_smc.h      |   1 +
- include/hw/watchdog/wdt_aspeed.h |   3 +-
- 20 files changed, 1787 insertions(+), 52 deletions(-)
- create mode 100644 hw/arm/aspeed_ast27x0.c
- create mode 100644 hw/intc/aspeed_intc.c
- create mode 100644 hw/misc/aspeed_sli.c
- create mode 100644 include/hw/misc/aspeed_sli.h
-
+diff --git a/hw/misc/aspeed_sdmc.c b/hw/misc/aspeed_sdmc.c
+index 64cd1a81dc..a5bdda0f60 100644
+--- a/hw/misc/aspeed_sdmc.c
++++ b/hw/misc/aspeed_sdmc.c
+@@ -27,6 +27,7 @@
+ #define   PROT_SOFTLOCKED    0x00
+ 
+ #define   PROT_KEY_UNLOCK     0xFC600309
++#define   PROT_2700_KEY_UNLOCK  0x1688A8A8
+ #define   PROT_KEY_HARDLOCK   0xDEADDEAD /* AST2600 */
+ 
+ /* Configuration Register */
+@@ -54,6 +55,46 @@
+ #define R_DRAM_TIME       (0x8c / 4)
+ #define R_ECC_ERR_INJECT  (0xb4 / 4)
+ 
++/* AST2700 Register */
++#define R_2700_PROT                 (0x00 / 4)
++#define R_INT_STATUS                (0x04 / 4)
++#define R_INT_CLEAR                 (0x08 / 4)
++#define R_INT_MASK                  (0x0c / 4)
++#define R_MAIN_CONF                 (0x10 / 4)
++#define R_MAIN_CONTROL              (0x14 / 4)
++#define R_MAIN_STATUS               (0x18 / 4)
++#define R_ERR_STATUS                (0x1c / 4)
++#define R_ECC_FAIL_STATUS           (0x78 / 4)
++#define R_ECC_FAIL_ADDR             (0x7c / 4)
++#define R_ECC_TESTING_CONTROL       (0x80 / 4)
++#define R_PROT_REGION_LOCK_STATUS   (0x94 / 4)
++#define R_TEST_FAIL_ADDR            (0xd4 / 4)
++#define R_TEST_FAIL_D0              (0xd8 / 4)
++#define R_TEST_FAIL_D1              (0xdc / 4)
++#define R_TEST_FAIL_D2              (0xe0 / 4)
++#define R_TEST_FAIL_D3              (0xe4 / 4)
++#define R_DBG_STATUS                (0xf4 / 4)
++#define R_PHY_INTERFACE_STATUS      (0xf8 / 4)
++#define R_GRAPHIC_MEM_BASE_ADDR     (0x10c / 4)
++#define R_PORT0_INTERFACE_MONITOR0  (0x240 / 4)
++#define R_PORT0_INTERFACE_MONITOR1  (0x244 / 4)
++#define R_PORT0_INTERFACE_MONITOR2  (0x248 / 4)
++#define R_PORT1_INTERFACE_MONITOR0  (0x2c0 / 4)
++#define R_PORT1_INTERFACE_MONITOR1  (0x2c4 / 4)
++#define R_PORT1_INTERFACE_MONITOR2  (0x2c8 / 4)
++#define R_PORT2_INTERFACE_MONITOR0  (0x340 / 4)
++#define R_PORT2_INTERFACE_MONITOR1  (0x344 / 4)
++#define R_PORT2_INTERFACE_MONITOR2  (0x348 / 4)
++#define R_PORT3_INTERFACE_MONITOR0  (0x3c0 / 4)
++#define R_PORT3_INTERFACE_MONITOR1  (0x3c4 / 4)
++#define R_PORT3_INTERFACE_MONITOR2  (0x3c8 / 4)
++#define R_PORT4_INTERFACE_MONITOR0  (0x440 / 4)
++#define R_PORT4_INTERFACE_MONITOR1  (0x444 / 4)
++#define R_PORT4_INTERFACE_MONITOR2  (0x448 / 4)
++#define R_PORT5_INTERFACE_MONITOR0  (0x4c0 / 4)
++#define R_PORT5_INTERFACE_MONITOR1  (0x4c4 / 4)
++#define R_PORT5_INTERFACE_MONITOR2  (0x4c8 / 4)
++
+ /*
+  * Configuration register Ox4 (for Aspeed AST2400 SOC)
+  *
+@@ -76,10 +117,6 @@
+ #define     ASPEED_SDMC_VGA_32MB            0x2
+ #define     ASPEED_SDMC_VGA_64MB            0x3
+ #define ASPEED_SDMC_DRAM_SIZE(x)        (x & 0x3)
+-#define     ASPEED_SDMC_DRAM_64MB           0x0
+-#define     ASPEED_SDMC_DRAM_128MB          0x1
+-#define     ASPEED_SDMC_DRAM_256MB          0x2
+-#define     ASPEED_SDMC_DRAM_512MB          0x3
+ 
+ #define ASPEED_SDMC_READONLY_MASK                       \
+     (ASPEED_SDMC_RESERVED | ASPEED_SDMC_VGA_COMPAT |    \
+@@ -100,22 +137,24 @@
+ #define ASPEED_SDMC_CACHE_ENABLE        (1 << 10) /* differs from AST2400 */
+ #define ASPEED_SDMC_DRAM_TYPE           (1 << 4)  /* differs from AST2400 */
+ 
+-/* DRAM size definitions differs */
+-#define     ASPEED_SDMC_AST2500_128MB       0x0
+-#define     ASPEED_SDMC_AST2500_256MB       0x1
+-#define     ASPEED_SDMC_AST2500_512MB       0x2
+-#define     ASPEED_SDMC_AST2500_1024MB      0x3
+-
+-#define     ASPEED_SDMC_AST2600_256MB       0x0
+-#define     ASPEED_SDMC_AST2600_512MB       0x1
+-#define     ASPEED_SDMC_AST2600_1024MB      0x2
+-#define     ASPEED_SDMC_AST2600_2048MB      0x3
+-
+ #define ASPEED_SDMC_AST2500_READONLY_MASK                               \
+     (ASPEED_SDMC_HW_VERSION(0xf) | ASPEED_SDMC_CACHE_INITIAL_DONE |     \
+      ASPEED_SDMC_AST2500_RESERVED | ASPEED_SDMC_VGA_COMPAT |            \
+      ASPEED_SDMC_VGA_APERTURE(ASPEED_SDMC_VGA_64MB))
+ 
++/*
++ * Main Configuration register Ox10 (for Aspeed AST2700 SOC and higher)
++ *
++ */
++#define ASPEED_SDMC_AST2700_RESERVED        0xFFFF2082 /* 31:16, 13, 7, 1 */
++#define ASPEED_SDMC_AST2700_DATA_SCRAMBLE           (1 << 8)
++#define ASPEED_SDMC_AST2700_ECC_ENABLE              (1 << 6)
++#define ASPEED_SDMC_AST2700_PAGE_MATCHING_ENABLE    (1 << 5)
++#define ASPEED_SDMC_AST2700_DRAM_SIZE(x)            ((x & 0x7) << 2)
++
++#define ASPEED_SDMC_AST2700_READONLY_MASK   \
++     (ASPEED_SDMC_AST2700_RESERVED)
++
+ static uint64_t aspeed_sdmc_read(void *opaque, hwaddr addr, unsigned size)
+ {
+     AspeedSDMCState *s = ASPEED_SDMC(opaque);
+@@ -231,7 +270,10 @@ static void aspeed_sdmc_realize(DeviceState *dev, Error **errp)
+     AspeedSDMCState *s = ASPEED_SDMC(dev);
+     AspeedSDMCClass *asc = ASPEED_SDMC_GET_CLASS(s);
+ 
+-    assert(asc->max_ram_size < 4 * GiB); /* 32-bit address bus */
++    if (!asc->is_aarch64) {
++        assert(asc->max_ram_size < 4 * GiB); /* 32-bit address bus */
++    }
++
+     s->max_ram_size = asc->max_ram_size;
+ 
+     memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_sdmc_ops, s,
+@@ -311,7 +353,8 @@ static void aspeed_2400_sdmc_write(AspeedSDMCState *s, uint32_t reg,
+                                    uint32_t data)
+ {
+     if (reg == R_PROT) {
+-        s->regs[reg] = (data == PROT_KEY_UNLOCK) ? PROT_UNLOCKED : PROT_SOFTLOCKED;
++        s->regs[reg] =
++            (data == PROT_KEY_UNLOCK) ? PROT_UNLOCKED : PROT_SOFTLOCKED;
+         return;
+     }
+ 
+@@ -369,7 +412,8 @@ static void aspeed_2500_sdmc_write(AspeedSDMCState *s, uint32_t reg,
+                                    uint32_t data)
+ {
+     if (reg == R_PROT) {
+-        s->regs[reg] = (data == PROT_KEY_UNLOCK) ? PROT_UNLOCKED : PROT_SOFTLOCKED;
++        s->regs[reg] =
++            (data == PROT_KEY_UNLOCK) ? PROT_UNLOCKED : PROT_SOFTLOCKED;
+         return;
+     }
+ 
+@@ -449,8 +493,9 @@ static void aspeed_2600_sdmc_write(AspeedSDMCState *s, uint32_t reg,
+     }
+ 
+     if (s->regs[R_PROT] == PROT_HARDLOCKED) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: SDMC is locked until system reset!\n",
+-                __func__);
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: SDMC is locked until system reset!\n",
++                      __func__);
+         return;
+     }
+ 
+@@ -512,12 +557,142 @@ static const TypeInfo aspeed_2600_sdmc_info = {
+     .class_init = aspeed_2600_sdmc_class_init,
+ };
+ 
++static void aspeed_2700_sdmc_reset(DeviceState *dev)
++{
++    AspeedSDMCState *s = ASPEED_SDMC(dev);
++    AspeedSDMCClass *asc = ASPEED_SDMC_GET_CLASS(s);
++
++    memset(s->regs, 0, sizeof(s->regs));
++
++    /* Set ram size bit and defaults values */
++    s->regs[R_MAIN_CONF] = asc->compute_conf(s, 0);
++    s->regs[R_2700_PROT] = PROT_UNLOCKED;
++}
++
++static uint32_t aspeed_2700_sdmc_compute_conf(AspeedSDMCState *s, uint32_t data)
++{
++    uint32_t fixed_conf = ASPEED_SDMC_AST2700_PAGE_MATCHING_ENABLE |
++        ASPEED_SDMC_AST2700_DRAM_SIZE(aspeed_sdmc_get_ram_bits(s));
++
++    /* Make sure readonly bits are kept */
++    data &= ~ASPEED_SDMC_AST2700_READONLY_MASK;
++
++    return data | fixed_conf;
++}
++
++static void aspeed_2700_sdmc_write(AspeedSDMCState *s, uint32_t reg,
++                                   uint32_t data)
++{
++    /* Unprotected registers */
++    switch (reg) {
++    case R_INT_STATUS:
++    case R_INT_CLEAR:
++    case R_INT_MASK:
++    case R_MAIN_STATUS:
++    case R_ERR_STATUS:
++    case R_ECC_FAIL_STATUS:
++    case R_ECC_FAIL_ADDR:
++    case R_PROT_REGION_LOCK_STATUS:
++    case R_TEST_FAIL_ADDR:
++    case R_TEST_FAIL_D0:
++    case R_TEST_FAIL_D1:
++    case R_TEST_FAIL_D2:
++    case R_TEST_FAIL_D3:
++    case R_DBG_STATUS:
++    case R_PHY_INTERFACE_STATUS:
++    case R_GRAPHIC_MEM_BASE_ADDR:
++    case R_PORT0_INTERFACE_MONITOR0:
++    case R_PORT0_INTERFACE_MONITOR1:
++    case R_PORT0_INTERFACE_MONITOR2:
++    case R_PORT1_INTERFACE_MONITOR0:
++    case R_PORT1_INTERFACE_MONITOR1:
++    case R_PORT1_INTERFACE_MONITOR2:
++    case R_PORT2_INTERFACE_MONITOR0:
++    case R_PORT2_INTERFACE_MONITOR1:
++    case R_PORT2_INTERFACE_MONITOR2:
++    case R_PORT3_INTERFACE_MONITOR0:
++    case R_PORT3_INTERFACE_MONITOR1:
++    case R_PORT3_INTERFACE_MONITOR2:
++    case R_PORT4_INTERFACE_MONITOR0:
++    case R_PORT4_INTERFACE_MONITOR1:
++    case R_PORT4_INTERFACE_MONITOR2:
++    case R_PORT5_INTERFACE_MONITOR0:
++    case R_PORT5_INTERFACE_MONITOR1:
++    case R_PORT5_INTERFACE_MONITOR2:
++        s->regs[reg] = data;
++        return;
++    }
++
++    if (s->regs[R_2700_PROT] == PROT_HARDLOCKED) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: SDMC is locked until system reset!\n",
++                      __func__);
++        return;
++    }
++
++    if (reg != R_2700_PROT && s->regs[R_2700_PROT] == PROT_SOFTLOCKED) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: SDMC is locked! (write to MCR%02x blocked)\n",
++                      __func__, reg * 4);
++        return;
++    }
++
++    switch (reg) {
++    case R_2700_PROT:
++        if (data == PROT_2700_KEY_UNLOCK)  {
++            data = PROT_UNLOCKED;
++        } else if (data == PROT_KEY_HARDLOCK) {
++            data = PROT_HARDLOCKED;
++        } else {
++            data = PROT_SOFTLOCKED;
++        }
++        break;
++    case R_MAIN_CONF:
++        data = aspeed_2700_sdmc_compute_conf(s, data);
++        break;
++    case R_MAIN_STATUS:
++        /* Will never return 'busy'. */
++        data &= ~PHY_BUSY_STATE;
++        break;
++    default:
++        break;
++    }
++
++    s->regs[reg] = data;
++}
++
++static const uint64_t
++    aspeed_2700_ram_sizes[] = { 256 * MiB, 512 * MiB, 1024 * MiB,
++                                2048 * MiB, 4096 * MiB, 8192 * MiB, 0};
++
++static void aspeed_2700_sdmc_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    AspeedSDMCClass *asc = ASPEED_SDMC_CLASS(klass);
++
++    dc->desc = "ASPEED 2700 SDRAM Memory Controller";
++    dc->reset = aspeed_2700_sdmc_reset;
++
++    asc->is_aarch64 = true;
++    asc->max_ram_size = 8 * GiB;
++    asc->compute_conf = aspeed_2700_sdmc_compute_conf;
++    asc->write = aspeed_2700_sdmc_write;
++    asc->valid_ram_sizes = aspeed_2700_ram_sizes;
++}
++
++static const TypeInfo aspeed_2700_sdmc_info = {
++    .name = TYPE_ASPEED_2700_SDMC,
++    .parent = TYPE_ASPEED_SDMC,
++    .class_init = aspeed_2700_sdmc_class_init,
++};
++
+ static void aspeed_sdmc_register_types(void)
+ {
+     type_register_static(&aspeed_sdmc_info);
+     type_register_static(&aspeed_2400_sdmc_info);
+     type_register_static(&aspeed_2500_sdmc_info);
+     type_register_static(&aspeed_2600_sdmc_info);
++    type_register_static(&aspeed_2700_sdmc_info);
+ }
+ 
+ type_init(aspeed_sdmc_register_types);
+diff --git a/include/hw/misc/aspeed_sdmc.h b/include/hw/misc/aspeed_sdmc.h
+index ec2d59a14f..0ce6567806 100644
+--- a/include/hw/misc/aspeed_sdmc.h
++++ b/include/hw/misc/aspeed_sdmc.h
+@@ -17,6 +17,7 @@ OBJECT_DECLARE_TYPE(AspeedSDMCState, AspeedSDMCClass, ASPEED_SDMC)
+ #define TYPE_ASPEED_2400_SDMC TYPE_ASPEED_SDMC "-ast2400"
+ #define TYPE_ASPEED_2500_SDMC TYPE_ASPEED_SDMC "-ast2500"
+ #define TYPE_ASPEED_2600_SDMC TYPE_ASPEED_SDMC "-ast2600"
++#define TYPE_ASPEED_2700_SDMC TYPE_ASPEED_SDMC "-ast2700"
+ 
+ /*
+  * SDMC has 174 documented registers. In addition the u-boot device tree
+@@ -29,7 +30,7 @@ OBJECT_DECLARE_TYPE(AspeedSDMCState, AspeedSDMCClass, ASPEED_SDMC)
+  * time, and the other is in the DDR-PHY IP which is used during DDR-PHY
+  * training.
+  */
+-#define ASPEED_SDMC_NR_REGS (0x500 >> 2)
++#define ASPEED_SDMC_NR_REGS (0x1000 >> 2)
+ 
+ struct AspeedSDMCState {
+     /*< private >*/
+@@ -51,6 +52,7 @@ struct AspeedSDMCClass {
+     const uint64_t *valid_ram_sizes;
+     uint32_t (*compute_conf)(AspeedSDMCState *s, uint32_t data);
+     void (*write)(AspeedSDMCState *s, uint32_t reg, uint32_t data);
++    uint32_t is_aarch64;
+ };
+ 
+ #endif /* ASPEED_SDMC_H */
 -- 
 2.25.1
 
