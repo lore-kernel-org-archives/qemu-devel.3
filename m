@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD4ADC54E49
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 03:04:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15E8AC5478C
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 03:11:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfWih-0003Q4-St; Wed, 28 Feb 2024 22:04:27 -0500
+	id 1rfWp3-000554-Da; Wed, 28 Feb 2024 22:11:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rfWig-0003Os-9r; Wed, 28 Feb 2024 22:04:26 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rfWp1-00054a-5D
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 22:10:59 -0500
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rfWie-0007mq-4h; Wed, 28 Feb 2024 22:04:25 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1dcc7f4717fso4673665ad.0; 
- Wed, 28 Feb 2024 19:04:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rfWoz-0001i4-Hp
+ for qemu-devel@nongnu.org; Wed, 28 Feb 2024 22:10:58 -0500
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-29b066ab295so194361a91.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 19:10:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709175862; x=1709780662; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1709176256; x=1709781056; darn=nongnu.org;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nVJmrM3UVdJnTK2hnM/hyWTpawMJjSRsnIXoSYfI/TQ=;
- b=VY/kk6p07frQhmERO5qCptzatg/wg7YeI4KmwBTll/bzYKQ4aecA4xEWPB86LeRFNT
- 0zxw0HAE79gtahthedR9wpK6hg+m0yb3XRQEkJoQLIw1VzDN/DRvH5caI6RVwZEBktE2
- UjkhA9lsRRtWq43xtyUoLMW9J7o3CAXo/WgiFSyzN+TtRM1RmQd7g3YNsmnrWzs3WjyK
- f3lLGDCL4sjNJnqTGnv6Ax0fgOPr06uAlOkLV9tJBraR45L/0q8ZUsUq0uzybwmQAqPs
- AU5NqX8N2hcE+/TsvPVdJ5Ljhm4UG4pVAmCOUHtZWqugG/lz4yeLi+BNl/wbFzgchkK9
- qh3w==
+ bh=Qdz/uZG4uzkwPJT4aHJ8RmgPaNaAKgmV2vGQNe8s30c=;
+ b=ju6tLcb+o7FZfgdMmoMgm1P11ttCvsMhjbKGeyhMfC8PuYifWLtdBMwiNef59tIPzm
+ gB6RuQAyD6EQ8Wz1X+OwZJtommrH/yn5YZxohPDdnodYHEgj5sH9sOpIHwMBMQwQkBb8
+ tPV1mderSV3Vx4XZTjOh531a2m2Zu150panz92TiVjAViM33WHGdHO3E3XC3pLhXFSCv
+ emhPjYuVkPOLShJC0uQIUrVoomLYl4Nt/gAe/9JLZou/9Twp6z5pbpBsIemhQIZkBX/3
+ 7ISidxnCfrjBOFXJKoZrtIIxxS8HzVXgOBTVJ4mILEoJutofCbc3b0W84xlMqFBZA6Wl
+ 8PgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709175862; x=1709780662;
+ d=1e100.net; s=20230601; t=1709176256; x=1709781056;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=nVJmrM3UVdJnTK2hnM/hyWTpawMJjSRsnIXoSYfI/TQ=;
- b=iFwsevFT3HQ53j/cx1yGsfweohyy3DmLo52RNO/oPvLBTIg6XKY4UBRdhhjLRBDdX6
- RLS0jThO4wY1HwAYxCk+63oj//QB/ixAJ4NmhLKKgWRFt7bvJ8AIKHBNLSBANzYSx5nt
- AdnuZUswIzM7iFYpF6Ivhfc020OUYg1giqAn9bnQ9Zc6SjSqMYSM3htYDKaO0MCVgJxn
- FhhOBaesBSqJpseXmDuCCEJrdo8wEvWpx0V28NMdFD1RuEkjjmPSF+Wezoz8muxCHD9G
- Eqzs24EDvWE3UC+dFRX4o38XdpOn76jU+0ONEpfgy1q4/6WBpKuJOgixP2YZlBMX7a82
- JZNw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVd6PxeJikFxPXJX22qCpFvK77HH+GMgs35inshXGOXyWLzatgotfGsRYo8bqrXmqTbz1P6gyL33WIhu2opyawDjY3f
-X-Gm-Message-State: AOJu0Yxa7jNB8nj9uizNGB5fZ2JSS3pBpj68Uk97SQaAjxKEFibv2sq9
- 7na/4kQnRANenC7v58u0zNOJTj/ZsjSXHmv/yrtqNdTfYMa18jgP
-X-Google-Smtp-Source: AGHT+IEiYImtOHtjGSK9M/oS2o036pGmQRhiuut1Pf/D8DgrhTejwAK/9Ky+4KN5ictrYABball+Qw==
-X-Received: by 2002:a17:902:e546:b0:1db:be98:e9a with SMTP id
- n6-20020a170902e54600b001dbbe980e9amr1157821plf.26.1709175861571; 
- Wed, 28 Feb 2024 19:04:21 -0800 (PST)
+ bh=Qdz/uZG4uzkwPJT4aHJ8RmgPaNaAKgmV2vGQNe8s30c=;
+ b=YylMp9uDOCwuG3rVMAlZsnl55PThDuJaSROsDS2MuNxqhY8yumTQjmKAgxPt93Exg4
+ B27X/BbC9UDYHpKrbQ6djmfxkx7Ou4RB7QCGl9aDnwdOA/CCuXJ1MJY6IwrI8n3enDHo
+ NtqfqDs8z2LmpXSGN/S65AfbN3G4cLMsu8AeA3j2IliCSw6j7O2ogUMjCTzUUN//92aA
+ vPao4BKnj953Cixjve8MiAFhlbR+kphLzdw2MU9JsQ6aoCAez/NAKGuATQefq5uCW3dX
+ qj8qzVswV/E0Q1PMz7/7imnAvDpKZAc1fjKxaewP0BGKoa3H/A9wkwNwunQLmv/xRBY7
+ lKew==
+X-Gm-Message-State: AOJu0YyN8cyrX5uJjZ7TklgmshSx//rHw46CkI6RYAhfvlM1sEpZMJXx
+ kQzVFij5HfgloQNIi3NxlALgCQRTWu0D/hPlg6v7dbkSte54+hIMfojjiB9u
+X-Google-Smtp-Source: AGHT+IEFCm5DUiC2DMjmuoqJ10Wa1+nChg3bkuvM3LHgifd2gEnWQ1BTYsuo187pBeiKqlIIhtoBfg==
+X-Received: by 2002:a17:90a:fe90:b0:29b:bc1:40b4 with SMTP id
+ co16-20020a17090afe9000b0029b0bc140b4mr604773pjb.36.1709176256037; 
+ Wed, 28 Feb 2024 19:10:56 -0800 (PST)
 Received: from localhost (220-235-220-130.tpgi.com.au. [220.235.220.130])
  by smtp.gmail.com with ESMTPSA id
- b6-20020a170902650600b001dbb0348733sm194094plk.67.2024.02.28.19.04.18
+ c13-20020a17090ae10d00b0029a8a599584sm270476pjz.13.2024.02.28.19.10.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Feb 2024 19:04:20 -0800 (PST)
+ Wed, 28 Feb 2024 19:10:55 -0800 (PST)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 29 Feb 2024 13:04:16 +1000
-Message-Id: <CZH89WQ98O1R.2TJ4GB7EWZ1Q8@wheely>
-Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>, "Peter Maydell"
- <peter.maydell@linaro.org>, "Daniel Henrique Barboza"
- <danielhb413@gmail.com>, <clg@kaod.org>
-Subject: Re: [PATCH v7 02/10] target/ppc: Readability improvements in
- exception handlers
+Date: Thu, 29 Feb 2024 13:10:49 +1000
+Message-Id: <CZH8EXLWVQDY.2PX5GNIDS3IMK@wheely>
+Cc: <qemu-devel@nongnu.org>, "Pavel Dovgalyuk" <Pavel.Dovgalyuk@ispras.ru>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Richard
+ Henderson" <richard.henderson@linaro.org>, "Paolo Bonzini"
+ <pbonzini@redhat.com>, "John Snow" <jsnow@redhat.com>, "Cleber Rosa"
+ <crosa@redhat.com>, "Wainer dos Santos Moschetta" <wainersm@redhat.com>,
+ "Beraldo Leal" <bleal@redhat.com>
+Subject: Re: [PATCH v3 3/9] tests/avocado: excercise scripts/replay-dump.py
+ in replay tests
 From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>
+To: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 X-Mailer: aerc 0.15.2
-References: <cover.1709045654.git.balaton@eik.bme.hu>
- <a06f6259d7a37aa88145fb13e4bce153ff763f86.1709045654.git.balaton@eik.bme.hu>
- <CAFEAcA_6R2wLaLOoOBQ0-Z_QydAEgxANmNPdKaAF=iiroFEhmA@mail.gmail.com>
- <ab46d0f9-19cc-bb34-2a8e-0c4d3d8592ea@eik.bme.hu>
- <7ad2aec9-1631-6350-869f-f5f97ae97096@eik.bme.hu>
-In-Reply-To: <7ad2aec9-1631-6350-869f-f5f97ae97096@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x631.google.com
+References: <20240226082945.1452499-1-npiggin@gmail.com>
+ <20240226082945.1452499-4-npiggin@gmail.com>
+ <87frxdd87d.fsf@draig.linaro.org>
+In-Reply-To: <87frxdd87d.fsf@draig.linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,60 +100,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed Feb 28, 2024 at 6:24 AM AEST, BALATON Zoltan wrote:
-> On Tue, 27 Feb 2024, BALATON Zoltan wrote:
-> > On Tue, 27 Feb 2024, Peter Maydell wrote:
-> >> On Tue, 27 Feb 2024 at 15:10, BALATON Zoltan <balaton@eik.bme.hu> wrot=
-e:
-> >>>=20
-> >>> Improve readability by shortening some long comments, removing
-> >>> comments that state the obvious and dropping some empty lines so they
-> >>> don't distract when reading the code.
-> >>>=20
-> >>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> >>> Acked-by: Nicholas Piggin <npiggin@gmail.com>
-> >>=20
-> >>=20
-> >>> -    /*
-> >>> -     * new interrupt handler msr preserves existing ME unless
-> >>> -     * explicitly overridden.
-> >>> -     */
-> >>> +    /* new interrupt handler msr preserves ME unless explicitly over=
-riden=20
-> >>> */
-> >>=20
-> >> Minor typo introduced here: should be "overridden".
-> >>
-> >>>      new_msr =3D env->msr & (((target_ulong)1 << MSR_ME));
-> >>=20
-> >>> @@ -575,16 +558,10 @@ static void powerpc_excp_6xx(PowerPCCPU *cpu, i=
-nt=20
-> >>> excp)
-> >>>      /* new srr1 value excluding must-be-zero bits */
-> >>>      msr =3D env->msr & ~0x783f0000ULL;
-> >>>=20
-> >>> -    /*
-> >>> -     * new interrupt handler msr preserves existing ME unless
-> >>> -     * explicitly overridden
-> >>> -     */
-> >>> +    /* new interrupt handler msr preserves ME unless explicitly over=
-riden=20
-> >>> */
-> >>=20
-> >> Ditto, and similarly for other instances later in the patch.
-> >
-> > Huh, sorry, don't know how I've lost that letter. It also seems that th=
-e last=20
-> > patch gone missing from the series somehow so if it does not turn up, I=
- can=20
-> > resend it with these fixed.
+On Wed Feb 28, 2024 at 5:21 AM AEST, Alex Benn=C3=A9e wrote:
+> Nicholas Piggin <npiggin@gmail.com> writes:
 >
-> As the last patch did not turn up I've resent just that to complete this=
-=20
-> v7 series. Do I need to send v8 or if these typos are the only change=20
-> needed maybe they could be fixed up during merge.
+> > This runs replay-dump.py after recording a trace, and fails the test if
+> > the script fails.
+> >
+> > replay-dump.py is modified to exit with non-zero if an error is
+> > encountered while parsing, to support this.
+> >
+> > Reviewed-by: Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
+> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> > ---
+> >  scripts/replay-dump.py         |  6 ++++--
+> >  tests/avocado/replay_kernel.py | 16 ++++++++++++++++
+> >  tests/avocado/replay_linux.py  | 15 +++++++++++++++
+> >  3 files changed, 35 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/scripts/replay-dump.py b/scripts/replay-dump.py
+> > index b82659cfb6..4ce7ff51cc 100755
+> > --- a/scripts/replay-dump.py
+> > +++ b/scripts/replay-dump.py
+> > @@ -21,6 +21,7 @@
+> >  import argparse
+> >  import struct
+> >  import os
+> > +import sys
+> >  from collections import namedtuple
+> >  from os import path
+> > =20
+> > @@ -100,7 +101,7 @@ def call_decode(table, index, dumpfile):
+> >          print("Could not decode index: %d" % (index))
+> >          print("Entry is: %s" % (decoder))
+> >          print("Decode Table is:\n%s" % (table))
+> > -        return False
+> > +        raise(Exception("unknown event"))
+> >      else:
+> >          return decoder.fn(decoder.eid, decoder.name, dumpfile)
+> > =20
+> > @@ -121,7 +122,7 @@ def print_event(eid, name, string=3DNone, event_cou=
+nt=3DNone):
+> >  def decode_unimp(eid, name, _unused_dumpfile):
+> >      "Unimplemented decoder, will trigger exit"
+> >      print("%s not handled - will now stop" % (name))
+> > -    return False
+> > +    raise(Exception("unhandled event"))
+> > =20
+> >  def decode_plain(eid, name, _unused_dumpfile):
+> >      "Plain events without additional data"
+> > @@ -434,6 +435,7 @@ def decode_file(filename):
+> >                                      dumpfile)
+> >      except Exception as inst:
+> >          print(f"error {inst}")
+> > +        sys.exit(1)
+> > =20
+> >      finally:
+> >          print(f"Reached {dumpfile.tell()} of {dumpsize} bytes")
+> > diff --git a/tests/avocado/replay_kernel.py b/tests/avocado/replay_kern=
+el.py
+> > index 10d99403a4..9b3ee6726b 100644
+> > --- a/tests/avocado/replay_kernel.py
+> > +++ b/tests/avocado/replay_kernel.py
+> > @@ -13,6 +13,7 @@
+> >  import shutil
+> >  import logging
+> >  import time
+> > +import subprocess
+> > =20
+> >  from avocado import skip
+> >  from avocado import skipUnless
+> > @@ -22,6 +23,11 @@
+> >  from avocado.utils import process
+> >  from boot_linux_console import LinuxKernelTest
+> > =20
+> > +from pathlib import Path
+> > +
+> > +self_dir =3D Path(__file__).parent
+> > +src_dir =3D self_dir.parent.parent
+> > +
+>
+> Whats this for? It doesn't seem to be used.
 
-I should be okay to do it.
+Thanks for finding it, must be just a leftover from some earlier hack.
+I'll take it out.
 
 Thanks,
 Nick
