@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C226FC48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 06:48:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98CF1C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 06:48:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfa7r-0000Nq-JE; Thu, 29 Feb 2024 01:42:39 -0500
+	id 1rfa8g-0001ZG-NN; Thu, 29 Feb 2024 01:43:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rfa7Z-0000GM-Dc
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:42:27 -0500
+ id 1rfa8d-0001Qt-LN
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:43:27 -0500
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rfa7W-0004qw-9a
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:42:21 -0500
+ id 1rfa8a-0005GA-Nt
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:43:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709188938; x=1740724938;
+ t=1709189004; x=1740725004;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=pw70+E9f7yP0q/kg6tok3Z3RGqPvOBZoP8fDG+f0630=;
- b=UZD8egheQEN6Grwgd6V5JAExZCGFJwrbsLwhxE9bddlJSzGtq80CA+vp
- NGpX1ZGeWRsM2TYqod5nBj/vDLvBJTu5eekAm2t02Kodta3jwWlYneG1u
- h5UnQ3MBhorb9porNScT5Jl51r48UO6z0dEdNftsl3JHI9ikX7Ts1qReu
- wmd8NPxvSzsrMMbsXApO3eQxs1w2F2cdkDuanGUbJ55BYA094ZpDwFkyH
- dMHP4Mp11Unzur6kTyL3UXLC1jJ+Cw4qd4EwyxZHtPfiwUy/7+BDZl4g7
- G/D/HgYLxh0Ja6EEL0jIg9KtPcYNQAJACEYqYiiNjsUP4+K2astIsljpD w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3803003"
+ bh=ojsjJjwwvXFn32DtEbF5sMQKOA0I6qo1coDuhp7qGAs=;
+ b=cMomJ/Fm+zQxhCT9+IVd/gaJKM73XpgtXBXIJbaghnyNz01rPKVpCSYF
+ 7j8sg2gebkd49q1dh+kKWN6i7annJUmmkxG8PE+vdzmwE4BlaoDMX7bJG
+ oU3uCYotTLZXIG/pVtu41pySKKh9LX7sESlQtP3XCar5Zt3mY4aCXvKN9
+ Y8fM6qdh1YJNtX6iHvHsVlrxwJlRc0UPXIRK87EL/y+8h6dqTMALitziF
+ w1EdolkOxOn8Ga7Ey+oJ0q8xjefliUOTZvYI79eNhcq4sp8U6iV5xvC4T
+ wApqprCY+BtRz1sK8yfGbc9RnWnNrx6HSpYuCLpN0k4TXLhmdbDPiTJHD w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3803150"
 X-IronPort-AV: E=Sophos;i="6.06,192,1705392000"; 
-   d="scan'208";a="3803003"
+   d="scan'208";a="3803150"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Feb 2024 22:42:17 -0800
+ 28 Feb 2024 22:43:23 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,192,1705392000"; 
-   d="scan'208";a="8076012"
+   d="scan'208";a="8076187"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa007.jf.intel.com with ESMTP; 28 Feb 2024 22:42:11 -0800
+ by orviesa007.jf.intel.com with ESMTP; 28 Feb 2024 22:43:17 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -60,10 +60,10 @@ Cc: kvm@vger.kernel.org, qemu-devel@nongnu.org,
  Gerd Hoffmann <kraxel@redhat.com>,
  Isaku Yamahata <isaku.yamahata@gmail.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>, xiaoyao.li@intel.com
-Subject: [PATCH v5 43/65] headers: Add definitions from UEFI spec for volumes,
- resources, etc...
-Date: Thu, 29 Feb 2024 01:37:04 -0500
-Message-Id: <20240229063726.610065-44-xiaoyao.li@intel.com>
+Subject: [PATCH v5 53/65] pci-host/q35: Move PAM initialization above SMRAM
+ initialization
+Date: Thu, 29 Feb 2024 01:37:14 -0500
+Message-Id: <20240229063726.610065-54-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240229063726.610065-1-xiaoyao.li@intel.com>
 References: <20240229063726.610065-1-xiaoyao.li@intel.com>
@@ -94,228 +94,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add UEFI definitions for literals, enums, structs, GUIDs, etc... that
-will be used by TDX to build the UEFI Hand-Off Block (HOB) that is passed
-to the Trusted Domain Virtual Firmware (TDVF).
+From: Isaku Yamahata <isaku.yamahata@intel.com>
 
-All values come from the UEFI specification [1], PI spec [2] and TDVF
-design guide[3].
+In mch_realize(), process PAM initialization before SMRAM initialization so
+that later patch can skill all the SMRAM related with a single check.
 
-[1] UEFI Specification v2.1.0 https://uefi.org/sites/default/files/resources/UEFI_Spec_2_10_Aug29.pdf
-[2] UEFI PI spec v1.8 https://uefi.org/sites/default/files/resources/UEFI_PI_Spec_1_8_March3.pdf
-[3] https://software.intel.com/content/dam/develop/external/us/en/documents/tdx-virtual-firmware-design-guide-rev-1.pdf
-
+Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- include/standard-headers/uefi/uefi.h | 198 +++++++++++++++++++++++++++
- 1 file changed, 198 insertions(+)
- create mode 100644 include/standard-headers/uefi/uefi.h
+ hw/pci-host/q35.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/include/standard-headers/uefi/uefi.h b/include/standard-headers/uefi/uefi.h
-new file mode 100644
-index 000000000000..b15aba796156
---- /dev/null
-+++ b/include/standard-headers/uefi/uefi.h
-@@ -0,0 +1,198 @@
-+/*
-+ * Copyright (C) 2020 Intel Corporation
-+ *
-+ * Author: Isaku Yamahata <isaku.yamahata at gmail.com>
-+ *                        <isaku.yamahata at intel.com>
-+ *
-+ * This program is free software; you can redistribute it and/or modify
-+ * it under the terms of the GNU General Public License as published by
-+ * the Free Software Foundation; either version 2 of the License, or
-+ * (at your option) any later version.
+diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+index 0d7d4e3f0860..98d4a7c253a6 100644
+--- a/hw/pci-host/q35.c
++++ b/hw/pci-host/q35.c
+@@ -568,6 +568,16 @@ static void mch_realize(PCIDevice *d, Error **errp)
+     /* setup pci memory mapping */
+     pc_pci_as_mapping_init(mch->system_memory, mch->pci_address_space);
+ 
++    /* PAM */
++    init_pam(&mch->pam_regions[0], OBJECT(mch), mch->ram_memory,
++             mch->system_memory, mch->pci_address_space,
++             PAM_BIOS_BASE, PAM_BIOS_SIZE);
++    for (i = 0; i < ARRAY_SIZE(mch->pam_regions) - 1; ++i) {
++        init_pam(&mch->pam_regions[i + 1], OBJECT(mch), mch->ram_memory,
++                 mch->system_memory, mch->pci_address_space,
++                 PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
++    }
 +
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ * GNU General Public License for more details.
-+
-+ * You should have received a copy of the GNU General Public License along
-+ * with this program; if not, see <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+
-+#ifndef HW_I386_UEFI_H
-+#define HW_I386_UEFI_H
-+
-+/***************************************************************************/
-+/*
-+ * basic EFI definitions
-+ * supplemented with UEFI Specification Version 2.8 (Errata A)
-+ * released February 2020
-+ */
-+/* UEFI integer is little endian */
-+
-+typedef struct {
-+    uint32_t Data1;
-+    uint16_t Data2;
-+    uint16_t Data3;
-+    uint8_t Data4[8];
-+} EFI_GUID;
-+
-+typedef enum {
-+    EfiReservedMemoryType,
-+    EfiLoaderCode,
-+    EfiLoaderData,
-+    EfiBootServicesCode,
-+    EfiBootServicesData,
-+    EfiRuntimeServicesCode,
-+    EfiRuntimeServicesData,
-+    EfiConventionalMemory,
-+    EfiUnusableMemory,
-+    EfiACPIReclaimMemory,
-+    EfiACPIMemoryNVS,
-+    EfiMemoryMappedIO,
-+    EfiMemoryMappedIOPortSpace,
-+    EfiPalCode,
-+    EfiPersistentMemory,
-+    EfiUnacceptedMemoryType,
-+    EfiMaxMemoryType
-+} EFI_MEMORY_TYPE;
-+
-+#define EFI_HOB_HANDOFF_TABLE_VERSION 0x0009
-+
-+#define EFI_HOB_TYPE_HANDOFF              0x0001
-+#define EFI_HOB_TYPE_MEMORY_ALLOCATION    0x0002
-+#define EFI_HOB_TYPE_RESOURCE_DESCRIPTOR  0x0003
-+#define EFI_HOB_TYPE_GUID_EXTENSION       0x0004
-+#define EFI_HOB_TYPE_FV                   0x0005
-+#define EFI_HOB_TYPE_CPU                  0x0006
-+#define EFI_HOB_TYPE_MEMORY_POOL          0x0007
-+#define EFI_HOB_TYPE_FV2                  0x0009
-+#define EFI_HOB_TYPE_LOAD_PEIM_UNUSED     0x000A
-+#define EFI_HOB_TYPE_UEFI_CAPSULE         0x000B
-+#define EFI_HOB_TYPE_FV3                  0x000C
-+#define EFI_HOB_TYPE_UNUSED               0xFFFE
-+#define EFI_HOB_TYPE_END_OF_HOB_LIST      0xFFFF
-+
-+typedef struct {
-+    uint16_t HobType;
-+    uint16_t HobLength;
-+    uint32_t Reserved;
-+} EFI_HOB_GENERIC_HEADER;
-+
-+typedef uint64_t EFI_PHYSICAL_ADDRESS;
-+typedef uint32_t EFI_BOOT_MODE;
-+
-+typedef struct {
-+    EFI_HOB_GENERIC_HEADER Header;
-+    uint32_t Version;
-+    EFI_BOOT_MODE BootMode;
-+    EFI_PHYSICAL_ADDRESS EfiMemoryTop;
-+    EFI_PHYSICAL_ADDRESS EfiMemoryBottom;
-+    EFI_PHYSICAL_ADDRESS EfiFreeMemoryTop;
-+    EFI_PHYSICAL_ADDRESS EfiFreeMemoryBottom;
-+    EFI_PHYSICAL_ADDRESS EfiEndOfHobList;
-+} EFI_HOB_HANDOFF_INFO_TABLE;
-+
-+#define EFI_RESOURCE_SYSTEM_MEMORY          0x00000000
-+#define EFI_RESOURCE_MEMORY_MAPPED_IO       0x00000001
-+#define EFI_RESOURCE_IO                     0x00000002
-+#define EFI_RESOURCE_FIRMWARE_DEVICE        0x00000003
-+#define EFI_RESOURCE_MEMORY_MAPPED_IO_PORT  0x00000004
-+#define EFI_RESOURCE_MEMORY_RESERVED        0x00000005
-+#define EFI_RESOURCE_IO_RESERVED            0x00000006
-+#define EFI_RESOURCE_MEMORY_UNACCEPTED      0x00000007
-+#define EFI_RESOURCE_MAX_MEMORY_TYPE        0x00000008
-+
-+#define EFI_RESOURCE_ATTRIBUTE_PRESENT                  0x00000001
-+#define EFI_RESOURCE_ATTRIBUTE_INITIALIZED              0x00000002
-+#define EFI_RESOURCE_ATTRIBUTE_TESTED                   0x00000004
-+#define EFI_RESOURCE_ATTRIBUTE_SINGLE_BIT_ECC           0x00000008
-+#define EFI_RESOURCE_ATTRIBUTE_MULTIPLE_BIT_ECC         0x00000010
-+#define EFI_RESOURCE_ATTRIBUTE_ECC_RESERVED_1           0x00000020
-+#define EFI_RESOURCE_ATTRIBUTE_ECC_RESERVED_2           0x00000040
-+#define EFI_RESOURCE_ATTRIBUTE_READ_PROTECTED           0x00000080
-+#define EFI_RESOURCE_ATTRIBUTE_WRITE_PROTECTED          0x00000100
-+#define EFI_RESOURCE_ATTRIBUTE_EXECUTION_PROTECTED      0x00000200
-+#define EFI_RESOURCE_ATTRIBUTE_UNCACHEABLE              0x00000400
-+#define EFI_RESOURCE_ATTRIBUTE_WRITE_COMBINEABLE        0x00000800
-+#define EFI_RESOURCE_ATTRIBUTE_WRITE_THROUGH_CACHEABLE  0x00001000
-+#define EFI_RESOURCE_ATTRIBUTE_WRITE_BACK_CACHEABLE     0x00002000
-+#define EFI_RESOURCE_ATTRIBUTE_16_BIT_IO                0x00004000
-+#define EFI_RESOURCE_ATTRIBUTE_32_BIT_IO                0x00008000
-+#define EFI_RESOURCE_ATTRIBUTE_64_BIT_IO                0x00010000
-+#define EFI_RESOURCE_ATTRIBUTE_UNCACHED_EXPORTED        0x00020000
-+#define EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTED      0x00040000
-+#define EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTABLE    0x00080000
-+#define EFI_RESOURCE_ATTRIBUTE_READ_PROTECTABLE         0x00100000
-+#define EFI_RESOURCE_ATTRIBUTE_WRITE_PROTECTABLE        0x00200000
-+#define EFI_RESOURCE_ATTRIBUTE_EXECUTION_PROTECTABLE    0x00400000
-+#define EFI_RESOURCE_ATTRIBUTE_PERSISTENT               0x00800000
-+#define EFI_RESOURCE_ATTRIBUTE_PERSISTABLE              0x01000000
-+#define EFI_RESOURCE_ATTRIBUTE_MORE_RELIABLE            0x02000000
-+
-+typedef uint32_t EFI_RESOURCE_TYPE;
-+typedef uint32_t EFI_RESOURCE_ATTRIBUTE_TYPE;
-+
-+typedef struct {
-+    EFI_HOB_GENERIC_HEADER Header;
-+    EFI_GUID Owner;
-+    EFI_RESOURCE_TYPE ResourceType;
-+    EFI_RESOURCE_ATTRIBUTE_TYPE ResourceAttribute;
-+    EFI_PHYSICAL_ADDRESS PhysicalStart;
-+    uint64_t ResourceLength;
-+} EFI_HOB_RESOURCE_DESCRIPTOR;
-+
-+typedef struct {
-+    EFI_HOB_GENERIC_HEADER Header;
-+    EFI_GUID Name;
-+
-+    /* guid specific data follows */
-+} EFI_HOB_GUID_TYPE;
-+
-+typedef struct {
-+    EFI_HOB_GENERIC_HEADER Header;
-+    EFI_PHYSICAL_ADDRESS BaseAddress;
-+    uint64_t Length;
-+} EFI_HOB_FIRMWARE_VOLUME;
-+
-+typedef struct {
-+    EFI_HOB_GENERIC_HEADER Header;
-+    EFI_PHYSICAL_ADDRESS BaseAddress;
-+    uint64_t Length;
-+    EFI_GUID FvName;
-+    EFI_GUID FileName;
-+} EFI_HOB_FIRMWARE_VOLUME2;
-+
-+typedef struct {
-+    EFI_HOB_GENERIC_HEADER Header;
-+    EFI_PHYSICAL_ADDRESS BaseAddress;
-+    uint64_t Length;
-+    uint32_t AuthenticationStatus;
-+    bool ExtractedFv;
-+    EFI_GUID FvName;
-+    EFI_GUID FileName;
-+} EFI_HOB_FIRMWARE_VOLUME3;
-+
-+typedef struct {
-+    EFI_HOB_GENERIC_HEADER Header;
-+    uint8_t SizeOfMemorySpace;
-+    uint8_t SizeOfIoSpace;
-+    uint8_t Reserved[6];
-+} EFI_HOB_CPU;
-+
-+typedef struct {
-+    EFI_HOB_GENERIC_HEADER Header;
-+} EFI_HOB_MEMORY_POOL;
-+
-+typedef struct {
-+    EFI_HOB_GENERIC_HEADER Header;
-+
-+    EFI_PHYSICAL_ADDRESS BaseAddress;
-+    uint64_t Length;
-+} EFI_HOB_UEFI_CAPSULE;
-+
-+#define EFI_HOB_OWNER_ZERO                                      \
-+    ((EFI_GUID){ 0x00000000, 0x0000, 0x0000,                    \
-+        { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 } })
-+
-+#endif
+     /* if *disabled* show SMRAM to all CPUs */
+     memory_region_init_alias(&mch->smram_region, OBJECT(mch), "smram-region",
+                              mch->pci_address_space, MCH_HOST_BRIDGE_SMRAM_C_BASE,
+@@ -634,15 +644,6 @@ static void mch_realize(PCIDevice *d, Error **errp)
+ 
+     object_property_add_const_link(qdev_get_machine(), "smram",
+                                    OBJECT(&mch->smram));
+-
+-    init_pam(&mch->pam_regions[0], OBJECT(mch), mch->ram_memory,
+-             mch->system_memory, mch->pci_address_space,
+-             PAM_BIOS_BASE, PAM_BIOS_SIZE);
+-    for (i = 0; i < ARRAY_SIZE(mch->pam_regions) - 1; ++i) {
+-        init_pam(&mch->pam_regions[i + 1], OBJECT(mch), mch->ram_memory,
+-                 mch->system_memory, mch->pci_address_space,
+-                 PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
+-    }
+ }
+ 
+ uint64_t mch_mcfg_base(void)
 -- 
 2.34.1
 
