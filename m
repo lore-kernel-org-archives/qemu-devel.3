@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2843EC48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 14:27:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFE14C54E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 14:27:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfhMn-00079w-FX; Thu, 29 Feb 2024 09:26:34 -0500
+	id 1rfhMt-0007SJ-NW; Thu, 29 Feb 2024 09:26:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfhMj-00074I-KJ; Thu, 29 Feb 2024 09:26:29 -0500
+ id 1rfhMn-0007BW-Js; Thu, 29 Feb 2024 09:26:33 -0500
 Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rfhMh-0005cJ-UT; Thu, 29 Feb 2024 09:26:29 -0500
+ id 1rfhMl-0005ee-Tu; Thu, 29 Feb 2024 09:26:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709216788; x=1740752788;
+ t=1709216792; x=1740752792;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=IGkhbFpn/c+13m0fNpAXvTFF2XOHAXW1Bu+Nbsc9m2M=;
- b=m5pYWLhquiamzvuBrHCUVqN5e/wPEwPtzXSCHxLaZhieQBjVl06KIYsO
- CffrXrnqOMAnsbzh2BK9NC8ksAmxQrkh6PAaD5rJ4qCtQZriOGT1Iqz1U
- iSc5guqX4PZSN5v2j1DAIc8TnT6FqSs/eYSH5KRvKUqepkLGZMcsp0gKj
- GEOWSyxNW4oX1HQRT9w89uEut0SV37igrLuZ92FIGfyA1ICWUeN7dTnSg
- mmsnTJvSkN3jmIsu9jRuszet9AtC4YfksPSnvk9sMYnoQTPJgVkyxM5F8
- JuaMnabjmXPieAImxD+cQmgV8XbYYZE6wRt/sVfPVlQpkqGEnv4aRkvd+ g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="14322828"
-X-IronPort-AV: E=Sophos;i="6.06,194,1705392000"; d="scan'208";a="14322828"
+ bh=wPeEnKkJYPPIgo94FX+zh/eKLbECzV39wf2hQuNxEqw=;
+ b=jpwVpbAV5bZaCj4da+FFeaPmQgZz5e1KI9dvt3TK/6ZgJTo22HwZdLQl
+ JOfHBPcFbpQooyKNL68r+6VwcPnLNbKpf4G8GgOGSbNL4frhra075zZI5
+ +bdurFoH1afpsB9471kqyvCsoaUeM9rE1hj/WAr/benfv03i+AlY5WCNM
+ zNTX1jFc1IjbvYqlwQsZED6dGxDoObVH7Ws8bVrGNl2Fi8b3WvdtzDD8R
+ f6K5nkZEEIptjjB3qIDxiVAx5VhIwOTVS2Jv34b5TFcEW1SCzjESlXVpn
+ wWgjCLf1qutpz2gGyRit9zP5be9eHff4+qD5U2o3n6LyTo6AWaHFeFQsP g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="14322841"
+X-IronPort-AV: E=Sophos;i="6.06,194,1705392000"; d="scan'208";a="14322841"
 Received: from fmviesa010.fm.intel.com ([10.60.135.150])
  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Feb 2024 06:26:05 -0800
+ 29 Feb 2024 06:26:09 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,194,1705392000"; 
-   d="scan'208";a="7793872"
+   d="scan'208";a="7793892"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa010.fm.intel.com with ESMTP; 29 Feb 2024 06:26:03 -0800
+ by fmviesa010.fm.intel.com with ESMTP; 29 Feb 2024 06:26:07 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Michael Tokarev <mjt@tls.msk.ru>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 12/17] hw/virtio/vhost-vsock: Fix missing ERRP_GUARD() for
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: [PATCH 14/17] migration/option: Fix missing ERRP_GUARD() for
  error_prepend()
-Date: Thu, 29 Feb 2024 22:39:09 +0800
-Message-Id: <20240229143914.1977550-13-zhao1.liu@linux.intel.com>
+Date: Thu, 29 Feb 2024 22:39:11 +0800
+Message-Id: <20240229143914.1977550-15-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240229143914.1977550-1-zhao1.liu@linux.intel.com>
 References: <20240229143914.1977550-1-zhao1.liu@linux.intel.com>
@@ -100,35 +100,38 @@ ERRP_GUARD() could avoid the case when @errp is the pointer of
 error_fatal, the user can't see this additional information, because
 exit() happens in error_setg earlier than information is added [1].
 
-The vhost_vsock_device_realize() passes @errp to error_prepend(), and as
-a VirtioDeviceClass.realize method, its @errp is from
-DeviceClass.realize so that there is no guarantee that the @errp won't
-point to @error_fatal.
+The migrate_params_check() passes @errp to error_prepend() without
+ERRP_GUARD(), and it could be called from migration_object_init(),
+where the passed @errp points to @error_fatal.
 
-To avoid the issue like [1] said, add missing ERRP_GUARD() at the
-beginning of this function.
+Therefore, the error message echoed in error_prepend() will be lost
+because of the above issue.
+
+To fix this, add missing ERRP_GUARD() at the beginning of this function.
 
 [1]: Issue description in the commit message of commit ae7c80a7bd73
      ("error: New macro ERRP_GUARD()").
 
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/virtio/vhost-vsock.c | 1 +
- 1 file changed, 1 insertion(+)
+ migration/options.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
-index d5ca0b5a1055..3d4a5a97f484 100644
---- a/hw/virtio/vhost-vsock.c
-+++ b/hw/virtio/vhost-vsock.c
-@@ -121,6 +121,7 @@ static const VMStateDescription vmstate_virtio_vhost_vsock = {
- 
- static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+diff --git a/migration/options.c b/migration/options.c
+index 3e3e0b93b439..b98cd639979e 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -1057,6 +1057,8 @@ void migrate_params_init(MigrationParameters *params)
+  */
+ bool migrate_params_check(MigrationParameters *params, Error **errp)
  {
 +    ERRP_GUARD();
-     VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VHostVSock *vsock = VHOST_VSOCK(dev);
++
+     if (params->has_compress_level &&
+         (params->compress_level > 9)) {
+         error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "compress_level",
 -- 
 2.34.1
 
