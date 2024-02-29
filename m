@@ -4,102 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09FF6C54798
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 11:02:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AEDDC48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 11:04:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfeB5-0006rp-GL; Thu, 29 Feb 2024 06:02:15 -0500
+	id 1rfeD1-0000H4-6R; Thu, 29 Feb 2024 06:04:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1rfeB3-0006qj-Pv
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 06:02:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1rfeB1-0008M2-26
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 06:02:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709204530;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3Zu5tBFOH5ImhLkt+ew3sONbMeOauI95Rk2Cdxdwk8g=;
- b=N8YLBNedrIgi5Tl2292XqeOYCZArr4goS5ObXwY9sDNLQ+JbpLyXfabYHl+p0eFeRUg18A
- S5ZrSGZskTsN8WH7oo9tMGdsFcz+ANe3Ay6zd2rmu80ckDw+CNJQhxEZtd+SFl7b172Gpr
- 67sQk+nkIE0Y5Jvixt1nEYFgac9nKsk=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-564-dXQBmth_OPCbse61wCXfww-1; Thu, 29 Feb 2024 06:02:08 -0500
-X-MC-Unique: dXQBmth_OPCbse61wCXfww-1
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-787c04e48a7so82016985a.1
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 03:02:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rfeCy-0000GV-Ln
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 06:04:13 -0500
+Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rfeCv-0000AZ-SN
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 06:04:11 -0500
+Received: by mail-lj1-x232.google.com with SMTP id
+ 38308e7fff4ca-2d094bc2244so9565801fa.1
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 03:04:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709204647; x=1709809447; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=N9zLbaFO/RECE58f9323vvtDq8jRLk1AZi3G2mWE4dA=;
+ b=LXErKTLzHgd6jjCPO2cEK/4tJw2AWyzlbonqBZS+Z/u13IiDq0C9bdRef42+NFRJ4u
+ RGUPKL4Z9aH9LtwecL1/350mpwceieLP1U8d7TBdV9x/7ycVxKuTpJvCf+49p3R9/NMJ
+ ye2nbinQoC71SI7JsO+1tjmchA3oTFY0SGFjAjbCZx1PNatovMMqkZapSqfm3PncpTib
+ gYDhF8tdinXdvB3AlGTgfes+8NikVrVx6El+0us/biUDns5lNqzWI1StrTzvVV6fbCGW
+ FwWaGMjGPBMBgzaGx4DG7p6on1ei/a1LxCHhmHWoJQKzzdrLzl8LiLKUOQoZzHOco4zo
+ fIWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709204528; x=1709809328;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3Zu5tBFOH5ImhLkt+ew3sONbMeOauI95Rk2Cdxdwk8g=;
- b=DuC4ggAxgmjvSiSxl3nbdR+hpRj4DxVaFYlUhzT7+tjNkJDizMZqmLvoLq69TSqqWO
- fQvpSANFq341LGuNwJ0wYg0pY32CIn8rOYiOPjRFmnNVQV3nAQ520wjhPg9oTzeJwttL
- vss3om7FvdAEMCi6h7RV2W1isIkGMeC8ev3Akb3gGRW47+nZ+krbJzTqqstDniQ3gYyd
- xAunGDE26Wo0gTBENhAi9V5VlW7hrOofss6YvJMt7TOCkuNW3+NRIgNeI8nqlgtbEwen
- VYEd+kYqmYQB5Pn5cyGL4oyP7tEMROXhfwzggy3mhtHXnnA3MZv0iC9IY9y0sFJayL+i
- llNg==
-X-Gm-Message-State: AOJu0YwNhwbVAm3Gpc5pW/j6/0M8zdTtpcBpjsRjndERbhfVUMsiJrNE
- XCo78kzEkkCQB3xq6GJnBxSW6qY0OIWMfyryLbsTX9n6gqOBHg2nJnmriiGyx5hNFr5FO+3M3xR
- DqwjWFuyTi7QOA1flm0Of54ibqB3y7S3lT3RyHNUQNP4SZl2CifXH
-X-Received: by 2002:a0c:f542:0:b0:68f:da03:3fe9 with SMTP id
- p2-20020a0cf542000000b0068fda033fe9mr1575142qvm.6.1709204528104; 
- Thu, 29 Feb 2024 03:02:08 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGoT/LhIuYx5K+oPou+YAYe3uxU0qUMgeG3SWPYs/r/NoH/ZtdUGWYPedAODqAjOTstbReSwQ==
-X-Received: by 2002:a0c:f542:0:b0:68f:da03:3fe9 with SMTP id
- p2-20020a0cf542000000b0068fda033fe9mr1575112qvm.6.1709204527796; 
- Thu, 29 Feb 2024 03:02:07 -0800 (PST)
-Received: from sgarzare-redhat (host-82-57-51-64.retail.telecomitalia.it.
- [82.57.51.64]) by smtp.gmail.com with ESMTPSA id
- pd7-20020a056214490700b0068fe3170b0esm613341qvb.11.2024.02.29.03.02.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Feb 2024 03:02:07 -0800 (PST)
-Date: Thu, 29 Feb 2024 12:01:59 +0100
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- qemu-block@nongnu.org,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Jason Wang <jasowang@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Eric Blake <eblake@redhat.com>, Coiby Xu <Coiby.Xu@gmail.com>, 
- slp@redhat.com, Eduardo Habkost <eduardo@habkost.net>, 
- Hanna Reitz <hreitz@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
- Raphael Norwitz <raphael@enfabrica.net>, Kevin Wolf <kwolf@redhat.com>, 
- David Hildenbrand <david@redhat.com>, stefanha@redhat.com, gmaglione@redhat.com
-Subject: Re: [PATCH 9/9] hostmem-file: support POSIX shm_open()
-Message-ID: <ochbl3qszx3yqmicm7dxqsp2ayfwajvh3onrzvm3xco4r5cnmi@7iayhlxzys3y>
-References: <20240228114759.44758-1-sgarzare@redhat.com>
- <20240228114759.44758-10-sgarzare@redhat.com>
- <874jdswyzy.fsf@pond.sub.org>
- <hxd362pwyrtanyw6xtjxiegru7z57btnaynaqxm5lysgzsm4u4@af36bjkqvc7z>
- <878r33zhre.fsf@pond.sub.org>
+ d=1e100.net; s=20230601; t=1709204647; x=1709809447;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=N9zLbaFO/RECE58f9323vvtDq8jRLk1AZi3G2mWE4dA=;
+ b=Yb+95q619FB3FHevuDCkcf6HP5tbfRIaooZeaAxszQphTH6gTQDzGnsIBiU6/GyExe
+ M61kpYrbvPW5lU3XWmO7Brw+Hh1VQT+qaBy+zJB3bnl5DBp1Xf/NxhEiy2R7IV4oWNOo
+ CMq4meg+KJOAjIAfJafaYjQdOO8NWQushHNxACbXlEAvMJuiNGbtItxQSVYXCChXvU2u
+ E3+Q5xcbkngJ1fHSa2rcS30SzYP4TC52Je2nnFXyhYG2aPWQOGaKjFgcUzPVieJACVOJ
+ eY/Ksa3m2xTGzFn6vwq8+EHxoOjwwgzR28Q7+Ns842i2OL/ZDPErNr86lWmGdDo0Rbot
+ NLbA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWd8N+3SgOKiP7XRg1ICvvXZwxrC5OHcUi3W3vMa1grOkM1MFxPV0VE/NZBKTMlVlkj719ObR75JbbvqH72pWh9nmVECEU=
+X-Gm-Message-State: AOJu0YyfCQ/pkVW9zxeXehjI1sjIpMDizaTDIdnV4QlhvqCFxdfahDb0
+ 91FaHn7d/9zeJkcomDYKATVGPTqmXPVfG80Yt7FfBX5wH82Obc6zjCz6ycHJymo=
+X-Google-Smtp-Source: AGHT+IEuJpBoxEnuInDVndL3SZMLKbLPWkw1jfacrojwXfRCGOD+vzrehB84+ZCqj4oxlpcDar5yfw==
+X-Received: by 2002:a05:6512:e81:b0:513:166c:353f with SMTP id
+ bi1-20020a0565120e8100b00513166c353fmr1241316lfb.38.1709204646911; 
+ Thu, 29 Feb 2024 03:04:06 -0800 (PST)
+Received: from [192.168.55.101] ([80.215.236.171])
+ by smtp.gmail.com with ESMTPSA id
+ u23-20020ac243d7000000b0051318551937sm208690lfl.162.2024.02.29.03.04.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 29 Feb 2024 03:04:06 -0800 (PST)
+Message-ID: <ffbd52ae-cebf-43f0-8ff7-a983a7cdf87d@linaro.org>
+Date: Thu, 29 Feb 2024 12:04:03 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <878r33zhre.fsf@pond.sub.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/9] Hexagon (target/hexagon) Add is_old/is_new to
+ Register class
+Content-Language: en-US
+To: Taylor Simpson <ltaylorsimpson@gmail.com>, qemu-devel@nongnu.org
+Cc: bcain@quicinc.com, quic_mathbern@quicinc.com, sidneym@quicinc.com,
+ quic_mliebel@quicinc.com, richard.henderson@linaro.org, ale@rev.ng,
+ anjo@rev.ng
+References: <20240226201722.391879-1-ltaylorsimpson@gmail.com>
+ <20240226201722.391879-2-ltaylorsimpson@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240226201722.391879-2-ltaylorsimpson@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::232;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x232.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,39 +99,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 29, 2024 at 11:28:37AM +0100, Markus Armbruster wrote:
->Stefano Garzarella <sgarzare@redhat.com> writes:
->
->> On Wed, Feb 28, 2024 at 01:32:17PM +0100, Markus Armbruster wrote:
->>>Stefano Garzarella <sgarzare@redhat.com> writes:
->
->[...]
->
->>>> +# @shm: if true, shm_open(3) is used to create/open POSIX shared memory
->>>> +#       object; if false, an open(2) is used. (default: false) (since 9.0)
->>>> +#
->>>
->>>Please format like this for consistency:
->>
->> Sure.
->>
->>>
->>># @shm: if true, shm_open(3) is used to create/open POSIX shared memory
->>>#     object; if false, an open(2) is used (default: false) (since 9.0)
->>
->> I just noticed that I followed the property just above (@rom). Should we fix that one?
->
->Yes, please.
+On 26/2/24 21:17, Taylor Simpson wrote:
+> Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+> ---
+>   target/hexagon/hex_common.py | 14 +++++++++++++-
+>   1 file changed, 13 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
+> index 195620c7ec..4bacef223f 100755
+> --- a/target/hexagon/hex_common.py
+> +++ b/target/hexagon/hex_common.py
+> @@ -1,7 +1,7 @@
+>   #!/usr/bin/env python3
+>   
+>   ##
+> -##  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
+> +##  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
 
-Done: 
-https://patchew.org/QEMU/20240229105826.16354-1-sgarzare@redhat.com/
+:)
 
-Thanks,
-Stefano
-
->
->See commit a937b6aa739 (qapi: Reformat doc comments to conform to
->current conventions).
->
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
