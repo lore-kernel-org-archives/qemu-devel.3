@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AEFFC48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 06:45:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5BEEC54E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 06:46:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfa6t-00067T-B0; Thu, 29 Feb 2024 01:41:39 -0500
+	id 1rfa76-0006X5-NB; Thu, 29 Feb 2024 01:41:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rfa6N-0005Oi-FG
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:41:07 -0500
+ id 1rfa6h-0005uD-R3
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:41:31 -0500
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rfa6L-0004qw-Kx
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:41:07 -0500
+ id 1rfa6f-0004qw-Q5
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:41:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709188865; x=1740724865;
+ t=1709188885; x=1740724885;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=cmbU3tDF03XHOgSHO4OovN27gl27DdI5rmRqf4cj0uY=;
- b=HGHAVjyjUwRKb6os6KbJykpPAr1uHbvZgnjoxm6JrvHcPeSEVaoOWkYT
- BQiUxaGZZDgzxX4IAiEFVKtRO0ZBnj40NVpvjsmyWTrFHu437a6Sh59GB
- Zw6D7w3Wusjc31sHV5y1jrjqKMBvq19aC3Dtl/EhL8ZeXIDzA7OScQjeK
- UcmXtUwF1kHFfe7R/4y0+2lleNA3CaqkWJ3l16BjaH7XpoVBJqow4Htss
- u0doqsZsxSQPR70vxD9ATX+/nSTueCy5rR/+No8pDByn7zg7P4ntR2vO2
- QlTySOibeG+T14+2vAehmycKg7M8hI6yqTcssx3T+Lgkp07XHs7MIn+Ge g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3802844"
+ bh=e+2C9uKtbhbExisrx4zbEuOZzq0QWHDfGmG/4u6UwRk=;
+ b=gXBg7fJmIkP7Jk5CH/2oZ9ewCQXYsHQe96XAAmx75ix1gMHRxtZIXmyR
+ K7OPCE6sq8TyPD+JAMmE84pFJ7+yYl4QYlcF/og3lhPZAktav33UeJ3zj
+ 4r24B9voaSy9HL5ZuwavgPJYkYKDQo4o/muHiXoHjJta0Vx/oKZziN570
+ W9yXwnlxMOm3XQiMP/HV4BkQ+07LX4XDmNALsbGBpNtVZO8u/rwX2xpGT
+ HGAY5708caNuh+m5UnXkZ6CgCaSP6comeru1WU5uTI9gJj7LkFMjsD+bA
+ ZR1+RrsD3W4elZRwmoGrHoGFuvRt6xnfyU5Jpzy0egHoO8JgeOJvUFAUn Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3802885"
 X-IronPort-AV: E=Sophos;i="6.06,192,1705392000"; 
-   d="scan'208";a="3802844"
+   d="scan'208";a="3802885"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Feb 2024 22:41:04 -0800
+ 28 Feb 2024 22:41:24 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,192,1705392000"; 
-   d="scan'208";a="8075600"
+   d="scan'208";a="8075656"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa007.jf.intel.com with ESMTP; 28 Feb 2024 22:40:58 -0800
+ by orviesa007.jf.intel.com with ESMTP; 28 Feb 2024 22:41:18 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -60,10 +60,10 @@ Cc: kvm@vger.kernel.org, qemu-devel@nongnu.org,
  Gerd Hoffmann <kraxel@redhat.com>,
  Isaku Yamahata <isaku.yamahata@gmail.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>, xiaoyao.li@intel.com
-Subject: [PATCH v5 32/65] i386/tdx: Set kvm_readonly_mem_enabled to false for
- TDX VM
-Date: Thu, 29 Feb 2024 01:36:53 -0500
-Message-Id: <20240229063726.610065-33-xiaoyao.li@intel.com>
+Subject: [PATCH v5 35/65] memory: Introduce
+ memory_region_init_ram_guest_memfd()
+Date: Thu, 29 Feb 2024 01:36:56 -0500
+Message-Id: <20240229063726.610065-36-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240229063726.610065-1-xiaoyao.li@intel.com>
 References: <20240229063726.610065-1-xiaoyao.li@intel.com>
@@ -94,38 +94,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-TDX only supports readonly for shared memory but not for private memory.
-
-In the view of QEMU, it has no idea whether a memslot is used as shared
-memory of private. Thus just mark kvm_readonly_mem_enabled to false to
-TDX VM for simplicity.
+Introduce memory_region_init_ram_guest_memfd() to allocate private
+guset memfd on the MemoryRegion initialization. It's for the use case of
+TDVF, which must be private on TDX case.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- target/i386/kvm/tdx.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+Changes in v5:
+- drop memory_region_set_default_private() because this function is
+  dropped in this v5 series;
+---
+ include/exec/memory.h |  6 ++++++
+ system/memory.c       | 25 +++++++++++++++++++++++++
+ 2 files changed, 31 insertions(+)
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 42dbb5ce5c15..13f069171db7 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -480,6 +480,15 @@ static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index 679a8476852e..1e351f6fc875 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -1603,6 +1603,12 @@ bool memory_region_init_ram(MemoryRegion *mr,
+                             uint64_t size,
+                             Error **errp);
  
-     update_tdx_cpuid_lookup_by_tdx_caps();
- 
-+    /*
-+     * Set kvm_readonly_mem_allowed to false, because TDX only supports readonly
-+     * memory for shared memory but not for private memory. Besides, whether a
-+     * memslot is private or shared is not determined by QEMU.
-+     *
-+     * Thus, just mark readonly memory not supported for simplicity.
-+     */
-+    kvm_readonly_mem_allowed = false;
++bool memory_region_init_ram_guest_memfd(MemoryRegion *mr,
++                                        Object *owner,
++                                        const char *name,
++                                        uint64_t size,
++                                        Error **errp);
 +
-     tdx_guest = tdx;
-     return 0;
+ /**
+  * memory_region_init_rom: Initialize a ROM memory region.
+  *
+diff --git a/system/memory.c b/system/memory.c
+index c756950c0c0f..85a22408e9a4 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -3606,6 +3606,31 @@ bool memory_region_init_ram(MemoryRegion *mr,
+     return true;
  }
+ 
++bool memory_region_init_ram_guest_memfd(MemoryRegion *mr,
++                                        Object *owner,
++                                        const char *name,
++                                        uint64_t size,
++                                        Error **errp)
++{
++    DeviceState *owner_dev;
++
++    if (!memory_region_init_ram_flags_nomigrate(mr, owner, name, size,
++                                                RAM_GUEST_MEMFD, errp)) {
++        return false;
++    }
++
++    /* This will assert if owner is neither NULL nor a DeviceState.
++     * We only want the owner here for the purposes of defining a
++     * unique name for migration. TODO: Ideally we should implement
++     * a naming scheme for Objects which are not DeviceStates, in
++     * which case we can relax this restriction.
++     */
++    owner_dev = DEVICE(owner);
++    vmstate_register_ram(mr, owner_dev);
++
++    return true;
++}
++
+ bool memory_region_init_rom(MemoryRegion *mr,
+                             Object *owner,
+                             const char *name,
 -- 
 2.34.1
 
