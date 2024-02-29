@@ -4,51 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6DB2C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 08:02:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69812C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 08:33:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfbLX-0001jy-Nr; Thu, 29 Feb 2024 03:00:51 -0500
+	id 1rfbqO-0000xx-Og; Thu, 29 Feb 2024 03:32:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1rfbLT-0001hP-UP; Thu, 29 Feb 2024 03:00:48 -0500
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX02.aspeed.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1rfbLS-00033a-2x; Thu, 29 Feb 2024 03:00:47 -0500
-Received: from TWMBX03.aspeed.com (192.168.0.62) by TWMBX02.aspeed.com
- (192.168.0.25) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 29 Feb
- 2024 16:00:19 +0800
-Received: from TWMBX02.aspeed.com (192.168.0.24) by TWMBX03.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 29 Feb
- 2024 16:01:16 +0800
-Received: from localhost.localdomain (192.168.10.10) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
- Transport; Thu, 29 Feb 2024 16:00:18 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC
- here" <qemu-devel@nongnu.org>
-CC: <troy_lee@aspeedtech.com>, <jamin_lin@aspeedtech.com>,
- <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 6/8] aspeed/intc: Add AST2700 support
-Date: Thu, 29 Feb 2024 16:00:12 +0800
-Message-ID: <20240229080014.1235018-7-jamin_lin@aspeedtech.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240229080014.1235018-1-jamin_lin@aspeedtech.com>
-References: <20240229080014.1235018-1-jamin_lin@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1rfbqM-0000xi-It
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 03:32:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1rfbqK-00033W-OZ
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 03:32:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709195559;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sTjNzaS1HA+RGFL3kdQwPORlJBszUM9+fgGl5yYyEEM=;
+ b=DbpawrsVmVfn+p+s2bxMMwidjhrwNOI+lW4rLGHAgViAfXl0l+0ltRIclzggdu3ZGAtVSh
+ Tfkxtq7/nNG+4ZxGS9uIGv6c1dRtgK7DmoJ79I+Zzg9QTuGzUc/01fAeFTDpv35Q8vMPkx
+ R6+f8f2PyG/Um3NeGfHvhxdFSGO4KNg=
+Received: from mail-yb1-f197.google.com (mail-yb1-f197.google.com
+ [209.85.219.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-609-K119ODjEPv2m_MWdJkCInA-1; Thu, 29 Feb 2024 03:32:37 -0500
+X-MC-Unique: K119ODjEPv2m_MWdJkCInA-1
+Received: by mail-yb1-f197.google.com with SMTP id
+ 3f1490d57ef6-dcc05887ee9so997468276.1
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 00:32:37 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709195557; x=1709800357;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=sTjNzaS1HA+RGFL3kdQwPORlJBszUM9+fgGl5yYyEEM=;
+ b=cEqoTk16XoczXH9tY0y4R5/WD4UbAhT+iYbxpehg2g485bwmKG/NXgElkgsV402Eex
+ VdfsrMtTtfviD5vgitTx3C73OGCN/h/HcGRgnKV5YZrKLFlCAvMrT1NrPdjVfIPO8zwC
+ +asHIho6Pb36WuyD5YwIAP9xnS/2Mlt+XYFGSglQq7dNbtHrTth9V9LI8ly7L6GzzNKf
+ Vb6VuZrnobpn4/JhV0Z84Dk88GgxqYhKtQLaoMEkeqhNzOkiPyJO6WGUjCZpOD+NxCo7
+ 2ZaNMmpQiDCdRN4WmhyCKeWoUQsxQ2iqw7QubBf7pQNxiGIE0gCgpZyvXJqMyEi7K/U7
+ 66sg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU8mCBNcEk9wk2TTXA7IYMshIdths1RaUlgZ7Zg1YeH5duL3iS3DTqNwZbFeo8q8mFC2adc5/Em2oNRla5nASmEKs61c6Q=
+X-Gm-Message-State: AOJu0YxLyVivXFi+06VCaLqFh9bF973FjHYOKE4Eth7rk58mJIf3VSjV
+ N0WJUnkixIbEqHgA3+LGGB1M1Lgx3PB6WopoXpb+it9svJ1z3qJAqg4Is4J8rIizP8/9LY12EtN
+ C5BQqVVMh9n2isbH+Dy7xecUTql8VxL9CTSvjrrMNS6Qjjy0bztYCusuItKSKaKpDtCtkNAhb40
+ ZQgQAtChdx2MISl7fubS4ZPh0xm9I=
+X-Received: by 2002:a5b:987:0:b0:dcd:9808:256c with SMTP id
+ c7-20020a5b0987000000b00dcd9808256cmr1463597ybq.58.1709195557157; 
+ Thu, 29 Feb 2024 00:32:37 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFI6ZE5etDt3cQLkbm0fXM1meuWsoLNjjD9oA7H/L9WOsQFq8xufdhheB/PiRRAX/BBkM7xGc14TjlEDwgNr+0=
+X-Received: by 2002:a5b:987:0:b0:dcd:9808:256c with SMTP id
+ c7-20020a5b0987000000b00dcd9808256cmr1463585ybq.58.1709195556803; Thu, 29 Feb
+ 2024 00:32:36 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX02.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_FAIL=0.001,
+References: <13625712.uLZWGnKmhe@valdaarhun>
+In-Reply-To: <13625712.uLZWGnKmhe@valdaarhun>
+From: Stefano Garzarella <sgarzare@redhat.com>
+Date: Thu, 29 Feb 2024 09:32:25 +0100
+Message-ID: <CAGxU2F4jx5m5_ijNoWZpVK_MepvtDBY8L70-dSZmRUPmTskCNw@mail.gmail.com>
+Subject: Re: Intention to work on GSoC project
+To: Sahil <icegambit91@gmail.com>
+Cc: eperezma@redhat.com, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -62,232 +95,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
-From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-AST2700 interrupt controller(INTC) provides hardware interrupt interfaces
-to interrupt of processors PSP, SSP and TSP. In INTC, each interrupt of
-INT 128 to INT136 combines 32 interrupts.
+Hi Sahil,
 
-Introduce a new aspeed_intc class with instance_init and realize handlers.
+On Sun, Feb 25, 2024 at 10:38=E2=80=AFPM Sahil <icegambit91@gmail.com> wrot=
+e:
+>
+> Hi,
+>
+> My name is Sahil and I go by the pseudonym 'valdaarhun' on Github. I have
+> never contributed to QEMU before but I have used it a few times as an end
+> user. I developed an interest in virtualization during my internship at
+> VMware and would like to dive deeper in this subfield.
+>
+> My current full-time job does not allow me to take part in external progr=
+ams
+> that are paid. I would like to work on one of the proposed projects outsi=
+de
+> of GSoC.
 
-QEMU supports ARM Generic Interrupt Controller, version 3(GICv3)
-but not support Shared Peripheral Interrupt (SPI), yet.
-This patch added work around to set GICINT132[18] which was BMC UART interrupt
-if it received GICINT132, so users are able to type any key from keyboard to
-trigger GICINT132 interrupt until AST2700 boot into login prompt.
-It is a temporary solution.
+Sure, not a problem at all, also because for this year QEMU was not
+accepted in GSoC, so anybody can work on those projects if they have
+time
 
-Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
----
- hw/intc/aspeed_intc.c        | 135 +++++++++++++++++++++++++++++++++++
- hw/intc/meson.build          |   1 +
- include/hw/intc/aspeed_vic.h |  29 ++++++++
- 3 files changed, 165 insertions(+)
- create mode 100644 hw/intc/aspeed_intc.c
+> I have gone through QEMU's list of GSoC '24 projects [1] and am
+> interested in two of them:
+>
+> 1. Add packed virtqueue to Shadow Virtqueue
+> 2. vhost-user memory isolation
+>
+> Based on what I have understood, they are somewhat related and are part
+> of the migration subsystem. I feel the learning curve of the first projec=
+t
+> will be less steep and will make me better prepared to tackle the second
+> project as well.
 
-diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-new file mode 100644
-index 0000000000..851d43363b
---- /dev/null
-+++ b/hw/intc/aspeed_intc.c
-@@ -0,0 +1,135 @@
-+/*
-+ * ASPEED INTC Controller
-+ *
-+ * Copyright (C) 2024 ASPEED Technology Inc.
-+ *
-+ * This code is licensed under the GPL version 2 or later.  See
-+ * the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/intc/aspeed_vic.h"
-+#include "hw/irq.h"
-+#include "migration/vmstate.h"
-+#include "qemu/bitops.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "hw/intc/arm_gicv3.h"
-+#include "trace.h"
-+
-+#define ASPEED_INTC_NR_IRQS 128
-+#define ASPEED_INTC_SIZE 0x4000
-+#define TO_REG(N) (N >> 2)
-+
-+uint64_t regs[ASPEED_INTC_SIZE];
-+
-+static void aspeed_intc_set_irq(void *opaque, int irq, int level)
-+{
-+}
-+
-+static uint64_t aspeed_intc_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    AspeedINTCState *s = ASPEED_INTC(opaque);
-+    GICv3State *gic = ARM_GICV3(s->gic);
-+
-+    uint64_t value = 0;
-+    switch (TO_REG(offset)) {
-+    case TO_REG(0x1404):
-+        /* BMC UART interript is GICINT132[18] */
-+        if (gic && gicv3_gicd_level_test(gic, 164)) {
-+            value = BIT(18);
-+        }
-+        break;
-+    default:
-+        value = regs[TO_REG(offset)];
-+        break;
-+    }
-+
-+    return value;
-+}
-+
-+static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
-+                                        unsigned size)
-+{
-+    AspeedINTCState *s = ASPEED_INTC(opaque);
-+    GICv3State *gic = ARM_GICV3(s->gic);
-+
-+    switch (TO_REG(offset)) {
-+    case TO_REG(0x1400):
-+        regs[TO_REG(offset)] = data;
-+        if (regs[TO_REG(offset)]) {
-+            gicv3_gicd_enabled_set(gic, 164);
-+        } else {
-+            gicv3_gicd_enabled_clear(gic, 164);
-+        }
-+        break;
-+    case TO_REG(0x1404):
-+        regs[TO_REG(offset)] &= ~(data);
-+        gicv3_gicd_level_clear(gic, 164);
-+        break;
-+    default:
-+        regs[TO_REG(offset)] = data;
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps aspeed_intc_ops = {
-+    .read = aspeed_intc_read,
-+    .write = aspeed_intc_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid.min_access_size = 4,
-+    .valid.max_access_size = 4,
-+    .valid.unaligned = false,
-+};
-+
-+static void aspeed_intc_realize(DeviceState *dev, Error **errp)
-+{
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+    AspeedINTCState *s = ASPEED_INTC(dev);
-+
-+    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_intc_ops, s,
-+                          TYPE_ASPEED_INTC, ASPEED_INTC_SIZE);
-+
-+    sysbus_init_mmio(sbd, &s->iomem);
-+
-+    qdev_init_gpio_in(dev, aspeed_intc_set_irq, ASPEED_INTC_NR_IRQS);
-+    sysbus_init_irq(sbd, &s->irq);
-+    sysbus_init_irq(sbd, &s->fiq);
-+}
-+
-+static void aspeed_intc_reset(DeviceState *dev)
-+{
-+    AspeedINTCState *s = ASPEED_INTC(dev);
-+
-+    s->level = 0;
-+    s->raw = 0;
-+    s->select = 0;
-+    s->enable = 0;
-+    s->trigger = 0;
-+    s->sense = 0x1F07FFF8FFFFULL;
-+    s->dual_edge = 0xF800070000ULL;
-+    s->event = 0x5F07FFF8FFFFULL;
-+}
-+
-+static void aspeed_intc_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    dc->realize = aspeed_intc_realize;
-+    dc->reset = aspeed_intc_reset;
-+    dc->desc = "ASPEED Interrupt Controller for AST27x0";
-+    dc->vmsd = NULL;
-+}
-+
-+static const TypeInfo aspeed_intc_info = {
-+    .name = TYPE_ASPEED_INTC,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(AspeedINTCState),
-+    .class_init = aspeed_intc_class_init,
-+};
-+
-+static void aspeed_intc_register_types(void)
-+{
-+    type_register_static(&aspeed_intc_info);
-+}
-+
-+type_init(aspeed_intc_register_types);
-diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index ed355941d1..f5c574f584 100644
---- a/hw/intc/meson.build
-+++ b/hw/intc/meson.build
-@@ -14,6 +14,7 @@ system_ss.add(when: 'CONFIG_ARM_GICV3_TCG', if_true: files(
- ))
- system_ss.add(when: 'CONFIG_ALLWINNER_A10_PIC', if_true: files('allwinner-a10-pic.c'))
- system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_vic.c'))
-+system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_intc.c'))
- system_ss.add(when: 'CONFIG_ETRAXFS', if_true: files('etraxfs_pic.c'))
- system_ss.add(when: 'CONFIG_EXYNOS4', if_true: files('exynos4210_gic.c', 'exynos4210_combiner.c'))
- system_ss.add(when: 'CONFIG_GOLDFISH_PIC', if_true: files('goldfish_pic.c'))
-diff --git a/include/hw/intc/aspeed_vic.h b/include/hw/intc/aspeed_vic.h
-index 68d6ab997a..673a11d7fd 100644
---- a/include/hw/intc/aspeed_vic.h
-+++ b/include/hw/intc/aspeed_vic.h
-@@ -17,6 +17,7 @@
- #include "qom/object.h"
- 
- #define TYPE_ASPEED_VIC "aspeed.vic"
-+#define TYPE_ASPEED_INTC "aspeed.intc"
- OBJECT_DECLARE_SIMPLE_TYPE(AspeedVICState, ASPEED_VIC)
- 
- #define ASPEED_VIC_NR_IRQS 51
-@@ -46,4 +47,32 @@ struct AspeedVICState {
-     uint64_t event;
- };
- 
-+OBJECT_DECLARE_SIMPLE_TYPE(AspeedINTCState, ASPEED_INTC)
-+
-+struct AspeedINTCState {
-+    /*< private >*/
-+    SysBusDevice parent_obj;
-+    DeviceState *gic;
-+
-+    /*< public >*/
-+    MemoryRegion iomem;
-+    qemu_irq irq;
-+    qemu_irq fiq;
-+
-+    uint64_t level;
-+    uint64_t raw;
-+    uint64_t select;
-+    uint64_t enable;
-+    uint64_t trigger;
-+
-+    /* 0=edge, 1=level */
-+    uint64_t sense;
-+
-+    /* 0=single-edge, 1=dual-edge */
-+    uint64_t dual_edge;
-+
-+    /* 0=low-sensitive/falling-edge, 1=high-sensitive/rising-edge */
-+    uint64_t event;
-+};
-+
- #endif /* ASPEED_VIC_H */
--- 
-2.25.1
+The first project is for sure related with migration. While vhost-user
+memory isolation is not really related to migration, but both are
+related to virtio devices.
+Anyway, your plan looks good to me!
+
+>
+> I have read the "Getting Started for Developers" [2] wiki page. I have al=
+so
+> built QEMU from source.
+
+Great!
+
+>
+> I think my next step should be to read the documentation on the migration
+> subsystem [3], the blog posts attached in the first project's description
+> and virtqueue's implementation. Would you also recommend that I work on a
+> QEMU issue that is open on Gitlab and related to virtqueues/virtio to
+> familiarize
+> myself with the codebase? I went through the issues tagged as "device:vir=
+tio"
+> [4]
+> but can't really tell if any of them are good for beginners. One of them =
+has
+> the
+> "bite-size" tag [5]. It also has a patch attached but hasn't been merged.
+> Shall I
+> work on getting that merged?
+
+Yeah, "bite-size" issues should be better to understand how to
+contribute to QEMU.
+Feel free to work on any issue, doing the work or helping to complete
+old patches.
+
+>
+> I have worked on a few smaller systems programming issues in other
+> organizations (eg: strace [6], htop [7]) in the past.
+>
+> I look forward to hearing from you.
+
+Feel free to reach us if you have more questions on the projects.
+
+Thanks,
+Stefano
 
 
