@@ -4,87 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57B24C54E41
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99582C48BF6
 	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 15:35:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfiQb-00029X-Ec; Thu, 29 Feb 2024 10:34:33 -0500
+	id 1rfiOC-0006Rh-38; Thu, 29 Feb 2024 10:32:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rfiQM-0001us-FU
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:34:18 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rfiNQ-0005r0-2K
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:31:18 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rfiQ1-0006o5-Df
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:33:59 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-412a14299a4so8100925e9.1
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 07:33:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709220836; x=1709825636; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RaYHN89FLqaB2XgfxZpmq7YKqG6dfOIjv3vq0ydw7O0=;
- b=s0HEFjY+T3CCGh6ZJGeY1ZboiC2TFcMjaYcwd/CadMEZuZkU3Td8GuNEMRSvw+RdF4
- MODtHl5kdf91RpIVatCVqVlm1q7QL6QzzP+i4LL3ujkcnFyTaibpO9CNZ4tf8Q8+cqgZ
- T3ODQZseZeLg4jGoup8WUFwKD9m5jDXdzOQOWCWlnVnltxQCEMR36CLsEHRk1Va0ZVM0
- SVbfq99uXqmYT1IDZnKTrICLlt7++iIgGsu/aMPKQS5H6IuwxV+wT7VW3i4wHufMAQKm
- EHUuTcWah+vsOc+eS/81q7vzy4pIaMAxX5T8zJUlit+FEBBnIJLTpGX39Ob8/Fl+Ctus
- qvMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709220836; x=1709825636;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=RaYHN89FLqaB2XgfxZpmq7YKqG6dfOIjv3vq0ydw7O0=;
- b=PUGIb0Ni2B652zlnwgVe2CSDGQ8aYw+2DUV+YRYnsFrnXQoPTIuhCrhD2tSki0Uoa6
- nBTVNO05l1L20W9bg7gzVpJmLPnHtHr1NyCu8XfLL08W8OjbjuA017vA4M+Nhkdzd8w2
- jmM5aWt/d80Z9lB6xlJjBkTywVAGwCCHXy1f2BC+f+ua6DHUaBRdOQp5MllWvNeHwGnC
- UrY7AqE8vPKPi1UE1q//aUTRyM1UhyVGW55zZ3AYgBXRlEHpFyc7YaSrsHSbURAtliGN
- XyexBaisbzu/RIhwupYGqz2R9lcja/giAE34W32Pa1oRbq9v0wJ/+jctXz7lYTx3uGiY
- wrCw==
-X-Gm-Message-State: AOJu0Yxr+RiXP+c8e84BCQF9xbS0qCybptEsQDHBe6ADGy48LkIrGKJe
- iYuyWnHCeXS7bCqlQ3elVttLt5vgIB7a9iy/a+XfQ9Pow1KCu8qJaNZH3REVAi/fgrtVNWc9+wM
- w
-X-Google-Smtp-Source: AGHT+IH30/kcl1vGFcNlhTWz4PsgyvtKVPcK9w1iMbJ/iLzsWhy7YMqkNxqRjgAgUbUdKr1hUZwW+w==
-X-Received: by 2002:a05:600c:4fd3:b0:412:c1e5:a353 with SMTP id
- o19-20020a05600c4fd300b00412c1e5a353mr850977wmq.12.1709220835836; 
- Thu, 29 Feb 2024 07:33:55 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- jp16-20020a05600c559000b00412a482cd90sm2351424wmb.25.2024.02.29.07.33.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Feb 2024 07:33:55 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 296E25F78A;
- Thu, 29 Feb 2024 15:33:55 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Nicolas Eder <nicolas.eder@lauterbach.com>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, "Christian Boenig" <christian.boenig@lauterbach.com>
-Subject: Re: [PATCH v5 02/18] gdbstub: hex conversion functions moved to
- cutils.h
-In-Reply-To: <20231220162555.19545-3-nicolas.eder@lauterbach.com> (Nicolas
- Eder's message of "Wed, 20 Dec 2023 17:25:39 +0100")
-References: <20231220162555.19545-1-nicolas.eder@lauterbach.com>
- <20231220162555.19545-3-nicolas.eder@lauterbach.com>
-User-Agent: mu4e 1.12.0; emacs 29.1
-Date: Thu, 29 Feb 2024 15:33:55 +0000
-Message-ID: <878r338eu4.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rfiNN-00062q-AZ
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:31:15 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 009451F7F6;
+ Thu, 29 Feb 2024 15:31:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1709220671; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=dUtdlKAOtKcRc3pkRXeHZkfdr3XY95D5qn0B7Js5PC4=;
+ b=Od7yFM75/BWZfaivjDk/DcqgEI2P+y9/aJ2HM4FV1MCt5IPrKV/J4YKOdKZv6LXOOLPqsj
+ BFDeThQOwIApgsXu8dv+CcvO919QtcEm8fxhdTwxMerPvofEKTMgH6WtlZZph93WF4BYK7
+ wfQFcTCivSalznDvSEaQSo58Or3Xy5I=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1709220671;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=dUtdlKAOtKcRc3pkRXeHZkfdr3XY95D5qn0B7Js5PC4=;
+ b=/BkAOHElzOECsNoE7QDniuOX5UKybtplgP0PucsDt5WNxbquEi6nEF2APnIHSuzYQsuhj9
+ 0QVBxwYvgCPQVJCg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1709220671; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=dUtdlKAOtKcRc3pkRXeHZkfdr3XY95D5qn0B7Js5PC4=;
+ b=Od7yFM75/BWZfaivjDk/DcqgEI2P+y9/aJ2HM4FV1MCt5IPrKV/J4YKOdKZv6LXOOLPqsj
+ BFDeThQOwIApgsXu8dv+CcvO919QtcEm8fxhdTwxMerPvofEKTMgH6WtlZZph93WF4BYK7
+ wfQFcTCivSalznDvSEaQSo58Or3Xy5I=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1709220671;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=dUtdlKAOtKcRc3pkRXeHZkfdr3XY95D5qn0B7Js5PC4=;
+ b=/BkAOHElzOECsNoE7QDniuOX5UKybtplgP0PucsDt5WNxbquEi6nEF2APnIHSuzYQsuhj9
+ 0QVBxwYvgCPQVJCg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 39ADC13503;
+ Thu, 29 Feb 2024 15:31:09 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([10.150.64.162])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id qBtfAD2j4GU/MAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 29 Feb 2024 15:31:09 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
+ Claudio Fontana <cfontana@suse.de>
+Subject: [PATCH v6 22/23] migration/multifd: Add mapped-ram support to fd: URI
+Date: Thu, 29 Feb 2024 12:30:16 -0300
+Message-Id: <20240229153017.2221-23-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20240229153017.2221-1-farosas@suse.de>
+References: <20240229153017.2221-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Authentication-Results: smtp-out2.suse.de;
+	none
+X-Spamd-Result: default: False [1.90 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; R_MISSING_CHARSET(2.50)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
+ BROKEN_CONTENT_TYPE(1.50)[]; RCPT_COUNT_FIVE(0.00)[5];
+ RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MID_CONTAINS_FROM(1.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ BAYES_HAM(-3.00)[100.00%]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,11 +119,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nicolas Eder <nicolas.eder@lauterbach.com> writes:
+If we receive a file descriptor that points to a regular file, there's
+nothing stopping us from doing multifd migration with mapped-ram to
+that file.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Enable the fd: URI to work with multifd + mapped-ram.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Note that the fds passed into multifd are duplicated because we want
+to avoid cross-thread effects when doing cleanup (i.e. close(fd)). The
+original fd doesn't need to be duplicated because monitor_get_fd()
+transfers ownership to the caller.
+
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ migration/fd.c        | 44 +++++++++++++++++++++++++++++++++++++++++++
+ migration/fd.h        |  2 ++
+ migration/file.c      | 16 +++++++++++-----
+ migration/migration.c |  4 ++++
+ migration/multifd.c   |  2 ++
+ 5 files changed, 63 insertions(+), 5 deletions(-)
+
+diff --git a/migration/fd.c b/migration/fd.c
+index 0eb677dcae..d4ae72d132 100644
+--- a/migration/fd.c
++++ b/migration/fd.c
+@@ -15,18 +15,41 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qapi/error.h"
+ #include "channel.h"
+ #include "fd.h"
+ #include "migration.h"
+ #include "monitor/monitor.h"
++#include "io/channel-file.h"
+ #include "io/channel-util.h"
++#include "options.h"
+ #include "trace.h"
+ 
+ 
++static struct FdOutgoingArgs {
++    int fd;
++} outgoing_args;
++
++int fd_args_get_fd(void)
++{
++    return outgoing_args.fd;
++}
++
++void fd_cleanup_outgoing_migration(void)
++{
++    if (outgoing_args.fd > 0) {
++        close(outgoing_args.fd);
++        outgoing_args.fd = -1;
++    }
++}
++
+ void fd_start_outgoing_migration(MigrationState *s, const char *fdname, Error **errp)
+ {
+     QIOChannel *ioc;
+     int fd = monitor_get_fd(monitor_cur(), fdname, errp);
++
++    outgoing_args.fd = -1;
++
+     if (fd == -1) {
+         return;
+     }
+@@ -38,6 +61,8 @@ void fd_start_outgoing_migration(MigrationState *s, const char *fdname, Error **
+         return;
+     }
+ 
++    outgoing_args.fd = fd;
++
+     qio_channel_set_name(ioc, "migration-fd-outgoing");
+     migration_channel_connect(s, ioc, NULL, NULL);
+     object_unref(OBJECT(ioc));
+@@ -73,4 +98,23 @@ void fd_start_incoming_migration(const char *fdname, Error **errp)
+                                fd_accept_incoming_migration,
+                                NULL, NULL,
+                                g_main_context_get_thread_default());
++
++    if (migrate_multifd()) {
++        int channels = migrate_multifd_channels();
++
++        while (channels--) {
++            ioc = QIO_CHANNEL(qio_channel_file_new_fd(dup(fd)));
++
++            if (QIO_CHANNEL_FILE(ioc)->fd == -1) {
++                error_setg(errp, "Failed to duplicate fd %d", fd);
++                return;
++            }
++
++            qio_channel_set_name(ioc, "migration-fd-incoming");
++            qio_channel_add_watch_full(ioc, G_IO_IN,
++                                       fd_accept_incoming_migration,
++                                       NULL, NULL,
++                                       g_main_context_get_thread_default());
++        }
++    }
+ }
+diff --git a/migration/fd.h b/migration/fd.h
+index b901bc014e..0c0a18d9e7 100644
+--- a/migration/fd.h
++++ b/migration/fd.h
+@@ -20,4 +20,6 @@ void fd_start_incoming_migration(const char *fdname, Error **errp);
+ 
+ void fd_start_outgoing_migration(MigrationState *s, const char *fdname,
+                                  Error **errp);
++void fd_cleanup_outgoing_migration(void);
++int fd_args_get_fd(void);
+ #endif
+diff --git a/migration/file.c b/migration/file.c
+index 499d2782fe..164b079966 100644
+--- a/migration/file.c
++++ b/migration/file.c
+@@ -11,6 +11,7 @@
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
+ #include "channel.h"
++#include "fd.h"
+ #include "file.h"
+ #include "migration.h"
+ #include "io/channel-file.h"
+@@ -53,15 +54,20 @@ bool file_send_channel_create(gpointer opaque, Error **errp)
+ {
+     QIOChannelFile *ioc;
+     int flags = O_WRONLY;
+-    bool ret = true;
++    bool ret = false;
++    int fd = fd_args_get_fd();
+ 
+-    ioc = qio_channel_file_new_path(outgoing_args.fname, flags, 0, errp);
+-    if (!ioc) {
+-        ret = false;
+-        goto out;
++    if (fd && fd != -1) {
++        ioc = qio_channel_file_new_fd(dup(fd));
++    } else {
++        ioc = qio_channel_file_new_path(outgoing_args.fname, flags, 0, errp);
++        if (!ioc) {
++            goto out;
++        }
+     }
+ 
+     multifd_channel_connect(opaque, QIO_CHANNEL(ioc));
++    ret = true;
+ 
+ out:
+     /*
+diff --git a/migration/migration.c b/migration/migration.c
+index 957d2890b7..0f1c044707 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -139,6 +139,10 @@ static bool transport_supports_multi_channels(MigrationAddress *addr)
+     if (addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET) {
+         SocketAddress *saddr = &addr->u.socket;
+ 
++        if (saddr->type == SOCKET_ADDRESS_TYPE_FD) {
++            return migrate_mapped_ram();
++        }
++
+         return (saddr->type == SOCKET_ADDRESS_TYPE_INET ||
+                 saddr->type == SOCKET_ADDRESS_TYPE_UNIX ||
+                 saddr->type == SOCKET_ADDRESS_TYPE_VSOCK);
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 419feb7df1..b4e5a9dfcc 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -17,6 +17,7 @@
+ #include "exec/ramblock.h"
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
++#include "fd.h"
+ #include "file.h"
+ #include "migration.h"
+ #include "migration-stats.h"
+@@ -731,6 +732,7 @@ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
+ static void multifd_send_cleanup_state(void)
+ {
+     file_cleanup_outgoing_migration();
++    fd_cleanup_outgoing_migration();
+     socket_cleanup_outgoing_migration();
+     qemu_sem_destroy(&multifd_send_state->channels_created);
+     qemu_sem_destroy(&multifd_send_state->channels_ready);
+-- 
+2.35.3
+
 
