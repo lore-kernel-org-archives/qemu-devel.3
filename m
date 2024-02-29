@@ -4,93 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D19EAC48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 07:12:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6768C54798
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 07:15:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfaaY-0003BF-RO; Thu, 29 Feb 2024 02:12:20 -0500
+	id 1rfacy-0004qI-Sx; Thu, 29 Feb 2024 02:14:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rfaaS-00037T-PC
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 02:12:13 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rfaaR-0004lR-Ap
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 02:12:12 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-33d568fbf62so302877f8f.3
- for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 23:12:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709190730; x=1709795530; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=31fyNln3HVxURNE8vA4kzbKfqBNWlIGkBNsLE9GcSPQ=;
- b=ts9XVZxKdwvMx2oD3EbeRMpOH2aK9I+UQ/jFCCrd0DSsWMjGI+S0k7zfmnvK1XfV75
- uhRouTustNFH3seFUr3S+Xr3UOnb5z1pjrGImP1chzdfP3gU91ybgOceoS0/QCFdOlNp
- nV/lUppabliCg3H8Jt0BT2E4NQyWQO8KvSm6EmM/GRr9EgxvE9GAHFTawwqb/rd3ZIge
- Cp66bGngEXZ0SmPSBhEi8G8kSup8vyvAbF+rJzcUG3fIHgju65ECdcCelDqiCfXooPgI
- iC0r5xyi6rqzDxh0zy8lMOBs8n6z9+ZGoPj5tHjIpPWVSRXtqdCajUL0HPfI+wEaBhzo
- G1gg==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfacw-0004pF-53
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 02:14:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfacu-0004x6-51
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 02:14:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709190881;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=bpmErMJ5rAXVBJRHDqnSobGSBAJ7lTd5CBRax2AFj7E=;
+ b=VfJyjuPNuxFrLjyvoYAGi3QXFS6XidUTEXoJ1ukNDfvLvbXxUEJNDE4WH/XvL1KVMQV3Hn
+ BN3QWDjKpfkkSDS50aMzcpmFhOAOq7Rib03ZHyv5qFiw0qt/mkAKPUAr6wmtoUEouBlHDV
+ SwHikmJjZGSzNDv51eURMFvDvmb7QXY=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-376-sgxBeGVqPPOq6JZa8bMdOQ-1; Thu, 29 Feb 2024 02:14:38 -0500
+X-MC-Unique: sgxBeGVqPPOq6JZa8bMdOQ-1
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-68fd00ac245so5497866d6.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Feb 2024 23:14:38 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709190730; x=1709795530;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=31fyNln3HVxURNE8vA4kzbKfqBNWlIGkBNsLE9GcSPQ=;
- b=p6TPEXQx95ksRKuNw5bZ0APfC3b2SP7z4pytu3LrCJBzcwIreBQ83rUR67YColkuiH
- ZALAIzYvA0yPXkoMYy/begSrcgUaYnS/62iZJizx+QtaVEejhvJD3LBVvx/k6RoSVGkE
- 5qgRgK2IU1qr5MmRa5ZzjFRMDWVLX+f8VzZ1fbu97PIgcEOULFR+3FuB/NckUIYEG2If
- WJ7qW/s8IDtGIxTSPxxNRAlrjJJ39029nly+gjDKvq9sSRZha+rANfI60/QAgf0jRc8s
- fCUquNId+MsvbeTrN2FdChIRn/aawAQO8pePd+iiw3+ICscqzqyB6ckJ8XdAgxbVpJw3
- vwzA==
+ d=1e100.net; s=20230601; t=1709190878; x=1709795678;
+ h=content-transfer-encoding:in-reply-to:autocrypt:cc:from
+ :content-language:references:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bpmErMJ5rAXVBJRHDqnSobGSBAJ7lTd5CBRax2AFj7E=;
+ b=HLiAn+CRhwbunO26OdgShrB7i2h4Kb9XcL7/Eoc53LELM+3u19ebdvbbojs5MXWf5/
+ ScygrfnyuovuS1KUeSlsQ8Ej+fkcdXhOqRgQcF2t5ICfGdDuBeqk9Yw3DCSqGtsIA+BF
+ rOnzBeQQKfxQ2DwX32HKM7SLYpP8+HkCuh0sZyLuG1oL/phL2UZ/YD6cn/GJEjEWJBVT
+ AcyIanvakJ8Z3Kr2q+Hg6UTue+FkawkUpFzUH4DCPzdFfHYKhYjgOGl5Evsfb4Vxl+bN
+ VrF4ujochbphzj3EkOKnEMsHIh6cbY0wf+vS5buj5v9q29tg3SA0nCIrWzsVOL04YdZC
+ oBGQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWyLWVNc5T4MM8sIHgr24L8+3+9VI/YXI/B5WGP+L9wbEljHT29DnxlHTrIXlx9BX21+o4Ql4P+T/DUN6Zvldx4UzupDKI=
-X-Gm-Message-State: AOJu0YyW9bmBi3HRt69fHKheM3gWd+R1G3nn8HY7b3VNXGSm/+KQ3R9J
- LXh8374WYiKbTTjH+CVG6HEmqdibn1ZQwnQ+Md/MvH62mbBUgwy//2if2/5zVWg=
-X-Google-Smtp-Source: AGHT+IHi422/sXt5SOoRD7Kxo6LQQ4MRhYGhvvZm1Hpea0KP4UjqMYPQpA41e832d18/WCJAROG01A==
-X-Received: by 2002:adf:a311:0:b0:33e:82f:7efa with SMTP id
- c17-20020adfa311000000b0033e082f7efamr703891wrb.41.1709190729694; 
- Wed, 28 Feb 2024 23:12:09 -0800 (PST)
-Received: from [192.168.1.24] ([102.35.208.160])
- by smtp.gmail.com with ESMTPSA id
- j12-20020adfea4c000000b0033e11bd9febsm399471wrn.90.2024.02.28.23.12.06
+ AJvYcCUuKYpmAGA5Za5Tss8GcvZBrraxKSbhmTA8wLhtnUQ4QZ9OxXzik2TK5lejT3cWwrU+i8uVpZgbT9IA/RHNP0031SH5UrU=
+X-Gm-Message-State: AOJu0YyrYU027XLGN2k6GfTjo31l5eA8KSmCkNeiCdtZYCc4HdzCA29Y
+ Blv97Q+KPuUtU4Tax4rFwRutyyQodKHRS4qcBN2MIt1lRgRtN/U6MQy0p+COryQCRLGf96WtLrE
+ MXQfh+AWlcHQgnAvI60s9dGgTJOnUeS1VjstsWiULP4nLGmH15IBaLdK9LFlU
+X-Received: by 2002:ad4:57d0:0:b0:690:46bf:13a5 with SMTP id
+ y16-20020ad457d0000000b0069046bf13a5mr965732qvx.18.1709190878225; 
+ Wed, 28 Feb 2024 23:14:38 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGL70qy1Ep50ZY3zF0k0rQd4XIgQHei8Z2P4DMEAUnItmrCs3EH/jg4hRjuoMQbRns5sTdXCQ==
+X-Received: by 2002:ad4:57d0:0:b0:690:46bf:13a5 with SMTP id
+ y16-20020ad457d0000000b0069046bf13a5mr965728qvx.18.1709190877944; 
+ Wed, 28 Feb 2024 23:14:37 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-178-133.web.vodafone.de.
+ [109.43.178.133]) by smtp.gmail.com with ESMTPSA id
+ f13-20020ad4558d000000b0068fe4969e23sm439072qvx.87.2024.02.28.23.14.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Feb 2024 23:12:09 -0800 (PST)
-Message-ID: <03ce19fb-0b82-4819-aaa4-a2241517090e@linaro.org>
-Date: Thu, 29 Feb 2024 11:12:03 +0400
+ Wed, 28 Feb 2024 23:14:37 -0800 (PST)
+Message-ID: <b333af78-88f8-4fc1-8d13-945e51d4bc55@redhat.com>
+Date: Thu, 29 Feb 2024 08:14:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 06/12] tests/plugin/mem: migrate to new per_vcpu API
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Luc Michel <luc.michel@amd.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Alexandre Iooss
- <erdnaxe@crans.org>, Eduardo Habkost <eduardo@habkost.net>
-References: <20240226091446.479436-1-pierrick.bouvier@linaro.org>
- <20240226091446.479436-7-pierrick.bouvier@linaro.org>
- <Zd2sxjxegajy7ZbF@luc-work-vm> <875xy8b5sg.fsf@draig.linaro.org>
- <f0133db0-63e1-4634-a18f-fe181754e17c@linaro.org>
- <87zfvjagse.fsf@draig.linaro.org>
+Subject: Re: ISO C90 compilation error
+To: Paz Offer <poffer@nvidia.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+References: <MW4PR12MB6997B8D6225D08E8F3E2DE55A05F2@MW4PR12MB6997.namprd12.prod.outlook.com>
 Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <87zfvjagse.fsf@draig.linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <MW4PR12MB6997B8D6225D08E8F3E2DE55A05F2@MW4PR12MB6997.namprd12.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,20 +147,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMi8yOS8yNCAxMTowOCBBTSwgQWxleCBCZW5uw6llIHdyb3RlOg0KPiBQaWVycmljayBC
-b3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+IHdyaXRlczoNCj4gDQo+PiBP
-biAyLzI5LzI0IDI6MDggQU0sIEFsZXggQmVubsOpZSB3cm90ZToNCj4+PiBMdWMgTWljaGVs
-IDxsdWMubWljaGVsQGFtZC5jb20+IHdyaXRlczoNCj4+Pg0KPj4+PiBIaSBQaWVycmljaywN
-Cj4+Pj4NCj4gPHNuaXA+DQo+Pj4NCj4+DQo+PiBNeSBiYWQuIE90aGVyIHBsdWdpbnMgZW5h
-YmxlIG9ubHkgaW5saW5lIHdoZW4gYm90aCBhcmUgc3VwcGxpZWQsIHNvIEkNCj4+IG1pc3Nl
-ZCB0aGlzIGhlcmUuDQo+PiBJIGFkZGVkIGFuIGV4cGxpY2l0IGVycm9yIHdoZW4gdXNlciBl
-bmFibGUgY2FsbGJhY2sgYW5kIGlubGluZSBhdCB0aGUNCj4+IHNhbWUgdGltZSBvbiB0aGlz
-IHBsdWdpbi4NCj4gDQo+IFdlIGNvdWxkIGRlZmF1bHQgdG8gaW5saW5lIHVubGVzcyB3ZSBu
-ZWVkIHRoZSBtb3JlIGZlYXR1cmVzIG9mIGNhbGxiYWNrcz8NCj4gDQoNClRoaXMgcmVtYXJr
-IGFwcGxpZXMgZm9yIGFsbCBwbHVnaW5zIGluIGdlbmVyYWwuIE5vdyB3ZSBoYXZlIHNhZmUg
-YW5kIA0KY29ycmVjdCBpbmxpbmUgb3BlcmF0aW9ucywgY2FsbGJhY2tzIGFyZSBub3QgbmVl
-ZGVkIGluIHNvbWUgY2FzZS4NCg0KV291bGQgdGhhdCBiZSBhY2NlcHRhYmxlIGZvciB5b3Ug
-dGhhdCB3ZSBkZWxheSB0aGlzICJjbGVhbnVwIiB0byANCmV4aXN0aW5nIHBsdWdpbnMgYWZ0
-ZXIgc29mdCBmcmVlemU/IFNvIHdlIGNhbiBmb2N1cyBvbiBtZXJnaW5nIGN1cnJlbnQgDQpB
-UEkgY2hhbmdlcyBuZWVkZWQuDQo=
+On 29/02/2024 08.03, Paz Offer wrote:
+> Hi,
+> 
+> I am trying to build my code with QEMU and getting compilation error 
+> according to the /ISO C90 /standard:
+> 
+>       const size_t buf_size = 31;
+>       char buffer[buf_size + 1];
+> 
+>       error: ISO C90 forbids array ‘buffer’ whose size can’t be evaluated 
+> [-Werror=vla]
+> 
+> I noticed that the code builds with '-std=gnu11', which is newer then C90, 
+> so this is not clear to me why I get this error.
+> Where is the correct place to specify the language version for this?
+
+The "ISO C90" part of the error message is quite misleading here. It's 
+rather that we explicitly enabled -Werror=vla in our codebase recently:
+
+  https://gitlab.com/qemu-project/qemu/-/commit/64c1a5443528ac09d8cd50f365d6
+
+See the commit description there for the rationale.
+
+  Thomas
+
 
