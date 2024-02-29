@@ -4,99 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A1B4C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 14:29:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8098DC48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 14:33:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfhPm-0002Nj-TQ; Thu, 29 Feb 2024 09:29:38 -0500
+	id 1rfhTL-0004Md-D0; Thu, 29 Feb 2024 09:33:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1rfhPi-0001zO-Rk
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 09:29:36 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1rfhPd-00068s-TK
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 09:29:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709216968;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=StbiZXwla8vIuHHbeT4VZbIjdaKRKNSm18LQtWP/rZQ=;
- b=K8eqRpa7JQ6Phq9D9odBnPhbAUAilzL5XUD+Ree4tS0MkCV62GTlZOwOW/rjhZBc0T1lND
- WgHkMiWvX1rrjoA+VOuMNzQropwINsvCHvgExsch8ayr90FdMN102LGoo8W4M+uzPjbBBy
- tf+3YMANppyfub2sr89Uu0QFZtLh6m0=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-460-1c8xQ0cHNIaEQ0odqm8nPQ-1; Thu, 29 Feb 2024 09:29:27 -0500
-X-MC-Unique: 1c8xQ0cHNIaEQ0odqm8nPQ-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-33d256ca4c8so549145f8f.3
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 06:29:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rfhTI-0004M2-NV
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 09:33:16 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rfhTG-0007nF-Hp
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 09:33:16 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-412b88e2f07so6977465e9.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 06:33:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709217192; x=1709821992; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=oTl3N2THqvGMU4lSJtwwxOyqFSaXMF+EAIhyAHr2gZU=;
+ b=ZF2Bz5uUvtLEcv+m9IiYngIH/I7E1woyKo1U3XpV65Bw4JVpbcCVsShM2hdxDANHXF
+ 94b0nijGtbeyLbFITuRV0943aHj6/g6pPJB280l78lbhY4k4Y5OQXUu4qKGZUHjitumc
+ n+es+vnxloFBuwXcth7Xss92+KkVUyoJpzsHYpZ3OQGdm6FzewIeDPjuOx53+Kzh8tVO
+ 4eZz7K8OZocucCWnNSenRMG7z/T/f7dRf4pbp/ZkCYtv2xW2fnx89T5LVlTQ4/RrPd3H
+ cLnPUk6qF/IirVm+KA6DvPyAu6L79n73X3za/fDRFB3GHuqIpYkGM+upZ09Bb0vKZoSh
+ XjYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709216966; x=1709821766;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=StbiZXwla8vIuHHbeT4VZbIjdaKRKNSm18LQtWP/rZQ=;
- b=EgKEN8ie35xyTkz8gC2uurhWvwxxPj7Mox2iscati9QR43mu5LZgbFpPz9kRxXf0WH
- O0G1Voy1CZLxLTR+U4HavOutpJ2Bf2KwMkkGsmYSaLkZwN0/cvEzFEBTjIsuRFvyjK0L
- cSJN1aV8DsiDZE8K7jB0H/cEr9/1Ezr+KjPoBs4f0sGURa7UxLSh2kbbEN5j5xv+idBN
- pACF5BZAASGap/5WrKWpcvy+hMK84lzj07tMv7K5PudeqyqgfCxro9cBGKfd8WMDKUXF
- J/4gelHOsJM7/JGRqUuamxzCaQ2+d8F3lDHKfkrjjVzQyCOxMa4tJod6wlXOETS5fzB4
- q9Wg==
-X-Gm-Message-State: AOJu0Yxo31KdzvCSBptcLYktZvFVJ+xVnmV7Cyp8rHxmxCplC2m1nk8I
- mouD0o85La3KJNxomtWCJ8xhLdxxI+k+viLgT9bRxVSw2wQnmwxFkYlPEJqOKR+eYZsp9ilU6Hs
- vyToK8/FuFLoJyHKRWU7kXbBIi34biKZQca0u0JwZudh3IJxMlSiO
-X-Received: by 2002:a05:600c:1c0d:b0:412:ace9:9d85 with SMTP id
- j13-20020a05600c1c0d00b00412ace99d85mr2219370wms.3.1709216965746; 
- Thu, 29 Feb 2024 06:29:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFF8tCz7L/WxQDM3B1qriCeSoM8c7kJ324p+93qr8j2fs1rmLR43Yjf7/+lBceVIN2D/TTzLg==
-X-Received: by 2002:a05:600c:1c0d:b0:412:ace9:9d85 with SMTP id
- j13-20020a05600c1c0d00b00412ace99d85mr2219349wms.3.1709216965338; 
- Thu, 29 Feb 2024 06:29:25 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- bw1-20020a0560001f8100b0033db0c866f7sm1954508wrb.11.2024.02.29.06.29.23
+ d=1e100.net; s=20230601; t=1709217192; x=1709821992;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=oTl3N2THqvGMU4lSJtwwxOyqFSaXMF+EAIhyAHr2gZU=;
+ b=xFwrODIFoqfthlIYOw5d2HAyYtCe14oP2QZu0mc8wLJqSjNDuEuOG249Pja9kOjqHf
+ Mh1Ef2/hoGtjxUQn1TrNHiT3zFylCpcZwgxaipcPs5BW1vqr7BXN6O7mLWpZmGPjEqjG
+ 8gyFupmf8n1I3mda+/Or2H8K4shLdMXlGot8Q3HGrryMEZQ+yRvYxZ0Msy5OF445Jm5s
+ +RuT7M7K88TM6S30cqUikpFt4qy3obn7YyBd4HVkspMSGtoc2e7OI5FgMkCPTxO4Vbet
+ Lo8/xIfVkcBnidqwVwtVSqYTzuLdUiuum2zyoxm+TGeVNsJgCOTNZ/kvvyN3/yFnfxGc
+ lV9Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVGBmA/AqHnEwqAxZxzn20+QAP0b3yL88JaUi025ViVf4rFa7qF7OYZ+x4SPjp52YvoaYXUlZJj/+m2oCqmXYzg8ZlQu3A=
+X-Gm-Message-State: AOJu0YyolRJwcydEPICrseoa72SDVDAf1DzadKOgBIM35UFYerHYkwi9
+ JfD0YPf9D7+JkAB+R5BPeTBTUwZny0feDCjxgnmmh2+QxgkLTBHxgVxG4C8NWV0wyOvhk03ssZA
+ 0
+X-Google-Smtp-Source: AGHT+IFrL2Fg47e6IWs0lCFazPsvnWz0PLtPYp+Q54PhPVdmIS0gMd9dpK5EWfQb5ILAtCAaZrgl3Q==
+X-Received: by 2002:a05:600c:1c0e:b0:412:bb1b:ec3 with SMTP id
+ j14-20020a05600c1c0e00b00412bb1b0ec3mr2036774wms.11.1709217191500; 
+ Thu, 29 Feb 2024 06:33:11 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ r3-20020adfca83000000b0033d2ae84fafsm1913825wrh.52.2024.02.29.06.33.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Feb 2024 06:29:24 -0800 (PST)
-Date: Thu, 29 Feb 2024 15:29:23 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Ani Sinha <anisinha@redhat.com>
-Cc: QEMU Developers <qemu-devel@nongnu.org>, Peter Maydell
- <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, "Michael
- S. Tsirkin" <mst@redhat.com>, Song Gao <gaosong@loongson.cn>, Alistair
- Francis <alistair.francis@wdc.com>, palmer@dabbelt.com,
- bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?=
- <philmd@linaro.org>, Yanan Wang <wangyanan55@huawei.com>, Eric Blake
- <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- qemu-arm@nongnu.org, qemu-riscv@nongnu.org, f.ebner@proxmox.com
-Subject: Re: [PATCH 06/19] smbios: get rid of smbios_legacy global
-Message-ID: <20240229152923.46919312@imammedo.users.ipa.redhat.com>
-In-Reply-To: <0129FA3E-A566-481A-85A6-439E72C5594B@redhat.com>
-References: <20240227154749.1818189-1-imammedo@redhat.com>
- <20240227154749.1818189-7-imammedo@redhat.com>
- <0129FA3E-A566-481A-85A6-439E72C5594B@redhat.com>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
+ Thu, 29 Feb 2024 06:33:11 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 9382D5F7B0;
+ Thu, 29 Feb 2024 14:33:10 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Luc Michel <luc.michel@amd.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ <qemu-devel@nongnu.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,  Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>,  Yanan Wang <wangyanan55@huawei.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,  Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH v5 09/12] contrib/plugins/hotblocks: migrate to new
+ per_vcpu API
+In-Reply-To: <Zd3xGrZetKoAbIn1@luc-work-vm> (Luc Michel's message of "Tue, 27
+ Feb 2024 15:26:34 +0100")
+References: <20240226091446.479436-1-pierrick.bouvier@linaro.org>
+ <20240226091446.479436-10-pierrick.bouvier@linaro.org>
+ <Zd2_VHB6-G7srfSo@luc-work-vm>
+ <e0688c8b-fac2-4b4f-8cda-a0c4f5ee2bf6@linaro.org>
+ <Zd3xGrZetKoAbIn1@luc-work-vm>
+User-Agent: mu4e 1.12.0; emacs 29.1
+Date: Thu, 29 Feb 2024 14:33:10 +0000
+Message-ID: <87il279w7t.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,197 +111,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 29 Feb 2024 16:23:21 +0530
-Ani Sinha <anisinha@redhat.com> wrote:
+Luc Michel <luc.michel@amd.com> writes:
 
-> > On 27-Feb-2024, at 21:17, Igor Mammedov <imammedo@redhat.com> wrote:
-> > 
-> > clean up smbios_set_defaults() which is reused by legacy
-> > and non legacy machines from being aware of 'legacy' notion
-> > and need to turn it off. And push legacy handling up to
-> > PC machine code where it's relevant.
-> > 
-> > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-> > ---
-> > PS: I've moved/kept legacy smbios_entries to smbios_get_tables()
-> > but it at least is not visible to API users. To get rid of it
-> > as well, it would be necessary to change how '-smbios' CLI
-> > option is processed. Which is done later in the series.
-> > ---
-> > include/hw/firmware/smbios.h |  2 +-
-> > hw/arm/virt.c                |  2 +-
-> > hw/i386/fw_cfg.c             |  7 ++++---
-> > hw/loongarch/virt.c          |  2 +-
-> > hw/riscv/virt.c              |  2 +-
-> > hw/smbios/smbios.c           | 35 +++++++++++++++--------------------
-> > 6 files changed, 23 insertions(+), 27 deletions(-)
-> > 
-> > diff --git a/include/hw/firmware/smbios.h b/include/hw/firmware/smbios.h
-> > index a187fbbd3d..0818184834 100644
-> > --- a/include/hw/firmware/smbios.h
-> > +++ b/include/hw/firmware/smbios.h
-> > @@ -293,7 +293,7 @@ struct smbios_type_127 {
-> > void smbios_entry_add(QemuOpts *opts, Error **errp);
-> > void smbios_set_cpuid(uint32_t version, uint32_t features);
-> > void smbios_set_defaults(const char *manufacturer, const char *product,
-> > -                         const char *version, bool legacy_mode,
-> > +                         const char *version,
-> >                          bool uuid_encoded, SmbiosEntryPointType ep_type);
-> > void smbios_set_default_processor_family(uint16_t processor_family);
-> > uint8_t *smbios_get_table_legacy(uint32_t expected_t4_count, size_t *length);
-> > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> > index 0af1943697..8588681f27 100644
-> > --- a/hw/arm/virt.c
-> > +++ b/hw/arm/virt.c
-> > @@ -1633,7 +1633,7 @@ static void virt_build_smbios(VirtMachineState *vms)
-> >     }
-> > 
-> >     smbios_set_defaults("QEMU", product,
-> > -                        vmc->smbios_old_sys_ver ? "1.0" : mc->name, false,
-> > +                        vmc->smbios_old_sys_ver ? "1.0" : mc->name,
-> >                         true, SMBIOS_ENTRY_POINT_TYPE_64);
-> > 
-> >     /* build the array of physical mem area from base_memmap */
-> > diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
-> > index fcb4fb0769..c1e9c0fd9c 100644
-> > --- a/hw/i386/fw_cfg.c
-> > +++ b/hw/i386/fw_cfg.c
-> > @@ -63,15 +63,16 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg)
-> >     if (pcmc->smbios_defaults) {
-> >         /* These values are guest ABI, do not change */
-> >         smbios_set_defaults("QEMU", mc->desc, mc->name,
-> > -                            pcmc->smbios_legacy_mode, pcmc->smbios_uuid_encoded,
-> > +                            pcmc->smbios_uuid_encoded,
-> >                             pcms->smbios_entry_point_type);
-> >     }
-> > 
-> >     /* tell smbios about cpuid version and features */
-> >     smbios_set_cpuid(cpu->env.cpuid_version, cpu->env.features[FEAT_1_EDX]);
-> > 
-> > -    smbios_tables = smbios_get_table_legacy(ms->smp.cpus, &smbios_tables_len);
-> > -    if (smbios_tables) {
-> > +    if (pcmc->smbios_legacy_mode) {
-> > +        smbios_tables = smbios_get_table_legacy(ms->smp.cpus,
-> > +                                                &smbios_tables_len);
-> >         fw_cfg_add_bytes(fw_cfg, FW_CFG_SMBIOS_ENTRIES,
-> >                          smbios_tables, smbios_tables_len);
-> >         return;
-> > diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> > index 0ad7d8c887..73fb3522ba 100644
-> > --- a/hw/loongarch/virt.c
-> > +++ b/hw/loongarch/virt.c
-> > @@ -320,7 +320,7 @@ static void virt_build_smbios(LoongArchMachineState *lams)
-> >         return;
-> >     }
-> > 
-> > -    smbios_set_defaults("QEMU", product, mc->name, false,
-> > +    smbios_set_defaults("QEMU", product, mc->name,
-> >                         true, SMBIOS_ENTRY_POINT_TYPE_64);
-> > 
-> >     smbios_get_tables(ms, NULL, 0, &smbios_tables, &smbios_tables_len,
-> > diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> > index fd35c74781..e2c9529df2 100644
-> > --- a/hw/riscv/virt.c
-> > +++ b/hw/riscv/virt.c
-> > @@ -1235,7 +1235,7 @@ static void virt_build_smbios(RISCVVirtState *s)
-> >         product = "KVM Virtual Machine";
-> >     }
-> > 
-> > -    smbios_set_defaults("QEMU", product, mc->name, false,
-> > +    smbios_set_defaults("QEMU", product, mc->name,
-> >                         true, SMBIOS_ENTRY_POINT_TYPE_64);
-> > 
-> >     if (riscv_is_32bit(&s->soc[0])) {
-> > diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
-> > index 15339d8dbe..c46fc93357 100644
-> > --- a/hw/smbios/smbios.c
-> > +++ b/hw/smbios/smbios.c
-> > @@ -54,7 +54,6 @@ struct smbios_table {
-> > 
-> > static uint8_t *smbios_entries;
-> > static size_t smbios_entries_len;
-> > -static bool smbios_legacy = true;
-> > static bool smbios_uuid_encoded = true;
-> > /* end: legacy structures & constants for <= 2.0 machines */
-> > 
-> > @@ -570,9 +569,16 @@ static void smbios_build_type_1_fields(void)
-> > 
-> > uint8_t *smbios_get_table_legacy(uint32_t expected_t4_count, size_t *length)
-> > {
-> > -    if (!smbios_legacy) {
-> > -        *length = 0;
-> > -        return NULL;
-> > +    /* drop unwanted version of command-line file blob(s) */
-> > +    g_free(smbios_tables);
-> > +    smbios_tables = NULL;
-> > +
-> > +    /* also complain if fields were given for types > 1 */
-> > +    if (find_next_bit(have_fields_bitmap,
-> > +                      SMBIOS_MAX_TYPE + 1, 2) < SMBIOS_MAX_TYPE + 1) {
-> > +        error_report("can't process fields for smbios "
-> > +                     "types > 1 on machine versions < 2.1!");
-> > +        exit(1);
-> >     }
-> > 
-> >     if (!smbios_immutable) {
-> > @@ -1006,28 +1012,13 @@ void smbios_set_default_processor_family(uint16_t processor_family)
-> > }
-> > 
-> > void smbios_set_defaults(const char *manufacturer, const char *product,
-> > -                         const char *version, bool legacy_mode,
-> > +                         const char *version,
-> >                          bool uuid_encoded, SmbiosEntryPointType ep_type)
-> > {
-> >     smbios_have_defaults = true;
-> > -    smbios_legacy = legacy_mode;
-> >     smbios_uuid_encoded = uuid_encoded;
-> >     smbios_ep_type = ep_type;
-> > 
-> > -    /* drop unwanted version of command-line file blob(s) */
-> > -    if (smbios_legacy) {
-> > -        g_free(smbios_tables);
-> > -        /* in legacy mode, also complain if fields were given for types > 1 */
-> > -        if (find_next_bit(have_fields_bitmap,
-> > -                          SMBIOS_MAX_TYPE+1, 2) < SMBIOS_MAX_TYPE+1) {
-> > -            error_report("can't process fields for smbios "
-> > -                         "types > 1 on machine versions < 2.1!");
-> > -            exit(1);
-> > -        }
-> > -    } else {
-> > -        g_free(smbios_entries);
-> > -    }
-> > -
-> >     SMBIOS_SET_DEFAULT(type1.manufacturer, manufacturer);
-> >     SMBIOS_SET_DEFAULT(type1.product, product);
-> >     SMBIOS_SET_DEFAULT(type1.version, version);
-> > @@ -1103,6 +1094,10 @@ void smbios_get_tables(MachineState *ms,
-> > {
-> >     unsigned i, dimm_cnt, offset;
-> > 
-> > +    /* drop unwanted (legacy) version of command-line file blob(s) */
-> > +    g_free(smbios_entries);
-> > +    smbios_entries = NULL;
-> > +  
-> 
-> Can you please explain why you do this unconditionally without checking for legacy mode? Seems wrong?
+> On 15:09 Tue 27 Feb     , Pierrick Bouvier wrote:
+>> On 2/27/24 2:54 PM, Luc Michel wrote:
+>> > Hi Pierrick,
+>> >=20
+>> > On 13:14 Mon 26 Feb     , Pierrick Bouvier wrote:
+>> > > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> > > ---
+>> > >   contrib/plugins/hotblocks.c | 50 ++++++++++++++++++++++-----------=
+----
+>> > >   1 file changed, 30 insertions(+), 20 deletions(-)
+>> > >=20
+>> > > diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks=
+.c
+>> > > index 4de1b134944..02bc5078bdd 100644
+>> > > --- a/contrib/plugins/hotblocks.c
+>> > > +++ b/contrib/plugins/hotblocks.c
+>> > > @@ -34,8 +34,8 @@ static guint64 limit =3D 20;
+>> > >    */
+>> > >   typedef struct {
+>> > >       uint64_t start_addr;
+>> > > -    uint64_t exec_count;
+>> > > -    int      trans_count;
+>> > > +    struct qemu_plugin_scoreboard *exec_count;
+>> > > +    int trans_count;
+>> > >       unsigned long insns;
+>> > >   } ExecCount;
+>> > >=20
+>> > > @@ -43,7 +43,17 @@ static gint cmp_exec_count(gconstpointer a, gcons=
+tpointer b)
+>> > >   {
+>> > >       ExecCount *ea =3D (ExecCount *) a;
+>> > >       ExecCount *eb =3D (ExecCount *) b;
+>> > > -    return ea->exec_count > eb->exec_count ? -1 : 1;
+>> > > +    uint64_t count_a =3D
+>> > > +        qemu_plugin_u64_sum(qemu_plugin_scoreboard_u64(ea->exec_cou=
+nt));
+>> > > +    uint64_t count_b =3D
+>> > > +        qemu_plugin_u64_sum(qemu_plugin_scoreboard_u64(eb->exec_cou=
+nt));
+>> > > +    return count_a > count_b ? -1 : 1;
+>> > > +}
+>> > > +
+>> > > +static void exec_count_free(gpointer key, gpointer value, gpointer =
+user_data)
+>> > > +{
+>> > > +    ExecCount *cnt =3D value;
+>> > > +    qemu_plugin_scoreboard_free(cnt->exec_count);
+>> > >   }
+>> > >=20
+>> > >   static void plugin_exit(qemu_plugin_id_t id, void *p)
+>> > > @@ -52,7 +62,6 @@ static void plugin_exit(qemu_plugin_id_t id, void =
+*p)
+>> > >       GList *counts, *it;
+>> > >       int i;
+>> > >=20
+>> > > -    g_mutex_lock(&lock);
+>> >=20
+>> > I encountered cases before where the vCPUs continue executing while
+>> > plugin_exit is called. This can happen e.g., when QEMU calls exit(3)
+>> > from one CPU thread. Others will continue to run at the same time the
+>> > atexit callbacks are called.
+>> >=20
+>> > This also means that you can't really free the resources as you do at
+>> > the end of plugin_exit.
+>> >=20
+>>=20
+>> Interesting...
+>>=20
+>> The current documentation [1] mentions it's the right place to free
+>> resources, and from what I saw, existing plugins assume this too (see
+>> contrib/plugins/cache.c for instance).
+>>=20
+>> There is probably a bug related to the case you mention, and I'll try to
+>> reproduce this, and see if we can have a proper fix.
+>>=20
+>> I'm not sure that removing cleanup code from existing plugins is the
+>> right thing to do at the moment, even though there is an existing issue
+>> with some programs.
+>
+> Yes absolutely. The problem is on the QEMU side. FWIW I tried to fix one
+> of those exit cases (semihosted exit syscall) some time ago:
+> https://lore.kernel.org/qemu-devel/20220621125916.25257-1-lmichel@kalray.=
+eu/
 
-with this patch legacy tables build is moved to fw_cfg_build_smbios(),
-however at this point QEMU still has option processing that fills
-both new and legacy smbios_entries blobs. 
+The plugin exit handler should flush all instrumented code:
 
-this hunk cleanups not needed blob smbios_entries when building
-modern tables, and smbios_get_table_legacy() has a corresponding
-smbios_tables cleanup since modern is not needed there.
+  /*
+   * Handle exit from linux-user. Unlike the normal atexit() mechanism
+   * we need to handle the clean-up manually as it's possible threads
+   * are still running. We need to remove all callbacks from code
+   * generation, flush the current translations and then we can safely
+   * trigger the exit callbacks.
+   */
 
-[7/19] removes this in favor of a single blob.
+  void qemu_plugin_user_exit(void)
+  {
+      enum qemu_plugin_event ev;
+      CPUState *cpu;
 
-> 
-> >     if (!smbios_immutable) {
-> >         smbios_build_type_0_table();
-> >         smbios_build_type_1_table();
-> > -- 
-> > 2.39.3
-> >   
-> 
+      /*
+       * Locking order: we must acquire locks in an order that is consistent
+       * with the one in fork_start(). That is:
+       * - start_exclusive(), which acquires qemu_cpu_list_lock,
+       *   must be called before acquiring plugin.lock.
+       * - tb_flush(), which acquires mmap_lock(), must be called
+       *   while plugin.lock is not held.
+       */
+      start_exclusive();
 
+      qemu_rec_mutex_lock(&plugin.lock);
+      /* un-register all callbacks except the final AT_EXIT one */
+      for (ev =3D 0; ev < QEMU_PLUGIN_EV_MAX; ev++) {
+          if (ev !=3D QEMU_PLUGIN_EV_ATEXIT) {
+              struct qemu_plugin_cb *cb, *next;
+
+              QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next)=
+ {
+                  plugin_unregister_cb__locked(cb->ctx, ev);
+              }
+          }
+      }
+      CPU_FOREACH(cpu) {
+          qemu_plugin_disable_mem_helpers(cpu);
+      }
+      qemu_rec_mutex_unlock(&plugin.lock);
+
+      tb_flush(current_cpu);
+      end_exclusive();
+
+      /* now it's safe to handle the exit case */
+      qemu_plugin_atexit_cb();
+  }
+
+So you shouldn't see any other instrumentation activity after the
+end_exclusive. However you may see another thread hit its exist handler
+before we complete exiting the system.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
