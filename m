@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AB4DC54798
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 06:50:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 440C7C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 06:51:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfa7N-0007v5-DZ; Thu, 29 Feb 2024 01:42:09 -0500
+	id 1rfa9f-0003wv-0B; Thu, 29 Feb 2024 01:44:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rfa7K-0007cV-O2
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:42:06 -0500
+ id 1rfa9W-0003i9-QA
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:44:22 -0500
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rfa7I-0004qw-VV
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:42:06 -0500
+ id 1rfa9V-0005ON-10
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:44:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709188925; x=1740724925;
+ t=1709189061; x=1740725061;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=CzIOnQF8VUig9CMSX7tnIeAOVNWpKeNyU9gJUPUG12c=;
- b=KjFELXbeDBYcNkK8oO71Di3sHBu/snB+8/O5HteEFloj4Hp80tXExDIr
- WCBL21XnylS/Fj1qZKs8BfS9F3dlpKXdAELGzAb5IZhdaP5/VxlB+lKe1
- 2CdAkWNTdj6sSs0r/l8nf/H8kM6NiLtP8DixLj3K3IzRapcV/brNKfpCm
- 8LdBGPz7LwT2DVl262Vjq/1X3etI0ywcuCuvunwX7zGOtLCt3w2+vLKrx
- Ww++8HBAZPgyJZ+BjV9Gg3ZNz8xK8oegJvTtVuAk8lUyHyejfORJyI4Ud
- rFV8TxrXwJ733YqhZwleYJImLv10stN7VKiMqAg+E32BdYw2DNp+UnKwg g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3802972"
+ bh=LHQPUt9kNMbszwvd34sfpT4+wYNaQjOCt0b7dVNRHqs=;
+ b=fvNtcmItbFwUnfx2jH8NjK9nNPXZ2d9hp/P8YkYDGx/ba16XC59luSi4
+ 5fMceNlpMg3+WLiYk7+8a/DPGKaaVzSQiQrwuXgSmFlf0YtjNH5c77FnN
+ +C4FSYtIVFQHHBKUpLO2Ne5+DqbQbwwmP5+gH7uRfsMQK52Bps2tn5UpW
+ FZMcbs88AqbfvPp+4b7MqSGxS5zrVlbUaDOA+xhn4zigYGq+3clipi3so
+ o6nQ/cHAW55sMdA4Uv25eWEVw+WJwkUEn3I9Kc4TXElfymw6MbjF/RJFJ
+ +KJ/IbDmVZq7Ini4uXt4jzuC+SQo/ircQgY0mdBSLWPKnfLSpZty3FH1d Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3803314"
 X-IronPort-AV: E=Sophos;i="6.06,192,1705392000"; 
-   d="scan'208";a="3802972"
+   d="scan'208";a="3803314"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Feb 2024 22:42:04 -0800
+ 28 Feb 2024 22:44:19 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,192,1705392000"; 
-   d="scan'208";a="8075873"
+   d="scan'208";a="8076531"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa007.jf.intel.com with ESMTP; 28 Feb 2024 22:41:58 -0800
+ by orviesa007.jf.intel.com with ESMTP; 28 Feb 2024 22:44:13 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -60,10 +60,10 @@ Cc: kvm@vger.kernel.org, qemu-devel@nongnu.org,
  Gerd Hoffmann <kraxel@redhat.com>,
  Isaku Yamahata <isaku.yamahata@gmail.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>, xiaoyao.li@intel.com
-Subject: [PATCH v5 41/65] i386/tdx: Track mem_ptr for each firmware entry of
- TDVF
-Date: Thu, 29 Feb 2024 01:37:02 -0500
-Message-Id: <20240229063726.610065-42-xiaoyao.li@intel.com>
+Subject: [PATCH v5 62/65] i386/tdx: Only configure MSR_IA32_UCODE_REV in
+ kvm_init_msrs() for TDs
+Date: Thu, 29 Feb 2024 01:37:23 -0500
+Message-Id: <20240229063726.610065-63-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240229063726.610065-1-xiaoyao.li@intel.com>
 References: <20240229063726.610065-1-xiaoyao.li@intel.com>
@@ -94,130 +94,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For each TDVF sections, QEMU needs to copy the content to guest
-private memory via KVM API (KVM_TDX_INIT_MEM_REGION).
+For TDs, only MSR_IA32_UCODE_REV in kvm_init_msrs() can be configured
+by VMM, while the features enumerated/controlled by other MSRs except
+MSR_IA32_UCODE_REV in kvm_init_msrs() are not under control of VMM.
 
-Introduce a field @mem_ptr for TdxFirmwareEntry to track the memory
-pointer of each TDVF sections. So that QEMU can add/copy them to guest
-private memory later.
-
-TDVF sections can be classified into two groups:
- - Firmware itself, e.g., TDVF BFV and CFV, that located separately from
-   guest RAM. Its memory pointer is the bios pointer.
-
- - Sections located at guest RAM, e.g., TEMP_MEM and TD_HOB.
-   mmap a new memory range for them.
-
-Register a machine_init_done callback to do the stuff.
+Only configure MSR_IA32_UCODE_REV for TDs.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- hw/i386/tdvf.c         |  1 +
- include/hw/i386/tdvf.h |  7 +++++++
- target/i386/kvm/tdx.c  | 31 +++++++++++++++++++++++++++++++
- 3 files changed, 39 insertions(+)
+ target/i386/kvm/kvm.c | 44 ++++++++++++++++++++++---------------------
+ 1 file changed, 23 insertions(+), 21 deletions(-)
 
-diff --git a/hw/i386/tdvf.c b/hw/i386/tdvf.c
-index ff51f40088f0..0a6445705160 100644
---- a/hw/i386/tdvf.c
-+++ b/hw/i386/tdvf.c
-@@ -189,6 +189,7 @@ int tdvf_parse_metadata(TdxFirmware *fw, void *flash_ptr, int size)
-     }
-     g_free(sections);
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 83276e23b19f..d23f94b77257 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -3270,32 +3270,34 @@ static void kvm_init_msrs(X86CPU *cpu)
+     CPUX86State *env = &cpu->env;
  
-+    fw->mem_ptr = flash_ptr;
-     return 0;
- 
- err:
-diff --git a/include/hw/i386/tdvf.h b/include/hw/i386/tdvf.h
-index 593341eb2e93..d880af245a73 100644
---- a/include/hw/i386/tdvf.h
-+++ b/include/hw/i386/tdvf.h
-@@ -39,13 +39,20 @@ typedef struct TdxFirmwareEntry {
-     uint64_t size;
-     uint32_t type;
-     uint32_t attributes;
+     kvm_msr_buf_reset(cpu);
+-    if (has_msr_arch_capabs) {
+-        kvm_msr_entry_add(cpu, MSR_IA32_ARCH_CAPABILITIES,
+-                          env->features[FEAT_ARCH_CAPABILITIES]);
+-    }
+-
+-    if (has_msr_core_capabs) {
+-        kvm_msr_entry_add(cpu, MSR_IA32_CORE_CAPABILITY,
+-                          env->features[FEAT_CORE_CAPABILITY]);
+-    }
+-
+-    if (has_msr_perf_capabs && cpu->enable_pmu) {
+-        kvm_msr_entry_add_perf(cpu, env->features);
 +
-+    void *mem_ptr;
- } TdxFirmwareEntry;
- 
- typedef struct TdxFirmware {
-+    void *mem_ptr;
-+
-     uint32_t nr_entries;
-     TdxFirmwareEntry *entries;
- } TdxFirmware;
- 
-+#define for_each_tdx_fw_entry(fw, e)    \
-+    for (e = (fw)->entries; e != (fw)->entries + (fw)->nr_entries; e++)
-+
- int tdvf_parse_metadata(TdxFirmware *fw, void *flash_ptr, int size);
- 
- #endif /* HW_I386_TDVF_H */
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 2bb6e9e9c392..1b4bca9cc3cd 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -14,6 +14,7 @@
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
- #include "qemu/base64.h"
-+#include "qemu/mmap-alloc.h"
- #include "qapi/error.h"
- #include "qom/object_interfaces.h"
- #include "standard-headers/asm-x86/kvm_para.h"
-@@ -22,6 +23,7 @@
- #include "exec/ramblock.h"
- 
- #include "hw/i386/x86.h"
-+#include "hw/i386/tdvf.h"
- #include "kvm_i386.h"
- #include "tdx.h"
- #include "../cpu-internal.h"
-@@ -470,6 +472,33 @@ void tdx_set_tdvf_region(MemoryRegion *tdvf_mr)
-     tdx_guest->tdvf_mr = tdvf_mr;
- }
- 
-+static void tdx_finalize_vm(Notifier *notifier, void *unused)
-+{
-+    TdxFirmware *tdvf = &tdx_guest->tdvf;
-+    TdxFirmwareEntry *entry;
-+
-+    for_each_tdx_fw_entry(tdvf, entry) {
-+        switch (entry->type) {
-+        case TDVF_SECTION_TYPE_BFV:
-+        case TDVF_SECTION_TYPE_CFV:
-+            entry->mem_ptr = tdvf->mem_ptr + entry->data_offset;
-+            break;
-+        case TDVF_SECTION_TYPE_TD_HOB:
-+        case TDVF_SECTION_TYPE_TEMP_MEM:
-+            entry->mem_ptr = qemu_ram_mmap(-1, entry->size,
-+                                           qemu_real_host_page_size(), 0, 0);
-+            break;
-+        default:
-+            error_report("Unsupported TDVF section %d", entry->type);
-+            exit(1);
++    if (!is_tdx_vm()) {
++        if (has_msr_arch_capabs) {
++            kvm_msr_entry_add(cpu, MSR_IA32_ARCH_CAPABILITIES,
++                                env->features[FEAT_ARCH_CAPABILITIES]);
 +        }
-+    }
-+}
 +
-+static Notifier tdx_machine_done_notify = {
-+    .notify = tdx_finalize_vm,
-+};
++        if (has_msr_core_capabs) {
++            kvm_msr_entry_add(cpu, MSR_IA32_CORE_CAPABILITY,
++                                env->features[FEAT_CORE_CAPABILITY]);
++        }
 +
- static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
- {
-     MachineState *ms = MACHINE(qdev_get_machine());
-@@ -496,6 +525,8 @@ static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-      */
-     kvm_readonly_mem_allowed = false;
++        if (has_msr_perf_capabs && cpu->enable_pmu) {
++            kvm_msr_entry_add_perf(cpu, env->features);
++        }
++
++        /*
++         * Older kernels do not include VMX MSRs in KVM_GET_MSR_INDEX_LIST, but
++         * all kernels with MSR features should have them.
++         */
++        if (kvm_feature_msrs && cpu_has_vmx(env)) {
++            kvm_msr_entry_add_vmx(cpu, env->features);
++        }
+     }
  
-+    qemu_add_machine_init_done_notifier(&tdx_machine_done_notify);
-+
-     tdx_guest = tdx;
-     return 0;
+     if (has_msr_ucode_rev) {
+         kvm_msr_entry_add(cpu, MSR_IA32_UCODE_REV, cpu->ucode_rev);
+     }
+-
+-    /*
+-     * Older kernels do not include VMX MSRs in KVM_GET_MSR_INDEX_LIST, but
+-     * all kernels with MSR features should have them.
+-     */
+-    if (kvm_feature_msrs && cpu_has_vmx(env)) {
+-        kvm_msr_entry_add_vmx(cpu, env->features);
+-    }
+-
+     assert(kvm_buf_set_msrs(cpu) == 0);
  }
+ 
 -- 
 2.34.1
 
