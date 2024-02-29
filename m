@@ -4,58 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C3D9C54798
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 10:49:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EE9DC48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 10:50:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfdyZ-0005Pb-VK; Thu, 29 Feb 2024 05:49:19 -0500
+	id 1rfdzV-0005ya-A2; Thu, 29 Feb 2024 05:50:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rfdyY-0005Ou-4j
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 05:49:18 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rfdyW-00044e-3b
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 05:49:17 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TlntZ3MFsz6D96f;
- Thu, 29 Feb 2024 18:45:26 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id E9783140A35;
- Thu, 29 Feb 2024 18:49:13 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Thu, 29 Feb
- 2024 10:49:13 +0000
-Date: Thu, 29 Feb 2024 10:49:12 +0000
-To: Jonathan Cameron via <qemu-devel@nongnu.org>, Paolo Bonzini
- <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, David Hildenbrand
- <david@redhat.com>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
- <philmd@linaro.org>
-CC: Jonathan Cameron <Jonathan.Cameron@huawei.com>, <linuxarm@huawei.com>
-Subject: Re: [PATCH 0/3] physmem: Fix MemoryRegion for second access to
- cached MMIO Address Space
-Message-ID: <20240229104758.00006908@huawei.com>
-In-Reply-To: <20240215142817.1904-1-Jonathan.Cameron@huawei.com>
-References: <20240215142817.1904-1-Jonathan.Cameron@huawei.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
+ id 1rfdz9-0005tz-Nh
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 05:49:58 -0500
+Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
+ id 1rfdz7-00048B-SZ
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 05:49:55 -0500
+Received: by mail-ot1-x329.google.com with SMTP id
+ 46e09a7af769-6e49518f375so301273a34.1
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 02:49:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1709203790; x=1709808590;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+D3fAJZ2s8jBhrFy8IzN9yZY5HZfsjO9OcRirnbfZog=;
+ b=BfEMGFHk/qTdTs/rzzERTX6fZpton2klntsUbRR286+4U4zdwmTdIELI4UCGYd99YL
+ sPgUKYYBb7SdTzVxoCehnTysi9/6GaVYC3LvVTZatuzF5eizL/RwXTb3MH+qV/5bv5Xq
+ wLODoY13mD4dKDMihIaTfCum7Tk7Pxyt3IiUb37YlRH/MhpV+ameg20Gx9LF/OsPan0b
+ GDITaySXZr5hna02P5Iecmd1/Oxv2YeHQ+OVgwSbO77ZDrh0Y3Xqnt65yv41ApuKBCie
+ 5flbBkz1/wTzku2flpo4ECBSYHHFLybh/bfgrpQkBbsAU5jqctfIc/KDwmusDaiTIRdg
+ A5TQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709203790; x=1709808590;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+D3fAJZ2s8jBhrFy8IzN9yZY5HZfsjO9OcRirnbfZog=;
+ b=kuhj2De6EcaNGeVmq+eFTEz3zBrhYaqQ5226LZYnrVvEEzMMpFikbEbQSKyFEDOAlA
+ xADGIxcz/AHPTurkPrEFyPomMj+5AYMGJ2vpO7XfUUBcwJA8tpbJP9iftHPddtl0+pL7
+ BNyQdYTdntR/6y9A3iX/E6GXcC4Z0B51MohUo3VYBxBW9Mw4nWPpa4T4Z8sSHlHxzRUS
+ t4lOWM4DHRObv6ALgH/QlOP6ygzlyVrxcmoaAHCnZesFM7VbQeM3kns6eMekHlkFZRgg
+ +TFoB/g0N0sFbYXlUovtj9/bDigAHiHeQKwc2fLp2c/kJNNspJ3qe9HOyYtfe2RD74z/
+ /Imw==
+X-Gm-Message-State: AOJu0YxZuOfxYEissK+DFYe2K2r//P8jZSE08vtc5VDcz+YSZ4asNhn+
+ Md7AW3fhEdUCBnuHAeOvjQmhp6BvqPiYG4RP/TcrtKOAMxIY8g7QEAbbaTGrzH6KVmo84NTXFEY
+ ktorcobTKgeMK3VX896cZUvQtzICCNP/Vl4Phcg==
+X-Google-Smtp-Source: AGHT+IGK179407aT6LY5YLVHNqcU1UGrbqNPsPX4r2XyYy0U/9Tv8OXVCvZAEqS8XhkY/+ITRX++bFBMOA38AYlcR1I=
+X-Received: by 2002:a05:6871:b0e:b0:220:a0ba:6bc8 with SMTP id
+ fq14-20020a0568710b0e00b00220a0ba6bc8mr273566oab.55.1709203790277; Thu, 29
+ Feb 2024 02:49:50 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+References: <20240212080617.2559498-1-mnissler@rivosinc.com>
+ <ZdQzXQwYNOxMOgGp@x1n>
+In-Reply-To: <ZdQzXQwYNOxMOgGp@x1n>
+From: Mattias Nissler <mnissler@rivosinc.com>
+Date: Thu, 29 Feb 2024 11:49:39 +0100
+Message-ID: <CAGNS4TaJQ6MVrX9-SijSdDAX8pRYFkYr4SkES63ZE4WSisqNRA@mail.gmail.com>
+Subject: Re: [PATCH v7 0/5] Support message-based DMA in vfio-user server
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, jag.raman@oracle.com, stefanha@redhat.com, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ john.levon@nutanix.com, David Hildenbrand <david@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::329;
+ envelope-from=mnissler@rivosinc.com; helo=mail-ot1-x329.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,58 +93,37 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 15 Feb 2024 14:28:14 +0000
-Jonathan Cameron via <qemu-devel@nongnu.org> wrote:
+Hi,
 
-Any comments?  Almost all the other fixes I need for CXL memory to
-work as normal ram are queued up so I'd love it if we can solve this one as
-well.
+I actually failed to carry forward the Reviewed-by tags from Jag,
+Phillipe and Stefan as well when reposting even though I didn't make
+any non-trivial changes to the respective patches. I intend to post
+another version with the respective tags restored, but I'll give you a
+day or two to speak up if you disagree.
 
-This looks like a big series, but it's really just a refactor + trivial
-addition - so shouldn't be too scary!
+Thanks,
+Mattias
 
-Jonathan
-
-> Issue seen testing virtio-blk-pci with CXL emulated interleave memory.
-> Tests were done on arm64, but the issue isn't architecture specific.
-> Note that some additional fixes are needed to TCG to be able to run far
-> enough to hit this on arm64 or x86. They are issues so I'll post separate
-> series shortly.
-> 
-> The address_space_read_cached_slow() and address_space_write_cached_slow()
-> functions query the MemoryRegion for the cached address space correctly
-> using address_space_translate_cached() but then call into
-> flatview_read_continue() / flatview_write_continue()
-> If the access is to a MMIO MemoryRegion and is bigger than the MemoryRegion
-> supports, the loop will query the MemoryRegion for the next access to use.
-> That query uses flatview_translate() but the address passed is suitable
-> for the cache, not the flatview. On my test setup that mean the second
-> 8 bytes and onwards of the virtio descriptor was read from flash memory
-> at the beginning of the system address map, not the CXL emulated memory
-> where the descriptor was found.  Result happened to be all fs so easy to
-> spot.
-> 
-> Changes these calls to use address_space_translate_cached() to get the
-> correct MemoryRegion for the cache. To avoid duplicating most of the
-> code, the first 2 patches factor out the common parts of
-> flatview_read_continue() and flatview_write_continue() so they can
-> be reused.
-> 
-> Write path has not been tested but it so similar to the read path I've
-> included it here.
-> 
-> Jonathan Cameron (3):
->   physmem: Reduce local variable scope in flatview_read/write_continue()
->   physmem: Factor out body of flatview_read/write_continue() loop
->   physmem: Fix wrong MR in large address_space_read/write_cached_slow()
-> 
->  system/physmem.c | 245 ++++++++++++++++++++++++++++++++---------------
->  1 file changed, 170 insertions(+), 75 deletions(-)
-> 
-
+On Tue, Feb 20, 2024 at 6:06=E2=80=AFAM Peter Xu <peterx@redhat.com> wrote:
+>
+> On Mon, Feb 12, 2024 at 12:06:12AM -0800, Mattias Nissler wrote:
+> > Changes from v6:
+> >
+> > * Rebase, resolve straightforward merge conflict in system/dma-helpers.=
+c
+>
+> Hi, Mattias,
+>
+> If the change is trivial, feel free to carry over my R-bs in the first tw=
+o
+> patches in the commit message.
+>
+> Thanks,
+>
+> --
+> Peter Xu
+>
 
