@@ -4,106 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3177CC54E4A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 15:32:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24B25C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 15:32:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfiNK-0005mJ-1B; Thu, 29 Feb 2024 10:31:10 -0500
+	id 1rfiMl-0005Ub-Vz; Thu, 29 Feb 2024 10:30:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rfiNC-0005b0-CD
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:31:02 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rfiMi-0005Se-HX
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:30:32 -0500
 Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rfiNA-0005zg-Kn
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:31:02 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rfiMf-0005sG-TQ
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:30:32 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 2A3FB1F7FA;
- Thu, 29 Feb 2024 15:30:58 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 96F9B1FBEF;
+ Thu, 29 Feb 2024 15:30:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709220658; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ t=1709220628; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9kqCh9w8tA8KF4vzH7XsjRtYcN2aYfwoKf9cav9Gzcc=;
- b=uYUUJE+sGoFGWu1sPYkI0jrgTSoGZSYiMgV9spGrEgn8ks3Z3/Xl0UMgBxX/CKNYJbkX6Z
- REIw+HMckkR4M93vxrM1y+AAjojfDYuhT684nww0eLspvpW2lY1pVM4KL7aBuQ20G0US6Z
- 12rlneOsXGi6azD+Tug0FJOn7+dGBkM=
+ bh=M8ETURXN4D66D0HrOGgTSooAccnh4vOt0f/y/PDYZ9Q=;
+ b=WyG04f9+exYowOzNzXq5S5T21AAG8wvKdFMydCSVmpZvECenhcSl1/fawrPfr7ObtTDRdd
+ iUYX7MUGvh8PRwgiXzeVqVvyo6fCbYFPThPi6SD8+74S9y+nGcXq6ex1FpCIxnP9EKFOsW
+ U9P6xgZgwNj92iHkpQAdfhMoes1EGNI=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709220658;
+ s=susede2_ed25519; t=1709220628;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9kqCh9w8tA8KF4vzH7XsjRtYcN2aYfwoKf9cav9Gzcc=;
- b=5PjJPACzt5exvf7+l5DzMIBAzwV883+dE4zb795K4pS/8Dtika63YjxkbJll+k0k0MBxp9
- eggLrO0jAx7SyrAw==
+ bh=M8ETURXN4D66D0HrOGgTSooAccnh4vOt0f/y/PDYZ9Q=;
+ b=WXHg7u2tlQ9QLb6WdFUjhQ9QInvSA0f0k1ivk3wRstBKeKxBkkZEymduQCHL7EoHT74HFV
+ ubYTsHDIGqBvhmCg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709220658; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ t=1709220628; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9kqCh9w8tA8KF4vzH7XsjRtYcN2aYfwoKf9cav9Gzcc=;
- b=uYUUJE+sGoFGWu1sPYkI0jrgTSoGZSYiMgV9spGrEgn8ks3Z3/Xl0UMgBxX/CKNYJbkX6Z
- REIw+HMckkR4M93vxrM1y+AAjojfDYuhT684nww0eLspvpW2lY1pVM4KL7aBuQ20G0US6Z
- 12rlneOsXGi6azD+Tug0FJOn7+dGBkM=
+ bh=M8ETURXN4D66D0HrOGgTSooAccnh4vOt0f/y/PDYZ9Q=;
+ b=WyG04f9+exYowOzNzXq5S5T21AAG8wvKdFMydCSVmpZvECenhcSl1/fawrPfr7ObtTDRdd
+ iUYX7MUGvh8PRwgiXzeVqVvyo6fCbYFPThPi6SD8+74S9y+nGcXq6ex1FpCIxnP9EKFOsW
+ U9P6xgZgwNj92iHkpQAdfhMoes1EGNI=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709220658;
+ s=susede2_ed25519; t=1709220628;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9kqCh9w8tA8KF4vzH7XsjRtYcN2aYfwoKf9cav9Gzcc=;
- b=5PjJPACzt5exvf7+l5DzMIBAzwV883+dE4zb795K4pS/8Dtika63YjxkbJll+k0k0MBxp9
- eggLrO0jAx7SyrAw==
+ bh=M8ETURXN4D66D0HrOGgTSooAccnh4vOt0f/y/PDYZ9Q=;
+ b=WXHg7u2tlQ9QLb6WdFUjhQ9QInvSA0f0k1ivk3wRstBKeKxBkkZEymduQCHL7EoHT74HFV
+ ubYTsHDIGqBvhmCg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 842CE13503;
- Thu, 29 Feb 2024 15:30:56 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BA37E13503;
+ Thu, 29 Feb 2024 15:30:26 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id MKSbEjCj4GU/MAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 29 Feb 2024 15:30:56 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id YAFSHxKj4GU/MAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 29 Feb 2024 15:30:26 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
- Claudio Fontana <cfontana@suse.de>
-Subject: [PATCH v6 16/23] migration/multifd: Add a wrapper for channels_created
-Date: Thu, 29 Feb 2024 12:30:10 -0300
-Message-Id: <20240229153017.2221-17-farosas@suse.de>
+ Claudio Fontana <cfontana@suse.de>, Nikolay Borisov <nborisov@suse.com>
+Subject: [PATCH v6 03/23] io: Add generic pwritev/preadv interface
+Date: Thu, 29 Feb 2024 12:29:57 -0300
+Message-Id: <20240229153017.2221-4-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240229153017.2221-1-farosas@suse.de>
 References: <20240229153017.2221-1-farosas@suse.de>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: /
 Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=uYUUJE+s;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=5PjJPACz
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [0.59 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- R_MISSING_CHARSET(2.50)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_GOOD(-0.10)[text/plain]; BROKEN_CONTENT_TYPE(1.50)[];
- RCPT_COUNT_FIVE(0.00)[5]; NEURAL_HAM_LONG(-1.00)[-1.000];
+	none
+X-Spamd-Result: default: False [-2.10 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_FIVE(0.00)[6];
  RCVD_COUNT_THREE(0.00)[3];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
  MID_CONTAINS_FROM(1.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.com:email];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- RCVD_TLS_ALL(0.00)[]; BAYES_HAM(-2.90)[99.56%]
-X-Rspamd-Queue-Id: 2A3FB1F7FA
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ BAYES_HAM(-3.00)[100.00%]
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
  envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -43
@@ -128,53 +119,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We'll need to access multifd_send_state->channels_created from outside
-multifd.c, so introduce a helper for that.
+From: Nikolay Borisov <nborisov@suse.com>
 
+Introduce basic pwritev/preadv support in the generic channel layer.
+Specific implementation will follow for the file channel as this is
+required in order to support migration streams with fixed location of
+each ram page.
+
+Signed-off-by: Nikolay Borisov <nborisov@suse.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/multifd.c | 7 ++++++-
- migration/multifd.h | 1 +
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ include/io/channel.h | 82 ++++++++++++++++++++++++++++++++++++++++++++
+ io/channel.c         | 58 +++++++++++++++++++++++++++++++
+ 2 files changed, 140 insertions(+)
 
-diff --git a/migration/multifd.c b/migration/multifd.c
-index d470af73ba..3574fd3953 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -101,6 +101,11 @@ static bool multifd_use_packets(void)
-     return !migrate_mapped_ram();
+diff --git a/include/io/channel.h b/include/io/channel.h
+index fcb19fd672..7986c49c71 100644
+--- a/include/io/channel.h
++++ b/include/io/channel.h
+@@ -131,6 +131,16 @@ struct QIOChannelClass {
+                            Error **errp);
+ 
+     /* Optional callbacks */
++    ssize_t (*io_pwritev)(QIOChannel *ioc,
++                          const struct iovec *iov,
++                          size_t niov,
++                          off_t offset,
++                          Error **errp);
++    ssize_t (*io_preadv)(QIOChannel *ioc,
++                         const struct iovec *iov,
++                         size_t niov,
++                         off_t offset,
++                         Error **errp);
+     int (*io_shutdown)(QIOChannel *ioc,
+                        QIOChannelShutdown how,
+                        Error **errp);
+@@ -529,6 +539,78 @@ void qio_channel_set_follow_coroutine_ctx(QIOChannel *ioc, bool enabled);
+ int qio_channel_close(QIOChannel *ioc,
+                       Error **errp);
+ 
++/**
++ * qio_channel_pwritev
++ * @ioc: the channel object
++ * @iov: the array of memory regions to write data from
++ * @niov: the length of the @iov array
++ * @offset: offset in the channel where writes should begin
++ * @errp: pointer to a NULL-initialized error object
++ *
++ * Not all implementations will support this facility, so may report
++ * an error. To avoid errors, the caller may check for the feature
++ * flag QIO_CHANNEL_FEATURE_SEEKABLE prior to calling this method.
++ *
++ * Behaves as qio_channel_writev_full, apart from not supporting
++ * sending of file handles as well as beginning the write at the
++ * passed @offset
++ *
++ */
++ssize_t qio_channel_pwritev(QIOChannel *ioc, const struct iovec *iov,
++                            size_t niov, off_t offset, Error **errp);
++
++/**
++ * qio_channel_pwrite
++ * @ioc: the channel object
++ * @buf: the memory region to write data into
++ * @buflen: the number of bytes to @buf
++ * @offset: offset in the channel where writes should begin
++ * @errp: pointer to a NULL-initialized error object
++ *
++ * Not all implementations will support this facility, so may report
++ * an error. To avoid errors, the caller may check for the feature
++ * flag QIO_CHANNEL_FEATURE_SEEKABLE prior to calling this method.
++ *
++ */
++ssize_t qio_channel_pwrite(QIOChannel *ioc, char *buf, size_t buflen,
++                           off_t offset, Error **errp);
++
++/**
++ * qio_channel_preadv
++ * @ioc: the channel object
++ * @iov: the array of memory regions to read data into
++ * @niov: the length of the @iov array
++ * @offset: offset in the channel where writes should begin
++ * @errp: pointer to a NULL-initialized error object
++ *
++ * Not all implementations will support this facility, so may report
++ * an error.  To avoid errors, the caller may check for the feature
++ * flag QIO_CHANNEL_FEATURE_SEEKABLE prior to calling this method.
++ *
++ * Behaves as qio_channel_readv_full, apart from not supporting
++ * receiving of file handles as well as beginning the read at the
++ * passed @offset
++ *
++ */
++ssize_t qio_channel_preadv(QIOChannel *ioc, const struct iovec *iov,
++                           size_t niov, off_t offset, Error **errp);
++
++/**
++ * qio_channel_pread
++ * @ioc: the channel object
++ * @buf: the memory region to write data into
++ * @buflen: the number of bytes to @buf
++ * @offset: offset in the channel where writes should begin
++ * @errp: pointer to a NULL-initialized error object
++ *
++ * Not all implementations will support this facility, so may report
++ * an error.  To avoid errors, the caller may check for the feature
++ * flag QIO_CHANNEL_FEATURE_SEEKABLE prior to calling this method.
++ *
++ */
++ssize_t qio_channel_pread(QIOChannel *ioc, char *buf, size_t buflen,
++                          off_t offset, Error **errp);
++
+ /**
+  * qio_channel_shutdown:
+  * @ioc: the channel object
+diff --git a/io/channel.c b/io/channel.c
+index 86c5834510..a1f12f8e90 100644
+--- a/io/channel.c
++++ b/io/channel.c
+@@ -454,6 +454,64 @@ GSource *qio_channel_add_watch_source(QIOChannel *ioc,
  }
  
-+void multifd_send_channel_created(void)
+ 
++ssize_t qio_channel_pwritev(QIOChannel *ioc, const struct iovec *iov,
++                            size_t niov, off_t offset, Error **errp)
 +{
-+    qemu_sem_post(&multifd_send_state->channels_created);
++    QIOChannelClass *klass = QIO_CHANNEL_GET_CLASS(ioc);
++
++    if (!klass->io_pwritev) {
++        error_setg(errp, "Channel does not support pwritev");
++        return -1;
++    }
++
++    if (!qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_SEEKABLE)) {
++        error_setg_errno(errp, EINVAL, "Requested channel is not seekable");
++        return -1;
++    }
++
++    return klass->io_pwritev(ioc, iov, niov, offset, errp);
 +}
 +
- /* Multifd without compression */
- 
- /**
-@@ -1023,7 +1028,7 @@ out:
-      * Here we're not interested whether creation succeeded, only that
-      * it happened at all.
-      */
--    qemu_sem_post(&multifd_send_state->channels_created);
-+    multifd_send_channel_created();
- 
-     if (ret) {
-         return;
-diff --git a/migration/multifd.h b/migration/multifd.h
-index 1be985978e..1d8bbaf96b 100644
---- a/migration/multifd.h
-+++ b/migration/multifd.h
-@@ -17,6 +17,7 @@ typedef struct MultiFDRecvData MultiFDRecvData;
- 
- bool multifd_send_setup(void);
- void multifd_send_shutdown(void);
-+void multifd_send_channel_created(void);
- int multifd_recv_setup(Error **errp);
- void multifd_recv_cleanup(void);
- void multifd_recv_shutdown(void);
++ssize_t qio_channel_pwrite(QIOChannel *ioc, char *buf, size_t buflen,
++                           off_t offset, Error **errp)
++{
++    struct iovec iov = {
++        .iov_base = buf,
++        .iov_len = buflen
++    };
++
++    return qio_channel_pwritev(ioc, &iov, 1, offset, errp);
++}
++
++ssize_t qio_channel_preadv(QIOChannel *ioc, const struct iovec *iov,
++                           size_t niov, off_t offset, Error **errp)
++{
++    QIOChannelClass *klass = QIO_CHANNEL_GET_CLASS(ioc);
++
++    if (!klass->io_preadv) {
++        error_setg(errp, "Channel does not support preadv");
++        return -1;
++    }
++
++    if (!qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_SEEKABLE)) {
++        error_setg_errno(errp, EINVAL, "Requested channel is not seekable");
++        return -1;
++    }
++
++    return klass->io_preadv(ioc, iov, niov, offset, errp);
++}
++
++ssize_t qio_channel_pread(QIOChannel *ioc, char *buf, size_t buflen,
++                          off_t offset, Error **errp)
++{
++    struct iovec iov = {
++        .iov_base = buf,
++        .iov_len = buflen
++    };
++
++    return qio_channel_preadv(ioc, &iov, 1, offset, errp);
++}
++
+ int qio_channel_shutdown(QIOChannel *ioc,
+                          QIOChannelShutdown how,
+                          Error **errp)
 -- 
 2.35.3
 
