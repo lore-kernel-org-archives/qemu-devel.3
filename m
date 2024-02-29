@@ -4,46 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC92CC54E41
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 13:13:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0E85C54E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 13:13:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfgD0-0005rt-7Y; Thu, 29 Feb 2024 08:12:24 -0500
+	id 1rfgCb-0005aT-5c; Thu, 29 Feb 2024 08:11:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rfgCc-0005cd-9H; Thu, 29 Feb 2024 08:11:58 -0500
-Received: from szxga05-in.huawei.com ([45.249.212.191])
+ id 1rfgCZ-0005YC-AV; Thu, 29 Feb 2024 08:11:55 -0500
+Received: from szxga04-in.huawei.com ([45.249.212.190])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rfgCZ-0002d4-8Q; Thu, 29 Feb 2024 08:11:58 -0500
-Received: from mail.maildlp.com (unknown [172.19.163.44])
- by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4Tls7F6gx5z1FLP5;
- Thu, 29 Feb 2024 21:11:37 +0800 (CST)
+ id 1rfgCW-0002dz-HC; Thu, 29 Feb 2024 08:11:54 -0500
+Received: from mail.maildlp.com (unknown [172.19.162.112])
+ by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4Tls4p3Xylz2Bdsg;
+ Thu, 29 Feb 2024 21:09:30 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id A6DD314037D;
- Thu, 29 Feb 2024 21:11:39 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 7392F140444;
+ Thu, 29 Feb 2024 21:11:46 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Thu, 29 Feb
- 2024 21:11:39 +0800
+ 2024 21:11:45 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [RFC PATCH v5 00/22] target/arm: Implement FEAT_NMI and FEAT_GICv3_NMI
-Date: Thu, 29 Feb 2024 13:10:17 +0000
-Message-ID: <20240229131039.1868904-1-ruanjinjie@huawei.com>
+Subject: [RFC PATCH v5 07/22] target/arm: Add support for NMI in
+ arm_phys_excp_target_el()
+Date: Thu, 29 Feb 2024 13:10:24 +0000
+Message-ID: <20240229131039.1868904-8-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240229131039.1868904-1-ruanjinjie@huawei.com>
+References: <20240229131039.1868904-1-ruanjinjie@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-Originating-IP: [10.67.174.55]
 X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
  kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.191;
- envelope-from=ruanjinjie@huawei.com; helo=szxga05-in.huawei.com
+Received-SPF: pass client-ip=45.249.212.190;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga04-in.huawei.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
@@ -67,134 +70,34 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch set implements FEAT_NMI and FEAT_GICv3_NMI for armv8. These
-introduce support for a new category of interrupts in the architecture
-which we can use to provide NMI like functionality.
+According to Arm GIC section 4.6.3 Interrupt superpriority, the interrupt
+with superpriority is always IRQ, never FIQ, so handle NMI same as IRQ in
+arm_phys_excp_target_el().
 
-There are two modes for using this FEAT_NMI. When PSTATE.ALLINT or
-PSTATE.SP & SCTLR_ELx.SCTLR_SPINTMASK is set, any entry to ELx causes all
-interrupts including those with superpriority to be masked on entry to ELn
-until the mask is explicitly removed by software or hardware. PSTATE.ALLINT
-can be managed by software using the new register control ALLINT.ALLINT.
-Independent controls are provided for this feature at each EL, usage at EL1
-should not disrupt EL2 or EL3.
-
-I have tested it with the following linux patches which try to support
-FEAT_NMI in linux kernel:
-
->-------https://lore.kernel.org/linux-arm-kernel/Y4sH5qX5bK9xfEBp@lpieralisi/T/#mb4ba4a2c045bf72c10c2202c1dd1b82d3240dc88
-
-In the test, SGI, PPI and SPI interrupts can all be set to have super priority
-to be converted to a hardware NMI interrupt. The SGI is tested with kernel
-IPI as NMI framework, softlockup, hardlockup and kgdb test cases, and the PPI
-interrupt is tested with "perf top" command with hardware NMI enabled, and
-the SPI interrupt is tested with a custom test module, in which NMI interrupts
-can be received and sent normally.
-
-However, the Virtual NMI(VNMI) has not been tested.
-
-         +-------------------------------------------------+
-         |               Distributor                       |
-         +-------------------------------------------------+
-             SPI |  NMI                         |  NMI
-                \/                            \/
-            +--------+                     +-------+
-            | Redist |                     | Redist|
-            +--------+                     +-------+
-            SGI  | NMI                     PPI | NMI
-                \/                            \/
-          +-------------+             +---------------+
-          |CPU Interface|   ...       | CPU Interface |
-          +-------------+             +---------------+
-               | NMI                         | NMI
-              \/                            \/
-            +-----+                       +-----+
-            |  PE |                       |  PE |
-            +-----+                       +-----+
-
-Changes in v5:
-- Remove the comment for ALLINT in cpu.h.
-- Merge allint_check() to msr_i_allint to clear the ALLINT MSR (immediate)
-  implementation.
-- Rename msr_i_allint() to msr_set_allint_el1() to make it clearer.
-- Drop the & 1 in trans_MSR_i_ALLINT().
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+v4:
 - Add Reviewed-by.
+v3:
+- Remove nmi_is_irq flag in CPUARMState.
+- Handle NMI same as IRQ in arm_phys_excp_target_el().
+---
+ target/arm/helper.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Changes in v4:
-- Handle VNMI within the CPU and the GIC.
-- Keep PSTATE.ALLINT in env->pstate but not env->allint.
-- Fix the ALLINT MSR (immediate) decodetree implementation.
-- Accept NMI unconditionally for arm_cpu_has_work() but add comment.
-- Improve nmi mask in arm_excp_unmasked().
-- Make the GICR_INMIR0 and GICD_INMIR implementation more clearer.
-- Improve ICC_NMIAR1_EL1 implementation
-- Extract gicv3_get_priority() to avoid priority code repetition.
-- Add Reviewed-by.
-
-Changes in v3:
-- Remove the FIQ NMI.
-- Adjust the patches Sequence.
-- Reomve the patch "Set pstate.ALLINT in arm_cpu_reset_hold".
-- Check whether support FEAT_NMI and FEAT_GICv3 for FEAT_GICv3_NMI.
-- With CPU_INTERRUPT_NMI, both CPSR_I and ISR_IS must be set.
-- Not include NMI logic when FEAT_NMI or SCTLR_ELx.NMI not enabled.
-- Refator nmi mask in arm_excp_unmasked().
-- Add VNMI definitions, add HCRX_VINMI and HCRX_VFNMI support in HCRX_EL2.
-- Add Reviewed-by and Acked-by.
-- Update the commit message.
-
-Changes in v2:
-- Break up the patches so that each one does only one thing.
-- Remove the command line option and just implement it in "max" cpu.
-
-Jinjie Ruan (22):
-  target/arm: Handle HCR_EL2 accesses for bits introduced with FEAT_NMI
-  target/arm: Add PSTATE.ALLINT
-  target/arm: Add support for FEAT_NMI, Non-maskable Interrupt
-  target/arm: Implement ALLINT MSR (immediate)
-  target/arm: Support MSR access to ALLINT
-  target/arm: Add support for Non-maskable Interrupt
-  target/arm: Add support for NMI in arm_phys_excp_target_el()
-  target/arm: Handle IS/FS in ISR_EL1 for NMI
-  target/arm: Handle PSTATE.ALLINT on taking an exception
-  hw/arm/virt: Wire NMI and VNMI irq lines from GIC to CPU
-  hw/intc/arm_gicv3: Add external IRQ lines for NMI
-  target/arm: Handle NMI in arm_cpu_do_interrupt_aarch64()
-  hw/intc/arm_gicv3: Add irq superpriority information
-  hw/intc/arm_gicv3_redist: Implement GICR_INMIR0
-  hw/intc/arm_gicv3: Implement GICD_INMIR
-  hw/intc: Enable FEAT_GICv3_NMI Feature
-  hw/intc/arm_gicv3: Add NMI handling CPU interface registers
-  hw/intc/arm_gicv3: Implement NMI interrupt prioirty
-  hw/intc/arm_gicv3: Report the NMI interrupt in gicv3_cpuif_update()
-  hw/intc/arm_gicv3: Report the VNMI interrupt
-  target/arm: Add FEAT_NMI to max
-  hw/arm/virt: Add FEAT_GICv3_NMI feature support in virt GIC
-
- docs/system/arm/emulation.rst      |  1 +
- hw/arm/virt.c                      | 25 ++++++++-
- hw/intc/arm_gicv3.c                | 71 +++++++++++++++++++++---
- hw/intc/arm_gicv3_common.c         |  7 +++
- hw/intc/arm_gicv3_cpuif.c          | 77 ++++++++++++++++++++++++--
- hw/intc/arm_gicv3_dist.c           | 36 ++++++++++++
- hw/intc/arm_gicv3_redist.c         | 19 +++++++
- hw/intc/gicv3_internal.h           |  6 ++
- hw/intc/trace-events               |  1 +
- include/hw/intc/arm_gic_common.h   |  2 +
- include/hw/intc/arm_gicv3_common.h |  7 +++
- target/arm/cpu-features.h          |  5 ++
- target/arm/cpu-qom.h               |  4 +-
- target/arm/cpu.c                   | 88 ++++++++++++++++++++++++++++--
- target/arm/cpu.h                   |  7 +++
- target/arm/helper.c                | 73 +++++++++++++++++++++++++
- target/arm/internals.h             | 13 +++++
- target/arm/tcg/a64.decode          |  1 +
- target/arm/tcg/cpu64.c             |  1 +
- target/arm/tcg/helper-a64.c        | 12 ++++
- target/arm/tcg/helper-a64.h        |  1 +
- target/arm/tcg/translate-a64.c     | 18 ++++++
- 22 files changed, 454 insertions(+), 21 deletions(-)
-
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 4b4c8e279d..7cdc90e9e3 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -10570,6 +10570,7 @@ uint32_t arm_phys_excp_target_el(CPUState *cs, uint32_t excp_idx,
+     hcr_el2 = arm_hcr_el2_eff(env);
+     switch (excp_idx) {
+     case EXCP_IRQ:
++    case EXCP_NMI:
+         scr = ((env->cp15.scr_el3 & SCR_IRQ) == SCR_IRQ);
+         hcr = hcr_el2 & HCR_IMO;
+         break;
 -- 
 2.34.1
 
