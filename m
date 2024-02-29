@@ -4,55 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AD58C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 11:39:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EAA2C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 11:45:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfeke-00047E-JV; Thu, 29 Feb 2024 06:39:00 -0500
+	id 1rfepT-0007Ib-Ex; Thu, 29 Feb 2024 06:43:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1rfeka-000462-4l
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 06:38:56 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1rfekW-0001dz-Vz
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 06:38:55 -0500
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Cx77vFbOBl3OESAA--.28250S3;
- Thu, 29 Feb 2024 19:38:45 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxHBPCbOBl_bxKAA--.2628S3; 
- Thu, 29 Feb 2024 19:38:44 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Xianglai Li <lixianglai@loongson.cn>,
- Andrea Bolognani <abologna@redhat.com>, maobibo@loongson.cn,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- zhaotianrui@loongson.cn
-Subject: [PULL v2 1/1] loongarch: Change the UEFI loading mode to loongarch
-Date: Thu, 29 Feb 2024 19:38:42 +0800
-Message-Id: <20240229113842.619738-2-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20240229113842.619738-1-gaosong@loongson.cn>
-References: <20240229113842.619738-1-gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <ankita@nvidia.com>)
+ id 1rfepO-0007Hg-1E; Thu, 29 Feb 2024 06:43:55 -0500
+Received: from mail-dm6nam11on20601.outbound.protection.outlook.com
+ ([2a01:111:f403:2415::601]
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ankita@nvidia.com>)
+ id 1rfepL-0002ZQ-KK; Thu, 29 Feb 2024 06:43:53 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=dzc0ypc8dWQgXsYWzRmdUNsaTOASN0LlQc7UVGHU1yGduCeBQA2hwweMhhjkvM2ifie1aD7tBsxhEtheEaowDVRS5vqtB+9ZvBLHu5/aWEElo3usJkYW2TPkgxCwQn2vhMpE9ZGC0xq5yeFxg4ILhVuY6HHJW5Z7pfs77Dpx6VzU5x4Luw1jv1UTfEvQ/Fao/nNm3CS1dt1wT4k1rXbOcaOdTyWoVyBG+mKMSxFyWZK1B8aC8Ez7E3E5Je8UgblxBkZfVyS+niyrD/9y75xRGqVX3/sOz/n70/IiuCLFQvR/NDYeE8uUL81BHc/t+VWz0LVZiwL9jmqFoiii9RTx5Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HaIlKOFUay9tPTF9j+mNvghlSx1MmGw8SQmOmlDnnt4=;
+ b=DFeqkHYXSz+kVZ9HIvD7Vs5ugUARmdSr8ezreX/BcKYv2SXh8KqB9RLompC7hx9Ub9PmqBgxP0oDfOtAUh4jt+ZGkLLa//l0kMm3Oi7091zTJLXrQ3YPCZ1sQUg3f7EBZu7J15ygFekf3aVF00r7gScn9EcTUN6BzJPLGlegqhNQUF/rIXu+xuuwF8yoSpMzIa8lWg36T8AQbrSgkIfiMacl4P/8GaO1G4L1Pk9fahSpnUTvM2xkTxI92cWpgqKt3LQQGMhfAQPCYEBQryjznQHPK9lifXggr5WKRs5eXq6IGwgIe8CgGALGhqW/Gb/rlsgUHwBfXpvC/rQwIId3bw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=HaIlKOFUay9tPTF9j+mNvghlSx1MmGw8SQmOmlDnnt4=;
+ b=WLIEUBwoVP13TSnwK+XSB/cQS79N+rLgYscUc4mZee6WorzEf2lYkCJfu8cxh/q2ZMgkFQNtbmCLjoongJrbl6Ix5RKu0+SfJaGI0g92HXinLBbYAJJ9vcMHTolg10Pdu8vxScHHSNTUL5LYWVnBd4tUcJ14ds5LpTna5N9R6NjF47uyc9VU/yZZsMtNgPmpnHT9p/GEZGUi3Daxc0t7KldALcGmLjJv48hCcdHr9ytZHBPHMfXTM56bPmqK2UwlQJ3MFsyHEM0t0k1XhVUpfvu+GhEBf7TpUE4i35/Y1dQvj3HGGj1F4UMBSUDyXj+G1W0B5nFN16G+HAxi1FRBYA==
+Received: from SA1PR12MB7199.namprd12.prod.outlook.com (2603:10b6:806:2bc::21)
+ by MW3PR12MB4491.namprd12.prod.outlook.com (2603:10b6:303:5c::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.41; Thu, 29 Feb
+ 2024 11:43:44 +0000
+Received: from SA1PR12MB7199.namprd12.prod.outlook.com
+ ([fe80::284c:211f:16dc:f7b2]) by SA1PR12MB7199.namprd12.prod.outlook.com
+ ([fe80::284c:211f:16dc:f7b2%5]) with mapi id 15.20.7316.032; Thu, 29 Feb 2024
+ 11:43:44 +0000
+From: Ankit Agrawal <ankita@nvidia.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+CC: Jason Gunthorpe <jgg@nvidia.com>, "alex.williamson@redhat.com"
+ <alex.williamson@redhat.com>, "clg@redhat.com" <clg@redhat.com>,
+ "shannon.zhaosl@gmail.com" <shannon.zhaosl@gmail.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "ani@anisinha.ca"
+ <ani@anisinha.ca>, "berrange@redhat.com" <berrange@redhat.com>,
+ "eduardo@habkost.net" <eduardo@habkost.net>, "imammedo@redhat.com"
+ <imammedo@redhat.com>, "mst@redhat.com" <mst@redhat.com>, "eblake@redhat.com"
+ <eblake@redhat.com>, "armbru@redhat.com" <armbru@redhat.com>,
+ "david@redhat.com" <david@redhat.com>, "gshan@redhat.com" <gshan@redhat.com>, 
+ Zhi Wang <zhiw@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>, Aniket Agashe
+ <aniketa@nvidia.com>, Neo Jia <cjia@nvidia.com>, Kirti Wankhede
+ <kwankhede@nvidia.com>, "Tarun Gupta (SW-GPU)" <targupta@nvidia.com>, Vikram
+ Sethi <vsethi@nvidia.com>, Andy Currid <acurrid@nvidia.com>, Dheeraj Nigam
+ <dnigam@nvidia.com>, Uday Dhoke <udhoke@nvidia.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v7 2/2] hw/acpi: Implement the SRAT GI affinity structure
+Thread-Topic: [PATCH v7 2/2] hw/acpi: Implement the SRAT GI affinity structure
+Thread-Index: AQHaZlXRPSA0zxYvqU+8THPBcca33bEc2OaAgARh1QA=
+Date: Thu, 29 Feb 2024 11:43:44 +0000
+Message-ID: <SA1PR12MB7199C32D46CF39363F38D2E7B05F2@SA1PR12MB7199.namprd12.prod.outlook.com>
+References: <20240223124223.800078-1-ankita@nvidia.com>
+ <20240223124223.800078-3-ankita@nvidia.com>
+ <20240226164229.00001536@Huawei.com>
+In-Reply-To: <20240226164229.00001536@Huawei.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SA1PR12MB7199:EE_|MW3PR12MB4491:EE_
+x-ms-office365-filtering-correlation-id: 730030ec-638c-4485-fa3f-08dc391baefb
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: sJ5PJqO95bT3ANoRes+MbUiICe2qcXPFBl8qcaKWvdkk4sEMhrlQVi2dCs3yY+NVwQoLG+LnvOJBs57LJfR1yqlNKaNceZUmKNhuG7FZt8RuhSaxW3Vq0sSS7gyWsyPBGi9eRgXB0GeedSoHTxfyph16ZDkcd8rVRUek3NNp3PyhYPv4K/h+ldm6rnnJNv9Q3b1sxp3mV7PMY3zrhBwv98YS6xVLi3sQwo+ZOZnht2RZZrNCAnhcJlKceIgeL0T++gOL3eJi1F5KhSBtA8pXL7vdm5NYHOYrVQRV3G/z6PDEXLkNx/hquVgHb/cU/gcgoVt7CbCab2qxPSFHXvfp+rlG9C42yh+NFxmN71naeJ5Dw2rcEb0J7YgFRXEgdg88nhiEUJnVw80baZKbmESi1e+5wBPcU0JQ38vuhoyckVneX8m0RL1v3HUuM5HnNmI9n6YnnUhO9l54hHkc6ME6bzbtV5BXt1NbHqkkBBVRU05BPK4EkISDCneWivUUHzRmOPqX2HWKcYFp2cvxJBMlixIib69uJNmr43gZ0KSrRnvwf/xWo5XAxfMbHaEaNCh1fgA6VXqJrmYL15mI0s/TqwErxKRv5QHDuRzVvD7IDp6i9DsMhrk3HaSuJn7zCspeMINMrfEzYss33UjOj0WwjbAm09PBG/hqfjLezQnF2z04uEOkoixmxXWfsgXa2ByrAw3HKKVG6RDOXqxwIbB+c5uQYqJP2EUGpMCLj9U4yXE=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SA1PR12MB7199.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(38070700009); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?NDmGiQmCFcAL5/eaIKZWj3Gwe/x/vQ9Tkan/T//AEEghJvvnCOW90MEH6s?=
+ =?iso-8859-1?Q?jKQHgv536tiaxhxyvkb7248uCHwTX3g5khixlYdSJ9ybYpwhLmlueIAQp5?=
+ =?iso-8859-1?Q?vCecCqdohLqkmTAfXMNNyikeHkRV0EEt4+fmp/XTlsf+Tx3XpjBxqM4ePq?=
+ =?iso-8859-1?Q?J/xcU3BkcTm3ZpVlEiz+Kw4OlV6oeiQO6l9brbdDCrG7S8MuyfZD7xVCTy?=
+ =?iso-8859-1?Q?tHeUEBwcvoYqDFoHKhE32nseuc8MsqYkbwaMPa8+Kg5QWG1WxVsTa26Vmp?=
+ =?iso-8859-1?Q?6wv3jgY8bGI7BYHsNiLlfOhZhhN1uwQw2w/7OKGRhYCE50Px5TmoCjrW2E?=
+ =?iso-8859-1?Q?zerEEy1I/bib43GL7eplnjj0jqHPo8wVWbX6vmnIxcL3Vl+aP1hiFkvdP2?=
+ =?iso-8859-1?Q?ivhK4KDVbS+zK/4nuzlvUdCDB1d/qEuJA9ehp5JbVrNNX8UQT+CPZ+sMjZ?=
+ =?iso-8859-1?Q?4KRqqaFB8g34YS9SPrh5TUMQ5RyomHE6EhzYxG8VSBCFSrtNm3kFn4p6lv?=
+ =?iso-8859-1?Q?oXCB97o9VjsR+qV6jEZwfrBW7suj1MVso7aGudc+Z90mrsw4+Gfj7b7VWv?=
+ =?iso-8859-1?Q?iupEVlwB5jWQwDifcDx/ysYvvjq/I6EJ69OF4BiLpVPXVE+N2tf4TPoaEh?=
+ =?iso-8859-1?Q?9TDqMi8g8sWvlLlmmas6GuOENC7n5nsmMBpd0XNgMkuHNqjI5zC+DVhmnF?=
+ =?iso-8859-1?Q?8hvBgFsxx0IdWPeE9CIXi2TnjoXAWqfVUHmnopQnbGOkPvg9LcF2quMWZD?=
+ =?iso-8859-1?Q?AU0sLgWyiznvq4DqSHiHH2Jfucaq8BpS+9NWs7RzNlB9t4Dw9dchg5SkUx?=
+ =?iso-8859-1?Q?mLUYUC/VghrGdlbwnxGoace3HS8O00wxo9L+JNrIAVDHAQtQIamSqFlBXT?=
+ =?iso-8859-1?Q?0/4dmX8YW96R12Ke5lWcuCngJ+Toi8++WwOoTAf/XkxJSUMJ78WL6svDz2?=
+ =?iso-8859-1?Q?u1QEq77Ly8Bj0PLuUZF7DvmPNYTaH+gJGz9l2MiS1mI9qFkFC9XVavXaEN?=
+ =?iso-8859-1?Q?oLJoCNG/NAh6E1ZmXJ0+QoCxBS4j082svbYV9cj+lPKUjJioo3Nb8D52UE?=
+ =?iso-8859-1?Q?k+ZW6cyK4bxv0mu0tgRe0J+dp122k9ohg/OnEgjYHR8Q1w6v4p5wgw80Jc?=
+ =?iso-8859-1?Q?YZX1UY7BJ0jkGMGwo9SNMcdmWy/Ewis8314btAzJyeV8r6i+MNNm72/mjJ?=
+ =?iso-8859-1?Q?fDOiqxZgooeqjsoUia+u3VOq6+QltkMeUuIxTEsDifLYBetfFZJdn41cjw?=
+ =?iso-8859-1?Q?f1DzdrfgiDEuNXRpQU+YpK6OymrONt+np5M2ZteaAGkgmBGDzQtG7/z8E1?=
+ =?iso-8859-1?Q?GHd3aOna6g2BRpiXWNxxEb/3j+rPKb6IaRRCKAeQ69Msvd8HvdbgmeEPWr?=
+ =?iso-8859-1?Q?O0hbyO+ZElpmePaMeMYHE2OFRVifQiehOloTniegyD8hAloPFqo/nJe26c?=
+ =?iso-8859-1?Q?XMDZHUfhFU0n6djCgh6ByoPEy/WnLrKiDp6md5lACA8XgC8Q3g7OwCgb0M?=
+ =?iso-8859-1?Q?/8L9tTeGbtzo8Y2A+rNSYHugsGKt6GwbUamm4XOt5LjXzPI5yqFAFWnkwH?=
+ =?iso-8859-1?Q?TZ7FHjkVk4/yZLBWVvarh1/qRcdklnti6Y3HeWYjPotPq4CUjxcblKOLh1?=
+ =?iso-8859-1?Q?25KbI6fvbJW3Y=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8BxHBPCbOBl_bxKAA--.2628S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SA1PR12MB7199.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 730030ec-638c-4485-fa3f-08dc391baefb
+X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Feb 2024 11:43:44.1791 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: ba6MzlbhPBwsxA0BmfNOyDCo/NFx35dehVuTt62nLfPhnR+D3VD9XWnT0yjW7eZK87CcJOjgDXyhMGZLGYp9Ag==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR12MB4491
+Received-SPF: softfail client-ip=2a01:111:f403:2415::601;
+ envelope-from=ankita@nvidia.com;
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,285 +155,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xianglai Li <lixianglai@loongson.cn>
-
-The UEFI loading mode in loongarch is very different
-from that in other architectures:loongarch's UEFI code
-is in rom, while other architectures' UEFI code is in flash.
-
-loongarch UEFI can be loaded as follows:
--machine virt,pflash=pflash0-format
--bios ./QEMU_EFI.fd
-
-Other architectures load UEFI using the following methods:
--machine virt,pflash0=pflash0-format,pflash1=pflash1-format
-
-loongarch's UEFI loading method makes qemu and libvirt incompatible
-when using NVRAM, and the cost of loongarch's current loading method
-far outweighs the benefits, so we decided to use the same UEFI loading
-scheme as other architectures.
-
-Cc: Andrea Bolognani <abologna@redhat.com>
-Cc: maobibo@loongson.cn
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Song Gao <gaosong@loongson.cn>
-Cc: zhaotianrui@loongson.cn
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-Tested-by: Andrea Bolognani <abologna@redhat.com>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Message-Id: <0bd892aa9b88e0f4cc904cb70efd0251fc1cde29.1708336919.git.lixianglai@loongson.cn>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- hw/loongarch/acpi-build.c   |  29 +++++++++--
- hw/loongarch/virt.c         | 101 ++++++++++++++++++++++++++----------
- include/hw/loongarch/virt.h |  10 ++--
- 3 files changed, 107 insertions(+), 33 deletions(-)
-
-diff --git a/hw/loongarch/acpi-build.c b/hw/loongarch/acpi-build.c
-index a1c4198741..e5ab1080af 100644
---- a/hw/loongarch/acpi-build.c
-+++ b/hw/loongarch/acpi-build.c
-@@ -314,16 +314,39 @@ static void build_pci_device_aml(Aml *scope, LoongArchMachineState *lams)
- static void build_flash_aml(Aml *scope, LoongArchMachineState *lams)
- {
-     Aml *dev, *crs;
-+    MemoryRegion *flash_mem;
- 
--    hwaddr flash_base = VIRT_FLASH_BASE;
--    hwaddr flash_size = VIRT_FLASH_SIZE;
-+    hwaddr flash0_base;
-+    hwaddr flash0_size;
-+
-+    hwaddr flash1_base;
-+    hwaddr flash1_size;
-+
-+    flash_mem = pflash_cfi01_get_memory(lams->flash[0]);
-+    flash0_base = flash_mem->addr;
-+    flash0_size = memory_region_size(flash_mem);
-+
-+    flash_mem = pflash_cfi01_get_memory(lams->flash[1]);
-+    flash1_base = flash_mem->addr;
-+    flash1_size = memory_region_size(flash_mem);
- 
-     dev = aml_device("FLS0");
-     aml_append(dev, aml_name_decl("_HID", aml_string("LNRO0015")));
-     aml_append(dev, aml_name_decl("_UID", aml_int(0)));
- 
-     crs = aml_resource_template();
--    aml_append(crs, aml_memory32_fixed(flash_base, flash_size, AML_READ_WRITE));
-+    aml_append(crs, aml_memory32_fixed(flash0_base, flash0_size,
-+                                       AML_READ_WRITE));
-+    aml_append(dev, aml_name_decl("_CRS", crs));
-+    aml_append(scope, dev);
-+
-+    dev = aml_device("FLS1");
-+    aml_append(dev, aml_name_decl("_HID", aml_string("LNRO0015")));
-+    aml_append(dev, aml_name_decl("_UID", aml_int(1)));
-+
-+    crs = aml_resource_template();
-+    aml_append(crs, aml_memory32_fixed(flash1_base, flash1_size,
-+                                       AML_READ_WRITE));
-     aml_append(dev, aml_name_decl("_CRS", crs));
-     aml_append(scope, dev);
- }
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 0ad7d8c887..1e98d8bda5 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -54,7 +54,9 @@ struct loaderparams {
-     const char *initrd_filename;
- };
- 
--static void virt_flash_create(LoongArchMachineState *lams)
-+static PFlashCFI01 *virt_flash_create1(LoongArchMachineState *lams,
-+                                       const char *name,
-+                                       const char *alias_prop_name)
- {
-     DeviceState *dev = qdev_new(TYPE_PFLASH_CFI01);
- 
-@@ -66,45 +68,78 @@ static void virt_flash_create(LoongArchMachineState *lams)
-     qdev_prop_set_uint16(dev, "id1", 0x18);
-     qdev_prop_set_uint16(dev, "id2", 0x00);
-     qdev_prop_set_uint16(dev, "id3", 0x00);
--    qdev_prop_set_string(dev, "name", "virt.flash");
--    object_property_add_child(OBJECT(lams), "virt.flash", OBJECT(dev));
--    object_property_add_alias(OBJECT(lams), "pflash",
-+    qdev_prop_set_string(dev, "name", name);
-+    object_property_add_child(OBJECT(lams), name, OBJECT(dev));
-+    object_property_add_alias(OBJECT(lams), alias_prop_name,
-                               OBJECT(dev), "drive");
-+    return PFLASH_CFI01(dev);
-+}
- 
--    lams->flash = PFLASH_CFI01(dev);
-+static void virt_flash_create(LoongArchMachineState *lams)
-+{
-+    lams->flash[0] = virt_flash_create1(lams, "virt.flash0", "pflash0");
-+    lams->flash[1] = virt_flash_create1(lams, "virt.flash1", "pflash1");
- }
- 
--static void virt_flash_map(LoongArchMachineState *lams,
--                           MemoryRegion *sysmem)
-+static void virt_flash_map1(PFlashCFI01 *flash,
-+                            hwaddr base, hwaddr size,
-+                            MemoryRegion *sysmem)
- {
--    PFlashCFI01 *flash = lams->flash;
-     DeviceState *dev = DEVICE(flash);
--    hwaddr base = VIRT_FLASH_BASE;
--    hwaddr size = VIRT_FLASH_SIZE;
-+    BlockBackend *blk;
-+    hwaddr real_size = size;
-+
-+    blk = pflash_cfi01_get_blk(flash);
-+    if (blk) {
-+        real_size = blk_getlength(blk);
-+        assert(real_size && real_size <= size);
-+    }
- 
--    assert(QEMU_IS_ALIGNED(size, VIRT_FLASH_SECTOR_SIZE));
--    assert(size / VIRT_FLASH_SECTOR_SIZE <= UINT32_MAX);
-+    assert(QEMU_IS_ALIGNED(real_size, VIRT_FLASH_SECTOR_SIZE));
-+    assert(real_size / VIRT_FLASH_SECTOR_SIZE <= UINT32_MAX);
- 
--    qdev_prop_set_uint32(dev, "num-blocks", size / VIRT_FLASH_SECTOR_SIZE);
-+    qdev_prop_set_uint32(dev, "num-blocks", real_size / VIRT_FLASH_SECTOR_SIZE);
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-     memory_region_add_subregion(sysmem, base,
-                                 sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
-+}
- 
-+static void virt_flash_map(LoongArchMachineState *lams,
-+                           MemoryRegion *sysmem)
-+{
-+    PFlashCFI01 *flash0 = lams->flash[0];
-+    PFlashCFI01 *flash1 = lams->flash[1];
-+
-+    virt_flash_map1(flash0, VIRT_FLASH0_BASE, VIRT_FLASH0_SIZE, sysmem);
-+    virt_flash_map1(flash1, VIRT_FLASH1_BASE, VIRT_FLASH1_SIZE, sysmem);
- }
- 
- static void fdt_add_flash_node(LoongArchMachineState *lams)
- {
-     MachineState *ms = MACHINE(lams);
-     char *nodename;
-+    MemoryRegion *flash_mem;
-+
-+    hwaddr flash0_base;
-+    hwaddr flash0_size;
- 
--    hwaddr flash_base = VIRT_FLASH_BASE;
--    hwaddr flash_size = VIRT_FLASH_SIZE;
-+    hwaddr flash1_base;
-+    hwaddr flash1_size;
- 
--    nodename = g_strdup_printf("/flash@%" PRIx64, flash_base);
-+    flash_mem = pflash_cfi01_get_memory(lams->flash[0]);
-+    flash0_base = flash_mem->addr;
-+    flash0_size = memory_region_size(flash_mem);
-+
-+    flash_mem = pflash_cfi01_get_memory(lams->flash[1]);
-+    flash1_base = flash_mem->addr;
-+    flash1_size = memory_region_size(flash_mem);
-+
-+    nodename = g_strdup_printf("/flash@%" PRIx64, flash0_base);
-     qemu_fdt_add_subnode(ms->fdt, nodename);
-     qemu_fdt_setprop_string(ms->fdt, nodename, "compatible", "cfi-flash");
-     qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg",
--                                 2, flash_base, 2, flash_size);
-+                                 2, flash0_base, 2, flash0_size,
-+                                 2, flash1_base, 2, flash1_size);
-     qemu_fdt_setprop_cell(ms->fdt, nodename, "bank-width", 4);
-     g_free(nodename);
- }
-@@ -637,12 +672,32 @@ static void loongarch_firmware_init(LoongArchMachineState *lams)
- {
-     char *filename = MACHINE(lams)->firmware;
-     char *bios_name = NULL;
--    int bios_size;
-+    int bios_size, i;
-+    BlockBackend *pflash_blk0;
-+    MemoryRegion *mr;
- 
-     lams->bios_loaded = false;
- 
-+    /* Map legacy -drive if=pflash to machine properties */
-+    for (i = 0; i < ARRAY_SIZE(lams->flash); i++) {
-+        pflash_cfi01_legacy_drive(lams->flash[i],
-+                                  drive_get(IF_PFLASH, 0, i));
-+    }
-+
-     virt_flash_map(lams, get_system_memory());
- 
-+    pflash_blk0 = pflash_cfi01_get_blk(lams->flash[0]);
-+
-+    if (pflash_blk0) {
-+        if (filename) {
-+            error_report("cannot use both '-bios' and '-drive if=pflash'"
-+                         "options at once");
-+            exit(1);
-+        }
-+        lams->bios_loaded = true;
-+        return;
-+    }
-+
-     if (filename) {
-         bios_name = qemu_find_file(QEMU_FILE_TYPE_BIOS, filename);
-         if (!bios_name) {
-@@ -650,21 +705,15 @@ static void loongarch_firmware_init(LoongArchMachineState *lams)
-             exit(1);
-         }
- 
--        bios_size = load_image_targphys(bios_name, VIRT_BIOS_BASE, VIRT_BIOS_SIZE);
-+        mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(lams->flash[0]), 0);
-+        bios_size = load_image_mr(bios_name, mr);
-         if (bios_size < 0) {
-             error_report("Could not load ROM image '%s'", bios_name);
-             exit(1);
-         }
--
-         g_free(bios_name);
--
--        memory_region_init_ram(&lams->bios, NULL, "loongarch.bios",
--                               VIRT_BIOS_SIZE, &error_fatal);
--        memory_region_set_readonly(&lams->bios, true);
--        memory_region_add_subregion(get_system_memory(), VIRT_BIOS_BASE, &lams->bios);
-         lams->bios_loaded = true;
-     }
--
- }
- 
- static void reset_load_elf(void *opaque)
-diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-index 6ef9a92394..252f7df7f4 100644
---- a/include/hw/loongarch/virt.h
-+++ b/include/hw/loongarch/virt.h
-@@ -18,10 +18,12 @@
- 
- #define VIRT_FWCFG_BASE         0x1e020000UL
- #define VIRT_BIOS_BASE          0x1c000000UL
--#define VIRT_BIOS_SIZE          (4 * MiB)
-+#define VIRT_BIOS_SIZE          (16 * MiB)
- #define VIRT_FLASH_SECTOR_SIZE  (128 * KiB)
--#define VIRT_FLASH_BASE         0x1d000000UL
--#define VIRT_FLASH_SIZE         (16 * MiB)
-+#define VIRT_FLASH0_BASE        VIRT_BIOS_BASE
-+#define VIRT_FLASH0_SIZE        VIRT_BIOS_SIZE
-+#define VIRT_FLASH1_BASE        0x1d000000UL
-+#define VIRT_FLASH1_SIZE        (16 * MiB)
- 
- #define VIRT_LOWMEM_BASE        0
- #define VIRT_LOWMEM_SIZE        0x10000000
-@@ -49,7 +51,7 @@ struct LoongArchMachineState {
-     int          fdt_size;
-     DeviceState *platform_bus_dev;
-     PCIBus       *pci_bus;
--    PFlashCFI01  *flash;
-+    PFlashCFI01  *flash[2];
-     MemoryRegion system_iocsr;
-     MemoryRegion iocsr_mem;
-     AddressSpace as_iocsr;
--- 
-2.25.1
-
+> One thing I forgot.=0A=
+>=0A=
+> Please add a test.=A0 tests/qtest/bios-tables-test.c=0A=
+=0A=
+IIUC, we need to add a test for aarch64 to test the interface with the=0A=
+acpi-generic-initiator object.=0A=
+=0A=
+> + relevant table dumps.=0A=
+=0A=
+Sorry it isn't clear where do you want me to add this. In the git commit=0A=
+message?=0A=
 
