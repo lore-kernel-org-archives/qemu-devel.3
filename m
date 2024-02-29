@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC7F4C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 13:15:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18C55C54E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 13:15:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfgDA-0005y5-1v; Thu, 29 Feb 2024 08:12:32 -0500
+	id 1rfgD7-0005vr-Si; Thu, 29 Feb 2024 08:12:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rfgCd-0005eu-Oa; Thu, 29 Feb 2024 08:11:59 -0500
-Received: from szxga04-in.huawei.com ([45.249.212.190])
+ id 1rfgCc-0005co-Ef; Thu, 29 Feb 2024 08:11:58 -0500
+Received: from szxga05-in.huawei.com ([45.249.212.191])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rfgCa-0002eC-QG; Thu, 29 Feb 2024 08:11:59 -0500
-Received: from mail.maildlp.com (unknown [172.19.163.17])
- by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4Tls5h2MZMz1xpV6;
- Thu, 29 Feb 2024 21:10:16 +0800 (CST)
+ id 1rfgCZ-0002ds-71; Thu, 29 Feb 2024 08:11:58 -0500
+Received: from mail.maildlp.com (unknown [172.19.88.234])
+ by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4Tls7M6RrCz1FLRM;
+ Thu, 29 Feb 2024 21:11:43 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id A362C1A0172;
- Thu, 29 Feb 2024 21:11:47 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 9E335140390;
+ Thu, 29 Feb 2024 21:11:45 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Thu, 29 Feb
- 2024 21:11:46 +0800
+ 2024 21:11:45 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [RFC PATCH v5 08/22] target/arm: Handle IS/FS in ISR_EL1 for NMI
-Date: Thu, 29 Feb 2024 13:10:25 +0000
-Message-ID: <20240229131039.1868904-9-ruanjinjie@huawei.com>
+Subject: [RFC PATCH v5 06/22] target/arm: Add support for Non-maskable
+ Interrupt
+Date: Thu, 29 Feb 2024 13:10:23 +0000
+Message-ID: <20240229131039.1868904-7-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240229131039.1868904-1-ruanjinjie@huawei.com>
 References: <20240229131039.1868904-1-ruanjinjie@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-Originating-IP: [10.67.174.55]
 X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
  kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.190;
- envelope-from=ruanjinjie@huawei.com; helo=szxga04-in.huawei.com
+Received-SPF: pass client-ip=45.249.212.191;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga05-in.huawei.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
@@ -69,68 +70,278 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add IS and FS bit in ISR_EL1 and handle the read. With CPU_INTERRUPT_NMI or
-CPU_INTERRUPT_VNMI, both CPSR_I and ISR_IS must be set. With
-CPU_INTERRUPT_VFIQ and HCRX_EL2.VFNMI set, both CPSR_F and ISR_FS must be set.
+This only implements the external delivery method via the GICv3.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 ---
-v4；
-- Also handle VNMI.
+v4:
+- Accept NMI unconditionally for arm_cpu_has_work() but add comment.
+- Change from & to && for EXCP_IRQ or EXCP_FIQ.
+- Refator nmi mask in arm_excp_unmasked().
+- Also handle VNMI in arm_cpu_exec_interrupt() and arm_cpu_set_irq().
+- Rename virtual to Virtual.
 v3:
-- CPU_INTERRUPT_NMI do not set FIQ, so remove it.
-- With CPU_INTERRUPT_NMI, both CPSR_I and ISR_IS must be set.
+- Not include CPU_INTERRUPT_NMI when FEAT_NMI not enabled
+- Add ARM_CPU_VNMI.
+- Refator nmi mask in arm_excp_unmasked().
+- Test SCTLR_ELx.NMI for ALLINT mask for NMI.
 ---
- target/arm/cpu.h    |  2 ++
- target/arm/helper.c | 13 +++++++++++++
- 2 files changed, 15 insertions(+)
+ target/arm/cpu-qom.h   |  4 +-
+ target/arm/cpu.c       | 88 +++++++++++++++++++++++++++++++++++++++---
+ target/arm/cpu.h       |  4 ++
+ target/arm/helper.c    |  2 +
+ target/arm/internals.h | 10 +++++
+ 5 files changed, 101 insertions(+), 7 deletions(-)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 6aa9f1e9ba..4f9a8127f9 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1474,6 +1474,8 @@ FIELD(CPTR_EL3, TCPAC, 31, 1)
- #define CPSR_N (1U << 31)
- #define CPSR_NZCV (CPSR_N | CPSR_Z | CPSR_C | CPSR_V)
- #define CPSR_AIF (CPSR_A | CPSR_I | CPSR_F)
-+#define ISR_FS (1U << 9)
-+#define ISR_IS (1U << 10)
+diff --git a/target/arm/cpu-qom.h b/target/arm/cpu-qom.h
+index 8e032691db..e0c9e18036 100644
+--- a/target/arm/cpu-qom.h
++++ b/target/arm/cpu-qom.h
+@@ -36,11 +36,13 @@ DECLARE_CLASS_CHECKERS(AArch64CPUClass, AARCH64_CPU,
+ #define ARM_CPU_TYPE_SUFFIX "-" TYPE_ARM_CPU
+ #define ARM_CPU_TYPE_NAME(name) (name ARM_CPU_TYPE_SUFFIX)
  
- #define CPSR_IT (CPSR_IT_0_1 | CPSR_IT_2_7)
- #define CACHED_CPSR_BITS (CPSR_T | CPSR_AIF | CPSR_GE | CPSR_IT | CPSR_Q \
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 7cdc90e9e3..ac44498537 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -2018,15 +2018,28 @@ static uint64_t isr_read(CPUARMState *env, const ARMCPRegInfo *ri)
-         if (cs->interrupt_request & CPU_INTERRUPT_VIRQ) {
-             ret |= CPSR_I;
-         }
-+        if (cs->interrupt_request & CPU_INTERRUPT_VNMI) {
-+            ret |= ISR_IS;
-+            ret |= CPSR_I;
-+        }
-     } else {
-         if (cs->interrupt_request & CPU_INTERRUPT_HARD) {
-             ret |= CPSR_I;
-         }
-+
-+        if (cs->interrupt_request & CPU_INTERRUPT_NMI) {
-+            ret |= ISR_IS;
-+            ret |= CPSR_I;
-+        }
+-/* Meanings of the ARMCPU object's four inbound GPIO lines */
++/* Meanings of the ARMCPU object's six inbound GPIO lines */
+ #define ARM_CPU_IRQ 0
+ #define ARM_CPU_FIQ 1
+ #define ARM_CPU_VIRQ 2
+ #define ARM_CPU_VFIQ 3
++#define ARM_CPU_NMI 4
++#define ARM_CPU_VNMI 5
+ 
+ /* For M profile, some registers are banked secure vs non-secure;
+  * these are represented as a 2-element array where the first element
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 5fa86bc8d5..ad6e6200f6 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -122,6 +122,13 @@ void arm_restore_state_to_opc(CPUState *cs,
+ }
+ #endif /* CONFIG_TCG */
+ 
++/*
++ * With SCTLR_ELx.NMI == 0, IRQ with Superpriority is masked identically with
++ * IRQ without Superpriority. Moreover, if the GIC is configured so that
++ * FEAT_GICv3_NMI is only set if FEAT_NMI is set, then we won't ever see
++ * CPU_INTERRUPT_*NMI anyway. So we might as well accept NMI here
++ * unconditionally.
++ */
+ static bool arm_cpu_has_work(CPUState *cs)
+ {
+     ARMCPU *cpu = ARM_CPU(cs);
+@@ -129,6 +136,7 @@ static bool arm_cpu_has_work(CPUState *cs)
+     return (cpu->power_state != PSCI_OFF)
+         && cs->interrupt_request &
+         (CPU_INTERRUPT_FIQ | CPU_INTERRUPT_HARD
++         | CPU_INTERRUPT_NMI | CPU_INTERRUPT_VNMI
+          | CPU_INTERRUPT_VFIQ | CPU_INTERRUPT_VIRQ | CPU_INTERRUPT_VSERR
+          | CPU_INTERRUPT_EXITTB);
+ }
+@@ -668,6 +676,7 @@ static inline bool arm_excp_unmasked(CPUState *cs, unsigned int excp_idx,
+     CPUARMState *env = cpu_env(cs);
+     bool pstate_unmasked;
+     bool unmasked = false;
++    bool allIntMask = false;
+ 
+     /*
+      * Don't take exceptions if they target a lower EL.
+@@ -678,13 +687,31 @@ static inline bool arm_excp_unmasked(CPUState *cs, unsigned int excp_idx,
+         return false;
      }
  
-     if (hcr_el2 & HCR_FMO) {
-         if (cs->interrupt_request & CPU_INTERRUPT_VFIQ) {
-             ret |= CPSR_F;
++    if (cpu_isar_feature(aa64_nmi, env_archcpu(env)) &&
++        env->cp15.sctlr_el[target_el] & SCTLR_NMI && cur_el == target_el) {
++        allIntMask = env->pstate & PSTATE_ALLINT ||
++                     ((env->cp15.sctlr_el[target_el] & SCTLR_SPINTMASK) &&
++                      (env->pstate & PSTATE_SP));
++    }
 +
-+            if (env->cp15.hcrx_el2 & HCRX_VFNMI) {
-+                ret |= ISR_FS;
-+            }
+     switch (excp_idx) {
++    case EXCP_NMI:
++        pstate_unmasked = !allIntMask;
++        break;
++
++    case EXCP_VNMI:
++        if ((!(hcr_el2 & HCR_IMO) && !(hcr_el2 & HCR_FMO)) ||
++             (hcr_el2 & HCR_TGE)) {
++            /* VNMIs(VIRQs or VFIQs) are only taken when hypervized.  */
++            return false;
++        }
++        return !allIntMask;
+     case EXCP_FIQ:
+-        pstate_unmasked = !(env->daif & PSTATE_F);
++        pstate_unmasked = (!(env->daif & PSTATE_F)) && (!allIntMask);
+         break;
+ 
+     case EXCP_IRQ:
+-        pstate_unmasked = !(env->daif & PSTATE_I);
++        pstate_unmasked = (!(env->daif & PSTATE_I)) && (!allIntMask);
+         break;
+ 
+     case EXCP_VFIQ:
+@@ -692,13 +719,13 @@ static inline bool arm_excp_unmasked(CPUState *cs, unsigned int excp_idx,
+             /* VFIQs are only taken when hypervized.  */
+             return false;
          }
+-        return !(env->daif & PSTATE_F);
++        return !(env->daif & PSTATE_F) && (!allIntMask);
+     case EXCP_VIRQ:
+         if (!(hcr_el2 & HCR_IMO) || (hcr_el2 & HCR_TGE)) {
+             /* VIRQs are only taken when hypervized.  */
+             return false;
+         }
+-        return !(env->daif & PSTATE_I);
++        return !(env->daif & PSTATE_I) && (!allIntMask);
+     case EXCP_VSERR:
+         if (!(hcr_el2 & HCR_AMO) || (hcr_el2 & HCR_TGE)) {
+             /* VIRQs are only taken when hypervized.  */
+@@ -804,6 +831,24 @@ static bool arm_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+ 
+     /* The prioritization of interrupts is IMPLEMENTATION DEFINED. */
+ 
++    if (cpu_isar_feature(aa64_nmi, env_archcpu(env))) {
++        if (interrupt_request & CPU_INTERRUPT_NMI) {
++            excp_idx = EXCP_NMI;
++            target_el = arm_phys_excp_target_el(cs, excp_idx, cur_el, secure);
++            if (arm_excp_unmasked(cs, excp_idx, target_el,
++                                  cur_el, secure, hcr_el2)) {
++                goto found;
++            }
++        }
++        if (interrupt_request & CPU_INTERRUPT_VNMI) {
++            excp_idx = EXCP_VNMI;
++            target_el = arm_phys_excp_target_el(cs, excp_idx, cur_el, secure);
++            if (arm_excp_unmasked(cs, excp_idx, target_el,
++                                  cur_el, secure, hcr_el2)) {
++                goto found;
++            }
++        }
++    }
+     if (interrupt_request & CPU_INTERRUPT_FIQ) {
+         excp_idx = EXCP_FIQ;
+         target_el = arm_phys_excp_target_el(cs, excp_idx, cur_el, secure);
+@@ -900,6 +945,31 @@ void arm_cpu_update_vfiq(ARMCPU *cpu)
+     }
+ }
+ 
++void arm_cpu_update_vnmi(ARMCPU *cpu)
++{
++    /*
++     * Update the interrupt level for VNMI, which is the logical OR of
++     * the HCRX_EL2.VINMI or HCRX_EL2.VFNMI bit and the input line level from
++     * the GIC.
++     */
++    CPUARMState *env = &cpu->env;
++    CPUState *cs = CPU(cpu);
++
++    bool new_state = ((env->cp15.hcr_el2 & HCR_VI) &&
++                      (env->cp15.hcrx_el2 & HCRX_VINMI)) ||
++                     ((env->cp15.hcr_el2 & HCR_VF) &&
++                      (env->cp15.hcrx_el2 & HCRX_VFNMI)) ||
++        (env->irq_line_state & CPU_INTERRUPT_VNMI);
++
++    if (new_state != ((cs->interrupt_request & CPU_INTERRUPT_VNMI) != 0)) {
++        if (new_state) {
++            cpu_interrupt(cs, CPU_INTERRUPT_VNMI);
++        } else {
++            cpu_reset_interrupt(cs, CPU_INTERRUPT_VNMI);
++        }
++    }
++}
++
+ void arm_cpu_update_vserr(ARMCPU *cpu)
+ {
+     /*
+@@ -929,7 +999,9 @@ static void arm_cpu_set_irq(void *opaque, int irq, int level)
+         [ARM_CPU_IRQ] = CPU_INTERRUPT_HARD,
+         [ARM_CPU_FIQ] = CPU_INTERRUPT_FIQ,
+         [ARM_CPU_VIRQ] = CPU_INTERRUPT_VIRQ,
+-        [ARM_CPU_VFIQ] = CPU_INTERRUPT_VFIQ
++        [ARM_CPU_VFIQ] = CPU_INTERRUPT_VFIQ,
++        [ARM_CPU_NMI] = CPU_INTERRUPT_NMI,
++        [ARM_CPU_VNMI] = CPU_INTERRUPT_VNMI
+     };
+ 
+     if (!arm_feature(env, ARM_FEATURE_EL2) &&
+@@ -955,8 +1027,12 @@ static void arm_cpu_set_irq(void *opaque, int irq, int level)
+     case ARM_CPU_VFIQ:
+         arm_cpu_update_vfiq(cpu);
+         break;
++    case ARM_CPU_VNMI:
++        arm_cpu_update_vnmi(cpu);
++        break;
+     case ARM_CPU_IRQ:
+     case ARM_CPU_FIQ:
++    case ARM_CPU_NMI:
+         if (level) {
+             cpu_interrupt(cs, mask[irq]);
+         } else {
+@@ -1355,7 +1431,7 @@ static void arm_cpu_initfn(Object *obj)
+          */
+         qdev_init_gpio_in(DEVICE(cpu), arm_cpu_kvm_set_irq, 4);
      } else {
-         if (cs->interrupt_request & CPU_INTERRUPT_FIQ) {
+-        qdev_init_gpio_in(DEVICE(cpu), arm_cpu_set_irq, 4);
++        qdev_init_gpio_in(DEVICE(cpu), arm_cpu_set_irq, 6);
+     }
+ 
+     qdev_init_gpio_out(DEVICE(cpu), cpu->gt_timer_outputs,
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index abb453f733..6aa9f1e9ba 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -60,6 +60,8 @@
+ #define EXCP_DIVBYZERO      23   /* v7M DIVBYZERO UsageFault */
+ #define EXCP_VSERR          24
+ #define EXCP_GPC            25   /* v9 Granule Protection Check Fault */
++#define EXCP_NMI            26
++#define EXCP_VNMI           27
+ /* NB: add new EXCP_ defines to the array in arm_log_exception() too */
+ 
+ #define ARMV7M_EXCP_RESET   1
+@@ -79,6 +81,8 @@
+ #define CPU_INTERRUPT_VIRQ  CPU_INTERRUPT_TGT_EXT_2
+ #define CPU_INTERRUPT_VFIQ  CPU_INTERRUPT_TGT_EXT_3
+ #define CPU_INTERRUPT_VSERR CPU_INTERRUPT_TGT_INT_0
++#define CPU_INTERRUPT_NMI   CPU_INTERRUPT_TGT_EXT_4
++#define CPU_INTERRUPT_VNMI  CPU_INTERRUPT_TGT_EXT_0
+ 
+ /* The usual mapping for an AArch64 system register to its AArch32
+  * counterpart is for the 32 bit world to have access to the lower
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 497b6e4bdf..4b4c8e279d 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -10628,6 +10628,8 @@ void arm_log_exception(CPUState *cs)
+             [EXCP_DIVBYZERO] = "v7M DIVBYZERO UsageFault",
+             [EXCP_VSERR] = "Virtual SERR",
+             [EXCP_GPC] = "Granule Protection Check",
++            [EXCP_NMI] = "NMI",
++            [EXCP_VNMI] = "Virtual NMI"
+         };
+ 
+         if (idx >= 0 && idx < ARRAY_SIZE(excnames)) {
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index fee65caba5..4ff19b1b44 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -958,6 +958,16 @@ void arm_cpu_update_virq(ARMCPU *cpu);
+  */
+ void arm_cpu_update_vfiq(ARMCPU *cpu);
+ 
++/**
++ * arm_cpu_update_vnmi: Update CPU_INTERRUPT_VNMI bit in cs->interrupt_request
++ *
++ * Update the CPU_INTERRUPT_VNMI bit in cs->interrupt_request, following
++ * a change to either the input VNMI line from the GIC or the HCRX_EL2.VINMI
++ * or the HCRX_EL2.VFNMI.
++ * Must be called with the BQL held.
++ */
++void arm_cpu_update_vnmi(ARMCPU *cpu);
++
+ /**
+  * arm_cpu_update_vserr: Update CPU_INTERRUPT_VSERR bit
+  *
 -- 
 2.34.1
 
