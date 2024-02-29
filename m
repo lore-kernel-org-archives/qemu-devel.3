@@ -4,55 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CD05C54798
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 23:02:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01C4FC54798
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 23:03:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfpPJ-00056g-3T; Thu, 29 Feb 2024 18:01:41 -0500
+	id 1rfpQI-0005Te-T5; Thu, 29 Feb 2024 18:02:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rfpPB-000567-Kc
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 18:01:39 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rfpP8-0006QO-Ti
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 18:01:33 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id B54D14E601B;
- Fri,  1 Mar 2024 00:01:26 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id xdO5vs9119Vy; Fri,  1 Mar 2024 00:01:24 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id B8C144E6004; Fri,  1 Mar 2024 00:01:24 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id B72B87456FE;
- Fri,  1 Mar 2024 00:01:24 +0100 (CET)
-Date: Fri, 1 Mar 2024 00:01:24 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Sven Schnelle <svens@stackframe.org>
-cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, 
- deller@gmx.de
-Subject: Re: [PATCH] hw/scsi/lsi53c895a: add timer to scripts processing
-In-Reply-To: <875xy7xbuz.fsf@t14.stackframe.org>
-Message-ID: <f5fe5ee1-fd43-7cf8-73bc-d0eef4b5eb98@eik.bme.hu>
-References: <20240229193031.1677365-1-svens@stackframe.org>
- <3cec3ef8-557f-c481-c64c-9b8288b16a31@eik.bme.hu>
- <875xy7xbuz.fsf@t14.stackframe.org>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rfpQG-0005T0-MM
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 18:02:41 -0500
+Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rfpQB-0006Ui-R8
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 18:02:40 -0500
+Received: by mail-oi1-x22f.google.com with SMTP id
+ 5614622812f47-3c1a7d51fb5so1126154b6e.1
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 15:02:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709247746; x=1709852546; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+FjtQ/FsVILsUbpCoTp3msJhtQx3r+SxfudK/yQyxoI=;
+ b=ANmB9jevY9gILIbAyEONTW1sRRU6f15fvH93MURDwfnorpiwJyYdqvqI70ntqmosM5
+ CDzmAAd/gn8chy6su24xTSLdRauPPdOwq1Jil1p9FO218AR1oQPLn7A0b1EMgn8w2ROF
+ 7GmbZdSz4sDMDHiyV/uG2CY3VNk1tHFAa9QJAeygInixaR82nM5KQzIce+DH8T1WP/md
+ YyM3q0bmLYXHCeAAsJulKQYfiJvma+4WD7cwoo2Jb/xJ143CGMJeFmAWCVmhP9I9zg1u
+ 5xh9Q8kSmV6FJ1aDmibJ8yjZQEM8IA2ynOODbihKF+OzU6XjsAqtLqGc1DtBC0lI/oxU
+ JRJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709247746; x=1709852546;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+FjtQ/FsVILsUbpCoTp3msJhtQx3r+SxfudK/yQyxoI=;
+ b=KXfvm01KM1GKbo9l39oCNAIeQaJoQxDhRfTkdtLrMv4t6NsLSuORZ9G/RuS20dQBtQ
+ RKAGEtmZO6kn3m8seRgAJ5053N2Cxz8bR0avry3sR+ccDPQFAB68iZBhJQlVzEi+sp9q
+ HRibOvq1m6hH4HlLqsoekT/eKAA9CTiamdJqslkklbb6vRjL6uNINv+oRX2Lor8LxZyX
+ FrUhvroo7CBCNunVlJgUNdnxxgUM90yu6hiVHWC0xEiAwFrzPxlLU0dw1qxh6BNPyzDg
+ Ebf2zVT/s2uLia33DEPOGBnjHUmc2Gj8m9sOSDD69WnEjb3qfwgVu+bVOTufCfAcijYE
+ UAMA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVMfB37e7kyqvwJ6LG+axeb7n2GzQKBrL1RSLis0/ehNlik+KWW/GEZV63kZuboa6haqDTmn4FDgA4ycfWe40njZsv9dfk=
+X-Gm-Message-State: AOJu0YxK5X5ogl+HkcY1VoJRdkP9q1eYHhwGLTXyPPt8Pj2GCV8qQrIw
+ HtfLl0LdpICVWAZPfE99aNrtAioRidSBF6rODjA71JO3XV6iTbXSP0lZIle4+jI=
+X-Google-Smtp-Source: AGHT+IETvL450/wveP8Yf5S/xC8o3Tu4q/7Y4AM00unAuToaThWyjjffAGD53vNi4LfIpqNqHQaXgg==
+X-Received: by 2002:a05:6808:1202:b0:3c0:72ba:64e with SMTP id
+ a2-20020a056808120200b003c072ba064emr21624oil.39.1709247746247; 
+ Thu, 29 Feb 2024 15:02:26 -0800 (PST)
+Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
+ [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
+ v184-20020a6389c1000000b005e43cb66a7asm1856051pgd.87.2024.02.29.15.02.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 29 Feb 2024 15:02:25 -0800 (PST)
+Message-ID: <8d494fe8-c0f0-47b3-9f59-ac69f10c1e64@linaro.org>
+Date: Thu, 29 Feb 2024 13:02:22 -1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v5 06/22] target/arm: Add support for Non-maskable
+ Interrupt
+Content-Language: en-US
+To: Jinjie Ruan <ruanjinjie@huawei.com>, peter.maydell@linaro.org,
+ eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20240229131039.1868904-1-ruanjinjie@huawei.com>
+ <20240229131039.1868904-7-ruanjinjie@huawei.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240229131039.1868904-7-ruanjinjie@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22f.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,168 +99,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 29 Feb 2024, Sven Schnelle wrote:
-> BALATON Zoltan <balaton@eik.bme.hu> writes:
->
->> On Thu, 29 Feb 2024, Sven Schnelle wrote:
->>> Some OS's like HP-UX 10.20 are spinn
->>
->> I guess the above line is left here by accident.
->
-> Yes.
->
->>> HP-UX 10.20 seems to make the lsi53c895a spinning on a memory location
->>> under certain circumstances. As the SCSI controller and CPU are not
->>> running at the same time this loop will never finish. After some
->>> time, the check loop interrupts with a unexpected device disconnect.
->>> This works, but is slow because the kernel resets the scsi controller.
->>> Instead of signaling UDC, start a timer and exit the loop. Until the
->>> timer fires, the CPU can process instructions until the timer fires.
->>> The limit of instructions is also reduced because scripts running
->>> on the SCSI processor are usually very short. This keeps the time
->>> until the loop-exit short.
->>>
->>> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
->>> Signed-off-by: Sven Schnelle <svens@stackframe.org>
->>> ---
->>> hw/scsi/lsi53c895a.c | 33 +++++++++++++++++++++++++--------
->>> 1 file changed, 25 insertions(+), 8 deletions(-)
->>>
->>> diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
->>> index d607a5f9fb..0b6f1dc72f 100644
->>> --- a/hw/scsi/lsi53c895a.c
->>> +++ b/hw/scsi/lsi53c895a.c
->>> @@ -188,7 +188,7 @@ static const char *names[] = {
->>> #define LSI_TAG_VALID     (1 << 16)
->>>
->>> /* Maximum instructions to process. */
->>> -#define LSI_MAX_INSN    10000
->>> +#define LSI_MAX_INSN    100
->>>
->>> typedef struct lsi_request {
->>>     SCSIRequest *req;
->>> @@ -205,6 +205,7 @@ enum {
->>>     LSI_WAIT_RESELECT, /* Wait Reselect instruction has been issued */
->>>     LSI_DMA_SCRIPTS, /* processing DMA from lsi_execute_script */
->>>     LSI_DMA_IN_PROGRESS, /* DMA operation is in progress */
->>> +    LSI_WAIT_SCRIPTS, /* SCRIPTS stopped because of instruction count limit */
->>> };
->>>
->>> enum {
->>> @@ -224,6 +225,7 @@ struct LSIState {
->>>     MemoryRegion ram_io;
->>>     MemoryRegion io_io;
->>>     AddressSpace pci_io_as;
->>> +    QEMUTimer *scripts_timer;
->>>
->>>     int carry; /* ??? Should this be an a visible register somewhere?  */
->>>     int status;
->>> @@ -415,6 +417,7 @@ static void lsi_soft_reset(LSIState *s)
->>>     s->sbr = 0;
->>>     assert(QTAILQ_EMPTY(&s->queue));
->>>     assert(!s->current);
->>> +    timer_del(s->scripts_timer);
->>
->> Maybe the rimer needs to be deleted in lsi_scsi_exit() too but I'm not
->> sure.
->
-> I added it, thanks.
->
->>> }
->>>
->>> static int lsi_dma_40bit(LSIState *s)
->>> @@ -1127,6 +1130,12 @@ static void lsi_wait_reselect(LSIState *s)
->>>     }
->>> }
->>>
->>> +static void lsi_scripts_timer_start(LSIState *s)
->>> +{
->>> +    trace_lsi_scripts_timer_start();
->>> +    timer_mod(s->scripts_timer, qemu_clock_get_us(QEMU_CLOCK_VIRTUAL) + 500);
->>> +}
->>> +
->>> static void lsi_execute_script(LSIState *s)
->>> {
->>>     PCIDevice *pci_dev = PCI_DEVICE(s);
->>> @@ -1152,13 +1161,8 @@ again:
->>>      * which should be enough for all valid use cases).
->>>      */
->>
->> Does tha above comment need updating to say what the code does now?
->
-> Yes, i changed it to describe the new method:
->
->    /*
->     * Some windows drivers make the device spin waiting for a memory location
->     * to change. If we have executed more than LSI_MAX_INSN instructions then
->     * assume this is the case and start a timer. Until the timer fires, the
->     * host CPU has a chance to run and change the memory location.
+On 2/29/24 03:10, Jinjie Ruan via wrote:
+> +    bool new_state = ((env->cp15.hcr_el2 & HCR_VI) &&
+> +                      (env->cp15.hcrx_el2 & HCRX_VINMI)) ||
+> +                     ((env->cp15.hcr_el2 & HCR_VF) &&
+> +                      (env->cp15.hcrx_el2 & HCRX_VFNMI)) ||
+> +        (env->irq_line_state & CPU_INTERRUPT_VNMI);
 
-Is that the host or guest CPU? I thought the guest vcpu needs to get a 
-chance to do something about this but maybe I did not get the problem at 
-all.
+Because the GIC cannot signal an FIQ with superpriority, I think you should not include VF 
+&& VFNMI in CPU_INTERRUPT_VNMI.
 
-Regards,
-BALATON Zoltan
+See comments for patch 8.
 
->     *
->     * Another issue (CVE-2023-0330) can occur if the script is programmed to
->     * trigger itself again and again. Avoid this problem by stopping after
->     * being called multiple times in a reentrant way (8 is an arbitrary value
->     * which should be enough for all valid use cases).
->     */
->
->> Regards,
->> BALATON Zoltan
->>
->>>     if (++insn_processed > LSI_MAX_INSN || reentrancy_level > 8) {
->>> -        if (!(s->sien0 & LSI_SIST0_UDC)) {
->>> -            qemu_log_mask(LOG_GUEST_ERROR,
->>> -                          "lsi_scsi: inf. loop with UDC masked");
->>> -        }
->>> -        lsi_script_scsi_interrupt(s, LSI_SIST0_UDC, 0);
->>> -        lsi_disconnect(s);
->>> -        trace_lsi_execute_script_stop();
->>> +        s->waiting = LSI_WAIT_SCRIPTS;
->>> +        lsi_scripts_timer_start(s);
->>>         reentrancy_level--;
->>>         return;
->>>     }
->>> @@ -2197,6 +2201,9 @@ static int lsi_post_load(void *opaque, int version_id)
->>>         return -EINVAL;
->>>     }
->>>
->>> +    if (s->waiting == LSI_WAIT_SCRIPTS) {
->>> +        lsi_scripts_timer_start(s);
->>> +    }
->>>     return 0;
->>> }
->>>
->>> @@ -2294,6 +2301,15 @@ static const struct SCSIBusInfo lsi_scsi_info = {
->>>     .cancel = lsi_request_cancelled
->>> };
->>>
->>> +static void scripts_timer_cb(void *opaque)
->>> +{
->>> +    LSIState *s = opaque;
->>> +
->>> +    trace_lsi_scripts_timer_triggered();
->>> +    s->waiting = LSI_NOWAIT;
->>> +    lsi_execute_script(s);
->>> +}
->>> +
->>> static void lsi_scsi_realize(PCIDevice *dev, Error **errp)
->>> {
->>>     LSIState *s = LSI53C895A(dev);
->>> @@ -2313,6 +2329,7 @@ static void lsi_scsi_realize(PCIDevice *dev, Error **errp)
->>>                           "lsi-ram", 0x2000);
->>>     memory_region_init_io(&s->io_io, OBJECT(s), &lsi_io_ops, s,
->>>                           "lsi-io", 256);
->>> +    s->scripts_timer = timer_new_us(QEMU_CLOCK_VIRTUAL, scripts_timer_cb, s);
->>>
->>>     /*
->>>      * Since we use the address-space API to interact with ram_io, disable the
->>>
->
->
+
+r~
 
