@@ -4,85 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69812C48BF6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D888C54E41
 	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 08:33:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfbqO-0000xx-Og; Thu, 29 Feb 2024 03:32:44 -0500
+	id 1rfbq7-0000tF-Ar; Thu, 29 Feb 2024 03:32:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1rfbqM-0000xi-It
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 03:32:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=c5Gn=KG=kaod.org=clg@ozlabs.org>)
+ id 1rfbq5-0000sm-R6; Thu, 29 Feb 2024 03:32:25 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1rfbqK-00033W-OZ
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 03:32:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709195559;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sTjNzaS1HA+RGFL3kdQwPORlJBszUM9+fgGl5yYyEEM=;
- b=DbpawrsVmVfn+p+s2bxMMwidjhrwNOI+lW4rLGHAgViAfXl0l+0ltRIclzggdu3ZGAtVSh
- Tfkxtq7/nNG+4ZxGS9uIGv6c1dRtgK7DmoJ79I+Zzg9QTuGzUc/01fAeFTDpv35Q8vMPkx
- R6+f8f2PyG/Um3NeGfHvhxdFSGO4KNg=
-Received: from mail-yb1-f197.google.com (mail-yb1-f197.google.com
- [209.85.219.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-609-K119ODjEPv2m_MWdJkCInA-1; Thu, 29 Feb 2024 03:32:37 -0500
-X-MC-Unique: K119ODjEPv2m_MWdJkCInA-1
-Received: by mail-yb1-f197.google.com with SMTP id
- 3f1490d57ef6-dcc05887ee9so997468276.1
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 00:32:37 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709195557; x=1709800357;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=sTjNzaS1HA+RGFL3kdQwPORlJBszUM9+fgGl5yYyEEM=;
- b=cEqoTk16XoczXH9tY0y4R5/WD4UbAhT+iYbxpehg2g485bwmKG/NXgElkgsV402Eex
- VdfsrMtTtfviD5vgitTx3C73OGCN/h/HcGRgnKV5YZrKLFlCAvMrT1NrPdjVfIPO8zwC
- +asHIho6Pb36WuyD5YwIAP9xnS/2Mlt+XYFGSglQq7dNbtHrTth9V9LI8ly7L6GzzNKf
- Vb6VuZrnobpn4/JhV0Z84Dk88GgxqYhKtQLaoMEkeqhNzOkiPyJO6WGUjCZpOD+NxCo7
- 2ZaNMmpQiDCdRN4WmhyCKeWoUQsxQ2iqw7QubBf7pQNxiGIE0gCgpZyvXJqMyEi7K/U7
- 66sg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU8mCBNcEk9wk2TTXA7IYMshIdths1RaUlgZ7Zg1YeH5duL3iS3DTqNwZbFeo8q8mFC2adc5/Em2oNRla5nASmEKs61c6Q=
-X-Gm-Message-State: AOJu0YxLyVivXFi+06VCaLqFh9bF973FjHYOKE4Eth7rk58mJIf3VSjV
- N0WJUnkixIbEqHgA3+LGGB1M1Lgx3PB6WopoXpb+it9svJ1z3qJAqg4Is4J8rIizP8/9LY12EtN
- C5BQqVVMh9n2isbH+Dy7xecUTql8VxL9CTSvjrrMNS6Qjjy0bztYCusuItKSKaKpDtCtkNAhb40
- ZQgQAtChdx2MISl7fubS4ZPh0xm9I=
-X-Received: by 2002:a5b:987:0:b0:dcd:9808:256c with SMTP id
- c7-20020a5b0987000000b00dcd9808256cmr1463597ybq.58.1709195557157; 
- Thu, 29 Feb 2024 00:32:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFI6ZE5etDt3cQLkbm0fXM1meuWsoLNjjD9oA7H/L9WOsQFq8xufdhheB/PiRRAX/BBkM7xGc14TjlEDwgNr+0=
-X-Received: by 2002:a5b:987:0:b0:dcd:9808:256c with SMTP id
- c7-20020a5b0987000000b00dcd9808256cmr1463585ybq.58.1709195556803; Thu, 29 Feb
- 2024 00:32:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <SRS0=c5Gn=KG=kaod.org=clg@ozlabs.org>)
+ id 1rfbq2-00030C-EH; Thu, 29 Feb 2024 03:32:25 -0500
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Tlkwn55Vkz4wyj;
+ Thu, 29 Feb 2024 19:32:09 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Tlkwk4JZfz4wxs;
+ Thu, 29 Feb 2024 19:32:05 +1100 (AEDT)
+Message-ID: <d6e7d67f-7498-4817-8586-8af216f9d739@kaod.org>
+Date: Thu, 29 Feb 2024 09:32:01 +0100
 MIME-Version: 1.0
-References: <13625712.uLZWGnKmhe@valdaarhun>
-In-Reply-To: <13625712.uLZWGnKmhe@valdaarhun>
-From: Stefano Garzarella <sgarzare@redhat.com>
-Date: Thu, 29 Feb 2024 09:32:25 +0100
-Message-ID: <CAGxU2F4jx5m5_ijNoWZpVK_MepvtDBY8L70-dSZmRUPmTskCNw@mail.gmail.com>
-Subject: Re: Intention to work on GSoC project
-To: Sahil <icegambit91@gmail.com>
-Cc: eperezma@redhat.com, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.102,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 8/8] aspeed: Add an AST2700 eval board
+Content-Language: en-US, fr
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "andrew@codeconstruct.com.au" <andrew@codeconstruct.com.au>,
+ "joel@jms.id.au" <joel@jms.id.au>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>,
+ Yunlin Tang <yunlin.tang@aspeedtech.com>
+References: <20240229074234.976164-1-jamin_lin@aspeedtech.com>
+ <20240229074234.976164-9-jamin_lin@aspeedtech.com>
+ <SI2PR06MB5041B1EA856220BB77B8809DFC5F2@SI2PR06MB5041.apcprd06.prod.outlook.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <SI2PR06MB5041B1EA856220BB77B8809DFC5F2@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=c5Gn=KG=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,82 +70,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Sahil,
+Hello Jamin,
 
-On Sun, Feb 25, 2024 at 10:38=E2=80=AFPM Sahil <icegambit91@gmail.com> wrot=
-e:
->
-> Hi,
->
-> My name is Sahil and I go by the pseudonym 'valdaarhun' on Github. I have
-> never contributed to QEMU before but I have used it a few times as an end
-> user. I developed an interest in virtualization during my internship at
-> VMware and would like to dive deeper in this subfield.
->
-> My current full-time job does not allow me to take part in external progr=
-ams
-> that are paid. I would like to work on one of the proposed projects outsi=
-de
-> of GSoC.
+> I tried to send the patch series to support AST2700 but I encountered some patches
+> were rejected by server IP 211.20.114.70.
+> 
+> Error Log:
+> qemu-devel@nongnu.org
+> eggs.gnu.org
+> Remote Server returned '550-[SPF] 211.20.114.70 is not allowed to send mail from aspeedtech.com. 550 Please see http://www.openspf.org/Why?scope=mfrom;identity=jamin_lin@aspeedtech.com;ip=211.20.114.70'
+> qemu-arm@nongnu.org
+> eggs.gnu.org
+> Remote Server returned '550-[SPF] 211.20.114.70 is not allowed to send mail from aspeedtech.com. 550 Please see http://www.openspf.org/Why?scope=mfrom;identity=jamin_lin@aspeedtech.com;ip=211.20.114.70
 
-Sure, not a problem at all, also because for this year QEMU was not
-accepted in GSoC, so anybody can work on those projects if they have
-time
+$ host -t txt aspeedtech.com
+aspeedtech.com descriptive text "google-site-verification=77FsedIzGqFvs3bFfy5L2lT_AGEWVecyoJwZN7KDVnM"
+aspeedtech.com descriptive text "v=spf1 ip4:211.20.114.72 include:spf.protection.outlook.com -all"
+aspeedtech.com descriptive text "google-site-verification=sBPPFeYyix6oWeC3GRJ64zQNFLJpN6SFBMT8RX8ZuME"
 
-> I have gone through QEMU's list of GSoC '24 projects [1] and am
-> interested in two of them:
->
-> 1. Add packed virtqueue to Shadow Virtqueue
-> 2. vhost-user memory isolation
->
-> Based on what I have understood, they are somewhat related and are part
-> of the migration subsystem. I feel the learning curve of the first projec=
-t
-> will be less steep and will make me better prepared to tackle the second
-> project as well.
+May be try using 211.20.114.72 (mail.aspeedtech.com) as an SMTP server ?
 
-The first project is for sure related with migration. While vhost-user
-memory isolation is not really related to migration, but both are
-related to virtio devices.
-Anyway, your plan looks good to me!
+> Did you encounter the same errors before?
 
->
-> I have read the "Getting Started for Developers" [2] wiki page. I have al=
-so
-> built QEMU from source.
+I received the full series 4 times.
 
-Great!
+But the mailing lists only have 4 :
 
->
-> I think my next step should be to read the documentation on the migration
-> subsystem [3], the blog posts attached in the first project's description
-> and virtqueue's implementation. Would you also recommend that I work on a
-> QEMU issue that is open on Gitlab and related to virtqueues/virtio to
-> familiarize
-> myself with the codebase? I went through the issues tagged as "device:vir=
-tio"
-> [4]
-> but can't really tell if any of them are good for beginners. One of them =
-has
-> the
-> "bite-size" tag [5]. It also has a patch attached but hasn't been merged.
-> Shall I
-> work on getting that merged?
+   https://lore.kernel.org/qemu-devel/20240229080014.1235018-1-jamin_lin@aspeedtech.com/
+   https://lore.kernel.org/qemu-devel/20240229072315.743963-1-jamin_lin@aspeedtech.com/
 
-Yeah, "bite-size" issues should be better to understand how to
-contribute to QEMU.
-Feel free to work on any issue, doing the work or helping to complete
-old patches.
+or
 
->
-> I have worked on a few smaller systems programming issues in other
-> organizations (eg: strace [6], htop [7]) in the past.
->
-> I look forward to hearing from you.
+   https://patchew.org/QEMU/20240229080014.1235018-1-jamin._5Flin@aspeedtech.com/
+   https://patchew.org/QEMU/20240229072315.743963-1-jamin._5Flin@aspeedtech.com/
 
-Feel free to reach us if you have more questions on the projects.
+
+> My send email command as following.
+> git send-email
+> --cc troy_lee@aspeedtech.com
+> --cc jamin_lin@aspeedtech.com
+> --cc yunlin.tang@aspeedtech.com
+> --to-cmd "./scripts/get_maintainer.pl ../v1-patch/*.patch" ../v1-patch/*.patch
+
+The command line above is sending twice the same series, you should remove
+one of the  "../v1-patch/*.patch" command arguments. the rest looks correct.
 
 Thanks,
-Stefano
+
+C.
+
 
 
