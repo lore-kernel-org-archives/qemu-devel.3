@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F10FAC54E49
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 16:26:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FA23C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 16:27:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfjEp-0006me-F5; Thu, 29 Feb 2024 11:26:27 -0500
+	id 1rfjFL-0007Tm-0o; Thu, 29 Feb 2024 11:26:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rfjEj-0006m2-VB
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 11:26:22 -0500
+ id 1rfjFC-00077w-AX
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 11:26:53 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rfjEh-0006zA-Mj
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 11:26:21 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TlxMS6PsKz6K8sx;
- Fri,  1 Mar 2024 00:22:28 +0800 (CST)
+ id 1rfjFA-00071U-QK
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 11:26:50 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TlxM03yggz6JB0V;
+ Fri,  1 Mar 2024 00:22:04 +0800 (CST)
 Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id A4880140B63;
- Fri,  1 Mar 2024 00:26:16 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 36FE114134C;
+ Fri,  1 Mar 2024 00:26:47 +0800 (CST)
 Received: from SecurePC-101-06.china.huawei.com (10.122.247.231) by
  lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Thu, 29 Feb 2024 16:26:16 +0000
+ 15.1.2507.35; Thu, 29 Feb 2024 16:26:46 +0000
 To: Liu Jingqi <jingqi.liu@intel.com>, <qemu-devel@nongnu.org>,
  <ankita@nvidia.com>, "Michael S . Tsirkin" <mst@redhat.com>, Igor Mammedov
  <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
 CC: <linuxarm@huawei.com>, Markus Armbruster <armbru@redhat.com>, Daniel Black
  <daniel@linux.ibm.com>, <linux-cxl@vger.kernel.org>
-Subject: [PATCH 1/2] hmat acpi: Do not add Memory Proximity Domain Attributes
- Structure targetting non existent memory.
-Date: Thu, 29 Feb 2024 16:25:44 +0000
-Message-ID: <20240229162545.7887-2-Jonathan.Cameron@huawei.com>
+Subject: [PATCH 2/2] hmat acpi: Fix out of bounds access due to missing use of
+ indirection
+Date: Thu, 29 Feb 2024 16:25:45 +0000
+Message-ID: <20240229162545.7887-3-Jonathan.Cameron@huawei.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240229162545.7887-1-Jonathan.Cameron@huawei.com>
 References: <20240229162545.7887-1-Jonathan.Cameron@huawei.com>
@@ -73,39 +73,56 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If qemu is started with a proximity node containing CPUs alone,
-it will provide one of these structures to say memory in this
-node is directly connected to itself.
+With a numa set up such as
 
-This description is arguably pointless even if there is memory
-in the node.  If there is no memory present, and hence no SRAT
-entry it breaks Linux HMAT passing and the table is rejected.
+-numa nodeid=0,cpus=0 \
+-numa nodeid=1,memdev=mem \
+-numa nodeid=2,cpus=1
 
-https://elixir.bootlin.com/linux/latest/source/drivers/acpi/numa/hmat.c#L444
+and appropriate hmat_lb entries the initiator list is correctly
+computed and writen to HMAT as 0,2 but then the LB data is accessed
+using the node id (here 2), landing outside the entry_list array.
 
+Stash the reverse lookup when writing the initiator list and use
+it to get the correct array index index.
+
+Fixes: 4586a2cb83 ("hmat acpi: Build System Locality Latency and Bandwidth Information Structure(s)")
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- hw/acpi/hmat.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/acpi/hmat.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/hw/acpi/hmat.c b/hw/acpi/hmat.c
-index 3042d223c8..723ae28d32 100644
+index 723ae28d32..b933ae3c06 100644
 --- a/hw/acpi/hmat.c
 +++ b/hw/acpi/hmat.c
-@@ -204,6 +204,13 @@ static void hmat_build_table_structs(GArray *table_data, NumaState *numa_state)
-     build_append_int_noprefix(table_data, 0, 4); /* Reserved */
+@@ -78,6 +78,7 @@ static void build_hmat_lb(GArray *table_data, HMAT_LB_Info *hmat_lb,
+                           uint32_t *initiator_list)
+ {
+     int i, index;
++    uint32_t initiator_to_index[MAX_NODES] = {};
+     HMAT_LB_Data *lb_data;
+     uint16_t *entry_list;
+     uint32_t base;
+@@ -121,6 +122,8 @@ static void build_hmat_lb(GArray *table_data, HMAT_LB_Info *hmat_lb,
+     /* Initiator Proximity Domain List */
+     for (i = 0; i < num_initiator; i++) {
+         build_append_int_noprefix(table_data, initiator_list[i], 4);
++        /* Reverse mapping for array possitions */
++        initiator_to_index[initiator_list[i]] = i;
+     }
  
-     for (i = 0; i < numa_state->num_nodes; i++) {
-+        /*
-+         * Linux rejects whole HMAT table if a node with no memory
-+         * has one of these structures listing it as a target.
-+         */
-+        if (!numa_state->nodes[i].node_mem) {
-+            continue;
-+        }
-         flags = 0;
+     /* Target Proximity Domain List */
+@@ -132,7 +135,8 @@ static void build_hmat_lb(GArray *table_data, HMAT_LB_Info *hmat_lb,
+     entry_list = g_new0(uint16_t, num_initiator * num_target);
+     for (i = 0; i < hmat_lb->list->len; i++) {
+         lb_data = &g_array_index(hmat_lb->list, HMAT_LB_Data, i);
+-        index = lb_data->initiator * num_target + lb_data->target;
++        index = initiator_to_index[lb_data->initiator] * num_target +
++            lb_data->target;
  
-         if (numa_state->nodes[i].initiator < MAX_NODES) {
+         entry_list[index] = (uint16_t)(lb_data->data / hmat_lb->base);
+     }
 -- 
 2.39.2
 
