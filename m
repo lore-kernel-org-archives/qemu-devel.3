@@ -4,72 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DC69C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 14:34:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AF74C54E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 14:35:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfhUV-0004vh-RH; Thu, 29 Feb 2024 09:34:31 -0500
+	id 1rfhVF-0005qA-8q; Thu, 29 Feb 2024 09:35:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rfhUO-0004tq-IG
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 09:34:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rfhUM-0008Cw-Ke
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 09:34:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709217259;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=MVYHrVeU9oNfbyTSVSnir8b6q4TVAjW+f/IOg5tGrRs=;
- b=KP4aOs5kpiRRTcjtbeMuZiDwrp7FzGtSIsKAaa0tAmZnOgaxo0XB3nwAmffl1MVB7w5t3W
- grkeRjM1rnJ9NQq/YzteUhGVIFGZT/RoIfzR6EeYSAYKGDolpWgTmK3iBIJgrcXOAuo9pb
- 1kR/1X2Etd+gRsimL5LBqgseFNkqlQY=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-340-7RiELA5FOTaqDONbnE9eDA-1; Thu,
- 29 Feb 2024 09:34:16 -0500
-X-MC-Unique: 7RiELA5FOTaqDONbnE9eDA-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7ADBA1C05138;
- Thu, 29 Feb 2024 14:34:16 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.45])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 70B43C185C0;
- Thu, 29 Feb 2024 14:34:15 +0000 (UTC)
-Date: Thu, 29 Feb 2024 14:34:13 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, armbru@redhat.com,
- Claudio Fontana <cfontana@suse.de>
-Subject: Re: [PATCH v5 17/23] migration/multifd: Add outgoing QIOChannelFile
- support
-Message-ID: <ZeCV5dVQCOLol9pO@redhat.com>
-References: <20240228152127.18769-1-farosas@suse.de>
- <20240228152127.18769-18-farosas@suse.de> <Zd_vhfonAX5gIcJl@x1n>
- <Zd_67kAJ3OcDFNjC@x1n> <87msrjz6ov.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rfhVD-0005nc-Ps
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 09:35:15 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rfhVC-0008Ij-9y
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 09:35:15 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4129ed6f514so7078685e9.1
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 06:35:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709217313; x=1709822113; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1Rl7oKUWzEf0mraJT3KrgwcszxjdCft6AKKs5tCD/r8=;
+ b=v6UZxKRTy0a078KXW38VB9/++P6klYlOmaARl2MPx6n4B1skQmW6nnNfX3cKQQ3KzV
+ wdTPXh1ivs42Wue+DCMG3A6orzofXI/TvmFJ5PPIbToPA2jUVLrln7z6VBHXTSjqGjzM
+ sFrbwkaxc9Jnx9Wnoh7quToC1HSM4VscwwzZLHJDfXKrCuRnk2VTT6hsdBAAwSjOSfYe
+ JXQzFKU421vH2auZCPFSr0JSYEM18cRxZc1WC+oRGTUj/27r53Cko4QAROZu+oSnYskP
+ cI3AWbffLzAVS1Ji04Lnsyqtm0ZLJW8PeMy04vXrxxpyyy2WibeGPGMGJZ9E1N9Wr14A
+ FP0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709217313; x=1709822113;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=1Rl7oKUWzEf0mraJT3KrgwcszxjdCft6AKKs5tCD/r8=;
+ b=gioMjjQUe9z3qMUhAMSVDUfJphYJ/ZE5MbwofFr2Md72egbLlbGUlv7Y7p8YHHEvxt
+ 1utEwarAxV85WiGhjlMJW/q8RZ5TvOiT2HDzB5NwbWQ9AZTgzn34Khqa7YMSqw8+9Sk8
+ 9W8M85dxni3LGupwCqGA/O0u1QQ2V/8+u8nm0oJ+Rv/ka5YQwyi6VX1flVzq8xVX8a1Y
+ IJmQFu526/wpaldiqkNAIlYl+RnBuu5DV60zVR07fpbUQMQubjbVl71lDzAzC/fFffMq
+ RsEbb/zLO+CEvVDTWHGzDssLtuuowG+dvIukrg5GAWvRC3Pa1cbMnrLd3VThIegZCEtU
+ ypJA==
+X-Gm-Message-State: AOJu0YxfpXA9/SoJOlFwIuKvuBb4wdd4NQ32p37ezPjXDKA98+va5fPN
+ TKVSZAR9LzShd7ULEjucloXisztZFePw3SmUlwOLAxibo4yGpzmGYqjE57u+yg0=
+X-Google-Smtp-Source: AGHT+IHBtxwjElPmncwL5v3BymKSeVYGHkMX7ZiKaRmzcqf+dANsi96dXwHGYV5Cv1Y8g2tQdXRpZw==
+X-Received: by 2002:a05:600c:3b29:b0:412:bd17:9d62 with SMTP id
+ m41-20020a05600c3b2900b00412bd179d62mr1495433wms.25.1709217312684; 
+ Thu, 29 Feb 2024 06:35:12 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ s15-20020a7bc38f000000b004128f1ace2asm5314031wmj.19.2024.02.29.06.35.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 29 Feb 2024 06:35:12 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id BECC35F7B0;
+ Thu, 29 Feb 2024 14:35:11 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,  Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>,  Yanan Wang <wangyanan55@huawei.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,  Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH v5 10/12] contrib/plugins/howvec: migrate to new
+ per_vcpu API
+In-Reply-To: <20240226091446.479436-11-pierrick.bouvier@linaro.org> (Pierrick
+ Bouvier's message of "Mon, 26 Feb 2024 13:14:42 +0400")
+References: <20240226091446.479436-1-pierrick.bouvier@linaro.org>
+ <20240226091446.479436-11-pierrick.bouvier@linaro.org>
+User-Agent: mu4e 1.12.0; emacs 29.1
+Date: Thu, 29 Feb 2024 14:35:11 +0000
+Message-ID: <87cysf9w4g.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87msrjz6ov.fsf@suse.de>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,193 +101,17 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 29, 2024 at 11:27:44AM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > On Thu, Feb 29, 2024 at 10:44:21AM +0800, Peter Xu wrote:
-> >> On Wed, Feb 28, 2024 at 12:21:21PM -0300, Fabiano Rosas wrote:
-> >> > Allow multifd to open file-backed channels. This will be used when
-> >> > enabling the mapped-ram migration stream format which expects a
-> >> > seekable transport.
-> >> > 
-> >> > The QIOChannel read and write methods will use the preadv/pwritev
-> >> > versions which don't update the file offset at each call so we can
-> >> > reuse the fd without re-opening for every channel.
-> >> > 
-> >> > Contrary to the socket migration, the file migration doesn't need an
-> >> > asynchronous channel creation process, so expose
-> >> > multifd_channel_connect() and call it directly.
-> >> > 
-> >> > Note that this is just setup code and multifd cannot yet make use of
-> >> > the file channels.
-> >> > 
-> >> > Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> >> > ---
-> >> > - moved flags change to another patch
-> >> > - removed channels_created assert
-> >> > ---
-> >> >  migration/file.c    | 41 +++++++++++++++++++++++++++++++++++++++--
-> >> >  migration/file.h    |  4 ++++
-> >> >  migration/multifd.c | 18 +++++++++++++++---
-> >> >  migration/multifd.h |  1 +
-> >> >  4 files changed, 59 insertions(+), 5 deletions(-)
-> >> > 
-> >> > diff --git a/migration/file.c b/migration/file.c
-> >> > index 22d052a71f..83328a7a1b 100644
-> >> > --- a/migration/file.c
-> >> > +++ b/migration/file.c
-> >> > @@ -12,12 +12,17 @@
-> >> >  #include "channel.h"
-> >> >  #include "file.h"
-> >> >  #include "migration.h"
-> >> > +#include "multifd.h"
-> >> >  #include "io/channel-file.h"
-> >> >  #include "io/channel-util.h"
-> >> >  #include "trace.h"
-> >> >  
-> >> >  #define OFFSET_OPTION ",offset="
-> >> >  
-> >> > +static struct FileOutgoingArgs {
-> >> > +    char *fname;
-> >> > +} outgoing_args;
-> >> > +
-> >> >  /* Remove the offset option from @filespec and return it in @offsetp. */
-> >> >  
-> >> >  int file_parse_offset(char *filespec, uint64_t *offsetp, Error **errp)
-> >> > @@ -37,6 +42,36 @@ int file_parse_offset(char *filespec, uint64_t *offsetp, Error **errp)
-> >> >      return 0;
-> >> >  }
-> >> >  
-> >> > +void file_cleanup_outgoing_migration(void)
-> >> > +{
-> >> > +    g_free(outgoing_args.fname);
-> >> > +    outgoing_args.fname = NULL;
-> >> > +}
-> >> > +
-> >> > +bool file_send_channel_create(gpointer opaque, Error **errp)
-> >> > +{
-> >> > +    QIOChannelFile *ioc;
-> >> > +    int flags = O_WRONLY;
-> >> > +    bool ret = true;
-> >> > +
-> >> > +    ioc = qio_channel_file_new_path(outgoing_args.fname, flags, 0, errp);
-> >> > +    if (!ioc) {
-> >> > +        ret = false;
-> >> > +        goto out;
-> >> > +    }
-> >> > +
-> >> > +    multifd_channel_connect(opaque, QIO_CHANNEL(ioc));
-> >> > +
-> >> > +out:
-> >> > +    /*
-> >> > +     * File channel creation is synchronous. However posting this
-> >> > +     * semaphore here is simpler than adding a special case.
-> >> > +     */
-> >> > +    multifd_send_channel_created();
-> >> > +
-> >> > +    return ret;
-> >> > +}
-> >> > +
-> >> >  void file_start_outgoing_migration(MigrationState *s,
-> >> >                                     FileMigrationArgs *file_args, Error **errp)
-> >> >  {
-> >> > @@ -47,12 +82,14 @@ void file_start_outgoing_migration(MigrationState *s,
-> >> >  
-> >> >      trace_migration_file_outgoing(filename);
-> >> >  
-> >> > -    fioc = qio_channel_file_new_path(filename, O_CREAT | O_WRONLY | O_TRUNC,
-> >> > -                                     0600, errp);
-> >> > +    fioc = qio_channel_file_new_path(filename, O_CREAT | O_TRUNC | O_WRONLY,
-> >> > +                                     0660, errp);
-> >> 
-> >> It seems this is still leftover?
-> >> 
-> >> >      if (!fioc) {
-> >> >          return;
-> >> >      }
-> >> >  
-> >> > +    outgoing_args.fname = g_strdup(filename);
-> >> > +
-> >> >      ioc = QIO_CHANNEL(fioc);
-> >> >      if (offset && qio_channel_io_seek(ioc, offset, SEEK_SET, errp) < 0) {
-> >> >          return;
-> >> > diff --git a/migration/file.h b/migration/file.h
-> >> > index 37d6a08bfc..4577f9efdd 100644
-> >> > --- a/migration/file.h
-> >> > +++ b/migration/file.h
-> >> > @@ -9,10 +9,14 @@
-> >> >  #define QEMU_MIGRATION_FILE_H
-> >> >  
-> >> >  #include "qapi/qapi-types-migration.h"
-> >> > +#include "io/task.h"
-> >> > +#include "channel.h"
-> >> >  
-> >> >  void file_start_incoming_migration(FileMigrationArgs *file_args, Error **errp);
-> >> >  
-> >> >  void file_start_outgoing_migration(MigrationState *s,
-> >> >                                     FileMigrationArgs *file_args, Error **errp);
-> >> >  int file_parse_offset(char *filespec, uint64_t *offsetp, Error **errp);
-> >> > +void file_cleanup_outgoing_migration(void);
-> >> > +bool file_send_channel_create(gpointer opaque, Error **errp);
-> >> >  #endif
-> >> > diff --git a/migration/multifd.c b/migration/multifd.c
-> >> > index 3574fd3953..f155223303 100644
-> >> > --- a/migration/multifd.c
-> >> > +++ b/migration/multifd.c
-> >> > @@ -17,6 +17,7 @@
-> >> >  #include "exec/ramblock.h"
-> >> >  #include "qemu/error-report.h"
-> >> >  #include "qapi/error.h"
-> >> > +#include "file.h"
-> >> >  #include "ram.h"
-> >> >  #include "migration.h"
-> >> >  #include "migration-stats.h"
-> >> > @@ -28,6 +29,7 @@
-> >> >  #include "threadinfo.h"
-> >> >  #include "options.h"
-> >> >  #include "qemu/yank.h"
-> >> > +#include "io/channel-file.h"
-> >> >  #include "io/channel-socket.h"
-> >> >  #include "yank_functions.h"
-> >> >  
-> >> > @@ -694,6 +696,7 @@ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
-> >> >  {
-> >> >      if (p->c) {
-> >> >          migration_ioc_unregister_yank(p->c);
-> >> > +        qio_channel_close(p->c, NULL);
-> >> 
-> >> s/NULL/&error_abort/?
-> >
-> > Or we can drop this line?  IIUC iochannel finalize() will always close it,
-> > or it could be a separate bug.
-> >
-> 
-> We need it so the fsync happens. The finalize() will be a noop because
-> the qio_channel_file_close() will clear the fd. Not the cleanest, but it
-> works.
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-It is always wise to explicitly call 'close'.
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-If something still has a GSource watch registered against
-the QIOChannel, that GSource will be holding a reference
-on the QIOChannel and will thus prevent finalize() ever
-running.
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-By calling close() you guarantee the channel is closed,
-even if you've mistakenly leaked a GSource somewhere.
-Finalize still won't run in that case, but at least the
-FD is gone, and the HUP might cause the GSource callback
-to trigger correct cleanup;
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
