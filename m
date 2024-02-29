@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AEDDC48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 11:04:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3C68C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 11:13:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfeD1-0000H4-6R; Thu, 29 Feb 2024 06:04:15 -0500
+	id 1rfeKo-00034c-Mb; Thu, 29 Feb 2024 06:12:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rfeCy-0000GV-Ln
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 06:04:13 -0500
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rfeKk-00034G-9r
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 06:12:14 -0500
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rfeCv-0000AZ-SN
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 06:04:11 -0500
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2d094bc2244so9565801fa.1
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 03:04:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rfeKi-0001lJ-Em
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 06:12:13 -0500
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-564a53b8133so1060652a12.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 03:12:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709204647; x=1709809447; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=N9zLbaFO/RECE58f9323vvtDq8jRLk1AZi3G2mWE4dA=;
- b=LXErKTLzHgd6jjCPO2cEK/4tJw2AWyzlbonqBZS+Z/u13IiDq0C9bdRef42+NFRJ4u
- RGUPKL4Z9aH9LtwecL1/350mpwceieLP1U8d7TBdV9x/7ycVxKuTpJvCf+49p3R9/NMJ
- ye2nbinQoC71SI7JsO+1tjmchA3oTFY0SGFjAjbCZx1PNatovMMqkZapSqfm3PncpTib
- gYDhF8tdinXdvB3AlGTgfes+8NikVrVx6El+0us/biUDns5lNqzWI1StrTzvVV6fbCGW
- FwWaGMjGPBMBgzaGx4DG7p6on1ei/a1LxCHhmHWoJQKzzdrLzl8LiLKUOQoZzHOco4zo
- fIWg==
+ d=linaro.org; s=google; t=1709205130; x=1709809930; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=7VsnEYd7D+59t0kjgZG4Q+rKaIBPz+bLoUEduQM/d7k=;
+ b=csjLa92MPUZSEfX3yM+mnOk/wTt3f+/S0xMu8G1rpwhJnyV8c5j7A0efJCM9klKnTm
+ prpoTpyA2+QPCuKyN3fjKK7eoRoQLrfpPaEWQw+k6QiyzctbajPeQ93XK+xU3Cu3YR77
+ HPqQfxQdppN2KXPbrhJ25g5c9RSjCwi3MjtgoezqEN19DdCjpXY/Ud2XpV+gM2emM/11
+ 27aCnrfO9uYtmRpLI2b1/EV18n8BSTt8CLEwWRn4+WciPvsKOurI9Tj2rr6Xyoo8tdy6
+ 08zqId9sSkLnzQy8UYWKUkbhxGzEvpbYmzb6t7btKlD6vKXesGSNi855JddJH/40fyDS
+ wZbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709204647; x=1709809447;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=N9zLbaFO/RECE58f9323vvtDq8jRLk1AZi3G2mWE4dA=;
- b=Yb+95q619FB3FHevuDCkcf6HP5tbfRIaooZeaAxszQphTH6gTQDzGnsIBiU6/GyExe
- M61kpYrbvPW5lU3XWmO7Brw+Hh1VQT+qaBy+zJB3bnl5DBp1Xf/NxhEiy2R7IV4oWNOo
- CMq4meg+KJOAjIAfJafaYjQdOO8NWQushHNxACbXlEAvMJuiNGbtItxQSVYXCChXvU2u
- E3+Q5xcbkngJ1fHSa2rcS30SzYP4TC52Je2nnFXyhYG2aPWQOGaKjFgcUzPVieJACVOJ
- eY/Ksa3m2xTGzFn6vwq8+EHxoOjwwgzR28Q7+Ns842i2OL/ZDPErNr86lWmGdDo0Rbot
- NLbA==
+ d=1e100.net; s=20230601; t=1709205130; x=1709809930;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7VsnEYd7D+59t0kjgZG4Q+rKaIBPz+bLoUEduQM/d7k=;
+ b=CzjAuuxVpz0lKc3QWRDiyS5OZCECcoIH4SjIwSodR0A4/Vif9We3UpPbiotjKom38z
+ YpigsCciRD3RsXcYaJwH2MiyrrzlesbwEBanVCgx3fGTUI+hYa8E9NuW/dXU17pjQi0W
+ QvQqnEyeSHn56i++ZvPy+SFJGgdBgj7P3mw9o9JYA91dyB5EF2gAgpjVLWjonL95qsjb
+ G77eWEfJXbE+ypXn2SZSSd+0NdLSSFEunWvkxAtpcrN9XtI9NXCAaGzred3CwlkR7Pht
+ nVXcoL7SEufe4zvivXNQHS5AVTvgRRl4CwVw9SdG8ihzo6r1dzIFaRkqOPCR7vGP90js
+ j8wg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWd8N+3SgOKiP7XRg1ICvvXZwxrC5OHcUi3W3vMa1grOkM1MFxPV0VE/NZBKTMlVlkj719ObR75JbbvqH72pWh9nmVECEU=
-X-Gm-Message-State: AOJu0YyfCQ/pkVW9zxeXehjI1sjIpMDizaTDIdnV4QlhvqCFxdfahDb0
- 91FaHn7d/9zeJkcomDYKATVGPTqmXPVfG80Yt7FfBX5wH82Obc6zjCz6ycHJymo=
-X-Google-Smtp-Source: AGHT+IEuJpBoxEnuInDVndL3SZMLKbLPWkw1jfacrojwXfRCGOD+vzrehB84+ZCqj4oxlpcDar5yfw==
-X-Received: by 2002:a05:6512:e81:b0:513:166c:353f with SMTP id
- bi1-20020a0565120e8100b00513166c353fmr1241316lfb.38.1709204646911; 
- Thu, 29 Feb 2024 03:04:06 -0800 (PST)
-Received: from [192.168.55.101] ([80.215.236.171])
- by smtp.gmail.com with ESMTPSA id
- u23-20020ac243d7000000b0051318551937sm208690lfl.162.2024.02.29.03.04.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Feb 2024 03:04:06 -0800 (PST)
-Message-ID: <ffbd52ae-cebf-43f0-8ff7-a983a7cdf87d@linaro.org>
-Date: Thu, 29 Feb 2024 12:04:03 +0100
+ AJvYcCUeQhpYzH0ZYah0/eZYvlKSotXIFa7DGZvNMut/8X+O+7nzLS1I680ZSZG8bks7wLIZF9zdcJh319p1iY2iHlg0KDGtraU=
+X-Gm-Message-State: AOJu0YxL1esJDHor4EYGsK0/LdNZEO8TFrw6Aps6uI9U54X42PFI7yi9
+ VDNvOoBSznmvQtwkNPWLSdATI6I/rJUX9Xnq1O8j/1y80F5fcfbcRALntJWFNBEv+5Q9AAU2nCq
+ Lq24sScMtECYG+S/VwUPvUuW5MgCQ3ST0Z/ArEM+R/fQIkVkV
+X-Google-Smtp-Source: AGHT+IHvLJd1bsvqRoJ0ceBBc8pkZHLdWpXgE8Io4cO8o3CuNKoBnknLb4+n4HxDtk6OOgyH8PcedS0Ln0PsxNG9Ymg=
+X-Received: by 2002:a05:6402:1855:b0:565:ff64:33b0 with SMTP id
+ v21-20020a056402185500b00565ff6433b0mr1241208edy.22.1709205129836; Thu, 29
+ Feb 2024 03:12:09 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/9] Hexagon (target/hexagon) Add is_old/is_new to
- Register class
-Content-Language: en-US
-To: Taylor Simpson <ltaylorsimpson@gmail.com>, qemu-devel@nongnu.org
-Cc: bcain@quicinc.com, quic_mathbern@quicinc.com, sidneym@quicinc.com,
- quic_mliebel@quicinc.com, richard.henderson@linaro.org, ale@rev.ng,
- anjo@rev.ng
-References: <20240226201722.391879-1-ltaylorsimpson@gmail.com>
- <20240226201722.391879-2-ltaylorsimpson@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240226201722.391879-2-ltaylorsimpson@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x232.google.com
+References: <20240228125939.56925-1-heinrich.schuchardt@canonical.com>
+ <fb6ef90d-4a3e-4bdd-8516-8b15c1f2329f@linaro.org>
+ <b9937680-8c0b-46f6-86ef-55139562e2c4@canonical.com>
+ <CAFEAcA_Bshua2BQTfOb3D1aF27ayELEt9TcQM8hkQdKaih3xHw@mail.gmail.com>
+ <9c64be5c-25b8-421d-966a-bdac03dfe37c@canonical.com>
+ <CAFEAcA92s+3Q3ud=zOjsyvuqZ=BjwXt3OY0n5mO_iDXovQpoRQ@mail.gmail.com>
+ <20240229105900.0000490e@Huawei.com>
+In-Reply-To: <20240229105900.0000490e@Huawei.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 29 Feb 2024 11:11:58 +0000
+Message-ID: <CAFEAcA_O2QPwCPE0HS9g0saEA3XbuVS_UGtRpe_o4tLRrc6Ksg@mail.gmail.com>
+Subject: Re: [PATCH, v2] physmem: avoid bounce buffer too small
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Mattias Nissler <mnissler@rivosinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,25 +99,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/2/24 21:17, Taylor Simpson wrote:
-> Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-> ---
->   target/hexagon/hex_common.py | 14 +++++++++++++-
->   1 file changed, 13 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
-> index 195620c7ec..4bacef223f 100755
-> --- a/target/hexagon/hex_common.py
-> +++ b/target/hexagon/hex_common.py
-> @@ -1,7 +1,7 @@
->   #!/usr/bin/env python3
->   
->   ##
-> -##  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-> +##  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
+On Thu, 29 Feb 2024 at 10:59, Jonathan Cameron
+<Jonathan.Cameron@huawei.com> wrote:
+>
+> On Thu, 29 Feb 2024 09:38:29 +0000
+> Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> > On Wed, 28 Feb 2024 at 19:07, Heinrich Schuchardt
+> > <heinrich.schuchardt@canonical.com> wrote:
+> > >
+> > > On 28.02.24 19:39, Peter Maydell wrote:
+> > > > The limitation to a page dates back to commit 6d16c2f88f2a in 2009,
+> > > > which was the first implementation of this function. I don't think
+> > > > there's a particular reason for that value beyond that it was
+> > > > probably a convenient value that was assumed to be likely "big enough".
+> > > >
+> > > > I think the idea with this bounce-buffer has always been that this
+> > > > isn't really a code path we expected to end up in very often --
+> > > > it's supposed to be for when devices are doing DMA, which they
+> > > > will typically be doing to memory (backed by host RAM), not
+> > > > devices (backed by MMIO and needing a bounce buffer). So the
+> > > > whole mechanism is a bit "last fallback to stop things breaking
+> > > > entirely".
+> > > >
+> > > > The address_space_map() API says that it's allowed to return
+> > > > a subset of the range you ask for, so if the virtio code doesn't
+> > > > cope with the minimum being set to TARGET_PAGE_SIZE then either
+> > > > we need to fix that virtio code or we need to change the API
+> > > > of this function. (But I think you will also get a reduced
+> > > > range if you try to use it across a boundary between normal
+> > > > host-memory-backed RAM and a device MemoryRegion.)
+> > >
+> > > If we allow a bounce buffer only to be used once (via the in_use flag),
+> > > why do we allow only a single bounce buffer?
+> > >
+> > > Could address_space_map() allocate a new bounce buffer on every call and
+> > > address_space_unmap() deallocate it?
+> > >
+> > > Isn't the design with a single bounce buffer bound to fail with a
+> > > multi-threaded client as collision can be expected?
+> >
+> > Yeah, I don't suppose multi-threaded was particularly expected.
+> > Again, this is really a "handle the case where the guest does
+> > something silly" setup, which is why only one bounce buffer.
+> >
+> > Why is your guest ending up in the bounce-buffer path?
+>
+> Happens for me with emulated CXL memory.
 
-:)
+Can we put that in the "something silly" bucket? :-)
+But yes, I'm not surprised that CXL runs into this. Heinrich,
+are you doing CXL testing, or is this some other workload?
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> I think the case I saw
+> was split descriptors in virtio via address space caches
+> https://elixir.bootlin.com/qemu/latest/source/hw/virtio/virtio.c#L4043
+>
+> One bounce buffer is in use for the outer loop and another for the descriptors
+> it is pointing to.
 
+Mmm. The other assumption made in the design of the address_space_map()
+API I think was that it was unlikely that a device would be trying
+to do two DMA operations simultaneously. This is clearly not
+true in practice. We definitely need to fix one end or other of
+this API.
+
+(I'm not sure why the bounce-buffer limit ought to be per-AddressSpace:
+is that just done in Matthias' series so that we can attach an
+x-thingy property to the individual PCI device?)
+
+-- PMM
 
