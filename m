@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B1EEC54798
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 06:49:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56858C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 06:49:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfa83-0000dN-3y; Thu, 29 Feb 2024 01:42:51 -0500
+	id 1rfa6s-000665-NF; Thu, 29 Feb 2024 01:41:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rfa7s-0000Q6-CS
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:42:40 -0500
+ id 1rfa6T-0005Z3-LI
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:41:15 -0500
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rfa7q-0004qw-Q9
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:42:40 -0500
+ id 1rfa6R-0004qw-ON
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:41:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709188958; x=1740724958;
+ t=1709188871; x=1740724871;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=opdbuBrxZYW0fFAi+dKWsqVfJde3vAaaouAKABSOYvw=;
- b=HtVViutBkgRVtxMnN4hGMY2IW+8AHylBYtO7aA48DZ6E2eQ+4cjiOz8c
- +yMgkHBClik4P0b75PSiPje/Xqz9bRLA4S1LeM25C7HfOKG62YDmEyO78
- yc4lrT8gP6vNHb2C4gEAd2MDQWDLkTLMa77LNHbrZCSgRFiInAgIFr+Q8
- GCX2XWdALqctW3+44sZRgJwe2xfFaSW28FayU46H+yfBsP2XAfbeLenri
- HlHd1BCYcNBr+REZZIsOS1JqzMBSkh8dRSZgqDhdhYmxfdWqulzDCXuGK
- X9XZE0OrfS9nwCoo0W6q51V4W9DfnP93NnOKpjA9PICSXvutqab+FHrvC Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3803053"
+ bh=TV0zJoSEEfrrhfHkCFBrQ5M3B95rGljdOpW38yTtSf8=;
+ b=oJqhRWkcYGLrTytVWT9Lp8faDpLCEb8rY0HylIJqkCMRgUwkpjTVcXlh
+ s41QoCJN09GZMT8FQABViYi1wo4prsZzSFkgPhZBsT7qUSSD2IAREXkAS
+ 1kLsMzY+Sq/PXjULmW+jkC0VCDBTCMHAzPf3fSFm2KJ9TqwV9N2Ts2C12
+ Mc7vQJOAljjO0cY6rbfAikOIe9I53c/6MfaOFD5Y26ZNxWRxHunWqnH1W
+ rmOwVv4Sx4gWhTR0wwCP3hzFiLyz0ygfa+0L7M1Uiy9CDKFXUYtrpqdBA
+ eGT2JaVWrPFv6UYpVy+tTi4BKjrEyRyPQjLkgsJ/E4P9PUixlYm9VKjDj w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3802855"
 X-IronPort-AV: E=Sophos;i="6.06,192,1705392000"; 
-   d="scan'208";a="3803053"
+   d="scan'208";a="3802855"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Feb 2024 22:42:37 -0800
+ 28 Feb 2024 22:41:10 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,192,1705392000"; 
-   d="scan'208";a="8076067"
+   d="scan'208";a="8075614"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa007.jf.intel.com with ESMTP; 28 Feb 2024 22:42:31 -0800
+ by orviesa007.jf.intel.com with ESMTP; 28 Feb 2024 22:41:05 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -60,10 +60,10 @@ Cc: kvm@vger.kernel.org, qemu-devel@nongnu.org,
  Gerd Hoffmann <kraxel@redhat.com>,
  Isaku Yamahata <isaku.yamahata@gmail.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>, xiaoyao.li@intel.com
-Subject: [PATCH v5 46/65] i386/tdx: Call KVM_TDX_INIT_VCPU to initialize TDX
- vcpu
-Date: Thu, 29 Feb 2024 01:37:07 -0500
-Message-Id: <20240229063726.610065-47-xiaoyao.li@intel.com>
+Subject: [PATCH v5 33/65] kvm/tdx: Don't complain when converting vMMIO region
+ to shared
+Date: Thu, 29 Feb 2024 01:36:54 -0500
+Message-Id: <20240229063726.610065-34-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240229063726.610065-1-xiaoyao.li@intel.com>
 References: <20240229063726.610065-1-xiaoyao.li@intel.com>
@@ -94,54 +94,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-TDX vcpu needs to be initialized by SEAMCALL(TDH.VP.INIT) and KVM
-provides vcpu level IOCTL KVM_TDX_INIT_VCPU for it.
+From: Isaku Yamahata <isaku.yamahata@intel.com>
 
-KVM_TDX_INIT_VCPU needs the address of the HOB as input. Invoke it for
-each vcpu after HOB list is created.
+Because vMMIO region needs to be shared region, guest TD may explicitly
+convert such region from private to shared.  Don't complain such
+conversion.
 
+Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- target/i386/kvm/tdx.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ accel/kvm/kvm-all.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index dcabe359eda5..4625f806920e 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -591,6 +591,22 @@ static void tdx_init_ram_entries(void)
-     tdx_guest->nr_ram_entries = j;
- }
- 
-+static void tdx_post_init_vcpus(void)
-+{
-+    TdxFirmwareEntry *hob;
-+    CPUState *cpu;
-+    int r;
-+
-+    hob = tdx_get_hob_entry(tdx_guest);
-+    CPU_FOREACH(cpu) {
-+        r = tdx_vcpu_ioctl(cpu, KVM_TDX_INIT_VCPU, 0, (void *)hob->address);
-+        if (r < 0) {
-+            error_report("KVM_TDX_INIT_VCPU failed %s", strerror(-r));
-+            exit(1);
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index c9df41efa484..d533e2611ad8 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2985,9 +2985,22 @@ static int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
+             ret = ram_block_discard_guest_memfd_range(rb, offset, size);
+         }
+     } else {
+-        error_report("Convert non guest_memfd backed memory region "
+-                    "(0x%"HWADDR_PRIx" ,+ 0x%"HWADDR_PRIx") to %s",
+-                    start, size, to_private ? "private" : "shared");
++        /*
++         * Because vMMIO region must be shared, guest TD may convert vMMIO
++         * region to shared explicitly.  Don't complain such case.  See
++         * memory_region_type() for checking if the region is MMIO region.
++         */
++        if (!to_private &&
++            !memory_region_is_ram(mr) &&
++            !memory_region_is_ram_device(mr) &&
++            !memory_region_is_rom(mr) &&
++            !memory_region_is_romd(mr)) {
++		    ret = 0;
++        } else {
++            error_report("Convert non guest_memfd backed memory region "
++                        "(0x%"HWADDR_PRIx" ,+ 0x%"HWADDR_PRIx") to %s",
++                        start, size, to_private ? "private" : "shared");
 +        }
-+    }
-+}
-+
- static void tdx_finalize_vm(Notifier *notifier, void *unused)
- {
-     TdxFirmware *tdvf = &tdx_guest->tdvf;
-@@ -623,6 +639,8 @@ static void tdx_finalize_vm(Notifier *notifier, void *unused)
+     }
  
-     tdvf_hob_create(tdx_guest, tdx_get_hob_entry(tdx_guest));
- 
-+    tdx_post_init_vcpus();
-+
-     for_each_tdx_fw_entry(tdvf, entry) {
-         struct kvm_memory_mapping mapping = {
-             .base_gfn = entry->address >> 12,
+     memory_region_unref(section.mr);
 -- 
 2.34.1
 
