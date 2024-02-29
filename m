@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C5E0C54798
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 06:57:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69FD9C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 06:57:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfa6I-0005BF-S5; Thu, 29 Feb 2024 01:41:02 -0500
+	id 1rfa6D-00055c-SX; Thu, 29 Feb 2024 01:40:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rfa5R-0004eE-Ma
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:40:10 -0500
+ id 1rfa5E-0004a6-4h
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:40:07 -0500
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rfa5P-0004k0-3X
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:40:09 -0500
+ id 1rfa5B-0004Xj-GX
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:39:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709188807; x=1740724807;
+ t=1709188793; x=1740724793;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=RufphmQEPuA7XlGyHgJtu3PHVWvGWDXbQzQBGXxFCy0=;
- b=eWP0fq+MgAHRTNRbFC9baezf1Yoh2NQIWFQEoBXsV2X5nJY4QRnY/S0z
- oQcT7TNQ0H3QGvXT04hMWzNj+hgC9NFH1pVfTkDyNcJ1Q8CKKc/9SAEDu
- Pwk0FvwVfbK0JXAmRe1oIbf3uzZ5Kcc+fCHeLJ0hVriliMvRDo7iMUguF
- WgzDaVC10REOZrRgRG42zRvP/xhAD5xo4mkkIe1+5dmR0QIpRGoge7yEc
- Kl7oizx6YM8+diNKQE/HiCXZ08gzeklChN9GwhIJL6pRU5g+h75Xu2R7Z
- b5JP8KHoYV8n38d6IvxbSHiWRjWgPJjvPVQwXkyN0KWO6tuDS8AuUrtpJ w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3802695"
+ bh=+2F7PMaCKwouGjmd/8igs1t8zsy94ivwrfJ9vmQH7+Y=;
+ b=Kg03cbl5prsrytVlmFYtER3zd9s4xDkuYEDrJg2+ExjFi1XBwBd9sYp+
+ jzCJh9xN3MdIq4ULPYkQ3vmhbZrBd4RpWoAROuMoizDQR+5Z3J+ABv8EA
+ a/2gCPO5vYR0kNtJKXq5wVS0T4H9VYUJ2tspQx/hI+7Syg746ssJ7v+ON
+ ErDWEaHjllco+KoMFgC+HQWOke6xJ+fgX7ufwI4ySqzoArCGqoOQT+60c
+ abC7tbyU+6atH5nTXfdV+J6V0WXAWWHSMTldwgaRfReGN+1JrsaEIYgt2
+ y6vFDFnRyUeN5ZcKbgyF/f3TELzuV8dGP/uWryDLZqIDd1SB1NBpJ99iv A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3802675"
 X-IronPort-AV: E=Sophos;i="6.06,192,1705392000"; 
-   d="scan'208";a="3802695"
+   d="scan'208";a="3802675"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Feb 2024 22:40:05 -0800
+ 28 Feb 2024 22:39:52 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,192,1705392000"; 
-   d="scan'208";a="8075458"
+   d="scan'208";a="8075403"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa007.jf.intel.com with ESMTP; 28 Feb 2024 22:39:59 -0800
+ by orviesa007.jf.intel.com with ESMTP; 28 Feb 2024 22:39:46 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -60,9 +60,10 @@ Cc: kvm@vger.kernel.org, qemu-devel@nongnu.org,
  Gerd Hoffmann <kraxel@redhat.com>,
  Isaku Yamahata <isaku.yamahata@gmail.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>, xiaoyao.li@intel.com
-Subject: [PATCH v5 23/65] kvm: Introduce kvm_arch_pre_create_vcpu()
-Date: Thu, 29 Feb 2024 01:36:44 -0500
-Message-Id: <20240229063726.610065-24-xiaoyao.li@intel.com>
+Subject: [PATCH v5 21/65] i386/tdx: Integrate tdx_caps->attrs_fixed0/1 to
+ tdx_cpuid_lookup
+Date: Thu, 29 Feb 2024 01:36:42 -0500
+Message-Id: <20240229063726.610065-22-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240229063726.610065-1-xiaoyao.li@intel.com>
 References: <20240229063726.610065-1-xiaoyao.li@intel.com>
@@ -93,60 +94,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce kvm_arch_pre_create_vcpu(), to perform arch-dependent
-work prior to create any vcpu. This is for i386 TDX because it needs
-call TDX_INIT_VM before creating any vcpu.
+Some bits in TD attributes have corresponding CPUID feature bits. Reflect
+the fixed0/1 restriction on TD attributes to their corresponding CPUID
+bits in tdx_cpuid_lookup[] as well.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
-Changes in v3:
-- pass @errp to kvm_arch_pre_create_vcpu(); (Per Daniel)
+Changes in v4:
+ - reverse the meaning of tdx_caps->attr_fixed0, because value 0 of bit
+   means the bit must be fixed 0.
 ---
- accel/kvm/kvm-all.c  | 10 ++++++++++
- include/sysemu/kvm.h |  1 +
- 2 files changed, 11 insertions(+)
+ target/i386/cpu-internal.h |  9 +++++++++
+ target/i386/cpu.c          |  9 ---------
+ target/i386/cpu.h          |  2 ++
+ target/i386/kvm/tdx.c      | 21 +++++++++++++++++++++
+ 4 files changed, 32 insertions(+), 9 deletions(-)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 0c0719a0303c..a8a99d48e4ce 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -418,6 +418,11 @@ static int kvm_get_vcpu(KVMState *s, unsigned long vcpu_id)
-     return kvm_vm_ioctl(s, KVM_CREATE_VCPU, (void *)vcpu_id);
- }
+diff --git a/target/i386/cpu-internal.h b/target/i386/cpu-internal.h
+index 9baac5c0b450..e980f6e3147f 100644
+--- a/target/i386/cpu-internal.h
++++ b/target/i386/cpu-internal.h
+@@ -20,6 +20,15 @@
+ #ifndef I386_CPU_INTERNAL_H
+ #define I386_CPU_INTERNAL_H
  
-+int __attribute__ ((weak)) kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-+{
-+    return 0;
-+}
++typedef struct FeatureMask {
++    FeatureWord index;
++    uint64_t mask;
++} FeatureMask;
 +
- int kvm_init_vcpu(CPUState *cpu, Error **errp)
- {
-     KVMState *s = kvm_state;
-@@ -426,6 +431,11 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
++typedef struct FeatureDep {
++    FeatureMask from, to;
++} FeatureDep;
++
+ typedef enum FeatureWordType {
+    CPUID_FEATURE_WORD,
+    MSR_FEATURE_WORD,
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index b5f0c1080c34..78a3f55a856f 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -1443,15 +1443,6 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+     },
+ };
  
-     trace_kvm_init_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
+-typedef struct FeatureMask {
+-    FeatureWord index;
+-    uint64_t mask;
+-} FeatureMask;
+-
+-typedef struct FeatureDep {
+-    FeatureMask from, to;
+-} FeatureDep;
+-
+ static FeatureDep feature_dependencies[] = {
+     {
+         .from = { FEAT_7_0_EDX,             CPUID_7_0_EDX_ARCH_CAPABILITIES },
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 782aba921bd5..f86afbdfca96 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -883,6 +883,8 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
+ #define CPUID_7_0_ECX_MAWAU             (31U << 17)
+ /* Read Processor ID */
+ #define CPUID_7_0_ECX_RDPID             (1U << 22)
++/* KeyLocker */
++#define CPUID_7_0_ECX_KeyLocker         (1U << 23)
+ /* Bus Lock Debug Exception */
+ #define CPUID_7_0_ECX_BUS_LOCK_DETECT   (1U << 24)
+ /* Cache Line Demote Instruction */
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 24475e6b312e..144acd8c9912 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -32,6 +32,13 @@
+                                      (1U << KVM_FEATURE_PV_SCHED_YIELD) | \
+                                      (1U << KVM_FEATURE_MSI_EXT_DEST_ID))
  
-+    ret = kvm_arch_pre_create_vcpu(cpu, errp);
-+    if (ret < 0) {
-+        goto err;
++#define TDX_ATTRIBUTES_MAX_BITS      64
++
++static FeatureMask tdx_attrs_ctrl_fields[TDX_ATTRIBUTES_MAX_BITS] = {
++    [30] = { .index = FEAT_7_0_ECX, .mask = CPUID_7_0_ECX_PKS },
++    [31] = { .index = FEAT_7_0_ECX, .mask = CPUID_7_0_ECX_KeyLocker},
++};
++
+ typedef struct KvmTdxCpuidLookup {
+     uint32_t tdx_fixed0;
+     uint32_t tdx_fixed1;
+@@ -383,6 +390,8 @@ static void update_tdx_cpuid_lookup_by_tdx_caps(void)
+     FeatureWordInfo *fi;
+     uint32_t config;
+     FeatureWord w;
++    FeatureMask *fm;
++    int i;
+ 
+     for (w = 0; w < FEATURE_WORDS; w++) {
+         fi = &feature_word_info[w];
+@@ -408,6 +417,18 @@ static void update_tdx_cpuid_lookup_by_tdx_caps(void)
+         entry->tdx_fixed1 &= ~config;
+     }
+ 
++    for (i = 0; i < ARRAY_SIZE(tdx_attrs_ctrl_fields); i++) {
++        fm = &tdx_attrs_ctrl_fields[i];
++
++        if (~(tdx_caps->attrs_fixed0 & (1ULL << i))) {
++            tdx_cpuid_lookup[fm->index].tdx_fixed0 |= fm->mask;
++        }
++
++        if (tdx_caps->attrs_fixed1 & (1ULL << i)) {
++            tdx_cpuid_lookup[fm->index].tdx_fixed1 |= fm->mask;
++        }
 +    }
 +
-     ret = kvm_get_vcpu(s, kvm_arch_vcpu_id(cpu));
-     if (ret < 0) {
-         error_setg_errno(errp, -ret, "kvm_init_vcpu: kvm_get_vcpu failed (%lu)",
-diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
-index 8e83adfbbd19..82b547848130 100644
---- a/include/sysemu/kvm.h
-+++ b/include/sysemu/kvm.h
-@@ -341,6 +341,7 @@ int kvm_arch_get_default_type(MachineState *ms);
- 
- int kvm_arch_init(MachineState *ms, KVMState *s);
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp);
- int kvm_arch_init_vcpu(CPUState *cpu);
- int kvm_arch_destroy_vcpu(CPUState *cpu);
- 
+     /*
+      * Because KVM gets XFAM settings via CPUID leaves 0xD,  map
+      * tdx_caps->xfam_fixed{0, 1} into tdx_cpuid_lookup[].tdx_fixed{0, 1}.
 -- 
 2.34.1
 
