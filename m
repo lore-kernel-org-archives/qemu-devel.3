@@ -4,106 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2F4DC48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 21:52:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30C62C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 22:43:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfoJk-0006ie-Na; Thu, 29 Feb 2024 16:51:52 -0500
+	id 1rfp7J-0003ZV-CE; Thu, 29 Feb 2024 17:43:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rfoJi-0006iU-Qr
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 16:51:50 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rfp7C-0003Yo-Mw
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 17:42:59 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rfoJf-0000DU-Fv
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 16:51:50 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 1639321AAE;
- Thu, 29 Feb 2024 21:51:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709243504; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CNX2iAfu4zAJntAwuAl0NAMieT4OTWwmQ21REjTx9jU=;
- b=0GTZB/9ZWnEvjbnJLzAxgrZgY1ACD5ElYoI6pjh5VobkMEjXdihkdXGFqhCzJxs6libSuC
- J4VILFpjHE0nwAPx4CnR32qGORjiNCLxyi7kds/PXQitCpOiYYzZWgdbatJ+KwqO1ppq0+
- rp1wdJqhfT8XwZWrxrjVt1F1f0nVfiM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709243504;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CNX2iAfu4zAJntAwuAl0NAMieT4OTWwmQ21REjTx9jU=;
- b=Bs1KPER9XJvMUGxCuDMfA2SFVxXM7b9bjVElcymtDdMbiJDd7/Jy3aMP9GX2cX+8/n9aOW
- 1+ork8jY1djE2HBg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709243504; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CNX2iAfu4zAJntAwuAl0NAMieT4OTWwmQ21REjTx9jU=;
- b=0GTZB/9ZWnEvjbnJLzAxgrZgY1ACD5ElYoI6pjh5VobkMEjXdihkdXGFqhCzJxs6libSuC
- J4VILFpjHE0nwAPx4CnR32qGORjiNCLxyi7kds/PXQitCpOiYYzZWgdbatJ+KwqO1ppq0+
- rp1wdJqhfT8XwZWrxrjVt1F1f0nVfiM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709243504;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CNX2iAfu4zAJntAwuAl0NAMieT4OTWwmQ21REjTx9jU=;
- b=Bs1KPER9XJvMUGxCuDMfA2SFVxXM7b9bjVElcymtDdMbiJDd7/Jy3aMP9GX2cX+8/n9aOW
- 1+ork8jY1djE2HBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 915DB13503;
- Thu, 29 Feb 2024 21:51:43 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id rM+QFW/84GXkCQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 29 Feb 2024 21:51:43 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Het Gala <het.gala@nutanix.com>, qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, thuth@redhat.com, lvivier@redhat.com,
- pbonzini@redhat.com, peterx@redhat.com
-Subject: Re: [PATCH v2 1/3] qtest: migration: Enhance qtest migration
- functions to support 'channels' argument
-In-Reply-To: <87o7c0rruo.fsf@suse.de>
-References: <20240223152517.7834-1-het.gala@nutanix.com>
- <20240223152517.7834-2-het.gala@nutanix.com> <87zfvr7xdn.fsf@suse.de>
- <1988bb0f-6ebe-4335-b761-d11313c772fd@nutanix.com>
- <87bk83bcqj.fsf@suse.de>
- <32687fa3-78dc-457b-ae50-854d2c72c922@nutanix.com>
- <894b5da4-0af1-4ca0-b8a7-da288bb20774@nutanix.com>
- <87o7c0rruo.fsf@suse.de>
-Date: Thu, 29 Feb 2024 18:51:41 -0300
-Message-ID: <87cysfym4y.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rfp7A-00023t-1p
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 17:42:58 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1dcafff3c50so12714195ad.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 14:42:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709246573; x=1709851373; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3ETVhg8Ne398brIPeThJ2esYVmViUwVa64/zKryTlTc=;
+ b=XeWBAUd9dWA1TfKZEdK3QG4VFHteVOePRWh+lVbxpauKbrB/TFnoC4gpT15C3QBUGW
+ SLpJ1vUfLNsEtO6vdQry9Fm4fkKXv3EVz7Y/Szk/PpIBMnbK95oNHTGfFdaIx9++Ovfe
+ /g4FOSE4D4aDY+7NStr0n0p/AWgJSXuR6YwGBVpP72sUR1Ats7oRuU5Ze/bFago2Pl20
+ sO+w7opvR0tvnYTlKZSuHsmKPLGGrAykDzJUAB34UWUY8kH18Z2uonfp9g7HqWfmYhIy
+ 94oI1KNcsl3Xl8bKdrFZRwE42JJiO7fjDPgaDFYOHfT1fZgV6BBH021BzK483Mvqx5v+
+ FYKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709246573; x=1709851373;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3ETVhg8Ne398brIPeThJ2esYVmViUwVa64/zKryTlTc=;
+ b=mpPVYZymfz9JZtaZcamD6veBOIwOuu4IKVSUGjXFwKDn4x9gxeQFvJ/7OhHdsRtwgM
+ eyRePDrklfrSKOjfmsVV5mgDpc5bLjQvIyUgqwoFFcQCtF05v+2jTCvj7NWnBbq46V4G
+ Re4x87pEqYOoHCYAL+L/FdM1andtPRYsKVA6lb7vc1lHqyw8lPTHPirZFUbjodYdGEGi
+ /Fe1ZrykMo4gzvjIKuu+5VRXCJhzOP6nZE8R0CCL2A0yEv6VlCH1FVYovZCA8DcJNeDK
+ 6MwXiGw3frAEzokf/wgJmtkBdFiNw5r0y+KCDLhsaPrKhra7cZNv1hGt/5zVR6Aj5P0q
+ e41A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX3U5UrJGYRO4GQ4mBGMwIXorPWP6C+hzqsuGhXdGb8b/K60QuoPcbKxkcvSWggh2JaTUg9wPnUpYqmCGMOmbHWacOHBO0=
+X-Gm-Message-State: AOJu0YwvlroXsd0KIgBinc5/l/KtKumxQsRO1uBZkqEZD7oF/ABJaBk2
+ jFE05wONcGiqRhUcuIq7sdDF7//I8dKPjhK1kn6cC+J67u5SZAySZ2TN7EG3cs0=
+X-Google-Smtp-Source: AGHT+IEhq79AH+rBdMbqgJc1+OVGN+z5s0CAud7JnamkMoAOo+m1do3KKbvDcFy2kJxwRV6ROBGufQ==
+X-Received: by 2002:a17:903:1104:b0:1db:a55b:617e with SMTP id
+ n4-20020a170903110400b001dba55b617emr4558721plh.39.1709246573516; 
+ Thu, 29 Feb 2024 14:42:53 -0800 (PST)
+Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
+ [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
+ k23-20020a170902ba9700b001da105d6a83sm2016463pls.224.2024.02.29.14.42.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 29 Feb 2024 14:42:53 -0800 (PST)
+Message-ID: <fce60803-ac84-4b8c-af04-65c382ae1fec@linaro.org>
+Date: Thu, 29 Feb 2024 12:42:49 -1000
 MIME-Version: 1.0
-Content-Type: text/plain
-Authentication-Results: smtp-out1.suse.de;
-	none
-X-Spamd-Result: default: False [-4.19 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.09)[-0.425]; RCPT_COUNT_SEVEN(0.00)[7];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v5 06/22] target/arm: Add support for Non-maskable
+ Interrupt
+Content-Language: en-US
+To: Jinjie Ruan <ruanjinjie@huawei.com>, peter.maydell@linaro.org,
+ eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20240229131039.1868904-1-ruanjinjie@huawei.com>
+ <20240229131039.1868904-7-ruanjinjie@huawei.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240229131039.1868904-7-ruanjinjie@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,191 +100,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+On 2/29/24 03:10, Jinjie Ruan via wrote:
+> @@ -900,6 +945,31 @@ void arm_cpu_update_vfiq(ARMCPU *cpu)
+>       }
+>   }
+>   
+> +void arm_cpu_update_vnmi(ARMCPU *cpu)
+> +{
+> +    /*
+> +     * Update the interrupt level for VNMI, which is the logical OR of
+> +     * the HCRX_EL2.VINMI or HCRX_EL2.VFNMI bit and the input line level from
+> +     * the GIC.
+> +     */
+> +    CPUARMState *env = &cpu->env;
+> +    CPUState *cs = CPU(cpu);
+> +
+> +    bool new_state = ((env->cp15.hcr_el2 & HCR_VI) &&
+> +                      (env->cp15.hcrx_el2 & HCRX_VINMI)) ||
+> +                     ((env->cp15.hcr_el2 & HCR_VF) &&
+> +                      (env->cp15.hcrx_el2 & HCRX_VFNMI)) ||
 
-> Het Gala <het.gala@nutanix.com> writes:
->
->> On 27/02/24 1:04 am, Het Gala wrote:
->>>
->>>
->>> On 26/02/24 6:31 pm, Fabiano Rosas wrote:
->>>> Het Gala<het.gala@nutanix.com>  writes:
->>>>
->>>>> On 24/02/24 1:42 am, Fabiano Rosas wrote:
->>>>> this was the same first approach that I attempted. It won't work because
->>>>>
->>>>> The final 'migrate' QAPI with channels string would look like
->>>>>
->>>>> { "execute": "migrate", "arguments": { "channels": "[ { "channel-type":
->>>>> "main", "addr": { "transport": "socket", "type": "inet", "host":
->>>>> "10.117.29.84", "port": "4000" }, "multifd-channels": 2 } ]" } }
->>>>>
->>>>> instead of
->>>>>
->>>>> { "execute": "migrate", "arguments": { "channels": [ { "channel-type":
->>>>> "main", "addr": { "transport": "socket", "type": "inet", "host":
->>>>> "10.117.29.84", "port": "4000" }, "multifd-channels": 2 } ] } }
->>>>>
->>>>> It would complain, that channels should be an *array* and not a string.
->>>>>
->>>>> So, that's the reason parsing was required in qtest too.
->>>>>
->>>>> I would be glad to hear if there are any ideas to convert /string ->
->>>>> json object -> add it inside qdict along with uri/ ?
->>>>>
->>>> Isn't this what the various qobject_from_json do? How does it work with
->>>> the existing tests?
->>>>
->>>>      qtest_qmp_assert_success(to, "{ 'execute': 'migrate-incoming',"
->>>>                               "  'arguments': { "
->>>>                               "      'channels': [ { 'channel-type': 'main',"
->>>>                               "      'addr': { 'transport': 'socket',"
->>>>                               "                'type': 'inet',"
->>>>                               "                'host': '127.0.0.1',"
->>>>                               "                'port': '0' } } ] } }");
->>>>
->>>> We can pass this^ string successfully to QMP somehow...
->>>
->>> I think, here in qtest_qmp_assert_success, we actually can pass the 
->>> whole QMP command, and it just asserts that return key is present in 
->>> the response, though I am not very much familiar with qtest codebase 
->>> to verify how swiftly we can convert string into an actual QObject.
->>>
->>> [...]
->>>
->> I tried with qobject_from_json type of utility functions and the error I 
->> got was this :
->>
->> migration-test: /rpmbuild/SOURCES/qemu/include/qapi/qmp/qobject.h:126: 
->> qobject_type: Assertion `QTYPE_NONE < obj->base.type && obj->base.type < 
->> QTYPE__MAX' failed.
->>
->> And I suppose this was the case because, there are only limited types of 
->> QTYPE available
->>
->> typedefenumQType{
->> QTYPE_NONE,
->> QTYPE_QNULL,
->> QTYPE_QNUM,
->> QTYPE_QSTRING,
->> QTYPE_QDICT,
->> QTYPE_QLIST,
->> QTYPE_QBOOL,
->> QTYPE__MAX,
->> } QType;
->>
->> And 'channels' is a mixture of QDICT and QLIST and hence it is not able 
->> to easily convert from string to json.
->>
->> Thoughts on this ?
->
-> I'm not sure what you tried. This works:
->
->     g_assert(!qdict_haskey(args, "channels"));
->     if (channels) {
->         channels_obj = qobject_from_json(channels, errp);
->         qdict_put_obj(args, "channels", channels_obj);
->     }
->
-> And in the test:
->
->         .connect_channels = "[ { 'channel-type': 'main',"
->                             "    'addr': { 'transport': 'socket',"
->                             "              'type': 'inet',"
->                             "              'host': '127.0.0.1',"
->                             "              'port': '0' } } ]",
->         .listen_uri = "tcp:127.0.0.1:0",
->         .result = MIG_TEST_QMP_ERROR
->
-> However, the real issue is how to inject the port for the source
-> migration. The example above only works for the tests that are expected
-> to fail. For a test that should pass, 0 as a port does not work.
->
-> I'm thinking it might be better to alter migrate_qmp like this:
->
->   void migrate_qmp(QTestState *from, QTestState *to, const char *channels,
->                    const char *fmt, ...)
->
-> Invocations would be:
->
->   migrate_qmp(from, to, NULL, "{uri: %s}", connect_uri);
->   migrate_qmp(from, to, args->channels, "{}");
->
-> In this last case, if the test provided a port, we use it, otherwise we
-> resolve it from the 'to' instance and put it in the QDict directly.
->
-> I'll play with this a bit more tomorrow, let me know what you think.
+Need to use arm_hcr_el2_eff and arm_hcrx_el2_eff.  I see this is an existing error from 
+the other functions too.
 
-Ok, so here's what I think we should do:
+> +        (env->irq_line_state & CPU_INTERRUPT_VNMI);
+> +
+> +    if (new_state != ((cs->interrupt_request & CPU_INTERRUPT_VNMI) != 0)) {
+> +        if (new_state) {
+> +            cpu_interrupt(cs, CPU_INTERRUPT_VNMI);
+> +        } else {
+> +            cpu_reset_interrupt(cs, CPU_INTERRUPT_VNMI);
+> +        }
+> +    }
+> +}
 
-1) Add the 'to' object into migrate_qmp(), so we can use
-migrate_get_socket_address() to get the port. Leave the other
-migrate_qmp* alone because they don't need the port;
+This is incomplete, as you need additional changes within the other two functions to not 
+raise IRQ when VINMI is set, etc.
 
-2) Move the calls to migrate_get_socket_address() into migrate_qmp() and
-get rid of that connect_uri, use args->connect_uri instead everywhere;
 
-3) Add a new function SocketAddress_to_qdict() that does the same as
-SocketAddress_to_str(), but fills in a QDict instead;
-
-4) Add args->connect_channels and pass it to migrate_qmp() and
-migrate_qmp_fail(). Convert the string to a dict;
-
-    if (channels) {
-        channels_obj = qobject_from_json(channels, &error_abort);
-        qdict_put_obj(args, "channels", channels_obj);
-    }
-
-5) Add a migrate_set_ports() function that uses 3) and fills in the port
-in case it was 0 in the test. Handle a list of channels so we can add a
-negative test that passes two channels;
-
-  addr = migrate_get_socket_address(to);
-  for each channel:
-      if channel["port"] && channel["port"] == "0":
-          channel["port"] = SocketAddress_to_qdict(addr->value)["port"]
-
-(optionally iterate over addr to be prepared for when we add more
-channels)
-
-6) Alter migrate_qmp_fail() to allow both uri and channels
-independently. No dealing with migrate_get_socket_address() because we
-will fail before starting the migration anyway;
-
-    if (uri) {
-        qdict_put_str(args, "uri", uri);
-    }
-
-    if (channels) {
-        channels_obj = qobject_from_json(channels, &error_abort);
-        qdict_put_obj(args, "channels", channels_obj);
-    }
-
-7) Alter migrate_qmp() to only fill the uri if there are no
-channels. Here we don't want to allow the wrong cases of having both or
-none;
-
-    if (uri) {
-        qdict_put_str(args, "uri", uri);
-    } else if (!channels) {
-        qdict_put_str(args, "uri", migrate_get_socket_address(to));
-    }
-
-    if (channels) {
-        channels_obj = qobject_from_json(channels, &error_abort);
-        migrate_set_ports(to, qobject_to(QList, channels_obj));            
-        qdict_put_obj(args, "channels", channels_obj);
-    }
-
-8) Write the tests to pass the list of channels;
-
-    .connect_channels = "[ { 'channel-type': 'main',"
-                        "    'addr': { 'transport': 'socket',"
-                        "              'type': 'inet',"
-                        "              'host': '127.0.0.1',"
-                        "              'port': '0' } } ]",
-
-With this we can test multiple channels, test other types of channel,
-add more channel types in the future, etc and not need to change the
-test infra.
+r~
 
