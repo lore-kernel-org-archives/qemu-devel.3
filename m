@@ -4,105 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBF3FC54E41
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 14:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD53DC54E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 14:41:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfha5-0000ZR-UL; Thu, 29 Feb 2024 09:40:17 -0500
+	id 1rfhbF-0001Be-Hd; Thu, 29 Feb 2024 09:41:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1rfha3-0000Yk-Nd; Thu, 29 Feb 2024 09:40:17 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rfhal-0000zr-LY
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 09:41:06 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1rfha1-0000pq-WA; Thu, 29 Feb 2024 09:40:15 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 777B8228C1;
- Thu, 29 Feb 2024 14:40:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709217611; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hNpKbYqfzuf/MaKse8ndi5jx0DwmYBrPj+7dmmZyC8I=;
- b=0Y/aHk0tn25s0ubDCmfPYdzBpK9sCDYoER3nisWjO+b5Gy43qKtzLhYC6YFBaChyHjFN0K
- yXfH3RPrSqIm7ffpYccZfIFRS4ej1H7GI22FgszE4FMUT/njxfCgeU1/YaC6sYUyaa1qR7
- XJa987R1tPwdx2O5cxIoMHnhR2zM2Hg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709217611;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hNpKbYqfzuf/MaKse8ndi5jx0DwmYBrPj+7dmmZyC8I=;
- b=YANC+17nxk1CZlOrt/q8HjRcF2pkHArFmdefQ2ZTi9e43CCZomChKzmrT2NMt1F/0NJcFC
- b0s4u4whCI/nk9BQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709217611; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hNpKbYqfzuf/MaKse8ndi5jx0DwmYBrPj+7dmmZyC8I=;
- b=0Y/aHk0tn25s0ubDCmfPYdzBpK9sCDYoER3nisWjO+b5Gy43qKtzLhYC6YFBaChyHjFN0K
- yXfH3RPrSqIm7ffpYccZfIFRS4ej1H7GI22FgszE4FMUT/njxfCgeU1/YaC6sYUyaa1qR7
- XJa987R1tPwdx2O5cxIoMHnhR2zM2Hg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709217611;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hNpKbYqfzuf/MaKse8ndi5jx0DwmYBrPj+7dmmZyC8I=;
- b=YANC+17nxk1CZlOrt/q8HjRcF2pkHArFmdefQ2ZTi9e43CCZomChKzmrT2NMt1F/0NJcFC
- b0s4u4whCI/nk9BQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id ED0D213A4B;
- Thu, 29 Feb 2024 14:40:10 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id bPaiLEqX4GVgIwAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 29 Feb 2024 14:40:10 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Zhao Liu <zhao1.liu@linux.intel.com>, Markus Armbruster
- <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>, Michael Tokarev
- <mjt@tls.msk.ru>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, Peter Xu
- <peterx@redhat.com>
-Subject: Re: [PATCH 14/17] migration/option: Fix missing ERRP_GUARD() for
- error_prepend()
-In-Reply-To: <20240229143914.1977550-15-zhao1.liu@linux.intel.com>
-References: <20240229143914.1977550-1-zhao1.liu@linux.intel.com>
- <20240229143914.1977550-15-zhao1.liu@linux.intel.com>
-Date: Thu, 29 Feb 2024 11:39:36 -0300
-Message-ID: <87jzmnz653.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rfhag-00014I-Cx
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 09:40:59 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-412a3371133so7310815e9.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 06:40:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709217652; x=1709822452; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YwelTvnDdyHPTh4M2kE8HoLPPb7WDiLKmPAVFSSRyf8=;
+ b=V6Ze9Z0w1PErX4IJ5QeTDKU6SKDeEHqvZQiEJJbKTvXBABnUo0CHZW2lHus5v9EQ9T
+ ylZMQMV9qW0p75VGjoOyrCUi6pRSNyDc9SjbATWpUeAcRuNVS6ESBa0ciOuukt7zHUK9
+ yEbnDMeRIOaN0Df70+LxUjRKEAQSxYgZ0rFJ6P0vnL1a7NPHAvelP4zbKBlQIUH53UoV
+ 0wzatK8biuYigYBfUnm8Vw90hMwll6E0coFYR0+lsOBpdMGYo4F/EmEO8o4pPAXiGQpA
+ K7WDKVszmJ2a47naQcAGpJNhp7S+X6XJrsAFbsz7NkUkGmvLWQyyKWC5vDVr7Z7h/u1A
+ 2Dfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709217652; x=1709822452;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=YwelTvnDdyHPTh4M2kE8HoLPPb7WDiLKmPAVFSSRyf8=;
+ b=jVGSlILOa8suYSL67IvTzQx0lAB44qYlXPJjeYVanDqdpkUa4d+jXkqyrPK4b3gQlj
+ Tka0maAy//nNrzM9eVljeCM/HrFfoFOUYb5BoJtKJO54OfHEhhr6PQRzHSV3xY8tiPH2
+ b5dp6HjMcBxzjkwNld467yCxPAPBwXMS1CokQ5wW5MPmRspnlrGA+NRs+nxgf0LLUg7l
+ V4n8Aq+f60SiHMa5EtGvXvKzioKCHyumUa5I3pG0dD+Qp3oplqnwb+MBGZEGfZVs00OD
+ rbi3rJ5GPltkl0xlcrYaYbILkzEKaGC6QP99YrkeArObXFAybVF/mgXfc3ZFYO7iXTts
+ IWiw==
+X-Gm-Message-State: AOJu0YyXWlWT8G5/OJzemqUbd+9hkwIm37EpPF0yKrHO7ZIXmbrsEChW
+ dlkxJeNefxzZ1TgLxpTwTQ1ZdUUfvi9IEXPYjdkrT3zdibDvB9VJEZuuLy5T4fw=
+X-Google-Smtp-Source: AGHT+IHzFGWFIevVCAYEM7qETw6LuBGtHGeK4YocdRrH/5C9ae9+CFn6yShJw7tJZ0evhiIFsl3B8A==
+X-Received: by 2002:a05:600c:4f52:b0:412:b0ef:22b1 with SMTP id
+ m18-20020a05600c4f5200b00412b0ef22b1mr2024774wmq.4.1709217652448; 
+ Thu, 29 Feb 2024 06:40:52 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ dw2-20020a0560000dc200b0033ddfba0c67sm1918807wrb.41.2024.02.29.06.40.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 29 Feb 2024 06:40:52 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id B29145F796;
+ Thu, 29 Feb 2024 14:40:51 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,  Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>,  Yanan Wang <wangyanan55@huawei.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,  Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH v5 10/12] contrib/plugins/howvec: migrate to new
+ per_vcpu API
+In-Reply-To: <20240226091446.479436-11-pierrick.bouvier@linaro.org> (Pierrick
+ Bouvier's message of "Mon, 26 Feb 2024 13:14:42 +0400")
+References: <20240226091446.479436-1-pierrick.bouvier@linaro.org>
+ <20240226091446.479436-11-pierrick.bouvier@linaro.org>
+User-Agent: mu4e 1.12.0; emacs 29.1
+Date: Thu, 29 Feb 2024 14:40:51 +0000
+Message-ID: <877cin9vv0.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-Authentication-Results: smtp-out1.suse.de;
-	none
-X-Spamd-Result: default: False [-2.95 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-2.85)[99.36%];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
- RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_SEVEN(0.00)[9];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,44 +103,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhao Liu <zhao1.liu@linux.intel.com> writes:
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-> From: Zhao Liu <zhao1.liu@intel.com>
->
-> As the comment in qapi/error, passing @errp to error_prepend() requires
-> ERRP_GUARD():
->
-> * = Why, when and how to use ERRP_GUARD() =
-> *
-> * Without ERRP_GUARD(), use of the @errp parameter is restricted:
-> ...
-> * - It should not be passed to error_prepend(), error_vprepend() or
-> *   error_append_hint(), because that doesn't work with &error_fatal.
-> * ERRP_GUARD() lifts these restrictions.
-> *
-> * To use ERRP_GUARD(), add it right at the beginning of the function.
-> * @errp can then be used without worrying about the argument being
-> * NULL or &error_fatal.
->
-> ERRP_GUARD() could avoid the case when @errp is the pointer of
-> error_fatal, the user can't see this additional information, because
-> exit() happens in error_setg earlier than information is added [1].
->
-> The migrate_params_check() passes @errp to error_prepend() without
-> ERRP_GUARD(), and it could be called from migration_object_init(),
-> where the passed @errp points to @error_fatal.
->
-> Therefore, the error message echoed in error_prepend() will be lost
-> because of the above issue.
->
-> To fix this, add missing ERRP_GUARD() at the beginning of this function.
->
-> [1]: Issue description in the commit message of commit ae7c80a7bd73
->      ("error: New macro ERRP_GUARD()").
->
-> Cc: Peter Xu <peterx@redhat.com>
-> Cc: Fabiano Rosas <farosas@suse.de>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
