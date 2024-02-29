@@ -4,156 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CA5AC48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 18:05:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54450C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 18:07:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfklp-0002sz-BP; Thu, 29 Feb 2024 13:04:37 -0500
+	id 1rfkoK-0004IM-Rk; Thu, 29 Feb 2024 13:07:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
- id 1rfklg-0002nx-Mx
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 13:04:29 -0500
-Received: from snake.cherry.relay.mailchannels.net ([23.83.223.171])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
- id 1rfklY-00082S-1Y
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 13:04:28 -0500
-X-Sender-Id: _forwarded-from|134.3.94.10
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id 0DD6183495
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 18:04:17 +0000 (UTC)
-Received: from outbound3.eu.mailhop.org (unknown [127.0.0.6])
- (Authenticated sender: duocircle)
- by relay.mailchannels.net (Postfix) with ESMTPA id 3011783CF0
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 18:04:16 +0000 (UTC)
-ARC-Seal: i=2; s=arc-2022; d=mailchannels.net; t=1709229856; a=rsa-sha256;
- cv=pass;
- b=Et76rEYc7oSupiYqp540EnZDDZagjBdC7Qhuf50x3+Rt0kVI7EZYjMatITXbX/A6Oo1rJF
- 6nYXfN04Vj4ollW14uzCzJt63hTBOJi+VQbx9U4Swiz5q3z7eE9j+wxTWWZ022RxdnMmkx
- jtPuQafjSDdkLuo2GM2CvkGgeUCI1a1zLGmGeinG+lofd0UktpiiPnGZq7uakA3OTi9NUq
- cKk3XYctTZ7cJNa6y6BkYXaiXnhrzQ8gGhER+nYmOGaFqlDYZJQbrhl+pMQWuFPucryoiJ
- gX0b+YIhETY3u1gVGHiCeLeH8lMcAtiid5Y9IUjTuLugrUVvajLHr6/7xfssJg==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net; s=arc-2022; t=1709229856;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:dkim-signature;
- bh=/wumxogzyOumUdTcGyRHuGOW8RASzXcjGdXHeiNMITE=;
- b=gcQU11sMUwRYu19AzN9EZD7QpAAwwZCcDmQeQBUgu2QNPg8/DfoJEWsuVWsQEkEUYHg+0Z
- UNC3x01GJDMzDbika5PVzYS4aaP+Ylfpl90VxVbInSLlILQ4yV0D+Munkm5fLOIxWl9Hc8
- WHbdMR7LA+L3L3Jr4VibI60opCfZ8pc193R7gA9KXWMA/fi5sZkvgVyy7JxDBPrFw+UhBE
- ne7X0f9w2WS9zb6eoF5nsqvjyquXIhfnd9sKPwR0rPngXJEHfAU0WWAzOQLiRkzE9kbOZ8
- +ZbFtqq1LV5JuE/lU0bkMfLoLnxQamPoJrZOAo6Y5SnbDecRtMbH+o1lwN+o3w==
-ARC-Authentication-Results: i=2; rspamd-7f9dd9fb96-smqdl;
- arc=pass ("outbound.mailhop.org:s=arc-outbound20181012:i=1");
- auth=pass smtp.auth=duocircle smtp.mailfrom=svens@stackframe.org
-X-Sender-Id: _forwarded-from|134.3.94.10
-X-MC-Relay: Forwarding
-X-MailChannels-SenderId: _forwarded-from|134.3.94.10
-X-MailChannels-Auth-Id: duocircle
-X-Harbor-Harbor: 594b42c262c546b3_1709229856686_3153848249
-X-MC-Loop-Signature: 1709229856686:594268258
-X-MC-Ingress-Time: 1709229856685
-Received: from outbound3.eu.mailhop.org (outbound3.eu.mailhop.org
- [52.29.21.168]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.102.58.46 (trex/6.9.2); Thu, 29 Feb 2024 18:04:16 +0000
-ARC-Seal: i=1; a=rsa-sha256; t=1709229831; cv=none;
- d=outbound.mailhop.org; s=arc-outbound20181012;
- b=Y6nCpJ/aK/YVC36kkCP/GDmhGtKtE7cAogvQE30895FBDEo6pKiCtVaLgunkcNaGHbN+SWvCEzBKO
- W8WzhHZObrZYe+ckpbyBbm1Jtupg++vCSPjwUEh0wfAJYrv7cjjbu21qCOV+d5SXzgwtzVBxB3oAUq
- C8ZwCfarmU/q8+Ru/9NuboO44vCVnZs1lxetBSTbdVVZs4QbZHN+nzsZniKoVW5tVIcqvB+WKOm4jf
- LALFuJ7ttbQ8fTm4/+vsgL0dnGHbePkCD4yxnJeb0HJgd7DBiLyVuY5xd+lR2jc73A/wn3VDzR9sgk
- UlYgPvozU8/Rw+oJNFAgdGWULhRlTVQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=outbound.mailhop.org; s=arc-outbound20181012;
- h=content-transfer-encoding:content-type:mime-version:message-id:date:
- references:in-reply-to:subject:cc:to:from:dkim-signature:dkim-signature:
- dkim-signature:from;
- bh=/wumxogzyOumUdTcGyRHuGOW8RASzXcjGdXHeiNMITE=;
- b=K7DlSvSeQNBawoTEaJVWphfbQ5tuIvfs7pmuCph3um5ink2scY06Aj2JE91AqKri2tfZCrU7i+EZP
- QYvxEXuWdheBubV5xkii6UIrGsjSxw7+PJSZRF4rwoPdhrZEDjN81G59T5iDJupSX3DoLbS7jvmF/8
- aqsqbPg9m/uvFuNWu0ZqQMX8Z67BSufWoRk82tjgIFWt2xxqui59j41LBg2DRyHS5g2T/XiA+o6Xjp
- zriAQ9tb8xuhEP9Kbm3qAV422E7Ddi86gnbo7q7Xy/l6OMe9T2R6oqMw1rXebGll8esshQ5GGDVw2c
- 1NpmroTabXR4X3NkqjgG3aVdDN0oB6A==
-ARC-Authentication-Results: i=1; outbound3.eu.mailhop.org;
- spf=pass smtp.mailfrom=stackframe.org smtp.remote-ip=130.180.31.158;
- dkim=pass header.d=stackframe.org header.s=dkim1 header.a=rsa-sha256
- header.b=J0U6mcZd; 
- dmarc=none header.from=stackframe.org;
- arc=none header.oldest-pass=0;
+ (Exim 4.90_1) (envelope-from <christoph.muellner@vrull.eu>)
+ id 1rfkoF-0004Fi-JJ
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 13:07:08 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <christoph.muellner@vrull.eu>)
+ id 1rfkoC-00007t-52
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 13:07:07 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5655c7dd3b1so4416593a12.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 10:07:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=stackframe.org; s=duo-1634547266507-560c42ae;
- h=content-transfer-encoding:content-type:mime-version:message-id:date:
- references:in-reply-to:subject:cc:to:from:from;
- bh=/wumxogzyOumUdTcGyRHuGOW8RASzXcjGdXHeiNMITE=;
- b=ZXzzSDrDpVYQ2TtneN0inUFdGsqbLMGT3tHWlyros60aH9PHOYxOZHZxtNZgL3XRHuSFFNL27AiUr
- sdojN5ZXW463T0g+bd7ILVrMK/Xl7LeYrw7M1ulwToIm6lY35vL+Smuh6JA109qzg7c3R2yU/VtuDp
- FSpUioIn7KRAhxN4=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=outbound.mailhop.org; s=dkim-high;
- h=content-transfer-encoding:content-type:mime-version:message-id:date:
- references:in-reply-to:subject:cc:to:from:from;
- bh=/wumxogzyOumUdTcGyRHuGOW8RASzXcjGdXHeiNMITE=;
- b=FtIBBgTpO3zEsFf6IDdaoZjNhyvq7j4zwo0AAueDpFXUiov6OQ1//sTKOOyPhldn+hkFoCvDMULcd
- PHXSgJdHLBnCb0PKAHV170scwA829uoJna6iWcDR+rePqRtBv/YSIbku4oDQIKFGVI7euJTw+bDTk0
- WjX9HFkH4L4uTxlg/POy9xLOE3CmHgZ+XnagsVHRTJkTJK5C2y7BVj353i841cDMvse5gVRxowMoD6
- nRbn0vSphfnrx9jNurDVeVDgPYLHOobddTO9Y1NFu6Z7FSMrFgeXuqKuv2h/mIh0F3zoaJwNvWJB7V
- GNa+orByPpyqTEEigT3AD+nipzLVWHA==
-X-Originating-IP: 130.180.31.158
-X-MHO-RoutePath: dG9ta2lzdG5lcm51
-X-MHO-User: e14fe26a-d72c-11ee-afbc-eda7e384987e
-X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
-X-Mail-Handler: DuoCircle Outbound SMTP
-Received: from mail.duncanthrax.net (mail.duncanthrax.net [130.180.31.158])
- by outbound3.eu.mailhop.org (Halon) with ESMTPSA
- id e14fe26a-d72c-11ee-afbc-eda7e384987e;
- Thu, 29 Feb 2024 18:03:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=stackframe.org; s=dkim1; h=Content-Transfer-Encoding:Content-Type:
- MIME-Version:Message-ID:Date:References:In-Reply-To:Subject:Cc:To:From:Sender
- :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=/wumxogzyOumUdTcGyRHuGOW8RASzXcjGdXHeiNMITE=; b=J0U6mcZdVCknG5g7YXnAcFw3JZ
- iGiRWA0HtqPywZYMgcF48xRBz/GB6uQIm6MWQ92BS0qJzvDy36h3IxJ8NKVZvuDPD9N8wwD3DrwIU
- uJgUr1a9wqHtPC3S6byVFXTape6QG3AZsAfTaR8EsenlWh/4+D5uSotM8fQeUYARO8K6KylOQnA0K
- 6COHF8lY9tEODoYf+LzNWHvoLn7WCM2JtRGOuOoJKjQISJet4Sn70qTiBO3+981JCTAvazfi6ZEZE
- OPtok3/9irf30c5I3L/194cp/aMFsw0E86ncz8EtqzOvSFpjnLPU2BGNR3VqOBlKGGdwT+LENZ4FI
- GNOgBNHQ==;
-Received: from ip-134-003-094-010.um41.pools.vodafone-ip.de ([134.3.94.10]
- helo=t14.stackframe.org.stackframe.org)
- by mail.duncanthrax.net with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
- (envelope-from <svens@stackframe.org>) id 1rfklN-000MxS-0Y;
- Thu, 29 Feb 2024 19:04:09 +0100
-From: Sven Schnelle <svens@stackframe.org>
-To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Alexandre Iooss <erdnaxe@crans.org>,  Mahmoud Mandour
- <ma.mandourr@gmail.com>,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- qemu-devel@nongnu.org,  deller@gmx.de
-Subject: Re: [PATCH 3/3] plugins/execlog: add address range matching
-In-Reply-To: <874jdr6vp5.fsf@draig.linaro.org> ("Alex =?utf-8?Q?Benn=C3=A9?=
- =?utf-8?Q?e=22's?= message of "Thu, 29 Feb 2024 17:12:38 +0000")
-References: <20240229150729.1620410-1-svens@stackframe.org>
- <20240229150729.1620410-4-svens@stackframe.org>
- <874jdr6vp5.fsf@draig.linaro.org>
-Date: Thu, 29 Feb 2024 19:04:08 +0100
-Message-ID: <87il27xi3r.fsf@t14.stackframe.org>
+ d=vrull.eu; s=google; t=1709230020; x=1709834820; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ispNcME3Fnv2/NODn686pnGKi1e4GIPoFAIakhezmas=;
+ b=OvD9aotzr1TPq1Mb4+qhtArlzoTxAYry7mqjRAK23J+lCyNKF9ER/6HnegDSVxNtNq
+ eUwA5vTNECRxJzJPxYoVd1kSxN5AOG4OGp4uNNu4pSfB5Iprccc/uT/3Azqa5J2qcgve
+ gxCy8jjQ2U/3ofEHAHPb16OvW7lwE2UTEVKR0tWELmviqlYWPSlN4wLJsMZ0+5iRF1g3
+ XQJ7G3pZujMoAmxFeZaaGLP3631D2f9nEP4eodHlSXT4UCKtaCOaHf4dp+BIncf7zs9n
+ 0N0cyDx6/Zr2mGTQ/7k1rCAV9q7t0yUXiBThQ78NeO9qzHjyTPHdFzVHfedAfMwD6Jcy
+ ++PQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709230020; x=1709834820;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ispNcME3Fnv2/NODn686pnGKi1e4GIPoFAIakhezmas=;
+ b=aQfNIHwImrPxhw9ukBnHu1fR969iYgvEQHw6ysoWVoo1pRAOn65HNpg/GUfQddWnNt
+ /DA8FLejKrV/6+aduMUaipg8p8n6/SVi+LV0o11lXU6WvMRY29RD6cVFkTaqH6vG3Wme
+ /J22ZGaqhNmOjiyM4aIRXwB48epfP92C9eUFqgFkSNlp+ISoiAcjl8wbC+iMXG4sH2N9
+ kCGFEC/XsIPIrC0/ZFE+zhwbCwXE9veHqde1D1InXBPVyJcLkfE11xyHgTUKobmD3nJK
+ LTn/77oVKJhYNdA/NYbT9qqxxUV8vApFsEdAcitwIAIqOZdR4X3BMvmKL6lDiwU2qbBf
+ LkJA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWRU+X8Gt0zLsot217kkCTPV5IALaCoKmxFhWCQkmIjNHbuDrd9gb0NA6OhLDNsLHn/9qyilG0vtVuBB4Bm7pyCW2k8qb0=
+X-Gm-Message-State: AOJu0YyqyagXUTqfYY+FvSHohfGDsvIw0ZPX+Mg4xLX1EtQyJJ/da21q
+ URXRrD/a+0kz71RNRCwmFz58WtpDg9eOmIiUc3uV0nlF1Q9kKoGb7oBlgAtHAsg=
+X-Google-Smtp-Source: AGHT+IEVTP1g8jGgKIH9oo9BrfMBuradbNfPamLEAH9WuH4JFNPzbaL49A+ddj4nyCbw7E9UXKXXlg==
+X-Received: by 2002:a17:906:a417:b0:a43:f924:d65 with SMTP id
+ l23-20020a170906a41700b00a43f9240d65mr1810605ejz.26.1709230020287; 
+ Thu, 29 Feb 2024 10:07:00 -0800 (PST)
+Received: from beast.fritz.box (62-178-148-172.cable.dynamic.surfer.at.
+ [62.178.148.172]) by smtp.gmail.com with ESMTPSA id
+ ss18-20020a170907039200b00a44230eafdfsm911960ejb.83.2024.02.29.10.06.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 29 Feb 2024 10:06:59 -0800 (PST)
+From: =?UTF-8?q?Christoph=20M=C3=BCllner?= <christoph.muellner@vrull.eu>
+To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>,
+ Philipp Tomsich <philipp.tomsich@vrull.eu>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Andrew Jones <ajones@ventanamicro.com>
+Cc: =?UTF-8?q?Christoph=20M=C3=BCllner?= <christoph.muellner@vrull.eu>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH] tests: riscv64: Use 'zfa' instead of 'Zfa'
+Date: Thu, 29 Feb 2024 19:06:56 +0100
+Message-ID: <20240229180656.1208881-1-christoph.muellner@vrull.eu>
+X-Mailer: git-send-email 2.43.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=23.83.223.171; envelope-from=svens@stackframe.org;
- helo=snake.cherry.relay.mailchannels.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=christoph.muellner@vrull.eu; helo=mail-ed1-x52b.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,50 +100,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alex,
+Running test-fcvtmod triggers the following deprecation warning:
+  warning: CPU property 'Zfa' is deprecated. Please use 'zfa' instead
+Let's fix that.
 
-Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+Signed-off-by: Christoph Müllner <christoph.muellner@vrull.eu>
+---
+ tests/tcg/riscv64/Makefile.target | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> Sven Schnelle <svens@stackframe.org> writes:
->> +static void parse_vaddr_match(GArray **matches, char *token)
->>  {
->> -    uint64_t v =3D g_ascii_strtoull(match, NULL, 16);
->> +    uint64_t low, high;
->> +    gchar *endp;
->>=20=20
->> -    if (!matches) {
->> -        *matches =3D g_array_new(false, true, sizeof(uint64_t));
->> +    low =3D g_ascii_strtoull(token, &endp, 16);
->> +    if (endp =3D=3D token) {
->> +        fprintf(stderr, "Invalid address(range) specified: %s\n", token=
-);
->> +        return;
->> +    }
->> +
->> +    if (*endp !=3D '-') {
->> +        high =3D low;
->> +    } else {
->> +        high =3D g_ascii_strtoull(endp + 1, &endp, 16);
->> +        if (endp =3D=3D token) {
->> +            fprintf(stderr, "Invalid address(range) specified: %s\n", t=
-oken);
->> +            return;
->> +        }
->> +    }
->> +
->> +    if (!*matches) {
->> +        *matches =3D g_array_new(false, true, sizeof(struct address_mat=
-ch));
->>      }
->> -    g_array_append_val(*matches, v);
->> +    struct address_match *match =3D g_new(struct address_match, 1);
->> +    match->low =3D low;
->> +    match->high =3D high;
->> +    g_array_append_val(*matches, match);
->
-> This is almost but not quite qemu_set_dfilter_ranges(). I wonder if it
-> would be worth a light re-factoring and then exposing the parser as a
-> helper function?
+diff --git a/tests/tcg/riscv64/Makefile.target b/tests/tcg/riscv64/Makefile.target
+index a7e390c384..4da5b9a3b3 100644
+--- a/tests/tcg/riscv64/Makefile.target
++++ b/tests/tcg/riscv64/Makefile.target
+@@ -17,4 +17,4 @@ run-test-aes: QEMU_OPTS += -cpu rv64,zk=on
+ TESTS += test-fcvtmod
+ test-fcvtmod: CFLAGS += -march=rv64imafdc
+ test-fcvtmod: LDFLAGS += -static
+-run-test-fcvtmod: QEMU_OPTS += -cpu rv64,d=true,Zfa=true
++run-test-fcvtmod: QEMU_OPTS += -cpu rv64,d=true,zfa=true
+-- 
+2.43.2
 
-Thanks, I'll take a look. I wasn't aware of qemu_set_dfilter_ranges().
 
