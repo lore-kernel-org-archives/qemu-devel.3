@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A70F1C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 06:48:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB3D0C54798
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 06:48:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfa6t-00067F-89; Thu, 29 Feb 2024 01:41:39 -0500
+	id 1rfa8X-0001Hw-OS; Thu, 29 Feb 2024 01:43:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rfa5z-0004zT-3Y
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:40:44 -0500
+ id 1rfa8U-0001DC-Fs
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:43:18 -0500
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rfa5t-0004nE-7d
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:40:40 -0500
+ id 1rfa8O-0004qw-DA
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 01:43:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709188837; x=1740724837;
+ t=1709188992; x=1740724992;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Gvq++bXmo93zAUhJsRjiDraEH3cCNX+uGjQb5aw6CGM=;
- b=GomGwSctxQ1cetgkmdAJnpXc9wM3MwpuLNyBXBMUV1+bFFvvMeQu/sze
- RdyvVuxFxS5GTBLSbaDe+Vpxr28NC4LFIQkCZvkV5QQtDxCzOk9tpaVai
- 6Vq7KYnTtTSoCFv6dLg2ySU79AnKC8Vs26T1P3TajTbcSRrNBWgY3uPNY
- ToB+Aqxp46dfP8WGfMMx871UfsDQsbSquRojesYKAzVIiI/TtvgfadBti
- yTEYM+5OebcXYLLeHEG4N8hWTyldh4t6gQSZsvxFKKgOEOWHu+UM3cpCW
- RJaSUmmft6i/DHdTHoZCot7XzKZvUWtHuNx4v0dj4ltaETL1e/sV9EvLT Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3802767"
+ bh=r0WVqY73FtUvDu2Uo/0GVK8pnEP8ED2vVJ/XQpG4oto=;
+ b=BCgGk0Rk1q5e47i1yMEpT3ftyznPhSGApmNeNVeMdjSDb7P8E2lQRRrH
+ lZmP+A0rZoWpY4shQd5iTqPF0lU2PkROJS5g50UkVpa4KmlsDhIk2TpvH
+ GZ4wP3sYMseAOmAPW7hpIdOuROW1XcsS0sKbksm4LPi6h8jHHFHWUnnmG
+ MuCxD7U0KWIn/3Svm8N2+p1Pq6lMbwk01g1VCfLMgQ34HY9wAeCzU5Rbc
+ DGxLOafVB0G+2XZV4NeVrCL+agF4sgZaljR0YZ359TbB7Vu5YE/aNwcTw
+ r9Vv124WD0Tk+G1WNT1RiSzGaoUFefTON9lM1MzxSHyuuMFEb9kOe4NDC g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10998"; a="3803128"
 X-IronPort-AV: E=Sophos;i="6.06,192,1705392000"; 
-   d="scan'208";a="3802767"
+   d="scan'208";a="3803128"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Feb 2024 22:40:31 -0800
+ 28 Feb 2024 22:43:10 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,192,1705392000"; 
-   d="scan'208";a="8075530"
+   d="scan'208";a="8076151"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa007.jf.intel.com with ESMTP; 28 Feb 2024 22:40:25 -0800
+ by orviesa007.jf.intel.com with ESMTP; 28 Feb 2024 22:43:04 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -60,10 +60,9 @@ Cc: kvm@vger.kernel.org, qemu-devel@nongnu.org,
  Gerd Hoffmann <kraxel@redhat.com>,
  Isaku Yamahata <isaku.yamahata@gmail.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>, xiaoyao.li@intel.com
-Subject: [PATCH v5 27/65] i386/tdx: Wire CPU features up with attributes of TD
- guest
-Date: Thu, 29 Feb 2024 01:36:48 -0500
-Message-Id: <20240229063726.610065-28-xiaoyao.li@intel.com>
+Subject: [PATCH v5 51/65] i386/tdx: Handle TDG.VP.VMCALL<REPORT_FATAL_ERROR>
+Date: Thu, 29 Feb 2024 01:37:12 -0500
+Message-Id: <20240229063726.610065-52-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240229063726.610065-1-xiaoyao.li@intel.com>
 References: <20240229063726.610065-1-xiaoyao.li@intel.com>
@@ -94,54 +93,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For QEMU VMs, PKS is configured via CPUID_7_0_ECX_PKS and PMU is
-configured by x86cpu->enable_pmu. Reuse the existing configuration
-interface for TDX VMs.
+TD guest can use TDG.VP.VMCALL<REPORT_FATAL_ERROR> to request termination
+with error message encoded in GPRs.
+
+Parse and print the error message, and terminate the TD guest in the
+handler.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- target/i386/kvm/tdx.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ target/i386/kvm/tdx.c | 39 +++++++++++++++++++++++++++++++++++++++
+ target/i386/kvm/tdx.h |  1 +
+ 2 files changed, 40 insertions(+)
 
 diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index b6295a644566..262e86fd2c67 100644
+index 88d245577594..6cd72a26b970 100644
 --- a/target/i386/kvm/tdx.c
 +++ b/target/i386/kvm/tdx.c
-@@ -33,6 +33,8 @@
-                                      (1U << KVM_FEATURE_MSI_EXT_DEST_ID))
- 
- #define TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE   BIT_ULL(28)
-+#define TDX_TD_ATTRIBUTES_PKS               BIT_ULL(30)
-+#define TDX_TD_ATTRIBUTES_PERFMON           BIT_ULL(63)
- 
- #define TDX_ATTRIBUTES_MAX_BITS      64
- 
-@@ -477,6 +479,15 @@ static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+@@ -1092,6 +1092,43 @@ static int tdx_handle_get_quote(X86CPU *cpu, struct kvm_tdx_vmcall *vmcall)
      return 0;
  }
  
-+static void setup_td_guest_attributes(X86CPU *x86cpu)
++static int tdx_handle_report_fatal_error(X86CPU *cpu,
++                                         struct kvm_tdx_vmcall *vmcall)
 +{
-+    CPUX86State *env = &x86cpu->env;
++    uint64_t error_code = vmcall->in_r12;
++    char *message = NULL;
 +
-+    tdx_guest->attributes |= (env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_PKS) ?
-+                             TDX_TD_ATTRIBUTES_PKS : 0;
-+    tdx_guest->attributes |= x86cpu->enable_pmu ? TDX_TD_ATTRIBUTES_PERFMON : 0;
++    if (error_code & 0xffff) {
++        error_report("TDX: REPORT_FATAL_ERROR: invalid error code: "
++                     "0x%lx\n", error_code);
++        return -1;
++    }
++
++    /* it has optional message */
++    if (vmcall->in_r14) {
++        uint64_t * tmp;
++
++#define GUEST_PANIC_INFO_TDX_MESSAGE_MAX        64
++        message = g_malloc0(GUEST_PANIC_INFO_TDX_MESSAGE_MAX + 1);
++
++        tmp = (uint64_t *)message;
++        /* The order is defined in TDX GHCI spec */
++        *(tmp++) = cpu_to_le64(vmcall->in_r14);
++        *(tmp++) = cpu_to_le64(vmcall->in_r15);
++        *(tmp++) = cpu_to_le64(vmcall->in_rbx);
++        *(tmp++) = cpu_to_le64(vmcall->in_rdi);
++        *(tmp++) = cpu_to_le64(vmcall->in_rsi);
++        *(tmp++) = cpu_to_le64(vmcall->in_r8);
++        *(tmp++) = cpu_to_le64(vmcall->in_r9);
++        *(tmp++) = cpu_to_le64(vmcall->in_rdx);
++        message[GUEST_PANIC_INFO_TDX_MESSAGE_MAX] = '\0';
++        assert((char *)tmp == message + GUEST_PANIC_INFO_TDX_MESSAGE_MAX);
++    }
++
++    error_report("TD guest reports fatal error. %s\n", message ? : "");
++    return -1;
 +}
 +
- int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+ static int tdx_handle_setup_event_notify_interrupt(X86CPU *cpu,
+                                                    struct kvm_tdx_vmcall *vmcall)
  {
-     MachineState *ms = MACHINE(qdev_get_machine());
-@@ -499,6 +510,8 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
-         return r;
-     }
+@@ -1126,6 +1163,8 @@ static int tdx_handle_vmcall(X86CPU *cpu, struct kvm_tdx_vmcall *vmcall)
+         return tdx_handle_map_gpa(cpu, vmcall);
+     case TDG_VP_VMCALL_GET_QUOTE:
+         return tdx_handle_get_quote(cpu, vmcall);
++    case TDG_VP_VMCALL_REPORT_FATAL_ERROR:
++        return  tdx_handle_report_fatal_error(cpu, vmcall);
+     case TDG_VP_VMCALL_SETUP_EVENT_NOTIFY_INTERRUPT:
+         return tdx_handle_setup_event_notify_interrupt(cpu, vmcall);
+     default:
+diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
+index b6b8742e79f7..86b1f80d6f49 100644
+--- a/target/i386/kvm/tdx.h
++++ b/target/i386/kvm/tdx.h
+@@ -20,6 +20,7 @@ typedef struct TdxGuestClass {
  
-+    setup_td_guest_attributes(x86cpu);
-+
-     init_vm->cpuid.nent = kvm_x86_arch_cpuid(env, init_vm->cpuid.entries, 0);
+ #define TDG_VP_VMCALL_MAP_GPA                           0x10001ULL
+ #define TDG_VP_VMCALL_GET_QUOTE                         0x10002ULL
++#define TDG_VP_VMCALL_REPORT_FATAL_ERROR                0x10003ULL
+ #define TDG_VP_VMCALL_SETUP_EVENT_NOTIFY_INTERRUPT      0x10004ULL
  
-     init_vm->attributes = tdx_guest->attributes;
+ #define TDG_VP_VMCALL_SUCCESS           0x0000000000000000ULL
 -- 
 2.34.1
 
