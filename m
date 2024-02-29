@@ -4,87 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53CC9C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 17:18:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFA4EC54E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 17:23:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfk2f-0004uO-ES; Thu, 29 Feb 2024 12:17:57 -0500
+	id 1rfk70-0008Fn-GR; Thu, 29 Feb 2024 12:22:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rfk2e-0004tl-3J
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 12:17:56 -0500
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rfk2b-0004Jq-Uv
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 12:17:55 -0500
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-299b92948a6so793295a91.3
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 09:17:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709227072; x=1709831872; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ZglatVsfAwaqgOtZ6XWnzgIpWJ3NUN3IDbiM9QdfJ7Y=;
- b=sj+BQVAzlx+Zv7eD+OI3qt7chqYp0V1o4JlCiwcTnq+yklmIFnog96q9nlquNpQRbg
- xq/NgX3U9zf8x+BFzmqNPh3lwefu0DPgMWAnhngKwO0zWFCui6lzQdb32GUpFYRDW6dB
- mVCFyDYPIJVaZfVidA+WJCZ2bNqfa9rpxazwdOWTlcK8FCJ8I8ibDiusFC4tvzilT882
- aFD7XelHNHxjuMph1LXxxQjT6dhVG71RVdxm1gNEcZelUHH151LILFQ1B51Dn7ZJh9p/
- 6PYCsrfbhJ41FuQY8DFMmgiPij8cczBBXOLfQfRijM4m8k5c6Y5HUjKPBmQgHIpIOLgJ
- +pmA==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfk6z-0008Ek-6d
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 12:22:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfk6x-0005aa-Lc
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 12:22:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709227342;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=I87VSXgw5DiLnm3tveFXeiIdN9mUJJ50N/+2Xr0MgO8=;
+ b=TAD6eJQ8PevyeHLztv6y8Lc4hrX8KtGHxaIuDwZONOW1cLJZldwexbuq7J26z0V/k+hpLq
+ VpG74kOTCfK/swE3eGRjdwJMTkzq0k4M3ZRiYT9UXgloM5RJBnqkwoGwsz9Y4d7g1wwol0
+ xHj6HqMc1aPDr4/xLCmuptYAOcM1/50=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-553-WuHM4Lp5OLeu2HDW4IIsxw-1; Thu, 29 Feb 2024 12:22:20 -0500
+X-MC-Unique: WuHM4Lp5OLeu2HDW4IIsxw-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a3f52ebbb6cso83655166b.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 09:22:20 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709227072; x=1709831872;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1709227339; x=1709832139;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZglatVsfAwaqgOtZ6XWnzgIpWJ3NUN3IDbiM9QdfJ7Y=;
- b=HCwxYt4bKHYEpCMdPFnyorsHG9eDVdd11q8K5d4MC1XoDkg9+kkJzVxrdXy8Wjcbjq
- uvCFDdQjKQfRW2PW6QnShhkQsdjucMZzNuIpXuPTIBwWbLLRme+3mY0+M/s/YCI9chTr
- hRE3sPqUbeOyEqBgny0COlsA1NwWO25FcAe4YPsPtLFZOs0B3XTyouKXhbYKmMFvwXnG
- VPx8IF20RdzIJY9ZvFVRUUUMgt8/5teDbpuC0XdOMovmal7en9eWsKj/OCREgngPIQzD
- w/7u6ZMf33SLdqKVgVm4ZZ0I7ShLM3Y7ebVF7rlcS7Fg6FgopCqNIH14l+Po/0AuA2Xi
- TWxQ==
+ bh=I87VSXgw5DiLnm3tveFXeiIdN9mUJJ50N/+2Xr0MgO8=;
+ b=L0rayKllTTnxybHsPamv9UqRdccpyI961/NhWiC3zQUk7sWpUrRqqb0eGlv12QlMqQ
+ 7HpmM+WGXWV6PlLV6d5NtsLgdX46mTUY4YXhBUWWeH5CjjbTKmdwTTDUqTt3UclNbyY6
+ HIFNp4A9nJCmVwAHqW0O0zbS64r/R6ELj5d14hKPjpYhZP1BUeijMMlkZKhqGPwjWjv+
+ hlX1xcVa29cAf7JcCWf/1BqMetBBMBsOSBUUHicHUioFA4SqdEu22jJgcSR4h9M14mA7
+ 0kFt3V/AZDw2x7GNQJrzpuB03pp2F26K0u1aaTGax+TwIiijvMQGIVEk4iC6aTcIBuPs
+ r7/g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXizOwLj9yZIIQYX7f4mPGIghFGCE4SfQ38dZIDu2QPvxq1wR3+rwRyOzaIhkQHucZ7ZxRDUrfRbMknmtAMqAoAyh+mb4w=
-X-Gm-Message-State: AOJu0YwlE1lbbZSBWGXYv5XykG/q/rancIFTOahoudld44Jg3paaZVZj
- bb4wR1mY/RkDH1gp3kpRnwBdvU1Lz8pOx/basIWPwbIFItMQDoFDOHROon+tJTxDlb8Es/AoXLU
- F
-X-Google-Smtp-Source: AGHT+IF7ZI8XOe8U82Mqfm8IC2XWhT27+ksOvLTB67OczU/eMS47g25vF4F706oDrs9wVu0c2Lftqg==
-X-Received: by 2002:a17:90a:e693:b0:29a:59e5:abfd with SMTP id
- s19-20020a17090ae69300b0029a59e5abfdmr2576562pjy.12.1709227072282; 
- Thu, 29 Feb 2024 09:17:52 -0800 (PST)
-Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
- [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- sm7-20020a17090b2e4700b002997e87b390sm3904758pjb.29.2024.02.29.09.17.51
+ AJvYcCURiZ1MpXAp/MK4zaIbg3uZirNaah+m30OOfpG6D/OtFYnMdAEfGfDbFlyH/o8+JoNJkekiWw89WOJvCHhZii8kDMSb2VU=
+X-Gm-Message-State: AOJu0YxvZh5EFIA3LD3NfcquroKd6w8xCfVoA5HjvSZSO+nc0Ma/zdtC
+ XJxymNxAsHM/x8ptMfXPaJrMjqxg7sz7nANhCEk+F7eIBom3OSdhM9f3zOeN25X/fBDWI/DdW9f
+ UVdT3NMPR+0K90v6I3uP786cW/mEpt640IiE2k8T0qF46Ofxc+aja
+X-Received: by 2002:a17:906:474c:b0:a44:553e:5a1d with SMTP id
+ j12-20020a170906474c00b00a44553e5a1dmr1301169ejs.20.1709227339279; 
+ Thu, 29 Feb 2024 09:22:19 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE+fFkUO8a5JlVVHtzmkJUzOMVOgtG313p4igEx3fDHzvASGc4g8ko6jCxL8yvzcd/X+xklXQ==
+X-Received: by 2002:a17:906:474c:b0:a44:553e:5a1d with SMTP id
+ j12-20020a170906474c00b00a44553e5a1dmr1301157ejs.20.1709227338988; 
+ Thu, 29 Feb 2024 09:22:18 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-178-133.web.vodafone.de.
+ [109.43.178.133]) by smtp.gmail.com with ESMTPSA id
+ ks27-20020a170906f85b00b00a442124bd2dsm881520ejb.37.2024.02.29.09.22.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Feb 2024 09:17:51 -0800 (PST)
-Message-ID: <08b4d72a-4a76-4faa-a7fd-a507c1345b6a@linaro.org>
-Date: Thu, 29 Feb 2024 07:17:48 -1000
+ Thu, 29 Feb 2024 09:22:18 -0800 (PST)
+Message-ID: <def17d13-34b2-40ee-a237-a80fe8002f81@redhat.com>
+Date: Thu, 29 Feb 2024 18:22:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] tcg/optimize: optimize TSTNE using smask and zmask
+Subject: Re: [PATCH 04/17] hw/scsi/vhost-scsi: Fix missing ERRP_GUARD() for
+ error_prepend()
 Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240228111151.287738-1-pbonzini@redhat.com>
- <20240228111151.287738-5-pbonzini@redhat.com>
- <4362aeec-ae18-4515-a3ec-6aba811e17d1@linaro.org>
- <8c623e70-80ab-4058-b898-8eb38e95f1e3@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <8c623e70-80ab-4058-b898-8eb38e95f1e3@redhat.com>
+To: Zhao Liu <zhao1.liu@linux.intel.com>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Michael Tokarev <mjt@tls.msk.ru>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>
+References: <20240229143914.1977550-1-zhao1.liu@linux.intel.com>
+ <20240229143914.1977550-5-zhao1.liu@linux.intel.com>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240229143914.1977550-5-zhao1.liu@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,41 +151,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/28/24 23:35, Paolo Bonzini wrote:
-> On 2/29/24 00:10, Richard Henderson wrote:
->> On 2/28/24 01:11, Paolo Bonzini wrote:
->>> -    /* TSTNE x,sign -> LT x,0 */
->>> -    if (arg_is_const_val(*p2, (ctx->type == TCG_TYPE_I32
->>> -                               ? INT32_MIN : INT64_MIN))) {
->>> +    /* TSTNE x,i -> LT x,0 if i only includes sign bit copies */
->>> +    if (arg_is_const(*p2) && (arg_info(*p2)->val & ~i1->s_mask) == 0) {
->>
->> This is a good idea, but s_mask isn't defined like you think -- it is *repetitions* of 
->> the sign bit, but not including the sign bit itself. For INT64_MIN, s_mask == 0.
->>
->> So for TSTNE min,min, (min & ~0) != 0, so the test won't pass.
+On 29/02/2024 15.39, Zhao Liu wrote:
+> From: Zhao Liu <zhao1.liu@intel.com>
 > 
-> Oh! So I have to squash:
+> As the comment in qapi/error, passing @errp to error_prepend() requires
+> ERRP_GUARD():
 > 
-> diff --git a/tcg/optimize.c b/tcg/optimize.c
-> index ab976a5bbe7..44d1b1a6d8a 100644
-> --- a/tcg/optimize.c
-> +++ b/tcg/optimize.c
-> @@ -140,6 +140,12 @@ static inline bool arg_is_const_val(TCGArg arg, uint64_t val)
->       return ts_is_const_val(arg_temp(arg), val);
->   }
+> * = Why, when and how to use ERRP_GUARD() =
+> *
+> * Without ERRP_GUARD(), use of the @errp parameter is restricted:
+> ...
+> * - It should not be passed to error_prepend(), error_vprepend() or
+> *   error_append_hint(), because that doesn't work with &error_fatal.
+> * ERRP_GUARD() lifts these restrictions.
+> *
+> * To use ERRP_GUARD(), add it right at the beginning of the function.
+> * @errp can then be used without worrying about the argument being
+> * NULL or &error_fatal.
 > 
-> +/* Calculate all the copies of the sign bit, both redundant and not. */
-> +static inline uint64_t all_sign_bit_copies(TempOptInfo *info)
-> +{
-> +    return (info->s_mask >> 1) | INT64_MIN;
-> +}
+> ERRP_GUARD() could avoid the case when @errp is the pointer of
+> error_fatal, the user can't see this additional information, because
+> exit() happens in error_setg earlier than information is added [1].
+> 
+> The vhost_scsi_realize() passes @errp to error_prepend(), and as a
+> VirtioDeviceClass.realize method, its @errp is from DeviceClass.realize
+> so that there is no guarantee that the @errp won't point to
+> @error_fatal.
+> 
+> To avoid the issue like [1] said, add missing ERRP_GUARD() at the
+> beginning of this function.
+> 
+> [1]: Issue description in the commit message of commit ae7c80a7bd73
+>       ("error: New macro ERRP_GUARD()").
+> 
+> Cc: "Michael S. Tsirkin" <mst@redhat.com>
+> Cc: Paolo Bonzini <pbonzini@redhat.com>
+> Cc: Fam Zheng <fam@euphon.net>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>   hw/scsi/vhost-scsi.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
+> index 58a00336c2db..ae26bc19a457 100644
+> --- a/hw/scsi/vhost-scsi.c
+> +++ b/hw/scsi/vhost-scsi.c
+> @@ -220,6 +220,7 @@ static int vhost_scsi_set_workers(VHostSCSICommon *vsc, bool per_virtqueue)
+>   
+>   static void vhost_scsi_realize(DeviceState *dev, Error **errp)
+>   {
+> +    ERRP_GUARD();
+>       VirtIOSCSICommon *vs = VIRTIO_SCSI_COMMON(dev);
+>       VHostSCSICommon *vsc = VHOST_SCSI_COMMON(dev);
+>       Error *err = NULL;
 
-You need to care about type too -- for TCG_TYPE_I32, you'll want to OR in INT32_MIN.  The 
-high bits of s_mask will be unknown (might be 1's from fold_masks, might be 0 from reset_ts).
+I think you could remove the "err" variable and the error_propagate stuff in 
+here now.
 
-But otherwise that's a good solution.
+  Thomas
 
-
-r~
 
