@@ -4,72 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E271FC48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 09:44:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2366C54798
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 09:49:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfcxx-0003tH-GB; Thu, 29 Feb 2024 04:44:37 -0500
+	id 1rfd2B-0007LR-Mh; Thu, 29 Feb 2024 04:48:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rfcxo-0003nz-5h
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 04:44:34 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rfd27-0007L8-Lj
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 04:48:55 -0500
+Received: from mail-oo1-xc35.google.com ([2607:f8b0:4864:20::c35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rfcxj-0007V8-Q1
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 04:44:27 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5658082d2c4so1029939a12.1
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 01:44:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rfd25-0001FY-I1
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 04:48:54 -0500
+Received: by mail-oo1-xc35.google.com with SMTP id
+ 006d021491bc7-5a0a19c9bb7so460365eaf.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 01:48:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709199856; x=1709804656; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=3od170oFZe+JPhRwwcVSY2EwQ/KEsEQiZBJf5WX4b7M=;
- b=UlnAIDm+cqgyoK2gJS11qD4zb5Zd3PBDpPUrzd0wOCSd18L97cCMSzIH/i4aA7gMKG
- x2Tyxy9oxPdpFWP+EuB4ckAK4KrieLwtm5qj+FM1nYsEfwacjTRAbAlGD/nMZSjuOvTT
- hIaMC40g+0x/yHZ6uLAClJ3kc17eFL2gmWZjFs40TkaTL+dyXkgJHcWJ9SViU6gmmYOE
- PG2HqijVL6VPddAKB+nsf/3fGLsdgMDyoj32x2qKAzmTJJBCeYNvBJAnQskRIoF7p+yV
- dq3CiGsWNb8ZRwFuu6ZS9StQbZ6UC+vj8VHDXLgmHwFhF978Jak+DvSwxMtaIT5i1nik
- x1vw==
+ d=linaro.org; s=google; t=1709200130; x=1709804930; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=OHdFkI4m87tQEp9MzSFNb/fULYSpHPD3AO4HHB1IFAU=;
+ b=utjZ+YYUCZ8OQPOFcrRLs2CyJEA8F1vghYodXk686uVi/dmQQFky1GR85px9w++G2j
+ In96LfD7Gu5fRGIWDuw5Rp/ZuUEdn9aFB8zOlHFY8ZwyGGDf1S6zO7guNUa7MP3IBLyl
+ L72dA+e1sDfVlcPXMecOSNE0Fw18w/bGm2WNO4+TJhh89af0HpcSwoXHhkpK4hz+0QQ+
+ LlbAt8kjk7ocaFLbd/7ekZEjmunTosXlzTly1hl/3J9tYm65JJBSwrqgCeHSgwp9jWi0
+ 8VRlZHzz6/x4SASRiLqj+SoTBOEXpV9EI85dN+JMlSRWTO6EvkP/fZV5ZV3WwNgK7ayO
+ XkOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709199856; x=1709804656;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3od170oFZe+JPhRwwcVSY2EwQ/KEsEQiZBJf5WX4b7M=;
- b=Zh4esiLW7vCNH5ITOC83qUF0ZdQSxnt0JPDxiebbqYOerbjhGHg94V5yjix99mK7jC
- 6oGlVAQHIZKf4edijiOoGQcDZTrhDuUThOgKOuXClbRAMiEu7fsh2Sclx5uWiJYUmGGm
- zezbu863UsORtuym3fI5huGe+dSWe63FB5lrj74OWAGhzvn8HQskttVeT2Irsx3+MUD2
- VTGsv/yO69efAzoXVhe8vJ9kCoxOjPLGNP1+xZTjuFDDUloozRf/vF8pdBVHZsLsHxXY
- V3+gbTBWA9YNATntRf6mS29NRdZLAhCw7Bw043xH1UZ/XrbkACcoiQW8VKREfayPnRT6
- 2uGg==
-X-Gm-Message-State: AOJu0Yz91sNv9tGGliPrjY1nsbMkTuCOusYjbOTNDrxOLuc1AvFuhxlw
- VU2q1sP7Q1En2FsCsc47tCRP3nHIzZmxONtrnoMIylkhdyDhQ4fpWjGSoVupkolQDIyB4GZCDkd
- VZTEcbkN+4NLUU8BoexJWyti28fA3IX+6uRh8tw==
-X-Google-Smtp-Source: AGHT+IH2qZzr63X/CEkFUOpEQKu/riJjkxMbT4zYZWp6RbPDlhqaacfJkw404xO5lzxpSbh+mBK55okiX8lbCvoEIO8=
-X-Received: by 2002:a50:d7d4:0:b0:564:9019:d9b1 with SMTP id
- m20-20020a50d7d4000000b005649019d9b1mr728842edj.40.1709199856501; Thu, 29 Feb
- 2024 01:44:16 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709200130; x=1709804930;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OHdFkI4m87tQEp9MzSFNb/fULYSpHPD3AO4HHB1IFAU=;
+ b=n0BUF7AmzM9lBZGNvAuDXe1vXHfTtFvAbNZFI/p7YJRdaowxicbDwm7IX7hCc6tyTL
+ TA3sLtiySP9ueUmnHcfiEnBdRvRNVLh7RJntHK/33WNWuTUd4vKD0fjrIQ8VRUeSPp9+
+ PgSOIKgbyHt6GisnQg+HXFtTgtTZXM7dSl32Y1Fh9aBEhAp8mKsfN3+F2okFwBWP67yQ
+ +cEOxE3QtB5hAII9zL/vAoTxYLOHiyAI/FJ3NGXj/AGJQQWM8xXU8OW0tTMibvSOSj3w
+ 45/XHlN5FB0o0dIPuDJ2IPrMeJmeeERWqZhpthXw8qNFfgxG+xezo22QxVJ1R0l7rh0n
+ NvWQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX5f79GUFmsx4zkfNSlr0WoZU6XnuKsiSNYlfOr1euIttr49uuqZ7R0kM/zQ9HINdMQUQy3RdC3aL/BhAfKJ1CjP0V6S+0=
+X-Gm-Message-State: AOJu0YyKc31k7OMLBl5C+EWNm5rKi3zgvQs1Y8Tvu/ZxQbopGxYokD5m
+ XFc3H/c2Y4xUnzJbNXql2U1nkYB2J+nP/FJ7tfb22G1YNeHNIgYtFemNZZusdr8=
+X-Google-Smtp-Source: AGHT+IGtRjIhYUNquLssekrM2tWDO0yyz9ho5h4iRpjoKDqeJ74cnZM60RlMxC8BKNz/AX36k68jug==
+X-Received: by 2002:a4a:9bcf:0:b0:5a0:573f:9b22 with SMTP id
+ b15-20020a4a9bcf000000b005a0573f9b22mr1629310ook.7.1709200129967; 
+ Thu, 29 Feb 2024 01:48:49 -0800 (PST)
+Received: from [192.168.1.67] ([78.196.4.158])
+ by smtp.gmail.com with ESMTPSA id
+ n10-20020a4a848a000000b0059f5da15e99sm205843oog.38.2024.02.29.01.48.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 29 Feb 2024 01:48:49 -0800 (PST)
+Message-ID: <cc19bbac-5557-439b-833c-643da6d22168@linaro.org>
+Date: Thu, 29 Feb 2024 10:48:46 +0100
 MIME-Version: 1.0
-References: <252c0f8d-08cd-2e7b-63b6-1bbf42ff32f8@huawei.com>
- <CAFEAcA81xV6wvBFoaGNpH9=0oAjP=toMBS=MNV_poXm5RPK-iQ@mail.gmail.com>
- <c91c1f3d-9ff1-a582-bf03-ecf182c78b1b@huawei.com>
-In-Reply-To: <c91c1f3d-9ff1-a582-bf03-ecf182c78b1b@huawei.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 29 Feb 2024 09:44:05 +0000
-Message-ID: <CAFEAcA-O00Sc9N_esAZ1CwfjmL7uprw_pcVcP=ZLFvu0-oA0AA@mail.gmail.com>
-Subject: Re: [Question] Can I start qemu-system-aarch64 with a vmlinux(ELF
- format)?
-To: Kunkun Jiang <jiangkunkun@huawei.com>
-Cc: "open list:All patches CC here" <qemu-devel@nongnu.org>, 
- "wanghaibin.wang@huawei.com" <wanghaibin.wang@huawei.com>,
- Zenghui Yu <yuzenghui@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/5] linux-user/x86_64: Handle the vsyscall page in
+ open_self_maps_{2, 4}
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: laurent@vivier.eu, richard.purdie@linuxfoundation.org, mjt@tls.msk.ru,
+ iii@linux.ibm.com
+References: <20240228202518.33180-1-richard.henderson@linaro.org>
+ <20240228202518.33180-2-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240228202518.33180-2-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c35;
+ envelope-from=philmd@linaro.org; helo=mail-oo1-xc35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,34 +98,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 29 Feb 2024 at 03:01, Kunkun Jiang <jiangkunkun@huawei.com> wrote:
->
-> Hi Peter,
->
-> On 2024/2/27 23:28, Peter Maydell wrote:
-> > On Tue, 27 Feb 2024 at 14:42, Kunkun Jiang via <qemu-devel@nongnu.org> wrote:
-> >> Hi everybody,
-> >>
-> >> I want to start qemu-system-aarch64 with a vmlinux,
-> >> which is an ELF format file. The arm_load_elf() is
-> >> implemented in arm_setup_direct_kernel_boot(). So I
-> >> thought it was supporting the ELF format file.
-> > No, you can't do this. The hw/arm/boot.c code assumes
-> > that ELF files are "bare metal" binaries, whereas
-> > uImage format, AArch64 Image format, and raw binary files
-> > are Linux kernels. Only the last three kinds of files will
-> > be started with the boot protocol the Linux kernel expects.
-> >
-> > For AArch64, pass the -kernel option the path to the Image
-> > file, not the vmlinux file.
->
-> Yes, it works fine using Image files.
-> I would also like to ask again, is it because AArch64 does not
-> support vmlinux, or is it because qemu does not implement
-> this capability?
+On 28/2/24 21:25, Richard Henderson wrote:
+> This is the only case in which we expect to have no host memory backing
+> for a guest memory page, because in general linux user processes cannot
+> map any pages in the top half of the 64-bit address space.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2170
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   linux-user/syscall.c | 16 ++++++++++++++++
+>   1 file changed, 16 insertions(+)
+> 
+> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> index e384e14248..bc8c06522f 100644
+> --- a/linux-user/syscall.c
+> +++ b/linux-user/syscall.c
+> @@ -7994,6 +7994,10 @@ static void open_self_maps_4(const struct open_self_maps_data *d,
+>           path = "[heap]";
+>       } else if (start == info->vdso) {
+>           path = "[vdso]";
+> +#ifdef TARGET_X86_64
 
-As I said, it is because QEMU assumes that ELF files are
-bare metal images, not Linux kernel images.
+Alternatively "#ifdef TARGET_VSYSCALL_PAGE" like in
+i386_tr_translate_insn()?
 
--- PMM
+> +    } else if (start == TARGET_VSYSCALL_PAGE) {
+> +        path = "[vsyscall]";
+> +#endif
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
