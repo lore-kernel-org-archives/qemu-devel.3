@@ -4,116 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0220EC48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 15:47:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7047C54E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 16:01:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rficd-0008Pz-4I; Thu, 29 Feb 2024 10:46:59 -0500
+	id 1rfipU-0007Qv-Ol; Thu, 29 Feb 2024 11:00:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rficZ-0008PO-5Q
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:46:55 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rficW-00034R-5E
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 10:46:54 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 5DB841F7F9;
- Thu, 29 Feb 2024 15:46:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709221609; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=IgpRTV863yfrDW3IoVMPAmBqhzf7j9E3e5u0jsE/hDw=;
- b=JgLuERsCYY0rGhb5QAnZaqYq34f7gL7eWokdpyk/59yVxukiMFTJWNw6M7I27qHUrUrPcP
- 818riDb/3Qef9//PfEz3fNiSJfCUuzqOX2SFLdeCr2OoQa1CEfxceReCfNdqqWe7qd/q6a
- +xZfg8di9rXZgDfvCXqlY1UC4+3jg0Q=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709221609;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=IgpRTV863yfrDW3IoVMPAmBqhzf7j9E3e5u0jsE/hDw=;
- b=eqPIoXBhk9Nc0oqD80+UiqKdczJiYNY1UJZUbQK9SG9Xnrm4ZtuecasIRVMy2LZi53gBZo
- PlB9e7NmvF4UlPAA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709221609; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=IgpRTV863yfrDW3IoVMPAmBqhzf7j9E3e5u0jsE/hDw=;
- b=JgLuERsCYY0rGhb5QAnZaqYq34f7gL7eWokdpyk/59yVxukiMFTJWNw6M7I27qHUrUrPcP
- 818riDb/3Qef9//PfEz3fNiSJfCUuzqOX2SFLdeCr2OoQa1CEfxceReCfNdqqWe7qd/q6a
- +xZfg8di9rXZgDfvCXqlY1UC4+3jg0Q=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709221609;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=IgpRTV863yfrDW3IoVMPAmBqhzf7j9E3e5u0jsE/hDw=;
- b=eqPIoXBhk9Nc0oqD80+UiqKdczJiYNY1UJZUbQK9SG9Xnrm4ZtuecasIRVMy2LZi53gBZo
- PlB9e7NmvF4UlPAA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D514413503;
- Thu, 29 Feb 2024 15:46:48 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id vguQJuim4GViNAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 29 Feb 2024 15:46:48 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Markus Armbruster <armbru@redhat.com>, Hao Xiang <hao.xiang@bytedance.com>
-Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
- peterx@redhat.com, eblake@redhat.com, thuth@redhat.com,
- lvivier@redhat.com, jdenemar@redhat.com, marcel.apfelbaum@gmail.com,
- philmd@linaro.org, wangyanan55@huawei.com, qemu-devel@nongnu.org
-Subject: Re: [External] Re: [PATCH v3 2/7] migration/multifd: Implement zero
- page transmission on the multifd thread.
-In-Reply-To: <87a5nju8ro.fsf@pond.sub.org>
-References: <20240226195654.934709-1-hao.xiang@bytedance.com>
- <20240226195654.934709-3-hao.xiang@bytedance.com>
- <871q8w29zx.fsf@pond.sub.org>
- <CAAYibXgdaH_=JxswvKaz9qaXRFuRncmkrrSpkqSMbFu=3ypfLQ@mail.gmail.com>
- <87a5nju8ro.fsf@pond.sub.org>
-Date: Thu, 29 Feb 2024 12:46:46 -0300
-Message-ID: <87h6hrz315.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rfipR-0007PD-Mo; Thu, 29 Feb 2024 11:00:13 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rfipB-0006Cv-1n; Thu, 29 Feb 2024 11:00:13 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TlwmC1gRNz6K6Lg;
+ Thu, 29 Feb 2024 23:55:23 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id A85DB14011D;
+ Thu, 29 Feb 2024 23:59:31 +0800 (CST)
+Received: from localhost (10.122.247.231) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Thu, 29 Feb
+ 2024 15:59:11 +0000
+Date: Thu, 29 Feb 2024 15:59:10 +0000
+To: Jonathan Cameron via <qemu-devel@nongnu.org>
+CC: Ankit Agrawal <ankita@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
+ "alex.williamson@redhat.com" <alex.williamson@redhat.com>, "clg@redhat.com"
+ <clg@redhat.com>, "shannon.zhaosl@gmail.com" <shannon.zhaosl@gmail.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "ani@anisinha.ca"
+ <ani@anisinha.ca>, "berrange@redhat.com" <berrange@redhat.com>,
+ "eduardo@habkost.net" <eduardo@habkost.net>, "imammedo@redhat.com"
+ <imammedo@redhat.com>, "mst@redhat.com" <mst@redhat.com>, "eblake@redhat.com"
+ <eblake@redhat.com>, "armbru@redhat.com" <armbru@redhat.com>,
+ "david@redhat.com" <david@redhat.com>, "gshan@redhat.com" <gshan@redhat.com>, 
+ Zhi Wang <zhiw@nvidia.com>, "Matt Ochs" <mochs@nvidia.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>, Aniket Agashe
+ <aniketa@nvidia.com>, Neo Jia <cjia@nvidia.com>, "Kirti Wankhede"
+ <kwankhede@nvidia.com>, "Tarun Gupta (SW-GPU)" <targupta@nvidia.com>, Vikram
+ Sethi <vsethi@nvidia.com>, Andy Currid <acurrid@nvidia.com>, Dheeraj Nigam
+ <dnigam@nvidia.com>, Uday Dhoke <udhoke@nvidia.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>
+Subject: Re: [PATCH v7 2/2] hw/acpi: Implement the SRAT GI affinity structure
+Message-ID: <20240229155910.00005186@huawei.com>
+In-Reply-To: <20240227173621.00003694@Huawei.com>
+References: <20240223124223.800078-1-ankita@nvidia.com>
+ <20240223124223.800078-3-ankita@nvidia.com>
+ <20240226164229.00001536@Huawei.com>
+ <SA1PR12MB71992ECFBF9FA3EE3C350EA8B0592@SA1PR12MB7199.namprd12.prod.outlook.com>
+ <20240227171115.00004c7b@Huawei.com>
+ <20240227173621.00003694@Huawei.com>
+Organization: Huawei Technologies R&D (UK) Ltd.
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.29; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset="ISO-8859-1"
 Content-Transfer-Encoding: quoted-printable
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spamd-Result: default: False [-2.80 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; TAGGED_RCPT(0.00)[];
- MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
- BAYES_HAM(-3.00)[100.00%];
- R_RATELIMIT(0.00)[to_ip_from(RLhqagydafxgxrmodn9uzmj73y)];
- RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; RCPT_COUNT_TWELVE(0.00)[14];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+];
- FREEMAIL_CC(0.00)[redhat.com,habkost.net,gmail.com,linaro.org,huawei.com,nongnu.org];
- RCVD_TLS_ALL(0.00)[]; SUSPICIOUS_RECIPS(1.50)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Originating-IP: [10.122.247.231]
+X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,71 +82,163 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster <armbru@redhat.com> writes:
+On Tue, 27 Feb 2024 17:36:21 +0000
+Jonathan Cameron <Jonathan.Cameron@Huawei.com> wrote:
 
-> Hao Xiang <hao.xiang@bytedance.com> writes:
->
->> On Wed, Feb 28, 2024 at 1:50=E2=80=AFAM Markus Armbruster <armbru@redhat=
-.com> wrote:
->>>
->>> Hao Xiang <hao.xiang@bytedance.com> writes:
->>>
->>> > 1. Add zero_pages field in MultiFDPacket_t.
->>> > 2. Implements the zero page detection and handling on the multifd
->>> > threads for non-compression, zlib and zstd compression backends.
->>> > 3. Added a new value 'multifd' in ZeroPageDetection enumeration.
->>> > 4. Handle migration QEMU9.0 -> QEMU8.2 compatibility.
->>> > 5. Adds zero page counters and updates multifd send/receive tracing
->>> > format to track the newly added counters.
->>> >
->>> > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
->>>
->>> [...]
->>>
->>> > diff --git a/qapi/migration.json b/qapi/migration.json
->>> > index 1e66272f8f..5a1bb8ad62 100644
->>> > --- a/qapi/migration.json
->>> > +++ b/qapi/migration.json
->>> > @@ -660,10 +660,13 @@
->>> >  #
->>> >  # @legacy: Perform zero page checking from main migration thread.
->>> >  #
->>> > +# @multifd: Perform zero page checking from multifd sender thread.
->>> > +#
->>> >  # Since: 9.0
->>> > +#
->>> >  ##
->>> >  { 'enum': 'ZeroPageDetection',
->>> > -  'data': [ 'none', 'legacy' ] }
->>> > +  'data': [ 'none', 'legacy', 'multifd' ] }
->>> >
->>> >  ##
->>> >  # @BitmapMigrationBitmapAliasTransform:
->>>
->>> What happens when you set "zero-page-detection": "multifd" *without*
->>> enabling multifd migration?
->>
->> Very good question! Right now the behavior is that if "multifd
->> migration" is not enabled, it goes through the legacy code path and
->> the "multifd zero page" option is ignored. The legacy path has its own
->> zero page checking and will run the same way as before. This is for
->> backward compatibility.
->
-> We need one of two improvements then:
->
-> 1. Make "zero-page-detection" reject value "multifd" when multifd
->    migration is not enabled.  Document this: "Requires migration
->    capability @multifd" or similar.
->
-> 2. Document that "multifd" means multifd only when multifd is enabled,
->    else same as "legacy".
->
-> I prefer 1., because it's easier to document.  But migration maintainers
-> may have their own preference.  Peter, Fabiano?
+> On Tue, 27 Feb 2024 17:11:15 +0000
+> Jonathan Cameron via <qemu-devel@nongnu.org> wrote:
+>=20
+> > On Tue, 27 Feb 2024 08:37:15 +0000
+> > Ankit Agrawal <ankita@nvidia.com> wrote:
+> >  =20
+> > > Thanks Jonathan for reviewing the change.
+> > >=20
+> > > Comments inline.
+> > >    =20
+> > > >> The structure needs a PCI device handle [2] that consists of the d=
+evice BDF.
+> > > >> The vfio-pci device corresponding to the acpi-generic-initiator ob=
+ject is
+> > > >> located to determine the BDF.
+> > > >>
+> > > >> [1] ACPI Spec 6.3, Section 5.2.16.6
+> > > >> [2] ACPI Spec 6.3, Table 5.80
+> > > >>
+> > > >> Signed-off-by: Ankit Agrawal <ankita@nvidia.com>     =20
+> > > >Hi Ankit,
+> > > >
+> > > > As the code stands the use of a list seems overkill.     =20
+> > >=20
+> > > Yeah, I will try out your suggestion.
+> > >    =20
+> > > > Otherwise looks good to me.=A0 I need Generic Ports support for CXL
+> > > > stuff so will copy your approach for that as it's ended up nice
+> > > > and simple.
+> > > >=20
+> > > > Jonathan     =20
+> > >=20
+> > > Nice, would be good to have uniform implementations.   =20
+> >=20
+> > I've been messing around with this today.
+> >=20
+> > They differ only very trivially.
+> > 2 Options.
+> > 1) Have acpi-generic-port inherit from acpi-generic-initiator.
+> >    Works but implies a relationship that isn't really true.
+> > 2) Add an abstract base class. I've called it acpi-generic-node
+> >    and have bother acpi-generic-initiator and acpi-generic-port
+> >    inherit from it.
+> >=20
+> > The second feels more natural but is a tiny bit more code (a few
+> > more empty init / finalize functions.
+> >=20
+> > If we are going to end up with an abstract base 'object' it
+> > will be cleaner to do this all as one series if you don't mind
+> > carrying the generic port stuff as well? Or I can smash the
+> > two series together and send out an updated version that hopefully
+> > meets both our requirements (+ tests etc).
+> >=20
+> > I'm just running tests against the CXL qos / generic port code
+> > but assuming all goes well can share my additional changes
+> > in next day or two.
+> >=20
+> > Jonathan =20
+>=20
+> One more thing.  Right now we can't use Generic Initiators as
+> HMAT initiators.  That also wants fixing given that's their
+> normal usecase rather than what you are using them for so it
+> should 'work'.
 
-I think we need to go with 2 for consistency with the other multifd_*
-parameters. I don't see any validation at options.c.
+Something along the lines of this will do the job.
+
+
+diff --git a/include/sysemu/numa.h b/include/sysemu/numa.h
+index 4173ef2afa..825cfe86bc 100644
+--- a/include/sysemu/numa.h
++++ b/include/sysemu/numa.h
+@@ -41,6 +41,7 @@ struct NodeInfo {
+     struct HostMemoryBackend *node_memdev;
+     bool present;
+     bool has_cpu;
++    bool has_gi;
+     uint8_t lb_info_provided;
+     uint16_t initiator;
+     uint8_t distance[MAX_NODES];
+diff --git a/hw/acpi/acpi-generic-initiator.c b/hw/acpi/acpi-generic-initia=
+tor.c
+index 9179590a42..8a67300320 100644
+--- a/hw/acpi/acpi-generic-initiator.c
++++ b/hw/acpi/acpi-generic-initiator.c
+@@ -6,6 +6,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/acpi/acpi-generic-initiator.h"
+ #include "hw/pci/pci_device.h"
++#include "hw/boards.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-builtin-visit.h"
+ #include "qapi/visitor.h"
+@@ -58,6 +59,7 @@ static void acpi_generic_node_set_node(Object *obj, Visit=
+or *v,
+                                        const char *name, void *opaque,
+                                        Error **errp)
+ {
++    MachineState *ms =3D MACHINE(qdev_get_machine());
+     AcpiGenericNode *gn =3D ACPI_GENERIC_NODE(obj);
+     uint32_t value;
+=20
+@@ -72,6 +74,10 @@ static void acpi_generic_node_set_node(Object *obj, Visi=
+tor *v,
+     }
+=20
+     gn->node =3D value;
++
++    if (object_dynamic_cast(obj, TYPE_ACPI_GENERIC_INITIATOR)) {
++        ms->numa_state->nodes[gn->node].has_gi =3D true;
++    }
+ }
+=20
+ static void acpi_generic_node_class_init(ObjectClass *oc, void *data)
+diff --git a/hw/acpi/hmat.c b/hw/acpi/hmat.c
+index b933ae3c06..9b1662b6b8 100644
+--- a/hw/acpi/hmat.c
++++ b/hw/acpi/hmat.c
+@@ -225,7 +225,7 @@ static void hmat_build_table_structs(GArray *table_data=
+, NumaState *numa_state)
+     }
+=20
+     for (i =3D 0; i < numa_state->num_nodes; i++) {
+-        if (numa_state->nodes[i].has_cpu) {
++        if (numa_state->nodes[i].has_cpu || numa_state->nodes[i].has_gi) {
+             initiator_list[num_initiator++] =3D i;
+         }
+     }
+diff --git a/hw/core/numa.c b/hw/core/numa.c
+index f08956ddb0..58a32f1564 100644
+--- a/hw/core/numa.c
++++ b/hw/core/numa.c
+@@ -229,7 +229,8 @@ void parse_numa_hmat_lb(NumaState *numa_state, NumaHmat=
+LBOptions *node,
+                    node->target, numa_state->num_nodes);
+         return;
+     }
+-    if (!numa_info[node->initiator].has_cpu) {
++    if (!numa_info[node->initiator].has_cpu &&
++        !numa_info[node->initiator].has_gi) {
+         error_setg(errp, "Invalid initiator=3D%d, it isn't an "
+                    "initiator proximity domain", node->initiator);
+         return;
+
+>=20
+> Jonathan
+>=20
+> >=20
+> >=20
+> >  =20
+>=20
+
 
