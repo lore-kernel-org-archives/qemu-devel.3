@@ -4,64 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38993C54798
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 23:11:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC482C54798
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Feb 2024 23:11:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfpYJ-0000Yl-Dw; Thu, 29 Feb 2024 18:11:00 -0500
+	id 1rfpYN-0000fB-Lp; Thu, 29 Feb 2024 18:11:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1rfpY1-0000VJ-Jr
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 18:10:45 -0500
-Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1rfpXl-0007xp-Kz
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 18:10:41 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id E1992CE1B22;
- Thu, 29 Feb 2024 23:10:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5DF7C433F1;
- Thu, 29 Feb 2024 23:10:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1709248219;
- bh=PGsZG3sU7hajT14NZwdUpq2C3rYv9teT56gyoIJ0P3s=;
- h=Date:From:To:cc:Subject:In-Reply-To:References:From;
- b=p77jp8uduPUDTaJp2v38mcsWqHlje8fZHiub+sCfdF3kN15dy28vdCrk7uNsSiNlq
- CRZ1MIEVxT/gFrWsOAYLcp6AYcs5E4yz1bF0VxkeTZi4dPDH0IoF7xyZf45t0i6aMd
- tTAi/zdHOvs8OIRA5ArQtCAc54e0ECWijdri+rDbx6AtNJyxkvt/8ujvDMB3kUiwKX
- YuZFsk4CnTISF4nqmlUAnuoL/NmwdefePanMk63kkdJXecO4f803pLWVMyomF2Ktnq
- zOIvrChtbc3EPV6Rjy97ivHEtpUche0/Zfu1AbxWAAiZwwM2+S9xtSrYKSqJGIbChV
- ELyK/8bVMRD4g==
-Date: Thu, 29 Feb 2024 15:10:16 -0800 (PST)
-From: Stefano Stabellini <sstabellini@kernel.org>
-X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
-To: Vikram Garhwal <vikram.garhwal@amd.com>
-cc: qemu-devel@nongnu.org, sstabellini@kernel.org, jgross@suse.com, 
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
- David Hildenbrand <david@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>
-Subject: Re: [QEMU][PATCH v3 6/7] xen: add map and unmap callbacks for grant
- region
-In-Reply-To: <20240227223501.28475-7-vikram.garhwal@amd.com>
-Message-ID: <alpine.DEB.2.22.394.2402291510080.853156@ubuntu-linux-20-04-desktop>
-References: <20240227223501.28475-1-vikram.garhwal@amd.com>
- <20240227223501.28475-7-vikram.garhwal@amd.com>
-User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rfpY9-0000Wk-Mx
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 18:10:50 -0500
+Received: from mail-oa1-x32.google.com ([2001:4860:4864:20::32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rfpY8-00087w-9P
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 18:10:49 -0500
+Received: by mail-oa1-x32.google.com with SMTP id
+ 586e51a60fabf-21fb368b468so826517fac.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 15:10:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709248246; x=1709853046; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jmUQEAZPsptV96SEZMGm2MuJEGaCazLT6BHoaPXUKPk=;
+ b=Hpj+4a4QLQRj0ny1+Dk5J6ZvSRbod4KSJOkEKFcDbrWvIn07ojE+MngFu4K9d9cYM+
+ 2bktqqpRap/mdfrba9U2YwWv/hkW6EvS1y8LhmYQHKbP8RtkUFUmxW+DdJj5531sLNqU
+ K4bA0Ue0d9zreFDWrlygTgqOMbnfwv3cWNIoxfhY9wWPJFGeQEkaMKQQ8ihQCi3Lyl5D
+ rm1C6F0J5lgZqxSdFoMkDhKp9m+DK53gUKJzSA2RTqNqnuuvY6p0ayzFPRMZ6W66CPxu
+ 5x6BAkFtmh1rqf4wL7lEmJEWHm/DpsV+XGLSaXbGqJkDFYKbMrWCdFg/I9N1CQot42lv
+ EldQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709248246; x=1709853046;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jmUQEAZPsptV96SEZMGm2MuJEGaCazLT6BHoaPXUKPk=;
+ b=OfebK6+KqtLyHYvAKdVJl6tU3CFowOa0I8U98aEQ3Ow0cNisdGHVpHWhCptUP3vy1J
+ PPAinloBnxY7EiLHSLL3wDnK1FSt6cTx6Yp0Kcyva8aASLImQFE+dBiG7N6GzpzizrA1
+ HCGCC12S0aB6jmd9WqHrdan7s3LVdzt6vl6pYVdlfJB45M6exnqr+1aVGhfe5NIezYLx
+ DrGmSJLE6G3Y/CoaPUXpOfBslZsdZtAzHO5sxbrrNn1LWCykia0eLlq6M68g6nG+BXJ0
+ E+suDzvk2/zPPL+XpwcdaNztqiZs3cqJhWMwtY418+1hyOUDv6F2nhNoI86zj9h4HVzC
+ acUA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVz6vNrb6bIkEdkNIzsIiC/dkA4YrnhhVUKlN+V+Vww7OMg2am8NFNyqx09MQbNFz6abHqqjFJOQqBElX+TlVt3Vif8clY=
+X-Gm-Message-State: AOJu0YyAumrNvNYS0TxSnVy+BPJRpRs0h+YcA/jzJT/XTRVMOeSO6TKN
+ iVj+UNpE9jOr8oLVoXyQTl+NE3JQuLBAAGMsTXVFJBCIvWzaer2VIr1zkCi/yO8=
+X-Google-Smtp-Source: AGHT+IFb2/xS8TLobduEH2MchjVsEflkLOrx74P9O6VmhmjHr5KZskCiD0O4KgFG3O51no7yuMPodQ==
+X-Received: by 2002:a05:6871:a595:b0:219:28af:f8a6 with SMTP id
+ wd21-20020a056871a59500b0021928aff8a6mr3492012oab.56.1709248246174; 
+ Thu, 29 Feb 2024 15:10:46 -0800 (PST)
+Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
+ [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
+ du6-20020a056a002b4600b006e5933a0da9sm1733399pfb.165.2024.02.29.15.10.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 29 Feb 2024 15:10:45 -0800 (PST)
+Message-ID: <e67afe0a-4584-41dd-8683-c99aeb7be7b2@linaro.org>
+Date: Thu, 29 Feb 2024 13:10:43 -1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
- envelope-from=sstabellini@kernel.org; helo=sin.source.kernel.org
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v5 14/22] hw/intc/arm_gicv3_redist: Implement
+ GICR_INMIR0
+Content-Language: en-US
+To: Jinjie Ruan <ruanjinjie@huawei.com>, peter.maydell@linaro.org,
+ eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20240229131039.1868904-1-ruanjinjie@huawei.com>
+ <20240229131039.1868904-15-ruanjinjie@huawei.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240229131039.1868904-15-ruanjinjie@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4860:4864:20::32;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x32.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,268 +100,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 27 Feb 2024, Vikram Garhwal wrote:
-> From: Juergen Gross <jgross@suse.com>
+On 2/29/24 03:10, Jinjie Ruan via wrote:
+> Add GICR_INMIR0 register and support access GICR_INMIR0.
 > 
-> Add the callbacks for mapping/unmapping guest memory via grants to the
-> special grant memory region.
-> 
-> Signed-off-by: Juergen Gross <jgross@suse.com>
-> Signed-off-by: Vikram Garhwal <vikram.garhwal@amd.com>
-
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-
-
+> Signed-off-by: Jinjie Ruan<ruanjinjie@huawei.com>
 > ---
->  hw/xen/xen-mapcache.c | 176 +++++++++++++++++++++++++++++++++++++++++-
->  system/physmem.c      |  11 ++-
->  2 files changed, 182 insertions(+), 5 deletions(-)
-> 
-> diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-> index 179b7e95b2..2e4c9b4947 100644
-> --- a/hw/xen/xen-mapcache.c
-> +++ b/hw/xen/xen-mapcache.c
-> @@ -9,6 +9,8 @@
->   */
->  
->  #include "qemu/osdep.h"
-> +#include "qemu/queue.h"
-> +#include "qemu/thread.h"
->  #include "qemu/units.h"
->  #include "qemu/error-report.h"
->  
-> @@ -23,6 +25,8 @@
->  #include "sysemu/xen-mapcache.h"
->  #include "trace.h"
->  
-> +#include <xenevtchn.h>
-> +#include <xengnttab.h>
->  
->  #if HOST_LONG_BITS == 32
->  #  define MCACHE_BUCKET_SHIFT 16
-> @@ -377,7 +381,7 @@ uint8_t *xen_map_cache(hwaddr phys_addr, hwaddr size,
->      return p;
->  }
->  
-> -ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
-> +static ram_addr_t xen_ram_addr_from_mapcache_try(void *ptr)
->  {
->      MapCacheEntry *entry = NULL;
->      MapCacheRev *reventry;
-> @@ -588,10 +592,179 @@ uint8_t *xen_replace_cache_entry(hwaddr old_phys_addr,
->      return p;
->  }
->  
-> +struct XENMappedGrantRegion {
-> +    void *addr;
-> +    unsigned int pages;
-> +    unsigned int refs;
-> +    unsigned int prot;
-> +    uint32_t idx;
-> +    QLIST_ENTRY(XENMappedGrantRegion) list;
-> +};
-> +
-> +static xengnttab_handle *xen_region_gnttabdev;
-> +static QLIST_HEAD(GrantRegionList, XENMappedGrantRegion) xen_grant_mappings =
-> +    QLIST_HEAD_INITIALIZER(xen_grant_mappings);
-> +static QemuMutex xen_map_mutex;
-> +
-> +static void *xen_map_grant_dyn(MemoryRegion **mr, hwaddr addr, hwaddr *plen,
-> +                               bool is_write, MemTxAttrs attrs)
-> +{
-> +    unsigned int page_off = addr & (XC_PAGE_SIZE - 1);
-> +    unsigned int i;
-> +    unsigned int total_grants = 0;
-> +    unsigned int nrefs = (page_off + *plen + XC_PAGE_SIZE - 1) >> XC_PAGE_SHIFT;
-> +    uint32_t ref = (addr - XEN_GRANT_ADDR_OFF) >> XC_PAGE_SHIFT;
-> +    uint32_t *refs = NULL;
-> +    unsigned int prot = PROT_READ;
-> +    struct XENMappedGrantRegion *mgr = NULL;
-> +
-> +    if (is_write) {
-> +        prot |= PROT_WRITE;
-> +    }
-> +
-> +    qemu_mutex_lock(&xen_map_mutex);
-> +
-> +    QLIST_FOREACH(mgr, &xen_grant_mappings, list) {
-> +        if (mgr->idx == ref &&
-> +            mgr->pages == nrefs &&
-> +            (mgr->prot & prot) == prot) {
-> +            break;
-> +        }
-> +
-> +        total_grants += mgr->pages;
-> +    }
-> +
-> +    if (!mgr) {
-> +        if (nrefs + total_grants >= XEN_MAX_VIRTIO_GRANTS) {
-> +            qemu_mutex_unlock(&xen_map_mutex);
-> +            return NULL;
-> +        }
-> +
-> +        mgr = g_new(struct XENMappedGrantRegion, 1);
-> +
-> +        if (nrefs == 1) {
-> +            refs = &ref;
-> +        } else {
-> +            refs = g_new(uint32_t, nrefs);
-> +            for (i = 0; i < nrefs; i++) {
-> +                refs[i] = ref + i;
-> +            }
-> +        }
-> +        mgr->addr = xengnttab_map_domain_grant_refs(xen_region_gnttabdev, nrefs,
-> +                                                    xen_domid, refs, prot);
-> +        if (mgr->addr) {
-> +            mgr->pages = nrefs;
-> +            mgr->refs = 1;
-> +            mgr->prot = prot;
-> +            mgr->idx = ref;
-> +
-> +            QLIST_INSERT_HEAD(&xen_grant_mappings, mgr, list);
-> +        } else {
-> +            g_free(mgr);
-> +            mgr = NULL;
-> +        }
-> +    } else {
-> +        mgr->refs++;
-> +    }
-> +
-> +    qemu_mutex_unlock(&xen_map_mutex);
-> +
-> +    if (nrefs > 1) {
-> +        g_free(refs);
-> +    }
-> +
-> +    return mgr ? mgr->addr + page_off : NULL;
-> +}
-> +
-> +static void xen_unmap_grant_dyn(MemoryRegion *mr, void *buffer, ram_addr_t addr,
-> +                                hwaddr len, bool is_write, hwaddr access_len)
-> +{
-> +    unsigned int page_off = (unsigned long)buffer & (XC_PAGE_SIZE - 1);
-> +    unsigned int nrefs = (page_off + len + XC_PAGE_SIZE - 1) >> XC_PAGE_SHIFT;
-> +    unsigned int prot = PROT_READ;
-> +    struct XENMappedGrantRegion *mgr = NULL;
-> +
-> +    if (is_write) {
-> +        prot |= PROT_WRITE;
-> +    }
-> +
-> +    qemu_mutex_lock(&xen_map_mutex);
-> +
-> +    QLIST_FOREACH(mgr, &xen_grant_mappings, list) {
-> +        if (mgr->addr == buffer - page_off &&
-> +            mgr->pages == nrefs &&
-> +            (mgr->prot & prot) == prot) {
-> +            break;
-> +        }
-> +    }
-> +    if (mgr) {
-> +        mgr->refs--;
-> +        if (!mgr->refs) {
-> +            xengnttab_unmap(xen_region_gnttabdev, mgr->addr, nrefs);
-> +
-> +            QLIST_REMOVE(mgr, list);
-> +            g_free(mgr);
-> +        }
-> +    } else {
-> +        error_report("xen_unmap_grant_dyn() trying to unmap unknown buffer");
-> +    }
-> +
-> +    qemu_mutex_unlock(&xen_map_mutex);
-> +}
-> +
-> +static ram_addr_t xen_ram_addr_from_grant_cache(void *ptr)
-> +{
-> +    unsigned int page_off = (unsigned long)ptr & (XC_PAGE_SIZE - 1);
-> +    struct XENMappedGrantRegion *mgr = NULL;
-> +    ram_addr_t raddr = RAM_ADDR_INVALID;
-> +
-> +    qemu_mutex_lock(&xen_map_mutex);
-> +
-> +    QLIST_FOREACH(mgr, &xen_grant_mappings, list) {
-> +        if (mgr->addr == ptr - page_off) {
-> +            break;
-> +        }
-> +    }
-> +
-> +    if (mgr) {
-> +        raddr = (mgr->idx << XC_PAGE_SHIFT) + page_off + XEN_GRANT_ADDR_OFF;
-> +    }
-> +
-> +    qemu_mutex_unlock(&xen_map_mutex);
-> +
-> +    return raddr;
-> +}
-> +
-> +ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
-> +{
-> +    ram_addr_t raddr;
-> +
-> +    raddr = xen_ram_addr_from_mapcache_try(ptr);
-> +    if (raddr == RAM_ADDR_INVALID) {
-> +        raddr = xen_ram_addr_from_grant_cache(ptr);
-> +    }
-> +
-> +    return raddr;
-> +}
-> +
-> +static const struct MemoryRegionOps xen_grant_mr_ops = {
-> +    .map = xen_map_grant_dyn,
-> +    .unmap = xen_unmap_grant_dyn,
-> +    .endianness = DEVICE_LITTLE_ENDIAN,
-> +};
-> +
->  MemoryRegion *xen_init_grant_ram(void)
->  {
->      RAMBlock *block;
->  
-> +    qemu_mutex_init(&xen_map_mutex);
-> +
-> +    xen_region_gnttabdev = xengnttab_open(NULL, 0);
-> +    if (xen_region_gnttabdev == NULL) {
-> +        fprintf(stderr, "can't open gnttab device\n");
-> +        return NULL;
-> +    }
-> +
->      memory_region_init(&ram_grants, NULL, "xen.grants",
->                         XEN_MAX_VIRTIO_GRANTS * XC_PAGE_SIZE);
->      block = g_malloc0(sizeof(*block));
-> @@ -606,6 +779,7 @@ MemoryRegion *xen_init_grant_ram(void)
->      ram_grants.ram_block = block;
->      ram_grants.ram = true;
->      ram_grants.terminates = true;
-> +    ram_grants.ops = &xen_grant_mr_ops;
->      ram_block_add_list(block);
->      memory_region_add_subregion(get_system_memory(), XEN_GRANT_ADDR_OFF,
->                                  &ram_grants);
-> diff --git a/system/physmem.c b/system/physmem.c
-> index d989e9fc1f..e6fc075d8f 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -2232,13 +2232,16 @@ RAMBlock *qemu_ram_block_from_host(void *ptr, bool round_offset,
->  
->      if (xen_enabled()) {
->          ram_addr_t ram_addr;
-> +
->          RCU_READ_LOCK_GUARD();
->          ram_addr = xen_ram_addr_from_mapcache(ptr);
-> -        block = qemu_get_ram_block(ram_addr);
-> -        if (block) {
-> -            *offset = ram_addr - block->offset;
-> +        if (ram_addr != RAM_ADDR_INVALID) {
-> +            block = qemu_get_ram_block(ram_addr);
-> +            if (block) {
-> +                *offset = ram_addr - block->offset;
-> +            }
-> +            return block;
->          }
-> -        return block;
->      }
->  
->      RCU_READ_LOCK_GUARD();
-> -- 
-> 2.17.1
-> 
+> v4:
+> - Make the GICR_INMIR0 implementation more clearer.
+> ---
+>   hw/intc/arm_gicv3_redist.c | 19 +++++++++++++++++++
+>   hw/intc/gicv3_internal.h   |  1 +
+>   2 files changed, 20 insertions(+)
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
 
