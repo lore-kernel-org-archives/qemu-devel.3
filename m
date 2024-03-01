@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C75A0C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 23:08:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EBF4C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 23:09:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgByL-0005k9-9w; Fri, 01 Mar 2024 18:07:22 -0500
+	id 1rgBxa-0004qx-HE; Fri, 01 Mar 2024 18:06:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgBxp-0004vN-Bu
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:06:51 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1rgBxW-0004qH-7m
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:06:30 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgBxn-0004G4-HR
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:06:48 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-1dc0d11d1b7so24577165ad.2
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 15:06:47 -0800 (PST)
+ id 1rgBxU-0004CX-6N
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:06:29 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1dc13fb0133so22382215ad.3
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 15:06:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709334406; x=1709939206; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709334386; x=1709939186; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=G2VXMZpzicQ4Dm28fmEM7ZpGthYgfI6UDANYII3bJPA=;
- b=WC6R8Cy1R42yVSuTO2NwOSCU4z2YOpjV4Ec8i8ymmWDq4Dbh5jljrSJlGYyuTqu90a
- ng5tSnU9hPLGXMyyP4Fbh+hn8Vf8W+tS997UQ23/sgS/6cr7JVFWay7r6uQJorUjNDid
- 3o7PlAMSYI9GD6i7Ov9Lh9CsytulkNEoNkHDJ/RJpQyHIeUP81TKiCwqQKrn1I2idd1n
- UUT6Cs496oa8wn0/55segL9Mj+akD9DDptJseOYpe0d6o2cUlo5nIQPMiZ+BTMmKBnGC
- 1NtLcCrOKNjc7leD79cbrbSJuTPedAOiyzXG8bGMZGdOF2GfoX7sEX9n6Ckz2BhN8c48
- 3Q/Q==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=PXNbhyM3M1ZvaxsPU8XRtEyhAyhYazBaocnAfgHjiNM=;
+ b=YHLl4gCrVPOOvaM/W99Bar1O8CqMDh9crOyBtgsqT9/J4LGAOfMaF+I1ZvtsqnqFL3
+ nM5HRbBMoyxK0hEZABHDtZywJhUpTsRruPOz9Kd5E5wzGrznPqADJov/B5hxT7CotfSM
+ iY9pEhDUprcPhAgDXHY1p6BbquYr6ThNReZa4SPnYGNYdgtzKGDHA9VPyZm3mHBPEOZE
+ K9JAAireTgHzVYTV2l7GEuIk+VJHNIDsMXsNIl07RYw82a8lItewo9/8viciDVtqcrvi
+ 8MuEH2yN3dg5OUzDUVRg9iGU7ejr8npQld000RjIAYjuE4xZCdjDAR4FSBPp/lgeG1Fu
+ UKRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709334406; x=1709939206;
+ d=1e100.net; s=20230601; t=1709334386; x=1709939186;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=G2VXMZpzicQ4Dm28fmEM7ZpGthYgfI6UDANYII3bJPA=;
- b=qKO9FIKqQ4hyxxJiKrUaJdCGIJckRIihzbYe9Whny87Ul28JR1JEHsZ0W7w7UoD4Ld
- NaDRmbS4wjlWPulMleT8OK4T/sICSESMP7/OPVxIDNkYYBv5zXjTqjhbaV4miWp1HD66
- zuT2h8KxwH1NnYc/dQmvajN7RSXOBlArxx76EKdspvnN35LoV9AuaYQ1pU0xQyqmPE0L
- zYVnim0qXhWZ45H9LKW/tj4Q4agGXBISybrDcFPfZrdwDOR/N8qaOoOFa88xxJBEZHsC
- BlbioILkq/NnUiBGTJWiAvWuCk7eF4rg5GdKNnpO5czG1ZtBY0Ng6BrUiZndZh0BFOU1
- VoOg==
-X-Gm-Message-State: AOJu0YzjzhiMR2gZqag4gjF9Riiyy1AtrKGTPYfDvheHLer/e1RA9NcL
- +zvS5iC7S0vSf/k+VvslIe6198+hX9KBZXsQ2GX9QEnvLugZZwIvZVR3Xr3R3j6hrdaZJKB2O+9
- +
-X-Google-Smtp-Source: AGHT+IHhX/hTS8JqfJgFZnNbpy4DodUMopAeISIYRTej3Phw3GQ6esTUSjBTHZJzRKoM075InFTK0w==
-X-Received: by 2002:a17:902:7790:b0:1d9:a4bb:29f2 with SMTP id
- o16-20020a170902779000b001d9a4bb29f2mr2518601pll.46.1709334406292; 
- Fri, 01 Mar 2024 15:06:46 -0800 (PST)
+ bh=PXNbhyM3M1ZvaxsPU8XRtEyhAyhYazBaocnAfgHjiNM=;
+ b=ijGAF+WuHNnxpXISihfhfKT0h51OoHrBtB5BZuRVXTfstFtf74n/9qf6wxMhYbGPcV
+ X5Tr6vngZ00+btVfIjlJ9Qjl0RTUUVoZVHgD+lL68/L9iV0zdBl+/KOQrmezu81ETwR3
+ cxlF3/ua4JpTsB77ETI0x7YVoOGW/Ovbo8t1wrDJ0wOwodvVcmUliGUpWS+1t+nwW6zV
+ eC6at4UzSxc/Pe1nnrEEQlE2PKtEV7JS6HAxSONBP+69KCEwsvMBG/vv0+WEMDW4p9nF
+ WLjR/+C1x61c7nvuBsTVlB0PbZXkLsxOkXBvPBGYxX3VZ8OLBdFjHnl25cnbYrc3BQXC
+ fJ+A==
+X-Gm-Message-State: AOJu0YwEU+c3GYzFu1zwwTCFfyNzSPJzapKb9NN6n0q2k4VTieO/sGxC
+ ttkt3CnsVBHA7QifkJGwokVLmOvNo5yKiCD7w+/o/2if73Q8JTeVhCdi3xeZEcsA5Cu20g3zy1Y
+ P
+X-Google-Smtp-Source: AGHT+IGL1UoEz2rY7XjUy9b3MCrSnOzvP8MopZBpaY11Yv5yu0AssVTQTvnXflAlS7O6PNwa3bBL2A==
+X-Received: by 2002:a17:902:e807:b0:1dc:696d:ec64 with SMTP id
+ u7-20020a170902e80700b001dc696dec64mr3982507plg.22.1709334386531; 
+ Fri, 01 Mar 2024 15:06:26 -0800 (PST)
 Received: from stoup.. (098-147-055-211.res.spectrum.com. [98.147.55.211])
  by smtp.gmail.com with ESMTPSA id
- lc11-20020a170902fa8b00b001dc668e145asm3988580plb.200.2024.03.01.15.06.44
+ lc11-20020a170902fa8b00b001dc668e145asm3988580plb.200.2024.03.01.15.06.25
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Mar 2024 15:06:45 -0800 (PST)
+ Fri, 01 Mar 2024 15:06:26 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Helge Deller <deller@gmx.de>
-Subject: [PATCH 18/60] accel/tcg: Remove qemu_host_page_size from
- page_protect/page_unprotect
-Date: Fri,  1 Mar 2024 13:05:37 -1000
-Message-Id: <20240301230619.661008-19-richard.henderson@linaro.org>
+Subject: [PATCH 03/60] linux-user/elfload: Tidy fill_note_info and struct
+ elf_note_info
+Date: Fri,  1 Mar 2024 13:05:22 -1000
+Message-Id: <20240301230619.661008-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240301230619.661008-1-richard.henderson@linaro.org>
 References: <20240301230619.661008-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,84 +94,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use qemu_real_host_page_size instead.  Except for the final mprotect
-within page_protect, we already handled host < target page size.
+In fill_note_info, there were unnecessary checks for
+success of g_new/g_malloc.  But these structures do not
+need to be dyamically allocated at all, and can in fact
+be statically allocated within the parent structure.
+
+This removes all error paths from fill_note_info, so
+change the return type to void.
+
+Change type of signr to match both caller (elf_core_dump)
+and callee (fill_prstatus), which both use int for signr.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Acked-by: Helge Deller <deller@gmx.de>
-Message-Id: <20240102015808.132373-2-richard.henderson@linaro.org>
 ---
- accel/tcg/user-exec.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ linux-user/elfload.c | 48 +++++++++++++++-----------------------------
+ 1 file changed, 16 insertions(+), 32 deletions(-)
 
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index 68b252cb8e..69b7429e31 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -651,16 +651,17 @@ void page_protect(tb_page_addr_t address)
- {
-     PageFlagsNode *p;
-     target_ulong start, last;
-+    int host_page_size = qemu_real_host_page_size();
-     int prot;
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 7b3a2c20f2..cc43487a37 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -4066,10 +4066,12 @@ struct elf_thread_status {
+     int num_notes;
+ };
  
-     assert_memory_lock();
++#define NUMNOTES 3
++
+ struct elf_note_info {
+-    struct memelfnote   *notes;
+-    struct target_elf_prstatus *prstatus;  /* NT_PRSTATUS */
+-    struct target_elf_prpsinfo *psinfo;    /* NT_PRPSINFO */
++    struct memelfnote notes[NUMNOTES];
++    struct target_elf_prstatus prstatus;  /* NT_PRSTATUS */
++    struct target_elf_prpsinfo psinfo;    /* NT_PRPSINFO */
  
--    if (qemu_host_page_size <= TARGET_PAGE_SIZE) {
-+    if (host_page_size <= TARGET_PAGE_SIZE) {
-         start = address & TARGET_PAGE_MASK;
-         last = start + TARGET_PAGE_SIZE - 1;
-     } else {
--        start = address & qemu_host_page_mask;
--        last = start + qemu_host_page_size - 1;
-+        start = address & -host_page_size;
-+        last = start + host_page_size - 1;
-     }
+     QTAILQ_HEAD(, elf_thread_status) thread_list;
+ #if 0
+@@ -4117,7 +4119,7 @@ static void fill_auxv_note(struct memelfnote *, const TaskState *);
+ static void fill_elf_note_phdr(struct elf_phdr *, int, off_t);
+ static size_t note_size(const struct memelfnote *);
+ static void free_note_info(struct elf_note_info *);
+-static int fill_note_info(struct elf_note_info *, long, const CPUArchState *);
++static void fill_note_info(struct elf_note_info *, int, const CPUArchState *);
+ static void fill_thread_info(struct elf_note_info *, const CPUArchState *);
  
-     p = pageflags_find(start, last);
-@@ -671,7 +672,7 @@ void page_protect(tb_page_addr_t address)
- 
-     if (unlikely(p->itree.last < last)) {
-         /* More than one protection region covers the one host page. */
--        assert(TARGET_PAGE_SIZE < qemu_host_page_size);
-+        assert(TARGET_PAGE_SIZE < host_page_size);
-         while ((p = pageflags_next(p, start, last)) != NULL) {
-             prot |= p->flags;
-         }
-@@ -679,7 +680,7 @@ void page_protect(tb_page_addr_t address)
- 
-     if (prot & PAGE_WRITE) {
-         pageflags_set_clear(start, last, 0, PAGE_WRITE);
--        mprotect(g2h_untagged(start), qemu_host_page_size,
-+        mprotect(g2h_untagged(start), last - start + 1,
-                  prot & (PAGE_READ | PAGE_EXEC) ? PROT_READ : PROT_NONE);
-     }
+ static int dump_write(int, const void *, size_t);
+@@ -4514,44 +4516,33 @@ static void fill_thread_info(struct elf_note_info *info, const CPUArchState *env
+     info->notes_size += note_size(&ets->notes[0]);
  }
-@@ -725,18 +726,19 @@ int page_unprotect(target_ulong address, uintptr_t pc)
+ 
+-static int fill_note_info(struct elf_note_info *info,
+-                          long signr, const CPUArchState *env)
++static void fill_note_info(struct elf_note_info *info,
++                           int signr, const CPUArchState *env)
+ {
+-#define NUMNOTES 3
+     CPUState *cpu = env_cpu((CPUArchState *)env);
+     TaskState *ts = (TaskState *)cpu->opaque;
+-    int i;
+ 
+     memset(info, 0, sizeof (*info));
+     QTAILQ_INIT(&info->thread_list);
+ 
+-    info->notes = g_new0(struct memelfnote, NUMNOTES);
+-    if (info->notes == NULL)
+-        return (-ENOMEM);
+-    info->prstatus = g_malloc0(sizeof (*info->prstatus));
+-    if (info->prstatus == NULL)
+-        return (-ENOMEM);
+-    info->psinfo = g_malloc0(sizeof (*info->psinfo));
+-    if (info->prstatus == NULL)
+-        return (-ENOMEM);
+-
+     /*
+      * First fill in status (and registers) of current thread
+      * including process info & aux vector.
+      */
+-    fill_prstatus(info->prstatus, ts, signr);
+-    elf_core_copy_regs(&info->prstatus->pr_reg, env);
++    fill_prstatus(&info->prstatus, ts, signr);
++    elf_core_copy_regs(&info->prstatus.pr_reg, env);
+     fill_note(&info->notes[0], "CORE", NT_PRSTATUS,
+-              sizeof (*info->prstatus), info->prstatus);
+-    fill_psinfo(info->psinfo, ts);
++              sizeof(info->prstatus), &info->prstatus);
++    fill_psinfo(&info->psinfo, ts);
+     fill_note(&info->notes[1], "CORE", NT_PRPSINFO,
+-              sizeof (*info->psinfo), info->psinfo);
++              sizeof(info->psinfo), &info->psinfo);
+     fill_auxv_note(&info->notes[2], ts);
+     info->numnote = 3;
+ 
+     info->notes_size = 0;
+-    for (i = 0; i < info->numnote; i++)
++    for (int i = 0; i < info->numnote; i++) {
+         info->notes_size += note_size(&info->notes[i]);
++    }
+ 
+     /* read and fill status of all threads */
+     WITH_QEMU_LOCK_GUARD(&qemu_cpu_list_lock) {
+@@ -4562,8 +4553,6 @@ static int fill_note_info(struct elf_note_info *info,
+             fill_thread_info(info, cpu_env(cpu));
          }
- #endif
-     } else {
-+        int host_page_size = qemu_real_host_page_size();
-         target_ulong start, len, i;
-         int prot;
+     }
+-
+-    return (0);
+ }
  
--        if (qemu_host_page_size <= TARGET_PAGE_SIZE) {
-+        if (host_page_size <= TARGET_PAGE_SIZE) {
-             start = address & TARGET_PAGE_MASK;
-             len = TARGET_PAGE_SIZE;
-             prot = p->flags | PAGE_WRITE;
-             pageflags_set_clear(start, start + len - 1, PAGE_WRITE, 0);
-             current_tb_invalidated = tb_invalidate_phys_page_unwind(start, pc);
-         } else {
--            start = address & qemu_host_page_mask;
--            len = qemu_host_page_size;
-+            start = address & -host_page_size;
-+            len = host_page_size;
-             prot = 0;
+ static void free_note_info(struct elf_note_info *info)
+@@ -4575,10 +4564,6 @@ static void free_note_info(struct elf_note_info *info)
+         QTAILQ_REMOVE(&info->thread_list, ets, ets_link);
+         g_free(ets);
+     }
+-
+-    g_free(info->prstatus);
+-    g_free(info->psinfo);
+-    g_free(info->notes);
+ }
  
-             for (i = 0; i < len; i += TARGET_PAGE_SIZE) {
+ static int write_note_info(struct elf_note_info *info, int fd)
+@@ -4694,8 +4679,7 @@ static int elf_core_dump(int signr, const CPUArchState *env)
+         goto out;
+ 
+     /* fill in the in-memory version of notes */
+-    if (fill_note_info(&info, signr, env) < 0)
+-        goto out;
++    fill_note_info(&info, signr, env);
+ 
+     offset += sizeof (elf);                             /* elf header */
+     offset += (segs + 1) * sizeof (struct elf_phdr);    /* program headers */
 -- 
 2.34.1
 
