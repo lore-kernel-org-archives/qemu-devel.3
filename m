@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 342CAC5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 19:57:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4FACC5478C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 20:06:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg8zM-0005Zt-Ru; Fri, 01 Mar 2024 14:56:12 -0500
+	id 1rg98m-00081k-KE; Fri, 01 Mar 2024 15:05:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rg8zL-0005ZS-AT
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 14:56:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1rg98i-000804-Jq
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 15:05:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rg8zI-0006b7-QJ
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 14:56:11 -0500
+ id 1rg98g-00005i-KT
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 15:05:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709322967;
+ s=mimecast20190719; t=1709323549;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9ZgEUSl+vA32O0vfl5TXIfza33OQsWq0SSwjuxnNZMc=;
- b=iJnRvmpK+38+MfvjXcegvTdZqWFjx4fpXuwQuvU/TbQHk+9xseKnuSEXF7n6j3yj470G2U
- OyWcy7mxIPl0DkBNQ9TieL4TS9Vnpt0FPmXHet4aLr7Hva3RZigIPbpqgrf8TFHDA7pu9p
- Yh3edxSUav1L6fIMwFV6dlW4E+N6wTo=
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0k1fdxRndW6WC9hnwpKSKEP8NpQ5ahA5LhfJu/UmZgI=;
+ b=PsaS9mHAACco8fTawxcNHE6SeqiAkSLlRRrCRpjrqAozypmJPdf/zPrpMx0vlSIWOoS3Hn
+ hcxcTQyrWn54nV8JRWs41CiGx/dZ3iZuWepBQVrNxETTCECRs2E9PzG3VC2TT5hhNEiJVR
+ IJr8ATAECZ+VZEZbDnUWgMjQm0Xyhjo=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-609-Br-b9KGBMQeRrwKUNnzK-w-1; Fri, 01 Mar 2024 14:56:03 -0500
-X-MC-Unique: Br-b9KGBMQeRrwKUNnzK-w-1
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-608ad239f8fso40553557b3.0
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 11:56:03 -0800 (PST)
+ us-mta-110-fx9Lqk76MjeNhZSR-y2iXg-1; Fri, 01 Mar 2024 15:05:48 -0500
+X-MC-Unique: fx9Lqk76MjeNhZSR-y2iXg-1
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-608e4171382so34617427b3.3
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 12:05:48 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709322962; x=1709927762;
+ d=1e100.net; s=20230601; t=1709323548; x=1709928348;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9ZgEUSl+vA32O0vfl5TXIfza33OQsWq0SSwjuxnNZMc=;
- b=RXmUxetMnQxo6v8aiWt+hngHcF+wr0CkjAwe5JIz+o8w33h3OaaqSJsZjksX90wa21
- ndXjYhwRujhWbwlSv2rr3swzM7S4uDzy5XFiQw5JagKKAKdHhqOWT5D0TcWHKjefNcZI
- gmlKjo007gmZzcUj0mdVgbbrTsfYxeDQvNneVHYYH3mOnEEe5p0qBPFau32RTPZYnWX0
- fMq48Oj5Jys2CnL3zP5xIR8fqW+RAHpQ5KJulzNWZsBc5ip2Nvtr+qRyrFCjHkR+9El5
- PbwGG4HMMft+5JebW2Wp8h2WeJyBTirfgV4dSu7nicAPTWEEX3DQCU/YVjfQBUI1oGum
- IvdA==
-X-Gm-Message-State: AOJu0YzLgaW/PoaKMgHzuvQJnv8vz2UDKXbwfykk2moBUnYncZ33iIFo
- G862cfoqaVhDmVb9pXcnirKTW/KWrus7rdEVi2aDeJr/Gg5mq9kNd6rzTTnCUgeupHmbMJrTeVk
- bXyrsY8wIknmfhpeB2BkkFkgPjQeReUrfqWJXtnJOOYYTOHmGvWlL57mNFn8pOMe5upCgLATb8V
- UZKEUw822weWByFMWBAFW8VfF0fvQ=
-X-Received: by 2002:a05:6902:160d:b0:dcf:56c3:336e with SMTP id
- bw13-20020a056902160d00b00dcf56c3336emr2623777ybb.35.1709322962336; 
- Fri, 01 Mar 2024 11:56:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHR33GP+FLVobe0wk9rdfKD7F5RMkkGGg9c5hUkaINJh7qFO9yASe9sQ0+ij3PPzIDgpTfmDL6CZ81mnvt2lF8=
-X-Received: by 2002:a05:6902:160d:b0:dcf:56c3:336e with SMTP id
- bw13-20020a056902160d00b00dcf56c3336emr2623751ybb.35.1709322962009; Fri, 01
- Mar 2024 11:56:02 -0800 (PST)
+ bh=0k1fdxRndW6WC9hnwpKSKEP8NpQ5ahA5LhfJu/UmZgI=;
+ b=P+k1QO1yGHNOfxpWhMKi4YN/o7pRcCdTKiWwRe7uTHbDBGHOlbjv7JTr8i2MzFSie9
+ 7uNNzyYsR2JD2jm7zlLBA8VMy8xWzTh1xBmozbup+jTfpwemZ7QIazV2a5tfgY7Xtat1
+ 5/BLFOAuj8lC5Fbxy19ATk4+QUnuA2Js7kRQXrYSL9RN5wlTD3scvuIfoRHazx6cdYWV
+ 6PHfTDaQSfmUd82n2MZ3kzpcjCBkoyu9oTsqFVMhKUxJXh63GLVK49+sJ9CcjZZfxmK2
+ +tNbg5Hdv1cemuQzaJSxZSXbLg/V2M6LjqdHGsEbJRA1M8G8lXgtcG1mUj/+Zs0eWeYq
+ FI/A==
+X-Gm-Message-State: AOJu0YyjoDcoVIS2JNkKnfCiiyP9mKOuXJSERCJH7qFmp4mTXSj1REyC
+ hqw3WonB8/M2EZwohpBy8MXGMB74jcBJ3fwOdGASaP0evyHJycmBQRvAm425GOwD186IWRh4cvT
+ MOVQh1u5lZyVeN5/U/YdtRiFlSpigfNL6pUdnmUkCeWFQx7dSxBpj1OHf2dwQb85FhkCQdoeuqM
+ 5vo+pQMvld0LS796zxGJMdS4/RFRQ=
+X-Received: by 2002:a25:9745:0:b0:dcd:3663:b5e5 with SMTP id
+ h5-20020a259745000000b00dcd3663b5e5mr2335757ybo.25.1709323547891; 
+ Fri, 01 Mar 2024 12:05:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG+1J8CIrLVnCpOEnOKyL5JwwC+uAVHVjmjxs+speuALEy6QlX/n95Cutd7uqUX6W05k8ndzfNg4uW7CPBiNdU=
+X-Received: by 2002:a25:9745:0:b0:dcd:3663:b5e5 with SMTP id
+ h5-20020a259745000000b00dcd3663b5e5mr2335735ybo.25.1709323547659; Fri, 01 Mar
+ 2024 12:05:47 -0800 (PST)
 MIME-Version: 1.0
 References: <20240301134330.4191007-1-jonah.palmer@oracle.com>
- <20240301134330.4191007-2-jonah.palmer@oracle.com>
-In-Reply-To: <20240301134330.4191007-2-jonah.palmer@oracle.com>
+ <20240301134330.4191007-9-jonah.palmer@oracle.com>
+In-Reply-To: <20240301134330.4191007-9-jonah.palmer@oracle.com>
 From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Fri, 1 Mar 2024 20:55:25 +0100
-Message-ID: <CAJaqyWd8WXtWyexk-oHxmAkgcG4pEawonqGHDhWwq1hb6+-_Og@mail.gmail.com>
-Subject: Re: [RFC 1/8] virtio/virtio-pci: Handle extra notification data
+Date: Fri, 1 Mar 2024 21:05:11 +0100
+Message-ID: <CAJaqyWcEvYJm0WSZtVd5qj-eLRwT00DbUGjnb6J63snRvpH2og@mail.gmail.com>
+Subject: Re: [RFC 8/8] virtio: Add VIRTIO_F_NOTIFICATION_DATA property
+ definition
 To: Jonah Palmer <jonah.palmer@oracle.com>
 Cc: qemu-devel@nongnu.org, mst@redhat.com, jasowang@redhat.com, 
  si-wei.liu@oracle.com, boris.ostrovsky@oracle.com, raphael@enfabrica.net, 
@@ -79,16 +80,16 @@ Cc: qemu-devel@nongnu.org, mst@redhat.com, jasowang@redhat.com,
  qemu-block@nongnu.org, qemu-s390x@nongnu.org, virtio-fs@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,108 +108,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Fri, Mar 1, 2024 at 2:44=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.co=
 m> wrote:
 >
-> Add support to virtio-pci devices for handling the extra data sent
-> from the driver to the device when the VIRTIO_F_NOTIFICATION_DATA
-> transport feature has been negotiated.
+> Extend the virtio device property definitions to include the
+> VIRTIO_F_NOTIFICATION_DATA feature.
 >
-> The extra data that's passed to the virtio-pci device when this
-> feature is enabled varies depending on the device's virtqueue
-> layout.
+> The default state of this feature is disabled, allowing it to be
+> explicitly enabled where it's supported.
 >
-> In a split virtqueue layout, this data includes:
->  - upper 16 bits: last_avail_idx
->  - lower 16 bits: virtqueue index
->
-> In a packed virtqueue layout, this data includes:
->  - upper 16 bits: 1-bit wrap counter & 15-bit last_avail_idx
->  - lower 16 bits: virtqueue index
->
+
+Reviewed-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+
+Thanks!
+
 > Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
 > ---
->  hw/virtio/virtio-pci.c     | 13 ++++++++++---
->  hw/virtio/virtio.c         | 13 +++++++++++++
->  include/hw/virtio/virtio.h |  1 +
->  3 files changed, 24 insertions(+), 3 deletions(-)
+>  include/hw/virtio/virtio.h | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 >
-> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> index 1a7039fb0c..c7c577b177 100644
-> --- a/hw/virtio/virtio-pci.c
-> +++ b/hw/virtio/virtio-pci.c
-> @@ -384,7 +384,7 @@ static void virtio_ioport_write(void *opaque, uint32_=
-t addr, uint32_t val)
->  {
->      VirtIOPCIProxy *proxy =3D opaque;
->      VirtIODevice *vdev =3D virtio_bus_get_device(&proxy->bus);
-> -    uint16_t vector;
-> +    uint16_t vector, vq_idx;
->      hwaddr pa;
->
->      switch (addr) {
-> @@ -408,8 +408,15 @@ static void virtio_ioport_write(void *opaque, uint32=
-_t addr, uint32_t val)
->              vdev->queue_sel =3D val;
->          break;
->      case VIRTIO_PCI_QUEUE_NOTIFY:
-> -        if (val < VIRTIO_QUEUE_MAX) {
-> -            virtio_queue_notify(vdev, val);
-> +        if (virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
-> +            vq_idx =3D val & 0xFFFF;
-> +            virtio_set_notification_data(vdev, vq_idx, val);
-> +        } else {
-> +            vq_idx =3D val;
-> +        }
-> +
-> +        if (vq_idx < VIRTIO_QUEUE_MAX) {
-> +            virtio_queue_notify(vdev, vq_idx);
->          }
->          break;
->      case VIRTIO_PCI_STATUS:
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index d229755eae..a61f69b7fd 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -2052,6 +2052,19 @@ int virtio_set_status(VirtIODevice *vdev, uint8_t =
-val)
->      return 0;
->  }
->
-> +void virtio_set_notification_data(VirtIODevice *vdev, uint16_t i, uint32=
-_t data)
-> +{
-> +    VirtQueue *vq =3D &vdev->vq[i];
-
-Sorry I sent the previous mail too fast :).
-
-i should also be checked against VIRTIO_QUEUE_MAX and vq->vring.desc
-before continuing this function. Otherwise is an out of bound access.
-
-> +
-> +    if (virtio_vdev_has_feature(vdev, VIRTIO_F_RING_PACKED)) {
-> +        vq->last_avail_wrap_counter =3D (data >> 31) & 0x1;
-> +        vq->last_avail_idx =3D (data >> 16) & 0x7FFF;
-> +    } else {
-> +        vq->last_avail_idx =3D (data >> 16) & 0xFFFF;
-> +    }
-> +    vq->shadow_avail_idx =3D vq->last_avail_idx;
-> +}
-> +
->  static enum virtio_device_endian virtio_default_endian(void)
->  {
->      if (target_words_bigendian()) {
 > diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-> index c8f72850bc..c92d8afc42 100644
+> index c92d8afc42..5772737dde 100644
 > --- a/include/hw/virtio/virtio.h
 > +++ b/include/hw/virtio/virtio.h
-> @@ -345,6 +345,7 @@ void virtio_queue_reset(VirtIODevice *vdev, uint32_t =
-queue_index);
->  void virtio_queue_enable(VirtIODevice *vdev, uint32_t queue_index);
->  void virtio_update_irq(VirtIODevice *vdev);
->  int virtio_set_features(VirtIODevice *vdev, uint64_t val);
-> +void virtio_set_notification_data(VirtIODevice *vdev, uint16_t i, uint32=
-_t data);
+> @@ -369,7 +369,9 @@ typedef struct VirtIORNGConf VirtIORNGConf;
+>      DEFINE_PROP_BIT64("packed", _state, _field, \
+>                        VIRTIO_F_RING_PACKED, false), \
+>      DEFINE_PROP_BIT64("queue_reset", _state, _field, \
+> -                      VIRTIO_F_RING_RESET, true)
+> +                      VIRTIO_F_RING_RESET, true), \
+> +    DEFINE_PROP_BIT64("notification_data", _state, _field, \
+> +                      VIRTIO_F_NOTIFICATION_DATA, false)
 >
->  /* Base devices.  */
->  typedef struct VirtIOBlkConf VirtIOBlkConf;
+>  hwaddr virtio_queue_get_desc_addr(VirtIODevice *vdev, int n);
+>  bool virtio_queue_enabled_legacy(VirtIODevice *vdev, int n);
 > --
 > 2.39.3
 >
