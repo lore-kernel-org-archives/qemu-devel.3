@@ -4,54 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89C5FC5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 15:48:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6C43C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 15:49:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg576-0007Rs-M9; Fri, 01 Mar 2024 10:47:56 -0500
+	id 1rg580-0008Cd-4j; Fri, 01 Mar 2024 10:48:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pavel.dovgalyuk@ispras.ru>)
- id 1rg574-0007R2-JC; Fri, 01 Mar 2024 10:47:54 -0500
-Received: from mail.ispras.ru ([83.149.199.84])
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pavel.dovgalyuk@ispras.ru>)
- id 1rg572-0005g8-73; Fri, 01 Mar 2024 10:47:54 -0500
-Received: from [192.168.0.253] (unknown [178.178.100.83])
- by mail.ispras.ru (Postfix) with ESMTPSA id 878EA40F1DFB;
- Fri,  1 Mar 2024 15:47:27 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru 878EA40F1DFB
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
- s=default; t=1709308047;
- bh=Bm38lFwtIU/Ws2Fofl5LNYp0G1R3YthP/JdI8roNLkA=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=kXzU7oVgKC9bezxIsBZByx/6igDlUbLSOQlikxHQF+5mbsOAgCNsAPOmmwt2ovo4y
- 8jpUHi0yZriTyVsXSuuCEO3aCnAwlGSqSQirfEhIMWHWaRLTpDkmEM22Ppvtu8Hrsj
- x8HYYVik0LU3L8RG/SgBEAmnC7W79XwjHq8k4v5c=
-Message-ID: <a066c1db-33a4-41c9-9a15-4ede82dfc895@ispras.ru>
-Date: Fri, 1 Mar 2024 18:47:27 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rg57z-0008CD-41
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 10:48:51 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rg57x-0005nj-Au
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 10:48:50 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-33e12916565so1124000f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 07:48:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709308128; x=1709912928; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=RHuuIrgiXICSKqK8qq6mrlldvq7XTPOBjMp5Ode5tpk=;
+ b=X1du9C+rV4kh4t1UZMyQjJnGiBRQK576yvSdzRUfBFdsPEEaEDpRCT3DYFZYKHXU+a
+ AgLPzQtoeRqKK5BuFIINJ5R3bPERRhMdOsGZwo/A5QfmXVFTetFlaHK+cL3JAR+ZTupb
+ 2mWsahB0m0UJTXMPFMAeJ6rzGRFfmn3Sq7v2ayU+ysBzpXb44bPANEOORV8JnDzz8OXe
+ Bs7YYGyNsHZG1OEBbtnTuO/9sq+eN5P9Q7RxlDgQupBTFRrbI4J4oYGWk+QZd5+M2NRi
+ 0KMIP1CtwxYqxwt8f/0oFTYsbrnip2NJPGFAdK/4nAZhj9XilYZQbNpPa9SbvEUEhslz
+ hR8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709308128; x=1709912928;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RHuuIrgiXICSKqK8qq6mrlldvq7XTPOBjMp5Ode5tpk=;
+ b=QUsrtLdAmCf40OjbnJFCcJ3jVMdFzwI20tl4C3jxzLMCtZdja+thGsKAR+9hho4X0c
+ X5H6k3d1q8DBhO1G36ETXiRTiAIGUCdp9E5qcnTLQ6zeD8xnqKCSH2hCs/VHGRgMjlf6
+ jvIw8LF052LXOVOvu1NkgAdi7eenzalehKaMhfxnr+RsvDKNGYAecL5La+hMK8VPQNm9
+ 5NC3DZIsw5K4d2vxfJELX/ooQ3m9XCbhV/pRikV3y8mMOFsnCl6PJiNm0cw8Fa3QoGSZ
+ fTcDoQ9vPYsUiYUIHXhwXjT8YBDkXwHQimUmyw0qIRIg5xVSJAgi0BYv/JSl+08wjn+V
+ gWMA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWJi0WxcT1ZLxp0B4Gp7yqkKqpLxk430UgJqjHM6foemWZDTuNOHyPZ2gdQizijVQcpV2ZcYttxPJKhjFuQuppOzFDkBc4=
+X-Gm-Message-State: AOJu0YwUEk1ql8l1ENddJNsr0aStELANn7rpgcv+grC//BtiFeGsPbzF
+ /J9ojpWOE7RIFMY+C5LyzSpaDx7vZrT9TYAbHgRm8oGtfxtno5KvGVcMj8m+RlQ=
+X-Google-Smtp-Source: AGHT+IHC2la2xZTDG3n+mmhpUFfXG73HGlEPwFWLlobqxJWHOQAB4hUYuH/O4YmzrYJrF2M7eF5oeQ==
+X-Received: by 2002:adf:f141:0:b0:33e:1ca0:8706 with SMTP id
+ y1-20020adff141000000b0033e1ca08706mr2129933wro.15.1709308127614; 
+ Fri, 01 Mar 2024 07:48:47 -0800 (PST)
+Received: from [192.168.193.175] (232.red-88-28-18.dynamicip.rima-tde.net.
+ [88.28.18.232]) by smtp.gmail.com with ESMTPSA id
+ bx10-20020a5d5b0a000000b0033df46f70dbsm5117235wrb.9.2024.03.01.07.48.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 01 Mar 2024 07:48:47 -0800 (PST)
+Message-ID: <eb260acf-859f-4b48-a2eb-2aff8416620a@linaro.org>
+Date: Fri, 1 Mar 2024 16:48:43 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [Spam][PATCH] replay: Improve error messages about configuration
- conflicts
+Subject: Re: [PULL 2/2] aspeed: fix hardcode boot address 0
 Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, qemu-trivial@nongnu.org
-References: <20240301120641.864047-1-armbru@redhat.com>
-From: Pavel Dovgalyuk <pavel.dovgalyuk@ispras.ru>
-In-Reply-To: <20240301120641.864047-1-armbru@redhat.com>
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
+References: <20240227125201.414060-1-clg@kaod.org>
+ <20240227125201.414060-3-clg@kaod.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240227125201.414060-3-clg@kaod.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=83.149.199.84;
- envelope-from=pavel.dovgalyuk@ispras.ru; helo=mail.ispras.ru
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,52 +97,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
+Hi Jamin,
 
-On 01.03.2024 15:06, Markus Armbruster wrote:
-> Improve
+On 27/2/24 13:52, Cédric Le Goater wrote:
+> From: Jamin Lin <jamin_lin@aspeedtech.com>
 > 
->     Record/replay feature is not supported for '-rtc base=localtime'
->     Record/replay feature is not supported for 'smp'
->     Record/replay feature is not supported for '-snapshot'
+> In the previous design of ASPEED SOCs QEMU model, it set the boot
+> address at "0" which was the hardcode setting for ast10x0, ast2600,
+> ast2500 and ast2400.
 > 
-> to
+> According to the design of ast2700, it has a bootmcu(riscv-32) which
+> is used for executing SPL and initialize DRAM and copy u-boot image
+> from SPI/Flash to DRAM at address 0x400000000 at SPL boot stage.
+> Then, CPUs(cortex-a35) execute u-boot, kernel and rofs.
 > 
->     Record/replay is not supported with -rtc base=localtime
->     Record/replay is not supported with multiple CPUs
->     Record/replay is not supported with -snapshot
+> Currently, qemu not support emulate two CPU architectures
+> at the same machine. Therefore, qemu will only support
+> to emulate CPU(cortex-a35) side for ast2700 and the boot
+> address is "0x4 00000000".
 > 
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> Fixed hardcode boot address "0" for future models using
+> a different mapping address.
+> 
+> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> Reviewed-by: Cédric Le Goater <clg@kaod.org>
+
+Tip for the email workflow: when someone provide a R-b tag for
+a patch, please carry it on in your next iterations.
+
+https://lore.kernel.org/qemu-devel/09f9ca34-4e0c-4ada-b808-643a8c578511@linaro.org/
+
+See 
+https://www.qemu.org/docs/master/devel/submitting-a-patch.html#proper-use-of-reviewed-by-tags-can-aid-review
+
+> Signed-off-by: Cédric Le Goater <clg@kaod.org>
 > ---
->   replay/replay.c | 2 +-
->   system/vl.c     | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/replay/replay.c b/replay/replay.c
-> index 3fd241a4fc..a2c576c16e 100644
-> --- a/replay/replay.c
-> +++ b/replay/replay.c
-> @@ -511,7 +511,7 @@ void replay_add_blocker(const char *feature)
->   {
->       Error *reason = NULL;
->   
-> -    error_setg(&reason, "Record/replay feature is not supported for '%s'",
-> +    error_setg(&reason, "Record/replay is not supported with %s",
->                  feature);
->       replay_blockers = g_slist_prepend(replay_blockers, reason);
->   }
-> diff --git a/system/vl.c b/system/vl.c
-> index e480afd7a0..cc03a17c09 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -1932,7 +1932,7 @@ static void qemu_apply_machine_options(QDict *qdict)
->       }
->   
->       if (current_machine->smp.cpus > 1) {
-> -        replay_add_blocker("smp");
-> +        replay_add_blocker("multiple CPUs");
->       }
->   }
->   
-
+>   include/hw/arm/aspeed_soc.h | 2 --
+>   hw/arm/aspeed.c             | 4 +++-
+>   hw/arm/aspeed_ast2400.c     | 4 ++--
+>   hw/arm/aspeed_ast2600.c     | 2 +-
+>   4 files changed, 6 insertions(+), 6 deletions(-)
 
