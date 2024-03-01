@@ -4,83 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8E42C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 15:56:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACA94C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 15:57:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg5Ew-0002ko-B4; Fri, 01 Mar 2024 10:56:03 -0500
+	id 1rg5GD-0003bj-Os; Fri, 01 Mar 2024 10:57:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rg5Eq-0002iJ-5j
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 10:55:56 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rg5Em-0006sc-3a
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 10:55:55 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-412c780464dso6304895e9.0
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 07:55:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709308549; x=1709913349; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=iGjfd67xLecNptvIrHUYbWQz/e0weR4wRxQOimbIicQ=;
- b=SA8uJb9oU1aiKeN9HzfmR8+BL6au5r8F8zJ+JZ0ImelzbJqFKv8lVyrb0aiZmmhjAT
- hDaOGJpv26yJ6hmW2hbPEDg4bln1MZN+qU0QEvmyh1KEIkBvCFR2l5M8ZeNV365fglYg
- 2fhvSFzkNXxEvI99/Br3RaFEktIJLnnezx3lA3O5IrRa8/cU5aoUjpzdTvhpfflikGL/
- zZZiUmMPiYntP4aHqF4kMcTkd9F3M2TMKcdYW472VxZpI01Ra8d7tk0medpTde4qVPKw
- O0pNsDtgk9eKMHWmuUswLlvrN79JsfEGyH2lDkvaBKyBtJSjVoHKAM+j4/1OiVCOrjit
- BW+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709308549; x=1709913349;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iGjfd67xLecNptvIrHUYbWQz/e0weR4wRxQOimbIicQ=;
- b=iM39qdH3ttFcvFX0pM3lmhO3G484sIv0oTE88kfqGqHiZj5qWz0r+G4fHMsx3xJCbs
- NCOhi/tSqB0TdJ107Gw8XZP5d2FMqGj/g255gbP9uAO067OktFHflmkL9xTT4gKJzErE
- N8t3lvXES8jX4X1Ec1Llz45GCidssKjJ98ngZijC4Upa98sRhJ+AmgsZjwRYjb6pGC6K
- CzfOBli9wdPePTSN793E7Rt4vj05z1/d17fAVBFY+S6fUgJMyJIGTeHs5L5aDVMCiCM4
- 2Nyzg6uk2coy08sSCPkB9IkzcybPvD0UmF27v4oAZQFtjKh9X2tbF5vB4lfhu8h5pb+h
- AQ4Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU6r41NupScNApurFVc4QuHyM5Q86MuDEONYlcAhaOl8bfa/dj73xzr9BFI/n+IM6t38ydqEW7pysmpl3/ofkgdyHvL1v4=
-X-Gm-Message-State: AOJu0Yxjoz8Z7cbIbPQ4zHNIyW2Fp9Bhk9dscvBB/RXdMmpia5HjdsXe
- F7xKDAZ7tqrmIddH8wcfaI8E8rYwRuUaLWIUsaTB6UaY9M3+M/QMA8RI8NREVFzflsZYjGTlvxS
- uWbs=
-X-Google-Smtp-Source: AGHT+IEfE3TUlqi8tVeVtr4X2uory3i5fyUUkqLHJ2iix+3vJG++p/du9Vs37HXgviMC5NtnNULynA==
-X-Received: by 2002:a05:600c:474a:b0:412:bf52:9ac2 with SMTP id
- w10-20020a05600c474a00b00412bf529ac2mr1852740wmo.14.1709308549583; 
- Fri, 01 Mar 2024 07:55:49 -0800 (PST)
-Received: from [192.168.193.175] (232.red-88-28-18.dynamicip.rima-tde.net.
- [88.28.18.232]) by smtp.gmail.com with ESMTPSA id
- 26-20020a05600c021a00b004128c73beffsm8797363wmi.34.2024.03.01.07.55.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 01 Mar 2024 07:55:49 -0800 (PST)
-Message-ID: <e78d9f52-e5d6-4039-a776-f2391afe0799@linaro.org>
-Date: Fri, 1 Mar 2024 16:55:46 +0100
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rg5GB-0003bG-Ul; Fri, 01 Mar 2024 10:57:20 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rg5G9-00073V-VL; Fri, 01 Mar 2024 10:57:19 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 6EAFC52309;
+ Fri,  1 Mar 2024 18:57:46 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3C1F58D5CC;
+ Fri,  1 Mar 2024 18:57:06 +0300 (MSK)
+Message-ID: <37256c80-5209-4e56-8bc2-28ee59ec42f1@tls.msk.ru>
+Date: Fri, 1 Mar 2024 18:57:06 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] replay: Improve error messages about configuration
- conflicts
+Subject: Re: [PATCH v2 1/6] libqos/virtio.c: init all elems in
+ qvring_indirect_desc_setup()
 Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: pavel.dovgaluk@ispras.ru, pbonzini@redhat.com, qemu-trivial@nongnu.org
-References: <20240301120641.864047-1-armbru@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240301120641.864047-1-armbru@redhat.com>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ thuth@redhat.com, lvivier@redhat.com, pbonzini@redhat.com
+References: <20240217192607.32565-1-dbarboza@ventanamicro.com>
+ <20240217192607.32565-2-dbarboza@ventanamicro.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240217192607.32565-2-dbarboza@ventanamicro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,25 +88,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/3/24 13:06, Markus Armbruster wrote:
-> Improve
-> 
->     Record/replay feature is not supported for '-rtc base=localtime'
->     Record/replay feature is not supported for 'smp'
->     Record/replay feature is not supported for '-snapshot'
-> 
-> to
-> 
->     Record/replay is not supported with -rtc base=localtime
->     Record/replay is not supported with multiple CPUs
->     Record/replay is not supported with -snapshot
-> 
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> ---
->   replay/replay.c | 2 +-
->   system/vl.c     | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
+17.02.2024 22:26, Daniel Henrique Barboza:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> diff --git a/tests/qtest/libqos/virtio.c b/tests/qtest/libqos/virtio.c
+> index 410513225f..4f39124eba 100644
+> --- a/tests/qtest/libqos/virtio.c
+> +++ b/tests/qtest/libqos/virtio.c
+> @@ -280,14 +280,27 @@ QVRingIndirectDesc *qvring_indirect_desc_setup(QTestState *qs, QVirtioDevice *d,
+>       indirect->elem = elem;
+>       indirect->desc = guest_alloc(alloc, sizeof(struct vring_desc) * elem);
+>   
+> -    for (i = 0; i < elem - 1; ++i) {
+> +    for (i = 0; i < elem; ++i) {
+>           /* indirect->desc[i].addr */
+>           qvirtio_writeq(d, qs, indirect->desc + (16 * i), 0);
+> -        /* indirect->desc[i].flags */
+> -        qvirtio_writew(d, qs, indirect->desc + (16 * i) + 12,
+> -                       VRING_DESC_F_NEXT);
+> -        /* indirect->desc[i].next */
+> -        qvirtio_writew(d, qs, indirect->desc + (16 * i) + 14, i + 1);
+> +
+> +        /*
+> +         * If it's not the last element of the ring, set
+> +         * the chain (VRING_DESC_F_NEXT) flag and
+> +         * desc->next. Clear the last element - there's
+> +         * no guarantee that guest_alloc() will do it.
+> +         */
+> +        if (i != elem - 1) {
+> +            /* indirect->desc[i].flags */
+> +            qvirtio_writew(d, qs, indirect->desc + (16 * i) + 12,
+> +                           VRING_DESC_F_NEXT);
+> +
+> +            /* indirect->desc[i].next */
+> +            qvirtio_writew(d, qs, indirect->desc + (16 * i) + 14, i + 1);
+> +        } else {
+> +            qvirtio_writew(d, qs, indirect->desc + (16 * i) + 12, 0);
+> +            qvirtio_writew(d, qs, indirect->desc + (16 * i) + 14, 0);
+> +        }
+>       }
 
+In my view it would be cleaner to add 2 extra function calls after this
+loop for the i==elem-1 case:
+
+     for (i = 0; i < elem - 1; ++i) {
+         /* indirect->desc[i].addr */
+         qvirtio_writeq(d, qs, indirect->desc + (16 * i), 0);
+         /* indirect->desc[i].flags */
+         qvirtio_writew(d, qs, indirect->desc + (16 * i) + 12,
+                        VRING_DESC_F_NEXT);
+         /* indirect->desc[i].next */
+         qvirtio_writew(d, qs, indirect->desc + (16 * i) + 14, i + 1);
+
+     }
+
+      /* clear last element */
+      qvirtio_writeq(d, qs, indirect->desc + (16 * i), 0);
+      qvirtio_writew(d, qs, indirect->desc + (16 * i) + 12, 0);
+      qvirtio_writew(d, qs, indirect->desc + (16 * i) + 14, 0);
+
+
+FWIW, -- it's too late to change it now I think.
+
+/mjt
 
