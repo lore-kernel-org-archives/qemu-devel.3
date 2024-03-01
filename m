@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03058C54E5A
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Mar 2024 04:13:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59F07C54E5C
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Mar 2024 04:13:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgGjG-0005KW-Kb; Fri, 01 Mar 2024 23:12:06 -0500
+	id 1rgGjF-0005KG-Qe; Fri, 01 Mar 2024 23:12:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgC4G-0000PZ-51
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:13:28 -0500
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1rgC1R-0003kp-3f
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:10:35 -0500
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgC41-0006aj-61
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:13:27 -0500
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-6e4560664b5so2239765b3a.1
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 15:13:12 -0800 (PST)
+ id 1rgC1O-0005ee-4Y
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:10:32 -0500
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-6e4d48a5823so2408735b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 15:10:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709334791; x=1709939591; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+UbEHBMhoq2U4plWax72+xkfgutFWy+FXSOt1ZDpIEI=;
- b=nKdf4BnxKhWErMqw3zVcC/Dx+SfxkLTUE1rqodijGLOoIM+yb7VF5k/TlS5CZ8Y0nm
- R4LBocnptZbSVXfnqCUatb0wUmr639aAfEvUC3nHG2c3n1YPPMhgys5glktVFrEFdtBt
- XTQRZCKyxzegXZETfnjbEuQqtnklUvBwLEwDeEFs11ImYrTniWM+ZEtgQpN9+SI5L3tp
- Dx2vIXKYKW4LGmr3URYb5EIFo2J2k5WqE6BKYUW4r4Y3uw/OhQsMUHSve9/gbisWTfHk
- Q8QzNf4VdCiHi6s+U08kQSYQZE1DRudSvt4iX4guHhf261oAziWP4kw5QjvSBzhp/kTL
- KNlw==
+ d=linaro.org; s=google; t=1709334627; x=1709939427; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2NxBdbDmPXvqTBcYichP7qzlXUZvSD7xiNQMCyXrUoI=;
+ b=qs2Y+WFIzwetA+h6Yrssb791wKEbmV4a8K2QmdMcX+tsF0MnByiW3H0a3NkFijhrPj
+ 6LF3IlM3VzQRvAtnpwrdMnmALXHIBl57oV3rfsEpxNCqOH+dGX5QGfmjZ1boUWwBJkeK
+ aAGws+PGWtyBkk3x70XLoTUnXSlsISD9YmpSr27peGYK0KaTE1tfU75D7+jfzs3RFIEc
+ BQmf11UKmuFFYdM5JiJPnJuNm1D2YGRccBNoGRF3MRgb7czIAnWP0XSnGmORbBOUhqEv
+ FBVeRU89t7t5Iz1JvltDPfXIFzHnVB6cYpNweRM38v0C0eVE7c8fzKeg8oq8FBI03q9I
+ mw6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709334791; x=1709939591;
- h=content-transfer-encoding:in-reply-to:references:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+UbEHBMhoq2U4plWax72+xkfgutFWy+FXSOt1ZDpIEI=;
- b=vsg7ngGdnPZzIAYJn5N3/0X4UjcOBwkzisAuxjcJRbgj4vsFmjxrAaMg104FO1WSsR
- ScpCtkVGdbljY44mTnVju3xsMZMstMCVJRMntrusrlLcA/RYnStvueK7rXnRqIq+VaVd
- KTtTqv5OILeXzduR2q+kKzJCoyBetS+tslbuYz4rr6HDguH481Dhbncp0ccjLvnZUEcm
- ij7Z2780TB6Jkh8OddrG3FTKzEn6avSViyVaMaOVtkEZiH+99k0pLHb2FzN307uPVzET
- R/33/F2LCyaweLi5OmKoRA//XXLgLa+CEEJSCJcphrq6Z9icrIimXtST1T0jorsb0H0V
- OK0w==
-X-Gm-Message-State: AOJu0YzgIx9e3wN1ePMaWIlXQjRq2C5B+GUp+FF2ZrAaJ7pvTelv1e4X
- gQZUEkSj8G90A4iMaEJhihN1TWgFUjPdFSPZ6hlxuVfJKqtZPPT86263iitThonjaefbe4ohqSE
- g
-X-Google-Smtp-Source: AGHT+IElUDl+3hx3pTL9c0yyuBbhCla93erESnMkMcJFfqmSn7aift5bvzzwy2grRXw6vuG5zfdFLA==
-X-Received: by 2002:a05:6a20:244a:b0:1a1:2793:a386 with SMTP id
- t10-20020a056a20244a00b001a12793a386mr3945164pzc.19.1709334791155; 
- Fri, 01 Mar 2024 15:13:11 -0800 (PST)
-Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
- [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- r7-20020aa79887000000b006e4e616e520sm3448946pfl.72.2024.03.01.15.13.10
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 01 Mar 2024 15:13:10 -0800 (PST)
-Message-ID: <6c613f56-6011-41be-830c-70208e7079dc@linaro.org>
-Date: Fri, 1 Mar 2024 13:13:07 -1000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PULL 00/60] linux-user and tcg patch queue
-Content-Language: en-US
+ d=1e100.net; s=20230601; t=1709334627; x=1709939427;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2NxBdbDmPXvqTBcYichP7qzlXUZvSD7xiNQMCyXrUoI=;
+ b=sAAW5Sqewz/CcpPqM/LVu0iMVzjQ3hd2rkS7/+0MLk14xYg2Lntr4PqfDMTJjBKzdI
+ 8Wjyusg/onm77SdlJSqwNiOwCGdNALe+ljQd+SqGixwflMMjpYttbyc0NS2UAjlZ/gXb
+ dmEcdnfsbDv8LlaXfYc/+ROgKGkZSePRCOGs+pIFJGacrVE5GqSJnimGyrejOwq0pP0k
+ r9t6iWoo8pajtii+UukZEByLwMpJdmXTDj/I1lvH11xQPQvgu2pH2f88KyZ0j+t0xbgQ
+ jWWc02oXE4chSpKVP+B4EVkOo33lLaeDTDkLuT0VtQHuwnwILWMtYEPqz/HSHDbTITKu
+ DFkQ==
+X-Gm-Message-State: AOJu0YzOhKwbsfC7f7uhCPkipwEGg8i6P1rkaywo0/QsbJKr3kkknz0U
+ biwxcu6aXX3ESuZOreBvZNQBOiJc05SPjnhKELa1pY6g4Y10Hq/eCm9MKy7gZR0e3FMzvtdsc/6
+ N
+X-Google-Smtp-Source: AGHT+IEAmN2zFo7V+85qKysxgFcPc9pA035hiyx3atYJi4YG0flx6TSM61qZKCItOnaYQCBQa2NOgw==
+X-Received: by 2002:a05:6a20:3404:b0:1a0:ed31:d5a6 with SMTP id
+ i4-20020a056a20340400b001a0ed31d5a6mr2365281pzd.56.1709334627407; 
+ Fri, 01 Mar 2024 15:10:27 -0800 (PST)
+Received: from stoup.. (098-147-055-211.res.spectrum.com. [98.147.55.211])
+ by smtp.gmail.com with ESMTPSA id
+ c2-20020a634e02000000b005e438fe702dsm3449407pgb.65.2024.03.01.15.10.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 01 Mar 2024 15:10:27 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-References: <20240301230619.661008-1-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Helge Deller <deller@gmx.de>
+Subject: [PATCH 44/60] tests/tcg: Remove run-test-mmap-*
+Date: Fri,  1 Mar 2024 13:06:03 -1000
+Message-Id: <20240301230619.661008-45-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240301230619.661008-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+References: <20240301230619.661008-1-richard.henderson@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,153 +95,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Arg.  PULL.
+These tests are confused, because -p does not change
+the guest page size, but the host page size.
 
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Acked-by: Helge Deller <deller@gmx.de>
+Message-Id: <20240102015808.132373-25-richard.henderson@linaro.org>
+---
+ tests/tcg/alpha/Makefile.target     |  3 ---
+ tests/tcg/arm/Makefile.target       |  3 ---
+ tests/tcg/hppa/Makefile.target      |  3 ---
+ tests/tcg/i386/Makefile.target      |  3 ---
+ tests/tcg/m68k/Makefile.target      |  3 ---
+ tests/tcg/multiarch/Makefile.target |  9 ---------
+ tests/tcg/ppc/Makefile.target       | 12 ------------
+ tests/tcg/sh4/Makefile.target       |  3 ---
+ tests/tcg/sparc64/Makefile.target   |  6 ------
+ 9 files changed, 45 deletions(-)
+ delete mode 100644 tests/tcg/ppc/Makefile.target
+ delete mode 100644 tests/tcg/sparc64/Makefile.target
 
-On 3/1/24 13:05, Richard Henderson wrote:
-> The following changes since commit c0c6a0e3528b88aaad0b9d333e295707a195587b:
-> 
->    Merge tag 'migration-next-pull-request' of https://gitlab.com/peterx/qemu into staging (2024-02-28 17:27:10 +0000)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20240301
-> 
-> for you to fetch changes up to 04dadd22aed00e5a2955ab078d7edd676812cf41:
-> 
->    tests/tcg: Check that shmat() does not break /proc/self/maps (2024-03-01 08:09:55 -1000)
-> 
-> ----------------------------------------------------------------
-> linux-user: Rewrite elf coredump
-> tcg/aarch64: Apple does not align __int128_t in even registers
-> accel/tcg: Fixes for page tables in mmio memory
-> linux-user: Remove qemu_host_page_{size,mask}, HOST_PAGE_ALIGN
-> migration: Remove qemu_host_page_size
-> hw/tpm: Remove qemu_host_page_size
-> softmmu: Remove qemu_host_page_{size,mask}, HOST_PAGE_ALIGN
-> linux-user: Split and reorganize target_mmap.
-> *-user: Deprecate and disable -p pagesize
-> linux-user: Allow TARGET_PAGE_BITS_VARY
-> target/alpha: Enable TARGET_PAGE_BITS_VARY for user-only
-> target/arm: Enable TARGET_PAGE_BITS_VARY for AArch64 user-only
-> target/ppc: Enable TARGET_PAGE_BITS_VARY for user-only
-> linux-user: Remove pgb_dynamic alignment assertion
-> tcg/optimize: fix uninitialized variable
-> linux-user: Rewrite shmat
-> 
-> ----------------------------------------------------------------
-> Ilya Leoshkevich (1):
->        tests/tcg: Check that shmat() does not break /proc/self/maps
-> 
-> Jonathan Cameron (1):
->        tcg: Avoid double lock if page tables happen to be in mmio memory.
-> 
-> Paolo Bonzini (1):
->        tcg/optimize: fix uninitialized variable
-> 
-> Peter Maydell (1):
->        accel/tcg: Set can_do_io at at start of lookup_tb_ptr helper
-> 
-> Richard Henderson (56):
->        linux-user/elfload: Disable core dump if getrlimit fails
->        linux-user/elfload: Merge init_note_info and fill_note_info
->        linux-user/elfload: Tidy fill_note_info and struct elf_note_info
->        linux-user/elfload: Stack allocate struct mm_struct
->        linux-user/elfload: Latch errno before cleanup in elf_core_dump
->        linux-user/elfload: Open core file after vma_init
->        linux-user/elfload: Truncate core file on open
->        linux-user/elfload: Lock cpu list and mmap during elf_core_dump
->        linux-user/elfload: Size corefile before opening
->        linux-user/elfload: Write corefile elf header in one block
->        linux-user/elfload: Write process memory to core file in larger chunks
->        linux-user/elfload: Simplify vma_dump_size
->        linux-user/elfload: Rely on walk_memory_regions for vmas
->        linux-user/elfload: Unprotect regions before core dump
->        tcg/aarch64: Apple does not align __int128_t in even registers
->        accel/tcg: Remove qemu_host_page_size from page_protect/page_unprotect
->        linux-user: Adjust SVr4 NULL page mapping
->        linux-user: Remove qemu_host_page_{size, mask} in probe_guest_base
->        linux-user: Remove qemu_host_page_size from create_elf_tables
->        linux-user/hppa: Simplify init_guest_commpage
->        linux-user/nios2: Remove qemu_host_page_size from init_guest_commpage
->        linux-user/arm: Remove qemu_host_page_size from init_guest_commpage
->        linux-user: Remove qemu_host_page_size from elf_core_dump
->        linux-user: Remove qemu_host_page_{size, mask} from mmap.c
->        linux-user: Remove REAL_HOST_PAGE_ALIGN from mmap.c
->        linux-user: Remove HOST_PAGE_ALIGN from mmap.c
->        migration: Remove qemu_host_page_size
->        hw/tpm: Remove HOST_PAGE_ALIGN from tpm_ppi_init
->        softmmu/physmem: Remove qemu_host_page_size
->        softmmu/physmem: Remove HOST_PAGE_ALIGN
->        linux-user: Remove qemu_host_page_size from main
->        linux-user: Split out target_mmap__locked
->        linux-user: Move some mmap checks outside the lock
->        linux-user: Fix sub-host-page mmap
->        linux-user: Split out mmap_end
->        linux-user: Do early mmap placement only for reserved_va
->        linux-user: Split out do_munmap
->        linux-user: Use do_munmap for target_mmap failure
->        linux-user: Split out mmap_h_eq_g
->        linux-user: Split out mmap_h_lt_g
->        linux-user: Split out mmap_h_gt_g
->        tests/tcg: Remove run-test-mmap-*
->        tests/tcg: Extend file in linux-madvise.c
->        *-user: Deprecate and disable -p pagesize
->        cpu: Remove page_size_init
->        accel/tcg: Disconnect TargetPageDataNode from page size
->        linux-user: Allow TARGET_PAGE_BITS_VARY
->        target/arm: Enable TARGET_PAGE_BITS_VARY for AArch64 user-only
->        linux-user: Bound mmap_min_addr by host page size
->        target/ppc: Enable TARGET_PAGE_BITS_VARY for user-only
->        target/alpha: Enable TARGET_PAGE_BITS_VARY for user-only
->        linux-user: Remove pgb_dynamic alignment assertion
->        linux-user/x86_64: Handle the vsyscall page in open_self_maps_{2,4}
->        linux-user/loongarch64: Remove TARGET_FORCE_SHMLBA
->        linux-user: Add strace for shmat
->        linux-user: Rewrite target_shmat
-> 
->   docs/about/deprecated.rst                    |  10 +
->   docs/user/main.rst                           |   3 -
->   bsd-user/qemu.h                              |   7 +
->   include/exec/cpu-common.h                    |   7 -
->   include/hw/core/cpu.h                        |   2 -
->   linux-user/loongarch64/target_syscall.h      |   7 -
->   target/alpha/cpu-param.h                     |  16 +-
->   target/arm/cpu-param.h                       |   6 +-
->   target/ppc/cpu-param.h                       |   9 +-
->   tcg/aarch64/tcg-target.h                     |   6 +-
->   accel/tcg/cpu-exec.c                         |   8 +
->   accel/tcg/cputlb.c                           |  34 +-
->   accel/tcg/translate-all.c                    |   1 -
->   accel/tcg/user-exec.c                        |  31 +-
->   bsd-user/main.c                              |  23 +-
->   cpu-target.c                                 |  16 -
->   hw/tpm/tpm_ppi.c                             |   6 +-
->   linux-user/elfload.c                         | 789 ++++++++--------------
->   linux-user/main.c                            |  34 +-
->   linux-user/mmap.c                            | 939 +++++++++++++++++----------
->   linux-user/strace.c                          |  24 +
->   linux-user/syscall.c                         |  16 +
->   migration/ram.c                              |  22 +-
->   system/physmem.c                             |  17 +-
->   system/vl.c                                  |   1 -
->   target/arm/cpu.c                             |  51 +-
->   tcg/optimize.c                               |   3 +-
->   tests/tcg/multiarch/linux/linux-madvise.c    |   2 +
->   tests/tcg/multiarch/linux/linux-shmat-maps.c |  55 ++
->   linux-user/strace.list                       |   2 +-
->   tests/tcg/alpha/Makefile.target              |   3 -
->   tests/tcg/arm/Makefile.target                |   3 -
->   tests/tcg/hppa/Makefile.target               |   3 -
->   tests/tcg/i386/Makefile.target               |   3 -
->   tests/tcg/m68k/Makefile.target               |   3 -
->   tests/tcg/multiarch/Makefile.target          |   9 -
->   tests/tcg/ppc/Makefile.target                |  12 -
->   tests/tcg/sh4/Makefile.target                |   3 -
->   tests/tcg/sparc64/Makefile.target            |   6 -
->   39 files changed, 1156 insertions(+), 1036 deletions(-)
->   create mode 100644 tests/tcg/multiarch/linux/linux-shmat-maps.c
->   delete mode 100644 tests/tcg/ppc/Makefile.target
->   delete mode 100644 tests/tcg/sparc64/Makefile.target
+diff --git a/tests/tcg/alpha/Makefile.target b/tests/tcg/alpha/Makefile.target
+index b94500a7d9..fdd7ddf64e 100644
+--- a/tests/tcg/alpha/Makefile.target
++++ b/tests/tcg/alpha/Makefile.target
+@@ -13,6 +13,3 @@ test-cmov: test-cond.c
+ 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
+ 
+ run-test-cmov: test-cmov
+-
+-# On Alpha Linux only supports 8k pages
+-EXTRA_RUNS+=run-test-mmap-8192
+diff --git a/tests/tcg/arm/Makefile.target b/tests/tcg/arm/Makefile.target
+index 3473f4619e..0a1965fce7 100644
+--- a/tests/tcg/arm/Makefile.target
++++ b/tests/tcg/arm/Makefile.target
+@@ -79,6 +79,3 @@ sha512-vector: sha512.c
+ ARM_TESTS += sha512-vector
+ 
+ TESTS += $(ARM_TESTS)
+-
+-# On ARM Linux only supports 4k pages
+-EXTRA_RUNS+=run-test-mmap-4096
+diff --git a/tests/tcg/hppa/Makefile.target b/tests/tcg/hppa/Makefile.target
+index cdd0d572a7..ea5ae2186d 100644
+--- a/tests/tcg/hppa/Makefile.target
++++ b/tests/tcg/hppa/Makefile.target
+@@ -2,9 +2,6 @@
+ #
+ # HPPA specific tweaks - specifically masking out broken tests
+ 
+-# On parisc Linux supports 4K/16K/64K (but currently only 4k works)
+-EXTRA_RUNS+=run-test-mmap-4096 # run-test-mmap-16384 run-test-mmap-65536
+-
+ # This triggers failures for hppa-linux about 1% of the time
+ # HPPA is the odd target that can't use the sigtramp page;
+ # it requires the full vdso with dwarf2 unwind info.
+diff --git a/tests/tcg/i386/Makefile.target b/tests/tcg/i386/Makefile.target
+index 9906f9e116..bbe2c44b2a 100644
+--- a/tests/tcg/i386/Makefile.target
++++ b/tests/tcg/i386/Makefile.target
+@@ -71,9 +71,6 @@ endif
+ I386_TESTS:=$(filter-out $(SKIP_I386_TESTS), $(ALL_X86_TESTS))
+ TESTS=$(MULTIARCH_TESTS) $(I386_TESTS)
+ 
+-# On i386 and x86_64 Linux only supports 4k pages (large pages are a different hack)
+-EXTRA_RUNS+=run-test-mmap-4096
+-
+ sha512-sse: CFLAGS=-msse4.1 -O3
+ sha512-sse: sha512.c
+ 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
+diff --git a/tests/tcg/m68k/Makefile.target b/tests/tcg/m68k/Makefile.target
+index 6ff214e60a..33f7b1b127 100644
+--- a/tests/tcg/m68k/Makefile.target
++++ b/tests/tcg/m68k/Makefile.target
+@@ -5,6 +5,3 @@
+ 
+ VPATH += $(SRC_PATH)/tests/tcg/m68k
+ TESTS += trap denormal
+-
+-# On m68k Linux supports 4k and 8k pages (but 8k is currently broken)
+-EXTRA_RUNS+=run-test-mmap-4096 # run-test-mmap-8192
+diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
+index e10951a801..f11f3b084d 100644
+--- a/tests/tcg/multiarch/Makefile.target
++++ b/tests/tcg/multiarch/Makefile.target
+@@ -51,18 +51,9 @@ run-plugin-vma-pthread-with-%: vma-pthread
+ 	$(call skip-test, $<, "flaky on CI?")
+ endif
+ 
+-# We define the runner for test-mmap after the individual
+-# architectures have defined their supported pages sizes. If no
+-# additional page sizes are defined we only run the default test.
+-
+-# default case (host page size)
+ run-test-mmap: test-mmap
+ 	$(call run-test, test-mmap, $(QEMU) $<, $< (default))
+ 
+-# additional page sizes (defined by each architecture adding to EXTRA_RUNS)
+-run-test-mmap-%: test-mmap
+-	$(call run-test, test-mmap-$*, $(QEMU) -p $* $<, $< ($* byte pages))
+-
+ ifneq ($(GDB),)
+ GDB_SCRIPT=$(SRC_PATH)/tests/guest-debug/run-test.py
+ 
+diff --git a/tests/tcg/ppc/Makefile.target b/tests/tcg/ppc/Makefile.target
+deleted file mode 100644
+index f5e08c7376..0000000000
+--- a/tests/tcg/ppc/Makefile.target
++++ /dev/null
+@@ -1,12 +0,0 @@
+-# -*- Mode: makefile -*-
+-#
+-# PPC - included from tests/tcg/Makefile
+-#
+-
+-ifneq (,$(findstring 64,$(TARGET_NAME)))
+-# On PPC64 Linux can be configured with 4k (default) or 64k pages (currently broken)
+-EXTRA_RUNS+=run-test-mmap-4096 #run-test-mmap-65536
+-else
+-# On PPC32 Linux supports 4K/16K/64K/256K (but currently only 4k works)
+-EXTRA_RUNS+=run-test-mmap-4096 #run-test-mmap-16384 run-test-mmap-65536 run-test-mmap-262144
+-endif
+diff --git a/tests/tcg/sh4/Makefile.target b/tests/tcg/sh4/Makefile.target
+index 47c39a44b6..16eaa850a8 100644
+--- a/tests/tcg/sh4/Makefile.target
++++ b/tests/tcg/sh4/Makefile.target
+@@ -3,9 +3,6 @@
+ # SuperH specific tweaks
+ #
+ 
+-# On sh Linux supports 4k, 8k, 16k and 64k pages (but only 4k currently works)
+-EXTRA_RUNS+=run-test-mmap-4096 # run-test-mmap-8192 run-test-mmap-16384 run-test-mmap-65536
+-
+ # This triggers failures for sh4-linux about 10% of the time.
+ # Random SIGSEGV at unpredictable guest address, cause unknown.
+ run-signals: signals
+diff --git a/tests/tcg/sparc64/Makefile.target b/tests/tcg/sparc64/Makefile.target
+deleted file mode 100644
+index 408dace783..0000000000
+--- a/tests/tcg/sparc64/Makefile.target
++++ /dev/null
+@@ -1,6 +0,0 @@
+-# -*- Mode: makefile -*-
+-#
+-# sparc specific tweaks
+-
+-# On Sparc64 Linux support 8k pages
+-EXTRA_RUNS+=run-test-mmap-8192
+-- 
+2.34.1
 
 
