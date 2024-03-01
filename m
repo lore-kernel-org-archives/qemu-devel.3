@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 402D2C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 09:41:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68AE3C54E41
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 09:41:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfzLy-0003Fo-Ar; Fri, 01 Mar 2024 04:38:54 -0500
+	id 1rfzMK-0003K5-Tv; Fri, 01 Mar 2024 04:39:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1rfzLu-0003Bh-Tb
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:38:50 -0500
+ id 1rfzMB-0003Hy-AM
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:39:11 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1rfzLq-0006NZ-Q7
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:38:50 -0500
+ (envelope-from <gaosong@loongson.cn>) id 1rfzM5-0006Op-Kc
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:39:07 -0500
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxWOgjouFlRj0TAA--.29240S3;
- Fri, 01 Mar 2024 17:38:43 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxOOgpouFlbD0TAA--.29209S3;
+ Fri, 01 Mar 2024 17:38:49 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8AxDBMfouFlyZxLAA--.4871S6; 
- Fri, 01 Mar 2024 17:38:43 +0800 (CST)
+ AQAAf8AxDBMfouFlyZxLAA--.4871S19; 
+ Fri, 01 Mar 2024 17:38:49 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, richard.henderson@linaro.org, philmd@linaro.org,
  maobibo@loongson.cn, zhaotianrui@loongson.cn, lixianglai@loongson.cn,
  imammedo@redhat.com, anisinha@redhat.com, mst@redhat.com
-Subject: [PATCH v5 04/17] hw/loongarch: Add init_cmdline
-Date: Fri,  1 Mar 2024 17:38:25 +0800
-Message-Id: <20240301093839.663947-5-gaosong@loongson.cn>
+Subject: [PATCH v5 17/17] hw/loongarch: Add cells missing from rtc node
+Date: Fri,  1 Mar 2024 17:38:38 +0800
+Message-Id: <20240301093839.663947-18-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20240301093839.663947-1-gaosong@loongson.cn>
 References: <20240301093839.663947-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8AxDBMfouFlyZxLAA--.4871S6
+X-CM-TRANSID: AQAAf8AxDBMfouFlyZxLAA--.4871S19
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,87 +66,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add init_cmline and set boot_info->a0, a1
+rtc node need interrupts and interrupt-parent cells.
 
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- include/hw/loongarch/virt.h |  2 ++
- target/loongarch/cpu.h      |  2 ++
- hw/loongarch/boot.c         | 19 +++++++++++++++++++
- 3 files changed, 23 insertions(+)
+ hw/loongarch/virt.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-index 6e6a5e487a..94ff15ad66 100644
---- a/include/hw/loongarch/virt.h
-+++ b/include/hw/loongarch/virt.h
-@@ -31,6 +31,8 @@
- #define VIRT_GED_MEM_ADDR       (VIRT_GED_EVT_ADDR + ACPI_GED_EVT_SEL_LEN)
- #define VIRT_GED_REG_ADDR       (VIRT_GED_MEM_ADDR + MEMORY_HOTPLUG_IO_LEN)
- 
-+#define COMMAND_LINE_SIZE       512
-+
- struct LoongArchMachineState {
-     /*< private >*/
-     MachineState parent_obj;
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index ec37579fd6..ce02ef3979 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -361,6 +361,8 @@ typedef struct CPUArchState {
-     uint32_t mp_state;
-     /* Store ipistate to access from this struct */
-     DeviceState *ipistate;
-+
-+    struct loongarch_boot_info *boot_info;
- #endif
- } CPULoongArchState;
- 
-diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-index 2f398260af..897d4636b6 100644
---- a/hw/loongarch/boot.c
-+++ b/hw/loongarch/boot.c
-@@ -62,6 +62,16 @@ static const unsigned int slave_boot_code[] = {
-     0x4c000020,   /* jirl       $r0,$r1,0           */
- };
- 
-+static void init_cmdline(struct loongarch_boot_info *info, void *p, void *start)
-+{
-+    hwaddr cmdline_addr = (hwaddr)p - (hwaddr)start;
-+
-+    info->a0 = 1;
-+    info->a1 = cmdline_addr;
-+
-+    memcpy(p, info->kernel_cmdline, COMMAND_LINE_SIZE);
-+}
-+
- static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
- {
-     return addr & MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
-@@ -121,6 +131,10 @@ static void reset_load_elf(void *opaque)
- 
-     cpu_reset(CPU(cpu));
-     if (env->load_elf) {
-+	if (cpu == LOONGARCH_CPU(first_cpu)) {
-+            env->gpr[4] = env->boot_info->a0;
-+            env->gpr[5] = env->boot_info->a1;
-+        }
-         cpu_set_pc(CPU(cpu), env->elf_address);
-     }
- }
-@@ -160,8 +174,13 @@ static void loongarch_firmware_boot(LoongArchMachineState *lams,
- 
- static void init_boot_rom(struct loongarch_boot_info *info, void *p)
- {
-+    void *start = p;
-+
-     memcpy(p, &slave_boot_code, sizeof(slave_boot_code));
-     p += sizeof(slave_boot_code);
-+
-+    init_cmdline(info, p, start);
-+    p += COMMAND_LINE_SIZE;
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 5d92b2f1aa..6810f78ebd 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -195,7 +195,8 @@ static void fdt_add_flash_node(LoongArchMachineState *lams)
+     g_free(nodename);
  }
  
- static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
+-static void fdt_add_rtc_node(LoongArchMachineState *lams)
++static void fdt_add_rtc_node(LoongArchMachineState *lams,
++                             uint32_t *pch_pic_phandle)
+ {
+     char *nodename;
+     hwaddr base = VIRT_RTC_REG_BASE;
+@@ -204,8 +205,13 @@ static void fdt_add_rtc_node(LoongArchMachineState *lams)
+ 
+     nodename = g_strdup_printf("/rtc@%" PRIx64, base);
+     qemu_fdt_add_subnode(ms->fdt, nodename);
+-    qemu_fdt_setprop_string(ms->fdt, nodename, "compatible", "loongson,ls7a-rtc");
++    qemu_fdt_setprop_string(ms->fdt, nodename, "compatible",
++                            "loongson,ls7a-rtc");
+     qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg", 2, base, 2, size);
++    qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts",
++                           VIRT_RTC_IRQ - VIRT_GSI_BASE , 0x4);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
++                          *pch_pic_phandle);
+     g_free(nodename);
+ }
+ 
+@@ -611,7 +617,7 @@ static void loongarch_devices_init(DeviceState *pch_pic,
+     sysbus_create_simple("ls7a_rtc", VIRT_RTC_REG_BASE,
+                          qdev_get_gpio_in(pch_pic,
+                          VIRT_RTC_IRQ - VIRT_GSI_BASE));
+-    fdt_add_rtc_node(lams);
++    fdt_add_rtc_node(lams, pch_pic_phandle);
+ 
+     /* acpi ged */
+     lams->acpi_ged = create_acpi_ged(pch_pic, lams);
 -- 
 2.25.1
 
