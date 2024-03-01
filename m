@@ -4,63 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EABE0C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 09:16:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F9C9C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 09:39:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfyzP-0000NH-Ue; Fri, 01 Mar 2024 04:15:36 -0500
+	id 1rfzLw-0003DD-8b; Fri, 01 Mar 2024 04:38:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfyzN-0000Mz-Kg
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:15:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfyzL-0002HT-W5
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:15:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709284530;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=ShIyOijF5hDb5xUYMjV46WkJwgk4IDv/i3PR+jIa9ZU=;
- b=JkxjvTefvaJYlEEc75G+eye1HfQz6zrb67e+epXbm22JBMRjHCBnW7t766AOsK+zqNryyC
- beXfKY2btwV6JaPRgXbbe84K84jGH/xWkDlx6EfvDj0pZrm+3uE7SNKyHHDcveYMmryhVE
- N19RDad0/v9yEF8FgCPHkvlrpDD5v68=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-27-uaWFUDB4PteAADNMvSEd9w-1; Fri, 01 Mar 2024 04:15:29 -0500
-X-MC-Unique: uaWFUDB4PteAADNMvSEd9w-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1CE9986C043;
- Fri,  1 Mar 2024 09:15:29 +0000 (UTC)
-Received: from x1n.redhat.com (unknown [10.72.116.21])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 544A6492BC6;
- Fri,  1 Mar 2024 09:15:25 +0000 (UTC)
-From: peterx@redhat.com
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1rfzLu-0003BU-IZ
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:38:50 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1rfzLr-0006NQ-HJ
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:38:50 -0500
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8AxPOkgouFlOT0TAA--.38697S3;
+ Fri, 01 Mar 2024 17:38:40 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8AxDBMfouFlyZxLAA--.4871S2; 
+ Fri, 01 Mar 2024 17:38:39 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- peterx@redhat.com
-Subject: [PATCH] migration/multifd: Document two places for mapped-ram
-Date: Fri,  1 Mar 2024 17:15:24 +0800
-Message-ID: <20240301091524.39900-1-peterx@redhat.com>
+Cc: peter.maydell@linaro.org, richard.henderson@linaro.org, philmd@linaro.org,
+ maobibo@loongson.cn, zhaotianrui@loongson.cn, lixianglai@loongson.cn,
+ imammedo@redhat.com, anisinha@redhat.com, mst@redhat.com
+Subject: [PATCH v5 00/17] Add boot LoongArch elf kernel with FDT
+Date: Fri,  1 Mar 2024 17:38:21 +0800
+Message-Id: <20240301093839.663947-1-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+X-CM-TRANSID: AQAAf8AxDBMfouFlyZxLAA--.4871S2
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,62 +64,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+Hi, All
 
-Add two documentations for mapped-ram migration on two spots that may not
-be extremely clear.
+We already support boot efi kernel with bios, but not support boot elf kernel.
+This series adds boot elf kernel with FDT.
 
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
-Based-on: <20240229153017.2221-1-farosas@suse.de>
----
- migration/multifd.c | 12 ++++++++++++
- migration/ram.c     |  8 +++++++-
- 2 files changed, 19 insertions(+), 1 deletion(-)
+'LoongArch supports ACPI and FDT. The information that needs to be passed
+ to the kernel includes the memmap, the initrd, the command line, optionally
+ the ACPI/FDT tables, and so on'  see [1].
 
-diff --git a/migration/multifd.c b/migration/multifd.c
-index b4e5a9dfcc..2942395ce2 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -709,6 +709,18 @@ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
- {
-     if (p->c) {
-         migration_ioc_unregister_yank(p->c);
-+        /*
-+         * An explicitly close() on the channel here is normally not
-+         * required, but can be helpful for "file:" iochannels, where it
-+         * will include an fdatasync() to make sure the data is flushed to
-+         * the disk backend.
-+         *
-+         * The object_unref() cannot guarantee that because: (1) finalize()
-+         * of the iochannel is only triggered on the last reference, and
-+         * it's not guaranteed that we always hold the last refcount when
-+         * reaching here, and, (2) even if finalize() is invoked, it only
-+         * does a close(fd) without data flush.
-+         */
-         qio_channel_close(p->c, &error_abort);
-         object_unref(OBJECT(p->c));
-         p->c = NULL;
-diff --git a/migration/ram.c b/migration/ram.c
-index 1f1b5297cf..c79e3de521 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -4258,7 +4258,13 @@ static int ram_load_precopy(QEMUFile *f)
-         switch (flags & ~RAM_SAVE_FLAG_CONTINUE) {
-         case RAM_SAVE_FLAG_MEM_SIZE:
-             ret = parse_ramblocks(f, addr);
--
-+            /*
-+             * For mapped-ram migration (to a file) using multifd, we sync
-+             * once and for all here to make sure all tasks we queued to
-+             * multifd threads are completed, so that all the ramblocks
-+             * (including all the guest memory pages within) are fully
-+             * loaded after this sync returns.
-+             */
-             if (migrate_mapped_ram()) {
-                 multifd_recv_sync_main();
-             }
+Patch 2-8 : Create efi system table, and three efi configuration table
+            boot_memmap, initd, FDT.
+Patch 9-17 : Fixes FDT problems.
+
+Test:
+  - Start kernel
+    See [2] start_kernel.sh
+  - Start qcow2
+    See [2] start_qcow2.sh
+
+V5:
+  - Rebase;
+
+V4:
+  - patch 3 change slave_boot_code[] to const, and 'static void *p ' to
+    'void *p';
+  - patch 4 fixes build error;
+  - patch 10-13, add project and commit link.
+
+V3:
+  - Load initrd at  kernel_high + 4 * kernel_size;
+  - Load 'boot_rom' at [0 - 1M], the 'boot_rom' includes
+    slave_boot_code, cmdline_buf and systab_tables;
+  - R-b and rebase.
+
+V2:
+  - FDT pcie node adds cells 'msi-map';
+
+
+[1]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/arch/loongarch/booting.rst?h=v6.7-rc4
+
+[2]: https://github.com/gaosong-loongson/loongarch-binary/releases
+
+Please review!
+
+Thanks.
+Song Gao
+
+Song Gao (17):
+  hw/loongarch: Move boot fucntions to boot.c
+  hw/loongarch: Add load initrd
+  hw/loongarch: Add slave cpu boot_code
+  hw/loongarch: Add init_cmdline
+  hw/loongarch: Init efi_system_table
+  hw/loongarch: Init efi_boot_memmap table
+  hw/loongarch: Init efi_initrd table
+  hw/loongarch: Init efi_fdt table
+  hw/loongarch: Fix fdt memory node wrong 'reg'
+  hw/loongarch: fdt adds cpu interrupt controller node
+  hw/loongarch: fdt adds Extend I/O Interrupt Controller
+  hw/loongarch: fdt adds pch_pic Controller
+  hw/loongarch: fdt adds pch_msi Controller
+  hw/loongarch: fdt adds pcie irq_map node
+  hw/loongarch: fdt remove unused irqchip node
+  hw/loongarch: Add cells missing from uart node
+  hw/loongarch: Add cells missing from rtc node
+
+ include/hw/intc/loongarch_extioi.h |   1 +
+ include/hw/loongarch/boot.h        | 109 +++++++++
+ include/hw/loongarch/virt.h        |  14 ++
+ include/hw/pci-host/ls7a.h         |   2 +
+ target/loongarch/cpu.h             |   2 +
+ hw/loongarch/boot.c                | 330 ++++++++++++++++++++++++++
+ hw/loongarch/virt.c                | 364 ++++++++++++++++-------------
+ hw/loongarch/meson.build           |   1 +
+ 8 files changed, 661 insertions(+), 162 deletions(-)
+ create mode 100644 include/hw/loongarch/boot.h
+ create mode 100644 hw/loongarch/boot.c
+
 -- 
-2.44.0
+2.25.1
 
 
