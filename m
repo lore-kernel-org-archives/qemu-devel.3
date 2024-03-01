@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A17E5C5475B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7A96C54E4A
 	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 23:15:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgByB-0005Xe-4n; Fri, 01 Mar 2024 18:07:11 -0500
+	id 1rgC3E-0006k7-Dc; Fri, 01 Mar 2024 18:12:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgBy5-0005GP-JN
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:07:06 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1rgC1V-0003rl-5d
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:10:43 -0500
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgBy4-0004JU-2c
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:07:05 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1dca8b86ee7so25633895ad.2
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 15:07:02 -0800 (PST)
+ id 1rgC1T-0005h5-9C
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:10:36 -0500
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-5ce2aada130so2373290a12.1
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 15:10:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709334422; x=1709939222; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709334633; x=1709939433; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=K5KQN5vcI0KBxXe8ErUYFGLj7ZU4KIuwkr3avJe+C4E=;
- b=MkwIIK/hIwNe3EivDUniCDfh/yvahtYbkCUjNJM3FMw71NbcP2T6BVUHaP6JjCG4r6
- SqmCYQALDc+sSo4sd6v/oh8aJA19DGMHAOTKgd8GeHHa/mSvZnzcwDJ+CfVNTSwsTyjp
- Zq+BAn3aSgKsrRl7/gfyj6x71NPUa8BQgTXrcMwbJP1X5CPI4IPLdxVSgFDhzzcvGPCO
- ZpWwACjpU4y59LSDMorz0WSazWIyn3QgwVU5Pg6mHHZq4Vo2FltEz5cvBnDTnLlEQW9S
- u+/RldH1FcWYJINLaQ3Z7g5e5701udbk8xZ9q6OiJiadAslGQeFcYOf+Mp5tMzalzSMt
- 2G5A==
+ bh=nFLr/Nh9lR5RHGOKXL0ktJAFT8XYevI/jB1Fp1QCuj0=;
+ b=WDyjvaQJN1OEqMugqeP4kryL6Wr58LNN0fFaHQj/alOQV/mB5YS8S3/uQVskHvrVE9
+ 9lv4BifWyHGYVT4Dg2TJGfzPwCFyfmtIH0VgDy5PhvnIEWwe3vjnhMyv5aN5uL+3JhvP
+ PH4+k1ds0602/f7v+z6B6kobAwL/VEM6S5JQVWRpvxMqw0RI2sq2tMawVc9BucNbRF7a
+ JQw5db9ZKx33Cth616zVOEVhy8LrgT47AtSem1coYrWMTkxojC8MYNtpYlQVEyXI2jZQ
+ 5GHSXwg42vu80VCGXDD6r4h3BFpIq20kt2l0B8D4HbE9gHeuZSsgPmkaJdbZDWMGXZ9X
+ /4Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709334422; x=1709939222;
+ d=1e100.net; s=20230601; t=1709334633; x=1709939433;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=K5KQN5vcI0KBxXe8ErUYFGLj7ZU4KIuwkr3avJe+C4E=;
- b=ISMjJ7XhXSxwUAiKGmuE/HWE7Ok2fDYFQGfRHCMuxCTZ8vHx1/nHU9AIdJ80+9IfuW
- b3t9EdIZ43p0YYSOYK27q+LbkwEft+R3QBII4pXNYaVyR7r8eIPsAM7Tk9SBo+49uQYW
- A4SfLTMfEfrwBeVin6selK4mVM4IBM9VAYXyxm9yaLDwU5iRjbyowwbH9+6kSM39s2uP
- xQ2AO60w21XLlblLUQ2tA7zXdMPL5dCjb3GgHPY6+QrV8/EXIkFk/1AMXH8tbGw32W52
- rJ1i8lmNh9i+q5vzy+M9D7lMc4hXtOCmMne1BzSDQ7et7WJsYppABoEunACFO2avRNto
- ga1g==
-X-Gm-Message-State: AOJu0YxDZ0/PxSylqD235vSpBbyn6rT/+afm9N1a8GkU4tw9/d86/KMl
- S6YcXJ4f9vGFmpLqNpERfo1mPGnifC5CPk7xPwfvbljEAjYrsCBYdE8iFhfeYlo50ycz/BVA1LX
- i
-X-Google-Smtp-Source: AGHT+IGmPx4UPkLIUdmegsfgoHP920HDGlgG5H2hJdEjF1ZIxG2jo+xYVxZujmckUxYVi3eF0nxMwA==
-X-Received: by 2002:a17:902:868f:b0:1dc:a82f:c6cb with SMTP id
- g15-20020a170902868f00b001dca82fc6cbmr2864710plo.16.1709334421828; 
- Fri, 01 Mar 2024 15:07:01 -0800 (PST)
+ bh=nFLr/Nh9lR5RHGOKXL0ktJAFT8XYevI/jB1Fp1QCuj0=;
+ b=jK+pFXxJd/wVOIOfXl3xMyglJF2PxBvf7FHvb7uGwVNtqfNCqCnsC4pjBb6XH51SbX
+ TzjOXOR2ZnFFAW/CdqNfdpx85mUszZyrQdvehU1J+KyRWnGOEHv6PTD3eATPRdPvV8GR
+ Ze8G7f/P1gAO9wNr+ypcRtFmoneOPEB2PGtXXlV+DgZhJ9EPGFFtrzEv2L1eGdppOUiA
+ 5MiIXde6CYZ1F1ltzvNXnF+2fqH6zTl8J2IlQaxa736hUoYPhJ0Q4ptmpRdoKXL+brmn
+ YLGfuIbFjuOtQBlq4JYJ8CaEmgjdiun3jBlik/ExOptdsexKNBD6Nv9/fEDPZkggL+Nl
+ LZgw==
+X-Gm-Message-State: AOJu0Yz1gO13YlCngNtBfbdjKQLZohQvppYmBQqRa0xNPcKZif/yJTI6
+ wSCImBE5X1qE+dHYLhE7c2NO36beSpX/UHvI0kMkScFmFVT/tdhsCF4sYUEYxWw4M/zEQPJqpLf
+ e
+X-Google-Smtp-Source: AGHT+IHfiU+h+aqT+6hV8F+0NDG1GLqmnvSOOV/HOpeBNQxCXHChmdXC7+wJWTbYcPZVHJBG0oYwkA==
+X-Received: by 2002:a05:6a20:8418:b0:1a1:15ff:43b with SMTP id
+ c24-20020a056a20841800b001a115ff043bmr3434798pzd.23.1709334633691; 
+ Fri, 01 Mar 2024 15:10:33 -0800 (PST)
 Received: from stoup.. (098-147-055-211.res.spectrum.com. [98.147.55.211])
  by smtp.gmail.com with ESMTPSA id
- lc11-20020a170902fa8b00b001dc668e145asm3988580plb.200.2024.03.01.15.07.00
+ c2-20020a634e02000000b005e438fe702dsm3449407pgb.65.2024.03.01.15.10.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Mar 2024 15:07:01 -0800 (PST)
+ Fri, 01 Mar 2024 15:10:33 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>, Helge Deller <deller@gmx.de>
-Subject: [PATCH 28/60] linux-user: Remove HOST_PAGE_ALIGN from mmap.c
-Date: Fri,  1 Mar 2024 13:05:47 -1000
-Message-Id: <20240301230619.661008-29-richard.henderson@linaro.org>
+Subject: [PATCH 48/60] accel/tcg: Disconnect TargetPageDataNode from page size
+Date: Fri,  1 Mar 2024 13:06:07 -1000
+Message-Id: <20240301230619.661008-49-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240301230619.661008-1-richard.henderson@linaro.org>
 References: <20240301230619.661008-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,77 +96,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This removes a hidden use of qemu_host_page_size, using instead
-the existing host_page_size local within each function.
+Dynamically size the node for the runtime target page size.
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 Acked-by: Helge Deller <deller@gmx.de>
-Message-Id: <20240102015808.132373-11-richard.henderson@linaro.org>
+Message-Id: <20240102015808.132373-29-richard.henderson@linaro.org>
 ---
- linux-user/mmap.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ accel/tcg/user-exec.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index 53e5486cc8..d11f758d07 100644
---- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -191,7 +191,7 @@ int target_mprotect(abi_ulong start, abi_ulong len, int target_prot)
+diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+index 69b7429e31..3cac3a78c4 100644
+--- a/accel/tcg/user-exec.c
++++ b/accel/tcg/user-exec.c
+@@ -864,7 +864,7 @@ tb_page_addr_t get_page_addr_code_hostp(CPUArchState *env, vaddr addr,
+ typedef struct TargetPageDataNode {
+     struct rcu_head rcu;
+     IntervalTreeNode itree;
+-    char data[TPD_PAGES][TARGET_PAGE_DATA_SIZE] __attribute__((aligned));
++    char data[] __attribute__((aligned));
+ } TargetPageDataNode;
  
-     last = start + len - 1;
-     host_start = start & -host_page_size;
--    host_last = HOST_PAGE_ALIGN(last) - 1;
-+    host_last = ROUND_UP(last, host_page_size) - 1;
-     nranges = 0;
+ static IntervalTreeRoot targetdata_root;
+@@ -902,7 +902,8 @@ void page_reset_target_data(target_ulong start, target_ulong last)
+         n_last = MIN(last, n->last);
+         p_len = (n_last + 1 - n_start) >> TARGET_PAGE_BITS;
  
-     mmap_lock();
-@@ -389,8 +389,7 @@ abi_ulong mmap_find_vma(abi_ulong start, abi_ulong size, abi_ulong align)
-         start &= -host_page_size;
+-        memset(t->data[p_ofs], 0, p_len * TARGET_PAGE_DATA_SIZE);
++        memset(t->data + p_ofs * TARGET_PAGE_DATA_SIZE, 0,
++               p_len * TARGET_PAGE_DATA_SIZE);
      }
-     start = ROUND_UP(start, align);
--
--    size = HOST_PAGE_ALIGN(size);
-+    size = ROUND_UP(size, host_page_size);
+ }
  
-     if (reserved_va) {
-         return mmap_find_vma_reserved(start, size, align);
-@@ -550,7 +549,7 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
-      */
-     if (!(flags & (MAP_FIXED | MAP_FIXED_NOREPLACE))) {
-         host_len = len + offset - host_offset;
--        host_len = HOST_PAGE_ALIGN(host_len);
-+        host_len = ROUND_UP(host_len, host_page_size);
-         start = mmap_find_vma(real_start, host_len, TARGET_PAGE_SIZE);
-         if (start == (abi_ulong)-1) {
-             errno = ENOMEM;
-@@ -595,7 +594,7 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
-         void *p;
+@@ -910,7 +911,7 @@ void *page_get_target_data(target_ulong address)
+ {
+     IntervalTreeNode *n;
+     TargetPageDataNode *t;
+-    target_ulong page, region;
++    target_ulong page, region, p_ofs;
  
-         host_len = len + offset - host_offset;
--        host_len = HOST_PAGE_ALIGN(host_len);
-+        host_len = ROUND_UP(host_len, host_page_size);
-         host_prot = target_to_host_prot(target_prot);
+     page = address & TARGET_PAGE_MASK;
+     region = address & TBD_MASK;
+@@ -926,7 +927,8 @@ void *page_get_target_data(target_ulong address)
+         mmap_lock();
+         n = interval_tree_iter_first(&targetdata_root, page, page);
+         if (!n) {
+-            t = g_new0(TargetPageDataNode, 1);
++            t = g_malloc0(sizeof(TargetPageDataNode)
++                          + TPD_PAGES * TARGET_PAGE_DATA_SIZE);
+             n = &t->itree;
+             n->start = region;
+             n->last = region | ~TBD_MASK;
+@@ -936,7 +938,8 @@ void *page_get_target_data(target_ulong address)
+     }
  
-         /* Note: we prefer to control the mapping address. */
-@@ -625,7 +624,7 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
-             goto fail;
-         }
-         last = start + len - 1;
--        real_last = HOST_PAGE_ALIGN(last) - 1;
-+        real_last = ROUND_UP(last, host_page_size) - 1;
- 
-         /*
-          * Test if requested memory area fits target address space
-@@ -794,7 +793,7 @@ static int mmap_reserve_or_unmap(abi_ulong start, abi_ulong len)
- 
-     last = start + len - 1;
-     real_start = start & -host_page_size;
--    real_last = HOST_PAGE_ALIGN(last) - 1;
-+    real_last = ROUND_UP(last, host_page_size) - 1;
- 
-     /*
-      * If guest pages remain on the first or last host pages,
+     t = container_of(n, TargetPageDataNode, itree);
+-    return t->data[(page - region) >> TARGET_PAGE_BITS];
++    p_ofs = (page - region) >> TARGET_PAGE_BITS;
++    return t->data + p_ofs * TARGET_PAGE_DATA_SIZE;
+ }
+ #else
+ void page_reset_target_data(target_ulong start, target_ulong last) { }
 -- 
 2.34.1
 
