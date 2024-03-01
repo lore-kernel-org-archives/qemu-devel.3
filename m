@@ -4,93 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2488C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 11:09:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2206AC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 11:34:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg0lA-0006CP-9i; Fri, 01 Mar 2024 06:09:00 -0500
+	id 1rg19E-0004dB-0e; Fri, 01 Mar 2024 06:33:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
- id 1rg0l7-0006CB-OH
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 06:08:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
- id 1rg0l5-0006OC-PX
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 06:08:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709291333;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9zweSLfU93Ib/bb3/oZ+x1M2ndvj1R5k1C7KWPPoXEE=;
- b=cTGZAzxhkM+VZNxBq4k/svZoLUwewIviB33y24iAHTsY79W0S6LCy8xw8VM7Vm+JAr0IbV
- /ZZMV67CA+VAClYL5e7Kr58Sjh3OYYC/Pf7qtaNLUJ7uw/XNKdgpIEPm0d8NA6pUQaYtoU
- WmGWGM66fgvHEPYNlg6BzHbyV0LJ8fQ=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-680-p04_iCCkPEW8o2WapyoE5Q-1; Fri, 01 Mar 2024 06:08:51 -0500
-X-MC-Unique: p04_iCCkPEW8o2WapyoE5Q-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-40d62d3ae0cso10776585e9.2
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 03:08:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rg19B-0004ck-5S
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 06:33:49 -0500
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rg199-0002ZR-MG
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 06:33:48 -0500
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a26ed1e05c7so362507166b.2
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 03:33:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709292826; x=1709897626; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4ofuE77d68LMi0fffi4FhBVynmgIr9dIkVDHmDGVo4A=;
+ b=tIiuoNeddEBjGcDcab2k0VKMXx7k6265yMVSHz4fLe8kBSIO1HjYlPsb+OmUcdkzJJ
+ SwOkPcR84tMKCnPtMDBDrcsH0TvJoo0UKKsWDKK3ddj0L3JAdqXsW0W9VeBldWO7u91w
+ hdRTtnE/Esi46v0hReBrygOX9ehkNToVWn6h7rfSp4LI+Eavw+7SHU7qgaEuq40Twm+B
+ WeYOdOmhTv9+Gcn6f1Lc4UE+i+EU6TIc9J9dIyOBoFo/GkTOHRs+UwENPylAlnKu86Au
+ N33oXrZdzKupPwprGRT6i3miHs2DE71n0zzz4ruC6px9oiqjONCDHnSnQooXhzYezrVN
+ VWmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709291330; x=1709896130;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=9zweSLfU93Ib/bb3/oZ+x1M2ndvj1R5k1C7KWPPoXEE=;
- b=Qg4uxD6C+hK6Z/tk8ZSzUK5Hm0XGOPuy48E8l62yroNg2iLqVNsLvwus6MvD8bpKIf
- 727XBRcuaoFQYB0BKnUjxucm4hppyCapa6EtRSP26rJd88p0EXyCgxJ6e/RLePGTJWF+
- gix/5GsJtVChlNI3FDgVwimRs/FOX3sJwBkfw5CnDTCQGokEIRWy+KymyJ0RxFBTn+HP
- c6QpdjI0XoNNAFKTVsDz+8ElRs3A23ElgKTcIjg80V5WvNtq0Uxc6DumeRKfFJGnKcJJ
- bEWcd659a2eYIKV4cA8mRrn0zMxSrVaKHyWg1O4M58U6haEiM9rQ2mrYC5z1oEoxRNhC
- eKQA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWZ1sEUKWVTlCJXfXWqi2/FPbt4Nj4rWtybH+3/yUXaKdePzBwkCy/LuTKXId9nn2AgOchN0S9n//Cbk3JTtAzcOZ1BcDo=
-X-Gm-Message-State: AOJu0YxnQmSAqTHec/ReQy39YzfTxoujfuKZs6tQykkCOe10pwhaxZxU
- 1x21++0y+qe/KqqqMk5cp0Qe40IpUBu4uH68fx7Tr2L20OlZ2ZBwj19jIKoNCAobMMExhdMcfKf
- Ktc9RqWo1k4iKiuAHHEypoiAzj9shJwsEE+W3SOGxg0bEoKRN0Cod
-X-Received: by 2002:adf:ec0e:0:b0:33d:82ae:67f8 with SMTP id
- x14-20020adfec0e000000b0033d82ae67f8mr1065547wrn.50.1709291330520; 
- Fri, 01 Mar 2024 03:08:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGIQ30Mvjbb6ckSymyNAylBwmLnxmuTxSYmgXXtMUuluZqHERQFQmowzwmO3+tm8WhJAWOwPQ==
-X-Received: by 2002:adf:ec0e:0:b0:33d:82ae:67f8 with SMTP id
- x14-20020adfec0e000000b0033d82ae67f8mr1065527wrn.50.1709291330184; 
- Fri, 01 Mar 2024 03:08:50 -0800 (PST)
-Received: from localhost ([2a01:e0a:a9a:c460:2827:8723:3c60:c84a])
- by smtp.gmail.com with ESMTPSA id
- l18-20020adfb112000000b0033d4deb2356sm4261073wra.56.2024.03.01.03.08.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 01 Mar 2024 03:08:49 -0800 (PST)
-Mime-Version: 1.0
+ d=1e100.net; s=20230601; t=1709292826; x=1709897626;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=4ofuE77d68LMi0fffi4FhBVynmgIr9dIkVDHmDGVo4A=;
+ b=kFY4qV1YwEUGjIK38H5T4HpLWXWorWMhiOHHK6oNktJKOuCdyML+wlxg7FN3xk1bqv
+ EqqpC2UHoTCigCGJ26IKKdOOOh/r7Digv0EwJG8R4Yyiw+0InCniDd4jojOVICSaSWtC
+ gmNhtdKzSahGga8Iq4Numosv8xt42I8v0LO7zcRaijRYxbIN/p2cdhWZtlhQ2yX/k1pz
+ AJvmXefmpZAW41c89F7PazrYeESVU47MALYhTJZLryemWrDb/+nxafjgGHfNq1zLVqtL
+ yJ4R8X11jypHrXScFI6uj+756ZL5tJRoTr9Ty4vXNVEt2uX5WnglNjn/BHsHxVBVw32X
+ Nfhg==
+X-Gm-Message-State: AOJu0Yx9NPaJEEm6+/NxnO8jT3+HyjzbgeyQqx/G+az6SiEhKBPHGKeI
+ BCR5zMpZ2Rlz2E6C7Ibi59nHCf1MKENSqOAOltmWPgtR0rkBmutKFPS/zL8Okbk=
+X-Google-Smtp-Source: AGHT+IGGKDLYOtXnLLmCGyNoDYSjNNpgD2aqec0FJz9AwgZzVOmwcE+lmBg1ORWSo56/ZGEAo5pzDA==
+X-Received: by 2002:a17:906:c06:b0:a3e:73c8:cd27 with SMTP id
+ s6-20020a1709060c0600b00a3e73c8cd27mr1052159ejf.73.1709292825719; 
+ Fri, 01 Mar 2024 03:33:45 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ h18-20020a5d5052000000b0033cf4e47496sm4294632wrt.51.2024.03.01.03.33.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 01 Mar 2024 03:33:45 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id DC5525F7DF;
+ Fri,  1 Mar 2024 11:33:44 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Vikram Garhwal <vikram.garhwal@amd.com>
+Cc: <qemu-devel@nongnu.org>,  <sstabellini@kernel.org>,  <jgross@suse.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Peter Xu <peterx@redhat.com>,
+ "David Hildenbrand" <david@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?= <philmd@linaro.org>
+Subject: Re: [QEMU][PATCH v3 1/7] softmmu: physmem: Split ram_block_add()
+In-Reply-To: <20240227223501.28475-2-vikram.garhwal@amd.com> (Vikram Garhwal's
+ message of "Tue, 27 Feb 2024 14:34:55 -0800")
+References: <20240227223501.28475-1-vikram.garhwal@amd.com>
+ <20240227223501.28475-2-vikram.garhwal@amd.com>
+User-Agent: mu4e 1.12.0; emacs 29.1
+Date: Fri, 01 Mar 2024 11:33:44 +0000
+Message-ID: <87bk7y5gpz.fsf@draig.linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 01 Mar 2024 12:08:49 +0100
-Message-Id: <CZID7GHAWHXR.2UTDU0T1RHPX4@fedora>
-Subject: Re: [PATCH v3 2/3] tools: build qemu-vmsr-helper
-From: "Anthony Harivel" <aharivel@redhat.com>
-To: "Paolo Bonzini" <pbonzini@redhat.com>,
- =?utf-8?b?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>
-Cc: <mtosatti@redhat.com>, <qemu-devel@nongnu.org>, <vchundur@redhat.com>
-X-Mailer: aerc/0.15.2-111-g39195000e213
-References: <20240125072214.318382-1-aharivel@redhat.com>
- <20240125072214.318382-3-aharivel@redhat.com> <Zbf0Fbhmg0tvMbxK@redhat.com>
- <CABgObfaRGL8eOs6NRBjEMjTa_7UGyAn+Pic2GP=XbE+Qg-oBCQ@mail.gmail.com>
-In-Reply-To: <CABgObfaRGL8eOs6NRBjEMjTa_7UGyAn+Pic2GP=XbE+Qg-oBCQ@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=aharivel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,79 +101,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo,
+Vikram Garhwal <vikram.garhwal@amd.com> writes:
 
-> > > +static void compute_default_paths(void)
-> > > +{
-> > > +    socket_path =3D g_build_filename("/run", "qemu-vmsr-helper.sock"=
-, NULL);
-> > > +    pidfile =3D g_build_filename("/run", "qemu-vmsr-helper.pid", NUL=
-L);
-> > > +}
-> >
-> > We shouldn't be hardcoding /run, we need to honour --prefix and
-> > --localstatedir args given to configure.  /var/run is a symlink
-> > to /run so the end result ends up the same AFAIK
+> Extract ram block list update to a new function ram_block_add_list(). Thi=
+s is
+> done to support grant mappings which adds a memory region for granted mem=
+ory and
+> updates the ram_block list.
 >
-> Indeed; just copy from scsi/qemu-pr-helper.c.
->
+> Signed-off-by: Juergen Gross <jgross@suse.com>
+> Signed-off-by: Vikram Garhwal <vikram.garhwal@amd.com>
+> Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
 
-When I copy the same as compute-default() of scsi/qemu-pr-helper.c, the=20
-helper is listening to "/var/local/run/qemu-vmsr-helper.sock".
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-Problem is /var/local/run is 700 while /run is 755.
-
-So I would need to adjust the qemu-vmsr-helper.service to give=20
-the --socket=3DPATH of qemu-vmsr-helper.socket (i.e=20
- /run/qemu-vmsr-helper.sock)
-
-Problem is when I do that , I fall into the case:=20
-"Unix socket can't be set when using socket activation"
-
-So I'm a bit confused what to do about that.
-
-> > You never answered my question from the previous posting of this
-> >
-> > This check is merely validating the the thread ID in the message
-> > is a child of the process ID connected to the socket. Any process
-> > on the entire host can satisfy this requirement.
-> >
-> > I don't see what is limiting this to only QEMU as claimed by the
-> > commit message, unless you're expecting the UNIX socket permissions
-> > to be such that only processes under the qemu:qemu user:group pair
-> > can access to the socket ? That would be a libvirt based permissions
-> > assumption though.
->
-> Yes, this is why the systemd socket uses 600, like
-> contrib/systemd/qemu-pr-helper.socket. The socket can be passed via
-> SCM_RIGHTS by libvirt, or its permissions can be changed (e.g. 660 and
-> root:kvm would make sense on a Debian system), or a separate helper
-> can be started by libvirt.
->
-> Either way, the policy is left to the user rather than embedding it in
-> the provided systemd unit.
->
-
-During this patch test, when I run by hand my VM (without libvirt),
-the vmsr helper systemd service/socket was like that:=20
-[Service]
-ExecStart=3D/usr/bin/qemu-vmsr-helper
-User=3Droot
-Group=3Droot
-
-and=20
-
-[Socket]
-ListenStream=3D/run/qemu-vmsr-helper.sock
-SocketUser=3Dqemu
-SocketGroup=3Dqemu
-SocketMode=3D0660
-
-And it seems to works. So I'm not sure 100% what to do in my patch.
-
-Should I follow the pr-helper systemd files anyway ?
-
-Regards,
-Anthony
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
