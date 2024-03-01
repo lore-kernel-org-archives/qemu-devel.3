@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58121C48BF6
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 00:17:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 045C2C48BF6
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 00:23:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfqZQ-0001id-L2; Thu, 29 Feb 2024 19:16:12 -0500
+	id 1rfqfV-0007xm-Uj; Thu, 29 Feb 2024 19:22:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfqZM-0001iS-Vz
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 19:16:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfqZL-0004Wg-KK
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 19:16:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709252166;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RRfGLX52A4TERmBP5O2Pj3Ykp9i/Od3PKocJhh2WHkE=;
- b=Qd+AyPIS4QFLGRypTaPH+BA7LfiWe0lDFFChxUN5sBaVeUtzOwcFyqEgR7fIbzWiXbrWSa
- dlLuX2kVFT2KR+BN0A+I6iYvJUV2pXzcMCfCH94q5iZA1s4EXC0EAdPExCKuPXATA/YeoG
- /wYNfVL+cmlan1gJK6rXBy7ey7OB3wg=
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-518-KkGRFGNJM7GBh2KXCPXzEw-1; Thu, 29 Feb 2024 19:16:05 -0500
-X-MC-Unique: KkGRFGNJM7GBh2KXCPXzEw-1
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-5c683944ab0so305363a12.0
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 16:16:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rfqfS-0007va-Uq
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 19:22:26 -0500
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rfqfQ-0006Cx-AW
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 19:22:25 -0500
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-6d9f94b9186so1454387b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 16:22:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709252542; x=1709857342; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Qz4r3dXCMksTCt4HIh2SSUhoXbYDl44npX8gMtiNOjo=;
+ b=eHUkpj3/FuK49b8TtTTKlQj7dg/xdLkUjsiOoclnTBNYbb2uyg+o14Ysgfp4ojeSHg
+ 0vq9kWt+DE0EQ0VXMQSiNbbpGDfcUAYySii/MTfgRgZam/u/XSZPs5ocJ1ADl/f/7cRo
+ KhCxs7hmFqkiNuxcQtWUKZJtivB59JHFyZi16pdewMKQt8jLIJsqahTQ6mLYqJ7kd+ab
+ RAFmFlMxmkt5i2oGfl7vOoG0oELkVOVJ71OMkvE4CGKJ4YZ+ogBgf0I6uGqkpKgpmEYt
+ V7pkXR3ZtAzlN6WpyRtHNAl4z2mN5k5VvRS2Nu0hDUmZRKIRHOEvL8cdB1omXyV93Jd3
+ ELTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709252164; x=1709856964;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RRfGLX52A4TERmBP5O2Pj3Ykp9i/Od3PKocJhh2WHkE=;
- b=Ur9xPurfdzcvwzf0pLifyg8dfR3R9oUYmdHl95LQDANkH9neQp2ib9OPIqglwdiyoI
- rbgfJxUkTHBKkXO2b7HIXCm8LiE0itcR+MCQikuK/0dXeRiM0zw8zz6rBTa2u+CU6/bf
- 6Ulh2GaAy6p1zXPGzNq/5FdQ+Aate7rKjgT9br4wYTLBlPqIfuj4eau0dcHtJW6u3B3W
- oAeRTm5DWDCFHfbHuVeosuHXE8PDl2y8/vx5lp3Tv/ZaF53Xn9CDY64tDEPqQFJryoDd
- Yzv3lRs5q0KcEdzKhY7yHJ0vA5SvyMAhI2uLRdt2cGTHFJqW2jtA472OH3wbjQpOpkmh
- ZjEA==
-X-Gm-Message-State: AOJu0YzISM5NsjeB4XUhz2xfNymDm4xwIovD1rxcpjkG2NTcSTjCrtz5
- mhVt/jsbArbOeULqhRCEh4T3YHfT6kULnho2Dugdbi3Kt0xY4hPxCksEANzA3wp1XrdFsux/nSm
- f4Mfddh4TdK2Af365ltg1XQ1iItIiEL7Fo9npBTpPloQxPznhWzJp
-X-Received: by 2002:a05:6a00:9295:b0:6e4:68fa:f1ff with SMTP id
- jw21-20020a056a00929500b006e468faf1ffmr329956pfb.0.1709252164143; 
- Thu, 29 Feb 2024 16:16:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHqAvtmoB/2liMFgJGZzbPRtzFOvq3ccxqHl8G1aiT3laphisHm9DUuKtpV5HE/P0G+oAWPNw==
-X-Received: by 2002:a05:6a00:9295:b0:6e4:68fa:f1ff with SMTP id
- jw21-20020a056a00929500b006e468faf1ffmr329939pfb.0.1709252163782; 
- Thu, 29 Feb 2024 16:16:03 -0800 (PST)
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- k16-20020aa788d0000000b006e4f1e6f145sm1828311pff.33.2024.02.29.16.16.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Feb 2024 16:16:03 -0800 (PST)
-Date: Fri, 1 Mar 2024 08:15:55 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
- Claudio Fontana <cfontana@suse.de>
-Subject: Re: [PATCH v5 19/23] migration/multifd: Prepare multifd sync for
- mapped-ram migration
-Message-ID: <ZeEeOxGkhC6fDhBR@x1n>
-References: <20240228152127.18769-1-farosas@suse.de>
- <20240228152127.18769-20-farosas@suse.de> <Zd_28lPa5Uq9Kaw2@x1n>
- <87plwfz9v3.fsf@suse.de>
+ d=1e100.net; s=20230601; t=1709252542; x=1709857342;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Qz4r3dXCMksTCt4HIh2SSUhoXbYDl44npX8gMtiNOjo=;
+ b=h2fLCJzSfIb4SmQlKP25wtPdK0uNXLCuChycRW2yiyqq07giCHiePy9S81yUQICRw2
+ D28loLfUnlkuYW98ifcEAnxGIRycujx1G8mz5EJDzXgGeDCLycyzI24xsEJKjDQeMRLy
+ 4INSvMFUabmOBn8ZRsTogAL2Hf0Pzl/DyMOAxX2ooUVMn59PVShoRjNkhckkwtDkGIgU
+ kMZZPwGr3zTyxfJl8pW10QFaCtDG4XzHASq1IKTCcx1PaoxZVqxr3zZGsl9A5fFADSPs
+ QzXmtJE0cmsWsy3SHbMMY8kEL7dnL0mHnYStCQgyA1YTC9Dk3HwbOK+C4Yv5zq9hXJAZ
+ IEeg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX8uV1UNiNIvIm1KKYSL5W24pXCzWHKLJsN0GpqPdhy0DO4AFO2wQSGawWgVNXHOUFp0Wc/OJ5Lu+sLAyADoXrzVUTwtL4=
+X-Gm-Message-State: AOJu0YyrVpwdRLIswbkQM8EkucaQnsdWVKYciRMBK8NLOMrvbDoUFH9Y
+ fg6uK5SVe7F6sygMtQIl2HQ01Jf6xcrBM/kE7SyxorApI7iCSxUqJeKf73XegBQ=
+X-Google-Smtp-Source: AGHT+IHH79s2GzMui9x9Aj0ah8R5rqz6tTTTyD8AK1VQutqXsidkxuFkl+niqXP6WHNwnkMpplq5Qw==
+X-Received: by 2002:a05:6a00:841:b0:6e4:f678:f694 with SMTP id
+ q1-20020a056a00084100b006e4f678f694mr330209pfk.19.1709252542405; 
+ Thu, 29 Feb 2024 16:22:22 -0800 (PST)
+Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
+ [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
+ i13-20020aa787cd000000b006e4762b5f3bsm1891523pfo.172.2024.02.29.16.22.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 29 Feb 2024 16:22:21 -0800 (PST)
+Message-ID: <657b22f4-c717-4288-86f3-a5226c926664@linaro.org>
+Date: Thu, 29 Feb 2024 14:22:17 -1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87plwfz9v3.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v5 19/22] hw/intc/arm_gicv3: Report the NMI interrupt
+ in gicv3_cpuif_update()
+Content-Language: en-US
+To: Jinjie Ruan <ruanjinjie@huawei.com>, peter.maydell@linaro.org,
+ eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20240229131039.1868904-1-ruanjinjie@huawei.com>
+ <20240229131039.1868904-20-ruanjinjie@huawei.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240229131039.1868904-20-ruanjinjie@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,41 +100,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 29, 2024 at 10:19:12AM -0300, Fabiano Rosas wrote:
-> > IMHO EOS cannot be accounted as "invalid" here because it always exists.
-> > Rather than this trick (then explicitly ignore it below... which is even
-> > hackier, IMHO), we can avoid setting EOS in invalid_flags, but explicitly
-> > ignore EOS in below code to bypass it for mapped-ram:
-> >
-> > @@ -4301,7 +4302,12 @@ static int ram_load_precopy(QEMUFile *f)
-> >          case RAM_SAVE_FLAG_EOS:
-> >              /* normal exit */
-> >              if (migrate_multifd() &&
-> > -                migrate_multifd_flush_after_each_section()) {
-> > +                migrate_multifd_flush_after_each_section() &&
-> > +                /*
-> > +                 * Mapped-ram migration flushes once and for all after
-> > +                 * parsing ramblocks.  Always ignore EOS for it.
-> > +                 */
-> > +                !migrate_mapped_ram()) {
-> >                  multifd_recv_sync_main();
-> >              }
-> >              break;
+On 2/29/24 03:10, Jinjie Ruan via wrote:
+> In CPU Interface, if the IRQ has the superpriority property, report
+> NMI to the corresponding PE.
 > 
-> I thought we were already spraying too many migrate_mapped_ram() checks
-> all over the code. But wat you said makes sense, I'll change it.
+> Signed-off-by: Jinjie Ruan<ruanjinjie@huawei.com>
+> ---
+> v4:
+> - Swap the ordering of the IFs.
+> v3:
+> - Remove handling nmi_is_irq flag.
+> ---
+>   hw/intc/arm_gicv3_cpuif.c | 4 ++++
+>   1 file changed, 4 insertions(+)
 
-Yep that's not good, but I can't think of anything better yet and
-simple. E.g. we could have some flag so ram_save_iterate()/etc. generates
-nothing to the stream but only update the pages with the offsets, then we
-don't need this at all and EOS can be legally accounted as invalid.  But
-that can involve more changes and not helpful on this series to converge.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-And it's also the long condition which makes me even more worry.. For the
-long run I think we should cleanup most of these "multifd &&
-after_flush_each_section && !mapped_ram" at some point..
-
--- 
-Peter Xu
-
+r~
 
