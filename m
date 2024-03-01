@@ -4,114 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6270BC5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 16:15:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36BD1C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 16:17:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg5WU-00086A-UK; Fri, 01 Mar 2024 11:14:11 -0500
+	id 1rg5Yg-0001V9-VC; Fri, 01 Mar 2024 11:16:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1rg5WM-00085Y-RZ
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 11:14:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1rg5WK-0001UC-CF
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 11:14:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709309639;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QBP0TDDVdwAOEYm7nyivjARpTdtgcQHk6YZWbsGSFTQ=;
- b=SAh4IcvZ7d5xgPdIFXWAFYlVB5wjU2kdJCRuBNlqQ6LiltwzIYcwLBqc4SErA9FlCJjAE8
- I7STOQyx32IBUWegvOVkJ7k7JuaxnwMjcFYo3tlxS15DI1NbLG27S2dd6AamnrP1fgjLbl
- 3tkzFtJGdGpOSq/4Osk4Rmy1ox9BpO8=
-Received: from mail-il1-f197.google.com (mail-il1-f197.google.com
- [209.85.166.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-549-Zk7aXo5vOt2cd080ghFNEg-1; Fri, 01 Mar 2024 11:13:47 -0500
-X-MC-Unique: Zk7aXo5vOt2cd080ghFNEg-1
-Received: by mail-il1-f197.google.com with SMTP id
- e9e14a558f8ab-365b4dc6c3eso23481345ab.2
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 08:13:47 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709309627; x=1709914427;
- h=content-transfer-encoding:mime-version:organization:references
- :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QBP0TDDVdwAOEYm7nyivjARpTdtgcQHk6YZWbsGSFTQ=;
- b=uwNMtzeLA+OmbCRg4OAVpqS3/zTkSYxX+6worJfvJ5NC/tTolA0R8az6EO4bwvP6Ra
- F9LdLeUJUzhlKzLrEIkowDfDJB6qWOw4KHgAep8KstFsTKH0wjh/3MCWi4J101HE/9Oh
- Xy5qXuhJDIhY5nmYU/xpImife8CIpHqTVmt/lTRoYxn6oIh0RaPwReKiStK0dr7eZbs3
- hdeVSzeT3/jX2uLMHuCGRxvY2wmdt9LGTDsUpxNfnK1pIhOszFz1Q1vVZSml4Gi0tYA8
- z9jwcXhgigqWnLhDr+xvsjzD/5Zf747UcpyaAx1Bt/qBZ4StP04mqV47SYh2dlcKS/f9
- 56Eg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUSn+/3r5GcKjD9si1QHQBWYMNpsWxhe4lkfWmkdOOnD8YZhmrqKJBVbpTqpDBXRK8b9I175UHGh7DyeDgVH93144yfLx8=
-X-Gm-Message-State: AOJu0Yyf5GjZzwBVCyPyWgfOV77z2GmJKQhv6ezoUA3o+fZRSzMbC203
- KDPv/Ws9VOjpQVKvOxYBR10KjjDYolfHu3C4bYxCl3NeeP6ybH8h6Vk4YvYUa+I+NNtMhQ2drbY
- GeSG60sQ7zvbzrutp/mLb1RqqbrpwfiumnvNGkBBKIvVzrCjXQC7E
-X-Received: by 2002:a05:6e02:2181:b0:365:b570:cbbc with SMTP id
- j1-20020a056e02218100b00365b570cbbcmr2581668ila.10.1709309626869; 
- Fri, 01 Mar 2024 08:13:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH9uX5/Md2fe9UZFpy1tgV7qrUeYBxp1s1gBUh7csdub2rgfB44HeLcjKPqOAa1QQnOLHr23A==
-X-Received: by 2002:a05:6e02:2181:b0:365:b570:cbbc with SMTP id
- j1-20020a056e02218100b00365b570cbbcmr2581648ila.10.1709309626618; 
- Fri, 01 Mar 2024 08:13:46 -0800 (PST)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- p1-20020a92d681000000b003657c7530bcsm978325iln.16.2024.03.01.08.13.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Mar 2024 08:13:46 -0800 (PST)
-Date: Fri, 1 Mar 2024 09:13:43 -0700
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Ankit Agrawal <ankita@nvidia.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@Huawei.com>, Markus Armbruster
- <armbru@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>, "clg@redhat.com"
- <clg@redhat.com>, "shannon.zhaosl@gmail.com" <shannon.zhaosl@gmail.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "ani@anisinha.ca"
- <ani@anisinha.ca>, "berrange@redhat.com" <berrange@redhat.com>,
- "eduardo@habkost.net" <eduardo@habkost.net>, "imammedo@redhat.com"
- <imammedo@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
- "eblake@redhat.com" <eblake@redhat.com>, "david@redhat.com"
- <david@redhat.com>, "gshan@redhat.com" <gshan@redhat.com>, Zhi Wang
- <zhiw@nvidia.com>, Matt Ochs <mochs@nvidia.com>, "pbonzini@redhat.com"
- <pbonzini@redhat.com>, Aniket Agashe <aniketa@nvidia.com>, Neo Jia
- <cjia@nvidia.com>, Kirti Wankhede <kwankhede@nvidia.com>, "Tarun Gupta
- (SW-GPU)" <targupta@nvidia.com>, Vikram Sethi <vsethi@nvidia.com>, Andy
- Currid <acurrid@nvidia.com>, Dheeraj Nigam <dnigam@nvidia.com>, Uday Dhoke
- <udhoke@nvidia.com>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v7 1/2] qom: new object to associate device to numa node
-Message-ID: <20240301091343.2e69359c.alex.williamson@redhat.com>
-In-Reply-To: <SA1PR12MB71999E1863F1FD4C2505294DB05E2@SA1PR12MB7199.namprd12.prod.outlook.com>
-References: <20240223124223.800078-1-ankita@nvidia.com>
- <20240223124223.800078-2-ankita@nvidia.com>
- <8734td3uty.fsf@pond.sub.org> <20240228135504.00005d12@Huawei.com>
- <87bk80vaft.fsf@pond.sub.org>
- <SA1PR12MB7199F868F1C300B1E795CD39B0582@SA1PR12MB7199.namprd12.prod.outlook.com>
- <20240229102230.00004277@Huawei.com>
- <SA1PR12MB71993D9D99F4756C17CAE9DBB05F2@SA1PR12MB7199.namprd12.prod.outlook.com>
- <20240229163232.0000478d@Huawei.com>
- <SA1PR12MB71999E1863F1FD4C2505294DB05E2@SA1PR12MB7199.namprd12.prod.outlook.com>
-Organization: Red Hat
+ (Exim 4.90_1) (envelope-from <liyongtai@iscas.ac.cn>)
+ id 1rg5YV-0001TE-Fr
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 11:16:15 -0500
+Received: from [159.226.251.87] (helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <liyongtai@iscas.ac.cn>)
+ id 1rg5YN-0001qJ-BY
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 11:16:14 -0500
+Received: from liyongtai$iscas.ac.cn ( [27.198.242.149] ) by
+ ajax-webmail-APP-17 (Coremail) ; Sat, 2 Mar 2024 00:15:25 +0800 (GMT+08:00)
+X-Originating-IP: [27.198.242.149]
+Date: Sat, 2 Mar 2024 00:15:25 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: =?UTF-8?B?5p2O5rC45rOw?= <liyongtai@iscas.ac.cn>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, "demin.han" <demin.han@starfivetech.com>, 
+ qemu-riscv <qemu-riscv@nongnu.org>, 
+ "Daniel Henrique Barboza" <dbarboza@ventanamicro.com>
+Subject: Re: Re: [PATCH] Fix unexpected Illegal instruction error on RISC-V.
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.15 build 20230921(8ad33efc)
+ Copyright (c) 2002-2024 www.mailtech.cn cnic.cn
+In-Reply-To: <4ed4b35a-659b-42d2-a0d9-9e7340b732f6@linaro.org>
+References: <20240301145545.333810-2-liyongtai@iscas.ac.cn>
+ <4ed4b35a-659b-42d2-a0d9-9e7340b732f6@linaro.org>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=alex.williamson@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Message-ID: <40c70913.243ca.18dfacc8cfb.Coremail.liyongtai@iscas.ac.cn>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: qgCowADnTDge_+FlDr8FAA--.5093W
+X-CM-SenderInfo: pol100pjwdxq5lvft2wodfhubq/1tbiCREDBGXh38hILQACsr
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
+ CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+ daVFxhVjvjDU=
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 159.226.251.87 (deferred)
+Received-SPF: pass client-ip=159.226.251.87;
+ envelope-from=liyongtai@iscas.ac.cn; helo=cstnet.cn
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RDNS_NONE=0.793,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,27 +71,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 1 Mar 2024 08:33:42 +0000
-Ankit Agrawal <ankita@nvidia.com> wrote:
-
-> >> As for your suggestion of using acpi-dev as the arg to take both
-> >> pci-dev and acpi-dev.. Would that mean sending a pure pci device
-> >> (not the corner case you mentioned) through the acpi-dev argument
-> >> as well? Not sure if that would appropriate.  
-> >
-> > Ah, looking up my description is unclear. I meant two optional parameters
-> > pci-dev or acpi-dev - which one was supplied would indicate the type
-> > of handle to be used.  
-> 
-> Yes, that makes sense. But for now only have pci-dev until we have any
-> acpi-dev related code added? IIRC, this is what we discussed earlier.
-
-Yep, I think we acknowledged that this device supports either PCI or
-ACPI devices and we only currently have a use case for PCI devices, so
-that's what's implemented and what the interface expects.  A separate
-ACPI device interface could be added later or derived from updating the
-interface to accept a generic device object.  Thanks,
-
-Alex
-
+SGkgUGhpbGlwcGUsCgpUaGFua3MgZm9yIHRoZSBoZWFkcyB1cC4gU29ycnkgSSBkaWRuJ3QgY2hl
+Y2sgZm9yIHRoaXMgYmVmb3JlIHNlbmRpbmcgb3V0IG15IHBhdGNoLgpJJ2xsIHRyYWNrIHRoaXMg
+aW4gRGVtaW4ncyB0aHJlYWQuCgoKJmd0OyAtLS0tLeWOn+Wni+mCruS7ti0tLS0tCiZndDsg5Y+R
+5Lu25Lq6OiAiUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kiIDxwaGlsbWRAbGluYXJvLm9yZz4KJmd0
+OyDlj5HpgIHml7bpl7Q6IDIwMjQtMDMtMDEgMjM6NTE6MDMgKOaYn+acn+S6lCkKJmd0OyDmlLbk
+u7bkuro6IFNpSHVhTiA8bGl5b25ndGFpQGlzY2FzLmFjLmNuPiwgcWVtdS1kZXZlbEBub25nbnUu
+b3JnCiZndDsg5oqE6YCBOiAiZGVtaW4uaGFuIiA8ZGVtaW4uaGFuQHN0YXJmaXZldGVjaC5jb20+
+LCBxZW11LXJpc2N2IDxxZW11LXJpc2N2QG5vbmdudS5vcmc+LCAiRGFuaWVsIEhlbnJpcXVlIEJh
+cmJvemEiIDxkYmFyYm96YUB2ZW50YW5hbWljcm8uY29tPgomZ3Q7IOS4u+mimDogUmU6IFtQQVRD
+SF0gRml4IHVuZXhwZWN0ZWQgSWxsZWdhbCBpbnN0cnVjdGlvbiBlcnJvciBvbiBSSVNDLVYuCiZn
+dDsgCiZndDsgSGkgU2lIdWFOLAomZ3Q7IAomZ3Q7IE9uIDEvMy8yNCAxNTo1NSwgU2lIdWFOIHdy
+b3RlOgomZ3Q7ICZndDsgQXZvaWQgcmlnaHQtc2hpZnRpbmcgYnkgYSBuZWdhdGl2ZSBudW1iZXIg
+b2YgYml0cyB3aGVuIGxtdWwgaXMgOC4KJmd0OyAKJmd0OyBGWUkgRGVtaW4gcG9zdGVkIGEgc2lt
+aWxhciBwYXRjaCwgc2VlOgomZ3Q7IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtZGV2ZWwv
+MjAyNDAyMjUxNzQxMTQuNTI5OC0xLWRlbWluLmhhbkBzdGFyZml2ZXRlY2guY29tLwomZ3Q7IAom
+Z3Q7ICZndDsgU2lnbmVkLW9mZi1ieTogU2lIdWFOIDxsaXlvbmd0YWlAaXNjYXMuYWMuY24+CiZn
+dDsgJmd0OyAtLS0KJmd0OyAmZ3Q7ICAgdGFyZ2V0L3Jpc2N2L3ZlY3Rvcl9oZWxwZXIuYyB8IDMg
+KystCiZndDsgJmd0OyAgIDEgZmlsZSBjaGFuZ2VkLCAyIGluc2VydGlvbnMoKyksIDEgZGVsZXRp
+b24oLSkKJmd0OyAmZ3Q7IAomZ3Q7ICZndDsgZGlmZiAtLWdpdCBhL3RhcmdldC9yaXNjdi92ZWN0
+b3JfaGVscGVyLmMgYi90YXJnZXQvcmlzY3YvdmVjdG9yX2hlbHBlci5jCiZndDsgJmd0OyBpbmRl
+eCA4NGNlYzczZWIyLi5mMDE1OGVhMjM3IDEwMDY0NAomZ3Q7ICZndDsgLS0tIGEvdGFyZ2V0L3Jp
+c2N2L3ZlY3Rvcl9oZWxwZXIuYwomZ3Q7ICZndDsgKysrIGIvdGFyZ2V0L3Jpc2N2L3ZlY3Rvcl9o
+ZWxwZXIuYwomZ3Q7ICZndDsgQEAgLTUzLDEwICs1MywxMSBAQCB0YXJnZXRfdWxvbmcgSEVMUEVS
+KHZzZXR2bCkoQ1BVUklTQ1ZTdGF0ZSAqZW52LCB0YXJnZXRfdWxvbmcgczEsCiZndDsgJmd0OyAg
+ICAgICAgICAgICogVkxFTiAqIExNVUwgJmd0Oz0gU0VXCiZndDsgJmd0OyAgICAgICAgICAgICog
+VkxFTiAmZ3Q7Jmd0OyAoOCAtIGxtdWwpICZndDs9IHNldwomZ3Q7ICZndDsgICAgICAgICAgICAq
+ICh2bGVuYiAmbHQ7Jmx0OyAzKSAmZ3Q7Jmd0OyAoOCAtIGxtdWwpICZndDs9IHNldwomZ3Q7ICZn
+dDsgKyAgICAgICAgICogQ29uc2lkZXJpbmcgdGhhdCBsbXVsIG1heSBiZSA4LCB0aGUgZm9sbG93
+aW5nIGZvcm0gY2Fubm90IGJlIHVzZWQuCiZndDsgJmd0OyAgICAgICAgICAgICogdmxlbmIgJmd0
+OyZndDsgKDggLSAzIC0gbG11bCkgJmd0Oz0gc2V3CiZndDsgJmd0OyAgICAgICAgICAgICovCiZn
+dDsgJmd0OyAgICAgICAgICAgaWYgKHZsbXVsID09IDQgfHwKJmd0OyAmZ3Q7IC0gICAgICAgICAg
+ICBjcHUtJmd0O2NmZy52bGVuYiAmZ3Q7Jmd0OyAoOCAtIDMgLSB2bG11bCkgJmx0OyBzZXcpIHsK
+Jmd0OyAmZ3Q7ICsgICAgICAgICAgICAoY3B1LSZndDtjZmcudmxlbmIgJmx0OyZsdDsgMykgJmd0
+OyZndDsgKDggLSB2bG11bCkgJmx0OyBzZXcpIHsKJmd0OyAmZ3Q7ICAgICAgICAgICAgICAgdmls
+bCA9IHRydWU7CiZndDsgJmd0OyAgICAgICAgICAgfQomZ3Q7ICZndDsgICAgICAgfQo8L2xpeW9u
+Z3RhaUBpc2Nhcy5hYy5jbj48L2RiYXJib3phQHZlbnRhbmFtaWNyby5jb20+PC9xZW11LXJpc2N2
+QG5vbmdudS5vcmc+PC9kZW1pbi5oYW5Ac3RhcmZpdmV0ZWNoLmNvbT48L2xpeW9uZ3RhaUBpc2Nh
+cy5hYy5jbj48L3BoaWxtZEBsaW5hcm8ub3JnPg==
 
