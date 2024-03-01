@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04384C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 23:16:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93576C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 23:18:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgC2g-0005zR-8m; Fri, 01 Mar 2024 18:11:53 -0500
+	id 1rgByP-0005pW-VJ; Fri, 01 Mar 2024 18:07:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgC1m-0003zh-8A
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:10:59 -0500
-Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
+ id 1rgByD-0005bq-AB
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:07:13 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgC1k-00062O-GF
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:10:54 -0500
-Received: by mail-ot1-x332.google.com with SMTP id
- 46e09a7af769-6e49518f375so1109680a34.1
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 15:10:52 -0800 (PST)
+ id 1rgByA-0004Kj-RM
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:07:13 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1dc0d11d1b7so24579105ad.2
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 15:07:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709334651; x=1709939451; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709334428; x=1709939228; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=p6tPGvcWUCgEHkg4WhhgoNhXXsmKMPZyhGixNdkwuIE=;
- b=GILe9hoH0YjVaq9230ldul13mDDZzl1m3HvvDq6dDYBob8JmoqtOr6b5m4EcbryE07
- NSaxC+qJPFFvpsx6JjrCppyLfpnNJJOKyTTGAwoso/MMKyPZ8Tfa3bcYQXXp+LV0HMXQ
- F0fwiXHW53vKDx65yiLqR9kOoR4PCGqcZTZhowIRJ/QmR0w0wXdz3C5yVyEQT1HFPooO
- lzogJJjfjFD1TECqDeFdcGwwZM1qdDTUh72JQT1UNbfCxSYIs3At8Q/TSXwwbQOayo1R
- cPuU0gnARBRLAvpBY28ihPJ3ZCVLJ9lm9lZBtHLEZlzhfU7yMF/fdjp8l7zbc8V/ZSCW
- IWHg==
+ bh=dE6xy9+D6Je1Etl+ajN+bavVnxpk9B7ygAyJhkrFQtk=;
+ b=jKNIjDiAMSZSHITBlHFWCnByQx0mVTEYaZV7mUdikYm9dIdsfGWkSzYdfHQrLopoS6
+ UGH7WtJtfV1Y7Zy2V/mTMjgk9huD8oA5a7UWOw+nNQpEQF+kRX1wyRz3Kse/Uh6uRIqV
+ w2yJeXWzXT2jbkYmnHykXExGsNh0sesvEX+c21dxS0ExX+Jvlmk7Gk5QeoLWaoBdqD0Y
+ JlXz2/cwWk4fmnvT6NSyOc9s5uH+O5GIEtIAAdTy+rCru7iCGETlrYkADrK3plJH0Odd
+ XiAmGCkK0Edtkos7z3QuvwZzO/qrmthLUK1AeW6gxNf5Y6M70d2pbxZ27C26/XN1EAsl
+ YnFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709334651; x=1709939451;
+ d=1e100.net; s=20230601; t=1709334428; x=1709939228;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=p6tPGvcWUCgEHkg4WhhgoNhXXsmKMPZyhGixNdkwuIE=;
- b=E36gfb/17a9o1V8T3kyKjOtRnRKz2iIoIJ3fVC8Gb6fyLkiLtU+iqhaFUpJHqnWfUB
- N5Dw5ycgKKp2P1PMldjOulZpbLUKhWDxyURFxUqPHycZGM/f4PmEERAgOmRHnqHlU4iD
- WHxA3TmswLRSW+bTipG8OVO8bf42376UYqGHlzVtMbAZXFPcQcZyyXeMpJCXfB5xm3+O
- LUHpqEu/AV/YqPbS9M8Ir+GeCy2fy1fYL05Gq08rUkHAGQWlfTMssH2i7WT4GuCQW94H
- 15xf89DWL1ioLgzIVK6/yx1pR6DvEmD9WwQjwqWkzsN+Yz0yhlWPCs+0dsKKD53xTpV4
- OsTQ==
-X-Gm-Message-State: AOJu0Yykq/ZG8px1/6Ag/OHQmLAp8EwDHT6fw5L/fb7TttMMLX9CoJYH
- SxLpzx2ZcOLcv9AvmBntsmzuddEgukAPfH36oPTUgZRlpKJgkqBZv9T+gElaG4izPpJaIOQjO2Y
- A
-X-Google-Smtp-Source: AGHT+IHHaxj6DzVYlUPsjRsiS8sq/PRn2zRmYazDx5JZ/uqyf7n2n894LIweDzTvWXQQ1aqnhpo8IA==
-X-Received: by 2002:a05:6830:1108:b0:6e2:de7a:8f6e with SMTP id
- w8-20020a056830110800b006e2de7a8f6emr3493299otq.31.1709334651431; 
- Fri, 01 Mar 2024 15:10:51 -0800 (PST)
+ bh=dE6xy9+D6Je1Etl+ajN+bavVnxpk9B7ygAyJhkrFQtk=;
+ b=asWkaAyiWaNXRq2Uiml9EbbvCsYWeJO6aimXRAlAn1OyUs3zoxY7ieJ4BV7Hm71IB4
+ 1V9Yn7c3CeK1sW912blEgJl7g88SUFO+wQTR3A8kIZif581YsDT0oFKKyQ1cQcG+TQkF
+ MYccGK0PBUXg5a3zNYxy8Ffq9WDpzcCtU0ITh/PXai4zsrC/QpDGj6ciJHPDH0G8y8tp
+ PsJhJQfLcQ2rtGG//n5nyn7s9UfmPrn7HfzMyrqs+8d+bJQHv7iQiuHnel3cISZUfU8e
+ MliMNOIybZN8EV1ahhUYDfXhdR/Ej4wF6JWiefkJZeLASP+ndfoJ3VY/zrKE5v0/Gtzf
+ iZxg==
+X-Gm-Message-State: AOJu0Yz7LGosYR3bICi+B8ounHi9XTNq17HbUJdGeEnXLuhps2Ds6apN
+ zHmR+ZcyR5sNybyLVDVreXiJ1OtH9FdW8mgAabjBJGnLT5Alq1xrv0y9L3WWl4hWCcjVReudsc3
+ b
+X-Google-Smtp-Source: AGHT+IGnsfKbVMZjDFy3Hpmi7CXBzXfGAxjs5zZXbk2yfGbGeBlVo5bfcjpHQeL2at5YMUEt2cEOIw==
+X-Received: by 2002:a17:902:e5cb:b0:1dc:26a1:da26 with SMTP id
+ u11-20020a170902e5cb00b001dc26a1da26mr3323977plf.30.1709334428012; 
+ Fri, 01 Mar 2024 15:07:08 -0800 (PST)
 Received: from stoup.. (098-147-055-211.res.spectrum.com. [98.147.55.211])
  by smtp.gmail.com with ESMTPSA id
- c2-20020a634e02000000b005e438fe702dsm3449407pgb.65.2024.03.01.15.10.50
+ lc11-20020a170902fa8b00b001dc668e145asm3988580plb.200.2024.03.01.15.07.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Mar 2024 15:10:51 -0800 (PST)
+ Fri, 01 Mar 2024 15:07:07 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH 60/60] tests/tcg: Check that shmat() does not break
- /proc/self/maps
-Date: Fri,  1 Mar 2024 13:06:19 -1000
-Message-Id: <20240301230619.661008-61-richard.henderson@linaro.org>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Helge Deller <deller@gmx.de>
+Subject: [PATCH 32/60] softmmu/physmem: Remove HOST_PAGE_ALIGN
+Date: Fri,  1 Mar 2024 13:05:51 -1000
+Message-Id: <20240301230619.661008-33-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240301230619.661008-1-richard.henderson@linaro.org>
 References: <20240301230619.661008-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::332;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x332.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,81 +96,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+Align allocation sizes to the maximum of host and target page sizes.
 
-Add a regression test for a recently fixed issue, where shmat()
-desynced the guest and the host view of the address space and caused
-open("/proc/self/maps") to SEGV.
-
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-Id: <jwyuvao4apydvykmsnvacwshdgy3ixv7qvkh4dbxm3jkwgnttw@k4wpaayou7oq>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Acked-by: Helge Deller <deller@gmx.de>
+Message-Id: <20240102015808.132373-15-richard.henderson@linaro.org>
 ---
- tests/tcg/multiarch/linux/linux-shmat-maps.c | 55 ++++++++++++++++++++
- 1 file changed, 55 insertions(+)
- create mode 100644 tests/tcg/multiarch/linux/linux-shmat-maps.c
+ system/physmem.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/tests/tcg/multiarch/linux/linux-shmat-maps.c b/tests/tcg/multiarch/linux/linux-shmat-maps.c
-new file mode 100644
-index 0000000000..0ccf7a973a
---- /dev/null
-+++ b/tests/tcg/multiarch/linux/linux-shmat-maps.c
-@@ -0,0 +1,55 @@
-+/*
-+ * Test that shmat() does not break /proc/self/maps.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <assert.h>
-+#include <fcntl.h>
-+#include <stdlib.h>
-+#include <sys/ipc.h>
-+#include <sys/shm.h>
-+#include <unistd.h>
+diff --git a/system/physmem.c b/system/physmem.c
+index 3b08e064ff..3adda08ebf 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1680,7 +1680,8 @@ int qemu_ram_resize(RAMBlock *block, ram_addr_t newsize, Error **errp)
+ 
+     assert(block);
+ 
+-    newsize = HOST_PAGE_ALIGN(newsize);
++    newsize = TARGET_PAGE_ALIGN(newsize);
++    newsize = REAL_HOST_PAGE_ALIGN(newsize);
+ 
+     if (block->used_length == newsize) {
+         /*
+@@ -1916,7 +1917,9 @@ RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, MemoryRegion *mr,
+         return NULL;
+     }
+ 
+-    size = HOST_PAGE_ALIGN(size);
++    size = TARGET_PAGE_ALIGN(size);
++    size = REAL_HOST_PAGE_ALIGN(size);
 +
-+int main(void)
-+{
-+    char buf[128];
-+    int err, fd;
-+    int shmid;
-+    ssize_t n;
-+    void *p;
+     file_size = get_file_size(fd);
+     if (file_size > offset && file_size < (offset + size)) {
+         error_setg(errp, "backing store size 0x%" PRIx64
+@@ -2014,13 +2017,17 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
+ {
+     RAMBlock *new_block;
+     Error *local_err = NULL;
++    int align;
+ 
+     assert((ram_flags & ~(RAM_SHARED | RAM_RESIZEABLE | RAM_PREALLOC |
+                           RAM_NORESERVE)) == 0);
+     assert(!host ^ (ram_flags & RAM_PREALLOC));
+ 
+-    size = HOST_PAGE_ALIGN(size);
+-    max_size = HOST_PAGE_ALIGN(max_size);
++    align = qemu_real_host_page_size();
++    align = MAX(align, TARGET_PAGE_SIZE);
++    size = ROUND_UP(size, align);
++    max_size = ROUND_UP(max_size, align);
 +
-+    shmid = shmget(IPC_PRIVATE, 1, IPC_CREAT | 0600);
-+    assert(shmid != -1);
-+
-+    /*
-+     * The original bug required a non-NULL address, which skipped the
-+     * mmap_find_vma step, which could result in a host mapping smaller
-+     * than the target mapping.  Choose an address at random.
-+     */
-+    p = shmat(shmid, (void *)0x800000, SHM_RND);
-+    if (p == (void *)-1) {
-+        /*
-+         * Because we are now running the testcase for all guests for which
-+         * we have a cross-compiler, the above random address might conflict
-+         * with the guest executable in some way.  Rather than stopping,
-+         * continue with a system supplied address, which should never fail.
-+         */
-+        p = shmat(shmid, NULL, 0);
-+        assert(p != (void *)-1);
-+    }
-+
-+    fd = open("/proc/self/maps", O_RDONLY);
-+    assert(fd != -1);
-+    do {
-+        n = read(fd, buf, sizeof(buf));
-+        assert(n >= 0);
-+    } while (n != 0);
-+    close(fd);
-+
-+    err = shmdt(p);
-+    assert(err == 0);
-+    err = shmctl(shmid, IPC_RMID, NULL);
-+    assert(err == 0);
-+
-+    return EXIT_SUCCESS;
-+}
+     new_block = g_malloc0(sizeof(*new_block));
+     new_block->mr = mr;
+     new_block->resized = resized;
 -- 
 2.34.1
 
