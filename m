@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66210C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 21:03:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1C1CC5478C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 21:09:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgA10-0006mR-0H; Fri, 01 Mar 2024 16:01:58 -0500
+	id 1rgA74-0000qF-Na; Fri, 01 Mar 2024 16:08:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgA0o-0006l9-Pk
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 16:01:47 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1rgA72-0000pu-1s
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 16:08:12 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgA0n-00032d-6E
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 16:01:46 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-1d93edfa76dso24067055ad.1
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 13:01:44 -0800 (PST)
+ id 1rgA70-0004Cy-Mt
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 16:08:11 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-6e5a232fe80so1463819b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 13:08:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709326903; x=1709931703; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709327288; x=1709932088; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=RU9YZj8AagaoCGRFPs6L7I/TWTREjW4XzxioQtL0dMU=;
- b=ZYNegoMBEESxaeJ7j69RIyJoywrKnym+iv9yN/KygchO/QSbu2oziaOqz5imo+YJtK
- teZmJO8rcTf/D/NnaqMVWB/hCLVfrzXB+MdMnDjP6lNtiQya4ew6tP+V8K0h6sW4C/fM
- Pi32a++Sz5hj1sJBbRrkmUcDuB4Ef5aCjj9uZk4cxoh5nYR9bbzQchv0PJpflXHLy6lH
- ih0ZLZTQTHCzguvdFiEUUz4hZC6Q2RyDjB5ddwKgaN0LjLL/NZCUD4hgKI87QNd3lr7h
- BaFHjqYSJadG+XUga4cK27d5Pki/jslaxpC7IreWiGdXlG3+CSXLxRU+mbEuGIkW38IP
- 1YhQ==
+ bh=TGz4UVDmEifkdLH9N4nbvPrzT6XDUxPriUpEC0rx4Q4=;
+ b=Wv1hIg5r+dgD6unnbEnaf8+hSwU+iQ03uZVRbOCz9H23XSJ2fJV/RkcpjfqXIWZnAE
+ tjrUypU4ZoDBlrakR8cCq7Fzfppatb9SiKWivVACs1LvyCG1ZaMKmL07uzk6ivS97wS/
+ DEw7YzoYuZs1uC9R00JWkj+89W6w1q18bGPt4PpXHJTMb9S0z2OrpvwbKbHCzQeAyYYT
+ w8Xaf9v6pkx31/UelrILBdLXUvuYpnbwKYdwXzeMKieKX8QtX2fXr+7Exa0398GAEBbh
+ 8BkMxCrw+ejUbaVe99tWXBRZTdaYYnt2sIhJXPVFIR4WDiESDl3I8Jlqw7o5JnRRo2go
+ LHUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709326903; x=1709931703;
+ d=1e100.net; s=20230601; t=1709327288; x=1709932088;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RU9YZj8AagaoCGRFPs6L7I/TWTREjW4XzxioQtL0dMU=;
- b=hT4iGT6jpm+PPuKaRKgEVSWioqOjMbSEhCck9vOXXOS9KywNcoLoKxOjkl0hYlxJMs
- rKghAeLKYGJMv3DcQKgo3RyjnuXRdTvavjNDc5D1yv87gm+gpnnL+RPFFFx+6nEMf7uD
- gHJHvd3/47EWdZ7kShoevT2altxu24ZyxYVI1ZVUsUei4rrBTJCcmxqhJN6NQkgeVtou
- EgCkC10Nc3q4tLG8x466Hm0yi8rdcprQP/EzGantLGVU5vzCl8YoqzXqdCci5cUJfpsc
- g5DJl2eTObbk3i1vK9JckOE1SVegngwKkil77afXxCUdjTRqJY2/QWNnVNu4UygobRxq
- p8ZQ==
+ bh=TGz4UVDmEifkdLH9N4nbvPrzT6XDUxPriUpEC0rx4Q4=;
+ b=Fv9w0LvxFKNkqAz19ZGHDICSisftxeyj1O1vdgAfDsWscYEBDoiN1zLFUI0clgilw/
+ k4cVGcFyFSAAHJlJFn6Bbq5RdK1RHYmmxORSLeVqpHAJgzHeA2RbCkTwuE1DDwMH856Z
+ y3Bh+jV5gAdXXMQdBQVCsi7izGJYOdcx3TOmDd6+nykYqMNL2yQqBuGgv0BVQj3WDfzh
+ HqUWhPfb5mk01Qh8jGQrrVB9ab1zWrvqbytd41KHs+9d+9UGSIHVMtvynoO5jCbzia+l
+ fKWDc3R4XLEXNq9e0+lchhOGBxBvN0DSt9i2V4oJVEezhZzgHWpyC4+iSWVaIs5+jIk+
+ KE5A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWeySJ5J5nb3SCBjP0W+PMjqXXVLNT0Xd1KWTqUQ/R/uqMqrPzKEvur8gTe0FBuPq7a1zgnIjBjYcweNSIlRU4aiRzQsUU=
-X-Gm-Message-State: AOJu0YyNjL0kll2skcBsjVhmeMzX+tH/tX5PO2uxH9qcWoy9RUupPSvj
- j8950oTqrTY5UMSzCW1N30t/tspzk5xd07N7/ZSiloJ+qGwJSThs3NRMAJsvmjnD8DctGR3LYdA
- Y
-X-Google-Smtp-Source: AGHT+IG7gs9HJqJG/ebg6DWVzjVEPvW2UlkVVj9nt/TQnLav2AHRcEBQlcgkuetWAbiimVlSE9qmsg==
-X-Received: by 2002:a17:903:984:b0:1dc:8b82:7f56 with SMTP id
- mb4-20020a170903098400b001dc8b827f56mr3315619plb.20.1709326903319; 
- Fri, 01 Mar 2024 13:01:43 -0800 (PST)
+ AJvYcCVSZmaePL4q7A/pnPSB63yBfxgB78IpoGAHWlsT1hozVDv2cySy4ALFV0XXnqVe3mpJ9U2dCe3iW2x9E/t+abhqXAGotQw=
+X-Gm-Message-State: AOJu0YzSQ8VIA8Fb9zDoRtKysHFTFKigkaxagqIlowJ4/L16ciwqKhDR
+ jyYEP2wJeWYsvTWDzGJLS4K89KlMof71lDh/KAUQ1PUDMRgWS6I/hCAEcprndrY=
+X-Google-Smtp-Source: AGHT+IGVG9m5JYefEr5eI6APdXzPvGeyJBaK7NFl78lMJLK68y7RYSmgseft5YLHPWZRGxIOevvFpQ==
+X-Received: by 2002:a05:6a00:b46:b0:6e5:3434:d5e0 with SMTP id
+ p6-20020a056a000b4600b006e53434d5e0mr4040467pfo.2.1709327288118; 
+ Fri, 01 Mar 2024 13:08:08 -0800 (PST)
 Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
  [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- w7-20020a170902e88700b001dba739d15bsm3908461plg.76.2024.03.01.13.01.41
+ d18-20020a056a00199200b006e56c8f572esm3496205pfl.141.2024.03.01.13.08.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 01 Mar 2024 13:01:42 -0800 (PST)
-Message-ID: <c48b6ae6-87ae-4033-8a64-0ce756115922@linaro.org>
-Date: Fri, 1 Mar 2024 11:01:39 -1000
+ Fri, 01 Mar 2024 13:08:07 -0800 (PST)
+Message-ID: <3f093460-91db-482e-8b58-3aa71f6d8e03@linaro.org>
+Date: Fri, 1 Mar 2024 11:08:04 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/8] target/arm: Move some register related defines to
- internals.h
+Subject: Re: [PATCH 2/8] target/arm: Timer _EL02 registers UNDEF for E2H == 0
 Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 Cc: Jean-Philippe Brucker <jean-philippe@linaro.org>
 References: <20240301183219.2424889-1-peter.maydell@linaro.org>
- <20240301183219.2424889-2-peter.maydell@linaro.org>
+ <20240301183219.2424889-3-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240301183219.2424889-2-peter.maydell@linaro.org>
+In-Reply-To: <20240301183219.2424889-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,23 +100,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/1/24 08:32, Peter Maydell wrote:
-> cpu.h has a lot of #defines relating to CPU register fields.
-> Most of these aren't actually used outside target/arm code,
-> so there's no point in cluttering up the cpu.h file with them.
-> Move some easy ones to internals.h.
+> The timer _EL02 registers should UNDEF for invalid accesses from EL2
+> or EL3 when HCR_EL2.E2H == 0, not take a cp access trap.  We were
+> delivering the exception to EL2 with the wrong syndrome.
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
-> I want to add some more CNTHCTL_* values, and don't really
-> want to put more into cpu.h. There's obviously more that could
-> be moved here, but I don't want to get into doing too much
-> all at once. I pondered having a different file for these,
-> but probably we'd end up pulling it in everywhere we do
-> internals.h.
-> ---
->   target/arm/cpu.h       | 128 -----------------------------------------
->   target/arm/internals.h | 128 +++++++++++++++++++++++++++++++++++++++++
->   2 files changed, 128 insertions(+), 128 deletions(-)
+>   target/arm/helper.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
