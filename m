@@ -4,152 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91F18C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 17:48:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48E14C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 17:48:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg6y3-0005Pm-3H; Fri, 01 Mar 2024 12:46:43 -0500
+	id 1rg6zW-0001OL-95; Fri, 01 Mar 2024 12:48:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
- id 1rg6y0-0005OD-02
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 12:46:40 -0500
-Received: from catfish.pear.relay.mailchannels.net ([23.83.216.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
- id 1rg6xw-0000YS-KQ
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 12:46:38 -0500
-X-Sender-Id: _forwarded-from|134.3.94.10
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id 54F382C1FD4
- for <qemu-devel@nongnu.org>; Fri,  1 Mar 2024 17:46:35 +0000 (UTC)
-Received: from outbound5h.eu.mailhop.org (unknown [127.0.0.6])
- (Authenticated sender: duocircle)
- by relay.mailchannels.net (Postfix) with ESMTPA id A8E4B2C20FB
- for <qemu-devel@nongnu.org>; Fri,  1 Mar 2024 17:46:34 +0000 (UTC)
-ARC-Seal: i=2; s=arc-2022; d=mailchannels.net; t=1709315194; a=rsa-sha256;
- cv=pass;
- b=laAKSyBWs37E0T5KDqUOzf5I+Vp+tItvmiPydN5DjBAvvkRZUeWLT74R9tiQ+H3Ge9hAcC
- X2aqgszH5wSUJyslziusbg/6EU1UkLudcKrgLUW8V0Cwwnh8Z/wDpCLYrB5ba0NVKu2rKd
- pxUXFdiouTp3nJmaIjGqJhQ6ABXOd+SNhb7FeHYi4thQ7QlIP8pqqVlE3ieJGlWKc2CGXr
- yszsat/AFNUxxkbkQFOJUHOiPGYnxq5VsnUSn6v0NtzO+3siy431ku/JJ59VkmJSjbJSIk
- Q8cBoP3OgUbgtQ+02dM/93E66fTU4VH28RzR7WcvV1Ajs1fepM1KKHBqHKAjLw==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net; s=arc-2022; t=1709315194;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:dkim-signature;
- bh=6qa/ABrIzNFeQmtdkh5F2jlICj/NXHjn33dee2Z9H48=;
- b=CnIDGllk0PUqwkKjh6VfcBja4wfToSbsVj/uKG+U0EuzHoJJBAlPV3J8vwDhZ7kQFbl5YT
- kop4Wen/xuMHJIddmcfQKK8uvcxkWhFd74ZLF7GLcXz3gUp9QEVndN+nX/0rvC+p4j1zef
- 1BEzgM9zPzPqhecJ/RDszowtS4Ha0dOrQf1jSqvjjCPjcaTIsPXyskvSxlcLCZxApXm9hg
- 3zBHxm8Tvui+bkl1994L5bz/fTESGzio90wawLZA3D4FH5tSzVvMNc36OdVZbGVYCtsIPR
- 7EpPhPH6cD9+rT0ZvpSK1YpoBYUtftJXL4Q3TDhFLmlff+lj5arP5EFKw0zbvw==
-ARC-Authentication-Results: i=2; rspamd-55b4bfd7cb-d4z79;
- arc=pass ("outbound.mailhop.org:s=arc-outbound20181012:i=1");
- auth=pass smtp.auth=duocircle smtp.mailfrom=svens@stackframe.org
-X-Sender-Id: _forwarded-from|134.3.94.10
-X-MC-Relay: Forwarding
-X-MailChannels-SenderId: _forwarded-from|134.3.94.10
-X-MailChannels-Auth-Id: duocircle
-X-Whistle-Name: 4629c484205e85bb_1709315195182_1839156030
-X-MC-Loop-Signature: 1709315195182:1736634380
-X-MC-Ingress-Time: 1709315195181
-Received: from outbound5h.eu.mailhop.org (outbound5h.eu.mailhop.org
- [18.156.94.234]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.111.52.242 (trex/6.9.2); Fri, 01 Mar 2024 17:46:35 +0000
-ARC-Seal: i=1; a=rsa-sha256; t=1709315098; cv=none;
- d=outbound.mailhop.org; s=arc-outbound20181012;
- b=Qh1gDycCYdELK21o356rmV5Tm9Bai0YtO3euqgO1QO5sZofl8z55ls9iO1QqkWmCn9DdIByqRFk7s
- WKWyDauNd6YIIwgGTw7WXLkiE/TGwsVL9E3ZHh1jSkgccRW0svirtNycf5XXZRlh5y81Zyp0hvvM6z
- BLETqXxGBxnHES8wUj5Dp5QPJjG8OG7aTghmrMy0+1p/PxFPbz3Gt4oDItHpYMWJ5Wlke+ccZex9Iz
- WdwaUY/dM9bxagP7OGbUHKAp3+PhK5HK4za2eTeYAmzGMW4oNKO3lcEThb8Mmt/TXEbznSi/4OUM8m
- /sGEdkQZZN3SrKnMnReR7dAjBKhwqmg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=outbound.mailhop.org; s=arc-outbound20181012;
- h=content-transfer-encoding:mime-version:references:in-reply-to:message-id:date:
- subject:cc:to:from:dkim-signature:dkim-signature:dkim-signature:from;
- bh=6qa/ABrIzNFeQmtdkh5F2jlICj/NXHjn33dee2Z9H48=;
- b=o5G1FOVyKpL49SO9LgH+/yNW8oHT2LVk+gz37XaEov9hU4F0vwBBF/JY6VNPvFwO3AhHJLRTFebT7
- 992bxsf+fsdXWyMRf0TC+DUY4lxZWNwViZINyNPLo7UN5RMUeDIDO7OSUr8HfT5MSBlX4KllZPjla+
- YVtKG1f9GS6a9cT5A9BCwZCzy6Sav//dbaUJCnBywZucQ9MxnRv4SNzOtlKJAN9HLri3bRh5yobU3O
- Wa8BVw3S23Z1PuGjnDMNNK2OeQqIF3O9+nY8MeII6hr038DskXVEFJjmdvYWhW4ClbXgASLFbjsYAx
- P4rId7XIRp6Cj0wgeNmZpYuaSjUJADw==
-ARC-Authentication-Results: i=1; outbound2.eu.mailhop.org;
- spf=pass smtp.mailfrom=stackframe.org smtp.remote-ip=130.180.31.158;
- dkim=pass header.d=stackframe.org header.s=dkim1 header.a=rsa-sha256
- header.b=as0lzJGo; 
- dmarc=none header.from=stackframe.org;
- arc=none header.oldest-pass=0;
+ (Exim 4.90_1) (envelope-from <faiqueali.109@gmail.com>)
+ id 1rg6zT-000113-R3
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 12:48:11 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <faiqueali.109@gmail.com>)
+ id 1rg6zR-0000mE-ST
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 12:48:11 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-56648955ac5so3405099a12.3
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 09:48:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=stackframe.org; s=duo-1634547266507-560c42ae;
- h=content-transfer-encoding:mime-version:references:in-reply-to:message-id:date:
- subject:cc:to:from:from;
- bh=6qa/ABrIzNFeQmtdkh5F2jlICj/NXHjn33dee2Z9H48=;
- b=XJCL6aPMDKv3x1fkHAIUnGGr9p0ziS8asFZnF81juXXxvZn7+v9fi7VrpAzDsgEDHvoDBRhEAxo0+
- 5CYEU2qAiMxs5xwQRNMi0aYbrjePyy4Oif8DJHwna4X7PlDSJ2M7bpMv5Ls4aVR502o6rlEUZH051o
- T7/X/tBivpEECVHg=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=outbound.mailhop.org; s=dkim-high;
- h=content-transfer-encoding:mime-version:references:in-reply-to:message-id:date:
- subject:cc:to:from:from;
- bh=6qa/ABrIzNFeQmtdkh5F2jlICj/NXHjn33dee2Z9H48=;
- b=LquhqCVmLNmh1PcNZVRjeeId+t4oJpFcJnFjtRlFim7hsCJym21wn0CXP0yVCbvG+AcUNDMrRUtHW
- J9BI8jByct83oi96hIK0ub0+PRG+VlOY84o4tnKvX0Y+qD4AWUxVV0d2Fsuq+rtfW84Wi2MdynJ9cB
- 5V7RMpy19681hqGbiSl/PEcC1yiUwgsiFaNRtwKvUb7QGd6b8PL7pzZKyfCOMwmE87RPparTxgM/fz
- 8M6Q7USINx2YsenkL488HjbI+2wd9za3CLPjANxC61YaUjAvzXERofCff5BnhZX8/bhBB+FIDdKu83
- GGZoA7NfOWP5ZxpnY9ONUvjo3Jw/3wQ==
-X-Originating-IP: 130.180.31.158
-X-MHO-RoutePath: dG9ta2lzdG5lcm51
-X-MHO-User: 68dd22f3-d7f3-11ee-b66d-9b9d9be6ef2c
-X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
-X-Mail-Handler: DuoCircle Outbound SMTP
-Received: from mail.duncanthrax.net (mail.duncanthrax.net [130.180.31.158])
- by outbound2.eu.mailhop.org (Halon) with ESMTPSA
- id 68dd22f3-d7f3-11ee-b66d-9b9d9be6ef2c;
- Fri, 01 Mar 2024 17:44:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=stackframe.org; s=dkim1; h=Content-Transfer-Encoding:MIME-Version:
- References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:
- Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=6qa/ABrIzNFeQmtdkh5F2jlICj/NXHjn33dee2Z9H48=; b=as0lzJGoPkMQXbZGj0fXfwxvJI
- bi1r6gg4MtrTvxNcMVOz3CtO3kPClxE5l4md3zfJEipJ+jNf6nOkjPnfG3/COK4m4Uah0w5Qaw8/z
- 55uAWqgIu/IRoiKC82ucSla0ysaDAlbrDAdrS7UeEkW2PUJ+FbVJIZXWJJ5Xl9j8fwQhTTCCR9eit
- bLGAxM0iEgmCRqnbJ76HJVyjHrTeEE5D53qEuWQ1fbzUE1ORM+5eD3mF4Q/GEyQxXnpT4k9ix66/D
- hnIvCpx6hqLZQFqP0gQ/voP3ZI33Ps3KoG/iIt5EfZXyct14cj/B93/0FNO6aRlSwBXMIpp955oIs
- pI5ZfZZQ==;
-Received: from ip-134-003-094-010.um41.pools.vodafone-ip.de ([134.3.94.10]
- helo=t14.stackframe.org)
- by mail.duncanthrax.net with esmtpa (Exim 4.96)
- (envelope-from <svens@stackframe.org>) id 1rg6xi-000bs2-32;
- Fri, 01 Mar 2024 18:46:23 +0100
-From: Sven Schnelle <svens@stackframe.org>
-To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, deller@gmx.de, Sven Schnelle <svens@stackframe.org>
-Subject: [PATCH v3 04/12] util/range: add range_list_free()
-Date: Fri,  1 Mar 2024 18:46:01 +0100
-Message-ID: <20240301174609.1964379-5-svens@stackframe.org>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240301174609.1964379-1-svens@stackframe.org>
-References: <20240301174609.1964379-1-svens@stackframe.org>
+ d=gmail.com; s=20230601; t=1709315287; x=1709920087; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=u/9dzJ2mXmywRiGKTIE8fQelBegAZok8brLUSg9rig0=;
+ b=UFMrF6U+XscGNjfMTW4IeaJECxBF8DhE3BPhMPo8gy4gJCZ5H0xYAYDyHWl4Ew6/oO
+ rd8sEIiSnC3eT7THsQdV5pRm0NvD6UwDcCrVjdV+qpl3GM/dSiGxLcBDQTnMXM4ZOkJK
+ f84Dtb+ALW/uYuk8HERibiYvXrAWb+LA15Z02dkjen/n8e/qwCoTYplC380bv7MhoWNY
+ /B4Yz2jqkpedtL68Sb1kA+ftSzzmIvPwtbIHog9mk9FKJbatHRJkAmVhmzmMmXMXFxc4
+ QUjNCIUhASuPmLwiArnkQO9rcQ91iPO8KZCR9YWXkt25yk4yFFkQSZYSLv+C9HW3bUx2
+ auvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709315287; x=1709920087;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=u/9dzJ2mXmywRiGKTIE8fQelBegAZok8brLUSg9rig0=;
+ b=lfSmPycFGixz1+bk0XNRRKRqE32jAKpvZ9dIKNZRzlgBlm1faQDsyMZmxGNuMVNRKg
+ fzYpm28rVQm9Ow1qsErhjelRbDLnaL0z4Y5aRjrtrjSE+cuRl+hhqcNy5rIuv0cgtKOR
+ 5SsAiwU8rIi/SqYyfStezb8JhPrDErNsH8qLtKc29VrhUwQU6Syb9fzg+e8l83lyEP03
+ AB4TUKUp5+B8ECM3kFA6NcqobEiuz7vkWdOd8N1EX4DEWyHG6zAnNxLkD5rCtPhG9nBN
+ DZQiYDYripPs3eUi50pfaSzAeUiA4U2iUjDZO1HiTDl0hzbWa8ZakpAhmx9atrYg8fDi
+ qvQA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWxzN0MHW9/b03mU7dMnC0HFKkvjH/zeRS5a3fCi4/tCTmt+9eiaRvKilMMeRqzAGEW8bCZQWgGoi4HlnYrPnLNx98RXwU=
+X-Gm-Message-State: AOJu0Yys5CLLa+a7F/FeDxdhUzNSeHhGAXCom4e01PpdY1no+ZcgXMpD
+ rtG6tyxSP31WitNhByV8JPH0P7Ox8t6UJO3OzRIv7wGCEeTkrxwBTcZNlcJirQmBHHUHAhNT61i
+ ExnDGGCqJYmlHsQB8G9XmrFRLhno=
+X-Google-Smtp-Source: AGHT+IFk4DGI00bG/0cd56DqyRrovl4fHsgYnidzdm4xSYiLRvyVN9UmVFh8fwAWwxXDsAQwZ9vVRAFl0bqujgKYrUA=
+X-Received: by 2002:a05:6402:3493:b0:566:f67e:3f72 with SMTP id
+ v19-20020a056402349300b00566f67e3f72mr447838edc.12.1709315287083; Fri, 01 Mar
+ 2024 09:48:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=23.83.216.32; envelope-from=svens@stackframe.org;
- helo=catfish.pear.relay.mailchannels.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <CAOpGCn+KdhjnXRHup6GXVbkoZkUBc7f-2urNzmvLjK1To_pp0A@mail.gmail.com>
+ <87a5nvci5n.fsf@draig.linaro.org>
+ <CAOpGCnLxVGhbJuAq+K+DNZBESEGGkSr8Sa0_cHsfMR7S-_ahkQ@mail.gmail.com>
+ <87y1bfawik.fsf@draig.linaro.org>
+ <CAOpGCn+_=5Uxi9mt-C1V3pguNT0OUJura-H3SwBOsJnW5tyJ4g@mail.gmail.com>
+ <CAFEAcA-03JYx9szd3FrQ_786gaRLWCJVHeMgjBxxvgH85f-78A@mail.gmail.com>
+ <CAOpGCn+vQ7wupMqeH8ZLarT0c4gD85R6cgRqBMhVeAXtZ1F_Mg@mail.gmail.com>
+ <CAFEAcA9Yp=ObPhgagAbf2Ev=6=D+9sCfHC_HCxPUr2JgvWa4oQ@mail.gmail.com>
+ <CAOpGCn+BHsVPG1_2-avx6Ex10dc-nKYuVv=3VTct=MYRb4TmYw@mail.gmail.com>
+ <CAFEAcA9_MDHQyQ6q76OpUXgEO9f_osS23oMhyTC4vNSBqtD1-A@mail.gmail.com>
+ <871q94ahui.fsf@draig.linaro.org>
+ <CAOpGCn+-T3e8arn0UPTM5-1gJu9626wP3=FHamXvUFW6NrDJcg@mail.gmail.com>
+ <CAJ307EgMiRDLaHD1P8_EBLwhLct6z+Wp15sXTqMV83F0mC1sLA@mail.gmail.com>
+In-Reply-To: <CAJ307EgMiRDLaHD1P8_EBLwhLct6z+Wp15sXTqMV83F0mC1sLA@mail.gmail.com>
+From: Faiq Ali Sayed <faiqueali.109@gmail.com>
+Date: Fri, 1 Mar 2024 18:47:55 +0100
+Message-ID: <CAOpGCn+PhxqRb=UjKM=z1q79u_iCH=RKW1=DDGUbWnBf4Q0kog@mail.gmail.com>
+Subject: Re: QNX VM hang on Qemu
+To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, 
+ Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Stefano Stabellini <stefano.stabellini@amd.com>
+Content-Type: multipart/alternative; boundary="0000000000007ef07606129cfa1b"
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=faiqueali.109@gmail.com; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -166,43 +106,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce range_list_free(), which takes a GList of ranges
-and frees the list and each range.
+--0000000000007ef07606129cfa1b
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Sven Schnelle <svens@stackframe.org>
----
- include/qemu/range.h | 5 +++++
- util/range.c         | 5 +++++
- 2 files changed, 10 insertions(+)
+Hi Cl=C3=A9ment,
 
-diff --git a/include/qemu/range.h b/include/qemu/range.h
-index 530b0c7db1..4ff9799d89 100644
---- a/include/qemu/range.h
-+++ b/include/qemu/range.h
-@@ -240,4 +240,9 @@ void range_inverse_array(GList *in_ranges,
- void range_list_from_string(GList **out_ranges, const char *filter_spec,
-                             Error **errp);
- 
-+/*
-+ * Free a list of ranges.
-+ */
-+void range_list_free(GList *ranges);
-+
- #endif
-diff --git a/util/range.c b/util/range.c
-index bd2d0961bd..7234ab7a53 100644
---- a/util/range.c
-+++ b/util/range.c
-@@ -197,3 +197,8 @@ out:
-     g_free(range);
-     g_strfreev(ranges);
- }
-+
-+void range_list_free(GList *ranges)
-+{
-+    g_list_free_full(ranges, g_free);
-+}
--- 
-2.43.2
+So the output of the command
+|  $ qemu-system-aarch64 -M xlnx-zcu102 -m 4G -no-reboot -nographic
+-kernel qnx.img
+is
 
+$ pulseaudio: set_sink_input_volume() failed
+$ pulseaudio: Reason: Invalid argument
+$ pulseaudio: set_sink_input_mute() failed
+$ pulseaudio: Reason: Invalid argument
+
+I am not using the "mkifs" rather I am using the command below..
+
+$ mkqnximage --type=3Dqemu --arch=3Daarch64le --build  --ssh-ident=3Dnone
+
+if I use the --run option with the command it creates a VM which is working
+fine.
+but when I use this image, with qemu command terminal is getting stuck.
+
+
+BR!
+Faiq
+
+
+
+On Fri, Mar 1, 2024 at 4:29=E2=80=AFPM Cl=C3=A9ment Chigot <chigot@adacore.=
+com> wrote:
+
+> Hi Faiq,
+>
+> On Fri, Feb 23, 2024 at 3:55=E2=80=AFPM Faiq Ali Sayed <faiqueali.109@gma=
+il.com>
+> wrote:
+> >
+> > So as far as my understanding, we provide these binaries using Qemu
+> command as depicted in the example you provided and there is no way I fou=
+nd
+> to put them into a single image.
+> > Regarding the overlapping space, I don't have much idea but I think we
+> could provide a starting address separately to these images something lik=
+e
+> addr=3D0x00100000.
+>
+> Where is this 0x00100000 address coming from ? Could you confirm with
+> "readelf -h" that this is the entry point of your image ?
+>
+> Alternatively and that's what we used locally, qemu is able to guess
+> the entry point of an image, when passed from -kernel. Therefore, our
+> command simply looks like:
+>   |  $ qemu-system-aarch64 -M xlnx-zcu102 -m 4G -no-reboot -nographic
+> -kernel qnx.img
+>
+> I'm not the one having built the qnx.img we're using. But it looks
+> pretty standard at the first look, made with "mkifs" and the kernel
+> specs from zcu102 evaluation kit.
+>
+> Hope it helps,
+> Cl=C3=A9ment
+>
+> > So as per your suggestion, I compared my images and I found that the
+> image does not show a virtual disk, and other commands like mkdir, do not
+> have these binaries.
+> > So these binaries are not included at the time of image creation and I
+> don't exactly know that how can we add these binaries into the QNX image.
+> >
+> > The Image that is currently installed in real hardware does not have a
+> debugging symbol, so I can't use GDB  to debug that.
+> > Now I am looking for a way to create the correct QNX OS image for Qemu.
+> >
+> > Any lead in this regard will be really helpful :)
+> >
+>
+
+
+--=20
+Kind Regard-
+Faiq Ali Sayed
+
+--0000000000007ef07606129cfa1b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi Cl=C3=A9ment,</div><div><br></div><div>So the outp=
+ut of the command <br></div><div> <span style=3D"background-color:rgb(243,2=
+43,243)">|=C2=A0 $ qemu-system-aarch64 -M xlnx-zcu102 -m 4G -no-reboot -nog=
+raphic<br>
+-kernel qnx.img</span></div><div></div><div>is <br></div><div></div><div><b=
+r></div><div>$ pulseaudio: set_sink_input_volume() failed<br>$ pulseaudio: =
+Reason: Invalid argument<br>$ pulseaudio: set_sink_input_mute() failed<br>$=
+ pulseaudio: Reason: Invalid argument</div><div></div><div><br></div><div>I=
+ am not using the &quot;mkifs&quot; rather I am using the command below..</=
+div><div><br></div><div>$ mkqnximage --type=3Dqemu --arch=3Daarch64le --bui=
+ld=C2=A0 --ssh-ident=3Dnone</div><div><br></div><div>if I use the --run opt=
+ion with the command it creates a VM which is working fine.</div><div>but w=
+hen I use this image, with qemu command terminal is getting stuck.</div><di=
+v><br></div><div><br></div><div>BR!</div><div>Faiq<br></div><div><br></div>=
+<div><br></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=
+=3D"gmail_attr">On Fri, Mar 1, 2024 at 4:29=E2=80=AFPM Cl=C3=A9ment Chigot =
+&lt;<a href=3D"mailto:chigot@adacore.com">chigot@adacore.com</a>&gt; wrote:=
+<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8=
+ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Hi Faiq,<br>
+<br>
+On Fri, Feb 23, 2024 at 3:55=E2=80=AFPM Faiq Ali Sayed &lt;<a href=3D"mailt=
+o:faiqueali.109@gmail.com" target=3D"_blank">faiqueali.109@gmail.com</a>&gt=
+; wrote:<br>
+&gt;<br>
+&gt; So as far as my understanding, we provide these binaries using Qemu co=
+mmand as depicted in the example you provided and there is no way I found t=
+o put them into a single image.<br>
+&gt; Regarding the overlapping space, I don&#39;t have much idea but I thin=
+k we could provide a starting address separately to these images something =
+like addr=3D0x00100000.<br>
+<br>
+Where is this 0x00100000 address coming from ? Could you confirm with<br>
+&quot;readelf -h&quot; that this is the entry point of your image ?<br>
+<br>
+Alternatively and that&#39;s what we used locally, qemu is able to guess<br=
+>
+the entry point of an image, when passed from -kernel. Therefore, our<br>
+command simply looks like:<br>
+=C2=A0 |=C2=A0 $ qemu-system-aarch64 -M xlnx-zcu102 -m 4G -no-reboot -nogra=
+phic<br>
+-kernel qnx.img<br>
+<br>
+I&#39;m not the one having built the qnx.img we&#39;re using. But it looks<=
+br>
+pretty standard at the first look, made with &quot;mkifs&quot; and the kern=
+el<br>
+specs from zcu102 evaluation kit.<br>
+<br>
+Hope it helps,<br>
+Cl=C3=A9ment<br>
+<br>
+&gt; So as per your suggestion, I compared my images and I found that the i=
+mage does not show a virtual disk, and other commands like mkdir, do not ha=
+ve these binaries.<br>
+&gt; So these binaries are not included at the time of image creation and I=
+ don&#39;t exactly know that how can we add these binaries into the QNX ima=
+ge.<br>
+&gt;<br>
+&gt; The Image that is currently installed in real hardware does not have a=
+ debugging symbol, so I can&#39;t use GDB=C2=A0 to debug that.<br>
+&gt; Now I am looking for a way to create the correct QNX OS image for Qemu=
+.<br>
+&gt;<br>
+&gt; Any lead in this regard will be really helpful :)<br>
+&gt;<br>
+</blockquote></div><br clear=3D"all"><br><span class=3D"gmail_signature_pre=
+fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><div dir=3D"l=
+tr"><div dir=3D"ltr">
+<div><span style=3D"color:rgb(34,34,34)">Kind Regard-</span><br style=3D"co=
+lor:rgb(34,34,34)"><div dir=3D"ltr" style=3D"color:rgb(34,34,34)"><div dir=
+=3D"ltr"><div dir=3D"ltr"><font color=3D"#073763">Faiq Ali Sayed</font></di=
+v></div></div></div>
+<div><font style=3D"background-color:rgb(255,255,255)" size=3D"1"><br></fon=
+t></div><br></div></div></div>
+
+--0000000000007ef07606129cfa1b--
 
