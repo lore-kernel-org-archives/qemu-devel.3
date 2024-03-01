@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0EF2C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 14:39:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C977BC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 14:39:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg428-0007it-1z; Fri, 01 Mar 2024 09:38:44 -0500
+	id 1rg42e-0007qi-RE; Fri, 01 Mar 2024 09:39:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rg426-0007hK-BJ
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 09:38:42 -0500
-Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
+ id 1rg42e-0007qQ-AS
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 09:39:16 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rg424-0000ft-5F
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 09:38:41 -0500
-Received: by mail-lf1-x135.google.com with SMTP id
- 2adb3069b0e04-5131c0691feso2667113e87.1
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 06:38:38 -0800 (PST)
+ id 1rg42c-0000iZ-Fs
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 09:39:16 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-564647bcdbfso2942599a12.2
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 06:39:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709303917; x=1709908717; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709303952; x=1709908752; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=saLjE0nD9m0n/GVuxHoNEFxY3eiqWZoV8vZ6BggC4XE=;
- b=wp8i6eZMNPV+sOJ5GWUq8XrdbkkQrZo9VcBQ+15Bgvg5FhSNeG4OuMThwsxpcCmMp4
- qtshvRIMUZm9e30mAtSfTpxbKLd7m1d2Rv0FxtVJjftLqDIY26KMwk1RKoNcEVfjciOr
- m+TEiR+uvpk7/Cljaz2bvBaaRRsqydNhTxptd8pl3UBs73mNBzFDV2gtIO5ls6WXoBF8
- gx/H549KHe82xxX2aMdAIMN57/Gq2o2phC8DhMxK6TjJfLlfk9A/80H6qcqqCW4xLYW7
- pIJZhf3b/7aQr73MFZXAcNRNWAeJi1ivmOTHEOZeYxVkPPkX7bwzLSIBykknZGJ4tPfd
- zieQ==
+ bh=YK8BQ4ac4EH/yN+dGS2IChQwa+eLXblrrFDHKStMHdU=;
+ b=yOAkdCgqQ46R8A9LiA01rFfyL9xdkd1cKUVTKlNNnO3F9NLH4YhMmTuubO1psP3QcV
+ bEeYP2++m1E9a69xLnGyQA9luFdYcx1wBjtZT+MjSQXj2huWbObraOPYJXyIaBPFcPVc
+ V3OewgwyzxdGUuSzWHwGYoJlxju3H1Q7q0+oT3wraXtiP+ozlbdhhD4uNwO9jmkefFRd
+ JhSrq3kOjLvAk6PuuoGAgQXdkMc1LBbT91ycSb2G5qaZX8J4ujvD0GkvL0+whGvLSe34
+ SwATcKn++zSIy0bNshbpECGTRkbO0zfs9HPiGoJ6NjY+BeAjG9uFmqKGRT+Zq6bJMFbA
+ HX0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709303917; x=1709908717;
+ d=1e100.net; s=20230601; t=1709303952; x=1709908752;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=saLjE0nD9m0n/GVuxHoNEFxY3eiqWZoV8vZ6BggC4XE=;
- b=hw0TjWGbpqjvSZ4UHL/tXAZsEEKb9DBHfhOClMXA7fBDyAcXXmkO40yTNI51j6GZY8
- FlaKTSTWm9LruDJhPKN2DqTgW3G8lXUmfzE6K6dZjfgvG/mgCShHpB16CGQZ6xfDaNJb
- Dyh29tsXkHKwW/suyLuzMp8q+CJgCji5Myj6DI28pmLzBev1KolduO6f+RSPGpxI2BqY
- x9mhM1S8VVMVNTasxCA3VDehXw974qBDRyAsst5sACGsFyBXlJpJneF8PUUhGsfoOb7O
- QEPlovTR5ymn3c5if3aUAvUswllwOMeHTB5kNoYh/PCuBrH9ovErOH4VlU5cp4/1zPkU
- ebUg==
-X-Gm-Message-State: AOJu0YwUTbJ+nq8wyp21ErElbag3YsAQ//fAxqlLwy/p94YZyLAoh/Bd
- P8gObykADIrFirMwLXcCKGOE1YfgyvXBGjARijvyVoTuFCZuL0OkXRl7i9F+0NuF/JxhHCS8GFe
- jPkvPpMsN/Ph2u/jIJjE4qQh9+mMeKFCL0SHQjP41uRn8iJLV
-X-Google-Smtp-Source: AGHT+IGJXYwwfNzDcowP/qQO5gS7/xrmttTxP7Vwma/X6TjdMI0QxIWajtHMjc4jWPibPjru79xJoivCvKz5PoVPkiE=
-X-Received: by 2002:ac2:58d0:0:b0:512:cef7:4754 with SMTP id
- u16-20020ac258d0000000b00512cef74754mr1184887lfo.5.1709303917001; Fri, 01 Mar
- 2024 06:38:37 -0800 (PST)
+ bh=YK8BQ4ac4EH/yN+dGS2IChQwa+eLXblrrFDHKStMHdU=;
+ b=HnRVE3vMJ3CuJfqp/5EztHU7tFa+6rakJnohgNyWNcX2ayeiM3I9nW6leB+TJgVG+w
+ ki+ffVBjD+Kx36EzxmOGD9RuUE3oNRy9SGga2L+gmYdOK0xwYeqE8NwrjZi6sk99yX35
+ yvHsemFDjHfJS52+vJN0nK5BwxwgcOabnHZ0JBGWxwSdlzL73UwteAQMWiQHUoVATpVY
+ gHri8w+q+clHTcgyl67EkHPqbh3OJcXgpFExaYQBin5t08oQahlZBOywl7qcer3ofQw5
+ wCjLWZwg81NZ0iUV4yCz8uiLKZgnTi9ItwtZ5t0vSE0MqAALhB4unxe1ve6QvL/p4pWA
+ U20w==
+X-Gm-Message-State: AOJu0YxFagryfq9UwjDtRUNPko6z2PpLQa4QAQW5g8526LQeyEBXLZjt
+ u5+svJl71RvkPbh4shOgRgAgNLMzc37amLIloCrqpYwtVa4dgXoB5RkJrFi//9IslpiQqyD9Eyq
+ OpWPy7g1Phz2nGFDj2xipulID7HrBv6uVGvyVIw==
+X-Google-Smtp-Source: AGHT+IG7++Nf/UY74fflJUozRLyZFqsrM6rRuVSp4nPAqrIrSdpOFFP1MYQxjwpB+ki+Tl5RkdZ+guv3oz5/5UBXWMg=
+X-Received: by 2002:a05:6402:323:b0:566:5ea2:1257 with SMTP id
+ q3-20020a056402032300b005665ea21257mr1408686edw.16.1709303952525; Fri, 01 Mar
+ 2024 06:39:12 -0800 (PST)
 MIME-Version: 1.0
-References: <20240229113842.619738-1-gaosong@loongson.cn>
-In-Reply-To: <20240229113842.619738-1-gaosong@loongson.cn>
+References: <20240301080953.66448-1-thuth@redhat.com>
+In-Reply-To: <20240301080953.66448-1-thuth@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 1 Mar 2024 14:38:25 +0000
-Message-ID: <CAFEAcA_P+1+tvSuLgZ-tkU8W=i-r+KjHCQi=n4TVwE_8xXgcZA@mail.gmail.com>
-Subject: Re: [PULL v2 0/1] loongarch-to-apply queue
-To: Song Gao <gaosong@loongson.cn>
+Date: Fri, 1 Mar 2024 14:39:01 +0000
+Message-ID: <CAFEAcA8BGHP4okzXO7o9hCVzjDaUH=fthWRQd1_Yo_mtnauWSQ@mail.gmail.com>
+Subject: Re: [PULL 0/6] Misc fixes (libqos vring, Kconfig, TLS io channels,
+ ...)
+To: Thomas Huth <thuth@redhat.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::135;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x135.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,24 +88,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 29 Feb 2024 at 11:38, Song Gao <gaosong@loongson.cn> wrote:
+On Fri, 1 Mar 2024 at 08:09, Thomas Huth <thuth@redhat.com> wrote:
 >
-> The following changes since commit bfe8020c814a30479a4241aaa78b63960655962b:
+>  Hi Peter!
 >
->   Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2024-02-28 14:23:21 +0000)
+> The following changes since commit c0c6a0e3528b88aaad0b9d333e295707a195587b:
+>
+>   Merge tag 'migration-next-pull-request' of https://gitlab.com/peterx/qemu into staging (2024-02-28 17:27:10 +0000)
 >
 > are available in the Git repository at:
 >
->   https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240229
+>   https://gitlab.com/thuth/qemu.git tags/pull-request-2024-03-01
 >
-> for you to fetch changes up to c6e9847fc4becba561c631c4505e3b05d4926184:
+> for you to fetch changes up to 462945cd22d2bcd233401ed3aa167d83a8e35b05:
 >
->   loongarch: Change the UEFI loading mode to loongarch (2024-02-29 19:32:45 +0800)
+>   chardev/char-socket: Fix TLS io channels sending too much data to the backend (2024-03-01 08:27:33 +0100)
 >
 > ----------------------------------------------------------------
-> pull-loongarch-20240229
->
-> V2: fix build error on mipsel
+> * Fix some bugs in the vring setup of libqos
+> * Fix GIC settings when using --without-default-devices
+> * Fix USB PCAP streams on Windows
+> * Remove temporary files from test-util-sockets
+> * Fix TLS io channels sending too much data to the backend
 >
 
 
