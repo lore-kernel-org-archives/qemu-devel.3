@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6531C48BF6
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 01:44:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CE6DC48BF6
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 01:45:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfrw5-0008E1-55; Thu, 29 Feb 2024 20:43:41 -0500
+	id 1rfrxk-0001i9-V2; Thu, 29 Feb 2024 20:45:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfrw4-0008Dm-28
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 20:43:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfrxj-0001eB-Ai
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 20:45:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfrw2-000502-2n
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 20:43:39 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfrxh-0005ap-UX
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 20:45:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709257417;
+ s=mimecast20190719; t=1709257521;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=fMvQcXfeSpZN+WU0P10PoJ1mOIt3MipilwZYJMeaV4Y=;
- b=Cl5Vln5VpqTjUucu1R3UWyi1pyHa13QMHbg9ozPLhs7FHftcj+sXyCglsHZIz1SrJI3p4Z
- /DyeEaCqyImdPrB+0FtXaR9DIOY8G1kn86XLEsqy82eUXUpS7G7zdG7ljAoj2yqGuwt0aa
- I37pP9L/jI3SK9KmQiJHcZE/I61ejhI=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=q1FjfDFV+f389A/PryCuuJ7eK9FlIA18XLdQqfboaBY=;
+ b=Y6bVclvLrLPoMcXEGGUvPpMpulN3TJr2uFzSV0JPAQ5/90eOLHPvbDKiQMhiqKtk+ZAmq8
+ sa9mbLa2XAo2omipzcJYkYbNcwZUAYLSVbiqaRH4n6KUP2/nrTEJ0nwnYDv3PH/lu/iMe4
+ rfhrP/adu5dU9XtDP5Gt9iYgkWE4YrA=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-83-3Zax6bJDNvKSjEGMRXC-qg-1; Thu, 29 Feb 2024 20:43:35 -0500
-X-MC-Unique: 3Zax6bJDNvKSjEGMRXC-qg-1
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-1dc2d4c7310so2964705ad.0
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 17:43:35 -0800 (PST)
+ us-mta-346-aMIdcjJOM3WAoU84HdytKA-1; Thu, 29 Feb 2024 20:45:19 -0500
+X-MC-Unique: aMIdcjJOM3WAoU84HdytKA-1
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-5dc97ac2facso546975a12.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 17:45:19 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709257414; x=1709862214;
+ d=1e100.net; s=20230601; t=1709257518; x=1709862318;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fMvQcXfeSpZN+WU0P10PoJ1mOIt3MipilwZYJMeaV4Y=;
- b=JFrKbZr3GrZR00D1/+tvAzlO5TYRYSFgkYP4/HNnxtkyY19Xozi3Ng2c3Xfhrv/Z1k
- JT9UmTvVlNrovxsjp3CEwH1WRWb9o4q+hRt3v1arsNESCKspfGJ2Xx3khvvu2qCPRYZg
- vgRi2USIuWT5SzyCZWUCge/oQMAMh7/aJ6vwX9gEBNBXnVX9j7/dnWQR7+2Ob3ZxvkyF
- CqtqYHMCYDRS+CRVEoekUJwovN6xCLXxOR+rmZzBHI0inPza/AMZ3Pci4JoCn/+/jEC8
- v9WQ1Ymg7SDdJqBii0cqoMrx5SKidCG+oKShjjH+xZygdewf4cfmCxeYwJ0ndX9x9c9V
- KSNw==
-X-Gm-Message-State: AOJu0Yyq9ThezUEFwNfOOVADNceEoA9K09lHFZSDcKsBtVJnwRQ8aFXF
- bcCkUPt8bYbW0+HoQ8Y4SIWxiY8jSThdnBBw9rMM9D0GYgdNU2s4bqIcEV5cg6xhHPeiDxWzh0u
- fZQh073cg90rOvtLydhjyKHGIYaAxjjyDTvnajS7I9md+U5VjnxsX
-X-Received: by 2002:a17:902:d5cb:b0:1dc:51ac:88ef with SMTP id
- g11-20020a170902d5cb00b001dc51ac88efmr261132plh.6.1709257414578; 
- Thu, 29 Feb 2024 17:43:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHF3NUtPUfQ1QelBnDP0Ful3g668m27Z4zeebZ3sdFAryxpYSjao/m+GY9NgC+VDg2bFKfSAQ==
-X-Received: by 2002:a17:902:d5cb:b0:1dc:51ac:88ef with SMTP id
- g11-20020a170902d5cb00b001dc51ac88efmr261122plh.6.1709257414169; 
- Thu, 29 Feb 2024 17:43:34 -0800 (PST)
+ bh=q1FjfDFV+f389A/PryCuuJ7eK9FlIA18XLdQqfboaBY=;
+ b=e3nvWPsnxRwr3sf4dsZlOrCSz4JN8fJmKmGWEg9/7PRJvyUHhn3b1g7rF0fR/v1tIE
+ EDk9vN8icrOffxsOpDQWg99Z1MuW18czKsBrgQoFZF4UpgFIx0BFZV2rvxd0itEJ4Blr
+ DLucq8PPsSdGhGfqjZmkIBrcXoO/LnDeEyEufZjBH0tPS0wKy0IubyBfapJakWTP/F/J
+ 5bTWbE8npt5Nu3//u8vK8AoaKH8wG/hfKJVHuGe9DhvO53qUibm1PExAAIQlBeQbL3nk
+ 7irWIxvLwgOdaiNbkTGZV6pBE9Xt0pBQtuXhuaDsvDqt0C0PyrNCoQtuwhNwodzNMnSN
+ SIAA==
+X-Gm-Message-State: AOJu0YzalrnDiHS/09EXuPQvZLe1m11pewelsGdjS3PZk0DHHOxQS6uY
+ FINTkKhB03PUVf1J6k0nKVw5g1TPMXx5DGgYmD2zgYL+cMtLPbkdPh0ax8JYUlZKmpoE0SXISU1
+ jWJrTHIpg0AMXnxT/oVz6zCyg9XwLb4OA0yeLFUqrkpV1e+ZrH58b
+X-Received: by 2002:a05:6a00:92a0:b0:6e5:35a7:5333 with SMTP id
+ jw32-20020a056a0092a000b006e535a75333mr507842pfb.2.1709257518652; 
+ Thu, 29 Feb 2024 17:45:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE5SeHn0JY2hVuZYGagJnp+Q9ZlWXg5lZZB2hZnxqJGrbjUAQbvl9YcYV4YVlTtY+YhZb8mMQ==
+X-Received: by 2002:a05:6a00:92a0:b0:6e5:35a7:5333 with SMTP id
+ jw32-20020a056a0092a000b006e535a75333mr507831pfb.2.1709257518248; 
+ Thu, 29 Feb 2024 17:45:18 -0800 (PST)
 Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- le8-20020a170902fb0800b001dc8db3150asm2177108plb.199.2024.02.29.17.43.32
+ gx1-20020a056a001e0100b006e59a311e2dsm1692623pfb.92.2024.02.29.17.45.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Feb 2024 17:43:33 -0800 (PST)
-Date: Fri, 1 Mar 2024 09:43:27 +0800
+ Thu, 29 Feb 2024 17:45:17 -0800 (PST)
+Date: Fri, 1 Mar 2024 09:45:11 +0800
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
  Claudio Fontana <cfontana@suse.de>
-Subject: Re: [PATCH v6 17/23] migration/multifd: Add outgoing QIOChannelFile
- support
-Message-ID: <ZeEyvzBHvsmF56Ur@x1n>
+Subject: Re: [PATCH v6 19/23] migration/multifd: Prepare multifd sync for
+ mapped-ram migration
+Message-ID: <ZeEzJ734MPmFfc7B@x1n>
 References: <20240229153017.2221-1-farosas@suse.de>
- <20240229153017.2221-18-farosas@suse.de>
+ <20240229153017.2221-20-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240229153017.2221-18-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20240229153017.2221-20-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,21 +100,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 29, 2024 at 12:30:11PM -0300, Fabiano Rosas wrote:
-> Allow multifd to open file-backed channels. This will be used when
-> enabling the mapped-ram migration stream format which expects a
-> seekable transport.
+On Thu, Feb 29, 2024 at 12:30:13PM -0300, Fabiano Rosas wrote:
+> The mapped-ram migration can be performed live or non-live, but it is
+> always asynchronous, i.e. the source machine and the destination
+> machine are not migrating at the same time. We only need some pieces
+> of the multifd sync operations.
 > 
-> The QIOChannel read and write methods will use the preadv/pwritev
-> versions which don't update the file offset at each call so we can
-> reuse the fd without re-opening for every channel.
+> multifd_send_sync_main()
+> ------------------------
+>   Issued by the ram migration code on the migration thread, causes the
+>   multifd send channels to synchronize with the migration thread and
+>   makes the sending side emit a packet with the MULTIFD_FLUSH flag.
 > 
-> Contrary to the socket migration, the file migration doesn't need an
-> asynchronous channel creation process, so expose
-> multifd_channel_connect() and call it directly.
+>   With mapped-ram we want to maintain the sync on the sending side
+>   because that provides ordering between the rounds of dirty pages when
+>   migrating live.
 > 
-> Note that this is just setup code and multifd cannot yet make use of
-> the file channels.
+> MULTIFD_FLUSH
+> -------------
+>   On the receiving side, the presence of the MULTIFD_FLUSH flag on a
+>   packet causes the receiving channels to start synchronizing with the
+>   main thread.
+> 
+>   We're not using packets with mapped-ram, so there's no MULTIFD_FLUSH
+>   flag and therefore no channel sync on the receiving side.
+> 
+> multifd_recv_sync_main()
+> ------------------------
+>   Issued by the migration thread when the ram migration flag
+>   RAM_SAVE_FLAG_MULTIFD_FLUSH is received, causes the migration thread
+>   on the receiving side to start synchronizing with the recv
+>   channels. Due to compatibility, this is also issued when
+>   RAM_SAVE_FLAG_EOS is received.
+> 
+>   For mapped-ram we only need to synchronize the channels at the end of
+>   migration to avoid doing cleanup before the channels have finished
+>   their IO.
+> 
+> Make sure the multifd syncs are only issued at the appropriate times.
+> 
+> Note that due to pre-existing backward compatibility issues, we have
+> the multifd_flush_after_each_section property that can cause a sync to
+> happen at EOS. Since the EOS flag is needed on the stream, allow
+> mapped-ram to just ignore it.
+> 
+> Also emit an error if any other unexpected flags are found on the
+> stream.
 > 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
