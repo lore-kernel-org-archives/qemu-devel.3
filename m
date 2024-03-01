@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE135C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 21:11:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8611DC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 21:12:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgA9S-00038i-Us; Fri, 01 Mar 2024 16:10:42 -0500
+	id 1rgAAk-0004im-M8; Fri, 01 Mar 2024 16:12:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgA9R-00038L-KK
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 16:10:41 -0500
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1rgAAi-0004ge-PM
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 16:12:00 -0500
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgA9P-0005gr-H9
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 16:10:41 -0500
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-6d9f94b9186so2449860b3a.0
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 13:10:38 -0800 (PST)
+ id 1rgAAh-0005xC-Dn
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 16:12:00 -0500
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-5ce2aada130so2295695a12.1
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 13:11:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709327438; x=1709932238; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709327518; x=1709932318; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=D4HeIULekpGrsrojeqSX33LBOUEmQtyGU7qBzXdm0K0=;
- b=Rktp30KP/TVJKjqlC3sAtl74LqCVfR7phu76MNTKa7zuRH43YxW/I74ET9Nlq0npHN
- +9p61fVwpaIoOvYiYRNCaxyyJpUKoktdnJtVxnBuW3di4CwFpENImrLLSKWejwoLkOqK
- rfVvYbOF8exv8kb1rU7xVP4TDskgdVmM2XTMh8qXOOi3DvPRanqEg7LjfVlaM0XJJeCG
- x3TTWM+fiZG+hKjZaLSGiNAGn4uayMsHMvRc40Y6Pj4SApMd7qbaG1073rJ5IWwRXAB3
- 0iTXHIZ0gPadyebCTl/fjRtQ1tVdNrvSfs8QkQ3RM1Qe7Gq3l8tR/XbEcatMUAkg+c3q
- Ozjw==
+ bh=mWdjiPjr30glgV0WFI/rH5rwT595It0dyq+bAo7uky4=;
+ b=LMW+hD0ecKupOnm0PLIz129NkO0MC0ntNQ1MRiVLlyuG91kuYkj1UXJW9sHQmMeipz
+ j07qx1rVqtEit4ulVT++j3gzrfclarz8A6LIkPC6CV92CVBCB9ErrVbBlQVRbw2NxItO
+ Uj/mrbp/3DNuQPIcm0pj04pKg1L+XiVzyOHIQZfllmz/VKmhWod5nFK0qbJq3fo54UVe
+ KNTrxoo8Ip3zY9cUIWMZnuvS/n8n++heaCOcf7dBikAIjLKjkC4i1AoQDdZOeq5eg8+S
+ 6MLVNx/uANs3hnvUNXtnoHh9n+TzkgWi1bv2JPUyNblbJryZiz4HK+jh8nnoxN5J83mY
+ vNbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709327438; x=1709932238;
+ d=1e100.net; s=20230601; t=1709327518; x=1709932318;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=D4HeIULekpGrsrojeqSX33LBOUEmQtyGU7qBzXdm0K0=;
- b=U2cdju4C4WSC0Ks3+dG5VBJqgwrjV+AlaHV/1tEFVNpHrpwou17JNHJ8yI/jxu0YTB
- 51+/5Bz1jBgGbzNk1joIh/uIhly7wCl9pGIqI0KPRrV1FTF9CYcxeB1tOf3yTdqrwoRg
- 1v2YZGvH0JY61TlcgoI8+I/Et31D3i5S5kWWE5f4kcRrhA7KFPLNRfVQvONDMgv2Nznk
- k/CwulddDWUGbEwi9bQHxzCE0gmxfRDkd5Wm6Bff/lX3QvDu+7JD/kMhk5DttD6zLDN3
- nBXgxLIz/OFiCgJNfIcplSv+EzC0OlZL0G1FCkGFSKuSb/XBI1qWliAp0P2tprIDiOVv
- lKeg==
+ bh=mWdjiPjr30glgV0WFI/rH5rwT595It0dyq+bAo7uky4=;
+ b=tezgngMS7g1cmQ9ECWCE5gbbtYLeVjRTAkzO+JstlZjtbR3I2g6gQSOrak84gTmZ99
+ R4cjiZd1QD1BcbY6vc64fcLMf7EeW8n5JHJ6+/pV5E/EUySgEPne+siMweEiz9ciVN0q
+ hZyWMSjOV178Jznh7k6OEounfqDl20deiY1+8u3ERkgrPkdTh4/CCr0D486qG5BYIBUJ
+ 75bToFH1Wa/yhCy0mQBWnC16OvLTjNDx22GWJDT8d9TsBbMt4VKuyIU6KwaxrlVmOLCR
+ X0xTaXFMCTEfeDYp0lQex7QRZwXzk7cjSrQTIkpjWdKnzHb3jJkblPYPpGJB3MM/mbMi
+ A6Lw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVlDu0y6q+2J4YnCRUTISmHlr+h6pzkXQ1pUPH11a01PA1/++rGiZNFM8VRPs5rbLfMkKeV6QtYVI6HqyD01qnC58szg0I=
-X-Gm-Message-State: AOJu0Yyh0xaXSG4Ozmg5HHhp+xXZNGyrz6W3HHNX3fi+ysz7oZKsGO2W
- QstSaWw21+MLPGgh8N8Mp7JN0NYX42TZ7C0kYuDg6Jmgc3WnsjJB/B8PVIcfHx8=
-X-Google-Smtp-Source: AGHT+IFoV+Wit2vUo/E9txcyE3v6GFxsiBEhcJzLhm78y73oGJULNcexTPdtt1g+UsI+hpiKxzs07Q==
-X-Received: by 2002:a05:6a20:429f:b0:1a1:461a:3320 with SMTP id
- o31-20020a056a20429f00b001a1461a3320mr75693pzj.9.1709327437865; 
- Fri, 01 Mar 2024 13:10:37 -0800 (PST)
+ AJvYcCXrL6LZNCdOPsTiRvd/KeNOTRaPt0YhIIClXwiQVEOUUtsT9HWIJudEpsOCSFf+Q7HyE/ZdAPig65zPflnN+KvlEHjales=
+X-Gm-Message-State: AOJu0Yy8Sc1NmV9bkoPmx3XdEm8Qy4foGuollTiiERFTmIhx+S+fGI7i
+ X5agHP5S1Xwl+AWM+e4yH6ZNSCfVAJf7DmiWJ2YVrznAbO6sGPaHZrr4wGeUICY=
+X-Google-Smtp-Source: AGHT+IHWegscd1XQ5vmJgnYe9GOgyi+NIHYpKR6zt4v5n4jTEhUyntox8EVf4IPwvYtX2WwtM0Q5LA==
+X-Received: by 2002:a17:90a:9b0b:b0:29a:2788:c9d1 with SMTP id
+ f11-20020a17090a9b0b00b0029a2788c9d1mr2800110pjp.39.1709327517840; 
+ Fri, 01 Mar 2024 13:11:57 -0800 (PST)
 Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
  [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- i2-20020a17090a718200b0029ab17eaa40sm3654043pjk.3.2024.03.01.13.10.36
+ i2-20020a17090a718200b0029ab17eaa40sm3654043pjk.3.2024.03.01.13.11.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 01 Mar 2024 13:10:37 -0800 (PST)
-Message-ID: <6efb383f-4655-48ff-b787-e048ca076773@linaro.org>
-Date: Fri, 1 Mar 2024 11:10:34 -1000
+ Fri, 01 Mar 2024 13:11:57 -0800 (PST)
+Message-ID: <0404e89e-9d15-4f4c-9a0a-b9f4c46b9eb9@linaro.org>
+Date: Fri, 1 Mar 2024 11:11:55 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/8] target/arm: use FIELD macro for CNTHCTL bit
- definitions
+Subject: Re: [PATCH 4/8] target/arm: Don't allow RES0 CNTHCTL_EL2 bits to be
+ written
 Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 Cc: Jean-Philippe Brucker <jean-philippe@linaro.org>
 References: <20240301183219.2424889-1-peter.maydell@linaro.org>
- <20240301183219.2424889-4-peter.maydell@linaro.org>
+ <20240301183219.2424889-5-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240301183219.2424889-4-peter.maydell@linaro.org>
+In-Reply-To: <20240301183219.2424889-5-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,14 +101,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/1/24 08:32, Peter Maydell wrote:
-> We prefer the FIELD macro over ad-hoc #defines for register bits;
-> switch CNTHCTL to that style before we add any more bits.
+> Don't allow the guest to write CNTHCTL_EL2 bits which don't exist.
+> This is not strictly architecturally required, but it is how we've
+> tended to implement registers more recently.
+> 
+> In particular, bits [19:18] are only present with FEAT_RME,
+> and bits [17:12] will only be present with FEAT_ECV.
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   target/arm/internals.h | 19 +++++++++++++++++--
->   target/arm/helper.c    |  9 ++++-----
->   2 files changed, 21 insertions(+), 7 deletions(-)
+>   target/arm/helper.c | 18 ++++++++++++++++++
+>   1 file changed, 18 insertions(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
