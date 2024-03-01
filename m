@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BB3FC5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 17:30:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F436C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 17:30:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg6h6-0003pN-Ka; Fri, 01 Mar 2024 12:29:12 -0500
+	id 1rg6h3-0003o4-VE; Fri, 01 Mar 2024 12:29:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1rg6h3-0003nb-8P
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 12:29:09 -0500
+ id 1rg6h1-0003mX-Tp
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 12:29:07 -0500
 Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1rg6gx-0005d2-Vb
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 12:29:08 -0500
+ id 1rg6gx-0005d0-VY
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 12:29:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=virtuozzo.com; s=relay; h=MIME-Version:Message-Id:Date:Subject:From:
- Content-Type; bh=TCjNFTmDj5adwMm8mWkF67k/DsXhNQZYrvO3a6rbjt8=; b=s9G+joeXG388
- rOyPVvjEvjBmzFXLv3zJNu5/RNebrLi9R+PR7JJ/n1FbmHmdtL17u2ppGVn8+MxE+BfQpfQ149zY6
- Iz802ZkYn/d6S6KwAuzKNch9SVYoGVOcz71IEW0orJVy5l4Bmpe8ryXwpgruaJ3y82O47g2fX6jKE
- /kBLoInB+Trq3tgm1jDPBAj7ETdrAMz4wDI/LjbLfB/SVCJjn8dZP88O5Td6JGiBro5Ij0RC+dSkN
- 9siavpHCs1iWf+zk8noMMhGOXPjMqlG3LB0mCPpfeBT7HqDJih8lSXxlLPuStdzEfwnLSdMmafFEX
- hJAh+0JKdTiLffqmSnj4jQ==;
+ Content-Type; bh=GsygPxWNyTKxxDZM8oS5g4+qWI+r/5+qm83ovsg8YcM=; b=qZeClQaVu4KL
+ /XYUTeYpkEmQOhqbNwikPzp0shBV1SVLeSVjebVK5J1TDycMix3esvJDPZ4RYsKo2FTFlKtYNI8Uf
+ OB9TOpDSJoVVxFXaka5sUHqK1dyRmBEymLAqC7NZUUVGqHG483r96jmOxf/ccYElQWWWPVlDngiO3
+ WWt6TCdg+L9yMy4AFDfQftC1Cn0bGMGzumfcPHSceM2X7gvMX+yN1rm29+B5nXO4r8vFTtWT9lb11
+ r1RMKHClbi5WpC50IGnnDM8v3+Qd5TKQHkPa6CpkRH6CSBuNYvToDHdVSUykpYjJ6/ATZiZkZQvfG
+ oUUPFZlhg/2X3CFmK9pR6g==;
 Received: from [130.117.225.1] (helo=dev005.ch-qa.vzint.dev)
  by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1rg6fM-0022sZ-1X;
+ (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1rg6fM-0022sZ-0m;
  Fri, 01 Mar 2024 18:28:57 +0100
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 To: qemu-devel@nongnu.org
 Cc: michael.roth@amd.com, kkostiuk@redhat.com, marcandre.lureau@redhat.com,
  philmd@linaro.org, andrey.drobyshev@virtuozzo.com, den@virtuozzo.com
-Subject: [PATCH v2 7/7] qga/commands-posix: qmp_guest_set_user_password: use
- ga_run_command helper
-Date: Fri,  1 Mar 2024 19:28:58 +0200
-Message-Id: <20240301172858.665135-8-andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH v2 2/7] qga: introduce ga_run_command() helper for guest cmd
+ execution
+Date: Fri,  1 Mar 2024 19:28:53 +0200
+Message-Id: <20240301172858.665135-3-andrey.drobyshev@virtuozzo.com>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20240301172858.665135-1-andrey.drobyshev@virtuozzo.com>
 References: <20240301172858.665135-1-andrey.drobyshev@virtuozzo.com>
@@ -69,142 +69,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There's no need to check for the existence of the "chpasswd", "pw"
-executables, as the exec() call will do that for us.
+When executing guest commands in *nix environment, we repeat the same
+fork/exec pattern multiple times.  Let's just separate it into a single
+helper which would also be able to feed input data into the launched
+process' stdin.  This way we can avoid code duplication.
 
+To keep the history more bisectable, let's replace qmp commands
+implementations one by one.  Also add G_GNUC_UNUSED attribute to the
+helper and remove it in the next commit.
+
+Originally-by: Yuri Pudgorodskiy <yur@virtuozzo.com>
 Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- qga/commands-posix.c | 96 ++++++--------------------------------------
- 1 file changed, 13 insertions(+), 83 deletions(-)
+ qga/commands-posix.c | 140 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 140 insertions(+)
 
 diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index f3f4a05e2d..f2e9496b80 100644
+index 8207c4c47e..781498418f 100644
 --- a/qga/commands-posix.c
 +++ b/qga/commands-posix.c
-@@ -2144,14 +2144,8 @@ void qmp_guest_set_user_password(const char *username,
-                                  Error **errp)
- {
-     Error *local_err = NULL;
--    char *passwd_path = NULL;
--    pid_t pid;
--    int status;
--    int datafd[2] = { -1, -1 };
--    char *rawpasswddata = NULL;
-+    g_autofree char *rawpasswddata = NULL;
-     size_t rawpasswdlen;
--    char *chpasswddata = NULL;
--    size_t chpasswdlen;
- 
-     rawpasswddata = (char *)qbase64_decode(password, -1, &rawpasswdlen, errp);
-     if (!rawpasswddata) {
-@@ -2162,95 +2156,31 @@ void qmp_guest_set_user_password(const char *username,
- 
-     if (strchr(rawpasswddata, '\n')) {
-         error_setg(errp, "forbidden characters in raw password");
--        goto out;
-+        return;
-     }
- 
-     if (strchr(username, '\n') ||
-         strchr(username, ':')) {
-         error_setg(errp, "forbidden characters in username");
--        goto out;
-+        return;
-     }
- 
- #ifdef __FreeBSD__
--    chpasswddata = g_strdup(rawpasswddata);
--    passwd_path = g_find_program_in_path("pw");
-+    g_autofree char *chpasswdata = g_strdup(rawpasswddata);
-+    const char *crypt_flag = (crypted) ? "-H" : "-h";
-+    const char *argv[] = {"pw", "usermod", "-n", username,
-+                          crypt_flag, "0", NULL};
- #else
--    chpasswddata = g_strdup_printf("%s:%s\n", username, rawpasswddata);
--    passwd_path = g_find_program_in_path("chpasswd");
-+    g_autofree char *chpasswddata = g_strdup_printf("%s:%s\n", username,
-+                                                    rawpasswddata);
-+    const char *crypt_flag = (crypted) ? "-e" : NULL;
-+    const char *argv[] = {"chpasswd", crypt_flag, NULL};
- #endif
- 
--    chpasswdlen = strlen(chpasswddata);
--
--    if (!passwd_path) {
--        error_setg(errp, "cannot find 'passwd' program in PATH");
--        goto out;
--    }
--
--    if (!g_unix_open_pipe(datafd, FD_CLOEXEC, NULL)) {
--        error_setg(errp, "cannot create pipe FDs");
--        goto out;
--    }
--
--    pid = fork();
--    if (pid == 0) {
--        close(datafd[1]);
--        /* child */
--        setsid();
--        dup2(datafd[0], 0);
--        reopen_fd_to_null(1);
--        reopen_fd_to_null(2);
--
--#ifdef __FreeBSD__
--        const char *h_arg;
--        h_arg = (crypted) ? "-H" : "-h";
--        execl(passwd_path, "pw", "usermod", "-n", username, h_arg, "0", NULL);
--#else
--        if (crypted) {
--            execl(passwd_path, "chpasswd", "-e", NULL);
--        } else {
--            execl(passwd_path, "chpasswd", NULL);
--        }
--#endif
--        _exit(EXIT_FAILURE);
--    } else if (pid < 0) {
--        error_setg_errno(errp, errno, "failed to create child process");
--        goto out;
--    }
--    close(datafd[0]);
--    datafd[0] = -1;
--
--    if (qemu_write_full(datafd[1], chpasswddata, chpasswdlen) != chpasswdlen) {
--        error_setg_errno(errp, errno, "cannot write new account password");
--        goto out;
--    }
--    close(datafd[1]);
--    datafd[1] = -1;
--
--    ga_wait_child(pid, &status, &local_err);
-+    ga_run_command(argv, chpasswddata, "set user password", &local_err);
-     if (local_err) {
-         error_propagate(errp, local_err);
--        goto out;
--    }
--
--    if (!WIFEXITED(status)) {
--        error_setg(errp, "child process has terminated abnormally");
--        goto out;
--    }
--
--    if (WEXITSTATUS(status)) {
--        error_setg(errp, "child process has failed to set user password");
--        goto out;
--    }
--
--out:
--    g_free(chpasswddata);
--    g_free(rawpasswddata);
--    g_free(passwd_path);
--    if (datafd[0] != -1) {
--        close(datafd[0]);
--    }
--    if (datafd[1] != -1) {
--        close(datafd[1]);
-+        return;
-     }
+@@ -76,6 +76,146 @@ static void ga_wait_child(pid_t pid, int *status, Error **errp)
+     g_assert(rpid == pid);
  }
- #else /* __linux__ || __FreeBSD__ */
+ 
++static void ga_pipe_read_str(int fd[2], char **str, size_t *len)
++{
++    ssize_t n;
++    char buf[1024];
++    close(fd[1]);
++    fd[1] = -1;
++    while ((n = read(fd[0], buf, sizeof(buf))) != 0) {
++        if (n < 0) {
++            if (errno == EINTR) {
++                continue;
++            } else {
++                break;
++            }
++        }
++        *str = g_realloc(*str, *len + n);
++        memcpy(*str + *len, buf, n);
++        *len += n;
++    }
++    close(fd[0]);
++    fd[0] = -1;
++}
++
++/*
++ * Helper to run command with input/output redirection,
++ * sending string to stdin and taking error message from
++ * stdout/err.
++ */
++G_GNUC_UNUSED
++static int ga_run_command(const char *argv[], const char *in_str,
++                          const char *action, Error **errp)
++{
++    pid_t pid;
++    int status;
++    int retcode = -1;
++    int infd[2] = { -1, -1 };
++    int outfd[2] = { -1, -1 };
++    char *str = NULL;
++    size_t len = 0;
++
++    if ((in_str && !g_unix_open_pipe(infd, FD_CLOEXEC, NULL)) ||
++        !g_unix_open_pipe(outfd, FD_CLOEXEC, NULL)) {
++        error_setg(errp, "cannot create pipe FDs");
++        goto out;
++    }
++
++    pid = fork();
++    if (pid == 0) {
++        char *cherr = NULL;
++
++        setsid();
++
++        if (in_str) {
++            /* Redirect stdin to infd. */
++            close(infd[1]);
++            dup2(infd[0], 0);
++            close(infd[0]);
++        } else {
++            reopen_fd_to_null(0);
++        }
++
++        /* Redirect stdout/stderr to outfd. */
++        close(outfd[0]);
++        dup2(outfd[1], 1);
++        dup2(outfd[1], 2);
++        close(outfd[1]);
++
++        execvp(argv[0], (char *const *)argv);
++
++        /* Write the cause of failed exec to pipe for the parent to read it. */
++        cherr = g_strdup_printf("failed to exec '%s'", argv[0]);
++        perror(cherr);
++        g_free(cherr);
++        _exit(EXIT_FAILURE);
++    } else if (pid < 0) {
++        error_setg_errno(errp, errno, "failed to create child process");
++        goto out;
++    }
++
++    if (in_str) {
++        close(infd[0]);
++        infd[0] = -1;
++        if (qemu_write_full(infd[1], in_str, strlen(in_str)) !=
++                strlen(in_str)) {
++            error_setg_errno(errp, errno, "%s: cannot write to stdin pipe",
++                             action);
++            goto out;
++        }
++        close(infd[1]);
++        infd[1] = -1;
++    }
++
++    ga_pipe_read_str(outfd, &str, &len);
++
++    ga_wait_child(pid, &status, errp);
++    if (*errp) {
++        goto out;
++    }
++
++    if (!WIFEXITED(status)) {
++        if (len) {
++            error_setg(errp, "child process has terminated abnormally: %s",
++                       str);
++        } else {
++            error_setg(errp, "child process has terminated abnormally");
++        }
++        goto out;
++    }
++
++    retcode = WEXITSTATUS(status);
++
++    if (WEXITSTATUS(status)) {
++        if (len) {
++            error_setg(errp, "child process has failed to %s: %s",
++                       action, str);
++        } else {
++            error_setg(errp, "child process has failed to %s: exit status %d",
++                       action, WEXITSTATUS(status));
++        }
++        goto out;
++    }
++
++out:
++    g_free(str);
++
++    if (infd[0] != -1) {
++        close(infd[0]);
++    }
++    if (infd[1] != -1) {
++        close(infd[1]);
++    }
++    if (outfd[0] != -1) {
++        close(outfd[0]);
++    }
++    if (outfd[1] != -1) {
++        close(outfd[1]);
++    }
++
++    return retcode;
++}
++
+ void qmp_guest_shutdown(const char *mode, Error **errp)
+ {
+     const char *shutdown_flag;
 -- 
 2.39.3
 
