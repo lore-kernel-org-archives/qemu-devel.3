@@ -4,102 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C382DC5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 16:18:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93E45C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 16:31:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg5Zv-0002lJ-IJ; Fri, 01 Mar 2024 11:17:47 -0500
+	id 1rg5mj-0007CQ-HP; Fri, 01 Mar 2024 11:30:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
- id 1rg5Zp-0002hw-Bi; Fri, 01 Mar 2024 11:17:37 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
- id 1rg5Zn-000224-07; Fri, 01 Mar 2024 11:17:37 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 421FvGPu032645; Fri, 1 Mar 2024 16:17:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=9UsPZRSI05lwvGd1PFe2h74P4zK+cs8wuH2mhf6Ofso=;
- b=lhtlfChEaooqH84g5Ogh63QGigRCXYRtX8BiNXCQvPvGKQEk6OhnosTQO06uSpvGB8Vu
- CV6ldFFltqTSksQj6a5GQ8yo6qIARlRSGgieyABJsDI/7XwaojO1nVIStfzQFmf5uWSp
- Ux4dpWsIajVPBn2dBpD2G01UnSXqMkmi+pH+oYf9fRCyzdZxGyBG0z5dVuDr6YHmf7T0
- g3Rr42AJxqUtsd+R8YcMd519GJ1GOPZh4OfO+cmy61bz/mmSPGGMo7MvCz3sr3SOiqcr
- 9ijRBKyPuWNX1iaUZeIhoNLrovT9Fz4OeiLXGmdyl1dAF6p2S/hOleCApFKC0SXbKh18 WQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wkj3y8rv5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 01 Mar 2024 16:17:28 +0000
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 421FvU5K002159;
- Fri, 1 Mar 2024 16:17:28 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wkj3y8run-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 01 Mar 2024 16:17:28 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 421Eak9Y021316; Fri, 1 Mar 2024 16:17:26 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3wfuspnfk3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 01 Mar 2024 16:17:26 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 421GHMBs7995862
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 1 Mar 2024 16:17:24 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C576320040;
- Fri,  1 Mar 2024 16:17:22 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CA23B2004B;
- Fri,  1 Mar 2024 16:17:20 +0000 (GMT)
-Received: from [9.43.5.155] (unknown [9.43.5.155])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  1 Mar 2024 16:17:20 +0000 (GMT)
-Message-ID: <2aef5ff8-bdae-437e-892b-25e4fe684335@linux.ibm.com>
-Date: Fri, 1 Mar 2024 21:47:18 +0530
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rg5mi-0007AU-0H
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 11:30:56 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rg5mg-0004F8-80
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 11:30:55 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-412ce4f62f8so1290035e9.0
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 08:30:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709310652; x=1709915452; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=y3o9rk8xW/dllZ0kqc9r9Xfz8W1XGg28eYGT/fgGt+k=;
+ b=DzPP65Zncui6XbrJftLWfaAWrPhBERWswgBk3h8MJbyywCVT04u3vnakBm0ppcj/Lo
+ ut5RIGKpEISb69L22eqjNASyp7lpyPjFWV9z4U8llPq8+uYnJ4iY2J0kjgrQY/MEJJ97
+ 8Y7hB0EaAiXufXgrFg3l2pId/X9L6cYKYgd3DRs8+Yr8JP0QjP26wuBXlhMryDCelomY
+ 2lh9rLZffjLgCE6QNgHjGACPfvjpEgSBGEFHbVcozlo+Zkq7IbNGnntvNt6m/F91hVsD
+ zseZi2wWI7RUlp6gY/RGpm+Toi1qOwAZSW36d8mThQKalujsRuxkFanVOdWe/rYDRakb
+ 5ZUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709310652; x=1709915452;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=y3o9rk8xW/dllZ0kqc9r9Xfz8W1XGg28eYGT/fgGt+k=;
+ b=c0FoVtQ5ev6nhQmD100ZgDoVNEuwjonjMg/OHPx9rsp+RxAG+eNBHT5sw1wcvd9QpL
+ NMCK7XPgf+oMCBVdKZ0p4pyWswSxnl/UXsrXjLElQ3vkznhjtj7kfbbSbid9P0iQ7hHB
+ 5mrGMhrONAehHLvW1wwViDDWq0/skzBK4z4wFcGt+Wqf5kJ/tFP6aNiZ8IDZlIlmt2hJ
+ LSOGoJEn9T/SgjREQzpVwuB/ks9/q70Bc832XAogyhpHT/FA4rBIFCQR3UaIBR/Zc2bI
+ fz2EL/kZvRBUs6XnwJqxMHECQysofOSAahRtzPPIrjYAlAFOIW7fQTwIdNEyKfv4XdjR
+ tHDw==
+X-Gm-Message-State: AOJu0YyvI3GthpxpA7kqGuY1KCqwNMybVzQ69PYZNpeCRtK0KJoGu4jx
+ NYpBu7x13dcg9RHkxVT5LW3cGBC7iH1UyXNE0EOtKX+jV49GEw6/9/zt3fjxF2c=
+X-Google-Smtp-Source: AGHT+IF60cVPbGqRdH3wzG2BLa7f6sJ5tuuvEEQ1U9OYDGZNHPd+1ksENQd06Ask3Kqzn+oohRDh1w==
+X-Received: by 2002:a05:600c:5494:b0:412:b721:1631 with SMTP id
+ iv20-20020a05600c549400b00412b7211631mr1798858wmb.35.1709310652585; 
+ Fri, 01 Mar 2024 08:30:52 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ ay1-20020a5d6f01000000b0033e22a7b3f8sm1259300wrb.75.2024.03.01.08.30.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 01 Mar 2024 08:30:52 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id D18DF5F895;
+ Fri,  1 Mar 2024 16:30:51 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,  Alexandre Iooss
+ <erdnaxe@crans.org>,  Mahmoud Mandour <ma.mandourr@gmail.com>,  Richard
+ Henderson <richard.henderson@linaro.org>,  Paolo Bonzini
+ <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: Re: [PULL 26/29] contrib/plugins: extend execlog to track register
+ changes
+In-Reply-To: <ZeH6S02g5n/2TzaN@intel.com> (Zhao Liu's message of "Fri, 1 Mar
+ 2024 23:54:51 +0800")
+References: <20240228115701.1416107-1-alex.bennee@linaro.org>
+ <20240228115701.1416107-27-alex.bennee@linaro.org>
+ <ZeGBl5eJoJ0PLrW3@intel.com> <87msri5k1b.fsf@draig.linaro.org>
+ <ZeH6S02g5n/2TzaN@intel.com>
+User-Agent: mu4e 1.12.0; emacs 29.1
+Date: Fri, 01 Mar 2024 16:30:51 +0000
+Message-ID: <87zfvh52ys.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 0/5] hw/ppc: SPI model
-Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
- clg@kaod.org, calebs@us.ibm.com, chalapathi.v@ibm.com,
- saif.abrar@linux.vnet.ibm.com
-References: <20240207160833.3437779-1-chalapathi.v@linux.ibm.com>
-From: Chalapathi V <chalapathi.v@linux.ibm.com>
-In-Reply-To: <20240207160833.3437779-1-chalapathi.v@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: JcmD8-CBt3y-FqSZamvtdTAB4txLrWXN
-X-Proofpoint-GUID: DwQ2kcBY4G9DBvyzt2exsJxXiD_gaAdq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-01_17,2024-03-01_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=1
- impostorscore=0 bulkscore=0
- lowpriorityscore=0 priorityscore=1501 malwarescore=0 clxscore=1011
- phishscore=0 spamscore=1 mlxlogscore=212 mlxscore=1 adultscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2403010135
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=chalapathi.v@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H2=-0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,80 +105,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+Zhao Liu <zhao1.liu@intel.com> writes:
 
-I would greatly appreciate the review comments/suggestions on PATCH V1.
+> On Fri, Mar 01, 2024 at 10:22:08AM +0000, Alex Benn=C3=A9e wrote:
+>> Date: Fri, 01 Mar 2024 10:22:08 +0000
+>> From: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> Subject: Re: [PULL 26/29] contrib/plugins: extend execlog to track regis=
+ter
+>>  changes
+>>=20
+>> Zhao Liu <zhao1.liu@intel.com> writes:
+>>=20
+>> > Hi Alex,
+>> >
+>> > I hit the following warnings (with "./configure --enable-werror"):
+>> >
+>> > /qemu/contrib/plugins/execlog.c: In function =E2=80=98registers_init=
+=E2=80=99:
+>> > /qemu/contrib/plugins/execlog.c:330:17: warning: =E2=80=98g_pattern_ma=
+tch_string=E2=80=99 is deprecated: Use 'g_pattern_spec_match_string' instea=
+d [-Wdeprecated-declarations]
+>> >   330 |                 if (g_pattern_match_string(pat, rd->name) ||
+>> >       |                 ^~
+>> > In file included from /usr/include/glib-2.0/glib.h:65,
+>> >                  from /qemu/contrib/plugins/execlog.c:9:
+>> > /usr/include/glib-2.0/glib/gpattern.h:55:15: note: declared here
+>> >    55 | gboolean      g_pattern_match_string   (GPatternSpec *pspec,
+>> >       |               ^~~~~~~~~~~~~~~~~~~~~~
+>> > /qemu/contrib/plugins/execlog.c:331:21: warning: =E2=80=98g_pattern_ma=
+tch_string=E2=80=99 is deprecated: Use 'g_pattern_spec_match_string' instea=
+d [-Wdeprecated-declarations]
+>> >   331 |                     g_pattern_match_string(pat, rd_lower)) {
+>> >       |                     ^~~~~~~~~~~~~~~~~~~~~~
+>> > In file included from /usr/include/glib-2.0/glib.h:65,
+>> >                  from /qemu/contrib/plugins/execlog.c:9:
+>> > /usr/include/glib-2.0/glib/gpattern.h:55:15: note: declared here
+>> >    55 | gboolean      g_pattern_match_string   (GPatternSpec *pspec,
+>> >       |               ^~~~~~~~~~~~~~~~~~~~~~
+>> > /qemu/contrib/plugins/execlog.c:339:63: warning: passing argument 2 of=
+ =E2=80=98g_ptr_array_add=E2=80=99 discards =E2=80=98const=E2=80=99 qualifi=
+er from pointer target type [-Wdiscarded-qualifiers]
+>> >   339 |                             g_ptr_array_add(all_reg_names,
+>> > reg->name);
+>>=20
+>> Hmm I missed that. Not sure what the neatest solution is in this case -
+>> g_ptr_array_new() doesn't have a destroy func so we shouldn't ever
+>> attempt to free it. We can manually re-add the const qualifier at the
+>> other end for completeness and I guess comment and cast?
+>
+> I find other palces use 2 ways:
+>   * Use g_strdup() to create a copy (e.g., net/net.c,
+>     add_nic_model_help()). But I'm not sure if this is OK since you said
+>     we shouldn't attempt to free it. May I ask if the free issue you
+>     mentioned will affect the use of g_strdup() here?
 
-Thank You and Regards,
+If we g_strdup we have to remember to free later and ensure the
+g_ptr_array has a free func.
 
-Chalapathi
+>   * Another way is the forced conversion to gpointer (also e.g., in
+>     net/net.c, qemu_get_nic_models()).
 
-On 07-02-2024 21:38, Chalapathi V wrote:
-> Hello,
+I think this is ok, but with a comment on all_reg_names just to remind
+any potential users that the strings are const and allocated by QEMU so
+are not to be modified or freed.
+
 >
-> In this series of patchset, SPI controller and responder models
-> for Power10 processor are modelled.
+> Which way do you like? ;-)
 >
-> Serial peripheral interface provides full-duplex synchronous serial
-> communication between single controller and multiple responder devices.
+<snip>
+>>=20
+>> but I hesitated to add it for this case as plugins shouldn't assume they
+>> have access to QEMU's internals. Maybe the glib-compat.h header could be
+>> treated as a special case.
 >
-> The current configuration supports a single SPI controller reside on the
-> SPI bus. In p10, SPI controller device model supports a connection to a
-> single SPI responder such as SPI seeproms, TPM, flash device and an ADC
-> controller.
+> Thanks! This works on my side!
 >
-> SPI controller model is divided into configuration unit, sequencer FSM
-> and shifter engine. All SPI function control is mapped into the SPI register
-> space to enable full control by firmware.
+> I support to fix the compatibility as the above, after all it's always
+> confusing when we allow users to use newer glib and see warnings at
+> compile time!
 >
-> SPI configuration component is modelled which contains all SPI configuration
-> and status registers as well as the hold registers for data to be sent or
-> having been received.
-> Shift engine performs serialization and de-serialization according to the
-> control by the sequencer and according to the setup defined in the
-> configuration registers.
-> Sequencer implements the main control logic and
-> FSM to handle data transmit and data receive control of the shift engine.
+>> >
+>> > I also noticed in target/arm/helper.c, there's another
+>> > g_pattern_match_string() but I haven't met the warning.
+>>=20
+>> Hmm that's weird. I suspect glib suppresses the warnings with:
+>>=20
+>>   /* Ask for warnings for anything that was marked deprecated in
+>>    * the defined version, or before. It is a candidate for rewrite.
+>>    */
+>>   #define GLIB_VERSION_MIN_REQUIRED GLIB_VERSION_2_56
+>>
 >
-> Microchip's 25CSM04 SEEPROM device is modelled and connected to SPI bus
-> "spi_bus2" of SPI controller "PIB_SPIC[2]".
+> I'm not too familiar with the QEMU build framework, but based on this, a
+> natural question is, can this rule be applied to plugins code as well?
+> If so, this would also avoid warning.
+
+I think the simplest solution would be to add:
+
+  #include "glib-compat.h"
+
+into qemu-plugin.h so plugins have the same deprecation rules as the
+QEMU they come from. I checked with Michael on IRC and Debian currently
+doesn't package any header files but if anyone starts shipping a qemu-dev
+package we'll need to make sure we include glib-compat.h in the same
+directory and qemu-plugin.h.
+
 >
-> Patches overview in V1.
-> PATCH1: Create a SPI responder model which includes responder methods
->          and SPI bus implementation.
-> PATCH2: Create a SPI controller model and implement configuration unit
->          to model SCOM registers.
-> PATCH3: SPI controller model: implement sequencer FSM and shift engine.
-> PATCH4: create SPI SEEPROM model.
-> PATCH5: Connect SPI controllers to p10 chip and create keystore seeprom
->          device on spi_bus2 of PIB_SPIC[2].
->
-> Thank You,
-> Chalapathi
->
-> Chalapathi V (5):
->    hw/ppc: SPI responder model
->    hw/ppc: SPI controller model - registers implementation
->    hw/ppc: SPI controller model - sequencer and shifter
->    hw/ppc: SPI SEEPROM model
->    hw/ppc: SPI controller wiring to P10 chip and create seeprom device
->
->   include/hw/ppc/pnv_chip.h           |    4 +
->   include/hw/ppc/pnv_spi_controller.h |  101 ++
->   include/hw/ppc/pnv_spi_responder.h  |  109 ++
->   include/hw/ppc/pnv_spi_seeprom.h    |   70 ++
->   include/hw/ppc/pnv_xscom.h          |    3 +
->   hw/ppc/pnv.c                        |   32 +
->   hw/ppc/pnv_spi_controller.c         | 1609 +++++++++++++++++++++++++++
->   hw/ppc/pnv_spi_responder.c          |  166 +++
->   hw/ppc/pnv_spi_seeprom.c            |  989 ++++++++++++++++
->   hw/ppc/meson.build                  |    3 +
->   10 files changed, 3086 insertions(+)
->   create mode 100644 include/hw/ppc/pnv_spi_controller.h
->   create mode 100644 include/hw/ppc/pnv_spi_responder.h
->   create mode 100644 include/hw/ppc/pnv_spi_seeprom.h
->   create mode 100644 hw/ppc/pnv_spi_controller.c
->   create mode 100644 hw/ppc/pnv_spi_responder.c
->   create mode 100644 hw/ppc/pnv_spi_seeprom.c
->
+> Thanks,
+> Zhao
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
