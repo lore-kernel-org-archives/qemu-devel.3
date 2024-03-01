@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07370C54798
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Mar 2024 04:14:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 247F4C54E41
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Mar 2024 04:14:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgGjI-0005MB-0d; Fri, 01 Mar 2024 23:12:08 -0500
+	id 1rgGjH-0005LN-DS; Fri, 01 Mar 2024 23:12:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgC1j-0003z4-65
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:10:57 -0500
-Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
+ id 1rgC1S-0003ld-Fx
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:10:35 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgC1g-0005uF-04
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:10:50 -0500
-Received: by mail-ot1-x32a.google.com with SMTP id
- 46e09a7af769-6e48153c13aso1388239a34.3
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 15:10:46 -0800 (PST)
+ id 1rgC1Q-0005gV-MV
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:10:34 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-1dc1ff3ba1aso22794705ad.3
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 15:10:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709334646; x=1709939446; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709334630; x=1709939430; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yTWT+RMoE1i/VU7YNW7VXZJeWBnC/6JB7arqg8VoVPY=;
- b=wPPgO3Azw4RZNrbdtjDazpIblGSuGm+sz0IzwuS0O8fW9MoBwtkqB3w81bNDlmfZIq
- T0LL8c6N5a2yBwanLH6OUQ9EO9ZN2ytZb3lBxO4or+6X1UxK3FIeRS6JgiAj8TZpHCzZ
- L80gvYehonUdo3F/eqlnbsSjTSpq5t+SX8aGV7CgDIT/jUMzzkWBDVz6HaRA+j93e5B4
- 8jANdlMGCPpt8UzEw12nRYTDoe8nMvUkArMj8QyTaElgAFIq4GT8bJ4fa6t+ZwUfVuZF
- uNwFES1C+aVNMn+BlHAjE7SkDqyPVrMIvw+Sg97iXPlcFp6fqWjHD24wDu0qHyZiJjHi
- EUSA==
+ bh=yOzziF9HLP7qTKwq+TAQQdn75nn/2tGow/nkk/g/qYA=;
+ b=n8qW/Vdj1XfxhQLXgkEuAxio9cY8kSswbik18Y10rA+9XKz9B1vWAA0dPCqRTkBQ/J
+ p/gGl6hUEKTpy0iEkdx804Kjq+csG1xXNLYaFHEjzwOltU66/Kfay3/eEsCqrQAvQoKJ
+ tTNYGeYkc00uKhxmuju9/MgUNX619ofhwZS6FuNCf6iv8S1B/uYB7Ee+IA25om/A8bdl
+ s6NLhMgTSb2khGnvOBrP+RgxPD0KQ3FU3zYEhxxfErzfZV5M/3sRqqVA0skXDavGBSwv
+ irS0I4LH1FR62AtjIQu6QeIVZncA1iZMlEoLkUD4dQc3SMs8KkLwvM1Xg/PIZfWf8p4Q
+ /0uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709334646; x=1709939446;
+ d=1e100.net; s=20230601; t=1709334630; x=1709939430;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yTWT+RMoE1i/VU7YNW7VXZJeWBnC/6JB7arqg8VoVPY=;
- b=sI8yS/SzQwZfu3V6MkSA9tjNEaj7hFAHl0kTVpOP7sIAt6BaLBZkhNr303MlMSKDri
- HXgd4VfEcJ8L7RvYgJRv6SGUaXo25lEOplJ4EDG4h4V9PiQgiiyeUNLQvgQ9SPxPCq/n
- BUpbeOSE1nf5fAIrE999WQOxQa4d0PLrAHwJWL/NXlvnolrGra8DOoLD0XXap1XTp6ve
- D14x7URIfqHgqADbevSltXsdx4vduDgdwTgn7FJp0j2j3tA/7LjoU1a++dE1/y/XwROU
- LsRzBWu6QsLP/xVE2WGjFlRRV2Ophi+yBS0B5+FDtMU6uOPJshhOWO8U1Ns4o7r5vsL2
- zVfA==
-X-Gm-Message-State: AOJu0Yw2u7Ha+diFY8vTVMWP7OdfZXQuIq3hqFyrDJDUNwWqYB/jqxM4
- tUPemdLmJjDhdBWMou9Kd/bPVY4DCT51vgXaZ8+CLnR1HTcUly88OXPX1Z1L0iE0W8FbmHvrb9K
- G
-X-Google-Smtp-Source: AGHT+IEC3IEufMvQbh163ikvKev1ecMXJ1/QLnLvsRa04C24bmAmYgEHkN4sYfovvFlF6DSD8TUFyw==
-X-Received: by 2002:a9d:6d85:0:b0:6e4:7e89:1205 with SMTP id
- x5-20020a9d6d85000000b006e47e891205mr3873115otp.9.1709334646004; 
- Fri, 01 Mar 2024 15:10:46 -0800 (PST)
+ bh=yOzziF9HLP7qTKwq+TAQQdn75nn/2tGow/nkk/g/qYA=;
+ b=TcCNQOHIGGi15Upc4mfSjOmMhNbTaL6u3QzFSxiT6hPVHE2gOZPz+b7jDVQ3y/aCLp
+ Hu7uWhMkoIuHUFtkuy9iU5IvtfGgxt0y+CRb9UkQ2YBOv9Qa4UFRqnMsYgZJtuWyv/dG
+ OsvR+HusdLJUdZ558iohWzTV4Q5LkxpqBl86Rvk4UOc1n53m/2s+LL7zGeR+AwFHH2Cp
+ 4OgBr9cqZwsZxegEbH+ElmwyhgBFQqV8f2hRg1JKsssW2Eks8sniyFHVbzINOuAZBN+Q
+ XrCgSAuoiOZaAvRdH+FKYQRlaoS6X8bPYHiA3ZmuSgo2vfIqBCHtH93zvWZEA4PbCg+0
+ mdZA==
+X-Gm-Message-State: AOJu0YyHQcHDgZqQAtmzhpj0ZxXwTB081jg+SFjrJ0W9VxXYCSNA2qah
+ 80IBS9TND95RFS6rTxOZ8vgjKn8ulbcGi5fSN63GjTyKTxQSrJpQdXlxSpJRv0EZttUMWWIrdBy
+ J
+X-Google-Smtp-Source: AGHT+IGoWY90DxlEftRhTYkzuJytqQj1OK/PetcWHXuMskTB+NlQVv1QXNDyOwWQAg83kh2XvcF7KA==
+X-Received: by 2002:a17:90a:a606:b0:299:51db:33aa with SMTP id
+ c6-20020a17090aa60600b0029951db33aamr3226010pjq.6.1709334630536; 
+ Fri, 01 Mar 2024 15:10:30 -0800 (PST)
 Received: from stoup.. (098-147-055-211.res.spectrum.com. [98.147.55.211])
  by smtp.gmail.com with ESMTPSA id
- c2-20020a634e02000000b005e438fe702dsm3449407pgb.65.2024.03.01.15.10.44
+ c2-20020a634e02000000b005e438fe702dsm3449407pgb.65.2024.03.01.15.10.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Mar 2024 15:10:45 -0800 (PST)
+ Fri, 01 Mar 2024 15:10:30 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 56/60] linux-user/x86_64: Handle the vsyscall page in
- open_self_maps_{2, 4}
-Date: Fri,  1 Mar 2024 13:06:15 -1000
-Message-Id: <20240301230619.661008-57-richard.henderson@linaro.org>
+Cc: Warner Losh <imp@bsdimp.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Helge Deller <deller@gmx.de>
+Subject: [PATCH 46/60] *-user: Deprecate and disable -p pagesize
+Date: Fri,  1 Mar 2024 13:06:05 -1000
+Message-Id: <20240301230619.661008-47-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240301230619.661008-1-richard.henderson@linaro.org>
 References: <20240301230619.661008-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,51 +97,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is the only case in which we expect to have no host memory backing
-for a guest memory page, because in general linux user processes cannot
-map any pages in the top half of the 64-bit address space.
+This option controls the host page size.  From the mis-usage in
+our own testsuite, this is easily confused with guest page size.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2170
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+The only thing that occurs when changing the host page size is
+that stuff breaks, because one cannot actually change the host
+page size.  Therefore reject all but the no-op setting as part
+of the deprecation process.
+
+Reviewed-by: Warner Losh <imp@bsdimp.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Helge Deller <deller@gmx.de>
+Message-Id: <20240102015808.132373-27-richard.henderson@linaro.org>
 ---
- linux-user/syscall.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ docs/about/deprecated.rst | 10 ++++++++++
+ docs/user/main.rst        |  3 ---
+ bsd-user/main.c           | 11 ++++++-----
+ linux-user/main.c         | 12 ++++++------
+ 4 files changed, 22 insertions(+), 14 deletions(-)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index e384e14248..bc8c06522f 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -7994,6 +7994,10 @@ static void open_self_maps_4(const struct open_self_maps_data *d,
-         path = "[heap]";
-     } else if (start == info->vdso) {
-         path = "[vdso]";
-+#ifdef TARGET_X86_64
-+    } else if (start == TARGET_VSYSCALL_PAGE) {
-+        path = "[vsyscall]";
-+#endif
-     }
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 36bd3e15ef..8565644da6 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -63,6 +63,16 @@ as short-form boolean values, and passed to plugins as ``arg_name=on``.
+ However, short-form booleans are deprecated and full explicit ``arg_name=on``
+ form is preferred.
  
-     /* Except null device (MAP_ANON), adjust offset for this fragment. */
-@@ -8082,6 +8086,18 @@ static int open_self_maps_2(void *opaque, target_ulong guest_start,
-     uintptr_t host_start = (uintptr_t)g2h_untagged(guest_start);
-     uintptr_t host_last = (uintptr_t)g2h_untagged(guest_end - 1);
- 
-+#ifdef TARGET_X86_64
-+    /*
-+     * Because of the extremely high position of the page within the guest
-+     * virtual address space, this is not backed by host memory at all.
-+     * Therefore the loop below would fail.  This is the only instance
-+     * of not having host backing memory.
-+     */
-+    if (guest_start == TARGET_VSYSCALL_PAGE) {
-+        return open_self_maps_3(opaque, guest_start, guest_end, flags);
-+    }
-+#endif
++User-mode emulator command line arguments
++-----------------------------------------
 +
-     while (1) {
-         IntervalTreeNode *n =
-             interval_tree_iter_first(d->host_maps, host_start, host_start);
++``-p`` (since 9.0)
++''''''''''''''''''
++
++The ``-p`` option pretends to control the host page size.  However,
++it is not possible to change the host page size, and using the
++option only causes failures.
++
+ QEMU Machine Protocol (QMP) commands
+ ------------------------------------
+ 
+diff --git a/docs/user/main.rst b/docs/user/main.rst
+index 7e7ad07409..d5fbb78d3c 100644
+--- a/docs/user/main.rst
++++ b/docs/user/main.rst
+@@ -87,9 +87,6 @@ Debug options:
+    Activate logging of the specified items (use '-d help' for a list of
+    log items)
+ 
+-``-p pagesize``
+-   Act as if the host page size was 'pagesize' bytes
+-
+ ``-g port``
+    Wait gdb connection to port
+ 
+diff --git a/bsd-user/main.c b/bsd-user/main.c
+index e5efb7b845..6ab3efd6c0 100644
+--- a/bsd-user/main.c
++++ b/bsd-user/main.c
+@@ -364,11 +364,12 @@ int main(int argc, char **argv)
+         } else if (!strcmp(r, "L")) {
+             interp_prefix = argv[optind++];
+         } else if (!strcmp(r, "p")) {
+-            qemu_host_page_size = atoi(argv[optind++]);
+-            if (qemu_host_page_size == 0 ||
+-                (qemu_host_page_size & (qemu_host_page_size - 1)) != 0) {
+-                fprintf(stderr, "page size must be a power of two\n");
+-                exit(1);
++            unsigned size, want = qemu_real_host_page_size();
++
++            r = argv[optind++];
++            if (qemu_strtoui(r, NULL, 10, &size) || size != want) {
++                warn_report("Deprecated page size option cannot "
++                            "change host page size (%u)", want);
+             }
+         } else if (!strcmp(r, "g")) {
+             gdbstub = g_strdup(argv[optind++]);
+diff --git a/linux-user/main.c b/linux-user/main.c
+index e540acb84a..bad03f06d3 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -332,11 +332,11 @@ static void handle_arg_ld_prefix(const char *arg)
+ 
+ static void handle_arg_pagesize(const char *arg)
+ {
+-    qemu_host_page_size = atoi(arg);
+-    if (qemu_host_page_size == 0 ||
+-        (qemu_host_page_size & (qemu_host_page_size - 1)) != 0) {
+-        fprintf(stderr, "page size must be a power of two\n");
+-        exit(EXIT_FAILURE);
++    unsigned size, want = qemu_real_host_page_size();
++
++    if (qemu_strtoui(arg, NULL, 10, &size) || size != want) {
++        warn_report("Deprecated page size option cannot "
++                    "change host page size (%u)", want);
+     }
+ }
+ 
+@@ -496,7 +496,7 @@ static const struct qemu_argument arg_table[] = {
+     {"D",          "QEMU_LOG_FILENAME", true, handle_arg_log_filename,
+      "logfile",     "write logs to 'logfile' (default stderr)"},
+     {"p",          "QEMU_PAGESIZE",    true,  handle_arg_pagesize,
+-     "pagesize",   "set the host page size to 'pagesize'"},
++     "pagesize",   "deprecated change to host page size"},
+     {"one-insn-per-tb",
+                    "QEMU_ONE_INSN_PER_TB",  false, handle_arg_one_insn_per_tb,
+      "",           "run with one guest instruction per emulated TB"},
 -- 
 2.34.1
 
