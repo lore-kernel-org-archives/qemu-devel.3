@@ -4,131 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A857DC5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 08:19:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8197AC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 08:25:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfy6j-00016H-At; Fri, 01 Mar 2024 03:19:05 -0500
+	id 1rfyBl-0002he-0I; Fri, 01 Mar 2024 03:24:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfy6i-000167-97
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 03:19:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfy6g-000061-LQ
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 03:19:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709281141;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=24ZXx3xtEZcNh4Xv08GtABkBmPyt4HsnZ4bmsakX/tU=;
- b=gFV/Jgil9/1UIq70xepzUjAakcQOPY4uGTM0IK6SCo4rNGyTJMurFdFWrYfLLrDH4S6geZ
- PddHOfNmeNg17+oCtNHOq0F0FFl2DFySBVMGZNojMDevsgrHvy3M3JyQ/Spiiimr32guxi
- uoFhYgE5YKQeFvIffAVA2zl5xH1vp8A=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-467-Iz-PGMxuOUGn5cO79qJ5aA-1; Fri, 01 Mar 2024 03:18:59 -0500
-X-MC-Unique: Iz-PGMxuOUGn5cO79qJ5aA-1
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-1dc435b3e87so18839605ad.1
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 00:18:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1rfyBe-0002gJ-Lq
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 03:24:11 -0500
+Received: from mail-qv1-xf33.google.com ([2607:f8b0:4864:20::f33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1rfyBb-0001Hg-PO
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 03:24:09 -0500
+Received: by mail-qv1-xf33.google.com with SMTP id
+ 6a1803df08f44-690105304b4so8935026d6.3
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 00:24:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1709281443; x=1709886243; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/6TShqh1i4+cFFfpKPT0xQIuYg06VEOVkdOiTtXAx9c=;
+ b=cwP+W75qd5ZRnunTQXnC96XJlnJLGZfXjwceR2LgtUCHdfBGjVS+rmA6sBqh48VxBm
+ qhPH31vgjQmO+4XXLiQi3TyfojZwFdP3sMYW1msxCrp0lr3Wk/LaClF2/J5OAr24ozaU
+ JavcUcJCWo3b0zh/hbJ2jvfN94lH9VpJDT3TvaWFOwpxICo9z5tcSP0kmYpAd1O8kPuo
+ SzeRyl1M+lIvIn4vlkL58N8ne//E85nvEh+oSZPis3N8zX28eZvWycZSmashPtyMRRKp
+ ErrvXjnDtmm0M8xto44OYVmsmizF4RDoSOGS250hbs7B9pfmiHC0EW/droQ//KSsw7MJ
+ SOZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709281139; x=1709885939;
- h=content-transfer-encoding:in-reply-to:autocrypt:cc:from:references
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=24ZXx3xtEZcNh4Xv08GtABkBmPyt4HsnZ4bmsakX/tU=;
- b=AVhZr9BFP9ZiOMjt8Q85SVhueiUyFP+Cos7VoLy9n0EGQidUkgTy9KhUnb/WdezyCk
- KP3axOrAH2Xlg8dVywEchVlA9tlNRuo95QCcYgPqf9MQZvkLPEzcOIiaIXkdJnh9fabc
- FFzXxqJCSMa1TzewBlw56ZUD0MuysLosUKkC8BwmYY9LXENmd0CBNSD0FZvsIY6Ez1W/
- ngaaKFlnkwRzE6V6gMxFM6kRFHo4YHdsI9KxaxqcSr8yvMXzdq+WPH0rTbT9H95Plphy
- z5gbl5ooW951NSsNG32QimMLiW3v4WdGi6PX96zAF5bKE4ye2pomhliB8dAMvAg62Wqj
- wapg==
+ d=1e100.net; s=20230601; t=1709281443; x=1709886243;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/6TShqh1i4+cFFfpKPT0xQIuYg06VEOVkdOiTtXAx9c=;
+ b=q1FeXSMCWrBpBzGTMRJYoCETFL5ligCgDZgl/4I0vn7IL0JF8/BTyWSuD88hWWJCU+
+ hb93ZnVKBBUEzonHi0w0MAbRy/8vfpl/naUQ108XaYq7sL5Yo+j5wzgljZnsrWQobtcj
+ cctoQjTATwNr9dsjJXumM2uuq4sgN5WBEpPqGSR6VqpBEai8rbNN+wpbbUd6LsLkRuVC
+ EHsT3o8FjgWdPwc8xaxg49rbA5aPiB5t/6HMX2sF+zz+gE7dMM31w0RxigSGGWCSkc9K
+ 5yXe7jtVjnfDHrdujcnjga/IDaVClO/r5EBxz6KyfZKIW05PqQYGWk+VlzBEOxhpRKuk
+ 9uJA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUZ/lfeEgxJFXYmKh9djOgYjm3Tt6WD0ME2iebj6R2ZLOtQ339kb1rdFBrJ7FDOsM+fzxz+7HSdkrGOdT4HLXE+yxKz+oI=
-X-Gm-Message-State: AOJu0YwB6+OUgTQae1S1T9dOLNuPwtnTczNjogDQZgIN3nC8BdXtxGcc
- K5HL1IYketJJ4wpl4hMDNOk/4OivJ3ky/9UyqEX9TbJgsiw8hDuxw7omGow7xtBlO+fzIRZaJj9
- M5dkYyqOVqwFJffamJ7ZkcqB9/JGb/Wod/xLtPHIA9fwrhHSc+FIH
-X-Received: by 2002:a17:902:6b4c:b0:1db:cb13:10f1 with SMTP id
- g12-20020a1709026b4c00b001dbcb1310f1mr836765plt.19.1709281139018; 
- Fri, 01 Mar 2024 00:18:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEI5k4DYcQZYvoKhzaFmr8qGBvoAXQ0lrN16m9zxfgeCMHKx0bkm1xg8nWMrRa131dpIXZw2g==
-X-Received: by 2002:a17:902:6b4c:b0:1db:cb13:10f1 with SMTP id
- g12-20020a1709026b4c00b001dbcb1310f1mr836753plt.19.1709281138652; 
- Fri, 01 Mar 2024 00:18:58 -0800 (PST)
-Received: from [192.168.0.9] (ip-109-43-178-133.web.vodafone.de.
- [109.43.178.133]) by smtp.gmail.com with ESMTPSA id
- f4-20020a170902684400b001db337d53ddsm2860783pln.56.2024.03.01.00.18.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 01 Mar 2024 00:18:58 -0800 (PST)
-Message-ID: <56e58fe0-476c-4daf-b61c-3fc24d7623a5@redhat.com>
-Date: Fri, 1 Mar 2024 09:18:54 +0100
+ AJvYcCWNGf/Ar05oKbu60v7qWqctLe6OoqgtjhZb2mg2y77G9ARkgpNHm0ZKpT5EsEgv6GjN50erIaUKW2WWiB9yU0W9T2GTu+M=
+X-Gm-Message-State: AOJu0YzVuipg/t9/Kz8YoQLqVMx2lNRZXgRbBYva3WtlX3h380ZtDHNa
+ TX7P/P5gBOvsc5bA5vK7ZrN78EwFfSttMjCpv9IiqzkhS6xTLKhbd6X3uxyG7kg=
+X-Google-Smtp-Source: AGHT+IFOE//de5gW8/t5EN6iDGtxoPupJsqmHB+gIs7CE75HdwkbfH6RIWi1eK5iB+kKO7THZmG8hQ==
+X-Received: by 2002:a05:6214:42:b0:68f:280f:14cc with SMTP id
+ c2-20020a056214004200b0068f280f14ccmr982605qvr.35.1709281443055; 
+ Fri, 01 Mar 2024 00:24:03 -0800 (PST)
+Received: from n231-228-171.byted.org ([130.44.215.123])
+ by smtp.gmail.com with ESMTPSA id
+ y19-20020a0cd993000000b0068fc392f526sm1631907qvj.127.2024.03.01.00.24.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 01 Mar 2024 00:24:02 -0800 (PST)
+From: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
+To: "Hao Xiang" <hao.xiang@bytedance.com>,
+ "Gregory Price" <gourry.memverge@gmail.com>, aneesh.kumar@linux.ibm.com,
+ mhocko@suse.com, tj@kernel.org, john@jagalactic.com,
+ "Eishan Mirakhur" <emirakhur@micron.com>,
+ "Vinicius Tavares Petrucci" <vtavarespetr@micron.com>,
+ "Ravis OpenSrc" <Ravis.OpenSrc@micron.com>,
+ "Alistair Popple" <apopple@nvidia.com>,
+ "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <lenb@kernel.org>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Dave Jiang <dave.jiang@intel.com>, Dan Williams <dan.j.williams@intel.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Huang Ying <ying.huang@intel.com>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>,
+ linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-mm@kvack.org
+Cc: "Ho-Ren (Jack) Chuang" <horenc@vt.edu>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>, linux-cxl@vger.kernel.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH v1 1/1] memory tier: acpi/hmat: create CPUless memory tiers
+ after obtaining HMAT info
+Date: Fri,  1 Mar 2024 08:22:45 +0000
+Message-Id: <20240301082248.3456086-2-horenchuang@bytedance.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20240301082248.3456086-1-horenchuang@bytedance.com>
+References: <20240301082248.3456086-1-horenchuang@bytedance.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/us/bus.c PCAP adding 0xA in Windows version
-Content-Language: en-US
-To: benlunt@fysnet.net, qemu-devel@nongnu.org
-References: <000101da6823$ce1bbf80$6a533e80$@fysnet.net>
-From: Thomas Huth <thuth@redhat.com>
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <000101da6823$ce1bbf80$6a533e80$@fysnet.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f33;
+ envelope-from=horenchuang@bytedance.com; helo=mail-qv1-xf33.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -144,79 +112,227 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/02/2024 20.49, benlunt@fysnet.net wrote:
-> Since Windows text files use CRLFs for all \n, the Windows version of QEMU
-> inserts a CR in the PCAP stream when a LF is encountered when using USB PCAP
-> files. This is due to the fact that the PCAP file is opened as TEXT instead
-> of BINARY.
-> 
-> To show an example, when using a very common protocol to USB disks, the BBB
-> protocol uses a 10-byte command packet. For example, the READ_CAPACITY(10)
-> command will have a command block length of 10 (0xA). When this 10-byte
-> command (part of the 31-byte CBW) is placed into the PCAP file, the Windows
-> file manager inserts a 0xD before the 0xA, turning the 31-byte CBW into a
-> 32-byte CBW.
-> 
-> Actual CBW:
->    0040 55 53 42 43 01 00 00 00 08 00 00 00 80 00 0a 25 USBC...........%
->    0050 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00       ...............
-> 
-> PCAP CBW
->    0040 55 53 42 43 01 00 00 00 08 00 00 00 80 00 0d 0a USBC............
->    0050 25 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 %..............
-> 
-> I believe simply opening the PCAP file as BINARY instead of TEXT will fix
-> this issue.
-> 
-> Resolves: https://bugs.launchpad.net/qemu/+bug/2054889
-> Signed-off-by: Benjamin David Lunt <benlunt@fysnet.net>
-> ---
->   hw/usb/bus.c | 2 +-
-> 1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff -u a/hw/usb/bus.c b/hw/usb/bus.c
-> --- a/hw/usb/bus.c
-> +++ b/hw/usb/bus.c
-> @@ -273,13 +273,13 @@
->       }
->   
->       if (dev->pcap_filename) {
-> -        int fd = qemu_open_old(dev->pcap_filename, O_CREAT | O_WRONLY |
-> O_TRUNC, 0666);
-> +        int fd = qemu_open_old(dev->pcap_filename, O_CREAT | O_WRONLY |
-> O_TRUNC | O_BINARY, 0666);
+* Introduce `mt_init_with_hmat()`
+We defer memory tier initialization for those CPUless NUMA nodes
+until acquiring HMAT info. `mt_init_with_hmat()` is introduced to
+post-create CPUless memory tiers after obtaining HMAT info.
+It iterates through each CPUless memory node, creating memory tiers if
+necessary. Finally, it calculates demotion tables again at the end.
 
-  Hi Benjamin!
+* Introduce `hmat_find_alloc_memory_type()`
+Find or allocate a memory type in the `hmat_memory_types` list.
 
-Thanks for the patch! Since it's rather a trivial patch and our USB 
-maintainer Gerd is pretty much busy with other stuff right now, I went ahead 
-and put it in my current pull request.
+* Make `set_node_memory_tier()` more generic
+This function can also be used for setting other memory types for a node.
+To do so, a new argument is added to specify a memory type.
 
-Two things to notice: First, something along the way (likely your mail 
-program) added a line break after the "O_WRONLY |" in the above two lines, 
-so I had to undo that change manually before I was able to apply the patch 
-... please try to use "git send-email" for sending patches, then such things 
-don't happen.
-And second, please use the scripts/checkpatch.pl script to check your 
-patches - it was complaining about a line getting too long here, so I went 
-ahead and fixed that, too (i.e. no need to resend, just a FYI for future 
-patches).
+* Handle cases where there is no HMAT when creating memory tiers
+If no HMAT is specified, it falls back to using `default_dram_type`.
 
-  Thanks,
-   Thomas
+* Change adist calculation code to use another new lock, mt_perf_lock.
+Iterating through CPUlist nodes requires holding the `memory_tier_lock`.
+However, `mt_calc_adistance()` will end up trying to acquire the same lock,
+leading to a potential deadlock. Therefore, we propose introducing a
+standalone `mt_perf_lock` to protect `default_dram_perf`. This approach not
+only avoids deadlock but also prevents holding a large lock simultaneously.
 
->           if (fd < 0) {
->               error_setg(errp, "open %s failed", dev->pcap_filename);
->               usb_qdev_unrealize(qdev);
->               return;
->           }
-> -        dev->pcap = fdopen(fd, "w");
-> +        dev->pcap = fdopen(fd, "wb");
->           usb_pcap_init(dev->pcap);
->       }
->   }
-> 
-> 
-> 
+Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
+Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
+---
+ drivers/acpi/numa/hmat.c     |  3 ++
+ include/linux/memory-tiers.h |  6 +++
+ mm/memory-tiers.c            | 76 ++++++++++++++++++++++++++++++++----
+ 3 files changed, 77 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
+index d6b85f0f6082..9f57338b3cb5 100644
+--- a/drivers/acpi/numa/hmat.c
++++ b/drivers/acpi/numa/hmat.c
+@@ -1038,6 +1038,9 @@ static __init int hmat_init(void)
+ 	if (!hmat_set_default_dram_perf())
+ 		register_mt_adistance_algorithm(&hmat_adist_nb);
+ 
++	/* Post-create CPUless memory tiers after getting HMAT info */
++	mt_init_with_hmat();
++
+ 	return 0;
+ out_put:
+ 	hmat_free_structures();
+diff --git a/include/linux/memory-tiers.h b/include/linux/memory-tiers.h
+index 69e781900082..2f845e90c033 100644
+--- a/include/linux/memory-tiers.h
++++ b/include/linux/memory-tiers.h
+@@ -48,6 +48,7 @@ int mt_calc_adistance(int node, int *adist);
+ int mt_set_default_dram_perf(int nid, struct access_coordinate *perf,
+ 			     const char *source);
+ int mt_perf_to_adistance(struct access_coordinate *perf, int *adist);
++void mt_init_with_hmat(void);
+ #ifdef CONFIG_MIGRATION
+ int next_demotion_node(int node);
+ void node_get_allowed_targets(pg_data_t *pgdat, nodemask_t *targets);
+@@ -136,5 +137,10 @@ static inline int mt_perf_to_adistance(struct access_coordinate *perf, int *adis
+ {
+ 	return -EIO;
+ }
++
++static inline void mt_init_with_hmat(void)
++{
++
++}
+ #endif	/* CONFIG_NUMA */
+ #endif  /* _LINUX_MEMORY_TIERS_H */
+diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
+index 0537664620e5..7a0a579b3deb 100644
+--- a/mm/memory-tiers.c
++++ b/mm/memory-tiers.c
+@@ -35,7 +35,9 @@ struct node_memory_type_map {
+ };
+ 
+ static DEFINE_MUTEX(memory_tier_lock);
++static DEFINE_MUTEX(mt_perf_lock);
+ static LIST_HEAD(memory_tiers);
++static LIST_HEAD(hmat_memory_types);
+ static struct node_memory_type_map node_memory_types[MAX_NUMNODES];
+ struct memory_dev_type *default_dram_type;
+ 
+@@ -502,7 +504,7 @@ static inline void __init_node_memory_type(int node, struct memory_dev_type *mem
+ 	}
+ }
+ 
+-static struct memory_tier *set_node_memory_tier(int node)
++static struct memory_tier *set_node_memory_tier(int node, struct memory_dev_type *new_memtype)
+ {
+ 	struct memory_tier *memtier;
+ 	struct memory_dev_type *memtype;
+@@ -514,7 +516,7 @@ static struct memory_tier *set_node_memory_tier(int node)
+ 	if (!node_state(node, N_MEMORY))
+ 		return ERR_PTR(-EINVAL);
+ 
+-	__init_node_memory_type(node, default_dram_type);
++	__init_node_memory_type(node, new_memtype);
+ 
+ 	memtype = node_memory_types[node].memtype;
+ 	node_set(node, memtype->nodes);
+@@ -623,6 +625,56 @@ void clear_node_memory_type(int node, struct memory_dev_type *memtype)
+ }
+ EXPORT_SYMBOL_GPL(clear_node_memory_type);
+ 
++static struct memory_dev_type *hmat_find_alloc_memory_type(int adist)
++{
++	bool found = false;
++	struct memory_dev_type *mtype;
++
++	list_for_each_entry(mtype, &hmat_memory_types, list) {
++		if (mtype->adistance == adist) {
++			found = true;
++			break;
++		}
++	}
++	if (!found) {
++		mtype = alloc_memory_type(adist);
++		if (!IS_ERR(mtype))
++			list_add(&mtype->list, &hmat_memory_types);
++	}
++	return mtype;
++}
++
++static void mt_create_with_hmat(int node)
++{
++	struct memory_dev_type *mtype = NULL;
++	int adist = MEMTIER_ADISTANCE_DRAM;
++
++	mt_calc_adistance(node, &adist);
++	if (adist != MEMTIER_ADISTANCE_DRAM) {
++		mtype = hmat_find_alloc_memory_type(adist);
++		if (IS_ERR(mtype))
++			pr_err("%s() failed to allocate a tier\n", __func__);
++	} else {
++		mtype = default_dram_type;
++	}
++
++	set_node_memory_tier(node, mtype);
++}
++
++void mt_init_with_hmat(void)
++{
++	int nid;
++
++	mutex_lock(&memory_tier_lock);
++	for_each_node_state(nid, N_MEMORY)
++		if (!node_state(nid, N_CPU))
++			mt_create_with_hmat(nid);
++
++	establish_demotion_targets();
++	mutex_unlock(&memory_tier_lock);
++}
++EXPORT_SYMBOL_GPL(mt_init_with_hmat);
++
+ static void dump_hmem_attrs(struct access_coordinate *coord, const char *prefix)
+ {
+ 	pr_info(
+@@ -636,7 +688,7 @@ int mt_set_default_dram_perf(int nid, struct access_coordinate *perf,
+ {
+ 	int rc = 0;
+ 
+-	mutex_lock(&memory_tier_lock);
++	mutex_lock(&mt_perf_lock);
+ 	if (default_dram_perf_error) {
+ 		rc = -EIO;
+ 		goto out;
+@@ -684,7 +736,7 @@ int mt_set_default_dram_perf(int nid, struct access_coordinate *perf,
+ 	}
+ 
+ out:
+-	mutex_unlock(&memory_tier_lock);
++	mutex_unlock(&mt_perf_lock);
+ 	return rc;
+ }
+ 
+@@ -700,7 +752,7 @@ int mt_perf_to_adistance(struct access_coordinate *perf, int *adist)
+ 	    perf->read_bandwidth + perf->write_bandwidth == 0)
+ 		return -EINVAL;
+ 
+-	mutex_lock(&memory_tier_lock);
++	mutex_lock(&mt_perf_lock);
+ 	/*
+ 	 * The abstract distance of a memory node is in direct proportion to
+ 	 * its memory latency (read + write) and inversely proportional to its
+@@ -713,7 +765,7 @@ int mt_perf_to_adistance(struct access_coordinate *perf, int *adist)
+ 		(default_dram_perf.read_latency + default_dram_perf.write_latency) *
+ 		(default_dram_perf.read_bandwidth + default_dram_perf.write_bandwidth) /
+ 		(perf->read_bandwidth + perf->write_bandwidth);
+-	mutex_unlock(&memory_tier_lock);
++	mutex_unlock(&mt_perf_lock);
+ 
+ 	return 0;
+ }
+@@ -797,7 +849,7 @@ static int __meminit memtier_hotplug_callback(struct notifier_block *self,
+ 		break;
+ 	case MEM_ONLINE:
+ 		mutex_lock(&memory_tier_lock);
+-		memtier = set_node_memory_tier(arg->status_change_nid);
++		memtier = set_node_memory_tier(arg->status_change_nid, default_dram_type);
+ 		if (!IS_ERR(memtier))
+ 			establish_demotion_targets();
+ 		mutex_unlock(&memory_tier_lock);
+@@ -836,7 +888,15 @@ static int __init memory_tier_init(void)
+ 	 * types assigned.
+ 	 */
+ 	for_each_node_state(node, N_MEMORY) {
+-		memtier = set_node_memory_tier(node);
++		if (!node_state(node, N_CPU))
++			/*
++			 * Defer memory tier initialization on CPUless numa nodes.
++			 * These will be initialized when HMAT information is
++			 * available.
++			 */
++			continue;
++
++		memtier = set_node_memory_tier(node, default_dram_type);
+ 		if (IS_ERR(memtier))
+ 			/*
+ 			 * Continue with memtiers we are able to setup
+-- 
+Hao Xiang and Ho-Ren (Jack) Chuang
 
 
