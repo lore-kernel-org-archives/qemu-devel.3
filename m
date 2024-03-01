@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AB75C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 23:16:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04384C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 23:16:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgC2P-0004fb-HL; Fri, 01 Mar 2024 18:11:35 -0500
+	id 1rgC2g-0005zR-8m; Fri, 01 Mar 2024 18:11:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgC1O-0003f8-CW
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:10:31 -0500
-Received: from mail-il1-x12e.google.com ([2607:f8b0:4864:20::12e])
+ id 1rgC1m-0003zh-8A
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:10:59 -0500
+Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgC1K-0005dn-AF
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:10:29 -0500
-Received: by mail-il1-x12e.google.com with SMTP id
- e9e14a558f8ab-365c96e2605so10492445ab.0
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 15:10:25 -0800 (PST)
+ id 1rgC1k-00062O-GF
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:10:54 -0500
+Received: by mail-ot1-x332.google.com with SMTP id
+ 46e09a7af769-6e49518f375so1109680a34.1
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 15:10:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709334624; x=1709939424; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709334651; x=1709939451; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=I4UwZkIS26PhKHP+iY1jWw6KRSEUK2Dc0FNGbwDM3y4=;
- b=y7inVYTmmCQwt+c1mcimvuVifIwBmPOKWglqaYA8yELg87KB/utF5iWOPYmvoF4rZe
- eXWNedSUqB2mBJr1aeeAfNUgdca2tXs+R7u+3glSvxrUwHso0s4tWiABNgwZNYd7GyZl
- NL4zdV7hDUVh4XQ3iCkJsj7ry3OiTHv5nMIlqbvgR2/bkgfQzdMyggIOqiJMNL9OId+5
- uKdCbDiEokGI/9MsrLz4DUe6tfWYhL8sC1WPrWLJP4fmeWrekWC3EyQpC21cTK1GxISg
- L4+UEE0+OORKQhDo0SkAjsETNVe++vKlcd64BLGVmPDMbuMguT/jHQN5wfmKWKg8ohwJ
- bh4Q==
+ bh=p6tPGvcWUCgEHkg4WhhgoNhXXsmKMPZyhGixNdkwuIE=;
+ b=GILe9hoH0YjVaq9230ldul13mDDZzl1m3HvvDq6dDYBob8JmoqtOr6b5m4EcbryE07
+ NSaxC+qJPFFvpsx6JjrCppyLfpnNJJOKyTTGAwoso/MMKyPZ8Tfa3bcYQXXp+LV0HMXQ
+ F0fwiXHW53vKDx65yiLqR9kOoR4PCGqcZTZhowIRJ/QmR0w0wXdz3C5yVyEQT1HFPooO
+ lzogJJjfjFD1TECqDeFdcGwwZM1qdDTUh72JQT1UNbfCxSYIs3At8Q/TSXwwbQOayo1R
+ cPuU0gnARBRLAvpBY28ihPJ3ZCVLJ9lm9lZBtHLEZlzhfU7yMF/fdjp8l7zbc8V/ZSCW
+ IWHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709334624; x=1709939424;
+ d=1e100.net; s=20230601; t=1709334651; x=1709939451;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=I4UwZkIS26PhKHP+iY1jWw6KRSEUK2Dc0FNGbwDM3y4=;
- b=bMUfAb3YGvii1U1ol2zwskoGYeHKinT6jxZYiWcCTL52PFlX+A1zXPRFAG46sA4WHs
- JcPHHi2FK0tXUaPP2swmF7hdxk+gQLj0kR9M+uITVuZQ5x9A98LsbTFRBvji0kZ3IaYh
- SBzMSLiJepji/8QPb+cp7BVy5F1MdnOFGGTw02DLFEgZD13TE/i13Ygm6devRMxedZfW
- +m011jgfjOY/aR1MjROW9NaHSSGWAIESHz5Y2MWY7Y3IqzSBtVuNLM7HagDLOr4amUkZ
- ElsQMmu97PgV38CseSxpjSjB942DnY39gy7afRRTOs+jWrwjFcFQMnj+fvanaZVI5bB+
- FLcw==
-X-Gm-Message-State: AOJu0YzqG/1qYbQ20NPXCvIJJxIZtHShVzNQ1uNN9rtdpqFRrhcYF3qt
- 9iwkca7tD00SWGpVPYMSKrlTWfCN+Ykwjl69STDmZbWf9I3KQXE2gMNgBpD8x1kj9VxnsewnC8k
- c
-X-Google-Smtp-Source: AGHT+IG53LjvkCuURiL/wExFQJzOkNtlyt+cSmSejHhcFbykvjx6jed8znqvwrTvrFq5tZpmec9PXg==
-X-Received: by 2002:a05:6e02:490:b0:365:d2bc:a535 with SMTP id
- b16-20020a056e02049000b00365d2bca535mr2671246ils.14.1709334624422; 
- Fri, 01 Mar 2024 15:10:24 -0800 (PST)
+ bh=p6tPGvcWUCgEHkg4WhhgoNhXXsmKMPZyhGixNdkwuIE=;
+ b=E36gfb/17a9o1V8T3kyKjOtRnRKz2iIoIJ3fVC8Gb6fyLkiLtU+iqhaFUpJHqnWfUB
+ N5Dw5ycgKKp2P1PMldjOulZpbLUKhWDxyURFxUqPHycZGM/f4PmEERAgOmRHnqHlU4iD
+ WHxA3TmswLRSW+bTipG8OVO8bf42376UYqGHlzVtMbAZXFPcQcZyyXeMpJCXfB5xm3+O
+ LUHpqEu/AV/YqPbS9M8Ir+GeCy2fy1fYL05Gq08rUkHAGQWlfTMssH2i7WT4GuCQW94H
+ 15xf89DWL1ioLgzIVK6/yx1pR6DvEmD9WwQjwqWkzsN+Yz0yhlWPCs+0dsKKD53xTpV4
+ OsTQ==
+X-Gm-Message-State: AOJu0Yykq/ZG8px1/6Ag/OHQmLAp8EwDHT6fw5L/fb7TttMMLX9CoJYH
+ SxLpzx2ZcOLcv9AvmBntsmzuddEgukAPfH36oPTUgZRlpKJgkqBZv9T+gElaG4izPpJaIOQjO2Y
+ A
+X-Google-Smtp-Source: AGHT+IHHaxj6DzVYlUPsjRsiS8sq/PRn2zRmYazDx5JZ/uqyf7n2n894LIweDzTvWXQQ1aqnhpo8IA==
+X-Received: by 2002:a05:6830:1108:b0:6e2:de7a:8f6e with SMTP id
+ w8-20020a056830110800b006e2de7a8f6emr3493299otq.31.1709334651431; 
+ Fri, 01 Mar 2024 15:10:51 -0800 (PST)
 Received: from stoup.. (098-147-055-211.res.spectrum.com. [98.147.55.211])
  by smtp.gmail.com with ESMTPSA id
- c2-20020a634e02000000b005e438fe702dsm3449407pgb.65.2024.03.01.15.10.23
+ c2-20020a634e02000000b005e438fe702dsm3449407pgb.65.2024.03.01.15.10.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Mar 2024 15:10:24 -0800 (PST)
+ Fri, 01 Mar 2024 15:10:51 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Helge Deller <deller@gmx.de>
-Subject: [PATCH 42/60] linux-user: Split out mmap_h_lt_g
-Date: Fri,  1 Mar 2024 13:06:01 -1000
-Message-Id: <20240301230619.661008-43-richard.henderson@linaro.org>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH 60/60] tests/tcg: Check that shmat() does not break
+ /proc/self/maps
+Date: Fri,  1 Mar 2024 13:06:19 -1000
+Message-Id: <20240301230619.661008-61-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240301230619.661008-1-richard.henderson@linaro.org>
 References: <20240301230619.661008-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12e;
- envelope-from=richard.henderson@linaro.org; helo=mail-il1-x12e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::332;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,220 +95,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Work much harder to get alignment and mapping beyond the end
-of the file correct.  Both of which are excercised by our
-test-mmap for alpha (8k pages) on any 4k page host.
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
+Add a regression test for a recently fixed issue, where shmat()
+desynced the guest and the host view of the address space and caused
+open("/proc/self/maps") to SEGV.
+
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-Id: <jwyuvao4apydvykmsnvacwshdgy3ixv7qvkh4dbxm3jkwgnttw@k4wpaayou7oq>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Acked-by: Helge Deller <deller@gmx.de>
-Message-Id: <20240102015808.132373-23-richard.henderson@linaro.org>
 ---
- linux-user/mmap.c | 184 ++++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 153 insertions(+), 31 deletions(-)
+ tests/tcg/multiarch/linux/linux-shmat-maps.c | 55 ++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
+ create mode 100644 tests/tcg/multiarch/linux/linux-shmat-maps.c
 
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index d3556bcc14..ff8f9f7ed0 100644
---- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -569,6 +569,156 @@ static abi_long mmap_h_eq_g(abi_ulong start, abi_ulong len,
-     return mmap_end(start, last, start, last, flags, page_flags);
- }
- 
+diff --git a/tests/tcg/multiarch/linux/linux-shmat-maps.c b/tests/tcg/multiarch/linux/linux-shmat-maps.c
+new file mode 100644
+index 0000000000..0ccf7a973a
+--- /dev/null
++++ b/tests/tcg/multiarch/linux/linux-shmat-maps.c
+@@ -0,0 +1,55 @@
 +/*
-+ * Special case host page size < target page size.
++ * Test that shmat() does not break /proc/self/maps.
 + *
-+ * The two special cases are increased guest alignment, and mapping
-+ * past the end of a file.
-+ *
-+ * When mapping files into a memory area larger than the file,
-+ * accesses to pages beyond the file size will cause a SIGBUS.
-+ *
-+ * For example, if mmaping a file of 100 bytes on a host with 4K
-+ * pages emulating a target with 8K pages, the target expects to
-+ * be able to access the first 8K. But the host will trap us on
-+ * any access beyond 4K.
-+ *
-+ * When emulating a target with a larger page-size than the hosts,
-+ * we may need to truncate file maps at EOF and add extra anonymous
-+ * pages up to the targets page boundary.
-+ *
-+ * This workaround only works for files that do not change.
-+ * If the file is later extended (e.g. ftruncate), the SIGBUS
-+ * vanishes and the proper behaviour is that changes within the
-+ * anon page should be reflected in the file.
-+ *
-+ * However, this case is rather common with executable images,
-+ * so the workaround is important for even trivial tests, whereas
-+ * the mmap of of a file being extended is less common.
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+static abi_long mmap_h_lt_g(abi_ulong start, abi_ulong len, int host_prot,
-+                            int mmap_flags, int page_flags, int fd,
-+                            off_t offset, int host_page_size)
++#include <assert.h>
++#include <fcntl.h>
++#include <stdlib.h>
++#include <sys/ipc.h>
++#include <sys/shm.h>
++#include <unistd.h>
++
++int main(void)
 +{
-+    void *p, *want_p = g2h_untagged(start);
-+    off_t fileend_adj = 0;
-+    int flags = mmap_flags;
-+    abi_ulong last, pass_last;
++    char buf[128];
++    int err, fd;
++    int shmid;
++    ssize_t n;
++    void *p;
 +
-+    if (!(flags & MAP_ANONYMOUS)) {
-+        struct stat sb;
++    shmid = shmget(IPC_PRIVATE, 1, IPC_CREAT | 0600);
++    assert(shmid != -1);
 +
-+        if (fstat(fd, &sb) == -1) {
-+            return -1;
-+        }
-+        if (offset >= sb.st_size) {
-+            /*
-+             * The entire map is beyond the end of the file.
-+             * Transform it to an anonymous mapping.
-+             */
-+            flags |= MAP_ANONYMOUS;
-+            fd = -1;
-+            offset = 0;
-+        } else if (offset + len > sb.st_size) {
-+            /*
-+             * A portion of the map is beyond the end of the file.
-+             * Truncate the file portion of the allocation.
-+             */
-+            fileend_adj = offset + len - sb.st_size;
-+        }
-+    }
-+
-+    if (flags & (MAP_FIXED | MAP_FIXED_NOREPLACE)) {
-+        if (fileend_adj) {
-+            p = mmap(want_p, len, host_prot, flags | MAP_ANONYMOUS, -1, 0);
-+        } else {
-+            p = mmap(want_p, len, host_prot, flags, fd, offset);
-+        }
-+        if (p != want_p) {
-+            if (p != MAP_FAILED) {
-+                /* Host does not support MAP_FIXED_NOREPLACE: emulate. */
-+                do_munmap(p, len);
-+                errno = EEXIST;
-+            }
-+            return -1;
-+        }
-+
-+        if (fileend_adj) {
-+            void *t = mmap(p, len - fileend_adj, host_prot,
-+                           (flags & ~MAP_FIXED_NOREPLACE) | MAP_FIXED,
-+                           fd, offset);
-+
-+            if (t == MAP_FAILED) {
-+                int save_errno = errno;
-+
-+                /*
-+                 * We failed a map over the top of the successful anonymous
-+                 * mapping above. The only failure mode is running out of VMAs,
-+                 * and there's nothing that we can do to detect that earlier.
-+                 * If we have replaced an existing mapping with MAP_FIXED,
-+                 * then we cannot properly recover.  It's a coin toss whether
-+                 * it would be better to exit or continue here.
-+                 */
-+                if (!(flags & MAP_FIXED_NOREPLACE) &&
-+                    !page_check_range_empty(start, start + len - 1)) {
-+                    qemu_log("QEMU target_mmap late failure: %s",
-+                             strerror(save_errno));
-+                }
-+
-+                do_munmap(want_p, len);
-+                errno = save_errno;
-+                return -1;
-+            }
-+        }
-+    } else {
-+        size_t host_len, part_len;
-+
++    /*
++     * The original bug required a non-NULL address, which skipped the
++     * mmap_find_vma step, which could result in a host mapping smaller
++     * than the target mapping.  Choose an address at random.
++     */
++    p = shmat(shmid, (void *)0x800000, SHM_RND);
++    if (p == (void *)-1) {
 +        /*
-+         * Take care to align the host memory.  Perform a larger anonymous
-+         * allocation and extract the aligned portion.  Remap the file on
-+         * top of that.
++         * Because we are now running the testcase for all guests for which
++         * we have a cross-compiler, the above random address might conflict
++         * with the guest executable in some way.  Rather than stopping,
++         * continue with a system supplied address, which should never fail.
 +         */
-+        host_len = len + TARGET_PAGE_SIZE - host_page_size;
-+        p = mmap(want_p, host_len, host_prot, flags | MAP_ANONYMOUS, -1, 0);
-+        if (p == MAP_FAILED) {
-+            return -1;
-+        }
-+
-+        part_len = (uintptr_t)p & (TARGET_PAGE_SIZE - 1);
-+        if (part_len) {
-+            part_len = TARGET_PAGE_SIZE - part_len;
-+            do_munmap(p, part_len);
-+            p += part_len;
-+            host_len -= part_len;
-+        }
-+        if (len < host_len) {
-+            do_munmap(p + len, host_len - len);
-+        }
-+
-+        if (!(flags & MAP_ANONYMOUS)) {
-+            void *t = mmap(p, len - fileend_adj, host_prot,
-+                           flags | MAP_FIXED, fd, offset);
-+
-+            if (t == MAP_FAILED) {
-+                int save_errno = errno;
-+                do_munmap(p, len);
-+                errno = save_errno;
-+                return -1;
-+            }
-+        }
-+
-+        start = h2g(p);
++        p = shmat(shmid, NULL, 0);
++        assert(p != (void *)-1);
 +    }
 +
-+    last = start + len - 1;
-+    if (fileend_adj) {
-+        pass_last = ROUND_UP(last - fileend_adj, host_page_size) - 1;
-+    } else {
-+        pass_last = last;
-+    }
-+    return mmap_end(start, last, start, pass_last, mmap_flags, page_flags);
++    fd = open("/proc/self/maps", O_RDONLY);
++    assert(fd != -1);
++    do {
++        n = read(fd, buf, sizeof(buf));
++        assert(n >= 0);
++    } while (n != 0);
++    close(fd);
++
++    err = shmdt(p);
++    assert(err == 0);
++    err = shmctl(shmid, IPC_RMID, NULL);
++    assert(err == 0);
++
++    return EXIT_SUCCESS;
 +}
-+
- static abi_long target_mmap__locked(abi_ulong start, abi_ulong len,
-                                     int target_prot, int flags, int page_flags,
-                                     int fd, off_t offset)
-@@ -613,37 +763,9 @@ static abi_long target_mmap__locked(abi_ulong start, abi_ulong len,
-     if (host_page_size == TARGET_PAGE_SIZE) {
-         return mmap_h_eq_g(start, len, host_prot, flags,
-                            page_flags, fd, offset);
--    }
--
--    /*
--     * When mapping files into a memory area larger than the file, accesses
--     * to pages beyond the file size will cause a SIGBUS.
--     *
--     * For example, if mmaping a file of 100 bytes on a host with 4K pages
--     * emulating a target with 8K pages, the target expects to be able to
--     * access the first 8K. But the host will trap us on any access beyond
--     * 4K.
--     *
--     * When emulating a target with a larger page-size than the hosts, we
--     * may need to truncate file maps at EOF and add extra anonymous pages
--     * up to the targets page boundary.
--     */
--    if (host_page_size < TARGET_PAGE_SIZE && !(flags & MAP_ANONYMOUS)) {
--        struct stat sb;
--
--        if (fstat(fd, &sb) == -1) {
--            return -1;
--        }
--
--        /* Are we trying to create a map beyond EOF?.  */
--        if (offset + len > sb.st_size) {
--            /*
--             * If so, truncate the file map at eof aligned with
--             * the hosts real pagesize. Additional anonymous maps
--             * will be created beyond EOF.
--             */
--            len = ROUND_UP(sb.st_size - offset, host_page_size);
--        }
-+    } else if (host_page_size < TARGET_PAGE_SIZE) {
-+        return mmap_h_lt_g(start, len, host_prot, flags,
-+                           page_flags, fd, offset, host_page_size);
-     }
- 
-     if (!(flags & (MAP_FIXED | MAP_FIXED_NOREPLACE))) {
 -- 
 2.34.1
 
