@@ -4,53 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 394CDC5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 09:44:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43EF4C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 09:44:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfzMN-0003L1-Fs; Fri, 01 Mar 2024 04:39:19 -0500
+	id 1rfzRU-0003LV-Gb; Fri, 01 Mar 2024 04:44:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1rfzMC-0003I7-IB
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:39:11 -0500
+ id 1rfzRS-0003Kz-E1
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:44:34 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1rfzM5-0006Oc-Kd
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:39:07 -0500
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxWPAoouFlXz0TAA--.48678S3;
- Fri, 01 Mar 2024 17:38:48 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
+ (envelope-from <gaosong@loongson.cn>) id 1rfzRQ-0007HJ-58
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:44:34 -0500
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8Axuuh7o+Fl4T0TAA--.29011S3;
+ Fri, 01 Mar 2024 17:44:27 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8AxDBMfouFlyZxLAA--.4871S14; 
- Fri, 01 Mar 2024 17:38:48 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
+ AQAAf8BxXRN3o+Fl0p1LAA--.4895S3; 
+ Fri, 01 Mar 2024 17:44:25 +0800 (CST)
+Subject: Re: [PATCH v5 00/17] Add boot LoongArch elf kernel with FDT
+From: gaosong <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, richard.henderson@linaro.org, philmd@linaro.org,
- maobibo@loongson.cn, zhaotianrui@loongson.cn, lixianglai@loongson.cn,
- imammedo@redhat.com, anisinha@redhat.com, mst@redhat.com
-Subject: [PATCH v5 12/17] hw/loongarch: fdt adds pch_pic Controller
-Date: Fri,  1 Mar 2024 17:38:33 +0800
-Message-Id: <20240301093839.663947-13-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20240301093839.663947-1-gaosong@loongson.cn>
+Cc: peter.maydell@linaro.org, richard.henderson@linaro.org,
+ philmd@linaro.org, maobibo@loongson.cn, zhaotianrui@loongson.cn,
+ lixianglai@loongson.cn, imammedo@redhat.com, anisinha@redhat.com,
+ mst@redhat.com
 References: <20240301093839.663947-1-gaosong@loongson.cn>
+Message-ID: <b97acf96-6bb7-be47-0f27-34dee5820523@loongson.cn>
+Date: Fri, 1 Mar 2024 17:44:23 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <20240301093839.663947-1-gaosong@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8AxDBMfouFlyZxLAA--.4871S14
+Content-Language: en-US
+X-CM-TRANSID: AQAAf8BxXRN3o+Fl0p1LAA--.4895S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
+X-Coremail-Antispam: 1Uk129KBj93XoWxGry8ur1UAw15AryxJr4kKrX_yoW5XrWfpF
+ W7Zr13Grs5JrZ7Ar9av343Xr90yrn7Gr12v3W3Kry8CrZFvF17Z3WxAr9rZFy7t3y0gryq
+ vr1Fkw1jga15J3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GF
+ ylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8xu
+ ctUUUUU==
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
  helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-4.176, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,86 +85,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-fdt adds pch pic controller, we use 'loongson,pch-pic-1.0'
+Hi,
 
-See:
-https://github.com/torvalds/linux/blob/v6.7/drivers/irqchip/irq-loongson-pch-pic.c
-https://lore.kernel.org/r/20200528152757.1028711-4-jiaxun.yang@flygoat.com
+If there are no new comments, I'll add this series to the loongarch-next 
+branch next week.
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- include/hw/pci-host/ls7a.h |  1 +
- hw/loongarch/virt.c        | 30 +++++++++++++++++++++++++++++-
- 2 files changed, 30 insertions(+), 1 deletion(-)
+Thanks.
+Song Gao
 
-diff --git a/include/hw/pci-host/ls7a.h b/include/hw/pci-host/ls7a.h
-index e753449593..fe260f0183 100644
---- a/include/hw/pci-host/ls7a.h
-+++ b/include/hw/pci-host/ls7a.h
-@@ -24,6 +24,7 @@
- #define VIRT_PCH_REG_BASE        0x10000000UL
- #define VIRT_IOAPIC_REG_BASE     (VIRT_PCH_REG_BASE)
- #define VIRT_PCH_MSI_ADDR_LOW    0x2FF00000UL
-+#define VIRT_PCH_REG_SIZE        0x400
- 
- /*
-  * GSI_BASE is hard-coded with 64 in linux kernel, else kernel fails to boot
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 4091a14080..87908d1f79 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -125,6 +125,31 @@ static void fdt_add_eiointc_node(LoongArchMachineState *lams,
-     g_free(nodename);
- }
- 
-+static void fdt_add_pch_pic_node(LoongArchMachineState *lams,
-+                                 uint32_t *eiointc_phandle,
-+                                 uint32_t *pch_pic_phandle)
-+{
-+    MachineState *ms = MACHINE(lams);
-+    char *nodename;
-+    hwaddr pch_pic_base = VIRT_PCH_REG_BASE;
-+    hwaddr pch_pic_size = VIRT_PCH_REG_SIZE;
-+
-+    *pch_pic_phandle = qemu_fdt_alloc_phandle(ms->fdt);
-+    nodename = g_strdup_printf("/platic@%" PRIx64, pch_pic_base);
-+    qemu_fdt_add_subnode(ms->fdt, nodename);
-+    qemu_fdt_setprop_cell(ms->fdt,  nodename, "phandle", *pch_pic_phandle);
-+    qemu_fdt_setprop_string(ms->fdt, nodename, "compatible",
-+                            "loongson,pch-pic-1.0");
-+    qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 0,
-+                           pch_pic_base, 0, pch_pic_size);
-+    qemu_fdt_setprop(ms->fdt, nodename, "interrupt-controller", NULL, 0);
-+    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 2);
-+    qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
-+                          *eiointc_phandle);
-+    qemu_fdt_setprop_cell(ms->fdt, nodename, "loongson,pic-base-vec", 0);
-+    g_free(nodename);
-+}
-+
- static void fdt_add_flash_node(LoongArchMachineState *lams)
- {
-     MachineState *ms = MACHINE(lams);
-@@ -533,7 +558,7 @@ static void loongarch_irq_init(LoongArchMachineState *lams)
-     CPULoongArchState *env;
-     CPUState *cpu_state;
-     int cpu, pin, i, start, num;
--    uint32_t cpuintc_phandle, eiointc_phandle;
-+    uint32_t cpuintc_phandle, eiointc_phandle, pch_pic_phandle;
- 
-     /*
-      * The connection of interrupts:
-@@ -624,6 +649,9 @@ static void loongarch_irq_init(LoongArchMachineState *lams)
-         qdev_connect_gpio_out(DEVICE(d), i, qdev_get_gpio_in(extioi, i));
-     }
- 
-+    /* Add PCH PIC node */
-+    fdt_add_pch_pic_node(lams, &eiointc_phandle, &pch_pic_phandle);
-+
-     pch_msi = qdev_new(TYPE_LOONGARCH_PCH_MSI);
-     start   =  num;
-     num = EXTIOI_IRQS - start;
--- 
-2.25.1
+ÔÚ 2024/3/1 ÏÂÎç5:38, Song Gao Ð´µÀ:
+> Hi, All
+>
+> We already support boot efi kernel with bios, but not support boot elf kernel.
+> This series adds boot elf kernel with FDT.
+>
+> 'LoongArch supports ACPI and FDT. The information that needs to be passed
+>   to the kernel includes the memmap, the initrd, the command line, optionally
+>   the ACPI/FDT tables, and so on'  see [1].
+>
+> Patch 2-8 : Create efi system table, and three efi configuration table
+>              boot_memmap, initd, FDT.
+> Patch 9-17 : Fixes FDT problems.
+>
+> Test:
+>    - Start kernel
+>      See [2] start_kernel.sh
+>    - Start qcow2
+>      See [2] start_qcow2.sh
+>
+> V5:
+>    - Rebase;
+>
+> V4:
+>    - patch 3 change slave_boot_code[] to const, and 'static void *p ' to
+>      'void *p';
+>    - patch 4 fixes build error;
+>    - patch 10-13, add project and commit link.
+>
+> V3:
+>    - Load initrd at  kernel_high + 4 * kernel_size;
+>    - Load 'boot_rom' at [0 - 1M], the 'boot_rom' includes
+>      slave_boot_code, cmdline_buf and systab_tables;
+>    - R-b and rebase.
+>
+> V2:
+>    - FDT pcie node adds cells 'msi-map';
+>
+>
+> [1]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/arch/loongarch/booting.rst?h=v6.7-rc4
+>
+> [2]: https://github.com/gaosong-loongson/loongarch-binary/releases
+>
+> Please review!
+>
+> Thanks.
+> Song Gao
+>
+> Song Gao (17):
+>    hw/loongarch: Move boot fucntions to boot.c
+>    hw/loongarch: Add load initrd
+>    hw/loongarch: Add slave cpu boot_code
+>    hw/loongarch: Add init_cmdline
+>    hw/loongarch: Init efi_system_table
+>    hw/loongarch: Init efi_boot_memmap table
+>    hw/loongarch: Init efi_initrd table
+>    hw/loongarch: Init efi_fdt table
+>    hw/loongarch: Fix fdt memory node wrong 'reg'
+>    hw/loongarch: fdt adds cpu interrupt controller node
+>    hw/loongarch: fdt adds Extend I/O Interrupt Controller
+>    hw/loongarch: fdt adds pch_pic Controller
+>    hw/loongarch: fdt adds pch_msi Controller
+>    hw/loongarch: fdt adds pcie irq_map node
+>    hw/loongarch: fdt remove unused irqchip node
+>    hw/loongarch: Add cells missing from uart node
+>    hw/loongarch: Add cells missing from rtc node
+>
+>   include/hw/intc/loongarch_extioi.h |   1 +
+>   include/hw/loongarch/boot.h        | 109 +++++++++
+>   include/hw/loongarch/virt.h        |  14 ++
+>   include/hw/pci-host/ls7a.h         |   2 +
+>   target/loongarch/cpu.h             |   2 +
+>   hw/loongarch/boot.c                | 330 ++++++++++++++++++++++++++
+>   hw/loongarch/virt.c                | 364 ++++++++++++++++-------------
+>   hw/loongarch/meson.build           |   1 +
+>   8 files changed, 661 insertions(+), 162 deletions(-)
+>   create mode 100644 include/hw/loongarch/boot.h
+>   create mode 100644 hw/loongarch/boot.c
+>
 
 
