@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8D36C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 07:57:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1811FC5478C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 08:00:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfxlB-00006I-Sl; Fri, 01 Mar 2024 02:56:49 -0500
+	id 1rfxo2-0000yr-TN; Fri, 01 Mar 2024 02:59:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfxl9-000065-JV
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 02:56:47 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfxo0-0000yI-JZ
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 02:59:44 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfxl7-0004jl-8a
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 02:56:47 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfxnz-00056z-2L
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 02:59:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709279804;
+ s=mimecast20190719; t=1709279982;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=wSWbzq19akJS7DD1CW4UkYNgD1SsFuvsRZZa/kDVj7w=;
- b=cTaLRLHn0aVKhH/GwJabtvINpo0ZZis9LJ9ZyLHo5hvwJu1sCaVsvTv5DL1tNoeXpxUqKl
- 8aDQzRqjoIFnA3tN4kzSl9K2DL4MlEqcDZ/ii0/Rm5mdtOipPazt+FHqxotbkKhpD5Jb6l
- 5rx8ntkVWaAaUMbhIh80wrDv3aBCKCw=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=iUBX5KEMQyrujmp0AYXtFz9dlyFNm0jieY4vTlE9/+c=;
+ b=VwWJd0/eeZmqXu2rGJaJ/YxzSoiBvQL3737wTcHEB7OHnckkL/yzlcT8YhFJjH8Po/GWKx
+ FM8Qg4HvAlqqBmXWCQHZ+xksQo73qTFdmB4ZtNwtqm9yNp9hjQbdI8lPZaBaSKWjYOKjBQ
+ LZwBcy4+AAuTx3UTmC+Fl6r0mrBsidI=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-178-lFGKxIRsPRSDr8MP2pJi1Q-1; Fri, 01 Mar 2024 02:56:42 -0500
-X-MC-Unique: lFGKxIRsPRSDr8MP2pJi1Q-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a3f9b549179so170916966b.2
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 23:56:42 -0800 (PST)
+ us-mta-180-Ef-auEj5NLquafLcAb_AvA-1; Fri, 01 Mar 2024 02:59:41 -0500
+X-MC-Unique: Ef-auEj5NLquafLcAb_AvA-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a4415f97672so119091966b.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 23:59:40 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709279801; x=1709884601;
+ d=1e100.net; s=20230601; t=1709279980; x=1709884780;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wSWbzq19akJS7DD1CW4UkYNgD1SsFuvsRZZa/kDVj7w=;
- b=nimXkfUDJmSkzc4hRChmyDJRwcbvkpKJiDSp+PY8LEwwv2RD6MZN1L9lfXDs+pKTXb
- DN8gmvqywXEBVptUtsDDXTrHLOQGA/PYydRM4RXZwnbQZlAtmEduDE7L+ILgkojzsUZx
- fCa2UrU61Gw5nPOw0iw+OduTqwzvBjmPJYE2GkEkNC8i24sV/SyFuOi/fQIbgcAX8Irb
- 3p6+cR1xJLijckXk9CadJtGyk/JC3LDDwr0aT90cTeW1aO/G1gkDGWUknAc6GA0Db3Ag
- 6v9AojVC+pLWyOgfK0OZOf/QwEabTPtRqocmxT0SPMzYf4D2ao3aLq9xVcVow2n2Rurs
- QswA==
-X-Gm-Message-State: AOJu0YzAu+ZcrTrcUMDcx7JqTi4UtKAbF0IqcTQ2cBgxn26HlU9cqOa/
- keMSqXPZ7ZFd49JDanAtaDdLFeFok0Jfnq0KeLwSb4rVFMDZDWmnfKKVZ7nMiG2Tm8UlSyRbD8a
- QtGKLtOEOstzKCVIFOprNVKs3e6QTIP13mtx7b1OYFTORF5V1NcqBj1x1K48O
-X-Received: by 2002:a17:906:4ecc:b0:a44:945e:a2cc with SMTP id
- i12-20020a1709064ecc00b00a44945ea2ccmr473265ejv.47.1709279801771; 
- Thu, 29 Feb 2024 23:56:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGHky/GlGCZ+BGqeji42IDRvnIAmKw4RvghhIk6g9LxC+KblGRQ4cP7MALbdq4rlG0Pz7Iwtg==
-X-Received: by 2002:a17:906:4ecc:b0:a44:945e:a2cc with SMTP id
- i12-20020a1709064ecc00b00a44945ea2ccmr473251ejv.47.1709279801484; 
- Thu, 29 Feb 2024 23:56:41 -0800 (PST)
+ bh=iUBX5KEMQyrujmp0AYXtFz9dlyFNm0jieY4vTlE9/+c=;
+ b=r0C8GJFvpmU+bwZulT/Ef+I38w0WCi8Yri7baPg36Z8SRg2FOoLt0yXY3BzqXIlYes
+ owLxWFdS3wkPnNSWV3BRSf+ZL4YfwkxOlirNAb0xzPeZFBszjgwsRXeQV4pcF0pGhY59
+ vLQ+6t2lpQcx9b+r6kocpbw7fdR7P6sf7EigANjP0Y7yyzmVp9nEBZ90rrVtI+yiwfoS
+ w3KW6WfOqeY++Gf9bd4EMJ6wwTeimVQDdG/OXMPicX9BYCJM4nUcxyDseTSJrJ0E7RrU
+ EsvtGRwt8ym00hjhIhxF2feTwHP1/LIImRKKYz6S3np/jPuSu3aeI0a7ozvhp9zX+Z9l
+ 5xZw==
+X-Gm-Message-State: AOJu0YxMaKiutsiBjWYxEG5K5d/RLipNQCeAjA5hwnWgYUdMXUzDSWNY
+ twcOWghmajYCtlS7PLX8SNHoo/mnBKHNRJ4TUKLIkDO9P1d8pBKhaRwQjnmKjjp7KBL4IQxs23k
+ XwYkvUFS6CMJLAs/IekLS7jEtnaDf36jdfn2dmkHd1BlAZr5B+0gj
+X-Received: by 2002:a17:906:4c52:b0:a43:b50d:1075 with SMTP id
+ d18-20020a1709064c5200b00a43b50d1075mr684392ejw.25.1709279980042; 
+ Thu, 29 Feb 2024 23:59:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHpgBrEldXFxYnO51cEBEPZaimP+4rC2T3et5Zd8T6HZ24t5vQ+hnTn43KZG0RxCe29abbKbg==
+X-Received: by 2002:a17:906:4c52:b0:a43:b50d:1075 with SMTP id
+ d18-20020a1709064c5200b00a43b50d1075mr684378ejw.25.1709279979721; 
+ Thu, 29 Feb 2024 23:59:39 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-178-133.web.vodafone.de.
  [109.43.178.133]) by smtp.gmail.com with ESMTPSA id
- ti12-20020a170907c20c00b00a4138c3f054sm1447821ejc.32.2024.02.29.23.56.40
+ un8-20020a170907cb8800b00a445044287bsm1198273ejc.123.2024.02.29.23.59.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Feb 2024 23:56:41 -0800 (PST)
-Message-ID: <66c7e6eb-ea79-49cb-a6e8-0015feb6aedc@redhat.com>
-Date: Fri, 1 Mar 2024 08:56:39 +0100
+ Thu, 29 Feb 2024 23:59:39 -0800 (PST)
+Message-ID: <119d38f9-2211-41c0-a8ec-36613f3f6520@redhat.com>
+Date: Fri, 1 Mar 2024 08:59:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/8] tests/unit/test-smp-parse.c: Test "drawers" parameter
- in -smp
+Subject: Re: [PATCH 7/8] tests/unit/test-smp-parse.c: Test the full 7-levels
+ topology hierarchy
 Content-Language: en-US
 To: Zhao Liu <zhao1.liu@linux.intel.com>,
  Eduardo Habkost <eduardo@habkost.net>,
@@ -76,9 +76,9 @@ To: Zhao Liu <zhao1.liu@linux.intel.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Yanan Wang <wangyanan55@huawei.com>
 Cc: qemu-devel@nongnu.org, Xiaoling Song <xiaoling.song@intel.com>,
- Zhao Liu <zhao1.liu@intel.com>, Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+ Zhao Liu <zhao1.liu@intel.com>
 References: <20240118144857.2124034-1-zhao1.liu@linux.intel.com>
- <20240118144857.2124034-6-zhao1.liu@linux.intel.com>
+ <20240118144857.2124034-8-zhao1.liu@linux.intel.com>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -122,7 +122,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240118144857.2124034-6-zhao1.liu@linux.intel.com>
+In-Reply-To: <20240118144857.2124034-8-zhao1.liu@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -153,17 +153,28 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 18/01/2024 15.48, Zhao Liu wrote:
 > From: Zhao Liu <zhao1.liu@intel.com>
 > 
-> Although drawer was introduced to -smp along with book by s390 machine,
-> as a general topology level in QEMU that may be reused by other arches
-> in the future, it is desirable to cover this parameter's parsing in a
-> separate case.
+> Currently, -smp supports up to 7-levels topology hierarchy:
+>    -drawers/books/sockets/dies/clusters/cores/threads.
+> 
+> Though no machine supports all these 7 levels yet, these 7 levels have
+> the strict containment relationship and together form the generic CPU
+> topology representation of QEMU.
+> 
+> Also, note that the maxcpus is calculated by multiplying all 7 levels:
+> 
+>    maxcpus = drawers * books * sockets * dies * clusters *
+>              cores * threads.
+> 
+> To cover this code path, it is necessary to test the full topology case
+> (with all 7 levels). This also helps to avoid introducing new issues by
+> further expanding the CPU topology in the future.
 > 
 > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
->   tests/unit/test-smp-parse.c | 89 +++++++++++++++++++++++++++++++++++++
->   1 file changed, 89 insertions(+)
+>   tests/unit/test-smp-parse.c | 143 ++++++++++++++++++++++++++++++++++++
+>   1 file changed, 143 insertions(+)
 
-
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+FWIW:
+Acked-by: Thomas Huth <thuth@redhat.com>
 
 
