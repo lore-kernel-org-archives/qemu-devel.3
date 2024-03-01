@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84667C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 23:16:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AB75C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 23:16:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgBxo-0004v5-GP; Fri, 01 Mar 2024 18:06:48 -0500
+	id 1rgC2P-0004fb-HL; Fri, 01 Mar 2024 18:11:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgBxf-0004ru-As
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:06:42 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1rgC1O-0003f8-CW
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:10:31 -0500
+Received: from mail-il1-x12e.google.com ([2607:f8b0:4864:20::12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgBxb-0004DX-DN
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:06:38 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-1dc1e7c0e29so10569735ad.1
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 15:06:35 -0800 (PST)
+ id 1rgC1K-0005dn-AF
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:10:29 -0500
+Received: by mail-il1-x12e.google.com with SMTP id
+ e9e14a558f8ab-365c96e2605so10492445ab.0
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 15:10:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709334394; x=1709939194; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709334624; x=1709939424; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=wXgOJaiR1gNovC/J+sG7U6tnXruxoEFoxj+FOnROhG4=;
- b=VUZKnmVb4gRnkIfqOOA3tmn2P7jczQKV0KdZk/F77Wj+QrSKvo4d5e/TrtMnHXpyVv
- /fMJERW/1zXpqFop1Uwd4/LTSfaqmQVr/hlXfJeWJCtU8okQx7GTj9l8Ngfzf+vsRX2e
- Ync08Dly4gQ1E89W0LPI3XyjialFHo7QP2rRE6bAW67zmWXpWgJlir/Ah+2xE12Yz6Z8
- LGj1Da5h2xYx2O3FlKImpp/TqhrmnBrjR2o8UDi9Wyku7WgR6oTIZ7r0EurnRsh9eCIh
- 2jGPJI6Xykicngj3VLHLmfp9KSisC/M2tWzyAWFCL5ukgtDbR3AldZhbT1ALRKDIHnVG
- Q+7A==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=I4UwZkIS26PhKHP+iY1jWw6KRSEUK2Dc0FNGbwDM3y4=;
+ b=y7inVYTmmCQwt+c1mcimvuVifIwBmPOKWglqaYA8yELg87KB/utF5iWOPYmvoF4rZe
+ eXWNedSUqB2mBJr1aeeAfNUgdca2tXs+R7u+3glSvxrUwHso0s4tWiABNgwZNYd7GyZl
+ NL4zdV7hDUVh4XQ3iCkJsj7ry3OiTHv5nMIlqbvgR2/bkgfQzdMyggIOqiJMNL9OId+5
+ uKdCbDiEokGI/9MsrLz4DUe6tfWYhL8sC1WPrWLJP4fmeWrekWC3EyQpC21cTK1GxISg
+ L4+UEE0+OORKQhDo0SkAjsETNVe++vKlcd64BLGVmPDMbuMguT/jHQN5wfmKWKg8ohwJ
+ bh4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709334394; x=1709939194;
+ d=1e100.net; s=20230601; t=1709334624; x=1709939424;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wXgOJaiR1gNovC/J+sG7U6tnXruxoEFoxj+FOnROhG4=;
- b=KViexqNvB2Fyy7ukrXSgZlbv3CrkIBZmuFrIG3e1l0bwUqkVEzKcn6OdIEI4ORSus0
- 1e020yWhV9wxnHypPgGQEAEbBma1nJORRvxxemlvhmKM58Qu60h+zCewGaLxcjjY4tSg
- /IMwOjSuqMKmlSNIxAT9kUCuCt3Oyc0Fv0pzazhUZrEpLP368ti0IIsHbeF8hmdCC2lw
- Z4qpAbs8VtTFWXecO6TDBBoqXr6EQ+Xjv3ygnlPHeAcPPKTdlOPvxpUpbpE48J49B2g7
- YEKXvnrPLu6I7jeb8y4k0pwbzGP4qYRVDxX1ekYWKwmTFx3ApoRAB4rz/tbX83S5Lzkc
- /UGA==
-X-Gm-Message-State: AOJu0YwhTlTi3ydRoxWKm8JVTw5YATNe3TpMcLPyTwoQ1UhNG7tBAGTT
- l9rnYLDOwbGi0pE80ywc03SsT6WKQZIwJD+plu6lr0XboytWC2RDktbDCUGrmDaqnrvVKDDA5NN
- w
-X-Google-Smtp-Source: AGHT+IF0r/H/bNsoIxp487FatF2QSINwXu5gAR2ULcUadQF69X45vs/chCu6KBG3ldusgIr/k4NBPg==
-X-Received: by 2002:a17:902:ccc2:b0:1dc:f16c:de0c with SMTP id
- z2-20020a170902ccc200b001dcf16cde0cmr2469911ple.65.1709334393861; 
- Fri, 01 Mar 2024 15:06:33 -0800 (PST)
+ bh=I4UwZkIS26PhKHP+iY1jWw6KRSEUK2Dc0FNGbwDM3y4=;
+ b=bMUfAb3YGvii1U1ol2zwskoGYeHKinT6jxZYiWcCTL52PFlX+A1zXPRFAG46sA4WHs
+ JcPHHi2FK0tXUaPP2swmF7hdxk+gQLj0kR9M+uITVuZQ5x9A98LsbTFRBvji0kZ3IaYh
+ SBzMSLiJepji/8QPb+cp7BVy5F1MdnOFGGTw02DLFEgZD13TE/i13Ygm6devRMxedZfW
+ +m011jgfjOY/aR1MjROW9NaHSSGWAIESHz5Y2MWY7Y3IqzSBtVuNLM7HagDLOr4amUkZ
+ ElsQMmu97PgV38CseSxpjSjB942DnY39gy7afRRTOs+jWrwjFcFQMnj+fvanaZVI5bB+
+ FLcw==
+X-Gm-Message-State: AOJu0YzqG/1qYbQ20NPXCvIJJxIZtHShVzNQ1uNN9rtdpqFRrhcYF3qt
+ 9iwkca7tD00SWGpVPYMSKrlTWfCN+Ykwjl69STDmZbWf9I3KQXE2gMNgBpD8x1kj9VxnsewnC8k
+ c
+X-Google-Smtp-Source: AGHT+IG53LjvkCuURiL/wExFQJzOkNtlyt+cSmSejHhcFbykvjx6jed8znqvwrTvrFq5tZpmec9PXg==
+X-Received: by 2002:a05:6e02:490:b0:365:d2bc:a535 with SMTP id
+ b16-20020a056e02049000b00365d2bca535mr2671246ils.14.1709334624422; 
+ Fri, 01 Mar 2024 15:10:24 -0800 (PST)
 Received: from stoup.. (098-147-055-211.res.spectrum.com. [98.147.55.211])
  by smtp.gmail.com with ESMTPSA id
- lc11-20020a170902fa8b00b001dc668e145asm3988580plb.200.2024.03.01.15.06.32
- for <qemu-devel@nongnu.org>
+ c2-20020a634e02000000b005e438fe702dsm3449407pgb.65.2024.03.01.15.10.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Mar 2024 15:06:33 -0800 (PST)
+ Fri, 01 Mar 2024 15:10:24 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 09/60] linux-user/elfload: Size corefile before opening
-Date: Fri,  1 Mar 2024 13:05:28 -1000
-Message-Id: <20240301230619.661008-10-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Helge Deller <deller@gmx.de>
+Subject: [PATCH 42/60] linux-user: Split out mmap_h_lt_g
+Date: Fri,  1 Mar 2024 13:06:01 -1000
+Message-Id: <20240301230619.661008-43-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240301230619.661008-1-richard.henderson@linaro.org>
 References: <20240301230619.661008-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-il1-x12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,162 +95,220 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Verify the size of the corefile vs the rlimit before
-opening and creating the core file at all.
+Work much harder to get alignment and mapping beyond the end
+of the file correct.  Both of which are excercised by our
+test-mmap for alpha (8k pages) on any 4k page host.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Acked-by: Helge Deller <deller@gmx.de>
+Message-Id: <20240102015808.132373-23-richard.henderson@linaro.org>
 ---
- linux-user/elfload.c | 83 +++++++++++++++++++++++---------------------
- 1 file changed, 44 insertions(+), 39 deletions(-)
+ linux-user/mmap.c | 184 ++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 153 insertions(+), 31 deletions(-)
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 6f9da721d7..bad01bd2ef 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -4270,6 +4270,16 @@ static int vma_walker(void *priv, target_ulong start, target_ulong end,
-     return (0);
+diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+index d3556bcc14..ff8f9f7ed0 100644
+--- a/linux-user/mmap.c
++++ b/linux-user/mmap.c
+@@ -569,6 +569,156 @@ static abi_long mmap_h_eq_g(abi_ulong start, abi_ulong len,
+     return mmap_end(start, last, start, last, flags, page_flags);
  }
  
-+static size_t size_note(const char *name, size_t datasz)
++/*
++ * Special case host page size < target page size.
++ *
++ * The two special cases are increased guest alignment, and mapping
++ * past the end of a file.
++ *
++ * When mapping files into a memory area larger than the file,
++ * accesses to pages beyond the file size will cause a SIGBUS.
++ *
++ * For example, if mmaping a file of 100 bytes on a host with 4K
++ * pages emulating a target with 8K pages, the target expects to
++ * be able to access the first 8K. But the host will trap us on
++ * any access beyond 4K.
++ *
++ * When emulating a target with a larger page-size than the hosts,
++ * we may need to truncate file maps at EOF and add extra anonymous
++ * pages up to the targets page boundary.
++ *
++ * This workaround only works for files that do not change.
++ * If the file is later extended (e.g. ftruncate), the SIGBUS
++ * vanishes and the proper behaviour is that changes within the
++ * anon page should be reflected in the file.
++ *
++ * However, this case is rather common with executable images,
++ * so the workaround is important for even trivial tests, whereas
++ * the mmap of of a file being extended is less common.
++ */
++static abi_long mmap_h_lt_g(abi_ulong start, abi_ulong len, int host_prot,
++                            int mmap_flags, int page_flags, int fd,
++                            off_t offset, int host_page_size)
 +{
-+    size_t namesz = strlen(name) + 1;
++    void *p, *want_p = g2h_untagged(start);
++    off_t fileend_adj = 0;
++    int flags = mmap_flags;
++    abi_ulong last, pass_last;
 +
-+    namesz = ROUND_UP(namesz, 4);
-+    datasz = ROUND_UP(datasz, 4);
++    if (!(flags & MAP_ANONYMOUS)) {
++        struct stat sb;
 +
-+    return sizeof(struct elf_note) + namesz + datasz;
++        if (fstat(fd, &sb) == -1) {
++            return -1;
++        }
++        if (offset >= sb.st_size) {
++            /*
++             * The entire map is beyond the end of the file.
++             * Transform it to an anonymous mapping.
++             */
++            flags |= MAP_ANONYMOUS;
++            fd = -1;
++            offset = 0;
++        } else if (offset + len > sb.st_size) {
++            /*
++             * A portion of the map is beyond the end of the file.
++             * Truncate the file portion of the allocation.
++             */
++            fileend_adj = offset + len - sb.st_size;
++        }
++    }
++
++    if (flags & (MAP_FIXED | MAP_FIXED_NOREPLACE)) {
++        if (fileend_adj) {
++            p = mmap(want_p, len, host_prot, flags | MAP_ANONYMOUS, -1, 0);
++        } else {
++            p = mmap(want_p, len, host_prot, flags, fd, offset);
++        }
++        if (p != want_p) {
++            if (p != MAP_FAILED) {
++                /* Host does not support MAP_FIXED_NOREPLACE: emulate. */
++                do_munmap(p, len);
++                errno = EEXIST;
++            }
++            return -1;
++        }
++
++        if (fileend_adj) {
++            void *t = mmap(p, len - fileend_adj, host_prot,
++                           (flags & ~MAP_FIXED_NOREPLACE) | MAP_FIXED,
++                           fd, offset);
++
++            if (t == MAP_FAILED) {
++                int save_errno = errno;
++
++                /*
++                 * We failed a map over the top of the successful anonymous
++                 * mapping above. The only failure mode is running out of VMAs,
++                 * and there's nothing that we can do to detect that earlier.
++                 * If we have replaced an existing mapping with MAP_FIXED,
++                 * then we cannot properly recover.  It's a coin toss whether
++                 * it would be better to exit or continue here.
++                 */
++                if (!(flags & MAP_FIXED_NOREPLACE) &&
++                    !page_check_range_empty(start, start + len - 1)) {
++                    qemu_log("QEMU target_mmap late failure: %s",
++                             strerror(save_errno));
++                }
++
++                do_munmap(want_p, len);
++                errno = save_errno;
++                return -1;
++            }
++        }
++    } else {
++        size_t host_len, part_len;
++
++        /*
++         * Take care to align the host memory.  Perform a larger anonymous
++         * allocation and extract the aligned portion.  Remap the file on
++         * top of that.
++         */
++        host_len = len + TARGET_PAGE_SIZE - host_page_size;
++        p = mmap(want_p, host_len, host_prot, flags | MAP_ANONYMOUS, -1, 0);
++        if (p == MAP_FAILED) {
++            return -1;
++        }
++
++        part_len = (uintptr_t)p & (TARGET_PAGE_SIZE - 1);
++        if (part_len) {
++            part_len = TARGET_PAGE_SIZE - part_len;
++            do_munmap(p, part_len);
++            p += part_len;
++            host_len -= part_len;
++        }
++        if (len < host_len) {
++            do_munmap(p + len, host_len - len);
++        }
++
++        if (!(flags & MAP_ANONYMOUS)) {
++            void *t = mmap(p, len - fileend_adj, host_prot,
++                           flags | MAP_FIXED, fd, offset);
++
++            if (t == MAP_FAILED) {
++                int save_errno = errno;
++                do_munmap(p, len);
++                errno = save_errno;
++                return -1;
++            }
++        }
++
++        start = h2g(p);
++    }
++
++    last = start + len - 1;
++    if (fileend_adj) {
++        pass_last = ROUND_UP(last - fileend_adj, host_page_size) - 1;
++    } else {
++        pass_last = last;
++    }
++    return mmap_end(start, last, start, pass_last, mmap_flags, page_flags);
 +}
 +
- static void fill_note(struct memelfnote *note, const char *name, int type,
-                       unsigned int sz, void *data)
- {
-@@ -4428,27 +4438,9 @@ static int dump_write(int fd, const void *ptr, size_t size)
- {
-     const char *bufp = (const char *)ptr;
-     ssize_t bytes_written, bytes_left;
--    struct rlimit dumpsize;
--    off_t pos;
- 
-     bytes_written = 0;
--    getrlimit(RLIMIT_CORE, &dumpsize);
--    if ((pos = lseek(fd, 0, SEEK_CUR))==-1) {
--        if (errno == ESPIPE) { /* not a seekable stream */
--            bytes_left = size;
--        } else {
--            return pos;
--        }
--    } else {
--        if (dumpsize.rlim_cur <= pos) {
--            return -1;
--        } else if (dumpsize.rlim_cur == RLIM_INFINITY) {
--            bytes_left = size;
--        } else {
--            size_t limit_left=dumpsize.rlim_cur - pos;
--            bytes_left = limit_left >= size ? size : limit_left ;
--        }
+ static abi_long target_mmap__locked(abi_ulong start, abi_ulong len,
+                                     int target_prot, int flags, int page_flags,
+                                     int fd, off_t offset)
+@@ -613,37 +763,9 @@ static abi_long target_mmap__locked(abi_ulong start, abi_ulong len,
+     if (host_page_size == TARGET_PAGE_SIZE) {
+         return mmap_h_eq_g(start, len, host_prot, flags,
+                            page_flags, fd, offset);
 -    }
-+    bytes_left = size;
- 
-     /*
-      * In normal conditions, single write(2) should do but
-@@ -4622,16 +4614,15 @@ static int elf_core_dump(int signr, const CPUArchState *env)
- {
-     const CPUState *cpu = env_cpu((CPUArchState *)env);
-     const TaskState *ts = (const TaskState *)cpu->opaque;
--    struct vm_area_struct *vma = NULL;
-+    struct vm_area_struct *vma;
-     struct elf_note_info info;
-     struct elfhdr elf;
-     struct elf_phdr phdr;
-     struct rlimit dumpsize;
-     struct mm_struct mm;
--    off_t offset = 0, data_offset = 0;
--    int segs = 0;
-+    off_t offset, note_offset, data_offset;
-+    int segs, cpus, ret;
-     int fd = -1;
--    int ret;
- 
-     if (prctl(PR_GET_DUMPABLE) == 0) {
-         return 0;
-@@ -4646,10 +4637,36 @@ static int elf_core_dump(int signr, const CPUArchState *env)
- 
-     /*
-      * Walk through target process memory mappings and
--     * set up structure containing this information.  After
--     * this point vma_xxx functions can be used.
-+     * set up structure containing this information.
-      */
-     vma_init(&mm);
-+    walk_memory_regions(&mm, vma_walker);
-+    segs = vma_get_mapping_count(&mm);
-+
-+    cpus = 0;
-+    CPU_FOREACH(cpu) {
-+        cpus++;
-+    }
-+
-+    offset = sizeof(struct elfhdr);
-+    offset += (segs + 1) * sizeof(struct elf_phdr);
-+    note_offset = offset;
-+
-+    offset += size_note("CORE", ts->info->auxv_len);
-+    offset += size_note("CORE", sizeof(struct target_elf_prpsinfo));
-+    offset += size_note("CORE", sizeof(struct target_elf_prstatus)) * cpus;
-+    offset = ROUND_UP(offset, ELF_EXEC_PAGESIZE);
-+    data_offset = offset;
-+
-+    for (vma = vma_first(&mm); vma != NULL; vma = vma_next(vma)) {
-+        offset += vma_dump_size(vma);
-+    }
-+
-+    /* Do not dump if the corefile size exceeds the limit. */
-+    if (dumpsize.rlim_cur != RLIM_INFINITY && dumpsize.rlim_cur < offset) {
-+        errno = 0;
-+        goto out;
-+    }
- 
-     {
-         g_autofree char *corefile = core_dump_filename(ts);
-@@ -4660,9 +4677,6 @@ static int elf_core_dump(int signr, const CPUArchState *env)
-         goto out;
+-
+-    /*
+-     * When mapping files into a memory area larger than the file, accesses
+-     * to pages beyond the file size will cause a SIGBUS.
+-     *
+-     * For example, if mmaping a file of 100 bytes on a host with 4K pages
+-     * emulating a target with 8K pages, the target expects to be able to
+-     * access the first 8K. But the host will trap us on any access beyond
+-     * 4K.
+-     *
+-     * When emulating a target with a larger page-size than the hosts, we
+-     * may need to truncate file maps at EOF and add extra anonymous pages
+-     * up to the targets page boundary.
+-     */
+-    if (host_page_size < TARGET_PAGE_SIZE && !(flags & MAP_ANONYMOUS)) {
+-        struct stat sb;
+-
+-        if (fstat(fd, &sb) == -1) {
+-            return -1;
+-        }
+-
+-        /* Are we trying to create a map beyond EOF?.  */
+-        if (offset + len > sb.st_size) {
+-            /*
+-             * If so, truncate the file map at eof aligned with
+-             * the hosts real pagesize. Additional anonymous maps
+-             * will be created beyond EOF.
+-             */
+-            len = ROUND_UP(sb.st_size - offset, host_page_size);
+-        }
++    } else if (host_page_size < TARGET_PAGE_SIZE) {
++        return mmap_h_lt_g(start, len, host_prot, flags,
++                           page_flags, fd, offset, host_page_size);
      }
  
--    walk_memory_regions(&mm, vma_walker);
--    segs = vma_get_mapping_count(&mm);
--
-     /*
-      * Construct valid coredump ELF header.  We also
-      * add one more segment for notes.
-@@ -4674,26 +4688,17 @@ static int elf_core_dump(int signr, const CPUArchState *env)
-     /* fill in the in-memory version of notes */
-     fill_note_info(&info, signr, env);
- 
--    offset += sizeof (elf);                             /* elf header */
--    offset += (segs + 1) * sizeof (struct elf_phdr);    /* program headers */
--
-     /* write out notes program header */
--    fill_elf_note_phdr(&phdr, info.notes_size, offset);
-+    fill_elf_note_phdr(&phdr, info.notes_size, note_offset);
- 
--    offset += info.notes_size;
-     if (dump_write(fd, &phdr, sizeof (phdr)) != 0)
-         goto out;
- 
--    /*
--     * ELF specification wants data to start at page boundary so
--     * we align it here.
--     */
--    data_offset = offset = roundup(offset, ELF_EXEC_PAGESIZE);
--
-     /*
-      * Write program headers for memory regions mapped in
-      * the target process.
-      */
-+    offset = data_offset;
-     for (vma = vma_first(&mm); vma != NULL; vma = vma_next(vma)) {
-         (void) memset(&phdr, 0, sizeof (phdr));
- 
+     if (!(flags & (MAP_FIXED | MAP_FIXED_NOREPLACE))) {
 -- 
 2.34.1
 
