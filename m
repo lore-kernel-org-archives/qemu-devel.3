@@ -4,140 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CCF2C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 10:52:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2488C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 11:09:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg0Uw-0002S1-VS; Fri, 01 Mar 2024 05:52:14 -0500
+	id 1rg0lA-0006CP-9i; Fri, 01 Mar 2024 06:09:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rg0Uv-0002Rb-PO
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 05:52:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
+ id 1rg0l7-0006CB-OH
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 06:08:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rg0Us-0003Ce-Nm
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 05:52:12 -0500
+ (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
+ id 1rg0l5-0006OC-PX
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 06:08:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709290325;
+ s=mimecast20190719; t=1709291333;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=aqeVVdHQlcPLjxzi+RJxcRs0FDTccO5F0XPuypXrO/I=;
- b=FMY19NvpWXd5KTrikZM0SWwqePrkirb74KSlPey3Z7pkFreiYCmyrhMvQ+QpPtvMg1nHiR
- VH2JPQ9KDTxtf2Iw+/sY+IQY8u7TrzlSgXo9vDwQtZmBEgCoYiAHaB5GKy41CipVd4uvgu
- Qvos9OfzEy/kAvfDP/Y0oiLtBfSoy8w=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=9zweSLfU93Ib/bb3/oZ+x1M2ndvj1R5k1C7KWPPoXEE=;
+ b=cTGZAzxhkM+VZNxBq4k/svZoLUwewIviB33y24iAHTsY79W0S6LCy8xw8VM7Vm+JAr0IbV
+ /ZZMV67CA+VAClYL5e7Kr58Sjh3OYYC/Pf7qtaNLUJ7uw/XNKdgpIEPm0d8NA6pUQaYtoU
+ WmGWGM66fgvHEPYNlg6BzHbyV0LJ8fQ=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-269-wDZGUZs-N76ftKk013G0rw-1; Fri, 01 Mar 2024 05:52:03 -0500
-X-MC-Unique: wDZGUZs-N76ftKk013G0rw-1
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-42e8e2f71f5so21371411cf.3
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 02:52:03 -0800 (PST)
+ us-mta-680-p04_iCCkPEW8o2WapyoE5Q-1; Fri, 01 Mar 2024 06:08:51 -0500
+X-MC-Unique: p04_iCCkPEW8o2WapyoE5Q-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-40d62d3ae0cso10776585e9.2
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 03:08:51 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709290323; x=1709895123;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aqeVVdHQlcPLjxzi+RJxcRs0FDTccO5F0XPuypXrO/I=;
- b=sOgWU27zMyTrY7FnAMKM4ZlzsONWEsL8B9NdMl9NPScRxoYQQeZVvVCgIONpALpwkw
- U75JUmma+rZyXQqWfK5w1lhtlm/IHGzuSXeAh11tOz/G2e341Xj3mSzYzW0KRky4ZXwk
- 2Ry7Yf9KXoE7SJM9VrrlXLt4aSX6jfQAh99F9gV88vMfhT0eJNK82Vo20db+76f6zvCp
- QgfYG+JKiFNrp5a1nC7gxaR40uMXdcDJO0vD3FDlnba370pc8Opg3gumFj0JRgUf2U5B
- fVrrhCHarVqnV/utZAKwOQNtxIhjPI185SCqwOwyb4qUthgcO8lLRMHdsearB9JeHDFz
- dZgQ==
+ d=1e100.net; s=20230601; t=1709291330; x=1709896130;
+ h=in-reply-to:references:cc:to:from:subject:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=9zweSLfU93Ib/bb3/oZ+x1M2ndvj1R5k1C7KWPPoXEE=;
+ b=Qg4uxD6C+hK6Z/tk8ZSzUK5Hm0XGOPuy48E8l62yroNg2iLqVNsLvwus6MvD8bpKIf
+ 727XBRcuaoFQYB0BKnUjxucm4hppyCapa6EtRSP26rJd88p0EXyCgxJ6e/RLePGTJWF+
+ gix/5GsJtVChlNI3FDgVwimRs/FOX3sJwBkfw5CnDTCQGokEIRWy+KymyJ0RxFBTn+HP
+ c6QpdjI0XoNNAFKTVsDz+8ElRs3A23ElgKTcIjg80V5WvNtq0Uxc6DumeRKfFJGnKcJJ
+ bEWcd659a2eYIKV4cA8mRrn0zMxSrVaKHyWg1O4M58U6haEiM9rQ2mrYC5z1oEoxRNhC
+ eKQA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVIN38moVUcj1xJS6RPLLtbTfaM0MqAL9tezrVRJPygPKQweAoUP1BcLapG3m1X+JdmPZhbBO+rLlelS/ukFEZb9ey5tBI=
-X-Gm-Message-State: AOJu0Yw9+BeOOHH8bUADanF6MPgz5or1WwsIul7kQ3oNpgFJzlKoJnpo
- RIYFsX9nibe2NxTTpslhmz3UM9L2h1skT9DTGfWPH2WZURngA7hBuahBoQOm2RbuRTG9HQ9pCzA
- ZdpDSooc5nYVWKYOAOOBS20JfUW9BdXGk4BzcxeWibfW7M2nqurMR
-X-Received: by 2002:a05:622a:144e:b0:42e:3fa6:28a6 with SMTP id
- v14-20020a05622a144e00b0042e3fa628a6mr1698206qtx.3.1709290323245; 
- Fri, 01 Mar 2024 02:52:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IErDHDG0/9VJoANxazgKvam0bpXvgDw3Yw97lefigHuTUo1JdoN/tH42ofSjw9AnnwHFM/oHQ==
-X-Received: by 2002:a05:622a:144e:b0:42e:3fa6:28a6 with SMTP id
- v14-20020a05622a144e00b0042e3fa628a6mr1698193qtx.3.1709290322944; 
- Fri, 01 Mar 2024 02:52:02 -0800 (PST)
-Received: from [192.168.0.9] (ip-109-43-178-133.web.vodafone.de.
- [109.43.178.133]) by smtp.gmail.com with ESMTPSA id
- d3-20020ac851c3000000b0042c61b99f42sm1594612qtn.46.2024.03.01.02.52.00
+ AJvYcCWZ1sEUKWVTlCJXfXWqi2/FPbt4Nj4rWtybH+3/yUXaKdePzBwkCy/LuTKXId9nn2AgOchN0S9n//Cbk3JTtAzcOZ1BcDo=
+X-Gm-Message-State: AOJu0YxnQmSAqTHec/ReQy39YzfTxoujfuKZs6tQykkCOe10pwhaxZxU
+ 1x21++0y+qe/KqqqMk5cp0Qe40IpUBu4uH68fx7Tr2L20OlZ2ZBwj19jIKoNCAobMMExhdMcfKf
+ Ktc9RqWo1k4iKiuAHHEypoiAzj9shJwsEE+W3SOGxg0bEoKRN0Cod
+X-Received: by 2002:adf:ec0e:0:b0:33d:82ae:67f8 with SMTP id
+ x14-20020adfec0e000000b0033d82ae67f8mr1065547wrn.50.1709291330520; 
+ Fri, 01 Mar 2024 03:08:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGIQ30Mvjbb6ckSymyNAylBwmLnxmuTxSYmgXXtMUuluZqHERQFQmowzwmO3+tm8WhJAWOwPQ==
+X-Received: by 2002:adf:ec0e:0:b0:33d:82ae:67f8 with SMTP id
+ x14-20020adfec0e000000b0033d82ae67f8mr1065527wrn.50.1709291330184; 
+ Fri, 01 Mar 2024 03:08:50 -0800 (PST)
+Received: from localhost ([2a01:e0a:a9a:c460:2827:8723:3c60:c84a])
+ by smtp.gmail.com with ESMTPSA id
+ l18-20020adfb112000000b0033d4deb2356sm4261073wra.56.2024.03.01.03.08.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 01 Mar 2024 02:52:02 -0800 (PST)
-Message-ID: <459ac649-4db0-486b-b989-df89b99ca1b4@redhat.com>
-Date: Fri, 1 Mar 2024 11:51:57 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/5] Add device DM163 (led driver, matrix colors shield
- & display)
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>,
- qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, qemu-arm@nongnu.org,
- Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Alistair Francis <alistair@alistair23.me>, Samuel Tardieu <sam@rfc1149.net>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20240228114555.192175-1-ines.varhol@telecom-paris.fr>
- <54fe3a53-5bb8-4907-94ca-817c3000048d@redhat.com>
- <CAFEAcA8Lbqgp1d3DCp+qXz=E51CfnAp_rbA7eF7C2BivJrGGtg@mail.gmail.com>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CAFEAcA8Lbqgp1d3DCp+qXz=E51CfnAp_rbA7eF7C2BivJrGGtg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ Fri, 01 Mar 2024 03:08:49 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 01 Mar 2024 12:08:49 +0100
+Message-Id: <CZID7GHAWHXR.2UTDU0T1RHPX4@fedora>
+Subject: Re: [PATCH v3 2/3] tools: build qemu-vmsr-helper
+From: "Anthony Harivel" <aharivel@redhat.com>
+To: "Paolo Bonzini" <pbonzini@redhat.com>,
+ =?utf-8?b?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>
+Cc: <mtosatti@redhat.com>, <qemu-devel@nongnu.org>, <vchundur@redhat.com>
+X-Mailer: aerc/0.15.2-111-g39195000e213
+References: <20240125072214.318382-1-aharivel@redhat.com>
+ <20240125072214.318382-3-aharivel@redhat.com> <Zbf0Fbhmg0tvMbxK@redhat.com>
+ <CABgObfaRGL8eOs6NRBjEMjTa_7UGyAn+Pic2GP=XbE+Qg-oBCQ@mail.gmail.com>
+In-Reply-To: <CABgObfaRGL8eOs6NRBjEMjTa_7UGyAn+Pic2GP=XbE+Qg-oBCQ@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=aharivel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,35 +107,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01/03/2024 11.21, Peter Maydell wrote:
-> On Wed, 28 Feb 2024 at 12:06, Thomas Huth <thuth@redhat.com> wrote:
->>
->> On 28/02/2024 12.31, Inès Varhol wrote:
->>> TLDR: how can I provide a test or an example?
->>>
->>> I've tested the display by running custom executables and
->>> comparing to the result on the real board, but I don't
->>> know how to test it using a QTest.
-> 
->> I'd suggest to try to take a screenshot via QMP or HMP. If you need a third
->> party binary to get something on the screen, it's maybe best to write an
->> avocado test instead of a qtest. See for example
->> tests/avocado/machine_m68k_nextcube.py - it takes a screenshot and then
->> converts the console messages from it via Tessaract to text and looks for
->> the expected strings there. Alternatively, have a look at
->> tests/avocado/machine_s390_ccw_virtio.py - it boots a Linux in the guest
->> that writes a string into the /dev/fb0 framebuffer, then takes a screendump
->> and then tries to find the string in the file. The latter could maybe also
->> be done via a qtest if you know how to set up the framebuffer without a
->> guest kernel.
-> 
-> The other extremely popular approach for testing display devices
-> is "I looked at the screen while I was doing the development,
-> and it was fine" :-)
+Hi Paolo,
 
-Well, but that doesn't help that much against regressions that can occur in 
-the course of time...
+> > > +static void compute_default_paths(void)
+> > > +{
+> > > +    socket_path =3D g_build_filename("/run", "qemu-vmsr-helper.sock"=
+, NULL);
+> > > +    pidfile =3D g_build_filename("/run", "qemu-vmsr-helper.pid", NUL=
+L);
+> > > +}
+> >
+> > We shouldn't be hardcoding /run, we need to honour --prefix and
+> > --localstatedir args given to configure.  /var/run is a symlink
+> > to /run so the end result ends up the same AFAIK
+>
+> Indeed; just copy from scsi/qemu-pr-helper.c.
+>
 
-  Thomas
+When I copy the same as compute-default() of scsi/qemu-pr-helper.c, the=20
+helper is listening to "/var/local/run/qemu-vmsr-helper.sock".
+
+Problem is /var/local/run is 700 while /run is 755.
+
+So I would need to adjust the qemu-vmsr-helper.service to give=20
+the --socket=3DPATH of qemu-vmsr-helper.socket (i.e=20
+ /run/qemu-vmsr-helper.sock)
+
+Problem is when I do that , I fall into the case:=20
+"Unix socket can't be set when using socket activation"
+
+So I'm a bit confused what to do about that.
+
+> > You never answered my question from the previous posting of this
+> >
+> > This check is merely validating the the thread ID in the message
+> > is a child of the process ID connected to the socket. Any process
+> > on the entire host can satisfy this requirement.
+> >
+> > I don't see what is limiting this to only QEMU as claimed by the
+> > commit message, unless you're expecting the UNIX socket permissions
+> > to be such that only processes under the qemu:qemu user:group pair
+> > can access to the socket ? That would be a libvirt based permissions
+> > assumption though.
+>
+> Yes, this is why the systemd socket uses 600, like
+> contrib/systemd/qemu-pr-helper.socket. The socket can be passed via
+> SCM_RIGHTS by libvirt, or its permissions can be changed (e.g. 660 and
+> root:kvm would make sense on a Debian system), or a separate helper
+> can be started by libvirt.
+>
+> Either way, the policy is left to the user rather than embedding it in
+> the provided systemd unit.
+>
+
+During this patch test, when I run by hand my VM (without libvirt),
+the vmsr helper systemd service/socket was like that:=20
+[Service]
+ExecStart=3D/usr/bin/qemu-vmsr-helper
+User=3Droot
+Group=3Droot
+
+and=20
+
+[Socket]
+ListenStream=3D/run/qemu-vmsr-helper.sock
+SocketUser=3Dqemu
+SocketGroup=3Dqemu
+SocketMode=3D0660
+
+And it seems to works. So I'm not sure 100% what to do in my patch.
+
+Should I follow the pr-helper systemd files anyway ?
+
+Regards,
+Anthony
 
 
