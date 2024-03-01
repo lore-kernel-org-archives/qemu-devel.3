@@ -4,90 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04769C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 05:45:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDF51C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 05:54:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfvh6-0004yJ-RX; Fri, 01 Mar 2024 00:44:28 -0500
+	id 1rfvq4-0003yd-PR; Fri, 01 Mar 2024 00:53:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfvgw-0004xY-Aw
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 00:44:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rfvq3-0003yL-9x
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 00:53:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfvgt-0006Cs-Un
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 00:44:18 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rfvq1-0007qk-GY
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 00:53:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709271854;
+ s=mimecast20190719; t=1709272420;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=22ydgyJHkQofMDuduHI8B3Kxexnqdv74gxI6xgrCQv8=;
- b=dDjlPxbR4qzN86NvDHWfwL+LC4Oi0BW4z/RXMIagbfQ5R8aGecfQhn/GV7B/11fC11ypK8
- RO896xQ5iSk79TllcFG8aMik4TjCbmE5XWBPrGP4DEx8ivzSHjdQYiR8seJUBSJn13OdJ8
- oPTgRsDVsLp1YNBCtCPuRWKmup0+BFY=
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wyRkmVMN5nuPIt2PJKAIL4i+J+M7XXVZtG2toE45VXE=;
+ b=Y8o8YQ0Z9D+NsZVfdE3e0zkXOqUlG077kx30GuLI6mp1cOlrOO6fOgO+OmCs4gp9G3JIWy
+ /aB+U6YrXVxH9ngVX/87MzwJ9KQ2R+b6K5W14sVdhtymQ4CL+qkntwh5+WuMSKwswamC2k
+ k5GEPzkotZEiO5B25/lyvZPkMcK7GNI=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-298-0aVPaOCXOqKkh4Qiz7G1aQ-1; Fri, 01 Mar 2024 00:44:13 -0500
-X-MC-Unique: 0aVPaOCXOqKkh4Qiz7G1aQ-1
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-563de65ac5dso548213a12.1
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 21:44:13 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709271852; x=1709876652;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=22ydgyJHkQofMDuduHI8B3Kxexnqdv74gxI6xgrCQv8=;
- b=pWJfdYAK8+U/cdWQweZrU8+xhdvKgXYf6ELv1YunaHK4QXKT5HdTu7cCwsKjoNjQIx
- ArG5bdY0oEELGrgSgCzKACe2NMVn6JB2w4Tz/g52GnNAsJ7h3tswlu/jJ49W+ikGaLUt
- VEovkzp3qs4ULIsefnl70ATb6UQmwLUBModLBCIP2WiSTcRKUi3NZcMOZct2HcpKD+eP
- zDdxkjmUgmvTGtuKC6xdkshPfIzbYpEM/aK//oFTytCD3DI2vuCTYV4Kg71Mllkvo5bi
- vLLbiD5w/Dv5WjHBdyYYhAjFezrho5FqaefA+F7fqY2bffa6eXs5Z62oNT98EY6oPkmd
- KfCA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWAbT/TqSynOUr2ouKaP1/07S/IV7bGr0s3v1xaD1r/hV5PzdBUEoEFBfMvgjBW6iz2CXC6/7xrw7JKaelL+zw5y+66SOw=
-X-Gm-Message-State: AOJu0Yz4WXLwkgWrRJ8Gegd5THvGgX60iL/J7MOOSlW9Hfvb1kdmQ36V
- oXOh+iOyoy3r76Wk6ypQP2++Gec/CyKRu9VsbjzvU0aQxbvW5j+pueTYSkVfEixcVM2DQstrhlm
- ld7h0oy1pl5rgEpQ3z5jBfdjUY8OCV8fwDTRPZi8N9vcMRnBYpR7t
-X-Received: by 2002:a17:90a:9e3:b0:29b:f79:2ec3 with SMTP id
- 90-20020a17090a09e300b0029b0f792ec3mr717007pjo.3.1709271852298; 
- Thu, 29 Feb 2024 21:44:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGSaPctf0q9L419OBcxjEAHyUqyVefUwgyqneMPyVAy2Z9dxM0Mwy7nPC+fLjlaPzijy+2jVQ==
-X-Received: by 2002:a17:90a:9e3:b0:29b:f79:2ec3 with SMTP id
- 90-20020a17090a09e300b0029b0f792ec3mr716999pjo.3.1709271851973; 
- Thu, 29 Feb 2024 21:44:11 -0800 (PST)
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- 1-20020a17090a0f0100b0029981c0d5c5sm2668662pjy.19.2024.02.29.21.44.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Feb 2024 21:44:11 -0800 (PST)
-Date: Fri, 1 Mar 2024 13:44:01 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, linuxarm@huawei.com
-Subject: Re: [PATCH 3/3] physmem: Fix wrong MR in large
- address_space_read/write_cached_slow()
-Message-ID: <ZeFrIY6exon32X0s@x1n>
-References: <20240215142817.1904-1-Jonathan.Cameron@huawei.com>
- <20240215142817.1904-4-Jonathan.Cameron@huawei.com>
+ us-mta-237-qpSv13ZCOHSqKbdM4cZ0Xw-1; Fri, 01 Mar 2024 00:53:35 -0500
+X-MC-Unique: qpSv13ZCOHSqKbdM4cZ0Xw-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id CC601841861;
+ Fri,  1 Mar 2024 05:53:34 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.193.4])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 4A21D2166B33;
+ Fri,  1 Mar 2024 05:53:34 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 0B3E221E6743; Fri,  1 Mar 2024 06:53:33 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Hao Xiang <hao.xiang@bytedance.com>
+Cc: pbonzini@redhat.com,  berrange@redhat.com,  eduardo@habkost.net,
+ peterx@redhat.com,  farosas@suse.de,  eblake@redhat.com,
+ thuth@redhat.com,  lvivier@redhat.com,  jdenemar@redhat.com,
+ marcel.apfelbaum@gmail.com,  philmd@linaro.org,  wangyanan55@huawei.com,
+ qemu-devel@nongnu.org
+Subject: Re: [External] Re: [PATCH v3 6/7] migration/multifd: Add zero pages
+ and zero bytes counter to migration status interface.
+In-Reply-To: <CAAYibXh_Rd0q1SnFmbH4+DUUY_Vdr5dcvawtrayRRp6ZCbOfPg@mail.gmail.com>
+ (Hao Xiang's message of "Thu, 29 Feb 2024 17:18:33 -0800")
+References: <20240226195654.934709-1-hao.xiang@bytedance.com>
+ <20240226195654.934709-7-hao.xiang@bytedance.com>
+ <87wmqozzjn.fsf@pond.sub.org>
+ <CAAYibXicsMkZ+QaFtjgSbjk_eL3waOp1fiJQ7M9b5SRXCRa+ig@mail.gmail.com>
+ <875xy7u7vb.fsf@pond.sub.org>
+ <CAAYibXh_Rd0q1SnFmbH4+DUUY_Vdr5dcvawtrayRRp6ZCbOfPg@mail.gmail.com>
+Date: Fri, 01 Mar 2024 06:53:33 +0100
+Message-ID: <87il26sdk2.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240215142817.1904-4-Jonathan.Cameron@huawei.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,121 +93,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 15, 2024 at 02:28:17PM +0000, Jonathan Cameron wrote:
+Hao Xiang <hao.xiang@bytedance.com> writes:
 
-Can we rename the subject?
+> On Wed, Feb 28, 2024 at 10:01=E2=80=AFPM Markus Armbruster <armbru@redhat=
+.com> wrote:
+>>
+>> Hao Xiang <hao.xiang@bytedance.com> writes:
+>>
+>> > On Wed, Feb 28, 2024 at 1:52=E2=80=AFAM Markus Armbruster <armbru@redh=
+at.com> wrote:
+>> >>
+>> >> Hao Xiang <hao.xiang@bytedance.com> writes:
+>> >>
+>> >> > This change extends the MigrationStatus interface to track zero pag=
+es
+>> >> > and zero bytes counter.
+>> >> >
+>> >> > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
+>> >>
+>> >> [...]
+>> >>
+>> >> > diff --git a/qapi/migration.json b/qapi/migration.json
+>> >> > index a0a85a0312..171734c07e 100644
+>> >> > --- a/qapi/migration.json
+>> >> > +++ b/qapi/migration.json
+>> >> > @@ -63,6 +63,10 @@
+>> >> >  #     between 0 and @dirty-sync-count * @multifd-channels.  (since
+>> >> >  #     7.1)
+>> >> >  #
+>> >> > +# @zero-pages: number of zero pages (since 9.0)
+>> >> > +#
+>> >> > +# @zero-bytes: number of zero bytes sent (since 9.0)
+>> >> > +#
+>> >>
+>> >> Awfully terse.  How are these two related?
+>> >
+>> > Sorry I forgot to address the same feedback from the last version.
+>>
+>> Happens :)
+>>
+>> > zero-pages are the number of pages being detected as all "zero" and
+>> > hence the payload isn't sent over the network. zero-bytes is basically
+>> > zero-pages * page_size. It's the number of bytes migrated (but not
+>> > actually sent through the network) because they are all "zero". These
+>> > two are related to the existing interface below. normal and
+>> > normal-bytes are the same representation of pages who are not all
+>> > "zero" and are actually sent through the network.
+>> >
+>> > # @normal: number of normal pages (since 1.2)
+>> > #
+>> > # @normal-bytes: number of normal bytes sent (since 1.2)
+>>
+>> We also have
+>>
+>>   # @duplicate: number of duplicate (zero) pages (since 1.2)
+>>   #
+>>   # @skipped: number of skipped zero pages. Always zero, only provided f=
+or
+>>   #     compatibility (since 1.5)
+>>
+>> Page skipping was introduced in 1.5, and withdrawn in 1.5.3 and 1.6.
+>> @skipped was formally deprecated in 8.1.  It'll soon be gone, no need to
+>> worry about it now.
+>>
+>> That leaves three values related to pages sent: @normal (and
+>> @normal-bytes), @duplicate (but no @duplicate-bytes), and @zero-pages
+>> (and @zero-bytes).
+>>
+>> I unwittingly created a naming inconsistency between @normal,
+>> @duplicate, and @zero-pages when I asked you to rename @zero to
+>> @zero-pages.
+>>
+>> The meaning of the three values is not obvious, and the doc comments
+>> don't explain them.  Can you, or anybody familiar with migration,
+>> explain them to me?
+>>
+>> MigrationStats return some values as bytes, some as pages, and some as
+>> both.  I hate that.  Can we standardize on bytes?
+>
+> I added zero/zero-bytes because I thought they were not there. But it
+> turns out "duplicate" is for that purpose. "zero/zero-bytes" is really
+> additional information to "normal/normal-bytes". Peter suggested that
+> if we add "zero/zero-bytes" we can slowly retire "duplicate" at a
+> later point.
 
-  physmem: Fix wrong MR in large address_space_read/write_cached_slow()
+"zero" is a better name than "duplicate".  Identical non-zero pages are
+possible, and they are duplicates, too.
 
-IMHO "wrong MR" is misleading, as the MR was wrong only because the address
-passed over is wrong at the first place.  Perhaps s/MR/addr/?
+If you add @zero with the intent to replace @duplicate, you should
+immediately deprecate @duplicate.  If you need assistance with that,
+just ask.
 
-> If the access is bigger than the MemoryRegion supports,
-> flatview_read/write_continue() will attempt to update the Memory Region.
-> but the address passed to flatview_translate() is relative to the cache, not
-> to the FlatView.
-> 
-> On arm/virt with interleaved CXL memory emulation and virtio-blk-pci this
-> lead to the first part of descriptor being read from the CXL memory and the
-> second part from PA 0x8 which happens to be a blank region
-> of a flash chip and all ffs on this particular configuration.
-> Note this test requires the out of tree ARM support for CXL, but
-> the problem is more general.
-> 
-> Avoid this by adding new address_space_read_continue_cached()
-> and address_space_write_continue_cached() which share all the logic
-> with the flatview versions except for the MemoryRegion lookup.
-> 
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> ---
->  system/physmem.c | 78 ++++++++++++++++++++++++++++++++++++++++++++----
->  1 file changed, 72 insertions(+), 6 deletions(-)
-> 
+> I don't know the historical reason why pages/bytes are used the way it
+> is today. The way I understand migration, the granularity of ram
+> migration is "page". There are only two types of pages 1) normal 2)
+> zero. Zero pages' playload are not sent through the network because we
+> already know what it looks like. Only the page offset is sent. Normal
+> pages are pages that are not zero. The entire page is sent through the
+> network to the target host.
+
+This is not at all clear from the documentation of MigrationStats.  I
+think the documentation needs improvement there.
+
+>                             if a user knows the zero/normal count,
+> they can already calculate the zero-bytes/normal-bytes (zero/normal *
+> page size)
+
+Yes, because member @page-size tells them the multiplier.
+
+>            but it's just convenient to see both. During development, I
+> check on these counters a lot and they are useful.
+
+QMP is for machines.  Machines don't need or want the same quantity in
+two units.  Providing them both bytes and pages is a design mistake.
+Whether it's worth correcting now is of course debatable.
+
+Regardless, the fact @normal-bytes =3D @normal * @page-size needs to be
+documented.  We have
+
+    # @page-size: The number of bytes per page for the various page-based
+    #     statistics (since 2.10)
+
+The fact that I inquired how zero-pages and zero-bytes are related might
+indicate that this isn't quite clear enough.
 
 [...]
-
-> +/* Called within RCU critical section.  */
-> +static MemTxResult address_space_read_continue_cached(MemoryRegionCache *cache,
-> +                                                      hwaddr addr,
-> +                                                      MemTxAttrs attrs,
-> +                                                      void *ptr, hwaddr len,
-> +                                                      hwaddr addr1, hwaddr l,
-> +                                                      MemoryRegion *mr)
-
-It looks like "addr" (of flatview AS) is not needed for a cached RW (see
-below), because we should have a stable (cached) MR to operate anyway?
-
-How about we also use "mr_addr" as the single addr of the MR, then drop
-addr1?
-
-> +{
-> +    MemTxResult result = MEMTX_OK;
-> +    uint8_t *buf = ptr;
-> +
-> +    fuzz_dma_read_cb(addr, len, mr);
-> +    for (;;) {
-> +
-
-Remove empty line?
-
-> +        result |= flatview_read_continue_step(addr, attrs, buf, len, addr1,
-> +                                              &l, mr);
-> +        len -= l;
-> +        buf += l;
-> +        addr += l;
-> +
-> +        if (!len) {
-> +            break;
-> +        }
-> +        l = len;
-> +
-> +        mr = address_space_translate_cached(cache, addr, &addr1, &l, false,
-> +                                            attrs);
-
-Here IIUC the mr will always be the same as before?  If so, maybe "mr_addr
-+= l" should be enough?
-
-(similar comment applies to the writer side too)
-
-> +    }
-> +
-> +    return result;
-> +}
-> +
->  /* Called from RCU critical section. address_space_read_cached uses this
->   * out of line function when the target is an MMIO or IOMMU region.
->   */
-> @@ -3390,9 +3456,9 @@ address_space_read_cached_slow(MemoryRegionCache *cache, hwaddr addr,
->      l = len;
->      mr = address_space_translate_cached(cache, addr, &addr1, &l, false,
->                                          MEMTXATTRS_UNSPECIFIED);
-> -    return flatview_read_continue(cache->fv,
-> -                                  addr, MEMTXATTRS_UNSPECIFIED, buf, len,
-> -                                  addr1, l, mr);
-> +    return address_space_read_continue_cached(cache, addr,
-> +                                              MEMTXATTRS_UNSPECIFIED, buf, len,
-> +                                              addr1, l, mr);
->  }
->  
->  /* Called from RCU critical section. address_space_write_cached uses this
-> @@ -3408,9 +3474,9 @@ address_space_write_cached_slow(MemoryRegionCache *cache, hwaddr addr,
->      l = len;
->      mr = address_space_translate_cached(cache, addr, &addr1, &l, true,
->                                          MEMTXATTRS_UNSPECIFIED);
-> -    return flatview_write_continue(cache->fv,
-> -                                   addr, MEMTXATTRS_UNSPECIFIED, buf, len,
-> -                                   addr1, l, mr);
-> +    return address_space_write_continue_cached(cache, addr,
-> +                                               MEMTXATTRS_UNSPECIFIED,
-> +                                               buf, len, addr1, l, mr);
->  }
->  
->  #define ARG1_DECL                MemoryRegionCache *cache
-> -- 
-> 2.39.2
-> 
-
--- 
-Peter Xu
 
 
