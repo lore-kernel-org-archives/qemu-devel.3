@@ -4,84 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71C79C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 19:04:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0486CC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 19:04:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg8Al-0003SJ-JU; Fri, 01 Mar 2024 14:03:55 -0500
+	id 1rg8Ay-0003VL-NJ; Fri, 01 Mar 2024 14:04:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rg8Aj-0003RQ-TX
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 14:03:53 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rg8Ai-00050h-9g
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 14:03:53 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-412cb54f086so3879855e9.3
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 11:03:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709319830; x=1709924630; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=M0Nau/AEooc9rNVy96Utg8TkIyXzpzRRRzAVdfocc8o=;
- b=RAY8zfzEJkGI7u0xQpyPHvEpDAgKEBC/9EiIN5vhs79Pnid7B6w+t6bqjXX6Yi3BbP
- /BTw9qg0sDQtGuDLSh1mM4andjlgpCgJusiBFnR9ymPgzAFxNoHe62hmJDqkRNxKH+F6
- AhGML//CHeLi/cIT4Ijn7JOa6PP09os+TR6MQKY79jo6RNxa6nQmXfZCraKgLvtDk9TB
- MAWn7ZjvJM5U36q27+Bag0Vt/kjKJqbn2CR3FqMYJcVIh8B46ECKh8BOdJuuwJmNiuaF
- tXQXY29u0UkKKtQ6T/Kpixd3vp9Yv2K4/b1pxKHUYd4eYt/LUk4FWtSV7vQrF6CgYDwn
- Ig5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709319830; x=1709924630;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=M0Nau/AEooc9rNVy96Utg8TkIyXzpzRRRzAVdfocc8o=;
- b=OFHamldB7kPmLvqzf/4z/5KEw/w+azUrRQHCxPB1hdrr8FYn6KLMzxJjUhTXWpHzNu
- xeoJvEgcyNkInorqzDGOyXaPT/7VDMtn0oPzQbsuDhUGYyexAlsgeljaE6XprqP/CYnz
- 0XpCzJXPtdtIRPD2sA2rsaiuCVtH8yfUubhmLSxFl/V87AbftvnjgCpYWxKOhL60nXlR
- SrBWLFVNm9EkTGO+D+esLf1C3d3jiyhoIbQ9dP62vmOiyg+OPOCeq6cJhGmuhmwsHrPI
- h1UlazPhWXJUUkpRUIZCIXmjtEpPeqDttdEhouBp1EqhkxlCDH/BrUhw1CyMv8iQW14g
- IvZA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXKuepdNTdC/FmDLFUsNl1wXCliuDrX51V5sMfv1jA/AkfQTnnkq0h4m20c6sCrw5TOmj2QR2AXLY8ca9nadlE8aaJ4Lpg=
-X-Gm-Message-State: AOJu0Yxhpw51CkPRmJGj0JD1BTIBxWiD6U6YVh7sLV2HN5ZnJouvhGup
- gT+kCrUkSk/pPuZlTDf5U10e+ww/HQpv72GdDHUnX/3S9BnmTgJY34vL4/dMZeM=
-X-Google-Smtp-Source: AGHT+IFo1fVaMbQg2jdLjcfFBP6Cnqi+LrxVrEn7fpBNRFovBqZNGkt3DlZ6Cjw7dddzPthGP7/1bA==
-X-Received: by 2002:a05:600c:3b12:b0:412:a266:f5e2 with SMTP id
- m18-20020a05600c3b1200b00412a266f5e2mr1800674wms.27.1709319830442; 
- Fri, 01 Mar 2024 11:03:50 -0800 (PST)
-Received: from [192.168.69.100] ([176.187.210.84])
- by smtp.gmail.com with ESMTPSA id
- s16-20020a05600c45d000b00412b67388f0sm8572229wmo.6.2024.03.01.11.03.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 01 Mar 2024 11:03:49 -0800 (PST)
-Message-ID: <01425b01-0975-4805-b302-af774abb795a@linaro.org>
-Date: Fri, 1 Mar 2024 20:03:48 +0100
+ (Exim 4.90_1) (envelope-from <crobinso@redhat.com>)
+ id 1rg8Aw-0003V8-1B
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 14:04:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <crobinso@redhat.com>)
+ id 1rg8Au-00052R-47
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 14:04:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709319842;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=H3L9x+Y35KQvPXS8MjnFJhFgiIm4TNZebFPnW1Pxy8g=;
+ b=e0q5KQtNlxjiWCHPtt70rH9kaGP0eMAquTWFGZJ1Yb+QVo3VfObqR7CJZhNN3uKEJ6M/0v
+ DpMEp65NJBrr+k+vB4a5pV9mRVqq3QlOcczFRVb8HVBeRteTXE2ycmdSGXPoDr1ZTNsqdK
+ kID8qDdMoaa128Ouo0ZGA1exuuFFG6s=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-320-WQFeNLDkP1mlqg9XfOrOIA-1; Fri,
+ 01 Mar 2024 14:04:01 -0500
+X-MC-Unique: WQFeNLDkP1mlqg9XfOrOIA-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id AF5FD3C0F198;
+ Fri,  1 Mar 2024 19:04:00 +0000 (UTC)
+Received: from [10.22.9.187] (unknown [10.22.9.187])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 84EBB492C25;
+ Fri,  1 Mar 2024 19:04:00 +0000 (UTC)
+Message-ID: <1bc7cd73-e204-4ee8-8c38-2107ed379295@redhat.com>
+Date: Fri, 1 Mar 2024 14:04:00 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/8] target/arm: Move some register related defines to
- internals.h
+Subject: Re: [Stable-7.2.10 v1 00/47] Patch Round-up for stable 7.2.10, freeze
+ on 2024-03-02
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Jean-Philippe Brucker <jean-philippe@linaro.org>
-References: <20240301183219.2424889-1-peter.maydell@linaro.org>
- <20240301183219.2424889-2-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240301183219.2424889-2-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+References: <qemu-stable-7.2.10-20240228233111@cover.tls.msk.ru>
+From: Cole Robinson <crobinso@redhat.com>
+In-Reply-To: <qemu-stable-7.2.10-20240228233111@cover.tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=crobinso@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,28 +85,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/3/24 19:32, Peter Maydell wrote:
-> cpu.h has a lot of #defines relating to CPU register fields.
-> Most of these aren't actually used outside target/arm code,
-> so there's no point in cluttering up the cpu.h file with them.
-> Move some easy ones to internals.h.
+On 2/28/24 3:35 PM, Michael Tokarev wrote:
+> The following patches are queued for QEMU stable v7.2.10:
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> I want to add some more CNTHCTL_* values, and don't really
-> want to put more into cpu.h. There's obviously more that could
-> be moved here, but I don't want to get into doing too much
-> all at once. I pondered having a different file for these,
-> but probably we'd end up pulling it in everywhere we do
-> internals.h.
+> https://gitlab.com/qemu-project/qemu/-/commits/staging-7.2
+> 
+> Patch freeze is 2024-03-02, and the release is planned for 
+> 2024-03-04:
+> 
+> https://wiki.qemu.org/Planning/7.2
+> 
+> Please respond here or CC qemu-stable@nongnu.org on any additional 
+> patches you think should (or shouldn't) be included in the release.
+> 
+> The changes which are staging for inclusion, with the original commit
+> hash from master branch, are given below the bottom line.
+> 
+> Thanks!
+> 
+> /mjt
+> 
 
-Yeah, have been there before :/
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Response might be too late, But here's the patches we are still carrying
+in Fedora 38 7.2.X and the explanations
 
-> ---
->   target/arm/cpu.h       | 128 -----------------------------------------
->   target/arm/internals.h | 128 +++++++++++++++++++++++++++++++++++++++++
->   2 files changed, 128 insertions(+), 128 deletions(-)
+
+* abe2c4bdb6 test-vmstate: fix bad GTree usage, use-after-free
+
+  Fixes an intermittent crash in test-vmstate
+
+
+* f2e57851b8 tests/qtest/display-vga-test: Add proper checks if a device
+is available
+
+  Fixes this reliable unittest error with device modules:
+  476/657 qemu:qtest+qtest-ppc64 / qtest-ppc64/display-vga-test
+           ERROR           0.71s   killed by signal 6 SIGABRT
+
+
+* b6903cbe3a tests/unit/test-blockjob: Disable complete_in_standby test
+
+  Fixes flakey blockjob test
+
+
+* 2196157404 target/i386: the sgx_epc_get_section stub is reachable
+
+  This is in 8.2.X series already, but applies to 7.2.X as well
+
+
+Thanks!
+Cole
 
 
