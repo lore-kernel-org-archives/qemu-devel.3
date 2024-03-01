@@ -4,87 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51D87C54798
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 01:28:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CB4EC54798
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 01:29:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfrgw-00046b-M2; Thu, 29 Feb 2024 20:28:02 -0500
+	id 1rfrhs-0004Rr-AG; Thu, 29 Feb 2024 20:29:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1rfrgv-00046T-7e
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 20:28:01 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1rfrgs-0001oL-Q9
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 20:28:01 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-56657bcd555so2223175a12.3
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 17:27:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1709256476; x=1709861276; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hO7saLYeafeg5Dofm8sPNK9jyx6Fp7eFukqro2mtYaQ=;
- b=WSnjwGrO9guE4Rz/RwKXC6uTe3dnrYjs487K5idGjwWp8iiaKo1Uh7w20cC4CcCXbQ
- 5kKsdTOaimAP9FwHLp/Yw+T1XFNRK/Pc8YBcmIgOW3D5VesNKLm8NLcNnzBkDBspQzoh
- IT2HK/Rt64OfJ6jbVUBII73czpl1pVmVn2L9JxPJLWl6/TfNJFX2ZRw9+Wm67zR7LFR7
- JCc+tMs4tsVwKJVlLsrHYoqpmKsiE+bCAhpxuahENuED+eZYjJcwPvDhuKRIXdizgXm2
- YrpPk99ufwUwdaGvLlEXyrzaEKJfBKBoDo98FwLdZgGziEZ8XA1RPlDOv+mV3FgpqndZ
- bMvg==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfrhq-0004RX-TS
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 20:28:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfrhl-0001s6-IV
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 20:28:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709256532;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hgPIzEabi/hqeanz74lgQYz1DsFPX117EL6jBDwVMog=;
+ b=PeNsmsM6xwtDu4bRqNrDnOP6xnWsjQXSLydA1GLhJLdZsv4An3J88XfQFiBYTGsw5d0taV
+ qP+ZbtYXnVxuaoQsAtBaQl3EaO0LlgecX/EwpVnAN2nXj6M9dKo74jYEbPb9YyJ0LK/b1V
+ mR9WY3YjAjWCL4DQ6nIkhhOV42rBpmY=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-571-X4frHlurMBuKvSWQCJjdgQ-1; Thu, 29 Feb 2024 20:28:50 -0500
+X-MC-Unique: X4frHlurMBuKvSWQCJjdgQ-1
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-29a16254a66so466072a91.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 17:28:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709256476; x=1709861276;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hO7saLYeafeg5Dofm8sPNK9jyx6Fp7eFukqro2mtYaQ=;
- b=XXMCtAdxAUrJmyzQDJ/qbiHUqZdCzJEbwwHXO778SH221/Eb8Mb9uxXUqIZmFkVXaM
- /89YuJe3ke4Nyy5cCY3Nhb7f8FORvtoM+a7X9EaR+3PwQWP9JFnafNBdeQ/9D7KNw1ZP
- Rm6XZhgAWWnmvsJUA5Uczty6UB3xMz3FXFb8/J9+8sfKtcKQSm1gSUd13jrokrrI3h0T
- heJ8h3hadlmLJYQg+nM/O1ZGlhq6LGo7VLU/dadCB+YLo0X7dwKx6KS8YEJ+/UrfEdNb
- YymKY2I3eDnJLPoqaIHJBfC2BYZI4rDRxiaOJUQPbnb2SHTv5tXlpFEt4a/2t1F6lDBM
- BfAA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXpJkxEDM8sMra8vTmfT1R7UVVOwvRPr/fpSz0hHFL+MeY3PELbSEvVrTtHmOrvoFyZ+POnDwHT09whoWhD+woSsyBnRQ8=
-X-Gm-Message-State: AOJu0YxmNop/z9FyBOZ+vsPDZAByZHbRYOAVb3pmLm1+mxtn22QqAl24
- 5ZNjproVPyX+4I3mjeKhbgpkEvTC6FUhLI5P9HzNTrznLs+13gmah5NmL4IPtnw/t5nnQpfbqFO
- Tt4ydkGEUzIPJEaja8HLjqow+ErbnUYBbl2dGdA==
-X-Google-Smtp-Source: AGHT+IGiRr39q65Oq9IgjEH+gPFosz2kOb+h1zjJLzHef8BdCyW5XXdEEv4y5PumcXhRehTemx5uMTwhiy6gybdkc/g=
-X-Received: by 2002:a50:cac7:0:b0:566:d25e:b73c with SMTP id
- f7-20020a50cac7000000b00566d25eb73cmr125598edi.35.1709256475854; Thu, 29 Feb
- 2024 17:27:55 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709256529; x=1709861329;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hgPIzEabi/hqeanz74lgQYz1DsFPX117EL6jBDwVMog=;
+ b=du09D0q/dVrEVmZvUe4lsicb5EbrQKRlp3I3m/r97ZnlnGcxR7d535UlnkpUTJf6wF
+ cL2SWplOHz9YQIAECmH53d4sKiLnFlbTfncHMKYQcSVhjaKnonT5cqkW9UZBObMOwQj2
+ 9jh2xIy7+eIXUZHGVZsJluMqK2DyX4wR4kWBk+ic7I+b9UQOwEmSCFKeRxY61QsuMKhz
+ VkEsbobdlqoA6470d6DYTPfEJxfG+QLsWYhLQ9yzXmBo4qwqvtIv3YsNWsVHG1beosVv
+ TyF5qt3GuujGxbxU/1NqdgtoeYNq7XrhWSd47n+p1SNmbb9HmdD8Ii7Nk4m6A4j4OgwB
+ f18g==
+X-Gm-Message-State: AOJu0YzW6JqnKLJ73ZQ73UXjW213b5q9bbC1V+c0pM4Koo5kg4zqsxNt
+ s8pZN/c5fNPBo6YT0+Ir3cpre8BJ+6ht6DelKh6MN1+JlnaAHgLTjSyhTAZ9KF8Evbz11Hf9JuJ
+ CQmsjO5DKa0V821215sNUIcneFEyAmUTIUaU3kCPad0OsbXxvuwYkW94QRFgY
+X-Received: by 2002:a17:90a:804c:b0:299:dddb:3a92 with SMTP id
+ e12-20020a17090a804c00b00299dddb3a92mr334755pjw.1.1709256529403; 
+ Thu, 29 Feb 2024 17:28:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF5k6p1poPC0skyKfPPKKvvPE5hwk4j08IDe9Oi15Z2+woIXAYu0RLoDfStM/9aVtC1EW6muQ==
+X-Received: by 2002:a17:90a:804c:b0:299:dddb:3a92 with SMTP id
+ e12-20020a17090a804c00b00299dddb3a92mr334734pjw.1.1709256529073; 
+ Thu, 29 Feb 2024 17:28:49 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ o8-20020a17090a744800b00299d061656csm2075735pjk.41.2024.02.29.17.28.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 29 Feb 2024 17:28:48 -0800 (PST)
+Date: Fri, 1 Mar 2024 09:28:40 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Marc-Andre Lureau <marcandre.lureau@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+Subject: Re: [PATCH V4 10/14] migration: stop vm for cpr
+Message-ID: <ZeEvSLgKW96KCy-N@x1n>
+References: <1708622920-68779-1-git-send-email-steven.sistare@oracle.com>
+ <1708622920-68779-11-git-send-email-steven.sistare@oracle.com>
+ <ZdvyuazPp6Lrn5Mr@x1n>
+ <9d560585-8f3b-4ad4-82e6-333e8c74b496@oracle.com>
 MIME-Version: 1.0
-References: <20240226195654.934709-1-hao.xiang@bytedance.com>
- <20240226195654.934709-3-hao.xiang@bytedance.com>
- <871q8w29zx.fsf@pond.sub.org>
- <CAAYibXgdaH_=JxswvKaz9qaXRFuRncmkrrSpkqSMbFu=3ypfLQ@mail.gmail.com>
- <87a5nju8ro.fsf@pond.sub.org> <87h6hrz315.fsf@suse.de>
-In-Reply-To: <87h6hrz315.fsf@suse.de>
-From: Hao Xiang <hao.xiang@bytedance.com>
-Date: Thu, 29 Feb 2024 17:27:44 -0800
-Message-ID: <CAAYibXiy3hQJaeb6urnZBQMa4M=gyxk6m3SPWjH29NB0P10aXg@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH v3 2/7] migration/multifd: Implement zero
- page transmission on the multifd thread.
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Markus Armbruster <armbru@redhat.com>, pbonzini@redhat.com,
- berrange@redhat.com, 
- eduardo@habkost.net, peterx@redhat.com, eblake@redhat.com, thuth@redhat.com, 
- lvivier@redhat.com, jdenemar@redhat.com, marcel.apfelbaum@gmail.com, 
- philmd@linaro.org, wangyanan55@huawei.com, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=hao.xiang@bytedance.com; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <9d560585-8f3b-4ad4-82e6-333e8c74b496@oracle.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,76 +105,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 29, 2024 at 7:47=E2=80=AFAM Fabiano Rosas <farosas@suse.de> wro=
-te:
->
-> Markus Armbruster <armbru@redhat.com> writes:
->
-> > Hao Xiang <hao.xiang@bytedance.com> writes:
-> >
-> >> On Wed, Feb 28, 2024 at 1:50=E2=80=AFAM Markus Armbruster <armbru@redh=
-at.com> wrote:
-> >>>
-> >>> Hao Xiang <hao.xiang@bytedance.com> writes:
-> >>>
-> >>> > 1. Add zero_pages field in MultiFDPacket_t.
-> >>> > 2. Implements the zero page detection and handling on the multifd
-> >>> > threads for non-compression, zlib and zstd compression backends.
-> >>> > 3. Added a new value 'multifd' in ZeroPageDetection enumeration.
-> >>> > 4. Handle migration QEMU9.0 -> QEMU8.2 compatibility.
-> >>> > 5. Adds zero page counters and updates multifd send/receive tracing
-> >>> > format to track the newly added counters.
-> >>> >
-> >>> > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
-> >>>
-> >>> [...]
-> >>>
-> >>> > diff --git a/qapi/migration.json b/qapi/migration.json
-> >>> > index 1e66272f8f..5a1bb8ad62 100644
-> >>> > --- a/qapi/migration.json
-> >>> > +++ b/qapi/migration.json
-> >>> > @@ -660,10 +660,13 @@
-> >>> >  #
-> >>> >  # @legacy: Perform zero page checking from main migration thread.
-> >>> >  #
-> >>> > +# @multifd: Perform zero page checking from multifd sender thread.
-> >>> > +#
-> >>> >  # Since: 9.0
-> >>> > +#
-> >>> >  ##
-> >>> >  { 'enum': 'ZeroPageDetection',
-> >>> > -  'data': [ 'none', 'legacy' ] }
-> >>> > +  'data': [ 'none', 'legacy', 'multifd' ] }
-> >>> >
-> >>> >  ##
-> >>> >  # @BitmapMigrationBitmapAliasTransform:
-> >>>
-> >>> What happens when you set "zero-page-detection": "multifd" *without*
-> >>> enabling multifd migration?
+On Thu, Feb 29, 2024 at 10:21:14AM -0500, Steven Sistare wrote:
+> On 2/25/2024 9:08 PM, Peter Xu wrote:
+> > On Thu, Feb 22, 2024 at 09:28:36AM -0800, Steve Sistare wrote:
+> >> When migration for cpr is initiated, stop the vm and set state
+> >> RUN_STATE_FINISH_MIGRATE before ram is saved.  This eliminates the
+> >> possibility of ram and device state being out of sync, and guarantees
+> >> that a guest in the suspended state remains suspended, because qmp_cont
+> >> rejects a cont command in the RUN_STATE_FINISH_MIGRATE state.
 > >>
-> >> Very good question! Right now the behavior is that if "multifd
-> >> migration" is not enabled, it goes through the legacy code path and
-> >> the "multifd zero page" option is ignored. The legacy path has its own
-> >> zero page checking and will run the same way as before. This is for
-> >> backward compatibility.
-> >
-> > We need one of two improvements then:
-> >
-> > 1. Make "zero-page-detection" reject value "multifd" when multifd
-> >    migration is not enabled.  Document this: "Requires migration
-> >    capability @multifd" or similar.
-> >
-> > 2. Document that "multifd" means multifd only when multifd is enabled,
-> >    else same as "legacy".
-> >
-> > I prefer 1., because it's easier to document.  But migration maintainer=
-s
-> > may have their own preference.  Peter, Fabiano?
->
-> I think we need to go with 2 for consistency with the other multifd_*
-> parameters. I don't see any validation at options.c.
+> >> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> > 
+> > Reviewed-by: Peter Xu <peterx@redhat.com>
+> > 
+> > cpr-reboot mode keeps changing behavior.
+> > 
+> > Could we declare it "experimental" until it's solid?  Maybe a patch to
+> > document this?
+> > 
+> > Normally IMHO we shouldn't merge a feature if it's not complete, however
+> > cpr-reboot is so special that the mode itself is already merged in 8.2
+> > before I started to merge patches, and it keeps changing things.  I don't
+> > know what else we can do here besides declaring it experimental and not
+> > declare it a stable feature.
+> 
+> Hi Peter, the planned/committed functionality for cpr-reboot changed only once, in:
+>     migration: stop vm for cpr
+> 
+> Suspension to support vfio is an enhancement which adds to the basic functionality,
+> it does not change it.  This was planned all along, but submitted as a separate 
 
-Yeah, it's hard to do 1. Someone can also set multifd and then disable
-multifd migration. This is an existing problem. I will update the
-document for "multifd".
+If VFIO used to migrate without suspension and now it won't, it's a
+behavior change?
+
+> series to manage complexity, as I outlined in my qemu community presentation,
+> which I emailed you at the time.
+> 
+> Other "changes" that arose during review were just clarifications and explanations.
+> 
+> So, I don't think cpr-reboot deserves to be condemned to experimental limbo.
+
+IMHO it's not about a feature being condemned, it's about a kindful
+heads-up to the users that one needs to take risk on using it until it
+becomes stable, it also makes developers easier because of no limitation on
+behavior change.  If all the changes are landing, then there's no need for
+such a patch.
+
+If so, please propose the planned complete document patch. I had a feeling
+that cpr is still not fully understood by even many developers on the list.
+It'll be great that such document will contain all the details one needs to
+know on the feature, etc. meaning of the name cpr-reboot (what is "cpr"),
+when to use it, how to use it, how it differs from "normal" mode
+(etc. lifted limitations on some devices that used to block migration?),
+what is enforced (vm stop, suspension, etc.) and what is optionally offered
+(VFIO, shared-mem, etc.), the expected behaviors, etc.
+
+When send it, please copy relevant people (Alex & Cedric for VFIO, while
+Markus could also be a good candidate considering the QMP involvement).
+
+Thanks a lot,
+
+-- 
+Peter Xu
+
 
