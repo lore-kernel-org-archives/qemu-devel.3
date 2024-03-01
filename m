@@ -4,96 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BD8BC5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 09:41:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28950C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 09:42:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfzOl-00027G-Au; Fri, 01 Mar 2024 04:41:47 -0500
+	id 1rfzNp-0006x5-Dp; Fri, 01 Mar 2024 04:40:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rfzOk-00022l-84
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:41:46 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rfzOi-0006yJ-Jy
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:41:45 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4129ed6f514so13459175e9.1
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 01:41:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709286103; x=1709890903; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=BYTrKBOOc/tov+EMDwZyxoUAvKKesT7oXYbWqIYldPY=;
- b=L5vSlWSNIrB2Qb54nS0Xg+YMXEFW+JTzHm8/aBL54KQVvAGRtr+0rnnztVzhoS+603
- DHhELwfkyaKQkYTEsU7S5JAErGHj3xHfAPLnHr4I8mKFsuV/fZGpimGQqhfR6v3cpUkk
- SAhJfI58rZN+Nw1olVwZ7KzVslqR1eKrKAvDcNPqDidwe426qzLL29A1wdbNtv1DQH88
- moEQXu/9NbiTjnED/Y3gLk8pQyLHsPWEkPD97LVZ1VtC2lNVHKJQ2ze2g0rvFnWdhsyH
- g4nMjZHir4Q1Mv4xJDSEr0JSOoUm6wxeiBPaoFJxjyxRWKTmP8LYiacYt8kY/tvYdg0c
- OwMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709286103; x=1709890903;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BYTrKBOOc/tov+EMDwZyxoUAvKKesT7oXYbWqIYldPY=;
- b=nki31BUS2Yqf05lRcG9UMXesoTSTF+uI2m3yrBoxH+BAPJMjq9c3e0v3SZQHvoeuv+
- RtABjAinf+0wq7ESj4KITecwhzfS1giGfHlM92pvaYB3j9FxSRwFM0fkJbyTKxsKnhZD
- t4iqeuQTl7iRsZNgQi12XA5NJ2+ifv5At33hASA8v7lOkJrcWamKHS9hZiPCt66c5soU
- tXYinqoAjMLGpFN99Erw2EGnmmUrX2ORtxzaoVAWokT24jcQp+x9qBpTe7TARLmelGfP
- vjiXOy22laErLXx3cEcW6inZNxGdA1FahzdNsugVc4k4WYeVmGAMkuUmv0xwVhuW/acn
- mUpQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWGMAzP762kW7aG2QM97SBTxQUwhBwyIpJA2zRXqfFWxis0sw1f274oxS4aPosRrp6HcozYadEN9QCQvA7SuQaHWXR3ILY=
-X-Gm-Message-State: AOJu0YzUI6TCbZNVjSbz9s8swcaONsRjO5vXVHgBnCveCX89mUHnhgMp
- wpNFcB7CZ+LtmgZF5Cb+iFxkPLwi+aD2LkCwwO/L5++yAjJBg19ME/Pd/PDIuYA=
-X-Google-Smtp-Source: AGHT+IEE6zemrfecTTfkMmQuWmY29aP0zuHR9zOQy831eY32rRyD24dRDbzQI67A9YHLTDVYEvzS6A==
-X-Received: by 2002:a05:600c:19cf:b0:412:c219:6206 with SMTP id
- u15-20020a05600c19cf00b00412c2196206mr886617wmq.39.1709286102917; 
- Fri, 01 Mar 2024 01:41:42 -0800 (PST)
-Received: from [192.168.1.24] ([102.35.208.160])
- by smtp.gmail.com with ESMTPSA id
- u17-20020a05600c19d100b00412a31d2e2asm4860695wmq.32.2024.03.01.01.41.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 01 Mar 2024 01:41:42 -0800 (PST)
-Message-ID: <03859aea-5bd6-4fd2-86f3-c30d24a75a8c@linaro.org>
-Date: Fri, 1 Mar 2024 13:41:39 +0400
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1rfzNU-0006J4-Vz
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:40:29 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1rfzNS-0006mI-18
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:40:28 -0500
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8CxG+koouFlZD0TAA--.30410S3;
+ Fri, 01 Mar 2024 17:38:48 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8AxDBMfouFlyZxLAA--.4871S16; 
+ Fri, 01 Mar 2024 17:38:48 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, richard.henderson@linaro.org, philmd@linaro.org,
+ maobibo@loongson.cn, zhaotianrui@loongson.cn, lixianglai@loongson.cn,
+ imammedo@redhat.com, anisinha@redhat.com, mst@redhat.com
+Subject: [PATCH v5 14/17] hw/loongarch: fdt adds pcie irq_map node
+Date: Fri,  1 Mar 2024 17:38:35 +0800
+Message-Id: <20240301093839.663947-15-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20240301093839.663947-1-gaosong@loongson.cn>
+References: <20240301093839.663947-1-gaosong@loongson.cn>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 06/12] tests/plugin/mem: migrate to new per_vcpu API
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Luc Michel <luc.michel@amd.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Alexandre Iooss
- <erdnaxe@crans.org>, Eduardo Habkost <eduardo@habkost.net>
-References: <20240226091446.479436-1-pierrick.bouvier@linaro.org>
- <20240226091446.479436-7-pierrick.bouvier@linaro.org>
- <Zd2sxjxegajy7ZbF@luc-work-vm> <875xy8b5sg.fsf@draig.linaro.org>
- <f0133db0-63e1-4634-a18f-fe181754e17c@linaro.org>
- <87zfvjagse.fsf@draig.linaro.org>
- <03ce19fb-0b82-4819-aaa4-a2241517090e@linaro.org>
- <87ttlr9ycv.fsf@draig.linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <87ttlr9ycv.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8AxDBMfouFlyZxLAA--.4871S16
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,24 +66,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMi8yOS8yNCA1OjQ2IFBNLCBBbGV4IEJlbm7DqWUgd3JvdGU6DQo+IFBpZXJyaWNrIEJv
-dXZpZXIgPHBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4gd3JpdGVzOg0KPiANCj4+IE9u
-IDIvMjkvMjQgMTE6MDggQU0sIEFsZXggQmVubsOpZSB3cm90ZToNCj4+PiBQaWVycmljayBC
-b3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+IHdyaXRlczoNCj4+Pg0KPj4+
-PiBPbiAyLzI5LzI0IDI6MDggQU0sIEFsZXggQmVubsOpZSB3cm90ZToNCj4+Pj4+IEx1YyBN
-aWNoZWwgPGx1Yy5taWNoZWxAYW1kLmNvbT4gd3JpdGVzOg0KPj4+Pj4NCj4+Pj4+PiBIaSBQ
-aWVycmljaywNCj4+Pj4+Pg0KPj4+IDxzbmlwPg0KPj4+Pj4NCj4+Pj4NCj4+Pj4gTXkgYmFk
-LiBPdGhlciBwbHVnaW5zIGVuYWJsZSBvbmx5IGlubGluZSB3aGVuIGJvdGggYXJlIHN1cHBs
-aWVkLCBzbyBJDQo+Pj4+IG1pc3NlZCB0aGlzIGhlcmUuDQo+Pj4+IEkgYWRkZWQgYW4gZXhw
-bGljaXQgZXJyb3Igd2hlbiB1c2VyIGVuYWJsZSBjYWxsYmFjayBhbmQgaW5saW5lIGF0IHRo
-ZQ0KPj4+PiBzYW1lIHRpbWUgb24gdGhpcyBwbHVnaW4uDQo+Pj4gV2UgY291bGQgZGVmYXVs
-dCB0byBpbmxpbmUgdW5sZXNzIHdlIG5lZWQgdGhlIG1vcmUgZmVhdHVyZXMgb2YNCj4+PiBj
-YWxsYmFja3M/DQo+Pj4NCj4+DQo+PiBUaGlzIHJlbWFyayBhcHBsaWVzIGZvciBhbGwgcGx1
-Z2lucyBpbiBnZW5lcmFsLiBOb3cgd2UgaGF2ZSBzYWZlIGFuZA0KPj4gY29ycmVjdCBpbmxp
-bmUgb3BlcmF0aW9ucywgY2FsbGJhY2tzIGFyZSBub3QgbmVlZGVkIGluIHNvbWUgY2FzZS4N
-Cj4+DQo+PiBXb3VsZCB0aGF0IGJlIGFjY2VwdGFibGUgZm9yIHlvdSB0aGF0IHdlIGRlbGF5
-IHRoaXMgImNsZWFudXAiIHRvDQo+PiBleGlzdGluZyBwbHVnaW5zIGFmdGVyIHNvZnQgZnJl
-ZXplPyBTbyB3ZSBjYW4gZm9jdXMgb24gbWVyZ2luZyBjdXJyZW50DQo+PiBBUEkgY2hhbmdl
-cyBuZWVkZWQuDQo+IA0KPiBBcyBsb25nIGFzIHdlIGZpeCB0aGUgZG91YmxlIHJlcG9ydGlu
-ZyBidWcgc3VyZS4NCj4gDQoNClllcywgZml4ZWQgaW4gdjYuDQo=
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+ hw/loongarch/virt.c | 73 ++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 69 insertions(+), 4 deletions(-)
+
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index e1fe1ea97f..ea73a80628 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -316,7 +316,62 @@ static void fdt_add_fw_cfg_node(const LoongArchMachineState *lams)
+     g_free(nodename);
+ }
+ 
+-static void fdt_add_pcie_node(const LoongArchMachineState *lams)
++static void fdt_add_pcie_irq_map_node(const LoongArchMachineState *lams,
++                                      char *nodename,
++                                      uint32_t *pch_pic_phandle)
++{
++    int pin, dev;
++    uint32_t irq_map_stride = 0;
++    uint32_t full_irq_map[GPEX_NUM_IRQS *GPEX_NUM_IRQS * 10] = {};
++    uint32_t *irq_map = full_irq_map;
++    const MachineState *ms = MACHINE(lams);
++
++    /* This code creates a standard swizzle of interrupts such that
++     * each device's first interrupt is based on it's PCI_SLOT number.
++     * (See pci_swizzle_map_irq_fn())
++     *
++     * We only need one entry per interrupt in the table (not one per
++     * possible slot) seeing the interrupt-map-mask will allow the table
++     * to wrap to any number of devices.
++     */
++
++    for (dev = 0; dev < GPEX_NUM_IRQS; dev++) {
++        int devfn = dev * 0x8;
++
++        for (pin = 0; pin  < GPEX_NUM_IRQS; pin++) {
++            int irq_nr = 16 + ((pin + PCI_SLOT(devfn)) % GPEX_NUM_IRQS);
++            int i = 0;
++
++            /* Fill PCI address cells */
++            irq_map[i] = cpu_to_be32(devfn << 8);
++            i += 3;
++
++            /* Fill PCI Interrupt cells */
++            irq_map[i] = cpu_to_be32(pin + 1);
++            i += 1;
++
++            /* Fill interrupt controller phandle and cells */
++            irq_map[i++] = cpu_to_be32(*pch_pic_phandle);
++            irq_map[i++] = cpu_to_be32(irq_nr);
++
++            if (!irq_map_stride) {
++                irq_map_stride = i;
++            }
++            irq_map += irq_map_stride;
++        }
++    }
++
++
++    qemu_fdt_setprop(ms->fdt, nodename, "interrupt-map", full_irq_map,
++                     GPEX_NUM_IRQS * GPEX_NUM_IRQS *
++                     irq_map_stride * sizeof(uint32_t));
++    qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupt-map-mask",
++                     0x1800, 0, 0, 0x7);
++}
++
++static void fdt_add_pcie_node(const LoongArchMachineState *lams,
++                              uint32_t *pch_pic_phandle,
++                              uint32_t *pch_msi_phandle)
+ {
+     char *nodename;
+     hwaddr base_mmio = VIRT_PCI_MEM_BASE;
+@@ -347,6 +402,11 @@ static void fdt_add_pcie_node(const LoongArchMachineState *lams)
+                                  2, base_pio, 2, size_pio,
+                                  1, FDT_PCI_RANGE_MMIO, 2, base_mmio,
+                                  2, base_mmio, 2, size_mmio);
++    qemu_fdt_setprop_cells(ms->fdt, nodename, "msi-map",
++                           0, *pch_msi_phandle, 0, 0x10000);
++
++    fdt_add_pcie_irq_map_node(lams, nodename, pch_pic_phandle);
++
+     g_free(nodename);
+ }
+ 
+@@ -505,7 +565,10 @@ static DeviceState *create_platform_bus(DeviceState *pch_pic)
+     return dev;
+ }
+ 
+-static void loongarch_devices_init(DeviceState *pch_pic, LoongArchMachineState *lams)
++static void loongarch_devices_init(DeviceState *pch_pic,
++                                   LoongArchMachineState *lams,
++                                   uint32_t *pch_pic_phandle,
++                                   uint32_t *pch_msi_phandle)
+ {
+     MachineClass *mc = MACHINE_GET_CLASS(lams);
+     DeviceState *gpex_dev;
+@@ -551,6 +614,9 @@ static void loongarch_devices_init(DeviceState *pch_pic, LoongArchMachineState *
+         gpex_set_irq_num(GPEX_HOST(gpex_dev), i, 16 + i);
+     }
+ 
++    /* Add pcie node */
++    fdt_add_pcie_node(lams, pch_pic_phandle, pch_msi_phandle);
++
+     serial_mm_init(get_system_memory(), VIRT_UART_BASE, 0,
+                    qdev_get_gpio_in(pch_pic,
+                                     VIRT_UART_IRQ - VIRT_GSI_BASE),
+@@ -697,7 +763,7 @@ static void loongarch_irq_init(LoongArchMachineState *lams)
+     /* Add PCH MSI node */
+     fdt_add_pch_msi_node(lams, &eiointc_phandle, &pch_msi_phandle);
+ 
+-    loongarch_devices_init(pch_pic, lams);
++    loongarch_devices_init(pch_pic, lams, &pch_pic_phandle, &pch_msi_phandle);
+ }
+ 
+ static void loongarch_firmware_init(LoongArchMachineState *lams)
+@@ -904,7 +970,6 @@ static void loongarch_init(MachineState *machine)
+     lams->powerdown_notifier.notify = virt_powerdown_req;
+     qemu_register_powerdown_notifier(&lams->powerdown_notifier);
+ 
+-    fdt_add_pcie_node(lams);
+     /*
+      * Since lowmem region starts from 0 and Linux kernel legacy start address
+      * at 2 MiB, FDT base address is located at 1 MiB to avoid NULL pointer
+-- 
+2.25.1
+
 
