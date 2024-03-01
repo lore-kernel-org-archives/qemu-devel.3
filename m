@@ -4,52 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74F81C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 16:37:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52CCCC5478C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 16:38:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg5sj-0000a6-L5; Fri, 01 Mar 2024 11:37:09 -0500
+	id 1rg5th-00011U-Nx; Fri, 01 Mar 2024 11:38:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=DSA8=KH=kaod.org=clg@ozlabs.org>)
- id 1rg5sf-0000ZV-Tn; Fri, 01 Mar 2024 11:37:05 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rg5te-00010A-Ii
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 11:38:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=DSA8=KH=kaod.org=clg@ozlabs.org>)
- id 1rg5sb-0005IZ-U0; Fri, 01 Mar 2024 11:37:05 -0500
-Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TmYdS5Qtzz4wc6;
- Sat,  2 Mar 2024 03:36:44 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rg5tb-0005Uq-Aw
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 11:38:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709311081;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=KxN9MjuotYhe0BLdZwH5sJ0H0O1jVrASjfSEj6nnoWM=;
+ b=OpEg0Ou8Xp1fuD5LOe58v6LafVQxYTwyS4uTFhXJtYnWkXuPLg3Jdz+0noP/JTGPZxzCYm
+ poaXXKe63TQ6L/yu7HKDZLywHzceRZx9avzcQ5DdDGPIzBKQHOZjj/j2uHsZPZB6t2qV9v
+ O635ug+BJX64rppkkapr/TzBS0cOjU0=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-478-GV9OeDfENPmG7INPekCXiw-1; Fri, 01 Mar 2024 11:37:57 -0500
+X-MC-Unique: GV9OeDfENPmG7INPekCXiw-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TmYdP5fc8z4wc1;
- Sat,  2 Mar 2024 03:36:41 +1100 (AEDT)
-Message-ID: <9dd1a7fe-4d28-4d2d-b43e-07eeaf2c6b1d@kaod.org>
-Date: Fri, 1 Mar 2024 17:36:37 +0100
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1DBB7862F7D;
+ Fri,  1 Mar 2024 16:37:57 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.50])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id C66E6492BE2;
+ Fri,  1 Mar 2024 16:37:53 +0000 (UTC)
+Date: Fri, 1 Mar 2024 16:37:51 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Roy Hopkins <roy.hopkins@suse.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>,
+ =?utf-8?B?SsO2cmc=?= Roedel <jroedel@suse.com>
+Subject: Re: [PATCH 3/9] backends/confidential-guest-support: Add functions
+ to support IGVM
+Message-ID: <ZeIEX8v7828JcXte@redhat.com>
+References: <cover.1709044754.git.roy.hopkins@suse.com>
+ <0d5af28ab63f6e4e4089b8b5a11b9fc9c941986f.1709044754.git.roy.hopkins@suse.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 0/5] hw/ppc: SPI model
-Content-Language: en-US, fr
-To: Chalapathi V <chalapathi.v@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
- calebs@us.ibm.com, chalapathi.v@ibm.com, saif.abrar@linux.vnet.ibm.com
-References: <20240207160833.3437779-1-chalapathi.v@linux.ibm.com>
- <2aef5ff8-bdae-437e-892b-25e4fe684335@linux.ibm.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <2aef5ff8-bdae-437e-892b-25e4fe684335@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=DSA8=KH=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0d5af28ab63f6e4e4089b8b5a11b9fc9c941986f.1709044754.git.roy.hopkins@suse.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,111 +91,197 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Chalapathi,
-
-On 3/1/24 17:17, Chalapathi V wrote:
-> Hello,
+On Tue, Feb 27, 2024 at 02:50:09PM +0000, Roy Hopkins wrote:
+> In preparation for supporting the processing of IGVM files to configure
+> guests, this adds a set of functions to ConfidentialGuestSupport
+> allowing configuration of secure virtual machines that can be
+> implemented for each supported isolation platform type such as Intel TDX
+> or AMD SEV-SNP. These functions will be called by IGVM processing code
+> in subsequent patches.
 > 
-> I would greatly appreciate the review comments/suggestions on PATCH V1.
+> This commit provides a default implementation of the functions that
+> either perform no action or generate a warning or error when they are
+> called. Targets that support ConfidentalGuestSupport should override
+> these implementations.
 > 
-> Thank You and Regards,
-
-I didn't forget but I lacked the time in this release cycle. Sorry
-about that.
-
-I have one quick comment though. There are already a few models
-implementing SPI controllers in QEMU. When I skimmed through the
-patches, I was surprised to see no use of the available SSI
-framework. Doesn't the current framework fit your needs ?
-
-Please take a look at files in : include/hw/ssi/* hw/ssi/*
-
-Same comment for the Serial EEPROM model. This device is generic
-and not POWER specific. It should be possible to attach the device
-model on other machines and different SPI bus provided by QEMU.
-This doesn't mean rewriting everything, but the "HW" interface
-probably needs to be reworked. It would make it easier to write
-unit test (see ests/qtest/) and ease the review also.
-
-Thanks,
-
-C.
-
-
-
+> Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
+> ---
+>  backends/confidential-guest-support.c     | 26 ++++++++
+>  include/exec/confidential-guest-support.h | 76 +++++++++++++++++++++++
+>  2 files changed, 102 insertions(+)
 > 
-> Chalapathi
+> diff --git a/backends/confidential-guest-support.c b/backends/confidential-guest-support.c
+> index da436fb736..42628be8d7 100644
+> --- a/backends/confidential-guest-support.c
+> +++ b/backends/confidential-guest-support.c
+> @@ -14,6 +14,7 @@
+>  #include "qemu/osdep.h"
+>  
+>  #include "exec/confidential-guest-support.h"
+> +#include "qemu/error-report.h"
+>  
+>  OBJECT_DEFINE_ABSTRACT_TYPE(ConfidentialGuestSupport,
+>                              confidential_guest_support,
+> @@ -45,8 +46,33 @@ static void confidential_guest_support_class_init(ObjectClass *oc, void *data)
+>  #endif
+>  }
+>  
+> +static int check_support(ConfidentialGuestPlatformType platform,
+> +                         uint16_t platform_version, uint8_t highest_vtl,
+> +                         uint64_t shared_gpa_boundary)
+> +{
+> +    /* Default: no support. */
+> +    return 0;
+> +}
+> +
+> +static int set_guest_state(hwaddr gpa, uint8_t *ptr, uint64_t len,
+> +                                 ConfidentialGuestPageType memory_type,
+> +                                 uint16_t cpu_index)
+> +{
+> +    warn_report("Confidential guest memory not supported");
+> +    return -1;
+> +}
+> +
+> +static int get_mem_map_entry(int index, ConfidentialGuestMemoryMapEntry *entry)
+> +{
+> +    return 1;
+> +}
+
+IIUC, all these can reports errors, and as such I think
+they should have an 'Error **errp' parameter, so we can
+report precise errors in these methods, rather than
+less useful generic errors in the caller.
+
+The above 'warn_report' ought to be an error too, since
+it is returning an failure code (-1)
+
+> +
+>  static void confidential_guest_support_init(Object *obj)
+>  {
+> +    ConfidentialGuestSupport *cgs = CONFIDENTIAL_GUEST_SUPPORT(obj);
+> +    cgs->check_support = check_support;
+> +    cgs->set_guest_state = set_guest_state;
+> +    cgs->get_mem_map_entry = get_mem_map_entry;
+>  }
+>  
+>  static void confidential_guest_support_finalize(Object *obj)
+> diff --git a/include/exec/confidential-guest-support.h b/include/exec/confidential-guest-support.h
+> index b08ad8de4d..c43a1a32f1 100644
+> --- a/include/exec/confidential-guest-support.h
+> +++ b/include/exec/confidential-guest-support.h
+> @@ -21,10 +21,46 @@
+>  #ifndef CONFIG_USER_ONLY
+>  
+>  #include "qom/object.h"
+> +#include "exec/hwaddr.h"
+> +
+> +#if defined(CONFIG_IGVM)
+> +#include "igvm/igvm.h"
+> +#endif
+>  
+>  #define TYPE_CONFIDENTIAL_GUEST_SUPPORT "confidential-guest-support"
+>  OBJECT_DECLARE_SIMPLE_TYPE(ConfidentialGuestSupport, CONFIDENTIAL_GUEST_SUPPORT)
+>  
+> +typedef enum ConfidentialGuestPlatformType {
+> +    CGS_PLATFORM_SEV,
+> +    CGS_PLATFORM_SEV_ES,
+> +    CGS_PLATFORM_SEV_SNP,
+> +    CGS_PLATFORM_TDX,
+
+QEMU only has support for SEV & SEV_ES today. We should leave the
+others until we actually get an impl of SEV-SNP/TDX in QEMU that
+supports those platforms.
+
+> +} ConfidentialGuestPlatformType;
+> +
+> +typedef enum ConfidentialGuestMemoryType {
+> +    CGS_MEM_RAM,
+> +    CGS_MEM_RESERVED,
+> +    CGS_MEM_ACPI,
+> +    CGS_MEM_NVS,
+> +    CGS_MEM_UNUSABLE,
+> +} ConfidentialGuestMemoryType;
+> +
+> +typedef struct ConfidentialGuestMemoryMapEntry {
+> +    uint64_t gpa;
+> +    uint64_t size;
+> +    ConfidentialGuestMemoryType type;
+> +} ConfidentialGuestMemoryMapEntry;
+> +
+> +typedef enum ConfidentialGuestPageType {
+> +    CGS_PAGE_TYPE_NORMAL,
+> +    CGS_PAGE_TYPE_VMSA,
+> +    CGS_PAGE_TYPE_ZERO,
+> +    CGS_PAGE_TYPE_UNMEASURED,
+> +    CGS_PAGE_TYPE_SECRETS,
+> +    CGS_PAGE_TYPE_CPUID,
+> +    CGS_PAGE_TYPE_REQUIRED_MEMORY,
+> +} ConfidentialGuestPageType;
+> +
+>  struct ConfidentialGuestSupport {
+>      Object parent;
+>  
+> @@ -60,6 +96,46 @@ struct ConfidentialGuestSupport {
+>       */
+>      char *igvm_filename;
+>  #endif
+> +
+> +    /*
+> +     * The following virtual methods need to be implemented by systems that
+> +     * support confidential guests that can be configured with IGVM and are
+> +     * used during processing of the IGVM file with process_igvm().
+> +     */
+> +
+> +    /*
+> +     * Check for to see if this confidential guest supports a particular
+> +     * platform or configuration
+> +     */
+> +    int (*check_support)(ConfidentialGuestPlatformType platform,
+> +                         uint16_t platform_version, uint8_t highest_vtl,
+> +                         uint64_t shared_gpa_boundary);
+> +
+> +    /*
+> +     * Configure part of the state of a guest for a particular set of data, page
+> +     * type and gpa. This can be used for example to pre-populate and measure
+> +     * guest memory contents, define private ranges or set the initial CPU state
+> +     * for one or more CPUs.
+> +     *
+> +     * If memory_type is CGS_PAGE_TYPE_VMSA then ptr points to the initial CPU
+> +     * context for a virtual CPU. The format of the data depends on the type of
+> +     * confidential virtual machine. For example, for SEV-ES ptr will point to a
+> +     * vmcb_save_area structure that should be copied into guest memory at the
+> +     * address specified in gpa. The cpu_index parameter contains the index of
+> +     * the CPU the VMSA applies to.
+> +     */
+> +    int (*set_guest_state)(hwaddr gpa, uint8_t *ptr, uint64_t len,
+> +                                 ConfidentialGuestPageType memory_type,
+> +                                 uint16_t cpu_index);
+> +
+> +    /*
+> +     * Iterate the system memory map, getting the entry with the given index
+> +     * that can be populated into guest memory.
+> +     *
+> +     * Returns 1 if the index is out of range.
+> +     */
+> +    int (*get_mem_map_entry)(int index,
+> +                              ConfidentialGuestMemoryMapEntry *entry);
+>  };
+>  
+>  typedef struct ConfidentialGuestSupportClass {
+> -- 
+> 2.43.0
 > 
-> On 07-02-2024 21:38, Chalapathi V wrote:
->> Hello,
->>
->> In this series of patchset, SPI controller and responder models
->> for Power10 processor are modelled.
->>
->> Serial peripheral interface provides full-duplex synchronous serial
->> communication between single controller and multiple responder devices.
->>
->> The current configuration supports a single SPI controller reside on the
->> SPI bus. In p10, SPI controller device model supports a connection to a
->> single SPI responder such as SPI seeproms, TPM, flash device and an ADC
->> controller.
->>
->> SPI controller model is divided into configuration unit, sequencer FSM
->> and shifter engine. All SPI function control is mapped into the SPI register
->> space to enable full control by firmware.
->>
->> SPI configuration component is modelled which contains all SPI configuration
->> and status registers as well as the hold registers for data to be sent or
->> having been received.
->> Shift engine performs serialization and de-serialization according to the
->> control by the sequencer and according to the setup defined in the
->> configuration registers.
->> Sequencer implements the main control logic and
->> FSM to handle data transmit and data receive control of the shift engine.
->>
->> Microchip's 25CSM04 SEEPROM device is modelled and connected to SPI bus
->> "spi_bus2" of SPI controller "PIB_SPIC[2]".
->>
->> Patches overview in V1.
->> PATCH1: Create a SPI responder model which includes responder methods
->>          and SPI bus implementation.
->> PATCH2: Create a SPI controller model and implement configuration unit
->>          to model SCOM registers.
->> PATCH3: SPI controller model: implement sequencer FSM and shift engine.
->> PATCH4: create SPI SEEPROM model.
->> PATCH5: Connect SPI controllers to p10 chip and create keystore seeprom
->>          device on spi_bus2 of PIB_SPIC[2].
->>
->> Thank You,
->> Chalapathi
->>
->> Chalapathi V (5):
->>    hw/ppc: SPI responder model
->>    hw/ppc: SPI controller model - registers implementation
->>    hw/ppc: SPI controller model - sequencer and shifter
->>    hw/ppc: SPI SEEPROM model
->>    hw/ppc: SPI controller wiring to P10 chip and create seeprom device
->>
->>   include/hw/ppc/pnv_chip.h           |    4 +
->>   include/hw/ppc/pnv_spi_controller.h |  101 ++
->>   include/hw/ppc/pnv_spi_responder.h  |  109 ++
->>   include/hw/ppc/pnv_spi_seeprom.h    |   70 ++
->>   include/hw/ppc/pnv_xscom.h          |    3 +
->>   hw/ppc/pnv.c                        |   32 +
->>   hw/ppc/pnv_spi_controller.c         | 1609 +++++++++++++++++++++++++++
->>   hw/ppc/pnv_spi_responder.c          |  166 +++
->>   hw/ppc/pnv_spi_seeprom.c            |  989 ++++++++++++++++
->>   hw/ppc/meson.build                  |    3 +
->>   10 files changed, 3086 insertions(+)
->>   create mode 100644 include/hw/ppc/pnv_spi_controller.h
->>   create mode 100644 include/hw/ppc/pnv_spi_responder.h
->>   create mode 100644 include/hw/ppc/pnv_spi_seeprom.h
->>   create mode 100644 hw/ppc/pnv_spi_controller.c
->>   create mode 100644 hw/ppc/pnv_spi_responder.c
->>   create mode 100644 hw/ppc/pnv_spi_seeprom.c
->>
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
