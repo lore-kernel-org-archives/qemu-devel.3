@@ -4,137 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AF04C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 07:41:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C767DC5478C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 07:41:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfxVx-0005Xx-SM; Fri, 01 Mar 2024 02:41:05 -0500
+	id 1rfxWa-00065u-4t; Fri, 01 Mar 2024 02:41:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfxVt-0005Wz-VV
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 02:41:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1rfxWP-00060x-L7
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 02:41:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfxVs-0001lE-Ar
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 02:41:01 -0500
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1rfxWN-0001n9-SF
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 02:41:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709278859;
+ s=mimecast20190719; t=1709278887;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ea/q2RNpofdPdxtkcnDXbHeHjWGDtKrTXR62jJvqBMM=;
- b=IiliwMR4BQvI7afTnUsTTvpMfnecIoNWC3zvNco5JbVoXq+Q+djbCmMgvD5o1BJ3WOjP3I
- fxNl3SZDr61kOxQXnnJuXxJxuCoGwAezGogrrRz2vSJnpewipcWI5BApbmP4YpCe3Mhd30
- m5llqUP7jc08T8V+S3bB+O3rfPMUpiU=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=SET/gY4O+c0RTYCUg3ln0vH5yO38NdGt1UwtYgJk6d8=;
+ b=f7bf0TukeVUe9Gl/BnjLpwapFzKxFE78pxe91HH1BIPbLDOioM+BAYRDOYt5cWqwight/6
+ EiCPFu3ij9QOIBxzBMPwgUEom/aacWi8ZFMemHghoPPjoORea+UfHthz5Yw8DXWjqBfpMW
+ SpHYJ2o/5ZI6XKH2ozOrRCumphVW6Gw=
+Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
+ [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-414-y-7OubWXOfuIpPM9EStZlA-1; Fri, 01 Mar 2024 02:40:58 -0500
-X-MC-Unique: y-7OubWXOfuIpPM9EStZlA-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a448cfe2266so35889366b.2
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 23:40:58 -0800 (PST)
+ us-mta-441-oVQcBqXlPNqWWRs9c55F_w-1; Fri, 01 Mar 2024 02:41:26 -0500
+X-MC-Unique: oVQcBqXlPNqWWRs9c55F_w-1
+Received: by mail-yb1-f198.google.com with SMTP id
+ 3f1490d57ef6-dcc05887ee9so2840180276.1
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 23:41:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709278857; x=1709883657;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ea/q2RNpofdPdxtkcnDXbHeHjWGDtKrTXR62jJvqBMM=;
- b=bk922AEQnWzSEQlRlZKd9Mu5HrksVu7WcOuclEEtZesSTWufOaynXM2M8jwxBihCYF
- iSjIMm6h4zA5WC2pEpAuApYwzlutDtqgFkw28MECUutUgFv7cTjkxjqO55y59KtGiIWq
- rIgfl361a9i4B+giROowB2vG6+wiBZkrE5JsKu8ICEI+XHruinDbTZyfE0QTXjM0zvy9
- I6FcPK56Izmgalb2yxDHrDukRrncjC5zDrHV1ar0Z3/MRb//RH7M3/btQ8EdNjI2TbVK
- GBRLKMr/ij1aH3nAwWYkyWxRYJMzle4qlG5ON6kW5ODOJV3e6YD2lava89X/1jYhLa+4
- WZMQ==
-X-Gm-Message-State: AOJu0YyFVePDZepH2hNeZ//WegjD/VTbuDDatJ/AUw57TEgLOtZcRU9x
- a/gYbaXv9HLjApLwbk0fJLMqu92ulMCgFmBO6j9LHoS+5phump5S0Q2X2FiJdl8ffRm5VyZa6rW
- W7FP84CWB7ncGArdKDk4UInNqFdRmJ6sf2hmRyWoKfZJdGWtwN2tL
-X-Received: by 2002:a17:906:4558:b0:a43:9857:8112 with SMTP id
- s24-20020a170906455800b00a4398578112mr682013ejq.20.1709278857072; 
- Thu, 29 Feb 2024 23:40:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGiCTjUOa07dn6wilUKhhlZNke8L12kH5Nck1pfPUM/nBLN4DaZ/+RlaepXtpNGTU9JPIZeXg==
-X-Received: by 2002:a17:906:4558:b0:a43:9857:8112 with SMTP id
- s24-20020a170906455800b00a4398578112mr682001ejq.20.1709278856738; 
- Thu, 29 Feb 2024 23:40:56 -0800 (PST)
-Received: from [192.168.0.9] (ip-109-43-178-133.web.vodafone.de.
- [109.43.178.133]) by smtp.gmail.com with ESMTPSA id
- g7-20020a1709063b0700b00a43e8562566sm1439081ejf.203.2024.02.29.23.40.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Feb 2024 23:40:56 -0800 (PST)
-Message-ID: <50b48e30-9187-4909-94f4-ca982f1d70ed@redhat.com>
-Date: Fri, 1 Mar 2024 08:40:54 +0100
+ d=1e100.net; s=20230601; t=1709278886; x=1709883686;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SET/gY4O+c0RTYCUg3ln0vH5yO38NdGt1UwtYgJk6d8=;
+ b=LBG9fld6JbWGF8PPl7yNok9KpKKWN9ct8c2kKE4QEHZ+IHX7tOy5N9BXRBMoeniKpC
+ Osn7sIZASEAnFeXJOHN3bmOb82kyDkjg52kX36zXmm7vS54j6dUzWjUEwdyDiGpjUjk6
+ 2yeMIh2FiJsEn6qR38uxAJ8zQZrtJCMsp40L1IVYZpk2/OjRhEUAIZbHn727FBMaSbJS
+ yjQ4AC6ozVLZ6++G05FCLlRM564SuqIi+p+8OdnGXpGgVuJINtmQt5R+7VC+3BIL9+NO
+ CD/UL6f2Aq3S+3QZ6vRN50Sp/7ssrUquM+/rbPSZqfI0zGnlzpFfdKYEYVN3v3Byu3J7
+ Q3Iw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX7dW905VAc20vcHKr1u+5gURquWzjsA/RbVs4II8iEUYO5KDzXYtALBn0OKS2mkuYTQySfiRbsKqEodnIuhUc37P/Bk9I=
+X-Gm-Message-State: AOJu0YzJIJfYMwFjbGcEwOL0tHhiuqdzFCiJ1HY0oEz+eXDVSfz6EG+J
+ hH3uazpDhO3HgPSCecVY/K6q5d4bFj/X2Ed7q6vm7UCFJVwwqlTyZEVk98l5L75g+Zlf0QLNEkq
+ wi54i7u32hV0vdPLaN+v0ptu/KB57wpg6NJ/I6l2Z4RIBeC4/OTjb9nbzu4B4ODan7Cdoj8yqUU
+ DzBklTBcD7aoRUDe7XsyL3DybfIOs=
+X-Received: by 2002:a05:6902:2406:b0:dcc:41dc:116e with SMTP id
+ dr6-20020a056902240600b00dcc41dc116emr738738ybb.35.1709278885894; 
+ Thu, 29 Feb 2024 23:41:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFA9hg3oHMsxwfKtHKVNIqZyhW7II3AGrKsqWkM44hEErQ1rCklYGa69qIbhtW5XktlsqpX4isZnkHwUE7vDVA=
+X-Received: by 2002:a05:6902:2406:b0:dcc:41dc:116e with SMTP id
+ dr6-20020a056902240600b00dcc41dc116emr738734ybb.35.1709278885607; Thu, 29 Feb
+ 2024 23:41:25 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/8] tests/unit/test-smp-parse.c: Bump max_cpus to 4096
-Content-Language: en-US
-To: Zhao Liu <zhao1.liu@linux.intel.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>
-Cc: qemu-devel@nongnu.org, Xiaoling Song <xiaoling.song@intel.com>,
- Zhao Liu <zhao1.liu@intel.com>, Ani Sinha <anisinha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20240118144857.2124034-1-zhao1.liu@linux.intel.com>
- <20240118144857.2124034-3-zhao1.liu@linux.intel.com>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240118144857.2124034-3-zhao1.liu@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+References: <13625712.uLZWGnKmhe@valdaarhun>
+ <CAGxU2F4jx5m5_ijNoWZpVK_MepvtDBY8L70-dSZmRUPmTskCNw@mail.gmail.com>
+In-Reply-To: <CAGxU2F4jx5m5_ijNoWZpVK_MepvtDBY8L70-dSZmRUPmTskCNw@mail.gmail.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Fri, 1 Mar 2024 08:40:49 +0100
+Message-ID: <CAJaqyWfOaYmX-6qo-O2xWjge5av_2MDLnQVO41XLskLQC6nXsQ@mail.gmail.com>
+Subject: Re: Intention to work on GSoC project
+To: Sahil <icegambit91@gmail.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>,
+ qemu-level <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,62 +100,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/01/2024 15.48, Zhao Liu wrote:
-> From: Zhao Liu <zhao1.liu@intel.com>
-> 
-> PC mahine is trying to support up to 4096 vCPUs [1], so it's necessary
+On Thu, Feb 29, 2024 at 9:32=E2=80=AFAM Stefano Garzarella <sgarzare@redhat=
+.com> wrote:
+>
+> Hi Sahil,
+>
+> On Sun, Feb 25, 2024 at 10:38=E2=80=AFPM Sahil <icegambit91@gmail.com> wr=
+ote:
+> >
+> > Hi,
+> >
+> > My name is Sahil and I go by the pseudonym 'valdaarhun' on Github. I ha=
+ve
+> > never contributed to QEMU before but I have used it a few times as an e=
+nd
+> > user. I developed an interest in virtualization during my internship at
+> > VMware and would like to dive deeper in this subfield.
+> >
+> > My current full-time job does not allow me to take part in external pro=
+grams
+> > that are paid. I would like to work on one of the proposed projects out=
+side
+> > of GSoC.
+>
+> Sure, not a problem at all, also because for this year QEMU was not
+> accepted in GSoC, so anybody can work on those projects if they have
+> time
+>
+> > I have gone through QEMU's list of GSoC '24 projects [1] and am
+> > interested in two of them:
+> >
+> > 1. Add packed virtqueue to Shadow Virtqueue
+> > 2. vhost-user memory isolation
+> >
+> > Based on what I have understood, they are somewhat related and are part
+> > of the migration subsystem. I feel the learning curve of the first proj=
+ect
+> > will be less steep and will make me better prepared to tackle the secon=
+d
+> > project as well.
+>
+> The first project is for sure related with migration. While vhost-user
+> memory isolation is not really related to migration, but both are
+> related to virtio devices.
+> Anyway, your plan looks good to me!
+>
 
-s/mahine/machine/
+I agree with all Stefano's answers above.
 
-> to bump max_cpus in test-smp-parse to 4096 to cover the topological
-> needs of future machines.
-> 
-> [1]: https://lore.kernel.org/qemu-devel/20231208122611.32311-1-anisinha@redhat.com/
+> >
+> > I have read the "Getting Started for Developers" [2] wiki page. I have =
+also
+> > built QEMU from source.
+>
+> Great!
+>
+> >
+> > I think my next step should be to read the documentation on the migrati=
+on
+> > subsystem [3], the blog posts attached in the first project's descripti=
+on
+> > and virtqueue's implementation.
 
-Is it ok for this test patch here to get included without that patch 
-already, or shall this wait for the patch from Ani first?
+You can add the recently published
+"virtio-live-migration-technical-deep-dive" :) [1].
 
-  Thomas
+[1] https://developers.redhat.com/articles/2024/02/21/virtio-live-migration=
+-technical-deep-dive
 
+> > Would you also recommend that I work on a
+> > QEMU issue that is open on Gitlab and related to virtqueues/virtio to
+> > familiarize
+> > myself with the codebase? I went through the issues tagged as "device:v=
+irtio"
+> > [4]
+> > but can't really tell if any of them are good for beginners. One of the=
+m has
+> > the
+> > "bite-size" tag [5]. It also has a patch attached but hasn't been merge=
+d.
+> > Shall I
+> > work on getting that merged?
+>
+> Yeah, "bite-size" issues should be better to understand how to
+> contribute to QEMU.
+> Feel free to work on any issue, doing the work or helping to complete
+> old patches.
+>
 
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
->   tests/unit/test-smp-parse.c | 14 +++++++-------
->   1 file changed, 7 insertions(+), 7 deletions(-)
-> 
-> diff --git a/tests/unit/test-smp-parse.c b/tests/unit/test-smp-parse.c
-> index 20c663a006b3..55ba13bf7d15 100644
-> --- a/tests/unit/test-smp-parse.c
-> +++ b/tests/unit/test-smp-parse.c
-> @@ -20,8 +20,8 @@
->   #define T true
->   #define F false
->   
-> -#define MIN_CPUS 1   /* set the min CPUs supported by the machine as 1 */
-> -#define MAX_CPUS 512 /* set the max CPUs supported by the machine as 512 */
-> +#define MIN_CPUS 1    /* set the min CPUs supported by the machine as 1 */
-> +#define MAX_CPUS 4096 /* set the max CPUs supported by the machine as 4096 */
->   
->   #define SMP_MACHINE_NAME "TEST-SMP"
->   
-> @@ -333,13 +333,13 @@ static const struct SMPTestData data_generic_invalid[] = {
->                           "by machine '" SMP_MACHINE_NAME "' is 2",
->       }, {
->           /*
-> -         * config: -smp 512
-> +         * config: -smp 4096
->            * The test machine should tweak the supported max CPUs to
-> -         * 511 (MAX_CPUS - 1) for testing.
-> +         * 4095 (MAX_CPUS - 1) for testing.
->            */
-> -        .config = SMP_CONFIG_GENERIC(T, MAX_CPUS, F, 0, F, 0, F, 0, F, 0),
-> -        .expect_error = "Invalid SMP CPUs 512. The max CPUs supported "
-> -                        "by machine '" SMP_MACHINE_NAME "' is 511",
-> +        .config = SMP_CONFIG_GENERIC(T, 4096, F, 0, F, 0, F, 0, F, 0),
-> +        .expect_error = "Invalid SMP CPUs 4096. The max CPUs supported "
-> +                        "by machine '" SMP_MACHINE_NAME "' is 4095",
->       },
->   };
->   
+Right,
+
+There are few other tasks pending for QEMU in general and SVQ in
+particular. I'll add them as gitlab issues by today.
+
+Thanks!
+
+> >
+> > I have worked on a few smaller systems programming issues in other
+> > organizations (eg: strace [6], htop [7]) in the past.
+> >
+> > I look forward to hearing from you.
+>
+> Feel free to reach us if you have more questions on the projects.
+>
+> Thanks,
+> Stefano
+>
 
 
