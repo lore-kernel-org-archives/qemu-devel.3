@@ -4,71 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43EF4C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 09:44:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 180ACC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 09:45:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfzRU-0003LV-Gb; Fri, 01 Mar 2024 04:44:36 -0500
+	id 1rfzNq-00078I-8d; Fri, 01 Mar 2024 04:40:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1rfzRS-0003Kz-E1
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:44:34 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1rfzRQ-0007HJ-58
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:44:34 -0500
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8Axuuh7o+Fl4T0TAA--.29011S3;
- Fri, 01 Mar 2024 17:44:27 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxXRN3o+Fl0p1LAA--.4895S3; 
- Fri, 01 Mar 2024 17:44:25 +0800 (CST)
-Subject: Re: [PATCH v5 00/17] Add boot LoongArch elf kernel with FDT
-From: gaosong <gaosong@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, richard.henderson@linaro.org,
- philmd@linaro.org, maobibo@loongson.cn, zhaotianrui@loongson.cn,
- lixianglai@loongson.cn, imammedo@redhat.com, anisinha@redhat.com,
- mst@redhat.com
-References: <20240301093839.663947-1-gaosong@loongson.cn>
-Message-ID: <b97acf96-6bb7-be47-0f27-34dee5820523@loongson.cn>
-Date: Fri, 1 Mar 2024 17:44:23 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1rfzNj-0006SE-6G
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:40:47 -0500
+Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1rfzNg-0006nd-Us
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:40:42 -0500
+Received: by mail-lj1-x236.google.com with SMTP id
+ 38308e7fff4ca-2d311081954so16621381fa.2
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 01:40:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709286037; x=1709890837; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Wt0BOcnSpo/3ofseFCOKCpIXtYfeyqRnv70PZLb2BjE=;
+ b=ZBTj3jak3JDNVv1K8TsGqmoJNR5AlnS1lxsojCOOkstAsBaIjhEfKuN0vccA8xAyzD
+ DdWJ0FblNH1LxxQV2l03lNuG5DoueYUxZB+PLG+QGhZZZ6Q76T9FGmXMmGDuWiDTEpUo
+ 7au73fzJjEJBEHra693VWbgZmK64BiIVznKlBlWGCv08oLBvfI3WaccFegSp7uQTtFib
+ 0HxgOviYpw54Ro/NCNAOvWNRraSjbwm0/eOYG0Zu7lK3JU/+LUf/iecf374ZgTmCMIpw
+ bplb6yE/W6bWWTH1x3zzlsay/enrvRu+/H0Lc5koP98ko5BS3IOo5DqrWB/5yHsmWXYz
+ 4JKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709286037; x=1709890837;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Wt0BOcnSpo/3ofseFCOKCpIXtYfeyqRnv70PZLb2BjE=;
+ b=WXbMz7bERl9LoUHsGNv8zH9IsfFGuXxlyGP4d2bwnIW5e1/IinL0/BuiTSydeA+JZ6
+ Imr7tJyOPI0Iy4kTlcP6DV/PnS8siUicH2B435MQswkxSCDRPNCKXQjhYhfDi+EAaWpM
+ ivUCyRQJOwaxENSjtiswrKGaURCwC3xydWAzQp+3dsYG75AYQBKvziZE0y0eXfhAz4PP
+ j5BHuyoaahtSXmMF1xhrmpbEHnNJEEsET/IK5Fk77Zo7wWr0gEg0JzcLUdEwuYUuJ7OM
+ ZdT9sPnusmI4o/DE0xSsIb8L3GCe4tek3fTem9qJEPjyq5eD3vr9M2yaMDUDsr+rwDSs
+ jnRg==
+X-Gm-Message-State: AOJu0Yy2BItVKSoIMvAgGQLdO4Ufgv0oUAnnjU2gcMLd/iUV2PGAMktY
+ OSqhACr+rWCrvk1LL6lQzzV7OreAhRo5VyYmZUfUd/ElALvZgUU6lCnAl08sbls=
+X-Google-Smtp-Source: AGHT+IEDthvEVUZJ1JvhBZ8uILkBLCcT+jUBBaPs+vSuuYd/hO0vPV4Ub0dZZNauKrkvBwRxoADD6A==
+X-Received: by 2002:a05:651c:382:b0:2d2:6820:a9f1 with SMTP id
+ e2-20020a05651c038200b002d26820a9f1mr782634ljp.14.1709286036954; 
+ Fri, 01 Mar 2024 01:40:36 -0800 (PST)
+Received: from [192.168.1.24] ([102.35.208.160])
+ by smtp.gmail.com with ESMTPSA id
+ u17-20020a05600c19d100b00412a31d2e2asm4860695wmq.32.2024.03.01.01.40.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 01 Mar 2024 01:40:36 -0800 (PST)
+Message-ID: <0dbaebb4-645e-495b-abb0-5eca86d180a2@linaro.org>
+Date: Fri, 1 Mar 2024 13:40:30 +0400
 MIME-Version: 1.0
-In-Reply-To: <20240301093839.663947-1-gaosong@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 06/12] tests/plugin/mem: migrate to new per_vcpu API
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Luc Michel <luc.michel@amd.com>
+References: <20240229052506.933222-1-pierrick.bouvier@linaro.org>
+ <20240229052506.933222-7-pierrick.bouvier@linaro.org>
+ <87y1b35ej7.fsf@draig.linaro.org>
 Content-Language: en-US
-X-CM-TRANSID: AQAAf8BxXRN3o+Fl0p1LAA--.4895S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxGry8ur1UAw15AryxJr4kKrX_yoW5XrWfpF
- W7Zr13Grs5JrZ7Ar9av343Xr90yrn7Gr12v3W3Kry8CrZFvF17Z3WxAr9rZFy7t3y0gryq
- vr1Fkw1jga15J3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GF
- ylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8xu
- ctUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-4.176, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <87y1b35ej7.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2a00:1450:4864:20::236;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-lj1-x236.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,92 +104,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-If there are no new comments, I'll add this series to the loongarch-next 
-branch next week.
-
-Thanks.
-Song Gao
-
-ÔÚ 2024/3/1 ÏÂÎç5:38, Song Gao Ð´µÀ:
-> Hi, All
->
-> We already support boot efi kernel with bios, but not support boot elf kernel.
-> This series adds boot elf kernel with FDT.
->
-> 'LoongArch supports ACPI and FDT. The information that needs to be passed
->   to the kernel includes the memmap, the initrd, the command line, optionally
->   the ACPI/FDT tables, and so on'  see [1].
->
-> Patch 2-8 : Create efi system table, and three efi configuration table
->              boot_memmap, initd, FDT.
-> Patch 9-17 : Fixes FDT problems.
->
-> Test:
->    - Start kernel
->      See [2] start_kernel.sh
->    - Start qcow2
->      See [2] start_qcow2.sh
->
-> V5:
->    - Rebase;
->
-> V4:
->    - patch 3 change slave_boot_code[] to const, and 'static void *p ' to
->      'void *p';
->    - patch 4 fixes build error;
->    - patch 10-13, add project and commit link.
->
-> V3:
->    - Load initrd at  kernel_high + 4 * kernel_size;
->    - Load 'boot_rom' at [0 - 1M], the 'boot_rom' includes
->      slave_boot_code, cmdline_buf and systab_tables;
->    - R-b and rebase.
->
-> V2:
->    - FDT pcie node adds cells 'msi-map';
->
->
-> [1]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/arch/loongarch/booting.rst?h=v6.7-rc4
->
-> [2]: https://github.com/gaosong-loongson/loongarch-binary/releases
->
-> Please review!
->
-> Thanks.
-> Song Gao
->
-> Song Gao (17):
->    hw/loongarch: Move boot fucntions to boot.c
->    hw/loongarch: Add load initrd
->    hw/loongarch: Add slave cpu boot_code
->    hw/loongarch: Add init_cmdline
->    hw/loongarch: Init efi_system_table
->    hw/loongarch: Init efi_boot_memmap table
->    hw/loongarch: Init efi_initrd table
->    hw/loongarch: Init efi_fdt table
->    hw/loongarch: Fix fdt memory node wrong 'reg'
->    hw/loongarch: fdt adds cpu interrupt controller node
->    hw/loongarch: fdt adds Extend I/O Interrupt Controller
->    hw/loongarch: fdt adds pch_pic Controller
->    hw/loongarch: fdt adds pch_msi Controller
->    hw/loongarch: fdt adds pcie irq_map node
->    hw/loongarch: fdt remove unused irqchip node
->    hw/loongarch: Add cells missing from uart node
->    hw/loongarch: Add cells missing from rtc node
->
->   include/hw/intc/loongarch_extioi.h |   1 +
->   include/hw/loongarch/boot.h        | 109 +++++++++
->   include/hw/loongarch/virt.h        |  14 ++
->   include/hw/pci-host/ls7a.h         |   2 +
->   target/loongarch/cpu.h             |   2 +
->   hw/loongarch/boot.c                | 330 ++++++++++++++++++++++++++
->   hw/loongarch/virt.c                | 364 ++++++++++++++++-------------
->   hw/loongarch/meson.build           |   1 +
->   8 files changed, 661 insertions(+), 162 deletions(-)
->   create mode 100644 include/hw/loongarch/boot.h
->   create mode 100644 hw/loongarch/boot.c
->
-
+T24gMi8yOS8yNCAxMDowOCBQTSwgQWxleCBCZW5uw6llIHdyb3RlOg0KPiBQaWVycmljayBC
+b3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+IHdyaXRlczoNCj4gDQo+PiBS
+ZXZpZXdlZC1ieTogTHVjIE1pY2hlbCA8bHVjLm1pY2hlbEBhbWQuY29tPg0KPj4gU2lnbmVk
+LW9mZi1ieTogUGllcnJpY2sgQm91dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3Jn
+Pg0KPj4gLS0tDQo+PiAgIHRlc3RzL3BsdWdpbi9tZW0uYyB8IDQ2ICsrKysrKysrKysrKysr
+KysrKysrKysrKysrKysrKystLS0tLS0tLS0tLS0tLS0NCj4+ICAgMSBmaWxlIGNoYW5nZWQs
+IDMxIGluc2VydGlvbnMoKyksIDE1IGRlbGV0aW9ucygtKQ0KPj4NCj4+IGRpZmYgLS1naXQg
+YS90ZXN0cy9wbHVnaW4vbWVtLmMgYi90ZXN0cy9wbHVnaW4vbWVtLmMNCj4+IGluZGV4IDQ0
+ZTkxMDY1YmE3Li5iNjUwZGRkY2NlMSAxMDA2NDQNCj4+IC0tLSBhL3Rlc3RzL3BsdWdpbi9t
+ZW0uYw0KPj4gKysrIGIvdGVzdHMvcGx1Z2luL21lbS5jDQo+PiBAQCAtMTYsOSArMTYsMTQg
+QEANCj4+ICAgDQo+PiAgIFFFTVVfUExVR0lOX0VYUE9SVCBpbnQgcWVtdV9wbHVnaW5fdmVy
+c2lvbiA9IFFFTVVfUExVR0lOX1ZFUlNJT047DQo+PiAgIA0KPj4gLXN0YXRpYyB1aW50NjRf
+dCBpbmxpbmVfbWVtX2NvdW50Ow0KPj4gLXN0YXRpYyB1aW50NjRfdCBjYl9tZW1fY291bnQ7
+DQo+PiAtc3RhdGljIHVpbnQ2NF90IGlvX2NvdW50Ow0KPj4gK3R5cGVkZWYgc3RydWN0IHsN
+Cj4+ICsgICAgdWludDY0X3QgbWVtX2NvdW50Ow0KPj4gKyAgICB1aW50NjRfdCBpb19jb3Vu
+dDsNCj4+ICt9IENQVUNvdW50Ow0KPj4gKw0KPj4gK3N0YXRpYyBzdHJ1Y3QgcWVtdV9wbHVn
+aW5fc2NvcmVib2FyZCAqY291bnRzOw0KPj4gK3N0YXRpYyBxZW11X3BsdWdpbl91NjQgbWVt
+X2NvdW50Ow0KPj4gK3N0YXRpYyBxZW11X3BsdWdpbl91NjQgaW9fY291bnQ7DQo+PiAgIHN0
+YXRpYyBib29sIGRvX2lubGluZSwgZG9fY2FsbGJhY2s7DQo+PiAgIHN0YXRpYyBib29sIGRv
+X2hhZGRyOw0KPj4gICBzdGF0aWMgZW51bSBxZW11X3BsdWdpbl9tZW1fcncgcncgPSBRRU1V
+X1BMVUdJTl9NRU1fUlc7DQo+PiBAQCAtMjcsMTYgKzMyLDE2IEBAIHN0YXRpYyB2b2lkIHBs
+dWdpbl9leGl0KHFlbXVfcGx1Z2luX2lkX3QgaWQsIHZvaWQgKnApDQo+PiAgIHsNCj4+ICAg
+ICAgIGdfYXV0b3B0cihHU3RyaW5nKSBvdXQgPSBnX3N0cmluZ19uZXcoIiIpOw0KPj4gICAN
+Cj4+IC0gICAgaWYgKGRvX2lubGluZSkgew0KPj4gLSAgICAgICAgZ19zdHJpbmdfcHJpbnRm
+KG91dCwgImlubGluZSBtZW0gYWNjZXNzZXM6ICUiIFBSSXU2NCAiXG4iLCBpbmxpbmVfbWVt
+X2NvdW50KTsNCj4+IC0gICAgfQ0KPj4gLSAgICBpZiAoZG9fY2FsbGJhY2spIHsNCj4+IC0g
+ICAgICAgIGdfc3RyaW5nX2FwcGVuZF9wcmludGYob3V0LCAiY2FsbGJhY2sgbWVtIGFjY2Vz
+c2VzOiAlIiBQUkl1NjQgIlxuIiwgY2JfbWVtX2NvdW50KTsNCj4+ICsgICAgaWYgKGRvX2lu
+bGluZSB8fCBkb19jYWxsYmFjaykgew0KPj4gKyAgICAgICAgZ19zdHJpbmdfcHJpbnRmKG91
+dCwgIm1lbSBhY2Nlc3NlczogJSIgUFJJdTY0ICJcbiIsDQo+PiArICAgICAgICAgICAgICAg
+ICAgICAgICAgcWVtdV9wbHVnaW5fdTY0X3N1bShtZW1fY291bnQpKTsNCj4+ICAgICAgIH0N
+Cj4+ICAgICAgIGlmIChkb19oYWRkcikgew0KPj4gLSAgICAgICAgZ19zdHJpbmdfYXBwZW5k
+X3ByaW50ZihvdXQsICJpbyBhY2Nlc3NlczogJSIgUFJJdTY0ICJcbiIsIGlvX2NvdW50KTsN
+Cj4+ICsgICAgICAgIGdfc3RyaW5nX2FwcGVuZF9wcmludGYob3V0LCAiaW8gYWNjZXNzZXM6
+ICUiIFBSSXU2NCAiXG4iLA0KPj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBx
+ZW11X3BsdWdpbl91NjRfc3VtKGlvX2NvdW50KSk7DQo+PiAgICAgICB9DQo+PiAgICAgICBx
+ZW11X3BsdWdpbl9vdXRzKG91dC0+c3RyKTsNCj4+ICsgICAgcWVtdV9wbHVnaW5fc2NvcmVi
+b2FyZF9mcmVlKGNvdW50cyk7DQo+PiAgIH0NCj4+ICAgDQo+PiAgIHN0YXRpYyB2b2lkIHZj
+cHVfbWVtKHVuc2lnbmVkIGludCBjcHVfaW5kZXgsIHFlbXVfcGx1Z2luX21lbWluZm9fdCBt
+ZW1pbmZvLA0KPj4gQEAgLTQ2LDEyICs1MSwxMiBAQCBzdGF0aWMgdm9pZCB2Y3B1X21lbSh1
+bnNpZ25lZCBpbnQgY3B1X2luZGV4LCBxZW11X3BsdWdpbl9tZW1pbmZvX3QgbWVtaW5mbywN
+Cj4+ICAgICAgICAgICBzdHJ1Y3QgcWVtdV9wbHVnaW5faHdhZGRyICpod2FkZHI7DQo+PiAg
+ICAgICAgICAgaHdhZGRyID0gcWVtdV9wbHVnaW5fZ2V0X2h3YWRkcihtZW1pbmZvLCB2YWRk
+cik7DQo+PiAgICAgICAgICAgaWYgKHFlbXVfcGx1Z2luX2h3YWRkcl9pc19pbyhod2FkZHIp
+KSB7DQo+PiAtICAgICAgICAgICAgaW9fY291bnQrKzsNCj4+ICsgICAgICAgICAgICBxZW11
+X3BsdWdpbl91NjRfYWRkKGlvX2NvdW50LCBjcHVfaW5kZXgsIDEpOw0KPj4gICAgICAgICAg
+IH0gZWxzZSB7DQo+PiAtICAgICAgICAgICAgY2JfbWVtX2NvdW50Kys7DQo+PiArICAgICAg
+ICAgICAgcWVtdV9wbHVnaW5fdTY0X2FkZChtZW1fY291bnQsIGNwdV9pbmRleCwgMSk7DQo+
+PiAgICAgICAgICAgfQ0KPj4gICAgICAgfSBlbHNlIHsNCj4+IC0gICAgICAgIGNiX21lbV9j
+b3VudCsrOw0KPj4gKyAgICAgICAgcWVtdV9wbHVnaW5fdTY0X2FkZChtZW1fY291bnQsIGNw
+dV9pbmRleCwgMSk7DQo+PiAgICAgICB9DQo+PiAgIH0NCj4+ICAgDQo+PiBAQCAtNjQsOSAr
+NjksMTAgQEAgc3RhdGljIHZvaWQgdmNwdV90Yl90cmFucyhxZW11X3BsdWdpbl9pZF90IGlk
+LCBzdHJ1Y3QgcWVtdV9wbHVnaW5fdGIgKnRiKQ0KPj4gICAgICAgICAgIHN0cnVjdCBxZW11
+X3BsdWdpbl9pbnNuICppbnNuID0gcWVtdV9wbHVnaW5fdGJfZ2V0X2luc24odGIsIGkpOw0K
+Pj4gICANCj4+ICAgICAgICAgICBpZiAoZG9faW5saW5lKSB7DQo+PiAtICAgICAgICAgICAg
+cWVtdV9wbHVnaW5fcmVnaXN0ZXJfdmNwdV9tZW1faW5saW5lKGluc24sIHJ3LA0KPj4gLSAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBRRU1VX1BM
+VUdJTl9JTkxJTkVfQUREX1U2NCwNCj4+IC0gICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgJmlubGluZV9tZW1fY291bnQsIDEpOw0KPj4gKyAgICAg
+ICAgICAgIHFlbXVfcGx1Z2luX3JlZ2lzdGVyX3ZjcHVfbWVtX2lubGluZV9wZXJfdmNwdSgN
+Cj4+ICsgICAgICAgICAgICAgICAgaW5zbiwgcncsDQo+PiArICAgICAgICAgICAgICAgIFFF
+TVVfUExVR0lOX0lOTElORV9BRERfVTY0LA0KPj4gKyAgICAgICAgICAgICAgICBtZW1fY291
+bnQsIDEpOw0KPj4gICAgICAgICAgIH0NCj4+ICAgICAgICAgICBpZiAoZG9fY2FsbGJhY2sp
+IHsNCj4+ICAgICAgICAgICAgICAgcWVtdV9wbHVnaW5fcmVnaXN0ZXJfdmNwdV9tZW1fY2Io
+aW5zbiwgdmNwdV9tZW0sDQo+PiBAQCAtMTE3LDYgKzEyMywxNiBAQCBRRU1VX1BMVUdJTl9F
+WFBPUlQgaW50IHFlbXVfcGx1Z2luX2luc3RhbGwocWVtdV9wbHVnaW5faWRfdCBpZCwNCj4+
+ICAgICAgICAgICB9DQo+PiAgICAgICB9DQo+PiAgIA0KPj4gKyAgICBpZiAoZG9faW5saW5l
+ICYmIGRvX2NhbGxiYWNrKSB7DQo+PiArICAgICAgICBmcHJpbnRmKHN0ZGVyciwNCj4+ICsg
+ICAgICAgICAgICAgICAgImNhbid0IGVuYWJsZSBpbmxpbmUgYW5kIGNhbGxiYWNrIGNvdW50
+aW5nIGF0IHRoZSBzYW1lIHRpbWVcbiIpOw0KPj4gKyAgICAgICAgcmV0dXJuIC0xOw0KPj4g
+KyAgICB9DQo+PiArDQo+PiArICAgIGNvdW50cyA9IHFlbXVfcGx1Z2luX3Njb3JlYm9hcmRf
+bmV3KHNpemVvZihDUFVDb3VudCkpOw0KPj4gKyAgICBtZW1fY291bnQgPSBxZW11X3BsdWdp
+bl9zY29yZWJvYXJkX3U2NF9pbl9zdHJ1Y3QoDQo+PiArICAgICAgICBjb3VudHMsIENQVUNv
+dW50LCBtZW1fY291bnQpOw0KPj4gKyAgICBpb19jb3VudCA9IHFlbXVfcGx1Z2luX3Njb3Jl
+Ym9hcmRfdTY0X2luX3N0cnVjdChjb3VudHMsIENQVUNvdW50LCBpb19jb3VudCk7DQo+PiAg
+ICAgICBxZW11X3BsdWdpbl9yZWdpc3Rlcl92Y3B1X3RiX3RyYW5zX2NiKGlkLCB2Y3B1X3Ri
+X3RyYW5zKTsNCj4+ICAgICAgIHFlbXVfcGx1Z2luX3JlZ2lzdGVyX2F0ZXhpdF9jYihpZCwg
+cGx1Z2luX2V4aXQsIE5VTEwpOw0KPj4gICAgICAgcmV0dXJuIDA7DQo+IA0KPiBZb3UgbmVl
+ZCB0aGUgZm9sbG93aW5nIHRvIGtlZXAgY2hlY2stdGNnIHdvcmtpbmc6DQo+IA0KPiBtb2Rp
+ZmllZCAgIHRlc3RzL3RjZy9NYWtlZmlsZS50YXJnZXQNCj4gQEAgLTE2OCw3ICsxNjgsNyBA
+QCBSVU5fVEVTVFMrPSQoRVhUUkFfUlVOUykNCj4gICANCj4gICAjIFNvbWUgcGx1Z2lucyBu
+ZWVkIGFkZGl0aW9uYWwgYXJndW1lbnRzIGFib3ZlIHRoZSBkZWZhdWx0IHRvIGZ1bGx5DQo+
+ICAgIyBleGVyY2lzZSB0aGluZ3MuIFdlIGNhbiBkZWZpbmUgdGhlbSBvbiBhIHBlci10ZXN0
+IGJhc2lzIGhlcmUuDQo+IC1ydW4tcGx1Z2luLSUtd2l0aC1saWJtZW0uc286IFBMVUdJTl9B
+UkdTPSQoQ09NTUEpaW5saW5lPXRydWUkKENPTU1BKWNhbGxiYWNrPXRydWUNCj4gK3J1bi1w
+bHVnaW4tJS13aXRoLWxpYm1lbS5zbzogUExVR0lOX0FSR1M9JChDT01NQSlpbmxpbmU9dHJ1
+ZQ0KPiAgIA0KPiAgIGlmZXEgKCQoZmlsdGVyICUtc29mdG1tdSwgJChUQVJHRVQpKSwpDQo+
+ICAgcnVuLSU6ICUNCj4gDQoNCk1pc3NlZCB0aGF0LCB3aWxsIGZpeCBpbiBuZXh0IHZlcnNp
+b24uIFRoYW5rcyENCg==
 
