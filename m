@@ -4,67 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 097CAC5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 18:56:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5541C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 18:57:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg82z-0005Hm-LF; Fri, 01 Mar 2024 13:55:54 -0500
+	id 1rg83l-0005Yi-C0; Fri, 01 Mar 2024 13:56:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <freddy77@gmail.com>)
- id 1rg82v-0005HS-2P; Fri, 01 Mar 2024 13:55:49 -0500
-Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
+ id 1rg83j-0005Y6-AO
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 13:56:39 -0500
+Received: from mail-yb1-xb2f.google.com ([2607:f8b0:4864:20::b2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <freddy77@gmail.com>)
- id 1rg82t-0003l6-PO; Fri, 01 Mar 2024 13:55:48 -0500
-Received: by mail-yb1-xb35.google.com with SMTP id
- 3f1490d57ef6-dcc84ae94c1so2416672276.1; 
- Fri, 01 Mar 2024 10:55:46 -0800 (PST)
+ id 1rg83h-0003w6-Qr
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 13:56:39 -0500
+Received: by mail-yb1-xb2f.google.com with SMTP id
+ 3f1490d57ef6-dcc86086c9fso2671977276.3
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 10:56:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709319346; x=1709924146; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1709319397; x=1709924197; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
  :date:message-id:reply-to;
- bh=T5POIChyahJc+CzAF7f5jZcebWJKRIFLJlnNHD44KNI=;
- b=lBr1tnNunGsiO6YrP3pragMA4yfg7aeyqZYk2B8Ydiv/4WtfGJ+1lkWFkEXFdX/G5a
- 0jzD3OItxBE8Bv2Bp+D5Qan6acCsp/35qslMqfVL4hfnjjt1HTH6UKau/DnOsjp7IdEn
- xRIhLC82H2pRkgfTZzTYC4/VFIBQmbHFZZ1i/zuX30HerImme1XUGFkIyjiSexjzvOwS
- OArQ8vjVDL3b3SYzqp5+ePC6MyRkti7SqPVouFiHjVZXWZEJnUJweWB/TXU2xl3+cLQo
- Z6HklYji+zHKaX7/Zf7aC3GhTul54BTouhaG38Rc1jMRzbCpZQkd/Pgd2UOx/cP19acH
- VqIg==
+ bh=IgXDeRMCN6gCmWkZM/1UMPs+fYvQ58DJDLgGotCHQoU=;
+ b=ei6rZeK4fSQNmV5YN0Of6+rwgfvBEJxUiAxqeAg8c4MNswBFmpMuz4J0+hjmbT9ne6
+ mhIr2MyazOhm4cKrH/vflTsO7fd8o4srSqLmvfCsIQYLNYWcCRDqpWUMtfqjoph5uSBe
+ zJmcK1xDGGZd2bA0myCrVvv5MjXoKeUpOQIRk7hPxiSmQiOUw9/9Ss8JPonEc7wFtm8l
+ aFRl8aqJpWW+HaFgfCx2ydkAyGyXvnR6UC64VVHMb51PyqbwWruluJZVptM6hQ04A0jR
+ XIrguZ8BMSRyQvS/xE5a1fUe016uecJAoW/5scDpCWgXo1cFqwVvkM9/vIfhQsWH/yL4
+ GHBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709319346; x=1709924146;
+ d=1e100.net; s=20230601; t=1709319397; x=1709924197;
  h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=T5POIChyahJc+CzAF7f5jZcebWJKRIFLJlnNHD44KNI=;
- b=ViHyeCr8gwFRAM22C9+ch8xKRBKv9D/IrAD7B7WTj0d5bO0yDs8IGAIwocGQbAzPN+
- 1D5DbokntPCbQLu6rIwVkaA85DtkhAnwD1hx4JwAjw1DlJ2VdIDADtQ2cJccvutGh9DU
- Aox00DOFk9BVj0Ma1zJ2eYKIOq7SFssblL8F7B+0WACSlJ1s1E2XozmYkzrjcxnhoMSp
- 4nQ+Nkm52M1d1BVus9cTjaZyt5gN/n3Ds1mg413k0rFUlZBPzzdb43e7dU8WVAf+vgkF
- 5SB1m12bF1BCnM4ENQVCF2rzTeLrsKE7ylEtPStTajfdaQnsYOoEJ2ikKeGzmXlrEMTp
- xtvA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXiP7qcVgbQQq4cWF001yZ59rs5Wb9osMBD7PovZ8bTovML53lhl8zm2FHIlh+t5a4kRUizfZvpYQhgw0Ne1d+nUSNVAQpgfA==
-X-Gm-Message-State: AOJu0YycpEx2/mALNdTbSJmiqkwR4V4Ve7OegSX98qCLMR2ACBHNuJ1z
- Ab2VuelqMBFAUUsov5Q6Ct6eC0RYSVTNMOD+BJr2faPtZ3in8cTkP3YccCS1uCF/N0zdbfaDzTv
- nrlkiZToqQTTrBKFvkwm+12Sl39j3QXttl14=
-X-Google-Smtp-Source: AGHT+IFVrukZoiuJWjLHo/RVStiDIizRu873vHcxTChV2RmwIKR7A4pCUTSkCKvzyeR/85oQExU7dGWqoh0UFVtXYag=
-X-Received: by 2002:a25:8148:0:b0:dc7:497e:cddf with SMTP id
- j8-20020a258148000000b00dc7497ecddfmr2160440ybm.33.1709319346028; Fri, 01 Mar
- 2024 10:55:46 -0800 (PST)
+ bh=IgXDeRMCN6gCmWkZM/1UMPs+fYvQ58DJDLgGotCHQoU=;
+ b=lxpxs7/dkWKoo/RvBSmKCBE64OtUSh1QlsfzuYxIpTete7Ixx/l7pYJFMuWZZhk/dZ
+ AsegUAgRV6nJvIpdogib8xEHNgVCl+jdN/snT8tWHFiuU1mhhrFCVB0TLAgpRcNbf3pF
+ cr22Pre/bwweFs2QbJPtxcOY+y6wl8pnsNAjEUjPput/PTZbmGOdbNv2JFB91ockczjG
+ Ggv3raTuyxO3AfRYUZf2zaE/meeCq5ARA9xXqP6EIal7RKrn6QVYufCMcmZbex9g4ItS
+ ONJ+SYCiKkwYtWUj+6cqYCC4nLpl4bbaVefsGgJGAS5iaGOsjBe7u4XgKnjc9kjA5vhj
+ +3bg==
+X-Gm-Message-State: AOJu0YwUZJLoCerYmigUCilh8PXze7i88YNxcrVcFXrtQnMpgnn2Zc3/
+ FqvqZrPHrzcX24H8za3z4TamToCmywfAztR71dUdwhpZan5ojG0eaF9LgnPQTNKHK5mDyMCFUVk
+ 0wCcXK0qkXKSRN9b6wcOfoSUZzTdschagDHCVIA==
+X-Google-Smtp-Source: AGHT+IHSy0nW8ADVzY828WRopg95rU3RPOm3abHUe1x0tp6I4vHg5s6e2ZjxPopzFsmYhzg6zX+Q7UPZvxrLl5mkUsc=
+X-Received: by 2002:a5b:502:0:b0:dc6:b121:d00c with SMTP id
+ o2-20020a5b0502000000b00dc6b121d00cmr2464858ybp.16.1709319396713; Fri, 01 Mar
+ 2024 10:56:36 -0800 (PST)
 MIME-Version: 1.0
 From: Frediano Ziglio <freddy77@gmail.com>
-Date: Fri, 1 Mar 2024 18:55:35 +0000
-Message-ID: <CAHt6W4fiLh+bBOX1qwvm-1qJVG=j9SrT5rMJnEaMSWPjwwZr1g@mail.gmail.com>
-Subject: [PATCH] Fix typo in comment (uin32_t -> uint32_t)
+Date: Fri, 1 Mar 2024 18:56:26 +0000
+Message-ID: <CAHt6W4cH+=pyxNZ9F_8Yed4K_pYfO-qP6iNHQHEYLvWUk+aGUw@mail.gmail.com>
+Subject: [PATCH] Make some structure static
 To: qemu-devel <qemu-devel@nongnu.org>
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
- qemu-trivial@nongnu.org
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
- envelope-from=freddy77@gmail.com; helo=mail-yb1-xb35.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2f;
+ envelope-from=freddy77@gmail.com; helo=mail-yb1-xb2f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -88,26 +86,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Not used outside C module.
+
 Signed-off-by: Frediano Ziglio <frediano.ziglio@cloud.com>
 ---
- hw/vfio/pci.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/vfio/pci.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-index 6e64a2654e..4bb7d7d257 100644
---- a/hw/vfio/pci.h
-+++ b/hw/vfio/pci.h
-@@ -181,7 +181,7 @@ struct VFIOPCIDevice {
-     Notifier irqchip_change_notifier;
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 4fa387f043..a1522a011a 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -2558,7 +2558,7 @@ static bool vfio_display_migration_needed(void *opaque)
+         (vdev->ramfb_migrate == ON_OFF_AUTO_AUTO && vdev->enable_ramfb);
+ }
+
+-const VMStateDescription vmstate_vfio_display = {
++static const VMStateDescription vmstate_vfio_display = {
+     .name = "VFIOPCIDevice/VFIODisplay",
+     .version_id = 1,
+     .minimum_version_id = 1,
+@@ -2570,7 +2570,7 @@ const VMStateDescription vmstate_vfio_display = {
+     }
  };
 
--/* Use uin32_t for vendor & device so PCI_ANY_ID expands and cannot match hw */
-+/* Use uint32_t for vendor & device so PCI_ANY_ID expands and cannot
-match hw */
- static inline bool vfio_pci_is(VFIOPCIDevice *vdev, uint32_t vendor,
-uint32_t device)
- {
-     return (vendor == PCI_ANY_ID || vendor == vdev->vendor_id) &&
+-const VMStateDescription vmstate_vfio_pci_config = {
++static const VMStateDescription vmstate_vfio_pci_config = {
+     .name = "VFIOPCIDevice",
+     .version_id = 1,
+     .minimum_version_id = 1,
 -- 
 2.34.1
 
