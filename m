@@ -4,40 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F9C9C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 09:39:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25489C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 09:39:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfzLw-0003DD-8b; Fri, 01 Mar 2024 04:38:52 -0500
+	id 1rfzLw-0003DU-Lu; Fri, 01 Mar 2024 04:38:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1rfzLu-0003BU-IZ
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:38:50 -0500
+ id 1rfzLv-0003Bw-7p
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:38:51 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1rfzLr-0006NQ-HJ
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:38:50 -0500
+ (envelope-from <gaosong@loongson.cn>) id 1rfzLr-0006Np-Ln
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:38:51 -0500
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8AxPOkgouFlOT0TAA--.38697S3;
- Fri, 01 Mar 2024 17:38:40 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxmfAkouFlTD0TAA--.49218S3;
+ Fri, 01 Mar 2024 17:38:44 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8AxDBMfouFlyZxLAA--.4871S2; 
- Fri, 01 Mar 2024 17:38:39 +0800 (CST)
+ AQAAf8AxDBMfouFlyZxLAA--.4871S8; 
+ Fri, 01 Mar 2024 17:38:44 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, richard.henderson@linaro.org, philmd@linaro.org,
  maobibo@loongson.cn, zhaotianrui@loongson.cn, lixianglai@loongson.cn,
  imammedo@redhat.com, anisinha@redhat.com, mst@redhat.com
-Subject: [PATCH v5 00/17] Add boot LoongArch elf kernel with FDT
-Date: Fri,  1 Mar 2024 17:38:21 +0800
-Message-Id: <20240301093839.663947-1-gaosong@loongson.cn>
+Subject: [PATCH v5 06/17] hw/loongarch: Init efi_boot_memmap table
+Date: Fri,  1 Mar 2024 17:38:27 +0800
+Message-Id: <20240301093839.663947-7-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20240301093839.663947-1-gaosong@loongson.cn>
+References: <20240301093839.663947-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8AxDBMfouFlyZxLAA--.4871S2
+X-CM-TRANSID: AQAAf8AxDBMfouFlyZxLAA--.4871S8
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -64,84 +66,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, All
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+ include/hw/loongarch/boot.h | 27 +++++++++++++++++++++++++
+ include/hw/loongarch/virt.h | 10 ++++++++++
+ hw/loongarch/boot.c         | 39 +++++++++++++++++++++++++++++++++++++
+ hw/loongarch/virt.c         | 11 ++---------
+ 4 files changed, 78 insertions(+), 9 deletions(-)
 
-We already support boot efi kernel with bios, but not support boot elf kernel.
-This series adds boot elf kernel with FDT.
-
-'LoongArch supports ACPI and FDT. The information that needs to be passed
- to the kernel includes the memmap, the initrd, the command line, optionally
- the ACPI/FDT tables, and so on'  see [1].
-
-Patch 2-8 : Create efi system table, and three efi configuration table
-            boot_memmap, initd, FDT.
-Patch 9-17 : Fixes FDT problems.
-
-Test:
-  - Start kernel
-    See [2] start_kernel.sh
-  - Start qcow2
-    See [2] start_qcow2.sh
-
-V5:
-  - Rebase;
-
-V4:
-  - patch 3 change slave_boot_code[] to const, and 'static void *p ' to
-    'void *p';
-  - patch 4 fixes build error;
-  - patch 10-13, add project and commit link.
-
-V3:
-  - Load initrd at  kernel_high + 4 * kernel_size;
-  - Load 'boot_rom' at [0 - 1M], the 'boot_rom' includes
-    slave_boot_code, cmdline_buf and systab_tables;
-  - R-b and rebase.
-
-V2:
-  - FDT pcie node adds cells 'msi-map';
-
-
-[1]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/arch/loongarch/booting.rst?h=v6.7-rc4
-
-[2]: https://github.com/gaosong-loongson/loongarch-binary/releases
-
-Please review!
-
-Thanks.
-Song Gao
-
-Song Gao (17):
-  hw/loongarch: Move boot fucntions to boot.c
-  hw/loongarch: Add load initrd
-  hw/loongarch: Add slave cpu boot_code
-  hw/loongarch: Add init_cmdline
-  hw/loongarch: Init efi_system_table
-  hw/loongarch: Init efi_boot_memmap table
-  hw/loongarch: Init efi_initrd table
-  hw/loongarch: Init efi_fdt table
-  hw/loongarch: Fix fdt memory node wrong 'reg'
-  hw/loongarch: fdt adds cpu interrupt controller node
-  hw/loongarch: fdt adds Extend I/O Interrupt Controller
-  hw/loongarch: fdt adds pch_pic Controller
-  hw/loongarch: fdt adds pch_msi Controller
-  hw/loongarch: fdt adds pcie irq_map node
-  hw/loongarch: fdt remove unused irqchip node
-  hw/loongarch: Add cells missing from uart node
-  hw/loongarch: Add cells missing from rtc node
-
- include/hw/intc/loongarch_extioi.h |   1 +
- include/hw/loongarch/boot.h        | 109 +++++++++
- include/hw/loongarch/virt.h        |  14 ++
- include/hw/pci-host/ls7a.h         |   2 +
- target/loongarch/cpu.h             |   2 +
- hw/loongarch/boot.c                | 330 ++++++++++++++++++++++++++
- hw/loongarch/virt.c                | 364 ++++++++++++++++-------------
- hw/loongarch/meson.build           |   1 +
- 8 files changed, 661 insertions(+), 162 deletions(-)
- create mode 100644 include/hw/loongarch/boot.h
- create mode 100644 hw/loongarch/boot.c
-
+diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
+index aa12a60ffb..7ad25080c5 100644
+--- a/include/hw/loongarch/boot.h
++++ b/include/hw/loongarch/boot.h
+@@ -21,6 +21,15 @@ typedef struct {
+     uint8_t b[16];
+ } efi_guid_t __attribute__((aligned(8)));
+ 
++#define EFI_GUID(a, b, c, d...) (efi_guid_t){ {                                \
++        (a) & 0xff, ((a) >> 8) & 0xff, ((a) >> 16) & 0xff, ((a) >> 24) & 0xff, \
++        (b) & 0xff, ((b) >> 8) & 0xff,                                         \
++        (c) & 0xff, ((c) >> 8) & 0xff, d } }
++
++#define LINUX_EFI_BOOT_MEMMAP_GUID \
++        EFI_GUID(0x800f683f, 0xd08b, 0x423a,  0xa2, 0x93, \
++                 0x96, 0x5c, 0x3c, 0x6f, 0xe2, 0xb4)
++
+ struct efi_config_table {
+     efi_guid_t guid;
+     uint64_t *ptr;
+@@ -56,6 +65,24 @@ struct efi_system_table {
+     struct efi_configuration_table *tables;
+ };
+ 
++typedef struct {
++    uint32_t type;
++    uint32_t pad;
++    uint64_t phys_addr;
++    uint64_t virt_addr;
++    uint64_t num_pages;
++    uint64_t attribute;
++} efi_memory_desc_t;
++
++struct efi_boot_memmap {
++    uint64_t map_size;
++    uint64_t desc_size;
++    uint32_t desc_ver;
++    uint64_t map_key;
++    uint64_t buff_size;
++    efi_memory_desc_t map[32];
++};
++
+ struct loongarch_boot_info {
+     uint64_t ram_size;
+     const char *kernel_filename;
+diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+index 94ff15ad66..d937586dbb 100644
+--- a/include/hw/loongarch/virt.h
++++ b/include/hw/loongarch/virt.h
+@@ -33,6 +33,16 @@
+ 
+ #define COMMAND_LINE_SIZE       512
+ 
++extern struct memmap_entry *memmap_table;
++extern unsigned memmap_entries;
++
++struct memmap_entry {
++    uint64_t address;
++    uint64_t length;
++    uint32_t type;
++    uint32_t reserved;
++};
++
+ struct LoongArchMachineState {
+     /*< private >*/
+     MachineState parent_obj;
+diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+index 769212fce2..c086070bc8 100644
+--- a/hw/loongarch/boot.c
++++ b/hw/loongarch/boot.c
+@@ -62,8 +62,40 @@ static const unsigned int slave_boot_code[] = {
+     0x4c000020,   /* jirl       $r0,$r1,0           */
+ };
+ 
++static inline void *guidcpy(void *dst, const void *src)
++{
++    return memcpy(dst, src, sizeof(efi_guid_t));
++}
++
++static void init_efi_boot_memmap(struct efi_system_table *systab,
++                                 void *p, void *start)
++{
++    unsigned i;
++    struct efi_boot_memmap *boot_memmap = p;
++    efi_guid_t tbl_guid = LINUX_EFI_BOOT_MEMMAP_GUID;
++
++    /* efi_configuration_table 1 */
++    guidcpy(&systab->tables[0].guid, &tbl_guid);
++    systab->tables[0].table = (struct efi_configuration_table *)(p - start);
++    systab->nr_tables = 1;
++
++    boot_memmap->desc_size = sizeof(efi_memory_desc_t);
++    boot_memmap->desc_ver = 1;
++    boot_memmap->map_size = 0;
++
++    efi_memory_desc_t *map = p + sizeof(struct efi_boot_memmap);
++    for (i = 0; i < memmap_entries; i++) {
++        map = (void *)boot_memmap + sizeof(*map);
++        map[i].type = memmap_table[i].type;
++        map[i].phys_addr = memmap_table[i].address;
++        map[i].num_pages = memmap_table[i].length >> 16; /* 64KB align*/
++        p += sizeof(efi_memory_desc_t);
++    }
++}
++
+ static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
+ {
++    void *bp_tables_start;
+     struct efi_system_table *systab = p;
+ 
+     info->a2 = (uint64_t)p - (uint64_t)start;
+@@ -79,6 +111,13 @@ static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
+     p += ROUND_UP(sizeof(struct efi_system_table), 64);
+ 
+     systab->tables = p;
++    bp_tables_start = p;
++
++    init_efi_boot_memmap(systab, p, start);
++    p += ROUND_UP(sizeof(struct efi_boot_memmap) +
++                  sizeof(efi_memory_desc_t) * memmap_entries, 64);
++
++    systab->tables = (struct efi_configuration_table *)(bp_tables_start - start);
+ }
+ 
+ static void init_cmdline(struct loongarch_boot_info *info, void *p, void *start)
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index d929e4f9bf..47e040628f 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -342,15 +342,8 @@ static void virt_powerdown_req(Notifier *notifier, void *opaque)
+     acpi_send_event(s->acpi_ged, ACPI_POWER_DOWN_STATUS);
+ }
+ 
+-struct memmap_entry {
+-    uint64_t address;
+-    uint64_t length;
+-    uint32_t type;
+-    uint32_t reserved;
+-};
+-
+-static struct memmap_entry *memmap_table;
+-static unsigned memmap_entries;
++struct memmap_entry *memmap_table;
++unsigned memmap_entries;
+ 
+ static void memmap_add_entry(uint64_t address, uint64_t length, uint32_t type)
+ {
 -- 
 2.25.1
 
