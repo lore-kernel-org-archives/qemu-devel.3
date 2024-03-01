@@ -4,82 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1B5FC5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 17:48:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39984C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 17:48:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg6zy-0003zG-GQ; Fri, 01 Mar 2024 12:48:42 -0500
+	id 1rg6xy-0005NX-SN; Fri, 01 Mar 2024 12:46:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1rg6zw-0003lZ-O2
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 12:48:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
+ id 1rg6xw-0005Ip-Cw
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 12:46:36 -0500
+Received: from chameleon.pear.relay.mailchannels.net ([23.83.216.33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1rg6zv-0000op-1Y
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 12:48:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709315317;
+ (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
+ id 1rg6xu-0000Xo-MT
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 12:46:36 -0500
+X-Sender-Id: _forwarded-from|134.3.94.10
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+ by relay.mailchannels.net (Postfix) with ESMTP id BEA6E4C269C
+ for <qemu-devel@nongnu.org>; Fri,  1 Mar 2024 17:46:31 +0000 (UTC)
+Received: from outbound1g.eu.mailhop.org (unknown [127.0.0.6])
+ (Authenticated sender: duocircle)
+ by relay.mailchannels.net (Postfix) with ESMTPA id B0A254C2310
+ for <qemu-devel@nongnu.org>; Fri,  1 Mar 2024 17:46:30 +0000 (UTC)
+ARC-Seal: i=2; s=arc-2022; d=mailchannels.net; t=1709315191; a=rsa-sha256;
+ cv=pass;
+ b=or1XBgRA6cHrzLpilgL98aOTnuWOzOYJcFDf1oQ1zQaGGVmiOjOHSPte8MOpUEyhF/25y0
+ bbo/E3HQ6X4eh1o6FgStRue/NomKkcYCZne7b5qiip/I6aURNeKH2lHEfV4tHtfDWPFwsQ
+ kkaQkerBAW9NHyyAbK+ABkJUFDnT6dg3Uw7eacVT3VA9rqvfOqQZmSm9jrWVCXmmIptCry
+ Fhq1JJLTIaFjOLdvKFDg9c4CFBtFlYX4lPG9RYgW7ngHJUyHdr0GMbKsHYjn1uKiY0CJDv
+ uBRKKc8XC4GC9p8AzWn+eSLPXCOlovZBGvJe+heI4np7RbdNxYN2p2qz8SAe8A==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net; s=arc-2022; t=1709315191;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=yTTjVnUQSj5ym4AyEk2AfhV6NkUqqLnFCzLcylUcINs=;
- b=OoSvbjLoLRA3PflXLPhxAjYGXb/WggaB8sPoPh6+ObXW+ZRP1K1GONnV+woCzjIb8CyaSV
- vBYj7dFSMzlfwHMjoSqvll9U0wZhSrurFxhlXqcF3wUgv+ttTRZ1uI1C5v67colvSvup/z
- J0eCDXlj6QuALrtIUhu9OdxO4snpyiU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-680--lCnfjIwOeK_iFRPJ-8m8w-1; Fri, 01 Mar 2024 12:47:28 -0500
-X-MC-Unique: -lCnfjIwOeK_iFRPJ-8m8w-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-412c7f1ca35so5533785e9.2
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 09:47:27 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709315247; x=1709920047;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=yTTjVnUQSj5ym4AyEk2AfhV6NkUqqLnFCzLcylUcINs=;
- b=mdQFcKUqk1lN37RGuk/zc/fQ0Fa3Mm9hCEs2A5nG4lgRjFd1bpDjNG8e1ckqZFBh8t
- 71qeZUSdudFwxkF3ecTvj7K1LZrKsrS0wOfffFC/lZlelH1kLAQcUrrUGd0tknMGUecn
- Bu8M04IJHGl6EL4dqF/T1vzJpKZ0CBlvfnRt0DyMtWsd5A/A7xnuSbOIOz85ytAkZ7PL
- jcGcTmETS3ASy0IxmZ8MxitqFgi07m+HpiVPhznF6mdBl42HVZu8ZpgSjgrBKFDdzPod
- qZhSNQgMLyQD2iezwm0vsXEiH0LTLXN6UgsUCByV2wG8R4c/RzsXf76NmY+iTLxJ5PiL
- 5oow==
-X-Gm-Message-State: AOJu0Yza9subF/bRo8sFnh9nIrNFPoiu61DVDiDopC5Lc9DJ8/2cR4RC
- DZSUb4xzV6YmmbIMHOkVgTsjxI0zn6oA29wdV/7bcxKVIinFSHNzntw8cdw+iG1W5eV7pkW+AWQ
- q8McpfHJ/4bXSOyeP/LkvXeq6UwOoatO7foP/mq6JeNyGq3z6f4fqp6MsIaPDU0M7H5wgydIUUq
- FB0GfJ1Tj6gxeL93NCiDuA3hPC7EY=
-X-Received: by 2002:a05:600c:3ac7:b0:412:b782:9001 with SMTP id
- d7-20020a05600c3ac700b00412b7829001mr2377237wms.18.1709315247109; 
- Fri, 01 Mar 2024 09:47:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEkuWUbm/39F3qpYX6Wzfvy2FZo7YsvdRM3oiv2ajHMVih928FTPb4oP1nHad5jTq5UZAAksytEUZXiAjT+Q0c=
-X-Received: by 2002:a05:600c:3ac7:b0:412:b782:9001 with SMTP id
- d7-20020a05600c3ac700b00412b7829001mr2377220wms.18.1709315246805; Fri, 01 Mar
- 2024 09:47:26 -0800 (PST)
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:dkim-signature;
+ bh=s0rD/E55eu1dy3gy9zrqMvtlkoGP/2RyTrDaNAJAFP4=;
+ b=i4sDhkxH/v36/qDe00atWCpa6lhyuHdA0P7APC/V3SCyVbvhV0vXZg+KfFubYepSHidv/B
+ fEQ9Jw+kNBHsIH70+9DWwGR7yXqgt4lwz4T0ygNlJDm/dxY+AzUgzvW5ZMidiCPAE5qh1W
+ n7UGTqknnVfDEgElZZBvip7zDVp9O2nGr7mrK5fmwK83LZEAlOsFCMvuaBSHwOJHRAMjPB
+ PJAlrYRbmVQI8HN5kjMwBSFHrT36ElUwe3Bq1YGEBBvQHcqtsUYU40OnriyOpmkrtpyGJS
+ ZxXhVALQ4mqpGwN0l92NqwuZmeopZ00RH9WJXthNKf52WKf3cspMHMXAp1EKQA==
+ARC-Authentication-Results: i=2; rspamd-55b4bfd7cb-jmwb2;
+ arc=pass ("outbound.mailhop.org:s=arc-outbound20181012:i=1");
+ auth=pass smtp.auth=duocircle smtp.mailfrom=svens@stackframe.org
+X-Sender-Id: _forwarded-from|134.3.94.10
+X-MC-Relay: Forwarding
+X-MailChannels-SenderId: _forwarded-from|134.3.94.10
+X-MailChannels-Auth-Id: duocircle
+X-Decisive-Battle: 03028bf9029b2e1a_1709315191227_2501781902
+X-MC-Loop-Signature: 1709315191227:2238914392
+X-MC-Ingress-Time: 1709315191226
+Received: from outbound1g.eu.mailhop.org (outbound1g.eu.mailhop.org
+ [52.28.6.212]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+ by 100.123.27.58 (trex/6.9.2); Fri, 01 Mar 2024 17:46:31 +0000
+ARC-Seal: i=1; a=rsa-sha256; t=1709315162; cv=none;
+ d=outbound.mailhop.org; s=arc-outbound20181012;
+ b=Rg2NSP2/jvvNAQQffUTYLAqbtrQCk/AzlWCZBRiljkA2u7JneMHFsGCPmmxXMgl4nDWAGGQ2Id8l2
+ su8zmdJ1otDHcaXZecwna3IRPwH1buO0mowDQaYqgH9HSAbz7oTwFEo3UDHR6IhYlKc+5/GkHvHu5E
+ yH3eVlYB4LseqoXFRm62uM7jFlW32UJtnMnags+Si53D9OqeCTz2uF0u7HFYr0rUS9weLQCRnu/lra
+ rzpe2GKNo6frvUWuLxkUs3wISeWvA9rbD6gDcvSlIEgPDwmu70H4MbOhPrddxw71D88sonEe58AeRG
+ SUN5bowYiQVjv9TbOhwDmdKuc8nlipQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=outbound.mailhop.org; s=arc-outbound20181012;
+ h=content-transfer-encoding:mime-version:references:in-reply-to:message-id:date:
+ subject:cc:to:from:dkim-signature:dkim-signature:dkim-signature:from;
+ bh=s0rD/E55eu1dy3gy9zrqMvtlkoGP/2RyTrDaNAJAFP4=;
+ b=DmLdQLU4aAydo//5MvfKI8vBxOWdx+uM9Khu8KAoXhEnWGHgVZv09DyfTw4TBkBWXYWBDeCcnY6ci
+ CzMENkRmkOACQDajIdcmVrxUsv60clopWhhGReqtjlvwl60NmE0HjBkRB6o+82tt9rPIWrO2gAohx9
+ U7bswUirvF6d5+FjvLWJuCSNRa7rjVhq7nUWA+sBBHgy3fklucJ78kceodRWjW0guOvqlhiCV/oiBB
+ CnBd2e2yecFEXIZQpJV9Ef8/bdQx7vAHcD7Wn3IG0P7YZRr+LbVzgWQjhkoiPxf3EXKF7ARxGWJxbM
+ vurCbbh32+M1FUJaW1hGHwyQcSGmeMw==
+ARC-Authentication-Results: i=1; outbound3.eu.mailhop.org;
+ spf=pass smtp.mailfrom=stackframe.org smtp.remote-ip=130.180.31.158;
+ dkim=pass header.d=stackframe.org header.s=dkim1 header.a=rsa-sha256
+ header.b=aX8A+CUW; 
+ dmarc=none header.from=stackframe.org;
+ arc=none header.oldest-pass=0;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=stackframe.org; s=duo-1634547266507-560c42ae;
+ h=content-transfer-encoding:mime-version:references:in-reply-to:message-id:date:
+ subject:cc:to:from:from;
+ bh=s0rD/E55eu1dy3gy9zrqMvtlkoGP/2RyTrDaNAJAFP4=;
+ b=WpsmVCXuJopxtiIvdot/boTgpAPamJR+RqfPObJS9xEZqGMF173YjBAsseVGdwkC3pKLI8/CroSIf
+ iYNTx7dfVZyd8vREmOqu66raGXQ0/EOPSVSLQtu3rKrVNDXmk7AwLps/Y3xD1wZfIlybf0L58R1GCD
+ 4+VNALHhG4dpL5LE=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=outbound.mailhop.org; s=dkim-high;
+ h=content-transfer-encoding:mime-version:references:in-reply-to:message-id:date:
+ subject:cc:to:from:from;
+ bh=s0rD/E55eu1dy3gy9zrqMvtlkoGP/2RyTrDaNAJAFP4=;
+ b=PZnL0JTGKbR1ZiKUZl58FjhwGHVEHxeA40nFjrTAvkFBvs39cyMRIZ9svwV/GNmXiHB+v757Tj1wE
+ /cyyV7ATyHU7u8EkI1CJYHdsJco5HOtAL+6TqLcaTE2h+2fEAEPo+4wkunzV6m+MZ2+RZTTpoeSVYE
+ pUs9yIi+XGs5ckZPPcLzI3gXWaSgoiDykR8/qPOvRl1+8p2uGdNuCCze/wXXaDgORGZk6t1aJU6u8I
+ kZZPrizNGZV+x2TnR68DtJas/iigXJ1ILIQf1+HIJ3/muNL8kY4mp9jRrG58aQIMKws7/kL8houjM8
+ f2ngu6ewf596Gdp54gJ8SwWo4bTkErA==
+X-Originating-IP: 130.180.31.158
+X-MHO-RoutePath: dG9ta2lzdG5lcm51
+X-MHO-User: 8eb5151e-d7f3-11ee-afda-eda7e384987e
+X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
+X-Mail-Handler: DuoCircle Outbound SMTP
+Received: from mail.duncanthrax.net (mail.duncanthrax.net [130.180.31.158])
+ by outbound3.eu.mailhop.org (Halon) with ESMTPSA
+ id 8eb5151e-d7f3-11ee-afda-eda7e384987e;
+ Fri, 01 Mar 2024 17:45:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=stackframe.org; s=dkim1; h=Content-Transfer-Encoding:MIME-Version:
+ References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:
+ Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
+ Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+ List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=s0rD/E55eu1dy3gy9zrqMvtlkoGP/2RyTrDaNAJAFP4=; b=aX8A+CUWuWb6t9UA7ZNV37sg5t
+ i5Haels4MPKPuFIgMy/At9xFTndRO6Vlf3ell4XF1BjGWDdQkseX1BSUOSvCC95R0umWsAc2CHGXv
+ AIXEqvNt1u3wqdbNfUlEDzkr/AQg/PK4ukg+85zjoradanZ8jpYKVlUzJj/tniF40u6p7AHLorIC9
+ +zpAL9XVtstVmgo8EMRWW/ebs8yoGUX47R/0C+PSisBZWI7Ff7o6WyxpuCahKfQrhzJ6c1gUhaOQP
+ X7vkCHkD+rJhXcN60JiccuYnAlGI0IIH7FwtaFC8Hc5H4Gio/y2o5dtpXiDl4+byg46xC664F65IY
+ BErOusJw==;
+Received: from ip-134-003-094-010.um41.pools.vodafone-ip.de ([134.3.94.10]
+ helo=t14.stackframe.org)
+ by mail.duncanthrax.net with esmtpa (Exim 4.96)
+ (envelope-from <svens@stackframe.org>) id 1rg6xg-000bs2-21;
+ Fri, 01 Mar 2024 18:46:20 +0100
+From: Sven Schnelle <svens@stackframe.org>
+To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, deller@gmx.de, Sven Schnelle <svens@stackframe.org>
+Subject: [PATCH v3 02/12] util/log: make qemu_set_dfilter_ranges() take a GList
+Date: Fri,  1 Mar 2024 18:45:59 +0100
+Message-ID: <20240301174609.1964379-3-svens@stackframe.org>
+X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240301174609.1964379-1-svens@stackframe.org>
+References: <20240301174609.1964379-1-svens@stackframe.org>
 MIME-Version: 1.0
-References: <20240301091524.39900-1-peterx@redhat.com>
-In-Reply-To: <20240301091524.39900-1-peterx@redhat.com>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Fri, 1 Mar 2024 23:17:10 +0530
-Message-ID: <CAE8KmOz_5-DtSO2BHpBXgD2kJUjwsLaqKguOcWgfXC2efB2rWA@mail.gmail.com>
-Subject: Re: [PATCH] migration/multifd: Document two places for mapped-ram
-To: peterx@redhat.com
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=23.83.216.33; envelope-from=svens@stackframe.org;
+ helo=chameleon.pear.relay.mailchannels.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,51 +166,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Petr,
+In preparation of making qemu_set_dfilter_ranges() available
+to other users, move the code to a new function range_list_from_string()
+which takes an additional GList argument.
 
-On Fri, 1 Mar 2024 at 14:46, <peterx@redhat.com> wrote:
-> +         * An explicitly close() on the channel here is normally not
-
-explicitly -> explicit
-
-> +         * required, but can be helpful for "file:" iochannels, where it
-> +         * will include an fdatasync() to make sure the data is flushed to
-> +         * the disk backend.
-
-* an fdatasync() -> fdatasync()
-
-* qio_channel_close
-    -> ioc_klass->io_close = qio_channel_file_close;
-     -> qemu_close(fioc->fd)
-      -> close(fd);
-
-It does not seem to call fdatasync() before close(fd);
-
-    - qio_channel_file_new_path(filename, O_CREAT | O_WRONLY | O_TRUNC, ...)
-
-Maybe the qio_channel..() calls above should include the 'O_DSYNC'
-flag as well? But that will do fdatasync() work at each write(2) call
-I think, not sure if that is okay.
-
-> +         *
-> +         * The object_unref() cannot guarantee that because: (1) finalize()
-> +         * of the iochannel is only triggered on the last reference, and
-> +         * it's not guaranteed that we always hold the last refcount when
-> +         * reaching here, and, (2) even if finalize() is invoked, it only
-> +         * does a close(fd) without data flush.
-> +         */
-
-* object_unref
-    -> object_finalize
-      -> object_deinit
-        -> type->instance_finalize
-         -> qio_channel_file_finalize
-          -> qemu_close(ioc->fd);
-
-* I hope I'm looking at the right code here. (Sorry if I'm not)
-
-Thank you.
+Signed-off-by: Sven Schnelle <svens@stackframe.org>
 ---
-  - Prasad
+ util/log.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
+
+diff --git a/util/log.c b/util/log.c
+index 779c0689a9..f183ea4e4d 100644
+--- a/util/log.c
++++ b/util/log.c
+@@ -382,15 +382,16 @@ bool qemu_log_in_addr_range(uint64_t addr)
+     return false;
+ }
+ 
+-void qemu_set_dfilter_ranges(const char *filter_spec, Error **errp)
++static void range_list_from_string(GList **out_ranges, const char *filter_spec,
++                                   Error **errp)
+ {
+     gchar **ranges = g_strsplit(filter_spec, ",", 0);
+     struct Range *range = NULL;
+     int i;
+ 
+-    if (debug_regions) {
+-        g_list_free_full(debug_regions, g_free);
+-        debug_regions = NULL;
++    if (*out_ranges) {
++        g_list_free_full(*out_ranges, g_free);
++        *out_ranges = NULL;
+     }
+ 
+     for (i = 0; ranges[i]; i++) {
+@@ -447,7 +448,7 @@ void qemu_set_dfilter_ranges(const char *filter_spec, Error **errp)
+             goto out;
+         }
+         range_set_bounds(range, lob, upb);
+-        debug_regions = g_list_append(debug_regions, range);
++       *out_ranges = g_list_append(*out_ranges, range);
+         range = NULL;
+     }
+ out:
+@@ -455,6 +456,11 @@ out:
+     g_strfreev(ranges);
+ }
+ 
++void qemu_set_dfilter_ranges(const char *filter_spec, Error **errp)
++{
++    range_list_from_string(&debug_regions, filter_spec, errp);
++}
++
+ const QEMULogItem qemu_log_items[] = {
+     { CPU_LOG_TB_OUT_ASM, "out_asm",
+       "show generated host assembly code for each compiled TB" },
+-- 
+2.43.2
 
 
