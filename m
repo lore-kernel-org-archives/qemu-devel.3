@@ -4,92 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32850C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 19:45:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41B83C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 19:52:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg8oV-0001jV-Bq; Fri, 01 Mar 2024 14:44:59 -0500
+	id 1rg8v5-0003nQ-Ks; Fri, 01 Mar 2024 14:51:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rg8oQ-0001iX-Ec
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 14:44:54 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rg8oN-0004Je-Tf
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 14:44:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709322291;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Lf2UEL+cQJVaADNBAhNdeM2N2bKFN/niMKZZQVDvnhU=;
- b=fwl2sIsggbOpJ5hwkF8THknPp6Q6m/XxbFEJ477AUZHapm14PghbtYR2a+UP7A/59L8rdb
- TEm7UnTe8SyLp8v6FPQxMZeSwzT4DEBToqx6PTma9xTIZofs55HzmJhURvDraaN1460Yys
- qmnb9YM9z1soGRRNq8cNqJ/yMKtfqQ4=
-Received: from mail-yb1-f197.google.com (mail-yb1-f197.google.com
- [209.85.219.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-397-rrSBhJYWPmGL0S8uD5EGNw-1; Fri, 01 Mar 2024 14:44:49 -0500
-X-MC-Unique: rrSBhJYWPmGL0S8uD5EGNw-1
-Received: by mail-yb1-f197.google.com with SMTP id
- 3f1490d57ef6-dbe9e13775aso4200739276.1
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 11:44:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rg8v4-0003m5-5K
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 14:51:46 -0500
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rg8v2-0005df-F8
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 14:51:45 -0500
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-6da4a923b1bso2236345b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 11:51:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709322703; x=1709927503; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=YKKPqCaBp34ZvikGcVi4z2VqdZGdGAgfaYBtkaDdt6I=;
+ b=YkibVjNg5Shd3PKrrJr2QBXAOVgnQPODq68e2B2OJa06U0krVASSx0vGXb1aDdSfOk
+ fVugzXHhvwDQ4/DZ43ivK6oVspH7pLdccbgV+p2T9vLj/y5xA00Fal65Fuu30zPbGYXU
+ oHlFEzAC1OzF9t3q+ItxXDNzYx8UrTxowgvs5z4WrwruSkyjAWEkUYPs1EDw/guaW7SO
+ LGSIu9qxkPN41+dzsS3mf/XHhoTk7/0hzVP83YwvLy+DbCHwjej7QRnekn7fLq+OryG0
+ mOzwLyw0R5J2oE9lCv5LV46ViaG5zBTpwFN6ehH5zU3geb/JmJQzQwe1oScARGh7XmTR
+ nD4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709322289; x=1709927089;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Lf2UEL+cQJVaADNBAhNdeM2N2bKFN/niMKZZQVDvnhU=;
- b=PBYc5t8zYYIlOtUZLnbKGDMUheQctSVe0HBVs9/jzK6chu94CJpTwoJmzOonDmFB2r
- CUUZwm3yo0K1KgHZc4SrX25ROg2x7SHyXIumtcJZ45XtUOpH27DSTzcg3rEqtrTY1asV
- oh3qt1WjuTQJhTiOvSQwV3DAhSn5PBtTkSx+5tcBzAfkMoak22ULd3fiCPVElVaA2smq
- wewqPI+w+TpHrJeb7TKGRb+8Xtk0uCiklpfejgiGi8iBcXDKLlJ+Y+kxTdYWcmDc3QEc
- JZZ3ZE+Vu0PtNFBi/UcvpalyyQ6a9hveL6PRO2hvplWhAJaWvWt0tLgPL6un5aNVPnma
- 8VSg==
-X-Gm-Message-State: AOJu0YyS2MEfLc5vk48rL84VVJ4lTAmN5r4c8pLh4652sg3jCfvYMkv7
- iSGiCjHU1MF9FZQE/IasXICJCWUDHYW8mc7JZ3Cet1nofrL28gxK/+fwF3Ez4pjPmZtKQnY/cqf
- +UVblC5lJkERLBtojUB6KjSlrjzHzd4igFdEXeSSAn3g9pAD9S4CNSNC5vn4CuCeSDXnx39jvWG
- uKVbVUOK+lSG/JgvEn7mWtm8EUD/1qYm40mNJwVg==
-X-Received: by 2002:a05:6902:218f:b0:dc7:4367:2527 with SMTP id
- dl15-20020a056902218f00b00dc743672527mr2997529ybb.49.1709322288860; 
- Fri, 01 Mar 2024 11:44:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGjm65dBSSOlNwC1BtrHh8qaNA3M8Enj9DzCv1Fr4qh7klO6+qedckFBQJXH5Kctw5k6GV0jj7LvdNbWRKQEaQ=
-X-Received: by 2002:a05:6902:218f:b0:dc7:4367:2527 with SMTP id
- dl15-20020a056902218f00b00dc743672527mr2997498ybb.49.1709322288610; Fri, 01
- Mar 2024 11:44:48 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709322703; x=1709927503;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YKKPqCaBp34ZvikGcVi4z2VqdZGdGAgfaYBtkaDdt6I=;
+ b=YvVQ7eV4VTkcDak8IzxGX+J5qFmlXuzWT1N9C6qEpJu63U3q+gKgt3gX2/Wg5Vka41
+ Gig44RTTC7UmDpw3PX6zt/KjURWcoALwALwQTYshSrqVDS7eovxuykyKfISKK1Kk9fJq
+ pf3Xnk8MS5PLtDPRrUai2mDbOBPX6+LHpiC4zR93aZ6WNBcuqtSdwqEkzlUN6iDhYv4K
+ QjbjUyCCXQrnneZYHPRWuoN9HicmLkFKSxMLstRBHk/vqNxcubMLJzQ74u4O5Vz7gDAi
+ cpNRgBxrwCHw8VPqtbtulXiZ1R62HjKMOd7LDpJY+HWlRG2ZODIP5ej68tlaZrSXsfRb
+ dmRw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXT7ffJY+IssKKG6/mNCVfk1UXMJWo5yAos+WKri/kNQSFO9s/RqFdIU5snBM1DhQTKUWpm8DM4i8ApvBnEGfjlGsioyzk=
+X-Gm-Message-State: AOJu0Yz/IOsE7DAFHknm+pow4pD6Ld4kLSZUgaVKJKrVhZ401pOqm0yZ
+ 5KedJ2wZzcBsp9SuK23a+vVCB0pqKo+JgKSV75LIr3revz7BMISSpqKtIbnDLs8=
+X-Google-Smtp-Source: AGHT+IEmlVgHobIfRgIhUY3xR9gp6wy05yat/or7EnLg50UjNsNdCHZrRfsAg9LnczTFOsRb04TJtA==
+X-Received: by 2002:a05:6a00:803:b0:6e5:7b34:fabb with SMTP id
+ m3-20020a056a00080300b006e57b34fabbmr3252285pfk.29.1709322702626; 
+ Fri, 01 Mar 2024 11:51:42 -0800 (PST)
+Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
+ [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
+ k4-20020aa79984000000b006e559bc3250sm799108pfh.68.2024.03.01.11.51.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 01 Mar 2024 11:51:42 -0800 (PST)
+Message-ID: <a5bfeeb9-5b56-4edd-b98b-d16f4dbcc57c@linaro.org>
+Date: Fri, 1 Mar 2024 09:51:39 -1000
 MIME-Version: 1.0
-References: <20240301134330.4191007-1-jonah.palmer@oracle.com>
- <20240301134330.4191007-3-jonah.palmer@oracle.com>
-In-Reply-To: <20240301134330.4191007-3-jonah.palmer@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Fri, 1 Mar 2024 20:44:12 +0100
-Message-ID: <CAJaqyWfzobbNeUOR0LvpZ=Er1ShVN8vcZAr6Vm4gU+dth5v4cw@mail.gmail.com>
-Subject: Re: [RFC 2/8] virtio-pci: Lock ioeventfd state with
- VIRTIO_F_NOTIFICATION_DATA
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, jasowang@redhat.com, 
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com, raphael@enfabrica.net, 
- kwolf@redhat.com, hreitz@redhat.com, pasic@linux.ibm.com, 
- borntraeger@linux.ibm.com, farman@linux.ibm.com, thuth@redhat.com, 
- richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com, 
- cohuck@redhat.com, pbonzini@redhat.com, fam@euphon.net, stefanha@redhat.com, 
- qemu-block@nongnu.org, qemu-s390x@nongnu.org, virtio-fs@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Make some structure static
+Content-Language: en-US
+To: Frediano Ziglio <freddy77@gmail.com>, qemu-devel <qemu-devel@nongnu.org>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+References: <CAHt6W4cH+=pyxNZ9F_8Yed4K_pYfO-qP6iNHQHEYLvWUk+aGUw@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CAHt6W4cH+=pyxNZ9F_8Yed4K_pYfO-qP6iNHQHEYLvWUk+aGUw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,54 +98,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 1, 2024 at 2:44=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.co=
-m> wrote:
->
-> Prevent ioeventfd from being enabled/disabled when a virtio-pci
-> device has negotiated the VIRTIO_F_NOTIFICATION_DATA transport
-> feature.
->
-> Due to ioeventfd not being able to carry the extra data associated with
-> this feature, the ioeventfd should be left in a disabled state for
-> emulated virtio-pci devices using this feature.
->
-> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
-
-Reviewed-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
-
-Thanks!
-
+On 3/1/24 08:56, Frediano Ziglio wrote:
+> Not used outside C module.
+> 
+> Signed-off-by: Frediano Ziglio<frediano.ziglio@cloud.com>
 > ---
->  hw/virtio/virtio-pci.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> index c7c577b177..fd9717a0f5 100644
-> --- a/hw/virtio/virtio-pci.c
-> +++ b/hw/virtio/virtio-pci.c
-> @@ -420,13 +420,15 @@ static void virtio_ioport_write(void *opaque, uint3=
-2_t addr, uint32_t val)
->          }
->          break;
->      case VIRTIO_PCI_STATUS:
-> -        if (!(val & VIRTIO_CONFIG_S_DRIVER_OK)) {
-> +        if (!(val & VIRTIO_CONFIG_S_DRIVER_OK) &&
-> +            !virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) =
-{
->              virtio_pci_stop_ioeventfd(proxy);
->          }
->
->          virtio_set_status(vdev, val & 0xFF);
->
-> -        if (val & VIRTIO_CONFIG_S_DRIVER_OK) {
-> +        if ((val & VIRTIO_CONFIG_S_DRIVER_OK) &&
-> +            !virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) =
-{
->              virtio_pci_start_ioeventfd(proxy);
->          }
->
-> --
-> 2.39.3
->
+>   hw/vfio/pci.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
 
