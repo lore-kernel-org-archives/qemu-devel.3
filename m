@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 998A8C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 04:00:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FD1BC5478C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 04:13:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfu3j-00048F-1T; Thu, 29 Feb 2024 22:59:44 -0500
+	id 1rfuFw-00077v-LZ; Thu, 29 Feb 2024 23:12:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bryan.zhang@bytedance.com>)
- id 1rfu3a-00047B-PG
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 22:59:35 -0500
-Received: from mail-qk1-x729.google.com ([2607:f8b0:4864:20::729])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bryan.zhang@bytedance.com>)
- id 1rfu3Z-0005f0-4u
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 22:59:34 -0500
-Received: by mail-qk1-x729.google.com with SMTP id
- af79cd13be357-787dacbcfeeso90503285a.1
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 19:59:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1709265572; x=1709870372; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LyOj4EOEJC+5kw+zlLlJ+hZRPszzVwAFiDK3HfnEjew=;
- b=Ejk73uoaDyDXxmvHwQ+e6Mb3dY9/lFtu7Egh84+uJECcgQP2wqCpD+rNAj8MNDahZ5
- RTkFVTRWGKJ2MYP2KmExqxAZytXZuPCQKQiE01jIJU2i7UJxGZFbEv9yvpEVOG5hpuja
- NM4qeX0Jz3l87hFvP5L9KKwwOwtDoeGH3D2WTLM60TMCarwBjxhNIpmQYVFlTtQXJ1uZ
- aImCAQKvZtkbG0oCzP5H6z/cxDVR+5kDtfMs3K9wolCUDVqm94CRJJG1MqlhczWP3lje
- O8lLqK+jcrrSY9i6sIB/u68Vls/FtHlf/ZdGnlAIRdaBBqYcFNOTZhw4eM3i/o+EV3sZ
- DwJA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfuFv-00077n-8B
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 23:12:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfuFt-00081h-OW
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 23:12:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709266336;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=CWMi6stCLB393Y4YI1tBjbSiUFyhpSIqmAvIz2ItVi8=;
+ b=P5d31km3e7NTb7oaGbUCRpOmmrGrfM3fUVXcP6UFKRwH1mw3nzlpa8XaxD0OTVZKcn3uP6
+ 0FcJisZbk7Gw15hzVaPcPVcIYwo7po/xpLkdisyyBp4hKaOtk2BdCJuS3yv4eTfqXEZ9X9
+ yheLo7jRGYdIoifImlSxBOMwXtj5L+o=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-180-_ulu2T5ONMeqWA_LQbVDrw-1; Thu, 29 Feb 2024 23:12:12 -0500
+X-MC-Unique: _ulu2T5ONMeqWA_LQbVDrw-1
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-29999b97b39so503039a91.1
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 20:12:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709265572; x=1709870372;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=LyOj4EOEJC+5kw+zlLlJ+hZRPszzVwAFiDK3HfnEjew=;
- b=E4rBjBE0HKfGI892t4YhfMnpSjr8UPHPsWsgH/S0a/uYxWLhyGYQAyUhtBttZZ1GV7
- rgajuGXtk9YR1Oo2ARTfljBkk87qbmQPqt0VA+jAv/n31ByZONVeoQnyHT0aq5/RzHrk
- QfLqHAmC/5ojyy03/asQi5aWjdfn8glj/QDqWx04HROsG9ynt4nwkQhBUoiI/WV3C36E
- FBuHYtH4jlIABt1StbzPuuwUQBpZMmPbvDo6U/ZcI6JHujVTrAPphmD9Ii6FLslZBejj
- J3ta3SCM5fuvJFmfDwS+JZgrrfERJtuitN0K1lJRmoI3jjojk97rsq83wP0qtNLxdrED
- k5Nw==
-X-Gm-Message-State: AOJu0Yy++sOXhz6IWfgPd/f9lm+pSA3qLagsV1jmOJKkOKLHo2DPeUJo
- /wt0hg/74NNxSf2a3qDYAjHTVWNmP1jl5A9/kr69X+FW/bzfFBtd6ZUgvkSW5B8m69+Jwy7zdHR
- j
-X-Google-Smtp-Source: AGHT+IFP71C6QHjsLqwg0m9nYdp5OzOGLkZeF6fhiTIhZc/aHQH07oznClUUjJZHfDiQguWaPZbawg==
-X-Received: by 2002:a05:620a:471f:b0:787:dd94:a492 with SMTP id
- bs31-20020a05620a471f00b00787dd94a492mr835167qkb.16.1709265571860; 
- Thu, 29 Feb 2024 19:59:31 -0800 (PST)
-Received: from n36-186-108.byted.org. ([130.44.212.90])
- by smtp.gmail.com with ESMTPSA id
- c21-20020a05620a165500b00787c6703539sm1296986qko.90.2024.02.29.19.59.31
+ d=1e100.net; s=20230601; t=1709266331; x=1709871131;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CWMi6stCLB393Y4YI1tBjbSiUFyhpSIqmAvIz2ItVi8=;
+ b=Rc9CsOHJl3Wm26V5WVDtp4aiNGDtnZq5fLEr4+D5IaGGj6sequkiMh1/h9djWBZDBV
+ 4KKJIs+sIyYRSpzsSL0/GEckLklBmGc7on6iV1hxGomWOa6LbybuHuSw9vYQoJWmBKmi
+ oyY5YWJ6oF5Nhbpuk3HlQp/nTbeKi8EauISGmFVBW/Fymkzr3pPaP/ZMMT8A07cQtzeV
+ C6YNp2IoT9fs9kpebVDgFAGjsxWAWcFsnqOwQ4/d2e7Ej+DG3UZcqJO6ZoOVBxxWr3oH
+ QXTJChVMs9Z1OZSkFgoqlaIGsEQgbrxak+4w+Va2WOVNUV0RR5U3llbTUjXNNJTB9nva
+ +u3A==
+X-Gm-Message-State: AOJu0YxYH42/k6zrx9LuppEZG+zN155Gtadt2yC+ZcGvu0gbEy0P5ETS
+ FWNuFEv8K/ChAlyXOVVHrNPaSvntAquKI+BQttbCVf8GCy0hpYObWR5zOitEjEgEq+59ybHytSF
+ qOHfYAdXgscFUxKLyFLBDL0RbwI8OHfUdDFSLq32KEcUhOqsIfEVD
+X-Received: by 2002:a17:902:7285:b0:1dc:d8c9:6a7f with SMTP id
+ d5-20020a170902728500b001dcd8c96a7fmr547085pll.3.1709266330971; 
+ Thu, 29 Feb 2024 20:12:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFuOTcQadBapqcqYBJX6auR+whmjC1Bz9m72jJXaFCVAOUFf9SeppzaimM2ATU9nowHWJtSFQ==
+X-Received: by 2002:a17:902:7285:b0:1dc:d8c9:6a7f with SMTP id
+ d5-20020a170902728500b001dcd8c96a7fmr547061pll.3.1709266330655; 
+ Thu, 29 Feb 2024 20:12:10 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ y9-20020a1709027c8900b001db717d2dbbsm2304439pll.210.2024.02.29.20.12.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Feb 2024 19:59:31 -0800 (PST)
-From: Bryan Zhang <bryan.zhang@bytedance.com>
-To: qemu-devel@nongnu.org,
-	peterx@redhat.com,
-	farosas@suse.de
-Cc: hao.xiang@bytedance.com, Bryan Zhang <bryan.zhang@BYTEDANCE.COM>,
- Bryan Zhang <bryan.zhang@bytedance.com>
-Subject: [PATCH 2/2] tests/migration: Set compression level in migration tests
-Date: Fri,  1 Mar 2024 03:59:01 +0000
-Message-Id: <20240301035901.4006936-3-bryan.zhang@bytedance.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20240301035901.4006936-1-bryan.zhang@bytedance.com>
+ Thu, 29 Feb 2024 20:12:10 -0800 (PST)
+Date: Fri, 1 Mar 2024 12:12:02 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Bryan Zhang <bryan.zhang@bytedance.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, hao.xiang@bytedance.com
+Subject: Re: [PATCH 0/2] *** Properly apply migration compression level
+Message-ID: <ZeFVkgRhAHuY7j3v@x1n>
 References: <20240301035901.4006936-1-bryan.zhang@bytedance.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::729;
- envelope-from=bryan.zhang@bytedance.com; helo=mail-qk1-x729.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240301035901.4006936-1-bryan.zhang@bytedance.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,45 +97,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bryan Zhang <bryan.zhang@BYTEDANCE.COM>
+On Fri, Mar 01, 2024 at 03:58:59AM +0000, Bryan Zhang wrote:
+> From: Bryan Zhang <bryan.zhang@BYTEDANCE.COM>
+> 
+> There is some glue code missing, such that the
+> `qmp_migrate_set_parameters` function does not properly update the
+> `multifd_zstd_level` and `multifd_zlib_level` parameters. This patch
+> adds the glue code and also adds some function calls to the existing
+> migration tests to make sure the set_parameters function gets tested.
+> 
+> Bryan Zhang (2):
+>   migration: Properly apply migration compression level parameters
+>   tests/migration: Set compression level in migration tests
 
-Adds calls to set compression level for `zstd` and `zlib` migration
-tests, just to make sure that the calls work.
+queued, thanks!
 
-Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
----
- tests/qtest/migration-test.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 8a5bb1752e..f23e860547 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -2625,6 +2625,13 @@ static void *
- test_migrate_precopy_tcp_multifd_zlib_start(QTestState *from,
-                                             QTestState *to)
- {
-+    /*
-+     * Overloading this test to also check that set_parameter does not error.
-+     * This is also done in the tests for the other compression methods.
-+     */
-+    migrate_set_parameter_int(from, "multifd-zlib-level", 2);
-+    migrate_set_parameter_int(to, "multifd-zlib-level", 2);
-+
-     return test_migrate_precopy_tcp_multifd_start_common(from, to, "zlib");
- }
- 
-@@ -2633,6 +2640,9 @@ static void *
- test_migrate_precopy_tcp_multifd_zstd_start(QTestState *from,
-                                             QTestState *to)
- {
-+    migrate_set_parameter_int(from, "multifd-zstd-level", 2);
-+    migrate_set_parameter_int(to, "multifd-zstd-level", 2);
-+
-     return test_migrate_precopy_tcp_multifd_start_common(from, to, "zstd");
- }
- #endif /* CONFIG_ZSTD */
 -- 
-2.30.2
+Peter Xu
 
 
