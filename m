@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62281C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 09:42:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB50FC5478C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 09:44:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfzNo-0006k9-Ex; Fri, 01 Mar 2024 04:40:48 -0500
+	id 1rfzLx-0003Di-1A; Fri, 01 Mar 2024 04:38:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1rfzNf-0006Rg-4Y
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:40:44 -0500
+ id 1rfzLu-0003Bc-SE
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:38:50 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1rfzNR-0006mD-Rc
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:40:38 -0500
+ (envelope-from <gaosong@loongson.cn>) id 1rfzLr-0006Nc-Do
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:38:50 -0500
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Cx2ugoouFlZj0TAA--.29259S3;
- Fri, 01 Mar 2024 17:38:48 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxuvAjouFlQD0TAA--.48930S3;
+ Fri, 01 Mar 2024 17:38:43 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8AxDBMfouFlyZxLAA--.4871S17; 
- Fri, 01 Mar 2024 17:38:48 +0800 (CST)
+ AQAAf8AxDBMfouFlyZxLAA--.4871S5; 
+ Fri, 01 Mar 2024 17:38:42 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, richard.henderson@linaro.org, philmd@linaro.org,
  maobibo@loongson.cn, zhaotianrui@loongson.cn, lixianglai@loongson.cn,
  imammedo@redhat.com, anisinha@redhat.com, mst@redhat.com
-Subject: [PATCH v5 15/17] hw/loongarch: fdt remove unused irqchip node
-Date: Fri,  1 Mar 2024 17:38:36 +0800
-Message-Id: <20240301093839.663947-16-gaosong@loongson.cn>
+Subject: [PATCH v5 03/17] hw/loongarch: Add slave cpu boot_code
+Date: Fri,  1 Mar 2024 17:38:24 +0800
+Message-Id: <20240301093839.663947-4-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20240301093839.663947-1-gaosong@loongson.cn>
 References: <20240301093839.663947-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8AxDBMfouFlyZxLAA--.4871S17
+X-CM-TRANSID: AQAAf8AxDBMfouFlyZxLAA--.4871S5
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -68,58 +68,110 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- hw/loongarch/virt.c | 31 +------------------------------
- 1 file changed, 1 insertion(+), 30 deletions(-)
+ hw/loongarch/boot.c | 70 ++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 69 insertions(+), 1 deletion(-)
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index ea73a80628..e2185d7bb4 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -410,34 +410,6 @@ static void fdt_add_pcie_node(const LoongArchMachineState *lams,
-     g_free(nodename);
+diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+index 3075c276d4..2f398260af 100644
+--- a/hw/loongarch/boot.c
++++ b/hw/loongarch/boot.c
+@@ -14,6 +14,54 @@
+ #include "qemu/error-report.h"
+ #include "sysemu/reset.h"
+ 
++static const unsigned int slave_boot_code[] = {
++                  /* Configure reset ebase.         */
++    0x0400302c,   /* csrwr      $r12,0xc            */
++
++                  /* Disable interrupt.             */
++    0x0380100c,   /* ori        $r12,$r0,0x4        */
++    0x04000180,   /* csrxchg    $r0,$r12,0x0        */
++
++                  /* Clear mailbox.                 */
++    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
++    0x038081ad,   /* ori        $r13,$r13,0x20      */
++    0x06481da0,   /* iocsrwr.d  $r0,$r13            */
++
++                  /* Enable IPI interrupt.          */
++    0x1400002c,   /* lu12i.w    $r12,1(0x1)         */
++    0x0400118c,   /* csrxchg    $r12,$r12,0x4       */
++    0x02fffc0c,   /* addi.d     $r12,$r0,-1(0xfff)  */
++    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
++    0x038011ad,   /* ori        $r13,$r13,0x4       */
++    0x064819ac,   /* iocsrwr.w  $r12,$r13           */
++    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
++    0x038081ad,   /* ori        $r13,$r13,0x20      */
++
++                  /* Wait for wakeup  <.L11>:       */
++    0x06488000,   /* idle       0x0                 */
++    0x03400000,   /* andi       $r0,$r0,0x0         */
++    0x064809ac,   /* iocsrrd.w  $r12,$r13           */
++    0x43fff59f,   /* beqz       $r12,-12(0x7ffff4) # 48 <.L11> */
++
++                  /* Read and clear IPI interrupt.  */
++    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
++    0x064809ac,   /* iocsrrd.w  $r12,$r13           */
++    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
++    0x038031ad,   /* ori        $r13,$r13,0xc       */
++    0x064819ac,   /* iocsrwr.w  $r12,$r13           */
++
++                  /* Disable  IPI interrupt.        */
++    0x1400002c,   /* lu12i.w    $r12,1(0x1)         */
++    0x04001180,   /* csrxchg    $r0,$r12,0x4        */
++
++                  /* Read mail buf and jump to specified entry */
++    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
++    0x038081ad,   /* ori        $r13,$r13,0x20      */
++    0x06480dac,   /* iocsrrd.d  $r12,$r13           */
++    0x00150181,   /* move       $r1,$r12            */
++    0x4c000020,   /* jirl       $r0,$r1,0           */
++};
++
+ static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
+ {
+     return addr & MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
+@@ -110,8 +158,15 @@ static void loongarch_firmware_boot(LoongArchMachineState *lams,
+     fw_cfg_add_kernel_info(info, lams->fw_cfg);
  }
  
--static void fdt_add_irqchip_node(LoongArchMachineState *lams)
--{
--    MachineState *ms = MACHINE(lams);
--    char *nodename;
--    uint32_t irqchip_phandle;
--
--    irqchip_phandle = qemu_fdt_alloc_phandle(ms->fdt);
--    qemu_fdt_setprop_cell(ms->fdt, "/", "interrupt-parent", irqchip_phandle);
--
--    nodename = g_strdup_printf("/intc@%lx", VIRT_IOAPIC_REG_BASE);
--    qemu_fdt_add_subnode(ms->fdt, nodename);
--    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 3);
--    qemu_fdt_setprop(ms->fdt, nodename, "interrupt-controller", NULL, 0);
--    qemu_fdt_setprop_cell(ms->fdt, nodename, "#address-cells", 0x2);
--    qemu_fdt_setprop_cell(ms->fdt, nodename, "#size-cells", 0x2);
--    qemu_fdt_setprop(ms->fdt, nodename, "ranges", NULL, 0);
--
--    qemu_fdt_setprop_string(ms->fdt, nodename, "compatible",
--                            "loongarch,ls7a");
--
--    qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg",
--                                 2, VIRT_IOAPIC_REG_BASE,
--                                 2, PCH_PIC_ROUTE_ENTRY_OFFSET);
--
--    qemu_fdt_setprop_cell(ms->fdt, nodename, "phandle", irqchip_phandle);
--    g_free(nodename);
--}
--
- static void fdt_add_memory_node(MachineState *ms,
-                                 uint64_t base, uint64_t size, int node_id)
++static void init_boot_rom(struct loongarch_boot_info *info, void *p)
++{
++    memcpy(p, &slave_boot_code, sizeof(slave_boot_code));
++    p += sizeof(slave_boot_code);
++}
++
+ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
  {
-@@ -959,8 +931,7 @@ static void loongarch_init(MachineState *machine)
++    void  *p, *bp;
+     int64_t kernel_addr = 0;
+     LoongArchCPU *lacpu;
+     CPUState *cs;
+@@ -123,11 +178,24 @@ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
+         exit(1);
+     }
  
-     /* Initialize the IO interrupt subsystem */
-     loongarch_irq_init(lams);
--    fdt_add_irqchip_node(lams);
--    platform_bus_add_all_fdt_nodes(machine->fdt, "/intc",
-+    platform_bus_add_all_fdt_nodes(machine->fdt, "/platic",
-                                    VIRT_PLATFORM_BUS_BASEADDRESS,
-                                    VIRT_PLATFORM_BUS_SIZE,
-                                    VIRT_PLATFORM_BUS_IRQ);
++    /* Load 'boot_rom' at [0 - 1MiB] */
++    p = g_malloc0(1 * MiB);
++    bp = p;
++    init_boot_rom(info, p);
++    rom_add_blob_fixed("boot_rom", bp, 1 * MiB, 0);
++
+     CPU_FOREACH(cs) {
+         lacpu = LOONGARCH_CPU(cs);
+         lacpu->env.load_elf = true;
+-        lacpu->env.elf_address = kernel_addr;
++        if (cs == first_cpu) {
++            lacpu->env.elf_address = kernel_addr;
++        } else {
++            lacpu->env.elf_address = 0;
++        }
++        lacpu->env.boot_info = info;
+     }
++
++    g_free(bp);
+ }
+ 
+ void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
 -- 
 2.25.1
 
