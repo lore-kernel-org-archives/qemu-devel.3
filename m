@@ -4,75 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACA94C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 15:57:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6270BC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 16:15:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg5GD-0003bj-Os; Fri, 01 Mar 2024 10:57:21 -0500
+	id 1rg5WU-00086A-UK; Fri, 01 Mar 2024 11:14:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rg5GB-0003bG-Ul; Fri, 01 Mar 2024 10:57:20 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1rg5WM-00085Y-RZ
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 11:14:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rg5G9-00073V-VL; Fri, 01 Mar 2024 10:57:19 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6EAFC52309;
- Fri,  1 Mar 2024 18:57:46 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3C1F58D5CC;
- Fri,  1 Mar 2024 18:57:06 +0300 (MSK)
-Message-ID: <37256c80-5209-4e56-8bc2-28ee59ec42f1@tls.msk.ru>
-Date: Fri, 1 Mar 2024 18:57:06 +0300
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1rg5WK-0001UC-CF
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 11:14:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709309639;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QBP0TDDVdwAOEYm7nyivjARpTdtgcQHk6YZWbsGSFTQ=;
+ b=SAh4IcvZ7d5xgPdIFXWAFYlVB5wjU2kdJCRuBNlqQ6LiltwzIYcwLBqc4SErA9FlCJjAE8
+ I7STOQyx32IBUWegvOVkJ7k7JuaxnwMjcFYo3tlxS15DI1NbLG27S2dd6AamnrP1fgjLbl
+ 3tkzFtJGdGpOSq/4Osk4Rmy1ox9BpO8=
+Received: from mail-il1-f197.google.com (mail-il1-f197.google.com
+ [209.85.166.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-549-Zk7aXo5vOt2cd080ghFNEg-1; Fri, 01 Mar 2024 11:13:47 -0500
+X-MC-Unique: Zk7aXo5vOt2cd080ghFNEg-1
+Received: by mail-il1-f197.google.com with SMTP id
+ e9e14a558f8ab-365b4dc6c3eso23481345ab.2
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 08:13:47 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709309627; x=1709914427;
+ h=content-transfer-encoding:mime-version:organization:references
+ :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=QBP0TDDVdwAOEYm7nyivjARpTdtgcQHk6YZWbsGSFTQ=;
+ b=uwNMtzeLA+OmbCRg4OAVpqS3/zTkSYxX+6worJfvJ5NC/tTolA0R8az6EO4bwvP6Ra
+ F9LdLeUJUzhlKzLrEIkowDfDJB6qWOw4KHgAep8KstFsTKH0wjh/3MCWi4J101HE/9Oh
+ Xy5qXuhJDIhY5nmYU/xpImife8CIpHqTVmt/lTRoYxn6oIh0RaPwReKiStK0dr7eZbs3
+ hdeVSzeT3/jX2uLMHuCGRxvY2wmdt9LGTDsUpxNfnK1pIhOszFz1Q1vVZSml4Gi0tYA8
+ z9jwcXhgigqWnLhDr+xvsjzD/5Zf747UcpyaAx1Bt/qBZ4StP04mqV47SYh2dlcKS/f9
+ 56Eg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUSn+/3r5GcKjD9si1QHQBWYMNpsWxhe4lkfWmkdOOnD8YZhmrqKJBVbpTqpDBXRK8b9I175UHGh7DyeDgVH93144yfLx8=
+X-Gm-Message-State: AOJu0Yyf5GjZzwBVCyPyWgfOV77z2GmJKQhv6ezoUA3o+fZRSzMbC203
+ KDPv/Ws9VOjpQVKvOxYBR10KjjDYolfHu3C4bYxCl3NeeP6ybH8h6Vk4YvYUa+I+NNtMhQ2drbY
+ GeSG60sQ7zvbzrutp/mLb1RqqbrpwfiumnvNGkBBKIvVzrCjXQC7E
+X-Received: by 2002:a05:6e02:2181:b0:365:b570:cbbc with SMTP id
+ j1-20020a056e02218100b00365b570cbbcmr2581668ila.10.1709309626869; 
+ Fri, 01 Mar 2024 08:13:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH9uX5/Md2fe9UZFpy1tgV7qrUeYBxp1s1gBUh7csdub2rgfB44HeLcjKPqOAa1QQnOLHr23A==
+X-Received: by 2002:a05:6e02:2181:b0:365:b570:cbbc with SMTP id
+ j1-20020a056e02218100b00365b570cbbcmr2581648ila.10.1709309626618; 
+ Fri, 01 Mar 2024 08:13:46 -0800 (PST)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ p1-20020a92d681000000b003657c7530bcsm978325iln.16.2024.03.01.08.13.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 01 Mar 2024 08:13:46 -0800 (PST)
+Date: Fri, 1 Mar 2024 09:13:43 -0700
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Ankit Agrawal <ankita@nvidia.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@Huawei.com>, Markus Armbruster
+ <armbru@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>, "clg@redhat.com"
+ <clg@redhat.com>, "shannon.zhaosl@gmail.com" <shannon.zhaosl@gmail.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "ani@anisinha.ca"
+ <ani@anisinha.ca>, "berrange@redhat.com" <berrange@redhat.com>,
+ "eduardo@habkost.net" <eduardo@habkost.net>, "imammedo@redhat.com"
+ <imammedo@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
+ "eblake@redhat.com" <eblake@redhat.com>, "david@redhat.com"
+ <david@redhat.com>, "gshan@redhat.com" <gshan@redhat.com>, Zhi Wang
+ <zhiw@nvidia.com>, Matt Ochs <mochs@nvidia.com>, "pbonzini@redhat.com"
+ <pbonzini@redhat.com>, Aniket Agashe <aniketa@nvidia.com>, Neo Jia
+ <cjia@nvidia.com>, Kirti Wankhede <kwankhede@nvidia.com>, "Tarun Gupta
+ (SW-GPU)" <targupta@nvidia.com>, Vikram Sethi <vsethi@nvidia.com>, Andy
+ Currid <acurrid@nvidia.com>, Dheeraj Nigam <dnigam@nvidia.com>, Uday Dhoke
+ <udhoke@nvidia.com>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v7 1/2] qom: new object to associate device to numa node
+Message-ID: <20240301091343.2e69359c.alex.williamson@redhat.com>
+In-Reply-To: <SA1PR12MB71999E1863F1FD4C2505294DB05E2@SA1PR12MB7199.namprd12.prod.outlook.com>
+References: <20240223124223.800078-1-ankita@nvidia.com>
+ <20240223124223.800078-2-ankita@nvidia.com>
+ <8734td3uty.fsf@pond.sub.org> <20240228135504.00005d12@Huawei.com>
+ <87bk80vaft.fsf@pond.sub.org>
+ <SA1PR12MB7199F868F1C300B1E795CD39B0582@SA1PR12MB7199.namprd12.prod.outlook.com>
+ <20240229102230.00004277@Huawei.com>
+ <SA1PR12MB71993D9D99F4756C17CAE9DBB05F2@SA1PR12MB7199.namprd12.prod.outlook.com>
+ <20240229163232.0000478d@Huawei.com>
+ <SA1PR12MB71999E1863F1FD4C2505294DB05E2@SA1PR12MB7199.namprd12.prod.outlook.com>
+Organization: Red Hat
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] libqos/virtio.c: init all elems in
- qvring_indirect_desc_setup()
-Content-Language: en-US
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- thuth@redhat.com, lvivier@redhat.com, pbonzini@redhat.com
-References: <20240217192607.32565-1-dbarboza@ventanamicro.com>
- <20240217192607.32565-2-dbarboza@ventanamicro.com>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240217192607.32565-2-dbarboza@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=alex.williamson@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,66 +127,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-17.02.2024 22:26, Daniel Henrique Barboza:
+On Fri, 1 Mar 2024 08:33:42 +0000
+Ankit Agrawal <ankita@nvidia.com> wrote:
 
-> diff --git a/tests/qtest/libqos/virtio.c b/tests/qtest/libqos/virtio.c
-> index 410513225f..4f39124eba 100644
-> --- a/tests/qtest/libqos/virtio.c
-> +++ b/tests/qtest/libqos/virtio.c
-> @@ -280,14 +280,27 @@ QVRingIndirectDesc *qvring_indirect_desc_setup(QTestState *qs, QVirtioDevice *d,
->       indirect->elem = elem;
->       indirect->desc = guest_alloc(alloc, sizeof(struct vring_desc) * elem);
->   
-> -    for (i = 0; i < elem - 1; ++i) {
-> +    for (i = 0; i < elem; ++i) {
->           /* indirect->desc[i].addr */
->           qvirtio_writeq(d, qs, indirect->desc + (16 * i), 0);
-> -        /* indirect->desc[i].flags */
-> -        qvirtio_writew(d, qs, indirect->desc + (16 * i) + 12,
-> -                       VRING_DESC_F_NEXT);
-> -        /* indirect->desc[i].next */
-> -        qvirtio_writew(d, qs, indirect->desc + (16 * i) + 14, i + 1);
-> +
-> +        /*
-> +         * If it's not the last element of the ring, set
-> +         * the chain (VRING_DESC_F_NEXT) flag and
-> +         * desc->next. Clear the last element - there's
-> +         * no guarantee that guest_alloc() will do it.
-> +         */
-> +        if (i != elem - 1) {
-> +            /* indirect->desc[i].flags */
-> +            qvirtio_writew(d, qs, indirect->desc + (16 * i) + 12,
-> +                           VRING_DESC_F_NEXT);
-> +
-> +            /* indirect->desc[i].next */
-> +            qvirtio_writew(d, qs, indirect->desc + (16 * i) + 14, i + 1);
-> +        } else {
-> +            qvirtio_writew(d, qs, indirect->desc + (16 * i) + 12, 0);
-> +            qvirtio_writew(d, qs, indirect->desc + (16 * i) + 14, 0);
-> +        }
->       }
+> >> As for your suggestion of using acpi-dev as the arg to take both
+> >> pci-dev and acpi-dev.. Would that mean sending a pure pci device
+> >> (not the corner case you mentioned) through the acpi-dev argument
+> >> as well? Not sure if that would appropriate.  
+> >
+> > Ah, looking up my description is unclear. I meant two optional parameters
+> > pci-dev or acpi-dev - which one was supplied would indicate the type
+> > of handle to be used.  
+> 
+> Yes, that makes sense. But for now only have pci-dev until we have any
+> acpi-dev related code added? IIRC, this is what we discussed earlier.
 
-In my view it would be cleaner to add 2 extra function calls after this
-loop for the i==elem-1 case:
+Yep, I think we acknowledged that this device supports either PCI or
+ACPI devices and we only currently have a use case for PCI devices, so
+that's what's implemented and what the interface expects.  A separate
+ACPI device interface could be added later or derived from updating the
+interface to accept a generic device object.  Thanks,
 
-     for (i = 0; i < elem - 1; ++i) {
-         /* indirect->desc[i].addr */
-         qvirtio_writeq(d, qs, indirect->desc + (16 * i), 0);
-         /* indirect->desc[i].flags */
-         qvirtio_writew(d, qs, indirect->desc + (16 * i) + 12,
-                        VRING_DESC_F_NEXT);
-         /* indirect->desc[i].next */
-         qvirtio_writew(d, qs, indirect->desc + (16 * i) + 14, i + 1);
+Alex
 
-     }
-
-      /* clear last element */
-      qvirtio_writeq(d, qs, indirect->desc + (16 * i), 0);
-      qvirtio_writew(d, qs, indirect->desc + (16 * i) + 12, 0);
-      qvirtio_writew(d, qs, indirect->desc + (16 * i) + 14, 0);
-
-
-FWIW, -- it's too late to change it now I think.
-
-/mjt
 
