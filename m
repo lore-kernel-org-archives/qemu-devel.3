@@ -4,76 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C05DC5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 14:44:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CD08C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 14:53:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg47c-0002Zs-3s; Fri, 01 Mar 2024 09:44:24 -0500
+	id 1rg4FQ-0007ad-Hw; Fri, 01 Mar 2024 09:52:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rg47a-0002Zi-TJ
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 09:44:23 -0500
-Received: from forwardcorp1c.mail.yandex.net ([178.154.239.200])
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1rg4FO-0007Zs-96; Fri, 01 Mar 2024 09:52:26 -0500
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rg47X-0001YG-7L
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 09:44:22 -0500
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:9328:0:640:5832:0])
- by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id 80A95609E6;
- Fri,  1 Mar 2024 17:44:14 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:a531::1:29] (unknown
- [2a02:6b8:b081:a531::1:29])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id CicDUP3i7eA0-tE04pECW; Fri, 01 Mar 2024 17:44:13 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1709304253;
- bh=ZpEiX+/kodI5EkSuz59LFwbvSw6BmRysBKz7+YQWBic=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=lZwLxUtAd7ngu4I/bMyBsjnFMAtmjok0TMGsJAphtNzuyC/Yv3gLTskqrQIeeLo8i
- tA0pYcv2I74e2DX/KzT3Ujd+m+gm9RzpG0BO2vzRqQGkwFhRnVHZFowjVeooUM8hZI
- 8Y47NyDU1+fhOp02E+68Hm2UyG/ysraXQqZRLEpo=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <626d7918-b96c-48ba-8891-a0f519f2023b@yandex-team.ru>
-Date: Fri, 1 Mar 2024 17:44:12 +0300
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1rg4FL-000347-Iv; Fri, 01 Mar 2024 09:52:26 -0500
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 3666E48327;
+ Fri,  1 Mar 2024 15:52:20 +0100 (CET)
+Message-ID: <9bcdcdb7-162f-431a-8895-8717ffe39413@proxmox.com>
+Date: Fri, 1 Mar 2024 15:52:19 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/21] migration: Add Error** argument to .save_setup()
- handler
+Subject: Re: [RFC 0/4] mirror: implement incremental and bitmap modes
 Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Alex Williamson
- <alex.williamson@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Halil Pasic
- <pasic@linux.ibm.com>, Eric Blake <eblake@redhat.com>,
- John Snow <jsnow@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-References: <20240227180345.548960-1-clg@redhat.com>
- <20240227180345.548960-7-clg@redhat.com> <87zfvj3hnd.fsf@pond.sub.org>
- <86d70a2e-7250-440b-bcd6-7877fe3b3dba@yandex-team.ru>
- <bea4ca16-a2ea-4a06-bb8d-27b485d63cc1@redhat.com>
- <875xy7xv6t.fsf@pond.sub.org>
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <875xy7xv6t.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, armbru@redhat.com, eblake@redhat.com,
+ hreitz@redhat.com, kwolf@redhat.com, jsnow@redhat.com,
+ f.gruenbichler@proxmox.com, t.lamprecht@proxmox.com,
+ mahaocong@didichuxing.com
+References: <20240216105513.309901-1-f.ebner@proxmox.com>
+ <217803cb-fced-4dce-87f3-9892b2f97dce@yandex-team.ru>
+ <195fe8a5-02c2-4cc4-bc41-095f6477b676@proxmox.com>
+ <3fbf2b67-3213-4416-86e4-f6e4deb0a97b@yandex-team.ru>
+ <b3d0ee7a-e633-4719-bc52-2796b18acb32@proxmox.com>
+ <9f27c816-510f-4482-85c1-f3d1be44b758@yandex-team.ru>
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <9f27c816-510f-4482-85c1-f3d1be44b758@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,88 +65,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.02.24 16:21, Markus Armbruster wrote:
-> Thomas Huth <thuth@redhat.com> writes:
+Am 01.03.24 um 15:14 schrieb Vladimir Sementsov-Ogievskiy:
 > 
->> On 29/02/2024 08.20, Vladimir Sementsov-Ogievskiy wrote:
->>> On 29.02.24 09:32, Markus Armbruster wrote:
+> As we already understood, (block-)job-api needs some spring-cleaning.
+> Unfortunately I don't have much time on it, but still I decided to start
+> from finally depreacting block-job-* API and moving to job-*.. Probably
+> bitmap/bitmap-mode/sync APIs also need some optimization, keeping in
+> mind new block-dirty-bitmap-merge api.
 > 
-> [...]
+> So, what I could advice in this situation for newc interfaces:
 > 
->>>> Anti-pattern: fail without setting an error.  There might be more
->>>> elsewhere in the series.
->>>>
->>>> qapi/error.h's big comment:
->>>>
->>>>    * - On success, the function should not touch *errp.  On failure, it
->>>>    *   should set a new error, e.g. with error_setg(errp, ...), or
->>>>    *   propagate an existing one, e.g. with error_propagate(errp, ...).
->>>>    *
->>>>    * - Whenever practical, also return a value that indicates success /
->>>>    *   failure.  This can make the error checking more concise, and can
->>>>    *   avoid useless error object creation and destruction.  Note that
->>>>    *   we still have many functions returning void.  We recommend
->>>>    *   • bool-valued functions return true on success / false on failure,
->>>>    *   • pointer-valued functions return non-null / null pointer, and
->>>>    *   • integer-valued functions return non-negative / negative.
->>>>
->>>>          }
->>>>          qemu_put_be64(f, STATTR_FLAG_EOS);
->>>>          return 0;
->>>>      }
->>>>
->>>> When adding Error **errp to a function, you must also add code to set an
->>>> error on failure to every failure path.  Adding it in a later patch in
->>>> the same series can be okay,
->>>
->>> Personally, I'd prefer not doing so. Creating wrong commits and fixing them in same series - better to merge all fixes into bad commit:)
->>
->> I agree - that might create issues with bisecting later. Please fix it in this patch here already!
+> 1. be minimalistic
+> 2. add `x-` prefix when unsure
 > 
-> Depends on the wrongness, really.
-
-In my understanding, unset errp on failure path is wrong enough.
-
-For example, simple pattern
-
-Error *local_err = NULL;
-
-int ret = foo(&local_err);
-if (ret < 0) {
-     error_report_err(local_err);
-     return;
-}
-
-will just crash.
-
-When I write code, I expect that "errp is set" === "ret < 0", for all functions returning negative integer on failure.
-
-Also, we have enough code that relying on errp for failure checking:
-$ git grep 'if (local_err)' | wc -l
-373
-
-Of course, most of this should be checking failure of functions that return void, but who knows.
-
-> 
-> We don't want broken intermediate states, no argument.
-> 
-> But intermediate states that are merely unclean can be acceptable.
-> 
-> For instance, my commit a30ecde6e79 (net: Permit incremental conversion
-> of init functions to Error) added such Error ** parameters to a somewhat
-> tangled nest of functions, along with FIXME comments where errors
-> weren't set.  The next few commits fixed most, but not all of them.
-> Later commits fixed some more.  The one in tap-win32.c is still there
-> today.
-> 
-> This was acceptable, because it improved things from "bad error
-> reporting" to "okay error reporting in most cases, unclean and bad error
-> reporting in a few cases marked FIXME", with "a few" over time going
-> down to the one I can't test, and nobody else seems to care about.
+> So, following these two rules, what about x-bitmap field, which may be
+> combined only with 'full' mode, and do what you need?
 > 
 
--- 
-Best regards,
-Vladimir
+AFAIU, it should rather be marked as @unstable in QAPI [0]? Then it
+doesn't need to be renamed if it becomes stable later.
+
+> About documentation: actually, I never liked that we use for backup job
+> "MirrorSyncMode". Now it looks more like "BackupSyncMode", having two
+> values supported only by backup.
+> 
+> I'm also unsure how mode=full&bitmap=some_bitmap differs from
+> mode=bitmap&bitmap=some_bitmap..
+> 
+
+With the current patches, it was an error to specify @bitmap for other
+modes than 'incremental' and 'bitmap'.
+
+> So, I'd suggest simply rename MirrorSyncMode to BackupSyncMode, and add
+> separate MirrorSyncMode with only "full", "top" and "none" values.
+> 
+
+Sounds good to me!
+
+[0]:
+https://gitlab.com/qemu-project/qemu/-/commit/a3c45b3e62962f99338716b1347cfb0d427cea44
+
+Best Regards,
+Fiona
 
 
