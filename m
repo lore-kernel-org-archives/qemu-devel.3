@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A885DC5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 20:42:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60D1DC5478C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 20:42:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg9h5-0001yA-0t; Fri, 01 Mar 2024 15:41:23 -0500
+	id 1rg9h2-0001wO-Ah; Fri, 01 Mar 2024 15:41:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rg9h3-0001xP-U1
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 15:41:21 -0500
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ id 1rg9h1-0001o9-0I
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 15:41:19 -0500
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rg9h2-0006zL-CD
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 15:41:21 -0500
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-5d3907ff128so2378804a12.3
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 12:41:19 -0800 (PST)
+ id 1rg9gz-0006wm-AN
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 15:41:18 -0500
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-5c66b093b86so2958512a12.0
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 12:41:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709325678; x=1709930478; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709325675; x=1709930475; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GuRyEJUy3EeC0acSqgIfQ+cNnDkZek7t4EbMZ1kuVCY=;
- b=RwKdvFaqq+YtR1qtErSzsheNZ+g7f+aCRXaIinkm2fFzev/elFg03wwOIitDH9Hbh4
- mGGAffPIFtlgqoOXRTaA13amAK/qsVPk+3cZU+8OzbtoDd1oXsomnvXln+rBSvbsp+Ut
- l89hObcazN9Ak7VeDuEvRk5RGaAyp+7tvUWKZxLUpfO4Kyr9abtcSIgtqQlAGjxr2d01
- hCMXBh5l4Iazio3P2R0HiwAZfIm7p1ECn4J0fC5CwBCSlnLXmtMkD3ku3m767yoYu11C
- 7EGAw9lstkEc2lku8Hovq+Z/h8DldO+KuvwWO0CcNWh1i3V0QkOgVEYAcTHidA4z+fS7
- 5uBg==
+ bh=KxuLBWXx0IJuL3Uf7q7zzjCB6UIN8ow8n3bSMH4FIK0=;
+ b=vCQcxbCzb9IUDfgIJaUVxpiBWHdP6oUPwNrBihAGMHXywUU49zTpG38F5+Cq7CFkZl
+ 7J9Hy0l25G12FWSGODe5+wSr4LFr5nhQLxsn4/7F79PUclMKjuZG/GexJpH/Cs5l2nLD
+ 6NhVG+fhu69sgMDjnlPgWR+cj3ixqcEd1Vzxrezxgt8hJQ/PoCXGc2Z5GL+4whEiGLgU
+ 6Lqv/YqFWa7Zbc/9WKnDQKqxOpfM2QwgHzduiO7BaDX56odgncFVhiHBf3tHKqzmMJaq
+ 5ha0pcOJdk00vChV1b4M/6kLQgteyMWOuRGkB/vJZEWma3+dulB33BGRPadLWhH69U0Q
+ px9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709325678; x=1709930478;
+ d=1e100.net; s=20230601; t=1709325675; x=1709930475;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GuRyEJUy3EeC0acSqgIfQ+cNnDkZek7t4EbMZ1kuVCY=;
- b=uT8IPC5jxD3r02h5Fuo5bkRI1bv9t4nwXMF75NCBT9H/06PWNYpELgmWh3xfUyUkX0
- 1u3M2XYNcWko0OkVKKC3KIHWpTw3PT2pbpH+lQ+1X+JUA1lhE8bk1KDkM4HvXFdgRhmX
- uiDswsM30e5oUrNB3gOvEPOq3BtE7tpA+FO4e7SdRYdSEL3d0oTMf7j+SLlrtGZyb/0O
- I1889vp3TzvLl485hSqMGg6Oar+hr9tDRAiFmS6rR8df1+mJehsk2nU5lUYc1OPJqz6z
- 7I601A0cbsqTh+Gi318M0+JRUBZEBBpirKNjc1MVmFGxdyoRzl8Y1WLfGbpeautIiK4e
- x5rw==
-X-Gm-Message-State: AOJu0Yykf9odiDONtjHgO9stjG+FWSlO9iE5jmBJNcUtU60Dt9oMyb49
- MG20w6B9FX0raXedp/q3k61+TqG9WHAc0fg35910WegevNZEsh3p7ttCNszZDd6QL40gwrd40fq
- G
-X-Google-Smtp-Source: AGHT+IGoTSE9Rs891AoE7C9IOasHEX9Qog6m84fx/4WzyuXfkuZNBKIXyorFy90YrREK38RAcHKMrQ==
-X-Received: by 2002:a17:90a:990b:b0:29a:cb1d:7a37 with SMTP id
- b11-20020a17090a990b00b0029acb1d7a37mr2624088pjp.32.1709325678004; 
- Fri, 01 Mar 2024 12:41:18 -0800 (PST)
+ bh=KxuLBWXx0IJuL3Uf7q7zzjCB6UIN8ow8n3bSMH4FIK0=;
+ b=OQWlXFBwMu1Iq14cfGYkcdMvQS5fx6jzAWZlT5IP06wfB48vSKuse3Br/3iO6aNbhe
+ 0YvP2/UvuQXRr/jTFsV2c8EhzEt2GNIX7DHaMQGBN1Q5xv9IDd9gOGYgtuPM9rbIvBLp
+ wTGT6Ms7H5XFIXV4Xqbqg5XyOacFg4WZ1/U6cT2tm4tagZ77DpM3NyNhUTkfIMl/vWAA
+ AbYLLbpWkHe0f9gZm1wwZDAvpiI6baKcYfrrRgUtDAWKBo5QiLj49+9HFK/alCQvwic+
+ sIXv1s2aAZZXF/XjE99om+MPFD5YiC5z1W3kyr1IDo0Iv8+D+5lc6iD7Ilo3ifK0RVIO
+ bH6g==
+X-Gm-Message-State: AOJu0YwkcFe+s3bS9chbnN6wXMbpHNt0seHofGI3SAjf6CMw/vy4YYqC
+ obGgbGwRqgECid9v/Pdcz+nRXHgHDcwa2abUha244prUDvPzAD7EghTSz8SpF+Ert583WYYOfJ0
+ D
+X-Google-Smtp-Source: AGHT+IFjt518UjS1xlN8kWJTPyVg1gJMEfCWQH9UJamHZNlPA51TVw/NJwu0rkC6J16YKofIOXNnag==
+X-Received: by 2002:a17:90a:4087:b0:29b:9e1:2fb0 with SMTP id
+ l7-20020a17090a408700b0029b09e12fb0mr3841181pjg.0.1709325675031; 
+ Fri, 01 Mar 2024 12:41:15 -0800 (PST)
 Received: from stoup.. (098-147-055-211.res.spectrum.com. [98.147.55.211])
  by smtp.gmail.com with ESMTPSA id
- l3-20020a17090ac58300b0029b2e00359esm681947pjt.36.2024.03.01.12.41.16
+ l3-20020a17090ac58300b0029b2e00359esm681947pjt.36.2024.03.01.12.41.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Mar 2024 12:41:17 -0800 (PST)
+ Fri, 01 Mar 2024 12:41:14 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 3/6] accel/tcg: Add tlb_fill_flags to CPUTLBEntryFull
-Date: Fri,  1 Mar 2024 10:41:07 -1000
-Message-Id: <20240301204110.656742-4-richard.henderson@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v3 1/6] target/arm: Support 32-byte alignment in pow2_align
+Date: Fri,  1 Mar 2024 10:41:05 -1000
+Message-Id: <20240301204110.656742-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240301204110.656742-1-richard.henderson@linaro.org>
 References: <20240301204110.656742-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,80 +97,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow the target to set tlb flags to apply to all of the
-comparators.  Remove MemTxAttrs.byte_swap, as the bit is
-not relevant to memory transactions, only the page mapping.
-Adjust target/sparc to set TLB_BSWAP directly.
+Now that we have removed TARGET_PAGE_BITS_MIN-6 from
+TLB_FLAGS_MASK, we can test for 32-byte alignment.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/memattrs.h   | 2 --
- include/hw/core/cpu.h     | 3 +++
- accel/tcg/cputlb.c        | 5 +----
- target/sparc/mmu_helper.c | 2 +-
- 4 files changed, 5 insertions(+), 7 deletions(-)
+ target/arm/tcg/translate.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
-index afa885f983..14cdd8d582 100644
---- a/include/exec/memattrs.h
-+++ b/include/exec/memattrs.h
-@@ -52,8 +52,6 @@ typedef struct MemTxAttrs {
-     unsigned int memory:1;
-     /* Requester ID (for MSI for example) */
-     unsigned int requester_id:16;
--    /* Invert endianness for this page */
--    unsigned int byte_swap:1;
- } MemTxAttrs;
- 
- /* Bus masters which don't specify any attributes will get this,
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index af1a29526d..4c2fddc85b 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -230,6 +230,9 @@ typedef struct CPUTLBEntryFull {
-     /* @lg_page_size contains the log2 of the page size. */
-     uint8_t lg_page_size;
- 
-+    /* Additional tlb flags requested by tlb_fill. */
-+    uint8_t tlb_fill_flags;
-+
-     /*
-      * Additional tlb flags for use by the slow path. If non-zero,
-      * the corresponding CPUTLBEntry comparator must have TLB_FORCE_SLOW.
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 047cd2cc0a..72d6a09616 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -1145,14 +1145,11 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
-               " prot=%x idx=%d\n",
-               addr, full->phys_addr, prot, mmu_idx);
- 
--    read_flags = 0;
-+    read_flags = full->tlb_fill_flags;
-     if (full->lg_page_size < TARGET_PAGE_BITS) {
-         /* Repeat the MMU check and TLB fill on every access.  */
-         read_flags |= TLB_INVALID_MASK;
-     }
--    if (full->attrs.byte_swap) {
--        read_flags |= TLB_BSWAP;
--    }
- 
-     is_ram = memory_region_is_ram(section->mr);
-     is_romd = memory_region_is_romd(section->mr);
-diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
-index 5170a668bb..e7b1997d54 100644
---- a/target/sparc/mmu_helper.c
-+++ b/target/sparc/mmu_helper.c
-@@ -580,7 +580,7 @@ static int get_physical_address_data(CPUSPARCState *env, CPUTLBEntryFull *full,
-             int do_fault = 0;
- 
-             if (TTE_IS_IE(env->dtlb[i].tte)) {
--                full->attrs.byte_swap = true;
-+                full->tlb_fill_flags |= TLB_BSWAP;
-             }
- 
-             /* access ok? */
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index f947c62c6b..c8a2470675 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -900,13 +900,7 @@ static inline void store_reg_from_load(DisasContext *s, int reg, TCGv_i32 var)
+ MemOp pow2_align(unsigned i)
+ {
+     static const MemOp mop_align[] = {
+-        0, MO_ALIGN_2, MO_ALIGN_4, MO_ALIGN_8, MO_ALIGN_16,
+-        /*
+-         * FIXME: TARGET_PAGE_BITS_MIN affects TLB_FLAGS_MASK such
+-         * that 256-bit alignment (MO_ALIGN_32) cannot be supported:
+-         * see get_alignment_bits(). Enforce only 128-bit alignment for now.
+-         */
+-        MO_ALIGN_16
++        0, MO_ALIGN_2, MO_ALIGN_4, MO_ALIGN_8, MO_ALIGN_16, MO_ALIGN_32
+     };
+     g_assert(i < ARRAY_SIZE(mop_align));
+     return mop_align[i];
 -- 
 2.34.1
 
