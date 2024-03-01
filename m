@@ -4,85 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6433C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 13:28:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AACBC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 13:34:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg2vx-000432-Ik; Fri, 01 Mar 2024 08:28:17 -0500
+	id 1rg31X-0006tX-IK; Fri, 01 Mar 2024 08:34:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rg2vv-00042c-CF
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 08:28:15 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rg31I-0006qj-Rq
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 08:33:53 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rg2vp-0001rW-0x
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 08:28:10 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-33d61e39912so975328f8f.3
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 05:28:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709299687; x=1709904487; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Ot6A01TALzRH28+8v0Lc0tfI+Kp3y1CjK9jVOQwUyko=;
- b=oznwGDLznSvcgliQ2ylnNtFFIjMuVgnUBL+IllvkZ+r3tHtKM93UBeRs1AN2bBWVaB
- 0knaLj+4iXRhWL69xrifERsdFbCXRSUKEFcWxXcoQxNN/zcfSzPtSMhd0IxR0oTiNhZ5
- xcDqn1Qm2ane/M/jgjQg9uR/r7+LM2/01PHXUr/Qf31SlN9B4W3bASZuPi5L5wSBHGrg
- d/nBGX3sHMUuyLTILtMWiH37b+ikshBOXGOxYmJ5WomFPRgqdZ+gW8iSLnU3S3buF/Sh
- wQflygpQrJeQF4DXnAO3UQOCJBbo3YeTuI2zbhuEOuCYhW0J/8csuUZlovtPa8KeNI3e
- lP9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709299687; x=1709904487;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ot6A01TALzRH28+8v0Lc0tfI+Kp3y1CjK9jVOQwUyko=;
- b=VshDC02UPYxhgzOhWBEVqPlro5MINIo79oNQcnNqong876+EGCHxIuZkxhwubZM5bx
- 6K7kjbq9EiVJ42eZIrWZjdQV/yvtLAenR/0gfjCjQvvGB+QNASmwDf5y21XtabWwpCnd
- 7NPjDyniU365W9hf1ZsjBX09xybO9E36etWD1Putczb9UiV10STBTPHGQ+OXtms7RnRo
- lIUboITLiQHCxTWAOtg4FQOWMVF/UE/VPlJKUQXqbFY/nuHFZw7Nndn5hpi4EWVHy7qe
- Uj8CxpHm7NF1Q8EOfbNIsY4UzK4Xm3Anfa3IVbbraJGgyqPg45f8Sp74o+Zn26gvQwqF
- 97MQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXPGQdhQ2bXkUh7W4uNs+x0uGBwN3n6PeEIznie3Dc4Z3nl1ykv1utHiwSvc+XQp2tDSMk6luoQDr4NeiINf8ZnBWiuatI=
-X-Gm-Message-State: AOJu0Ywgf1JP3mvnw9dbmRxr+R/sKZ+iNJhAf9C1vwL1DnbC9BmrmbXp
- MZw4jy9GBZBcP0pm4U9TpegHAhVgTwMVZDMYdqF8P11pfMbdY2QCU/+2XmNoamIO3YlOJWt4gPl
- cXPY=
-X-Google-Smtp-Source: AGHT+IHeOZfZXhp1xehBDh1pkZmAyxG7WpBYJR4shauE9rqrDr20sBpWZDVD1NwJNc7TXOGKcS2t4A==
-X-Received: by 2002:adf:e902:0:b0:33d:f1e5:7b5b with SMTP id
- f2-20020adfe902000000b0033df1e57b5bmr1248428wrm.59.1709299686713; 
- Fri, 01 Mar 2024 05:28:06 -0800 (PST)
-Received: from [192.168.128.175] (232.red-88-28-18.dynamicip.rima-tde.net.
- [88.28.18.232]) by smtp.gmail.com with ESMTPSA id
- ay1-20020a5d6f01000000b0033e22a7b3f8sm871079wrb.75.2024.03.01.05.28.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 01 Mar 2024 05:28:06 -0800 (PST)
-Message-ID: <168d29d9-b82e-4dd5-abdd-93759037033c@linaro.org>
-Date: Fri, 1 Mar 2024 14:28:02 +0100
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rg31G-0002qi-F7
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 08:33:48 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 5D2F033A1F;
+ Fri,  1 Mar 2024 13:33:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1709300024; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AfgIQZjsIfzz4q9OvXplBpCPvzo/38NCSh3z7Cel8tQ=;
+ b=hJoXHRrDKFULR9tTwsnAKDEg8SGQ+mlvre/Xl09ra7gJ0jPAMWmcky7FsKaKdROaF32+Kq
+ KU9L7wtVLLnk7ybHNpA4v+pb0ZZojEZKEdeMFHwMS36fxhIJmOAJJScTqrzibYQHu+Xm3K
+ KNhu4FlZwIiwCExXi/EEaE63N6ndhnY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1709300024;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AfgIQZjsIfzz4q9OvXplBpCPvzo/38NCSh3z7Cel8tQ=;
+ b=CE1gC2kr5WOlbgZR06fy3SKGUwJ/SsYWAWWpwwa1pbCHlqXH5uUKz4CmWh11RC6d5DS059
+ ELPP6/L6zGepOPAg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1709300024; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AfgIQZjsIfzz4q9OvXplBpCPvzo/38NCSh3z7Cel8tQ=;
+ b=hJoXHRrDKFULR9tTwsnAKDEg8SGQ+mlvre/Xl09ra7gJ0jPAMWmcky7FsKaKdROaF32+Kq
+ KU9L7wtVLLnk7ybHNpA4v+pb0ZZojEZKEdeMFHwMS36fxhIJmOAJJScTqrzibYQHu+Xm3K
+ KNhu4FlZwIiwCExXi/EEaE63N6ndhnY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1709300024;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AfgIQZjsIfzz4q9OvXplBpCPvzo/38NCSh3z7Cel8tQ=;
+ b=CE1gC2kr5WOlbgZR06fy3SKGUwJ/SsYWAWWpwwa1pbCHlqXH5uUKz4CmWh11RC6d5DS059
+ ELPP6/L6zGepOPAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D9FFC13A80;
+ Fri,  1 Mar 2024 13:33:43 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 15FmJzfZ4WXRXQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 01 Mar 2024 13:33:43 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Het Gala <het.gala@nutanix.com>, qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com, thuth@redhat.com, lvivier@redhat.com,
+ pbonzini@redhat.com, peterx@redhat.com
+Subject: Re: [PATCH v2 1/3] qtest: migration: Enhance qtest migration
+ functions to support 'channels' argument
+In-Reply-To: <584cc08c-7847-401c-aa4a-516427ae1c4d@nutanix.com>
+References: <20240223152517.7834-1-het.gala@nutanix.com>
+ <20240223152517.7834-2-het.gala@nutanix.com> <87zfvr7xdn.fsf@suse.de>
+ <1988bb0f-6ebe-4335-b761-d11313c772fd@nutanix.com>
+ <87bk83bcqj.fsf@suse.de>
+ <32687fa3-78dc-457b-ae50-854d2c72c922@nutanix.com>
+ <894b5da4-0af1-4ca0-b8a7-da288bb20774@nutanix.com>
+ <87o7c0rruo.fsf@suse.de>
+ <0bf519e8-3bd2-4074-bc77-29d30a7af110@nutanix.com>
+ <584cc08c-7847-401c-aa4a-516427ae1c4d@nutanix.com>
+Date: Fri, 01 Mar 2024 10:33:41 -0300
+Message-ID: <878r32vzyi.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 1/1] loongarch: Change the UEFI loading mode to loongarch
-Content-Language: en-US
-To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Xianglai Li <lixianglai@loongson.cn>,
- Andrea Bolognani <abologna@redhat.com>, maobibo@loongson.cn,
- zhaotianrui@loongson.cn
-References: <20240229113842.619738-1-gaosong@loongson.cn>
- <20240229113842.619738-2-gaosong@loongson.cn>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240229113842.619738-2-gaosong@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Authentication-Results: smtp-out1.suse.de;
+	none
+X-Spamd-Result: default: False [-1.30 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-0.00)[29.77%];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-0.994]; RCPT_COUNT_SEVEN(0.00)[7];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,43 +126,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/2/24 12:38, Song Gao wrote:
-> From: Xianglai Li <lixianglai@loongson.cn>
-> 
-> The UEFI loading mode in loongarch is very different
-> from that in other architectures:loongarch's UEFI code
-> is in rom, while other architectures' UEFI code is in flash.
-> 
-> loongarch UEFI can be loaded as follows:
-> -machine virt,pflash=pflash0-format
-> -bios ./QEMU_EFI.fd
-> 
-> Other architectures load UEFI using the following methods:
-> -machine virt,pflash0=pflash0-format,pflash1=pflash1-format
-> 
-> loongarch's UEFI loading method makes qemu and libvirt incompatible
-> when using NVRAM, and the cost of loongarch's current loading method
-> far outweighs the benefits, so we decided to use the same UEFI loading
-> scheme as other architectures.
+Het Gala <het.gala@nutanix.com> writes:
 
-FYI I'm still trying to find a way to avoid that, planning to discuss
-more with libvirt folks. Well, maybe it is a waste of my time and I
-should just stop worrying / caring about this long standing issue.
+> On 01/03/24 2:19 pm, Het Gala wrote:
+>>
+>> On 29/02/24 6:47 am, Fabiano Rosas wrote:
+>>> Het Gala <het.gala@nutanix.com> writes:
+>>>
+>>>> On 27/02/24 1:04 am, Het Gala wrote:
+>>>>>
+>>>>> On 26/02/24 6:31 pm, Fabiano Rosas wrote:
+>>>>>> Het Gala<het.gala@nutanix.com>=C2=A0 writes:
+>>>>>>
+>>>>>>> On 24/02/24 1:42 am, Fabiano Rosas wrote:
+>>>>>>> this was the same first approach that I attempted. It won't work=20
+>>>>>>> because
+>>>>>>>
+>>>>>>> The final 'migrate' QAPI with channels string would look like
+>>>>>>>
+> [...]
+>>> I'm not sure what you tried. This works:
+>>>
+>>> =C2=A0=C2=A0=C2=A0=C2=A0 g_assert(!qdict_haskey(args, "channels"));
+>>> =C2=A0=C2=A0=C2=A0=C2=A0 if (channels) {
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 channels_obj =3D qobje=
+ct_from_json(channels, errp);
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qdict_put_obj(args, "c=
+hannels", channels_obj);
+>>> =C2=A0=C2=A0=C2=A0=C2=A0 }
+>>
+>> Are you sure the above works ?
+>
+> Sorry, please ignore the below doubt. I understood what silly mistakes I=
+=20
+> was doing. you were right, qobject_from_json() works fine and converts=20
+> string to json object.
+>
+> Will follow your latest reply and send out the patch really soon. Thank=20
+> you for unblocking me here quickly :)
 
-> Cc: Andrea Bolognani <abologna@redhat.com>
-> Cc: maobibo@loongson.cn
-> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Cc: Song Gao <gaosong@loongson.cn>
-> Cc: zhaotianrui@loongson.cn
-> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-> Tested-by: Andrea Bolognani <abologna@redhat.com>
-> Reviewed-by: Song Gao <gaosong@loongson.cn>
-> Message-Id: <0bd892aa9b88e0f4cc904cb70efd0251fc1cde29.1708336919.git.lixianglai@loongson.cn>
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->   hw/loongarch/acpi-build.c   |  29 +++++++++--
->   hw/loongarch/virt.c         | 101 ++++++++++++++++++++++++++----------
->   include/hw/loongarch/virt.h |  10 ++--
->   3 files changed, 107 insertions(+), 33 deletions(-)
-
+Just please don't make it all one patch. Each of those steps could be a
+separate patch.
 
