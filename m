@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BF00C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 20:42:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B016AC54E4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 20:42:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg9h3-0001ws-1Y; Fri, 01 Mar 2024 15:41:21 -0500
+	id 1rg9h9-00021b-PB; Fri, 01 Mar 2024 15:41:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rg9h1-0001qX-EQ
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 15:41:19 -0500
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ id 1rg9h8-0001zi-8j
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 15:41:26 -0500
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rg9gz-0006yd-TH
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 15:41:19 -0500
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-5dcc4076c13so2132115a12.0
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 12:41:17 -0800 (PST)
+ id 1rg9h5-000705-KQ
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 15:41:25 -0500
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-29abd02d0d9so1926710a91.0
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 12:41:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709325676; x=1709930476; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709325682; x=1709930482; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uSxGM8jSCUAKauTODiPxOuZGF0sA3+vBxABkPlr2Gc8=;
- b=D1BRQr5+QOiLN5I/UNqsClGgT9yMul/wBvtZjIzhW2PVKAYZ/qQYsah8/BaCgxbIKE
- uAmPIXurda3IPYXJZBJqbWmO4a6vjuci3bC2bSn2xoshmqJfpwfuw+QncMajf6cI+fyh
- 44um+pZleU8t1MfcYklp9uageSBIv38CMOP4YHPyXuc7t9ByaP6sWJdkCbT1AKMQfolN
- B7YKvr7rqbwv2h2p9fP12Fe0md29lwih806dg7RZmwCaEI5IkSdvzWyqWadZisP84hP1
- rzst2e9Ov7ibL6mqWWvVNFoidd+DoH2zkbAwljGiXw0Zo+Tb5h5h8XLOTLL/5Gtga5/0
- eXEg==
+ bh=TxofW6bNC8fGOO2v/wfoJQ/7dw6hp4z2OqJzWySAJjk=;
+ b=CdcT8qGonIpTT6BsZgxe2USZBV5JQwyWBy/Ptj7UCpLUuz/SsLNBnDf8ZDKjcgah2N
+ MibYlncFyi/4v9y6FDm/o+zkjvFEgdnDsYjECbRYx5/jk/xbwPjjMa7UScGDI4p+DPUm
+ nXLTHxKhurxsZsvtV/qfb5AdSL7P4OyprG4MrriIIqy/5LjjGcnASJSZsKRbwQXOSuCv
+ lytpVxjrfxkIkNDkvxRFgdEr+XQPN0G89c/1tWI9hPjVzmrpQAHGZKUnrIdH1uYQA0dB
+ n01sHmiJd+4WtWs9hIMt9J+mFGozTkidWVdfNVsyArNqI8uMDbyn9siVQG5BYAAlg75O
+ xH+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709325676; x=1709930476;
+ d=1e100.net; s=20230601; t=1709325682; x=1709930482;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uSxGM8jSCUAKauTODiPxOuZGF0sA3+vBxABkPlr2Gc8=;
- b=Q3MVwH8D8DroOFkrlz05oywV2Pvpsaq4v3Z69Xp+Hm+3OpvJRZQRqgK/GYZS4m6pmZ
- zOTqJADfMJeijUq2hXzftDeZLtvc5Y+DOgtEXTayRUGMAZJpcLU/z3DVVqIEre38Raqy
- 0LKbpHNJiT1yqD3Tx4y7N60KtKOxEdO7Aho73VgCh71KRsNTBcDD1nct5JSCyVPeAE2E
- 4VZ2QT1Fc7t/9iF+erQaz7djQ68/vUOTyoEjpYbcucjTwVEvYyP8P0cnBMt4SPblMyed
- MpquvrEEpWZul/AR9gBHY8esmELmhpt09s166WnkjnhUMfAPXJKvuqbU/F/F8CpTJtI3
- 6b5Q==
-X-Gm-Message-State: AOJu0Ywjbhj4Z2U+QxSzWlnJlbuOJq2EBsJwTQ/9KuNvUcOGVQNNTiKq
- 9y7AYeuQA862r9lEPNijulJ4qzkX3Eu0hiWOa0Rp6qJIYGbtzm09bESDr+CskF+eDxyeliThP8N
- M
-X-Google-Smtp-Source: AGHT+IEzdqGd8SqXPjUZ5yakxxH+7zIKAHvLTYU8dF8CKF+yEotgHayXy2xv9Jh1JCkZ/T+077zJmA==
-X-Received: by 2002:a17:90a:b96:b0:29a:f150:aeed with SMTP id
- 22-20020a17090a0b9600b0029af150aeedmr4650938pjr.19.1709325676472; 
- Fri, 01 Mar 2024 12:41:16 -0800 (PST)
+ bh=TxofW6bNC8fGOO2v/wfoJQ/7dw6hp4z2OqJzWySAJjk=;
+ b=p3Zt4SA0kn4dELfE5yTJBEWn6GXFgF86Aqw/i2wNyPXJCSiDNZAQhJdc/gkOoPO94s
+ 7X6nH4hOw8wJ2lNzG0U5vVuuXEFIk7iDDymDvb+y1JX8wJjckKRrNcW6zGpCyBiVYlL1
+ m77ySEu72YBXTPZsSN47mNJ1lEMjFGOQCpS2anCApSU2mVhPgFK40+00D20R4YfFHWFx
+ 9g/QhdxTOPo18L/lVI7GFcgt+CoBvpMvFEzlGWqLFMwO+WB1Jva4ERMuwy0K4Iv6FnK6
+ HX4eM6nHYsm/sfyB6P5PF3GFZggHtCKz60KfOK72qSh8/CBu9wK3U0jaCVz1VSOkFSKM
+ A6oQ==
+X-Gm-Message-State: AOJu0YwBvVJQuJGfD3vrKP4eKLDldXK6zraHzSlJUiJAqUtUCsHk1LJh
+ p2Vu6Jc02Agu2ABusxuGXEsmaOkf+Yk6A2u06SlSiBWcF9zMk+v2Baf1bKiz1CZh4OEt9H+rHUp
+ 5
+X-Google-Smtp-Source: AGHT+IFNvNmwyWmQmn+FpdkfmWoQvf4px2mQhOqUVg6KSRMQrrWNCtTL4ucKsYbxyYfeAP/902q0Rw==
+X-Received: by 2002:a17:90a:d718:b0:29b:1699:f5dc with SMTP id
+ y24-20020a17090ad71800b0029b1699f5dcmr2822868pju.9.1709325682044; 
+ Fri, 01 Mar 2024 12:41:22 -0800 (PST)
 Received: from stoup.. (098-147-055-211.res.spectrum.com. [98.147.55.211])
  by smtp.gmail.com with ESMTPSA id
- l3-20020a17090ac58300b0029b2e00359esm681947pjt.36.2024.03.01.12.41.15
+ l3-20020a17090ac58300b0029b2e00359esm681947pjt.36.2024.03.01.12.41.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Mar 2024 12:41:16 -0800 (PST)
+ Fri, 01 Mar 2024 12:41:21 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 2/6] exec/memattrs: Remove target_tlb_bit*
-Date: Fri,  1 Mar 2024 10:41:06 -1000
-Message-Id: <20240301204110.656742-3-richard.henderson@linaro.org>
+Cc: qemu-arm@nongnu.org
+Subject: [PATCH v3 6/6] target/arm: Do memory type alignment check when
+ translation enabled
+Date: Fri,  1 Mar 2024 10:41:10 -1000
+Message-Id: <20240301204110.656742-7-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240301204110.656742-1-richard.henderson@linaro.org>
 References: <20240301204110.656742-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,37 +95,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These fields are no longer used since 937f224559.
-Target specific extensions to the page tables should be done
-with TARGET_PAGE_ENTRY_EXTRA.
+If translation is enabled, and the PTE memory type is Device,
+enable checking alignment via TLB_CHECK_ALIGNMENT.  While the
+check is done later than it should be per the ARM, it's better
+than not performing the check at all.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/memattrs.h | 10 ----------
- 1 file changed, 10 deletions(-)
+ target/arm/ptw.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
-index d04170aa27..afa885f983 100644
---- a/include/exec/memattrs.h
-+++ b/include/exec/memattrs.h
-@@ -54,16 +54,6 @@ typedef struct MemTxAttrs {
-     unsigned int requester_id:16;
-     /* Invert endianness for this page */
-     unsigned int byte_swap:1;
--    /*
--     * The following are target-specific page-table bits.  These are not
--     * related to actual memory transactions at all.  However, this structure
--     * is part of the tlb_fill interface, cached in the cputlb structure,
--     * and has unused bits.  These fields will be read by target-specific
--     * helpers using env->iotlb[mmu_idx][tlb_index()].attrs.target_tlb_bitN.
--     */
--    unsigned int target_tlb_bit0 : 1;
--    unsigned int target_tlb_bit1 : 1;
--    unsigned int target_tlb_bit2 : 1;
- } MemTxAttrs;
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index ba1a27ca2b..fc2f226411 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -471,6 +471,16 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
+     return false;
+ }
  
- /* Bus masters which don't specify any attributes will get this,
++static bool S1_attrs_are_device(uint8_t attrs)
++{
++    /*
++     * This slightly under-decodes the MAIR_ELx field:
++     * 0b0000dd01 is Device with FEAT_XS, otherwise UNPREDICTABLE;
++     * 0b0000dd1x is UNPREDICTABLE.
++     */
++    return (attrs & 0xf0) == 0;
++}
++
+ static bool S2_attrs_are_device(uint64_t hcr, uint8_t attrs)
+ {
+     /*
+@@ -1684,6 +1694,7 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+     bool aarch64 = arm_el_is_aa64(env, el);
+     uint64_t descriptor, new_descriptor;
+     ARMSecuritySpace out_space;
++    bool device;
+ 
+     /* TODO: This code does not support shareability levels. */
+     if (aarch64) {
+@@ -2106,6 +2117,12 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+     if (regime_is_stage2(mmu_idx)) {
+         result->cacheattrs.is_s2_format = true;
+         result->cacheattrs.attrs = extract32(attrs, 2, 4);
++        /*
++         * Security state does not really affect HCR_EL2.FWB;
++         * we only need to filter FWB for aa32 or other FEAT.
++         */
++        device = S2_attrs_are_device(arm_hcr_el2_eff(env),
++                                     result->cacheattrs.attrs);
+     } else {
+         /* Index into MAIR registers for cache attributes */
+         uint8_t attrindx = extract32(attrs, 2, 3);
+@@ -2118,6 +2135,21 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+         if (aarch64 && cpu_isar_feature(aa64_bti, cpu)) {
+             result->f.extra.arm.guarded = extract64(attrs, 50, 1); /* GP */
+         }
++        device = S1_attrs_are_device(result->cacheattrs.attrs);
++    }
++
++    /*
++     * Enable alignment checks on Device memory.
++     *
++     * Per R_XCHFJ, this check is mis-ordered, in that this alignment check
++     * should have priority 30, while the permission check should be next at
++     * priority 31 and stage2 translation faults come after that.
++     * Due to the way the TCG softmmu TLB operates, we will have implicitly
++     * done the permission check and the stage2 lookup in finding the TLB
++     * entry, so the alignment check cannot be done sooner.
++     */
++    if (device) {
++        result->f.tlb_fill_flags |= TLB_CHECK_ALIGNED;
+     }
+ 
+     /*
 -- 
 2.34.1
 
