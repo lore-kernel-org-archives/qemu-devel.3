@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F436C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 17:30:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 093C7C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 17:30:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg6h3-0003o4-VE; Fri, 01 Mar 2024 12:29:09 -0500
+	id 1rg6h3-0003nV-2q; Fri, 01 Mar 2024 12:29:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1rg6h1-0003mX-Tp
+ id 1rg6h1-0003mW-S2
  for qemu-devel@nongnu.org; Fri, 01 Mar 2024 12:29:07 -0500
 Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1rg6gx-0005d0-VY
+ id 1rg6gx-0005d5-V8
  for qemu-devel@nongnu.org; Fri, 01 Mar 2024 12:29:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=virtuozzo.com; s=relay; h=MIME-Version:Message-Id:Date:Subject:From:
- Content-Type; bh=GsygPxWNyTKxxDZM8oS5g4+qWI+r/5+qm83ovsg8YcM=; b=qZeClQaVu4KL
- /XYUTeYpkEmQOhqbNwikPzp0shBV1SVLeSVjebVK5J1TDycMix3esvJDPZ4RYsKo2FTFlKtYNI8Uf
- OB9TOpDSJoVVxFXaka5sUHqK1dyRmBEymLAqC7NZUUVGqHG483r96jmOxf/ccYElQWWWPVlDngiO3
- WWt6TCdg+L9yMy4AFDfQftC1Cn0bGMGzumfcPHSceM2X7gvMX+yN1rm29+B5nXO4r8vFTtWT9lb11
- r1RMKHClbi5WpC50IGnnDM8v3+Qd5TKQHkPa6CpkRH6CSBuNYvToDHdVSUykpYjJ6/ATZiZkZQvfG
- oUUPFZlhg/2X3CFmK9pR6g==;
+ Content-Type; bh=2f25Xvl+7dbrNkTuSEg5zBbFIGFCzRZwAf4Oxr9ZJTI=; b=ovAhIKoyg+dk
+ bhAE+6Bb77yCDhO1oYviek+BqPMWw72Ztk501L2ZHLfX1Z5EGIsihNXTeq177aaZbKhXdRg8GnIfP
+ nNSnMXrFVkTIHySD48e9Fg/XOCh0Z+DcgdHHvg1HrvXV5UW1QLu8QzTmasHXox7rwsS9Skj9YtmKR
+ AbElJ81K+w8qASPeG0oYb/ze5NuBlFkWITfrmQBoXbEIws5nvoot9QPz3AjOSGmdg0kP7EdApnuzT
+ wkSb6/Mr2Tek+Mch2R67WFP+CVGo8eo81Jt46GMP/Ghi1aciijXC0Iy2pKJx/vWdjUJT3cWIT+p0G
+ aFarcIPHsEbdACeQBDDVFg==;
 Received: from [130.117.225.1] (helo=dev005.ch-qa.vzint.dev)
  by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1rg6fM-0022sZ-0m;
+ (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1rg6fM-0022sZ-1J;
  Fri, 01 Mar 2024 18:28:57 +0100
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 To: qemu-devel@nongnu.org
 Cc: michael.roth@amd.com, kkostiuk@redhat.com, marcandre.lureau@redhat.com,
  philmd@linaro.org, andrey.drobyshev@virtuozzo.com, den@virtuozzo.com
-Subject: [PATCH v2 2/7] qga: introduce ga_run_command() helper for guest cmd
- execution
-Date: Fri,  1 Mar 2024 19:28:53 +0200
-Message-Id: <20240301172858.665135-3-andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH v2 5/7] qga/commands-posix: execute_fsfreeze_hook: use
+ ga_run_command helper
+Date: Fri,  1 Mar 2024 19:28:56 +0200
+Message-Id: <20240301172858.665135-6-andrey.drobyshev@virtuozzo.com>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20240301172858.665135-1-andrey.drobyshev@virtuozzo.com>
 References: <20240301172858.665135-1-andrey.drobyshev@virtuozzo.com>
@@ -69,172 +69,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When executing guest commands in *nix environment, we repeat the same
-fork/exec pattern multiple times.  Let's just separate it into a single
-helper which would also be able to feed input data into the launched
-process' stdin.  This way we can avoid code duplication.
+There's no need to check for the existence of the hook executable, as the
+exec() call will do that for us.
 
-To keep the history more bisectable, let's replace qmp commands
-implementations one by one.  Also add G_GNUC_UNUSED attribute to the
-helper and remove it in the next commit.
-
-Originally-by: Yuri Pudgorodskiy <yur@virtuozzo.com>
 Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- qga/commands-posix.c | 140 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 140 insertions(+)
+ qga/commands-posix.c | 35 +++--------------------------------
+ 1 file changed, 3 insertions(+), 32 deletions(-)
 
 diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index 8207c4c47e..781498418f 100644
+index e44203a273..dd2a7ad2e6 100644
 --- a/qga/commands-posix.c
 +++ b/qga/commands-posix.c
-@@ -76,6 +76,146 @@ static void ga_wait_child(pid_t pid, int *status, Error **errp)
-     g_assert(rpid == pid);
+@@ -726,8 +726,6 @@ static const char *fsfreeze_hook_arg_string[] = {
+ 
+ static void execute_fsfreeze_hook(FsfreezeHookArg arg, Error **errp)
+ {
+-    int status;
+-    pid_t pid;
+     const char *hook;
+     const char *arg_str = fsfreeze_hook_arg_string[arg];
+     Error *local_err = NULL;
+@@ -736,42 +734,15 @@ static void execute_fsfreeze_hook(FsfreezeHookArg arg, Error **errp)
+     if (!hook) {
+         return;
+     }
+-    if (access(hook, X_OK) != 0) {
+-        error_setg_errno(errp, errno, "can't access fsfreeze hook '%s'", hook);
+-        return;
+-    }
+ 
+-    slog("executing fsfreeze hook with arg '%s'", arg_str);
+-    pid = fork();
+-    if (pid == 0) {
+-        setsid();
+-        reopen_fd_to_null(0);
+-        reopen_fd_to_null(1);
+-        reopen_fd_to_null(2);
+-
+-        execl(hook, hook, arg_str, NULL);
+-        _exit(EXIT_FAILURE);
+-    } else if (pid < 0) {
+-        error_setg_errno(errp, errno, "failed to create child process");
+-        return;
+-    }
++    const char *argv[] = {hook, arg_str, NULL};
+ 
+-    ga_wait_child(pid, &status, &local_err);
++    slog("executing fsfreeze hook with arg '%s'", arg_str);
++    ga_run_command(argv, NULL, "execute fsfreeze hook", &local_err);
+     if (local_err) {
+         error_propagate(errp, local_err);
+         return;
+     }
+-
+-    if (!WIFEXITED(status)) {
+-        error_setg(errp, "fsfreeze hook has terminated abnormally");
+-        return;
+-    }
+-
+-    status = WEXITSTATUS(status);
+-    if (status) {
+-        error_setg(errp, "fsfreeze hook has failed with status %d", status);
+-        return;
+-    }
  }
  
-+static void ga_pipe_read_str(int fd[2], char **str, size_t *len)
-+{
-+    ssize_t n;
-+    char buf[1024];
-+    close(fd[1]);
-+    fd[1] = -1;
-+    while ((n = read(fd[0], buf, sizeof(buf))) != 0) {
-+        if (n < 0) {
-+            if (errno == EINTR) {
-+                continue;
-+            } else {
-+                break;
-+            }
-+        }
-+        *str = g_realloc(*str, *len + n);
-+        memcpy(*str + *len, buf, n);
-+        *len += n;
-+    }
-+    close(fd[0]);
-+    fd[0] = -1;
-+}
-+
-+/*
-+ * Helper to run command with input/output redirection,
-+ * sending string to stdin and taking error message from
-+ * stdout/err.
-+ */
-+G_GNUC_UNUSED
-+static int ga_run_command(const char *argv[], const char *in_str,
-+                          const char *action, Error **errp)
-+{
-+    pid_t pid;
-+    int status;
-+    int retcode = -1;
-+    int infd[2] = { -1, -1 };
-+    int outfd[2] = { -1, -1 };
-+    char *str = NULL;
-+    size_t len = 0;
-+
-+    if ((in_str && !g_unix_open_pipe(infd, FD_CLOEXEC, NULL)) ||
-+        !g_unix_open_pipe(outfd, FD_CLOEXEC, NULL)) {
-+        error_setg(errp, "cannot create pipe FDs");
-+        goto out;
-+    }
-+
-+    pid = fork();
-+    if (pid == 0) {
-+        char *cherr = NULL;
-+
-+        setsid();
-+
-+        if (in_str) {
-+            /* Redirect stdin to infd. */
-+            close(infd[1]);
-+            dup2(infd[0], 0);
-+            close(infd[0]);
-+        } else {
-+            reopen_fd_to_null(0);
-+        }
-+
-+        /* Redirect stdout/stderr to outfd. */
-+        close(outfd[0]);
-+        dup2(outfd[1], 1);
-+        dup2(outfd[1], 2);
-+        close(outfd[1]);
-+
-+        execvp(argv[0], (char *const *)argv);
-+
-+        /* Write the cause of failed exec to pipe for the parent to read it. */
-+        cherr = g_strdup_printf("failed to exec '%s'", argv[0]);
-+        perror(cherr);
-+        g_free(cherr);
-+        _exit(EXIT_FAILURE);
-+    } else if (pid < 0) {
-+        error_setg_errno(errp, errno, "failed to create child process");
-+        goto out;
-+    }
-+
-+    if (in_str) {
-+        close(infd[0]);
-+        infd[0] = -1;
-+        if (qemu_write_full(infd[1], in_str, strlen(in_str)) !=
-+                strlen(in_str)) {
-+            error_setg_errno(errp, errno, "%s: cannot write to stdin pipe",
-+                             action);
-+            goto out;
-+        }
-+        close(infd[1]);
-+        infd[1] = -1;
-+    }
-+
-+    ga_pipe_read_str(outfd, &str, &len);
-+
-+    ga_wait_child(pid, &status, errp);
-+    if (*errp) {
-+        goto out;
-+    }
-+
-+    if (!WIFEXITED(status)) {
-+        if (len) {
-+            error_setg(errp, "child process has terminated abnormally: %s",
-+                       str);
-+        } else {
-+            error_setg(errp, "child process has terminated abnormally");
-+        }
-+        goto out;
-+    }
-+
-+    retcode = WEXITSTATUS(status);
-+
-+    if (WEXITSTATUS(status)) {
-+        if (len) {
-+            error_setg(errp, "child process has failed to %s: %s",
-+                       action, str);
-+        } else {
-+            error_setg(errp, "child process has failed to %s: exit status %d",
-+                       action, WEXITSTATUS(status));
-+        }
-+        goto out;
-+    }
-+
-+out:
-+    g_free(str);
-+
-+    if (infd[0] != -1) {
-+        close(infd[0]);
-+    }
-+    if (infd[1] != -1) {
-+        close(infd[1]);
-+    }
-+    if (outfd[0] != -1) {
-+        close(outfd[0]);
-+    }
-+    if (outfd[1] != -1) {
-+        close(outfd[1]);
-+    }
-+
-+    return retcode;
-+}
-+
- void qmp_guest_shutdown(const char *mode, Error **errp)
- {
-     const char *shutdown_flag;
+ /*
 -- 
 2.39.3
 
