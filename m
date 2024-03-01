@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6C43C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 15:49:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDF11C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 15:51:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg580-0008Cd-4j; Fri, 01 Mar 2024 10:48:52 -0500
+	id 1rg5AK-0000bS-Ha; Fri, 01 Mar 2024 10:51:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rg57z-0008CD-41
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 10:48:51 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rg5AG-0000ah-Qx
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 10:51:12 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rg57x-0005nj-Au
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 10:48:50 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-33e12916565so1124000f8f.1
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 07:48:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rg5AF-0006G4-1q
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 10:51:12 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-412cb6148dfso2518925e9.1
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 07:51:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709308128; x=1709912928; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1709308269; x=1709913069; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:cc:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=RHuuIrgiXICSKqK8qq6mrlldvq7XTPOBjMp5Ode5tpk=;
- b=X1du9C+rV4kh4t1UZMyQjJnGiBRQK576yvSdzRUfBFdsPEEaEDpRCT3DYFZYKHXU+a
- AgLPzQtoeRqKK5BuFIINJ5R3bPERRhMdOsGZwo/A5QfmXVFTetFlaHK+cL3JAR+ZTupb
- 2mWsahB0m0UJTXMPFMAeJ6rzGRFfmn3Sq7v2ayU+ysBzpXb44bPANEOORV8JnDzz8OXe
- Bs7YYGyNsHZG1OEBbtnTuO/9sq+eN5P9Q7RxlDgQupBTFRrbI4J4oYGWk+QZd5+M2NRi
- 0KMIP1CtwxYqxwt8f/0oFTYsbrnip2NJPGFAdK/4nAZhj9XilYZQbNpPa9SbvEUEhslz
- hR8Q==
+ bh=oDa42n1Ei544pT0WBQ9oXhFQ/0gh0b6vmnfaufFTyEQ=;
+ b=Iov5Yt4YkIUTLy9P3i3SPCHOcz5BVFJ4smKOdd6Mo1t5y+0w0lJ48nrzGSOnUd+U3G
+ TZK3S1+/AYShI1DZ9Gwjit/0eOODeBKh7mGkmikYhrSgXaFSaOphoWwQp/H/hEHB8tir
+ QZYEnvFAT+FxYlck9nzFLIL64CJZUUPX72NBVkQLwrhZpNNQMB9WeLganSjXF7ppBuV7
+ mPPUJdOSjgMVSVzPfcpJjaiQxoXKjPQMlPY/tAhOEtsHeZLuqwdevc7pTtXqZYvVXFK+
+ 1YPDDyaZXYW8KVVGIc6vvbETnK9T8n4SsVSmLRz5AD2Wv10SYyd0TRGgC06Jpildo6xV
+ xlgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709308128; x=1709912928;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1709308269; x=1709913069;
+ h=content-transfer-encoding:in-reply-to:from:cc:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RHuuIrgiXICSKqK8qq6mrlldvq7XTPOBjMp5Ode5tpk=;
- b=QUsrtLdAmCf40OjbnJFCcJ3jVMdFzwI20tl4C3jxzLMCtZdja+thGsKAR+9hho4X0c
- X5H6k3d1q8DBhO1G36ETXiRTiAIGUCdp9E5qcnTLQ6zeD8xnqKCSH2hCs/VHGRgMjlf6
- jvIw8LF052LXOVOvu1NkgAdi7eenzalehKaMhfxnr+RsvDKNGYAecL5La+hMK8VPQNm9
- 5NC3DZIsw5K4d2vxfJELX/ooQ3m9XCbhV/pRikV3y8mMOFsnCl6PJiNm0cw8Fa3QoGSZ
- fTcDoQ9vPYsUiYUIHXhwXjT8YBDkXwHQimUmyw0qIRIg5xVSJAgi0BYv/JSl+08wjn+V
- gWMA==
+ bh=oDa42n1Ei544pT0WBQ9oXhFQ/0gh0b6vmnfaufFTyEQ=;
+ b=CpqM2K6aPC02fPR94KgvoNVXqHv34Xrrqny+WQIygnV73AIv/ArYbi4ZVrBzG7CCJj
+ 1h0fBA8S5UatIlo7adejJmAyFb2PO9UDpqb3UjKCP06tuZlZCH2jKGiunWQHltyo7Duz
+ /KT0I9jPhO0wpynkW/w0VXZ7vgtm2JvpkGrN0wYm9JJ6vthWvVCckwgGstmLZjUgxnOn
+ KMZbvnIlfVt9gQoodVTkf3hxx8pBPfgAhFDRsRlPaFUF3KmXObeL92e6b3CqWyF9EhVF
+ JbvWfprkF2hHV8PplB7PPtD0sWd7Joi7WxDj2Hd7IBOVtFGo7YzLbCdYNTBAzzVnY4+d
+ ZcFw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWJi0WxcT1ZLxp0B4Gp7yqkKqpLxk430UgJqjHM6foemWZDTuNOHyPZ2gdQizijVQcpV2ZcYttxPJKhjFuQuppOzFDkBc4=
-X-Gm-Message-State: AOJu0YwUEk1ql8l1ENddJNsr0aStELANn7rpgcv+grC//BtiFeGsPbzF
- /J9ojpWOE7RIFMY+C5LyzSpaDx7vZrT9TYAbHgRm8oGtfxtno5KvGVcMj8m+RlQ=
-X-Google-Smtp-Source: AGHT+IHC2la2xZTDG3n+mmhpUFfXG73HGlEPwFWLlobqxJWHOQAB4hUYuH/O4YmzrYJrF2M7eF5oeQ==
-X-Received: by 2002:adf:f141:0:b0:33e:1ca0:8706 with SMTP id
- y1-20020adff141000000b0033e1ca08706mr2129933wro.15.1709308127614; 
- Fri, 01 Mar 2024 07:48:47 -0800 (PST)
+ AJvYcCXz27ZhIDDsiN97xFZ1ducd/bTwyO8Ve/73lNxF0+iri3Dk5E1QItMBIoJXARNjukQRvODOJz3oF/ri6ZQZHbANeudHqsQ=
+X-Gm-Message-State: AOJu0Yzf0eXPJ6lUeorb4qt12bRSRgwkeHu1oORGN1SsehwcKDTN0JxX
+ WmNXoQRERhr/0y531hJqFwp6w2unz/Hrff+inMEP9LTRipAbnAqhckMklMIJcyxjMQp2j2pcPeq
+ cJF8=
+X-Google-Smtp-Source: AGHT+IGujuxe+gtr9lPXWCvwbYjTszypujrzlApGruG8+p6211u7l3zcARs0gf1EwTFKRW5WA0SDrg==
+X-Received: by 2002:a05:600c:35d5:b0:412:b41a:53a2 with SMTP id
+ r21-20020a05600c35d500b00412b41a53a2mr1855736wmq.2.1709308267394; 
+ Fri, 01 Mar 2024 07:51:07 -0800 (PST)
 Received: from [192.168.193.175] (232.red-88-28-18.dynamicip.rima-tde.net.
  [88.28.18.232]) by smtp.gmail.com with ESMTPSA id
- bx10-20020a5d5b0a000000b0033df46f70dbsm5117235wrb.9.2024.03.01.07.48.45
+ bg14-20020a05600c3c8e00b004122b7a680dsm5956241wmb.21.2024.03.01.07.51.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 01 Mar 2024 07:48:47 -0800 (PST)
-Message-ID: <eb260acf-859f-4b48-a2eb-2aff8416620a@linaro.org>
-Date: Fri, 1 Mar 2024 16:48:43 +0100
+ Fri, 01 Mar 2024 07:51:06 -0800 (PST)
+Message-ID: <4ed4b35a-659b-42d2-a0d9-9e7340b732f6@linaro.org>
+Date: Fri, 1 Mar 2024 16:51:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 2/2] aspeed: fix hardcode boot address 0
+Subject: Re: [PATCH] Fix unexpected Illegal instruction error on RISC-V.
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-References: <20240227125201.414060-1-clg@kaod.org>
- <20240227125201.414060-3-clg@kaod.org>
+To: SiHuaN <liyongtai@iscas.ac.cn>, qemu-devel@nongnu.org
+References: <20240301145545.333810-2-liyongtai@iscas.ac.cn>
+Cc: "demin.han" <demin.han@starfivetech.com>,
+ qemu-riscv <qemu-riscv@nongnu.org>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240227125201.414060-3-clg@kaod.org>
+In-Reply-To: <20240301145545.333810-2-liyongtai@iscas.ac.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,45 +98,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jamin,
+Hi SiHuaN,
 
-On 27/2/24 13:52, Cédric Le Goater wrote:
-> From: Jamin Lin <jamin_lin@aspeedtech.com>
-> 
-> In the previous design of ASPEED SOCs QEMU model, it set the boot
-> address at "0" which was the hardcode setting for ast10x0, ast2600,
-> ast2500 and ast2400.
-> 
-> According to the design of ast2700, it has a bootmcu(riscv-32) which
-> is used for executing SPL and initialize DRAM and copy u-boot image
-> from SPI/Flash to DRAM at address 0x400000000 at SPL boot stage.
-> Then, CPUs(cortex-a35) execute u-boot, kernel and rofs.
-> 
-> Currently, qemu not support emulate two CPU architectures
-> at the same machine. Therefore, qemu will only support
-> to emulate CPU(cortex-a35) side for ast2700 and the boot
-> address is "0x4 00000000".
-> 
-> Fixed hardcode boot address "0" for future models using
-> a different mapping address.
-> 
-> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> Reviewed-by: Cédric Le Goater <clg@kaod.org>
+On 1/3/24 15:55, SiHuaN wrote:
+> Avoid right-shifting by a negative number of bits when lmul is 8.
 
-Tip for the email workflow: when someone provide a R-b tag for
-a patch, please carry it on in your next iterations.
+FYI Demin posted a similar patch, see:
+https://lore.kernel.org/qemu-devel/20240225174114.5298-1-demin.han@starfivetech.com/
 
-https://lore.kernel.org/qemu-devel/09f9ca34-4e0c-4ada-b808-643a8c578511@linaro.org/
-
-See 
-https://www.qemu.org/docs/master/devel/submitting-a-patch.html#proper-use-of-reviewed-by-tags-can-aid-review
-
-> Signed-off-by: Cédric Le Goater <clg@kaod.org>
+> Signed-off-by: SiHuaN <liyongtai@iscas.ac.cn>
 > ---
->   include/hw/arm/aspeed_soc.h | 2 --
->   hw/arm/aspeed.c             | 4 +++-
->   hw/arm/aspeed_ast2400.c     | 4 ++--
->   hw/arm/aspeed_ast2600.c     | 2 +-
->   4 files changed, 6 insertions(+), 6 deletions(-)
+>   target/riscv/vector_helper.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+> index 84cec73eb2..f0158ea237 100644
+> --- a/target/riscv/vector_helper.c
+> +++ b/target/riscv/vector_helper.c
+> @@ -53,10 +53,11 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+>            * VLEN * LMUL >= SEW
+>            * VLEN >> (8 - lmul) >= sew
+>            * (vlenb << 3) >> (8 - lmul) >= sew
+> +         * Considering that lmul may be 8, the following form cannot be used.
+>            * vlenb >> (8 - 3 - lmul) >= sew
+>            */
+>           if (vlmul == 4 ||
+> -            cpu->cfg.vlenb >> (8 - 3 - vlmul) < sew) {
+> +            (cpu->cfg.vlenb << 3) >> (8 - vlmul) < sew) {
+>               vill = true;
+>           }
+>       }
+
 
