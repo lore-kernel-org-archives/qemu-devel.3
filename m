@@ -4,96 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55A2AC5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 20:34:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 021BAC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 20:34:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg9ZG-0004lF-IJ; Fri, 01 Mar 2024 15:33:18 -0500
+	id 1rg9aA-0005iH-AS; Fri, 01 Mar 2024 15:34:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rg9ZE-0004kn-T2
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 15:33:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rg9Z7-0004yu-F0
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 15:33:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709325188;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7JekRTZsMlrf+FEvkqJPtKIxNmwHErCIsbh0T0Zg3mA=;
- b=ODqjVfuzsSL67o/lwyUs7EGPXs9MVe7ATpe7egAb972ZEFCRKhI7/0Yog7e4oP78JMafvp
- N8H9t14mhETYA57CUajc9947p6EY/yAXlP77apNm8N4dTdhBglcmTxtTDvCbfW1vDDSugU
- SU9HKFWjxJ90dd1/1mPOMfhA0vANhfo=
-Received: from mail-yb1-f197.google.com (mail-yb1-f197.google.com
- [209.85.219.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-384-aK0FZuCCNlSYNi-XZ4YoNg-1; Fri, 01 Mar 2024 15:33:07 -0500
-X-MC-Unique: aK0FZuCCNlSYNi-XZ4YoNg-1
-Received: by mail-yb1-f197.google.com with SMTP id
- 3f1490d57ef6-dd001f821caso1146881276.0
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 12:33:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rg9a7-0005hi-PV
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 15:34:11 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rg9a6-00056L-5u
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 15:34:11 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-6e55b33ad14so1752404b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 12:34:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709325248; x=1709930048; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=yuo77yp9Q0iPSquUWth3OUNwMsklDChrk49kCCDlmGY=;
+ b=KrZg0J6eCE/QOF8F/xciRK1DpsN06yZLWztcnaSquk/RgCz5cy7QcGN7tWBCby43V5
+ kdvTGgOxpNPvKy7JU3D1cl0tGlm2m5MantJxKmRvgNU02qqGIAAWZjbktDtwjjTz0jmn
+ qr55Vlqwnvi1/SSR+5STPLAc6nbtGYnxIRke8xcrOKOs7kwa9jjo5Vjslr3qAFB2Xlws
+ 9c1LeQqaXVsEspC+2SAJ194O4TvnM7eRW9mun3jgpgzqxOMhFavqxl7QtwK+WTVqkVch
+ 7GB3RFLwBiJlC5k6IXHn4o85mXhmTTFxnsQ4yL3N++yymi2jNaM6mWUXa/q4+MwgvZkg
+ KSmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709325185; x=1709929985;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7JekRTZsMlrf+FEvkqJPtKIxNmwHErCIsbh0T0Zg3mA=;
- b=QmLAiUpR143C07HzoC0g4kBTE7X3U4zkeEsjmqqmT55DG7u2o/rxolt6QiL6CsnYvI
- vvE4l8V8pwjscij93HwUuv/eL407DC5St36AjAxtEW9UUWm8U2CS02acQgSYIjhVe3qX
- JZ91xd35P9J+FUU4kcVKGcO585aMjdH/sJsQABVbK1oqAcTTQ3MwJvK3xuH5hSTvLUZS
- XE5826awIkP64q31PwB3ENaOR0hmSJpwjqBm4VDcyNvwKvR6C9Of4Esnq3XMkS/kfuTq
- UrwIPpZqtcEm7AkH5+llPj1L16EN+SqBQg0DQ8TTTVCJSF8S2zSZm1PK6/6WZ4v4axvg
- Q+ow==
+ d=1e100.net; s=20230601; t=1709325248; x=1709930048;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=yuo77yp9Q0iPSquUWth3OUNwMsklDChrk49kCCDlmGY=;
+ b=nNrK4OGSWGhOgPF56j9Twe1sw6GHJzUDtBBbFLgApM2iobUBMbpw5MrYbEbs8R3TJx
+ rjNEfgjJ1sJhqRcs/CdZoxgmJ+XINyv94IFuV0aTkeX/qAwaS+dwio0UHP3zxPXJva3d
+ 7s8/VFN7p0R29WW04v+Y2CuH68GNRduKPM6L/g9lTcJFx1ae8az80L1eMKgjjKrSbaat
+ Jy23qok0jycsMBNs1A+RhuXv2Yr7WdHik9caFGfhtlUDx3QbimsY+yODLC4y75fb2AVb
+ T37NsqJPSU5Vp8ZmklqJsSvQNXSLsEAOYpQUmYl6R0hm7sTJfxsDy2GW2EzvW7Y8uIUZ
+ z5mQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWDpAVhXrqiweiqG5z4qYjRVZhPvOoMrypd8Lygyomxn159azbMzapT4ye4cQtTx/5nvsAdX6+Oo4zIfItKmNzUi5HxT/g=
-X-Gm-Message-State: AOJu0YzGczngxdktb4tL6yNu4Yqxsu9ybuxBCejNTKDJbceMlS7HhT7X
- nsUG5NktbJ6farNBvIIKlB3aE1+NcjU4CASM0RHlySwPsVkVgIlZ9nqs1iKQy2XPAohlZDYCrh6
- hoPsu8Fv+KSKFtqZ5SrJ83e5c1DO4PmqYDaY5NZ72F1cKP6ytghnTAjcV+W2VNVE6Mf6cpXTumQ
- RR/rZiZAnl8QWb5riVCE3hVicS2iA=
-X-Received: by 2002:a25:ba48:0:b0:dcf:9aeb:73af with SMTP id
- z8-20020a25ba48000000b00dcf9aeb73afmr2106893ybj.2.1709325185701; 
- Fri, 01 Mar 2024 12:33:05 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGebWf+1TXP+6k5ZRJI3Gxcr22nlqFqDK3NKq9d2JbPHvQ5STmvxtAAYyiUDQGCC/9HqwFXhJbf0ttCfq6apRo=
-X-Received: by 2002:a25:ba48:0:b0:dcf:9aeb:73af with SMTP id
- z8-20020a25ba48000000b00dcf9aeb73afmr2106869ybj.2.1709325185470; Fri, 01 Mar
- 2024 12:33:05 -0800 (PST)
+ AJvYcCUmIs/vnZPaIoZO5UOfeKuWS2SkL1Ri1FSI+xpmXs7XzMa/P4artDYIl2B3vk3K3T6aTOQ03657vDvOlcBayY8trEZs+2o=
+X-Gm-Message-State: AOJu0Ywp507MKojk0HHgXtffdOKhXDNgQp29NvzYoH+MkcKdXCnJvP4t
+ GwrnsYXp9aqSOBgN0EbXMpAWPV7SqA2B2q55UK5R/K2wjGC8b8UNJX1sg1fnaKQ=
+X-Google-Smtp-Source: AGHT+IEynDfid25gutssuIdUV/69FKHbWSCQDKWwZTpoHSp05TFI4vij3wOYdOXbkON93tiSTKS8Dg==
+X-Received: by 2002:a05:6a20:7d90:b0:1a1:30a6:2b4b with SMTP id
+ v16-20020a056a207d9000b001a130a62b4bmr2876917pzj.15.1709325248388; 
+ Fri, 01 Mar 2024 12:34:08 -0800 (PST)
+Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
+ [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
+ q1-20020aa79821000000b006e4d336c420sm3348143pfl.69.2024.03.01.12.34.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 01 Mar 2024 12:34:08 -0800 (PST)
+Message-ID: <f2deec4d-b76c-4d9b-a42a-c31d432a4b53@linaro.org>
+Date: Fri, 1 Mar 2024 10:34:04 -1000
 MIME-Version: 1.0
-References: <20240301134330.4191007-1-jonah.palmer@oracle.com>
-In-Reply-To: <20240301134330.4191007-1-jonah.palmer@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Fri, 1 Mar 2024 21:32:29 +0100
-Message-ID: <CAJaqyWfD96Dh9gVavzC22KuaG4bwJ0m7sbWOsy9fR4y1HJ3-Gg@mail.gmail.com>
-Subject: Re: [RFC 0/8] virtio,vhost: Add VIRTIO_F_NOTIFICATION_DATA support
-To: Wentao Jia <wentao.jia@corigine.com>,
- Rick Zhong <zhaoyong.zhong@nephogine.com>, 
- Xinying Yu <xinying.yu@nephogine.com>
-Cc: Jonah Palmer <jonah.palmer@oracle.com>, qemu-devel@nongnu.org,
- mst@redhat.com, 
- jasowang@redhat.com, si-wei.liu@oracle.com, boris.ostrovsky@oracle.com, 
- raphael@enfabrica.net, kwolf@redhat.com, hreitz@redhat.com, 
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com, 
- thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com, 
- iii@linux.ibm.com, cohuck@redhat.com, pbonzini@redhat.com, fam@euphon.net, 
- stefanha@redhat.com, qemu-block@nongnu.org, qemu-s390x@nongnu.org, 
- virtio-fs@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] hw/i386/pc: Remove 'host_type' argument from
+ pc_init1()
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Bernhard Beschow <shentey@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20240301185936.95175-1-philmd@linaro.org>
+ <20240301185936.95175-4-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240301185936.95175-4-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,43 +103,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Wentao / Rick / Xinying Yu,
+On 3/1/24 08:59, Philippe Mathieu-Daudé wrote:
+> All callers use host_type=TYPE_I440FX_PCI_HOST_BRIDGE.
+> Directly use this definition within pc_init1().
+> 
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   hw/i386/pc_piix.c | 14 +++++---------
+>   1 file changed, 5 insertions(+), 9 deletions(-)
 
-Would it work for you to test this series on your use cases, so we
-make sure everything works as expected?
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Thanks!
-
-On Fri, Mar 1, 2024 at 2:44=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.co=
-m> wrote:
->
-> The goal of these patches are to add support to a variety of virtio and
-> vhost devices for the VIRTIO_F_NOTIFICATION_DATA transport feature. This
-> feature indicates that a driver will pass extra data (instead of just a
-> virtqueue's index) when notifying the corresponding device.
->
-> The data passed in by the driver when this feature is enabled varies in
-> format depending on if the device is using a split or packed virtqueue
-> layout:
->
->  Split VQ
->   - Upper 16 bits: last_avail_idx
->   - Lower 16 bits: virtqueue index
->
->  Packed VQ
->   - Upper 16 bits: 1-bit wrap counter & 15-bit last_avail_idx
->   - Lower 16 bits: virtqueue index
->
-> Also, due to the limitations of ioeventfd not being able to carry the
-> extra provided by the driver, ioeventfd is left disabled for any devices
-> using this feature.
->
-> A significant aspect of this effort has been to maintain compatibility
-> across different backends. As such, the feature is offered by backend
-> devices only when supported, with fallback mechanisms where backend
-> support is absent.
->
-
-Hi Wentao,
-
+r~
 
