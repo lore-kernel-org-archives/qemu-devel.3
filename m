@@ -4,83 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 021BAC5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 20:34:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BF00C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 20:42:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg9aA-0005iH-AS; Fri, 01 Mar 2024 15:34:14 -0500
+	id 1rg9h3-0001ws-1Y; Fri, 01 Mar 2024 15:41:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rg9a7-0005hi-PV
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 15:34:11 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1rg9h1-0001qX-EQ
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 15:41:19 -0500
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rg9a6-00056L-5u
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 15:34:11 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-6e55b33ad14so1752404b3a.1
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 12:34:09 -0800 (PST)
+ id 1rg9gz-0006yd-TH
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 15:41:19 -0500
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-5dcc4076c13so2132115a12.0
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 12:41:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709325248; x=1709930048; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=yuo77yp9Q0iPSquUWth3OUNwMsklDChrk49kCCDlmGY=;
- b=KrZg0J6eCE/QOF8F/xciRK1DpsN06yZLWztcnaSquk/RgCz5cy7QcGN7tWBCby43V5
- kdvTGgOxpNPvKy7JU3D1cl0tGlm2m5MantJxKmRvgNU02qqGIAAWZjbktDtwjjTz0jmn
- qr55Vlqwnvi1/SSR+5STPLAc6nbtGYnxIRke8xcrOKOs7kwa9jjo5Vjslr3qAFB2Xlws
- 9c1LeQqaXVsEspC+2SAJ194O4TvnM7eRW9mun3jgpgzqxOMhFavqxl7QtwK+WTVqkVch
- 7GB3RFLwBiJlC5k6IXHn4o85mXhmTTFxnsQ4yL3N++yymi2jNaM6mWUXa/q4+MwgvZkg
- KSmw==
+ d=linaro.org; s=google; t=1709325676; x=1709930476; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uSxGM8jSCUAKauTODiPxOuZGF0sA3+vBxABkPlr2Gc8=;
+ b=D1BRQr5+QOiLN5I/UNqsClGgT9yMul/wBvtZjIzhW2PVKAYZ/qQYsah8/BaCgxbIKE
+ uAmPIXurda3IPYXJZBJqbWmO4a6vjuci3bC2bSn2xoshmqJfpwfuw+QncMajf6cI+fyh
+ 44um+pZleU8t1MfcYklp9uageSBIv38CMOP4YHPyXuc7t9ByaP6sWJdkCbT1AKMQfolN
+ B7YKvr7rqbwv2h2p9fP12Fe0md29lwih806dg7RZmwCaEI5IkSdvzWyqWadZisP84hP1
+ rzst2e9Ov7ibL6mqWWvVNFoidd+DoH2zkbAwljGiXw0Zo+Tb5h5h8XLOTLL/5Gtga5/0
+ eXEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709325248; x=1709930048;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yuo77yp9Q0iPSquUWth3OUNwMsklDChrk49kCCDlmGY=;
- b=nNrK4OGSWGhOgPF56j9Twe1sw6GHJzUDtBBbFLgApM2iobUBMbpw5MrYbEbs8R3TJx
- rjNEfgjJ1sJhqRcs/CdZoxgmJ+XINyv94IFuV0aTkeX/qAwaS+dwio0UHP3zxPXJva3d
- 7s8/VFN7p0R29WW04v+Y2CuH68GNRduKPM6L/g9lTcJFx1ae8az80L1eMKgjjKrSbaat
- Jy23qok0jycsMBNs1A+RhuXv2Yr7WdHik9caFGfhtlUDx3QbimsY+yODLC4y75fb2AVb
- T37NsqJPSU5Vp8ZmklqJsSvQNXSLsEAOYpQUmYl6R0hm7sTJfxsDy2GW2EzvW7Y8uIUZ
- z5mQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUmIs/vnZPaIoZO5UOfeKuWS2SkL1Ri1FSI+xpmXs7XzMa/P4artDYIl2B3vk3K3T6aTOQ03657vDvOlcBayY8trEZs+2o=
-X-Gm-Message-State: AOJu0Ywp507MKojk0HHgXtffdOKhXDNgQp29NvzYoH+MkcKdXCnJvP4t
- GwrnsYXp9aqSOBgN0EbXMpAWPV7SqA2B2q55UK5R/K2wjGC8b8UNJX1sg1fnaKQ=
-X-Google-Smtp-Source: AGHT+IEynDfid25gutssuIdUV/69FKHbWSCQDKWwZTpoHSp05TFI4vij3wOYdOXbkON93tiSTKS8Dg==
-X-Received: by 2002:a05:6a20:7d90:b0:1a1:30a6:2b4b with SMTP id
- v16-20020a056a207d9000b001a130a62b4bmr2876917pzj.15.1709325248388; 
- Fri, 01 Mar 2024 12:34:08 -0800 (PST)
-Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
- [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- q1-20020aa79821000000b006e4d336c420sm3348143pfl.69.2024.03.01.12.34.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 01 Mar 2024 12:34:08 -0800 (PST)
-Message-ID: <f2deec4d-b76c-4d9b-a42a-c31d432a4b53@linaro.org>
-Date: Fri, 1 Mar 2024 10:34:04 -1000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] hw/i386/pc: Remove 'host_type' argument from
- pc_init1()
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, "Michael S. Tsirkin"
- <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20240301185936.95175-1-philmd@linaro.org>
- <20240301185936.95175-4-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1709325676; x=1709930476;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=uSxGM8jSCUAKauTODiPxOuZGF0sA3+vBxABkPlr2Gc8=;
+ b=Q3MVwH8D8DroOFkrlz05oywV2Pvpsaq4v3Z69Xp+Hm+3OpvJRZQRqgK/GYZS4m6pmZ
+ zOTqJADfMJeijUq2hXzftDeZLtvc5Y+DOgtEXTayRUGMAZJpcLU/z3DVVqIEre38Raqy
+ 0LKbpHNJiT1yqD3Tx4y7N60KtKOxEdO7Aho73VgCh71KRsNTBcDD1nct5JSCyVPeAE2E
+ 4VZ2QT1Fc7t/9iF+erQaz7djQ68/vUOTyoEjpYbcucjTwVEvYyP8P0cnBMt4SPblMyed
+ MpquvrEEpWZul/AR9gBHY8esmELmhpt09s166WnkjnhUMfAPXJKvuqbU/F/F8CpTJtI3
+ 6b5Q==
+X-Gm-Message-State: AOJu0Ywjbhj4Z2U+QxSzWlnJlbuOJq2EBsJwTQ/9KuNvUcOGVQNNTiKq
+ 9y7AYeuQA862r9lEPNijulJ4qzkX3Eu0hiWOa0Rp6qJIYGbtzm09bESDr+CskF+eDxyeliThP8N
+ M
+X-Google-Smtp-Source: AGHT+IEzdqGd8SqXPjUZ5yakxxH+7zIKAHvLTYU8dF8CKF+yEotgHayXy2xv9Jh1JCkZ/T+077zJmA==
+X-Received: by 2002:a17:90a:b96:b0:29a:f150:aeed with SMTP id
+ 22-20020a17090a0b9600b0029af150aeedmr4650938pjr.19.1709325676472; 
+ Fri, 01 Mar 2024 12:41:16 -0800 (PST)
+Received: from stoup.. (098-147-055-211.res.spectrum.com. [98.147.55.211])
+ by smtp.gmail.com with ESMTPSA id
+ l3-20020a17090ac58300b0029b2e00359esm681947pjt.36.2024.03.01.12.41.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 01 Mar 2024 12:41:16 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240301185936.95175-4-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 2/6] exec/memattrs: Remove target_tlb_bit*
+Date: Fri,  1 Mar 2024 10:41:06 -1000
+Message-Id: <20240301204110.656742-3-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240301204110.656742-1-richard.henderson@linaro.org>
+References: <20240301204110.656742-1-richard.henderson@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,16 +96,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/1/24 08:59, Philippe Mathieu-Daudé wrote:
-> All callers use host_type=TYPE_I440FX_PCI_HOST_BRIDGE.
-> Directly use this definition within pc_init1().
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   hw/i386/pc_piix.c | 14 +++++---------
->   1 file changed, 5 insertions(+), 9 deletions(-)
+These fields are no longer used since 937f224559.
+Target specific extensions to the page tables should be done
+with TARGET_PAGE_ENTRY_EXTRA.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ include/exec/memattrs.h | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-r~
+diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
+index d04170aa27..afa885f983 100644
+--- a/include/exec/memattrs.h
++++ b/include/exec/memattrs.h
+@@ -54,16 +54,6 @@ typedef struct MemTxAttrs {
+     unsigned int requester_id:16;
+     /* Invert endianness for this page */
+     unsigned int byte_swap:1;
+-    /*
+-     * The following are target-specific page-table bits.  These are not
+-     * related to actual memory transactions at all.  However, this structure
+-     * is part of the tlb_fill interface, cached in the cputlb structure,
+-     * and has unused bits.  These fields will be read by target-specific
+-     * helpers using env->iotlb[mmu_idx][tlb_index()].attrs.target_tlb_bitN.
+-     */
+-    unsigned int target_tlb_bit0 : 1;
+-    unsigned int target_tlb_bit1 : 1;
+-    unsigned int target_tlb_bit2 : 1;
+ } MemTxAttrs;
+ 
+ /* Bus masters which don't specify any attributes will get this,
+-- 
+2.34.1
+
 
