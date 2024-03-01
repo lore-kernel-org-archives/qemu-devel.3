@@ -4,66 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C203CC5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 07:37:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C67CDC5478C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 07:38:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfxS0-0003QA-Ii; Fri, 01 Mar 2024 02:37:02 -0500
+	id 1rfxSh-0003qU-HL; Fri, 01 Mar 2024 02:37:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d.sharikhin@yadro.com>)
- id 1rfxRx-0003Pw-BR
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 02:36:57 -0500
-Received: from mta-04.yadro.com ([89.207.88.248])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfxSX-0003oU-7w
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 02:37:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d.sharikhin@yadro.com>)
- id 1rfxRt-00013y-5d
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 02:36:57 -0500
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com 9B532C0004
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yadro.com; s=mta-04;
- t=1709278603; bh=k7FblgxATpkBqsWWo3G0v7q4bUcJhsjSejWoLrfvUK4=;
- h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:From;
- b=dm/JG/dBV1DbTxrQDi5erwMhvOwPtYAZ13m7UMZzHyQjudjFQZelHA0YKnPIzmCwr
- TI4g/XxkyyrKFBBbi8tBenNb2F3SpDWEd4gH4D0cw6sTCptSF9BiviJkN1shsPKDiv
- zED2U7xx1aExTKMbYEiKLqFusjuTJl7P0blqhOy8B+oLnzyytApXkvSoWYqEm9xbMN
- TK5ajmcHJzLX5796ddh06a1Lmriq5khFgr6imKadG8Ba3se7cN0z222v1EO/dCAgmi
- KXuwJf9s90v0PpaK5WRat3+BZLOP01v5w0v0l+OncdAfWYJdHWTFfYhiGU8r7DY/9v
- 1aa4S9V1oy7EQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yadro.com; s=mta-03;
- t=1709278603; bh=k7FblgxATpkBqsWWo3G0v7q4bUcJhsjSejWoLrfvUK4=;
- h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:From;
- b=pGmhc0Ul4tYuYpv0k6ylcDMQNrJ81pceydYNJ0zVDja+cC8yqmCTUtRMjzR86yzvn
- /z2j76ZbFVGN9HuiNCOLmmg241XBNxT9K5lCPZDo+x/idzwNWwgArfUoTT6/K09IJa
- SD3PYRehFcHNIVjAzignX+Hb03k3fi3nKo4BMb5CBKMBg1R0IQAWpoPVHil/bKROV1
- /GpBtdLHjE0zWnFEBvBpCHQD5jRQJS9ZHDaE05OxdQDWBMMecEaTNtXRKi1IpD5Hrm
- N0bW6HYFHidhkbRw0mLkMR+qPfrlE0YrGzInDvLxAl1P6LGaM9WJDFxCpgKcBZ9sDH
- 47wEshl++NNpg==
-From: Dmitriy Sharikhin <d.sharikhin@yadro.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: Igor Kononenko <i.kononenko@yadro.com>, "Alexander A. Filippov"
- <a.filippov@yadro.com>, Alexander Amelkin <a.amelkin@yadro.com>
-Subject: [PATCH] hw: gpio: introduce pcf8574 driver
-Thread-Topic: [PATCH] hw: gpio: introduce pcf8574 driver
-Thread-Index: AQHaa6s0kSa3DF4Dg0q8WutIAOtiBA==
-Date: Fri, 1 Mar 2024 07:36:42 +0000
-Message-ID: <ee386866ca7ba80add0c428b59efb936fd7ce797.camel@yadro.com>
-Accept-Language: ru-RU, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <754AEE96F634FD49A88543F47CD7FBBE@yadro.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rfxSV-00019Z-Bt
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 02:37:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709278648;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=hcI/NtXeicjRAtUMLLrt+amMQwfobj4PMzE2Ib3rUEY=;
+ b=NuQSpStxBmzTq2d6IjaBJZDm8diDg+e4yCi564k3TYLNxqatGa22POwGLh0c0aVD8K55gw
+ Qaek5dtb2FrslRH5ZzdrNpE9nte1w81EG+5vR7EndPRDAiMvvSEOaT7AiXB4IX7WUmEUJW
+ j5qnel9MtB6VlZZVuMCfvZI/gmZjkX4=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-650-qnMJq2jFNMipUwnfc3aeDg-1; Fri, 01 Mar 2024 02:37:26 -0500
+X-MC-Unique: qnMJq2jFNMipUwnfc3aeDg-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a4415f97672so117806566b.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 23:37:26 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709278646; x=1709883446;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hcI/NtXeicjRAtUMLLrt+amMQwfobj4PMzE2Ib3rUEY=;
+ b=PmtozFsO9paD2eprg1+HLXBCeDPpzGLlHE0vMyOm8m64jUA9ToOhUDmHuPb6ilUJW5
+ lZJtB1Z/k+xBI/lZLu/Jzqxx8K81hK8JpJ0XZgXXDHpfQpj5T6UU9H97QJDzVPXNzYYv
+ tJsX2aRNpMaLSzJ9uc3qV796RLBLCYv/351bcNNIN5GWeO5v59tHIv+lQI2F1pIzTxLW
+ W2ZGiLWvDO/1l/mBaxryQ9RMDFsYmrDPSAcYXNNQIQFMZpJI4sTUomupPYn6JaUmO9hg
+ zGNWrfbhjjSCyXRRZq5/Fz7E6++oU3UmCnl/6IV6q+DEoCuDN9gi3HvCnXo+rQ5RwUCl
+ vqNg==
+X-Gm-Message-State: AOJu0YyRsfUgBUViW5YYQ1nzDm3I2KraVAbcTInnjYrONO8U/joG96/W
+ TRyV0MiP3YMC10lSP3j6KBx2mKnw2owLU5f+prqN9fi+P5VLkSzdYshSYIWwlNxTP08n+SLqSQJ
+ PZDDXRCGoOipK0OEOOkZqZx3yGV9JCesv81s4nHXWV1zHnkFj4qRv
+X-Received: by 2002:a17:906:6888:b0:a43:adee:81a4 with SMTP id
+ n8-20020a170906688800b00a43adee81a4mr602813ejr.13.1709278645855; 
+ Thu, 29 Feb 2024 23:37:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHL/ovvVDipdnuXDASiQjWbLWKN/d+wKzStf/c7IzG1sEFkrQ0ScSle5YHkTk46jjwp4p1TRg==
+X-Received: by 2002:a17:906:6888:b0:a43:adee:81a4 with SMTP id
+ n8-20020a170906688800b00a43adee81a4mr602803ejr.13.1709278645452; 
+ Thu, 29 Feb 2024 23:37:25 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-178-133.web.vodafone.de.
+ [109.43.178.133]) by smtp.gmail.com with ESMTPSA id
+ hw16-20020a170907a0d000b00a3ed5479b8bsm1439373ejc.21.2024.02.29.23.37.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 29 Feb 2024 23:37:24 -0800 (PST)
+Message-ID: <2c9163a0-a863-4387-b615-2fda216031b6@redhat.com>
+Date: Fri, 1 Mar 2024 08:37:23 +0100
 MIME-Version: 1.0
-Received-SPF: pass client-ip=89.207.88.248; envelope-from=d.sharikhin@yadro.com;
- helo=mta-04.yadro.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/8] tests/unit/test-smp-parse.c: Use CPU number macros in
+ invalid topology case
+To: Zhao Liu <zhao1.liu@linux.intel.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>
+Cc: qemu-devel@nongnu.org, Xiaoling Song <xiaoling.song@intel.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+References: <20240118144857.2124034-1-zhao1.liu@linux.intel.com>
+ <20240118144857.2124034-2-zhao1.liu@linux.intel.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240118144857.2124034-2-zhao1.liu@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,111 +151,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-TlhQIFBDRjg1NzQgYW5kIGNvbXBhdGlibGUgSUNzIGFyZSBzaW1wbGUgSTJDIEdQSU8gZXhwYW5k
-ZXJzLg0KUENGODU3NCBpbmNvcnBvcmF0ZXMgcXVhc2ktYmlkaXJlY3Rpb25hbCBJTywgYW5kIHNp
-bXBsZQ0KY29tbXVuaWNhdGlvbiBwcm90b2NvbCwgd2hlbiBJTyByZWFkIGlzIEkyQyBieXRlIHJl
-YWQsIGFuZA0KSU8gd3JpdGUgaXMgSTJDIGJ5dGUgd3JpdGUuIFVzZXIgY2FuIHRoaW5rIG9mIGl0
-IGFzDQpvcGVuLWRyYWluIHBvcnQsIHdoZW4gbGluZSBoaWdoIHN0YXRlIGlzIGlucHV0IGFuZCBs
-aW5lIGxvdw0Kc3RhdGUgaXMgb3V0cHV0Lg0KDQpUaGlzIHBhdGNoIGFsbG93IHRvIGluc3RhbnRp
-YXRlIHZpcnR1YWwgSTJDIGRldmljZSBjYWxsZWQNCiJwY2Y4NTc0IiBpbiBtYWNoaW5lIGluaXQg
-Y29kZSB2aWEgZ2VuZXJpYyBtZWNoYW5pc20uDQoNClNpZ25lZC1vZmYtYnk6IERtaXRyaWkgU2hh
-cmlraGluIDxkLnNoYXJpa2hpbkB5YWRyby5jb20+DQotLS0NCiBody9ncGlvL0tjb25maWcgICAg
-ICAgICAgIHwgICA0ICsrDQogaHcvZ3Bpby9tZXNvbi5idWlsZCAgICAgICB8ICAgMSArDQogaHcv
-Z3Bpby9wY2Y4NTc0LmMgICAgICAgICB8IDEzOSArKysrKysrKysrKysrKysrKysrKysrKysrKysr
-KysrKysrKysrKw0KIGluY2x1ZGUvaHcvZ3Bpby9wY2Y4NTc0LmggfCAgMTUgKysrKw0KIDQgZmls
-ZXMgY2hhbmdlZCwgMTU5IGluc2VydGlvbnMoKykNCiBjcmVhdGUgbW9kZSAxMDA2NDQgaHcvZ3Bp
-by9wY2Y4NTc0LmMNCiBjcmVhdGUgbW9kZSAxMDA2NDQgaW5jbHVkZS9ody9ncGlvL3BjZjg1NzQu
-aA0KDQpkaWZmIC0tZ2l0IGEvaHcvZ3Bpby9LY29uZmlnIGIvaHcvZ3Bpby9LY29uZmlnDQppbmRl
-eCBkMmNmM2FjY2M4Li5iYjczMWZmNGNlIDEwMDY0NA0KLS0tIGEvaHcvZ3Bpby9LY29uZmlnDQor
-KysgYi9ody9ncGlvL0tjb25maWcNCkBAIC0xNiwzICsxNiw3IEBAIGNvbmZpZyBHUElPX1BXUg0K
-IA0KIGNvbmZpZyBTSUZJVkVfR1BJTw0KICAgICBib29sDQorDQorY29uZmlnIFBDRjg1NzQNCisg
-ICAgYm9vbA0KKyAgICBkZXBlbmRzIG9uIEkyQw0KZGlmZiAtLWdpdCBhL2h3L2dwaW8vbWVzb24u
-YnVpbGQgYi9ody9ncGlvL21lc29uLmJ1aWxkDQppbmRleCA4YThkMDNkODg1Li5jMGQ5YTNjNzU3
-IDEwMDY0NA0KLS0tIGEvaHcvZ3Bpby9tZXNvbi5idWlsZA0KKysrIGIvaHcvZ3Bpby9tZXNvbi5i
-dWlsZA0KQEAgLTE1LDMgKzE1LDQgQEAgc3lzdGVtX3NzLmFkZCh3aGVuOiAnQ09ORklHX1JBU1BJ
-JywgaWZfdHJ1ZTogZmlsZXMoDQogKSkNCiBzeXN0ZW1fc3MuYWRkKHdoZW46ICdDT05GSUdfQVNQ
-RUVEX1NPQycsIGlmX3RydWU6IGZpbGVzKCdhc3BlZWRfZ3Bpby5jJykpDQogc3lzdGVtX3NzLmFk
-ZCh3aGVuOiAnQ09ORklHX1NJRklWRV9HUElPJywgaWZfdHJ1ZTogZmlsZXMoJ3NpZml2ZV9ncGlv
-LmMnKSkNCitzeXN0ZW1fc3MuYWRkKHdoZW46ICdDT05GSUdfUENGODU3NCcsIGlmX3RydWU6IGZp
-bGVzKCdwY2Y4NTc0LmMnKSkNCmRpZmYgLS1naXQgYS9ody9ncGlvL3BjZjg1NzQuYyBiL2h3L2dw
-aW8vcGNmODU3NC5jDQpuZXcgZmlsZSBtb2RlIDEwMDY0NA0KaW5kZXggMDAwMDAwMDAwMC4uYTZj
-NmJkMzZmYQ0KLS0tIC9kZXYvbnVsbA0KKysrIGIvaHcvZ3Bpby9wY2Y4NTc0LmMNCkBAIC0wLDAg
-KzEsMTM5IEBADQorLyoNCisgKiBOWFAgUENGODU3NCA4LXBvcnQgSTJDIEdQSU8gZXhwYW5zaW9u
-IGNoaXAuDQorICoNCisgKiBDb3B5cmlnaHQgKGMpIDIwMjQgS05TIEdyb3VwIChZQURSTykuDQor
-ICogV3JpdHRlbiBieSBEbWl0cmlpIFNoYXJpa2hpbiA8ZC5zaGFyaWtoaW5AeWFkcm8uY29tPg0K
-KyAqDQorICogVGhpcyBmaWxlIGlzIGxpY2Vuc2VkIHVuZGVyIEdOVSBHUEwuDQorICovDQorDQor
-I2luY2x1ZGUgInFlbXUvb3NkZXAuaCINCisjaW5jbHVkZSAiaHcvaTJjL2kyYy5oIg0KKyNpbmNs
-dWRlICJody9ncGlvL3BjZjg1NzQuaCINCisjaW5jbHVkZSAiaHcvaXJxLmgiDQorI2luY2x1ZGUg
-Im1pZ3JhdGlvbi92bXN0YXRlLmgiDQorI2luY2x1ZGUgInFlbXUvbG9nLmgiDQorI2luY2x1ZGUg
-InFlbXUvbW9kdWxlLmgiDQorI2luY2x1ZGUgInFvbS9vYmplY3QuaCINCisNCisvKioNCisgKiBQ
-Q0Y4NTc0IGFuZCBjb21wYXRpYmxlIGNoaXBzIGluY29ycG9yYXRlIHF1YXNpLWJpZGlyZWN0aW9u
-YWwNCisgKiBJTy4gRWxlY3RyaWNhbGx5IGl0IG1lYW5zIHRoYXQgZGV2aWNlIHN1c3RhaW4gcHVs
-bC11cCB0byBsaW5lDQorICogdW5sZXNzIElPIHBvcnQgaXMgY29uZmlndXJlZCBhcyBvdXRwdXQg
-X2FuZF8gZHJpdmVuIGxvdy4NCisgKiANCisgKiBJTyBhY2Nlc3MgaXMgaW1wbGVtZW50ZWQgYXMg
-c2ltcGxlIEkyQyBzaW5nbGUtYnl0ZSByZWFkDQorICogb3Igd3JpdGUgb3BlcmF0aW9uLiBTbywg
-dG8gY29uZmlndXJlIGxpbmUgdG8gaW5wdXQgdXNlciB3cml0ZSAxDQorICogdG8gY29ycmVzcG9u
-ZGluZyBiaXQuIFRvIGNvbmZpZ3VyZSBsaW5lIHRvIG91dHB1dCBhbmQgZHJpdmUgaXQgbG93DQor
-ICogdXNlciB3cml0ZSAwIHRvIGNvcnJlc3BvbmRpbmcgYml0Lg0KKyAqIA0KKyAqIEluIGVzc2Vu
-Y2UsIHVzZXIgY2FuIHRoaW5rIG9mIHF1YXNpLWJpZGlyZWN0aW9uYWwgSU8gYXMNCisgKiBvcGVu
-LWRyYWluIGxpbmUsIGV4Y2VwdCBwcmVzZW5jZSBvZiBidWlsdGluIHJpc2luZyBlZGdlIGFjY2Vs
-ZXJhdGlvbg0KKyAqIGVtYmVkZGVkIGluIFBDRjg1NzQgSUMNCisgKiovDQorDQorT0JKRUNUX0RF
-Q0xBUkVfU0lNUExFX1RZUEUoUENGODU3NFN0YXRlLCBQQ0Y4NTc0KQ0KKw0KK3N0cnVjdCBQQ0Y4
-NTc0U3RhdGUgew0KKyAgICBJMkNTbGF2ZSBwYXJlbnRfb2JqOw0KKyAgICB1aW50OF90ICBpbnB1
-dDsgICAgICAvKiBleHRlcm5hbCBlbGVjdHJpY2FsIGxpbmUgc3RhdGUgKi8NCisgICAgdWludDhf
-dCAgb3V0cHV0OyAgICAgLyogUHVsbC11cCAoMSkgb3IgZHJpdmUgbG93ICgwKSBvbiBiaXQgKi8N
-CisgICAgcWVtdV9pcnEgaGFuZGxlcls4XTsNCisgICAgcWVtdV9pcnEgKmdwaW9faW47DQorfTsN
-CisNCitzdGF0aWMgdm9pZCBwY2Y4NTc0X3Jlc2V0KERldmljZVN0YXRlICpkZXYpDQorew0KKyAg
-ICBQQ0Y4NTc0U3RhdGUgKnMgPSBQQ0Y4NTc0KGRldik7DQorICAgIHMtPmlucHV0ICA9IDB4RkY7
-DQorICAgIHMtPm91dHB1dCA9IDB4RkY7DQorfQ0KKw0KK3N0YXRpYyBpbmxpbmUgdWludDhfdCBw
-Y2Y4NTc0X2xpbmVfc3RhdGUoUENGODU3NFN0YXRlICpzKQ0KK3sNCisgICAgLy8gd2UgZHJpdmlu
-ZyBsaW5lIGxvdyBvciBleHRlcm5hbCBjaXJjdWl0IGRvZXMgdGhhdA0KKyAgICByZXR1cm4gcy0+
-aW5wdXQgJiBzLT5vdXRwdXQ7IA0KK30NCisNCitzdGF0aWMgdWludDhfdCBwY2Y4NTc0X3J4KEky
-Q1NsYXZlICppMmMpDQorew0KKyAgICByZXR1cm4gcGNmODU3NF9saW5lX3N0YXRlKFBDRjg1NzQo
-aTJjKSk7DQorfQ0KKw0KK3N0YXRpYyBpbnQgcGNmODU3NF90eChJMkNTbGF2ZSAqaTJjLCB1aW50
-OF90IGRhdGEpDQorew0KKyAgICBQQ0Y4NTc0U3RhdGUgKnMgPSBQQ0Y4NTc0KGkyYyk7DQorICAg
-IHVpbnQ4X3QgcHJldjsNCisgICAgdWludDhfdCBkaWZmOw0KKyAgICB1aW50OF90IGFjdHVhbDsN
-CisgICAgaW50IGxpbmUgPSAwOw0KKw0KKyAgICBwcmV2ID0gcGNmODU3NF9saW5lX3N0YXRlKHMp
-Ow0KKyAgICBzLT5vdXRwdXQgPSBkYXRhOw0KKyAgICBhY3R1YWwgPSBwY2Y4NTc0X2xpbmVfc3Rh
-dGUocyk7DQorDQorICAgIGZvciAoZGlmZiA9IChhY3R1YWwgXiBwcmV2KTsgZGlmZjsgZGlmZiAm
-PSB+KDEgPDwgbGluZSkpDQorICAgIHsNCisgICAgICAgIGxpbmUgPSBjdHozMihkaWZmKTsNCisg
-ICAgICAgIGlmIChzLT5oYW5kbGVyW2xpbmVdKQ0KKyAgICAgICAgICAgIHFlbXVfc2V0X2lycShz
-LT5oYW5kbGVyW2xpbmVdLCAoYWN0dWFsID4+IGxpbmUpICYgMSk7DQorICAgIH0NCisNCisgICAg
-cmV0dXJuIDA7DQorfQ0KKw0KK3N0YXRpYyBjb25zdCBWTVN0YXRlRGVzY3JpcHRpb24gdm1zdGF0
-ZV9wY2Y4NTc0ID0gew0KKyAgICAubmFtZSA9ICJwY2Y4NTc0IiwNCisgICAgLnZlcnNpb25faWQg
-PSAwLA0KKyAgICAubWluaW11bV92ZXJzaW9uX2lkID0gMCwNCisgICAgLmZpZWxkcyA9IChWTVN0
-YXRlRmllbGRbXSkgew0KKyAgICAgICAgVk1TVEFURV9VSU5UOChpbnB1dCwgIFBDRjg1NzRTdGF0
-ZSksDQorICAgICAgICBWTVNUQVRFX1VJTlQ4KG91dHB1dCwgUENGODU3NFN0YXRlKSwNCisgICAg
-ICAgIFZNU1RBVEVfSTJDX1NMQVZFKHBhcmVudF9vYmosIFBDRjg1NzRTdGF0ZSksDQorICAgICAg
-ICBWTVNUQVRFX0VORF9PRl9MSVNUKCkNCisgICAgfQ0KK307DQorDQorc3RhdGljIHZvaWQgcGNm
-ODU3NF9ncGlvX3NldCh2b2lkICpvcGFxdWUsIGludCBsaW5lLCBpbnQgbGV2ZWwpDQorew0KKyAg
-ICBQQ0Y4NTc0U3RhdGUgKnMgPSAoUENGODU3NFN0YXRlICopIG9wYXF1ZTsNCisgICAgYXNzZXJ0
-KGxpbmUgPj0gMCAmJiBsaW5lIDwgQVJSQVlfU0laRShzLT5oYW5kbGVyKSk7IA0KKw0KKyAgICBp
-ZiAobGV2ZWwpDQorICAgICAgICBzLT5pbnB1dCB8PSAgKDEgPDwgbGluZSk7DQorICAgIGVsc2UN
-CisgICAgICAgIHMtPmlucHV0ICY9IH4oMSA8PCBsaW5lKTsNCit9DQorDQorc3RhdGljIHZvaWQg
-cGNmODU3NF9yZWFsaXplKERldmljZVN0YXRlICpkZXYsIEVycm9yICoqZXJycCkNCit7DQorICAg
-IFBDRjg1NzRTdGF0ZSAqcyA9IFBDRjg1NzQoZGV2KTsNCisNCisgICAgcWRldl9pbml0X2dwaW9f
-aW4oZGV2LCBwY2Y4NTc0X2dwaW9fc2V0LCBBUlJBWV9TSVpFKHMtPmhhbmRsZXIpKTsNCisgICAg
-cWRldl9pbml0X2dwaW9fb3V0KGRldiwgcy0+aGFuZGxlciwgQVJSQVlfU0laRShzLT5oYW5kbGVy
-KSk7DQorfQ0KKw0KK3N0YXRpYyB2b2lkIHBjZjg1NzRfY2xhc3NfaW5pdChPYmplY3RDbGFzcyAq
-a2xhc3MsIHZvaWQgKmRhdGEpDQorew0KKyAgICBEZXZpY2VDbGFzcyAgICpkYyA9IERFVklDRV9D
-TEFTUyhrbGFzcyk7DQorICAgIEkyQ1NsYXZlQ2xhc3MgKmsgID0gSTJDX1NMQVZFX0NMQVNTKGts
-YXNzKTsNCisNCisgICAgay0+cmVjdiAgICAgPSBwY2Y4NTc0X3J4Ow0KKyAgICBrLT5zZW5kICAg
-ICA9IHBjZjg1NzRfdHg7DQorICAgIGRjLT5yZWFsaXplID0gcGNmODU3NF9yZWFsaXplOw0KKyAg
-ICBkYy0+cmVzZXQgICA9IHBjZjg1NzRfcmVzZXQ7DQorICAgIGRjLT52bXNkICAgID0gJnZtc3Rh
-dGVfcGNmODU3NDsNCit9DQorDQorc3RhdGljIGNvbnN0IFR5cGVJbmZvIHBjZjg1NzRfaW5mbyA9
-IHsNCisgICAgLm5hbWUgICAgICAgICAgPSBUWVBFX1BDRjg1NzQsDQorICAgIC5wYXJlbnQgICAg
-ICAgID0gVFlQRV9JMkNfU0xBVkUsDQorICAgIC5pbnN0YW5jZV9zaXplID0gc2l6ZW9mKFBDRjg1
-NzRTdGF0ZSksDQorICAgIC5jbGFzc19pbml0ICAgID0gcGNmODU3NF9jbGFzc19pbml0LA0KK307
-DQorDQorc3RhdGljIHZvaWQgcGNmODU3NF9yZWdpc3Rlcl90eXBlcyh2b2lkKQ0KK3sNCisgICAg
-dHlwZV9yZWdpc3Rlcl9zdGF0aWMoJnBjZjg1NzRfaW5mbyk7DQorfQ0KKw0KK3R5cGVfaW5pdChw
-Y2Y4NTc0X3JlZ2lzdGVyX3R5cGVzKQ0KZGlmZiAtLWdpdCBhL2luY2x1ZGUvaHcvZ3Bpby9wY2Y4
-NTc0LmggYi9pbmNsdWRlL2h3L2dwaW8vcGNmODU3NC5oDQpuZXcgZmlsZSBtb2RlIDEwMDY0NA0K
-aW5kZXggMDAwMDAwMDAwMC4uYzY5MGU3MzQ4Nw0KLS0tIC9kZXYvbnVsbA0KKysrIGIvaW5jbHVk
-ZS9ody9ncGlvL3BjZjg1NzQuaA0KQEAgLTAsMCArMSwxNSBAQA0KKy8qDQorICogTlhQIFBDRjg1
-NzQgOC1wb3J0IEkyQyBHUElPIGV4cGFuc2lvbiBjaGlwLg0KKyAqDQorICogQ29weXJpZ2h0IChj
-KSAyMDI0IEtOUyBHcm91cCAoWUFEUk8pLg0KKyAqIFdyaXR0ZW4gYnkgRG1pdHJpaSBTaGFyaWto
-aW4gPGQuc2hhcmlraGluQHlhZHJvLmNvbT4NCisgKg0KKyAqIFRoaXMgZmlsZSBpcyBsaWNlbnNl
-ZCB1bmRlciBHTlUgR1BMLg0KKyAqLw0KKw0KKyNpZm5kZWYgX0hXX0dQSU9fUENGODU3NA0KKyNk
-ZWZpbmUgX0hXX0dQSU9fUENGODU3NA0KKw0KKyNkZWZpbmUgVFlQRV9QQ0Y4NTc0ICJwY2Y4NTc0
-Ig0KKw0KKyNlbmRpZiAvKiBfSFdfR1BJT19QQ0Y4NTc0ICovDQotLSANCjIuMzkuMg0KDQo=
+On 18/01/2024 15.48, Zhao Liu wrote:
+> From: Zhao Liu <zhao1.liu@intel.com>
+> 
+> Use MAX_CPUS/MIN_CPUS micros in invalid topology case. This gives us the
+
+s/micros/macros/
+
+Apart from that typo, FWIW:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+> flexibility to change the maximum and minimum CPU limits.
+> 
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>   tests/unit/test-smp-parse.c | 22 ++++++++++++++--------
+>   1 file changed, 14 insertions(+), 8 deletions(-)
+> 
+> diff --git a/tests/unit/test-smp-parse.c b/tests/unit/test-smp-parse.c
+> index 24972666a74d..20c663a006b3 100644
+> --- a/tests/unit/test-smp-parse.c
+> +++ b/tests/unit/test-smp-parse.c
+> @@ -323,15 +323,21 @@ static const struct SMPTestData data_generic_invalid[] = {
+>                           "sockets (2) * cores (4) * threads (2) "
+>                           "== maxcpus (16) < smp_cpus (18)",
+>       }, {
+> -        /* config: -smp 1
+> -         * should tweak the supported min CPUs to 2 for testing */
+> -        .config = SMP_CONFIG_GENERIC(T, 1, F, 0, F, 0, F, 0, F, 0),
+> +        /*
+> +         * config: -smp 1
+> +         * The test machine should tweak the supported min CPUs to
+> +         * 2 (MIN_CPUS + 1) for testing.
+> +         */
+> +        .config = SMP_CONFIG_GENERIC(T, MIN_CPUS, F, 0, F, 0, F, 0, F, 0),
+>           .expect_error = "Invalid SMP CPUs 1. The min CPUs supported "
+>                           "by machine '" SMP_MACHINE_NAME "' is 2",
+>       }, {
+> -        /* config: -smp 512
+> -         * should tweak the supported max CPUs to 511 for testing */
+> -        .config = SMP_CONFIG_GENERIC(T, 512, F, 0, F, 0, F, 0, F, 0),
+> +        /*
+> +         * config: -smp 512
+> +         * The test machine should tweak the supported max CPUs to
+> +         * 511 (MAX_CPUS - 1) for testing.
+> +         */
+> +        .config = SMP_CONFIG_GENERIC(T, MAX_CPUS, F, 0, F, 0, F, 0, F, 0),
+>           .expect_error = "Invalid SMP CPUs 512. The max CPUs supported "
+>                           "by machine '" SMP_MACHINE_NAME "' is 511",
+>       },
+> @@ -575,8 +581,8 @@ static void machine_generic_invalid_class_init(ObjectClass *oc, void *data)
+>       MachineClass *mc = MACHINE_CLASS(oc);
+>   
+>       /* Force invalid min CPUs and max CPUs */
+> -    mc->min_cpus = 2;
+> -    mc->max_cpus = 511;
+> +    mc->min_cpus = MIN_CPUS + 1;
+> +    mc->max_cpus = MAX_CPUS - 1;
+>   }
+>   
+>   static void machine_with_dies_class_init(ObjectClass *oc, void *data)
+
 
