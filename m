@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 068F9C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 20:06:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21848C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 20:12:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg98J-0007vO-66; Fri, 01 Mar 2024 15:05:29 -0500
+	id 1rg9E8-00024m-BK; Fri, 01 Mar 2024 15:11:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rg987-0007uR-9k
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 15:05:15 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rg985-0008Me-4X
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 15:05:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709323511;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=K8ROXt87b41leJzrs1qawudk/3ANLOKhm3rIOBD7Src=;
- b=acr09A4Cyl+EnrUVyHCzYDgz+SUMBnudgZrwCPv59CzGPXHZkStGeiKi574C6fkEwPHUPf
- qIQ/cUFwevme4j91/WJLfvm0j8R2wlMMdzg/U4QyAWhkvkmhvHMk0ESPwi7NHz5Bzq8loj
- LF7/ZrfduaiuA03R2iU6t/iQGcG+wbs=
-Received: from mail-yb1-f197.google.com (mail-yb1-f197.google.com
- [209.85.219.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-601-M_0S8UrcMdCdQPmp11OloA-1; Fri, 01 Mar 2024 15:05:09 -0500
-X-MC-Unique: M_0S8UrcMdCdQPmp11OloA-1
-Received: by mail-yb1-f197.google.com with SMTP id
- 3f1490d57ef6-dcc05887ee9so3835797276.1
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 12:05:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rg9E6-00023h-Ob
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 15:11:26 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rg9E5-0001Kh-8h
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 15:11:26 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-6d9f94b9186so2394995b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 12:11:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709323883; x=1709928683; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=73XN9iZT7cxSnt+vHjRMw2eTqfLQwELsWFvFIN++fxI=;
+ b=GNpWH8oiocEhkTj2oQhTEKT65YfrP1XucdDPue73UJl7jB7AlMX3w7rd89NvVcJPkF
+ /ZzZyNzudV7eQUydZ6ZAvbaesz5rrVZDbt24084vne6z1VueYi/VYBslYmh23WJ3nwvD
+ p1jbO7aVosOfZ1YuRbMLDU8ENFULPP3dYlNmwdIpwlmq61U1GK/V0WeMD77hv/DG/fA1
+ 5FcHOBRkjsxh1C6HIq2L2L553swgHo1/GYpmHiEX2nQKat8yb1cUikDsI4o4Ix3uYUg8
+ +E0MpQm7X+FMcZHB0YGqD3CBzX5gFxe32xl1AdLDjcCzyHccD4jo2QrmJLVwUZrzmzvH
+ jbFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709323509; x=1709928309;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=K8ROXt87b41leJzrs1qawudk/3ANLOKhm3rIOBD7Src=;
- b=pQiqcE46vuGrx0+YGwIc/Q9k1gstblwMh5DW+5It9TDmngNQ2YvNvH7+5j446cUbM6
- d4ZbirvAGkNJ0w1L0KrAO8JoyXKbAWC+2mLwUgVg++zNU2T5BHPIpADuGnapJo0HIBnr
- BV5CcyQqdlZX9A2bVOA0Th9eMsfNHGujMfYACNt9NCucej52xfNk01hSUMOqs/hbFjOx
- DGIlFE27hH3gVh14CmZ7OHLHbKfA+x1lndPf9MAFK2wJcshPAQgkvdolImJby7kuIZSQ
- pMEQnaP4YDviXDDZuS7Eo3KmYY5kadnPj1nQEh2jiftSXllyb903NjcKzAdYZKQrbzhX
- BzjA==
-X-Gm-Message-State: AOJu0Yw8i4O3qE4YVd015sabXU4yJEwxVWnInNmVDNNHQVsO3zz6Ra06
- Jwo8dQbou+qIXqLxQdrk4Ef/MT0KZ3TXLTbvGyfXpoRbVnckuPwaPUuhSVvbQVZm1gJqXXleZXS
- HvOX8MlxLwKLimA6w3fH+ZqCQbvCelcm2Qz69BebCLEfELO+Y7wnzEHVS00E9V4uDpV4RtWcv+5
- YSHlXTOeLJSY8V90diSfWk92SJTxo=
-X-Received: by 2002:a25:d092:0:b0:dcd:a28e:e5e0 with SMTP id
- h140-20020a25d092000000b00dcda28ee5e0mr2451346ybg.25.1709323509330; 
- Fri, 01 Mar 2024 12:05:09 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE5TcnCVv6iSZnCkGwsdCpzXD9prVZ0M6KM4DYmuVzRCgZBCAOHCwn7854IQHOU8gcLVdj6jPCYMzve35ofmOU=
-X-Received: by 2002:a25:d092:0:b0:dcd:a28e:e5e0 with SMTP id
- h140-20020a25d092000000b00dcda28ee5e0mr2451321ybg.25.1709323509061; Fri, 01
- Mar 2024 12:05:09 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709323883; x=1709928683;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=73XN9iZT7cxSnt+vHjRMw2eTqfLQwELsWFvFIN++fxI=;
+ b=Be5QIaRa84NgI6YpPI0CtyQZBHpWRwB8OALTaazfKPovA2/yoK7NAo77dkCYMbeeAB
+ 3U2Edql7hrSQSntGQWWTLfyt0iq7a61AVibi+W40IPRU9ifLWJvsEMK9IQ8GZMNNX4I1
+ 1jf8GvqTU0AgP96bnQzJ6ix7K5OPDzPSDR1LjBvM1q3qG5IlumelLk1yZkukpaO75PJy
+ XB/5BQfzqSm80Hw4Dstitxkr0ypByAzRcrNpTGcPbk33t4IaF8d4gVFpHK4QD6U3L2L1
+ KmSAt1LJP3XmXoRc4CX0BtkZAGs/v6o2mFX3PA5z5yCOuYZFWOMad04Hx99Ct4yJ3Vch
+ h1LA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUAYI7B6SEuziTKLkRqN+TNFvb5n84dBXCtkR4G5rVl3ExCz3FUlYq6+6ybsKy2mFfnhS2gCHP8QXUghbLRx2mvMHilPnk=
+X-Gm-Message-State: AOJu0YzKdXFEfmRAFeRz91iuNLOUVNDrRljbaSTDf6JQ9FYbmNTB5MYF
+ 1lvTzThGMA6x66EQkODmfWOLPRnvLxurJLyWatAlSe6UuzuuFkvLBHRFGzaPbIE=
+X-Google-Smtp-Source: AGHT+IF5wr4s+AUWDtFOHdFImWZFVUb0wAPySNNzjgFPbbO51xgkHYRUyLjwpiR/m3ABu4v41YoOmw==
+X-Received: by 2002:a05:6a20:b2a9:b0:19e:a1a2:60f6 with SMTP id
+ ei41-20020a056a20b2a900b0019ea1a260f6mr2209394pzb.57.1709323883220; 
+ Fri, 01 Mar 2024 12:11:23 -0800 (PST)
+Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
+ [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
+ c6-20020aa78806000000b006e53cc789c3sm3349553pfo.107.2024.03.01.12.11.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 01 Mar 2024 12:11:22 -0800 (PST)
+Message-ID: <6fa95443-3eae-4192-92e7-89f916aa793c@linaro.org>
+Date: Fri, 1 Mar 2024 10:11:19 -1000
 MIME-Version: 1.0
-References: <20240301134330.4191007-1-jonah.palmer@oracle.com>
- <20240301134330.4191007-8-jonah.palmer@oracle.com>
-In-Reply-To: <20240301134330.4191007-8-jonah.palmer@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Fri, 1 Mar 2024 21:04:33 +0100
-Message-ID: <CAJaqyWfUk4m6pJGmGN9A5k7Eqb=eDjVk26udo_hanCOv9FjHEw@mail.gmail.com>
-Subject: Re: [RFC 7/8] vhost/vhost-user: Add VIRTIO_F_NOTIFICATION_DATA to
- vhost feature bits
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, jasowang@redhat.com, 
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com, raphael@enfabrica.net, 
- kwolf@redhat.com, hreitz@redhat.com, pasic@linux.ibm.com, 
- borntraeger@linux.ibm.com, farman@linux.ibm.com, thuth@redhat.com, 
- richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com, 
- cohuck@redhat.com, pbonzini@redhat.com, fam@euphon.net, stefanha@redhat.com, 
- qemu-block@nongnu.org, qemu-s390x@nongnu.org, virtio-fs@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] hw/i386/pc: Remove pc_compat_1_4..1.7[] left over
+ declarations
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Bernhard Beschow <shentey@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20240301185936.95175-1-philmd@linaro.org>
+ <20240301185936.95175-2-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240301185936.95175-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,130 +103,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 1, 2024 at 2:44=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.co=
-m> wrote:
->
-> Add support for the VIRTIO_F_NOTIFICATION_DATA feature across a variety
-> of vhost devices.
->
-> The inclusion of VIRTIO_F_NOTIFICATION_DATA in the feature bits arrays
-> for these devices ensures that the backend is capable of offering and
-> providing support for this feature, and that it can be disabled if the
-> backend does not support it.
->
-> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+On 3/1/24 08:59, Philippe Mathieu-Daudé wrote:
+> These definitions were removed in commit ea985d235b
+> ("pc_piix: remove pc-i440fx-1.4 up to pc-i440fx-1.7").
+> 
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->  hw/block/vhost-user-blk.c    | 1 +
->  hw/net/vhost_net.c           | 2 ++
->  hw/scsi/vhost-scsi.c         | 1 +
->  hw/scsi/vhost-user-scsi.c    | 1 +
->  hw/virtio/vhost-user-fs.c    | 2 +-
->  hw/virtio/vhost-user-vsock.c | 1 +
->  net/vhost-vdpa.c             | 1 +
->  7 files changed, 8 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-> index 6a856ad51a..983c0657da 100644
-> --- a/hw/block/vhost-user-blk.c
-> +++ b/hw/block/vhost-user-blk.c
-> @@ -51,6 +51,7 @@ static const int user_feature_bits[] =3D {
->      VIRTIO_F_RING_PACKED,
->      VIRTIO_F_IOMMU_PLATFORM,
->      VIRTIO_F_RING_RESET,
-> +    VIRTIO_F_NOTIFICATION_DATA,
->      VHOST_INVALID_FEATURE_BIT
->  };
->
-> diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-> index e8e1661646..bb1f975b39 100644
-> --- a/hw/net/vhost_net.c
-> +++ b/hw/net/vhost_net.c
-> @@ -48,6 +48,7 @@ static const int kernel_feature_bits[] =3D {
->      VIRTIO_F_IOMMU_PLATFORM,
->      VIRTIO_F_RING_PACKED,
->      VIRTIO_F_RING_RESET,
-> +    VIRTIO_F_NOTIFICATION_DATA,
->      VIRTIO_NET_F_HASH_REPORT,
->      VHOST_INVALID_FEATURE_BIT
->  };
-> @@ -55,6 +56,7 @@ static const int kernel_feature_bits[] =3D {
->  /* Features supported by others. */
->  static const int user_feature_bits[] =3D {
->      VIRTIO_F_NOTIFY_ON_EMPTY,
-> +    VIRTIO_F_NOTIFICATION_DATA,
->      VIRTIO_RING_F_INDIRECT_DESC,
->      VIRTIO_RING_F_EVENT_IDX,
->
+>   include/hw/i386/pc.h | 12 ------------
+>   1 file changed, 12 deletions(-)
 
-vdpa_feature_bits also needs this feature bit added.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Apart from that,
-
-Reviewed-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
-
-> diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
-> index 58a00336c2..b8048f18e9 100644
-> --- a/hw/scsi/vhost-scsi.c
-> +++ b/hw/scsi/vhost-scsi.c
-> @@ -38,6 +38,7 @@ static const int kernel_feature_bits[] =3D {
->      VIRTIO_RING_F_EVENT_IDX,
->      VIRTIO_SCSI_F_HOTPLUG,
->      VIRTIO_F_RING_RESET,
-> +    VIRTIO_F_NOTIFICATION_DATA,
->      VHOST_INVALID_FEATURE_BIT
->  };
->
-> diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
-> index a63b1f4948..0b050805a8 100644
-> --- a/hw/scsi/vhost-user-scsi.c
-> +++ b/hw/scsi/vhost-user-scsi.c
-> @@ -36,6 +36,7 @@ static const int user_feature_bits[] =3D {
->      VIRTIO_RING_F_EVENT_IDX,
->      VIRTIO_SCSI_F_HOTPLUG,
->      VIRTIO_F_RING_RESET,
-> +    VIRTIO_F_NOTIFICATION_DATA,
->      VHOST_INVALID_FEATURE_BIT
->  };
->
-> diff --git a/hw/virtio/vhost-user-fs.c b/hw/virtio/vhost-user-fs.c
-> index cca2cd41be..ae48cc1c96 100644
-> --- a/hw/virtio/vhost-user-fs.c
-> +++ b/hw/virtio/vhost-user-fs.c
-> @@ -33,7 +33,7 @@ static const int user_feature_bits[] =3D {
->      VIRTIO_F_RING_PACKED,
->      VIRTIO_F_IOMMU_PLATFORM,
->      VIRTIO_F_RING_RESET,
-> -
-> +    VIRTIO_F_NOTIFICATION_DATA,
->      VHOST_INVALID_FEATURE_BIT
->  };
->
-> diff --git a/hw/virtio/vhost-user-vsock.c b/hw/virtio/vhost-user-vsock.c
-> index 9431b9792c..802b44a07d 100644
-> --- a/hw/virtio/vhost-user-vsock.c
-> +++ b/hw/virtio/vhost-user-vsock.c
-> @@ -21,6 +21,7 @@ static const int user_feature_bits[] =3D {
->      VIRTIO_RING_F_INDIRECT_DESC,
->      VIRTIO_RING_F_EVENT_IDX,
->      VIRTIO_F_NOTIFY_ON_EMPTY,
-> +    VIRTIO_F_NOTIFICATION_DATA,
->      VHOST_INVALID_FEATURE_BIT
->  };
->
-> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-> index 3726ee5d67..2827d29ce7 100644
-> --- a/net/vhost-vdpa.c
-> +++ b/net/vhost-vdpa.c
-> @@ -62,6 +62,7 @@ const int vdpa_feature_bits[] =3D {
->      VIRTIO_F_RING_PACKED,
->      VIRTIO_F_RING_RESET,
->      VIRTIO_F_VERSION_1,
-> +    VIRTIO_F_NOTIFICATION_DATA,
->      VIRTIO_NET_F_CSUM,
->      VIRTIO_NET_F_CTRL_GUEST_OFFLOADS,
->      VIRTIO_NET_F_CTRL_MAC_ADDR,
-> --
-> 2.39.3
->
-
+r~
 
