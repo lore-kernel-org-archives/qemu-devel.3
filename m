@@ -4,49 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 368D5C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 18:13:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE221C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 18:30:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg7NB-0004Tg-PN; Fri, 01 Mar 2024 13:12:42 -0500
+	id 1rg7dh-0005fD-CJ; Fri, 01 Mar 2024 13:29:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rg7N9-0004Sq-IZ
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 13:12:39 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rg7N7-00050H-EW
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 13:12:39 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 1EFA44E6013;
- Fri,  1 Mar 2024 19:12:31 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id YV6P0doiTqEV; Fri,  1 Mar 2024 19:12:29 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 332754E602B; Fri,  1 Mar 2024 19:12:29 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH] hmp: Add option to info qtree to omit details
-Date: Fri, 01 Mar 2024 19:05:22 +0100
+ (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
+ id 1rg7df-0005ew-Ie
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 13:29:43 -0500
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
+ id 1rg7dd-0007b6-RK
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 13:29:43 -0500
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-5cedfc32250so2087706a12.0
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 10:29:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1709317780; x=1709922580; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=F9rBoDsklV4sSaDJ2Nxyv8Sw67xMTR9cFJkVXYHHzGM=;
+ b=mFX+Fp/xin1ykNKroxW0qjmYhZ3N9eiU7Rtmi00MAU43Fm5J3kehhhgW+/vNF8wrPZ
+ R8MXZhswDrcBwgus0VaT/7B6jkZ2jOm/blbffmc5sCNTC7UsjJiYI/R37BaJGad39JKQ
+ 2qCdnyN7GzoMPDl8CPeB3bRDRjVRPiZzKOavxui+VygyeMdu5AASQZ3m4lQ9g27x72B6
+ bs0IVloym7mFgwe1UlhsizldwFj8EC6I4/2JdpVhIVsHCiJNXbLQBfMNX/j6rPLQMyn+
+ s/sYg3lpai0CByr/P9//Azr+tpnGa4TkR1S+e2g4bpggg1UOHdV1RzNLCFM878+4SF97
+ N5Kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709317780; x=1709922580;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=F9rBoDsklV4sSaDJ2Nxyv8Sw67xMTR9cFJkVXYHHzGM=;
+ b=s5O0pxPYpOliShiStMQ9+nwX4IeOcXlWMfrRXqG4PzVpSuVvHtAI+UFsM+T+UW3G1o
+ CqhgVxC2fjiLlPPGE36sAGXy1YuE73hngxfSGApobwK7VyD4YoK6ai87+DRCcuByEN4k
+ 9f7ljpWo1c5DgdivO7Z6BwJJfA2rAFmiO+Cq3iHFNHqfqQgtwlOxVtceiWII0p+/rz7e
+ Da8au1CyNnm6zQ/6xoBP0SicW4aHHvXmIUTs7TYm6LPP1eGd1F/x/WxbIiYCYceMyas6
+ 0tmyxX8AX/QKT8QeF1nttPMxn5HAQCiaKMx7VbCuv5Rn+/xTcLIl0K/G0/k4PILMvuUi
+ UThA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUpNWwy7l6rx0Nmlg9Xc6IKCm2hLRfK4bIiJ++wKPBSK2Dl4+LntMJBFLELzlXRlz3KRT6R+fDjcbrTt2hjkl7Zm412R00=
+X-Gm-Message-State: AOJu0Yy5Ktp/onT8pOVffAIsKkOo/hyvwRwY73mgZKQ1zL1ZASwUTQva
+ 5yyCsszex4ov5PLsawFllOd1CFm0Efx7Ir4POq39nzEahaQRFeqvknzKSbgKN5U=
+X-Google-Smtp-Source: AGHT+IE3cy8gJ+sdyVvdC0m6IVxwdGAhmSCGDsnQdrZBAVC1ZLYXDrIhO+vLQOiZiD+KVsAg0QhPKg==
+X-Received: by 2002:a17:90b:23d0:b0:29a:c21c:674d with SMTP id
+ md16-20020a17090b23d000b0029ac21c674dmr2483294pjb.14.1709317780255; 
+ Fri, 01 Mar 2024 10:29:40 -0800 (PST)
+Received: from valdaarhun.localnet ([223.233.80.13])
+ by smtp.gmail.com with ESMTPSA id
+ gf18-20020a17090ac7d200b0029a45b28d43sm3608260pjb.14.2024.03.01.10.29.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 01 Mar 2024 10:29:39 -0800 (PST)
+From: Sahil <icegambit91@gmail.com>
+To: Eugenio Perez Martin <eperezma@redhat.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>,
+ qemu-level <qemu-devel@nongnu.org>
+Subject: Re: Intention to work on GSoC project
+Date: Fri, 01 Mar 2024 23:59:34 +0530
+Message-ID: <6022175.lOV4Wx5bFT@valdaarhun>
+In-Reply-To: <CAJaqyWfOaYmX-6qo-O2xWjge5av_2MDLnQVO41XLskLQC6nXsQ@mail.gmail.com>
+References: <13625712.uLZWGnKmhe@valdaarhun>
+ <CAGxU2F4jx5m5_ijNoWZpVK_MepvtDBY8L70-dSZmRUPmTskCNw@mail.gmail.com>
+ <CAJaqyWfOaYmX-6qo-O2xWjge5av_2MDLnQVO41XLskLQC6nXsQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: qemu-devel@nongnu.org
-Cc: Dr David Alan Gilbert <dave@treblig.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- berrange@redhat.com
-Message-Id: <20240301181229.332754E602B@zero.eik.bme.hu>
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=icegambit91@gmail.com; helo=mail-pg1-x535.google.com
+X-Spam_score_int: 15
+X-Spam_score: 1.5
+X-Spam_bar: +
+X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,102 +99,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The output of info qtree monitor command is very long. Add an option
-to print a brief overview omitting all the details.
+Hi,
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
- hmp-commands-info.hx  |  6 +++---
- system/qdev-monitor.c | 24 +++++++++++++-----------
- 2 files changed, 16 insertions(+), 14 deletions(-)
+On Friday, March 1, 2024 1:10:49 PM IST you wrote:
+> [...]
+> You can add the recently published
+> "virtio-live-migration-technical-deep-dive" :) [1].
+> 
+> [1]
+> https://developers.redhat.com/articles/2024/02/21/virtio-live-migration-technical-deep-dive
 
-diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-index da120f82a3..ad1b1306e3 100644
---- a/hmp-commands-info.hx
-+++ b/hmp-commands-info.hx
-@@ -540,9 +540,9 @@ ERST
- 
-     {
-         .name       = "qtree",
--        .args_type  = "",
--        .params     = "",
--        .help       = "show device tree",
-+        .args_type  = "brief:-b",
-+        .params     = "[-b]",
-+        .help       = "show device tree (-b: brief, omit properties)",
-         .cmd        = hmp_info_qtree,
-     },
- 
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index a13db763e5..d5cef36800 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -744,7 +744,6 @@ DeviceState *qdev_device_add(QemuOpts *opts, Error **errp)
- }
- 
- #define qdev_printf(fmt, ...) monitor_printf(mon, "%*s" fmt, indent, "", ## __VA_ARGS__)
--static void qbus_print(Monitor *mon, BusState *bus, int indent);
- 
- static void qdev_print_props(Monitor *mon, DeviceState *dev, Property *props,
-                              int indent)
-@@ -784,13 +783,9 @@ static void bus_print_dev(BusState *bus, Monitor *mon, DeviceState *dev, int ind
- static void qdev_print(Monitor *mon, DeviceState *dev, int indent)
- {
-     ObjectClass *class;
--    BusState *child;
-     NamedGPIOList *ngl;
-     NamedClockList *ncl;
- 
--    qdev_printf("dev: %s, id \"%s\"\n", object_get_typename(OBJECT(dev)),
--                dev->id ? dev->id : "");
--    indent += 2;
-     QLIST_FOREACH(ngl, &dev->gpios, node) {
-         if (ngl->num_in) {
-             qdev_printf("gpio-in \"%s\" %d\n", ngl->name ? ngl->name : "",
-@@ -814,12 +809,9 @@ static void qdev_print(Monitor *mon, DeviceState *dev, int indent)
-         class = object_class_get_parent(class);
-     } while (class != object_class_by_name(TYPE_DEVICE));
-     bus_print_dev(dev->parent_bus, mon, dev, indent);
--    QLIST_FOREACH(child, &dev->child_bus, sibling) {
--        qbus_print(mon, child, indent);
--    }
- }
- 
--static void qbus_print(Monitor *mon, BusState *bus, int indent)
-+static void qbus_print(Monitor *mon, BusState *bus, int indent, bool details)
- {
-     BusChild *kid;
- 
-@@ -827,16 +819,26 @@ static void qbus_print(Monitor *mon, BusState *bus, int indent)
-     indent += 2;
-     qdev_printf("type %s\n", object_get_typename(OBJECT(bus)));
-     QTAILQ_FOREACH(kid, &bus->children, sibling) {
-+        BusState *child_bus;
-         DeviceState *dev = kid->child;
--        qdev_print(mon, dev, indent);
-+        qdev_printf("dev: %s, id \"%s\"\n", object_get_typename(OBJECT(dev)),
-+                    dev->id ? dev->id : "");
-+        if (details) {
-+            qdev_print(mon, dev, indent + 2);
-+        }
-+        QLIST_FOREACH(child_bus, &dev->child_bus, sibling) {
-+            qbus_print(mon, child_bus, indent + 2, details);
-+        }
-     }
- }
- #undef qdev_printf
- 
- void hmp_info_qtree(Monitor *mon, const QDict *qdict)
- {
-+    bool brief = qdict_get_try_bool(qdict, "brief", false);
-+
-     if (sysbus_get_default())
--        qbus_print(mon, sysbus_get_default(), 0);
-+        qbus_print(mon, sysbus_get_default(), 0, !brief);
- }
- 
- void hmp_info_qdm(Monitor *mon, const QDict *qdict)
--- 
-2.30.9
+Thank you. This resource will help me cover a lot of ground.
+
+> [...]
+> There are few other tasks pending for QEMU in general and SVQ in
+> particular. I'll add them as gitlab issues by today.
+> 
+
+That would be nice. I'll keep an eye out for the new issues.
+
+Thanks,
+Sahil
+
+
 
 
