@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8785C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 23:13:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A17E5C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 23:15:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgBxd-0004rO-Oy; Fri, 01 Mar 2024 18:06:41 -0500
+	id 1rgByB-0005Xe-4n; Fri, 01 Mar 2024 18:07:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgBxY-0004qh-19
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:06:32 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1rgBy5-0005GP-JN
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:07:06 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgBxW-0004Cx-IR
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:06:31 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-1dc1e7c0e29so10569485ad.1
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 15:06:30 -0800 (PST)
+ id 1rgBy4-0004JU-2c
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:07:05 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1dca8b86ee7so25633895ad.2
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 15:07:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709334389; x=1709939189; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709334422; x=1709939222; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=0IQWSjcLXc40VTcQlmdhU2o876C5B7NqB15Y8LB3+3A=;
- b=nOf4jPsqFqYBsTdgCrg4Y6c4SGVpaJ5NSqdzpNIQCugZ/oVp2OgE29WoJqQBgq7fsE
- qtrW4rSK7QLa19bPUEQTL6L2kMXBLEsR1tvgPyLn66JdfL3ShPBvRixMU7XVnZEpKUFO
- xJRYGTicvGdydqQNp/CAjUHrmdJE9fcEdkt2YEK8IeomIXzUr2HL3LzY0m0fQk+A9Doz
- 6dSiIk5CPRqysCJPgbH2IbtIWN70qDToD2pOSkzOSmakltmGZErA+NGdPpWYx5Oja9wB
- eN5CBlkkp4YBhsNdXmNxOYu/A++4xY6+2P7fs3J5nEi03efAulx8dFlRqPm8qEXPThtJ
- KYVg==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=K5KQN5vcI0KBxXe8ErUYFGLj7ZU4KIuwkr3avJe+C4E=;
+ b=MkwIIK/hIwNe3EivDUniCDfh/yvahtYbkCUjNJM3FMw71NbcP2T6BVUHaP6JjCG4r6
+ SqmCYQALDc+sSo4sd6v/oh8aJA19DGMHAOTKgd8GeHHa/mSvZnzcwDJ+CfVNTSwsTyjp
+ Zq+BAn3aSgKsrRl7/gfyj6x71NPUa8BQgTXrcMwbJP1X5CPI4IPLdxVSgFDhzzcvGPCO
+ ZpWwACjpU4y59LSDMorz0WSazWIyn3QgwVU5Pg6mHHZq4Vo2FltEz5cvBnDTnLlEQW9S
+ u+/RldH1FcWYJINLaQ3Z7g5e5701udbk8xZ9q6OiJiadAslGQeFcYOf+Mp5tMzalzSMt
+ 2G5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709334389; x=1709939189;
+ d=1e100.net; s=20230601; t=1709334422; x=1709939222;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0IQWSjcLXc40VTcQlmdhU2o876C5B7NqB15Y8LB3+3A=;
- b=pgFQ2VvvIY+U8BGWMxpT4aeBZbk95eikuEGHYpj+LGm5niGEdyK6P2w9IGFjNTH3S1
- EAHfWU4L8+AyLqUz38oO60+YdV3dMOedXmomIk4JLnmHKJE6ayp6o7vVVJvPAnL62ApY
- 3nQoGH8PXb+cE5E8SLDScuRYw8bdWHz1xv92O+xXk5uk948hRHINJWq83RjdVcBZCZyF
- vz1DrrL0+67rkw8+hdL8xbRHnjKy4GCOpB8mindDWHAgiAVG0IsZuHLeZwVH7BVTcld+
- 5Pt2VPp52bE53a2fUIRSSAiQKCtHt/GMuadq0dYiHngnOi/nWJ31uWqOtHFLTWkGTFe/
- GjoA==
-X-Gm-Message-State: AOJu0YwzIdOtDsNE9wEACqfzeStOIM7d2ZSBl74RuBhNCS8td8HFT2sD
- DBYmEvmsP4aJ6wgByGpoFEmIWzeyHyFhnY+cTqrUUW5SRYAOTxRVA4qhZ6YO1Zdn7+p9J7R316P
- O
-X-Google-Smtp-Source: AGHT+IEEw3XfmaIBx87z4X+Xs1ZMq78KUA65W6HSk+0eSyi0Qv6/hf/iLd6jkT/CITzPkW33XMt6Ew==
-X-Received: by 2002:a17:903:187:b0:1dc:adb2:628c with SMTP id
- z7-20020a170903018700b001dcadb2628cmr4097679plg.34.1709334388934; 
- Fri, 01 Mar 2024 15:06:28 -0800 (PST)
+ bh=K5KQN5vcI0KBxXe8ErUYFGLj7ZU4KIuwkr3avJe+C4E=;
+ b=ISMjJ7XhXSxwUAiKGmuE/HWE7Ok2fDYFQGfRHCMuxCTZ8vHx1/nHU9AIdJ80+9IfuW
+ b3t9EdIZ43p0YYSOYK27q+LbkwEft+R3QBII4pXNYaVyR7r8eIPsAM7Tk9SBo+49uQYW
+ A4SfLTMfEfrwBeVin6selK4mVM4IBM9VAYXyxm9yaLDwU5iRjbyowwbH9+6kSM39s2uP
+ xQ2AO60w21XLlblLUQ2tA7zXdMPL5dCjb3GgHPY6+QrV8/EXIkFk/1AMXH8tbGw32W52
+ rJ1i8lmNh9i+q5vzy+M9D7lMc4hXtOCmMne1BzSDQ7et7WJsYppABoEunACFO2avRNto
+ ga1g==
+X-Gm-Message-State: AOJu0YxDZ0/PxSylqD235vSpBbyn6rT/+afm9N1a8GkU4tw9/d86/KMl
+ S6YcXJ4f9vGFmpLqNpERfo1mPGnifC5CPk7xPwfvbljEAjYrsCBYdE8iFhfeYlo50ycz/BVA1LX
+ i
+X-Google-Smtp-Source: AGHT+IGmPx4UPkLIUdmegsfgoHP920HDGlgG5H2hJdEjF1ZIxG2jo+xYVxZujmckUxYVi3eF0nxMwA==
+X-Received: by 2002:a17:902:868f:b0:1dc:a82f:c6cb with SMTP id
+ g15-20020a170902868f00b001dca82fc6cbmr2864710plo.16.1709334421828; 
+ Fri, 01 Mar 2024 15:07:01 -0800 (PST)
 Received: from stoup.. (098-147-055-211.res.spectrum.com. [98.147.55.211])
  by smtp.gmail.com with ESMTPSA id
- lc11-20020a170902fa8b00b001dc668e145asm3988580plb.200.2024.03.01.15.06.27
- for <qemu-devel@nongnu.org>
+ lc11-20020a170902fa8b00b001dc668e145asm3988580plb.200.2024.03.01.15.07.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Mar 2024 15:06:28 -0800 (PST)
+ Fri, 01 Mar 2024 15:07:01 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 05/60] linux-user/elfload: Latch errno before cleanup in
- elf_core_dump
-Date: Fri,  1 Mar 2024 13:05:24 -1000
-Message-Id: <20240301230619.661008-6-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Helge Deller <deller@gmx.de>
+Subject: [PATCH 28/60] linux-user: Remove HOST_PAGE_ALIGN from mmap.c
+Date: Fri,  1 Mar 2024 13:05:47 -1000
+Message-Id: <20240301230619.661008-29-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240301230619.661008-1-richard.henderson@linaro.org>
 References: <20240301230619.661008-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,51 +95,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On the off-chance that one of the cleanup functions changes
-errno, latch the errno that we want to return beforehand.
-
-Flush errno to 0 upon success, rather than at the beginning.
-No need to avoid negation of 0.
+This removes a hidden use of qemu_host_page_size, using instead
+the existing host_page_size local within each function.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Acked-by: Helge Deller <deller@gmx.de>
+Message-Id: <20240102015808.132373-11-richard.henderson@linaro.org>
 ---
- linux-user/elfload.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ linux-user/mmap.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 98b82b1a49..39d9ef9acc 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -4634,8 +4634,7 @@ static int elf_core_dump(int signr, const CPUArchState *env)
-     off_t offset = 0, data_offset = 0;
-     int segs = 0;
-     int fd = -1;
--
--    errno = 0;
-+    int ret;
+diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+index 53e5486cc8..d11f758d07 100644
+--- a/linux-user/mmap.c
++++ b/linux-user/mmap.c
+@@ -191,7 +191,7 @@ int target_mprotect(abi_ulong start, abi_ulong len, int target_prot)
  
-     if (prctl(PR_GET_DUMPABLE) == 0) {
-         return 0;
-@@ -4755,15 +4754,14 @@ static int elf_core_dump(int signr, const CPUArchState *env)
-                 goto out;
-         }
+     last = start + len - 1;
+     host_start = start & -host_page_size;
+-    host_last = HOST_PAGE_ALIGN(last) - 1;
++    host_last = ROUND_UP(last, host_page_size) - 1;
+     nranges = 0;
+ 
+     mmap_lock();
+@@ -389,8 +389,7 @@ abi_ulong mmap_find_vma(abi_ulong start, abi_ulong size, abi_ulong align)
+         start &= -host_page_size;
      }
-+    errno = 0;
- 
-  out:
-+    ret = -errno;
-     free_note_info(&info);
-     vma_delete(&mm);
--    (void) close(fd);
+     start = ROUND_UP(start, align);
 -
--    if (errno != 0)
--        return (-errno);
--    return (0);
-+    close(fd);
-+    return ret;
- }
- #endif /* USE_ELF_CORE_DUMP */
+-    size = HOST_PAGE_ALIGN(size);
++    size = ROUND_UP(size, host_page_size);
  
+     if (reserved_va) {
+         return mmap_find_vma_reserved(start, size, align);
+@@ -550,7 +549,7 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
+      */
+     if (!(flags & (MAP_FIXED | MAP_FIXED_NOREPLACE))) {
+         host_len = len + offset - host_offset;
+-        host_len = HOST_PAGE_ALIGN(host_len);
++        host_len = ROUND_UP(host_len, host_page_size);
+         start = mmap_find_vma(real_start, host_len, TARGET_PAGE_SIZE);
+         if (start == (abi_ulong)-1) {
+             errno = ENOMEM;
+@@ -595,7 +594,7 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
+         void *p;
+ 
+         host_len = len + offset - host_offset;
+-        host_len = HOST_PAGE_ALIGN(host_len);
++        host_len = ROUND_UP(host_len, host_page_size);
+         host_prot = target_to_host_prot(target_prot);
+ 
+         /* Note: we prefer to control the mapping address. */
+@@ -625,7 +624,7 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
+             goto fail;
+         }
+         last = start + len - 1;
+-        real_last = HOST_PAGE_ALIGN(last) - 1;
++        real_last = ROUND_UP(last, host_page_size) - 1;
+ 
+         /*
+          * Test if requested memory area fits target address space
+@@ -794,7 +793,7 @@ static int mmap_reserve_or_unmap(abi_ulong start, abi_ulong len)
+ 
+     last = start + len - 1;
+     real_start = start & -host_page_size;
+-    real_last = HOST_PAGE_ALIGN(last) - 1;
++    real_last = ROUND_UP(last, host_page_size) - 1;
+ 
+     /*
+      * If guest pages remain on the first or last host pages,
 -- 
 2.34.1
 
