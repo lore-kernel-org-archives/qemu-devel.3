@@ -4,92 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C6EDC54798
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 01:38:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6531C48BF6
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 01:44:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfrqV-00072Q-3u; Thu, 29 Feb 2024 20:37:55 -0500
+	id 1rfrw5-0008E1-55; Thu, 29 Feb 2024 20:43:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfrqT-00072A-DP
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 20:37:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfrw4-0008Dm-28
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 20:43:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfrqR-00042Y-UT
- for qemu-devel@nongnu.org; Thu, 29 Feb 2024 20:37:53 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rfrw2-000502-2n
+ for qemu-devel@nongnu.org; Thu, 29 Feb 2024 20:43:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709257070;
+ s=mimecast20190719; t=1709257417;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=63oYsEAvNqcByuDthn6v74H3iZYFylwDOaegU5/e6ro=;
- b=ScADoN4jI6LE7m3T+f+aMP83LX/CvymJsjk5TxzLmAfz3YDvVgUXKblEyWx6ORHjRDzrV4
- OvAm4SXxH3OFqqE9YxNNd3qBnEndNEeABtBEQbre9y8vCJ2MHVrEYYnQqwlOeM7jYnChe7
- +hH78TQWXevl6qys6SraBRCGXS3uQ1Y=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=fMvQcXfeSpZN+WU0P10PoJ1mOIt3MipilwZYJMeaV4Y=;
+ b=Cl5Vln5VpqTjUucu1R3UWyi1pyHa13QMHbg9ozPLhs7FHftcj+sXyCglsHZIz1SrJI3p4Z
+ /DyeEaCqyImdPrB+0FtXaR9DIOY8G1kn86XLEsqy82eUXUpS7G7zdG7ljAoj2yqGuwt0aa
+ I37pP9L/jI3SK9KmQiJHcZE/I61ejhI=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-146-P6NvWfQeO6W8slemNWv0PA-1; Thu, 29 Feb 2024 20:37:49 -0500
-X-MC-Unique: P6NvWfQeO6W8slemNWv0PA-1
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-299180d546bso338420a91.0
- for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 17:37:49 -0800 (PST)
+ us-mta-83-3Zax6bJDNvKSjEGMRXC-qg-1; Thu, 29 Feb 2024 20:43:35 -0500
+X-MC-Unique: 3Zax6bJDNvKSjEGMRXC-qg-1
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-1dc2d4c7310so2964705ad.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Feb 2024 17:43:35 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709257068; x=1709861868;
+ d=1e100.net; s=20230601; t=1709257414; x=1709862214;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=63oYsEAvNqcByuDthn6v74H3iZYFylwDOaegU5/e6ro=;
- b=lO3oQc8b4PfLRcIeUdJFPSpk0PkFb+rbens79GixteSKuHc8DxrKoUIxOhQqVXYl73
- VpFIunwouiMfK797LFmkFkZmX8GSmolhda3wDQM85bEGetW24k5BGz67eKKqbdSaBd+9
- cPWqwM5F0nvapqP30q1F7zCa5s6Vf6NpXZdsS9nQfQbbKD2wFaOTYmIECUZT6EA7MWTj
- hrIi+W7y0kY4oVqfU86VdxIW9QUHwT8HI1+W/cq40VXy4fN9KmYTf0IqYTrBVl5RBk9L
- IjvRE7hVQtYh3E4Qw9rZYmhruOG2bLpBqjF+FsWGrndLLge9DKUU9rEvBZj9B/e+X2I7
- 0cQw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW08fuzkWjscISmxjtp/i9z4gxfGQnwbryaurst8oI2nk5WQsdr54kwOlaPPyyIZVluEGtddHDKLZJskCoWnBdHOGn++v4=
-X-Gm-Message-State: AOJu0YxY6z8JNBHS1FyYCfUm+Fz/dqC0dA25q1eQ2CxixbtyuphaL/cP
- XEKzbwRTM1+NbLHT7DeHOGsnQcdDzqbz67MMz4o3iulvIlGghBs44xI8qPTtAcfFHwpl5GdY5nF
- l3FRHU+ETpriXBUpQIbwYrOBt/jMKUp5+sI/ksP+UJoAgM+E0vIsc2QVZpBP4
-X-Received: by 2002:a17:903:22c6:b0:1dc:6208:2e5a with SMTP id
- y6-20020a17090322c600b001dc62082e5amr277361plg.3.1709257068093; 
- Thu, 29 Feb 2024 17:37:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEzJj/cjoaVrLoEFuuCrBTcHzmFa6dyu8L1NlwPUQWSQclmcTpNINf/LMdWTd0sGvjyfz4p1g==
-X-Received: by 2002:a17:903:22c6:b0:1dc:6208:2e5a with SMTP id
- y6-20020a17090322c600b001dc62082e5amr277350plg.3.1709257067665; 
- Thu, 29 Feb 2024 17:37:47 -0800 (PST)
+ bh=fMvQcXfeSpZN+WU0P10PoJ1mOIt3MipilwZYJMeaV4Y=;
+ b=JFrKbZr3GrZR00D1/+tvAzlO5TYRYSFgkYP4/HNnxtkyY19Xozi3Ng2c3Xfhrv/Z1k
+ JT9UmTvVlNrovxsjp3CEwH1WRWb9o4q+hRt3v1arsNESCKspfGJ2Xx3khvvu2qCPRYZg
+ vgRi2USIuWT5SzyCZWUCge/oQMAMh7/aJ6vwX9gEBNBXnVX9j7/dnWQR7+2Ob3ZxvkyF
+ CqtqYHMCYDRS+CRVEoekUJwovN6xCLXxOR+rmZzBHI0inPza/AMZ3Pci4JoCn/+/jEC8
+ v9WQ1Ymg7SDdJqBii0cqoMrx5SKidCG+oKShjjH+xZygdewf4cfmCxeYwJ0ndX9x9c9V
+ KSNw==
+X-Gm-Message-State: AOJu0Yyq9ThezUEFwNfOOVADNceEoA9K09lHFZSDcKsBtVJnwRQ8aFXF
+ bcCkUPt8bYbW0+HoQ8Y4SIWxiY8jSThdnBBw9rMM9D0GYgdNU2s4bqIcEV5cg6xhHPeiDxWzh0u
+ fZQh073cg90rOvtLydhjyKHGIYaAxjjyDTvnajS7I9md+U5VjnxsX
+X-Received: by 2002:a17:902:d5cb:b0:1dc:51ac:88ef with SMTP id
+ g11-20020a170902d5cb00b001dc51ac88efmr261132plh.6.1709257414578; 
+ Thu, 29 Feb 2024 17:43:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHF3NUtPUfQ1QelBnDP0Ful3g668m27Z4zeebZ3sdFAryxpYSjao/m+GY9NgC+VDg2bFKfSAQ==
+X-Received: by 2002:a17:902:d5cb:b0:1dc:51ac:88ef with SMTP id
+ g11-20020a170902d5cb00b001dc51ac88efmr261122plh.6.1709257414169; 
+ Thu, 29 Feb 2024 17:43:34 -0800 (PST)
 Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- h12-20020a170902f7cc00b001dcac08a360sm2177494plw.175.2024.02.29.17.37.44
+ le8-20020a170902fb0800b001dc8db3150asm2177108plb.199.2024.02.29.17.43.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Feb 2024 17:37:47 -0800 (PST)
-Date: Fri, 1 Mar 2024 09:37:38 +0800
+ Thu, 29 Feb 2024 17:43:33 -0800 (PST)
+Date: Fri, 1 Mar 2024 09:43:27 +0800
 From: Peter Xu <peterx@redhat.com>
-To: Zhao Liu <zhao1.liu@linux.intel.com>
-Cc: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Michael Tokarev <mjt@tls.msk.ru>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH 14/17] migration/option: Fix missing ERRP_GUARD() for
- error_prepend()
-Message-ID: <ZeExYtPjZWAdaJup@x1n>
-References: <20240229143914.1977550-1-zhao1.liu@linux.intel.com>
- <20240229143914.1977550-15-zhao1.liu@linux.intel.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
+ Claudio Fontana <cfontana@suse.de>
+Subject: Re: [PATCH v6 17/23] migration/multifd: Add outgoing QIOChannelFile
+ support
+Message-ID: <ZeEyvzBHvsmF56Ur@x1n>
+References: <20240229153017.2221-1-farosas@suse.de>
+ <20240229153017.2221-18-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240229143914.1977550-15-zhao1.liu@linux.intel.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20240229153017.2221-18-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,45 +99,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 29, 2024 at 10:39:11PM +0800, Zhao Liu wrote:
-> From: Zhao Liu <zhao1.liu@intel.com>
+On Thu, Feb 29, 2024 at 12:30:11PM -0300, Fabiano Rosas wrote:
+> Allow multifd to open file-backed channels. This will be used when
+> enabling the mapped-ram migration stream format which expects a
+> seekable transport.
 > 
-> As the comment in qapi/error, passing @errp to error_prepend() requires
-> ERRP_GUARD():
+> The QIOChannel read and write methods will use the preadv/pwritev
+> versions which don't update the file offset at each call so we can
+> reuse the fd without re-opening for every channel.
 > 
-> * = Why, when and how to use ERRP_GUARD() =
-> *
-> * Without ERRP_GUARD(), use of the @errp parameter is restricted:
-> ...
-> * - It should not be passed to error_prepend(), error_vprepend() or
-> *   error_append_hint(), because that doesn't work with &error_fatal.
-> * ERRP_GUARD() lifts these restrictions.
-> *
-> * To use ERRP_GUARD(), add it right at the beginning of the function.
-> * @errp can then be used without worrying about the argument being
-> * NULL or &error_fatal.
+> Contrary to the socket migration, the file migration doesn't need an
+> asynchronous channel creation process, so expose
+> multifd_channel_connect() and call it directly.
 > 
-> ERRP_GUARD() could avoid the case when @errp is the pointer of
-> error_fatal, the user can't see this additional information, because
-> exit() happens in error_setg earlier than information is added [1].
+> Note that this is just setup code and multifd cannot yet make use of
+> the file channels.
 > 
-> The migrate_params_check() passes @errp to error_prepend() without
-> ERRP_GUARD(), and it could be called from migration_object_init(),
-> where the passed @errp points to @error_fatal.
-> 
-> Therefore, the error message echoed in error_prepend() will be lost
-> because of the above issue.
-> 
-> To fix this, add missing ERRP_GUARD() at the beginning of this function.
-> 
-> [1]: Issue description in the commit message of commit ae7c80a7bd73
->      ("error: New macro ERRP_GUARD()").
-> 
-> Cc: Peter Xu <peterx@redhat.com>
-> Cc: Fabiano Rosas <farosas@suse.de>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-Acked-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
 -- 
 Peter Xu
