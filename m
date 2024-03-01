@@ -4,71 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0BF4C54E41
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Mar 2024 04:14:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07370C54798
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Mar 2024 04:14:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgGjG-0005KB-0l; Fri, 01 Mar 2024 23:12:06 -0500
+	id 1rgGjI-0005MB-0d; Fri, 01 Mar 2024 23:12:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
- id 1rgFAX-0003RO-Ig
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 21:32:09 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lixianglai@loongson.cn>) id 1rgFAU-0007qy-Lk
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 21:32:09 -0500
-Received: from loongson.cn (unknown [10.20.42.32])
- by gateway (Coremail) with SMTP id _____8DxdfGaj+JlyHUTAA--.49485S3;
- Sat, 02 Mar 2024 10:31:55 +0800 (CST)
-Received: from [10.20.42.32] (unknown [10.20.42.32])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8Dx_xOWj+JlKiNMAA--.2856S2; 
- Sat, 02 Mar 2024 10:31:52 +0800 (CST)
-Subject: Re: [PULL v2 1/1] loongarch: Change the UEFI loading mode to loongarch
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Andrea Bolognani <abologna@redhat.com>,
- maobibo@loongson.cn, zhaotianrui@loongson.cn
-References: <20240229113842.619738-1-gaosong@loongson.cn>
- <20240229113842.619738-2-gaosong@loongson.cn>
- <168d29d9-b82e-4dd5-abdd-93759037033c@linaro.org>
-From: lixianglai <lixianglai@loongson.cn>
-Message-ID: <5e2419ec-6c1f-e21c-2105-fadb5971239c@loongson.cn>
-Date: Sat, 2 Mar 2024 10:31:50 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rgC1j-0003z4-65
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:10:57 -0500
+Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rgC1g-0005uF-04
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:10:50 -0500
+Received: by mail-ot1-x32a.google.com with SMTP id
+ 46e09a7af769-6e48153c13aso1388239a34.3
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 15:10:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709334646; x=1709939446; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yTWT+RMoE1i/VU7YNW7VXZJeWBnC/6JB7arqg8VoVPY=;
+ b=wPPgO3Azw4RZNrbdtjDazpIblGSuGm+sz0IzwuS0O8fW9MoBwtkqB3w81bNDlmfZIq
+ T0LL8c6N5a2yBwanLH6OUQ9EO9ZN2ytZb3lBxO4or+6X1UxK3FIeRS6JgiAj8TZpHCzZ
+ L80gvYehonUdo3F/eqlnbsSjTSpq5t+SX8aGV7CgDIT/jUMzzkWBDVz6HaRA+j93e5B4
+ 8jANdlMGCPpt8UzEw12nRYTDoe8nMvUkArMj8QyTaElgAFIq4GT8bJ4fa6t+ZwUfVuZF
+ uNwFES1C+aVNMn+BlHAjE7SkDqyPVrMIvw+Sg97iXPlcFp6fqWjHD24wDu0qHyZiJjHi
+ EUSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709334646; x=1709939446;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yTWT+RMoE1i/VU7YNW7VXZJeWBnC/6JB7arqg8VoVPY=;
+ b=sI8yS/SzQwZfu3V6MkSA9tjNEaj7hFAHl0kTVpOP7sIAt6BaLBZkhNr303MlMSKDri
+ HXgd4VfEcJ8L7RvYgJRv6SGUaXo25lEOplJ4EDG4h4V9PiQgiiyeUNLQvgQ9SPxPCq/n
+ BUpbeOSE1nf5fAIrE999WQOxQa4d0PLrAHwJWL/NXlvnolrGra8DOoLD0XXap1XTp6ve
+ D14x7URIfqHgqADbevSltXsdx4vduDgdwTgn7FJp0j2j3tA/7LjoU1a++dE1/y/XwROU
+ LsRzBWu6QsLP/xVE2WGjFlRRV2Ophi+yBS0B5+FDtMU6uOPJshhOWO8U1Ns4o7r5vsL2
+ zVfA==
+X-Gm-Message-State: AOJu0Yw2u7Ha+diFY8vTVMWP7OdfZXQuIq3hqFyrDJDUNwWqYB/jqxM4
+ tUPemdLmJjDhdBWMou9Kd/bPVY4DCT51vgXaZ8+CLnR1HTcUly88OXPX1Z1L0iE0W8FbmHvrb9K
+ G
+X-Google-Smtp-Source: AGHT+IEC3IEufMvQbh163ikvKev1ecMXJ1/QLnLvsRa04C24bmAmYgEHkN4sYfovvFlF6DSD8TUFyw==
+X-Received: by 2002:a9d:6d85:0:b0:6e4:7e89:1205 with SMTP id
+ x5-20020a9d6d85000000b006e47e891205mr3873115otp.9.1709334646004; 
+ Fri, 01 Mar 2024 15:10:46 -0800 (PST)
+Received: from stoup.. (098-147-055-211.res.spectrum.com. [98.147.55.211])
+ by smtp.gmail.com with ESMTPSA id
+ c2-20020a634e02000000b005e438fe702dsm3449407pgb.65.2024.03.01.15.10.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 01 Mar 2024 15:10:45 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 56/60] linux-user/x86_64: Handle the vsyscall page in
+ open_self_maps_{2, 4}
+Date: Fri,  1 Mar 2024 13:06:15 -1000
+Message-Id: <20240301230619.661008-57-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240301230619.661008-1-richard.henderson@linaro.org>
+References: <20240301230619.661008-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <168d29d9-b82e-4dd5-abdd-93759037033c@linaro.org>
-Content-Type: multipart/alternative;
- boundary="------------F376EBF4DB57B5BCAEC0DC40"
-Content-Language: en-US
-X-CM-TRANSID: AQAAf8Dx_xOWj+JlKiNMAA--.2856S2
-X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBj93XoW7WF1fWr43Cr17tFyfZrWrZwc_yoW8CF13pF
- yfC3Z8Wr4UJry7JFsxX3yIgrZxAr95KFyxXFsaqry8Grn8Aw1kXr1rKr1vyryfZayfJ3Wj
- vrWvkry8Wan8ArcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnRJUUUkKb4IE77IF4wAF
- F20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r
- 1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAF
- wI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67
- AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UM2AIxVAIcxkEcVAq07x2
- 0xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1lYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx
- 0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCjr7xv
- wVCIw2I0I7xG6c02F41lc7I2V7IY0VAS07AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2
- IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r106r1rMI8I3I0E7480Y4vE14v2
- 6r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67
- AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IY
- s7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr
- 0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IUb6nQUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163;
- envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
-X-Spam_score_int: -60
-X-Spam_score: -6.1
-X-Spam_bar: ------
-X-Spam_report: (-6.1 / 5.0 requ) BAYES_00=-1.9, HTML_MESSAGE=0.001,
- NICE_REPLY_A=-4.176, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,194 +96,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------F376EBF4DB57B5BCAEC0DC40
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+This is the only case in which we expect to have no host memory backing
+for a guest memory page, because in general linux user processes cannot
+map any pages in the top half of the 64-bit address space.
 
-Hi Philippe:
-> On 29/2/24 12:38, Song Gao wrote:
->> From: Xianglai Li <lixianglai@loongson.cn>
->>
->> The UEFI loading mode in loongarch is very different
->> from that in other architectures:loongarch's UEFI code
->> is in rom, while other architectures' UEFI code is in flash.
->>
->> loongarch UEFI can be loaded as follows:
->> -machine virt,pflash=pflash0-format
->> -bios ./QEMU_EFI.fd
->>
->> Other architectures load UEFI using the following methods:
->> -machine virt,pflash0=pflash0-format,pflash1=pflash1-format
->>
->> loongarch's UEFI loading method makes qemu and libvirt incompatible
->> when using NVRAM, and the cost of loongarch's current loading method
->> far outweighs the benefits, so we decided to use the same UEFI loading
->> scheme as other architectures.
->
-> FYI I'm still trying to find a way to avoid that, planning to discuss
-> more with libvirt folks. Well, maybe it is a waste of my time and I
-> should just stop worrying / caring about this long standing issue.
->
-Thank you so much for your attention to this issue
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2170
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ linux-user/syscall.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-and your long-standing contributions to the community!!:-)
-
-Best regards,
-
-Xianglai.
-
-
->> Cc: Andrea Bolognani <abologna@redhat.com>
->> Cc: maobibo@loongson.cn
->> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Cc: Song Gao <gaosong@loongson.cn>
->> Cc: zhaotianrui@loongson.cn
->> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
->> Tested-by: Andrea Bolognani <abologna@redhat.com>
->> Reviewed-by: Song Gao <gaosong@loongson.cn>
->> Message-Id: 
->> <0bd892aa9b88e0f4cc904cb70efd0251fc1cde29.1708336919.git.lixianglai@loongson.cn>
->> Signed-off-by: Song Gao <gaosong@loongson.cn>
->> ---
->>   hw/loongarch/acpi-build.c   |  29 +++++++++--
->>   hw/loongarch/virt.c         | 101 ++++++++++++++++++++++++++----------
->>   include/hw/loongarch/virt.h |  10 ++--
->>   3 files changed, 107 insertions(+), 33 deletions(-)
->
-
---------------F376EBF4DB57B5BCAEC0DC40
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    Hi Philippe:<br>
-    <blockquote type="cite"
-      cite="mid:168d29d9-b82e-4dd5-abdd-93759037033c@linaro.org">On
-      29/2/24 12:38, Song Gao wrote:
-      <br>
-      <blockquote type="cite">From: Xianglai Li
-        <a class="moz-txt-link-rfc2396E" href="mailto:lixianglai@loongson.cn">&lt;lixianglai@loongson.cn&gt;</a>
-        <br>
-        <br>
-        The UEFI loading mode in loongarch is very different
-        <br>
-        from that in other architectures:loongarch's UEFI code
-        <br>
-        is in rom, while other architectures' UEFI code is in flash.
-        <br>
-        <br>
-        loongarch UEFI can be loaded as follows:
-        <br>
-        -machine virt,pflash=pflash0-format
-        <br>
-        -bios ./QEMU_EFI.fd
-        <br>
-        <br>
-        Other architectures load UEFI using the following methods:
-        <br>
-        -machine virt,pflash0=pflash0-format,pflash1=pflash1-format
-        <br>
-        <br>
-        loongarch's UEFI loading method makes qemu and libvirt
-        incompatible
-        <br>
-        when using NVRAM, and the cost of loongarch's current loading
-        method
-        <br>
-        far outweighs the benefits, so we decided to use the same UEFI
-        loading
-        <br>
-        scheme as other architectures.
-        <br>
-      </blockquote>
-      <br>
-      FYI I'm still trying to find a way to avoid that, planning to
-      discuss
-      <br>
-      more with libvirt folks. Well, maybe it is a waste of my time and
-      I
-      <br>
-      should just stop worrying / caring about this long standing issue.
-      <br>
-      <br>
-    </blockquote>
-    <p>Thank you so much for your attention to this issue</p>
-    <p>and your long-standing contributions to the community!!<span
-        class="moz-smiley-s1"><span>:-)</span></span></p>
-    <p><span style="color: rgb(25, 27, 31); font-family: -apple-system,
-        BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang
-        SC&quot;, &quot;Microsoft YaHei&quot;, &quot;Source Han Sans
-        SC&quot;, &quot;Noto Sans CJK SC&quot;, &quot;WenQuanYi Micro
-        Hei&quot;, sans-serif; font-size: 15px; font-style: normal;
-        font-variant-ligatures: normal; font-variant-caps: normal;
-        font-weight: 400; letter-spacing: normal; orphans: 2;
-        text-align: start; text-indent: 0px; text-transform: none;
-        white-space: normal; widows: 2; word-spacing: 0px;
-        -webkit-text-stroke-width: 0px; background-color: rgb(255, 255,
-        255); text-decoration-thickness: initial; text-decoration-style:
-        initial; text-decoration-color: initial; display: inline
-        !important; float: none;">Best regards,</span></p>
-    <p><span style="color: rgb(25, 27, 31); font-family: -apple-system,
-        BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang
-        SC&quot;, &quot;Microsoft YaHei&quot;, &quot;Source Han Sans
-        SC&quot;, &quot;Noto Sans CJK SC&quot;, &quot;WenQuanYi Micro
-        Hei&quot;, sans-serif; font-size: 15px; font-style: normal;
-        font-variant-ligatures: normal; font-variant-caps: normal;
-        font-weight: 400; letter-spacing: normal; orphans: 2;
-        text-align: start; text-indent: 0px; text-transform: none;
-        white-space: normal; widows: 2; word-spacing: 0px;
-        -webkit-text-stroke-width: 0px; background-color: rgb(255, 255,
-        255); text-decoration-thickness: initial; text-decoration-style:
-        initial; text-decoration-color: initial; display: inline
-        !important; float: none;">Xianglai.<br>
-      </span></p>
-    <p><br>
-    </p>
-    <blockquote type="cite"
-      cite="mid:168d29d9-b82e-4dd5-abdd-93759037033c@linaro.org">
-      <blockquote type="cite">Cc: Andrea Bolognani
-        <a class="moz-txt-link-rfc2396E" href="mailto:abologna@redhat.com">&lt;abologna@redhat.com&gt;</a>
-        <br>
-        Cc: <a class="moz-txt-link-abbreviated" href="mailto:maobibo@loongson.cn">maobibo@loongson.cn</a>
-        <br>
-        Cc: Philippe Mathieu-Daudé <a class="moz-txt-link-rfc2396E" href="mailto:philmd@linaro.org">&lt;philmd@linaro.org&gt;</a>
-        <br>
-        Cc: Song Gao <a class="moz-txt-link-rfc2396E" href="mailto:gaosong@loongson.cn">&lt;gaosong@loongson.cn&gt;</a>
-        <br>
-        Cc: <a class="moz-txt-link-abbreviated" href="mailto:zhaotianrui@loongson.cn">zhaotianrui@loongson.cn</a>
-        <br>
-        Signed-off-by: Xianglai Li <a class="moz-txt-link-rfc2396E" href="mailto:lixianglai@loongson.cn">&lt;lixianglai@loongson.cn&gt;</a>
-        <br>
-        Tested-by: Andrea Bolognani <a class="moz-txt-link-rfc2396E" href="mailto:abologna@redhat.com">&lt;abologna@redhat.com&gt;</a>
-        <br>
-        Reviewed-by: Song Gao <a class="moz-txt-link-rfc2396E" href="mailto:gaosong@loongson.cn">&lt;gaosong@loongson.cn&gt;</a>
-        <br>
-        Message-Id:
-<a class="moz-txt-link-rfc2396E" href="mailto:0bd892aa9b88e0f4cc904cb70efd0251fc1cde29.1708336919.git.lixianglai@loongson.cn">&lt;0bd892aa9b88e0f4cc904cb70efd0251fc1cde29.1708336919.git.lixianglai@loongson.cn&gt;</a><br>
-        Signed-off-by: Song Gao <a class="moz-txt-link-rfc2396E" href="mailto:gaosong@loongson.cn">&lt;gaosong@loongson.cn&gt;</a>
-        <br>
-        ---
-        <br>
-          hw/loongarch/acpi-build.c   |  29 +++++++++--
-        <br>
-          hw/loongarch/virt.c         | 101
-        ++++++++++++++++++++++++++----------
-        <br>
-          include/hw/loongarch/virt.h |  10 ++--
-        <br>
-          3 files changed, 107 insertions(+), 33 deletions(-)
-        <br>
-      </blockquote>
-      <br>
-    </blockquote>
-  </body>
-</html>
-
---------------F376EBF4DB57B5BCAEC0DC40--
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index e384e14248..bc8c06522f 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -7994,6 +7994,10 @@ static void open_self_maps_4(const struct open_self_maps_data *d,
+         path = "[heap]";
+     } else if (start == info->vdso) {
+         path = "[vdso]";
++#ifdef TARGET_X86_64
++    } else if (start == TARGET_VSYSCALL_PAGE) {
++        path = "[vsyscall]";
++#endif
+     }
+ 
+     /* Except null device (MAP_ANON), adjust offset for this fragment. */
+@@ -8082,6 +8086,18 @@ static int open_self_maps_2(void *opaque, target_ulong guest_start,
+     uintptr_t host_start = (uintptr_t)g2h_untagged(guest_start);
+     uintptr_t host_last = (uintptr_t)g2h_untagged(guest_end - 1);
+ 
++#ifdef TARGET_X86_64
++    /*
++     * Because of the extremely high position of the page within the guest
++     * virtual address space, this is not backed by host memory at all.
++     * Therefore the loop below would fail.  This is the only instance
++     * of not having host backing memory.
++     */
++    if (guest_start == TARGET_VSYSCALL_PAGE) {
++        return open_self_maps_3(opaque, guest_start, guest_end, flags);
++    }
++#endif
++
+     while (1) {
+         IntervalTreeNode *n =
+             interval_tree_iter_first(d->host_maps, host_start, host_start);
+-- 
+2.34.1
 
 
