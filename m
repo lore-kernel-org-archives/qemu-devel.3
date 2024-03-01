@@ -4,68 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A619DC5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 17:50:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 368D5C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 18:13:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg71n-0006FJ-M6; Fri, 01 Mar 2024 12:50:35 -0500
+	id 1rg7NB-0004Tg-PN; Fri, 01 Mar 2024 13:12:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rg71m-0006Ev-3o
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 12:50:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rg7N9-0004Sq-IZ
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 13:12:39 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rg71k-0001C1-7U
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 12:50:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709315431;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=/Y465+ptn/nUZiasWZbpBFilVca+31DZltQTGQGGTIg=;
- b=AHVFrFFeqqZrjqMLDXoqdh12XmZHrDlbzyJFBqrWwS1GRZljiBP9ZaPVb3XCGLiUvNf+v4
- 80RAdkKKxcVmdi2s3Y7KJFyDQQQThSjOW6wDk7T+nUFVcihP/reQ2zmSIA2Kc1BZLn9tRk
- 8saefQ1J1h9dqGufiYOuS/wSYidIxEs=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-245-MN7yrHZBMb-do9TWrzdD_w-1; Fri, 01 Mar 2024 12:50:28 -0500
-X-MC-Unique: MN7yrHZBMb-do9TWrzdD_w-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D1F77185A784;
- Fri,  1 Mar 2024 17:50:27 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.50])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 17DB739D6D;
- Fri,  1 Mar 2024 17:50:25 +0000 (UTC)
-Date: Fri, 1 Mar 2024 17:50:24 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: peterx@redhat.com, qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH] migration/multifd: Document two places for mapped-ram
-Message-ID: <ZeIVYDnAkPTpKHsP@redhat.com>
-References: <20240301091524.39900-1-peterx@redhat.com>
- <CAE8KmOz_5-DtSO2BHpBXgD2kJUjwsLaqKguOcWgfXC2efB2rWA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rg7N7-00050H-EW
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 13:12:39 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 1EFA44E6013;
+ Fri,  1 Mar 2024 19:12:31 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id YV6P0doiTqEV; Fri,  1 Mar 2024 19:12:29 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 332754E602B; Fri,  1 Mar 2024 19:12:29 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PATCH] hmp: Add option to info qtree to omit details
+Date: Fri, 01 Mar 2024 19:05:22 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAE8KmOz_5-DtSO2BHpBXgD2kJUjwsLaqKguOcWgfXC2efB2rWA@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+To: qemu-devel@nongnu.org
+Cc: Dr David Alan Gilbert <dave@treblig.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ berrange@redhat.com
+Message-Id: <20240301181229.332754E602B@zero.eik.bme.hu>
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,67 +59,105 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 01, 2024 at 11:17:10PM +0530, Prasad Pandit wrote:
-> Hello Petr,
-> 
-> On Fri, 1 Mar 2024 at 14:46, <peterx@redhat.com> wrote:
-> > +         * An explicitly close() on the channel here is normally not
-> 
-> explicitly -> explicit
-> 
-> > +         * required, but can be helpful for "file:" iochannels, where it
-> > +         * will include an fdatasync() to make sure the data is flushed to
-> > +         * the disk backend.
-> 
-> * an fdatasync() -> fdatasync()
-> 
-> * qio_channel_close
->     -> ioc_klass->io_close = qio_channel_file_close;
->      -> qemu_close(fioc->fd)
->       -> close(fd);
-> 
-> It does not seem to call fdatasync() before close(fd);
-> 
->     - qio_channel_file_new_path(filename, O_CREAT | O_WRONLY | O_TRUNC, ...)
+The output of info qtree monitor command is very long. Add an option
+to print a brief overview omitting all the details.
 
-The documented behaviour reliant on another pending patch:
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+---
+ hmp-commands-info.hx  |  6 +++---
+ system/qdev-monitor.c | 24 +++++++++++++-----------
+ 2 files changed, 16 insertions(+), 14 deletions(-)
 
-https://lists.nongnu.org/archive/html/qemu-devel/2024-02/msg07046.html
-
-> 
-> Maybe the qio_channel..() calls above should include the 'O_DSYNC'
-> flag as well? But that will do fdatasync() work at each write(2) call
-> I think, not sure if that is okay.
-
-
-
-> 
-> > +         *
-> > +         * The object_unref() cannot guarantee that because: (1) finalize()
-> > +         * of the iochannel is only triggered on the last reference, and
-> > +         * it's not guaranteed that we always hold the last refcount when
-> > +         * reaching here, and, (2) even if finalize() is invoked, it only
-> > +         * does a close(fd) without data flush.
-> > +         */
-> 
-> * object_unref
->     -> object_finalize
->       -> object_deinit
->         -> type->instance_finalize
->          -> qio_channel_file_finalize
->           -> qemu_close(ioc->fd);
-> 
-> * I hope I'm looking at the right code here. (Sorry if I'm not)
-
-With regards,
-Daniel
+diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+index da120f82a3..ad1b1306e3 100644
+--- a/hmp-commands-info.hx
++++ b/hmp-commands-info.hx
+@@ -540,9 +540,9 @@ ERST
+ 
+     {
+         .name       = "qtree",
+-        .args_type  = "",
+-        .params     = "",
+-        .help       = "show device tree",
++        .args_type  = "brief:-b",
++        .params     = "[-b]",
++        .help       = "show device tree (-b: brief, omit properties)",
+         .cmd        = hmp_info_qtree,
+     },
+ 
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index a13db763e5..d5cef36800 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -744,7 +744,6 @@ DeviceState *qdev_device_add(QemuOpts *opts, Error **errp)
+ }
+ 
+ #define qdev_printf(fmt, ...) monitor_printf(mon, "%*s" fmt, indent, "", ## __VA_ARGS__)
+-static void qbus_print(Monitor *mon, BusState *bus, int indent);
+ 
+ static void qdev_print_props(Monitor *mon, DeviceState *dev, Property *props,
+                              int indent)
+@@ -784,13 +783,9 @@ static void bus_print_dev(BusState *bus, Monitor *mon, DeviceState *dev, int ind
+ static void qdev_print(Monitor *mon, DeviceState *dev, int indent)
+ {
+     ObjectClass *class;
+-    BusState *child;
+     NamedGPIOList *ngl;
+     NamedClockList *ncl;
+ 
+-    qdev_printf("dev: %s, id \"%s\"\n", object_get_typename(OBJECT(dev)),
+-                dev->id ? dev->id : "");
+-    indent += 2;
+     QLIST_FOREACH(ngl, &dev->gpios, node) {
+         if (ngl->num_in) {
+             qdev_printf("gpio-in \"%s\" %d\n", ngl->name ? ngl->name : "",
+@@ -814,12 +809,9 @@ static void qdev_print(Monitor *mon, DeviceState *dev, int indent)
+         class = object_class_get_parent(class);
+     } while (class != object_class_by_name(TYPE_DEVICE));
+     bus_print_dev(dev->parent_bus, mon, dev, indent);
+-    QLIST_FOREACH(child, &dev->child_bus, sibling) {
+-        qbus_print(mon, child, indent);
+-    }
+ }
+ 
+-static void qbus_print(Monitor *mon, BusState *bus, int indent)
++static void qbus_print(Monitor *mon, BusState *bus, int indent, bool details)
+ {
+     BusChild *kid;
+ 
+@@ -827,16 +819,26 @@ static void qbus_print(Monitor *mon, BusState *bus, int indent)
+     indent += 2;
+     qdev_printf("type %s\n", object_get_typename(OBJECT(bus)));
+     QTAILQ_FOREACH(kid, &bus->children, sibling) {
++        BusState *child_bus;
+         DeviceState *dev = kid->child;
+-        qdev_print(mon, dev, indent);
++        qdev_printf("dev: %s, id \"%s\"\n", object_get_typename(OBJECT(dev)),
++                    dev->id ? dev->id : "");
++        if (details) {
++            qdev_print(mon, dev, indent + 2);
++        }
++        QLIST_FOREACH(child_bus, &dev->child_bus, sibling) {
++            qbus_print(mon, child_bus, indent + 2, details);
++        }
+     }
+ }
+ #undef qdev_printf
+ 
+ void hmp_info_qtree(Monitor *mon, const QDict *qdict)
+ {
++    bool brief = qdict_get_try_bool(qdict, "brief", false);
++
+     if (sysbus_get_default())
+-        qbus_print(mon, sysbus_get_default(), 0);
++        qbus_print(mon, sysbus_get_default(), 0, !brief);
+ }
+ 
+ void hmp_info_qdm(Monitor *mon, const QDict *qdict)
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.30.9
 
 
