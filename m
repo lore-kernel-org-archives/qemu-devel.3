@@ -4,84 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAB97C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 14:06:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EAFCC5478C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 14:15:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg3WJ-0005PE-HC; Fri, 01 Mar 2024 09:05:51 -0500
+	id 1rg3f7-0000Yx-JQ; Fri, 01 Mar 2024 09:14:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rg3WG-0005O2-Jj
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 09:05:48 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rg3WD-0001xv-H7
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 09:05:47 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-33aeb088324so1082691f8f.2
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 06:05:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709301943; x=1709906743; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EvRcj/lRDxwSKa/nT/9N7/Vu7IjmpxIlQF47Bc5vUnk=;
- b=F56XTIq2S68Qq5IXZYhTnYLjR30AySG+xY4qsR3K7A8vdVtF/A+2nmQ/EjiTyAaabF
- 3RS7NwvK6zLZD4ndBM9Q3ufIUxh5Ot/1oD5fiILQrE5Q1nz04RnPYtjRNTlGR671W/4/
- 249DgABnv70t+p/HpfB5XGqHeNpV6acDiXnGhbcDwpgciXROdx6GZmPQY0n60Gt7Fop5
- S3jHJfDMMgzXRmFtf9s/i1gS7ACUVpJMdL90eRRv7fq1T71HU/fwOKQcEhgEUmMs72Vs
- ce8VByU9TQ0vQwDySL8n4ilL7e8r+z2IeKfwPEu3+gm9INy7UQmS2QhOelumDjqrLJuU
- 2i2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709301943; x=1709906743;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=EvRcj/lRDxwSKa/nT/9N7/Vu7IjmpxIlQF47Bc5vUnk=;
- b=F2gE2zDbMoZnuWFqpyFyEUPKmNm5qkQnWInqh6D4BM2RUq1EVvwKGlwkH66mm9w0WH
- Z+Wjb8zagNhAaw04v/+6YbXBOjORad8HMeAUhzvtwvA+/ggGaSoudhKDpOm2cTyXNsUN
- EvjUABMrwXoaxfD63RcUQYb4M7KfllLV68Pa9hwUegqoPwGS/usS3+NYQ4YRCoy2VnxD
- YpmO4mbNGZzJKLiaizIo4uC7v4jZ0Ca6BLeLw+IrlzCybTM5U7xMWY2yP1ogFuUW+bE1
- SZ2qBeDhZV094vBf6sMPFNnT9ffU6OC7F8wnNlfhwcxPmqtqo5DQavBdBg+QJ/1mBGTb
- u3sQ==
-X-Gm-Message-State: AOJu0YxoLaX0Rh9Tp5jw7LsSaeLUavX3QBlLBZ7o2WMEpDrAYaxzOFzy
- ih5o0uO6pp+zlSPl6mQGHdUGtZq91eCab1onnWrWSbVoPtqWlsUp1/iwPOrTDKY=
-X-Google-Smtp-Source: AGHT+IH0vRBDHW2rDFP3hgccyW/FGrjbFZjzIJZDaHlWCZN9wENhqaERMhpoLlTDZp91yXJWbVVJEg==
-X-Received: by 2002:adf:f28d:0:b0:33d:38cf:aa73 with SMTP id
- k13-20020adff28d000000b0033d38cfaa73mr1336560wro.47.1709301943499; 
- Fri, 01 Mar 2024 06:05:43 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- bh3-20020a05600005c300b0033df1dc39f0sm4918552wrb.4.2024.03.01.06.05.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Mar 2024 06:05:43 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B4D2F5F796;
- Fri,  1 Mar 2024 14:05:42 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Vikram Garhwal <vikram.garhwal@amd.com>
-Cc: <qemu-devel@nongnu.org>,  <sstabellini@kernel.org>,  <jgross@suse.com>,
- Anthony Perard <anthony.perard@citrix.com>,  Paul Durrant <paul@xen.org>,
- Paolo Bonzini <pbonzini@redhat.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>,  "open list:X86 Xen CPUs"
- <xen-devel@lists.xenproject.org>
-Subject: Re: [QEMU][PATCH v3 2/7] xen: add pseudo RAM region for grant mappings
-In-Reply-To: <20240227223501.28475-3-vikram.garhwal@amd.com> (Vikram Garhwal's
- message of "Tue, 27 Feb 2024 14:34:56 -0800")
-References: <20240227223501.28475-1-vikram.garhwal@amd.com>
- <20240227223501.28475-3-vikram.garhwal@amd.com>
-User-Agent: mu4e 1.12.0; emacs 29.1
-Date: Fri, 01 Mar 2024 14:05:42 +0000
-Message-ID: <875xy659op.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rg3f5-0000YN-W7; Fri, 01 Mar 2024 09:14:56 -0500
+Received: from forwardcorp1c.mail.yandex.net ([178.154.239.200])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rg3f2-00041u-9O; Fri, 01 Mar 2024 09:14:55 -0500
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:9328:0:640:5832:0])
+ by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id 741FC60D96;
+ Fri,  1 Mar 2024 17:14:43 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:a531::1:29] (unknown
+ [2a02:6b8:b081:a531::1:29])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id fEcc1P3i80U0-78yF2eDU; Fri, 01 Mar 2024 17:14:42 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1709302482;
+ bh=udmNoJ4xv4qkXef9b5S4Yl+s3zzhpVjnq/3gq/uPFqE=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=hqpDZ6QDh0GJ17l/brv/+I+acfYrJG0tqQ7JhMn664v13xXFCWBh3Li/DvC7WerWg
+ ZbW1ERPPuJAihS334RRVyNeDGxhmEnsvQ0ybhTIMj4ITZ+5V13R7oA+TZ28vDe32it
+ 2TX+MotUybVt0r78uqceciLiSDFFxvOLjzJXRdzQ=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <9f27c816-510f-4482-85c1-f3d1be44b758@yandex-team.ru>
+Date: Fri, 1 Mar 2024 17:14:41 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 0/4] mirror: implement incremental and bitmap modes
+Content-Language: en-US
+To: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, armbru@redhat.com, eblake@redhat.com,
+ hreitz@redhat.com, kwolf@redhat.com, jsnow@redhat.com,
+ f.gruenbichler@proxmox.com, t.lamprecht@proxmox.com,
+ mahaocong@didichuxing.com
+References: <20240216105513.309901-1-f.ebner@proxmox.com>
+ <217803cb-fced-4dce-87f3-9892b2f97dce@yandex-team.ru>
+ <195fe8a5-02c2-4cc4-bc41-095f6477b676@proxmox.com>
+ <3fbf2b67-3213-4416-86e4-f6e4deb0a97b@yandex-team.ru>
+ <b3d0ee7a-e633-4719-bc52-2796b18acb32@proxmox.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <b3d0ee7a-e633-4719-bc52-2796b18acb32@proxmox.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,23 +81,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vikram Garhwal <vikram.garhwal@amd.com> writes:
+On 29.02.24 17:50, Fiona Ebner wrote:
+> Am 29.02.24 um 13:00 schrieb Vladimir Sementsov-Ogievskiy:
+>>
+>> But anyway, this all could be simply achieved with
+>> bitmap-copying/merging API, if we allow to pass user-given bitmap to the
+>> mirror as working bitmap.
+>>
+>>>
+>>> I see, I'll drop the 'bitmap-mode' in the next version if nobody
+>>> complains :)
+>>>
+>>
+>> Good. It's a golden rule: never make public interfaces which you don't
+>> actually need for production. I myself sometimes violate it and spend
+>> extra time on developing features, which we later have to just drop as
+>> "not needed downstream, no sense in upstreaming".
+>>
+> 
+> Just wondering which new mode I should allow for the @MirrorSyncMode
+> then? The documentation states:
+> 
+>> # @incremental: only copy data described by the dirty bitmap.
+>> #     (since: 2.4)
+>> #
+>> # @bitmap: only copy data described by the dirty bitmap.  (since: 4.2)
+>> #     Behavior on completion is determined by the BitmapSyncMode.
+> 
+> For backup, do_backup_common() just maps @incremental to @bitmap +
+> @bitmap-mode == @on-success.
+> 
+> Using @bitmap for mirror would lead to being at odds with the
+> documentation, because it mentions the BitmapSyncMode, which mirror
+> won't have.
+> 
+> Using @incremental for mirror would be consistent with the
+> documentation, but behave a bit differently from backup.
+> 
+> Opinions?
+> 
 
-> From: Juergen Gross <jgross@suse.com>
->
-> Add a memory region which can be used to automatically map granted
-> memory. It is starting at 0x8000000000000000ULL in order to be able to
-> distinguish it from normal RAM.
+Good question.
 
-Is the Xen memory map for HVM guests documented anywhere? I couldn't
-find anything googling or on the Xen wiki. I'm guessing this is going to
-be shared across all 64 bit HVM arches in Xen?
+As we already understood, (block-)job-api needs some spring-cleaning. Unfortunately I don't have much time on it, but still I decided to start from finally depreacting block-job-* API and moving to job-*.. Probably bitmap/bitmap-mode/sync APIs also need some optimization, keeping in mind new block-dirty-bitmap-merge api.
 
-Anyway:
+So, what I could advice in this situation for newc interfaces:
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+1. be minimalistic
+2. add `x-` prefix when unsure
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+So, following these two rules, what about x-bitmap field, which may be combined only with 'full' mode, and do what you need?
+
+About documentation: actually, I never liked that we use for backup job "MirrorSyncMode". Now it looks more like "BackupSyncMode", having two values supported only by backup.
+
+I'm also unsure how mode=full&bitmap=some_bitmap differs from mode=bitmap&bitmap=some_bitmap..
+
+So, I'd suggest simply rename MirrorSyncMode to BackupSyncMode, and add separate MirrorSyncMode with only "full", "top" and "none" values.
+
+-- 
+Best regards,
+Vladimir
+
 
