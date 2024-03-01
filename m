@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A07F6C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 22:50:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9714C54E4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 23:07:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgBhZ-0000SU-Rk; Fri, 01 Mar 2024 17:50:01 -0500
+	id 1rgBxY-0004qo-Te; Fri, 01 Mar 2024 18:06:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1rgBhY-0000SE-61
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 17:50:00 -0500
-Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rgBxU-0004pm-9P
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:06:29 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1rgBhU-0008Iq-Fd
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 17:49:59 -0500
-Received: by mail-lf1-x12b.google.com with SMTP id
- 2adb3069b0e04-5131316693cso3273661e87.0
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 14:49:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rgBxS-0004CK-Se
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:06:28 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-1dcad814986so23696845ad.0
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 15:06:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1709333392; x=1709938192; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1709334385; x=1709939185; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UJ2kxMmawni/vMaCKfd4juzzcGlAUyNFGIeOtH398MU=;
- b=Yk5C4CRwH+N23NywGjKHP+Gh2B/6KwxNiJTdFkbRRlvz0Gzol7BKsc9WeGbBTUOxAP
- R4aQxCp2oc++GkRaVM8lFW+w2fSPdAga9XRHZoiS4vYp+7ABh9lmMsIrg8sTP6JdqydV
- bedodIOJImRKjmOnHLI75pYH/5NyMmf1zAc1QVpJSiwBkyYw8qxroibDj+qIzCYLS8eO
- lnspJIVL2/HY7AS8NI1pfpGGUJNin0dAR7GVEQZMYdGRv9HrJ12dQVa2Rh52nB1Nq9KY
- eUtQw5b+BAKKyy7xK/x0GE/Zkz5VuCugJLN5X8U6WrN5WPWMlg7nQyzb2Zvz/a2Fu+Pq
- XAXQ==
+ bh=c1WCKXawMTZMOrVqL/DhlUtKi+hfbHIEOTuyKivWJBk=;
+ b=q5IUtvV72ltONvA3wjmO4J7+0yBxTs4zRFqXZl4BD/GD3U9BYvy868l+ZkjzERNZVX
+ 3Tn14kD9Vi+5M1onqgkdTEmX0b7/7xicBlQRu7dw9BLgj4gMmpp5t2U/rnO+3z5zyKko
+ pYj4aDYnmyFG5lfyh88P/kzFVmSeqjYncCFLkNHrVac6B5MBykgOwr0071Gp3QWBYFMC
+ aG6wlGO9kSWmibvrseAOD7i30yV3QaZY0Fb6UWNDPlBkAnVkb8sBAEq7uDTxjVmAbO/S
+ IJFMSkGqJS+JNq7p/XkYmncmfddaYzwXFFXbYFVAT3zYRduNiQ/clIUrC7smyEWHa8bJ
+ oPBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709333392; x=1709938192;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1709334385; x=1709939185;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UJ2kxMmawni/vMaCKfd4juzzcGlAUyNFGIeOtH398MU=;
- b=HW7mF0etAukZfTuVgyVq4fWQBFnTBWAyE5Z8ywjRS+G3nt0crN482Wn7+BpssR+iDB
- LvuWJEILyM8UOnQe77k+5xXcam3eNJezO3r8KYI4yhbwGN++j1fJ44eUJ6TGhcQO9rYn
- llpcVphQ3aH6H2gK0PfCd47/iOTQG0RWZORWjgq1MHvrfPOgleJVFJ8H5tVd55bUQvfh
- qlfcHq2fZ7koTVjGUI5pbmWHY2aZcRfEeFmpOBuh/84X+5jVFHZ7CKR1aIMDeHqVsm6Q
- br2khWGi93TIQpZiYjbGakxnBTJPBEiFougy1fPAZXgXA3rto4ZSWPgWKy/FlEbwdeTE
- TjCw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXOpJ1vYxgDYDQt9+JWxe+tosw1uGMnSf9QF9/5Gp13pxUfnskETJ/AYYhjMOkv79EABHWTbWgARz0zh3xPWi2rG5vKg2I=
-X-Gm-Message-State: AOJu0YyTBNr/o5F38KPtiT82M5tg8E8HlYMpTlemSYVzEMzVK+Hwo0/1
- px2Ahh2ZdWbk5VkyhJOO3lKaRhl8WcZf8+ErNwVHiFFYrBUK6At8veudzYkuzoM7HxQeW3M8OXD
- h3f4xu6trp+woTFHn7WriQlojpW+VltRKtP9m1g==
-X-Google-Smtp-Source: AGHT+IHoHKjwKdzCheqYxmV4ZZgwvEamP/Fy0lX+T9Satk1T6pIB2ARqBPRhUS5OQ3QZrWrEpUwaOKwrZD67u+1hiSk=
-X-Received: by 2002:a05:6512:44a:b0:513:2b10:cc28 with SMTP id
- y10-20020a056512044a00b005132b10cc28mr2342158lfk.9.1709333392434; Fri, 01 Mar
- 2024 14:49:52 -0800 (PST)
+ bh=c1WCKXawMTZMOrVqL/DhlUtKi+hfbHIEOTuyKivWJBk=;
+ b=UQQoSRWgEw/KWyihMfH4nVvVZfZ+HpR6TQyWFubYJQJznqvfOMjJ2VWOlwxLDnbdlB
+ USiwigGG5NBtGBgZdAoeW6Gec+uwNMqfTu2BubnPl9N4vV613ij9EyVDlxuzAWT5FQXn
+ R0R8X3nrOilLDYuMveUR5QOcf7XkevUp6EF96+ixKDeW+OE9neQF8Gtg3NtK+pUENaUW
+ M2yzfUuBbZbUY4AF76LAsoCc7OwcnxJMyEF26Hf+3Gq+ppRgoGpikwMsmX/V5+aRfNgh
+ Xa5HFeZL/Od0cmbZdN90JlT14SSxjWVaUr3HX4HLOZnnzG26kf5ZlAZjpPExQUbOUoH7
+ 6ryA==
+X-Gm-Message-State: AOJu0YyZ6as8eJzixMQY1uFWww6S1kzVsjsF3a+Dk9GKcYoWpGSwNfcn
+ WfyZ22aeoFFGUxYEwE/cI8usZYFQQQsRIhjS7zqd6pDZAx7l2beWEPzSHUCBVkew9LrVwMh4/pR
+ k
+X-Google-Smtp-Source: AGHT+IGa43dslZ5wNDgRMgJScgVk/chbWoY+U0rRfdvNugLCnbt8xz5I+iNhAb+kpZzG15JPHwwEtA==
+X-Received: by 2002:a17:902:d58b:b0:1dc:b6bf:fae8 with SMTP id
+ k11-20020a170902d58b00b001dcb6bffae8mr4337694plh.59.1709334385266; 
+ Fri, 01 Mar 2024 15:06:25 -0800 (PST)
+Received: from stoup.. (098-147-055-211.res.spectrum.com. [98.147.55.211])
+ by smtp.gmail.com with ESMTPSA id
+ lc11-20020a170902fa8b00b001dc668e145asm3988580plb.200.2024.03.01.15.06.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 01 Mar 2024 15:06:24 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH 02/60] linux-user/elfload: Merge init_note_info and
+ fill_note_info
+Date: Fri,  1 Mar 2024 13:05:21 -1000
+Message-Id: <20240301230619.661008-3-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240301230619.661008-1-richard.henderson@linaro.org>
+References: <20240301230619.661008-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-References: <20240301022829.3390548-1-hao.xiang@bytedance.com>
- <20240301022829.3390548-3-hao.xiang@bytedance.com>
- <871q8uqule.fsf@pond.sub.org>
-In-Reply-To: <871q8uqule.fsf@pond.sub.org>
-From: Hao Xiang <hao.xiang@bytedance.com>
-Date: Fri, 1 Mar 2024 14:49:40 -0800
-Message-ID: <CAAYibXhbeC3GJVghkgnzrFCJT1veNs1UkGJ4Sxih_ALqV9LQog@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH v4 2/7] migration/multifd: Implement zero
- page transmission on the multifd thread.
-To: Markus Armbruster <armbru@redhat.com>
-Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net, 
- peterx@redhat.com, farosas@suse.de, eblake@redhat.com, thuth@redhat.com, 
- lvivier@redhat.com, jdenemar@redhat.com, marcel.apfelbaum@gmail.com, 
- philmd@linaro.org, wangyanan55@huawei.com, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
- envelope-from=hao.xiang@bytedance.com; helo=mail-lf1-x12b.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,58 +96,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 29, 2024 at 11:28=E2=80=AFPM Markus Armbruster <armbru@redhat.c=
-om> wrote:
->
-> Hao Xiang <hao.xiang@bytedance.com> writes:
->
-> > 1. Add zero_pages field in MultiFDPacket_t.
-> > 2. Implements the zero page detection and handling on the multifd
-> > threads for non-compression, zlib and zstd compression backends.
-> > 3. Added a new value 'multifd' in ZeroPageDetection enumeration.
-> > 4. Handle migration QEMU9.0 -> QEMU8.2 compatibility.
-> > 5. Adds zero page counters and updates multifd send/receive tracing
-> > format to track the newly added counters.
-> >
-> > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
->
-> [...]
->
-> > diff --git a/qapi/migration.json b/qapi/migration.json
-> > index 8da05dba47..846d0411d5 100644
-> > --- a/qapi/migration.json
-> > +++ b/qapi/migration.json
-> > @@ -671,10 +671,15 @@
-> >  #
-> >  # @legacy: Perform zero page checking in main migration thread.
-> >  #
-> > +# @multifd: Perform zero page checking in multifd sender thread.
-> > +#     This option only takes effect if migration capability multifd
-> > +#     is set.  Otherwise, it will have the same effect as legacy.
->
-> Suggest
->
->    # @multifd: Perform zero page checking in multifd sender thread if
->    #     multifd migration is enabled, else in the main migration
->    #     thread as for @legacy.
->
-> Thoughts?
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ linux-user/elfload.c | 15 +++------------
+ 1 file changed, 3 insertions(+), 12 deletions(-)
 
-Sounds good. Will change that.
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index fb47fe39c9..7b3a2c20f2 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -4514,16 +4514,6 @@ static void fill_thread_info(struct elf_note_info *info, const CPUArchState *env
+     info->notes_size += note_size(&ets->notes[0]);
+ }
+ 
+-static void init_note_info(struct elf_note_info *info)
+-{
+-    /* Initialize the elf_note_info structure so that it is at
+-     * least safe to call free_note_info() on it. Must be
+-     * called before calling fill_note_info().
+-     */
+-    memset(info, 0, sizeof (*info));
+-    QTAILQ_INIT(&info->thread_list);
+-}
+-
+ static int fill_note_info(struct elf_note_info *info,
+                           long signr, const CPUArchState *env)
+ {
+@@ -4532,6 +4522,9 @@ static int fill_note_info(struct elf_note_info *info,
+     TaskState *ts = (TaskState *)cpu->opaque;
+     int i;
+ 
++    memset(info, 0, sizeof (*info));
++    QTAILQ_INIT(&info->thread_list);
++
+     info->notes = g_new0(struct memelfnote, NUMNOTES);
+     if (info->notes == NULL)
+         return (-ENOMEM);
+@@ -4665,8 +4658,6 @@ static int elf_core_dump(int signr, const CPUArchState *env)
+     int segs = 0;
+     int fd = -1;
+ 
+-    init_note_info(&info);
+-
+     errno = 0;
+ 
+     if (prctl(PR_GET_DUMPABLE) == 0) {
+-- 
+2.34.1
 
->
-> > +#
-> >  # Since: 9.0
-> > +#
-> >  ##
-> >  { 'enum': 'ZeroPageDetection',
-> > -  'data': [ 'none', 'legacy' ] }
-> > +  'data': [ 'none', 'legacy', 'multifd' ] }
-> >
-> >  ##
-> >  # @BitmapMigrationBitmapAliasTransform:
->
-> QAPI schema
-> Acked-by: Markus Armbruster <armbru@redhat.com>
->
 
