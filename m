@@ -4,73 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80554C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 23:08:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C75A0C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 23:08:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgBxi-0004t5-VN; Fri, 01 Mar 2024 18:06:43 -0500
+	id 1rgByL-0005k9-9w; Fri, 01 Mar 2024 18:07:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgBxX-0004qU-Mt
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:06:31 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1rgBxp-0004vN-Bu
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:06:51 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgBxW-0004Co-4N
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:06:31 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1dc3b4b9b62so23771625ad.1
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 15:06:29 -0800 (PST)
+ id 1rgBxn-0004G4-HR
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 18:06:48 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-1dc0d11d1b7so24577165ad.2
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 15:06:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709334388; x=1709939188; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709334406; x=1709939206; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=keqqLzVNAo4uH25B4sgF/a/mk1kxuvixDsagaZwoXEA=;
- b=PB9EjzNw4+NNo/r7ILU/XW4K8BIXsGue2sjOwBuYukLQAdy0Ib67UueXkqSiXx8aB+
- VLOC6soi0HY9DJGoHwzXkVr044D82ymw57jeXGD61FYTqzpl0C3T2zyTTOW+aWoyNOob
- Bl8HJ8jz9bTrz5rv1CJ/FfB4P+2sPqXmtIIGPvT6C1B7WUu+y1RW4tFQmfTyt0rrwyXJ
- /lMaWCJmvhMpqgjjzJ3cFOVx+wh3Kz4KZCQzordgYufAhEdI2a62Hm4YrUVEOM07pmM4
- 69cG31S462xYENZ4CVwtgxd7/1LxvxGz6tl9Q1YEQgAMnRn6iIZwsTEKhOh1z0jGF46N
- qhgw==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=G2VXMZpzicQ4Dm28fmEM7ZpGthYgfI6UDANYII3bJPA=;
+ b=WC6R8Cy1R42yVSuTO2NwOSCU4z2YOpjV4Ec8i8ymmWDq4Dbh5jljrSJlGYyuTqu90a
+ ng5tSnU9hPLGXMyyP4Fbh+hn8Vf8W+tS997UQ23/sgS/6cr7JVFWay7r6uQJorUjNDid
+ 3o7PlAMSYI9GD6i7Ov9Lh9CsytulkNEoNkHDJ/RJpQyHIeUP81TKiCwqQKrn1I2idd1n
+ UUT6Cs496oa8wn0/55segL9Mj+akD9DDptJseOYpe0d6o2cUlo5nIQPMiZ+BTMmKBnGC
+ 1NtLcCrOKNjc7leD79cbrbSJuTPedAOiyzXG8bGMZGdOF2GfoX7sEX9n6Ckz2BhN8c48
+ 3Q/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709334388; x=1709939188;
+ d=1e100.net; s=20230601; t=1709334406; x=1709939206;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=keqqLzVNAo4uH25B4sgF/a/mk1kxuvixDsagaZwoXEA=;
- b=BBTVgrwjERFMD0WzpQp17D+q46zWc4St2LlXNRZXkHf4D8s6heckFZ1hGCgJygtDgP
- m4oM9acC8+FlO0RLfNdaBMV3IWC8gVDO1SHQjC1L/aqhyzIkuJles/Bdlu7Xb/OcChnm
- hFvf/kz2cD7RobvFMI66VHV/utCJycDVHSFF0Ta0EJooFlGfo+a5ewHUjFewAHkLQvr4
- mkMMdORyK6SNMnu00XIwE0L8bcZgzIbcXupFC0ZWY6+GOh7TlCFJgX6JsWK8U14RCZsd
- upqNYnRwpxEsmwMWyTWEmeUct6wXMaO+WvWPFV4dsKqrqeEibrfjYQDdZ4BcqsivJYr0
- w4VA==
-X-Gm-Message-State: AOJu0YzK+6igmV5yJK7uCFQaPSzadskPRi5x+5qITOxThSBMKJ7Uxyec
- UoURVNNCB9VAfBJaBtBeV/6y+8pdCxOQhcrLb1X7M461ALFODEWB0HAd7a2gaLHYWA8fqLj5Lrh
- 3
-X-Google-Smtp-Source: AGHT+IGSqzanFoyo3BGVUsOeqWu1YHLIOlVtTGEdsd+m0TdUJ+wOn5LN80SQbgUAO5mVZjIH3zM5gQ==
-X-Received: by 2002:a17:903:190:b0:1db:b8dc:a016 with SMTP id
- z16-20020a170903019000b001dbb8dca016mr4261042plg.7.1709334387715; 
- Fri, 01 Mar 2024 15:06:27 -0800 (PST)
+ bh=G2VXMZpzicQ4Dm28fmEM7ZpGthYgfI6UDANYII3bJPA=;
+ b=qKO9FIKqQ4hyxxJiKrUaJdCGIJckRIihzbYe9Whny87Ul28JR1JEHsZ0W7w7UoD4Ld
+ NaDRmbS4wjlWPulMleT8OK4T/sICSESMP7/OPVxIDNkYYBv5zXjTqjhbaV4miWp1HD66
+ zuT2h8KxwH1NnYc/dQmvajN7RSXOBlArxx76EKdspvnN35LoV9AuaYQ1pU0xQyqmPE0L
+ zYVnim0qXhWZ45H9LKW/tj4Q4agGXBISybrDcFPfZrdwDOR/N8qaOoOFa88xxJBEZHsC
+ BlbioILkq/NnUiBGTJWiAvWuCk7eF4rg5GdKNnpO5czG1ZtBY0Ng6BrUiZndZh0BFOU1
+ VoOg==
+X-Gm-Message-State: AOJu0YzjzhiMR2gZqag4gjF9Riiyy1AtrKGTPYfDvheHLer/e1RA9NcL
+ +zvS5iC7S0vSf/k+VvslIe6198+hX9KBZXsQ2GX9QEnvLugZZwIvZVR3Xr3R3j6hrdaZJKB2O+9
+ +
+X-Google-Smtp-Source: AGHT+IHhX/hTS8JqfJgFZnNbpy4DodUMopAeISIYRTej3Phw3GQ6esTUSjBTHZJzRKoM075InFTK0w==
+X-Received: by 2002:a17:902:7790:b0:1d9:a4bb:29f2 with SMTP id
+ o16-20020a170902779000b001d9a4bb29f2mr2518601pll.46.1709334406292; 
+ Fri, 01 Mar 2024 15:06:46 -0800 (PST)
 Received: from stoup.. (098-147-055-211.res.spectrum.com. [98.147.55.211])
  by smtp.gmail.com with ESMTPSA id
- lc11-20020a170902fa8b00b001dc668e145asm3988580plb.200.2024.03.01.15.06.26
- for <qemu-devel@nongnu.org>
+ lc11-20020a170902fa8b00b001dc668e145asm3988580plb.200.2024.03.01.15.06.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Mar 2024 15:06:27 -0800 (PST)
+ Fri, 01 Mar 2024 15:06:45 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 04/60] linux-user/elfload: Stack allocate struct mm_struct
-Date: Fri,  1 Mar 2024 13:05:23 -1000
-Message-Id: <20240301230619.661008-5-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Helge Deller <deller@gmx.de>
+Subject: [PATCH 18/60] accel/tcg: Remove qemu_host_page_size from
+ page_protect/page_unprotect
+Date: Fri,  1 Mar 2024 13:05:37 -1000
+Message-Id: <20240301230619.661008-19-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240301230619.661008-1-richard.henderson@linaro.org>
 References: <20240301230619.661008-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,106 +97,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ignoring the fact that g_malloc cannot fail, the structure
-is quite small and might as well be allocated locally.
+Use qemu_real_host_page_size instead.  Except for the final mprotect
+within page_protect, we already handled host < target page size.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Acked-by: Helge Deller <deller@gmx.de>
+Message-Id: <20240102015808.132373-2-richard.henderson@linaro.org>
 ---
- linux-user/elfload.c | 28 +++++++++-------------------
- 1 file changed, 9 insertions(+), 19 deletions(-)
+ accel/tcg/user-exec.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index cc43487a37..98b82b1a49 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -4099,7 +4099,7 @@ struct mm_struct {
-     int mm_count;           /* number of mappings */
- };
- 
--static struct mm_struct *vma_init(void);
-+static void vma_init(struct mm_struct *);
- static void vma_delete(struct mm_struct *);
- static int vma_add_mapping(struct mm_struct *, target_ulong,
-                            target_ulong, abi_ulong);
-@@ -4174,17 +4174,10 @@ static inline void bswap_note(struct elf_note *en) { }
-  * thread that received the signal is stopped.
-  */
- 
--static struct mm_struct *vma_init(void)
-+static void vma_init(struct mm_struct *mm)
+diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+index 68b252cb8e..69b7429e31 100644
+--- a/accel/tcg/user-exec.c
++++ b/accel/tcg/user-exec.c
+@@ -651,16 +651,17 @@ void page_protect(tb_page_addr_t address)
  {
--    struct mm_struct *mm;
--
--    if ((mm = g_malloc(sizeof (*mm))) == NULL)
--        return (NULL);
--
-     mm->mm_count = 0;
-     QTAILQ_INIT(&mm->mm_mmap);
--
--    return (mm);
- }
+     PageFlagsNode *p;
+     target_ulong start, last;
++    int host_page_size = qemu_real_host_page_size();
+     int prot;
  
- static void vma_delete(struct mm_struct *mm)
-@@ -4195,7 +4188,6 @@ static void vma_delete(struct mm_struct *mm)
-         QTAILQ_REMOVE(&mm->mm_mmap, vma, vma_link);
-         g_free(vma);
+     assert_memory_lock();
+ 
+-    if (qemu_host_page_size <= TARGET_PAGE_SIZE) {
++    if (host_page_size <= TARGET_PAGE_SIZE) {
+         start = address & TARGET_PAGE_MASK;
+         last = start + TARGET_PAGE_SIZE - 1;
+     } else {
+-        start = address & qemu_host_page_mask;
+-        last = start + qemu_host_page_size - 1;
++        start = address & -host_page_size;
++        last = start + host_page_size - 1;
      }
--    g_free(mm);
+ 
+     p = pageflags_find(start, last);
+@@ -671,7 +672,7 @@ void page_protect(tb_page_addr_t address)
+ 
+     if (unlikely(p->itree.last < last)) {
+         /* More than one protection region covers the one host page. */
+-        assert(TARGET_PAGE_SIZE < qemu_host_page_size);
++        assert(TARGET_PAGE_SIZE < host_page_size);
+         while ((p = pageflags_next(p, start, last)) != NULL) {
+             prot |= p->flags;
+         }
+@@ -679,7 +680,7 @@ void page_protect(tb_page_addr_t address)
+ 
+     if (prot & PAGE_WRITE) {
+         pageflags_set_clear(start, last, 0, PAGE_WRITE);
+-        mprotect(g2h_untagged(start), qemu_host_page_size,
++        mprotect(g2h_untagged(start), last - start + 1,
+                  prot & (PAGE_READ | PAGE_EXEC) ? PROT_READ : PROT_NONE);
+     }
  }
+@@ -725,18 +726,19 @@ int page_unprotect(target_ulong address, uintptr_t pc)
+         }
+ #endif
+     } else {
++        int host_page_size = qemu_real_host_page_size();
+         target_ulong start, len, i;
+         int prot;
  
- static int vma_add_mapping(struct mm_struct *mm, target_ulong start,
-@@ -4638,7 +4630,7 @@ static int elf_core_dump(int signr, const CPUArchState *env)
-     struct elfhdr elf;
-     struct elf_phdr phdr;
-     struct rlimit dumpsize;
--    struct mm_struct *mm = NULL;
-+    struct mm_struct mm;
-     off_t offset = 0, data_offset = 0;
-     int segs = 0;
-     int fd = -1;
-@@ -4664,11 +4656,10 @@ static int elf_core_dump(int signr, const CPUArchState *env)
-      * set up structure containing this information.  After
-      * this point vma_xxx functions can be used.
-      */
--    if ((mm = vma_init()) == NULL)
--        goto out;
-+    vma_init(&mm);
+-        if (qemu_host_page_size <= TARGET_PAGE_SIZE) {
++        if (host_page_size <= TARGET_PAGE_SIZE) {
+             start = address & TARGET_PAGE_MASK;
+             len = TARGET_PAGE_SIZE;
+             prot = p->flags | PAGE_WRITE;
+             pageflags_set_clear(start, start + len - 1, PAGE_WRITE, 0);
+             current_tb_invalidated = tb_invalidate_phys_page_unwind(start, pc);
+         } else {
+-            start = address & qemu_host_page_mask;
+-            len = qemu_host_page_size;
++            start = address & -host_page_size;
++            len = host_page_size;
+             prot = 0;
  
--    walk_memory_regions(mm, vma_walker);
--    segs = vma_get_mapping_count(mm);
-+    walk_memory_regions(&mm, vma_walker);
-+    segs = vma_get_mapping_count(&mm);
- 
-     /*
-      * Construct valid coredump ELF header.  We also
-@@ -4701,7 +4692,7 @@ static int elf_core_dump(int signr, const CPUArchState *env)
-      * Write program headers for memory regions mapped in
-      * the target process.
-      */
--    for (vma = vma_first(mm); vma != NULL; vma = vma_next(vma)) {
-+    for (vma = vma_first(&mm); vma != NULL; vma = vma_next(vma)) {
-         (void) memset(&phdr, 0, sizeof (phdr));
- 
-         phdr.p_type = PT_LOAD;
-@@ -4738,7 +4729,7 @@ static int elf_core_dump(int signr, const CPUArchState *env)
-     /*
-      * Finally we can dump process memory into corefile as well.
-      */
--    for (vma = vma_first(mm); vma != NULL; vma = vma_next(vma)) {
-+    for (vma = vma_first(&mm); vma != NULL; vma = vma_next(vma)) {
-         abi_ulong addr;
-         abi_ulong end;
- 
-@@ -4767,8 +4758,7 @@ static int elf_core_dump(int signr, const CPUArchState *env)
- 
-  out:
-     free_note_info(&info);
--    if (mm != NULL)
--        vma_delete(mm);
-+    vma_delete(&mm);
-     (void) close(fd);
- 
-     if (errno != 0)
+             for (i = 0; i < len; i += TARGET_PAGE_SIZE) {
 -- 
 2.34.1
 
