@@ -4,88 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A34D4C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 17:08:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAB21C54E49
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 17:11:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rg6N6-0004Ov-7C; Fri, 01 Mar 2024 12:08:32 -0500
+	id 1rg6Ox-0005Hh-PL; Fri, 01 Mar 2024 12:10:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rg6N2-0004IA-Nv
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 12:08:28 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rg6N1-0002fc-3V
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 12:08:28 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-412ced8ef97so782235e9.3
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 09:08:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709312905; x=1709917705; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yIsxd3I49dEeoEihY92y12I5QN6KFVksMBQbYfAFd0k=;
- b=Bp6DkDEtxrPlRZutCpHhPysohDuXummihHJnF20fQw4NEMACsynojMEY5BuM8v6PeX
- ArbdLsGVdEUl2jFdfuB+gMJfHvBE1G4DlNWYeZLZ6PbIcYiK+aw3rzn9gcFpuzO7yx7S
- 3vE4xY+7jBxhMVTG/Hy2HQwkzx6k9lnko7CRYCiKTZCXWoHO3r6O7AqQrGnFzpA06PV1
- 7txmKPTz4ZWTnlB40c4gq29LcImgEJhAfxQP8OABJ8hrr5vV+z5PKs3BXENcXVG753br
- pvxEqLRwRptOMQbfevm0V5O2W791kWvFot0uhMMrAD1JH6kNbfUX3o0vpijUl4jpJGxP
- 2R5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709312905; x=1709917705;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=yIsxd3I49dEeoEihY92y12I5QN6KFVksMBQbYfAFd0k=;
- b=Nznx5OZOnGxu36+qaDWpYoLtduZThoNToX2s06BfI8zWsIagZuEzjnzU8APtg0CexC
- qz1rLbYEWbdKGjDdnv6suJam6NTkAlun6wrXWAhB0GYDE4NwuwRKDc2DTCTS2mFAvDlz
- dnv0yf1XbnYpjWM0HAA4YVA4Cj2ufSDS6TFLIu3xOxN4Hc8RQ7mUP28TWq01aFDBVsqC
- iK5FQT86fs1XCOMZemg+WRvT8VCODIiKjlR+kohjM7fL2bAXXSMkvAbi36ehnBJovrg1
- 9dODWcW1NRfw3al6MLQg8oGg+7Ig3dMhq/CUZVjW3Wt7XOHzl5fF22VG077E+VSevxbV
- o/IQ==
-X-Gm-Message-State: AOJu0Ywp+hm57DBwiJVNfNGJwlMntYGzKLIEZeTWxDvS7w7ncbAOjMBG
- 6q5/NBzlb8sC8eIri8IL7LK4k80pop07nJoW+EVLCupaSGuz6oUvt50IrlK8UKE=
-X-Google-Smtp-Source: AGHT+IF/04gw/RkqLIbw8xez/beiUpqog3Zmj88Frgy30DgiLIcrkJ88jnJeBOUjtNlvcLKherqjQg==
-X-Received: by 2002:a05:600c:45cf:b0:412:ca55:10ec with SMTP id
- s15-20020a05600c45cf00b00412ca5510ecmr1148930wmo.19.1709312905208; 
- Fri, 01 Mar 2024 09:08:25 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- jn3-20020a05600c6b0300b004128e903b2csm8910607wmb.39.2024.03.01.09.08.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Mar 2024 09:08:24 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9A47B5F7B4;
- Fri,  1 Mar 2024 17:08:24 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Vikram Garhwal <vikram.garhwal@amd.com>
-Cc: <qemu-devel@nongnu.org>,  <sstabellini@kernel.org>,  <jgross@suse.com>,
- Anthony Perard <anthony.perard@citrix.com>,  Paul Durrant <paul@xen.org>,
- "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>
-Subject: Re: [QEMU][PATCH v3 4/7] xen: let xen_ram_addr_from_mapcache()
- return -1 in case of not found entry
-In-Reply-To: <20240227223501.28475-5-vikram.garhwal@amd.com> (Vikram Garhwal's
- message of "Tue, 27 Feb 2024 14:34:58 -0800")
-References: <20240227223501.28475-1-vikram.garhwal@amd.com>
- <20240227223501.28475-5-vikram.garhwal@amd.com>
-User-Agent: mu4e 1.12.0; emacs 29.1
-Date: Fri, 01 Mar 2024 17:08:24 +0000
-Message-ID: <87o7bx5187.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rg6Ov-0005G2-On
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 12:10:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rg6Ot-000359-KY
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 12:10:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709313022;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=mr0Zd0ePmuxZCHu2mhQtacyGf5CQPtkvQMMohELTPbs=;
+ b=IHzof8XBrzr61WtcuzXbKE7vKvj6Adqq4uVOL+IkCz7eJ1Nkkw30PTuDIK5lz0hgeysXAc
+ dgWdkU1ysZiMXtevVj4jhF6JueQkBD6Cgf5aXhnfZh0KhwZAzVmmt36MnRVXsQq25UIyFD
+ AJZNxnhPC2BlXR2ePEQ5mIBuNAz2B+Q=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-TCLtQWUKPii1pBuk9fwZxA-1; Fri,
+ 01 Mar 2024 12:10:20 -0500
+X-MC-Unique: TCLtQWUKPii1pBuk9fwZxA-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A26022812947;
+ Fri,  1 Mar 2024 17:10:19 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.50])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 57FF742422;
+ Fri,  1 Mar 2024 17:10:15 +0000 (UTC)
+Date: Fri, 1 Mar 2024 17:10:13 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Roy Hopkins <roy.hopkins@suse.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>,
+ =?utf-8?B?SsO2cmc=?= Roedel <jroedel@suse.com>
+Subject: Re: [PATCH 9/9] docs/system: Add documentation on support for IGVM
+Message-ID: <ZeIL9Tco7PCRxdg-@redhat.com>
+References: <cover.1709044754.git.roy.hopkins@suse.com>
+ <2f98be192cf6ffd36b984266570ea2eed4dfe364.1709044754.git.roy.hopkins@suse.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Disposition: inline
+In-Reply-To: <2f98be192cf6ffd36b984266570ea2eed4dfe364.1709044754.git.roy.hopkins@suse.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.096,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,46 +89,61 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vikram Garhwal <vikram.garhwal@amd.com> writes:
-
-> From: Juergen Gross <jgross@suse.com>
->
-> Today xen_ram_addr_from_mapcache() will either abort() or return 0 in
-> case it can't find a matching entry for a pointer value. Both cases
-> are bad, so change that to return an invalid address instead.
->
-> Signed-off-by: Juergen Gross <jgross@suse.com>
-> Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+On Tue, Feb 27, 2024 at 02:50:15PM +0000, Roy Hopkins wrote:
+> IGVM support has been implemented for Confidential Guests that support
+> AMD SEV and AMD SEV-ES. Add some documentation that gives some
+> background on the IGVM format and how to use it to configure a
+> confidential guest.
+> 
+> Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
 > ---
->  hw/xen/xen-mapcache.c | 11 +++--------
->  1 file changed, 3 insertions(+), 8 deletions(-)
->
-> diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-> index dfc412d138..179b7e95b2 100644
-> --- a/hw/xen/xen-mapcache.c
-> +++ b/hw/xen/xen-mapcache.c
-> @@ -396,13 +396,8 @@ ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
->          }
->      }
->      if (!found) {
-> -        trace_xen_ram_addr_from_mapcache_not_found(ptr);
-> -        QTAILQ_FOREACH(reventry, &mapcache->locked_entries, next) {
-> -            trace_xen_ram_addr_from_mapcache_found(reventry->paddr_index,
-> -                                                   reventry->vaddr_req);
-> -        }
+>  docs/system/igvm.rst  | 58 +++++++++++++++++++++++++++++++++++++++++++
+>  docs/system/index.rst |  1 +
+>  2 files changed, 59 insertions(+)
+>  create mode 100644 docs/system/igvm.rst
 
-If these tracepoints aren't useful they need removing from trace-events.
-However I suspect it would be better to keep them in as they are fairly
-cheap.
 
-Otherwise:
+> +Firmware Images with IGVM
+> +-------------------------
+> +
+> +When an IGVM filename is specified for a Confidential Guest Support object it
+> +overrides the default handling of system firmware: the firmware image, such as
+> +an OVMF binary should be contained as a payload of the IGVM file and not
+> +provided as a flash drive. The default QEMU firmware is not automatically mapped
+> +into guest memory.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+IIUC, in future the IGVM file could contain both the OVMF and SVSM
+binaries ?
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+I'm also wondering if there can be dependancies between the IGVM
+file and the broader QEMU configuration ?  eg if SVSM gains suupport
+for data persistence, potentially we might need some pflash device
+exposed as storage for SVSM to use. Would such a dependancy be
+something expressed in the IGVM file, or would it be knowledge that
+is out of band ?
+
+Finally, if we think of the IGVM file as simply yet another firmware
+file format, then it raises of question of integration into the
+QEMU firmware descriptors.
+
+Right now when defining a guest in libvirt if you can say 'type=bios'
+or 'type=uefi', and libvirt consults the firmware descriptors to find
+the binary to use.
+
+If the OS distro provides IGVM files instead of traditional raw OVMF
+binaries for SEV/TDX/etc, then from libvirt's POV I think having this
+expressed in the firmware descriptors is highly desirable.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
