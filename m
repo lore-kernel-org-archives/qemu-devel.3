@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71A03C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 09:41:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7B5EC5478C
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 Mar 2024 09:41:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rfzLv-0003CQ-Sn; Fri, 01 Mar 2024 04:38:51 -0500
+	id 1rfzMK-0003JW-Kv; Fri, 01 Mar 2024 04:39:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1rfzLt-0003BD-Ku
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:38:49 -0500
+ id 1rfzMA-0003Hs-AA
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:39:11 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1rfzLq-0006NV-MD
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:38:49 -0500
+ (envelope-from <gaosong@loongson.cn>) id 1rfzM5-0006OP-Kb
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 04:39:04 -0500
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8BxVfEiouFlPz0TAA--.49235S3;
- Fri, 01 Mar 2024 17:38:42 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxaOgoouFlYj0TAA--.29096S3;
+ Fri, 01 Mar 2024 17:38:48 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8AxDBMfouFlyZxLAA--.4871S4; 
- Fri, 01 Mar 2024 17:38:41 +0800 (CST)
+ AQAAf8AxDBMfouFlyZxLAA--.4871S15; 
+ Fri, 01 Mar 2024 17:38:48 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, richard.henderson@linaro.org, philmd@linaro.org,
  maobibo@loongson.cn, zhaotianrui@loongson.cn, lixianglai@loongson.cn,
  imammedo@redhat.com, anisinha@redhat.com, mst@redhat.com
-Subject: [PATCH v5 02/17] hw/loongarch: Add load initrd
-Date: Fri,  1 Mar 2024 17:38:23 +0800
-Message-Id: <20240301093839.663947-3-gaosong@loongson.cn>
+Subject: [PATCH v5 13/17] hw/loongarch: fdt adds pch_msi Controller
+Date: Fri,  1 Mar 2024 17:38:34 +0800
+Message-Id: <20240301093839.663947-14-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20240301093839.663947-1-gaosong@loongson.cn>
 References: <20240301093839.663947-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8AxDBMfouFlyZxLAA--.4871S4
+X-CM-TRANSID: AQAAf8AxDBMfouFlyZxLAA--.4871S15
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,58 +66,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-we load initrd ramdisk after kernel_high address
+fdt adds pch msi controller, we use 'loongson,pch-msi-1.0'.
+
+See:
+https://github.com/torvalds/linux/blob/v6.7/drivers/irqchip/irq-loongson-pch-msi.c
+https://lore.kernel.org/r/20200528152757.1028711-6-jiaxun.yang@flygoat.com
 
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- hw/loongarch/boot.c | 29 ++++++++++++++++++++++++++++-
- 1 file changed, 28 insertions(+), 1 deletion(-)
+ include/hw/pci-host/ls7a.h |  1 +
+ hw/loongarch/virt.c        | 33 ++++++++++++++++++++++++++++++++-
+ 2 files changed, 33 insertions(+), 1 deletion(-)
 
-diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-index 0f2bc15fdf..3075c276d4 100644
---- a/hw/loongarch/boot.c
-+++ b/hw/loongarch/boot.c
-@@ -21,7 +21,8 @@ static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
+diff --git a/include/hw/pci-host/ls7a.h b/include/hw/pci-host/ls7a.h
+index fe260f0183..cd7c9ec7bc 100644
+--- a/include/hw/pci-host/ls7a.h
++++ b/include/hw/pci-host/ls7a.h
+@@ -25,6 +25,7 @@
+ #define VIRT_IOAPIC_REG_BASE     (VIRT_PCH_REG_BASE)
+ #define VIRT_PCH_MSI_ADDR_LOW    0x2FF00000UL
+ #define VIRT_PCH_REG_SIZE        0x400
++#define VIRT_PCH_MSI_SIZE        0x8
  
- static int64_t load_kernel_info(struct loongarch_boot_info *info)
+ /*
+  * GSI_BASE is hard-coded with 64 in linux kernel, else kernel fails to boot
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 87908d1f79..e1fe1ea97f 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -150,6 +150,34 @@ static void fdt_add_pch_pic_node(LoongArchMachineState *lams,
+     g_free(nodename);
+ }
+ 
++static void fdt_add_pch_msi_node(LoongArchMachineState *lams,
++                                 uint32_t *eiointc_phandle,
++                                 uint32_t *pch_msi_phandle)
++{
++    MachineState *ms = MACHINE(lams);
++    char *nodename;
++    hwaddr pch_msi_base = VIRT_PCH_MSI_ADDR_LOW;
++    hwaddr pch_msi_size = VIRT_PCH_MSI_SIZE;
++
++    *pch_msi_phandle = qemu_fdt_alloc_phandle(ms->fdt);
++    nodename = g_strdup_printf("/msi@%" PRIx64, pch_msi_base);
++    qemu_fdt_add_subnode(ms->fdt, nodename);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "phandle", *pch_msi_phandle);
++    qemu_fdt_setprop_string(ms->fdt, nodename, "compatible",
++                            "loongson,pch-msi-1.0");
++    qemu_fdt_setprop_cells(ms->fdt, nodename, "reg",
++                           0, pch_msi_base,
++                           0, pch_msi_size);
++    qemu_fdt_setprop(ms->fdt, nodename, "interrupt-controller", NULL, 0);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
++                          *eiointc_phandle);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "loongson,msi-base-vec",
++                          VIRT_PCH_PIC_IRQ_NUM);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "loongson,msi-num-vecs",
++                          EXTIOI_IRQS - VIRT_PCH_PIC_IRQ_NUM);
++    g_free(nodename);
++}
++
+ static void fdt_add_flash_node(LoongArchMachineState *lams)
  {
--    uint64_t kernel_entry, kernel_low, kernel_high;
-+    uint64_t kernel_entry, kernel_low, kernel_high, initrd_size;
-+    ram_addr_t initrd_offset;
-     ssize_t kernel_size;
+     MachineState *ms = MACHINE(lams);
+@@ -558,7 +586,7 @@ static void loongarch_irq_init(LoongArchMachineState *lams)
+     CPULoongArchState *env;
+     CPUState *cpu_state;
+     int cpu, pin, i, start, num;
+-    uint32_t cpuintc_phandle, eiointc_phandle, pch_pic_phandle;
++    uint32_t cpuintc_phandle, eiointc_phandle, pch_pic_phandle, pch_msi_phandle;
  
-     kernel_size = load_elf(info->kernel_filename, NULL,
-@@ -36,6 +37,32 @@ static int64_t load_kernel_info(struct loongarch_boot_info *info)
-                      load_elf_strerror(kernel_size));
-         exit(1);
+     /*
+      * The connection of interrupts:
+@@ -666,6 +694,9 @@ static void loongarch_irq_init(LoongArchMachineState *lams)
+                               qdev_get_gpio_in(extioi, i + start));
      }
+ 
++    /* Add PCH MSI node */
++    fdt_add_pch_msi_node(lams, &eiointc_phandle, &pch_msi_phandle);
 +
-+    if (info->initrd_filename) {
-+        initrd_size = get_image_size(info->initrd_filename);
-+        if (initrd_size > 0) {
-+            initrd_offset = ROUND_UP(kernel_high + 4 * kernel_size, 64 * KiB);
-+
-+            if (initrd_offset + initrd_size > info->ram_size) {
-+                error_report("memory too small for initial ram disk '%s'",
-+                             info->initrd_filename);
-+                exit(1);
-+            }
-+
-+            initrd_size = load_image_targphys(info->initrd_filename, initrd_offset,
-+                                              info->ram_size - initrd_offset);
-+        }
-+
-+        if (initrd_size == (target_ulong)-1) {
-+            error_report("could not load initial ram disk '%s'",
-+                         info->initrd_filename);
-+            exit(1);
-+        }
-+    } else {
-+        error_report("Need initrd!");
-+        exit(1);
-+    }
-+
-     return kernel_entry;
+     loongarch_devices_init(pch_pic, lams);
  }
  
 -- 
