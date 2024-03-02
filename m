@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A2DFC54E49
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Mar 2024 05:20:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10BD4C54E55
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Mar 2024 05:20:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgHjm-0002V5-L5; Sat, 02 Mar 2024 00:16:42 -0500
+	id 1rgHk8-00032r-OC; Sat, 02 Mar 2024 00:17:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgHjj-0002UU-Qb
- for qemu-devel@nongnu.org; Sat, 02 Mar 2024 00:16:39 -0500
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ id 1rgHk6-00031v-9Q
+ for qemu-devel@nongnu.org; Sat, 02 Mar 2024 00:17:02 -0500
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgHjV-0007Vd-Vx
- for qemu-devel@nongnu.org; Sat, 02 Mar 2024 00:16:39 -0500
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-5d8b519e438so2577351a12.1
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 21:16:25 -0800 (PST)
+ id 1rgHk3-0007ba-9b
+ for qemu-devel@nongnu.org; Sat, 02 Mar 2024 00:17:02 -0500
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-6e5e4b1d1f1so296728b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 21:16:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709356584; x=1709961384; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709356616; x=1709961416; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TFEdg7NNQgrayWD3SI3BgIOCHtplkk9gYK46g8nra+g=;
- b=G0PRaYXxD58R7+6KMBxs53LCV4yY4ZAu9FN0Zy3cIzRjIOsH0KIfkF6ju+IStmwz1u
- 4ZFVZwoS+t4TdtkP5B/8yuRTDNHnB4wG65IFONprNFAhXTjOjq7Ozhza/4FxwfCtO6jE
- q4eWWPXuVq94BsSpU+QCKAMdC0t3OZTTY6pikOtmP/5P438BlG+UrP/zLp3zx4yomxWJ
- E6cCIo75j6rxWhpfIBfRohn8cJIEWKP3FrohKCZZiWyloCuO/XoUIufWp0g9nGjYET7f
- 7VzZceIllGzChOMe5vIoYrQFm5fuMT2R7Ts6pyuB8LgxXPkwZLfujelfrKm7PnCQFEaf
- VFwg==
+ bh=VsIJr6QEnw4W2YvjzGDYdqQcqjL5PLIBf0yL49rbXJU=;
+ b=FoJLqy5XVz9JIkzfG4sDjxEN0SxtXefwPgH22QXSYR5oGI5Cn0gsILDlBE8IjBxAoN
+ ZpskAm0JhtalfUYHTBTgr/E8nWWYk/pqzcVowCciZ7XedrJx1Iv6jLhls2AOiWO45PpK
+ 96qtUkfSDM2EvumkI3hOsPrtDO250cZxxLska+9zPZienSD5IDsZQf0R7L23bLh9YdOB
+ Z5O2S82VYyccrTtlM1gLY5Xn6FcoSn0vaoyIMZ2KJpHF/JpvzfM49b1wz9MIqRpBHYU5
+ GKcdD7PUznprKErPXTw5QpRrLMCvYL5RqRmoyJDoUnFc1f4+ZN6SfdOCCCGi2WV+U2K3
+ yxzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709356584; x=1709961384;
+ d=1e100.net; s=20230601; t=1709356616; x=1709961416;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TFEdg7NNQgrayWD3SI3BgIOCHtplkk9gYK46g8nra+g=;
- b=Hlm4Nxnu0VXy5NAM5JpwqsoHVuslPwlHT2SYURfe7fGFV/cHMOBX+xUG+8i6VG+Smj
- UXVUrBu3SWdcUs0JMTexy4FWvwMKlLXLo3QwZ9nwnwo8OUx/TrkxcHbeO7Px6B5BsHW9
- tkkZGsgMr1eW7EUGnRzXJy0sXSpWhE3IQPwQpPMQWfqHIpDHRjSe7e7LMANYoVtOZul4
- Hgb3dCiUu6R7BbGMkRxYEp+Deuuu34CbN4mh4CxHig1odwF+0ePk7gvJL/PG0lM5dMBq
- dDuDcCmLUMbOFeL5TCVFuiduyk693bteAW6T1hYem+qGlL3S6KW0K66Zcpv3hOHCJwAe
- 3o5w==
-X-Gm-Message-State: AOJu0Yy5EME1FMynwt6QIVnvRCE3YWM2BKkZANx9UQVgnzwydK72YCdX
- MtHK47vkMddKxEVMewiGxcpox+WxD2ZT0V6udpmRWufHU1JrJPsgNtv1JEPdAK2kpfkG9fciTHA
- Q
-X-Google-Smtp-Source: AGHT+IH4DTXqmHQBl8eb4Q14+01SjVnoY7yUJbX8Jm3E+2XxLLRJy75DlCvud8y6Vrifzbrt1XjECQ==
-X-Received: by 2002:a05:6a20:244d:b0:1a1:461a:331b with SMTP id
- t13-20020a056a20244d00b001a1461a331bmr1031194pzc.18.1709356584664; 
- Fri, 01 Mar 2024 21:16:24 -0800 (PST)
+ bh=VsIJr6QEnw4W2YvjzGDYdqQcqjL5PLIBf0yL49rbXJU=;
+ b=r1INtZejZEndV++cJGwMjxnmByR9hyXQKHEFZiHg/EONA2gLGPB1KxD7r/g/rP9zMC
+ oY7J+uBQFuDUTGO+iO/CISX1TG6HiIr0vmNrMHDihrKwG4vRHJxNcsGxewGolcKu+6nf
+ aYFMYU4URuZXjaOOEsUhIvkltKDPoc0HNdxpbEmhCfqqlhd1cM6jZ8Jyu8jehvc5jzGY
+ WXj55GSxb1KjOui8jmuT7Ksov2MMYTSgHRgqAoHCsxZrRmlPTIbZji5FUETKfk2LjO2c
+ ApbdZe0xGvF0aKL2fp6XhsqqDJEjKmO/2fgX/JwrrS0ZWHCx0yH+VD84/vKz4/L7OQQV
+ tijQ==
+X-Gm-Message-State: AOJu0Yx2Xlggx7lh16K6AGuTr9HjnvHkjuznaBRGcPrqcg7MCIW3JPXG
+ omEYGPyfhndey8G5iPX6GJ15wVxx4xTffBSV6Ru0xjP1ni6SL4c/ZjRHZfWoRNmFYfL7r2AkMEA
+ R
+X-Google-Smtp-Source: AGHT+IEVhDktlnrdfQKspxKxy4mVdMQKj4TAT2bRwX+kYajLNyB3xZYbTHpCWKvYV1L1nHMt+rMx0g==
+X-Received: by 2002:a17:90a:de8c:b0:296:530:996e with SMTP id
+ n12-20020a17090ade8c00b002960530996emr5028429pjv.20.1709356616645; 
+ Fri, 01 Mar 2024 21:16:56 -0800 (PST)
 Received: from stoup.. (098-147-055-211.res.spectrum.com. [98.147.55.211])
  by smtp.gmail.com with ESMTPSA id
- v8-20020a17090a458800b0029af67d4fd0sm4034901pjg.44.2024.03.01.21.16.23
+ v8-20020a17090a458800b0029af67d4fd0sm4034901pjg.44.2024.03.01.21.16.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Mar 2024 21:16:24 -0800 (PST)
+ Fri, 01 Mar 2024 21:16:56 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: mark.cave-ayland@ilande.co.uk,
 	atar4qemu@gmail.com
-Subject: [PATCH 11/41] target/sparc: Use gvec for VIS1 parallel add/sub
-Date: Fri,  1 Mar 2024 19:15:31 -1000
-Message-Id: <20240302051601.53649-12-richard.henderson@linaro.org>
+Subject: [PATCH 33/41] target/sparc: Add feature bit for VIS4
+Date: Fri,  1 Mar 2024 19:15:53 -1000
+Message-Id: <20240302051601.53649-34-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240302051601.53649-1-richard.henderson@linaro.org>
 References: <20240302051601.53649-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,45 +97,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/sparc/translate.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ target/sparc/translate.c       | 2 ++
+ target/sparc/cpu-feature.h.inc | 1 +
+ 2 files changed, 3 insertions(+)
 
 diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index 981d9d9101..ee3da73551 100644
+index 56ee3927af..77b53cbf3b 100644
 --- a/target/sparc/translate.c
 +++ b/target/sparc/translate.c
-@@ -4645,6 +4645,20 @@ static bool do_dfd(DisasContext *dc, arg_r_r_r *a,
+@@ -2402,6 +2402,7 @@ static int extract_qfpreg(DisasContext *dc, int x)
+ # define avail_VIS2(C)    ((C)->def->features & CPU_FEATURE_VIS2)
+ # define avail_VIS3(C)    ((C)->def->features & CPU_FEATURE_VIS3)
+ # define avail_VIS3B(C)   avail_VIS3(C)
++# define avail_VIS4(C)    ((C)->def->features & CPU_FEATURE_VIS4)
+ #else
+ # define avail_32(C)      true
+ # define avail_ASR17(C)   ((C)->def->features & CPU_FEATURE_ASR17)
+@@ -2418,6 +2419,7 @@ static int extract_qfpreg(DisasContext *dc, int x)
+ # define avail_VIS2(C)    false
+ # define avail_VIS3(C)    false
+ # define avail_VIS3B(C)   false
++# define avail_VIS4(C)    false
+ #endif
  
- TRANS(FMUL8x16, VIS1, do_dfd, a, gen_helper_fmul8x16)
- 
-+static bool do_gvec_ddd(DisasContext *dc, arg_r_r_r *a, MemOp vece,
-+                        void (*func)(unsigned, uint32_t, uint32_t,
-+                                     uint32_t, uint32_t, uint32_t))
-+{
-+    func(vece, gen_offset_fpr_D(a->rd), gen_offset_fpr_D(a->rs1),
-+         gen_offset_fpr_D(a->rs2), 8, 8);
-+    return advance_pc(dc);
-+}
-+
-+TRANS(FPADD16, VIS1, do_gvec_ddd, a, MO_16, tcg_gen_gvec_add)
-+TRANS(FPADD32, VIS1, do_gvec_ddd, a, MO_32, tcg_gen_gvec_add)
-+TRANS(FPSUB16, VIS1, do_gvec_ddd, a, MO_16, tcg_gen_gvec_sub)
-+TRANS(FPSUB32, VIS1, do_gvec_ddd, a, MO_32, tcg_gen_gvec_sub)
-+
- static bool do_ddd(DisasContext *dc, arg_r_r_r *a,
-                    void (*func)(TCGv_i64, TCGv_i64, TCGv_i64))
- {
-@@ -4665,10 +4679,6 @@ static bool do_ddd(DisasContext *dc, arg_r_r_r *a,
- TRANS(FMUL8SUx16, VIS1, do_ddd, a, gen_helper_fmul8sux16)
- TRANS(FMUL8ULx16, VIS1, do_ddd, a, gen_helper_fmul8ulx16)
- 
--TRANS(FPADD16, VIS1, do_ddd, a, tcg_gen_vec_add16_i64)
--TRANS(FPADD32, VIS1, do_ddd, a, tcg_gen_vec_add32_i64)
--TRANS(FPSUB16, VIS1, do_ddd, a, tcg_gen_vec_sub16_i64)
--TRANS(FPSUB32, VIS1, do_ddd, a, tcg_gen_vec_sub32_i64)
- TRANS(FNORd, VIS1, do_ddd, a, tcg_gen_nor_i64)
- TRANS(FANDNOTd, VIS1, do_ddd, a, tcg_gen_andc_i64)
- TRANS(FXORd, VIS1, do_ddd, a, tcg_gen_xor_i64)
+ /* Default case for non jump instructions. */
+diff --git a/target/sparc/cpu-feature.h.inc b/target/sparc/cpu-feature.h.inc
+index e2e6de9144..be81005237 100644
+--- a/target/sparc/cpu-feature.h.inc
++++ b/target/sparc/cpu-feature.h.inc
+@@ -15,3 +15,4 @@ FEATURE(CASA)
+ FEATURE(FMAF)
+ FEATURE(VIS3)
+ FEATURE(IMA)
++FEATURE(VIS4)
 -- 
 2.34.1
 
