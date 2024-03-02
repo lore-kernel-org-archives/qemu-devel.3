@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C613DC54E41
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB32FC54E49
 	for <qemu-devel@archiver.kernel.org>; Sat,  2 Mar 2024 04:13:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgGjJ-0005No-7n; Fri, 01 Mar 2024 23:12:09 -0500
+	id 1rgGjL-0005Oz-JT; Fri, 01 Mar 2024 23:12:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgDpo-0008In-Am
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 20:06:41 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1rgDKo-00081I-Ii
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 19:34:38 -0500
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgDpj-0001qH-4Y
- for qemu-devel@nongnu.org; Fri, 01 Mar 2024 20:06:38 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-6e5e4b1d1f1so241738b3a.1
- for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 17:06:34 -0800 (PST)
+ id 1rgDKm-000837-Vg
+ for qemu-devel@nongnu.org; Fri, 01 Mar 2024 19:34:38 -0500
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-6e46dcd8feaso1682732b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 01 Mar 2024 16:34:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709341594; x=1709946394; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=heWwhhZRXEytDL0SmdxoBBOuqoxj4iBtZd/7OGPBfBQ=;
- b=DEYHr8YNykP4Tvn+YkyIDqsvjVWYkIr6Sm+r34N7YUvFYCCd2cFWdX2FPc1Z3PouKs
- HILLcreypPr3Ayfo6giUotyU+foj8mp49lPedanOngYNbYWmO8OtjpH1ylKSTwTyMjQ0
- KZrqvIZ37c0cpcnIWQht4U6e7fmQWDMm9owEP1H2Pn6J7DRXwMBbSV3d3UihODpQzdg5
- egFEgy9Trpb3JrcFsgAvsidQV00HjXxBsxFtWtvgKv4xnXXH6f/FdSKTDNzswwfhngiq
- J7+5elGpMdIlsDoc1ySQwKf8TnWooaAQzHvwqw9acvBxjkiIHGNCcIwTeztpxed7Vhi3
- sSkA==
+ d=linaro.org; s=google; t=1709339675; x=1709944475; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=XpJrB5ct4rQ3tjBR5Uke9KdALSQm1ESN+KjjBjX/cQk=;
+ b=K25FbGf4oR49YAYltzLaK4l2AYPGl+V9uut3eXX2XkOnmCBviBMDiBBsihBHzLw9z9
+ tKbSHjlSDNFttT58hyuXMIxOb7FYKMzNAZ8L9Wqje5InfeyNoX89xPZbunWzC40Xcn2y
+ inXdeRUoPpt1dwJWghcmegzCO1Hz5mZaS9CtX6rvAtYZPuq+T20haIxxxHWqJ04O0sUE
+ UdjSIqBcgj/A7m57N+yW4avEZ0Z43bcpTs429EGlSRE06Ib5apL1cp9FnP+twzxgaI8i
+ Laf8t4SWHZPcaPG0MOZ2R5c1i6xRb62tnD1Iz2pUcU9GH/VKtFzOu5ELyU0jCdvQzqA3
+ 8tqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709341594; x=1709946394;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=heWwhhZRXEytDL0SmdxoBBOuqoxj4iBtZd/7OGPBfBQ=;
- b=qJ0ooZy77CBfJ3ZRwsB0SGLuOwdzKoftpYgupx9uxMyQq2J4BbKKoeNn1/Lpcr8NBY
- GPlwSWbYBcoKY+0UH6Q7VvdAVdUSwopMaH3Ftq9cE6mMaUcCseRKblPxsDxKJcM7Htfp
- MwrrD40aZhwVUA9Jvsg6ObXC4Z54ZrnI4TtIIj2OK+ksHcgC+iJPBXpPS7q2919sqw3R
- fzNrlPP7Q3qFjeLLuRd6CqPkFde19j7lTXu6F185M1e3cltU2wqB3uCAZ6fIk5aOfSNc
- TTQkKnml6vdtgVFV3O6ekTbM5SXI6cOb47t1zsCY+3LODX58wA7xil5OexwSzS3qbVsp
- XTRw==
-X-Gm-Message-State: AOJu0Yy/gQUQJ9Haso7UtjTdGUnuKJwHgTIMuhYtedvLIjhoXMQ8yglK
- uUNrunxJsO/mTq8TxCZnzrb4PiASyEHhfiDgn/AaNW1Uhv2CFo/esvTxu5T/MnOPzJCy09+9i1L
- j
-X-Google-Smtp-Source: AGHT+IFI82ZPjHgKGiOB++Pgxaysu7U7cPqxA80sGKZQrtrMxgCuowohJxM6NNImHf4d14jxzuC6ew==
-X-Received: by 2002:a05:6a20:c706:b0:19e:a5ae:229b with SMTP id
- hi6-20020a056a20c70600b0019ea5ae229bmr7573638pzb.31.1709341593953; 
- Fri, 01 Mar 2024 17:06:33 -0800 (PST)
-Received: from stoup.. (098-147-055-211.res.spectrum.com. [98.147.55.211])
- by smtp.gmail.com with ESMTPSA id
- lo21-20020a056a003d1500b006e5acdb5c94sm2399881pfb.176.2024.03.01.17.06.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 Mar 2024 17:06:33 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com
-Subject: [PATCH 3/3] linux-user: Implement PR_GET_TID_ADDRESS
-Date: Fri,  1 Mar 2024 15:06:27 -1000
-Message-Id: <20240302010627.12998-4-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240302010627.12998-1-richard.henderson@linaro.org>
-References: <20240302010627.12998-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1709339675; x=1709944475;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=XpJrB5ct4rQ3tjBR5Uke9KdALSQm1ESN+KjjBjX/cQk=;
+ b=HkmYww+Foq+o9PVikIcAZf+n4/T5oJ+4LwiEVyXfgnTO/f6tCgW+YAckLwo7AGgojm
+ gm6fLbXvPxwg8pCSCInvnV/inSCiaPRJQPmwfXDoBNuIs5pzSHV8H9z6Y7MubJ7c0EMq
+ u2tE0oI7veZO17Xm3qW0zR3ii7PZFicKFCVtIC0/jG5OwsxaUq6aGuINadOYIm8Xmj0q
+ lX5yJ9csNvexEnvHvjOkbnIzPdIlvi+m4GCfxLMxClENb+lqpOPM0kif38/v1GCXMPS8
+ /leKaHs3eLGvcr/Buo6KlRhToevLivfEAY0GnkUsQ+3f3A+2kXx2fYxIYefCvEELrWKC
+ cjRQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWa0F2zglgoAEIzFj0AY84Gu2M0DtMX2kF55oZp7OcApKhGfzY+o6nXjNg29c28af37C2nv4ywGxSxUsNsegendSd3e5OQ=
+X-Gm-Message-State: AOJu0YxPr0RdaE/UrsNSOFJi48WujQHx3YQokkVSygD/VafefQD6Q8gq
+ 6iRBDv9rHEIG15yuwqm56G0ngkVF1hG7m1QoqJvzwIGa2b5NbeSojx/7bYLMa2vLijGp6wf4RoN
+ R
+X-Google-Smtp-Source: AGHT+IFuPmtaEfSj+wgq7r1nZlhiVF9BPMes8QxWAkL1NGRL3ltI4paUyqbdLzp/MG+JknUlxZQHWw==
+X-Received: by 2002:a17:902:be03:b0:1dc:297d:b621 with SMTP id
+ r3-20020a170902be0300b001dc297db621mr3253128pls.16.1709339675028; 
+ Fri, 01 Mar 2024 16:34:35 -0800 (PST)
+Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
+ [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
+ cp12-20020a170902e78c00b001dcfaab3457sm144942plb.104.2024.03.01.16.34.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 01 Mar 2024 16:34:34 -0800 (PST)
+Message-ID: <cd9ed599-3bac-4353-8513-2a125701bd17@linaro.org>
+Date: Fri, 1 Mar 2024 14:34:31 -1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] linux-user: Add FIFREEZE and FITHAW ioctls
+To: Michael Vogt <michael.vogt@gmail.com>, qemu-devel@nongnu.org
+References: <20240220105726.8852-1-michael.vogt@gmail.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240220105726.8852-1-michael.vogt@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,29 +97,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/syscall.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+On 2/20/24 00:57, Michael Vogt wrote:
+> Add missing FIFREEZE and FITHAW ioctls.
+> 
+> Signed-off-by: Michael Vogt <michael.vogt@gmail.com>
+> ---
+>   linux-user/ioctls.h       | 6 ++++++
+>   linux-user/syscall_defs.h | 3 +++
+>   2 files changed, 9 insertions(+)
+> 
+> diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
+> index 071f7ca253..1aec9d5836 100644
+> --- a/linux-user/ioctls.h
+> +++ b/linux-user/ioctls.h
+> @@ -134,6 +134,12 @@
+>        IOCTL(FICLONE, IOC_W, TYPE_INT)
+>        IOCTL(FICLONERANGE, IOC_W, MK_PTR(MK_STRUCT(STRUCT_file_clone_range)))
+>   #endif
+> +#ifdef FIFREEZE
+> +     IOCTL(FIFREEZE, IOC_W | IOC_R, TYPE_INT)
+> +#endif
+> +#ifdef FITHAW
+> +     IOCTL(FITHAW, IOC_W | IOC_R, TYPE_INT)
+> +#endif
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index efa200878f..a50a18b008 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -6468,8 +6468,10 @@ static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
-         }
- 
-     case PR_GET_TID_ADDRESS:
--        /* TODO */
--        return -TARGET_EINVAL;
-+        {
-+            TaskState *ts = env_cpu(env)->opaque;
-+            return put_user_ual(ts->child_tidptr, arg2);
-+        }
- 
-     case PR_GET_FPEXC:
-     case PR_SET_FPEXC:
--- 
-2.34.1
+I suspect these are old enough that they should be unconditionally available.
+However, quite a lot of the ioctls here are in the same boat, and it's not worth quibbling.
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+Applied to lu-next.
+
+
+r~
 
