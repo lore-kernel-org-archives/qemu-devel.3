@@ -4,56 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B90AC5478C
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Mar 2024 22:37:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02C5AC5478C
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Mar 2024 22:42:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgXxR-0006BQ-3B; Sat, 02 Mar 2024 17:35:53 -0500
+	id 1rgY3V-0003MI-Dj; Sat, 02 Mar 2024 17:42:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgXxG-00069O-Ig
- for qemu-devel@nongnu.org; Sat, 02 Mar 2024 17:35:42 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rgY3T-0003M2-UC; Sat, 02 Mar 2024 17:42:07 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgXxD-0003ga-VF
- for qemu-devel@nongnu.org; Sat, 02 Mar 2024 17:35:42 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id D511860F75;
- Sat,  2 Mar 2024 22:35:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FB9CC433C7;
- Sat,  2 Mar 2024 22:35:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1709418928;
- bh=t2xatLPUQitdK7QlDb4pBEBirGnlzkSL8GWMvf0Y78U=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=SYLAFdB/Y56tKxHA6z1xvfqwml49ot5iUJJtdcHs+EqFq/6eOGepGYY9ttjRionbV
- 57GSzvn5j0aL1ShVXOLCkEAkbxeWBcoQ8YlLDFoPrcR9+OZ5nDqPYfo4+ZJgaYQ/5p
- zGJlQ2CYoGoCVprnSUbgh/Z83EEiceRMwOnn1cfSBub5x3PbmBJjeBgKZR1aH/xdU/
- utrLOx4+j7VngcMMO1YV5iTFOrzcpCaQ0QszkHKj4Doi0PxkRf0W2Nn9JnD9q0Ijvh
- rNKd8Lbxj1xY72TeUn7Hxsson17HCnRWXEuz49SDHZRnbD8P+bOFYCYlhcqLF3uoJa
- 0Dje904n5kwTQ==
-From: deller@kernel.org
-To: Richard Henderson <richard.henderson@linaro.org>,
-	qemu-devel@nongnu.org
-Cc: deller@gmx.de
-Subject: [PATCH 1/5] target/hppa: Fix unaligned double word accesses for hppa64
-Date: Sat,  2 Mar 2024 23:35:20 +0100
-Message-ID: <20240302223524.24421-2-deller@kernel.org>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240302223524.24421-1-deller@kernel.org>
-References: <20240302223524.24421-1-deller@kernel.org>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rgY3S-0004dy-08; Sat, 02 Mar 2024 17:42:07 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 1D5DD4E6013;
+ Sat,  2 Mar 2024 23:42:02 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id VoZq0rSond8a; Sat,  2 Mar 2024 23:42:00 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 353AD4E6005; Sat,  2 Mar 2024 23:42:00 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PATCH] hw/scsi/lsi53c895a: Fix typo in comment
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=139.178.84.217; envelope-from=deller@kernel.org;
- helo=dfw.source.kernel.org
-X-Spam_score_int: -71
-X-Spam_score: -7.2
-X-Spam_bar: -------
-X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.094,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+To: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Sven Schnelle <svens@stackframe.org>
+Message-Id: <20240302224200.353AD4E6005@zero.eik.bme.hu>
+Date: Sat,  2 Mar 2024 23:42:00 +0100 (CET)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,46 +59,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Guenter Roeck <linux@roeck-us.net>
-
-Unaligned 64-bit accesses were found in Linux to clobber carry bits,
-resulting in bad results if an arithmetic operation involving a
-carry bit was executed after an unaligned 64-bit operation.
-
-hppa 2.0 defines additional carry bits in PSW register bits 32..39.
-When restoring PSW after executing an unaligned instruction trap,
-those bits were not cleared and ended up to be active all the time.
-Clearing bit 32..39 in psw prior to restoring it solves the problem.
-
-Fixes: 931adff31478 ("target/hppa: Update cpu_hppa_get/put_psw for hppa64")
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Cc: Charlie Jenkins <charlie@rivosinc.com>
-Cc: Helge Deller <deller@gmx.de>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- target/hppa/helper.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ hw/scsi/lsi53c895a.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/hppa/helper.c b/target/hppa/helper.c
-index 859644c47a..7b798d1227 100644
---- a/target/hppa/helper.c
-+++ b/target/hppa/helper.c
-@@ -76,7 +76,12 @@ void cpu_hppa_put_psw(CPUHPPAState *env, target_ulong psw)
-     }
-     psw &= ~reserved;
+diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
+index d607a5f9fb..4f784be749 100644
+--- a/hw/scsi/lsi53c895a.c
++++ b/hw/scsi/lsi53c895a.c
+@@ -225,7 +225,7 @@ struct LSIState {
+     MemoryRegion io_io;
+     AddressSpace pci_io_as;
  
--    env->psw = psw & ~(PSW_N | PSW_V | PSW_CB);
-+    if (hppa_is_pa20(env)) {
-+        env->psw = psw & ~(PSW_N | PSW_V | PSW_CB | 0xff00000000ull);
-+    } else {
-+        env->psw = psw & ~(PSW_N | PSW_V | PSW_CB);
-+    }
-+
-     env->psw_n = (psw / PSW_N) & 1;
-     env->psw_v = -((psw / PSW_V) & 1);
- 
+-    int carry; /* ??? Should this be an a visible register somewhere?  */
++    int carry; /* ??? Should this be in a visible register somewhere?  */
+     int status;
+     int msg_action;
+     int msg_len;
 -- 
-2.44.0
+2.30.9
 
 
