@@ -4,46 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02C5AC5478C
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Mar 2024 22:42:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A781C54798
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Mar 2024 22:55:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgY3V-0003MI-Dj; Sat, 02 Mar 2024 17:42:09 -0500
+	id 1rgYF3-0008OP-EF; Sat, 02 Mar 2024 17:54:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rgY3T-0003M2-UC; Sat, 02 Mar 2024 17:42:07 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rgYF1-0008Nv-Ig
+ for qemu-devel@nongnu.org; Sat, 02 Mar 2024 17:54:03 -0500
+Received: from mout.gmx.net ([212.227.17.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rgY3S-0004dy-08; Sat, 02 Mar 2024 17:42:07 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 1D5DD4E6013;
- Sat,  2 Mar 2024 23:42:02 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id VoZq0rSond8a; Sat,  2 Mar 2024 23:42:00 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 353AD4E6005; Sat,  2 Mar 2024 23:42:00 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH] hw/scsi/lsi53c895a: Fix typo in comment
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rgYEz-0008Jf-1w
+ for qemu-devel@nongnu.org; Sat, 02 Mar 2024 17:54:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+ t=1709420027; x=1710024827; i=deller@gmx.de;
+ bh=62fj25vnkKCuefnVls7i9CnZk6JLBy9pXgO4GHhrBhA=;
+ h=X-UI-Sender-Class:Date:Subject:To:References:From:In-Reply-To;
+ b=UDm3IHem/FEg9rjc+aqzy1OseTLQmuC5Dvny22HfEkg8NqIke7teq5PnqNO4anNV
+ q+t9dYUksfiWvXxqOJMJ+6qek7sWCs0zq9xm6Bj6O5HkB/YUgbfrf63SgdPl4TYqd
+ roAx/dfYf3HBtBUr5VUwqn6d7+kW6niQkZPbMarcV9NyToIiPo01bu+NceyKQRjUC
+ Jq1DQv1iojXR+gDZshmeRxYKwbdqpk8bZz5hW85KXY5UMNgQwb5C1Oikag4XsJsEm
+ atlfZwUh6vQVz/cqX/qCC8nm0xafgbPMpBmkXgGBkOyby984a+WIGjkTbJ0Mig6cs
+ JgPzk8gvhyQGqYb3wQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.20.55] ([94.134.144.221]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MQ5rU-1rTRCF1sAK-00M08O; Sat, 02
+ Mar 2024 23:53:47 +0100
+Message-ID: <93accc33-77da-4596-ba4f-8c5d61a050c8@gmx.de>
+Date: Sat, 2 Mar 2024 23:53:46 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Sven Schnelle <svens@stackframe.org>
-Message-Id: <20240302224200.353AD4E6005@zero.eik.bme.hu>
-Date: Sat,  2 Mar 2024 23:42:00 +0100 (CET)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/scsi/lsi53c895a: stop script on phase mismatch
+Content-Language: en-US
+To: Sven Schnelle <svens@stackframe.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, qemu-devel@nongnu.org
+References: <20240302214453.2071388-1-svens@stackframe.org>
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ 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
+In-Reply-To: <20240302214453.2071388-1-svens@stackframe.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:ef7e2Wilg38CZ5NmwROtbrc4hIj81JM66ljc03k7pd9nPWImP1K
+ +fDPbmDZla1IDgWwta+BBtJ2Tk+R7qzOD9PGQTTIg0IRptqeDy/8ORjHREsXrlTXZpFDCsC
+ Cs67noYhOfd7BGBonCcISM0AqEhXMzBErogwHuRQ+8R7XOcZEkpxI6Fv+iQjbOUJw7boplh
+ yBRdfmZ5dWh/FGY5EbUvQ==
+UI-OutboundReport: notjunk:1;M01:P0:/mix5l6CGB4=;zsyjFD5Da77f98x+G6c7C3TYYry
+ 34z270moolcuuSQ6RzL/1sYOqkfNoGPfTdFyia1n3kFqSX1pmUh2/Tn5zvUVyULs7Y/G9VwP8
+ jLTegFqSbA0F7v3AxZkNIsXYux7nryEoQvH36aQlMK9FR1wwYONhoTVeiLkW+seoj+RN/aDom
+ Vj6VJ7Gtcjf3CeyHByyV0sCrYhCaL7RunrBdYBQTmhBbejqVMkmkqNV+BChy9L3EzjMkyifLN
+ dRqZOsjSZL4LM+ncBUQW9IwF1A3xfVvuAxfmuZpFRtAHM+ie39p/Y8Raj6twPevFBPA4rcy3o
+ NhO4xbe5s/Iu+vhosiCBHXofUjSyXYwVMqdfLXxDoVnBnNeU8cVD9bN5eDnKyBIWqWVORt3sz
+ jGh8pV2HzYGxD9QjTKxipPbXsueeooT91+zMJZIIoIFwXPFoHl2hx4daIdR1OrNtsh1JLlGUa
+ +czOV7RhB2mkTwG5u7KOaCne63VkLk9C2ivycmribMD7I9D9mKz8IwwQgJ6HKzDVv9OFyUXlQ
+ ZSBLK7hp0lxJgk8yH8hEfs9ayK/67RKcd5glGgWky/IGBsH1+FsddXRLdmydNfrNlcdiDB7nd
+ E70dMLYSal+Eu58dhChAQBdS7Rqc1pHYTsUOd2U2lRsV5l+ndvf/iHCdVGcAxuW16MBvgyshR
+ P5He+KgvTH2EPdWc5DS8pilyuXJJu0Xn1bYxnhOGt9AdzAes8KnRykxdALylvymOSBGme9/kM
+ xtFgKIgrZaN2tYnxc7pJccWzlVNOSHf1kZpU32RA4AHOy/VnbrTNWDHakyTvcVFBc+JyH0mL4
+ W0ifNt9tLblIXNPWVxCblgB5JFG4jau4PVZtRAdqSuoHk=
+Received-SPF: pass client-ip=212.227.17.21; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -59,25 +130,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
- hw/scsi/lsi53c895a.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 3/2/24 22:44, Sven Schnelle wrote:
+> Netbsd isn't happy with qemu lsi53c895a emulation:
+>
+> cd0(esiop0:0:2:0): command with tag id 0 reset
+> esiop0: autoconfiguration error: phase mismatch without command
+> esiop0: autoconfiguration error: unhandled scsi interrupt, sist=3D0x80 s=
+stat1=3D0x0 DSA=3D0x23a64b1 DSP=3D0x50
+>
+> This is because lsi_bad_phase() triggers a phase mismatch, which
+> stops SCRIPT processing. However, after returning to
+> lsi_command_complete(), SCRIPT is restarted with lsi_resume_script().
+> Fix this by adding a return value to lsi_bad_phase(), and only resume
+> script processing when lsi_bad_phase() didn't trigger a host interrupt.
+>
+> Signed-off-by: Sven Schnelle <svens@stackframe.org>
 
-diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
-index d607a5f9fb..4f784be749 100644
---- a/hw/scsi/lsi53c895a.c
-+++ b/hw/scsi/lsi53c895a.c
-@@ -225,7 +225,7 @@ struct LSIState {
-     MemoryRegion io_io;
-     AddressSpace pci_io_as;
- 
--    int carry; /* ??? Should this be an a visible register somewhere?  */
-+    int carry; /* ??? Should this be in a visible register somewhere?  */
-     int status;
-     int msg_action;
-     int msg_len;
--- 
-2.30.9
+Tested-by: Helge Deller <deller@gmx.de>
+
+Helge
+
+> ---
+>   hw/scsi/lsi53c895a.c | 16 ++++++++++++----
+>   1 file changed, 12 insertions(+), 4 deletions(-)
+>
+> diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
+> index 4ff9470381..59b88aff3f 100644
+> --- a/hw/scsi/lsi53c895a.c
+> +++ b/hw/scsi/lsi53c895a.c
+> @@ -573,8 +573,9 @@ static inline void lsi_set_phase(LSIState *s, int ph=
+ase)
+>       s->sstat1 =3D (s->sstat1 & ~PHASE_MASK) | phase;
+>   }
+>
+> -static void lsi_bad_phase(LSIState *s, int out, int new_phase)
+> +static int lsi_bad_phase(LSIState *s, int out, int new_phase)
+>   {
+> +    int ret =3D 0;
+>       /* Trigger a phase mismatch.  */
+>       if (s->ccntl0 & LSI_CCNTL0_ENPMJ) {
+>           if ((s->ccntl0 & LSI_CCNTL0_PMJCTL)) {
+> @@ -587,8 +588,10 @@ static void lsi_bad_phase(LSIState *s, int out, int=
+ new_phase)
+>           trace_lsi_bad_phase_interrupt();
+>           lsi_script_scsi_interrupt(s, LSI_SIST0_MA, 0);
+>           lsi_stop_script(s);
+> +        ret =3D 1;
+>       }
+>       lsi_set_phase(s, new_phase);
+> +    return ret;
+>   }
+>
+>
+> @@ -792,7 +795,7 @@ static int lsi_queue_req(LSIState *s, SCSIRequest *r=
+eq, uint32_t len)
+>   static void lsi_command_complete(SCSIRequest *req, size_t resid)
+>   {
+>       LSIState *s =3D LSI53C895A(req->bus->qbus.parent);
+> -    int out;
+> +    int out, stop =3D 0;
+>
+>       out =3D (s->sstat1 & PHASE_MASK) =3D=3D PHASE_DO;
+>       trace_lsi_command_complete(req->status);
+> @@ -800,7 +803,10 @@ static void lsi_command_complete(SCSIRequest *req, =
+size_t resid)
+>       s->command_complete =3D 2;
+>       if (s->waiting && s->dbc !=3D 0) {
+>           /* Raise phase mismatch for short transfers.  */
+> -        lsi_bad_phase(s, out, PHASE_ST);
+> +        stop =3D lsi_bad_phase(s, out, PHASE_ST);
+> +        if (stop) {
+> +            s->waiting =3D 0;
+> +        }
+>       } else {
+>           lsi_set_phase(s, PHASE_ST);
+>       }
+> @@ -810,7 +816,9 @@ static void lsi_command_complete(SCSIRequest *req, s=
+ize_t resid)
+>           lsi_request_free(s, s->current);
+>           scsi_req_unref(req);
+>       }
+> -    lsi_resume_script(s);
+> +    if (!stop) {
+> +        lsi_resume_script(s);
+> +    }
+>   }
+>
+>    /* Callback to indicate that the SCSI layer has completed a transfer.=
+  */
 
 
