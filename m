@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13845C54798
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Mar 2024 22:36:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13A82C54798
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Mar 2024 22:36:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgXxU-0006DD-BO; Sat, 02 Mar 2024 17:35:56 -0500
+	id 1rgXxM-0006AQ-7k; Sat, 02 Mar 2024 17:35:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgXxK-0006AG-Gg
- for qemu-devel@nongnu.org; Sat, 02 Mar 2024 17:35:46 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgXxI-00069o-KU
+ for qemu-devel@nongnu.org; Sat, 02 Mar 2024 17:35:45 -0500
 Received: from sin.source.kernel.org ([145.40.73.55])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgXxE-0003h1-TC
- for qemu-devel@nongnu.org; Sat, 02 Mar 2024 17:35:44 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgXxE-0003h8-T7
+ for qemu-devel@nongnu.org; Sat, 02 Mar 2024 17:35:43 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 099C0CE0E15;
- Sat,  2 Mar 2024 22:35:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51706C433F1;
- Sat,  2 Mar 2024 22:35:30 +0000 (UTC)
+ by sin.source.kernel.org (Postfix) with ESMTP id 68032CE0EA2;
+ Sat,  2 Mar 2024 22:35:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD5BEC43390;
+ Sat,  2 Mar 2024 22:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1709418931;
- bh=kjP1Pa/oNAtFAL8Kl/hLJlc6NmMlJfTBR36+ya8MznM=;
+ s=k20201202; t=1709418932;
+ bh=4Eqf7vy3Pugx/18Mi19bIFh3nWbHySqNUjbMF2ic1G4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=jL27EwkuYjUc3ekYCpiHgB3zL6f4BdGtmUNaC45VpbumciW4A5cCWdEVDRkLJ1zAM
- 1qssfmqgNNs7ERcMw23hq6no2//0j/DqSwWmc3rTVagTCXE0RaBIQBcJdMkZiojT67
- 7ijjnS0Z8lMS2Wg5KGpC2XFz73KaJpW9yBciqfigP+EgcioNDGszcdtMhiwR/zHDC6
- Oa7GVz1n4hoz4cIfZ8GWYMQ2cO8uPbzq8oFrAsvR2d1WpGsR0KlppKLwW9aUU3a17Q
- 4+08SjSq9rJ97LMLpTgGJWz2caVR0DX5BHb6+aGk7OmYmrbGiyFCk21gsJYWf9+Ms3
- 5Wqkdpwwa1Lcw==
+ b=JZgjJ7xg9LojlUBYoXgQFguxrSGR8kudqlu5RQC85dBSm2MtDQ4zq7yzJW6FU665j
+ c3iL/n3Nhdl9mRWksCRheuVcNi/6SwsMT/TxFcstbME8fAy9r96OLt8PdLjcQXLnFC
+ 6dCcXfCK0GPqyk+dYaP2DL8gk4Fd9INzR8Vu+JHftDqUWYhOf4qshuhABr3+VTXt/D
+ /mpinCUuE6jSPG8quMv1OdAXSuyRL5asXOaIDb4fzWsv9+EIJE8hkw9V0nXrzMoocW
+ XKiHXvdeOypwQQItopkCm3qipGvrqE1UYrOEWu5QJAIr7ex2RxKxZm9KbCMrGm2dtU
+ 1Km0HlHe0yBgw==
 From: deller@kernel.org
 To: Richard Henderson <richard.henderson@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: deller@gmx.de
-Subject: [PATCH 3/5] pc-bios/meson: Add hppa-firmware64.img blob
-Date: Sat,  2 Mar 2024 23:35:22 +0100
-Message-ID: <20240302223524.24421-4-deller@kernel.org>
+Subject: [PATCH 4/5] pc-bios/README: Add information about hppa-firmware
+Date: Sat,  2 Mar 2024 23:35:23 +0100
+Message-ID: <20240302223524.24421-5-deller@kernel.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240302223524.24421-1-deller@kernel.org>
 References: <20240302223524.24421-1-deller@kernel.org>
@@ -71,26 +71,25 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Add the missing 64-bit hppa firmware blob so that it gets installed.
-
 Signed-off-by: Helge Deller <deller@gmx.de>
-Fixes: 7c0dfcf9395e ("target/hppa: Update SeaBIOS-hppa to version 16")
 ---
- pc-bios/meson.build | 1 +
- 1 file changed, 1 insertion(+)
+ pc-bios/README | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/pc-bios/meson.build b/pc-bios/meson.build
-index e67fa433a1..0760612bea 100644
---- a/pc-bios/meson.build
-+++ b/pc-bios/meson.build
-@@ -73,6 +73,7 @@ blobs = [
-   'qemu_vga.ndrv',
-   'edk2-licenses.txt',
-   'hppa-firmware.img',
-+  'hppa-firmware64.img',
-   'opensbi-riscv32-generic-fw_dynamic.bin',
-   'opensbi-riscv64-generic-fw_dynamic.bin',
-   'npcm7xx_bootrom.bin',
+diff --git a/pc-bios/README b/pc-bios/README
+index b8a0210d24..6ffc46006e 100644
+--- a/pc-bios/README
++++ b/pc-bios/README
+@@ -75,3 +75,9 @@
+   initialize and run boot images stored in SPI flash, but may grow more
+   features over time as needed. The source code is available at:
+   https://github.com/google/vbootrom
++
++- hppa-firmware.img (32-bit) and hppa-firmware64.img (64-bit) are firmware
++  files for the HP-PARISC (hppa) architecture.
++  The are built form the SeaBIOS-hppa sources, which is a fork of SeaBIOS
++  adapted for hppa.
++  SeaBIOS-hppa is available at https://github.com/hdeller/seabios-hppa
 -- 
 2.44.0
 
