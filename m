@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A13AC54798
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Mar 2024 22:36:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13845C54798
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Mar 2024 22:36:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgXxM-0006Ah-CJ; Sat, 02 Mar 2024 17:35:48 -0500
+	id 1rgXxU-0006DD-BO; Sat, 02 Mar 2024 17:35:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgXxI-00069j-FF
- for qemu-devel@nongnu.org; Sat, 02 Mar 2024 17:35:45 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgXxK-0006AG-Gg
+ for qemu-devel@nongnu.org; Sat, 02 Mar 2024 17:35:46 -0500
+Received: from sin.source.kernel.org ([145.40.73.55])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgXxD-0003gY-OU
- for qemu-devel@nongnu.org; Sat, 02 Mar 2024 17:35:43 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgXxE-0003h1-TC
+ for qemu-devel@nongnu.org; Sat, 02 Mar 2024 17:35:44 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id BA9E860F3E;
- Sat,  2 Mar 2024 22:35:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD8FC433F1;
- Sat,  2 Mar 2024 22:35:26 +0000 (UTC)
+ by sin.source.kernel.org (Postfix) with ESMTP id 099C0CE0E15;
+ Sat,  2 Mar 2024 22:35:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51706C433F1;
+ Sat,  2 Mar 2024 22:35:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1709418927;
- bh=QxpUQHjYZrYwwl1ZX8fNpRt0CF3Jl0AE0E/aa+9jEfQ=;
- h=From:To:Cc:Subject:Date:From;
- b=tvhoY6y8ZbZRgjJ1j/Kz7vdG41DdBGRll6Bzl0ZRcpAj69ZXpDpzG+GxYnKXJ80gr
- kvIfBEFe9zJooM9tiV2gq5XlSgEMxEOvvPqkaJqa8Sr0hQXlEcRe/NBXotP9GnrScI
- La/9qME/RzW8t3yX0mbdc8XGV8X8pTJ0VedAkWqbM8Ty4E8U+L0qVFMX9GhusIAlV8
- L7n6FQccwTROOt2G13F/CEPSbDSi8tG3hyFFTQwwjKfV01bwp5HaOVRinMHg01w4Uh
- hS5xlHzwmWN4p+Bou8xXeQdtXv0nvu9WB6U5cE2pZ6YWN7S6SDHLVdT/vkTCyJKl0K
- 4r4Cp6BmXLVkQ==
+ s=k20201202; t=1709418931;
+ bh=kjP1Pa/oNAtFAL8Kl/hLJlc6NmMlJfTBR36+ya8MznM=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=jL27EwkuYjUc3ekYCpiHgB3zL6f4BdGtmUNaC45VpbumciW4A5cCWdEVDRkLJ1zAM
+ 1qssfmqgNNs7ERcMw23hq6no2//0j/DqSwWmc3rTVagTCXE0RaBIQBcJdMkZiojT67
+ 7ijjnS0Z8lMS2Wg5KGpC2XFz73KaJpW9yBciqfigP+EgcioNDGszcdtMhiwR/zHDC6
+ Oa7GVz1n4hoz4cIfZ8GWYMQ2cO8uPbzq8oFrAsvR2d1WpGsR0KlppKLwW9aUU3a17Q
+ 4+08SjSq9rJ97LMLpTgGJWz2caVR0DX5BHb6+aGk7OmYmrbGiyFCk21gsJYWf9+Ms3
+ 5Wqkdpwwa1Lcw==
 From: deller@kernel.org
 To: Richard Henderson <richard.henderson@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: deller@gmx.de
-Subject: [PATCH 0/5] HPPA64 updates
-Date: Sat,  2 Mar 2024 23:35:19 +0100
-Message-ID: <20240302223524.24421-1-deller@kernel.org>
+Subject: [PATCH 3/5] pc-bios/meson: Add hppa-firmware64.img blob
+Date: Sat,  2 Mar 2024 23:35:22 +0100
+Message-ID: <20240302223524.24421-4-deller@kernel.org>
 X-Mailer: git-send-email 2.44.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20240302223524.24421-1-deller@kernel.org>
+References: <20240302223524.24421-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=139.178.84.217; envelope-from=deller@kernel.org;
- helo=dfw.source.kernel.org
-X-Spam_score_int: -71
-X-Spam_score: -7.2
-X-Spam_bar: -------
-X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.094,
+Received-SPF: pass client-ip=145.40.73.55; envelope-from=deller@kernel.org;
+ helo=sin.source.kernel.org
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.094,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,29 +71,26 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Some fixes for the hppa64 target.
-Add references to SeaBIOS-hppa and hppa-firmware into
-pc-bios/README file and add rom make targets.
-Patches 2-5 need review.
+Add the missing 64-bit hppa firmware blob so that it gets installed.
 
-Guenter Roeck (1):
-  target/hppa: Fix unaligned double word accesses for hppa64
+Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 7c0dfcf9395e ("target/hppa: Update SeaBIOS-hppa to version 16")
+---
+ pc-bios/meson.build | 1 +
+ 1 file changed, 1 insertion(+)
 
-Helge Deller (4):
-  target/hppa: Restore unwind_breg before calculating ior
-  pc-bios/meson: Add hppa-firmware64.img blob
-  pc-bios/README: Add information about hppa-firmware
-  roms/hppa: Add build rules for hppa-firmware
-
- pc-bios/README           | 6 ++++++
- pc-bios/meson.build      | 1 +
- roms/Makefile            | 7 +++++++
- target/hppa/cpu.c        | 3 ++-
- target/hppa/helper.c     | 7 ++++++-
- target/hppa/mem_helper.c | 3 ++-
- target/hppa/op_helper.c  | 3 ++-
- 7 files changed, 26 insertions(+), 4 deletions(-)
-
+diff --git a/pc-bios/meson.build b/pc-bios/meson.build
+index e67fa433a1..0760612bea 100644
+--- a/pc-bios/meson.build
++++ b/pc-bios/meson.build
+@@ -73,6 +73,7 @@ blobs = [
+   'qemu_vga.ndrv',
+   'edk2-licenses.txt',
+   'hppa-firmware.img',
++  'hppa-firmware64.img',
+   'opensbi-riscv32-generic-fw_dynamic.bin',
+   'opensbi-riscv64-generic-fw_dynamic.bin',
+   'npcm7xx_bootrom.bin',
 -- 
 2.44.0
 
