@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C9ACC5478C
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Mar 2024 15:35:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22AE3C54798
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Mar 2024 15:35:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgRNM-0005kg-Ih; Sat, 02 Mar 2024 10:34:12 -0500
+	id 1rgROU-0006SA-T9; Sat, 02 Mar 2024 10:35:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rgRNH-0005j1-HI
- for qemu-devel@nongnu.org; Sat, 02 Mar 2024 10:34:09 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rgROT-0006N6-2I
+ for qemu-devel@nongnu.org; Sat, 02 Mar 2024 10:35:21 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rgRN9-0006XT-CX
- for qemu-devel@nongnu.org; Sat, 02 Mar 2024 10:34:07 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rgROP-00083H-FO
+ for qemu-devel@nongnu.org; Sat, 02 Mar 2024 10:35:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709393637;
+ s=mimecast20190719; t=1709393712;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=54pAYSo8hZvMTDgBLslAFWG2BSBhNyIksapSarakzGo=;
- b=SnPYqAhKtfPXFEEpQJBGbdqDU/F7jI/y983uHPZ8UrfqKpAOqbKy1lduuiSm+8aN0sxEEw
- wlssLIQq9asqhhLqb2n/27+dtmZQQp96y5g8uWPZCV4AJ5AbvGPfsdWHcFyl7hrTK8PFNu
- xxjPQmazv071DB1U68xt2uoH9dB7O+E=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+Ysx85g/W0kQzYguGb7KsJTcMOviltiNzvv6o9/n7kQ=;
+ b=fzg6phpU3Q7OR+zLA6T5tgUywQR5a0Tca4aWDcr8c8+w+9B7Lq4E0J6AUvsGBVGMl61sG7
+ G1SAR368cIuxbkXRKYOjNNuHq9bz40aV95oxSmaauFs0VlRe7J/y0e59uom/neLr0aUfiT
+ RF9G8L1oD1Xr/GMB5kPECmUtxak4t7k=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-659-py4iv8aoPPuVlfgI02yX4g-1; Sat, 02 Mar 2024 10:33:56 -0500
-X-MC-Unique: py4iv8aoPPuVlfgI02yX4g-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a450265c7b6so5702666b.0
- for <qemu-devel@nongnu.org>; Sat, 02 Mar 2024 07:33:56 -0800 (PST)
+ us-mta-193-3EnshH-XN6mbjEqMwocO9Q-1; Sat, 02 Mar 2024 10:35:11 -0500
+X-MC-Unique: 3EnshH-XN6mbjEqMwocO9Q-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a44e57bbc30so24542866b.0
+ for <qemu-devel@nongnu.org>; Sat, 02 Mar 2024 07:35:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709393635; x=1709998435;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=54pAYSo8hZvMTDgBLslAFWG2BSBhNyIksapSarakzGo=;
- b=Z6SyTlSE1uLxM3U1/KxqLAbl5jlz/2tbQb0vnCLVpzEQO6CUOPWQ3yVj82k7V4oCB7
- q8ezcHL+vig37d3K+Nt1wp7X3bR6yFsdOxSJ7kX6owhs7hze5YID/KRkUx5SBFPKHGU7
- mWyyuq/R4z9Ff71LLHHDnfR2FxMYMxK1ia2t2FnxQPnVrur0f42hCZkvIcvkXGu2cj69
- 93GuKasn80DnduM3WhsLPjmHD4AboBfW+Q0M5UvMyvzNtA2h+u19PAG1hq6rnYMpw+QJ
- QNFT3WJ/Y271KdfTIW4poEKyTmaCZI4yWB9ihkKwdquZVHPMBM5HkvvX5Rnm9S7kLzUA
- +vpw==
+ d=1e100.net; s=20230601; t=1709393710; x=1709998510;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+Ysx85g/W0kQzYguGb7KsJTcMOviltiNzvv6o9/n7kQ=;
+ b=viZrSylFuD4Ys3Z3ymdHZEQUyrgEvZr1pcReaxPh6Kzyw2QDqxmbONGxR+LNP1yJnQ
+ DxjR2WEO+V3zn6L7sPF7OKSDL2V8n8BrhW13dz7EKBH0BvBtavci3R+J40yGXGVMsta+
+ RRtNeaqRnBKx5ROPgWXRdgN3V4QIN9AUEOrJZgjizSX0DSkfOPOxVJuPXzxQjlLUr0uQ
+ skw5wm29DNcTR0aAMw9ldX+KjFOupu0KZFJ0NmMiz0RBxjVSXOeRq6/C96/Y1aFU+7qu
+ 1/4eRtUJJUMBdvIeDFk4cG1W6/gm323Dr4BDyO9x997KEMD7FFh/w9z3bXTBZAHXbSmA
+ 6b4w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU4d96e4rE10F63uwR22DiHdnNoTOzJLUDODZ98b6yQZ0WO34Fbibo9gzxXoSwXdYc+qaVE53V0t/5zm2iNuhs44Xm0+jE=
-X-Gm-Message-State: AOJu0YwMjeCQDxkhYSH429CBHrzy2nhwrKfcK3vDTIsJRlHQVE3GMJSo
- zF7eTSZ6QiFoECSrGUTwyTe/JmWBE8Mq2lLxjhvCooNy7/K6sgsXviHM0EgJW553bi3HmfiiNha
- FgsGVh+BCnM3JX/2tUaNvmjZuTROmujsO6bZulc8jV4KYcHPkoDvh
-X-Received: by 2002:a17:906:dfc1:b0:a44:e5fc:d4e4 with SMTP id
- jt1-20020a170906dfc100b00a44e5fcd4e4mr976698ejc.33.1709393635204; 
- Sat, 02 Mar 2024 07:33:55 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGmkLG0ADS//phIihupprRmTdKDr7lei2HdGBD9Ojq2gCroQrWFywMWB7BibZ5JMDDxDS/mJQ==
-X-Received: by 2002:a17:906:dfc1:b0:a44:e5fc:d4e4 with SMTP id
- jt1-20020a170906dfc100b00a44e5fcd4e4mr976671ejc.33.1709393634840; 
- Sat, 02 Mar 2024 07:33:54 -0800 (PST)
+ AJvYcCVEMUjpKGMGKMx7Ia9KPjccHkVo3ShWB+sBQZXRETSSvuERZLxpVQoc+HB+uoepvLcgUQNFdt5l75YDZOQCGdtoptkDj0c=
+X-Gm-Message-State: AOJu0YwoQg1wU1w7vo/ABQTDR4pwuDfD6dmEXP4reDwVIfsfajBoRv3y
+ EBiiN8OxUEZZLF+b1aseYLiDcEuVz3lkZ3weaJDqH49XAlQurAQvkenIexgvIs5rWJDZ9Afwppm
+ ahgQ8e1cgbUECyco7R/yP0KTt1R4J21NKCRpnv08S/V7LD41uAnGK
+X-Received: by 2002:a17:906:1cc2:b0:a44:4578:c79d with SMTP id
+ i2-20020a1709061cc200b00a444578c79dmr2627059ejh.4.1709393710247; 
+ Sat, 02 Mar 2024 07:35:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFY9MUodEcq5pRtp8+1j9t8Xxh2XdPUcbjFbDne1Iba7u3u+yTyQRsz3fYX6MPN5o+XBJvruw==
+X-Received: by 2002:a17:906:1cc2:b0:a44:4578:c79d with SMTP id
+ i2-20020a1709061cc200b00a444578c79dmr2627035ejh.4.1709393709867; 
+ Sat, 02 Mar 2024 07:35:09 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-178-133.web.vodafone.de.
  [109.43.178.133]) by smtp.gmail.com with ESMTPSA id
- ag3-20020a1709069a8300b00a44790d06d3sm1918149ejc.71.2024.03.02.07.33.53
+ ag3-20020a1709069a8300b00a44790d06d3sm1918149ejc.71.2024.03.02.07.35.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 02 Mar 2024 07:33:54 -0800 (PST)
-Message-ID: <65fee13a-f927-4791-a3a9-132f53ad5ae0@redhat.com>
-Date: Sat, 2 Mar 2024 16:33:52 +0100
+ Sat, 02 Mar 2024 07:35:09 -0800 (PST)
+Message-ID: <356dff14-af44-403b-9a9c-b4ea9e156f19@redhat.com>
+Date: Sat, 2 Mar 2024 16:35:08 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 5/8] virtio-ccw: Handle extra notification data
+Subject: Re: [RFC 6/8] virtio-ccw: Lock ioeventfd state with
+ VIRTIO_F_NOTIFICATION_DATA
+Content-Language: en-US
 To: Jonah Palmer <jonah.palmer@oracle.com>, qemu-devel@nongnu.org
 Cc: mst@redhat.com, jasowang@redhat.com, eperezma@redhat.com,
  si-wei.liu@oracle.com, boris.ostrovsky@oracle.com, raphael@enfabrica.net,
@@ -80,8 +81,7 @@ Cc: mst@redhat.com, jasowang@redhat.com, eperezma@redhat.com,
  cohuck@redhat.com, pbonzini@redhat.com, fam@euphon.net, stefanha@redhat.com,
  qemu-block@nongnu.org, qemu-s390x@nongnu.org, virtio-fs@lists.linux.dev
 References: <20240301134330.4191007-1-jonah.palmer@oracle.com>
- <20240301134330.4191007-6-jonah.palmer@oracle.com>
-Content-Language: en-US
+ <20240301134330.4191007-7-jonah.palmer@oracle.com>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -125,7 +125,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240301134330.4191007-6-jonah.palmer@oracle.com>
+In-Reply-To: <20240301134330.4191007-7-jonah.palmer@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -135,7 +135,8 @@ X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.094,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -153,62 +154,42 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 01/03/2024 14.43, Jonah Palmer wrote:
-> Add support to virtio-ccw devices for handling the extra data sent from
-> the driver to the device when the VIRTIO_F_NOTIFICATION_DATA transport
-> feature has been negotiated.
+> Prevent ioeventfd from being enabled/disabled when a virtio-ccw device
+> has negotiated the VIRTIO_F_NOTIFICATION_DATA transport feature.
 > 
-> The extra data that's passed to the virtio-ccw device when this feature
-> is enabled varies depending on the device's virtqueue layout.
-> 
-> That data passed to the virtio-ccw device is in the same format as the
-> data passed to virtio-pci devices.
+> Due to the ioeventfd not being able to carry the extra data associated
+> with this feature, the ioeventfd should be left in a disabled state for
+> emulated virtio-ccw devices using this feature.
 > 
 > Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
 > ---
->   hw/s390x/s390-virtio-ccw.c | 18 ++++++++++++++----
->   1 file changed, 14 insertions(+), 4 deletions(-)
+>   hw/s390x/virtio-ccw.c | 6 ++++--
+>   1 file changed, 4 insertions(+), 2 deletions(-)
 > 
-> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-> index 62804cc228..b8e193956c 100644
-> --- a/hw/s390x/s390-virtio-ccw.c
-> +++ b/hw/s390x/s390-virtio-ccw.c
-> @@ -140,9 +140,11 @@ static void subsystem_reset(void)
->   static int virtio_ccw_hcall_notify(const uint64_t *args)
->   {
->       uint64_t subch_id = args[0];
-> -    uint64_t queue = args[1];
-> +    uint64_t data = args[1];
->       SubchDev *sch;
-> +    VirtIODevice *vdev;
->       int cssid, ssid, schid, m;
-> +    uint16_t vq_idx;
->   
->       if (ioinst_disassemble_sch_ident(subch_id, &m, &cssid, &ssid, &schid)) {
->           return -EINVAL;
-> @@ -151,12 +153,20 @@ static int virtio_ccw_hcall_notify(const uint64_t *args)
->       if (!sch || !css_subch_visible(sch)) {
->           return -EINVAL;
->       }
-> -    if (queue >= VIRTIO_QUEUE_MAX) {
-> +
-> +    vdev = virtio_ccw_get_vdev(sch);
-> +    if (virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
-> +        vq_idx = data & 0xFFFF;
-> +        virtio_set_notification_data(vdev, vq_idx, data);
-> +    } else {
-> +        vq_idx = data;
-> +    }
-> +
-> +    if (vq_idx >= VIRTIO_QUEUE_MAX) {
->           return -EINVAL;
->       }
-> -    virtio_queue_notify(virtio_ccw_get_vdev(sch), queue);
-> +    virtio_queue_notify(vdev, vq_idx);
->       return 0;
-> -
->   }
+> diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
+> index b4676909dd..936ba78fda 100644
+> --- a/hw/s390x/virtio-ccw.c
+> +++ b/hw/s390x/virtio-ccw.c
+> @@ -530,14 +530,16 @@ static int virtio_ccw_cb(SubchDev *sch, CCW1 ccw)
+>               if (ret) {
+>                   break;
+>               }
+> -            if (!(status & VIRTIO_CONFIG_S_DRIVER_OK)) {
+> +            if (!(status & VIRTIO_CONFIG_S_DRIVER_OK) &&
+> +                !virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
+>                   virtio_ccw_stop_ioeventfd(dev);
+>               }
+>               if (virtio_set_status(vdev, status) == 0) {
+>                   if (vdev->status == 0) {
+>                       virtio_ccw_reset_virtio(dev);
+>                   }
+> -                if (status & VIRTIO_CONFIG_S_DRIVER_OK) {
+> +                if ((status & VIRTIO_CONFIG_S_DRIVER_OK) &&
+> +                    !virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
+>                       virtio_ccw_start_ioeventfd(dev);
+>                   }
+>                   sch->curr_status.scsw.count = ccw.count - sizeof(status);
 
 Acked-by: Thomas Huth <thuth@redhat.com>
-
 
 
