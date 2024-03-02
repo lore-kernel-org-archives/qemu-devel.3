@@ -4,103 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C289C5478C
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Mar 2024 14:39:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C9ACC5478C
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Mar 2024 15:35:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgQV1-00083b-9O; Sat, 02 Mar 2024 09:38:03 -0500
+	id 1rgRNM-0005kg-Ih; Sat, 02 Mar 2024 10:34:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1rgQUz-00083N-Er
- for qemu-devel@nongnu.org; Sat, 02 Mar 2024 09:38:01 -0500
-Received: from fout8-smtp.messagingengine.com ([103.168.172.151])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rgRNH-0005j1-HI
+ for qemu-devel@nongnu.org; Sat, 02 Mar 2024 10:34:09 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1rgQUx-00075J-DA
- for qemu-devel@nongnu.org; Sat, 02 Mar 2024 09:38:01 -0500
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
- by mailfout.nyi.internal (Postfix) with ESMTP id 4A49813800AD;
- Sat,  2 Mar 2024 09:37:56 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute2.internal (MEProxy); Sat, 02 Mar 2024 09:37:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alyssa.is; h=cc
- :cc:content-type:content-type:date:date:from:from:in-reply-to
- :in-reply-to:message-id:mime-version:references:reply-to:subject
- :subject:to:to; s=fm3; t=1709390276; x=1709476676; bh=06ZJduLhoG
- QK20UMHoLZUla5w4XgeIwZJQcFmeWeZWo=; b=aYIxSilEJYiW9VyzuUquM+9gwf
- lLM12Zivj0zj9DckPc/0hYDS3djAVuQ5MVpfMlooeeyRyLrZmISfqwR/kzpLl7+i
- ncq9eNL+g3PEuQuwSn8O0VxBGMBREVXqh4Zp1ar84Ei+8vouNKbTTYaKHD5sN0R7
- TV05NvBbE7cWlJmvNqRz8fNiQeRth1Cr/w1OoutCifc2mSz/mQ6oUCCuGNo7vvj/
- +9bsy1QlpzQQwo0m3oauJfHB+YVc9kjhzZP6xRSW+e4pQRNFq8In58M7fQT85Xv2
- rvmkdXmWKj7EfdfZ0rBcET4YcilOOr0EXLYyn3iPPuTbt/OJxSdzBJVeVaVQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm1; t=1709390276; x=1709476676; bh=06ZJduLhoGQK20UMHoLZUla5w4Xg
- eIwZJQcFmeWeZWo=; b=YVFxZHGCYH7e371gWfEWu6w29Qo6RKkX14+rZM6Vu12w
- 6LEbw8tTsZiWx3gc43uf+ZiLaUpUfTqZ2QUW//B80HhX4nHm3ghIifjZYrx3US+j
- F/ZrWMZxj2GeTj9CXo1Z1sIU2nMRu+Kr0SbbS2I4/iFWCrJ/wpqCT9pm2ppRzgqM
- bAHK4VVzz4RbhZpaSUkDGp7A6l8DkRgiu7P90eRdfLtxPntEOUvOcO5V3nEf3URJ
- iD69DFn8x0Z9WvxOI7M2st2OIldeJs85oIlik+ea/8l7PdC/5g3hX9Fri5jSALeu
- BVPzFY+osD2DhusrfsoQbML126un6v0rZuCQCwY9Bg==
-X-ME-Sender: <xms:wznjZU0EPLoISSKPaL9O2dg9IWeQ-xLacE7jZaVGE5y9Gbu9gUYMXA>
- <xme:wznjZfEeXTwaFntXk_4dgF0kyxvxkDyiqbpedqjzos8htJJHQzFk7Y8BNnFcZ0Hht
- -nSGDGfTpsTbC6ChA>
-X-ME-Received: <xmr:wznjZc4K_9hzrF5Xhf__an3c0-O5hsSS7Ike5_8zr8Q2ojnbrl_JwkErNf8VdkIoSWuxopLkMHyqBaEJW6ca1apy3NoJ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrheefgdeiiecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpeffhffvvefukfhfgggtuggjsehgtdfsredttddvnecuhfhrohhmpeetlhihshhs
- rgcutfhoshhsuceohhhisegrlhihshhsrgdrihhsqeenucggtffrrghtthgvrhhnpeetke
- dvteejjeeiudehfeeijefhleffledvieejheekjeefffeuteevffduhfduteenucffohhm
- rghinhepghhoohhglhgvshhouhhrtggvrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
- enucfrrghrrghmpehmrghilhhfrhhomhephhhisegrlhihshhsrgdrihhs
-X-ME-Proxy: <xmx:wznjZd0ZGGcNYGtIUURdd6pucXGM0uUJyPKE53vjijEGu66RgLY30g>
- <xmx:wznjZXFVf0bhwx_vjUzbdM6CBxHSGcGGq1ffWppvw_PGDahax3HVNw>
- <xmx:wznjZW-DDa4bXQwslhapxQacw925ChfhQonQK4dEa2sODw5BVrATvg>
- <xmx:xDnjZXH_n4G3Rmr7_XkUpzORcFs4P_1_OUmTVHjMbf6mhljEyFrc4g>
-Feedback-ID: i12284293:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 2 Mar 2024 09:37:55 -0500 (EST)
-Received: by mbp.qyliss.net (Postfix, from userid 1000)
- id 1EF25DD6A; Sat,  2 Mar 2024 15:37:53 +0100 (CET)
-Date: Sat, 2 Mar 2024 15:37:53 +0100
-From: Alyssa Ross <hi@alyssa.is>
-To: Gurchetan Singh <gurchetansingh@chromium.org>
-Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com, 
- akihiko.odaki@gmail.com, ray.huang@amd.com, alex.bennee@linaro.org,
- shentey@gmail.com, ernunes@redhat.com, manos.pitsidianakis@linaro.org,
- mark.cave-ayland@ilande.co.uk, 
- thuth@redhat.com, Andrew Walbran <qwandor@google.com>, 
- Frederick Mayle <fmayle@google.com>
-Subject: Re: rutabaga 0.1.3
-Message-ID: <ufctubdq3cyltmtgwc4ng2dn6akazaybqvz5f5a6pyvgwmsxw2@3kapq5mvvy7l>
-References: <20231003204500.518-1-gurchetansingh@chromium.org>
- <87wms9d0fi.fsf@alyssa.is>
- <CAAfnVBmiaesEQkZOk4zf08JTh-WM3tqNT8RoyaL=49Lm--5HSQ@mail.gmail.com>
- <87cytxni1n.fsf@alyssa.is>
- <CAAfnVBmV3m0-Kh5gcrxzQXotEQ9ktXfEhJr92XAMKi6rXXkuOg@mail.gmail.com>
- <87cytwnqoj.fsf@alyssa.is>
- <CAAfnVBkuKW7gfG5KAh8g26Keq_VCqmNrJwJi9+YZ-Lm+7rOUNA@mail.gmail.com>
- <87msssmax4.fsf@alyssa.is>
- <CAAfnVBm--wu3=ES0tY2JPXwm+Ga-tRLq=EpkZdzdVoHGUfb2KQ@mail.gmail.com>
- <CAAfnVBkk1QTAo4dT372QNFmWqFFG4TxM0OTv9XHQQf6fm11fag@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rgRN9-0006XT-CX
+ for qemu-devel@nongnu.org; Sat, 02 Mar 2024 10:34:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709393637;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=54pAYSo8hZvMTDgBLslAFWG2BSBhNyIksapSarakzGo=;
+ b=SnPYqAhKtfPXFEEpQJBGbdqDU/F7jI/y983uHPZ8UrfqKpAOqbKy1lduuiSm+8aN0sxEEw
+ wlssLIQq9asqhhLqb2n/27+dtmZQQp96y5g8uWPZCV4AJ5AbvGPfsdWHcFyl7hrTK8PFNu
+ xxjPQmazv071DB1U68xt2uoH9dB7O+E=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-659-py4iv8aoPPuVlfgI02yX4g-1; Sat, 02 Mar 2024 10:33:56 -0500
+X-MC-Unique: py4iv8aoPPuVlfgI02yX4g-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a450265c7b6so5702666b.0
+ for <qemu-devel@nongnu.org>; Sat, 02 Mar 2024 07:33:56 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709393635; x=1709998435;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=54pAYSo8hZvMTDgBLslAFWG2BSBhNyIksapSarakzGo=;
+ b=Z6SyTlSE1uLxM3U1/KxqLAbl5jlz/2tbQb0vnCLVpzEQO6CUOPWQ3yVj82k7V4oCB7
+ q8ezcHL+vig37d3K+Nt1wp7X3bR6yFsdOxSJ7kX6owhs7hze5YID/KRkUx5SBFPKHGU7
+ mWyyuq/R4z9Ff71LLHHDnfR2FxMYMxK1ia2t2FnxQPnVrur0f42hCZkvIcvkXGu2cj69
+ 93GuKasn80DnduM3WhsLPjmHD4AboBfW+Q0M5UvMyvzNtA2h+u19PAG1hq6rnYMpw+QJ
+ QNFT3WJ/Y271KdfTIW4poEKyTmaCZI4yWB9ihkKwdquZVHPMBM5HkvvX5Rnm9S7kLzUA
+ +vpw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU4d96e4rE10F63uwR22DiHdnNoTOzJLUDODZ98b6yQZ0WO34Fbibo9gzxXoSwXdYc+qaVE53V0t/5zm2iNuhs44Xm0+jE=
+X-Gm-Message-State: AOJu0YwMjeCQDxkhYSH429CBHrzy2nhwrKfcK3vDTIsJRlHQVE3GMJSo
+ zF7eTSZ6QiFoECSrGUTwyTe/JmWBE8Mq2lLxjhvCooNy7/K6sgsXviHM0EgJW553bi3HmfiiNha
+ FgsGVh+BCnM3JX/2tUaNvmjZuTROmujsO6bZulc8jV4KYcHPkoDvh
+X-Received: by 2002:a17:906:dfc1:b0:a44:e5fc:d4e4 with SMTP id
+ jt1-20020a170906dfc100b00a44e5fcd4e4mr976698ejc.33.1709393635204; 
+ Sat, 02 Mar 2024 07:33:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGmkLG0ADS//phIihupprRmTdKDr7lei2HdGBD9Ojq2gCroQrWFywMWB7BibZ5JMDDxDS/mJQ==
+X-Received: by 2002:a17:906:dfc1:b0:a44:e5fc:d4e4 with SMTP id
+ jt1-20020a170906dfc100b00a44e5fcd4e4mr976671ejc.33.1709393634840; 
+ Sat, 02 Mar 2024 07:33:54 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-178-133.web.vodafone.de.
+ [109.43.178.133]) by smtp.gmail.com with ESMTPSA id
+ ag3-20020a1709069a8300b00a44790d06d3sm1918149ejc.71.2024.03.02.07.33.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 02 Mar 2024 07:33:54 -0800 (PST)
+Message-ID: <65fee13a-f927-4791-a3a9-132f53ad5ae0@redhat.com>
+Date: Sat, 2 Mar 2024 16:33:52 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="lob5dt7ynjcoezoe"
-Content-Disposition: inline
-In-Reply-To: <CAAfnVBkk1QTAo4dT372QNFmWqFFG4TxM0OTv9XHQQf6fm11fag@mail.gmail.com>
-Received-SPF: pass client-ip=103.168.172.151; envelope-from=hi@alyssa.is;
- helo=fout8-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 5/8] virtio-ccw: Handle extra notification data
+To: Jonah Palmer <jonah.palmer@oracle.com>, qemu-devel@nongnu.org
+Cc: mst@redhat.com, jasowang@redhat.com, eperezma@redhat.com,
+ si-wei.liu@oracle.com, boris.ostrovsky@oracle.com, raphael@enfabrica.net,
+ kwolf@redhat.com, hreitz@redhat.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com,
+ cohuck@redhat.com, pbonzini@redhat.com, fam@euphon.net, stefanha@redhat.com,
+ qemu-block@nongnu.org, qemu-s390x@nongnu.org, virtio-fs@lists.linux.dev
+References: <20240301134330.4191007-1-jonah.palmer@oracle.com>
+ <20240301134330.4191007-6-jonah.palmer@oracle.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240301134330.4191007-6-jonah.palmer@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.094,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,93 +152,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 01/03/2024 14.43, Jonah Palmer wrote:
+> Add support to virtio-ccw devices for handling the extra data sent from
+> the driver to the device when the VIRTIO_F_NOTIFICATION_DATA transport
+> feature has been negotiated.
+> 
+> The extra data that's passed to the virtio-ccw device when this feature
+> is enabled varies depending on the device's virtqueue layout.
+> 
+> That data passed to the virtio-ccw device is in the same format as the
+> data passed to virtio-pci devices.
+> 
+> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+> ---
+>   hw/s390x/s390-virtio-ccw.c | 18 ++++++++++++++----
+>   1 file changed, 14 insertions(+), 4 deletions(-)
+> 
+> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+> index 62804cc228..b8e193956c 100644
+> --- a/hw/s390x/s390-virtio-ccw.c
+> +++ b/hw/s390x/s390-virtio-ccw.c
+> @@ -140,9 +140,11 @@ static void subsystem_reset(void)
+>   static int virtio_ccw_hcall_notify(const uint64_t *args)
+>   {
+>       uint64_t subch_id = args[0];
+> -    uint64_t queue = args[1];
+> +    uint64_t data = args[1];
+>       SubchDev *sch;
+> +    VirtIODevice *vdev;
+>       int cssid, ssid, schid, m;
+> +    uint16_t vq_idx;
+>   
+>       if (ioinst_disassemble_sch_ident(subch_id, &m, &cssid, &ssid, &schid)) {
+>           return -EINVAL;
+> @@ -151,12 +153,20 @@ static int virtio_ccw_hcall_notify(const uint64_t *args)
+>       if (!sch || !css_subch_visible(sch)) {
+>           return -EINVAL;
+>       }
+> -    if (queue >= VIRTIO_QUEUE_MAX) {
+> +
+> +    vdev = virtio_ccw_get_vdev(sch);
+> +    if (virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
+> +        vq_idx = data & 0xFFFF;
+> +        virtio_set_notification_data(vdev, vq_idx, data);
+> +    } else {
+> +        vq_idx = data;
+> +    }
+> +
+> +    if (vq_idx >= VIRTIO_QUEUE_MAX) {
+>           return -EINVAL;
+>       }
+> -    virtio_queue_notify(virtio_ccw_get_vdev(sch), queue);
+> +    virtio_queue_notify(vdev, vq_idx);
+>       return 0;
+> -
+>   }
 
---lob5dt7ynjcoezoe
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Acked-by: Thomas Huth <thuth@redhat.com>
 
-Hi Gurchetan,
 
-> >> > Would this be a suitable commit for the 0.1.3 release of rutabaga?
-> >> >
-> >> > https://chromium.googlesource.com/crosvm/crosvm/+/5dfd74a0680d317c6edf44138def886f47cb1c7c
-> >> >
-> >> > The gfxstream/AEMU commits would remain unchanged.
-> >>
-> >> That combination works for me.
-> >
-> > Just FYI, still working on it.  Could take 1-2 more weeks.
->
-> FYI:
->
-> https://android.googlesource.com/platform/hardware/google/gfxstream/+/refs/tags/v0.1.2-gfxstream-release
->
-> https://android.googlesource.com/platform/hardware/google/aemu/+/refs/tags/v0.1.2-aemu-release
->
-> https://chromium.googlesource.com/crosvm/crosvm/+/refs/tags/v0.1.3-rutabaga-release
-
-Unlike the commit I tested for you, the commit that ended up being
-tagged as v0.1.3-rutabaga-release doesn't work for me:
-
-	qemu: The errno is EBADF: Bad file number
-	qemu: CHECK failed in rutabaga_cmd_resource_map_blob() ../hw/display/virtio-gpu-rutabaga.c:655
-	qemu: virtio_gpu_rutabaga_process_cmd: ctrl 0x208, error 0x1200
-	qemu: CHECK failed in rutabaga_cmd_resource_unmap_blob() ../hw/display/virtio-gpu-rutabaga.c:723
-	qemu: virtio_gpu_rutabaga_process_cmd: ctrl 0x209, error 0x1200
-	qemu: The errno is EBADF: Bad file number
-	qemu: CHECK failed in rutabaga_cmd_resource_map_blob() ../hw/display/virtio-gpu-rutabaga.c:655
-	qemu: virtio_gpu_rutabaga_process_cmd: ctrl 0x208, error 0x1200
-	qemu: CHECK failed in rutabaga_cmd_resource_unmap_blob() ../hw/display/virtio-gpu-rutabaga.c:723
-	qemu: virtio_gpu_rutabaga_process_cmd: ctrl 0x209, error 0x1200
-	qemu: The errno is EBADF: Bad file number
-	qemu: CHECK failed in rutabaga_cmd_resource_map_blob() ../hw/display/virtio-gpu-rutabaga.c:655
-	qemu: virtio_gpu_rutabaga_process_cmd: ctrl 0x208, error 0x1200
-	qemu: invalid resource id
-	qemu: CHECK failed in rutabaga_cmd_submit_3d() ../hw/display/virtio-gpu-rutabaga.c:341
-	qemu: virtio_gpu_rutabaga_process_cmd: ctrl 0x207, error 0x1200
-	qemu: CHECK failed in rutabaga_cmd_resource_unmap_blob() ../hw/display/virtio-gpu-rutabaga.c:723
-	qemu: virtio_gpu_rutabaga_process_cmd: ctrl 0x209, error 0x1200
-
-I bisected it to:
-
-	commit f3dbf20eedadb135e2fd813474fbb9731d465f3a
-	Author: Andrew Walbran <qwandor@google.com>
-	Date:   Wed Nov 29 17:23:45 2023 +0000
-
-	    rutabaga_gfx: Uprev nix to 0.27.1
-
-	    The new version of nix uses OwnedFd in various places, which allows us
-	    to have less unsafe code.
-
-	    TEST=CQ
-	    BUG=b:293289578
-
-	    Change-Id: I61aa80c4105eaf1182c5c325109b5aba11cf60de
-	    Reviewed-on: https://chromium-review.googlesource.com/c/crosvm/crosvm/+/5072293
-	    Auto-Submit: Andrew Walbran <qwandor@google.com>
-	    Reviewed-by: Gurchetan Singh <gurchetansingh@chromium.org>
-	    Reviewed-by: Frederick Mayle <fmayle@google.com>
-	    Commit-Queue: Frederick Mayle <fmayle@google.com>
-
---lob5dt7ynjcoezoe
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEH9wgcxqlHM/ARR3h+dvtSFmyccAFAmXjOb8ACgkQ+dvtSFmy
-ccAshA/+Jq7WG6GGA8TTFyzLP6nUs2SvQ6IWqZT/V9FQk1LTL60ibqWkwfDMw3Fj
-R9klplnRe+WKLXgdOUMrQI5kLtDp8fIJIw+Fjtxme7mHyty4UGwIhaPYqx1klXq1
-SeV7xMiB15ieR1wzd3Vuj7oJ7IwFgV6ChBH6fUrWL+Se6X0ugpUBRScfSH/yIxD8
-T0qVCvBbYyXHOe6JoY6nCp3gKPUFvR+SXXvor/Lmz51pCLDqXAC5nSekz6pMKuRq
-IzQI4MlI0u9M5Y6/otKZdLfPCiEJEbbiT8gUndhG1K2cNf8Up051yEEY1OtKTPrx
-bg6UJQEcGur7SATNHdiKLYkmnpuFPTH+NR1WVpbQiag/drMMPK4HViTVqD7qMxNr
-XsLttFzv7woQvwiBadIg0AHfopwEiNMxPybJoXj3zwMvLMZmXx4Im2qp9EsbC9uQ
-aEKtVsQmJrSegYVWZnyHlhHOii7LQH/fiRcwD9FFrJKLLXTBavQ+R0xkSTCk43a+
-FEUOGwO/sRllergQHCVNffkKVrXf256gkcAI1cTQWyVieU0eOTC+2MKwiXBkFdCF
-waWHdxXXcTBkJKW9QZPn7YpCv+8qJFISEAJVUW3YSm/6AemuJG7u2o3TjVAj3vjs
-mK76E57RQKvgP8IExaJyAdZcf5srUrmBdYx0B1xi1Jo1x6PEcmw=
-=s6nl
------END PGP SIGNATURE-----
-
---lob5dt7ynjcoezoe--
 
