@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78D39C5478C
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 Mar 2024 22:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B90AC5478C
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 Mar 2024 22:37:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgXxR-0006BS-J7; Sat, 02 Mar 2024 17:35:53 -0500
+	id 1rgXxR-0006BQ-3B; Sat, 02 Mar 2024 17:35:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgXxI-00069q-Qp
- for qemu-devel@nongnu.org; Sat, 02 Mar 2024 17:35:45 -0500
-Received: from sin.source.kernel.org ([145.40.73.55])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgXxG-00069O-Ig
+ for qemu-devel@nongnu.org; Sat, 02 Mar 2024 17:35:42 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgXxE-0003hG-T8
- for qemu-devel@nongnu.org; Sat, 02 Mar 2024 17:35:44 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgXxD-0003ga-VF
+ for qemu-devel@nongnu.org; Sat, 02 Mar 2024 17:35:42 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id B71E9CE0E9F;
- Sat,  2 Mar 2024 22:35:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F6F1C433C7;
- Sat,  2 Mar 2024 22:35:32 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id D511860F75;
+ Sat,  2 Mar 2024 22:35:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FB9CC433C7;
+ Sat,  2 Mar 2024 22:35:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1709418934;
- bh=JQ9YUOaP/MNthjzG+feEZ13KEK55SdT8GDW+dC2U7Pg=;
+ s=k20201202; t=1709418928;
+ bh=t2xatLPUQitdK7QlDb4pBEBirGnlzkSL8GWMvf0Y78U=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=NVV5tanHSuLQmt7lMSOYV8qMTGACEX2I4hCvj/q2wtuVG6kBhnTEuIa9eTmzncFYu
- a7thdCNww5N6fuxVUkGTnATGZLyH21T9diFhJJo3+uSDa9FbVIjHjdqfKjBwnRQXl3
- vg0zxKeLTo/l3Imf9t1BvRgQ4YFwjkDMymO9NiNQyy7E5R1j5auspG07Xaq++ZeOFh
- B32/F+pWDeZ6Emcmn4Hiv1913DlcbAq+jqRTROV+vvvTx3cAc82RsNoaRP83hQvVBb
- KxVJvtT9DazLHG0dspU0KlTsXggLPdpY/Su8dIlckgzmKl459XMgbozP9uEMZWIAxU
- Aq/qGSe4fsAxw==
+ b=SYLAFdB/Y56tKxHA6z1xvfqwml49ot5iUJJtdcHs+EqFq/6eOGepGYY9ttjRionbV
+ 57GSzvn5j0aL1ShVXOLCkEAkbxeWBcoQ8YlLDFoPrcR9+OZ5nDqPYfo4+ZJgaYQ/5p
+ zGJlQ2CYoGoCVprnSUbgh/Z83EEiceRMwOnn1cfSBub5x3PbmBJjeBgKZR1aH/xdU/
+ utrLOx4+j7VngcMMO1YV5iTFOrzcpCaQ0QszkHKj4Doi0PxkRf0W2Nn9JnD9q0Ijvh
+ rNKd8Lbxj1xY72TeUn7Hxsson17HCnRWXEuz49SDHZRnbD8P+bOFYCYlhcqLF3uoJa
+ 0Dje904n5kwTQ==
 From: deller@kernel.org
 To: Richard Henderson <richard.henderson@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: deller@gmx.de
-Subject: [PATCH 5/5] roms/hppa: Add build rules for hppa-firmware
-Date: Sat,  2 Mar 2024 23:35:24 +0100
-Message-ID: <20240302223524.24421-6-deller@kernel.org>
+Subject: [PATCH 1/5] target/hppa: Fix unaligned double word accesses for hppa64
+Date: Sat,  2 Mar 2024 23:35:20 +0100
+Message-ID: <20240302223524.24421-2-deller@kernel.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240302223524.24421-1-deller@kernel.org>
 References: <20240302223524.24421-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.40.73.55; envelope-from=deller@kernel.org;
- helo=sin.source.kernel.org
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.094,
+Received-SPF: pass client-ip=139.178.84.217; envelope-from=deller@kernel.org;
+ helo=dfw.source.kernel.org
+X-Spam_score_int: -71
+X-Spam_score: -7.2
+X-Spam_bar: -------
+X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.094,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,43 +69,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Guenter Roeck <linux@roeck-us.net>
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Suggested-by: Michael Tokarev <mjt@tls.msk.ru>
+Unaligned 64-bit accesses were found in Linux to clobber carry bits,
+resulting in bad results if an arithmetic operation involving a
+carry bit was executed after an unaligned 64-bit operation.
+
+hppa 2.0 defines additional carry bits in PSW register bits 32..39.
+When restoring PSW after executing an unaligned instruction trap,
+those bits were not cleared and ended up to be active all the time.
+Clearing bit 32..39 in psw prior to restoring it solves the problem.
+
+Fixes: 931adff31478 ("target/hppa: Update cpu_hppa_get/put_psw for hppa64")
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Cc: Charlie Jenkins <charlie@rivosinc.com>
+Cc: Helge Deller <deller@gmx.de>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- roms/Makefile | 7 +++++++
- 1 file changed, 7 insertions(+)
+ target/hppa/helper.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/roms/Makefile b/roms/Makefile
-index 67f709ba2d..8e5d8d26a9 100644
---- a/roms/Makefile
-+++ b/roms/Makefile
-@@ -68,6 +68,7 @@ default help:
- 	@echo "  opensbi32-generic  -- update OpenSBI for 32-bit generic machine"
- 	@echo "  opensbi64-generic  -- update OpenSBI for 64-bit generic machine"
- 	@echo "  qboot              -- update qboot"
-+	@echo "  hppa-firmware      -- update 32- and 64-bit hppa firmware"
- 	@echo "  clean              -- delete the files generated by the previous" \
- 	                              "build targets"
+diff --git a/target/hppa/helper.c b/target/hppa/helper.c
+index 859644c47a..7b798d1227 100644
+--- a/target/hppa/helper.c
++++ b/target/hppa/helper.c
+@@ -76,7 +76,12 @@ void cpu_hppa_put_psw(CPUHPPAState *env, target_ulong psw)
+     }
+     psw &= ~reserved;
  
-@@ -177,6 +178,11 @@ npcm7xx_bootrom:
- 	$(MAKE) -C vbootrom CROSS_COMPILE=$(arm_cross_prefix)
- 	cp vbootrom/npcm7xx_bootrom.bin ../pc-bios/npcm7xx_bootrom.bin
- 
-+hppa-firmware:
-+	$(MAKE) -C seabios-hppa parisc
-+	cp seabios-hppa/out/hppa-firmware.img      ../pc-bios/
-+	cp seabios-hppa/out-64/hppa-firmware64.img ../pc-bios/
+-    env->psw = psw & ~(PSW_N | PSW_V | PSW_CB);
++    if (hppa_is_pa20(env)) {
++        env->psw = psw & ~(PSW_N | PSW_V | PSW_CB | 0xff00000000ull);
++    } else {
++        env->psw = psw & ~(PSW_N | PSW_V | PSW_CB);
++    }
 +
- clean:
- 	rm -rf seabios/.config seabios/out seabios/builds
- 	$(MAKE) -C ipxe/src veryclean
-@@ -189,3 +195,4 @@ clean:
- 	$(MAKE) -C opensbi clean
- 	$(MAKE) -C qboot clean
- 	$(MAKE) -C vbootrom clean
-+	$(MAKE) -C seabios-hppa clean
+     env->psw_n = (psw / PSW_N) & 1;
+     env->psw_v = -((psw / PSW_V) & 1);
+ 
 -- 
 2.44.0
 
