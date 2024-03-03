@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F06F6C48BF6
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 17:47:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33529C54E49
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 18:54:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgpub-0002KQ-Ol; Sun, 03 Mar 2024 12:46:09 -0500
+	id 1rgqyG-0002z1-T0; Sun, 03 Mar 2024 13:54:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rgpuW-0002Jr-Pe
- for qemu-devel@nongnu.org; Sun, 03 Mar 2024 12:46:08 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rgqy7-0002xs-R1
+ for qemu-devel@nongnu.org; Sun, 03 Mar 2024 13:53:55 -0500
+Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rgpuV-0005WH-52
- for qemu-devel@nongnu.org; Sun, 03 Mar 2024 12:46:04 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-33e2774bdc5so1128145f8f.2
- for <qemu-devel@nongnu.org>; Sun, 03 Mar 2024 09:46:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rgqy6-0003yI-9j
+ for qemu-devel@nongnu.org; Sun, 03 Mar 2024 13:53:51 -0500
+Received: by mail-lj1-x232.google.com with SMTP id
+ 38308e7fff4ca-2d2509c66daso46718051fa.3
+ for <qemu-devel@nongnu.org>; Sun, 03 Mar 2024 10:53:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709487960; x=1710092760; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1709492028; x=1710096828; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KXOsimm5b/J80I2W9cGrrHUnx2UJxTDevm55fAWLl+Y=;
- b=JZDZaayNZbhzM1LyeesmuLrENz0EcRX7gjF2OjmlQQYnxv3/wGEAD8CU/gnGLfVkIH
- y9alBz8vd0W/NGU/+JnwUJDkSGnSf/zk9X9w+pzWDlnMKY5D0eFKbLPI/7ZwueMfkEHN
- vCST95SkrYp3HdPE0BGz1THuXjV3gchmDrVMEnMr6oBnVVesLkmf2P2jdve9rqS+1cC8
- Ic7JGa9F0d23wfpYDWJqTmbuPliYv0XTOzoDU4ISkW32iexNmg036aFIl9rVBw8aKmq/
- XLq0YxejquxU4X9XuJK9OWYaz0NA8L4pj/tcKY4MgPgz6YIbrr3H1vZpntih523ip9Ad
- 0UrQ==
+ bh=6rvC2H6C2Wukg8u7UcsRKEckfeM9Uh0xCoR3xrUsp3g=;
+ b=W9gkyfT8wkGDvNsFTLBKmX4PdJKVtgZrOvufuhqaBdlTI/UK4ivX7cRrUKfZi/mCKd
+ Navj1peKsJgY5cCNXauhNLCDc1hx5p4ySQw52BUNf/cw1B9dS6LliFdXqkN/pdtxTpzx
+ IwvNAd4MTnmmyVQyNThT+FofNnsMmg8pytQkp1vG3Ie9XSLtbiZxy8+Il5lxFKndPhDD
+ ah/QCKHWLSmiVldcG4iJTDToT3G4S1/PCvR7sVZiU1D5OTEV9fWehicH/d8i44lgSfQS
+ 1as5UD2Dzg7duf6RfZVeGv0//wUcPnlFKAE2Q/PYHc7VHhlNUI4nJMeiCSqi/221vSxW
+ cmTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709487960; x=1710092760;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1709492028; x=1710096828;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KXOsimm5b/J80I2W9cGrrHUnx2UJxTDevm55fAWLl+Y=;
- b=v2ZC/k2Z7gGlcqb5ybBRCOcB4v2snJZHT3XAWzX5jttNGVBDfA2y99miP5sNo0frRL
- Mf2Obe1y9jerKbbUKv2JsrIkNMVdibbl9QTxr89GCMI6vyezl9aDY9pY4JoD/BrCLHki
- 10nvF71F8/SxUX5LJi17dE//lYXi25Dfn6W9OOwn5y9Wh6FgD8CLal7V44vvTmCdLOE0
- +LC+3gmrp5O+tM59GBWMLcUZrhj3Do617CTeEGz+Ac+G6dWYiB5uQJcIrfq+1faLADma
- JTQh6rjOuI3cU/qLIQK8BbeGVY6yw17umMtFd1b0h8LJpOaoJhLfW6PHIq3qi+Mq2k64
- YNbg==
-X-Gm-Message-State: AOJu0YyB96vAYdZChyfRgLJqJgUG/gXSugQXnsa6qm2tMTUdYvWznyFA
- BY9fRk6D6a8NBHavbmzKFziHNL0toxaoG+TKbDrXn/diA8k9ZF1TqnjnB5dq
-X-Google-Smtp-Source: AGHT+IEHyoDT4t9yLXHUJvyVbB2JSFBmSiU2UqaR++tFrkXfzArZtpooFUtircg4YPdWJRaI27gtLQ==
-X-Received: by 2002:adf:c98c:0:b0:33c:f9d6:fb20 with SMTP id
- f12-20020adfc98c000000b0033cf9d6fb20mr4992115wrh.45.1709487959391; 
- Sun, 03 Mar 2024 09:45:59 -0800 (PST)
-Received: from [127.0.0.1] (dynamic-092-224-118-014.92.224.pool.telefonica.de.
+ bh=6rvC2H6C2Wukg8u7UcsRKEckfeM9Uh0xCoR3xrUsp3g=;
+ b=uRYGnjFirw1LvxhvAavLfaOpzxeq1wpsxJ0XVrKubcDiB8JNbNyyT9n6u16d22FGYR
+ vxX0I2yV0LhFLGB6rbDtlc/PX4011WW5Zae0mQGJMKhm5QHYMDxtUrvl/icFsz8uh5ey
+ 7N0preZ1+88GIHxaQ9v/fQYA90+Ok4ANdJ67sF3Imr2q2OuwA2z5LpjMBSeqfZz2DaMu
+ 17Jl/wR4rXZrqGQGfZf96jR69RJuQndcgnZ3JqHT6GM1EH2A1bH4Lon3x/cb3tEWsASk
+ DKRTQoU2bTeuF+kUQGnlpJxtXijl14UfGLsB4ncwtVWElKsLZD8IhjGCTvsO9cEfBXl+
+ rwbA==
+X-Gm-Message-State: AOJu0Yz+745coRETV7NeH//OgrxapMNpyeIJv2YwqpAAoVB50foiP48b
+ t0NdD0dDr4EY7EeO0+Wza88b6jLpEzjgscO8j+LxKavCA0HXbei19LuU/niV
+X-Google-Smtp-Source: AGHT+IEW5wf8oVE197xweQI8A8GKcmywEQnJPnvje6Vg4EM1fJeddU/BtZ7aGqakCwFsCwKDv/WgRA==
+X-Received: by 2002:a2e:9d85:0:b0:2d2:b518:3ccd with SMTP id
+ c5-20020a2e9d85000000b002d2b5183ccdmr5211263ljj.11.1709492027971; 
+ Sun, 03 Mar 2024 10:53:47 -0800 (PST)
+Received: from archlinux.. (dynamic-092-224-118-014.92.224.pool.telefonica.de.
  [92.224.118.14]) by smtp.gmail.com with ESMTPSA id
- f15-20020adffccf000000b0033dedd63382sm10098443wrs.101.2024.03.03.09.45.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 03 Mar 2024 09:45:58 -0800 (PST)
-Date: Sun, 03 Mar 2024 17:45:59 +0000
+ o17-20020a05600c4fd100b00412d68dbf75sm5259460wmq.35.2024.03.03.10.53.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 03 Mar 2024 10:53:47 -0800 (PST)
 From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Sven Schnelle <svens@stackframe.org>,
- =?ISO-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-CC: deller@gmx.de
-Subject: Re: [PATCH v3 10/12] plugins: add range list API
-In-Reply-To: <20240301174609.1964379-11-svens@stackframe.org>
-References: <20240301174609.1964379-1-svens@stackframe.org>
- <20240301174609.1964379-11-svens@stackframe.org>
-Message-ID: <7A337DB0-78D2-4891-8E8D-B7370CB8ED30@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jason Wang <jasowang@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Sergio Lopez <slp@redhat.com>, Paul Durrant <paul@xen.org>,
+ David Woodhouse <dwmw2@infradead.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH v3 3/4] hw/i386/pc: Set "normal" boot device order in
+ pc_basic_device_init()
+Date: Sun,  3 Mar 2024 19:53:31 +0100
+Message-ID: <20240303185332.1408-4-shentey@gmail.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240303185332.1408-1-shentey@gmail.com>
+References: <20240303185332.1408-1-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x430.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::232;
+ envelope-from=shentey@gmail.com; helo=mail-lj1-x232.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,127 +100,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The boot device order may change during the lifetime of a VM. Usually, the
+"normal" order is set once during machine init(). However, if a user specifies
+`-boot once=...`, the "normal" order is overwritten by the "once" order just
+before machine_done, and a reset handler is registered which restores the
+"normal" order during the next reset.
 
+In the next patch, pc_cmos_init() will be inlined into pc_cmos_init_late() which
+runs during machine_done. This means that the "once" boot order would be
+overwritten again with the "normal" boot order -- which renders the user's
+choice ineffective. Fix this by setting the "normal" boot order in
+pc_basic_device_init() which already registers the boot_set() handler.
 
-Am 1=2E M=C3=A4rz 2024 17:46:07 UTC schrieb Sven Schnelle <svens@stackfram=
-e=2Eorg>:
->Export range_list_from_string(), range_contains() and range_list_free()
->to allow plugins to parse filter ranges and match them to avoid
->reimplementing this functionality=2E
->
->Signed-off-by: Sven Schnelle <svens@stackframe=2Eorg>
->---
-> include/qemu/qemu-plugin=2Eh   | 41 ++++++++++++++++++++++++++++++++++++
-> plugins/api=2Ec                | 18 ++++++++++++++++
-> plugins/qemu-plugins=2Esymbols |  3 +++
-> 3 files changed, 62 insertions(+)
->
->diff --git a/include/qemu/qemu-plugin=2Eh b/include/qemu/qemu-plugin=2Eh
->index 5839feea4d=2E=2E4910a63d70 100644
->--- a/include/qemu/qemu-plugin=2Eh
->+++ b/include/qemu/qemu-plugin=2Eh
->@@ -765,4 +765,45 @@ typedef struct Error Error;
-> QEMU_PLUGIN_API
-> void qemu_plugin_error_print(Error *err);
->=20
->+typedef GList qemu_plugin_range_list;
->+
->+/**
->+ * qemu_plugin_ranges_from_string() - parse a filter range string
->+ *
->+ * @out_ranges: a pointer to a @qemu_plugin_range_list pointer
->+ * @filter_spec: input string
->+ * @errp: @Error string on parse failure
->+ *
->+ * This function parses a filter specification string and stores the
->+ * parsed adress ranges found in @out=2E On parse failure a @Error point=
-er
->+ * is stored in @errp=2E The function accepts a comma-separated list
->+ * of start and end addresses or single addresses=2E
->+ */
->+QEMU_PLUGIN_API
->+void qemu_plugin_range_list_from_string(qemu_plugin_range_list **out_ran=
-ge,
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ hw/i386/pc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Nice series in general=2E One nitpick: When the API docs are generated I g=
-et the following error:
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 06ef278b34..7780d8d6dd 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -614,8 +614,6 @@ void pc_cmos_init(PCMachineState *pcms,
+     mc146818rtc_set_cmos_data(s, 0x5c, val >> 8);
+     mc146818rtc_set_cmos_data(s, 0x5d, val >> 16);
+ 
+-    set_boot_dev(pcms, s, MACHINE(pcms)->boot_config.order, &error_fatal);
+-
+     val = 0;
+     val |= 0x02; /* FPU is there */
+     val |= 0x04; /* PS/2 mouse installed */
+@@ -1254,6 +1252,8 @@ void pc_basic_device_init(struct PCMachineState *pcms,
+ #endif
+ 
+     qemu_register_boot_set(pc_boot_set, pcms);
++    set_boot_dev(pcms, MC146818_RTC(rtc_state),
++                 MACHINE(pcms)->boot_config.order, &error_fatal);
+ 
+     if (!xen_enabled() &&
+         (x86ms->pit == ON_OFF_AUTO_AUTO || x86ms->pit == ON_OFF_AUTO_ON)) {
+-- 
+2.44.0
 
-    include/qemu/qemu-plugin=2Eh:788: warning: Function parameter or membe=
-r 'out_range' not described in 'qemu_plugin_range_list_from_string'
-
-This is due to the parameter being documented as "out_ranges" which seems =
-like the more appropriate name given its type=2E It might also be cleaner t=
-o have the same names in the source, too=2E
-
-Best regards,
-Bernhard
-
->+                                        const char *filter_spec,
->+                                        Error **errp);
->+
->+/**
->+ * qemu_plugin_range_list_contains() - match a value against a list
->+ * of ranges
->+ *
->+ * @ranges: a pointer to a @qemu_plugin_range_list
->+ * @val: the value to match
->+ *
->+ * This function matches @val against the adress range list in @ranges=
-=2E
->+ * On success, true is returned, otherwise false=2E
->+ */
->+QEMU_PLUGIN_API
->+bool qemu_plugin_range_list_contains(qemu_plugin_range_list *ranges,
->+                                     uint64_t val);
->+
->+/**
->+ * qemu_plugin_range_list_free() - free a list of ranges
->+ *
->+ * @ranges: a pointer to the list to be freed
->+ */
->+QEMU_PLUGIN_API
->+void qemu_plugin_range_list_free(qemu_plugin_range_list *ranges);
->+
-> #endif /* QEMU_QEMU_PLUGIN_H */
->diff --git a/plugins/api=2Ec b/plugins/api=2Ec
->index 8fd3a8964a=2E=2E8dbd14c648 100644
->--- a/plugins/api=2Ec
->+++ b/plugins/api=2Ec
->@@ -472,3 +472,21 @@ void qemu_plugin_error_print(Error *err)
->     error_report_err(err);
-> }
->=20
->+void qemu_plugin_range_list_from_string(qemu_plugin_range_list **out,
->+                                        const char *filter_spec,
->+                                        Error **errp)
->+{
->+    return range_list_from_string(out, filter_spec, errp);
->+}
->+
->+bool qemu_plugin_range_list_contains(qemu_plugin_range_list *ranges,
->+                                     uint64_t val)
->+{
->+    return range_list_contains(ranges, val);
->+}
->+
->+void qemu_plugin_range_list_free(qemu_plugin_range_list *ranges)
->+{
->+    return range_list_free(ranges);
->+}
->+
->diff --git a/plugins/qemu-plugins=2Esymbols b/plugins/qemu-plugins=2Esymb=
-ols
->index b142d11e58=2E=2E472b29fc5f 100644
->--- a/plugins/qemu-plugins=2Esymbols
->+++ b/plugins/qemu-plugins=2Esymbols
->@@ -21,6 +21,9 @@
->   qemu_plugin_num_vcpus;
->   qemu_plugin_outs;
->   qemu_plugin_path_to_binary;
->+  qemu_plugin_range_list_contains;
->+  qemu_plugin_range_list_free;
->+  qemu_plugin_range_list_from_string;
->   qemu_plugin_read_register;
->   qemu_plugin_register_atexit_cb;
->   qemu_plugin_register_flush_cb;
 
