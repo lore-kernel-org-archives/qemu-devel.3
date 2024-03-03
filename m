@@ -4,76 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B41AEC54E49
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 19:27:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2394C48BF6
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 19:27:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgrTv-00048f-Ps; Sun, 03 Mar 2024 14:26:43 -0500
+	id 1rgrTv-00048X-5G; Sun, 03 Mar 2024 14:26:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1rgrTu-00048A-1E
+ id 1rgrTt-000489-Vx
  for qemu-devel@nongnu.org; Sun, 03 Mar 2024 14:26:42 -0500
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1rgrTs-00031W-8f
+ id 1rgrTs-00031B-8W
  for qemu-devel@nongnu.org; Sun, 03 Mar 2024 14:26:41 -0500
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-6e5a232fe80so2171734b3a.0
- for <qemu-devel@nongnu.org>; Sun, 03 Mar 2024 11:26:35 -0800 (PST)
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-6e56da425b5so2694310b3a.0
+ for <qemu-devel@nongnu.org>; Sun, 03 Mar 2024 11:26:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709493994; x=1710098794; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=W9FD8yKg80ZqH9APzxpqcFIl19t8UD0rlYBITybI9/w=;
- b=a1RVfc29y8Ki5y9pAr4mRCZl93gSG3d7LIiZM0mQCXX2M4g1yTmu7/LQ98iI3GDo5G
- QhiPzwqbZZym6Hd2fk/KonV38x2LgPcsOi9xPcgd5CsjShH/vFW+fjZ7bNcp6saIOzej
- T2OShpp+KdEsYWsf2BFrFMNAPDKsAg2emsKXfeeOYuKN20ijMTZF1mbzt+aS2I/KAp+M
- RJ0n2ohqa96VNPDZ/UKWB0KiFXKLGf1GfQV9ZqjgUAZslB2p4z3jsYAXsAmB9RjuBdLP
- XpFHXCv7fn+JBgvIX/Gc45t6kGxgVocvLIg5c0FQph08Oj7b0ArcUDLC1ym7OlzskZBA
- wLsQ==
+ d=linaro.org; s=google; t=1709493993; x=1710098793; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=d5m9mhIK8JyytOQksDR6IYtiA11v8ohv/oTiKgv5/GE=;
+ b=LcEAtvvtjtxtzXyVKdfDGlwecnBh8mGkOTSfVdZEGG5+Ce8Uz+xkExtn1OfcPI8SbK
+ iWIfczPueDO1NNGJ54BV/tyJ/L2Ic+FBP3HdhQZfqQueQtecgcBg7VdMG8XK3g6mtSUU
+ I1oE/wm0agjS7pnX357wX5V+nPn5K8Gb/JfVuFnmKVY0GqTdQQdhy+4qIqvNthLIZ1Ur
+ Pu1UPP0Ad4Sk7F8dvEnSNop9cNOLU99PazuHyeZDyOaKkf27trpeCUhxUDh6e8tIND4S
+ ZzRpE+5PNA1nEj3WMEvjfNqt6ZVhg7ygukAq2JS4dM7lXq9LyaM/Q3N9rLqPTMz8vjyW
+ w/lQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709493994; x=1710098794;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=W9FD8yKg80ZqH9APzxpqcFIl19t8UD0rlYBITybI9/w=;
- b=uqR1IsiIEt6mYqL600CnnAybQIXAf0ZroPXkm0Rfrby7KaGAMHgqJe322O0bWaZps1
- wyZxU9H6ZhenSRkEBof7RVzN0fYQ+sqQSeJRn1rO76MQq7FAktPzw2faT5G/9KLhA3pE
- rtW/oxwaZgJ9xPPIXcujuPDnfH9jGo8K8QS7fUi8MoSl73tGWtyAzJzdo/TMd2IUpKMk
- pAz4XmNPLMROc8EmMuqVQ2pdrMuebTxx8qKy443on1EVTJc/5PCw0m91SDYT+dp/t24j
- oTduLUPyl8jZZyeSxxAnCP/sGykENSs9rRFHZLSDoYIJo/T50THoKozAAeoYnEEnlBqp
- wAvw==
-X-Gm-Message-State: AOJu0Yz/5rkmA4dPvPKvXzwRIGahfNThuqNH7j+dEt+MXrCgoIsn9ckG
- 4IirZ3LGgxfwt6Irb6P7fhJwQsDdPA1Ky7fJZSyk/ku01+EOQ0bkyZ+SIuvFRQegfRTMqfpTnQd
- 1
-X-Google-Smtp-Source: AGHT+IFJr2Ee6stNYnG2YV5JnYsoKNFeca/t/bCOkQTWgOmZJQSwSMSUb0/Ht6F4Y915pHglSgzWgw==
-X-Received: by 2002:a05:6a20:2451:b0:1a0:eb43:421b with SMTP id
- t17-20020a056a20245100b001a0eb43421bmr9582679pzc.28.1709493994546; 
- Sun, 03 Mar 2024 11:26:34 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709493993; x=1710098793;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=d5m9mhIK8JyytOQksDR6IYtiA11v8ohv/oTiKgv5/GE=;
+ b=TQdyKL9eEwm+3vMSutSf+6FHxUlz4SASPu7WuzOMeSwMgsrdf+tPp9QoAwQBy46+jP
+ LzVht4A/gaBt/NJj9vSiNwnvlUPnKSXWRXLSOI5M/kmwQBLunaqWVh32CIhDLfnKBSvt
+ Eywzz4VzaHi7bNMCzIgTik/nX0R5UN4cJBCwi7h04ouccQN2n0mFwOBT4n3taEYOF+GI
+ kp4Fw3UvFq/ivlWx+yQt+pxMc/Eekqj4jOPRaF+evxqXZHq8KNcq6tfOsBWRoBy0D6+z
+ NC4N7FzzSYHFHJQKi3H6Nu/E+0qUEzEfJ4UWDUZ/51imVlz3nN6WimJg/dvew5pfny9U
+ f+eg==
+X-Gm-Message-State: AOJu0YwbCqbgio6S5LFL8Q8vxDiEW/rZerscDChQnSChZUaUeRgHWTzD
+ cnjpNFwnJ7TYLWC2oPKLeqKK8xrfyWeBQVBK1F9KmSS6FU9EIgq8NhiGBy1Z1eRoNtCbtqPQUxO
+ Z
+X-Google-Smtp-Source: AGHT+IGEwsfhYHXN+Tn1tAwL4LwbMvg/EC2Ttbow815mKScrPcKmLMGdinobTqTCR0WeCTjD89cvGA==
+X-Received: by 2002:a05:6a00:1915:b0:6e5:75cd:eff0 with SMTP id
+ y21-20020a056a00191500b006e575cdeff0mr7141652pfi.31.1709493992604; 
+ Sun, 03 Mar 2024 11:26:32 -0800 (PST)
 Received: from amd.. ([2804:7f0:b401:120f:3e7c:3fff:fe7a:e83b])
  by smtp.gmail.com with ESMTPSA id
- du6-20020a056a002b4600b006e5933a0da9sm5941287pfb.165.2024.03.03.11.26.32
+ du6-20020a056a002b4600b006e5933a0da9sm5941287pfb.165.2024.03.03.11.26.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 03 Mar 2024 11:26:34 -0800 (PST)
+ Sun, 03 Mar 2024 11:26:32 -0800 (PST)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org,
 	alex.bennee@linaro.org
 Cc: peter.maydell@linaro.org,
 	gustavo.romero@linaro.org
-Subject: [PATCH 2/2] tests/tcg: Add multiarch test for Xfer:siginfo:read stub
-Date: Sun,  3 Mar 2024 19:26:10 +0000
-Message-Id: <20240303192610.498490-2-gustavo.romero@linaro.org>
+Subject: [PATCH 1/2] gdbstub: Add Xfer:siginfo:read stub
+Date: Sun,  3 Mar 2024 19:26:09 +0000
+Message-Id: <20240303192610.498490-1-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240303192610.498490-1-gustavo.romero@linaro.org>
-References: <20240303192610.498490-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,98 +93,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add multiarch test for testing if Xfer:siginfo:read query is properly
-handled by gdbstub.
+Add stub to handle Xfer:siginfo:read query that requests the machine's
+siginfo data.
+
+This is used when GDB users execute 'print $_siginfo' and when the
+machine stops due to a signal, like on a SIGSEGV. The information in
+siginfo allows GDB to determine further details on the signal, like the
+fault address/insn when the SIGSEGV is caught. The siginfo is also used
+by GDB to find out the si_code automatically and show additional info to
+the user in some cases.
+
+This is only a QEMU user mode and Linux-only feature.
 
 Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 ---
- tests/tcg/multiarch/Makefile.target           | 10 ++++++-
- .../gdbstub/test-qxfer-siginfo-read.py        | 26 +++++++++++++++++++
- tests/tcg/multiarch/segfault.c                | 14 ++++++++++
- 3 files changed, 49 insertions(+), 1 deletion(-)
- create mode 100644 tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py
- create mode 100644 tests/tcg/multiarch/segfault.c
+ gdbstub/gdbstub.c     |  9 +++++++++
+ gdbstub/internals.h   |  1 +
+ gdbstub/user-target.c | 31 +++++++++++++++++++++++++++++++
+ 3 files changed, 41 insertions(+)
 
-diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
-index e10951a801..61cda9640e 100644
---- a/tests/tcg/multiarch/Makefile.target
-+++ b/tests/tcg/multiarch/Makefile.target
-@@ -80,6 +80,13 @@ run-gdbstub-qxfer-auxv-read: sha1
- 		--bin $< --test $(MULTIARCH_SRC)/gdbstub/test-qxfer-auxv-read.py, \
- 	basic gdbstub qXfer:auxv:read support)
- 
-+run-gdbstub-qxfer-siginfo-read: segfault
-+	$(call run-test, $@, $(GDB_SCRIPT) \
-+		--gdb $(GDB) \
-+		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
-+		--bin "$< -s" --test $(MULTIARCH_SRC)/gdbstub/test-qxfer-siginfo-read.py, \
-+	basic gdbstub qXfer:siginfo:read support)
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index 2909bc8c69..54c1f6fb3c 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -1650,7 +1650,10 @@ static void handle_query_supported(GArray *params, void *user_ctx)
+     if (gdbserver_state.c_cpu->opaque) {
+         g_string_append(gdbserver_state.str_buf, ";qXfer:auxv:read+");
+     }
 +
- run-gdbstub-proc-mappings: sha1
- 	$(call run-test, $@, $(GDB_SCRIPT) \
- 		--gdb $(GDB) \
-@@ -122,7 +129,8 @@ endif
- EXTRA_RUNS += run-gdbstub-sha1 run-gdbstub-qxfer-auxv-read \
- 	      run-gdbstub-proc-mappings run-gdbstub-thread-breakpoint \
- 	      run-gdbstub-registers run-gdbstub-prot-none \
--	      run-gdbstub-catch-syscalls
-+	      run-gdbstub-catch-syscalls \
-+	      run-gdbstub-qxfer-siginfo-read
- 
- # ARM Compatible Semi Hosting Tests
- #
-diff --git a/tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py b/tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py
-new file mode 100644
-index 0000000000..862596b07a
---- /dev/null
-+++ b/tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py
-@@ -0,0 +1,26 @@
-+from __future__ import print_function
-+#
-+# Test gdbstub Xfer:siginfo:read stub.
-+#
-+# The test runs a binary that causes a SIGSEGV and then looks for additional
-+# info about the signal through printing GDB's '$_siginfo' special variable,
-+# which sends a Xfer:siginfo:read query to the gdbstub.
-+#
-+# The binary causes a SIGSEGV at dereferencing a pointer with value 0xdeadbeef,
-+# so the test looks for and checks if this address is correctly reported by the
-+# gdbstub.
-+#
-+# This is launched via tests/guest-debug/run-test.py
-+#
+     g_string_append(gdbserver_state.str_buf, ";QCatchSyscalls+");
 +
-+import gdb
-+from test_gdbstub import main, report
++    g_string_append(gdbserver_state.str_buf, ";qXfer:siginfo:read+");
+ #endif
+     g_string_append(gdbserver_state.str_buf, ";qXfer:exec-file:read+");
+ #endif
+@@ -1799,6 +1802,12 @@ static const GdbCmdParseEntry gdb_gen_query_table[] = {
+         .cmd_startswith = 1,
+         .schema = "l,l0"
+     },
++    {
++        .handler = gdb_handle_query_xfer_siginfo,
++        .cmd = "Xfer:siginfo:read::",
++        .cmd_startswith = 1,
++        .schema = "l,l0"
++     },
+ #endif
+     {
+         .handler = gdb_handle_query_xfer_exec_file,
+diff --git a/gdbstub/internals.h b/gdbstub/internals.h
+index 56b7c13b75..fcfe7c2d26 100644
+--- a/gdbstub/internals.h
++++ b/gdbstub/internals.h
+@@ -190,6 +190,7 @@ typedef union GdbCmdVariant {
+ void gdb_handle_query_rcmd(GArray *params, void *user_ctx); /* softmmu */
+ void gdb_handle_query_offsets(GArray *params, void *user_ctx); /* user */
+ void gdb_handle_query_xfer_auxv(GArray *params, void *user_ctx); /*user */
++void gdb_handle_query_xfer_siginfo(GArray *params, void *user_ctx); /*user */
+ void gdb_handle_v_file_open(GArray *params, void *user_ctx); /* user */
+ void gdb_handle_v_file_close(GArray *params, void *user_ctx); /* user */
+ void gdb_handle_v_file_pread(GArray *params, void *user_ctx); /* user */
+diff --git a/gdbstub/user-target.c b/gdbstub/user-target.c
+index b7d4c37cd8..3a4cf96622 100644
+--- a/gdbstub/user-target.c
++++ b/gdbstub/user-target.c
+@@ -284,6 +284,37 @@ void gdb_handle_query_xfer_auxv(GArray *params, void *user_ctx)
+     gdb_put_packet_binary(gdbserver_state.str_buf->str,
+                       gdbserver_state.str_buf->len, true);
+ }
 +
-+def run_test():
-+    "Run through the test"
-+
-+    gdb.execute("continue", False, True)
-+    resp = gdb.execute("print/x $_siginfo", False, True)
-+    report(resp.find("si_addr = 0xdeadbeef"), "Found fault address.")
-+
-+main(run_test)
-diff --git a/tests/tcg/multiarch/segfault.c b/tests/tcg/multiarch/segfault.c
-new file mode 100644
-index 0000000000..e6c8ff31ca
---- /dev/null
-+++ b/tests/tcg/multiarch/segfault.c
-@@ -0,0 +1,14 @@
-+#include <stdio.h>
-+#include <string.h>
-+
-+/* Cause a segfault for testing purposes. */
-+
-+int main(int argc, char *argv[])
++void gdb_handle_query_xfer_siginfo(GArray *params, void *user_ctx)
 +{
-+    int *ptr = (void *)0xdeadbeef;
++    TaskState *ts;
++    unsigned long offset, len;
++    target_siginfo_t tmp_siginfo;
++    uint8_t *siginfo_offset;
 +
-+    if (argc == 2 && strcmp(argv[1], "-s") == 0) {
-+        /* Cause segfault. */
-+        printf("%d\n", *ptr);
++    offset = get_param(params, 0)->val_ul;
++    len = get_param(params, 1)->val_ul;
++
++    if (offset + len > sizeof(target_siginfo_t)) {
++        /* Invalid offset and/or requested length. */
++        gdb_put_packet("E01");
++        return;
 +    }
++
++    ts = gdbserver_state.c_cpu->opaque;
++
++    /* Filter out si_type from si_code. See comment in siginfo_noswap(). */
++    tmp_siginfo = ts->sync_signal.info;
++    tmp_siginfo.si_code = sextract32(tmp_siginfo.si_code, 0, 16);
++
++    siginfo_offset = (uint8_t *)&tmp_siginfo + offset;
++
++    /* Reply */
++    g_string_assign(gdbserver_state.str_buf, "l");
++    gdb_memtox(gdbserver_state.str_buf, (const char *)siginfo_offset, len);
++    gdb_put_packet_binary(gdbserver_state.str_buf->str,
++                          gdbserver_state.str_buf->len, true);
 +}
+ #endif
+ 
+ static const char *get_filename_param(GArray *params, int i)
 -- 
 2.34.1
 
