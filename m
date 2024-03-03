@@ -4,50 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FF28C54E4A
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 05:47:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DDCEC54E49
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 05:47:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgegY-0006N6-S6; Sun, 03 Mar 2024 00:46:54 -0500
+	id 1rgegn-0006PQ-NV; Sun, 03 Mar 2024 00:47:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgegX-0006Mh-AK
- for qemu-devel@nongnu.org; Sun, 03 Mar 2024 00:46:53 -0500
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgegc-0006Nh-5t
+ for qemu-devel@nongnu.org; Sun, 03 Mar 2024 00:46:58 -0500
+Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgegV-0003Su-S1
- for qemu-devel@nongnu.org; Sun, 03 Mar 2024 00:46:53 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgega-0003TE-IL
+ for qemu-devel@nongnu.org; Sun, 03 Mar 2024 00:46:57 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 9C81760C2B;
- Sun,  3 Mar 2024 05:46:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3989C433C7;
- Sun,  3 Mar 2024 05:46:48 +0000 (UTC)
+ by sin.source.kernel.org (Postfix) with ESMTP id CD8E5CE0174;
+ Sun,  3 Mar 2024 05:46:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 243D8C433F1;
+ Sun,  3 Mar 2024 05:46:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1709444810;
- bh=a9DjyL7Kb/8nZ96CbZM91Omz+z9llahcCJYvcimBSS4=;
+ s=k20201202; t=1709444813;
+ bh=XLfvXG7l/UK5yykmyD2ewRRa6oMf5P67/E/qzGj65rs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=uY37Sz3ZsQHeeQ/P5lRd2RbrNvNOnx/+UrBPZ1xu+qJqn2UIniBz79293DKUKQtjo
- tnx/EyJSJiP1nQbk307F7g/Q1CP9elDN5P6mgN2golRcrdKOzQ/LQqlNpYQXMdiiW8
- JSfNSrQiXkN7cwY7vmPRqTKDdxz13VF1feRCQqSwkdaDcUwk9yhfhzbuAgLh2kM3Xj
- IzKVACUOLZXY4cHUReDDOaG9HOTPWSpjvL9G5QE59uh/8pBU52ggvyqdEFwm5aT5bC
- jkXDVF0pRHzB32UDLj1QL/PbuQpE86CQcFqPTNJTAMhisYjQN96kgVyX57R8BZLaQr
- p+puwdPu6QC1w==
+ b=U4IOwRGaV60n3m//NpTjHfV3Nv2OJswySjXb25KjEs1jR6rBsxkMbZIkFnDjcOKRi
+ /J6jfqBbWg/QxdkSrxR5TtgcA4VDXtff2h2JGu9aXs+HEc6rTMRfJFTpPtxsPlf1Ln
+ +w7lGHgs/yY7GboSyEgD6h0ki+u9a4jc2x6D4tTVRrOvT0Uam2Um2soh5wkFjlyvjN
+ DAU44M9buyMRVkXygEyab4eheNkA8A3bFCSQS68VdaumPZi3R9h7SxrKywcZtrsMFo
+ Du40u6bLHi6ipkDqiZ8ih2UvF0bxv6v9YKCo9kTe6EkFhqwkyAAkM1Lv8dM+PhZcBF
+ F3C1brb+cNOqA==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Cc: deller@gmx.de, Guenter Roeck <linux@roeck-us.net>,
- Charlie Jenkins <charlie@rivosinc.com>
-Subject: [PULL 1/5] target: hppa: Fix unaligned double word accesses for hppa64
-Date: Sun,  3 Mar 2024 06:46:41 +0100
-Message-ID: <20240303054645.3004-2-deller@kernel.org>
+Cc: deller@gmx.de
+Subject: [PULL 3/5] pc-bios/meson: Add hppa-firmware64.img blob
+Date: Sun,  3 Mar 2024 06:46:43 +0100
+Message-ID: <20240303054645.3004-4-deller@kernel.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240303054645.3004-1-deller@kernel.org>
 References: <20240303054645.3004-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=deller@kernel.org; helo=dfw.source.kernel.org
+Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
+ envelope-from=deller@kernel.org; helo=sin.source.kernel.org
 X-Spam_score_int: -44
 X-Spam_score: -4.5
 X-Spam_bar: ----
@@ -70,44 +69,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Helge Deller <deller@gmx.de>
 
-Unaligned 64-bit accesses were found in Linux to clobber carry bits,
-resulting in bad results if an arithmetic operation involving a
-carry bit was executed after an unaligned 64-bit operation.
+Add the missing 64-bit hppa firmware blob so that it gets installed.
 
-hppa 2.0 defines additional carry bits in PSW register bits 32..39.
-When restoring PSW after executing an unaligned instruction trap, those
-bits were not cleared and ended up to be active all the time. Since there
-are no bits other than the upper carry bits needed in the upper 32 bit of
-env->psw and since those are stored in env->psw_cb, just clear the entire
-upper 32 bit when storing psw to solve the problem unconditionally.
-
-Fixes: 931adff31478 ("target/hppa: Update cpu_hppa_get/put_psw for hppa64")
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Cc: Charlie Jenkins <charlie@rivosinc.com>
-Cc: Helge Deller <deller@gmx.de>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 7c0dfcf9395e ("target/hppa: Update SeaBIOS-hppa to version 16")
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/helper.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ pc-bios/meson.build | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/hppa/helper.c b/target/hppa/helper.c
-index 859644c47a..9d217d051c 100644
---- a/target/hppa/helper.c
-+++ b/target/hppa/helper.c
-@@ -76,7 +76,8 @@ void cpu_hppa_put_psw(CPUHPPAState *env, target_ulong psw)
-     }
-     psw &= ~reserved;
- 
--    env->psw = psw & ~(PSW_N | PSW_V | PSW_CB);
-+    env->psw = psw & (uint32_t)~(PSW_N | PSW_V | PSW_CB);
-+
-     env->psw_n = (psw / PSW_N) & 1;
-     env->psw_v = -((psw / PSW_V) & 1);
- 
+diff --git a/pc-bios/meson.build b/pc-bios/meson.build
+index e67fa433a1..0760612bea 100644
+--- a/pc-bios/meson.build
++++ b/pc-bios/meson.build
+@@ -73,6 +73,7 @@ blobs = [
+   'qemu_vga.ndrv',
+   'edk2-licenses.txt',
+   'hppa-firmware.img',
++  'hppa-firmware64.img',
+   'opensbi-riscv32-generic-fw_dynamic.bin',
+   'opensbi-riscv64-generic-fw_dynamic.bin',
+   'npcm7xx_bootrom.bin',
 -- 
 2.44.0
 
