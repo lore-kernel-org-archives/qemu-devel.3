@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F21E1C48BF6
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 06:45:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31C60C48BF6
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 06:52:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgfa2-0005e5-NQ; Sun, 03 Mar 2024 01:44:14 -0500
+	id 1rgfhv-0008E5-3I; Sun, 03 Mar 2024 01:52:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rgfZi-0005d1-79
- for qemu-devel@nongnu.org; Sun, 03 Mar 2024 01:43:55 -0500
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rgfhk-0008Cr-JC
+ for qemu-devel@nongnu.org; Sun, 03 Mar 2024 01:52:12 -0500
 Received: from mout.gmx.net ([212.227.15.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rgfZf-0002ww-Dw
- for qemu-devel@nongnu.org; Sun, 03 Mar 2024 01:43:53 -0500
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rgfhi-0005eF-No
+ for qemu-devel@nongnu.org; Sun, 03 Mar 2024 01:52:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
- t=1709448227; x=1710053027; i=deller@gmx.de;
- bh=S3GVZYBg7lK3MSkaXg19GsNI/1CfaXmyizhHxEO8H4E=;
+ t=1709448727; x=1710053527; i=deller@gmx.de;
+ bh=ELreuQvFiullE7etmPzNrQcTKx8KpiktqaIEAtJOVmA=;
  h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
  In-Reply-To;
- b=sJbNEoVHdVNIcH9wprAigbJ/Fhz4KWMb24bWFytaFLzrZOqtDcmRRii1RQ7ERiYA
- zDOP2Pr6sxNd2YeWhE3zp0CvXrDtLxsB1Hw30VTmWkmS8YzVOB7cPV265vBdX9fhB
- FzCMghtcqDBp9DrCUcDCjt+U37fkoOZQCPGeTL8/Q7KVttibKcxY/Kkcx1iyYlpcF
- rM7LAuqnosUp28UZPpm2rwZSLMcTZBSZZpi6psCSVZd/rNoHNPkGmkBvMdVumIb43
- V/psjKw7UvvaA8B+vGElJ3/AhJaR7Ib6069Ft9H1vUqabLUjXJ45Tt/D7YbNjGqI7
- Z09ZYwmPudKwsMu1/g==
+ b=UOstU44TJ3b2SaYcX/BZMI6R0Uqw6ECz/zHVSebQF0eIkSoFavwYT/ql90JoTvL0
+ VxO1wIZ0VL32tGUgdqh39tPsXWXYdKo4eLVqlM3sQHEMfW5d/KJOzvjbDf4TwmYvY
+ krgXUObb5hpY8nmma8/W7nW4b2c11tV3RnAFvt2ltZQbTZSoE8hTcUyBfj1fVwBuT
+ Db/xbMdfKWovKqm7Bs6V+uqPMHg34Zs48/BhYGaAinNkOyA9SceKD1FNafL5q4YlF
+ J7Aj56RjVjWRIKRQV06xIeOvsbygXr/MgvpySi8qXNEBbhkMHyVYD9wVo8nTcRE3w
+ egt0CaWOaiwVZ8cR9w==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.55] ([94.134.157.166]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MyKDe-1qvY8l2rbY-00ygkv; Sun, 03
- Mar 2024 07:43:47 +0100
-Message-ID: <6f44d208-5ba1-43e4-b6de-8e48f3cc497f@gmx.de>
-Date: Sun, 3 Mar 2024 07:43:46 +0100
+Received: from [192.168.20.55] ([94.134.157.166]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MhlKs-1rBziJ07pQ-00djme; Sun, 03
+ Mar 2024 07:52:07 +0100
+Message-ID: <d71b8c47-336d-466d-bfbb-c04f955b20e7@gmx.de>
+Date: Sun, 3 Mar 2024 07:52:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] target/hppa: Fix assemble_16 insns for wide mode
+Subject: Re: [PATCH 2/3] target/hppa: Fix assemble_11a insns for wide mode
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: svens@stackframe.org
 References: <20240303021925.116609-1-richard.henderson@linaro.org>
- <20240303021925.116609-2-richard.henderson@linaro.org>
+ <20240303021925.116609-3-richard.henderson@linaro.org>
 From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
  xsFNBF3Ia3MBEAD3nmWzMgQByYAWnb9cNqspnkb2GLVKzhoH2QD4eRpyDLA/3smlClbeKkWT
@@ -87,26 +87,26 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20240303021925.116609-2-richard.henderson@linaro.org>
+In-Reply-To: <20240303021925.116609-3-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:jcvTgNW9Pa/+EKTHbpzdKag441EPuin1rWvYR4xqLcPMe3e7INq
- EWOx/PjBjHXm0PMy0HoEQzJd9M4+inVvKJ1r7bXpmrU5CyUZZZvqG+0ewI6I+iP1ZQXClo7
- /yiySiFAUbnhU3ZdRI7egeG26dF/Y5gyY1465aAS6iICWUC28l2PZRdlyVhWb8znwieFswP
- GcfZzqNIxkB6wRZPPhtyQ==
-UI-OutboundReport: notjunk:1;M01:P0:z8TlUZJKVK4=;EfatWoVvdYlrwTHSzTlgfJcEOmi
- CCMBXlirL0HzfVol2XNk/azQwHOCxjXz4I8TjCt03usBcvmQvNlrX9jTDrwQDb22wv8YBebi2
- cdQp9b+iBl2eHnpTxdaN3MUgp5uzLKEq4ZRtzhOXlD+kARlLqlePvPo7z51/U+9MSZPKLqulv
- NyHSwU4Z/sowyRpE/lshpemmxlWm5iT9f1pSGEEEJi9uOtJ7nX+ShGzRjLTXbda7EaSacYNSG
- E74f6Y/5SgwCjDy/L9uQNn5P6bLK1MDrW1DgQQCT/Jf18jfDi2UyoGtvG+ov73aSt2s8cmqH7
- FrBptymykXJA6TF24wLg5Bp1krgBOhJeSg9Y8AAxPP2Q+f9hKG8uNvjv5vBJwUb/lC8+V28WF
- ZvvRkug4B3876IfmLrRpGugZZ9uwXM4eECeOcRwUB/b53g9M+xF6W5v5dIuMi0LDMcTEsWw/o
- DJrhrHKzq5b2KWLpE7TkYxNJAxoGKTVzQmbVfsyJxQzXwg3Tzfc6nLEQCwXBT28AGF8dnsvJd
- eKwil78tg9B4SEeKk6G57ns0h6trGZ3vqImwlzQ9n6cz8h596m9Sx35vJ41OHEBGFfo5VKOU7
- H2UYDoP0F2gUjQEiyf1rjX7TtYqmbOW76urrIfzpIWUIm8zMxhWSYP50Y+5gumpeordG8XGYE
- 75SM7oUHfRQN4Ctyv19DlOSnmmLBFglaLvmpGgFiw7DrJCD7Sn7JLQZKRHReW0gU7OWagG2AA
- 1mgx0VTw5Q72MciQWOWNfhs0IhzeZbrwqFr5ycYE+5hF1w/Kl4HCOIK/UQn/3hne0dUsqx+t9
- menJ6M8pZQF5ltz+1OnCZzLrrWPuGLSS5T6TBqkCBp/AQ=
+X-Provags-ID: V03:K1:H7wmmdbniTQXWnNPLD4CWiIC1qCCEB8YW6VqOJGklmzfyHB3aMV
+ otBzs3uizsULn7iEuVxS2azzJweodRLD1uzmvaib8RI1ceYfLdd820tDm6Jh5NmTlFAFrZg
+ NxW723nVwhr740b1hTtYv0mLhS7GIg0TaUvjsuj8dDzV/InyjsV0EwBd2eZohoa5k36cz4G
+ BkFs/QePleyMOq5Fi++sQ==
+UI-OutboundReport: notjunk:1;M01:P0:5QGKZQi234Y=;DA1P0Tt+BD7mErGJf/FfyNXG0VW
+ OTuNB/20qZcQXgJHPidMeEKWHP1m3ZrXrvAnZNk8uVlCBt9UoBXq1Er7U9sX8sTyDA/dcxsIR
+ WYMYUiahtyDiXcVwfYL+fzCUntzoNiuPjL+5swpJNmehMX9YgzjCVyX4eGdICoeTxnrxtP5aH
+ tXtCoKx2WbHH86T2ndsVStXMESIgmI+ZPDCzGXv0nqK9HAdHgAykWfbJlap8gz55DT25Myqn5
+ rpq1wBPvLf4qSqbVKJBbW03AmRDyNPpupRd6O1+QCAe4X1ih1HjGqTqdnkAXEU65CDH6WwZM7
+ srDFAliFL4pnMmc8Io5BxWMmKZyYZjxojeZS31hADk92WEaKR8Csfy9C0pOUO/NAwM99BRnGL
+ 98trxKXm7/7G72rQ6SkOPum0xoTZdhedLoztDJYDBOGaAeehltbLFmJ15u8x+Bwz7IY8dDtHO
+ 24VaI3Ojih3uq6FWWlNTcQIAVCJ+IRV5C/ExB7G5iDxh15WAN0++8GK2XOqtR9nRIxnFLXnu9
+ I39e0/V/PemxJMt/KtCnetf4goM2YoKCvlPoirBCnkhyjfP9ANPEdU2k51pxyvARslot9Dv2H
+ bh3+5hzg8n5Hp4FRvFblJuHCV+DdDK90MI5vWn8TJHMD/CXAimP/XQIyo4xrP6yPES+YH6quQ
+ hc5nzqT6WZoo/N74PN7Wd49ZLHZrsia6vI32bS18Sq87kO5Bw9NNl9VTepJtAcJQEzC5P3NIk
+ GXfuKZDnOMnKDBuMACE9mGMhaM1EyQIiBdpGq+838+MtCrapo+BJYB25l59w75Ks0rfMJtLOJ
+ QgnfCCVLeD5bQvoDF/Bqw9zcHNABi6bsMiHm1DG52bT6E=
 Received-SPF: pass client-ip=212.227.15.18; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -27
@@ -136,100 +136,84 @@ On 3/3/24 03:19, Richard Henderson wrote:
 > Reported-by: Sven Schnelle <svens@stackframe.org>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/hppa/insns.decode | 15 +++++++++------
->   target/hppa/translate.c  | 21 +++++++++++++++++++++
->   2 files changed, 30 insertions(+), 6 deletions(-)
+>   target/hppa/insns.decode |  7 ++++---
+>   target/hppa/translate.c  | 23 +++++++++++++++++------
+>   2 files changed, 21 insertions(+), 9 deletions(-)
 >
 > diff --git a/target/hppa/insns.decode b/target/hppa/insns.decode
-> index f5a3f02fd1..0d9f8159ec 100644
+> index 0d9f8159ec..9c6f92444c 100644
 > --- a/target/hppa/insns.decode
 > +++ b/target/hppa/insns.decode
-> @@ -27,13 +27,14 @@
->   %assemble_11a   0:s1 4:10            !function=3Dexpand_shl3
+> @@ -24,7 +24,7 @@
+>   %assemble_sr3   13:1 14:2
+>   %assemble_sr3x  13:1 14:2 !function=3Dexpand_sr3x
+>
+> -%assemble_11a   0:s1 4:10            !function=3Dexpand_shl3
+> +%assemble_11a   4:12 0:1             !function=3Dexpand_11a
 >   %assemble_12    0:s1 2:1 3:10        !function=3Dexpand_shl2
 >   %assemble_12a   0:s1 3:11            !function=3Dexpand_shl2
-> +%assemble_16    0:16                 !function=3Dexpand_16
->   %assemble_17    0:s1 16:5 2:1 3:10   !function=3Dexpand_shl2
->   %assemble_22    0:s1 16:10 2:1 3:10  !function=3Dexpand_shl2
-> +%assemble_sp    14:2                 !function=3Dsp0_if_wide
+>   %assemble_16    0:16                 !function=3Dexpand_16
+> @@ -305,8 +305,9 @@ fstd            001011 ..... ..... .. . 1 -- 100 0 .=
+ .....      @fldstdi
+>   # Offset Mem
+>   ####
 >
->   %assemble_21    0:s1 1:11 14:2 16:5 12:2  !function=3Dexpand_shl11
->
->   %lowsign_11     0:s1 1:10
-> -%lowsign_14     0:s1 1:13
->
->   %sm_imm         16:10 !function=3Dexpand_sm_imm
->
-> @@ -221,7 +222,7 @@ sub_b_tsv       000010 ..... ..... .... 110100 . ...=
-..  @rrr_cf_d
->
->   ldil            001000 t:5 .....................        i=3D%assemble_=
-21
->   addil           001010 r:5 .....................        i=3D%assemble_=
-21
-> -ldo             001101 b:5 t:5 -- ..............        i=3D%lowsign_14
-> +ldo             001101 b:5 t:5  ................        i=3D%assemble_1=
-6
->
->   addi            101101 ..... ..... .... 0 ...........   @rri_cf
->   addi_tsv        101101 ..... ..... .... 1 ...........   @rri_cf
-> @@ -306,10 +307,12 @@ fstd            001011 ..... ..... .. . 1 -- 100 0=
- . .....      @fldstdi
->
->   @ldstim11       ...... b:5 t:5 sp:2 ..............      \
->                   &ldst disp=3D%assemble_11a m=3D%ma2_to_m x=3D0 scale=
-=3D0 size=3D3
-> -@ldstim14       ...... b:5 t:5 sp:2 ..............      \
-> -                &ldst disp=3D%lowsign_14 x=3D0 scale=3D0 m=3D0
-> -@ldstim14m      ...... b:5 t:5 sp:2 ..............      \
-> -                &ldst disp=3D%lowsign_14 x=3D0 scale=3D0 m=3D%neg_to_m
-> +@ldstim14       ...... b:5 t:5 ................          \
-> +                &ldst sp=3D%assemble_sp disp=3D%assemble_16  \
-> +                x=3D0 scale=3D0 m=3D0
-> +@ldstim14m      ...... b:5 t:5 ................          \
-> +                &ldst sp=3D%assemble_sp disp=3D%assemble_16  \
-> +                x=3D0 scale=3D0 m=3D%neg_to_m
->   @ldstim12m      ...... b:5 t:5 sp:2 ..............      \
->                   &ldst disp=3D%assemble_12a x=3D0 scale=3D0 m=3D%pos_to=
-_m
->
+> -@ldstim11       ...... b:5 t:5 sp:2 ..............      \
+> -                &ldst disp=3D%assemble_11a m=3D%ma2_to_m x=3D0 scale=3D=
+0 size=3D3
+> +@ldstim11       ...... b:5 t:5 ................          \
+> +                &ldst sp=3D%assemble_sp disp=3D%assemble_11a \
+> +                m=3D%ma2_to_m x=3D0 scale=3D0 size=3D3
+>   @ldstim14       ...... b:5 t:5 ................          \
+>                   &ldst sp=3D%assemble_sp disp=3D%assemble_16  \
+>                   x=3D0 scale=3D0 m=3D0
 > diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-> index 01f3188656..585d836959 100644
+> index 585d836959..6dcc74e681 100644
 > --- a/target/hppa/translate.c
 > +++ b/target/hppa/translate.c
-> @@ -144,6 +144,27 @@ static int assemble_6(DisasContext *ctx, int val)
+> @@ -121,12 +121,6 @@ static int expand_shl2(DisasContext *ctx, int val)
+>       return val << 2;
+>   }
+>
+> -/* Used for fp memory ops.  */
+> -static int expand_shl3(DisasContext *ctx, int val)
+> -{
+> -    return val << 3;
+> -}
+> -
+>   /* Used for assemble_21.  */
+>   static int expand_shl11(DisasContext *ctx, int val)
+>   {
+> @@ -144,6 +138,23 @@ static int assemble_6(DisasContext *ctx, int val)
 >       return (val ^ 31) + 1;
 >   }
 >
-> +/* Expander for assemble_16(s,im14). */
-> +static int expand_16(DisasContext *ctx, int val)
+> +/* Expander for assemble_16a(s,cat(im10a,0),i). */
+
+Typo above, should be assemble_11a().
+
+Otherwise:
+Tested-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Helge Deller <deller@gmx.de>
+
+> +static int expand_11a(DisasContext *ctx, int val)
 > +{
 > +    /*
-> +     * @val is bits [0:15], containing both im14 and s.
+> +     * @val is bit 0 and bits [4:15].
 > +     * Swizzle thing around depending on PSW.W.
 > +     */
-> +    int i =3D (-(val & 1) << 13) | extract32(val, 1, 13);
+> +    int im10a =3D extract32(val, 1, 10);
+> +    int sp =3D extract32(val, 11, 2);
+> +    int i =3D (-(val & 1) << 13) | (im10a << 3);
 > +
 > +    if (ctx->tb_flags & PSW_W) {
-> +        i ^=3D val & (3 << 13);
-
-Patch boots when I change to:
-+        i ^=3D ((val >> 14) & 3) << 13;
-
-Helge
-
+> +        i ^=3D sp << 13;
 > +    }
 > +    return i;
 > +}
 > +
-> +/* The sp field is only present with !PSW_W. */
-> +static int sp0_if_wide(DisasContext *ctx, int sp)
-> +{
-> +    return ctx->tb_flags & PSW_W ? 0 : sp;
-> +}
-> +
->   /* Translate CMPI doubleword conditions to standard. */
->   static int cmpbid_c(DisasContext *ctx, int val)
+>   /* Expander for assemble_16(s,im14). */
+>   static int expand_16(DisasContext *ctx, int val)
 >   {
 
 
