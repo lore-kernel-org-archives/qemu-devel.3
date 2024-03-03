@@ -4,50 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 642B7C54E49
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 05:47:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C35D9C54E49
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 05:48:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgegq-0006Pv-Ct; Sun, 03 Mar 2024 00:47:12 -0500
+	id 1rgegf-0006OH-LO; Sun, 03 Mar 2024 00:47:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgegh-0006Ob-JV
- for qemu-devel@nongnu.org; Sun, 03 Mar 2024 00:47:03 -0500
-Received: from sin.source.kernel.org ([145.40.73.55])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgegb-0006NZ-D4
+ for qemu-devel@nongnu.org; Sun, 03 Mar 2024 00:46:57 -0500
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgegd-0003TU-NY
- for qemu-devel@nongnu.org; Sun, 03 Mar 2024 00:47:02 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgegZ-0003TG-Or
+ for qemu-devel@nongnu.org; Sun, 03 Mar 2024 00:46:57 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id CCCD8CE0BA6;
- Sun,  3 Mar 2024 05:46:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F195CC433F1;
+ by dfw.source.kernel.org (Postfix) with ESMTP id D186560D30;
  Sun,  3 Mar 2024 05:46:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ACCBC43390;
+ Sun,  3 Mar 2024 05:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1709444816;
- bh=z/QJxjIL3f5HKAc3bOq4+8/xgcWjlF0EBM91SM1pGdo=;
+ s=k20201202; t=1709444814;
+ bh=8SYw1jn1vfJ84+dFSZug51KEovglt1a3pWdQ04RPSG8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=fHcIZd1ZjfT2ptFTSal7OTy7YyfYlRqeYDwLAnyZeEEwlY4RBYysnJGRsveKbgC5B
- LRZ9GooCoCXzC+Od0sDZMG8G//MHImPOJmqF2I9qlLaENZMR8OZ2tYs/ULs2eJx18Y
- ZDgxujIpjQcqk9O+C+pH1S0ugiFRkmf3WIVn+HElzEQQZ47ju10Y4d5uB6s8ru74ti
- cCoPu8rJ+v2KPqeyyRqcPB5mmCAZJRm6aO92TzRx6fVKVvo1VytCw+M4TOrE/ssdTr
- K23goQ9FPxRzyppv1U1EAqhar8JJwRFhuxPzZ1cStBbmpouPh0ZiHjXC7jjZVCvXNZ
- lq2TFuvfIBCuw==
+ b=MeAgrqSixaU2qs8KUDhbOM10Gals7fS+SoZgK+IQNn8hT01zYQOcCpDXI6KlbIfvF
+ qgAHlG9r4+bwVZcW76gjhFZIU4XvePfpOStyeyB1gFlnIU/OBWOWY4RjdpMF6G+JIx
+ ZXLPyNC0Ni5AsgLmSk531rlF7XuSPNhl97re/eH1LQOvirSh9GQMtfv4Jp1ARZhWkL
+ 4hE/PWaY1gfl+tia3CdgWGNFcYW+wbX27pWque2GHLaxgEYQYc7giY6svIhZqhsVKE
+ F2pxHQT3HXbyyxY9e7eRbLMNXtIn7ZxNcSNqC1ioDoR4+H/8jBerCL+hjJwmbhn06Q
+ nDZ9kf/3FrNqw==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Cc: deller@gmx.de,
-	Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 5/5] roms/hppa: Add build rules for hppa-firmware
-Date: Sun,  3 Mar 2024 06:46:45 +0100
-Message-ID: <20240303054645.3004-6-deller@kernel.org>
+Cc: deller@gmx.de
+Subject: [PULL 4/5] pc-bios/README: Add information about hppa-firmware
+Date: Sun,  3 Mar 2024 06:46:44 +0100
+Message-ID: <20240303054645.3004-5-deller@kernel.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240303054645.3004-1-deller@kernel.org>
 References: <20240303054645.3004-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.40.73.55; envelope-from=deller@kernel.org;
- helo=sin.source.kernel.org
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=deller@kernel.org; helo=dfw.source.kernel.org
 X-Spam_score_int: -44
 X-Spam_score: -4.5
 X-Spam_bar: ----
@@ -73,41 +72,25 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: Helge Deller <deller@gmx.de>
 
 Signed-off-by: Helge Deller <deller@gmx.de>
-Suggested-by: Michael Tokarev <mjt@tls.msk.ru>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- roms/Makefile | 7 +++++++
- 1 file changed, 7 insertions(+)
+ pc-bios/README | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/roms/Makefile b/roms/Makefile
-index 67f709ba2d..8e5d8d26a9 100644
---- a/roms/Makefile
-+++ b/roms/Makefile
-@@ -68,6 +68,7 @@ default help:
- 	@echo "  opensbi32-generic  -- update OpenSBI for 32-bit generic machine"
- 	@echo "  opensbi64-generic  -- update OpenSBI for 64-bit generic machine"
- 	@echo "  qboot              -- update qboot"
-+	@echo "  hppa-firmware      -- update 32- and 64-bit hppa firmware"
- 	@echo "  clean              -- delete the files generated by the previous" \
- 	                              "build targets"
- 
-@@ -177,6 +178,11 @@ npcm7xx_bootrom:
- 	$(MAKE) -C vbootrom CROSS_COMPILE=$(arm_cross_prefix)
- 	cp vbootrom/npcm7xx_bootrom.bin ../pc-bios/npcm7xx_bootrom.bin
- 
-+hppa-firmware:
-+	$(MAKE) -C seabios-hppa parisc
-+	cp seabios-hppa/out/hppa-firmware.img      ../pc-bios/
-+	cp seabios-hppa/out-64/hppa-firmware64.img ../pc-bios/
+diff --git a/pc-bios/README b/pc-bios/README
+index b8a0210d24..7ffb2f43a4 100644
+--- a/pc-bios/README
++++ b/pc-bios/README
+@@ -75,3 +75,9 @@
+   initialize and run boot images stored in SPI flash, but may grow more
+   features over time as needed. The source code is available at:
+   https://github.com/google/vbootrom
 +
- clean:
- 	rm -rf seabios/.config seabios/out seabios/builds
- 	$(MAKE) -C ipxe/src veryclean
-@@ -189,3 +195,4 @@ clean:
- 	$(MAKE) -C opensbi clean
- 	$(MAKE) -C qboot clean
- 	$(MAKE) -C vbootrom clean
-+	$(MAKE) -C seabios-hppa clean
++- hppa-firmware.img (32-bit) and hppa-firmware64.img (64-bit) are firmware
++  files for the HP-PARISC (hppa) architecture.
++  They are built form the SeaBIOS-hppa sources, which is a fork of SeaBIOS
++  adapted for hppa.
++  SeaBIOS-hppa is available at https://github.com/hdeller/seabios-hppa
 -- 
 2.44.0
 
