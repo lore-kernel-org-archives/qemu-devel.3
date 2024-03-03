@@ -4,48 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83178C48BF6
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 05:47:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 642B7C54E49
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 05:47:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgegY-0006My-Lo; Sun, 03 Mar 2024 00:46:54 -0500
+	id 1rgegq-0006Pv-Ct; Sun, 03 Mar 2024 00:47:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgegW-0006MY-A3
- for qemu-devel@nongnu.org; Sun, 03 Mar 2024 00:46:52 -0500
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgegh-0006Ob-JV
+ for qemu-devel@nongnu.org; Sun, 03 Mar 2024 00:47:03 -0500
+Received: from sin.source.kernel.org ([145.40.73.55])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgegU-0003Sq-Kd
- for qemu-devel@nongnu.org; Sun, 03 Mar 2024 00:46:52 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1rgegd-0003TU-NY
+ for qemu-devel@nongnu.org; Sun, 03 Mar 2024 00:47:02 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id D4597601BC;
- Sun,  3 Mar 2024 05:46:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94BDFC433C7;
- Sun,  3 Mar 2024 05:46:47 +0000 (UTC)
+ by sin.source.kernel.org (Postfix) with ESMTP id CCCD8CE0BA6;
+ Sun,  3 Mar 2024 05:46:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F195CC433F1;
+ Sun,  3 Mar 2024 05:46:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1709444808;
- bh=mLYFY4A7BeiD5YOQKXZ5xrcH5Y1m2DlFCP6A02xNApc=;
- h=From:To:Cc:Subject:Date:From;
- b=oRHNWeKQMbJ4RVI8HpNlxDsesxTFSJwbx4EYGJR/VPD67FfsXy8Pk66l3bhxyjhNN
- GdV8+v1eBbB6M4NzoOhD6o8fL8nTRV16zlD29dtKgMl/SGBl9JWMnifO1QL2sbIiv7
- e4Cb0Zls69A32yL3mOJQqwr2EsyNayXmZoH+BIlAvt1deV18Cgc8tdmENoX/i7XDfu
- 8D/Gvkh0CTFfo8QsYxa8/D56IHwFnueompZ3up4acSNTdNkrecX0fxLD6+GP4nXFDr
- kQRaIU1Eq83qk0iJQ5FDbH1R2uMYx1qdpUtnAv/JNq0D2B3+3bkFrP0Lv6j7+NRmUD
- 3virB7JqUocMg==
+ s=k20201202; t=1709444816;
+ bh=z/QJxjIL3f5HKAc3bOq4+8/xgcWjlF0EBM91SM1pGdo=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=fHcIZd1ZjfT2ptFTSal7OTy7YyfYlRqeYDwLAnyZeEEwlY4RBYysnJGRsveKbgC5B
+ LRZ9GooCoCXzC+Od0sDZMG8G//MHImPOJmqF2I9qlLaENZMR8OZ2tYs/ULs2eJx18Y
+ ZDgxujIpjQcqk9O+C+pH1S0ugiFRkmf3WIVn+HElzEQQZ47ju10Y4d5uB6s8ru74ti
+ cCoPu8rJ+v2KPqeyyRqcPB5mmCAZJRm6aO92TzRx6fVKVvo1VytCw+M4TOrE/ssdTr
+ K23goQ9FPxRzyppv1U1EAqhar8JJwRFhuxPzZ1cStBbmpouPh0ZiHjXC7jjZVCvXNZ
+ lq2TFuvfIBCuw==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Cc: deller@gmx.de
-Subject: [PULL 0/5] Hppa latest patches
-Date: Sun,  3 Mar 2024 06:46:40 +0100
-Message-ID: <20240303054645.3004-1-deller@kernel.org>
+Cc: deller@gmx.de,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 5/5] roms/hppa: Add build rules for hppa-firmware
+Date: Sun,  3 Mar 2024 06:46:45 +0100
+Message-ID: <20240303054645.3004-6-deller@kernel.org>
 X-Mailer: git-send-email 2.44.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20240303054645.3004-1-deller@kernel.org>
+References: <20240303054645.3004-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=deller@kernel.org; helo=dfw.source.kernel.org
+Received-SPF: pass client-ip=145.40.73.55; envelope-from=deller@kernel.org;
+ helo=sin.source.kernel.org
 X-Spam_score_int: -44
 X-Spam_score: -4.5
 X-Spam_bar: ----
@@ -70,41 +72,42 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-The following changes since commit e1007b6bab5cf97705bf4f2aaec1f607787355b8:
+Signed-off-by: Helge Deller <deller@gmx.de>
+Suggested-by: Michael Tokarev <mjt@tls.msk.ru>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ roms/Makefile | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-  Merge tag 'pull-request-2024-03-01' of https://gitlab.com/thuth/qemu into staging (2024-03-01 10:14:32 +0000)
-
-are available in the Git repository at:
-
-  https://github.com/hdeller/qemu-hppa.git tags/hppa-latest-pull-request
-
-for you to fetch changes up to 839a88e8bd1a1efe05844c39a59985482894f4de:
-
-  roms/hppa: Add build rules for hppa-firmware (2024-03-03 06:41:19 +0100)
-
-----------------------------------------------------------------
-HPPA64 updates
-
-----------------------------------------------------------------
-
-Guenter Roeck (1):
-  target: hppa: Fix unaligned double word accesses for hppa64
-
-Helge Deller (4):
-  target/hppa: Restore unwind_breg before calculating ior
-  pc-bios/meson: Add hppa-firmware64.img blob
-  pc-bios/README: Add information about hppa-firmware
-  roms/hppa: Add build rules for hppa-firmware
-
- pc-bios/README           | 6 ++++++
- pc-bios/meson.build      | 1 +
- roms/Makefile            | 7 +++++++
- target/hppa/cpu.c        | 3 ++-
- target/hppa/helper.c     | 3 ++-
- target/hppa/mem_helper.c | 3 ++-
- target/hppa/op_helper.c  | 3 ++-
- 7 files changed, 22 insertions(+), 4 deletions(-)
-
+diff --git a/roms/Makefile b/roms/Makefile
+index 67f709ba2d..8e5d8d26a9 100644
+--- a/roms/Makefile
++++ b/roms/Makefile
+@@ -68,6 +68,7 @@ default help:
+ 	@echo "  opensbi32-generic  -- update OpenSBI for 32-bit generic machine"
+ 	@echo "  opensbi64-generic  -- update OpenSBI for 64-bit generic machine"
+ 	@echo "  qboot              -- update qboot"
++	@echo "  hppa-firmware      -- update 32- and 64-bit hppa firmware"
+ 	@echo "  clean              -- delete the files generated by the previous" \
+ 	                              "build targets"
+ 
+@@ -177,6 +178,11 @@ npcm7xx_bootrom:
+ 	$(MAKE) -C vbootrom CROSS_COMPILE=$(arm_cross_prefix)
+ 	cp vbootrom/npcm7xx_bootrom.bin ../pc-bios/npcm7xx_bootrom.bin
+ 
++hppa-firmware:
++	$(MAKE) -C seabios-hppa parisc
++	cp seabios-hppa/out/hppa-firmware.img      ../pc-bios/
++	cp seabios-hppa/out-64/hppa-firmware64.img ../pc-bios/
++
+ clean:
+ 	rm -rf seabios/.config seabios/out seabios/builds
+ 	$(MAKE) -C ipxe/src veryclean
+@@ -189,3 +195,4 @@ clean:
+ 	$(MAKE) -C opensbi clean
+ 	$(MAKE) -C qboot clean
+ 	$(MAKE) -C vbootrom clean
++	$(MAKE) -C seabios-hppa clean
 -- 
 2.44.0
 
