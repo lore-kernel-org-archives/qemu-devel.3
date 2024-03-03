@@ -4,40 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BA85C54E49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E55C7C54E4A
 	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 07:42:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rggS0-0001rS-08; Sun, 03 Mar 2024 02:40:00 -0500
+	id 1rggRr-0001jw-7y; Sun, 03 Mar 2024 02:39:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rggRy-0001qb-7H; Sun, 03 Mar 2024 02:39:58 -0500
+ id 1rggRo-0001jE-UV; Sun, 03 Mar 2024 02:39:48 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rggRw-0001lf-IF; Sun, 03 Mar 2024 02:39:57 -0500
+ id 1rggRn-0001ja-DK; Sun, 03 Mar 2024 02:39:48 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5678A5275A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 01EC552755;
  Sun,  3 Mar 2024 10:40:18 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 02EB68E84F;
- Sun,  3 Mar 2024 10:39:35 +0300 (MSK)
-Received: (nullmailer pid 1350616 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 9F6D58E84A;
+ Sun,  3 Mar 2024 10:39:34 +0300 (MSK)
+Received: (nullmailer pid 1350601 invoked by uid 1000);
  Sun, 03 Mar 2024 07:39:34 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.10 53/54] tests/unit/test-blockjob: Disable
- complete_in_standby test
-Date: Sun,  3 Mar 2024 10:39:32 +0300
-Message-Id: <20240303073934.1350568-6-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.10 48/54] gitlab: force allow use of pip in Cirrus jobs
+Date: Sun,  3 Mar 2024 10:39:27 +0300
+Message-Id: <20240303073934.1350568-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.10-20240303092734@cover.tls.msk.ru>
 References: <qemu-stable-7.2.10-20240303092734@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,61 +65,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-The blockjob/complete_in_standby test is flaky and fails
-intermittently in CI:
+Python is transitioning to a world where you're not allowed to use 'pip
+install' outside of a virutal env by default. The rationale is to stop
+use of pip clashing with distro provided python packages, which creates
+a major headache on distro upgrades.
 
-172/621 qemu:unit / test-blockjob
-           ERROR           0.26s   killed by signal 6 SIGABRT
-11:03:46 MALLOC_PERTURB_=176
-G_TEST_SRCDIR=/Users/pm215/src/qemu-for-merges/tests/unit
-G_TEST_BUILDDIR=/Users/pm215/src/qemu-for-merges/build/all/tests/unit
-/Users/pm215/src/qemu-for-merges/build/all/tests/unit/test-blockjob
---tap -k
------------------------------------ output -----------------------------------
-stdout:
-# random seed: R02S8c79d6e1c01ce0b25475b2210a253242
-1..9
-# Start of blockjob tests
-ok 1 /blockjob/ids
-stderr:
-Assertion failed: (job->status == JOB_STATUS_STANDBY), function
-test_complete_in_standby, file ../../tests/unit/test-blockjob.c, line
-499.
+All our CI environments, however, are 100% disposable so the upgrade
+headaches don't exist. Thus we can undo the python defaults to allow
+pip to work.
 
-Seen on macOS/x86_64, FreeBSD 13/x86_64, msys2-64bit, eg:
-
-https://gitlab.com/qemu-project/qemu/-/jobs/3872508803
-https://gitlab.com/qemu-project/qemu/-/jobs/3950667240
-
-Disable this subtest until somebody has time to investigate.
-
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Thomas Huth <thuth@redhat.com>
+Message-id: 20240222114038.2348718-1-berrange@redhat.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-Id: <20230317143534.1481947-1-peter.maydell@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit b6903cbe3a2e3feb7204636209b5607e70fee998)
+(cherry picked from commit a8bf9de2f4f398315ac5340e4b88c478d5457731)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/unit/test-blockjob.c b/tests/unit/test-blockjob.c
-index c0426bd10c..a130f6fefb 100644
---- a/tests/unit/test-blockjob.c
-+++ b/tests/unit/test-blockjob.c
-@@ -531,6 +531,13 @@ int main(int argc, char **argv)
-     g_test_add_func("/blockjob/cancel/standby", test_cancel_standby);
-     g_test_add_func("/blockjob/cancel/pending", test_cancel_pending);
-     g_test_add_func("/blockjob/cancel/concluded", test_cancel_concluded);
--    g_test_add_func("/blockjob/complete_in_standby", test_complete_in_standby);
-+
-+    /*
-+     * This test is flaky and sometimes fails in CI and otherwise:
-+     * don't run unless user opts in via environment variable.
-+     */
-+    if (getenv("QEMU_TEST_FLAKY_TESTS")) {
-+        g_test_add_func("/blockjob/complete_in_standby", test_complete_in_standby);
-+    }
-     return g_test_run();
- }
+diff --git a/.gitlab-ci.d/cirrus/build.yml b/.gitlab-ci.d/cirrus/build.yml
+index 7ef6af8d33..d8cf08dc14 100644
+--- a/.gitlab-ci.d/cirrus/build.yml
++++ b/.gitlab-ci.d/cirrus/build.yml
+@@ -19,7 +19,7 @@ build_task:
+   install_script:
+     - @UPDATE_COMMAND@
+     - @INSTALL_COMMAND@ @PKGS@
+-    - if test -n "@PYPI_PKGS@" ; then @PIP3@ install @PYPI_PKGS@ ; fi
++    - if test -n "@PYPI_PKGS@" ; then PYLIB=$(@PYTHON@ -c 'import sysconfig; print(sysconfig.get_path("stdlib"))'); rm -f $PYLIB/EXTERNALLY-MANAGED; @PIP3@ install @PYPI_PKGS@ ; fi
+   clone_script:
+     - git clone --depth 100 "$CI_REPOSITORY_URL" .
+     - git fetch origin "$CI_COMMIT_REF_NAME"
 -- 
 2.39.2
 
