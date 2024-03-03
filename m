@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93F2BC54798
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 02:28:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E624C54798
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 02:29:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgba9-0006fF-GJ; Sat, 02 Mar 2024 21:28:05 -0500
+	id 1rgbbP-0007Kj-Qz; Sat, 02 Mar 2024 21:29:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgba7-0006f4-KP
- for qemu-devel@nongnu.org; Sat, 02 Mar 2024 21:28:03 -0500
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1rgbbO-0007KV-C9
+ for qemu-devel@nongnu.org; Sat, 02 Mar 2024 21:29:22 -0500
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgba6-0006Bp-3B
- for qemu-devel@nongnu.org; Sat, 02 Mar 2024 21:28:03 -0500
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-5d8b70b39efso3177988a12.0
- for <qemu-devel@nongnu.org>; Sat, 02 Mar 2024 18:28:01 -0800 (PST)
+ id 1rgbbM-0006JI-VJ
+ for qemu-devel@nongnu.org; Sat, 02 Mar 2024 21:29:22 -0500
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-5d8b519e438so3143952a12.1
+ for <qemu-devel@nongnu.org>; Sat, 02 Mar 2024 18:29:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709432880; x=1710037680; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709432959; x=1710037759; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=9XXD+enmUEVU2SApJ7cc9SX31pWsl46RlsYAeVBo44Y=;
- b=GAOu9A+0in2/helgrcrROn3wkYXQWasb1KehkFm9smXuUOY4p4E6rMM5T5zPKFe3dx
- llt2HJyU4XtvrXebI4P3wnxmex1Ef96olzqtCsgUsr+JQu5HBjXKRnJd3qzp8p+KCHhN
- N5KqROnIXtoXgeS+tWwRlBuGmkMfUeSQQnHV1tpoAXP/7JdjQPT85Q+VqM/FE+PCJI5f
- 5JDXdOPEtrQPdWhD6gK/bE5pt+m00MTHL3VuGdQmnXOdLL6srQ75oxss5xa8iWjNBGF/
- F02XERdeSVCLpqoLNrhYFvrsQgXfzSOZmJa7xNLDWWJ/+yKB0cV9E7H9ValJQwtf8JJa
- H/hQ==
+ bh=5iNwwu+6qERU4ouf23SWkEZYQ65ITY6Hv/0w7ULcI8Y=;
+ b=pV76Ey/iGSDr4t+HDAWqiKoapIaH/OJj7VaBNQ8oYgidGhrL0FwIhj0C0T3G1baVg3
+ mIRPLObX4VHkxQddulYmEwto3oGkCtNHxOIZ6z3CW2xjJ5r0yhYigRILgP+EILGB2pMa
+ 3O+ETy6rQIRdjiXdEIQiw21nPJT09DWskznqr4km/UY5ACCJr254VlNzGlYrR28E5iR/
+ RYr7pCMq/qhqfRiV3oOtsiQL9Y7x5UAbJ3N9Q2y2aSXAVse+b0gnCZ8HL+A0H4ltAvxq
+ OBu7gIVetK1KG6520ydPIw8Y6Wy4w4OjdPajKwBFEisTyCvE4lLmvRQOke9JaBI2rcyb
+ TwEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709432880; x=1710037680;
+ d=1e100.net; s=20230601; t=1709432959; x=1710037759;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9XXD+enmUEVU2SApJ7cc9SX31pWsl46RlsYAeVBo44Y=;
- b=BHbv6TD0HLIbBx5jVXzQf8eV2l3ETjwbRk11FYg7e/tasSHWE6XFOL9/5AG3YrtzYQ
- xErRTWih0I9GHw4B62tmCRFcB/p44FI67u1+HeO/h20gq7/9pPStpAVTS6EaJTX7+Hl7
- Lz4Y2HEybcKUw7eeE/fdszp3R1EDX0qVx5ZKPdQbrUaLNaQ7zGa1G/9zHnxuIN4bpmB2
- DBqL2EvCi2ytJD16kIknLd9GWib3zeqm78IAFaFIDzbrP4geTzPn6LSsJBxlHNqakKq7
- usGNz7AAS2VXK9EyudGP9lslsJVALuichDKMNp4JLgH5THUwok+BDQYql/NyZjRqlbpc
- 6ArA==
+ bh=5iNwwu+6qERU4ouf23SWkEZYQ65ITY6Hv/0w7ULcI8Y=;
+ b=hVYOSSsxEIX3rt4T5in/dxoXJ9ZgjOUe7f/GPPwFIAAYhCUiOdjh6oKG/Hw6Mie5Bf
+ M99rV/6S7uEtRoLcf9Fh1e+cgjH85OAJLumTDqKhzLQ71BOnWvi98VfsRu+EZ8MQ+UCD
+ qTD8EmqhESHhR/6wc5FzBmnymsKEZMfy1RCabRPqYgXC3+N5dbqZc84sYCRItbE//kkd
+ 4e7Zjl1K6Ky+K1DOhQRKvm/ybzgNqhFhZRTaKGYPFr81hfiYTx7PV7K/s5BB5Jk4AUWO
+ EGSdawQYYTzhr4ZjVXY2fntFzDw7A6nTakUgmBq+vsl+6udtKTx1Gsk233uWTrpOt2NU
+ oSeQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUsroHger2yfzRo/+GXTHkiEfQNrPHSJqAlpPTLgD44LDrCgXIpt282acRnXdPBQiH5NTBKiD0a7CK43nhzGMRP06hzAiA=
-X-Gm-Message-State: AOJu0YzBw6FkpRP7eGDmTmqYrq5Y45idoVvQwV8wogVeIi1ryhLnsTXj
- 1gW1iHiS6oAFGUrOCj6+95eJO98t+ql1Imt1KQ/usZ73YUp3CGdSsA0sz39ntCM=
-X-Google-Smtp-Source: AGHT+IHx9/Cy3FQKBYyNLZ3lSgBeh8GRVR7wnxMy5PrRedzDKM/PHI6B+LJTEidHG1EdA7cIcjKltg==
-X-Received: by 2002:a17:903:2409:b0:1dc:a605:5435 with SMTP id
- e9-20020a170903240900b001dca6055435mr6060350plo.31.1709432880635; 
- Sat, 02 Mar 2024 18:28:00 -0800 (PST)
+ AJvYcCWjEPb0ehHzeSsyD94uIMIxsx9Usr7wxKSbkAOpinkEDK/8z7aY2mz3FA4uEqwasuBkEznmztQkVi7J7uQslDXx/gU0ZgU=
+X-Gm-Message-State: AOJu0YxJhJQRRu2n5ZzPJICWX0GPC+RZdgZn7U4+x2yOU82PUYOMZJ8v
+ 43ULvgvut+d5c9qkLIELJUTG3LDxiI37daNe3Zu7VizXGZ4qGXUe05UGP1wvsgg=
+X-Google-Smtp-Source: AGHT+IEReXUIEoHvRGuYurS+vvbZUYEvyGq4q0pS48EMdlVud9nRCEn+MIzVjKL5+UpF57awqtgiMQ==
+X-Received: by 2002:a17:902:dac6:b0:1dc:81a4:4c73 with SMTP id
+ q6-20020a170902dac600b001dc81a44c73mr7836679plx.0.1709432959669; 
+ Sat, 02 Mar 2024 18:29:19 -0800 (PST)
 Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
  [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- p6-20020a170902b08600b001dc30f13e6asm5827636plr.137.2024.03.02.18.27.59
+ p6-20020a170902b08600b001dc30f13e6asm5827636plr.137.2024.03.02.18.29.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 02 Mar 2024 18:28:00 -0800 (PST)
-Message-ID: <5b08c6e0-7242-4b87-908e-e13c8e680b96@linaro.org>
-Date: Sat, 2 Mar 2024 16:27:57 -1000
+ Sat, 02 Mar 2024 18:29:19 -0800 (PST)
+Message-ID: <88e1c5e0-0334-42c8-84a1-6c4809d256bb@linaro.org>
+Date: Sat, 2 Mar 2024 16:29:17 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] target/hppa: Restore unwind_breg before calculating
- ior
+Subject: Re: [PATCH 3/5] pc-bios/meson: Add hppa-firmware64.img blob
 Content-Language: en-US
 To: deller@kernel.org, qemu-devel@nongnu.org
 Cc: deller@gmx.de
 References: <20240302223524.24421-1-deller@kernel.org>
- <20240302223524.24421-3-deller@kernel.org>
+ <20240302223524.24421-4-deller@kernel.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240302223524.24421-3-deller@kernel.org>
+In-Reply-To: <20240302223524.24421-4-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,19 +101,13 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 3/2/24 12:35, deller@kernel.org wrote:
 > From: Helge Deller<deller@gmx.de>
 > 
-> When calculating the IOR for the exception handlers, the current
-> unwind_breg value is needed on 64-bit hppa machines.
-> Restore that value by calling cpu_restore_state() earlier, which in turn
-> calls hppa_restore_state_to_opc() which restores the unwind_breg for the
-> current instruction.
+> Add the missing 64-bit hppa firmware blob so that it gets installed.
 > 
 > Signed-off-by: Helge Deller<deller@gmx.de>
-> Fixes: 3824e0d643f3 ("target/hppa: Export function hppa_set_ior_and_isr()")
+> Fixes: 7c0dfcf9395e ("target/hppa: Update SeaBIOS-hppa to version 16")
 > ---
->   target/hppa/cpu.c        | 3 ++-
->   target/hppa/mem_helper.c | 3 ++-
->   target/hppa/op_helper.c  | 3 ++-
->   3 files changed, 6 insertions(+), 3 deletions(-)
+>   pc-bios/meson.build | 1 +
+>   1 file changed, 1 insertion(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
