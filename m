@@ -4,68 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CE96C5475B
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 10:34:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C888C5475B
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 10:51:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgj9v-0007UZ-Lt; Sun, 03 Mar 2024 05:33:31 -0500
+	id 1rgjR4-0002Fj-TC; Sun, 03 Mar 2024 05:51:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <whitebox@nefkom.net>)
- id 1rgj9l-0007Tu-70; Sun, 03 Mar 2024 05:33:22 -0500
-Received: from mail-out.m-online.net ([212.18.0.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <whitebox@nefkom.net>)
- id 1rgj9i-0005xA-Ti; Sun, 03 Mar 2024 05:33:20 -0500
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
- by mail-out.m-online.net (Postfix) with ESMTP id 4TndSz6Y6Nz1qsP8;
- Sun,  3 Mar 2024 11:33:07 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
- by mail.m-online.net (Postfix) with ESMTP id 4TndSz5dW3z1qqlS;
- Sun,  3 Mar 2024 11:33:07 +0100 (CET)
-X-Virus-Scanned: amavis at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
- by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavis, port 10024)
- with ESMTP id klEGctD5HFrw; Sun,  3 Mar 2024 11:33:06 +0100 (CET)
-X-Auth-Info: yNFI/4S470aCEYpBBLczPGvbs0ZkiuEy+ar8OniSFxeO2J1b0K/eYmdUkIvli/0K
-Received: from tiger.home (aftr-62-216-202-45.dynamic.mnet-online.de
- [62.216.202.45])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.mnet-online.de (Postfix) with ESMTPSA;
- Sun,  3 Mar 2024 11:33:06 +0100 (CET)
-Received: by tiger.home (Postfix, from userid 1000)
- id 4E251266802; Sun,  3 Mar 2024 11:33:06 +0100 (CET)
-From: Andreas Schwab <schwab@linux-m68k.org>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org,  qemu-stable@nongnu.org,  Richard Henderson
- <richard.henderson@linaro.org>,  Vineet Gupta <vineetg@rivosinc.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Alistair
- Francis <alistair.francis@wdc.com>
-Subject: Re: [Stable-8.2.1 61/71] linux-user/riscv: Adjust vdso signal frame
- cfa offsets
-In-Reply-To: <20240128175035.812352-7-mjt@tls.msk.ru> (Michael Tokarev's
- message of "Sun, 28 Jan 2024 20:50:24 +0300")
-References: <qemu-stable-8.2.1-20240128204849@cover.tls.msk.ru>
- <20240128175035.812352-7-mjt@tls.msk.ru>
-X-Yow: Hmmm...  a PINHEAD, during an EARTHQUAKE, encounters an ALL-MIDGET
- FIDDLE ORCHESTRA...  ha..  ha..
-Date: Sun, 03 Mar 2024 11:33:06 +0100
-Message-ID: <87ttlnehb1.fsf@linux-m68k.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rgjR3-0002Fa-VZ
+ for qemu-devel@nongnu.org; Sun, 03 Mar 2024 05:51:13 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rgjR2-0001hn-Mx
+ for qemu-devel@nongnu.org; Sun, 03 Mar 2024 05:51:13 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1dc0e5b223eso30963525ad.1
+ for <qemu-devel@nongnu.org>; Sun, 03 Mar 2024 02:51:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709463070; x=1710067870;
+ darn=nongnu.org; 
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Y6F4s7SD+EbTcsUd3BOMfzMk3X1lfu/l+APGABisSNs=;
+ b=IhXNzqVYGgCBUfTxc8jVMkcB9mjiGA7V+DkpTC1TY/cryNR/4GkisxyR+dDQf/s/kJ
+ Dk2Tzo96uBXRUIkznVh/mG1HX7IovDSkA+dOhgERoqJXBEVKeMKMuGqhdv/v214Xa7HW
+ oDE/kA08d+3GKymCOdwuAqLHWm0yJpmceoqdWnT2ktcdVwh7a15MkkY/2y/QMZdkIhrZ
+ T6qTy+1Pk2slzLYqMz1h69fIePdCei4F4y0URRMMI4tC73UnbLqnGYHHNZ3TYoZ9d/tL
+ ZrWTYOKNsUaM5RkyDC3/+6Y/Vncr7Z4g4Ye+fUpkr/iSSTFkptwYRR7ANYfGjAGgj1+A
+ kKRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709463070; x=1710067870;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Y6F4s7SD+EbTcsUd3BOMfzMk3X1lfu/l+APGABisSNs=;
+ b=Uj+6NX8AjgNaGCp/vuA+h3Wvw+qyONXIdJTCZ9qv9iL0LhH/Y79S+F0ENS9i292gdW
+ +6oZzLDSCLf+FIOtGmNG+MKvCcdKI1VBHmEqeXYmZkug5GT+1BJBe9IqMi2X789DBL3t
+ 1WxLtzy54Pjk41qp0RKYcrtYyvjIBW8P/Z1j8bjcpaY+sdB9xXze5/n7O07nycmtDfMd
+ MnRQbrZx/wRiGXHOWEuH+AsshProsAM9yV3xMKclRNtusoqU1Nx1+/LIV+n0dIDxicl2
+ BS1M6KSw0+LY0MQem9btk7Q7ubVFz04GCzRhDT4tgce7ww94ygfxlIkyKCHhAsea8Xyy
+ Tx4g==
+X-Gm-Message-State: AOJu0YzC3WqQFEr1JEi4FSOGYHmb2Vf1Vgc4PiqbH5MSzWOjHoXQycWV
+ grwF+0zHIyawXVpMOlDQkUEpAtqEZJZ3KO3mzvwqnQ2vZs55IvAAE91TaaWm9ue6B6ZtnQ8O4rK
+ 2
+X-Google-Smtp-Source: AGHT+IG7ai09kxgh/fcKOSpEdrE9CpwvQNE6JDrtGnci3ayX851N7aWUWSV/Aqv3kYMeHvhTda43Mw==
+X-Received: by 2002:a17:903:230b:b0:1dc:a00c:5442 with SMTP id
+ d11-20020a170903230b00b001dca00c5442mr6701340plh.43.1709463070609; 
+ Sun, 03 Mar 2024 02:51:10 -0800 (PST)
+Received: from localhost ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
+ by smtp.gmail.com with UTF8SMTPSA id
+ ju17-20020a170903429100b001db499c5c12sm6439521plb.143.2024.03.03.02.51.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 03 Mar 2024 02:51:10 -0800 (PST)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Subject: [PATCH 0/7] contrib/elf2dmp: Improve robustness
+Date: Sun, 03 Mar 2024 19:50:34 +0900
+Message-Id: <20240303-elf2dmp-v1-0-bea6649fe3e6@daynix.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-Received-SPF: pass client-ip=212.18.0.9; envelope-from=whitebox@nefkom.net;
- helo=mail-out.m-online.net
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPpV5GUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDYwND3dScNKOU3AJdw0SzRFNTwzQLMzNjJaDqgqLUtMwKsEnRsbW1ADL
+ EuWZZAAAA
+To: Viktor Prutyanov <viktor.prutyanov@phystech.edu>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.12.3
+Received-SPF: none client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,21 +95,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Jan 28 2024, Michael Tokarev wrote:
+elf2dmp sometimes fails to work with partially corrupted dumps, and also
+emits warnings when sanitizers are in use. This series are collections
+of changes to improve the situation.
 
-> From: Richard Henderson <richard.henderson@linaro.org>
->
-> A typo in sizeof_reg put the registers at the wrong offset.
->
-> Simplify the expressions to use positive addresses from the
-> start of uc_mcontext instead of negative addresses from the
-> end of uc_mcontext.
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+Akihiko Odaki (7):
+      contrib/elf2dmp: Always check for PA resolution failure
+      contrib/elf2dmp: Always destroy PA space
+      contrib/elf2dmp: Ensure segment fits in file
+      contrib/elf2dmp: Use lduw_le_p() to read PDB
+      contrib/elf2dmp: Use rol64() to decode
+      contrib/elf2dmp: Continue even contexts are lacking
+      MAINTAINERS: Add Akihiko Odaki as a elf2dmp reviewer
 
-This breaks the testsuite of libunwind.  The test Gtest-resume-sig and
-all dependent tests hang.  Reverting this commit fixes them.
+ MAINTAINERS                 |  1 +
+ contrib/elf2dmp/addrspace.c | 51 ++++++++++++++++++++++++++++-----------------
+ contrib/elf2dmp/main.c      | 25 +++++++---------------
+ contrib/elf2dmp/pdb.c       |  3 ++-
+ 4 files changed, 43 insertions(+), 37 deletions(-)
+---
+base-commit: bfe8020c814a30479a4241aaa78b63960655962b
+change-id: 20240301-elf2dmp-1a6a551f8663
 
+Best regards,
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
-"And now for something completely different."
+Akihiko Odaki <akihiko.odaki@daynix.com>
+
 
