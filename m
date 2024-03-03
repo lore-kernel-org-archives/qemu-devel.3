@@ -4,39 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7198C54E41
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 09:34:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DF25C54E41
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 09:34:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgiDh-0001SS-EL; Sun, 03 Mar 2024 04:33:23 -0500
+	id 1rgiDl-0001To-5q; Sun, 03 Mar 2024 04:33:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rgiDd-0001S5-DU; Sun, 03 Mar 2024 04:33:17 -0500
+ id 1rgiDf-0001SP-7o; Sun, 03 Mar 2024 04:33:20 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rgiDZ-0006Vu-Hj; Sun, 03 Mar 2024 04:33:16 -0500
+ id 1rgiDd-0006WN-FS; Sun, 03 Mar 2024 04:33:18 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1AE9E527CE;
+ by isrv.corpit.ru (Postfix) with ESMTP id 41441527D0;
  Sun,  3 Mar 2024 12:33:48 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 93DDB8E8CA;
+ by tsrv.corpit.ru (Postfix) with SMTP id B5E1F8E8CC;
  Sun,  3 Mar 2024 12:33:04 +0300 (MSK)
-Received: (nullmailer pid 1357010 invoked by uid 1000);
+Received: (nullmailer pid 1357016 invoked by uid 1000);
  Sun, 03 Mar 2024 09:33:04 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Benjamin David Lunt <benlunt@fysnet.net>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.2 80/82] hw/usb/bus.c: PCAP adding 0xA in Windows version
-Date: Sun,  3 Mar 2024 12:32:58 +0300
-Message-Id: <20240303093304.1356981-2-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Antoine Damhet <antoine.damhet@blade-group.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.2 82/82] chardev/char-socket: Fix TLS io channels sending
+ too much data to the backend
+Date: Sun,  3 Mar 2024 12:33:00 +0300
+Message-Id: <20240303093304.1356981-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.2-20240303104213@cover.tls.msk.ru>
 References: <qemu-stable-8.2.2-20240303104213@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,60 +66,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Benjamin David Lunt <benlunt@fysnet.net>
+From: Thomas Huth <thuth@redhat.com>
 
-Since Windows text files use CRLFs for all \n, the Windows version of QEMU
-inserts a CR in the PCAP stream when a LF is encountered when using USB PCAP
-files. This is due to the fact that the PCAP file is opened as TEXT instead
-of BINARY.
+Commit ffda5db65a ("io/channel-tls: fix handling of bigger read buffers")
+changed the behavior of the TLS io channels to schedule a second reading
+attempt if there is still incoming data pending. This caused a regression
+with backends like the sclpconsole that check in their read function that
+the sender does not try to write more bytes to it than the device can
+currently handle.
 
-To show an example, when using a very common protocol to USB disks, the BBB
-protocol uses a 10-byte command packet. For example, the READ_CAPACITY(10)
-command will have a command block length of 10 (0xA). When this 10-byte
-command (part of the 31-byte CBW) is placed into the PCAP file, the Windows
-file manager inserts a 0xD before the 0xA, turning the 31-byte CBW into a
-32-byte CBW.
+The problem can be reproduced like this:
 
-Actual CBW:
-  0040 55 53 42 43 01 00 00 00 08 00 00 00 80 00 0a 25 USBC...........%
-  0050 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00       ...............
+ 1) In one terminal, do this:
 
-PCAP CBW
-  0040 55 53 42 43 01 00 00 00 08 00 00 00 80 00 0d 0a USBC............
-  0050 25 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 %..............
+  mkdir qemu-pki
+  cd qemu-pki
+  openssl genrsa 2048 > ca-key.pem
+  openssl req -new -x509 -nodes -days 365000 -key ca-key.pem -out ca-cert.pem
+  # enter some dummy value for the cert
+  openssl genrsa 2048 > server-key.pem
+  openssl req -new -x509 -nodes -days 365000 -key server-key.pem \
+    -out server-cert.pem
+  # enter some other dummy values for the cert
 
-I believe simply opening the PCAP file as BINARY instead of TEXT will fix
-this issue.
+  gnutls-serv --echo --x509cafile ca-cert.pem --x509keyfile server-key.pem \
+              --x509certfile server-cert.pem -p 8338
 
-Resolves: https://bugs.launchpad.net/qemu/+bug/2054889
-Signed-off-by: Benjamin David Lunt <benlunt@fysnet.net>
-Message-ID: <000101da6823$ce1bbf80$6a533e80$@fysnet.net>
-[thuth: Break long line to avoid checkpatch.pl error]
+ 2) In another terminal, do this:
+
+  wget https://download.fedoraproject.org/pub/fedora-secondary/releases/39/Cloud/s390x/images/Fedora-Cloud-Base-39-1.5.s390x.qcow2
+
+  qemu-system-s390x -nographic -nodefaults \
+    -hda Fedora-Cloud-Base-39-1.5.s390x.qcow2 \
+    -object tls-creds-x509,id=tls0,endpoint=client,verify-peer=false,dir=$PWD/qemu-pki \
+    -chardev socket,id=tls_chardev,host=localhost,port=8338,tls-creds=tls0 \
+    -device sclpconsole,chardev=tls_chardev,id=tls_serial
+
+QEMU then aborts after a second or two with:
+
+  qemu-system-s390x: ../hw/char/sclpconsole.c:73: chr_read: Assertion
+   `size <= SIZE_BUFFER_VT220 - scon->iov_data_len' failed.
+ Aborted (core dumped)
+
+It looks like the second read does not trigger the chr_can_read() function
+to be called before the second read, which should normally always be done
+before sending bytes to a character device to see how much it can handle,
+so the s->max_size in tcp_chr_read() still contains the old value from the
+previous read. Let's make sure that we use the up-to-date value by calling
+tcp_chr_read_poll() again here.
+
+Fixes: ffda5db65a ("io/channel-tls: fix handling of bigger read buffers")
+Buglink: https://issues.redhat.com/browse/RHEL-24614
+Reviewed-by: "Daniel P. Berrangé" <berrange@redhat.com>
+Message-ID: <20240229104339.42574-1-thuth@redhat.com>
+Reviewed-by: Antoine Damhet <antoine.damhet@blade-group.com>
+Tested-by: Antoine Damhet <antoine.damhet@blade-group.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit 5e02a4fdebc442e34c5bb05e4540f85cc6e802f0)
+(cherry picked from commit 462945cd22d2bcd233401ed3aa167d83a8e35b05)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/bus.c b/hw/usb/bus.c
-index 92d6ed5626..4d4c671913 100644
---- a/hw/usb/bus.c
-+++ b/hw/usb/bus.c
-@@ -273,13 +273,14 @@ static void usb_qdev_realize(DeviceState *qdev, Error **errp)
+diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+index 73947da188..034840593d 100644
+--- a/chardev/char-socket.c
++++ b/chardev/char-socket.c
+@@ -492,9 +492,9 @@ static gboolean tcp_chr_read(QIOChannel *chan, GIOCondition cond, void *opaque)
+         s->max_size <= 0) {
+         return TRUE;
      }
- 
-     if (dev->pcap_filename) {
--        int fd = qemu_open_old(dev->pcap_filename, O_CREAT | O_WRONLY | O_TRUNC, 0666);
-+        int fd = qemu_open_old(dev->pcap_filename,
-+                               O_CREAT | O_WRONLY | O_TRUNC | O_BINARY, 0666);
-         if (fd < 0) {
-             error_setg(errp, "open %s failed", dev->pcap_filename);
-             usb_qdev_unrealize(qdev);
-             return;
-         }
--        dev->pcap = fdopen(fd, "w");
-+        dev->pcap = fdopen(fd, "wb");
-         usb_pcap_init(dev->pcap);
+-    len = sizeof(buf);
+-    if (len > s->max_size) {
+-        len = s->max_size;
++    len = tcp_chr_read_poll(opaque);
++    if (len > sizeof(buf)) {
++        len = sizeof(buf);
      }
- }
+     size = tcp_chr_recv(chr, (void *)buf, len);
+     if (size == 0 || (size == -1 && errno != EAGAIN)) {
 -- 
 2.39.2
 
