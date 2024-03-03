@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10AA2C54E49
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 06:58:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49C08C48BF6
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 07:12:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgfnL-0002rI-1Z; Sun, 03 Mar 2024 01:57:59 -0500
+	id 1rgg0g-0006YD-L0; Sun, 03 Mar 2024 02:11:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rgfnJ-0002r3-Jx
- for qemu-devel@nongnu.org; Sun, 03 Mar 2024 01:57:57 -0500
-Received: from mout.gmx.net ([212.227.15.18])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rgg0d-0006W7-0J
+ for qemu-devel@nongnu.org; Sun, 03 Mar 2024 02:11:43 -0500
+Received: from mout.gmx.net ([212.227.15.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rgfnG-00074E-MH
- for qemu-devel@nongnu.org; Sun, 03 Mar 2024 01:57:57 -0500
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rgg0R-0002uT-36
+ for qemu-devel@nongnu.org; Sun, 03 Mar 2024 02:11:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
- t=1709449071; x=1710053871; i=deller@gmx.de;
- bh=8oYvH27BsMyxbPhk8srXgkpUMWC96tgiw6fcM8tx580=;
- h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:
+ t=1709449887; x=1710054687; i=deller@gmx.de;
+ bh=wQZk/9gmE8tNZ34ysJ6k53njHAewUxjBorKYM+UowKY=;
+ h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
  In-Reply-To;
- b=mJN1x/CM6BJclxzXmukeP0XcAsPKX2oXiZBw1acKP+gW2YBzo8Q9GerCPMTHdbIn
- VQvlUFjeWEjKQ2S2Rd5T3V1oS5TabvMiqtK0pAsqOQGXLjyqHg2QTuZS9VUsKUEnL
- YWyK5zvkgNBu3tJ7f4tkKOijPfooU4LFJ8ypLC1ld0hEZcKHKVY5THTKGGr9bxiQ+
- f9853kQNn6Pq1quNtheMfh1egVnuMe6slqGDyKKZ53gz+gAJNbiaod/0iit+EBHrM
- lMaOI3pbk/i7rrQCpbB9djvcUeQEX+31ICB/OsSjVbJfQJxoIDmEYosyE3UWjGGsg
- 2hLllZjaFB/PTA/aVg==
+ b=km1d4yvzeYfLkDnoA777lDtBNwYfsU5WxCnxMPC7+ZvxK3ryg3boDZ2V7BQT+yos
+ /MQ1AkbHYBhRPbPaBlqiZy10ZEfQeQdwdTEQrcpQRWmkh0iBbV05axZYuCQnpA3mK
+ /TEF8QJj4U43Phvtb1M6acqwGlcgiuuXQEnu1nLQXOJl2779zvbwRb6BQ3hFp/EJw
+ S1rmG+TZ6aiVlluaColg6uU7hDRXrsQTbMup6EwG1MXdnn8CaHvG+hnNysHi83FcZ
+ wpKgSnlbdqOGE9oOeH1pZzSQrTCjYJrNGR+6+TxBkSiJBSmghISEXDkfc4kF95y4c
+ seCYAVojIyqcA/1ZZA==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.55] ([94.134.157.166]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1McH5a-1r8hU30IDU-00ckNs; Sun, 03
- Mar 2024 07:57:51 +0100
-Message-ID: <b9721dd8-e6b6-4017-8f94-0460b788d2a5@gmx.de>
-Date: Sun, 3 Mar 2024 07:57:50 +0100
+Received: from [192.168.20.55] ([94.134.157.166]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N95e9-1qlOgr46CN-016AMC; Sun, 03
+ Mar 2024 08:11:27 +0100
+Message-ID: <7fbb3b2d-4a76-4899-8a7c-25a97c125bf4@gmx.de>
+Date: Sun, 3 Mar 2024 08:11:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] target/hppa: Fix assemble_11a insns for wide mode
+Subject: Re: [PATCH 3/3] target/hppa: Fix assemble_12a insns for wide mode
 Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: svens@stackframe.org
 References: <20240303021925.116609-1-richard.henderson@linaro.org>
- <20240303021925.116609-3-richard.henderson@linaro.org>
- <d71b8c47-336d-466d-bfbb-c04f955b20e7@gmx.de>
+ <20240303021925.116609-4-richard.henderson@linaro.org>
+From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
  xsFNBF3Ia3MBEAD3nmWzMgQByYAWnb9cNqspnkb2GLVKzhoH2QD4eRpyDLA/3smlClbeKkWT
  HLnjgkbPFDmcmCz5V0Wv1mKYRClAHPCIBIJgyICqqUZo2qGmKstUx3pFAiztlXBANpRECgwJ
@@ -88,34 +87,33 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <d71b8c47-336d-466d-bfbb-c04f955b20e7@gmx.de>
+In-Reply-To: <20240303021925.116609-4-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-X-Provags-ID: V03:K1:1T5aaqCB4l/0nwczl9ge6gljF7+rxaPb1qO7/kuOHkrwjJscnvG
- wRkEWAcIEUpV2LqNJXFrov6/MVbOAFj5gt+VxCN/rCJgbhREa7ymMSaF3U4S2LiMHAlteIq
- hU6bTQbe1SqZIZlgu4AqCaiYe950eFsZVqEPKCxZzBPkbvskytVMYxVJsZc9Jvs8PR/BhKb
- V26QkfUKCLSPf4UiK223w==
-UI-OutboundReport: notjunk:1;M01:P0:irOR8/EmiHg=;DYS1zb04sKyD1PAbVcpG57hwsj4
- y0XXxRoEhql9sY+X/SqaR9OeYwbeiIhaKMzH4sbidbOIfQ660J2TgHMefvshjsc9ZqcUsYP42
- i8ZqSeLTGAwL4FEqGgKw1LgkITWQV2J3LpKFkk5pj0/56foh9kuxtY8knHzUpd9KWDzCHLJ4k
- S3tBOmu/fHapIz6r+Ihzn1+3J2tulTlwuLQGr8h6yAMCQUAcZkZm3p9EcgSmXa3baeeAEBkCG
- CdWIfyuyr9P1uu7E1+DWjtBxb1inNnU5sgAGE/TXayBphdfcvRjngdu4Jvi9v236uQFeguHBE
- 5gKvW48mVJ3Byn4+rCdG5tcawxNegoba8RzI5UxOtNK3ujeXm2MU80I/PBaPVB6v14bkXJLKG
- ATfMgv9CtFnPypI3l1ZUoV0sRiH1UYzL22ZzV5qkyGwSM4twB+fYG3rp+fjnTMmrfUv7UwvW/
- CdxgDKSeBrS3ux0FDVbaDzeUa0QDi4mL+rhqlNc2X88arD66VGbDYI9sKyi9vZqZAx2Du418G
- 4mkF3EZujNF2nCZnfPmgy1mQAQgtj1HesnwfrfG2fONmcPLFiSeGDO0o/e6KYfRTF5u/dJkaL
- WczVgzcKhBVNeAf9htJnIazhigfMOVm9uiZ5w3+TxMvY/gehuQ4op+uVp4kHDgmHwu4NHcTeA
- zlycc2FIv+MPR9Xs1+MzwMaYPxHt2zIY93G0Uby/kL/nYrviHY7H+uifsxpnhZNSUyYTjAuGJ
- PoVZLc3PbYO1x93WJYuqURSmwvbhhUALI9p69P3so3fWSKNQ5wc2ii6TbFKOqS4vsg/5fLIt3
- bRVT1Q23AANRHjvghNFD5ThfEJ4bDSWIOyDwMMieGlvww=
-Received-SPF: pass client-ip=212.227.15.18; envelope-from=deller@gmx.de;
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:etb51NtPGEk1DpP7pBvlsvexnlxMPgy84InHaP3r+R1mf28mGTg
+ P0HT1EUqF1DA/Ew1n0YVfO4BF68W2tgjz6Y5WG0jFTS/D73kyf6aq9t4KJFF2pgbO406SOP
+ mFO+vvsbz6gLXB0vVsvM5zKd7WT39YoXIWTaobMz7ZBOCkXag6Xq3CJxoWuUoyxT8A+M73N
+ vQ67vB4q4MBIDkVK/RkLw==
+UI-OutboundReport: notjunk:1;M01:P0:vIRMhwZ3CCo=;ivM8GYr0Zi3orls6zERGTHDKOKQ
+ on0h3YnhhxNCnoejMIpBunmCZfKyZbyKaFiPL++3vxNNZNNH/SyF+xj9bw20yExAD266O7BwY
+ 2l3b7lfg8NZbnLZKv9nIQGP97HK8MGKMP6PAd0LfEeD9W3K1MJ8c6os+7yB+d+ckiuQvc5Z1r
+ 3R2mRe+1nh4G2ktoOV3q7GWpYrLSafgJ6TBJPyF1fX4H+K5uvl8rS6PoULWmfY5lTfUQAUb2I
+ 7+ffQ72ZPDzvjKohy5weki9yDdiwBhnFZvbjcMZ8QIGBqzIUCwIWkvLWQ7q8OsX59N5tKeOed
+ oX0GWxXIuQ5JlPmRwE3E7EFXIVyFJc6VW9Cj6r1nLbL39nXrdqNWZSDkK/qWG31M1FuYQ1/Vm
+ 5ooDn9xiZA9qmjtchsMh+bc8dHV43FzwoBz6CtksBHF13ReEsnOey8yn6Pnl+k3eiaBFQwqfO
+ WO3HbauI4QY1RMZRxL7n3wIgONXKC7quyLgMdvlL9cFBWjWvjmXsCH6JacDfFROzRfRBdno8q
+ AW23mesden83/whs9qvjnGNIudbXH4TrgYtmL1fcnUv3tQKpPeXeZ61vxTlQ2BNcdRc3WTVTR
+ oqIdiYKhwA+r04hsGgPRVITsgmIgDfHRaFUmwzC8Efvk/8gVHRWh31HPSB/RCj+L5FMmMlrtO
+ etbzoWDuvVfozN+F3rT6P5EqKju1l5VqJ/G5S0F46ON7yf6PfLil22TQw3yUIGaZrQYrgDbY6
+ wdDaCxlsma2CRiA0zwSw/Mv1jsu2SVFKzcwy1SutQIcgTx2b3azEVbFPkKJUbi5sMt+3JCWd+
+ NqvcJJ6HFIzX+wpLjBTmjUF2rmXY8ZNlVXe4pifa3Pm/8=
+Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -133,63 +131,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMy8zLzI0IDA3OjUyLCBIZWxnZSBEZWxsZXIgd3JvdGU6DQo+IE9uIDMvMy8yNCAwMzoxOSwg
-UmljaGFyZCBIZW5kZXJzb24gd3JvdGU6DQo+PiBSZXBvcnRlZC1ieTogU3ZlbiBTY2huZWxsZSA8
-c3ZlbnNAc3RhY2tmcmFtZS5vcmc+DQo+PiBTaWduZWQtb2ZmLWJ5OiBSaWNoYXJkIEhlbmRlcnNv
-biA8cmljaGFyZC5oZW5kZXJzb25AbGluYXJvLm9yZz4NCj4+IC0tLQ0KPj4gwqAgdGFyZ2V0L2hw
-cGEvaW5zbnMuZGVjb2RlIHzCoCA3ICsrKystLS0NCj4+IMKgIHRhcmdldC9ocHBhL3RyYW5zbGF0
-ZS5jwqAgfCAyMyArKysrKysrKysrKysrKysrKy0tLS0tLQ0KPj4gwqAgMiBmaWxlcyBjaGFuZ2Vk
-LCAyMSBpbnNlcnRpb25zKCspLCA5IGRlbGV0aW9ucygtKQ0KPj4NCj4+IGRpZmYgLS1naXQgYS90
-YXJnZXQvaHBwYS9pbnNucy5kZWNvZGUgYi90YXJnZXQvaHBwYS9pbnNucy5kZWNvZGUNCj4+IGlu
-ZGV4IDBkOWY4MTU5ZWMuLjljNmY5MjQ0NGMgMTAwNjQ0DQo+PiAtLS0gYS90YXJnZXQvaHBwYS9p
-bnNucy5kZWNvZGUNCj4+ICsrKyBiL3RhcmdldC9ocHBhL2luc25zLmRlY29kZQ0KPj4gQEAgLTI0
-LDcgKzI0LDcgQEANCj4+IMKgICVhc3NlbWJsZV9zcjPCoMKgIDEzOjEgMTQ6Mg0KPj4gwqAgJWFz
-c2VtYmxlX3NyM3jCoCAxMzoxIDE0OjIgIWZ1bmN0aW9uPWV4cGFuZF9zcjN4DQo+Pg0KPj4gLSVh
-c3NlbWJsZV8xMWHCoMKgIDA6czEgNDoxMMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgIWZ1bmN0aW9u
-PWV4cGFuZF9zaGwzDQo+PiArJWFzc2VtYmxlXzExYcKgwqAgNDoxMiAwOjHCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqAgIWZ1bmN0aW9uPWV4cGFuZF8xMWENCj4+IMKgICVhc3NlbWJsZV8xMsKgwqDC
-oCAwOnMxIDI6MSAzOjEwwqDCoMKgwqDCoMKgwqAgIWZ1bmN0aW9uPWV4cGFuZF9zaGwyDQo+PiDC
-oCAlYXNzZW1ibGVfMTJhwqDCoCAwOnMxIDM6MTHCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICFmdW5j
-dGlvbj1leHBhbmRfc2hsMg0KPj4gwqAgJWFzc2VtYmxlXzE2wqDCoMKgIDA6MTbCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAhZnVuY3Rpb249ZXhwYW5kXzE2DQo+PiBAQCAtMzA1LDgg
-KzMwNSw5IEBAIGZzdGTCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIDAwMTAxMSAuLi4uLiAuLi4uLiAu
-LiAuIDEgLS0gMTAwIDAgLiAuLi4uLsKgwqDCoMKgwqAgQGZsZHN0ZGkNCj4+IMKgICMgT2Zmc2V0
-IE1lbQ0KPj4gwqAgIyMjIw0KPj4NCj4+IC1AbGRzdGltMTHCoMKgwqDCoMKgwqAgLi4uLi4uIGI6
-NSB0OjUgc3A6MiAuLi4uLi4uLi4uLi4uLsKgwqDCoMKgwqAgXA0KPj4gLcKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoCAmbGRzdCBkaXNwPSVhc3NlbWJsZV8xMWEgbT0lbWEyX3RvX20geD0w
-IHNjYWxlPTAgc2l6ZT0zDQo+PiArQGxkc3RpbTExwqDCoMKgwqDCoMKgIC4uLi4uLiBiOjUgdDo1
-IC4uLi4uLi4uLi4uLi4uLi7CoMKgwqDCoMKgwqDCoMKgwqAgXA0KPj4gK8KgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoCAmbGRzdCBzcD0lYXNzZW1ibGVfc3AgZGlzcD0lYXNzZW1ibGVfMTFh
-IFwNCj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgbT0lbWEyX3RvX20geD0wIHNj
-YWxlPTAgc2l6ZT0zDQo+PiDCoCBAbGRzdGltMTTCoMKgwqDCoMKgwqAgLi4uLi4uIGI6NSB0OjUg
-Li4uLi4uLi4uLi4uLi4uLsKgwqDCoMKgwqDCoMKgwqDCoCBcDQo+PiDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgICZsZHN0IHNwPSVhc3NlbWJsZV9zcCBkaXNwPSVhc3NlbWJsZV8x
-NsKgIFwNCj4+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgeD0wIHNjYWxlPTAg
-bT0wDQo+PiBkaWZmIC0tZ2l0IGEvdGFyZ2V0L2hwcGEvdHJhbnNsYXRlLmMgYi90YXJnZXQvaHBw
-YS90cmFuc2xhdGUuYw0KPj4gaW5kZXggNTg1ZDgzNjk1OS4uNmRjYzc0ZTY4MSAxMDA2NDQNCj4+
-IC0tLSBhL3RhcmdldC9ocHBhL3RyYW5zbGF0ZS5jDQo+PiArKysgYi90YXJnZXQvaHBwYS90cmFu
-c2xhdGUuYw0KPj4gQEAgLTEyMSwxMiArMTIxLDYgQEAgc3RhdGljIGludCBleHBhbmRfc2hsMihE
-aXNhc0NvbnRleHQgKmN0eCwgaW50IHZhbCkNCj4+IMKgwqDCoMKgwqAgcmV0dXJuIHZhbCA8PCAy
-Ow0KPj4gwqAgfQ0KPj4NCj4+IC0vKiBVc2VkIGZvciBmcCBtZW1vcnkgb3BzLsKgICovDQo+PiAt
-c3RhdGljIGludCBleHBhbmRfc2hsMyhEaXNhc0NvbnRleHQgKmN0eCwgaW50IHZhbCkNCj4+IC17
-DQo+PiAtwqDCoMKgIHJldHVybiB2YWwgPDwgMzsNCj4+IC19DQo+PiAtDQo+PiDCoCAvKiBVc2Vk
-IGZvciBhc3NlbWJsZV8yMS7CoCAqLw0KPj4gwqAgc3RhdGljIGludCBleHBhbmRfc2hsMTEoRGlz
-YXNDb250ZXh0ICpjdHgsIGludCB2YWwpDQo+PiDCoCB7DQo+PiBAQCAtMTQ0LDYgKzEzOCwyMyBA
-QCBzdGF0aWMgaW50IGFzc2VtYmxlXzYoRGlzYXNDb250ZXh0ICpjdHgsIGludCB2YWwpDQo+PiDC
-oMKgwqDCoMKgIHJldHVybiAodmFsIF4gMzEpICsgMTsNCj4+IMKgIH0NCj4+DQo+PiArLyogRXhw
-YW5kZXIgZm9yIGFzc2VtYmxlXzE2YShzLGNhdChpbTEwYSwwKSxpKS4gKi8NCj4gDQo+IFR5cG8g
-YWJvdmUsIHNob3VsZCBiZSBhc3NlbWJsZV8xMWEoKS4NCg0KXl4gSWdub3JlIHRoYXQuDQoNCkhl
-bGdlDQoNCiAgDQo+IE90aGVyd2lzZToNCj4gVGVzdGVkLWJ5OiBIZWxnZSBEZWxsZXIgPGRlbGxl
-ckBnbXguZGU+DQo+IFJldmlld2VkLWJ5OiBIZWxnZSBEZWxsZXIgPGRlbGxlckBnbXguZGU+DQo+
-IA0KPj4gK3N0YXRpYyBpbnQgZXhwYW5kXzExYShEaXNhc0NvbnRleHQgKmN0eCwgaW50IHZhbCkN
-Cj4+ICt7DQo+PiArwqDCoMKgIC8qDQo+PiArwqDCoMKgwqAgKiBAdmFsIGlzIGJpdCAwIGFuZCBi
-aXRzIFs0OjE1XS4NCj4+ICvCoMKgwqDCoCAqIFN3aXp6bGUgdGhpbmcgYXJvdW5kIGRlcGVuZGlu
-ZyBvbiBQU1cuVy4NCj4+ICvCoMKgwqDCoCAqLw0KPj4gK8KgwqDCoCBpbnQgaW0xMGEgPSBleHRy
-YWN0MzIodmFsLCAxLCAxMCk7DQo+PiArwqDCoMKgIGludCBzcCA9IGV4dHJhY3QzMih2YWwsIDEx
-LCAyKTsNCj4+ICvCoMKgwqAgaW50IGkgPSAoLSh2YWwgJiAxKSA8PCAxMykgfCAoaW0xMGEgPDwg
-Myk7DQo+PiArDQo+PiArwqDCoMKgIGlmIChjdHgtPnRiX2ZsYWdzICYgUFNXX1cpIHsNCj4+ICvC
-oMKgwqDCoMKgwqDCoCBpIF49IHNwIDw8IDEzOw0KPj4gK8KgwqDCoCB9DQo+PiArwqDCoMKgIHJl
-dHVybiBpOw0KPj4gK30NCj4+ICsNCj4+IMKgIC8qIEV4cGFuZGVyIGZvciBhc3NlbWJsZV8xNihz
-LGltMTQpLiAqLw0KPj4gwqAgc3RhdGljIGludCBleHBhbmRfMTYoRGlzYXNDb250ZXh0ICpjdHgs
-IGludCB2YWwpDQo+PiDCoCB7DQo+IA0KDQo=
+On 3/3/24 03:19, Richard Henderson wrote:
+> Reported-by: Sven Schnelle <svens@stackframe.org>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+
+Tested-by: Helge Deller <deller@gmx.de>
+
+> ---
+>   target/hppa/insns.decode | 27 ++++++++++++++++-----------
+>   target/hppa/translate.c  | 17 +++++++++++++++++
+>   2 files changed, 33 insertions(+), 11 deletions(-)
+>
+> diff --git a/target/hppa/insns.decode b/target/hppa/insns.decode
+> index 9c6f92444c..5412ff9836 100644
+> --- a/target/hppa/insns.decode
+> +++ b/target/hppa/insns.decode
+> @@ -26,7 +26,7 @@
+>
+>   %assemble_11a   4:12 0:1             !function=3Dexpand_11a
+>   %assemble_12    0:s1 2:1 3:10        !function=3Dexpand_shl2
+> -%assemble_12a   0:s1 3:11            !function=3Dexpand_shl2
+> +%assemble_12a   3:13 0:1             !function=3Dexpand_12a
+>   %assemble_16    0:16                 !function=3Dexpand_16
+>   %assemble_17    0:s1 16:5 2:1 3:10   !function=3Dexpand_shl2
+>   %assemble_22    0:s1 16:10 2:1 3:10  !function=3Dexpand_shl2
+> @@ -314,8 +314,9 @@ fstd            001011 ..... ..... .. . 1 -- 100 0 .=
+ .....      @fldstdi
+>   @ldstim14m      ...... b:5 t:5 ................          \
+>                   &ldst sp=3D%assemble_sp disp=3D%assemble_16  \
+>                   x=3D0 scale=3D0 m=3D%neg_to_m
+> -@ldstim12m      ...... b:5 t:5 sp:2 ..............      \
+> -                &ldst disp=3D%assemble_12a x=3D0 scale=3D0 m=3D%pos_to_=
+m
+> +@ldstim12m      ...... b:5 t:5 ................          \
+> +                &ldst sp=3D%assemble_sp disp=3D%assemble_12a \
+> +                x=3D0 scale=3D0 m=3D%pos_to_m
+>
+>   # LDB, LDH, LDW, LDWM
+>   ld              010000 ..... ..... .. ..............    @ldstim14  siz=
+e=3D0
+> @@ -331,15 +332,19 @@ st              011010 ..... ..... .. ............=
+..    @ldstim14  size=3D2
+>   st              011011 ..... ..... .. ..............    @ldstim14m siz=
+e=3D2
+>   st              011111 ..... ..... .. ...........10.    @ldstim12m siz=
+e=3D2
+>
+> -fldw            010110 b:5 ..... sp:2 ..............    \
+> -                &ldst disp=3D%assemble_12a t=3D%rm64 m=3D%a_to_m x=3D0 =
+scale=3D0 size=3D2
+> -fldw            010111 b:5 ..... sp:2 ...........0..    \
+> -                &ldst disp=3D%assemble_12a t=3D%rm64 m=3D0 x=3D0 scale=
+=3D0 size=3D2
+> +fldw            010110 b:5 ..... ................        \
+> +                &ldst disp=3D%assemble_12a sp=3D%assemble_sp \
+> +                t=3D%rm64 m=3D%a_to_m x=3D0 scale=3D0 size=3D2
+> +fldw            010111 b:5 ..... .............0..        \
+> +                &ldst disp=3D%assemble_12a sp=3D%assemble_sp \
+> +                t=3D%rm64 m=3D0 x=3D0 scale=3D0 size=3D2
+>
+> -fstw            011110 b:5 ..... sp:2 ..............    \
+> -                &ldst disp=3D%assemble_12a t=3D%rm64 m=3D%a_to_m x=3D0 =
+scale=3D0 size=3D2
+> -fstw            011111 b:5 ..... sp:2 ...........0..    \
+> -                &ldst disp=3D%assemble_12a t=3D%rm64 m=3D0 x=3D0 scale=
+=3D0 size=3D2
+> +fstw            011110 b:5 ..... ................        \
+> +                &ldst disp=3D%assemble_12a sp=3D%assemble_sp \
+> +                t=3D%rm64 m=3D%a_to_m x=3D0 scale=3D0 size=3D2
+> +fstw            011111 b:5 ..... .............0..        \
+> +                &ldst disp=3D%assemble_12a sp=3D%assemble_sp \
+> +                t=3D%rm64 m=3D0 x=3D0 scale=3D0 size=3D2
+>
+>   ld              010100 ..... ..... .. ............0.    @ldstim11
+>   fldd            010100 ..... ..... .. ............1.    @ldstim11
+> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+> index 6dcc74e681..1ef266c403 100644
+> --- a/target/hppa/translate.c
+> +++ b/target/hppa/translate.c
+> @@ -155,6 +155,23 @@ static int expand_11a(DisasContext *ctx, int val)
+>       return i;
+>   }
+>
+> +/* Expander for assemble_16a(s,im11a,i). */
+> +static int expand_12a(DisasContext *ctx, int val)
+> +{
+> +    /*
+> +     * @val is bit 0 and bits [3:15].
+> +     * Swizzle thing around depending on PSW.W.
+> +     */
+> +    int im11a =3D extract32(val, 1, 11);
+> +    int sp =3D extract32(val, 12, 2);
+> +    int i =3D (-(val & 1) << 13) | (im11a << 2);
+> +
+> +    if (ctx->tb_flags & PSW_W) {
+> +        i ^=3D sp << 13;
+> +    }
+> +    return i;
+> +}
+> +
+>   /* Expander for assemble_16(s,im14). */
+>   static int expand_16(DisasContext *ctx, int val)
+>   {
+
 
