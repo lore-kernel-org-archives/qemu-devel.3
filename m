@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 762D0C48BF6
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 07:42:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BA85C54E49
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 07:42:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rggRv-0001nz-SA; Sun, 03 Mar 2024 02:39:56 -0500
+	id 1rggS0-0001rS-08; Sun, 03 Mar 2024 02:40:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rggRr-0001kr-TI; Sun, 03 Mar 2024 02:39:51 -0500
+ id 1rggRy-0001qb-7H; Sun, 03 Mar 2024 02:39:58 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rggRq-0001ks-8Z; Sun, 03 Mar 2024 02:39:51 -0500
+ id 1rggRw-0001lf-IF; Sun, 03 Mar 2024 02:39:57 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 11A5F52756;
+ by isrv.corpit.ru (Postfix) with ESMTP id 5678A5275A;
  Sun,  3 Mar 2024 10:40:18 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id B1B768E84B;
- Sun,  3 Mar 2024 10:39:34 +0300 (MSK)
-Received: (nullmailer pid 1350604 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 02EB68E84F;
+ Sun,  3 Mar 2024 10:39:35 +0300 (MSK)
+Received: (nullmailer pid 1350616 invoked by uid 1000);
  Sun, 03 Mar 2024 07:39:34 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Benjamin David Lunt <benlunt@fysnet.net>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.10 49/54] hw/usb/bus.c: PCAP adding 0xA in Windows version
-Date: Sun,  3 Mar 2024 10:39:28 +0300
-Message-Id: <20240303073934.1350568-2-mjt@tls.msk.ru>
+Subject: [Stable-7.2.10 53/54] tests/unit/test-blockjob: Disable
+ complete_in_standby test
+Date: Sun,  3 Mar 2024 10:39:32 +0300
+Message-Id: <20240303073934.1350568-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.10-20240303092734@cover.tls.msk.ru>
 References: <qemu-stable-7.2.10-20240303092734@cover.tls.msk.ru>
@@ -61,59 +62,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Benjamin David Lunt <benlunt@fysnet.net>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Since Windows text files use CRLFs for all \n, the Windows version of QEMU
-inserts a CR in the PCAP stream when a LF is encountered when using USB PCAP
-files. This is due to the fact that the PCAP file is opened as TEXT instead
-of BINARY.
+The blockjob/complete_in_standby test is flaky and fails
+intermittently in CI:
 
-To show an example, when using a very common protocol to USB disks, the BBB
-protocol uses a 10-byte command packet. For example, the READ_CAPACITY(10)
-command will have a command block length of 10 (0xA). When this 10-byte
-command (part of the 31-byte CBW) is placed into the PCAP file, the Windows
-file manager inserts a 0xD before the 0xA, turning the 31-byte CBW into a
-32-byte CBW.
+172/621 qemu:unit / test-blockjob
+           ERROR           0.26s   killed by signal 6 SIGABRT
+11:03:46 MALLOC_PERTURB_=176
+G_TEST_SRCDIR=/Users/pm215/src/qemu-for-merges/tests/unit
+G_TEST_BUILDDIR=/Users/pm215/src/qemu-for-merges/build/all/tests/unit
+/Users/pm215/src/qemu-for-merges/build/all/tests/unit/test-blockjob
+--tap -k
+----------------------------------- output -----------------------------------
+stdout:
+# random seed: R02S8c79d6e1c01ce0b25475b2210a253242
+1..9
+# Start of blockjob tests
+ok 1 /blockjob/ids
+stderr:
+Assertion failed: (job->status == JOB_STATUS_STANDBY), function
+test_complete_in_standby, file ../../tests/unit/test-blockjob.c, line
+499.
 
-Actual CBW:
-  0040 55 53 42 43 01 00 00 00 08 00 00 00 80 00 0a 25 USBC...........%
-  0050 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00       ...............
+Seen on macOS/x86_64, FreeBSD 13/x86_64, msys2-64bit, eg:
 
-PCAP CBW
-  0040 55 53 42 43 01 00 00 00 08 00 00 00 80 00 0d 0a USBC............
-  0050 25 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 %..............
+https://gitlab.com/qemu-project/qemu/-/jobs/3872508803
+https://gitlab.com/qemu-project/qemu/-/jobs/3950667240
 
-I believe simply opening the PCAP file as BINARY instead of TEXT will fix
-this issue.
+Disable this subtest until somebody has time to investigate.
 
-Resolves: https://bugs.launchpad.net/qemu/+bug/2054889
-Signed-off-by: Benjamin David Lunt <benlunt@fysnet.net>
-Message-ID: <000101da6823$ce1bbf80$6a533e80$@fysnet.net>
-[thuth: Break long line to avoid checkpatch.pl error]
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Message-Id: <20230317143534.1481947-1-peter.maydell@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit 5e02a4fdebc442e34c5bb05e4540f85cc6e802f0)
+(cherry picked from commit b6903cbe3a2e3feb7204636209b5607e70fee998)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/bus.c b/hw/usb/bus.c
-index 92d6ed5626..4d4c671913 100644
---- a/hw/usb/bus.c
-+++ b/hw/usb/bus.c
-@@ -273,13 +273,14 @@ static void usb_qdev_realize(DeviceState *qdev, Error **errp)
-     }
- 
-     if (dev->pcap_filename) {
--        int fd = qemu_open_old(dev->pcap_filename, O_CREAT | O_WRONLY | O_TRUNC, 0666);
-+        int fd = qemu_open_old(dev->pcap_filename,
-+                               O_CREAT | O_WRONLY | O_TRUNC | O_BINARY, 0666);
-         if (fd < 0) {
-             error_setg(errp, "open %s failed", dev->pcap_filename);
-             usb_qdev_unrealize(qdev);
-             return;
-         }
--        dev->pcap = fdopen(fd, "w");
-+        dev->pcap = fdopen(fd, "wb");
-         usb_pcap_init(dev->pcap);
-     }
+diff --git a/tests/unit/test-blockjob.c b/tests/unit/test-blockjob.c
+index c0426bd10c..a130f6fefb 100644
+--- a/tests/unit/test-blockjob.c
++++ b/tests/unit/test-blockjob.c
+@@ -531,6 +531,13 @@ int main(int argc, char **argv)
+     g_test_add_func("/blockjob/cancel/standby", test_cancel_standby);
+     g_test_add_func("/blockjob/cancel/pending", test_cancel_pending);
+     g_test_add_func("/blockjob/cancel/concluded", test_cancel_concluded);
+-    g_test_add_func("/blockjob/complete_in_standby", test_complete_in_standby);
++
++    /*
++     * This test is flaky and sometimes fails in CI and otherwise:
++     * don't run unless user opts in via environment variable.
++     */
++    if (getenv("QEMU_TEST_FLAKY_TESTS")) {
++        g_test_add_func("/blockjob/complete_in_standby", test_complete_in_standby);
++    }
+     return g_test_run();
  }
 -- 
 2.39.2
