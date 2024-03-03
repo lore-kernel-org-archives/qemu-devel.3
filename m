@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB1CFC54798
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 00:02:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0CFDC5478C
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 02:10:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgZIV-0000Cl-Ot; Sat, 02 Mar 2024 19:01:43 -0500
+	id 1rgbIw-0000VW-5p; Sat, 02 Mar 2024 21:10:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgZIT-0000CK-Ls
- for qemu-devel@nongnu.org; Sat, 02 Mar 2024 19:01:41 -0500
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ id 1rgbIt-0000Tl-Ad
+ for qemu-devel@nongnu.org; Sat, 02 Mar 2024 21:10:15 -0500
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rgZIR-0004sx-Ox
- for qemu-devel@nongnu.org; Sat, 02 Mar 2024 19:01:40 -0500
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-53fbf2c42bfso2959230a12.3
- for <qemu-devel@nongnu.org>; Sat, 02 Mar 2024 16:01:38 -0800 (PST)
+ id 1rgbIn-0008Qz-6b
+ for qemu-devel@nongnu.org; Sat, 02 Mar 2024 21:10:14 -0500
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-5dbcfa0eb5dso3179026a12.3
+ for <qemu-devel@nongnu.org>; Sat, 02 Mar 2024 18:10:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709424098; x=1710028898; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1709431806; x=1710036606; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=0wGiIwp7kOH4zJz+LAx1j5QiqEMpC2frev7DNuS9boo=;
- b=tTOtINeLhBF5j5Hri1YfCPzTWA3rg5OfKRSSJlMPF21o4y6YIpOmuKGZ/Hc+W/0zNG
- nUaGpDXni6qC6FGMZv/0jXZJDkRcexAjdSRtPi+4QCy2qGCSh+DODzBqQsiMdyh6ms9z
- TSibHLMb4d7REiog33Vw1fuAMT8glwjDczlnDmTB6NCbe+5kexJd+eEVWXSyNzLuYv7R
- cjWD02AiLpGnN4RVcRgJmMl0HqU4P9EeyFRkSIlbXOejlV6sD/FuFy2ikEqgaYqMyVE8
- qwvBuxJl41mi2KYdUWxVoLhhsYUAQktCazrhmRX4E7wXVL/jsDoi7SzaQP76DD7p7Qtv
- 1XSA==
+ bh=hZzRf3NTHKpptwBGTIxgEOUGLrULCKZ2XASd/MlZOZs=;
+ b=ljETqiB9kO99+fr6gROK3TrMechxuTFU9uhy2r0f7L33gIPSFWOOgNxppf4QGMK9FB
+ YtIdbtKC6t2rBhvEBJUaxUMpA04wSv4Rg23/Rk/riA6Wam28wADV4xeiswKO2fBVXxcj
+ L9hrdgpN9+EjowMweD5qo1+/aZzAHn6Ee0vfR+kXDneEtRIN5DDcfx2T6/qqks2GLvyH
+ 3iVugeNwsIG3Hd+kGkz+jgUvmYL6fvKKtfU+7kn+iDWuoRBM4rsCuhho3VtUHCAAYSM9
+ PuGSjlain5KIRqTSSNNHWJ/T6KBysHzUvTBjRIyl90ZUrH37vADhi59afotgeSvfIv8b
+ whAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709424098; x=1710028898;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1709431806; x=1710036606;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0wGiIwp7kOH4zJz+LAx1j5QiqEMpC2frev7DNuS9boo=;
- b=QONtin2ABwZWW34VzZKLaK8GXYitpgpLBaOIQsr+Qk30LJZHU9TY+rZSDZGq2D39pe
- mkgdP8ku7AVpJ7j1CUg9CUgAdPR/D9Q9EY3K6DeljUcpDPASyo1apZjGR3l1C71Z0/Kg
- ZWqANOdGwizYxPbQmlnE3Q06Xt+IixDu8wBoAo0xwgsgcHpdEGK+8ONQJk0otPCqzERQ
- RyEEMDHgmdCWozw8fmMN8fI8yiFvxkf5/Z9l0g76sNqVqyksxw+guWOd6jh7lwMhR7xW
- rKkWQoPtS8WHYI32Y8XxwicqIfF+CHdCuNCEwTaY/G6yT9vJh0N8aOXpMryRxySgDjj2
- bPlw==
+ bh=hZzRf3NTHKpptwBGTIxgEOUGLrULCKZ2XASd/MlZOZs=;
+ b=Jf5RS0hyu+W9v8sT15jddeFwRPXkh1m9A2kJ2vfI5osRdae6FZYS3wvBYv7z501Hpa
+ MACT/vvegPU8LAY23yQ2s07hG8cRKs0R2NP6iZTunbE+895nNefBdFJavwN/pNN39yxV
+ aIu0SR/bvvrpTISRvE0A8hqrO5D2xy9yqEkS16iw6Lzo1+lRhrGlmeYOFbLilCLjxuub
+ RsWjaOiIYF8s6eE3/HIGM6lKbKztECtzAtA3BKmtRyytlqXH/tn6bvBBQISkwbav+XNr
+ C9YnRJXunzzy0BzyBuK6yMwy3VKmg/ZZuxOhAzrLnJmE+hXgUnt7oydPvSZfCV+gWlN5
+ 83sQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW9fjkrNxLP7lIikcYdaJtYJsL2iFx5hBGf+PPT8sIV6qPHisVJ/1AY2+JMBd0QUfSC8f2OJ1IhJhvo25lSknvskSkmKDw=
-X-Gm-Message-State: AOJu0Yz2BVDzfY+Zg1pDZTToCGy6WqvPN8klYVvBm2A7Lvv4QAhW21G2
- /Yg1KHLLawV3RzTmyZz0RycCHmFyRHIYdhDwNB+brLHkh39PcmlYWfLZr5TN7nI=
-X-Google-Smtp-Source: AGHT+IEoCu7Ed82IPureFdXn9C0Jf1RIIHjIMEdWZjjWf7OTzHaJnIheJ7ohCLc2BiDEgMOPFgmKmA==
-X-Received: by 2002:a05:6a20:d908:b0:19e:bca3:213f with SMTP id
- jd8-20020a056a20d90800b0019ebca3213fmr6220798pzb.52.1709424097777; 
- Sat, 02 Mar 2024 16:01:37 -0800 (PST)
+ AJvYcCX4msSfvYSi0QLvo7F7wcYVYiC1otQjNVsBbAojqiLiJa2f5ZmL6p2eRtikk8qDCZops7L8IZibu96yOHxOVB4DFiTjkSo=
+X-Gm-Message-State: AOJu0YyReRk8B5lNMy+6o+hNhXiheTrnU2Fd8teFWpRx6dwy+58z0dMF
+ ChCvgFom26XOzWrS0HwYcVFXO28+Efl0mBXoTJQ/C5+ydF6YWrFQq2dHiNrMkZCBkLq6E+QNtCh
+ 8
+X-Google-Smtp-Source: AGHT+IGnVkaRutCm+WDhyAwN+ycoE1NPVZhTdcrcI9rudJqxzTdUCpTEUoUgUoNpjvDcmKXohzggQA==
+X-Received: by 2002:a17:903:1111:b0:1dc:fc0b:6a41 with SMTP id
+ n17-20020a170903111100b001dcfc0b6a41mr2520882plh.59.1709431806410; 
+ Sat, 02 Mar 2024 18:10:06 -0800 (PST)
 Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
  [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- 132-20020a63008a000000b005dc9439c56bsm4831887pga.13.2024.03.02.16.01.36
+ p23-20020a1709027ed700b001dcf8ebe89bsm2076033plb.112.2024.03.02.18.10.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 02 Mar 2024 16:01:37 -0800 (PST)
-Message-ID: <3590961a-92f9-4a52-bdf4-ad0a7ce95c1f@linaro.org>
-Date: Sat, 2 Mar 2024 14:01:32 -1000
+ Sat, 02 Mar 2024 18:10:06 -0800 (PST)
+Message-ID: <4f6bbf0f-20d2-4599-a8b3-5fb0a381d6dd@linaro.org>
+Date: Sat, 2 Mar 2024 16:10:02 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC] hppa: assemble_16() in wide mode
-To: Sven Schnelle <svens@stackframe.org>
-Cc: deller@gmx.de, qemu-devel@nongnu.org
-References: <20240302172727.2035011-1-svens@stackframe.org>
+Subject: Re: [PATCH 1/5] target/hppa: Fix unaligned double word accesses for
+ hppa64
 Content-Language: en-US
+To: deller@kernel.org, qemu-devel@nongnu.org
+Cc: deller@gmx.de
+References: <20240302223524.24421-1-deller@kernel.org>
+ <20240302223524.24421-2-deller@kernel.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240302172727.2035011-1-svens@stackframe.org>
+In-Reply-To: <20240302223524.24421-2-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,25 +100,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/2/24 07:21, Sven Schnelle wrote:
-> Hi Richard,
+On 3/2/24 12:35, deller@kernel.org wrote:
+> From: Guenter Roeck <linux@roeck-us.net>
 > 
-> while looking into a HPPA tcg issue i noticed that the current
-> tcg code doesn't do the special wide mode handling described in the
-> Parisc 2.0 specification, Chapter E -> assemble_16(). In wide mode,
-> assemble_16() adds two more bits to the immediate value/displacement
-> of certain instruction like ldo(ldi), st[bhwd] and ld[bhwd] and some
-> others.
+> Unaligned 64-bit accesses were found in Linux to clobber carry bits,
+> resulting in bad results if an arithmetic operation involving a
+> carry bit was executed after an unaligned 64-bit operation.
 > 
-> I wonder what the easiest way to implement this is - it has to be xor'd
-> and is dependend on the W bit, so i don't think it will be possible to
-> implement this with changing only insn.decode. I came up with the
-> attached patch, do you think there's a better way?
+> hppa 2.0 defines additional carry bits in PSW register bits 32..39.
+> When restoring PSW after executing an unaligned instruction trap,
+> those bits were not cleared and ended up to be active all the time.
+> Clearing bit 32..39 in psw prior to restoring it solves the problem.
+> 
+> Fixes: 931adff31478 ("target/hppa: Update cpu_hppa_get/put_psw for hppa64")
+> Cc: Richard Henderson <richard.henderson@linaro.org>
+> Cc: Charlie Jenkins <charlie@rivosinc.com>
+> Cc: Helge Deller <deller@gmx.de>
+> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/hppa/helper.c | 7 ++++++-
+>   1 file changed, 6 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/hppa/helper.c b/target/hppa/helper.c
+> index 859644c47a..7b798d1227 100644
+> --- a/target/hppa/helper.c
+> +++ b/target/hppa/helper.c
+> @@ -76,7 +76,12 @@ void cpu_hppa_put_psw(CPUHPPAState *env, target_ulong psw)
+>       }
+>       psw &= ~reserved;
+>   
+> -    env->psw = psw & ~(PSW_N | PSW_V | PSW_CB);
+> +    if (hppa_is_pa20(env)) {
+> +        env->psw = psw & ~(PSW_N | PSW_V | PSW_CB | 0xff00000000ull);
+> +    } else {
+> +        env->psw = psw & ~(PSW_N | PSW_V | PSW_CB);
+> +    }
 
-Yes, it is possible to do this with decodetree.
-I'll whip something up.
+https://patchew.org/QEMU/20240217015811.1975411-1-linux@roeck-us.net/
+
+was the better version.
 
 
 r~
-
 
