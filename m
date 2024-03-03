@@ -4,85 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C79FC48BF6
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 16:26:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F443C48BF6
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 17:20:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgoeu-0001ji-Pv; Sun, 03 Mar 2024 11:25:52 -0500
+	id 1rgpVD-0001q6-38; Sun, 03 Mar 2024 12:19:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rgoeZ-0001gs-P6
- for qemu-devel@nongnu.org; Sun, 03 Mar 2024 11:25:35 -0500
-Received: from mail-qt1-x830.google.com ([2607:f8b0:4864:20::830])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rgoeX-0002Cb-V1
- for qemu-devel@nongnu.org; Sun, 03 Mar 2024 11:25:31 -0500
-Received: by mail-qt1-x830.google.com with SMTP id
- d75a77b69052e-42e8e85a969so20350091cf.2
- for <qemu-devel@nongnu.org>; Sun, 03 Mar 2024 08:25:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709483129; x=1710087929;
- darn=nongnu.org; 
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ze5xWJ90/UecUwJAtMbtPH74W/O9yEMNAIeoMAPeh+I=;
- b=bViDKBhJBICAAKgxNeghOQ7zYauzgLbEM2ipe5zb4eaxcFPio6AI+igQZrvKsKiIVf
- XflRR3wR3DAXOB495K1SP+d3ZDInLG+o7EO7E9nQEl7sTR19AieCvi/ZYQO/Z511evTa
- CrNo+OYnNgIgE+a4XH97KqTl4oKJqfSdraJMoaTDOETTw0nismNLrHJnQAakol1QhooO
- TccpNdcsT9Nzd9aLQHbK5AW7WLOl2MkNT2eRgbB41Pg8Ue5m2OSeWWtrqUPDN1Qwcvqy
- I6+yZzhnP6a5eAzgSfovcEd2ZO/9stCWLauNTOee7cBD8457MZ2Pl84o12Flo6NUaEkA
- o2Bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709483129; x=1710087929;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ze5xWJ90/UecUwJAtMbtPH74W/O9yEMNAIeoMAPeh+I=;
- b=S+YZb8ewZrAjfdCQXwUQED6OLISqyIziUmaILMz+V7HvxIi+cZhBgzzU9HhjrlX0Cn
- 8Jusb7NocU9NL1qBffG6NJFxhtCaRwJ/VmX1IhxBpqSGNQN0Os7e97J7HYaiFnSDVHac
- CdU7CdTleqVxvFQgXKefsXyoT4H7brUT18kxpMWINNZ8AMvYW/RmThUsOs+iNiZfragD
- f6TUIrlpTNbx4DrcdF+o5GNltTcC9EuHKU+ZtsRNRUyrjiUx1qTmbz2YN6AkEodwbyn8
- NlKesw6e3XxzJyLpYnBZsbfWC0yZylUlqiZbwPnnnQ6atcQgPL8qO5RvInNoY07idLYT
- hDuw==
-X-Gm-Message-State: AOJu0YyHn1b6phk+/BbeqjWDNURf69m/jlHOasqAunWUOh9dbQMQRgS0
- o0z3Y5XKOswHrYfFxchrrurv/1p/4upII2a56gBzpC3zQHfLN8RIM6YazvHmKpw=
-X-Google-Smtp-Source: AGHT+IEsoTc8i6jJccoaGT27fOBAULAf7reipUal3ogRKXKfjoWxa9oHdkt0gGkl2WtxNRhagpCh2Q==
-X-Received: by 2002:ac8:5d15:0:b0:42e:880f:2f75 with SMTP id
- f21-20020ac85d15000000b0042e880f2f75mr8032072qtx.21.1709483129051; 
- Sun, 03 Mar 2024 08:25:29 -0800 (PST)
-Received: from localhost ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
- by smtp.gmail.com with UTF8SMTPSA id
- w12-20020ac84d0c000000b0042eea4d6088sm755564qtv.39.2024.03.03.08.25.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 03 Mar 2024 08:25:28 -0800 (PST)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Mon, 04 Mar 2024 01:25:20 +0900
-Subject: [PATCH] meson: Remove --warn-common ldflag
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rgpVB-0001pa-Iw; Sun, 03 Mar 2024 12:19:53 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rgpV9-0007aW-Q1; Sun, 03 Mar 2024 12:19:53 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 2853D5285D;
+ Sun,  3 Mar 2024 20:20:30 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7C8AC8EAA8;
+ Sun,  3 Mar 2024 20:19:45 +0300 (MSK)
+Message-ID: <95f617bf-546f-428f-a375-de5c5368c0e0@tls.msk.ru>
+Date: Sun, 3 Mar 2024 20:19:44 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Make some structure static
+Content-Language: en-US
+To: Frediano Ziglio <freddy77@gmail.com>, qemu-devel <qemu-devel@nongnu.org>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ QEMU Trivial <qemu-trivial@nongnu.org>
+References: <CAHt6W4cH+=pyxNZ9F_8Yed4K_pYfO-qP6iNHQHEYLvWUk+aGUw@mail.gmail.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <CAHt6W4cH+=pyxNZ9F_8Yed4K_pYfO-qP6iNHQHEYLvWUk+aGUw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240304-common-v1-1-1a2005d1f350@daynix.com>
-X-B4-Tracking: v=1; b=H4sIAG+k5GUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDYwMT3eT83Nz8PN1EU8OUFENT0zQLQxMloOKCotS0zAqwQdGxtbUAixA
- bBVgAAAA=
-To: Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::830;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-qt1-x830.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,53 +86,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---warn-common ldflag causes warnings for multiple definitions of
-___asan_globals_registered when enabling AddressSanitizer with clang.
-The warning is somewhat obsolete so just remove it.
+01.03.2024 21:56, Frediano Ziglio :
+> Not used outside C module.
+Applied to trivial-patches (with subject fixup)
 
-The common block is used to allow duplicate definitions of uninitialized
-global variables. In the past, GCC and clang used to place such
-variables in a common block by default, which prevented programmers for
-noticing accidental duplicate definitions. Commit 49237acdb725 ("Enable
-ld flag --warn-common") added --warn-common ldflag so that ld warns in
-such a case.
-
-Today, both of GCC and clang don't use common blocks by default[1][2] so
-any remaining use of common blocks should be intentional. Remove
---warn-common ldflag to suppress warnings for intentional use of
-common blocks.
-
-[1]: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=85678
-[2]: https://reviews.llvm.org/D75056
-
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- meson.build | 5 -----
- 1 file changed, 5 deletions(-)
-
-diff --git a/meson.build b/meson.build
-index c1dc83e4c007..4bbd921e9fbd 100644
---- a/meson.build
-+++ b/meson.build
-@@ -476,11 +476,6 @@ if host_os == 'windows'
-   qemu_ldflags += cc.get_supported_link_arguments('-Wl,--dynamicbase', '-Wl,--high-entropy-va')
- endif
- 
--# Exclude --warn-common with TSan to suppress warnings from the TSan libraries.
--if host_os != 'sunos' and not get_option('tsan')
--  qemu_ldflags += cc.get_supported_link_arguments('-Wl,--warn-common')
--endif
--
- if get_option('fuzzing')
-   # Specify a filter to only instrument code that is directly related to
-   # virtual-devices.
-
----
-base-commit: 5005aed8a7e728d028efb40e243ecfc2b4f3df3a
-change-id: 20240304-common-a51dd155f814
-
-Best regards,
--- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+/mjt
 
 
