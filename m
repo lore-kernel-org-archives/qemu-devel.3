@@ -4,41 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 457DBC54E49
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 07:42:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CBACC48BF6
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 Mar 2024 09:33:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rggS1-0001sN-CE; Sun, 03 Mar 2024 02:40:01 -0500
+	id 1rgiDe-0001SA-4g; Sun, 03 Mar 2024 04:33:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rggRy-0001qo-LO; Sun, 03 Mar 2024 02:39:58 -0500
+ id 1rgiDa-0001RS-FV; Sun, 03 Mar 2024 04:33:14 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rggRt-0001lN-8a; Sun, 03 Mar 2024 02:39:58 -0500
+ id 1rgiDY-0006W1-UI; Sun, 03 Mar 2024 04:33:14 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4710952759;
- Sun,  3 Mar 2024 10:40:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2CB2F527CF;
+ Sun,  3 Mar 2024 12:33:48 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id E5F918E84E;
- Sun,  3 Mar 2024 10:39:34 +0300 (MSK)
-Received: (nullmailer pid 1350613 invoked by uid 1000);
- Sun, 03 Mar 2024 07:39:34 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id A44088E8CB;
+ Sun,  3 Mar 2024 12:33:04 +0300 (MSK)
+Received: (nullmailer pid 1357013 invoked by uid 1000);
+ Sun, 03 Mar 2024 09:33:04 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.10 52/54] tests/qtest/display-vga-test: Add proper checks
- if a device is available
-Date: Sun,  3 Mar 2024 10:39:31 +0300
-Message-Id: <20240303073934.1350568-5-mjt@tls.msk.ru>
+Subject: [Stable-8.2.2 81/82] tests/unit/test-util-sockets: Remove temporary
+ file after test
+Date: Sun,  3 Mar 2024 12:32:59 +0300
+Message-Id: <20240303093304.1356981-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-7.2.10-20240303092734@cover.tls.msk.ru>
-References: <qemu-stable-7.2.10-20240303092734@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-8.2.2-20240303104213@cover.tls.msk.ru>
+References: <qemu-stable-8.2.2-20240303104213@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -65,113 +67,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-display-vga-test currently tries to guess the usable VGA devices
-according to the target architecture that is used for the test.
-This of course does not work if QEMU has been built with the
-"--without-default-devices" configure switch. To fix this, use the
-qtest_has_device() function for the decision instead. This way
-we can also consolidate most of the test functions into one single
-function (that takes a parameter with the device name now), except
-for the multihead test that tries to instantiate two devices and
-thus is a little bit different.
+test-util-sockets leaves the temporary socket files around in the
+temporary files folder. Let's better remove them at the end of the
+testing.
 
-Message-Id: <20230130104446.1286773-4-thuth@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Fixes: 4d3a329af5 ("tests/util-sockets: add abstract unix socket cases")
+Message-ID: <20240226082728.249753-1-thuth@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit f2e57851b831922625f9d364d78c11a0258331a6)
+(cherry picked from commit f0cb6828ae34fb56fbb869bb3147a636d1c984ce)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/display-vga-test.c b/tests/qtest/display-vga-test.c
-index ace3bb28e0..75b341a9c6 100644
---- a/tests/qtest/display-vga-test.c
-+++ b/tests/qtest/display-vga-test.c
-@@ -8,61 +8,46 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "libqtest-single.h"
--
--static void pci_cirrus(void)
--{
--    qtest_start("-vga none -device cirrus-vga");
--    qtest_end();
--}
--
--static void pci_stdvga(void)
--{
--    qtest_start("-vga none -device VGA");
--    qtest_end();
--}
--
--static void pci_secondary(void)
--{
--    qtest_start("-vga none -device secondary-vga");
--    qtest_end();
--}
-+#include "libqtest.h"
- 
- static void pci_multihead(void)
- {
--    qtest_start("-vga none -device VGA -device secondary-vga");
--    qtest_end();
--}
-+    QTestState *qts;
- 
--static void pci_virtio_gpu(void)
--{
--    qtest_start("-vga none -device virtio-gpu-pci");
--    qtest_end();
-+    qts = qtest_init("-vga none -device VGA -device secondary-vga");
-+    qtest_quit(qts);
- }
- 
--static void pci_virtio_vga(void)
-+static void test_vga(gconstpointer data)
- {
--    qtest_start("-vga none -device virtio-vga");
--    qtest_end();
-+    QTestState *qts;
-+
-+    qts = qtest_initf("-vga none -device %s", (const char *)data);
-+    qtest_quit(qts);
- }
- 
- int main(int argc, char **argv)
- {
--    const char *arch = qtest_get_arch();
-+    static const char *devices[] = {
-+        "cirrus-vga",
-+        "VGA",
-+        "secondary-vga",
-+        "virtio-gpu-pci",
-+        "virtio-vga"
-+    };
- 
-     g_test_init(&argc, &argv, NULL);
- 
--    if (strcmp(arch, "alpha") == 0 || strcmp(arch, "i386") == 0 ||
--        strcmp(arch, "mips") == 0 || strcmp(arch, "x86_64") == 0) {
--        qtest_add_func("/display/pci/cirrus", pci_cirrus);
-+    for (int i = 0; i < ARRAY_SIZE(devices); i++) {
-+        if (qtest_has_device(devices[i])) {
-+            char *testpath = g_strdup_printf("/display/pci/%s", devices[i]);
-+            qtest_add_data_func(testpath, devices[i], test_vga);
-+            g_free(testpath);
-+        }
-     }
--    qtest_add_func("/display/pci/stdvga", pci_stdvga);
--    qtest_add_func("/display/pci/secondary", pci_secondary);
--    qtest_add_func("/display/pci/multihead", pci_multihead);
--    qtest_add_func("/display/pci/virtio-gpu", pci_virtio_gpu);
--    if (g_str_equal(arch, "i386") || g_str_equal(arch, "x86_64") ||
--        g_str_equal(arch, "hppa") || g_str_equal(arch, "ppc64")) {
--        qtest_add_func("/display/pci/virtio-vga", pci_virtio_vga);
-+
-+    if (qtest_has_device("secondary-vga")) {
-+        qtest_add_func("/display/pci/multihead", pci_multihead);
+diff --git a/tests/unit/test-util-sockets.c b/tests/unit/test-util-sockets.c
+index 63909ccb2b..4c9dd0b271 100644
+--- a/tests/unit/test-util-sockets.c
++++ b/tests/unit/test-util-sockets.c
+@@ -326,6 +326,7 @@ static void test_socket_unix_abstract(void)
+         test_socket_unix_abstract_row(&matrix[i]);
      }
  
-     return g_test_run();
++    unlink(addr.u.q_unix.path);
+     g_free(addr.u.q_unix.path);
+ }
+ 
 -- 
 2.39.2
 
