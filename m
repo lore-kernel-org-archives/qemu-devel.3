@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95331C5478C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA071C54E4A
 	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 14:46:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh9ZU-0007NH-31; Mon, 04 Mar 2024 09:45:40 -0500
+	id 1rh9ZD-0007B5-Ep; Mon, 04 Mar 2024 09:45:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rh9ZF-0007Bb-GG
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 09:45:34 -0500
+ id 1rh9Z0-00078E-0X
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 09:45:12 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rh9Z9-0006aj-Hc
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 09:45:23 -0500
+ id 1rh9Yx-0006MI-FG
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 09:45:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709563517;
+ s=mimecast20190719; t=1709563506;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=qy2efYcIVsN/lanvVB8MBAw7LJQRpOLE3vWjL/JTqW0=;
- b=P1LJzevxJXjfRuvFnk3acX0C8aHoK7S049dy4raUbIADyyaViGqjinLh/PNPxmtA3SpHsS
- TSYUthVzQ8QBG3sxB5vKOoTO+46GshkMSVcUkLJzk64Zq6rY42nzIkEt6qD6pNP1rA1cei
- wtbr8fnZYHhrKMgy4ogmaz+OYu8gUNY=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-292-5cePSnt6NU2TqEaa3hJU_w-1; Mon,
- 04 Mar 2024 09:45:15 -0500
-X-MC-Unique: 5cePSnt6NU2TqEaa3hJU_w-1
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CLvvnawf8Y0JAJgS0FG+ATI5m0ZuxaniOd3uQ0mOM8A=;
+ b=CGaNDI4m18auHMlMhJhN33JNRcn23b8SQpa7TaVQisIi10DtlbMnpcZ3VqJjSXWL9s/uQH
+ E753OlxLCQ3u67Thlgb5GnYqOMFt91XazsRbDfEP78N7BDZiLn9SwJKl3Z2K8xoTdnejRa
+ SRFCWja5COEzD06wTGX2cxDEtDEjBsI=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-156-9TdeOOI2OkWutwADUWbgIw-1; Mon, 04 Mar 2024 09:45:01 -0500
+X-MC-Unique: 9TdeOOI2OkWutwADUWbgIw-1
 Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
  [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id AF8DC2815E28;
- Mon,  4 Mar 2024 14:44:59 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 89150891F20;
+ Mon,  4 Mar 2024 14:45:01 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.54])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 6DBE42166B36;
- Mon,  4 Mar 2024 14:44:57 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id DEC882166B35;
+ Mon,  4 Mar 2024 14:44:59 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
@@ -53,11 +54,13 @@ Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 0/2] Fix CI build on Free BSD 13
-Date: Mon,  4 Mar 2024 14:44:54 +0000
-Message-ID: <20240304144456.3825935-1-berrange@redhat.com>
+Subject: [PATCH 1/2] meson: detect broken clang 17 with -fzero-call-used-regs
+Date: Mon,  4 Mar 2024 14:44:55 +0000
+Message-ID: <20240304144456.3825935-2-berrange@redhat.com>
+In-Reply-To: <20240304144456.3825935-1-berrange@redhat.com>
+References: <20240304144456.3825935-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
@@ -85,21 +88,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FreeBSD seems to have prematurely purged the 13.2 images from gcloud,
-despite 13.3 not being announced until tomorrow. Historically the old
-images were left available for quite some time, until we noticed ports
-failing due to missing symbols. Either way we need to update to 13.3
+Clang 17 will segv if given  -fzero-call-used-regs and optimization
+is enabled. Since upstream hasn't triaged the bug, distros are
+increasingly shipping with broken Clang.
 
-This exposed a clang bug so needs a workaround adding too.
+https://github.com/llvm/llvm-project/issues/75168
+https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=277474
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ meson.build | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-Daniel P. Berrangé (2):
-  meson: detect broken clang 17 with -fzero-call-used-regs
-  gitlab: update FreeBSD Cirrus CI image to 13.3
-
- .gitlab-ci.d/cirrus.yml |  2 +-
- meson.build             | 17 ++++++++++++-----
- 2 files changed, 13 insertions(+), 6 deletions(-)
-
+diff --git a/meson.build b/meson.build
+index 0ef1654e86..762798f2ee 100644
+--- a/meson.build
++++ b/meson.build
+@@ -555,17 +555,24 @@ endif
+ # Check further flags that make QEMU more robust against malicious parties
+ 
+ hardening_flags = [
+-    # Zero out registers used during a function call
+-    # upon its return. This makes it harder to assemble
+-    # ROP gadgets into something usable
+-    '-fzero-call-used-regs=used-gpr',
+-
+     # Initialize all stack variables to zero. This makes
+     # it harder to take advantage of uninitialized stack
+     # data to drive exploits
+     '-ftrivial-auto-var-init=zero',
+ ]
+ 
++# Zero out registers used during a function call
++# upon its return. This makes it harder to assemble
++# ROP gadgets into something usable
++#
++# NB: CLang 17 is broken and SEGVs
++# https://github.com/llvm/llvm-project/issues/75168
++if cc.compiles('extern struct { void (*cb)(void); } s; void f(void) { s.cb(); }',
++               name: '-fzero-call-used-regs=used-gpr',
++               args: ['-O2', '-fzero-call-used-regs=used-gpr'])
++    hardening_flags += '-fzero-call-used-regs=used-gpr'
++endif
++
+ qemu_common_flags += cc.get_supported_arguments(hardening_flags)
+ 
+ add_global_arguments(qemu_common_flags, native: false, language: all_languages)
 -- 
 2.43.0
 
