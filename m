@@ -4,92 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D2DCC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 17:26:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A306C5478C
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 17:27:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhC4T-0006Yl-3j; Mon, 04 Mar 2024 12:25:51 -0500
+	id 1rhC61-00011K-QW; Mon, 04 Mar 2024 12:27:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rhC3z-00068o-HR
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:25:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rhC3v-0007hy-D7
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:25:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709573113;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LaweyTroA2VnJXi7StgwRI1QNvEzqGs11NoMDW9yOr8=;
- b=HUf2Nwzu6dyY+iKubjuUYYVpu+trwoMHwbwYxKXsjWEu+Du5WkM8sJN181iGITYhk3NdEd
- GydREu24TTYLKe/8Fykqqu23swxecGzmgmeAplHQNzWOw8wf+hCos7luvkRbHk7t/lZQB4
- Poc5YsqYmzSYW46+tN6/gXt3I1zCha8=
-Received: from mail-yb1-f197.google.com (mail-yb1-f197.google.com
- [209.85.219.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-121-Ejbq6JkNNgW_wr4jJcpNKA-1; Mon, 04 Mar 2024 12:25:12 -0500
-X-MC-Unique: Ejbq6JkNNgW_wr4jJcpNKA-1
-Received: by mail-yb1-f197.google.com with SMTP id
- 3f1490d57ef6-dc6b5d1899eso7934412276.0
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 09:25:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rhC5z-0000zu-84
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:27:23 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rhC5x-0008Ap-AU
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:27:22 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1dc3b4b9b62so40741225ad.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 09:27:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709573240; x=1710178040; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wTd0DPsfURrIrCcbXM8PEnn29nN7bPwAfFryTCWeXxo=;
+ b=CXEVEodrb8qKjwMKMlKIqs7rWD60MoykPW5Us5eApxAlEXeyGviT9PLT+LijvcJjrc
+ D45HYg8SvB2dKFLezXqhfUmApEL8I50tiIIcEgMhxn0fjRNnIcp21bMin6E7tPClEyL3
+ nMG7s9xajYTfyrqayaW+fnXnnTjzylNq6G69iS1DqjO0555RHnvR2zz2HSC/JaDS3EPa
+ Hj+ewmDLRtAH4L4Uh6OnpOmGF96HS593Mt24NNk5vZSWO8sto2X6k/HpoT2ZFE91VnuQ
+ iMCmdztl2A0pPvPHjmoVTi8uaJ3iAFdO110u8eZYLaNXtJVLzePOpJKxPIA5m3gxJmzx
+ ZWog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709573112; x=1710177912;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=LaweyTroA2VnJXi7StgwRI1QNvEzqGs11NoMDW9yOr8=;
- b=hXwIkfy8mNYm4TgkZvsre+jvvok1FjELaqzWmYLtsaVCN9Sg3VwgD9hUcGaBNRxfAQ
- csenCK0vLLS/0g1jH3ynITg61PVM4LDFuGkvbab2jQVaJgV0YmXe5GxcVzAK9BcnfVrO
- HtfEijzhEbzH4D5jPmJggO7fCzvfxK07TBTF5qDhUM72M1IXVkhk8YiSM/XFR6zp89xB
- jTkkh60CdKphZJlc2WkrQdipizEIxdiodyuvm63ddyZp6vJRrCCtsfhD/lYVPFYO994c
- wC591KI+HGQFBZHZUJU9GyYz/GpFu5KWQ38ShUxqEdYx4RSj3UdWVlEy3QY63OkKGmBW
- z0dw==
-X-Gm-Message-State: AOJu0YwGWdFPvIv6QeiTIOgMOqciYQts2V+RXWTnshGwVbNFKqWEIpau
- lg278I24CBhfb+Pblj8tIMElzYZTLit3hRNYXF2UPPZCooGvmWCp8enHEKD14NdBOPg+oqEI6sR
- LINS1W05M8vfZoMa8ipCPT2ECFwDQqUMXXfql04pFEKcUc42Ze3nXnF/MBCruGvqvO/DKNkAHyz
- fJN86mLBqRWKWHLvNkjzmjYMSZhzQ=
-X-Received: by 2002:a25:903:0:b0:dc2:3a05:489 with SMTP id
- 3-20020a250903000000b00dc23a050489mr129847ybj.14.1709573111717; 
- Mon, 04 Mar 2024 09:25:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEfociF5Qvz73m+6ENb5dn65k6dyE5og73b1/Zs8ESjiBs9FcHO39zlmih2LYsKafT9+MMb/HNyZ39dTUqy5E8=
-X-Received: by 2002:a25:903:0:b0:dc2:3a05:489 with SMTP id
- 3-20020a250903000000b00dc23a050489mr129805ybj.14.1709573111408; 
- Mon, 04 Mar 2024 09:25:11 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709573240; x=1710178040;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wTd0DPsfURrIrCcbXM8PEnn29nN7bPwAfFryTCWeXxo=;
+ b=Pw1mttsgcx/3aaTJTCTbkCVJ+TWOUl+b3lmZedfwnWcKJaXurZuk/ESmG6Hga9Wud3
+ fNsuH6vsYt/V2cIoGXoiU4Z9PE54ZZZ3rEUljH/wcNyX/Aqqf8ED4CsVfCjQU5qpTvOO
+ 6mMng22KG4fdnhwVJ6ta44193M1JzlCg/yij1GViFUncuckqiGAfqjVMuhqUTeyKPIwZ
+ NonfzHnuuGAJWJ7oveenGxkKmK3LYhlks3xTOKlGsvv+c8/7ckQ6eZg3Rn/9urXmv905
+ v354O49uKjoQBbeROXoNdA3fBITUidzGQS+plBK6MFrdS6k2QEveRXdiYDPAFiS7i9TW
+ Kn4Q==
+X-Gm-Message-State: AOJu0Yw7gL4Gojng2n7E1dUN9AGw7Yx16gN2dqyBuKhusfU0ZNgF69tV
+ OxkSh8SYwsliuDhhX6KMCmtpdTWze3jBLVQHj8zm3QW/fDgSCiMQFA2ZaoJqQyA=
+X-Google-Smtp-Source: AGHT+IFUGsJkDt9uTKjLZK7W8KXo1apQ4Vye2imTJARpyht8aIM2xk0ji/kgdj73/F4LgUP2ys5MeA==
+X-Received: by 2002:a17:902:da87:b0:1dc:c8b3:9376 with SMTP id
+ j7-20020a170902da8700b001dcc8b39376mr202158plx.7.1709573239680; 
+ Mon, 04 Mar 2024 09:27:19 -0800 (PST)
+Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
+ [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
+ a8-20020a170902b58800b001d9b537ad0bsm8737336pls.275.2024.03.04.09.27.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 Mar 2024 09:27:19 -0800 (PST)
+Message-ID: <8f571406-4192-4be7-ac24-f23a06690cab@linaro.org>
+Date: Mon, 4 Mar 2024 07:27:16 -1000
 MIME-Version: 1.0
-References: <20240301134330.4191007-1-jonah.palmer@oracle.com>
- <20240301134330.4191007-2-jonah.palmer@oracle.com>
- <CAJaqyWdokP3yqbP8wPfgttFyFWfy1O3ST4jUQmiJ+n-xkrp_Zg@mail.gmail.com>
- <964078ad-35de-4687-86e4-e3bc059481b0@oracle.com>
-In-Reply-To: <964078ad-35de-4687-86e4-e3bc059481b0@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Mon, 4 Mar 2024 18:24:35 +0100
-Message-ID: <CAJaqyWcnfhRA=xXHxdgF-u8gxJEAt7FQFryCrwj52N+4aLPbUQ@mail.gmail.com>
-Subject: Re: [RFC 1/8] virtio/virtio-pci: Handle extra notification data
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, jasowang@redhat.com, 
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com, raphael@enfabrica.net, 
- kwolf@redhat.com, hreitz@redhat.com, pasic@linux.ibm.com, 
- borntraeger@linux.ibm.com, farman@linux.ibm.com, thuth@redhat.com, 
- richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com, 
- cohuck@redhat.com, pbonzini@redhat.com, fam@euphon.net, stefanha@redhat.com, 
- qemu-block@nongnu.org, qemu-s390x@nongnu.org, virtio-fs@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 6/6] target/arm: Do memory type alignment check when
+ translation enabled
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20240301204110.656742-1-richard.henderson@linaro.org>
+ <20240301204110.656742-7-richard.henderson@linaro.org>
+ <CAFEAcA-RCuHCR18q6V+xGi_igE-7-+PUrX1eOjduJeeeWFq7EA@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CAFEAcA-RCuHCR18q6V+xGi_igE-7-+PUrX1eOjduJeeeWFq7EA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,199 +98,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 4, 2024 at 6:09=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.co=
-m> wrote:
->
->
->
-> On 3/1/24 2:31 PM, Eugenio Perez Martin wrote:
-> > On Fri, Mar 1, 2024 at 2:44=E2=80=AFPM Jonah Palmer <jonah.palmer@oracl=
-e.com> wrote:
-> >>
-> >> Add support to virtio-pci devices for handling the extra data sent
-> >> from the driver to the device when the VIRTIO_F_NOTIFICATION_DATA
-> >> transport feature has been negotiated.
-> >>
-> >> The extra data that's passed to the virtio-pci device when this
-> >> feature is enabled varies depending on the device's virtqueue
-> >> layout.
-> >>
-> >> In a split virtqueue layout, this data includes:
-> >>   - upper 16 bits: last_avail_idx
-> >>   - lower 16 bits: virtqueue index
-> >>
-> >> In a packed virtqueue layout, this data includes:
-> >>   - upper 16 bits: 1-bit wrap counter & 15-bit last_avail_idx
-> >>   - lower 16 bits: virtqueue index
-> >>
-> >> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
-> >> ---
-> >>   hw/virtio/virtio-pci.c     | 13 ++++++++++---
-> >>   hw/virtio/virtio.c         | 13 +++++++++++++
-> >>   include/hw/virtio/virtio.h |  1 +
-> >>   3 files changed, 24 insertions(+), 3 deletions(-)
-> >>
-> >> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> >> index 1a7039fb0c..c7c577b177 100644
-> >> --- a/hw/virtio/virtio-pci.c
-> >> +++ b/hw/virtio/virtio-pci.c
-> >> @@ -384,7 +384,7 @@ static void virtio_ioport_write(void *opaque, uint=
-32_t addr, uint32_t val)
-> >>   {
-> >>       VirtIOPCIProxy *proxy =3D opaque;
-> >>       VirtIODevice *vdev =3D virtio_bus_get_device(&proxy->bus);
-> >> -    uint16_t vector;
-> >> +    uint16_t vector, vq_idx;
-> >>       hwaddr pa;
-> >>
-> >>       switch (addr) {
-> >> @@ -408,8 +408,15 @@ static void virtio_ioport_write(void *opaque, uin=
-t32_t addr, uint32_t val)
-> >>               vdev->queue_sel =3D val;
-> >>           break;
-> >>       case VIRTIO_PCI_QUEUE_NOTIFY:
-> >> -        if (val < VIRTIO_QUEUE_MAX) {
-> >> -            virtio_queue_notify(vdev, val);
-> >> +        if (virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)=
-) {
-> >> +            vq_idx =3D val & 0xFFFF;
-> >
-> > Nitpick, but since vq_idx is already a uint16_t the & 0xFFFF is not
-> > needed.
->
-> Ah okay. I wasn't sure if it was worthwhile to keep the '& 0xFFFF' in or
-> not for the sake of clarity and good practice. In that case I could just
-> do away with vq_idx here and use explicit casting on 'val'.
->
-> > I think it's cleaner just to call virtio_set_notification data
-> > in the has_feature(...) condition, but I'm happy with this too.
->
-> Do you mean something like:
->
-> if (virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA) &&
->      virtio_set_notification_data(vdev, vq_idx, val)) {
->      ...
-> }
->
+On 3/4/24 07:10, Peter Maydell wrote:
+> On Fri, 1 Mar 2024 at 20:42, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> If translation is enabled, and the PTE memory type is Device,
+>> enable checking alignment via TLB_CHECK_ALIGNMENT.  While the
+>> check is done later than it should be per the ARM, it's better
+>> than not performing the check at all.
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> 
+> 
+>> +    /*
+>> +     * Enable alignment checks on Device memory.
+>> +     *
+>> +     * Per R_XCHFJ, this check is mis-ordered, in that this alignment check
+>> +     * should have priority 30, while the permission check should be next at
+>> +     * priority 31 and stage2 translation faults come after that.
+>> +     * Due to the way the TCG softmmu TLB operates, we will have implicitly
+>> +     * done the permission check and the stage2 lookup in finding the TLB
+>> +     * entry, so the alignment check cannot be done sooner.
+>> +     */
+> 
+> Looks like in rev J.a the priority list has had some extra entries
+> added, so these are now items 35, 36 and 37 in the list.
+> Maybe we should drop the numbering and say
+> 
+>   * Per R_XCHFJ, this check is mis-ordered. The correct ordering
+>   * for alignment, permission, and stage 2 faults should be:
+>   *    - Alignment fault caused by the memory type
+>   *    - Permission fault
+>   *    - A stage 2 fault on the memory access
+>   * but due to ...
+> 
+> ?
+> 
+>> +    if (device) {
+>> +        result->f.tlb_fill_flags |= TLB_CHECK_ALIGNED;
+>>      }
+> 
+> In v7, the alignment faults on Device memory accesses are only
+> architecturally required if the CPU implements the Virtualization
+> Extensions; otherwise they are UNPREDICTABLE. But in practice
+> QEMU doesn't implement any CPU types with ARM_FEATURE_LPAE
+> but not ARM_FEATURE_V7VE, and "take an alignment fault" is
+> something that the UNPREDICTABLE case allows us to do, so
+> it doesn't seem necessary to put in a check for ARM_FEATURE_LPAE
+> here. We could mention it in the comment, though.
+> 
+> I propose to fold in this comment diff and take the patchset into
+> target-arm.next:
+> 
+> --- a/target/arm/ptw.c
+> +++ b/target/arm/ptw.c
+> @@ -2141,12 +2141,19 @@ static bool get_phys_addr_lpae(CPUARMState
+> *env, S1Translate *ptw,
+>       /*
+>        * Enable alignment checks on Device memory.
+>        *
+> -     * Per R_XCHFJ, this check is mis-ordered, in that this alignment check
+> -     * should have priority 30, while the permission check should be next at
+> -     * priority 31 and stage2 translation faults come after that.
+> -     * Due to the way the TCG softmmu TLB operates, we will have implicitly
+> -     * done the permission check and the stage2 lookup in finding the TLB
+> -     * entry, so the alignment check cannot be done sooner.
+> +     * Per R_XCHFJ, this check is mis-ordered. The correct ordering
+> +     * for alignment, permission, and stage 2 faults should be:
+> +     *    - Alignment fault caused by the memory type
+> +     *    - Permission fault
+> +     *    - A stage 2 fault on the memory access
+> +     * but due to the way the TCG softmmu TLB operates, we will have
+> +     * implicitly done the permission check and the stage2 lookup in
+> +     * finding the TLB entry, so the alignment check cannot be done sooner.
+> +     *
+> +     * In v7, for a CPU without the Virtualization Extensions this
+> +     * access is UNPREDICTABLE; we choose to make it take the alignment
+> +     * fault as is required for a v7VE CPU. (QEMU doesn't emulate any
+> +     * CPUs with ARM_FEATURE_LPAE but not ARM_FEATURE_V7VE anyway.)
 
-Sorry I was not clear, I meant just to take out the common code of the
-conditionals:
-vq_idx =3D val;
-if (virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA) {
-    virtio_set_notification_data(vdev, val);
-}
+Looks good, thanks for the update.
 
-> Though I'm not sure what would then go in the body of this conditional,
-> especially if I did something like:
->
-> case VIRTIO_PCI_QUEUE_NOTIFY:
->      if ((uint16_t)val < VIRTIO_QUEUE_MAX) {
->          if (virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA) &&
->              virtio_set_notification_data(vdev, val)) {
->              // Not sure what to put here other than a no-op
->          }
->
->          virtio_queue_notify(vdev, (uint16_t)val);
->      }
->      break;
->
-> But I'm not sure if you'd prefer this explicit casting of 'val' over
-> implicit casting like:
->
-> uint16_t vq_idx =3D val;
->
-> >
-> >> +            virtio_set_notification_data(vdev, vq_idx, val);
-> >> +        } else {
-> >> +            vq_idx =3D val;
-> >> +        }
-> >> +
-> >> +        if (vq_idx < VIRTIO_QUEUE_MAX) {
-> >> +            virtio_queue_notify(vdev, vq_idx);
-> >>           }
-> >>           break;
-> >>       case VIRTIO_PCI_STATUS:
-> >> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> >> index d229755eae..a61f69b7fd 100644
-> >> --- a/hw/virtio/virtio.c
-> >> +++ b/hw/virtio/virtio.c
-> >> @@ -2052,6 +2052,19 @@ int virtio_set_status(VirtIODevice *vdev, uint8=
-_t val)
-> >>       return 0;
-> >>   }
-> >>
-> >> +void virtio_set_notification_data(VirtIODevice *vdev, uint16_t i, uin=
-t32_t data)
-> >> +{
-> >> +    VirtQueue *vq =3D &vdev->vq[i];
-> >> +
-> >> +    if (virtio_vdev_has_feature(vdev, VIRTIO_F_RING_PACKED)) {
-> >> +        vq->last_avail_wrap_counter =3D (data >> 31) & 0x1;
-> >> +        vq->last_avail_idx =3D (data >> 16) & 0x7FFF;
-> >> +    } else {
-> >> +        vq->last_avail_idx =3D (data >> 16) & 0xFFFF;
-> >> +    }
-> >
-> > It should not set last_avail_idx, only shadow_avail_idx. Otherwise,
-> > QEMU can only see the descriptors placed after the notification.
-> >
-> > Or am I missing something?
-> >
-> > In that regard, I would call this function
-> > "virtqueue_set_shadow_avail_idx". But I'm very bad at naming :).
->
-> Ah that's right. This would make Qemu skip processing descriptors that
-> might've been made available before the notification but after the
-> host's last check of last_avail_idx. In other words, ignoring available
-> descriptors that were placed before the notification but not yet
-> processed. Good catch, thank you!
->
-> So, for the packed VQ layout, we'll still want to save the wrap counter
-> but for the shadow_avail_idx, right? E.g.
->
-> if (virtio_vdev_has_feature(vdev, VIRTIO_F_RING_PACKED)) {
->      vq->shadow_avail_wrap_counter =3D (data >> 31) & 0x1;
->      vq->shadow_avail_idx =3D (data >> 16) & 0x7FFF;
-> } else {
->      vq->shadow_avail_idx =3D (data >> 16);
-> }
->
 
-Right, I was not clear enough again :). You probably have guessed
-already but not modifying avail_wrap_counter would make QEMu to read
-the wrong index too.
-
-Thanks!
-
-> >
-> > The rest looks good to me.
-> >
-> > Thanks!
-> >
-> >> +    vq->shadow_avail_idx =3D vq->last_avail_idx;
-> >> +}
-> >> +
-> >>   static enum virtio_device_endian virtio_default_endian(void)
-> >>   {
-> >>       if (target_words_bigendian()) {
-> >> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-> >> index c8f72850bc..c92d8afc42 100644
-> >> --- a/include/hw/virtio/virtio.h
-> >> +++ b/include/hw/virtio/virtio.h
-> >> @@ -345,6 +345,7 @@ void virtio_queue_reset(VirtIODevice *vdev, uint32=
-_t queue_index);
-> >>   void virtio_queue_enable(VirtIODevice *vdev, uint32_t queue_index);
-> >>   void virtio_update_irq(VirtIODevice *vdev);
-> >>   int virtio_set_features(VirtIODevice *vdev, uint64_t val);
-> >> +void virtio_set_notification_data(VirtIODevice *vdev, uint16_t i, uin=
-t32_t data);
-> >>
-> >>   /* Base devices.  */
-> >>   typedef struct VirtIOBlkConf VirtIOBlkConf;
-> >> --
-> >> 2.39.3
-> >>
-> >
->
-
+r~
 
