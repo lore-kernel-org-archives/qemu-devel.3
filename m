@@ -4,84 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05DE7C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 12:01:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8F5FC48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 12:05:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh702-0004gC-5s; Mon, 04 Mar 2024 07:00:55 -0500
+	id 1rh73L-0006OO-02; Mon, 04 Mar 2024 07:04:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1rh6zw-0004fh-L2
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:00:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <twiederh@redhat.com>)
+ id 1rh73J-0006OD-EL
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:04:17 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1rh6zu-0001A2-Ki
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:00:48 -0500
+ (Exim 4.90_1) (envelope-from <twiederh@redhat.com>)
+ id 1rh73H-00025z-9g
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:04:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709553642;
+ s=mimecast20190719; t=1709553853;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5CVwbaybbAvs7uRccksOImnnt714UIk95sp84aBoyAA=;
- b=aTXpSVG7RHDloHc6rGzTqHhgJeIjt3llcjx2qajydx7MGeiP4b1eL8JyeOAEXG5wzaqtI/
- 9u5hRpnvu5jpCJVxrSOss5bQ9HORXYMInnxMwZ9uE1BvR789cc44znkhBgSMvMVt9MEiBL
- jgoM2xb7xK350Bh0k1xkdDummgL3+Qo=
-Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
- [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=n4j1l4si0NLw7Q+lV0QdkQ1jQi9y+QL+lWA3XTu5TW4=;
+ b=Q/3tcHKIPnRP18KCu35GxkLRgYxf5us7eKBhBJBciN8XbdPlioYUQm45u89ZuLmFrAq7bp
+ KDqWVC7uLxrML7A8cJ0hXIDq0ot2kxzwUjsXmp333fbpOa/+msF8+Gm1oPL18pEkw/9SQF
+ gAZ3luKwYUAdpLfsv7pW5vf9FoWdbsQ=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-395-CmXOeJjYNOKzuW2iTHMtbQ-1; Mon, 04 Mar 2024 07:00:40 -0500
-X-MC-Unique: CmXOeJjYNOKzuW2iTHMtbQ-1
-Received: by mail-lj1-f200.google.com with SMTP id
- 38308e7fff4ca-2d32656e8c2so27121111fa.2
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 04:00:40 -0800 (PST)
+ us-mta-222-aoh8HUY_NB2-nsqEeQcRBg-1; Mon, 04 Mar 2024 07:04:11 -0500
+X-MC-Unique: aoh8HUY_NB2-nsqEeQcRBg-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-33d7fcb70c2so2662228f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 04:04:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709553638; x=1710158438;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=5CVwbaybbAvs7uRccksOImnnt714UIk95sp84aBoyAA=;
- b=H+27HtP0xf+IaeLTfStclRiP9009kYqXnJk3Ds4u45ThmKJrINmW6Jg7CceFZlAASW
- B2Dq210ipZXMe1LlpMy+NTM9dao51vUrvix8kllZpky6UKR4npIBOLakhzvsB5iRBO75
- +yQaen3sLT8fh04rYRz/tyBgqx891WY9/Pz9O8WojGLr1jzcTx0ggbWjOkixd0eeD87F
- 618/3Il6E2VIDzngXKidfB2sao7/Uu5qXi0xVngoaEXQiSp3BVj0pK8z/l6puSCnktWA
- rB5nAcRjt25vUJ5XS+Fip0sZaTICOhLEcM6VBXAQYwjPGaAnWqM/+vLP7mWHAfznyRLN
- kuqA==
-X-Gm-Message-State: AOJu0YypWbAw3oBoV2dOexViN5YMt1MD21cr4Oq8qCCusIc25D0jGdvW
- pI3i7LV/Ef5ftF5H3/clN1bQ5fnPzxTiaGSn8uRZf8apxTOFcKzwoj0BUq/uY/AohzZNXqeeOWk
- GqrcP1mlBk4vzfCku6ZsGU4CSBKkX/ESY2+NIK6yCKrHCXSEmlXSrpeJKkAIItfPwRmC+v3dtvh
- AzyqA087lrWk647UOvDH+bKrAmvTVBBYSGfG2SQw==
-X-Received: by 2002:a2e:a41a:0:b0:2d3:6ff0:31b8 with SMTP id
- p26-20020a2ea41a000000b002d36ff031b8mr4666070ljn.19.1709553638624; 
- Mon, 04 Mar 2024 04:00:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IELwLHZAfHfqM4FsQmRKv/hU72XBepVOpTUM3eO6366BnJWXWQlau/qFiNPfThisk7scHg63Up+bzVuym2Lo7s=
-X-Received: by 2002:a2e:a41a:0:b0:2d3:6ff0:31b8 with SMTP id
- p26-20020a2ea41a000000b002d36ff031b8mr4666043ljn.19.1709553638161; Mon, 04
- Mar 2024 04:00:38 -0800 (PST)
-MIME-Version: 1.0
-References: <20240301172858.665135-1-andrey.drobyshev@virtuozzo.com>
-In-Reply-To: <20240301172858.665135-1-andrey.drobyshev@virtuozzo.com>
-From: Konstantin Kostiuk <kkostiuk@redhat.com>
-Date: Mon, 4 Mar 2024 14:00:27 +0200
-Message-ID: <CAPMcbCrOijMTjm+LhfGyHXjPpQs4gp3Zwh9UKoThMfVwF6e=3g@mail.gmail.com>
-Subject: Re: [PATCH v2 0/7] qga/commands-posix: replace code duplicating
- commands with a helper
+ d=1e100.net; s=20230601; t=1709553850; x=1710158650;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=n4j1l4si0NLw7Q+lV0QdkQ1jQi9y+QL+lWA3XTu5TW4=;
+ b=vQn+adlhBe3UDNtlLgOjEpdXKyJTp/gdW0C8bTgtgxmfkYq4dxP/TJQGXLehOxIuPF
+ jYc+6VLL+ryrMWfOZ3k6aWF6IaCv6WOdIJ2osN+P+bikbVAM0AMg+f8TV8NbG/9EZLEQ
+ TJc6hALhlkCWG0mk/SWsGqEmcwSGD3pz/5aQMaJdGb0LK8jVkk8igR1hA2cMUMwaiYGF
+ 5jUelYtLosyXwnlbr3CFWJItPcIzbzcVGBR7vt+NUxZuCuXWUuqdWUcOYKnhFXsH63Pd
+ mjs3tecB0+vpyuNW+oscd8UtV8i4VxM7KAUDrJ1BuWG+OM3IqH5mttEfYcllKH+CNziz
+ qs4A==
+X-Gm-Message-State: AOJu0YwcE3kqI8Og6FYPUXGaosolOm+GbDhFLI7sVs0ihDQc9gU46Fg4
+ Rtlhbv9T9j9dDC+S2EcIyJi5uIZgcG4an0bhp0WPULJZU/qpVToqXNLtPpZVZ2J9p5tiTNrfwRX
+ CiMewc8iLr//Rl1Y96MDO60LPmYHsLF9P/gWTV0khchvymL2jtKGAWAOKsKca3fe4A7yZMQaKOn
+ IU8XG/vU8mQB71wWi9JC6DYLne8JJUPy0zlgXPnDI=
+X-Received: by 2002:adf:b303:0:b0:33e:2d7b:c5a8 with SMTP id
+ j3-20020adfb303000000b0033e2d7bc5a8mr4910328wrd.17.1709553850537; 
+ Mon, 04 Mar 2024 04:04:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHfGQPn5g/4cC+WjhvHMNxzNTika2qVPjer70np/b7vMylkyys8dz7/rqIEBuyua+hRSnVmoA==
+X-Received: by 2002:adf:b303:0:b0:33e:2d7b:c5a8 with SMTP id
+ j3-20020adfb303000000b0033e2d7bc5a8mr4910301wrd.17.1709553850127; 
+ Mon, 04 Mar 2024 04:04:10 -0800 (PST)
+Received: from [192.168.178.136] (port-92-192-150-107.dynamic.as20676.net.
+ [92.192.150.107]) by smtp.gmail.com with ESMTPSA id
+ by1-20020a056000098100b0033e22341942sm8825419wrb.78.2024.03.04.04.04.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 04 Mar 2024 04:04:09 -0800 (PST)
+Message-ID: <ea82934aa34f08da3c30814676878607f976cbdc.camel@redhat.com>
+Subject: Re: [PATCH v3 0/5] Generate x86 cpu features
+From: Tim Wiederhake <twiederh@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, michael.roth@amd.com, 
- marcandre.lureau@redhat.com, philmd@linaro.org, den@virtuozzo.com, 
- Dehan Meng <demeng@redhat.com>
-Content-Type: multipart/alternative; boundary="00000000000053cf4e0612d47986"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+Cc: Igor Mammedov <imammedo@redhat.com>, Philippe
+ =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, "Daniel P ."
+ =?ISO-8859-1?Q?Berrang=E9?=
+ <berrange@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
+Date: Mon, 04 Mar 2024 13:04:08 +0100
+In-Reply-To: <20240206134739.15345-1-twiederh@redhat.com>
+References: <20240206134739.15345-1-twiederh@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.50.2 (3.50.2-1.fc39) 
+MIME-Version: 1.0
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=twiederh@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,101 +107,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000053cf4e0612d47986
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+ping
 
-For series
-Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
-
-On Fri, Mar 1, 2024 at 7:29=E2=80=AFPM Andrey Drobyshev <
-andrey.drobyshev@virtuozzo.com> wrote:
-
-> v1 --> v2:
->  * Replace commit for guest-get-fsinfo: instead of reporting statvfs(3)
->    values directly, keep the old ones but add an additional optional
->    field 'total-bytes-root', only reported in POSIX.  Also tweak the
->    fields description in qga/qapi-schema.json to document where the
->    values come from.
->
-> v1: https://lists.nongnu.org/archive/html/qemu-devel/2024-02/msg05766.htm=
-l
->
-> Andrey Drobyshev (7):
->   qga: guest-get-fsinfo: add optional 'total-bytes-root' field
->   qga: introduce ga_run_command() helper for guest cmd execution
->   qga/commands-posix: qmp_guest_shutdown: use ga_run_command helper
->   qga/commands-posix: qmp_guest_set_time: use ga_run_command helper
->   qga/commands-posix: execute_fsfreeze_hook: use ga_run_command helper
->   qga/commands-posix: use ga_run_command helper when suspending via
->     sysfs
->   qga/commands-posix: qmp_guest_set_user_password: use ga_run_command
->     helper
->
->  qga/commands-posix.c | 389 +++++++++++++++++++------------------------
->  qga/commands-win32.c |   1 +
->  qga/qapi-schema.json |  12 +-
->  3 files changed, 182 insertions(+), 220 deletions(-)
->
-> --
-> 2.39.3
->
->
-
---00000000000053cf4e0612d47986
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><div>For series <br></div><div>Reviewed-b=
-y: Konstantin Kostiuk &lt;<a href=3D"mailto:kkostiuk@redhat.com" target=3D"=
-_blank">kkostiuk@redhat.com</a>&gt;</div></div><br><div class=3D"gmail_quot=
-e"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Mar 1, 2024 at 7:29=E2=80=
-=AFPM Andrey Drobyshev &lt;<a href=3D"mailto:andrey.drobyshev@virtuozzo.com=
-">andrey.drobyshev@virtuozzo.com</a>&gt; wrote:<br></div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex">v1 --&gt; v2:<br>
-=C2=A0* Replace commit for guest-get-fsinfo: instead of reporting statvfs(3=
-)<br>
-=C2=A0 =C2=A0values directly, keep the old ones but add an additional optio=
-nal<br>
-=C2=A0 =C2=A0field &#39;total-bytes-root&#39;, only reported in POSIX.=C2=
-=A0 Also tweak the<br>
-=C2=A0 =C2=A0fields description in qga/qapi-schema.json to document where t=
-he<br>
-=C2=A0 =C2=A0values come from.<br>
-<br>
-v1: <a href=3D"https://lists.nongnu.org/archive/html/qemu-devel/2024-02/msg=
-05766.html" rel=3D"noreferrer" target=3D"_blank">https://lists.nongnu.org/a=
-rchive/html/qemu-devel/2024-02/msg05766.html</a><br>
-<br>
-Andrey Drobyshev (7):<br>
-=C2=A0 qga: guest-get-fsinfo: add optional &#39;total-bytes-root&#39; field=
-<br>
-=C2=A0 qga: introduce ga_run_command() helper for guest cmd execution<br>
-=C2=A0 qga/commands-posix: qmp_guest_shutdown: use ga_run_command helper<br=
->
-=C2=A0 qga/commands-posix: qmp_guest_set_time: use ga_run_command helper<br=
->
-=C2=A0 qga/commands-posix: execute_fsfreeze_hook: use ga_run_command helper=
-<br>
-=C2=A0 qga/commands-posix: use ga_run_command helper when suspending via<br=
->
-=C2=A0 =C2=A0 sysfs<br>
-=C2=A0 qga/commands-posix: qmp_guest_set_user_password: use ga_run_command<=
-br>
-=C2=A0 =C2=A0 helper<br>
-<br>
-=C2=A0qga/commands-posix.c | 389 +++++++++++++++++++-----------------------=
--<br>
-=C2=A0qga/commands-win32.c |=C2=A0 =C2=A01 +<br>
-=C2=A0qga/qapi-schema.json |=C2=A0 12 +-<br>
-=C2=A03 files changed, 182 insertions(+), 220 deletions(-)<br>
-<br>
--- <br>
-2.39.3<br>
-<br>
-</blockquote></div></div>
-
---00000000000053cf4e0612d47986--
+On Tue, 2024-02-06 at 14:47 +0100, Tim Wiederhake wrote:
+> Synchronizing the list of cpu features and models with qemu is a
+> recurring
+> task in libvirt. For x86, this is done by reading qom-list-properties
+> for
+> max-x86_64-cpu and manually filtering out everthing that does not
+> look like
+> a feature name, as well as parsing target/i386/cpu.c for cpu models.
+>=20
+> This is a flawed, tedious and error-prone procedure. Ideally, qemu
+> and libvirt would query a common source for cpu feature and model
+> related information. Meanwhile, converting this information into an
+> easier
+> to parse format would help libvirt a lot.
+>=20
+> This patch series converts the cpu feature information present in
+> target/i386/cpu.c (`feature_word_info`) into a yaml file and adds a
+> script to generate the c code from this data.
+>=20
+> v1:
+> https://lists.nongnu.org/archive/html/qemu-devel/2023-08/msg02005.html
+> v2:
+> https://lists.nongnu.org/archive/html/qemu-devel/2023-09/msg01773.html
+>=20
+> Changes since v2:
+> * Rebased on top of current master
+> * Removed all "drive-by" changes to feature names ("vmx-ept-uc",
+> "vmx-ept-wb",
+> =C2=A0 "kvmclock", "vmx-invept-single-context", and
+> =C2=A0 "vmx-invept-single-context-noglobals") as these needed further
+> discussion.
+> * Changes to the generator script reduce the changes in formatting to
+> the
+> =C2=A0 current feature_word_info even further to address the concern abou=
+t
+> code
+> =C2=A0 legibility. See Patch 5, "target/i386: Generate
+> feature_word_info.c.inc" for
+> =C2=A0 all non-whitespace changes.
+>=20
+> Tim Wiederhake (5):
+> =C2=A0 target/i386: Split out feature_word_info
+> =C2=A0 target/i386: Translate feature_word_info to yaml
+> =C2=A0 target/i386: Remove comments from feature_word_info.c.inc
+> =C2=A0 target/i386: Fix feature_word_info.c.inc formatting
+> =C2=A0 target/i386: Generate feature_word_info.c.inc
+>=20
+> =C2=A0target/i386/cpu.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 679 +-------=
+------------------
+> =C2=A0target/i386/feature_word_info.c.inc | 710
+> ++++++++++++++++++++++++++++
+> =C2=A0target/i386/feature_word_info.py=C2=A0=C2=A0=C2=A0 |=C2=A0 71 +++
+> =C2=A0target/i386/feature_word_info.yaml=C2=A0 | 701
+> +++++++++++++++++++++++++++
+> =C2=A04 files changed, 1483 insertions(+), 678 deletions(-)
+> =C2=A0create mode 100644 target/i386/feature_word_info.c.inc
+> =C2=A0create mode 100755 target/i386/feature_word_info.py
+> =C2=A0create mode 100644 target/i386/feature_word_info.yaml
+>=20
 
 
