@@ -4,98 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6770C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 03:08:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01DAAC48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 04:09:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgygS-0002Kg-8H; Sun, 03 Mar 2024 22:08:08 -0500
+	id 1rgzdG-0005Ts-SU; Sun, 03 Mar 2024 23:08:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rgygP-0002K8-FC
- for qemu-devel@nongnu.org; Sun, 03 Mar 2024 22:08:06 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rgygN-0000rS-W9
- for qemu-devel@nongnu.org; Sun, 03 Mar 2024 22:08:05 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-6e5e4b1d1f1so947381b3a.1
- for <qemu-devel@nongnu.org>; Sun, 03 Mar 2024 19:08:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709521682; x=1710126482; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=09c5Ld8ZWpizXtKH4r3UpdHmyvyQCrCH0kV5BMr3LS0=;
- b=aNzzPhezS1t0/moWXRG+H+THxSPtOTmMq014zWqtPpJTzS9EBVNdVz3LvThYZ1KsX8
- dNLzlG8rDnmen18xCShxbzVoycqVqEOejn+v8Z7bHy6A2ZoeVQqQM91jH5CrSvyKsF60
- Aysi6nbpOU+elVG95FKEBxfqjC6L/bQnPkNg/g3bP0sjsepb8UEJ3+NpKMRBk70huNfb
- OhOMKhdlM0qknBP/EaG3C+zV2vgeosjNG7aYYvNlR0XWa3vlgPuat7uVGfeSeImg93hX
- yiaNWQo+H3+lhF3T+Vs5Aof9T4uvhVOcJOckB5mtD1MZChpvwifOKQDPg2aDIXTyJpz6
- /XdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709521682; x=1710126482;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=09c5Ld8ZWpizXtKH4r3UpdHmyvyQCrCH0kV5BMr3LS0=;
- b=NsGdPU/jfDXdKElK7Zx/KODNaMtvJFs4HovNaeN8/VkNblkSbutjjVnTC5OtdFsHdl
- iMGsr0q+Wm8fEhXWlRQPCjZVIrDVNZYWemaDDsJIbOrxHQD5JepVm3J+a8MXbWNfAnYE
- Rz2yt/J9k9m9g7eivqLS0DULv13jS/zRGpsXdEjSGKxqkPvAVO6yC+cUd0j3O9HlOFU5
- oa/tnronKcEup4qwDNl2Vs8A3KGcYTgGH20Urv/9K3C5diCAY91MBMlSmad/H6xED6G6
- bXd290y5w4cWM+1EwXlRS44P/RYj/s0b4Hrntb0RU06GguEK+odHHpUPXb890PKskriX
- EDnQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX4eqtgCfBloyECD8LvjCz55pUYkXQLx/wr6dv6PVOMM6Glb8MUK/flGGHboXcANuRq639W+CAYe1xvH2yZIFMGqQwMfMw=
-X-Gm-Message-State: AOJu0Yw66/NAPN6sNXUseGXf5mdUaJmqO91+CSkmLV7gxKJrnsHGTHhR
- w2XdUjiDMKAANZrkfS3+2JUDbnTZDVU2Vj2gDfFYz39sRVj6PsRi
-X-Google-Smtp-Source: AGHT+IG2uYM8bLWoyeF3gdZVlOJfprj9tSG/wxizpVtatiHSeXDThSwnJefuUnh4WouBjPO9U9WXKA==
-X-Received: by 2002:a05:6a20:8f29:b0:1a1:461a:3691 with SMTP id
- b41-20020a056a208f2900b001a1461a3691mr6916853pzk.15.1709521682220; 
- Sun, 03 Mar 2024 19:08:02 -0800 (PST)
-Received: from debian ([2601:641:300:14de:bae0:aa65:8bdd:7233])
- by smtp.gmail.com with ESMTPSA id
- a3-20020aa78643000000b006e0debc1b75sm6348979pfo.90.2024.03.03.19.08.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 03 Mar 2024 19:08:01 -0800 (PST)
-From: fan <nifan.cxl@gmail.com>
-X-Google-Original-From: fan <fan@debian>
-Date: Sun, 3 Mar 2024 19:07:40 -0800
-To: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
-Cc: Hao Xiang <hao.xiang@bytedance.com>,
- Gregory Price <gourry.memverge@gmail.com>,
- aneesh.kumar@linux.ibm.com, mhocko@suse.com, tj@kernel.org,
- john@jagalactic.com, Eishan Mirakhur <emirakhur@micron.com>,
- Vinicius Tavares Petrucci <vtavarespetr@micron.com>,
- Ravis OpenSrc <Ravis.OpenSrc@micron.com>,
- Alistair Popple <apopple@nvidia.com>,
- "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <lenb@kernel.org>,
- Andrew Morton <akpm@linux-foundation.org>,
- Dave Jiang <dave.jiang@intel.com>, Dan Williams <dan.j.williams@intel.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Huang Ying <ying.huang@intel.com>, linux-acpi@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-mm@kvack.org,
- "Ho-Ren (Jack) Chuang" <horenc@vt.edu>,
- "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>,
- linux-cxl@vger.kernel.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v1 0/1] Improved Memory Tier Creation for CPUless NUMA
- Nodes
-Message-ID: <ZeU6_BnXIUs6pCym@debian>
-References: <20240301082248.3456086-1-horenchuang@bytedance.com>
+ (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
+ id 1rgzdE-0005Ti-UC
+ for qemu-devel@nongnu.org; Sun, 03 Mar 2024 23:08:53 -0500
+Received: from mgamail.intel.com ([192.198.163.19])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
+ id 1rgzdD-0001xN-3D
+ for qemu-devel@nongnu.org; Sun, 03 Mar 2024 23:08:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1709525331; x=1741061331;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=kPEzY1Q/YiJkCG9/zvlWooKynCaKb4rUYhJRl+dFyFs=;
+ b=BnvR70REWY365WJqZLNjnJeSTRbkH/LUNHR/eH7oOKABsqntkQxyJKm4
+ CnJWbuiIHyZrM/0SsZg4EQ9ojwWx/QIBd7i6YFrgOhLJth0IW6PHa9j6t
+ bxePwhOdbJY0rK+0l1imoregSgL0iOOnONJ0Jxg2/tDVwxLLDiQq544cE
+ lYy6zCht4GqgS1vfetRUY/1AUvhJSnWQwIJD6HQJXzmlzXvzccjfQ+9zs
+ NMFIlNGvtFXQZ3qfto5VpxfbMOHQDGVqXX+5nSAK26RUzYAwiRBcyebG9
+ e1ijO04DIlKMOCcFahPTpCuJTM6VTnwgchr3vQkQAxSmpd6irDjKwVL84 w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11002"; a="3858455"
+X-IronPort-AV: E=Sophos;i="6.06,203,1705392000"; 
+   d="scan'208";a="3858455"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Mar 2024 20:08:47 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,203,1705392000"; 
+   d="scan'208";a="9296666"
+Received: from linux.bj.intel.com ([10.238.157.71])
+ by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Mar 2024 20:08:44 -0800
+Date: Mon, 4 Mar 2024 12:05:50 +0800
+From: Tao Su <tao1.su@linux.intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org
+Subject: Re: [PATCH 1/1] kvm: add support for guest physical bits
+Message-ID: <ZeVIniWQDtPufs7W@linux.bj.intel.com>
+References: <20240301101713.356759-1-kraxel@redhat.com>
+ <20240301101713.356759-2-kraxel@redhat.com>
+ <3ab64c0f-7387-4738-b78c-cf798528d5f4@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240301082248.3456086-1-horenchuang@bytedance.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pf1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <3ab64c0f-7387-4738-b78c-cf798528d5f4@intel.com>
+Received-SPF: none client-ip=192.198.163.19;
+ envelope-from=tao1.su@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.589,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,40 +82,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 01, 2024 at 08:22:44AM +0000, Ho-Ren (Jack) Chuang wrote:
-> The memory tiering component in the kernel is functionally useless for
-> CPUless memory/non-DRAM devices like CXL1.1 type3 memory because the nodes
-> are lumped together in the DRAM tier.
-> https://lore.kernel.org/linux-mm/PH0PR08MB7955E9F08CCB64F23963B5C3A860A@PH0PR08MB7955.namprd08.prod.outlook.com/T/
+On Mon, Mar 04, 2024 at 09:54:40AM +0800, Xiaoyao Li wrote:
+> On 3/1/2024 6:17 PM, Gerd Hoffmann wrote:
+> > query kvm for supported guest physical address bits using
+> > KVM_CAP_VM_GPA_BITS.  Expose the value to the guest via cpuid
+> > (leaf 0x80000008, eax, bits 16-23).
+> > 
+> > Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> > ---
+> >   target/i386/cpu.h     | 1 +
+> >   target/i386/cpu.c     | 1 +
+> >   target/i386/kvm/kvm.c | 8 ++++++++
+> >   3 files changed, 10 insertions(+)
+> > 
+> > diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> > index 952174bb6f52..d427218827f6 100644
+> > --- a/target/i386/cpu.h
+> > +++ b/target/i386/cpu.h
+> > @@ -2026,6 +2026,7 @@ struct ArchCPU {
+> >       /* Number of physical address bits supported */
+> >       uint32_t phys_bits;
+> > +    uint32_t guest_phys_bits;
+> >       /* in order to simplify APIC support, we leave this pointer to the
+> >          user */
+> > diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> > index 2666ef380891..1a6cfc75951e 100644
+> > --- a/target/i386/cpu.c
+> > +++ b/target/i386/cpu.c
+> > @@ -6570,6 +6570,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+> >           if (env->features[FEAT_8000_0001_EDX] & CPUID_EXT2_LM) {
+> >               /* 64 bit processor */
+> >                *eax |= (cpu_x86_virtual_addr_width(env) << 8);
+> > +             *eax |= (cpu->guest_phys_bits << 16);
+> 
+> I think you misunderstand this field.
+> 
+> If you expose this field to guest, it's the information for nested guest.
+> i.e., the guest itself runs as a hypervisor will know its nested guest can
+> have guest_phys_bits for physical addr.
 
-Is this the right patchset you want to refer to? It is about node
-migration between tiers, how is it related to the context here?
+I'm also thinking about this issue...
 
-Fan
+Currently guest KVM doesn't use this field to advertise MAXPHYADDR because
+nested guest hasn't tdp. And this patch only affects KVM hypervisor now.
+
+Thanks,
+Tao
 
 > 
-> This patchset automatically resolves the issues. It delays the initialization
-> of memory tiers for CPUless NUMA nodes until they obtain HMAT information
-> at boot time, eliminating the need for user intervention.
-> If no HMAT specified, it falls back to using `default_dram_type`.
+> >           }
+> >           *ebx = env->features[FEAT_8000_0008_EBX];
+> >           if (cs->nr_cores * cs->nr_threads > 1) {
+> > diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> > index 42970ab046fa..e06c9d66bb01 100644
+> > --- a/target/i386/kvm/kvm.c
+> > +++ b/target/i386/kvm/kvm.c
+> > @@ -1716,6 +1716,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
+> >       X86CPU *cpu = X86_CPU(cs);
+> >       CPUX86State *env = &cpu->env;
+> >       uint32_t limit, i, j, cpuid_i;
+> > +    uint32_t guest_phys_bits;
+> >       uint32_t unused;
+> >       struct kvm_cpuid_entry2 *c;
+> >       uint32_t signature[3];
+> > @@ -1751,6 +1752,13 @@ int kvm_arch_init_vcpu(CPUState *cs)
+> >       env->apic_bus_freq = KVM_APIC_BUS_FREQUENCY;
+> > +    guest_phys_bits = kvm_check_extension(cs->kvm_state, KVM_CAP_VM_GPA_BITS);
+> > +    if (guest_phys_bits &&
+> > +        (cpu->guest_phys_bits == 0 ||
+> > +         cpu->guest_phys_bits > guest_phys_bits)) {
+> > +        cpu->guest_phys_bits = guest_phys_bits;
+> > +    }
+> > +
+> >       /*
+> >        * kvm_hyperv_expand_features() is called here for the second time in case
+> >        * KVM_CAP_SYS_HYPERV_CPUID is not supported. While we can't possibly handle
 > 
-> Example usecase:
-> We have CXL memory on the host, and we create VMs with a new system memory
-> device backed by host CXL memory. We inject CXL memory performance attributes
-> through QEMU, and the guest now sees memory nodes with performance attributes
-> in HMAT. With this change, we enable the guest kernel to construct
-> the correct memory tiering for the memory nodes.
-> 
-> Ho-Ren (Jack) Chuang (1):
->   memory tier: acpi/hmat: create CPUless memory tiers after obtaining
->     HMAT info
-> 
->  drivers/acpi/numa/hmat.c     |  3 ++
->  include/linux/memory-tiers.h |  6 +++
->  mm/memory-tiers.c            | 76 ++++++++++++++++++++++++++++++++----
->  3 files changed, 77 insertions(+), 8 deletions(-)
-> 
-> -- 
-> Hao Xiang and Ho-Ren (Jack) Chuang
 > 
 
