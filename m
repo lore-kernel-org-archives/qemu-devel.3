@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1A57C54E41
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 12:31:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F998C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 12:32:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh7Sw-0000pt-IP; Mon, 04 Mar 2024 07:30:46 -0500
+	id 1rh7Ty-0002S0-N3; Mon, 04 Mar 2024 07:31:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=mkh8=KK=redhat.com=clg@ozlabs.org>)
- id 1rh7S6-0000JU-QL
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:30:00 -0500
+ id 1rh7Su-0000ur-5o
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:30:46 -0500
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
  helo=gandalf.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=mkh8=KK=redhat.com=clg@ozlabs.org>)
- id 1rh7Ry-0004lG-GN
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:29:50 -0500
+ id 1rh7ST-0004js-0L
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:30:26 -0500
 Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TpJ111DjNz4x1H;
- Mon,  4 Mar 2024 23:29:41 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TpJ0x59Rjz4wyx;
+ Mon,  4 Mar 2024 23:29:37 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TpJ0y25QNz4x0m;
- Mon,  4 Mar 2024 23:29:38 +1100 (AEDT)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TpJ0r0wzKz4x0m;
+ Mon,  4 Mar 2024 23:29:31 +1100 (AEDT)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -39,11 +39,17 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Avihai Horon <avihaih@nvidia.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 13/26] migration: Add Error** argument to .load_setup()
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Halil Pasic <pasic@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ John Snow <jsnow@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PATCH v3 12/26] migration: Add Error** argument to .save_setup()
  handler
-Date: Mon,  4 Mar 2024 13:28:31 +0100
-Message-ID: <20240304122844.1888308-14-clg@redhat.com>
+Date: Mon,  4 Mar 2024 13:28:30 +0100
+Message-ID: <20240304122844.1888308-13-clg@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304122844.1888308-1-clg@redhat.com>
 References: <20240304122844.1888308-1-clg@redhat.com>
@@ -74,121 +80,303 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This will be useful to report errors at a higher level, mostly in VFIO
-today.
+The purpose is to record a potential error in the migration stream if
+qemu_savevm_state_setup() fails. Most of the current .save_setup()
+handlers can be modified to use the Error argument instead of managing
+their own and calling locally error_report().
 
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Halil Pasic <pasic@linux.ibm.com>
+Cc: Thomas Huth <thuth@redhat.com>
+Cc: Eric Blake <eblake@redhat.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: John Snow <jsnow@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
 
- Changes in v3:
+ Changes in v3: 
 
- - ERRP_GUARD() because of error_prepend use 
  - Made sure an error is always set in case of failure in
-   vfio_load_setup()
+   qemu_savevm_state_setup()
 
- include/migration/register.h |  3 ++-
- hw/vfio/migration.c          |  9 +++++++--
- migration/ram.c              |  3 ++-
- migration/savevm.c           | 11 +++++++----
- 4 files changed, 18 insertions(+), 8 deletions(-)
+ Changes in v2: 
+
+ - dropped qemu_file_set_error_obj(f, ret, local_err);
+ 
+ include/migration/register.h   |  3 ++-
+ hw/ppc/spapr.c                 |  2 +-
+ hw/s390x/s390-stattrib.c       |  6 ++----
+ hw/vfio/migration.c            | 17 ++++++++---------
+ migration/block-dirty-bitmap.c |  4 +++-
+ migration/block.c              | 13 ++++---------
+ migration/ram.c                | 15 ++++++++-------
+ migration/savevm.c             |  4 +---
+ 8 files changed, 29 insertions(+), 35 deletions(-)
 
 diff --git a/include/migration/register.h b/include/migration/register.h
-index 64fc7c11036c82edd6d69513e56a0216d36c17aa..f60e797894e5faacdf55d2d6de175074ac58944f 100644
+index d7b70a8be68c9df47c7843bda7d430989d7ca384..64fc7c11036c82edd6d69513e56a0216d36c17aa 100644
 --- a/include/migration/register.h
 +++ b/include/migration/register.h
-@@ -234,10 +234,11 @@ typedef struct SaveVMHandlers {
+@@ -60,10 +60,11 @@ typedef struct SaveVMHandlers {
       *
-      * @f: QEMUFile where to receive the data
+      * @f: QEMUFile where to send the data
       * @opaque: data pointer passed to register_savevm_live()
 +     * @errp: pointer to Error*, to store an error if it happens.
       *
       * Returns zero to indicate success and negative for error
       */
--    int (*load_setup)(QEMUFile *f, void *opaque);
-+    int (*load_setup)(QEMUFile *f, void *opaque, Error **errp);
+-    int (*save_setup)(QEMUFile *f, void *opaque);
++    int (*save_setup)(QEMUFile *f, void *opaque, Error **errp);
  
      /**
-      * @load_cleanup
+      * @save_cleanup
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 55263f0815ed7671b32ea20b394ae71c82e616cb..045c024ffa76eacfc496bd486cb6cafbee2df73e 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -2142,7 +2142,7 @@ static const VMStateDescription vmstate_spapr = {
+     }
+ };
+ 
+-static int htab_save_setup(QEMUFile *f, void *opaque)
++static int htab_save_setup(QEMUFile *f, void *opaque, Error **errp)
+ {
+     SpaprMachineState *spapr = opaque;
+ 
+diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
+index e99de190332a82363b1388bbc450013149295bc0..16dee2e2ea8031d072156bb7930d5ac6dfd5a214 100644
+--- a/hw/s390x/s390-stattrib.c
++++ b/hw/s390x/s390-stattrib.c
+@@ -167,19 +167,17 @@ static int cmma_load(QEMUFile *f, void *opaque, int version_id)
+     return ret;
+ }
+ 
+-static int cmma_save_setup(QEMUFile *f, void *opaque)
++static int cmma_save_setup(QEMUFile *f, void *opaque, Error **errp)
+ {
+     S390StAttribState *sas = S390_STATTRIB(opaque);
+     S390StAttribClass *sac = S390_STATTRIB_GET_CLASS(sas);
+-    Error *local_err = NULL;
+     int res;
+     /*
+      * Signal that we want to start a migration, thus needing PGSTE dirty
+      * tracking.
+      */
+-    res = sac->set_migrationmode(sas, true, &local_err);
++    res = sac->set_migrationmode(sas, true, errp);
+     if (res) {
+-        error_report_err(local_err);
+         return res;
+     }
+     qemu_put_be64(f, STATTR_FLAG_EOS);
 diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 5152783e01c39edaf4ab37035924f8e495cf48d8..20eb7dad1a909d49a810294d87a07262ec5f1e9d 100644
+index 51bea536cc290ba0aa393f78b017b0650e333bff..5152783e01c39edaf4ab37035924f8e495cf48d8 100644
 --- a/hw/vfio/migration.c
 +++ b/hw/vfio/migration.c
-@@ -588,12 +588,17 @@ static void vfio_save_state(QEMUFile *f, void *opaque)
-     }
+@@ -378,7 +378,7 @@ static int vfio_save_prepare(void *opaque, Error **errp)
+     return 0;
  }
  
--static int vfio_load_setup(QEMUFile *f, void *opaque)
-+static int vfio_load_setup(QEMUFile *f, void *opaque, Error **errp)
+-static int vfio_save_setup(QEMUFile *f, void *opaque)
++static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
  {
      VFIODevice *vbasedev = opaque;
-+    int ret;
+     VFIOMigration *migration = vbasedev->migration;
+@@ -392,8 +392,8 @@ static int vfio_save_setup(QEMUFile *f, void *opaque)
+                                       stop_copy_size);
+     migration->data_buffer = g_try_malloc0(migration->data_buffer_size);
+     if (!migration->data_buffer) {
+-        error_report("%s: Failed to allocate migration data buffer",
+-                     vbasedev->name);
++        error_setg(errp, "%s: Failed to allocate migration data buffer",
++                   vbasedev->name);
+         return -ENOMEM;
+     }
  
--    return vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_RESUMING,
-+    ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_RESUMING,
-                                    vbasedev->migration->device_state);
-+    if (ret) {
-+        error_setg(errp, "%s: Failed to set RESUMING state", vbasedev->name);
-+    }
-+    return ret;
- }
- 
- static int vfio_load_cleanup(void *opaque)
-diff --git a/migration/ram.c b/migration/ram.c
-index 84e718c562c72310092114c438eb94e0077775f2..20c6ad9e759b2b8ec7ae26b7ca72d5cbd20d481f 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -3506,8 +3506,9 @@ void colo_release_ram_cache(void)
-  *
-  * @f: QEMUFile where to receive the data
-  * @opaque: RAMState pointer
-+ * @errp: pointer to Error*, to store an error if it happens.
-  */
--static int ram_load_setup(QEMUFile *f, void *opaque)
-+static int ram_load_setup(QEMUFile *f, void *opaque, Error **errp)
- {
-     xbzrle_load_setup();
-     ramblock_recv_map_init();
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 0ff2c4d97d475b81603bc2387cfaa3c000a25cdc..a495676fab928b86df33911ea2f24d250efe1876 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -2749,8 +2749,9 @@ static void qemu_loadvm_state_switchover_ack_needed(MigrationIncomingState *mis)
-     trace_loadvm_state_switchover_ack_needed(mis->switchover_ack_pending_num);
- }
- 
--static int qemu_loadvm_state_setup(QEMUFile *f)
-+static int qemu_loadvm_state_setup(QEMUFile *f, Error **errp)
- {
-+    ERRP_GUARD(); /* error_prepend use */
-     SaveStateEntry *se;
-     int ret;
- 
-@@ -2765,10 +2766,11 @@ static int qemu_loadvm_state_setup(QEMUFile *f)
+@@ -403,8 +403,8 @@ static int vfio_save_setup(QEMUFile *f, void *opaque)
+             ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_PRE_COPY,
+                                            VFIO_DEVICE_STATE_RUNNING);
+             if (ret) {
+-                error_report("%s: Failed to set new RUNNING state",
+-                             vbasedev->name);
++                error_setg(errp, "%s: Failed to set new RUNNING state",
++                           vbasedev->name);
+                 return ret;
              }
-         }
  
--        ret = se->ops->load_setup(f, se->opaque);
-+        ret = se->ops->load_setup(f, se->opaque, errp);
-         if (ret < 0) {
-+            error_prepend(errp, "Load state of device %s failed: ",
-+                          se->idstr);
-             qemu_file_set_error(f, ret);
--            error_report("Load state of device %s failed", se->idstr);
-             return ret;
+@@ -415,8 +415,8 @@ static int vfio_save_setup(QEMUFile *f, void *opaque)
+             /* vfio_save_complete_precopy() will go to STOP_COPY */
+             break;
+         default:
+-            error_report("%s: Invalid device state %d", vbasedev->name,
+-                         migration->device_state);
++            error_setg(errp, "%s: Invalid device state %d", vbasedev->name,
++                       migration->device_state);
+             return -EINVAL;
          }
      }
-@@ -2949,7 +2951,8 @@ int qemu_loadvm_state(QEMUFile *f)
+@@ -427,8 +427,7 @@ static int vfio_save_setup(QEMUFile *f, void *opaque)
+ 
+     ret = qemu_file_get_error(f);
+     if (ret) {
+-        error_report("%s: save setup failed : %s", vbasedev->name,
+-                     strerror(ret));
++        error_setg_errno(errp, ret, "%s: save setup failed", vbasedev->name);
+     }
+ 
+     return ret;
+diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
+index 2708abf3d762de774ed294d3fdb8e56690d2974c..542a8c297b329abc30d1b3a205d29340fa59a961 100644
+--- a/migration/block-dirty-bitmap.c
++++ b/migration/block-dirty-bitmap.c
+@@ -1213,12 +1213,14 @@ fail:
+     return ret;
+ }
+ 
+-static int dirty_bitmap_save_setup(QEMUFile *f, void *opaque)
++static int dirty_bitmap_save_setup(QEMUFile *f, void *opaque, Error **errp)
+ {
+     DBMSaveState *s = &((DBMState *)opaque)->save;
+     SaveBitmapState *dbms = NULL;
+ 
+     if (init_dirty_bitmap_migration(s) < 0) {
++        error_setg(errp,
++                   "Failed to initialize dirty tracking bitmap for blocks");
+         return -1;
+     }
+ 
+diff --git a/migration/block.c b/migration/block.c
+index 06f5857cf049df3261d2cf1d7c3607ab92350ac6..02d00095db4cb040d5508a191f469d657b0085bf 100644
+--- a/migration/block.c
++++ b/migration/block.c
+@@ -706,10 +706,9 @@ static void block_migration_cleanup(void *opaque)
+     blk_mig_unlock();
+ }
+ 
+-static int block_save_setup(QEMUFile *f, void *opaque)
++static int block_save_setup(QEMUFile *f, void *opaque, Error **errp)
+ {
+     int ret;
+-    Error *local_err = NULL;
+ 
+     trace_migration_block_save("setup", block_mig_state.submitted,
+                                block_mig_state.transferred);
+@@ -717,25 +716,21 @@ static int block_save_setup(QEMUFile *f, void *opaque)
+     warn_report("block migration is deprecated;"
+                 " use blockdev-mirror with NBD instead");
+ 
+-    ret = init_blk_migration(f, &local_err);
++    ret = init_blk_migration(f, errp);
+     if (ret < 0) {
+-        error_report_err(local_err);
          return ret;
      }
  
--    if (qemu_loadvm_state_setup(f) != 0) {
-+    if (qemu_loadvm_state_setup(f, &local_err) != 0) {
-+        error_report_err(local_err);
-         return -EINVAL;
+     /* start track dirty blocks */
+     ret = set_dirty_tracking();
+     if (ret) {
+-        error_setg_errno(&local_err, -ret,
+-                         "Failed to start block dirty tracking");
+-        error_report_err(local_err);
++        error_setg_errno(errp, -ret, "Failed to start block dirty tracking");
+         return ret;
      }
  
+     ret = flush_blks(f);
+     if (ret) {
+-        error_setg_errno(&local_err, -ret, "Flushing block failed");
+-        error_report_err(local_err);
++        error_setg_errno(errp, -ret, "Flushing block failed");
+         return ret;
+     }
+     blk_mig_reset_dirty_cursor();
+diff --git a/migration/ram.c b/migration/ram.c
+index dbd04d8ee2167881007c836a6bbc79c1aced72d0..84e718c562c72310092114c438eb94e0077775f2 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -2929,22 +2929,23 @@ void qemu_guest_free_page_hint(void *addr, size_t len)
+  *
+  * @f: QEMUFile where to send the data
+  * @opaque: RAMState pointer
++ * @errp: pointer to Error*, to store an error if it happens.
+  */
+-static int ram_save_setup(QEMUFile *f, void *opaque)
++static int ram_save_setup(QEMUFile *f, void *opaque, Error **errp)
+ {
+     RAMState **rsp = opaque;
+     RAMBlock *block;
+     int ret;
+ 
+     if (compress_threads_save_setup()) {
+-        error_report("%s: failed to start compress threads", __func__);
++        error_setg(errp, "%s: failed to start compress threads", __func__);
+         return -1;
+     }
+ 
+     /* migration has already setup the bitmap, reuse it. */
+     if (!migration_in_colo_state()) {
+         if (ram_init_all(rsp) != 0) {
+-            error_report("%s: failed to setup RAM for migration", __func__);
++            error_setg(errp, "%s: failed to setup RAM for migration", __func__);
+             compress_threads_save_cleanup();
+             return -1;
+         }
+@@ -2971,14 +2972,14 @@ static int ram_save_setup(QEMUFile *f, void *opaque)
+ 
+     ret = rdma_registration_start(f, RAM_CONTROL_SETUP);
+     if (ret < 0) {
+-        error_report("%s: failed to start RDMA registration", __func__);
++        error_setg(errp, "%s: failed to start RDMA registration", __func__);
+         qemu_file_set_error(f, ret);
+         return ret;
+     }
+ 
+     ret = rdma_registration_stop(f, RAM_CONTROL_SETUP);
+     if (ret < 0) {
+-        error_report("%s: failed to stop RDMA registration", __func__);
++        error_setg(errp, "%s: failed to stop RDMA registration", __func__);
+         qemu_file_set_error(f, ret);
+         return ret;
+     }
+@@ -2990,7 +2991,7 @@ static int ram_save_setup(QEMUFile *f, void *opaque)
+     ret = multifd_send_sync_main();
+     bql_lock();
+     if (ret < 0) {
+-        error_report("%s: multifd synchronization failed", __func__);
++        error_setg(errp, "%s: multifd synchronization failed", __func__);
+         return ret;
+     }
+ 
+@@ -3001,7 +3002,7 @@ static int ram_save_setup(QEMUFile *f, void *opaque)
+     qemu_put_be64(f, RAM_SAVE_FLAG_EOS);
+     ret = qemu_fflush(f);
+     if (ret) {
+-        error_report("%s failed : %s", __func__, strerror(ret));
++        error_setg_errno(errp, ret, "%s failed", __func__);
+     }
+     return ret;
+ }
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 3ae4328b95d554cb4855f96989f8685daf4b8407..0ff2c4d97d475b81603bc2387cfaa3c000a25cdc 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -1341,11 +1341,9 @@ int qemu_savevm_state_setup(QEMUFile *f, Error **errp)
+         }
+         save_section_header(f, se, QEMU_VM_SECTION_START);
+ 
+-        ret = se->ops->save_setup(f, se->opaque);
++        ret = se->ops->save_setup(f, se->opaque, errp);
+         save_section_footer(f, se);
+         if (ret < 0) {
+-            error_setg(errp, "failed to setup SaveStateEntry with id(name): "
+-                       "%d(%s): %d", se->section_id, se->idstr, ret);
+             qemu_file_set_error(f, ret);
+             break;
+         }
 -- 
 2.44.0
 
