@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84AD6C54E55
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 19:45:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CF56C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 19:45:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhEEh-0005WN-Ey; Mon, 04 Mar 2024 14:44:31 -0500
+	id 1rhEFF-0005q0-AM; Mon, 04 Mar 2024 14:45:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rhEEf-0005VR-1y
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 14:44:29 -0500
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ id 1rhEEq-0005dI-MJ
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 14:44:42 -0500
+Received: from mail-yb1-xb36.google.com ([2607:f8b0:4864:20::b36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rhEEW-0006wX-Jn
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 14:44:28 -0500
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-607c5679842so48932017b3.2
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 11:44:20 -0800 (PST)
+ id 1rhEEp-0006z9-2Z
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 14:44:40 -0500
+Received: by mail-yb1-xb36.google.com with SMTP id
+ 3f1490d57ef6-db4364ecd6aso5048718276.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 11:44:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709581459; x=1710186259; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1709581476; x=1710186276; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=g8lPD938tgQqBzbyLXCNS0GDAHx1dZoU8O4sZyz4+ao=;
- b=Y66kDvOWkiZH98Cxn30Z8/RKSgR67scwQ6Nppy2EdP14DY8aZuQGFOA01dM5N6/y0l
- q7b4sLfWqe+unM5bjStTJNyShfDbyqRKdwptSt3UIqOc1ZZGggtvX5Lihc8UJfxRRFpS
- LJh86TULZbpL9WeMg0FvodBm0XFgyyo8l6SU5p6qI6Osn26YjLZclTAeP4KOynfM22Xn
- flBj9qovCAPAtCYjS2b4ZvAkmLEyvorSc7jHdfXo5YsZdKubFRBJ3Y6X0oKYvPm5mX1C
- Kcmfetj7DlFLD/AXzHoJ2YDCsYhXbEN1Bzz8P1DzBwTf+MQHu3Ph7nJOxnfrEjhRC8pw
- coAg==
+ bh=TKU7EMmrCEGIbEXLnUmzxmQlpe4p33ksgB+5YiuAYXs=;
+ b=ApR0SxyZ0y2x1m+wVRGfSeaCxU2+FrFRRXht3z2fEsAbauv5juhk0ly4XIPvFjHYT6
+ NgJPcbiwEnYPrpAZiSpz11fpbj+6nxInqXzjh4Qcq15qhactaA+/oENfVzitSGUZ9XFI
+ VE93BTDDDLSyEB1LZW9UoNHun4JXEaoNAd5peBs5RhTO3Kb1WOsa0ZQhrAKxj25APGs7
+ ZIh1ps5odkXwXPdnYF3bsg77hv4+3iMVIKZLr95m+szK8P3W2Ptzg16Uf5LRnLzv4cTz
+ y6Mo/fQs+wKelU5tzL6GaOFDIY1EzCp3TnpwK3xOy6DkWcMfzS8IlrZRU5Bxt94iSg3Q
+ xGSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709581459; x=1710186259;
+ d=1e100.net; s=20230601; t=1709581476; x=1710186276;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=g8lPD938tgQqBzbyLXCNS0GDAHx1dZoU8O4sZyz4+ao=;
- b=ggYmC+PZDy5NLy/EMSe6r5QPp5x/lcH/+DfAtKcMVhjPp/xDO6yEExooNpV3UTooZH
- 2f47j68wpJ2wYrfOpMWWj/nJwr2RYFIrTtSxqOSZD65EDn8e5KyD4oJC3IjacDWlDGym
- Kp3C5gbqZFtzBGYOn59FDyRV6ERmrkR1zMDvub4KUxjq+GyYPE/xYGurW1slsaSRgHME
- QDHqUKf7u/HgBoQ2XmE/pF1KtrUCF8O07uX73bWUJ7+DwvTUaz0i16/Qevv96Wv09Ez+
- lRhUldCyJuwKcJQgMW4nNSimHhdmgcQHoeZUcKVqmF8sR8jSA6lr3D5uR18RRiTIQTqa
- uyrw==
-X-Gm-Message-State: AOJu0Yx6R+Wk8P+1nq7AsdkDCtXL6G05SrE4ZlFAfWH7VoBVlXCSy/Gx
- HJ4Gj6q8EaYQybfkdM87NpUZNsvZdWGxuV/yD/hckHt2Rj5QcmNh1C5zPyUk
-X-Google-Smtp-Source: AGHT+IGMxwD7M3abEPAmA4B7Id72YrzI5ZSRaZbmHCQNrQ/PXng4IFuOLlXZLROHo70LffTiLhR0wg==
-X-Received: by 2002:a25:5f48:0:b0:dbf:6267:eba4 with SMTP id
- h8-20020a255f48000000b00dbf6267eba4mr7589407ybm.27.1709581458654; 
- Mon, 04 Mar 2024 11:44:18 -0800 (PST)
+ bh=TKU7EMmrCEGIbEXLnUmzxmQlpe4p33ksgB+5YiuAYXs=;
+ b=JS69OqcJC6bN25s+krw2ODMlgxh5fJR4tdbOrtHpsU+MvmKzsjGQT7iWgHO92oGLuy
+ 8xqhDWOjUaK3UU8KlHG4IETiK8DvPjt5Rkf4NNV8kAJc/Ni/IA6phBdVGVzrAu5lkNaz
+ +0AL0EqErEA2ynwJe31n/8PpAV10OGMtFAsjNAKs61N5pwmMthmZaTYPcrv1F+0whlLM
+ rc87ZAICRrdt8OLHkLkGqe73ymc59GHNJ2hjWCTe8/wP1PSxTh8zAQhSJ6iLua3q0/mQ
+ QZ9j3O1/mwAzC7WCIipxaLAOCjYaD2yN82dyT0VAjHzKo6/J1xvWRCU+MlP+uZSqCRd4
+ 2+tg==
+X-Gm-Message-State: AOJu0Yy2y6214AiK4MxPWQpD16ifDBQXMfNyvsfnF4NP/AfFD4GR/NIo
+ SLM/M8XmBppDzSoTJ7tf4Lw4W62cWsz5hS5FGvfFpFRR5rc2f7yBxiesTBxl
+X-Google-Smtp-Source: AGHT+IGJaenBrz1oSac79n8j93VzbYMt0qiN1tC/RpBnCVT3yoX1a0NYTi0pRDY7jv1mKlEMaKgrEw==
+X-Received: by 2002:a25:2690:0:b0:dc6:ff12:13d7 with SMTP id
+ m138-20020a252690000000b00dc6ff1213d7mr5343408ybm.60.1709581476386; 
+ Mon, 04 Mar 2024 11:44:36 -0800 (PST)
 Received: from localhost.localdomain ([50.205.20.42])
  by smtp.gmail.com with ESMTPSA id
- h1-20020a255f41000000b00dc62edd58dasm2282646ybm.40.2024.03.04.11.44.16
+ h1-20020a255f41000000b00dc62edd58dasm2282646ybm.40.2024.03.04.11.44.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Mar 2024 11:44:18 -0800 (PST)
+ Mon, 04 Mar 2024 11:44:36 -0800 (PST)
 From: nifan.cxl@gmail.com
 To: qemu-devel@nongnu.org
 Cc: jonathan.cameron@huawei.com, linux-cxl@vger.kernel.org,
@@ -65,17 +65,17 @@ Cc: jonathan.cameron@huawei.com, linux-cxl@vger.kernel.org,
  a.manzanares@samsung.com, dave@stgolabs.net, nmtadam.samsung@gmail.com,
  nifan.cxl@gmail.com, jim.harris@samsung.com, Jorgen.Hansen@wdc.com,
  wj28.lee@gmail.com, Fan Ni <fan.ni@samsung.com>
-Subject: [PATCH v5 07/13] hw/mem/cxl_type3: Add DC extent list representative
- and get DC extent list mailbox support
-Date: Mon,  4 Mar 2024 11:34:02 -0800
-Message-ID: <20240304194331.1586191-8-nifan.cxl@gmail.com>
+Subject: [PATCH v5 13/13] qapi/cxl.json: Add QMP interfaces to print out
+ accepted and pending DC extents
+Date: Mon,  4 Mar 2024 11:34:08 -0800
+Message-ID: <20240304194331.1586191-14-nifan.cxl@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240304194331.1586191-1-nifan.cxl@gmail.com>
 References: <20240304194331.1586191-1-nifan.cxl@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=nifan.cxl@gmail.com; helo=mail-yw1-x1131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b36;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-yb1-xb36.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,172 +100,173 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Fan Ni <fan.ni@samsung.com>
 
-Add dynamic capacity extent list representative to the definition of
-CXLType3Dev and add get DC extent list mailbox command per
-CXL.spec.3.1:.8.2.9.9.9.2.
+With the change, we add the following two QMP interfaces to print out
+extents information in the device,
+1. cxl-display-accepted-dc-extents: print out the accepted DC extents in
+   the device;
+2. cxl-display-pending-to-add-dc-extents: print out the pending-to-add
+   DC extents in the device;
+The output is appended to a file passed to the command and by default
+it is /tmp/dc-extent.txt.
 
 Signed-off-by: Fan Ni <fan.ni@samsung.com>
 ---
- hw/cxl/cxl-mailbox-utils.c  | 71 ++++++++++++++++++++++++++++++++++++-
- hw/mem/cxl_type3.c          |  1 +
- include/hw/cxl/cxl_device.h | 22 ++++++++++++
- 3 files changed, 93 insertions(+), 1 deletion(-)
+ hw/mem/cxl_type3.c       | 80 ++++++++++++++++++++++++++++++++++++++++
+ hw/mem/cxl_type3_stubs.c | 12 ++++++
+ qapi/cxl.json            | 32 ++++++++++++++++
+ 3 files changed, 124 insertions(+)
 
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 8309f27a2b..425b378a2c 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -84,6 +84,7 @@ enum {
-         #define CLEAR_POISON           0x2
-     DCD_CONFIG  = 0x48,
-         #define GET_DC_CONFIG          0x0
-+        #define GET_DYN_CAP_EXT_LIST   0x1
-     PHYSICAL_SWITCH = 0x51,
-         #define IDENTIFY_SWITCH_DEVICE      0x0
-         #define GET_PHYSICAL_PORT_STATE     0x1
-@@ -1325,7 +1326,8 @@ static CXLRetCode cmd_dcd_get_dyn_cap_config(const struct cxl_cmd *cmd,
-      * to use.
-      */
-     stl_le_p(&extra_out->num_extents_supported, CXL_NUM_EXTENTS_SUPPORTED);
--    stl_le_p(&extra_out->num_extents_available, CXL_NUM_EXTENTS_SUPPORTED);
-+    stl_le_p(&extra_out->num_extents_available, CXL_NUM_EXTENTS_SUPPORTED -
-+             ct3d->dc.total_extent_count);
-     stl_le_p(&extra_out->num_tags_supported, CXL_NUM_TAGS_SUPPORTED);
-     stl_le_p(&extra_out->num_tags_available, CXL_NUM_TAGS_SUPPORTED);
- 
-@@ -1333,6 +1335,70 @@ static CXLRetCode cmd_dcd_get_dyn_cap_config(const struct cxl_cmd *cmd,
-     return CXL_MBOX_SUCCESS;
- }
- 
-+/*
-+ * CXL r3.1 section 8.2.9.9.9.2:
-+ * Get Dynamic Capacity Extent List (Opcode 4801h)
-+ */
-+static CXLRetCode cmd_dcd_get_dyn_cap_ext_list(const struct cxl_cmd *cmd,
-+                                               uint8_t *payload_in,
-+                                               size_t len_in,
-+                                               uint8_t *payload_out,
-+                                               size_t *len_out,
-+                                               CXLCCI *cci)
-+{
-+    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-+    struct {
-+        uint32_t extent_cnt;
-+        uint32_t start_extent_id;
-+    } QEMU_PACKED *in = (void *)payload_in;
-+    struct {
-+        uint32_t count;
-+        uint32_t total_extents;
-+        uint32_t generation_num;
-+        uint8_t rsvd[4];
-+        CXLDCExtentRaw records[];
-+    } QEMU_PACKED *out = (void *)payload_out;
-+    uint16_t record_count = 0, i = 0, record_done = 0;
-+    uint16_t out_pl_len;
-+    uint32_t start_extent_id = in->start_extent_id;
-+    CXLDCExtentList *extent_list = &ct3d->dc.extents;
-+    CXLDCExtent *ent;
-+
-+    if (start_extent_id > ct3d->dc.total_extent_count) {
-+        return CXL_MBOX_INVALID_INPUT;
-+    }
-+
-+    record_count = MIN(in->extent_cnt,
-+                       ct3d->dc.total_extent_count - start_extent_id);
-+
-+    out_pl_len = sizeof(*out) + record_count * sizeof(out->records[0]);
-+    assert(out_pl_len <= CXL_MAILBOX_MAX_PAYLOAD_SIZE);
-+
-+    stl_le_p(&out->count, record_count);
-+    stl_le_p(&out->total_extents, ct3d->dc.total_extent_count);
-+    stl_le_p(&out->generation_num, ct3d->dc.ext_list_gen_seq);
-+
-+    if (record_count > 0) {
-+        QTAILQ_FOREACH(ent, extent_list, node) {
-+            if (i++ < start_extent_id) {
-+                continue;
-+            }
-+            stq_le_p(&out->records[record_done].start_dpa, ent->start_dpa);
-+            stq_le_p(&out->records[record_done].len, ent->len);
-+            memcpy(&out->records[record_done].tag, ent->tag, 0x10);
-+            stw_le_p(&out->records[record_done].shared_seq, ent->shared_seq);
-+
-+            record_done++;
-+            if (record_done == record_count) {
-+                break;
-+            }
-+        }
-+    }
-+
-+    *len_out = out_pl_len;
-+    return CXL_MBOX_SUCCESS;
-+}
-+
- #define IMMEDIATE_CONFIG_CHANGE (1 << 1)
- #define IMMEDIATE_DATA_CHANGE (1 << 2)
- #define IMMEDIATE_POLICY_CHANGE (1 << 3)
-@@ -1380,6 +1446,9 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
- static const struct cxl_cmd cxl_cmd_set_dcd[256][256] = {
-     [DCD_CONFIG][GET_DC_CONFIG] = { "DCD_GET_DC_CONFIG",
-         cmd_dcd_get_dyn_cap_config, 2, 0 },
-+    [DCD_CONFIG][GET_DYN_CAP_EXT_LIST] = {
-+        "DCD_GET_DYNAMIC_CAPACITY_EXTENT_LIST", cmd_dcd_get_dyn_cap_ext_list,
-+        8, 0 },
- };
- 
- static const struct cxl_cmd cxl_cmd_set_sw[256][256] = {
 diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 2b380a260b..102fa8151e 100644
+index 5bd64e604e..6a08e7ae40 100644
 --- a/hw/mem/cxl_type3.c
 +++ b/hw/mem/cxl_type3.c
-@@ -673,6 +673,7 @@ static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
-         region_base += region->len;
-         ct3d->dc.total_capacity += region->len;
-     }
-+    QTAILQ_INIT(&ct3d->dc.extents);
- 
-     return true;
+@@ -2089,6 +2089,86 @@ void qmp_cxl_release_dynamic_capacity(const char *path, uint8_t region_id,
+                                      region_id, records, errp);
  }
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index 265679302c..8148bcc34b 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -424,6 +424,25 @@ typedef QLIST_HEAD(, CXLPoison) CXLPoisonList;
  
- #define DCD_MAX_NUM_REGION 8
- 
-+typedef struct CXLDCExtentRaw {
-+    uint64_t start_dpa;
-+    uint64_t len;
-+    uint8_t tag[0x10];
-+    uint16_t shared_seq;
-+    uint8_t rsvd[0x6];
-+} QEMU_PACKED CXLDCExtentRaw;
++static void cxl_dcd_display_extent_list(const CXLType3Dev *dcd, const char *f,
++                                        bool accepted_list, Error **errp)
++{
++    const CXLDCExtentList *list;
++    CXLDCExtent *ent;
++    FILE *fp = NULL;
++    int i = 0;
 +
-+typedef struct CXLDCExtent {
-+    uint64_t start_dpa;
-+    uint64_t len;
-+    uint8_t tag[0x10];
-+    uint16_t shared_seq;
-+    uint8_t rsvd[0x6];
++    if (!dcd->dc.num_regions) {
++        error_setg(errp, "No dynamic capacity support from the device");
++        return;
++    }
 +
-+    QTAILQ_ENTRY(CXLDCExtent) node;
-+} CXLDCExtent;
-+typedef QTAILQ_HEAD(, CXLDCExtent) CXLDCExtentList;
++    if (!f) {
++        fp = fopen("/tmp/dc-extent.txt", "a+");
++    } else {
++        fp = fopen(f, "a+");
++    }
 +
- typedef struct CXLDCRegion {
-     uint64_t base;       /* aligned to 256*MiB */
-     uint64_t decode_len; /* aligned to 256*MiB */
-@@ -470,6 +489,9 @@ struct CXLType3Dev {
-         HostMemoryBackend *host_dc;
-         AddressSpace host_dc_as;
-         uint64_t total_capacity; /* 256M aligned */
-+        CXLDCExtentList extents;
-+        uint32_t total_extent_count;
-+        uint32_t ext_list_gen_seq;
- 
-         uint8_t num_regions; /* 0-8 regions */
-         CXLDCRegion regions[DCD_MAX_NUM_REGION];
++    if (!fp) {
++        error_setg(errp, "Open log file failed");
++        return;
++    }
++    if (accepted_list) {
++        list = &dcd->dc.extents;
++        fprintf(fp, "Print accepted extent info:\n");
++    } else {
++        list = &dcd->dc.extents_pending_to_add;
++        fprintf(fp, "Print pending-to-add extent info:\n");
++    }
++
++    QTAILQ_FOREACH(ent, list, node) {
++        fprintf(fp, "%d: [0x%lx - 0x%lx]\n", i++, ent->start_dpa,
++                               ent->start_dpa + ent->len);
++    }
++    fprintf(fp, "In total, %d extents printed!\n", i);
++    fclose(fp);
++}
++
++void qmp_cxl_display_accepted_dc_extents(const char *path, const char *f,
++                                         Error **errp)
++{
++    Object *obj;
++    CXLType3Dev *dcd;
++
++    obj = object_resolve_path(path, NULL);
++    if (!obj) {
++        error_setg(errp, "Unable to resolve path");
++        return;
++    }
++    if (!object_dynamic_cast(obj, TYPE_CXL_TYPE3)) {
++        error_setg(errp, "Path not point to a valid CXL type3 device");
++        return;
++    }
++
++    dcd = CXL_TYPE3(obj);
++    cxl_dcd_display_extent_list(dcd, f, true, errp);
++}
++
++void qmp_cxl_display_pending_to_add_dc_extents(const char *path, const char *f,
++                                               Error **errp)
++{
++    Object *obj;
++    CXLType3Dev *dcd;
++
++    obj = object_resolve_path(path, NULL);
++    if (!obj) {
++        error_setg(errp, "Unable to resolve path");
++        return;
++    }
++    if (!object_dynamic_cast(obj, TYPE_CXL_TYPE3)) {
++        error_setg(errp, "Path not point to a valid CXL type3 device");
++        return;
++    }
++
++
++    dcd = CXL_TYPE3(obj);
++    cxl_dcd_display_extent_list(dcd, f, false, errp);
++}
++
+ static void ct3_class_init(ObjectClass *oc, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(oc);
+diff --git a/hw/mem/cxl_type3_stubs.c b/hw/mem/cxl_type3_stubs.c
+index d913b11b4d..d896758301 100644
+--- a/hw/mem/cxl_type3_stubs.c
++++ b/hw/mem/cxl_type3_stubs.c
+@@ -81,3 +81,15 @@ void qmp_cxl_release_dynamic_capacity(const char *path, uint8_t region_id,
+ {
+     error_setg(errp, "CXL Type 3 support is not compiled in");
+ }
++
++void qmp_cxl_display_accepted_dc_extents(const char *path, const char *f,
++                                         Error **errp)
++{
++    error_setg(errp, "CXL Type 3 support is not compiled in");
++}
++
++void qmp_cxl_display_pending_to_add_dc_extents(const char *path, const char *f,
++                                               Error **errp)
++{
++    error_setg(errp, "CXL Type 3 support is not compiled in");
++}
+diff --git a/qapi/cxl.json b/qapi/cxl.json
+index 2645004666..6f10300ec6 100644
+--- a/qapi/cxl.json
++++ b/qapi/cxl.json
+@@ -420,3 +420,35 @@
+             'extents': [ 'CXLDCExtentRecord' ]
+            }
+ }
++
++##
++# @cxl-display-accepted-dc-extents:
++#
++# Command to print out all the accepted DC extents in the device
++#
++# @path: CXL DCD canonical QOM path
++# @output: path of output file to dump the results to
++#
++# Since : 9.0
++##
++{ 'command': 'cxl-display-accepted-dc-extents',
++  'data': { 'path': 'str',
++            'output': 'str'
++           }
++}
++
++##
++# @cxl-display-pending-to-add-dc-extents:
++#
++# Command to print out all the pending-to-add DC extents in the device
++#
++# @path: CXL DCD canonical QOM path
++# @output: path of output file to dump the results to
++#
++# Since : 9.0
++##
++{ 'command': 'cxl-display-pending-to-add-dc-extents',
++  'data': { 'path': 'str',
++            'output': 'str'
++           }
++}
 -- 
 2.43.0
 
