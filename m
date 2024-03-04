@@ -4,33 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED52AC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 12:33:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC976C54E41
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 12:33:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh7Rc-0008Eg-0P; Mon, 04 Mar 2024 07:29:24 -0500
+	id 1rh7VS-000424-TS; Mon, 04 Mar 2024 07:33:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=mkh8=KK=redhat.com=clg@ozlabs.org>)
- id 1rh7RZ-0008DV-BI
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:29:21 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76])
+ id 1rh7Te-0001tO-Vo
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:31:31 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
+ helo=gandalf.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=mkh8=KK=redhat.com=clg@ozlabs.org>)
- id 1rh7RX-0004a6-Ks
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:29:21 -0500
+ id 1rh7T3-0005Qr-Cs
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:31:30 -0500
 Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TpJ0Y49Lnz4wyp;
- Mon,  4 Mar 2024 23:29:17 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TpJ1v4yTVz4x3g;
+ Mon,  4 Mar 2024 23:30:27 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TpJ0V52wsz4wqN;
- Mon,  4 Mar 2024 23:29:14 +1100 (AEDT)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TpJ1r5TL5z4x1s;
+ Mon,  4 Mar 2024 23:30:24 +1100 (AEDT)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -39,17 +40,17 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 07/26] migration: Remove SaveStateHandler and
- LoadStateHandler typedefs
-Date: Mon,  4 Mar 2024 13:28:25 +0100
-Message-ID: <20240304122844.1888308-8-clg@redhat.com>
+Subject: [PATCH v3 25/26] vfio: Also trace event failures in
+ vfio_save_complete_precopy()
+Date: Mon,  4 Mar 2024 13:28:43 +0100
+Message-ID: <20240304122844.1888308-26-clg@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304122844.1888308-1-clg@redhat.com>
 References: <20240304122844.1888308-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=mkh8=KK=redhat.com=clg@ozlabs.org; helo=gandalf.ozlabs.org
 X-Spam_score_int: -16
 X-Spam_score: -1.7
@@ -72,51 +73,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-They are only used once.
+vfio_save_complete_precopy() currently returns before doing the trace
+event. Change that.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/migration/register.h | 4 ++--
- include/qemu/typedefs.h      | 2 --
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ hw/vfio/migration.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/include/migration/register.h b/include/migration/register.h
-index 9ab1f79512c605f0c88a45b560c57486fa054441..2e6a7d766e62f64940086b7b511249c9ff21fa62 100644
---- a/include/migration/register.h
-+++ b/include/migration/register.h
-@@ -18,7 +18,7 @@
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index 4c4ccbaed10b82e7baa992770ec0ec5a6c82b757..4469ac6abafd4fa0cbf1df54faebc975c92bbcf2 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -580,9 +580,6 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
  
- typedef struct SaveVMHandlers {
-     /* This runs inside the BQL.  */
--    SaveStateHandler *save_state;
-+    void (*save_state)(QEMUFile *f, void *opaque);
+     qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
+     ret = qemu_file_get_error(f);
+-    if (ret) {
+-        return ret;
+-    }
  
-     /*
-      * save_prepare is called early, even before migration starts, and can be
-@@ -71,7 +71,7 @@ typedef struct SaveVMHandlers {
-     /* This calculate the exact remaining data to transfer */
-     void (*state_pending_exact)(void *opaque, uint64_t *must_precopy,
-                                 uint64_t *can_postcopy);
--    LoadStateHandler *load_state;
-+    int (*load_state)(QEMUFile *f, void *opaque, int version_id);
-     int (*load_setup)(QEMUFile *f, void *opaque);
-     int (*load_cleanup)(void *opaque);
-     /* Called when postcopy migration wants to resume from failure */
-diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
-index a028dba4d0b67e87165f9f1a4e960e9e6b94477c..50c277cf0b467f782ba526041b2663207bf70945 100644
---- a/include/qemu/typedefs.h
-+++ b/include/qemu/typedefs.h
-@@ -151,8 +151,6 @@ typedef struct IRQState *qemu_irq;
- /*
-  * Function types
-  */
--typedef void SaveStateHandler(QEMUFile *f, void *opaque);
--typedef int LoadStateHandler(QEMUFile *f, void *opaque, int version_id);
- typedef void (*qemu_irq_handler)(void *opaque, int n, int level);
+     trace_vfio_save_complete_precopy(vbasedev->name, ret);
  
- #endif /* QEMU_TYPEDEFS_H */
 -- 
 2.44.0
 
