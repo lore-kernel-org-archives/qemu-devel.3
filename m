@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 605D6C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 08:23:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D2ABC48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 08:25:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh3bf-0000KJ-VH; Mon, 04 Mar 2024 03:23:31 -0500
+	id 1rh3d4-00012Q-05; Mon, 04 Mar 2024 03:24:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1rh3bd-0000J1-Sy
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 03:23:30 -0500
+ id 1rh3cz-00011t-Lj
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 03:24:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1rh3bc-0003dH-73
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 03:23:29 -0500
+ id 1rh3cx-0003us-UZ
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 03:24:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709540607;
+ s=mimecast20190719; t=1709540690;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=sWSbj/48wKuJrDLBpxDgSoQ5SgacQBpTe47mkcNqAsI=;
- b=dw9+XNa47LGde2zwjBkYDgxnbS3aesnpO383ELgSWDi8gwAjqjwSgMj3dmi4xK+T+T4L0K
- laxrZftHP5VtEYsN4lznF9np/cj/Tqyg3qCCMuxQ9nkOuojgBgYD8p+ZMiaIVLCISpWSf8
- C9Ql6TkW+OaaHTcfjAK60AJvcFl0r/E=
+ bh=8zP3MSIF7Wk4V7+B21ehutqPA24cLlvS0BIdYF2dRdE=;
+ b=XWeUqbqQXWAsSgB5+I6PeTmU+6fUaiqHJ86r7ReGUxdgj/55dW9lqKoQoBrQzPiP7fbNjj
+ Q/RLweKFTxQY0C2hh0+BWa32NwH8/KDtj60S9e/NHBGR35McCNfUeoRnfa9yR4vcB/zaWv
+ w5D3pTdHDGwTlBfOmhmEbg0bpyzevpg=
 Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
  [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-643-9QpnPGffOduuyalLgBl-kQ-1; Mon, 04 Mar 2024 03:23:25 -0500
-X-MC-Unique: 9QpnPGffOduuyalLgBl-kQ-1
+ us-mta-619-6ziJkz4CPxWUvc_Zm7aa0w-1; Mon, 04 Mar 2024 03:24:48 -0500
+X-MC-Unique: 6ziJkz4CPxWUvc_Zm7aa0w-1
 Received: by mail-lf1-f70.google.com with SMTP id
- 2adb3069b0e04-513297a755dso5214172e87.0
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 00:23:25 -0800 (PST)
+ 2adb3069b0e04-513297a755dso5216804e87.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 00:24:48 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709540603; x=1710145403;
+ d=1e100.net; s=20230601; t=1709540687; x=1710145487;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=sWSbj/48wKuJrDLBpxDgSoQ5SgacQBpTe47mkcNqAsI=;
- b=il6aR/2MSTuQmh6HOeETpg6FMYqAnjcP1QfUtLTdCaGr13ffJ8AkAC2IR4XumWqi/N
- oqZQDbHHTt7mibWvHC9bPqaysJ6SwysGFrPTAhoSSIWfb8Dfk5P7dl5LgBEtBEDcQ6nv
- VTNebJvXHtX90MyefAkhrzimcxoONsxqJxbZ5lmt6Lv00xgiGIrl9Vt9c0Z//tTZ2aFy
- sc/bhdNu6/F/4GO7M+/HobUhjH5XPLJayyKhDhtL7GN6ut3r7PXuDu/ZYyaeNEkZgcQP
- mjd4E+eJafnp79PFQ+ow8jEhvlMwf3gGPw3ZFND3dJz9RHVyfGFeoY4bdQ6i1KpVfY6I
- 7rVw==
-X-Gm-Message-State: AOJu0YyF6SEQ6esvVChY42NjTbWYh4l1uxLn1cXaVpTgQJGiLstuumUi
- CwIrf7aaaJ3pEeCr2KH1XUHhlf3atUs73Xofr2woi/Be9GZEF1N6tWvRaXLCbckQfgGZYv1FrfN
- a5ou8SVFTxnO3Jf/RT31BWCNe4fxdt3DSCdahuitvRsdsXqc/zXUAy20VUwwPCdb7gWNlI7Fgoa
- ryp5glYbrBz8bur7vC+n+EXrAllOaJ2cLB80MbBA==
-X-Received: by 2002:a05:6512:1589:b0:513:45ca:5410 with SMTP id
- bp9-20020a056512158900b0051345ca5410mr2231157lfb.68.1709540603728; 
- Mon, 04 Mar 2024 00:23:23 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGy/f1cpsgYGfi7wlK8cwFaHpQFQYrpgA1r//qpUoNNsVvNwiaxzrDndU+jpPW3jNWrTkkLX0cCNbxuzP5ykH4=
-X-Received: by 2002:a05:6512:1589:b0:513:45ca:5410 with SMTP id
- bp9-20020a056512158900b0051345ca5410mr2231143lfb.68.1709540603403; Mon, 04
- Mar 2024 00:23:23 -0800 (PST)
+ bh=8zP3MSIF7Wk4V7+B21ehutqPA24cLlvS0BIdYF2dRdE=;
+ b=sI1xQX4rUkdajPBYIQwPlpVYvqTMbtycDyws8J/omoREpv/MaNhl/6F9Yi9HjnslUc
+ iCWDRyzglrjLj2OJsmMuccNd5A3Qt/x8ENCkFdpTB9hGeo06tlevZNY2GbUv+Jbr4yJ+
+ JTiWkQ2qRymMFucNb/sYEldAuMW4FOoEKOkcWytMoFMFnVuIPo43sHc5Mmcn6ti3y/zt
+ 5hh311Pq4l0AODyVstHcxGn+1u2w2u3wt8JbWeMsT5NrjWP8AE2rWxWOZmM+u4rJVg1b
+ bu9z7m5rEKmcH+6jq0eFiaFsUra6JM4MWpNcA3pLYtjHkdouYMOmzaUVE2nPqWa1X7Je
+ pPQg==
+X-Gm-Message-State: AOJu0YwA9/PtsG/6gWF/whnZMnCkOqnwOyytFjuOZZb3bdT+g0OH2Awm
+ mYSYEh/KzgT+C7vA/D+oaewkMa0mlMnF3iSvYIVkyamCXCasK++PtqHdgKRU4cJ9SVY+hchv1P0
+ /tfqxrCLGjGIoGxs1YYRroiFT1vCG1TYhRx6ONRhDhRGbS0sj9EmCR/TCXPimDZR/E/Df6m5ba4
+ kRZcHBoKynHNUkWr5TDr2wn26ZXSM=
+X-Received: by 2002:ac2:5dc7:0:b0:513:22d3:c9a9 with SMTP id
+ x7-20020ac25dc7000000b0051322d3c9a9mr5266524lfq.27.1709540687034; 
+ Mon, 04 Mar 2024 00:24:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG7HCzftyfoM41IscbSzHVAHGlGim/lw0mcJh7lVzve2gwo9y4TrQ48jQqONi65ALPahbUu0EE5DU50jrlVDu8=
+X-Received: by 2002:ac2:5dc7:0:b0:513:22d3:c9a9 with SMTP id
+ x7-20020ac25dc7000000b0051322d3c9a9mr5266510lfq.27.1709540686740; Mon, 04 Mar
+ 2024 00:24:46 -0800 (PST)
 MIME-Version: 1.0
 References: <20240227113921.236097-1-armbru@redhat.com>
- <20240227113921.236097-9-armbru@redhat.com>
-In-Reply-To: <20240227113921.236097-9-armbru@redhat.com>
+ <20240227113921.236097-11-armbru@redhat.com>
+In-Reply-To: <20240227113921.236097-11-armbru@redhat.com>
 From: Konstantin Kostiuk <kkostiuk@redhat.com>
-Date: Mon, 4 Mar 2024 10:23:12 +0200
-Message-ID: <CAPMcbCohWkdYhVM3tCEwQAJbBzQcGHCaPyf_dyn_3knEeY1WRQ@mail.gmail.com>
-Subject: Re: [PATCH 08/13] qga/qapi-schema: Move error documentation to new
- "Errors" sections
+Date: Mon, 4 Mar 2024 10:24:36 +0200
+Message-ID: <CAPMcbCqUNQu4euaSCmD56Hou_VCYxVh9JoaSM-OsdHy1ivwmNw@mail.gmail.com>
+Subject: Re: [PATCH 10/13] qga/qapi-schema: Clean up "Returns" sections
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, michael.roth@amd.com, jsnow@redhat.com, 
  eblake@redhat.com
-Content-Type: multipart/alternative; boundary="00000000000065314d0612d17073"
+Content-Type: multipart/alternative; boundary="0000000000005ccf960612d175ee"
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
@@ -98,7 +97,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000065314d0612d17073
+--0000000000005ccf960612d175ee
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -107,78 +106,95 @@ Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 On Tue, Feb 27, 2024 at 1:39=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
 m> wrote:
 
+> Drop "on success" where it is redundant with "Returns:".
+>
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
->  qga/qapi-schema.json | 22 ++++++++++------------
->  1 file changed, 10 insertions(+), 12 deletions(-)
+>  qga/qapi-schema.json | 16 ++++++++--------
+>  1 file changed, 8 insertions(+), 8 deletions(-)
 >
 > diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-> index b8efe31897..c5f2ac8f59 100644
+> index 636c2c5697..326d324901 100644
 > --- a/qga/qapi-schema.json
 > +++ b/qga/qapi-schema.json
-> @@ -561,9 +561,8 @@
->  # could also exit (or set its status to "shutdown") due to other
->  # reasons.
+> @@ -228,7 +228,7 @@
 >  #
-> -# The following errors may be returned:
-> -#
-> -# - If suspend to disk is not supported, Unsupported
-> +# Errors:
-> +#     - If suspend to disk is not supported, Unsupported
+>  # @mode: open mode, as per fopen(), "r" is the default.
 >  #
->  # Notes: It's strongly recommended to issue the guest-sync command
->  #     before sending commands when the guest resumes
-> @@ -598,9 +597,8 @@
->  # 2. Issue the query-status QMP command to confirm the VM status is
->  #    "suspended"
+> -# Returns: Guest file handle on success.
+> +# Returns: Guest file handle
 >  #
-> -# The following errors may be returned:
-> -#
-> -# - If suspend to ram is not supported, Unsupported
-> +# Errors:
-> +#     - If suspend to ram is not supported, Unsupported
->  #
->  # Notes: It's strongly recommended to issue the guest-sync command
->  #     before sending commands when the guest resumes
-> @@ -634,9 +632,8 @@
->  # 2. Issue the query-status QMP command to confirm the VM status is
->  #    "suspended"
->  #
-> -# The following errors may be returned:
-> -#
-> -# - If hybrid suspend is not supported, Unsupported
-> +# Errors:
-> +#     - If hybrid suspend is not supported, Unsupported
->  #
->  # Notes: It's strongly recommended to issue the guest-sync command
->  #     before sending commands when the guest resumes
-> @@ -796,9 +793,6 @@
->  #     - 0:
->  #       if the @vcpus list was empty on input.  Guest state has not
->  #       been changed.  Otherwise,
-> -#     - Error:
-> -#       processing the first node of @vcpus failed for the reason
-> -#       returned.  Guest state has not been changed.  Otherwise,
->  #     - < length(@vcpus):
->  #       more than zero initial nodes have been processed, but not the
->  #       entire @vcpus list.  Guest state has changed accordingly.  To
-> @@ -808,6 +802,10 @@
->  #     - length(@vcpus):
->  #       call successful.
->  #
-> +# Errors:
-> +#     - If the reconfiguration of the first node in @vcpus failed.
-> +#       Guest state has not been changed.
-> +#
->  # Since: 1.5
+>  # Since: 0.15.0
 >  ##
->  { 'command': 'guest-set-vcpus',
+> @@ -277,7 +277,7 @@
+>  # @count: maximum number of bytes to read (default is 4KB, maximum is
+>  #     48MB)
+>  #
+> -# Returns: @GuestFileRead on success.
+> +# Returns: @GuestFileRead
+>  #
+>  # Since: 0.15.0
+>  ##
+> @@ -312,7 +312,7 @@
+>  # @count: bytes to write (actual bytes, after base64-decode), default
+>  #     is all content in buf-b64 buffer after base64 decoding
+>  #
+> -# Returns: @GuestFileWrite on success.
+> +# Returns: @GuestFileWrite
+>  #
+>  # Since: 0.15.0
+>  ##
+> @@ -379,7 +379,7 @@
+>  #
+>  # @whence: Symbolic or numeric code for interpreting offset
+>  #
+> -# Returns: @GuestFileSeek on success.
+> +# Returns: @GuestFileSeek
+>  #
+>  # Since: 0.15.0
+>  ##
+> @@ -723,7 +723,7 @@
+>  #
+>  # Get list of guest IP addresses, MAC addresses and netmasks.
+>  #
+> -# Returns: List of GuestNetworkInterface on success.
+> +# Returns: List of GuestNetworkInterface
+>  #
+>  # Since: 1.1
+>  ##
+> @@ -1247,7 +1247,7 @@
+>  #
+>  # @pid: pid returned from guest-exec
+>  #
+> -# Returns: GuestExecStatus on success.
+> +# Returns: GuestExecStatus
+>  #
+>  # Since: 2.5
+>  ##
+> @@ -1315,7 +1315,7 @@
+>  # @capture-output: bool flag to enable capture of stdout/stderr of
+>  #     running process.  defaults to false.
+>  #
+> -# Returns: PID on success.
+> +# Returns: PID
+>  #
+>  # Since: 2.5
+>  ##
+> @@ -1344,7 +1344,7 @@
+>  # or even present in DNS or some other name service at all.  It need
+>  # not even be unique on your local network or site, but usually it is.
+>  #
+> -# Returns: the host name of the machine on success
+> +# Returns: the host name of the machine
+>  #
+>  # Since: 2.10
+>  ##
 > --
 > 2.43.0
 >
 >
 
---00000000000065314d0612d17073
+--0000000000005ccf960612d175ee
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -188,94 +204,102 @@ v class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Feb 2=
 7, 2024 at 1:39=E2=80=AFPM Markus Armbruster &lt;<a href=3D"mailto:armbru@r=
 edhat.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"g=
 mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204=
-,204,204);padding-left:1ex">Signed-off-by: Markus Armbruster &lt;<a href=3D=
-"mailto:armbru@redhat.com" target=3D"_blank">armbru@redhat.com</a>&gt;<br>
+,204,204);padding-left:1ex">Drop &quot;on success&quot; where it is redunda=
+nt with &quot;Returns:&quot;.<br>
+<br>
+Signed-off-by: Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com" t=
+arget=3D"_blank">armbru@redhat.com</a>&gt;<br>
 ---<br>
-=C2=A0qga/qapi-schema.json | 22 ++++++++++------------<br>
-=C2=A01 file changed, 10 insertions(+), 12 deletions(-)<br>
+=C2=A0qga/qapi-schema.json | 16 ++++++++--------<br>
+=C2=A01 file changed, 8 insertions(+), 8 deletions(-)<br>
 <br>
 diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json<br>
-index b8efe31897..c5f2ac8f59 100644<br>
+index 636c2c5697..326d324901 100644<br>
 --- a/qga/qapi-schema.json<br>
 +++ b/qga/qapi-schema.json<br>
-@@ -561,9 +561,8 @@<br>
-=C2=A0# could also exit (or set its status to &quot;shutdown&quot;) due to =
-other<br>
-=C2=A0# reasons.<br>
+@@ -228,7 +228,7 @@<br>
 =C2=A0#<br>
--# The following errors may be returned:<br>
--#<br>
--# - If suspend to disk is not supported, Unsupported<br>
-+# Errors:<br>
-+#=C2=A0 =C2=A0 =C2=A0- If suspend to disk is not supported, Unsupported<br=
->
+=C2=A0# @mode: open mode, as per fopen(), &quot;r&quot; is the default.<br>
 =C2=A0#<br>
-=C2=A0# Notes: It&#39;s strongly recommended to issue the guest-sync comman=
-d<br>
-=C2=A0#=C2=A0 =C2=A0 =C2=A0before sending commands when the guest resumes<b=
-r>
-@@ -598,9 +597,8 @@<br>
-=C2=A0# 2. Issue the query-status QMP command to confirm the VM status is<b=
-r>
-=C2=A0#=C2=A0 =C2=A0 &quot;suspended&quot;<br>
+-# Returns: Guest file handle on success.<br>
++# Returns: Guest file handle<br>
 =C2=A0#<br>
--# The following errors may be returned:<br>
--#<br>
--# - If suspend to ram is not supported, Unsupported<br>
-+# Errors:<br>
-+#=C2=A0 =C2=A0 =C2=A0- If suspend to ram is not supported, Unsupported<br>
-=C2=A0#<br>
-=C2=A0# Notes: It&#39;s strongly recommended to issue the guest-sync comman=
-d<br>
-=C2=A0#=C2=A0 =C2=A0 =C2=A0before sending commands when the guest resumes<b=
-r>
-@@ -634,9 +632,8 @@<br>
-=C2=A0# 2. Issue the query-status QMP command to confirm the VM status is<b=
-r>
-=C2=A0#=C2=A0 =C2=A0 &quot;suspended&quot;<br>
-=C2=A0#<br>
--# The following errors may be returned:<br>
--#<br>
--# - If hybrid suspend is not supported, Unsupported<br>
-+# Errors:<br>
-+#=C2=A0 =C2=A0 =C2=A0- If hybrid suspend is not supported, Unsupported<br>
-=C2=A0#<br>
-=C2=A0# Notes: It&#39;s strongly recommended to issue the guest-sync comman=
-d<br>
-=C2=A0#=C2=A0 =C2=A0 =C2=A0before sending commands when the guest resumes<b=
-r>
-@@ -796,9 +793,6 @@<br>
-=C2=A0#=C2=A0 =C2=A0 =C2=A0- 0:<br>
-=C2=A0#=C2=A0 =C2=A0 =C2=A0 =C2=A0if the @vcpus list was empty on input.=C2=
-=A0 Guest state has not<br>
-=C2=A0#=C2=A0 =C2=A0 =C2=A0 =C2=A0been changed.=C2=A0 Otherwise,<br>
--#=C2=A0 =C2=A0 =C2=A0- Error:<br>
--#=C2=A0 =C2=A0 =C2=A0 =C2=A0processing the first node of @vcpus failed for=
- the reason<br>
--#=C2=A0 =C2=A0 =C2=A0 =C2=A0returned.=C2=A0 Guest state has not been chang=
-ed.=C2=A0 Otherwise,<br>
-=C2=A0#=C2=A0 =C2=A0 =C2=A0- &lt; length(@vcpus):<br>
-=C2=A0#=C2=A0 =C2=A0 =C2=A0 =C2=A0more than zero initial nodes have been pr=
-ocessed, but not the<br>
-=C2=A0#=C2=A0 =C2=A0 =C2=A0 =C2=A0entire @vcpus list.=C2=A0 Guest state has=
- changed accordingly.=C2=A0 To<br>
-@@ -808,6 +802,10 @@<br>
-=C2=A0#=C2=A0 =C2=A0 =C2=A0- length(@vcpus):<br>
-=C2=A0#=C2=A0 =C2=A0 =C2=A0 =C2=A0call successful.<br>
-=C2=A0#<br>
-+# Errors:<br>
-+#=C2=A0 =C2=A0 =C2=A0- If the reconfiguration of the first node in @vcpus =
-failed.<br>
-+#=C2=A0 =C2=A0 =C2=A0 =C2=A0Guest state has not been changed.<br>
-+#<br>
-=C2=A0# Since: 1.5<br>
+=C2=A0# Since: 0.15.0<br>
 =C2=A0##<br>
-=C2=A0{ &#39;command&#39;: &#39;guest-set-vcpus&#39;,<br>
+@@ -277,7 +277,7 @@<br>
+=C2=A0# @count: maximum number of bytes to read (default is 4KB, maximum is=
+<br>
+=C2=A0#=C2=A0 =C2=A0 =C2=A048MB)<br>
+=C2=A0#<br>
+-# Returns: @GuestFileRead on success.<br>
++# Returns: @GuestFileRead<br>
+=C2=A0#<br>
+=C2=A0# Since: 0.15.0<br>
+=C2=A0##<br>
+@@ -312,7 +312,7 @@<br>
+=C2=A0# @count: bytes to write (actual bytes, after base64-decode), default=
+<br>
+=C2=A0#=C2=A0 =C2=A0 =C2=A0is all content in buf-b64 buffer after base64 de=
+coding<br>
+=C2=A0#<br>
+-# Returns: @GuestFileWrite on success.<br>
++# Returns: @GuestFileWrite<br>
+=C2=A0#<br>
+=C2=A0# Since: 0.15.0<br>
+=C2=A0##<br>
+@@ -379,7 +379,7 @@<br>
+=C2=A0#<br>
+=C2=A0# @whence: Symbolic or numeric code for interpreting offset<br>
+=C2=A0#<br>
+-# Returns: @GuestFileSeek on success.<br>
++# Returns: @GuestFileSeek<br>
+=C2=A0#<br>
+=C2=A0# Since: 0.15.0<br>
+=C2=A0##<br>
+@@ -723,7 +723,7 @@<br>
+=C2=A0#<br>
+=C2=A0# Get list of guest IP addresses, MAC addresses and netmasks.<br>
+=C2=A0#<br>
+-# Returns: List of GuestNetworkInterface on success.<br>
++# Returns: List of GuestNetworkInterface<br>
+=C2=A0#<br>
+=C2=A0# Since: 1.1<br>
+=C2=A0##<br>
+@@ -1247,7 +1247,7 @@<br>
+=C2=A0#<br>
+=C2=A0# @pid: pid returned from guest-exec<br>
+=C2=A0#<br>
+-# Returns: GuestExecStatus on success.<br>
++# Returns: GuestExecStatus<br>
+=C2=A0#<br>
+=C2=A0# Since: 2.5<br>
+=C2=A0##<br>
+@@ -1315,7 +1315,7 @@<br>
+=C2=A0# @capture-output: bool flag to enable capture of stdout/stderr of<br=
+>
+=C2=A0#=C2=A0 =C2=A0 =C2=A0running process.=C2=A0 defaults to false.<br>
+=C2=A0#<br>
+-# Returns: PID on success.<br>
++# Returns: PID<br>
+=C2=A0#<br>
+=C2=A0# Since: 2.5<br>
+=C2=A0##<br>
+@@ -1344,7 +1344,7 @@<br>
+=C2=A0# or even present in DNS or some other name service at all.=C2=A0 It =
+need<br>
+=C2=A0# not even be unique on your local network or site, but usually it is=
+.<br>
+=C2=A0#<br>
+-# Returns: the host name of the machine on success<br>
++# Returns: the host name of the machine<br>
+=C2=A0#<br>
+=C2=A0# Since: 2.10<br>
+=C2=A0##<br>
 -- <br>
 2.43.0<br>
 <br>
 </blockquote></div>
 
---00000000000065314d0612d17073--
+--0000000000005ccf960612d175ee--
 
 
