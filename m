@@ -4,95 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DBBFC5478C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 15:49:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86BDFC5478C
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 15:50:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhAYo-0004PI-6p; Mon, 04 Mar 2024 10:49:02 -0500
+	id 1rhAZd-0004mq-T5; Mon, 04 Mar 2024 10:49:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <faiqueali.109@gmail.com>)
- id 1rhAYm-0004Ou-Ou
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 10:49:00 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <faiqueali.109@gmail.com>)
- id 1rhAYk-0002UJ-Ht
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 10:49:00 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-55a5e7fa471so6495198a12.1
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 07:48:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709567336; x=1710172136; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Y2BGXxOgPid4Tk5glP0CYS0gAwsFHTbjnJw7PpQuMCQ=;
- b=hVyKXJPnSX/S50JLh9j0VWnQibvXUTBXOaRC3rfeQtNGEotvwBqtVmIUmTRqTv/s1U
- OgnUp+GkRAwPj4jobQPB+upr0IQEcn26LcQk8aOqgWkJnSoDfSVMpcnvGVWVFHIg3iKz
- VZTEq1rlhTiVZao8s35jTYD5+7QoSdZJLEo2OaGWLmWWamlubBADFK6cMxNpi/8SK37H
- 2931iPUzF+vVv6mL1xuuceQWOMMExFSbSgmWEEuEKMCr786alUzH3ky7zCL5GmwXOpGo
- QCk/3YL/2F0EOeUHQAqFFVQV/OXY+BCnnKXN/mXzNR90PKfvzLLSFe8A7/BwS6NXCGHA
- 42nA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709567336; x=1710172136;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Y2BGXxOgPid4Tk5glP0CYS0gAwsFHTbjnJw7PpQuMCQ=;
- b=fv7TZfMwIkVIdk8ak8q2xe+G1jhyUaO+5JAdDNz4lHJxt5wKb5ZfoXCRo7OI+IenvD
- NwyKYwwpzuRVebUDpBCKsF6XZRBwybbyUWZAdvrupcqqHIofQ6zFK6YB4OnNGaduat59
- cD5Tdx5zumxaZMoIr4NtlmRyf/32CAO+X5uNRyhUCM3g0D0BEXlvv+Yc7e+jhhMXvBl9
- +k/FkPjX0U41A6ACi2IWbCgSg1w9jDtOaoeM6kyeNQwH1aDh26qU6VwpYxZM8nnTRFW/
- zeFYbQuAin0+SNLeUJeye2s587QFMlZevd/rknwWg3DHlzicwKnKIZK0goJRlD1YPfdW
- XQTA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWNhS6E96Twf7wf2zOEhn+GTwWbD4g7ltwbI6su+OhbYq92XNLG6f4Yoiabd2UsdEtTmoT0M3nJziTlJ/aiKF8NEv/cv5c=
-X-Gm-Message-State: AOJu0YwaxcAAIHDX7miKHJCQOWt1NYwPqDXJyFMDhFzvDUyKytzJRd7T
- gX1MQLmDSiLZMmqZ7KDqirMnesiB552TigzE0F4RerTCYCqCH9I5XLYzKuSWEyhuWgfQrAUGRa6
- bbKnUEyVVLLL7rgyqzEM6xjzKH1o=
-X-Google-Smtp-Source: AGHT+IGiRvguvcDan3OzoAgHnRZVnA/viyOqpvNq/QUIkdQFW3rLNzkqz/wv3/ajz7wR6tPzUppMrrDntgUSGZ+qmGE=
-X-Received: by 2002:aa7:c38e:0:b0:566:f81:41a1 with SMTP id
- k14-20020aa7c38e000000b005660f8141a1mr6228421edq.22.1709567335686; Mon, 04
- Mar 2024 07:48:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <SRS0=daq9=KK=kaod.org=clg@ozlabs.org>)
+ id 1rhAZc-0004k0-6y; Mon, 04 Mar 2024 10:49:52 -0500
+Received: from gandalf.ozlabs.org ([150.107.74.76])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=daq9=KK=kaod.org=clg@ozlabs.org>)
+ id 1rhAZV-0002ZB-W7; Mon, 04 Mar 2024 10:49:51 -0500
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TpNRl2M8Yz4wcJ;
+ Tue,  5 Mar 2024 02:49:39 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TpNRg5Lsdz4wc7;
+ Tue,  5 Mar 2024 02:49:35 +1100 (AEDT)
+Message-ID: <a181aa98-6ed6-49de-8d6f-a828c9dad0a1@kaod.org>
+Date: Mon, 4 Mar 2024 16:49:33 +0100
 MIME-Version: 1.0
-References: <CAOpGCn+KdhjnXRHup6GXVbkoZkUBc7f-2urNzmvLjK1To_pp0A@mail.gmail.com>
- <87a5nvci5n.fsf@draig.linaro.org>
- <CAOpGCnLxVGhbJuAq+K+DNZBESEGGkSr8Sa0_cHsfMR7S-_ahkQ@mail.gmail.com>
- <87y1bfawik.fsf@draig.linaro.org>
- <CAOpGCn+_=5Uxi9mt-C1V3pguNT0OUJura-H3SwBOsJnW5tyJ4g@mail.gmail.com>
- <CAFEAcA-03JYx9szd3FrQ_786gaRLWCJVHeMgjBxxvgH85f-78A@mail.gmail.com>
- <CAOpGCn+vQ7wupMqeH8ZLarT0c4gD85R6cgRqBMhVeAXtZ1F_Mg@mail.gmail.com>
- <CAFEAcA9Yp=ObPhgagAbf2Ev=6=D+9sCfHC_HCxPUr2JgvWa4oQ@mail.gmail.com>
- <CAOpGCn+BHsVPG1_2-avx6Ex10dc-nKYuVv=3VTct=MYRb4TmYw@mail.gmail.com>
- <CAFEAcA9_MDHQyQ6q76OpUXgEO9f_osS23oMhyTC4vNSBqtD1-A@mail.gmail.com>
- <871q94ahui.fsf@draig.linaro.org>
- <CAOpGCn+-T3e8arn0UPTM5-1gJu9626wP3=FHamXvUFW6NrDJcg@mail.gmail.com>
- <CAJ307EgMiRDLaHD1P8_EBLwhLct6z+Wp15sXTqMV83F0mC1sLA@mail.gmail.com>
- <CAOpGCn+PhxqRb=UjKM=z1q79u_iCH=RKW1=DDGUbWnBf4Q0kog@mail.gmail.com>
- <CAJ307EhpocLQ5p+MU++pTpotMuDTCedzNGWohvm6F02LXkhcrA@mail.gmail.com>
-In-Reply-To: <CAJ307EhpocLQ5p+MU++pTpotMuDTCedzNGWohvm6F02LXkhcrA@mail.gmail.com>
-From: Faiq Ali Sayed <faiqueali.109@gmail.com>
-Date: Mon, 4 Mar 2024 16:48:44 +0100
-Message-ID: <CAOpGCnLGkTSNbURwgXRL7GqcuyCPpJEJhPFpqhQb-RGn73H4gw@mail.gmail.com>
-Subject: Re: QNX VM hang on Qemu
-To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 7/9] aspeed/soc: Add AST2700 support
+Content-Language: en-US, fr
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
  Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Stefano Stabellini <stefano.stabellini@amd.com>
-Content-Type: multipart/alternative; boundary="000000000000c368cc0612d7a9b6"
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=faiqueali.109@gmail.com; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20240304092934.1953198-1-jamin_lin@aspeedtech.com>
+ <20240304092934.1953198-8-jamin_lin@aspeedtech.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240304092934.1953198-8-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=daq9=KK=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,278 +70,605 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000c368cc0612d7a9b6
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 3/4/24 10:29, Jamin Lin wrote:
+> Initial definitions for a simple machine using an AST2700 SOC (Cortex-a35 CPU).
+> 
+> AST2700 SOC and its interrupt controller are too complex to handle
+> in the common Aspeed SoC framework. We introduce a new ast2700
+> class with instance_init and realize handlers.
+> 
+> AST2700 is a 64 bits quad core cpus and support 8 watchdog.
+> Update maximum ASPEED_CPUS_NUM to 4 and ASPEED_WDTS_NUM to 8.
+> In addition, update AspeedSocState to support scuio, sli, sliio and intc.
+> 
+> Update silicon_rev data type to 64bits from AspeedSoCClass 
 
-Hi,
+Why ? It is still 32bits in the models.
 
->I wasn't aware that such a command exists. However, the --run option
->seems to call the script "runimage". You might want to take a look at
->the options being set or maybe simply retrieve the qemu command line
->created by it (if that's not how you created your first command line).
+The rest looks good.
 
->Sorry to not be more helpful.
+Thanks,
 
-This is actually the main concern, how can I get the internal command of
-QNX, how do I know how QNX calls Qemu.
-let me investigate it more and yes thanks for your time and support.
-Thanks :)
-
-BR!
-Faiq
-
-On Mon, Mar 4, 2024 at 10:37=E2=80=AFAM Cl=C3=A9ment Chigot <chigot@adacore=
-.com> wrote:
-
-> On Fri, Mar 1, 2024 at 6:48=E2=80=AFPM Faiq Ali Sayed <faiqueali.109@gmai=
-l.com>
-> wrote:
-> >
-> > Hi Cl=C3=A9ment,
-> >
-> > So the output of the command
-> > |  $ qemu-system-aarch64 -M xlnx-zcu102 -m 4G -no-reboot -nographic
-> > -kernel qnx.img
-> > is
-> >
-> > $ pulseaudio: set_sink_input_volume() failed
-> > $ pulseaudio: Reason: Invalid argument
-> > $ pulseaudio: set_sink_input_mute() failed
-> > $ pulseaudio: Reason: Invalid argument
-> >
-> > I am not using the "mkifs" rather I am using the command below..
->
-> I guess we disabled some options when we built our kernels to allow a
-> simple command line. However, I don't know which ones.
->
-> > $ mkqnximage --type=3Dqemu --arch=3Daarch64le --build  --ssh-ident=3Dno=
-ne
-> >
-> > if I use the --run option with the command it creates a VM which is
-> working fine.
-> > but when I use this image, with qemu command terminal is getting stuck.
->
-> I wasn't aware that such a command exists. However, the --run option
-> seems to call the script "runimage". You might want to take a look at
-> the options being set or maybe simply retrieve the qemu command line
-> created by it (if that's not how you created your first command line).
->
-> Sorry to not be more helpful.
->
-> Cl=C3=A9ment
->
-> > BR!
-> > Faiq
-> >
-> >
-> >
-> > On Fri, Mar 1, 2024 at 4:29=E2=80=AFPM Cl=C3=A9ment Chigot <chigot@adac=
-ore.com>
-> wrote:
-> >>
-> >> Hi Faiq,
-> >>
-> >> On Fri, Feb 23, 2024 at 3:55=E2=80=AFPM Faiq Ali Sayed <faiqueali.109@=
-gmail.com>
-> wrote:
-> >> >
-> >> > So as far as my understanding, we provide these binaries using Qemu
-> command as depicted in the example you provided and there is no way I fou=
-nd
-> to put them into a single image.
-> >> > Regarding the overlapping space, I don't have much idea but I think
-> we could provide a starting address separately to these images something
-> like addr=3D0x00100000.
-> >>
-> >> Where is this 0x00100000 address coming from ? Could you confirm with
-> >> "readelf -h" that this is the entry point of your image ?
-> >>
-> >> Alternatively and that's what we used locally, qemu is able to guess
-> >> the entry point of an image, when passed from -kernel. Therefore, our
-> >> command simply looks like:
-> >>   |  $ qemu-system-aarch64 -M xlnx-zcu102 -m 4G -no-reboot -nographic
-> >> -kernel qnx.img
-> >>
-> >> I'm not the one having built the qnx.img we're using. But it looks
-> >> pretty standard at the first look, made with "mkifs" and the kernel
-> >> specs from zcu102 evaluation kit.
-> >>
-> >> Hope it helps,
-> >> Cl=C3=A9ment
-> >>
-> >> > So as per your suggestion, I compared my images and I found that the
-> image does not show a virtual disk, and other commands like mkdir, do not
-> have these binaries.
-> >> > So these binaries are not included at the time of image creation and
-> I don't exactly know that how can we add these binaries into the QNX imag=
-e.
-> >> >
-> >> > The Image that is currently installed in real hardware does not have
-> a debugging symbol, so I can't use GDB  to debug that.
-> >> > Now I am looking for a way to create the correct QNX OS image for
-> Qemu.
-> >> >
-> >> > Any lead in this regard will be really helpful :)
-> >> >
-> >
-> >
-> >
-> > --
-> > Kind Regard-
-> > Faiq Ali Sayed
-> >
-> >
->
+C.
 
 
---=20
-Kind Regard-
-Faiq Ali Sayed
+> and
+> add TYPE_ASPEED27X0_SOC machine type.
+> 
+> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   hw/arm/aspeed_ast27x0.c     | 462 ++++++++++++++++++++++++++++++++++++
+>   hw/arm/meson.build          |   1 +
+>   include/hw/arm/aspeed_soc.h |  26 +-
+>   3 files changed, 486 insertions(+), 3 deletions(-)
+>   create mode 100644 hw/arm/aspeed_ast27x0.c
+> 
+> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+> new file mode 100644
+> index 0000000000..c120994e5c
+> --- /dev/null
+> +++ b/hw/arm/aspeed_ast27x0.c
+> @@ -0,0 +1,462 @@
+> +/*
+> + * ASPEED SoC 27x0 family
+> + *
+> + * Copyright (C) 2024 ASPEED Technology Inc.
+> + *
+> + * This code is licensed under the GPL version 2 or later.  See
+> + * the COPYING file in the top-level directory.
+> + *
+> + * Implementation extracted from the AST2600 and adapted for AST27x0.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +#include "hw/misc/unimp.h"
+> +#include "hw/arm/aspeed_soc.h"
+> +#include "qemu/module.h"
+> +#include "qemu/error-report.h"
+> +#include "hw/i2c/aspeed_i2c.h"
+> +#include "net/net.h"
+> +#include "sysemu/sysemu.h"
+> +#include "hw/intc/arm_gicv3.h"
+> +#include "qapi/qmp/qlist.h"
+> +
+> +static const hwaddr aspeed_soc_ast2700_memmap[] = {
+> +    [ASPEED_DEV_SPI_BOOT]  =  0x400000000,
+> +    [ASPEED_DEV_SRAM]      =  0x10000000,
+> +    [ASPEED_DEV_SDMC]      =  0x12C00000,
+> +    [ASPEED_DEV_SCU]       =  0x12C02000,
+> +    [ASPEED_DEV_SCUIO]     =  0x14C02000,
+> +    [ASPEED_DEV_UART0]     =  0X14C33000,
+> +    [ASPEED_DEV_UART1]     =  0X14C33100,
+> +    [ASPEED_DEV_UART2]     =  0X14C33200,
+> +    [ASPEED_DEV_UART3]     =  0X14C33300,
+> +    [ASPEED_DEV_UART4]     =  0X12C1A000,
+> +    [ASPEED_DEV_UART5]     =  0X14C33400,
+> +    [ASPEED_DEV_UART6]     =  0X14C33500,
+> +    [ASPEED_DEV_UART7]     =  0X14C33600,
+> +    [ASPEED_DEV_UART8]     =  0X14C33700,
+> +    [ASPEED_DEV_UART9]     =  0X14C33800,
+> +    [ASPEED_DEV_UART10]    =  0X14C33900,
+> +    [ASPEED_DEV_UART11]    =  0X14C33A00,
+> +    [ASPEED_DEV_UART12]    =  0X14C33B00,
+> +    [ASPEED_DEV_WDT]       =  0x14C37000,
+> +    [ASPEED_DEV_VUART]     =  0X14C30000,
+> +    [ASPEED_DEV_FMC]       =  0x14000000,
+> +    [ASPEED_DEV_SPI0]      =  0x14010000,
+> +    [ASPEED_DEV_SPI1]      =  0x14020000,
+> +    [ASPEED_DEV_SPI2]      =  0x14030000,
+> +    [ASPEED_DEV_SDRAM]     =  0x400000000,
+> +    [ASPEED_DEV_MII1]      =  0x14040000,
+> +    [ASPEED_DEV_MII2]      =  0x14040008,
+> +    [ASPEED_DEV_MII3]      =  0x14040010,
+> +    [ASPEED_DEV_ETH1]      =  0x14050000,
+> +    [ASPEED_DEV_ETH2]      =  0x14060000,
+> +    [ASPEED_DEV_ETH3]      =  0x14070000,
+> +    [ASPEED_DEV_EMMC]      =  0x12090000,
+> +    [ASPEED_DEV_VIC]       =  0x12100000,
+> +    [ASPEED_DEV_SLI]       =  0x12C17000,
+> +    [ASPEED_DEV_SLIIO]     =  0x14C1E000,
+> +    [ASPEED_GIC_DIST]      =  0x12200000,
+> +    [ASPEED_GIC_REDIST]    =  0x12280000,
+> +};
+> +
+> +#define AST2700_MAX_IRQ 288
+> +
+> +/* Shared Peripheral Interrupt values below are offset by -32 from datasheet */
+> +static const int aspeed_soc_ast2700_irqmap[] = {
+> +    [ASPEED_DEV_UART0]     = 132,
+> +    [ASPEED_DEV_UART1]     = 132,
+> +    [ASPEED_DEV_UART2]     = 132,
+> +    [ASPEED_DEV_UART3]     = 132,
+> +    [ASPEED_DEV_UART4]     = 8,
+> +    [ASPEED_DEV_UART5]     = 132,
+> +    [ASPEED_DEV_UART6]     = 132,
+> +    [ASPEED_DEV_UART7]     = 132,
+> +    [ASPEED_DEV_UART8]     = 132,
+> +    [ASPEED_DEV_UART9]     = 132,
+> +    [ASPEED_DEV_UART10]    = 132,
+> +    [ASPEED_DEV_UART11]    = 132,
+> +    [ASPEED_DEV_UART12]    = 132,
+> +    [ASPEED_DEV_FMC]       = 131,
+> +    [ASPEED_DEV_SDMC]      = 0,
+> +    [ASPEED_DEV_SCU]       = 12,
+> +    [ASPEED_DEV_ADC]       = 130,
+> +    [ASPEED_DEV_XDMA]      = 5,
+> +    [ASPEED_DEV_EMMC]      = 15,
+> +    [ASPEED_DEV_GPIO]      = 11,
+> +    [ASPEED_DEV_GPIO_1_8V] = 130,
+> +    [ASPEED_DEV_RTC]       = 13,
+> +    [ASPEED_DEV_TIMER1]    = 16,
+> +    [ASPEED_DEV_TIMER2]    = 17,
+> +    [ASPEED_DEV_TIMER3]    = 18,
+> +    [ASPEED_DEV_TIMER4]    = 19,
+> +    [ASPEED_DEV_TIMER5]    = 20,
+> +    [ASPEED_DEV_TIMER6]    = 21,
+> +    [ASPEED_DEV_TIMER7]    = 22,
+> +    [ASPEED_DEV_TIMER8]    = 23,
+> +    [ASPEED_DEV_WDT]       = 131,
+> +    [ASPEED_DEV_PWM]       = 131,
+> +    [ASPEED_DEV_LPC]       = 128,
+> +    [ASPEED_DEV_IBT]       = 128,
+> +    [ASPEED_DEV_I2C]       = 130,
+> +    [ASPEED_DEV_PECI]      = 133,
+> +    [ASPEED_DEV_ETH1]      = 132,
+> +    [ASPEED_DEV_ETH2]      = 132,
+> +    [ASPEED_DEV_ETH3]      = 132,
+> +    [ASPEED_DEV_HACE]      = 4,
+> +    [ASPEED_DEV_KCS]       = 128,
+> +    [ASPEED_DEV_DP]        = 28,
+> +    [ASPEED_DEV_I3C]       = 131,
+> +};
+> +
+> +static qemu_irq aspeed_soc_ast2700_get_irq(AspeedSoCState *s, int dev)
+> +{
+> +    Aspeed27x0SoCState *a = ASPEED27X0_SOC(s);
+> +    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+> +
+> +    return qdev_get_gpio_in(a->intc.gic, sc->irqmap[dev]);
+> +}
+> +
+> +static void aspeed_soc_ast2700_init(Object *obj)
+> +{
+> +    Aspeed27x0SoCState *a = ASPEED27X0_SOC(obj);
+> +    AspeedSoCState *s = ASPEED_SOC(obj);
+> +    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+> +    int i;
+> +    char socname[8];
+> +    char typename[64];
+> +
+> +    if (sscanf(sc->name, "%7s", socname) != 1) {
+> +        g_assert_not_reached();
+> +    }
+> +
+> +    for (i = 0; i < sc->num_cpus; i++) {
+> +        object_initialize_child(obj, "cpu[*]", &a->cpu[i],
+> +                                aspeed_soc_cpu_type(sc));
+> +    }
+> +
+> +    object_initialize_child(obj, "scu", &s->scu, TYPE_ASPEED_2700_SCU);
+> +    qdev_prop_set_uint32(DEVICE(&s->scu), "silicon-rev",
+> +                         sc->silicon_rev);
+> +    object_property_add_alias(obj, "hw-strap1", OBJECT(&s->scu),
+> +                              "hw-strap1");
+> +    object_property_add_alias(obj, "hw-strap2", OBJECT(&s->scu),
+> +                              "hw-strap2");
+> +    object_property_add_alias(obj, "hw-prot-key", OBJECT(&s->scu),
+> +                              "hw-prot-key");
+> +
+> +    object_initialize_child(obj, "scuio", &s->scuio, TYPE_ASPEED_2700_SCUIO);
+> +    qdev_prop_set_uint32(DEVICE(&s->scuio), "silicon-rev",
+> +                         sc->silicon_rev);
+> +
+> +    snprintf(typename, sizeof(typename), "aspeed.fmc-%s", socname);
+> +    object_initialize_child(obj, "fmc", &s->fmc, typename);
+> +
+> +    for (i = 0; i < sc->spis_num; i++) {
+> +        snprintf(typename, sizeof(typename), "aspeed.spi%d-%s", i, socname);
+> +        object_initialize_child(obj, "spi[*]", &s->spi[i], typename);
+> +    }
+> +
+> +    snprintf(typename, sizeof(typename), "aspeed.sdmc-%s", socname);
+> +    object_initialize_child(obj, "sdmc", &s->sdmc, typename);
+> +    object_property_add_alias(obj, "ram-size", OBJECT(&s->sdmc),
+> +                              "ram-size");
+> +
+> +    for (i = 0; i < sc->wdts_num; i++) {
+> +        snprintf(typename, sizeof(typename), "aspeed.wdt-%s", socname);
+> +        object_initialize_child(obj, "wdt[*]", &s->wdt[i], typename);
+> +    }
+> +
+> +    for (i = 0; i < sc->macs_num; i++) {
+> +        object_initialize_child(obj, "ftgmac100[*]", &s->ftgmac100[i],
+> +                                TYPE_FTGMAC100);
+> +
+> +        object_initialize_child(obj, "mii[*]", &s->mii[i], TYPE_ASPEED_MII);
+> +    }
+> +
+> +    for (i = 0; i < sc->uarts_num; i++) {
+> +        object_initialize_child(obj, "uart[*]", &s->uart[i], TYPE_SERIAL_MM);
+> +    }
+> +
+> +    object_initialize_child(obj, "sli", &s->sli, TYPE_ASPEED_2700_SLI);
+> +    object_initialize_child(obj, "sliio", &s->sliio, TYPE_ASPEED_2700_SLIIO);
+> +    object_initialize_child(obj, "intc", &a->intc, TYPE_ASPEED_INTC);
+> +}
+> +
+> +/*
+> + * ASPEED ast2700 has 0xf as cluster ID
+> + *
+> + * https://developer.arm.com/documentation/ddi0388/e/the-system-control-coprocessors/summary-of-system-control-coprocessor-registers/multiprocessor-affinity-register
+> + */
+> +static uint64_t aspeed_calc_affinity(int cpu)
+> +{
+> +    return (0x0 << ARM_AFF1_SHIFT) | cpu;
+> +}
+> +
+> +static void aspeed_soc_ast2700_gic(DeviceState *dev, Error **errp)
+> +{
+> +    Aspeed27x0SoCState *a = ASPEED27X0_SOC(dev);
+> +    AspeedSoCState *s = ASPEED_SOC(dev);
+> +    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+> +    SysBusDevice *gicbusdev;
+> +    QList *redist_region_count;
+> +    int i;
+> +
+> +    a->intc.gic = qdev_new(gicv3_class_name());
+> +    qdev_prop_set_uint32(a->intc.gic, "revision", 3);
+> +    qdev_prop_set_uint32(a->intc.gic, "num-cpu", sc->num_cpus);
+> +    qdev_prop_set_uint32(a->intc.gic, "num-irq", AST2700_MAX_IRQ);
+> +
+> +    redist_region_count = qlist_new();
+> +    qlist_append_int(redist_region_count, sc->num_cpus);
+> +    qdev_prop_set_array(a->intc.gic, "redist-region-count",
+> +                            redist_region_count);
+> +
+> +    gicbusdev = SYS_BUS_DEVICE(a->intc.gic);
+> +    sysbus_realize_and_unref(gicbusdev, errp);
+> +    sysbus_mmio_map(gicbusdev, 0, sc->memmap[ASPEED_GIC_DIST]);
+> +    sysbus_mmio_map(gicbusdev, 1, sc->memmap[ASPEED_GIC_REDIST]);
+> +
+> +    for (i = 0; i < sc->num_cpus; i++) {
+> +        DeviceState *cpudev = DEVICE(qemu_get_cpu(i));
+> +        int NUM_IRQS = 256, ARCH_GIC_MAINT_IRQ = 9, VIRTUAL_PMU_IRQ = 7;
+> +        int ppibase = NUM_IRQS + i * GIC_INTERNAL + GIC_NR_SGIS;
+> +
+> +        const int timer_irq[] = {
+> +            [GTIMER_PHYS] = 14,
+> +            [GTIMER_VIRT] = 11,
+> +            [GTIMER_HYP]  = 10,
+> +            [GTIMER_SEC]  = 13,
+> +        };
+> +        int j;
+> +
+> +        for (j = 0; j < ARRAY_SIZE(timer_irq); j++) {
+> +            qdev_connect_gpio_out(cpudev, j,
+> +                    qdev_get_gpio_in(a->intc.gic, ppibase + timer_irq[j]));
+> +        }
+> +
+> +        qemu_irq irq = qdev_get_gpio_in(a->intc.gic,
+> +                                        ppibase + ARCH_GIC_MAINT_IRQ);
+> +        qdev_connect_gpio_out_named(cpudev, "gicv3-maintenance-interrupt",
+> +                                    0, irq);
+> +        qdev_connect_gpio_out_named(cpudev, "pmu-interrupt", 0,
+> +                qdev_get_gpio_in(a->intc.gic, ppibase + VIRTUAL_PMU_IRQ));
+> +
+> +        sysbus_connect_irq(gicbusdev, i, qdev_get_gpio_in(cpudev, ARM_CPU_IRQ));
+> +        sysbus_connect_irq(gicbusdev, i + sc->num_cpus,
+> +                           qdev_get_gpio_in(cpudev, ARM_CPU_FIQ));
+> +        sysbus_connect_irq(gicbusdev, i + 2 * sc->num_cpus,
+> +                           qdev_get_gpio_in(cpudev, ARM_CPU_VIRQ));
+> +        sysbus_connect_irq(gicbusdev, i + 3 * sc->num_cpus,
+> +                           qdev_get_gpio_in(cpudev, ARM_CPU_VFIQ));
+> +    }
+> +}
+> +
+> +static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+> +{
+> +    int i;
+> +    Aspeed27x0SoCState *a = ASPEED27X0_SOC(dev);
+> +    AspeedSoCState *s = ASPEED_SOC(dev);
+> +    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+> +    g_autofree char *sram_name = NULL;
+> +
+> +    /* Default boot region (SPI memory or ROMs) */
+> +    memory_region_init(&s->spi_boot_container, OBJECT(s),
+> +                       "aspeed.spi_boot_container", 0x400000000);
+> +    memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SPI_BOOT],
+> +                                &s->spi_boot_container);
+> +
+> +    /* CPU */
+> +    for (i = 0; i < sc->num_cpus; i++) {
+> +        object_property_set_int(OBJECT(&a->cpu[i]), "mp-affinity",
+> +                                aspeed_calc_affinity(i), &error_abort);
+> +
+> +        object_property_set_int(OBJECT(&a->cpu[i]), "cntfrq", 1125000000,
+> +                                &error_abort);
+> +        object_property_set_link(OBJECT(&a->cpu[i]), "memory",
+> +                                 OBJECT(s->memory), &error_abort);
+> +
+> +        if (!qdev_realize(DEVICE(&a->cpu[i]), NULL, errp)) {
+> +            return;
+> +        }
+> +    }
+> +
+> +    /* GIC */
+> +    aspeed_soc_ast2700_gic(dev, errp);
+> +
+> +    /* INTC */
+> +    if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc), errp)) {
+> +        return;
+> +    }
+> +
+> +    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->intc), 0, sc->memmap[ASPEED_DEV_VIC]);
+> +    sysbus_connect_irq(SYS_BUS_DEVICE(&a->intc), 0,
+> +                       qdev_get_gpio_in(DEVICE(&a->cpu), ARM_CPU_IRQ));
+> +    sysbus_connect_irq(SYS_BUS_DEVICE(&a->intc), 1,
+> +                       qdev_get_gpio_in(DEVICE(&a->cpu), ARM_CPU_FIQ));
+> +
+> +    /* SRAM */
+> +    sram_name = g_strdup_printf("aspeed.sram.%d", CPU(&a->cpu[0])->cpu_index);
+> +    if (!memory_region_init_ram(&s->sram, OBJECT(s), sram_name, sc->sram_size,
+> +                                 errp)) {
+> +        return;
+> +    }
+> +    memory_region_add_subregion(s->memory,
+> +                                sc->memmap[ASPEED_DEV_SRAM], &s->sram);
+> +
+> +    /* SCU */
+> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {
+> +        return;
+> +    }
+> +    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->scu), 0, sc->memmap[ASPEED_DEV_SCU]);
+> +
+> +    /* SCU1 */
+> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->scuio), errp)) {
+> +        return;
+> +    }
+> +    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->scuio), 0,
+> +                    sc->memmap[ASPEED_DEV_SCUIO]);
+> +
+> +    /* UART */
+> +    if (!aspeed_soc_uart_realize(s, errp)) {
+> +        return;
+> +    }
+> +
+> +    /* FMC, The number of CS is set at the board level */
+> +    object_property_set_link(OBJECT(&s->fmc), "dram", OBJECT(s->dram_mr),
+> +                             &error_abort);
+> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->fmc), errp)) {
+> +        return;
+> +    }
+> +    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->fmc), 0, sc->memmap[ASPEED_DEV_FMC]);
+> +    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->fmc), 1,
+> +                    ASPEED_SMC_GET_CLASS(&s->fmc)->flash_window_base);
+> +    sysbus_connect_irq(SYS_BUS_DEVICE(&s->fmc), 0,
+> +                       aspeed_soc_get_irq(s, ASPEED_DEV_FMC));
+> +
+> +    /* Set up an alias on the FMC CE0 region (boot default) */
+> +    MemoryRegion *fmc0_mmio = &s->fmc.flashes[0].mmio;
+> +    memory_region_init_alias(&s->spi_boot, OBJECT(s), "aspeed.spi_boot",
+> +                             fmc0_mmio, 0, memory_region_size(fmc0_mmio));
+> +    memory_region_add_subregion(&s->spi_boot_container, 0x0, &s->spi_boot);
+> +
+> +    /* SPI */
+> +    for (i = 0; i < sc->spis_num; i++) {
+> +        object_property_set_link(OBJECT(&s->spi[i]), "dram",
+> +                                 OBJECT(s->dram_mr), &error_abort);
+> +        if (!sysbus_realize(SYS_BUS_DEVICE(&s->spi[i]), errp)) {
+> +            return;
+> +        }
+> +        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->spi[i]), 0,
+> +                        sc->memmap[ASPEED_DEV_SPI0 + i]);
+> +        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->spi[i]), 1,
+> +                        ASPEED_SMC_GET_CLASS(&s->spi[i])->flash_window_base);
+> +    }
+> +
+> +    /* SDMC - SDRAM Memory Controller */
+> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->sdmc), errp)) {
+> +        return;
+> +    }
+> +    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->sdmc), 0,
+> +                    sc->memmap[ASPEED_DEV_SDMC]);
+> +
+> +    /* RAM */
+> +    if (!aspeed_soc_dram_init(s, errp)) {
+> +        return;
+> +    }
+> +
+> +    for (i = 0; i < sc->macs_num; i++) {
+> +        object_property_set_bool(OBJECT(&s->ftgmac100[i]), "aspeed", true,
+> +                                 &error_abort);
+> +        if (!sysbus_realize(SYS_BUS_DEVICE(&s->ftgmac100[i]), errp)) {
+> +            return;
+> +        }
+> +        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->ftgmac100[i]), 0,
+> +                        sc->memmap[ASPEED_DEV_ETH1 + i]);
+> +        sysbus_connect_irq(SYS_BUS_DEVICE(&s->ftgmac100[i]), 0,
+> +                           aspeed_soc_get_irq(s, ASPEED_DEV_ETH1 + i));
+> +
+> +        object_property_set_link(OBJECT(&s->mii[i]), "nic",
+> +                                 OBJECT(&s->ftgmac100[i]), &error_abort);
+> +        if (!sysbus_realize(SYS_BUS_DEVICE(&s->mii[i]), errp)) {
+> +            return;
+> +        }
+> +
+> +        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->mii[i]), 0,
+> +                        sc->memmap[ASPEED_DEV_MII1 + i]);
+> +    }
+> +
+> +    /* Watch dog */
+> +    for (i = 0; i < sc->wdts_num; i++) {
+> +        AspeedWDTClass *awc = ASPEED_WDT_GET_CLASS(&s->wdt[i]);
+> +        hwaddr wdt_offset = sc->memmap[ASPEED_DEV_WDT] + i * awc->iosize;
+> +
+> +        object_property_set_link(OBJECT(&s->wdt[i]), "scu", OBJECT(&s->scu),
+> +                                 &error_abort);
+> +        if (!sysbus_realize(SYS_BUS_DEVICE(&s->wdt[i]), errp)) {
+> +            return;
+> +        }
+> +        aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->wdt[i]), 0, wdt_offset);
+> +    }
+> +
+> +    /* SLI */
+> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->sli), errp)) {
+> +        return;
+> +    }
+> +    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->sli), 0, sc->memmap[ASPEED_DEV_SLI]);
+> +
+> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->sliio), errp)) {
+> +        return;
+> +    }
+> +    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->sliio), 0,
+> +                    sc->memmap[ASPEED_DEV_SLIIO]);
+> +
+> +    create_unimplemented_device("ast2700.dpmcu", 0x11000000, 0x40000);
+> +    create_unimplemented_device("ast2700.iomem0", 0x12000000, 0x01000000);
+> +    create_unimplemented_device("ast2700.iomem1", 0x14000000, 0x01000000);
+> +    create_unimplemented_device("ast2700.ltpi", 0x30000000, 0x1000000);
+> +    create_unimplemented_device("ast2700.io", 0x0, 0x4000000);
+> +}
+> +
+> +static void aspeed_soc_ast2700_class_init(ObjectClass *oc, void *data)
+> +{
+> +    static const char * const valid_cpu_types[] = {
+> +        ARM_CPU_TYPE_NAME("cortex-a35"),
+> +        NULL
+> +    };
+> +    DeviceClass *dc = DEVICE_CLASS(oc);
+> +    AspeedSoCClass *sc = ASPEED_SOC_CLASS(oc);
+> +
+> +    dc->realize      = aspeed_soc_ast2700_realize;
+> +
+> +    sc->name         = "ast2700-a0";
+> +    sc->valid_cpu_types = valid_cpu_types;
+> +    sc->silicon_rev  = AST2700_A0_SILICON_REV;
+> +    sc->sram_size    = 0x20000;
+> +    sc->spis_num     = 3;
+> +    sc->wdts_num     = 8;
+> +    sc->macs_num     = 1;
+> +    sc->uarts_num    = 13;
+> +    sc->num_cpus     = 4;
+> +    sc->uarts_base   = ASPEED_DEV_UART0;
+> +    sc->irqmap       = aspeed_soc_ast2700_irqmap;
+> +    sc->memmap       = aspeed_soc_ast2700_memmap;
+> +    sc->get_irq      = aspeed_soc_ast2700_get_irq;
+> +}
+> +
+> +static const TypeInfo aspeed_soc_ast27x0_types[] = {
+> +    {
+> +        .name           = TYPE_ASPEED27X0_SOC,
+> +        .parent         = TYPE_ASPEED_SOC,
+> +        .instance_size  = sizeof(Aspeed27x0SoCState),
+> +        .abstract       = true,
+> +    }, {
+> +        .name           = "ast2700-a0",
+> +        .parent         = TYPE_ASPEED27X0_SOC,
+> +        .instance_init  = aspeed_soc_ast2700_init,
+> +        .class_init     = aspeed_soc_ast2700_class_init,
+> +    },
+> +};
+> +
+> +DEFINE_TYPES(aspeed_soc_ast27x0_types)
+> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+> index 6808135c1f..1e3295a423 100644
+> --- a/hw/arm/meson.build
+> +++ b/hw/arm/meson.build
+> @@ -46,6 +46,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+>     'aspeed_soc_common.c',
+>     'aspeed_ast2400.c',
+>     'aspeed_ast2600.c',
+> +  'aspeed_ast27x0.c',
+>     'aspeed_ast10x0.c',
+>     'aspeed_eeprom.c',
+>     'fby35.c'))
+> diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+> index c60fac900a..fab5abff9e 100644
+> --- a/include/hw/arm/aspeed_soc.h
+> +++ b/include/hw/arm/aspeed_soc.h
+> @@ -26,6 +26,7 @@
+>   #include "hw/ssi/aspeed_smc.h"
+>   #include "hw/misc/aspeed_hace.h"
+>   #include "hw/misc/aspeed_sbc.h"
+> +#include "hw/misc/aspeed_sli.h"
+>   #include "hw/watchdog/wdt_aspeed.h"
+>   #include "hw/net/ftgmac100.h"
+>   #include "target/arm/cpu.h"
+> @@ -41,8 +42,8 @@
+>   
+>   #define ASPEED_SPIS_NUM  2
+>   #define ASPEED_EHCIS_NUM 2
+> -#define ASPEED_WDTS_NUM  4
+> -#define ASPEED_CPUS_NUM  2
+> +#define ASPEED_WDTS_NUM  8
+> +#define ASPEED_CPUS_NUM  4
+>   #define ASPEED_MACS_NUM  4
+>   #define ASPEED_UARTS_NUM 13
+>   #define ASPEED_JTAG_NUM  2
+> @@ -61,6 +62,7 @@ struct AspeedSoCState {
+>       AspeedI2CState i2c;
+>       AspeedI3CState i3c;
+>       AspeedSCUState scu;
+> +    AspeedSCUState scuio;
+>       AspeedHACEState hace;
+>       AspeedXDMAState xdma;
+>       AspeedADCState adc;
+> @@ -68,6 +70,8 @@ struct AspeedSoCState {
+>       AspeedSMCState spi[ASPEED_SPIS_NUM];
+>       EHCISysBusState ehci[ASPEED_EHCIS_NUM];
+>       AspeedSBCState sbc;
+> +    AspeedSLIState sli;
+> +    AspeedSLIState sliio;
+>       MemoryRegion secsram;
+>       UnimplementedDeviceState sbc_unimplemented;
+>       AspeedSDMCState sdmc;
+> @@ -117,6 +121,16 @@ struct Aspeed2600SoCState {
+>   #define TYPE_ASPEED2600_SOC "aspeed2600-soc"
+>   OBJECT_DECLARE_SIMPLE_TYPE(Aspeed2600SoCState, ASPEED2600_SOC)
+>   
+> +struct Aspeed27x0SoCState {
+> +    AspeedSoCState parent;
+> +
+> +    ARMCPU cpu[ASPEED_CPUS_NUM];
+> +    AspeedINTCState intc;
+> +};
+> +
+> +#define TYPE_ASPEED27X0_SOC "aspeed27x0-soc"
+> +OBJECT_DECLARE_SIMPLE_TYPE(Aspeed27x0SoCState, ASPEED27X0_SOC)
+> +
+>   struct Aspeed10x0SoCState {
+>       AspeedSoCState parent;
+>   
+> @@ -132,7 +146,7 @@ struct AspeedSoCClass {
+>       const char *name;
+>       /** valid_cpu_types: NULL terminated array of a single CPU type. */
+>       const char * const *valid_cpu_types;
+> -    uint32_t silicon_rev;
+> +    uint64_t silicon_rev;
+>       uint64_t sram_size;
+>       uint64_t secsram_size;
+>       int spis_num;
+> @@ -168,6 +182,7 @@ enum {
+>       ASPEED_DEV_UART13,
+>       ASPEED_DEV_VUART,
+>       ASPEED_DEV_FMC,
+> +    ASPEED_DEV_SPI0,
+>       ASPEED_DEV_SPI1,
+>       ASPEED_DEV_SPI2,
+>       ASPEED_DEV_EHCI1,
+> @@ -222,6 +237,11 @@ enum {
+>       ASPEED_DEV_JTAG1,
+>       ASPEED_DEV_FSI1,
+>       ASPEED_DEV_FSI2,
+> +    ASPEED_DEV_SCUIO,
+> +    ASPEED_DEV_SLI,
+> +    ASPEED_DEV_SLIIO,
+> +    ASPEED_GIC_DIST,
+> +    ASPEED_GIC_REDIST,
+>   };
+>   
+>   qemu_irq aspeed_soc_get_irq(AspeedSoCState *s, int dev);
 
---000000000000c368cc0612d7a9b6
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hi,</div><div><br></div><div><span style=3D"color:rgb=
-(116,27,71)">&gt;I wasn&#39;t aware that such a command exists. However, th=
-e --run option<br>
-&gt;seems to call the script &quot;runimage&quot;. You might want to take a=
- look at<br>
-&gt;the options being set or maybe simply retrieve the qemu command line<br=
->
-&gt;created by it (if that&#39;s not how you created your first command lin=
-e).<br></span>
-</div><div><span style=3D"color:rgb(116,27,71)"><br></span></div><div><span=
- style=3D"color:rgb(116,27,71)">&gt;Sorry to not be more helpful.<br></span=
-></div><div><font color=3D"#888888"><br></font></div><div>This is actually =
-the main concern, how can I get the internal command of QNX, how do I know =
-how QNX calls Qemu.</div><div>let me investigate it more and yes thanks for=
- your time and support.</div><div>Thanks :)<br></div><div><br></div><div>BR=
-!<br></div><div>Faiq<br></div><div></div></div><br><div class=3D"gmail_quot=
-e"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Mar 4, 2024 at 10:37=E2=80=
-=AFAM Cl=C3=A9ment Chigot &lt;<a href=3D"mailto:chigot@adacore.com">chigot@=
-adacore.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">On Fri, Mar 1, 2024 at 6:48=E2=80=AFPM Faiq Ali Sayed &lt;<a hre=
-f=3D"mailto:faiqueali.109@gmail.com" target=3D"_blank">faiqueali.109@gmail.=
-com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; Hi Cl=C3=A9ment,<br>
-&gt;<br>
-&gt; So the output of the command<br>
-&gt; |=C2=A0 $ qemu-system-aarch64 -M xlnx-zcu102 -m 4G -no-reboot -nograph=
-ic<br>
-&gt; -kernel qnx.img<br>
-&gt; is<br>
-&gt;<br>
-&gt; $ pulseaudio: set_sink_input_volume() failed<br>
-&gt; $ pulseaudio: Reason: Invalid argument<br>
-&gt; $ pulseaudio: set_sink_input_mute() failed<br>
-&gt; $ pulseaudio: Reason: Invalid argument<br>
-&gt;<br>
-&gt; I am not using the &quot;mkifs&quot; rather I am using the command bel=
-ow..<br>
-<br>
-I guess we disabled some options when we built our kernels to allow a<br>
-simple command line. However, I don&#39;t know which ones.<br>
-<br>
-&gt; $ mkqnximage --type=3Dqemu --arch=3Daarch64le --build=C2=A0 --ssh-iden=
-t=3Dnone<br>
-&gt;<br>
-&gt; if I use the --run option with the command it creates a VM which is wo=
-rking fine.<br>
-&gt; but when I use this image, with qemu command terminal is getting stuck=
-.<br>
-<br>
-I wasn&#39;t aware that such a command exists. However, the --run option<br=
->
-seems to call the script &quot;runimage&quot;. You might want to take a loo=
-k at<br>
-the options being set or maybe simply retrieve the qemu command line<br>
-created by it (if that&#39;s not how you created your first command line).<=
-br>
-<br>
-Sorry to not be more helpful.<br>
-<br>
-Cl=C3=A9ment<br>
-<br>
-&gt; BR!<br>
-&gt; Faiq<br>
-&gt;<br>
-&gt;<br>
-&gt;<br>
-&gt; On Fri, Mar 1, 2024 at 4:29=E2=80=AFPM Cl=C3=A9ment Chigot &lt;<a href=
-=3D"mailto:chigot@adacore.com" target=3D"_blank">chigot@adacore.com</a>&gt;=
- wrote:<br>
-&gt;&gt;<br>
-&gt;&gt; Hi Faiq,<br>
-&gt;&gt;<br>
-&gt;&gt; On Fri, Feb 23, 2024 at 3:55=E2=80=AFPM Faiq Ali Sayed &lt;<a href=
-=3D"mailto:faiqueali.109@gmail.com" target=3D"_blank">faiqueali.109@gmail.c=
-om</a>&gt; wrote:<br>
-&gt;&gt; &gt;<br>
-&gt;&gt; &gt; So as far as my understanding, we provide these binaries usin=
-g Qemu command as depicted in the example you provided and there is no way =
-I found to put them into a single image.<br>
-&gt;&gt; &gt; Regarding the overlapping space, I don&#39;t have much idea b=
-ut I think we could provide a starting address separately to these images s=
-omething like addr=3D0x00100000.<br>
-&gt;&gt;<br>
-&gt;&gt; Where is this 0x00100000 address coming from ? Could you confirm w=
-ith<br>
-&gt;&gt; &quot;readelf -h&quot; that this is the entry point of your image =
-?<br>
-&gt;&gt;<br>
-&gt;&gt; Alternatively and that&#39;s what we used locally, qemu is able to=
- guess<br>
-&gt;&gt; the entry point of an image, when passed from -kernel. Therefore, =
-our<br>
-&gt;&gt; command simply looks like:<br>
-&gt;&gt;=C2=A0 =C2=A0|=C2=A0 $ qemu-system-aarch64 -M xlnx-zcu102 -m 4G -no=
--reboot -nographic<br>
-&gt;&gt; -kernel qnx.img<br>
-&gt;&gt;<br>
-&gt;&gt; I&#39;m not the one having built the qnx.img we&#39;re using. But =
-it looks<br>
-&gt;&gt; pretty standard at the first look, made with &quot;mkifs&quot; and=
- the kernel<br>
-&gt;&gt; specs from zcu102 evaluation kit.<br>
-&gt;&gt;<br>
-&gt;&gt; Hope it helps,<br>
-&gt;&gt; Cl=C3=A9ment<br>
-&gt;&gt;<br>
-&gt;&gt; &gt; So as per your suggestion, I compared my images and I found t=
-hat the image does not show a virtual disk, and other commands like mkdir, =
-do not have these binaries.<br>
-&gt;&gt; &gt; So these binaries are not included at the time of image creat=
-ion and I don&#39;t exactly know that how can we add these binaries into th=
-e QNX image.<br>
-&gt;&gt; &gt;<br>
-&gt;&gt; &gt; The Image that is currently installed in real hardware does n=
-ot have a debugging symbol, so I can&#39;t use GDB=C2=A0 to debug that.<br>
-&gt;&gt; &gt; Now I am looking for a way to create the correct QNX OS image=
- for Qemu.<br>
-&gt;&gt; &gt;<br>
-&gt;&gt; &gt; Any lead in this regard will be really helpful :)<br>
-&gt;&gt; &gt;<br>
-&gt;<br>
-&gt;<br>
-&gt;<br>
-&gt; --<br>
-&gt; Kind Regard-<br>
-&gt; Faiq Ali Sayed<br>
-&gt;<br>
-&gt;<br>
-</blockquote></div><br clear=3D"all"><br><span class=3D"gmail_signature_pre=
-fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><div dir=3D"l=
-tr"><div dir=3D"ltr">
-<div><span style=3D"color:rgb(34,34,34)">Kind Regard-</span><br style=3D"co=
-lor:rgb(34,34,34)"><div dir=3D"ltr" style=3D"color:rgb(34,34,34)"><div dir=
-=3D"ltr"><div dir=3D"ltr"><font color=3D"#073763">Faiq Ali Sayed</font></di=
-v></div></div></div>
-<div><font style=3D"background-color:rgb(255,255,255)" size=3D"1"><br></fon=
-t></div><br></div></div></div>
-
---000000000000c368cc0612d7a9b6--
 
