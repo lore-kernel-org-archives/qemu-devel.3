@@ -4,81 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 817A4C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 00:31:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 223B3C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 01:27:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgwE3-0000vD-Ex; Sun, 03 Mar 2024 19:30:39 -0500
+	id 1rgx6Q-0001Aa-9S; Sun, 03 Mar 2024 20:26:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rgwE1-0000ux-9f
- for qemu-devel@nongnu.org; Sun, 03 Mar 2024 19:30:37 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rgx6O-0001AR-OL
+ for qemu-devel@nongnu.org; Sun, 03 Mar 2024 20:26:48 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rgwDz-0001Cn-Bo
- for qemu-devel@nongnu.org; Sun, 03 Mar 2024 19:30:37 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rgx6M-0002Cc-SF
+ for qemu-devel@nongnu.org; Sun, 03 Mar 2024 20:26:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709512233;
+ s=mimecast20190719; t=1709515604;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=IZriy6c/ERZ7d3BCwVgBok9tFGBO+WJUZ0ghiU0HB7Y=;
- b=AlpgVpHMdFVdhZeeY5SAL9aSw80bm6OBFtEFfXVH1U4z6np+YhdL+6OrJlg0TA/IkAG8mW
- JkWv/6/aODwteOGs/aAgf2Uvond0Atb33E46RPCXYVMe/UxtEn7HijgXaEYlX3pR6IZ8vt
- CICB3voD1i32a6iKRd3BedXqp6lHtDY=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=bPpPX4VKwwr50UkRqlv82JfnKao9192AMEgKngY6V9Y=;
+ b=iRL+KYiGqt19ty7elhNy4505CgKJOEBpma+/DjQcpMMjV3qYFBaDcXK//TfrYf1d/ajhHL
+ y3xjLPbvCtM0pa6feMbbPAf8eUVnyOKLfL+SYnRXMSUoekOVkpCaiEadeRF3NQzTKeETCl
+ JkL79tn+W8422vIvmt+PFCEYZyUqqmA=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-557-hMeclWPQMgeaeDd3s_X30g-1; Sun, 03 Mar 2024 19:30:31 -0500
-X-MC-Unique: hMeclWPQMgeaeDd3s_X30g-1
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-29a16254a66so1481492a91.0
- for <qemu-devel@nongnu.org>; Sun, 03 Mar 2024 16:30:31 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709512231; x=1710117031;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IZriy6c/ERZ7d3BCwVgBok9tFGBO+WJUZ0ghiU0HB7Y=;
- b=LmC24qZu7T/eoBVRmslPOZvl+RbfZSrAehbe4EsbSERb6/Pi4f07pPea505Si6Rszx
- ttBUT9jlauhxWa09ZoaKyFgTa5/uW1fWOZXWKrOAOqjdt9bCl7VeZ1gyOEWg+DVIDk8l
- kGXz7465wMGzr+vcmskRO01bcKK/2onUigmPs9gHVk7ZWJliLnll1Ajiw34NFYp0YfpF
- E8nOTaqvtTCpotkbCLh+8iFonPM8EQzHDeo0+vgD3tzyYTpzsPdgwrKDuvfBDNeEtmI4
- JpjCVMrSRruYR8ZSN2cVI5y6CCaSQ/58Dqr4NdqbqakcyRnjC4GQd/J4tN04sfbUmQhD
- TalA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWi0y1mwe3+i11G2Szkfduvii23QGvQw4RktEZwnuepale7grf3lWkDtwRd1M1L/tz0kzMgHaPhx3WDUPraLiglO6mCmvM=
-X-Gm-Message-State: AOJu0YwC7eWvlbazAJd9X04Ou5RTeTu07ca8aHoGlHVhQ25MaGOIp54i
- xjViXJsNjL5GLEm/zfgz69q+ySjsC7OIIUvAJ5XZF8G6get55+g93qmElu5mIThbXOOwQEf0cKD
- DqJYybJ5wurNJWW79wL42XF20VkTpt9ahbQch+wTlLpx1Idbf39c7
-X-Received: by 2002:a17:90a:8998:b0:29b:3cae:c50a with SMTP id
- v24-20020a17090a899800b0029b3caec50amr2405746pjn.0.1709512230657; 
- Sun, 03 Mar 2024 16:30:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFWOrkcCXv00/ncgrvEUOWC/nO0b7TjgVzXGKcuRHlkME6Kg1gTj5In+bX4uI9dAR8DVnS0aA==
-X-Received: by 2002:a17:90a:8998:b0:29b:3cae:c50a with SMTP id
- v24-20020a17090a899800b0029b3caec50amr2405732pjn.0.1709512230235; 
- Sun, 03 Mar 2024 16:30:30 -0800 (PST)
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- sw14-20020a17090b2c8e00b0029abf47ec7fsm8884397pjb.0.2024.03.03.16.30.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 03 Mar 2024 16:30:29 -0800 (PST)
-Date: Mon, 4 Mar 2024 08:30:17 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH] migration/multifd: Document two places for mapped-ram
-Message-ID: <ZeUWGa20ELoWse5q@x1n>
-References: <20240301091524.39900-1-peterx@redhat.com>
- <CAE8KmOz_5-DtSO2BHpBXgD2kJUjwsLaqKguOcWgfXC2efB2rWA@mail.gmail.com>
- <ZeIVYDnAkPTpKHsP@redhat.com>
+ us-mta-63-iVDEuUFCPS-VENf5exO9Mg-1; Sun, 03 Mar 2024 20:26:40 -0500
+X-MC-Unique: iVDEuUFCPS-VENf5exO9Mg-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 992C5185A783;
+ Mon,  4 Mar 2024 01:26:40 +0000 (UTC)
+Received: from x1n.redhat.com (unknown [10.72.116.2])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 405C240C6EBA;
+ Mon,  4 Mar 2024 01:26:36 +0000 (UTC)
+From: peterx@redhat.com
+To: qemu-devel@nongnu.org,
+	Peter Maydell <peter.maydell@linaro.org>
+Cc: peterx@redhat.com,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Prasad Pandit <ppandit@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: [PULL 00/27] Migration next patches
+Date: Mon,  4 Mar 2024 09:26:07 +0800
+Message-ID: <20240304012634.95520-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZeIVYDnAkPTpKHsP@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
@@ -103,102 +79,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 01, 2024 at 05:50:24PM +0000, Daniel P. Berrangé wrote:
-> On Fri, Mar 01, 2024 at 11:17:10PM +0530, Prasad Pandit wrote:
-> > Hello Petr,
+From: Peter Xu <peterx@redhat.com>
 
-Hey Prasad!
+The following changes since commit c0c6a0e3528b88aaad0b9d333e295707a195587b:
 
-Thanks for taking a look.
+  Merge tag 'migration-next-pull-request' of https://gitlab.com/peterx/qemu into staging (2024-02-28 17:27:10 +0000)
 
-> > 
-> > On Fri, 1 Mar 2024 at 14:46, <peterx@redhat.com> wrote:
-> > > +         * An explicitly close() on the channel here is normally not
-> > 
-> > explicitly -> explicit
-> > 
-> > > +         * required, but can be helpful for "file:" iochannels, where it
-> > > +         * will include an fdatasync() to make sure the data is flushed to
-> > > +         * the disk backend.
-> > 
-> > * an fdatasync() -> fdatasync()
+are available in the Git repository at:
 
-I'll fix both when apply.
+  https://gitlab.com/peterx/qemu.git tags/migration-next-pull-request
 
-> > 
-> > * qio_channel_close
-> >     -> ioc_klass->io_close = qio_channel_file_close;
-> >      -> qemu_close(fioc->fd)
-> >       -> close(fd);
-> > 
-> > It does not seem to call fdatasync() before close(fd);
-> > 
-> >     - qio_channel_file_new_path(filename, O_CREAT | O_WRONLY | O_TRUNC, ...)
-> 
-> The documented behaviour reliant on another pending patch:
-> 
-> https://lists.nongnu.org/archive/html/qemu-devel/2024-02/msg07046.html
+for you to fetch changes up to 1a6e217c35b6dbab10fdc1e02640b8d60b2dc663:
 
-Rightfully as Dan helped to answer.
+  migration/multifd: Document two places for mapped-ram (2024-03-04 08:31:11 +0800)
 
-While for the other comment section in the same patch it relies on the
-other patch:
+----------------------------------------------------------------
+Migartion pull request for 20240304
 
-https://lore.kernel.org/all/20240229153017.2221-20-farosas@suse.de/
+- Bryan's fix on multifd compression level API
+- Fabiano's mapped-ram series (base + multifd only)
+- Steve's amend on cpr document in qapi/
 
-> 
-> > 
-> > Maybe the qio_channel..() calls above should include the 'O_DSYNC'
-> > flag as well? But that will do fdatasync() work at each write(2) call
-> > I think, not sure if that is okay.
-> 
-> 
-> 
-> > 
-> > > +         *
-> > > +         * The object_unref() cannot guarantee that because: (1) finalize()
-> > > +         * of the iochannel is only triggered on the last reference, and
-> > > +         * it's not guaranteed that we always hold the last refcount when
-> > > +         * reaching here, and, (2) even if finalize() is invoked, it only
-> > > +         * does a close(fd) without data flush.
-> > > +         */
-> > 
-> > * object_unref
-> >     -> object_finalize
-> >       -> object_deinit
-> >         -> type->instance_finalize
-> >          -> qio_channel_file_finalize
-> >           -> qemu_close(ioc->fd);
-> > 
-> > * I hope I'm looking at the right code here. (Sorry if I'm not)
+----------------------------------------------------------------
 
-Yes I think you're looking at the right path, it's just that the relevant
-patches haven't yet landed upstream but is planned.  I normally use
-"Based-on" tag for such patch that has a dependency outside master, like:
+Bryan Zhang (2):
+  migration: Properly apply migration compression level parameters
+  tests/migration: Set compression level in migration tests
 
-Based-on: <20240229153017.2221-1-farosas@suse.de>
+Fabiano Rosas (20):
+  migration/multifd: Cleanup multifd_recv_sync_main
+  io: fsync before closing a file channel
+  migration/qemu-file: add utility methods for working with seekable
+    channels
+  migration/ram: Introduce 'mapped-ram' migration capability
+  migration: Add mapped-ram URI compatibility check
+  migration/ram: Add outgoing 'mapped-ram' migration
+  migration/ram: Add incoming 'mapped-ram' migration
+  tests/qtest/migration: Add tests for mapped-ram file-based migration
+  migration/multifd: Rename MultiFDSend|RecvParams::data to
+    compress_data
+  migration/multifd: Decouple recv method from pages
+  migration/multifd: Allow multifd without packets
+  migration/multifd: Allow receiving pages without packets
+  migration/multifd: Add a wrapper for channels_created
+  migration/multifd: Add outgoing QIOChannelFile support
+  migration/multifd: Add incoming QIOChannelFile support
+  migration/multifd: Prepare multifd sync for mapped-ram migration
+  migration/multifd: Support outgoing mapped-ram stream format
+  migration/multifd: Support incoming mapped-ram stream format
+  migration/multifd: Add mapped-ram support to fd: URI
+  tests/qtest/migration: Add a multifd + mapped-ram migration test
 
-I believe many others on the qemu list do the same.  I think the rational
-is this will be both recognized by human beings and also by patchew,
-e.g. patchew will report a good apply status here:
+Nikolay Borisov (3):
+  io: add and implement QIO_CHANNEL_FEATURE_SEEKABLE for channel file
+  io: Add generic pwritev/preadv interface
+  io: implement io_pwritev/preadv for QIOChannelFile
 
-https://patchew.org/QEMU/20240301091524.39900-1-peterx@redhat.com/
+Peter Xu (1):
+  migration/multifd: Document two places for mapped-ram
 
-And in the same patch if you fetch the tree patchew provided:
+Steve Sistare (1):
+  migration: massage cpr-reboot documentation
 
-  git fetch https://github.com/patchew-project/qemu tags/patchew/20240301091524.39900-1-peterx@redhat.com
-
-You can also directly fetch the whole tree with this patch applied
-correctly on top of the dependency series.
-
-Personally I don't use patchew, but I kept that habit to declare patch
-dependencies just in case it'll help others who use it (e.g., I think
-patchew has other review tools like version comparisons, which I also don't
-use myself).
-
-Thanks,
+ docs/devel/migration/features.rst   |   1 +
+ docs/devel/migration/mapped-ram.rst | 138 +++++++++
+ qapi/migration.json                 |  42 +--
+ include/exec/ramblock.h             |  13 +
+ include/io/channel.h                |  83 ++++++
+ include/migration/qemu-file-types.h |   2 +
+ include/qemu/bitops.h               |  13 +
+ migration/fd.h                      |   2 +
+ migration/file.h                    |   8 +
+ migration/multifd.h                 |  27 +-
+ migration/options.h                 |   1 +
+ migration/qemu-file.h               |   6 +
+ migration/ram.h                     |   1 +
+ io/channel-file.c                   |  69 +++++
+ io/channel.c                        |  58 ++++
+ migration/fd.c                      |  44 +++
+ migration/file.c                    | 149 +++++++++-
+ migration/migration.c               |  56 +++-
+ migration/multifd-zlib.c            |  26 +-
+ migration/multifd-zstd.c            |  26 +-
+ migration/multifd.c                 | 417 ++++++++++++++++++++++------
+ migration/options.c                 |  47 ++++
+ migration/qemu-file.c               | 106 +++++++
+ migration/ram.c                     | 351 +++++++++++++++++++++--
+ migration/savevm.c                  |   1 +
+ tests/qtest/migration-test.c        | 137 +++++++++
+ migration/trace-events              |   2 +-
+ 27 files changed, 1666 insertions(+), 160 deletions(-)
+ create mode 100644 docs/devel/migration/mapped-ram.rst
 
 -- 
-Peter Xu
+2.44.0
 
 
