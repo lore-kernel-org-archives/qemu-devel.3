@@ -4,77 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E070C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 16:08:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C461C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 16:34:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhAr2-0004YI-RF; Mon, 04 Mar 2024 11:07:52 -0500
+	id 1rhBGR-0004Th-TF; Mon, 04 Mar 2024 11:34:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhAqx-0004R6-Ey
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 11:07:50 -0500
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rhBGP-0004TV-E3
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 11:34:05 -0500
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhAqv-0006WP-NT
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 11:07:47 -0500
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-2d208be133bso62498531fa.2
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 08:07:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rhBGO-0004Hu-0f
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 11:34:05 -0500
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-5ce2aada130so4122397a12.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 08:34:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709568462; x=1710173262; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=FOrrYov8+bg8EmDVgoFJki/0RKCsUNs7CCFg1Y0F+HE=;
- b=dk90o2XyFh3XOR4+o/P4w1Zw4ZNg838h7h9u8cf8BtbJmImK7VTPDeIYn6uMlJLxtt
- OSw/0el0QZg7IqazazuGBLO9/dYh07qa/xClLZ7xw0ZUUMf1Cv4dnhqh6xfdE2OGpmLI
- kBq4vdrZFrJsbBYtNI3MiJ107mCji68fK04EjAo4WSw3FltXY2/M2sbamYFPqIz35Wwx
- JQbASPF12JL48t97IdYEgmBj1bdR2z/FTPtYV4A13ByMi4IyubrQ9FX5GhNRYIpqTHwB
- svtMeYIy3B6ZgK3X8tWPKc32t23DoOBZOY/aTffeSoGzQhW+eCi6Wgwl4jBgyv3vnNRE
- QffQ==
+ d=gmail.com; s=20230601; t=1709570042; x=1710174842; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=X4BWV3LLWweVMGGezJU4P4CxZ4Dvs4NyrCZ+++DgLek=;
+ b=Ybz1OCm4bEp3cSVMvGtF3ZwwKNM83DiNIwP/XD11Acj2r1MLKIzDVwqvxW5kQ3RB/s
+ uDxcwlPC7QZKF6eGaDteTsU0wR1Evdld/Htsv/8xS9qsg+JUOD4B5kFOZAErHeHeFOMV
+ 8WlhjrnkEKR92vLCeU++YjvjcUcPqAkEyvgnUb+04X1SmVLhFoGDoxmVlcEALauSczPu
+ DjVN4aBHjt9QvUD7VCSMax3bCr4mCtZNgAajAl7UBlHorJsaYE1FwYnwCg4pXytoFtfA
+ G/CUpGATZYHxRsEOxy9WMcwFDL4sPcgfXijkJP70ONxqMWY5WAW+foRoiRREVJu/AVTR
+ g5Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709568462; x=1710173262;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=FOrrYov8+bg8EmDVgoFJki/0RKCsUNs7CCFg1Y0F+HE=;
- b=aaAfScPwz29rBJSW+nh/8SUh4Thzz3PuOl+8k3oEryivQ9tCnb5dpEUs9eU/CHyqwH
- uTHvuqCov6TEE52myewsHPNxntVoN+BQcrUADX7fTBpmAV8PHPsIa4zS+E6QMoU++o8D
- v+GvCNfo1jIgiGiopEkQAawafEXYqW5rPjBZMyWGO00Z+TUlg+yajsG5AuEetMGlXGYb
- Y6ZfOY/3nC0mgSIoXcdHJgA2yvy4HQAHjLL360BakDNF+yTMOAcQg0Fpuua1fgTLkYre
- ezmc+SAUKTE7S1MiK9q5ruaq5Ze5otG2l2cOB8ekHAL1Ck9Ftesm8cLI+BEhf7Sk9Jn4
- x5bQ==
+ d=1e100.net; s=20230601; t=1709570042; x=1710174842;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=X4BWV3LLWweVMGGezJU4P4CxZ4Dvs4NyrCZ+++DgLek=;
+ b=IDEuUlR4bmVW8+VymNBtLvUoCiwsw4puk13fAyvD801ghCWNv3Aos9UKd21JlXlN8e
+ q31qj1+Auy6JDLlgI3AJI0HYFY2Ni6+SZdXrMQBtCX9SabTen8hkFuQqmonylI80YDTg
+ ZdRLAdYLePnK+niotDrWw3CyQszmigh53hUbh/HqBe8VNG/BQC7Q5JSa/ylHxQwNApVk
+ Mf3JNhPM2OKqatDKl3E5UPtlpCaI99jxN4NelJBN9hDZlXvpNo25N6t9PElFiLAODJP2
+ bF5Qkd81vxNLaItWIaURb7tajAikuWPENKZ5y+4dFAU7XiKBNVD1niEPNloCmRoAT07b
+ u/Fw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVK3P5fiO1SXnMATAaHcYEMXyP1D1QsFAMcDkRdzT0CeimjSlEp2osVOsnf9JdCJCFQP4HwNtnW2pH5mp87sLhO/gmCvD0=
-X-Gm-Message-State: AOJu0YzZ/uDT6pKSvwNr1SKsynoKjEGUYwHedA964yOEMY94Y9Zr07q1
- wmveVJ1hP00n+Q1BLgpr6mxSHAsYghVFQrXN/BPV1TqxI1vdJmenePsvD+SBdP3BkGWSAyTknWf
- sxASET/E0eJjTrr6aRk7V2SdPD3F0DzMjTnb4KA==
-X-Google-Smtp-Source: AGHT+IFBSrQROCu4DpLzuSS6/lWwtGBP6HcAI2p/O7cPLfjAAhYEJkFxZb0a5VPQhuwVA+5+RRJdtk81s9eb2RxUe/s=
-X-Received: by 2002:ac2:5dc3:0:b0:513:3086:fcf1 with SMTP id
- x3-20020ac25dc3000000b005133086fcf1mr6106917lfq.18.1709568462161; Mon, 04 Mar
- 2024 08:07:42 -0800 (PST)
-MIME-Version: 1.0
-References: <20240229204407.1699260-1-svens@stackframe.org>
- <CAFEAcA9NSNVkZdtqF=aw=eB=MpsHTFoH6Z1CQtiabn5mme092w@mail.gmail.com>
- <87frx6ugyg.fsf@t14.stackframe.org>
-In-Reply-To: <87frx6ugyg.fsf@t14.stackframe.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 4 Mar 2024 16:07:30 +0000
-Message-ID: <CAFEAcA_PGJ30572vKC866Utdi+cgVS8QRZ8SCpxAkVzYoHA3-A@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/scsi/lsi53c895a: add timer to scripts processing
-To: Sven Schnelle <svens@stackframe.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- qemu-devel@nongnu.org, deller@gmx.de, BALATON Zoltan <balaton@eik.bme.hu>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x231.google.com
+ AJvYcCV87p6lzc3TEu2WdcXfK/wnLkCJW3h7Kc+B3eQd9/obcrXHHsDppe8cmSajz0DIAjuOMP72y5z0ffO7lNOQRO/2kqVbnQY=
+X-Gm-Message-State: AOJu0Yxz6+XUvbw+Y8zJcm9jVnYE5dbeRH/KADBrnRORS2YaQumad8+f
+ VfP2XIKzxcixuHPz+NHf6nCu40UUTs097aOoCzCktz91PTYEIhQZ
+X-Google-Smtp-Source: AGHT+IGKx1zUgiEOpaeuxseXwwc9YIlUDtpKrkhWzXQSC61SexxtrpQlfGK5HZIIxm9ajnsKFHcHtQ==
+X-Received: by 2002:a17:90a:f007:b0:29b:1c83:4e06 with SMTP id
+ bt7-20020a17090af00700b0029b1c834e06mr6706551pjb.36.1709570041133; 
+ Mon, 04 Mar 2024 08:34:01 -0800 (PST)
+Received: from localhost (220-235-220-130.tpgi.com.au. [220.235.220.130])
+ by smtp.gmail.com with ESMTPSA id
+ st3-20020a17090b1fc300b00299ef19177dsm10351172pjb.8.2024.03.04.08.33.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 Mar 2024 08:34:00 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 05 Mar 2024 02:33:52 +1000
+Message-Id: <CZL3ZYYZELI4.2S658P3W949GV@wheely>
+Cc: "Paolo Bonzini" <pbonzini@redhat.com>, "John Snow" <jsnow@redhat.com>,
+ "Cleber Rosa" <crosa@redhat.com>, =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, "Wainer dos Santos Moschetta" <wainersm@redhat.com>,
+ "Beraldo Leal" <bleal@redhat.com>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 4/4] replay: simple auto-snapshot mode for record
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Pavel Dovgalyuk" <pavel.dovgalyuk@ispras.ru>
+X-Mailer: aerc 0.15.2
+References: <20230814163135.187882-1-npiggin@gmail.com>
+ <20230814163135.187882-5-npiggin@gmail.com>
+ <95adc4ea-225c-bcd5-cec2-9edf1c2cf496@ispras.ru>
+ <CZEU6LST3QJK.25NCID08671V5@wheely>
+ <b212b1a1-eca9-40ae-992b-ff24f41844e3@ispras.ru>
+In-Reply-To: <b212b1a1-eca9-40ae-992b-ff24f41844e3@ispras.ru>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -92,51 +101,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 4 Mar 2024 at 15:58, Sven Schnelle <svens@stackframe.org> wrote:
->
-> Peter Maydell <peter.maydell@linaro.org> writes:
->
-> > On Thu, 29 Feb 2024 at 20:44, Sven Schnelle <svens@stackframe.org> wrote:
+On Wed Feb 28, 2024 at 3:07 PM AEST, Pavel Dovgalyuk wrote:
+> On 26.02.2024 10:36, Nicholas Piggin wrote:
+> >>> @@ -313,6 +317,27 @@ void replay_configure(QemuOpts *opts)
+> >>>        }
+> >>>   =20
+> >>>        replay_snapshot =3D g_strdup(qemu_opt_get(opts, "rrsnapshot"))=
+;
+> >>> +    if (replay_snapshot && mode =3D=3D REPLAY_MODE_RECORD) {
 > >>
-> >> HP-UX 10.20 seems to make the lsi53c895a spinning on a memory location
-> >> under certain circumstances. As the SCSI controller and CPU are not
-> >> running at the same time this loop will never finish. After some
-> >> time, the check loop interrupts with a unexpected device disconnect.
-> >> This works, but is slow because the kernel resets the scsi controller.
-> >> Instead of signaling UDC, start a timer and exit the loop. Until the
-> >> timer fires, the CPU can process instructions which might changes the
-> >> memory location.
-> >>
-> >> The limit of instructions is also reduced because scripts running on
-> >> the SCSI processor are usually very short. This keeps the time until
-> >> the loop is exit short.
-> >
-> > "exited"
-> >
-> >>
-> >> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> >> Signed-off-by: Sven Schnelle <svens@stackframe.org>
-> >> ---
-> >> Changes in v2:
-> >> - update comment in lsi_execute_script()
-> >> - reset waiting state and del timer in lsi_execute_script() to
-> >>   handle the case where script processing is triggered via
-> >>   register write, and not from the pending timer
-> >> - delete timer in lsi_scsi_exit()
-> >
-> > Other than the s/host/guest/ comment fix,
-> > Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-> >
-> > I don't suppose anybody has a setup with the Windows drivers
-> > to test this on? (commit ee4d919f30f13 suggests that at least
-> > Windows XP and 2003 had this problem.)
+> >> Can such a snapshotting may be useful in replay mode?
+> >=20
+> > Does snapshotting do anything in replay mode?=20
 >
-> I have a Windows XP VM with lsi53c895a. I just fired it up and added
-> a qemu_log() in the timer path, and seen it trigger once while copying
-> a few files. It looks like Windows XP (or better the SCSI driver) also
-> works with this patch.
+> Yes, you can create as many snapshots as you want if 'snapshot=3Don'
+> option of the disk image was not used.
 
-Excellent; thanks for testing.
+Actually something goes wrong and the machine crashes when I try
+this, so it's not so simple. It's a nice idea to be able to do
+because it really makes reverse debugging much faster, but no time
+to look into it further at the moment.
 
--- PMM
+So I will resubmit basically as is, which works for me nicely.
+Tweaks can be made or other timer behaviour can be added later,
+it's not a hard API with precisely defined semantics. So it would
+be nice to get the basic mechanisms merged and tests added.
+
+Thanks,
+Nick
 
