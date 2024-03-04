@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD6A6C54E49
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 19:49:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 818D9C5478C
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 19:51:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhEGt-000406-If; Mon, 04 Mar 2024 14:46:47 -0500
+	id 1rhEKj-0002hb-NJ; Mon, 04 Mar 2024 14:50:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1rhEGn-0003UG-6q; Mon, 04 Mar 2024 14:46:41 -0500
+ id 1rhEKW-0002UL-F1; Mon, 04 Mar 2024 14:50:36 -0500
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1rhEGl-0007Sx-ET; Mon, 04 Mar 2024 14:46:40 -0500
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+ id 1rhEKU-00082p-KY; Mon, 04 Mar 2024 14:50:32 -0500
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 424IxPDi030866; Mon, 4 Mar 2024 19:46:23 GMT
+ 424IxTg0002093; Mon, 4 Mar 2024 19:46:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
  h=from : to : cc :
  subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding; s=corp-2023-11-20;
- bh=p0KhQU56JZrNXT6Uf1rHIOF2FBiWYZRJhX65jJNo8e0=;
- b=X3+KvPz9R2tB/N95s0oVCw/rGCFDV6ocnAU2D35T54JXctaqbNa4GvaNdYWsWBng4dcI
- OtZm4KY2ixzwpuh+dKXSRVX/y2b+rMd74fqPwG4U+ChsoDX7PQoU1qN1Y56fMZQo4zyA
- I8nFujcyDoAiwR2HSYmETOBF/GkmPmN4uWquMJbB4ubdMKJ6rM3c2ccLmwblB+dE6Vzb
- 8T2Ul1MxtDrFaY9t7bB1syBfm/QwnOgM1yhFUVlhIg4D4QUQ4r+eCGcMrNgV1j3iDyGi
- 4ObBvblXdiV2hT+jAvks6WKvtfmRHANftdq+PXpVlSgCwoc7I1PqatFBpSibZG24sdNT wQ== 
+ content-type : content-transfer-encoding; s=corp-2023-11-20;
+ bh=v42uEPaaW1O9AWwC8cXe0QMmXpolwf08lZcTWXWJfdE=;
+ b=QiWA7kZqErQSaLEOG9X9IXB7eCIgk2zYGRM7UXQn++qsS0xlcHBZm9tL7u4ner2MzVTs
+ v5sWJ02ZLsMQ4QtatUF18/gYBDtKE57LXGVJy1EX7KcwSHsz3qDndf7w8s3HD5cXxaPT
+ COTMK/ayn68d8vPCHNXNXMLKMZQjyAkohdljpRSzqivUEPBiry4OL9v6U9zccqz8a6z/
+ fYWZ8DYeFys0v9KtAvygwE8WfrGrzALu4bOPWG5T6F9Pxc6sZRpBk0N+4QAPxG0OF/Vy
+ FMSiI1zswt0QXTZBc04bcxPpdQbgtZaIg+vqyVUs0QTRT4c8/9lhoAAJC2WJypgtGDWA nw== 
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wktw44epj-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wkv5dcnht-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 04 Mar 2024 19:46:23 +0000
+ Mon, 04 Mar 2024 19:46:26 +0000
 Received: from pps.filterd
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 424Ia2gk019156; Mon, 4 Mar 2024 19:46:23 GMT
+ with ESMTP id 424J0Gad018958; Mon, 4 Mar 2024 19:46:26 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 3wktj6agbv-1
+ 3wktj6agep-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 04 Mar 2024 19:46:23 +0000
+ Mon, 04 Mar 2024 19:46:25 +0000
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 424JkE48038523;
- Mon, 4 Mar 2024 19:46:22 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 424JkE4C038523;
+ Mon, 4 Mar 2024 19:46:25 GMT
 Received: from jonah-ol8.us.oracle.com (dhcp-10-39-196-188.vpn.oracle.com
  [10.39.196.188])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 3wktj6ag50-6; Mon, 04 Mar 2024 19:46:22 +0000
+ 3wktj6ag50-8; Mon, 04 Mar 2024 19:46:25 +0000
 From: Jonah Palmer <jonah.palmer@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: mst@redhat.com, jasowang@redhat.com, eperezma@redhat.com,
@@ -63,13 +63,15 @@ Cc: mst@redhat.com, jasowang@redhat.com, eperezma@redhat.com,
  david@redhat.com, iii@linux.ibm.com, cohuck@redhat.com,
  pbonzini@redhat.com, fam@euphon.net, stefanha@redhat.com,
  qemu-block@nongnu.org, qemu-s390x@nongnu.org, virtio-fs@lists.linux.dev
-Subject: [PATCH v1 5/8] virtio-ccw: Handle extra notification data
-Date: Mon,  4 Mar 2024 14:46:09 -0500
-Message-Id: <20240304194612.611660-6-jonah.palmer@oracle.com>
+Subject: [PATCH v1 7/8] vhost/vhost-user: Add VIRTIO_F_NOTIFICATION_DATA to
+ vhost feature bits
+Date: Mon,  4 Mar 2024 14:46:11 -0500
+Message-Id: <20240304194612.611660-8-jonah.palmer@oracle.com>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20240304194612.611660-1-jonah.palmer@oracle.com>
 References: <20240304194612.611660-1-jonah.palmer@oracle.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
@@ -79,8 +81,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
  adultscore=0 bulkscore=0 spamscore=0 mlxlogscore=999 malwarescore=0
  mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2311290000 definitions=main-2403040152
-X-Proofpoint-ORIG-GUID: n05XgzT27nPQ8rvJ3sT4uLXo_5G-Qb5a
-X-Proofpoint-GUID: n05XgzT27nPQ8rvJ3sT4uLXo_5G-Qb5a
+X-Proofpoint-GUID: GLFxPpaavAvqEDKShe5FF50gJAnNWkaE
+X-Proofpoint-ORIG-GUID: GLFxPpaavAvqEDKShe5FF50gJAnNWkaE
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=jonah.palmer@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -106,61 +108,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support to virtio-ccw devices for handling the extra data sent from
-the driver to the device when the VIRTIO_F_NOTIFICATION_DATA transport
-feature has been negotiated.
+Add support for the VIRTIO_F_NOTIFICATION_DATA feature across a variety
+of vhost devices.
 
-The extra data that's passed to the virtio-ccw device when this feature
-is enabled varies depending on the device's virtqueue layout.
+The inclusion of VIRTIO_F_NOTIFICATION_DATA in the feature bits arrays
+for these devices ensures that the backend is capable of offering and
+providing support for this feature, and that it can be disabled if the
+backend does not support it.
 
-That data passed to the virtio-ccw device is in the same format as the
-data passed to virtio-pci devices.
-
-Acked-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
 Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
 ---
- hw/s390x/s390-virtio-ccw.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ hw/block/vhost-user-blk.c    | 1 +
+ hw/net/vhost_net.c           | 2 ++
+ hw/scsi/vhost-scsi.c         | 1 +
+ hw/scsi/vhost-user-scsi.c    | 1 +
+ hw/virtio/vhost-user-fs.c    | 2 +-
+ hw/virtio/vhost-user-vsock.c | 1 +
+ net/vhost-vdpa.c             | 1 +
+ 7 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 62804cc228..828052046b 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -140,9 +140,11 @@ static void subsystem_reset(void)
- static int virtio_ccw_hcall_notify(const uint64_t *args)
- {
-     uint64_t subch_id = args[0];
--    uint64_t queue = args[1];
-+    uint64_t data = args[1];
-     SubchDev *sch;
-+    VirtIODevice *vdev;
-     int cssid, ssid, schid, m;
-+    uint16_t vq_idx = data;
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index 6a856ad51a..983c0657da 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -51,6 +51,7 @@ static const int user_feature_bits[] = {
+     VIRTIO_F_RING_PACKED,
+     VIRTIO_F_IOMMU_PLATFORM,
+     VIRTIO_F_RING_RESET,
++    VIRTIO_F_NOTIFICATION_DATA,
+     VHOST_INVALID_FEATURE_BIT
+ };
  
-     if (ioinst_disassemble_sch_ident(subch_id, &m, &cssid, &ssid, &schid)) {
-         return -EINVAL;
-@@ -151,12 +153,18 @@ static int virtio_ccw_hcall_notify(const uint64_t *args)
-     if (!sch || !css_subch_visible(sch)) {
-         return -EINVAL;
-     }
--    if (queue >= VIRTIO_QUEUE_MAX) {
-+
-+    if (vq_idx >= VIRTIO_QUEUE_MAX) {
-         return -EINVAL;
-     }
--    virtio_queue_notify(virtio_ccw_get_vdev(sch), queue);
--    return 0;
+diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
+index e8e1661646..bb1f975b39 100644
+--- a/hw/net/vhost_net.c
++++ b/hw/net/vhost_net.c
+@@ -48,6 +48,7 @@ static const int kernel_feature_bits[] = {
+     VIRTIO_F_IOMMU_PLATFORM,
+     VIRTIO_F_RING_PACKED,
+     VIRTIO_F_RING_RESET,
++    VIRTIO_F_NOTIFICATION_DATA,
+     VIRTIO_NET_F_HASH_REPORT,
+     VHOST_INVALID_FEATURE_BIT
+ };
+@@ -55,6 +56,7 @@ static const int kernel_feature_bits[] = {
+ /* Features supported by others. */
+ static const int user_feature_bits[] = {
+     VIRTIO_F_NOTIFY_ON_EMPTY,
++    VIRTIO_F_NOTIFICATION_DATA,
+     VIRTIO_RING_F_INDIRECT_DESC,
+     VIRTIO_RING_F_EVENT_IDX,
  
-+    vdev = virtio_ccw_get_vdev(sch);
-+    if (virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
-+        virtio_queue_set_shadow_avail_data(vdev, data);
-+    }
-+
-+    virtio_queue_notify(vdev, vq_idx);
-+    return 0;
- }
+diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
+index 58a00336c2..b8048f18e9 100644
+--- a/hw/scsi/vhost-scsi.c
++++ b/hw/scsi/vhost-scsi.c
+@@ -38,6 +38,7 @@ static const int kernel_feature_bits[] = {
+     VIRTIO_RING_F_EVENT_IDX,
+     VIRTIO_SCSI_F_HOTPLUG,
+     VIRTIO_F_RING_RESET,
++    VIRTIO_F_NOTIFICATION_DATA,
+     VHOST_INVALID_FEATURE_BIT
+ };
  
- static int virtio_ccw_hcall_early_printk(const uint64_t *args)
+diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
+index a63b1f4948..0b050805a8 100644
+--- a/hw/scsi/vhost-user-scsi.c
++++ b/hw/scsi/vhost-user-scsi.c
+@@ -36,6 +36,7 @@ static const int user_feature_bits[] = {
+     VIRTIO_RING_F_EVENT_IDX,
+     VIRTIO_SCSI_F_HOTPLUG,
+     VIRTIO_F_RING_RESET,
++    VIRTIO_F_NOTIFICATION_DATA,
+     VHOST_INVALID_FEATURE_BIT
+ };
+ 
+diff --git a/hw/virtio/vhost-user-fs.c b/hw/virtio/vhost-user-fs.c
+index cca2cd41be..ae48cc1c96 100644
+--- a/hw/virtio/vhost-user-fs.c
++++ b/hw/virtio/vhost-user-fs.c
+@@ -33,7 +33,7 @@ static const int user_feature_bits[] = {
+     VIRTIO_F_RING_PACKED,
+     VIRTIO_F_IOMMU_PLATFORM,
+     VIRTIO_F_RING_RESET,
+-
++    VIRTIO_F_NOTIFICATION_DATA,
+     VHOST_INVALID_FEATURE_BIT
+ };
+ 
+diff --git a/hw/virtio/vhost-user-vsock.c b/hw/virtio/vhost-user-vsock.c
+index 9431b9792c..802b44a07d 100644
+--- a/hw/virtio/vhost-user-vsock.c
++++ b/hw/virtio/vhost-user-vsock.c
+@@ -21,6 +21,7 @@ static const int user_feature_bits[] = {
+     VIRTIO_RING_F_INDIRECT_DESC,
+     VIRTIO_RING_F_EVENT_IDX,
+     VIRTIO_F_NOTIFY_ON_EMPTY,
++    VIRTIO_F_NOTIFICATION_DATA,
+     VHOST_INVALID_FEATURE_BIT
+ };
+ 
+diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+index e6bdb4562d..08b822e6ed 100644
+--- a/net/vhost-vdpa.c
++++ b/net/vhost-vdpa.c
+@@ -62,6 +62,7 @@ const int vdpa_feature_bits[] = {
+     VIRTIO_F_RING_PACKED,
+     VIRTIO_F_RING_RESET,
+     VIRTIO_F_VERSION_1,
++    VIRTIO_F_NOTIFICATION_DATA,
+     VIRTIO_NET_F_CSUM,
+     VIRTIO_NET_F_CTRL_GUEST_OFFLOADS,
+     VIRTIO_NET_F_CTRL_MAC_ADDR,
 -- 
 2.39.3
 
