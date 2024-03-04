@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D010CC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 19:47:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA464C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 19:47:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhEGo-0003cw-LJ; Mon, 04 Mar 2024 14:46:42 -0500
+	id 1rhEGk-0003Dq-HV; Mon, 04 Mar 2024 14:46:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1rhEGl-0003M3-RX; Mon, 04 Mar 2024 14:46:39 -0500
+ id 1rhEGh-0002px-7d; Mon, 04 Mar 2024 14:46:35 -0500
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1rhEGk-0007SF-1c; Mon, 04 Mar 2024 14:46:39 -0500
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ id 1rhEGf-0007O4-GN; Mon, 04 Mar 2024 14:46:34 -0500
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 424IxiPH014980; Mon, 4 Mar 2024 19:46:29 GMT
+ 424IxqbM032311; Mon, 4 Mar 2024 19:46:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
  h=from : to : cc :
  subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=corp-2023-11-20;
- bh=42Q56BfGoWW3SYftKo0HTu7R0vs7xDQNQCZVLJSzsio=;
- b=DL4QeFTm6kgQQOC/rZSmI44Msg93tu7NmYUv7Xa/GHabiVvgoj1VxzbTl4HClwR+Ln69
- xGsi32RZ12A8tIVvJEefsiNHTy2mjFSkno6UH3Smp7kcH1bse2nWXNMEjkAy2EnfZ6cq
- 6F3G5lTd+CSFwZ8uwwPjG9Zi/QGVU5yeKtCMbzJI7+VW8ViRzPYbh5ZKk7KWDm+ZqVG9
- wV4YjVsTkwtyz8eb9t7AnvpWWgFJFr6Q4W35vtY89q5ayBxJ13/FuSy3KmAuCr7toRNa
- m31uBSdVp8wwHrHAuGXHPBmOXApenEtYdOxoSCtgctAoc/k3gnc4HB02ybKeUpQe8adM pQ== 
+ content-transfer-encoding; s=corp-2023-11-20;
+ bh=jglHBlmZ0KmZFBvl99lLam02zHjHqPLHsDjR3lhm5XQ=;
+ b=hxAmzIDu080hVcLGcCfsLjsfUg2x2bGnnhFxLscAYP4uum8MGT5ALYkSEJ/lWi1d4O3/
+ W3lruuyJDXztDOj1wCrRK2hQe/crJnwM2HO38wIf5sVlAY7f+B8vf154WLf0+f53t0XP
+ ERmx6DBKI86ahEfbbpuNBAVQtgnbcF9+lD8SjiEDjKOyX19VkLTX3q/+ykemjF77nyyR
+ vRgEoi852unwDDbFhiG4gWkhQfAxdg2Vnq8J3Duj/ffurTAcROP/mxgKZv4LExvR0kK8
+ LsXkd04m0X7hMl2Bnvj0nKxL3oOUXks8MZ2LVqe6G5RGtOx0z3K1+8W84V8HfB3OF97o qQ== 
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wktq24jre-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wkv0bcfan-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 04 Mar 2024 19:46:28 +0000
+ Mon, 04 Mar 2024 19:46:23 +0000
 Received: from pps.filterd
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 424ItleQ018994; Mon, 4 Mar 2024 19:46:27 GMT
+ with ESMTP id 424JLesw019006; Mon, 4 Mar 2024 19:46:21 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 3wktj6agg4-1
+ 3wktj6agaj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 04 Mar 2024 19:46:27 +0000
+ Mon, 04 Mar 2024 19:46:21 +0000
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 424JkE4E038523;
- Mon, 4 Mar 2024 19:46:26 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 424JkE46038523;
+ Mon, 4 Mar 2024 19:46:20 GMT
 Received: from jonah-ol8.us.oracle.com (dhcp-10-39-196-188.vpn.oracle.com
  [10.39.196.188])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 3wktj6ag50-9; Mon, 04 Mar 2024 19:46:26 +0000
+ 3wktj6ag50-5; Mon, 04 Mar 2024 19:46:20 +0000
 From: Jonah Palmer <jonah.palmer@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: mst@redhat.com, jasowang@redhat.com, eperezma@redhat.com,
@@ -63,15 +63,14 @@ Cc: mst@redhat.com, jasowang@redhat.com, eperezma@redhat.com,
  david@redhat.com, iii@linux.ibm.com, cohuck@redhat.com,
  pbonzini@redhat.com, fam@euphon.net, stefanha@redhat.com,
  qemu-block@nongnu.org, qemu-s390x@nongnu.org, virtio-fs@lists.linux.dev
-Subject: [PATCH v1 8/8] virtio: Add VIRTIO_F_NOTIFICATION_DATA property
- definition
-Date: Mon,  4 Mar 2024 14:46:12 -0500
-Message-Id: <20240304194612.611660-9-jonah.palmer@oracle.com>
+Subject: [PATCH v1 4/8] virtio-mmio: Lock ioeventfd state with
+ VIRTIO_F_NOTIFICATION_DATA
+Date: Mon,  4 Mar 2024 14:46:08 -0500
+Message-Id: <20240304194612.611660-5-jonah.palmer@oracle.com>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20240304194612.611660-1-jonah.palmer@oracle.com>
 References: <20240304194612.611660-1-jonah.palmer@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
@@ -81,8 +80,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
  adultscore=0 bulkscore=0 spamscore=0 mlxlogscore=999 malwarescore=0
  mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2311290000 definitions=main-2403040152
-X-Proofpoint-GUID: 4lF4B-vi0KJNbSQiv847VOHk76DaEWij
-X-Proofpoint-ORIG-GUID: 4lF4B-vi0KJNbSQiv847VOHk76DaEWij
+X-Proofpoint-ORIG-GUID: 1iUBpQksxHR9DVlyRPEMUdOYeqaeSf0b
+X-Proofpoint-GUID: 1iUBpQksxHR9DVlyRPEMUdOYeqaeSf0b
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=jonah.palmer@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -20
@@ -107,33 +106,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extend the virtio device property definitions to include the
-VIRTIO_F_NOTIFICATION_DATA feature.
+Prevent ioeventfd from being enabled/disabled when a virtio-mmio device
+has negotiated the VIRTIO_F_NOTIFICATION_DATA transport feature.
 
-The default state of this feature is disabled, allowing it to be
-explicitly enabled where it's supported.
+Due to ioeventfd not being able to carry the extra data associated with
+this feature, the ioeventfd should be left in a disabled state for
+emulated virtio-mmio devices using this feature.
 
-Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
 Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
 ---
- include/hw/virtio/virtio.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ hw/virtio/virtio-mmio.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index 53915947a7..41ef3c4aef 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -369,7 +369,9 @@ typedef struct VirtIORNGConf VirtIORNGConf;
-     DEFINE_PROP_BIT64("packed", _state, _field, \
-                       VIRTIO_F_RING_PACKED, false), \
-     DEFINE_PROP_BIT64("queue_reset", _state, _field, \
--                      VIRTIO_F_RING_RESET, true)
-+                      VIRTIO_F_RING_RESET, true), \
-+    DEFINE_PROP_BIT64("notification_data", _state, _field, \
-+                      VIRTIO_F_NOTIFICATION_DATA, false)
+diff --git a/hw/virtio/virtio-mmio.c b/hw/virtio/virtio-mmio.c
+index f99d5851a2..f42ed5c512 100644
+--- a/hw/virtio/virtio-mmio.c
++++ b/hw/virtio/virtio-mmio.c
+@@ -421,7 +421,8 @@ static void virtio_mmio_write(void *opaque, hwaddr offset, uint64_t value,
+         virtio_update_irq(vdev);
+         break;
+     case VIRTIO_MMIO_STATUS:
+-        if (!(value & VIRTIO_CONFIG_S_DRIVER_OK)) {
++        if (!(value & VIRTIO_CONFIG_S_DRIVER_OK) &&
++            !virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
+             virtio_mmio_stop_ioeventfd(proxy);
+         }
  
- hwaddr virtio_queue_get_desc_addr(VirtIODevice *vdev, int n);
- bool virtio_queue_enabled_legacy(VirtIODevice *vdev, int n);
+@@ -433,7 +434,8 @@ static void virtio_mmio_write(void *opaque, hwaddr offset, uint64_t value,
+ 
+         virtio_set_status(vdev, value & 0xff);
+ 
+-        if (value & VIRTIO_CONFIG_S_DRIVER_OK) {
++        if ((value & VIRTIO_CONFIG_S_DRIVER_OK) &&
++            !virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
+             virtio_mmio_start_ioeventfd(proxy);
+         }
+ 
 -- 
 2.39.3
 
