@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24FECC5478C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 12:37:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03716C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 12:37:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh7W3-0004XR-4t; Mon, 04 Mar 2024 07:34:02 -0500
+	id 1rh7Ud-0003Gg-Ar; Mon, 04 Mar 2024 07:32:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=mkh8=KK=redhat.com=clg@ozlabs.org>)
- id 1rh7Sy-00015l-Nd
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:30:49 -0500
+ id 1rh7Sw-0000yx-OP
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:30:46 -0500
 Received: from gandalf.ozlabs.org ([150.107.74.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=mkh8=KK=redhat.com=clg@ozlabs.org>)
- id 1rh7Sc-0004gm-91
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:30:47 -0500
+ id 1rh7SM-0004sn-Oz
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:30:38 -0500
 Received: from gandalf.ozlabs.org (mail.ozlabs.org
  [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TpJ0q3bTFz4wyy;
- Mon,  4 Mar 2024 23:29:31 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TpJ1M0W2Fz4x1d;
+ Mon,  4 Mar 2024 23:29:59 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TpJ0m3ntwz4wqN;
- Mon,  4 Mar 2024 23:29:28 +1100 (AEDT)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TpJ1J1Mz9z4x0q;
+ Mon,  4 Mar 2024 23:29:55 +1100 (AEDT)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -40,10 +40,10 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 11/26] migration: Add Error** argument to
- qemu_savevm_state_setup()
-Date: Mon,  4 Mar 2024 13:28:29 +0100
-Message-ID: <20240304122844.1888308-12-clg@redhat.com>
+Subject: [PATCH v3 17/26] vfio: Add Error** argument to
+ .set_dirty_page_tracking() handler
+Date: Mon,  4 Mar 2024 13:28:35 +0100
+Message-ID: <20240304122844.1888308-18-clg@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304122844.1888308-1-clg@redhat.com>
 References: <20240304122844.1888308-1-clg@redhat.com>
@@ -73,188 +73,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This prepares ground for the changes coming next which add an Error**
-argument to the .save_setup() handler. Callers of qemu_savevm_state_setup()
-now handle the error and fail earlier setting the migration state from
-MIGRATION_STATUS_SETUP to MIGRATION_STATUS_FAILED.
+We will use the Error object to improve error reporting in the
+.log_global*() handlers of VFIO. Add documentation while at it.
 
-Since the previous behavior was to ignore errors at this step of
-migration, this change should be examined closely to check that
-cleanups are still correctly done.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
 
  Changes in v3:
- 
- - Set migration state to MIGRATION_STATUS_FAILED 
- - Fixed error handling to be done under lock in bg_migration_thread()
- - Made sure an error is always set in case of failure in
-   qemu_savevm_state_setup()
-   
- migration/savevm.h    |  2 +-
- migration/migration.c | 27 ++++++++++++++++++++++++---
- migration/savevm.c    | 24 ++++++++++++++----------
- 3 files changed, 39 insertions(+), 14 deletions(-)
 
-diff --git a/migration/savevm.h b/migration/savevm.h
-index 74669733dd63a080b765866c703234a5c4939223..9ec96a995c93a42aad621595f0ed58596c532328 100644
---- a/migration/savevm.h
-+++ b/migration/savevm.h
-@@ -32,7 +32,7 @@
- bool qemu_savevm_state_blocked(Error **errp);
- void qemu_savevm_non_migratable_list(strList **reasons);
- int qemu_savevm_state_prepare(Error **errp);
--void qemu_savevm_state_setup(QEMUFile *f);
-+int qemu_savevm_state_setup(QEMUFile *f, Error **errp);
- bool qemu_savevm_state_guest_unplug_pending(void);
- int qemu_savevm_state_resume_prepare(MigrationState *s);
- void qemu_savevm_state_header(QEMUFile *f);
-diff --git a/migration/migration.c b/migration/migration.c
-index bab68bcbef33edc9a78c2f4ebeccee690f4b1786..ff2d4bf9d153444d58d21f761071fe811034ea86 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -3360,6 +3360,8 @@ static void *migration_thread(void *opaque)
-     int64_t setup_start = qemu_clock_get_ms(QEMU_CLOCK_HOST);
-     MigThrError thr_error;
-     bool urgent = false;
-+    Error *local_err = NULL;
-+    int ret;
+ - Use error_setg_errno() in vfio_legacy_set_dirty_page_tracking()
  
-     thread = migration_threads_add("live_migration", qemu_get_thread_id());
- 
-@@ -3403,9 +3405,17 @@ static void *migration_thread(void *opaque)
-     }
- 
-     bql_lock();
--    qemu_savevm_state_setup(s->to_dst_file);
-+    ret = qemu_savevm_state_setup(s->to_dst_file, &local_err);
-     bql_unlock();
- 
-+    if (ret) {
-+        migrate_set_error(s, local_err);
-+        error_free(local_err);
-+        migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
-+                          MIGRATION_STATUS_FAILED);
-+        goto out;
-+     }
+ include/hw/vfio/vfio-container-base.h | 18 ++++++++++++++++--
+ hw/vfio/common.c                      |  4 ++--
+ hw/vfio/container-base.c              |  4 ++--
+ hw/vfio/container.c                   |  6 +++---
+ 4 files changed, 23 insertions(+), 9 deletions(-)
+
+diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+index 3582d5f97a37877b2adfc0d0b06996c82403f8b7..c76984654a596e3016a8cf833e10143eb872e102 100644
+--- a/include/hw/vfio/vfio-container-base.h
++++ b/include/hw/vfio/vfio-container-base.h
+@@ -82,7 +82,7 @@ int vfio_container_add_section_window(VFIOContainerBase *bcontainer,
+ void vfio_container_del_section_window(VFIOContainerBase *bcontainer,
+                                        MemoryRegionSection *section);
+ int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
+-                                           bool start);
++                                           bool start, Error **errp);
+ int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+                                       VFIOBitmap *vbmap,
+                                       hwaddr iova, hwaddr size);
+@@ -121,9 +121,23 @@ struct VFIOIOMMUClass {
+     int (*attach_device)(const char *name, VFIODevice *vbasedev,
+                          AddressSpace *as, Error **errp);
+     void (*detach_device)(VFIODevice *vbasedev);
 +
-     qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
-                                MIGRATION_STATUS_ACTIVE);
- 
-@@ -3482,6 +3492,9 @@ static void *bg_migration_thread(void *opaque)
-     MigThrError thr_error;
-     QEMUFile *fb;
-     bool early_fail = true;
-+    bool setup_fail = true;
-+    Error *local_err = NULL;
-+    int ret;
- 
-     rcu_register_thread();
-     object_ref(OBJECT(s));
-@@ -3515,9 +3528,16 @@ static void *bg_migration_thread(void *opaque)
- 
-     bql_lock();
-     qemu_savevm_state_header(s->to_dst_file);
--    qemu_savevm_state_setup(s->to_dst_file);
-+    ret = qemu_savevm_state_setup(s->to_dst_file, &local_err);
-+    if (ret) {
-+        migrate_set_error(s, local_err);
-+        error_free(local_err);
-+        goto fail;
-+    }
-     bql_unlock();
- 
-+    setup_fail = false;
+     /* migration feature */
 +
-     qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
-                                MIGRATION_STATUS_ACTIVE);
- 
-@@ -3584,7 +3604,8 @@ static void *bg_migration_thread(void *opaque)
- 
- fail:
-     if (early_fail) {
--        migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
-+        migrate_set_state(&s->state,
-+                setup_fail ? MIGRATION_STATUS_SETUP : MIGRATION_STATUS_ACTIVE,
-                 MIGRATION_STATUS_FAILED);
-         bql_unlock();
-     }
-diff --git a/migration/savevm.c b/migration/savevm.c
-index e400706e61e06d2d1d03a11aed14f30a243833f2..3ae4328b95d554cb4855f96989f8685daf4b8407 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -1309,11 +1309,11 @@ int qemu_savevm_state_prepare(Error **errp)
-     return 0;
- }
- 
--void qemu_savevm_state_setup(QEMUFile *f)
-+int qemu_savevm_state_setup(QEMUFile *f, Error **errp)
- {
-+    ERRP_GUARD();
-     MigrationState *ms = migrate_get_current();
-     SaveStateEntry *se;
--    Error *local_err = NULL;
-     int ret = 0;
- 
-     json_writer_int64(ms->vmdesc, "page_size", qemu_target_page_size());
-@@ -1322,10 +1322,9 @@ void qemu_savevm_state_setup(QEMUFile *f)
-     trace_savevm_state_setup();
-     QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-         if (se->vmsd && se->vmsd->early_setup) {
--            ret = vmstate_save(f, se, ms->vmdesc, &local_err);
-+            ret = vmstate_save(f, se, ms->vmdesc, errp);
-             if (ret) {
--                migrate_set_error(ms, local_err);
--                error_report_err(local_err);
-+                migrate_set_error(ms, *errp);
-                 qemu_file_set_error(f, ret);
-                 break;
-             }
-@@ -1345,18 +1344,19 @@ void qemu_savevm_state_setup(QEMUFile *f)
-         ret = se->ops->save_setup(f, se->opaque);
-         save_section_footer(f, se);
-         if (ret < 0) {
-+            error_setg(errp, "failed to setup SaveStateEntry with id(name): "
-+                       "%d(%s): %d", se->section_id, se->idstr, ret);
-             qemu_file_set_error(f, ret);
-             break;
-         }
++    /**
++     * @set_dirty_page_tracking
++     *
++     * Start or stop dirty pages tracking on VFIO container
++     *
++     * @bcontainer: #VFIOContainerBase on which to de/activate dirty
++     *              pages tracking
++     * @start: indicates whether to start or stop dirty pages tracking
++     * @errp: pointer to Error*, to store an error if it happens.
++     *
++     * Returns zero to indicate success and negative for error
++     */
+     int (*set_dirty_page_tracking)(const VFIOContainerBase *bcontainer,
+-                                   bool start);
++                                   bool start, Error **errp);
+     int (*query_dirty_bitmap)(const VFIOContainerBase *bcontainer,
+                               VFIOBitmap *vbmap,
+                               hwaddr iova, hwaddr size);
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index 71352ad6532cad02f3a2ab53bdd531d769ea55b2..9c5bc76414487513775fa8e559f97c12ed9c5fda 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -1085,7 +1085,7 @@ static bool vfio_listener_log_global_start(MemoryListener *listener,
+     if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
+         ret = vfio_devices_dma_logging_start(bcontainer);
+     } else {
+-        ret = vfio_container_set_dirty_page_tracking(bcontainer, true);
++        ret = vfio_container_set_dirty_page_tracking(bcontainer, true, NULL);
      }
  
      if (ret) {
--        return;
-+        return ret;
+@@ -1106,7 +1106,7 @@ static bool vfio_listener_log_global_stop(MemoryListener *listener,
+     if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
+         vfio_devices_dma_logging_stop(bcontainer);
+     } else {
+-        ret = vfio_container_set_dirty_page_tracking(bcontainer, false);
++        ret = vfio_container_set_dirty_page_tracking(bcontainer, false, NULL);
      }
  
--    if (precopy_notify(PRECOPY_NOTIFY_SETUP, &local_err)) {
--        error_report_err(local_err);
--    }
-+    /* TODO: Should we check that errp is set in case of failure ? */
-+    return precopy_notify(PRECOPY_NOTIFY_SETUP, errp);
+     if (ret) {
+diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+index 913ae49077c4f09b7b27517c1231cfbe4befb7fb..7c0764121d24b02b6c4e66e368d7dff78a6d65aa 100644
+--- a/hw/vfio/container-base.c
++++ b/hw/vfio/container-base.c
+@@ -53,14 +53,14 @@ void vfio_container_del_section_window(VFIOContainerBase *bcontainer,
  }
  
- int qemu_savevm_state_resume_prepare(MigrationState *s)
-@@ -1727,7 +1727,10 @@ static int qemu_savevm_state(QEMUFile *f, Error **errp)
-     ms->to_dst_file = f;
- 
-     qemu_savevm_state_header(f);
--    qemu_savevm_state_setup(f);
-+    ret = qemu_savevm_state_setup(f, errp);
-+    if (ret) {
-+        goto cleanup;
-+    }
- 
-     while (qemu_file_get_error(f) == 0) {
-         if (qemu_savevm_state_iterate(f, false) > 0) {
-@@ -1743,6 +1746,7 @@ static int qemu_savevm_state(QEMUFile *f, Error **errp)
-     if (ret != 0) {
-         error_setg_errno(errp, -ret, "Error while writing VM state");
+ int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
+-                                           bool start)
++                                           bool start, Error **errp)
+ {
+     if (!bcontainer->dirty_pages_supported) {
+         return 0;
      }
-+cleanup:
-     qemu_savevm_state_cleanup();
  
-     if (ret != 0) {
+     g_assert(bcontainer->ops->set_dirty_page_tracking);
+-    return bcontainer->ops->set_dirty_page_tracking(bcontainer, start);
++    return bcontainer->ops->set_dirty_page_tracking(bcontainer, start, errp);
+ }
+ 
+ int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 096d77eac3946a9c38fc2a98116b93353f71f06e..6524575aeddcea8470b5fd10caf57475088d1813 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -210,7 +210,7 @@ static int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
+ 
+ static int
+ vfio_legacy_set_dirty_page_tracking(const VFIOContainerBase *bcontainer,
+-                                    bool start)
++                                    bool start, Error **errp)
+ {
+     const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
+                                                   bcontainer);
+@@ -228,8 +228,8 @@ vfio_legacy_set_dirty_page_tracking(const VFIOContainerBase *bcontainer,
+     ret = ioctl(container->fd, VFIO_IOMMU_DIRTY_PAGES, &dirty);
+     if (ret) {
+         ret = -errno;
+-        error_report("Failed to set dirty tracking flag 0x%x errno: %d",
+-                     dirty.flags, errno);
++        error_setg_errno(errp, errno, "Failed to set dirty tracking flag 0x%x",
++                         dirty.flags);
+     }
+ 
+     return ret;
 -- 
 2.44.0
 
