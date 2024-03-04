@@ -4,90 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 128D1C5478C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 13:12:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91F35C5478C
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 13:14:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh87I-0005yx-EM; Mon, 04 Mar 2024 08:12:28 -0500
+	id 1rh88v-00071T-8F; Mon, 04 Mar 2024 08:14:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rh874-0005xq-K3
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 08:12:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
+ id 1rh88t-000714-GP
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 08:14:07 -0500
+Received: from aye.yew.relay.mailchannels.net ([23.83.220.6])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rh872-0003aO-K6
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 08:12:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709557931;
+ (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
+ id 1rh88p-0003lC-VB
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 08:14:07 -0500
+X-Sender-Id: _forwarded-from|134.3.94.10
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+ by relay.mailchannels.net (Postfix) with ESMTP id 9D04E901B2D
+ for <qemu-devel@nongnu.org>; Mon,  4 Mar 2024 13:13:54 +0000 (UTC)
+Received: from outbound5i.eu.mailhop.org (unknown [127.0.0.6])
+ (Authenticated sender: duocircle)
+ by relay.mailchannels.net (Postfix) with ESMTPA id E38CC901B02
+ for <qemu-devel@nongnu.org>; Mon,  4 Mar 2024 13:13:53 +0000 (UTC)
+ARC-Seal: i=2; s=arc-2022; d=mailchannels.net; t=1709558034; a=rsa-sha256;
+ cv=pass;
+ b=FKmMBdwfj9DtAU5S5heT9CDSisSVHFiDRPfWAeSq2ZHRvEQ++MiJGfliOdDbWyxCVvKWA4
+ 0nDDfIY8ENp6+lhnvvWPC+0f60vLZONqHOnCjYhEZOhGyfkH0MTefqBbqm+aQsBBJMUydq
+ eEQ/zw1BAas4x+7Re3sByzSEzDi+WyQHF4M6ms9Jzu0xckLZT+6pPqcYiVu91oJVHaY2sL
+ dxWec9oKifTrtmV+43TaN35anp6ZZTK5gi8XKJfggPbqdR2fQNHSitoy61poHsPj5pfY2c
+ gbNtYKTVD5fp7A7doOfHMAEJJBXkLTxYrz5JFR+trBS2EtBhDAAfpgnAtEAO1w==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net; s=arc-2022; t=1709558034;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Hya7C3IrM4vtFfsgfyACNWyuC5xB51ekW/NKhHA8ZaU=;
- b=MfKh8gnyKqUUtdec2g1oyu6tNpFFsDhsnoMiGoxWSfdyPJN41vLoQaT8DQIqO48x79OYmd
- YyKJRLZUue0S7Pd/kYfsrzPIfuNzTby8i3+Y0Iuigp9qB53IJc14F0GdQASqmc7uLz3cUT
- J5wyivQ196+a8ME4Z2oVDftOb6dl+Io=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-370-mC8unQavO2iqqhE8sczGzA-1; Mon, 04 Mar 2024 08:12:10 -0500
-X-MC-Unique: mC8unQavO2iqqhE8sczGzA-1
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-299565dfd2dso921097a91.1
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 05:12:10 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709557929; x=1710162729;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Hya7C3IrM4vtFfsgfyACNWyuC5xB51ekW/NKhHA8ZaU=;
- b=QeUBLTjkC5WbnTHTyEPmYMFrXnfhXdFI3T2fKxeVGbfljvgNR8r6K9a/xqnmSELp27
- /E90j++nkq20pu060krNvJrYN+E4qzR3Gd/UGgaFUgjlGpI37bZeCucIuFEcOJI16hmy
- ikbVMLbxDv82gUTY/6Jjl+wOjCNc6K2LnKSkfcPD8ZlrDZkbh9c7Mw9gGG8C06EIsbTh
- EG8sv+wNCPK4taiV4vY8dUGbeUCe/uJGGbHVgVEKKcmd1WCQ8ruxRJ93vvGqFYEXKRNv
- KFoZGg9Horp0TuQeg4DmyMggL+GzGo/EvhHVAsz8wK4GVDZbI3+dt3sTe6yy6m3fqNnx
- jk9g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXkDckBVQdaQzMsL+i9r3nKAS+t0C9t/wm5kJ3eRFzW65L35L4XJsAEb1woAc7Sj24teSTOpGaKSCY37csJEFhq96yYKi0=
-X-Gm-Message-State: AOJu0YwTZEfkCVgFS4tki5Qe/I1mMLWX7WE0ImJLMonfX4lfj7tcQJPL
- e//NyR8uM6eUu63Ih+TqneezzMucBJw6NE3BCy9fE0o8XieEnvybz4vP632YOcl50G4dm3YoOMy
- DIxtYE5nvhjUvKxT8gaySu6XeXqW5B4c6AaMlaH+tsLcTodfqF5uh
-X-Received: by 2002:a17:90a:b78d:b0:299:25ad:7c98 with SMTP id
- m13-20020a17090ab78d00b0029925ad7c98mr7307383pjr.2.1709557929213; 
- Mon, 04 Mar 2024 05:12:09 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGcgeXQaCSNbnuX/ApZebFy6vU/au5RMDT2Y2rooNkM+sJeBdjC9Vu0QMCrnT/OCYpUlAROUw==
-X-Received: by 2002:a17:90a:b78d:b0:299:25ad:7c98 with SMTP id
- m13-20020a17090ab78d00b0029925ad7c98mr7307372pjr.2.1709557928909; 
- Mon, 04 Mar 2024 05:12:08 -0800 (PST)
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- q66-20020a17090a17c800b0029aea375586sm7393998pja.1.2024.03.04.05.12.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Mar 2024 05:12:08 -0800 (PST)
-Date: Mon, 4 Mar 2024 21:12:01 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- armbru@redhat.com, Claudio Fontana <cfontana@suse.de>
-Subject: Re: [PATCH v6 00/23] migration: File based migration with multifd
- and mapped-ram
-Message-ID: <ZeXIoVho09HtXKQQ@x1n>
-References: <20240229153017.2221-1-farosas@suse.de> <ZeXAGEVFWt4Z8QeN@x1n>
- <ZeXBsR0ctl4evdYb@redhat.com> <ZeXEROyMmHffj1b2@x1n>
+ in-reply-to:in-reply-to:references:references:dkim-signature;
+ bh=v8oo1R9nliai7StaByx6EngF66pk1g0gBLXxd/HFVh4=;
+ b=acuxSZc1f7y7cbdwJJaWEStuMWl8sKWlCPdphpgTKgWU5FJfmGGyyptPwiyl7aBidOV3kq
+ d1pmge4npyUBbfdUMwySr+RUH1NDso9pwSfMzWO6UsOANz6zITsBbxWiVFjdNdtXRJa4B/
+ 9KFSmexrMut8qlHWYiy47w7l7l22H55oTlICZrLf663+TwgZN9sK3YUs+DcY5eAd5zuQGE
+ KiTcsIzSEYoFbo5s3SfVM3k4IpgkbzxLCQFae8VOz2qH8TupNqWzze++dY2c5FGrDKEtDP
+ Q5hJXgh9rdpKoyxFkgNujjATx0pN3UqPakwDC9GYY9b/8vSS/eyNv/KaXalQ+A==
+ARC-Authentication-Results: i=2; rspamd-7f9dd9fb96-26htq;
+ arc=pass ("outbound.mailhop.org:s=arc-outbound20181012:i=1");
+ auth=pass smtp.auth=duocircle smtp.mailfrom=svens@stackframe.org
+X-Sender-Id: _forwarded-from|134.3.94.10
+X-MC-Relay: Forwarding
+X-MailChannels-SenderId: _forwarded-from|134.3.94.10
+X-MailChannels-Auth-Id: duocircle
+X-Harbor-Relation: 6032631c25cd868b_1709558034425_434175741
+X-MC-Loop-Signature: 1709558034425:1571939916
+X-MC-Ingress-Time: 1709558034425
+Received: from outbound5i.eu.mailhop.org (outbound5i.eu.mailhop.org
+ [35.156.234.212]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+ by 100.111.192.177 (trex/6.9.2); Mon, 04 Mar 2024 13:13:54 +0000
+ARC-Seal: i=1; a=rsa-sha256; t=1709557939; cv=none;
+ d=outbound.mailhop.org; s=arc-outbound20181012;
+ b=oeOIkMPAnpIb976RbV809Flh7U3mGv1b07S1PRItM26y47YDCxpxGnac192CDOZOZT6m/u7ov8b8M
+ ot0l/g8n1os57itPKfy+IzZn0ILLA/LP5D8PrzYssqBru0gwTYqDKVJzmuwgj1fxe3/5OJqRUKOGr0
+ 61ew+9Ap8EWHiblr+okR4JQ9u4atGkpjiosX9rFewMy3O6PPCYsJOeVSjWYXpw2FVL1VikTLpNbVpt
+ GyiRsWnhbFVlSb6w+gTtry1ITWDcJg7PogHl8fPv7T6bk+wHY6y8vi6eR2bYu+K1yDFiChf38KvFjG
+ /TUtiMzxr5lEyf8Y2uXvZnjowp6otDQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=outbound.mailhop.org; s=arc-outbound20181012;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date:
+ references:in-reply-to:subject:cc:to:from:dkim-signature:dkim-signature:
+ dkim-signature:from;
+ bh=v8oo1R9nliai7StaByx6EngF66pk1g0gBLXxd/HFVh4=;
+ b=JAEG/O5/CqHOSoJs8lgYm1Q0O1ZFhLA7gF57puLI8M2+TNLQtKI1WESq+nVxY9h87N1hbrPUec1vH
+ TcJL8pVqq/3qAvQgsyEWc3QPXX9W/vNLSeA7d221ZVKSyMEKKqdixe5jsMjK2A+f+7KFx92180Rma/
+ QNzlGNW3Fr7YmG5zqAkAiDPrkAIgD+Bttu2y6Gr3UdoO2dMhnLjGcngX7SIeJ5XijCN/ZE7wMJbsX5
+ z1vzpUbPIvWe2+oFoUraKDid75/ceIboN5PBp/nK/TCXfe4IdeXiNLKg1pGJK1L1SNEyE26vdSfFOi
+ Xt3+HT7mV87pIK7CRKtgyHyE5DlB8lQ==
+ARC-Authentication-Results: i=1; outbound2.eu.mailhop.org;
+ spf=pass smtp.mailfrom=stackframe.org smtp.remote-ip=130.180.31.158;
+ dkim=pass header.d=stackframe.org header.s=dkim1 header.a=rsa-sha256
+ header.b=YfOdZkBH; 
+ dmarc=none header.from=stackframe.org;
+ arc=none header.oldest-pass=0;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=stackframe.org; s=duo-1634547266507-560c42ae;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date:
+ references:in-reply-to:subject:cc:to:from:from;
+ bh=v8oo1R9nliai7StaByx6EngF66pk1g0gBLXxd/HFVh4=;
+ b=oK+irFqFbMOo1WR9RovtVyhaJIdvgp/Mf1yAYVCabY/l4CoB907Xh0nt14FHJ9oK8SsGPw5UL96X0
+ c9DQHDHOkogX/5l5NSkawZR5VDTB5zADOPOC4lGE6/Cn6BfXVirrSnlJgs/EqXde4O38itD8KJBLH1
+ 6VmbbPS51yQvkp7Q=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=outbound.mailhop.org; s=dkim-high;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date:
+ references:in-reply-to:subject:cc:to:from:from;
+ bh=v8oo1R9nliai7StaByx6EngF66pk1g0gBLXxd/HFVh4=;
+ b=rRFpLeut/c1Zmri2LiK9K4nggfe6AhxGmB1TkRZPioRJB8TSR2XkiO4R1QY0xY8mxnjiEC+FLSjVm
+ S6xPdKlgsFud+riLtZXYi8jSl65Nz4ZFGg01M3GWdfn71NWnwC9Ntrp3R9Wr/eYkBz/brxz0uM74eR
+ YTE8GGei+ZOLDtJFRGfaR7K59BjJNZNI07M4eAF2ZEnr2t5FpLtkvcq3xtQG01hhOK1U1Q+2JPnf/o
+ ItBDuhY5cw4f8UnD04FRvJLpsKzVVd4ef3j03T/MhVUlvmaDQ9WV4S2JBRU5KRIDdHxd1qQXqPGdeU
+ /WuiZz2AA45ImIRsGcvfGeGZ17RlSQw==
+X-Originating-IP: 130.180.31.158
+X-MHO-RoutePath: dG9ta2lzdG5lcm51
+X-MHO-User: d12ddaef-da28-11ee-b690-9b9d9be6ef2c
+X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
+X-Mail-Handler: DuoCircle Outbound SMTP
+Received: from mail.duncanthrax.net (mail.duncanthrax.net [130.180.31.158])
+ by outbound2.eu.mailhop.org (Halon) with ESMTPSA
+ id d12ddaef-da28-11ee-b690-9b9d9be6ef2c;
+ Mon, 04 Mar 2024 13:12:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=stackframe.org; s=dkim1; h=Content-Transfer-Encoding:Content-Type:
+ MIME-Version:Message-ID:Date:References:In-Reply-To:Subject:Cc:To:From:Sender
+ :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+ Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+ List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=v8oo1R9nliai7StaByx6EngF66pk1g0gBLXxd/HFVh4=; b=YfOdZkBHKRWW9+QCAhw+ixe1PT
+ VTm9FMrc4SB1/y8d9QgLDfupew+Uq5+dzOis2W2Ym5GzZ4OEGqc0pgIlC8gEtwJWPbWZTCXzc1gt6
+ IEP1iEarYUIN9spAUKpFMeEfdNcPBE831AMo8qSoDmTTXXx/iIlq5c5eNjZj9PfnbIAd+0dVrZGTz
+ rRfFYysHspGq+NVaWJ8sCYNsy6XimcQbBaJHMKH6RFGmtAgI0/bf5kBulxEiIkUTptZQTXgjg9hIE
+ ngDoPPSMTgvCIgrI0baNoq6WGaLYP9wyzRqgCvDNzqNK2fhJWgLJWC40pYeNiK+s0nVxRixq01luL
+ 64GVY4TA==;
+Received: from ip-134-003-094-010.um41.pools.vodafone-ip.de ([134.3.94.10]
+ helo=t14.stackframe.org.stackframe.org)
+ by mail.duncanthrax.net with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
+ (envelope-from <svens@stackframe.org>) id 1rh88Y-0017nD-3C;
+ Mon, 04 Mar 2024 14:13:47 +0100
+From: Sven Schnelle <svens@stackframe.org>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Alexandre Iooss <erdnaxe@crans.org>,  Mahmoud Mandour
+ <ma.mandourr@gmail.com>,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ qemu-devel@nongnu.org,  deller@gmx.de
+Subject: Re: [PATCH v3 01/12] util/log: convert debug_regions to GList
+In-Reply-To: <87jzmiz3oa.fsf@draig.linaro.org> ("Alex =?utf-8?Q?Benn=C3=A9?=
+ =?utf-8?Q?e=22's?= message of "Mon, 04 Mar 2024 10:34:13 +0000")
+References: <20240301174609.1964379-1-svens@stackframe.org>
+ <20240301174609.1964379-2-svens@stackframe.org>
+ <87jzmiz3oa.fsf@draig.linaro.org>
+Date: Mon, 04 Mar 2024 14:13:46 +0100
+Message-ID: <87jzmiuol1.fsf@t14.stackframe.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZeXEROyMmHffj1b2@x1n>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=23.83.220.6; envelope-from=svens@stackframe.org;
+ helo=aye.yew.relay.mailchannels.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,62 +169,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 04, 2024 at 08:53:24PM +0800, Peter Xu wrote:
-> On Mon, Mar 04, 2024 at 12:42:25PM +0000, Daniel P. Berrangé wrote:
-> > On Mon, Mar 04, 2024 at 08:35:36PM +0800, Peter Xu wrote:
-> > > Fabiano,
-> > > 
-> > > On Thu, Feb 29, 2024 at 12:29:54PM -0300, Fabiano Rosas wrote:
-> > > > => guest: 128 GB RAM - 120 GB dirty - 1 vcpu in tight loop dirtying memory
-> > > 
-> > > I'm curious normally how much time does it take to do the final fdatasync()
-> > > for you when you did this test.
-> > > 
-> > > I finally got a relatively large system today and gave it a quick shot over
-> > > 128G (100G busy dirty) mapped-ram snapshot with 8 multifd channels.  The
-> > > migration save/load does all fine, so I don't think there's anything wrong
-> > > with the patchset, however when save completes (I'll need to stop the
-> > > workload as my disk isn't fast enough I guess..) I'll always hit a super
-> > > long hang of QEMU on fdatasync() on XFS during which the main thread is in
-> > > UNINTERRUPTIBLE state.
-> > 
-> > That isn't very surprising. If you don't have O_DIRECT enabled, then
-> > all that disk I/O from the migrate is going to be in RAM, and thus the
-> > fdatasync() is likely to trigger writing out alot of data.
-> > 
-> > Blocking the main QEMU thread though is pretty unhelpful. That suggests
-> > the data sync needs to be moved to a non-main thread.
-> 
-> Perhaps migration thread itself can also be a candidate, then.
-> 
-> > 
-> > With O_DIRECT meanwhile there should be essentially no hit from fdatasync.
-> 
-> The update of COMPLETED status can be a good place of a marker point to
-> show such flush done if from the gut feeling of a user POV.  If that makes
-> sense, maybe we can do that sync before setting COMPLETED.
-> 
-> No matter which thread does that sync, it's still a pity that it'll go into
-> UNINTERRUPTIBLE during fdatasync(), then whoever wants to e.g. attach a gdb
-> onto it to have a look will also hang.
+Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
 
-Or... would it be nicer we get rid of the fdatasync() but leave that for
-upper layers?  QEMU used to support file: migration already, it never
-manage cache behavior; it does smell like something shouldn't be done in
-QEMU when thinking about it, at least mapped-ram is nothing special to me
-from this regard.
+> Sven Schnelle <svens@stackframe.org> writes:
+>
+>> In preparation of making the parsing part of qemu_set_dfilter_ranges()
+>> available to other users, convert it to return a GList, so the result
+>> can be used with other functions taking a GList of struct Range.
+>
+> Why do we need to convert it to a Glist? When I originally wrote the
+> dfilter code I deliberately chose GArray over GList to avoid bouncing
+> across cache lines during the tight loop that is checking ranges. It's
+> not like we can't pass GArray's to plugins as well?
 
-User should be able to control that either manually (sync), or Libvirt can
-do that after QEMU quits; after all Libvirt holds the fd itself?  It should
-allow us to get rid of above UNINTERRUPTIBLE / un-debuggable period of QEMU
-went away.  Another side benefit: rather than holding all of QEMU resources
-(especially, guest RAM) when waiting for a super slow disk flush, Libvirt /
-upper layer can do that separately after releasing all the QEMU resources
-first.
-
-Thanks,
-
--- 
-Peter Xu
-
+Good point. I'll change it back to a GArray in the next iteration.
 
