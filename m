@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E97DCC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 17:19:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9354C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 17:22:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhBxP-0002Rx-Rd; Mon, 04 Mar 2024 12:18:31 -0500
+	id 1rhC0s-0004HG-Dx; Mon, 04 Mar 2024 12:22:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rhBxO-0002R8-GN
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:18:30 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1rhC0q-0004H5-QL
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:22:04 -0500
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rhBxJ-0005vK-7U
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:18:30 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-6e58a984ea1so3072502b3a.2
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 09:18:24 -0800 (PST)
+ id 1rhC0p-0006rT-5j
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:22:04 -0500
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-5c66b093b86so4546463a12.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 09:22:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709572703; x=1710177503; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709572921; x=1710177721; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=YntQ3ABADeVDqD88zu1QWTkAFLJJB1JzDx+xSJtyAeM=;
- b=qsbgfCaEPOSUWln10+2JYvx2PgdUSsZ/X4LM9JTRS27kO2hMvg4EpBRL3I2Rslel3D
- QZl2CrX0rd82caLYWJZ+Us+y6sAR90PUcTMldlTNQmB0NClw4f5egtkjfYcUYHTGR8JP
- SOzXe29skbkh58pmEkV0SuTTYCHWYOhOWuOAfQzWJOxuJ+K80mNrdqGiNzX9SJURAnl7
- OHqa4/QqwaxboePyxKkPFaxFmCRRUIcLMsoji3QKRVodvoIrBspofTau3Rz1TZVT/JWI
- gndg5bq3U8xAIkW6XC3BG7eBSFbjYbHEGOcT3nz6pC8qLuNN4q81YYfySzVm8thDwoTT
- 3arg==
+ bh=R5ruznmM3OY0bC8o3BVg0gCa4UCMiapvj3tpFmEWu+g=;
+ b=SzgO9V2Pt7NIsqw5w7HtWSpO/C95HmGFfARwA+pr9ceX/j8hlKOFvHfFsNJymlcQu3
+ E39je08vMiz/84hVXIwwjGyp0coxodexg7xL+L3MPksXahy/4puXNcpINJ2HYZkMivP3
+ SpYOwpouBvFjeIY81joaLWfE1qsNm8NrsT6Gkl2SPO5uqLudIwVHP8T+WMQo1NSf6JK1
+ q8lXDWULF/eT266H8Zk0BKOJFbEr6AJNY7eFOM6Vks5HPZ5e0cyyzF/nu0j6RMlZ1q4S
+ bvqgdT6QQBJv5KZcZh4hVwqzaGjg3ksjQB1hgY65ptGKUoKTapcTBmNCQwuj+pebpf+j
+ mbjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709572703; x=1710177503;
+ d=1e100.net; s=20230601; t=1709572921; x=1710177721;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YntQ3ABADeVDqD88zu1QWTkAFLJJB1JzDx+xSJtyAeM=;
- b=pPu5SBoisL4Tah1vVh4cano4LjHLfd/rNfoFakvXlsnM/pIoqTBj76bF6fhqnq5ShR
- 7bkyTH8fJDbPsIzFkZWqzJGadUcWZ8bDmG2dSqWO5+5whU6LUE0BMKkKPpH68xHEOQPL
- BYcqBJl0ZnUkHa+Vf7s5FO8wwQCgNqKXF7hevx7mT9hfWnUEJ/uVefZk6dtRKUjkCwJ8
- LtSNvS0KEb97/ORL3MiTUqZ20DcM1Zjz6FyYI8eD4VZJ7SpCQx0xbYRPG1JdQAJVYn2Z
- 9e5hPvII6Le1Aeh87ZZlXHkIV+cPruD5k+h73lgVMWDuSQc/cmjpTVhREh1UoLBmMoj3
- 2Itg==
+ bh=R5ruznmM3OY0bC8o3BVg0gCa4UCMiapvj3tpFmEWu+g=;
+ b=JgQl3obiPKzLdJW4aOZPSbfYLrq+WVVwJykJVFgQEH+D15eDqcm47Rl4l6zBTuRXmx
+ VdTD+gc4r2v936eTztXZh0/awsdAN7L4RVnsSl6KmwUI2MCWX28K62/a8RbLIrp9RPtE
+ 568axsigVr/1+bnbkZrl9Sjk1UYiBGnSZDwfZN/TIezDVyfJsQmIjS3kqKGQ2SJmqEHH
+ /cogN3mIxpkH7i2irJk6bpo0S008h4aDFyxJGaC2Hz5S/KVccau/mpHiD6V0p/SuCU/8
+ pff2kPgHbuHb8dCLTny05t00dMCEU19hNEOTwjLkZay/DDG8fXTlXNtm0de8Y+WGu894
+ Cu+w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVQluupX153B8LJRugJ4jPyLO1xr6L/5t79iiocb2/NosyM3y3vHlkCFacctAarc/Wm07GbMUa0UtjkNAk8so+uTp+AIhc=
-X-Gm-Message-State: AOJu0YycZ2tAXCE8ZU0y68AWljVOS1B1HFJThMQpaxXBmr6ENLFmYvIm
- L1vXX1/GQIvwoPBgNeq7/Atdgcf6HeMinjFdiySAqs25W9VnEUn9J/xqoTAEHEo=
-X-Google-Smtp-Source: AGHT+IFOg1+rHCK0xEerRlprq+fcAYsSXaegN4bRkwpC92cOPPrpGt9NwUEx7nDW6RRVEBLZcYXFSA==
-X-Received: by 2002:a05:6a00:238f:b0:6e6:27d5:4182 with SMTP id
- f15-20020a056a00238f00b006e627d54182mr2580981pfc.9.1709572703085; 
- Mon, 04 Mar 2024 09:18:23 -0800 (PST)
+ AJvYcCU8rgNCwLxGI4JsR2Jon0OM69hZMsIonKgqS/gu01RoUnxnCF2F1wl3VQvFle7shGEhUuIkzLjYw83L9X0zQnxEu7xpVok=
+X-Gm-Message-State: AOJu0YyF3EFIcVnFPDVk67Fx6/IySwYLjW6jD/bP06hqQhXcObF/xCeN
+ yCKOKKUnxhqp0ooMLznxS0dSUnsC99g+C9+PhtkGSxtAM/14l+jPXqVwlnQ2e1I=
+X-Google-Smtp-Source: AGHT+IG0zvT7pjU5l4EGhRIQ52Oe65bK6YKKGBtqoGoLFY6EOf9dbMhnc1TAuP8rZAItGyKsvjrVag==
+X-Received: by 2002:a17:90b:4393:b0:29b:46f0:6f8e with SMTP id
+ in19-20020a17090b439300b0029b46f06f8emr130508pjb.8.1709572920936; 
+ Mon, 04 Mar 2024 09:22:00 -0800 (PST)
 Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
  [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- x11-20020aa784cb000000b006e45c5d7720sm7726423pfn.93.2024.03.04.09.18.21
+ oh5-20020a17090b3a4500b0029ab712f648sm10268079pjb.38.2024.03.04.09.21.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Mar 2024 09:18:22 -0800 (PST)
-Message-ID: <aa702db8-9e72-4727-aac3-6824415ef29f@linaro.org>
-Date: Mon, 4 Mar 2024 07:18:19 -1000
+ Mon, 04 Mar 2024 09:22:00 -0800 (PST)
+Message-ID: <e33ab9ae-e2d4-41ba-b053-e7e918572808@linaro.org>
+Date: Mon, 4 Mar 2024 07:21:57 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] gdbstub: Add Xfer:siginfo:read stub
+Subject: Re: [PATCH 2/2] tests/tcg: Add multiarch test for Xfer:siginfo:read
+ stub
 Content-Language: en-US
 To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
  alex.bennee@linaro.org
 Cc: peter.maydell@linaro.org
 References: <20240303192610.498490-1-gustavo.romero@linaro.org>
+ <20240303192610.498490-2-gustavo.romero@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240303192610.498490-1-gustavo.romero@linaro.org>
+In-Reply-To: <20240303192610.498490-2-gustavo.romero@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,16 +101,105 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/3/24 09:26, Gustavo Romero wrote:
-> +    /* Filter out si_type from si_code. See comment in siginfo_noswap(). */ > +    tmp_siginfo = ts->sync_signal.info;
-> +    tmp_siginfo.si_code = sextract32(tmp_siginfo.si_code, 0, 16);
+> Add multiarch test for testing if Xfer:siginfo:read query is properly
+> handled by gdbstub.
+> 
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> ---
+>   tests/tcg/multiarch/Makefile.target           | 10 ++++++-
+>   .../gdbstub/test-qxfer-siginfo-read.py        | 26 +++++++++++++++++++
+>   tests/tcg/multiarch/segfault.c                | 14 ++++++++++
+>   3 files changed, 49 insertions(+), 1 deletion(-)
+>   create mode 100644 tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py
+>   create mode 100644 tests/tcg/multiarch/segfault.c
+> 
+> diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
+> index e10951a801..61cda9640e 100644
+> --- a/tests/tcg/multiarch/Makefile.target
+> +++ b/tests/tcg/multiarch/Makefile.target
+> @@ -80,6 +80,13 @@ run-gdbstub-qxfer-auxv-read: sha1
+>   		--bin $< --test $(MULTIARCH_SRC)/gdbstub/test-qxfer-auxv-read.py, \
+>   	basic gdbstub qXfer:auxv:read support)
+>   
+> +run-gdbstub-qxfer-siginfo-read: segfault
+> +	$(call run-test, $@, $(GDB_SCRIPT) \
+> +		--gdb $(GDB) \
+> +		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
+> +		--bin "$< -s" --test $(MULTIARCH_SRC)/gdbstub/test-qxfer-siginfo-read.py, \
+> +	basic gdbstub qXfer:siginfo:read support)
+> +
+>   run-gdbstub-proc-mappings: sha1
+>   	$(call run-test, $@, $(GDB_SCRIPT) \
+>   		--gdb $(GDB) \
+> @@ -122,7 +129,8 @@ endif
+>   EXTRA_RUNS += run-gdbstub-sha1 run-gdbstub-qxfer-auxv-read \
+>   	      run-gdbstub-proc-mappings run-gdbstub-thread-breakpoint \
+>   	      run-gdbstub-registers run-gdbstub-prot-none \
+> -	      run-gdbstub-catch-syscalls
+> +	      run-gdbstub-catch-syscalls \
+> +	      run-gdbstub-qxfer-siginfo-read
+>   
+>   # ARM Compatible Semi Hosting Tests
+>   #
+> diff --git a/tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py b/tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py
+> new file mode 100644
+> index 0000000000..862596b07a
+> --- /dev/null
+> +++ b/tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py
+> @@ -0,0 +1,26 @@
+> +from __future__ import print_function
+> +#
+> +# Test gdbstub Xfer:siginfo:read stub.
+> +#
+> +# The test runs a binary that causes a SIGSEGV and then looks for additional
+> +# info about the signal through printing GDB's '$_siginfo' special variable,
+> +# which sends a Xfer:siginfo:read query to the gdbstub.
+> +#
+> +# The binary causes a SIGSEGV at dereferencing a pointer with value 0xdeadbeef,
+> +# so the test looks for and checks if this address is correctly reported by the
+> +# gdbstub.
+> +#
+> +# This is launched via tests/guest-debug/run-test.py
+> +#
+> +
+> +import gdb
+> +from test_gdbstub import main, report
+> +
+> +def run_test():
+> +    "Run through the test"
+> +
+> +    gdb.execute("continue", False, True)
+> +    resp = gdb.execute("print/x $_siginfo", False, True)
+> +    report(resp.find("si_addr = 0xdeadbeef"), "Found fault address.")
+> +
+> +main(run_test)
+> diff --git a/tests/tcg/multiarch/segfault.c b/tests/tcg/multiarch/segfault.c
+> new file mode 100644
+> index 0000000000..e6c8ff31ca
+> --- /dev/null
+> +++ b/tests/tcg/multiarch/segfault.c
+> @@ -0,0 +1,14 @@
+> +#include <stdio.h>
+> +#include <string.h>
+> +
+> +/* Cause a segfault for testing purposes. */
+> +
+> +int main(int argc, char *argv[])
+> +{
+> +    int *ptr = (void *)0xdeadbeef;
+> +
+> +    if (argc == 2 && strcmp(argv[1], "-s") == 0) {
+> +        /* Cause segfault. */
+> +        printf("%d\n", *ptr);
+> +    }
+> +}
 
+Any reason SIGSEGV is interesting?
+Perhaps just abort for SIGABRT instead?
 
-This is incorrect, as it only handles synchronous signals.
-
-In handle_pending_signal(), struct emulated_sigtable is passed, which has the correct 
-siginfo (all of it, so no need for the adjustment).  I think you need to pass that in to 
-gdb_handlesig so that a copy can be made for later xfer.
+A test using setitimer to raise SIGALRM would test the async path.
 
 
 r~
+
 
