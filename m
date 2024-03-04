@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C867DC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 12:35:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C669C5478C
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 12:36:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh7Rx-0000FJ-OD; Mon, 04 Mar 2024 07:29:48 -0500
+	id 1rh7WL-0005Oj-Rf; Mon, 04 Mar 2024 07:34:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=mkh8=KK=redhat.com=clg@ozlabs.org>)
- id 1rh7Rq-00004s-TN
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:29:38 -0500
+ id 1rh7TJ-0001bV-DB
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:31:13 -0500
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
  helo=gandalf.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=mkh8=KK=redhat.com=clg@ozlabs.org>)
- id 1rh7Ri-0004dS-1q
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:29:33 -0500
+ id 1rh7Sw-0005Ck-B5
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:31:03 -0500
 Received: from gandalf.ozlabs.org (mail.ozlabs.org
  [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TpJ0l6rY6z4wyt;
- Mon,  4 Mar 2024 23:29:27 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TpJ1h2ypcz4x0q;
+ Mon,  4 Mar 2024 23:30:16 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TpJ0j0VPbz4wqN;
- Mon,  4 Mar 2024 23:29:24 +1100 (AEDT)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TpJ1d3BsYz4x1s;
+ Mon,  4 Mar 2024 23:30:13 +1100 (AEDT)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -41,10 +41,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 10/26] migration: Move cleanup after after error reporting
- in qemu_savevm_state_setup()
-Date: Mon,  4 Mar 2024 13:28:28 +0100
-Message-ID: <20240304122844.1888308-11-clg@redhat.com>
+Subject: [PATCH v3 22/26] vfio: Reverse test on vfio_get_dirty_bitmap()
+Date: Mon,  4 Mar 2024 13:28:40 +0100
+Message-ID: <20240304122844.1888308-23-clg@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304122844.1888308-1-clg@redhat.com>
 References: <20240304122844.1888308-1-clg@redhat.com>
@@ -75,29 +74,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This will help preserving the error set by .save_setup() handlers.
+It will simplify the changes coming after.
 
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- migration/savevm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/vfio/common.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 31ce9391d49c825d4ec835e26ac0246e192783a0..e400706e61e06d2d1d03a11aed14f30a243833f2 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -1740,10 +1740,10 @@ static int qemu_savevm_state(QEMUFile *f, Error **errp)
-         qemu_savevm_state_complete_precopy(f, false, false);
-         ret = qemu_file_get_error(f);
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index 8fa232538d482f094643e0f1601b8ebe25fe077f..3c01b4c78ac73665d3c9f2322291a19ef8f71e76 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -1239,16 +1239,20 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
      }
--    qemu_savevm_state_cleanup();
-     if (ret != 0) {
-         error_setg_errno(errp, -ret, "Error while writing VM state");
-     }
-+    qemu_savevm_state_cleanup();
  
-     if (ret != 0) {
-         status = MIGRATION_STATUS_FAILED;
+     rcu_read_lock();
+-    if (vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL)) {
+-        ret = vfio_get_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
+-                                    translated_addr);
+-        if (ret) {
+-            error_report("vfio_iommu_map_dirty_notify(%p, 0x%"HWADDR_PRIx", "
+-                         "0x%"HWADDR_PRIx") = %d (%s)",
+-                         bcontainer, iova, iotlb->addr_mask + 1, ret,
+-                         strerror(-ret));
+-        }
++    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL)) {
++        goto out_lock;
+     }
++
++    ret = vfio_get_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
++                                translated_addr);
++    if (ret) {
++        error_report("vfio_iommu_map_dirty_notify(%p, 0x%"HWADDR_PRIx", "
++                     "0x%"HWADDR_PRIx") = %d (%s)",
++                     bcontainer, iova, iotlb->addr_mask + 1, ret,
++                     strerror(-ret));
++    }
++
++out_lock:
+     rcu_read_unlock();
+ 
+ out:
 -- 
 2.44.0
 
