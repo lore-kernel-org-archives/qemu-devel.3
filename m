@@ -4,89 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD05DC5478C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 12:54:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0153C5478C
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 13:00:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh7p7-0006dr-8F; Mon, 04 Mar 2024 07:53:41 -0500
+	id 1rh7ul-0008Vc-GJ; Mon, 04 Mar 2024 07:59:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rh7p4-0006dK-TU
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:53:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1rh7ui-0008V6-SH; Mon, 04 Mar 2024 07:59:28 -0500
+Received: from szxga01-in.huawei.com ([45.249.212.187])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rh7p3-0006W1-Az
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:53:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709556815;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bQTzI5RbwcARNm1W6r+Eijre1yn5IivSnIVIQu26ThQ=;
- b=Y04ZY0gjf46+pohiPYfBwSuoGYcZyv1LSM4I5121LeiQhwEeRYDO7YsuE+jmE0Gxms4f3m
- QWi9EL9R2pnThQPpGrg4Ytn+hplB/1YAJLFJ3PCKSMeKrsND1pghdTJiy1A6/JWNe+08Lu
- 3qyTCJh99nn/HGpVeS5fc8g6bzRlOqo=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-131-TcvuKZcnOKy3wSPtPIYw-A-1; Mon, 04 Mar 2024 07:53:34 -0500
-X-MC-Unique: TcvuKZcnOKy3wSPtPIYw-A-1
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-5cfccde4a54so1558067a12.1
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 04:53:34 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709556813; x=1710161613;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bQTzI5RbwcARNm1W6r+Eijre1yn5IivSnIVIQu26ThQ=;
- b=tZAEvv/Mt37eco8lNu2hLJq8jkNwyaQrm2YqrwzD0NSvq/uagKViJV6x5h9UE1x6oU
- 0W4lZaOzhL8514ynjtmj4mzvYN8R/yJKNinCFSKCLBlDMOuuMxxPTUZ4k+ZAiXLDhaCT
- TsO8HjNBxQVjVgR2I0yUtlODzIPTfpiFmqgUpD16kXNmjKJffWJQqvj3j/C+mmHsP6JV
- pMu6g3DtRYieOfEnOD0culfGHM+8TxdjkKWBSP5sE5PBWayyE5iKtc6iymebUwdS14c8
- hzvF8xK+RrbbEJeWxf4bTZ4V6foDWN6Mx0teJ2y/1tK1ClaEzIRQ5KveXl0w5CsPiPhG
- taig==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWqXaObj9hvDOUffBz1lUnzHR6fzRkVFcNZ8q6WLlmGlhRF4PHIWPH7VCO9sr7e9PNK6xVmH9AdBI30qFyigC1RaYnR8+I=
-X-Gm-Message-State: AOJu0Yy6mFe08g7O7HD6fSqdMxAlYxFj6nnhsy9BS5T3D+GgzRpGgIX0
- N3eIUxm2DwFp+nfVpwp1NQOQO9OtwzwEqfXusJhMPVDLrITS4N6oiG6B8ugL5/YOpHRNLqQ6HZm
- yKWdCakHevWr2mmB7klCJdXRhg2KAyhEhc8xNcJ6LUmM1l8NUaKzg
-X-Received: by 2002:a05:6a00:acb:b0:6e6:120b:9b3 with SMTP id
- c11-20020a056a000acb00b006e6120b09b3mr5257965pfl.1.1709556813520; 
- Mon, 04 Mar 2024 04:53:33 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFqylxDFxYiLoV720pHjWyo7bQs91EO8ANI4glbk0+cru+43UmdJViCLMmOGGfqQxGtjOxWgQ==
-X-Received: by 2002:a05:6a00:acb:b0:6e6:120b:9b3 with SMTP id
- c11-20020a056a000acb00b006e6120b09b3mr5257952pfl.1.1709556813135; 
- Mon, 04 Mar 2024 04:53:33 -0800 (PST)
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- w8-20020a056a0014c800b006e622f9175asm1623555pfu.217.2024.03.04.04.53.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Mar 2024 04:53:32 -0800 (PST)
-Date: Mon, 4 Mar 2024 20:53:24 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- armbru@redhat.com, Claudio Fontana <cfontana@suse.de>
-Subject: Re: [PATCH v6 00/23] migration: File based migration with multifd
- and mapped-ram
-Message-ID: <ZeXEROyMmHffj1b2@x1n>
-References: <20240229153017.2221-1-farosas@suse.de> <ZeXAGEVFWt4Z8QeN@x1n>
- <ZeXBsR0ctl4evdYb@redhat.com>
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1rh7ug-0008V7-1A; Mon, 04 Mar 2024 07:59:28 -0500
+Received: from mail.maildlp.com (unknown [172.19.163.174])
+ by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4TpJcc69J9zwPFs;
+ Mon,  4 Mar 2024 20:57:04 +0800 (CST)
+Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
+ by mail.maildlp.com (Postfix) with ESMTPS id 4BF241402CD;
+ Mon,  4 Mar 2024 20:59:20 +0800 (CST)
+Received: from [10.67.109.254] (10.67.109.254) by
+ kwepemi500008.china.huawei.com (7.221.188.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Mon, 4 Mar 2024 20:59:19 +0800
+Message-ID: <7f9d680d-1e1f-10b2-ca3f-dd2e385b69f7@huawei.com>
+Date: Mon, 4 Mar 2024 20:59:18 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.0
+Subject: Re: [RFC PATCH v5 18/22] hw/intc/arm_gicv3: Implement NMI interrupt
+ prioirty
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>,
+ <peter.maydell@linaro.org>, <eduardo@habkost.net>,
+ <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
+ <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+References: <20240229131039.1868904-1-ruanjinjie@huawei.com>
+ <20240229131039.1868904-19-ruanjinjie@huawei.com>
+ <85d632e6-8eb9-4bb5-bef4-b6430d499e61@linaro.org>
+In-Reply-To: <85d632e6-8eb9-4bb5-bef4-b6430d499e61@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZeXBsR0ctl4evdYb@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Originating-IP: [10.67.109.254]
+X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
+ kwepemi500008.china.huawei.com (7.221.188.139)
+Received-SPF: pass client-ip=45.249.212.187;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga01-in.huawei.com
+X-Spam_score_int: -82
+X-Spam_score: -8.3
+X-Spam_bar: --------
+X-Spam_report: (-8.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-4.098,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,50 +69,150 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
+From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 04, 2024 at 12:42:25PM +0000, Daniel P. Berrangé wrote:
-> On Mon, Mar 04, 2024 at 08:35:36PM +0800, Peter Xu wrote:
-> > Fabiano,
-> > 
-> > On Thu, Feb 29, 2024 at 12:29:54PM -0300, Fabiano Rosas wrote:
-> > > => guest: 128 GB RAM - 120 GB dirty - 1 vcpu in tight loop dirtying memory
-> > 
-> > I'm curious normally how much time does it take to do the final fdatasync()
-> > for you when you did this test.
-> > 
-> > I finally got a relatively large system today and gave it a quick shot over
-> > 128G (100G busy dirty) mapped-ram snapshot with 8 multifd channels.  The
-> > migration save/load does all fine, so I don't think there's anything wrong
-> > with the patchset, however when save completes (I'll need to stop the
-> > workload as my disk isn't fast enough I guess..) I'll always hit a super
-> > long hang of QEMU on fdatasync() on XFS during which the main thread is in
-> > UNINTERRUPTIBLE state.
+
+
+On 2024/3/1 7:50, Richard Henderson wrote:
+> On 2/29/24 03:10, Jinjie Ruan via wrote:
+>> If GICD_CTLR_DS bit is zero and the NMI is non-secure, the NMI prioirty
+>> is higher than 0x80, otherwise it is higher than 0x0. And save NMI
+>> super prioirty information in hppi.superprio to deliver NMI exception.
+>> Since both GICR and GICD can deliver NMI, it is both necessary to check
+>> whether the pending irq is NMI in gicv3_redist_update_noirqset and
+>> gicv3_update_noirqset. And In irqbetter(), only a non-NMI with the same
+>> priority and a smaller interrupt number can be preempted but not NMI.
+>>
+>> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+>> ---
+>> v4:
+>> - Replace is_nmi with has_superprio to not a mix NMI and superpriority.
+>> - Update the comment in irqbetter().
+>> - Extract gicv3_get_priority() to avoid code repeat.
+>> ---
+>> v3:
+>> - Add missing brace
+>> ---
+>>   hw/intc/arm_gicv3.c | 71 ++++++++++++++++++++++++++++++++++++++++-----
+>>   1 file changed, 63 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/hw/intc/arm_gicv3.c b/hw/intc/arm_gicv3.c
+>> index 0b8f79a122..1d16a53b23 100644
+>> --- a/hw/intc/arm_gicv3.c
+>> +++ b/hw/intc/arm_gicv3.c
+>> @@ -21,7 +21,8 @@
+>>   #include "hw/intc/arm_gicv3.h"
+>>   #include "gicv3_internal.h"
+>>   -static bool irqbetter(GICv3CPUState *cs, int irq, uint8_t prio)
+>> +static bool irqbetter(GICv3CPUState *cs, int irq, uint8_t prio,
+>> +                      bool has_superprio)
+>>   {
+>>       /* Return true if this IRQ at this priority should take
+>>        * precedence over the current recorded highest priority
+>> @@ -33,11 +34,24 @@ static bool irqbetter(GICv3CPUState *cs, int irq,
+>> uint8_t prio)
+>>       if (prio < cs->hppi.prio) {
+>>           return true;
+>>       }
+>> +
+>> +    /*
+>> +     * Current highest prioirity pending interrupt is an IRQ without
+>> +     * superpriority, the new IRQ with superpriority has same priority
+>> +     * should signal to the CPU as it have the priority higher than
+>> +     * the labelled 0x80 or 0x00.
+>> +     */
+>> +    if (prio == cs->hppi.prio && !cs->hppi.superprio && has_superprio) {
+>> +        return true;
+>> +    }
+>> +
+>>       /* If multiple pending interrupts have the same priority then it
+>> is an
+>>        * IMPDEF choice which of them to signal to the CPU. We choose to
+>> -     * signal the one with the lowest interrupt number.
+>> +     * signal the one with the lowest interrupt number if they don't
+>> have
+>> +     * superpriority.
+>>        */
+>> -    if (prio == cs->hppi.prio && irq <= cs->hppi.irq) {
+>> +    if (prio == cs->hppi.prio && !cs->hppi.superprio &&
+>> +        !has_superprio && irq <= cs->hppi.irq) {
+>>           return true;
+>>       }
+>>       return false;
+>> @@ -129,6 +143,35 @@ static uint32_t gicr_int_pending(GICv3CPUState *cs)
+>>       return pend;
+>>   }
+>>   +static bool gicv3_get_priority(GICv3CPUState *cs, bool is_redist,
+>> +                               uint32_t superprio, uint8_t *prio, int
+>> irq)
+>> +{
+>> +    bool has_superprio = false;
+>> +
+>> +    if (superprio) {
+>> +        has_superprio = true;
+>> +
+>> +        /* DS = 0 & Non-secure NMI */
+>> +        if (!(cs->gic->gicd_ctlr & GICD_CTLR_DS) &&
+>> +            ((is_redist && extract32(cs->gicr_igroupr0, irq, 1)) ||
+>> +             (!is_redist && gicv3_gicd_group_test(cs->gic, irq)))) {
+>> +            *prio = 0x80;
+>> +        } else {
+>> +            *prio = 0x0;
+>> +        }
+>> +    } else {
+>> +        has_superprio = false;
+>> +
+>> +        if (is_redist) {
+>> +            *prio = cs->gicr_ipriorityr[irq];
+>> +        } else {
+>> +            *prio = cs->gic->gicd_ipriority[irq];
+>> +        }
+>> +    }
+>> +
+>> +    return has_superprio;
+>> +}
 > 
-> That isn't very surprising. If you don't have O_DIRECT enabled, then
-> all that disk I/O from the migrate is going to be in RAM, and thus the
-> fdatasync() is likely to trigger writing out alot of data.
+> Did you not like the idea to map {priority, !superpriority} into a
+> single value?
 > 
-> Blocking the main QEMU thread though is pretty unhelpful. That suggests
-> the data sync needs to be moved to a non-main thread.
+> It would eliminate the change in irqbetter(), which is a bit more
+> complex than it needs to be.
+> 
+>> @@ -152,10 +197,13 @@ static void
+>> gicv3_redist_update_noirqset(GICv3CPUState *cs)
+>>               if (!(pend & (1 << i))) {
+>>                   continue;
+>>               }
+>> -            prio = cs->gicr_ipriorityr[i];
+>> -            if (irqbetter(cs, i, prio)) {
+>> +            superprio = extract32(cs->gicr_isuperprio, i, 1);
+>> +            has_superprio = gicv3_get_priority(cs, true, superprio,
+>> &prio, i);
+> 
+> It would allow moving the read of gicr_isuperprio into
+> gicv3_get_priority(), alongside the read of gicr_ipriorityr.
+> 
+> Is there a bug here not handling is_redist for GCIR_INMI*?
 
-Perhaps migration thread itself can also be a candidate, then.
+There seems no bug. Since prio = cs->gicr_ipriorityr[i] or  prio =
+s->gicd_ipriority[i] are separately used originally,
 
 > 
-> With O_DIRECT meanwhile there should be essentially no hit from fdatasync.
-
-The update of COMPLETED status can be a good place of a marker point to
-show such flush done if from the gut feeling of a user POV.  If that makes
-sense, maybe we can do that sync before setting COMPLETED.
-
-No matter which thread does that sync, it's still a pity that it'll go into
-UNINTERRUPTIBLE during fdatasync(), then whoever wants to e.g. attach a gdb
-onto it to have a look will also hang.
-
-Thanks,
-
--- 
-Peter Xu
-
+>> @@ -168,7 +216,7 @@ static void
+>> gicv3_redist_update_noirqset(GICv3CPUState *cs)
+>>       if ((cs->gicr_ctlr & GICR_CTLR_ENABLE_LPIS) &&
+>> cs->gic->lpi_enable &&
+>>           (cs->gic->gicd_ctlr & GICD_CTLR_EN_GRP1NS) &&
+>>           (cs->hpplpi.prio != 0xff)) {
+>> -        if (irqbetter(cs, cs->hpplpi.irq, cs->hpplpi.prio)) {
+>> +        if (irqbetter(cs, cs->hpplpi.irq, cs->hpplpi.prio, false)) {
+> 
+> Always passing false here is incorrect -- again missing the
+> redistributor nmi bit?
+> 
+> 
+> r~
 
