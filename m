@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AD2AC5478C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 10:07:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CE2BC5478C
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 10:07:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh5D9-0007SC-Vo; Mon, 04 Mar 2024 05:06:20 -0500
+	id 1rh5DB-0007T3-6c; Mon, 04 Mar 2024 05:06:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1rh5D8-0007Rp-Ha
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 05:06:18 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1rh5DA-0007SR-7T
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 05:06:20 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1rh5D4-0006Gb-MG
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 05:06:16 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-6e62c65865cso219474b3a.2
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 02:06:14 -0800 (PST)
+ id 1rh5D8-0006IL-9O
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 05:06:19 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-1dc13fb0133so31047145ad.3
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 02:06:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1709546773; x=1710151573;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1709546775; x=1710151575;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gVQqFC9D2KqJlxw+A6UHxs7gFanVhnkmzHqHRZSs/iE=;
- b=KrxowlEDfhPf/75KGLEA+Eim8j1dbMN8T3hykC6xn4mklRNBSFOmTfQkT+x4dTth9e
- skjoVN7oH4wfTycWo8fK7gp5HoWw9aVY3Gnyvu9YUkEww8rE1V2sMvvU1o1Rfn32D8ts
- uy8rLCRSFRNteu8+EWsjpaAvDl3wrltG0Qz+FzSxkKgWP6tSM6yJ3/mpmyfBufAKgoIq
- gi3DGMcySMnhfqefxCaTe/C5iMmejjpZFfKF66ULXE12DwT+1OigmlWqaWQ2Mk1H32Z2
- 8pqSKQicQ965TYWTUt4de1f8FBDehJT9zd6V8HtTwzVcUhkXdFicQ+ZyPFXM8amCDuLL
- IOsg==
+ bh=8rF+7GtIf1rtTmKIckGnSl1eaAm4N6ysn3Y/c7lHL+s=;
+ b=hk6WXwIBjHNwC6OFk1xIw1nVV7bVDy0l9BqRjITIMb6C4PjwHAWRz/zNvJsW7u/k9f
+ ViLKUZGTNsE8H/CoLuYkT9fbixJJ5i+Wp1GIUNWxBz2krfm/82ykz+g/sZW5jw1V6uDx
+ l2T+5qV5Y1arFCd4R2HSSXX79O3Oewjy9INcRMhXECknekSuha1Xo980xzU3cJwwbAko
+ EMO5ely7eO0YmDx1lCf5vnbjRDO5gwIr1q3BqzcfyIyQkwoBevJaUvOFf4YeANbMSpaA
+ 4M9VO3qi8SOMfbQUEIwxvFcNUrh11/zGPK0X0iFbSS9S+QxFOBpP8YB/NinWKnU2otoR
+ laEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709546773; x=1710151573;
+ d=1e100.net; s=20230601; t=1709546775; x=1710151575;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gVQqFC9D2KqJlxw+A6UHxs7gFanVhnkmzHqHRZSs/iE=;
- b=Up1h4873ECYcQC8GRSNc306+/vGGEE5tDoXa7qyiMUXWqC29BQqiC3dDSDwkcBpSnN
- aQ9pznmAee9Z8vOsOhJAn+x890ZCf7FheX0uAYtxvJfOCsb3tKEi2LBtOr1YDXDcPvlZ
- PMVwrdrtjrxt4Wdiyrhxp0YaurPnDWTn7M02Mg5kEPrMVYe7Lii+t9Jk6idgQVLvMopY
- /i9YVARm57o+6VxRXRQDmiz7hwQHAjq410pFaclAdTjbLbYviVoIq5oh2XtnS2voap4B
- c819q4T88qfoA2O/gfnihq4SflkshXbhj2NQeHHsE0FYNvtPciFfWgvGX7KnZSUqxO6F
- wn0w==
+ bh=8rF+7GtIf1rtTmKIckGnSl1eaAm4N6ysn3Y/c7lHL+s=;
+ b=fTxEbKGTjN9fjK+ekj11dcfVpn9UWG5bGVCDc3a99tMkCDkuYt54ONPbm2Vm53l/BM
+ GB7/otGL8pq8XzY/UFUVbL8vaiXjO+V1RnU+pghzGRL3X/9AwMRmx7dOAxYoPDvld9Cr
+ kRRsSP5kdwsotRpCurJtvzuC+LE7Y1DE95iZLkH8nG8Gnz73IoIVxusU2t+MuBY7WjHh
+ LKcjv//B1lzdV5acz2ydCma7Uf3ZTklmBADhgkfJTaZ/xp6AECBgZKTJUUCp2UFGnfuu
+ rMsQl2y9TXhowzxATp1QeTES20w9ywkqW7/7QrMqNvsQFQjCMbTeDU9zMKU2DxyiKyW6
+ YNbg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW0cjt7dFaDUruoudTAzVSatXyLIVVavajJjGPaYRJHL4LnOg08yyhy8KA7Zs6htwuSjs5ysik+Ua3lrNHByllTJUiXkMY=
-X-Gm-Message-State: AOJu0Yy3GAcc1DHDjFw657Tuogb6flkGtIK8TmeMQIWWKxJm1j/SV4fK
- 58ojSiGuxKMG/ECnUD7M/mb5Y5ZsYPMRSFNGoWPUTvy+k1f4lztSYYzopfShovo=
-X-Google-Smtp-Source: AGHT+IE3Vyv8Rh6+TEPY69pRZfA5wr/jcS6SYCq/G6FJGy62c8yTDdVdh/oDjk3Du1gttRtFkpzjIA==
-X-Received: by 2002:a05:6a20:d48e:b0:1a0:fab6:41d0 with SMTP id
- im14-20020a056a20d48e00b001a0fab641d0mr10372763pzb.42.1709546773177; 
- Mon, 04 Mar 2024 02:06:13 -0800 (PST)
+ AJvYcCVIYUIa/23YkOrgI7IZbDEnPjExik7dmkhsz0bXmkmoPvoYiy0ucZ2AfmUGVMaUrlLQ+UuQi63PklnlHES/SceSXkMku7g=
+X-Gm-Message-State: AOJu0Yx5u0xTUuGQF0ftTIQ1vnfuiVIvImPfjwaKrYLpZ0O3WjtMSwAW
+ 2j3Jz3hmsqqS45s5/LWvqxw121m9kzpW6d5XNTb9lFHfFFGU9e2lZ8IVD2mvvJU=
+X-Google-Smtp-Source: AGHT+IGqIhHmp3DUy138+wzLN9QrpTtKaV9YLz3kGPCmnoOJoQhs1RKGrrQIok5dotOJaNSRn45x2g==
+X-Received: by 2002:a17:902:b717:b0:1db:51ee:8677 with SMTP id
+ d23-20020a170902b71700b001db51ee8677mr7783405pls.59.1709546775355; 
+ Mon, 04 Mar 2024 02:06:15 -0800 (PST)
 Received: from mnissler.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- y18-20020a170902e19200b001dc95e7e191sm8091570pla.298.2024.03.04.02.06.12
+ y18-20020a170902e19200b001dc95e7e191sm8091570pla.298.2024.03.04.02.06.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Mar 2024 02:06:12 -0800 (PST)
+ Mon, 04 Mar 2024 02:06:15 -0800 (PST)
 From: Mattias Nissler <mnissler@rivosinc.com>
 To: stefanha@redhat.com, jag.raman@oracle.com, peterx@redhat.com,
  qemu-devel@nongnu.org
@@ -70,18 +70,17 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Mattias Nissler <mnissler@rivosinc.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH v8 2/5] softmmu: Support concurrent bounce buffers
-Date: Mon,  4 Mar 2024 02:05:51 -0800
-Message-Id: <20240304100554.1143763-3-mnissler@rivosinc.com>
+ Mattias Nissler <mnissler@rivosinc.com>
+Subject: [PATCH v8 4/5] vfio-user: Message-based DMA support
+Date: Mon,  4 Mar 2024 02:05:53 -0800
+Message-Id: <20240304100554.1143763-5-mnissler@rivosinc.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240304100554.1143763-1-mnissler@rivosinc.com>
 References: <20240304100554.1143763-1-mnissler@rivosinc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=mnissler@rivosinc.com; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=mnissler@rivosinc.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -103,278 +102,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When DMA memory can't be directly accessed, as is the case when
-running the device model in a separate process without shareable DMA
-file descriptors, bounce buffering is used.
+Wire up support for DMA for the case where the vfio-user client does not
+provide mmap()-able file descriptors, but DMA requests must be performed
+via the VFIO-user protocol. This installs an indirect memory region,
+which already works for pci_dma_{read,write}, and pci_dma_map works
+thanks to the existing DMA bounce buffering support.
 
-It is not uncommon for device models to request mapping of several DMA
-regions at the same time. Examples include:
- * net devices, e.g. when transmitting a packet that is split across
-   several TX descriptors (observed with igb)
- * USB host controllers, when handling a packet with multiple data TRBs
-   (observed with xhci)
+Note that while simple scenarios work with this patch, there's a known
+race condition in libvfio-user that will mess up the communication
+channel. See https://github.com/nutanix/libvfio-user/issues/279 for
+details as well as a proposed fix.
 
-Previously, qemu only provided a single bounce buffer per AddressSpace
-and would fail DMA map requests while the buffer was already in use. In
-turn, this would cause DMA failures that ultimately manifest as hardware
-errors from the guest perspective.
-
-This change allocates DMA bounce buffers dynamically instead of
-supporting only a single buffer. Thus, multiple DMA mappings work
-correctly also when RAM can't be mmap()-ed.
-
-The total bounce buffer allocation size is limited individually for each
-AddressSpace. The default limit is 4096 bytes, matching the previous
-maximum buffer size. A new x-max-bounce-buffer-size parameter is
-provided to configure the limit for PCI devices.
-
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Tested-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Jagannathan Raman <jag.raman@oracle.com>
 Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
 ---
- hw/pci/pci.c                |  8 ++++
- include/exec/memory.h       | 14 +++----
- include/hw/pci/pci_device.h |  3 ++
- system/memory.c             |  5 ++-
- system/physmem.c            | 80 +++++++++++++++++++++++++------------
- 5 files changed, 74 insertions(+), 36 deletions(-)
+ hw/remote/trace-events    |   2 +
+ hw/remote/vfio-user-obj.c | 100 ++++++++++++++++++++++++++++++++------
+ 2 files changed, 87 insertions(+), 15 deletions(-)
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 6496d027ca..036b3ff822 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -85,6 +85,8 @@ static Property pci_props[] = {
-                     QEMU_PCIE_ERR_UNC_MASK_BITNR, true),
-     DEFINE_PROP_BIT("x-pcie-ari-nextfn-1", PCIDevice, cap_present,
-                     QEMU_PCIE_ARI_NEXTFN_1_BITNR, false),
-+    DEFINE_PROP_SIZE("x-max-bounce-buffer-size", PCIDevice,
-+                     max_bounce_buffer_size, DEFAULT_MAX_BOUNCE_BUFFER_SIZE),
-     DEFINE_PROP_END_OF_LIST()
- };
- 
-@@ -1203,6 +1205,8 @@ static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,
-                        "bus master container", UINT64_MAX);
-     address_space_init(&pci_dev->bus_master_as,
-                        &pci_dev->bus_master_container_region, pci_dev->name);
-+    pci_dev->bus_master_as.max_bounce_buffer_size =
-+        pci_dev->max_bounce_buffer_size;
- 
-     if (phase_check(PHASE_MACHINE_READY)) {
-         pci_init_bus_master(pci_dev);
-@@ -2632,6 +2636,10 @@ static void pci_device_class_init(ObjectClass *klass, void *data)
-     k->unrealize = pci_qdev_unrealize;
-     k->bus_type = TYPE_PCI_BUS;
-     device_class_set_props(k, pci_props);
-+    object_class_property_set_description(
-+        klass, "x-max-bounce-buffer-size",
-+        "Maximum buffer size allocated for bounce buffers used for mapped "
-+        "access to indirect DMA memory");
+diff --git a/hw/remote/trace-events b/hw/remote/trace-events
+index 0d1b7d56a5..358a68fb34 100644
+--- a/hw/remote/trace-events
++++ b/hw/remote/trace-events
+@@ -9,6 +9,8 @@ vfu_cfg_read(uint32_t offset, uint32_t val) "vfu: cfg: 0x%x -> 0x%x"
+ vfu_cfg_write(uint32_t offset, uint32_t val) "vfu: cfg: 0x%x <- 0x%x"
+ vfu_dma_register(uint64_t gpa, size_t len) "vfu: registering GPA 0x%"PRIx64", %zu bytes"
+ vfu_dma_unregister(uint64_t gpa) "vfu: unregistering GPA 0x%"PRIx64""
++vfu_dma_read(uint64_t gpa, size_t len) "vfu: DMA read 0x%"PRIx64", %zu bytes"
++vfu_dma_write(uint64_t gpa, size_t len) "vfu: DMA write 0x%"PRIx64", %zu bytes"
+ vfu_bar_register(int i, uint64_t addr, uint64_t size) "vfu: BAR %d: addr 0x%"PRIx64" size 0x%"PRIx64""
+ vfu_bar_rw_enter(const char *op, uint64_t addr) "vfu: %s request for BAR address 0x%"PRIx64""
+ vfu_bar_rw_exit(const char *op, uint64_t addr) "vfu: Finished %s of BAR address 0x%"PRIx64""
+diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
+index d9b879e056..a15e291c9a 100644
+--- a/hw/remote/vfio-user-obj.c
++++ b/hw/remote/vfio-user-obj.c
+@@ -300,6 +300,63 @@ static ssize_t vfu_object_cfg_access(vfu_ctx_t *vfu_ctx, char * const buf,
+     return count;
  }
  
- static void pci_device_class_base_init(ObjectClass *klass, void *data)
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 0658846555..3fe0e2824c 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -1111,13 +1111,7 @@ typedef struct AddressSpaceMapClient {
-     QLIST_ENTRY(AddressSpaceMapClient) link;
- } AddressSpaceMapClient;
- 
--typedef struct {
--    MemoryRegion *mr;
--    void *buffer;
--    hwaddr addr;
--    hwaddr len;
--    bool in_use;
--} BounceBuffer;
-+#define DEFAULT_MAX_BOUNCE_BUFFER_SIZE (4096)
- 
- /**
-  * struct AddressSpace: describes a mapping of addresses to #MemoryRegion objects
-@@ -1137,8 +1131,10 @@ struct AddressSpace {
-     QTAILQ_HEAD(, MemoryListener) listeners;
-     QTAILQ_ENTRY(AddressSpace) address_spaces_link;
- 
--    /* Bounce buffer to use for this address space. */
--    BounceBuffer bounce;
-+    /* Maximum DMA bounce buffer size used for indirect memory map requests */
-+    uint64_t max_bounce_buffer_size;
-+    /* Total size of bounce buffers currently allocated, atomically accessed */
-+    uint64_t bounce_buffer_size;
-     /* List of callbacks to invoke when buffers free up */
-     QemuMutex map_client_list_lock;
-     QLIST_HEAD(, AddressSpaceMapClient) map_client_list;
-diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
-index d3dd0f64b2..f4027c5379 100644
---- a/include/hw/pci/pci_device.h
-+++ b/include/hw/pci/pci_device.h
-@@ -160,6 +160,9 @@ struct PCIDevice {
-     /* ID of standby device in net_failover pair */
-     char *failover_pair_id;
-     uint32_t acpi_index;
++static MemTxResult vfu_dma_read(void *opaque, hwaddr addr, uint64_t *val,
++                                unsigned size, MemTxAttrs attrs)
++{
++    MemoryRegion *region = opaque;
++    vfu_ctx_t *vfu_ctx = VFU_OBJECT(region->owner)->vfu_ctx;
++    uint8_t buf[sizeof(uint64_t)];
 +
-+    /* Maximum DMA bounce buffer size used for indirect memory map requests */
-+    uint64_t max_bounce_buffer_size;
- };
- 
- static inline int pci_intx(PCIDevice *pci_dev)
-diff --git a/system/memory.c b/system/memory.c
-index ad0caef1b8..1cf89654a1 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -3133,7 +3133,8 @@ void address_space_init(AddressSpace *as, MemoryRegion *root, const char *name)
-     as->ioeventfds = NULL;
-     QTAILQ_INIT(&as->listeners);
-     QTAILQ_INSERT_TAIL(&address_spaces, as, address_spaces_link);
--    as->bounce.in_use = false;
-+    as->max_bounce_buffer_size = DEFAULT_MAX_BOUNCE_BUFFER_SIZE;
-+    as->bounce_buffer_size = 0;
-     qemu_mutex_init(&as->map_client_list_lock);
-     QLIST_INIT(&as->map_client_list);
-     as->name = g_strdup(name ? name : "anonymous");
-@@ -3143,7 +3144,7 @@ void address_space_init(AddressSpace *as, MemoryRegion *root, const char *name)
- 
- static void do_address_space_destroy(AddressSpace *as)
- {
--    assert(!qatomic_read(&as->bounce.in_use));
-+    assert(qatomic_read(&as->bounce_buffer_size) == 0);
-     assert(QLIST_EMPTY(&as->map_client_list));
-     qemu_mutex_destroy(&as->map_client_list_lock);
- 
-diff --git a/system/physmem.c b/system/physmem.c
-index 2972b83ab0..5dcf4910cf 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2971,6 +2971,20 @@ void cpu_flush_icache_range(hwaddr start, hwaddr len)
-                                      NULL, len, FLUSH_CACHE);
- }
- 
-+/*
-+ * A magic value stored in the first 8 bytes of the bounce buffer struct. Used
-+ * to detect illegal pointers passed to address_space_unmap.
-+ */
-+#define BOUNCE_BUFFER_MAGIC 0xb4017ceb4ffe12ed
++    trace_vfu_dma_read(region->addr + addr, size);
 +
-+typedef struct {
-+    uint64_t magic;
-+    MemoryRegion *mr;
-+    hwaddr addr;
-+    size_t len;
-+    uint8_t buffer[];
-+} BounceBuffer;
-+
- static void
- address_space_unregister_map_client_do(AddressSpaceMapClient *client)
- {
-@@ -2996,9 +3010,9 @@ void address_space_register_map_client(AddressSpace *as, QEMUBH *bh)
-     qemu_mutex_lock(&as->map_client_list_lock);
-     client->bh = bh;
-     QLIST_INSERT_HEAD(&as->map_client_list, client, link);
--    /* Write map_client_list before reading in_use.  */
-+    /* Write map_client_list before reading bounce_buffer_size. */
-     smp_mb();
--    if (!qatomic_read(&as->bounce.in_use)) {
-+    if (qatomic_read(&as->bounce_buffer_size) < as->max_bounce_buffer_size) {
-         address_space_notify_map_clients_locked(as);
-     }
-     qemu_mutex_unlock(&as->map_client_list_lock);
-@@ -3128,28 +3142,38 @@ void *address_space_map(AddressSpace *as,
-     mr = flatview_translate(fv, addr, &xlat, &l, is_write, attrs);
- 
-     if (!memory_access_is_direct(mr, is_write)) {
--        if (qatomic_xchg(&as->bounce.in_use, true)) {
-+        size_t size = qatomic_add_fetch(&as->bounce_buffer_size, l);
-+        if (size > as->max_bounce_buffer_size) {
-+            /*
-+             * Note that the overshot might be larger than l if threads are
-+             * racing and bump bounce_buffer_size at the same time.
-+             */
-+            size_t excess = MIN(size - as->max_bounce_buffer_size, l);
-+            l -= excess;
-+            qatomic_sub(&as->bounce_buffer_size, excess);
-+        }
-+
-+        if (l == 0) {
-             *plen = 0;
-             return NULL;
-         }
--        /* Avoid unbounded allocations */
--        l = MIN(l, TARGET_PAGE_SIZE);
--        as->bounce.buffer = qemu_memalign(TARGET_PAGE_SIZE, l);
--        as->bounce.addr = addr;
--        as->bounce.len = l;
- 
-+        BounceBuffer *bounce = g_malloc0(l + sizeof(BounceBuffer));
-+        bounce->magic = BOUNCE_BUFFER_MAGIC;
-         memory_region_ref(mr);
--        as->bounce.mr = mr;
-+        bounce->mr = mr;
-+        bounce->addr = addr;
-+        bounce->len = l;
-+
-         if (!is_write) {
-             flatview_read(fv, addr, MEMTXATTRS_UNSPECIFIED,
--                          as->bounce.buffer, l);
-+                          bounce->buffer, l);
-         }
- 
-         *plen = l;
--        return as->bounce.buffer;
-+        return bounce->buffer;
-     }
- 
--
-     memory_region_ref(mr);
-     *plen = flatview_extend_translation(fv, addr, len, mr, xlat,
-                                         l, is_write, attrs);
-@@ -3164,12 +3188,11 @@ void *address_space_map(AddressSpace *as,
- void address_space_unmap(AddressSpace *as, void *buffer, hwaddr len,
-                          bool is_write, hwaddr access_len)
- {
--    if (buffer != as->bounce.buffer) {
--        MemoryRegion *mr;
--        ram_addr_t addr1;
-+    MemoryRegion *mr;
-+    ram_addr_t addr1;
- 
--        mr = memory_region_from_host(buffer, &addr1);
--        assert(mr != NULL);
-+    mr = memory_region_from_host(buffer, &addr1);
-+    if (mr != NULL) {
-         if (is_write) {
-             invalidate_and_set_dirty(mr, addr1, access_len);
-         }
-@@ -3179,15 +3202,22 @@ void address_space_unmap(AddressSpace *as, void *buffer, hwaddr len,
-         memory_region_unref(mr);
-         return;
-     }
-+
-+
-+    BounceBuffer *bounce = container_of(buffer, BounceBuffer, buffer);
-+    assert(bounce->magic == BOUNCE_BUFFER_MAGIC);
-+
-     if (is_write) {
--        address_space_write(as, as->bounce.addr, MEMTXATTRS_UNSPECIFIED,
--                            as->bounce.buffer, access_len);
--    }
--    qemu_vfree(as->bounce.buffer);
--    as->bounce.buffer = NULL;
--    memory_region_unref(as->bounce.mr);
--    /* Clear in_use before reading map_client_list.  */
--    qatomic_set_mb(&as->bounce.in_use, false);
-+        address_space_write(as, bounce->addr, MEMTXATTRS_UNSPECIFIED,
-+                            bounce->buffer, access_len);
++    g_autofree dma_sg_t *sg = g_malloc0(dma_sg_size());
++    vfu_dma_addr_t vfu_addr = (vfu_dma_addr_t)(region->addr + addr);
++    if (vfu_addr_to_sgl(vfu_ctx, vfu_addr, size, sg, 1, PROT_READ) < 0 ||
++        vfu_sgl_read(vfu_ctx, sg, 1, buf) != 0) {
++        return MEMTX_ERROR;
 +    }
 +
-+    qatomic_sub(&as->bounce_buffer_size, bounce->len);
-+    bounce->magic = ~BOUNCE_BUFFER_MAGIC;
-+    memory_region_unref(bounce->mr);
-+    g_free(bounce);
-+    /* Write bounce_buffer_size before reading map_client_list. */
-+    smp_mb();
-     address_space_notify_map_clients(as);
- }
++    *val = ldn_he_p(buf, size);
++
++    return MEMTX_OK;
++}
++
++static MemTxResult vfu_dma_write(void *opaque, hwaddr addr, uint64_t val,
++                                 unsigned size, MemTxAttrs attrs)
++{
++    MemoryRegion *region = opaque;
++    vfu_ctx_t *vfu_ctx = VFU_OBJECT(region->owner)->vfu_ctx;
++    uint8_t buf[sizeof(uint64_t)];
++
++    trace_vfu_dma_write(region->addr + addr, size);
++
++    stn_he_p(buf, size, val);
++
++    g_autofree dma_sg_t *sg = g_malloc0(dma_sg_size());
++    vfu_dma_addr_t vfu_addr = (vfu_dma_addr_t)(region->addr + addr);
++    if (vfu_addr_to_sgl(vfu_ctx, vfu_addr, size, sg, 1, PROT_WRITE) < 0 ||
++        vfu_sgl_write(vfu_ctx, sg, 1, buf) != 0) {
++        return MEMTX_ERROR;
++    }
++
++    return MEMTX_OK;
++}
++
++static const MemoryRegionOps vfu_dma_ops = {
++    .read_with_attrs = vfu_dma_read,
++    .write_with_attrs = vfu_dma_write,
++    .endianness = DEVICE_HOST_ENDIAN,
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 8,
++        .unaligned = true,
++    },
++    .impl = {
++        .min_access_size = 1,
++        .max_access_size = 8,
++    },
++};
++
+ static void dma_register(vfu_ctx_t *vfu_ctx, vfu_dma_info_t *info)
+ {
+     VfuObject *o = vfu_get_private(vfu_ctx);
+@@ -308,17 +365,30 @@ static void dma_register(vfu_ctx_t *vfu_ctx, vfu_dma_info_t *info)
+     g_autofree char *name = NULL;
+     struct iovec *iov = &info->iova;
  
+-    if (!info->vaddr) {
+-        return;
+-    }
+-
+     name = g_strdup_printf("mem-%s-%"PRIx64"", o->device,
+-                           (uint64_t)info->vaddr);
++                           (uint64_t)iov->iov_base);
+ 
+     subregion = g_new0(MemoryRegion, 1);
+ 
+-    memory_region_init_ram_ptr(subregion, NULL, name,
+-                               iov->iov_len, info->vaddr);
++    if (info->vaddr) {
++        memory_region_init_ram_ptr(subregion, OBJECT(o), name,
++                                   iov->iov_len, info->vaddr);
++    } else {
++        /*
++         * Note that I/O regions' MemoryRegionOps handle accesses of at most 8
++         * bytes at a time, and larger accesses are broken down. However,
++         * many/most DMA accesses are larger than 8 bytes and VFIO-user can
++         * handle large DMA accesses just fine, thus this size restriction
++         * unnecessarily hurts performance, in particular given that each
++         * access causes a round trip on the VFIO-user socket.
++         *
++         * TODO: Investigate how to plumb larger accesses through memory
++         * regions, possibly by amending MemoryRegionOps or by creating a new
++         * memory region type.
++         */
++        memory_region_init_io(subregion, OBJECT(o), &vfu_dma_ops, subregion,
++                              name, iov->iov_len);
++    }
+ 
+     dma_as = pci_device_iommu_address_space(o->pci_dev);
+ 
+@@ -330,20 +400,20 @@ static void dma_register(vfu_ctx_t *vfu_ctx, vfu_dma_info_t *info)
+ static void dma_unregister(vfu_ctx_t *vfu_ctx, vfu_dma_info_t *info)
+ {
+     VfuObject *o = vfu_get_private(vfu_ctx);
++    MemoryRegionSection mr_section;
+     AddressSpace *dma_as = NULL;
+-    MemoryRegion *mr = NULL;
+-    ram_addr_t offset;
+ 
+-    mr = memory_region_from_host(info->vaddr, &offset);
+-    if (!mr) {
++    dma_as = pci_device_iommu_address_space(o->pci_dev);
++
++    mr_section =
++        memory_region_find(dma_as->root, (hwaddr)info->iova.iov_base, 1);
++    if (!mr_section.mr) {
+         return;
+     }
+ 
+-    dma_as = pci_device_iommu_address_space(o->pci_dev);
+-
+-    memory_region_del_subregion(dma_as->root, mr);
++    memory_region_del_subregion(dma_as->root, mr_section.mr);
+ 
+-    object_unparent((OBJECT(mr)));
++    object_unparent((OBJECT(mr_section.mr)));
+ 
+     trace_vfu_dma_unregister((uint64_t)info->iova.iov_base);
+ }
 -- 
 2.34.1
 
