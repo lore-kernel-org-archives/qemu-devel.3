@@ -4,112 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F8EEC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 20:37:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7140C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 20:45:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhF3P-0004Ko-No; Mon, 04 Mar 2024 15:36:55 -0500
+	id 1rhFB2-00063H-1D; Mon, 04 Mar 2024 15:44:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rhF3N-0004De-Vu
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 15:36:54 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rhFB0-00062p-1e
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 15:44:46 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rhF3M-0000ES-4C
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 15:36:53 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 28F13205E8;
- Mon,  4 Mar 2024 20:36:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709584609; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pxnr65KLM3QTYTNZrtNs/JQUcaQ9SYCnxksu4V4Z+SY=;
- b=0ElQA/j/AjuGDMgiDu2EiQ3n0c+2ImrzMg3dKbhu/mTjZ8ww/0L6TW+mGa4LJaW26xf+6H
- p/cnECyt1iltbC871hBCS5yE8F5gfo/Sa6osPgdIgws85FRtdUYzrTfAuHFwh1aiuwXUVH
- ksPbZRLZ4cNBM0oImsVEfjU4uCIQYmw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709584609;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pxnr65KLM3QTYTNZrtNs/JQUcaQ9SYCnxksu4V4Z+SY=;
- b=9yxgkTfLjqs8zwW1Qk2haNDDpQZwdspiy0q2JmvsuxTVi7frFYqJ5Qo3uG4XRNieEJJnRY
- bCMr/ZXu3AzT2GDw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709584609; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pxnr65KLM3QTYTNZrtNs/JQUcaQ9SYCnxksu4V4Z+SY=;
- b=0ElQA/j/AjuGDMgiDu2EiQ3n0c+2ImrzMg3dKbhu/mTjZ8ww/0L6TW+mGa4LJaW26xf+6H
- p/cnECyt1iltbC871hBCS5yE8F5gfo/Sa6osPgdIgws85FRtdUYzrTfAuHFwh1aiuwXUVH
- ksPbZRLZ4cNBM0oImsVEfjU4uCIQYmw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709584609;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pxnr65KLM3QTYTNZrtNs/JQUcaQ9SYCnxksu4V4Z+SY=;
- b=9yxgkTfLjqs8zwW1Qk2haNDDpQZwdspiy0q2JmvsuxTVi7frFYqJ5Qo3uG4XRNieEJJnRY
- bCMr/ZXu3AzT2GDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A7C4513A5B;
- Mon,  4 Mar 2024 20:36:48 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id tG2zG+Aw5mUuQQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 04 Mar 2024 20:36:48 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>, =?utf-8?Q?C=C3=A9dric?= Le
- Goater <clg@redhat.com>, Peter Xu <peterx@redhat.com>, "Wang, Lei"
- <lei4.wang@intel.com>, Joao Martins <joao.m.martins@oracle.com>, Avihai
- Horon <avihaih@nvidia.com>
-Subject: Re: [PATCH v2 0/3] migration: Don't serialize devices in
- qemu_savevm_state_iterate()
-In-Reply-To: <20240304105339.20713-1-avihaih@nvidia.com>
-References: <20240304105339.20713-1-avihaih@nvidia.com>
-Date: Mon, 04 Mar 2024 17:36:46 -0300
-Message-ID: <87msrd20pt.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rhFAw-0001ab-4L
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 15:44:45 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-56454c695e6so8201211a12.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 12:44:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709585080; x=1710189880; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kSxDdh76XAZtDLAMCK3bxUFm7+aMZHcVedsBmBgBj5w=;
+ b=zTDXjC4BdTcNax1Vq041xsxJzLMI72NZZkx+a7UX1P/t6SpxhVmoaptSmtipLU4N5r
+ grdvVBpLqyfOwP+GpwpF5ozdv65jqtSCaEe8q2kmSE6Q/MF/Ke3z64sGYhaFXI+ONtGF
+ NW0y/PD+BQ+7nPp6KopZTNq0eM9JSf5bxEJvBPuTaw5ifpeEDuSnTuqPbt88wtFsreqq
+ 1hYU8QcTJMzdNBzpLezs6uDhwXkz5cD82O/U411J0vNj1EGgsVhELMJTMEyYlHDv6biU
+ MTgv2axCwexBjzjxlTH4KW7wBOmv+PJLM/TVnHnEGq1EfqsTGg7gKWk+4Hw2oe2KrmHc
+ /mOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709585080; x=1710189880;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=kSxDdh76XAZtDLAMCK3bxUFm7+aMZHcVedsBmBgBj5w=;
+ b=IJpYE0S+dkFIOa4Y2m+7CCiq/5I/47fI+t37RaBCNtqBOYdBF0pAUy0piIVEI0VV2u
+ mgtqt1j2SoSsgscwi4zsDpLm2GJuEaedkj6UT+YHb6rnCWiSWJaWvoyht3b2sEbjeM4Y
+ VnaG+rDo/jOA4Z5nYF3kWZjw+5riPJL1axg0z6Fz2nn3YGpCa250D8iVvsTvx4+vbTaY
+ BbMagcfBxnHcgvYIy8kH9A+3rlgIiskTrZ3Dxn95MOTmffJqZH8tnxR0UnFklwTVjLjT
+ sWAK/HjfbNvgMZWZ6ee/+59sKYAceTgu5pktiCAgyazvTzBOfo2XVLV7OdibmibyvlzS
+ YpHg==
+X-Gm-Message-State: AOJu0YzJsYre4ahmqwewzIRYe16y/Bjvbsksn/7OgKJDqtP1War81YxE
+ HV4fQ2HgYRMTu4febBtoi2r3JFj+DI4o0U10UVbRhwd340yK9diALse7oKXroMRGxWO6U//RtMy
+ /GOM3zlQ31WmafN/ad0M/UI4//0aVGQQctxw/HA==
+X-Google-Smtp-Source: AGHT+IF8ju+cNNBPm0z3iFC6IfSX25rfHu6QFuS6+Zr2JLWw4JxlgwbYth0HwX17NL5VBa6pDx+8P+IXY8C+z9NNNdM=
+X-Received: by 2002:aa7:d882:0:b0:567:e6c:c60f with SMTP id
+ u2-20020aa7d882000000b005670e6cc60fmr698561edq.16.1709585080124; Mon, 04 Mar
+ 2024 12:44:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="0ElQA/j/";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=9yxgkTfL
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-7.10 / 50.00]; RCVD_VIA_SMTP_AUTH(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_THREE(0.00)[3];
- DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
- RCPT_COUNT_SEVEN(0.00)[8]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- FROM_EQ_ENVFROM(0.00)[]; MIME_TRACE(0.00)[0:+];
- MID_RHS_MATCH_FROM(0.00)[]; BAYES_HAM(-2.09)[95.58%];
- ARC_NA(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCVD_DKIM_ARC_DNSWL_HI(-1.00)[]; FROM_HAS_DN(0.00)[];
- DWL_DNSWL_MED(-2.00)[suse.de:dkim];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- MIME_GOOD(-0.10)[text/plain];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- RCVD_IN_DNSWL_HI(-0.50)[2a07:de40:b281:106:10:150:64:167:received];
- RCVD_TLS_ALL(0.00)[]
-X-Rspamd-Queue-Id: 28F13205E8
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240227142316.1827154-1-peter.maydell@linaro.org>
+ <CAFEAcA9QbbOuzeo+bTRAdTCS2h6gTocbMsgj3k3DNP=H4Bh0Ag@mail.gmail.com>
+ <87v861x38c.fsf@draig.linaro.org>
+In-Reply-To: <87v861x38c.fsf@draig.linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 4 Mar 2024 20:44:28 +0000
+Message-ID: <CAFEAcA-q0SaXHf5ZpK-WLgf=O6enQVqpWKjQgO9UNCiBOjT+EQ@mail.gmail.com>
+Subject: Re: [PATCH] tests/tcg/multiarch: Give the 'memory' TCG test a larger
+ timeout
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,36 +93,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avihai Horon <avihaih@nvidia.com> writes:
+On Mon, 4 Mar 2024 at 18:26, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
+e:
+>
+> Peter Maydell <peter.maydell@linaro.org> writes:
+>
+> > Ping for review?
+>
+> Ahh we crossed streams because I merged:
+>
+>   cdb5bfc9f34 (tests/tcg: bump TCG test timeout to 120s)
+>
+> Do we need even more time?
 
-> Hi,
->
-> This small series is v2 of the single patch I previously sent [1].
->
-> It removes device serialization in qemu_savevm_state_iterate() and does
-> some VFIO migration touch ups. More info provided in the commit
-> messages.
->
-> Thanks.
->
-> Changes from V1 -> V2:
-> * Remove device serialization in qemu_savevm_state_iterate() always,
->   regardless of switchover-ack.
-> * Refactor vfio_save_iterate() return value.
-> * Add a note about migration rate limiting in vfio_save_iterate().
->
-> [1] https://lore.kernel.org/qemu-devel/20240222155627.14563-1-avihaih@nvidia.com/
->
-> Avihai Horon (3):
->   migration: Don't serialize devices in qemu_savevm_state_iterate()
->   vfio/migration: Refactor vfio_save_state() return value
->   vfio/migration: Add a note about migration rate limiting
->
->  hw/vfio/migration.c | 12 +++++++-----
->  migration/savevm.c  | 15 ++++++---------
->  2 files changed, 13 insertions(+), 14 deletions(-)
+Ah, I missed that -- I'll let you know if I see this failure again.
 
-Series:
-
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+-- PMM
 
