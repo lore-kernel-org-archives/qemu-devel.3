@@ -4,56 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79712C54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 05:48:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 327CEC5478C
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 05:49:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhNem-0004PV-Ic; Tue, 05 Mar 2024 00:48:04 -0500
+	id 1rhNfC-0004Vh-6O; Tue, 05 Mar 2024 00:48:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1rhNei-0004Nj-1w
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 00:48:01 -0500
-Received: from mgamail.intel.com ([198.175.65.19])
+ id 1rhNfA-0004VC-Vi
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 00:48:29 -0500
+Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1rhNee-0003aU-Iq
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 00:47:59 -0500
+ id 1rhNf9-0003fB-AS
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 00:48:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709617676; x=1741153676;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=H2mvl17dSiAUIDoFYQN8d7YiTbsTtHB7N8zpSdNZzsA=;
- b=WF5jUENaABYEQgoe1IWQEzQdNKHtQMO2zW//71BcPq3Ai6cu/Jfj02G2
- WkmfiM7nqK55o/PIARH/d57O93vqtvMBve/1yPT+BUQLA4h/R6e+9b/Zt
- dXiaMcUfi+7oJ0BBPn0XzUXJNqyupL5u9qs3d5tYzfAY2HiAa+9cqMWlu
- 0Cv9gVPF4lM9Gi8ogHqfMaRGnKMhw9Vcxl81wFuGB7E7XnHpKcJWkXCtu
- hoItpLZWD6BA5eCjx7mwXHiM/Szcua6R6bzx+wzITXWRvMHBployfPkMy
- aoK02a9siZKZbc2/Ibb2fttf95gtsAuCFncZddLtI1I9pIpo5ZsJpMuwS w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11003"; a="4006172"
+ t=1709617707; x=1741153707;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=I60mSo2+idY+1i00U4px6xKXXI7NrmIgiiKujhHDfHM=;
+ b=mcfTUFkLZQCYsKWEBfm6Knojo9okPOaAPIKwnQ23KwmMFUA20F45QnW/
+ YGOKJf5SFwtK7NLhoLPnKRs41GZrfgZt0pEQzL+iGdSdsC2Kx9XmaM1Cx
+ 43GBK0T9IxN37CqfTNT1pqZBPpScw9Fu/gSJzmZv/fFKtD/Sy9UpU+n9X
+ SgmkJ7N6kCuqs3rg9e4miZCvPzZvQ7LPR8bV75h5QBUNtXPLwmsLygvfr
+ PCqn9M4aieD9+3V/skU4EySK35et5HiqXDENLYeitt/XQ4k+agLjVsOVl
+ 60BFlbAoX9jIZh7CEyjz0GlKe6fSURp9NzqJ6h9Vrv5uVcV1GNLRklv31 g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11003"; a="7096103"
 X-IronPort-AV: E=Sophos;i="6.06,205,1705392000"; 
-   d="scan'208";a="4006172"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Mar 2024 21:47:52 -0800
+   d="scan'208";a="7096103"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Mar 2024 21:48:26 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,205,1705392000"; d="scan'208";a="40135847"
+X-IronPort-AV: E=Sophos;i="6.06,205,1705392000"; d="scan'208";a="46785291"
 Received: from sae-gw02.sh.intel.com (HELO localhost) ([10.239.45.110])
- by orviesa002.jf.intel.com with ESMTP; 04 Mar 2024 21:47:50 -0800
+ by orviesa001.jf.intel.com with ESMTP; 04 Mar 2024 21:48:25 -0800
 From: Yuan Liu <yuan1.liu@intel.com>
 To: peterx@redhat.com,
 	farosas@suse.de
 Cc: qemu-devel@nongnu.org, hao.xiang@bytedance.com, bryan.zhang@bytedance.com,
  yuan1.liu@intel.com, nanhai.zou@intel.com
-Subject: [PATCH v4 0/8] Live Migration With IAA
-Date: Mon,  4 Mar 2024 22:00:20 +0800
-Message-Id: <20240304140028.1590649-1-yuan1.liu@intel.com>
+Subject: [PATCH v4 7/8] migration/multifd: fix zlib and zstd compression
+ levels not working
+Date: Mon,  4 Mar 2024 22:00:27 +0800
+Message-Id: <20240304140028.1590649-8-yuan1.liu@intel.com>
 X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240304140028.1590649-1-yuan1.liu@intel.com>
+References: <20240304140028.1590649-1-yuan1.liu@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.19; envelope-from=yuan1.liu@intel.com;
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=yuan1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
@@ -77,197 +80,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+add zlib and zstd compression levels in multifd parameter
+testing and application and add compression level tests
 
-I am writing to submit a code change aimed at enhancing live migration
-acceleration by leveraging the compression capability of the Intel
-In-Memory Analytics Accelerator (IAA).
+Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
+Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
+Reported-by: Xiaohui Li <xiaohli@redhat.com>
+---
+ migration/options.c          | 12 ++++++++++++
+ tests/qtest/migration-test.c | 16 ++++++++++++++++
+ 2 files changed, 28 insertions(+)
 
-The implementation of the IAA (de)compression code is based on Intel Query
-Processing Library (QPL), an open-source software project designed for
-IAA high-level software programming. https://github.com/intel/qpl
-
-Sorry that the submission of v4 version took so long due to the Chinese New
-Year holiday. I would like to summarize the progress so far
-
-1. QPL will be used as an independent compression method like ZLIB and ZSTD,
-   QPL will force the use of the IAA accelerator and will not support software
-   compression. For a summary of issues compatible with Zlib, please refer to
-   docs/devel/migration/qpl-compression.rst
-
-2. Compression accelerator related patches are removed from this patch set and
-   will be added to the QAT patch set, we will submit separate patches to use
-   QAT to accelerate ZLIB and ZSTD.
-
-3. Advantages of using IAA accelerator include:
-   a. Compared with the non-compression method, it can improve downtime
-      performance without adding additional host resources (both CPU and
-      network).
-   b. Compared with using software compression methods (ZSTD/ZLIB), it can
-      provide high data compression ratio and save a lot of CPU resources
-      used for compression.
-
-Test condition:
-  1. Host CPUs are based on Sapphire Rapids
-  2. VM type, 16 vCPU and 64G memory
-  3. The source and destination respectively use 4 IAA devices.
-  4. The workload in the VM
-    a. all vCPUs are idle state
-    b. 90% of the virtual machine's memory is used, use silesia to fill
-       the memory.
-       The introduction of silesia:
-       https://sun.aei.polsl.pl//~sdeor/index.php?page=silesia
-  5. Set "--mem-prealloc" boot parameter on the destination, this parameter
-     can make IAA performance better and related introduction is added here.
-     docs/devel/migration/qpl-compression.rst
-  6. Source migration configuration commands
-     a. migrate_set_capability multifd on
-     b. migrate_set_parameter multifd-channels 2/4/8
-     c. migrate_set_parameter downtime-limit 300
-     f. migrate_set_parameter max-bandwidth 100G/1G
-     d. migrate_set_parameter multifd-compression none/qpl/zstd
-  7. Destination migration configuration commands
-     a. migrate_set_capability multifd on
-     b. migrate_set_parameter multifd-channels 2/4/8
-     c. migrate_set_parameter multifd-compression none/qpl/zstd
-
-Early migration result, each result is the average of three tests
-
- +--------+-------------+--------+--------+---------+----------+------|
- |        | The number  |total   |downtime|network  |pages per | CPU  |
- | None   | of channels |time(ms)|(ms)    |bandwidth|second    | Util |
- | Comp   |             |        |        |(mbps)   |          |      |
- |        +-------------+-----------------+---------+----------+------+
- |Network |            2|    8571|      69|    58391|   1896525|  256%|
- |BW:100G +-------------+--------+--------+---------+----------+------+
- |        |            4|    7180|      92|    69736|   1865640|  300%|
- |        +-------------+--------+--------+---------+----------+------+
- |        |            8|    7090|     121|    70562|   2174060|  307%|
- +--------+-------------+--------+--------+---------+----------+------+
-
- +--------+-------------+--------+--------+---------+----------+------|
- |        | The number  |total   |downtime|network  |pages per | CPU  |
- | QPL    | of channels |time(ms)|(ms)    |bandwidth|second    | Util |
- | Comp   |             |        |        |(mbps)   |          |      |
- |        +-------------+-----------------+---------+----------+------+
- |Network |            2|    8413|      34|    30067|   1732411|  230%|
- |BW:100G +-------------+--------+--------+---------+----------+------+
- |        |            4|    6559|      32|    38804|   1689954|  450%|
- |        +-------------+--------+--------+---------+----------+------+
- |        |            8|    6623|      37|    38745|   1566507|  790%|
- +--------+-------------+--------+--------+---------+----------+------+
-
- +--------+-------------+--------+--------+---------+----------+------|
- |        | The number  |total   |downtime|network  |pages per | CPU  |
- | ZSTD   | of channels |time(ms)|(ms)    |bandwidth|second    | Util |
- | Comp   |             |        |        |(mbps)   |          |      |
- |        +-------------+-----------------+---------+----------+------+
- |Network |            2|   95846|      24|     1800|    521829|  203%|
- |BW:100G +-------------+--------+--------+---------+----------+------+
- |        |            4|   49004|      24|     3529|    890532|  403%|
- |        +-------------+--------+--------+---------+----------+------+
- |        |            8|   25574|      32|     6782|   1762222|  800%|
- +--------+-------------+--------+--------+---------+----------+------+
-
-When network bandwidth resource is sufficient, QPL can improve downtime
-by 2x compared to no compression. In this scenario, with 4 channels, the
-IAA hardware resources are fully used, so adding more channels will not
-gain more benefits.
-
+diff --git a/migration/options.c b/migration/options.c
+index 3e3e0b93b4..1cd3cc7c33 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -1312,6 +1312,12 @@ static void migrate_params_test_apply(MigrateSetParameters *params,
+     if (params->has_multifd_compression) {
+         dest->multifd_compression = params->multifd_compression;
+     }
++    if (params->has_multifd_zlib_level) {
++        dest->multifd_zlib_level = params->multifd_zlib_level;
++    }
++    if (params->has_multifd_zstd_level) {
++        dest->multifd_zstd_level = params->multifd_zstd_level;
++    }
+     if (params->has_xbzrle_cache_size) {
+         dest->xbzrle_cache_size = params->xbzrle_cache_size;
+     }
+@@ -1447,6 +1453,12 @@ static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
+     if (params->has_multifd_compression) {
+         s->parameters.multifd_compression = params->multifd_compression;
+     }
++    if (params->has_multifd_zlib_level) {
++        s->parameters.multifd_zlib_level = params->multifd_zlib_level;
++    }
++    if (params->has_multifd_zstd_level) {
++        s->parameters.multifd_zstd_level = params->multifd_zstd_level;
++    }
+     if (params->has_xbzrle_cache_size) {
+         s->parameters.xbzrle_cache_size = params->xbzrle_cache_size;
+         xbzrle_cache_resize(params->xbzrle_cache_size, errp);
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index 8a5bb1752e..23d50fe599 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -2621,10 +2621,24 @@ test_migrate_precopy_tcp_multifd_start(QTestState *from,
+     return test_migrate_precopy_tcp_multifd_start_common(from, to, "none");
+ }
  
- +--------+-------------+--------+--------+---------+----------+------|
- |        | The number  |total   |downtime|network  |pages per | CPU  |
- | None   | of channels |time(ms)|(ms)    |bandwidth|second    | Util |
- | Comp   |             |        |        |(mbps)   |          |      |
- |        +-------------+-----------------+---------+----------+------+
- |Network |            2|   57758|      66|     8643|    264617|   34%|
- |BW:  1G +-------------+--------+--------+---------+----------+------+
- |        |            4|   57216|      58|     8726|    266773|   34%|
- |        +-------------+--------+--------+---------+----------+------+
- |        |            8|   56708|      53|     8804|    270223|   33%|
- +--------+-------------+--------+--------+---------+----------+------+
-
- +--------+-------------+--------+--------+---------+----------+------|
- |        | The number  |total   |downtime|network  |pages per | CPU  |
- | QPL    | of channels |time(ms)|(ms)    |bandwidth|second    | Util |
- | Comp   |             |        |        |(mbps)   |          |      |
- |        +-------------+-----------------+---------+----------+------+
- |Network |            2|   30129|      34|     8345|   2224761|   54%|
- |BW:  1G +-------------+--------+--------+---------+----------+------+
- |        |            4|   30317|      39|     8300|   2025220|   73%|
- |        +-------------+--------+--------+---------+----------+------+
- |        |            8|   29615|      35|     8514|   2250122|  131%|
- +--------+-------------+--------+--------+---------+----------+------+
-
- +--------+-------------+--------+--------+---------+----------+------|
- |        | The number  |total   |downtime|network  |pages per | CPU  |
- | ZSTD   | of channels |time(ms)|(ms)    |bandwidth|second    | Util |
- | Comp   |             |        |        |(mbps)   |          |      |
- |        +-------------+-----------------+---------+----------+------+
- |Network |            2|   95750|      24|     1802|    477236|  202%|
- |BW:  1G +-------------+--------+--------+---------+----------+------+
- |        |            4|   48907|      24|     3536|   1002142|  404%|
- |        +-------------+--------+--------+---------+----------+------+
- |        |            8|   25568|      32|     6783|   1696437|  800%|
- +--------+-------------+--------+--------+---------+----------+------+
-
-When network bandwidth resource is limited, the "page perf second" metric
-decreases for none compression, the success rate of migration will reduce.
-Comparison of QPL and ZSTD compression methods, QPL can save a lot of CPU
-resources used for compression.
-
-v2:
-  - add support for multifd compression accelerator
-  - add support for the QPL accelerator in the multifd
-    compression accelerator
-  - fixed the issue that QPL was compiled into the migration
-    module by default
-
-v3:
-  - use Meson instead of pkg-config to resolve QPL build
-    dependency issue
-  - fix coding style
-  - fix a CI issue for get_multifd_ops function in multifd.c file
-
-v4:
-  - patch based on commit: da96ad4a6a Merge tag 'hw-misc-20240215' of
-    https://github.com/philmd/qemu into staging
-  - remove the compression accelerator implementation patches, the patches
-    will be placed in the QAT accelerator implementation.
-  - introduce QPL as a new compression method
-  - add QPL compression documentation
-  - add QPL compression migration test
-  - fix zlib/zstd compression level issue
-
-Yuan Liu (8):
-  docs/migration: add qpl compression feature
-  migration/multifd: add get_iov_count in the multifd method
-  configure: add --enable-qpl build option
-  migration/multifd: add qpl compression method
-  migration/multifd: implement initialization of qpl compression
-  migration/multifd: implement qpl compression and decompression
-  migration/multifd: fix zlib and zstd compression levels not working
-  tests/migration-test: add qpl compression test
-
- docs/devel/migration/features.rst        |   1 +
- docs/devel/migration/qpl-compression.rst | 231 +++++++++++
- hw/core/qdev-properties-system.c         |   2 +-
- meson.build                              |  18 +
- meson_options.txt                        |   2 +
- migration/meson.build                    |   1 +
- migration/multifd-qpl.c                  | 485 +++++++++++++++++++++++
- migration/multifd-zlib.c                 |  18 +-
- migration/multifd-zstd.c                 |  18 +-
- migration/multifd.c                      |  24 +-
- migration/multifd.h                      |   3 +
- migration/options.c                      |  12 +
- qapi/migration.json                      |   7 +-
- scripts/meson-buildoptions.sh            |   3 +
- tests/qtest/migration-test.c             |  40 ++
- 15 files changed, 858 insertions(+), 7 deletions(-)
- create mode 100644 docs/devel/migration/qpl-compression.rst
- create mode 100644 migration/multifd-qpl.c
-
++static void
++test_and_set_multifd_compression_level(QTestState *who, const char *param)
++{
++    /* The default compression level is 1, test a level other than 1 */
++    int level = 2;
++
++    migrate_set_parameter_int(who, param, level);
++    migrate_check_parameter_int(who, param, level);
++    /* only test compression level 1 during migration */
++    migrate_set_parameter_int(who, param, 1);
++}
++
+ static void *
+ test_migrate_precopy_tcp_multifd_zlib_start(QTestState *from,
+                                             QTestState *to)
+ {
++    /* the compression level is used only on the source side. */
++    test_and_set_multifd_compression_level(from, "multifd-zlib-level");
+     return test_migrate_precopy_tcp_multifd_start_common(from, to, "zlib");
+ }
+ 
+@@ -2633,6 +2647,8 @@ static void *
+ test_migrate_precopy_tcp_multifd_zstd_start(QTestState *from,
+                                             QTestState *to)
+ {
++    /* the compression level is used only on the source side. */
++    test_and_set_multifd_compression_level(from, "multifd-zstd-level");
+     return test_migrate_precopy_tcp_multifd_start_common(from, to, "zstd");
+ }
+ #endif /* CONFIG_ZSTD */
 -- 
 2.39.3
 
