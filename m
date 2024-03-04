@@ -4,87 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46E64C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 04:18:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C80EAC48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 04:32:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgzll-0007eL-BU; Sun, 03 Mar 2024 23:17:41 -0500
+	id 1rgzzJ-0002Lu-CH; Sun, 03 Mar 2024 23:31:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rgzlj-0007dQ-Oa
- for qemu-devel@nongnu.org; Sun, 03 Mar 2024 23:17:39 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rgzzI-0002Lj-4V
+ for qemu-devel@nongnu.org; Sun, 03 Mar 2024 23:31:40 -0500
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rgzlh-0003IO-Qu
- for qemu-devel@nongnu.org; Sun, 03 Mar 2024 23:17:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709525856;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zLoJeu/MJgO02S24yafKoCZcFLLHzlFUnHlQNssRjLA=;
- b=TLRMW/v99A0xg8Q7x0vt4c+kewcXGAXEV5F059y8PxOjbv2jb133k9kNNU4n+3GmhpTWBT
- G+IPXzOarNSsGz1u2YF5XLSLy1Fd8ACq/cVbQ4zDiplZRz1lJWOYTsWzUgLd5Jq5K6YmSV
- Wh7+dmFRsANgg7cKOz8JXdbia/3Ulj8=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-650-KJotuOUYPxWMQKI0PfAe6A-1; Sun, 03 Mar 2024 23:17:34 -0500
-X-MC-Unique: KJotuOUYPxWMQKI0PfAe6A-1
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-2992c1d4e7fso1766284a91.3
- for <qemu-devel@nongnu.org>; Sun, 03 Mar 2024 20:17:34 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709525854; x=1710130654;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zLoJeu/MJgO02S24yafKoCZcFLLHzlFUnHlQNssRjLA=;
- b=ejD28YJF+HVBZfZYCr3EjQMXbyEikreZDLBdpZDd9w8nxFt/GGLXW7v978crD7aVoc
- jkJuBpU4DqlUMN+oY7OAzYtSZcCKEiX3rpl1owH0+l5WPQWgBjBVeVDLp4lbJ8ts2xFv
- 0JyY55oSKcDwf7ILgnLSpgXIRxvnsQkKrIqz4zA7CKipgC74W6JZwRxLf6OMLFTg3atu
- vZ3oY/vCUnnG/d5UfW6JtVQykwXulHtTPs1bHRui2Azz5iLlLRVCjf8qE1rZ29/1jhDW
- j+ELMtH+BcDFlBPJJzfPFdSCR+CsY83s+HHza75urc+DokGtwesgLHk5BQsghhxd4GZW
- 0TUw==
-X-Gm-Message-State: AOJu0YyS5GeegqBsNzCVQ5Kw0VLLpYJjVFV/I2OL42h70HQqIwgjk41j
- hubq55L3NX+flvg7ANQ1Lo3Wbp36qn/OG3GpFp6SqsAiaSBVrKSR05lECXuXa6eMrvJNH6Ngjnn
- xkTb66GVcWBHOgGobtA634renaBr0qFzuoAIqrmnaNxxGa3mUSE0+jEXwsRxy2ev0FjKUtAN+0t
- eLM8DW7Uik/2acbDuT8231a8Rlofo=
-X-Received: by 2002:a17:90a:9f8d:b0:299:544c:4933 with SMTP id
- o13-20020a17090a9f8d00b00299544c4933mr5672354pjp.14.1709525853834; 
- Sun, 03 Mar 2024 20:17:33 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFnJHT8tjJe7xHJC/K3zuiLv1+lSTiN6eQ1/cZ/xECHgtnO4Fyt8zROllsP6Xh32U055vIFAHqDPrWEN2Sxzb0=
-X-Received: by 2002:a17:90a:9f8d:b0:299:544c:4933 with SMTP id
- o13-20020a17090a9f8d00b00299544c4933mr5672340pjp.14.1709525853555; Sun, 03
- Mar 2024 20:17:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rgzzG-0005P4-1C
+ for qemu-devel@nongnu.org; Sun, 03 Mar 2024 23:31:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1709526698; x=1741062698;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=mji7ogxWGnlO7OLNebqnZVXK4CDstCuZ6BWCb3Vtj5Q=;
+ b=AEERgq7YJ2H0Q6v2H/me07S/6Hn7hMAI/+/9p5Z3KnN6862JkNQBHTIh
+ 1ObqasIDg4vqFOG8QZMDKMmH9lPeJohM4paW+TY+X4kkhr/BSZkNJFqsf
+ zWDWwk38DfVFq5jZPG1M9ieEXQqgY9n67aNHzoUG6/btZjQdKHDfe8qob
+ 5n518I1ZOt59KdZKIK3lBecqWy9Q4qCWJ6Av7fyYPcaqConaZ9l9oL+B2
+ oWsakHHvXew8RvprTQdv6gpJRchuaNb4R3Tk2yS8E/7Md5bPEdOWa+r1e
+ B2kRNx4YpjDIdPsAn+XwjkmwM4SJjoMse1hd7JAn143J4sMWlnkI8g0E5 g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11002"; a="29424064"
+X-IronPort-AV: E=Sophos;i="6.06,203,1705392000"; d="scan'208";a="29424064"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Mar 2024 20:31:34 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,203,1705392000"; d="scan'208";a="39861167"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
+ by fmviesa001.fm.intel.com with ESMTP; 03 Mar 2024 20:31:31 -0800
+From: Zhao Liu <zhao1.liu@linux.intel.com>
+To: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, devel@lists.libvirt.org,
+ qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH] hw/core/machine-smp: Remove deprecated "parameter=0" SMP
+ configurations
+Date: Mon,  4 Mar 2024 12:45:10 +0800
+Message-Id: <20240304044510.2305849-1-zhao1.liu@linux.intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20240228094432.1092748-1-zhenzhong.duan@intel.com>
-In-Reply-To: <20240228094432.1092748-1-zhenzhong.duan@intel.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Mon, 4 Mar 2024 12:17:22 +0800
-Message-ID: <CACGkMEtadjC7sX+ssc=5LTaqrrkVZzs4DDMMiUPdPVXRLD0hJw@mail.gmail.com>
-Subject: Re: [PATCH v1 0/6] Check and sync host IOMMU cap/ecap with vIOMMU
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com, clg@redhat.com, 
- eric.auger@redhat.com, peterx@redhat.com, mst@redhat.com, jgg@nvidia.com, 
- nicolinc@nvidia.com, joao.m.martins@oracle.com, kevin.tian@intel.com, 
- yi.l.liu@intel.com, yi.y.sun@intel.com, chao.p.peng@intel.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=192.198.163.7;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.589,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.589,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,106 +80,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 28, 2024 at 5:46=E2=80=AFPM Zhenzhong Duan <zhenzhong.duan@inte=
-l.com> wrote:
->
-> Hi,
->
-> Based on Joao's suggestion, the iommufd nesting prerequisite series [1]
-> is further splitted to host IOMMU device abstract part [2] and vIOMMU
-> check/sync part. This series implements the 2nd part.
->
-> This enables vIOMMU to get host IOMMU cap/ecap information by implementin=
-g
-> a new set/unset_iommu_device interface, then vIOMMU could check or sync
-> with vIOMMU's own cap/ecap config.
+From: Zhao Liu <zhao1.liu@intel.com>
 
-Does it mean that it would supress the cap/ecap config from the qemu
-command line? If yes, I wonder how to maintain the migration
-compatibility.
+The "parameter=0" SMP configurations have been marked as deprecated
+since v6.2.
 
-Thanks
+For these cases, -smp currently returns the warning and adjusts the
+zeroed parameters to 1 by default.
 
->
-> It works by having device side, i.e. VFIO, register either an IOMMULegacy=
-Device
-> or IOMMUFDDevice to vIOMMU, which includes necessary data to archive that=
-.
-> Currently only VFIO device is supported, but it could also be used for ot=
-her
-> devices, i.e., VDPA.
->
-> For coldplugged device, we can get its host IOMMU cap/ecap during qemu in=
-it,
-> then check and sync into vIOMMU cap/ecap.
-> For hotplugged device, vIOMMU cap/ecap is frozen, we could only check wit=
-h
-> vIOMMU cap/ecap, not allowed to update. If check fails, hotplugged will f=
-ail.
->
-> This is also a prerequisite for incoming iommufd nesting series:
-> 'intel_iommu: Enable stage-1 translation'.
->
-> I didn't implement cap/ecap sync for legacy VFIO backend, would like to s=
-ee
-> what Eric want to put in IOMMULegacyDevice for virtio-iommu and if I can
-> utilize some of them.
->
-> Because it's becoming clear on community's suggestion, I'd like to remove
-> rfc tag from this version.
->
-> Qemu code can be found at:
-> https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_nesting_preq_par=
-t2_v1
->
-> [1] https://lore.kernel.org/qemu-devel/20240201072818.327930-1-zhenzhong.=
-duan@intel.com
-> [2] https://lists.gnu.org/archive/html/qemu-devel/2024-02/msg06314.html
->
-> Thanks
-> Zhenzhong
->
-> Changelog:
-> v1:
-> - convert HostIOMMUDevice to sub object pointer in vtd_check_hdev
->
-> rfcv2:
-> - introduce common abstract HostIOMMUDevice and sub struct for different =
-BEs (Eric, C=C3=A9dric)
-> - remove iommufd_device.[ch] (C=C3=A9dric)
-> - remove duplicate iommufd/devid define from VFIODevice (Eric)
-> - drop the p in aliased_pbus and aliased_pdevfn (Eric)
-> - assert devfn and iommu_bus in pci_device_get_iommu_bus_devfn (C=C3=A9dr=
-ic, Eric)
-> - use errp in iommufd_device_get_info (Eric)
-> - split and simplify cap/ecap check/sync code in intel_iommu.c (C=C3=A9dr=
-ic)
-> - move VTDHostIOMMUDevice declaration to intel_iommu_internal.h (C=C3=A9d=
-ric)
-> - make '(vtd->cap_reg >> 16) & 0x3fULL' a MACRO and add missed '+1' (C=C3=
-=A9dric)
-> - block migration if vIOMMU cap/ecap updated based on host IOMMU cap/ecap
-> - add R-B
->
->
-> Yi Liu (2):
->   intel_iommu: Add set/unset_iommu_device callback
->   intel_iommu: Add a framework to check and sync host IOMMU cap/ecap
->
-> Zhenzhong Duan (4):
->   intel_iommu: Extract out vtd_cap_init to initialize cap/ecap
->   intel_iommu: Implement check and sync mechanism in iommufd mode
->   intel_iommu: Use mgaw instead of s->aw_bits
->   intel_iommu: Block migration if cap is updated
->
->  hw/i386/intel_iommu_internal.h |   9 ++
->  include/hw/i386/intel_iommu.h  |   4 +
->  hw/i386/acpi-build.c           |   3 +-
->  hw/i386/intel_iommu.c          | 287 ++++++++++++++++++++++++++-------
->  4 files changed, 245 insertions(+), 58 deletions(-)
->
-> --
-> 2.34.1
->
+Remove the above compatibility logic in v9.0, and return error directly
+if any -smp parameter is set as 0.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ docs/about/deprecated.rst       | 16 ----------------
+ docs/about/removed-features.rst | 15 +++++++++++++++
+ hw/core/machine-smp.c           |  5 +++--
+ 3 files changed, 18 insertions(+), 18 deletions(-)
+
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 36bd3e15ef06..872974640252 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -36,22 +36,6 @@ and will cause a warning.
+ The replacement for the ``nodelay`` short-form boolean option is ``nodelay=on``
+ rather than ``delay=off``.
+ 
+-``-smp`` ("parameter=0" SMP configurations) (since 6.2)
+-'''''''''''''''''''''''''''''''''''''''''''''''''''''''
+-
+-Specified CPU topology parameters must be greater than zero.
+-
+-In the SMP configuration, users should either provide a CPU topology
+-parameter with a reasonable value (greater than zero) or just omit it
+-and QEMU will compute the missing value.
+-
+-However, historically it was implicitly allowed for users to provide
+-a parameter with zero value, which is meaningless and could also possibly
+-cause unexpected results in the -smp parsing. So support for this kind of
+-configurations (e.g. -smp 8,sockets=0) is deprecated since 6.2 and will
+-be removed in the near future, users have to ensure that all the topology
+-members described with -smp are greater than zero.
+-
+ Plugin argument passing through ``arg=<string>`` (since 6.1)
+ ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index 417a0e4fa1d9..f9cf874f7b1f 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -489,6 +489,21 @@ The ``-singlestep`` option has been turned into an accelerator property,
+ and given a name that better reflects what it actually does.
+ Use ``-accel tcg,one-insn-per-tb=on`` instead.
+ 
++``-smp`` ("parameter=0" SMP configurations) (removed in 9.0)
++''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++
++Specified CPU topology parameters must be greater than zero.
++
++In the SMP configuration, users should either provide a CPU topology
++parameter with a reasonable value (greater than zero) or just omit it
++and QEMU will compute the missing value.
++
++However, historically it was implicitly allowed for users to provide
++a parameter with zero value, which is meaningless and could also possibly
++cause unexpected results in the -smp parsing. So support for this kind of
++configurations (e.g. -smp 8,sockets=0) is removed since 9.0, users have
++to ensure that all the topology members described with -smp are greater
++than zero.
+ 
+ User-mode emulator command line arguments
+ -----------------------------------------
+diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
+index 25019c91ee36..96533886b14e 100644
+--- a/hw/core/machine-smp.c
++++ b/hw/core/machine-smp.c
+@@ -105,8 +105,9 @@ void machine_parse_smp_config(MachineState *ms,
+         (config->has_cores && config->cores == 0) ||
+         (config->has_threads && config->threads == 0) ||
+         (config->has_maxcpus && config->maxcpus == 0)) {
+-        warn_report("Deprecated CPU topology (considered invalid): "
+-                    "CPU topology parameters must be greater than zero");
++        error_setg(errp, "Invalid CPU topology: "
++                   "CPU topology parameters must be greater than zero");
++        return;
+     }
+ 
+     /*
+-- 
+2.34.1
 
 
