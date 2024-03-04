@@ -4,90 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CDABC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 17:25:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73E4FC5478C
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 17:25:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhC3C-0005kG-5m; Mon, 04 Mar 2024 12:24:30 -0500
+	id 1rhC3H-0005kw-QQ; Mon, 04 Mar 2024 12:24:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rhC3A-0005jS-SM
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:24:28 -0500
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rhC3G-0005ke-3v
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:24:34 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rhC38-0007QR-TG
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:24:28 -0500
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-6e57a3bf411so2731568b3a.0
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 09:24:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rhC3D-0007RS-RB
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:24:33 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5672afabb86so1435122a12.3
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 09:24:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1709573065; x=1710177865; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ujQZlVzwEouRsoAxeY1MiVCw9haUba1/ifiQupfzP88=;
- b=Nv7dQc2FFA7gc+dddu8seEd6QLcIrj67q8Uc4mTStcPyGDwLKKWYQ/gYIuMpREzA6x
- olgqf4qfiGfjMvnL2yoNy4GbInySuGnt/X77iklOP6gbl/9oX8faeCbXnIhhe2dDaO5Y
- P2MCLWa7mXZF2yTH1w/4DTUOOHfCyVm/p3ULX5QInmFN5H+MSLMDmuQF+/SSkS3pVgZj
- l4w1yB8ZwuL5rLZ/ZB4Ur+Sa7VZGwbMmFBND/vqRgF3o/r+6UQ2W9Q1UpQUCfGzsYsWC
- nHxhRnWZnoFYJcxp/9OJDSUNE81ht/XdEAvD2tjlXKB6qN6kXRRrAqNUiSKYXERJHPtR
- JKbw==
+ d=linaro.org; s=google; t=1709573070; x=1710177870; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=wtWH2GKLVB9TTORLSeHbin5g5WMKQBuWBoDKhCB8zvI=;
+ b=hDDPbgPBRx/sfSYtagELWcq46HAh+VoQ2m69UHomsrGEV8g5vbt8737NME0Pmex3xj
+ 5nG1VL0NLFJN6gig1VdeIqFZXEUyfemF+xUt5PEiZJs0uD7YVJSrniiY5u74WM38NE5D
+ Z2xapjGEegAQEVIfSudF86n6VNyA2MmZmUT1dPvqog0mY+oUtHIck6hPrwED4Js7xrMY
+ /SwKa0XrPxL+5AKR9P+F/7tlp8/32QJSWpS1wcEM/v7aolsBnW8BQQK+msjUzruj2Rf5
+ JQUg5PDQz9MsTeCrhZ2j3N56+m6AITaIpBKinKc6zk+Kolo2cF89ER6cOpHOb0UPQUf5
+ Yagg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709573065; x=1710177865;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ujQZlVzwEouRsoAxeY1MiVCw9haUba1/ifiQupfzP88=;
- b=hcMTpzqKJTpxpjSuRPo13valt9veI+kEB9pwDV5sH7clo5LpcRCvwvjV25vI7rfwYm
- mp/PWo+Qc9WBhr7E4GygZZE6tx+WLGAIX9LopevXoHEcfRpl5NLn1Kcwa7EEzrcayavN
- aqOZxeSmUBiYe2C4Xtm6pLUZH/joctLbWV8Ps3ol6Fz5TeYmzRGTQYiMq9rXJuR9cF3S
- 9kcU4nzREfKO72BkC/TEvr3QVJiecK1EVzVAhq0qdYdOyUREWfQ7/tehdGtReufVtMmH
- 9Ix1Eg8f7BhFxBVVzmIMHA/ZgCDuKbX+DRJkn79GiA4g4AtN6WNlmNYRcyykoA8m3dZr
- 2Lug==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWQaWVQxgP/Oc2UMNKDT7Tprx2NV71X0JbTAItGGHXzVVYsXrK5gxTp1H7bt/vzNBO0y29UbslrjsO4Ajh3zszPuufjALo=
-X-Gm-Message-State: AOJu0YxabU+8L6fqZAdJgbRW+zeJ4Ca+z3Hc3fdVTHTHcDt3ZgPFHtEN
- hm5nBcVOUn0++j3n3BVoHX5V3l8nczl1Sxa2KLhaB3EJm2pNdll8vht7gxI92kA=
-X-Google-Smtp-Source: AGHT+IFrkuXw/iiN1aUxFBGZEApPu2LibaAmsW/EyACllCghD6kYY0sliQFSvPO1DPB5QjUty8sOEQ==
-X-Received: by 2002:a05:6a00:9084:b0:6e5:dadd:6e11 with SMTP id
- jo4-20020a056a00908400b006e5dadd6e11mr11946711pfb.33.1709573064784; 
- Mon, 04 Mar 2024 09:24:24 -0800 (PST)
-Received: from [192.168.68.110] ([177.94.15.159])
- by smtp.gmail.com with ESMTPSA id
- c2-20020a62e802000000b006e1463c18f8sm7558556pfi.37.2024.03.04.09.24.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Mar 2024 09:24:24 -0800 (PST)
-Message-ID: <23cdc593-c394-4f45-ab83-07b6aae44047@ventanamicro.com>
-Date: Mon, 4 Mar 2024 14:24:19 -0300
+ d=1e100.net; s=20230601; t=1709573070; x=1710177870;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wtWH2GKLVB9TTORLSeHbin5g5WMKQBuWBoDKhCB8zvI=;
+ b=sFY50czsg3Gx7SFAZtK3mr07mlWNnoB03sWMV+y6NpI5rc2tV3BCh+labz7NNvrD3w
+ bgskC+s8OJQpFdGvvzjNhy457rQE+CAXKom0YeNliRpLKTUxwgb0pVjJ7phFL9INJYd3
+ wSWTHmeXgF+ml4GwluTjRWK/ifA4fek2uA1u0zSAc6diMBH3PEduTQm+mapSuF1PsWtx
+ A4mE+3lqqmsyG/g6zm4s2F0L6EdehxMyfqFkv8mQ94OuV+wyZ6Sf9QE/0bk+HhgFsErP
+ W1xN0eUxu8OacddvMnU7FX29BqKBxmZUWJzSZc60eykUhwk+bYK0e954PGsALWddG8Zk
+ IbVQ==
+X-Gm-Message-State: AOJu0YxxgpmaCKFXkFX+eUofyQOTJJHls6YcY6v6SzGNWEktBZ3dITZK
+ Z6cLa3auYfQQJfSXqSiQGwAKJe/o+vsn7wRlE/jSMNd3Pkv7QJhkadvj1GtSA9BFFKb6CB7GK3j
+ JC2bCZ0vXBP6p6nZtLp9wzEYgLMOlnj7me3JW5g==
+X-Google-Smtp-Source: AGHT+IHRWwFGNXQIBoY2J4SadmHWaENkjKoE625sDdFV006HACD6iwSRJXkvkca45tlM3424aqr+FQxk3nuSCT1HXqU=
+X-Received: by 2002:a05:6402:1d3a:b0:565:6dde:ed2e with SMTP id
+ dh26-20020a0564021d3a00b005656ddeed2emr5999272edb.33.1709573070119; Mon, 04
+ Mar 2024 09:24:30 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/5] target/riscv: Add cycle & instret privilege mode
- filtering properties
-To: Atish Patra <atishp@rivosinc.com>
-Cc: Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Liu Zhiwei
- <zhiwei_liu@linux.alibaba.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org, Weiwei Li
- <liwei1518@gmail.com>, kaiwenxue1@gmail.com
-References: <20240228185116.1321730-1-atishp@rivosinc.com>
- <20240228185116.1321730-3-atishp@rivosinc.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240228185116.1321730-3-atishp@rivosinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x436.google.com
+References: <20240302010627.12998-1-richard.henderson@linaro.org>
+ <20240302010627.12998-2-richard.henderson@linaro.org>
+In-Reply-To: <20240302010627.12998-2-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 4 Mar 2024 17:24:19 +0000
+Message-ID: <CAFEAcA-_ZbgmF0qxNxXevU4yztWYdgVL74QutHtDsfp=5kojCQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] linux-user: Implement PR_{GET,SET}_CHILD_SUBREAPER
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,54 +88,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2/28/24 15:51, Atish Patra wrote:
-> From: Kaiwen Xue <kaiwenx@rivosinc.com>
-> 
-> This adds the properties for ISA extension smcntrpmf. Patches
-> implementing it will follow.
-> 
-> Signed-off-by: Atish Patra <atishp@rivosinc.com>
-> Signed-off-by: Kaiwen Xue <kaiwenx@rivosinc.com>
+On Sat, 2 Mar 2024 at 04:13, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> The "set" prctl passes through integral values.
+> The "get" prctl returns the value into a pointer.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1929
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
->   target/riscv/cpu.c     | 2 ++
->   target/riscv/cpu_cfg.h | 1 +
->   2 files changed, 3 insertions(+)
-> 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 1b8d001d237f..f9d3c80597fc 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -169,6 +169,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
->       ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
->       ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
->       ISA_EXT_DATA_ENTRY(smaia, PRIV_VERSION_1_12_0, ext_smaia),
-> +    ISA_EXT_DATA_ENTRY(smcntrpmf, PRIV_VERSION_1_12_0, ext_smcntrpmf),
->       ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
->       ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
->       ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
-> @@ -1447,6 +1448,7 @@ const char *riscv_get_misa_ext_description(uint32_t bit)
->   const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
->       /* Defaults for standard extensions */
->       MULTI_EXT_CFG_BOOL("sscofpmf", ext_sscofpmf, false),
-> +    MULTI_EXT_CFG_BOOL("smcntrpmf", ext_smcntrpmf, false),
->       MULTI_EXT_CFG_BOOL("zifencei", ext_zifencei, true),
->       MULTI_EXT_CFG_BOOL("zicsr", ext_zicsr, true),
->       MULTI_EXT_CFG_BOOL("zihintntl", ext_zihintntl, true),
-> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index 833bf5821708..0828841445c5 100644
-> --- a/target/riscv/cpu_cfg.h
-> +++ b/target/riscv/cpu_cfg.h
-> @@ -73,6 +73,7 @@ struct RISCVCPUConfig {
->       bool ext_zihpm;
->       bool ext_smstateen;
->       bool ext_sstc;
-> +    bool ext_smcntrpmf;
->       bool ext_svadu;
->       bool ext_svinval;
->       bool ext_svnapot;
+thanks
+-- PMM
 
