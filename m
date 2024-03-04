@@ -4,70 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C2E8C5478C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 17:57:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92BFDC5478C
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 17:59:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhCYs-0005MZ-Hq; Mon, 04 Mar 2024 12:57:14 -0500
+	id 1rhCaW-0006C6-2m; Mon, 04 Mar 2024 12:58:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhCYr-0005MF-DF
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:57:13 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rhCaU-0006BV-2w
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:58:54 -0500
+Received: from mail-io1-xd32.google.com ([2607:f8b0:4864:20::d32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhCYp-0005CG-QY
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:57:13 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-563d32ee33aso5941895a12.2
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 09:57:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rhCaS-0005Pz-HZ
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:58:53 -0500
+Received: by mail-io1-xd32.google.com with SMTP id
+ ca18e2360f4ac-7bb5fda069bso312663139f.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 09:58:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709575030; x=1710179830; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=GL3aiZiJM15uGsxD3QqB/zA+pota5yeZ+pRdMpkByf0=;
- b=t6yIZa58qM7wk8gaLLWJHucogEpbOTV2Ij8mvSBTE6HC2TKJkdsGb1XBHo5jABDo+H
- 8SUogamOLbShW0HWhtReju/GUX8hVHMQMdji6ccWRSv6nck2uJthhrBKwDaC99sH9Zvs
- Q5S8slTHn1IqczFq+LScPMIS10XBqEJUNZ4bpvdAnWW2u4A/kUFHBMFAccvsk565Xo3Y
- 8uet02s7K0/4fRaA/sySCWfUB6/a0CRU2RUtRqJaiGneZXxf/zVxFHWl8Au6DBB4DMQ6
- u4+fgRYL5Jy4DoDpyPyAeRdly7yXFrajwzkwNLDLVR1EQsVnd5A2yoV3MYtBLCTUZD+3
- LUQA==
+ d=linaro.org; s=google; t=1709575131; x=1710179931; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Hq/FixD+nGs54fzNASOm6ZEXxaHKd6vqf1kVatDBhSA=;
+ b=mWBlUAhQR0HBjTSxBx0eIcqA/uxe0A2YJRP+GY72BLLcwa+LYtffci2pjnUj6RT/qZ
+ imoqz3TUFCL1B7edVEuGjsHEWAniCp4Fnqq1TRnJ2gT7R8eR1R+CikCdCZmtDx/KhnL8
+ Y3b712SBUd7ID0uZBH+NWPcG6TQdSKI/1ggwfMnqJTiCPl0w80A+DEho0E2GHyBfvXwp
+ sfpAoOhWF9UoCLJzOKHwytMTZDI6uiJd4PZ/HRrvyZIbAulzbhKMIkjlSD2/3/r7DEtK
+ 6zQSeXTyEtz87k5vqb1AmIW2LpHMcs3fxzkoD8Wh7HLQtc9mZRQNPs5BiI6OOhiTw9Dq
+ wq2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709575030; x=1710179830;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GL3aiZiJM15uGsxD3QqB/zA+pota5yeZ+pRdMpkByf0=;
- b=IRtItvXspAyQE1ozLFie9KMgAP0UViegIaejhl7YZuc2ce3sc8Z0P9T/B4EQaoWc5d
- nlo9zxzCtaDZLgVbM2+pfUXzIskmWC0YAdKbcE5PBOdaK6SAfG0VCNYzWFb+pKVZW4cF
- X0Pb8NGAcFuy6j0CPpHzg60xBOjllA7Y+QRsLd0oR+kj/SenhFhguLeOMHmTISm/jaHZ
- NjozF/YQr6Ugr10/rhE4QQlCiG3fcpoYMrW9NhTTG0auBaAQLU5h2jCAOp0Y9kOFCuQz
- moGR2QXkySgR6cveR19WA3SBSoV0znu1Nc3U+llv1TRHfMsiEm7thA/E0F1hg8SeV78P
- yXDQ==
+ d=1e100.net; s=20230601; t=1709575131; x=1710179931;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Hq/FixD+nGs54fzNASOm6ZEXxaHKd6vqf1kVatDBhSA=;
+ b=JCcVp3XjE1GQ/YUx1zhQo5l9UgmoC/DLXoRELVhb9ZqKcrVCAN6WRHFEELRSr3mCAF
+ p0v4boAK+2dHOv/oCtlrWKvtJrtU4fJVDV6MNk7zAaH0D3vdTv94R0xEENrzV8mNbUps
+ RgKo0CtpE8a8+eb2/REfeTaEoGbSWRdA3YTkWl+CQUuI3CSg0RYItMot+H1FJbaAmwx7
+ KK7stxQuqXa+wS4QAnfS130436ZBUtEkfvdMXYQsXuzae0MW6vD0HhpDazyM8K7moO9L
+ C6fDNz8tjw+6lKLfXFhFOf/yoItBUuZg0fOMWKZIYZl4j33D0DscIgwvdRfDRl3dk2A5
+ iL+g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVF6jRzWhK89VHS6QtWoMu4eaicegi2lJKbauJDlsWth6UJ/AYr+n0MyGPNHkstmdvYnpF0/v2+ZmDB2ga1kgo96YDggp4=
-X-Gm-Message-State: AOJu0YzygwPspQlEmrQ/7cEZvRiCs433g7qzHuWQIuwE6dnxdjeG6XjB
- 6FSe9CpmbRLUfJUS4CajLd1Y4sNqksVISLsWMN4ATTOhuGGz6GNyIXPgMB/SaHUPSHBonpL8gNt
- IJheutiX01kmuQTRcYOBKEZvu0HOeRKGWjhMQIg==
-X-Google-Smtp-Source: AGHT+IGyE7me+zybtlBc2VbuZDZ7ywBafK1J84/K3Ms9rd57UtnsahmHDpwCwxRupHKxJyz05jn5Y+Ce+sPPfyr69+g=
-X-Received: by 2002:a50:bb68:0:b0:565:b934:3301 with SMTP id
- y95-20020a50bb68000000b00565b9343301mr6945854ede.16.1709575030213; Mon, 04
- Mar 2024 09:57:10 -0800 (PST)
+ AJvYcCW82bdTfkzz10kT1trVGT8V3MuTnE00bP96PxFiw/b91OS7lHsUtftPfNQZGS5TPTDsi/p+XtT1A1Zoa/9B5Rvx9dzsjWU=
+X-Gm-Message-State: AOJu0YwFUS+1JVJvLgWum4g+zqqcXjCzLUOEncIWXqztZzXlZOt1FBx4
+ vGegRZagoP+VlF+h6t6ZSKk3yeMXKSGB4sxhCG0oshZfqfujnFDshKePW1ICehY=
+X-Google-Smtp-Source: AGHT+IFKApj1rbHnmoFz+vYQH65sZRigZRqA/Q3Npldy75A6MWfbBmeGAAYah0WVn2vGZsZuC26wEg==
+X-Received: by 2002:a05:6e02:1c0b:b0:365:da4:ec9d with SMTP id
+ l11-20020a056e021c0b00b003650da4ec9dmr12797802ilh.15.1709575131198; 
+ Mon, 04 Mar 2024 09:58:51 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ x10-20020a02970a000000b00474fbcf19f7sm204492jai.129.2024.03.04.09.58.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 04 Mar 2024 09:58:50 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id BE66B5F89D;
+ Mon,  4 Mar 2024 17:58:48 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Sven Schnelle <svens@stackframe.org>
+Cc: Alexandre Iooss <erdnaxe@crans.org>,  Mahmoud Mandour
+ <ma.mandourr@gmail.com>,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ qemu-devel@nongnu.org,  deller@gmx.de
+Subject: Re: [PATCH v3 01/12] util/log: convert debug_regions to GList
+In-Reply-To: <87bk7uue47.fsf@t14.stackframe.org> (Sven Schnelle's message of
+ "Mon, 04 Mar 2024 17:59:52 +0100")
+References: <20240301174609.1964379-1-svens@stackframe.org>
+ <20240301174609.1964379-2-svens@stackframe.org>
+ <87jzmiz3oa.fsf@draig.linaro.org> <87bk7uue47.fsf@t14.stackframe.org>
+User-Agent: mu4e 1.12.1; emacs 29.1
+Date: Mon, 04 Mar 2024 17:58:48 +0000
+Message-ID: <87il21yj3b.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20240303-elf2dmp-v1-0-bea6649fe3e6@daynix.com>
- <20240303-elf2dmp-v1-4-bea6649fe3e6@daynix.com>
-In-Reply-To: <20240303-elf2dmp-v1-4-bea6649fe3e6@daynix.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 4 Mar 2024 17:56:58 +0000
-Message-ID: <CAFEAcA8TmKAPU_egO5tkHHFEodSJX_yssqx9kWaq=+tS1mrxnQ@mail.gmail.com>
-Subject: Re: [PATCH 4/7] contrib/elf2dmp: Use lduw_le_p() to read PDB
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Viktor Prutyanov <viktor.prutyanov@phystech.edu>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d32;
+ envelope-from=alex.bennee@linaro.org; helo=mail-io1-xd32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,45 +103,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 3 Mar 2024 at 10:52, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->
-> This resolved UBSan warnings.
->
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  contrib/elf2dmp/pdb.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/contrib/elf2dmp/pdb.c b/contrib/elf2dmp/pdb.c
-> index 40991f5f4c34..2541234205c3 100644
-> --- a/contrib/elf2dmp/pdb.c
-> +++ b/contrib/elf2dmp/pdb.c
-> @@ -19,6 +19,7 @@
->   */
->
->  #include "qemu/osdep.h"
-> +#include "qemu/bswap.h"
->
->  #include "pdb.h"
->  #include "err.h"
-> @@ -187,7 +188,7 @@ static int pdb_init_symbols(struct pdb_reader *r)
->
->      r->symbols = symbols;
->
-> -    r->segments = *(uint16_t *)((const char *)symbols + sizeof(PDB_SYMBOLS) +
-> +    r->segments = lduw_le_p((const char *)symbols + sizeof(PDB_SYMBOLS) +
->              symbols->module_size + symbols->offset_size +
->              symbols->hash_size + symbols->srcmodule_size +
->              symbols->pdbimport_size + symbols->unknown2_size +
+Sven Schnelle <svens@stackframe.org> writes:
 
-This is a behaviour change -- previously we did a load in
-host-endian order, but now we do it in little-endian order.
-Which is correct?
+> Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+>
+>> Sven Schnelle <svens@stackframe.org> writes:
+>>
+>>> In preparation of making the parsing part of qemu_set_dfilter_ranges()
+>>> available to other users, convert it to return a GList, so the result
+>>> can be used with other functions taking a GList of struct Range.
+>>
+>> Why do we need to convert it to a Glist? When I originally wrote the
+>> dfilter code I deliberately chose GArray over GList to avoid bouncing
+>> across cache lines during the tight loop that is checking ranges. It's
+>> not like we can't pass GArray's to plugins as well?
+>
+> Looking at the code again, i remember that the reason for choosing GList
+> was that the other range matching function all take GList's - having
+> some functions take GArray's, and some not would be odd.
 
-If we need host-endian, then we have lduw_he_p() for that.
-If we need little-endian, then maybe other parts of the code
-also are loading data in the wrong endianness?
+Ahh I see. There wasn't intended to be much of a relationship between
+the dfilter code and the range code apart from the fact I re-used the
+Range typedef to avoid duplication.
 
-thanks
--- PMM
+> So i wonder
+> whether we should convert all of those functions to GArray? (if
+> possible, i haven't checked)
+
+I think that would depend on access patterns and flexibility. For the
+dfilter there is no particular need for sorting and the principle
+operation is a sequence of lookups. For the other use cases keeping a
+sorted list and quick insertion might be more useful.
+
+While its tempting to go on a wider re-factoring I would caution against
+it so close to softfreeze.
+
+> What do you think?
+
+Lets stick to the dfilter case and worry about wider clean-ups later. As
+Richard points out it might be the interval tree makes more sense for
+some of these things.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
