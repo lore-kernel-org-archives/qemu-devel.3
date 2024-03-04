@@ -4,91 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1670FC5478C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 19:46:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B1DEC5478C
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 19:46:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhEGj-0003BZ-Vc; Mon, 04 Mar 2024 14:46:38 -0500
+	id 1rhEEQ-0005SZ-Vo; Mon, 04 Mar 2024 14:44:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1rhEGf-0002cc-F4; Mon, 04 Mar 2024 14:46:33 -0500
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1rhEGc-0007Nc-PX; Mon, 04 Mar 2024 14:46:33 -0500
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 424IxqGd032304; Mon, 4 Mar 2024 19:46:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
- h=from : to : cc :
- subject : date : message-id : mime-version : content-type :
- content-transfer-encoding; s=corp-2023-11-20;
- bh=tC9KBJfCvFe//nHt1DYEV1IOweBPPnQLAk60VlvmXW0=;
- b=V4fHAQpCxJcHTykuogMHv7PygJX2wG9D57T3kL+V7oXjvCy33bZ6bL9t9Ul/8ocyfHOc
- iVS41/GnoGtBsveJsDQHJmN0HrcHECI3G3xOQRcK/osSAfj0+cyNNPtpQswHVUN54stm
- iWC49QAOGEYO9Sd8LinhaBRgFYymef18bcPYFLZEaXhzniUQsr7Sh1scjA3ITvzvYmbi
- hfBzNgkh/1XPAj93wD5cGrxHG8K/Xg7/ZgDMXDqNAd1jC+l0yYCWLSpFmpVt/RbmCHiH
- onh7gnxv0Jj5/zyk/Q99TqNxG2FJYiUrBQ6jZ68udYspd1bzml4smWw87umy8uupjJ/q 5w== 
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wkv0bcfaj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 04 Mar 2024 19:46:17 +0000
-Received: from pps.filterd
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 424JIr71018962; Mon, 4 Mar 2024 19:46:15 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 3wktj6ag65-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 04 Mar 2024 19:46:15 +0000
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 424JkE3w038523;
- Mon, 4 Mar 2024 19:46:14 GMT
-Received: from jonah-ol8.us.oracle.com (dhcp-10-39-196-188.vpn.oracle.com
- [10.39.196.188])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 3wktj6ag50-1; Mon, 04 Mar 2024 19:46:14 +0000
-From: Jonah Palmer <jonah.palmer@oracle.com>
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1rhEEK-0005RQ-2B
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 14:44:08 -0500
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1rhEEI-0006uk-9g
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 14:44:07 -0500
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-6095dfcb461so46332707b3.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 11:44:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1709581445; x=1710186245; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=QJbfZE+vJVhF6ohULRusgGlAawiyr+LeVZe1pP+RB9U=;
+ b=kWCXqWTRFC9cYqlQVb9Zkj3EQ4IWQedDry81KN6uPu4IznmozlDG11UKQAia8/ZVeF
+ HIpNc1P94rVjl5lrSpQipEc69owOC1CP7pNb3Sl2htpBzmYc6PuJCGle9c1IWgywpnQf
+ Tuow7L0mgaznvwHjkeiZFxP00YauqCgq512lFgjWWnXNAHUp1xVggFxvmWSbmESQBuAl
+ eeiaoERuiqa8VfjZHqT4hfmGmoOkMeTNAphC5ABhzlQtEP+Zjf1DlMquFPa6Lnj5P9OJ
+ iEWh74jwe9fWEA9BM2PbaNI9pV/FwH5oI3WOtt5ydPqCbfTV1DAFzMyjtTHoYWcdrzGu
+ kC+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709581445; x=1710186245;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QJbfZE+vJVhF6ohULRusgGlAawiyr+LeVZe1pP+RB9U=;
+ b=BG1QvsPXiTfiP0iMoHgx9FeVpte2u+e1/8cDoPNqW7yZhj91jFY1GoFRYlMXfhnglZ
+ uj4zp2h/O1KiY7xyXbqUrGH1xYW8HDBHNC1TJ8m6QW49aimFSzU8Qea5uEsGQ6YOrDBg
+ 17UNrRIppHdnyTXQTkoZ9zgNn7r8zxW56T0EMNvJK3n6SARhBiM35jH6eK3WIE+qo5VH
+ 6yZce0RuKNNiPDEmM8Xo7RPIkLNhhVv0Y4bbPRYDox6CZIKmUuiywBAUWLKnEAjWEZ65
+ caHQmVh4+aJVREB17oTtz8i4yxYYvgSpm0SNrej2wOMui4Av71T7iDHPJnvjVtCbKGFr
+ GG2Q==
+X-Gm-Message-State: AOJu0YwKCVM/V08kY8egu10tZgorbno0YTUg/VTKzxRuHlKuAw3T0lto
+ GchvLCWoIjdazvD0D7sQjhhmx7TIkvC6aK5+HagoDq4atRvuVghi5mMGL6Tm
+X-Google-Smtp-Source: AGHT+IFvo7oOwuDmSurrtT5G/HJwiIcSWjslezbbQeIkVsdhV8wYif+bOOvtoCuDV8Xf5v/OxuOODw==
+X-Received: by 2002:a25:aa86:0:b0:dc7:49ec:50d9 with SMTP id
+ t6-20020a25aa86000000b00dc749ec50d9mr7732176ybi.42.1709581444731; 
+ Mon, 04 Mar 2024 11:44:04 -0800 (PST)
+Received: from localhost.localdomain ([50.205.20.42])
+ by smtp.gmail.com with ESMTPSA id
+ h1-20020a255f41000000b00dc62edd58dasm2282646ybm.40.2024.03.04.11.44.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 04 Mar 2024 11:44:04 -0800 (PST)
+From: nifan.cxl@gmail.com
 To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, jasowang@redhat.com, eperezma@redhat.com,
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com,
- jonah.palmer@oracle.com, raphael@enfabrica.net, kwolf@redhat.com,
- hreitz@redhat.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, thuth@redhat.com, richard.henderson@linaro.org,
- david@redhat.com, iii@linux.ibm.com, cohuck@redhat.com,
- pbonzini@redhat.com, fam@euphon.net, stefanha@redhat.com,
- qemu-block@nongnu.org, qemu-s390x@nongnu.org, virtio-fs@lists.linux.dev
-Subject: [PATCH v1 0/8] virtio,vhost: Add VIRTIO_F_NOTIFICATION_DATA support
-Date: Mon,  4 Mar 2024 14:46:04 -0500
-Message-Id: <20240304194612.611660-1-jonah.palmer@oracle.com>
-X-Mailer: git-send-email 2.39.3
+Cc: jonathan.cameron@huawei.com, linux-cxl@vger.kernel.org,
+ gregory.price@memverge.com, ira.weiny@intel.com, dan.j.williams@intel.com,
+ a.manzanares@samsung.com, dave@stgolabs.net, nmtadam.samsung@gmail.com,
+ nifan.cxl@gmail.com, jim.harris@samsung.com, Jorgen.Hansen@wdc.com,
+ wj28.lee@gmail.com, Fan Ni <fan.ni@samsung.com>
+Subject: [PATCH v5 00/13] Enabling DCD emulation support in Qemu
+Date: Mon,  4 Mar 2024 11:33:55 -0800
+Message-ID: <20240304194331.1586191-1-nifan.cxl@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-04_15,2024-03-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- suspectscore=0
- adultscore=0 bulkscore=0 spamscore=0 mlxlogscore=999 malwarescore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2403040152
-X-Proofpoint-ORIG-GUID: vRvhdcgJXi0OEMGyYLakIPJdyBVU4HHr
-X-Proofpoint-GUID: vRvhdcgJXi0OEMGyYLakIPJdyBVU4HHr
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=jonah.palmer@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-yw1-x1134.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FREEMAIL_REPLY=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,58 +94,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The goal of these patches are to add support to a variety of virtio and
-vhost devices for the VIRTIO_F_NOTIFICATION_DATA transport feature. This
-feature indicates that a driver will pass extra data (instead of just a
-virtqueue's index) when notifying the corresponding device.
+From: Fan Ni <fan.ni@samsung.com>
 
-The data passed in by the driver when this feature is enabled varies in
-format depending on if the device is using a split or packed virtqueue
-layout:
+The code is rebased on mainstream QEMU with the following patch series:
+hw/cxl/mailbox: change CCI cmd set structure to be a member, not a reference
+hw/cxl/mailbox: interface to add CCI commands to an existing CCI
 
- Split VQ
-  - Upper 16 bits: shadow_avail_idx
-  - Lower 16 bits: virtqueue index
+v4->v5:
+1. Did spell check for the patchset and fixed 2 typos;
+2. Fixed a misuse of stq_le_p and replaced it with stl_le_p in
+   cmd_dcd_get_dyn_cap_config;
+3. Removed unnecessary switch case in patch 9;
+4. Capitalized ""opcode" to "Opcode" in two code comments;
+5. Updated one reference text to the spec;
+6. Minor text change in qapi/cxl.json.
+7. Removed the definition of CXL_SPEC_AFTER_R30
+8. Removed the unnecessary input and output mailbox payload struct type
+   definition;
+9. set num_extents_supported and num_extents_avaible based on extents;
+10. Renamed DCD_MAX_REGION_NUM to DCD_MAX_NUM_REGION;
+11. Updated the commit log in Patch 4 to remove the unwanted text;
+12. Fixed some indent issues;
+13. Fail removal if it causes extents overflow after removal;
+14. Capture cases when adding response causing the device to exceed its extent
+    tracking ability;
+15. Using memory_region_size instead of directly accessing the field in
+    cxl_create_dc_regions;
+16. Renamed DCDRegion as DCRegion;
 
- Packed VQ
-  - Upper 16 bits: 1-bit wrap counter & 15-bit shadow_avail_idx
-  - Lower 16 bits: virtqueue index
+Changes 1-5 are suggested by Wonjae Lee (wj28.lee@gmail.com), 
+Changes 6-14 are suggested by Jonathan.
+Changes 15-16 are suggested by Jorgen.
 
-Also, due to the limitations of ioeventfd not being able to carry the
-extra provided by the driver, ioeventfd is left disabled for any devices
-using this feature.
+Thanks for the review of v4.
 
-A significant aspect of this effort has been to maintain compatibility
-across different backends. As such, the feature is offered by backend
-devices only when supported, with fallback mechanisms where backend
-support is absent.
+For this version, the main code changes (PATCH 11~12) extend DC extent
+release processing, including mailbox command and QMP interface processing.
 
-Jonah Palmer (8):
-  virtio/virtio-pci: Handle extra notification data
-  virtio-pci: Lock ioeventfd state with VIRTIO_F_NOTIFICATION_DATA
-  virtio-mmio: Handle extra notification data
-  virtio-mmio: Lock ioeventfd state with VIRTIO_F_NOTIFICATION_DATA
-  virtio-ccw: Handle extra notification data
-  virtio-ccw: Lock ioeventfd state with VIRTIO_F_NOTIFICATION_DATA
-  vhost/vhost-user: Add VIRTIO_F_NOTIFICATION_DATA to vhost feature bits
-  virtio: Add VIRTIO_F_NOTIFICATION_DATA property definition
+Based on Jonathan's suggestion, we updated the code, and now we can process
+extent release request more flexible. We can now support superset release
+(actually we can do even more, as long as the DPA range is covered by
+accepted extents, we can release).
 
- hw/block/vhost-user-blk.c    |  1 +
- hw/net/vhost_net.c           |  2 ++
- hw/s390x/s390-virtio-ccw.c   | 16 ++++++++++++----
- hw/s390x/virtio-ccw.c        |  6 ++++--
- hw/scsi/vhost-scsi.c         |  1 +
- hw/scsi/vhost-user-scsi.c    |  1 +
- hw/virtio/vhost-user-fs.c    |  2 +-
- hw/virtio/vhost-user-vsock.c |  1 +
- hw/virtio/virtio-mmio.c      | 15 +++++++++++----
- hw/virtio/virtio-pci.c       | 16 +++++++++++-----
- hw/virtio/virtio.c           | 18 ++++++++++++++++++
- include/hw/virtio/virtio.h   |  5 ++++-
- net/vhost-vdpa.c             |  1 +
- 13 files changed, 68 insertions(+), 17 deletions(-)
+For superset extent release, the only requirement, if we find part of its DPA
+range is still pending to add, while the other is accepted, we reject it
+through QMP interface.
+
+Last but not least, in the series, we introduced a new patch (PATCH 13),
+which We introduce new QMP interfaces to print out accepted and
+pending-to-add list in the device to a file.
+
+The latest code branch is https://github.com/moking/qemu/tree/dcd-v5.
+
+The code is tested with Ira's last kernel DCD patch set [2] with some minor
+bug fixes[3]. Tested operations include:
+
+Extra extent release test,
+1. Add multiple extents, and removing them one by one, passed;
+2. Superset release: add multiple extents with continuous DPA ranges, and
+   Remove all of them with a single extent request with extent covering the
+   whole DPA range, passed;
+3. Partial extent release: add a large extent and release only part of it,
+   passed;
+4. Partial+superset release: add multiple extents,and release it with some
+   leftover with one request with an extent. For example, add extents [0-128M]
+   and [128-256], release [64M-256M], passed;
+5. release extent not aligned to block size, failed as expected;
+6. extents have overlaps, fail the request as expected;
+7. extent has uncovered DPA range, skip the extent as expected; 
+8. OS tries to release a non-exist extent, return invalid PA as expected;
+ 
+[1] v4: https://lore.kernel.org/linux-cxl/20240221182020.1086096-1-nifan.cxl@gmail.com/T/#m580c59be5deca2639dd7158e57f4bc1141d1c885
+[2] https://github.com/weiny2/linux-kernel/tree/dcd-v3-2023-10-30
+[3] https://github.com/moking/linux-dcd/commit/9d24fa6e5d39f934623220953caecc080f93e964
+
+Fan Ni (13):
+  hw/cxl/cxl-mailbox-utils: Add dc_event_log_size field to output
+    payload of identify memory device command
+  hw/cxl/cxl-mailbox-utils: Add dynamic capacity region representative
+    and mailbox command support
+  include/hw/cxl/cxl_device: Rename mem_size as static_mem_size for
+    type3 memory devices
+  hw/mem/cxl_type3: Add support to create DC regions to type3 memory
+    devices
+  hw/mem/cxl-type3: Refactor ct3_build_cdat_entries_for_mr to take mr
+    size insead of mr as argument
+  hw/mem/cxl_type3: Add host backend and address space handling for DC
+    regions
+  hw/mem/cxl_type3: Add DC extent list representative and get DC extent
+    list mailbox support
+  hw/cxl/cxl-mailbox-utils: Add mailbox commands to support add/release
+    dynamic capacity response
+  hw/cxl/events: Add qmp interfaces to add/release dynamic capacity
+    extents
+  hw/mem/cxl_type3: Add dpa range validation for accesses to DC regions
+  hw/cxl/cxl-mailbox-utils: Add partial and superset extent release
+    mailbox support
+  hw/mem/cxl_type3: Allow to release partial extent and extent superset
+    in QMP interface
+  qapi/cxl.json: Add QMP interfaces to print out accepted and pending DC
+    extents
+
+ hw/cxl/cxl-mailbox-utils.c  | 682 ++++++++++++++++++++++++++++++++-
+ hw/mem/cxl_type3.c          | 724 ++++++++++++++++++++++++++++++++++--
+ hw/mem/cxl_type3_stubs.c    |  26 ++
+ include/hw/cxl/cxl_device.h |  61 ++-
+ include/hw/cxl/cxl_events.h |  18 +
+ qapi/cxl.json               |  93 ++++-
+ 6 files changed, 1558 insertions(+), 46 deletions(-)
 
 -- 
-2.39.3
+2.43.0
 
 
