@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C10B7C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 12:34:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C867DC48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 12:35:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh7Ra-0008E2-BH; Mon, 04 Mar 2024 07:29:22 -0500
+	id 1rh7Rx-0000FJ-OD; Mon, 04 Mar 2024 07:29:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=mkh8=KK=redhat.com=clg@ozlabs.org>)
- id 1rh7RL-00084g-Jv
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:29:11 -0500
+ id 1rh7Rq-00004s-TN
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:29:38 -0500
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
  helo=gandalf.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=mkh8=KK=redhat.com=clg@ozlabs.org>)
- id 1rh7RJ-0004TK-RE
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:29:07 -0500
+ id 1rh7Ri-0004dS-1q
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:29:33 -0500
 Received: from gandalf.ozlabs.org (mail.ozlabs.org
  [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TpJ0D04z8z4wp0;
- Mon,  4 Mar 2024 23:29:00 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TpJ0l6rY6z4wyt;
+ Mon,  4 Mar 2024 23:29:27 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TpJ090wLgz4wcK;
- Mon,  4 Mar 2024 23:28:56 +1100 (AEDT)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TpJ0j0VPbz4wqN;
+ Mon,  4 Mar 2024 23:29:24 +1100 (AEDT)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -41,9 +41,10 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 02/26] vfio: Always report an error in vfio_save_setup()
-Date: Mon,  4 Mar 2024 13:28:20 +0100
-Message-ID: <20240304122844.1888308-3-clg@redhat.com>
+Subject: [PATCH v3 10/26] migration: Move cleanup after after error reporting
+ in qemu_savevm_state_setup()
+Date: Mon,  4 Mar 2024 13:28:28 +0100
+Message-ID: <20240304122844.1888308-11-clg@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304122844.1888308-1-clg@redhat.com>
 References: <20240304122844.1888308-1-clg@redhat.com>
@@ -74,67 +75,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This will prepare ground for futur changes adding an Error** argument
-to the save_setup() handler. We need to make sure that on failure,
-vfio_save_setup() always sets a new error.
+This will help preserving the error set by .save_setup() handlers.
 
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/migration.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ migration/savevm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 2050ac8897231ff89cc223f0570d5c7a65dede9e..51bea536cc290ba0aa393f78b017b0650e333bff 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -383,6 +383,7 @@ static int vfio_save_setup(QEMUFile *f, void *opaque)
-     VFIODevice *vbasedev = opaque;
-     VFIOMigration *migration = vbasedev->migration;
-     uint64_t stop_copy_size = VFIO_MIG_DEFAULT_DATA_BUFFER_SIZE;
-+    int ret;
- 
-     qemu_put_be64(f, VFIO_MIG_FLAG_DEV_SETUP_STATE);
- 
-@@ -397,13 +398,13 @@ static int vfio_save_setup(QEMUFile *f, void *opaque)
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 31ce9391d49c825d4ec835e26ac0246e192783a0..e400706e61e06d2d1d03a11aed14f30a243833f2 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -1740,10 +1740,10 @@ static int qemu_savevm_state(QEMUFile *f, Error **errp)
+         qemu_savevm_state_complete_precopy(f, false, false);
+         ret = qemu_file_get_error(f);
      }
- 
-     if (vfio_precopy_supported(vbasedev)) {
--        int ret;
--
-         switch (migration->device_state) {
-         case VFIO_DEVICE_STATE_RUNNING:
-             ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_PRE_COPY,
-                                            VFIO_DEVICE_STATE_RUNNING);
-             if (ret) {
-+                error_report("%s: Failed to set new RUNNING state",
-+                             vbasedev->name);
-                 return ret;
-             }
- 
-@@ -414,6 +415,8 @@ static int vfio_save_setup(QEMUFile *f, void *opaque)
-             /* vfio_save_complete_precopy() will go to STOP_COPY */
-             break;
-         default:
-+            error_report("%s: Invalid device state %d", vbasedev->name,
-+                         migration->device_state);
-             return -EINVAL;
-         }
+-    qemu_savevm_state_cleanup();
+     if (ret != 0) {
+         error_setg_errno(errp, -ret, "Error while writing VM state");
      }
-@@ -422,7 +425,13 @@ static int vfio_save_setup(QEMUFile *f, void *opaque)
++    qemu_savevm_state_cleanup();
  
-     qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
- 
--    return qemu_file_get_error(f);
-+    ret = qemu_file_get_error(f);
-+    if (ret) {
-+        error_report("%s: save setup failed : %s", vbasedev->name,
-+                     strerror(ret));
-+    }
-+
-+    return ret;
- }
- 
- static void vfio_save_cleanup(void *opaque)
+     if (ret != 0) {
+         status = MIGRATION_STATUS_FAILED;
 -- 
 2.44.0
 
