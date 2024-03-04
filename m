@@ -4,62 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 916AFC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 07:37:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67363C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 07:47:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh2sF-0000cV-3s; Mon, 04 Mar 2024 02:36:35 -0500
+	id 1rh32K-0002sS-GJ; Mon, 04 Mar 2024 02:47:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rh2sD-0000bq-K1; Mon, 04 Mar 2024 02:36:33 -0500
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rh32C-0002ri-9q
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 02:46:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rh2sB-0001WE-DJ; Mon, 04 Mar 2024 02:36:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
- Message-Id:Date:To:From:Sender:Reply-To:Cc:Content-Type:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=YGVQIgMvq3sqtrQR8Eoo9eAm1kpHnXhFj7jwONKzVos=; b=d78iZqDsL+aF8flVhn+ClVPTYy
- EdaTyGalSQA05s3i6VpVWZ1K5gKI0xz9SNhC2cNKFwdEoOYL3UYA38mp3Vqm70i5TMKgPi4ltnVg1
- aivrgAVrHNxx5U3qNa4unfYLUB0N/c0nGUT67eJPDS2f3SJFcjlXdqeYN6Mm+aWdWXVYTu1RxLAPo
- t0m7wzuF8SOlDLJOZHSFTfqjC0PcRFsc32Obxu+RZDoEc2vO4TCwL0U3IAJglxNHYdojalhJiDFTn
- 7JbxFA9qtd8Ie3yhPYwOxFHrUvIdAIWbYJjDN8GDk5f6QPv5tCF2WeG9QXGbCc+kDOisah85c7OYw
- ALz3Tf6y56Qz3EMubr2wVwGJmoM8ZTQB9ROYkSutnBVpzKeuTpQjS78PSVnPjqiOVzZ0MFpj0JqoN
- uBFC8k/AlSWsdGcTViPolgR/G6W94CKysBliqHSwVdy5IMXP1zR0HX5krqiRP0GxQtF1Cnu0bH+Kg
- myP3fEJXGPP7I22yp9xZReyuk16rD0VfevWGXLBHW7GTJ8cJMagw0onTBUFH3nie/5xX+mmQ4nt0Y
- fmnI+7PfbpeC5DuatJxhV8io7vQ8Zy//0UiG5zjCtGRbDlawxVhCbdcijnBskNMIaYu/5phbRqaJb
- jLwIPd3bAxlJumRKo+JRI9y3mPmq3LsqJRnl7Q3/s=;
-Received: from [2a00:23c4:8bb2:1300:eb54:aec0:aa9a:72ab]
- (helo=localhost.localdomain)
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rh2rH-0001gw-9E; Mon, 04 Mar 2024 07:35:39 +0000
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-To: qemu-devel@nongnu.org,
-	qemu-ppc@nongnu.org
-Date: Mon,  4 Mar 2024 07:35:48 +0000
-Message-Id: <20240304073548.2098806-1-mark.cave-ayland@ilande.co.uk>
-X-Mailer: git-send-email 2.39.2
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rh32A-0003Ip-8J
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 02:46:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709538408;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=vdYQUvi5hyxOLkwWHkCJ8sw+T0JOy9OCSm8WFukCp6o=;
+ b=Hv31vFfo3Jg51YSj7ArLsAx1ughOuuDXuR0wfuDD4LR0NWnOJGPVfvqyhxYNYvJpD47HYw
+ NHr4PstluDtqha3sOs7IVT5IWMSS+cHhGpDrfkXiMKbPHAR5ACFZ6gLd83VpFKIOPxZUj/
+ B3qXY4XGUrAVQ2LC25R/Q3fKtVEwZW0=
+Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com
+ [209.85.160.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-365-aM70ahfrMWCXc_ksV1EbXQ-1; Mon, 04 Mar 2024 02:46:46 -0500
+X-MC-Unique: aM70ahfrMWCXc_ksV1EbXQ-1
+Received: by mail-oa1-f70.google.com with SMTP id
+ 586e51a60fabf-21e63661790so774414fac.1
+ for <qemu-devel@nongnu.org>; Sun, 03 Mar 2024 23:46:46 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709538406; x=1710143206;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vdYQUvi5hyxOLkwWHkCJ8sw+T0JOy9OCSm8WFukCp6o=;
+ b=gIEJqJx+LSuYcfqVsDo2DmGXYRnZluAiY03c0zql8VV67Casv19Jos7z0tFwiU651C
+ UyKu0h8wnjYrK2bjHDYCVWnNBki3FPvhZvE+J66E1JLRxVsM2bzbZFIm5uxHVfLqo5VP
+ lX0GSye/+1Vl17BNGd9vSrs2KQo7ScnbPGMcFCwIuat3Zq5VwB9K0h+pHrqQB3QJTG8H
+ YVbBSoTSMJ8AccmbF+3dHapE4BgZozZfKHM8GI0DsiAI3Ld/ofd13zaBQEyKEjq1NsLv
+ Q1T9hv2XMyDUleGyyTDexSBa/caCpMEZprvYTX62r5msuQXqILLAD2jx7U7sC1zJopmG
+ a/PA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXoLz78dF4Yvhbf4ECyb4b+PG9kfeaIBRbgHyvMBrI0qhjxlhm8vaKxRGwZDI6cEITgN+dS5F09yOr2UkUELWR6Bxr7FUk=
+X-Gm-Message-State: AOJu0YzMn3+9EOQMhCe0wqX7Mi+b5aEdMal8p0srMeVZnMh5Pvw63t/V
+ puvl4Z/umIdAcf6LcED2UTtUi9cYWvuq8bGtIFsl0Ixa+KT2VnkBtNnaLm1fcrrn78EVvgywegk
+ 7rg2bXCE0UqP2bGxBiVxwKVo3qDnfb0rjUtk8F7CWbDkuzs8xtRHw
+X-Received: by 2002:a05:6808:f16:b0:3c1:e710:466a with SMTP id
+ m22-20020a0568080f1600b003c1e710466amr4545748oiw.1.1709538405798; 
+ Sun, 03 Mar 2024 23:46:45 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEXgU6nNtyyxKfXpz2ErUoDlRHjesLufqLXl6AUqUniY3eryoWTGo9IihjW/PxZMXmhEpnBvw==
+X-Received: by 2002:a05:6808:f16:b0:3c1:e710:466a with SMTP id
+ m22-20020a0568080f1600b003c1e710466amr4545733oiw.1.1709538405533; 
+ Sun, 03 Mar 2024 23:46:45 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ w62-20020a636241000000b005e485fbd455sm6832267pgb.45.2024.03.03.23.46.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 03 Mar 2024 23:46:45 -0800 (PST)
+Date: Mon, 4 Mar 2024 15:46:33 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Hao Xiang <hao.xiang@bytedance.com>
+Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
+ farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com, jdenemar@redhat.com,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 3/7] migration/multifd: Implement
+ ram_save_target_page_multifd to handle multifd version of
+ MigrationOps::ram_save_target_page.
+Message-ID: <ZeV8WaKyKEfw-em-@x1n>
+References: <20240301022829.3390548-1-hao.xiang@bytedance.com>
+ <20240301022829.3390548-4-hao.xiang@bytedance.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb2:1300:eb54:aec0:aa9a:72ab
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH] mac_newworld: change timebase frequency from 100MHz to 25MHz
- for mac99 machine
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240301022829.3390548-4-hao.xiang@bytedance.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.589,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,46 +105,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MacOS X uses multiple techniques for calibrating timers depending upon the detected
-hardware. One of these calibration routines compares the change in the timebase
-against the KeyLargo timer and uses this to recalculate the clock frequency,
-timebase frequency and bus frequency if the calibration exceeds certain limits.
-This recalibration occurs despite the correct values being passed via the device
-tree, and is likely due to buggy firmware on some hardware.
+On Fri, Mar 01, 2024 at 02:28:25AM +0000, Hao Xiang wrote:
+> 1. Add a dedicated handler for MigrationOps::ram_save_target_page in
+> multifd live migration.
+> 2. Refactor ram_save_target_page_legacy so that the legacy and multifd
+> handlers don't have internal functions calling into each other.
+> 
+> Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> Message-Id: <20240226195654.934709-4-hao.xiang@bytedance.com>
+> ---
+>  migration/ram.c | 43 ++++++++++++++++++++++++++++++-------------
+>  1 file changed, 30 insertions(+), 13 deletions(-)
+> 
+> diff --git a/migration/ram.c b/migration/ram.c
+> index e1fa229acf..f9d6ea65cc 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -1122,10 +1122,6 @@ static int save_zero_page(RAMState *rs, PageSearchStatus *pss,
+>      QEMUFile *file = pss->pss_channel;
+>      int len = 0;
+>  
+> -    if (migrate_zero_page_detection() == ZERO_PAGE_DETECTION_NONE) {
+> -        return 0;
+> -    }
 
-The timebase frequency of 100MHz was set way back in 2005 by commit fa296b0fb4
-("PIC fix - changed back TB frequency to 100 MHz") and with this value on a
-mac99,via=pmu machine the OSX 10.2 timer calibration incorrectly calculates the
-bus frequency as 400MHz instead of 100MHz. The most noticeable side-effect is
-the UI appears sluggish and not very responsive for normal use.
+We need to keep this to disable zero-page-detect on !multifd?
 
-Change the timebase frequency from 100MHz to 25MHz which matches that of a real
-G4 AGP machine (the closest match to QEMU's mac99 machine) and allows OSX 10.2
-to correctly detect all of the clock frequency, timebase frequency and bus
-frequency.
+> -
+>      if (!buffer_is_zero(p, TARGET_PAGE_SIZE)) {
+>          return 0;
+>      }
+> @@ -2045,7 +2041,6 @@ static bool save_compress_page(RAMState *rs, PageSearchStatus *pss,
+>   */
+>  static int ram_save_target_page_legacy(RAMState *rs, PageSearchStatus *pss)
+>  {
+> -    RAMBlock *block = pss->block;
+>      ram_addr_t offset = ((ram_addr_t)pss->page) << TARGET_PAGE_BITS;
+>      int res;
+>  
+> @@ -2061,17 +2056,34 @@ static int ram_save_target_page_legacy(RAMState *rs, PageSearchStatus *pss)
+>          return 1;
+>      }
+>  
+> +    return ram_save_page(rs, pss);
+> +}
+> +
+> +/**
+> + * ram_save_target_page_multifd: send one target page to multifd workers
+> + *
+> + * Returns 1 if the page was queued, -1 otherwise.
+> + *
+> + * @rs: current RAM state
+> + * @pss: data about the page we want to send
+> + */
+> +static int ram_save_target_page_multifd(RAMState *rs, PageSearchStatus *pss)
+> +{
+> +    RAMBlock *block = pss->block;
+> +    ram_addr_t offset = ((ram_addr_t)pss->page) << TARGET_PAGE_BITS;
+> +
+>      /*
+> -     * Do not use multifd in postcopy as one whole host page should be
+> -     * placed.  Meanwhile postcopy requires atomic update of pages, so even
+> -     * if host page size == guest page size the dest guest during run may
+> -     * still see partially copied pages which is data corruption.
+> +     * Backward compatibility support. While using multifd live
 
-Tested on various MacOS images from OS 9.2 through to OSX 10.4, along with Linux
-and NetBSD and I was unable to find any regressions from this change.
+We can also avoid mentioning "compatibility support" here - it's a
+parameter, user can legally set it to anything.
 
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
----
- hw/ppc/mac_newworld.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> +     * migration, we still need to handle zero page checking on the
+> +     * migration main thread.
+>       */
+> -    if (migrate_multifd() && !migration_in_postcopy()) {
+> -        return ram_save_multifd_page(block, offset);
+> +    if (migrate_zero_page_detection() == ZERO_PAGE_DETECTION_LEGACY) {
+> +        if (save_zero_page(rs, pss, offset)) {
+> +            return 1;
+> +        }
+>      }
+>  
+> -    return ram_save_page(rs, pss);
+> +    return ram_save_multifd_page(block, offset);
+>  }
+>  
+>  /* Should be called before sending a host page */
+> @@ -2983,7 +2995,12 @@ static int ram_save_setup(QEMUFile *f, void *opaque)
+>      }
+>  
+>      migration_ops = g_malloc0(sizeof(MigrationOps));
+> -    migration_ops->ram_save_target_page = ram_save_target_page_legacy;
+> +
+> +    if (migrate_multifd()) {
+> +        migration_ops->ram_save_target_page = ram_save_target_page_multifd;
+> +    } else {
+> +        migration_ops->ram_save_target_page = ram_save_target_page_legacy;
+> +    }
+>  
+>      bql_unlock();
+>      ret = multifd_send_sync_main();
+> -- 
+> 2.30.2
+> 
 
-diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
-index 3e796d2f6d..ff9e490c4e 100644
---- a/hw/ppc/mac_newworld.c
-+++ b/hw/ppc/mac_newworld.c
-@@ -77,7 +77,7 @@
- 
- #define MAX_IDE_BUS 2
- #define CFG_ADDR 0xf0000510
--#define TBFREQ (100UL * 1000UL * 1000UL)
-+#define TBFREQ (25UL * 1000UL * 1000UL)
- #define CLOCKFREQ (900UL * 1000UL * 1000UL)
- #define BUSFREQ (100UL * 1000UL * 1000UL)
- 
 -- 
-2.39.2
+Peter Xu
 
 
