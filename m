@@ -4,93 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 544E2C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 09:44:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E466C54E41
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 09:56:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh4ru-0006bN-Bc; Mon, 04 Mar 2024 04:44:22 -0500
+	id 1rh52j-0001y9-CH; Mon, 04 Mar 2024 04:55:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1rh4rs-0006at-Cj
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 04:44:20 -0500
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1rh52g-0001xZ-Pl
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 04:55:32 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1rh4rq-0000AX-R0
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 04:44:20 -0500
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1rh52d-000288-6z
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 04:55:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709545456;
+ s=mimecast20190719; t=1709546126;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JDdTEQwD6nOXb+ZUeLHLv5IucqkQlO2++fN2l0/hk1Q=;
- b=ZG8bqD1/2uaQ8W0q6OMKdKkDF2SUUL5ybMt5aRJm23t5+OOMQyBEyXRphBDXVW4qxJjY7S
- jpv5Kfxgr3G5IGml8Kg3cWs0aRw4N4njLjALxmiUMZnF6rwETcMvVtF3yY16fOaJM68iTB
- 5ncAh0y7QBcqCtcz+HDe2vLowV8uzEI=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=4jCd5RGq1kFbGA9Ha55zGrhopf2SSTFnGpxK1+8EEpg=;
+ b=Xu7vypSWrUcJRLm0MgyerpXiBAQ08p4e174zXMNcFHOesp7JNE7FW9Eu3nBRDfRHH8TLCl
+ 7CG6eeElRzoESNdmlqsnpdNYd0RcbdcxuZ5rLK/bvTbeWof9lUTEcqGRnUWOM6oVkERpM2
+ u3Gjv9Hwmz+pK/ZApfV3unynO0Jiatg=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-575-sUJjqkr1PZK_esSEZe08qA-1; Mon, 04 Mar 2024 04:44:13 -0500
-X-MC-Unique: sUJjqkr1PZK_esSEZe08qA-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-33d19951a9bso1577836f8f.0
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 01:44:13 -0800 (PST)
+ us-mta-549-UnZZrBwLM5ii0f8DSfCxag-1; Mon, 04 Mar 2024 04:55:24 -0500
+X-MC-Unique: UnZZrBwLM5ii0f8DSfCxag-1
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-78806327fc9so355291185a.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 01:55:24 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709545452; x=1710150252;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JDdTEQwD6nOXb+ZUeLHLv5IucqkQlO2++fN2l0/hk1Q=;
- b=JlMfbQpwXyzxVIAzI+TCLrykeIGYI+N4CRH8ApTbjv+rEAZx4TxPX8R3VOgyesRBjl
- JOIxbYkFr3IlKTiCqiDJC0/V4pnu4nVYVKApH/hbtia6NHE8fdgrck0SyWxE7xNHUTDy
- tvrls7mYrdysHZEUttxktN4YRKNa8IF7q8GhUh7V2Q02NHZ5wCW7Ju/QeBMeALGJCrSN
- 4MDx+JBXrZJgjHW2Oh7yGkNKIjCZyWhy2v0qbV8FgxAjZXm1YhyM/QaDhbxRU1J5zjaL
- 4vH2mXwM7aYgoTq8f2mALmA/dFMuEmu9iObN+Cm1/c4tyyrd4qCcIHTxlopymdtgpa+Z
- LksA==
-X-Gm-Message-State: AOJu0Yy5EeWFXJHZ5qhQ5Jjnt8KiVnmuvzF4haOzrg4dzcVO8rHaZuUP
- re1fZt/wl+Lcz4CkTYseuRyIxFPQ/BI3nOOeS9mu/Pki9DolRprilqFRnNIwkbiO28XNhJ0jd88
- p/7kVhqmK3YH5+Zhld10hZfLceluM5wC6CkUnP5K5l59tdqE3j2MAP0BQX3fx4zKqa70jgKuM1s
- SprbobWOMk675bPL5APt+JTm6J6YM=
-X-Received: by 2002:adf:f3ca:0:b0:33e:193d:5156 with SMTP id
- g10-20020adff3ca000000b0033e193d5156mr5985117wrp.63.1709545452550; 
- Mon, 04 Mar 2024 01:44:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFP+Beog7lXU61GXx8YtkJzrsx3l8/wPonLBLc2xL+7pKorc5cSOb05oWHtgB6KF7npqr5C1T6hF6b+QiLfZB4=
-X-Received: by 2002:adf:f3ca:0:b0:33e:193d:5156 with SMTP id
- g10-20020adff3ca000000b0033e193d5156mr5985096wrp.63.1709545452234; Mon, 04
- Mar 2024 01:44:12 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709546124; x=1710150924;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4jCd5RGq1kFbGA9Ha55zGrhopf2SSTFnGpxK1+8EEpg=;
+ b=tr1oz3iEBODolDiFeKWn0jHNOVQuil9qVLYX0J4ZKFIkoHvuLoViQ8hlebDCXVovR8
+ zU3AGVOynAiddb+uS/zNzPoUSHBGMNoh2TPGbB1NKDkKv2FXkEtzPJ2yPeC9ypPqnv5W
+ HdGT1N2vXU5mH6b5PBCgen7TMzl72zVCZxRN+LSapcZT1S2qFlbQ+rjIo8Y68Yi8nqyq
+ 0ohLoGmORHytLCiFCefgYvciU5nSic6nlH2EaQvnIHV82atsvqa6nPiqQRCH6fsC+PHw
+ LK+ge53qgBn7WLkL/2NBCm5NW9gfJhCVxhl1jBejR7RsKuncvNIxoQJZkvYoG/vbgdSg
+ 9ZMw==
+X-Gm-Message-State: AOJu0YweRKRfehL9Eb/bE6WnqZtnLhd/AMSpy/J+certzFSmqdfwHbhP
+ nOcNma16KK3ujxjwjU6d8gIVKH7Aoym0jnZil/M9hjlXuwXT6kJZNLck0i5iF06SRzoqKJJTfoP
+ x5ceNNlt6oNOnw0KKgGDx6QPH4fJ0hoY0U9+voOGFa8ppNTb26z2f
+X-Received: by 2002:a05:620a:190c:b0:787:a444:12c7 with SMTP id
+ bj12-20020a05620a190c00b00787a44412c7mr10932125qkb.54.1709546124002; 
+ Mon, 04 Mar 2024 01:55:24 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGXsP+IXcsAdAX8AoobCmQZYHBASSBXXmyJ+Pf1mRPfLTIRstdhuZRw6De/JsKZBSZupSMC4g==
+X-Received: by 2002:a05:620a:190c:b0:787:a444:12c7 with SMTP id
+ bj12-20020a05620a190c00b00787a44412c7mr10932106qkb.54.1709546123570; 
+ Mon, 04 Mar 2024 01:55:23 -0800 (PST)
+Received: from fc37-ani ([115.96.159.226])
+ by smtp.googlemail.com with ESMTPSA id
+ u12-20020a05620a022c00b00788258a8888sm1093171qkm.48.2024.03.04.01.55.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 04 Mar 2024 01:55:23 -0800 (PST)
+Date: Mon, 4 Mar 2024 15:25:11 +0530 (IST)
+From: Ani Sinha <anisinha@redhat.com>
+To: Igor Mammedov <imammedo@redhat.com>
+cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, pbonzini@redhat.com, 
+ mst@redhat.com, gaosong@loongson.cn, alistair.francis@wdc.com, 
+ palmer@dabbelt.com, bin.meng@windriver.com, liwei1518@gmail.com, 
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, philmd@linaro.org, 
+ wangyanan55@huawei.com, eblake@redhat.com, armbru@redhat.com, 
+ qemu-arm@nongnu.org, qemu-riscv@nongnu.org, f.ebner@proxmox.com
+Subject: Re: [PATCH 07/19] smbios: avoid mangling user provided tables
+In-Reply-To: <20240227154749.1818189-8-imammedo@redhat.com>
+Message-ID: <bb38e2e8-d9dd-d552-469e-8d47196393c1@redhat.com>
+References: <20240227154749.1818189-1-imammedo@redhat.com>
+ <20240227154749.1818189-8-imammedo@redhat.com>
 MIME-Version: 1.0
-References: <20240228094432.1092748-1-zhenzhong.duan@intel.com>
- <20240228094432.1092748-7-zhenzhong.duan@intel.com>
- <CAE8KmOxFnzsw2das+Go_EEyVUr517hWS8xvXfN1VoJq0RofR+w@mail.gmail.com>
- <SJ0PR11MB6744A22D240CB8A41569222392232@SJ0PR11MB6744.namprd11.prod.outlook.com>
-In-Reply-To: <SJ0PR11MB6744A22D240CB8A41569222392232@SJ0PR11MB6744.namprd11.prod.outlook.com>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Mon, 4 Mar 2024 15:13:55 +0530
-Message-ID: <CAE8KmOwuTpFSr=ft2cdiWKJmiy2uZMunO+v1UWFa1MbGqCXH7g@mail.gmail.com>
-Subject: Re: [PATCH v1 6/6] intel_iommu: Block migration if cap is updated
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>, 
- "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "peterx@redhat.com" <peterx@redhat.com>, 
- "jasowang@redhat.com" <jasowang@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
- "jgg@nvidia.com" <jgg@nvidia.com>, 
- "nicolinc@nvidia.com" <nicolinc@nvidia.com>, 
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>, "Tian,
- Kevin" <kevin.tian@intel.com>, 
- "Liu, Yi L" <yi.l.liu@intel.com>, "Sun, Yi Y" <yi.y.sun@intel.com>, 
- "Peng, Chao P" <chao.p.peng@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Eduardo Habkost <eduardo@habkost.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -114,77 +103,308 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 4 Mar 2024 at 13:41, Duan, Zhenzhong <zhenzhong.duan@intel.com> wro=
-te:
-> This is to deal with a special case when cold plugged vfio device is unpl=
-ugged
-> at runtime, then migration triggers.
->
-> When qemu on source side starts with cold plugged vfio device, vIOMMU
 
-qemu -> QEMU
 
-> capability/extended capability registers(cap/ecap) can be updated based
-> on host cap/ecap, then vIOMMU cap/ecap is frozen after machine creation
-> done, vIOMMU cap/ecap isn=E2=80=99t restored to default after vfio device=
- is unplugged.
-> In this case source and dest(default cap/ecap) will have incompatible cap=
-/ecap
-> value. So migration is blocked if there is cap/ecap update on source side=
-.
+On Tue, 27 Feb 2024, Igor Mammedov wrote:
+
+> currently smbios_entry_add() preserves internally '-smbios type='
+> options but tables provided with '-smbios file=' are stored directly
+> into blob that eventually will be exposed to VM. And then later
+> QEMU adds default/'-smbios type' entries on top into the same blob.
 >
-> If vfio device isn't unplugged at runtime, vfio device's own vIOMMU migra=
-tion blocker
-> is redundant with blocker here, but that's harmless.
+> It makes impossible to generate tables more than once, hence
+> 'immutable' guard was used.
+> Make it possible to regenerate final blob by storing user provided
+> blobs into a dedicated area (usr_blobs) and then copy it when
+> composing final blob. Which also makes handling of -smbios
+> options consistent.
 >
-> If vfio devices are all hot plugged after qemu on source side starts, the=
-n vIOMMU
-> cap/ecap is frozen with the default value, we don't make a blocker in thi=
-s case.
+> As side effect of this and previous commits there is no need to
+> generate legacy smbios_entries at the time options are parsed.
+> Instead compose smbios_entries on demand from  usr_blobs like
+> it is done for non-legacy SMBIOS tables.
 >
 
-Nice +1
+This patch is very dense and even after taking several iterations through
+it, I am not confident that I have not missed anything.
 
-> >> @@ -3861,8 +3864,17 @@ static int
-> >vtd_check_iommufd_hdev(IntelIOMMUState *s,
-> >>          tmp_cap |=3D VTD_CAP_MGAW(host_mgaw + 1);
-> >>      }
-> >>
-> >> -    s->cap =3D tmp_cap;
-> >> -    return 0;
-> >> +    if (s->cap !=3D tmp_cap) {
-> >> +        if (vtd_mig_blocker =3D=3D NULL) {
-> >> +            error_setg(&vtd_mig_blocker,
-> >> +                       "cap/ecap update from host IOMMU block migrati=
-on");
-> >> +            ret =3D migrate_add_blocker(&vtd_mig_blocker, errp);
-> >> +        }
-> >> +        if (!ret) {
-> >> +            s->cap =3D tmp_cap;
-> >> +        }
-> >> +    }
-> >> +    return ret;
+> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> ---
+>  hw/smbios/smbios.c | 179 +++++++++++++++++++++++----------------------
+>  1 file changed, 92 insertions(+), 87 deletions(-)
 >
-> vtd_mig_blocker !=3D NULL means cap is already updated once at least.
-> In this case, ret is return value 0 from iommufd_device_get_info().
+> diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
+> index c46fc93357..aa2cc5bdbd 100644
+> --- a/hw/smbios/smbios.c
+> +++ b/hw/smbios/smbios.c
+> @@ -57,6 +57,14 @@ static size_t smbios_entries_len;
+>  static bool smbios_uuid_encoded = true;
+>  /* end: legacy structures & constants for <= 2.0 machines */
 >
->     ret =3D iommufd_device_get_info(idev, &type, sizeof(vtd), &vtd, errp)=
-;
->     if (ret) {
->         return ret;
->     }
+> +/*
+> + * SMBIOS tables provided by user with '-smbios file=<foo>' option
+> + */
+> +uint8_t *usr_blobs;
+> +size_t usr_blobs_len;
+> +static GArray *usr_blobs_sizes;
+> +static unsigned usr_table_max;
+> +static unsigned usr_table_cnt;
 >
-> Then cap is updated with host cap value tmp_cap. This update only happen
-> before machine creation done.
+>  uint8_t *smbios_tables;
+>  size_t smbios_tables_len;
+> @@ -67,7 +75,6 @@ static SmbiosEntryPointType smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_32;
+>  static SmbiosEntryPoint ep;
+>
+>  static int smbios_type4_count = 0;
+> -static bool smbios_immutable;
+>  static bool smbios_have_defaults;
+>  static uint32_t smbios_cpuid_version, smbios_cpuid_features;
+>
+> @@ -569,9 +576,8 @@ static void smbios_build_type_1_fields(void)
+>
+>  uint8_t *smbios_get_table_legacy(uint32_t expected_t4_count, size_t *length)
+>  {
+> -    /* drop unwanted version of command-line file blob(s) */
+> -    g_free(smbios_tables);
+> -    smbios_tables = NULL;
+> +    int i;
+> +    size_t usr_offset;
+>
+>      /* also complain if fields were given for types > 1 */
+>      if (find_next_bit(have_fields_bitmap,
+> @@ -581,12 +587,33 @@ uint8_t *smbios_get_table_legacy(uint32_t expected_t4_count, size_t *length)
+>          exit(1);
+>      }
+>
+> -    if (!smbios_immutable) {
+> -        smbios_build_type_0_fields();
+> -        smbios_build_type_1_fields();
+> -        smbios_validate_table(expected_t4_count);
+> -        smbios_immutable = true;
+> +    g_free(smbios_entries);
+> +    smbios_entries_len = sizeof(uint16_t);
+> +    smbios_entries = g_malloc0(smbios_entries_len);
+> +
+> +    for (i = 0, usr_offset = 0; usr_blobs_sizes && i < usr_blobs_sizes->len;
+> +         i++)
+> +    {
+> +        struct smbios_table *table;
+> +        struct smbios_structure_header *header;
+> +        size_t size = g_array_index(usr_blobs_sizes, size_t, i);
+> +
+> +        header = (struct smbios_structure_header *)(usr_blobs + usr_offset);
+> +        smbios_entries = g_realloc(smbios_entries, smbios_entries_len +
+> +                                                   size + sizeof(*table));
+> +        table = (struct smbios_table *)(smbios_entries + smbios_entries_len);
+> +        table->header.type = SMBIOS_TABLE_ENTRY;
+> +        table->header.length = cpu_to_le16(sizeof(*table) + size);
+> +        memcpy(table->data, header, size);
+> +        smbios_entries_len += sizeof(*table) + size;
+> +        (*(uint16_t *)smbios_entries) =
+> +            cpu_to_le16(le16_to_cpu(*(uint16_t *)smbios_entries) + 1);
+> +        usr_offset += size;
+>      }
+> +
+> +    smbios_build_type_0_fields();
+> +    smbios_build_type_1_fields();
+> +    smbios_validate_table(expected_t4_count);
+>      *length = smbios_entries_len;
+>      return smbios_entries;
+>  }
+> @@ -1094,67 +1121,67 @@ void smbios_get_tables(MachineState *ms,
+>  {
+>      unsigned i, dimm_cnt, offset;
+>
+> -    /* drop unwanted (legacy) version of command-line file blob(s) */
+> -    g_free(smbios_entries);
+> -    smbios_entries = NULL;
+> +    g_free(smbios_tables);
+> +    smbios_tables = g_memdup2(usr_blobs, usr_blobs_len);
 
-* After iommufd_device_get_info() ret is !=3D 0. So s->cap won't be
-updated then. Hope that is intended.
+Why can't we do a memdup even for the legacy case instead of memcpy?
 
-* With the above tweaks included:
-    Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
+Secondly, here and other places we should check for NULL returns.
+https://docs.gtk.org/glib/func.memdup2.html
+return from memdup2 can be null.
 
-Thank you.
----
-  - Prasad
+
+> +    smbios_tables_len = usr_blobs_len;
+> +    smbios_table_max = usr_table_max;
+> +    smbios_table_cnt = usr_table_cnt;
+>
+> -    if (!smbios_immutable) {
+> -        smbios_build_type_0_table();
+> -        smbios_build_type_1_table();
+> -        smbios_build_type_2_table();
+> -        smbios_build_type_3_table();
+> +    smbios_build_type_0_table();
+> +    smbios_build_type_1_table();
+> +    smbios_build_type_2_table();
+> +    smbios_build_type_3_table();
+>
+> -        assert(ms->smp.sockets >= 1);
+> +    assert(ms->smp.sockets >= 1);
+>
+> -        for (i = 0; i < ms->smp.sockets; i++) {
+> -            smbios_build_type_4_table(ms, i);
+> -        }
+> +    for (i = 0; i < ms->smp.sockets; i++) {
+> +        smbios_build_type_4_table(ms, i);
+> +    }
+>
+> -        smbios_build_type_8_table();
+> -        smbios_build_type_11_table();
+> +    smbios_build_type_8_table();
+> +    smbios_build_type_11_table();
+>
+>  #define MAX_DIMM_SZ (16 * GiB)
+>  #define GET_DIMM_SZ ((i < dimm_cnt - 1) ? MAX_DIMM_SZ \
+>                                          : ((current_machine->ram_size - 1) % MAX_DIMM_SZ) + 1)
+>
+> -        dimm_cnt = QEMU_ALIGN_UP(current_machine->ram_size, MAX_DIMM_SZ) / MAX_DIMM_SZ;
+> +    dimm_cnt = QEMU_ALIGN_UP(current_machine->ram_size, MAX_DIMM_SZ) /
+> +               MAX_DIMM_SZ;
+>
+> -        /*
+> -         * The offset determines if we need to keep additional space between
+> -         * table 17 and table 19 header handle numbers so that they do
+> -         * not overlap. For example, for a VM with larger than 8 TB guest
+> -         * memory and DIMM like chunks of 16 GiB, the default space between
+> -         * the two tables (T19_BASE - T17_BASE = 512) is not enough.
+> -         */
+> -        offset = (dimm_cnt > (T19_BASE - T17_BASE)) ? \
+> -                 dimm_cnt - (T19_BASE - T17_BASE) : 0;
+> +    /*
+> +     * The offset determines if we need to keep additional space between
+> +     * table 17 and table 19 header handle numbers so that they do
+> +     * not overlap. For example, for a VM with larger than 8 TB guest
+> +     * memory and DIMM like chunks of 16 GiB, the default space between
+> +     * the two tables (T19_BASE - T17_BASE = 512) is not enough.
+> +     */
+> +    offset = (dimm_cnt > (T19_BASE - T17_BASE)) ? \
+> +             dimm_cnt - (T19_BASE - T17_BASE) : 0;
+>
+> -        smbios_build_type_16_table(dimm_cnt);
+> +    smbios_build_type_16_table(dimm_cnt);
+>
+> -        for (i = 0; i < dimm_cnt; i++) {
+> -            smbios_build_type_17_table(i, GET_DIMM_SZ);
+> -        }
+> +    for (i = 0; i < dimm_cnt; i++) {
+> +        smbios_build_type_17_table(i, GET_DIMM_SZ);
+> +    }
+>
+> -        for (i = 0; i < mem_array_size; i++) {
+> -            smbios_build_type_19_table(i, offset, mem_array[i].address,
+> -                                       mem_array[i].length);
+> -        }
+> +    for (i = 0; i < mem_array_size; i++) {
+> +        smbios_build_type_19_table(i, offset, mem_array[i].address,
+> +                                   mem_array[i].length);
+> +    }
+>
+> -        /*
+> -         * make sure 16 bit handle numbers in the headers of tables 19
+> -         * and 32 do not overlap.
+> -         */
+> -        assert((mem_array_size + offset) < (T32_BASE - T19_BASE));
+> +    /*
+> +     * make sure 16 bit handle numbers in the headers of tables 19
+> +     * and 32 do not overlap.
+> +     */
+> +    assert((mem_array_size + offset) < (T32_BASE - T19_BASE));
+>
+> -        smbios_build_type_32_table();
+> -        smbios_build_type_38_table();
+> -        smbios_build_type_41_table(errp);
+> -        smbios_build_type_127_table();
+> +    smbios_build_type_32_table();
+> +    smbios_build_type_38_table();
+> +    smbios_build_type_41_table(errp);
+> +    smbios_build_type_127_table();
+>
+> -        smbios_validate_table(ms->smp.sockets);
+> -        smbios_entry_point_setup();
+> -        smbios_immutable = true;
+> -    }
+> +    smbios_validate_table(ms->smp.sockets);
+> +    smbios_entry_point_setup();
+>
+>      /* return tables blob and entry point (anchor), and their sizes */
+>      *tables = smbios_tables;
+> @@ -1254,13 +1281,10 @@ void smbios_entry_add(QemuOpts *opts, Error **errp)
+>  {
+>      const char *val;
+>
+> -    assert(!smbios_immutable);
+> -
+>      val = qemu_opt_get(opts, "file");
+>      if (val) {
+>          struct smbios_structure_header *header;
+> -        int size;
+> -        struct smbios_table *table; /* legacy mode only */
+> +        size_t size;
+>
+>          if (!qemu_opts_validate(opts, qemu_smbios_file_opts, errp)) {
+>              return;
+> @@ -1277,9 +1301,9 @@ void smbios_entry_add(QemuOpts *opts, Error **errp)
+>           * (except in legacy mode, where the second '\0' is implicit and
+>           *  will be inserted by the BIOS).
+>           */
+> -        smbios_tables = g_realloc(smbios_tables, smbios_tables_len + size);
+> -        header = (struct smbios_structure_header *)(smbios_tables +
+> -                                                    smbios_tables_len);
+> +        usr_blobs = g_realloc(usr_blobs, usr_blobs_len + size);
+> +        header = (struct smbios_structure_header *)(usr_blobs +
+> +                                                    usr_blobs_len);
+>
+>          if (load_image_size(val, (uint8_t *)header, size) != size) {
+>              error_setg(errp, "Failed to load SMBIOS file %s", val);
+> @@ -1300,34 +1324,15 @@ void smbios_entry_add(QemuOpts *opts, Error **errp)
+>              smbios_type4_count++;
+>          }
+>
+> -        smbios_tables_len += size;
+> -        if (size > smbios_table_max) {
+> -            smbios_table_max = size;
+> +        if (!usr_blobs_sizes) {
+> +            usr_blobs_sizes = g_array_new(false, false, sizeof(size_t));
+>          }
+> -        smbios_table_cnt++;
+> -
+> -        /* add a copy of the newly loaded blob to legacy smbios_entries */
+> -        /* NOTE: This code runs before smbios_set_defaults(), so we don't
+> -         *       yet know which mode (legacy vs. aggregate-table) will be
+> -         *       required. We therefore add the binary blob to both legacy
+> -         *       (smbios_entries) and aggregate (smbios_tables) tables, and
+> -         *       delete the one we don't need from smbios_set_defaults(),
+> -         *       once we know which machine version has been requested.
+> -         */
+> -        if (!smbios_entries) {
+> -            smbios_entries_len = sizeof(uint16_t);
+> -            smbios_entries = g_malloc0(smbios_entries_len);
+> +        g_array_append_val(usr_blobs_sizes, size);
+> +        usr_blobs_len += size;
+> +        if (size > usr_table_max) {
+> +            usr_table_max = size;
+>          }
+> -        smbios_entries = g_realloc(smbios_entries, smbios_entries_len +
+> -                                                   size + sizeof(*table));
+> -        table = (struct smbios_table *)(smbios_entries + smbios_entries_len);
+> -        table->header.type = SMBIOS_TABLE_ENTRY;
+> -        table->header.length = cpu_to_le16(sizeof(*table) + size);
+> -        memcpy(table->data, header, size);
+> -        smbios_entries_len += sizeof(*table) + size;
+> -        (*(uint16_t *)smbios_entries) =
+> -                cpu_to_le16(le16_to_cpu(*(uint16_t *)smbios_entries) + 1);
+> -        /* end: add a copy of the newly loaded blob to legacy smbios_entries */
+> +        usr_table_cnt++;
+>
+>          return;
+>      }
+> --
+> 2.39.3
+>
+>
 
 
