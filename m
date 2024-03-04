@@ -4,76 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDE85C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 16:54:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4952CC5478C
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 16:56:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhBZO-0004b7-7S; Mon, 04 Mar 2024 11:53:42 -0500
+	id 1rhBbz-0005gG-Fx; Mon, 04 Mar 2024 11:56:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rhBZK-0004as-Ul
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 11:53:39 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rhBby-0005fP-CB
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 11:56:22 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rhBZJ-0000Qf-Cl
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 11:53:38 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-1dcce5e84bcso37637185ad.1
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 08:53:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rhBbw-0001GL-3u
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 11:56:22 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-565a3910f86so7064758a12.3
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 08:56:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709571215; x=1710176015; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=YXIrWZwouHSttlPE/11Vh5ARQLJuQaURZm9KbUFry4g=;
- b=nBvwg21r0PGRphngpr7yjfV3/L+Pn+lzyzequf83j89SlBCezjMTj8zzf9q1zFv8at
- ytWnLENVdoAIGmL0m2Mlo0bosLH35O612dCvvQHPbWJe8wHBmkJN3XDQAMjPZVsHaaCZ
- eZGAVgetHIVIefJsabOEhej0z5D3fnVFA4U5Bc/uNsGV9zFKjFv6BE3rUeJ150+3hIZx
- bUMquE3v+LmTiueoLaTpYWWuzE3Z84E8wjywIvVOnYV8dWMXoxK9SLZgmcfmSKRhk+xQ
- SwijzTlmdu9vzxwqD2F8kkqqNXXlHyJq+4brpC1PLzwh7o6C8kHobT4N+/s3vXPin5pp
- aoWw==
+ d=linaro.org; s=google; t=1709571378; x=1710176178; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=WMU4mMZg2CUCC4QCecP1CE+y0d+ze76R128fW03pBxU=;
+ b=V9OAYAy8CNMBh98Lejw10QasMJGxcPwzPENhJ/aLWM9M/T6ovY8WYri/PqeS2/8SNW
+ 9+n7TNxqKXYDIQ7iKnMQSpBOuXL9tMcMLvC0bTP5LnHxEknrKY2hUd0ZdQkkrD+eC65p
+ +h73pyuFFkOw7s5E426mlDeRVFV7C+11CZ7lw0BWU8QMUsv6pf9xzvXSOGJI4nHO8Idq
+ 4xZlOxXLfIYq6Mfg4QFEqjyH0UR6w5uWG3RPMNSrTRaDcTs7Jjmt+9fE9OIioJDPUWNW
+ IIlwfZWwV4jPCU0ICwuRhTIDpaQxlhdchA3enT4ni8WPFMcgZDWPlXjOM23ykKJgPmDY
+ 9IYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709571215; x=1710176015;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YXIrWZwouHSttlPE/11Vh5ARQLJuQaURZm9KbUFry4g=;
- b=ncn/UWXMIr7nEq02nyJghA/Vz0g7JZbYYv+UStykhDzEHAVeuYQAR6JYNR33VcoZlx
- 25JaSJN2c3nw43cA5ng3js8tfIIhhxAUJfIRE2m3V+Hq84cVOb9L/B1XCKeVpi3emjrP
- GK/21xibkdKi7y13dOdSMWkFL2UW/cMIneAlybTufFCcXtRmuQ2Bee3NPmwe0UTHg9+z
- 8MZjUAGZK6CGHC/w5wUjL2m4zvECAgaFp9CatDhLuyVGsm58+M+l7CuMNio8j5wqr3oL
- V4QaIcUDO15u0NW9Vk3eBxSfZo8+dVSdt2hkSnbyGOhLAiL4re/T9tEsI0/WUuiEHZ5I
- WbWQ==
-X-Gm-Message-State: AOJu0YzMHEYJ/HpTJReii2YQ7+4sjBT26VRkFmZxQZO8rrN9RsUd0D5x
- 9DE9fIVdKIbSizFBU4J65rNRR9xPw+O+6GduRmajHZ1g0Zh1m1mN/bMq94pdQso=
-X-Google-Smtp-Source: AGHT+IH4VYt8fa6daw2vrqAibOQ6w1vBA4zi/nqct/63R17Bj7gpboCyqBv6aPZK7bLpTlUUWG4U1g==
-X-Received: by 2002:a17:902:ec8a:b0:1dd:151b:fa9e with SMTP id
- x10-20020a170902ec8a00b001dd151bfa9emr2893749plg.63.1709571215437; 
- Mon, 04 Mar 2024 08:53:35 -0800 (PST)
-Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
- [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- w16-20020a1709026f1000b001dc90b62393sm8908581plk.216.2024.03.04.08.53.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Mar 2024 08:53:35 -0800 (PST)
-Message-ID: <a6fa3bf6-2e5f-4068-82ec-44720e4be34a@linaro.org>
-Date: Mon, 4 Mar 2024 06:53:31 -1000
+ d=1e100.net; s=20230601; t=1709571378; x=1710176178;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=WMU4mMZg2CUCC4QCecP1CE+y0d+ze76R128fW03pBxU=;
+ b=spNDe1kLnqmGi4D8a8gbzM1Agl9mMJcA8JdjGNFw0wFg2gLvhBflKeP/6E3GNKcuml
+ buz7uG4VSdvtSbv27yH4j9PbA8hfIhYl+4R9pps2GaX01idBJmg7KWXust66tco2bbTg
+ /qV3eV6ceEiP33xMXuplVfmAoTuPCAWz954idCs8BwoKzdJYucBB2nRZNFAR7Wld7c4L
+ qAymN8iWW6QwOvRwMmk6Ofe7wV+nBmiaCvNUza8HfSvAn10J2+B0b1LFtML8xTJo8FDQ
+ kOYPFZhIwfnerECIeD7dincItPs8fK3cxmHM+XPtZHAnDOp4sw6TSEf7tJh7SUBwmkDC
+ B0Kw==
+X-Gm-Message-State: AOJu0Yw8ks0z/tWgmLLo2u6svbBYhr9R6bxEkNYT+2O/1DAhEDPK6+ee
+ WvGvhFAQUXTvjmVusiTAO42SjQetybDg89M0C+yAHj4xTwEDbijLUEC9UOwLMwUCfDzDxSNRSv0
+ khyRiv9P/tQxa09sZ9/hHBnniPVSJqBjsL4bUcA==
+X-Google-Smtp-Source: AGHT+IG+s2/jvRnZ5F0F8VJvSWQDeftGuhV18+Ju0fAXMtbNwQFb3w/MsSNDzZi995ThiAbfxedw/iSUVSbgfh88cmA=
+X-Received: by 2002:a05:6402:5c3:b0:564:3b2e:2a2e with SMTP id
+ n3-20020a05640205c300b005643b2e2a2emr6198874edx.9.1709571377739; Mon, 04 Mar
+ 2024 08:56:17 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/loongarch: Add TCG macro in structure
- CPUArchState
-Content-Language: en-US
-To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org
-References: <20240304021844.1449164-1-maobibo@loongson.cn>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240304021844.1449164-1-maobibo@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+References: <20240304130403.129543-1-thuth@redhat.com>
+In-Reply-To: <20240304130403.129543-1-thuth@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 4 Mar 2024 16:56:06 +0000
+Message-ID: <CAFEAcA8rac2nEzrVWUWfRHAWYLmC6dSDMK=j6msD_SdPpn6ZtA@mail.gmail.com>
+Subject: Re: [PATCH v2] docs/conf.py: Remove usage of distutils
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,41 +88,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/3/24 16:18, Bibo Mao wrote:
-> @@ -696,11 +700,15 @@ void loongarch_cpu_dump_state(CPUState *cs, FILE *f, int flags)
->   {
->       LoongArchCPU *cpu = LOONGARCH_CPU(cs);
->       CPULoongArchState *env = &cpu->env;
-> -    int i;
-> +    int i, fp_status;
->   
-> +#ifdef CONFIG_TCG
-> +    fp_status = get_float_exception_flags(&env->fp_status);
-> +#else
-> +    fp_status = 0;
-> +#endif
->       qemu_fprintf(f, " PC=%016" PRIx64 " ", env->pc);
-> -    qemu_fprintf(f, " FCSR0 0x%08x  fp_status 0x%02x\n", env->fcsr0,
-> -                 get_float_exception_flags(&env->fp_status));
-> +    qemu_fprintf(f, " FCSR0 0x%08x  fp_status 0x%02x\n", env->fcsr0, fp_status);
+On Mon, 4 Mar 2024 at 13:04, Thomas Huth <thuth@redhat.com> wrote:
+>
+> The macOS jobs in our CI recently started failing, complaining that
+> the distutils module is not available anymore. And indeed, according to
+> https://peps.python.org/pep-0632/ it's been deprecated since a while
+> and now likely got removed in recent Python versions.
 
-fp_status, I think, is unnecessary to print all of the time.
+This doesn't seem to be sufficient to fix the macos CI:
+something in glib seems to still be using it.
 
-In update_fcsr0_mask, we ensure that fcsr0 is updated and fp_status.exception_flags is 0. 
-So I would expect this field to be 0 all of the time -- anything else is a bug.
+https://gitlab.com/qemu-project/qemu/-/jobs/6313212803
 
-> +#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
-> +static bool tlb_needed(void *opaque)
-> +{
-> +    if (kvm_enabled()) {
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-
-Better as return tcg_enabled();
+[281/6553] Generating ui/dbus-display gdbus-codegen with a custom command
+FAILED: ui/dbus-display1.h ui/dbus-display1.c
+/opt/homebrew/Cellar/glib/2.78.4/bin/gdbus-codegen
+ui/dbus-display1.xml --glib-min-required 2.64 --output-directory
+/private/var/folders/xc/tpssff9959345bnqq4c6tlww0000gn/T/cirrus-ci-build/build/ui
+--interface-prefix org.qemu. --c-namespace QemuDBus --generate-c-code
+dbus-display1
+Traceback (most recent call last):
+File "/opt/homebrew/Cellar/glib/2.78.4/bin/gdbus-codegen", line 53, in <module>
+from codegen import codegen_main
+File "/opt/homebrew/Cellar/glib/2.78.4/share/glib-2.0/codegen/codegen_main.py",
+line 29, in <module>
+from . import dbustypes
+File "/opt/homebrew/Cellar/glib/2.78.4/share/glib-2.0/codegen/dbustypes.py",
+line 22, in <module>
+from . import utils
+File "/opt/homebrew/Cellar/glib/2.78.4/share/glib-2.0/codegen/utils.py",
+line 22, in <module>
+import distutils.version
+ModuleNotFoundError: No module named 'distutils'
 
 
-r~
+thanks
+-- PMM
 
