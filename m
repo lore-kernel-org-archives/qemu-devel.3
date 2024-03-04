@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39F83C54E49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 370AAC48BF6
 	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 08:42:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh3st-0006eG-0F; Mon, 04 Mar 2024 03:41:19 -0500
+	id 1rh3tH-0006mE-Ro; Mon, 04 Mar 2024 03:41:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1rh3sb-0006bj-Ff
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 03:41:07 -0500
+ id 1rh3tE-0006m3-HK
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 03:41:40 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1rh3sX-0006Pz-Jz
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 03:41:01 -0500
+ (envelope-from <gaosong@loongson.cn>) id 1rh3tC-0006Sa-QV
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 03:41:40 -0500
 Received: from loongson.cn (unknown [117.67.130.223])
- by gateway (Coremail) with SMTP id _____8BxSOgTieVligEUAA--.31061S3;
- Mon, 04 Mar 2024 16:40:51 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Dx_7s_ieVlnAEUAA--.30877S3;
+ Mon, 04 Mar 2024 16:41:35 +0800 (CST)
 Received: from [192.168.2.12] (unknown [117.67.130.223])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxLs8SieVlJ6xNAA--.8190S3; 
- Mon, 04 Mar 2024 16:40:51 +0800 (CST)
-Subject: Re: [PATCH 3/5] hw/loongarch: Add compat machine for 9.0
+ AQAAf8DxDc8+ieVlWaxNAA--.9735S3; 
+ Mon, 04 Mar 2024 16:41:34 +0800 (CST)
+Subject: Re: [PATCH v2 4/5] hw/loongarch: Set minimium memory size as 256M
 To: Bibo Mao <maobibo@loongson.cn>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
 Cc: qemu-devel@nongnu.org
-References: <20240220124126.1164081-1-maobibo@loongson.cn>
- <20240220124126.1164081-4-maobibo@loongson.cn>
+References: <20240227023031.3299067-1-maobibo@loongson.cn>
+ <20240227023031.3299067-5-maobibo@loongson.cn>
 From: gaosong <gaosong@loongson.cn>
-Message-ID: <e34ca6da-d0d9-abf5-07fa-182783fb63f6@loongson.cn>
-Date: Mon, 4 Mar 2024 16:40:50 +0800
+Message-ID: <bd0ab402-a4f7-7fdf-7e7c-ea2f6aa86f48@loongson.cn>
+Date: Mon, 4 Mar 2024 16:41:34 +0800
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <20240220124126.1164081-4-maobibo@loongson.cn>
+In-Reply-To: <20240227023031.3299067-5-maobibo@loongson.cn>
 Content-Type: text/plain; charset=gbk; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8BxLs8SieVlJ6xNAA--.8190S3
+X-CM-TRANSID: AQAAf8DxDc8+ieVlWaxNAA--.9735S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxWw17Ww4rGw1UCw43XFy3Jrc_yoW5WFW5pF
- 98Zrs8Cw4DWFsxurWfJa1DXF15Kr4kGFy2vFs7Zw40yF98CryqvrW8C34qka97ArWktF1r
- ZF4kCa47Wa15ZwcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8r9
- N3UUUUU==
+X-Coremail-Antispam: 1Uk129KBj9xXoWrtFyUtrWDGF1rAF1Uuw18tFc_yoWDAFc_WF
+ y7tw48CF4DX3Wj9a13Zw1rJw4DJa18AFn5Z3W7Gw1kG343Xrs3JFsFgwn3WrnI9w45uanx
+ tw4kWryYkr9xWosvyTuYvTs0mTUanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUj1kv1TuYvT
+ s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
+ cSsGvfJTRUUUbI8YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+ vaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+ w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+ W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE
+ 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1I6r4UMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
+ 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUwMKu
+ UUUUU
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -2
@@ -86,96 +86,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-在 2024/2/20 20:41, Bibo Mao 写道:
-> Since migration test case requires compat machine type support,
-> compat machine is added for qemu 9.0 here.
+在 2024/2/27 10:30, Bibo Mao 写道:
+> The minimum memory size for LoongArch UEFI bios is 256M, also some
+> test cases such as migration and qos use 256M memory by default.
+> 
+> Here set minimum memory size for Loongarch VirtMachine with 256M rather
+> than 1G, so that test cases with 256M memory can pass to run.
 > 
 > Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
->   hw/loongarch/virt.c | 60 +++++++++++++++++++++++++++++++++++----------
->   1 file changed, 47 insertions(+), 13 deletions(-)
+>   hw/loongarch/virt.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
 Reviewed-by: Song Gao <gaosong@loongson.cn>
 
 Thanks.
 Song Gao
 > diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index d0827aafab..a7d700497d 100644
+> index f37f642ede..1dadb8e299 100644
 > --- a/hw/loongarch/virt.c
 > +++ b/hw/loongarch/virt.c
-> @@ -46,6 +46,32 @@
->   #include "hw/block/flash.h"
->   #include "qemu/error-report.h"
+> @@ -864,8 +864,8 @@ static void virt_init(MachineState *machine)
+>           cpu_model = LOONGARCH_CPU_TYPE_NAME("la464");
+>       }
 >   
-> +#define DEFINE_VIRT_MACHINE_LATEST(major, minor, latest) \
-> +    static void virt_##major##_##minor##_class_init(ObjectClass *oc, \
-> +                                                    void *data) \
-> +    { \
-> +        MachineClass *mc = MACHINE_CLASS(oc); \
-> +        virt_machine_##major##_##minor##_options(mc); \
-> +        mc->desc = "QEMU " # major "." # minor " ARM Virtual Machine"; \
-> +        if (latest) { \
-> +            mc->alias = "virt"; \
-> +        } \
-> +    } \
-> +    static const TypeInfo machvirt_##major##_##minor##_info = { \
-> +        .name = MACHINE_TYPE_NAME("virt-" # major "." # minor), \
-> +        .parent = TYPE_VIRT_MACHINE, \
-> +        .class_init = virt_##major##_##minor##_class_init, \
-> +    }; \
-> +    static void machvirt_machine_##major##_##minor##_init(void) \
-> +    { \
-> +        type_register_static(&machvirt_##major##_##minor##_info); \
-> +    } \
-> +    type_init(machvirt_machine_##major##_##minor##_init);
-> +
-> +#define DEFINE_VIRT_MACHINE_AS_LATEST(major, minor) \
-> +    DEFINE_VIRT_MACHINE_LATEST(major, minor, true)
-> +#define DEFINE_VIRT_MACHINE(major, minor) \
-> +    DEFINE_VIRT_MACHINE_LATEST(major, minor, false)
->   
->   struct loaderparams {
->       uint64_t ram_size;
-> @@ -1151,18 +1177,26 @@ static void virt_class_init(ObjectClass *oc, void *data)
->   #endif
->   }
->   
-> -static const TypeInfo virt_machine_types[] = {
-> -    {
-> -        .name           = TYPE_VIRT_MACHINE,
-> -        .parent         = TYPE_MACHINE,
-> -        .instance_size  = sizeof(VirtMachineState),
-> -        .class_init     = virt_class_init,
-> -        .instance_init = virt_machine_initfn,
-> -        .interfaces = (InterfaceInfo[]) {
-> -         { TYPE_HOTPLUG_HANDLER },
-> -         { }
-> -        },
-> -    }
-> +static const TypeInfo virt_machine_info = {
-> +    .name           = TYPE_VIRT_MACHINE,
-> +    .parent         = TYPE_MACHINE,
-> +    .abstract       = true,
-> +    .instance_size  = sizeof(VirtMachineState),
-> +    .class_init     = virt_class_init,
-> +    .instance_init = virt_machine_initfn,
-> +    .interfaces = (InterfaceInfo[]) {
-> +    { TYPE_HOTPLUG_HANDLER },
-> +    { }
-> +    },
->   };
->   
-> -DEFINE_TYPES(virt_machine_types)
-> +static void machvirt_machine_init(void)
-> +{
-> +    type_register_static(&virt_machine_info);
-> +}
-> +type_init(machvirt_machine_init);
-> +
-> +static void virt_machine_9_0_options(MachineClass *mc)
-> +{
-> +}
-> +DEFINE_VIRT_MACHINE_AS_LATEST(9, 0)
+> -    if (ram_size < 1 * GiB) {
+> -        error_report("ram_size must be greater than 1G.");
+> +    if (ram_size < 256 * MiB) {
+> +        error_report("ram_size must be greater than 256M.");
+>           exit(1);
+>       }
+>       create_fdt(vms);
 > 
 
 
