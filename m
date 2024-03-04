@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 693E7C54E55
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 05:49:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FD80C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 05:49:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhNeq-0004QK-KO; Tue, 05 Mar 2024 00:48:08 -0500
+	id 1rhNfA-0004Uv-KK; Tue, 05 Mar 2024 00:48:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1rhNeo-0004Q4-MB
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 00:48:06 -0500
-Received: from mgamail.intel.com ([198.175.65.19])
+ id 1rhNf8-0004UQ-TE
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 00:48:26 -0500
+Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1rhNem-0003d1-MW
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 00:48:06 -0500
+ id 1rhNf6-0003fB-Rp
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 00:48:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709617684; x=1741153684;
+ t=1709617705; x=1741153705;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Usm0Cr4TBGAFZbQzTV+QxZ9r1UjnFlad/IwuFFs/hd4=;
- b=URH9jwX1+otbrdSwnB12RWMvvoEUcJTtveJ3i5hioKg54FKO2jQ1Ip/Z
- ER/kQ8nhy/LBfz9PCoPqbf8zvxT34aPg1f4sXZDlnCCxgbRqfHgJglWK5
- 4+zzCeEpqouT9eGwdgw84YM1LFqXFSHKGfgUNHQ7hCTTiWvHl046dKDfc
- tJRHF9XBMW0sNfRMfqpZFYLDQDDl/OBbmkqIZYeDQ8le49g5eAc2ZPryr
- lX/c1p3M1CYkuOSQFS+lTCwGtlfCZnNnmsMFdmJ3lfgVJaFLUuea+FXEi
- 5f/Q+KbGUwhcd9A0KB3beVDsOHjH3k/Micveb1n+IZInCZ6nE+ftTcq71 Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11003"; a="4006232"
+ bh=lOg7Z2NiVWexPEJdPMGkjDH7mkPnvTrF6i/RWRX6gvQ=;
+ b=OO4r/tof1F7FwIQ1tu4MDJ1NOQbC3sWxp0wO4oC1U/Pn8qZ4px7VlcgD
+ ilKYhs52tjK4D8jodpzCtBjClZOhQ4EQWncKoirsw6oDcRw2Vo0ZM6NxT
+ +3W2zQyzhsTfjGPGaxNrzSX/CwduXxVoDeLCACxuhtTF8LlojKd9FqSBy
+ QPIJyc2cuu31j+/FuSIAeLE5Y/MihvFQJzvHBnfDKYYUtGDrR0hCIt7w6
+ n8fBsclkVhsxavQt3qsT5fcU8YfykAS3w+qYmF0EilfooPh1maxu/IkHW
+ IBj9OwCWa8cq/LPzXP4/gjD7xrw847htFMlCuF+4oX5KzHhBaJqi56pEH A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11003"; a="7096091"
 X-IronPort-AV: E=Sophos;i="6.06,205,1705392000"; 
-   d="scan'208";a="4006232"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Mar 2024 21:48:03 -0800
+   d="scan'208";a="7096091"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Mar 2024 21:48:23 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,205,1705392000"; d="scan'208";a="40135902"
+X-IronPort-AV: E=Sophos;i="6.06,205,1705392000"; d="scan'208";a="46785282"
 Received: from sae-gw02.sh.intel.com (HELO localhost) ([10.239.45.110])
- by orviesa002.jf.intel.com with ESMTP; 04 Mar 2024 21:48:00 -0800
+ by orviesa001.jf.intel.com with ESMTP; 04 Mar 2024 21:48:22 -0800
 From: Yuan Liu <yuan1.liu@intel.com>
 To: peterx@redhat.com,
 	farosas@suse.de
 Cc: qemu-devel@nongnu.org, hao.xiang@bytedance.com, bryan.zhang@bytedance.com,
  yuan1.liu@intel.com, nanhai.zou@intel.com
-Subject: [PATCH v4 3/8] configure: add --enable-qpl build option
-Date: Mon,  4 Mar 2024 22:00:23 +0800
-Message-Id: <20240304140028.1590649-4-yuan1.liu@intel.com>
+Subject: [PATCH v4 6/8] migration/multifd: implement qpl compression and
+ decompression
+Date: Mon,  4 Mar 2024 22:00:26 +0800
+Message-Id: <20240304140028.1590649-7-yuan1.liu@intel.com>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20240304140028.1590649-1-yuan1.liu@intel.com>
 References: <20240304140028.1590649-1-yuan1.liu@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.19; envelope-from=yuan1.liu@intel.com;
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=yuan1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
@@ -79,104 +80,268 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-add --enable-qpl and --disable-qpl options to enable and disable
-the QPL compression method for multifd migration.
-
-the Query Processing Library (QPL) is an open-source library
-that supports data compression and decompression features.
-
-The QPL compression is based on the deflate compression algorithm
-and use Intel In-Memory Analytics Accelerator(IAA) hardware for
-compression and decompression acceleration.
-
-Please refer to the following for more information about QPL
-https://intel.github.io/qpl/documentation/introduction_docs/introduction.html
+each qpl job is used to (de)compress a normal page and it can
+be processed independently by the IAA hardware. All qpl jobs
+are submitted to the hardware at once, and wait for all jobs
+completion.
 
 Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
 Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
 ---
- meson.build                   | 18 ++++++++++++++++++
- meson_options.txt             |  2 ++
- scripts/meson-buildoptions.sh |  3 +++
- 3 files changed, 23 insertions(+)
+ migration/multifd-qpl.c | 219 +++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 215 insertions(+), 4 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index c1dc83e4c0..2dea1e6834 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1197,6 +1197,22 @@ if not get_option('zstd').auto() or have_block
-                     required: get_option('zstd'),
-                     method: 'pkg-config')
- endif
-+qpl = not_found
-+if not get_option('qpl').auto()
-+  libqpl = cc.find_library('qpl', required: false)
-+  if not libqpl.found()
-+    error('libqpl not found, please install it from ' +
-+    'https://intel.github.io/qpl/documentation/get_started_docs/installation.html')
-+  endif
-+  libaccel = cc.find_library('accel-config', required: false)
-+  if not libaccel.found()
-+    error('libaccel-config not found, please install it from ' +
-+    'https://github.com/intel/idxd-config')
-+  endif
-+  qpl = declare_dependency(dependencies: [libqpl, libaccel,
-+        cc.find_library('dl', required: get_option('qpl'))],
-+        link_args: ['-lstdc++'])
-+endif
- virgl = not_found
+diff --git a/migration/multifd-qpl.c b/migration/multifd-qpl.c
+index f4db97ca01..eb815ea3be 100644
+--- a/migration/multifd-qpl.c
++++ b/migration/multifd-qpl.c
+@@ -167,6 +167,112 @@ static void qpl_send_cleanup(MultiFDSendParams *p, Error **errp)
+     p->data = NULL;
+ }
  
- have_vhost_user_gpu = have_tools and host_os == 'linux' and pixman.found()
-@@ -2298,6 +2314,7 @@ config_host_data.set('CONFIG_MALLOC_TRIM', has_malloc_trim)
- config_host_data.set('CONFIG_STATX', has_statx)
- config_host_data.set('CONFIG_STATX_MNT_ID', has_statx_mnt_id)
- config_host_data.set('CONFIG_ZSTD', zstd.found())
-+config_host_data.set('CONFIG_QPL', qpl.found())
- config_host_data.set('CONFIG_FUSE', fuse.found())
- config_host_data.set('CONFIG_FUSE_LSEEK', fuse_lseek.found())
- config_host_data.set('CONFIG_SPICE_PROTOCOL', spice_protocol.found())
-@@ -4438,6 +4455,7 @@ summary_info += {'snappy support':    snappy}
- summary_info += {'bzip2 support':     libbzip2}
- summary_info += {'lzfse support':     liblzfse}
- summary_info += {'zstd support':      zstd}
-+summary_info += {'Query Processing Library support': qpl}
- summary_info += {'NUMA host support': numa}
- summary_info += {'capstone':          capstone}
- summary_info += {'libpmem support':   libpmem}
-diff --git a/meson_options.txt b/meson_options.txt
-index 0a99a059ec..06cd675572 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -259,6 +259,8 @@ option('xkbcommon', type : 'feature', value : 'auto',
-        description: 'xkbcommon support')
- option('zstd', type : 'feature', value : 'auto',
-        description: 'zstd compression support')
-+option('qpl', type : 'feature', value : 'auto',
-+       description: 'Query Processing Library support')
- option('fuse', type: 'feature', value: 'auto',
-        description: 'FUSE block device export')
- option('fuse_lseek', type : 'feature', value : 'auto',
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index 680fa3f581..784f74fde9 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -222,6 +222,7 @@ meson_options_help() {
-   printf "%s\n" '                  Xen PCI passthrough support'
-   printf "%s\n" '  xkbcommon       xkbcommon support'
-   printf "%s\n" '  zstd            zstd compression support'
-+  printf "%s\n" '  qpl             Query Processing Library support'
++static inline void prepare_job(qpl_job *job, uint8_t *input, uint32_t input_len,
++                               uint8_t *output, uint32_t output_len,
++                               bool is_compression)
++{
++    job->op = is_compression ? qpl_op_compress : qpl_op_decompress;
++    job->next_in_ptr = input;
++    job->next_out_ptr = output;
++    job->available_in = input_len;
++    job->available_out = output_len;
++    job->flags = QPL_FLAG_FIRST | QPL_FLAG_LAST | QPL_FLAG_OMIT_VERIFY;
++    /* only supports one compression level */
++    job->level = 1;
++}
++
++/**
++ * set_raw_data_hdr: set the length of raw data
++ *
++ * If the length of the compressed output data is greater than or equal to
++ * the page size, then set the compressed data length to the data size and
++ * send raw data directly.
++ *
++ * @qpl: pointer to the qpl_data structure
++ * @index: the index of the compression job header
++ */
++static inline void set_raw_data_hdr(struct qpl_data *qpl, uint32_t index)
++{
++    assert(index < qpl->job_num);
++    qpl->zbuf_hdr[index] = cpu_to_be32(qpl->data_size);
++}
++
++/**
++ * is_raw_data: check if the data is raw data
++ *
++ * The raw data length is always equal to data size, which is the
++ * size of one page.
++ *
++ * Returns true if the data is raw data, otherwise false
++ *
++ * @qpl: pointer to the qpl_data structure
++ * @index: the index of the decompressed job header
++ */
++static inline bool is_raw_data(struct qpl_data *qpl, uint32_t index)
++{
++    assert(index < qpl->job_num);
++    return qpl->zbuf_hdr[index] == qpl->data_size;
++}
++
++static int run_comp_jobs(MultiFDSendParams *p, Error **errp)
++{
++    qpl_status status;
++    struct qpl_data *qpl = p->data;
++    MultiFDPages_t *pages = p->pages;
++    uint32_t job_num = pages->num;
++    qpl_job *job = NULL;
++    uint32_t off = 0;
++
++    assert(job_num <= qpl->job_num);
++    /* submit all compression jobs */
++    for (int i = 0; i < job_num; i++) {
++        job = qpl->job_array[i];
++        /* the compressed data size should be less than one page */
++        prepare_job(job, pages->block->host + pages->offset[i], qpl->data_size,
++                    qpl->zbuf + off, qpl->data_size - 1, true);
++retry:
++        status = qpl_submit_job(job);
++        if (status == QPL_STS_OK) {
++            off += qpl->data_size;
++        } else if (status == QPL_STS_QUEUES_ARE_BUSY_ERR) {
++            goto retry;
++        } else {
++            error_setg(errp, "multifd %u: qpl_submit_job failed with error %d",
++                       p->id, status);
++            return -1;
++        }
++    }
++
++    /* wait all jobs to complete */
++    for (int i = 0; i < job_num; i++) {
++        job = qpl->job_array[i];
++        status = qpl_wait_job(job);
++        if (status == QPL_STS_OK) {
++            qpl->zbuf_hdr[i] = cpu_to_be32(job->total_out);
++            p->iov[p->iovs_num].iov_len = job->total_out;
++            p->iov[p->iovs_num].iov_base = qpl->zbuf + (qpl->data_size * i);
++            p->next_packet_size += job->total_out;
++        } else if (status == QPL_STS_MORE_OUTPUT_NEEDED) {
++            /*
++             * the compression job does not fail, the output data
++             * size is larger than the provided memory size. In this
++             * case, raw data is sent directly to the destination.
++             */
++            set_raw_data_hdr(qpl, i);
++            p->iov[p->iovs_num].iov_len = qpl->data_size;
++            p->iov[p->iovs_num].iov_base = pages->block->host +
++                                           pages->offset[i];
++            p->next_packet_size += qpl->data_size;
++        } else {
++            error_setg(errp, "multifd %u: qpl_wait_job failed with error %d",
++                       p->id, status);
++            return -1;
++        }
++        p->iovs_num++;
++    }
++    return 0;
++}
++
+ /**
+  * qpl_send_prepare: prepare data to be able to send
+  *
+@@ -180,8 +286,25 @@ static void qpl_send_cleanup(MultiFDSendParams *p, Error **errp)
+  */
+ static int qpl_send_prepare(MultiFDSendParams *p, Error **errp)
+ {
+-    /* Implement in next patch */
+-    return -1;
++    struct qpl_data *qpl = p->data;
++    uint32_t hdr_size = p->pages->num * sizeof(uint32_t);
++
++    multifd_send_prepare_header(p);
++
++    assert(p->pages->num <= qpl->job_num);
++    /* prepare the header that stores the lengths of all compressed data */
++    p->iov[1].iov_base = (uint8_t *) qpl->zbuf_hdr;
++    p->iov[1].iov_len = hdr_size;
++    p->iovs_num++;
++    p->next_packet_size += hdr_size;
++    p->flags |= MULTIFD_FLAG_QPL;
++
++    if (run_comp_jobs(p, errp) != 0) {
++        return -1;
++    }
++
++    multifd_send_fill_packet(p);
++    return 0;
  }
- _meson_option_parse() {
-   case $1 in
-@@ -562,6 +563,8 @@ _meson_option_parse() {
-     --disable-xkbcommon) printf "%s" -Dxkbcommon=disabled ;;
-     --enable-zstd) printf "%s" -Dzstd=enabled ;;
-     --disable-zstd) printf "%s" -Dzstd=disabled ;;
-+    --enable-qpl) printf "%s" -Dqpl=enabled ;;
-+    --disable-qpl) printf "%s" -Dqpl=disabled ;;
-     *) return 1 ;;
-   esac
+ 
+ /**
+@@ -223,6 +346,60 @@ static void qpl_recv_cleanup(MultiFDRecvParams *p)
+     p->data = NULL;
  }
+ 
++static int run_decomp_jobs(MultiFDRecvParams *p, Error **errp)
++{
++    qpl_status status;
++    qpl_job *job;
++    struct qpl_data *qpl = p->data;
++    uint32_t off = 0;
++    uint32_t job_num = p->normal_num;
++
++    assert(job_num <= qpl->job_num);
++    /* submit all decompression jobs */
++    for (int i = 0; i < job_num; i++) {
++        /* for the raw data, load it directly */
++        if (is_raw_data(qpl, i)) {
++            memcpy(p->host + p->normal[i], qpl->zbuf + off, qpl->data_size);
++            off += qpl->data_size;
++            continue;
++        }
++        job = qpl->job_array[i];
++        prepare_job(job, qpl->zbuf + off, qpl->zbuf_hdr[i],
++                    p->host + p->normal[i], qpl->data_size, false);
++retry:
++        status = qpl_submit_job(job);
++        if (status == QPL_STS_OK) {
++            off += qpl->zbuf_hdr[i];
++        } else if (status == QPL_STS_QUEUES_ARE_BUSY_ERR) {
++            goto retry;
++        } else {
++            error_setg(errp, "multifd %u: qpl_submit_job failed with error %d",
++                       p->id, status);
++            return -1;
++        }
++    }
++
++    /* wait all jobs to complete */
++    for (int i = 0; i < job_num; i++) {
++        if (is_raw_data(qpl, i)) {
++            continue;
++        }
++        job = qpl->job_array[i];
++        status = qpl_wait_job(job);
++        if (status != QPL_STS_OK) {
++            error_setg(errp, "multifd %u: qpl_wait_job failed with error %d",
++                       p->id, status);
++            return -1;
++        }
++        if (job->total_out != qpl->data_size) {
++            error_setg(errp, "multifd %u: decompressed len %u, expected len %u",
++                       p->id, job->total_out, qpl->data_size);
++            return -1;
++        }
++    }
++    return 0;
++}
++
+ /**
+  * qpl_recv_pages: read the data from the channel into actual pages
+  *
+@@ -236,8 +413,42 @@ static void qpl_recv_cleanup(MultiFDRecvParams *p)
+  */
+ static int qpl_recv_pages(MultiFDRecvParams *p, Error **errp)
+ {
+-    /* Implement in next patch */
+-    return -1;
++    struct qpl_data *qpl = p->data;
++    uint32_t in_size = p->next_packet_size;
++    uint32_t flags = p->flags & MULTIFD_FLAG_COMPRESSION_MASK;
++    uint32_t hdr_len = p->normal_num * sizeof(uint32_t);
++    uint32_t data_len = 0;
++    int ret;
++
++    if (flags != MULTIFD_FLAG_QPL) {
++        error_setg(errp, "multifd %u: flags received %x flags expected %x",
++                   p->id, flags, MULTIFD_FLAG_QPL);
++        return -1;
++    }
++    /* read comprssed data lengths */
++    assert(hdr_len < in_size);
++    ret = qio_channel_read_all(p->c, (void *) qpl->zbuf_hdr, hdr_len, errp);
++    if (ret != 0) {
++        return ret;
++    }
++    assert(p->normal_num <= qpl->job_num);
++    for (int i = 0; i < p->normal_num; i++) {
++        qpl->zbuf_hdr[i] = be32_to_cpu(qpl->zbuf_hdr[i]);
++        data_len += qpl->zbuf_hdr[i];
++        assert(qpl->zbuf_hdr[i] <= qpl->data_size);
++    }
++
++    /* read comprssed data */
++    assert(in_size == hdr_len + data_len);
++    ret = qio_channel_read_all(p->c, (void *) qpl->zbuf, data_len, errp);
++    if (ret != 0) {
++        return ret;
++    }
++
++    if (run_decomp_jobs(p, errp) != 0) {
++        return -1;
++    }
++    return 0;
+ }
+ 
+ /**
 -- 
 2.39.3
 
