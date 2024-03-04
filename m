@@ -4,115 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D8A9C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 13:17:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F2CAC5478C
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 13:18:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh8C7-0000PW-AL; Mon, 04 Mar 2024 08:17:27 -0500
+	id 1rh8CL-0000RA-VS; Mon, 04 Mar 2024 08:17:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rh8C5-0000PM-FU
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 08:17:25 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rh8C3-0004QZ-Fw
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 08:17:25 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 8DA7A4E714;
- Mon,  4 Mar 2024 13:17:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709558240; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rh8CJ-0000Qy-2z
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 08:17:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rh8CG-0004RE-Th
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 08:17:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709558252;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=JZwknmPTFAdbziKcSQ5GWP4E/v/fvj4pXj6MbfZHjWU=;
- b=xx+b8HnSy/t3r4WXkr9RrYXy2z9GnMr0z9Bp9RxVUfzebH7aXCBCamgxyIb8gGwPs4WOSg
- 8Uwej/eC0FX0NJQOztKNDwKUCLo5tY7S+v3eqXQG+PH/3Eas4rIJuoOq1JJ9JJKYHpBRKN
- iOvJoN063Dd8t3kmd6NFvlaI0JE2k2k=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709558240;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JZwknmPTFAdbziKcSQ5GWP4E/v/fvj4pXj6MbfZHjWU=;
- b=PKqN/4CeeWwrUm4cQeDicwTgrC9CYLJZ/xkFOOVr4zpPVtoI0gWVijwOhhpgg7cYSnZJyA
- sis/ZKf5Me8kaGBQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709558240; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JZwknmPTFAdbziKcSQ5GWP4E/v/fvj4pXj6MbfZHjWU=;
- b=xx+b8HnSy/t3r4WXkr9RrYXy2z9GnMr0z9Bp9RxVUfzebH7aXCBCamgxyIb8gGwPs4WOSg
- 8Uwej/eC0FX0NJQOztKNDwKUCLo5tY7S+v3eqXQG+PH/3Eas4rIJuoOq1JJ9JJKYHpBRKN
- iOvJoN063Dd8t3kmd6NFvlaI0JE2k2k=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709558240;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JZwknmPTFAdbziKcSQ5GWP4E/v/fvj4pXj6MbfZHjWU=;
- b=PKqN/4CeeWwrUm4cQeDicwTgrC9CYLJZ/xkFOOVr4zpPVtoI0gWVijwOhhpgg7cYSnZJyA
- sis/ZKf5Me8kaGBQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0D1DA13A5B;
- Mon,  4 Mar 2024 13:17:19 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id dgHJMd/J5WVpQwAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 04 Mar 2024 13:17:19 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, Hao Xiang <hao.xiang@bytedance.com>
-Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
- eblake@redhat.com, armbru@redhat.com, thuth@redhat.com,
- lvivier@redhat.com, jdenemar@redhat.com, marcel.apfelbaum@gmail.com,
- philmd@linaro.org, wangyanan55@huawei.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 2/7] migration/multifd: Implement zero page
- transmission on the multifd thread.
-In-Reply-To: <ZeV1TrOvERHN_LOo@x1n>
-References: <20240301022829.3390548-1-hao.xiang@bytedance.com>
- <20240301022829.3390548-3-hao.xiang@bytedance.com> <ZeV1TrOvERHN_LOo@x1n>
-Date: Mon, 04 Mar 2024 10:17:17 -0300
-Message-ID: <878r2ynnky.fsf@suse.de>
+ bh=C1dPlt+VnCpcEOsgoh7qeSYDmELU+5cLAxrM5ua3Oaw=;
+ b=PP0e5A1i3xuq4xWz8oQFSj/e101RE38bzeiSF6M1kWO2wFdbA675Wt++k+L1YJqbwCHPBC
+ /pCkruvdrdr+ylN2LuXBdRD4wBI4b6AhEzsj6ZtAXAVWKPgHt8hyYw6BstGaGhnAcg9bK3
+ krBDwZ6y9XIoKvkNZpLemyZJrtJo9c4=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-388-oot5KAEhO_G37NJu5nFefQ-1; Mon, 04 Mar 2024 08:17:31 -0500
+X-MC-Unique: oot5KAEhO_G37NJu5nFefQ-1
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-29a6fc39c7eso237160a91.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 05:17:31 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709558250; x=1710163050;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=C1dPlt+VnCpcEOsgoh7qeSYDmELU+5cLAxrM5ua3Oaw=;
+ b=gFh0zaYk2gbxnzjQxuEOyuDNKrD2Zur1VE4+56kjAEAXXYctZQwse0yHWKFdZKfKSa
+ jrfChQHExR5XWXBMXCNNlfzkQY1j0YZ+R/iZLPEN7G1xLD/mwRLmAJ6FKKyTnquQa9ap
+ FtywiFnAxGufYvMbJyZo0gnXCfKOikB/Oc+2LanRwVUgpkQag8JfJFIKGgTVACR3FFO+
+ zAws0oZGQAZx8otBARWQ6GN0Wxzd6SD4brtLLYBC3sv0yF6AJQbvTaq2Th0AbDbHXsaq
+ 9S80P0UQ3HyiuYC+qZRIeCEgwy4/Z1E3sszDeWkkguJ5lDdtQ5/xFjByWCYwKbtnYss3
+ z4BA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWUUmSu5edzC/rCYGup0DMIL3l50iLsgsP7PbWBdfw5P6DTDvUtSkLAYl3xq9s3Si1ZHDRbAJShFbzVuZs7GFiSUTa0tGA=
+X-Gm-Message-State: AOJu0YzqmsE2UpNKki6C/XsLNOK4sMFEwZ6anIx09mZCxJMGQgmePzxG
+ pXGcIcnv8dICHnWeAi4A5UlFeefIr4TIat7B6+494bik+ZLLmMBKIyobih9ui+0dWLov5XQx2A4
+ PqmwFwIAcWYpOjJ5f1oHOtXHM0CkY5NW33k8ncR+D3QGC1637EMUo
+X-Received: by 2002:a17:90a:db81:b0:299:c3d:c00e with SMTP id
+ h1-20020a17090adb8100b002990c3dc00emr7191101pjv.3.1709558250696; 
+ Mon, 04 Mar 2024 05:17:30 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHGCweczouJUnnw2M9NwAAYPI0IK0Sng9hVeXDzfcrUnDOXanVXx9oKNTesnXoY+jfQsnePUQ==
+X-Received: by 2002:a17:90a:db81:b0:299:c3d:c00e with SMTP id
+ h1-20020a17090adb8100b002990c3dc00emr7191079pjv.3.1709558250352; 
+ Mon, 04 Mar 2024 05:17:30 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ gb2-20020a17090b060200b0029acce2420asm7688077pjb.10.2024.03.04.05.17.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 04 Mar 2024 05:17:30 -0800 (PST)
+Date: Mon, 4 Mar 2024 21:17:21 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, armbru@redhat.com,
+ Claudio Fontana <cfontana@suse.de>
+Subject: Re: [PATCH v6 00/23] migration: File based migration with multifd
+ and mapped-ram
+Message-ID: <ZeXJ4VvX6RvSHKk-@x1n>
+References: <20240229153017.2221-1-farosas@suse.de> <ZeXAGEVFWt4Z8QeN@x1n>
+ <ZeXBsR0ctl4evdYb@redhat.com> <87bk7unny2.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Bar: /
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=xx+b8HnS;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="PKqN/4Ce"
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-0.52 / 50.00]; RCVD_VIA_SMTP_AUTH(0.00)[];
- TO_DN_SOME(0.00)[];
- R_RATELIMIT(0.00)[to_ip_from(RL9pwd6yriz4g6gm1w7u8hak7u)];
- RCVD_COUNT_THREE(0.00)[3]; DKIM_TRACE(0.00)[suse.de:+];
- MX_GOOD(-0.01)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- FROM_EQ_ENVFROM(0.00)[]; MIME_TRACE(0.00)[0:+];
- MID_RHS_MATCH_FROM(0.00)[]; BAYES_HAM(-0.51)[80.16%];
- ARC_NA(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; TAGGED_RCPT(0.00)[];
- MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_TWELVE(0.00)[14];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- FREEMAIL_CC(0.00)[redhat.com,habkost.net,gmail.com,linaro.org,huawei.com,nongnu.org];
- RCVD_TLS_ALL(0.00)[]; SUSPICIOUS_RECIPS(1.50)[]
-X-Rspamd-Queue-Id: 8DA7A4E714
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87bk7unny2.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,37 +103,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On Mon, Mar 04, 2024 at 10:09:25AM -0300, Fabiano Rosas wrote:
+> Perhaps if we move the fsync to the same spot as the multifd thread sync
+> instead of having a big one at the end? Not sure how that looks with
+> concurrency in the mix.
 
-> On Fri, Mar 01, 2024 at 02:28:24AM +0000, Hao Xiang wrote:
->> -GlobalProperty hw_compat_8_2[] = {};
->> +GlobalProperty hw_compat_8_2[] = {
->> +    { "migration", "zero-page-detection", "legacy"},
->> +};
->
-> I hope we can make it for 9.0, then this (and many rest places) can be kept
-> as-is.  Let's see..  soft-freeze is March 12th.
->
-> One thing to mention is I just sent a pull which has mapped-ram feature
-> merged.  You may need a rebase onto that, and hopefully mapped-ram can also
-> use your feature too within the same patch when you repost.
+Can try, but I think the bottleneck should normally be on the block
+backend, in which case I won't be surprised concurrency on flushing won't
+help then.
 
-The key points are:
+Please see my other proposal on removing fdatasync() from qemu; I could
+overlook some reason to have it, though..
 
-- The socket migration is under "use_packets", the mapped-ram is under
-"!use_packets" always.
+-- 
+Peter Xu
 
-- mapped-ram doesn't trasmit zero-pages, it just clears the
-corresponding bit in block->file_bmap.
-
-> https://lore.kernel.org/all/20240229153017.2221-1-farosas@suse.de/
->
-> That rebase may or may not need much caution, I apologize for that:
-> mapped-ram as a feature was discussed 1+ years, so it was a plan to merge
-> it (actually still partly of it) into QEMU 9.0.
-
-I started doing that rebase last week and saw issues with a sender
-thread always getting -EPIPE at the sendmsg() on the regular socket
-migration. Let's hope it was just me being tired. I'll try to get
-something ready this week.
 
