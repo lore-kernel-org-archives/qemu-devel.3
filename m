@@ -4,153 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3140BC54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 05:31:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 670D3C54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 05:48:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhNOD-00080l-4N; Tue, 05 Mar 2024 00:30:57 -0500
+	id 1rhNf1-0004T1-Cw; Tue, 05 Mar 2024 00:48:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xinying.yu@nephogine.com>)
- id 1rhLNA-0002CM-51; Mon, 04 Mar 2024 22:21:44 -0500
-Received: from mail-dm6nam10on20709.outbound.protection.outlook.com
- ([2a01:111:f400:7e88::709]
- helo=NAM10-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
+ id 1rhNex-0004Sn-6K
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 00:48:15 -0500
+Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xinying.yu@nephogine.com>)
- id 1rhLN7-0004yb-Ei; Mon, 04 Mar 2024 22:21:43 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ADMF/FdM1fNw3kHJ18avtLRY4IuRrv2/Ejzp3jw0EPjdsb+ainZGXu8NLcxLPiqeS+VMmXxPX/Z1IJO73c/s8u4uSNgTRB041CWPPT5cR+QvplkwCFH4hdNxCEyIoLjBD9kIXkH5kC9zY2CagiSKEqCj/nKSBOboIpYwQ6KLmpLrn8IkLH2fr03n76ExAj2SXUjJURWwprZnmU9KuiaahVTvfipCbB5SrMqq9JZJZUL70qRQC58PY5TOm+21lqzkivYPBIsBYxjcVLJDbEvrax+W/j5nhUGXJ1sthKob+kpopfMHoHkj5BBkUrXeYLN7u1dl4UPVw277QeO79Kj5oA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zgwEp1sOAlqLXs2qeQyexVzv6pg+GFkDcCD5vFAqE28=;
- b=Muv7zjSogf5qXxO9pXOgKF0KG7bb3JnLqkUQRpn4eM7OXIRu3OfI77d5NXPbWXz6FdVQiBRlRodXHqmU6ntr8W0Kor3rLb4lBwp54N885pQWdr5xEFxp/xUp0LwBubHxLzz7jM1bAOKUoekItUR5aF0ysFd+L5wlsjMxjP0I1pkoctjnRUPvixiltIiaJ2X7z972zZsXZnucRhrY0rxsoFI6OLo9L0dN1pNKm1TGlUQnEmVGapqYDS5jubDsIt1hSiV+z/zfyAAk8HggTAKcfJ3A8qDufwST/vtEGqaeGWFU3qc2PG7BUfKy3XE2qJIlRI52oKuctxmYyT0d/wpm2A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nephogine.com; dmarc=pass action=none
- header.from=nephogine.com; dkim=pass header.d=nephogine.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nephogine.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zgwEp1sOAlqLXs2qeQyexVzv6pg+GFkDcCD5vFAqE28=;
- b=32YWyR9AMgor41rU5GrqpLs78vTENBXDIFrt/mJdbO6pkgxBpbqSQKPkUq4blNx8HbUc4y0Tfo9FQyk4Yi9qRjIpkbL+i0ovALjr55DE1Y3bFRUtihzg1ph0/j/WcUNE1zxUwOR0AFvEjuHUBi88i+pagj8s5/qK0zUEz1eD+dPs1f2XsBpVxopcAZb7KEWO343x1av7g+QSPDT/kz6H1f9BilHSl+ifZ/JpSRikEVmviEh9P5Sf65kC/h0d6f+zZbt8roNd6FM6Flb40ZG+iBLcOFR/wWnsxv9jFVveIGOyK6bJOnV4q8A+qiEu2KCfO9pchN+o/KJtu5XEch/qDA==
-Received: from PH0PR13MB5682.namprd13.prod.outlook.com (2603:10b6:510:111::19)
- by SJ0PR13MB5570.namprd13.prod.outlook.com (2603:10b6:a03:420::5)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.21; Tue, 5 Mar
- 2024 03:21:27 +0000
-Received: from PH0PR13MB5682.namprd13.prod.outlook.com
- ([fe80::559:1c9e:f927:c0f2]) by PH0PR13MB5682.namprd13.prod.outlook.com
- ([fe80::559:1c9e:f927:c0f2%5]) with mapi id 15.20.7316.035; Tue, 5 Mar 2024
- 03:21:26 +0000
-From: Xinying Yu <xinying.yu@nephogine.com>
-To: Eugenio Perez Martin <eperezma@redhat.com>, Wentao Jia
- <wentao.jia@nephogine.com>, Rick Zhong <zhaoyong.zhong@nephogine.com>
-CC: Jonah Palmer <jonah.palmer@oracle.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "mst@redhat.com" <mst@redhat.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>, "si-wei.liu@oracle.com"
- <si-wei.liu@oracle.com>, "boris.ostrovsky@oracle.com"
- <boris.ostrovsky@oracle.com>, "raphael@enfabrica.net"
- <raphael@enfabrica.net>, "kwolf@redhat.com" <kwolf@redhat.com>,
- "hreitz@redhat.com" <hreitz@redhat.com>, "pasic@linux.ibm.com"
- <pasic@linux.ibm.com>, "borntraeger@linux.ibm.com"
- <borntraeger@linux.ibm.com>, "farman@linux.ibm.com" <farman@linux.ibm.com>,
- "thuth@redhat.com" <thuth@redhat.com>, "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>, "david@redhat.com" <david@redhat.com>,
- "iii@linux.ibm.com" <iii@linux.ibm.com>, "cohuck@redhat.com"
- <cohuck@redhat.com>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "fam@euphon.net" <fam@euphon.net>, "stefanha@redhat.com"
- <stefanha@redhat.com>, "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
- "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>, "virtio-fs@lists.linux.dev"
- <virtio-fs@lists.linux.dev>
-Subject: Re: [RFC 0/8] virtio,vhost: Add VIRTIO_F_NOTIFICATION_DATA support
-Thread-Topic: [RFC 0/8] virtio,vhost: Add VIRTIO_F_NOTIFICATION_DATA support
-Thread-Index: AQHabBevlMLGKrDWtkqrfBcQc5nAI7EobiuZ
-Date: Tue, 5 Mar 2024 03:21:26 +0000
-Message-ID: <PH0PR13MB56827829C8502484EACF080D88222@PH0PR13MB5682.namprd13.prod.outlook.com>
-References: <20240301134330.4191007-1-jonah.palmer@oracle.com>
- <CAJaqyWfD96Dh9gVavzC22KuaG4bwJ0m7sbWOsy9fR4y1HJ3-Gg@mail.gmail.com>
-In-Reply-To: <CAJaqyWfD96Dh9gVavzC22KuaG4bwJ0m7sbWOsy9fR4y1HJ3-Gg@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nephogine.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PH0PR13MB5682:EE_|SJ0PR13MB5570:EE_
-x-ms-office365-filtering-correlation-id: 17d4451b-c10c-4a8a-7aab-08dc3cc357a1
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: DBwJ23nPFnJtOVZ+ezLjrPEqHBZypkMX2/MmHuL0CWmF76MzkBvJz/4Wk1+z57wKm9lq+Zc9WuxOP8PWt8ir/9mchuPmjzRyQWdhP+b/ItQMujKf9VSHv7Lk6REROUexEvsJi68671RpBiIwhcR4bML7qIOZpF1GLVV2CZ7c4D1QNjYqgnI3F4DSpb8e4h03sB3q+EfYPRVDyhYC5lpCi76PUjcAZtcN6p+AMVDp4U0gasC8bC4+k1SyPDEPnpgjcjQ32dyr0xtq9S5xx4Oyn58hpzoWnrL1VKiFYb8Fgp+a0DODLu7z6T2Yf/0kOfcnOpYIRU8tP+SDk7+qmqymBPwkoFgCEXXv8sjGsYiGArW9La+iOpGqLjl/I9yqaB9D88oFljQ5FNbzCUelPBm5A1rx85v4z0NLodMThID3mgFJj4H4/04owcYKrWx5I63DNshMsvTTbL3CMpsLAKXbzN395Q5D3XTPY5HvRY5nzSWJCm05/5jAir+bcZdfYoU5Kpn4BcTSYKgoAa72M/z/wbnl/YIG31GL9oerLCj8w+Ue6hmrr7gTz41bmAaikTwDRnh1NK61rGgCeX0Fksg4SlrJh99XJspuBMgffjwzyVn+jhIouxnGLVBkdPsN18YSPzibyf7h21ON+ks+I8id/apJmHESvnG4OB5I8Ntw8Rs=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR13MB5682.namprd13.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(376005)(38070700009); DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?NE9QL2Q2UFFVcVYxS3NvVjdFZ0tKMlRiSnNKWm9NcmI1YlZpYlFFejNOanBC?=
- =?utf-8?B?N3dPaEhQQVJ6bnJUT0p2NnZpNUoydVhqWCtwNHhYZ2EyUkVlL241cDZNL1o0?=
- =?utf-8?B?YmdLbVlyZzVPdE5MQStlRVRNQk5PTEl4Mjl0aWduTElXQ2gvdjQ2UmI2UjZB?=
- =?utf-8?B?MVdTWjAramd1MHVkTFMxclJmejAxNDdESkhGWTNBcXJHQWpQcGhWdlBkWGRZ?=
- =?utf-8?B?UU41VmZ6ckxEaWMrQ1J4UVdtaGNQbVVPYUlXQUJiU2ZaSnBRYU1hWWIvZEhP?=
- =?utf-8?B?Y3RLbUdqVGdXOTlObDRFcytzTUxmbUVUaDgwUmxqd3F0K0ZkNWtCMUQveGR4?=
- =?utf-8?B?UVVaZFA3aU9LZTltVU1xajdvRmcyOG8yQVNJTTRnYjNnNHRQbXhhcVhiSnVh?=
- =?utf-8?B?cXViMitSUzhvUk5RVmIxWjBsRnFjZkRMUm5qeHA4aUkxYUdjZDZrZnBFUnhO?=
- =?utf-8?B?eUxnUDBycmdtMnFTeEdaK25oSjVOT1FaRzQyT1N6eVJtdTYwU3BXNitiVmVR?=
- =?utf-8?B?Y2pBbnBydkNicmlzOUVoZzNJTUxNdS9USWViNWZtbWUrZUdkbVVmdEs3S1l1?=
- =?utf-8?B?a0phSVpoY3hhSm1zRzhNUU9yNHdmSUdlSHROQlNRbEpVY3lmL1BGQjZXd1VO?=
- =?utf-8?B?OWlXVFdUdTBTenRhZkZvUldRSVQ2TjlHNnRmZFc3ZkptSWdmUHVWdVZUZERP?=
- =?utf-8?B?d01GNkt6cTJRK2Zjd040UkRONW1CZW1KcWFhSVFEaUpOb0JPeDdnTVRIRktI?=
- =?utf-8?B?b0pxUFVJUkNNR2VOWjl3MlJ4ZWpwL3FxWlRUM2xzOTdLWnZaOVI0MEErem40?=
- =?utf-8?B?RC9sRjV2ZUl6R291MWNLL0RpbFltV3hUTEdRM1U5UDhFU2ZhcEVKdkdkL2tN?=
- =?utf-8?B?Mk5Femttb0hOYjNuSUtvNWdadk45WnNHSVdEN2w0Ui9YMS8vZ1YrY2FxdElM?=
- =?utf-8?B?T3NwTkZLSGpXdlA2VFdrNm9xNk8vZHRlcjQ1SkkySmt2c0YrZ0ltekJTMTVy?=
- =?utf-8?B?K21vQUR0K3BESlBmWHRjVXNLU2tYOUJLRnJxcmxJYW4wWW5DSmYxTDBaSXhM?=
- =?utf-8?B?Q0VneTFDY3cwY2FyVFczOXRvZjg3SGE3MFdPalhPMFB3SVJIMElXcWg0R3lQ?=
- =?utf-8?B?UkxXRzZDU1g5SWJJZFE4Ty9iY2xGSEhHbXpJMzQwWS92M0pKeVZTNVBlRG0x?=
- =?utf-8?B?N1F3YVYvclRUL2Y1MFJEeHAzL3gzb1pMZGpTQk9qS2VaTUhKazNmUGpCWFJq?=
- =?utf-8?B?ajRSalNYb0ZyZ2MvNnRlR2NQbUl5SVBOejUvZGhHbmx0SEdYTDNmUFJDeGZo?=
- =?utf-8?B?a1AwT3lYLzk3a0ExUkY1Rk42dnVETU93b0JIOVVSSVpRS0RseW5tVXhUVytP?=
- =?utf-8?B?YldIZ1drUXMvM2NocC9WeFFFRTJ1ZUtzM0dveGExQ2d0Tytmc0t0SFhaeTU4?=
- =?utf-8?B?dXhGYllUc0o5YWJRVFo5RE8vdjQzWEt1bGFFQWhydXVtZGh3UkZlWkNrY0pj?=
- =?utf-8?B?QWlRL1RRemJlWTZjYVA4QzA5N283VjVmbnk0TGtrQUVXNlhIWWJLWk1mWnly?=
- =?utf-8?B?SnRXRmFCQ0tmbmM3RzZtQUVQRGpVT1BVRHZBc1Excm9HbnMxU0d6aXdhWU93?=
- =?utf-8?B?UTF5TW9XcVhQVHAyc2dseU5tRmtzeTZ2VHROd2lha0sxSWdoendnNG15UXFj?=
- =?utf-8?B?ZUw2OHFLNmlJYWJqWEZmOWFzRkdhVjM0RUkwbWNNcEEwT25lN1JVdjhhOWlj?=
- =?utf-8?B?NGxnTG03ZWtjamhGeWZQYnVEOVZxSHRKeWM1bndvRzhMYkJNeEljWUJicTY0?=
- =?utf-8?B?ZS9nSSttRVhyYVdFVVUyTWpNQlNYK05jVXFqbVh3Ynoxd1NWUzBFMi9yT2Fa?=
- =?utf-8?B?ZC9BbkM5REx3ZUk5dmNzQXBRY3BkSzJwQ1RTZnlPaUNYUVloc3hGN2hzQnI1?=
- =?utf-8?B?WWg5VEtWcHg1ekk2Slk2NlM3VG5OYVBpSlFZdldoaUtxNy9TbHRkN3ViL0d2?=
- =?utf-8?B?TDFkODdLTEVCU0FDK2xQdXRycHNLZERFdHNZRG4xcmtSY25STmkzOC81c0tU?=
- =?utf-8?B?ZGF1K2ZFWTBhamRTOHNPMjk0bFNZc3pMS3ZPWllHMXhUNVAySHp3a3BSZitG?=
- =?utf-8?Q?2XAaolB0UFXnJTBmv76gzZyxQ?=
-Content-Type: multipart/alternative;
- boundary="_000_PH0PR13MB56827829C8502484EACF080D88222PH0PR13MB5682namp_"
+ (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
+ id 1rhNev-0003eg-8g
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 00:48:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1709617693; x=1741153693;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=7sHmriUwSGMAnFTcA5AVBxwma0hCf6t82yyyCrzLIDI=;
+ b=WYY8jTsHBSRlrqyXbaTrljy9wzbVxHJGFDo/S3Tctw+RPPYzsWcrIFVw
+ b91Sv2k6vPuV85jbSCVYX8oFCNUqCV7jYZPrmERV1wOmG5JI2b2vep4vW
+ +GHpAAiXkGdh3IxPAQDG/E9VDIe9CXwEHIQmYVDPFFb2mZ/okdjfTblo/
+ 9oIKi5ixsKeophk6Eviu/7EkgMhF8S019KyuWLVP9ZdrYHrgVMHTJcnqr
+ AEvFwOylavYUz/s4lrf5mBHURrqv8m8fx+PGWQjNTqnnK1sYbWVKiTSUf
+ RHFT70hIzYKR9W7T4DdApyzOMwYe3FQloyyn4AmVLNtFSMVd44+kFhi2s Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11003"; a="4006265"
+X-IronPort-AV: E=Sophos;i="6.06,205,1705392000"; 
+   d="scan'208";a="4006265"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Mar 2024 21:48:11 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,205,1705392000"; d="scan'208";a="40135958"
+Received: from sae-gw02.sh.intel.com (HELO localhost) ([10.239.45.110])
+ by orviesa002.jf.intel.com with ESMTP; 04 Mar 2024 21:48:09 -0800
+From: Yuan Liu <yuan1.liu@intel.com>
+To: peterx@redhat.com,
+	farosas@suse.de
+Cc: qemu-devel@nongnu.org, hao.xiang@bytedance.com, bryan.zhang@bytedance.com,
+ yuan1.liu@intel.com, nanhai.zou@intel.com
+Subject: [PATCH v4 4/8] migration/multifd: add qpl compression method
+Date: Mon,  4 Mar 2024 22:00:24 +0800
+Message-Id: <20240304140028.1590649-5-yuan1.liu@intel.com>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240304140028.1590649-1-yuan1.liu@intel.com>
+References: <20240304140028.1590649-1-yuan1.liu@intel.com>
 MIME-Version: 1.0
-X-OriginatorOrg: nephogine.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR13MB5682.namprd13.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 17d4451b-c10c-4a8a-7aab-08dc3cc357a1
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Mar 2024 03:21:26.6152 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: fe128f2c-073b-4c20-818e-7246a585940c
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: MAsKZ4SeVma9nPTbpZfyhQI1vKZ1tVsh5beCgLR8AcFGsTTPVlwToNYoiWjZdqeQOzYHMvYA+SwKMBc1nKSVqA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR13MB5570
-Received-SPF: pass client-ip=2a01:111:f400:7e88::709;
- envelope-from=xinying.yu@nephogine.com;
- helo=NAM10-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.19; envelope-from=yuan1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
+ DKIMWL_WL_HIGH=-0.571, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 05 Mar 2024 00:30:55 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -165,194 +79,255 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---_000_PH0PR13MB56827829C8502484EACF080D88222PH0PR13MB5682namp_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+add the Query Processing Library (QPL) compression method
 
-T2YgY291cnNlLCAgSSBhbSBnbGFkIHRvIGRvLiAgQW5kIEkgbmVlZCB0byBjbGFyaWZ5IHRoYXQg
-b3VyIHVzZSBjYXNlIG9ubHkgc3VwcG9ydCBWSVJUSU9fRl9OT1RJRklDQVRJT05fREFUQSAgdHJh
-bnNwb3J0IGZlYXR1cmUgb24gRFBESyB2RFBBIGZyYW1ld29yayB3aGljaCB0aGUgYmFja2VuZCB0
-eXBlIGlzIE5FVF9DTElFTlRfRFJJVkVSX1ZIT1NUX1VTRVIgYW5kIHVzZSB1c2VyX2ZlYXR1cmVf
-Yml0cy4gU28gdGhlIG5ldyBmZWF0dXJlIGFkZCBvbiB2ZHBhX2ZlYXR1cmVfYml0cyAgd2lsbCBu
-b3QgdW5kZXIgdmVyaWZpZWQgaW4gb3VyIGNhc2UuICBOb3Qgc3VyZSB0aGlzIG1lZXRzIHlvdXIg
-ZXhwZWN0YXRpb25zPw0KT25lIG1vcmUgdGhpbmcsIEkgd291bGQgYXNrIGhvdyBkbyAgSSBnZXQg
-dGhlIGZ1bGwgc2VyaWVzIHBhdGNoPyBEbyBJIGNvcHkgdGhlIFJGQyBsaW5lIGJ5IGxpbmUgZnJv
-bSB0aGlzIGxpbmtbMV0/DQoNClRoYW5rcywNClhpbnlpbmcNCg0KDQpbMV0gaHR0cHM6Ly9saXN0
-cy5ub25nbnUub3JnL2FyY2hpdmUvaHRtbC9xZW11LWRldmVsLzIwMjQtMDMvbXNnMDAwOTAuaHRt
-bA0KDQpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXw0KRnJvbTogRXVnZW5pbyBQZXJl
-eiBNYXJ0aW4gPGVwZXJlem1hQHJlZGhhdC5jb20+DQpTZW50OiBTYXR1cmRheSwgTWFyY2ggMiwg
-MjAyNCA0OjMyIEFNDQpUbzogV2VudGFvIEppYSA8d2VudGFvLmppYUBuZXBob2dpbmUuY29tPjsg
-UmljayBaaG9uZyA8emhhb3lvbmcuemhvbmdAbmVwaG9naW5lLmNvbT47IFhpbnlpbmcgWXUgPHhp
-bnlpbmcueXVAbmVwaG9naW5lLmNvbT4NCkNjOiBKb25haCBQYWxtZXIgPGpvbmFoLnBhbG1lckBv
-cmFjbGUuY29tPjsgcWVtdS1kZXZlbEBub25nbnUub3JnIDxxZW11LWRldmVsQG5vbmdudS5vcmc+
-OyBtc3RAcmVkaGF0LmNvbSA8bXN0QHJlZGhhdC5jb20+OyBqYXNvd2FuZ0ByZWRoYXQuY29tIDxq
-YXNvd2FuZ0ByZWRoYXQuY29tPjsgc2ktd2VpLmxpdUBvcmFjbGUuY29tIDxzaS13ZWkubGl1QG9y
-YWNsZS5jb20+OyBib3Jpcy5vc3Ryb3Zza3lAb3JhY2xlLmNvbSA8Ym9yaXMub3N0cm92c2t5QG9y
-YWNsZS5jb20+OyByYXBoYWVsQGVuZmFicmljYS5uZXQgPHJhcGhhZWxAZW5mYWJyaWNhLm5ldD47
-IGt3b2xmQHJlZGhhdC5jb20gPGt3b2xmQHJlZGhhdC5jb20+OyBocmVpdHpAcmVkaGF0LmNvbSA8
-aHJlaXR6QHJlZGhhdC5jb20+OyBwYXNpY0BsaW51eC5pYm0uY29tIDxwYXNpY0BsaW51eC5pYm0u
-Y29tPjsgYm9ybnRyYWVnZXJAbGludXguaWJtLmNvbSA8Ym9ybnRyYWVnZXJAbGludXguaWJtLmNv
-bT47IGZhcm1hbkBsaW51eC5pYm0uY29tIDxmYXJtYW5AbGludXguaWJtLmNvbT47IHRodXRoQHJl
-ZGhhdC5jb20gPHRodXRoQHJlZGhhdC5jb20+OyByaWNoYXJkLmhlbmRlcnNvbkBsaW5hcm8ub3Jn
-IDxyaWNoYXJkLmhlbmRlcnNvbkBsaW5hcm8ub3JnPjsgZGF2aWRAcmVkaGF0LmNvbSA8ZGF2aWRA
-cmVkaGF0LmNvbT47IGlpaUBsaW51eC5pYm0uY29tIDxpaWlAbGludXguaWJtLmNvbT47IGNvaHVj
-a0ByZWRoYXQuY29tIDxjb2h1Y2tAcmVkaGF0LmNvbT47IHBib256aW5pQHJlZGhhdC5jb20gPHBi
-b256aW5pQHJlZGhhdC5jb20+OyBmYW1AZXVwaG9uLm5ldCA8ZmFtQGV1cGhvbi5uZXQ+OyBzdGVm
-YW5oYUByZWRoYXQuY29tIDxzdGVmYW5oYUByZWRoYXQuY29tPjsgcWVtdS1ibG9ja0Bub25nbnUu
-b3JnIDxxZW11LWJsb2NrQG5vbmdudS5vcmc+OyBxZW11LXMzOTB4QG5vbmdudS5vcmcgPHFlbXUt
-czM5MHhAbm9uZ251Lm9yZz47IHZpcnRpby1mc0BsaXN0cy5saW51eC5kZXYgPHZpcnRpby1mc0Bs
-aXN0cy5saW51eC5kZXY+DQpTdWJqZWN0OiBSZTogW1JGQyAwLzhdIHZpcnRpbyx2aG9zdDogQWRk
-IFZJUlRJT19GX05PVElGSUNBVElPTl9EQVRBIHN1cHBvcnQNCg0KSGkgV2VudGFvIC8gUmljayAv
-IFhpbnlpbmcgWXUsDQoNCldvdWxkIGl0IHdvcmsgZm9yIHlvdSB0byB0ZXN0IHRoaXMgc2VyaWVz
-IG9uIHlvdXIgdXNlIGNhc2VzLCBzbyB3ZQ0KbWFrZSBzdXJlIGV2ZXJ5dGhpbmcgd29ya3MgYXMg
-ZXhwZWN0ZWQ/DQoNClRoYW5rcyENCg0KT24gRnJpLCBNYXIgMSwgMjAyNCBhdCAyOjQ04oCvUE0g
-Sm9uYWggUGFsbWVyIDxqb25haC5wYWxtZXJAb3JhY2xlLmNvbT4gd3JvdGU6DQo+DQo+IFRoZSBn
-b2FsIG9mIHRoZXNlIHBhdGNoZXMgYXJlIHRvIGFkZCBzdXBwb3J0IHRvIGEgdmFyaWV0eSBvZiB2
-aXJ0aW8gYW5kDQo+IHZob3N0IGRldmljZXMgZm9yIHRoZSBWSVJUSU9fRl9OT1RJRklDQVRJT05f
-REFUQSB0cmFuc3BvcnQgZmVhdHVyZS4gVGhpcw0KPiBmZWF0dXJlIGluZGljYXRlcyB0aGF0IGEg
-ZHJpdmVyIHdpbGwgcGFzcyBleHRyYSBkYXRhIChpbnN0ZWFkIG9mIGp1c3QgYQ0KPiB2aXJ0cXVl
-dWUncyBpbmRleCkgd2hlbiBub3RpZnlpbmcgdGhlIGNvcnJlc3BvbmRpbmcgZGV2aWNlLg0KPg0K
-PiBUaGUgZGF0YSBwYXNzZWQgaW4gYnkgdGhlIGRyaXZlciB3aGVuIHRoaXMgZmVhdHVyZSBpcyBl
-bmFibGVkIHZhcmllcyBpbg0KPiBmb3JtYXQgZGVwZW5kaW5nIG9uIGlmIHRoZSBkZXZpY2UgaXMg
-dXNpbmcgYSBzcGxpdCBvciBwYWNrZWQgdmlydHF1ZXVlDQo+IGxheW91dDoNCj4NCj4gIFNwbGl0
-IFZRDQo+ICAgLSBVcHBlciAxNiBiaXRzOiBsYXN0X2F2YWlsX2lkeA0KPiAgIC0gTG93ZXIgMTYg
-Yml0czogdmlydHF1ZXVlIGluZGV4DQo+DQo+ICBQYWNrZWQgVlENCj4gICAtIFVwcGVyIDE2IGJp
-dHM6IDEtYml0IHdyYXAgY291bnRlciAmIDE1LWJpdCBsYXN0X2F2YWlsX2lkeA0KPiAgIC0gTG93
-ZXIgMTYgYml0czogdmlydHF1ZXVlIGluZGV4DQo+DQo+IEFsc28sIGR1ZSB0byB0aGUgbGltaXRh
-dGlvbnMgb2YgaW9ldmVudGZkIG5vdCBiZWluZyBhYmxlIHRvIGNhcnJ5IHRoZQ0KPiBleHRyYSBw
-cm92aWRlZCBieSB0aGUgZHJpdmVyLCBpb2V2ZW50ZmQgaXMgbGVmdCBkaXNhYmxlZCBmb3IgYW55
-IGRldmljZXMNCj4gdXNpbmcgdGhpcyBmZWF0dXJlLg0KPg0KPiBBIHNpZ25pZmljYW50IGFzcGVj
-dCBvZiB0aGlzIGVmZm9ydCBoYXMgYmVlbiB0byBtYWludGFpbiBjb21wYXRpYmlsaXR5DQo+IGFj
-cm9zcyBkaWZmZXJlbnQgYmFja2VuZHMuIEFzIHN1Y2gsIHRoZSBmZWF0dXJlIGlzIG9mZmVyZWQg
-YnkgYmFja2VuZA0KPiBkZXZpY2VzIG9ubHkgd2hlbiBzdXBwb3J0ZWQsIHdpdGggZmFsbGJhY2sg
-bWVjaGFuaXNtcyB3aGVyZSBiYWNrZW5kDQo+IHN1cHBvcnQgaXMgYWJzZW50Lg0KPg0KDQpIaSBX
-ZW50YW8sDQoNCg==
+Although both qpl and zlib support deflate compression, qpl will
+only use the In-Memory Analytics Accelerator(IAA) for compression
+and decompression, and IAA is not compatible with the Zlib in
+migration, so qpl is used as a new compression method for migration.
 
---_000_PH0PR13MB56827829C8502484EACF080D88222PH0PR13MB5682namp_
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+How to enable qpl compression during migration:
+migrate_set_parameter multifd-compression qpl
 
-PGh0bWw+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIgY29udGVudD0i
-dGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyIgc3R5bGU9
-ImRpc3BsYXk6bm9uZTsiPiBQIHttYXJnaW4tdG9wOjA7bWFyZ2luLWJvdHRvbTowO30gPC9zdHls
-ZT4NCjwvaGVhZD4NCjxib2R5IGRpcj0ibHRyIj4NCjxkaXYgY2xhc3M9ImVsZW1lbnRUb1Byb29m
-Ij48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6IEFwdG9zLCBBcHRvc19FbWJlZGRlZEZvbnQsIEFw
-dG9zX01TRm9udFNlcnZpY2UsIENhbGlicmksIEhlbHZldGljYSwgc2Fucy1zZXJpZjsgZm9udC1z
-aXplOiAxMnB0OyBjb2xvcjogcmdiKDAsIDAsIDApOyI+T2YgY291cnNlLCZuYnNwOyBJIGFtIGds
-YWQgdG8gZG8uJm5ic3A7IEFuZCBJIG5lZWQgdG8gY2xhcmlmeSB0aGF0IG91ciB1c2UgY2FzZSBv
-bmx5IHN1cHBvcnQNCjwvc3Bhbj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6ICZxdW90O1NlZ29l
-IFVJJnF1b3Q7LCAmcXVvdDtTZWdvZSBVSSBXZWIgKFdlc3QgRXVyb3BlYW4pJnF1b3Q7LCAmcXVv
-dDtTZWdvZSBVSSZxdW90OywgLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCBSb2Jv
-dG8sICZxdW90O0hlbHZldGljYSBOZXVlJnF1b3Q7LCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDE0
-LjY2NjdweDsgY29sb3I6IHJnYig2NiwgNjYsIDY2KTsgYmFja2dyb3VuZC1jb2xvcjogcmdiKDI1
-NSwgMjU1LCAyNTUpOyI+VklSVElPX0ZfTk9USUZJQ0FUSU9OX0RBVEENCjwvc3Bhbj48c3BhbiBz
-dHlsZT0iZm9udC1mYW1pbHk6IEFwdG9zLCBBcHRvc19FbWJlZGRlZEZvbnQsIEFwdG9zX01TRm9u
-dFNlcnZpY2UsIENhbGlicmksIEhlbHZldGljYSwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMnB0
-OyBjb2xvcjogcmdiKDAsIDAsIDApOyI+Jm5ic3A7PC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LWZh
-bWlseTogJnF1b3Q7U2Vnb2UgVUkmcXVvdDssICZxdW90O1NlZ29lIFVJIFdlYiAoV2VzdCBFdXJv
-cGVhbikmcXVvdDssICZxdW90O1NlZ29lIFVJJnF1b3Q7LCAtYXBwbGUtc3lzdGVtLCBCbGlua01h
-Y1N5c3RlbUZvbnQsIFJvYm90bywgJnF1b3Q7SGVsdmV0aWNhIE5ldWUmcXVvdDssIHNhbnMtc2Vy
-aWY7IGZvbnQtc2l6ZTogMTQuNjY2N3B4OyBjb2xvcjogcmdiKDY2LCA2NiwgNjYpOyBiYWNrZ3Jv
-dW5kLWNvbG9yOiByZ2IoMjU1LCAyNTUsIDI1NSk7Ij50cmFuc3BvcnQNCiBmZWF0dXJlPC9zcGFu
-PjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTogQXB0b3MsIEFwdG9zX0VtYmVkZGVkRm9udCwgQXB0
-b3NfTVNGb250U2VydmljZSwgQ2FsaWJyaSwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmOyBmb250LXNp
-emU6IDEycHQ7IGNvbG9yOiByZ2IoMCwgMCwgMCk7Ij4mbmJzcDtvbiBEUERLIHZEUEEgZnJhbWV3
-b3JrIHdoaWNoIHRoZSBiYWNrZW5kIHR5cGUgaXMgTkVUX0NMSUVOVF9EUklWRVJfVkhPU1RfVVNF
-UiBhbmQgdXNlIHVzZXJfZmVhdHVyZV9iaXRzLg0KIFNvIHRoZSBuZXcgZmVhdHVyZSBhZGQgb24g
-dmRwYV9mZWF0dXJlX2JpdHMgJm5ic3A7d2lsbCBub3QgdW5kZXIgdmVyaWZpZWQgaW4gb3VyIGNh
-c2UuJm5ic3A7IE5vdCBzdXJlIHRoaXMgbWVldHMgeW91ciBleHBlY3RhdGlvbnM/PC9zcGFuPjwv
-ZGl2Pg0KPGRpdiBjbGFzcz0iZWxlbWVudFRvUHJvb2YiPjxzcGFuIHN0eWxlPSJmb250LWZhbWls
-eTogQXB0b3MsIEFwdG9zX0VtYmVkZGVkRm9udCwgQXB0b3NfTVNGb250U2VydmljZSwgQ2FsaWJy
-aSwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDEycHQ7IGNvbG9yOiByZ2IoMCwg
-MCwgMCk7Ij5PbmUgbW9yZSB0aGluZywgSSB3b3VsZCBhc2sgaG93IGRvICZuYnNwO0kgZ2V0IHRo
-ZSBmdWxsIHNlcmllcyBwYXRjaD8gRG8gSSBjb3B5IHRoZSBSRkMgbGluZQ0KIGJ5IGxpbmUgZnJv
-bSB0aGlzIGxpbmtbMV0/PC9zcGFuPjwvZGl2Pg0KPGRpdiBjbGFzcz0iZWxlbWVudFRvUHJvb2Yi
-PjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTogQXB0b3MsIEFwdG9zX0VtYmVkZGVkRm9udCwgQXB0
-b3NfTVNGb250U2VydmljZSwgQ2FsaWJyaSwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmOyBmb250LXNp
-emU6IDEycHQ7IGNvbG9yOiByZ2IoMCwgMCwgMCk7Ij48YnI+DQo8L3NwYW4+PC9kaXY+DQo8ZGl2
-IGNsYXNzPSJlbGVtZW50VG9Qcm9vZiI+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OiBBcHRvcywg
-QXB0b3NfRW1iZWRkZWRGb250LCBBcHRvc19NU0ZvbnRTZXJ2aWNlLCBDYWxpYnJpLCBIZWx2ZXRp
-Y2EsIHNhbnMtc2VyaWY7IGZvbnQtc2l6ZTogMTJwdDsgY29sb3I6IHJnYigwLCAwLCAwKTsiPlRo
-YW5rcywNCjxkaXY+WGlueWluZzwvZGl2Pg0KPC9zcGFuPjwvZGl2Pg0KPGRpdiBjbGFzcz0iZWxl
-bWVudFRvUHJvb2YiPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTogQXB0b3MsIEFwdG9zX0VtYmVk
-ZGVkRm9udCwgQXB0b3NfTVNGb250U2VydmljZSwgQ2FsaWJyaSwgSGVsdmV0aWNhLCBzYW5zLXNl
-cmlmOyBmb250LXNpemU6IDEycHQ7IGNvbG9yOiByZ2IoMCwgMCwgMCk7Ij48YnI+DQo8L3NwYW4+
-PC9kaXY+DQo8ZGl2IGNsYXNzPSJlbGVtZW50VG9Qcm9vZiI+PHNwYW4gc3R5bGU9ImZvbnQtZmFt
-aWx5OiBBcHRvcywgQXB0b3NfRW1iZWRkZWRGb250LCBBcHRvc19NU0ZvbnRTZXJ2aWNlLCBDYWxp
-YnJpLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7IGZvbnQtc2l6ZTogMTJwdDsgY29sb3I6IHJnYigw
-LCAwLCAwKTsiPjxicj4NCjwvc3Bhbj48L2Rpdj4NCjxkaXYgY2xhc3M9ImVsZW1lbnRUb1Byb29m
-Ij48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6IEFwdG9zLCBBcHRvc19FbWJlZGRlZEZvbnQsIEFw
-dG9zX01TRm9udFNlcnZpY2UsIENhbGlicmksIEhlbHZldGljYSwgc2Fucy1zZXJpZjsgZm9udC1z
-aXplOiAxMnB0OyBjb2xvcjogcmdiKDAsIDAsIDApOyI+WzFdDQo8YSBocmVmPSJodHRwczovL2xp
-c3RzLm5vbmdudS5vcmcvYXJjaGl2ZS9odG1sL3FlbXUtZGV2ZWwvMjAyNC0wMy9tc2cwMDA5MC5o
-dG1sIiBpZD0iTFBsbmsxNjQzNzEiPg0KaHR0cHM6Ly9saXN0cy5ub25nbnUub3JnL2FyY2hpdmUv
-aHRtbC9xZW11LWRldmVsLzIwMjQtMDMvbXNnMDAwOTAuaHRtbDwvYT48L3NwYW4+PC9kaXY+DQo8
-ZGl2IGNsYXNzPSJlbGVtZW50VG9Qcm9vZiI+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OiBBcHRv
-cywgQXB0b3NfRW1iZWRkZWRGb250LCBBcHRvc19NU0ZvbnRTZXJ2aWNlLCBDYWxpYnJpLCBIZWx2
-ZXRpY2EsIHNhbnMtc2VyaWY7IGZvbnQtc2l6ZTogMTJwdDsgY29sb3I6IHJnYigwLCAwLCAwKTsi
-Pjxicj4NCjwvc3Bhbj48L2Rpdj4NCjxkaXYgaWQ9ImFwcGVuZG9uc2VuZCI+PC9kaXY+DQo8aHIg
-c3R5bGU9ImRpc3BsYXk6aW5saW5lLWJsb2NrO3dpZHRoOjk4JSIgdGFiaW5kZXg9Ii0xIj4NCjxk
-aXYgaWQ9ImRpdlJwbHlGd2RNc2ciIGRpcj0ibHRyIj48Zm9udCBmYWNlPSJDYWxpYnJpLCBzYW5z
-LXNlcmlmIiBzdHlsZT0iZm9udC1zaXplOjExcHQiIGNvbG9yPSIjMDAwMDAwIj48Yj5Gcm9tOjwv
-Yj4gRXVnZW5pbyBQZXJleiBNYXJ0aW4gJmx0O2VwZXJlem1hQHJlZGhhdC5jb20mZ3Q7PGJyPg0K
-PGI+U2VudDo8L2I+IFNhdHVyZGF5LCBNYXJjaCAyLCAyMDI0IDQ6MzIgQU08YnI+DQo8Yj5Ubzo8
-L2I+IFdlbnRhbyBKaWEgJmx0O3dlbnRhby5qaWFAbmVwaG9naW5lLmNvbSZndDs7IFJpY2sgWmhv
-bmcgJmx0O3poYW95b25nLnpob25nQG5lcGhvZ2luZS5jb20mZ3Q7OyBYaW55aW5nIFl1ICZsdDt4
-aW55aW5nLnl1QG5lcGhvZ2luZS5jb20mZ3Q7PGJyPg0KPGI+Q2M6PC9iPiBKb25haCBQYWxtZXIg
-Jmx0O2pvbmFoLnBhbG1lckBvcmFjbGUuY29tJmd0OzsgcWVtdS1kZXZlbEBub25nbnUub3JnICZs
-dDtxZW11LWRldmVsQG5vbmdudS5vcmcmZ3Q7OyBtc3RAcmVkaGF0LmNvbSAmbHQ7bXN0QHJlZGhh
-dC5jb20mZ3Q7OyBqYXNvd2FuZ0ByZWRoYXQuY29tICZsdDtqYXNvd2FuZ0ByZWRoYXQuY29tJmd0
-Ozsgc2ktd2VpLmxpdUBvcmFjbGUuY29tICZsdDtzaS13ZWkubGl1QG9yYWNsZS5jb20mZ3Q7OyBi
-b3Jpcy5vc3Ryb3Zza3lAb3JhY2xlLmNvbSAmbHQ7Ym9yaXMub3N0cm92c2t5QG9yYWNsZS5jb20m
-Z3Q7Ow0KIHJhcGhhZWxAZW5mYWJyaWNhLm5ldCAmbHQ7cmFwaGFlbEBlbmZhYnJpY2EubmV0Jmd0
-Ozsga3dvbGZAcmVkaGF0LmNvbSAmbHQ7a3dvbGZAcmVkaGF0LmNvbSZndDs7IGhyZWl0ekByZWRo
-YXQuY29tICZsdDtocmVpdHpAcmVkaGF0LmNvbSZndDs7IHBhc2ljQGxpbnV4LmlibS5jb20gJmx0
-O3Bhc2ljQGxpbnV4LmlibS5jb20mZ3Q7OyBib3JudHJhZWdlckBsaW51eC5pYm0uY29tICZsdDti
-b3JudHJhZWdlckBsaW51eC5pYm0uY29tJmd0OzsgZmFybWFuQGxpbnV4LmlibS5jb20gJmx0O2Zh
-cm1hbkBsaW51eC5pYm0uY29tJmd0OzsNCiB0aHV0aEByZWRoYXQuY29tICZsdDt0aHV0aEByZWRo
-YXQuY29tJmd0OzsgcmljaGFyZC5oZW5kZXJzb25AbGluYXJvLm9yZyAmbHQ7cmljaGFyZC5oZW5k
-ZXJzb25AbGluYXJvLm9yZyZndDs7IGRhdmlkQHJlZGhhdC5jb20gJmx0O2RhdmlkQHJlZGhhdC5j
-b20mZ3Q7OyBpaWlAbGludXguaWJtLmNvbSAmbHQ7aWlpQGxpbnV4LmlibS5jb20mZ3Q7OyBjb2h1
-Y2tAcmVkaGF0LmNvbSAmbHQ7Y29odWNrQHJlZGhhdC5jb20mZ3Q7OyBwYm9uemluaUByZWRoYXQu
-Y29tICZsdDtwYm9uemluaUByZWRoYXQuY29tJmd0OzsNCiBmYW1AZXVwaG9uLm5ldCAmbHQ7ZmFt
-QGV1cGhvbi5uZXQmZ3Q7OyBzdGVmYW5oYUByZWRoYXQuY29tICZsdDtzdGVmYW5oYUByZWRoYXQu
-Y29tJmd0OzsgcWVtdS1ibG9ja0Bub25nbnUub3JnICZsdDtxZW11LWJsb2NrQG5vbmdudS5vcmcm
-Z3Q7OyBxZW11LXMzOTB4QG5vbmdudS5vcmcgJmx0O3FlbXUtczM5MHhAbm9uZ251Lm9yZyZndDs7
-IHZpcnRpby1mc0BsaXN0cy5saW51eC5kZXYgJmx0O3ZpcnRpby1mc0BsaXN0cy5saW51eC5kZXYm
-Z3Q7PGJyPg0KPGI+U3ViamVjdDo8L2I+IFJlOiBbUkZDIDAvOF0gdmlydGlvLHZob3N0OiBBZGQg
-VklSVElPX0ZfTk9USUZJQ0FUSU9OX0RBVEEgc3VwcG9ydDwvZm9udD4NCjxkaXY+Jm5ic3A7PC9k
-aXY+DQo8L2Rpdj4NCjxkaXYgY2xhc3M9IkJvZHlGcmFnbWVudCI+PGZvbnQgc2l6ZT0iMiI+PHNw
-YW4gc3R5bGU9ImZvbnQtc2l6ZToxMXB0OyI+DQo8ZGl2IGNsYXNzPSJQbGFpblRleHQiPkhpIFdl
-bnRhbyAvIFJpY2sgLyBYaW55aW5nIFl1LDxicj4NCjxicj4NCldvdWxkIGl0IHdvcmsgZm9yIHlv
-dSB0byB0ZXN0IHRoaXMgc2VyaWVzIG9uIHlvdXIgdXNlIGNhc2VzLCBzbyB3ZTxicj4NCm1ha2Ug
-c3VyZSBldmVyeXRoaW5nIHdvcmtzIGFzIGV4cGVjdGVkPzxicj4NCjxicj4NClRoYW5rcyE8YnI+
-DQo8YnI+DQpPbiBGcmksIE1hciAxLCAyMDI0IGF0IDI6NDTigK9QTSBKb25haCBQYWxtZXIgJmx0
-O2pvbmFoLnBhbG1lckBvcmFjbGUuY29tJmd0OyB3cm90ZTo8YnI+DQomZ3Q7PGJyPg0KJmd0OyBU
-aGUgZ29hbCBvZiB0aGVzZSBwYXRjaGVzIGFyZSB0byBhZGQgc3VwcG9ydCB0byBhIHZhcmlldHkg
-b2YgdmlydGlvIGFuZDxicj4NCiZndDsgdmhvc3QgZGV2aWNlcyBmb3IgdGhlIFZJUlRJT19GX05P
-VElGSUNBVElPTl9EQVRBIHRyYW5zcG9ydCBmZWF0dXJlLiBUaGlzPGJyPg0KJmd0OyBmZWF0dXJl
-IGluZGljYXRlcyB0aGF0IGEgZHJpdmVyIHdpbGwgcGFzcyBleHRyYSBkYXRhIChpbnN0ZWFkIG9m
-IGp1c3QgYTxicj4NCiZndDsgdmlydHF1ZXVlJ3MgaW5kZXgpIHdoZW4gbm90aWZ5aW5nIHRoZSBj
-b3JyZXNwb25kaW5nIGRldmljZS48YnI+DQomZ3Q7PGJyPg0KJmd0OyBUaGUgZGF0YSBwYXNzZWQg
-aW4gYnkgdGhlIGRyaXZlciB3aGVuIHRoaXMgZmVhdHVyZSBpcyBlbmFibGVkIHZhcmllcyBpbjxi
-cj4NCiZndDsgZm9ybWF0IGRlcGVuZGluZyBvbiBpZiB0aGUgZGV2aWNlIGlzIHVzaW5nIGEgc3Bs
-aXQgb3IgcGFja2VkIHZpcnRxdWV1ZTxicj4NCiZndDsgbGF5b3V0Ojxicj4NCiZndDs8YnI+DQom
-Z3Q7Jm5ic3A7IFNwbGl0IFZRPGJyPg0KJmd0OyZuYnNwOyZuYnNwOyAtIFVwcGVyIDE2IGJpdHM6
-IGxhc3RfYXZhaWxfaWR4PGJyPg0KJmd0OyZuYnNwOyZuYnNwOyAtIExvd2VyIDE2IGJpdHM6IHZp
-cnRxdWV1ZSBpbmRleDxicj4NCiZndDs8YnI+DQomZ3Q7Jm5ic3A7IFBhY2tlZCBWUTxicj4NCiZn
-dDsmbmJzcDsmbmJzcDsgLSBVcHBlciAxNiBiaXRzOiAxLWJpdCB3cmFwIGNvdW50ZXIgJmFtcDsg
-MTUtYml0IGxhc3RfYXZhaWxfaWR4PGJyPg0KJmd0OyZuYnNwOyZuYnNwOyAtIExvd2VyIDE2IGJp
-dHM6IHZpcnRxdWV1ZSBpbmRleDxicj4NCiZndDs8YnI+DQomZ3Q7IEFsc28sIGR1ZSB0byB0aGUg
-bGltaXRhdGlvbnMgb2YgaW9ldmVudGZkIG5vdCBiZWluZyBhYmxlIHRvIGNhcnJ5IHRoZTxicj4N
-CiZndDsgZXh0cmEgcHJvdmlkZWQgYnkgdGhlIGRyaXZlciwgaW9ldmVudGZkIGlzIGxlZnQgZGlz
-YWJsZWQgZm9yIGFueSBkZXZpY2VzPGJyPg0KJmd0OyB1c2luZyB0aGlzIGZlYXR1cmUuPGJyPg0K
-Jmd0Ozxicj4NCiZndDsgQSBzaWduaWZpY2FudCBhc3BlY3Qgb2YgdGhpcyBlZmZvcnQgaGFzIGJl
-ZW4gdG8gbWFpbnRhaW4gY29tcGF0aWJpbGl0eTxicj4NCiZndDsgYWNyb3NzIGRpZmZlcmVudCBi
-YWNrZW5kcy4gQXMgc3VjaCwgdGhlIGZlYXR1cmUgaXMgb2ZmZXJlZCBieSBiYWNrZW5kPGJyPg0K
-Jmd0OyBkZXZpY2VzIG9ubHkgd2hlbiBzdXBwb3J0ZWQsIHdpdGggZmFsbGJhY2sgbWVjaGFuaXNt
-cyB3aGVyZSBiYWNrZW5kPGJyPg0KJmd0OyBzdXBwb3J0IGlzIGFic2VudC48YnI+DQomZ3Q7PGJy
-Pg0KPGJyPg0KSGkgV2VudGFvLDxicj4NCjxicj4NCjwvZGl2Pg0KPC9zcGFuPjwvZm9udD48L2Rp
-dj4NCjwvYm9keT4NCjwvaHRtbD4NCg==
+The qpl only supports one compression level, there is no qpl
+compression level parameter added, users do not need to specify
+the qpl compression level.
 
---_000_PH0PR13MB56827829C8502484EACF080D88222PH0PR13MB5682namp_--
+Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
+Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
+---
+ hw/core/qdev-properties-system.c |   2 +-
+ migration/meson.build            |   1 +
+ migration/multifd-qpl.c          | 158 +++++++++++++++++++++++++++++++
+ migration/multifd.h              |   1 +
+ qapi/migration.json              |   7 +-
+ 5 files changed, 167 insertions(+), 2 deletions(-)
+ create mode 100644 migration/multifd-qpl.c
+
+diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+index 1a396521d5..b4f0e5cbdb 100644
+--- a/hw/core/qdev-properties-system.c
++++ b/hw/core/qdev-properties-system.c
+@@ -658,7 +658,7 @@ const PropertyInfo qdev_prop_fdc_drive_type = {
+ const PropertyInfo qdev_prop_multifd_compression = {
+     .name = "MultiFDCompression",
+     .description = "multifd_compression values, "
+-                   "none/zlib/zstd",
++                   "none/zlib/zstd/qpl",
+     .enum_table = &MultiFDCompression_lookup,
+     .get = qdev_propinfo_get_enum,
+     .set = qdev_propinfo_set_enum,
+diff --git a/migration/meson.build b/migration/meson.build
+index 92b1cc4297..c155c2d781 100644
+--- a/migration/meson.build
++++ b/migration/meson.build
+@@ -40,6 +40,7 @@ if get_option('live_block_migration').allowed()
+   system_ss.add(files('block.c'))
+ endif
+ system_ss.add(when: zstd, if_true: files('multifd-zstd.c'))
++system_ss.add(when: qpl, if_true: files('multifd-qpl.c'))
+ 
+ specific_ss.add(when: 'CONFIG_SYSTEM_ONLY',
+                 if_true: files('ram.c',
+diff --git a/migration/multifd-qpl.c b/migration/multifd-qpl.c
+new file mode 100644
+index 0000000000..6b94e732ac
+--- /dev/null
++++ b/migration/multifd-qpl.c
+@@ -0,0 +1,158 @@
++/*
++ * Multifd qpl compression accelerator implementation
++ *
++ * Copyright (c) 2023 Intel Corporation
++ *
++ * Authors:
++ *  Yuan Liu<yuan1.liu@intel.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/rcu.h"
++#include "exec/ramblock.h"
++#include "exec/target_page.h"
++#include "qapi/error.h"
++#include "migration.h"
++#include "trace.h"
++#include "options.h"
++#include "multifd.h"
++#include "qpl/qpl.h"
++
++struct qpl_data {
++    qpl_job **job_array;
++    /* the number of allocated jobs */
++    uint32_t job_num;
++    /* the size of data processed by a qpl job */
++    uint32_t data_size;
++    /* compressed data buffer */
++    uint8_t *zbuf;
++    /* the length of compressed data */
++    uint32_t *zbuf_hdr;
++};
++
++/**
++ * qpl_send_setup: setup send side
++ *
++ * Setup each channel with QPL compression.
++ *
++ * Returns 0 for success or -1 for error
++ *
++ * @p: Params for the channel that we are using
++ * @errp: pointer to an error
++ */
++static int qpl_send_setup(MultiFDSendParams *p, Error **errp)
++{
++    /* Implement in next patch */
++    return -1;
++}
++
++/**
++ * qpl_send_cleanup: cleanup send side
++ *
++ * Close the channel and return memory.
++ *
++ * @p: Params for the channel that we are using
++ * @errp: pointer to an error
++ */
++static void qpl_send_cleanup(MultiFDSendParams *p, Error **errp)
++{
++    /* Implement in next patch */
++}
++
++/**
++ * qpl_send_prepare: prepare data to be able to send
++ *
++ * Create a compressed buffer with all the pages that we are going to
++ * send.
++ *
++ * Returns 0 for success or -1 for error
++ *
++ * @p: Params for the channel that we are using
++ * @errp: pointer to an error
++ */
++static int qpl_send_prepare(MultiFDSendParams *p, Error **errp)
++{
++    /* Implement in next patch */
++    return -1;
++}
++
++/**
++ * qpl_recv_setup: setup receive side
++ *
++ * Create the compressed channel and buffer.
++ *
++ * Returns 0 for success or -1 for error
++ *
++ * @p: Params for the channel that we are using
++ * @errp: pointer to an error
++ */
++static int qpl_recv_setup(MultiFDRecvParams *p, Error **errp)
++{
++    /* Implement in next patch */
++    return -1;
++}
++
++/**
++ * qpl_recv_cleanup: setup receive side
++ *
++ * Close the channel and return memory.
++ *
++ * @p: Params for the channel that we are using
++ */
++static void qpl_recv_cleanup(MultiFDRecvParams *p)
++{
++    /* Implement in next patch */
++}
++
++/**
++ * qpl_recv_pages: read the data from the channel into actual pages
++ *
++ * Read the compressed buffer, and uncompress it into the actual
++ * pages.
++ *
++ * Returns 0 for success or -1 for error
++ *
++ * @p: Params for the channel that we are using
++ * @errp: pointer to an error
++ */
++static int qpl_recv_pages(MultiFDRecvParams *p, Error **errp)
++{
++    /* Implement in next patch */
++    return -1;
++}
++
++/**
++ * qpl_get_iov_count: get the count of IOVs
++ *
++ * For QPL compression, in addition to requesting the same number of IOVs
++ * as the page, it also requires an additional IOV to store all compressed
++ * data lengths.
++ *
++ * Returns the count of the IOVs
++ *
++ * @page_count: Indicate the maximum count of pages processed by multifd
++ */
++static uint32_t qpl_get_iov_count(uint32_t page_count)
++{
++    return page_count + 1;
++}
++
++static MultiFDMethods multifd_qpl_ops = {
++    .send_setup = qpl_send_setup,
++    .send_cleanup = qpl_send_cleanup,
++    .send_prepare = qpl_send_prepare,
++    .recv_setup = qpl_recv_setup,
++    .recv_cleanup = qpl_recv_cleanup,
++    .recv_pages = qpl_recv_pages,
++    .get_iov_count = qpl_get_iov_count
++};
++
++static void multifd_qpl_register(void)
++{
++    multifd_register_ops(MULTIFD_COMPRESSION_QPL, &multifd_qpl_ops);
++}
++
++migration_init(multifd_qpl_register);
+diff --git a/migration/multifd.h b/migration/multifd.h
+index d82495c508..0e9361df2a 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -33,6 +33,7 @@ bool multifd_queue_page(RAMBlock *block, ram_addr_t offset);
+ #define MULTIFD_FLAG_NOCOMP (0 << 1)
+ #define MULTIFD_FLAG_ZLIB (1 << 1)
+ #define MULTIFD_FLAG_ZSTD (2 << 1)
++#define MULTIFD_FLAG_QPL (4 << 1)
+ 
+ /* This value needs to be a multiple of qemu_target_page_size() */
+ #define MULTIFD_PACKET_SIZE (512 * 1024)
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 5a565d9b8d..e48e3d7065 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -625,11 +625,16 @@
+ #
+ # @zstd: use zstd compression method.
+ #
++# @qpl: use qpl compression method. Query Processing Library(qpl) is based on
++#       the deflate compression algorithm and use the Intel In-Memory Analytics
++#       Accelerator(IAA) hardware accelerated compression and decompression.
++#
+ # Since: 5.0
+ ##
+ { 'enum': 'MultiFDCompression',
+   'data': [ 'none', 'zlib',
+-            { 'name': 'zstd', 'if': 'CONFIG_ZSTD' } ] }
++            { 'name': 'zstd', 'if': 'CONFIG_ZSTD' },
++            { 'name': 'qpl', 'if': 'CONFIG_QPL' } ] }
+ 
+ ##
+ # @MigMode:
+-- 
+2.39.3
+
 
