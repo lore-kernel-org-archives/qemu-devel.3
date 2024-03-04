@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9354C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 17:22:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CDABC48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 17:25:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhC0s-0004HG-Dx; Mon, 04 Mar 2024 12:22:06 -0500
+	id 1rhC3C-0005kG-5m; Mon, 04 Mar 2024 12:24:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rhC0q-0004H5-QL
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:22:04 -0500
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rhC3A-0005jS-SM
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:24:28 -0500
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rhC0p-0006rT-5j
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:22:04 -0500
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-5c66b093b86so4546463a12.0
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 09:22:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rhC38-0007QR-TG
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:24:28 -0500
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-6e57a3bf411so2731568b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 09:24:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709572921; x=1710177721; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=ventanamicro.com; s=google; t=1709573065; x=1710177865; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=R5ruznmM3OY0bC8o3BVg0gCa4UCMiapvj3tpFmEWu+g=;
- b=SzgO9V2Pt7NIsqw5w7HtWSpO/C95HmGFfARwA+pr9ceX/j8hlKOFvHfFsNJymlcQu3
- E39je08vMiz/84hVXIwwjGyp0coxodexg7xL+L3MPksXahy/4puXNcpINJ2HYZkMivP3
- SpYOwpouBvFjeIY81joaLWfE1qsNm8NrsT6Gkl2SPO5uqLudIwVHP8T+WMQo1NSf6JK1
- q8lXDWULF/eT266H8Zk0BKOJFbEr6AJNY7eFOM6Vks5HPZ5e0cyyzF/nu0j6RMlZ1q4S
- bvqgdT6QQBJv5KZcZh4hVwqzaGjg3ksjQB1hgY65ptGKUoKTapcTBmNCQwuj+pebpf+j
- mbjA==
+ bh=ujQZlVzwEouRsoAxeY1MiVCw9haUba1/ifiQupfzP88=;
+ b=Nv7dQc2FFA7gc+dddu8seEd6QLcIrj67q8Uc4mTStcPyGDwLKKWYQ/gYIuMpREzA6x
+ olgqf4qfiGfjMvnL2yoNy4GbInySuGnt/X77iklOP6gbl/9oX8faeCbXnIhhe2dDaO5Y
+ P2MCLWa7mXZF2yTH1w/4DTUOOHfCyVm/p3ULX5QInmFN5H+MSLMDmuQF+/SSkS3pVgZj
+ l4w1yB8ZwuL5rLZ/ZB4Ur+Sa7VZGwbMmFBND/vqRgF3o/r+6UQ2W9Q1UpQUCfGzsYsWC
+ nHxhRnWZnoFYJcxp/9OJDSUNE81ht/XdEAvD2tjlXKB6qN6kXRRrAqNUiSKYXERJHPtR
+ JKbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709572921; x=1710177721;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1709573065; x=1710177865;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=R5ruznmM3OY0bC8o3BVg0gCa4UCMiapvj3tpFmEWu+g=;
- b=JgQl3obiPKzLdJW4aOZPSbfYLrq+WVVwJykJVFgQEH+D15eDqcm47Rl4l6zBTuRXmx
- VdTD+gc4r2v936eTztXZh0/awsdAN7L4RVnsSl6KmwUI2MCWX28K62/a8RbLIrp9RPtE
- 568axsigVr/1+bnbkZrl9Sjk1UYiBGnSZDwfZN/TIezDVyfJsQmIjS3kqKGQ2SJmqEHH
- /cogN3mIxpkH7i2irJk6bpo0S008h4aDFyxJGaC2Hz5S/KVccau/mpHiD6V0p/SuCU/8
- pff2kPgHbuHb8dCLTny05t00dMCEU19hNEOTwjLkZay/DDG8fXTlXNtm0de8Y+WGu894
- Cu+w==
+ bh=ujQZlVzwEouRsoAxeY1MiVCw9haUba1/ifiQupfzP88=;
+ b=hcMTpzqKJTpxpjSuRPo13valt9veI+kEB9pwDV5sH7clo5LpcRCvwvjV25vI7rfwYm
+ mp/PWo+Qc9WBhr7E4GygZZE6tx+WLGAIX9LopevXoHEcfRpl5NLn1Kcwa7EEzrcayavN
+ aqOZxeSmUBiYe2C4Xtm6pLUZH/joctLbWV8Ps3ol6Fz5TeYmzRGTQYiMq9rXJuR9cF3S
+ 9kcU4nzREfKO72BkC/TEvr3QVJiecK1EVzVAhq0qdYdOyUREWfQ7/tehdGtReufVtMmH
+ 9Ix1Eg8f7BhFxBVVzmIMHA/ZgCDuKbX+DRJkn79GiA4g4AtN6WNlmNYRcyykoA8m3dZr
+ 2Lug==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU8rgNCwLxGI4JsR2Jon0OM69hZMsIonKgqS/gu01RoUnxnCF2F1wl3VQvFle7shGEhUuIkzLjYw83L9X0zQnxEu7xpVok=
-X-Gm-Message-State: AOJu0YyF3EFIcVnFPDVk67Fx6/IySwYLjW6jD/bP06hqQhXcObF/xCeN
- yCKOKKUnxhqp0ooMLznxS0dSUnsC99g+C9+PhtkGSxtAM/14l+jPXqVwlnQ2e1I=
-X-Google-Smtp-Source: AGHT+IG0zvT7pjU5l4EGhRIQ52Oe65bK6YKKGBtqoGoLFY6EOf9dbMhnc1TAuP8rZAItGyKsvjrVag==
-X-Received: by 2002:a17:90b:4393:b0:29b:46f0:6f8e with SMTP id
- in19-20020a17090b439300b0029b46f06f8emr130508pjb.8.1709572920936; 
- Mon, 04 Mar 2024 09:22:00 -0800 (PST)
-Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
- [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- oh5-20020a17090b3a4500b0029ab712f648sm10268079pjb.38.2024.03.04.09.21.59
+ AJvYcCWQaWVQxgP/Oc2UMNKDT7Tprx2NV71X0JbTAItGGHXzVVYsXrK5gxTp1H7bt/vzNBO0y29UbslrjsO4Ajh3zszPuufjALo=
+X-Gm-Message-State: AOJu0YxabU+8L6fqZAdJgbRW+zeJ4Ca+z3Hc3fdVTHTHcDt3ZgPFHtEN
+ hm5nBcVOUn0++j3n3BVoHX5V3l8nczl1Sxa2KLhaB3EJm2pNdll8vht7gxI92kA=
+X-Google-Smtp-Source: AGHT+IFrkuXw/iiN1aUxFBGZEApPu2LibaAmsW/EyACllCghD6kYY0sliQFSvPO1DPB5QjUty8sOEQ==
+X-Received: by 2002:a05:6a00:9084:b0:6e5:dadd:6e11 with SMTP id
+ jo4-20020a056a00908400b006e5dadd6e11mr11946711pfb.33.1709573064784; 
+ Mon, 04 Mar 2024 09:24:24 -0800 (PST)
+Received: from [192.168.68.110] ([177.94.15.159])
+ by smtp.gmail.com with ESMTPSA id
+ c2-20020a62e802000000b006e1463c18f8sm7558556pfi.37.2024.03.04.09.24.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Mar 2024 09:22:00 -0800 (PST)
-Message-ID: <e33ab9ae-e2d4-41ba-b053-e7e918572808@linaro.org>
-Date: Mon, 4 Mar 2024 07:21:57 -1000
+ Mon, 04 Mar 2024 09:24:24 -0800 (PST)
+Message-ID: <23cdc593-c394-4f45-ab83-07b6aae44047@ventanamicro.com>
+Date: Mon, 4 Mar 2024 14:24:19 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] tests/tcg: Add multiarch test for Xfer:siginfo:read
- stub
+Subject: Re: [PATCH v5 2/5] target/riscv: Add cycle & instret privilege mode
+ filtering properties
+To: Atish Patra <atishp@rivosinc.com>
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org, Weiwei Li
+ <liwei1518@gmail.com>, kaiwenxue1@gmail.com
+References: <20240228185116.1321730-1-atishp@rivosinc.com>
+ <20240228185116.1321730-3-atishp@rivosinc.com>
 Content-Language: en-US
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
- alex.bennee@linaro.org
-Cc: peter.maydell@linaro.org
-References: <20240303192610.498490-1-gustavo.romero@linaro.org>
- <20240303192610.498490-2-gustavo.romero@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240303192610.498490-2-gustavo.romero@linaro.org>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240228185116.1321730-3-atishp@rivosinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,106 +103,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/3/24 09:26, Gustavo Romero wrote:
-> Add multiarch test for testing if Xfer:siginfo:read query is properly
-> handled by gdbstub.
+
+
+On 2/28/24 15:51, Atish Patra wrote:
+> From: Kaiwen Xue <kaiwenx@rivosinc.com>
 > 
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> This adds the properties for ISA extension smcntrpmf. Patches
+> implementing it will follow.
+> 
+> Signed-off-by: Atish Patra <atishp@rivosinc.com>
+> Signed-off-by: Kaiwen Xue <kaiwenx@rivosinc.com>
 > ---
->   tests/tcg/multiarch/Makefile.target           | 10 ++++++-
->   .../gdbstub/test-qxfer-siginfo-read.py        | 26 +++++++++++++++++++
->   tests/tcg/multiarch/segfault.c                | 14 ++++++++++
->   3 files changed, 49 insertions(+), 1 deletion(-)
->   create mode 100644 tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py
->   create mode 100644 tests/tcg/multiarch/segfault.c
+
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+
+>   target/riscv/cpu.c     | 2 ++
+>   target/riscv/cpu_cfg.h | 1 +
+>   2 files changed, 3 insertions(+)
 > 
-> diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
-> index e10951a801..61cda9640e 100644
-> --- a/tests/tcg/multiarch/Makefile.target
-> +++ b/tests/tcg/multiarch/Makefile.target
-> @@ -80,6 +80,13 @@ run-gdbstub-qxfer-auxv-read: sha1
->   		--bin $< --test $(MULTIARCH_SRC)/gdbstub/test-qxfer-auxv-read.py, \
->   	basic gdbstub qXfer:auxv:read support)
->   
-> +run-gdbstub-qxfer-siginfo-read: segfault
-> +	$(call run-test, $@, $(GDB_SCRIPT) \
-> +		--gdb $(GDB) \
-> +		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
-> +		--bin "$< -s" --test $(MULTIARCH_SRC)/gdbstub/test-qxfer-siginfo-read.py, \
-> +	basic gdbstub qXfer:siginfo:read support)
-> +
->   run-gdbstub-proc-mappings: sha1
->   	$(call run-test, $@, $(GDB_SCRIPT) \
->   		--gdb $(GDB) \
-> @@ -122,7 +129,8 @@ endif
->   EXTRA_RUNS += run-gdbstub-sha1 run-gdbstub-qxfer-auxv-read \
->   	      run-gdbstub-proc-mappings run-gdbstub-thread-breakpoint \
->   	      run-gdbstub-registers run-gdbstub-prot-none \
-> -	      run-gdbstub-catch-syscalls
-> +	      run-gdbstub-catch-syscalls \
-> +	      run-gdbstub-qxfer-siginfo-read
->   
->   # ARM Compatible Semi Hosting Tests
->   #
-> diff --git a/tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py b/tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py
-> new file mode 100644
-> index 0000000000..862596b07a
-> --- /dev/null
-> +++ b/tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py
-> @@ -0,0 +1,26 @@
-> +from __future__ import print_function
-> +#
-> +# Test gdbstub Xfer:siginfo:read stub.
-> +#
-> +# The test runs a binary that causes a SIGSEGV and then looks for additional
-> +# info about the signal through printing GDB's '$_siginfo' special variable,
-> +# which sends a Xfer:siginfo:read query to the gdbstub.
-> +#
-> +# The binary causes a SIGSEGV at dereferencing a pointer with value 0xdeadbeef,
-> +# so the test looks for and checks if this address is correctly reported by the
-> +# gdbstub.
-> +#
-> +# This is launched via tests/guest-debug/run-test.py
-> +#
-> +
-> +import gdb
-> +from test_gdbstub import main, report
-> +
-> +def run_test():
-> +    "Run through the test"
-> +
-> +    gdb.execute("continue", False, True)
-> +    resp = gdb.execute("print/x $_siginfo", False, True)
-> +    report(resp.find("si_addr = 0xdeadbeef"), "Found fault address.")
-> +
-> +main(run_test)
-> diff --git a/tests/tcg/multiarch/segfault.c b/tests/tcg/multiarch/segfault.c
-> new file mode 100644
-> index 0000000000..e6c8ff31ca
-> --- /dev/null
-> +++ b/tests/tcg/multiarch/segfault.c
-> @@ -0,0 +1,14 @@
-> +#include <stdio.h>
-> +#include <string.h>
-> +
-> +/* Cause a segfault for testing purposes. */
-> +
-> +int main(int argc, char *argv[])
-> +{
-> +    int *ptr = (void *)0xdeadbeef;
-> +
-> +    if (argc == 2 && strcmp(argv[1], "-s") == 0) {
-> +        /* Cause segfault. */
-> +        printf("%d\n", *ptr);
-> +    }
-> +}
-
-Any reason SIGSEGV is interesting?
-Perhaps just abort for SIGABRT instead?
-
-A test using setitimer to raise SIGALRM would test the async path.
-
-
-r~
-
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 1b8d001d237f..f9d3c80597fc 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -169,6 +169,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+>       ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
+>       ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
+>       ISA_EXT_DATA_ENTRY(smaia, PRIV_VERSION_1_12_0, ext_smaia),
+> +    ISA_EXT_DATA_ENTRY(smcntrpmf, PRIV_VERSION_1_12_0, ext_smcntrpmf),
+>       ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
+>       ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
+>       ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
+> @@ -1447,6 +1448,7 @@ const char *riscv_get_misa_ext_description(uint32_t bit)
+>   const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+>       /* Defaults for standard extensions */
+>       MULTI_EXT_CFG_BOOL("sscofpmf", ext_sscofpmf, false),
+> +    MULTI_EXT_CFG_BOOL("smcntrpmf", ext_smcntrpmf, false),
+>       MULTI_EXT_CFG_BOOL("zifencei", ext_zifencei, true),
+>       MULTI_EXT_CFG_BOOL("zicsr", ext_zicsr, true),
+>       MULTI_EXT_CFG_BOOL("zihintntl", ext_zihintntl, true),
+> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+> index 833bf5821708..0828841445c5 100644
+> --- a/target/riscv/cpu_cfg.h
+> +++ b/target/riscv/cpu_cfg.h
+> @@ -73,6 +73,7 @@ struct RISCVCPUConfig {
+>       bool ext_zihpm;
+>       bool ext_smstateen;
+>       bool ext_sstc;
+> +    bool ext_smcntrpmf;
+>       bool ext_svadu;
+>       bool ext_svinval;
+>       bool ext_svnapot;
 
