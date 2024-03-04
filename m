@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 422C8C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 07:02:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A6B7C54E49
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 07:17:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh2Kd-0006mp-02; Mon, 04 Mar 2024 02:01:51 -0500
+	id 1rh2ZD-0002PJ-1R; Mon, 04 Mar 2024 02:16:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rh2KX-0006mX-LA
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 02:01:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rh2ZA-0002OC-R7
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 02:16:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rh2KW-0004gY-Bi
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 02:01:45 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rh2Z8-0006qf-E9
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 02:16:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709535703;
+ s=mimecast20190719; t=1709536607;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=mtiZU1AtijGtjW2vJas1UhhaqPj5BF3e7xkqFJbTNz0=;
- b=FuvNqex26VTSVtMfxzrr8pmJDRGiG1vczjqbTDcfGVsFfee0VbURY4N+BVXl0xbxMRWJIV
- p2s7Nsr0BriIEq8gQbPYGznGfw5/bdj0Vby29u5lyRudrpSabyBlY8bK1lWPX7Sty7VneD
- xoUxdQvIg5dPesvMupFrW+UExOUxmOk=
-Received: from mail-il1-f197.google.com (mail-il1-f197.google.com
- [209.85.166.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=F+dTBzbN6KE6fb3XcgiKEDQEdaQMcjz+HkgpkWDdjAo=;
+ b=d16KchZtG92BXe0Uc8iP2fLYlZ7m9SRph2I2YB0U4wfeEBm8Q2hdeMHwK2x7zkjHGTp75U
+ uqbscUdJm8V1bgmE3bTyZfs9xO/lvgAW6QCFbD67vVRUBK0qBI34SGh8hVpVI+TlPINZ4n
+ FHJSuJorc97d1f9wCCtMGOiW8URtFEQ=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-486-KZfkkRrNMG6i5x7Jvw1wCQ-1; Mon, 04 Mar 2024 02:01:40 -0500
-X-MC-Unique: KZfkkRrNMG6i5x7Jvw1wCQ-1
-Received: by mail-il1-f197.google.com with SMTP id
- e9e14a558f8ab-3654e457a72so11650165ab.0
- for <qemu-devel@nongnu.org>; Sun, 03 Mar 2024 23:01:40 -0800 (PST)
+ us-mta-625-1SSeuVB2N0-8LHQ2NiIWZw-1; Mon, 04 Mar 2024 02:16:45 -0500
+X-MC-Unique: 1SSeuVB2N0-8LHQ2NiIWZw-1
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-29a0b097af4so313423a91.1
+ for <qemu-devel@nongnu.org>; Sun, 03 Mar 2024 23:16:44 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709535699; x=1710140499;
+ d=1e100.net; s=20230601; t=1709536603; x=1710141403;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mtiZU1AtijGtjW2vJas1UhhaqPj5BF3e7xkqFJbTNz0=;
- b=LeQEh/gYFV8Z2Jl3jlaj/Sz8Btlm/Daj18rLT7s3zKSwaemyMM9DTKhKIO5arVNBDz
- u8MFydw9kNKpdHKB/PB7TUkcPBbytDrihXeLoa2cgk5pFyc23kQLsa8zmdFgWb+ngRo3
- mqBpT7F08HdY4EO+QIvUIRGemjvbU8RECdtT9r8mKPT0b2h6BeONFNbPtbPSGe/nqZQV
- AyvDu6iUZXgiJxf7qORFogkwQ/0k/MgMBM/PhABQp2aPujQHP+aiL3YHJ70MdqT5lJzJ
- EDt7YnRLgxvTio7zYmjQVU/HjohAaUiJyCZ4X8bkPqO4fJHi+iR1TBy/6UvUnItQpIIV
- /n2w==
+ bh=F+dTBzbN6KE6fb3XcgiKEDQEdaQMcjz+HkgpkWDdjAo=;
+ b=ngJn/aHf4K7c4S6ZhCCBhbdCHxd6OE/tydw/Sz+dxWkrvTC79Wr41cOfGU2wZ9o6e9
+ XfSoQWR0tMHwgdLXVq5ADXtR5bghih4fLgQ91Ii4qESd1NuIAeP4BfIZFy6Y/bKqoP6Q
+ RuWjphYRvn9qH1fCsFQAWB6IL7NA8C6Vbkvn0U6YGk+C9AC24Z7ZbxdFCziUpGw3pbKq
+ Ndgp2wUYVQYlB54/33I9B7o5rGiNnlA4slNCQsAoHcjijmgJuC2J0H8SwTamOr5gXl87
+ VaXgS2mRD6B+xQsnTh/oomhayxxmon2Zdtro+Siei4xh6pf/5djr4Al1bYR1hFYEqABO
+ Vd5A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUmu24Fw/xbs4EFhBiQO5bVk+JFlk3JSSU7V0XEXxGhMY27GEb3XMLHwMG0+sw5dUPP1AyrnAN3TWm28RzYe/raOOXwHek=
-X-Gm-Message-State: AOJu0Yy254Ed4rGdRMfg3KuUNihbVRvI5VJz6P5J8w8KbBypYbW8ykT+
- rLehB6+phapcTgFTZC7F+879F4s4kS12J7Czjb0cHvc59d9zx0/LkkriOmwFXIy2hEeph2xicmV
- m9HoSbkzIpyOegL/shijdPl6ndp2bfM0lwyBbfjTI9ru+CN/qyETv
-X-Received: by 2002:a6b:c805:0:b0:7c8:3715:4d64 with SMTP id
- y5-20020a6bc805000000b007c837154d64mr3474814iof.1.1709535699760; 
- Sun, 03 Mar 2024 23:01:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEomXZDXBr3SJOQZjHUKZoBuZ1pvrCRJ4qb/TzYdfJKrPUM2oebvFhfksiFWpXprr5URWggdw==
-X-Received: by 2002:a6b:c805:0:b0:7c8:3715:4d64 with SMTP id
- y5-20020a6bc805000000b007c837154d64mr3474799iof.1.1709535699509; 
- Sun, 03 Mar 2024 23:01:39 -0800 (PST)
+ AJvYcCUBf3W3tRhli9QVrsFwQrpilBzb6l6Eln1R6+jN7KW9JjEuSRxPWDLCuVYkWOvCHl4dJXfX9WJFXjW1bjKKZgo5hO0lyto=
+X-Gm-Message-State: AOJu0YzS91+uLhvE3GpIfnpY111HtdnQvOSai2Bgi5zuD+n+iZmIdKGn
+ LhGujryuaPyvrWf/RtUQet1uRvXaQlrUk7LqumMBIpI0Nf6iTY4hZD92XdKnzKHzUaoFB3siJxG
+ mWB5ywlhf2m7covR5fxfTLhKpcyV0cQ/UzrZXQ3lYXqpa4yQiXswy
+X-Received: by 2002:a17:90b:128a:b0:298:c3b4:f6ab with SMTP id
+ fw10-20020a17090b128a00b00298c3b4f6abmr6731530pjb.2.1709536603251; 
+ Sun, 03 Mar 2024 23:16:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFDuT+OtVi7UTiErrZIFfMSJsOdr9yLvWV3ZBZXZifYksmXRtLz0C0fQ0HS8HJZAvbOKgTWLQ==
+X-Received: by 2002:a17:90b:128a:b0:298:c3b4:f6ab with SMTP id
+ fw10-20020a17090b128a00b00298c3b4f6abmr6731511pjb.2.1709536602851; 
+ Sun, 03 Mar 2024 23:16:42 -0800 (PST)
 Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- b22-20020a63cf56000000b005dc884e9f5bsm6896612pgj.38.2024.03.03.23.01.34
+ a23-20020a17090abe1700b0029b28e6ef26sm4636647pjs.11.2024.03.03.23.16.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 03 Mar 2024 23:01:39 -0800 (PST)
-Date: Mon, 4 Mar 2024 15:01:28 +0800
+ Sun, 03 Mar 2024 23:16:42 -0800 (PST)
+Date: Mon, 4 Mar 2024 15:16:30 +0800
 From: Peter Xu <peterx@redhat.com>
 To: Hao Xiang <hao.xiang@bytedance.com>
 Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
@@ -71,25 +71,24 @@ Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
  thuth@redhat.com, lvivier@redhat.com, jdenemar@redhat.com,
  marcel.apfelbaum@gmail.com, philmd@linaro.org,
  wangyanan55@huawei.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 1/7] migration/multifd: Add new migration option
- zero-page-detection.
-Message-ID: <ZeVxyNKLoHqoodYM@x1n>
+Subject: Re: [PATCH v4 2/7] migration/multifd: Implement zero page
+ transmission on the multifd thread.
+Message-ID: <ZeV1TrOvERHN_LOo@x1n>
 References: <20240301022829.3390548-1-hao.xiang@bytedance.com>
- <20240301022829.3390548-2-hao.xiang@bytedance.com>
+ <20240301022829.3390548-3-hao.xiang@bytedance.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240301022829.3390548-2-hao.xiang@bytedance.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20240301022829.3390548-3-hao.xiang@bytedance.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.589,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,15 +104,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 01, 2024 at 02:28:23AM +0000, Hao Xiang wrote:
-> This new parameter controls where the zero page checking is running.
-> 1. If this parameter is set to 'legacy', zero page checking is
-> done in the migration main thread.
-> 2. If this parameter is set to 'none', zero page checking is disabled.
-> 
-> Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
+On Fri, Mar 01, 2024 at 02:28:24AM +0000, Hao Xiang wrote:
+> -GlobalProperty hw_compat_8_2[] = {};
+> +GlobalProperty hw_compat_8_2[] = {
+> +    { "migration", "zero-page-detection", "legacy"},
+> +};
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+I hope we can make it for 9.0, then this (and many rest places) can be kept
+as-is.  Let's see..  soft-freeze is March 12th.
+
+One thing to mention is I just sent a pull which has mapped-ram feature
+merged.  You may need a rebase onto that, and hopefully mapped-ram can also
+use your feature too within the same patch when you repost.
+
+https://lore.kernel.org/all/20240229153017.2221-1-farosas@suse.de/
+
+That rebase may or may not need much caution, I apologize for that:
+mapped-ram as a feature was discussed 1+ years, so it was a plan to merge
+it (actually still partly of it) into QEMU 9.0.
+
+[...]
+
+> +static bool multifd_zero_page(void)
+
+multifd_zero_page_enabled()?
+
+> +{
+> +    return migrate_zero_page_detection() == ZERO_PAGE_DETECTION_MULTIFD;
+> +}
+> +
+> +static void swap_page_offset(ram_addr_t *pages_offset, int a, int b)
+> +{
+> +    ram_addr_t temp;
+> +
+> +    if (a == b) {
+> +        return;
+> +    }
+> +
+> +    temp = pages_offset[a];
+> +    pages_offset[a] = pages_offset[b];
+> +    pages_offset[b] = temp;
+> +}
+> +
+> +/**
+> + * multifd_send_zero_page_check: Perform zero page detection on all pages.
+> + *
+> + * Sorts normal pages before zero pages in p->pages->offset and updates
+> + * p->pages->normal_num.
+> + *
+> + * @param p A pointer to the send params.
+
+Nit: the majority of doc style in QEMU (it seems to me) is:
+
+  @p: pointer to @MultiFDSendParams.
+
+> + */
+> +void multifd_send_zero_page_check(MultiFDSendParams *p)
+
+multifd_send_zero_page_detect()?
+
+This patch used "check" on both sides, but neither of them is a pure check
+to me.  For the other side, maybe multifd_recv_zero_page_process()?  As
+that one applies the zero pages.
+
+> +{
+> +    MultiFDPages_t *pages = p->pages;
+> +    RAMBlock *rb = pages->block;
+> +    int i = 0;
+> +    int j = pages->num - 1;
+> +
+> +    /*
+> +     * QEMU older than 9.0 don't understand zero page
+> +     * on multifd channel. This switch is required to
+> +     * maintain backward compatibility.
+> +     */
+
+IMHO we can drop this comment; it is not accurate as the user can disable
+it explicitly through the parameter, then it may not always about compatibility.
+
+> +    if (multifd_zero_page()) {
+
+Shouldn't this be "!multifd_zero_page_enabled()"?
+
+> +        pages->normal_num = pages->num;
+> +        return;
+> +    }
+
+The rest looks all sane.
+
+Thanks,
 
 -- 
 Peter Xu
