@@ -4,69 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA108C5478C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 13:47:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F47EC48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 13:48:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh8dk-0000d6-EX; Mon, 04 Mar 2024 08:46:00 -0500
+	id 1rh8fS-000363-NV; Mon, 04 Mar 2024 08:47:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1rh8dX-0000Zd-SS
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 08:45:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1rh8dN-0000sh-B6
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 08:45:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709559936;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=gYYMuzTY4kRR3iY0POkbOJDFrVyQQqPPzyTGgUgjNhU=;
- b=RO8ecw+s71yD6CEs+FZpVnUkq/rIKTQYkFxvdYRiXkBo008fK2RXQ+TF994j1IA4A0Txzu
- il3toQt/WQS9GZ2DO5W2cOHc0u3nDmit5NvZMByU0Jrsnzt+ZdBcPnx6SnqxZIrrTYAmet
- huZEofCHvOQQWohX2dLrYIqy3uNNSbg=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-654-R2DXGs6bMaasBBogdDhSAw-1; Mon, 04 Mar 2024 08:45:35 -0500
-X-MC-Unique: R2DXGs6bMaasBBogdDhSAw-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id ACE6685A58B;
- Mon,  4 Mar 2024 13:45:34 +0000 (UTC)
-Received: from srv1.redhat.com (unknown [10.45.226.165])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 97BF924D;
- Mon,  4 Mar 2024 13:45:33 +0000 (UTC)
-From: Konstantin Kostiuk <kkostiuk@redhat.com>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rh8fQ-0002yx-VB
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 08:47:44 -0500
+Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rh8fP-0001WK-8N
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 08:47:44 -0500
+Received: by mail-ot1-x32f.google.com with SMTP id
+ 46e09a7af769-6e125818649so2356700a34.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 05:47:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1709560061; x=1710164861; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=D9rTFwWrmBiGRVkSfatNGszolevvlbeDe2scBpfLQlo=;
+ b=Q9TCEITbqSMVPZXZjdXZSqWV/Zi1oEseio7rulJ4t3HiVzFSCOnHL9lz9wmSj5bQeT
+ +PAlPGEGxNKjshFCLdDjFwGZAiBUt15YyvWOTVAiu9S4tlODsmAtOD7uN+825WnUV1WG
+ W+2LLsvFH5UgDvgvv9m686zqeoHjBfq7K51z6c7bI10W6eu77vGa+8EmqyrIHC5kVmAc
+ /+Nx+dgShLDcDxWz6aqsOynAKbaqPcZg+j5sPK/Ytxrb/B6nAg+Yg59EBhRISNTzuGxZ
+ sRDimNkRLCmmdoxJCx6TqOTc7SIEX9JXuaOXpPOwyEhsQaGom+lN0a9wHP+zyWzHDo2f
+ 9DVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709560061; x=1710164861;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=D9rTFwWrmBiGRVkSfatNGszolevvlbeDe2scBpfLQlo=;
+ b=JBzybAYnE6UskS/W0000Gsoho3Q3NEboeK6s3iEv1B/zLS0yBzgzE0BhjE1L5jETME
+ Jf4QxiD0dtSuGOcR5naFTFyqmQ3UyaZ/85VwYvjY+wth+uSO264VwJP+xU91Mb68/f+X
+ jSfs5FiJGcMzdaXR5n9sJgZT38LuulMANLPwnaZikoi6DXwTB6OwYYLYJYhwb6jBalP+
+ 2sQ9V/NJ+cb5pP7aNFzCCtJtLwtjJ7BNSBTkCyBR/hXC23/0liG1/x5PnIq8JEqb6sa2
+ wctJSs5MVl4jQPJIYGBX2MYKTVYZe/mQBeoIFFmwxduaHDle7ZO8f6m9qW26/1gaQLsX
+ QqrQ==
+X-Gm-Message-State: AOJu0Yz/RCC87iMZYvbZnH+wGeiFbG5AoY2BBwglsXSuIdJucajj1lkH
+ IYv8rj1LOygp/2nF8zTiUUwUhHquKk6VNF9qGdHuiWPQlAtL9w1Qhf6sJyb/+YB0ynnP45+vNiX
+ n
+X-Google-Smtp-Source: AGHT+IEDTgZfM6CdNi0wuBEz71jsVCxJkLMnZ+OcOIyoTTUVXe+Zk5KXkyXaiEj1hTLVCEzSzs/GHg==
+X-Received: by 2002:a9d:7559:0:b0:6e2:ea96:c9d8 with SMTP id
+ b25-20020a9d7559000000b006e2ea96c9d8mr9269442otl.32.1709560061345; 
+ Mon, 04 Mar 2024 05:47:41 -0800 (PST)
+Received: from grind.. ([177.94.15.159]) by smtp.gmail.com with ESMTPSA id
+ 23-20020a630d57000000b005dc87f5dfcfsm7285335pgn.78.2024.03.04.05.47.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 04 Mar 2024 05:47:40 -0800 (PST)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
-Cc: Dehan Meng <demeng@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>, Yan Vugenfirer <yvugenfi@redhat.com>
-Subject: [PATCH v4 0/3] qga/commands-win32: Style cleanups before adding
- Windows Server 2025
-Date: Mon,  4 Mar 2024 15:45:29 +0200
-Message-ID: <20240304134532.28506-1-kkostiuk@redhat.com>
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ ajones@ventanamicro.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH 0/2] target/riscv/kvm: update KVM exts to Linux 6.8
+Date: Mon,  4 Mar 2024 10:47:30 -0300
+Message-ID: <20240304134732.386590-1-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.43.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-ot1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,22 +93,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Respin of Philippe's v3 to fix multidimensional array compilation error.
+Hi,
 
-Supersedes: <20240222025437.58996-1-demeng@redhat.com>
-Supersedes: <20240222152835.72095-1-philmd@linaro.org>
+Let's update QEMU KVM extension support up to 6.8-rc6 before the 9.0
+freeze.
 
-Dehan Meng (1):
-  qga-win: Add support of Windows Server 2025 in get-osinfo command
+Patches based on alistair/riscv-to-apply.next.
 
-Philippe Mathieu-Daudé (2):
-  qga/commands-win32: Declare const qualifier before type
-  qga/commands-win32: Do not set matrix_lookup_t/win_10_0_t arrays size
+Daniel Henrique Barboza (2):
+  linux-headers: Update to Linux v6.8-rc6
+  target/riscv/kvm: update KVM exts to Linux 6.8
 
- qga/commands-win32.c | 59 ++++++++++++++++++++++----------------------
- 1 file changed, 29 insertions(+), 30 deletions(-)
+ include/standard-headers/drm/drm_fourcc.h     |  10 +-
+ include/standard-headers/linux/ethtool.h      |  41 +++--
+ .../standard-headers/linux/virtio_config.h    |   8 +-
+ include/standard-headers/linux/virtio_pci.h   |  68 +++++++++
+ include/standard-headers/linux/virtio_pmem.h  |   7 +
+ linux-headers/asm-generic/unistd.h            |  15 +-
+ linux-headers/asm-mips/mman.h                 |   2 +-
+ linux-headers/asm-mips/unistd_n32.h           |   5 +
+ linux-headers/asm-mips/unistd_n64.h           |   5 +
+ linux-headers/asm-mips/unistd_o32.h           |   5 +
+ linux-headers/asm-powerpc/unistd_32.h         |   5 +
+ linux-headers/asm-powerpc/unistd_64.h         |   5 +
+ linux-headers/asm-riscv/kvm.h                 |  40 +++++
+ linux-headers/asm-s390/unistd_32.h            |   5 +
+ linux-headers/asm-s390/unistd_64.h            |   5 +
+ linux-headers/asm-x86/kvm.h                   |   3 +
+ linux-headers/asm-x86/unistd_32.h             |   5 +
+ linux-headers/asm-x86/unistd_64.h             |   5 +
+ linux-headers/asm-x86/unistd_x32.h            |   5 +
+ linux-headers/linux/iommufd.h                 |  79 ++++++++++
+ linux-headers/linux/kvm.h                     | 140 +++++++-----------
+ linux-headers/linux/userfaultfd.h             |  29 +++-
+ linux-headers/linux/vfio.h                    |   1 +
+ target/riscv/kvm/kvm-cpu.c                    |  29 ++++
+ 24 files changed, 410 insertions(+), 112 deletions(-)
 
---
-2.44.0
+-- 
+2.43.2
 
 
