@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D670C5478C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 17:02:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED05DC48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 17:03:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhBg2-0007BS-Qm; Mon, 04 Mar 2024 12:00:34 -0500
+	id 1rhBiG-0000rf-RX; Mon, 04 Mar 2024 12:02:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rhBfu-00076n-Js
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:00:32 -0500
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1rhBiF-0000qz-7G
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:02:51 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rhBfn-00023W-Cz
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:00:26 -0500
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-29ab78237d2so3149750a91.1
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 09:00:18 -0800 (PST)
+ id 1rhBiD-0002Zg-Bm
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 12:02:50 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-6d9f94b9186so4586829b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 09:02:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709571617; x=1710176417; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709571767; x=1710176567; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=k6Hg4T4X/NC6MVox5Fg510dea9QkgpxRKyZmA4RoKBc=;
- b=n/W6peQrr8hRS0H2ieZ6ULJJAFhcFj15nOqQK+02Se9IsJPxQFxCaLSyuKjN1OE/2c
- uHsBbAGW2//fQLSBrhZ8GU6GLBU2tWwCjAjkIq78dA0PKE5OAJrdkPOxQd1X5amoqlus
- OEgwrYeEk4U/+pXROHLU4zqDGv/ejxObhYBRoEblBoTvDOJONCo5pAKamSKo/8ZwnBwg
- 6fwqcomsT4szkcPzx7H1aLJqz2oLDV5qOkcHK1Aa1sIb1cIhglZsuMHWhTGAgxaHDBv2
- 3cMOI3Yu28d3CNBjsZKhzVAOmkHI78LBY8RfdZMa6KuOz5pkyPr6UJs0Oyw7sdpFoeTG
- TW8Q==
+ bh=GE6mDiJbQ2UU8njAjf9/yNHee9b/ZjET9OK0aQM71gY=;
+ b=xJXhE9pdb0gSpdp40pGIE/mCguAJ1v+ZJuq0Ls6z2sMmsYeNV4s+dMhurptO1w2AAd
+ 5GkipRXOYIUtEABkRB9yooDoGDdtlvEkCnwvf7irBv0XLya/D7oHoWVSE51RifjljHf3
+ S3Pd/c+cyOAaoJYA/phu7haEFqbRp/VwSW+htktic6PLdmFadlGkCOAr9y+wPtI2sXID
+ BnWdtuMAF6lWl98sCF7778Ts66QiV+DRWsTS0/Hx3OeaZwCl7XpJ/7emeRn3H4G3411S
+ 29DVYLYJLQDMbmCaQlwFx5NRCo+4K3skOJPy1jlyIXIXb62/b7OVFjOOsW3ytDjoL07K
+ 5zuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709571617; x=1710176417;
+ d=1e100.net; s=20230601; t=1709571767; x=1710176567;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=k6Hg4T4X/NC6MVox5Fg510dea9QkgpxRKyZmA4RoKBc=;
- b=Sn3LUQsk4LhkpFknmyku5EiNp36PODwRRvy+nG7aXYkqREaqQAzofgRHFE89JtAD4t
- x65Rn6uRWHCy0IbASmw6Yv2d9eduvNvy80IOUwu4kKYKdVSrrp3/S05kSCCelypNUl82
- wx+KJmitvy5rV6lSXhaW7KuBl9lSlCYZFTF/aKSitEAJEf7WmWmNLYE/4KiaQU7wCjWb
- rCiQgGQLi6o/qUVJts7eSYm1cna5vsfiQRB4s/8a0D2GbViyE9PT2/VfCJYfqJqAXggp
- MoQBIGOWZ6sfOqBX5ZI0YyX+A3gSn5bWAeqsvIaTkA36pGQSNmUNyiazg6CsJlB4/HhC
- 1SyA==
+ bh=GE6mDiJbQ2UU8njAjf9/yNHee9b/ZjET9OK0aQM71gY=;
+ b=Zj1tYjR4dL4bnZsZ6GGjDxcXOA+HWBNealpsu66DccnpxsdHf9H57b/M8QWbEHzdco
+ n5pAFsbtJ7SFhdJOXrQG7TyT1nw8HajU/w+PZ43ch1rAnmZOkANaaTtrdHrNa5oodbDb
+ kBL/1YXYCaXpgusynLRRijdAelxQBwahgOWwuWhqKmxNg0Aum2QjjQ6GdpQdhXQomJQ8
+ q8Ida7c2YuJyzQlRTEIONpabXCOHJMpbQE8WGeCOXb5AT7fuOk/d64AZ3SMAFtxp9YYP
+ LvaOVc3yWotr/nxTF4Chuw1J3y5cHWgmotHVbUGGsLFQZxuReC++y15NCHOqGJYx5poe
+ xeNg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVQfWjzjf0oDTMMsLJ++TAF3a6uDvpKqESOZrz0rYYQvfSPSgsCdkSP0xJMwg5FKGAH+mMwwH7KpLWyIOraqb9CBGT05mU=
-X-Gm-Message-State: AOJu0YyTfAHIQuonkR9zyLBIhkKRuk+KDOL04rK3JNDZgG5URM58IvSt
- ML7JlPnVX7UCr1rfnd6BrMV/9y4GEzBossjb8dgU2FSKNMgfLMBKNODDlUdgqog=
-X-Google-Smtp-Source: AGHT+IG3X1LbtvNWBa39G2x5dSC2I4dh7PLjQ5P8sgRObi7FDUN6+60Ot0jCCMdzebIHb2yCqOTdFA==
-X-Received: by 2002:a17:90a:d811:b0:29b:858:f646 with SMTP id
- a17-20020a17090ad81100b0029b0858f646mr6935305pjv.8.1709571616677; 
- Mon, 04 Mar 2024 09:00:16 -0800 (PST)
+ AJvYcCUJw2/r449eST5UhSsB1FTW/PhERANn70GcxA1xxmtqT8N9z75IH50ejep4k97TNcjHNFnjbont6lXODA1lUU+Aj6Ftr/o=
+X-Gm-Message-State: AOJu0YxYSFjss3KO5Z4EGSiCbpmuyE737tfKkcpNMjPiou0Jc+sBNdYQ
+ 3z1N4/X3vXqW7QCQ8I60iwOQCfxNx4WfwWf+voIpBeGAjGN/cwAR/8efs3LXbHM=
+X-Google-Smtp-Source: AGHT+IFTl6gOSzYWX1LAntY14KGwFDc9JGtncVWnimwKDUg+ICvpwoOuuRM+YSdCPl7e+qlUhZnwfQ==
+X-Received: by 2002:a05:6a20:6aa1:b0:1a0:e19c:c0dc with SMTP id
+ bi33-20020a056a206aa100b001a0e19cc0dcmr9920907pzb.62.1709571767014; 
+ Mon, 04 Mar 2024 09:02:47 -0800 (PST)
 Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
  [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- g4-20020a17090adb0400b0029b2e5bc1b9sm5047132pjv.23.2024.03.04.09.00.15
+ t15-20020a63460f000000b005dccf9e3b74sm7575534pga.92.2024.03.04.09.02.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Mar 2024 09:00:16 -0800 (PST)
-Message-ID: <8fc36a59-a666-4c29-8964-c0e71c77b45b@linaro.org>
-Date: Mon, 4 Mar 2024 07:00:12 -1000
+ Mon, 04 Mar 2024 09:02:46 -0800 (PST)
+Message-ID: <eb882d18-cbfe-4d46-8bef-2798a707a486@linaro.org>
+Date: Mon, 4 Mar 2024 07:02:43 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 01/12] util/log: convert debug_regions to GList
+Subject: Re: [PATCH 3/8] target/arm: use FIELD macro for CNTHCTL bit
+ definitions
 Content-Language: en-US
-To: Sven Schnelle <svens@stackframe.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Cc: Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
- deller@gmx.de
-References: <20240301174609.1964379-1-svens@stackframe.org>
- <20240301174609.1964379-2-svens@stackframe.org>
- <87jzmiz3oa.fsf@draig.linaro.org> <87jzmiuol1.fsf@t14.stackframe.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>
+References: <20240301183219.2424889-1-peter.maydell@linaro.org>
+ <20240301183219.2424889-4-peter.maydell@linaro.org>
+ <f0dd2308-6a94-46b5-821f-12ab907d29ea@linaro.org>
+ <CAFEAcA_JFq9hFoCJDD9BNx-SOumZBtLs64B=yj-jWRrg_WMzfA@mail.gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <87jzmiuol1.fsf@t14.stackframe.org>
+In-Reply-To: <CAFEAcA_JFq9hFoCJDD9BNx-SOumZBtLs64B=yj-jWRrg_WMzfA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,26 +102,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/4/24 03:13, Sven Schnelle wrote:
-> Alex Bennée <alex.bennee@linaro.org> writes:
-> 
->> Sven Schnelle <svens@stackframe.org> writes:
+On 3/4/24 03:21, Peter Maydell wrote:
+> On Fri, 1 Mar 2024 at 21:19, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
 >>
->>> In preparation of making the parsing part of qemu_set_dfilter_ranges()
->>> available to other users, convert it to return a GList, so the result
->>> can be used with other functions taking a GList of struct Range.
+>> On 3/1/24 08:32, Peter Maydell wrote:
+>>> We prefer the FIELD macro over ad-hoc #defines for register bits;
+>>> switch CNTHCTL to that style before we add any more bits.
+>>>
+>>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+>>> ---
+>>>    target/arm/internals.h | 19 +++++++++++++++++--
+>>>    target/arm/helper.c    |  9 ++++-----
+>>>    2 files changed, 21 insertions(+), 7 deletions(-)
+>>>
+>>> diff --git a/target/arm/internals.h b/target/arm/internals.h
+>>> index c93acb270cc..6553e414934 100644
+>>> --- a/target/arm/internals.h
+>>> +++ b/target/arm/internals.h
+>>> @@ -224,8 +224,23 @@ FIELD(VTCR, SL2, 33, 1)
+>>>    #define HSTR_TTEE (1 << 16)
+>>>    #define HSTR_TJDBX (1 << 17)
+>>>
+>>> -#define CNTHCTL_CNTVMASK      (1 << 18)
+>>> -#define CNTHCTL_CNTPMASK      (1 << 19)
+>>> +FIELD(CNTHCTL, EL0PCTEN, 0, 1)
+>>> +FIELD(CNTHCTL, EL0VCTEN, 1, 1)
+>>> +FIELD(CNTHCTL, EVNTEN, 2, 1)
+>>> +FIELD(CNTHCTL, EVNTDIR, 3, 1)
+>> ...
+>>> +FIELD(CNTHCTL, EL0VTEN, 8, 1)
+>>> +FIELD(CNTHCTL, EL0PTEN, 9, 1)
+>>> +FIELD(CNTHCTL, EL1PCTEN, 10, 1)
+>>> +FIELD(CNTHCTL, EL1PTEN, 11, 1)
 >>
->> Why do we need to convert it to a Glist? When I originally wrote the
->> dfilter code I deliberately chose GArray over GList to avoid bouncing
->> across cache lines during the tight loop that is checking ranges. It's
->> not like we can't pass GArray's to plugins as well?
+>> These bits change definition based on HCR_E2H, which I remembered when I got to patch 5,
+>> which adds code nearby the existing tests of these bits.
+>>
+>> It might be confusing to only provide the E2H versions, without some extra suffix?
 > 
-> Good point. I'll change it back to a GArray in the next iteration.
+> Yeah, bits 8..11 are RES0 if E2H is 0; bits 3 and 2 are the same;
+> bits 0 and 1 change (to EL1PCTEN and EL1PCEN, so bit 0 when E2H is 0
+> has the same name as bit 10 when E2H is 1).
+> 
+> I don't see the need to suffix the bits that are only relevant in
+> one context and RES0 in the other, only the ones where the bit has
+> the same name but a different location, or where the same bit
+> number has two names. So:
+> 
+> +/*
+> + * Depending on the value of HCR_EL2.E2H, bits 0 and 1
+> + * have different bit definitions, and EL1PCTEN might be
+> + * bit 0 or bit 10. We use _E2H1 and _E2H0 suffixes to
+> + * disambiguate if necessary.
+> + */
+> +FIELD(CNTHCTL, EL0PCTEN_E2H1, 0, 1)
+> +FIELD(CNTHCTL, EL0VCTEN_E2H1, 1, 1)
+> +FIELD(CNTHCTL, EL1PCTEN_E2H0, 0, 1)
+> +FIELD(CNTHCTL, EL1PCEN_E2H0, 1, 1)
+> +FIELD(CNTHCTL, EVNTEN, 2, 1)
+> +FIELD(CNTHCTL, EVNTDIR, 3, 1)
+> +FIELD(CNTHCTL, EVNTI, 4, 4)
+> +FIELD(CNTHCTL, EL0VTEN, 8, 1)
+> +FIELD(CNTHCTL, EL0PTEN, 9, 1)
+> +FIELD(CNTHCTL, EL1PCTEN_E2H1, 10, 1)
+> +FIELD(CNTHCTL, EL1PTEN, 11, 1)
+> +FIELD(CNTHCTL, ECV, 12, 1)
+> +FIELD(CNTHCTL, EL1TVT, 13, 1)
+> +FIELD(CNTHCTL, EL1TVCT, 14, 1)
+> +FIELD(CNTHCTL, EL1NVPCT, 15, 1)
+> +FIELD(CNTHCTL, EL1NVVCT, 16, 1)
+> +FIELD(CNTHCTL, EVNTIS, 17, 1)
+> +FIELD(CNTHCTL, CNTVMASK, 18, 1)
+> +FIELD(CNTHCTL, CNTPMASK, 19, 1)
+> 
+> (and updating the uses in following patches as needed) ?
 
-How many address ranges do you expect to have?
-If more than a couple, then perhaps IntervalTree would be better for a balanced binary search.
+Looks good, thanks.
 
 
 r~
-
 
