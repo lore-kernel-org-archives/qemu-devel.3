@@ -4,86 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34C9BC54E41
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 22:49:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 644E3C54E41
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 22:52:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhH7L-0007rP-EQ; Mon, 04 Mar 2024 17:49:07 -0500
+	id 1rhHAB-0000LO-L7; Mon, 04 Mar 2024 17:52:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rhH7J-0007r3-IZ
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 17:49:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rhH7H-0001S1-WD
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 17:49:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709592543;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=cgUvIl5+RU1WsUWMBt5CD8iRmvnfCu2nTiFI6QKvaZ8=;
- b=cepoEjeX26Cl81eQ0AKwsNAWbVigSR0S7WbEgoOT2BbtAI8XmuCBYR0/+VQGaBbcBuRXyR
- 6HbFuh5NaHSzJRZu8ZCx4TOgjlz1VaxXIMrWR+cqhVNFiAU8VyNpb40xEUAIm4TXD8VJIc
- yS1KpCCs3KhuosduHChxEja7CJhyCrc=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-8-XgLqZfxyO0i-zl54zUaUag-1; Mon, 04 Mar 2024 17:49:01 -0500
-X-MC-Unique: XgLqZfxyO0i-zl54zUaUag-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-412de861228so11068515e9.0
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 14:49:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rhHAA-0000LF-RM
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 17:52:02 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rhHA8-0001xg-SU
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 17:52:02 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-1dca160163dso48885335ad.3
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 14:52:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709592719; x=1710197519; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=c37fbNcNwdR9mtT8FsddqKhSMxITPLNe3JTZM+Tjzv8=;
+ b=yT/QXQYAYQhYInslP3zNBiXhRWFpeZ/g3LnRhN6M+h67XGMY8vNJE2bnCI3HIxyCsm
+ +BEzgCUqXD4OdPw74zkEkLQ9jp5HJjKGF63tf5lhHBgC+o8q/YmwGdybVLtbWlPICiT3
+ gDDXdulL8G8NfqnmgkCCnHBzcPltd3hNr5UTYgzNYnJgK6opdnpz58E/CVzsXFzh+yQD
+ 5TSwle2L7hHP7Vqfy/59UQtDtdjGi2LMP+NOi2LpX+b5ygRjOq3aIXO/M/RN2F6OlZKv
+ lHe/4bEshT+ncT0kq+KPoZysxx0mujU1qW7dyCRhExVkjhkF/WCwsKPe3pwOrCVdZEZR
+ FjfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709592539; x=1710197339;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=cgUvIl5+RU1WsUWMBt5CD8iRmvnfCu2nTiFI6QKvaZ8=;
- b=MWR10mVeBJbOvjqfLZdjzMZoTOg3sYWmEhXejgcQbvw4hFS8WLxo9me4zRfA7wEAP/
- FY65b+Oi31ZgTuYfa5i/9MpZJFPNhGH4Obd9QBwN8Vnv2kxrQHds/XpO5zpBCUP5NeyW
- 40PSUBJGlSKmdXy3Qd7ylDudCH3Cm6izas2cr63vFTLmk7Pq5giUDCpDmP4oxJsjvGqY
- G9Gpd7bM2ApnQfdFGy3zktZff7qlpiBO+EU3BL8Q0VhwE/VfGvCB0fZ8xYJAgsLd1UBy
- ZN4dNlH11mz1mNbzJQaiIEDK0hdbHKtZL3n8czCbdiE1Gp3ImPtl6Z6DIn2gcAjkY4Wr
- jr/Q==
-X-Gm-Message-State: AOJu0YwPofwCGPT2U0qEv+NUurNZYm4mQeneoblUwWOfv8JvGyRpNnbx
- Vn6n/hvBok2EKJpuMw8fHK9n/FkALi6hoPrt9z2T2QVo038Z6CCZztJKuoF+zfvVITZfReg3Dm2
- AD8uSJVhvBE7osKka5GY8WSc5T7H+PFkF7foVlTehAS5BWF/38YZ59+mJSvFN8PlqhU7jspVVrk
- 8jowblIIDcY1C4li0oMT/kG4lA30QTdiDTeoMu
-X-Received: by 2002:a05:600c:4e8e:b0:412:e70a:ab8a with SMTP id
- f14-20020a05600c4e8e00b00412e70aab8amr1949130wmq.25.1709592539389; 
- Mon, 04 Mar 2024 14:48:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF1c4ab18TYfKeou5rHvFC9et/l7UvB29U0/VXpHw3f7E5kG/Akz1aVkhWCK9j+25Yb4xQNYA==
-X-Received: by 2002:a05:600c:4e8e:b0:412:e70a:ab8a with SMTP id
- f14-20020a05600c4e8e00b00412e70aab8amr1949123wmq.25.1709592538997; 
- Mon, 04 Mar 2024 14:48:58 -0800 (PST)
-Received: from [192.168.10.118] ([151.49.77.21])
- by smtp.gmail.com with ESMTPSA id
- c21-20020a05600c0a5500b00412cb0961fasm11358493wmq.6.2024.03.04.14.48.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Mar 2024 14:48:58 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Mark Kanda <mark.kanda@oracle.com>
-Subject: [PATCH] oslib-posix: fix memory leak in touch_all_pages
-Date: Mon,  4 Mar 2024 23:48:57 +0100
-Message-ID: <20240304224857.268503-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.43.2
+ d=1e100.net; s=20230601; t=1709592719; x=1710197519;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=c37fbNcNwdR9mtT8FsddqKhSMxITPLNe3JTZM+Tjzv8=;
+ b=gMI5Ua/GgHU0vVGOMdpKlC3enN9YQsRBx0kAZFnYwD05MXwKG6tIybXPkSzLMG1gXS
+ ETNbPAQRXmVpLfxv5A4hgcqyXLkpdhDOEIkw+5dWhwDe/oDPS+YLRyIfjDJBAOKI+uku
+ QUfqDght+GT8aIJAlYxWGucsUFKQcrE4FoVrb14KolhDYa0yNQhR0s0og/odbWDHQME/
+ c6gEHyZwtVBWR5f5DkQF18lQR3VuHShYHyxSwSIVS+uDglQQQ8oZ3UXn90U6dQ5SMRXW
+ JqG4RlHATH+oxL88d6YeYT9kytqiwi0CBWcpcOyi3k+4VQBU68ZafdL4rDboJh1/CuQf
+ STvg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXa9bXZfkcgmYqNx9opSXt9CwvihyObANIBEhZcHp0nZUng509YrxsFSDi0BsQqSTUOta58qWeVw5yUVDpgVhk7TgHoMBc=
+X-Gm-Message-State: AOJu0YwCTL35WTvB4UqiT+79M5k/OvrZicQ/Er/ZqxddGcMesNzPfjDq
+ Z+1b9CwHQtespPt6TxuVety+4ckUccmK25dMev3kFEHd+ciFKRxvjNBq9BC6c4U=
+X-Google-Smtp-Source: AGHT+IFF39yIxZEuIF19P+/N2OqeyObWqwmRC3O70zyyRvx/YLI4jkfn2ZVJgBw58xrTWXkOEJK+wg==
+X-Received: by 2002:a17:902:a9c1:b0:1db:be98:e9a with SMTP id
+ b1-20020a170902a9c100b001dbbe980e9amr198921plr.26.1709592719008; 
+ Mon, 04 Mar 2024 14:51:59 -0800 (PST)
+Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
+ [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
+ k15-20020a170902ba8f00b001dc91b4081dsm9033935pls.271.2024.03.04.14.51.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 Mar 2024 14:51:58 -0800 (PST)
+Message-ID: <cd6b5e0f-5a10-4acb-94d6-51073ceb5acf@linaro.org>
+Date: Mon, 4 Mar 2024 12:51:55 -1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] tests/tcg: Add multiarch test for Xfer:siginfo:read
+ stub
+Content-Language: en-US
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
+ alex.bennee@linaro.org
+Cc: peter.maydell@linaro.org
+References: <20240303192610.498490-1-gustavo.romero@linaro.org>
+ <20240303192610.498490-2-gustavo.romero@linaro.org>
+ <e33ab9ae-e2d4-41ba-b053-e7e918572808@linaro.org>
+ <d98ef081-b25d-4dbf-7b67-fe27e09ff2f0@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <d98ef081-b25d-4dbf-7b67-fe27e09ff2f0@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,40 +102,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-touch_all_pages() can return early, before creating threads.  In this case,
-however, it leaks the MemsetContext that it has allocated at the
-beginning of the function.
+On 3/4/24 10:59, Gustavo Romero wrote:
+>> Perhaps just abort for SIGABRT instead?
+> 
+> Although this can make a simpler test, the test can't control
+> the si_addr value easily, which I think is interesting to be tested.
+> 
+> Why do you prefer SIGABRT?
 
-Reported by Coverity as CID 1534922.
+I missed that you were testing si_addr -- in which case SIGSEGV is a good match.
 
-Fixes: 04accf43df8 ("oslib-posix: initialize backend memory objects in parallel", 2024-02-06)
-Cc: Mark Kanda <mark.kanda@oracle.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- util/oslib-posix.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-index 3c379f96c26..e76441695bd 100644
---- a/util/oslib-posix.c
-+++ b/util/oslib-posix.c
-@@ -467,11 +467,13 @@ static int touch_all_pages(char *area, size_t hpagesize, size_t numpages,
-          * preallocating synchronously.
-          */
-         if (context->num_threads == 1 && !async) {
-+            ret = 0;
-             if (qemu_madvise(area, hpagesize * numpages,
-                              QEMU_MADV_POPULATE_WRITE)) {
--                return -errno;
-+                ret = -errno;
-             }
--            return 0;
-+            g_free(context);
-+            return ret;
-         }
-         touch_fn = do_madv_populate_write_pages;
-     } else {
--- 
-2.43.2
+>> A test using setitimer to raise SIGALRM would test the async path.
+> 
+> SIGLARM doesn't generate any interesting siginfo?
 
+It should at minimum have si_sig = SIGALRM.
+
+> 
+> gromero@arm64:~$ gdb -q ./sigalrm
+> Reading symbols from ./sigalrm...
+> (gdb) run
+> Starting program: /home/gromero/sigalrm
+> 
+> Program terminated with signal SIGALRM, Alarm clock.
+> The program no longer exists.
+> (gdb) p $_siginfo
+> $1 = void
+
+Well that's because the program died.
+Do you need to have gdb handle the signal?
+
+
+r~
 
