@@ -4,98 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EE38C5478C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 16:44:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35C8AC5478C
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 16:45:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhBPa-0008TV-DN; Mon, 04 Mar 2024 11:43:34 -0500
+	id 1rhBRD-0001b4-8E; Mon, 04 Mar 2024 11:45:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1rhBPN-0008Ri-Je
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 11:43:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1rhBPK-0006qO-Ow
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 11:43:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709570597;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lGund8dWrWdtVg7OgtEi7Hk2WzobqDUR2vASBBvDgzs=;
- b=KFHtEIo17/Xvm5PTXbrftSja/a9NcFM/Ajv3j3KIQl5CE+gCEixBbBheDkz998YtG8HAdD
- IEpnbNoX0mm0Xc36Ev/a+oAAcSdUiE96/OkiF7yi/28QZrn2DJidOWYLoR3RT/xZI1Hx6V
- jL8yUGd07aeNAYZfy1kZ3AiMpFqnsqw=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-175-1C6Aq4SAPHqxPtRzAcTdEg-1; Mon, 04 Mar 2024 11:43:16 -0500
-X-MC-Unique: 1C6Aq4SAPHqxPtRzAcTdEg-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-33e0edcf4f4so1432521f8f.2
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 08:43:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rhBRB-0001YJ-Ff
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 11:45:13 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rhBR9-0007CI-MO
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 11:45:13 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-563bb51c36eso6218561a12.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 08:45:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709570710; x=1710175510; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kRoFfZS6WhZ4JpL4Bamd0JVsZ/xh7vi9fLKC22s7ctA=;
+ b=sgk4p/U2iicNE8qSbK+7cGj3F+Px166E4JLuoF2o2o7XlOvDsiF6Bf2JaqxpZMXPii
+ iF2fML/3DAulLZoZvk2FRiqVX7wcBoMBR8foR4RSBdR2/VTs65/U+z1OmyE/KPIH+HCl
+ u2rT7oNx1oq4MTBZq0p3DtUOtw2p5rXNVNW6pGa1WJXz5sYBdmIteg3sCT5mNReQQBEX
+ Ow/lVWNT/m+oC/CaoN6GwqpmG56SebHtA7TrFqD3E1qMxYOLSJ2JLJYwRUVzsnMy6iJ1
+ htb8T832dCN460WvodgQT6B8DCv5m4xGZAipp0T78eOT8ebW4h0HFv5RDKWaN9Lyxkn0
+ R21A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709570595; x=1710175395;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1709570710; x=1710175510;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lGund8dWrWdtVg7OgtEi7Hk2WzobqDUR2vASBBvDgzs=;
- b=SGIoiYdbcMVwPvFUdzyhJ36J/MISYcByATJLSWxNfnTZiQh02UiO7HKviGqlPUN8gv
- dVhN8l4/q4pK8JB4vBCuAdFP2Ki4+07Mf6JqYTR3yzBHQqQ0CxKeaeurNirjy1nQK5Ye
- NLbY4zoGq+/f8Qztse96vQEKuXIVspXehGugFNZuAd/LWft+bBNl2vD93BK96uGF9HW1
- CTfjITC64WnrbxLXNVcDsPdeL/2OR8sttDQftBP5Su3RzGLuA8NYvKNbgpTGGm5E4WQ5
- +Nw9DVM+KkJwXQSkkt3t8J6DFPrHdEphaERo8IRGaeWBfU7bPPCG9Zj/ntQUojL7Oh7Z
- QERg==
-X-Gm-Message-State: AOJu0Ywfg5HPEEUP11G8OCaVZnVh/EdW8o49KhgU8HZrr3ZTN64DVeXu
- gIgcUG6DnST2jkNgbSfKv8SrYQ03OL3HyVVSpbQHROEO5gXqB30ff6guUL0GB2l9GoMx5+5FXOr
- NXjAy7/oaB8PHTeaV7DHAj6oBp+kZsQVftxLRZVX/HZnxHsHx0oWt
-X-Received: by 2002:adf:e811:0:b0:33d:3072:e38d with SMTP id
- o17-20020adfe811000000b0033d3072e38dmr5851894wrm.21.1709570595113; 
- Mon, 04 Mar 2024 08:43:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEHZGwkUK/Cll/ir7xtDqlHocv489+xKu6mj2vLfNWX2QnZIiE/i0QR7rNbfy64L3NQze/SpA==
-X-Received: by 2002:adf:e811:0:b0:33d:3072:e38d with SMTP id
- o17-20020adfe811000000b0033d3072e38dmr5851884wrm.21.1709570594776; 
- Mon, 04 Mar 2024 08:43:14 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- p6-20020adf9d86000000b0033e0dd83be1sm12662816wre.91.2024.03.04.08.43.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Mar 2024 08:43:14 -0800 (PST)
-Date: Mon, 4 Mar 2024 17:43:13 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Ani Sinha <anisinha@redhat.com>
-Cc: QEMU Developers <qemu-devel@nongnu.org>, Peter Maydell
- <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, "Michael
- S. Tsirkin" <mst@redhat.com>, Song Gao <gaosong@loongson.cn>, Alistair
- Francis <alistair.francis@wdc.com>, palmer@dabbelt.com,
- bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, philmd@linaro.org, wangyanan55@huawei.com,
- eblake@redhat.com, armbru@redhat.com, qemu-arm@nongnu.org,
- qemu-riscv@nongnu.org, f.ebner@proxmox.com
-Subject: Re: [PATCH 09/19] smbios: build legacy mode code only for 'pc' machine
-Message-ID: <20240304174313.5ff4dc2b@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240304152300.1be944ce@imammedo.users.ipa.redhat.com>
-References: <20240227154749.1818189-1-imammedo@redhat.com>
- <20240227154749.1818189-10-imammedo@redhat.com>
- <BB495028-FC8F-4E80-A58F-B3AC81732DFF@redhat.com>
- <20240304152300.1be944ce@imammedo.users.ipa.redhat.com>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
+ bh=kRoFfZS6WhZ4JpL4Bamd0JVsZ/xh7vi9fLKC22s7ctA=;
+ b=czbnVo86dxPhVc04tEvnWGWaFVKFYgIV9WFB44DxtKFyGQZ/Fwj2L1dkJEbAV5ziWv
+ 7P7Fq/jVWns+zxE+slIkvSB06csRHKT2KSACS4xJsGEYzPjr9dFCBCVap2H2ySedO69Y
+ HQjMYrxSm4LaYxriIPCoU1Fr56xICOEgOGwyMxGg6zUBZosuG+0j8QmSArLA/SIE/YYE
+ 5OOZ9kYOTapXU2UukXB0ktmup8zmo/Yf+iLDpQGOFLQqJ5oFrTv2MLUXzblXvdIf0HGi
+ up0OkKNUfvo37wz7WAzXdM3b2alpWUztdPJZVrolsB1tWvFtKY7m5M4a7A/eM3VqAbWX
+ fLSw==
+X-Gm-Message-State: AOJu0Yy24Fxh7sQc+4UPOc/gm9blewYvbKrnHLJ4waF1O+oO6qU3B3tw
+ bu8yCxz3shtQQn8TM59aIV9lm5/M0QOiCIb1xT8fVlcr5tbjN9hvSYYxB9FY2r2Mi3uV6+mml4M
+ lUw0i5PrrfM6gw9o4S+/sjqe+OyX1HU9dk7S5Bw==
+X-Google-Smtp-Source: AGHT+IF0JFFtCjDtzYf4M4BoY2UFZ2hdmOsufQiKcOvK3rw5Ak6qLW0U9DXj7MbxjLWw5q5Ri4Z+BryUbQTIsBAyOow=
+X-Received: by 2002:a50:8dc7:0:b0:565:7116:d533 with SMTP id
+ s7-20020a508dc7000000b005657116d533mr6199844edh.6.1709570710006; Mon, 04 Mar
+ 2024 08:45:10 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+References: <20240303140643.81957-1-arnaud.minier@telecom-paris.fr>
+In-Reply-To: <20240303140643.81957-1-arnaud.minier@telecom-paris.fr>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 4 Mar 2024 16:44:58 +0000
+Message-ID: <CAFEAcA_f2MJ4OxO+qyev+kUHMDoniT9P7seUYzsni-xeac1eTA@mail.gmail.com>
+Subject: Re: [PATCH v6 0/8] Add device STM32L4x5 RCC
+To: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Alistair Francis <alistair@alistair23.me>,
+ =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>, 
+ Samuel Tardieu <samuel.tardieu@telecom-paris.fr>, qemu-arm@nongnu.org, 
+ Laurent Vivier <lvivier@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,42 +93,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 4 Mar 2024 15:23:00 +0100
-Igor Mammedov <imammedo@redhat.com> wrote:
+On Sun, 3 Mar 2024 at 14:07, Arnaud Minier
+<arnaud.minier@telecom-paris.fr> wrote:
+>
+> This patch adds the STM32L4x5 RCC (Reset and Clock Control) device and is=
+ part
+> of a series implementing the STM32L4x5 with a few peripherals.
+>
+> Due to the high number of lines, I tried to split the patch into several =
+independent commits.
+> Each commit compiles on its own but I had to add temporary workarounds in=
+ intermediary commits to allow them to compile even if some functions are n=
+ot used. However, they have been removed once the functions were used. Tell=
+ me if this is ok or if I should remove them.
+>
+> Also, the tests are not very exhaustive for the moment. I have not found =
+a way to test the clocks' frequency from the qtests, which limits severely =
+the exhaustiveness of the tests.
+>
+> Thanks to Philippe Mathieu-Daud=C3=A9 and Luc Michel for guiding me towar=
+d the hw/misc/bcm2835_cprman.c implementation and answering my questions ab=
+out clock emulation in qemu !
 
-> On Mon, 4 Mar 2024 16:25:03 +0530
-> Ani Sinha <anisinha@redhat.com> wrote:
->=20
-> > > On 27-Feb-2024, at 21:17, Igor Mammedov <imammedo@redhat.com> wrote:
-> > >=20
-> > > basically moving code around without functional change.
-> > > And exposing some symbols so that they could be shared
-> > > between smbbios.c and new smbios_legacy.c
-> > >=20
-> > > plus some meson magic to build smbios_legacy.c only
-> > > for 'pc' machine and otherwise replace it with stub
-> > > if not selected.
-> > >=20
-> > > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-> > > ---
-[...]
-> > > +        /*
-> > > +         * preserve blob size for legacy mode so it could build its
-> > > +         * blobs flavor from 'usr_blobs'
-> > > +         */
-> > > +        smbios_add_usr_blob_size(size);
-> > > +   =20
-> >=20
-> > Could this have been made as a part of a separate patch? It is extremel=
-y hard to understand why you are doing this when it=E2=80=99s a part of a l=
-arger code refactoring/modularisation. =20
->=20
-> sure, will do on respin
 
-I also has split out variables renaming into a separate patch.
-Hope it will make it easier to review.
-=20
->=20
-[...]
 
+Applied to target-arm.next, thanks.
+
+-- PMM
 
