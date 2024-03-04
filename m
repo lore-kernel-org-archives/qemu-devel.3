@@ -4,70 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DDFEC5478C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 14:58:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71C5CC5478C
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 15:03:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh9lo-0001jC-M4; Mon, 04 Mar 2024 09:58:24 -0500
+	id 1rh9qR-0003gR-K3; Mon, 04 Mar 2024 10:03:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rh9lm-0001hW-6f
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 09:58:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rh9lj-0000MO-Hj
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 09:58:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709564297;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nRj+ZQOUd9c6zEEw65NfXBu2gLm5lh8Gkkiq+U+6YUM=;
- b=K4izzsvyMM2TzA0ztNplDVVqomhUvXPzgxE6/W6CJIhS63C5FMrC62OCFaEN+Q7FmR/j5m
- +eBUWAIcYdGiZMoNRswqR/g4D/aIsMGBhDwE45SmCRTtESUtHDKlUZ3Uh0uKcqPullRg9M
- 2fcD2ZQAU7n/hAM2ycedu/LSNPCB3sM=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-13-yNZwggd_Mb6qpGudFh1kVQ-1; Mon,
- 04 Mar 2024 09:58:16 -0500
-X-MC-Unique: yNZwggd_Mb6qpGudFh1kVQ-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E126B3816449;
- Mon,  4 Mar 2024 14:58:15 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.39.193.36])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id BE58C111D640;
- Mon,  4 Mar 2024 14:58:15 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 8BA3518009DB; Mon,  4 Mar 2024 15:58:14 +0100 (CET)
-Date: Mon, 4 Mar 2024 15:58:14 +0100
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: qemu-devel@nongnu.org, Marcelo Tosatti <mtosatti@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org
-Subject: Re: [PATCH 1/1] kvm: add support for guest physical bits
-Message-ID: <z4di6tev2kdeddclskhl5xhrlpseykgukfwit6ickrh57zscyv@bkjtbyj3enjx>
-References: <20240301101713.356759-1-kraxel@redhat.com>
- <20240301101713.356759-2-kraxel@redhat.com>
- <3ab64c0f-7387-4738-b78c-cf798528d5f4@intel.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rh9q8-0003cb-AS
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 10:02:57 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rh9pv-00019Q-46
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 10:02:50 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5673f7b3196so1662321a12.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 07:02:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709564556; x=1710169356; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=otbtgtUNVpwfIth7PNDoBPWCzPaH5tButK7oNpC0WYk=;
+ b=Z7/K6HQ7yYhfp0z/EVQckfqasJWY7Cpj7c3o0r6i8r4OvtfldXXk82XgUcXZ1TwrAa
+ C3KBapgYHPPVHUnc16WEPx57aknBu3p0lDV6LcDutNMaFUEYKo5plzkaeWSJqM0XsD7K
+ D6tVKFxQW09tGF+2BtaspnPq3wySYaqTFPWyDTNPPB8pSSrWKilGIpO+F9jsSYxGtr0J
+ 3KdAs2CksbHd6enI0ozs26FL0wXClRk2Nmnepoct4TQzg3j5Qr31yVgeZ9CHBefqc2Zx
+ s27+oB6v5MM/KGaCmCMcBV9qi4ZIInqDx3BcDfHwvkvRLMHqEeLsebjeZm2YolDZwgk8
+ JQyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709564556; x=1710169356;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=otbtgtUNVpwfIth7PNDoBPWCzPaH5tButK7oNpC0WYk=;
+ b=uIXJJ1NxA97c8HdQUHkxj3p5eFXjsVE6k1PypgZffGu6qcj7XJnyAH84wogrbd5B1r
+ /4XKFb2i7CK6bhRospiQx8tG+f7kPsC9EHd4VJHxx23QS9x9ls3GOY7yHw7B8J8SjEBK
+ JGcR5in6WK3InKlGFq0MF7v5zWdHdzR5QzLZ/EoEMmwrYeBqL4s7f4nkiHcyRtv0zkxy
+ y+qo9LIqqI3zIYN7tT9/dLETaSJw9Hx1YEPZlWwgFp2UwVlS2wAHJlNDWK6ySkIEt/X4
+ m0wL51IVpe29VAbdzXVTnOnMsGC9c5txgW1pXzJpOrY2/Lt+4FfJ5325XBDNkIrxfB0u
+ A+kA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVE9uWJ9uvqh/MoHb4uOLyCgyyy6SSjYjBF/IDMzPUuxTNCzrNb5K7fEEVvZl51H6n+Lu1xW2XTg+ABGtm2q+ZBqkhn6B0=
+X-Gm-Message-State: AOJu0YxNhqbcLRaseomeWKfns+V+aSWaKMm5tJuEjFvGHRY/RJoqSFIM
+ 8R8H0Du/w52yhdF0UBUrrDK/eKocNgNJSjyhPtMUkxA9gbLY0gr7KhRVuclG1UnGr3qgrQSoS33
+ jPpOmOZ5yJUMyjQRTyz16MWyCcVossi0xM5P5Gw==
+X-Google-Smtp-Source: AGHT+IHpoMxunOka5Wmm9+DK54avExB6Nl5/p7pkdeChfvh46B34Gkfzwkp6D9mHoegsBdAjBFwyqUh8GcVXtfoYgEg=
+X-Received: by 2002:aa7:d8cd:0:b0:567:56b5:8960 with SMTP id
+ k13-20020aa7d8cd000000b0056756b58960mr1710862eds.13.1709564556606; Mon, 04
+ Mar 2024 07:02:36 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3ab64c0f-7387-4738-b78c-cf798528d5f4@intel.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20240227054855.44204-1-tong.ho@amd.com>
+In-Reply-To: <20240227054855.44204-1-tong.ho@amd.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 4 Mar 2024 15:02:25 +0000
+Message-ID: <CAFEAcA8EH1VLRPBb4gGCHotLbG6Gpnf3OqGM5Vy4GUX+2h_=_w@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/char/pl011: Add support for loopback
+To: Tong Ho <tong.ho@amd.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, marcandre.lureau@redhat.com, 
+ pbonzini@redhat.com, francisco.iglesias@amd.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,59 +90,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 04, 2024 at 09:54:40AM +0800, Xiaoyao Li wrote:
-> On 3/1/2024 6:17 PM, Gerd Hoffmann wrote:
-> > query kvm for supported guest physical address bits using
-> > KVM_CAP_VM_GPA_BITS.  Expose the value to the guest via cpuid
-> > (leaf 0x80000008, eax, bits 16-23).
-> > 
-> > Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-> > ---
-> >   target/i386/cpu.h     | 1 +
-> >   target/i386/cpu.c     | 1 +
-> >   target/i386/kvm/kvm.c | 8 ++++++++
-> >   3 files changed, 10 insertions(+)
-> > 
-> > diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> > index 952174bb6f52..d427218827f6 100644
-> > --- a/target/i386/cpu.h
-> > +++ b/target/i386/cpu.h
-> > @@ -2026,6 +2026,7 @@ struct ArchCPU {
-> >       /* Number of physical address bits supported */
-> >       uint32_t phys_bits;
-> > +    uint32_t guest_phys_bits;
-> >       /* in order to simplify APIC support, we leave this pointer to the
-> >          user */
-> > diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> > index 2666ef380891..1a6cfc75951e 100644
-> > --- a/target/i386/cpu.c
-> > +++ b/target/i386/cpu.c
-> > @@ -6570,6 +6570,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-> >           if (env->features[FEAT_8000_0001_EDX] & CPUID_EXT2_LM) {
-> >               /* 64 bit processor */
-> >                *eax |= (cpu_x86_virtual_addr_width(env) << 8);
-> > +             *eax |= (cpu->guest_phys_bits << 16);
-> 
-> I think you misunderstand this field.
-> 
-> If you expose this field to guest, it's the information for nested guest.
-> i.e., the guest itself runs as a hypervisor will know its nested guest can
-> have guest_phys_bits for physical addr.
+On Tue, 27 Feb 2024 at 05:48, Tong Ho <tong.ho@amd.com> wrote:
+>
+> This patch adds loopback for sent characters, sent BREAK,
+> and modem-control signals.
+>
+> Loopback of send and modem-control is often used for uart
+> self tests in real hardware but missing from current pl011
+> model, resulting in self-test failures when running in QEMU.
+>
+> This implementation matches what is observed in real pl011
+> hardware placed in loopback mode:
+> 1. Input characters and BREAK events from serial backend
+>    are ignored, but
+> 2. Both TX characters and BREAK events are still sent to
+>    serial backend, in addition to be looped back to RX.
+>
+> Signed-off-by: Tong Ho <tong.ho@amd.com>
+> Signed-off-by: Francisco Iglesias <francisco.iglesias@amd.com>
 
-I think those limits (l1 + l2 guest phys-bits) are identical, no?
 
-The problem this tries to solve is that making the guest phys-bits
-smaller than the host phys-bits is problematic (which why we have
-allow_smaller_maxphyaddr), but nevertheless there are cases where
-the usable guest physical address space is smaller than the host
-physical address space.  One case is intel processors with phys-bits
-larger than 48 and 4-level EPT.  Another case is amd processors with
-phys-bits larger than 48 and the l0 hypervisor using 4-level paging.
 
-The guest needs to know that limit, specifically the guest firmware
-so it knows where it can map PCI bars.
+Applied to target-arm.next, thanks.
 
-take care,
-  Gerd
-
+-- PMM
 
