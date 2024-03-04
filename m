@@ -4,62 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD7FEC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 02:19:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3A11C5475B
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 02:43:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rgxuw-0002KE-Ib; Sun, 03 Mar 2024 21:19:02 -0500
+	id 1rgyHe-0005Qo-TV; Sun, 03 Mar 2024 21:42:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1rgxut-0002JD-5T
- for qemu-devel@nongnu.org; Sun, 03 Mar 2024 21:18:59 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1rgxuq-0001fD-JC
- for qemu-devel@nongnu.org; Sun, 03 Mar 2024 21:18:58 -0500
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8Bx3+uGL+VlAu4TAA--.50079S3;
- Mon, 04 Mar 2024 10:18:47 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8Cxbs2EL+VlfH9NAA--.6704S2; 
- Mon, 04 Mar 2024 10:18:45 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org
-Subject: [PATCH v2] target/loongarch: Add TCG macro in structure CPUArchState
-Date: Mon,  4 Mar 2024 10:18:44 +0800
-Message-Id: <20240304021844.1449164-1-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
+ (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
+ id 1rgyHd-0005Qa-6D
+ for qemu-devel@nongnu.org; Sun, 03 Mar 2024 21:42:29 -0500
+Received: from mgamail.intel.com ([192.198.163.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
+ id 1rgyHa-0005II-QG
+ for qemu-devel@nongnu.org; Sun, 03 Mar 2024 21:42:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1709520146; x=1741056146;
+ h=from:to:cc:subject:in-reply-to:references:date:
+ message-id:mime-version;
+ bh=p3rlpauy9CcC/96wXB/B3OYstONDXCGXsyOYQKXvKOw=;
+ b=ms9Kh/wj+pGxdXw8mfPec+Sohl2aQDjqW28YfjW3vWcIOPnp+N7dSAhz
+ BEgKzkUWQfpC9dpQMSNnoW8rCvL9LL4qMHo1lCqJ5Odn4lQ1NcwHuc2rt
+ sOJRY6RYky5DcLNWT3BHLX7GLp22ce5LJnA7oIi0onpCysilirBi5gFqb
+ YsCxnvLSqUF5Lyk8Ig8V8JEhnM29OQSbvsX3j6bFZ3asf40mkeu2DzBw3
+ 4yLHYdjFhXj0qF5+GJXjJyK//uFLwGjvDUEvJg6pXleuR0fE95WvCmVUX
+ oD1uZHKxcYWB6iSjQDroCjGax+WHjP4fNtD8xZSbsw5RvrhPu1s2TbpL6 A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11002"; a="14706604"
+X-IronPort-AV: E=Sophos;i="6.06,203,1705392000"; d="scan'208";a="14706604"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Mar 2024 18:42:22 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,203,1705392000"; d="scan'208";a="39839001"
+Received: from yhuang6-desk2.sh.intel.com (HELO
+ yhuang6-desk2.ccr.corp.intel.com) ([10.238.208.55])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Mar 2024 18:42:16 -0800
+From: "Huang, Ying" <ying.huang@intel.com>
+To: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
+Cc: "Hao Xiang" <hao.xiang@bytedance.com>,  "Gregory Price"
+ <gourry.memverge@gmail.com>,  aneesh.kumar@linux.ibm.com,
+ mhocko@suse.com,  tj@kernel.org,  john@jagalactic.com,  "Eishan Mirakhur"
+ <emirakhur@micron.com>,  "Vinicius Tavares Petrucci"
+ <vtavarespetr@micron.com>,  "Ravis OpenSrc" <Ravis.OpenSrc@micron.com>,
+ "Alistair Popple" <apopple@nvidia.com>,  "Rafael J. Wysocki"
+ <rafael@kernel.org>,  Len Brown <lenb@kernel.org>,  Andrew Morton
+ <akpm@linux-foundation.org>,  Dave Jiang <dave.jiang@intel.com>,  Dan
+ Williams <dan.j.williams@intel.com>,  Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>,  linux-acpi@vger.kernel.org,
+ linux-kernel@vger.kernel.org,  linux-mm@kvack.org,  "Ho-Ren (Jack)
+ Chuang" <horenc@vt.edu>,  "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>,
+ linux-cxl@vger.kernel.org,  qemu-devel@nongnu.org
+Subject: Re: [PATCH v1 1/1] memory tier: acpi/hmat: create CPUless memory
+ tiers after obtaining HMAT info
+In-Reply-To: <20240301082248.3456086-2-horenchuang@bytedance.com> (Ho-Ren
+ Chuang's message of "Fri, 1 Mar 2024 08:22:45 +0000")
+References: <20240301082248.3456086-1-horenchuang@bytedance.com>
+ <20240301082248.3456086-2-horenchuang@bytedance.com>
+Date: Mon, 04 Mar 2024 10:40:22 +0800
+Message-ID: <87jzmibtyh.fsf@yhuang6-desk2.ccr.corp.intel.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8Cxbs2EL+VlfH9NAA--.6704S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxtrW3trWftrW7CFyxKw18Xrc_yoWxXF18pr
- 9xCF15KF48GrZ3Xan3X3s8WFn8Xr4xG342ya17KrySka18Jr1rur4kt39FvFZ8Z34rWr1I
- 9F1Iy345WF4UZ3cCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUkjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2Ij64
- vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8G
- jcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAKI48JMIIF0xvE2I
- x0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK
- 8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I
- 0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07UE-erUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=ascii
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=ying.huang@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.589,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,229 +93,254 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In structure CPUArchState some struct elements are only used in TCG
-mode, and it is not used in KVM mode. Macro CONFIG_TCG is added to
-make it simpiler in KVM mode, also there is the same modification
-in c code when these struct elements are used.
+Hi, Jack,
 
-When VM runs in KVM mode, TLB entries are not used and do not need
-migrate. It is only useful when it runs in TCG mode.
+"Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> writes:
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Change-Id: Id30d663f5d7bc3436520638f606f99d93926eb2e
----
-v1 --> v2:
-- Add field needed in structure vmstate_tlb, dynamically judge whether
-tlb should be migrated, since mostly qemu-system-loongarch64 is compiled
-with both kvm and tcg accl enabled.
----
- target/loongarch/cpu.c        | 14 +++++++++++---
- target/loongarch/cpu.h        | 16 ++++++++++------
- target/loongarch/cpu_helper.c |  9 +++++++++
- target/loongarch/machine.c    | 34 +++++++++++++++++++++++++++++-----
- 4 files changed, 59 insertions(+), 14 deletions(-)
+> * Introduce `mt_init_with_hmat()`
+> We defer memory tier initialization for those CPUless NUMA nodes
+> until acquiring HMAT info. `mt_init_with_hmat()` is introduced to
+> post-create CPUless memory tiers after obtaining HMAT info.
+> It iterates through each CPUless memory node, creating memory tiers if
+> necessary. Finally, it calculates demotion tables again at the end.
+>
+> * Introduce `hmat_find_alloc_memory_type()`
+> Find or allocate a memory type in the `hmat_memory_types` list.
+>
+> * Make `set_node_memory_tier()` more generic
+> This function can also be used for setting other memory types for a node.
+> To do so, a new argument is added to specify a memory type.
+>
+> * Handle cases where there is no HMAT when creating memory tiers
+> If no HMAT is specified, it falls back to using `default_dram_type`.
+>
+> * Change adist calculation code to use another new lock, mt_perf_lock.
+> Iterating through CPUlist nodes requires holding the `memory_tier_lock`.
+> However, `mt_calc_adistance()` will end up trying to acquire the same lock,
+> leading to a potential deadlock. Therefore, we propose introducing a
+> standalone `mt_perf_lock` to protect `default_dram_perf`. This approach not
+> only avoids deadlock but also prevents holding a large lock simultaneously.
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index bc2684179f..35db8e244d 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -517,7 +517,9 @@ static void loongarch_cpu_reset_hold(Object *obj)
-         lacc->parent_phases.hold(obj);
-     }
- 
-+#ifdef CONFIG_TCG
-     env->fcsr0_mask = FCSR0_M1 | FCSR0_M2 | FCSR0_M3;
-+#endif
-     env->fcsr0 = 0x0;
- 
-     int n;
-@@ -562,7 +564,9 @@ static void loongarch_cpu_reset_hold(Object *obj)
- 
- #ifndef CONFIG_USER_ONLY
-     env->pc = 0x1c000000;
-+#ifdef CONFIG_TCG
-     memset(env->tlb, 0, sizeof(env->tlb));
-+#endif
-     if (kvm_enabled()) {
-         kvm_arch_reset_vcpu(env);
-     }
-@@ -696,11 +700,15 @@ void loongarch_cpu_dump_state(CPUState *cs, FILE *f, int flags)
- {
-     LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-     CPULoongArchState *env = &cpu->env;
--    int i;
-+    int i, fp_status;
- 
-+#ifdef CONFIG_TCG
-+    fp_status = get_float_exception_flags(&env->fp_status);
-+#else
-+    fp_status = 0;
-+#endif
-     qemu_fprintf(f, " PC=%016" PRIx64 " ", env->pc);
--    qemu_fprintf(f, " FCSR0 0x%08x  fp_status 0x%02x\n", env->fcsr0,
--                 get_float_exception_flags(&env->fp_status));
-+    qemu_fprintf(f, " FCSR0 0x%08x  fp_status 0x%02x\n", env->fcsr0, fp_status);
- 
-     /* gpr */
-     for (i = 0; i < 32; i++) {
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index ec37579fd6..c25ad112b1 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -272,6 +272,7 @@ union fpr_t {
-     VReg  vreg;
- };
- 
-+#ifdef CONFIG_TCG
- struct LoongArchTLB {
-     uint64_t tlb_misc;
-     /* Fields corresponding to CSR_TLBELO0/1 */
-@@ -279,23 +280,18 @@ struct LoongArchTLB {
-     uint64_t tlb_entry1;
- };
- typedef struct LoongArchTLB LoongArchTLB;
-+#endif
- 
- typedef struct CPUArchState {
-     uint64_t gpr[32];
-     uint64_t pc;
- 
-     fpr_t fpr[32];
--    float_status fp_status;
-     bool cf[8];
--
-     uint32_t fcsr0;
--    uint32_t fcsr0_mask;
- 
-     uint32_t cpucfg[21];
- 
--    uint64_t lladdr; /* LL virtual address compared against SC */
--    uint64_t llval;
--
-     /* LoongArch CSRs */
-     uint64_t CSR_CRMD;
-     uint64_t CSR_PRMD;
-@@ -352,8 +348,16 @@ typedef struct CPUArchState {
-     uint64_t CSR_DERA;
-     uint64_t CSR_DSAVE;
- 
-+#ifdef CONFIG_TCG
-+    float_status fp_status;
-+    uint32_t fcsr0_mask;
-+    uint64_t lladdr; /* LL virtual address compared against SC */
-+    uint64_t llval;
-+#endif
- #ifndef CONFIG_USER_ONLY
-+#ifdef CONFIG_TCG
-     LoongArchTLB  tlb[LOONGARCH_TLB_MAX];
-+#endif
- 
-     AddressSpace *address_space_iocsr;
-     bool load_elf;
-diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
-index 45f821d086..d1cdbe30ba 100644
---- a/target/loongarch/cpu_helper.c
-+++ b/target/loongarch/cpu_helper.c
-@@ -11,6 +11,7 @@
- #include "internals.h"
- #include "cpu-csr.h"
- 
-+#ifdef CONFIG_TCG
- static int loongarch_map_tlb_entry(CPULoongArchState *env, hwaddr *physical,
-                                    int *prot, target_ulong address,
-                                    int access_type, int index, int mmu_idx)
-@@ -154,6 +155,14 @@ static int loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
- 
-     return TLBRET_NOMATCH;
- }
-+#else
-+static int loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
-+                                 int *prot, target_ulong address,
-+                                 MMUAccessType access_type, int mmu_idx)
-+{
-+    return TLBRET_NOMATCH;
-+}
-+#endif
- 
- static hwaddr dmw_va2pa(CPULoongArchState *env, target_ulong va,
-                         target_ulong dmw)
-diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
-index c7029fb9b4..77890f07cc 100644
---- a/target/loongarch/machine.c
-+++ b/target/loongarch/machine.c
-@@ -8,6 +8,7 @@
- #include "qemu/osdep.h"
- #include "cpu.h"
- #include "migration/cpu.h"
-+#include "sysemu/kvm.h"
- #include "vec.h"
- 
- static const VMStateDescription vmstate_fpu_reg = {
-@@ -109,9 +110,19 @@ static const VMStateDescription vmstate_lasx = {
-     },
- };
- 
-+#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
-+static bool tlb_needed(void *opaque)
-+{
-+    if (kvm_enabled()) {
-+        return false;
-+    }
-+
-+    return true;
-+}
-+
- /* TLB state */
--const VMStateDescription vmstate_tlb = {
--    .name = "cpu/tlb",
-+static const VMStateDescription vmstate_tlb_entry = {
-+    .name = "cpu/tlb_entry",
-     .version_id = 0,
-     .minimum_version_id = 0,
-     .fields = (const VMStateField[]) {
-@@ -122,6 +133,19 @@ const VMStateDescription vmstate_tlb = {
-     }
- };
- 
-+static const VMStateDescription vmstate_tlb = {
-+    .name = "cpu/tlb",
-+    .version_id = 0,
-+    .minimum_version_id = 0,
-+    .needed = tlb_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_STRUCT_ARRAY(env.tlb, LoongArchCPU, LOONGARCH_TLB_MAX,
-+                             0, vmstate_tlb_entry, LoongArchTLB),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+#endif
-+
- /* LoongArch CPU state */
- const VMStateDescription vmstate_loongarch_cpu = {
-     .name = "cpu",
-@@ -187,9 +211,6 @@ const VMStateDescription vmstate_loongarch_cpu = {
-         VMSTATE_UINT64(env.CSR_DBG, LoongArchCPU),
-         VMSTATE_UINT64(env.CSR_DERA, LoongArchCPU),
-         VMSTATE_UINT64(env.CSR_DSAVE, LoongArchCPU),
--        /* TLB */
--        VMSTATE_STRUCT_ARRAY(env.tlb, LoongArchCPU, LOONGARCH_TLB_MAX,
--                             0, vmstate_tlb, LoongArchTLB),
- 
-         VMSTATE_END_OF_LIST()
-     },
-@@ -197,6 +218,9 @@ const VMStateDescription vmstate_loongarch_cpu = {
-         &vmstate_fpu,
-         &vmstate_lsx,
-         &vmstate_lasx,
-+#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
-+        &vmstate_tlb,
-+#endif
-         NULL
-     }
- };
+The patch description is used to described why we need the change, and
+how we do that, but not what we do.  People can tell what is done from
+the code itself.
 
-base-commit: e1007b6bab5cf97705bf4f2aaec1f607787355b8
--- 
-2.39.3
+> Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
+> Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
+> ---
+>  drivers/acpi/numa/hmat.c     |  3 ++
+>  include/linux/memory-tiers.h |  6 +++
+>  mm/memory-tiers.c            | 76 ++++++++++++++++++++++++++++++++----
+>  3 files changed, 77 insertions(+), 8 deletions(-)
+>
+> diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
+> index d6b85f0f6082..9f57338b3cb5 100644
+> --- a/drivers/acpi/numa/hmat.c
+> +++ b/drivers/acpi/numa/hmat.c
+> @@ -1038,6 +1038,9 @@ static __init int hmat_init(void)
+>  	if (!hmat_set_default_dram_perf())
+>  		register_mt_adistance_algorithm(&hmat_adist_nb);
+>  
+> +	/* Post-create CPUless memory tiers after getting HMAT info */
+> +	mt_init_with_hmat();
+> +
+>  	return 0;
+>  out_put:
+>  	hmat_free_structures();
+> diff --git a/include/linux/memory-tiers.h b/include/linux/memory-tiers.h
+> index 69e781900082..2f845e90c033 100644
+> --- a/include/linux/memory-tiers.h
+> +++ b/include/linux/memory-tiers.h
+> @@ -48,6 +48,7 @@ int mt_calc_adistance(int node, int *adist);
+>  int mt_set_default_dram_perf(int nid, struct access_coordinate *perf,
+>  			     const char *source);
+>  int mt_perf_to_adistance(struct access_coordinate *perf, int *adist);
+> +void mt_init_with_hmat(void);
 
+HMAT isn't universally available.  It's a driver in fact.  So, don't put
+driver specific code in general code.
+
+>  #ifdef CONFIG_MIGRATION
+>  int next_demotion_node(int node);
+>  void node_get_allowed_targets(pg_data_t *pgdat, nodemask_t *targets);
+> @@ -136,5 +137,10 @@ static inline int mt_perf_to_adistance(struct access_coordinate *perf, int *adis
+>  {
+>  	return -EIO;
+>  }
+> +
+> +static inline void mt_init_with_hmat(void)
+> +{
+> +
+> +}
+>  #endif	/* CONFIG_NUMA */
+>  #endif  /* _LINUX_MEMORY_TIERS_H */
+> diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
+> index 0537664620e5..7a0a579b3deb 100644
+> --- a/mm/memory-tiers.c
+> +++ b/mm/memory-tiers.c
+> @@ -35,7 +35,9 @@ struct node_memory_type_map {
+>  };
+>  
+>  static DEFINE_MUTEX(memory_tier_lock);
+> +static DEFINE_MUTEX(mt_perf_lock);
+>  static LIST_HEAD(memory_tiers);
+> +static LIST_HEAD(hmat_memory_types);
+>  static struct node_memory_type_map node_memory_types[MAX_NUMNODES];
+>  struct memory_dev_type *default_dram_type;
+>  
+> @@ -502,7 +504,7 @@ static inline void __init_node_memory_type(int node, struct memory_dev_type *mem
+>  	}
+>  }
+>  
+> -static struct memory_tier *set_node_memory_tier(int node)
+> +static struct memory_tier *set_node_memory_tier(int node, struct memory_dev_type *new_memtype)
+
+No. memory_dev_type are passed to the function via node_memory_types[node].memtype.
+
+>  {
+>  	struct memory_tier *memtier;
+>  	struct memory_dev_type *memtype;
+> @@ -514,7 +516,7 @@ static struct memory_tier *set_node_memory_tier(int node)
+>  	if (!node_state(node, N_MEMORY))
+>  		return ERR_PTR(-EINVAL);
+>  
+> -	__init_node_memory_type(node, default_dram_type);
+> +	__init_node_memory_type(node, new_memtype);
+>  
+>  	memtype = node_memory_types[node].memtype;
+>  	node_set(node, memtype->nodes);
+> @@ -623,6 +625,56 @@ void clear_node_memory_type(int node, struct memory_dev_type *memtype)
+>  }
+>  EXPORT_SYMBOL_GPL(clear_node_memory_type);
+>  
+> +static struct memory_dev_type *hmat_find_alloc_memory_type(int adist)
+
+Similar function existed in drivers/dax/kmem.c.  Please abstract them
+and move them here.
+
+> +{
+> +	bool found = false;
+> +	struct memory_dev_type *mtype;
+> +
+> +	list_for_each_entry(mtype, &hmat_memory_types, list) {
+> +		if (mtype->adistance == adist) {
+> +			found = true;
+> +			break;
+> +		}
+> +	}
+> +	if (!found) {
+> +		mtype = alloc_memory_type(adist);
+> +		if (!IS_ERR(mtype))
+> +			list_add(&mtype->list, &hmat_memory_types);
+> +	}
+> +	return mtype;
+> +}
+> +
+> +static void mt_create_with_hmat(int node)
+> +{
+> +	struct memory_dev_type *mtype = NULL;
+> +	int adist = MEMTIER_ADISTANCE_DRAM;
+> +
+> +	mt_calc_adistance(node, &adist);
+> +	if (adist != MEMTIER_ADISTANCE_DRAM) {
+> +		mtype = hmat_find_alloc_memory_type(adist);
+> +		if (IS_ERR(mtype))
+> +			pr_err("%s() failed to allocate a tier\n", __func__);
+> +	} else {
+> +		mtype = default_dram_type;
+> +	}
+> +
+> +	set_node_memory_tier(node, mtype);
+> +}
+> +
+> +void mt_init_with_hmat(void)
+> +{
+> +	int nid;
+> +
+> +	mutex_lock(&memory_tier_lock);
+> +	for_each_node_state(nid, N_MEMORY)
+> +		if (!node_state(nid, N_CPU))
+> +			mt_create_with_hmat(nid);
+> +
+> +	establish_demotion_targets();
+> +	mutex_unlock(&memory_tier_lock);
+> +}
+> +EXPORT_SYMBOL_GPL(mt_init_with_hmat);
+> +
+
+I guess that we can put most hmat related code above in hmat.c.
+
+>  static void dump_hmem_attrs(struct access_coordinate *coord, const char *prefix)
+>  {
+>  	pr_info(
+> @@ -636,7 +688,7 @@ int mt_set_default_dram_perf(int nid, struct access_coordinate *perf,
+>  {
+>  	int rc = 0;
+>  
+> -	mutex_lock(&memory_tier_lock);
+> +	mutex_lock(&mt_perf_lock);
+>  	if (default_dram_perf_error) {
+>  		rc = -EIO;
+>  		goto out;
+> @@ -684,7 +736,7 @@ int mt_set_default_dram_perf(int nid, struct access_coordinate *perf,
+>  	}
+>  
+>  out:
+> -	mutex_unlock(&memory_tier_lock);
+> +	mutex_unlock(&mt_perf_lock);
+>  	return rc;
+>  }
+>  
+> @@ -700,7 +752,7 @@ int mt_perf_to_adistance(struct access_coordinate *perf, int *adist)
+>  	    perf->read_bandwidth + perf->write_bandwidth == 0)
+>  		return -EINVAL;
+>  
+> -	mutex_lock(&memory_tier_lock);
+> +	mutex_lock(&mt_perf_lock);
+>  	/*
+>  	 * The abstract distance of a memory node is in direct proportion to
+>  	 * its memory latency (read + write) and inversely proportional to its
+> @@ -713,7 +765,7 @@ int mt_perf_to_adistance(struct access_coordinate *perf, int *adist)
+>  		(default_dram_perf.read_latency + default_dram_perf.write_latency) *
+>  		(default_dram_perf.read_bandwidth + default_dram_perf.write_bandwidth) /
+>  		(perf->read_bandwidth + perf->write_bandwidth);
+> -	mutex_unlock(&memory_tier_lock);
+> +	mutex_unlock(&mt_perf_lock);
+>  
+>  	return 0;
+>  }
+> @@ -797,7 +849,7 @@ static int __meminit memtier_hotplug_callback(struct notifier_block *self,
+>  		break;
+>  	case MEM_ONLINE:
+>  		mutex_lock(&memory_tier_lock);
+> -		memtier = set_node_memory_tier(arg->status_change_nid);
+> +		memtier = set_node_memory_tier(arg->status_change_nid, default_dram_type);
+>  		if (!IS_ERR(memtier))
+>  			establish_demotion_targets();
+>  		mutex_unlock(&memory_tier_lock);
+> @@ -836,7 +888,15 @@ static int __init memory_tier_init(void)
+>  	 * types assigned.
+>  	 */
+>  	for_each_node_state(node, N_MEMORY) {
+> -		memtier = set_node_memory_tier(node);
+> +		if (!node_state(node, N_CPU))
+> +			/*
+> +			 * Defer memory tier initialization on CPUless numa nodes.
+> +			 * These will be initialized when HMAT information is
+> +			 * available.
+> +			 */
+> +			continue;
+> +
+> +		memtier = set_node_memory_tier(node, default_dram_type);
+
+On system with HMAT, how to fall back CPU-less node to
+default_dram_type?  I found your description, but I don't find it in code.
+
+>  		if (IS_ERR(memtier))
+>  			/*
+>  			 * Continue with memtiers we are able to setup
+
+--
+Best Regards,
+Huang, Ying
 
