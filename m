@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67F70C5478C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 19:46:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E9C3C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 19:46:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhEES-0005TP-L0; Mon, 04 Mar 2024 14:44:16 -0500
+	id 1rhEFG-0005sK-R8; Mon, 04 Mar 2024 14:45:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rhEER-0005Sr-JV
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 14:44:15 -0500
-Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
+ id 1rhEEl-0005XY-IK
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 14:44:36 -0500
+Received: from mail-yb1-xb2a.google.com ([2607:f8b0:4864:20::b2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rhEEP-0006vR-QI
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 14:44:15 -0500
-Received: by mail-yb1-xb2c.google.com with SMTP id
- 3f1490d57ef6-dcd7c526cc0so5184544276.1
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 11:44:13 -0800 (PST)
+ id 1rhEEj-0006yG-Na
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 14:44:35 -0500
+Received: by mail-yb1-xb2a.google.com with SMTP id
+ 3f1490d57ef6-dc238cb1b17so5221363276.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 11:44:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709581453; x=1710186253; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1709581471; x=1710186271; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qbOcnbLy9moWsSBbE+Q42MVGWhpKJBtzuH2spFlbBIc=;
- b=F+NqVZkan2g6rTkEtl2ksPATYTmVx/hF1j849qakco0Z7AqUSP9lAsc1nFMzYtn/Qk
- KwtB+TClJ5KMDeN0ryUy4DlmmxLlPKdH5kPABbyrRJz29hR0ePd2FTB4R8CxtBVRdjaC
- 4r37NgEbO3TM/IRH/qhGAAzl4ocajaZWGBm3WcDLTcc0E5FpyWnNEh663+kOM2C4SlZz
- uDuKYqEp4SfllPglUe1i6tDRjHCI+uJN12a+WqaK7BF/MyKe8Em/KUGXXOScwvS3FLcc
- I5HFWrZISL2Wmz8bwgXItQKOipFwLJqBKbDyav8rnYO+eaOC+GQnNFCFYl7DT9fUm597
- KB9A==
+ bh=283fafKoCAhZyon638Mj48RQ1VuKIm6CVjiYXSW1c5Y=;
+ b=SuzMFmzlEkvDTt/LOSPaTMBG7QDpwl1W4rbbUnitwLHJ54Iw5yBwrGwqB9lAMqi6PY
+ ptiTUDUXuv/nrkN+Swx24fJcFlFeV2opWnOxrfk57KwT9tWHQsEFpn4AdOicFdOsnOHQ
+ tM9Zrzm0P5ZmAull+5v649I6EYjTZXXHNYsOAw9F8+L/TeuwI/UhCt46S4/djyPPi2CI
+ EgNXc/QZ1hJ3v1ZTPbINtfWue2WBpA/YeaVEyZXcvlirIkVgJdNTyyqfB7gcm/0XvpLD
+ 0L13PRZK9iSsEjAbi96S+aXCOlqYmDAYbVPvtKYIMqpqh4VeKShzz13yFUrag+0uuy84
+ d9Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709581453; x=1710186253;
+ d=1e100.net; s=20230601; t=1709581471; x=1710186271;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qbOcnbLy9moWsSBbE+Q42MVGWhpKJBtzuH2spFlbBIc=;
- b=keQx2gReSyZsanffI9Yk69NEFeRs8OjDlr1eZDodaK9dwlAe9YGOruTQ2gz0Dh4ibH
- DzDxzSNrLiYCtfAp+3WxHygAF4GpTFArKNmGmI7q3rl3g0eLONZt3XqUhiWQTvCjjitN
- C9RYJs6cNm3Je2P40DzBoTjAJat2WYbEEdnHKvu7Ur2b+YUln60+Djo1TTYdJbI4s5JE
- rcoM6qMwMkCFt+si50FmHQA3rCJUGuB6jjrA/RbOZLVi9M2sUG3ZTsj3PV2FntI4+mmV
- P8dFepl2IeZHgsqRduDNnXDYOCY6of/jfusaBDUeHU+KsDnxhIXX5VfeC2wHfBRimNtF
- Wf0w==
-X-Gm-Message-State: AOJu0YwAONjf1l0s0L3BqeBYp7XOhQtGe41mG87cHpNiYqjjVlR1/Yg4
- 725OiBUPTncecbHvtv9/ncIOUGECjm6qJj9GaD1bWyvJnUzPwkX+RC1vT38u
-X-Google-Smtp-Source: AGHT+IFj/6AKOb01CS8iZ0cx8I6hTpu+7AdNBUdow4ScUYPauwu6XEYgtcZPPXwXUBAP+6x/56QZMw==
-X-Received: by 2002:a25:9d88:0:b0:dcb:aa26:50fe with SMTP id
- v8-20020a259d88000000b00dcbaa2650femr6868080ybp.15.1709581452753; 
- Mon, 04 Mar 2024 11:44:12 -0800 (PST)
+ bh=283fafKoCAhZyon638Mj48RQ1VuKIm6CVjiYXSW1c5Y=;
+ b=HJDV3f8n1G0YVUiAtZ0bxVJIj2mNlxXC2n9UFUlvN0WGf0IXQdE5KqAdzF2DgM0fuB
+ DPtzGLsnUMgwkgBGOa8RbJK+G73cqw0AnWO8M06jfgkuX2SXVdyos/f7qWryI7PmDhCC
+ E2qwPtB8hgOBsD7qvOWvGASZe9KG4nlfyX/WghcQmkTfGQtf8u3YP40fzeJqPH3Doozo
+ 923USUcZYJgpnK59GOa7zSyO7Opf6D3M0Te//tMzTYRnN14sU+8A8Ew5cN16AKf1xgfu
+ YHoUoqw4udpOLq4QU6l4B1GHLLFtmXKWErD72oBTlhddpobTMc6ty1V72AYBACYnVgXa
+ 4L4Q==
+X-Gm-Message-State: AOJu0YxYL5fCDZigbpt3KbBP2Xhp8Ui+0MDhv/omRLjscF9B8pCJHFg4
+ YKlcnlj70Yt4xGzxwohLTgITdhSq1zBjVPPNr9FD5AUuQmS+J/t6EOqwP0/Q
+X-Google-Smtp-Source: AGHT+IFK+f2/iwwB2tpKeab2vQ3PeNmoLam8Uf4HcS3wFtyitfX3H5sfkoJ3VHSCHggO5FT0xZVaWw==
+X-Received: by 2002:a25:7412:0:b0:dcc:79ab:e51a with SMTP id
+ p18-20020a257412000000b00dcc79abe51amr8056756ybc.57.1709581471312; 
+ Mon, 04 Mar 2024 11:44:31 -0800 (PST)
 Received: from localhost.localdomain ([50.205.20.42])
  by smtp.gmail.com with ESMTPSA id
- h1-20020a255f41000000b00dc62edd58dasm2282646ybm.40.2024.03.04.11.44.11
+ h1-20020a255f41000000b00dc62edd58dasm2282646ybm.40.2024.03.04.11.44.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Mar 2024 11:44:12 -0800 (PST)
+ Mon, 04 Mar 2024 11:44:31 -0800 (PST)
 From: nifan.cxl@gmail.com
 To: qemu-devel@nongnu.org
 Cc: jonathan.cameron@huawei.com, linux-cxl@vger.kernel.org,
@@ -65,17 +65,17 @@ Cc: jonathan.cameron@huawei.com, linux-cxl@vger.kernel.org,
  a.manzanares@samsung.com, dave@stgolabs.net, nmtadam.samsung@gmail.com,
  nifan.cxl@gmail.com, jim.harris@samsung.com, Jorgen.Hansen@wdc.com,
  wj28.lee@gmail.com, Fan Ni <fan.ni@samsung.com>
-Subject: [PATCH v5 04/13] hw/mem/cxl_type3: Add support to create DC regions
- to type3 memory devices
-Date: Mon,  4 Mar 2024 11:33:59 -0800
-Message-ID: <20240304194331.1586191-5-nifan.cxl@gmail.com>
+Subject: [PATCH v5 11/13] hw/cxl/cxl-mailbox-utils: Add partial and superset
+ extent release mailbox support
+Date: Mon,  4 Mar 2024 11:34:06 -0800
+Message-ID: <20240304194331.1586191-12-nifan.cxl@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240304194331.1586191-1-nifan.cxl@gmail.com>
 References: <20240304194331.1586191-1-nifan.cxl@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
- envelope-from=nifan.cxl@gmail.com; helo=mail-yb1-xb2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2a;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-yb1-xb2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,112 +100,270 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Fan Ni <fan.ni@samsung.com>
 
-With the change, when setting up memory for type3 memory device, we can
-create DC regions.
-A property 'num-dc-regions' is added to ct3_props to allow users to pass the
-number of DC regions to create. To make it easier, other region parameters
-like region base, length, and block size are hard coded. If needed,
-these parameters can be added easily.
-
-With the change, we can create DC regions with proper kernel side
-support like below:
-
-region=$(cat /sys/bus/cxl/devices/decoder0.0/create_dc_region)
-echo $region > /sys/bus/cxl/devices/decoder0.0/create_dc_region
-echo 256 > /sys/bus/cxl/devices/$region/interleave_granularity
-echo 1 > /sys/bus/cxl/devices/$region/interleave_ways
-
-echo "dc0" >/sys/bus/cxl/devices/decoder2.0/mode
-echo 0x40000000 >/sys/bus/cxl/devices/decoder2.0/dpa_size
-
-echo 0x40000000 > /sys/bus/cxl/devices/$region/size
-echo  "decoder2.0" > /sys/bus/cxl/devices/$region/target0
-echo 1 > /sys/bus/cxl/devices/$region/commit
-echo $region > /sys/bus/cxl/drivers/cxl_region/bind
+With the change, we extend the extent release mailbox command processing
+to allow more flexible release. As long as the DPA range of the extent to
+release is covered by valid extent(s) in the device, the release can be
+performed.
 
 Signed-off-by: Fan Ni <fan.ni@samsung.com>
 ---
- hw/mem/cxl_type3.c | 46 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+ hw/cxl/cxl-mailbox-utils.c | 211 +++++++++++++++++++++++++++++++++----
+ 1 file changed, 188 insertions(+), 23 deletions(-)
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 244d2b5fd5..a191211009 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -30,6 +30,7 @@
- #include "hw/pci/msix.h"
- 
- #define DWORD_BYTE 4
-+#define CXL_CAPACITY_MULTIPLIER   (256 * MiB)
- 
- /* Default CDAT entries for a memory region */
- enum {
-@@ -567,6 +568,45 @@ static void ct3d_reg_write(void *opaque, hwaddr offset, uint64_t value,
-     }
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index b538297bb5..eaff5c4c93 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -1617,6 +1617,155 @@ static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
+     return CXL_MBOX_SUCCESS;
  }
  
 +/*
-+ * TODO: dc region configuration will be updated once host backend and address
-+ * space support is added for DCD.
++ * Return value: the id of the DC region that covers the DPA range
++ * [dpa, dpa+len) The assumption is that the range is valid and within
++ * a DC region.
 + */
-+static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
++static uint8_t cxl_find_dc_region_id(const CXLType3Dev *ct3d, uint64_t dpa,
++                                     uint64_t len)
 +{
 +    int i;
-+    uint64_t region_base = 0;
-+    uint64_t region_len =  2 * GiB;
-+    uint64_t decode_len = 2 * GiB;
-+    uint64_t blk_size = 2 * MiB;
-+    CXLDCRegion *region;
-+    MemoryRegion *mr;
++    const CXLDCRegion *region;
 +
-+    if (ct3d->hostvmem) {
-+        mr = host_memory_backend_get_memory(ct3d->hostvmem);
-+        region_base += memory_region_size(mr);
-+    }
-+    if (ct3d->hostpmem) {
-+        mr = host_memory_backend_get_memory(ct3d->hostpmem);
-+        region_base += memory_region_size(mr);
-+    }
-+    assert(region_base % CXL_CAPACITY_MULTIPLIER == 0);
-+
-+    for (i = 0; i < ct3d->dc.num_regions; i++) {
++    for (i = ct3d->dc.num_regions - 1; i >= 0; i--) {
 +        region = &ct3d->dc.regions[i];
-+        region->base = region_base;
-+        region->decode_len = decode_len;
-+        region->len = region_len;
-+        region->block_size = blk_size;
-+        /* dsmad_handle is set when creating cdat table entries */
-+        region->flags = 0;
-+
-+        region_base += region->len;
++        if (dpa >= region->base) {
++            break;
++        }
 +    }
-+
-+    return true;
++    return i;
 +}
 +
- static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
- {
-     DeviceState *ds = DEVICE(ct3d);
-@@ -635,6 +675,11 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
-         g_free(p_name);
-     }
- 
-+    if (!cxl_create_dc_regions(ct3d, errp)) {
-+        error_setg(errp, "setup DC regions failed");
-+        return false;
++/*
++ * Copy extent list from src to dst
++ * Return value: number of extents copied
++ */
++static uint32_t copy_extent_list(CXLDCExtentList *dst,
++                                 const CXLDCExtentList *src)
++{
++    uint32_t cnt = 0;
++    CXLDCExtent *ent;
++
++    if (!dst || !src) {
++        return 0;
 +    }
 +
-     return true;
- }
++    QTAILQ_FOREACH(ent, src, node) {
++        cxl_insert_extent_to_extent_list(dst, ent->start_dpa, ent->len,
++                                         ent->tag, ent->shared_seq);
++        cnt++;
++    }
++    return cnt;
++}
++
++/*
++ * Detect potential extent overflow caused by extent split during processing
++ * extent release requests, also allow releasing superset of extents where the
++ * extent to release covers the range of multiple extents in the device.
++ * Note:
++ * 1.we will reject releasing an extent if some portion of its rang is
++ * not covered by valid extents.
++ * 2.This function is called after cxl_detect_malformed_extent_list so checks
++ * already performed there will be skipped.
++ */
++static CXLRetCode cxl_detect_extent_overflow(const CXLType3Dev *ct3d,
++        const CXLUpdateDCExtentListInPl *in)
++{
++    uint64_t nbits, offset;
++    const CXLDCRegion *region;
++    unsigned long **bitmaps_copied;
++    uint64_t dpa, len;
++    int i, rid;
++    CXLRetCode ret = CXL_MBOX_SUCCESS;
++    long extent_cnt_delta = 0;
++    CXLDCExtentList tmp_list;
++    CXLDCExtent *ent;
++
++    QTAILQ_INIT(&tmp_list);
++    copy_extent_list(&tmp_list, &ct3d->dc.extents);
++
++    bitmaps_copied = g_new0(unsigned long *, ct3d->dc.num_regions);
++    for (i = 0; i < ct3d->dc.num_regions; i++) {
++        region = &ct3d->dc.regions[i];
++        nbits = region->len / region->block_size;
++        bitmaps_copied[i] = bitmap_new(nbits);
++        bitmap_copy(bitmaps_copied[i], region->blk_bitmap, nbits);
++    }
++
++    for (i = 0; i < in->num_entries_updated; i++) {
++        dpa = in->updated_entries[i].start_dpa;
++        len = in->updated_entries[i].len;
++
++        rid = cxl_find_dc_region_id(ct3d, dpa, len);
++        region = &ct3d->dc.regions[rid];
++        offset = (dpa - region->base) / region->block_size;
++        nbits = len / region->block_size;
++
++        /* Check whether range [dpa, dpa + len) is covered by valid range */
++        if (find_next_zero_bit(bitmaps_copied[rid], offset + nbits, offset) <
++                               offset + nbits) {
++            ret = CXL_MBOX_INVALID_PA;
++            goto free_and_exit;
++        }
++
++        QTAILQ_FOREACH(ent, &tmp_list, node) {
++            /* Only split within an extent can cause extent count increase */
++            if (ent->start_dpa <= dpa &&
++                dpa + len <= ent->start_dpa + ent->len) {
++                uint64_t ent_start_dpa = ent->start_dpa;
++                uint64_t ent_len = ent->len;
++                uint64_t len1 = dpa - ent_start_dpa;
++                uint64_t len2 = ent_start_dpa + ent_len - dpa - len;
++
++                extent_cnt_delta += len1 && len2 ? 2 : (len1 || len2 ? 1 : 0);
++                extent_cnt_delta -= 1;
++                if (ct3d->dc.total_extent_count + extent_cnt_delta >
++                    CXL_NUM_EXTENTS_SUPPORTED) {
++                    ret = CXL_MBOX_RESOURCES_EXHAUSTED;
++                    goto free_and_exit;
++                }
++
++                offset = (ent->start_dpa - region->base) / region->block_size;
++                nbits = ent->len / region->block_size;
++                bitmap_clear(bitmaps_copied[rid], offset, nbits);
++                cxl_remove_extent_from_extent_list(&tmp_list, ent);
++
++                 if (len1) {
++                    offset = (dpa - region->base) / region->block_size;
++                    nbits = len1 / region->block_size;
++                    bitmap_set(bitmaps_copied[rid], offset, nbits);
++                    cxl_insert_extent_to_extent_list(&tmp_list,
++                                                     ent_start_dpa, len1,
++                                                     NULL, 0);
++                 }
++
++                 if (len2) {
++                    offset = (dpa + len - region->base) / region->block_size;
++                    nbits = len2 / region->block_size;
++                    bitmap_set(bitmaps_copied[rid], offset, nbits);
++                    cxl_insert_extent_to_extent_list(&tmp_list, dpa + len,
++                                                     len2, NULL, 0);
++                 }
++                 break;
++             }
++         }
++    }
++
++free_and_exit:
++    for (i = 0; i < ct3d->dc.num_regions; i++) {
++        g_free(bitmaps_copied[i]);
++    }
++    g_free(bitmaps_copied);
++
++    while (!QTAILQ_EMPTY(&tmp_list)) {
++        ent = QTAILQ_FIRST(&tmp_list);
++        cxl_remove_extent_from_extent_list(&tmp_list, ent);
++    }
++
++    return ret;
++}
++
+ /*
+  * CXL r3.1 section 8.2.9.9.9.4: Release Dynamic Capacity (Opcode 4803h)
+  */
+@@ -1644,15 +1793,28 @@ static CXLRetCode cmd_dcd_release_dyn_cap(const struct cxl_cmd *cmd,
+         return ret;
+     }
  
-@@ -930,6 +975,7 @@ static Property ct3_props[] = {
-                      HostMemoryBackend *),
-     DEFINE_PROP_UINT64("sn", CXLType3Dev, sn, UI64_NULL),
-     DEFINE_PROP_STRING("cdat", CXLType3Dev, cxl_cstate.cdat.filename),
-+    DEFINE_PROP_UINT8("num-dc-regions", CXLType3Dev, dc.num_regions, 0),
-     DEFINE_PROP_END_OF_LIST(),
- };
+-    for (i = 0; i < in->num_entries_updated; i++) {
+-        bool found = false;
++    ret = cxl_detect_extent_overflow(ct3d, in);
++    if (ret != CXL_MBOX_SUCCESS) {
++        return ret;
++    }
  
++    /*
++     * After this point, it is guaranteed that the extents in the
++     * updated extent list to release is valid, that means:
++     * 1. All extents in the list have no overlaps;
++     * 2. Each extent belongs to a valid DC region;
++     * 3. The DPA range of each extent is covered by valid extent
++     * in the device.
++     */
++    for (i = 0; i < in->num_entries_updated; i++) {
+         dpa = in->updated_entries[i].start_dpa;
+         len = in->updated_entries[i].len;
+ 
++process_leftover:
+         QTAILQ_FOREACH(ent, extent_list, node) {
+             /* Found the extent overlapping with */
+             if (ent->start_dpa <= dpa && dpa < ent->start_dpa + ent->len) {
++                /* Case 1: The to-release extent is subset of ent */
+                 if (dpa + len <= ent->start_dpa + ent->len) {
+                     /*
+                      * The incoming extent covers a portion of an extent
+@@ -1669,17 +1831,6 @@ static CXLRetCode cmd_dcd_release_dyn_cap(const struct cxl_cmd *cmd,
+                     uint64_t len1 = dpa - ent_start_dpa;
+                     uint64_t len2 = ent_start_dpa + ent_len - dpa - len;
+ 
+-                    /*
+-                     * TODO: checking for possible extent overflow, will be
+-                     * moved into a dedicated function of detecting extent
+-                     * overflow.
+-                     */
+-                    if (len1 && len2 && ct3d->dc.total_extent_count ==
+-                        CXL_NUM_EXTENTS_SUPPORTED) {
+-                        return CXL_MBOX_RESOURCES_EXHAUSTED;
+-                    }
+-
+-                    found = true;
+                     cxl_remove_extent_from_extent_list(extent_list, ent);
+                     ct3d->dc.total_extent_count -= 1;
+                     ct3_clear_region_block_backed(ct3d, ent_start_dpa, ent_len);
+@@ -1700,20 +1851,34 @@ static CXLRetCode cmd_dcd_release_dyn_cap(const struct cxl_cmd *cmd,
+                     break;
+                 } else {
+                     /*
+-                     * TODO: we reject the attempt to remove an extent that
+-                     * overlaps with multiple extents in the device for now,
+-                     * once the bitmap indicating whether a DPA range is
+-                     * covered by valid extents is introduced, will allow it.
++                     * Case 2: the to-release extent overlaps with multiple
++                     * extents, including the superset case
+                      */
+-                    return CXL_MBOX_INVALID_PA;
++                    uint64_t ent_start_dpa = ent->start_dpa;
++                    uint64_t ent_len = ent->len;
++                    uint64_t len1 = dpa - ent_start_dpa;
++
++                    cxl_remove_extent_from_extent_list(extent_list, ent);
++                    ct3d->dc.total_extent_count -= 1;
++                    ct3_clear_region_block_backed(ct3d, ent_start_dpa, ent_len);
++
++                    if (len1) {
++                        cxl_insert_extent_to_extent_list(extent_list,
++                                                         ent_start_dpa, len1,
++                                                         NULL, 0);
++                        ct3d->dc.total_extent_count += 1;
++                        ct3_set_region_block_backed(ct3d, ent_start_dpa, len1);
++                    }
++                    /*
++                     * processing the portion of the range following current
++                     * extent
++                     */
++                    len = dpa + len - ent_start_dpa - ent_len;
++                    dpa = ent_start_dpa + ent_len;
++                    goto process_leftover;
+                 }
+             }
+         }
+-
+-        if (!found) {
+-            /* Try to remove a non-existing extent. */
+-            return CXL_MBOX_INVALID_PA;
+-        }
+     }
+ 
+     return CXL_MBOX_SUCCESS;
 -- 
 2.43.0
 
