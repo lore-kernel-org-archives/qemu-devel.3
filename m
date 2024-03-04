@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03716C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 12:37:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63F44C5478C
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 12:37:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh7Ud-0003Gg-Ar; Mon, 04 Mar 2024 07:32:33 -0500
+	id 1rh7WR-0005qb-Cy; Mon, 04 Mar 2024 07:34:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=mkh8=KK=redhat.com=clg@ozlabs.org>)
- id 1rh7Sw-0000yx-OP
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:30:46 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76])
+ id 1rh7TJ-0001cI-Uf
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:31:19 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
+ helo=gandalf.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=mkh8=KK=redhat.com=clg@ozlabs.org>)
- id 1rh7SM-0004sn-Oz
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:30:38 -0500
+ id 1rh7Sw-00052y-BC
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:31:05 -0500
 Received: from gandalf.ozlabs.org (mail.ozlabs.org
  [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TpJ1M0W2Fz4x1d;
- Mon,  4 Mar 2024 23:29:59 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TpJ1c6DFyz4x3C;
+ Mon,  4 Mar 2024 23:30:12 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TpJ1J1Mz9z4x0q;
- Mon,  4 Mar 2024 23:29:55 +1100 (AEDT)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TpJ1Y754rz4x0q;
+ Mon,  4 Mar 2024 23:30:09 +1100 (AEDT)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -40,24 +41,25 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 17/26] vfio: Add Error** argument to
- .set_dirty_page_tracking() handler
-Date: Mon,  4 Mar 2024 13:28:35 +0100
-Message-ID: <20240304122844.1888308-18-clg@redhat.com>
+Subject: [PATCH v3 21/26] vfio: Add Error** argument to .vfio_save_config()
+ handler
+Date: Mon,  4 Mar 2024 13:28:39 +0100
+Message-ID: <20240304122844.1888308-22-clg@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304122844.1888308-1-clg@redhat.com>
 References: <20240304122844.1888308-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=mkh8=KK=redhat.com=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,128 +75,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We will use the Error object to improve error reporting in the
-.log_global*() handlers of VFIO. Add documentation while at it.
+Use vmstate_save_state_with_err() to improve error reporting in the
+callers and store a reported error under the migration stream. Add
+documentation while at it.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
+ include/hw/vfio/vfio-common.h | 25 ++++++++++++++++++++++++-
+ hw/vfio/migration.c           | 18 ++++++++++++------
+ hw/vfio/pci.c                 |  5 +++--
+ 3 files changed, 39 insertions(+), 9 deletions(-)
 
- Changes in v3:
-
- - Use error_setg_errno() in vfio_legacy_set_dirty_page_tracking()
- 
- include/hw/vfio/vfio-container-base.h | 18 ++++++++++++++++--
- hw/vfio/common.c                      |  4 ++--
- hw/vfio/container-base.c              |  4 ++--
- hw/vfio/container.c                   |  6 +++---
- 4 files changed, 23 insertions(+), 9 deletions(-)
-
-diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
-index 3582d5f97a37877b2adfc0d0b06996c82403f8b7..c76984654a596e3016a8cf833e10143eb872e102 100644
---- a/include/hw/vfio/vfio-container-base.h
-+++ b/include/hw/vfio/vfio-container-base.h
-@@ -82,7 +82,7 @@ int vfio_container_add_section_window(VFIOContainerBase *bcontainer,
- void vfio_container_del_section_window(VFIOContainerBase *bcontainer,
-                                        MemoryRegionSection *section);
- int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
--                                           bool start);
-+                                           bool start, Error **errp);
- int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
-                                       VFIOBitmap *vbmap,
-                                       hwaddr iova, hwaddr size);
-@@ -121,9 +121,23 @@ struct VFIOIOMMUClass {
-     int (*attach_device)(const char *name, VFIODevice *vbasedev,
-                          AddressSpace *as, Error **errp);
-     void (*detach_device)(VFIODevice *vbasedev);
-+
-     /* migration feature */
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index b9da6c08ef41174610eb92726c590309a53696a3..46f88493634b5634a9c14a5caa33a463fbf2c50d 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -133,7 +133,30 @@ struct VFIODeviceOps {
+     int (*vfio_hot_reset_multi)(VFIODevice *vdev);
+     void (*vfio_eoi)(VFIODevice *vdev);
+     Object *(*vfio_get_object)(VFIODevice *vdev);
+-    void (*vfio_save_config)(VFIODevice *vdev, QEMUFile *f);
 +
 +    /**
-+     * @set_dirty_page_tracking
++     * @vfio_save_config
 +     *
-+     * Start or stop dirty pages tracking on VFIO container
++     * Save device config state
 +     *
-+     * @bcontainer: #VFIOContainerBase on which to de/activate dirty
-+     *              pages tracking
-+     * @start: indicates whether to start or stop dirty pages tracking
++     * @vdev: #VFIODevice for which to save the config
++     * @f: #QEMUFile where to send the data
 +     * @errp: pointer to Error*, to store an error if it happens.
 +     *
 +     * Returns zero to indicate success and negative for error
 +     */
-     int (*set_dirty_page_tracking)(const VFIOContainerBase *bcontainer,
--                                   bool start);
-+                                   bool start, Error **errp);
-     int (*query_dirty_bitmap)(const VFIOContainerBase *bcontainer,
-                               VFIOBitmap *vbmap,
-                               hwaddr iova, hwaddr size);
-diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index 71352ad6532cad02f3a2ab53bdd531d769ea55b2..9c5bc76414487513775fa8e559f97c12ed9c5fda 100644
---- a/hw/vfio/common.c
-+++ b/hw/vfio/common.c
-@@ -1085,7 +1085,7 @@ static bool vfio_listener_log_global_start(MemoryListener *listener,
-     if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
-         ret = vfio_devices_dma_logging_start(bcontainer);
-     } else {
--        ret = vfio_container_set_dirty_page_tracking(bcontainer, true);
-+        ret = vfio_container_set_dirty_page_tracking(bcontainer, true, NULL);
-     }
++    int (*vfio_save_config)(VFIODevice *vdev, QEMUFile *f, Error **errp);
++
++    /**
++     * @vfio_load_config
++     *
++     * Load device config state
++     *
++     * @vdev: #VFIODevice for which to load the config
++     * @f: #QEMUFile where to get the data
++     *
++     * Returns zero to indicate success and negative for error
++     */
+     int (*vfio_load_config)(VFIODevice *vdev, QEMUFile *f);
+ };
  
-     if (ret) {
-@@ -1106,7 +1106,7 @@ static bool vfio_listener_log_global_stop(MemoryListener *listener,
-     if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
-         vfio_devices_dma_logging_stop(bcontainer);
-     } else {
--        ret = vfio_container_set_dirty_page_tracking(bcontainer, false);
-+        ret = vfio_container_set_dirty_page_tracking(bcontainer, false, NULL);
-     }
- 
-     if (ret) {
-diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
-index 913ae49077c4f09b7b27517c1231cfbe4befb7fb..7c0764121d24b02b6c4e66e368d7dff78a6d65aa 100644
---- a/hw/vfio/container-base.c
-+++ b/hw/vfio/container-base.c
-@@ -53,14 +53,14 @@ void vfio_container_del_section_window(VFIOContainerBase *bcontainer,
- }
- 
- int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
--                                           bool start)
-+                                           bool start, Error **errp)
- {
-     if (!bcontainer->dirty_pages_supported) {
-         return 0;
-     }
- 
-     g_assert(bcontainer->ops->set_dirty_page_tracking);
--    return bcontainer->ops->set_dirty_page_tracking(bcontainer, start);
-+    return bcontainer->ops->set_dirty_page_tracking(bcontainer, start, errp);
- }
- 
- int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 096d77eac3946a9c38fc2a98116b93353f71f06e..6524575aeddcea8470b5fd10caf57475088d1813 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -210,7 +210,7 @@ static int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
- 
- static int
- vfio_legacy_set_dirty_page_tracking(const VFIOContainerBase *bcontainer,
--                                    bool start)
-+                                    bool start, Error **errp)
- {
-     const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
-                                                   bcontainer);
-@@ -228,8 +228,8 @@ vfio_legacy_set_dirty_page_tracking(const VFIOContainerBase *bcontainer,
-     ret = ioctl(container->fd, VFIO_IOMMU_DIRTY_PAGES, &dirty);
-     if (ret) {
-         ret = -errno;
--        error_report("Failed to set dirty tracking flag 0x%x errno: %d",
--                     dirty.flags, errno);
-+        error_setg_errno(errp, errno, "Failed to set dirty tracking flag 0x%x",
-+                         dirty.flags);
-     }
- 
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index a67c3e457aa8255e7e39db5127627524d75a55dd..4c4ccbaed10b82e7baa992770ec0ec5a6c82b757 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -190,14 +190,19 @@ static int vfio_load_buffer(QEMUFile *f, VFIODevice *vbasedev,
      return ret;
+ }
+ 
+-static int vfio_save_device_config_state(QEMUFile *f, void *opaque)
++static int vfio_save_device_config_state(QEMUFile *f, void *opaque,
++                                         Error **errp)
+ {
+     VFIODevice *vbasedev = opaque;
++    int ret;
+ 
+     qemu_put_be64(f, VFIO_MIG_FLAG_DEV_CONFIG_STATE);
+ 
+     if (vbasedev->ops && vbasedev->ops->vfio_save_config) {
+-        vbasedev->ops->vfio_save_config(vbasedev, f);
++        ret = vbasedev->ops->vfio_save_config(vbasedev, f, errp);
++        if (ret) {
++            return ret;
++        }
+     }
+ 
+     qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
+@@ -587,13 +592,14 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
+ static void vfio_save_state(QEMUFile *f, void *opaque)
+ {
+     VFIODevice *vbasedev = opaque;
++    Error *local_err = NULL;
+     int ret;
+ 
+-    ret = vfio_save_device_config_state(f, opaque);
++    ret = vfio_save_device_config_state(f, opaque, &local_err);
+     if (ret) {
+-        error_report("%s: Failed to save device config space",
+-                     vbasedev->name);
+-        qemu_file_set_error(f, ret);
++        error_prepend(&local_err, "%s: Failed to save device config space",
++                      vbasedev->name);
++        qemu_file_set_error_obj(f, ret, local_err);
+     }
+ }
+ 
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 4fa387f0430d62ca2ba1b5ae5b7037f8f06b33f9..99d86e1d40ef25133fc76ad6e58294b07bd20843 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -2585,11 +2585,12 @@ const VMStateDescription vmstate_vfio_pci_config = {
+     }
+ };
+ 
+-static void vfio_pci_save_config(VFIODevice *vbasedev, QEMUFile *f)
++static int vfio_pci_save_config(VFIODevice *vbasedev, QEMUFile *f, Error **errp)
+ {
+     VFIOPCIDevice *vdev = container_of(vbasedev, VFIOPCIDevice, vbasedev);
+ 
+-    vmstate_save_state(f, &vmstate_vfio_pci_config, vdev, NULL);
++    return vmstate_save_state_with_err(f, &vmstate_vfio_pci_config, vdev, NULL,
++                                       errp);
+ }
+ 
+ static int vfio_pci_load_config(VFIODevice *vbasedev, QEMUFile *f)
 -- 
 2.44.0
 
