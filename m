@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BA3CC5478C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 14:49:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 362CBC48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 14:50:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh9cX-0002Z4-JP; Mon, 04 Mar 2024 09:48:49 -0500
+	id 1rh9dm-0005D7-7l; Mon, 04 Mar 2024 09:50:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rh9cU-0002W5-JV
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 09:48:47 -0500
+ id 1rh9dO-00054X-NW
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 09:49:43 -0500
 Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rh9cS-0007C5-Q7
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 09:48:46 -0500
+ id 1rh9dN-0007NB-4X
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 09:49:42 -0500
 Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5658082d2c4so6301355a12.1
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 06:48:44 -0800 (PST)
+ 4fb4d7f45d1cf-564fd9eea75so6563539a12.3
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 06:49:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709563723; x=1710168523; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709563779; x=1710168579; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZVQ6XsZulfExPgKIBMdqV61wTuYfQlGkP6JW60NKR10=;
- b=mwl4cgZJb6HqF3NqY8LhEaVWsGAwIoQvs6fESrQ8YRt01v6kKN6OSsN0MKuDCl/0/8
- MXXz/ESaaE5Yd3pFi35eCMhAZxcb+2du8L0EpycaGExH3QGrhsVpmKw2p5wGNRV4MKpg
- 083pg+0BfU7kYkvouTKFUwG4KmEgR26XwTOe19dtPKJnkseKi+4O2e1KUwYDgkeJXi8E
- U6jPqt0+lvS2vZL1BafRgWLknY7fVbMLUG3pedCM5e6PuwiztIGZgqkx8u2H08MFuNXF
- /0fcP633MYPdHfDuuHM5UsNLzoO07k4814J6ZOjZImEdubFx6LKPja+yR7Si5sPZ1Qg9
- rKbA==
+ bh=DnXwJ+2oj6ZInQuzEHozRJ+EE/lnYTg2w6W35/BMoVA=;
+ b=rHR7lPgPsWEwNrN2kk0sGoPfUimqwQiKRHLUecqAoI//aSsK53tH987voZ+5dcscSO
+ gubVtJk9thYMBZA9l2lKIe56mrkVAzVPAmrM3lQbeP4+Jh/YXIgsiHJmcm0RL59k50Tm
+ MR6HVQYCaGvEiNhwY0cbhnnpPDC84LuK99MWZ9Qn+b2HCP6BGsX6K/7AU0yyDfiZkRPB
+ dcmdcJaWF7SQYLinMz6chOvmn2YX/+Nw64+qtYZl5dAI6t1+t6oOOiJpFsdb78Q8vu51
+ b4JVZrPDqVuxsIlf5D/zUcmXZStpqlq7vtk6Om9sJZwcQH4+cpBSEkHMyjBR8KQifkJG
+ ejMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709563723; x=1710168523;
+ d=1e100.net; s=20230601; t=1709563779; x=1710168579;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZVQ6XsZulfExPgKIBMdqV61wTuYfQlGkP6JW60NKR10=;
- b=hoauj9zxW410NZEjTgeRBZexIAlPW5Dxh2+0y1QBOeYOQ3FvABWYMyD/UBjp3Pn6Qe
- quwsPtzQk+IBjSnhfI4cWGGWlssihqpE7q7ytZDvNzhVnxEY7kr7PjAGdVTee4gMQW2a
- XPjwBx47+zt52uxPcpo+sqf+PbS2XnfF9zQ+vz6z7STAao1F2DmNAX2hnJ4ZmeBE+yLH
- BDQUYveYuXU/JV6YXPb5U+7aCjvrAvQglEIeafRb3tIDB+/kaWK/KAbYhnVRw5Wuy+0b
- nCnLT2cc4T0UUUxMTd/RQHySftCy0M4XHWfn/IypV+wOs/PJ0PP5HfKgJzgmTnjGy4U7
- JYTQ==
-X-Gm-Message-State: AOJu0YzYZ6CLaSWKtbi1FrF6qRiHsUzJ3GoSPxYPCfvw30ZgDFYZMchX
- 2VaHDiipqv9A6j6wqYtRx0WxxV3PcYejuR/vulNox/kIZoqIXLf6Yibd+zKNLC8l8cUI0J496Km
- no5vUsEOeoV+A13e50hGgihNLeSuMn+hXY5UeHQ==
-X-Google-Smtp-Source: AGHT+IHg+Jco6wQvvjRITkAR4QNJDQMeYZgHX2qOsfvZAIynw7VPQa/5moWCC44/na2kY4JfFisPtjHQpGyOWVvuesY=
-X-Received: by 2002:a05:6402:1e86:b0:565:3aa7:565f with SMTP id
- f6-20020a0564021e8600b005653aa7565fmr5832510edf.8.1709563722855; Mon, 04 Mar
- 2024 06:48:42 -0800 (PST)
+ bh=DnXwJ+2oj6ZInQuzEHozRJ+EE/lnYTg2w6W35/BMoVA=;
+ b=lSKUqwjWUYqfPSJsTKhD52cWczf52GRexczONrVdrkuG/qmkX7gA2PcwoFgJQLiVgu
+ 6G7NVs+GprxHpPMO50SFc9tJEvNOtzWQxPQa1PwBT45goOTUgmWQe8KO6llKwe3C7IVR
+ 1g/RTJvMY4ZaOzGxNmcLHZ5Ob0/9bsP6n7tF4xqt3B0S1dhgkR83whvnQiw5j++gX1Aa
+ 2nokyX6okM9YUsKFilz6pbw/7Hi569hEwWHvrG/jWYYw8MKPeWeiRng0Zi3hMJCkHn7H
+ aordPBaOySmScvE8qT4cv34JjG7wbeU5Ko9bk10jOJnKEpUiUU1lN+06VOQzIv9fFVpj
+ vm6g==
+X-Gm-Message-State: AOJu0YwWr/IYAhIPz5f3wnGzk+xgAzIv/VYA0Q3QqObq4QslHpNCJEow
+ YBSB+MKrsQXR7Q3dhNrMaTNDzpMr5eQL1zA3Ad7mWY2kyMXzOzS4og3vFt7yQ+c3yfLmfvLtFPY
+ k8ZcveN5K6iB2czaq57jNSyW8ENwBbyFyht3N+g==
+X-Google-Smtp-Source: AGHT+IGIgKals/TgOHcNnnesQZSSiq4EkXu76qIrxYvUdasGtRv4foEVVpTRoX9WkWJm0uoazmCi3zL70OpaPg7FjFY=
+X-Received: by 2002:a50:85c6:0:b0:566:4a85:ceb3 with SMTP id
+ q6-20020a5085c6000000b005664a85ceb3mr6074285edh.9.1709563779583; Mon, 04 Mar
+ 2024 06:49:39 -0800 (PST)
 MIME-Version: 1.0
 References: <20240304144456.3825935-1-berrange@redhat.com>
- <20240304144456.3825935-2-berrange@redhat.com>
-In-Reply-To: <20240304144456.3825935-2-berrange@redhat.com>
+ <20240304144456.3825935-3-berrange@redhat.com>
+In-Reply-To: <20240304144456.3825935-3-berrange@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 4 Mar 2024 14:48:31 +0000
-Message-ID: <CAFEAcA-OqzmWt+QP43POFDN5y4HNRS_hb2vCGbiYGd7EV--fAA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] meson: detect broken clang 17 with
- -fzero-call-used-regs
+Date: Mon, 4 Mar 2024 14:49:28 +0000
+Message-ID: <CAFEAcA_92-kjjf2L_Z-+w+GX=kCQU+OnLMYp44eLwj8w2T-fpA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] gitlab: update FreeBSD Cirrus CI image to 13.3
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, Wainer dos Santos Moschetta <wainersm@redhat.com>, 
  Thomas Huth <thuth@redhat.com>, Beraldo Leal <bleal@redhat.com>, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-stable <qemu-stable@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=2a00:1450:4864:20::532;
@@ -99,62 +99,33 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Mon, 4 Mar 2024 at 14:46, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
 wrote:
 >
-> Clang 17 will segv if given  -fzero-call-used-regs and optimization
-> is enabled. Since upstream hasn't triaged the bug, distros are
-> increasingly shipping with broken Clang.
+> The 13.2 images have been deleted from gcloud
 >
-> https://github.com/llvm/llvm-project/issues/75168
-> https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=3D277474
 > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 > ---
->  meson.build | 17 ++++++++++++-----
->  1 file changed, 12 insertions(+), 5 deletions(-)
+>  .gitlab-ci.d/cirrus.yml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/meson.build b/meson.build
-> index 0ef1654e86..762798f2ee 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -555,17 +555,24 @@ endif
->  # Check further flags that make QEMU more robust against malicious parti=
-es
->
->  hardening_flags =3D [
-> -    # Zero out registers used during a function call
-> -    # upon its return. This makes it harder to assemble
-> -    # ROP gadgets into something usable
-> -    '-fzero-call-used-regs=3Dused-gpr',
-> -
->      # Initialize all stack variables to zero. This makes
->      # it harder to take advantage of uninitialized stack
->      # data to drive exploits
->      '-ftrivial-auto-var-init=3Dzero',
->  ]
->
-> +# Zero out registers used during a function call
-> +# upon its return. This makes it harder to assemble
-> +# ROP gadgets into something usable
-> +#
-> +# NB: CLang 17 is broken and SEGVs
-
-"Clang"
-
-> +# https://github.com/llvm/llvm-project/issues/75168
-> +if cc.compiles('extern struct { void (*cb)(void); } s; void f(void) { s.=
-cb(); }',
-> +               name: '-fzero-call-used-regs=3Dused-gpr',
-> +               args: ['-O2', '-fzero-call-used-regs=3Dused-gpr'])
-> +    hardening_flags +=3D '-fzero-call-used-regs=3Dused-gpr'
-> +endif
-> +
->  qemu_common_flags +=3D cc.get_supported_arguments(hardening_flags)
->
->  add_global_arguments(qemu_common_flags, native: false, language: all_lan=
-guages)
+> diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
+> index 64f2e25afa..b45f9de62f 100644
+> --- a/.gitlab-ci.d/cirrus.yml
+> +++ b/.gitlab-ci.d/cirrus.yml
+> @@ -52,7 +52,7 @@ x64-freebsd-13-build:
+>      NAME: freebsd-13
+>      CIRRUS_VM_INSTANCE_TYPE: freebsd_instance
+>      CIRRUS_VM_IMAGE_SELECTOR: image_family
+> -    CIRRUS_VM_IMAGE_NAME: freebsd-13-2
+> +    CIRRUS_VM_IMAGE_NAME: freebsd-13-3
+>      CIRRUS_VM_CPUS: 8
+>      CIRRUS_VM_RAM: 8G
+>      UPDATE_COMMAND: pkg update; pkg upgrade -y
+> --
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-The stable releases don't have the use of -fzero-call-used-regs,
-so we don't need to backport this.
+This one should be tagged
+Cc: qemu-stable@nongnu.org
+I guess?
 
 thanks
 -- PMM
