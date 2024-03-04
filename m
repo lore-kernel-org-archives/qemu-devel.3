@@ -4,82 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7455CC5478C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 10:34:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53005C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 10:42:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh5eJ-0003Wp-Rh; Mon, 04 Mar 2024 05:34:23 -0500
+	id 1rh5lp-0005Xl-Sj; Mon, 04 Mar 2024 05:42:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rh5eG-0003WZ-H0
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 05:34:20 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rh5lo-0005VU-43
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 05:42:08 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rh5eD-0002MR-3k
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 05:34:18 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-412e784060cso1752115e9.1
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 02:34:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rh5lm-0003mI-Ji
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 05:42:07 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-566adfeced4so4350124a12.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 02:42:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709548455; x=1710153255; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Ofq/jPCi2HYH2e2H03yzoUa8fKZ8YrDUZOe3cB/Sm50=;
- b=lHJv+mg2ZiQv3XmtCatO36W3wvj2V+AXLLmo89jyGnaIWuB7r6DrCv2smBZHTjT0fs
- MqI5jvP5+K/cPCh+DcOkgSwTzJvsQz13cW8jlGUMBMlA6jSDwsrlckRWNrbTqAdrSoO+
- QCVBfLE6vl17srZ87A7onmE7+JELSzWw83fcraPo0QaFZ4TWD5FO8Ie0BILUiRV7R1mS
- M1nSpUrhj9bcmfeoNRSMHop4DoPAQhsEJahm8+xiWkzlyo9dHVGCVcZJl7WaB99s06S3
- pz9E3ywuZvp2UkgSqe3rWzLrZn11a1TFVO31doUhnCPIt9k+481ZcspP10ZC23QjE1iq
- Gb+w==
+ d=linaro.org; s=google; t=1709548924; x=1710153724; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=EjLkmn4Jw88Be2lNSETLjKfywgeAWRZQl7FiCmTVJao=;
+ b=NUHA8GuBz0HyRaDqp45R0FIh523g/zUumiXTBdruObiEI9ZBT8w0ieWVBdEmZrVa0w
+ KbXzBwBFIGw/Xggpp1+ZwPmb44rs/OIdgzNOGJ0xcLt/MDxx2cmTx++20okG4tGuyZ2R
+ ZQ/gtssIl9MUkAqWPXb6l10VyZ9NuQEk/qlz+VGnz2RtkzWO990+nT8GYjQCbTIlfcfD
+ W+Xa2RqEwF4n6ZowAUDy7+O226Ij4jTd/bpcNl3dK+MdnTE7bEend1FnTGPujL24WAdb
+ j8j4RpeGAY2DskIzlgwq9xOsVKRwTFqtT57trqi7tj/5JQTf5hKdCij6Yux3V6bAeSUH
+ PD5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709548455; x=1710153255;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Ofq/jPCi2HYH2e2H03yzoUa8fKZ8YrDUZOe3cB/Sm50=;
- b=OacmeXL/zyu8YDWd/t3hJ/+sfuV777bN8iomvgQtnIeD29AwsxEjy/sMqof4tUVzt/
- UTdGppcEo7SCyx0SYeZrRhlgAmkbVA2kqLDEJzIrVpEEZjkX0KnIfZdqMWoFGGnzOiyf
- 6zX9+8L+HqKOIiXuarfM9C4s56AoJmigBrPSEwz0PpqtCx3QCkjxt+HsuF8EjbAGWzJh
- 4yzeIZ3UfnVuopk8WXBTtxV0RA/pa1y9IlAsLkLX2tZoG3Lo3A4S+1/uzgj5IqPj0mJG
- FpBolMx89IgVipDYi6iVxTWhl5kKzw169gnwKIn9l2fbrhv3nUpprkOV4tuVjR6lq/YR
- EkeA==
+ d=1e100.net; s=20230601; t=1709548924; x=1710153724;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=EjLkmn4Jw88Be2lNSETLjKfywgeAWRZQl7FiCmTVJao=;
+ b=vD7OKpMyDBuGmJS9jVuOqrCHoMGcFktx6zXpGztXy6+p9ovWaY988rWwZuprthAaiO
+ VDKoCSK5P+GxMjilHwu7BoVBNiFkK/v/5g1GfAIjzmTzI7bIOVNnwMYvlqHl91vOlvRj
+ ac0XOQUPUrTbF1V8M9HZ4X9k2RWKM4AYgI5YJA9n2Zd3eRDbpeFRAkc99L/On4Gpma6N
+ VaZ8lxmd1RK/By1TTdhgivVNsg5ZBmEps6cs1S88I8EYCZx6NyKi1tp2h30gJYIrgfMM
+ 8EGCSzuOBQqxf1P5x5p4zdRZhEQFJKJXLaIo3ivQdEPbo9JQFFKjXoEEEGLAwsaZ8tDG
+ yb6w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXY2XS9y5C8e90pYGuHkEIBG5DOQWtgYBm11xBe4DaMEjeU1/lAELo6m1gL/Z49Lbaqa2kuNh73/urzxHYMyOYixguA5mc=
-X-Gm-Message-State: AOJu0YzKOhCMma0jNuo/8kkb9z9u9LVGOpnqZhRxlfx4Tq9Rkc44YrqD
- kYji8OSArGm4xMQ6sY7ffEjufyO/nmr6ogEkZuRRkJvPFdGe1+OVa/F8UEEv0Xw=
-X-Google-Smtp-Source: AGHT+IHXOjsdAogkq5lOsQPszea2cOVw1airWLtA7jDNua8v46vted4kDNfS6E7fMU+ZvpyiN3P0dw==
-X-Received: by 2002:adf:e9ca:0:b0:33e:1bc2:c392 with SMTP id
- l10-20020adfe9ca000000b0033e1bc2c392mr8889429wrn.16.1709548454737; 
- Mon, 04 Mar 2024 02:34:14 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- cr14-20020a05600004ee00b0033dd06e628asm11843621wrb.27.2024.03.04.02.34.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Mar 2024 02:34:14 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CC1C55F7B1;
- Mon,  4 Mar 2024 10:34:13 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Sven Schnelle <svens@stackframe.org>
-Cc: Alexandre Iooss <erdnaxe@crans.org>,  Mahmoud Mandour
- <ma.mandourr@gmail.com>,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- qemu-devel@nongnu.org,  deller@gmx.de
-Subject: Re: [PATCH v3 01/12] util/log: convert debug_regions to GList
-In-Reply-To: <20240301174609.1964379-2-svens@stackframe.org> (Sven Schnelle's
- message of "Fri, 1 Mar 2024 18:45:58 +0100")
-References: <20240301174609.1964379-1-svens@stackframe.org>
- <20240301174609.1964379-2-svens@stackframe.org>
-User-Agent: mu4e 1.12.1; emacs 29.1
-Date: Mon, 04 Mar 2024 10:34:13 +0000
-Message-ID: <87jzmiz3oa.fsf@draig.linaro.org>
+ AJvYcCWF1bX2M7Oq7XCVjRVwOVyQYvb539fl8cWHQ/Yw2u/rWYlbIC/74vCeyxVozjzM199randxAIUAg0uhjq0yYdirsYSU/xs=
+X-Gm-Message-State: AOJu0YxiiLat+6dQPRBkIRUYasHK6bFHe4CLrzh7HJF+2LTGic031fRd
+ uT4yMpkbNgFaVpFqzerRvIHHX5IFtQeeOF1YZa7CvebLsIJuUw2lJbjLiLxqBI3xbuvL+R6xhaX
+ TgmTYJv1luLpBDADNW/dvqSFsUC6Jj120qE9x/w==
+X-Google-Smtp-Source: AGHT+IHg9ma/DaqX4tgFT+nrP1I5lP22rxL6wCOLthmDTsQXYB/2iBPj86FVYpVbsemGyK66ngYy7cmILEA7iqmk1LU=
+X-Received: by 2002:a05:6402:2152:b0:565:7c8d:5790 with SMTP id
+ bq18-20020a056402215200b005657c8d5790mr5793845edb.4.1709548924454; Mon, 04
+ Mar 2024 02:42:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
+References: <20240304-common-v1-1-1a2005d1f350@daynix.com>
+In-Reply-To: <20240304-common-v1-1-1a2005d1f350@daynix.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 4 Mar 2024 10:41:52 +0000
+Message-ID: <CAFEAcA_-B46tABOTD=9PBQ1Kt2farT9RPRnMGrEEY=ytcVmmUg@mail.gmail.com>
+Subject: Re: [PATCH] meson: Remove --warn-common ldflag
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,18 +94,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sven Schnelle <svens@stackframe.org> writes:
+On Sun, 3 Mar 2024 at 16:26, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>
+> --warn-common ldflag causes warnings for multiple definitions of
+> ___asan_globals_registered when enabling AddressSanitizer with clang.
+> The warning is somewhat obsolete so just remove it.
+>
+> The common block is used to allow duplicate definitions of uninitialized
+> global variables. In the past, GCC and clang used to place such
+> variables in a common block by default, which prevented programmers for
+> noticing accidental duplicate definitions. Commit 49237acdb725 ("Enable
+> ld flag --warn-common") added --warn-common ldflag so that ld warns in
+> such a case.
+>
+> Today, both of GCC and clang don't use common blocks by default[1][2] so
+> any remaining use of common blocks should be intentional. Remove
+> --warn-common ldflag to suppress warnings for intentional use of
+> common blocks.
 
-> In preparation of making the parsing part of qemu_set_dfilter_ranges()
-> available to other users, convert it to return a GList, so the result
-> can be used with other functions taking a GList of struct Range.
+We also explicitly turn off the common block with -fno-common
+(since commit 4c288acbd6b9e, 2014).
 
-Why do we need to convert it to a Glist? When I originally wrote the
-dfilter code I deliberately chose GArray over GList to avoid bouncing
-across cache lines during the tight loop that is checking ranges. It's
-not like we can't pass GArray's to plugins as well?
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+thanks
+-- PMM
 
