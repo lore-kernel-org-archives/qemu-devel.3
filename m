@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FB6CC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 13:02:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88667C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 13:02:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh7xJ-00030G-SL; Mon, 04 Mar 2024 08:02:09 -0500
+	id 1rh7wV-0001BV-R6; Mon, 04 Mar 2024 08:01:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rh7xB-0002FA-RH
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 08:02:03 -0500
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ id 1rh7wP-0000uw-D4
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 08:01:13 -0500
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rh7x9-0000rw-T2
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 08:02:01 -0500
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-a293f2280c7so785398866b.1
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 05:01:58 -0800 (PST)
+ id 1rh7wN-0000ae-4b
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 08:01:12 -0500
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a4499ef8b5aso285957366b.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 05:01:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709557316; x=1710162116; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709557269; x=1710162069; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=F+pWikmJEVeXYqaCZG5aCHJMSgAUEA60kwg5eYyl/pg=;
- b=FlSh5tqk5KAVz0YGMQE1dL7UpvTwVeP5IyzR3OArS9p11vvnYp3vpT+QI6XffSTvR1
- I8J1RNdB8XKolYmZ469xLUhhkdy4H1WkmzIqx29RwIaVqKKSy6BY1ctFcRypLBP4Sbjy
- 2sWPbufjT9UNSajcKodAaVPSZEsmAkxFdaVXWSM358cRG2aj5Jg+YCl43i1j52eV1bHp
- guXg8yHwdulensyg6owCop46+AGlHjHTTVSitMH0h6GR8mHau2VJUHRciQ2a9Ejt9dpT
- HKrsDwlw/ReNUVLAM7PsXB1ucBAdK0N/G1B86/TfO/3hZka+jHKzn6c+kcQ4L2noTBEY
- ogEA==
+ bh=MIZX041RReYggrOD88szc9Tr+OwGhWpNswxH8Yq0yAw=;
+ b=r1mRX66TUPeOxdiAtyKo5xqFuVcRXrUcJcIUwZuXLBSsosKM1i5enEhrUISlFckYbU
+ 3E3xv6g3Jrls7H1cLSAQ8ctVESlJ9Htld9uqIiT14rMcLNRPsPixGOnl/uQlI7U2ATTS
+ s4ijuOvS4mNt+lPkwA2wbTrKK+PXWvrcClNs031+JcjFGGF8f5u8XI6gq4RP86O1vH25
+ 8CvIHnX6Vd/H133Kv1MqUEHYngUccIoi6yABe8uIPE4cFo2wV/LJuAOOOgaYuKvG5cqP
+ VrTR2iljA2OciHuUYFhhL4AYFaC4IiEk9+sOI6sKQHI5Ks0w6nAlqQIarGc+hqZKckRK
+ AAKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709557316; x=1710162116;
+ d=1e100.net; s=20230601; t=1709557269; x=1710162069;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=F+pWikmJEVeXYqaCZG5aCHJMSgAUEA60kwg5eYyl/pg=;
- b=rLwkaiKdTqX2iIzFVoOTSPfhi+IhhR7fOP1vBUsSz9VvNgM4ZPvsSQ/Qi/m4j9+YNL
- bSVqxv0VndiX7XuzrfX/3cqWuRfcx2AyXL2kFhOuEhk3OPohvsEiS0aOcD9HEMbpxMYR
- Sw69ro7gRdWd/EepN/PgfhdMPMMYf7iSlIwsOGzyYx0BQA1xELpJhchmpErSNnXjUvAt
- F3bjlQDBE3I/dZy34dreHTQL0Bz3aYxJWHAayskqt9e8cQOwp+xZl+sXwWYi1ITEMebc
- +OnGlp/kML42jslD3AAhrPkmin4NLet85Tffb5NtlBbbT0cCaujldVktxpxYXxqZ+Jfk
- rOuw==
-X-Gm-Message-State: AOJu0YypyhnB3T90QLlCByHckCZIBlW3V6hd0gLdluW2DJRUM1aEZi2j
- bpl4OYwM8QTznEfwFkyGAckjtYX/n/LXN7tsAGXPgMa6kt8UHGScuDzh/MrUGYhyq3dUclhykX8
- CMBs=
-X-Google-Smtp-Source: AGHT+IGx1sljSFf/X3qlqap6P4Ibugw8ZHfVPhsX/lK7JsXZncaMNflNoC6Z/OZI+dZg5uKqDzkdLA==
-X-Received: by 2002:a17:906:71d1:b0:a44:9cdb:9ec1 with SMTP id
- i17-20020a17090671d100b00a449cdb9ec1mr5601848ejk.11.1709557316149; 
- Mon, 04 Mar 2024 05:01:56 -0800 (PST)
+ bh=MIZX041RReYggrOD88szc9Tr+OwGhWpNswxH8Yq0yAw=;
+ b=SQN/7C5j4M2g54l3nYvzYAJ6kgaYvSgIhB78jyZLX5s2g00JCV+ISI+//OIN7JCMq2
+ 88J+7gcbGpViflXf35ZUJsrB9kwY4LGC6aDkb9LoaIt17L1i4dh5WGvvXuIA22VEugdS
+ BRS/7dqCQAGNzHtD4GUhyx0MCr57JlbxsCmw8zpgMfe3cm1gbPCy0DNLozNeRdk2xh72
+ 3cq7KJdkILX7VTpLfuZoIv5mTJbQC5Eh5OUjy8tk5c0hqlzjVScGZOjuD5SdzfrZwMtP
+ HaVYk9VhzVTeiI7ooxIZ7iA14ip1aEAxx3E5CkYIDkP8DXZax2H33BewN0DGlvyb+3/l
+ 3Rgg==
+X-Gm-Message-State: AOJu0YxApryUt9jIc5Hfkt/lh1El8lKbxp0vyZLLfRN0HIS8e8bhlTRP
+ xr5UVSMG717LTfMrZpX59sJV3k9UE8l6S8Fhb4kaHGpK2POf94dg5hGIBtQn2S+g26Vb/iiznW0
+ /Cf8=
+X-Google-Smtp-Source: AGHT+IH9buhloAlB3fM9ESVecD7jfGc3r5Ivc/5Q6bhPKILMEv+hFambrp1jdZbxuvY3ZY561BD0Vg==
+X-Received: by 2002:a17:906:3e4f:b0:a44:5761:fbd with SMTP id
+ t15-20020a1709063e4f00b00a4457610fbdmr6052710eji.39.1709557268953; 
+ Mon, 04 Mar 2024 05:01:08 -0800 (PST)
 Received: from debian.. ([102.35.208.160]) by smtp.gmail.com with ESMTPSA id
- tj7-20020a170907c24700b00a413d1eda4bsm4806136ejc.87.2024.03.04.05.01.51
+ tj7-20020a170907c24700b00a413d1eda4bsm4806136ejc.87.2024.03.04.05.01.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Mar 2024 05:01:55 -0800 (PST)
+ Mon, 04 Mar 2024 05:01:08 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Yanan Wang <wangyanan55@huawei.com>,
@@ -70,18 +70,17 @@ Cc: Yanan Wang <wangyanan55@huawei.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v7 11/12] plugins: remove non per_vcpu inline operation from
- API
-Date: Mon,  4 Mar 2024 17:00:35 +0400
-Message-Id: <20240304130036.124418-12-pierrick.bouvier@linaro.org>
+Subject: [PATCH v7 03/12] plugins: implement inline operation relative to
+ cpu_index
+Date: Mon,  4 Mar 2024 17:00:27 +0400
+Message-Id: <20240304130036.124418-4-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240304130036.124418-1-pierrick.bouvier@linaro.org>
 References: <20240304130036.124418-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-ej1-x634.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,188 +103,205 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now we have a thread-safe equivalent of inline operation, and that all
-plugins were changed to use it, there is no point to keep the old API.
+Instead of working on a fixed memory location, allow to address it based
+on cpu_index, an element size and a given offset.
+Result address: ptr + offset + cpu_index * element_size.
 
-In more, it will help when we implement more functionality (conditional
-callbacks), as we can assume that we operate on a scoreboard.
+With this, we can target a member in a struct array from a base pointer.
 
-API version bump was already done as part of this series.
+Current semantic is not modified, thus inline operation still targets
+always the same memory location.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/qemu/qemu-plugin.h   | 58 ++++--------------------------------
- plugins/api.c                | 29 ------------------
- plugins/qemu-plugins.symbols |  3 --
- 3 files changed, 5 insertions(+), 85 deletions(-)
+ plugins/plugin.h       |  2 +-
+ accel/tcg/plugin-gen.c | 69 ++++++++++++++++++++++++++++++++++--------
+ plugins/api.c          |  3 +-
+ plugins/core.c         | 12 +++++---
+ 4 files changed, 67 insertions(+), 19 deletions(-)
 
-diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-index 6bbad068c01..4fc6c3739b2 100644
---- a/include/qemu/qemu-plugin.h
-+++ b/include/qemu/qemu-plugin.h
-@@ -52,7 +52,11 @@ typedef uint64_t qemu_plugin_id_t;
-  * The plugins export the API they were built against by exposing the
-  * symbol qemu_plugin_version which can be checked.
-  *
-- * version 2: removed qemu_plugin_n_vcpus and qemu_plugin_n_max_vcpus
-+ * version 2:
-+ * - removed qemu_plugin_n_vcpus and qemu_plugin_n_max_vcpus
-+ * - Remove qemu_plugin_register_vcpu_{tb, insn, mem}_exec_inline.
-+ *   Those functions are replaced by *_per_vcpu variants, which guarantee
-+ *   thread-safety for operations.
+diff --git a/plugins/plugin.h b/plugins/plugin.h
+index 043c740067d..3bf1aaf5c2d 100644
+--- a/plugins/plugin.h
++++ b/plugins/plugin.h
+@@ -99,7 +99,7 @@ void plugin_register_vcpu_mem_cb(GArray **arr,
+                                  enum qemu_plugin_mem_rw rw,
+                                  void *udata);
+ 
+-void exec_inline_op(struct qemu_plugin_dyn_cb *cb);
++void exec_inline_op(struct qemu_plugin_dyn_cb *cb, int cpu_index);
+ 
+ int plugin_num_vcpus(void);
+ 
+diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
+index ac6b52b9ec9..0f8be53d394 100644
+--- a/accel/tcg/plugin-gen.c
++++ b/accel/tcg/plugin-gen.c
+@@ -133,16 +133,28 @@ static void gen_empty_udata_cb_no_rwg(void)
   */
+ static void gen_empty_inline_cb(void)
+ {
++    TCGv_i32 cpu_index = tcg_temp_ebb_new_i32();
++    TCGv_ptr cpu_index_as_ptr = tcg_temp_ebb_new_ptr();
+     TCGv_i64 val = tcg_temp_ebb_new_i64();
+     TCGv_ptr ptr = tcg_temp_ebb_new_ptr();
  
- extern QEMU_PLUGIN_EXPORT int qemu_plugin_version;
-@@ -309,25 +313,6 @@ enum qemu_plugin_op {
-     QEMU_PLUGIN_INLINE_ADD_U64,
- };
++    tcg_gen_ld_i32(cpu_index, tcg_env,
++                   -offsetof(ArchCPU, env) + offsetof(CPUState, cpu_index));
++    /* second operand will be replaced by immediate value */
++    tcg_gen_mul_i32(cpu_index, cpu_index, cpu_index);
++    tcg_gen_ext_i32_ptr(cpu_index_as_ptr, cpu_index);
++
+     tcg_gen_movi_ptr(ptr, 0);
++    tcg_gen_add_ptr(ptr, ptr, cpu_index_as_ptr);
+     tcg_gen_ld_i64(val, ptr, 0);
+-    /* pass an immediate != 0 so that it doesn't get optimized away */
+-    tcg_gen_addi_i64(val, val, 0xdeadface);
++    /* second operand will be replaced by immediate value */
++    tcg_gen_add_i64(val, val, val);
++
+     tcg_gen_st_i64(val, ptr, 0);
+     tcg_temp_free_ptr(ptr);
+     tcg_temp_free_i64(val);
++    tcg_temp_free_ptr(cpu_index_as_ptr);
++    tcg_temp_free_i32(cpu_index);
+ }
  
--/**
-- * qemu_plugin_register_vcpu_tb_exec_inline() - execution inline op
-- * @tb: the opaque qemu_plugin_tb handle for the translation
-- * @op: the type of qemu_plugin_op (e.g. ADD_U64)
-- * @ptr: the target memory location for the op
-- * @imm: the op data (e.g. 1)
-- *
-- * Insert an inline op to every time a translated unit executes.
-- * Useful if you just want to increment a single counter somewhere in
-- * memory.
-- *
-- * Note: ops are not atomic so in multi-threaded/multi-smp situations
-- * you will get inexact results.
-- */
--QEMU_PLUGIN_API
--void qemu_plugin_register_vcpu_tb_exec_inline(struct qemu_plugin_tb *tb,
--                                              enum qemu_plugin_op op,
--                                              void *ptr, uint64_t imm);
+ static void gen_empty_mem_cb(TCGv_i64 addr, uint32_t info)
+@@ -290,12 +302,37 @@ static TCGOp *copy_const_ptr(TCGOp **begin_op, TCGOp *op, void *ptr)
+     return op;
+ }
+ 
++static TCGOp *copy_ld_i32(TCGOp **begin_op, TCGOp *op)
++{
++    return copy_op(begin_op, op, INDEX_op_ld_i32);
++}
++
++static TCGOp *copy_ext_i32_ptr(TCGOp **begin_op, TCGOp *op)
++{
++    if (UINTPTR_MAX == UINT32_MAX) {
++        op = copy_op(begin_op, op, INDEX_op_mov_i32);
++    } else {
++        op = copy_op(begin_op, op, INDEX_op_ext_i32_i64);
++    }
++    return op;
++}
++
++static TCGOp *copy_add_ptr(TCGOp **begin_op, TCGOp *op)
++{
++    if (UINTPTR_MAX == UINT32_MAX) {
++        op = copy_op(begin_op, op, INDEX_op_add_i32);
++    } else {
++        op = copy_op(begin_op, op, INDEX_op_add_i64);
++    }
++    return op;
++}
++
+ static TCGOp *copy_ld_i64(TCGOp **begin_op, TCGOp *op)
+ {
+     if (TCG_TARGET_REG_BITS == 32) {
+         /* 2x ld_i32 */
+-        op = copy_op(begin_op, op, INDEX_op_ld_i32);
+-        op = copy_op(begin_op, op, INDEX_op_ld_i32);
++        op = copy_ld_i32(begin_op, op);
++        op = copy_ld_i32(begin_op, op);
+     } else {
+         /* ld_i64 */
+         op = copy_op(begin_op, op, INDEX_op_ld_i64);
+@@ -331,6 +368,13 @@ static TCGOp *copy_add_i64(TCGOp **begin_op, TCGOp *op, uint64_t v)
+     return op;
+ }
+ 
++static TCGOp *copy_mul_i32(TCGOp **begin_op, TCGOp *op, uint32_t v)
++{
++    op = copy_op(begin_op, op, INDEX_op_mul_i32);
++    op->args[2] = tcgv_i32_arg(tcg_constant_i32(v));
++    return op;
++}
++
+ static TCGOp *copy_st_ptr(TCGOp **begin_op, TCGOp *op)
+ {
+     if (UINTPTR_MAX == UINT32_MAX) {
+@@ -396,18 +440,17 @@ static TCGOp *append_inline_cb(const struct qemu_plugin_dyn_cb *cb,
+                                TCGOp *begin_op, TCGOp *op,
+                                int *unused)
+ {
+-    /* const_ptr */
+-    op = copy_const_ptr(&begin_op, op, cb->userp);
 -
- /**
-  * qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu() - execution inline op
-  * @tb: the opaque qemu_plugin_tb handle for the translation
-@@ -359,21 +344,6 @@ void qemu_plugin_register_vcpu_insn_exec_cb(struct qemu_plugin_insn *insn,
-                                             enum qemu_plugin_cb_flags flags,
-                                             void *userdata);
- 
--/**
-- * qemu_plugin_register_vcpu_insn_exec_inline() - insn execution inline op
-- * @insn: the opaque qemu_plugin_insn handle for an instruction
-- * @op: the type of qemu_plugin_op (e.g. ADD_U64)
-- * @ptr: the target memory location for the op
-- * @imm: the op data (e.g. 1)
-- *
-- * Insert an inline op to every time an instruction executes. Useful
-- * if you just want to increment a single counter somewhere in memory.
-- */
--QEMU_PLUGIN_API
--void qemu_plugin_register_vcpu_insn_exec_inline(struct qemu_plugin_insn *insn,
--                                                enum qemu_plugin_op op,
--                                                void *ptr, uint64_t imm);
+-    /* ld_i64 */
++    char *ptr = cb->userp;
++    size_t elem_size = 0;
++    size_t offset = 0;
++    op = copy_ld_i32(&begin_op, op);
++    op = copy_mul_i32(&begin_op, op, elem_size);
++    op = copy_ext_i32_ptr(&begin_op, op);
++    op = copy_const_ptr(&begin_op, op, ptr + offset);
++    op = copy_add_ptr(&begin_op, op);
+     op = copy_ld_i64(&begin_op, op);
 -
- /**
-  * qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu() - insn exec inline op
-  * @insn: the opaque qemu_plugin_insn handle for an instruction
-@@ -597,24 +567,6 @@ void qemu_plugin_register_vcpu_mem_cb(struct qemu_plugin_insn *insn,
-                                       enum qemu_plugin_mem_rw rw,
-                                       void *userdata);
- 
--/**
-- * qemu_plugin_register_vcpu_mem_inline() - register an inline op to any memory access
-- * @insn: handle for instruction to instrument
-- * @rw: apply to reads, writes or both
-- * @op: the op, of type qemu_plugin_op
-- * @ptr: pointer memory for the op
-- * @imm: immediate data for @op
-- *
-- * This registers a inline op every memory access generated by the
-- * instruction. This provides for a lightweight but not thread-safe
-- * way of counting the number of operations done.
-- */
--QEMU_PLUGIN_API
--void qemu_plugin_register_vcpu_mem_inline(struct qemu_plugin_insn *insn,
--                                          enum qemu_plugin_mem_rw rw,
--                                          enum qemu_plugin_op op, void *ptr,
--                                          uint64_t imm);
+-    /* add_i64 */
+     op = copy_add_i64(&begin_op, op, cb->inline_insn.imm);
 -
- /**
-  * qemu_plugin_register_vcpu_mem_inline_per_vcpu() - inline op for mem access
-  * @insn: handle for instruction to instrument
+-    /* st_i64 */
+     op = copy_st_i64(&begin_op, op);
+-
+     return op;
+ }
+ 
 diff --git a/plugins/api.c b/plugins/api.c
-index ac3982c6636..58e851effdb 100644
+index f4518a68afe..d8b461bc69c 100644
 --- a/plugins/api.c
 +++ b/plugins/api.c
-@@ -101,16 +101,6 @@ void qemu_plugin_register_vcpu_tb_exec_cb(struct qemu_plugin_tb *tb,
+@@ -106,7 +106,8 @@ void qemu_plugin_register_vcpu_tb_exec_inline(struct qemu_plugin_tb *tb,
+                                               void *ptr, uint64_t imm)
+ {
+     if (!tb->mem_only) {
+-        plugin_register_inline_op(&tb->cbs[PLUGIN_CB_INLINE], 0, op, ptr, imm);
++        plugin_register_inline_op(&tb->cbs[PLUGIN_CB_INLINE],
++                                  0, op, ptr, imm);
      }
  }
  
--void qemu_plugin_register_vcpu_tb_exec_inline(struct qemu_plugin_tb *tb,
--                                              enum qemu_plugin_op op,
--                                              void *ptr, uint64_t imm)
--{
--    if (!tb->mem_only) {
--        plugin_register_inline_op(&tb->cbs[PLUGIN_CB_INLINE],
--                                  0, op, ptr, imm);
--    }
--}
--
- void qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
-     struct qemu_plugin_tb *tb,
-     enum qemu_plugin_op op,
-@@ -138,16 +128,6 @@ void qemu_plugin_register_vcpu_insn_exec_cb(struct qemu_plugin_insn *insn,
-     }
+diff --git a/plugins/core.c b/plugins/core.c
+index 63f4c6c6ce3..65d5611f797 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -318,7 +318,8 @@ static struct qemu_plugin_dyn_cb *plugin_get_dyn_cb(GArray **arr)
+ 
+ void plugin_register_inline_op(GArray **arr,
+                                enum qemu_plugin_mem_rw rw,
+-                               enum qemu_plugin_op op, void *ptr,
++                               enum qemu_plugin_op op,
++                               void *ptr,
+                                uint64_t imm)
+ {
+     struct qemu_plugin_dyn_cb *dyn_cb;
+@@ -474,9 +475,12 @@ void qemu_plugin_flush_cb(void)
+     plugin_cb__simple(QEMU_PLUGIN_EV_FLUSH);
  }
  
--void qemu_plugin_register_vcpu_insn_exec_inline(struct qemu_plugin_insn *insn,
--                                                enum qemu_plugin_op op,
--                                                void *ptr, uint64_t imm)
--{
--    if (!insn->mem_only) {
--        plugin_register_inline_op(&insn->cbs[PLUGIN_CB_INSN][PLUGIN_CB_INLINE],
--                                  0, op, ptr, imm);
--    }
--}
--
- void qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
-     struct qemu_plugin_insn *insn,
-     enum qemu_plugin_op op,
-@@ -175,15 +155,6 @@ void qemu_plugin_register_vcpu_mem_cb(struct qemu_plugin_insn *insn,
-                                 cb, flags, rw, udata);
- }
+-void exec_inline_op(struct qemu_plugin_dyn_cb *cb)
++void exec_inline_op(struct qemu_plugin_dyn_cb *cb, int cpu_index)
+ {
+-    uint64_t *val = cb->userp;
++    char *ptr = cb->userp;
++    size_t elem_size = 0;
++    size_t offset = 0;
++    uint64_t *val = (uint64_t *)(ptr + offset + cpu_index * elem_size);
  
--void qemu_plugin_register_vcpu_mem_inline(struct qemu_plugin_insn *insn,
--                                          enum qemu_plugin_mem_rw rw,
--                                          enum qemu_plugin_op op, void *ptr,
--                                          uint64_t imm)
--{
--    plugin_register_inline_op(&insn->cbs[PLUGIN_CB_MEM][PLUGIN_CB_INLINE],
--                              rw, op, ptr, imm);
--}
--
- void qemu_plugin_register_vcpu_mem_inline_per_vcpu(
-     struct qemu_plugin_insn *insn,
-     enum qemu_plugin_mem_rw rw,
-diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
-index 0d8141b85f1..a9fac056c7f 100644
---- a/plugins/qemu-plugins.symbols
-+++ b/plugins/qemu-plugins.symbols
-@@ -27,16 +27,13 @@
-   qemu_plugin_register_vcpu_idle_cb;
-   qemu_plugin_register_vcpu_init_cb;
-   qemu_plugin_register_vcpu_insn_exec_cb;
--  qemu_plugin_register_vcpu_insn_exec_inline;
-   qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu;
-   qemu_plugin_register_vcpu_mem_cb;
--  qemu_plugin_register_vcpu_mem_inline;
-   qemu_plugin_register_vcpu_mem_inline_per_vcpu;
-   qemu_plugin_register_vcpu_resume_cb;
-   qemu_plugin_register_vcpu_syscall_cb;
-   qemu_plugin_register_vcpu_syscall_ret_cb;
-   qemu_plugin_register_vcpu_tb_exec_cb;
--  qemu_plugin_register_vcpu_tb_exec_inline;
-   qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu;
-   qemu_plugin_register_vcpu_tb_trans_cb;
-   qemu_plugin_reset;
+     switch (cb->inline_insn.op) {
+     case QEMU_PLUGIN_INLINE_ADD_U64:
+@@ -509,7 +513,7 @@ void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
+                            vaddr, cb->userp);
+             break;
+         case PLUGIN_CB_INLINE:
+-            exec_inline_op(cb);
++            exec_inline_op(cb, cpu->cpu_index);
+             break;
+         default:
+             g_assert_not_reached();
 -- 
 2.39.2
 
