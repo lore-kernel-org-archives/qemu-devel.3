@@ -4,89 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E466C54E41
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 09:56:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65C47C5478C
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 09:56:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh52j-0001y9-CH; Mon, 04 Mar 2024 04:55:37 -0500
+	id 1rh53c-0002pz-Nd; Mon, 04 Mar 2024 04:56:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1rh52g-0001xZ-Pl
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 04:55:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1rh53a-0002l2-De; Mon, 04 Mar 2024 04:56:26 -0500
+Received: from mail-tyzapc01on20701.outbound.protection.outlook.com
+ ([2a01:111:f403:2011::701]
+ helo=APC01-TYZ-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1rh52d-000288-6z
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 04:55:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709546126;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4jCd5RGq1kFbGA9Ha55zGrhopf2SSTFnGpxK1+8EEpg=;
- b=Xu7vypSWrUcJRLm0MgyerpXiBAQ08p4e174zXMNcFHOesp7JNE7FW9Eu3nBRDfRHH8TLCl
- 7CG6eeElRzoESNdmlqsnpdNYd0RcbdcxuZ5rLK/bvTbeWof9lUTEcqGRnUWOM6oVkERpM2
- u3Gjv9Hwmz+pK/ZApfV3unynO0Jiatg=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-549-UnZZrBwLM5ii0f8DSfCxag-1; Mon, 04 Mar 2024 04:55:24 -0500
-X-MC-Unique: UnZZrBwLM5ii0f8DSfCxag-1
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-78806327fc9so355291185a.2
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 01:55:24 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709546124; x=1710150924;
- h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4jCd5RGq1kFbGA9Ha55zGrhopf2SSTFnGpxK1+8EEpg=;
- b=tr1oz3iEBODolDiFeKWn0jHNOVQuil9qVLYX0J4ZKFIkoHvuLoViQ8hlebDCXVovR8
- zU3AGVOynAiddb+uS/zNzPoUSHBGMNoh2TPGbB1NKDkKv2FXkEtzPJ2yPeC9ypPqnv5W
- HdGT1N2vXU5mH6b5PBCgen7TMzl72zVCZxRN+LSapcZT1S2qFlbQ+rjIo8Y68Yi8nqyq
- 0ohLoGmORHytLCiFCefgYvciU5nSic6nlH2EaQvnIHV82atsvqa6nPiqQRCH6fsC+PHw
- LK+ge53qgBn7WLkL/2NBCm5NW9gfJhCVxhl1jBejR7RsKuncvNIxoQJZkvYoG/vbgdSg
- 9ZMw==
-X-Gm-Message-State: AOJu0YweRKRfehL9Eb/bE6WnqZtnLhd/AMSpy/J+certzFSmqdfwHbhP
- nOcNma16KK3ujxjwjU6d8gIVKH7Aoym0jnZil/M9hjlXuwXT6kJZNLck0i5iF06SRzoqKJJTfoP
- x5ceNNlt6oNOnw0KKgGDx6QPH4fJ0hoY0U9+voOGFa8ppNTb26z2f
-X-Received: by 2002:a05:620a:190c:b0:787:a444:12c7 with SMTP id
- bj12-20020a05620a190c00b00787a44412c7mr10932125qkb.54.1709546124002; 
- Mon, 04 Mar 2024 01:55:24 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGXsP+IXcsAdAX8AoobCmQZYHBASSBXXmyJ+Pf1mRPfLTIRstdhuZRw6De/JsKZBSZupSMC4g==
-X-Received: by 2002:a05:620a:190c:b0:787:a444:12c7 with SMTP id
- bj12-20020a05620a190c00b00787a44412c7mr10932106qkb.54.1709546123570; 
- Mon, 04 Mar 2024 01:55:23 -0800 (PST)
-Received: from fc37-ani ([115.96.159.226])
- by smtp.googlemail.com with ESMTPSA id
- u12-20020a05620a022c00b00788258a8888sm1093171qkm.48.2024.03.04.01.55.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Mar 2024 01:55:23 -0800 (PST)
-Date: Mon, 4 Mar 2024 15:25:11 +0530 (IST)
-From: Ani Sinha <anisinha@redhat.com>
-To: Igor Mammedov <imammedo@redhat.com>
-cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, pbonzini@redhat.com, 
- mst@redhat.com, gaosong@loongson.cn, alistair.francis@wdc.com, 
- palmer@dabbelt.com, bin.meng@windriver.com, liwei1518@gmail.com, 
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, philmd@linaro.org, 
- wangyanan55@huawei.com, eblake@redhat.com, armbru@redhat.com, 
- qemu-arm@nongnu.org, qemu-riscv@nongnu.org, f.ebner@proxmox.com
-Subject: Re: [PATCH 07/19] smbios: avoid mangling user provided tables
-In-Reply-To: <20240227154749.1818189-8-imammedo@redhat.com>
-Message-ID: <bb38e2e8-d9dd-d552-469e-8d47196393c1@redhat.com>
-References: <20240227154749.1818189-1-imammedo@redhat.com>
- <20240227154749.1818189-8-imammedo@redhat.com>
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1rh53X-0002f4-CJ; Mon, 04 Mar 2024 04:56:26 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Wks/GBsKYJ/FTgHeDQAP8OCpHik8DC/e/Okr7KmiEs8lzO9Za9EIb1Ym3CDnBIIrK6LXziqDZ/wdL56HV9M7br0UtyhRCvhqHVwggbj1QY5CwWpad6aHwQljcChBm8PQYh9cYOnUxLaFXlySzr+az4ft4Cj2C2QGV9FsNh+Iy97sP2NeuoQqhf3Q3cGnOyAcV3POOEpzM8ljkiLBEbe427I1dxDZEWl/9bQzoDOwDg4Rpcn8AdZIfp/bOvPnBFZNG9SRq4ojpF2dtWgotYbxW8OedH7IkVOOUImByNwnItlNt32LgybiH/Nsie/XInqAoCVS1uTKrM69Xm4S18rupA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=r/ggj07rRxBnQTCgxQc96SP93m9uXy/9BOSDOGAh+0I=;
+ b=AR7NGomImPHSPtoVo4inEezwwIQVzunJCq62A9MzUOVGMvfy9FUKaQOC2WDUeTT3yu4DP84VD6fy4gtwShoOKAGsTcRLDmRSwJ2VzMKiJDn5POFfgCE99hpZ88zFTG6XAcz9B1wosoU38Jt7l5NkatJhwnwLR9S5cxJFks9RSHsDdC4RsVmodVjxlquKeNDvtEanoLZuF0bul48TUpBami20Mz4H/d4Ic8vVRPlZGG0pHBOQ4EYt/xB7c/HS/Tm3+o86IzUUBzDxl010kIxGCCe2QFt0BY40dMNjFmKUUxG+xl/rBteHDZp5/HvE22/lIIjkii8484scs3CpUGT9Nw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=r/ggj07rRxBnQTCgxQc96SP93m9uXy/9BOSDOGAh+0I=;
+ b=M4SZFLBu+u/y8e5mxpMbPiBajz8PtqjQhpwfimEQZEeGezrw0GnD9dc/8cQmKsbPYmbPaUup3jXur9Fkup9y9cQA68lqMrgKgbnjcvDfP3eBOf0anqLGN+nU2lnCTta6vkWlUGUoTJs5SjTkN5z068b/rn66Ja/EPgKPc4R6vlCceOHkcX6z+t4+TZYTW45awDGD6oTx9+o4vEDwgHVIY4MGSVIniS5FVXM1/WXFTD6ulHkf8umSoTbICuiMk98/RUOMe6aKsbDOL7Xc/P996wIYx7MWOEnr2+7vLEYk+0TkRzAJ/flmvbAlbUMRyVOYhzb7BNOmRwk9Ael7HU7FDg==
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com (2603:1096:4:1a4::6) by
+ TYUPR06MB6242.apcprd06.prod.outlook.com (2603:1096:400:346::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7339.34; Mon, 4 Mar
+ 2024 09:56:13 +0000
+Received: from SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::14c9:526b:24b5:109d]) by SI2PR06MB5041.apcprd06.prod.outlook.com
+ ([fe80::14c9:526b:24b5:109d%4]) with mapi id 15.20.7339.035; Mon, 4 Mar 2024
+ 09:56:13 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "andrew@codeconstruct.com.au" <andrew@codeconstruct.com.au>, "joel@jms.id.au"
+ <joel@jms.id.au>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, Yunlin Tang
+ <yunlin.tang@aspeedtech.com>
+Subject: RE: [PATCH v1 8/8] aspeed: Add an AST2700 eval board
+Thread-Topic: [PATCH v1 8/8] aspeed: Add an AST2700 eval board
+Thread-Index: AQHaauLiedApTYd2DEatyfju4PLRdbEg8W0ggAAMVYCABmAQ0A==
+Date: Mon, 4 Mar 2024 09:56:13 +0000
+Message-ID: <SI2PR06MB504190B93104EC157393483BFC232@SI2PR06MB5041.apcprd06.prod.outlook.com>
+References: <20240229074234.976164-1-jamin_lin@aspeedtech.com>
+ <20240229074234.976164-9-jamin_lin@aspeedtech.com>
+ <SI2PR06MB5041B1EA856220BB77B8809DFC5F2@SI2PR06MB5041.apcprd06.prod.outlook.com>
+ <d6e7d67f-7498-4817-8586-8af216f9d739@kaod.org>
+In-Reply-To: <d6e7d67f-7498-4817-8586-8af216f9d739@kaod.org>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SI2PR06MB5041:EE_|TYUPR06MB6242:EE_
+x-ms-office365-filtering-correlation-id: 40da7965-b44c-44eb-3451-08dc3c315381
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: BjAAcJJQreP3Krr8c4qgW4fcHpjB6J/HcUdgjcrYFOuMbJnpPIR/+8kHraY492rcxS2TSHbuAnfyC7J3qx6rXfBh6l/WafrwfK2qIErArjsM1ZrB1/RCRfqL61nLztezYobHxqRRgIJovXXPCO+kdTkfaCGGLMUPvoT0WMLh0JDdv6YswI4rbl6ihuFls0Wjja/ZzFYCKAUDJTEwzrSW4AKPx5WKwkXF7wPKVHyStgx59AQxSLzkaIKjbpFjb/nsNaXSsdHeBDFEKKvqAxSnX5YJlGOpsbyNYJeo/M0toQKzbRGRE1Fyb7W1a7yshJvbu9G0WjEQkOTTJqavCk7gO3eheujx4wmdzqa5Zr7hIExZhaW0eA0RAp+qmliWHcsn4IBHniHSS9vxooIQ4r4njPhX9Qi99X7BJSGKcucgT+7zzMeOo96q98R96i3OPaKd0x+zXfTzpVizr8o7X8rnQGIxkCk2AUnRKTOUJ9v9e5/O01Rdd6tDstVfvRJ2kajlY7luNeIqMNDqtSHuwptuXHVFBaLM9p3CI5W5v97cwYWcF37lCXrQ4AAzygL63P7bnVf0u7aBDAFy4H97Sic/RYjZD4CkKlpzDC9+wb/TudiR9bzJcd2dnWa/oWFXgaGvIFy8rDh6wI4y6h1gN+mYc/rYone8rfX6T+LrinQZgiQ=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:SI2PR06MB5041.apcprd06.prod.outlook.com; PTR:;
+ CAT:NONE; SFS:(13230031)(376005)(38070700009); DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?akV6aWVKWHNTWnpLQUE2V25BSVdnUXFSWSs2R3M4OVF4MHNGYmwyd3c1TmVI?=
+ =?utf-8?B?a3h6VmVjRnRQdXdqYjFIYkszdWhuMkZwSzc2bkVhc29aLzRXY25xRWY4WU1R?=
+ =?utf-8?B?cG96VkhOa1R1SHNkRjZ5MUlScUhNaTJSckVrbkpia3o5emN3VTFjWkZRS3Bh?=
+ =?utf-8?B?VDBZNlhrQWlkMGcrUGpjMnI4aU9IaDg2MGE2ZHJoanVqdzU0MFhPR084eldI?=
+ =?utf-8?B?bnhUd3FFUmNtb01ua2RjSFVIUmNMdFZCQWwxVW8reEYzVUlVWnhIcTZLSXlq?=
+ =?utf-8?B?K0V3Smw4eXdpRTBKRnpvZEQ5Tk9qVUJlTnJaeHoyM29LT0UzbHp2Tld6T3FS?=
+ =?utf-8?B?ODliTlFZK2pYcnFVRmRoelAyem1GSnRBRXYvRWIwRjUxaWdpZ0V5ZmtjM2hT?=
+ =?utf-8?B?M2dNSWsvM3hCb1ZOblp3NDg0Tko2YzIvVmwwZGxzTmZQaG54cWVRcDJiM3Qr?=
+ =?utf-8?B?UUVTZEI3VXNybnRUcjQzcW5NV3FLcC9jTzNjcC9ZUnp0bUVyTDlsNXFBUjJK?=
+ =?utf-8?B?VjhFN1JBbXB4UUI4L09namh2Vko3cjhqNnpWL2RYVmY3clNhakkwZG9IWXBJ?=
+ =?utf-8?B?YlBncExCbnBBQjBtdHF0eFBOc2J1eDBXMjNESzBPREJpV3dwT2NVWFE5b3pj?=
+ =?utf-8?B?U0xjZ0s1SFJINXhUeGlZWUlJRWhBR0NEQ2lRcEtrVXNaSWZhRkwzK1BNRHJt?=
+ =?utf-8?B?alRiRmdzM05ZVDNNRStraXBTQWtiQjRPMTBmRDZmdEdxWmt1UGx0a3I2UXEv?=
+ =?utf-8?B?bmFmQW4zUzBvYVl3UzVXeW84RFoyeG1MeTEyL012UjNKNVoyUjdieGhoN2N5?=
+ =?utf-8?B?N0JVb3FsODVjb0I3WHJ3c1lxUHJGekZrdjMyOWhveXBXclYweWorRlFjM2Nq?=
+ =?utf-8?B?TEc5NHdyUEdPMFU3dXIxemlFZDR5a3owU1pLcWpuZ0FOSFlhVU0yb01vSE1I?=
+ =?utf-8?B?K1pDRzBVTmxiMDA5VWFCK1pZWUtCRUtSa003TDhuVlRzdUtFOXBxQ3ZTY21U?=
+ =?utf-8?B?UmluWmJTUW5YdU5XcXhiZGU0aDEyTUJOSzFWam5SUEFkOEdmOXRLTWQ4aTVy?=
+ =?utf-8?B?MlBRWXlseDRCM09wQ0tGKzhzRTJmZmYzZk8zSlBPeTROMER6SWtwNDU4MXp2?=
+ =?utf-8?B?eW81NDhQOWNUZGk3TS9HclVhaW5SVkRCRnY2RnlHTzI2RlpIYWJ0bzQwekk3?=
+ =?utf-8?B?V3B2WGd5bHBoS2RKNWdmMUx6TXVIblhVSS93U1J2SmtObXpBemJkWGRBZGwz?=
+ =?utf-8?B?SWdTeEFMdnBTdndtUXZJdEhLRi90VlowZDQ5dGRKZnRKUENlMWd1MEI2bVhS?=
+ =?utf-8?B?Z0ZTeW1ONjRYVFJEMlh5MFN0ZlFQeTdzSDVJNUxDWHFhK3V3QjMxWWRnQnNz?=
+ =?utf-8?B?dVVLcXV4SmJPeld1OWtBRHViZzkvVE5NUDY4U1BSM0MyYUd6TG8vNlJEUW9q?=
+ =?utf-8?B?bkViSDdqSjRiK1JhbkswTTdYMDRZWjNwNTdRWmRMbEwvdHE4R3lTREZsTkFC?=
+ =?utf-8?B?cE9Vc3RpU2NzcnFkbXBDYWNYUThCaDcvZVEzQzJRd2Z0VGEwc2FSUGNrbTVi?=
+ =?utf-8?B?dGVyb2hQdURDVHpMbmV3UUFqd0dHNnBHU2tPams1Vmc1RDlMRkF3Y2NrQWxI?=
+ =?utf-8?B?OHJrcXR4L0pjTUxDV2JRQXdrN0hhKzVwMGNUcTMwSjR4SDdiN05uQ3RuR3pG?=
+ =?utf-8?B?ZFBlZzdob3hpY1ZWYWRZUWI1Wkk1amd6TE5IN3ErV1l2aDBlODhINmlMMk1q?=
+ =?utf-8?B?bXh2V2VZQnRPdktURlJmRDBxVlkrb2Q5RHFxenZwczAraklwNkxlUXhuSDJR?=
+ =?utf-8?B?Q2FJR3JFT3B1UHQzTXJDOEpmT1NpNmZoTXlLZ204VjcrZytNNDFZWnJhdHFn?=
+ =?utf-8?B?YWwxWXQ3bTcyODZmSWUybWdha2Ewd2F5emV2b3ZGTU50SGlWdmRReTRZV2lp?=
+ =?utf-8?B?dyt4VVdEaCtwajZWMTZrVjRDOFBaUjEydGRyOUlEeWtaaWVSZ0pFOWUvY1Jn?=
+ =?utf-8?B?MS9zVDNUTzlSclFhQm0vaXgzbWJDSlphb3BNZDY3TjBPZFJiZzM1U1AvRmpx?=
+ =?utf-8?B?ckQ5MmlqKzZKamd4TWRhcTcwcEFIZ3lPdkZ4bHBCb3AyTTdLekRFRit6V2cr?=
+ =?utf-8?Q?18wcS2sja5IC9Dvr3YzIdeBBF?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5041.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 40da7965-b44c-44eb-3451-08dc3c315381
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Mar 2024 09:56:13.1285 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: EAAUYhqXnMf9iGpqwcR/ZtYKs7wt4zeVvTmj2Ak49jAva4iq2bKw5VVgF+nub2EmUV4M17i3Rl0PRyU1kxklGUQCPniLy6d5DQprXqupFbM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYUPR06MB6242
+Received-SPF: pass client-ip=2a01:111:f403:2011::701;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=APC01-TYZ-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.589,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,308 +153,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On Tue, 27 Feb 2024, Igor Mammedov wrote:
-
-> currently smbios_entry_add() preserves internally '-smbios type='
-> options but tables provided with '-smbios file=' are stored directly
-> into blob that eventually will be exposed to VM. And then later
-> QEMU adds default/'-smbios type' entries on top into the same blob.
->
-> It makes impossible to generate tables more than once, hence
-> 'immutable' guard was used.
-> Make it possible to regenerate final blob by storing user provided
-> blobs into a dedicated area (usr_blobs) and then copy it when
-> composing final blob. Which also makes handling of -smbios
-> options consistent.
->
-> As side effect of this and previous commits there is no need to
-> generate legacy smbios_entries at the time options are parsed.
-> Instead compose smbios_entries on demand from  usr_blobs like
-> it is done for non-legacy SMBIOS tables.
->
-
-This patch is very dense and even after taking several iterations through
-it, I am not confident that I have not missed anything.
-
-> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-> ---
->  hw/smbios/smbios.c | 179 +++++++++++++++++++++++----------------------
->  1 file changed, 92 insertions(+), 87 deletions(-)
->
-> diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
-> index c46fc93357..aa2cc5bdbd 100644
-> --- a/hw/smbios/smbios.c
-> +++ b/hw/smbios/smbios.c
-> @@ -57,6 +57,14 @@ static size_t smbios_entries_len;
->  static bool smbios_uuid_encoded = true;
->  /* end: legacy structures & constants for <= 2.0 machines */
->
-> +/*
-> + * SMBIOS tables provided by user with '-smbios file=<foo>' option
-> + */
-> +uint8_t *usr_blobs;
-> +size_t usr_blobs_len;
-> +static GArray *usr_blobs_sizes;
-> +static unsigned usr_table_max;
-> +static unsigned usr_table_cnt;
->
->  uint8_t *smbios_tables;
->  size_t smbios_tables_len;
-> @@ -67,7 +75,6 @@ static SmbiosEntryPointType smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_32;
->  static SmbiosEntryPoint ep;
->
->  static int smbios_type4_count = 0;
-> -static bool smbios_immutable;
->  static bool smbios_have_defaults;
->  static uint32_t smbios_cpuid_version, smbios_cpuid_features;
->
-> @@ -569,9 +576,8 @@ static void smbios_build_type_1_fields(void)
->
->  uint8_t *smbios_get_table_legacy(uint32_t expected_t4_count, size_t *length)
->  {
-> -    /* drop unwanted version of command-line file blob(s) */
-> -    g_free(smbios_tables);
-> -    smbios_tables = NULL;
-> +    int i;
-> +    size_t usr_offset;
->
->      /* also complain if fields were given for types > 1 */
->      if (find_next_bit(have_fields_bitmap,
-> @@ -581,12 +587,33 @@ uint8_t *smbios_get_table_legacy(uint32_t expected_t4_count, size_t *length)
->          exit(1);
->      }
->
-> -    if (!smbios_immutable) {
-> -        smbios_build_type_0_fields();
-> -        smbios_build_type_1_fields();
-> -        smbios_validate_table(expected_t4_count);
-> -        smbios_immutable = true;
-> +    g_free(smbios_entries);
-> +    smbios_entries_len = sizeof(uint16_t);
-> +    smbios_entries = g_malloc0(smbios_entries_len);
-> +
-> +    for (i = 0, usr_offset = 0; usr_blobs_sizes && i < usr_blobs_sizes->len;
-> +         i++)
-> +    {
-> +        struct smbios_table *table;
-> +        struct smbios_structure_header *header;
-> +        size_t size = g_array_index(usr_blobs_sizes, size_t, i);
-> +
-> +        header = (struct smbios_structure_header *)(usr_blobs + usr_offset);
-> +        smbios_entries = g_realloc(smbios_entries, smbios_entries_len +
-> +                                                   size + sizeof(*table));
-> +        table = (struct smbios_table *)(smbios_entries + smbios_entries_len);
-> +        table->header.type = SMBIOS_TABLE_ENTRY;
-> +        table->header.length = cpu_to_le16(sizeof(*table) + size);
-> +        memcpy(table->data, header, size);
-> +        smbios_entries_len += sizeof(*table) + size;
-> +        (*(uint16_t *)smbios_entries) =
-> +            cpu_to_le16(le16_to_cpu(*(uint16_t *)smbios_entries) + 1);
-> +        usr_offset += size;
->      }
-> +
-> +    smbios_build_type_0_fields();
-> +    smbios_build_type_1_fields();
-> +    smbios_validate_table(expected_t4_count);
->      *length = smbios_entries_len;
->      return smbios_entries;
->  }
-> @@ -1094,67 +1121,67 @@ void smbios_get_tables(MachineState *ms,
->  {
->      unsigned i, dimm_cnt, offset;
->
-> -    /* drop unwanted (legacy) version of command-line file blob(s) */
-> -    g_free(smbios_entries);
-> -    smbios_entries = NULL;
-> +    g_free(smbios_tables);
-> +    smbios_tables = g_memdup2(usr_blobs, usr_blobs_len);
-
-Why can't we do a memdup even for the legacy case instead of memcpy?
-
-Secondly, here and other places we should check for NULL returns.
-https://docs.gtk.org/glib/func.memdup2.html
-return from memdup2 can be null.
-
-
-> +    smbios_tables_len = usr_blobs_len;
-> +    smbios_table_max = usr_table_max;
-> +    smbios_table_cnt = usr_table_cnt;
->
-> -    if (!smbios_immutable) {
-> -        smbios_build_type_0_table();
-> -        smbios_build_type_1_table();
-> -        smbios_build_type_2_table();
-> -        smbios_build_type_3_table();
-> +    smbios_build_type_0_table();
-> +    smbios_build_type_1_table();
-> +    smbios_build_type_2_table();
-> +    smbios_build_type_3_table();
->
-> -        assert(ms->smp.sockets >= 1);
-> +    assert(ms->smp.sockets >= 1);
->
-> -        for (i = 0; i < ms->smp.sockets; i++) {
-> -            smbios_build_type_4_table(ms, i);
-> -        }
-> +    for (i = 0; i < ms->smp.sockets; i++) {
-> +        smbios_build_type_4_table(ms, i);
-> +    }
->
-> -        smbios_build_type_8_table();
-> -        smbios_build_type_11_table();
-> +    smbios_build_type_8_table();
-> +    smbios_build_type_11_table();
->
->  #define MAX_DIMM_SZ (16 * GiB)
->  #define GET_DIMM_SZ ((i < dimm_cnt - 1) ? MAX_DIMM_SZ \
->                                          : ((current_machine->ram_size - 1) % MAX_DIMM_SZ) + 1)
->
-> -        dimm_cnt = QEMU_ALIGN_UP(current_machine->ram_size, MAX_DIMM_SZ) / MAX_DIMM_SZ;
-> +    dimm_cnt = QEMU_ALIGN_UP(current_machine->ram_size, MAX_DIMM_SZ) /
-> +               MAX_DIMM_SZ;
->
-> -        /*
-> -         * The offset determines if we need to keep additional space between
-> -         * table 17 and table 19 header handle numbers so that they do
-> -         * not overlap. For example, for a VM with larger than 8 TB guest
-> -         * memory and DIMM like chunks of 16 GiB, the default space between
-> -         * the two tables (T19_BASE - T17_BASE = 512) is not enough.
-> -         */
-> -        offset = (dimm_cnt > (T19_BASE - T17_BASE)) ? \
-> -                 dimm_cnt - (T19_BASE - T17_BASE) : 0;
-> +    /*
-> +     * The offset determines if we need to keep additional space between
-> +     * table 17 and table 19 header handle numbers so that they do
-> +     * not overlap. For example, for a VM with larger than 8 TB guest
-> +     * memory and DIMM like chunks of 16 GiB, the default space between
-> +     * the two tables (T19_BASE - T17_BASE = 512) is not enough.
-> +     */
-> +    offset = (dimm_cnt > (T19_BASE - T17_BASE)) ? \
-> +             dimm_cnt - (T19_BASE - T17_BASE) : 0;
->
-> -        smbios_build_type_16_table(dimm_cnt);
-> +    smbios_build_type_16_table(dimm_cnt);
->
-> -        for (i = 0; i < dimm_cnt; i++) {
-> -            smbios_build_type_17_table(i, GET_DIMM_SZ);
-> -        }
-> +    for (i = 0; i < dimm_cnt; i++) {
-> +        smbios_build_type_17_table(i, GET_DIMM_SZ);
-> +    }
->
-> -        for (i = 0; i < mem_array_size; i++) {
-> -            smbios_build_type_19_table(i, offset, mem_array[i].address,
-> -                                       mem_array[i].length);
-> -        }
-> +    for (i = 0; i < mem_array_size; i++) {
-> +        smbios_build_type_19_table(i, offset, mem_array[i].address,
-> +                                   mem_array[i].length);
-> +    }
->
-> -        /*
-> -         * make sure 16 bit handle numbers in the headers of tables 19
-> -         * and 32 do not overlap.
-> -         */
-> -        assert((mem_array_size + offset) < (T32_BASE - T19_BASE));
-> +    /*
-> +     * make sure 16 bit handle numbers in the headers of tables 19
-> +     * and 32 do not overlap.
-> +     */
-> +    assert((mem_array_size + offset) < (T32_BASE - T19_BASE));
->
-> -        smbios_build_type_32_table();
-> -        smbios_build_type_38_table();
-> -        smbios_build_type_41_table(errp);
-> -        smbios_build_type_127_table();
-> +    smbios_build_type_32_table();
-> +    smbios_build_type_38_table();
-> +    smbios_build_type_41_table(errp);
-> +    smbios_build_type_127_table();
->
-> -        smbios_validate_table(ms->smp.sockets);
-> -        smbios_entry_point_setup();
-> -        smbios_immutable = true;
-> -    }
-> +    smbios_validate_table(ms->smp.sockets);
-> +    smbios_entry_point_setup();
->
->      /* return tables blob and entry point (anchor), and their sizes */
->      *tables = smbios_tables;
-> @@ -1254,13 +1281,10 @@ void smbios_entry_add(QemuOpts *opts, Error **errp)
->  {
->      const char *val;
->
-> -    assert(!smbios_immutable);
-> -
->      val = qemu_opt_get(opts, "file");
->      if (val) {
->          struct smbios_structure_header *header;
-> -        int size;
-> -        struct smbios_table *table; /* legacy mode only */
-> +        size_t size;
->
->          if (!qemu_opts_validate(opts, qemu_smbios_file_opts, errp)) {
->              return;
-> @@ -1277,9 +1301,9 @@ void smbios_entry_add(QemuOpts *opts, Error **errp)
->           * (except in legacy mode, where the second '\0' is implicit and
->           *  will be inserted by the BIOS).
->           */
-> -        smbios_tables = g_realloc(smbios_tables, smbios_tables_len + size);
-> -        header = (struct smbios_structure_header *)(smbios_tables +
-> -                                                    smbios_tables_len);
-> +        usr_blobs = g_realloc(usr_blobs, usr_blobs_len + size);
-> +        header = (struct smbios_structure_header *)(usr_blobs +
-> +                                                    usr_blobs_len);
->
->          if (load_image_size(val, (uint8_t *)header, size) != size) {
->              error_setg(errp, "Failed to load SMBIOS file %s", val);
-> @@ -1300,34 +1324,15 @@ void smbios_entry_add(QemuOpts *opts, Error **errp)
->              smbios_type4_count++;
->          }
->
-> -        smbios_tables_len += size;
-> -        if (size > smbios_table_max) {
-> -            smbios_table_max = size;
-> +        if (!usr_blobs_sizes) {
-> +            usr_blobs_sizes = g_array_new(false, false, sizeof(size_t));
->          }
-> -        smbios_table_cnt++;
-> -
-> -        /* add a copy of the newly loaded blob to legacy smbios_entries */
-> -        /* NOTE: This code runs before smbios_set_defaults(), so we don't
-> -         *       yet know which mode (legacy vs. aggregate-table) will be
-> -         *       required. We therefore add the binary blob to both legacy
-> -         *       (smbios_entries) and aggregate (smbios_tables) tables, and
-> -         *       delete the one we don't need from smbios_set_defaults(),
-> -         *       once we know which machine version has been requested.
-> -         */
-> -        if (!smbios_entries) {
-> -            smbios_entries_len = sizeof(uint16_t);
-> -            smbios_entries = g_malloc0(smbios_entries_len);
-> +        g_array_append_val(usr_blobs_sizes, size);
-> +        usr_blobs_len += size;
-> +        if (size > usr_table_max) {
-> +            usr_table_max = size;
->          }
-> -        smbios_entries = g_realloc(smbios_entries, smbios_entries_len +
-> -                                                   size + sizeof(*table));
-> -        table = (struct smbios_table *)(smbios_entries + smbios_entries_len);
-> -        table->header.type = SMBIOS_TABLE_ENTRY;
-> -        table->header.length = cpu_to_le16(sizeof(*table) + size);
-> -        memcpy(table->data, header, size);
-> -        smbios_entries_len += sizeof(*table) + size;
-> -        (*(uint16_t *)smbios_entries) =
-> -                cpu_to_le16(le16_to_cpu(*(uint16_t *)smbios_entries) + 1);
-> -        /* end: add a copy of the newly loaded blob to legacy smbios_entries */
-> +        usr_table_cnt++;
->
->          return;
->      }
-> --
-> 2.39.3
->
->
-
+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBDw6lkcmljIExlIEdvYXRlciA8
+Y2xnQGthb2Qub3JnPg0KPiBTZW50OiBUaHVyc2RheSwgRmVicnVhcnkgMjksIDIwMjQgNDozMiBQ
+TQ0KPiBUbzogSmFtaW4gTGluIDxqYW1pbl9saW5AYXNwZWVkdGVjaC5jb20+OyBwZXRlci5tYXlk
+ZWxsQGxpbmFyby5vcmc7DQo+IGFuZHJld0Bjb2RlY29uc3RydWN0LmNvbS5hdTsgam9lbEBqbXMu
+aWQuYXU7IHFlbXUtYXJtQG5vbmdudS5vcmc7DQo+IHFlbXUtZGV2ZWxAbm9uZ251Lm9yZw0KPiBD
+YzogVHJveSBMZWUgPHRyb3lfbGVlQGFzcGVlZHRlY2guY29tPjsgWXVubGluIFRhbmcNCj4gPHl1
+bmxpbi50YW5nQGFzcGVlZHRlY2guY29tPg0KPiBTdWJqZWN0OiBSZTogW1BBVENIIHYxIDgvOF0g
+YXNwZWVkOiBBZGQgYW4gQVNUMjcwMCBldmFsIGJvYXJkDQo+IA0KPiBIZWxsbyBKYW1pbiwNCj4g
+DQo+ID4gSSB0cmllZCB0byBzZW5kIHRoZSBwYXRjaCBzZXJpZXMgdG8gc3VwcG9ydCBBU1QyNzAw
+IGJ1dCBJIGVuY291bnRlcmVkDQo+ID4gc29tZSBwYXRjaGVzIHdlcmUgcmVqZWN0ZWQgYnkgc2Vy
+dmVyIElQIDIxMS4yMC4xMTQuNzAuDQo+ID4NCj4gPiBFcnJvciBMb2c6DQo+ID4gcWVtdS1kZXZl
+bEBub25nbnUub3JnDQo+ID4gZWdncy5nbnUub3JnDQo+ID4gUmVtb3RlIFNlcnZlciByZXR1cm5l
+ZCAnNTUwLVtTUEZdIDIxMS4yMC4xMTQuNzAgaXMgbm90IGFsbG93ZWQgdG8gc2VuZCBtYWlsDQo+
+IGZyb20gYXNwZWVkdGVjaC5jb20uIDU1MCBQbGVhc2Ugc2VlDQo+IGh0dHA6Ly93d3cub3BlbnNw
+Zi5vcmcvV2h5P3Njb3BlPW1mcm9tO2lkZW50aXR5PWphbWluX2xpbkBhc3BlZWR0ZWNoLmMNCj4g
+b207aXA9MjExLjIwLjExNC43MCcNCj4gPiBxZW11LWFybUBub25nbnUub3JnDQo+ID4gZWdncy5n
+bnUub3JnDQo+ID4gUmVtb3RlIFNlcnZlciByZXR1cm5lZCAnNTUwLVtTUEZdIDIxMS4yMC4xMTQu
+NzAgaXMgbm90IGFsbG93ZWQgdG8gc2VuZA0KPiA+IG1haWwgZnJvbSBhc3BlZWR0ZWNoLmNvbS4g
+NTUwIFBsZWFzZSBzZWUNCj4gPg0KPiBodHRwOi8vd3d3Lm9wZW5zcGYub3JnL1doeT9zY29wZT1t
+ZnJvbTtpZGVudGl0eT1qYW1pbl9saW5AYXNwZWVkdGVjaC5jDQo+ID4gb207aXA9MjExLjIwLjEx
+NC43MA0KPiANCj4gJCBob3N0IC10IHR4dCBhc3BlZWR0ZWNoLmNvbQ0KPiBhc3BlZWR0ZWNoLmNv
+bSBkZXNjcmlwdGl2ZSB0ZXh0DQo+ICJnb29nbGUtc2l0ZS12ZXJpZmljYXRpb249NzdGc2VkSXpH
+cUZ2czNiRmZ5NUwybFRfQUdFV1ZlY3lvSndaTjdLRFZuTSINCj4gYXNwZWVkdGVjaC5jb20gZGVz
+Y3JpcHRpdmUgdGV4dCAidj1zcGYxIGlwNDoyMTEuMjAuMTE0LjcyDQo+IGluY2x1ZGU6c3BmLnBy
+b3RlY3Rpb24ub3V0bG9vay5jb20gLWFsbCINCj4gYXNwZWVkdGVjaC5jb20gZGVzY3JpcHRpdmUg
+dGV4dA0KPiAiZ29vZ2xlLXNpdGUtdmVyaWZpY2F0aW9uPXNCUFBGZVl5aXg2b1dlQzNHUko2NHpR
+TkZMSnBONlNGQk1UOFJYOFp1TQ0KPiBFIg0KPiANCj4gTWF5IGJlIHRyeSB1c2luZyAyMTEuMjAu
+MTE0LjcyIChtYWlsLmFzcGVlZHRlY2guY29tKSBhcyBhbiBTTVRQIHNlcnZlciA/DQo+IA0KVGhh
+bmtzIGZvciB5b3VyIGhlbHAuIFdlIGFyZSBjaGVja2luZyBvdXIgc210cCBzZXJ2ZXIgbm93IGFu
+ZCBzb3JyeSBmb3IgeW91ciBpbmNvbnZlbmllbnQuDQpKYW1pbg0KPiA+IERpZCB5b3UgZW5jb3Vu
+dGVyIHRoZSBzYW1lIGVycm9ycyBiZWZvcmU/DQo+IA0KPiBJIHJlY2VpdmVkIHRoZSBmdWxsIHNl
+cmllcyA0IHRpbWVzLg0KPiANCj4gQnV0IHRoZSBtYWlsaW5nIGxpc3RzIG9ubHkgaGF2ZSA0IDoN
+Cj4gDQo+IA0KPiBodHRwczovL2xvcmUua2VybmVsLm9yZy9xZW11LWRldmVsLzIwMjQwMjI5MDgw
+MDE0LjEyMzUwMTgtMS1qYW1pbl9saW5AYXMNCj4gcGVlZHRlY2guY29tLw0KPiANCj4gaHR0cHM6
+Ly9sb3JlLmtlcm5lbC5vcmcvcWVtdS1kZXZlbC8yMDI0MDIyOTA3MjMxNS43NDM5NjMtMS1qYW1p
+bl9saW5AYXNwDQo+IGVlZHRlY2guY29tLw0KPiANCj4gb3INCj4gDQo+IA0KPiBodHRwczovL3Bh
+dGNoZXcub3JnL1FFTVUvMjAyNDAyMjkwODAwMTQuMTIzNTAxOC0xLWphbWluLl81RmxpbkBhc3Bl
+ZWQNCj4gdGVjaC5jb20vDQo+IA0KPiBodHRwczovL3BhdGNoZXcub3JnL1FFTVUvMjAyNDAyMjkw
+NzIzMTUuNzQzOTYzLTEtamFtaW4uXzVGbGluQGFzcGVlZHQNCj4gZWNoLmNvbS8NCj4gDQo+IA0K
+PiA+IE15IHNlbmQgZW1haWwgY29tbWFuZCBhcyBmb2xsb3dpbmcuDQo+ID4gZ2l0IHNlbmQtZW1h
+aWwNCj4gPiAtLWNjIHRyb3lfbGVlQGFzcGVlZHRlY2guY29tDQo+ID4gLS1jYyBqYW1pbl9saW5A
+YXNwZWVkdGVjaC5jb20NCj4gPiAtLWNjIHl1bmxpbi50YW5nQGFzcGVlZHRlY2guY29tDQo+ID4g
+LS10by1jbWQgIi4vc2NyaXB0cy9nZXRfbWFpbnRhaW5lci5wbCAuLi92MS1wYXRjaC8qLnBhdGNo
+Ig0KPiA+IC4uL3YxLXBhdGNoLyoucGF0Y2gNCj4gDQo+IFRoZSBjb21tYW5kIGxpbmUgYWJvdmUg
+aXMgc2VuZGluZyB0d2ljZSB0aGUgc2FtZSBzZXJpZXMsIHlvdSBzaG91bGQgcmVtb3ZlDQo+IG9u
+ZSBvZiB0aGUgICIuLi92MS1wYXRjaC8qLnBhdGNoIiBjb21tYW5kIGFyZ3VtZW50cy4gdGhlIHJl
+c3QgbG9va3MgY29ycmVjdC4NCj4gDQo+IFRoYW5rcywNCj4gDQo+IEMuDQo+IA0KDQo=
 
