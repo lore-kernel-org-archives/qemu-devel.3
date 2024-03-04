@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC080C5478C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 13:01:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5942C54E41
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 13:01:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh7wR-00014j-Hl; Mon, 04 Mar 2024 08:01:15 -0500
+	id 1rh7wQ-0000zu-Ki; Mon, 04 Mar 2024 08:01:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rh7wF-0000oe-Ro
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 08:01:05 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1rh7wC-0000nG-GD
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 08:01:03 -0500
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rh7wD-0000Ws-0P
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 08:01:03 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-56698eb5e1dso5842354a12.2
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 05:01:00 -0800 (PST)
+ id 1rh7w9-0000Vm-9S
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 08:00:59 -0500
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-a44628725e3so552069166b.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 05:00:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709557258; x=1710162058; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oYjfIB8otldj7nOTeEAU6E3VxeKPpH0lZMwsxPa1los=;
- b=e/V7+2eYT6ipYp4lPzw1lDNIXmf0Ty24PS1caX3eGoFFXDfWb+GWG9xPLzGH6CWyJ+
- zIqsO6YmSfmoDxWTzELUoDx9ibLgN4OAqpPRtFMnCyrDpPLlunwBsBRZ9252cUBHSMyO
- iInRQToKJ7KveG4kNuQgYqr9K+hNO/Rl6NZ22kTklfGVUABHWgn8IZTxiKNkUppLHN9N
- +1Grf3HdlTUudL522tvhxn88ukz+UEoUtB3Co4DmSs7pZYDDHtAPGBKasee6muzVmaUe
- CTI+2AA3LRBok1JF3ZCBj+HS2EbSbsC/EckEytKhgMSHyMpz9xaQuo01s/IgCgQzjM/M
- PtjQ==
+ d=linaro.org; s=google; t=1709557253; x=1710162053; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=vt3WH01e9OeOZTYYqNhO1zrBMunPPC2f5o+P5PGgSEE=;
+ b=Y9vHPHkevmBxXI0hrmotxluQP3p8SZ63H46vOxYjedHJarNSqwF3RgqIHe/NLka658
+ RaP47GPtxMBYuHMOmTt28QmSP43X8Y2FX6SwVFs9VL3l+W1ZyIhWrKFAM8X/JW6Lg5xs
+ ihZYkIPqRg4ZMDyi9fnVU2dDzt8Agj/Y2wYp5xURS+4otc/6+PjJ1Hv6N9sO4Eere8l0
+ vDNiVRtY+bJYcCW3k9GDiBY/pLtrHHs5D65LoNoTL00ivXcHBuapno5BKAHpx2Gl95+f
+ ojfQi1UEJAl6OetAC0LdUie84fMRDkeTiSi23GOSiQ/iz3z0X+3GUhi095qCGW8/dTSB
+ oNzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709557258; x=1710162058;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oYjfIB8otldj7nOTeEAU6E3VxeKPpH0lZMwsxPa1los=;
- b=w8GSVCHdGugR8IbiBGSteH5Wnss2SlI6Az3pR6L8WlhN9eGfe1nw544Fol3f/m/Dan
- fx4CNNxJfAF/rS9PNODr3NjcQjthvNf5ZLf7enBWxIB6hAgvmKa9HJWm1YzUNvWdv71/
- WZsLy6HYquHRIRh/kOHSgrdCdqi3ROXY1RQlDNFZWYN11cB+WQSdQl/J+FQ9vBHHy1qL
- fFHHHDuVd0U/yQRZFy9R5o9TDDyHM3PnebAbYw9kHqFu+hO3cCklw5ljmM8waiFIWRQ4
- rnCfi7Yz5w3KTyMF2RlOHv2IaEdFpNt/pKcLvQtT70h/7kO32YVkd+QVk/5wUFAOaJyr
- SZKQ==
-X-Gm-Message-State: AOJu0YwnO8YcJendv5n7eV2Pb1hIMo+LDcwWZe1ORaiChP1PBEwh+A5C
- 1Sip/5s9TeSOhb8MeQ1MAtc76m25rMWw+4gI1N9bx0vb9nT07NclBpAJeUufZZm4i+CSs3PuqU8
- v3uw=
-X-Google-Smtp-Source: AGHT+IGp023GnxR+h9cGKZdmTb0x4+iBZ0rVH4eXbPUS8HGoy5bXOR/qCaJIQfbu8iAZa0EZZg3+Dw==
-X-Received: by 2002:a17:906:d0d4:b0:a45:22e2:bd6 with SMTP id
- bq20-20020a170906d0d400b00a4522e20bd6mr2521418ejb.23.1709557258014; 
- Mon, 04 Mar 2024 05:00:58 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709557253; x=1710162053;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=vt3WH01e9OeOZTYYqNhO1zrBMunPPC2f5o+P5PGgSEE=;
+ b=L6bveU6RBV6IljrFN4idDGtBrdeQ+KeEHE2YBj0/4HaFZpCA1phPLeXE+SJqO8Tz28
+ Togta+yO66LUVX6HWKvm+BCpn2410c60drn033Opp1gStasPyPOmLcxMjN41rDn+m1bu
+ Nx6KTPc59mSO+7F3O31khP10KGfHqF+zlJvGCdeU/crQuLLgkMh3VEzeQDQQBXZvqAOV
+ PPGDgTfMMr/zf6ow53Dtx6Rowazij5RvxmtZjVX0qnXMBxf965qpdwvk8Z6bNZWNFW73
+ t7qJIAv8x/oFcS3BWyvaVztvphzowrALY2Efqi28rBK9ukM+TbBe0xx0hQT9TughkYmr
+ kExw==
+X-Gm-Message-State: AOJu0YxuZ6AId8Dhul54xgUvxHWVekDKmaHG5I8eHY+G4W9Vekk8DtTJ
+ IhSAIGONGeo/Xwy0z5aUURxqBFnX2mvDMl/8kPdXFrQThLsuguDclxl7AbJVHERz5MdXT/zstzr
+ 3Htc=
+X-Google-Smtp-Source: AGHT+IFswqIELTg9TYpfal70zsgZPei1NlMWF10c+eXTdljowgawyidoJvhH1f6aqEhOB9tY3hc39A==
+X-Received: by 2002:a17:906:4c54:b0:a45:6e43:4cf4 with SMTP id
+ d20-20020a1709064c5400b00a456e434cf4mr962807ejw.60.1709557252893; 
+ Mon, 04 Mar 2024 05:00:52 -0800 (PST)
 Received: from debian.. ([102.35.208.160]) by smtp.gmail.com with ESMTPSA id
- tj7-20020a170907c24700b00a413d1eda4bsm4806136ejc.87.2024.03.04.05.00.53
+ tj7-20020a170907c24700b00a413d1eda4bsm4806136ejc.87.2024.03.04.05.00.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Mar 2024 05:00:57 -0800 (PST)
+ Mon, 04 Mar 2024 05:00:52 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Yanan Wang <wangyanan55@huawei.com>,
@@ -70,16 +69,15 @@ Cc: Yanan Wang <wangyanan55@huawei.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v7 01/12] plugins: scoreboard API
-Date: Mon,  4 Mar 2024 17:00:25 +0400
-Message-Id: <20240304130036.124418-2-pierrick.bouvier@linaro.org>
+Subject: [PATCH v7 00/12] TCG Plugin inline operation enhancement
+Date: Mon,  4 Mar 2024 17:00:24 +0400
+Message-Id: <20240304130036.124418-1-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240304130036.124418-1-pierrick.bouvier@linaro.org>
-References: <20240304130036.124418-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,254 +100,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We introduce a cpu local storage, automatically managed (and extended)
-by QEMU itself. Plugin allocate a scoreboard, and don't have to deal
-with how many cpus are launched.
+This series adds a new thread-safe API to declare inline operation
+inside plugins. As well, it removes the existing non thread-safe API,
+and migrates all existing plugins to use it.
 
-This API will be used by new inline functions but callbacks can benefit
-from this as well. This way, they can operate without a global lock for
-simple operations.
+Tested on Linux (user, system) for i386, x86_64 and aarch64.
 
-At any point during execution, any scoreboard will be dimensioned with
-at least qemu_plugin_num_vcpus entries.
+To give some context, this a long term series of work around plugins,
+with the goal to be able to do basic operations in a more performant and
+accurate way. This will mean to add more inline operations and
+conditional callbacks.
 
-New functions:
-- qemu_plugin_scoreboard_find
-- qemu_plugin_scoreboard_free
-- qemu_plugin_scoreboard_new
+One final target of this work is to implement a plugin that implements
+the icount=auto feature, and allow QEMU to run at a given "frequency"
+based on number of instructions executed, without QEMU needing to keep
+track of this.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- include/qemu/plugin.h        |  6 ++++
- include/qemu/qemu-plugin.h   | 31 ++++++++++++++++++++
- plugins/plugin.h             |  6 ++++
- plugins/api.c                | 19 ++++++++++++
- plugins/core.c               | 57 ++++++++++++++++++++++++++++++++++++
- plugins/qemu-plugins.symbols |  3 ++
- 6 files changed, 122 insertions(+)
+Another final target is to be able to detect control flow changes in an
+efficient and elegant way, by combining inline operation and conditional
+callbacks.
 
-diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
-index b3c94a34aa4..bf96d2c2aa3 100644
---- a/include/qemu/plugin.h
-+++ b/include/qemu/plugin.h
-@@ -112,6 +112,12 @@ struct qemu_plugin_insn {
-     bool mem_only;
- };
- 
-+/* A scoreboard is an array of values, indexed by vcpu_index */
-+struct qemu_plugin_scoreboard {
-+    GArray *data;
-+    QLIST_ENTRY(qemu_plugin_scoreboard) entry;
-+};
-+
- /*
-  * qemu_plugin_insn allocate and cleanup functions. We don't expect to
-  * cleanup many of these structures. They are reused for each fresh
-diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-index 45e2ebc8f8f..31c468ddb2c 100644
---- a/include/qemu/qemu-plugin.h
-+++ b/include/qemu/qemu-plugin.h
-@@ -222,6 +222,8 @@ void qemu_plugin_register_vcpu_resume_cb(qemu_plugin_id_t id,
- struct qemu_plugin_tb;
- /** struct qemu_plugin_insn - Opaque handle for a translated instruction */
- struct qemu_plugin_insn;
-+/** struct qemu_plugin_scoreboard - Opaque handle for a scoreboard */
-+struct qemu_plugin_scoreboard;
- 
- /**
-  * enum qemu_plugin_cb_flags - type of callback
-@@ -752,5 +754,34 @@ QEMU_PLUGIN_API
- int qemu_plugin_read_register(struct qemu_plugin_register *handle,
-                               GByteArray *buf);
- 
-+/**
-+ * qemu_plugin_scoreboard_new() - alloc a new scoreboard
-+ *
-+ * @element_size: size (in bytes) for one entry
-+ *
-+ * Returns a pointer to a new scoreboard. It must be freed using
-+ * qemu_plugin_scoreboard_free.
-+ */
-+QEMU_PLUGIN_API
-+struct qemu_plugin_scoreboard *qemu_plugin_scoreboard_new(size_t element_size);
-+
-+/**
-+ * qemu_plugin_scoreboard_free() - free a scoreboard
-+ * @score: scoreboard to free
-+ */
-+QEMU_PLUGIN_API
-+void qemu_plugin_scoreboard_free(struct qemu_plugin_scoreboard *score);
-+
-+/**
-+ * qemu_plugin_scoreboard_find() - get pointer to an entry of a scoreboard
-+ * @score: scoreboard to query
-+ * @vcpu_index: entry index
-+ *
-+ * Returns address of entry of a scoreboard matching a given vcpu_index. This
-+ * address can be modified later if scoreboard is resized.
-+ */
-+QEMU_PLUGIN_API
-+void *qemu_plugin_scoreboard_find(struct qemu_plugin_scoreboard *score,
-+                                  unsigned int vcpu_index);
- 
- #endif /* QEMU_QEMU_PLUGIN_H */
-diff --git a/plugins/plugin.h b/plugins/plugin.h
-index 00b3509f708..043c740067d 100644
---- a/plugins/plugin.h
-+++ b/plugins/plugin.h
-@@ -31,6 +31,8 @@ struct qemu_plugin_state {
-      * but with the HT we avoid adding a field to CPUState.
-      */
-     GHashTable *cpu_ht;
-+    QLIST_HEAD(, qemu_plugin_scoreboard) scoreboards;
-+    size_t scoreboard_alloc_size;
-     DECLARE_BITMAP(mask, QEMU_PLUGIN_EV_MAX);
-     /*
-      * @lock protects the struct as well as ctx->uninstalling.
-@@ -101,4 +103,8 @@ void exec_inline_op(struct qemu_plugin_dyn_cb *cb);
- 
- int plugin_num_vcpus(void);
- 
-+struct qemu_plugin_scoreboard *plugin_scoreboard_new(size_t element_size);
-+
-+void plugin_scoreboard_free(struct qemu_plugin_scoreboard *score);
-+
- #endif /* PLUGIN_H */
-diff --git a/plugins/api.c b/plugins/api.c
-index 81f43c9ce8a..f8b15510ff7 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -465,3 +465,22 @@ int qemu_plugin_read_register(struct qemu_plugin_register *reg, GByteArray *buf)
- 
-     return gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg));
- }
-+
-+struct qemu_plugin_scoreboard *qemu_plugin_scoreboard_new(size_t element_size)
-+{
-+    return plugin_scoreboard_new(element_size);
-+}
-+
-+void qemu_plugin_scoreboard_free(struct qemu_plugin_scoreboard *score)
-+{
-+    plugin_scoreboard_free(score);
-+}
-+
-+void *qemu_plugin_scoreboard_find(struct qemu_plugin_scoreboard *score,
-+                                  unsigned int vcpu_index)
-+{
-+    g_assert(vcpu_index < qemu_plugin_num_vcpus());
-+    /* we can't use g_array_index since entry size is not statically known */
-+    char *base_ptr = score->data->data;
-+    return base_ptr + vcpu_index * g_array_get_element_size(score->data);
-+}
-diff --git a/plugins/core.c b/plugins/core.c
-index 2db4d31354b..63f4c6c6ce3 100644
---- a/plugins/core.c
-+++ b/plugins/core.c
-@@ -18,6 +18,7 @@
- #include "qemu/lockable.h"
- #include "qemu/option.h"
- #include "qemu/plugin.h"
-+#include "qemu/queue.h"
- #include "qemu/rcu_queue.h"
- #include "qemu/xxhash.h"
- #include "qemu/rcu.h"
-@@ -215,6 +216,35 @@ CPUPluginState *qemu_plugin_create_vcpu_state(void)
-     return g_new0(CPUPluginState, 1);
- }
- 
-+static void plugin_grow_scoreboards__locked(CPUState *cpu)
-+{
-+    if (cpu->cpu_index < plugin.scoreboard_alloc_size) {
-+        return;
-+    }
-+
-+    bool need_realloc = FALSE;
-+    while (cpu->cpu_index >= plugin.scoreboard_alloc_size) {
-+        plugin.scoreboard_alloc_size *= 2;
-+        need_realloc = TRUE;
-+    }
-+
-+
-+    if (!need_realloc || QLIST_EMPTY(&plugin.scoreboards)) {
-+        /* nothing to do, we just updated sizes for future scoreboards */
-+        return;
-+    }
-+
-+    /* cpus must be stopped, as tb might still use an existing scoreboard. */
-+    start_exclusive();
-+    struct qemu_plugin_scoreboard *score;
-+    QLIST_FOREACH(score, &plugin.scoreboards, entry) {
-+        g_array_set_size(score->data, plugin.scoreboard_alloc_size);
-+    }
-+    /* force all tb to be flushed, as scoreboard pointers were changed. */
-+    tb_flush(cpu);
-+    end_exclusive();
-+}
-+
- void qemu_plugin_vcpu_init_hook(CPUState *cpu)
- {
-     bool success;
-@@ -225,6 +255,7 @@ void qemu_plugin_vcpu_init_hook(CPUState *cpu)
-     success = g_hash_table_insert(plugin.cpu_ht, &cpu->cpu_index,
-                                   &cpu->cpu_index);
-     g_assert(success);
-+    plugin_grow_scoreboards__locked(cpu);
-     qemu_rec_mutex_unlock(&plugin.lock);
- 
-     plugin_vcpu_cb__simple(cpu, QEMU_PLUGIN_EV_VCPU_INIT);
-@@ -578,6 +609,8 @@ static void __attribute__((__constructor__)) plugin_init(void)
-     qemu_rec_mutex_init(&plugin.lock);
-     plugin.id_ht = g_hash_table_new(g_int64_hash, g_int64_equal);
-     plugin.cpu_ht = g_hash_table_new(g_int_hash, g_int_equal);
-+    QLIST_INIT(&plugin.scoreboards);
-+    plugin.scoreboard_alloc_size = 16; /* avoid frequent reallocation */
-     QTAILQ_INIT(&plugin.ctxs);
-     qht_init(&plugin.dyn_cb_arr_ht, plugin_dyn_cb_arr_cmp, 16,
-              QHT_MODE_AUTO_RESIZE);
-@@ -588,3 +621,27 @@ int plugin_num_vcpus(void)
- {
-     return plugin.num_vcpus;
- }
-+
-+struct qemu_plugin_scoreboard *plugin_scoreboard_new(size_t element_size)
-+{
-+    struct qemu_plugin_scoreboard *score =
-+        g_malloc0(sizeof(struct qemu_plugin_scoreboard));
-+    score->data = g_array_new(FALSE, TRUE, element_size);
-+    g_array_set_size(score->data, plugin.scoreboard_alloc_size);
-+
-+    qemu_rec_mutex_lock(&plugin.lock);
-+    QLIST_INSERT_HEAD(&plugin.scoreboards, score, entry);
-+    qemu_rec_mutex_unlock(&plugin.lock);
-+
-+    return score;
-+}
-+
-+void plugin_scoreboard_free(struct qemu_plugin_scoreboard *score)
-+{
-+    qemu_rec_mutex_lock(&plugin.lock);
-+    QLIST_REMOVE(score, entry);
-+    qemu_rec_mutex_unlock(&plugin.lock);
-+
-+    g_array_free(score->data, TRUE);
-+    g_free(score);
-+}
-diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
-index 27fe97239be..3f93e7d6b13 100644
---- a/plugins/qemu-plugins.symbols
-+++ b/plugins/qemu-plugins.symbols
-@@ -37,6 +37,9 @@
-   qemu_plugin_register_vcpu_tb_exec_inline;
-   qemu_plugin_register_vcpu_tb_trans_cb;
-   qemu_plugin_reset;
-+  qemu_plugin_scoreboard_free;
-+  qemu_plugin_scoreboard_find;
-+  qemu_plugin_scoreboard_new;
-   qemu_plugin_start_code;
-   qemu_plugin_tb_get_insn;
-   qemu_plugin_tb_n_insns;
+v7
+--
+
+- Fix parameters for plugin test (make check-tcg)
+
+v6
+--
+
+- fix test/plugins/mem.c double count
+- rebase on top of master, now that register api was merged
+
+v5
+--
+
+- fix bound for qemu_plugin_u64_loop
+- skip double API bump for plugins
+- rebase on top of 20240223162202.1936541-1-alex.bennee@linaro.org
+
+Only existing plugins changes still need a review.
+
+v4
+--
+
+- split scoreboard/qemu_plugin_u64 patches
+- use list instead of hash table to keep track of scoreboards
+- remove immediate in tcg code gen
+
+v3
+--
+
+- introduce qemu_plugin_num_vcpus (how many cpus were initialized)
+- fix order of plugin init/idle/resume callbacks
+- scoreboard:
+  - renamed qemu_plugin_u64_t -> qemu_plugin_u64
+  - some functions rename for scoreboard api
+  - qemu_plugin_u64 has only value based function (vs address before)
+- various cleanup thanks to review of previous series
+
+v2
+--
+
+Implement scoreboard API (cpu local storage), so plugins don't have to deal
+with how many cpus are used.
+
+Since plugins have been modified again, I didn't transfer any reviewed-by on
+those commits.
+
+Pierrick Bouvier (12):
+  plugins: scoreboard API
+  plugins: define qemu_plugin_u64
+  plugins: implement inline operation relative to cpu_index
+  plugins: add inline operation per vcpu
+  tests/plugin: add test plugin for inline operations
+  tests/plugin/mem: migrate to new per_vcpu API
+  tests/plugin/insn: migrate to new per_vcpu API
+  tests/plugin/bb: migrate to new per_vcpu API
+  contrib/plugins/hotblocks: migrate to new per_vcpu API
+  contrib/plugins/howvec: migrate to new per_vcpu API
+  plugins: remove non per_vcpu inline operation from API
+  plugins: cleanup codepath for previous inline operation
+
+ include/qemu/plugin.h        |   7 ++
+ include/qemu/qemu-plugin.h   | 142 ++++++++++++++++++++------
+ plugins/plugin.h             |  17 +++-
+ accel/tcg/plugin-gen.c       |  69 ++++++++++---
+ contrib/plugins/hotblocks.c  |  50 ++++++----
+ contrib/plugins/howvec.c     |  53 +++++++---
+ plugins/api.c                |  92 ++++++++++++++---
+ plugins/core.c               |  79 +++++++++++++--
+ tests/plugin/bb.c            |  63 +++++-------
+ tests/plugin/inline.c        | 186 +++++++++++++++++++++++++++++++++++
+ tests/plugin/insn.c          | 106 ++++++++++----------
+ tests/plugin/mem.c           |  46 ++++++---
+ plugins/qemu-plugins.symbols |  13 ++-
+ tests/plugin/meson.build     |   2 +-
+ tests/tcg/Makefile.target    |   2 +-
+ 15 files changed, 709 insertions(+), 218 deletions(-)
+ create mode 100644 tests/plugin/inline.c
+
 -- 
 2.39.2
 
