@@ -4,91 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0173C54E41
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 08:22:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B63AC54E49
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 08:22:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh3a2-0007Ds-1U; Mon, 04 Mar 2024 03:21:50 -0500
+	id 1rh3Zu-0007CT-VY; Mon, 04 Mar 2024 03:21:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1rh3Zu-0007CY-5f
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 03:21:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1rh3Zo-0007BY-B1
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 03:21:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1rh3Zs-0003Oh-NV
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 03:21:41 -0500
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1rh3Zm-0003OA-MU
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 03:21:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709540499;
+ s=mimecast20190719; t=1709540492;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=pU9+/9p95TUHAnxTiqhdc5eWW4vhBm8PRsaqbbv6kmQ=;
- b=K2/lhERLBkIrmpBPFLpccCwgn3Sh3byaJJChJs1rwbSIySD/XxnOUCwiJWwhadIWGPAP/q
- X2bfboZds38SOwPEWVH/MlOCr9l3weOjS588hn/RaQ8zERiYRJ2Xz88UrhdMveM7aKmsCt
- MfcwRStvvmFFoYvu9codpB/gTAsA5MM=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=pX+UiUFNg9ssn8alfoAA0EIlF720P4RAN8LE3ETNpS4=;
+ b=dFDOD1vCJzGHpdGFYO9OQbNfha0pmkmNUM7MQCclmsIfpfkQZwUbkFb6Ysi1o2gotuDy4m
+ Fjljnizio49+fTIOq+YXmeYK1ZFOFMkCEZND6a2eBx4i6VnhovbV6TVgB2Pnv1HVMsJChV
+ J9HmIZsU08dUCdEpwgb6eCYdp3i+Nsk=
+Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
+ [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-78-oCGJQiv9NbW9KE0DZSsWIA-1; Mon, 04 Mar 2024 03:21:37 -0500
-X-MC-Unique: oCGJQiv9NbW9KE0DZSsWIA-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-33e0edcf4f4so1221312f8f.2
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 00:21:37 -0800 (PST)
+ us-mta-121-BuqZbn_uPyy5BigH09e1tw-1; Mon, 04 Mar 2024 03:21:31 -0500
+X-MC-Unique: BuqZbn_uPyy5BigH09e1tw-1
+Received: by mail-lj1-f199.google.com with SMTP id
+ 38308e7fff4ca-2d2a43ca538so23512091fa.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 00:21:31 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709540496; x=1710145296;
+ d=1e100.net; s=20230601; t=1709540490; x=1710145290;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=pU9+/9p95TUHAnxTiqhdc5eWW4vhBm8PRsaqbbv6kmQ=;
- b=R6kMq/1dI2wkpe1hpnIK+COxWZxDmbjB3YU9mRHiwrAfxEqBkyuET64+iShMdI4JSn
- 70NbQTynV+QQkJj9UD0GplLFmEgYX7gm6R88NIZZF6vrZAWePt8eRqjFuxI5+Ov8u3aQ
- ymTajEB1v8xPAYAk8JeiCYt7FoMI9+nMdRWULDWLnQdg3Vx3298CIkHSSaE9SRyWR+NJ
- p0LDu+rw07xDWh7Tf+urfwzY3LrU2NvN5xiEOr0pNBROM53eze0R8fwcZbeITsohSmBi
- mCe6Wb9/Olba3OJnphaJAmAP5R9wHE/7sqsljYYVS6QZKXwD8sdDGH0bh89pZJPEQ1qt
- NjFA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXdPT9tXelw25KkUP2+e33U5gy4PLTa+58mhp59zBEaiJOhu6Ze2cIUOc3Rx6aoy0RxZx8zZ4KDcaD6+fVXqTMn1I89WPg=
-X-Gm-Message-State: AOJu0YzGN6nsChKt8Cx6A4VBg8IqcadWFtEg8ztWxtJ7FQ87zxA/Gqc9
- MXnBGt+yeZApHMXdaOT/Cxg6Q0fzbzL324EVyBGXsqOmrBJigjEHyo9/7nvGvqmHTRqaaZPRP/v
- mazbiuE50+YFkg79QRMm1vzXYbInLG/abQhXOKpjh0RYsUat+Q9yW5NKRGjcdZUEFOyYZ4iQIu6
- OLZyWX2yqBZx08duvyM4RAIOdxCZE=
-X-Received: by 2002:adf:e84b:0:b0:33e:d0c:1ed0 with SMTP id
- d11-20020adfe84b000000b0033e0d0c1ed0mr5485345wrn.57.1709540496560; 
- Mon, 04 Mar 2024 00:21:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEUu/kr/AyCZ6y4xf/PN/WfIINwopChrxIJlyfKEsjKZSi7H910t0a9+PA/olBA66TE+MrhJf+992MrKFFyJ88=
-X-Received: by 2002:adf:e84b:0:b0:33e:d0c:1ed0 with SMTP id
- d11-20020adfe84b000000b0033e0d0c1ed0mr5485334wrn.57.1709540496290; Mon, 04
- Mar 2024 00:21:36 -0800 (PST)
+ bh=pX+UiUFNg9ssn8alfoAA0EIlF720P4RAN8LE3ETNpS4=;
+ b=C0+E3I2PBVjpuil4kx1lKi1dvrrjsT9B7yjkBi7SSg5i70ovuq1xi/15tSQMIgv+69
+ o6JcSmdUCKoUWE91yB7y9c00kMlh7CmuqMqySyw94OIO0TQZfuma0qmz1BRZoafT3vVC
+ TsIaH4sHvxm30Am8NwFjunjvgmLieln+tia5AZNKQYGUd4xo+oYFGWzQ3BEPiXGJ5sxJ
+ dvcZ4TzukYwnA+fjnw+nUJlRvOBVUn0zE9uzTDCHwGoT+XRWilJHfV+h4hHbhQQdGHEu
+ CNQK1fRT/XPI84HnlEI9ErNyPpuO/T2dH8jo6hOmukbgIm20Oe/ruwd6ZWrBEnB/H6Ei
+ xogA==
+X-Gm-Message-State: AOJu0YwyzwVwFCaVhjcC9nI76LFRtvxY+q/mK6JV02cmXlbaxugg28J6
+ wcFlwf3wq/qWXpBSJT5fa1I9c3BazzT7dRFJ/lauhVakq4Po8s0AkFw1fdggv29FSZReQLYmcpW
+ tWtrtRo5MNLIM3n+9+d80R4oLTdzf+g9BAiWifPXQh9BlhIRoUDs3JMsg6kBuFtDJq6wTrk8Skg
+ Brv4NV+rEPnmY5a9D+sDuzBUfOvAg=
+X-Received: by 2002:a05:651c:198d:b0:2d2:846b:8c4e with SMTP id
+ bx13-20020a05651c198d00b002d2846b8c4emr4600572ljb.4.1709540490035; 
+ Mon, 04 Mar 2024 00:21:30 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEe9enyD3osQ/eeIgmznxUOMzdqiO5JQ73qfYoTStR9cIT8k7OU6p1K52lzz7wv8iUxnQm7sTS9Up388pb/tzI=
+X-Received: by 2002:a05:651c:198d:b0:2d2:846b:8c4e with SMTP id
+ bx13-20020a05651c198d00b002d2846b8c4emr4600561ljb.4.1709540489722; Mon, 04
+ Mar 2024 00:21:29 -0800 (PST)
 MIME-Version: 1.0
-References: <20240304044510.2305849-1-zhao1.liu@linux.intel.com>
- <CAE8KmOxvZFjtKkHiGGREx_b0QgfDjPWZ7Ex3nqAQQbiPKa_wrQ@mail.gmail.com>
- <ZeVyKMux7Ysjo/lY@intel.com>
-In-Reply-To: <ZeVyKMux7Ysjo/lY@intel.com>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Mon, 4 Mar 2024 13:51:19 +0530
-Message-ID: <CAE8KmOxJECe7oNkB1Oiuk-+_4J4drmdJTL2mBzQz+Zu+6XpxrQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/core/machine-smp: Remove deprecated "parameter=0" SMP
- configurations
-To: Zhao Liu <zhao1.liu@linux.intel.com>
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, devel@lists.libvirt.org, qemu-devel@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+References: <20240227113921.236097-1-armbru@redhat.com>
+ <20240227113921.236097-12-armbru@redhat.com>
+In-Reply-To: <20240227113921.236097-12-armbru@redhat.com>
+From: Konstantin Kostiuk <kkostiuk@redhat.com>
+Date: Mon, 4 Mar 2024 10:21:18 +0200
+Message-ID: <CAPMcbCqY+C+Qi5t2j6yQe9TkZ-AZNdNCzAZ0cByF-O7oR64Qvw@mail.gmail.com>
+Subject: Re: [PATCH 11/13] qga/qapi-schema: Tweak documentation of fsfreeze
+ commands
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, michael.roth@amd.com, jsnow@redhat.com, 
+ eblake@redhat.com
+Content-Type: multipart/alternative; boundary="0000000000009e8f740612d16940"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.589,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,68 +98,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Zhao,
+--0000000000009e8f740612d16940
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, 4 Mar 2024 at 12:19, Zhao Liu <zhao1.liu@linux.intel.com> wrote:
-> > unsigned maxcpus = config->has_maxcpus ? config->maxcpus : 0;
+Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+
+On Tue, Feb 27, 2024 at 1:39=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+
+> "Returns:" sections of guest-fsfreeze-freeze and
+> guest-fsfreeze-freeze-list describe both command behavior and success
+> response.  Move behavior out, so "Returns:" is only about success
+> response.
 >
-> This indicates the default maxcpus is initialized as 0 if user doesn't
-> specifies it.
-
-* 'has_maxcpus' should be set only if maxcpus > 0. If maxcpus == 0,
-then setting 'has_maxcpus=1' seems convoluted.
-
-> However, we could initialize maxcpus as other default value, e.g.,
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>  qga/qapi-schema.json | 16 +++++++++-------
+>  1 file changed, 9 insertions(+), 7 deletions(-)
 >
->     maxcpus = config->has_maxcpus ? config->maxcpus : 1.
-===
-hw/core/machine.c
- machine_initfn
-    /* default to mc->default_cpus */
-    ms->smp.cpus = mc->default_cpus;
-    ms->smp.max_cpus = mc->default_cpus;
-
-   static void machine_class_base_init(ObjectClass *oc, void *data)
-   {
-       MachineClass *mc = MACHINE_CLASS(oc);
-       mc->max_cpus = mc->max_cpus ?: 1;
-       mc->min_cpus = mc->min_cpus ?: 1;
-       mc->default_cpus = mc->default_cpus ?: 1;
-   }
-===
-* Looking at the above bits, it seems smp.cpus & smp.max_cpus are
-initialised to 1 via default_cpus in MachineClass object.
-
->>  if (config->has_maxcpus && config->maxcpus == 0)
-> This check only wants to identify the case that user sets the 0.
-> If the default maxcpus is initialized as 0, then (maxcpus == 0) will
-> fail if user doesn't set maxcpus.
+> diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+> index 326d324901..2ea1022092 100644
+> --- a/qga/qapi-schema.json
+> +++ b/qga/qapi-schema.json
+> @@ -437,15 +437,16 @@
+>  # command succeeded, you may call @guest-fsfreeze-thaw later to
+>  # unfreeze.
+>  #
+> +# On error, all filesystems will be thawed.  If no filesystems are
+> +# frozen as a result of this call, then @guest-fsfreeze-status will
+> +# remain "thawed" and calling @guest-fsfreeze-thaw is not necessary.
+> +#
+> +# Returns: Number of file systems currently frozen.
+> +#
+>  # Note: On Windows, the command is implemented with the help of a
+>  #     Volume Shadow-copy Service DLL helper.  The frozen state is
+>  #     limited for up to 10 seconds by VSS.
+>  #
+> -# Returns: Number of file systems currently frozen.  On error, all
+> -#     filesystems will be thawed.  If no filesystems are frozen as a
+> -#     result of this call, then @guest-fsfreeze-status will remain
+> -#     "thawed" and calling @guest-fsfreeze-thaw is not necessary.
+> -#
+>  # Since: 0.15.0
+>  ##
+>  { 'command': 'guest-fsfreeze-freeze',
+> @@ -457,12 +458,13 @@
+>  # Sync and freeze specified guest filesystems.  See also
+>  # @guest-fsfreeze-freeze.
+>  #
+> +# On error, all filesystems will be thawed.
+> +#
+>  # @mountpoints: an array of mountpoints of filesystems to be frozen.
+>  #     If omitted, every mounted filesystem is frozen.  Invalid mount
+>  #     points are ignored.
+>  #
+> -# Returns: Number of file systems currently frozen.  On error, all
+> -#     filesystems will be thawed.
+> +# Returns: Number of file systems currently frozen.
+>  #
+>  # Since: 2.2
+>  ##
+> --
+> 2.43.0
 >
-> But it is still necessary to distinguish whether maxcpus is user-set or
-> auto-initialized.
-
-* If it is set to zero(0) either by user or by auto-initialise, it is
-still invalid, right?
-
-> If it is user-set, -smp should fail is there's invalid maxcpus/invalid
-> topology.
 >
-> Otherwise, if it is auto-initialized, its value should be adjusted based
-> on other topology components as the above calculation in (*).
 
-* Why have such diverging ways?
-* Could we simplify it as
-   - If cpus/maxcpus==0, it is invalid, show an error and exit.
-   - If cpus/maxcpus > 0, but incorrect for topology, then
-re-calculate the correct value based on topology parameters. If the
-re-calculated value is still incorrect or unsatisfactory, then show an
-error and exit.
+--0000000000009e8f740612d16940
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-* Saying that user setting cpu/maxcpus=0 is invalid and
-auto-initialising it to zero(0) is valid, is not consistent.
+<div dir=3D"ltr">Reviewed-by: Konstantin Kostiuk &lt;<a href=3D"mailto:kkos=
+tiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</a>&gt;</div><br><di=
+v class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Feb 2=
+7, 2024 at 1:39=E2=80=AFPM Markus Armbruster &lt;<a href=3D"mailto:armbru@r=
+edhat.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"g=
+mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204=
+,204,204);padding-left:1ex">&quot;Returns:&quot; sections of guest-fsfreeze=
+-freeze and<br>
+guest-fsfreeze-freeze-list describe both command behavior and success<br>
+response.=C2=A0 Move behavior out, so &quot;Returns:&quot; is only about su=
+ccess<br>
+response.<br>
+<br>
+Signed-off-by: Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com" t=
+arget=3D"_blank">armbru@redhat.com</a>&gt;<br>
+---<br>
+=C2=A0qga/qapi-schema.json | 16 +++++++++-------<br>
+=C2=A01 file changed, 9 insertions(+), 7 deletions(-)<br>
+<br>
+diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json<br>
+index 326d324901..2ea1022092 100644<br>
+--- a/qga/qapi-schema.json<br>
++++ b/qga/qapi-schema.json<br>
+@@ -437,15 +437,16 @@<br>
+=C2=A0# command succeeded, you may call @guest-fsfreeze-thaw later to<br>
+=C2=A0# unfreeze.<br>
+=C2=A0#<br>
++# On error, all filesystems will be thawed.=C2=A0 If no filesystems are<br=
+>
++# frozen as a result of this call, then @guest-fsfreeze-status will<br>
++# remain &quot;thawed&quot; and calling @guest-fsfreeze-thaw is not necess=
+ary.<br>
++#<br>
++# Returns: Number of file systems currently frozen.<br>
++#<br>
+=C2=A0# Note: On Windows, the command is implemented with the help of a<br>
+=C2=A0#=C2=A0 =C2=A0 =C2=A0Volume Shadow-copy Service DLL helper.=C2=A0 The=
+ frozen state is<br>
+=C2=A0#=C2=A0 =C2=A0 =C2=A0limited for up to 10 seconds by VSS.<br>
+=C2=A0#<br>
+-# Returns: Number of file systems currently frozen.=C2=A0 On error, all<br=
+>
+-#=C2=A0 =C2=A0 =C2=A0filesystems will be thawed.=C2=A0 If no filesystems a=
+re frozen as a<br>
+-#=C2=A0 =C2=A0 =C2=A0result of this call, then @guest-fsfreeze-status will=
+ remain<br>
+-#=C2=A0 =C2=A0 =C2=A0&quot;thawed&quot; and calling @guest-fsfreeze-thaw i=
+s not necessary.<br>
+-#<br>
+=C2=A0# Since: 0.15.0<br>
+=C2=A0##<br>
+=C2=A0{ &#39;command&#39;: &#39;guest-fsfreeze-freeze&#39;,<br>
+@@ -457,12 +458,13 @@<br>
+=C2=A0# Sync and freeze specified guest filesystems.=C2=A0 See also<br>
+=C2=A0# @guest-fsfreeze-freeze.<br>
+=C2=A0#<br>
++# On error, all filesystems will be thawed.<br>
++#<br>
+=C2=A0# @mountpoints: an array of mountpoints of filesystems to be frozen.<=
+br>
+=C2=A0#=C2=A0 =C2=A0 =C2=A0If omitted, every mounted filesystem is frozen.=
+=C2=A0 Invalid mount<br>
+=C2=A0#=C2=A0 =C2=A0 =C2=A0points are ignored.<br>
+=C2=A0#<br>
+-# Returns: Number of file systems currently frozen.=C2=A0 On error, all<br=
+>
+-#=C2=A0 =C2=A0 =C2=A0filesystems will be thawed.<br>
++# Returns: Number of file systems currently frozen.<br>
+=C2=A0#<br>
+=C2=A0# Since: 2.2<br>
+=C2=A0##<br>
+-- <br>
+2.43.0<br>
+<br>
+</blockquote></div>
 
-...wdyt?
----
-  - Prasad
+--0000000000009e8f740612d16940--
 
 
