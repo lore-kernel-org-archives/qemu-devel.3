@@ -4,81 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDB6CC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 21:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDF8BC48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 21:16:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhFau-0007iG-7E; Mon, 04 Mar 2024 16:11:32 -0500
+	id 1rhFf2-0000rD-VP; Mon, 04 Mar 2024 16:15:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
- id 1rhFao-0007hW-EF
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 16:11:26 -0500
-Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rhFf1-0000qP-5N
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 16:15:47 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
- id 1rhFal-0006sA-MU
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 16:11:26 -0500
-Received: by mail-oa1-x2c.google.com with SMTP id
- 586e51a60fabf-21fdf31a154so2734463fac.3
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 13:11:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rhFey-0007br-MM
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 16:15:46 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-33d2b354c72so3744853f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 13:15:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1709586681; x=1710191481; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1709586943; x=1710191743; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+Hqb1C+XYVn3thuSGrZUtKLKE9O91b1Ym1bO374eQt0=;
- b=jjNDGPba7VAwH17WKKUVg+n58YRgzMBHNTkm0RhSz8xAvroKfah+F/OgJ7IZFCD/uo
- 72pcove1bfIdfDc7pTjYDRxaWAr/6cfYqkMM49MXEopm5WWbA485jtLlzWWsFGHnVuxX
- QCZpJ3Ac0XCB2mglOv9POHOh97ZfZwGFjVYvPsG2BM1yT1U09VBrxLS/0OrsL4TK75jA
- ooumNdXAMMeJHmnFsSExqdyDkQg7EdJbPa0IG7Dx5oYV/+5QyfTJYiEbQCw+U5H69/5q
- 2hhRMHlIdlaKw7iH3Y9s8wQ8MhmfSRvHfWmer2Ud43p4bg9F2OoHP6slvsnTwkDl/h/3
- 4QwA==
+ bh=pzuZx5aNACkw+s0uZ08Y5q1cqQl3ruALEWPObHZRbSc=;
+ b=uOtg0atQSV+oAF4+Xl1cgVx+o5cfDzIkZBqRXS+m+uiEmK2dsX/2QGDZmbI4bp1E0x
+ iF9xRRKaLZaPnZt6253WxN4kBbRf3xPOzQLOxPFtaukJAM3n3eu/DbxEE5c1PtQKBGmM
+ Kn5aKg7oUxha3nAm4lwtcAa5kABp8aDJRfEYIjTXfcsLsS3NVjZQzqqIgoU5J+AgTfoH
+ oGCeS49m97kHmXKep/qyJ8fRYlFFhqkAf3ehEJ6kRb1vXef5kTHGpihMUZeOW/egv2oM
+ hsq80fHdJdHh9sFM/AV422I0kue1cS+6ZxVvEPvlcIGwXjWDta0H80B1VZ2DOrhehc/F
+ CAow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709586681; x=1710191481;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+Hqb1C+XYVn3thuSGrZUtKLKE9O91b1Ym1bO374eQt0=;
- b=i0v0b+LucGbYJWeYJfoeVqmammyLC9e7mLJRO65E5Wp51yPZPN3jt9qSTXA8MHaD7K
- O0gzhSe32gwfFyZwaGEDASS349lDmdAgwdw3p0EIFMV9PTFuNk/qfc+M4C09MPWeJLke
- xqtFkg2fz6acQQpHboGASPE13LWq3YAgKjoVcSmoVI+GHJJYlABedlflp2Yl/b5eRdtg
- N/0Ol+EVc6le37Hw9wokBUy5QOIWB3PVDmtRZ9+WNxJdZ6UrZcZ1KG7iVhpCx3gw0ZTI
- dVMZNDlz3CejkyHioVraA6NqRVkNP1SkDZD/h0cPUL2kU/Ty5ALsDB5KEWWxkkGzg0sV
- MkgQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX9OirW8bGLlcOxqtYudhyWmddJK8S/acYKvLsaFoNSk0+xZnmyWzvjc4bZnScGPMs5g6r9D1lSY1SG0GbAk2TxJOQxI30=
-X-Gm-Message-State: AOJu0YzZEBI5N4MLM5yIOOwXhZhYLk2yT6Jyr/uWAhoVOmPckU0DDTVt
- PvgbQt0w9e6U+PuLykriMRrVJTrxT6O+4NSGbnGjRlTMB/jHava+PX/PaZ/4hZA9EwRe31Gig67
- CV1b9hP9Zbb1MhHZxdG0DF/kDVazb4/O3ehzV
-X-Google-Smtp-Source: AGHT+IHbdurqtwEQIkOOm1yuieitXLJA+NYVfOJxd/RWPNmfq5pU+X62B9dpDuyk0XY6ImCrZJLP230hakQETu9sJgw=
-X-Received: by 2002:a05:6870:1645:b0:220:a0b0:6d4a with SMTP id
- c5-20020a056870164500b00220a0b06d4amr12339900oae.57.1709586681421; Mon, 04
- Mar 2024 13:11:21 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709586943; x=1710191743;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=pzuZx5aNACkw+s0uZ08Y5q1cqQl3ruALEWPObHZRbSc=;
+ b=EFWA332xbjMqfIKlXEim0WpHDpBU/K81NhJ9lzY6eA4ZtmOHasRcLMCENhBHpa8MBh
+ XV1OV3a4cRBDES0JkfDhsUJBZpGTmn13EW1bmT9OmR9hPGPQ4fjyV/S15WLCft0J5y3a
+ /ubpeVkE+BmmqOTDzdNoUw3zFADwxhJIHdVIRn6dIafjd0zZFiUUoTYsAe3fyKNNnGxW
+ iv1jzgJTCjTioZGWGdeChgwxa6ns+kRm+uT3JyErkOEZOCEAg3hh/akY+wJaiWV8WFsO
+ Jcz/VJgi3fS72ta8s4hTixqfkOnjZD0hoSuXfynJOjNbWGGQmX+mK9kLg2MVLH2UlGHA
+ nDCg==
+X-Gm-Message-State: AOJu0YxbuJpDuU+wi/HsPTmza2Qosvi/EuQ/SqN2yD6xa7V26lM5ZnmG
+ HKRgU8RC/B6GE3YjvbqulU+u4hrxiqqN0X/jdon8pfT3Srh3U4+R1X0axWVLF4jfFNYMdZj15Z/
+ 0
+X-Google-Smtp-Source: AGHT+IFuOP26Njz2v1mNgOSUfrMA9SGKIASgi9SP5EnsB8fBpbZYohwW3og0OHA0sqG1USNJD3dCCA==
+X-Received: by 2002:adf:b601:0:b0:33d:b03a:5e2f with SMTP id
+ f1-20020adfb601000000b0033db03a5e2fmr7564947wre.10.1709586943070; 
+ Mon, 04 Mar 2024 13:15:43 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ n15-20020a5d484f000000b0033dec836ea6sm13145332wrs.99.2024.03.04.13.15.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 04 Mar 2024 13:15:42 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 60B195F881;
+ Mon,  4 Mar 2024 21:15:42 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
+ qemu-stable@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>
+Subject: Re: [PATCH v2] docs/conf.py: Remove usage of distutils
+In-Reply-To: <20240304130403.129543-1-thuth@redhat.com> (Thomas Huth's message
+ of "Mon, 4 Mar 2024 14:04:03 +0100")
+References: <20240304130403.129543-1-thuth@redhat.com>
+User-Agent: mu4e 1.12.1; emacs 29.1
+Date: Mon, 04 Mar 2024 21:15:42 +0000
+Message-ID: <87plw9wvep.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20240221170027.1027325-1-nabihestefan@google.com>
-In-Reply-To: <20240221170027.1027325-1-nabihestefan@google.com>
-From: Nabih Estefan <nabihestefan@google.com>
-Date: Mon, 4 Mar 2024 13:11:09 -0800
-Message-ID: <CA+QoejU3y=0k3-hMQzzmOV-RxkxTe1pnSVpU-xv=B0WLHq3n4A@mail.gmail.com>
-Subject: Re: [PATCH 0/2] SMBIOS type 9 descriptor implementation
-To: peter.maydell@linaro.org
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- its@irrelevant.dk, kbusch@kernel.org, eric.auger@redhat.com, mst@redhat.com, 
- imammedo@redhat.com, anisinha@redhat.com, flwu@google.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2001:4860:4864:20::2c;
- envelope-from=nabihestefan@google.com; helo=mail-oa1-x2c.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,39 +100,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Friendly ping on review for this patchset!
+Thomas Huth <thuth@redhat.com> writes:
 
-It's been ~2 weeks since it was sent out, please let us know if
-there's any changes that should be done to upstream it!
-
-Thanks,
-Nabih Estefan
-
-Nabih Estefan (he/him) |  Software Engineer |
-nabihestefan@google.com |  857-308-9574
-
-
-
-On Wed, Feb 21, 2024 at 9:00=E2=80=AFAM Nabih Estefan <nabihestefan@google.=
-com> wrote:
+> The macOS jobs in our CI recently started failing, complaining that
+> the distutils module is not available anymore. And indeed, according to
+> https://peps.python.org/pep-0632/ it's been deprecated since a while
+> and now likely got removed in recent Python versions.
 >
-> This patch series implements SMBIOS type 9 descriptor, system slots.
-> For each system slot, we can assign one descriptor for it if needed.
-> In versions later than 2.6, a new PCI device field was added to make sure=
- the
-> descriptor is associated with a certain device, if provided.
-> For ease of usage, qemu-options.hx was updated.
+> Fortunately, we only use it for a version check via LooseVersion here
+> which we don't really need anymore - according to Repology.org, these
+> are the versions of sphinx-rtd-theme that are currently used by the
+> various distros:
 >
-> Felix Wu (2):
->   Implement base of SMBIOS type 9 descriptor.
->   Implement SMBIOS type 9 v2.6
+>  centos_stream_8: 0.3.1
+>  centos_stream_9: 0.5.1
+>  fedora_38: 1.1.1
+>  fedora_39: 1.2.2
+>  freebsd: 1.0.0
+>  haikuports_master: 1.2.1
+>  openbsd: 1.2.2
+>  opensuse_leap_15_5: 0.5.1
+>  pkgsrc_current: 2.0.0
+>  debian_11: 0.5.1
+>  debian_12: 1.2.0
+>  ubuntu_20_04: 0.4.3
+>  ubuntu_22_04: 1.0.0
+>  ubuntu_24_04: 2.0.0
 >
->  hw/smbios/smbios.c           | 142 +++++++++++++++++++++++++++++++++++
->  include/hw/firmware/smbios.h |  17 +++++
->  qemu-options.hx              |   3 +
->  3 files changed, 162 insertions(+)
+> So except for CentOS 8, all distros are using a newer version of
+> sphinx-rtd-theme, and for CentOS 8 we don't support compiling with
+> the Sphinx of the distro anymore anyway, since it's based on the
+> Python 3.6 interpreter there. For compiling on CentOS 8, you have
+> to use the alternative Python 3.8 interpreter which comes without
+> Sphinx, so that needs the Sphinx installed via pip in the venv
+> instead, and that is using a newer version, too, according to our
+> pythondeps.toml file.
 >
-> --
-> 2.44.0.rc0.258.g7320e95886-goog
+> Thus we can simply drop the version check now to get rid of the
+> distutils dependency here.
 >
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+
+Queued to testing/next, thanks.
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
