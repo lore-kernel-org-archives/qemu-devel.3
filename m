@@ -4,77 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71C5CC5478C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 15:03:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65445C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 15:07:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh9qR-0003gR-K3; Mon, 04 Mar 2024 10:03:11 -0500
+	id 1rh9uH-00050a-OK; Mon, 04 Mar 2024 10:07:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rh9q8-0003cb-AS
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 10:02:57 -0500
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rh9pv-00019Q-46
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 10:02:50 -0500
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-5673f7b3196so1662321a12.1
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 07:02:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709564556; x=1710169356; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=otbtgtUNVpwfIth7PNDoBPWCzPaH5tButK7oNpC0WYk=;
- b=Z7/K6HQ7yYhfp0z/EVQckfqasJWY7Cpj7c3o0r6i8r4OvtfldXXk82XgUcXZ1TwrAa
- C3KBapgYHPPVHUnc16WEPx57aknBu3p0lDV6LcDutNMaFUEYKo5plzkaeWSJqM0XsD7K
- D6tVKFxQW09tGF+2BtaspnPq3wySYaqTFPWyDTNPPB8pSSrWKilGIpO+F9jsSYxGtr0J
- 3KdAs2CksbHd6enI0ozs26FL0wXClRk2Nmnepoct4TQzg3j5Qr31yVgeZ9CHBefqc2Zx
- s27+oB6v5MM/KGaCmCMcBV9qi4ZIInqDx3BcDfHwvkvRLMHqEeLsebjeZm2YolDZwgk8
- JQyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709564556; x=1710169356;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=otbtgtUNVpwfIth7PNDoBPWCzPaH5tButK7oNpC0WYk=;
- b=uIXJJ1NxA97c8HdQUHkxj3p5eFXjsVE6k1PypgZffGu6qcj7XJnyAH84wogrbd5B1r
- /4XKFb2i7CK6bhRospiQx8tG+f7kPsC9EHd4VJHxx23QS9x9ls3GOY7yHw7B8J8SjEBK
- JGcR5in6WK3InKlGFq0MF7v5zWdHdzR5QzLZ/EoEMmwrYeBqL4s7f4nkiHcyRtv0zkxy
- y+qo9LIqqI3zIYN7tT9/dLETaSJw9Hx1YEPZlWwgFp2UwVlS2wAHJlNDWK6ySkIEt/X4
- m0wL51IVpe29VAbdzXVTnOnMsGC9c5txgW1pXzJpOrY2/Lt+4FfJ5325XBDNkIrxfB0u
- A+kA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVE9uWJ9uvqh/MoHb4uOLyCgyyy6SSjYjBF/IDMzPUuxTNCzrNb5K7fEEVvZl51H6n+Lu1xW2XTg+ABGtm2q+ZBqkhn6B0=
-X-Gm-Message-State: AOJu0YxNhqbcLRaseomeWKfns+V+aSWaKMm5tJuEjFvGHRY/RJoqSFIM
- 8R8H0Du/w52yhdF0UBUrrDK/eKocNgNJSjyhPtMUkxA9gbLY0gr7KhRVuclG1UnGr3qgrQSoS33
- jPpOmOZ5yJUMyjQRTyz16MWyCcVossi0xM5P5Gw==
-X-Google-Smtp-Source: AGHT+IHpoMxunOka5Wmm9+DK54avExB6Nl5/p7pkdeChfvh46B34Gkfzwkp6D9mHoegsBdAjBFwyqUh8GcVXtfoYgEg=
-X-Received: by 2002:aa7:d8cd:0:b0:567:56b5:8960 with SMTP id
- k13-20020aa7d8cd000000b0056756b58960mr1710862eds.13.1709564556606; Mon, 04
- Mar 2024 07:02:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rh9uD-0004zy-VR; Mon, 04 Mar 2024 10:07:06 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rh9uB-0001us-4r; Mon, 04 Mar 2024 10:07:05 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TpMPt5dqYz6K9SH;
+ Mon,  4 Mar 2024 23:02:58 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id D383A140A36;
+ Mon,  4 Mar 2024 23:06:52 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Mon, 4 Mar
+ 2024 15:06:52 +0000
+Date: Mon, 4 Mar 2024 15:06:51 +0000
+To: Thomas Huth <thuth@redhat.com>
+CC: <qemu-devel@nongnu.org>, Fan Ni <fan.ni@samsung.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ <qemu-trivial@nongnu.org>
+Subject: Re: [PATCH 2/3] hw/pci-bridge/cxl_upstream: Fix problem with
+ g_steal_pointer()
+Message-ID: <20240304150651.00006dd1@Huawei.com>
+In-Reply-To: <20240304104406.59855-3-thuth@redhat.com>
+References: <20240304104406.59855-1-thuth@redhat.com>
+ <20240304104406.59855-3-thuth@redhat.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20240227054855.44204-1-tong.ho@amd.com>
-In-Reply-To: <20240227054855.44204-1-tong.ho@amd.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 4 Mar 2024 15:02:25 +0000
-Message-ID: <CAFEAcA8EH1VLRPBb4gGCHotLbG6Gpnf3OqGM5Vy4GUX+2h_=_w@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/char/pl011: Add support for loopback
-To: Tong Ho <tong.ho@amd.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, marcandre.lureau@redhat.com, 
- pbonzini@redhat.com, francisco.iglesias@amd.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,31 +67,104 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 27 Feb 2024 at 05:48, Tong Ho <tong.ho@amd.com> wrote:
->
-> This patch adds loopback for sent characters, sent BREAK,
-> and modem-control signals.
->
-> Loopback of send and modem-control is often used for uart
-> self tests in real hardware but missing from current pl011
-> model, resulting in self-test failures when running in QEMU.
->
-> This implementation matches what is observed in real pl011
-> hardware placed in loopback mode:
-> 1. Input characters and BREAK events from serial backend
->    are ignored, but
-> 2. Both TX characters and BREAK events are still sent to
->    serial backend, in addition to be looped back to RX.
->
-> Signed-off-by: Tong Ho <tong.ho@amd.com>
-> Signed-off-by: Francisco Iglesias <francisco.iglesias@amd.com>
+On Mon,  4 Mar 2024 11:44:05 +0100
+Thomas Huth <thuth@redhat.com> wrote:
 
+> When setting GLIB_VERSION_MAX_ALLOWED to GLIB_VERSION_2_58 or higher,
+> glib adds type safety checks to the g_steal_pointer() macro. This
+> triggers errors in the build_cdat_table() function which uses the
+> g_steal_pointer() for type-casting from one pointer type to the other
+> (which also looks quite weird since the local pointers have all been
+> declared with g_autofree though they are never freed here).
 
+Left over of an earlier cleanup where I failed to notice there were no
+longer any error return paths. Great to clean this out.
 
-Applied to target-arm.next, thanks.
+> Let's fix
+> it by using a proper typecast instead. For making this possible, we
+> have to remove the QEMU_PACKED attribute from some structs since GCC
+> otherwise complains that the source and destination pointer might
+> have different alignment restrictions. Removing the QEMU_PACKED should
+> be fine here since the structs are already naturally aligned. Anyway,
+> add some QEMU_BUILD_BUG_ON() statements to make sure that we've got
+> the right sizes (without padding in the structs).
 
--- PMM
+Ok. In these cases indeed seem to be fine unpacked. That's
+not in general true of the CXL spec structures.
+Maybe alternative if we run into problems with future versions
+of these structures will be to define struct CDATSubHeader as packed.
+
+Still we can cross that bridge when we come to it.
+
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+
+> ---
+>  include/hw/cxl/cxl_cdat.h    | 8 +++++---
+>  hw/pci-bridge/cxl_upstream.c | 8 ++++----
+>  2 files changed, 9 insertions(+), 7 deletions(-)
+> 
+> diff --git a/include/hw/cxl/cxl_cdat.h b/include/hw/cxl/cxl_cdat.h
+> index 8e3d094608..b44cefaad6 100644
+> --- a/include/hw/cxl/cxl_cdat.h
+> +++ b/include/hw/cxl/cxl_cdat.h
+> @@ -130,7 +130,8 @@ typedef struct CDATSslbisHeader {
+>      uint8_t data_type;
+>      uint8_t reserved[3];
+>      uint64_t entry_base_unit;
+> -} QEMU_PACKED CDATSslbisHeader;
+> +} CDATSslbisHeader;
+> +QEMU_BUILD_BUG_ON(sizeof(CDATSslbisHeader) != 16);
+>  
+>  #define CDAT_PORT_ID_USP 0x100
+>  /* Switch Scoped Latency and Bandwidth Entry - CDAT Table 10 */
+> @@ -139,12 +140,13 @@ typedef struct CDATSslbe {
+>      uint16_t port_y_id;
+>      uint16_t latency_bandwidth;
+>      uint16_t reserved;
+> -} QEMU_PACKED CDATSslbe;
+> +} CDATSslbe;
+> +QEMU_BUILD_BUG_ON(sizeof(CDATSslbe) != 8);
+>  
+>  typedef struct CDATSslbis {
+>      CDATSslbisHeader sslbis_header;
+>      CDATSslbe sslbe[];
+> -} QEMU_PACKED CDATSslbis;
+> +} CDATSslbis;
+>  
+>  typedef struct CDATEntry {
+>      void *base;
+> diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
+> index e87eb40177..537f9affb8 100644
+> --- a/hw/pci-bridge/cxl_upstream.c
+> +++ b/hw/pci-bridge/cxl_upstream.c
+> @@ -192,8 +192,8 @@ enum {
+>  
+>  static int build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
+>  {
+> -    g_autofree CDATSslbis *sslbis_latency = NULL;
+> -    g_autofree CDATSslbis *sslbis_bandwidth = NULL;
+> +    CDATSslbis *sslbis_latency;
+> +    CDATSslbis *sslbis_bandwidth;
+>      CXLUpstreamPort *us = CXL_USP(priv);
+>      PCIBus *bus = &PCI_BRIDGE(us)->sec_bus;
+>      int devfn, sslbis_size, i;
+> @@ -270,8 +270,8 @@ static int build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
+>      *cdat_table = g_new0(CDATSubHeader *, CXL_USP_CDAT_NUM_ENTRIES);
+>  
+>      /* Header always at start of structure */
+> -    (*cdat_table)[CXL_USP_CDAT_SSLBIS_LAT] = g_steal_pointer(&sslbis_latency);
+> -    (*cdat_table)[CXL_USP_CDAT_SSLBIS_BW] = g_steal_pointer(&sslbis_bandwidth);
+> +    (*cdat_table)[CXL_USP_CDAT_SSLBIS_LAT] = (CDATSubHeader *)sslbis_latency;
+> +    (*cdat_table)[CXL_USP_CDAT_SSLBIS_BW] = (CDATSubHeader *)sslbis_bandwidth;
+>  
+>      return CXL_USP_CDAT_NUM_ENTRIES;
+>  }
+
 
