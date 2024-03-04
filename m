@@ -4,81 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42465C54E49
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 06:36:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F58BC48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 06:37:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh1w7-0004dY-Jh; Mon, 04 Mar 2024 01:36:33 -0500
+	id 1rh1t6-0005fb-90; Mon, 04 Mar 2024 01:33:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1rh1vW-0004UU-Dx
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 01:35:57 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rh1sY-0005YN-Ce
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 01:32:51 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1rh1vU-0000mD-KM
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 01:35:53 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rh1sR-000098-4H
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 01:32:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709534151;
+ s=mimecast20190719; t=1709533962;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=isiB3iqbcFlvdmOfBVXRYZeqOy8i1c4ZbMDshxgx0AU=;
- b=BsvIfTdliVTS7dkRnue6oDpozvLnobWuxF36BqPiIBw+uqTQQr3fboX1OpQDaCM+XotLhw
- BgxRz2e7RAyezGB4MkloqnA7g4KPIfIoDwNk3PkJrZ2strN4XfXnbEyw3WXEimR2d8nPo/
- s8HghFUUvUawHOj0Q4w9SoUL8J9/NJI=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=rFZd5IV1WDNKgdBt9qHdcSx83Jp1mXqoEbBsIONztp8=;
+ b=f2Vtapx/WAvpzTbUg6IRx2BiILy/Ig7if4OS+ncWuZiqSWAMFDnuJAKmjzXb0DydxJoYg9
+ gW4Xzu9oMHHM0o8Dt4EruowaMeOAnpoebU1e4BxaO8Tg1tEXfMD+Hk4hQgJaeMtfGGKQCQ
+ ESn4rPMhrbc+p/cVpyPyFQWVudRe4eU=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-496-d_3XHEKAOa6qNanQdv24sA-1; Mon, 04 Mar 2024 01:35:49 -0500
-X-MC-Unique: d_3XHEKAOa6qNanQdv24sA-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-412e4d20b28so2189405e9.1
- for <qemu-devel@nongnu.org>; Sun, 03 Mar 2024 22:35:49 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709534148; x=1710138948;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=isiB3iqbcFlvdmOfBVXRYZeqOy8i1c4ZbMDshxgx0AU=;
- b=Cpu1Zh5YYTuwfIOpZi8mZf/Phl/TwJZw3dDfLZJb0xOhkkIrQGMnmlunEL9I9drfH1
- H6Rczs/IIE/kKCz3IwuaOu1l9KJbGFUxOPQw24Rz1OrDcDgTGUQseLQpLThtnmWaGMmR
- MURUSN79iNTrYh1Hxn2ofMhWTkE8/MUmEDBcQpWZ1an4bNJKyinJjat+D676W6BeP4dz
- MPmC6EURheIrBog2jpIs1RBa41CBPm6AnkOJN09zGkQ1aTbGPVIQxoC2/xUyQ37dgNTJ
- LyyH4UDha9GvfcRiXMFg3CoesZvK9YmJPyqQzwGsEQ+UwVDau6wxYT3Ef4c1diymuYAV
- dYDw==
-X-Gm-Message-State: AOJu0YyIzBQ62Zig6QlzgFcN4WuW+78YOA5gcNKHq6dIp85Dm40v6QbS
- Gkthowb8IbCjdiEUZA+F5psl5g81OEYCn0LIWkx2x2drfBNhagv6meNGDkyqVe+JET6eOs5aVCF
- gPItybTByglDmY/jVdaCCcHLml5OHdobMjBgBIHuBHPoOaGVbn5MCuF2rbxN8WV6PvWwS7zqaJf
- 9i3qo+v0TkjGrULApMDXDNLmk0CG8=
-X-Received: by 2002:a05:600c:310c:b0:412:e708:488a with SMTP id
- g12-20020a05600c310c00b00412e708488amr148760wmo.40.1709534148380; 
- Sun, 03 Mar 2024 22:35:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGBJVCM9Ats+7TLo4KLh6JKdGWsPAASkSgozCkHCOjeBrk0SJ1aHB0DBb1jSw0JkTp9M9ekKM+WSCH0W9huWWQ=
-X-Received: by 2002:a05:600c:310c:b0:412:e708:488a with SMTP id
- g12-20020a05600c310c00b00412e708488amr148750wmo.40.1709534148040; Sun, 03 Mar
- 2024 22:35:48 -0800 (PST)
+ us-mta-338-3ANZYiJRPzeJLlKQ2xjXpA-1; Mon, 04 Mar 2024 01:32:38 -0500
+X-MC-Unique: 3ANZYiJRPzeJLlKQ2xjXpA-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D9FF01064F8C;
+ Mon,  4 Mar 2024 06:32:37 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.3])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 944E8C04324;
+ Mon,  4 Mar 2024 06:32:37 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 6C1F121E6A24; Mon,  4 Mar 2024 07:32:36 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+Subject: [PULL 00/18] QAPI patches patches for 2024-03-04
+Date: Mon,  4 Mar 2024 07:32:18 +0100
+Message-ID: <20240304063236.213955-1-armbru@redhat.com>
 MIME-Version: 1.0
-References: <20240228094432.1092748-1-zhenzhong.duan@intel.com>
- <20240228094432.1092748-7-zhenzhong.duan@intel.com>
-In-Reply-To: <20240228094432.1092748-7-zhenzhong.duan@intel.com>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Mon, 4 Mar 2024 12:05:31 +0530
-Message-ID: <CAE8KmOxFnzsw2das+Go_EEyVUr517hWS8xvXfN1VoJq0RofR+w@mail.gmail.com>
-Subject: Re: [PATCH v1 6/6] intel_iommu: Block migration if cap is updated
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com, clg@redhat.com, 
- eric.auger@redhat.com, peterx@redhat.com, jasowang@redhat.com, mst@redhat.com, 
- jgg@nvidia.com, nicolinc@nvidia.com, joao.m.martins@oracle.com, 
- kevin.tian@intel.com, yi.l.liu@intel.com, yi.y.sun@intel.com, 
- chao.p.peng@intel.com, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Eduardo Habkost <eduardo@habkost.net>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -103,46 +79,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 28 Feb 2024 at 15:17, Zhenzhong Duan <zhenzhong.duan@intel.com> wrote:
-> When there is VFIO device and vIOMMU cap/ecap is updated based on host
+The following changes since commit e1007b6bab5cf97705bf4f2aaec1f607787355b8:
 
-* cap/ecap -> capability/extended capability registers are updated ...
+  Merge tag 'pull-request-2024-03-01' of https://gitlab.com/thuth/qemu into staging (2024-03-01 10:14:32 +0000)
 
-> IOMMU cap/ecap, migration should be blocked.
+are available in the Git repository at:
 
-* It'll help to mention why migration should be blocked in this case?
+  https://repo.or.cz/qemu/armbru.git tags/pull-qapi-2024-03-04
 
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->  hw/i386/intel_iommu.c | 16 ++++++++++++++--
-> +static Error *vtd_mig_blocker;
-> +
->  static int vtd_check_iommufd_hdev(IntelIOMMUState *s,
->                                    IOMMUFDDevice *idev,
->                                    Error **errp)
-> @@ -3861,8 +3864,17 @@ static int vtd_check_iommufd_hdev(IntelIOMMUState *s,
->          tmp_cap |= VTD_CAP_MGAW(host_mgaw + 1);
->      }
->
-> -    s->cap = tmp_cap;
-> -    return 0;
-> +    if (s->cap != tmp_cap) {
-> +        if (vtd_mig_blocker == NULL) {
-> +            error_setg(&vtd_mig_blocker,
-> +                       "cap/ecap update from host IOMMU block migration");
-> +            ret = migrate_add_blocker(&vtd_mig_blocker, errp);
-> +        }
-> +        if (!ret) {
-> +            s->cap = tmp_cap;
-> +        }
-> +    }
-> +    return ret;
+for you to fetch changes up to 018d5fb1f91c7f316b4b8501a78e7219bb9fb614:
 
-* I couldn't find vtd_check_* function in the tree, but what happens
-if vtd_mig_blocker != NULL? What will be 'ret' then?
+  migration: simplify exec migration functions (2024-03-04 07:12:40 +0100)
 
-Thank you.
----
-  - Prasad
+----------------------------------------------------------------
+QAPI patches patches for 2024-03-04
+
+----------------------------------------------------------------
+Markus Armbruster (15):
+      qapi: Memorize since & returns sections
+      qapi: Slightly clearer error message for invalid "Returns" section
+      qapi: New documentation section tag "Errors"
+      qapi: Move error documentation to new "Errors" sections
+      qapi: Delete useless "Returns" sections
+      qapi: Clean up "Returns" sections
+      qapi/yank: Tweak @yank's error description for consistency
+      qga/qapi-schema: Move error documentation to new "Errors" sections
+      qga/qapi-schema: Delete useless "Returns" sections
+      qga/qapi-schema: Clean up "Returns" sections
+      qga/qapi-schema: Tweak documentation of fsfreeze commands
+      qga/qapi-schema: Fix guest-set-memory-blocks documentation
+      qapi: Reject "Returns" section when command doesn't return anything
+      docs/devel/writing-monitor-commands: Repair a decade of rot
+      docs/devel/writing-monitor-commands: Minor improvements
+
+Steve Sistare (3):
+      qapi: New QAPI_LIST_LENGTH()
+      qapi: New strv_from_str_list()
+      migration: simplify exec migration functions
+
+ docs/devel/qapi-code-gen.rst               |   6 +-
+ docs/devel/writing-monitor-commands.rst    | 496 ++++++++++++-----------------
+ qapi/block-core.json                       |  74 ++---
+ qapi/block-export.json                     |  23 +-
+ qapi/block.json                            |  10 +-
+ qapi/char.json                             |   6 -
+ qapi/dump.json                             |   2 -
+ qapi/machine-target.json                   |  37 ++-
+ qapi/machine.json                          |  19 +-
+ qapi/migration.json                        |  26 --
+ qapi/misc-target.json                      |   3 -
+ qapi/misc.json                             |  25 +-
+ qapi/net.json                              |  17 +-
+ qapi/qdev.json                             |   3 +-
+ qapi/qom.json                              |   6 +-
+ qapi/run-state.json                        |   5 +-
+ qapi/tpm.json                              |   2 -
+ qapi/transaction.json                      |   5 +-
+ qapi/ui.json                               |  17 +-
+ qapi/yank.json                             |   5 +-
+ qga/qapi-schema.json                       |  72 ++---
+ include/qapi/type-helpers.h                |   8 +
+ include/qapi/util.h                        |  13 +
+ migration/exec.c                           |  57 +---
+ qapi/qapi-type-helpers.c                   |  14 +
+ scripts/qapi/parser.py                     |  50 ++-
+ tests/qapi-schema/doc-good.json            |   2 +
+ tests/qapi-schema/doc-good.out             |   2 +
+ tests/qapi-schema/doc-good.txt             |   6 +
+ tests/qapi-schema/doc-invalid-return.err   |   2 +-
+ tests/qapi-schema/doc-invalid-return2.err  |   1 +
+ tests/qapi-schema/doc-invalid-return2.json |   7 +
+ tests/qapi-schema/doc-invalid-return2.out  |   0
+ tests/qapi-schema/meson.build              |   1 +
+ 34 files changed, 430 insertions(+), 592 deletions(-)
+ create mode 100644 tests/qapi-schema/doc-invalid-return2.err
+ create mode 100644 tests/qapi-schema/doc-invalid-return2.json
+ create mode 100644 tests/qapi-schema/doc-invalid-return2.out
+
+-- 
+2.44.0
 
 
