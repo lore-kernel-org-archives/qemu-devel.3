@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 431DDC5478C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 19:14:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE480C5478C
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 19:14:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhDkw-0003A8-Mb; Mon, 04 Mar 2024 14:13:46 -0500
+	id 1rhDkw-0003AB-O0; Mon, 04 Mar 2024 14:13:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhDkt-00039N-QA
+ id 1rhDkt-00038q-7m
  for qemu-devel@nongnu.org; Mon, 04 Mar 2024 14:13:43 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhDks-0001bM-Ad
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 14:13:43 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-412e90ef887so4755225e9.2
+ id 1rhDkr-0001bA-KE
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 14:13:42 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-412e90ef887so4755165e9.2
  for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 11:13:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709579621; x=1710184421; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709579620; x=1710184420; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ffYxUIi2VesCW8E3hAaY86N1SXnFx+7CKtORz4AUgmU=;
- b=PmFDnmuV6pdVif8ImWmnSP8a85lP1gXCdoGZMgXNlJer/1/ZZBXIyS1xJUKQ+X/fkQ
- 3IXe7pB/k9om9Z75qW29S1QbkQKbF2Hy3qxfLe58SAe2uTCURFdpTGEfDuRfUOF/Bf96
- ZRqwR5LBhRIxHw+9vLnt3NL9n5mkbM5p3RHI+zJWvFFj4K43ginE0AIPrno4jvUFkyRv
- 7Ou8nGUuUQCIHAxkeDD3PVq+WtDXau09WZDOXe600DkggYotwJAsdVCWssmI9O2+ZbmS
- bw0dA4s3nQbLZwKtZS1GMVV/Ej58ONg5x7L8EDuECdYIb5EviQcFSv0+Yw34thX3wjfe
- 4GXQ==
+ bh=mJYQlLP/RL1iB+sA/9wIyNkwvTTFBy7MlRN8CyxoDMQ=;
+ b=kMvLpFNqOFNsVYFlz3ZGajF8LmJqeBHlm91kdfK6x+9WUm39izGbcoQ6uwc999opOS
+ 1pZBiiV04BjBNOouWdx/j6CPoaj3dJqyFTrSDX7lDodY6n9U10wtNcLQS2RNiA+CUU5R
+ ZyzBoKC1/e51ZXqGTf8Vg4Fs2XNcLXtiQgHlqmI4nRA+GFjplUcy6rOXlfOBjeiGiJyv
+ NFClGK2HTHcrkocNg7WwIkHBOixZxOzkFbEzH5E2J2PLf7yinL7FOE50kpQZaxtSfzE1
+ pMQT8QbbSz+kv6UHZThUVu08CgoClsSizt/AMeREoGoQfQc0/ck4TJSA96oxoS6pGhqz
+ uB2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709579621; x=1710184421;
+ d=1e100.net; s=20230601; t=1709579620; x=1710184420;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ffYxUIi2VesCW8E3hAaY86N1SXnFx+7CKtORz4AUgmU=;
- b=lajRY3vm0UbW3H+8FdCLsTzyp2z3Suok4HPIMlWW0p+cgx51h0rPsQTLyCj3uUMjF7
- jeM6XjMbLK5iXFkx1DB7/qXgpiy54ecK1Qf3OZtYpCRMPPGlmZkryOZDqDgXH2c0Q4eE
- p2vnxtptSICPF6624UN3RqeJjJ7ooQF2HH1pxx9RUeTNA9HephqiJyCFsS+bKuMQ7klY
- eQh3Zw401TVtOhL6OGMM1yoWTcZ3mY03yg4A1ilJBKt97Qfjd4WOkeC1U8ZQH5keARz9
- DVenh77BKoQqu9OXu9v06dn1UVZ/fTtdFj6qDwQdMHWEmb1vxbzHoftufaSE7t9wGfv4
- +WjA==
-X-Gm-Message-State: AOJu0YyQKcKrmZB/9mAsH9nsUwpSMJipfdvAD25OuEU1gWXyOoUMR2AI
- u77f1m8xSI1xoDzoB5kH2rCKkz2wgIku8sjAcR1K7CqQvQ2Rc0lfY4iYaUcjuew=
-X-Google-Smtp-Source: AGHT+IHEcl25GzX8m3ns3WwogSQOD0Ke9ISZPTBiAOpEOaWGaqRT9MyRa3w/WL5QIQOjyqxIFP43Aw==
-X-Received: by 2002:adf:f04e:0:b0:33d:deb8:8bab with SMTP id
- t14-20020adff04e000000b0033ddeb88babmr7694640wro.53.1709579620799; 
+ bh=mJYQlLP/RL1iB+sA/9wIyNkwvTTFBy7MlRN8CyxoDMQ=;
+ b=Rj8Hn8jPHNEXDL8of1jfvuAZgGl1hEY+oFa/fSIgglBOXx0Ib8BeDXclFSz2w4cHM7
+ Moo2yIYXipG1+qCjlgaSiHO3HrtixWBs3dn+oPaUOxCXa8lklbgVJFR+lAoXkiQ3Nd2h
+ dveEhOqPTiIGfAsoYk54YJpax3RbYFABYwqjJdc/2DRyeOAnFJbN5m0fhOK+rhiSnoJP
+ +5Ao6QbMoHDx+wSy4UCuvxtmyGAjg9Nje/A1B1ZYQcr6O9Tjf9CAEVOe9A6T817QpxEo
+ lKoqZk4hoXQeMquNWPXX9MxlkKtPc3DzX0s9J6ZUuTZL9zAClx8jGKBv2MO7McKDM9++
+ asvw==
+X-Gm-Message-State: AOJu0Yxb9zMZtIpXzku7o0xZT8g97meDeG7snKuL3QLSU0sBjH6ZAqXT
+ vi9G6XJNPqEJOPL0XiBlB7aKoAr3UNAIQxhUETWpYshJJbRkcfTz4Xn/ZMl339s=
+X-Google-Smtp-Source: AGHT+IERLtrDLm32ZVC8EJ4rDiuWMW34PKbr4XqqthjGS23jirsMlhjrsDD9XlQMwcqq8BgUVP1MUg==
+X-Received: by 2002:a05:600c:3111:b0:412:ada8:85a6 with SMTP id
+ g17-20020a05600c311100b00412ada885a6mr7674285wmo.4.1709579620151; 
  Mon, 04 Mar 2024 11:13:40 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a16-20020a5d53d0000000b0033de10c9efcsm12920753wrw.114.2024.03.04.11.13.37
+ fl11-20020a05600c0b8b00b00412e2bb56bfsm4458708wmb.3.2024.03.04.11.13.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Mar 2024 11:13:38 -0800 (PST)
+ Mon, 04 Mar 2024 11:13:37 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4909C5F94F;
+ by draig.lan (Postfix) with ESMTP id 6E4515F954;
  Mon,  4 Mar 2024 19:13:37 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -67,17 +67,17 @@ Cc: Alistair Francis <Alistair.Francis@wdc.com>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-riscv@nongnu.org,
  Song Gao <gaosong@loongson.cn>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 2/4] disas/hppa: honour no_raw_bytes
-Date: Mon,  4 Mar 2024 19:13:35 +0000
-Message-Id: <20240304191337.3101411-3-alex.bennee@linaro.org>
+Subject: [PATCH 4/4] target/riscv: honour no_raw_bytes when disassembling
+Date: Mon,  4 Mar 2024 19:13:37 +0000
+Message-Id: <20240304191337.3101411-5-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240304191337.3101411-1-alex.bennee@linaro.org>
 References: <20240304191337.3101411-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,30 +100,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This makes the output suitable when used for plugins.
+
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- disas/hppa.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ disas/riscv.c | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/disas/hppa.c b/disas/hppa.c
-index 22dce9b41bb..17e4f1ccdc6 100644
---- a/disas/hppa.c
-+++ b/disas/hppa.c
-@@ -1972,9 +1972,11 @@ print_insn_hppa (bfd_vma memaddr, disassemble_info *info)
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 8a546d5ea53..86028efea85 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -5192,19 +5192,21 @@ print_insn_riscv(bfd_vma memaddr, struct disassemble_info *info, rv_isa isa)
+         }
+     }
  
-   insn = bfd_getb32 (buffer);
+-    switch (len) {
+-    case 2:
+-        (*info->fprintf_func)(info->stream, INST_FMT_2, inst);
+-        break;
+-    case 4:
+-        (*info->fprintf_func)(info->stream, INST_FMT_4, inst);
+-        break;
+-    case 6:
+-        (*info->fprintf_func)(info->stream, INST_FMT_6, inst);
+-        break;
+-    default:
+-        (*info->fprintf_func)(info->stream, INST_FMT_8, inst);
+-        break;
++    if (!info->no_raw_bytes) {
++        switch (len) {
++        case 2:
++            (*info->fprintf_func)(info->stream, INST_FMT_2, inst);
++            break;
++        case 4:
++            (*info->fprintf_func)(info->stream, INST_FMT_4, inst);
++            break;
++        case 6:
++            (*info->fprintf_func)(info->stream, INST_FMT_6, inst);
++            break;
++        default:
++            (*info->fprintf_func)(info->stream, INST_FMT_8, inst);
++            break;
++        }
+     }
  
--  info->fprintf_func(info->stream, " %02x %02x %02x %02x   ",
--                (insn >> 24) & 0xff, (insn >> 16) & 0xff,
--                (insn >>  8) & 0xff, insn & 0xff);
-+  if (!info->no_raw_bytes) {
-+      info->fprintf_func(info->stream, " %02x %02x %02x %02x   ",
-+                         (insn >> 24) & 0xff, (insn >> 16) & 0xff,
-+                         (insn >>  8) & 0xff, insn & 0xff);
-+  }
- 
-   for (i = 0; i < NUMOPCODES; ++i)
-     {
+     disasm_inst(buf, sizeof(buf), isa, memaddr, inst,
 -- 
 2.39.2
 
