@@ -4,89 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E26DDC48BF6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E271AC54E55
 	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 19:46:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhEEK-0005Qr-Ig; Mon, 04 Mar 2024 14:44:10 -0500
+	id 1rhEFD-0005m9-9D; Mon, 04 Mar 2024 14:45:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rhEEE-0005QS-DF
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 14:44:02 -0500
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1rhEEh-0005WT-8V
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 14:44:31 -0500
+Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rhEEC-0006uG-Ak
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 14:44:02 -0500
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-2997a92e23bso3009338a91.3
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 11:43:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1rhEEd-0006xK-D5
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 14:44:30 -0500
+Received: by mail-yb1-xb2c.google.com with SMTP id
+ 3f1490d57ef6-dbed179f0faso4172142276.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 11:44:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1709581439; x=1710186239; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=aK5MEnsuNt8kOWRDjkuorH2Y+KM/6UJXdQNK5bcYjo0=;
- b=KNosJvGvpu1tqNh0M2BMlI9Lq1rxdklHPgtOaJgt0R1AAlx89erKhr0yF+i1HChDA6
- t6hZ2w34twly/92eWSOGRwoXlI7+CW7/QSpK4s5MnHbY5J2BnFsDSjx+GIiipS3O2G3P
- op1cVgPiKYSkWRN9wSxNuMuxcMZ4e9gZANcCclscC1mc/nK2O1upgeeyF9ZO3SM/0BPw
- I6z4DLZgSdnsROhsMVeKtTm8JcPvPMUO2oHLVLwfJPwdyQ91iF1TZtIgYdKs0l/K2lhE
- qrkFyU7evZgflnkqE7+aBtoLwSa3ZFo7gbAzw+Zdzpzck7r26GQHgctT9VLBG5xpUykz
- OsrQ==
+ d=gmail.com; s=20230601; t=1709581466; x=1710186266; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9IBOSIGSvnMADzgZ+mW+5zQVhNDHXh+pawO9uLnLzyc=;
+ b=WVSgvrk2nvhxOgLZ5zWcR2Nde5j/s5mLqr3lhM4fmEjYGwwQmMmGjNzsGPm7I1KUg7
+ RU+7fkIpI1Ed0CuR16nY5zeiyFCmVG28QcIVhgX0Q2hNZk9mqoTQRJvkgSxeiBKAiaus
+ RKkRZLQKf9SI2Ex1GkXMIEQoAKA5lOv7dz7D3SspfjVk9dmZ9/06tjBob9kMkanpiGhw
+ xeHR7npgVqnt7udwqWWnsK6R1VtM49qkKIvV0JvzN6ncqnIvjd9F+EwPjWkFQ/yryRUY
+ LzYSxGv03a5S6eF+UcQ+A7zVWTlYfTkMEmpbrvoV/ErYmRHXpHZwP77MxQFFzpHYH4vo
+ /n6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709581439; x=1710186239;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aK5MEnsuNt8kOWRDjkuorH2Y+KM/6UJXdQNK5bcYjo0=;
- b=C84/zSeaf2d9nq1RhUVkwGE61LKFYFzv0fU3rZgCAgLKAUjTlUHQVtBg1pEBUbA+Wj
- xjBGJBrFqUSvl2wGHWWoTn4nSBBt6ONkr24EduCcsUggQMV7boawvXuE8d3Eo/5hZxqn
- cVyFVERmJrp/SqCZbdFLHYfBNQKI631T3FK7SqO7pgWuU3Pw++FMIC8SZbv3eBl9jm7/
- ry0Y2NTX0s5IpNiBkMmVW73jGwbs7iwFXysPnv2hhhN5ZQD5DuxCdekn6avXKEquG/AE
- l0LbZFcYohvMnmdsqBHmYSGiJhA7UmSKxGJRacxbswukjXg7wwsoEcCZV8q634UBgx4u
- xqJg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXmriwxEcHNsQv2QGJ68e3rbMFxeTG5ZTtoN+MZSLdCIAq9ImYKBnxV25m2+s6YvNP21/6l1DsNQUcu/8beETn69BdSQGU=
-X-Gm-Message-State: AOJu0YxwwZpBJaT6xOMMe4Y3RNtbtWK0Cl2c/cmsVvyGgknm3OGmnXzj
- KoyuRkVXZfufQ1f3iDJTX8CXDVSa10eAE7TM8frnoGBQXNGnf32JwZwjtvvGKFg=
-X-Google-Smtp-Source: AGHT+IEuYVC/BMVyeTeiUK3bampXahobefIY9pUY+jaAuuisRPZKDylQ/clZA8hbTaE5XpJm2I+kGg==
-X-Received: by 2002:a17:90b:1007:b0:29a:bb49:eb41 with SMTP id
- gm7-20020a17090b100700b0029abb49eb41mr6937237pjb.29.1709581438987; 
- Mon, 04 Mar 2024 11:43:58 -0800 (PST)
-Received: from ?IPV6:2804:7f0:bcc0:e4b8:6daf:840a:5593:a7a3?
- ([2804:7f0:bcc0:e4b8:6daf:840a:5593:a7a3])
+ d=1e100.net; s=20230601; t=1709581466; x=1710186266;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9IBOSIGSvnMADzgZ+mW+5zQVhNDHXh+pawO9uLnLzyc=;
+ b=TAfLnH96BeMzqIvSqSENHEtYgAED5B1Wh678HjGuSc2CtueCWlXDrNfME/lBDBUREM
+ jALGZhNUxdjZRF+xgFJqPeV6oYOwN0wkFSdM0g8z6Ubiyw5eK1WG3sgXGDN4UPWfByN8
+ nz+UXfZaEBY00R6+iy/ZtKgedW3XmmTjleYO0X3H+hLJOjB2gaXCvSxKnLx+re7OOSCo
+ 66/VTeNzr1SYU+iUhrYu+rqsdfuA+vfYXNhF43DX6pxT/VuTDPTRqIT2t+XiyA2HWbWe
+ h5TyQf9uHmlV4ArXB3EiItAitZGnWb1Fe5OyfmxSjANEWMhA+qj+TQp3fowwvkgjbSne
+ T+Cg==
+X-Gm-Message-State: AOJu0YydoMD3ZfdpDbxU4UGBXqkTnwP0SMau0xGjdp8A7OHiI2LuxOZT
+ JvxgUtal1dqj7Bz7cfEy4aywCtZucQ5tUqlyLMTadN09R1Q8IdqlYHHkN9gg
+X-Google-Smtp-Source: AGHT+IHKrxBL4gj+jTPCrIcVjmwDt26gJvL7p07d8UAeOHaLX1Zkbnj3sPAl0YyHB5/As3vhFckawQ==
+X-Received: by 2002:a5b:10f:0:b0:dc7:4265:1e92 with SMTP id
+ 15-20020a5b010f000000b00dc742651e92mr448450ybx.23.1709581465690; 
+ Mon, 04 Mar 2024 11:44:25 -0800 (PST)
+Received: from localhost.localdomain ([50.205.20.42])
  by smtp.gmail.com with ESMTPSA id
- r12-20020a17090ad40c00b00298d2182f1asm10363868pju.55.2024.03.04.11.43.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Mar 2024 11:43:58 -0800 (PST)
-Message-ID: <bd34501b-3dda-40eb-aa92-73ea289297d1@ventanamicro.com>
-Date: Mon, 4 Mar 2024 16:43:52 -0300
+ h1-20020a255f41000000b00dc62edd58dasm2282646ybm.40.2024.03.04.11.44.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 04 Mar 2024 11:44:25 -0800 (PST)
+From: nifan.cxl@gmail.com
+To: qemu-devel@nongnu.org
+Cc: jonathan.cameron@huawei.com, linux-cxl@vger.kernel.org,
+ gregory.price@memverge.com, ira.weiny@intel.com, dan.j.williams@intel.com,
+ a.manzanares@samsung.com, dave@stgolabs.net, nmtadam.samsung@gmail.com,
+ nifan.cxl@gmail.com, jim.harris@samsung.com, Jorgen.Hansen@wdc.com,
+ wj28.lee@gmail.com, Fan Ni <fan.ni@samsung.com>
+Subject: [PATCH v5 09/13] hw/cxl/events: Add qmp interfaces to add/release
+ dynamic capacity extents
+Date: Mon,  4 Mar 2024 11:34:04 -0800
+Message-ID: <20240304194331.1586191-10-nifan.cxl@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240304194331.1586191-1-nifan.cxl@gmail.com>
+References: <20240304194331.1586191-1-nifan.cxl@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 2/2] target/riscv: Add server platform reference cpu
-Content-Language: en-US
-To: Fei Wu <fei2.wu@intel.com>, pbonzini@redhat.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, bin.meng@windriver.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- andrei.warkentin@intel.com, shaolin.xie@alibaba-inc.com, ved@rivosinc.com,
- sunilvl@ventanamicro.com, haibo1.xu@intel.com, evan.chai@intel.com,
- yin.wang@intel.com, tech-server-platform@lists.riscv.org,
- tech-server-soc@lists.riscv.org
-References: <20240304102540.2789225-1-fei2.wu@intel.com>
- <20240304102540.2789225-3-fei2.wu@intel.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240304102540.2789225-3-fei2.wu@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1031.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-yb1-xb2c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,157 +98,554 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Fan Ni <fan.ni@samsung.com>
 
+Since fabric manager emulation is not supported yet, the change implements
+the functions to add/release dynamic capacity extents as QMP interfaces.
 
-On 3/4/24 07:25, Fei Wu wrote:
-> The harts requirements of RISC-V server platform [1] require RVA23 ISA
-> profile support, plus Sv48, Svadu, H, Sscofmpf etc. This patch provides
-> a virt CPU type (rvsp-ref) as compliant as possible.
-> 
-> [1] https://github.com/riscv-non-isa/riscv-server-platform/blob/main/server_platform_requirements.adoc
-> 
-> Signed-off-by: Fei Wu <fei2.wu@intel.com>
-> --->   hw/riscv/server_platform_ref.c |  6 +++-
->   target/riscv/cpu-qom.h         |  1 +
->   target/riscv/cpu.c             | 62 ++++++++++++++++++++++++++++++++++
->   3 files changed, 68 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/riscv/server_platform_ref.c b/hw/riscv/server_platform_ref.c
-> index ae90c4b27a..52ec607cee 100644
-> --- a/hw/riscv/server_platform_ref.c
-> +++ b/hw/riscv/server_platform_ref.c
-> @@ -1205,11 +1205,15 @@ static void rvsp_ref_machine_class_init(ObjectClass *oc, void *data)
->   {
->       char str[128];
->       MachineClass *mc = MACHINE_CLASS(oc);
-> +    static const char * const valid_cpu_types[] = {
-> +        TYPE_RISCV_CPU_RVSP_REF,
-> +    };
->   
->       mc->desc = "RISC-V Server SoC Reference board";
->       mc->init = rvsp_ref_machine_init;
->       mc->max_cpus = RVSP_CPUS_MAX;
-> -    mc->default_cpu_type = TYPE_RISCV_CPU_BASE;
-> +    mc->default_cpu_type = TYPE_RISCV_CPU_RVSP_REF;
-> +    mc->valid_cpu_types = valid_cpu_types;
+Note: we skips any FM issued extent release request if the exact extent
+does not exist in the extent list of the device. We will loose the
+restriction later once we have partial release support in the kernel.
 
-I suggest introducing this patch first, then the new machine type that will use it as a default
-CPU. The reason is to facilitate future bisects. If we introduce the board first, a future bisect
-might hit the previous patch, the board will be run using RV64 instead of the correct CPU, and
-we'll have different results because of it.
+1. Add dynamic capacity extents:
 
->       mc->pci_allow_0_address = true;
->       mc->default_nic = "e1000e";
->       mc->possible_cpu_arch_ids = riscv_numa_possible_cpu_arch_ids;
-> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-> index 3670cfe6d9..adb934d19e 100644
-> --- a/target/riscv/cpu-qom.h
-> +++ b/target/riscv/cpu-qom.h
-> @@ -49,6 +49,7 @@
->   #define TYPE_RISCV_CPU_SIFIVE_U54       RISCV_CPU_TYPE_NAME("sifive-u54")
->   #define TYPE_RISCV_CPU_THEAD_C906       RISCV_CPU_TYPE_NAME("thead-c906")
->   #define TYPE_RISCV_CPU_VEYRON_V1        RISCV_CPU_TYPE_NAME("veyron-v1")
-> +#define TYPE_RISCV_CPU_RVSP_REF         RISCV_CPU_TYPE_NAME("rvsp-ref")
->   #define TYPE_RISCV_CPU_HOST             RISCV_CPU_TYPE_NAME("host")
->   
->   OBJECT_DECLARE_CPU_TYPE(RISCVCPU, RISCVCPUClass, RISCV_CPU)
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 5ff0192c52..bc91be702b 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -2282,6 +2282,67 @@ static void rva22s64_profile_cpu_init(Object *obj)
->   
->       RVA22S64.enabled = true;
->   }
-> +
-> +static void rv64_rvsp_ref_cpu_init(Object *obj)
-> +{
-> +    CPURISCVState *env = &RISCV_CPU(obj)->env;
-> +    RISCVCPU *cpu = RISCV_CPU(obj);
-> +
-> +    riscv_cpu_set_misa_ext(env, RVG | RVC | RVS | RVU | RVH | RVV);
-> +
-> +    /* FIXME: change to 1.13 */
-> +    env->priv_ver = PRIV_VERSION_1_12_0;
-> +
-> +    /* RVA22U64 */
-> +    cpu->cfg.mmu = true;
-> +    cpu->cfg.ext_zifencei = true;
-> +    cpu->cfg.ext_zicsr = true;
-> +    cpu->cfg.ext_zicntr = true;
-> +    cpu->cfg.ext_zihpm = true;
-> +    cpu->cfg.ext_zihintpause = true;
-> +    cpu->cfg.ext_zba = true;
-> +    cpu->cfg.ext_zbb = true;
-> +    cpu->cfg.ext_zbs = true;
-> +    cpu->cfg.zic64b = true;
-> +    cpu->cfg.ext_zicbom = true;
-> +    cpu->cfg.ext_zicbop = true;
-> +    cpu->cfg.ext_zicboz = true;
-> +    cpu->cfg.cbom_blocksize = 64;
-> +    cpu->cfg.cbop_blocksize = 64;
-> +    cpu->cfg.cboz_blocksize = 64;
-> +    cpu->cfg.ext_zfhmin = true;
-> +    cpu->cfg.ext_zkt = true;
+For example, the command to add two continuous extents (each 128MiB long)
+to region 0 (starting at DPA offset 0) looks like below:
 
-You can change this whole block with:
+{ "execute": "qmp_capabilities" }
 
-RVA22U64.enabled = true;
+{ "execute": "cxl-add-dynamic-capacity",
+  "arguments": {
+      "path": "/machine/peripheral/cxl-dcd0",
+      "region-id": 0,
+      "extents": [
+      {
+          "dpa": 0,
+          "len": 134217728
+      },
+      {
+          "dpa": 134217728,
+          "len": 134217728
+      }
+      ]
+  }
+}
 
+2. Release dynamic capacity extents:
 
-riscv_cpu_add_profiles() will check if we have a profile enabled and, if that's the
-case, we'll enable all its extensions in the CPU.
+For example, the command to release an extent of size 128MiB from region 0
+(DPA offset 128MiB) look like below:
 
-In the near future, when we implement a proper RVA23 support, we'll be able to just do
-a single RVA23S64.enabled = true in this cpu_init(). But for now we can at least declare
-RVA22U64 (perhaps RVA22S64) support for this CPU.
+{ "execute": "cxl-release-dynamic-capacity",
+  "arguments": {
+      "path": "/machine/peripheral/cxl-dcd0",
+      "region-id": 0,
+      "extents": [
+      {
+          "dpa": 134217728,
+          "len": 134217728
+      }
+      ]
+  }
+}
 
+Signed-off-by: Fan Ni <fan.ni@samsung.com>
+---
+ hw/cxl/cxl-mailbox-utils.c  |  26 ++--
+ hw/mem/cxl_type3.c          | 245 +++++++++++++++++++++++++++++++++++-
+ hw/mem/cxl_type3_stubs.c    |  14 +++
+ include/hw/cxl/cxl_device.h |   6 +
+ include/hw/cxl/cxl_events.h |  18 +++
+ qapi/cxl.json               |  61 ++++++++-
+ 6 files changed, 361 insertions(+), 9 deletions(-)
 
-Thanks,
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 8c59635a9f..53ebc526ae 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -1405,7 +1405,7 @@ static CXLRetCode cmd_dcd_get_dyn_cap_ext_list(const struct cxl_cmd *cmd,
+  * Check whether any bit between addr[nr, nr+size) is set,
+  * return true if any bit is set, otherwise return false
+  */
+-static bool test_any_bits_set(const unsigned long *addr, unsigned long nr,
++bool test_any_bits_set(const unsigned long *addr, unsigned long nr,
+                               unsigned long size)
+ {
+     unsigned long res = find_next_bit(addr, size + nr, nr);
+@@ -1444,7 +1444,7 @@ CXLDCRegion *cxl_find_dc_region(CXLType3Dev *ct3d, uint64_t dpa, uint64_t len)
+     return NULL;
+ }
+ 
+-static void cxl_insert_extent_to_extent_list(CXLDCExtentList *list,
++void cxl_insert_extent_to_extent_list(CXLDCExtentList *list,
+                                              uint64_t dpa,
+                                              uint64_t len,
+                                              uint8_t *tag,
+@@ -1591,16 +1591,28 @@ static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
+             }
+         }
+ 
+-        /*
+-         * TODO: we will add a pending extent list based on event log record
+-         * and verify the input response; also, the "More" flag is not
+-         * considered at the moment.
+-         */
++        QTAILQ_FOREACH(ent, &ct3d->dc.extents_pending_to_add, node) {
++            if (ent->start_dpa <= dpa &&
++                dpa + len <= ent->start_dpa + ent->len) {
++                break;
++            }
++        }
++        if (!ent) {
++            return CXL_MBOX_INVALID_PA;
++        }
++
++        cxl_remove_extent_from_extent_list(&ct3d->dc.extents_pending_to_add,
++                                           ent);
+ 
+         cxl_insert_extent_to_extent_list(extent_list, dpa, len, NULL, 0);
+         ct3d->dc.total_extent_count += 1;
+     }
+ 
++    /*
++     * TODO: extents_pending_to_add needs to be cleared so the extents not
++     * accepted can be reclaimed base on spec r3.1: 8.2.9.9.9.3
++     */
++
+     return CXL_MBOX_SUCCESS;
+ }
+ 
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index dccfaaad3a..e9c8994cdb 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -674,6 +674,7 @@ static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
+         ct3d->dc.total_capacity += region->len;
+     }
+     QTAILQ_INIT(&ct3d->dc.extents);
++    QTAILQ_INIT(&ct3d->dc.extents_pending_to_add);
+ 
+     return true;
+ }
+@@ -686,6 +687,12 @@ static void cxl_destroy_dc_regions(CXLType3Dev *ct3d)
+         ent = QTAILQ_FIRST(&ct3d->dc.extents);
+         cxl_remove_extent_from_extent_list(&ct3d->dc.extents, ent);
+     }
++
++    while (!QTAILQ_EMPTY(&ct3d->dc.extents_pending_to_add)) {
++        ent = QTAILQ_FIRST(&ct3d->dc.extents_pending_to_add);
++        cxl_remove_extent_from_extent_list(&ct3d->dc.extents_pending_to_add,
++                                           ent);
++    }
+ }
+ 
+ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
+@@ -1451,7 +1458,8 @@ static int ct3d_qmp_cxl_event_log_enc(CxlEventLog log)
+         return CXL_EVENT_TYPE_FAIL;
+     case CXL_EVENT_LOG_FATAL:
+         return CXL_EVENT_TYPE_FATAL;
+-/* DCD not yet supported */
++    case CXL_EVENT_LOG_DYNCAP:
++        return CXL_EVENT_TYPE_DYNAMIC_CAP;
+     default:
+         return -EINVAL;
+     }
+@@ -1702,6 +1710,241 @@ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
+     }
+ }
+ 
++/* CXL r3.1 Table 8-50: Dynamic Capacity Event Record */
++static const QemuUUID dynamic_capacity_uuid = {
++    .data = UUID(0xca95afa7, 0xf183, 0x4018, 0x8c, 0x2f,
++                 0x95, 0x26, 0x8e, 0x10, 0x1a, 0x2a),
++};
++
++typedef enum CXLDCEventType {
++    DC_EVENT_ADD_CAPACITY = 0x0,
++    DC_EVENT_RELEASE_CAPACITY = 0x1,
++    DC_EVENT_FORCED_RELEASE_CAPACITY = 0x2,
++    DC_EVENT_REGION_CONFIG_UPDATED = 0x3,
++    DC_EVENT_ADD_CAPACITY_RSP = 0x4,
++    DC_EVENT_CAPACITY_RELEASED = 0x5,
++} CXLDCEventType;
++
++/*
++ * Check whether the exact extent exists in the list
++ * Return value: the extent pointer in the list; else null
++ */
++static CXLDCExtent *cxl_dc_extent_exists(CXLDCExtentList *list,
++                                         CXLDCExtentRaw *ext)
++{
++    CXLDCExtent *ent;
++
++    if (!ext || !list) {
++        return NULL;
++    }
++
++    QTAILQ_FOREACH(ent, list, node) {
++        if (ent->start_dpa != ext->start_dpa) {
++            continue;
++        }
++
++        /* Found exact extent */
++        return ent->len == ext->len ? ent : NULL;
++    }
++
++    return NULL;
++}
++
++/*
++ * The main function to process dynamic capacity event. Currently DC extents
++ * add/release requests are processed.
++ */
++static void qmp_cxl_process_dynamic_capacity(const char *path, CxlEventLog log,
++                                             CXLDCEventType type, uint16_t hid,
++                                             uint8_t rid,
++                                             CXLDCExtentRecordList *records,
++                                             Error **errp)
++{
++    Object *obj;
++    CXLEventDynamicCapacity dCap = {};
++    CXLEventRecordHdr *hdr = &dCap.hdr;
++    CXLType3Dev *dcd;
++    uint8_t flags = 1 << CXL_EVENT_TYPE_INFO;
++    uint32_t num_extents = 0;
++    CXLDCExtentRecordList *list;
++    g_autofree CXLDCExtentRaw *extents = NULL;
++    uint8_t enc_log;
++    uint64_t offset, len, block_size;
++    int i;
++    int rc;
++    g_autofree unsigned long *blk_bitmap = NULL;
++
++    obj = object_resolve_path(path, NULL);
++    if (!obj) {
++        error_setg(errp, "Unable to resolve path");
++        return;
++    }
++    if (!object_dynamic_cast(obj, TYPE_CXL_TYPE3)) {
++        error_setg(errp, "Path not point to a valid CXL type3 device");
++        return;
++    }
++
++    dcd = CXL_TYPE3(obj);
++    if (!dcd->dc.num_regions) {
++        error_setg(errp, "No dynamic capacity support from the device");
++        return;
++    }
++
++    rc = ct3d_qmp_cxl_event_log_enc(log);
++    if (rc < 0) {
++        error_setg(errp, "Unhandled error log type");
++        return;
++    }
++    enc_log = rc;
++
++    if (rid >= dcd->dc.num_regions) {
++        error_setg(errp, "region id is too large");
++        return;
++    }
++    block_size = dcd->dc.regions[rid].block_size;
++
++    /* Sanity check and count the extents */
++    list = records;
++    while (list) {
++        offset = list->value->offset;
++        len = list->value->len;
++
++        if (len == 0) {
++            error_setg(errp, "extent with 0 length is not allowed");
++            return;
++        }
++
++        if (offset % block_size || len % block_size) {
++            error_setg(errp, "dpa or len is not aligned to region block size");
++            return;
++        }
++
++        if (offset + len > dcd->dc.regions[rid].len) {
++            error_setg(errp, "extent range is beyond the region end");
++            return;
++        }
++
++        num_extents++;
++        list = list->next;
++    }
++    if (num_extents == 0) {
++        error_setg(errp, "No extents found in the command");
++        return;
++    }
++
++    blk_bitmap = bitmap_new(dcd->dc.regions[rid].len / block_size);
++
++    /* Create Extent list for event being passed to host */
++    i = 0;
++    list = records;
++    extents = g_new0(CXLDCExtentRaw, num_extents);
++    while (list) {
++        CXLDCExtent *ent;
++        bool skip_extent = false;
++
++        offset = list->value->offset;
++        len = list->value->len;
++
++        extents[i].start_dpa = offset + dcd->dc.regions[rid].base;
++        extents[i].len = len;
++        memset(extents[i].tag, 0, 0x10);
++        extents[i].shared_seq = 0;
++
++        if (type == DC_EVENT_RELEASE_CAPACITY ||
++            type == DC_EVENT_FORCED_RELEASE_CAPACITY) {
++            /*
++             *  if the extent is still pending to be added to the host,
++             * remove it from the pending extent list, so later when the add
++             * response for the extent arrives, the device can reject the
++             * extent as it is not in the pending list.
++             */
++            ent = cxl_dc_extent_exists(&dcd->dc.extents_pending_to_add,
++                        &extents[i]);
++            if (ent) {
++                QTAILQ_REMOVE(&dcd->dc.extents_pending_to_add, ent, node);
++                g_free(ent);
++                skip_extent = true;
++            } else if (!cxl_dc_extent_exists(&dcd->dc.extents, &extents[i])) {
++                /* If the exact extent is not in the accepted list, skip */
++                skip_extent = true;
++            }
++        }
++
++        /* No duplicate or overlapped extents are allowed */
++        if (test_any_bits_set(blk_bitmap, offset / block_size,
++                              len / block_size)) {
++            error_setg(errp, "duplicate or overlapped extents are detected");
++            return;
++        }
++        bitmap_set(blk_bitmap, offset / block_size, len / block_size);
++
++        list = list->next;
++        if (!skip_extent) {
++            i++;
++        }
++    }
++    num_extents = i;
++
++    /*
++     * CXL r3.1 section 8.2.9.2.1.6: Dynamic Capacity Event Record
++     *
++     * All Dynamic Capacity event records shall set the Event Record Severity
++     * field in the Common Event Record Format to Informational Event. All
++     * Dynamic Capacity related events shall be logged in the Dynamic Capacity
++     * Event Log.
++     */
++    cxl_assign_event_header(hdr, &dynamic_capacity_uuid, flags, sizeof(dCap),
++                            cxl_device_get_timestamp(&dcd->cxl_dstate));
++
++    dCap.type = type;
++    /* FIXME: for now, validity flag is cleared */
++    dCap.validity_flags = 0;
++    stw_le_p(&dCap.host_id, hid);
++    /* only valid for DC_REGION_CONFIG_UPDATED event */
++    dCap.updated_region_id = 0;
++    /*
++     * FIXME: for now, the "More" flag is cleared as there is only one
++     * extent associating with each record and tag-based release is
++     * not supported.
++     */
++    dCap.flags = 0;
++    for (i = 0; i < num_extents; i++) {
++        memcpy(&dCap.dynamic_capacity_extent, &extents[i],
++               sizeof(CXLDCExtentRaw));
++
++        if (type == DC_EVENT_ADD_CAPACITY) {
++            cxl_insert_extent_to_extent_list(&dcd->dc.extents_pending_to_add,
++                                             extents[i].start_dpa,
++                                             extents[i].len,
++                                             extents[i].tag,
++                                             extents[i].shared_seq);
++        }
++
++        if (cxl_event_insert(&dcd->cxl_dstate, enc_log,
++                             (CXLEventRecordRaw *)&dCap)) {
++            cxl_event_irq_assert(dcd);
++        }
++    }
++}
++
++void qmp_cxl_add_dynamic_capacity(const char *path, uint8_t region_id,
++                                  CXLDCExtentRecordList  *records,
++                                  Error **errp)
++{
++   qmp_cxl_process_dynamic_capacity(path, CXL_EVENT_LOG_DYNCAP,
++                                    DC_EVENT_ADD_CAPACITY, 0,
++                                    region_id, records, errp);
++}
++
++void qmp_cxl_release_dynamic_capacity(const char *path, uint8_t region_id,
++                                      CXLDCExtentRecordList  *records,
++                                      Error **errp)
++{
++    qmp_cxl_process_dynamic_capacity(path, CXL_EVENT_LOG_DYNCAP,
++                                     DC_EVENT_RELEASE_CAPACITY, 0,
++                                     region_id, records, errp);
++}
++
+ static void ct3_class_init(ObjectClass *oc, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(oc);
+diff --git a/hw/mem/cxl_type3_stubs.c b/hw/mem/cxl_type3_stubs.c
+index 3e1851e32b..d913b11b4d 100644
+--- a/hw/mem/cxl_type3_stubs.c
++++ b/hw/mem/cxl_type3_stubs.c
+@@ -67,3 +67,17 @@ void qmp_cxl_inject_correctable_error(const char *path, CxlCorErrorType type,
+ {
+     error_setg(errp, "CXL Type 3 support is not compiled in");
+ }
++
++void qmp_cxl_add_dynamic_capacity(const char *path, uint8_t region_id,
++                                  CXLDCExtentRecordList  *records,
++                                  Error **errp)
++{
++    error_setg(errp, "CXL Type 3 support is not compiled in");
++}
++
++void qmp_cxl_release_dynamic_capacity(const char *path, uint8_t region_id,
++                                      CXLDCExtentRecordList  *records,
++                                      Error **errp)
++{
++    error_setg(errp, "CXL Type 3 support is not compiled in");
++}
+diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+index 341260e6e4..b524c5e699 100644
+--- a/include/hw/cxl/cxl_device.h
++++ b/include/hw/cxl/cxl_device.h
+@@ -490,6 +490,7 @@ struct CXLType3Dev {
+         AddressSpace host_dc_as;
+         uint64_t total_capacity; /* 256M aligned */
+         CXLDCExtentList extents;
++        CXLDCExtentList extents_pending_to_add;
+         uint32_t total_extent_count;
+         uint32_t ext_list_gen_seq;
+ 
+@@ -551,4 +552,9 @@ CXLDCRegion *cxl_find_dc_region(CXLType3Dev *ct3d, uint64_t dpa, uint64_t len);
+ 
+ void cxl_remove_extent_from_extent_list(CXLDCExtentList *list,
+                                         CXLDCExtent *extent);
++void cxl_insert_extent_to_extent_list(CXLDCExtentList *list, uint64_t dpa,
++                                      uint64_t len, uint8_t *tag,
++                                      uint16_t shared_seq);
++bool test_any_bits_set(const unsigned long *addr, unsigned long nr,
++                       unsigned long size);
+ #endif
+diff --git a/include/hw/cxl/cxl_events.h b/include/hw/cxl/cxl_events.h
+index 5170b8dbf8..38cadaa0f3 100644
+--- a/include/hw/cxl/cxl_events.h
++++ b/include/hw/cxl/cxl_events.h
+@@ -166,4 +166,22 @@ typedef struct CXLEventMemoryModule {
+     uint8_t reserved[0x3d];
+ } QEMU_PACKED CXLEventMemoryModule;
+ 
++/*
++ * CXL r3.1 section Table 8-50: Dynamic Capacity Event Record
++ * All fields little endian.
++ */
++typedef struct CXLEventDynamicCapacity {
++    CXLEventRecordHdr hdr;
++    uint8_t type;
++    uint8_t validity_flags;
++    uint16_t host_id;
++    uint8_t updated_region_id;
++    uint8_t flags;
++    uint8_t reserved2[2];
++    uint8_t dynamic_capacity_extent[0x28]; /* defined in cxl_device.h */
++    uint8_t reserved[0x18];
++    uint32_t extents_avail;
++    uint32_t tags_avail;
++} QEMU_PACKED CXLEventDynamicCapacity;
++
+ #endif /* CXL_EVENTS_H */
+diff --git a/qapi/cxl.json b/qapi/cxl.json
+index 8cc4c72fa9..2645004666 100644
+--- a/qapi/cxl.json
++++ b/qapi/cxl.json
+@@ -19,13 +19,16 @@
+ #
+ # @fatal: Fatal Event Log
+ #
++# @dyncap: Dynamic Capacity Event Log
++#
+ # Since: 8.1
+ ##
+ { 'enum': 'CxlEventLog',
+   'data': ['informational',
+            'warning',
+            'failure',
+-           'fatal']
++           'fatal',
++           'dyncap']
+  }
+ 
+ ##
+@@ -361,3 +364,59 @@
+ ##
+ {'command': 'cxl-inject-correctable-error',
+  'data': {'path': 'str', 'type': 'CxlCorErrorType'}}
++
++##
++# @CXLDCExtentRecord:
++#
++# Record of a single extent to add/release
++#
++# @offset: offset to the start of the region where the extent to be operated
++# @len: length of the extent
++#
++# Since: 9.0
++##
++{ 'struct': 'CXLDCExtentRecord',
++  'data': {
++      'offset':'uint64',
++      'len': 'uint64'
++  }
++}
++
++##
++# @cxl-add-dynamic-capacity:
++#
++# Command to start add dynamic capacity extents flow. The device will
++# have to acknowledged the acceptance of the extents before they are usable.
++#
++# @path: CXL DCD canonical QOM path
++# @region-id: id of the region where the extent to add
++# @extents: Extents to add
++#
++# Since : 9.0
++##
++{ 'command': 'cxl-add-dynamic-capacity',
++  'data': { 'path': 'str',
++            'region-id': 'uint8',
++            'extents': [ 'CXLDCExtentRecord' ]
++           }
++}
++
++##
++# @cxl-release-dynamic-capacity:
++#
++# Command to start release dynamic capacity extents flow. The host will
++# need to respond to indicate that it has released the capacity before it
++# is made unavailable for read and write and can be re-added.
++#
++# @path: CXL DCD canonical QOM path
++# @region-id: id of the region where the extent to release
++# @extents: Extents to release
++#
++# Since : 9.0
++##
++{ 'command': 'cxl-release-dynamic-capacity',
++  'data': { 'path': 'str',
++            'region-id': 'uint8',
++            'extents': [ 'CXLDCExtentRecord' ]
++           }
++}
+-- 
+2.43.0
 
-Daniel
-
-
-> +
-> +    /* RVA23U64 */
-> +    cpu->cfg.ext_zvfhmin = true;
-> +    cpu->cfg.ext_zvbb = true;
-> +    cpu->cfg.ext_zvkt = true;
-> +    cpu->cfg.ext_zihintntl = true;
-> +    cpu->cfg.ext_zicond = true;
-> +    cpu->cfg.ext_zcb = true;
-> +    cpu->cfg.ext_zfa = true;
-> +    cpu->cfg.ext_zawrs = true;
-> +
-> +    /* RVA23S64 */
-> +    cpu->cfg.ext_zifencei = true;
-> +    cpu->cfg.svade = true;
-> +    cpu->cfg.ext_svpbmt = true;
-> +    cpu->cfg.ext_svinval = true;
-> +    cpu->cfg.ext_svnapot = true;
-> +    cpu->cfg.ext_sstc = true;
-> +    cpu->cfg.ext_sscofpmf = true;
-> +    cpu->cfg.ext_smstateen = true;
-> +
-> +    cpu->cfg.ext_smaia = true;
-> +    cpu->cfg.ext_ssaia = true;
-> +
-> +    /* Server Platform */
-> +#ifndef CONFIG_USER_ONLY
-> +    set_satp_mode_max_supported(cpu, VM_1_10_SV48);
-> +#endif
-> +    cpu->cfg.ext_svadu = true;
-> +    cpu->cfg.ext_zkr = true;
-> +}
->   #endif
->   
->   static const gchar *riscv_gdb_arch_name(CPUState *cs)
-> @@ -2547,6 +2608,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
->       DEFINE_BARE_CPU(TYPE_RISCV_CPU_RV64E,        MXL_RV64,  rv64e_bare_cpu_init),
->       DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA22U64,  MXL_RV64,  rva22u64_profile_cpu_init),
->       DEFINE_PROFILE_CPU(TYPE_RISCV_CPU_RVA22S64,  MXL_RV64,  rva22s64_profile_cpu_init),
-> +    DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_RVSP_REF,   MXL_RV64,  rv64_rvsp_ref_cpu_init),
->   #endif
->   };
->   
 
