@@ -4,85 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 065B1C5478C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 19:47:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D010CC48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 19:47:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhEER-0005Ss-N4; Mon, 04 Mar 2024 14:44:15 -0500
+	id 1rhEGo-0003cw-LJ; Mon, 04 Mar 2024 14:46:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rhEEQ-0005SN-0h
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 14:44:14 -0500
-Received: from mail-yb1-xb36.google.com ([2607:f8b0:4864:20::b36])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rhEEO-0006vE-3C
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 14:44:13 -0500
-Received: by mail-yb1-xb36.google.com with SMTP id
- 3f1490d57ef6-dc74435c428so5362259276.2
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 11:44:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709581451; x=1710186251; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2InpeJRt+f0kCa8qliojbJhzR8/UO/mLPd8lEue23eI=;
- b=KzbM50V7t/K1GRGJ9/eGnPo0jLKH7MYGng6e0nFcTvCk4fArMh3z91P7eys6U2lWJV
- edrtM9BcSKDWUNyYq1VdXX10q7mKjMzeaAE0+++Y4aSTXZFFtdqugTR8AMOA9ArOT7bK
- Ge2kHeNEH73N4ngg4pc34o/XhxzDePhrrWJOHsf26U8dczdFk6ZXzNDYLe8kni6OV2SR
- M+LgNrtOmT6ZIa1Wt/le6+YhBp5CM6DD6pQs6/maRaWo7dVHFbhxUGB3VH6ZtmVfb7hs
- ESn6frRV6sFpYVjSV2zyP2kYELJrCDned4+mbZbcwHxBRSoXebM1OxXTyukW0UQ44KBS
- N4tQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709581451; x=1710186251;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2InpeJRt+f0kCa8qliojbJhzR8/UO/mLPd8lEue23eI=;
- b=Aoxm+MdawKhw8IrpCVCv+QSju67H2MG88eYotIV+Upj8kME+7Zu6Qga49043I7z1sn
- BvqdO3q9aMg3N/2CO/dVLD8QH0cDneJEUsit0xpkaX2wp1tYY3nFR73UE0KDsmgVhuoB
- jeT2nrmf1SyXKLRUM4/rgUwJyL/sSoyL3qKAZmxODFPbT/VwFgV6NqI0PpmFn+HoWnrJ
- QuWq3+rKURChL/X2PtYkwnm2fDp4DwyUoBelLTYX+Km1AF5hTL4fF3z6zmPjZ6vwtBXm
- U+EHYL7T9AWwnFEGld2NpVYxejz8MZCN3KEd3Y1dx2ttWLxeR+k34btwhLAqHJEt6Z3I
- mbMw==
-X-Gm-Message-State: AOJu0YxE6chN2GWynBtI4S7IOy6wsNJG4JvAuptqMZYSI1us1e8e3qsQ
- EvJ1VIEKLGS62oyDy+vYXW1MYOOzSA8fKK2FYgm9XlgyulRGwkLlsBYawBOn
-X-Google-Smtp-Source: AGHT+IEklaIYAzLXknCQyGLMTYvknIhiLaansPxR45rNdr+9VPvP4NwG4q+IH2RxW6udFYT1qcQEPQ==
-X-Received: by 2002:a25:aa8b:0:b0:dc2:2b0d:613e with SMTP id
- t11-20020a25aa8b000000b00dc22b0d613emr7102455ybi.10.1709581450845; 
- Mon, 04 Mar 2024 11:44:10 -0800 (PST)
-Received: from localhost.localdomain ([50.205.20.42])
- by smtp.gmail.com with ESMTPSA id
- h1-20020a255f41000000b00dc62edd58dasm2282646ybm.40.2024.03.04.11.44.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Mar 2024 11:44:10 -0800 (PST)
-From: nifan.cxl@gmail.com
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1rhEGl-0003M3-RX; Mon, 04 Mar 2024 14:46:39 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1rhEGk-0007SF-1c; Mon, 04 Mar 2024 14:46:39 -0500
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 424IxiPH014980; Mon, 4 Mar 2024 19:46:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
+ h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-type : content-transfer-encoding; s=corp-2023-11-20;
+ bh=42Q56BfGoWW3SYftKo0HTu7R0vs7xDQNQCZVLJSzsio=;
+ b=DL4QeFTm6kgQQOC/rZSmI44Msg93tu7NmYUv7Xa/GHabiVvgoj1VxzbTl4HClwR+Ln69
+ xGsi32RZ12A8tIVvJEefsiNHTy2mjFSkno6UH3Smp7kcH1bse2nWXNMEjkAy2EnfZ6cq
+ 6F3G5lTd+CSFwZ8uwwPjG9Zi/QGVU5yeKtCMbzJI7+VW8ViRzPYbh5ZKk7KWDm+ZqVG9
+ wV4YjVsTkwtyz8eb9t7AnvpWWgFJFr6Q4W35vtY89q5ayBxJ13/FuSy3KmAuCr7toRNa
+ m31uBSdVp8wwHrHAuGXHPBmOXApenEtYdOxoSCtgctAoc/k3gnc4HB02ybKeUpQe8adM pQ== 
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wktq24jre-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 04 Mar 2024 19:46:28 +0000
+Received: from pps.filterd
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 424ItleQ018994; Mon, 4 Mar 2024 19:46:27 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 3wktj6agg4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 04 Mar 2024 19:46:27 +0000
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 424JkE4E038523;
+ Mon, 4 Mar 2024 19:46:26 GMT
+Received: from jonah-ol8.us.oracle.com (dhcp-10-39-196-188.vpn.oracle.com
+ [10.39.196.188])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
+ 3wktj6ag50-9; Mon, 04 Mar 2024 19:46:26 +0000
+From: Jonah Palmer <jonah.palmer@oracle.com>
 To: qemu-devel@nongnu.org
-Cc: jonathan.cameron@huawei.com, linux-cxl@vger.kernel.org,
- gregory.price@memverge.com, ira.weiny@intel.com, dan.j.williams@intel.com,
- a.manzanares@samsung.com, dave@stgolabs.net, nmtadam.samsung@gmail.com,
- nifan.cxl@gmail.com, jim.harris@samsung.com, Jorgen.Hansen@wdc.com,
- wj28.lee@gmail.com, Fan Ni <fan.ni@samsung.com>
-Subject: [PATCH v5 03/13] include/hw/cxl/cxl_device: Rename mem_size as
- static_mem_size for type3 memory devices
-Date: Mon,  4 Mar 2024 11:33:58 -0800
-Message-ID: <20240304194331.1586191-4-nifan.cxl@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240304194331.1586191-1-nifan.cxl@gmail.com>
-References: <20240304194331.1586191-1-nifan.cxl@gmail.com>
+Cc: mst@redhat.com, jasowang@redhat.com, eperezma@redhat.com,
+ si-wei.liu@oracle.com, boris.ostrovsky@oracle.com,
+ jonah.palmer@oracle.com, raphael@enfabrica.net, kwolf@redhat.com,
+ hreitz@redhat.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, thuth@redhat.com, richard.henderson@linaro.org,
+ david@redhat.com, iii@linux.ibm.com, cohuck@redhat.com,
+ pbonzini@redhat.com, fam@euphon.net, stefanha@redhat.com,
+ qemu-block@nongnu.org, qemu-s390x@nongnu.org, virtio-fs@lists.linux.dev
+Subject: [PATCH v1 8/8] virtio: Add VIRTIO_F_NOTIFICATION_DATA property
+ definition
+Date: Mon,  4 Mar 2024 14:46:12 -0500
+Message-Id: <20240304194612.611660-9-jonah.palmer@oracle.com>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240304194612.611660-1-jonah.palmer@oracle.com>
+References: <20240304194612.611660-1-jonah.palmer@oracle.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b36;
- envelope-from=nifan.cxl@gmail.com; helo=mail-yb1-xb36.google.com
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-04_15,2024-03-04_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ suspectscore=0
+ adultscore=0 bulkscore=0 spamscore=0 mlxlogscore=999 malwarescore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2403040152
+X-Proofpoint-GUID: 4lF4B-vi0KJNbSQiv847VOHk76DaEWij
+X-Proofpoint-ORIG-GUID: 4lF4B-vi0KJNbSQiv847VOHk76DaEWij
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=jonah.palmer@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,95 +107,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fan Ni <fan.ni@samsung.com>
+Extend the virtio device property definitions to include the
+VIRTIO_F_NOTIFICATION_DATA feature.
 
-Rename mem_size as static_mem_size for type3 memdev to cover static RAM and
-pmem capacity, preparing for the introduction of dynamic capacity to support
-dynamic capacity devices.
+The default state of this feature is disabled, allowing it to be
+explicitly enabled where it's supported.
 
-Signed-off-by: Fan Ni <fan.ni@samsung.com>
+Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
+Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
 ---
- hw/cxl/cxl-mailbox-utils.c  | 4 ++--
- hw/mem/cxl_type3.c          | 8 ++++----
- include/hw/cxl/cxl_device.h | 2 +-
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ include/hw/virtio/virtio.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 5792010c12..853dadba39 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -803,7 +803,7 @@ static CXLRetCode cmd_identify_memory_device(const struct cxl_cmd *cmd,
-     snprintf(id->fw_revision, 0x10, "BWFW VERSION %02d", 0);
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index 53915947a7..41ef3c4aef 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -369,7 +369,9 @@ typedef struct VirtIORNGConf VirtIORNGConf;
+     DEFINE_PROP_BIT64("packed", _state, _field, \
+                       VIRTIO_F_RING_PACKED, false), \
+     DEFINE_PROP_BIT64("queue_reset", _state, _field, \
+-                      VIRTIO_F_RING_RESET, true)
++                      VIRTIO_F_RING_RESET, true), \
++    DEFINE_PROP_BIT64("notification_data", _state, _field, \
++                      VIRTIO_F_NOTIFICATION_DATA, false)
  
-     stq_le_p(&id->total_capacity,
--             cxl_dstate->mem_size / CXL_CAPACITY_MULTIPLIER);
-+             cxl_dstate->static_mem_size / CXL_CAPACITY_MULTIPLIER);
-     stq_le_p(&id->persistent_capacity,
-              cxl_dstate->pmem_size / CXL_CAPACITY_MULTIPLIER);
-     stq_le_p(&id->volatile_capacity,
-@@ -1179,7 +1179,7 @@ static CXLRetCode cmd_media_clear_poison(const struct cxl_cmd *cmd,
-     struct clear_poison_pl *in = (void *)payload_in;
- 
-     dpa = ldq_le_p(&in->dpa);
--    if (dpa + CXL_CACHE_LINE_SIZE > cxl_dstate->mem_size) {
-+    if (dpa + CXL_CACHE_LINE_SIZE > cxl_dstate->static_mem_size) {
-         return CXL_MBOX_INVALID_PA;
-     }
- 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index e8801805b9..244d2b5fd5 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -608,7 +608,7 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
-         }
-         address_space_init(&ct3d->hostvmem_as, vmr, v_name);
-         ct3d->cxl_dstate.vmem_size = memory_region_size(vmr);
--        ct3d->cxl_dstate.mem_size += memory_region_size(vmr);
-+        ct3d->cxl_dstate.static_mem_size += memory_region_size(vmr);
-         g_free(v_name);
-     }
- 
-@@ -631,7 +631,7 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
-         }
-         address_space_init(&ct3d->hostpmem_as, pmr, p_name);
-         ct3d->cxl_dstate.pmem_size = memory_region_size(pmr);
--        ct3d->cxl_dstate.mem_size += memory_region_size(pmr);
-+        ct3d->cxl_dstate.static_mem_size += memory_region_size(pmr);
-         g_free(p_name);
-     }
- 
-@@ -837,7 +837,7 @@ static int cxl_type3_hpa_to_as_and_dpa(CXLType3Dev *ct3d,
-         return -EINVAL;
-     }
- 
--    if (*dpa_offset > ct3d->cxl_dstate.mem_size) {
-+    if (*dpa_offset > ct3d->cxl_dstate.static_mem_size) {
-         return -EINVAL;
-     }
- 
-@@ -1010,7 +1010,7 @@ static bool set_cacheline(CXLType3Dev *ct3d, uint64_t dpa_offset, uint8_t *data)
-         return false;
-     }
- 
--    if (dpa_offset + CXL_CACHE_LINE_SIZE > ct3d->cxl_dstate.mem_size) {
-+    if (dpa_offset + CXL_CACHE_LINE_SIZE > ct3d->cxl_dstate.static_mem_size) {
-         return false;
-     }
- 
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index 93ce047b28..f82d018422 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -234,7 +234,7 @@ typedef struct cxl_device_state {
-     } timestamp;
- 
-     /* memory region size, HDM */
--    uint64_t mem_size;
-+    uint64_t static_mem_size;
-     uint64_t pmem_size;
-     uint64_t vmem_size;
- 
+ hwaddr virtio_queue_get_desc_addr(VirtIODevice *vdev, int n);
+ bool virtio_queue_enabled_legacy(VirtIODevice *vdev, int n);
 -- 
-2.43.0
+2.39.3
 
 
