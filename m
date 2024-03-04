@@ -4,57 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65445C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 15:07:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41F7EC5478C
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 15:09:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh9uH-00050a-OK; Mon, 04 Mar 2024 10:07:09 -0500
+	id 1rh9vx-00067Z-MA; Mon, 04 Mar 2024 10:08:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rh9uD-0004zy-VR; Mon, 04 Mar 2024 10:07:06 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rh9uB-0001us-4r; Mon, 04 Mar 2024 10:07:05 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TpMPt5dqYz6K9SH;
- Mon,  4 Mar 2024 23:02:58 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id D383A140A36;
- Mon,  4 Mar 2024 23:06:52 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Mon, 4 Mar
- 2024 15:06:52 +0000
-Date: Mon, 4 Mar 2024 15:06:51 +0000
-To: Thomas Huth <thuth@redhat.com>
-CC: <qemu-devel@nongnu.org>, Fan Ni <fan.ni@samsung.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- <qemu-trivial@nongnu.org>
-Subject: Re: [PATCH 2/3] hw/pci-bridge/cxl_upstream: Fix problem with
- g_steal_pointer()
-Message-ID: <20240304150651.00006dd1@Huawei.com>
-In-Reply-To: <20240304104406.59855-3-thuth@redhat.com>
-References: <20240304104406.59855-1-thuth@redhat.com>
- <20240304104406.59855-3-thuth@redhat.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rh9vw-00067G-My
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 10:08:52 -0500
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rh9vv-0002EN-5p
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 10:08:52 -0500
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-563c403719cso6327608a12.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 07:08:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709564929; x=1710169729; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=6KQKSKheR9W/Hcb/4Zeri+kzTUNTdAuqyfUiIitit7U=;
+ b=uI69B0TJtUgTgUnxgfOUEMTVJJH6wtS1DvQ1opWYniDwEYcuC477VMXnXFWZtdI+PI
+ u3nByHGD6sOcTO1wr31BW+NMo+zx3XbbI+yhXlhtXmm+VwjxlqHGmoJD3Wg+GF75vYMX
+ PGAOji6l4CQyLyxEjEzzSWvSPidBwtw5F+QyBe9R+sjGM+cfrlp/B0RjHlIdfepfqx4+
+ CABMQbH1MucDFomdMjo/zJxD/osIHRHiJisZMRHgKD1Y9cAJRRWp2er6YYOnCC7WnsOU
+ H9+CiqRqWAuP22IYyY1zeedWKMJR6iSQjFjq1/SLiKWDHXvm+HTOfMlLrsSB6XvrkgNQ
+ VA2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709564929; x=1710169729;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=6KQKSKheR9W/Hcb/4Zeri+kzTUNTdAuqyfUiIitit7U=;
+ b=pjs41PDB3OeGFoxqnUgCiLBXUyJ+4nlTM4zeGYduXoD80Q+qnkCFeyak48/CIJN9q7
+ Qf7QppVgyewA3rrzXquokjtT75Zbv+RqrW0MIUreMIl+mdUNc0cqtdqLqK7P/bwfBx3x
+ Kr+FHiZmE1dJGlUpwr6s6jLQ8aXZfysMt9sSSmYfad1sf8c1ozuq7SZVGxW7cE7w7Vfz
+ KhB6VdYrSfkIzdzKJUsOByy8KoSpxCaYjLIqyT18H3b/PnC1Gg+r88tTB+HhpMS/M0HS
+ vYkZ1YWVkoGGwCUByVDIkxSqrXyeS5V07NAO/3AbVB/Fb/0+4YR1DHZ0Z4jcmj0kiRrz
+ q4sg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW9RrV7K9TOBzXEOjaPf8sN16cdPFYol5uNpwhATvFibw9mlCySf2z1G+MNrDYQIRz9ktpMvubhvAO7my1l+CGDIJPjlDo=
+X-Gm-Message-State: AOJu0YxJ+R12pQBjhhe6r2zXqmcrUIGk1zEgaf1uMEPJ/QMGF+ZkoalK
+ GusULVPOU2X2vK9nIHqdq1DLNLvzOX5hruXVX8bXEaOc4N1HXRMiPqLIHND8XQdgWUoHbUz2eDJ
+ 4jnZF19x4UlBxVAWD6rIeTHyfsxlgQ/AHQ0JgMapVCZecu4CA
+X-Google-Smtp-Source: AGHT+IGmkQ01HKKfdCWnoqp6mR4rjwWyMuzQpsD/6cg0Igd6R2/OQF3TMr2+Jz2qOcTU8nIHLpdLRF8jErwPk+DJDHA=
+X-Received: by 2002:a05:6402:2695:b0:566:9fef:1ee9 with SMTP id
+ w21-20020a056402269500b005669fef1ee9mr8770820edd.22.1709564929360; Mon, 04
+ Mar 2024 07:08:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240229204407.1699260-1-svens@stackframe.org>
+In-Reply-To: <20240229204407.1699260-1-svens@stackframe.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 4 Mar 2024 15:08:37 +0000
+Message-ID: <CAFEAcA9NSNVkZdtqF=aw=eB=MpsHTFoH6Z1CQtiabn5mme092w@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/scsi/lsi53c895a: add timer to scripts processing
+To: Sven Schnelle <svens@stackframe.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ qemu-devel@nongnu.org, deller@gmx.de, BALATON Zoltan <balaton@eik.bme.hu>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,104 +87,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon,  4 Mar 2024 11:44:05 +0100
-Thomas Huth <thuth@redhat.com> wrote:
+On Thu, 29 Feb 2024 at 20:44, Sven Schnelle <svens@stackframe.org> wrote:
+>
+> HP-UX 10.20 seems to make the lsi53c895a spinning on a memory location
+> under certain circumstances. As the SCSI controller and CPU are not
+> running at the same time this loop will never finish. After some
+> time, the check loop interrupts with a unexpected device disconnect.
+> This works, but is slow because the kernel resets the scsi controller.
+> Instead of signaling UDC, start a timer and exit the loop. Until the
+> timer fires, the CPU can process instructions which might changes the
+> memory location.
+>
+> The limit of instructions is also reduced because scripts running on
+> the SCSI processor are usually very short. This keeps the time until
+> the loop is exit short.
 
-> When setting GLIB_VERSION_MAX_ALLOWED to GLIB_VERSION_2_58 or higher,
-> glib adds type safety checks to the g_steal_pointer() macro. This
-> triggers errors in the build_cdat_table() function which uses the
-> g_steal_pointer() for type-casting from one pointer type to the other
-> (which also looks quite weird since the local pointers have all been
-> declared with g_autofree though they are never freed here).
+"exited"
 
-Left over of an earlier cleanup where I failed to notice there were no
-longer any error return paths. Great to clean this out.
-
-> Let's fix
-> it by using a proper typecast instead. For making this possible, we
-> have to remove the QEMU_PACKED attribute from some structs since GCC
-> otherwise complains that the source and destination pointer might
-> have different alignment restrictions. Removing the QEMU_PACKED should
-> be fine here since the structs are already naturally aligned. Anyway,
-> add some QEMU_BUILD_BUG_ON() statements to make sure that we've got
-> the right sizes (without padding in the structs).
-
-Ok. In these cases indeed seem to be fine unpacked. That's
-not in general true of the CXL spec structures.
-Maybe alternative if we run into problems with future versions
-of these structures will be to define struct CDATSubHeader as packed.
-
-Still we can cross that bridge when we come to it.
-
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-
+>
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Sven Schnelle <svens@stackframe.org>
 > ---
->  include/hw/cxl/cxl_cdat.h    | 8 +++++---
->  hw/pci-bridge/cxl_upstream.c | 8 ++++----
->  2 files changed, 9 insertions(+), 7 deletions(-)
-> 
-> diff --git a/include/hw/cxl/cxl_cdat.h b/include/hw/cxl/cxl_cdat.h
-> index 8e3d094608..b44cefaad6 100644
-> --- a/include/hw/cxl/cxl_cdat.h
-> +++ b/include/hw/cxl/cxl_cdat.h
-> @@ -130,7 +130,8 @@ typedef struct CDATSslbisHeader {
->      uint8_t data_type;
->      uint8_t reserved[3];
->      uint64_t entry_base_unit;
-> -} QEMU_PACKED CDATSslbisHeader;
-> +} CDATSslbisHeader;
-> +QEMU_BUILD_BUG_ON(sizeof(CDATSslbisHeader) != 16);
->  
->  #define CDAT_PORT_ID_USP 0x100
->  /* Switch Scoped Latency and Bandwidth Entry - CDAT Table 10 */
-> @@ -139,12 +140,13 @@ typedef struct CDATSslbe {
->      uint16_t port_y_id;
->      uint16_t latency_bandwidth;
->      uint16_t reserved;
-> -} QEMU_PACKED CDATSslbe;
-> +} CDATSslbe;
-> +QEMU_BUILD_BUG_ON(sizeof(CDATSslbe) != 8);
->  
->  typedef struct CDATSslbis {
->      CDATSslbisHeader sslbis_header;
->      CDATSslbe sslbe[];
-> -} QEMU_PACKED CDATSslbis;
-> +} CDATSslbis;
->  
->  typedef struct CDATEntry {
->      void *base;
-> diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
-> index e87eb40177..537f9affb8 100644
-> --- a/hw/pci-bridge/cxl_upstream.c
-> +++ b/hw/pci-bridge/cxl_upstream.c
-> @@ -192,8 +192,8 @@ enum {
->  
->  static int build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
->  {
-> -    g_autofree CDATSslbis *sslbis_latency = NULL;
-> -    g_autofree CDATSslbis *sslbis_bandwidth = NULL;
-> +    CDATSslbis *sslbis_latency;
-> +    CDATSslbis *sslbis_bandwidth;
->      CXLUpstreamPort *us = CXL_USP(priv);
->      PCIBus *bus = &PCI_BRIDGE(us)->sec_bus;
->      int devfn, sslbis_size, i;
-> @@ -270,8 +270,8 @@ static int build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
->      *cdat_table = g_new0(CDATSubHeader *, CXL_USP_CDAT_NUM_ENTRIES);
->  
->      /* Header always at start of structure */
-> -    (*cdat_table)[CXL_USP_CDAT_SSLBIS_LAT] = g_steal_pointer(&sslbis_latency);
-> -    (*cdat_table)[CXL_USP_CDAT_SSLBIS_BW] = g_steal_pointer(&sslbis_bandwidth);
-> +    (*cdat_table)[CXL_USP_CDAT_SSLBIS_LAT] = (CDATSubHeader *)sslbis_latency;
-> +    (*cdat_table)[CXL_USP_CDAT_SSLBIS_BW] = (CDATSubHeader *)sslbis_bandwidth;
->  
->      return CXL_USP_CDAT_NUM_ENTRIES;
->  }
+> Changes in v2:
+> - update comment in lsi_execute_script()
+> - reset waiting state and del timer in lsi_execute_script() to
+>   handle the case where script processing is triggered via
+>   register write, and not from the pending timer
+> - delete timer in lsi_scsi_exit()
 
+Other than the s/host/guest/ comment fix,
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+I don't suppose anybody has a setup with the Windows drivers
+to test this on? (commit ee4d919f30f13 suggests that at least
+Windows XP and 2003 had this problem.)
+
+thanks
+-- PMM
 
