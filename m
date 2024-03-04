@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9BFFC5478C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F22BC48BF6
 	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 12:37:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh7WR-0005qK-D7; Mon, 04 Mar 2024 07:34:23 -0500
+	id 1rh7WU-0006Bs-Ir; Mon, 04 Mar 2024 07:34:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=mkh8=KK=redhat.com=clg@ozlabs.org>)
- id 1rh7TL-0001fb-8w
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:31:19 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76])
+ id 1rh7TQ-0001iy-KK
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:31:26 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
+ helo=gandalf.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=mkh8=KK=redhat.com=clg@ozlabs.org>)
- id 1rh7Sw-0004qO-B4
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:31:07 -0500
-Received: from gandalf.ozlabs.org (mail.ozlabs.org
- [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TpJ1H4NmYz4x1Y;
- Mon,  4 Mar 2024 23:29:55 +1100 (AEDT)
+ id 1rh7Sx-0004wD-D0
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 07:31:14 -0500
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TpJ1r1PWzz4x3H;
+ Mon,  4 Mar 2024 23:30:24 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TpJ1D5CQwz4x0q;
- Mon,  4 Mar 2024 23:29:52 +1100 (AEDT)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TpJ1n2BxVz4x1s;
+ Mon,  4 Mar 2024 23:30:21 +1100 (AEDT)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -40,24 +40,25 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 16/26] migration: Modify ram_init_bitmaps() to report dirty
- tracking errors
-Date: Mon,  4 Mar 2024 13:28:34 +0100
-Message-ID: <20240304122844.1888308-17-clg@redhat.com>
+Subject: [PATCH v3 24/26] vfio: Add Error** argument to .get_dirty_bitmap()
+ handler
+Date: Mon,  4 Mar 2024 13:28:42 +0100
+Message-ID: <20240304122844.1888308-25-clg@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240304122844.1888308-1-clg@redhat.com>
 References: <20240304122844.1888308-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=mkh8=KK=redhat.com=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,86 +74,285 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The .save_setup() handler has now an Error** argument that we can use
-to propagate errors reported by the .log_global_start() handler. Do
-that for the RAM. The caller qemu_savevm_state_setup() will store the
-error under the migration stream for later detection in the migration
-sequence.
+Let the callers do the error reporting. Add documentation while at it.
 
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- migration/ram.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ include/hw/vfio/vfio-common.h         |  4 +-
+ include/hw/vfio/vfio-container-base.h | 17 +++++++-
+ hw/vfio/common.c                      | 59 ++++++++++++++++++---------
+ hw/vfio/container-base.c              |  5 ++-
+ hw/vfio/container.c                   | 13 +++---
+ 5 files changed, 67 insertions(+), 31 deletions(-)
 
-diff --git a/migration/ram.c b/migration/ram.c
-index 3d9c08cfae8a59031a7c1b3c70721c2a90daceba..b12a2f24335be4b2b009aabfe431f4e5a6b4d9a9 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -2801,9 +2801,8 @@ static void migration_bitmap_clear_discarded_pages(RAMState *rs)
-     }
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index 46f88493634b5634a9c14a5caa33a463fbf2c50d..68911d36676667352e94a97895828aff4b194b57 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -274,9 +274,9 @@ bool
+ vfio_devices_all_device_dirty_tracking(const VFIOContainerBase *bcontainer);
+ int vfio_devices_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+                                     VFIOBitmap *vbmap, hwaddr iova,
+-                                    hwaddr size);
++                                    hwaddr size, Error **errp);
+ int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
+-                          uint64_t size, ram_addr_t ram_addr);
++                          uint64_t size, ram_addr_t ram_addr, Error **errp);
+ 
+ /* Returns 0 on success, or a negative errno. */
+ int vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
+diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+index c76984654a596e3016a8cf833e10143eb872e102..ebc49ebfbe7de862450941b1129faad5d62b3769 100644
+--- a/include/hw/vfio/vfio-container-base.h
++++ b/include/hw/vfio/vfio-container-base.h
+@@ -85,7 +85,7 @@ int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
+                                            bool start, Error **errp);
+ int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+                                       VFIOBitmap *vbmap,
+-                                      hwaddr iova, hwaddr size);
++                                      hwaddr iova, hwaddr size, Error **errp);
+ 
+ void vfio_container_init(VFIOContainerBase *bcontainer,
+                          VFIOAddressSpace *space,
+@@ -138,9 +138,22 @@ struct VFIOIOMMUClass {
+      */
+     int (*set_dirty_page_tracking)(const VFIOContainerBase *bcontainer,
+                                    bool start, Error **errp);
++    /**
++     * @query_dirty_bitmap
++     *
++     * Get list of dirty pages from container
++     *
++     * @bcontainer: #VFIOContainerBase from which to get dirty pages
++     * @vbmap: #VFIOBitmap internal bitmap structure
++     * @iova: iova base address
++     * @size: size of iova range
++     * @errp: pointer to Error*, to store an error if it happens.
++     *
++     * Returns zero to indicate success and negative for error
++     */
+     int (*query_dirty_bitmap)(const VFIOContainerBase *bcontainer,
+                               VFIOBitmap *vbmap,
+-                              hwaddr iova, hwaddr size);
++                              hwaddr iova, hwaddr size, Error **errp);
+     /* PCI specific */
+     int (*pci_hot_reset)(VFIODevice *vbasedev, bool single);
+ 
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index d4f6e695b671eeead2284d2116740d9eac31a5a3..1dec3b4d49c2864a397c99754eca69c6ba443ca1 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -1156,7 +1156,7 @@ static int vfio_device_dma_logging_report(VFIODevice *vbasedev, hwaddr iova,
+ 
+ int vfio_devices_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+                                     VFIOBitmap *vbmap, hwaddr iova,
+-                                    hwaddr size)
++                                    hwaddr size, Error **errp)
+ {
+     VFIODevice *vbasedev;
+     int ret;
+@@ -1165,10 +1165,10 @@ int vfio_devices_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+         ret = vfio_device_dma_logging_report(vbasedev, iova, size,
+                                              vbmap->bitmap);
+         if (ret) {
+-            error_report("%s: Failed to get DMA logging report, iova: "
+-                         "0x%" HWADDR_PRIx ", size: 0x%" HWADDR_PRIx
+-                         ", err: %d (%s)",
+-                         vbasedev->name, iova, size, ret, strerror(-ret));
++            error_setg(errp, "%s: Failed to get DMA logging report, iova: "
++                       "0x%" HWADDR_PRIx ", size: 0x%" HWADDR_PRIx
++                       ", err: %d (%s)",
++                       vbasedev->name, iova, size, ret, strerror(-ret));
+ 
+             return ret;
+         }
+@@ -1178,7 +1178,7 @@ int vfio_devices_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
  }
  
--static void ram_init_bitmaps(RAMState *rs)
-+static bool ram_init_bitmaps(RAMState *rs, Error **errp)
+ int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
+-                          uint64_t size, ram_addr_t ram_addr)
++                          uint64_t size, ram_addr_t ram_addr, Error **errp)
  {
--    Error *local_err = NULL;
-     bool ret = true;
+     bool all_device_dirty_tracking =
+         vfio_devices_all_device_dirty_tracking(bcontainer);
+@@ -1195,13 +1195,17 @@ int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
  
-     qemu_mutex_lock_ramlist();
-@@ -2812,10 +2811,8 @@ static void ram_init_bitmaps(RAMState *rs)
-         ram_list_init_bitmaps();
-         /* We don't use dirty log with background snapshots */
-         if (!migrate_background_snapshot()) {
--            ret = memory_global_dirty_log_start(GLOBAL_DIRTY_MIGRATION,
--                                                &local_err);
-+            ret = memory_global_dirty_log_start(GLOBAL_DIRTY_MIGRATION, errp);
-             if (!ret) {
--                error_report_err(local_err);
-                 goto out_unlock;
-             }
-             migration_bitmap_sync_precopy(rs, false);
-@@ -2825,7 +2822,7 @@ out_unlock:
-     qemu_mutex_unlock_ramlist();
- 
-     if (!ret) {
--        return;
-+        return false;
+     ret = vfio_bitmap_alloc(&vbmap, size);
+     if (ret) {
++        error_setg_errno(errp, -ret,
++                         "Failed to allocate dirty tracking bitmap");
+         return ret;
      }
+ 
+     if (all_device_dirty_tracking) {
+-        ret = vfio_devices_query_dirty_bitmap(bcontainer, &vbmap, iova, size);
++        ret = vfio_devices_query_dirty_bitmap(bcontainer, &vbmap, iova, size,
++                                              errp);
+     } else {
+-        ret = vfio_container_query_dirty_bitmap(bcontainer, &vbmap, iova, size);
++        ret = vfio_container_query_dirty_bitmap(bcontainer, &vbmap, iova, size,
++                                                errp);
+     }
+ 
+     if (ret) {
+@@ -1249,12 +1253,13 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+     }
+ 
+     ret = vfio_get_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
+-                                translated_addr);
++                                translated_addr, &local_err);
+     if (ret) {
+-        error_report("vfio_iommu_map_dirty_notify(%p, 0x%"HWADDR_PRIx", "
+-                     "0x%"HWADDR_PRIx") = %d (%s)",
+-                     bcontainer, iova, iotlb->addr_mask + 1, ret,
+-                     strerror(-ret));
++        error_prepend(&local_err,
++                      "vfio_iommu_map_dirty_notify(%p, 0x%"HWADDR_PRIx", "
++                      "0x%"HWADDR_PRIx") failed :", bcontainer, iova,
++                      iotlb->addr_mask + 1);
++        error_report_err(local_err);
+     }
+ 
+ out_lock:
+@@ -1274,12 +1279,19 @@ static int vfio_ram_discard_get_dirty_bitmap(MemoryRegionSection *section,
+     const ram_addr_t ram_addr = memory_region_get_ram_addr(section->mr) +
+                                 section->offset_within_region;
+     VFIORamDiscardListener *vrdl = opaque;
++    Error *local_err = NULL;
++    int ret;
  
      /*
-@@ -2833,9 +2830,10 @@ out_unlock:
-      * containing all 1s to exclude any discarded pages from migration.
+      * Sync the whole mapped region (spanning multiple individual mappings)
+      * in one go.
       */
-     migration_bitmap_clear_discarded_pages(rs);
-+    return true;
+-    return vfio_get_dirty_bitmap(vrdl->bcontainer, iova, size, ram_addr);
++    ret = vfio_get_dirty_bitmap(vrdl->bcontainer, iova, size, ram_addr,
++                                &local_err);
++    if (ret) {
++        error_report_err(local_err);
++    }
++    return ret;
  }
  
--static int ram_init_all(RAMState **rsp)
-+static int ram_init_all(RAMState **rsp, Error **errp)
+ static int
+@@ -1311,7 +1323,7 @@ vfio_sync_ram_discard_listener_dirty_bitmap(VFIOContainerBase *bcontainer,
+ }
+ 
+ static int vfio_sync_dirty_bitmap(VFIOContainerBase *bcontainer,
+-                                  MemoryRegionSection *section)
++                                  MemoryRegionSection *section, Error **errp)
  {
-     if (ram_state_init(rsp)) {
-         return -1;
-@@ -2846,7 +2844,9 @@ static int ram_init_all(RAMState **rsp)
-         return -1;
+     ram_addr_t ram_addr;
+ 
+@@ -1342,7 +1354,14 @@ static int vfio_sync_dirty_bitmap(VFIOContainerBase *bcontainer,
+         }
+         return 0;
+     } else if (memory_region_has_ram_discard_manager(section->mr)) {
+-        return vfio_sync_ram_discard_listener_dirty_bitmap(bcontainer, section);
++        int ret;
++
++        ret = vfio_sync_ram_discard_listener_dirty_bitmap(bcontainer, section);
++        if (ret) {
++            error_setg(errp,
++                       "Failed to sync dirty bitmap with RAM discard listener");
++            return ret;
++        }
      }
  
--    ram_init_bitmaps(*rsp);
-+    if (!ram_init_bitmaps(*rsp, errp)) {
-+        return -1;
-+    }
+     ram_addr = memory_region_get_ram_addr(section->mr) +
+@@ -1350,7 +1369,7 @@ static int vfio_sync_dirty_bitmap(VFIOContainerBase *bcontainer,
  
-     return 0;
+     return vfio_get_dirty_bitmap(bcontainer,
+                    REAL_HOST_PAGE_ALIGN(section->offset_within_address_space),
+-                   int128_get64(section->size), ram_addr);
++                                 int128_get64(section->size), ram_addr, errp);
  }
-@@ -2961,8 +2961,7 @@ static int ram_save_setup(QEMUFile *f, void *opaque, Error **errp)
  
-     /* migration has already setup the bitmap, reuse it. */
-     if (!migration_in_colo_state()) {
--        if (ram_init_all(rsp) != 0) {
--            error_setg(errp, "%s: failed to setup RAM for migration", __func__);
-+        if (ram_init_all(rsp, errp) != 0) {
-             compress_threads_save_cleanup();
-             return -1;
+ static void vfio_listener_log_sync(MemoryListener *listener,
+@@ -1359,16 +1378,16 @@ static void vfio_listener_log_sync(MemoryListener *listener,
+     VFIOContainerBase *bcontainer = container_of(listener, VFIOContainerBase,
+                                                  listener);
+     int ret;
++    Error *local_err = NULL;
+ 
+     if (vfio_listener_skipped_section(section)) {
+         return;
+     }
+ 
+     if (vfio_devices_all_dirty_tracking(bcontainer)) {
+-        ret = vfio_sync_dirty_bitmap(bcontainer, section);
++        ret = vfio_sync_dirty_bitmap(bcontainer, section, &local_err);
+         if (ret) {
+-            error_report("vfio: Failed to sync dirty bitmap, err: %d (%s)", ret,
+-                         strerror(-ret));
++            error_report_err(local_err);
+             vfio_set_migration_error(ret);
          }
+     }
+diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+index 7c0764121d24b02b6c4e66e368d7dff78a6d65aa..8db59881873c3b1edee81104b966af737e5fa6f6 100644
+--- a/hw/vfio/container-base.c
++++ b/hw/vfio/container-base.c
+@@ -65,10 +65,11 @@ int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
+ 
+ int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+                                       VFIOBitmap *vbmap,
+-                                      hwaddr iova, hwaddr size)
++                                      hwaddr iova, hwaddr size, Error **errp)
+ {
+     g_assert(bcontainer->ops->query_dirty_bitmap);
+-    return bcontainer->ops->query_dirty_bitmap(bcontainer, vbmap, iova, size);
++    return bcontainer->ops->query_dirty_bitmap(bcontainer, vbmap, iova, size,
++                                               errp);
+ }
+ 
+ void vfio_container_init(VFIOContainerBase *bcontainer, VFIOAddressSpace *space,
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 6524575aeddcea8470b5fd10caf57475088d1813..475d96eaaa927998c6aa8cc9aa9f2115f5a1efda 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -131,6 +131,7 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
+     };
+     bool need_dirty_sync = false;
+     int ret;
++    Error *local_err = NULL;
+ 
+     if (iotlb && vfio_devices_all_running_and_mig_active(bcontainer)) {
+         if (!vfio_devices_all_device_dirty_tracking(bcontainer) &&
+@@ -166,8 +167,9 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
+ 
+     if (need_dirty_sync) {
+         ret = vfio_get_dirty_bitmap(bcontainer, iova, size,
+-                                    iotlb->translated_addr);
++                                    iotlb->translated_addr, &local_err);
+         if (ret) {
++            error_report_err(local_err);
+             return ret;
+         }
+     }
+@@ -237,7 +239,8 @@ vfio_legacy_set_dirty_page_tracking(const VFIOContainerBase *bcontainer,
+ 
+ static int vfio_legacy_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+                                           VFIOBitmap *vbmap,
+-                                          hwaddr iova, hwaddr size)
++                                          hwaddr iova, hwaddr size,
++                                          Error **errp)
+ {
+     const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
+                                                   bcontainer);
+@@ -265,9 +268,9 @@ static int vfio_legacy_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+     ret = ioctl(container->fd, VFIO_IOMMU_DIRTY_PAGES, dbitmap);
+     if (ret) {
+         ret = -errno;
+-        error_report("Failed to get dirty bitmap for iova: 0x%"PRIx64
+-                " size: 0x%"PRIx64" err: %d", (uint64_t)range->iova,
+-                (uint64_t)range->size, errno);
++        error_setg(errp, "Failed to get dirty bitmap for iova: 0x%"PRIx64
++                   " size: 0x%"PRIx64" err: %d", (uint64_t)range->iova,
++                   (uint64_t)range->size, errno);
+     }
+ 
+     g_free(dbitmap);
 -- 
 2.44.0
 
