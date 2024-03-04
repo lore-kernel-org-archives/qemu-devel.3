@@ -4,69 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CBD7C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 18:03:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 385E3C5478C
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 18:04:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhCey-0000uR-JL; Mon, 04 Mar 2024 13:03:32 -0500
+	id 1rhCfD-00010e-Hp; Mon, 04 Mar 2024 13:03:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhCex-0000ty-Dc
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 13:03:31 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rhCfB-0000yP-IU
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 13:03:45 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhCev-0006PT-Sn
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 13:03:31 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5658082d2c4so6626760a12.1
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 10:03:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rhCf9-0006T4-UR
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 13:03:45 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-33e1207bba1so3833658f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 10:03:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709575408; x=1710180208; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=AEN6w40t0pspdlu2ngnJZO7POyMRUmSmC4FlT3zYSt8=;
- b=UJN6smd/IB16HZEjGTOfHXy8ELkPYpDN/MBZYRB8+z6kDFbRjOyGLyWacYwPxKchUl
- hze8gGgU8XUSQA+bHjZPphqlXzW+2+wMRNvMxxUvB7YiPCNV4dj66EDxWSlV9zvWjCFe
- 5+hSDEkjzAcOZwXRTg/YxjAdusXUr2N/xmK6mIpLZ+547Ae75yIe259UQu9zhQ6iGBet
- 3z5yqAm7FaRRQYFD8FlBhRoMF82YQTvvCtYr621Z3kvQggVtboQrsnfm8c3CaeOgPC/X
- 8OVntNguH34aM19Ofcaf8T6fIcKcK3avkDPLDUfkvm/OYMZU7C+woW8/cknmpQqLy5c8
- XugA==
+ d=linaro.org; s=google; t=1709575422; x=1710180222; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OEq8+T+wLX8mR2vomKvWYeIZ9wf4ORqtMKoXQKvvhAQ=;
+ b=Nxl8nUZ67wXM+mSGZA2vVMC0VGQCKxuEKcNN9vxDQ321PyHzr78hvHYMpGipm2MV2T
+ 66lKVsBwFZ97aZZmcXq0bntXJ0kbotGsDvF1sCtyJ4lH8R/afU5nr56UQZOVNJ0NRJOb
+ sZzgKImk//YFcnVu7EsZqt9j6xtvpstSfP5cROiFkBVswhFhLvYy4xavWVyNKsa76UTh
+ UdJQ65L6EqXkzI5Fqn8XUGdcQRWv6/+p2inMuTek9XDqC+sZewRKbibJ9FNGSlaJX1BF
+ pZPJph9CZ2cTWAgdPUy2d9IjY+0ZLcFUq+NEXdgnawNkkopPQde3Zw97TZvfosCZi5wC
+ rlOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709575408; x=1710180208;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=AEN6w40t0pspdlu2ngnJZO7POyMRUmSmC4FlT3zYSt8=;
- b=gDaZv+yqGJQa+SbZcZnq7+smUkX8oH9+PlMiQaehtu75TuTMx3BH5p5AtA9brwJQg6
- FPdjcBZ7PBUyszlyEVNF7eBOhG5279kdq1900VEehEpgc5Z6vrM4yXpyIUmH3Sg97O5y
- Bk4VB0+tFoZfEgsoWUrqFxtda4jrp6zVBSle84Mw2TCprR+rvNQvpwsDl0Xk7IJ1XcUs
- GPEcbWhdGfxYuKhw5Pb98R2ZKFCJ8wHBS6V/o4cTINDngbh2+Yd5Se2htmqRxZrTTruN
- eSwiYTFTqxItVUsAsiWNZ84dNoUbNM0Gd7cwlLX43XPogcF7eap36P3nRPLZTp7zIDNX
- 8hqw==
+ d=1e100.net; s=20230601; t=1709575422; x=1710180222;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=OEq8+T+wLX8mR2vomKvWYeIZ9wf4ORqtMKoXQKvvhAQ=;
+ b=bCD0v68Jz0h9LgpLtnVzyZsogVs9gUy68K0NTnYYPxyVjddUw7HPLAFQPehFIc99RG
+ tFE9p70991eV/GeqOrspPKDhWnX8D+nFzvq5lt1NDBGED2XMefiUmzfIhrOZ1VFr0J1E
+ D1w1PPUV4z6+4SXqGbo3QT9KEmgbCpUFK2Fgbx0w0MUgHd+Yz/fRJCCGA+CmaRTSayYc
+ C5GlClJLV+kbYIz7z0s+y0KjPRRq8RmL54SBE1+nMGfYt3pLkh2225UzvKji+xnHlVX/
+ 2aliWHDQpffsTJ9GtagXR3zceWiCV3MM1xG0Aasxc8L4y+W6WCq3Cy3eA7yuoyztHT/E
+ GerA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXwIIpuuwV5HYwVuEMX5Rd02ELSxa5Gn0PK95tI0f5a/hI9ZvFifFKcArK8vBCk16OmfwH7i2D3m8+pbCGQ+rfudBVgXkg=
-X-Gm-Message-State: AOJu0Yz6Z0mI/UeGhh8imAi4n9YrCvU29S2zb6xMc8AoKhLRFRL1N1Nw
- 8YAaZ7nyyKMCYPRdCRb5FzMU6Wa61d3kRdeGXo49FzMIvMUpLX80N6Vb41KJC2USnOIKCL2KSqM
- Xy6j6EcMzgGqv08GFT+FwrOr7peu0mcYyFX7I+Q==
-X-Google-Smtp-Source: AGHT+IGx0CF+o19HHQuuOwrtma1IrXh+TMhYU8VNPQL33hGkR9mNpQ3TVVN5UhBwlrnia5sL+vA5BxDyIIssKgJqTDg=
-X-Received: by 2002:a05:6402:12ce:b0:567:14ff:771a with SMTP id
- k14-20020a05640212ce00b0056714ff771amr4462075edx.21.1709575408265; Mon, 04
- Mar 2024 10:03:28 -0800 (PST)
+ AJvYcCWSEtKxJOafw8+r/k+ZRN9aO76pBzwyS3CzQY3Q1ZTsJRiRT4QTM30OBKJnGQ61/obnxyVUWj/rNbg8ZUpUfRWclmLPgPQ=
+X-Gm-Message-State: AOJu0YxuH0yLkUm9bbghrmgn9utLYLiLWLqXnmQe3G3LlIMr6b9Al5ui
+ jZtiRR2oCclxSjzTfNRYD80a1hAkv7hV0IOKiIP0PvzgsaQiwCkyJxEnTMTg6bs=
+X-Google-Smtp-Source: AGHT+IFtFfgLMWGEKfU7ZedXy1p6ZGpw3nDTmRlhZa/OJqf55XXOcAS+7Qm7KL42jOpdK5OAt3I2FA==
+X-Received: by 2002:a5d:55c4:0:b0:33e:854:8b24 with SMTP id
+ i4-20020a5d55c4000000b0033e08548b24mr6054306wrw.12.1709575422358; 
+ Mon, 04 Mar 2024 10:03:42 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ bk15-20020a0560001d8f00b0033b48190e5esm13119949wrb.67.2024.03.04.10.03.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 04 Mar 2024 10:03:41 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 4E4D75F796;
+ Mon,  4 Mar 2024 18:03:41 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Warner Losh <imp@bsdimp.com>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Riku Voipio <riku.voipio@iki.fi>,
+ Laurent Vivier <laurent@vivier.eu>,  Kyle Evans <kevans@freebsd.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Alexandre
+ Iooss
+ <erdnaxe@crans.org>,  Mahmoud Mandour <ma.mandourr@gmail.com>,  Pierrick
+ Bouvier <pierrick.bouvier@linaro.org>,  qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 00/12] gdbstub: Implement follow-fork-mode child
+In-Reply-To: <20240219141628.246823-1-iii@linux.ibm.com> (Ilya Leoshkevich's
+ message of "Mon, 19 Feb 2024 15:15:48 +0100")
+References: <20240219141628.246823-1-iii@linux.ibm.com>
+User-Agent: mu4e 1.12.1; emacs 29.1
+Date: Mon, 04 Mar 2024 18:03:41 +0000
+Message-ID: <87cys9yiv6.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20240303-elf2dmp-v1-0-bea6649fe3e6@daynix.com>
-In-Reply-To: <20240303-elf2dmp-v1-0-bea6649fe3e6@daynix.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 4 Mar 2024 18:03:17 +0000
-Message-ID: <CAFEAcA93hQXMh7NXej2X=HUhgyrv-e+3UEjC-5X5Q14gwkdmgg@mail.gmail.com>
-Subject: Re: [PATCH 0/7] contrib/elf2dmp: Improve robustness
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Viktor Prutyanov <viktor.prutyanov@phystech.edu>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,31 +105,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 3 Mar 2024 at 10:51, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+Ilya Leoshkevich <iii@linux.ibm.com> writes:
+
+> v3: https://lists.gnu.org/archive/html/qemu-devel/2024-02/msg03142.html
+> v3 -> v4: Address the review comments, add R-bs.
+>           Add the get_task_state() refactoring.
+>           Keep passing CPUState to gdbserver_fork_end() for tb_flush().
+>           Patches that need review: 02/12, 09/12-12/12.
 >
-> elf2dmp sometimes fails to work with partially corrupted dumps, and also
-> emits warnings when sanitizers are in use. This series are collections
-> of changes to improve the situation.
+> v2: https://lists.gnu.org/archive/html/qemu-devel/2024-02/msg00810.html
+> v2 -> v3: Rebase on top of master.
+>           Fix a typo in the 01/11 commit message.
 >
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
-> Akihiko Odaki (7):
->       contrib/elf2dmp: Always check for PA resolution failure
->       contrib/elf2dmp: Always destroy PA space
->       contrib/elf2dmp: Ensure segment fits in file
->       contrib/elf2dmp: Use lduw_le_p() to read PDB
->       contrib/elf2dmp: Use rol64() to decode
->       contrib/elf2dmp: Continue even contexts are lacking
->       MAINTAINERS: Add Akihiko Odaki as a elf2dmp reviewer
+> v1: https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg06646.html
+> v1 -> v2: Factor out a number of prep patches;
+>           Add a state transition diagram comment (Alex).
+>           Improve a few comments;
+>           Extend the ts_tid fix to bsd.
 >
+> Hi,
+>
+> I needed to debug a linux-user crash between fork() and exec() [1] and
+> realized that gdbstub does not allow this. This series lifts this
+> restriction (one still cannot debug past exec() though). Patches 1-10
+> are preliminary refactorings, patch 11 is the implementation, and patch
+> 12 is the test.
 
-I noticed somebody filed a bug report about elf2dmp
-crashing recently:
+Queued to gdbstub/next, thanks.
 
-https://gitlab.com/qemu-project/qemu/-/issues/2202
-
-Does this patchset happen to fix that crash?
-
-thanks
--- PMM
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
