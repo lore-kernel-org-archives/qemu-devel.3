@@ -4,58 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0153C5478C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 13:00:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB768C54E41
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 13:01:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh7ul-0008Vc-GJ; Mon, 04 Mar 2024 07:59:31 -0500
+	id 1rh7wQ-00010B-L5; Mon, 04 Mar 2024 08:01:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rh7ui-0008V6-SH; Mon, 04 Mar 2024 07:59:28 -0500
-Received: from szxga01-in.huawei.com ([45.249.212.187])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rh7ug-0008V7-1A; Mon, 04 Mar 2024 07:59:28 -0500
-Received: from mail.maildlp.com (unknown [172.19.163.174])
- by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4TpJcc69J9zwPFs;
- Mon,  4 Mar 2024 20:57:04 +0800 (CST)
-Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 4BF241402CD;
- Mon,  4 Mar 2024 20:59:20 +0800 (CST)
-Received: from [10.67.109.254] (10.67.109.254) by
- kwepemi500008.china.huawei.com (7.221.188.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Mon, 4 Mar 2024 20:59:19 +0800
-Message-ID: <7f9d680d-1e1f-10b2-ca3f-dd2e385b69f7@huawei.com>
-Date: Mon, 4 Mar 2024 20:59:18 +0800
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1rh7wJ-0000qy-NQ
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 08:01:07 -0500
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1rh7wH-0000Xp-Ou
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 08:01:07 -0500
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-a45670f9508so84630666b.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 05:01:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709557263; x=1710162063; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=u5Cts3jLtVZqVds2/HzjKgVNqkIHL6jaHibVwwKPKDg=;
+ b=vnYRHdud61lEDrF2aSmerfLP2IoioTVCH9820Cf65gnEEem69keCRNSwpCA4fW25ww
+ jWvZRc79CO8mTNz5LDvIXaCrwRS3j5/bCXZQMzW25vmfmuxlYKc5csrC297VMaCEVlwD
+ pRrWOx2l98cfe3Ow/vFbBEmBNgmgsXl3XyQlQTWp/54cTTkawItv9SuxnQte164UxgKh
+ 9njcqUEC3pGFgk5WSXfpt81EKYgmmIDWgpwaeS5wH0baBf/rWMAp0fkxd/BPI5rlMO9N
+ oRUb2V9IycHyBdOzikh/QLMVzXmAZ4h+1Lk+yBbrbaQQt2QsJmk28VmXo+v56eAQpMN6
+ i0Ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709557263; x=1710162063;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=u5Cts3jLtVZqVds2/HzjKgVNqkIHL6jaHibVwwKPKDg=;
+ b=xKESlc4F6j6633OzCFCyN5THErUdeVBOv8pHfg9NdqKThMdsQpCfodPmH+WSvUdljb
+ kiRAh+StxHGkgKOvtrHb3Lhr03HimHX14GTehumj5QW6QuAw+uUTKwfoZzQY2q15ASVo
+ 4hO826nTZO1SXTcVTYq38q/2nrOdWlZ9mUsIcQAyCoNMrhoWhNBALRpub7LsrCSPXX4v
+ YpD/M2bbDMIApABRN45amVXe9lTDak1Fy/FnhLEyE6ACUgfCqakO6G3BTH11Hx9AsrnQ
+ QmTCVPoK0rirbUMKW9/51qKexFxqgGVH91pvSh0S1pJUWm4hb4qHi3qIuCujZEs5ZPBt
+ sl7g==
+X-Gm-Message-State: AOJu0Yzfnh3MY9UqUq5RnxiLD+3oTmCluYSk3SX7yex7V/qdICpnxrhd
+ i58AsuV+004s0jKwV/t5lVEPyAcivc7OEfkfdroIsqyM71Erxsc7JBNl9NiknV2OwBSc7C3J3cm
+ i6ro=
+X-Google-Smtp-Source: AGHT+IE0TtH/eDDHDNKhDxAvQploDMzhXJ8tyZlskKUXM7tF0yzuxcUOw0cQGgPxYNBh9OwNpGq28w==
+X-Received: by 2002:a17:906:4f02:b0:a45:3ca0:40c2 with SMTP id
+ t2-20020a1709064f0200b00a453ca040c2mr1976378eju.74.1709557263173; 
+ Mon, 04 Mar 2024 05:01:03 -0800 (PST)
+Received: from debian.. ([102.35.208.160]) by smtp.gmail.com with ESMTPSA id
+ tj7-20020a170907c24700b00a413d1eda4bsm4806136ejc.87.2024.03.04.05.00.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 04 Mar 2024 05:01:02 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Yanan Wang <wangyanan55@huawei.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v7 02/12] plugins: define qemu_plugin_u64
+Date: Mon,  4 Mar 2024 17:00:26 +0400
+Message-Id: <20240304130036.124418-3-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240304130036.124418-1-pierrick.bouvier@linaro.org>
+References: <20240304130036.124418-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.0
-Subject: Re: [RFC PATCH v5 18/22] hw/intc/arm_gicv3: Implement NMI interrupt
- prioirty
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>,
- <peter.maydell@linaro.org>, <eduardo@habkost.net>,
- <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
- <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-References: <20240229131039.1868904-1-ruanjinjie@huawei.com>
- <20240229131039.1868904-19-ruanjinjie@huawei.com>
- <85d632e6-8eb9-4bb5-bef4-b6430d499e61@linaro.org>
-In-Reply-To: <85d632e6-8eb9-4bb5-bef4-b6430d499e61@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.67.109.254]
-X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
- kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.187;
- envelope-from=ruanjinjie@huawei.com; helo=szxga01-in.huawei.com
-X-Spam_score_int: -82
-X-Spam_score: -8.3
-X-Spam_bar: --------
-X-Spam_report: (-8.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-4.098,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-ej1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,150 +99,162 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
-From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Additionally to the scoreboard, we define a qemu_plugin_u64, which is a
+simple struct holding a pointer to a scoreboard, and a given offset.
+This allows to have a scoreboard containing structs, without having to
+bring offset to operate on a specific field.
 
+Since most of the plugins are simply collecting a sum of per-cpu values,
+qemu_plugin_u64 directly support this operation as well.
 
-On 2024/3/1 7:50, Richard Henderson wrote:
-> On 2/29/24 03:10, Jinjie Ruan via wrote:
->> If GICD_CTLR_DS bit is zero and the NMI is non-secure, the NMI prioirty
->> is higher than 0x80, otherwise it is higher than 0x0. And save NMI
->> super prioirty information in hppi.superprio to deliver NMI exception.
->> Since both GICR and GICD can deliver NMI, it is both necessary to check
->> whether the pending irq is NMI in gicv3_redist_update_noirqset and
->> gicv3_update_noirqset. And In irqbetter(), only a non-NMI with the same
->> priority and a smaller interrupt number can be preempted but not NMI.
->>
->> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
->> ---
->> v4:
->> - Replace is_nmi with has_superprio to not a mix NMI and superpriority.
->> - Update the comment in irqbetter().
->> - Extract gicv3_get_priority() to avoid code repeat.
->> ---
->> v3:
->> - Add missing brace
->> ---
->>   hw/intc/arm_gicv3.c | 71 ++++++++++++++++++++++++++++++++++++++++-----
->>   1 file changed, 63 insertions(+), 8 deletions(-)
->>
->> diff --git a/hw/intc/arm_gicv3.c b/hw/intc/arm_gicv3.c
->> index 0b8f79a122..1d16a53b23 100644
->> --- a/hw/intc/arm_gicv3.c
->> +++ b/hw/intc/arm_gicv3.c
->> @@ -21,7 +21,8 @@
->>   #include "hw/intc/arm_gicv3.h"
->>   #include "gicv3_internal.h"
->>   -static bool irqbetter(GICv3CPUState *cs, int irq, uint8_t prio)
->> +static bool irqbetter(GICv3CPUState *cs, int irq, uint8_t prio,
->> +                      bool has_superprio)
->>   {
->>       /* Return true if this IRQ at this priority should take
->>        * precedence over the current recorded highest priority
->> @@ -33,11 +34,24 @@ static bool irqbetter(GICv3CPUState *cs, int irq,
->> uint8_t prio)
->>       if (prio < cs->hppi.prio) {
->>           return true;
->>       }
->> +
->> +    /*
->> +     * Current highest prioirity pending interrupt is an IRQ without
->> +     * superpriority, the new IRQ with superpriority has same priority
->> +     * should signal to the CPU as it have the priority higher than
->> +     * the labelled 0x80 or 0x00.
->> +     */
->> +    if (prio == cs->hppi.prio && !cs->hppi.superprio && has_superprio) {
->> +        return true;
->> +    }
->> +
->>       /* If multiple pending interrupts have the same priority then it
->> is an
->>        * IMPDEF choice which of them to signal to the CPU. We choose to
->> -     * signal the one with the lowest interrupt number.
->> +     * signal the one with the lowest interrupt number if they don't
->> have
->> +     * superpriority.
->>        */
->> -    if (prio == cs->hppi.prio && irq <= cs->hppi.irq) {
->> +    if (prio == cs->hppi.prio && !cs->hppi.superprio &&
->> +        !has_superprio && irq <= cs->hppi.irq) {
->>           return true;
->>       }
->>       return false;
->> @@ -129,6 +143,35 @@ static uint32_t gicr_int_pending(GICv3CPUState *cs)
->>       return pend;
->>   }
->>   +static bool gicv3_get_priority(GICv3CPUState *cs, bool is_redist,
->> +                               uint32_t superprio, uint8_t *prio, int
->> irq)
->> +{
->> +    bool has_superprio = false;
->> +
->> +    if (superprio) {
->> +        has_superprio = true;
->> +
->> +        /* DS = 0 & Non-secure NMI */
->> +        if (!(cs->gic->gicd_ctlr & GICD_CTLR_DS) &&
->> +            ((is_redist && extract32(cs->gicr_igroupr0, irq, 1)) ||
->> +             (!is_redist && gicv3_gicd_group_test(cs->gic, irq)))) {
->> +            *prio = 0x80;
->> +        } else {
->> +            *prio = 0x0;
->> +        }
->> +    } else {
->> +        has_superprio = false;
->> +
->> +        if (is_redist) {
->> +            *prio = cs->gicr_ipriorityr[irq];
->> +        } else {
->> +            *prio = cs->gic->gicd_ipriority[irq];
->> +        }
->> +    }
->> +
->> +    return has_superprio;
->> +}
-> 
-> Did you not like the idea to map {priority, !superpriority} into a
-> single value?
-> 
-> It would eliminate the change in irqbetter(), which is a bit more
-> complex than it needs to be.
-> 
->> @@ -152,10 +197,13 @@ static void
->> gicv3_redist_update_noirqset(GICv3CPUState *cs)
->>               if (!(pend & (1 << i))) {
->>                   continue;
->>               }
->> -            prio = cs->gicr_ipriorityr[i];
->> -            if (irqbetter(cs, i, prio)) {
->> +            superprio = extract32(cs->gicr_isuperprio, i, 1);
->> +            has_superprio = gicv3_get_priority(cs, true, superprio,
->> &prio, i);
-> 
-> It would allow moving the read of gicr_isuperprio into
-> gicv3_get_priority(), alongside the read of gicr_ipriorityr.
-> 
-> Is there a bug here not handling is_redist for GCIR_INMI*?
+All inline operations defined later will use a qemu_plugin_u64 as input.
 
-There seems no bug. Since prio = cs->gicr_ipriorityr[i] or  prio =
-s->gicd_ipriority[i] are separately used originally,
+New functions:
+- qemu_plugin_u64_add
+- qemu_plugin_u64_get
+- qemu_plugin_u64_set
+- qemu_plugin_u64_sum
+New macros:
+- qemu_plugin_scoreboard_u64
+- qemu_plugin_scoreboard_u64_in_struct
 
-> 
->> @@ -168,7 +216,7 @@ static void
->> gicv3_redist_update_noirqset(GICv3CPUState *cs)
->>       if ((cs->gicr_ctlr & GICR_CTLR_ENABLE_LPIS) &&
->> cs->gic->lpi_enable &&
->>           (cs->gic->gicd_ctlr & GICD_CTLR_EN_GRP1NS) &&
->>           (cs->hpplpi.prio != 0xff)) {
->> -        if (irqbetter(cs, cs->hpplpi.irq, cs->hpplpi.prio)) {
->> +        if (irqbetter(cs, cs->hpplpi.irq, cs->hpplpi.prio, false)) {
-> 
-> Always passing false here is incorrect -- again missing the
-> redistributor nmi bit?
-> 
-> 
-> r~
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ include/qemu/qemu-plugin.h   | 52 ++++++++++++++++++++++++++++++++++++
+ plugins/api.c                | 34 +++++++++++++++++++++++
+ plugins/qemu-plugins.symbols |  4 +++
+ 3 files changed, 90 insertions(+)
+
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index 31c468ddb2c..ebf9a645e15 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -225,6 +225,17 @@ struct qemu_plugin_insn;
+ /** struct qemu_plugin_scoreboard - Opaque handle for a scoreboard */
+ struct qemu_plugin_scoreboard;
+ 
++/**
++ * typedef qemu_plugin_u64 - uint64_t member of an entry in a scoreboard
++ *
++ * This field allows to access a specific uint64_t member in one given entry,
++ * located at a specified offset. Inline operations expect this as entry.
++ */
++typedef struct {
++    struct qemu_plugin_scoreboard *score;
++    size_t offset;
++} qemu_plugin_u64;
++
+ /**
+  * enum qemu_plugin_cb_flags - type of callback
+  *
+@@ -784,4 +795,45 @@ QEMU_PLUGIN_API
+ void *qemu_plugin_scoreboard_find(struct qemu_plugin_scoreboard *score,
+                                   unsigned int vcpu_index);
+ 
++/* Macros to define a qemu_plugin_u64 */
++#define qemu_plugin_scoreboard_u64(score) \
++    (qemu_plugin_u64) {score, 0}
++#define qemu_plugin_scoreboard_u64_in_struct(score, type, member) \
++    (qemu_plugin_u64) {score, offsetof(type, member)}
++
++/**
++ * qemu_plugin_u64_add() - add a value to a qemu_plugin_u64 for a given vcpu
++ * @entry: entry to query
++ * @vcpu_index: entry index
++ * @added: value to add
++ */
++QEMU_PLUGIN_API
++void qemu_plugin_u64_add(qemu_plugin_u64 entry, unsigned int vcpu_index,
++                         uint64_t added);
++
++/**
++ * qemu_plugin_u64_get() - get value of a qemu_plugin_u64 for a given vcpu
++ * @entry: entry to query
++ * @vcpu_index: entry index
++ */
++QEMU_PLUGIN_API
++uint64_t qemu_plugin_u64_get(qemu_plugin_u64 entry, unsigned int vcpu_index);
++
++/**
++ * qemu_plugin_u64_set() - set value of a qemu_plugin_u64 for a given vcpu
++ * @entry: entry to query
++ * @vcpu_index: entry index
++ * @val: new value
++ */
++QEMU_PLUGIN_API
++void qemu_plugin_u64_set(qemu_plugin_u64 entry, unsigned int vcpu_index,
++                         uint64_t val);
++
++/**
++ * qemu_plugin_u64_sum() - return sum of all vcpu entries in a scoreboard
++ * @entry: entry to sum
++ */
++QEMU_PLUGIN_API
++uint64_t qemu_plugin_u64_sum(qemu_plugin_u64 entry);
++
+ #endif /* QEMU_QEMU_PLUGIN_H */
+diff --git a/plugins/api.c b/plugins/api.c
+index f8b15510ff7..f4518a68afe 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -484,3 +484,37 @@ void *qemu_plugin_scoreboard_find(struct qemu_plugin_scoreboard *score,
+     char *base_ptr = score->data->data;
+     return base_ptr + vcpu_index * g_array_get_element_size(score->data);
+ }
++
++static uint64_t *plugin_u64_address(qemu_plugin_u64 entry,
++                                    unsigned int vcpu_index)
++{
++    char *ptr = qemu_plugin_scoreboard_find(entry.score, vcpu_index);
++    return (uint64_t *)(ptr + entry.offset);
++}
++
++void qemu_plugin_u64_add(qemu_plugin_u64 entry, unsigned int vcpu_index,
++                         uint64_t added)
++{
++    *plugin_u64_address(entry, vcpu_index) += added;
++}
++
++uint64_t qemu_plugin_u64_get(qemu_plugin_u64 entry,
++                             unsigned int vcpu_index)
++{
++    return *plugin_u64_address(entry, vcpu_index);
++}
++
++void qemu_plugin_u64_set(qemu_plugin_u64 entry, unsigned int vcpu_index,
++                         uint64_t val)
++{
++    *plugin_u64_address(entry, vcpu_index) = val;
++}
++
++uint64_t qemu_plugin_u64_sum(qemu_plugin_u64 entry)
++{
++    uint64_t total = 0;
++    for (int i = 0, n = qemu_plugin_num_vcpus(); i < n; ++i) {
++        total += qemu_plugin_u64_get(entry, i);
++    }
++    return total;
++}
+diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
+index 3f93e7d6b13..6204453d0fd 100644
+--- a/plugins/qemu-plugins.symbols
++++ b/plugins/qemu-plugins.symbols
+@@ -44,6 +44,10 @@
+   qemu_plugin_tb_get_insn;
+   qemu_plugin_tb_n_insns;
+   qemu_plugin_tb_vaddr;
++  qemu_plugin_u64_add;
++  qemu_plugin_u64_get;
++  qemu_plugin_u64_set;
++  qemu_plugin_u64_sum;
+   qemu_plugin_uninstall;
+   qemu_plugin_vcpu_for_each;
+ };
+-- 
+2.39.2
+
 
