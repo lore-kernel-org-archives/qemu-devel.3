@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76710C54E49
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 19:46:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67F70C5478C
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 19:46:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhEEk-0005XU-V6; Mon, 04 Mar 2024 14:44:35 -0500
+	id 1rhEES-0005TP-L0; Mon, 04 Mar 2024 14:44:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rhEEh-0005Wp-JI
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 14:44:31 -0500
-Received: from mail-yb1-xb31.google.com ([2607:f8b0:4864:20::b31])
+ id 1rhEER-0005Sr-JV
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 14:44:15 -0500
+Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rhEEf-0006xb-Ny
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 14:44:31 -0500
-Received: by mail-yb1-xb31.google.com with SMTP id
- 3f1490d57ef6-dcc80d6006aso5068175276.0
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 11:44:29 -0800 (PST)
+ id 1rhEEP-0006vR-QI
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 14:44:15 -0500
+Received: by mail-yb1-xb2c.google.com with SMTP id
+ 3f1490d57ef6-dcd7c526cc0so5184544276.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 11:44:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709581468; x=1710186268; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1709581453; x=1710186253; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zJmbpLHmX91RSD+FS2bbI4ESdtGu0icFFQqbt0j7En8=;
- b=QOW14upCueKGmhl7kqpIQXMJonky45CZaSrT9w5rW5nkEfu1vgILKNPuApPVDm4xTu
- r3gLa5E2dB7DgARnsnMFJmPLQYCzibL9ShQj5eE0VMMckagmL72spLd8qSETgTM2HfEW
- xqsNuRIQ0JZAB4bX9NtpEmH0AKruvwni4SvCCZoNwMsyS+DBDH7xFuIL3YlykZZRpXyW
- YufYMZf0/y1jzoK8AmeWYri/oP6PHdI7wQmpLZrgOU7pohqzJo9qUqSofXTKzbho+UMC
- OY9ZCZ1dQDUDIyVTx5Ezzvnex6qVSfTlS+iVvYIhmIF2NhA0vaI2UpINLIbgZOUt1/yl
- zh2g==
+ bh=qbOcnbLy9moWsSBbE+Q42MVGWhpKJBtzuH2spFlbBIc=;
+ b=F+NqVZkan2g6rTkEtl2ksPATYTmVx/hF1j849qakco0Z7AqUSP9lAsc1nFMzYtn/Qk
+ KwtB+TClJ5KMDeN0ryUy4DlmmxLlPKdH5kPABbyrRJz29hR0ePd2FTB4R8CxtBVRdjaC
+ 4r37NgEbO3TM/IRH/qhGAAzl4ocajaZWGBm3WcDLTcc0E5FpyWnNEh663+kOM2C4SlZz
+ uDuKYqEp4SfllPglUe1i6tDRjHCI+uJN12a+WqaK7BF/MyKe8Em/KUGXXOScwvS3FLcc
+ I5HFWrZISL2Wmz8bwgXItQKOipFwLJqBKbDyav8rnYO+eaOC+GQnNFCFYl7DT9fUm597
+ KB9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709581468; x=1710186268;
+ d=1e100.net; s=20230601; t=1709581453; x=1710186253;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zJmbpLHmX91RSD+FS2bbI4ESdtGu0icFFQqbt0j7En8=;
- b=YicfiJ8Mk/WwgR+WERI9dCWIrbejJJ/wtMLL30W9+Xh9ZPmc8ZtDaXwEc6yq5eO9OO
- nJH2kRR6I8OWcssLXc+FGKAyLCplrbxdprBkiDkOgYbIqtcb/7m/rgNOts4PJ2n/i59E
- xeprHxTLOtJD6O9M7zl1iedgDT92S/NbdMWAyfris0SSxvdjblRfg3vxdbCPeG0rYkGz
- ej4ZWo4MSGNgy0r2445T/LJ+fHQMxswlaH8gcZ/9AHOZQlrMl7jQyC6uypcgjAjfbKCq
- GtqIYVpNLa4c/Aof1fnO6ULHksl/03XsmSW9vn7bxFQuvFOLJKJbEdBlWgGhjpYeO+sa
- ecqQ==
-X-Gm-Message-State: AOJu0Yx7RX6UcMksNQymiak9UuIHH7nIdNDPKvvIu6bOs+zwqiCxzmF5
- nfVx46CXdUhqqNM3Qva6svMebvcPzRcr4RFkJg3bb7sOlzWNVQtg8jQYrKf9
-X-Google-Smtp-Source: AGHT+IFgVk4gFsTBw619+d2h77tRgbIEeyXBAg4E1CIdEk27elXaNIecJfX30qCONXyB3gh3/cBbGg==
-X-Received: by 2002:a5b:644:0:b0:dc2:41de:b744 with SMTP id
- o4-20020a5b0644000000b00dc241deb744mr7144765ybq.32.1709581468003; 
- Mon, 04 Mar 2024 11:44:28 -0800 (PST)
+ bh=qbOcnbLy9moWsSBbE+Q42MVGWhpKJBtzuH2spFlbBIc=;
+ b=keQx2gReSyZsanffI9Yk69NEFeRs8OjDlr1eZDodaK9dwlAe9YGOruTQ2gz0Dh4ibH
+ DzDxzSNrLiYCtfAp+3WxHygAF4GpTFArKNmGmI7q3rl3g0eLONZt3XqUhiWQTvCjjitN
+ C9RYJs6cNm3Je2P40DzBoTjAJat2WYbEEdnHKvu7Ur2b+YUln60+Djo1TTYdJbI4s5JE
+ rcoM6qMwMkCFt+si50FmHQA3rCJUGuB6jjrA/RbOZLVi9M2sUG3ZTsj3PV2FntI4+mmV
+ P8dFepl2IeZHgsqRduDNnXDYOCY6of/jfusaBDUeHU+KsDnxhIXX5VfeC2wHfBRimNtF
+ Wf0w==
+X-Gm-Message-State: AOJu0YwAONjf1l0s0L3BqeBYp7XOhQtGe41mG87cHpNiYqjjVlR1/Yg4
+ 725OiBUPTncecbHvtv9/ncIOUGECjm6qJj9GaD1bWyvJnUzPwkX+RC1vT38u
+X-Google-Smtp-Source: AGHT+IFj/6AKOb01CS8iZ0cx8I6hTpu+7AdNBUdow4ScUYPauwu6XEYgtcZPPXwXUBAP+6x/56QZMw==
+X-Received: by 2002:a25:9d88:0:b0:dcb:aa26:50fe with SMTP id
+ v8-20020a259d88000000b00dcbaa2650femr6868080ybp.15.1709581452753; 
+ Mon, 04 Mar 2024 11:44:12 -0800 (PST)
 Received: from localhost.localdomain ([50.205.20.42])
  by smtp.gmail.com with ESMTPSA id
- h1-20020a255f41000000b00dc62edd58dasm2282646ybm.40.2024.03.04.11.44.25
+ h1-20020a255f41000000b00dc62edd58dasm2282646ybm.40.2024.03.04.11.44.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Mar 2024 11:44:27 -0800 (PST)
+ Mon, 04 Mar 2024 11:44:12 -0800 (PST)
 From: nifan.cxl@gmail.com
 To: qemu-devel@nongnu.org
 Cc: jonathan.cameron@huawei.com, linux-cxl@vger.kernel.org,
@@ -65,17 +65,17 @@ Cc: jonathan.cameron@huawei.com, linux-cxl@vger.kernel.org,
  a.manzanares@samsung.com, dave@stgolabs.net, nmtadam.samsung@gmail.com,
  nifan.cxl@gmail.com, jim.harris@samsung.com, Jorgen.Hansen@wdc.com,
  wj28.lee@gmail.com, Fan Ni <fan.ni@samsung.com>
-Subject: [PATCH v5 10/13] hw/mem/cxl_type3: Add dpa range validation for
- accesses to DC regions
-Date: Mon,  4 Mar 2024 11:34:05 -0800
-Message-ID: <20240304194331.1586191-11-nifan.cxl@gmail.com>
+Subject: [PATCH v5 04/13] hw/mem/cxl_type3: Add support to create DC regions
+ to type3 memory devices
+Date: Mon,  4 Mar 2024 11:33:59 -0800
+Message-ID: <20240304194331.1586191-5-nifan.cxl@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240304194331.1586191-1-nifan.cxl@gmail.com>
 References: <20240304194331.1586191-1-nifan.cxl@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b31;
- envelope-from=nifan.cxl@gmail.com; helo=mail-yb1-xb31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-yb1-xb2c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,191 +100,112 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Fan Ni <fan.ni@samsung.com>
 
-Not all dpa range in the DC regions is valid to access until an extent
-covering the range has been added. Add a bitmap for each region to
-record whether a DC block in the region has been backed by DC extent.
-For the bitmap, a bit in the bitmap represents a DC block. When a DC
-extent is added, all the bits of the blocks in the extent will be set,
-which will be cleared when the extent is released.
+With the change, when setting up memory for type3 memory device, we can
+create DC regions.
+A property 'num-dc-regions' is added to ct3_props to allow users to pass the
+number of DC regions to create. To make it easier, other region parameters
+like region base, length, and block size are hard coded. If needed,
+these parameters can be added easily.
+
+With the change, we can create DC regions with proper kernel side
+support like below:
+
+region=$(cat /sys/bus/cxl/devices/decoder0.0/create_dc_region)
+echo $region > /sys/bus/cxl/devices/decoder0.0/create_dc_region
+echo 256 > /sys/bus/cxl/devices/$region/interleave_granularity
+echo 1 > /sys/bus/cxl/devices/$region/interleave_ways
+
+echo "dc0" >/sys/bus/cxl/devices/decoder2.0/mode
+echo 0x40000000 >/sys/bus/cxl/devices/decoder2.0/dpa_size
+
+echo 0x40000000 > /sys/bus/cxl/devices/$region/size
+echo  "decoder2.0" > /sys/bus/cxl/devices/$region/target0
+echo 1 > /sys/bus/cxl/devices/$region/commit
+echo $region > /sys/bus/cxl/drivers/cxl_region/bind
 
 Signed-off-by: Fan Ni <fan.ni@samsung.com>
 ---
- hw/cxl/cxl-mailbox-utils.c  |  4 ++
- hw/mem/cxl_type3.c          | 76 +++++++++++++++++++++++++++++++++++++
- include/hw/cxl/cxl_device.h |  7 ++++
- 3 files changed, 87 insertions(+)
+ hw/mem/cxl_type3.c | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 46 insertions(+)
 
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 53ebc526ae..b538297bb5 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -1606,6 +1606,7 @@ static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
- 
-         cxl_insert_extent_to_extent_list(extent_list, dpa, len, NULL, 0);
-         ct3d->dc.total_extent_count += 1;
-+        ct3_set_region_block_backed(ct3d, dpa, len);
-     }
- 
-     /*
-@@ -1681,17 +1682,20 @@ static CXLRetCode cmd_dcd_release_dyn_cap(const struct cxl_cmd *cmd,
-                     found = true;
-                     cxl_remove_extent_from_extent_list(extent_list, ent);
-                     ct3d->dc.total_extent_count -= 1;
-+                    ct3_clear_region_block_backed(ct3d, ent_start_dpa, ent_len);
- 
-                     if (len1) {
-                         cxl_insert_extent_to_extent_list(extent_list,
-                                                          ent_start_dpa, len1,
-                                                          NULL, 0);
-                         ct3d->dc.total_extent_count += 1;
-+                        ct3_set_region_block_backed(ct3d, ent_start_dpa, len1);
-                     }
-                     if (len2) {
-                         cxl_insert_extent_to_extent_list(extent_list, dpa + len,
-                                                          len2, NULL, 0);
-                         ct3d->dc.total_extent_count += 1;
-+                        ct3_set_region_block_backed(ct3d, dpa + len, len2);
-                     }
-                     break;
-                 } else {
 diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index e9c8994cdb..c164cf4580 100644
+index 244d2b5fd5..a191211009 100644
 --- a/hw/mem/cxl_type3.c
 +++ b/hw/mem/cxl_type3.c
-@@ -672,6 +672,7 @@ static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
+@@ -30,6 +30,7 @@
+ #include "hw/pci/msix.h"
  
-         region_base += region->len;
-         ct3d->dc.total_capacity += region->len;
-+        region->blk_bitmap = bitmap_new(region->len / region->block_size);
+ #define DWORD_BYTE 4
++#define CXL_CAPACITY_MULTIPLIER   (256 * MiB)
+ 
+ /* Default CDAT entries for a memory region */
+ enum {
+@@ -567,6 +568,45 @@ static void ct3d_reg_write(void *opaque, hwaddr offset, uint64_t value,
      }
-     QTAILQ_INIT(&ct3d->dc.extents);
-     QTAILQ_INIT(&ct3d->dc.extents_pending_to_add);
-@@ -682,6 +683,8 @@ static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
- static void cxl_destroy_dc_regions(CXLType3Dev *ct3d)
- {
-     CXLDCExtent *ent;
+ }
+ 
++/*
++ * TODO: dc region configuration will be updated once host backend and address
++ * space support is added for DCD.
++ */
++static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
++{
 +    int i;
++    uint64_t region_base = 0;
++    uint64_t region_len =  2 * GiB;
++    uint64_t decode_len = 2 * GiB;
++    uint64_t blk_size = 2 * MiB;
 +    CXLDCRegion *region;
- 
-     while (!QTAILQ_EMPTY(&ct3d->dc.extents)) {
-         ent = QTAILQ_FIRST(&ct3d->dc.extents);
-@@ -693,6 +696,11 @@ static void cxl_destroy_dc_regions(CXLType3Dev *ct3d)
-         cxl_remove_extent_from_extent_list(&ct3d->dc.extents_pending_to_add,
-                                            ent);
-     }
++    MemoryRegion *mr;
++
++    if (ct3d->hostvmem) {
++        mr = host_memory_backend_get_memory(ct3d->hostvmem);
++        region_base += memory_region_size(mr);
++    }
++    if (ct3d->hostpmem) {
++        mr = host_memory_backend_get_memory(ct3d->hostpmem);
++        region_base += memory_region_size(mr);
++    }
++    assert(region_base % CXL_CAPACITY_MULTIPLIER == 0);
 +
 +    for (i = 0; i < ct3d->dc.num_regions; i++) {
 +        region = &ct3d->dc.regions[i];
-+        g_free(region->blk_bitmap);
-+    }
- }
- 
- static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
-@@ -924,6 +932,70 @@ static void ct3_exit(PCIDevice *pci_dev)
-     }
- }
- 
-+/*
-+ * Mark the DPA range [dpa, dap + len) to be backed and accessible. This
-+ * happens when a DC extent is added and accepted by the host.
-+ */
-+void ct3_set_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
-+                                 uint64_t len)
-+{
-+    CXLDCRegion *region;
++        region->base = region_base;
++        region->decode_len = decode_len;
++        region->len = region_len;
++        region->block_size = blk_size;
++        /* dsmad_handle is set when creating cdat table entries */
++        region->flags = 0;
 +
-+    region = cxl_find_dc_region(ct3d, dpa, len);
-+    if (!region) {
-+        return;
++        region_base += region->len;
 +    }
 +
-+    bitmap_set(region->blk_bitmap, (dpa - region->base) / region->block_size,
-+               len / region->block_size);
++    return true;
 +}
 +
-+/*
-+ * Check whether the DPA range [dpa, dpa + len) is backed with DC extents.
-+ * Used when validating read/write to dc regions
-+ */
-+bool ct3_test_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
-+                                  uint64_t len)
-+{
-+    CXLDCRegion *region;
-+    uint64_t nbits;
-+    long nr;
-+
-+    region = cxl_find_dc_region(ct3d, dpa, len);
-+    if (!region) {
+ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
+ {
+     DeviceState *ds = DEVICE(ct3d);
+@@ -635,6 +675,11 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
+         g_free(p_name);
+     }
+ 
++    if (!cxl_create_dc_regions(ct3d, errp)) {
++        error_setg(errp, "setup DC regions failed");
 +        return false;
 +    }
 +
-+    nr = (dpa - region->base) / region->block_size;
-+    nbits = DIV_ROUND_UP(len, region->block_size);
-+    /*
-+     * if bits between [dpa, dpa + len) are all 1s, meaning the DPA range is
-+     * backed with DC extents, return true; else return false.
-+     */
-+    return find_next_zero_bit(region->blk_bitmap, nr + nbits, nr) == nr + nbits;
-+}
-+
-+/*
-+ * Mark the DPA range [dpa, dap + len) to be unbacked and inaccessible. This
-+ * happens when a dc extent is released by the host.
-+ */
-+void ct3_clear_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
-+                                   uint64_t len)
-+{
-+    CXLDCRegion *region;
-+    uint64_t nbits;
-+    long nr;
-+
-+    region = cxl_find_dc_region(ct3d, dpa, len);
-+    if (!region) {
-+        return;
-+    }
-+
-+    nr = (dpa - region->base) / region->block_size;
-+    nbits = len / region->block_size;
-+    bitmap_clear(region->blk_bitmap, nr, nbits);
-+}
-+
- static bool cxl_type3_dpa(CXLType3Dev *ct3d, hwaddr host_addr, uint64_t *dpa)
- {
-     int hdm_inc = R_CXL_HDM_DECODER1_BASE_LO - R_CXL_HDM_DECODER0_BASE_LO;
-@@ -1029,6 +1101,10 @@ static int cxl_type3_hpa_to_as_and_dpa(CXLType3Dev *ct3d,
-         *as = &ct3d->hostpmem_as;
-         *dpa_offset -= vmr_size;
-     } else {
-+        if (!ct3_test_region_block_backed(ct3d, *dpa_offset, size)) {
-+            return -ENODEV;
-+        }
-+
-         *as = &ct3d->dc.host_dc_as;
-         *dpa_offset -= (vmr_size + pmr_size);
-     }
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index b524c5e699..b213149de2 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -450,6 +450,7 @@ typedef struct CXLDCRegion {
-     uint64_t block_size;
-     uint32_t dsmadhandle;
-     uint8_t flags;
-+    unsigned long *blk_bitmap;
- } CXLDCRegion;
+     return true;
+ }
  
- struct CXLType3Dev {
-@@ -557,4 +558,10 @@ void cxl_insert_extent_to_extent_list(CXLDCExtentList *list, uint64_t dpa,
-                                       uint16_t shared_seq);
- bool test_any_bits_set(const unsigned long *addr, unsigned long nr,
-                        unsigned long size);
-+void ct3_set_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
-+                                 uint64_t len);
-+void ct3_clear_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
-+                                   uint64_t len);
-+bool ct3_test_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
-+                                  uint64_t len);
- #endif
+@@ -930,6 +975,7 @@ static Property ct3_props[] = {
+                      HostMemoryBackend *),
+     DEFINE_PROP_UINT64("sn", CXLType3Dev, sn, UI64_NULL),
+     DEFINE_PROP_STRING("cdat", CXLType3Dev, cxl_cstate.cdat.filename),
++    DEFINE_PROP_UINT8("num-dc-regions", CXLType3Dev, dc.num_regions, 0),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
 -- 
 2.43.0
 
