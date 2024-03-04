@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3176FC54E4A
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 06:37:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9343CC48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 Mar 2024 06:40:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rh1ss-0005bt-DG; Mon, 04 Mar 2024 01:33:19 -0500
+	id 1rh1zf-0000sV-Hh; Mon, 04 Mar 2024 01:40:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rh1sW-0005Xv-61
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 01:32:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rh1sR-00008D-EE
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 01:32:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709533961;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pOjnZidORcDEQ/A5DM1wItaLmYEEvB17BaywLPOi69Y=;
- b=H8wJ+FIAsKwx8OMlXM9SG7NTd/M6aYGrWkQBJ8vY8+lTAmF9XiiIYmNnvzI7Qv62phWgRn
- u8fISgQjoRtvnmumonQtuaQJqETFBZ7ujOWaaHCeQfg45BMffTRUzSgc5H8ZtUPwFgB1sX
- wF1yOb1R/0cyFBJIEBi6dMwQxCHnI9g=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-563-aP4l2THTNtis9Xo6f4YYdQ-1; Mon, 04 Mar 2024 01:32:39 -0500
-X-MC-Unique: aP4l2THTNtis9Xo6f4YYdQ-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 32B5F85A589;
- Mon,  4 Mar 2024 06:32:39 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.3])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 0F2521C060B1;
- Mon,  4 Mar 2024 06:32:39 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 844F621E68BD; Mon,  4 Mar 2024 07:32:36 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1rh1zQ-0000rz-FH
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 01:39:56 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1rh1zN-0001D0-LC
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 01:39:56 -0500
+Received: from loongson.cn (unknown [10.20.42.173])
+ by gateway (Coremail) with SMTP id _____8DxdfGybOVlW_kTAA--.50526S3;
+ Mon, 04 Mar 2024 14:39:48 +0800 (CST)
+Received: from [10.20.42.173] (unknown [10.20.42.173])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8CxPs+vbOVlq5pNAA--.8875S3; 
+ Mon, 04 Mar 2024 14:39:45 +0800 (CST)
+Subject: Re: [PATCH] Fixed tlb huge page loading issue
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-Subject: [PULL 09/18] qga/qapi-schema: Delete useless "Returns" sections
-Date: Mon,  4 Mar 2024 07:32:27 +0100
-Message-ID: <20240304063236.213955-10-armbru@redhat.com>
-In-Reply-To: <20240304063236.213955-1-armbru@redhat.com>
-References: <20240304063236.213955-1-armbru@redhat.com>
+References: <20240228065552.365973-1-lixianglai@loongson.cn>
+Cc: Song Gao <gaosong@loongson.cn>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <a4ffc5e1-9401-afef-80dd-a89d9a973825@loongson.cn>
+Date: Mon, 4 Mar 2024 14:39:42 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-type: text/plain
+In-Reply-To: <20240228065552.365973-1-lixianglai@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.589,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-CM-TRANSID: AQAAf8CxPs+vbOVlq5pNAA--.8875S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxAr48Gry3tr4DGry5ur1kCrX_yoW5Cw4xpF
+ WxCw4SkFW5trZrtas3Wa1Yvr1DXw4Ik3y7Wa1xtryFkw15Xr97XF4ktrZIkF15J3y5urWx
+ ZFnFvryUCay8XacCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1CP
+ fJUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.301,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,71 +82,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20240227113921.236097-10-armbru@redhat.com>
----
- qga/qapi-schema.json | 12 ------------
- 1 file changed, 12 deletions(-)
+Xianglai,
 
-diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-index c5f2ac8f59..636c2c5697 100644
---- a/qga/qapi-schema.json
-+++ b/qga/qapi-schema.json
-@@ -153,8 +153,6 @@
- # @time: time of nanoseconds, relative to the Epoch of 1970-01-01 in
- #     UTC.
- #
--# Returns: Nothing on success.
--#
- # Since: 1.5
- ##
- { 'command': 'guest-set-time',
-@@ -245,8 +243,6 @@
- #
- # @handle: filehandle returned by guest-file-open
- #
--# Returns: Nothing on success.
--#
- # Since: 0.15.0
- ##
- { 'command': 'guest-file-close',
-@@ -399,8 +395,6 @@
- #
- # @handle: filehandle returned by guest-file-open
- #
--# Returns: Nothing on success.
--#
- # Since: 0.15.0
- ##
- { 'command': 'guest-file-flush',
-@@ -1077,8 +1071,6 @@
- # transmission, even if already crypt()d, to ensure it is 8-bit safe
- # when passed as JSON.
- #
--# Returns: Nothing on success.
--#
- # Since: 2.3
- ##
- { 'command': 'guest-set-user-password',
-@@ -1602,8 +1594,6 @@
- #
- # @reset: ignore the existing content, set it with the given keys only
- #
--# Returns: Nothing on success.
--#
- # Since: 5.2
- ##
- { 'command': 'guest-ssh-add-authorized-keys',
-@@ -1622,8 +1612,6 @@
- # @keys: the public keys to remove (in OpenSSH/sshd(8) authorized_keys
- #     format)
- #
--# Returns: Nothing on success.
--#
- # Since: 5.2
- ##
- { 'command': 'guest-ssh-remove-authorized-keys',
--- 
-2.44.0
+Thanks for your patch.
+
+On 2024/2/28 下午2:55, Xianglai Li wrote:
+> The lddir and ldpte instruction emulation has
+> a problem with the use of large page processing above level 2.
+> The page size is not correctly calculated,
+> resulting in the wrong page size of the table entry found by tlb.
+Could you describe the actual problem in detail?
+
+> 
+> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+> ---
+>   target/loongarch/cpu.h            |  1 +
+>   target/loongarch/tcg/tlb_helper.c | 21 ++++++++++++---------
+>   2 files changed, 13 insertions(+), 9 deletions(-)
+> 
+> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+> index ec37579fd6..eab3e41c71 100644
+> --- a/target/loongarch/cpu.h
+> +++ b/target/loongarch/cpu.h
+> @@ -292,6 +292,7 @@ typedef struct CPUArchState {
+>       uint32_t fcsr0_mask;
+>   
+>       uint32_t cpucfg[21];
+> +    uint32_t lddir_ps;
+>   
+>       uint64_t lladdr; /* LL virtual address compared against SC */
+>       uint64_t llval;
+> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+> index a08c08b05a..3594c800b3 100644
+> --- a/target/loongarch/tcg/tlb_helper.c
+> +++ b/target/loongarch/tcg/tlb_helper.c
+> @@ -38,6 +38,7 @@ static void raise_mmu_exception(CPULoongArchState *env, target_ulong address,
+>               cs->exception_index = EXCCODE_PIF;
+>           }
+>           env->CSR_TLBRERA = FIELD_DP64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 1);
+> +        env->lddir_ps = 0;
+>           break;
+>       case TLBRET_INVALID:
+>           /* TLB match with no valid bit */
+> @@ -488,13 +489,6 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+>       uint64_t dir_base, dir_width;
+>       bool huge = (base >> LOONGARCH_PAGE_HUGE_SHIFT) & 0x1;
+>   
+> -    badvaddr = env->CSR_TLBRBADV;
+> -    base = base & TARGET_PHYS_MASK;
+> -
+> -    /* 0:64bit, 1:128bit, 2:192bit, 3:256bit */
+> -    shift = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTEWIDTH);
+> -    shift = (shift + 1) * 3;
+> -
+>       if (huge) {
+>           return base;
+>       }
+> @@ -519,9 +513,18 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+>           do_raise_exception(env, EXCCODE_INE, GETPC());
+>           return 0;
+>       }
+> +
+> +    /* 0:64bit, 1:128bit, 2:192bit, 3:256bit */
+> +    shift = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTEWIDTH);
+> +    shift = (shift + 1) * 3;
+> +    badvaddr = env->CSR_TLBRBADV;
+> +    base = base & TARGET_PHYS_MASK;
+>       index = (badvaddr >> dir_base) & ((1 << dir_width) - 1);
+>       phys = base | index << shift;
+>       ret = ldq_phys(cs->as, phys) & TARGET_PHYS_MASK;
+> +    if (ret & BIT_ULL(LOONGARCH_PAGE_HUGE_SHIFT)) {
+> +        env->lddir_ps = dir_base;
+> +    }
+>       return ret;
+>   }
+>   
+> @@ -538,13 +541,13 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+>       base = base & TARGET_PHYS_MASK;
+>   
+>       if (huge) {
+> -        /* Huge Page. base is paddr */
+>           tmp0 = base ^ (1 << LOONGARCH_PAGE_HUGE_SHIFT);
+>           /* Move Global bit */
+>           tmp0 = ((tmp0 & (1 << LOONGARCH_HGLOBAL_SHIFT))  >>
+>                   LOONGARCH_HGLOBAL_SHIFT) << R_TLBENTRY_G_SHIFT |
+>                   (tmp0 & (~(1 << LOONGARCH_HGLOBAL_SHIFT)));
+> -        ps = ptbase + ptwidth - 1;
+> +
+empty line is not necessary.
+
+Regards
+Bibo Mao
+> +        ps = env->lddir_ps - 1;
+>           if (odd) {
+>               tmp0 += MAKE_64BIT_MASK(ps, 1);
+>           }
+> 
 
 
