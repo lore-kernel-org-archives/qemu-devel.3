@@ -4,82 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CFDDC5478C
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 06:37:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60982C54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 06:49:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhOQ6-0005zH-Du; Tue, 05 Mar 2024 01:37:03 -0500
+	id 1rhOb4-00088H-Kg; Tue, 05 Mar 2024 01:48:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
- id 1rhOPt-0005yg-CS
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 01:36:46 -0500
-Received: from mgamail.intel.com ([198.175.65.21])
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1rhOao-00086m-8f; Tue, 05 Mar 2024 01:48:08 -0500
+Received: from out30-119.freemail.mail.aliyun.com ([115.124.30.119])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
- id 1rhOPp-0003n5-BB
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 01:36:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709620602; x=1741156602;
- h=from:to:cc:subject:in-reply-to:references:date:
- message-id:mime-version:content-transfer-encoding;
- bh=fsK+f7bh6SaYyPN7/YyJPG+tUPYKxJnt+4ogSrVq56o=;
- b=QSd7V8NxtxH1LrnAbtiynFuT3BTjs6gLdfwI5+0wxGlH81lnJxhMEKXP
- O4eKMELATuBY3G5Oxh07GrkjxjFG4mVpY21C4DfkCAA7F5yOVer4apKUj
- dF8wYnt/O9N8oNd7FrwHqsuqVOFBXrIgh5/hiPtu9UMT2EdZZrlYNtyRb
- hyMGp7tyglKYR8hklrHf8kWqPkVUdjt9ULcV0JhLtjNF2ES1SbDTY+NVW
- YfDReETXIb7qd4tLeNscd2Y70Z9m1izEsAIZDF/8VTlw6Yd+xpd7yIoeW
- 8h+WehXlN68o4OVxWho8wlJ9kzym8N1pItIuFE1mUp23nVtt3Hn9eMJmi g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11003"; a="4076919"
-X-IronPort-AV: E=Sophos;i="6.06,205,1705392000"; 
-   d="scan'208";a="4076919"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Mar 2024 22:36:38 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,205,1705392000"; d="scan'208";a="46795681"
-Received: from yhuang6-desk2.sh.intel.com (HELO
- yhuang6-desk2.ccr.corp.intel.com) ([10.238.208.55])
- by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Mar 2024 22:36:31 -0800
-From: "Huang, Ying" <ying.huang@intel.com>
-To: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
-Cc: Gregory Price <gourry.memverge@gmail.com>,  aneesh.kumar@linux.ibm.com,
- mhocko@suse.com,  tj@kernel.org,  john@jagalactic.com,  Eishan Mirakhur
- <emirakhur@micron.com>,  Vinicius Tavares Petrucci
- <vtavarespetr@micron.com>,  Ravis OpenSrc <Ravis.OpenSrc@micron.com>,
- Alistair Popple <apopple@nvidia.com>,  "Rafael J. Wysocki"
- <rafael@kernel.org>,  Len Brown <lenb@kernel.org>,  Andrew Morton
- <akpm@linux-foundation.org>,  Dave Jiang <dave.jiang@intel.com>,  Dan
- Williams <dan.j.williams@intel.com>,  Jonathan Cameron
- <Jonathan.Cameron@huawei.com>,  linux-acpi@vger.kernel.org,
- linux-kernel@vger.kernel.org,  linux-mm@kvack.org,  "Ho-Ren (Jack)
- Chuang" <horenc@vt.edu>,  "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>,
- linux-cxl@vger.kernel.org,  qemu-devel@nongnu.org
-Subject: Re: [External] Re: [PATCH v1 0/1] Improved Memory Tier Creation for
- CPUless NUMA Nodes
-In-Reply-To: <CAKPbEqr-0yPDW7qps24vJgVCtVOGy_Jm4kcc0FKUsL3d9APDsw@mail.gmail.com>
- (Ho-Ren Chuang's message of "Mon, 4 Mar 2024 22:22:59 -0800")
-References: <20240301082248.3456086-1-horenchuang@bytedance.com>
- <87frx6btqp.fsf@yhuang6-desk2.ccr.corp.intel.com>
- <CAKPbEqr-0yPDW7qps24vJgVCtVOGy_Jm4kcc0FKUsL3d9APDsw@mail.gmail.com>
-Date: Tue, 05 Mar 2024 14:34:36 +0800
-Message-ID: <87h6hl9og3.fsf@yhuang6-desk2.ccr.corp.intel.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1rhOag-0005qu-Ei; Tue, 05 Mar 2024 01:48:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1709621259; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=77iPO+RmmC0nTa9RMJ/QmIPzNxjOhN2jFl+Ela2Dz+g=;
+ b=jqTXZ47Q//fysBiEERDoMf+231vKtmNUVXYstCLElnnSmj4tQjSCKjr6NjmAJPVkXqS2PdxXM8GwizAEJCvl8CQ1mA+o5uQTkdK8WwLOKAkK1jjCueJf4BhCkRDjLVEo5PW+wupl4Oym/umP+xAfmeo1uds/QG5xU9jy3dkHNts=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R431e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046049;
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
+ TI=SMTPD_---0W1tHlPI_1709621257; 
+Received: from 30.198.0.247(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0W1tHlPI_1709621257) by smtp.aliyun-inc.com;
+ Tue, 05 Mar 2024 14:47:38 +0800
+Message-ID: <165adab6-d41f-4d72-b059-b13219cd5ac9@linux.alibaba.com>
+Date: Tue, 5 Mar 2024 14:47:41 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=198.175.65.21; envelope-from=ying.huang@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 5/5] target/riscv: Implement privilege mode filtering
+ for cycle/instret
+To: Atish Patra <atishp@rivosinc.com>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org, Weiwei Li
+ <liwei1518@gmail.com>, kaiwenxue1@gmail.com
+References: <20240228185116.1321730-1-atishp@rivosinc.com>
+ <20240228185116.1321730-6-atishp@rivosinc.com>
+Content-Language: en-US
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20240228185116.1321730-6-atishp@rivosinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=115.124.30.119;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-119.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,86 +75,345 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> writes:
 
-> On Sun, Mar 3, 2024 at 6:47=E2=80=AFPM Huang, Ying <ying.huang@intel.com>=
- wrote:
->>
->> "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> writes:
->>
->> > The memory tiering component in the kernel is functionally useless for
->> > CPUless memory/non-DRAM devices like CXL1.1 type3 memory because the n=
-odes
->> > are lumped together in the DRAM tier.
->> > https://lore.kernel.org/linux-mm/PH0PR08MB7955E9F08CCB64F23963B5C3A860=
-A@PH0PR08MB7955.namprd08.prod.outlook.com/T/
->>
->> I think that it's unfair to call it "useless".  Yes, it doesn't work if
->> the CXL memory device are not enumerate via drivers/dax/kmem.c.  So,
->> please be specific about in which cases it doesn't work instead of too
->> general "useless".
->>
+On 2024/2/29 2:51, Atish Patra wrote:
+> Privilege mode filtering can also be emulated for cycle/instret by
+> tracking host_ticks/icount during each privilege mode switch. This
+> patch implements that for both cycle/instret and mhpmcounters. The
+> first one requires Smcntrpmf while the other one requires Sscofpmf
+> to be enabled.
 >
-> Thank you and I didn't mean anything specific. I simply reused phrases
-> we discussed
-> earlier in the previous patchset. I will change them to the following in =
-v2:
-> "At boot time, current memory tiering assigns all detected memory nodes
-> to the same DRAM tier. This results in CPUless memory/non-DRAM devices,
-> such as CXL1.1 type3 memory, being unable to be assigned to the
-> correct memory tier,
-> leading to the inability to migrate pages between different types of memo=
-ry."
+> The cycle/instret are still computed using host ticks when icount
+> is not enabled. Otherwise, they are computed using raw icount which
+> is more accurate in icount mode.
 >
-> Please see if this looks more specific.
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Signed-off-by: Atish Patra <atishp@rivosinc.com>
+> ---
+>   target/riscv/cpu.h        | 11 +++++
+>   target/riscv/cpu_bits.h   |  5 ++
+>   target/riscv/cpu_helper.c | 17 ++++++-
+>   target/riscv/csr.c        | 96 ++++++++++++++++++++++++++++++---------
+>   target/riscv/pmu.c        | 64 ++++++++++++++++++++++++++
+>   target/riscv/pmu.h        |  2 +
+>   6 files changed, 171 insertions(+), 24 deletions(-)
+>
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 174e8ba8e847..9e21d7f7d635 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -157,6 +157,15 @@ typedef struct PMUCTRState {
+>       target_ulong irq_overflow_left;
+>   } PMUCTRState;
+>   
+> +typedef struct PMUFixedCtrState {
+> +        /* Track cycle and icount for each privilege mode */
+> +        uint64_t counter[4];
+> +        uint64_t counter_prev[4];
+> +        /* Track cycle and icount for each privilege mode when V = 1*/
+> +        uint64_t counter_virt[2];
+> +        uint64_t counter_virt_prev[2];
+> +} PMUFixedCtrState;
+> +
+>   struct CPUArchState {
+>       target_ulong gpr[32];
+>       target_ulong gprh[32]; /* 64 top bits of the 128-bit registers */
+> @@ -353,6 +362,8 @@ struct CPUArchState {
+>       /* PMU event selector configured values for RV32 */
+>       target_ulong mhpmeventh_val[RV_MAX_MHPMEVENTS];
+>   
+> +    PMUFixedCtrState pmu_fixed_ctrs[2];
+> +
+>       target_ulong sscratch;
+>       target_ulong mscratch;
+>   
+> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+> index e866c60a400c..5fe349e313dc 100644
+> --- a/target/riscv/cpu_bits.h
+> +++ b/target/riscv/cpu_bits.h
+> @@ -920,6 +920,11 @@ typedef enum RISCVException {
+>   #define MHPMEVENT_BIT_VUINH                BIT_ULL(58)
+>   #define MHPMEVENTH_BIT_VUINH               BIT(26)
+>   
+> +#define MHPMEVENT_FILTER_MASK              (MHPMEVENT_BIT_MINH  | \
+> +                                            MHPMEVENT_BIT_SINH  | \
+> +                                            MHPMEVENT_BIT_UINH  | \
+> +                                            MHPMEVENT_BIT_VSINH | \
+> +                                            MHPMEVENT_BIT_VUINH)
+>   #define MHPMEVENT_SSCOF_MASK               _ULL(0xFFFF000000000000)
+>   #define MHPMEVENT_IDX_MASK                 0xFFFFF
+>   #define MHPMEVENT_SSCOF_RESVD              16
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index d462d95ee165..33965d843d46 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -718,8 +718,21 @@ void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv)
+>   {
+>       g_assert(newpriv <= PRV_M && newpriv != PRV_RESERVED);
+>   
+> -    if (icount_enabled() && newpriv != env->priv) {
+> -        riscv_itrigger_update_priv(env);
+> +    /*
+> +     * Invoke cycle/instret update between priv mode changes or
+> +     * VS->HS mode transition is SPV bit must be set
+> +     * HS->VS mode transition where virt_enabled must be set
+> +     * In both cases, priv will S mode only.
+> +     */
+> +    if (newpriv != env->priv ||
+> +       (env->priv == PRV_S && newpriv == PRV_S &&
+> +        (env->virt_enabled || get_field(env->hstatus, HSTATUS_SPV)))) {
+> +        if (icount_enabled()) {
+> +            riscv_itrigger_update_priv(env);
+> +            riscv_pmu_icount_update_priv(env, newpriv);
+> +        } else {
+> +            riscv_pmu_cycle_update_priv(env, newpriv);
+> +        }
+>       }
+>       /* tlb_flush is unnecessary as mode is contained in mmu_idx */
+>       env->priv = newpriv;
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index ff9bac537593..482e212c5f74 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -788,32 +788,16 @@ static RISCVException write_vcsr(CPURISCVState *env, int csrno,
+>       return RISCV_EXCP_NONE;
+>   }
+>   
+> +#if defined(CONFIG_USER_ONLY)
+>   /* User Timers and Counters */
+>   static target_ulong get_ticks(bool shift)
+>   {
+> -    int64_t val;
+> -    target_ulong result;
+> -
+> -#if !defined(CONFIG_USER_ONLY)
+> -    if (icount_enabled()) {
+> -        val = icount_get();
+> -    } else {
+> -        val = cpu_get_host_ticks();
+> -    }
+> -#else
+> -    val = cpu_get_host_ticks();
+> -#endif
+> -
+> -    if (shift) {
+> -        result = val >> 32;
+> -    } else {
+> -        result = val;
+> -    }
+> +    int64_t val = cpu_get_host_ticks();
+> +    target_ulong result = shift ? val >> 32 : val;
+>   
+>       return result;
+>   }
+>   
+> -#if defined(CONFIG_USER_ONLY)
+>   static RISCVException read_time(CPURISCVState *env, int csrno,
+>                                   target_ulong *val)
+>   {
+> @@ -952,6 +936,71 @@ static RISCVException write_mhpmeventh(CPURISCVState *env, int csrno,
+>       return RISCV_EXCP_NONE;
+>   }
+>   
+> +static target_ulong riscv_pmu_ctr_get_fixed_counters_val(CPURISCVState *env,
+> +                                                         int counter_idx,
+> +                                                         bool upper_half)
+> +{
+> +    uint64_t curr_val = 0;
+> +    target_ulong result = 0;
+> +    uint64_t *counter_arr = icount_enabled() ? env->pmu_fixed_ctrs[1].counter :
+> +                            env->pmu_fixed_ctrs[0].counter;
+> +    uint64_t *counter_arr_virt = icount_enabled() ?
+> +                                 env->pmu_fixed_ctrs[1].counter_virt :
+> +                                 env->pmu_fixed_ctrs[0].counter_virt;
+> +    uint64_t cfg_val = 0;
+> +
+> +    if (counter_idx == 0) {
+> +        cfg_val = upper_half ? ((uint64_t)env->mcyclecfgh << 32) :
+> +                  env->mcyclecfg;
+> +    } else if (counter_idx == 2) {
+> +        cfg_val = upper_half ? ((uint64_t)env->minstretcfgh << 32) :
+> +                  env->minstretcfg;
+> +    } else {
+> +        cfg_val = upper_half ?
+> +                  ((uint64_t)env->mhpmeventh_val[counter_idx] << 32) :
+> +                  env->mhpmevent_val[counter_idx];
+> +        cfg_val &= MHPMEVENT_FILTER_MASK;
+> +    }
+> +
+> +    if (!cfg_val) {
+> +        if (icount_enabled()) {
+> +            curr_val = icount_get_raw();
+> +        } else {
+> +            curr_val = cpu_get_host_ticks();
+> +        }
+> +        goto done;
+> +    }
+> +
+> +    if (!(cfg_val & MCYCLECFG_BIT_MINH)) {
+> +        curr_val += counter_arr[PRV_M];
+> +    }
+> +
+> +    if (!(cfg_val & MCYCLECFG_BIT_SINH)) {
+> +        curr_val += counter_arr[PRV_S];
+> +    }
+> +
+> +    if (!(cfg_val & MCYCLECFG_BIT_UINH)) {
+> +        curr_val += counter_arr[PRV_U];
+> +    }
+> +
+> +    if (!(cfg_val & MCYCLECFG_BIT_VSINH)) {
+> +        curr_val += counter_arr_virt[PRV_S];
+> +    }
+> +
+> +    if (!(cfg_val & MCYCLECFG_BIT_VUINH)) {
+> +        curr_val += counter_arr_virt[PRV_U];
+> +    }
+> +
+> +done:
+> +    if (riscv_cpu_mxl(env) == MXL_RV32) {
+> +        result = upper_half ? curr_val >> 32 : curr_val;
+> +    } else {
+> +        result = curr_val;
+> +    }
+> +
+> +    return result;
+> +}
+> +
+>   static RISCVException write_mhpmcounter(CPURISCVState *env, int csrno,
+>                                           target_ulong val)
+>   {
+> @@ -962,7 +1011,8 @@ static RISCVException write_mhpmcounter(CPURISCVState *env, int csrno,
+>       counter->mhpmcounter_val = val;
+>       if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
+>           riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
+> -        counter->mhpmcounter_prev = get_ticks(false);
+> +        counter->mhpmcounter_prev = riscv_pmu_ctr_get_fixed_counters_val(env,
+> +                                                                ctr_idx, false);
+>           if (ctr_idx > 2) {
+>               if (riscv_cpu_mxl(env) == MXL_RV32) {
+>                   mhpmctr_val = mhpmctr_val |
+> @@ -990,7 +1040,8 @@ static RISCVException write_mhpmcounterh(CPURISCVState *env, int csrno,
+>       mhpmctr_val = mhpmctr_val | (mhpmctrh_val << 32);
+>       if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
+>           riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
+> -        counter->mhpmcounterh_prev = get_ticks(true);
+> +        counter->mhpmcounterh_prev = riscv_pmu_ctr_get_fixed_counters_val(env,
+> +                                                                 ctr_idx, true);
+>           if (ctr_idx > 2) {
+>               riscv_pmu_setup_timer(env, mhpmctr_val, ctr_idx);
+>           }
+> @@ -1031,7 +1082,8 @@ static RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
+>        */
+>       if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
+>           riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
+> -        *val = get_ticks(upper_half) - ctr_prev + ctr_val;
+> +        *val = riscv_pmu_ctr_get_fixed_counters_val(env, ctr_idx, upper_half) -
+> +                                                    ctr_prev + ctr_val;
+>       } else {
+>           *val = ctr_val;
+>       }
+> diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
+> index 0e7d58b8a5c2..37309ff64cb6 100644
+> --- a/target/riscv/pmu.c
+> +++ b/target/riscv/pmu.c
+> @@ -19,6 +19,7 @@
+>   #include "qemu/osdep.h"
+>   #include "qemu/log.h"
+>   #include "qemu/error-report.h"
+> +#include "qemu/timer.h"
+>   #include "cpu.h"
+>   #include "pmu.h"
+>   #include "sysemu/cpu-timers.h"
+> @@ -176,6 +177,69 @@ static int riscv_pmu_incr_ctr_rv64(RISCVCPU *cpu, uint32_t ctr_idx)
+>       return 0;
+>   }
+>   
+> +void riscv_pmu_icount_update_priv(CPURISCVState *env, target_ulong newpriv)
+> +{
+> +    uint64_t delta;
+> +    uint64_t *counter_arr;
+> +    uint64_t *counter_arr_prev;
+> +    uint64_t current_icount = icount_get_raw();
+> +
+> +    if (env->virt_enabled) {
+> +        counter_arr = env->pmu_fixed_ctrs[1].counter_virt;
+> +        counter_arr_prev = env->pmu_fixed_ctrs[1].counter_virt_prev;
+> +    } else {
+> +        counter_arr = env->pmu_fixed_ctrs[1].counter;
+> +        counter_arr_prev = env->pmu_fixed_ctrs[1].counter_prev;
+> +    }
+> +
+> +    if (newpriv != env->priv) {
+> +        delta = current_icount - counter_arr_prev[env->priv];
+> +        counter_arr_prev[newpriv] = current_icount;
+> +    } else {
+> +        delta = current_icount - counter_arr_prev[env->priv];
+> +        if (env->virt_enabled) {
+> +            /* HS->VS transition.The previous value should correspond to HS. */
 
-I don't think that the description above is accurate.  In fact, there
-are 2 ways to enumerate the memory device,
+Hi Atish,
 
-1. Mark it as reserved memory (E820_TYPE_SOFT_RESERVED, etc.) in E820
-   table or something similar.
+Dose env->virt_enabled ensure HS->VS transition?
 
-2. Mark it as normal memory (E820_TYPE_RAM) in E820 table or something
-   similar
+I think VS->VS also keeps  env->virt_enabled to be true, where the 
+previous value should correspond to VS.
 
-For 1, the memory device (including CXL memory) is onlined via
-drivers/dax/kmem.c, so will be put in proper memory tiers.  For 2, the
-memory device is indistinguishable with normal DRAM with current
-implementation.  And this is what this patch is working on.
+Thanks,
+Zhiwei
 
-Right?
-
---
-Best Regards,
-Huang, Ying
-
->> > This patchset automatically resolves the issues. It delays the initial=
-ization
->> > of memory tiers for CPUless NUMA nodes until they obtain HMAT informat=
-ion
->> > at boot time, eliminating the need for user intervention.
->> > If no HMAT specified, it falls back to using `default_dram_type`.
->> >
->> > Example usecase:
->> > We have CXL memory on the host, and we create VMs with a new system me=
-mory
->> > device backed by host CXL memory. We inject CXL memory performance att=
-ributes
->> > through QEMU, and the guest now sees memory nodes with performance att=
-ributes
->> > in HMAT. With this change, we enable the guest kernel to construct
->> > the correct memory tiering for the memory nodes.
->> >
->> > Ho-Ren (Jack) Chuang (1):
->> >   memory tier: acpi/hmat: create CPUless memory tiers after obtaining
->> >     HMAT info
->> >
->> >  drivers/acpi/numa/hmat.c     |  3 ++
->> >  include/linux/memory-tiers.h |  6 +++
->> >  mm/memory-tiers.c            | 76 ++++++++++++++++++++++++++++++++----
->> >  3 files changed, 77 insertions(+), 8 deletions(-)
->>
->> --
->> Best Regards,
->> Huang, Ying
+> +            env->pmu_fixed_ctrs[1].counter_prev[PRV_S] = current_icount;
+> +        } else if (get_field(env->hstatus, HSTATUS_SPV)) {
+> +            /* VS->HS transition.The previous value should correspond to VS. */
+> +            env->pmu_fixed_ctrs[1].counter_virt_prev[PRV_S] = current_icount;
+> +        }
+> +   }
+> +
+> +    counter_arr[env->priv] += delta;
+> +}
+> +
+> +void riscv_pmu_cycle_update_priv(CPURISCVState *env, target_ulong newpriv)
+> +{
+> +    uint64_t delta;
+> +    uint64_t *counter_arr;
+> +    uint64_t *counter_arr_prev;
+> +    uint64_t current_host_ticks = cpu_get_host_ticks();
+> +
+> +    if (env->virt_enabled) {
+> +        counter_arr = env->pmu_fixed_ctrs[0].counter_virt;
+> +        counter_arr_prev = env->pmu_fixed_ctrs[0].counter_virt_prev;
+> +    } else {
+> +        counter_arr = env->pmu_fixed_ctrs[0].counter;
+> +        counter_arr_prev = env->pmu_fixed_ctrs[0].counter_prev;
+> +    }
+> +
+> +    if (newpriv != env->priv) {
+> +        delta = current_host_ticks - counter_arr_prev[env->priv];
+> +        counter_arr_prev[newpriv] = current_host_ticks;
+> +    } else {
+> +        delta = current_host_ticks - counter_arr_prev[env->priv];
+> +        if (env->virt_enabled) {
+> +            env->pmu_fixed_ctrs[0].counter_prev[PRV_S] = current_host_ticks;
+> +        } else if (get_field(env->hstatus, HSTATUS_SPV)) {
+> +            env->pmu_fixed_ctrs[0].counter_virt_prev[PRV_S] =
+> +            current_host_ticks;
+> +        }
+> +   }
+> +
+> +    counter_arr[env->priv] += delta;
+> +}
+> +
+>   int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
+>   {
+>       uint32_t ctr_idx;
+> diff --git a/target/riscv/pmu.h b/target/riscv/pmu.h
+> index 505fc850d38e..50de6031a730 100644
+> --- a/target/riscv/pmu.h
+> +++ b/target/riscv/pmu.h
+> @@ -31,3 +31,5 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx);
+>   void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name);
+>   int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
+>                             uint32_t ctr_idx);
+> +void riscv_pmu_icount_update_priv(CPURISCVState *env, target_ulong newpriv);
+> +void riscv_pmu_cycle_update_priv(CPURISCVState *env, target_ulong newpriv);
 
