@@ -4,97 +4,166 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F941C48BF6
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 00:24:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62693C54E49
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 00:52:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhIar-0002f4-KT; Mon, 04 Mar 2024 19:23:41 -0500
+	id 1rhJ2b-0000i8-SG; Mon, 04 Mar 2024 19:52:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gurchetansingh@chromium.org>)
- id 1rhIap-0002eg-Op
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 19:23:39 -0500
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gurchetansingh@chromium.org>)
- id 1rhIan-0007fH-H2
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 19:23:39 -0500
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a44f2d894b7so283069266b.1
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 16:23:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mark.kanda@oracle.com>)
+ id 1rhJ2D-0000dx-1Q
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 19:52:00 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.kanda@oracle.com>)
+ id 1rhJ2A-0005Oq-Lc
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 19:51:56 -0500
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 424IxgPU014934; Tue, 5 Mar 2024 00:51:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
+ h=content-type :
+ message-id : date : subject : to : references : from : in-reply-to :
+ mime-version; s=corp-2023-11-20;
+ bh=59OQmDxL2ZZi9QKesdGUxw/hmlukCTTLTkYn3TaENxY=;
+ b=b+AgF8iCfdTP5ExjMc1hXpt2cGjzA1k1LS9nH0lkXR81tXvBHBY3ckaHChcFNjr8GKrq
+ 3C/vBBSylGAbJ9fmy9Qo18XUXqa93LkifxR2/OBWTjkPbJ9gIPbz9LKTjccs2Y1aXhgO
+ 9z0KNxHhBJgIX0Aa6MPgGd3LCS6YBp7ZIoxzoqEJWmnaRiQrquCFHX8yBHLHXqiBshuj
+ eXB821a4AuAlUrUHpY9ZXZ30nRmDsOxcldoUN1708yubf4XkEiTog9V23aLHwlrDiQ3j
+ MfchmMuqtu2Aw/9LPJvRO/NgzdtoHD1q58fXfSR9ISHCMvcmpgAIFWYJaku+PramPo1n Sw== 
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wktq251p8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 05 Mar 2024 00:51:50 +0000
+Received: from pps.filterd
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 42502FrQ015220; Tue, 5 Mar 2024 00:51:49 GMT
+Received: from nam12-mw2-obe.outbound.protection.outlook.com
+ (mail-mw2nam12lp2040.outbound.protection.outlook.com [104.47.66.40])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 3wktj6xke5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 05 Mar 2024 00:51:49 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=WSHZX2yc5rqCpnWpENDP5sTIdEN0NC3R8F0C70OYAFGcDxI1AfOWJJ7xHe1j2im8gQ/bI9eDrReZwb/t+cjaoDJCUkgrRRmhY8KCROhgJZmK8kiG1NP8FKKxEIABPLfRp83dBpMfYZSJiBdcmsGE8WulIJvd2SbwAohwIDha+8uR4d9zXgdroUESvkcDa0Su04RQB6Z5MN4Dk8sxsv3/4wuXdw2itxcyG9cbCVIVs2eT0TCClHdmeX2G46MjasBJmZb7MC/ie+EywDAclvg8Pet5E5ISpSxoJnBzFV733Da/iG+D1ez8R7cPM3MgJ+3Zzgg+fjhdRQ/taDPUJZ4JTA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=59OQmDxL2ZZi9QKesdGUxw/hmlukCTTLTkYn3TaENxY=;
+ b=OeCph/cxEjIVcAaOkJJ89zi1yoik2hWaS70RCGJw+kmVqs5gekF2LLY35J6p5KypuTal0Q23mgr/w7JG7eIgJG1AiCwpHV7j2iEk13Cq+xNBU/iGG78S8ywtWqaWgPU+va9Iy5fdX45Ij6JxD2Ms424JktPKxBT9kHMg3ZG4bE/MeL8eNs7NcOdQB14QgPkzZVXIsTXHV1ocGCuxw1xWqVqSCw/54py7yYIeI3EZZeANy+vfv449ZgiNfnDPw/dnToHe9Yl1H/WEehL1D0ppJ3DsEbqb5bCVURTxYxLcp/s8ozP5yLhylurPEVAOLsg7+RBSS6y9ptTh7rRUznDJWg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=chromium.org; s=google; t=1709598214; x=1710203014; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Xb4QJtvJ1KYOzTPpyh5Bw6iSo6F2yRhSe0xWbMO0uvE=;
- b=aN/2A93Y48nCpbZgOgBGwheNJUjTNYQYwoo5cGFaXX+gK5G6U2i9ldoTmIaOyn57FF
- pUOEPWXuLpAguLJcO63ueFXNm/y1LcQf0t7QUMf5xNx447hN+UVcNwuc+4src08eW9bS
- WDPh0CzfhRI544MPW+6PYaV0CmQhu+Gna7pqA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709598214; x=1710203014;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Xb4QJtvJ1KYOzTPpyh5Bw6iSo6F2yRhSe0xWbMO0uvE=;
- b=PI7sbIzcgeusAefIf+UY+g9wcp7bEnsOA5g3UogrxcFFraYQQTx6gF8KYu4yD9aDMQ
- BCxiPiRCxaVG80LO4YoEmkFMp6BoTT5kEXeAMey09wOsK95ZrznSfNKgScd/crCdy2FQ
- uCMQGyrc/rS9IQd6YNyHJ8takVI8IEC15s9zX7YmtqBGhl4aCjQsXfiBJ/ru0ombSqNH
- K27npFor464WfdkAhZoeq90Qs8X2lhenS+m6+k45eko7olgIp90eKmG7Vg3V9ShGIl/O
- 67T3eJ0gpooTE4ScSv7hQSPm2l9FMVdysoENTZ6UlLVAE8Xqt47fp7tBSltSzK42NeKy
- DXlg==
-X-Gm-Message-State: AOJu0YzOyVY5XxKcVGrAeZQfGdLttNJNyz7zO+Vt4Y+OjY14Ud3+wxf2
- Abqerv5+ea7TZ5H4sV1UiTXgKWiS6I3sLpGmrtyjzrrSrkvQd8He3cLkQ0LN9tmmo/q3PaKtuP4
- tZA==
-X-Google-Smtp-Source: AGHT+IEHaA0564AIK7EyymX6MuiZy6V7ZD3VEXOXqAZ467cCDNwkU0PP0fyr9YKZN35I/0JLtHve9A==
-X-Received: by 2002:a17:906:894:b0:a45:5371:f0d6 with SMTP id
- n20-20020a170906089400b00a455371f0d6mr2453089eje.61.1709598214372; 
- Mon, 04 Mar 2024 16:23:34 -0800 (PST)
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com.
- [209.85.208.53]) by smtp.gmail.com with ESMTPSA id
- gt25-20020a170906f21900b00a3ec216ec6csm5352047ejb.45.2024.03.04.16.23.33
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Mar 2024 16:23:33 -0800 (PST)
-Received: by mail-ed1-f53.google.com with SMTP id
- 4fb4d7f45d1cf-566b160f6eeso3266a12.1
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 16:23:33 -0800 (PST)
-X-Received: by 2002:aa7:de04:0:b0:566:e8fc:8f83 with SMTP id
- h4-20020aa7de04000000b00566e8fc8f83mr20835edv.7.1709598213628; Mon, 04 Mar
- 2024 16:23:33 -0800 (PST)
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=59OQmDxL2ZZi9QKesdGUxw/hmlukCTTLTkYn3TaENxY=;
+ b=mJ2ljNHST1hhW4q1TWlDv1iRTBz5fu2bKZXFXknpAPFIKwnVXVt5YSOJG/Y80xM16GoHdUDc/OQMzt1PsCGVqETGzlhf8Vseo0/kHCDD7ek1j3NbCOUW366u6VzjTfjPeah60U2D9K/xZnvAzbudEgiPMPHSqui+WYVunlvuJKQ=
+Received: from SA1PR10MB5841.namprd10.prod.outlook.com (2603:10b6:806:22b::16)
+ by MW4PR10MB6440.namprd10.prod.outlook.com (2603:10b6:303:218::6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7339.39; Tue, 5 Mar
+ 2024 00:51:47 +0000
+Received: from SA1PR10MB5841.namprd10.prod.outlook.com
+ ([fe80::b084:65b1:3637:7e48]) by SA1PR10MB5841.namprd10.prod.outlook.com
+ ([fe80::b084:65b1:3637:7e48%4]) with mapi id 15.20.7339.035; Tue, 5 Mar 2024
+ 00:51:47 +0000
+Content-Type: multipart/alternative;
+ boundary="------------jnNnNmEja0RoGGD61T6GlbNx"
+Message-ID: <aa09fe92-e241-4eea-8e3e-6e2ed62495ab@oracle.com>
+Date: Mon, 4 Mar 2024 18:51:45 -0600
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] oslib-posix: fix memory leak in touch_all_pages
+Content-Language: en-US
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20240304224857.268503-1-pbonzini@redhat.com>
+From: Mark Kanda <mark.kanda@oracle.com>
+In-Reply-To: <20240304224857.268503-1-pbonzini@redhat.com>
+X-ClientProxiedBy: BL1P223CA0017.NAMP223.PROD.OUTLOOK.COM
+ (2603:10b6:208:2c4::22) To SA1PR10MB5841.namprd10.prod.outlook.com
+ (2603:10b6:806:22b::16)
 MIME-Version: 1.0
-References: <20231003204500.518-1-gurchetansingh@chromium.org>
- <87wms9d0fi.fsf@alyssa.is>
- <CAAfnVBmiaesEQkZOk4zf08JTh-WM3tqNT8RoyaL=49Lm--5HSQ@mail.gmail.com>
- <87cytxni1n.fsf@alyssa.is>
- <CAAfnVBmV3m0-Kh5gcrxzQXotEQ9ktXfEhJr92XAMKi6rXXkuOg@mail.gmail.com>
- <87cytwnqoj.fsf@alyssa.is>
- <CAAfnVBkuKW7gfG5KAh8g26Keq_VCqmNrJwJi9+YZ-Lm+7rOUNA@mail.gmail.com>
- <87msssmax4.fsf@alyssa.is>
- <CAAfnVBm--wu3=ES0tY2JPXwm+Ga-tRLq=EpkZdzdVoHGUfb2KQ@mail.gmail.com>
- <CAAfnVBkk1QTAo4dT372QNFmWqFFG4TxM0OTv9XHQQf6fm11fag@mail.gmail.com>
- <ufctubdq3cyltmtgwc4ng2dn6akazaybqvz5f5a6pyvgwmsxw2@3kapq5mvvy7l>
-In-Reply-To: <ufctubdq3cyltmtgwc4ng2dn6akazaybqvz5f5a6pyvgwmsxw2@3kapq5mvvy7l>
-From: Gurchetan Singh <gurchetansingh@chromium.org>
-Date: Mon, 4 Mar 2024 16:23:20 -0800
-X-Gmail-Original-Message-ID: <CAAfnVBnN3jnnyszxRW4YH=39SHK=hji6RqhXAYwHEMw-pnRevw@mail.gmail.com>
-Message-ID: <CAAfnVBnN3jnnyszxRW4YH=39SHK=hji6RqhXAYwHEMw-pnRevw@mail.gmail.com>
-Subject: Re: rutabaga 0.1.3
-To: Alyssa Ross <hi@alyssa.is>
-Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com, 
- akihiko.odaki@gmail.com, ray.huang@amd.com, alex.bennee@linaro.org, 
- shentey@gmail.com, ernunes@redhat.com, manos.pitsidianakis@linaro.org, 
- mark.cave-ayland@ilande.co.uk, thuth@redhat.com, 
- Andrew Walbran <qwandor@google.com>, Frederick Mayle <fmayle@google.com>
-Content-Type: multipart/alternative; boundary="0000000000003bbd0c0612deda70"
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=gurchetansingh@chromium.org; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA1PR10MB5841:EE_|MW4PR10MB6440:EE_
+X-MS-Office365-Filtering-Correlation-Id: e8e0aa43-602e-41be-d1c6-08dc3cae6f8c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: OlOCmXc+3FIFTNYWRua2ZZ2BszeiJUbi8aItB9JG274eWd9zIBbQ/WT8+FsN0XoBL4vfA/+XmwTnXxgDsijo39qX1F278n2GohZXdi7gP6HR/77JBPM1Vo24PMFCVD1vi2Qd3XTMUKmOYHBtWUn1jai2UYqSCQEEb4/4/UbvTrCPiaZVBofPACh42BdJ4p8D5pFP1mU6/Fb8LwHHuQ+XPASuML3dn2POtxVBvKTfvJeO+c2yBnBoX/b8+W2SRDptgHlpWWgKS+2sWbh/1ew/pFJZ2udcWUH9ytCE8TMVjV5edMdoNZNJKwor7RqBSE0roZtczrDnDSOf4sdilHPIglBDbhXBkVWGc+1jg1IY3/NG5CbbV2AzOzBv8MdpuwHgw7p6l/BykRif5cSIzQg/TZH5J4A5sc76F2bD+TpHnYK+RzXlW66rOqwVQz7YI43BP13vqzQBiq1yB4TVNt46s0pZdvupu+4/iQMia4uiGDjg3xQ8pRNcV/6XIUbqgrrXZc+TJEk2q2cyRFrigYTRtd2wh7urgR0zz6FEr41HeiGuojWxY8a/uZ9EekyjwWpcdl+ajMvQzWzVdb4odPj2sv+wni6ThaPec6kBPwgjvtR3AWUhp1kJdECiRTHrVh/JiwG6dgvOnYjWd+nKCwhxQ5UDMDkBpi3+xt2vXtWeFMk=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SA1PR10MB5841.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(376005); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?R0FzdFFIZHdoNTBMK2QyVng3UldSY2ozT05ydzVwcXVuSHRhOHNXM3ZKeENL?=
+ =?utf-8?B?REl6aVh3SDNGWG43blI4MU83TE00U0NVZktXZEJqSEhkNWEzLzhlbjdjczJy?=
+ =?utf-8?B?VlBjVjdGd1NPTGJpcU5pUWpXMi9NMHRTU0R1S2JXUUVON21kcEE2Unhucng5?=
+ =?utf-8?B?aVBudVlreTM2UEV6VXUrNW8vTHlReHZMSnZyNU1HU1dmZVRkbGU2dW5jcUpZ?=
+ =?utf-8?B?WWNvVWsyb1g4L3RlWm8zZGpoQXJ4VUFOOFVvUFVpVE8zcTRlRElhWVg3ME9G?=
+ =?utf-8?B?Mms2Nk1zVDlheDBZNzJGbnZUdUluSFQ3ZXBZZ2U5WXVuaEdLUWF1THNOOU9h?=
+ =?utf-8?B?SkZMMWFtaEVETDdBYXJESGFNNFdOeEZrd2RKVHVESzJTREhKYkR1RVI1Y0ts?=
+ =?utf-8?B?cURHWGdQZ0F5a09EdFZMdmZwTnBzUEMwdEVSd3lyWVFwR3JvWnBlZGUvM3JJ?=
+ =?utf-8?B?TjFMMDloRHNxTGVwNGJ2MlVuT0xXM2kvUU9hZmFEMm41MHFCK0d2bVZvWjZu?=
+ =?utf-8?B?Zm1XaTlMVmFBUWFHZnp0Z3l6M3NDWmdSU1NKdGozM1FHQU1HNExXa2hEUVFs?=
+ =?utf-8?B?ZG12c0JGT3htSG11ck92SnBqZnRPRGNPQXhXenYyUGIwVDNOMml6M3V0ZjJw?=
+ =?utf-8?B?dHdPR2lhd0NlamdlMFhGKzNvL1V4TkgvYmp3RXUyck1oR3hBZmFCQy9LbzBx?=
+ =?utf-8?B?K0Z0WGR6cjNHMzhrbnZRYmVwYmVWNTFlUnVRM3dRcklMTVlZdU80Y0Q3aTZS?=
+ =?utf-8?B?Z2NXMkYyU3daT0FxLzdnYmtybXRvbHUvd2Vlc0YvczQ5UUhVRi85NnFRZmJx?=
+ =?utf-8?B?R24wWG9VbVZTWGVaL3lzVzU2YW5qbVVwZWhaaVFzNXljejRlUmJLNFZHa0Ft?=
+ =?utf-8?B?NVFiMFRhREgyd0E5QnphRldVaTRyN3R3clc5OERJTnVYaVJOWXRHNDRrUzJx?=
+ =?utf-8?B?K2p2UFZvVmVubU13MHQrbmYyK1dKSDNnV1dXNEJqOVJBUnZodmFKc0NhbzRa?=
+ =?utf-8?B?citQWGVNR0RKY1JVWmErL2t5anF3UHhOcFp2MlRXWEUyZCtaSlBFL3ZpRHlD?=
+ =?utf-8?B?MGNlaDczREtDU2hUNFI5R0JaYlFoN1c1Z2VaVzBISksyRXpydmozK2RuOFVY?=
+ =?utf-8?B?QjE3aUJ1QVRrVXJpWjkrSGxvV0I5aVhlZldicjMvNmZ1VVRKZ2M4Sm9qSzZL?=
+ =?utf-8?B?VkFlaytqb00rZHlkelZDaUFqdTNZSWNsZTBFaktBS0hYN0ZCQjh0SytkYzVP?=
+ =?utf-8?B?ZEFvTnF3WnZYTHFISW5qRjVlTWFrRU1MS1U0ZCtBQTdWSDBxLzU5VVdyVGo4?=
+ =?utf-8?B?VWNqbHl4MmFHelgyOVNDT3ZPL2Z5di9DWHpRdVV1Wkd3WElMSXY2Y2dqZHFK?=
+ =?utf-8?B?Q2dZd1ArK2g2cVplMURLK1hadzVHeG1oY0ZwcTc1NzN4MTJGK2psQWdEZm5F?=
+ =?utf-8?B?UEIwbDR5bjBmVmdqMTFVSWtFaHErdS9JUDE5NC95OXVmUmJqdkJveHV3OFFJ?=
+ =?utf-8?B?dFRQWDNjKzhCTml5Y3BOTEthc0pxQVEyOEp2QkFKN1hnd3RITElRWTFpaGt3?=
+ =?utf-8?B?NjZ2ejQ5aXRzbm9oeTVvZGJodUhsVTVpSFA0d0VZWXF4Zks0WUU1WUdqNlkx?=
+ =?utf-8?B?d3psVU5xcTBxYm9zbzhaeG5RbmhzL0JVYjg5QVhFRmI5TWtMS252YS95bzBo?=
+ =?utf-8?B?L3RVVXJsQ2phcVV2S0oxOUNTcFM0MlAxT1Rka3E4d282emhPSm1zbTIvNWh3?=
+ =?utf-8?B?TmlvWDdQYTJsajg5a2hIc01IcU9wM1EzdXZZR1U4b3dvazVWR0JDS3NxME9Y?=
+ =?utf-8?B?bU1UOVVSSW1PZHFHREljaTBmaU5xa3lCaEZldHZMNk9ZR2JyRXBLQnVKeUxa?=
+ =?utf-8?B?OU1mb1JCZWtwSFRDSEJ5RW4rWVdhOTFpUDY5OFhvTUdUa2VXcUdndHZzSTBl?=
+ =?utf-8?B?c0hTL0w4S0FpaFZZS0RXNk9wMFJ2TlhDN3NkQzlFV2laRDdBRWVUYXNhSG1X?=
+ =?utf-8?B?U09rUk11QnQ2eDJ1ZlZvRUlLUlQvWXppYmVXVnV0L280UUhHWjFLQXVEd2dk?=
+ =?utf-8?B?a3hMajl5am15RCthL0pXSjAyNEVIa1NkUng0bHRFcEQzNjJVU1Bkc3doYVJp?=
+ =?utf-8?Q?CPZUVkYeLFIHymIdH/8yPWNLw?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: AhQsQEn3RWSI1y7uS+fQdXkbfnES+/A82ryLfHy4x5zYpnHdcxUVSDE4krYY1L14BUU3bLxK9RM/1/owy2FDU3L833TE3+iJcG86wyBD2JaTaqbrkEumAWRqEy4vIH7p2tc9vEPEhWF/dWF+DAlkAWF3eKBHXpHqV8+KZgliaACZTa72vXLsydMNVffPdB6t2rRf+IiZ0kDS8kFu0uf9lR1VDC3ViB5zTLfvJiM1vplB6i3iBOnej32SrME2f+nFRKXg05NZZxFwRJv74OPj2HEZPMJEzBL4e2RzABTffOQut+Sf0X2/brGjGK54JQxLf6vVW5kj3HbGcZiQc8Rxta6/7MKMNJFC4u3wEotblAsmX5fPtuX6UfVgATe7cqDkwiBWhIg50vV79htHM63lLWop9AKCpsUNmEFXHFq22jlVKIj1BuX3hlssIbYnpWQR7UamR9TxJPwJIrgg/sHMA8uNZoN9pvTTYmJZa1LEZ8Zb7w5N8w0s0MLCMFlb4SQiRxe4CO3zJW/nIidcp03EDY2oDPXbWumHvUctxAPNwJ9WJcAx3v/j5XT546hG8JAjkDZOzKfMDwdEyBK7zrnKAG9bg7/sV4doG2hzGNfEOao=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e8e0aa43-602e-41be-d1c6-08dc3cae6f8c
+X-MS-Exchange-CrossTenant-AuthSource: SA1PR10MB5841.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Mar 2024 00:51:47.4971 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: BM6S+SlnhmKi/92pP5f6oppZdtlDSq8PBFXERF3fuT4TtSub0rosNOhheeFx6kwUt2YJ0zO9PO7AkffrZVK1TQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR10MB6440
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-04_19,2024-03-04_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ adultscore=0
+ mlxlogscore=999 suspectscore=0 spamscore=0 malwarescore=0 mlxscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2403050004
+X-Proofpoint-GUID: tTcrMR3r8iqZX3TkgJlBr0PNUOp7p4zv
+X-Proofpoint-ORIG-GUID: tTcrMR3r8iqZX3TkgJlBr0PNUOp7p4zv
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=mark.kanda@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,218 +180,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000003bbd0c0612deda70
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+--------------jnNnNmEja0RoGGD61T6GlbNx
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, Mar 2, 2024 at 6:38=E2=80=AFAM Alyssa Ross <hi@alyssa.is> wrote:
+On 3/4/24 4:48 PM, Paolo Bonzini wrote:
+> touch_all_pages() can return early, before creating threads.  In this case,
+> however, it leaks the MemsetContext that it has allocated at the
+> beginning of the function.
+>
+> Reported by Coverity as CID 1534922.
+>
+> Fixes: 04accf43df8 ("oslib-posix: initialize backend memory objects in parallel", 2024-02-06)
+> Cc: Mark Kanda<mark.kanda@oracle.com>
+> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
+Reviewed-by: Mark Kanda <mark.kanda@oracle.com>
 
-> Hi Gurchetan,
+Thanks/regards,
+-Mark
+> ---
+>   util/oslib-posix.c | 6 ++++--
+>   1 file changed, 4 insertions(+), 2 deletions(-)
 >
-> > >> > Would this be a suitable commit for the 0.1.3 release of rutabaga?
-> > >> >
-> > >> >
-> https://chromium.googlesource.com/crosvm/crosvm/+/5dfd74a0680d317c6edf441=
-38def886f47cb1c7c
-> > >> >
-> > >> > The gfxstream/AEMU commits would remain unchanged.
-> > >>
-> > >> That combination works for me.
-> > >
-> > > Just FYI, still working on it.  Could take 1-2 more weeks.
-> >
-> > FYI:
-> >
-> >
-> https://android.googlesource.com/platform/hardware/google/gfxstream/+/ref=
-s/tags/v0.1.2-gfxstream-release
-> >
-> >
-> https://android.googlesource.com/platform/hardware/google/aemu/+/refs/tag=
-s/v0.1.2-aemu-release
-> >
-> >
-> https://chromium.googlesource.com/crosvm/crosvm/+/refs/tags/v0.1.3-rutaba=
-ga-release
->
-> Unlike the commit I tested for you, the commit that ended up being
-> tagged as v0.1.3-rutabaga-release doesn't work for me:
->
->         qemu: The errno is EBADF: Bad file number
->         qemu: CHECK failed in rutabaga_cmd_resource_map_blob()
-> ../hw/display/virtio-gpu-rutabaga.c:655
->         qemu: virtio_gpu_rutabaga_process_cmd: ctrl 0x208, error 0x1200
->         qemu: CHECK failed in rutabaga_cmd_resource_unmap_blob()
-> ../hw/display/virtio-gpu-rutabaga.c:723
->         qemu: virtio_gpu_rutabaga_process_cmd: ctrl 0x209, error 0x1200
->         qemu: The errno is EBADF: Bad file number
->         qemu: CHECK failed in rutabaga_cmd_resource_map_blob()
-> ../hw/display/virtio-gpu-rutabaga.c:655
->         qemu: virtio_gpu_rutabaga_process_cmd: ctrl 0x208, error 0x1200
->         qemu: CHECK failed in rutabaga_cmd_resource_unmap_blob()
-> ../hw/display/virtio-gpu-rutabaga.c:723
->         qemu: virtio_gpu_rutabaga_process_cmd: ctrl 0x209, error 0x1200
->         qemu: The errno is EBADF: Bad file number
->         qemu: CHECK failed in rutabaga_cmd_resource_map_blob()
-> ../hw/display/virtio-gpu-rutabaga.c:655
->         qemu: virtio_gpu_rutabaga_process_cmd: ctrl 0x208, error 0x1200
->         qemu: invalid resource id
->         qemu: CHECK failed in rutabaga_cmd_submit_3d()
-> ../hw/display/virtio-gpu-rutabaga.c:341
->         qemu: virtio_gpu_rutabaga_process_cmd: ctrl 0x207, error 0x1200
->         qemu: CHECK failed in rutabaga_cmd_resource_unmap_blob()
-> ../hw/display/virtio-gpu-rutabaga.c:723
->         qemu: virtio_gpu_rutabaga_process_cmd: ctrl 0x209, error 0x1200
->
+> diff --git a/util/oslib-posix.c b/util/oslib-posix.c
+> index 3c379f96c26..e76441695bd 100644
+> --- a/util/oslib-posix.c
+> +++ b/util/oslib-posix.c
+> @@ -467,11 +467,13 @@ static int touch_all_pages(char *area, size_t hpagesize, size_t numpages,
+>            * preallocating synchronously.
+>            */
+>           if (context->num_threads == 1 && !async) {
+> +            ret = 0;
+>               if (qemu_madvise(area, hpagesize * numpages,
+>                                QEMU_MADV_POPULATE_WRITE)) {
+> -                return -errno;
+> +                ret = -errno;
+>               }
+> -            return 0;
+> +            g_free(context);
+> +            return ret;
+>           }
+>           touch_fn = do_madv_populate_write_pages;
+>       } else {
 
-Thank you for the bug report .. does crrev.com/c/5342655 fix this for you?
+--------------jnNnNmEja0RoGGD61T6GlbNx
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+<!DOCTYPE html><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+    On 3/4/24 4:48 PM, Paolo Bonzini wrote:<br>
+    <blockquote type="cite" cite="mid:20240304224857.268503-1-pbonzini@redhat.com">
+      <pre class="moz-quote-pre" wrap="">touch_all_pages() can return early, before creating threads.  In this case,
+however, it leaks the MemsetContext that it has allocated at the
+beginning of the function.
 
-I bisected it to:
->
->         commit f3dbf20eedadb135e2fd813474fbb9731d465f3a
->         Author: Andrew Walbran <qwandor@google.com>
->         Date:   Wed Nov 29 17:23:45 2023 +0000
->
->             rutabaga_gfx: Uprev nix to 0.27.1
->
->             The new version of nix uses OwnedFd in various places, which
-> allows us
->             to have less unsafe code.
->
->             TEST=3DCQ
->             BUG=3Db:293289578
->
->             Change-Id: I61aa80c4105eaf1182c5c325109b5aba11cf60de
->             Reviewed-on:
-> https://chromium-review.googlesource.com/c/crosvm/crosvm/+/5072293
->             Auto-Submit: Andrew Walbran <qwandor@google.com>
->             Reviewed-by: Gurchetan Singh <gurchetansingh@chromium.org>
->             Reviewed-by: Frederick Mayle <fmayle@google.com>
->             Commit-Queue: Frederick Mayle <fmayle@google.com>
->
+Reported by Coverity as CID 1534922.
 
---0000000000003bbd0c0612deda70
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Fixes: 04accf43df8 (&quot;oslib-posix: initialize backend memory objects in parallel&quot;, 2024-02-06)
+Cc: Mark Kanda <a class="moz-txt-link-rfc2396E" href="mailto:mark.kanda@oracle.com">&lt;mark.kanda@oracle.com&gt;</a>
+Signed-off-by: Paolo Bonzini <a class="moz-txt-link-rfc2396E" href="mailto:pbonzini@redhat.com">&lt;pbonzini@redhat.com&gt;</a></pre>
+    </blockquote>
+    Reviewed-by: Mark Kanda <a class="moz-txt-link-rfc2396E" href="mailto:mark.kanda@oracle.com">&lt;mark.kanda@oracle.com&gt;</a><br>
+    <br>
+    Thanks/regards,<br>
+    -Mark<br>
+    <blockquote type="cite" cite="mid:20240304224857.268503-1-pbonzini@redhat.com">
+      <pre class="moz-quote-pre" wrap="">
+---
+ util/oslib-posix.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Sat, Mar 2, 2024 at 6:38=E2=80=AFA=
-M Alyssa Ross &lt;<a href=3D"mailto:hi@alyssa.is">hi@alyssa.is</a>&gt; wrot=
-e:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
-.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Hi Gurchetan,=
-<br>
-<br>
-&gt; &gt;&gt; &gt; Would this be a suitable commit for the 0.1.3 release of=
- rutabaga?<br>
-&gt; &gt;&gt; &gt;<br>
-&gt; &gt;&gt; &gt; <a href=3D"https://chromium.googlesource.com/crosvm/cros=
-vm/+/5dfd74a0680d317c6edf44138def886f47cb1c7c" rel=3D"noreferrer" target=3D=
-"_blank">https://chromium.googlesource.com/crosvm/crosvm/+/5dfd74a0680d317c=
-6edf44138def886f47cb1c7c</a><br>
-&gt; &gt;&gt; &gt;<br>
-&gt; &gt;&gt; &gt; The gfxstream/AEMU commits would remain unchanged.<br>
-&gt; &gt;&gt;<br>
-&gt; &gt;&gt; That combination works for me.<br>
-&gt; &gt;<br>
-&gt; &gt; Just FYI, still working on it.=C2=A0 Could take 1-2 more weeks.<b=
-r>
-&gt;<br>
-&gt; FYI:<br>
-&gt;<br>
-&gt; <a href=3D"https://android.googlesource.com/platform/hardware/google/g=
-fxstream/+/refs/tags/v0.1.2-gfxstream-release" rel=3D"noreferrer" target=3D=
-"_blank">https://android.googlesource.com/platform/hardware/google/gfxstrea=
-m/+/refs/tags/v0.1.2-gfxstream-release</a><br>
-&gt;<br>
-&gt; <a href=3D"https://android.googlesource.com/platform/hardware/google/a=
-emu/+/refs/tags/v0.1.2-aemu-release" rel=3D"noreferrer" target=3D"_blank">h=
-ttps://android.googlesource.com/platform/hardware/google/aemu/+/refs/tags/v=
-0.1.2-aemu-release</a><br>
-&gt;<br>
-&gt; <a href=3D"https://chromium.googlesource.com/crosvm/crosvm/+/refs/tags=
-/v0.1.3-rutabaga-release" rel=3D"noreferrer" target=3D"_blank">https://chro=
-mium.googlesource.com/crosvm/crosvm/+/refs/tags/v0.1.3-rutabaga-release</a>=
-<br>
-<br>
-Unlike the commit I tested for you, the commit that ended up being<br>
-tagged as v0.1.3-rutabaga-release doesn&#39;t work for me:<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu: The errno is EBADF: Bad file number<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu: CHECK failed in rutabaga_cmd_resource_map=
-_blob() ../hw/display/virtio-gpu-rutabaga.c:655<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu: virtio_gpu_rutabaga_process_cmd: ctrl 0x2=
-08, error 0x1200<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu: CHECK failed in rutabaga_cmd_resource_unm=
-ap_blob() ../hw/display/virtio-gpu-rutabaga.c:723<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu: virtio_gpu_rutabaga_process_cmd: ctrl 0x2=
-09, error 0x1200<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu: The errno is EBADF: Bad file number<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu: CHECK failed in rutabaga_cmd_resource_map=
-_blob() ../hw/display/virtio-gpu-rutabaga.c:655<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu: virtio_gpu_rutabaga_process_cmd: ctrl 0x2=
-08, error 0x1200<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu: CHECK failed in rutabaga_cmd_resource_unm=
-ap_blob() ../hw/display/virtio-gpu-rutabaga.c:723<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu: virtio_gpu_rutabaga_process_cmd: ctrl 0x2=
-09, error 0x1200<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu: The errno is EBADF: Bad file number<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu: CHECK failed in rutabaga_cmd_resource_map=
-_blob() ../hw/display/virtio-gpu-rutabaga.c:655<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu: virtio_gpu_rutabaga_process_cmd: ctrl 0x2=
-08, error 0x1200<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu: invalid resource id<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu: CHECK failed in rutabaga_cmd_submit_3d() =
-../hw/display/virtio-gpu-rutabaga.c:341<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu: virtio_gpu_rutabaga_process_cmd: ctrl 0x2=
-07, error 0x1200<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu: CHECK failed in rutabaga_cmd_resource_unm=
-ap_blob() ../hw/display/virtio-gpu-rutabaga.c:723<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu: virtio_gpu_rutabaga_process_cmd: ctrl 0x2=
-09, error 0x1200<br>
-</blockquote><div><br></div><div>Thank you for the bug report .. does <a hr=
-ef=3D"http://crrev.com/c/5342655">crrev.com/c/5342655</a> fix this for you?=
-=C2=A0<br></div><div><br></div><div><br></div><blockquote class=3D"gmail_qu=
-ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
-4);padding-left:1ex">
-I bisected it to:<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 commit f3dbf20eedadb135e2fd813474fbb9731d465f3a=
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 Author: Andrew Walbran &lt;<a href=3D"mailto:qw=
-andor@google.com" target=3D"_blank">qwandor@google.com</a>&gt;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 Date:=C2=A0 =C2=A0Wed Nov 29 17:23:45 2023 +000=
-0<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 rutabaga_gfx: Uprev nix to 0.27.1=
-<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 The new version of nix uses Owned=
-Fd in various places, which allows us<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 to have less unsafe code.<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 TEST=3DCQ<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 BUG=3Db:293289578<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Change-Id: I61aa80c4105eaf1182c5c=
-325109b5aba11cf60de<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Reviewed-on: <a href=3D"https://c=
-hromium-review.googlesource.com/c/crosvm/crosvm/+/5072293" rel=3D"noreferre=
-r" target=3D"_blank">https://chromium-review.googlesource.com/c/crosvm/cros=
-vm/+/5072293</a><br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Auto-Submit: Andrew Walbran &lt;<=
-a href=3D"mailto:qwandor@google.com" target=3D"_blank">qwandor@google.com</=
-a>&gt;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Reviewed-by: Gurchetan Singh &lt;=
-<a href=3D"mailto:gurchetansingh@chromium.org" target=3D"_blank">gurchetans=
-ingh@chromium.org</a>&gt;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Reviewed-by: Frederick Mayle &lt;=
-<a href=3D"mailto:fmayle@google.com" target=3D"_blank">fmayle@google.com</a=
->&gt;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Commit-Queue: Frederick Mayle &lt=
-;<a href=3D"mailto:fmayle@google.com" target=3D"_blank">fmayle@google.com</=
-a>&gt;<br>
-</blockquote></div></div>
+diff --git a/util/oslib-posix.c b/util/oslib-posix.c
+index 3c379f96c26..e76441695bd 100644
+--- a/util/oslib-posix.c
++++ b/util/oslib-posix.c
+@@ -467,11 +467,13 @@ static int touch_all_pages(char *area, size_t hpagesize, size_t numpages,
+          * preallocating synchronously.
+          */
+         if (context-&gt;num_threads == 1 &amp;&amp; !async) {
++            ret = 0;
+             if (qemu_madvise(area, hpagesize * numpages,
+                              QEMU_MADV_POPULATE_WRITE)) {
+-                return -errno;
++                ret = -errno;
+             }
+-            return 0;
++            g_free(context);
++            return ret;
+         }
+         touch_fn = do_madv_populate_write_pages;
+     } else {
+</pre>
+    </blockquote>
+    <br>
+  </body>
+</html>
 
---0000000000003bbd0c0612deda70--
+--------------jnNnNmEja0RoGGD61T6GlbNx--
 
