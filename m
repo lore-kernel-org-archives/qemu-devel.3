@@ -4,67 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E9B3C54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 16:45:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27FE4C54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 16:45:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhXth-0002Xa-2K; Tue, 05 Mar 2024 11:44:09 -0500
+	id 1rhXuY-0002xh-ON; Tue, 05 Mar 2024 11:45:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vkuznets@redhat.com>)
- id 1rhXtd-0002X2-4j
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 11:44:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1rhXuM-0002sH-K2
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 11:44:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vkuznets@redhat.com>)
- id 1rhXtb-0000zC-EE
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 11:44:04 -0500
+ id 1rhXuL-00015O-2i
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 11:44:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709657041;
+ s=mimecast20190719; t=1709657088;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rzUSmNr48AuOew4PQoowHUdG5Y8LjTF7gVdoLv9e0Y8=;
- b=GwOJ0jP8pR6tJChq4zgJ5TJEL9fsMIxlkg0rv94xVvkpynbV77nz58Onnt4IFmrTskFvPQ
- wFeH/7/kBV+v/4WCY6Itn+2vRxtqsjdBkqyEY1EzJhZAI49p1y+spo8aF7A5Y/YB4jEcCR
- MijEBX8bExFL4TIwJmmpIdQ+IQcP6yM=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-325-XcyiSUnXMvO2sNS6vY9y5A-1; Tue, 05 Mar 2024 11:42:07 -0500
-X-MC-Unique: XcyiSUnXMvO2sNS6vY9y5A-1
+ bh=8b6YKrwFTOQkloU6yGe4dh340t/IAqkoph2jnxslv5c=;
+ b=gV19k1AYZ1rEhcdy3yL5oP+yQV1I5tLImDFHi2eWArdYE9en4zDpktCq96WHd1N60NWX2V
+ 2Ta25l2IBI7Dz72cA1WIlgd1z74Pyt4CjoxSNqTQJ6lrrJCz2M0caB0H9ijwZ9DUd6wqVq
+ wc/yAY05u/jsim2xze9pOOXGgdUYL/I=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-312-mA6qioZbNiC19yDodhCQyg-1; Tue,
+ 05 Mar 2024 11:42:09 -0500
+X-MC-Unique: mA6qioZbNiC19yDodhCQyg-1
 Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
  [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8746A85A58C
- for <qemu-devel@nongnu.org>; Tue,  5 Mar 2024 16:42:07 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 294153C025B8
+ for <qemu-devel@nongnu.org>; Tue,  5 Mar 2024 16:42:09 +0000 (UTC)
 Received: from fedora.redhat.com (unknown [10.45.225.218])
- by smtp.corp.redhat.com (Postfix) with ESMTP id DBEC74073486;
- Tue,  5 Mar 2024 16:42:06 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 8DEA64073488;
+ Tue,  5 Mar 2024 16:42:08 +0000 (UTC)
 From: Vitaly Kuznetsov <vkuznets@redhat.com>
 To: qemu-devel@nongnu.org,
 	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH RESEND v3 1/3] i386: Fix conditional CONFIG_SYNDBG enablement
-Date: Tue,  5 Mar 2024 17:42:02 +0100
-Message-ID: <20240305164204.525575-2-vkuznets@redhat.com>
+Subject: [PATCH RESEND v3 3/3] docs/system: Add recommendations to Hyper-V
+ enlightenments doc
+Date: Tue,  5 Mar 2024 17:42:04 +0100
+Message-ID: <20240305164204.525575-4-vkuznets@redhat.com>
 In-Reply-To: <20240305164204.525575-1-vkuznets@redhat.com>
 References: <20240305164204.525575-1-vkuznets@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=vkuznets@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=vkuznets@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.568,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,94 +83,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Putting HYPERV_FEAT_SYNDBG entry under "#ifdef CONFIG_SYNDBG" in
-'kvm_hyperv_properties' array is wrong: as HYPERV_FEAT_SYNDBG is not
-the highest feature number, the result is an empty (zeroed) entry in
-the array (and not a skipped entry!). hyperv_feature_supported() is
-designed to check that all CPUID bits are set but for a zeroed
-feature in 'kvm_hyperv_properties' it returns 'true' so QEMU considers
-HYPERV_FEAT_SYNDBG as always supported, regardless of whether KVM host
-actually supports it.
+While hyperv.rst already has all currently implemented Hyper-V
+enlightenments documented, it may be unclear what is the recommended set to
+achieve the best result. Add the corresponding section to the doc.
 
-To fix the issue, leave HYPERV_FEAT_SYNDBG's definition in
-'kvm_hyperv_properties' array, there's nothing wrong in having it defined
-even when 'CONFIG_SYNDBG' is not set. Instead, put "hv-syndbg" CPU property
-under '#ifdef CONFIG_SYNDBG' to alter the existing behavior when the flag
-is silently skipped in !CONFIG_SYNDBG builds.
-
-Leave an 'assert' sentinel in hyperv_feature_supported() making sure there
-are no 'holes' or improperly defined features in 'kvm_hyperv_properties'.
-
-Fixes: d8701185f40c ("hw: hyperv: Initial commit for Synthetic Debugging device")
 Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
 ---
- target/i386/cpu.c     |  2 ++
- target/i386/kvm/kvm.c | 11 +++++++----
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ docs/system/i386/hyperv.rst | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 2666ef380891..64ce7c4c8242 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -7866,8 +7866,10 @@ static Property x86_cpu_properties[] = {
-                       HYPERV_FEAT_TLBFLUSH_DIRECT, 0),
-     DEFINE_PROP_ON_OFF_AUTO("hv-no-nonarch-coresharing", X86CPU,
-                             hyperv_no_nonarch_cs, ON_OFF_AUTO_OFF),
-+#ifdef CONFIG_SYNDBG
-     DEFINE_PROP_BIT64("hv-syndbg", X86CPU, hyperv_features,
-                       HYPERV_FEAT_SYNDBG, 0),
-+#endif
-     DEFINE_PROP_BOOL("hv-passthrough", X86CPU, hyperv_passthrough, false),
-     DEFINE_PROP_BOOL("hv-enforce-cpuid", X86CPU, hyperv_enforce_cpuid, false),
+diff --git a/docs/system/i386/hyperv.rst b/docs/system/i386/hyperv.rst
+index 009947e39141..1c1de77feb65 100644
+--- a/docs/system/i386/hyperv.rst
++++ b/docs/system/i386/hyperv.rst
+@@ -283,6 +283,36 @@ Supplementary features
+   feature alters this behavior and only allows the guest to use exposed Hyper-V
+   enlightenments.
  
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 42970ab046fa..f067e35d35b1 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -945,7 +945,6 @@ static struct {
-              .bits = HV_DEPRECATING_AEOI_RECOMMENDED}
-         }
-     },
--#ifdef CONFIG_SYNDBG
-     [HYPERV_FEAT_SYNDBG] = {
-         .desc = "Enable synthetic kernel debugger channel (hv-syndbg)",
-         .flags = {
-@@ -954,7 +953,6 @@ static struct {
-         },
-         .dependencies = BIT(HYPERV_FEAT_SYNIC) | BIT(HYPERV_FEAT_RELAXED)
-     },
--#endif
-     [HYPERV_FEAT_MSR_BITMAP] = {
-         .desc = "enlightened MSR-Bitmap (hv-emsr-bitmap)",
-         .flags = {
-@@ -1206,6 +1204,13 @@ static bool hyperv_feature_supported(CPUState *cs, int feature)
-     uint32_t func, bits;
-     int i, reg;
- 
-+    /*
-+     * kvm_hyperv_properties needs to define at least one CPUID flag which
-+     * must be used to detect the feature, it's hard to say whether it is
-+     * supported or not otherwise.
-+     */
-+    assert(kvm_hyperv_properties[feature].flags[0].func);
++Recommendations
++---------------
 +
-     for (i = 0; i < ARRAY_SIZE(kvm_hyperv_properties[feature].flags); i++) {
++To achieve the best performance of Windows and Hyper-V guests and unless there
++are any specific requirements (e.g. migration to older QEMU/KVM versions,
++emulating specific Hyper-V version, ...), it is recommended to enable all
++currently implemented Hyper-V enlightenments with the following exceptions:
++
++- ``hv-syndbg``, ``hv-passthrough``, ``hv-enforce-cpuid`` should not be enabled
++  in production configurations as these are debugging/development features.
++- ``hv-reset`` can be avoided as modern Hyper-V versions don't expose it.
++- ``hv-evmcs`` can (and should) be enabled on Intel CPUs only. While the feature
++  is only used in nested configurations (Hyper-V, WSL2), enabling it for regular
++  Windows guests should not have any negative effects.
++- ``hv-no-nonarch-coresharing`` must only be enabled if vCPUs are properly pinned
++  so no non-architectural core sharing is possible.
++- ``hv-vendor-id``, ``hv-version-id-build``, ``hv-version-id-major``,
++  ``hv-version-id-minor``, ``hv-version-id-spack``, ``hv-version-id-sbranch``,
++  ``hv-version-id-snumber`` can be left unchanged, guests are not supposed to
++  behave differently when different Hyper-V version is presented to them.
++- ``hv-crash`` must only be enabled if the crash information is consumed via
++  QAPI by higher levels of the virtualization stack. Enabling this feature
++  effectively prevents Windows from creating dumps upon crashes.
++- ``hv-reenlightenment`` can only be used on hardware which supports TSC
++  scaling or when guest migration is not needed.
++- ``hv-spinlocks`` should be set to e.g. 0xfff when host CPUs are overcommited
++  (meaning there are other scheduled tasks or guests) and can be left unchanged
++  from the default value (0xffffffff) otherwise.
++- ``hv-avic``/``hv-apicv`` should not be enabled if the hardware does not
++  support APIC virtualization (Intel APICv, AMD AVIC).
  
-         func = kvm_hyperv_properties[feature].flags[i].func;
-@@ -3388,13 +3393,11 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
-                 kvm_msr_entry_add(cpu, HV_X64_MSR_TSC_EMULATION_STATUS,
-                                   env->msr_hv_tsc_emulation_status);
-             }
--#ifdef CONFIG_SYNDBG
-             if (hyperv_feat_enabled(cpu, HYPERV_FEAT_SYNDBG) &&
-                 has_msr_hv_syndbg_options) {
-                 kvm_msr_entry_add(cpu, HV_X64_MSR_SYNDBG_OPTIONS,
-                                   hyperv_syndbg_query_options());
-             }
--#endif
-         }
-         if (hyperv_feat_enabled(cpu, HYPERV_FEAT_VAPIC)) {
-             kvm_msr_entry_add(cpu, HV_X64_MSR_APIC_ASSIST_PAGE,
+ Useful links
+ ------------
 -- 
 2.43.2
 
