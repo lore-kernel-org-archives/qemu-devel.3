@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE971C54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 17:59:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FB48C54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 18:08:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhZ3y-0007ok-V5; Tue, 05 Mar 2024 12:58:50 -0500
+	id 1rhZCh-0001q4-Uu; Tue, 05 Mar 2024 13:07:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rhZ3y-0007oY-7K
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 12:58:50 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1rhZCg-0001p4-D5
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 13:07:50 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rhZ3s-0006pa-Hp
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 12:58:49 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1rhZCe-0008S9-E5
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 13:07:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709661523;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=dAtFWPBhFfYwfDphly73YPCFKHZ2gjwQ4k2DUTMtLng=;
- b=fiAhX9YOkkAlrJAUg3x/1MkzpYPk7YkE3zf6xilErAQiQHAmro/EDEzmg8O24R4Y76MbIP
- ZXw4PSGmoXE6JWI8l172t7VLpnahVD3nNHQNk6R9nrPRNjXlEYD5Upg87H9ypdArwL/G+1
- NQSBjhn6Ff9zHuNyof9e6N0j8IYeztU=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-151-q8zt0856NE2Ec6qdgW_aGw-1; Tue,
- 05 Mar 2024 12:58:40 -0500
-X-MC-Unique: q8zt0856NE2Ec6qdgW_aGw-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
+ s=mimecast20190719; t=1709662067;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ffhGhTFKTfoOEdehWkcuXBNltZdfqeZn8lAiBMxVS6Y=;
+ b=PaaKuSvd5yRD+P00d3NZ7+oM8c4GlMi67irXYhG8JF4Tf0//KbPohBV9hFAA5jHyDrNg8z
+ b+K0fs47fmsHDTu7G4zB2o0zjFirGkpXqz+DKcK1jY2tMjxI+tSVbvgP2WtsV3jIOr8l3F
+ 3tMfF0NcMxtJSeGKutWu7vONpSUWU+U=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-683-eB6L_hBqNIGezc45DXgtAg-1; Tue, 05 Mar 2024 13:07:42 -0500
+X-MC-Unique: eB6L_hBqNIGezc45DXgtAg-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9972B3C025BB;
- Tue,  5 Mar 2024 17:58:39 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.66])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 438D2492BDC;
- Tue,  5 Mar 2024 17:58:37 +0000 (UTC)
-Date: Tue, 5 Mar 2024 17:58:34 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Cc: qemu-devel@nongnu.org, michael.roth@amd.com, kkostiuk@redhat.com,
- marcandre.lureau@redhat.com, philmd@linaro.org, den@virtuozzo.com
-Subject: Re: [PATCH v2 2/7] qga: introduce ga_run_command() helper for guest
- cmd execution
-Message-ID: <ZeddShrMTUFjMoNl@redhat.com>
-References: <20240301172858.665135-1-andrey.drobyshev@virtuozzo.com>
- <20240301172858.665135-3-andrey.drobyshev@virtuozzo.com>
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D0AB686C047;
+ Tue,  5 Mar 2024 18:07:40 +0000 (UTC)
+Received: from laptop.redhat.com (unknown [10.39.193.114])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 1C172C041F0;
+ Tue,  5 Mar 2024 18:07:36 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, mst@redhat.com, jean-philippe@linaro.org,
+ imammedo@redhat.com, peter.maydell@linaro.org, clg@redhat.com,
+ yanghliu@redhat.com, zhenzhong.duan@intel.com
+Cc: alex.williamson@redhat.com, jasowang@redhat.com, pbonzini@redhat.com,
+ berrange@redhat.com
+Subject: [PATCH v6 0/9] VIRTIO-IOMMU: Introduce aw-bits and granule options
+Date: Tue,  5 Mar 2024 19:06:18 +0100
+Message-ID: <20240305180734.48515-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240301172858.665135-3-andrey.drobyshev@virtuozzo.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.568,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,207 +79,69 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 01, 2024 at 07:28:53PM +0200, Andrey Drobyshev wrote:
-> When executing guest commands in *nix environment, we repeat the same
-> fork/exec pattern multiple times.  Let's just separate it into a single
-> helper which would also be able to feed input data into the launched
-> process' stdin.  This way we can avoid code duplication.
-> 
-> To keep the history more bisectable, let's replace qmp commands
-> implementations one by one.  Also add G_GNUC_UNUSED attribute to the
-> helper and remove it in the next commit.
-> 
-> Originally-by: Yuri Pudgorodskiy <yur@virtuozzo.com>
-> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> ---
->  qga/commands-posix.c | 140 +++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 140 insertions(+)
-> 
-> diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-> index 8207c4c47e..781498418f 100644
-> --- a/qga/commands-posix.c
-> +++ b/qga/commands-posix.c
-> @@ -76,6 +76,146 @@ static void ga_wait_child(pid_t pid, int *status, Error **errp)
->      g_assert(rpid == pid);
->  }
->  
-> +static void ga_pipe_read_str(int fd[2], char **str, size_t *len)
-> +{
-> +    ssize_t n;
-> +    char buf[1024];
-> +    close(fd[1]);
-> +    fd[1] = -1;
-> +    while ((n = read(fd[0], buf, sizeof(buf))) != 0) {
-> +        if (n < 0) {
-> +            if (errno == EINTR) {
-> +                continue;
-> +            } else {
-> +                break;
+This is a respin of
+[1] [PATCH v5 0/4] VIRTIO-IOMMU: Introduce an aw-bits option
+(https://lore.kernel.org/all/20240215084315.863897-1-eric.auger@redhat.com/)
 
-This is a fatal error condition....
+which now also integrates
 
-> +            }
-> +        }
-> +        *str = g_realloc(*str, *len + n);
-> +        memcpy(*str + *len, buf, n);
-> +        *len += n;
-> +    }
-> +    close(fd[0]);
-> +    fd[0] = -1;
+[PATCH v6 0/3] VIRTIO-IOMMU: Set default granule to host page size
+(https://lore.kernel.org/all/20240227165730.14099-1-eric.auger@redhat.com/)
 
-....and yet as far as the caller is concerned we're not indicating
-any sense of failure here. They're just being returned a partially
-read data stream as if it were successful. IMHO this needs to be
-reported properly.
+The introduction of those 2 new options and their new default values
+fix bugs when assigning VFIO devices protected by a virtio-iommu.
+
+patches 1 - 4: intro of the granule property, collected reviews
+- we used to set the default granule to 4k. This causes failures
+  when hotplugging a VFIO device on a 64kB/64kB host/guest config:
+  "vfio: DMA mapping failed, unable to continue". When the device
+  is hotplugged the granule is already frozen to 4k wheras 64k is
+  needed. This series introduces a new granule option which is set
+  by default to the host page size.
+
+patches 5 - 9: intro of the aw-bits property, needs further review
+- we used to set the input address width to 64b. This causes
+  failures with some assigned devices where the guest driver
+  tries to use the full 64b input range whereas the physical IOMMU
+  supports less bits (39/48 gaw for instance on VTD). New default
+  usually match the host HW capability.
+
+For more details please see the cover letter of [1] and [2].
+
+This series can be found at:
+https://github.com/eauger/qemu/tree/granule_aw_bits_v4
 
 
-Nothing in this method has NUL terminated 'str', so we are
-relying on the caller *always* honouring 'len', but.....
+Eric Auger (9):
+  qdev: Add a granule_mode property
+  virtio-iommu: Add a granule property
+  virtio-iommu: Change the default granule to the host page size
+  qemu-options.hx: Document the virtio-iommu-pci granule option
+  virtio-iommu: Trace domain range limits as unsigned int
+  virtio-iommu: Add an option to define the input range width
+  hw/i386/q35: Set virtio-iommu aw-bits default value to 39
+  hw/arm/virt: Set virtio-iommu aw-bits default value to 48
+  qemu-options.hx: Document the virtio-iommu-pci aw-bits option
 
-> +}
-> +
-> +/*
-> + * Helper to run command with input/output redirection,
-> + * sending string to stdin and taking error message from
-> + * stdout/err.
-> + */
-> +G_GNUC_UNUSED
-> +static int ga_run_command(const char *argv[], const char *in_str,
-> +                          const char *action, Error **errp)
-> +{
-> +    pid_t pid;
-> +    int status;
-> +    int retcode = -1;
-> +    int infd[2] = { -1, -1 };
-> +    int outfd[2] = { -1, -1 };
-> +    char *str = NULL;
-> +    size_t len = 0;
-> +
-> +    if ((in_str && !g_unix_open_pipe(infd, FD_CLOEXEC, NULL)) ||
-> +        !g_unix_open_pipe(outfd, FD_CLOEXEC, NULL)) {
-> +        error_setg(errp, "cannot create pipe FDs");
-> +        goto out;
-> +    }
-> +
-> +    pid = fork();
-> +    if (pid == 0) {
-> +        char *cherr = NULL;
-> +
-> +        setsid();
-> +
-> +        if (in_str) {
-> +            /* Redirect stdin to infd. */
-> +            close(infd[1]);
-> +            dup2(infd[0], 0);
-> +            close(infd[0]);
-> +        } else {
-> +            reopen_fd_to_null(0);
-> +        }
-> +
-> +        /* Redirect stdout/stderr to outfd. */
-> +        close(outfd[0]);
-> +        dup2(outfd[1], 1);
-> +        dup2(outfd[1], 2);
-> +        close(outfd[1]);
-> +
-> +        execvp(argv[0], (char *const *)argv);
-> +
-> +        /* Write the cause of failed exec to pipe for the parent to read it. */
-> +        cherr = g_strdup_printf("failed to exec '%s'", argv[0]);
-> +        perror(cherr);
-> +        g_free(cherr);
-> +        _exit(EXIT_FAILURE);
-> +    } else if (pid < 0) {
-> +        error_setg_errno(errp, errno, "failed to create child process");
-> +        goto out;
-> +    }
-> +
-> +    if (in_str) {
-> +        close(infd[0]);
-> +        infd[0] = -1;
-> +        if (qemu_write_full(infd[1], in_str, strlen(in_str)) !=
-> +                strlen(in_str)) {
-> +            error_setg_errno(errp, errno, "%s: cannot write to stdin pipe",
-> +                             action);
-> +            goto out;
-> +        }
-> +        close(infd[1]);
-> +        infd[1] = -1;
-> +    }
-> +
-> +    ga_pipe_read_str(outfd, &str, &len);
-> +
-> +    ga_wait_child(pid, &status, errp);
-> +    if (*errp) {
-> +        goto out;
-> +    }
-> +
-> +    if (!WIFEXITED(status)) {
-> +        if (len) {
-> +            error_setg(errp, "child process has terminated abnormally: %s",
-> +                       str);
+ qapi/virtio.json                    | 18 +++++++++++++++
+ include/hw/i386/pc.h                |  3 +++
+ include/hw/qdev-properties-system.h |  3 +++
+ include/hw/virtio/virtio-iommu.h    |  3 +++
+ hw/arm/virt.c                       | 17 ++++++++++++++
+ hw/core/machine.c                   |  6 ++++-
+ hw/core/qdev-properties-system.c    | 14 ++++++++++++
+ hw/i386/pc.c                        |  6 +++++
+ hw/i386/pc_q35.c                    |  2 ++
+ hw/virtio/virtio-iommu.c            | 35 +++++++++++++++++++++++++----
+ tests/qtest/virtio-iommu-test.c     |  2 +-
+ hw/virtio/trace-events              |  2 +-
+ qemu-options.hx                     | 11 +++++++++
+ 13 files changed, 115 insertions(+), 7 deletions(-)
 
-...this is reading 'str' without honouring 'len', so is likely
-an array out of bounds read.
-
-> +        } else {
-> +            error_setg(errp, "child process has terminated abnormally");
-> +        }
-> +        goto out;
-> +    }
-> +
-> +    retcode = WEXITSTATUS(status);
-> +
-> +    if (WEXITSTATUS(status)) {
-> +        if (len) {
-> +            error_setg(errp, "child process has failed to %s: %s",
-> +                       action, str);
-
-Again, array out of bounds is likely
-
-> +        } else {
-> +            error_setg(errp, "child process has failed to %s: exit status %d",
-> +                       action, WEXITSTATUS(status));
-> +        }
-> +        goto out;
-> +    }
-> +
-> +out:
-> +    g_free(str);
-> +
-> +    if (infd[0] != -1) {
-> +        close(infd[0]);
-> +    }
-> +    if (infd[1] != -1) {
-> +        close(infd[1]);
-> +    }
-> +    if (outfd[0] != -1) {
-> +        close(outfd[0]);
-> +    }
-> +    if (outfd[1] != -1) {
-> +        close(outfd[1]);
-> +    }
-> +
-> +    return retcode;
-> +}
-> +
->  void qmp_guest_shutdown(const char *mode, Error **errp)
->  {
->      const char *shutdown_flag;
-> -- 
-> 2.39.3
-> 
-> 
-
-With regards,
-Daniel
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.41.0
 
 
