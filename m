@@ -4,88 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E908C54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 19:55:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ECFCC54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 19:57:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhasH-00050F-9W; Tue, 05 Mar 2024 14:54:53 -0500
+	id 1rhau3-0005hv-AP; Tue, 05 Mar 2024 14:56:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rhasF-000507-RL
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 14:54:51 -0500
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rhau2-0005hn-NN
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 14:56:42 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rhasE-0001Eu-5W
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 14:54:51 -0500
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-a4417fa396fso743229566b.1
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 11:54:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709668488; x=1710273288; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YC4b2cVXloWpoqqCBwlpKZuhf6Pn9xSqQ3vLqZEzSpw=;
- b=PZkxoRoUfFsGvWUVajTVJ18D5z0WYHBKcAQ4GWOM4k02R4WNaUPBeMOe/7Toy5//Nz
- 3r8cZz1WJ/tG4AUX92vDi9L1yfq9CATXh7hyDtJvWmCH8Qz+yesoNEykMZMk6pcfxks1
- p/4QtXhkdQJPFKJzDt2FRj+mLgrZ+74EFf8xxAzqi+ovOu0sTL5lqTJV9yRvVBLjsVy+
- mvczKUJhUAEHNGgp+dnhFFUFDb8Qq+/FhgC0v34EMK/VAo0EhXgjHqyXFaKXJSVuIqe2
- W7sgCQl3cQMmY4XxsGDHkueqoVfZB9TRODlrSa32tqOJhh9wYqnTX4mkEDs6Oyq8tsHN
- ewEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709668488; x=1710273288;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=YC4b2cVXloWpoqqCBwlpKZuhf6Pn9xSqQ3vLqZEzSpw=;
- b=evWoCCXW8iDyMZx0ZmBAdztw833HPagS1xPe9e9Oahl9EPcv/vJie9xURxj9Znf3wY
- 6EqC2xc5iU6hAay62R/nA6C+NRHMa82rfJ/vXGzD+eL1CQswkSIyuK16z3/3F8V6x1SA
- UZMghmglkP4oLAcnEKbkVAzk/HLy3A2ihHw2iNs0Y2Qp89synL8UZi+4B43kQiOkQqgR
- 9LCmGCxy5tw9vQZMmpP1z7vLCnesSZYdm52K+Ed+G+bqoMIAYc0w0+IOzTqYis86T/BU
- Rk++nitw7UwiPq18iuQTBouCkXT5N6+lZlqyn/riUbolY0GDBQ50+TqmPHBMHhlSwCoH
- ILzw==
-X-Gm-Message-State: AOJu0Yzg7QYHHjfzCj8rEuYmlFFvY5+qpjrGCU2i+jQnIaRjnMEgZbDh
- IJVkwQZmAZ4LzzXz2acwDp820sAuCnDJfrfrsXjFU1IschYKdbAh3BXH+RTEWRQ=
-X-Google-Smtp-Source: AGHT+IGbk2nM73u8f7iqJforIrOGcJV43J9g7hoFZPT1nPQmNWmSiDxeCzzIxaIyS63be+E4eLRTyw==
-X-Received: by 2002:a17:906:c20f:b0:a45:a9c2:85d7 with SMTP id
- d15-20020a170906c20f00b00a45a9c285d7mr2115844ejz.44.1709668487978; 
- Tue, 05 Mar 2024 11:54:47 -0800 (PST)
-Received: from [127.0.0.1] (dynamic-089-012-109-249.89.12.pool.telefonica.de.
- [89.12.109.249]) by smtp.gmail.com with ESMTPSA id
- f8-20020a17090660c800b00a45a09e7e23sm1205455ejk.136.2024.03.05.11.54.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Mar 2024 11:54:47 -0800 (PST)
-Date: Tue, 05 Mar 2024 19:54:40 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: qemu-devel@nongnu.org,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- Jason Wang <jasowang@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Sergio Lopez <slp@redhat.com>, Paul Durrant <paul@xen.org>,
- David Woodhouse <dwmw2@infradead.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH v3 1/4] hw/i386/pc: Remove "rtc_state" link again
-In-Reply-To: <CAFEAcA9tzgAetYu8QcR+CgN1L_1ZcCS3mYHbD9oPe5py7Tw1iw@mail.gmail.com>
-References: <20240303185332.1408-1-shentey@gmail.com>
- <20240303185332.1408-2-shentey@gmail.com>
- <CAFEAcA9tzgAetYu8QcR+CgN1L_1ZcCS3mYHbD9oPe5py7Tw1iw@mail.gmail.com>
-Message-ID: <23F8A871-DE41-4B76-A78E-C3C517FF6319@gmail.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rhau0-0001kn-Dv
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 14:56:42 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 52B493473F;
+ Tue,  5 Mar 2024 19:56:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1709668593; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=iq2l4jFXW/stiXAvwBEizLutLe9RrUQ8wyZYiDZGBcY=;
+ b=frg4/nv81Xo1ZX/HfkuRw4HqvqW1k3k4UscXlbeg1MyJZEjM6Rm+v/uOuIO/9+fzXdlanw
+ 6NZbOHpDiN//sPizP6fvOpRZAmCyldhZISJ+8I5rVlwHsbi9gdLAid8uvCjFvSCHV/ZAt5
+ I9grGDlUkcxjhaiqWqKxH5/ksKTg6qE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1709668593;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=iq2l4jFXW/stiXAvwBEizLutLe9RrUQ8wyZYiDZGBcY=;
+ b=UoVAbwZdroqB8SFnemFJ0x+fTZM4kn821V2elXmxeq+94pUEMzvAspu4LwNiGublCxGuNf
+ n28kvJcQo4hdJXAg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1709668593; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=iq2l4jFXW/stiXAvwBEizLutLe9RrUQ8wyZYiDZGBcY=;
+ b=frg4/nv81Xo1ZX/HfkuRw4HqvqW1k3k4UscXlbeg1MyJZEjM6Rm+v/uOuIO/9+fzXdlanw
+ 6NZbOHpDiN//sPizP6fvOpRZAmCyldhZISJ+8I5rVlwHsbi9gdLAid8uvCjFvSCHV/ZAt5
+ I9grGDlUkcxjhaiqWqKxH5/ksKTg6qE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1709668593;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=iq2l4jFXW/stiXAvwBEizLutLe9RrUQ8wyZYiDZGBcY=;
+ b=UoVAbwZdroqB8SFnemFJ0x+fTZM4kn821V2elXmxeq+94pUEMzvAspu4LwNiGublCxGuNf
+ n28kvJcQo4hdJXAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 216E7139D0;
+ Tue,  5 Mar 2024 19:56:31 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([10.150.64.162])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id /mlUNe9452UHNgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 05 Mar 2024 19:56:31 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: berrange@redhat.com,
+	peterx@redhat.com
+Subject: [PATCH v2] migration/multifd: Don't fsync when closing QIOChannelFile
+Date: Tue,  5 Mar 2024 16:56:29 -0300
+Message-Id: <20240305195629.9922-1-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="frg4/nv8";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=UoVAbwZd
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-3.51 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; TO_DN_NONE(0.00)[];
+ RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ MID_CONTAINS_FROM(1.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-0.995];
+ RCVD_TLS_ALL(0.00)[]; BAYES_HAM(-3.00)[100.00%]
+X-Rspamd-Queue-Id: 52B493473F
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,40 +120,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Commit bc38feddeb ("io: fsync before closing a file channel") added a
+fsync/fdatasync at the closing point of the QIOChannelFile to ensure
+integrity of the migration stream in case of QEMU crash.
 
+The decision to do the sync at qio_channel_close() was not the best
+since that function runs in the main thread and the fsync can cause
+QEMU to hang for several minutes, depending on the migration size and
+disk speed.
 
-Am 5=2E M=C3=A4rz 2024 15:57:08 UTC schrieb Peter Maydell <peter=2Emaydell=
-@linaro=2Eorg>:
->On Sun, 3 Mar 2024 at 18:55, Bernhard Beschow <shentey@gmail=2Ecom> wrote=
-:
->>
->> Commit 99e1c1137b6f "hw/i386/pc: Populate RTC attribute directly" made =
-linking
->> the "rtc_state" property unnecessary and removed it=2E Commit 84e945aad=
-2d0 "vl,
->> pc: turn -no-fd-bootchk into a machine property" accidently reintroduce=
-d the
->> link=2E Remove it again since it is not needed=2E
->>
->> Fixes: 84e945aad2d0 "vl, pc: turn -no-fd-bootchk into a machine propert=
-y"
->> Cc: Paolo Bonzini <pbonzini@redhat=2Ecom>
->> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->
->Ah, I did wonder when I was working with this code whether that
->rtc_state link was really necessary=2E
->
->We could now remove the rtc argument from the pc_cmos_init()
->function, because we can guarantee that it's in x86ms->rtc,
->which the function already has access to from its pcms argument=2E
+To fix the hang, remove the fsync from qio_channel_file_close().
 
-This series goes one step further and inlines this function=2E It would be=
- a nice to get some feedback before the freeze=2E
+At this moment, the migration code is the only user of the fsync and
+we're taking the tradeoff of not having a sync at all, leaving the
+responsibility to the upper layers.
 
-Best regards,
-Bernhard
+Fixes: bc38feddeb ("io: fsync before closing a file channel")
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+v2:
+- kept the qio_channel_close
+---
+ docs/devel/migration/main.rst |  3 ++-
+ io/channel-file.c             |  5 -----
+ migration/multifd.c           | 14 ++++----------
+ 3 files changed, 6 insertions(+), 16 deletions(-)
 
->
->thanks
->-- PMM
+diff --git a/docs/devel/migration/main.rst b/docs/devel/migration/main.rst
+index 8024275d6d..54385a23e5 100644
+--- a/docs/devel/migration/main.rst
++++ b/docs/devel/migration/main.rst
+@@ -44,7 +44,8 @@ over any transport.
+ - file migration: do the migration using a file that is passed to QEMU
+   by path. A file offset option is supported to allow a management
+   application to add its own metadata to the start of the file without
+-  QEMU interference.
++  QEMU interference. Note that QEMU does not flush cached file
++  data/metadata at the end of migration.
+ 
+ In addition, support is included for migration using RDMA, which
+ transports the page data using ``RDMA``, where the hardware takes care of
+diff --git a/io/channel-file.c b/io/channel-file.c
+index d4706fa592..a6ad7770c6 100644
+--- a/io/channel-file.c
++++ b/io/channel-file.c
+@@ -242,11 +242,6 @@ static int qio_channel_file_close(QIOChannel *ioc,
+ {
+     QIOChannelFile *fioc = QIO_CHANNEL_FILE(ioc);
+ 
+-    if (qemu_fdatasync(fioc->fd) < 0) {
+-        error_setg_errno(errp, errno,
+-                         "Unable to synchronize file data with storage device");
+-        return -1;
+-    }
+     if (qemu_close(fioc->fd) < 0) {
+         error_setg_errno(errp, errno,
+                          "Unable to close file");
+diff --git a/migration/multifd.c b/migration/multifd.c
+index d4a44da559..0a8fef046b 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -710,16 +710,10 @@ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
+     if (p->c) {
+         migration_ioc_unregister_yank(p->c);
+         /*
+-         * An explicit close() on the channel here is normally not
+-         * required, but can be helpful for "file:" iochannels, where it
+-         * will include fdatasync() to make sure the data is flushed to the
+-         * disk backend.
+-         *
+-         * The object_unref() cannot guarantee that because: (1) finalize()
+-         * of the iochannel is only triggered on the last reference, and
+-         * it's not guaranteed that we always hold the last refcount when
+-         * reaching here, and, (2) even if finalize() is invoked, it only
+-         * does a close(fd) without data flush.
++         * The object_unref() cannot guarantee the fd will always be
++         * released because finalize() of the iochannel is only
++         * triggered on the last reference and it's not guaranteed
++         * that we always hold the last refcount when reaching here.
+          */
+         qio_channel_close(p->c, &error_abort);
+         object_unref(OBJECT(p->c));
+-- 
+2.35.3
+
 
