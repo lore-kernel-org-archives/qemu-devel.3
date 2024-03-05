@@ -4,105 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B52AC54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 08:23:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE580C54E41
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 08:24:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhQ54-0000ID-Fa; Tue, 05 Mar 2024 03:23:22 -0500
+	id 1rhQ5n-0000pu-1c; Tue, 05 Mar 2024 03:24:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rhQ51-0000He-O7; Tue, 05 Mar 2024 03:23:19 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rhQ5i-0000eI-Np
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 03:24:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rhQ50-0005uw-0S; Tue, 05 Mar 2024 03:23:19 -0500
-Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 4257qIRT005269; Tue, 5 Mar 2024 08:23:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=ntHM9VA3GbVwcpUr6/gb2RjtSYf4iJK4cnMEUOLbyTA=;
- b=PuvexDhNFt0KVC4QEpSGF3GelT1Cik38puG3QsWhsVfAA/892pdNO8zJ46S9ld6v2mpe
- QH5BrZlmhrkEh7bCo9kTSh0mb2dUpUuJXrE46XXV/EWmQHEXeZovl0XHVeWvSZjuJMcC
- /3bl094Qf2ygDMSOSBB+MeFzxMFuEcEBlb0pw1XdhgLdr2szlY5eTwaWFz0Z7YbqyUWG
- iGokgVEuvEiBQMjyGhlMXyQmTBDfWu/g7rjYArrY1SdhIkywo2LHNw84KnBBiMk1RsN2
- ABAGUSVeOtxrpbrCPq9q0zCSTr5eAQ1+qYfJeNeDu8ft0xa5mHklQuAK5q2mkyedgWYo LQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wnycqgvvy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Mar 2024 08:23:12 +0000
-Received: from m0353727.ppops.net (m0353727.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4257q56T004881;
- Tue, 5 Mar 2024 08:23:08 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wnycqgv5t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Mar 2024 08:23:07 +0000
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 4255sSDT010910; Tue, 5 Mar 2024 08:21:21 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3wmh525rey-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Mar 2024 08:21:21 +0000
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4258LHEw25821868
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 5 Mar 2024 08:21:20 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BFDE458043;
- Tue,  5 Mar 2024 08:21:17 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CCE5458055;
- Tue,  5 Mar 2024 08:21:14 +0000 (GMT)
-Received: from [9.109.243.35] (unknown [9.109.243.35])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  5 Mar 2024 08:21:14 +0000 (GMT)
-Message-ID: <de98bb30-6632-4938-b3c6-964ab867b2ad@linux.ibm.com>
-Date: Tue, 5 Mar 2024 13:51:13 +0530
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rhQ5Z-0005yR-Pu
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 03:24:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709627033;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=t97PPAvAR+1evBiiddKA2s1dqRYW7WAJ8wooILuMRtI=;
+ b=Xmw/ojKjjoQ5p2vfr/NFhZRPoHFzspQcoM9RvmbCxgs3De/ChTl/cqK+W25cJfX1SSSZsX
+ XfhJnmYpSioaCvWsD2tPyOuH9XYjq6fxJRfi2C/52a2xCpu0kBAOZ7dZyl5wHt8bWmnMYv
+ ph+B7+hJbLtbKed175pmPru1TcEDIqs=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-326-IpkaTYVhMn-BppT_oxNC2g-1; Tue, 05 Mar 2024 03:23:51 -0500
+X-MC-Unique: IpkaTYVhMn-BppT_oxNC2g-1
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-788228e459dso270239285a.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 00:23:51 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709627031; x=1710231831;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=t97PPAvAR+1evBiiddKA2s1dqRYW7WAJ8wooILuMRtI=;
+ b=RfJBux4J+kqk6XRiAZE6iCBYW1AYD3/IAboMNtD1uABRX0KaqZeXgh4JyZOHhScZVF
+ Q3W7Yp4JOxc70ksjegig/TKMOTsYVTs4tHBQcUo3ZD8RJzyARx4iLztW8wIthOAH8eDL
+ QBQ2luSjo4CDz92dnZi+1lfSUi1xxsaC6abrHzisqMHXukU0DS4wHA2lI+0nTNuGGIPC
+ TCGkvEkmeJYuHscOT4aSBTewx7GN9NnleUGHpuuBy+7L338w2qz3CLst4tjVSvr6m+GF
+ Zgex7AFjAHRU8+IZ5nQ/69F0F9AL9vlj9fCeS8RQalNdqZGWcTZwS3UujEtRlxKYLd+N
+ QOzA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWvtx/4fHYphHqLCnPJuRuXSXnyZ8pZ+RYnKZew81I3qEOtljOrdh6V4FY8vVBXaXg2nJeZL1vilNvXIYB5hks1bDxWwmI=
+X-Gm-Message-State: AOJu0YxNdkT0XNBzqV2eBEXlZUk0NHuz76AHT1n7N6hptIeSGlISazFa
+ r6Kp/W4rENmxkA9L3/xY3cdHph01+39I2HB8QuRLtMbf17G+gcSzLnF0TPEcUOwnFfMO4KnutuL
+ E3aMPI4MuIzPk27oj/1CrFckuifUBt+DOYoVd+v1IjcCIhpYPuoVQ
+X-Received: by 2002:a05:620a:149a:b0:788:20bb:6bc6 with SMTP id
+ w26-20020a05620a149a00b0078820bb6bc6mr1181928qkj.17.1709627031314; 
+ Tue, 05 Mar 2024 00:23:51 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEVgMV6SBXunoTYJzb6DLZLDLPxGuE1B2YzjcmpVqlD4qFOf7znxfUzoUXbyPk7O2NQNLjIgw==
+X-Received: by 2002:a05:620a:149a:b0:788:20bb:6bc6 with SMTP id
+ w26-20020a05620a149a00b0078820bb6bc6mr1181913qkj.17.1709627030975; 
+ Tue, 05 Mar 2024 00:23:50 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ a17-20020a05620a125100b007881f769315sm2802681qkl.68.2024.03.05.00.23.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 Mar 2024 00:23:50 -0800 (PST)
+Message-ID: <2dae4a33-14de-4ab6-9848-da48d08ff9b3@redhat.com>
+Date: Tue, 5 Mar 2024 09:23:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 12/15] spapr: nested: Use correct source for parttbl
- info for nested PAPR API.
-Content-Language: en-US
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: clegoate@redhat.com, mikey@neuling.org, amachhiw@linux.vnet.ibm.com,
- vaibhav@linux.ibm.com, sbhat@linux.ibm.com, danielhb413@gmail.com,
- qemu-devel@nongnu.org
-References: <20240220083609.748325-1-harshpb@linux.ibm.com>
- <20240220083609.748325-13-harshpb@linux.ibm.com>
- <CZFS7NVV22F1.11DDO9RYBJG5P@wheely>
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <CZFS7NVV22F1.11DDO9RYBJG5P@wheely>
+Subject: Re: [PATCH v3 03/26] migration: Always report an error in
+ block_save_setup()
+Content-Language: en-US, fr
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Alex Williamson
+ <alex.williamson@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Stefan Hajnoczi
+ <stefanha@redhat.com>, qemu-block@nongnu.org
+References: <20240304122844.1888308-1-clg@redhat.com>
+ <20240304122844.1888308-4-clg@redhat.com> <87plw9hfoa.fsf@suse.de>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <87plw9hfoa.fsf@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: zGoWU4llXJlVQULeWoSHuZ5SxMmPmD5z
-X-Proofpoint-GUID: m1x43WSGaIPXXuontPAycvVDLPzT4JL1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-05_05,2024-03-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- clxscore=1015 impostorscore=0 phishscore=0 adultscore=0 mlxlogscore=999
- malwarescore=0 suspectscore=0 mlxscore=0 spamscore=0 bulkscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2403050065
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,84 +110,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Nick,
-
-On 2/27/24 15:46, Nicholas Piggin wrote:
-> On Tue Feb 20, 2024 at 6:36 PM AEST, Harsh Prateek Bora wrote:
->> For nested PAPR API, we use SpaprMachineStateNestedGuest struct to store
->> partition table info, use the same in spapr_get_pate_nested() via
->> helper.
+On 3/4/24 22:04, Fabiano Rosas wrote:
+> Cédric Le Goater <clg@redhat.com> writes:
+> 
+>> This will prepare ground for futur changes adding an Error** argument
+>> to the save_setup() handler. We need to make sure that on failure,
+>> block_save_setup() always sets a new error.
 >>
->> Signed-off-by: Michael Neuling <mikey@neuling.org>
->> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>> Cc: Stefan Hajnoczi <stefanha@redhat.com>
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 >> ---
->>   include/hw/ppc/spapr_nested.h |  4 ++++
->>   hw/ppc/spapr.c                |  2 ++
->>   hw/ppc/spapr_nested.c         | 20 +++++++++++++++++++-
->>   3 files changed, 25 insertions(+), 1 deletion(-)
+>>   migration/block.c | 18 +++++++++++++-----
+>>   1 file changed, 13 insertions(+), 5 deletions(-)
 >>
->> diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
->> index 1b7e55f12a..da918d2dd0 100644
->> --- a/include/hw/ppc/spapr_nested.h
->> +++ b/include/hw/ppc/spapr_nested.h
->> @@ -511,4 +511,8 @@ bool spapr_get_pate_nested_hv(SpaprMachineState *spapr, PowerPCCPU *cpu,
->>   void spapr_nested_init(SpaprMachineState *spapr);
->>   uint8_t spapr_nested_api(SpaprMachineState *spapr);
->>   void spapr_nested_gsb_init(void);
->> +bool spapr_get_pate_nested_papr(SpaprMachineState *spapr, PowerPCCPU *cpu,
->> +                                target_ulong lpid, ppc_v3_pate_t *entry);
->> +SpaprMachineStateNestedGuest *spapr_get_nested_guest(SpaprMachineState *spapr,
->> +                                                     target_ulong lpid);
->>   #endif /* HW_SPAPR_NESTED_H */
->> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
->> index 51a1be027a..3453b30a57 100644
->> --- a/hw/ppc/spapr.c
->> +++ b/hw/ppc/spapr.c
->> @@ -1379,6 +1379,8 @@ static bool spapr_get_pate(PPCVirtualHypervisor *vhyp, PowerPCCPU *cpu,
->>           assert(spapr_nested_api(spapr));
->>           if (spapr_nested_api(spapr) == NESTED_API_KVM_HV) {
->>               return spapr_get_pate_nested_hv(spapr, cpu, lpid, entry);
->> +        } else if (spapr_nested_api(spapr) == NESTED_API_PAPR) {
->> +            return spapr_get_pate_nested_papr(spapr, cpu, lpid, entry);
->>           }
->>           return false;
+>> diff --git a/migration/block.c b/migration/block.c
+>> index 8c6ebafacc1ffe930d1d4f19d968817b14852c69..06f5857cf049df3261d2cf1d7c3607ab92350ac6 100644
+>> --- a/migration/block.c
+>> +++ b/migration/block.c
+>> @@ -367,7 +367,7 @@ static void unset_dirty_tracking(void)
 >>       }
-> 
-> BTW. I would change these asserts to } else { g_assert_not_reached(); }
-
-Sure, updating as suggested.
-
-> 
->> diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
->> index aba4b25da6..0edb362709 100644
->> --- a/hw/ppc/spapr_nested.c
->> +++ b/hw/ppc/spapr_nested.c
->> @@ -52,6 +52,19 @@ bool spapr_get_pate_nested_hv(SpaprMachineState *spapr, PowerPCCPU *cpu,
->>       return true;
 >>   }
 >>   
->> +bool spapr_get_pate_nested_papr(SpaprMachineState *spapr, PowerPCCPU *cpu,
->> +                                target_ulong lpid, ppc_v3_pate_t *entry)
->> +{
->> +    SpaprMachineStateNestedGuest *guest;
->> +    assert(lpid != 0);
->> +    guest = spapr_get_nested_guest(spapr, lpid);
->> +    assert(guest != NULL);
->> +
->> +    entry->dw0 = guest->parttbl[0];
->> +    entry->dw1 = guest->parttbl[1];
->> +    return true;
->> +}
+>> -static int init_blk_migration(QEMUFile *f)
+>> +static int init_blk_migration(QEMUFile *f, Error **errp)
+>>   {
+>>       BlockDriverState *bs;
+>>       BlkMigDevState *bmds;
+>> @@ -378,7 +378,6 @@ static int init_blk_migration(QEMUFile *f)
+>>           BlkMigDevState *bmds;
+>>           BlockDriverState *bs;
+>>       } *bmds_bs;
+>> -    Error *local_err = NULL;
+>>       int ret;
+>>   
+>>       GRAPH_RDLOCK_GUARD_MAINLOOP();
 > 
-> Asserts should not need to be changed to proper error handling, right?
+> There's a negative return below at:
+> 
+>      for (i = 0, bs = bdrv_first(&it); bs; bs = bdrv_next(&it), i++) {
+>          if (bdrv_is_read_only(bs)) {
+>              continue;
+>          }
+> 
+>          sectors = bdrv_nb_sectors(bs);
+>          if (sectors <= 0) {
+>              ret = sectors;
+>                  ^
+>              bdrv_next_cleanup(&it);
+>              goto out;
+>          }
+>          ...
 
-Hmm, changing !guest check to return false as more appropriate.
-lpid check shall remain an assert.
 
-regards,
-Harsh
+Indeed.
+
+I understand that the bdrv_nb_sectors() == 0 case only breaks the loop but
+it is not considered as an error. Could the block folks confirm please ?
+
+Thanks,
+
+C.
 
 > 
-> Thanks,
-> Nick
+> I presume that must be covered by an error as well. A similar function
+> somewhere else reports:
+> 
+>          total_sectors = blk_nb_sectors(blk);
+>          if (total_sectors <= 0) {
+>              error_report("Error getting length of block device %s",
+>                           device_name);
+>              return -EINVAL;
+>          }
+>
+>> @@ -439,9 +438,8 @@ static int init_blk_migration(QEMUFile *f)
+>>           bs = bmds_bs[i].bs;
+>>   
+>>           if (bmds) {
+>> -            ret = blk_insert_bs(bmds->blk, bs, &local_err);
+>> +            ret = blk_insert_bs(bmds->blk, bs, errp);
+>>               if (ret < 0) {
+>> -                error_report_err(local_err);
+>>                   goto out;
+>>               }
+>>   
+>> @@ -711,6 +709,7 @@ static void block_migration_cleanup(void *opaque)
+>>   static int block_save_setup(QEMUFile *f, void *opaque)
+>>   {
+>>       int ret;
+>> +    Error *local_err = NULL;
+>>   
+>>       trace_migration_block_save("setup", block_mig_state.submitted,
+>>                                  block_mig_state.transferred);
+>> @@ -718,18 +717,27 @@ static int block_save_setup(QEMUFile *f, void *opaque)
+>>       warn_report("block migration is deprecated;"
+>>                   " use blockdev-mirror with NBD instead");
+>>   
+>> -    ret = init_blk_migration(f);
+>> +    ret = init_blk_migration(f, &local_err);
+>>       if (ret < 0) {
+>> +        error_report_err(local_err);
+>>           return ret;
+>>       }
+>>   
+>>       /* start track dirty blocks */
+>>       ret = set_dirty_tracking();
+>>       if (ret) {
+>> +        error_setg_errno(&local_err, -ret,
+>> +                         "Failed to start block dirty tracking");
+>> +        error_report_err(local_err);
+>>           return ret;
+>>       }
+>>   
+>>       ret = flush_blks(f);
+>> +    if (ret) {
+>> +        error_setg_errno(&local_err, -ret, "Flushing block failed");
+>> +        error_report_err(local_err);
+>> +        return ret;
+>> +    }
+>>       blk_mig_reset_dirty_cursor();
+>>       qemu_put_be64(f, BLK_MIG_FLAG_EOS);
+> 
+
 
