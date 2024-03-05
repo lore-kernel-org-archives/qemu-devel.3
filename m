@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40516C54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:32:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A379FC54E41
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:33:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhUuK-0005BH-NU; Tue, 05 Mar 2024 08:32:36 -0500
+	id 1rhUuz-0006K5-T7; Tue, 05 Mar 2024 08:33:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhUuI-0005AQ-Nj
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:32:34 -0500
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
+ id 1rhUuy-0006Jt-JJ
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:33:16 -0500
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhUuH-0001zO-5l
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:32:34 -0500
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2d204e102a9so60653891fa.0
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:32:32 -0800 (PST)
+ id 1rhUuw-00022B-1r
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:33:16 -0500
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-565b434f90aso8170361a12.3
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:33:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709645551; x=1710250351; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709645592; x=1710250392; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=E38r6/jg4YgFWKsIXJzdzue2mLMIBhN94Dtxgql2ZdI=;
- b=BaN6EbLWJ0StV9VcbkihVX7Gi/XiUonp2PNoc20M2bWUQVD1kirSpqVWNJaLF9Y+48
- oyRGnvWHCI3AeqsA1UePkJyoJzBHldVV4ggkXF0AyQmHAlP14BUsIStw0EruEb3U9duj
- K93LuvW6NXyQW7G012DjT+E49m9swfMFlfJEPcJNNZnNPn6Myr1mdujPsJAdZpTwDrti
- JKMsAFENQE/J6utdHUj/ebTt0tIOuPTgNslMRUWZI8zniHOPfeDQ/WziwMdUhPWlYJeu
- kVAFoJdfWAjG3GENULHbxJXUdv69yIpqurJ/NI9f/OzPbzt3ZqRiN2ZD3AHQLNOu3IG6
- FIBA==
+ bh=7tKGWIW+fFOvHzcdRyQ+OAZJL8lUHfcHX3y8hGNnSQc=;
+ b=nWwpHmgRMJWXcobUlznjHkEcZL9eJhQgXIZOhTwW6LO5ZnAmBpsxXHbK+oo5Si9UwR
+ b19sDsCcFf/cRpD0oqG+IxL1OCM/fGvPqyP2zgrwOYykDxHxLQb68W6dsTg/PhorsUlB
+ bnFgbcjp9CXHcd36ipYeqUwFMb83Xy1A3kC6ZKq0dfSpAMYWvYgFCLfw4MOyy/B3Qh/U
+ w1q3JF3Im1kri8cKqKQ8JcrE1fuWlGnXR8L06p3vCO2z8zFsos1cT2fiUGYT257NnP3Y
+ 5kP1cjaxRzFVVCsvnyoPIlcGWtYlFuQ+maSVWTePVjostF4ZSA/vLm5kgHso4fk0kX/v
+ ZKSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709645551; x=1710250351;
+ d=1e100.net; s=20230601; t=1709645592; x=1710250392;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=E38r6/jg4YgFWKsIXJzdzue2mLMIBhN94Dtxgql2ZdI=;
- b=Uhx4f8NqMyOr2TsC8LJAGUTehTMBYOY+rSzvGtlsGwKTyzbu0mkeVVYvjo1Xw+su4G
- Sg4xf7sVr7XXZlgM0Le5+EbZfGs9ppHFUaZdgob8Ny2N4wckJLyRwF34rK2g2Ntq3szh
- i5OWcZOOJq58IekQX4g3a2xlyfMM0FdE8VTi4Rx5KhRtf3fRJ3essSrMsDXG8xTP7w+G
- lRq4TZ7vuxMrX7yR9isSUVeN8iIrvt8n2ab+FYQg0zI/Pge70wqtGcDVqFFLMOdrjM66
- fqx8X1iAOfSbLVL6JzxHeLn2fvh9/UTYGFD1PaYtJ4ejjoh7d0KYog7YXgWNe80MzsVQ
- VZ/Q==
+ bh=7tKGWIW+fFOvHzcdRyQ+OAZJL8lUHfcHX3y8hGNnSQc=;
+ b=ggH2RW8oCw/yqztXDZWPadw01DxhUHhfldF9P1OhszMynvY3RF/SS3iP56X0z8xQyW
+ ROvVKv474IByynmiMt0NOyx6Pkm9msS3z2ZafqpKBdtPCkWTJf3C4NIK2db5Wcsu5C+2
+ yJvmY7doIJtUdhNmrx4HcpOlciyMGmIJwzrBvUWMayM1CUy1yI3DNmJ5GsxFMbZ/mANo
+ 3vZZ1E9W6RdnNp4z5esZez6BPvvR6aH/oYygT6Saq9G5QEPcQCMTNnV0IctkcSu8V0qu
+ yEgr2e/EMqgmr4T4FbDwB/1loUkpmWrF8UFG2wPBsEolsFLdkpjJ3Z72565oCM9gg152
+ Wkag==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWR8OhP9LlPoF6J8o5dKNVwaLWMdtcvbGQ4L208a/NmpbZy1QU3yetO7+76XCFa8NrnODNsgBv+KRRqdYj/g+g/n0VVAMc=
-X-Gm-Message-State: AOJu0Yxs+SeaSHvLc8Fb2t0Qdvh6A3FnGRvUSHAtSDYos50HVmH7vREC
- b69PAE0aSGjJeAmDkAB7qBz9HcmlFsiwtrvHg25b1zUpW3JpU4wfObB0/LNDN32NELOMEgioZVG
- 1Eef0NKraheeVw5wL9hCKEZhA9fSNXiqrdht1mA==
-X-Google-Smtp-Source: AGHT+IERZ3YeHmx4sCh845y5swxbtIvWdAd08aezbQgCiBdR4hTlyr8b8JY2wstQ5mIJF3fpSVAFt9QRgA8qBAnwOsY=
-X-Received: by 2002:a05:651c:4d2:b0:2d2:b929:9388 with SMTP id
- e18-20020a05651c04d200b002d2b9299388mr1767180lji.22.1709645551299; Tue, 05
- Mar 2024 05:32:31 -0800 (PST)
+ AJvYcCU7YVjYsr5+oNLvASNV/9RoRB4k39p7ZDYxXWpYBTRXIIalP4RJFdprUUfGaIHNXOlvSlQTxex8BEgu3f70HaUdca81se0=
+X-Gm-Message-State: AOJu0YyDvjfo6fjXfnM0orgvGvauySMPLP05MFsUjUhZA/S0M379ZYg6
+ 5glswg7dQTwB3HxR9Wl/j0kyTViTuMO87Bm1FM8konlNVtvLeMTV1Oavt6HdihwaS0f5RDp3AU3
+ JTB14hWpIY2GKwvUnBQzj2hCona383UqCX63H+A==
+X-Google-Smtp-Source: AGHT+IEbner3InpQvXmclITIEgoQs4iruhgqBjIj3iucmw4pBF9bDBTpCXSOr1pmWoBXFzZpxqK3DQj/c90bwdMYMTs=
+X-Received: by 2002:a05:6402:2267:b0:565:6bbc:39d1 with SMTP id
+ du7-20020a056402226700b005656bbc39d1mr8069391edb.5.1709645592642; Tue, 05 Mar
+ 2024 05:33:12 -0800 (PST)
 MIME-Version: 1.0
 References: <20240305-elf2dmp-v2-0-86ff2163ad32@daynix.com>
- <20240305-elf2dmp-v2-8-86ff2163ad32@daynix.com>
-In-Reply-To: <20240305-elf2dmp-v2-8-86ff2163ad32@daynix.com>
+ <20240305-elf2dmp-v2-11-86ff2163ad32@daynix.com>
+In-Reply-To: <20240305-elf2dmp-v2-11-86ff2163ad32@daynix.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 5 Mar 2024 13:32:20 +0000
-Message-ID: <CAFEAcA-e8UFY7OFF3tvFE_Uo_i77n5a_qbZQtV4tEBz6ca5Vag@mail.gmail.com>
-Subject: Re: [PATCH v2 08/13] contrib/elf2dmp: Use lduw_le_p() to read PDB
+Date: Tue, 5 Mar 2024 13:33:01 +0000
+Message-ID: <CAFEAcA8LoGjtzeh9DYurbb_xEOuKzYMPWG=3ucOkNVvdVTd_=g@mail.gmail.com>
+Subject: Re: [PATCH v2 11/13] contrib/elf2dmp: Build only for little endian
+ host
 To: Akihiko Odaki <akihiko.odaki@daynix.com>
 Cc: Viktor Prutyanov <viktor.prutyanov@phystech.edu>, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x230.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,38 +91,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 5 Mar 2024 at 07:36, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+On Tue, 5 Mar 2024 at 07:37, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
 >
-> This resolved UBSan warnings.
+> elf2dmp assumes little endian host in many places.
 >
 > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
->  contrib/elf2dmp/pdb.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+>  contrib/elf2dmp/meson.build | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/contrib/elf2dmp/pdb.c b/contrib/elf2dmp/pdb.c
-> index 1c5051425185..492aca4434c8 100644
-> --- a/contrib/elf2dmp/pdb.c
-> +++ b/contrib/elf2dmp/pdb.c
-> @@ -19,6 +19,7 @@
->   */
->
->  #include "qemu/osdep.h"
-> +#include "qemu/bswap.h"
->
->  #include "pdb.h"
->  #include "err.h"
-> @@ -186,7 +187,7 @@ static bool pdb_init_symbols(struct pdb_reader *r)
->
->      r->symbols = symbols;
->
-> -    r->segments = *(uint16_t *)((const char *)symbols + sizeof(PDB_SYMBOLS) +
-> +    r->segments = lduw_le_p((const char *)symbols + sizeof(PDB_SYMBOLS) +
->              symbols->module_size + symbols->offset_size +
->              symbols->hash_size + symbols->srcmodule_size +
->              symbols->pdbimport_size + symbols->unknown2_size +
+> diff --git a/contrib/elf2dmp/meson.build b/contrib/elf2dmp/meson.build
+> index 6707d43c4fa5..046569861f7a 100644
+> --- a/contrib/elf2dmp/meson.build
+> +++ b/contrib/elf2dmp/meson.build
+> @@ -1,4 +1,4 @@
+> -if curl.found()
+> +if curl.found() and host_machine.endian() == 'little'
+>    executable('elf2dmp', files('main.c', 'addrspace.c', 'download.c', 'pdb.c', 'qemu_elf.c'), genh,
+>               dependencies: [glib, curl],
+>               install: true)
 
-Same comment still applies as on v1 version of this patch.
+If it assumes a little-endian host that is a bug and we
+should fix it, not just disable building the tool on
+big-endian systems.
 
 thanks
 -- PMM
