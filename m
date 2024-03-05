@@ -4,101 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F319CC54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 20:59:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B839C54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 21:06:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhbrv-0002lm-Sr; Tue, 05 Mar 2024 15:58:35 -0500
+	id 1rhbyE-0004JN-U1; Tue, 05 Mar 2024 16:05:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rhbrr-0002ke-Sy
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 15:58:31 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rhbrp-0005gl-OR
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 15:58:31 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 6115733B0B;
- Tue,  5 Mar 2024 20:58:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709672306; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=GYx8woq3xHUDrW1PoyPYTO0GU3PLo0jxe+rthQZ3OUk=;
- b=mpVG/qIT10/tShOBznq74smVu8X+sbHK5WEiEsTEhhFIEy7Vfj5xUP56OIeHBHEF7/nmDx
- ZzQWbSEzSxa3tWlZPYmgH0hcvUP+Bc7iGYbjzO02hMBef6ggs6rVphvJBsWkYfsOifHYfa
- TqS0pggN1A22uDD7sSknNslXau7yudY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709672306;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=GYx8woq3xHUDrW1PoyPYTO0GU3PLo0jxe+rthQZ3OUk=;
- b=ZibcUE3fQh33O2FT9a3duKzKSbv85XdSLovBGMzU+HaxN8vCdM2Uut174ad2C+SmJ6uyQt
- AMUr6iyK88lyC5Bg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709672305; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=GYx8woq3xHUDrW1PoyPYTO0GU3PLo0jxe+rthQZ3OUk=;
- b=k89S0esr2NKCT38ixSK76WfDXwKvPbrxNc9leuwYK8u6fqPqiLwWvBHp3xC4sAD6aU0iXr
- ZhZUnMkRvu469OpMFVnkIMFRb/LeaecgcakwwbLQLC3egg6wsKB7jPw/c+lghX/3yYKZkz
- AE5Lu74dKugJPPMbgfXG5PeSy75TdZY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709672305;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=GYx8woq3xHUDrW1PoyPYTO0GU3PLo0jxe+rthQZ3OUk=;
- b=f3/hfLh1fdCLEkVuawD9XyniNCDX9PJu0SOckARQZWplAqWuuNE/Idh+0wB9/Nou/rUA/Y
- ni6FWQzz4uND63Ag==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D5A4713A5B;
- Tue,  5 Mar 2024 20:58:24 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 03TaJnCH52UoRgAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 05 Mar 2024 20:58:24 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Yuan Liu <yuan1.liu@intel.com>, peterx@redhat.com
-Cc: qemu-devel@nongnu.org, hao.xiang@bytedance.com,
- bryan.zhang@bytedance.com, yuan1.liu@intel.com, nanhai.zou@intel.com
-Subject: Re: [PATCH v4 4/8] migration/multifd: add qpl compression method
-In-Reply-To: <20240304140028.1590649-5-yuan1.liu@intel.com>
-References: <20240304140028.1590649-1-yuan1.liu@intel.com>
- <20240304140028.1590649-5-yuan1.liu@intel.com>
-Date: Tue, 05 Mar 2024 17:58:22 -0300
-Message-ID: <87wmqggzv5.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
+ id 1rhbyD-0004Io-6q; Tue, 05 Mar 2024 16:05:05 -0500
+Received: from zproxy3.enst.fr ([137.194.2.222])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
+ id 1rhby7-0006f1-Pm; Tue, 05 Mar 2024 16:05:04 -0500
+Received: from localhost (localhost [IPv6:::1])
+ by zproxy3.enst.fr (Postfix) with ESMTP id 71F55A071C;
+ Tue,  5 Mar 2024 22:04:55 +0100 (CET)
+Received: from zproxy3.enst.fr ([IPv6:::1])
+ by localhost (zproxy3.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
+ id ClLhn2JtVJh1; Tue,  5 Mar 2024 22:04:54 +0100 (CET)
+Received: from localhost (localhost [IPv6:::1])
+ by zproxy3.enst.fr (Postfix) with ESMTP id AC98DA06BB;
+ Tue,  5 Mar 2024 22:04:54 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy3.enst.fr AC98DA06BB
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
+ s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1709672694;
+ bh=39E3eNLaepdC//DrMaTEdG6VZWBd6x7zbsKWo9yygs0=;
+ h=From:To:Date:Message-ID:MIME-Version;
+ b=iZbnQ4RrS086AbKMuZMjTWzBm77pgYV+ku5BRiinl3yndVDVprvX64ctuNkn6FDph
+ b+F7gMMD3edAYECZEplom/ox5XMxf/tD5tzNl+WNbASNbrJHAASGhs9UTGxkVu6qIp
+ 4cF9ykshYLF87Lt+VzEfOMwU0Mw9yQZ7VjC1eGd4=
+X-Virus-Scanned: amavis at enst.fr
+Received: from zproxy3.enst.fr ([IPv6:::1])
+ by localhost (zproxy3.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
+ id ou3GhfQ59Wi2; Tue,  5 Mar 2024 22:04:54 +0100 (CET)
+Received: from localhost.localdomain (74.0.125.80.rev.sfr.net [80.125.0.74])
+ by zproxy3.enst.fr (Postfix) with ESMTPSA id 172A3A06B5;
+ Tue,  5 Mar 2024 22:04:54 +0100 (CET)
+From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, qemu-arm@nongnu.org,
+ Samuel Tardieu <samuel.tardieu@telecom-paris.fr>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH v7 0/3] Add device STM32L4x5 GPIO
+Date: Tue,  5 Mar 2024 22:03:09 +0100
+Message-ID: <20240305210444.310665-1-ines.varhol@telecom-paris.fr>
+X-Mailer: git-send-email 2.43.2
 MIME-Version: 1.0
-Content-Type: text/plain
-Authentication-Results: smtp-out1.suse.de;
-	none
-X-Spamd-Result: default: False [-3.10 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
- RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_SEVEN(0.00)[7];
- DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=137.194.2.222;
+ envelope-from=ines.varhol@telecom-paris.fr; helo=zproxy3.enst.fr
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,278 +84,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Yuan Liu <yuan1.liu@intel.com> writes:
+This patch adds a new device STM32L4x5 GPIO device and is part
+of a series implementing the STM32L4x5 with a few peripherals.
 
-> add the Query Processing Library (QPL) compression method
->
-> Although both qpl and zlib support deflate compression, qpl will
-> only use the In-Memory Analytics Accelerator(IAA) for compression
-> and decompression, and IAA is not compatible with the Zlib in
-> migration, so qpl is used as a new compression method for migration.
->
-> How to enable qpl compression during migration:
-> migrate_set_parameter multifd-compression qpl
->
-> The qpl only supports one compression level, there is no qpl
-> compression level parameter added, users do not need to specify
-> the qpl compression level.
->
-> Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
-> Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
-> ---
->  hw/core/qdev-properties-system.c |   2 +-
->  migration/meson.build            |   1 +
->  migration/multifd-qpl.c          | 158 +++++++++++++++++++++++++++++++
->  migration/multifd.h              |   1 +
->  qapi/migration.json              |   7 +-
->  5 files changed, 167 insertions(+), 2 deletions(-)
->  create mode 100644 migration/multifd-qpl.c
->
-> diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-> index 1a396521d5..b4f0e5cbdb 100644
-> --- a/hw/core/qdev-properties-system.c
-> +++ b/hw/core/qdev-properties-system.c
-> @@ -658,7 +658,7 @@ const PropertyInfo qdev_prop_fdc_drive_type = {
->  const PropertyInfo qdev_prop_multifd_compression = {
->      .name = "MultiFDCompression",
->      .description = "multifd_compression values, "
-> -                   "none/zlib/zstd",
-> +                   "none/zlib/zstd/qpl",
->      .enum_table = &MultiFDCompression_lookup,
->      .get = qdev_propinfo_get_enum,
->      .set = qdev_propinfo_set_enum,
-> diff --git a/migration/meson.build b/migration/meson.build
-> index 92b1cc4297..c155c2d781 100644
-> --- a/migration/meson.build
-> +++ b/migration/meson.build
-> @@ -40,6 +40,7 @@ if get_option('live_block_migration').allowed()
->    system_ss.add(files('block.c'))
->  endif
->  system_ss.add(when: zstd, if_true: files('multifd-zstd.c'))
-> +system_ss.add(when: qpl, if_true: files('multifd-qpl.c'))
->  
->  specific_ss.add(when: 'CONFIG_SYSTEM_ONLY',
->                  if_true: files('ram.c',
-> diff --git a/migration/multifd-qpl.c b/migration/multifd-qpl.c
-> new file mode 100644
-> index 0000000000..6b94e732ac
-> --- /dev/null
-> +++ b/migration/multifd-qpl.c
-> @@ -0,0 +1,158 @@
-> +/*
-> + * Multifd qpl compression accelerator implementation
-> + *
-> + * Copyright (c) 2023 Intel Corporation
-> + *
-> + * Authors:
-> + *  Yuan Liu<yuan1.liu@intel.com>
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
-> + * See the COPYING file in the top-level directory.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/rcu.h"
-> +#include "exec/ramblock.h"
-> +#include "exec/target_page.h"
-> +#include "qapi/error.h"
-> +#include "migration.h"
-> +#include "trace.h"
-> +#include "options.h"
-> +#include "multifd.h"
-> +#include "qpl/qpl.h"
+Changes from v6 :
+- rebasing on main
+- removing QTest `clock_enable()` as it isn't actually a GPIO test
 
-I don't mind adding a skeleton upfront before adding the implementation,
-but adding the headers here hurts the review process. Reviewers will
-have to go digging through the next patches to be able to validate each
-of these. It's better to include them along with their usage.
+Changes from v5 :
+- deduplicating macro constant `GPIO_NUM_PINS` that was defined both
+in stm32l4x5_syscfg.h and stm32l4x5_gpio.h
+- moving definition of constant `NUM_GPIOS` from syscfg.h to gpio.h
+- soc.c : replacing a hardcoded 16 by the correct `GPIO_NUM_PINS`
 
-What I would do in this patch is maybe just add the new option, the
-.json and meson changes and this file with just:
+Changes from v4 :
+- gpio.c : use helpers `is_pull_up()`, `is_pull_down()`, `is_output()`
+for more clarity
+- gpio.c : correct `update_gpio_idr()` in case of open-drain pin
+set to 1 in ODR and set to 0 externally
+- gpio.c : rename `get_gpio_pins_to_disconnect()` to
+`get_gpio_pinmask_to_disconnect()` and associated comments
+- gpio.c : correct coding style issues (alignment and declaration)
+- soc.c : unite structs `gpio_addr` and `stm32l4x5_gpio_initval`
 
-static void multifd_qpl_register(void)
-{
-    /* noop */
-}
+Changes from v3 :
+- replacing occurences of '16' with the correct macro `GPIO_NUM_PINS`
+- updating copyright year
+- rebasing on latest version of STM32L4x5 RCC
 
-Then in the next commit you can implement all the methods in one
-go. That way, the docstrings come along with the implementation, which
-also facilitates review.
+Changes from v2 :
+- correct memory leaks caused by re-assigning a `g_autofree`
+pointer without freeing it
+- gpio-test : test that reset values (and not just initialization
+values) are correct, correct `stm32l4x5_gpio_reset()` accordingly
+- adding a `clock-freq-hz` object property to test that
+enabling GPIO clock in RCC sets the GPIO clocks
 
-> +
-> +struct qpl_data {
+Changes from v1 :
+- replacing test GPIO register `DISCONNECTED_PINS` with an object
+property accessed using `qtest_qmp()` in the qtest (through helpers
+`get_disconnected_pins()` and `disconnect_all_pins()`)
+- removing GPIO subclasses and storing MODER, OSPEEDR and PUPDR reset
+values in properties
+- adding a `name` property and using it for more lisible traces
+- using `g_strdup_printf()` to facilitate setting irqs in the qtest,
+and initializing GPIO children in soc_initfn
 
-typedef struct {} QplData/QPLData, following QEMU's coding style.
+Changes from RFC v1 :
+- `stm32l4x5-gpio-test.c` : correct typos, make the test generic,
+add a test for bitwise writing in register ODR
+- `stm32l4x5_soc.c` : connect gpios to their clock, use an
+array of GpioState
+- `stm32l4x5_gpio.c` : correct comments in `update_gpio_idr()`,
+correct `get_gpio_pins_to_disconnect()`, correct `stm32l4x5_gpio_init()`
+and initialize the clock, add a realize function
+- update MAINAINERS
 
-> +    qpl_job **job_array;
-> +    /* the number of allocated jobs */
-> +    uint32_t job_num;
-> +    /* the size of data processed by a qpl job */
-> +    uint32_t data_size;
-> +    /* compressed data buffer */
-> +    uint8_t *zbuf;
-> +    /* the length of compressed data */
-> +    uint32_t *zbuf_hdr;
-> +};
-> +
-> +/**
-> + * qpl_send_setup: setup send side
-> + *
-> + * Setup each channel with QPL compression.
-> + *
-> + * Returns 0 for success or -1 for error
-> + *
-> + * @p: Params for the channel that we are using
-> + * @errp: pointer to an error
-> + */
-> +static int qpl_send_setup(MultiFDSendParams *p, Error **errp)
-> +{
-> +    /* Implement in next patch */
-> +    return -1;
-> +}
-> +
-> +/**
-> + * qpl_send_cleanup: cleanup send side
-> + *
-> + * Close the channel and return memory.
-> + *
-> + * @p: Params for the channel that we are using
-> + * @errp: pointer to an error
-> + */
-> +static void qpl_send_cleanup(MultiFDSendParams *p, Error **errp)
-> +{
-> +    /* Implement in next patch */
-> +}
-> +
-> +/**
-> + * qpl_send_prepare: prepare data to be able to send
-> + *
-> + * Create a compressed buffer with all the pages that we are going to
-> + * send.
-> + *
-> + * Returns 0 for success or -1 for error
-> + *
-> + * @p: Params for the channel that we are using
-> + * @errp: pointer to an error
-> + */
-> +static int qpl_send_prepare(MultiFDSendParams *p, Error **errp)
-> +{
-> +    /* Implement in next patch */
-> +    return -1;
-> +}
-> +
-> +/**
-> + * qpl_recv_setup: setup receive side
-> + *
-> + * Create the compressed channel and buffer.
-> + *
-> + * Returns 0 for success or -1 for error
-> + *
-> + * @p: Params for the channel that we are using
-> + * @errp: pointer to an error
-> + */
-> +static int qpl_recv_setup(MultiFDRecvParams *p, Error **errp)
-> +{
-> +    /* Implement in next patch */
-> +    return -1;
-> +}
-> +
-> +/**
-> + * qpl_recv_cleanup: setup receive side
-> + *
-> + * Close the channel and return memory.
-> + *
-> + * @p: Params for the channel that we are using
-> + */
-> +static void qpl_recv_cleanup(MultiFDRecvParams *p)
-> +{
-> +    /* Implement in next patch */
-> +}
-> +
-> +/**
-> + * qpl_recv_pages: read the data from the channel into actual pages
-> + *
-> + * Read the compressed buffer, and uncompress it into the actual
-> + * pages.
-> + *
-> + * Returns 0 for success or -1 for error
-> + *
-> + * @p: Params for the channel that we are using
-> + * @errp: pointer to an error
-> + */
-> +static int qpl_recv_pages(MultiFDRecvParams *p, Error **errp)
-> +{
-> +    /* Implement in next patch */
-> +    return -1;
-> +}
-> +
-> +/**
-> + * qpl_get_iov_count: get the count of IOVs
-> + *
-> + * For QPL compression, in addition to requesting the same number of IOVs
-> + * as the page, it also requires an additional IOV to store all compressed
-> + * data lengths.
-> + *
-> + * Returns the count of the IOVs
-> + *
-> + * @page_count: Indicate the maximum count of pages processed by multifd
-> + */
-> +static uint32_t qpl_get_iov_count(uint32_t page_count)
-> +{
-> +    return page_count + 1;
-> +}
-> +
-> +static MultiFDMethods multifd_qpl_ops = {
-> +    .send_setup = qpl_send_setup,
-> +    .send_cleanup = qpl_send_cleanup,
-> +    .send_prepare = qpl_send_prepare,
-> +    .recv_setup = qpl_recv_setup,
-> +    .recv_cleanup = qpl_recv_cleanup,
-> +    .recv_pages = qpl_recv_pages,
-> +    .get_iov_count = qpl_get_iov_count
-> +};
-> +
-> +static void multifd_qpl_register(void)
-> +{
-> +    multifd_register_ops(MULTIFD_COMPRESSION_QPL, &multifd_qpl_ops);
-> +}
-> +
-> +migration_init(multifd_qpl_register);
-> diff --git a/migration/multifd.h b/migration/multifd.h
-> index d82495c508..0e9361df2a 100644
-> --- a/migration/multifd.h
-> +++ b/migration/multifd.h
-> @@ -33,6 +33,7 @@ bool multifd_queue_page(RAMBlock *block, ram_addr_t offset);
->  #define MULTIFD_FLAG_NOCOMP (0 << 1)
->  #define MULTIFD_FLAG_ZLIB (1 << 1)
->  #define MULTIFD_FLAG_ZSTD (2 << 1)
-> +#define MULTIFD_FLAG_QPL (4 << 1)
->  
->  /* This value needs to be a multiple of qemu_target_page_size() */
->  #define MULTIFD_PACKET_SIZE (512 * 1024)
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 5a565d9b8d..e48e3d7065 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -625,11 +625,16 @@
->  #
->  # @zstd: use zstd compression method.
->  #
-> +# @qpl: use qpl compression method. Query Processing Library(qpl) is based on
-> +#       the deflate compression algorithm and use the Intel In-Memory Analytics
-> +#       Accelerator(IAA) hardware accelerated compression and decompression.
+Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
 
-Missing: (since 9.0)
+In=C3=A8s Varhol (3):
+  hw/gpio: Implement STM32L4x5 GPIO
+  hw/arm: Connect STM32L4x5 GPIO to STM32L4x5 SoC
+  tests/qtest: Add STM32L4x5 GPIO QTest testcase
 
-> +#
->  # Since: 5.0
->  ##
->  { 'enum': 'MultiFDCompression',
->    'data': [ 'none', 'zlib',
-> -            { 'name': 'zstd', 'if': 'CONFIG_ZSTD' } ] }
-> +            { 'name': 'zstd', 'if': 'CONFIG_ZSTD' },
-> +            { 'name': 'qpl', 'if': 'CONFIG_QPL' } ] }
->  
->  ##
->  # @MigMode:
+ MAINTAINERS                        |   1 +
+ docs/system/arm/b-l475e-iot01a.rst |   2 +-
+ include/hw/arm/stm32l4x5_soc.h     |   2 +
+ include/hw/gpio/stm32l4x5_gpio.h   |  71 ++++
+ include/hw/misc/stm32l4x5_syscfg.h |   3 +-
+ hw/arm/stm32l4x5_soc.c             |  71 +++-
+ hw/gpio/stm32l4x5_gpio.c           | 477 +++++++++++++++++++++++++
+ hw/misc/stm32l4x5_syscfg.c         |   1 +
+ tests/qtest/stm32l4x5_gpio-test.c  | 551 +++++++++++++++++++++++++++++
+ hw/arm/Kconfig                     |   3 +-
+ hw/gpio/Kconfig                    |   3 +
+ hw/gpio/meson.build                |   1 +
+ hw/gpio/trace-events               |   6 +
+ tests/qtest/meson.build            |   3 +-
+ 14 files changed, 1175 insertions(+), 20 deletions(-)
+ create mode 100644 include/hw/gpio/stm32l4x5_gpio.h
+ create mode 100644 hw/gpio/stm32l4x5_gpio.c
+ create mode 100644 tests/qtest/stm32l4x5_gpio-test.c
+
+--=20
+2.43.2
+
 
