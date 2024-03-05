@@ -4,67 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E9DAC54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 05:50:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4992DC5478C
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 05:56:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhNf7-0004UN-LV; Tue, 05 Mar 2024 00:48:25 -0500
+	id 1rhNmK-000236-MY; Tue, 05 Mar 2024 00:55:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1rhNf5-0004Tl-2M
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 00:48:23 -0500
-Received: from mgamail.intel.com ([198.175.65.19])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rhNmJ-00022v-87
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 00:55:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1rhNf3-0003ev-85
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 00:48:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709617701; x=1741153701;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=2iEuTnLvQ/OH0PNo/1fvbYIPLyWaF7RSSa/asMCWoTc=;
- b=VJph5R3tywJxeyzUpVK1b8rHX7/yPABNhv6JMNhnsspibn6morwArBP8
- mqAUIo6+h0n1rfF5NfxY0LEcS7Co5WItXuxuUQcfqHAx/aLHmUvPvJ1pE
- tk29GOx31GgomU8+jdRsXvHa384I1xVkOB67vzaBuWIlscqNeIpwFkwDT
- s35eoAcF/pDbrci3QmHckAWV1QbGX0USd2BJk9rR4ViW6WNT4l9tFiK4N
- veDkQvKFsExIruwNwMB6kZpF1blW+KhNoZOfvtttjlDz5gU73i7WBQG0j
- Ggh9JgSxfibXjk27IYKziAjyvROnjSJ601rH7yTQVVZsf7V/G7zjwVKxX A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11003"; a="4006288"
-X-IronPort-AV: E=Sophos;i="6.06,205,1705392000"; 
-   d="scan'208";a="4006288"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Mar 2024 21:48:19 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,205,1705392000"; d="scan'208";a="40135985"
-Received: from sae-gw02.sh.intel.com (HELO localhost) ([10.239.45.110])
- by orviesa002.jf.intel.com with ESMTP; 04 Mar 2024 21:48:17 -0800
-From: Yuan Liu <yuan1.liu@intel.com>
-To: peterx@redhat.com,
-	farosas@suse.de
-Cc: qemu-devel@nongnu.org, hao.xiang@bytedance.com, bryan.zhang@bytedance.com,
- yuan1.liu@intel.com, nanhai.zou@intel.com
-Subject: [PATCH v4 5/8] migration/multifd: implement initialization of qpl
- compression
-Date: Mon,  4 Mar 2024 22:00:25 +0800
-Message-Id: <20240304140028.1590649-6-yuan1.liu@intel.com>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20240304140028.1590649-1-yuan1.liu@intel.com>
-References: <20240304140028.1590649-1-yuan1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rhNmF-0004rA-7P
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 00:55:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709618146;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Yk7/dff0vQEH3N194xhcsq3bcn9s9tFqXs7p3zjuatk=;
+ b=XRng/UzVHACFTJYWtyDA86Wl9IZTWqX7ET06/n72WtzdebkBhqVt9yBgTv8sBxw86j78Xo
+ ws2Hyp3jt6jI49DiAwe+D0NQE/uoQKhRQZl5jo1gybS2hZcc2I5ucriNqQ+HAnvgyuKHJi
+ DQd2uPVxv/huhZS4vrsxivVeo69jF1w=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-59-NTBWWZV9PHiqK4IZtNLnLA-1; Tue, 05 Mar 2024 00:55:44 -0500
+X-MC-Unique: NTBWWZV9PHiqK4IZtNLnLA-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a448cfe2266so409389366b.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 21:55:44 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709618143; x=1710222943;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Yk7/dff0vQEH3N194xhcsq3bcn9s9tFqXs7p3zjuatk=;
+ b=qYChsUMjH1YHTFnyefx8pjw9cypkmgGoga/6HPi4A5iCC07Ue3+YNMaIKbrjNpxHvr
+ 5YdnQXV1a0YY7Y/gWjfI2Iq9lnYtMAU12FaX0DNvW3mh6H9fAo47a3GLzmHOwQsjUw6l
+ V/r1gX3WRutkNfNvcpC931LDb1Pp6UGhdRHyKUI+zfpd2PnV9DLKdcg3LV345k5MmM/G
+ LqrTSkZ7N1OcArHqN2E0aYWAD4v0SDlWAz7FgGJ/+vAitKEHDIKugcLeizQQkvr7mDJD
+ reJl9GdEpjXRpxVyWQaAG0h+MMlFnz9fxyyYrwfNyZjwX3UVT+15ZYN4JnuJkciNeTi2
+ mGMA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUnh3kC5zrB9thIcOghdPelzHmVJV1upr2dAJVtc+afGoedvjr/uvpyQwCHKKgFb6Hjr7sbhkwD0d1AD9suNa01H6YdW2c=
+X-Gm-Message-State: AOJu0YwJOqnabcBk4DKWjgx+38f21mWhFIXnZhtsUhr46gPFYn45Jtmo
+ uTxM/XidpgEkYEMP/t+lu93Sod9XhJqGjFFpqen1z+SMnzZgM1leQcZxjX9/vEJkoYRyWzdL1Yx
+ OhXBJ/Oot7QTgYAMqFGGx1k0kuM1C/W4aPFw3/8DqwP1bqa+Wn6k8
+X-Received: by 2002:a05:6402:b86:b0:566:806a:6f9e with SMTP id
+ cf6-20020a0564020b8600b00566806a6f9emr7040406edb.28.1709618143494; 
+ Mon, 04 Mar 2024 21:55:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGo1Nerf4jy3DMRAP357xLNX4TYiHYzv7UIDCzaUvU3Ke9gl8HeN0kUkqI+1g/AaRNnPAzosw==
+X-Received: by 2002:a05:6402:b86:b0:566:806a:6f9e with SMTP id
+ cf6-20020a0564020b8600b00566806a6f9emr7040399edb.28.1709618143134; 
+ Mon, 04 Mar 2024 21:55:43 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-178-243.web.vodafone.de.
+ [109.43.178.243]) by smtp.gmail.com with ESMTPSA id
+ k8-20020a05640212c800b00567216c1e9bsm2938093edx.88.2024.03.04.21.55.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 Mar 2024 21:55:42 -0800 (PST)
+Message-ID: <9f3dba9c-54ed-4de8-958c-80cbe17e79a8@redhat.com>
+Date: Tue, 5 Mar 2024 06:55:40 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] tests: bump QOS_PATH_MAX_ELEMENT_SIZE again
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20240304193702.3195255-1-alex.bennee@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240304193702.3195255-1-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.19; envelope-from=yuan1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
- DKIMWL_WL_HIGH=-0.571, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 7
+X-Spam_score: 0.7
+X-Spam_bar: /
+X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,188 +145,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-the qpl initialization includes memory allocation for compressed
-data and the qpl job initialization.
+On 04/03/2024 20.37, Alex Bennée wrote:
+> We "fixed" a bug with LTO builds with 100c459f194 (tests/qtest: bump
+> up QOS_PATH_MAX_ELEMENT_SIZE) but it seems it has triggered again.
+> Lets be more assertive raising QOS_PATH_MAX_ELEMENT_SIZE to make it go
+> away again.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1186 (again)
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   tests/qtest/libqos/qgraph.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/tests/qtest/libqos/qgraph.h b/tests/qtest/libqos/qgraph.h
+> index 287022a67c1..1b5de02e7be 100644
+> --- a/tests/qtest/libqos/qgraph.h
+> +++ b/tests/qtest/libqos/qgraph.h
+> @@ -24,7 +24,7 @@
+>   #include "libqos-malloc.h"
+>   
+>   /* maximum path length */
+> -#define QOS_PATH_MAX_ELEMENT_SIZE 64
+> +#define QOS_PATH_MAX_ELEMENT_SIZE 128
 
-the qpl initialization will check whether the In-Memory Analytics
-Accelerator(IAA) hardware is available, if the platform does not
-have IAA hardware or the IAA hardware is not available, the QPL
-compression initialization will fail.
 
-Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
-Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
----
- migration/multifd-qpl.c | 128 ++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 122 insertions(+), 6 deletions(-)
-
-diff --git a/migration/multifd-qpl.c b/migration/multifd-qpl.c
-index 6b94e732ac..f4db97ca01 100644
---- a/migration/multifd-qpl.c
-+++ b/migration/multifd-qpl.c
-@@ -33,6 +33,100 @@ struct qpl_data {
-     uint32_t *zbuf_hdr;
- };
- 
-+static void free_zbuf(struct qpl_data *qpl)
-+{
-+    if (qpl->zbuf != NULL) {
-+        munmap(qpl->zbuf, qpl->job_num * qpl->data_size);
-+        qpl->zbuf = NULL;
-+    }
-+    if (qpl->zbuf_hdr != NULL) {
-+        g_free(qpl->zbuf_hdr);
-+        qpl->zbuf_hdr = NULL;
-+    }
-+}
-+
-+static int alloc_zbuf(struct qpl_data *qpl, uint8_t chan_id, Error **errp)
-+{
-+    int flags = MAP_PRIVATE | MAP_POPULATE | MAP_ANONYMOUS;
-+    uint32_t size = qpl->job_num * qpl->data_size;
-+    uint8_t *buf;
-+
-+    buf = (uint8_t *) mmap(NULL, size, PROT_READ | PROT_WRITE, flags, -1, 0);
-+    if (buf == MAP_FAILED) {
-+        error_setg(errp, "multifd: %u: alloc_zbuf failed, job num %u, size %u",
-+                   chan_id, qpl->job_num, qpl->data_size);
-+        return -1;
-+    }
-+    qpl->zbuf = buf;
-+    qpl->zbuf_hdr = g_new0(uint32_t, qpl->job_num);
-+    return 0;
-+}
-+
-+static void free_jobs(struct qpl_data *qpl)
-+{
-+    for (int i = 0; i < qpl->job_num; i++) {
-+        qpl_fini_job(qpl->job_array[i]);
-+        g_free(qpl->job_array[i]);
-+        qpl->job_array[i] = NULL;
-+    }
-+    g_free(qpl->job_array);
-+    qpl->job_array = NULL;
-+}
-+
-+static int alloc_jobs(struct qpl_data *qpl, uint8_t chan_id, Error **errp)
-+{
-+    qpl_status status;
-+    uint32_t job_size = 0;
-+    qpl_job *job = NULL;
-+    /* always use IAA hardware accelerator */
-+    qpl_path_t path = qpl_path_hardware;
-+
-+    status = qpl_get_job_size(path, &job_size);
-+    if (status != QPL_STS_OK) {
-+        error_setg(errp, "multifd: %u: qpl_get_job_size failed with error %d",
-+                   chan_id, status);
-+        return -1;
-+    }
-+    qpl->job_array = g_new0(qpl_job *, qpl->job_num);
-+    for (int i = 0; i < qpl->job_num; i++) {
-+        job = g_malloc0(job_size);
-+        status = qpl_init_job(path, job);
-+        if (status != QPL_STS_OK) {
-+            error_setg(errp, "multifd: %u: qpl_init_job failed with error %d",
-+                       chan_id, status);
-+            free_jobs(qpl);
-+            return -1;
-+        }
-+        qpl->job_array[i] = job;
-+    }
-+    return 0;
-+}
-+
-+static int init_qpl(struct qpl_data *qpl, uint32_t job_num, uint32_t data_size,
-+                    uint8_t chan_id, Error **errp)
-+{
-+    qpl->job_num = job_num;
-+    qpl->data_size = data_size;
-+    if (alloc_zbuf(qpl, chan_id, errp) != 0) {
-+        return -1;
-+    }
-+    if (alloc_jobs(qpl, chan_id, errp) != 0) {
-+        free_zbuf(qpl);
-+        return -1;
-+    }
-+    return 0;
-+}
-+
-+static void deinit_qpl(struct qpl_data *qpl)
-+{
-+    if (qpl != NULL) {
-+        free_jobs(qpl);
-+        free_zbuf(qpl);
-+        qpl->job_num = 0;
-+        qpl->data_size = 0;
-+    }
-+}
-+
- /**
-  * qpl_send_setup: setup send side
-  *
-@@ -45,8 +139,15 @@ struct qpl_data {
-  */
- static int qpl_send_setup(MultiFDSendParams *p, Error **errp)
- {
--    /* Implement in next patch */
--    return -1;
-+    struct qpl_data *qpl;
-+
-+    qpl = g_new0(struct qpl_data, 1);
-+    if (init_qpl(qpl, p->page_count, p->page_size, p->id, errp) != 0) {
-+        g_free(qpl);
-+        return -1;
-+    }
-+    p->data = qpl;
-+    return 0;
- }
- 
- /**
-@@ -59,7 +160,11 @@ static int qpl_send_setup(MultiFDSendParams *p, Error **errp)
-  */
- static void qpl_send_cleanup(MultiFDSendParams *p, Error **errp)
- {
--    /* Implement in next patch */
-+    struct qpl_data *qpl = p->data;
-+
-+    deinit_qpl(qpl);
-+    g_free(p->data);
-+    p->data = NULL;
- }
- 
- /**
-@@ -91,8 +196,15 @@ static int qpl_send_prepare(MultiFDSendParams *p, Error **errp)
-  */
- static int qpl_recv_setup(MultiFDRecvParams *p, Error **errp)
- {
--    /* Implement in next patch */
--    return -1;
-+    struct qpl_data *qpl;
-+
-+    qpl = g_new0(struct qpl_data, 1);
-+    if (init_qpl(qpl, p->page_count, p->page_size, p->id, errp) != 0) {
-+        g_free(qpl);
-+        return -1;
-+    }
-+    p->data = qpl;
-+    return 0;
- }
- 
- /**
-@@ -104,7 +216,11 @@ static int qpl_recv_setup(MultiFDRecvParams *p, Error **errp)
-  */
- static void qpl_recv_cleanup(MultiFDRecvParams *p)
- {
--    /* Implement in next patch */
-+    struct qpl_data *qpl = p->data;
-+
-+    deinit_qpl(qpl);
-+    g_free(p->data);
-+    p->data = NULL;
- }
- 
- /**
--- 
-2.39.3
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
