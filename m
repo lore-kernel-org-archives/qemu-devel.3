@@ -4,81 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 923C8C54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 10:26:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D046FC54E41
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 10:33:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhS01-0000M5-Kk; Tue, 05 Mar 2024 05:26:20 -0500
+	id 1rhS6K-0002KO-1s; Tue, 05 Mar 2024 05:32:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhRzq-0000EI-Pg
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 05:26:08 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhRzn-0002Ry-8J
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 05:26:06 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-412eced6d1aso3092395e9.3
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 02:26:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709634361; x=1710239161; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=7E2GTSB8Zju8NT8XoAqhhgxVYaqC6EeA5A/XxJgFLZg=;
- b=LbvzAyuqGlII27srZPjjfYuAWZjOX6a75eE/nO3RlY4ZReNKxDTdNaC8eICjFyX5Nh
- pP1isvdyzQZC7tqWYsdCwAxtNKav6GusY9BwRNe2Slp4s/6YzZmyEcBm2xeUQDesmEYR
- Sy1qXKHffqbI1TD0AeOwkIqIeylkcozZsrjelQoNdN0fowSG3c0t/Dfd4+aXur2BNSiJ
- h/8zFVSn6UkNwrWHgWFoKwWeZ9UCAEFVZinnOdFR3ehpIwJyiXgA8dhvo0Vomd9Di9tW
- x7qonB5n4kHgvAREUgs34kts/uIJR/zW4YSMocmtabzVYp3MRFIahxg8XBKK+K4rZjqJ
- FPuQ==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1rhS6I-0002Jw-If
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 05:32:46 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1rhS6F-0003PM-G1
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 05:32:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709634762;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2vDMOG858kwohsjaFQnfhqCCejlVxFcw1ADU0gyslJk=;
+ b=PxJdcyebzLDOQBbb2It9sf1BPhRfKQPVpmPktxLOJfnqbuDSOGLdGk2XCG2E64KLGJBV3l
+ PaAXaGoUNvfgameIKvcjJV5dHpyujHbuCCiDPD9XMbOZ/VURNYroyHMxLCjGllHDltYu67
+ EIWj2BE6DGkVnY/Zldo1dMo4cSXM12E=
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
+ [209.85.210.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-365-AJpdIhm9OoaJ_DtdvMvStw-1; Tue, 05 Mar 2024 05:32:41 -0500
+X-MC-Unique: AJpdIhm9OoaJ_DtdvMvStw-1
+Received: by mail-pf1-f199.google.com with SMTP id
+ d2e1a72fcca58-6e5d996a3dcso2372999b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 02:32:40 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709634361; x=1710239161;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:to:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7E2GTSB8Zju8NT8XoAqhhgxVYaqC6EeA5A/XxJgFLZg=;
- b=Fvep3e1A3YZszU7T93nKrXVsfiK4XIXKk1D1mjxN7Vw4IBndp27auWSGcszTPOaQGy
- gYjo9hEhRGGywMRtElzxUccNnjdSIJ1+Fe5wmL+0wEQ2NJpcL3p5QBt1MToFxKsLuJmI
- xqQF4GQu1WL5CBC7xqrJW/R+AZdUzQQAUvCucZcjkuZLabYUyRlXA+HgfnUV2Y7aUMPE
- 1Wffh2xg3UPJGPAuNcd3CEEgdnxXKCzef0orMIF4hRC44v9WjQ1qbFPjrLjA06z1GwAe
- 1msEydqu4xd9Gfw9k3AIPYMR5QpjiuvXIaq4eAhxS3Ia1BdmtEuQMLNfgzFUch+lemA+
- PH9g==
-X-Gm-Message-State: AOJu0YxKsu7Lb0BipQQUhrd1Qlhiw9G6ZgrU7n+uTIPpg7Ux248IX03Z
- Aqz6TuXGQ6w1WY2ONz2Lp0YJBaYsCT6v72fDGkNhZmNwNJWGXrstOgBGTHtHRJkWh72MOmoPh8g
- h
-X-Google-Smtp-Source: AGHT+IGNSgZ41PRTgPLfwt6d3pN2SQ6CogAkInlhDqo3aPFUdrdctz7yabSt7ksBxB1qCzmJJ9Mcgw==
-X-Received: by 2002:a05:600c:518d:b0:412:f007:63c9 with SMTP id
- fa13-20020a05600c518d00b00412f00763c9mr102242wmb.30.1709634360905; 
- Tue, 05 Mar 2024 02:26:00 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- h14-20020a05600016ce00b0033e25e970c2sm9909131wrf.88.2024.03.05.02.26.00
- for <qemu-devel@nongnu.org>
+ d=1e100.net; s=20230601; t=1709634760; x=1710239560;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2vDMOG858kwohsjaFQnfhqCCejlVxFcw1ADU0gyslJk=;
+ b=qZ0FdVelH+ggMYh/kiQ+XvmR9GTVrGPlxLHXrTD/GwCpV7WGxbIGlCdc5gvhvwhO3L
+ Wx6uyRKzw3u2WufrZv3GYBn7CzHrXCZNE7GF8m7HEHMp4iZ8AN1pS7IHz9oVsafN6coB
+ ZyHNKStC59liyjxC0i1dwsAu69HxBO/9PypaehLaL1qVNJdNu3+3gqOoVroDxT40BDIp
+ LrQSmJH6i8N7Wyc8D8bVcBjZ//LJyIK8SEbUU9nn5jjxNbpSs4D9e9LkF46amp1yjASl
+ shzkuvhbZVhBj6h4UzR7gOjzCpySyHpIKjvd76399KexuwO9Fs8TWKLlpbuxf2vnLIbU
+ cLlw==
+X-Gm-Message-State: AOJu0YwS1CYg9hQFk52lS20RHp68xiuS0fAzagfPpVwaGeszDIkvy9uo
+ kdWm914/SXP+ba+3DCP1iZ56OltSjUqgsSC2TW8lFz1qNiA/U1YmU2u5mvLFPu+dkrcUtLkKiag
+ 69cQv/MkwCrL/UIBc9Hu4CJHMdzuA/GVBGELxjrTAmYmaAJib2bjF
+X-Received: by 2002:a05:6a00:2288:b0:6e5:fb97:ed35 with SMTP id
+ f8-20020a056a00228800b006e5fb97ed35mr8011353pfe.18.1709634759903; 
+ Tue, 05 Mar 2024 02:32:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHyz/i29xOvqC5LpAfkn519rkysFPw5L32Dxd2+STcTASTjwl2hw7012/AkBfNd5NZ95dSiwg==
+X-Received: by 2002:a05:6a00:2288:b0:6e5:fb97:ed35 with SMTP id
+ f8-20020a056a00228800b006e5fb97ed35mr8011331pfe.18.1709634759542; 
+ Tue, 05 Mar 2024 02:32:39 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ le6-20020a056a004fc600b006e6150a5392sm3748585pfb.155.2024.03.05.02.32.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Mar 2024 02:26:00 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3863C5F892
- for <qemu-devel@nongnu.org>; Tue,  5 Mar 2024 10:26:00 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: KVM/QEMU Community Call 5th March Agenda Items
-User-Agent: mu4e 1.12.1; emacs 29.1
-Date: Tue, 05 Mar 2024 10:26:00 +0000
-Message-ID: <87edcpvutj.fsf@draig.linaro.org>
+ Tue, 05 Mar 2024 02:32:38 -0800 (PST)
+Date: Tue, 5 Mar 2024 11:32:32 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, pbonzini@redhat.com,
+ gaosong@loongson.cn, alistair.francis@wdc.com, palmer@dabbelt.com,
+ bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com, anisinha@redhat.com, philmd@linaro.org,
+ wangyanan55@huawei.com, eblake@redhat.com, armbru@redhat.com,
+ qemu-arm@nongnu.org, qemu-riscv@nongnu.org, f.ebner@proxmox.com
+Subject: Re: [PATCH 00/19] Workaround Windows failing to find 64bit SMBIOS
+ entry point with SeaBIOS
+Message-ID: <20240305113232.791c116e@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240305050735-mutt-send-email-mst@kernel.org>
+References: <20240227154749.1818189-1-imammedo@redhat.com>
+ <20240305050735-mutt-send-email-mst@kernel.org>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -11
+X-Spam_score: -1.2
+X-Spam_bar: -
+X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,26 +108,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, 5 Mar 2024 05:08:05 -0500
+"Michael S. Tsirkin" <mst@redhat.com> wrote:
 
-The KVM/QEMU community call is at:
+> On Tue, Feb 27, 2024 at 04:47:30PM +0100, Igor Mammedov wrote:
+> > Windows (10) bootloader when running on top of SeaBIOS, fails to find            
+> > SMBIOSv3 entry point. Tracing it shows that it looks for v2 anchor markers       
+> > only and not v3. Tricking it into believing that entry point is found            
+> > lets Windows successfully locate and parse SMBIOSv3 tables. Whether it           
+> > will be fixed on Windows side is not clear so here goes a workaround.            
+> >                                                                                  
+> > Idea is to try build v2 tables if QEMU configuration permits,                    
+> > and fallback to v3 tables otherwise. That will mask Windows issue                
+> > form majority of users.                                                          
+> > However if VM configuration can't be described (typically large VMs)             
+> > by v2 tables, QEMU will use SMBIOSv3 and Windows will hit the issue              
+> > again. In this case complain to Microsoft and/or use UEFI instead of             
+> > SeaBIOS (requires reinstall).                                                      
+> 
+> Igor so you want to repost a version with a couple of patches squashed?
 
-  https://meet.jit.si/kvmcallmeeting
-  @
-  5/3/2024 14:00 UTC
+requested changes where in several patches
+(style and making series easier to review),
 
-Are there any agenda items for the sync-up?
+I'll repost series with those changes today. 
+ 
 
-I maintain the invite on our Linaro project calendar here:
+> > Default compat setting of smbios-entry-point-type after series                   
+> > for pc/q35 machines:                                                             
+> >   * 9.0-newer: 'auto'                                                            
+> >   * 8.1-8.2: '64'                                                                
+> >   * 8.0-older: '32'                                                              
+> >                                                                                  
+> > Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2008                        
+> > CC: peter.maydell@linaro.org                                                     
+> > CC: pbonzini@redhat.com                                                          
+> > CC: mst@redhat.com                                                               
+> > CC: gaosong@loongson.cn                                                          
+> > CC: alistair.francis@wdc.com                                                     
+> > CC: palmer@dabbelt.com                                                           
+> > CC: bin.meng@windriver.com                                                       
+> > CC: liwei1518@gmail.com                                                          
+> > CC: dbarboza@ventanamicro.com                                                    
+> > CC: zhiwei_liu@linux.alibaba.com                                                 
+> > CC: imammedo@redhat.com                                                          
+> > CC: anisinha@redhat.com                                                          
+> > CC: philmd@linaro.org                                                            
+> > CC: wangyanan55@huawei.com                                                       
+> > CC: eblake@redhat.com                                                            
+> > CC: armbru@redhat.com                                                            
+> > CC: qemu-arm@nongnu.org                                                          
+> > CC: qemu-riscv@nongnu.org                                                        
+> > CC: f.ebner@proxmox.com                                                          
+> >                           
+> > Igor Mammedov (19):
+> >   tests: smbios: make it possible to write SMBIOS only test
+> >   tests: smbios: add test for -smbios type=11 option
+> >   tests: smbios: add test for legacy mode CLI options
+> >   smbios: cleanup smbios_get_tables() from legacy handling
+> >   smbios: get rid of smbios_smp_sockets global
+> >   smbios: get rid of smbios_legacy global
+> >   smbios: avoid mangling user provided tables
+> >   smbios: don't check type4 structures in legacy mode
+> >   smbios: build legacy mode code only for 'pc' machine
+> >   smbios: handle errors consistently
+> >   smbios: clear smbios_tables pointer after freeing
+> >   get rid of global smbios_ep_type
+> >   smbios: extend smbios-entry-point-type with 'auto' value
+> >   smbios: in case of entry point is 'auto' try to build v2 tables 1st
+> >   smbios: error out when building type 4 table is not possible
+> >   smbios: clear smbios_type4_count before building tables
+> >   tests: acpi/smbios: whitelist expected blobs
+> >   pc/q35: set SMBIOS entry point type to 'auto' by default
+> >   tests: acpi: update expected SSDT.dimmpxm blob
+> > 
+> >  hw/i386/fw_cfg.h                     |   3 +-
+> >  include/hw/firmware/smbios.h         |  29 +-
+> >  hw/arm/virt.c                        |   6 +-
+> >  hw/i386/Kconfig                      |   1 +
+> >  hw/i386/fw_cfg.c                     |  14 +-
+> >  hw/i386/pc.c                         |   4 +-
+> >  hw/i386/pc_piix.c                    |   4 +
+> >  hw/i386/pc_q35.c                     |   3 +
+> >  hw/loongarch/virt.c                  |   7 +-
+> >  hw/riscv/virt.c                      |   6 +-
+> >  hw/smbios/Kconfig                    |   2 +
+> >  hw/smbios/meson.build                |   4 +
+> >  hw/smbios/smbios.c                   | 481 +++++++++++----------------
+> >  hw/smbios/smbios_legacy.c            | 185 +++++++++++
+> >  hw/smbios/smbios_legacy_stub.c       |  16 +
+> >  qapi/machine.json                    |   5 +-
+> >  tests/data/acpi/q35/SSDT.dimmpxm     | Bin 1815 -> 1815 bytes
+> >  tests/data/smbios/type11_blob        | Bin 0 -> 11 bytes
+> >  tests/data/smbios/type11_blob.legacy | Bin 0 -> 10 bytes
+> >  tests/qtest/bios-tables-test.c       |  81 ++++-
+> >  20 files changed, 535 insertions(+), 316 deletions(-)
+> >  create mode 100644 hw/smbios/smbios_legacy.c
+> >  create mode 100644 hw/smbios/smbios_legacy_stub.c
+> >  create mode 100644 tests/data/smbios/type11_blob
+> >  create mode 100644 tests/data/smbios/type11_blob.legacy
+> > 
+> > -- 
+> > 2.39.3  
+> 
 
-  https://calendar.google.com/calendar/event?action=3DTEMPLATE&tmeid=3DMWd2=
-dWI5NDM1bzdocnJlbTBhMHJhbG5sNWlfMjAyNDAyMjBUMTQwMDAwWiBjX2s1cDJscGd2YnB0ZGl=
-ya3U1c2kwMWJsbW5rQGc&tmsrc=3Dc_k5p2lpgvbptdirku5si01blmnk%40group.calendar.=
-google.com&scp=3DALL
-
-If you want to be added to the invite list let me know and you can get
-spammed by your calendar app as well ;-)
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
