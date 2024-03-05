@@ -4,75 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2380C54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:39:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D7F6C54E41
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:40:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhV0a-0000mb-S3; Tue, 05 Mar 2024 08:39:04 -0500
+	id 1rhV1h-0001QM-6B; Tue, 05 Mar 2024 08:40:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhV0W-0000mM-FZ
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:39:00 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <rnn59437@gmail.com>)
+ id 1rhV1g-0001Q6-2o
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:40:12 -0500
+Received: from mail-oa1-x29.google.com ([2001:4860:4864:20::29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhV0V-0003Hy-14
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:39:00 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-565d1656c12so10063605a12.1
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:38:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <rnn59437@gmail.com>)
+ id 1rhV1e-0003Qt-Hp
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:40:11 -0500
+Received: by mail-oa1-x29.google.com with SMTP id
+ 586e51a60fabf-21fa6e04835so1986652fac.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:40:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709645937; x=1710250737; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=fU9PHk2pIf+KsWH/egAKI1bXCce8nbZLlO1v00TPkPA=;
- b=iinuImxBjMXq9Dw49vYKqXaX+VUXN3D3PO4y4eVUI5YEPS+wTh5qZ2vNCq1CpMOC7O
- 7vZUySOgAO/i6Ch/hF8263zcwVBjvA1SRURtaDIEpnxhiCcMeyw/afZShkTrhC1LjOEc
- n/eBayEMH258Oya00u4UH/961arK2pZ6vRc2Enw5S5f24lvBgiHS0qStTlCRuUVQBeQf
- kv+IrfktSXLYimo3eUbn3IBdl5bT6301xPjEdcH9pPb7JQ7bst/y30DXV+Vzg2mIH7Kd
- E3ZXgOX/iUXFu0ZV/5V4z96FkJVpOkw17oRz+b8ZPIlBXvwEcq+RsRaMkecktqEKp2I2
- VONA==
+ d=gmail.com; s=20230601; t=1709646008; x=1710250808; darn=nongnu.org;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=jfXBgX12vBlUxglU1EMWyCrl4xOTD0jRCm3hsT3Txfc=;
+ b=GqsyZQHzUouYVUYyNe3YJtrxpLlb4dA9WOrXk9lsuzJKAOqJ/lyAziL2MUlZ84pvl1
+ npGOJerEgU8TNRTdQeZ5NpCJ8JtIvPP0Dl1AH405OHvfdVl8wQm3Pmz/8BZ532dCykqc
+ pFDig6oWaCJZO2/s+rhWBkvB1ndqseqHSVbfS3Yz/hcFnir81CCzx2prf2GWsmTQFC3n
+ Bg3smgFV/177OIEWtYPo6Bn5lp8aS847iqfy0xW4Tykdh91qgwxtn+l0VEWDeXxrYuf6
+ dgRZJtIkC/R+hWSRH3D6awkKxprmv/R+EMp3aT3QaoCEdEETE7PFdBHN3DUD0TytYIqp
+ Z41A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709645937; x=1710250737;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=fU9PHk2pIf+KsWH/egAKI1bXCce8nbZLlO1v00TPkPA=;
- b=l66Q4vpCT2IKSw2DFMG9xwkNzdu4nVUequEDAfcWjzI7uUm8tAjrheCw9iB9Kb2C7O
- TLofNA7dttyAvvBtU2XRsOQKYqYFNYtPTHLOtSpNqK23FMPwLG1Upspwk8BJGpabP0HM
- wNKRwKZyo4155CFL+RQGYBweqxguacNCJe/dPX8ZBWbfaygTlBOrVXJ02Pg5+SNPyY2j
- LvYdX4Cbduy6gfzzPzuKLbQKDw529qTl4pyghsfFw734lTGkNdEIjiekXe7SUEsKvrZF
- hPMERPs2nVmjLycVFHUGOlbeCBU9YWZKhdRVNZJXsRa1GbV6nxsy0CB7joETi+AQKRDW
- zwzw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX9zip/plz0/xEXEpOv5daxmj8td7EPRfaDh0nbkdMHLPStGZeDkRRdV1yf4vzdI4Ft7nbsIA7L/QQ/8aj0U1jrDtx8DOI=
-X-Gm-Message-State: AOJu0YxQj0snqeRdidyD1eNOWWHKRYcwrMG9tMn9wocL5f69a8mTv06Y
- vK32xNOO5YQZpBevAU64rIOmXaRYsAEtO8MKw4+Q7BOFnR2Nlp2wXV711UUU7rA6AQPqcP5HWhP
- B2gwrmOiYBzLD1vcWkC4f1ebZzUu35B8WmZPRgA==
-X-Google-Smtp-Source: AGHT+IEwm6CWL0zwGVUEIqiM4JwyLAjHDCGOjGwtBDxsri+SkBtkFiaiiH6uUp+5kX6+RSJJFAx0neW2WgM64CWbebk=
-X-Received: by 2002:a50:8e05:0:b0:566:85aa:e63e with SMTP id
- 5-20020a508e05000000b0056685aae63emr2606500edw.9.1709645936925; Tue, 05 Mar
- 2024 05:38:56 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709646008; x=1710250808;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jfXBgX12vBlUxglU1EMWyCrl4xOTD0jRCm3hsT3Txfc=;
+ b=Zoj/7W51gJ2v0Gi5Dxp9vfdxUAiVODA7dOazhm0rL4pUhdBl/LuPxDF2zgXJXNwFl6
+ y4/R5yBV13gXodCaK3tzCspAzSZbiTOWZ8OJBqvibuu+9VKPEiO6I5vB3u7gKOP1i2Rg
+ Ck7ssh9nsnp+zmlU67dw+NhMLQ2/YGC/+SmG31LfnJMDjE4VFFVclPI8Rhizd0SRPhH1
+ mS6Pn5m2LbwEmQBUAydNfPzhlvrzB6qWyxX5JOnDUsFJNoXZhG4vECxomFO9fCJSBxiB
+ PmifooeTzHsYa40sclzfuJIvWfQRuwjM1gInnd4OI+tbOzazfupIIqFM0bqTPaL0cdAa
+ a9EQ==
+X-Gm-Message-State: AOJu0YyRiQYI/YUTI2C+9j6CMiQbc+QZkkFKAfsnNaUx79SZzr8rugRd
+ boXwWiRCgUYAKXpqs5WodwMr094WXummlMvywtMaud09VG13sUPtzVLkewasZB3JnmqyInJrfOM
+ kfLKynNERGL4t/1WzCTWptsA+Wyn6bstIm0mp7DBm
+X-Google-Smtp-Source: AGHT+IFuSgHCbA4I/SAtsZeaGzjng2DAaX8byEXSMrbltipKC0axjpXQVklxMYNjDDNgLc9FY30U13Jdd+591GUOTbU=
+X-Received: by 2002:a05:6870:e2d1:b0:21f:9ce8:462e with SMTP id
+ w17-20020a056870e2d100b0021f9ce8462emr1592532oad.55.1709646008098; Tue, 05
+ Mar 2024 05:40:08 -0800 (PST)
 MIME-Version: 1.0
-References: <20240305-elf2dmp-v2-0-86ff2163ad32@daynix.com>
- <20240305-elf2dmp-v2-13-86ff2163ad32@daynix.com>
-In-Reply-To: <20240305-elf2dmp-v2-13-86ff2163ad32@daynix.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 5 Mar 2024 13:38:46 +0000
-Message-ID: <CAFEAcA9or3wfwokpNRorFDZbNGNFz9mx4_9F1athf+mcz4cpKQ@mail.gmail.com>
-Subject: Re: [PATCH v2 13/13] contrib/elf2dmp: Clamp QEMU note to file size
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Viktor Prutyanov <viktor.prutyanov@phystech.edu>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+From: RR NN <rnn59437@gmail.com>
+Date: Tue, 5 Mar 2024 17:09:56 +0330
+Message-ID: <CAK4oD7BPCf5o-OR8WThb3QGJbrJnYpHipjKv-hY9rkWNOSAHjA@mail.gmail.com>
+Subject: ARM hypervisors
+To: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000000125a30612e9fb78"
+Received-SPF: pass client-ip=2001:4860:4864:20::29;
+ envelope-from=rnn59437@gmail.com; helo=mail-oa1-x29.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,15 +84,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 5 Mar 2024 at 07:37, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->
-> This fixes crashes with truncated dumps.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2202
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+--0000000000000125a30612e9fb78
+Content-Type: text/plain; charset="UTF-8"
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Hello
+ARM hypervisors (pKVM, Gunyah) can run x86 OSs?
 
-thanks
--- PMM
+--0000000000000125a30612e9fb78
+Content-Type: text/html; charset="UTF-8"
+
+<div dir="auto">Hello<div dir="auto">ARM hypervisors (pKVM, Gunyah) can run x86 OSs?</div></div>
+
+--0000000000000125a30612e9fb78--
 
