@@ -4,86 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D73CEC54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 12:19:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 848A0C54E41
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 12:19:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhTkq-0008D4-NN; Tue, 05 Mar 2024 07:18:46 -0500
+	id 1rhTl9-0000I8-Ji; Tue, 05 Mar 2024 07:19:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1rhTkj-00083X-9l
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 07:18:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1rhTkh-0003B6-Au
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 07:18:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709641112;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=12c8QEjQRjPojdJVSjK28K0zJsO6fMItylegWxv/gxE=;
- b=CKGpzkLfvaIeXhvlb2wNXJpfSzjabQf67YeRympGO6LCb4NSleVGsWQmvPnCS2qjyIulFM
- 7uLlsC/tqBhYLp+yoWOqjZykU3qTWQAOr3o7dD0MaMZmRfw7JwlSwBpVEd6HCpid8EhBWz
- tf4cN5ZTzgFdSgNKazCjQFnEewtcHFY=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-178-piLtlgF5MNKpaITRM2SlWQ-1; Tue, 05 Mar 2024 07:18:31 -0500
-X-MC-Unique: piLtlgF5MNKpaITRM2SlWQ-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-55d71ec6ef3so5272331a12.0
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 04:18:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rhTkz-0008Oo-UK
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 07:18:56 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rhTks-0003Da-Bp
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 07:18:53 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-412e4619e5eso14088275e9.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 04:18:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709641124; x=1710245924; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=y1lN+fUrX1yI6hMkThPuuG28B1/LgsqaW0mrtGfmT/8=;
+ b=JggpSdqGJPnsOvVpGO/8SEOliK6if/zOBmGhPpah1ogblTql9c1em+2Nj///He7RMj
+ wFsEqrg9g9rARWf4GGaNNhPwipcLwEsy1Abs+rHDAp0g9NL4jlXrQdR8ffCDZM7Wjc2l
+ RCJWk+4r+g8HHjv76RK1dXCqonf/tv2P573HTL92fkwYyTKQt756j+tvsvNEy7jv0A6I
+ ZKwtCozlnJ78c8KJ57CHgc35gCvCIlxi72GUfXdumUw0cpFxYh4fCD+/5N0iuVu5Uj8i
+ SsNaj1GvslAoNkkCBgNQi3/WdjObyQ9JRiQmuCg7VLFKJ3bqRtFwN00RLL0PaDPyDK6r
+ cYjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709641110; x=1710245910;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1709641124; x=1710245924;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=12c8QEjQRjPojdJVSjK28K0zJsO6fMItylegWxv/gxE=;
- b=B8l7VBY0l1II8esa8pSVm+oX7SqdGyt7tYaqwVCwFJthBLbjUgyJXeLzqxM16meV7b
- 4xv63psdT1crgE32g3pwns5OtUsK49MuvfUlC6VARhvjs7HJ2oMCbqIJPPvY2JTaq0Bp
- dzLB+aiT2codPLu/b8eEY2cUOoQ/3DM3kVn5hDiyQyR1SgDBVzpfuL0UluIuZjqO8R41
- DCiH7PUVxJozu+/8sjClH8hq1LqvTAZU45hEe+KRDnK643s+2C2nXJIqgK/Xbpqjwhr6
- CGby1dS0cxncglzw3fwZ1UY0ObppTzcUZvcbK0bogSCaAaUFWb3pf5pAYzqGYNjZcwGP
- eUEA==
-X-Gm-Message-State: AOJu0Yy6sqlgLhqfwwLx+6/Vqt8KzMXcl2vm+GmM7plGSoDOdH4H4Rnd
- LkSLTQeZHGrUQ7+z6PFi+/zll2eNTJoCIO+wx0IbMXXYVHWka+TVIQeWOLZtDy+1UlRqLzqr6Ac
- s4mH5gmTW+Uv7FWpELeMK3/QAtHZ93L9v9rd1v08Nni8ALIw2wWq5yKKDbPlRuFcY4RJWb6wLa1
- 7oCi1GjOKY65bQYm5OIA1TKaO5erE=
-X-Received: by 2002:a50:c8cb:0:b0:566:a235:9355 with SMTP id
- k11-20020a50c8cb000000b00566a2359355mr8652014edh.33.1709641110143; 
- Tue, 05 Mar 2024 04:18:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEcPOPGnW9muaKglY2l01ppj3QXD/8ZLzSVGK6MZ9HaTuyyWmRQYcycoO6PIwCvTF1XC/wKBmwA/BXqFi/t3ZA=
-X-Received: by 2002:a50:c8cb:0:b0:566:a235:9355 with SMTP id
- k11-20020a50c8cb000000b00566a2359355mr8652005edh.33.1709641109836; Tue, 05
- Mar 2024 04:18:29 -0800 (PST)
+ bh=y1lN+fUrX1yI6hMkThPuuG28B1/LgsqaW0mrtGfmT/8=;
+ b=t/+rZ5PqySVRDISg3LQ6DtB5sqlsOQTh20mW10QhMwfefUx7ZiQjAWSi7gHusjXed+
+ UoK3mJMIxxdfmtCTG4iEWptkfkENcMbkbWO+xk/JSQsx8ZD1b0Yyew8pG1/cDVWNoK6/
+ bLIblzuCKUFuKZ4BvCdbgYlgSzG+Qaq9cZ9pzphmOOYedSDfWFoZVY7nDFWQsJI3IMBI
+ vQSoCkTDgANwt0UZAacpRzwH8FayllUp0qGhTMKBwAQOun/Ln4X2NdUTUUA1Ygh0Lq69
+ tOVRSVoC6eKNB5pEZ5k8xZ5lAJe8bVMO2dUixh1FNJLxZ5MxVRfTkEXvtm9zYWdb3mTt
+ qljQ==
+X-Gm-Message-State: AOJu0YwaXkoHTSDTx0kcBRQgR9Scx/+otsNo6y2kG1/2FKRNeGLJqxIi
+ wRtjJhqHMI+8bV+aTvH1ZiRNON8r8lbMJvZqZ68z9I+HD7DkeDZpL3B1S20MZx4=
+X-Google-Smtp-Source: AGHT+IFIxNu71j7Y2KVErvOFS2FGyXwefyeOtJLrmxDxFA0pddvyB2e6Oh1Znch+jL/wsSubC4XxIw==
+X-Received: by 2002:a05:600c:4f0d:b0:412:beee:36b3 with SMTP id
+ l13-20020a05600c4f0d00b00412beee36b3mr9351811wmq.7.1709641124451; 
+ Tue, 05 Mar 2024 04:18:44 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ l21-20020a05600c4f1500b004101543e843sm20823499wmq.10.2024.03.05.04.18.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 05 Mar 2024 04:18:43 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 239F45FA03;
+ Tue,  5 Mar 2024 12:10:08 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, qemu-s390x@nongnu.org,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Michael Rolnik <mrolnik@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Laurent Vivier <laurent@vivier.eu>, Thomas Huth <thuth@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Brad Smith <brad@comstyle.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Brian Cain <bcain@quicinc.com>, Cleber Rosa <crosa@redhat.com>,
+ John Snow <jsnow@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Riku Voipio <riku.voipio@iki.fi>,
+ qemu-arm@nongnu.org, qemu-ppc@nongnu.org, Weiwei Li <liwei1518@gmail.com>,
+ Bin Meng <bin.meng@windriver.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Beraldo Leal <bleal@redhat.com>, Kyle Evans <kevans@freebsd.org>,
+ David Hildenbrand <david@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Warner Losh <imp@bsdimp.com>, qemu-riscv@nongnu.org,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH 29/29] target/riscv: honour show_opcodes when disassembling
+Date: Tue,  5 Mar 2024 12:10:05 +0000
+Message-Id: <20240305121005.3528075-30-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240305121005.3528075-1-alex.bennee@linaro.org>
+References: <20240305121005.3528075-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-References: <20240130234840.53122-1-dongwon.kim@intel.com>
- <PH8PR11MB6879F0CB84091A8436C3B891FA5E2@PH8PR11MB6879.namprd11.prod.outlook.com>
-In-Reply-To: <PH8PR11MB6879F0CB84091A8436C3B891FA5E2@PH8PR11MB6879.namprd11.prod.outlook.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 5 Mar 2024 16:18:18 +0400
-Message-ID: <CAMxuvay8Gir6r4EWE0L=Y_YxGUxu9WS3TwNyUMe5vYX8Qt2SyA@mail.gmail.com>
-Subject: Re: [PATCH 0/3] ui/gtk: introducing vc->visible
-To: "Kim, Dongwon" <dongwon.kim@intel.com>, "P. Berrange,
- Daniel" <berrange@redhat.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.568,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,88 +127,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Kim
+This makes the output suitable when used for plugins.
 
-I am uncomfortable with the series in general.
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ disas/riscv.c | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
-Not only we don't have the means to draw dmabuf/scanout "when
-required", so resuming drawing won't work until the guest draws (this
-is already a problem but you are only making it worse). And I also
-think reconfiguring the guest by merely minimizing or switching
-window/tabs isn't what most users would expect.
-
-(fwiw, my personal opinion is that QEMU shouldn't provide UIs and
-different clients should be able to implement different behaviours,
-out of process.. that makes me relatively less motivated to break
-things and be responsible)
-
-Daniel, could you have a look too?
-
-thanks
-
-On Fri, Mar 1, 2024 at 4:05=E2=80=AFAM Kim, Dongwon <dongwon.kim@intel.com>=
- wrote:
->
-> Hi Marc-Andr=C3=A9 Lureau,
->
-> Just a reminder.. I need your help reviewing this patch series. Please ta=
-ke a look at my messages at
-> https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg06636.html and
-> https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg06637.html
->
-> Thanks!!
-> DW
->
-> > -----Original Message-----
-> > From: qemu-devel-bounces+dongwon.kim=3Dintel.com@nongnu.org <qemu-
-> > devel-bounces+dongwon.kim=3Dintel.com@nongnu.org> On Behalf Of
-> > dongwon.kim@intel.com
-> > Sent: Tuesday, January 30, 2024 3:49 PM
-> > To: qemu-devel@nongnu.org
-> > Subject: [PATCH 0/3] ui/gtk: introducing vc->visible
-> >
-> > From: Dongwon Kim <dongwon.kim@intel.com>
-> >
-> > Drawing guest display frames can't be completed while the VC is not in =
-visible
-> > state, which could result in timeout in both the host and the guest esp=
-ecially
-> > when using blob scanout. Therefore it is needed to update and track the=
- visiblity
-> > status of the VC and unblock the pipeline in case when VC becomes invis=
-ible (e.g.
-> > windows minimization, switching among tabs) while processing a guest fr=
-ame.
-> >
-> > First patch (0001-ui-gtk-skip...) is introducing a flag 'visible' to Vi=
-rtualConsole
-> > struct then set it only if the VC and its window is visible.
-> >
-> > Second patch (0002-ui-gtk-set-...) sets the ui size to 0 when VC is inv=
-isible when
-> > the tab is closed or deactivated. This notifies the guest that the asso=
-ciated guest
-> > display is not active anymore.
-> >
-> > Third patch (0003-ui-gtk-reset-visible...) adds a callback for GTK wind=
-ow-state-
-> > event. The flag, 'visible' is updated based on the minization status of=
- the window.
-> >
-> > Dongwon Kim (3):
-> >   ui/gtk: skip drawing guest scanout when associated VC is invisible
-> >   ui/gtk: set the ui size to 0 when invisible
-> >   ui/gtk: reset visible flag when window is minimized
-> >
-> >  include/ui/gtk.h |  1 +
-> >  ui/gtk-egl.c     |  8 +++++++
-> >  ui/gtk-gl-area.c |  8 +++++++
-> >  ui/gtk.c         | 62 ++++++++++++++++++++++++++++++++++++++++++++++--
-> >  4 files changed, 77 insertions(+), 2 deletions(-)
-> >
-> > --
-> > 2.34.1
-> >
->
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 8a546d5ea53..9dec8fa966f 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -5192,19 +5192,21 @@ print_insn_riscv(bfd_vma memaddr, struct disassemble_info *info, rv_isa isa)
+         }
+     }
+ 
+-    switch (len) {
+-    case 2:
+-        (*info->fprintf_func)(info->stream, INST_FMT_2, inst);
+-        break;
+-    case 4:
+-        (*info->fprintf_func)(info->stream, INST_FMT_4, inst);
+-        break;
+-    case 6:
+-        (*info->fprintf_func)(info->stream, INST_FMT_6, inst);
+-        break;
+-    default:
+-        (*info->fprintf_func)(info->stream, INST_FMT_8, inst);
+-        break;
++    if (!info->show_opcodes) {
++        switch (len) {
++        case 2:
++            (*info->fprintf_func)(info->stream, INST_FMT_2, inst);
++            break;
++        case 4:
++            (*info->fprintf_func)(info->stream, INST_FMT_4, inst);
++            break;
++        case 6:
++            (*info->fprintf_func)(info->stream, INST_FMT_6, inst);
++            break;
++        default:
++            (*info->fprintf_func)(info->stream, INST_FMT_8, inst);
++            break;
++        }
+     }
+ 
+     disasm_inst(buf, sizeof(buf), isa, memaddr, inst,
+-- 
+2.39.2
 
 
