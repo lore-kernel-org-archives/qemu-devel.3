@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 389CEC5478C
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 07:18:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 301BAC5478C
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 07:18:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhOsq-00065D-RS; Tue, 05 Mar 2024 02:06:44 -0500
+	id 1rhOuX-0000Or-3q; Tue, 05 Mar 2024 02:08:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rhOr3-00049j-AU; Tue, 05 Mar 2024 02:04:51 -0500
-Received: from szxga06-in.huawei.com ([45.249.212.32])
+ id 1rhOrN-0004Lb-94; Tue, 05 Mar 2024 02:05:20 -0500
+Received: from szxga01-in.huawei.com ([45.249.212.187])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rhOqz-0008Qt-EW; Tue, 05 Mar 2024 02:04:48 -0500
-Received: from mail.maildlp.com (unknown [172.19.163.44])
- by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4Tpmkm4DXgz1vw4H;
- Tue,  5 Mar 2024 15:04:00 +0800 (CST)
+ id 1rhOrH-0008VM-Vc; Tue, 05 Mar 2024 02:05:07 -0500
+Received: from mail.maildlp.com (unknown [172.19.88.194])
+ by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4Tpmj967sxzsX8J;
+ Tue,  5 Mar 2024 15:02:37 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 4BEF91402CE;
- Tue,  5 Mar 2024 15:04:40 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 360F714037B;
+ Tue,  5 Mar 2024 15:04:34 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Tue, 5 Mar
- 2024 15:04:39 +0800
+ 2024 15:04:33 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [RFC PATCH v6 07/23] target/arm: Add support for NMI in
- arm_phys_excp_target_el()
-Date: Tue, 5 Mar 2024 07:03:15 +0000
-Message-ID: <20240305070331.2151131-8-ruanjinjie@huawei.com>
+Subject: [RFC PATCH v6 01/23] target/arm: Handle HCR_EL2 accesses for bits
+ introduced with FEAT_NMI
+Date: Tue, 5 Mar 2024 07:03:09 +0000
+Message-ID: <20240305070331.2151131-2-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240305070331.2151131-1-ruanjinjie@huawei.com>
 References: <20240305070331.2151131-1-ruanjinjie@huawei.com>
@@ -45,14 +45,14 @@ Content-Type: text/plain
 X-Originating-IP: [10.67.174.55]
 X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
  kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.32; envelope-from=ruanjinjie@huawei.com;
- helo=szxga06-in.huawei.com
+Received-SPF: pass client-ip=45.249.212.187;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga01-in.huawei.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,34 +70,57 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to Arm GIC section 4.6.3 Interrupt superpriority, the interrupt
-with superpriority is always IRQ, never FIQ, so handle NMI same as IRQ in
-arm_phys_excp_target_el().
+FEAT_NMI defines another three new bits in HCRX_EL2: TALLINT, HCRX_VINMI and
+HCRX_VFNMI. When the feature is enabled, allow these bits to be written in
+HCRX_EL2.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
 v4:
-- Add Reviewed-by.
+- Update the comment for FEAT_NMI in hcrx_write().
+- Update the commit message, s/thress/three/g.
 v3:
-- Remove nmi_is_irq flag in CPUARMState.
-- Handle NMI same as IRQ in arm_phys_excp_target_el().
+- Add Reviewed-by.
+- Add HCRX_VINMI and HCRX_VFNMI support in HCRX_EL2.
+- Upate the commit messsage.
 ---
- target/arm/helper.c | 1 +
- 1 file changed, 1 insertion(+)
+ target/arm/cpu-features.h | 5 +++++
+ target/arm/helper.c       | 5 +++++
+ 2 files changed, 10 insertions(+)
 
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 7567854db6..2ad1179be7 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -681,6 +681,11 @@ static inline bool isar_feature_aa64_sme(const ARMISARegisters *id)
+     return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, SME) != 0;
+ }
+ 
++static inline bool isar_feature_aa64_nmi(const ARMISARegisters *id)
++{
++    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, NMI) != 0;
++}
++
+ static inline bool isar_feature_aa64_tgran4_lpa2(const ARMISARegisters *id)
+ {
+     return FIELD_SEX64(id->id_aa64mmfr0, ID_AA64MMFR0, TGRAN4) >= 1;
 diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 4b4c8e279d..7cdc90e9e3 100644
+index 90c4fb72ce..affa493141 100644
 --- a/target/arm/helper.c
 +++ b/target/arm/helper.c
-@@ -10570,6 +10570,7 @@ uint32_t arm_phys_excp_target_el(CPUState *cs, uint32_t excp_idx,
-     hcr_el2 = arm_hcr_el2_eff(env);
-     switch (excp_idx) {
-     case EXCP_IRQ:
-+    case EXCP_NMI:
-         scr = ((env->cp15.scr_el3 & SCR_IRQ) == SCR_IRQ);
-         hcr = hcr_el2 & HCR_IMO;
-         break;
+@@ -6056,6 +6056,11 @@ static void hcrx_write(CPUARMState *env, const ARMCPRegInfo *ri,
+         valid_mask |= HCRX_MSCEN | HCRX_MCE2;
+     }
+ 
++    /* FEAT_NMI adds TALLINT, VINMI and VFNMI */
++    if (cpu_isar_feature(aa64_nmi, env_archcpu(env))) {
++        valid_mask |= HCRX_TALLINT | HCRX_VINMI | HCRX_VFNMI;
++    }
++
+     /* Clear RES0 bits.  */
+     env->cp15.hcrx_el2 = value & valid_mask;
+ }
 -- 
 2.34.1
 
