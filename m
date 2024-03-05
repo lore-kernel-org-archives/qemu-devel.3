@@ -4,79 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C74CC54E49
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 02:31:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E9E3C48BF6
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 03:04:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhKaU-00024s-V0; Mon, 04 Mar 2024 21:31:27 -0500
+	id 1rhL5x-0006Gc-A1; Mon, 04 Mar 2024 22:03:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rhKaQ-00024P-DW
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 21:31:23 -0500
-Received: from mail-oa1-x29.google.com ([2001:4860:4864:20::29])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rhKaO-0005UK-AY
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 21:31:22 -0500
-Received: by mail-oa1-x29.google.com with SMTP id
- 586e51a60fabf-21f3a4ba205so2144553fac.1
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 18:31:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709605879; x=1710210679; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=gZ/X+Gm6f8G27zUrqUaBxmrYaEWuc6ExS67JFkwCyrQ=;
- b=O0v4LcmeqaB2ra9V7W+1TZC54y6ucUZ4p5xmo1xEgGIzgLPVVs+0W/G9+ytxCb2skP
- GfM3Sp3IJDF5yGTo7VdeYQgdJc/GGNBpWTyu0thh5FAumGx17pz5sqYWhXdcnavYsdgJ
- hmQrCIHyeEToouZrjd7ItBzd5wiV6CgFeSvT4kv0cIMaxKCGzrFdOakirWg/k7ng6Rvr
- t30CxGYlBNOINlCcBlYzKqSCD20Q+fVADxQ8tRPzJ1YH+FHbR/IFXB6Iqrz0YfhjiUOQ
- 4uMgJRS0xeOwUXtWJaaPM1aWw6SLqSIk4pqasD0W51HWZlqddeUWqLNpHTtqhaLzGyET
- mYLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709605879; x=1710210679;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gZ/X+Gm6f8G27zUrqUaBxmrYaEWuc6ExS67JFkwCyrQ=;
- b=NcOXyJZyqJSaHnMFii9gx6+MpY8MFYITfYFpXTr4Su7GAU9/tsHz998MAaksgI9a1s
- p7xBYBuqMRl7Iv+5O1BIeXUyN+QI0Lkz5RwXCq6H7Ykfp/EXyNttes5ZXrMjbnlkGaGO
- 382VNiMu8JBckIJLkvufB+wy3pIk0jfPEYS6Bn9gY4b3fSx0eAmMmaMGe9QWRuVNVaSa
- xeNj7tzVNDQXuszm+1H3UTq29eTIn8JXLLpA6Roms0B2rBn562jjm7Ehp4mjtaPlCdwt
- P9rclDaux/CnlWQzGGIjlqd0riS1Ux+xSlsgHOdVyFdM1437J9PrOloMxUMCm9o0y53B
- tsOg==
-X-Gm-Message-State: AOJu0Yw/ClJmLXIPWRLQLiKDzf0nW4nyTe5KWUoYXeHjNGWFw09ScgvA
- dbYxJfhoEqEqJHxROY5fCFxaAZFzopqs3l00RHx7u8AGrG8hz0So9aI/x1kmLHdqxL479BrHJ8T
- +
-X-Google-Smtp-Source: AGHT+IFAZxPxr3wKd2C+4p6Ilz99XTt3jSa17mZppTyLdLCCnTdx3ccTrh+3uNe5afRsiAKuUKsfpQ==
-X-Received: by 2002:a05:6870:e98c:b0:220:94b4:2074 with SMTP id
- r12-20020a056870e98c00b0022094b42074mr540762oao.37.1709605878933; 
- Mon, 04 Mar 2024 18:31:18 -0800 (PST)
-Received: from stoup.. (098-147-055-211.res.spectrum.com. [98.147.55.211])
- by smtp.gmail.com with ESMTPSA id
- g22-20020aa78756000000b006e5588d1c9fsm7887635pfo.156.2024.03.04.18.31.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 Mar 2024 18:31:18 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	qemu-stable@nongnu.org
-Subject: [PATCH] target/arm: Fix 32-bit SMOPA
-Date: Mon,  4 Mar 2024 16:31:16 -1000
-Message-Id: <20240305023116.234256-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1rhL5p-0006Fm-D1
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 22:03:52 -0500
+Received: from mgamail.intel.com ([198.175.65.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1rhL5m-0002Ch-59
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 22:03:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1709607826; x=1741143826;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=mp+ol3XwG06p9glsFnLYwqdxgHrJDYRhiNjw+YkZF1A=;
+ b=YSd9zavmxStS378F9zZbMDrB/eBHVbRrFAcGHcIyxf3Y/sIilTqkurGt
+ MF2k3aTVLLINmhtW/LnpoOexFJ647V8whGcgIgbsN47ZG/rFQRO28EOEb
+ PZQK8wH0hTcNcpk/S5Ca9o97urLVPzumEA89Oz+Dz/q6GgmLwjD4akUYj
+ UwdOZ2xqDPY1nCeCJ22JdF3IhuguKNl/Ug80JKYoBeMkPLrAojGmr6xqG
+ BYE54JFWR5Fj6fs/HVtf14Ir/w3ATyKfhL0uIJtwGpK2kg/WTLG0D4ACk
+ y3WeXXsJraiLwzmH0Qyn9PnvgGPtsE7oDna7LQ3uzbqWE0iNmXIUX5jw+ g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11003"; a="4059143"
+X-IronPort-AV: E=Sophos;i="6.06,205,1705392000"; 
+   d="scan'208";a="4059143"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Mar 2024 19:03:40 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,205,1705392000"; 
+   d="scan'208";a="9325010"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.125.243.127])
+ ([10.125.243.127])
+ by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Mar 2024 19:03:39 -0800
+Message-ID: <7a77eb25-2287-4e30-813d-c3b0e9bae4a6@intel.com>
+Date: Tue, 5 Mar 2024 11:03:36 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::29;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x29.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] kvm: add support for guest physical bits
+Content-Language: en-US
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org, Marcelo Tosatti <mtosatti@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org
+References: <20240301101713.356759-1-kraxel@redhat.com>
+ <20240301101713.356759-2-kraxel@redhat.com>
+ <3ab64c0f-7387-4738-b78c-cf798528d5f4@intel.com>
+ <z4di6tev2kdeddclskhl5xhrlpseykgukfwit6ickrh57zscyv@bkjtbyj3enjx>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <z4di6tev2kdeddclskhl5xhrlpseykgukfwit6ickrh57zscyv@bkjtbyj3enjx>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.273, HK_RANDOM_FROM=0.999, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,254 +86,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The while the 8-bit input elements are sequential in the input vector,
-the 32-bit output elements are not sequential in the output matrix.
-Do not attempt to compute 2 32-bit outputs at the same time.
+On 3/4/2024 10:58 PM, Gerd Hoffmann wrote:
+> On Mon, Mar 04, 2024 at 09:54:40AM +0800, Xiaoyao Li wrote:
+>> On 3/1/2024 6:17 PM, Gerd Hoffmann wrote:
+>>> query kvm for supported guest physical address bits using
+>>> KVM_CAP_VM_GPA_BITS.  Expose the value to the guest via cpuid
+>>> (leaf 0x80000008, eax, bits 16-23).
+>>>
+>>> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+>>> ---
+>>>    target/i386/cpu.h     | 1 +
+>>>    target/i386/cpu.c     | 1 +
+>>>    target/i386/kvm/kvm.c | 8 ++++++++
+>>>    3 files changed, 10 insertions(+)
+>>>
+>>> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+>>> index 952174bb6f52..d427218827f6 100644
+>>> --- a/target/i386/cpu.h
+>>> +++ b/target/i386/cpu.h
+>>> @@ -2026,6 +2026,7 @@ struct ArchCPU {
+>>>        /* Number of physical address bits supported */
+>>>        uint32_t phys_bits;
+>>> +    uint32_t guest_phys_bits;
+>>>        /* in order to simplify APIC support, we leave this pointer to the
+>>>           user */
+>>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+>>> index 2666ef380891..1a6cfc75951e 100644
+>>> --- a/target/i386/cpu.c
+>>> +++ b/target/i386/cpu.c
+>>> @@ -6570,6 +6570,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>>>            if (env->features[FEAT_8000_0001_EDX] & CPUID_EXT2_LM) {
+>>>                /* 64 bit processor */
+>>>                 *eax |= (cpu_x86_virtual_addr_width(env) << 8);
+>>> +             *eax |= (cpu->guest_phys_bits << 16);
+>>
+>> I think you misunderstand this field.
+>>
+>> If you expose this field to guest, it's the information for nested guest.
+>> i.e., the guest itself runs as a hypervisor will know its nested guest can
+>> have guest_phys_bits for physical addr.
+> 
+> I think those limits (l1 + l2 guest phys-bits) are identical, no?
 
-Cc: qemu-stable@nongnu.org
-Fixes: 23a5e3859f5 ("target/arm: Implement SME integer outer product")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2083
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/tcg/sme_helper.c       | 77 ++++++++++++++++++-------------
- tests/tcg/aarch64/sme-smopa-1.c   | 47 +++++++++++++++++++
- tests/tcg/aarch64/sme-smopa-2.c   | 54 ++++++++++++++++++++++
- tests/tcg/aarch64/Makefile.target |  2 +-
- 4 files changed, 147 insertions(+), 33 deletions(-)
- create mode 100644 tests/tcg/aarch64/sme-smopa-1.c
- create mode 100644 tests/tcg/aarch64/sme-smopa-2.c
+Sorry, I didn't know this patch was based on the off-list proposal made 
+by Paolo that changing the definition of CPUID.0x80000008:EAX[23:16] to 
+advertise the "maximum usable physical address bits".
 
-diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
-index 904bfdac43..ef39eee48d 100644
---- a/target/arm/tcg/sme_helper.c
-+++ b/target/arm/tcg/sme_helper.c
-@@ -1083,11 +1083,32 @@ void HELPER(sme_bfmopa)(void *vza, void *vzn, void *vzm, void *vpn,
-     }
- }
- 
--typedef uint64_t IMOPFn(uint64_t, uint64_t, uint64_t, uint8_t, bool);
-+typedef uint32_t IMOPFn32(uint32_t, uint32_t, uint32_t, uint8_t, bool);
-+static inline void do_imopa_s(uint32_t *za, uint32_t *zn, uint32_t *zm,
-+                              uint8_t *pn, uint8_t *pm,
-+                              uint32_t desc, IMOPFn32 *fn)
-+{
-+    intptr_t row, col, oprsz = simd_oprsz(desc) / 4;
-+    bool neg = simd_data(desc);
- 
--static inline void do_imopa(uint64_t *za, uint64_t *zn, uint64_t *zm,
--                            uint8_t *pn, uint8_t *pm,
--                            uint32_t desc, IMOPFn *fn)
-+    for (row = 0; row < oprsz; ++row) {
-+        uint8_t pa = pn[H1(row >> 1)] >> ((row & 1) * 4);
-+        uint32_t *za_row = &za[H4(tile_vslice_index(row))];
-+        uint32_t n = zn[H4(row)];
-+
-+        for (col = 0; col < oprsz; ++col) {
-+            uint8_t pb = pm[H1(col >> 1)] >> ((col & 1) * 4);
-+            uint32_t *a = &za_row[col];
-+
-+            *a = fn(n, zm[H4(col)], *a, pa & pb & 0xf, neg);
-+        }
-+    }
-+}
-+
-+typedef uint64_t IMOPFn64(uint64_t, uint64_t, uint64_t, uint8_t, bool);
-+static inline void do_imopa_d(uint64_t *za, uint64_t *zn, uint64_t *zm,
-+                              uint8_t *pn, uint8_t *pm,
-+                              uint32_t desc, IMOPFn64 *fn)
- {
-     intptr_t row, col, oprsz = simd_oprsz(desc) / 8;
-     bool neg = simd_data(desc);
-@@ -1107,25 +1128,16 @@ static inline void do_imopa(uint64_t *za, uint64_t *zn, uint64_t *zm,
- }
- 
- #define DEF_IMOP_32(NAME, NTYPE, MTYPE) \
--static uint64_t NAME(uint64_t n, uint64_t m, uint64_t a, uint8_t p, bool neg) \
-+static uint32_t NAME(uint32_t n, uint32_t m, uint32_t a, uint8_t p, bool neg) \
- {                                                                           \
--    uint32_t sum0 = 0, sum1 = 0;                                            \
-+    uint32_t sum = 0;                                                       \
-     /* Apply P to N as a mask, making the inactive elements 0. */           \
-     n &= expand_pred_b(p);                                                  \
--    sum0 += (NTYPE)(n >> 0) * (MTYPE)(m >> 0);                              \
--    sum0 += (NTYPE)(n >> 8) * (MTYPE)(m >> 8);                              \
--    sum0 += (NTYPE)(n >> 16) * (MTYPE)(m >> 16);                            \
--    sum0 += (NTYPE)(n >> 24) * (MTYPE)(m >> 24);                            \
--    sum1 += (NTYPE)(n >> 32) * (MTYPE)(m >> 32);                            \
--    sum1 += (NTYPE)(n >> 40) * (MTYPE)(m >> 40);                            \
--    sum1 += (NTYPE)(n >> 48) * (MTYPE)(m >> 48);                            \
--    sum1 += (NTYPE)(n >> 56) * (MTYPE)(m >> 56);                            \
--    if (neg) {                                                              \
--        sum0 = (uint32_t)a - sum0, sum1 = (uint32_t)(a >> 32) - sum1;       \
--    } else {                                                                \
--        sum0 = (uint32_t)a + sum0, sum1 = (uint32_t)(a >> 32) + sum1;       \
--    }                                                                       \
--    return ((uint64_t)sum1 << 32) | sum0;                                   \
-+    sum += (NTYPE)(n >> 0) * (MTYPE)(m >> 0);                               \
-+    sum += (NTYPE)(n >> 8) * (MTYPE)(m >> 8);                               \
-+    sum += (NTYPE)(n >> 16) * (MTYPE)(m >> 16);                             \
-+    sum += (NTYPE)(n >> 24) * (MTYPE)(m >> 24);                             \
-+    return neg ? a - sum : a + sum;                                         \
- }
- 
- #define DEF_IMOP_64(NAME, NTYPE, MTYPE) \
-@@ -1151,16 +1163,17 @@ DEF_IMOP_64(umopa_d, uint16_t, uint16_t)
- DEF_IMOP_64(sumopa_d, int16_t, uint16_t)
- DEF_IMOP_64(usmopa_d, uint16_t, int16_t)
- 
--#define DEF_IMOPH(NAME) \
--    void HELPER(sme_##NAME)(void *vza, void *vzn, void *vzm, void *vpn,      \
--                            void *vpm, uint32_t desc)                        \
--    { do_imopa(vza, vzn, vzm, vpn, vpm, desc, NAME); }
-+#define DEF_IMOPH(NAME, S) \
-+    void HELPER(sme_##NAME##_##S)(void *vza, void *vzn, void *vzm,          \
-+                                  void *vpn, void *vpm, uint32_t desc)      \
-+    { do_imopa_##S(vza, vzn, vzm, vpn, vpm, desc, NAME##_##S); }
- 
--DEF_IMOPH(smopa_s)
--DEF_IMOPH(umopa_s)
--DEF_IMOPH(sumopa_s)
--DEF_IMOPH(usmopa_s)
--DEF_IMOPH(smopa_d)
--DEF_IMOPH(umopa_d)
--DEF_IMOPH(sumopa_d)
--DEF_IMOPH(usmopa_d)
-+DEF_IMOPH(smopa, s)
-+DEF_IMOPH(umopa, s)
-+DEF_IMOPH(sumopa, s)
-+DEF_IMOPH(usmopa, s)
-+
-+DEF_IMOPH(smopa, d)
-+DEF_IMOPH(umopa, d)
-+DEF_IMOPH(sumopa, d)
-+DEF_IMOPH(usmopa, d)
-diff --git a/tests/tcg/aarch64/sme-smopa-1.c b/tests/tcg/aarch64/sme-smopa-1.c
-new file mode 100644
-index 0000000000..c62d5e0007
---- /dev/null
-+++ b/tests/tcg/aarch64/sme-smopa-1.c
-@@ -0,0 +1,47 @@
-+#include <stdio.h>
-+#include <string.h>
-+
-+int main()
-+{
-+    static const int cmp[4][4] = {
-+        {  110,  134,  158,  182 },
-+        {  390,  478,  566,  654 },
-+        {  670,  822,  974, 1126 },
-+        {  950, 1166, 1382, 1598 }
-+    };
-+    int dst[4][4];
-+    int *tmp = &dst[0][0];
-+
-+    asm volatile(
-+        ".arch armv8-r+sme\n\t"
-+        "smstart\n\t"
-+        "index z0.b, #0, #1\n\t"
-+        "movprfx z1, z0\n\t"
-+        "add z1.b, z1.b, #16\n\t"
-+        "ptrue p0.b\n\t"
-+        "smopa za0.s, p0/m, p0/m, z0.b, z1.b\n\t"
-+        "ptrue p0.s, vl4\n\t"
-+        "mov w12, #0\n\t"
-+        "st1w { za0h.s[w12, #0] }, p0, [%0]\n\t"
-+        "add %0, %0, #16\n\t"
-+        "st1w { za0h.s[w12, #1] }, p0, [%0]\n\t"
-+        "add %0, %0, #16\n\t"
-+        "st1w { za0h.s[w12, #2] }, p0, [%0]\n\t"
-+        "add %0, %0, #16\n\t"
-+        "st1w { za0h.s[w12, #3] }, p0, [%0]\n\t"
-+        "smstop"
-+        : "+r"(tmp) : : "memory");
-+
-+    if (memcmp(cmp, dst, sizeof(dst)) == 0) {
-+        return 0;
-+    }
-+
-+    /* See above for correct results. */
-+    for (int i = 0; i < 4; ++i) {
-+        for (int j = 0; j < 4; ++j) {
-+            printf("%6d", dst[i][j]);
-+        }
-+        printf("\n");
-+    }
-+    return 1;
-+}
-diff --git a/tests/tcg/aarch64/sme-smopa-2.c b/tests/tcg/aarch64/sme-smopa-2.c
-new file mode 100644
-index 0000000000..c9f48c3bfc
---- /dev/null
-+++ b/tests/tcg/aarch64/sme-smopa-2.c
-@@ -0,0 +1,54 @@
-+#include <stdio.h>
-+#include <string.h>
-+
-+int main()
-+{
-+    static const long cmp[4][4] = {
-+        {  110,  134,  158,  182 },
-+        {  390,  478,  566,  654 },
-+        {  670,  822,  974, 1126 },
-+        {  950, 1166, 1382, 1598 }
-+    };
-+    long dst[4][4];
-+    long *tmp = &dst[0][0];
-+    long svl;
-+
-+    /* Validate that we have a wide enough vector for 4 elements. */
-+    asm(".arch armv8-r+sme-i64\n\trdsvl %0, #1" : "=r"(svl));
-+    if (svl < 32) {
-+        return 0;
-+    }
-+
-+    asm volatile(
-+        "smstart\n\t"
-+        "index z0.h, #0, #1\n\t"
-+        "movprfx z1, z0\n\t"
-+        "add z1.h, z1.h, #16\n\t"
-+        "ptrue p0.b\n\t"
-+        "smopa za0.d, p0/m, p0/m, z0.h, z1.h\n\t"
-+        "ptrue p0.d, vl4\n\t"
-+        "mov w12, #0\n\t"
-+        "st1d { za0h.d[w12, #0] }, p0, [%0]\n\t"
-+        "add %0, %0, #32\n\t"
-+        "st1d { za0h.d[w12, #1] }, p0, [%0]\n\t"
-+        "mov w12, #2\n\t"
-+        "add %0, %0, #32\n\t"
-+        "st1d { za0h.d[w12, #0] }, p0, [%0]\n\t"
-+        "add %0, %0, #32\n\t"
-+        "st1d { za0h.d[w12, #1] }, p0, [%0]\n\t"
-+        "smstop"
-+        : "+r"(tmp) : : "memory");
-+
-+    if (memcmp(cmp, dst, sizeof(dst)) == 0) {
-+        return 0;
-+    }
-+
-+    /* See above for correct results. */
-+    for (int i = 0; i < 4; ++i) {
-+        for (int j = 0; j < 4; ++j) {
-+            printf("%6ld", dst[i][j]);
-+        }
-+        printf("\n");
-+    }
-+    return 1;
-+}
-diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
-index cded1d01fc..ea3e232e65 100644
---- a/tests/tcg/aarch64/Makefile.target
-+++ b/tests/tcg/aarch64/Makefile.target
-@@ -67,7 +67,7 @@ endif
- 
- # SME Tests
- ifneq ($(CROSS_AS_HAS_ARMV9_SME),)
--AARCH64_TESTS += sme-outprod1
-+AARCH64_TESTS += sme-outprod1 sme-smopa-1 sme-smopa-2
- endif
- 
- # System Registers Tests
--- 
-2.34.1
+If you call out this in the change log, it can avoid the misunderstanding.
+
+As I replied to KVM series, I think the info is better to setup by KVM 
+and reported by GET_SUPPORTED_CPUID.
+
+> The problem this tries to solve is that making the guest phys-bits
+> smaller than the host phys-bits is problematic (which why we have
+> allow_smaller_maxphyaddr), but nevertheless there are cases where
+> the usable guest physical address space is smaller than the host
+> physical address space.  One case is intel processors with phys-bits
+> larger than 48 and 4-level EPT.  Another case is amd processors with
+> phys-bits larger than 48 and the l0 hypervisor using 4-level paging.
+> 
+> The guest needs to know that limit, specifically the guest firmware
+> so it knows where it can map PCI bars.
+> 
+> take care,
+>    Gerd
+> 
 
 
