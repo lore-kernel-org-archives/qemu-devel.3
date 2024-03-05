@@ -4,65 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB081C54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 15:27:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A5CFC54E41
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 15:28:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhWgT-0000ul-Cm; Tue, 05 Mar 2024 10:26:25 -0500
+	id 1rhWi7-0001us-VN; Tue, 05 Mar 2024 10:28:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhWgO-0000sp-4n
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 10:26:21 -0500
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1rhWi4-0001uZ-W2
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 10:28:06 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhWgM-0002n0-EU
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 10:26:19 -0500
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-565a3910f86so8700977a12.3
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 07:26:17 -0800 (PST)
+ id 1rhWi2-00034Z-Kc
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 10:28:04 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-563c403719cso7861558a12.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 07:28:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709652376; x=1710257176; darn=nongnu.org;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=t79qxtDjvCjVIncwS12U6PxJd8QcEk1F5iBOvkG0Cbw=;
- b=DHKQceXis0gA7A0Fkxzbznkwi982akTOO/g81m07Kb3oxFxZDbIySbNDjS8ZHTjGkk
- NjT21MLunjR/7sgrE1f+EzCvYbasKnkg5+St77+Ou4+xBoPSpbYMqueAkiKfJEptgyRW
- 56JFP2vxe8ie/JpyO0F7wb9BeNzHauT7xb1QxXelhtjohedigzf8/vzjH+Bw9kgUvxsV
- pbRzGcMHM8VNN/B4K2ckL3TSuUDhbjNSCmL7Lk8kGMXgzLKAebZBcyKO8HdpvY+Ri2oJ
- 36S1CGp/3FDNUS4HYc0mKh4+mRHC39c6+FRgYy2ZNj/ZH694Y98D6W8wvMLkGVHyNo8P
- sNKw==
+ d=linaro.org; s=google; t=1709652481; x=1710257281; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UphnCZ3xP8e4Zwi8aB9kHv+9FQBR4vpSKI5825OqHRc=;
+ b=pSMhgHfw4mf8yyvdSBNR2lNIX6Tqr2b8RdWw8jruCb5XIeudAbysWQeuC++1cJrJQA
+ Jq/vqL3gH66jexPFDa1iJiDfWhnpp9sQ+6gJfQGC6iRe4RfpY4mP9R3XEP8bJYgCye9o
+ CMRu8a6tWTHcgw8ZKlQ4KG5dWNOYwwbKjk78k70Uasr/6jxnyMRatohl0pmf7g1Iu2oU
+ 3fE9n9NLntOwUAZA9HWO6JtojRolYEJgz4I39AW0IBFxrcFChwBDd0+S8F0NZR5H4l2d
+ 7Z2NiF5l1Y57LbevTg3egfEU/Lc2lttUQWAJNCHJXRnba73aZn8UE7nyj32hblP9CwQ9
+ 60Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709652376; x=1710257176;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=t79qxtDjvCjVIncwS12U6PxJd8QcEk1F5iBOvkG0Cbw=;
- b=AbHePsxav9KMgYonjQTNV+WmG1iOWIoCw7/oUkOs2us9DOJXStcjzqdvgb8iYsZhNs
- zwpd35E1L3/bO8JZzyUMGkLnDYxcSXfANXEpYfOtlpToN2yuCf4CKl779zvF0nCE/ncL
- ECM5/paxkQ1WAG/NqgJr3raYTUoATg9lHx0MW4y+1b+VytVm4jpuNffSDKVDstqufQft
- ZDZb+3twxL1l1px0KK8fMmyfcGE6G9mO6g1tAjqP5ZVhtMnfseFdnY1rILi4n9Tf/lQ9
- b46w/iddDYFeHzD728XEGhCNEn3qiTsDJQKEFa5wKuTl11Nksy6UTqRaQpb21WzI+kAm
- FM3g==
-X-Gm-Message-State: AOJu0YyW2mN/JDBB+10O7bQGFe8+NwRTKGrZRAhB/vaaZ599iBsVwyZp
- LQmZ3Xuh0yJo1QAtZpp5NAtKp3v6RR9wE/ZKWI1XCFKVTvnJE1vq35u7bQ4Ime4Uc/unP55FyKZ
- CMyHj48EvM4Srd2e21mPskg2oVSouW+XfXErNMwKUWa+S8Vi3
-X-Google-Smtp-Source: AGHT+IGK+NXhF6vdCrOmdCdG29EaOtMOItyCY/nrir2ZcvskTs86w9FCV4w0ETRlcORnyeYlCbGzq8Q7dvKG265T6/M=
-X-Received: by 2002:aa7:cf06:0:b0:565:a562:9fc3 with SMTP id
- a6-20020aa7cf06000000b00565a5629fc3mr7902185edy.38.1709652376484; Tue, 05 Mar
- 2024 07:26:16 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709652481; x=1710257281;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=UphnCZ3xP8e4Zwi8aB9kHv+9FQBR4vpSKI5825OqHRc=;
+ b=VAjHnKj1pgaP9MscRu2CDWHvNh6IJf6qKOyec6lZ4xpqOkQXMfgadb1/VRt0g24/zY
+ h6XgSTyn9eb50Pmsjku+Hjjt8TP82YJgz0HJssyaB5+9ZrFC8/HSv5IK54ckVcokOYq6
+ H2MpZttpR2KZTvAijZyxj+bGuLFtf9wVH9jvfQNlPhbbOHTYqZMrlQFEJg3ds0s5dQqx
+ zum5wX9LtKv/zuRmmNtF/eBzxHGKxEAW063W7JVUp0RIknKJA9pVdehe6HomIdMvTI6c
+ 4nPrXmQmiP7GvTphrnSVsxpEGrtOEVbIwoBsiicET5uwxaIPp7PpVb6av1vaj3uA2ico
+ Ie2Q==
+X-Gm-Message-State: AOJu0YyVGhBAHw6KjiAwv0VNKfdnEWKvbsAw6R0JCS8R8Q5Rp5k27ogT
+ ZhqfSrJu190/85hGzIJA2jNUkbvE4LKlhzgri8qi1syovYIBbbLasc8x7o7+ZcB36WVVG8WxgQj
+ mBC1Z/FktZgwe9Hi27AlKH6DMAoiUN4CMjvQHELeSVY0NHzY0
+X-Google-Smtp-Source: AGHT+IFKGUyLRf2xGEIWF6Uz1JkIvO1xklpjmoWOrJalp0ozov9QuUndQdBz70W4eoGPXxz0+LztVpCQCbp/YuASbLA=
+X-Received: by 2002:a50:cbc8:0:b0:566:d27a:2ab5 with SMTP id
+ l8-20020a50cbc8000000b00566d27a2ab5mr8609762edi.10.1709652480791; Tue, 05 Mar
+ 2024 07:28:00 -0800 (PST)
 MIME-Version: 1.0
-References: <20240305135237.3111642-1-peter.maydell@linaro.org>
-In-Reply-To: <20240305135237.3111642-1-peter.maydell@linaro.org>
+References: <20240305110608.21618-1-philmd@linaro.org>
+In-Reply-To: <20240305110608.21618-1-philmd@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 5 Mar 2024 15:26:05 +0000
-Message-ID: <CAFEAcA9rQc3-QzsiNkhGB_C0uQHAW6askWz5HwJGTDn8PmXTVw@mail.gmail.com>
-Subject: Re: [PULL 00/20] target-arm queue
-To: qemu-devel@nongnu.org
+Date: Tue, 5 Mar 2024 15:27:49 +0000
+Message-ID: <CAFEAcA-D-GvgNTshzCQbRS1Os9M4FFRnm=ucJhFra7jJ55dacg@mail.gmail.com>
+Subject: Re: [PULL 00/12] Cocoa patches for 2024-03-05
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -85,36 +89,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 5 Mar 2024 at 13:52, Peter Maydell <peter.maydell@linaro.org> wrote:
+On Tue, 5 Mar 2024 at 11:06, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
 >
-> The following changes since commit 4eac9dfbd72d346505642fb45ac3141c7eb2c516:
+> The following changes since commit 52e7db443bd8d233acc3977bd150bdadb62db8=
+6c:
 >
->   Merge tag 'pull-tcg-20240301' of https://gitlab.com/rth7680/qemu into staging (2024-03-05 09:45:22 +0000)
+>   Merge tag 'hppa-latest-pull-request' of https://github.com/hdeller/qemu=
+-hppa into staging (2024-03-04 16:01:33 +0000)
 >
 > are available in the Git repository at:
 >
->   https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20240305
+>   https://github.com/philmd/qemu.git tags/darwin-20240305
 >
-> for you to fetch changes up to 7558300c53057126514ee0fd5cf629c65ccc20e1:
+> for you to fetch changes up to 5576663208b7c31766c580520df506375d00103e:
 >
->   qemu-options.hx: Don't claim "-serial" has limit of 4 serial ports (2024-03-05 13:22:56 +0000)
->
-> ----------------------------------------------------------------
-> target-arm queue:
->  * raspi: Implement Broadcom Serial Controller (BSC) for BCM2835 boards
->  * hw/char/pl011: Add support for loopback
->  * STM32L4x5: Implement RCC clock control device
->  * target/arm: Do memory type alignment checks
->  * atomic.h: Reword confusing comment for qatomic_cmpxchg
->  * qemu-options.hx: Don't claim "-serial" has limit of 4 serial ports
+>   ui/cocoa: Remove stretch_video flag (2024-03-05 12:04:41 +0100)
 >
 > ----------------------------------------------------------------
+> Darwin Cocoa patches:
+>
+> - Add 'zoom-interpolation' to smooth scaled display with 'zoom-to-fit' (C=
+arwyn)
+> - Set clipsToBounds on macOS 14 to fix window clipping (David)
+> - Use NSWindow's ability to resize (Akihiko)
+>
+> ----------------------------------------------------------------
 
+I'm going to hold off on applying this for a few days in the hope
+that the fix to homebrew's glib package propagates through and
+our macos CI job runs OK again. If that doesn't happen by the
+end of the week I'll apply it anyway.
 
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
-for any user-visible changes.
-
+thanks
 -- PMM
 
