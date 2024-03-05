@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23604C54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:46:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1F94C54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:46:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhV4I-0002IE-F3; Tue, 05 Mar 2024 08:42:54 -0500
+	id 1rhV77-0005Fh-OP; Tue, 05 Mar 2024 08:45:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhV4D-0002Hc-44
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:42:49 -0500
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhV5v-0004Py-9v
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:44:38 -0500
+Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhV4B-0003xW-KY
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:42:48 -0500
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-5672afabb86so2435137a12.3
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:42:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhV5t-0004J2-J4
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:44:35 -0500
+Received: by mail-lf1-x12f.google.com with SMTP id
+ 2adb3069b0e04-5131c48055cso875969e87.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:44:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709646165; x=1710250965; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709646271; x=1710251071; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=puZvfwYJmiovgLIksxQYRb4sHK5AG83t9xnfOfq3iqY=;
- b=HSpWkdqyGFJKHINUIW7eFXs7a66cMOiEOPPy84vFPRtBbgduO99yYNxn21plDKluQc
- vemnaMFR5hM6X6oHdgajtbBt5Cra5UULw7AoLB+lTUANdoOEE42SM92irlV65zV3Vo9s
- /yLWANlqM4MjJGIcu8krpD+IWJoNmxCXl1m/RmNx71m0aHT+m2IKO/wsEn+dr5OVhmha
- kzKg4RQVvRlDOX+U7DyXh7qZq0fkzSRS6C2d5ZzfZOBKD5Y6MlYAM4lQcEnnnNYk2fjR
- i/FdzM4EAagqAk5S3La10L03LhT6DnRsrX2XFPKMVyGhc1KkdIHvdyQYUhY2SuFihb+d
- YLRg==
+ bh=iOxnYUajpBTpGKSyr9S0Yy8S7gw3p/1QBOxX+w9BDyM=;
+ b=BcGyntElQvi+nCVmOH8W61Vrfi0XwkkwMs6sOzD5ShzIlU8Q57BR05UnfP7SG4dF2W
+ QI2JvQkx+LVvUGSNAros4rktqbFb9JxNEIDa+ISG5hnZ8i668bFxSYO4tuFBzRU2LfVO
+ S9mljKrttARTE7KMQrHVXvBhaSUVOUF1kQG0v/II2MTSO9cjLnddQJTVnlQeRJhr6DcL
+ 9wmNtiwCoG6IEutzJpumIpmwbHaJ6T5w11yR1i+PpJ+B23ed8Z+XAUUI7cCFL9MggpNK
+ Qu4b/YG2RFobv6r7pd3Oh9dToibTWqb3nSqf+epmm4JztumZMRVocRcHVtO9yRyO5IpX
+ ZRBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709646165; x=1710250965;
+ d=1e100.net; s=20230601; t=1709646271; x=1710251071;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=puZvfwYJmiovgLIksxQYRb4sHK5AG83t9xnfOfq3iqY=;
- b=Hovz0/llDDIh/BOWPquh8D1qKHtWjSYf0B7BA6jv1MH9i7DtVtmK6Iu3hm5i+Xl9IK
- w9j5yJmLkQQ7VVffDK2/kQtbLbHnrT4s2wtLn/+nPPCcnlerYQrs8360BjdN3iU3acb5
- FsdCEdAbQKcSVqPi8k8BbC3C0kLRI0rw2jV74QehfZpeFLiRTuDVNeBk3+MZK8vMrTAZ
- wdzqew4s5BSUvksh+EbLdyqyLUbK8czlwS2o78JDyoUV0y6CleqRw/FUFvClZUPKQMXn
- WqCK9ZlaNySSleSclwTW/lnmgKy1+OHBleDUS2pfcZH9xeAA9TyXHzR+Gg7zmeA/HPL9
- 8pvw==
-X-Gm-Message-State: AOJu0YxS6L+5jeksRcSuEtLmM3lWJlZ2AKKrxv3x0rzdhUR3yDFg0Wd4
- +W84/KV9T7Iionf90xdqJmGjAi0F2+opsl020lhGadvD+n3o1mfr/cBJ7J91ki5bVXoMyh+6L5N
- o
-X-Google-Smtp-Source: AGHT+IGoQLz3vb/hw5i2C2mEhP7oyJ2WOykEYWfKelOzXGkQ9Oyr76XV3KVkqIMUEC1WspvOGAtlkw==
-X-Received: by 2002:aa7:cb0b:0:b0:564:dd13:56e9 with SMTP id
- s11-20020aa7cb0b000000b00564dd1356e9mr8683560edt.29.1709646165626; 
- Tue, 05 Mar 2024 05:42:45 -0800 (PST)
+ bh=iOxnYUajpBTpGKSyr9S0Yy8S7gw3p/1QBOxX+w9BDyM=;
+ b=AWI/1fI+9ojMEXn4t5KkBNHIPvsf9t5q9t539akRX5bT7U24wz4s6AckAue2X0py8f
+ G/2XTsdXeiikEQpMBjcEQb1LbVOJGgepbi2ajY4K/beLuuanWS+FX5jKsnMSfZBmlVtS
+ 3y9RboJPAhpMnMKQtNFB6spM+uak2fgda0dZOX4MsJ+CGucZGqSnKerDfXTfnWxUmL3S
+ Ef3OmomZlCeSHNSRnhukAZ4HyGVFem33DsSlThJkpbHPNtaL6zqWlvThJnOeg0iVEW8n
+ qbzYn8XjWMTJVrcj3iyQl1v7j9+6Y2T3uYrV5K5r1wVmzcJoeJxq2XH6r9cspZn5a2ta
+ cz0Q==
+X-Gm-Message-State: AOJu0Yz1C17JKajbA/WsNMldtC4BFY3307QFPWlun5OiJEF6hOJ5o1Da
+ titpcP1edhivZAsG4Jep/YChz9INpUDgxpLGbl+P42EbkI4ckOmayb2Wn9zXCN/YMMzzr8s/Gii
+ v
+X-Google-Smtp-Source: AGHT+IHpOzBhI25sZswJgzVD41rB8MjyWnj6iLrgSAs150NP2za1mp4EKVUQTwD9LVaUetj1tdSnbA==
+X-Received: by 2002:a05:6512:10ce:b0:513:588a:260f with SMTP id
+ k14-20020a05651210ce00b00513588a260fmr510188lfg.38.1709646271091; 
+ Tue, 05 Mar 2024 05:44:31 -0800 (PST)
 Received: from m1x-phil.lan ([176.176.177.70])
  by smtp.gmail.com with ESMTPSA id
- z42-20020a509e2d000000b005669d904871sm6107335ede.49.2024.03.05.05.42.43
+ bu16-20020a056000079000b0033dc3f3d689sm15142258wrb.93.2024.03.05.05.44.28
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 05 Mar 2024 05:42:45 -0800 (PST)
+ Tue, 05 Mar 2024 05:44:30 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Thomas Huth <thuth@redhat.com>
@@ -67,19 +67,20 @@ Cc: Igor Mammedov <imammedo@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.1 03/18] hw/usb/hcd-xhci: Remove
- XHCI_FLAG_FORCE_PCIE_ENDCAP flag
-Date: Tue,  5 Mar 2024 14:42:05 +0100
-Message-ID: <20240305134221.30924-4-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH-for-9.1 18/18] hw/i386/pc: Replace
+ PCMachineClass::acpi_data_size by PC_ACPI_DATA_SIZE
+Date: Tue,  5 Mar 2024 14:42:20 +0100
+Message-ID: <20240305134221.30924-19-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240305134221.30924-1-philmd@linaro.org>
 References: <20240305134221.30924-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,56 +103,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-XHCI_FLAG_FORCE_PCIE_ENDCAP was only used by the
-pc-i440fx-2.0 machine, which got removed. Remove it
-and simplify usb_xhci_pci_realize().
+PCMachineClass::acpi_data_size was only used by the pc-i440fx-2.0
+machine, which got removed. Since it is constant, replace the class
+field by a definition.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/usb/hcd-xhci.h     | 1 -
- hw/usb/hcd-xhci-nec.c | 2 --
- hw/usb/hcd-xhci-pci.c | 3 +--
- 3 files changed, 1 insertion(+), 5 deletions(-)
+ include/hw/i386/pc.h |  4 ----
+ hw/i386/pc.c         | 19 ++++++++++++-------
+ 2 files changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/hw/usb/hcd-xhci.h b/hw/usb/hcd-xhci.h
-index 37f0d2e43b..7dcab8b8db 100644
---- a/hw/usb/hcd-xhci.h
-+++ b/hw/usb/hcd-xhci.h
-@@ -37,7 +37,6 @@ typedef struct XHCIEPContext XHCIEPContext;
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index b4a9ea46a3..2e57a1b5da 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -74,9 +74,6 @@ typedef struct PCMachineState {
+  *
+  * Compat fields:
+  *
+- * @acpi_data_size: Size of the chunk of memory at the top of RAM
+- *                  for the BIOS ACPI tables and other BIOS
+- *                  datastructures.
+  * @gigabyte_align: Make sure that guest addresses aligned at
+  *                  1Gbyte boundaries get mapped to host
+  *                  addresses aligned at 1Gbyte boundaries. This
+@@ -100,7 +97,6 @@ struct PCMachineClass {
  
- enum xhci_flags {
-     XHCI_FLAG_SS_FIRST = 1,
--    XHCI_FLAG_FORCE_PCIE_ENDCAP = 2,
-     XHCI_FLAG_ENABLE_STREAMS = 3,
+     /* ACPI compat: */
+     bool has_acpi_build;
+-    unsigned acpi_data_size;
+     int pci_root_uid;
+ 
+     /* SMBIOS compat: */
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 4b9f4c5c2c..ce9e6b6272 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -256,6 +256,16 @@ GlobalProperty pc_compat_2_4[] = {
  };
+ const size_t pc_compat_2_4_len = G_N_ELEMENTS(pc_compat_2_4);
  
-diff --git a/hw/usb/hcd-xhci-nec.c b/hw/usb/hcd-xhci-nec.c
-index 328e5bfe7c..5d5b069cf9 100644
---- a/hw/usb/hcd-xhci-nec.c
-+++ b/hw/usb/hcd-xhci-nec.c
-@@ -43,8 +43,6 @@ static Property nec_xhci_properties[] = {
-     DEFINE_PROP_ON_OFF_AUTO("msix", XHCIPciState, msix, ON_OFF_AUTO_AUTO),
-     DEFINE_PROP_BIT("superspeed-ports-first", XHCINecState, flags,
-                     XHCI_FLAG_SS_FIRST, true),
--    DEFINE_PROP_BIT("force-pcie-endcap", XHCINecState, flags,
--                    XHCI_FLAG_FORCE_PCIE_ENDCAP, false),
-     DEFINE_PROP_UINT32("intrs", XHCINecState, intrs, XHCI_MAXINTRS),
-     DEFINE_PROP_UINT32("slots", XHCINecState, slots, XHCI_MAXSLOTS),
-     DEFINE_PROP_END_OF_LIST(),
-diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
-index 4423983308..cbad96f393 100644
---- a/hw/usb/hcd-xhci-pci.c
-+++ b/hw/usb/hcd-xhci-pci.c
-@@ -148,8 +148,7 @@ static void usb_xhci_pci_realize(struct PCIDevice *dev, Error **errp)
-                      PCI_BASE_ADDRESS_MEM_TYPE_64,
-                      &s->xhci.mem);
++/*
++ * @PC_ACPI_DATA_SIZE:
++ * Size of the chunk of memory at the top of RAM for the BIOS ACPI tables
++ * and other BIOS datastructures.
++ *
++ * BIOS ACPI tables: 128K. Other BIOS datastructures: less than 4K
++ * reported to be used at the moment, 32K should be enough for a while.
++ */
++#define PC_ACPI_DATA_SIZE (0x20000 + 0x8000)
++
+ GSIState *pc_gsi_create(qemu_irq **irqs, bool pci_enabled)
+ {
+     GSIState *s;
+@@ -652,8 +662,7 @@ void xen_load_linux(PCMachineState *pcms)
+     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, x86ms->boot_cpus);
+     rom_set_fw(fw_cfg);
  
--    if (pci_bus_is_express(pci_get_bus(dev)) ||
--        xhci_get_flag(&s->xhci, XHCI_FLAG_FORCE_PCIE_ENDCAP)) {
-+    if (pci_bus_is_express(pci_get_bus(dev))) {
-         ret = pcie_endpoint_cap_init(dev, 0xa0);
-         assert(ret > 0);
+-    x86_load_linux(x86ms, fw_cfg, pcmc->acpi_data_size,
+-                   pcmc->pvh_enabled);
++    x86_load_linux(x86ms, fw_cfg, PC_ACPI_DATA_SIZE, pcmc->pvh_enabled);
+     for (i = 0; i < nb_option_roms; i++) {
+         assert(!strcmp(option_rom[i].name, "linuxboot.bin") ||
+                !strcmp(option_rom[i].name, "linuxboot_dma.bin") ||
+@@ -987,8 +996,7 @@ void pc_memory_init(PCMachineState *pcms,
      }
+ 
+     if (linux_boot) {
+-        x86_load_linux(x86ms, fw_cfg, pcmc->acpi_data_size,
+-                       pcmc->pvh_enabled);
++        x86_load_linux(x86ms, fw_cfg, PC_ACPI_DATA_SIZE, pcmc->pvh_enabled);
+     }
+ 
+     for (i = 0; i < nb_option_roms; i++) {
+@@ -1737,9 +1745,6 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
+     pcmc->gigabyte_align = true;
+     pcmc->has_reserved_memory = true;
+     pcmc->enforce_amd_1tb_hole = true;
+-    /* BIOS ACPI tables: 128K. Other BIOS datastructures: less than 4K reported
+-     * to be used at the moment, 32K should be enough for a while.  */
+-    pcmc->acpi_data_size = 0x20000 + 0x8000;
+     pcmc->pvh_enabled = true;
+     pcmc->kvmclock_create_always = true;
+     x86mc->apic_xrupt_override = true;
 -- 
 2.41.0
 
