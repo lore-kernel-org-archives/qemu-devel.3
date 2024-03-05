@@ -4,69 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54653C54E49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A0B6C54798
 	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:47:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhV7S-0006E3-G4; Tue, 05 Mar 2024 08:46:15 -0500
+	id 1rhV7w-0007VJ-5w; Tue, 05 Mar 2024 08:46:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhV6X-00058S-1O
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:45:16 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhV5a-00044f-5w
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:44:19 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhV6V-0004OH-8r
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:45:12 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-563bb51c36eso7361951a12.2
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:45:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhV5Y-0004FG-8D
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:44:13 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-412e2dfa502so5771845e9.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:44:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709646310; x=1710251110; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=nk61dm87MUb2IrBN3PbquWmu7NlfYTBZIb5XuqIsPV0=;
- b=ufvQVKnQxS5efNgsfY/4LJnRURe96AbVu9P3qH3BXoHTKegpuRsoYTaxsHddU4zuQC
- HQBK1sfR7V0ZFwIHRfWW0nwW9EVRJFzYd0uk9ViCOleCQhG8S/CUSpeLUrS4NzVcqu+a
- 7oADEmYf7GD64xgfpHnboEKclSkL2gbr0lfZj0IrG/jhHp7Fg29WxdEbwGw8zML7e6Rz
- nZMr4EMgqFMpfxhotYJ6J1Rjq9vdUs/XN5YB/zCQqfgbdWDbcEFyaqckKlYqWQP4J3gu
- 9Nzuf85J2ZrQzeMLOBp5aRjSvJnA6HvbxADD6BkIDUs4ukYCmT9lybeJAoCxrOatbLr1
- 2ffQ==
+ d=linaro.org; s=google; t=1709646250; x=1710251050; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CWBRqdFoui2ZIQdsVAc4WwMyQH/pl83wSwYQ0f8fh5s=;
+ b=tpktzmtWv8GYaEoDhnCIF0JfbLDkhqYp9+JHByZk56/avxWmBE57Ypx8SqPsx6X67s
+ /oHctsCqUSH0SwKPasDb5DRnlsZYYEE2mX/XJDLSnY0MSgjIoL5oMgtfykHdfhXhlI2w
+ 1WN9JbiQ2SIb3PjpbWf8XFG3SHIXwZfcbJh1+uk8bGvtc/BAtCXSfgxBcNMWPxOtZcYP
+ QBSU8t40lWkLJTtn3CyP+i/TIzHdfMt+QBT9tp7IdiRR2tMqfHthwaN3LSEHqJ/E/17C
+ Zd9hHfhQqHJh/M9kWtTkxrUaqpDX8qY+U5bFLnq5RFuPeqC945ToNtq9MOjzukMdDnyW
+ tDVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709646310; x=1710251110;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nk61dm87MUb2IrBN3PbquWmu7NlfYTBZIb5XuqIsPV0=;
- b=TzzdR4hLqZpe2hoJeDH4e86+xDuvTWTK+2o1qd550i1p8Lw6m0iwbe9tUVMuI4MgJ3
- qKCq/G1SbzopeYaO2neoIXPwUgBep4QAhYkSsU8HH4eh3cf1YDVSBSLW2uErF6tc6TrN
- 1GioHrIgEyaEV5JjqWMoqWOWfRXEVuPuxVQpaYMLOYLp8B2d2RC+KcPEk+YuyDYigGYM
- /zQgt7RMzgxSt4F8VsTw9OAR3BaWU/7evJOJXEXOYMjfKj3f8X+dI6/iWZzCte6//N11
- rrxgkP8/BmTY3iWgXIcsQiG33Js0JZ/W+86IubVSUCVRecln6k12CYOSHBc+aB7e/0Aw
- gp0g==
-X-Gm-Message-State: AOJu0Yy8xe3br6cE5zoaHKNrqWkQgZf6nqQczfZXL8nN4Y58xX2lmwN6
- hu0ARf0TN+zZrcsc+JAm29Z0vduD9jXc4HnCrvOnfo2BUqnixKd0BozZWS7WZFCI71vAQZRQvaK
- IeDTTTya5iTzIFMVgJO/Y537MSAWNLvDbdkO3DQ==
-X-Google-Smtp-Source: AGHT+IEEVt7WP3tzhrZlsUMavEL1ghvQGlGrVNrEYK/MbYPFCR0tjJfyYFf9iS88NySumWZJ2+iqPAOhLSfIoT7AGso=
-X-Received: by 2002:a05:6402:1c91:b0:567:bab7:48fe with SMTP id
- cy17-20020a0564021c9100b00567bab748femr303900edb.21.1709646309858; Tue, 05
- Mar 2024 05:45:09 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709646250; x=1710251050;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CWBRqdFoui2ZIQdsVAc4WwMyQH/pl83wSwYQ0f8fh5s=;
+ b=tjNFz2iID2qir/kW6BJ7spaob50J/M8oWnI8Lm7tFebI4Z3UChz8FHFVpotB+iO5qj
+ s+gr4KjtyDJYvTlVB+nDAiDbTJcKWurRp+70dnvgsU2Yc7yI7o5yiOUKLq7SoKSuh+AF
+ Nk02feTqPjsULTLRg3Kba+BEnSJqtEg6tD3eOhqc0wqixzowMURxMtjyyG66SAgiyiv+
+ zdiHpTu3KmrWl/0oKzLX1k/Vuz1I2/HPzQfta1aN+PZGL3s5zji3+DlK7PqEQan27yN8
+ Bfemi9xuW9iV/H7dgDR5N9gdl3An2+kfDogRbO52gs656NGwPAHcfGfYXjwgum/Ku1Jv
+ CUIA==
+X-Gm-Message-State: AOJu0Yw6yeY2d6myyUI829FOEQ9TRJp7S8AYZFUdCw1uLPW+KerubIaI
+ Dzpnj1J9eBjZqmVzak6IM6+D9SFYD3ayHkAYmTkSwGR1xcGNDTPe7laQncuOmRk2UnI4ojpATz7
+ j
+X-Google-Smtp-Source: AGHT+IGQTuvSA25MYt3l0zdavkjoVT1Rvq7X1tInRhssFdU2bEWiaupK/vlzesgSWvabYqXcp2J6Qw==
+X-Received: by 2002:a05:600c:3d0f:b0:412:f0fa:5c81 with SMTP id
+ bh15-20020a05600c3d0f00b00412f0fa5c81mr14729wmb.12.1709646249934; 
+ Tue, 05 Mar 2024 05:44:09 -0800 (PST)
+Received: from m1x-phil.lan ([176.176.177.70])
+ by smtp.gmail.com with ESMTPSA id
+ bd23-20020a05600c1f1700b00412ef097c27sm1260661wmb.16.2024.03.05.05.44.07
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 05 Mar 2024 05:44:09 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org,
+	Thomas Huth <thuth@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, kvm@vger.kernel.org,
+ Marcelo Tosatti <mtosatti@redhat.com>, devel@lists.libvirt.org,
+ David Hildenbrand <david@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH-for-9.1 15/18] hw/i386/acpi: Remove AcpiBuildState::rsdp field
+Date: Tue,  5 Mar 2024 14:42:17 +0100
+Message-ID: <20240305134221.30924-16-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240305134221.30924-1-philmd@linaro.org>
+References: <20240305134221.30924-1-philmd@linaro.org>
 MIME-Version: 1.0
-References: <20240304012634.95520-1-peterx@redhat.com>
-In-Reply-To: <20240304012634.95520-1-peterx@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 5 Mar 2024 13:44:58 +0000
-Message-ID: <CAFEAcA8J0+sq4A_6Fd85B6grozGeio=AgP_Tmi5hBOj=6SyVew@mail.gmail.com>
-Subject: Re: [PULL 00/27] Migration next patches
-To: peterx@redhat.com
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Prasad Pandit <ppandit@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,36 +102,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 4 Mar 2024 at 01:26, <peterx@redhat.com> wrote:
->
-> From: Peter Xu <peterx@redhat.com>
->
-> The following changes since commit c0c6a0e3528b88aaad0b9d333e295707a195587b:
->
->   Merge tag 'migration-next-pull-request' of https://gitlab.com/peterx/qemu into staging (2024-02-28 17:27:10 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/peterx/qemu.git tags/migration-next-pull-request
->
-> for you to fetch changes up to 1a6e217c35b6dbab10fdc1e02640b8d60b2dc663:
->
->   migration/multifd: Document two places for mapped-ram (2024-03-04 08:31:11 +0800)
->
-> ----------------------------------------------------------------
-> Migartion pull request for 20240304
->
-> - Bryan's fix on multifd compression level API
-> - Fabiano's mapped-ram series (base + multifd only)
-> - Steve's amend on cpr document in qapi/
->
-> ----------------------------------------------------------------
+AcpiBuildState::rsdp is always NULL, remove it,
+simplifying acpi_build_update().
 
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/i386/acpi-build.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-Applied, thanks.
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index 12bc2b7d54..bf727eb148 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -2456,7 +2456,6 @@ struct AcpiBuildState {
+     MemoryRegion *table_mr;
+     /* Is table patched? */
+     uint8_t patched;
+-    void *rsdp;
+     MemoryRegion *rsdp_mr;
+     MemoryRegion *linker_mr;
+ } AcpiBuildState;
+@@ -2715,11 +2714,7 @@ static void acpi_build_update(void *build_opaque)
+ 
+     acpi_ram_update(build_state->table_mr, tables.table_data);
+ 
+-    if (build_state->rsdp) {
+-        memcpy(build_state->rsdp, tables.rsdp->data, acpi_data_len(tables.rsdp));
+-    } else {
+-        acpi_ram_update(build_state->rsdp_mr, tables.rsdp);
+-    }
++    acpi_ram_update(build_state->rsdp_mr, tables.rsdp);
+ 
+     acpi_ram_update(build_state->linker_mr, tables.linker->cmd_blob);
+     acpi_build_tables_cleanup(&tables, true);
+@@ -2805,7 +2800,6 @@ void acpi_setup(void)
+                            tables.vmgenid);
+     }
+ 
+-    build_state->rsdp = NULL;
+     build_state->rsdp_mr = acpi_add_rom_blob(acpi_build_update,
+                                              build_state, tables.rsdp,
+                                              ACPI_BUILD_RSDP_FILE);
+-- 
+2.41.0
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
-for any user-visible changes.
-
--- PMM
 
