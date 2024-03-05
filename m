@@ -4,59 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5129CC54E4A
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 10:53:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0CA3C54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 10:54:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhSPi-0008GS-1Q; Tue, 05 Mar 2024 05:52:50 -0500
+	id 1rhSRZ-0002RD-Ja; Tue, 05 Mar 2024 05:54:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rhSPZ-0008FC-Hx
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 05:52:41 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rhSRX-0002PW-BC
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 05:54:43 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rhSPX-0007U9-S7
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 05:52:41 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rhSRW-0007sA-3N
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 05:54:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709635958;
+ s=mimecast20190719; t=1709636081;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=QXXrnxGBxMGgQNNZbpH3bctjMDiLFNhErcRPQVRsX3g=;
- b=YFuztmDL0aKi58u6VOpy5N9R9vHf4cyPpvJGjg7DUJmHXxEXi2twhSML/9JPU3bnOYCUdg
- KxXmBWplHBV35x6qOfTvYwexSL39AmJPTO6dvnXL0Z4nE+8DSGqHBntSRwycAOw7A5u+SZ
- JCuaYbhiHsqklTyQ5yOmeW8Je+7+fos=
+ in-reply-to:in-reply-to:references:references;
+ bh=xageVqCN2K3BbBi/+AWPwm4uxws0zuBvGlm7BUF0h+0=;
+ b=WBLYxZIYk2RSiMGer9jBSFqIdqy7EWN2r5RSSv0+yQx58SBaHhTF7Ds94XhVEhGj6hoEY8
+ wOC6GOsaRafZwXwCL1NHSI5NNOnxQG18bev2LWArBRtmVIPCKWbwpy43k9UrE3C6/DoWP0
+ 6LbdMvmIk+r/jHVEGDFXcuVRT2VlSuA=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-186-Inp4hYS2M_i9dAj28f14tw-1; Tue, 05 Mar 2024 05:52:35 -0500
-X-MC-Unique: Inp4hYS2M_i9dAj28f14tw-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
+ us-mta-616-ckiM_axHPZScQyri9_KITA-1; Tue, 05 Mar 2024 05:54:36 -0500
+X-MC-Unique: ckiM_axHPZScQyri9_KITA-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B3FC787251E;
- Tue,  5 Mar 2024 10:52:34 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 828ED18172C0;
+ Tue,  5 Mar 2024 10:54:36 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.39.193.36])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 5982A17A8E;
- Tue,  5 Mar 2024 10:52:34 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 60204492BD6;
+ Tue,  5 Mar 2024 10:54:36 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 34CFE18000B2; Tue,  5 Mar 2024 11:52:33 +0100 (CET)
+ id 6710A18000B2; Tue,  5 Mar 2024 11:54:35 +0100 (CET)
+Date: Tue, 5 Mar 2024 11:54:35 +0100
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Tom Lendacky <thomas.lendacky@amd.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH v2 0/2] kvm: add support for guest physical bits
-Date: Tue,  5 Mar 2024 11:52:31 +0100
-Message-ID: <20240305105233.617131-1-kraxel@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Cc: Paolo Bonzini <pbonzini@redhat.com>, 
+ Tom Lendacky <thomas.lendacky@amd.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ kvm@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] [debug] log kvm supported cpuid
+Message-ID: <v7gtkm3ejxz7zsu4cfper7ukukz4uvovzcrvfcp2t2xw6rf33s@gkxwhk25cong>
+References: <20240305105233.617131-1-kraxel@redhat.com>
+ <20240305105233.617131-2-kraxel@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240305105233.617131-2-kraxel@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
@@ -82,19 +84,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The matching kernel bits are here:
-https://lore.kernel.org/kvm/20240305103506.613950-1-kraxel@redhat.com/T/
+>  target/i386/kvm/kvm.c | 14 ++++++++++++++
 
-Gerd Hoffmann (2):
-  [debug] log kvm supported cpuid
-  kvm: add support for guest physical bits
+Oops, that was not meant to be posted.
+Please ignore and look at patch 2/2.
 
- target/i386/cpu.h     |  1 +
- target/i386/cpu.c     |  1 +
- target/i386/kvm/kvm.c | 31 +++++++++++++++++++++++++++++++
- 3 files changed, 33 insertions(+)
-
--- 
-2.44.0
+thanks,
+  Gerd
 
 
