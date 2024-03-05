@@ -4,52 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FC70C54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 03:52:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6417C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 03:54:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhLq2-00086k-Ir; Mon, 04 Mar 2024 22:51:35 -0500
+	id 1rhLsA-00012f-Rm; Mon, 04 Mar 2024 22:53:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
- id 1rhLpy-00086M-U6
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 22:51:31 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lixianglai@loongson.cn>) id 1rhLpw-0001hW-Pw
- for qemu-devel@nongnu.org; Mon, 04 Mar 2024 22:51:30 -0500
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8AxqvC9luZly4sUAA--.51492S3;
- Tue, 05 Mar 2024 11:51:25 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8AxjhO3luZlTEdOAA--.20921S3; 
- Tue, 05 Mar 2024 11:51:24 +0800 (CST)
-From: Xianglai Li <lixianglai@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: maobibo@loongson.cn, Song Gao <gaosong@loongson.cn>,
- Xiaojuan Yang <yangxiaojuan@loongson.cn>, zhaotianrui@loongson.cn
-Subject: [PATCH V2 1/1] target/loongarch: Fixed tlb huge page loading issue
-Date: Tue,  5 Mar 2024 11:51:11 +0800
-Message-Id: <5b23421ee1ebf59142c7d7a3bc1082fff910f2fa.1709610311.git.lixianglai@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <cover.1709610311.git.lixianglai@loongson.cn>
-References: <cover.1709610311.git.lixianglai@loongson.cn>
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rhLs9-000127-00
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 22:53:45 -0500
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rhLs7-0001nj-43
+ for qemu-devel@nongnu.org; Mon, 04 Mar 2024 22:53:44 -0500
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-6e5e4b1d1f1so1769225b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 19:53:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709610821; x=1710215621;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gdPZHn1gXlpg+Qa2vDPaWb+1cjtTzWMu1eA9/qbgk38=;
+ b=djw6xDugT3gMH29KbKl1ruunwLFP/CJTYvM6BRTcBHuiYOpyCB/BCcj060ASwQcmJI
+ GStqdc5DdIpHuKnOqnZ0z60YoiXEAFgknXSqUdTIb+vzQ/n5KAsfxlIgvLiR9VXCJmaj
+ 146p/zIIcWfeKqq4GY2OmrPti7pAAztJSS15SmUXmL7DP4NYGEonXVcCHiYJJrb6sgpD
+ 16KL01ikwQc3LQKCAPMe24Vh4+8RcEggDMycy9T4BA1Rxp/2osgO/VENRR50xUKOxtg5
+ /pqa+HRp3qTg0x25yuHL/Jg0p1g5Hs5eSGKr7jLeTQ4LIJAhQkrnW6gMrAFRkUMWcCAd
+ J3hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709610821; x=1710215621;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=gdPZHn1gXlpg+Qa2vDPaWb+1cjtTzWMu1eA9/qbgk38=;
+ b=s4n9oLKKzYStc1B8Vid2Sy2j7Ri/lGEwUvl5UzG406QMahDAtgSEZoBK7setzXGMCf
+ wJOsCQqq5nBFIpoIUv6AHj4xIpxPsNqf+26f+OkMBMM0ePcqgtgsw2muG7pOl/4ZdbhL
+ NfcLkDUBHulzUEQInaDrekOmU0CLzSsh5yAGsssWy9wPQs3v73RIs1t1DIUmANsDESvw
+ 2jqwLtpn+xXQ8uTeAH4DpGN8HEnuBCIwdFhyP5lTKPneLE/vJvWMWCR+fMQJCHc0J+rw
+ 6XhKqF6JstR8QvWOMSpRI97Cy5W83cKpeLeEtv99EWqHXyB7FJfxmPBlcQxhSUYz2IoY
+ 53wg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWEydAm6J45JvDGzF3Wf76VvbkzM7J92viwCjrg9A11xsDBjC7/WEzB4t6bPIrSOXVmh6MKFEB7r2RMACcXOp3tFEtTJhk=
+X-Gm-Message-State: AOJu0YyLE8RoPrb0KPwEIWFc6g6h43diz39q3nnjRm3pP0d/edglhTiz
+ jWu6fzWrbATmShE54nEQSfyMdEZEyYUxGgFQUqtGxuVjqCV6zHIyV/3Esn7NSq4mJNzYtobZjqv
+ S
+X-Google-Smtp-Source: AGHT+IFqP4qJxTwrrZ863abB5oBvXs+qB4UvEcz3VUKRbS708LQsnBOkO7TER+nbhS5S0mja09xvQA==
+X-Received: by 2002:a05:6a21:9998:b0:1a1:3bba:6f48 with SMTP id
+ ve24-20020a056a21999800b001a13bba6f48mr1019182pzb.18.1709610821289; 
+ Mon, 04 Mar 2024 19:53:41 -0800 (PST)
+Received: from [157.82.203.206] ([157.82.203.206])
+ by smtp.gmail.com with ESMTPSA id
+ ei30-20020a056a0080de00b006e5359e621csm7980032pfb.182.2024.03.04.19.53.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 Mar 2024 19:53:40 -0800 (PST)
+Message-ID: <b48e9a1f-7db4-4f92-bfbf-591c53f252df@daynix.com>
+Date: Tue, 5 Mar 2024 12:53:38 +0900
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8AxjhO3luZlTEdOAA--.20921S3
-X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163;
- envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/7] contrib/elf2dmp: Ensure segment fits in file
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Viktor Prutyanov <viktor.prutyanov@phystech.edu>, qemu-devel@nongnu.org
+References: <20240303-elf2dmp-v1-0-bea6649fe3e6@daynix.com>
+ <20240303-elf2dmp-v1-3-bea6649fe3e6@daynix.com>
+ <CAFEAcA9Nr=rgzFP+L3UhL2AtEGBO0Mf=9iYKWJM=mRPFSwTBig@mail.gmail.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <CAFEAcA9Nr=rgzFP+L3UhL2AtEGBO0Mf=9iYKWJM=mRPFSwTBig@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::430;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,100 +100,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When we use qemu tcg simulation, the page size of bios is 4KB.
-When using the level 2 super large page (page size is 1G) to create the page table,
-it is found that the content of the corresponding address space is abnormal,
-resulting in the bios can not start the operating system and graphical interface normally.
+On 2024/03/05 2:52, Peter Maydell wrote:
+> On Sun, 3 Mar 2024 at 10:53, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>>
+>> This makes elf2dmp more robust against corrupted inputs.
+>>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
+>>   contrib/elf2dmp/addrspace.c | 5 +++--
+>>   1 file changed, 3 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/contrib/elf2dmp/addrspace.c b/contrib/elf2dmp/addrspace.c
+>> index 980a7aa5f8fb..d546a400dfda 100644
+>> --- a/contrib/elf2dmp/addrspace.c
+>> +++ b/contrib/elf2dmp/addrspace.c
+>> @@ -88,11 +88,12 @@ int pa_space_create(struct pa_space *ps, QEMU_Elf *qemu_elf)
+>>       ps->block = g_new(struct pa_block, ps->block_nr);
+>>
+>>       for (i = 0; i < phdr_nr; i++) {
+>> -        if (phdr[i].p_type == PT_LOAD) {
+>> +        if (phdr[i].p_type == PT_LOAD && phdr[i].p_offset < qemu_elf->size) {
+>>               ps->block[block_i] = (struct pa_block) {
+>>                   .addr = (uint8_t *)qemu_elf->map + phdr[i].p_offset,
+>>                   .paddr = phdr[i].p_paddr,
+>> -                .size = phdr[i].p_filesz,
+>> +                .size = MIN(phdr[i].p_filesz,
+>> +                            qemu_elf->size - phdr[i].p_offset),
+> 
+> Shouldn't "p_filesz is smaller than the actual amount of data in the
+> file" be a failure condition? In include/hw/elf_ops.h we treat it
+> that way:
+> 
+>              mem_size = ph->p_memsz; /* Size of the ROM */
+>              file_size = ph->p_filesz; /* Size of the allocated data */
+>              data_offset = ph->p_offset; /* Offset where the data is located */
+> 
+>              if (file_size > 0) {
+>                  if (g_mapped_file_get_length(mapped_file) <
+>                      file_size + data_offset) {
+>                      goto fail;
+>                  }
+>                  [etc]
+> 
+> Like that code, we could then only check if p_offset + p_filesz is off
+> the end of the file, rather than checking p_offset separately.
+> 
+>>               };
+>>               pa_block_align(&ps->block[block_i]);
+>>               block_i = ps->block[block_i].size ? (block_i + 1) : block_i;
+> 
+> thanks
+> -- PMM
 
-The lddir and ldpte instruction emulation has
-a problem with the use of super large page processing above level 2.
-The page size is not correctly calculated,
-resulting in the wrong page size of the table entry found by tlb.
+I'm making this permissive for corrupted dumps since they may still 
+include valuable information.
 
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-Cc: maobibo@loongson.cn
-Cc: Song Gao <gaosong@loongson.cn>
-Cc: Xiaojuan Yang <yangxiaojuan@loongson.cn>
-Cc: zhaotianrui@loongson.cn
----
- target/loongarch/cpu.h            |  1 +
- target/loongarch/tcg/tlb_helper.c | 21 ++++++++++++---------
- 2 files changed, 13 insertions(+), 9 deletions(-)
+It is different from include/hw/elf_ops.h, which is presumably used to 
+load executables rather than dumps. Loading a corrupted executable does 
+nothing good.
 
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index ec37579fd6..eab3e41c71 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -292,6 +292,7 @@ typedef struct CPUArchState {
-     uint32_t fcsr0_mask;
- 
-     uint32_t cpucfg[21];
-+    uint32_t lddir_ps;
- 
-     uint64_t lladdr; /* LL virtual address compared against SC */
-     uint64_t llval;
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index a08c08b05a..3594c800b3 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -38,6 +38,7 @@ static void raise_mmu_exception(CPULoongArchState *env, target_ulong address,
-             cs->exception_index = EXCCODE_PIF;
-         }
-         env->CSR_TLBRERA = FIELD_DP64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 1);
-+        env->lddir_ps = 0;
-         break;
-     case TLBRET_INVALID:
-         /* TLB match with no valid bit */
-@@ -488,13 +489,6 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
-     uint64_t dir_base, dir_width;
-     bool huge = (base >> LOONGARCH_PAGE_HUGE_SHIFT) & 0x1;
- 
--    badvaddr = env->CSR_TLBRBADV;
--    base = base & TARGET_PHYS_MASK;
--
--    /* 0:64bit, 1:128bit, 2:192bit, 3:256bit */
--    shift = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTEWIDTH);
--    shift = (shift + 1) * 3;
--
-     if (huge) {
-         return base;
-     }
-@@ -519,9 +513,18 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
-         do_raise_exception(env, EXCCODE_INE, GETPC());
-         return 0;
-     }
-+
-+    /* 0:64bit, 1:128bit, 2:192bit, 3:256bit */
-+    shift = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTEWIDTH);
-+    shift = (shift + 1) * 3;
-+    badvaddr = env->CSR_TLBRBADV;
-+    base = base & TARGET_PHYS_MASK;
-     index = (badvaddr >> dir_base) & ((1 << dir_width) - 1);
-     phys = base | index << shift;
-     ret = ldq_phys(cs->as, phys) & TARGET_PHYS_MASK;
-+    if (ret & BIT_ULL(LOONGARCH_PAGE_HUGE_SHIFT)) {
-+        env->lddir_ps = dir_base;
-+    }
-     return ret;
- }
- 
-@@ -538,13 +541,13 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
-     base = base & TARGET_PHYS_MASK;
- 
-     if (huge) {
--        /* Huge Page. base is paddr */
-         tmp0 = base ^ (1 << LOONGARCH_PAGE_HUGE_SHIFT);
-         /* Move Global bit */
-         tmp0 = ((tmp0 & (1 << LOONGARCH_HGLOBAL_SHIFT))  >>
-                 LOONGARCH_HGLOBAL_SHIFT) << R_TLBENTRY_G_SHIFT |
-                 (tmp0 & (~(1 << LOONGARCH_HGLOBAL_SHIFT)));
--        ps = ptbase + ptwidth - 1;
-+
-+        ps = env->lddir_ps - 1;
-         if (odd) {
-             tmp0 += MAKE_64BIT_MASK(ps, 1);
-         }
--- 
-2.39.1
-
+Regards,
+Akihiko Odaki
 
