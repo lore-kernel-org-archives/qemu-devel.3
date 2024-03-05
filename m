@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA3DCC54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 12:14:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90E9CC54E41
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 12:15:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhTee-0004ry-Su; Tue, 05 Mar 2024 07:12:20 -0500
+	id 1rhTe2-00038u-5e; Tue, 05 Mar 2024 07:11:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhTdN-0001x2-HW
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 07:11:05 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ id 1rhTd5-0001iV-MR
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 07:10:53 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhTci-0001Sf-J7
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 07:10:59 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-33e4d36f288so236858f8f.1
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 04:10:19 -0800 (PST)
+ id 1rhTcf-0001RQ-EM
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 07:10:40 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-412ecc1064cso4581355e9.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 04:10:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709640616; x=1710245416; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709640614; x=1710245414; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZqnQ8XijekxyIBL7Xx6BaJyRk5an5hw3I1N1rasyLAw=;
- b=SNT8Biws1so53AURPPYtJTpSUkquhCfCQQ5aX9S4+TRjdDkz8JRDWFj2qNgp83688Q
- STusXn+KR9JfTCJSBFT1FqKph5egXIMFE+YPcYv/coY0pql4zen4evn+fVF4DFEH6dWz
- bVIdYJV2+vs3HOxxZ5HRgINA9ZV+WRiQG0SnrVyWFubX2Q3t7hO9Y4aRXJ4CozZyGYCX
- vjJmF59KOaQ2srb9XgXuFJosvcVUEzCuVMLV8CShrqQIkuGQ/nvwNoC5XYNx1s9gu+3G
- X7hjEm5dV2VCdzx2+tNxWGpkzVbQQ8FAxUi5WFV2Uo0SRuUkyPmRcFTMh3oEutuZLy56
- fw7g==
+ bh=eN1w3VZA32Wi8fJgCeFoCtnvrPmKwuzv+ibyU3+3o6o=;
+ b=BYZvPV/POC2s7JrzoSfCGWx4C2ATR+TzSETRejEefvUV9xkw2+trUwz1DT55H2+6tt
+ BebBE4fz/8Z5duJmZKK+XoVvHVBcy3DoV35pzku8nqXufhwEh3yubslIYxiUku+DVOf8
+ DxZQzZD5mos9p6PYwxxvkLtyBLwRJ4mdO1G14LPClRMc30o5NDchhQRpje4t5UuiU0rb
+ 1QKT+nt4usCqEuaEfiY8rAvdHgD+SxfuNtg9iykBP8ZI/6hxxqRVoGF9mbhuR3sAwj32
+ dt55YwrGmhtz/Gm+UFTk9Y83tuAI0ns8WnGY9wRaSrUAIj6mgH3I0iEcJQ7kdVbykr0H
+ SDUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709640616; x=1710245416;
+ d=1e100.net; s=20230601; t=1709640614; x=1710245414;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZqnQ8XijekxyIBL7Xx6BaJyRk5an5hw3I1N1rasyLAw=;
- b=NgBDEtjbC7cotgc6BvABGlMFcJLtSQJPum9UY6ckqCgw8/L+4Up+1DMRqF9CJbhXkY
- Dxm6sekMcHXqbYhn2l/DjyxBtvze8EwJWR7l7Grbtf6dpzjt1o70Fh1gMJjCU+Js0tOR
- j74Pmhi+LF7fmgb2LRSBauNbOCe2AuIcr6GsJx5Ipfr1BjAThxys+LgCu9HWiuGPLan9
- LPa+UC0CTMG43bSWwxTNHpnGXOdAWsz5KGb6sYlhDv+YALBXIf2o0JmwyaMZZZNgkjF8
- JhfZs8ujl+EMIegOiVzhzcmVf77/QMCFqU4sFOlgR54KwgdgRs5OKy/W46LGrfSCR6NH
- C/zA==
-X-Gm-Message-State: AOJu0YxgQYIql22f3XgB77lwWqe3nyvBpr9EeycBc/XMysct/0WArEY2
- MmORVo8mtDuUKbMrwTaKOwpIovNnkPp05EW7GMke5UOaC4jqCOD8POYNuwR4DEw=
-X-Google-Smtp-Source: AGHT+IHFTyPejUIURcNk9BVacfFz4duAbKnfNHNZfVjg4uLkBpbZE3sIi9/Mzh5DMg6sBUfe0ye9hA==
-X-Received: by 2002:adf:b212:0:b0:33e:21ac:b89d with SMTP id
- u18-20020adfb212000000b0033e21acb89dmr2303195wra.6.1709640616176; 
- Tue, 05 Mar 2024 04:10:16 -0800 (PST)
+ bh=eN1w3VZA32Wi8fJgCeFoCtnvrPmKwuzv+ibyU3+3o6o=;
+ b=RFNu/6EJ67/n7Oz77oFIUBtG9gsvioNsHGeB+eBehgrcN05K3CVQolMSeJMghIB3i+
+ BWUScmgMigYKLyeSdzpYtfj30KnCv9xgQ4cRdiwccGsLePLHaDRWl6zBgj14NXWZ+hZI
+ RXinlFJstKjaqXrDVcbm+FZb2p0Z2cygD6BZvF5roQMiGBGIv623/i1DAcVQNI/aJs+M
+ VIZW/XmeIYTQTufCX2ZuKe5Xcg9sjHLnprY1xIEJ/k/ngEVqRyHtDuV1n/oJqG2qH7d4
+ nAZvKpEU+6T6u1TFrPWOgUjAajTc1kxqjWfQQ9NRYURpc4rk4VrYza2Qyt0UK/9+mShz
+ vyOw==
+X-Gm-Message-State: AOJu0Yz2R5Ec06bgnUgX2R8EYGsHAjLVRosjaxBT1WcgaK4UciMm/0kg
+ d4piLckg3sVfIbIXqZqYSAimL7NXbmOdPJKxuXmhovSb88I8iD3omKCaxq/ipGg=
+X-Google-Smtp-Source: AGHT+IEVuEapc/2m/rYMnypstBHkreGm3a0DZAqtHtnVmJWeGeXufNpTmF9IPZPtexy/OrRqPDeUBw==
+X-Received: by 2002:a05:600c:4fcf:b0:412:ebfe:68fe with SMTP id
+ o15-20020a05600c4fcf00b00412ebfe68femr1410832wmq.35.1709640614053; 
+ Tue, 05 Mar 2024 04:10:14 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- i10-20020a05600011ca00b0033b60bad2fcsm14828244wrx.113.2024.03.05.04.10.08
+ d8-20020a05600c3ac800b00412e84e59d8sm3851590wms.44.2024.03.05.04.10.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 05 Mar 2024 04:10:12 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 496475F9CB;
+ by draig.lan (Postfix) with ESMTP id 8A5E65F9CF;
  Tue,  5 Mar 2024 12:10:06 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -94,25 +94,24 @@ Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
  Warner Losh <imp@bsdimp.com>, qemu-riscv@nongnu.org,
  Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH 08/29] gdbstub: Call gdbserver_fork() both in parent and in
- child
-Date: Tue,  5 Mar 2024 12:09:44 +0000
-Message-Id: <20240305121005.3528075-9-alex.bennee@linaro.org>
+Subject: [PATCH 11/29] gdbstub: Introduce gdb_handle_detach_user()
+Date: Tue,  5 Mar 2024 12:09:47 +0000
+Message-Id: <20240305121005.3528075-12-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240305121005.3528075-1-alex.bennee@linaro.org>
 References: <20240305121005.3528075-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,90 +129,64 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-The upcoming follow-fork-mode child support requires post-fork message
-exchange between the parent and the child. Prepare gdbserver_fork() for
-this purpose. Rename it to gdbserver_fork_end() to better reflect its
-purpose.
+The upcoming follow-fork-mode child support needs to perform certain
+actions when GDB detaches from the stopped parent or the stopped child.
+Introduce a user-specific hook for this.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-Id: <20240219141628.246823-8-iii@linux.ibm.com>
+Message-Id: <20240219141628.246823-11-iii@linux.ibm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- include/gdbstub/user.h | 5 +++--
- bsd-user/main.c        | 3 ++-
- gdbstub/user.c         | 5 ++---
- linux-user/main.c      | 2 +-
- 4 files changed, 8 insertions(+), 7 deletions(-)
+ gdbstub/internals.h | 1 +
+ gdbstub/gdbstub.c   | 6 ++++++
+ gdbstub/user.c      | 5 +++++
+ 3 files changed, 12 insertions(+)
 
-diff --git a/include/gdbstub/user.h b/include/gdbstub/user.h
-index 3f9f45946e0..4c4e5c4c582 100644
---- a/include/gdbstub/user.h
-+++ b/include/gdbstub/user.h
-@@ -51,10 +51,11 @@ void gdb_signalled(CPUArchState *as, int sig);
- void gdbserver_fork_start(void);
+diff --git a/gdbstub/internals.h b/gdbstub/internals.h
+index b4905c7181a..b4724598384 100644
+--- a/gdbstub/internals.h
++++ b/gdbstub/internals.h
+@@ -198,6 +198,7 @@ void gdb_handle_query_xfer_exec_file(GArray *params, void *user_ctx); /* user */
+ void gdb_handle_set_catch_syscalls(GArray *params, void *user_ctx); /* user */
+ void gdb_handle_query_supported_user(const char *gdb_supported); /* user */
+ bool gdb_handle_set_thread_user(uint32_t pid, uint32_t tid); /* user */
++bool gdb_handle_detach_user(uint32_t pid); /* user */
  
- /**
-- * gdbserver_fork() - disable gdb stub for child processes.
-+ * gdbserver_fork_end() - inform gdb of the completed fork()
-  * @cs: CPU
-+ * @pid: 0 if in child process, -1 if fork failed, child process pid otherwise
-  */
--void gdbserver_fork(CPUState *cs, pid_t pid);
-+void gdbserver_fork_end(CPUState *cs, pid_t pid);
+ void gdb_handle_query_attached(GArray *params, void *user_ctx); /* both */
  
- /**
-  * gdb_syscall_entry() - inform gdb of syscall entry and yield control to it
-diff --git a/bsd-user/main.c b/bsd-user/main.c
-index 0dbd1cf8801..3dc285e5b74 100644
---- a/bsd-user/main.c
-+++ b/bsd-user/main.c
-@@ -138,10 +138,11 @@ void fork_end(pid_t pid)
-          */
-         qemu_init_cpu_list();
-         get_task_state(thread_cpu)->ts_tid = qemu_get_thread_id();
--        gdbserver_fork(thread_cpu, pid);
-+        gdbserver_fork_end(thread_cpu, pid);
-     } else {
-         mmap_fork_end(child);
-         cpu_list_unlock();
-+        gdbserver_fork_end(thread_cpu, pid);
-         end_exclusive();
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index 3eb93162aa8..17efcae0d0e 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -1024,6 +1024,12 @@ static void handle_detach(GArray *params, void *user_ctx)
+         pid = get_param(params, 0)->val_ul;
      }
- }
+ 
++#ifdef CONFIG_USER_ONLY
++    if (gdb_handle_detach_user(pid)) {
++        return;
++    }
++#endif
++
+     process = gdb_get_process(pid);
+     gdb_process_breakpoint_remove_all(process);
+     process->attached = false;
 diff --git a/gdbstub/user.c b/gdbstub/user.c
-index c61e1a0d1f6..866a25f9c06 100644
+index b048754c4f8..1a7b582a40d 100644
 --- a/gdbstub/user.c
 +++ b/gdbstub/user.c
-@@ -374,10 +374,9 @@ static void disable_gdbstub(CPUState *thread_cpu)
-     tb_flush(thread_cpu);
+@@ -391,6 +391,11 @@ bool gdb_handle_set_thread_user(uint32_t pid, uint32_t tid)
+     return false;
  }
  
--/* Disable gdb stub for child processes.  */
--void gdbserver_fork(CPUState *cpu, pid_t pid)
-+void gdbserver_fork_end(CPUState *cpu, pid_t pid)
- {
--    if (!gdbserver_state.init || gdbserver_user_state.fd < 0) {
-+    if (pid != 0 || !gdbserver_state.init || gdbserver_user_state.fd < 0) {
-         return;
-     }
-     disable_gdbstub(cpu);
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 70314e0ab6a..41caa77cb52 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -165,10 +165,10 @@ void fork_end(pid_t pid)
-         }
-         qemu_init_cpu_list();
-         get_task_state(thread_cpu)->ts_tid = qemu_get_thread_id();
--        gdbserver_fork(thread_cpu, pid);
-     } else {
-         cpu_list_unlock();
-     }
-+    gdbserver_fork_end(thread_cpu, pid);
-     /*
-      * qemu_init_cpu_list() reinitialized the child exclusive state, but we
-      * also need to keep current_cpu consistent, so call end_exclusive() for
++bool gdb_handle_detach_user(uint32_t pid)
++{
++    return false;
++}
++
+ /*
+  * Execution state helpers
+  */
 -- 
 2.39.2
 
