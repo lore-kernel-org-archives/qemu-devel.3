@@ -4,142 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10A10C54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 08:55:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 685CBC54E41
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 08:59:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhQZn-0001X7-TC; Tue, 05 Mar 2024 03:55:09 -0500
+	id 1rhQdg-0003tJ-CY; Tue, 05 Mar 2024 03:59:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rhQZY-0001Nu-UI
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 03:54:54 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rhQZW-0002q9-Rp
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 03:54:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709628877;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=UZ7cGQ6aNgJiDW0t9XZPqroLWjmdkKEgenu5r3YHQmc=;
- b=BuQ1wd9iiHLiZ8nce6rvBSGGztbsWt41HKhj7C7wUqCFMWtx/Gt2I/mjhhCBMYCbjma3Zf
- iqgXPgzk4yDzmeEoWKxiBc78sivJFD4LNgVpJEJ3313MLjCAszOg5mENA03tT1aEYXq7Qs
- t8JuPfKSuDjOld/G4aeU2uQbvNWaeEc=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-60-lSJQ1XkTPL2M6WaZ5yMj7w-1; Tue, 05 Mar 2024 03:54:35 -0500
-X-MC-Unique: lSJQ1XkTPL2M6WaZ5yMj7w-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-68facaf1c37so5819336d6.2
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 00:54:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rhQdd-0003rv-TH
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 03:59:05 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rhQda-0003eX-Th
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 03:59:05 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-1dbd32cff0bso45842135ad.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 00:59:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709629141; x=1710233941;
+ darn=nongnu.org; 
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=41HOhmfFzvzHUWDzT1tLGC+0kqqS1QTmSsIo/CJC9aw=;
+ b=gTtgVVLc2iwUZWKKFnuz0bydQOTsdACWA69S2teEQ5tVNyqGR0rBK0c1cXRb5goASK
+ 0nikpL8K7RZQF8ikX5Bthkq2aItDA6ZRecS0SehUycJXDc0E+fBbLCqnLjE/qGuJvaNz
+ ZZDEOIzPHHyDuuyQOxMX7Nlcj9rI0EUNVQwBV9BSqnK2yMzLKv/8277VRGGPCUIivLG6
+ HAoqBmEQBoZHNGn4Y6HNweaHnBLQ04x6afAMtBTNU9/0dAMSppWhGHjJwT4wFf7na35Z
+ ieNtW2JnprStcfPHEBebSSSRJEhlkz8mj7wIo2urVKwqBCZqkK1hAruHk1nVfKUkJ5Sf
+ UK0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709628875; x=1710233675;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UZ7cGQ6aNgJiDW0t9XZPqroLWjmdkKEgenu5r3YHQmc=;
- b=WdjNHYzFn681TOKvQ9SUjf9DlEAbPcFC2JnwlLRdfeI9juiindtKYh5zHnkw6QJhPU
- waRdy1Na8/6xLcvhfrk+1qP+TjmQVOBGCZY1nHZ5J5JER9mHoekjLnws0g0h1XO5fffo
- bGPe1gyypI5AxbE1ag9rK6a2ApIuQV3W5nW0mNfa6vi+/dEYISHYm+U2dU3ukQ20FklN
- jFp+tLbgL2MzDGD96B9KCgCzV5+u/6gpLvClJUGTQfZsrJw8bwwqTKrEPQhlL9ogUK0d
- dD/wlwAk3KRSlHxoaHbCn8t8KQadkLSQAVeoCG7SWjcADnmuM3ElAx3wNlrNLW11kSjj
- V5jQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUxLl+/molkJiaoAPLFfd+XOjoq0IzmJoSTJTqbbeFaYeazFZ8H7oEXSIYmteMLvJA6cK25RgCFTThAiKVG3Hp8bgJf4Ao=
-X-Gm-Message-State: AOJu0Yw0JF/vET/+OTlGQPHBYGLm/woFtl3Q5DiYIaEZddo6QDuWd5Np
- 3gm+GQ66Gpii2gSoiRb5H5ba4Ur+qexiSaJrWr51GG/PaZwTwZkhljYqgr8PuwRrqC7gYUA2E0r
- /Rq28Wz+/26mXeNotNLGF0dH4UJkXu/pxiDdN7HPG8nOKqVXJSa+X
-X-Received: by 2002:ad4:444b:0:b0:68f:3a7b:acde with SMTP id
- l11-20020ad4444b000000b0068f3a7bacdemr1076637qvt.41.1709628875301; 
- Tue, 05 Mar 2024 00:54:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHNaL0OVeDCK2s2GmC7cc4euVAhrzQwlBVEDraGbaEYTuGzkxvs/HdbYkQolohF81DcSj3VYw==
-X-Received: by 2002:ad4:444b:0:b0:68f:3a7b:acde with SMTP id
- l11-20020ad4444b000000b0068f3a7bacdemr1076627qvt.41.1709628875064; 
- Tue, 05 Mar 2024 00:54:35 -0800 (PST)
-Received: from [192.168.0.9] (ip-109-43-178-243.web.vodafone.de.
- [109.43.178.243]) by smtp.gmail.com with ESMTPSA id
- ow15-20020a0562143f8f00b0069046d929a3sm5929823qvb.145.2024.03.05.00.54.31
+ d=1e100.net; s=20230601; t=1709629141; x=1710233941;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=41HOhmfFzvzHUWDzT1tLGC+0kqqS1QTmSsIo/CJC9aw=;
+ b=MUnvKIkrFtw8qTl7MxddLoI96LY9bbnZlv2XktVJLZuPWKRp6BglJ1/vN6z9Qv2Y4D
+ TwH5RP7F0QfjxJ43GX+Hz9MfZVzsFV33BcVC52lnrVClHFHbyVcqpd7NKXx+dY8qVB8p
+ S4WPr2cDb2sFUGogrAtwE7fhVGm0B6DL7Mzn3jmsVO8+zgPMSgvj57xlQScjORtn8/lE
+ yVI4z67pqFpIsUvGA4kh3qk3FXY4ZgYflI6zsuITkss5kGyrXiYrlrnTb/h5ry5M6VCr
+ 2fd+I+YetirNbgnICyv8mcqp7+sk4HkYXSEtE9B6CUWBa64sP9xlxq7j9oyHsr3OL8Ib
+ bsSw==
+X-Gm-Message-State: AOJu0Yy0OxWD+7mq9+c/O0sB5i6pDrbByeWzXgRUGnUylx8ZfAAsPNVt
+ nVQBWr9IdP5vVJRJvlY7rsx+/fIvycNpXz3MG6yVGq5hGbzWJrJ0oZAZAYoZwdk=
+X-Google-Smtp-Source: AGHT+IGR2YzRjLxs4vKHJWgiJis2qudqTHhJ8QiUBQ3YaGqJTP++Zq1W3IpdBMbJ8yHv3NEAwjgnhA==
+X-Received: by 2002:a17:902:eb8f:b0:1db:ab9c:d33d with SMTP id
+ q15-20020a170902eb8f00b001dbab9cd33dmr1561733plg.9.1709629141222; 
+ Tue, 05 Mar 2024 00:59:01 -0800 (PST)
+Received: from localhost ([157.82.203.206])
+ by smtp.gmail.com with UTF8SMTPSA id
+ u11-20020a170903124b00b001dc01efaec2sm9959404plh.168.2024.03.05.00.58.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Mar 2024 00:54:34 -0800 (PST)
-Message-ID: <4eddc6e3-8abb-42a9-835d-804a7da8b33f@redhat.com>
-Date: Tue, 5 Mar 2024 09:54:30 +0100
+ Tue, 05 Mar 2024 00:59:00 -0800 (PST)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Tue, 05 Mar 2024 17:58:48 +0900
+Subject: [PATCH RFC v3 1/6] hw/pci: Do not add ROM BAR for SR-IOV VF
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 12/26] migration: Add Error** argument to .save_setup()
- handler
-Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Halil Pasic
- <pasic@linux.ibm.com>, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-References: <20240304122844.1888308-1-clg@redhat.com>
- <20240304122844.1888308-13-clg@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240304122844.1888308-13-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 22
-X-Spam_score: 2.2
-X-Spam_bar: ++
-X-Spam_report: (2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240305-sriov-v3-1-abdb75770372@daynix.com>
+References: <20240305-sriov-v3-0-abdb75770372@daynix.com>
+In-Reply-To: <20240305-sriov-v3-0-abdb75770372@daynix.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Alex Williamson <alex.williamson@redhat.com>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Jason Wang <jasowang@redhat.com>, 
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>, 
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ 20240228-reuse-v8-0-282660281e60@daynix.com, 
+ Yui Washizu <yui.washidu@gmail.com>, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.12.3
+Received-SPF: none client-ip=2607:f8b0:4864:20::631;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,25 +104,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/03/2024 13.28, Cédric Le Goater wrote:
-> The purpose is to record a potential error in the migration stream if
-> qemu_savevm_state_setup() fails. Most of the current .save_setup()
-> handlers can be modified to use the Error argument instead of managing
-> their own and calling locally error_report().
-> 
-> Cc: Nicholas Piggin <npiggin@gmail.com>
-> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> Cc: Halil Pasic <pasic@linux.ibm.com>
-> Cc: Thomas Huth <thuth@redhat.com>
-> Cc: Eric Blake <eblake@redhat.com>
-> Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> Cc: John Snow <jsnow@redhat.com>
-> Cc: Stefan Hajnoczi <stefanha@redhat.com>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Peter Xu <peterx@redhat.com>
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
+A SR-IOV VF cannot have a ROM BAR.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Co-developed-by: Yui Washizu <yui.washidu@gmail.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ hw/pci/pci.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index cb5ac46e9f27..201ff64e11cc 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -2359,6 +2359,14 @@ static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
+         return;
+     }
+ 
++    if (pci_is_vf(pdev)) {
++        if (pdev->rom_bar != UINT32_MAX) {
++            error_setg(errp, "ROM BAR cannot be enabled for SR-IOV VF");
++        }
++
++        return;
++    }
++
+     if (load_file || pdev->romsize == UINT32_MAX) {
+         path = qemu_find_file(QEMU_FILE_TYPE_BIOS, pdev->romfile);
+         if (path == NULL) {
+
+-- 
+2.44.0
 
 
