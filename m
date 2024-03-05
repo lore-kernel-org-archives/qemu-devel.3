@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79103C54798
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4DF1C54E41
 	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 12:17:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhTeb-0004V9-TJ; Tue, 05 Mar 2024 07:12:17 -0500
+	id 1rhTeo-0005je-EC; Tue, 05 Mar 2024 07:12:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhTdL-0001wH-PB
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 07:11:04 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1rhTdR-0001zo-HQ
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 07:11:08 -0500
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhTch-0001UI-Vz
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 07:10:57 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-33e2268ed96so3532900f8f.3
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 04:10:19 -0800 (PST)
+ id 1rhTcm-0001VU-Ra
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 07:11:05 -0500
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-512bde3d197so5474523e87.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 04:10:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709640618; x=1710245418; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709640620; x=1710245420; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WooNzOV/us8bLuMeAwrWGnmqqnwveEN5CVxp1t3KKRI=;
- b=ewhbZIQa42obNozwJyQmBs70PDQ1JmFoxR5gSo0sbtIn6lbPgkTcTlhPwX7ZtuWJ6I
- aJC2+ofUmMi2iOehRDiP/6oQjS+O+4MpslM/ILkrGEXWZ2XLZeH8xiOAFYytdbM0lK2M
- eAdHfJ9DyjZsmKpnndqOQzeuW8iTxloxU4mrf2scIEQPtzLq+oBXTpVLc8UiB8IGB2lc
- EN5Hlf7JLWz62/08Ci0qbAFxdFI+TXRoBIrfnMd8U+9tlErnOJthYKT7AJAli9OUUM8L
- vt8q6nnR59cEacKeeuPRgWNLon6PWXMgZ7baZ9mDY1Ala0a4Fm7udCI+hXM3+c7iv9Mv
- /hdA==
+ bh=LZ5YOQP0/kNKuw0pdbpFKUIj/5LzNegIm91JdMI6gJ8=;
+ b=FDWKB5wJ0B46M8XhSomsFIYqKAP/8X87qCKDqKtJpS4t0QZ+ANAPk6zPyp6FMxFIyH
+ FabeG9DgbALr3X+e6/hd6peJ/BrpA1LM/C24UPHCdc/XPdYTbUol1wB0v8mBYU4lPQSm
+ 1LDUzRpVzby4iZRgIuT3MVQwFg+QpiZbKK+8Q/NFfFStvOgoaX9mqGuiLNuPGfIK0KsS
+ u+2X6On5S8Fma2l9UjJB7z3isH6Cd5G0AhYz4YkOX/+l9EsL/XMpGtswbc9g0uinuc7X
+ psR1cditVXLKIZCmATV1s3lld0dL0OuHKTqP9TJ8eE1LcHjnrVgupcKaopbxD3x/SLOR
+ rsRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709640618; x=1710245418;
+ d=1e100.net; s=20230601; t=1709640620; x=1710245420;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WooNzOV/us8bLuMeAwrWGnmqqnwveEN5CVxp1t3KKRI=;
- b=Ynwg7GVRyoPjU4erHtIG4oiQ3xLBxJmSD2aK9nJwzOn7ET6q3NtB2dAdiostM2pbwX
- v5zT9zucmG1uLG4YxPA68bdn7/49RxXEMgjwdaeJBa5fjk59ZcNxh4zh9xJfUJaS8egb
- 5RQQQ3Sx1hXhRxxMsoq8XrYZFWlkI+OJx1A5GLYJ53Edk2LCD96Z9dUQk9pIBKD28UNM
- 9b4KjlAF6mj9xGoZwEb44tomHfBl4QErg2tADCfHQHZeFPhCy1lmPWviLn2E2UruW8HZ
- TVnEmCvApDX0NPIJWbC0JPkT/wnkIC6K9g9O30OuFhLR3NviD8vyz8lWgnOffo2lvt89
- No3w==
-X-Gm-Message-State: AOJu0YzAKtsWfTwolJUZ1fiVY+lDkVEpUSvBw+XWzSVzDAZw+O1jhsoZ
- 2IXHc0y5xS0xidB/ss4hXvNtEbE6uL5G3VZ4DCjNNAIJjRf5G9r3bK8Dr8fGC5A=
-X-Google-Smtp-Source: AGHT+IH/bFZkJLW9C0nEA6geVUtEWC+DP7m7ABlvX9K83JZCZItT7nWbkFN3prZoThSKDfhWw1SWAw==
-X-Received: by 2002:a5d:6986:0:b0:33d:d792:c7c7 with SMTP id
- g6-20020a5d6986000000b0033dd792c7c7mr7907924wru.10.1709640618264; 
- Tue, 05 Mar 2024 04:10:18 -0800 (PST)
+ bh=LZ5YOQP0/kNKuw0pdbpFKUIj/5LzNegIm91JdMI6gJ8=;
+ b=tx2xrjRRUznTez8K9ubqSzTMmYICNEmbjQHdzpolAsT68u4s1vX/YrzmAxTi5mBUhH
+ MLxUKU1XJNoxioSXrlWYgo13WzFORe2pnGSPpIKbB1v343f1KK8FIFYKDMzaLN+ffCjp
+ KJoXpgI6Il9S88EcBal7nOlpJYd38i1QSnx61TsmhH6tCN8hCcWJfqmT2YW2Guh6CQo0
+ ZxzRjjVQvTs/enZwkoFfY+E0595J+8IpHUl1vRsZ4DK7mfHaKyGuvs6yF83wbIoKK40s
+ abspuxFPIxaBwiYZZQEIkI3hVHGXKUpipnGNC/Bt+FsexVIDkfhxYGMcII/8n3X03B2z
+ I5Eg==
+X-Gm-Message-State: AOJu0YzDmGeFOPyaDEEq/qdausHwfAxRGdL1h+7K4FcRc7o2Zm29iedc
+ NEo1WOIsocCfXROmxHSLgXvGt2rXiXMzzJqlV8GxsCqoSUdmLGJf+D3w1aJbNjQ=
+X-Google-Smtp-Source: AGHT+IEe/HVl4sVZaRhh3RJCWXaysR/Mhpi9KzKVehL9dMuH96z4xl/43q58BAFxTe8NY5QXZ3KpDw==
+X-Received: by 2002:a05:6512:3ba0:b0:513:3f16:25d6 with SMTP id
+ g32-20020a0565123ba000b005133f1625d6mr1539795lfv.34.1709640619821; 
+ Tue, 05 Mar 2024 04:10:19 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- f10-20020a5d58ea000000b0033d4cf751b2sm14731989wrd.33.2024.03.05.04.10.09
+ n37-20020a05600c3ba500b00412e58be350sm5058355wms.1.2024.03.05.04.10.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Mar 2024 04:10:12 -0800 (PST)
+ Tue, 05 Mar 2024 04:10:16 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B6EA15F9DA;
- Tue,  5 Mar 2024 12:10:06 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 082A95F9E0;
+ Tue,  5 Mar 2024 12:10:07 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
@@ -94,17 +94,18 @@ Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
  Warner Losh <imp@bsdimp.com>, qemu-riscv@nongnu.org,
  Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH 13/29] tests/tcg: Add two follow-fork-mode tests
-Date: Tue,  5 Mar 2024 12:09:49 +0000
-Message-Id: <20240305121005.3528075-14-alex.bennee@linaro.org>
+Subject: [PATCH 16/29] plugins: implement inline operation relative to
+ cpu_index
+Date: Tue,  5 Mar 2024 12:09:52 +0000
+Message-Id: <20240305121005.3528075-17-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240305121005.3528075-1-alex.bennee@linaro.org>
 References: <20240305121005.3528075-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -127,190 +128,209 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Add follow-fork-mode child and and follow-fork-mode parent tests.
-Check for the obvious pitfalls, such as lingering breakpoints,
-catchpoints, and single-step mode.
+Instead of working on a fixed memory location, allow to address it based
+on cpu_index, an element size and a given offset.
+Result address: ptr + offset + cpu_index * element_size.
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-Id: <20240219141628.246823-13-iii@linux.ibm.com>
+With this, we can target a member in a struct array from a base pointer.
+
+Current semantic is not modified, thus inline operation still targets
+always the same memory location.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20240304130036.124418-4-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/tcg/multiarch/follow-fork-mode.c        | 56 +++++++++++++++++++
- tests/tcg/multiarch/Makefile.target           | 17 +++++-
- .../gdbstub/follow-fork-mode-child.py         | 40 +++++++++++++
- .../gdbstub/follow-fork-mode-parent.py        | 16 ++++++
- 4 files changed, 128 insertions(+), 1 deletion(-)
- create mode 100644 tests/tcg/multiarch/follow-fork-mode.c
- create mode 100644 tests/tcg/multiarch/gdbstub/follow-fork-mode-child.py
- create mode 100644 tests/tcg/multiarch/gdbstub/follow-fork-mode-parent.py
+ plugins/plugin.h       |  2 +-
+ accel/tcg/plugin-gen.c | 69 ++++++++++++++++++++++++++++++++++--------
+ plugins/api.c          |  3 +-
+ plugins/core.c         | 12 +++++---
+ 4 files changed, 67 insertions(+), 19 deletions(-)
 
-diff --git a/tests/tcg/multiarch/follow-fork-mode.c b/tests/tcg/multiarch/follow-fork-mode.c
-new file mode 100644
-index 00000000000..cb6b032b388
---- /dev/null
-+++ b/tests/tcg/multiarch/follow-fork-mode.c
-@@ -0,0 +1,56 @@
-+/*
-+ * Test GDB's follow-fork-mode.
-+ *
-+ * fork() a chain of processes.
-+ * Parents sends one byte to their children, and children return their
-+ * position in the chain, in order to prove that they survived GDB's fork()
-+ * handling.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <assert.h>
-+#include <stdlib.h>
-+#include <sys/wait.h>
-+#include <unistd.h>
+diff --git a/plugins/plugin.h b/plugins/plugin.h
+index 043c740067d..3bf1aaf5c2d 100644
+--- a/plugins/plugin.h
++++ b/plugins/plugin.h
+@@ -99,7 +99,7 @@ void plugin_register_vcpu_mem_cb(GArray **arr,
+                                  enum qemu_plugin_mem_rw rw,
+                                  void *udata);
+ 
+-void exec_inline_op(struct qemu_plugin_dyn_cb *cb);
++void exec_inline_op(struct qemu_plugin_dyn_cb *cb, int cpu_index);
+ 
+ int plugin_num_vcpus(void);
+ 
+diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
+index ac6b52b9ec9..0f8be53d394 100644
+--- a/accel/tcg/plugin-gen.c
++++ b/accel/tcg/plugin-gen.c
+@@ -133,16 +133,28 @@ static void gen_empty_udata_cb_no_rwg(void)
+  */
+ static void gen_empty_inline_cb(void)
+ {
++    TCGv_i32 cpu_index = tcg_temp_ebb_new_i32();
++    TCGv_ptr cpu_index_as_ptr = tcg_temp_ebb_new_ptr();
+     TCGv_i64 val = tcg_temp_ebb_new_i64();
+     TCGv_ptr ptr = tcg_temp_ebb_new_ptr();
+ 
++    tcg_gen_ld_i32(cpu_index, tcg_env,
++                   -offsetof(ArchCPU, env) + offsetof(CPUState, cpu_index));
++    /* second operand will be replaced by immediate value */
++    tcg_gen_mul_i32(cpu_index, cpu_index, cpu_index);
++    tcg_gen_ext_i32_ptr(cpu_index_as_ptr, cpu_index);
 +
-+void break_after_fork(void)
+     tcg_gen_movi_ptr(ptr, 0);
++    tcg_gen_add_ptr(ptr, ptr, cpu_index_as_ptr);
+     tcg_gen_ld_i64(val, ptr, 0);
+-    /* pass an immediate != 0 so that it doesn't get optimized away */
+-    tcg_gen_addi_i64(val, val, 0xdeadface);
++    /* second operand will be replaced by immediate value */
++    tcg_gen_add_i64(val, val, val);
++
+     tcg_gen_st_i64(val, ptr, 0);
+     tcg_temp_free_ptr(ptr);
+     tcg_temp_free_i64(val);
++    tcg_temp_free_ptr(cpu_index_as_ptr);
++    tcg_temp_free_i32(cpu_index);
+ }
+ 
+ static void gen_empty_mem_cb(TCGv_i64 addr, uint32_t info)
+@@ -290,12 +302,37 @@ static TCGOp *copy_const_ptr(TCGOp **begin_op, TCGOp *op, void *ptr)
+     return op;
+ }
+ 
++static TCGOp *copy_ld_i32(TCGOp **begin_op, TCGOp *op)
 +{
++    return copy_op(begin_op, op, INDEX_op_ld_i32);
 +}
 +
-+int main(void)
++static TCGOp *copy_ext_i32_ptr(TCGOp **begin_op, TCGOp *op)
 +{
-+    int depth = 42, err, i, fd[2], status;
-+    pid_t child, pid;
-+    ssize_t n;
-+    char b;
-+
-+    for (i = 0; i < depth; i++) {
-+        err = pipe(fd);
-+        assert(err == 0);
-+        child = fork();
-+        break_after_fork();
-+        assert(child != -1);
-+        if (child == 0) {
-+            close(fd[1]);
-+
-+            n = read(fd[0], &b, 1);
-+            close(fd[0]);
-+            assert(n == 1);
-+            assert(b == (char)i);
-+        } else {
-+            close(fd[0]);
-+
-+            b = (char)i;
-+            n = write(fd[1], &b, 1);
-+            close(fd[1]);
-+            assert(n == 1);
-+
-+            pid = waitpid(child, &status, 0);
-+            assert(pid == child);
-+            assert(WIFEXITED(status));
-+            return WEXITSTATUS(status) - 1;
-+        }
++    if (UINTPTR_MAX == UINT32_MAX) {
++        op = copy_op(begin_op, op, INDEX_op_mov_i32);
++    } else {
++        op = copy_op(begin_op, op, INDEX_op_ext_i32_i64);
 +    }
-+
-+    return depth;
++    return op;
 +}
-diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
-index f11f3b084d7..979a0dd1bc2 100644
---- a/tests/tcg/multiarch/Makefile.target
-+++ b/tests/tcg/multiarch/Makefile.target
-@@ -106,6 +106,20 @@ run-gdbstub-catch-syscalls: catch-syscalls
- 		--bin $< --test $(MULTIARCH_SRC)/gdbstub/catch-syscalls.py, \
- 	hitting a syscall catchpoint)
++
++static TCGOp *copy_add_ptr(TCGOp **begin_op, TCGOp *op)
++{
++    if (UINTPTR_MAX == UINT32_MAX) {
++        op = copy_op(begin_op, op, INDEX_op_add_i32);
++    } else {
++        op = copy_op(begin_op, op, INDEX_op_add_i64);
++    }
++    return op;
++}
++
+ static TCGOp *copy_ld_i64(TCGOp **begin_op, TCGOp *op)
+ {
+     if (TCG_TARGET_REG_BITS == 32) {
+         /* 2x ld_i32 */
+-        op = copy_op(begin_op, op, INDEX_op_ld_i32);
+-        op = copy_op(begin_op, op, INDEX_op_ld_i32);
++        op = copy_ld_i32(begin_op, op);
++        op = copy_ld_i32(begin_op, op);
+     } else {
+         /* ld_i64 */
+         op = copy_op(begin_op, op, INDEX_op_ld_i64);
+@@ -331,6 +368,13 @@ static TCGOp *copy_add_i64(TCGOp **begin_op, TCGOp *op, uint64_t v)
+     return op;
+ }
  
-+run-gdbstub-follow-fork-mode-child: follow-fork-mode
-+	$(call run-test, $@, $(GDB_SCRIPT) \
-+		--gdb $(GDB) \
-+		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
-+		--bin $< --test $(MULTIARCH_SRC)/gdbstub/follow-fork-mode-child.py, \
-+	following children on fork)
++static TCGOp *copy_mul_i32(TCGOp **begin_op, TCGOp *op, uint32_t v)
++{
++    op = copy_op(begin_op, op, INDEX_op_mul_i32);
++    op->args[2] = tcgv_i32_arg(tcg_constant_i32(v));
++    return op;
++}
 +
-+run-gdbstub-follow-fork-mode-parent: follow-fork-mode
-+	$(call run-test, $@, $(GDB_SCRIPT) \
-+		--gdb $(GDB) \
-+		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
-+		--bin $< --test $(MULTIARCH_SRC)/gdbstub/follow-fork-mode-parent.py, \
-+	following parents on fork)
-+
- else
- run-gdbstub-%:
- 	$(call skip-test, "gdbstub test $*", "need working gdb with $(patsubst -%,,$(TARGET_NAME)) support")
-@@ -113,7 +127,8 @@ endif
- EXTRA_RUNS += run-gdbstub-sha1 run-gdbstub-qxfer-auxv-read \
- 	      run-gdbstub-proc-mappings run-gdbstub-thread-breakpoint \
- 	      run-gdbstub-registers run-gdbstub-prot-none \
--	      run-gdbstub-catch-syscalls
-+	      run-gdbstub-catch-syscalls run-gdbstub-follow-fork-mode-child \
-+	      run-gdbstub-follow-fork-mode-parent
+ static TCGOp *copy_st_ptr(TCGOp **begin_op, TCGOp *op)
+ {
+     if (UINTPTR_MAX == UINT32_MAX) {
+@@ -396,18 +440,17 @@ static TCGOp *append_inline_cb(const struct qemu_plugin_dyn_cb *cb,
+                                TCGOp *begin_op, TCGOp *op,
+                                int *unused)
+ {
+-    /* const_ptr */
+-    op = copy_const_ptr(&begin_op, op, cb->userp);
+-
+-    /* ld_i64 */
++    char *ptr = cb->userp;
++    size_t elem_size = 0;
++    size_t offset = 0;
++    op = copy_ld_i32(&begin_op, op);
++    op = copy_mul_i32(&begin_op, op, elem_size);
++    op = copy_ext_i32_ptr(&begin_op, op);
++    op = copy_const_ptr(&begin_op, op, ptr + offset);
++    op = copy_add_ptr(&begin_op, op);
+     op = copy_ld_i64(&begin_op, op);
+-
+-    /* add_i64 */
+     op = copy_add_i64(&begin_op, op, cb->inline_insn.imm);
+-
+-    /* st_i64 */
+     op = copy_st_i64(&begin_op, op);
+-
+     return op;
+ }
  
- # ARM Compatible Semi Hosting Tests
- #
-diff --git a/tests/tcg/multiarch/gdbstub/follow-fork-mode-child.py b/tests/tcg/multiarch/gdbstub/follow-fork-mode-child.py
-new file mode 100644
-index 00000000000..72a6e440c08
---- /dev/null
-+++ b/tests/tcg/multiarch/gdbstub/follow-fork-mode-child.py
-@@ -0,0 +1,40 @@
-+"""Test GDB's follow-fork-mode child.
-+
-+SPDX-License-Identifier: GPL-2.0-or-later
-+"""
-+from test_gdbstub import main, report
-+
-+
-+def run_test():
-+    """Run through the tests one by one"""
-+    gdb.execute("set follow-fork-mode child")
-+    # Check that the parent breakpoints are unset.
-+    gdb.execute("break break_after_fork")
-+    # Check that the parent syscall catchpoints are unset.
-+    # Skip this check on the architectures that don't have them.
-+    have_fork_syscall = False
-+    for fork_syscall in ("fork", "clone", "clone2", "clone3"):
-+        try:
-+            gdb.execute("catch syscall {}".format(fork_syscall))
-+        except gdb.error:
-+            pass
-+        else:
-+            have_fork_syscall = True
-+    gdb.execute("continue")
-+    for i in range(42):
-+        if have_fork_syscall:
-+            # syscall entry.
-+            if i % 2 == 0:
-+                # Check that the parent single-stepping is turned off.
-+                gdb.execute("si")
-+            else:
-+                gdb.execute("continue")
-+            # syscall exit.
-+            gdb.execute("continue")
-+        # break_after_fork()
-+        gdb.execute("continue")
-+    exitcode = int(gdb.parse_and_eval("$_exitcode"))
-+    report(exitcode == 42, "{} == 42".format(exitcode))
-+
-+
-+main(run_test)
-diff --git a/tests/tcg/multiarch/gdbstub/follow-fork-mode-parent.py b/tests/tcg/multiarch/gdbstub/follow-fork-mode-parent.py
-new file mode 100644
-index 00000000000..5c2fe722088
---- /dev/null
-+++ b/tests/tcg/multiarch/gdbstub/follow-fork-mode-parent.py
-@@ -0,0 +1,16 @@
-+"""Test GDB's follow-fork-mode parent.
-+
-+SPDX-License-Identifier: GPL-2.0-or-later
-+"""
-+from test_gdbstub import main, report
-+
-+
-+def run_test():
-+    """Run through the tests one by one"""
-+    gdb.execute("set follow-fork-mode parent")
-+    gdb.execute("continue")
-+    exitcode = int(gdb.parse_and_eval("$_exitcode"))
-+    report(exitcode == 0, "{} == 0".format(exitcode))
-+
-+
-+main(run_test)
+diff --git a/plugins/api.c b/plugins/api.c
+index 8910cbb2c46..fa1daee8254 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -106,7 +106,8 @@ void qemu_plugin_register_vcpu_tb_exec_inline(struct qemu_plugin_tb *tb,
+                                               void *ptr, uint64_t imm)
+ {
+     if (!tb->mem_only) {
+-        plugin_register_inline_op(&tb->cbs[PLUGIN_CB_INLINE], 0, op, ptr, imm);
++        plugin_register_inline_op(&tb->cbs[PLUGIN_CB_INLINE],
++                                  0, op, ptr, imm);
+     }
+ }
+ 
+diff --git a/plugins/core.c b/plugins/core.c
+index 63f4c6c6ce3..65d5611f797 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -318,7 +318,8 @@ static struct qemu_plugin_dyn_cb *plugin_get_dyn_cb(GArray **arr)
+ 
+ void plugin_register_inline_op(GArray **arr,
+                                enum qemu_plugin_mem_rw rw,
+-                               enum qemu_plugin_op op, void *ptr,
++                               enum qemu_plugin_op op,
++                               void *ptr,
+                                uint64_t imm)
+ {
+     struct qemu_plugin_dyn_cb *dyn_cb;
+@@ -474,9 +475,12 @@ void qemu_plugin_flush_cb(void)
+     plugin_cb__simple(QEMU_PLUGIN_EV_FLUSH);
+ }
+ 
+-void exec_inline_op(struct qemu_plugin_dyn_cb *cb)
++void exec_inline_op(struct qemu_plugin_dyn_cb *cb, int cpu_index)
+ {
+-    uint64_t *val = cb->userp;
++    char *ptr = cb->userp;
++    size_t elem_size = 0;
++    size_t offset = 0;
++    uint64_t *val = (uint64_t *)(ptr + offset + cpu_index * elem_size);
+ 
+     switch (cb->inline_insn.op) {
+     case QEMU_PLUGIN_INLINE_ADD_U64:
+@@ -509,7 +513,7 @@ void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
+                            vaddr, cb->userp);
+             break;
+         case PLUGIN_CB_INLINE:
+-            exec_inline_op(cb);
++            exec_inline_op(cb, cpu->cpu_index);
+             break;
+         default:
+             g_assert_not_reached();
 -- 
 2.39.2
 
