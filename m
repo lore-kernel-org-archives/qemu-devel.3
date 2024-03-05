@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0063C54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 18:09:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84A24C54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 18:09:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhZD7-0002AZ-Fl; Tue, 05 Mar 2024 13:08:17 -0500
+	id 1rhZD2-00024V-TH; Tue, 05 Mar 2024 13:08:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rhZD4-00025y-Pt
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 13:08:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1rhZD1-00022y-F5
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 13:08:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rhZD3-00009l-Ea
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 13:08:14 -0500
+ id 1rhZCz-00008S-RK
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 13:08:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709662092;
+ s=mimecast20190719; t=1709662087;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uaYMvUYAW68FZKxiZnuqrn5CwWP/VqklI1W2luIlxrA=;
- b=hpyp+1vjMZDJu3URho431yOcsCjWpHYx2L3hnlguAIsTqPKljojrCZE/AuXyX8bmtRFHBq
- WGDdrbGAMKKk3NwGER0Z+UMYLCUzTIQjWpf1O5/TLxpjis0pohhJuYz4n8ujPdHnExa+we
- onaJ5dX4l5l/ELj9sehY6usRWxElBXU=
+ bh=mtAnTSStkOKpy0/Q14u1Ipt8HVO4uL1e5P+fAKhJM+A=;
+ b=Ox2xBcOvReGotelKEAFbvZa+T1qbT4QrFxdz9oyp7bp+nj/2qrlILoq2xyrJyXiPWlXTiJ
+ n0qdga3dkzGlGO61/0V4Mkko0Ufry7OzufzY/rZ+WAJF4x2N5L4ocuM1+1gg87L2d/CELX
+ 93CqIKll9jBfUIEt+fO6UpgCYZBpL0w=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-96-LPZp8DnaNmmeoLsodz_5MA-1; Tue,
- 05 Mar 2024 13:08:11 -0500
-X-MC-Unique: LPZp8DnaNmmeoLsodz_5MA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-253-JipZx50eP4-ixgtVQX04jA-1; Tue,
+ 05 Mar 2024 13:08:04 -0500
+X-MC-Unique: JipZx50eP4-ixgtVQX04jA-1
 Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
  [10.11.54.8])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D775838000A2;
- Tue,  5 Mar 2024 18:08:10 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 736263C0244C;
+ Tue,  5 Mar 2024 18:08:03 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.39.193.114])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 6EF7AC041F0;
- Tue,  5 Mar 2024 18:08:07 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 0B183C041F0;
+ Tue,  5 Mar 2024 18:07:59 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, mst@redhat.com, jean-philippe@linaro.org,
@@ -52,24 +52,24 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  yanghliu@redhat.com, zhenzhong.duan@intel.com
 Cc: alex.williamson@redhat.com, jasowang@redhat.com, pbonzini@redhat.com,
  berrange@redhat.com
-Subject: [PATCH v6 8/9] hw/arm/virt: Set virtio-iommu aw-bits default value to
- 48
-Date: Tue,  5 Mar 2024 19:06:26 +0100
-Message-ID: <20240305180734.48515-9-eric.auger@redhat.com>
+Subject: [PATCH v6 6/9] virtio-iommu: Add an option to define the input range
+ width
+Date: Tue,  5 Mar 2024 19:06:24 +0100
+Message-ID: <20240305180734.48515-7-eric.auger@redhat.com>
 In-Reply-To: <20240305180734.48515-1-eric.auger@redhat.com>
 References: <20240305180734.48515-1-eric.auger@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.568,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,49 +86,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On ARM we set 48b as a default (matching SMMUv3 SMMU_IDR5.VAX == 0).
-
-hw_compat_8_2 is used to handle the compatibility for machine types
-before 9.0 (default was 64 bits).
+aw-bits is a new option that allows to set the bit width of
+the input address range. This value will be used as a default for
+the device config input_range.end. By default it is set to 64 bits
+which is the current value.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
----
- hw/arm/virt.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 0af1943697..dcfb25369b 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -85,11 +85,28 @@
- #include "hw/char/pl011.h"
- #include "qemu/guest-random.h"
+---
+
+v1 -> v2:
+- Check the aw-bits value is within [32,64]
+---
+ include/hw/virtio/virtio-iommu.h | 1 +
+ hw/virtio/virtio-iommu.c         | 7 ++++++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/include/hw/virtio/virtio-iommu.h b/include/hw/virtio/virtio-iommu.h
+index 67ea5022af..83a52cc446 100644
+--- a/include/hw/virtio/virtio-iommu.h
++++ b/include/hw/virtio/virtio-iommu.h
+@@ -68,6 +68,7 @@ struct VirtIOIOMMU {
+     Notifier machine_done;
+     bool granule_frozen;
+     GranuleMode granule_mode;
++    uint8_t aw_bits;
+ };
  
-+GlobalProperty arm_virt_compat[] = {
-+    { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
-+};
-+const size_t arm_virt_compat_len = G_N_ELEMENTS(arm_virt_compat);
-+
-+/*
-+ * This cannot be called from the virt_machine_class_init() because
-+ * TYPE_VIRT_MACHINE is abstract and mc->compat_props g_ptr_array_new()
-+ * only is called on virt non abstract class init.
-+ */
-+static void arm_virt_compat_set(MachineClass *mc)
-+{
-+    compat_props_add(mc->compat_props, arm_virt_compat,
-+                     arm_virt_compat_len);
-+}
-+
- #define DEFINE_VIRT_MACHINE_LATEST(major, minor, latest) \
-     static void virt_##major##_##minor##_class_init(ObjectClass *oc, \
-                                                     void *data) \
-     { \
-         MachineClass *mc = MACHINE_CLASS(oc); \
-+        arm_virt_compat_set(mc); \
-         virt_machine_##major##_##minor##_options(mc); \
-         mc->desc = "QEMU " # major "." # minor " ARM Virtual Machine"; \
-         if (latest) { \
+ #endif
+diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+index aab97e1527..9b2813188b 100644
+--- a/hw/virtio/virtio-iommu.c
++++ b/hw/virtio/virtio-iommu.c
+@@ -1314,7 +1314,11 @@ static void virtio_iommu_device_realize(DeviceState *dev, Error **errp)
+      * in vfio realize
+      */
+     s->config.bypass = s->boot_bypass;
+-    s->config.input_range.end = UINT64_MAX;
++    if (s->aw_bits < 32 || s->aw_bits > 64) {
++        error_setg(errp, "aw-bits must be within [32,64]");
++    }
++    s->config.input_range.end =
++        s->aw_bits == 64 ? UINT64_MAX : BIT_ULL(s->aw_bits) - 1;
+ 
+     switch (s->granule_mode) {
+     case GRANULE_MODE_4K:
+@@ -1544,6 +1548,7 @@ static Property virtio_iommu_properties[] = {
+     DEFINE_PROP_BOOL("boot-bypass", VirtIOIOMMU, boot_bypass, true),
+     DEFINE_PROP_GRANULE_MODE("granule", VirtIOIOMMU, granule_mode,
+                              GRANULE_MODE_HOST),
++    DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 64),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
 -- 
 2.41.0
 
