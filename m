@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B9F1C54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 20:44:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FDAFC54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 20:46:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhbe1-0006cm-FY; Tue, 05 Mar 2024 15:44:13 -0500
+	id 1rhbgH-0007Xi-09; Tue, 05 Mar 2024 15:46:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rhbdz-0006bR-D5
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 15:44:11 -0500
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1rhbgE-0007XV-26
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 15:46:30 -0500
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rhbdw-0001QC-79
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 15:44:09 -0500
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-6e6092a84f4so2396344b3a.0
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 12:44:07 -0800 (PST)
+ id 1rhbgC-000217-6d
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 15:46:29 -0500
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-6e5c0be115aso3110670b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 12:46:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709671446; x=1710276246; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709671586; x=1710276386; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=P9k2biLPUbINbZY8mZhoZ0TQXk7gMWJSyi4sPzemapE=;
- b=PkXhwh2bJj/1TOvn8UMSzjRYa1djT3p9tSlLeNUGLfe0nJVp/sRkD+iFcsDSCy4J7h
- 0/RmNxHYN3HkLQymKbP0AtZJuL5G3mciDQYDDImXbXzhCBizdn0UyKSdLKnZjy/AO8hd
- RfJ84kL7ZC635NRTzvRQxafb2/bJa4o9qSCJOi3/Pxkrx1GAlui8CeUi7ESPgnUb7ugF
- J6BG5OVAoFsdC0TZuL1XgT0FpwIG34FCSh4o/pwfscHM/6Y2CS6khkS5SOBbwykNt+ar
- DzwZVgzp8ihuoQNsLQBgYo3lN1+79/byrxQ3O2qj93YXWHPiQMMwYpCJNZORYgi6+zku
- 96Vw==
+ bh=Rh7ImRCJ9sXBDVRNLKseuNzseOk7B+khv7+nBAQFxQo=;
+ b=Zr8GcDqbxKR7c7xp/0JCAl8eXoPzaXloGn8SdbHNkWIgvL0AitmTTjdrpn6DlggW/E
+ XolC9yBmGpUNRqH62/DMF5YxWVYle4CG5nuJMk7OnK+w7Nfx+dB+oQupRRntVDCOAGY7
+ lzPYF5Z0iGCfEgzZVtH2ozmNUvgjjnN+ddI/v96eU5o8uJ3M6zC5cgYlK871ymhdL4fL
+ uU2Y4Kp8ksQKXC0k30jr4E0vWFN8nHItwv4h6t4JHrNQj3+9eEQvhPu/n6f4MsTUpatF
+ 5TVe/qtNKa+gxdFEUJgeqgjQ6jvC8ATjl9j50SQyWM0QqCvBjGobhBnt+7mVRhyeU80B
+ PfEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709671446; x=1710276246;
+ d=1e100.net; s=20230601; t=1709671586; x=1710276386;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=P9k2biLPUbINbZY8mZhoZ0TQXk7gMWJSyi4sPzemapE=;
- b=xGg5lzqqUNQSUUSz/nfafW7rAWGJXlG+X1j1SWfZ1dPOWWqU2Pq7uooSCIQbV6Cwb6
- wkdRd8dNA1F7CIZf35sO624cV4Cd9SzJDdzxhL61ckSNtpR84R++OozKKe02nMLySGJv
- OozSBpXie0mHh0zcZEwwQRu9h2BAi73gEoQ2gHQXagcUrr4zWXT//J0FiLxEXxssE/Ii
- W5P7g34+vyBcTQKt1PL8VZaAyTZxOFl690EmWLIpf7fncJq9n+SVTkqE2f0qJaGHq92V
- ysc04o3vw5CkIkwYo8M+YI3Jmpm/e340EGPB5ozfg8EVWDaUGxnPax76LpIFSPl0TyMG
- PSeg==
+ bh=Rh7ImRCJ9sXBDVRNLKseuNzseOk7B+khv7+nBAQFxQo=;
+ b=kM2rNERUQz+5F3+lHKud0B/mKtlXU77xCu4uJiPQpmi9DUATkx6xowyFVEp6CapNTe
+ LowqfzfUO3Hu8aXEMiHAshJCzOT7/SeQ41X1Bcrc1DDQz5ChXN2R8UCNMIjFs0h93kZ0
+ r26Xi9oDWe25ab3pgen8z5tyachpHW/DSUhCNPPermhnh0Gs3D4QsNZDXDrQveAhaig1
+ /wJ7gLKjnRhbhyD+J41YCtDwA7C0NzXlbpZ2VcH1CbuAsx5u71yWVLekmgxzcHWKAKS/
+ s2o3Bme7I7bfdN30++gO4zm4bTEtk00FoY+Q5LiCgvKHRrgM6O+cCAp86NEuAV4+XDxS
+ o5Pg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXYAKekLPRMq3FFNm3gFNRDMtIRePCfxnmj17Yf8oZuLzDLpN/AYwjbAoVvPMyySH02KzMZMmawrLLqXhlUSb0evRQ/V2Q=
-X-Gm-Message-State: AOJu0Yz8KfYQLmvq0Ru4gGJAfu0eEJd57zgU823rp7jwSiuc4suPGdc4
- 94PIg9r3Yl9FYmwT7o3b88iesspUcY+Y/Y2EUlxcZITITsZY7cTCXNxMqHOdmh1r/mjLoyrePKq
- 3
-X-Google-Smtp-Source: AGHT+IELWiZaQIfdoiSmSOctbGQGK5Yhw+4PFtJz/xJLCLMibjRj+n9mlfEaG+oS4o6UYkLtMm46hQ==
-X-Received: by 2002:a05:6a20:4e22:b0:1a0:cb49:60a0 with SMTP id
- gk34-20020a056a204e2200b001a0cb4960a0mr2483302pzb.36.1709671446536; 
- Tue, 05 Mar 2024 12:44:06 -0800 (PST)
+ AJvYcCUaIv8hURsECP17ULBehFKiAHwPVlX9I55uWTpAC0bFDGsjeSLnhppPHCtuL6kFOPNvn2bhwSYW1Ep5AI7uGfM9x3P2Yaw=
+X-Gm-Message-State: AOJu0Yxk91TO4q6AC4VaeOpxGvPNMvEBrlZMyx/2eB1NkOBKmVxBDtgi
+ IzbWr6EIxChX0ak0I5LmIZiVHI9YDYJHxnhwoprVaFVxmbaiGUL2ayzx5c9vjcU=
+X-Google-Smtp-Source: AGHT+IEaaf8zdGt1DsicyJlIF/SKQZQV3dlKJWPlxVNPp5rJwaaqOalmt/9l2TUZ08eBfAM3itdqZg==
+X-Received: by 2002:a05:6a00:310f:b0:6e5:bdfb:bcd2 with SMTP id
+ bi15-20020a056a00310f00b006e5bdfbbcd2mr10205592pfb.9.1709671586427; 
+ Tue, 05 Mar 2024 12:46:26 -0800 (PST)
 Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
  [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- du6-20020a056a002b4600b006e5933a0da9sm9390944pfb.165.2024.03.05.12.44.05
+ q67-20020a634346000000b005dc49afed53sm9621106pga.55.2024.03.05.12.46.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Mar 2024 12:44:06 -0800 (PST)
-Message-ID: <9b32b7c6-8883-46a9-aa0f-c3120eb84691@linaro.org>
-Date: Tue, 5 Mar 2024 10:44:03 -1000
+ Tue, 05 Mar 2024 12:46:25 -0800 (PST)
+Message-ID: <fb7d5ad6-f671-4b53-9ed9-512f03d637b2@linaro.org>
+Date: Tue, 5 Mar 2024 10:46:23 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/29] {linux,bsd}-user: Update ts_tid after fork()
+Subject: Re: [PATCH 26/29] disas: introduce show_opcodes
 Content-Language: en-US
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 References: <20240305121005.3528075-1-alex.bennee@linaro.org>
- <20240305121005.3528075-5-alex.bennee@linaro.org>
+ <20240305121005.3528075-27-alex.bennee@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240305121005.3528075-5-alex.bennee@linaro.org>
+In-Reply-To: <20240305121005.3528075-27-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,22 +98,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/5/24 02:09, Alex Bennée wrote:
-> From: Ilya Leoshkevich<iii@linux.ibm.com>
+On 3/5/24 02:10, Alex Bennée wrote:
+> For plugins we don't expect the raw opcodes in the disassembly. We
+> already deal with this by hand crafting our capstone call but for
+> other diassemblers we need a flag. Introduce show_opcodes which
+> defaults to off.
 > 
-> Currently ts_tid contains the parent tid after fork(), which is not
-> correct. So far it has not affected anything, but the upcoming
-> follow-fork-mode child support relies on the correct value, so fix it.
-> 
-> Reviewed-by: Alex Bennée<alex.bennee@linaro.org>
-> Signed-off-by: Ilya Leoshkevich<iii@linux.ibm.com>
-> Reviewed-by: Warner Losh<imp@bsdimp.com>
-> Message-Id:<20240219141628.246823-4-iii@linux.ibm.com>
 > Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
 > ---
->   bsd-user/main.c   | 1 +
->   linux-user/main.c | 1 +
->   2 files changed, 2 insertions(+)
+>   include/disas/dis-asm.h | 8 ++++++++
+>   disas/disas.c           | 1 +
+>   2 files changed, 9 insertions(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
