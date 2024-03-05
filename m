@@ -4,75 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2ADEC54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:25:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3756EC54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:25:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhUmy-0000xZ-A5; Tue, 05 Mar 2024 08:25:00 -0500
+	id 1rhUnN-0001UZ-4f; Tue, 05 Mar 2024 08:25:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhUmw-0000wl-Ov
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:24:58 -0500
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhUmu-0000Ge-UJ
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:24:58 -0500
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-564fc495d83so6908084a12.0
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:24:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709645095; x=1710249895; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=3HjOVpyemVvfYxuS83Hc64F3D7md4xvq6tyhMY07ABg=;
- b=JXJuhPBPMq10gvwo+BB6ZjjQF8nNhlCo4GG8Kz0dMKGkm1sgqk4dUPWIHpoJBBxW9X
- 5kZCU6WapOpnqfHuo9StEsZ4Oy/h8B5VkhDc9aGdEDJgw7JrslcEbT0z6j9ySJXnH7Ed
- G4eSuwXmAV/uV3UOpz8uNySXeR3DvCtQRyCRemWgXK//eEkRThkkJbEOXkKLjjr2f7Vj
- 2CdqO2uWb33q5FZspvTIUjVvRdbUT5OHzCfvpZS4GCqju3M87nk+DcIqZqHVNIyGe3Z7
- V2b2v3o+CYzpLsNRhthyS0gibInF+n1zHq8wkwLJx664b7DBnAyTqHjY/4kx+BFGdN5Q
- gO0w==
+ (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
+ id 1rhUnF-0001MG-H4
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:25:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
+ id 1rhUnC-0000IR-3w
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:25:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709645113;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=T79oVyRg7XNKTAqVdhgKpl0H0wRy/jlYtV8yLhmXE5c=;
+ b=fuPzyQhSuS/MgtNtZtFfyDKI7BAc6jQxiFdhCg66G0Rl9JReZ/HcZyvxddEKH5A2W2shRx
+ RlMnfFslojPJqsJ+o8fYmwjK+d5ysz2vUBEeCx8raVXNktQ9K8M9JSAyfY6Xv1Cuiq8cW2
+ 6lJrKqXCVRv8NNf/97QjOtgZUDkyL4c=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-665-6zP2TYT0N5mzugjDBz5KAQ-1; Tue, 05 Mar 2024 08:25:11 -0500
+X-MC-Unique: 6zP2TYT0N5mzugjDBz5KAQ-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-412e51c20fdso12001395e9.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:25:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709645095; x=1710249895;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3HjOVpyemVvfYxuS83Hc64F3D7md4xvq6tyhMY07ABg=;
- b=adgJXbngkhmbKSc3yK2aAgo0+nwT9/Atgw3IVNlgAXdRmTQVmav0fZqlb837cAQ3Ul
- KrtNo9xCkdVOUGVa/LNw3YuGgpBpdOWpIhclXY2S7iJS8L1c8+0IQxXdJ0pcpAybNR+9
- aQz/z4TJ4VIFZ8M6gaJvqXqMqSRizIVZCli//vTotpilHjZZwnTsKqbC0AbtiT/6K/0q
- XE7MVKkKw04516R76a5gxh+IpP+1CXTD9jVeA/nFPMHHmQjrJbdjqCR3xcngYUsTxcfF
- gTqihN5io21/p3laAhh9z36cY3K+MKVR5BTvCkm/nPX33y79hMGtuEb8t2QZ3YxNb7Fb
- 5G2Q==
+ d=1e100.net; s=20230601; t=1709645110; x=1710249910;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=T79oVyRg7XNKTAqVdhgKpl0H0wRy/jlYtV8yLhmXE5c=;
+ b=U7w0dZX4lhlHmPKChC12pokFBn/y+t/6GW3XrZfiKqmVhG4tk4gLYYlXFrJWB5pSkN
+ TAW33J9Yqj9r1j10tADRdOxDWk86eFCoBtqXwjXV4V/0Spjt80m2ZKjLP/Fx33pu5x82
+ IifKOjkfJPZm4lMFif3d339WcoPtsNPdIF+NGGaBm1jdZ4OpElBSKYezomMqEWxKOs5D
+ BeD8/fPTSUZdh78TnsK1GauKbcKiQ/EH5fls/Z75noNu+q/0wts2g7GjTXwuU7LUWWUx
+ Oa8aJPjJsTtabsojd1NT5M2QvfiuXjH46S8dAzA5EzduONNB+OWspjsqZj4Y3h77OgqJ
+ HfOQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUrGg6dS766Z8rZt20VJwUcrgal/6NzG15R3MVoQ3O5kPUqYrcpWfDd+7L4l5vewxo/Ho7phLT1If9Bj1lvhrbabGwki4s=
-X-Gm-Message-State: AOJu0Ywv9d41a7Fi1eRB17yO72BGvXARpO7oEVKCR8ynOSrlwuNvh98q
- MG6mggi63eAemQV7N8ou0iJRomrtjI0yQiNZLTOZRhQ9eY7aqtrAqrX9SvylFHFYqAMqJHxdh+A
- GNBfrI0T/lRO0SbjLcXT+Yr5TlQiB8d07VgJQ0g==
-X-Google-Smtp-Source: AGHT+IGngYB4/h4gk3+d+tr2yMKdbdEQNIIQxQYjf/N1fWP3Dp06kehmch3y9YicVoUfBpb3hinQrG/tn2HvVKbL/jU=
-X-Received: by 2002:a05:6402:b6b:b0:567:bce2:e3a9 with SMTP id
- cb11-20020a0564020b6b00b00567bce2e3a9mr211922edb.15.1709645095222; Tue, 05
- Mar 2024 05:24:55 -0800 (PST)
-MIME-Version: 1.0
-References: <20240305-elf2dmp-v2-0-86ff2163ad32@daynix.com>
- <20240305-elf2dmp-v2-2-86ff2163ad32@daynix.com>
-In-Reply-To: <20240305-elf2dmp-v2-2-86ff2163ad32@daynix.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 5 Mar 2024 13:24:44 +0000
-Message-ID: <CAFEAcA8OpgnQojTVxLhy84jodoRHZrQq+sxr4cskRL4+edjsNQ@mail.gmail.com>
-Subject: Re: [PATCH v2 02/13] contrib/elf2dmp: Assume error by default
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Viktor Prutyanov <viktor.prutyanov@phystech.edu>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ AJvYcCXu2eMVH/ZVQ1EHGfvr8QztUm/v2rd7J3lcCW6A8Js8ZD691PzakyV27cpDYdNnC+hXhOsc6GvnAL6UCNwViSIisN1GJLs=
+X-Gm-Message-State: AOJu0YzDWcpKbBc3J0Rfe3BNvfyaOwLSM46z3N0PwN4KFPnN25gwKUps
+ WJhp0I7Yb+MHmg9YfXQw7nFN2kK/RQagaR0MEtbVz7OkMyXrdgUjSRNh3lRPe25Z04kfaJFeHGN
+ FO2Bys61xN1Ko66TdD5qEYPqJr/mCk+Q+Dm4vvUWuTESdGbVFc1R0
+X-Received: by 2002:a05:600c:4504:b0:412:b42c:8ff1 with SMTP id
+ t4-20020a05600c450400b00412b42c8ff1mr10684179wmo.21.1709645110619; 
+ Tue, 05 Mar 2024 05:25:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE3q9RiTK82INQT11px/g7VIRLAj70Wti28vSUgsmf6eyI91e6IAGPZF2EIGY65Wv97eXWB3w==
+X-Received: by 2002:a05:600c:4504:b0:412:b42c:8ff1 with SMTP id
+ t4-20020a05600c450400b00412b42c8ff1mr10684160wmo.21.1709645110217; 
+ Tue, 05 Mar 2024 05:25:10 -0800 (PST)
+Received: from localhost ([2a01:e0a:a9a:c460:2827:8723:3c60:c84a])
+ by smtp.gmail.com with ESMTPSA id
+ t16-20020a05600c451000b00412e13bb942sm7280397wmo.19.2024.03.05.05.25.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 Mar 2024 05:25:09 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 05 Mar 2024 14:25:09 +0100
+Message-Id: <CZLUM0L9G5U3.1UOBP5UFKY1AA@fedora>
+From: "Anthony Harivel" <aharivel@redhat.com>
+To: =?utf-8?b?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>
+Cc: <pbonzini@redhat.com>, <mtosatti@redhat.com>, <qemu-devel@nongnu.org>,
+ <vchundur@redhat.com>
+Subject: Re: [PATCH v3 3/3] Add support for RAPL MSRs in KVM/Qemu
+X-Mailer: aerc/0.15.2-111-g39195000e213
+References: <20240125072214.318382-1-aharivel@redhat.com>
+ <20240125072214.318382-4-aharivel@redhat.com> <Zbi9vjPCsia58LG4@redhat.com>
+ <CZL1LKPLC005.2WG9X653U6H6D@fedora> <ZeXfPdp-Ul3vxlxL@redhat.com>
+In-Reply-To: <ZeXfPdp-Ul3vxlxL@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=aharivel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.568,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,17 +106,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 5 Mar 2024 at 07:36, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+Daniel P. Berrang=C3=A9, Mar 04, 2024 at 15:48:
+> On Mon, Mar 04, 2024 at 03:41:02PM +0100, Anthony Harivel wrote:
+> >=20
+> > Hi Daniel,
+> >=20
+> > > > +        if (s->msr_energy.enable =3D=3D true) {
+> > >
+> > > This looks to be where we need to check that both the host CPU
+> > > vendor is intel, and the guest CPU vendor is intel, and that
+> > > the host CPU has the RAPL feature we're using.
+> >
+> > Checking for the host cpu and RAPL enable is fine and done.=20
+> >=20
+> > But checking for guest CPU is confusing me.=20
+> > The RAPL feature is enable only with KVM enable.=20
+> > This means "-cpu" can only be "host" or its derivative that essentially=
+=20
+> > copy the host CPU definition, no?
 >
-> A common construct in contrib/elf2dmp is to set "err" flag and goto
-> in error paths. In such a construct, there is only one successful path
-> while there are several error paths, so it will be more simpler to
-> initialize "err" flag set, and clear it in the successful path.
+> KVM can use any named CPU.
 >
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> > That means if we are already checking the host cpu we don't need to do=
+=20
+> > anything for the guest, do we ?
+>
+> When I first wrote this I though it would be as simple as checknig a
+> CPUID feature flag. That appears to not be the case, however, as Linux
+> is just checking for various CPU models directly. With that in mind
+> perhaps we should just check of the guest CPU model vendor
+> =3D=3D CPUID_VENDOR_INTEL and leave it at that.
+>
+> eg, create an error if running an AMD CPU such as $QEMU -cpu EPYC
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+The idea looks good to me. Now the hiccups of this solution is that=20
+I cannot find a way to reach CPUArchState at this level of code (i.e=20
+kvm_arch_init() ) with only the MachineState or the KVMState.=20
+I can only reach the topology with x86_possible_cpu_arch_ids().
 
-thanks
--- PMM
+CPUArchState struct is holding the cpuid_vendor variables where we can=20
+use IS_INTEL_CPU() for checking.
+
+Maybe you know the trick that I miss ?=20
+
+Regards,
+Anthony
+
+>
+> With regards,
+> Daniel
+> --=20
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
+ge :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
+om :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
+ge :|
+
 
