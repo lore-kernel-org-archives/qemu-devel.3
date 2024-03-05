@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DF24C54798
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 857AEC5478C
 	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 07:38:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhPMw-0006xS-4Z; Tue, 05 Mar 2024 02:37:46 -0500
+	id 1rhPMq-0006mC-UR; Tue, 05 Mar 2024 02:37:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rhPMM-0006Hy-85
+ id 1rhPMK-0006Ho-W7
  for qemu-devel@nongnu.org; Tue, 05 Mar 2024 02:37:13 -0500
-Received: from mail-oo1-xc32.google.com ([2607:f8b0:4864:20::c32])
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rhPMJ-0005sv-Jz
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 02:37:09 -0500
-Received: by mail-oo1-xc32.google.com with SMTP id
- 006d021491bc7-5a0b1936400so2462888eaf.2
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 23:37:03 -0800 (PST)
+ id 1rhPM5-0005rz-5w
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 02:37:08 -0500
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-6e558a67f70so4786006b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 23:36:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709624223; x=1710229023;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709624210; x=1710229010;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=oaZOxuMruCzpX9cG/05AqpvWpWeh3L71YtF+WLnYGuQ=;
- b=D/OO7UprfeihY7W4L1cvUSN3/EnS9V9z6TFOoh5W7w0lcb7kf9zwLvOzLLeJBUZdGA
- Xv2pjAIWWtoqKaJiwxMn3iE1st3ptUTYtGKkNRPi4aUM/UVOZ3R7x0t6RV58AO98y++w
- obKs2cukktB7iyrOC3/bmaEM7rlMPZwEpB8mUq2VoWm4iWsFHJorYlMRn6KTFim/9IVI
- 01jL/+yAffeDU8XGSr9MjqU6/yNRVj2na2wpmC2P3Q1dW4wiqBm6t5bXANtd7CWZFtuh
- 5UzGRwiqVohIJH+NcCZPgn49FnDAM0T0Mn1h3ak2Uf51Tadg1s24H0UBtCzxAStBxLeM
- inoA==
+ :reply-to; bh=9OhDS/T3Gx56oShsQS7FHNcWODYCE0LjRwel+5jTWOY=;
+ b=GES3jGdo7vtoyjckvE2PiNCxm8VSDSmslI/KJDynJRLOVAUMmyHmBYIr1skGzHEA1N
+ SqWxREhqILxf4qA/eaeXYqXIsbiL49nnTU9LH+aZUjHymwq97LF5jSY8vVU7uV0Rsng/
+ sqPSLxuSZYMY341d1sQKg09/xUxWC12Xt9iFoxbTwPFDb8qkVs5dkBw/VcBaMoyjJ2NE
+ GZ6JC8pF8aRd9qO4NOrJgOJ9oQGLj96l5pmwjyMVII/4XP5Ht++Q3DF14doddGMCQUzq
+ wqiKELOykiLbOBW3Pn+zxdxfMTdBfEeMVpS26tUu+Gd3/HWArlj28O1vedkn/ZLZ0i7N
+ Is5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709624223; x=1710229023;
+ d=1e100.net; s=20230601; t=1709624210; x=1710229010;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oaZOxuMruCzpX9cG/05AqpvWpWeh3L71YtF+WLnYGuQ=;
- b=CuoXE5Rxg1YTguMTieXayZEKRnkLbOfd6nM8rHerSFpy4O640DaIkCq9U9Vx602QBc
- Dsek/DVUtLBWwXO+1wwqlbWbWjJdrhSZPb4MLBXsVpKT8jY9ogishye5yYmBesMuUKnN
- a98XPuyanBH54GFAut/t1F5xCS0Tqj5ata25g1NYZXJPfnss+7b/DG0yMlDADLO9IhEX
- ejIyCXtqGgr1QbApoRWuZUz8Q5RXq9qO9QzW5k7sdrBGYHBhYuSYEERjOo76AhkzzuEK
- cRjzO53RnAqu0udSaUSsf9xnthsvJXD4SvUUoESz0Tme6W3KgPHmfJRO6g1Cdwhr5BDD
- 8fPw==
-X-Gm-Message-State: AOJu0YzUGpYmmR8Ek2fw9XAXiX27WKnPcXvFcyxKme4JX18hpt5I9HN6
- KIErfqu5L8hVjrvYgz4syEuI+F23EKN00RZewJyD0RUzx0KYu9KGtVBJZU70dqs3nZoMO/x8skB
- d
-X-Google-Smtp-Source: AGHT+IFD5V9C+rYlvE7xfnzq62Jhok5FWGVhkrdtetfQdPkAJsCibYir0qzDD/g5wLhA4zYTdyRSCg==
-X-Received: by 2002:a05:6358:7e42:b0:17b:c797:8a08 with SMTP id
- p2-20020a0563587e4200b0017bc7978a08mr1157066rwm.20.1709624222779; 
- Mon, 04 Mar 2024 23:37:02 -0800 (PST)
+ bh=9OhDS/T3Gx56oShsQS7FHNcWODYCE0LjRwel+5jTWOY=;
+ b=Mp3lX1PksEEoQ556Rc6+a5O/+QEHwM2/pTqP3nBeDj+ucBp6h+OipWdzdHClvMJkWU
+ /8BtjUmZuUfM4H0dQHWUst9bJerPRE+mN9mPNPciJ+aaUlX8Hln7ZsliDaewCKq87v9E
+ RkuRq/XBqDh08K7qiG55C+q6VXX25vKHJvC3RFeh3sVdfUfq2bKAq4ZkIqEV57dKQRdy
+ He/uQ392WpvC0RGwK6wNo0EwkJLOVi9H6BClpwLrX3P+6EQLdEupvCB5Rh0d357XouCR
+ kBDY1tbtJ8u+YD1HGb5amQKgVxOiim1cZfjLVVewsK5phvUtimeEoat6HcsUdZVkdBZJ
+ lUDQ==
+X-Gm-Message-State: AOJu0Yze0GiCx/iGFsoh36JfkVazi9MCZpY5hWGPHPpqEU2bW/aiLQlW
+ 3QoyyVH6tBb+LcT6Czy/cJ1fek16kSS8ti3xnxaoi0Mxa8Ce1s0AVVlbQ0q9SBKNaZYXUmpzGm0
+ q
+X-Google-Smtp-Source: AGHT+IGvYv5h8OpOxOyVbmpw8qxtPaafTSUOffqI6gFm6yQErngvRvgJuZJRjrHT/ry/ifp6+sDzag==
+X-Received: by 2002:a05:6a20:914e:b0:1a1:4b62:a60a with SMTP id
+ x14-20020a056a20914e00b001a14b62a60amr1223095pzc.7.1709624209958; 
+ Mon, 04 Mar 2024 23:36:49 -0800 (PST)
 Received: from localhost ([157.82.203.206])
  by smtp.gmail.com with UTF8SMTPSA id
- i125-20020a639d83000000b005dc5129ba9dsm8564842pgd.72.2024.03.04.23.37.01
+ n39-20020a056a000d6700b006e57defe737sm8396506pfv.76.2024.03.04.23.36.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Mar 2024 23:37:02 -0800 (PST)
+ Mon, 04 Mar 2024 23:36:49 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Tue, 05 Mar 2024 16:36:28 +0900
-Subject: [PATCH v2 11/13] contrib/elf2dmp: Build only for little endian
- host
+Date: Tue, 05 Mar 2024 16:36:24 +0900
+Subject: [PATCH v2 07/13] contrib/elf2dmp: Ensure segment fits in file
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240305-elf2dmp-v2-11-86ff2163ad32@daynix.com>
+Message-Id: <20240305-elf2dmp-v2-7-86ff2163ad32@daynix.com>
 References: <20240305-elf2dmp-v2-0-86ff2163ad32@daynix.com>
 In-Reply-To: <20240305-elf2dmp-v2-0-86ff2163ad32@daynix.com>
 To: Viktor Prutyanov <viktor.prutyanov@phystech.edu>, 
  Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::c32;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-oo1-xc32.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::435;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -96,23 +95,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-elf2dmp assumes little endian host in many places.
+This makes elf2dmp more robust against corrupted inputs.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- contrib/elf2dmp/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/elf2dmp/addrspace.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/elf2dmp/meson.build b/contrib/elf2dmp/meson.build
-index 6707d43c4fa5..046569861f7a 100644
---- a/contrib/elf2dmp/meson.build
-+++ b/contrib/elf2dmp/meson.build
-@@ -1,4 +1,4 @@
--if curl.found()
-+if curl.found() and host_machine.endian() == 'little'
-   executable('elf2dmp', files('main.c', 'addrspace.c', 'download.c', 'pdb.c', 'qemu_elf.c'), genh,
-              dependencies: [glib, curl],
-              install: true)
+diff --git a/contrib/elf2dmp/addrspace.c b/contrib/elf2dmp/addrspace.c
+index e01860d15b07..81295a11534a 100644
+--- a/contrib/elf2dmp/addrspace.c
++++ b/contrib/elf2dmp/addrspace.c
+@@ -88,11 +88,12 @@ void pa_space_create(struct pa_space *ps, QEMU_Elf *qemu_elf)
+     ps->block = g_new(struct pa_block, ps->block_nr);
+ 
+     for (i = 0; i < phdr_nr; i++) {
+-        if (phdr[i].p_type == PT_LOAD) {
++        if (phdr[i].p_type == PT_LOAD && phdr[i].p_offset < qemu_elf->size) {
+             ps->block[block_i] = (struct pa_block) {
+                 .addr = (uint8_t *)qemu_elf->map + phdr[i].p_offset,
+                 .paddr = phdr[i].p_paddr,
+-                .size = phdr[i].p_filesz,
++                .size = MIN(phdr[i].p_filesz,
++                            qemu_elf->size - phdr[i].p_offset),
+             };
+             pa_block_align(&ps->block[block_i]);
+             block_i = ps->block[block_i].size ? (block_i + 1) : block_i;
 
 -- 
 2.44.0
