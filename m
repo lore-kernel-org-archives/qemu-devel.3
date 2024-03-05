@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38A5CC54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 07:38:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DF24C54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 07:38:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhPMj-0006X8-QU; Tue, 05 Mar 2024 02:37:33 -0500
+	id 1rhPMw-0006xS-4Z; Tue, 05 Mar 2024 02:37:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rhPLu-00067p-FM
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 02:36:43 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1rhPMM-0006Hy-85
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 02:37:13 -0500
+Received: from mail-oo1-xc32.google.com ([2607:f8b0:4864:20::c32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rhPLq-0005r7-VH
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 02:36:41 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1dc49b00bdbso48092875ad.3
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 23:36:38 -0800 (PST)
+ id 1rhPMJ-0005sv-Jz
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 02:37:09 -0500
+Received: by mail-oo1-xc32.google.com with SMTP id
+ 006d021491bc7-5a0b1936400so2462888eaf.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 23:37:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709624197; x=1710228997;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709624223; x=1710229023;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=dNi2CODBILcZJ3pornZRE2FYjihFpsMHPvoOvkX8mDc=;
- b=YJtnwlH3TYKARwQTedLbVGSQNeuwx3NugHPWQEbXR9HAgvfr4S5Ux1bH/HQh1LVm8g
- BBM8RWo+28/fbIjTOQ2i6+U3xigRqWoN0RbC88ZHZQ2XrEUKqX2L4MS9FhQXFF6gAawj
- C9FrejFF0DWKeAQCkSNjTvLUR3wCa4O6LC2VI4bPrrt8Q2OKxfkL+EgcOJpyHkXgJ0R5
- 2GtxM+aMunFPcXUSfxU9mPEPGcFQwKvdRdbBmGPPXK8M2FdcSHF352jQf4DpIEXzjFPq
- 9opAnrFlx2krO+FOoFfAPaYk3ObELggUEKS9d/2HTQ2E5Umc3LtsSLQS5fC8hParGS63
- QVLw==
+ :reply-to; bh=oaZOxuMruCzpX9cG/05AqpvWpWeh3L71YtF+WLnYGuQ=;
+ b=D/OO7UprfeihY7W4L1cvUSN3/EnS9V9z6TFOoh5W7w0lcb7kf9zwLvOzLLeJBUZdGA
+ Xv2pjAIWWtoqKaJiwxMn3iE1st3ptUTYtGKkNRPi4aUM/UVOZ3R7x0t6RV58AO98y++w
+ obKs2cukktB7iyrOC3/bmaEM7rlMPZwEpB8mUq2VoWm4iWsFHJorYlMRn6KTFim/9IVI
+ 01jL/+yAffeDU8XGSr9MjqU6/yNRVj2na2wpmC2P3Q1dW4wiqBm6t5bXANtd7CWZFtuh
+ 5UzGRwiqVohIJH+NcCZPgn49FnDAM0T0Mn1h3ak2Uf51Tadg1s24H0UBtCzxAStBxLeM
+ inoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709624197; x=1710228997;
+ d=1e100.net; s=20230601; t=1709624223; x=1710229023;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dNi2CODBILcZJ3pornZRE2FYjihFpsMHPvoOvkX8mDc=;
- b=uUlAbyo3BT8omPjxl2JW5ujbX8f3p0UmlHSYbCPKWKd37iui/lD5zoYkR2nZ77ck6v
- deF3rELXwm67PSDt6G9J28G77hDrqHITpFmBlGT2z36ITMa131rrUUgxiprc//2RHpdk
- gdgxAfXwfR55+xW4r55ptF8qIcZ7qb8WxSU/OWOHWWRAzIPhcSHyd/wTVJ3YWnqCB8Sw
- zsbo5Bc1kBSYMa23tvkQljATCNCn4sviHu4h10cp/aUfvR9SHr0lveD/CMYwM7AMrZta
- xZ5p5gwKuEfuA3oP0xyiy2leukOk1qWrW0TNMAXmyIlS9rDIZ6gl02MGVjFyfIh5Zx4k
- MCJA==
-X-Gm-Message-State: AOJu0Yz2xuJ+paP6CT/QYBh86lX/h0PagUnMW5h13VulDinkwO38fby7
- A69XuVixNjS2rgu+0OyI9HC85GXdZgJZ5cWYOHxnBzfTO/F2tm9fInY8RLTdZ3tC2y3oPhZmSiC
- b
-X-Google-Smtp-Source: AGHT+IEjw1wkFY0spBfs/nxee99IMG11NMdPDQs85sISzCkuBEVDYT6GwkbtvzNIejOc4L7hd3H9FQ==
-X-Received: by 2002:a17:902:a514:b0:1d9:7095:7e3c with SMTP id
- s20-20020a170902a51400b001d970957e3cmr1002127plq.57.1709624197590; 
- Mon, 04 Mar 2024 23:36:37 -0800 (PST)
+ bh=oaZOxuMruCzpX9cG/05AqpvWpWeh3L71YtF+WLnYGuQ=;
+ b=CuoXE5Rxg1YTguMTieXayZEKRnkLbOfd6nM8rHerSFpy4O640DaIkCq9U9Vx602QBc
+ Dsek/DVUtLBWwXO+1wwqlbWbWjJdrhSZPb4MLBXsVpKT8jY9ogishye5yYmBesMuUKnN
+ a98XPuyanBH54GFAut/t1F5xCS0Tqj5ata25g1NYZXJPfnss+7b/DG0yMlDADLO9IhEX
+ ejIyCXtqGgr1QbApoRWuZUz8Q5RXq9qO9QzW5k7sdrBGYHBhYuSYEERjOo76AhkzzuEK
+ cRjzO53RnAqu0udSaUSsf9xnthsvJXD4SvUUoESz0Tme6W3KgPHmfJRO6g1Cdwhr5BDD
+ 8fPw==
+X-Gm-Message-State: AOJu0YzUGpYmmR8Ek2fw9XAXiX27WKnPcXvFcyxKme4JX18hpt5I9HN6
+ KIErfqu5L8hVjrvYgz4syEuI+F23EKN00RZewJyD0RUzx0KYu9KGtVBJZU70dqs3nZoMO/x8skB
+ d
+X-Google-Smtp-Source: AGHT+IFD5V9C+rYlvE7xfnzq62Jhok5FWGVhkrdtetfQdPkAJsCibYir0qzDD/g5wLhA4zYTdyRSCg==
+X-Received: by 2002:a05:6358:7e42:b0:17b:c797:8a08 with SMTP id
+ p2-20020a0563587e4200b0017bc7978a08mr1157066rwm.20.1709624222779; 
+ Mon, 04 Mar 2024 23:37:02 -0800 (PST)
 Received: from localhost ([157.82.203.206])
  by smtp.gmail.com with UTF8SMTPSA id
- l12-20020a170903120c00b001db66f3748fsm9750555plh.182.2024.03.04.23.36.36
+ i125-20020a639d83000000b005dc5129ba9dsm8564842pgd.72.2024.03.04.23.37.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Mar 2024 23:36:37 -0800 (PST)
+ Mon, 04 Mar 2024 23:37:02 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Tue, 05 Mar 2024 16:36:20 +0900
-Subject: [PATCH v2 03/13] contrib/elf2dmp: Continue even contexts are lacking
+Date: Tue, 05 Mar 2024 16:36:28 +0900
+Subject: [PATCH v2 11/13] contrib/elf2dmp: Build only for little endian
+ host
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240305-elf2dmp-v2-3-86ff2163ad32@daynix.com>
+Message-Id: <20240305-elf2dmp-v2-11-86ff2163ad32@daynix.com>
 References: <20240305-elf2dmp-v2-0-86ff2163ad32@daynix.com>
 In-Reply-To: <20240305-elf2dmp-v2-0-86ff2163ad32@daynix.com>
 To: Viktor Prutyanov <viktor.prutyanov@phystech.edu>, 
  Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::62d;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62d.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::c32;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oo1-xc32.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -95,77 +96,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Let fill_context() continue even if it fails to fill contexts of some
-CPUs. A dump may still contain valuable information even if it lacks
-contexts of some CPUs due to dump corruption or a failure before
-starting CPUs.
+elf2dmp assumes little endian host in many places.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- contrib/elf2dmp/main.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ contrib/elf2dmp/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/contrib/elf2dmp/main.c b/contrib/elf2dmp/main.c
-index 9b278f392e39..89bf4e23566b 100644
---- a/contrib/elf2dmp/main.c
-+++ b/contrib/elf2dmp/main.c
-@@ -336,7 +336,12 @@ static int fill_header(WinDumpHeader64 *hdr, struct pa_space *ps,
-     return 0;
- }
- 
--static int fill_context(KDDEBUGGER_DATA64 *kdbg,
-+/*
-+ * fill_context() continues even if it fails to fill contexts of some CPUs.
-+ * A dump may still contain valuable information even if it lacks contexts of
-+ * some CPUs due to dump corruption or a failure before starting CPUs.
-+ */
-+static void fill_context(KDDEBUGGER_DATA64 *kdbg,
-         struct va_space *vs, QEMU_Elf *qe)
- {
-     int i;
-@@ -350,7 +355,7 @@ static int fill_context(KDDEBUGGER_DATA64 *kdbg,
-         if (va_space_rw(vs, kdbg->KiProcessorBlock + sizeof(Prcb) * i,
-                     &Prcb, sizeof(Prcb), 0)) {
-             eprintf("Failed to read CPU #%d PRCB location\n", i);
--            return 1;
-+            continue;
-         }
- 
-         if (!Prcb) {
-@@ -361,7 +366,7 @@ static int fill_context(KDDEBUGGER_DATA64 *kdbg,
-         if (va_space_rw(vs, Prcb + kdbg->OffsetPrcbContext,
-                     &Context, sizeof(Context), 0)) {
-             eprintf("Failed to read CPU #%d ContextFrame location\n", i);
--            return 1;
-+            continue;
-         }
- 
-         printf("Filling context for CPU #%d...\n", i);
-@@ -369,11 +374,9 @@ static int fill_context(KDDEBUGGER_DATA64 *kdbg,
- 
-         if (va_space_rw(vs, Context, &ctx, sizeof(ctx), 1)) {
-             eprintf("Failed to fill CPU #%d context\n", i);
--            return 1;
-+            continue;
-         }
-     }
--
--    return 0;
- }
- 
- static int pe_get_data_dir_entry(uint64_t base, void *start_addr, int idx,
-@@ -619,9 +622,7 @@ int main(int argc, char *argv[])
-         goto out_kdbg;
-     }
- 
--    if (fill_context(kdbg, &vs, &qemu_elf)) {
--        goto out_kdbg;
--    }
-+    fill_context(kdbg, &vs, &qemu_elf);
- 
-     if (write_dump(&ps, &header, argv[2])) {
-         eprintf("Failed to save dump\n");
+diff --git a/contrib/elf2dmp/meson.build b/contrib/elf2dmp/meson.build
+index 6707d43c4fa5..046569861f7a 100644
+--- a/contrib/elf2dmp/meson.build
++++ b/contrib/elf2dmp/meson.build
+@@ -1,4 +1,4 @@
+-if curl.found()
++if curl.found() and host_machine.endian() == 'little'
+   executable('elf2dmp', files('main.c', 'addrspace.c', 'download.c', 'pdb.c', 'qemu_elf.c'), genh,
+              dependencies: [glib, curl],
+              install: true)
 
 -- 
 2.44.0
