@@ -4,71 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 458A5C54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 14:19:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4886DC54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 14:26:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhVcP-0005kF-EQ; Tue, 05 Mar 2024 09:18:09 -0500
+	id 1rhVjm-0000Wj-BL; Tue, 05 Mar 2024 09:25:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rhVcO-0005k6-Ik
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 09:18:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rhVjk-0000WK-2k
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 09:25:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rhVcM-0003Kv-KT
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 09:18:08 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rhVji-0004pu-9P
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 09:25:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709648284;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=PNBQaR6KsKmYg0wNjWKy9lcVdNG94/gkgKzakxuxElY=;
- b=iMuD9EO8fFipBP49cpOymW0/hSzYMdWvx/KSODBKVWTROQjVutBXoY115XrhfLaTyY4njA
- u4WCrxYQXQc+im/kcv/W7WA9T5kjTNmk5RxiWYS0fB/oN/UUAOc4CmWpoOgYoymd05FXN0
- 7Z8ggglu6pYHHzTgOih/aVkLDbQNFmY=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-208-PdZSlsI9MxW6DotbetgkUA-1; Tue,
- 05 Mar 2024 09:18:02 -0500
-X-MC-Unique: PdZSlsI9MxW6DotbetgkUA-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9FBF83CBDF69;
- Tue,  5 Mar 2024 14:18:02 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.66])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 69BCD1C060D6;
- Tue,  5 Mar 2024 14:18:01 +0000 (UTC)
-Date: Tue, 5 Mar 2024 14:17:59 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Tim Wiederhake <twiederh@redhat.com>
-Cc: qemu-devel@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH v3 0/5] Generate x86 cpu features
-Message-ID: <ZecplxvAjp07vnQ_@redhat.com>
-References: <20240206134739.15345-1-twiederh@redhat.com>
+ s=mimecast20190719; t=1709648741;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zUHKWz896Esprjn5bEOSh0X+iP+QTfVdXVUIO0Xrxak=;
+ b=dn2rNs237pghlDMF4HIxi0zZEzbmt2Wg5qstTjc25iewsXQj6YF9yl9jykQH7Gc7lOLg9/
+ Oj5K+C64+CqAKtgzl8MvzDVXXFBA9R6qEcpuIPLHTMyBcGhDiLVD0Qg6Z8FLQPNINMfQ1z
+ +IdEmOJDdnFEfEKXRh8CMY3MaFbMxpQ=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-561-OAXR6RDPNHSFqa9OIHDHyg-1; Tue, 05 Mar 2024 09:25:40 -0500
+X-MC-Unique: OAXR6RDPNHSFqa9OIHDHyg-1
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-783350c4584so115251185a.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 06:25:40 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709648740; x=1710253540;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zUHKWz896Esprjn5bEOSh0X+iP+QTfVdXVUIO0Xrxak=;
+ b=oS7Axy0i6n2POr6POsggru3cX0xRa+yVMzOmkV4jvey8WA9W8a9H9MtUCygCdzgTnW
+ NiS0Xke5qWXvOh1HU2dhSLbIhacxqVPeM+sZc8biJStBh+3Qhg8cVT/TMPMqww6mY31Z
+ pSZrY/XVE/A5tSXRvtOmw9FqT9gkZdLFDXQ9IrUg47CE80UDjDC51cBHgIfHOVBeAQos
+ YBf0KqyJ9cnRuUNvfgSpmXyeWAmYTIqUjRuoMz7k9fEHeKbfBgzOjE+fUpAsc9h5O+9e
+ NZSnPPEHLnS/OHG1v1vG0Jn4++T0C6LNyyol4Omv3dpwvPtZmcYXCiW58/+llxgXhwit
+ 8amg==
+X-Gm-Message-State: AOJu0Yx53LUEJyB7NICieYA5YeFTvSwKnQhun+FKab64K5pKLTZUcoDm
+ q5thjjVu//iRIvBXrvmBkujAesEpbV1u1SUdJsEzrC/gPeeh03gyTgc4eypdb1ilD2aLdyVu+PA
+ faBNGqKNoU+3/qMxCRsfSO6zB00QalzSzRf75SGS7iYAm+tBmXh1l
+X-Received: by 2002:a05:620a:1359:b0:788:322c:3c1a with SMTP id
+ c25-20020a05620a135900b00788322c3c1amr1979866qkl.75.1709648739805; 
+ Tue, 05 Mar 2024 06:25:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGY5tFffHNwwtbpZoa1l5dOALO1K9EC5KRl0ZNhv0Eethu9WYjmJ1yBQhsUnsM2j5krj9Fv0w==
+X-Received: by 2002:a05:620a:1359:b0:788:322c:3c1a with SMTP id
+ c25-20020a05620a135900b00788322c3c1amr1979834qkl.75.1709648739514; 
+ Tue, 05 Mar 2024 06:25:39 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ c24-20020ae9e218000000b00788349c0098sm742539qkc.50.2024.03.05.06.25.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 Mar 2024 06:25:39 -0800 (PST)
+Message-ID: <4022ae23-7151-4fb0-abb5-82539feacad0@redhat.com>
+Date: Tue, 5 Mar 2024 15:25:35 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240206134739.15345-1-twiederh@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 14/26] memory: Add Error** argument to .log_global*()
+ handlers
+Content-Language: en-US, fr
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+References: <20240304122844.1888308-1-clg@redhat.com>
+ <20240304122844.1888308-15-clg@redhat.com> <ZebQgd3uRuBNACRI@x1n>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <ZebQgd3uRuBNACRI@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.568,
+X-Spam_score_int: -11
+X-Spam_score: -1.2
+X-Spam_bar: -
+X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.568,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,84 +107,68 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 06, 2024 at 02:47:34PM +0100, Tim Wiederhake wrote:
-> Synchronizing the list of cpu features and models with qemu is a recurring
-> task in libvirt. For x86, this is done by reading qom-list-properties for
-> max-x86_64-cpu and manually filtering out everthing that does not look like
-> a feature name, as well as parsing target/i386/cpu.c for cpu models.
+On 3/5/24 08:57, Peter Xu wrote:
+> On Mon, Mar 04, 2024 at 01:28:32PM +0100, Cédric Le Goater wrote:
+>> @@ -2936,15 +2975,22 @@ void memory_global_dirty_log_start(unsigned int flags)
+>>       trace_global_dirty_changed(global_dirty_tracking);
+>>   
+>>       if (!old_flags) {
+>> -        MEMORY_LISTENER_CALL_GLOBAL(log_global_start, Forward);
+>> +        MEMORY_LISTENER_CALL_LOG_GLOBAL(log_global_start, Forward,
+>> +                                        &local_err);
+>> +        if (local_err) {
+>> +            error_report_err(local_err);
+>> +            return;
 > 
-> This is a flawed, tedious and error-prone procedure. Ideally, qemu
-> and libvirt would query a common source for cpu feature and model
-> related information. Meanwhile, converting this information into an easier
-> to parse format would help libvirt a lot.
+> Returns here means global_dirty_tracking will keep the new value even if
+> it's not truly commited globally (in memory_region_transaction_commit()
+> later below).  I think it'll cause inconsistency: global_dirty_tracking
+> should reflect the global status of dirty tracking, and that should match
+> with the MR status cached in FlatViews (which is used in memory core to
+> reflect address space translations).
+
+You are right. FlatRange::dirty_log_mask could be out sync with
+global_dirty_tracking.
+
+> For some details on how that flag applied to each MR, feel free to have a
+> quick look in address_space_update_topology_pass() of the "else if (frold
+> && frnew && flatrange_equal(frold, frnew))".>
+> Here IIUC if to fully support a graceful failure (IIUC that is the goal for
+> VFIO.. and this op should be easily triggerable by the user), then we need
+> to do proper unwind on both:
 > 
-> This patch series converts the cpu feature information present in
-> target/i386/cpu.c (`feature_word_info`) into a yaml file and adds a
-> script to generate the c code from this data.
+>    - Call proper log_global_stop() on those who has already been started
+>      successfully before the current failed log_global_start(), then,
 
-Looking at this fresh, I'm left wondering why I didn't suggested
-using 'QMP' to expose this information when reviewing the earlier
-versions. I see Igor did indeed suggest this:
+Yes. This needs more work to restore the initial state. The current
+proposal is relying on save_cleanup() to restore the previous state.
+This is not enough.
 
-  https://lists.nongnu.org/archive/html/qemu-devel/2023-09/msg03905.html
+>    - Reset global_dirty_tracking to old_flags before return
+> 
+> We may want to make sure trace_global_dirty_changed() is only called when
+> all things succeeded.
 
-Your commentry that "qom-list-properties" doesn't distinguish
-between CPU features and other random QOM properties is bang
-on the money.
+That should be done after the loop on listeners even today.
 
-I think what this highlights, is that 'qom-list-properties'
-is a very poor design/fit for the problem that management apps
-need to solve in this regard.
+> I don't have a strong opinion on whether do we need similar error report
+> interfaces for _stop() and _log_sync(). 
 
-Libvirt should not need to manually exclude non-feature properties
-like 'check' 'enforce' 'migratable' etc.
+Yes. Let's focus on log_global_start(). The other changes are not necessary
+for VFIO.
 
-QEMU already has this knowledge, as IIUC, 'query-cpu-model-expansion'
-can distinguish this:
+> I'd still suggest the same that we
+> drop them to make the patch simpler, but only add such error reports for
+> log_global_start().  If they never get triggered they're dead code anyway,
+> so I don't think "having errp for all APIs" is a must-to-have at least to me.
 
-query-cpu-model-expansion type=static model={'name':'Nehalem'}
-{
-    "return": {
-        "model": {
-            "name": "base",
-            "props": {
-                "3dnow": false,
-                ...snip...
-                "xtpr": false
-            }
-        }
-    }
-}
+I am fine with that.
 
-We still have the problem that we're not exposing the CPUID/MSR
-leafs/register bits. So query-cpu-model-expansion isn't a fit
-for the problem.
+Thanks,
 
-Rather than try to design something super general purpose, I'd
-suggest we take a short cut and design something entirley x86
-specific, and simply mark the QMP command as "unstable"
-eg a 'x-query-x86-cpu-model-features', and then basically
-report all the information libvirt needs there.
-
-This is functionally equivalent to what you expose in the YAML
-file, while still using QEMU's formal 'QMP' API mechanism, so
-we avoid inventing a new API concept via YAML.
-
-I think this would avoid need to have a code generator refactor
-the CPU definitions too. We just need to expose the values of
-the existing CPUID_xxx constants against each register.
-
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+C.
 
 
