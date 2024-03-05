@@ -4,73 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90F55C54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 14:00:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 458A5C54E41
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 14:19:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhVLA-0007MM-Qj; Tue, 05 Mar 2024 09:00:26 -0500
+	id 1rhVcP-0005kF-EQ; Tue, 05 Mar 2024 09:18:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhVKP-0007Am-5B
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:59:42 -0500
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhVK9-0006yH-RF
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:59:19 -0500
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-564fc495d83so6952791a12.0
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:59:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709647155; x=1710251955; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Lawp1sjxEsVyZiI+IHrhk2/sI27YCGTO5bv9sr9ZoH0=;
- b=hoj9gIETxPFjgrAWGLeJQ05mOKZOB11/YaabnPqYkmldv4060oOVprAWeTRMYjBzw1
- 1rbDoF7vp2cGksVSwU02StJg1/+GSHdGVne+JQucZREnEKUWd21HNvvdp580WqolJYrX
- NaG4ztk04rPRxi/83GPuXwnQYDjTqhJoIChOjjC4WYdfHWKhT+bnptjI7o+ODtFvJMzj
- KF6a543z0MPU+R869xhk8i1q35XzcLR5SK+biJsilhOfKNvsl/yEtpba2cRUqPeY6gBT
- kTKKSX9NjCa7Z8HUn3bihyF26ifhH2Rlcx9G85GyaB6fv1RJlmDRTr5k/8qBP6m1ZSev
- Vdsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709647155; x=1710251955;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Lawp1sjxEsVyZiI+IHrhk2/sI27YCGTO5bv9sr9ZoH0=;
- b=EXaLHmnc8a3rBX/zFT01JHTpztsshU2gWpRHzpMfppiPwimdKw1A8fnhWkRG9tvGyb
- 8SEtSq42iBYAgwoV03+BZjly51Z0xmcmJhfPy8gJwuMk3r0tiBjye/LROO0RCCs4bgLs
- PD7YToG7op73M9qDvZ6rVhlmGRS0pYD4niAd9gQzFlNogSiTYEOwlZ77xwoDU1CblsuH
- jClARpfJ1S0rHbmb7bSD15O98K80TP/y+d1p+9nGJ+/2HWO/ljj/6LTxho+z3g8JdyCE
- dds9xNbZK5nHZNmyVEjkY2ZWDKEYRUPwvz1JFeXREJERNdJHpkZ8a/WtyCgZEKpEiAjg
- GjJg==
-X-Gm-Message-State: AOJu0Yxmp990AiNqbcciMJYhk4WICwdpEnXEpHZGqUTDobXsxUze8K7Y
- 19Bkobzeh7UMkYgjB3vJDF4JyrLLVF7jdRbxhoi3Pyxncv5p50lL/ETcHk2xrry7P8gsNfzkvHf
- pTaeRvj2NsCF7m/jNa78nIyGfp3SgaDTrMvttBggxflwqOecT
-X-Google-Smtp-Source: AGHT+IEkVyiUCD2hR3xTa2jUlilUzjISsMfXyD5EOhH7edVtoFOF8ma+HkAJNHG69wQ2tnApwkcWaT0/nCq6GFECv/0=
-X-Received: by 2002:a50:85cb:0:b0:566:5cb2:c76c with SMTP id
- q11-20020a5085cb000000b005665cb2c76cmr8881531edh.3.1709647155442; Tue, 05 Mar
- 2024 05:59:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rhVcO-0005k6-Ik
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 09:18:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rhVcM-0003Kv-KT
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 09:18:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709648284;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=PNBQaR6KsKmYg0wNjWKy9lcVdNG94/gkgKzakxuxElY=;
+ b=iMuD9EO8fFipBP49cpOymW0/hSzYMdWvx/KSODBKVWTROQjVutBXoY115XrhfLaTyY4njA
+ u4WCrxYQXQc+im/kcv/W7WA9T5kjTNmk5RxiWYS0fB/oN/UUAOc4CmWpoOgYoymd05FXN0
+ 7Z8ggglu6pYHHzTgOih/aVkLDbQNFmY=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-208-PdZSlsI9MxW6DotbetgkUA-1; Tue,
+ 05 Mar 2024 09:18:02 -0500
+X-MC-Unique: PdZSlsI9MxW6DotbetgkUA-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9FBF83CBDF69;
+ Tue,  5 Mar 2024 14:18:02 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.66])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 69BCD1C060D6;
+ Tue,  5 Mar 2024 14:18:01 +0000 (UTC)
+Date: Tue, 5 Mar 2024 14:17:59 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Tim Wiederhake <twiederh@redhat.com>
+Cc: qemu-devel@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH v3 0/5] Generate x86 cpu features
+Message-ID: <ZecplxvAjp07vnQ_@redhat.com>
+References: <20240206134739.15345-1-twiederh@redhat.com>
 MIME-Version: 1.0
-References: <CAK4oD7BPCf5o-OR8WThb3QGJbrJnYpHipjKv-hY9rkWNOSAHjA@mail.gmail.com>
-In-Reply-To: <CAK4oD7BPCf5o-OR8WThb3QGJbrJnYpHipjKv-hY9rkWNOSAHjA@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 5 Mar 2024 13:59:04 +0000
-Message-ID: <CAFEAcA8wQK_jfj+q-70TJ9Mnu+JHan_oNPYTDMMUmsBm7kMcOw@mail.gmail.com>
-Subject: Re: ARM hypervisors
-To: RR NN <rnn59437@gmail.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240206134739.15345-1-twiederh@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.568,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,22 +81,84 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 5 Mar 2024 at 13:40, RR NN <rnn59437@gmail.com> wrote:
->
-> Hello
-> ARM hypervisors (pKVM, Gunyah) can run x86 OSs?
+On Tue, Feb 06, 2024 at 02:47:34PM +0100, Tim Wiederhake wrote:
+> Synchronizing the list of cpu features and models with qemu is a recurring
+> task in libvirt. For x86, this is done by reading qom-list-properties for
+> max-x86_64-cpu and manually filtering out everthing that does not look like
+> a feature name, as well as parsing target/i386/cpu.c for cpu models.
+> 
+> This is a flawed, tedious and error-prone procedure. Ideally, qemu
+> and libvirt would query a common source for cpu feature and model
+> related information. Meanwhile, converting this information into an easier
+> to parse format would help libvirt a lot.
+> 
+> This patch series converts the cpu feature information present in
+> target/i386/cpu.c (`feature_word_info`) into a yaml file and adds a
+> script to generate the c code from this data.
 
-No. A hypervisor uses the host CPU's virtualization extensions
-to allow the guest code to run directly on the host CPU. This
-is why they're fast. This also means that they only work when
-the guest CPU is the same architecture as the host CPU.
-So you can run an x86 OS on an x86 host CPU, or an Arm
-OS on an Arm host CPU using a hypervisor, but you can't run
-a guest of the "wrong" architecture.
+Looking at this fresh, I'm left wondering why I didn't suggested
+using 'QMP' to expose this information when reviewing the earlier
+versions. I see Igor did indeed suggest this:
 
-thanks
--- PMM
+  https://lists.nongnu.org/archive/html/qemu-devel/2023-09/msg03905.html
+
+Your commentry that "qom-list-properties" doesn't distinguish
+between CPU features and other random QOM properties is bang
+on the money.
+
+I think what this highlights, is that 'qom-list-properties'
+is a very poor design/fit for the problem that management apps
+need to solve in this regard.
+
+Libvirt should not need to manually exclude non-feature properties
+like 'check' 'enforce' 'migratable' etc.
+
+QEMU already has this knowledge, as IIUC, 'query-cpu-model-expansion'
+can distinguish this:
+
+query-cpu-model-expansion type=static model={'name':'Nehalem'}
+{
+    "return": {
+        "model": {
+            "name": "base",
+            "props": {
+                "3dnow": false,
+                ...snip...
+                "xtpr": false
+            }
+        }
+    }
+}
+
+We still have the problem that we're not exposing the CPUID/MSR
+leafs/register bits. So query-cpu-model-expansion isn't a fit
+for the problem.
+
+Rather than try to design something super general purpose, I'd
+suggest we take a short cut and design something entirley x86
+specific, and simply mark the QMP command as "unstable"
+eg a 'x-query-x86-cpu-model-features', and then basically
+report all the information libvirt needs there.
+
+This is functionally equivalent to what you expose in the YAML
+file, while still using QEMU's formal 'QMP' API mechanism, so
+we avoid inventing a new API concept via YAML.
+
+I think this would avoid need to have a code generator refactor
+the CPU definitions too. We just need to expose the values of
+the existing CPUID_xxx constants against each register.
+
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
