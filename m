@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB1F6C54E4A
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 10:08:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87261C54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 10:22:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhRic-00045T-Oi; Tue, 05 Mar 2024 05:08:18 -0500
+	id 1rhRuu-0006pa-P0; Tue, 05 Mar 2024 05:21:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rhRib-00044y-BW
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 05:08:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rhRuo-0006pD-8s
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 05:20:54 -0500
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rhRiZ-0007pG-LN
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 05:08:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709633293;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vBFJjak2kPJbPumj6Klm0aRcNBGL6fk+t48daLXgxc4=;
- b=gFwIf56saiyo4gLO+NAOnbD5lhHspBUoUdKrSK1bBTypC00D1g4wwzUg4lL+QcFD4QmTGb
- JD8OUk33+we5g60iyj7PSi0w+/Ti/3NLlTs5kDXDOq2vORT1kA6zpxb6EeaA/7c5M9vq6B
- aTwasZqxGaG/PmFuf6qp+geK1rP+kCE=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-670-1kKo8N-FPtGhggKoi8UQPQ-1; Tue, 05 Mar 2024 05:08:12 -0500
-X-MC-Unique: 1kKo8N-FPtGhggKoi8UQPQ-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-412ae5704f7so35982345e9.1
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 02:08:11 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709633291; x=1710238091;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vBFJjak2kPJbPumj6Klm0aRcNBGL6fk+t48daLXgxc4=;
- b=dNEmIvIOARQNr1eW1F/dvulkdKJe78psO3naH7ysipzSoKz62Ncyov4memVgHDZB2r
- fx+dbmVt2FJG1eaYNEe7kvZh2nP6cBwDR4tNuI6ETuk6/hWMt9GyHTMKQpcHAJgzsKyP
- SOKA9wq4e1TNuwK2+wbwYxmSyNB4dVNKZjmPWjn/46y5m4PKijGl5C6q36dQhsgriKyp
- YOMIZDT/bCj3ncNMEkt9UjFe5V4xC1lE+KEPUIfS7EUczYi/RrLujxFBU/R8KGaK966P
- SsGjSW42xvRhxKOoqd0WPwk651Wt53XqkHhhANS39gnPXSoqVPtf6u1zZQ0twidlwBL1
- BREA==
-X-Gm-Message-State: AOJu0YxC2S4ygSf1y+dwOBI3YtpnlweA3FiLLroLTvd1hxkJjYYhYiOx
- Mr9VWMLichqaScQCuP0yDLyNF4OLcCLW3n/SJtvR8Bm4X44rwP4wZ2q6jNwhJTKdVSHCLuAb1Fd
- BGoAMMdGAJoB+3dx7HKaGsZdh7HQvDp9crqXwuviUIJUs/YMvvaLf
-X-Received: by 2002:a05:600c:444c:b0:412:efe5:7fcb with SMTP id
- v12-20020a05600c444c00b00412efe57fcbmr156623wmn.39.1709633290944; 
- Tue, 05 Mar 2024 02:08:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEYzCL4mG5M7+KIVv8xdqugBIWcbXjCA47hgErz6+RHKIS9fS4b+lQ0QidUoxxlDSjPV7BJgQ==
-X-Received: by 2002:a05:600c:444c:b0:412:efe5:7fcb with SMTP id
- v12-20020a05600c444c00b00412efe57fcbmr156596wmn.39.1709633290565; 
- Tue, 05 Mar 2024 02:08:10 -0800 (PST)
-Received: from redhat.com ([2.52.130.198]) by smtp.gmail.com with ESMTPSA id
- be10-20020a05600c1e8a00b00412ea14ff91sm2578048wmb.21.2024.03.05.02.08.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Mar 2024 02:08:10 -0800 (PST)
-Date: Tue, 5 Mar 2024 05:08:05 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, pbonzini@redhat.com,
- gaosong@loongson.cn, alistair.francis@wdc.com, palmer@dabbelt.com,
- bin.meng@windriver.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
- anisinha@redhat.com, philmd@linaro.org, wangyanan55@huawei.com,
- eblake@redhat.com, armbru@redhat.com, qemu-arm@nongnu.org,
- qemu-riscv@nongnu.org, f.ebner@proxmox.com
-Subject: Re: [PATCH 00/19] Workaround Windows failing to find 64bit SMBIOS
- entry point with SeaBIOS
-Message-ID: <20240305050735-mutt-send-email-mst@kernel.org>
-References: <20240227154749.1818189-1-imammedo@redhat.com>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rhRum-0001WU-KH
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 05:20:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=zMkxgwHIKoHtumftQNJFI/2RE9KVesaYVJXrfwvmPUk=; b=QeuLL7qQ82gD2nVYMj1fwRioxy
+ CpjsZil7KzX3sMwmfS10x4kQsWgPmOqb8ELj+o7JohDqIwonW0JXY7HJ09IFzRgkZ3XbtYs2qcyL3
+ rux41KMjC5kfqK5ar66CWr+yFbu/X6nwIVHC2Gto8DyRH9gZs95dqJbAtlpfJqQNLzzoJyHilIEE9
+ avgtea84IPW/0ttftmFSPbWdueGxh2IeUy+NEG22BvmS+eC2usCDKfLfZ7sM7L2dlBpu2SbLNeN0N
+ 4mUjotZ4avR1UqpIWKW3RVPpQXMY0uZXs67cOv1wC8kLMf+Vfh1MstKZETRbpXFjM8n7gFWJX5byp
+ z1gIYTr+zmVAdoSaXmThjmWtVC2DvPmnUtPN600kEH06jQ12Kxjgl+SBToCNHPI1n1HcgmIwJUs68
+ BqsyO0+FXgf6neuQWzDZbp5yuuEZI+O0SGH3sjmRo4WhWMaX7shEbMIIqdYHMJrtWrNcSOfvXgCS9
+ 9+NAJyhTAh8vmSOFLxj5bIboMZCynMe9XhyY1tc07DRc/3Ys95afh/xhtYAriw5UxAvy+BMtIqgi1
+ OPBuFIj/5EOJ/FXbqqOwteTcwVPQZFHN4V+3oGUUlAkmV0TCtOfxbPx6th4KG6WXJbVStl8HADrns
+ HFnQBj84fuKkzL+AhgpQqx511mCI3EWjt3io9hKw0=;
+Received: from host86-159-123-79.range86-159.btcentralplus.com
+ ([86.159.123.79] helo=[10.8.0.6])
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rhRty-000Bm9-L5; Tue, 05 Mar 2024 10:20:03 +0000
+Message-ID: <870d1970-8c5f-46de-a1fa-57abad7730d1@ilande.co.uk>
+Date: Tue, 5 Mar 2024 10:20:45 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240227154749.1818189-1-imammedo@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: atar4qemu@gmail.com
+References: <20240302051601.53649-1-richard.henderson@linaro.org>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20240302051601.53649-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 86.159.123.79
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH 00/41] target/sparc: Implement VIS4
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,99 +105,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 27, 2024 at 04:47:30PM +0100, Igor Mammedov wrote:
-> Windows (10) bootloader when running on top of SeaBIOS, fails to find            
-> SMBIOSv3 entry point. Tracing it shows that it looks for v2 anchor markers       
-> only and not v3. Tricking it into believing that entry point is found            
-> lets Windows successfully locate and parse SMBIOSv3 tables. Whether it           
-> will be fixed on Windows side is not clear so here goes a workaround.            
->                                                                                  
-> Idea is to try build v2 tables if QEMU configuration permits,                    
-> and fallback to v3 tables otherwise. That will mask Windows issue                
-> form majority of users.                                                          
-> However if VM configuration can't be described (typically large VMs)             
-> by v2 tables, QEMU will use SMBIOSv3 and Windows will hit the issue              
-> again. In this case complain to Microsoft and/or use UEFI instead of             
-> SeaBIOS (requires reinstall).                                                    
+On 02/03/2024 05:15, Richard Henderson wrote:
 
-Igor so you want to repost a version with a couple of patches squashed?
-
-
-> Default compat setting of smbios-entry-point-type after series                   
-> for pc/q35 machines:                                                             
->   * 9.0-newer: 'auto'                                                            
->   * 8.1-8.2: '64'                                                                
->   * 8.0-older: '32'                                                              
->                                                                                  
-> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2008                        
-> CC: peter.maydell@linaro.org                                                     
-> CC: pbonzini@redhat.com                                                          
-> CC: mst@redhat.com                                                               
-> CC: gaosong@loongson.cn                                                          
-> CC: alistair.francis@wdc.com                                                     
-> CC: palmer@dabbelt.com                                                           
-> CC: bin.meng@windriver.com                                                       
-> CC: liwei1518@gmail.com                                                          
-> CC: dbarboza@ventanamicro.com                                                    
-> CC: zhiwei_liu@linux.alibaba.com                                                 
-> CC: imammedo@redhat.com                                                          
-> CC: anisinha@redhat.com                                                          
-> CC: philmd@linaro.org                                                            
-> CC: wangyanan55@huawei.com                                                       
-> CC: eblake@redhat.com                                                            
-> CC: armbru@redhat.com                                                            
-> CC: qemu-arm@nongnu.org                                                          
-> CC: qemu-riscv@nongnu.org                                                        
-> CC: f.ebner@proxmox.com                                                          
->                           
-> Igor Mammedov (19):
->   tests: smbios: make it possible to write SMBIOS only test
->   tests: smbios: add test for -smbios type=11 option
->   tests: smbios: add test for legacy mode CLI options
->   smbios: cleanup smbios_get_tables() from legacy handling
->   smbios: get rid of smbios_smp_sockets global
->   smbios: get rid of smbios_legacy global
->   smbios: avoid mangling user provided tables
->   smbios: don't check type4 structures in legacy mode
->   smbios: build legacy mode code only for 'pc' machine
->   smbios: handle errors consistently
->   smbios: clear smbios_tables pointer after freeing
->   get rid of global smbios_ep_type
->   smbios: extend smbios-entry-point-type with 'auto' value
->   smbios: in case of entry point is 'auto' try to build v2 tables 1st
->   smbios: error out when building type 4 table is not possible
->   smbios: clear smbios_type4_count before building tables
->   tests: acpi/smbios: whitelist expected blobs
->   pc/q35: set SMBIOS entry point type to 'auto' by default
->   tests: acpi: update expected SSDT.dimmpxm blob
+> I whipped this up over the Christmas break, but I'm just now
+> getting around to posting.  I have not attempted to model the
+> newer cpus that have these features, but it is possible to
+> enable the features manually via -cpu properties.
 > 
->  hw/i386/fw_cfg.h                     |   3 +-
->  include/hw/firmware/smbios.h         |  29 +-
->  hw/arm/virt.c                        |   6 +-
->  hw/i386/Kconfig                      |   1 +
->  hw/i386/fw_cfg.c                     |  14 +-
->  hw/i386/pc.c                         |   4 +-
->  hw/i386/pc_piix.c                    |   4 +
->  hw/i386/pc_q35.c                     |   3 +
->  hw/loongarch/virt.c                  |   7 +-
->  hw/riscv/virt.c                      |   6 +-
->  hw/smbios/Kconfig                    |   2 +
->  hw/smbios/meson.build                |   4 +
->  hw/smbios/smbios.c                   | 481 +++++++++++----------------
->  hw/smbios/smbios_legacy.c            | 185 +++++++++++
->  hw/smbios/smbios_legacy_stub.c       |  16 +
->  qapi/machine.json                    |   5 +-
->  tests/data/acpi/q35/SSDT.dimmpxm     | Bin 1815 -> 1815 bytes
->  tests/data/smbios/type11_blob        | Bin 0 -> 11 bytes
->  tests/data/smbios/type11_blob.legacy | Bin 0 -> 10 bytes
->  tests/qtest/bios-tables-test.c       |  81 ++++-
->  20 files changed, 535 insertions(+), 316 deletions(-)
->  create mode 100644 hw/smbios/smbios_legacy.c
->  create mode 100644 hw/smbios/smbios_legacy_stub.c
->  create mode 100644 tests/data/smbios/type11_blob
->  create mode 100644 tests/data/smbios/type11_blob.legacy
+> Possibly the first 6 or 7 patches should be taken sooner than
+> later because they fix bugs in existing VIS[12] code.
 > 
-> -- 
-> 2.39.3
+> I remove cpu_fpr[], so that we can use gvec on the same memory.
+>  
+> r~
+
+Nice! Since all of my SPARC bits and pieces are done with QEMU sun4m/sun4u, I don't 
+really have much in the way that can test the newer VIS instructions. Do you have any 
+particular suite that you've been using for testing, or future plans for particular CPUs?
+
+Generally I'm okay for this to be merged if there is a way for the new VIS 
+instructions to be easily tested, given that they're not currently enabled by default.
+
+> Richard Henderson (41):
+>    linux-user/sparc: Add more hwcap bits for sparc64
+>    target/sparc: Fix FEXPAND
+>    target/sparc: Fix FMUL8x16
+>    target/sparc: Fix FMUL8x16A{U,L}
+>    target/sparc: Fix FMULD8*X16
+>    target/sparc: Fix FPMERGE
+>    target/sparc: Split out do_ms16b
+>    target/sparc: Perform DFPREG/QFPREG in decodetree
+>    target/sparc: Remove gen_dest_fpr_D
+>    target/sparc: Remove cpu_fpr[]
+>    target/sparc: Use gvec for VIS1 parallel add/sub
+>    target/sparc: Implement FMAf extension
+>    target/sparc: Add feature bits for VIS 3
+>    target/sparc: Implement ADDXC, ADDXCcc
+>    target/sparc: Implement CMASK instructions
+>    target/sparc: Implement FCHKSM16
+>    target/sparc: Implement FHADD, FHSUB, FNHADD, FNADD
+>    target/sparc: Implement FNMUL
+>    target/sparc: Implement FLCMP
+>    target/sparc: Implement FMEAN16
+>    target/sparc: Implement FPADD64 FPSUB64
+>    target/sparc: Implement FPADDS, FPSUBS
+>    target/sparc: Implement FPCMPEQ8, FPCMPNE8, FPCMPULE8, FPCMPUGT8
+>    target/sparc: Implement FSLL, FSRL, FSRA, FSLAS
+>    target/sparc: Implement LDXEFSR
+>    target/sparc: Implement LZCNT
+>    target/sparc: Implement MOVsTOw, MOVdTOx, MOVwTOs, MOVxTOd
+>    target/sparc: Implement PDISTN
+>    target/sparc: Implement UMULXHI
+>    target/sparc: Implement XMULX
+>    target/sparc: Enable VIS3 feature bit
+>    target/sparc: Implement IMA extension
+>    target/sparc: Add feature bit for VIS4
+>    target/sparc: Implement FALIGNDATAi
+>    target/sparc: Implement 8-bit FPADD, FPADDS, and FPADDUS
+>    target/sparc: Implement VIS4 comparisons
+>    target/sparc: Implement FPMIN, FPMAX
+>    target/sparc: Implement SUBXC, SUBXCcc
+>    target/sparc: Implement MWAIT
+>    target/sparc: Implement monitor asis
+>    target/sparc: Enable VIS4 feature bit
+> 
+>   target/sparc/asi.h             |   4 +
+>   target/sparc/helper.h          |  36 +-
+>   linux-user/elfload.c           |  51 +-
+>   target/sparc/cpu.c             |  12 +
+>   target/sparc/fop_helper.c      | 104 ++++
+>   target/sparc/ldst_helper.c     |   4 +
+>   target/sparc/translate.c       | 960 +++++++++++++++++++++++++++++----
+>   target/sparc/vis_helper.c      | 526 +++++++++++-------
+>   target/sparc/cpu-feature.h.inc |   4 +
+>   target/sparc/insns.decode      | 338 +++++++++---
+>   10 files changed, 1626 insertions(+), 413 deletions(-)
+
+
+ATB,
+
+Mark.
 
 
