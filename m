@@ -4,53 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0685BC54798
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A376C54E55
 	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 07:14:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhOtn-0007K9-Rx; Tue, 05 Mar 2024 02:07:40 -0500
+	id 1rhOxP-0003bF-5R; Tue, 05 Mar 2024 02:11:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rhOrh-0004TG-Bs; Tue, 05 Mar 2024 02:05:30 -0500
-Received: from szxga02-in.huawei.com ([45.249.212.188])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rhOrf-00008A-DK; Tue, 05 Mar 2024 02:05:29 -0500
-Received: from mail.maildlp.com (unknown [172.19.163.174])
- by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4Tpmks1QC9zbcjv;
- Tue,  5 Mar 2024 15:04:05 +0800 (CST)
-Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 15C7C14037C;
- Tue,  5 Mar 2024 15:04:47 +0800 (CST)
-Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
- (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Tue, 5 Mar
- 2024 15:04:46 +0800
-To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
- <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
- <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-CC: <ruanjinjie@huawei.com>
-Subject: [RFC PATCH v6 15/23] hw/intc/arm_gicv3: Implement GICD_INMIR
-Date: Tue, 5 Mar 2024 07:03:23 +0000
-Message-ID: <20240305070331.2151131-16-ruanjinjie@huawei.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240305070331.2151131-1-ruanjinjie@huawei.com>
-References: <20240305070331.2151131-1-ruanjinjie@huawei.com>
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1rhOwx-0003Or-LB
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 02:10:58 -0500
+Received: from mail-ua1-x92c.google.com ([2607:f8b0:4864:20::92c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1rhOwv-0001c7-34
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 02:10:55 -0500
+Received: by mail-ua1-x92c.google.com with SMTP id
+ a1e0cc1a2514c-7db241b1e0cso1136158241.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 23:10:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1709622650; x=1710227450; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Y36f7posl7ZMNySYHsTNdos9pSPjUErfBNricXfxXss=;
+ b=B1bQ911OE0C0ddXUzOEFQkR5PQ66NLB6cLW3fkReZWYWBBkvKgTtEfGGwUfMMATi4W
+ tinG4R7fCs63jgUNd/nimD1BWRMikisHqtGEx32zQ7XSg3yZDEw5Mo0uHlP2b7Ve26EB
+ gKUbzstcdYg3uIf7TWdAE5E1ghj900s3MC7Aqp0v6IVOoFKODElelJMneY9WxuuIj1/C
+ Z8u8qjYGHkJ417bfp/VdA+25mGLVFljjofvVm8LZJnknf89H+1HqZqMyw2ArBd0J4gGu
+ IiPfczDAI0+xHIVrSJNEXrk6SsAAfdlLfDPwEg3tbv1+iipqtxDGr7VzOj1GmXoZkXRV
+ yRAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709622650; x=1710227450;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Y36f7posl7ZMNySYHsTNdos9pSPjUErfBNricXfxXss=;
+ b=ca7WRKnmjT4jAUx8kOae7UoJxQpDXyhgYl5oIHvz7bkSNEj9oWklHsWitsLIqBwAKJ
+ DrrnPMoJ8l2yNgGYO2jJnkeG5Finc+TdWpKoS7i8Zu8fkGxi0XYh0G1cxiSfYrT1UIm4
+ rDz4qazlwXcrGoVVkbx2cy0CQ2cDEAlWeYXK9i0+0x/VQW5pr84raabNR3xqWhJ4RgPa
+ xqPlr01Sv19aovfh+1bo7eLW7gLpTwwELGbhWmR40zXLcccRUiigyiYfBIAi/2ihk4iZ
+ KOsYAX3tmsvuwrxMqzaQN9ZDe7OVOf7DT+QyFYeckiwhRGnfpQJ7t4LfuHIVMKPNcea1
+ GYDw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVNMZz64sLC1ZJ+QOjVBsz0dM6ivxLA89MPrJQPZ69xWYFEOkug8OHt/o1zea97i5HNSqm9QFL4ByzukptfZJJBnLuTAYQ=
+X-Gm-Message-State: AOJu0YxhDN7ls8HbC/jHl8q9TdDNsMtefi8Ufr75Sg15vhR2jMZaqx0a
+ geZZKuCH0BPJ2UHNOj0ehtnORvEzZMKyyJ4pCYKmR1GgzKE9zNFIUwaArP3oKRnGCF8rp2A/97Y
+ xfS/MtolO4wH7lg9OaqM8eTYHFHJGFtQkWdxD8w==
+X-Google-Smtp-Source: AGHT+IE7ZWEURNC7vMd05rp6rJaZD8Db0t4zZRyqV8oa+Hv15rpZuLuTzski8EfVy0sAWkUwbXcMNnQVkDKF9+6ak1A=
+X-Received: by 2002:a05:6102:160b:b0:471:c414:83b5 with SMTP id
+ cu11-20020a056102160b00b00471c41483b5mr1203643vsb.18.1709622650347; Mon, 04
+ Mar 2024 23:10:50 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.67.174.55]
-X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
- kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.188;
- envelope-from=ruanjinjie@huawei.com; helo=szxga02-in.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20240301082248.3456086-1-horenchuang@bytedance.com>
+ <87frx6btqp.fsf@yhuang6-desk2.ccr.corp.intel.com>
+ <CAKPbEqr-0yPDW7qps24vJgVCtVOGy_Jm4kcc0FKUsL3d9APDsw@mail.gmail.com>
+ <87h6hl9og3.fsf@yhuang6-desk2.ccr.corp.intel.com>
+In-Reply-To: <87h6hl9og3.fsf@yhuang6-desk2.ccr.corp.intel.com>
+From: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
+Date: Mon, 4 Mar 2024 23:10:39 -0800
+Message-ID: <CAKPbEqpVSsva3P2mEs5LThJZVO12u6nxuDA4KJOEhKNY811-hw@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH v1 0/1] Improved Memory Tier Creation for
+ CPUless NUMA Nodes
+To: "Huang, Ying" <ying.huang@intel.com>
+Cc: Gregory Price <gourry.memverge@gmail.com>, aneesh.kumar@linux.ibm.com,
+ mhocko@suse.com, 
+ tj@kernel.org, john@jagalactic.com, Eishan Mirakhur <emirakhur@micron.com>, 
+ Vinicius Tavares Petrucci <vtavarespetr@micron.com>,
+ Ravis OpenSrc <Ravis.OpenSrc@micron.com>, 
+ Alistair Popple <apopple@nvidia.com>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Len Brown <lenb@kernel.org>, 
+ Andrew Morton <akpm@linux-foundation.org>, Dave Jiang <dave.jiang@intel.com>, 
+ Dan Williams <dan.j.williams@intel.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>, 
+ linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mm@kvack.org, 
+ "Ho-Ren (Jack) Chuang" <horenc@vt.edu>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>, linux-cxl@vger.kernel.org, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92c;
+ envelope-from=horenchuang@bytedance.com; helo=mail-ua1-x92c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -64,99 +105,79 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
-From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add GICD_INMIR, GICD_INMIRnE register and support access GICD_INMIR0.
+On Mon, Mar 4, 2024 at 10:36=E2=80=AFPM Huang, Ying <ying.huang@intel.com> =
+wrote:
+>
+> "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> writes:
+>
+> > On Sun, Mar 3, 2024 at 6:47=E2=80=AFPM Huang, Ying <ying.huang@intel.co=
+m> wrote:
+> >>
+> >> "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> writes:
+> >>
+> >> > The memory tiering component in the kernel is functionally useless f=
+or
+> >> > CPUless memory/non-DRAM devices like CXL1.1 type3 memory because the=
+ nodes
+> >> > are lumped together in the DRAM tier.
+> >> > https://lore.kernel.org/linux-mm/PH0PR08MB7955E9F08CCB64F23963B5C3A8=
+60A@PH0PR08MB7955.namprd08.prod.outlook.com/T/
+> >>
+> >> I think that it's unfair to call it "useless".  Yes, it doesn't work i=
+f
+> >> the CXL memory device are not enumerate via drivers/dax/kmem.c.  So,
+> >> please be specific about in which cases it doesn't work instead of too
+> >> general "useless".
+> >>
+> >
+> > Thank you and I didn't mean anything specific. I simply reused phrases
+> > we discussed
+> > earlier in the previous patchset. I will change them to the following i=
+n v2:
+> > "At boot time, current memory tiering assigns all detected memory nodes
+> > to the same DRAM tier. This results in CPUless memory/non-DRAM devices,
+> > such as CXL1.1 type3 memory, being unable to be assigned to the
+> > correct memory tier,
+> > leading to the inability to migrate pages between different types of me=
+mory."
+> >
+> > Please see if this looks more specific.
+>
+> I don't think that the description above is accurate.  In fact, there
+> are 2 ways to enumerate the memory device,
+>
+> 1. Mark it as reserved memory (E820_TYPE_SOFT_RESERVED, etc.) in E820
+>    table or something similar.
+>
+> 2. Mark it as normal memory (E820_TYPE_RAM) in E820 table or something
+>    similar
+>
+> For 1, the memory device (including CXL memory) is onlined via
+> drivers/dax/kmem.c, so will be put in proper memory tiers.  For 2, the
+> memory device is indistinguishable with normal DRAM with current
+> implementation.  And this is what this patch is working on.
+>
+> Right?
 
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
-v4:
-- Make the GICD_INMIR implementation more clearer.
-- Udpate the commit message.
-v3:
-- Add Reviewed-by.
----
- hw/intc/arm_gicv3_dist.c | 34 ++++++++++++++++++++++++++++++++++
- hw/intc/gicv3_internal.h |  2 ++
- 2 files changed, 36 insertions(+)
+Good point! How about this?:
+"
+When a memory device, such as CXL1.1 type3 memory, is emulated as
+normal memory (E820_TYPE_RAM), the memory device is indistinguishable
+from normal DRAM in terms of memory tiering with the current implementation=
+.
+The current memory tiering assigns all detected normal memory nodes
+to the same DRAM tier. This results in normal memory devices with
+different attributions being unable to be assigned to the correct memory ti=
+er,
+leading to the inability to migrate pages between different types of memory=
+.
+"
 
-diff --git a/hw/intc/arm_gicv3_dist.c b/hw/intc/arm_gicv3_dist.c
-index 35e850685c..9739404e35 100644
---- a/hw/intc/arm_gicv3_dist.c
-+++ b/hw/intc/arm_gicv3_dist.c
-@@ -89,6 +89,29 @@ static int gicd_ns_access(GICv3State *s, int irq)
-     return extract32(s->gicd_nsacr[irq / 16], (irq % 16) * 2, 2);
- }
- 
-+static void gicd_write_bitmap_reg(GICv3State *s, MemTxAttrs attrs,
-+                                  uint32_t *bmp, maskfn *maskfn,
-+                                  int offset, uint32_t val)
-+{
-+    /*
-+     * Helper routine to implement writing to a "set" register
-+     * (GICD_INMIR, etc).
-+     * Semantics implemented here:
-+     * RAZ/WI for SGIs, PPIs, unimplemented IRQs
-+     * Bits corresponding to Group 0 or Secure Group 1 interrupts RAZ/WI.
-+     * offset should be the offset in bytes of the register from the start
-+     * of its group.
-+     */
-+    int irq = offset * 8;
-+
-+    if (irq < GIC_INTERNAL || irq >= s->num_irq) {
-+        return;
-+    }
-+    val &= mask_group_and_nsacr(s, attrs, maskfn, irq);
-+    *gic_bmp_ptr32(bmp, irq) = val;
-+    gicv3_update(s, irq, 32);
-+}
-+
- static void gicd_write_set_bitmap_reg(GICv3State *s, MemTxAttrs attrs,
-                                       uint32_t *bmp,
-                                       maskfn *maskfn,
-@@ -543,6 +566,11 @@ static bool gicd_readl(GICv3State *s, hwaddr offset,
-         /* RAZ/WI since affinity routing is always enabled */
-         *data = 0;
-         return true;
-+    case GICD_INMIR ... GICD_INMIR + 0x7f:
-+        *data = (!s->nmi_support) ? 0 :
-+                gicd_read_bitmap_reg(s, attrs, s->superprio, NULL,
-+                                     offset - GICD_INMIR);
-+        return true;
-     case GICD_IROUTER ... GICD_IROUTER + 0x1fdf:
-     {
-         uint64_t r;
-@@ -752,6 +780,12 @@ static bool gicd_writel(GICv3State *s, hwaddr offset,
-     case GICD_SPENDSGIR ... GICD_SPENDSGIR + 0xf:
-         /* RAZ/WI since affinity routing is always enabled */
-         return true;
-+    case GICD_INMIR ... GICD_INMIR + 0x7f:
-+        if (s->nmi_support) {
-+            gicd_write_bitmap_reg(s, attrs, s->superprio, NULL,
-+                                  offset - GICD_INMIR, value);
-+        }
-+        return true;
-     case GICD_IROUTER ... GICD_IROUTER + 0x1fdf:
-     {
-         uint64_t r;
-diff --git a/hw/intc/gicv3_internal.h b/hw/intc/gicv3_internal.h
-index f35b7d2f03..a1fc34597e 100644
---- a/hw/intc/gicv3_internal.h
-+++ b/hw/intc/gicv3_internal.h
-@@ -52,6 +52,8 @@
- #define GICD_SGIR            0x0F00
- #define GICD_CPENDSGIR       0x0F10
- #define GICD_SPENDSGIR       0x0F20
-+#define GICD_INMIR           0x0F80
-+#define GICD_INMIRnE         0x3B00
- #define GICD_IROUTER         0x6000
- #define GICD_IDREGS          0xFFD0
- 
--- 
-2.34.1
-
+--
+Best regards,
+Ho-Ren (Jack) Chuang
+=E8=8E=8A=E8=B3=80=E4=BB=BB
 
