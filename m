@@ -4,114 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D7A1C54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 07:14:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6B0BC54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 07:14:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhOyK-0004S5-9X; Tue, 05 Mar 2024 02:12:20 -0500
+	id 1rhOw0-0001h0-EM; Tue, 05 Mar 2024 02:09:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rhOxi-0003zY-PR
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 02:11:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1rhOri-0004TQ-4m; Tue, 05 Mar 2024 02:05:30 -0500
+Received: from szxga06-in.huawei.com ([45.249.212.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rhOxf-0001ld-W1
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 02:11:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709622699;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ZJXSIOH+YBRZRygDXtueZZ6Vz07xd7JTPPO9WZ0Ig8g=;
- b=ajWaNLJZ1Yr21lyORkJAodKs0LQ9/QwSTCs6VN03jU+G7hOe0fqOMJTzhahmT7KMvFthvS
- ogB1TNMKjXCSoucYiwj/0dQUuhRKNWHWknimQNkP/fIqwDYeinxLqMNMiRLDeigmuSdAA2
- 3x9IG+q9DHLJOJxmjPZjrqSZ1cI9ZFg=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-316-g1Ocmz03NEetik4SJk_x7g-1; Tue, 05 Mar 2024 02:11:35 -0500
-X-MC-Unique: g1Ocmz03NEetik4SJk_x7g-1
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-78319f64126so838958985a.3
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 23:11:35 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709622695; x=1710227495;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZJXSIOH+YBRZRygDXtueZZ6Vz07xd7JTPPO9WZ0Ig8g=;
- b=tDNKuz41dH2fYfWJWxN5TUMpZf31GP01yjTXovKTa00hzOBBuNMB8z6lIN2AfaVC+f
- diE/wiUOmxiujLM9ci8pfeiKbgeuyJXR9PT2/2KNYWLFhu/OBGEQi7X9Demb+YkVvqe0
- kKVFkLxcPs7q3lBZezVSCiEFH1j0o6C4a9zAW8GR3zJiVPsHENGio+yX92OLprXj7Mbz
- eS05f6PQPOrBIm4iU9WPt79Vi6uxbW1XuFQHpH3BCd8IZ7bwPXqqpZObPQlk5+3UI6gl
- WcdIi3Y6IaS3QJUjtQ/VhDyTxx/qPsko1HA+fOdX++r08TtXzS+RbCfwLn54nwnC1aFd
- CjNw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW9m3/hp6vben3yZ4jq51YwBmRcvXrlKJ8gZciZhijp5pU1foebIZfgn5shSPLhbytOZlkk4Bk8dnUiAXJP3jq3QrAwOOU=
-X-Gm-Message-State: AOJu0YyHwCCsfSA1j+H0z8gBnUy66O+JltZORfeN8pRf5PtBpsM81mFL
- 8aYeE/Am9LdmOy031Mvu11TOoweOgeLtkisV4E8lPD9nTwqzFxBBu/8MVzvCnQqtNg9iFNhXugv
- 9jp6698nkqUveaW0HhR52dKAA/qr0HOonlHx42/vZFgPTJyiOkzUu
-X-Received: by 2002:a05:622a:104:b0:42e:68b5:da8f with SMTP id
- u4-20020a05622a010400b0042e68b5da8fmr1107501qtw.1.1709622695143; 
- Mon, 04 Mar 2024 23:11:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHYbyOGIjyXYKQQCxTfAl+0QcvfB/gCAjtdFXoRsBfCIgitujAaRSN/AfeKFcS1tEO0xY69gw==
-X-Received: by 2002:a05:622a:104:b0:42e:68b5:da8f with SMTP id
- u4-20020a05622a010400b0042e68b5da8fmr1107465qtw.1.1709622694795; 
- Mon, 04 Mar 2024 23:11:34 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- he29-20020a05622a601d00b0042ee1ff302esm2592910qtb.66.2024.03.04.23.11.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Mar 2024 23:11:34 -0800 (PST)
-Message-ID: <533ccbfc-7d90-42cd-9183-a5b128c41fad@redhat.com>
-Date: Tue, 5 Mar 2024 08:11:28 +0100
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1rhOrg-00008L-Fz; Tue, 05 Mar 2024 02:05:29 -0500
+Received: from mail.maildlp.com (unknown [172.19.88.234])
+ by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4Tpml30DlYz1vw5r;
+ Tue,  5 Mar 2024 15:04:15 +0800 (CST)
+Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
+ by mail.maildlp.com (Postfix) with ESMTPS id B568D14037E;
+ Tue,  5 Mar 2024 15:04:54 +0800 (CST)
+Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
+ (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Tue, 5 Mar
+ 2024 15:04:54 +0800
+To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
+ <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
+ <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+CC: <ruanjinjie@huawei.com>
+Subject: [RFC PATCH v6 23/23] hw/arm/virt: Add FEAT_GICv3_NMI feature support
+ in virt GIC
+Date: Tue, 5 Mar 2024 07:03:31 +0000
+Message-ID: <20240305070331.2151131-24-ruanjinjie@huawei.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240305070331.2151131-1-ruanjinjie@huawei.com>
+References: <20240305070331.2151131-1-ruanjinjie@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 2/2] hw/acpi: Implement the SRAT GI affinity structure
-Content-Language: en-US, fr
-To: Ankit Agrawal <ankita@nvidia.com>,
- Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>,
- "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "shannon.zhaosl@gmail.com" <shannon.zhaosl@gmail.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "ani@anisinha.ca" <ani@anisinha.ca>,
- "berrange@redhat.com" <berrange@redhat.com>,
- "eduardo@habkost.net" <eduardo@habkost.net>,
- "imammedo@redhat.com" <imammedo@redhat.com>, "mst@redhat.com"
- <mst@redhat.com>, "eblake@redhat.com" <eblake@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>, "david@redhat.com"
- <david@redhat.com>, "gshan@redhat.com" <gshan@redhat.com>,
- Zhi Wang <zhiw@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- Aniket Agashe <aniketa@nvidia.com>, Neo Jia <cjia@nvidia.com>,
- Kirti Wankhede <kwankhede@nvidia.com>,
- "Tarun Gupta (SW-GPU)" <targupta@nvidia.com>,
- Vikram Sethi <vsethi@nvidia.com>, Andy Currid <acurrid@nvidia.com>,
- Dheeraj Nigam <dnigam@nvidia.com>, Uday Dhoke <udhoke@nvidia.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-References: <20240223124223.800078-1-ankita@nvidia.com>
- <20240223124223.800078-3-ankita@nvidia.com>
- <20240226164229.00001536@Huawei.com>
- <SA1PR12MB71995AAADE78D3D0052FAC01B0222@SA1PR12MB7199.namprd12.prod.outlook.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <SA1PR12MB71995AAADE78D3D0052FAC01B0222@SA1PR12MB7199.namprd12.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.67.174.55]
+X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
+ kwepemi500008.china.huawei.com (7.221.188.139)
+Received-SPF: pass client-ip=45.249.212.32; envelope-from=ruanjinjie@huawei.com;
+ helo=szxga06-in.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,51 +65,67 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
+From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/5/24 06:59, Ankit Agrawal wrote:
->> One thing I forgot.
->>
->> Please add a test.  tests/qtest/bios-tables-test.c
->> + relevant table dumps.
-> 
-> Here I need to add a test that creates a vfio-pci device and numa
-> nodes and link using the acpi-generic-initiator object. One thing
-> here is that the -device vfio-pci needs a host=<bdf> argument. I
-> probably cannot provide the device bdf from my local setup. So
-> I am not sure how can I add this test to tests/qtest/bios-tables-test.c.
-> FYI, the following is a sample args we use for the
-> acpi-generic-initiator object.
-> 
->         -numa node,nodeid=2
->         -device vfio-pci-nohotplug,bus=pcie.0,addr=04.0,rombar=0,id=dev0 \
->         -object acpi-generic-initiator,id=gi0,pci-dev=dev0,node=2 \
-> 
-> Moreover based on a quick grep, I don't see any other test that
-> have -device vfio-pci argument.
-> 
-> Jonathan, Alex, do you know how we may add tests that is dependent
-> on the vfio-pci device?
+A PE that implements FEAT_NMI and FEAT_GICv3 also implements
+FEAT_GICv3_NMI. A PE that does not implement FEAT_NMI, does not implement
+FEAT_GICv3_NMI
 
-There are none.
+So included support FEAT_GICv3_NMI feature as part of virt platform
+GIC initialization if FEAT_NMI and FEAT_GICv3 supported.
 
-This would require a host device always available for passthrough and
-there is no simple solution for this problem. Such tests would need to
-run in a nested environment under avocado: a pc/virt machine with an
-igb device and use the PF and/or VFs to check device assignment in a
-nested guests.
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+v4:
+- Add Reviewed-by.
+v3:
+- Adjust to be the last after add FEAT_NMI to max.
+- Check whether support FEAT_NMI and FEAT_GICv3 for FEAT_GICv3_NMI.
+---
+ hw/arm/virt.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-PPC just introduced new tests to check nested guest support on two
-different HV implementations. If you have time, please take a look
-at tests/avocado/ppc_hv_tests.py for the framework.
-
-I will try to propose a new test when I am done with the reviews,
-not before 9.0 soft freeze though.
-
-Thanks,
-
-C.
-
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 2d4a187fd5..c12307ccd9 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -712,6 +712,19 @@ static void create_v2m(VirtMachineState *vms)
+     vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
+ }
+ 
++/*
++ * A PE that implements FEAT_NMI and FEAT_GICv3 also implements
++ * FEAT_GICv3_NMI. A PE that does not implement FEAT_NMI, does not implement
++ * FEAT_GICv3_NMI.
++ */
++static bool gicv3_nmi_present(VirtMachineState *vms)
++{
++    ARMCPU *cpu = ARM_CPU(qemu_get_cpu(0));
++
++    return cpu_isar_feature(aa64_nmi, cpu) &&
++           (vms->gic_version != VIRT_GIC_VERSION_2);
++}
++
+ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+ {
+     MachineState *ms = MACHINE(vms);
+@@ -785,6 +798,11 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+                               vms->virt);
+         }
+     }
++
++    if (gicv3_nmi_present(vms)) {
++        qdev_prop_set_bit(vms->gic, "has-nmi", true);
++    }
++
+     gicbusdev = SYS_BUS_DEVICE(vms->gic);
+     sysbus_realize_and_unref(gicbusdev, &error_fatal);
+     sysbus_mmio_map(gicbusdev, 0, vms->memmap[VIRT_GIC_DIST].base);
+-- 
+2.34.1
 
 
