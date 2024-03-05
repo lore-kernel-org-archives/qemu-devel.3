@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DE16C54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 21:37:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DEFEC54E41
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 21:42:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhcSo-0004lR-Cu; Tue, 05 Mar 2024 16:36:42 -0500
+	id 1rhcXF-0005za-FE; Tue, 05 Mar 2024 16:41:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rhcSm-0004l8-Vs
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 16:36:41 -0500
-Received: from mail-il1-x129.google.com ([2607:f8b0:4864:20::129])
+ id 1rhcXD-0005xi-1i
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 16:41:15 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rhcSl-0003kd-GI
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 16:36:40 -0500
-Received: by mail-il1-x129.google.com with SMTP id
- e9e14a558f8ab-36602d8ae4fso1258295ab.0
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 13:36:39 -0800 (PST)
+ id 1rhcXB-0004ZN-Bd
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 16:41:14 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-1dc49b00bdbso55965725ad.3
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 13:41:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709674598; x=1710279398; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709674871; x=1710279671; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=uIDPaQ9p4Bh8kYkbG1aNC/r3mhO071zWcGdOe1pZtEw=;
- b=pUmNQEzs9Hv+pEDYGY/ePNU92wiUbQVpFdz01XaTyboiyyOg/xi8wO5hMJOY9JiBLR
- vxjEiarriaqlotCPAuVkc2v1yYJFgYJqCrl6PpV2ZfpniIYcTw1JzUEglWKRBew+85B9
- sV40W4BwiuPnTU3zK0fcBRR82UX1ic31gNvgzsfxEoHl+xIm0bNeo65NFDURia8AHys5
- 2nrs5NKB4ZzMakrS+gIIniikopodRcDaE2zDVoU88quMnVallkDRmp6Lom28x88P8NK2
- we9jP+LI97GClzt7eL1pD8BOFObqG6Kn9ZZWb6Wuh3gz3RPlbz37a5+pRhAzKGSpS1Z/
- S/BA==
+ bh=ihNVgW41v527yiX4XLXfYOFmPJQT2nrCVR5N/Whf8M0=;
+ b=Jd229FK/UDUMKLijM/s1wpCRM6QV2iwNDIQQTsBomE5mE9Pacw55CzFzxNYDvP7gGl
+ Nda5qTdeLhVqiHDK7NBp+kmpOR9whPUS7Iv6ehEH88xQAQbyoZZMcs/KaQWgienfE3Zk
+ RHAL0A9y5v8nZZ0rlVJNvxnc/Fp3KorxtOz1xtbghAopq1pkEvAV+Z5WD9+M7+WR4r7b
+ QCqubrC6unVUfXBSUthpdkKs6VT8J21zMH7MTIcnA50y9Si8Qd9F9PTmGjHMcAjTe+Ye
+ a1othpiALsYxpLZ83oUObpciPN2epUgEZIfJkwvL4UpzMqW3Tq1VE0eNvxusO6q7TyfT
+ QS4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709674598; x=1710279398;
+ d=1e100.net; s=20230601; t=1709674871; x=1710279671;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uIDPaQ9p4Bh8kYkbG1aNC/r3mhO071zWcGdOe1pZtEw=;
- b=oSdF5BVpID2gvYEHw7s2zQ5A/HAWoiksCm3Atdzbvqg8g5LcKYY+bWpreG7I5pNsk/
- dhb1jCSgM5Kr9Oq7kitBLHV/7FSYoMHbsDOPwtllrQ1VfEEvnIgGkis9QIt/lxN5pEdD
- vKL6gCnoX7cGwijHwCpdgbZsZ8UdI7T+BOiWTMmSCGLUhRyK5M5+qSbj0g8MPMRZH4MP
- gwYH2K3yqJN53JoZc1Fimf5Er+RgdswHcugdWOffi/BcVrX1DJdDg/+pMtjrIY/mIV98
- rnif4qu55A4vwPCd4L+Z16hJE/v8LDlFFfK6EBtdVGBUFj5DqvxrODnfEpC6lZPNiMdo
- x3qQ==
+ bh=ihNVgW41v527yiX4XLXfYOFmPJQT2nrCVR5N/Whf8M0=;
+ b=uTkuPfVlIVKu+/+A/Vs5oSHTcUo5H/a5QMU9dLktMO2mDLX4WY0ri1TgJnwDz7G4U6
+ 8An2nIVsWmtW2+rXEtcrS/vRm7NVQcOlF+2o+HJuOjIoJFm3Q4ydUVQVRS+PrlVlIZE7
+ pIC6G8JgPV9hJQoWQ0ghjqdkO53L1xqfql8efNepM230szPjiDAH3Y4wjaElcXDFfqqi
+ E6qTAQgslz9N6shc0Pt628XHImefbbFP2w4Sx6bvNciZoSZafZobwsG00nHGG/vFhHnh
+ 94/036NLi7VZlVfHzJfwL2jAEKleTrhonJd8Z1d3MsCNrhQeoZFfZo/9Dg55f20i/ST0
+ 6dWw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWAgOz2FGgssfL4iqSyn3NynnVJ4NQ8OdWid0OTyHR82y12r/6frGt86rQTDYN9HtplhDmI781+zokg/CSpDG24QC/dAwE=
-X-Gm-Message-State: AOJu0Yx5g/FnOxjyf06Huo8lZ1akDThJ+n0zSl0gx45LWIMrWWWEcxXO
- n/ycMFW0aUoktBvi8cfEjjzXWUGtEawrpNtugLJSIXX+UorHIaRphBLGFRkepxE=
-X-Google-Smtp-Source: AGHT+IGfvf0lbv7gUsA3bN+OtANzPzHleeQB7jgIvssQcmBKRvr1uQt4P2+meVY4BZatU3m+DNSupg==
-X-Received: by 2002:a92:c26f:0:b0:365:29e4:d95d with SMTP id
- h15-20020a92c26f000000b0036529e4d95dmr14481486ild.30.1709674598153; 
- Tue, 05 Mar 2024 13:36:38 -0800 (PST)
+ AJvYcCXaTtGJzq9dUp4gd7AuY40jBS2lcvIdZ8koNRR4JkWchYvKask9SjtfQx1a/SjzKwgNabkOIwGdFI2jloOQQOgOV9rlg6c=
+X-Gm-Message-State: AOJu0YxvoTL4g63uStQnxPIJfn0t2jq/yysGpjHbR07y2zcM8cVOlABx
+ 0wvaW8Iiv1CKMynFddQeVaeVMgQJ4EY7N5rYlWpGZcQwkzMOsL48MNyfs67jh6dO3v6uJYB3As5
+ h
+X-Google-Smtp-Source: AGHT+IH29/0k4mAYtI7DYbp6Z2SDoA9R9TaQ4w8fUbA/r194IxxDgw0v1Li4aYPVsBajX+mqn9CROw==
+X-Received: by 2002:a17:902:d58c:b0:1dc:d116:1a3a with SMTP id
+ k12-20020a170902d58c00b001dcd1161a3amr3644720plh.62.1709674871560; 
+ Tue, 05 Mar 2024 13:41:11 -0800 (PST)
 Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
  [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- q12-20020a63504c000000b005df58c83e89sm9684140pgl.84.2024.03.05.13.36.36
+ n4-20020a170902968400b001db8145a1a2sm11074557plp.274.2024.03.05.13.41.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Mar 2024 13:36:37 -0800 (PST)
-Message-ID: <f3db8d07-71dc-4b25-b50a-94f52b5ad3b2@linaro.org>
-Date: Tue, 5 Mar 2024 11:36:34 -1000
+ Tue, 05 Mar 2024 13:41:10 -0800 (PST)
+Message-ID: <2f181e8a-2dc4-48cf-b304-2a961512897b@linaro.org>
+Date: Tue, 5 Mar 2024 11:41:07 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v6 04/23] target/arm: Implement ALLINT MSR (immediate)
+Subject: Re: [RFC PATCH v6 06/23] target/arm: Add support for Non-maskable
+ Interrupt
 Content-Language: en-US
 To: Jinjie Ruan <ruanjinjie@huawei.com>, peter.maydell@linaro.org,
  eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
  wangyanan55@huawei.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
 References: <20240305070331.2151131-1-ruanjinjie@huawei.com>
- <20240305070331.2151131-5-ruanjinjie@huawei.com>
+ <20240305070331.2151131-7-ruanjinjie@huawei.com>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240305070331.2151131-5-ruanjinjie@huawei.com>
+In-Reply-To: <20240305070331.2151131-7-ruanjinjie@huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::129;
- envelope-from=richard.henderson@linaro.org; helo=mail-il1-x129.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,37 +102,32 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/4/24 21:03, Jinjie Ruan via wrote:
-> Add ALLINT MSR (immediate) to decodetree, in which the CRm is 0b000x. The
-> EL0 check is necessary to ALLINT, and the EL1 check is necessary when
-> imm == 1. So implement it inline for EL2/3, or EL1 with imm==0. Avoid the
-> unconditional write to pc and use raise_exception_ra to unwind.
+> This only implements the external delivery method via the GICv3.
 > 
 > Signed-off-by: Jinjie Ruan<ruanjinjie@huawei.com>
 > ---
 > v6:
-> - Fix DISAS_TOO_MANY to DISAS_UPDATE_EXIT and add the comment.
-> v5:
-> - Drop the & 1 in trans_MSR_i_ALLINT().
-> - Simplify and merge msr_i_allint() and allint_check().
-> - Rename msr_i_allint() to msr_set_allint_el1().
+> - env->cp15.hcr_el2 -> arm_hcr_el2_eff().
+> - env->cp15.hcrx_el2 -> arm_hcrx_el2_eff().
+> - Not include VF && VFNMI in CPU_INTERRUPT_VNMI.
 > v4:
-> - Fix the ALLINT MSR (immediate) decodetree implementation.
-> - Remove arm_is_el2_enabled() check in allint_check().
-> - Update env->allint to env->pstate.
-> - Only call allint_check() when imm == 1.
-> - Simplify the allint_check() to not pass "op" and extract.
-> - Implement it inline for EL2/3, or EL1 with imm==0.
-> - Pass (a->imm & 1) * PSTATE_ALLINT (i64) to simplfy the ALLINT set/clear.
+> - Accept NMI unconditionally for arm_cpu_has_work() but add comment.
+> - Change from & to && for EXCP_IRQ or EXCP_FIQ.
+> - Refator nmi mask in arm_excp_unmasked().
+> - Also handle VNMI in arm_cpu_exec_interrupt() and arm_cpu_set_irq().
+> - Rename virtual to Virtual.
 > v3:
-> - Remove EL0 check in allint_check().
-> - Add TALLINT check for EL1 in allint_check().
-> - Remove unnecessarily arm_rebuild_hflags() in msr_i_allint helper.
+> - Not include CPU_INTERRUPT_NMI when FEAT_NMI not enabled
+> - Add ARM_CPU_VNMI.
+> - Refator nmi mask in arm_excp_unmasked().
+> - Test SCTLR_ELx.NMI for ALLINT mask for NMI.
 > ---
->   target/arm/tcg/a64.decode      |  1 +
->   target/arm/tcg/helper-a64.c    | 12 ++++++++++++
->   target/arm/tcg/helper-a64.h    |  1 +
->   target/arm/tcg/translate-a64.c | 19 +++++++++++++++++++
->   4 files changed, 33 insertions(+)
+>   target/arm/cpu-qom.h   |  4 +-
+>   target/arm/cpu.c       | 85 +++++++++++++++++++++++++++++++++++++++---
+>   target/arm/cpu.h       |  4 ++
+>   target/arm/helper.c    |  2 +
+>   target/arm/internals.h |  9 +++++
+>   5 files changed, 97 insertions(+), 7 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
