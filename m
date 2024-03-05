@@ -4,63 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB57FC54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 18:39:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2214FC54E41
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 19:09:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhZh6-0006H7-Vk; Tue, 05 Mar 2024 13:39:17 -0500
+	id 1rhaA7-0001lZ-Tp; Tue, 05 Mar 2024 14:09:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rhZh5-0006Gv-AQ
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 13:39:15 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rhaA6-0001lO-34
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 14:09:14 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rhZgt-00054k-Ri
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 13:39:14 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rhaA4-0002Bv-Bm
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 14:09:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709663943;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=fSCTBvjmalNE1r1Jr9E/0oh8zfXA6FGzLBW6Kqx3n2k=;
- b=ONgPZFiA4FKtRP4Ze115n4cZgZiDPI2HPzze3XazdCi1AfmtrwsZWxtCXfnSFQPPWkp6Ul
- c58XQYbqXWiMUxiKB+R7MvGcwb7ipJfyTani0+3eXbBZL6mgpi3xGt8rBJLHs7jEkoA1qu
- HCDvI79gXESkTei8oDAJhhnKDEtHoRA=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-OA8nSaODMYSx_ucl7EZTkQ-1; Tue,
- 05 Mar 2024 13:38:59 -0500
-X-MC-Unique: OA8nSaODMYSx_ucl7EZTkQ-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 87D6E1C05138;
- Tue,  5 Mar 2024 18:38:58 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.66])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id DCDBF10E4F;
- Tue,  5 Mar 2024 18:38:56 +0000 (UTC)
-Date: Tue, 5 Mar 2024 18:38:54 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Cc: qemu-devel@nongnu.org, michael.roth@amd.com, kkostiuk@redhat.com,
- marcandre.lureau@redhat.com, philmd@linaro.org, den@virtuozzo.com
-Subject: Re: [PATCH v2 7/7] qga/commands-posix: qmp_guest_set_user_password:
- use ga_run_command helper
-Message-ID: <ZedmvqCQe4puhT3G@redhat.com>
-References: <20240301172858.665135-1-andrey.drobyshev@virtuozzo.com>
- <20240301172858.665135-8-andrey.drobyshev@virtuozzo.com>
+ s=mimecast20190719; t=1709665751;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=WNBwNyP93UNETTCQt7HxqHOcuB/TSrwLC8yZ1GgpcbY=;
+ b=SwCQia0wRLwf0P9xBguGSRZdBbTBX97GQjSO1M2YVwZqP2sIViEtEaxgIWXAjOgCwKczoS
+ Ncke6B4QSM3Pxsozzsndh+RvyWEKvfS28DLfIIr+7cxcLdxxuQhGwYhNvqkjYJSJfW4D8M
+ D/HVpyM45xAVj9sshsU7LN/ZZCIMb9k=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-173-pQQPJwSmNGGsL-XZJQ1plw-1; Tue, 05 Mar 2024 14:09:10 -0500
+X-MC-Unique: pQQPJwSmNGGsL-XZJQ1plw-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a4533388b03so153277066b.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 11:09:09 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709665747; x=1710270547;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=WNBwNyP93UNETTCQt7HxqHOcuB/TSrwLC8yZ1GgpcbY=;
+ b=wyEutdtcrA6qB/NejydKnlZ8CvHK3JhC0vw+xw9Vc06dC3ZPCq6wmMXimWyPEZ7yH5
+ o4z6DEQLFUwrz6EM++FGTG9NYEORgBh7FfayuEvLzY1ilMh619lNTymHpstUnCpEYYuD
+ 222n9mPkkR2xnWdLNQD2X03BGHq17OzZootDTy3NUvtsA7vzBG95yC12k5RXC59Q6gkl
+ nZPFm/NATa4ol49Z5T/RbQKtUWeJze0cEG8DyUFRALpIKmFO+mCGIogt2abHK7v7IxW4
+ 2/63+835tKlomiIhgJMAxr7WsDYTOLF8YLdtaoGfHPlC2DV/cEputTmJjlJtvhDcnfeQ
+ up3g==
+X-Gm-Message-State: AOJu0YyxXm4At7p7l8C5HjtoTIxm7qniVzaQkAKoDNYgDytCEKPzYCFB
+ RYFLBDkldLMjiA/g+oR6EqWAYjnKBVaLO/9ZSC7Xu3t+9eDuhlT6BTiRqDooFk2S2MLLYvBxo0c
+ p2PL2/vTrAdbopK1JOpomcvlDLAPBHtQUP2NBF8++Gq4bbiIjfV6YYOGekrLplOYT176EklK/GK
+ ShFl8W28s80jq4sQRPcx4GQULju/WtuiIVWV+X
+X-Received: by 2002:a17:906:29cd:b0:a45:b10a:9fe9 with SMTP id
+ y13-20020a17090629cd00b00a45b10a9fe9mr861102eje.2.1709665747285; 
+ Tue, 05 Mar 2024 11:09:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHFGFL6uxVaA/dv+UkVyjfHJb3PJeUb7XnGRpkDqrj/ksiL0pLdIJ9gSM44Sgrs37ow7PT3Pg==
+X-Received: by 2002:a17:906:29cd:b0:a45:b10a:9fe9 with SMTP id
+ y13-20020a17090629cd00b00a45b10a9fe9mr861088eje.2.1709665746877; 
+ Tue, 05 Mar 2024 11:09:06 -0800 (PST)
+Received: from [192.168.10.118] ([151.49.77.21])
+ by smtp.gmail.com with ESMTPSA id
+ o4-20020a17090611c400b00a458d85f9d9sm1515008eja.142.2024.03.05.11.09.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 05 Mar 2024 11:09:04 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org,
+	berrange@redhat.com
+Subject: [PATCH 1/2] run-coverity-scan: add --check-upload-only option
+Date: Tue,  5 Mar 2024 20:09:01 +0100
+Message-ID: <20240305190902.364753-2-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240305190902.364753-1-pbonzini@redhat.com>
+References: <20240305190902.364753-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240301172858.665135-8-andrey.drobyshev@virtuozzo.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -81,164 +100,139 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 01, 2024 at 07:28:58PM +0200, Andrey Drobyshev wrote:
-> There's no need to check for the existence of the "chpasswd", "pw"
-> executables, as the exec() call will do that for us.
-> 
-> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> ---
->  qga/commands-posix.c | 96 ++++++--------------------------------------
->  1 file changed, 13 insertions(+), 83 deletions(-)
-> 
-> diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-> index f3f4a05e2d..f2e9496b80 100644
-> --- a/qga/commands-posix.c
-> +++ b/qga/commands-posix.c
-> @@ -2144,14 +2144,8 @@ void qmp_guest_set_user_password(const char *username,
->                                   Error **errp)
->  {
->      Error *local_err = NULL;
-> -    char *passwd_path = NULL;
-> -    pid_t pid;
-> -    int status;
-> -    int datafd[2] = { -1, -1 };
-> -    char *rawpasswddata = NULL;
-> +    g_autofree char *rawpasswddata = NULL;
->      size_t rawpasswdlen;
-> -    char *chpasswddata = NULL;
-> -    size_t chpasswdlen;
->  
->      rawpasswddata = (char *)qbase64_decode(password, -1, &rawpasswdlen, errp);
->      if (!rawpasswddata) {
-> @@ -2162,95 +2156,31 @@ void qmp_guest_set_user_password(const char *username,
->  
->      if (strchr(rawpasswddata, '\n')) {
->          error_setg(errp, "forbidden characters in raw password");
-> -        goto out;
-> +        return;
->      }
->  
->      if (strchr(username, '\n') ||
->          strchr(username, ':')) {
->          error_setg(errp, "forbidden characters in username");
-> -        goto out;
-> +        return;
->      }
->  
->  #ifdef __FreeBSD__
-> -    chpasswddata = g_strdup(rawpasswddata);
-> -    passwd_path = g_find_program_in_path("pw");
-> +    g_autofree char *chpasswdata = g_strdup(rawpasswddata);
-> +    const char *crypt_flag = (crypted) ? "-H" : "-h";
-> +    const char *argv[] = {"pw", "usermod", "-n", username,
-> +                          crypt_flag, "0", NULL};
->  #else
-> -    chpasswddata = g_strdup_printf("%s:%s\n", username, rawpasswddata);
-> -    passwd_path = g_find_program_in_path("chpasswd");
-> +    g_autofree char *chpasswddata = g_strdup_printf("%s:%s\n", username,
-> +                                                    rawpasswddata);
-> +    const char *crypt_flag = (crypted) ? "-e" : NULL;
+Add an option to check if upload is permitted without actually
+attempting a build.  This can be useful to add a third outcome
+beyond success and failure---namely, a CI job can self-cancel
+if the uploading quota has been reached.
 
-Style nit-pick - no '(...)' around 'crypted' is needed here, or
-the other place later in this method.
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ scripts/coverity-scan/run-coverity-scan | 51 ++++++++++++++++++-------
+ 1 file changed, 38 insertions(+), 13 deletions(-)
 
-Yes, that was a pre-existing issue, but since you're refactoring
-the code, might as well kill the redundant brackets.
-
-> +    const char *argv[] = {"chpasswd", crypt_flag, NULL};
->  #endif
->  
-> -    chpasswdlen = strlen(chpasswddata);
-> -
-> -    if (!passwd_path) {
-> -        error_setg(errp, "cannot find 'passwd' program in PATH");
-> -        goto out;
-> -    }
-> -
-> -    if (!g_unix_open_pipe(datafd, FD_CLOEXEC, NULL)) {
-> -        error_setg(errp, "cannot create pipe FDs");
-> -        goto out;
-> -    }
-> -
-> -    pid = fork();
-> -    if (pid == 0) {
-> -        close(datafd[1]);
-> -        /* child */
-> -        setsid();
-> -        dup2(datafd[0], 0);
-> -        reopen_fd_to_null(1);
-> -        reopen_fd_to_null(2);
-> -
-> -#ifdef __FreeBSD__
-> -        const char *h_arg;
-> -        h_arg = (crypted) ? "-H" : "-h";
-> -        execl(passwd_path, "pw", "usermod", "-n", username, h_arg, "0", NULL);
-> -#else
-> -        if (crypted) {
-> -            execl(passwd_path, "chpasswd", "-e", NULL);
-> -        } else {
-> -            execl(passwd_path, "chpasswd", NULL);
-> -        }
-> -#endif
-> -        _exit(EXIT_FAILURE);
-> -    } else if (pid < 0) {
-> -        error_setg_errno(errp, errno, "failed to create child process");
-> -        goto out;
-> -    }
-> -    close(datafd[0]);
-> -    datafd[0] = -1;
-> -
-> -    if (qemu_write_full(datafd[1], chpasswddata, chpasswdlen) != chpasswdlen) {
-> -        error_setg_errno(errp, errno, "cannot write new account password");
-> -        goto out;
-> -    }
-> -    close(datafd[1]);
-> -    datafd[1] = -1;
-> -
-> -    ga_wait_child(pid, &status, &local_err);
-> +    ga_run_command(argv, chpasswddata, "set user password", &local_err);
->      if (local_err) {
->          error_propagate(errp, local_err);
-> -        goto out;
-> -    }
-> -
-> -    if (!WIFEXITED(status)) {
-> -        error_setg(errp, "child process has terminated abnormally");
-> -        goto out;
-> -    }
-> -
-> -    if (WEXITSTATUS(status)) {
-> -        error_setg(errp, "child process has failed to set user password");
-> -        goto out;
-> -    }
-> -
-> -out:
-> -    g_free(chpasswddata);
-> -    g_free(rawpasswddata);
-> -    g_free(passwd_path);
-> -    if (datafd[0] != -1) {
-> -        close(datafd[0]);
-> -    }
-> -    if (datafd[1] != -1) {
-> -        close(datafd[1]);
-> +        return;
->      }
->  }
->  #else /* __linux__ || __FreeBSD__ */
-> -- 
-> 2.39.3
-> 
-> 
-
-With regards,
-Daniel
+diff --git a/scripts/coverity-scan/run-coverity-scan b/scripts/coverity-scan/run-coverity-scan
+index d56c9b66776..4bc991f70fd 100755
+--- a/scripts/coverity-scan/run-coverity-scan
++++ b/scripts/coverity-scan/run-coverity-scan
+@@ -28,6 +28,7 @@
+ # project settings, if you have maintainer access there.
+ 
+ # Command line options:
++#   --check-upload-only : return success if upload is possible
+ #   --dry-run : run the tools, but don't actually do the upload
+ #   --docker : create and work inside a container
+ #   --docker-engine : specify the container engine to use (docker/podman/auto);
+@@ -57,18 +58,18 @@
+ # putting it in a file and using --tokenfile. Everything else has
+ # a reasonable default if this is run from a git tree.
+ 
+-check_upload_permissions() {
++upload_permitted() {
+     # Check whether we can do an upload to the server; will exit the script
+     # with status 1 if the check failed (usually a bad token);
+     # will exit the script with status 0 if the check indicated that we
+     # can't upload yet (ie we are at quota)
+-    # Assumes that COVERITY_TOKEN, PROJNAME and DRYRUN have been initialized.
++    # Assumes that COVERITY_TOKEN and PROJNAME have been initialized.
+ 
+     echo "Checking upload permissions..."
+ 
+     if ! up_perm="$(wget https://scan.coverity.com/api/upload_permitted --post-data "token=$COVERITY_TOKEN&project=$PROJNAME" -q -O -)"; then
+         echo "Coverity Scan API access denied: bad token?"
+-        exit 1
++        exit 99
+     fi
+ 
+     # Really up_perm is a JSON response with either
+@@ -76,25 +77,40 @@ check_upload_permissions() {
+     # We do some hacky string parsing instead of properly parsing it.
+     case "$up_perm" in
+         *upload_permitted*true*)
+-            echo "Coverity Scan: upload permitted"
++            return 0
+             ;;
+         *next_upload_permitted_at*)
+-            if [ "$DRYRUN" = yes ]; then
+-                echo "Coverity Scan: upload quota reached, continuing dry run"
+-            else
+-                echo "Coverity Scan: upload quota reached; stopping here"
+-                # Exit success as this isn't a build error.
+-                exit 0
+-            fi
++            return 1
+             ;;
+         *)
+             echo "Coverity Scan upload check: unexpected result $up_perm"
+-            exit 1
++            exit 99
+             ;;
+     esac
+ }
+ 
+ 
++check_upload_permissions() {
++    # Check whether we can do an upload to the server; will exit the script
++    # with status 1 if the check failed (usually a bad token);
++    # will exit the script with status 0 if the check indicated that we
++    # can't upload yet (ie we are at quota)
++    # Assumes that COVERITY_TOKEN, PROJNAME and DRYRUN have been initialized.
++
++    if upload_permitted; then
++        echo "Coverity Scan: upload permitted"
++    else
++        if [ "$DRYRUN" = yes ]; then
++            echo "Coverity Scan: upload quota reached, continuing dry run"
++        else
++            echo "Coverity Scan: upload quota reached; stopping here"
++            # Exit success as this isn't a build error.
++            exit 0
++        fi
++    fi
++}
++
++
+ build_docker_image() {
+     # build docker container including the coverity-scan tools
+     echo "Building docker container..."
+@@ -152,9 +168,14 @@ update_coverity_tools () {
+ DRYRUN=no
+ UPDATE=yes
+ DOCKER=no
++PROJNAME=QEMU
+ 
+ while [ "$#" -ge 1 ]; do
+     case "$1" in
++        --check-upload-only)
++            shift
++            DRYRUN=check
++            ;;
+         --dry-run)
+             shift
+             DRYRUN=yes
+@@ -251,6 +272,11 @@ if [ -z "$COVERITY_TOKEN" ]; then
+     exit 1
+ fi
+ 
++if [ "$DRYRUN" = check ]; then
++    upload_permitted
++    exit $?
++fi
++
+ if [ -z "$COVERITY_BUILD_CMD" ]; then
+     NPROC=$(nproc)
+     COVERITY_BUILD_CMD="make -j$NPROC"
+@@ -266,7 +292,6 @@ if [ -z "$SRCDIR" ]; then
+     SRCDIR="$PWD"
+ fi
+ 
+-PROJNAME=QEMU
+ TARBALL=cov-int.tar.xz
+ 
+ if [ "$UPDATE" = only ]; then
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.43.2
 
 
