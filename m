@@ -4,79 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CADEC54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 14:46:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 324E4C54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 14:59:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhW3H-0007NG-Io; Tue, 05 Mar 2024 09:45:55 -0500
+	id 1rhWFo-0002uW-0k; Tue, 05 Mar 2024 09:58:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhW3B-0007LQ-EC
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 09:45:49 -0500
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhW38-00016e-LF
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 09:45:49 -0500
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5673b5a356eso867755a12.0
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 06:45:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709649944; x=1710254744; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iar5Yqz2ndMcxExgXO/Vr1XhhBonegkGTYBbQCldPzg=;
- b=o4/20KFyfihYNWhfG++X9L+KeAL4FiLkk4+/GhVaalU6MAmGnFhlTkJ//+Nm2HanKk
- NkSU6vbZVQZpJvxX29rtjdeR/gluZc2odKVM6winjqE6p29NpCMetighBeQ3DRQLJC8h
- ipGFLamnqUIQgqzfS10323PZ3VDhEEcPhapF5K48rGFqGmcj6WYunklSFMwMhCvMSzVo
- gIjolI3EJa3nza4jMc+rlHwOhAcgpccUCuKM5kKppdcwaN3ZBONXbGRCNieuSvrgL5Do
- vGb4aPzZsZtE/LPNxgclgGDlhNodj3pLL0lOJ8CIH4H+7eFB9SD3V5DXBdceVbqO2taR
- 2DoA==
+ (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
+ id 1rhWFm-0002ts-6b
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 09:58:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
+ id 1rhWFj-00046c-W0
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 09:58:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709650726;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=bGmtSnEMvXaAyhbkbKiJuU2VWzcp9cCKce6Umqdl3TM=;
+ b=dCKG5foYbal/WEMhf/P1QS6LdVCHGezOTRoeWDEFiosFc19LElvE3PXNyhJ16euK1pCCbx
+ pSIQFQtQsy3Pfg+dONi/Lr9LKt2Gr0wIGfsckemP6XzD2wB7T3NagynJvNG6FqU+4xzBqz
+ z4Jn1kADnAsU8GRzK4dGT9upJYq/GhM=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-187-cbGxfgUaNSCtOALRYNfvRw-1; Tue, 05 Mar 2024 09:58:45 -0500
+X-MC-Unique: cbGxfgUaNSCtOALRYNfvRw-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-412de861228so15112895e9.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 06:58:41 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709649944; x=1710254744;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=iar5Yqz2ndMcxExgXO/Vr1XhhBonegkGTYBbQCldPzg=;
- b=unWclgWqPmagacpURo9uEWuDgyMDCRy9xzRu2PEXimUs+2QuEXbm5zGC60TqFLJrQM
- sBMbIoLNq4iQ+8+NVtKiY3pByVhomEvyWxhI2zvWqmT3ituW+UGGixzODgfKg42hqf75
- NSdExbqdhFAv7VCywpZ3UPbKw/1Y25nbtpXsfyNLYVopJqCb7lyu2IzQzl1fvkDWR23P
- cbyJpT+s+V780zjBAfD4a4qYI1byyFV7M9DZTtXfovD5MQLmQJ4V/7oicmKTyB5xWhT4
- lepXNZ6mkPuI9vIgFlXKOJPr6+AOkK5F78RxI9ixMCOaFz9NucqECtRpDZFKoqG2GxaN
- kwXA==
-X-Gm-Message-State: AOJu0YyaDOP9ORMKmvChoUJIKZjh18sER1HAohL/F40yETcCM8/INKVh
- 2bMmX21BvQ6VxV3sRGMNSS3tJBQTVTFTrEZQ+3FfwfhzcEbKSTbjBXSW+xWvE9cNyi/Vxmx9MAb
- GrPlDS2DLLx1pCFO9LKYNR+5ocipe0SPCtCbyDA==
-X-Google-Smtp-Source: AGHT+IHD6utqPbacIH7U+XJmv2tIvemKmpl3Q5AUkz2UXFLSPUZA3kuZNOMVabVqGvvBYJDNxM4BLNTT9WIHcfa9q00=
-X-Received: by 2002:a05:6402:1d18:b0:566:4dc1:522c with SMTP id
- dg24-20020a0564021d1800b005664dc1522cmr8461452edb.15.1709649944413; Tue, 05
- Mar 2024 06:45:44 -0800 (PST)
-MIME-Version: 1.0
-References: <20240223161300.938542-1-peter.maydell@linaro.org>
- <CABgObfZ_FOs29mZJKcXWTJurWO8wDDWkhfFW9g9ppzOGG2_dKA@mail.gmail.com>
-In-Reply-To: <CABgObfZ_FOs29mZJKcXWTJurWO8wDDWkhfFW9g9ppzOGG2_dKA@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 5 Mar 2024 14:45:33 +0000
-Message-ID: <CAFEAcA9JWQp39SQtB4JOZun9aYYvLKaaFH7Lto-Qet-0UAfJDw@mail.gmail.com>
-Subject: Re: [PATCH] hw/rtc/sun4v-rtc: Relicense to GPLv2-or-later
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Markus Armbruster <armbru@redhat.com>, Eduardo Habkost <ehabkost@redhat.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Content-Type: text/plain; charset="UTF-8"
+ d=1e100.net; s=20230601; t=1709650721; x=1710255521;
+ h=in-reply-to:references:cc:to:from:subject:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=bGmtSnEMvXaAyhbkbKiJuU2VWzcp9cCKce6Umqdl3TM=;
+ b=oq94cb7vA4OW8FimYlGMvCNp+tvAQbpjvu1cFxl/tb0dz9q0+j12ebCbnWlekPe/5T
+ wTt6QNrKE5eRg5Cri9yZx17eN+d8I4imrpzkDCnfSCWds6LgsHx8kKN+WzbdIjv0LveH
+ 7A8bR8JPy1hYd+93lsBiy8/Vhl1T7VN1zmd5C8+P/QMdQZ3NBUYPVcqSVrfOGC9ZJRGq
+ h8+9gtXIJ0uyuYcbyh3PP+WrS3UTDE5FBgPbKP0rrffbo0zwIvQ+x2pQh+S6s5WqWaDa
+ KdQvVjJSgUKR+sdkU/m+F6mCf+kBxAWWpaLXGDya1Yj85bde/rLBGFyXnhe5XqOqCFMa
+ HKrg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW4ojthjUCHM4BPtkYVR87BGj+F0qXaDouq02dHjllW2HYCmx4S0KGiEWDWkCYqLGhtyxFQBmjElr6I9DOVUgQ+S0mYO5A=
+X-Gm-Message-State: AOJu0Yy7EhZANjwCj7MwrY9lH1OEHTcPm/pWKaTwCxqwriawMEK0EPBF
+ wX9BpFTFcsLWttWcgJFdJpEexv9EzayaPmcvPT4ww42w0665+icFZUUTs0/Gxj5UQS/JlTvISrd
+ IFtNfEpqchIjFZBaZ2GWBoiZRL9OOeZ+iHZNT2N6VD5GvKKbRE34o
+X-Received: by 2002:a05:600c:19d1:b0:412:c8cc:d9eb with SMTP id
+ u17-20020a05600c19d100b00412c8ccd9ebmr9362330wmq.23.1709650720995; 
+ Tue, 05 Mar 2024 06:58:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGslh68IMiARuMA6X5pJzXyv/ICLSgjn14XJRZSs3a4BNTATXN7kfOYg87xEqX1lfeJ48Jo2g==
+X-Received: by 2002:a05:600c:19d1:b0:412:c8cc:d9eb with SMTP id
+ u17-20020a05600c19d100b00412c8ccd9ebmr9362320wmq.23.1709650720667; 
+ Tue, 05 Mar 2024 06:58:40 -0800 (PST)
+Received: from localhost ([2a01:e0a:a9a:c460:2827:8723:3c60:c84a])
+ by smtp.gmail.com with ESMTPSA id
+ v6-20020a05600c444600b00412ed9b621bsm2004581wmn.5.2024.03.05.06.58.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 Mar 2024 06:58:40 -0800 (PST)
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 05 Mar 2024 15:58:40 +0100
+Message-Id: <CZLWLM84EI89.28IAJ5VSI5OEV@fedora>
+Subject: Re: [PATCH v3 3/3] Add support for RAPL MSRs in KVM/Qemu
+From: "Anthony Harivel" <aharivel@redhat.com>
+To: =?utf-8?b?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>
+Cc: <pbonzini@redhat.com>, <mtosatti@redhat.com>, <qemu-devel@nongnu.org>,
+ <vchundur@redhat.com>
+X-Mailer: aerc/0.15.2-111-g39195000e213
+References: <20240125072214.318382-1-aharivel@redhat.com>
+ <20240125072214.318382-4-aharivel@redhat.com> <Zbf8hradcHeeEXae@redhat.com>
+In-Reply-To: <Zbf8hradcHeeEXae@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=aharivel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.568,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -94,36 +105,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 5 Mar 2024 at 14:29, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> On Fri, Feb 23, 2024 at 5:13=E2=80=AFPM Peter Maydell <peter.maydell@lina=
-ro.org> wrote:
-> >
-> > The sun4v RTC device model added under commit a0e893039cf2ce0 in 2016
-> > was unfortunately added with a license of GPL-v3-or-later, which is
-> > not compatible with other QEMU code which has a GPL-v2-only license.
-> >
-> > Relicense the code in the .c and the .h file to GPL-v2-or-later,
-> > to make it compatible with the rest of QEMU.
-> >
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> > Before we can commit this to either head-of-git or any stable branch,
-> > we need a Signed-off-by: from everybody who's touched this file (or,
-> > for corporate contributions, from somebody from the relevant company
-> > who can confirm that the company is OK with the licensing, which is
-> > RedHat and Linaro in this case).
->
-> All contributions from Red Hat are GPLv2 or later (though it's nice
-> that Markus signed off on his own), so
->
-> Signed-off-by: Paolo Bonzini (for Red Hat) <pbonzini@redhat.com>
+Hi Daniel,
 
-Excellent. I believe that is then everybody's signoff that
-we need, so I'll make sure this gets into a pullreq by the end
-of the week (and add the cc:stable tag for it).
+> > +
+> > +        /* Retrieve all packages power plane energy counter */
+> > +        for (int i =3D 0; i <=3D maxpkgs; i++) {
+> > +            for (int j =3D 0; j < num_threads; j++) {
+> > +                /*
+> > +                 * Use the first thread we found that ran on the CPU
+> > +                 * of the package to read the packages energy counter
+> > +                 */
+>
+> This says we're using a thread ID
+>
+> > +                if (thd_stat[j].numa_node_id =3D=3D i) {
+> > +                    pkg_stat[i].e_start =3D
+> > +                    vmsr_read_msr(MSR_PKG_ENERGY_STATUS, i, pid,
+>
+> but here we're using a pid ID, which is the thread ID of the initial
+> thread.
+>
+> > +                                  s->msr_energy.socket_path);
+> > +                    break;
+> > +                }
+> > +            }
+> > +        }
+>
+> This API design for vmsr_read_msr() is incredibly inefficient.
+> We're making (maxpkgs * num_threads) calls to vmsr_read_msr(),
+> and every one of those is opening and closing the socket.
+>
+> Why isn't QEMU opening the socket once and then sending all
+> the requests over the same socket ?
+>
 
-Thanks everybody for your assistance in getting this sorted out.
 
--- PMM
+The usage of pid here is a mistake, thanks for pointing this out.
+
+However, I'm more sceptical about the fact that the loop is inefficient.=20
+The confusion could definitely be because of the poor variable naming,=20
+and I apologize about that.
+Let me try to explain what it's supposed to do:
+Imagine we are running on machine that has i packages. QEMU has=20
+j threads running on whichever packages. We need to get the current=20
+packages energy of each packages that are used by the QEMU threads.=20
+(could be all i packages, only 1, 2.. we don't know what we need yet)=20
+So it loops first on the packages "0", and look if any thread has run=20
+on this packages.=20
+If no, test the next thread.=20
+if yes, we need the value, we call the vmsr_read_msr() then break and=20
+now loop for the next package, i.e package "1". And this until all=20
+packages has been tested.
+
+So in the end, we 'only' have maximum "maxpkgs" calls of vmsr_read_msr().
+
+Hope that's ok and that clear up the confusion!
+
+Regards,
+Anthony
+
+
 
