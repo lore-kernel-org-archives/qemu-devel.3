@@ -4,75 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65F20C54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 19:14:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62AE3C54E41
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 19:16:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhaF6-0004uB-6V; Tue, 05 Mar 2024 14:14:24 -0500
+	id 1rhaGS-0005bJ-ST; Tue, 05 Mar 2024 14:15:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rnn59437@gmail.com>)
- id 1rhaF5-0004tT-10
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 14:14:23 -0500
-Received: from mail-oi1-x233.google.com ([2607:f8b0:4864:20::233])
+ id 1rhaGQ-0005ap-EY
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 14:15:46 -0500
+Received: from mail-oa1-x34.google.com ([2001:4860:4864:20::34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <rnn59437@gmail.com>)
- id 1rhaEz-0002vo-VM
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 14:14:22 -0500
-Received: by mail-oi1-x233.google.com with SMTP id
- 5614622812f47-3bbbc6e51d0so4273753b6e.3
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 11:14:17 -0800 (PST)
+ id 1rhaGO-0003HY-TW
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 14:15:46 -0500
+Received: by mail-oa1-x34.google.com with SMTP id
+ 586e51a60fabf-21fed501addso3409306fac.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 11:15:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709666056; x=1710270856; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1709666143; x=1710270943; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=5AmI5o6uN6wUjJHHxKQUVG+rfMUG8i0cxQVyFCVsnL0=;
- b=bC/iHztMAW2ar0zEPteXB5hMKnkGsjRtWJR+gmAez50hhzw/wGo2qm6JAyFuFnB2SD
- rMQtFt8KiZIaqLUuCnpHzJnjb9aJziOAtK1Fs8cwEoHc3Dw1dnGoh19w0L/fw+UNj19b
- ++nX00FwZ+UADnAny7VfjSdxw10tdDp8I8hgCUS0eyL3jaJC+sduP7AzULD3R4D8JX3H
- xFahFai+zTyGR0n8fTqFLyvuEAGXLIzsox8MBXIx7ptauEsJL/xKPtFUHOoBfiOFv0PF
- kdtll4XQ2WHmbgVB58/J5kb7z2dZvaJH/+PK5BlWhC5E+hCjl/ABKKFAQPKAhCOemIMT
- hTdg==
+ bh=s9/ihvTwChu9fLBn1SiTMhnwk+6YX44290mJbtPdZ0U=;
+ b=ORcvQqaaNN+mzEMXIsDopmRsTXquq2qLyAtAIFd1spOKA4sP6NFlpEaAKZPxVoJCNc
+ M/BWCHQ9b9gP72gQgrcL5vosMrpOnolv3lTQcOsWtzCAbvmlJ8TxOjEwNXHaALyHbiy8
+ 2ugKH53iU5dB+dzDvLhhF8k7GStAr5DKLFIEKl1uYNPu8yi0+q0R36BZxpIFaRkfRrkg
+ 8ja9PYb3BWG1Cul+CB99PQ6aY0tUeUgR1aL17V7Q4LVPVeZJWX5/rX2MhWkzpwJFySn2
+ R/NUKErMEQ0sjEJSS23FICKapX9Gkpd/fI3GGjRjb4nVa5Mdv2h/q7PCNNQQnvjn0MkD
+ 8u6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709666056; x=1710270856;
+ d=1e100.net; s=20230601; t=1709666143; x=1710270943;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=5AmI5o6uN6wUjJHHxKQUVG+rfMUG8i0cxQVyFCVsnL0=;
- b=d/YVBWnyzD0ab9kML/wr3NbvZqA0NLa7uWZR13waBA47VnbMie0RFs1eEjIJLkvOIz
- QkcngmcpdMByX2uqgan0dT1LmHQINhjbdcT+XKSLImzLzjAgYPUgNoYWX0UusDknPxGg
- bie37jHTF0C3nYthbtm14iaFe3XqwMxwXXBpQS65ie2rGNvien39xI46jxcA9+bNgrie
- qqijwtYrnneMgb8ryJFTEBwnqsP6SB8PhjYQbFpYi6dggwNrtXJ9VEt63goN2X0cGI8Z
- 0JKz5lmVIUKRZ9Gpg/S3tg3BPb8/zq0o+O+BBHdfQXrBYWVFEQWZUcglYnfuHEjTXosd
- XQBQ==
-X-Gm-Message-State: AOJu0YyttA5SorE/J4nY8KnCozFqj6z0UXS3i4QLtHNqIE4y5Ox0rkfU
- hMNVKtYG7b3gHpxRuY+ez2ipdIAXRBSD8duewyG4TZMkV4HrvW8lo81TU6wAXR1lseKdst9p4lH
- pc1KNQrDU9S7iBMfA42R3J5GQ2YY=
-X-Google-Smtp-Source: AGHT+IGtK2+zNIhCpCkDbvjYeB0jbU72b3sYelW0sQp8TWs2ISfRrS6BwC7vvLR9Aux24cioZMjqPxPVGuV5/jhRwGo=
-X-Received: by 2002:a05:6871:4399:b0:21e:bbdc:cc80 with SMTP id
- lv25-20020a056871439900b0021ebbdccc80mr3074199oab.8.1709666056288; Tue, 05
- Mar 2024 11:14:16 -0800 (PST)
+ bh=s9/ihvTwChu9fLBn1SiTMhnwk+6YX44290mJbtPdZ0U=;
+ b=HMpH6tgm4EYlpdLoeWmDDekfBYljYj6l8VBLuzWV+TgT0aNqNCKDtrIopz8hizzRJl
+ vktDTgGkAInykTupG3mc+j6U3gJgowv+PXmH/s0/wswvzOtjHQbdxoHB78e3XcexoYy/
+ NWWTUH3NdjLzenachAbN5ZcBZLQR0VMpZh2VE6qfpFEsTPEfkHoQQ+8dkkzT2hAXhIoQ
+ kppCFNpuL1YmT7RpV2GuPrnjIVTv2DWzX7BoCnfkFtIKTRkJjcG0KDnwmlAwauGCrw92
+ 2zD1kfKleq8yn2YgVSjHuHEfC6dM+VoUcQEjksptu0k+6Z7hnCnqmsa6UymM7xgXDlb0
+ dbhA==
+X-Gm-Message-State: AOJu0YxADlaaS0uVm/Sp0htdEJ95ibNnF8DHQv+6H17yr6ap4FFCR+z5
+ 1TeKab6VjYkBDfUvQD+N8kVKuJbWWZ0nUYIJH4nicC2p16rzG0GlzFVTNYsQBd3Dwz2k5RcKCPR
+ KEbKJYSIc8gzMqoHXaRsMwcoGPvs0KmTs57Xl3f08cM2w7dATe1I6/FobFrk/omz/IgHADggZoB
+ MSuw==
+X-Google-Smtp-Source: AGHT+IF4hfQVFrrQmCOkyUZPqgTcD8uOvVoka2vGOerojdOyfA4TOmGopbfhKG+zHGGnUAj7qYin7FwgVNWZe45wYkNzTFT49eI+75nJ
+X-Received: by 2002:a05:6870:82ab:b0:21e:c594:7515 with SMTP id
+ q43-20020a05687082ab00b0021ec5947515mr3065609oae.28.1709666143344; Tue, 05
+ Mar 2024 11:15:43 -0800 (PST)
 MIME-Version: 1.0
 References: <CAK4oD7BPCf5o-OR8WThb3QGJbrJnYpHipjKv-hY9rkWNOSAHjA@mail.gmail.com>
  <CAFEAcA8wQK_jfj+q-70TJ9Mnu+JHan_oNPYTDMMUmsBm7kMcOw@mail.gmail.com>
-In-Reply-To: <CAFEAcA8wQK_jfj+q-70TJ9Mnu+JHan_oNPYTDMMUmsBm7kMcOw@mail.gmail.com>
+ <CAK4oD7AJYesHPRY3ft3cXQkqW9RAvCZVcnLSC-rfFbnpUGykAQ@mail.gmail.com>
+In-Reply-To: <CAK4oD7AJYesHPRY3ft3cXQkqW9RAvCZVcnLSC-rfFbnpUGykAQ@mail.gmail.com>
 From: RR NN <rnn59437@gmail.com>
-Date: Tue, 5 Mar 2024 22:44:04 +0330
-Message-ID: <CAK4oD7AJYesHPRY3ft3cXQkqW9RAvCZVcnLSC-rfFbnpUGykAQ@mail.gmail.com>
+Date: Tue, 5 Mar 2024 22:45:32 +0330
+Message-ID: <CAK4oD7BPnGaPR5QzXGYdEqYyXTB5Pt4SYjHzHzLV_S+Mg3cwXw@mail.gmail.com>
 Subject: Re: ARM hypervisors
-To: Peter Maydell <peter.maydell@linaro.org>
+To: peter.maydell@linaro.org
 Cc: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000f83fc30612eea511"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::233;
- envelope-from=rnn59437@gmail.com; helo=mail-oi1-x233.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Content-Type: multipart/alternative; boundary="000000000000289c7c0612eeab3a"
+Received-SPF: pass client-ip=2001:4860:4864:20::34;
+ envelope-from=rnn59437@gmail.com; helo=mail-oa1-x34.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_KAM_HTML_FONT_INVALID=0.01,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,41 +92,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f83fc30612eea511
+--000000000000289c7c0612eeab3a
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Awesome, thanks for the info!
+=F0=9F=92=96
 
-On Tue, Mar 5, 2024, 17:29 Peter Maydell <peter.maydell@linaro.org> wrote:
+RR reacted via Gmail
+<https://www.google.com/gmail/about/?utm_source=3Dgmail-in-product&utm_medi=
+um=3Det&utm_campaign=3Demojireactionemail#app>
 
-> On Tue, 5 Mar 2024 at 13:40, RR NN <rnn59437@gmail.com> wrote:
-> >
-> > Hello
-> > ARM hypervisors (pKVM, Gunyah) can run x86 OSs?
+On Tue, Mar 5, 2024, 22:44 RR NN <rnn59437@gmail.com> wrote:
+
+> Awesome, thanks for the info!
 >
-> No. A hypervisor uses the host CPU's virtualization extensions
-> to allow the guest code to run directly on the host CPU. This
-> is why they're fast. This also means that they only work when
-> the guest CPU is the same architecture as the host CPU.
-> So you can run an x86 OS on an x86 host CPU, or an Arm
-> OS on an Arm host CPU using a hypervisor, but you can't run
-> a guest of the "wrong" architecture.
+> On Tue, Mar 5, 2024, 17:29 Peter Maydell <peter.maydell@linaro.org> wrote=
+:
 >
-> thanks
-> -- PMM
+>> On Tue, 5 Mar 2024 at 13:40, RR NN <rnn59437@gmail.com> wrote:
+>> >
+>> > Hello
+>> > ARM hypervisors (pKVM, Gunyah) can run x86 OSs?
+>>
+>> No. A hypervisor uses the host CPU's virtualization extensions
+>> to allow the guest code to run directly on the host CPU. This
+>> is why they're fast. This also means that they only work when
+>> the guest CPU is the same architecture as the host CPU.
+>> So you can run an x86 OS on an x86 host CPU, or an Arm
+>> OS on an Arm host CPU using a hypervisor, but you can't run
+>> a guest of the "wrong" architecture.
+>>
+>> thanks
+>> -- PMM
+>>
 >
 
---000000000000f83fc30612eea511
+--000000000000289c7c0612eeab3a
+Content-Type: text/vnd.google.email-reaction+json; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+{
+  "emoji": "=F0=9F=92=96",
+  "version": 1
+}
+--000000000000289c7c0612eeab3a
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"auto">Awesome, thanks for the info!=C2=A0</div><br><div class=
-=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Mar 5, 2024,=
- 17:29 Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org">peter.=
-maydell@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote=
-" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">O=
-n Tue, 5 Mar 2024 at 13:40, RR NN &lt;<a href=3D"mailto:rnn59437@gmail.com"=
- target=3D"_blank" rel=3D"noreferrer">rnn59437@gmail.com</a>&gt; wrote:<br>
+<div><p style=3D"font-size:50px;margin-top:0;margin-bottom:0">=F0=9F=92=96<=
+/p><p style=3D"margin-top:10px;margin-bottom:0">RR reacted via <a style=3D"=
+color:unset;text-decoration:underline" href=3D"https://www.google.com/gmail=
+/about/?utm_source=3Dgmail-in-product&amp;utm_medium=3Det&amp;utm_campaign=
+=3Demojireactionemail#app">Gmail</a></p></div><br><div class=3D"gmail_quote=
+"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Mar 5, 2024, 22:44 RR NN &l=
+t;<a href=3D"mailto:rnn59437@gmail.com">rnn59437@gmail.com</a>&gt; wrote:<b=
+r></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border=
+-left:1px #ccc solid;padding-left:1ex"><div dir=3D"auto">Awesome, thanks fo=
+r the info!=C2=A0</div><br><div class=3D"gmail_quote"><div dir=3D"ltr" clas=
+s=3D"gmail_attr">On Tue, Mar 5, 2024, 17:29 Peter Maydell &lt;<a href=3D"ma=
+ilto:peter.maydell@linaro.org" target=3D"_blank" rel=3D"noreferrer">peter.m=
+aydell@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote"=
+ style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On=
+ Tue, 5 Mar 2024 at 13:40, RR NN &lt;<a href=3D"mailto:rnn59437@gmail.com" =
+rel=3D"noreferrer noreferrer" target=3D"_blank">rnn59437@gmail.com</a>&gt; =
+wrote:<br>
 &gt;<br>
 &gt; Hello<br>
 &gt; ARM hypervisors (pKVM, Gunyah) can run x86 OSs?<br>
@@ -139,6 +171,7 @@ a guest of the &quot;wrong&quot; architecture.<br>
 thanks<br>
 -- PMM<br>
 </blockquote></div>
+</blockquote></div>
 
---000000000000f83fc30612eea511--
+--000000000000289c7c0612eeab3a--
 
