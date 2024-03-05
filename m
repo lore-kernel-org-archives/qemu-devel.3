@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FDAFC54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 20:46:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A8D4C54E41
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 20:47:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhbgH-0007Xi-09; Tue, 05 Mar 2024 15:46:33 -0500
+	id 1rhbgd-0007gp-D4; Tue, 05 Mar 2024 15:46:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rhbgE-0007XV-26
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 15:46:30 -0500
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1rhbga-0007eE-Ml
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 15:46:52 -0500
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rhbgC-000217-6d
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 15:46:29 -0500
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-6e5c0be115aso3110670b3a.3
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 12:46:27 -0800 (PST)
+ id 1rhbgZ-00025C-BL
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 15:46:52 -0500
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-6e56787e691so137889b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 12:46:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709671586; x=1710276386; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709671609; x=1710276409; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Rh7ImRCJ9sXBDVRNLKseuNzseOk7B+khv7+nBAQFxQo=;
- b=Zr8GcDqbxKR7c7xp/0JCAl8eXoPzaXloGn8SdbHNkWIgvL0AitmTTjdrpn6DlggW/E
- XolC9yBmGpUNRqH62/DMF5YxWVYle4CG5nuJMk7OnK+w7Nfx+dB+oQupRRntVDCOAGY7
- lzPYF5Z0iGCfEgzZVtH2ozmNUvgjjnN+ddI/v96eU5o8uJ3M6zC5cgYlK871ymhdL4fL
- uU2Y4Kp8ksQKXC0k30jr4E0vWFN8nHItwv4h6t4JHrNQj3+9eEQvhPu/n6f4MsTUpatF
- 5TVe/qtNKa+gxdFEUJgeqgjQ6jvC8ATjl9j50SQyWM0QqCvBjGobhBnt+7mVRhyeU80B
- PfEw==
+ bh=uAxI2BjsGU0eD+OlV5CSjt6wFJwiXSfAof/OQXK+c4g=;
+ b=kCONZay6Ed3Dr8pQpWgp3/ckeIrTIvmLq+eA8c+emSJXHgnB0W0jBgnd9dOr3wFj9t
+ 3MdGn8gaMOtUYa1Z+8lZDLy53SvN+ccHyGNfSjqeR8lvMn2QfRb7+MpekyLc96omM+Y4
+ 0ipyACreYfsubckAcVCmFOuVmppPIMhvoB+vHPDfSA1I4rCPg29QQcmobgi874VKC1va
+ MCBq8cIs4oVbo6Gp6MVajqQhPJdGavcipujJAnyFCQVIzbZqkZW9Hl0ELRTvsmwezE1l
+ NuNSrMM1Sdh9DxCpJjIAx8jtAWFw4omlwRvWO9uRmsQskoaqr+dcDjgk+cVDyFMY3fa/
+ W8FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709671586; x=1710276386;
+ d=1e100.net; s=20230601; t=1709671609; x=1710276409;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Rh7ImRCJ9sXBDVRNLKseuNzseOk7B+khv7+nBAQFxQo=;
- b=kM2rNERUQz+5F3+lHKud0B/mKtlXU77xCu4uJiPQpmi9DUATkx6xowyFVEp6CapNTe
- LowqfzfUO3Hu8aXEMiHAshJCzOT7/SeQ41X1Bcrc1DDQz5ChXN2R8UCNMIjFs0h93kZ0
- r26Xi9oDWe25ab3pgen8z5tyachpHW/DSUhCNPPermhnh0Gs3D4QsNZDXDrQveAhaig1
- /wJ7gLKjnRhbhyD+J41YCtDwA7C0NzXlbpZ2VcH1CbuAsx5u71yWVLekmgxzcHWKAKS/
- s2o3Bme7I7bfdN30++gO4zm4bTEtk00FoY+Q5LiCgvKHRrgM6O+cCAp86NEuAV4+XDxS
- o5Pg==
+ bh=uAxI2BjsGU0eD+OlV5CSjt6wFJwiXSfAof/OQXK+c4g=;
+ b=u4lWkAafxhkoPFHtQLXKhi8zIH5/+TvK2qv8PEtz4eSisO2RTzdnSxdEslXZ5mo1Ys
+ 3pwRNBuci01CsQVYF1g09tzpz1+2Erxeq+F91uwrCdFjI5MJS6G6VTyH958U0kN4fG+G
+ YZtsJP6u3P9PnPEe9z5HjS1QTjUjGA1MVxCc60VbvAPMjrukhQdoGaCOhq5BPdRZ8Wg6
+ ND5VeGjuLUuw2brq1PFk0C2fTIMszibDTPZXPmQ7IZF6mQ0o9cBl7RAffvH31TBW8LNx
+ 57knj0de0VYXGyyDCSm3SIuZ8LOzcs6GbJe+/hqwxcqwWX0g/ka8RW0/QOYBKpVbZXUK
+ d4Uw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUaIv8hURsECP17ULBehFKiAHwPVlX9I55uWTpAC0bFDGsjeSLnhppPHCtuL6kFOPNvn2bhwSYW1Ep5AI7uGfM9x3P2Yaw=
-X-Gm-Message-State: AOJu0Yxk91TO4q6AC4VaeOpxGvPNMvEBrlZMyx/2eB1NkOBKmVxBDtgi
- IzbWr6EIxChX0ak0I5LmIZiVHI9YDYJHxnhwoprVaFVxmbaiGUL2ayzx5c9vjcU=
-X-Google-Smtp-Source: AGHT+IEaaf8zdGt1DsicyJlIF/SKQZQV3dlKJWPlxVNPp5rJwaaqOalmt/9l2TUZ08eBfAM3itdqZg==
-X-Received: by 2002:a05:6a00:310f:b0:6e5:bdfb:bcd2 with SMTP id
- bi15-20020a056a00310f00b006e5bdfbbcd2mr10205592pfb.9.1709671586427; 
- Tue, 05 Mar 2024 12:46:26 -0800 (PST)
+ AJvYcCVlFxuoHl2A/SmsX1vR6v7+NnEn9qVANMvQHtfdkRzCvxGWXdUmB+Bg1imgI/sQVLLwWOn3GmdEB/Y64McnXFGII3xHihc=
+X-Gm-Message-State: AOJu0YyrPk/ER0hZLFHwLZvDRtBSnKnD3974gsthEXsSKDSnMrBpsYEK
+ SnXx5xrkuVV8YjkkOIjGIfZx1YAbd3dJkqeJA0hNEjACC71M7gKEDCotQ1LJEopWHmjeRODhH/h
+ E
+X-Google-Smtp-Source: AGHT+IFEEeQsvcb4Tjb1nqyPGjwHefnSOaFH4pV+tS+CrwxzSYQ4jLUDTMF8nGd8r3lNkLYeXGB2CQ==
+X-Received: by 2002:a05:6a20:9e4a:b0:1a1:420e:f26f with SMTP id
+ mt10-20020a056a209e4a00b001a1420ef26fmr4282000pzb.22.1709671609462; 
+ Tue, 05 Mar 2024 12:46:49 -0800 (PST)
 Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
  [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- q67-20020a634346000000b005dc49afed53sm9621106pga.55.2024.03.05.12.46.25
+ q67-20020a634346000000b005dc49afed53sm9621106pga.55.2024.03.05.12.46.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Mar 2024 12:46:25 -0800 (PST)
-Message-ID: <fb7d5ad6-f671-4b53-9ed9-512f03d637b2@linaro.org>
-Date: Tue, 5 Mar 2024 10:46:23 -1000
+ Tue, 05 Mar 2024 12:46:49 -0800 (PST)
+Message-ID: <17681f16-5fe0-4191-814c-0c261ba82b86@linaro.org>
+Date: Tue, 5 Mar 2024 10:46:47 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 26/29] disas: introduce show_opcodes
+Subject: Re: [PATCH 27/29] disas/hppa: honour show_opcodes
 Content-Language: en-US
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 References: <20240305121005.3528075-1-alex.bennee@linaro.org>
- <20240305121005.3528075-27-alex.bennee@linaro.org>
+ <20240305121005.3528075-28-alex.bennee@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240305121005.3528075-27-alex.bennee@linaro.org>
+In-Reply-To: <20240305121005.3528075-28-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,16 +100,10 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/5/24 02:10, Alex Bennée wrote:
-> For plugins we don't expect the raw opcodes in the disassembly. We
-> already deal with this by hand crafting our capstone call but for
-> other diassemblers we need a flag. Introduce show_opcodes which
-> defaults to off.
-> 
 > Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
 > ---
->   include/disas/dis-asm.h | 8 ++++++++
->   disas/disas.c           | 1 +
->   2 files changed, 9 insertions(+)
+>   disas/hppa.c | 8 +++++---
+>   1 file changed, 5 insertions(+), 3 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
