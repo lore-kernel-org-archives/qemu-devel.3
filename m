@@ -4,104 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08E3BC54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 08:26:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E59CC54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 08:31:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhQ81-000302-OZ; Tue, 05 Mar 2024 03:26:25 -0500
+	id 1rhQCa-0004dX-Jy; Tue, 05 Mar 2024 03:31:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rhQ7x-0002zV-Jq; Tue, 05 Mar 2024 03:26:22 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rhQBw-0004a5-QV
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 03:30:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rhQ7v-0006Ro-S8; Tue, 05 Mar 2024 03:26:21 -0500
-Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 4258CcR0028000; Tue, 5 Mar 2024 08:26:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=+ojZixkpU2sF5twNP2lR6nZGpFYHoybU301Y6vz/PGQ=;
- b=V0cY7KMsJfg/lEAcuO/hyDBX9wHaZ4VtMuPIapv99+pfbkTyY8jllay/xzCyvAnvBjgC
- uX2KowAFE0fflq3sWANxDp+He3AWz3/UXcuABag6PZGTsOdxaZuMWz51eMWQv8xhq1Gx
- iIwO5mf38IjWMsYrchEOL2gGEWZYzRl/xQJMlDQ3eHVHPcpzDZAo5jed2o68vwSz0Pnw
- NkdBmuVPrFDPrS78rVnjWy1+XjRF4aSNjuNPQNOjHCYv91mK89RNQnMr7zshLIU9ZP21
- 5+mGYDT8eiVUozBfpcSU8sW97Rh//jJDlzUd/BzlI09qizk1tlqB0/tgepaXcznyLqAn TA== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wnyp8gdu0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Mar 2024 08:26:13 +0000
-Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4258DXGB030056;
- Tue, 5 Mar 2024 08:26:13 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wnyp8gdpw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Mar 2024 08:26:13 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 4257pmsh027187; Tue, 5 Mar 2024 08:26:10 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3wmfenp7yx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 Mar 2024 08:26:10 +0000
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4258Q7Y238666622
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 5 Mar 2024 08:26:09 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BC24958043;
- Tue,  5 Mar 2024 08:26:07 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 104F75805F;
- Tue,  5 Mar 2024 08:26:05 +0000 (GMT)
-Received: from [9.109.243.35] (unknown [9.109.243.35])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  5 Mar 2024 08:26:04 +0000 (GMT)
-Message-ID: <e54891fa-8509-4e79-807f-aaeb8236b79c@linux.ibm.com>
-Date: Tue, 5 Mar 2024 13:56:03 +0530
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rhQBs-0006u5-Te
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 03:30:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709627424;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=XmMqm0PNy9md6EorKnZHsa9GgFIkrNCbqyC00aLo3dg=;
+ b=cYo381OpoMmZRey+iqtU6YrMTAAxu7QPs7fX5w9hvSZWLF8VPF8RlVAjfb77fpvWlxHcVF
+ mvGboiKhtDpg99SCsEovMD1tvMKEn/1QdElnOaVPpbfnJeWrTqwYZtOh3RqhvLnToecUjv
+ M43fFvvBeYA0ePcR6BjZXqCI27Dt3aw=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-630-rOEA_TjxMdO6OrxiMK4mNQ-1; Tue, 05 Mar 2024 03:30:23 -0500
+X-MC-Unique: rOEA_TjxMdO6OrxiMK4mNQ-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-68fa6c656dbso90367386d6.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 00:30:23 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709627403; x=1710232203;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=XmMqm0PNy9md6EorKnZHsa9GgFIkrNCbqyC00aLo3dg=;
+ b=T11zOBv09h3TjpYvnqwvHQYnb+MgU41veVxMlZ9xjkd4shbEsLl6ja88KgkPqzpl7x
+ qFwZUf7irWKBTKJOOMhSCzCg6I5jzycS07xfIoGPoskjQtvCl2XUlyghwT5jYX++qsLx
+ +0g/mbQ7h1wY2U4xoqtDEi4Id3GyRQ05+YZRYq5X2hT3tef1/xO6LTvYK11oEnLGW2yI
+ 6nz566vxgbYdm3WJGjOmGnB9ySJavcrC9m7D77a/Xy4fU7dCD0jellEW5GDraEIG/RFg
+ rxQU4EFE0dPaq/E0TSdJyKXgsPUGbTNtvnB8eeibjs6TTjkCZouCFNB9x3R70OQLfwR1
+ EQ3Q==
+X-Gm-Message-State: AOJu0Yyj3L+9J8f6o9IzaMMgYjXrWvIkDSo5nsFGCNDoghDE7HVJrbWi
+ 24A9n0G5Lb4HcTXw8NUOz8qPGtuG83IySNxHlQmdA3fcKeEvQtns704vHeZYNE9ULZkmukCNnwt
+ 52QaVF1ojT0VqYzRN5EACpVd+dPgf9rFgVBEKzGx9W0kFqwAPqKIt
+X-Received: by 2002:a05:6214:486:b0:690:84d5:cfc3 with SMTP id
+ pt6-20020a056214048600b0069084d5cfc3mr2121612qvb.1.1709627403327; 
+ Tue, 05 Mar 2024 00:30:03 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE/RyA3yZmYs1NjOW9LiCij5y4I3HtYeKYiAB3Y2Ybf+UgdyeluEasctSaCxzz7o48GSlQJmg==
+X-Received: by 2002:a05:6214:486:b0:690:84d5:cfc3 with SMTP id
+ pt6-20020a056214048600b0069084d5cfc3mr2121585qvb.1.1709627403076; 
+ Tue, 05 Mar 2024 00:30:03 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ nz7-20020a0562143a8700b0068f71daf86bsm5977364qvb.43.2024.03.05.00.30.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 Mar 2024 00:30:02 -0800 (PST)
+Message-ID: <226fe952-aae5-49cf-8b09-82602b272e36@redhat.com>
+Date: Tue, 5 Mar 2024 09:30:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 15/15] spapr: nested: Set the PCR when logical PVR is
- set
-Content-Language: en-US
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: clegoate@redhat.com, mikey@neuling.org, amachhiw@linux.vnet.ibm.com,
- vaibhav@linux.ibm.com, sbhat@linux.ibm.com, danielhb413@gmail.com,
- qemu-devel@nongnu.org
-References: <20240220083609.748325-1-harshpb@linux.ibm.com>
- <20240220083609.748325-16-harshpb@linux.ibm.com>
- <CZFSD126HHHS.1V0PEMMKHEVJF@wheely>
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <CZFSD126HHHS.1V0PEMMKHEVJF@wheely>
+Subject: Re: [PATCH v3 00/26] migration: Improve error reporting
+Content-Language: en-US, fr
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>
+References: <20240304122844.1888308-1-clg@redhat.com> <ZebSnrfmy0_0GKwu@x1n>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <ZebSnrfmy0_0GKwu@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: JcMTWKJtfMkfjQETjgivadD7CxoaF4JD
-X-Proofpoint-GUID: 9wDAUxOaPJ5aHRRteAQ5U8Pwdt0_asck
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-05_05,2024-03-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 mlxlogscore=999
- lowpriorityscore=0 clxscore=1015 suspectscore=0 malwarescore=0 spamscore=0
- phishscore=0 impostorscore=0 mlxscore=0 priorityscore=1501 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
- definitions=main-2403050065
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,104 +105,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2/27/24 15:53, Nicholas Piggin wrote:
-> On Tue Feb 20, 2024 at 6:36 PM AEST, Harsh Prateek Bora wrote:
->> From: Amit Machhiwal <amachhiw@linux.vnet.ibm.com>
->>
->> In APIv1, KVM L0 sets the PCR, while in the nested papr APIv2, this
->> doesn't work as the PCR can't be set via the guest state buffer; the
->> logical PVR is set via the GSB though.
->>
->> This change sets the PCR whenever the logical PVR is set via the GSB.
->> Also, unlike the other registers, the value 1 in a defined bit in the
->> PCR makes the affected resources unavailable and the value 0 makes
->> them available. Hence, the PCR is set accordingly.
+On 3/5/24 09:06, Peter Xu wrote:
+> On Mon, Mar 04, 2024 at 01:28:18PM +0100, Cédric Le Goater wrote:
+>>    migration: Report error when shutdown fails
+>>    migration: Remove SaveStateHandler and LoadStateHandler typedefs
+>>    migration: Add documentation for SaveVMHandlers
+>>    migration: Do not call PRECOPY_NOTIFY_SETUP notifiers in case of error
 > 
-> Should this be squashed in as a fix?
+> These four patches seem to be pretty standalone ones and got at least 1
+> ACKs.  I queued them for 9.0, thanks.
 
-Yeh, it can be squashed with 10/15 GSB initialization patch, will update 
-as suggested in v5.
+OK.
 
-regards,
-Harsh
-> 
-> Thanks,
-> Nick
-> 
->>
->> Signed-off-by: Amit Machhiwal <amachhiw@linux.vnet.ibm.com>
->> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
->> ---
->>   include/hw/ppc/spapr_nested.h |  9 +++++++++
->>   hw/ppc/spapr_nested.c         | 24 ++++++++++++++++++++++++
->>   2 files changed, 33 insertions(+)
->>
->> diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
->> index da918d2dd0..f67c721f53 100644
->> --- a/include/hw/ppc/spapr_nested.h
->> +++ b/include/hw/ppc/spapr_nested.h
->> @@ -229,6 +229,15 @@ typedef struct SpaprMachineStateNestedGuest {
->>   #define GUEST_STATE_REQUEST_GUEST_WIDE       0x1
->>   #define GUEST_STATE_REQUEST_SET              0x2
->>   
->> +/* As per ISA v3.1B, following bits are reserved:
->> + *      0:2
->> + *      4:57  (ISA mentions bit 58 as well but it should be used for P10)
->> + *      61:63 (hence, haven't included PCR bits for v2.06 and v2.05
->> + *             in LOW BITS)
->> + */
->> +#define PCR_LOW_BITS   (PCR_COMPAT_3_10 | PCR_COMPAT_3_00)
->> +#define HVMASK_PCR     ~PCR_LOW_BITS
->> +
->>   #define GUEST_STATE_ELEMENT(i, sz, s, f, ptr, c) { \
->>       .id = (i),                                     \
->>       .size = (sz),                                  \
->> diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
->> index 6e6a90616e..af8a482337 100644
->> --- a/hw/ppc/spapr_nested.c
->> +++ b/hw/ppc/spapr_nested.c
->> @@ -740,9 +740,11 @@ static void out_buf_min_size(void *a, void *b, bool set)
->>   
->>   static void copy_logical_pvr(void *a, void *b, bool set)
->>   {
->> +    SpaprMachineStateNestedGuest *guest;
->>       uint32_t *buf; /* 1 word */
->>       uint32_t *pvr_logical_ptr;
->>       uint32_t pvr_logical;
->> +    target_ulong pcr = 0;
->>   
->>       pvr_logical_ptr = a;
->>       buf = b;
->> @@ -755,6 +757,28 @@ static void copy_logical_pvr(void *a, void *b, bool set)
->>       pvr_logical = be32_to_cpu(buf[0]);
->>   
->>       *pvr_logical_ptr = pvr_logical;
->> +
->> +    if (*pvr_logical_ptr) {
->> +        switch (*pvr_logical_ptr) {
->> +            case CPU_POWERPC_LOGICAL_3_10:
->> +                pcr = PCR_COMPAT_3_10 | PCR_COMPAT_3_00;
->> +                break;
->> +            case CPU_POWERPC_LOGICAL_3_00:
->> +                pcr = PCR_COMPAT_3_00;
->> +                break;
->> +            default:
->> +                qemu_log_mask(LOG_GUEST_ERROR,
->> +                    "Could not set PCR for LPVR=0x%08x\n", *pvr_logical_ptr);
->> +                return;
->> +        }
->> +    }
->> +
->> +    guest = container_of(pvr_logical_ptr,
->> +                         struct SpaprMachineStateNestedGuest,
->> +                         pvr_logical);
->> +    for (int i = 0; i < guest->vcpus; i++) {
->> +        guest->vcpu[i].state.pcr = ~pcr | HVMASK_PCR;
->> +    }
->>   }
->>   
->>   static void copy_tb_offset(void *a, void *b, bool set)
-> 
+I will try to have the first 5 ready before 9.0 :
+
+   s390/stattrib: Add Error** argument to set_migrationmode() handler
+   vfio: Always report an error in vfio_save_setup()
+   migration: Always report an error in block_save_setup()
+   migration: Always report an error in ram_save_setup()
+   migration: Add Error** argument to vmstate_save()
+
+So that we only have the core changes in log_global_start() and
+ram_init_bitmaps() to address in the next cycle.
+
+As for the VFIO part coming after, I will see which initial cleanups
+we can merge before soft freeze.
+
+Thanks,
+
+C.
+
 
