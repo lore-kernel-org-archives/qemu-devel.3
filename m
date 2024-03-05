@@ -4,62 +4,154 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60982C54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 06:49:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C12F7C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 06:57:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhOb4-00088H-Kg; Tue, 05 Mar 2024 01:48:18 -0500
+	id 1rhOik-0001XL-1Z; Tue, 05 Mar 2024 01:56:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1rhOao-00086m-8f; Tue, 05 Mar 2024 01:48:08 -0500
-Received: from out30-119.freemail.mail.aliyun.com ([115.124.30.119])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rhOii-0001Wa-2g
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 01:56:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1rhOag-0005qu-Ei; Tue, 05 Mar 2024 01:48:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1709621259; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=77iPO+RmmC0nTa9RMJ/QmIPzNxjOhN2jFl+Ela2Dz+g=;
- b=jqTXZ47Q//fysBiEERDoMf+231vKtmNUVXYstCLElnnSmj4tQjSCKjr6NjmAJPVkXqS2PdxXM8GwizAEJCvl8CQ1mA+o5uQTkdK8WwLOKAkK1jjCueJf4BhCkRDjLVEo5PW+wupl4Oym/umP+xAfmeo1uds/QG5xU9jy3dkHNts=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R431e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046049;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
- TI=SMTPD_---0W1tHlPI_1709621257; 
-Received: from 30.198.0.247(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0W1tHlPI_1709621257) by smtp.aliyun-inc.com;
- Tue, 05 Mar 2024 14:47:38 +0800
-Message-ID: <165adab6-d41f-4d72-b059-b13219cd5ac9@linux.alibaba.com>
-Date: Tue, 5 Mar 2024 14:47:41 +0800
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rhOig-0007Fe-Eh
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 01:56:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709621769;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=nZMRmZ/2SsjkSO0PkukIWpzEubGAMevMx9kQUeQSna0=;
+ b=PPrCAziDVsANZ5/Fj/3PyAbX5Q3QAeTGbnGEAks23wbhGA9fiCYEVOwl7KEqBZ8wA8jnZV
+ z+6KSlHExRDcFxcIY4HZ65sCsRZO9n2P74Aa2icAGOLcSkY/u6oi0q3CL1y0LzYaq0qJfY
+ 8mozqT4xz8Cncu7TVQhntYzC9CioonU=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-212-Co9kM1NhMxq4bxYWayMMxQ-1; Tue, 05 Mar 2024 01:56:07 -0500
+X-MC-Unique: Co9kM1NhMxq4bxYWayMMxQ-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a453443c9acso109013966b.3
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 22:56:07 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709621766; x=1710226566;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nZMRmZ/2SsjkSO0PkukIWpzEubGAMevMx9kQUeQSna0=;
+ b=Mvt0Oag9cbDIKdBZenwMCkDqZjFA6hDsbJy5sFH5lFjy4DYRkNqcHFX9TbDPBZ8/rd
+ AhWNDbH2e9rRZp5cfbhp7CID7xANNpBP6DspMXYuJA5LvfYLrfmDlhn/CFGKT4iYTvYH
+ kdsS2aeleqQM3adNLxAqN+75eafb2ZScjKxQHdLzJyEaVWaQVsfifXyNpr3LGc2qgccA
+ S6Mq5n1PoruIR3fklnqbLfi5RWB/3Ioa4FLQcsUrdpPCAgG3PHrqFu+U60HKI5/FZB6i
+ LvueHe3JDB/COs3GnopanYGsKh0ilfqOvTFOa4LdxPa2ow+Nx6uMi9MXt+uzImi6LAYA
+ 58FA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUab21lN4aBbqu8AWu77OUUStHi5QWLfIGp++UIYwTXLbns3LyMgyaRh05CbIAutSlBYcugPuA7vbajEMgdAi+vPXjl3kM=
+X-Gm-Message-State: AOJu0Yx3QL/vrzufd8NLU7laK8d2HgR8vON/zEGYFkO4bIwD0ss5jMEE
+ 6cv/YQCf/hKlXmdYPPSwwLt8BbOjmrQAgRplsPdlSXaRAceQPTzeqZ6P1JMgl+6DqBJv/8g63K2
+ iJYyrB9+PBg8RWRLvQO9A5sYofS2p6uka9aYMoIo5athk8efVPQ3B
+X-Received: by 2002:a17:906:2b4e:b0:a45:622e:a0b9 with SMTP id
+ b14-20020a1709062b4e00b00a45622ea0b9mr2386786ejg.64.1709621766790; 
+ Mon, 04 Mar 2024 22:56:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEPW9itF42tECIBVFWAJUABPk0V7sAEskFZPaEpiKuX64LfEF6rIZb99uyQvNgz0x0GKl/GHA==
+X-Received: by 2002:a17:906:2b4e:b0:a45:622e:a0b9 with SMTP id
+ b14-20020a1709062b4e00b00a45622ea0b9mr2386779ejg.64.1709621766468; 
+ Mon, 04 Mar 2024 22:56:06 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-178-243.web.vodafone.de.
+ [109.43.178.243]) by smtp.gmail.com with ESMTPSA id
+ uz3-20020a170907118300b00a44bb63f29csm4010255ejb.47.2024.03.04.22.56.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 Mar 2024 22:56:06 -0800 (PST)
+Message-ID: <4ae198c2-37ea-4df6-bc99-2c03848cef26@redhat.com>
+Date: Tue, 5 Mar 2024 07:56:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 5/5] target/riscv: Implement privilege mode filtering
- for cycle/instret
-To: Atish Patra <atishp@rivosinc.com>
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org, Weiwei Li
- <liwei1518@gmail.com>, kaiwenxue1@gmail.com
-References: <20240228185116.1321730-1-atishp@rivosinc.com>
- <20240228185116.1321730-6-atishp@rivosinc.com>
+Subject: Re: [RFC 0/8] virtio,vhost: Add VIRTIO_F_NOTIFICATION_DATA support
 Content-Language: en-US
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20240228185116.1321730-6-atishp@rivosinc.com>
+To: Xinying Yu <xinying.yu@nephogine.com>,
+ Eugenio Perez Martin <eperezma@redhat.com>,
+ Wentao Jia <wentao.jia@nephogine.com>,
+ Rick Zhong <zhaoyong.zhong@nephogine.com>
+Cc: Jonah Palmer <jonah.palmer@oracle.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"
+ <jasowang@redhat.com>, "si-wei.liu@oracle.com" <si-wei.liu@oracle.com>,
+ "boris.ostrovsky@oracle.com" <boris.ostrovsky@oracle.com>,
+ "raphael@enfabrica.net" <raphael@enfabrica.net>,
+ "kwolf@redhat.com" <kwolf@redhat.com>, "hreitz@redhat.com"
+ <hreitz@redhat.com>, "pasic@linux.ibm.com" <pasic@linux.ibm.com>,
+ "borntraeger@linux.ibm.com" <borntraeger@linux.ibm.com>,
+ "farman@linux.ibm.com" <farman@linux.ibm.com>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "david@redhat.com" <david@redhat.com>, "iii@linux.ibm.com"
+ <iii@linux.ibm.com>, "cohuck@redhat.com" <cohuck@redhat.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>, "fam@euphon.net"
+ <fam@euphon.net>, "stefanha@redhat.com" <stefanha@redhat.com>,
+ "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
+ "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>,
+ "virtio-fs@lists.linux.dev" <virtio-fs@lists.linux.dev>
+References: <20240301134330.4191007-1-jonah.palmer@oracle.com>
+ <CAJaqyWfD96Dh9gVavzC22KuaG4bwJ0m7sbWOsy9fR4y1HJ3-Gg@mail.gmail.com>
+ <PH0PR13MB56827829C8502484EACF080D88222@PH0PR13MB5682.namprd13.prod.outlook.com>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <PH0PR13MB56827829C8502484EACF080D88222@PH0PR13MB5682.namprd13.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.119;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-119.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 7
+X-Spam_score: 0.7
+X-Spam_bar: /
+X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,345 +167,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 05/03/2024 04.21, Xinying Yu wrote:
 
-On 2024/2/29 2:51, Atish Patra wrote:
-> Privilege mode filtering can also be emulated for cycle/instret by
-> tracking host_ticks/icount during each privilege mode switch. This
-> patch implements that for both cycle/instret and mhpmcounters. The
-> first one requires Smcntrpmf while the other one requires Sscofpmf
-> to be enabled.
->
-> The cycle/instret are still computed using host ticks when icount
-> is not enabled. Otherwise, they are computed using raw icount which
-> is more accurate in icount mode.
->
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> Signed-off-by: Atish Patra <atishp@rivosinc.com>
-> ---
->   target/riscv/cpu.h        | 11 +++++
->   target/riscv/cpu_bits.h   |  5 ++
->   target/riscv/cpu_helper.c | 17 ++++++-
->   target/riscv/csr.c        | 96 ++++++++++++++++++++++++++++++---------
->   target/riscv/pmu.c        | 64 ++++++++++++++++++++++++++
->   target/riscv/pmu.h        |  2 +
->   6 files changed, 171 insertions(+), 24 deletions(-)
->
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 174e8ba8e847..9e21d7f7d635 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -157,6 +157,15 @@ typedef struct PMUCTRState {
->       target_ulong irq_overflow_left;
->   } PMUCTRState;
->   
-> +typedef struct PMUFixedCtrState {
-> +        /* Track cycle and icount for each privilege mode */
-> +        uint64_t counter[4];
-> +        uint64_t counter_prev[4];
-> +        /* Track cycle and icount for each privilege mode when V = 1*/
-> +        uint64_t counter_virt[2];
-> +        uint64_t counter_virt_prev[2];
-> +} PMUFixedCtrState;
-> +
->   struct CPUArchState {
->       target_ulong gpr[32];
->       target_ulong gprh[32]; /* 64 top bits of the 128-bit registers */
-> @@ -353,6 +362,8 @@ struct CPUArchState {
->       /* PMU event selector configured values for RV32 */
->       target_ulong mhpmeventh_val[RV_MAX_MHPMEVENTS];
->   
-> +    PMUFixedCtrState pmu_fixed_ctrs[2];
-> +
->       target_ulong sscratch;
->       target_ulong mscratch;
->   
-> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-> index e866c60a400c..5fe349e313dc 100644
-> --- a/target/riscv/cpu_bits.h
-> +++ b/target/riscv/cpu_bits.h
-> @@ -920,6 +920,11 @@ typedef enum RISCVException {
->   #define MHPMEVENT_BIT_VUINH                BIT_ULL(58)
->   #define MHPMEVENTH_BIT_VUINH               BIT(26)
->   
-> +#define MHPMEVENT_FILTER_MASK              (MHPMEVENT_BIT_MINH  | \
-> +                                            MHPMEVENT_BIT_SINH  | \
-> +                                            MHPMEVENT_BIT_UINH  | \
-> +                                            MHPMEVENT_BIT_VSINH | \
-> +                                            MHPMEVENT_BIT_VUINH)
->   #define MHPMEVENT_SSCOF_MASK               _ULL(0xFFFF000000000000)
->   #define MHPMEVENT_IDX_MASK                 0xFFFFF
->   #define MHPMEVENT_SSCOF_RESVD              16
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index d462d95ee165..33965d843d46 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -718,8 +718,21 @@ void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv)
->   {
->       g_assert(newpriv <= PRV_M && newpriv != PRV_RESERVED);
->   
-> -    if (icount_enabled() && newpriv != env->priv) {
-> -        riscv_itrigger_update_priv(env);
-> +    /*
-> +     * Invoke cycle/instret update between priv mode changes or
-> +     * VS->HS mode transition is SPV bit must be set
-> +     * HS->VS mode transition where virt_enabled must be set
-> +     * In both cases, priv will S mode only.
-> +     */
-> +    if (newpriv != env->priv ||
-> +       (env->priv == PRV_S && newpriv == PRV_S &&
-> +        (env->virt_enabled || get_field(env->hstatus, HSTATUS_SPV)))) {
-> +        if (icount_enabled()) {
-> +            riscv_itrigger_update_priv(env);
-> +            riscv_pmu_icount_update_priv(env, newpriv);
-> +        } else {
-> +            riscv_pmu_cycle_update_priv(env, newpriv);
-> +        }
->       }
->       /* tlb_flush is unnecessary as mode is contained in mmu_idx */
->       env->priv = newpriv;
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index ff9bac537593..482e212c5f74 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -788,32 +788,16 @@ static RISCVException write_vcsr(CPURISCVState *env, int csrno,
->       return RISCV_EXCP_NONE;
->   }
->   
-> +#if defined(CONFIG_USER_ONLY)
->   /* User Timers and Counters */
->   static target_ulong get_ticks(bool shift)
->   {
-> -    int64_t val;
-> -    target_ulong result;
-> -
-> -#if !defined(CONFIG_USER_ONLY)
-> -    if (icount_enabled()) {
-> -        val = icount_get();
-> -    } else {
-> -        val = cpu_get_host_ticks();
-> -    }
-> -#else
-> -    val = cpu_get_host_ticks();
-> -#endif
-> -
-> -    if (shift) {
-> -        result = val >> 32;
-> -    } else {
-> -        result = val;
-> -    }
-> +    int64_t val = cpu_get_host_ticks();
-> +    target_ulong result = shift ? val >> 32 : val;
->   
->       return result;
->   }
->   
-> -#if defined(CONFIG_USER_ONLY)
->   static RISCVException read_time(CPURISCVState *env, int csrno,
->                                   target_ulong *val)
->   {
-> @@ -952,6 +936,71 @@ static RISCVException write_mhpmeventh(CPURISCVState *env, int csrno,
->       return RISCV_EXCP_NONE;
->   }
->   
-> +static target_ulong riscv_pmu_ctr_get_fixed_counters_val(CPURISCVState *env,
-> +                                                         int counter_idx,
-> +                                                         bool upper_half)
-> +{
-> +    uint64_t curr_val = 0;
-> +    target_ulong result = 0;
-> +    uint64_t *counter_arr = icount_enabled() ? env->pmu_fixed_ctrs[1].counter :
-> +                            env->pmu_fixed_ctrs[0].counter;
-> +    uint64_t *counter_arr_virt = icount_enabled() ?
-> +                                 env->pmu_fixed_ctrs[1].counter_virt :
-> +                                 env->pmu_fixed_ctrs[0].counter_virt;
-> +    uint64_t cfg_val = 0;
-> +
-> +    if (counter_idx == 0) {
-> +        cfg_val = upper_half ? ((uint64_t)env->mcyclecfgh << 32) :
-> +                  env->mcyclecfg;
-> +    } else if (counter_idx == 2) {
-> +        cfg_val = upper_half ? ((uint64_t)env->minstretcfgh << 32) :
-> +                  env->minstretcfg;
-> +    } else {
-> +        cfg_val = upper_half ?
-> +                  ((uint64_t)env->mhpmeventh_val[counter_idx] << 32) :
-> +                  env->mhpmevent_val[counter_idx];
-> +        cfg_val &= MHPMEVENT_FILTER_MASK;
-> +    }
-> +
-> +    if (!cfg_val) {
-> +        if (icount_enabled()) {
-> +            curr_val = icount_get_raw();
-> +        } else {
-> +            curr_val = cpu_get_host_ticks();
-> +        }
-> +        goto done;
-> +    }
-> +
-> +    if (!(cfg_val & MCYCLECFG_BIT_MINH)) {
-> +        curr_val += counter_arr[PRV_M];
-> +    }
-> +
-> +    if (!(cfg_val & MCYCLECFG_BIT_SINH)) {
-> +        curr_val += counter_arr[PRV_S];
-> +    }
-> +
-> +    if (!(cfg_val & MCYCLECFG_BIT_UINH)) {
-> +        curr_val += counter_arr[PRV_U];
-> +    }
-> +
-> +    if (!(cfg_val & MCYCLECFG_BIT_VSINH)) {
-> +        curr_val += counter_arr_virt[PRV_S];
-> +    }
-> +
-> +    if (!(cfg_val & MCYCLECFG_BIT_VUINH)) {
-> +        curr_val += counter_arr_virt[PRV_U];
-> +    }
-> +
-> +done:
-> +    if (riscv_cpu_mxl(env) == MXL_RV32) {
-> +        result = upper_half ? curr_val >> 32 : curr_val;
-> +    } else {
-> +        result = curr_val;
-> +    }
-> +
-> +    return result;
-> +}
-> +
->   static RISCVException write_mhpmcounter(CPURISCVState *env, int csrno,
->                                           target_ulong val)
->   {
-> @@ -962,7 +1011,8 @@ static RISCVException write_mhpmcounter(CPURISCVState *env, int csrno,
->       counter->mhpmcounter_val = val;
->       if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
->           riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
-> -        counter->mhpmcounter_prev = get_ticks(false);
-> +        counter->mhpmcounter_prev = riscv_pmu_ctr_get_fixed_counters_val(env,
-> +                                                                ctr_idx, false);
->           if (ctr_idx > 2) {
->               if (riscv_cpu_mxl(env) == MXL_RV32) {
->                   mhpmctr_val = mhpmctr_val |
-> @@ -990,7 +1040,8 @@ static RISCVException write_mhpmcounterh(CPURISCVState *env, int csrno,
->       mhpmctr_val = mhpmctr_val | (mhpmctrh_val << 32);
->       if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
->           riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
-> -        counter->mhpmcounterh_prev = get_ticks(true);
-> +        counter->mhpmcounterh_prev = riscv_pmu_ctr_get_fixed_counters_val(env,
-> +                                                                 ctr_idx, true);
->           if (ctr_idx > 2) {
->               riscv_pmu_setup_timer(env, mhpmctr_val, ctr_idx);
->           }
-> @@ -1031,7 +1082,8 @@ static RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
->        */
->       if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
->           riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
-> -        *val = get_ticks(upper_half) - ctr_prev + ctr_val;
-> +        *val = riscv_pmu_ctr_get_fixed_counters_val(env, ctr_idx, upper_half) -
-> +                                                    ctr_prev + ctr_val;
->       } else {
->           *val = ctr_val;
->       }
-> diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
-> index 0e7d58b8a5c2..37309ff64cb6 100644
-> --- a/target/riscv/pmu.c
-> +++ b/target/riscv/pmu.c
-> @@ -19,6 +19,7 @@
->   #include "qemu/osdep.h"
->   #include "qemu/log.h"
->   #include "qemu/error-report.h"
-> +#include "qemu/timer.h"
->   #include "cpu.h"
->   #include "pmu.h"
->   #include "sysemu/cpu-timers.h"
-> @@ -176,6 +177,69 @@ static int riscv_pmu_incr_ctr_rv64(RISCVCPU *cpu, uint32_t ctr_idx)
->       return 0;
->   }
->   
-> +void riscv_pmu_icount_update_priv(CPURISCVState *env, target_ulong newpriv)
-> +{
-> +    uint64_t delta;
-> +    uint64_t *counter_arr;
-> +    uint64_t *counter_arr_prev;
-> +    uint64_t current_icount = icount_get_raw();
-> +
-> +    if (env->virt_enabled) {
-> +        counter_arr = env->pmu_fixed_ctrs[1].counter_virt;
-> +        counter_arr_prev = env->pmu_fixed_ctrs[1].counter_virt_prev;
-> +    } else {
-> +        counter_arr = env->pmu_fixed_ctrs[1].counter;
-> +        counter_arr_prev = env->pmu_fixed_ctrs[1].counter_prev;
-> +    }
-> +
-> +    if (newpriv != env->priv) {
-> +        delta = current_icount - counter_arr_prev[env->priv];
-> +        counter_arr_prev[newpriv] = current_icount;
-> +    } else {
-> +        delta = current_icount - counter_arr_prev[env->priv];
-> +        if (env->virt_enabled) {
-> +            /* HS->VS transition.The previous value should correspond to HS. */
+> One more thing, I would ask how do  I get the full series patch? Do I copy 
+> the RFC line by line from this link[1]?
 
-Hi Atish,
+For getting patches that you might have missed on the mailing list, I 
+recommend lore.kernel.org :
 
-Dose env->virt_enabled ensure HS->VS transition?
+ 
+https://lore.kernel.org/qemu-devel/20240301134330.4191007-1-jonah.palmer@oracle.com/
 
-I think VS->VS also keeps  env->virt_enabled to be true, where the 
-previous value should correspond to VS.
+You can download mbox files there that you can apply locally with "git am".
 
-Thanks,
-Zhiwei
+  HTH,
+   Thomas
 
-> +            env->pmu_fixed_ctrs[1].counter_prev[PRV_S] = current_icount;
-> +        } else if (get_field(env->hstatus, HSTATUS_SPV)) {
-> +            /* VS->HS transition.The previous value should correspond to VS. */
-> +            env->pmu_fixed_ctrs[1].counter_virt_prev[PRV_S] = current_icount;
-> +        }
-> +   }
-> +
-> +    counter_arr[env->priv] += delta;
-> +}
-> +
-> +void riscv_pmu_cycle_update_priv(CPURISCVState *env, target_ulong newpriv)
-> +{
-> +    uint64_t delta;
-> +    uint64_t *counter_arr;
-> +    uint64_t *counter_arr_prev;
-> +    uint64_t current_host_ticks = cpu_get_host_ticks();
-> +
-> +    if (env->virt_enabled) {
-> +        counter_arr = env->pmu_fixed_ctrs[0].counter_virt;
-> +        counter_arr_prev = env->pmu_fixed_ctrs[0].counter_virt_prev;
-> +    } else {
-> +        counter_arr = env->pmu_fixed_ctrs[0].counter;
-> +        counter_arr_prev = env->pmu_fixed_ctrs[0].counter_prev;
-> +    }
-> +
-> +    if (newpriv != env->priv) {
-> +        delta = current_host_ticks - counter_arr_prev[env->priv];
-> +        counter_arr_prev[newpriv] = current_host_ticks;
-> +    } else {
-> +        delta = current_host_ticks - counter_arr_prev[env->priv];
-> +        if (env->virt_enabled) {
-> +            env->pmu_fixed_ctrs[0].counter_prev[PRV_S] = current_host_ticks;
-> +        } else if (get_field(env->hstatus, HSTATUS_SPV)) {
-> +            env->pmu_fixed_ctrs[0].counter_virt_prev[PRV_S] =
-> +            current_host_ticks;
-> +        }
-> +   }
-> +
-> +    counter_arr[env->priv] += delta;
-> +}
-> +
->   int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
->   {
->       uint32_t ctr_idx;
-> diff --git a/target/riscv/pmu.h b/target/riscv/pmu.h
-> index 505fc850d38e..50de6031a730 100644
-> --- a/target/riscv/pmu.h
-> +++ b/target/riscv/pmu.h
-> @@ -31,3 +31,5 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx);
->   void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name);
->   int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
->                             uint32_t ctr_idx);
-> +void riscv_pmu_icount_update_priv(CPURISCVState *env, target_ulong newpriv);
-> +void riscv_pmu_cycle_update_priv(CPURISCVState *env, target_ulong newpriv);
 
