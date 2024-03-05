@@ -4,73 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EF40C54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 10:39:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C23FC54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 10:39:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhSC5-0004P2-Qc; Tue, 05 Mar 2024 05:38:45 -0500
+	id 1rhSCq-0004wO-B3; Tue, 05 Mar 2024 05:39:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rhSC4-0004Oj-3a; Tue, 05 Mar 2024 05:38:44 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rhSCf-0004cN-1Q
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 05:39:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rhSC1-0004hM-6b; Tue, 05 Mar 2024 05:38:43 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TpsNg5Lx8z6J9Tw;
- Tue,  5 Mar 2024 18:33:39 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 12E7B1404F5;
- Tue,  5 Mar 2024 18:38:36 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Tue, 5 Mar
- 2024 10:38:35 +0000
-Date: Tue, 5 Mar 2024 10:38:34 +0000
-To: Ankit Agrawal <ankita@nvidia.com>
-CC: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>, Jason Gunthorpe
- <jgg@nvidia.com>, "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "shannon.zhaosl@gmail.com" <shannon.zhaosl@gmail.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "ani@anisinha.ca"
- <ani@anisinha.ca>, "berrange@redhat.com" <berrange@redhat.com>,
- "eduardo@habkost.net" <eduardo@habkost.net>, "imammedo@redhat.com"
- <imammedo@redhat.com>, "mst@redhat.com" <mst@redhat.com>, "eblake@redhat.com"
- <eblake@redhat.com>, "armbru@redhat.com" <armbru@redhat.com>,
- "david@redhat.com" <david@redhat.com>, "gshan@redhat.com" <gshan@redhat.com>, 
- Zhi Wang <zhiw@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>, Aniket Agashe
- <aniketa@nvidia.com>, Neo Jia <cjia@nvidia.com>, Kirti Wankhede
- <kwankhede@nvidia.com>, "Tarun Gupta (SW-GPU)" <targupta@nvidia.com>, Vikram
- Sethi <vsethi@nvidia.com>, "Andy Currid" <acurrid@nvidia.com>, Dheeraj Nigam
- <dnigam@nvidia.com>, Uday Dhoke <udhoke@nvidia.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v7 2/2] hw/acpi: Implement the SRAT GI affinity structure
-Message-ID: <20240305103834.00004d49@Huawei.com>
-In-Reply-To: <SA1PR12MB7199E6243CD2838335893CFCB0222@SA1PR12MB7199.namprd12.prod.outlook.com>
-References: <20240223124223.800078-1-ankita@nvidia.com>
- <20240223124223.800078-3-ankita@nvidia.com>
- <20240226164229.00001536@Huawei.com>
- <SA1PR12MB71995AAADE78D3D0052FAC01B0222@SA1PR12MB7199.namprd12.prod.outlook.com>
- <533ccbfc-7d90-42cd-9183-a5b128c41fad@redhat.com>
- <SA1PR12MB7199E6243CD2838335893CFCB0222@SA1PR12MB7199.namprd12.prod.outlook.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rhSCc-0004kD-SN
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 05:39:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709635158;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=AuVhreoTkzzsDO6HM6fhgM36zoMFVM/2uztQypsqkf4=;
+ b=a1SX7AZPMxHFeKCa8xcah+LxqycJT/ruVUBxZ5ocb+aYhAB467UhcEOCp5KdLfT77IvCCB
+ TAdMJyQzqS+5gESL6qklvG6SvWiSJMkv0Z9TwrvHJRQsc5kGzh0x1c+FpOSWWYYXMzL6bM
+ kYLwXnPyM6EXTHKA3pkVhrYYt08qIxc=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-360-Ii8TvDkwPk-qdvXDn4jeFA-1; Tue, 05 Mar 2024 05:39:14 -0500
+X-MC-Unique: Ii8TvDkwPk-qdvXDn4jeFA-1
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-42eeee47028so20663381cf.3
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 02:39:14 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709635154; x=1710239954;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=AuVhreoTkzzsDO6HM6fhgM36zoMFVM/2uztQypsqkf4=;
+ b=TwxbG0esWyyr9xxGEKz84Y3w9Zk8HLd4w1DIMf7yxFVYti09KX9xqf9Y2WINbvns1e
+ Wky4M5PCKxElYSPwFRISrdZ/+A0lJE91lOcEPoUbPksgZxxClUySqr6ZdWXyyC/KYCWa
+ 0sap2RnX8yNtPlLaV5k84oWI6hpY3SFpnSrZT84fi1taY4dS29RbvUBcfKhvJ3URdF9Q
+ ieKdemPQyH/hz6tXATXVLrpdKu46LLnAQpl111Bh40n1HGTIbTCPJ+pwsuZvGa8hv3UJ
+ k0xgGEWEJYZbnw79eHlAWF8bVdqr6tnGXJff89enWdNwI/hJQBszukXd+NMQUGWN6IPO
+ z8ZQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVh7aeLg+KQtg1ZKN0yF8w5vth//zh0dRuF8XabbikCBJ+VFdRkIRpGjWNhB0J6HQx1bipSW/ZLWzusHu8INrdOKs2ypTA=
+X-Gm-Message-State: AOJu0Yw68pqevKXOAr8zOJtjtAL8wFVtJ+HMnDapUhZLxIIOQGkMgk24
+ +Bt6QV5nAJrZAwsgqr+9rsDKUn2Fnu3yILtQCRjQl1ejb9VdOnNopOS6f7TxHvgJvCUOt+0Nowk
+ bG/COo4nfR1TBu5BD9jdqPiU8JdGrU2TVOUwNRr86gaieXD8sdV4v
+X-Received: by 2002:a05:622a:1709:b0:42e:eba2:fac9 with SMTP id
+ h9-20020a05622a170900b0042eeba2fac9mr1641387qtk.19.1709635154503; 
+ Tue, 05 Mar 2024 02:39:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHhnJNnkK9MKix4oy89MRemWCJHYK0c/Ol75EZM5Fww7lB/qvAi77zNCWLbd+bwf8ypca1PqA==
+X-Received: by 2002:a05:622a:1709:b0:42e:eba2:fac9 with SMTP id
+ h9-20020a05622a170900b0042eeba2fac9mr1641375qtk.19.1709635154194; 
+ Tue, 05 Mar 2024 02:39:14 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-178-243.web.vodafone.de.
+ [109.43.178.243]) by smtp.gmail.com with ESMTPSA id
+ i24-20020ac84898000000b0042edfc2c608sm2917307qtq.2.2024.03.05.02.39.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 Mar 2024 02:39:13 -0800 (PST)
+Message-ID: <86d80d62-8c82-4ec5-ab67-50c83041f979@redhat.com>
+Date: Tue, 5 Mar 2024 11:39:09 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml100002.china.huawei.com (7.191.160.241) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] docs/conf.py: Remove usage of distutils
+Content-Language: en-US
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-stable@nongnu.org
+References: <20240304130403.129543-1-thuth@redhat.com>
+ <CAFEAcA8rac2nEzrVWUWfRHAWYLmC6dSDMK=j6msD_SdPpn6ZtA@mail.gmail.com>
+ <3262c873-b845-4286-a71f-a53b96bbc8a9@redhat.com>
+ <ZeYNQdqW2bBA4gNL@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <ZeYNQdqW2bBA4gNL@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 22
+X-Spam_score: 2.2
+X-Spam_bar: ++
+X-Spam_report: (2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,68 +146,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 5 Mar 2024 08:17:18 +0000
-Ankit Agrawal <ankita@nvidia.com> wrote:
+On 04/03/2024 19.04, Daniel P. Berrangé wrote:
+> On Mon, Mar 04, 2024 at 06:11:58PM +0100, Thomas Huth wrote:
+>> On 04/03/2024 17.56, Peter Maydell wrote:
+>>> On Mon, 4 Mar 2024 at 13:04, Thomas Huth <thuth@redhat.com> wrote:
+>>>>
+>>>> The macOS jobs in our CI recently started failing, complaining that
+>>>> the distutils module is not available anymore. And indeed, according to
+>>>> https://peps.python.org/pep-0632/ it's been deprecated since a while
+>>>> and now likely got removed in recent Python versions.
+>>>
+>>> This doesn't seem to be sufficient to fix the macos CI:
+>>> something in glib seems to still be using it.
+>>>
+>>> https://gitlab.com/qemu-project/qemu/-/jobs/6313212803
+>>>
+>>> [281/6553] Generating ui/dbus-display gdbus-codegen with a custom command
+>>> FAILED: ui/dbus-display1.h ui/dbus-display1.c
+>>> /opt/homebrew/Cellar/glib/2.78.4/bin/gdbus-codegen
+>>> ui/dbus-display1.xml --glib-min-required 2.64 --output-directory
+>>> /private/var/folders/xc/tpssff9959345bnqq4c6tlww0000gn/T/cirrus-ci-build/build/ui
+>>> --interface-prefix org.qemu. --c-namespace QemuDBus --generate-c-code
+>>> dbus-display1
+>> ...
+>>> ModuleNotFoundError: No module named 'distutils'
+>>
+>> Looking at the glib sources, I think this has been fixed here:
+>>
+>>   https://gitlab.gnome.org/GNOME/glib/-/commit/6ef967a0f930ce37a8c9b5aff96969
+>>
+>> The fix will be in glib 2.79, unfortunately homebrew still seems to use glib
+>> 2.78 ...
+>>
+>> We could maybe temporarily work-around the problem by disabling the dbus
+>> code in the CI job? Or just wait for homebrew to update the package?
+> 
+> File a bug against homebrew. IME they are very quick (1-3 days) at
+> putting out fixes for things like this, especially if you point them
+> to the upstream solution.
 
-> >>> Please add a test.=A0 tests/qtest/bios-tables-test.c
-> >>> + relevant table dumps. =20
-> >>
-> >> Here I need to add a test that creates a vfio-pci device and numa
-> >> nodes and link using the acpi-generic-initiator object. One thing
-> >> here is that the -device vfio-pci needs a host=3D<bdf> argument. I
-> >> probably cannot provide the device bdf from my local setup. So
-> >> I am not sure how can I add this test to tests/qtest/bios-tables-test.=
-c.
-> >> FYI, the following is a sample args we use for the
-> >> acpi-generic-initiator object.
-> >>
-> >>=A0=A0=A0=A0=A0=A0=A0=A0 -numa node,nodeid=3D2
-> >>=A0=A0=A0=A0=A0=A0=A0=A0 -device vfio-pci-nohotplug,bus=3Dpcie.0,addr=
-=3D04.0,rombar=3D0,id=3Ddev0 \
-> >>=A0=A0=A0=A0=A0=A0=A0=A0 -object acpi-generic-initiator,id=3Dgi0,pci-de=
-v=3Ddev0,node=3D2 \
-> >>
-> >> Moreover based on a quick grep, I don't see any other test that
-> >> have -device vfio-pci argument.
-> >>
-> >> Jonathan, Alex, do you know how we may add tests that is dependent
-> >> on the vfio-pci device? =20
-> >
-> > There are none.
-> >
-> > This would require a host device always available for passthrough and
-> > there is no simple solution for this problem. Such tests would need to
-> > run in a nested environment under avocado: a pc/virt machine with an
-> > igb device and use the PF and/or VFs to check device assignment in a
-> > nested guests.
-> >
-> > PPC just introduced new tests to check nested guest support on two
-> > different HV implementations. If you have time, please take a look
-> > at tests/avocado/ppc_hv_tests.py for the framework.
-> >
-> > I will try to propose a new test when I am done with the reviews,
-> > not before 9.0 soft freeze though. =20
->=20
-> Thanks for the information. As part of this patch, I'll leave out
-> this test change then.
+Ok, while I was writing my mail, I was looking at https://brew.sh/ and 
+didn't see a link to a bug tracker there ... but now I realized that they 
+are simply using the github tracker, so I went ahead and filed a bug there:
 
-For BIOS table purposes it can be any PCI device. I've been testing
-this with a virtio-net-pci but something like virtio-rng-pci will
-do fine.  The table contents doesn't care if it's vfio or not.
+  https://github.com/Homebrew/brew/issues/16823
 
-I can spin a test as part of the follow up Generic Port series that
-incorporates both and pushes the limits of the hmat code in general.
-Current tests are too tame ;)
+Let's see how it goes...
 
-Given I don't think we have clarification from ACPI spec side on
-the many to one mapping you are using, I'd just use a 1-1 in any
-test.
+  Thomas
 
 
-Jonathan
 
