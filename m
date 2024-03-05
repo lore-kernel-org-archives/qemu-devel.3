@@ -4,82 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3087DC54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 09:19:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8DA5C54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 09:30:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhQxT-0005xV-NK; Tue, 05 Mar 2024 04:19:35 -0500
+	id 1rhR6t-0008Fz-DE; Tue, 05 Mar 2024 04:29:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhQxR-0005w0-Lj
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 04:19:33 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1rhR6n-0008EA-Kg
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 04:29:14 -0500
+Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhQxD-0007W9-Ji
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 04:19:33 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-33e17342ea7so2825242f8f.2
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 01:19:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1rhR6j-0000kx-Ub
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 04:29:12 -0500
+Received: by mail-ua1-x92e.google.com with SMTP id
+ a1e0cc1a2514c-7da728b0597so2290503241.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 01:29:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709630358; x=1710235158; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SBGWjvKzxGlK6swN0imY7LpdB8TE7rSqLvXeRQtd6rQ=;
- b=ZgJIMtGEEx0tTFDmi33rMxVJkEZS0JuZ7pOaKTCN9rAA8zck/wpBiezRQusiP9igdB
- VawHEbE1QDJUDTogFs0jFVRHdm5ZHI1dc1ZsN+CnkGi1xQusNukcNRY+lCjTLvAwfP2o
- fhFovAzXDVuZnaiNN+znyNY4aitqx4B0v/aMmV6bAfPVz+r4j6t3CIdsEktrkfTLZY1H
- 1uGPTNeNxB7+06fTAChdtQsXBwAjuxOOu4DGwvoDmsZnCjau5n3Zsc/SzQAIR+hcxi1s
- jUppS4EivdtxREjaAyjer7XMhUfaS9YGd6aioF13qHrF/ZGJnHg9w3M7JNgbn2HXysqX
- yIZQ==
+ d=bytedance.com; s=google; t=1709630946; x=1710235746; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=79M1BRzVOMDaKqMxEGUh5q94dnwcGvlodjX5ei2a/R4=;
+ b=YnRy60JQTw67qf/4MwMeSWjBUEurZv6AxIDbVdErEnZ3XfIZMobqsbPdVnrWBHPR3B
+ UQufcekZChNN398pGdYFXZMHWcmLJdLcEHIsytIh0pfJRv4XFvwKND2hhOhcXVhHjHbK
+ SzIl6phkdoasBcPGT7GH6WKxB7ufAuaYTz+16D+r6ACwGEqiFnYn/9dabRSGnMGtKalK
+ AQpQ8uvHSnNDpcf+FNRasfckx8nhCroeV+vloElJt7XmK+dtN9IVLIGrvsgVwIroSbvj
+ Un59/1R8IFrhLjdgDH23AiqReQ7CSpiQuNnszpSQSmCSw2lNaSUNNIpE5g5Znm+FTdfR
+ G0MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709630358; x=1710235158;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SBGWjvKzxGlK6swN0imY7LpdB8TE7rSqLvXeRQtd6rQ=;
- b=RHF5H6MSClxpUFp98c1FRfFIhAA/DTJzzrbyN246G5bvsdpBy2Bd8JJ526t9vO7wRk
- 3VJR93ZZGfZ8DUOUFyo9iQ1fG5KYVDDr71LSjoqf51jLqR3hS6OXbuJqSX4DB14KQ13Z
- vvtdYhgy4u8H5QyY0xecWjZNyYKZ/SJfksPOPR3jtLaBu355eSTq9wjqMg4iFc0VyruE
- Ce4XDJnX/16CAPWDCEUrhg8plm3V9BHD5hh6ujhkyp3BLNI7hqjMZh3ankI8M0a/jQOK
- DpNHz05+ZRVWjage2YDpnErW/zJaK9lYEN+u1eqvYsS2ky1cvQcSI0iF8OJf57VkS/FQ
- ADAg==
+ d=1e100.net; s=20230601; t=1709630946; x=1710235746;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=79M1BRzVOMDaKqMxEGUh5q94dnwcGvlodjX5ei2a/R4=;
+ b=ZuKyg08eUg64UIAi9BtUFLH0SWpShwnJ3EwUsqFLwEB7rKmzOsnDj0jdk+mbjdKuhr
+ G85j2GPHDhYBPqf7sZbRCBRtQXPM0H2MR96ImSfhX9xM5j40d+f7z6Som0eQ3GCvCWnA
+ hVhQ92P3GicJShzP9TFmqv5YNnokTkelmlPxAoltOTzwza+QzmW9XLWybINzsmnuzHui
+ bp1nQ4VJJrl/7MyBmm+QJUYpYGC6VTBlOdw5zlmpvsYUzSjDPrt5Vjm8iVjXY9mhU4mw
+ 1Y7k1ssSuBg3nq9KI1GhTInN/AfDWtK+on/3jk0NQ/H4feh90h7O9cP0FiTy+nuFVGyz
+ mCsg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVs2yTwZzZRn7GjQxRUjDwTAG5EAR32t5jrLSkEwktUWVRReAE3oYzkY+pLsFffjFaJ92r/zgh83SFXBApIEQyOmegHpww=
-X-Gm-Message-State: AOJu0YyvmvWyTfBVk449QF6nC/eSGST0j8rXKrPKx4qrIWPWFO27IOxv
- ER04Lt5GqVmrpmhI56az0kGyUwgKRFXb90uH+RdDO0LJlnAIN5EazLV2FQqQgCI=
-X-Google-Smtp-Source: AGHT+IFtlOlk+gLm3DfmH9tpfj3LCoumED0VBX8D5kJ54SOUFzinWWmA2DeqpYkIxby0mYz10Ad2Zw==
-X-Received: by 2002:adf:9d93:0:b0:33e:17fd:5f25 with SMTP id
- p19-20020adf9d93000000b0033e17fd5f25mr8627195wre.2.1709630357791; 
- Tue, 05 Mar 2024 01:19:17 -0800 (PST)
-Received: from [192.168.69.100] ([176.176.177.70])
- by smtp.gmail.com with ESMTPSA id
- q13-20020adfcb8d000000b0033ce06c303csm14337479wrh.40.2024.03.05.01.19.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Mar 2024 01:19:17 -0800 (PST)
-Message-ID: <fa8f1d52-f88d-4107-abfa-fa10ebef511c@linaro.org>
-Date: Tue, 5 Mar 2024 10:19:15 +0100
+ AJvYcCVOArNMYE2og6BDGuRZJjW8jdChR8fiiJaGR6z/i1xeuI21KuE+Y5IaJnBqkuNsMKVPAz2DVMid5VMAaQcBKkr2wrQmRbY=
+X-Gm-Message-State: AOJu0YzXps3zd7KiD+LkfcmVWJzsQduw+urldVJ7CcsKc4RSkrqiIflC
+ jx7ffP/XrONvKXgyKVtdqbQCH8UA895g1KHV9bajP7vX07VC+985z34CY+mUjll11+ZbP5BTo1l
+ ePdJn46HWIVBhuAhd+kTp9lASvP80LR6MEjY/4g==
+X-Google-Smtp-Source: AGHT+IGeG8eiA+gbTAW4lP8+EW0Wh/ImGvq3CgHfBV04xBBfvRQuXg2vDyo36TnOBu+4pDZXWZHNMilzpagoOwujU5k=
+X-Received: by 2002:a05:6102:21ba:b0:472:c844:804d with SMTP id
+ i26-20020a05610221ba00b00472c844804dmr1040181vsb.18.1709630946252; Tue, 05
+ Mar 2024 01:29:06 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm: Fix 32-bit SMOPA
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-stable@nongnu.org
-References: <20240305023116.234256-1-richard.henderson@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240305023116.234256-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+References: <20240301082248.3456086-1-horenchuang@bytedance.com>
+ <20240301082248.3456086-2-horenchuang@bytedance.com>
+ <87jzmibtyh.fsf@yhuang6-desk2.ccr.corp.intel.com>
+In-Reply-To: <87jzmibtyh.fsf@yhuang6-desk2.ccr.corp.intel.com>
+From: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
+Date: Tue, 5 Mar 2024 01:28:55 -0800
+Message-ID: <CAKPbEqrti2x05n5QhXtefhu+C=xmMUaH8mMwDy83LVN3Fj6nDw@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH v1 1/1] memory tier: acpi/hmat: create
+ CPUless memory tiers after obtaining HMAT info
+To: "Huang, Ying" <ying.huang@intel.com>
+Cc: Gregory Price <gourry.memverge@gmail.com>, aneesh.kumar@linux.ibm.com,
+ mhocko@suse.com, 
+ tj@kernel.org, john@jagalactic.com, Eishan Mirakhur <emirakhur@micron.com>, 
+ Vinicius Tavares Petrucci <vtavarespetr@micron.com>,
+ Ravis OpenSrc <Ravis.OpenSrc@micron.com>, 
+ Alistair Popple <apopple@nvidia.com>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Len Brown <lenb@kernel.org>, 
+ Andrew Morton <akpm@linux-foundation.org>, Dave Jiang <dave.jiang@intel.com>, 
+ Dan Williams <dan.j.williams@intel.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>, 
+ linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mm@kvack.org, 
+ "Ho-Ren (Jack) Chuang" <horenc@vt.edu>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>, linux-cxl@vger.kernel.org, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
+ envelope-from=horenchuang@bytedance.com; helo=mail-ua1-x92e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,104 +107,320 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
+On Sun, Mar 3, 2024 at 6:42=E2=80=AFPM Huang, Ying <ying.huang@intel.com> w=
+rote:
+>
+> Hi, Jack,
+>
+> "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> writes:
+>
+> > * Introduce `mt_init_with_hmat()`
+> > We defer memory tier initialization for those CPUless NUMA nodes
+> > until acquiring HMAT info. `mt_init_with_hmat()` is introduced to
+> > post-create CPUless memory tiers after obtaining HMAT info.
+> > It iterates through each CPUless memory node, creating memory tiers if
+> > necessary. Finally, it calculates demotion tables again at the end.
+> >
+> > * Introduce `hmat_find_alloc_memory_type()`
+> > Find or allocate a memory type in the `hmat_memory_types` list.
+> >
+> > * Make `set_node_memory_tier()` more generic
+> > This function can also be used for setting other memory types for a nod=
+e.
+> > To do so, a new argument is added to specify a memory type.
+> >
+> > * Handle cases where there is no HMAT when creating memory tiers
+> > If no HMAT is specified, it falls back to using `default_dram_type`.
+> >
+> > * Change adist calculation code to use another new lock, mt_perf_lock.
+> > Iterating through CPUlist nodes requires holding the `memory_tier_lock`=
+.
+> > However, `mt_calc_adistance()` will end up trying to acquire the same l=
+ock,
+> > leading to a potential deadlock. Therefore, we propose introducing a
+> > standalone `mt_perf_lock` to protect `default_dram_perf`. This approach=
+ not
+> > only avoids deadlock but also prevents holding a large lock simultaneou=
+sly.
+>
+> The patch description is used to described why we need the change, and
+> how we do that, but not what we do.  People can tell what is done from
+> the code itself.
+>
 
-On 5/3/24 03:31, Richard Henderson wrote:
-> The while the 8-bit input elements are sequential in the input vector,
-> the 32-bit output elements are not sequential in the output matrix.
-> Do not attempt to compute 2 32-bit outputs at the same time.
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 23a5e3859f5 ("target/arm: Implement SME integer outer product")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2083
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/arm/tcg/sme_helper.c       | 77 ++++++++++++++++++-------------
->   tests/tcg/aarch64/sme-smopa-1.c   | 47 +++++++++++++++++++
->   tests/tcg/aarch64/sme-smopa-2.c   | 54 ++++++++++++++++++++++
->   tests/tcg/aarch64/Makefile.target |  2 +-
->   4 files changed, 147 insertions(+), 33 deletions(-)
->   create mode 100644 tests/tcg/aarch64/sme-smopa-1.c
->   create mode 100644 tests/tcg/aarch64/sme-smopa-2.c
-> 
-> diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
-> index 904bfdac43..ef39eee48d 100644
-> --- a/target/arm/tcg/sme_helper.c
-> +++ b/target/arm/tcg/sme_helper.c
-> @@ -1083,11 +1083,32 @@ void HELPER(sme_bfmopa)(void *vza, void *vzn, void *vzm, void *vpn,
->       }
->   }
->   
-> -typedef uint64_t IMOPFn(uint64_t, uint64_t, uint64_t, uint8_t, bool);
-> +typedef uint32_t IMOPFn32(uint32_t, uint32_t, uint32_t, uint8_t, bool);
-> +static inline void do_imopa_s(uint32_t *za, uint32_t *zn, uint32_t *zm,
-> +                              uint8_t *pn, uint8_t *pm,
-> +                              uint32_t desc, IMOPFn32 *fn)
-> +{
-> +    intptr_t row, col, oprsz = simd_oprsz(desc) / 4;
-> +    bool neg = simd_data(desc);
->   
-> -static inline void do_imopa(uint64_t *za, uint64_t *zn, uint64_t *zm,
-> -                            uint8_t *pn, uint8_t *pm,
-> -                            uint32_t desc, IMOPFn *fn)
-> +    for (row = 0; row < oprsz; ++row) {
-> +        uint8_t pa = pn[H1(row >> 1)] >> ((row & 1) * 4);
-> +        uint32_t *za_row = &za[H4(tile_vslice_index(row))];
-> +        uint32_t n = zn[H4(row)];
-> +
-> +        for (col = 0; col < oprsz; ++col) {
-> +            uint8_t pb = pm[H1(col >> 1)] >> ((col & 1) * 4);
-> +            uint32_t *a = &za_row[col];
+Got it. Thanks. Will rewrite it after the code is finalized.
 
-Shouldn't this be:
+> > Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
+> > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
+> > ---
+> >  drivers/acpi/numa/hmat.c     |  3 ++
+> >  include/linux/memory-tiers.h |  6 +++
+> >  mm/memory-tiers.c            | 76 ++++++++++++++++++++++++++++++++----
+> >  3 files changed, 77 insertions(+), 8 deletions(-)
+> >
+> > diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
+> > index d6b85f0f6082..9f57338b3cb5 100644
+> > --- a/drivers/acpi/numa/hmat.c
+> > +++ b/drivers/acpi/numa/hmat.c
+> > @@ -1038,6 +1038,9 @@ static __init int hmat_init(void)
+> >       if (!hmat_set_default_dram_perf())
+> >               register_mt_adistance_algorithm(&hmat_adist_nb);
+> >
+> > +     /* Post-create CPUless memory tiers after getting HMAT info */
+> > +     mt_init_with_hmat();
+> > +
+> >       return 0;
+> >  out_put:
+> >       hmat_free_structures();
+> > diff --git a/include/linux/memory-tiers.h b/include/linux/memory-tiers.=
+h
+> > index 69e781900082..2f845e90c033 100644
+> > --- a/include/linux/memory-tiers.h
+> > +++ b/include/linux/memory-tiers.h
+> > @@ -48,6 +48,7 @@ int mt_calc_adistance(int node, int *adist);
+> >  int mt_set_default_dram_perf(int nid, struct access_coordinate *perf,
+> >                            const char *source);
+> >  int mt_perf_to_adistance(struct access_coordinate *perf, int *adist);
+> > +void mt_init_with_hmat(void);
+>
+> HMAT isn't universally available.  It's a driver in fact.  So, don't put
+> driver specific code in general code.
+>
 
-               uint32_t *a = &za_row[H4(col)];
+Please see below regarding "move code to hmat.c"
 
-to work on big endian hosts?
+> >  #ifdef CONFIG_MIGRATION
+> >  int next_demotion_node(int node);
+> >  void node_get_allowed_targets(pg_data_t *pgdat, nodemask_t *targets);
+> > @@ -136,5 +137,10 @@ static inline int mt_perf_to_adistance(struct acce=
+ss_coordinate *perf, int *adis
+> >  {
+> >       return -EIO;
+> >  }
+> > +
+> > +static inline void mt_init_with_hmat(void)
+> > +{
+> > +
+> > +}
+> >  #endif       /* CONFIG_NUMA */
+> >  #endif  /* _LINUX_MEMORY_TIERS_H */
+> > diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
+> > index 0537664620e5..7a0a579b3deb 100644
+> > --- a/mm/memory-tiers.c
+> > +++ b/mm/memory-tiers.c
+> > @@ -35,7 +35,9 @@ struct node_memory_type_map {
+> >  };
+> >
+> >  static DEFINE_MUTEX(memory_tier_lock);
+> > +static DEFINE_MUTEX(mt_perf_lock);
+> >  static LIST_HEAD(memory_tiers);
+> > +static LIST_HEAD(hmat_memory_types);
+> >  static struct node_memory_type_map node_memory_types[MAX_NUMNODES];
+> >  struct memory_dev_type *default_dram_type;
+> >
+> > @@ -502,7 +504,7 @@ static inline void __init_node_memory_type(int node=
+, struct memory_dev_type *mem
+> >       }
+> >  }
+> >
+> > -static struct memory_tier *set_node_memory_tier(int node)
+> > +static struct memory_tier *set_node_memory_tier(int node, struct memor=
+y_dev_type *new_memtype)
+>
+> No. memory_dev_type are passed to the function via node_memory_types[node=
+].memtype.
+>
 
-> +
-> +            *a = fn(n, zm[H4(col)], *a, pa & pb & 0xf, neg);
-> +        }
-> +    }
-> +}
-> +
-> +typedef uint64_t IMOPFn64(uint64_t, uint64_t, uint64_t, uint8_t, bool);
-> +static inline void do_imopa_d(uint64_t *za, uint64_t *zn, uint64_t *zm,
-> +                              uint8_t *pn, uint8_t *pm,
-> +                              uint32_t desc, IMOPFn64 *fn)
->   {
->       intptr_t row, col, oprsz = simd_oprsz(desc) / 8;
->       bool neg = simd_data(desc);
-> @@ -1107,25 +1128,16 @@ static inline void do_imopa(uint64_t *za, uint64_t *zn, uint64_t *zm,
->   }
->   
->   #define DEF_IMOP_32(NAME, NTYPE, MTYPE) \
-> -static uint64_t NAME(uint64_t n, uint64_t m, uint64_t a, uint8_t p, bool neg) \
-> +static uint32_t NAME(uint32_t n, uint32_t m, uint32_t a, uint8_t p, bool neg) \
->   {                                                                           \
-> -    uint32_t sum0 = 0, sum1 = 0;                                            \
-> +    uint32_t sum = 0;                                                       \
->       /* Apply P to N as a mask, making the inactive elements 0. */           \
->       n &= expand_pred_b(p);                                                  \
-> -    sum0 += (NTYPE)(n >> 0) * (MTYPE)(m >> 0);                              \
-> -    sum0 += (NTYPE)(n >> 8) * (MTYPE)(m >> 8);                              \
-> -    sum0 += (NTYPE)(n >> 16) * (MTYPE)(m >> 16);                            \
-> -    sum0 += (NTYPE)(n >> 24) * (MTYPE)(m >> 24);                            \
-> -    sum1 += (NTYPE)(n >> 32) * (MTYPE)(m >> 32);                            \
-> -    sum1 += (NTYPE)(n >> 40) * (MTYPE)(m >> 40);                            \
-> -    sum1 += (NTYPE)(n >> 48) * (MTYPE)(m >> 48);                            \
-> -    sum1 += (NTYPE)(n >> 56) * (MTYPE)(m >> 56);                            \
-> -    if (neg) {                                                              \
-> -        sum0 = (uint32_t)a - sum0, sum1 = (uint32_t)(a >> 32) - sum1;       \
-> -    } else {                                                                \
-> -        sum0 = (uint32_t)a + sum0, sum1 = (uint32_t)(a >> 32) + sum1;       \
-> -    }                                                                       \
-> -    return ((uint64_t)sum1 << 32) | sum0;                                   \
-> +    sum += (NTYPE)(n >> 0) * (MTYPE)(m >> 0);                               \
-> +    sum += (NTYPE)(n >> 8) * (MTYPE)(m >> 8);                               \
-> +    sum += (NTYPE)(n >> 16) * (MTYPE)(m >> 16);                             \
-> +    sum += (NTYPE)(n >> 24) * (MTYPE)(m >> 24);                             \
-> +    return neg ? a - sum : a + sum;                                         \
->   }
+Got it. Will mimic the way kmem.c does. Thanks.
 
+> >  {
+> >       struct memory_tier *memtier;
+> >       struct memory_dev_type *memtype;
+> > @@ -514,7 +516,7 @@ static struct memory_tier *set_node_memory_tier(int=
+ node)
+> >       if (!node_state(node, N_MEMORY))
+> >               return ERR_PTR(-EINVAL);
+> >
+> > -     __init_node_memory_type(node, default_dram_type);
+> > +     __init_node_memory_type(node, new_memtype);
+> >
+> >       memtype =3D node_memory_types[node].memtype;
+> >       node_set(node, memtype->nodes);
+> > @@ -623,6 +625,56 @@ void clear_node_memory_type(int node, struct memor=
+y_dev_type *memtype)
+> >  }
+> >  EXPORT_SYMBOL_GPL(clear_node_memory_type);
+> >
+> > +static struct memory_dev_type *hmat_find_alloc_memory_type(int adist)
+>
+> Similar function existed in drivers/dax/kmem.c.  Please abstract them
+> and move them here.
+>
+
+Got it. Will try. Thanks.
+
+> > +{
+> > +     bool found =3D false;
+> > +     struct memory_dev_type *mtype;
+> > +
+> > +     list_for_each_entry(mtype, &hmat_memory_types, list) {
+> > +             if (mtype->adistance =3D=3D adist) {
+> > +                     found =3D true;
+> > +                     break;
+> > +             }
+> > +     }
+> > +     if (!found) {
+> > +             mtype =3D alloc_memory_type(adist);
+> > +             if (!IS_ERR(mtype))
+> > +                     list_add(&mtype->list, &hmat_memory_types);
+> > +     }
+> > +     return mtype;
+> > +}
+> > +
+> > +static void mt_create_with_hmat(int node)
+> > +{
+> > +     struct memory_dev_type *mtype =3D NULL;
+> > +     int adist =3D MEMTIER_ADISTANCE_DRAM;
+> > +
+> > +     mt_calc_adistance(node, &adist);
+> > +     if (adist !=3D MEMTIER_ADISTANCE_DRAM) {
+> > +             mtype =3D hmat_find_alloc_memory_type(adist);
+> > +             if (IS_ERR(mtype))
+> > +                     pr_err("%s() failed to allocate a tier\n", __func=
+__);
+> > +     } else {
+> > +             mtype =3D default_dram_type;
+> > +     }
+> > +
+> > +     set_node_memory_tier(node, mtype);
+> > +}
+> > +
+> > +void mt_init_with_hmat(void)
+> > +{
+> > +     int nid;
+> > +
+> > +     mutex_lock(&memory_tier_lock);
+> > +     for_each_node_state(nid, N_MEMORY)
+> > +             if (!node_state(nid, N_CPU))
+> > +                     mt_create_with_hmat(nid);
+> > +
+> > +     establish_demotion_targets();
+> > +     mutex_unlock(&memory_tier_lock);
+> > +}
+> > +EXPORT_SYMBOL_GPL(mt_init_with_hmat);
+> > +
+>
+> I guess that we can put most hmat related code above in hmat.c.
+>
+
+To put the heat-related code to hmat.c I will need to export some
+static functions in memory-tiers.c, like set_node_memory_tier() and
+establish_demotion_targets(). Is that ok?
+
+> >  static void dump_hmem_attrs(struct access_coordinate *coord, const cha=
+r *prefix)
+> >  {
+> >       pr_info(
+> > @@ -636,7 +688,7 @@ int mt_set_default_dram_perf(int nid, struct access=
+_coordinate *perf,
+> >  {
+> >       int rc =3D 0;
+> >
+> > -     mutex_lock(&memory_tier_lock);
+> > +     mutex_lock(&mt_perf_lock);
+> >       if (default_dram_perf_error) {
+> >               rc =3D -EIO;
+> >               goto out;
+> > @@ -684,7 +736,7 @@ int mt_set_default_dram_perf(int nid, struct access=
+_coordinate *perf,
+> >       }
+> >
+> >  out:
+> > -     mutex_unlock(&memory_tier_lock);
+> > +     mutex_unlock(&mt_perf_lock);
+> >       return rc;
+> >  }
+> >
+> > @@ -700,7 +752,7 @@ int mt_perf_to_adistance(struct access_coordinate *=
+perf, int *adist)
+> >           perf->read_bandwidth + perf->write_bandwidth =3D=3D 0)
+> >               return -EINVAL;
+> >
+> > -     mutex_lock(&memory_tier_lock);
+> > +     mutex_lock(&mt_perf_lock);
+> >       /*
+> >        * The abstract distance of a memory node is in direct proportion=
+ to
+> >        * its memory latency (read + write) and inversely proportional t=
+o its
+> > @@ -713,7 +765,7 @@ int mt_perf_to_adistance(struct access_coordinate *=
+perf, int *adist)
+> >               (default_dram_perf.read_latency + default_dram_perf.write=
+_latency) *
+> >               (default_dram_perf.read_bandwidth + default_dram_perf.wri=
+te_bandwidth) /
+> >               (perf->read_bandwidth + perf->write_bandwidth);
+> > -     mutex_unlock(&memory_tier_lock);
+> > +     mutex_unlock(&mt_perf_lock);
+> >
+> >       return 0;
+> >  }
+> > @@ -797,7 +849,7 @@ static int __meminit memtier_hotplug_callback(struc=
+t notifier_block *self,
+> >               break;
+> >       case MEM_ONLINE:
+> >               mutex_lock(&memory_tier_lock);
+> > -             memtier =3D set_node_memory_tier(arg->status_change_nid);
+> > +             memtier =3D set_node_memory_tier(arg->status_change_nid, =
+default_dram_type);
+> >               if (!IS_ERR(memtier))
+> >                       establish_demotion_targets();
+> >               mutex_unlock(&memory_tier_lock);
+> > @@ -836,7 +888,15 @@ static int __init memory_tier_init(void)
+> >        * types assigned.
+> >        */
+> >       for_each_node_state(node, N_MEMORY) {
+> > -             memtier =3D set_node_memory_tier(node);
+> > +             if (!node_state(node, N_CPU))
+> > +                     /*
+> > +                      * Defer memory tier initialization on CPUless nu=
+ma nodes.
+> > +                      * These will be initialized when HMAT informatio=
+n is
+> > +                      * available.
+> > +                      */
+> > +                     continue;
+> > +
+> > +             memtier =3D set_node_memory_tier(node, default_dram_type)=
+;
+>
+> On system with HMAT, how to fall back CPU-less node to
+> default_dram_type?  I found your description, but I don't find it in code=
+.
+>
+
+I assume you meant without HMAT, if so,
+because if no HMAT, adist will not be updated in mt_calc_adistance():
++ int adist =3D MEMTIER_ADISTANCE_DRAM;
++
++ mt_calc_adistance(node, &adist);
++ if (adist !=3D MEMTIER_ADISTANCE_DRAM) {
+=E2=80=A6
++ } else {
++ mtype =3D default_dram_type;
++ }
++
++ set_node_memory_tier(node, mtype);
+
+> >               if (IS_ERR(memtier))
+> >                       /*
+> >                        * Continue with memtiers we are able to setup
+>
+> --
+> Best Regards,
+> Huang, Ying
+--=20
+Best regards,
+Ho-Ren (Jack) Chuang
+=E8=8E=8A=E8=B3=80=E4=BB=BB
 
