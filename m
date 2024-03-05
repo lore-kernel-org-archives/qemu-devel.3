@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAC8BC54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:46:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B14CBC54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:46:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhV6S-00055L-PS; Tue, 05 Mar 2024 08:45:13 -0500
+	id 1rhV56-0003Lu-2l; Tue, 05 Mar 2024 08:43:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhV54-0003PM-9k
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:43:44 -0500
-Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhV4l-00039P-PG
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:43:24 -0500
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhV50-00042O-30
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:43:40 -0500
-Received: by mail-lj1-x236.google.com with SMTP id
- 38308e7fff4ca-2d33986dbc0so9266371fa.2
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:43:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhV4j-0003zk-Nk
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:43:23 -0500
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-563c595f968so8432132a12.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:43:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709646216; x=1710251016; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709646199; x=1710250999; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8+MCTA1UltNqL+EA8gVKWQmk1jjDdIIyMkrSTBOV/KA=;
- b=H2e2t35iS2U0o52j3CarRN7e+pXelRwYzjuESiNvoR32fgvhv0EcMWgJodtDHBGFV2
- fLRpJvU1XPv8QIeObmmUHTGab2WxyF3LRCjmePWIblxEfuJM1Tq+OZiEBJDHgZLTIvvI
- NrxnbGADNCfOUFK0XHr+MqLF1oH09ZHtpYnfzjVigm14czd8nk/nl0j4gWdTm+H9Esli
- Aq45gz2KZakhVmwfOJl7TM7iFUM05RWWwIuzv+dT+weY91HqoZVRoqryQbnqfTLX4Xkw
- 9oPPZmmH+AOqLTtwvlrMRvUkveWZQaWYVNrziVibHnN6jbnMUwuicy2lptrcG++qtxDx
- TNPA==
+ bh=/uaVgcIj5CZp4PgaMSlBhVfscYd2B9Mi4dr8ANISE2s=;
+ b=NnFvYTlkZ8URXbMCv+NnVDrhJuWL7bvWlgRYgTxdGbRyGtpCPUehurSZ6vBfIRZxTy
+ ZpT1+a+NyxlSn70Hp7vLhb8oAHJ8hI5Pgzg6d4ByTgZxY4yywpjgeNvkWFyXrUFNBSk/
+ mRqgU2QdDa4Ert1x/1I6lwnHHoHb4IGE004KarU9SbKXDqJyNiKjKPy9QN+7PuWYIAcX
+ xKABQ13o5x0EfOUBSM8VVVczOFkYaML85sxm37iYL05tbT+tb8K1Fl637GKpH+CbQoSb
+ 3etFwzMKYmchho6BLM3xNQv0qnnEm5VOHjiraIqtSWhS0KF2brnNshwcHcAw9CJgdpuE
+ ZRaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709646216; x=1710251016;
+ d=1e100.net; s=20230601; t=1709646199; x=1710250999;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8+MCTA1UltNqL+EA8gVKWQmk1jjDdIIyMkrSTBOV/KA=;
- b=ehxiQ5SswKD6Poo0EdkdNW5We9RsG39Vl18RSj5Ge4pv/9Mj+MgU7EZJhJUPNmBFZo
- CC4SfxlcV8IkFejK9em9n4XPX4kFFRKNlcaKe/Tf9LHQgkmoBNfwsfgsUeZuhSCDFvOs
- oidzhyq/Smklv3XhYfLlfEoB++SOLukYXlWPrYfvMyDSr/bndxIiOHrdWYg2L5hgQk55
- WiMVK78BXSznKw4NyG3eWPeidVCX0US8FZSRokFsxJecoz8jeWwGKl4zq1hxrmHqz9Lm
- 4YQNEggmCajz12YkHzk6BHlQDdDexkN9EPDfMOcXalnGhpocDdV41iD5tad0yolQA4Si
- LwiQ==
-X-Gm-Message-State: AOJu0YzMv5Jde7IR7xUljGyZizzCyD/RrywXo+BMcSB/fypJXImAzTee
- LXb74SXRvuyImSP4HaLllFPR4AW0F3QRo+a8nvuxOezvmm2jmUzv5snwesPbzLUcC8dsbrmYB1p
- s
-X-Google-Smtp-Source: AGHT+IHpNwIWn9dU253fZ8k5m2DWd3SEtuggzOllzPMD9VtxMkKcCh3wswwtA70e6fwn1H/OqFetiA==
-X-Received: by 2002:a05:6512:2028:b0:513:177e:4254 with SMTP id
- s8-20020a056512202800b00513177e4254mr1162168lfs.14.1709646216124; 
- Tue, 05 Mar 2024 05:43:36 -0800 (PST)
+ bh=/uaVgcIj5CZp4PgaMSlBhVfscYd2B9Mi4dr8ANISE2s=;
+ b=STtLsAF3zmS3rnj1vSv74xktuh5COuB29IzHkNYZBRxrGNqYjjXloE42WAohvco+Jk
+ bnvlhRDjcbzbijBrs0QAhupy0yUV8Q1kNfwNAShfxLMSLyZz8S6FyAvgmHEm2sg4HTMn
+ ixCJUrFCQnvrGQt0MQC9TAmsyhh8LOKWuGAfs335p1lfu0sk9inbvIlR5vlUL4KUVObK
+ l46p5arLNb7hw0mAgBTivB3l8i+OWwyoHFbK4E4FwfVXu+ZYNnYvW2FIaYVbMJZi/w/k
+ OzQZ8LiTm8EzVzw+zKA5+Cd1KEK9LJHVtVv3UHqn7LuFCbTcmtWAfoasZ+ekdMRndWAX
+ xCxw==
+X-Gm-Message-State: AOJu0Yw+eaI+3eZbix2+wZ8kDOo/jqFIdgUTAYkbG05V2iGWzRlrBAKU
+ fORY5kJyr5l37T1sptNdCR+bUXLMxoLvrRBDB5tBTNHu+8eMhWjsJxe9vieKN/VlN76V4AG/REx
+ z
+X-Google-Smtp-Source: AGHT+IFX0UlicD2nXIVlAQ+n7nrYayFTU70QHqN/oYZVIOnExi3rdtn3EIahhoj5s7wQRhibaK+BUw==
+X-Received: by 2002:a17:906:f2d1:b0:a45:7d04:c1fa with SMTP id
+ gz17-20020a170906f2d100b00a457d04c1famr2588070ejb.67.1709646199488; 
+ Tue, 05 Mar 2024 05:43:19 -0800 (PST)
 Received: from m1x-phil.lan ([176.176.177.70])
  by smtp.gmail.com with ESMTPSA id
- qw28-20020a1709066a1c00b00a381ca0e589sm6032584ejc.22.2024.03.05.05.43.32
+ q7-20020a170906540700b00a45aeaf9969sm238731ejo.5.2024.03.05.05.43.17
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 05 Mar 2024 05:43:35 -0800 (PST)
+ Tue, 05 Mar 2024 05:43:19 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Thomas Huth <thuth@redhat.com>
@@ -68,34 +68,26 @@ Cc: Igor Mammedov <imammedo@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, Song Gao <gaosong@loongson.cn>,
- Xiao Guangrong <xiaoguangrong.eric@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-arm@nongnu.org,
- qemu-ppc@nongnu.org
-Subject: [PATCH-for-9.1 10/18] hw/mem/pc-dimm: Remove legacy_align argument
- from pc_dimm_pre_plug()
-Date: Tue,  5 Mar 2024 14:42:12 +0100
-Message-ID: <20240305134221.30924-11-philmd@linaro.org>
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH-for-9.1 08/18] hw/i386/pc: Remove
+ PCMachineClass::smbios_uuid_encoded
+Date: Tue,  5 Mar 2024 14:42:10 +0100
+Message-ID: <20240305134221.30924-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240305134221.30924-1-philmd@linaro.org>
 References: <20240305134221.30924-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::236;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x236.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,108 +103,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'legacy_align' is always NULL, remove it.
+PCMachineClass::smbios_uuid_encoded was only used by the
+pc-i440fx-2.1 machine, which got removed. It is now always
+true, remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/mem/pc-dimm.h | 3 +--
- hw/arm/virt.c            | 2 +-
- hw/i386/pc.c             | 2 +-
- hw/loongarch/virt.c      | 2 +-
- hw/mem/pc-dimm.c         | 6 ++----
- hw/ppc/spapr.c           | 2 +-
- 6 files changed, 7 insertions(+), 10 deletions(-)
+ include/hw/i386/pc.h | 1 -
+ hw/i386/fw_cfg.c     | 2 +-
+ hw/i386/pc.c         | 1 -
+ 3 files changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/include/hw/mem/pc-dimm.h b/include/hw/mem/pc-dimm.h
-index 322bebe555..fe0f3ea963 100644
---- a/include/hw/mem/pc-dimm.h
-+++ b/include/hw/mem/pc-dimm.h
-@@ -66,8 +66,7 @@ struct PCDIMMDeviceClass {
-     void (*unrealize)(PCDIMMDevice *dimm);
- };
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index f77639d94f..f051ddafca 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -109,7 +109,6 @@ struct PCMachineClass {
+     /* SMBIOS compat: */
+     bool smbios_defaults;
+     bool smbios_legacy_mode;
+-    bool smbios_uuid_encoded;
+     SmbiosEntryPointType default_smbios_ep_type;
  
--void pc_dimm_pre_plug(PCDIMMDevice *dimm, MachineState *machine,
--                      const uint64_t *legacy_align, Error **errp);
-+void pc_dimm_pre_plug(PCDIMMDevice *dimm, MachineState *machine, Error **errp);
- void pc_dimm_plug(PCDIMMDevice *dimm, MachineState *machine);
- void pc_dimm_unplug(PCDIMMDevice *dimm, MachineState *machine);
- #endif
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 0af1943697..9a6df69642 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -2720,7 +2720,7 @@ static void virt_memory_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
-         return;
+     /* RAM / address space compat: */
+diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
+index 98a478c276..176c086673 100644
+--- a/hw/i386/fw_cfg.c
++++ b/hw/i386/fw_cfg.c
+@@ -63,7 +63,7 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg)
+     if (pcmc->smbios_defaults) {
+         /* These values are guest ABI, do not change */
+         smbios_set_defaults("QEMU", mc->desc, mc->name,
+-                            pcmc->smbios_legacy_mode, pcmc->smbios_uuid_encoded,
++                            pcmc->smbios_legacy_mode, true,
+                             pcms->smbios_entry_point_type);
      }
  
--    pc_dimm_pre_plug(PC_DIMM(dev), MACHINE(hotplug_dev), NULL, errp);
-+    pc_dimm_pre_plug(PC_DIMM(dev), MACHINE(hotplug_dev), errp);
- }
- 
- static void virt_memory_plug(HotplugHandler *hotplug_dev,
 diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 0950abcc2a..b4736822e4 100644
+index d417cf106c..409114bba5 100644
 --- a/hw/i386/pc.c
 +++ b/hw/i386/pc.c
-@@ -1325,7 +1325,7 @@ static void pc_memory_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
-         return;
-     }
- 
--    pc_dimm_pre_plug(PC_DIMM(dev), MACHINE(hotplug_dev), NULL, errp);
-+    pc_dimm_pre_plug(PC_DIMM(dev), MACHINE(hotplug_dev), errp);
- }
- 
- static void pc_memory_plug(HotplugHandler *hotplug_dev,
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 1e98d8bda5..2e8234affd 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -1024,7 +1024,7 @@ static bool memhp_type_supported(DeviceState *dev)
- static void virt_mem_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
-                                  Error **errp)
- {
--    pc_dimm_pre_plug(PC_DIMM(dev), MACHINE(hotplug_dev), NULL, errp);
-+    pc_dimm_pre_plug(PC_DIMM(dev), MACHINE(hotplug_dev), errp);
- }
- 
- static void virt_machine_device_pre_plug(HotplugHandler *hotplug_dev,
-diff --git a/hw/mem/pc-dimm.c b/hw/mem/pc-dimm.c
-index 37f1f4ccfd..836384a90f 100644
---- a/hw/mem/pc-dimm.c
-+++ b/hw/mem/pc-dimm.c
-@@ -44,8 +44,7 @@ static MemoryRegion *pc_dimm_get_memory_region(PCDIMMDevice *dimm, Error **errp)
-     return host_memory_backend_get_memory(dimm->hostmem);
- }
- 
--void pc_dimm_pre_plug(PCDIMMDevice *dimm, MachineState *machine,
--                      const uint64_t *legacy_align, Error **errp)
-+void pc_dimm_pre_plug(PCDIMMDevice *dimm, MachineState *machine, Error **errp)
- {
-     Error *local_err = NULL;
-     int slot;
-@@ -70,8 +69,7 @@ void pc_dimm_pre_plug(PCDIMMDevice *dimm, MachineState *machine,
-                             &error_abort);
-     trace_mhp_pc_dimm_assigned_slot(slot);
- 
--    memory_device_pre_plug(MEMORY_DEVICE(dimm), machine, legacy_align,
--                           errp);
-+    memory_device_pre_plug(MEMORY_DEVICE(dimm), machine, NULL, errp);
- }
- 
- void pc_dimm_plug(PCDIMMDevice *dimm, MachineState *machine)
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 55263f0815..32fdca2bd4 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -3639,7 +3639,7 @@ static void spapr_memory_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
-         return;
-     }
- 
--    pc_dimm_pre_plug(dimm, MACHINE(hotplug_dev), NULL, errp);
-+    pc_dimm_pre_plug(dimm, MACHINE(hotplug_dev), errp);
- }
- 
- struct SpaprDimmState {
+@@ -1791,7 +1791,6 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
+     pcmc->has_acpi_build = true;
+     pcmc->rsdp_in_ram = true;
+     pcmc->smbios_defaults = true;
+-    pcmc->smbios_uuid_encoded = true;
+     pcmc->gigabyte_align = true;
+     pcmc->has_reserved_memory = true;
+     pcmc->enforce_aligned_dimm = true;
 -- 
 2.41.0
 
