@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28A62C54E49
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:53:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 258F7C54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:53:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhVEZ-0001DJ-L2; Tue, 05 Mar 2024 08:53:31 -0500
+	id 1rhVEF-000112-OZ; Tue, 05 Mar 2024 08:53:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhVDt-0000va-4Z
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:52:49 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1rhVDq-0000vB-Nw
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:52:48 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhVDm-0005xD-Na
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:52:48 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-412ebda8772so5739195e9.3
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:52:41 -0800 (PST)
+ id 1rhVDk-0005x2-S9
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:52:46 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-33d18931a94so3336384f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:52:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709646760; x=1710251560; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=tz7e0axdRAsRzGQKByGesEJpVfUbUyDvuhdaeTdsD0U=;
- b=E+eMU5rQw/pSo0mUybSI7MEnUrJ1OREIoizoqPGXUU6HQ1czCik36e0AcmSjV/9x3/
- H61X577PV44i/WsgT8UPZs3C4lggTtwCE5qXNS0vrM+mCe+v1JtRvFgoQfWDeYTxowJF
- fxV+lBycJH1vGJFX+i2hVxPl/82b5uGl5vixa+oxCjABs5LJLWNPJ2r3TxpQWoz+M+dl
- y8Veb0NGGQfKzBg6pZ0KvVzeIidyOGTvwKQdV2CzOUFIialETcdCqTCZ+t+8AIpjqKYB
- lC5QrRDY0k0VQBwhJbXMxfdU/uomtokYzZYDJB6NsLmQXKFMLEpbvCxfisTGERmBTABW
- 99hA==
+ d=linaro.org; s=google; t=1709646759; x=1710251559; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=QOjLeOAAcgGIM32VXbE9CqkwcOez577c3TaR1Ypc5KY=;
+ b=jOGkidvSdDTUMzVqjb+ndVsHSdXc0CeW06o8eTfRx0Hjx4+qgUh6TCho15p995PtmY
+ M8eHQ4lsYgM5M3Pj8ciSToHGp3cfuhkReoY3UB9Pc8vJna/Gtvsvytzq/CDejS8zQXZD
+ c4NJHG3VZRl8lEzadyEwq08YYZ30WENHButdOU0X1D6VSyObLUeucnqxnT+nzntLYMwo
+ Kr+wgJLBEqqzi1vAUQqfv65Hcz7Jw46ZOSWi7gj1/MZdK2XDEHnr/xWfdvuzij+Elc0B
+ PU7bs5NCJdHhHUBpo4ZT5NvrVkPGoUSSozJzAvjJSUeyaVePhzQm587mYuxO/q7tDi24
+ TDsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709646760; x=1710251560;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=tz7e0axdRAsRzGQKByGesEJpVfUbUyDvuhdaeTdsD0U=;
- b=FIux1pFvrxhJbBbqEFUQaA0ZYGUfTNBbvxYHGwLAvqz3OyJaY2C2ApPsgRQ7DcC0c/
- +dQnQQTYrNKHRw7VwH/2k65CSzM0AH/+jNQpSlTB5F8flnrdWNjeUXVEmnl482ixTl79
- 9sUgxnZslYe91fNkaG2MYfjmfORlGRqK9olLNYOqh7uYOX+uizt9GjELfcY8EkECvJot
- 3BXCLJAQJj3u10w4v+1qd3RDYpLNXd27gwet/ggVt0uesknYp0reVcfPF4KO/ef/T8cp
- fVL3Cgu5OkCx7iadBKKw56NGVsMuDwQ4RQqmeOenplLB+bZzChCQXNtAEOIc2k2/bTiG
- +7iQ==
-X-Gm-Message-State: AOJu0YxvamRkJHrNuZetW0mlNbOqT0RmfYCo4eo/GoCjjncKkPGIXmK9
- ZTB8eEd9TevTT+dZgCDuMtgld6BNHDGZAdjULnlFVPvxhzKFgAvU1wAWwVQBg33np/xFl6LS6i7
- 7
-X-Google-Smtp-Source: AGHT+IFP0lcLf6uV7kNSKmVZzdFHd4uE+otSmPKCJaNoji+QvPjUBYTzJ1By1ndT7yegsVfzmmUdLQ==
-X-Received: by 2002:adf:f6c7:0:b0:33d:dcd4:9d8f with SMTP id
- y7-20020adff6c7000000b0033ddcd49d8fmr8178037wrp.65.1709646760123; 
- Tue, 05 Mar 2024 05:52:40 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709646759; x=1710251559;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=QOjLeOAAcgGIM32VXbE9CqkwcOez577c3TaR1Ypc5KY=;
+ b=iGJCbBQ0OldTSfx+UaMqkocLTkU+w9fCAdPjWBs8WtIvS6XZIB0IpoBGQPTseb7mlT
+ RHDmUf8Vk83vIDwnCUL/ITI8qio9bwrcRVLEvT7z8XzlNRXc1xgVOxspRsALs4oMoIB6
+ bSWqF2B+dlyVXWzgg6H9oORvgdOPsiIVX6x2SjqU6VWmrbd4cI1bI3E1wBpDjzXIUSGN
+ 4RBGt5Jdo44JdT3kWfZZ1EId9Ye5nRZkbD2Dgi5jtPJx9KgIlZyVWOA4xXVY4Hg8cHtv
+ EkFsc5ipQMHdjpjMc7vjW0FnK7fs6b0FRbbv70ikts5UGNnyysrp759ihOgJTXWQXMpw
+ LCYQ==
+X-Gm-Message-State: AOJu0Ywqtwjin8GqWj+jn/bavAo2E93gb0/OeFOo4BisY/H4kc2g9N3Z
+ WfasEIhEpskp/17EwweZiFeGe7qa0H+iNgfDWX74a1c7y0psHQaqRwvYcztPjWsRyqPjp53KTEz
+ p
+X-Google-Smtp-Source: AGHT+IHPTuUoF/TSOma8nAeTBQ0PCLxOLLMvjcbrTKtiaa0S3Jv8vJhUZLxo8eepn8AeQLVFfbzMTg==
+X-Received: by 2002:adf:ed0c:0:b0:33d:fec5:2fac with SMTP id
+ a12-20020adfed0c000000b0033dfec52facmr8500570wro.9.1709646758851; 
+ Tue, 05 Mar 2024 05:52:38 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- x3-20020a5d6503000000b0033e206a0a7asm11797532wru.26.2024.03.05.05.52.39
+ x3-20020a5d6503000000b0033e206a0a7asm11797532wru.26.2024.03.05.05.52.38
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Mar 2024 05:52:39 -0800 (PST)
+ Tue, 05 Mar 2024 05:52:38 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/20] tests/qtest: Add testcase for BCM2835 BSC
-Date: Tue,  5 Mar 2024 13:52:20 +0000
-Message-Id: <20240305135237.3111642-4-peter.maydell@linaro.org>
+Subject: [PULL 00/20] target-arm queue
+Date: Tue,  5 Mar 2024 13:52:17 +0000
+Message-Id: <20240305135237.3111642-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240305135237.3111642-1-peter.maydell@linaro.org>
-References: <20240305135237.3111642-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,156 +91,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Rayhan Faizel <rayhan.faizel@gmail.com>
+The following changes since commit 4eac9dfbd72d346505642fb45ac3141c7eb2c516:
 
-Simple testcase for validating proper operation of read and write for all
-three BSC controllers.
+  Merge tag 'pull-tcg-20240301' of https://gitlab.com/rth7680/qemu into staging (2024-03-05 09:45:22 +0000)
 
-Signed-off-by: Rayhan Faizel <rayhan.faizel@gmail.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20240224191038.2409945-4-rayhan.faizel@gmail.com
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- tests/qtest/bcm2835-i2c-test.c | 115 +++++++++++++++++++++++++++++++++
- tests/qtest/meson.build        |   2 +-
- 2 files changed, 116 insertions(+), 1 deletion(-)
+are available in the Git repository at:
+
+  https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20240305
+
+for you to fetch changes up to 7558300c53057126514ee0fd5cf629c65ccc20e1:
+
+  qemu-options.hx: Don't claim "-serial" has limit of 4 serial ports (2024-03-05 13:22:56 +0000)
+
+----------------------------------------------------------------
+target-arm queue:
+ * raspi: Implement Broadcom Serial Controller (BSC) for BCM2835 boards
+ * hw/char/pl011: Add support for loopback
+ * STM32L4x5: Implement RCC clock control device
+ * target/arm: Do memory type alignment checks
+ * atomic.h: Reword confusing comment for qatomic_cmpxchg
+ * qemu-options.hx: Don't claim "-serial" has limit of 4 serial ports
+
+----------------------------------------------------------------
+Arnaud Minier (8):
+      hw/misc/stm32l4x5_rcc: Implement STM32L4x5_RCC skeleton
+      hw/misc/stm32l4x5_rcc: Add an internal clock multiplexer object
+      hw/misc/stm32l4x5_rcc: Add an internal PLL Clock object
+      hw/misc/stm32l4x5_rcc: Initialize PLLs and clock multiplexers
+      hw/misc/stm32l4x5_rcc: Handle Register Updates
+      hw/misc/stm32l4x5_rcc: Add write protections to CR register
+      hw/arm/stm32l4x5_soc.c: Use the RCC Sysclk
+      tests/qtest/stm32l4x5_rcc-test.c: Add tests for the STM32L4x5_RCC
+
+Peter Maydell (1):
+      atomic.h: Reword confusing comment for qatomic_cmpxchg
+
+Rayhan Faizel (3):
+      hw/i2c: Implement Broadcom Serial Controller (BSC)
+      hw/arm: Connect BSC to BCM2835 board as I2C0, I2C1 and I2C2
+      tests/qtest: Add testcase for BCM2835 BSC
+
+Richard Henderson (6):
+      target/arm: Support 32-byte alignment in pow2_align
+      exec/memattrs: Remove target_tlb_bit*
+      accel/tcg: Add tlb_fill_flags to CPUTLBEntryFull
+      accel/tcg: Add TLB_CHECK_ALIGNED
+      target/arm: Do memory type alignment check when translation disabled
+      target/arm: Do memory type alignment check when translation enabled
+
+Steven Shen (1):
+      qemu-options.hx: Don't claim "-serial" has limit of 4 serial ports
+
+Tong Ho (1):
+      hw/char/pl011: Add support for loopback
+
+ MAINTAINERS                               |    5 +-
+ docs/system/arm/b-l475e-iot01a.rst        |    2 +-
+ docs/system/arm/raspi.rst                 |    1 +
+ include/exec/cpu-all.h                    |    4 +-
+ include/exec/memattrs.h                   |   12 -
+ include/hw/arm/bcm2835_peripherals.h      |    4 +-
+ include/hw/arm/stm32l4x5_soc.h            |    5 +-
+ include/hw/core/cpu.h                     |    3 +
+ include/hw/i2c/bcm2835_i2c.h              |   80 ++
+ include/hw/misc/stm32l4x5_rcc.h           |  239 +++++
+ include/hw/misc/stm32l4x5_rcc_internals.h | 1042 +++++++++++++++++++++
+ include/qemu/atomic.h                     |    2 +-
+ accel/tcg/cputlb.c                        |   35 +-
+ hw/arm/b-l475e-iot01a.c                   |   10 +-
+ hw/arm/bcm2835_peripherals.c              |   45 +-
+ hw/arm/stm32l4x5_soc.c                    |   45 +-
+ hw/char/pl011.c                           |  110 ++-
+ hw/i2c/bcm2835_i2c.c                      |  282 ++++++
+ hw/misc/stm32l4x5_rcc.c                   | 1457 +++++++++++++++++++++++++++++
+ target/arm/ptw.c                          |   39 +
+ target/arm/tcg/hflags.c                   |   34 +-
+ target/arm/tcg/translate.c                |    8 +-
+ target/sparc/mmu_helper.c                 |    2 +-
+ tests/qtest/bcm2835-i2c-test.c            |  115 +++
+ tests/qtest/stm32l4x5_rcc-test.c          |  189 ++++
+ hw/arm/Kconfig                            |    2 +
+ hw/i2c/Kconfig                            |    4 +
+ hw/i2c/meson.build                        |    1 +
+ hw/misc/Kconfig                           |    3 +
+ hw/misc/meson.build                       |    1 +
+ hw/misc/trace-events                      |   14 +
+ qemu-options.hx                           |    2 +-
+ tests/qtest/meson.build                   |    5 +-
+ 33 files changed, 3718 insertions(+), 84 deletions(-)
+ create mode 100644 include/hw/i2c/bcm2835_i2c.h
+ create mode 100644 include/hw/misc/stm32l4x5_rcc.h
+ create mode 100644 include/hw/misc/stm32l4x5_rcc_internals.h
+ create mode 100644 hw/i2c/bcm2835_i2c.c
+ create mode 100644 hw/misc/stm32l4x5_rcc.c
  create mode 100644 tests/qtest/bcm2835-i2c-test.c
-
-diff --git a/tests/qtest/bcm2835-i2c-test.c b/tests/qtest/bcm2835-i2c-test.c
-new file mode 100644
-index 00000000000..513ecce61dc
---- /dev/null
-+++ b/tests/qtest/bcm2835-i2c-test.c
-@@ -0,0 +1,115 @@
-+/*
-+ * QTest testcase for Broadcom Serial Controller (BSC)
-+ *
-+ * Copyright (c) 2024 Rayhan Faizel <rayhan.faizel@gmail.com>
-+ *
-+ * SPDX-License-Identifier: MIT
-+ *
-+ * Permission is hereby granted, free of charge, to any person obtaining a copy
-+ * of this software and associated documentation files (the "Software"), to deal
-+ * in the Software without restriction, including without limitation the rights
-+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-+ * copies of the Software, and to permit persons to whom the Software is
-+ * furnished to do so, subject to the following conditions:
-+ *
-+ * The above copyright notice and this permission notice shall be included in
-+ * all copies or substantial portions of the Software.
-+ *
-+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-+ * THE SOFTWARE.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest-single.h"
-+
-+#include "hw/i2c/bcm2835_i2c.h"
-+#include "hw/sensor/tmp105_regs.h"
-+
-+static const uint32_t bsc_base_addrs[] = {
-+    0x3f205000,                         /* I2C0 */
-+    0x3f804000,                         /* I2C1 */
-+    0x3f805000,                         /* I2C2 */
-+};
-+
-+static void bcm2835_i2c_init_transfer(uint32_t base_addr, bool read)
-+{
-+    /* read flag is bit 0 so we can write it directly */
-+    int interrupt = read ? BCM2835_I2C_C_INTR : BCM2835_I2C_C_INTT;
-+
-+    writel(base_addr + BCM2835_I2C_C,
-+           BCM2835_I2C_C_I2CEN | BCM2835_I2C_C_INTD |
-+           BCM2835_I2C_C_ST | BCM2835_I2C_C_CLEAR | interrupt | read);
-+}
-+
-+static void test_i2c_read_write(gconstpointer data)
-+{
-+    uint32_t i2cdata;
-+    intptr_t index = (intptr_t) data;
-+    uint32_t base_addr = bsc_base_addrs[index];
-+
-+    /* Write to TMP105 register */
-+    writel(base_addr + BCM2835_I2C_A, 0x50);
-+    writel(base_addr + BCM2835_I2C_DLEN, 3);
-+
-+    bcm2835_i2c_init_transfer(base_addr, 0);
-+
-+    writel(base_addr + BCM2835_I2C_FIFO, TMP105_REG_T_HIGH);
-+    writel(base_addr + BCM2835_I2C_FIFO, 0xde);
-+    writel(base_addr + BCM2835_I2C_FIFO, 0xad);
-+
-+    /* Clear flags */
-+    writel(base_addr + BCM2835_I2C_S, BCM2835_I2C_S_DONE | BCM2835_I2C_S_ERR |
-+                                      BCM2835_I2C_S_CLKT);
-+
-+    /* Read from TMP105 register */
-+    writel(base_addr + BCM2835_I2C_A, 0x50);
-+    writel(base_addr + BCM2835_I2C_DLEN, 1);
-+
-+    bcm2835_i2c_init_transfer(base_addr, 0);
-+
-+    writel(base_addr + BCM2835_I2C_FIFO, TMP105_REG_T_HIGH);
-+
-+    writel(base_addr + BCM2835_I2C_DLEN, 2);
-+    bcm2835_i2c_init_transfer(base_addr, 1);
-+
-+    i2cdata = readl(base_addr + BCM2835_I2C_FIFO);
-+    g_assert_cmpint(i2cdata, ==, 0xde);
-+
-+    i2cdata = readl(base_addr + BCM2835_I2C_FIFO);
-+    g_assert_cmpint(i2cdata, ==, 0xad);
-+
-+    /* Clear flags */
-+    writel(base_addr + BCM2835_I2C_S, BCM2835_I2C_S_DONE | BCM2835_I2C_S_ERR |
-+                                      BCM2835_I2C_S_CLKT);
-+
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    int ret;
-+    int i;
-+
-+    g_test_init(&argc, &argv, NULL);
-+
-+    for (i = 0; i < 3; i++) {
-+        g_autofree char *test_name =
-+        g_strdup_printf("/bcm2835/bcm2835-i2c%d/read_write", i);
-+        qtest_add_data_func(test_name, (void *)(intptr_t) i,
-+                            test_i2c_read_write);
-+    }
-+
-+    /* Run I2C tests with TMP105 slaves on all three buses */
-+    qtest_start("-M raspi3b "
-+                "-device tmp105,address=0x50,bus=i2c-bus.0 "
-+                "-device tmp105,address=0x50,bus=i2c-bus.1 "
-+                "-device tmp105,address=0x50,bus=i2c-bus.2");
-+    ret = g_test_run();
-+    qtest_end();
-+
-+    return ret;
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 6ea77893f50..bdc8bba7a98 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -230,7 +230,7 @@ qtests_aarch64 = \
-     ['tpm-tis-device-test', 'tpm-tis-device-swtpm-test'] : []) +                                         \
-   (config_all_devices.has_key('CONFIG_XLNX_ZYNQMP_ARM') ? ['xlnx-can-test', 'fuzz-xlnx-dp-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_XLNX_VERSAL') ? ['xlnx-canfd-test', 'xlnx-versal-trng-test'] : []) + \
--  (config_all_devices.has_key('CONFIG_RASPI') ? ['bcm2835-dma-test'] : []) +  \
-+  (config_all_devices.has_key('CONFIG_RASPI') ? ['bcm2835-dma-test', 'bcm2835-i2c-test'] : []) +  \
-   (config_all_accel.has_key('CONFIG_TCG') and                                            \
-    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
-   ['arm-cpu-features',
--- 
-2.34.1
-
+ create mode 100644 tests/qtest/stm32l4x5_rcc-test.c
 
