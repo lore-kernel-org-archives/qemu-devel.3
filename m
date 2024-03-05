@@ -4,54 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A954C5478C
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 07:12:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E3C1C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 07:13:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhOsn-0005sK-1Y; Tue, 05 Mar 2024 02:06:37 -0500
+	id 1rhOyZ-0004zL-KT; Tue, 05 Mar 2024 02:12:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rhOr1-00048k-DT; Tue, 05 Mar 2024 02:04:49 -0500
-Received: from szxga05-in.huawei.com ([45.249.212.191])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rhOyR-0004pf-PJ
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 02:12:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rhOqw-0008QS-QA; Tue, 05 Mar 2024 02:04:46 -0500
-Received: from mail.maildlp.com (unknown [172.19.88.234])
- by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4Tpmhn5k8Nz1h1RJ;
- Tue,  5 Mar 2024 15:02:17 +0800 (CST)
-Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id B3BC41402E1;
- Tue,  5 Mar 2024 15:04:37 +0800 (CST)
-Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
- (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Tue, 5 Mar
- 2024 15:04:37 +0800
-To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
- <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
- <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-CC: <ruanjinjie@huawei.com>
-Subject: [RFC PATCH v6 04/23] target/arm: Implement ALLINT MSR (immediate)
-Date: Tue, 5 Mar 2024 07:03:12 +0000
-Message-ID: <20240305070331.2151131-5-ruanjinjie@huawei.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240305070331.2151131-1-ruanjinjie@huawei.com>
-References: <20240305070331.2151131-1-ruanjinjie@huawei.com>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rhOyQ-0001qd-3x
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 02:12:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709622744;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=z3rmWrwsYIH8+AVc0Y/VnGI5K+bQgFl3RojjzJO+fFQ=;
+ b=AsI6e2WNlt8dRAZhNdVmmLYtEec+LpLaQqch5lYo1jZAMrTKbF5n1iBwqrcccncmaDl1CM
+ qB2gcYBriKp5t1pNNmMoXtU46OQJGlzW6d2BtJKN/Y3ZKnZgO0HXR1rr1JVkZRzhVRneFi
+ Myza5AqntIB13pUVbhELlEbX7oER1q8=
+Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
+ [209.85.217.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-250-kh5ILQfTOmCP-QdgyQUVCw-1; Tue, 05 Mar 2024 02:12:22 -0500
+X-MC-Unique: kh5ILQfTOmCP-QdgyQUVCw-1
+Received: by mail-vs1-f72.google.com with SMTP id
+ ada2fe7eead31-4727e51f64bso1033824137.1
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 23:12:22 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709622741; x=1710227541;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=z3rmWrwsYIH8+AVc0Y/VnGI5K+bQgFl3RojjzJO+fFQ=;
+ b=tt997GTuAFdapIchZ9zLCOkreW2jQT9smxj9hDz5lGKGP4jVZb0iDb2k16iP7965gd
+ 7GSvsYCPpevQr33fxq+npJ635ZsplVOH5j1tgjhlRlqZE4583I6nt8fC3auO61wH8xfb
+ 5w3/aeXdQzsKwD/nm8BBOL9mVHumAS/wdk13gHBbY8g7pvlRV156mh5HQiHLSk0Gkw8F
+ 6CVrczHfyLWC95RrkUR1R43xKFO+8dsZ76fWojtRv3Nc9703LLM49olXseBcBuyEvvUc
+ a/QMy67a5kYZGSV6RxGK5L5dpTNHZ7pMn+oU/Je4mH0u2ZOV+211RC/xcqJPpugHygwG
+ twqQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU1S6thGT+4fXQY7omVYFHKvdiTqCWHUP//vkhtyaEKW4YtFtYkyAXRnBpLZgWLCJB+eG7r9PKB3wFLl9X/z4EBB0zHgfM=
+X-Gm-Message-State: AOJu0YzMos+IgYecGOnP2Md4qHf8PL9VjlFxFLVQ/Gu0xCsDy8BwRi4/
+ 8okmLgykntndoLp2AKYW29EHr1ktSN53ng3ojU11IHAyDX70aBjUSoPTso0zit5cdOr3HuWPHkn
+ k2MC7bSV+xijDhbHxrwtWR8BZQ5wKi2fKfQlYqcdUQJPJOmsnT3iN
+X-Received: by 2002:a05:6102:dcd:b0:472:5948:3c85 with SMTP id
+ e13-20020a0561020dcd00b0047259483c85mr1230556vst.8.1709622740430; 
+ Mon, 04 Mar 2024 23:12:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGEgr/V8DmpiYcJ5EcXAFQ5q49Kmjo8TaY3NZZrlgTMXeNPmar3At8+5UFuNfQ6gvXZWerzBw==
+X-Received: by 2002:a05:6102:dcd:b0:472:5948:3c85 with SMTP id
+ e13-20020a0561020dcd00b0047259483c85mr1230492vst.8.1709622738712; 
+ Mon, 04 Mar 2024 23:12:18 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ he29-20020a05622a601d00b0042ee1ff302esm2592910qtb.66.2024.03.04.23.12.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 Mar 2024 23:12:18 -0800 (PST)
+Message-ID: <bf4ff1c0-6d11-4c33-a3be-8d7d06755072@redhat.com>
+Date: Tue, 5 Mar 2024 08:12:16 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 01/26] s390/stattrib: Add Error** argument to
+ set_migrationmode() handler
+Content-Language: en-US, fr
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Alex Williamson
+ <alex.williamson@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>
+References: <20240304122844.1888308-1-clg@redhat.com>
+ <20240304122844.1888308-2-clg@redhat.com> <87v861hgcr.fsf@suse.de>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <87v861hgcr.fsf@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.67.174.55]
-X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
- kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.191;
- envelope-from=ruanjinjie@huawei.com; helo=szxga05-in.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,121 +108,144 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
-From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add ALLINT MSR (immediate) to decodetree, in which the CRm is 0b000x. The
-EL0 check is necessary to ALLINT, and the EL1 check is necessary when
-imm == 1. So implement it inline for EL2/3, or EL1 with imm==0. Avoid the
-unconditional write to pc and use raise_exception_ra to unwind.
+On 3/4/24 21:49, Fabiano Rosas wrote:
+> Cédric Le Goater <clg@redhat.com> writes:
+> 
+>> This will prepare ground for futur changes adding an Error** argument
+>> to the save_setup() handler. We need to make sure that on failure,
+>> set_migrationmode() always sets a new error. See the Rules section in
+>> qapi/error.h.
+>>
+>> Cc: Halil Pasic <pasic@linux.ibm.com>
+>> Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
+>> Cc: Thomas Huth <thuth@redhat.com>
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>> ---
+>>   include/hw/s390x/storage-attributes.h |  2 +-
+>>   hw/s390x/s390-stattrib-kvm.c          | 12 ++++++++++--
+>>   hw/s390x/s390-stattrib.c              | 14 +++++++++-----
+>>   3 files changed, 20 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/include/hw/s390x/storage-attributes.h b/include/hw/s390x/storage-attributes.h
+>> index 5239eb538c1b087797867a247abfc14551af6a4d..8921a04d514bf64a3113255ee10ed33fc598ae06 100644
+>> --- a/include/hw/s390x/storage-attributes.h
+>> +++ b/include/hw/s390x/storage-attributes.h
+>> @@ -39,7 +39,7 @@ struct S390StAttribClass {
+>>       int (*set_stattr)(S390StAttribState *sa, uint64_t start_gfn,
+>>                         uint32_t count, uint8_t *values);
+>>       void (*synchronize)(S390StAttribState *sa);
+>> -    int (*set_migrationmode)(S390StAttribState *sa, bool value);
+>> +    int (*set_migrationmode)(S390StAttribState *sa, bool value, Error **errp);
+>>       int (*get_active)(S390StAttribState *sa);
+>>       long long (*get_dirtycount)(S390StAttribState *sa);
+>>   };
+>> diff --git a/hw/s390x/s390-stattrib-kvm.c b/hw/s390x/s390-stattrib-kvm.c
+>> index 24cd01382e2d74d62c2d7e980eb6aca1077d893d..357cea2c987213b867c81b0e258f7d0c293fe665 100644
+>> --- a/hw/s390x/s390-stattrib-kvm.c
+>> +++ b/hw/s390x/s390-stattrib-kvm.c
+>> @@ -17,6 +17,7 @@
+>>   #include "sysemu/kvm.h"
+>>   #include "exec/ram_addr.h"
+>>   #include "kvm/kvm_s390x.h"
+>> +#include "qapi/error.h"
+>>   
+>>   Object *kvm_s390_stattrib_create(void)
+>>   {
+>> @@ -137,14 +138,21 @@ static void kvm_s390_stattrib_synchronize(S390StAttribState *sa)
+>>       }
+>>   }
+>>   
+>> -static int kvm_s390_stattrib_set_migrationmode(S390StAttribState *sa, bool val)
+>> +static int kvm_s390_stattrib_set_migrationmode(S390StAttribState *sa, bool val,
+>> +                                               Error **errp)
+>>   {
+>>       struct kvm_device_attr attr = {
+>>           .group = KVM_S390_VM_MIGRATION,
+>>           .attr = val,
+>>           .addr = 0,
+>>       };
+>> -    return kvm_vm_ioctl(kvm_state, KVM_SET_DEVICE_ATTR, &attr);
+>> +    int r;
+>> +
+>> +    r = kvm_vm_ioctl(kvm_state, KVM_SET_DEVICE_ATTR, &attr);
+>> +    if (r) {
+>> +        error_setg_errno(errp, -r, "KVM_S390_SET_CMMA_BITS failed");
+> 
+> Did you mean KVM_SET_DEVICE_ATTR?
 
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
----
-v6:
-- Fix DISAS_TOO_MANY to DISAS_UPDATE_EXIT and add the comment.
-v5:
-- Drop the & 1 in trans_MSR_i_ALLINT().
-- Simplify and merge msr_i_allint() and allint_check().
-- Rename msr_i_allint() to msr_set_allint_el1().
-v4:
-- Fix the ALLINT MSR (immediate) decodetree implementation.
-- Remove arm_is_el2_enabled() check in allint_check().
-- Update env->allint to env->pstate.
-- Only call allint_check() when imm == 1.
-- Simplify the allint_check() to not pass "op" and extract.
-- Implement it inline for EL2/3, or EL1 with imm==0.
-- Pass (a->imm & 1) * PSTATE_ALLINT (i64) to simplfy the ALLINT set/clear.
-v3:
-- Remove EL0 check in allint_check().
-- Add TALLINT check for EL1 in allint_check().
-- Remove unnecessarily arm_rebuild_hflags() in msr_i_allint helper.
----
- target/arm/tcg/a64.decode      |  1 +
- target/arm/tcg/helper-a64.c    | 12 ++++++++++++
- target/arm/tcg/helper-a64.h    |  1 +
- target/arm/tcg/translate-a64.c | 19 +++++++++++++++++++
- 4 files changed, 33 insertions(+)
+Drat. Copy paste :)
 
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 8a20dce3c8..0e7656fd15 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -207,6 +207,7 @@ MSR_i_DIT       1101 0101 0000 0 011 0100 .... 010 11111 @msr_i
- MSR_i_TCO       1101 0101 0000 0 011 0100 .... 100 11111 @msr_i
- MSR_i_DAIFSET   1101 0101 0000 0 011 0100 .... 110 11111 @msr_i
- MSR_i_DAIFCLEAR 1101 0101 0000 0 011 0100 .... 111 11111 @msr_i
-+MSR_i_ALLINT    1101 0101 0000 0 001 0100 000 imm:1 000 11111
- MSR_i_SVCR      1101 0101 0000 0 011 0100 0 mask:2 imm:1 011 11111
- 
- # MRS, MSR (register), SYS, SYSL. These are all essentially the
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index ebaa7f00df..7818537890 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -66,6 +66,18 @@ void HELPER(msr_i_spsel)(CPUARMState *env, uint32_t imm)
-     update_spsel(env, imm);
- }
- 
-+void HELPER(msr_set_allint_el1)(CPUARMState *env)
-+{
-+    /* ALLINT update to PSTATE. */
-+    if (arm_hcrx_el2_eff(env) & HCRX_TALLINT) {
-+        raise_exception_ra(env, EXCP_UDEF,
-+                           syn_aa64_sysregtrap(0, 1, 0, 4, 1, 0x1f, 0),
-+                           exception_target_el(env), GETPC());
-+    }
-+
-+    env->pstate |= PSTATE_ALLINT;
-+}
-+
- static void daif_check(CPUARMState *env, uint32_t op,
-                        uint32_t imm, uintptr_t ra)
- {
-diff --git a/target/arm/tcg/helper-a64.h b/target/arm/tcg/helper-a64.h
-index 575a5dab7d..0518165399 100644
---- a/target/arm/tcg/helper-a64.h
-+++ b/target/arm/tcg/helper-a64.h
-@@ -22,6 +22,7 @@ DEF_HELPER_FLAGS_1(rbit64, TCG_CALL_NO_RWG_SE, i64, i64)
- DEF_HELPER_2(msr_i_spsel, void, env, i32)
- DEF_HELPER_2(msr_i_daifset, void, env, i32)
- DEF_HELPER_2(msr_i_daifclear, void, env, i32)
-+DEF_HELPER_1(msr_set_allint_el1, void, env)
- DEF_HELPER_3(vfp_cmph_a64, i64, f16, f16, ptr)
- DEF_HELPER_3(vfp_cmpeh_a64, i64, f16, f16, ptr)
- DEF_HELPER_3(vfp_cmps_a64, i64, f32, f32, ptr)
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 340265beb0..21758b290d 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -2036,6 +2036,25 @@ static bool trans_MSR_i_DAIFCLEAR(DisasContext *s, arg_i *a)
-     return true;
- }
- 
-+static bool trans_MSR_i_ALLINT(DisasContext *s, arg_i *a)
-+{
-+    if (!dc_isar_feature(aa64_nmi, s) || s->current_el == 0) {
-+        return false;
-+    }
-+
-+    if (a->imm == 0) {
-+        clear_pstate_bits(PSTATE_ALLINT);
-+    } else if (s->current_el > 1) {
-+        set_pstate_bits(PSTATE_ALLINT);
-+    } else {
-+        gen_helper_msr_set_allint_el1(tcg_env);
-+    }
-+
-+    /* Exit the cpu loop to re-evaluate pending IRQs. */
-+    s->base.is_jmp = DISAS_UPDATE_EXIT;
-+    return true;
-+}
-+
- static bool trans_MSR_i_SVCR(DisasContext *s, arg_MSR_i_SVCR *a)
- {
-     if (!dc_isar_feature(aa64_sme, s) || a->mask == 0) {
--- 
-2.34.1
+
+Thanks,
+
+C.
+
+
+
+> 
+>> +    }
+>> +    return r;
+>>   }
+>>   
+>>   static long long kvm_s390_stattrib_get_dirtycount(S390StAttribState *sa)
+>> diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
+>> index c483b62a9b5f71772639fc180bdad15ecb6711cb..e99de190332a82363b1388bbc450013149295bc0 100644
+>> --- a/hw/s390x/s390-stattrib.c
+>> +++ b/hw/s390x/s390-stattrib.c
+>> @@ -60,11 +60,12 @@ void hmp_migrationmode(Monitor *mon, const QDict *qdict)
+>>       S390StAttribState *sas = s390_get_stattrib_device();
+>>       S390StAttribClass *sac = S390_STATTRIB_GET_CLASS(sas);
+>>       uint64_t what = qdict_get_int(qdict, "mode");
+>> +    Error *local_err = NULL;
+>>       int r;
+>>   
+>> -    r = sac->set_migrationmode(sas, what);
+>> +    r = sac->set_migrationmode(sas, what, &local_err);
+>>       if (r < 0) {
+>> -        monitor_printf(mon, "Error: %s", strerror(-r));
+>> +        monitor_printf(mon, "Error: %s", error_get_pretty(local_err));
+>>       }
+>>   }
+>>   
+>> @@ -170,13 +171,15 @@ static int cmma_save_setup(QEMUFile *f, void *opaque)
+>>   {
+>>       S390StAttribState *sas = S390_STATTRIB(opaque);
+>>       S390StAttribClass *sac = S390_STATTRIB_GET_CLASS(sas);
+>> +    Error *local_err = NULL;
+>>       int res;
+>>       /*
+>>        * Signal that we want to start a migration, thus needing PGSTE dirty
+>>        * tracking.
+>>        */
+>> -    res = sac->set_migrationmode(sas, 1);
+>> +    res = sac->set_migrationmode(sas, true, &local_err);
+>>       if (res) {
+>> +        error_report_err(local_err);
+>>           return res;
+>>       }
+>>       qemu_put_be64(f, STATTR_FLAG_EOS);
+>> @@ -260,7 +263,7 @@ static void cmma_save_cleanup(void *opaque)
+>>   {
+>>       S390StAttribState *sas = S390_STATTRIB(opaque);
+>>       S390StAttribClass *sac = S390_STATTRIB_GET_CLASS(sas);
+>> -    sac->set_migrationmode(sas, 0);
+>> +    sac->set_migrationmode(sas, false, NULL);
+>>   }
+>>   
+>>   static bool cmma_active(void *opaque)
+>> @@ -293,7 +296,8 @@ static long long qemu_s390_get_dirtycount_stub(S390StAttribState *sa)
+>>   {
+>>       return 0;
+>>   }
+>> -static int qemu_s390_set_migrationmode_stub(S390StAttribState *sa, bool value)
+>> +static int qemu_s390_set_migrationmode_stub(S390StAttribState *sa, bool value,
+>> +                                            Error **errp)
+>>   {
+>>       return 0;
+>>   }
+> 
 
 
