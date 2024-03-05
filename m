@@ -4,91 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F38CC54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 17:10:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3519C54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 17:13:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhYID-0000eS-4T; Tue, 05 Mar 2024 12:09:29 -0500
+	id 1rhYL8-0002H4-5i; Tue, 05 Mar 2024 12:12:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rhYIB-0000eE-F6
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 12:09:27 -0500
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rhYL6-0002Gi-Df
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 12:12:28 -0500
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rhYI9-0006B9-Mr
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 12:09:27 -0500
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-6e5760eeb7aso4674807b3a.1
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 09:09:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rhYL4-0006sK-Lk
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 12:12:28 -0500
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-513382f40e9so4381707e87.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 09:12:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709658564; x=1710263364; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:date:from:from:to
- :cc:subject:date:message-id:reply-to;
- bh=RMyPSQNoZX6mCJEU1oJOANHIjsrabzXyzk2PurQx6yU=;
- b=PW2N4BtKUHFekYiIhYecm8B6qXGEnlOTMkpAL6OhzFPrDgOucGDItC2wU4YIxMlCVc
- V9c8d2eBuB41B9KrInZpzeiTsmGVxSKq2i9XYmyqChk3OTNFkE7iHaoTnE4lEpcKtMd+
- vCYEw5Ijg+vz69ILQD2zl1RC2ZpQzv3j3wcbPMc9/WHgbJbaiN88uYBHdms9RkWqQiaC
- GuekmOn/JPxOtdTEgQ1UDrlmkx3wCNpQJibSCbYNG7D5aul4Ay6jMBBQF5rVxo52iL+H
- kihr/jX5WS/nD4r5FyRKSqAakWHWJ0Z2EVd2aK4C+Ft15GHQbefHKs9+lh3S9RB+Eqyq
- 67Ag==
+ d=linaro.org; s=google; t=1709658744; x=1710263544; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=0rjXKS6vGeWEZgAJZUHM1h05LKR0JFC5i6Cm52KHRQw=;
+ b=AdaHYCkqMO/bQfS4lDu9huiPfr/8Bvj0sbJNRuCmHtYTIvw/bE+s44S8w1KH75A7oH
+ pyGbcGeq3tmht1qTgnmEJ7COaTk6/Gi/ncHJV9CCHujztfP9ci+09SoyRGMC+BM6tUQ1
+ OtZGEws9lFkx/ZK/icixIypjNcZQmuMUQv8WU3BKQPsPkS1BviOOBUcn6evHhi1f3t1Z
+ wMd7Y10MSNBE60pbhP2uSXVTQTshdOvJPxSchc5XJ9WXOKpkeMkfCNEavaxiFFG5/TW2
+ N63Xs9e0PVvRk/QBkCa/+9B5SGNTKul2UHEyj8jBsyXRdGikv2wWupVXPgkm3rxS6po6
+ 6L5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709658564; x=1710263364;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:date:from
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RMyPSQNoZX6mCJEU1oJOANHIjsrabzXyzk2PurQx6yU=;
- b=ATgdXiVq0iTxWZAfen9bqyElgmOez6vlh3shnhIfw12sYjvC5nNo8x+xqGAtsdOWcq
- P2i/aLMprK1rNyYSpKe4jkp3w+E7FbJYVFKXie79in7VB5DMtdoPmc/ljTSpMLcoS37d
- CmH1zorVNEFMIws9tPoAKVGLM7zuL3kY6oSSgRl5bRsqifsDf2uebpzuJ41OODOwZlHY
- d4Tcoh5H15FZH7bU7e+kMWZVsfGilXeNGmoDSfgs9UzQHdstU7RTpcVXn0k5MC5YYrvL
- BL2WaLJLwO+N8u+U9s60aoZ0GHsa1CHfsNh9zpSWfh0WPJcTLZe1OymF4nRHtD/wCZ9n
- X/Ng==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU47V6lwBdrKzKdN/MoxSXZzxXHSjps2T7WuZHnLMGPQ9ERNogNFdCOdx6ARfsPvtfqOsfDmO+umbekajorTvdyta9cKro=
-X-Gm-Message-State: AOJu0Yxwpuq5W93IhSnd6wSMmLTsgYYcx1+Fcz+lyygIoQA6GspLqXY2
- WlJG6LPzH39KWNYkPTILfiCvNskGqc95m7+heM+9P7zT5D+YKv9J
-X-Google-Smtp-Source: AGHT+IGo9IutGEDzfw88MhEA1IBT1j5jFoOJfB77AyyqYzLqAchDwqAIZpHvJgOCb317KNKTV7WimA==
-X-Received: by 2002:a05:6a00:2fd1:b0:6e5:d3b9:2d06 with SMTP id
- fn17-20020a056a002fd100b006e5d3b92d06mr11304820pfb.21.1709658563597; 
- Tue, 05 Mar 2024 09:09:23 -0800 (PST)
-Received: from debian ([2601:641:300:14de:8dce:12ff:6983:289])
- by smtp.gmail.com with ESMTPSA id
- w8-20020a056a0014c800b006e622f9175asm3660646pfu.217.2024.03.05.09.09.22
+ d=1e100.net; s=20230601; t=1709658744; x=1710263544;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=0rjXKS6vGeWEZgAJZUHM1h05LKR0JFC5i6Cm52KHRQw=;
+ b=IzcaF4UMoLAM7s2KoShd9+XsGKwgG5TVK5IGHH0lNBauBVFlQ+ccOcgVxIMyV5r/cI
+ CRT0YqCkZxieix7V0w65po4Cj2rr6tjxdJXftnOlnILm8SAcjsQH8xOdbcObvbx8mPK5
+ qN4g3twgsvHf3wloAd8UKzrzSbtfLrptWWXGlCHOgta3A6WJk1tgHu9XCLuKKGq1ExM1
+ z1b5ilzR3WXzsSypLRE2FUB5X2CKLLxiFH5mjuISEN3EQGKVAPtJ6LZLdIP011YFGYDx
+ t/HPftPgPK3O1ts1c4aHemlZWPBtOWKyMhdUyVRMR1q/Y5paSRQ8KNMeeAj1o8LSqRgL
+ tsHA==
+X-Gm-Message-State: AOJu0YyEFoXIfGbsRj4vS9rp+6CHpo+xLHOEaFnQpOI3i72A9OrrbdIF
+ vxogdknmklsUlTCNNE1KFKif3tt+GPUlslRFMgT+lVA/m10rWYyIKuDvXALaCJGG3HmKOnjBcik
+ 5
+X-Google-Smtp-Source: AGHT+IFcWtbAQWlGJF+jWWyWDmYFVNF+lym8tad+lnMV7PbDa6TOmhK+kUr9NAW1seisEP0dfSbV2w==
+X-Received: by 2002:a19:915d:0:b0:513:2b36:3195 with SMTP id
+ y29-20020a19915d000000b005132b363195mr1529720lfj.51.1709658743636; 
+ Tue, 05 Mar 2024 09:12:23 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ r12-20020a05600c35cc00b00412a0ce903dsm18465906wmq.46.2024.03.05.09.12.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Mar 2024 09:09:23 -0800 (PST)
-From: fan <nifan.cxl@gmail.com>
-X-Google-Original-From: fan <fan@debian>
-Date: Tue, 5 Mar 2024 09:09:05 -0800
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, nifan.cxl@gmail.com,
- qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
- gregory.price@memverge.com, ira.weiny@intel.com,
- dan.j.williams@intel.com, a.manzanares@samsung.com,
- dave@stgolabs.net, nmtadam.samsung@gmail.com,
- jim.harris@samsung.com, Jorgen.Hansen@wdc.com, wj28.lee@gmail.com,
- Fan Ni <fan.ni@samsung.com>
-Subject: Re: [PATCH v5 13/13] qapi/cxl.json: Add QMP interfaces to print out
- accepted and pending DC extents
-Message-ID: <ZedRsZee2WhTi_Nd@debian>
-References: <20240304194331.1586191-1-nifan.cxl@gmail.com>
- <20240304194331.1586191-14-nifan.cxl@gmail.com>
- <20240305160908.000010c5@Huawei.com> <ZedFIp5gK4aXsqD-@redhat.com>
+ Tue, 05 Mar 2024 09:12:23 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id D14345F753;
+ Tue,  5 Mar 2024 17:12:22 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [RFC PATCH] plugins: filter out the PC from the register list
+Date: Tue,  5 Mar 2024 17:12:18 +0000
+Message-Id: <20240305171218.3621274-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZedFIp5gK4aXsqD-@redhat.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::133;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,55 +99,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 05, 2024 at 04:15:30PM +0000, Daniel P. BerrangÈ wrote:
-> On Tue, Mar 05, 2024 at 04:09:08PM +0000, Jonathan Cameron via wrote:
-> > On Mon,  4 Mar 2024 11:34:08 -0800
-> > nifan.cxl@gmail.com wrote:
-> > 
-> > > From: Fan Ni <fan.ni@samsung.com>
-> > > 
-> > > With the change, we add the following two QMP interfaces to print out
-> > > extents information in the device,
-> > > 1. cxl-display-accepted-dc-extents: print out the accepted DC extents in
-> > >    the device;
-> > > 2. cxl-display-pending-to-add-dc-extents: print out the pending-to-add
-> > >    DC extents in the device;
-> > > The output is appended to a file passed to the command and by default
-> > > it is /tmp/dc-extent.txt.
-> > Hi Fan,
-> > 
-> > Is there precedence for this sort of logging to a file from a qmp
-> > command?  I can see something like this being useful.
-> 
-> This is pretty unusual.
+QEMU's handling of the program counter is special in so far as the
+translator avoids setting it whenever possible. As the PC is available
+at translation time lets avoid confusion by just filtering the program
+counter from the list of available registers.
 
-Yeah. I cannot find anything similar in existing code, my initial plan
-was to print out to the screen directly, however, cannot find out how to
-do it nicely, so decided to go with a file. 
+Update the documentation with some notes about the register access and
+calling out the behaviour of the PC.
 
-Is there a reason why we do not want to go with this approach?
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2208
+Signed-off-by: Alex Benn√©e <alex.bennee@linaro.org>
+---
+ docs/devel/tcg-plugins.rst | 15 +++++++++++++++
+ plugins/api.c              |  5 +++++
+ 2 files changed, 20 insertions(+)
 
-> 
-> For runtime debugging information our strong preference is to integrate
-> 'trace' probes throughout the code:
-> 
->   https://www.qemu.org/docs/master/devel/tracing.html#tracing
+diff --git a/docs/devel/tcg-plugins.rst b/docs/devel/tcg-plugins.rst
+index 9cc09d8c3da..656df012e77 100644
+--- a/docs/devel/tcg-plugins.rst
++++ b/docs/devel/tcg-plugins.rst
+@@ -151,6 +151,21 @@ Unsuccessful operations (i.e. faults) will not be visible to memory
+ instrumentation although the execution side effects can be observed
+ (e.g. entering a exception handler).
+ 
++Register Values
+++++++++++++++++
++
++Callbacks registered with the ``QEMU_PLUGIN_CB_R_REGS`` flags can read
++the current register values of the system. The plugin need to request
++the list of available registers after a vcpu has initialised by
++calling ``qemu_plugin_get_registers`` and using the supplied handle to
++query the values when executing the callback.
++
++.. Note:: the program counter (PC) is not available through this
++          interface but can be queried at translation time by using
++          the ``qemu_plugin_insn_vaddr`` and
++          ``qemu_plugin_insn_haddr`` on the instruction handle.
++
++
+ System Idle and Resume States
+ +++++++++++++++++++++++++++++
+ 
+diff --git a/plugins/api.c b/plugins/api.c
+index 8fa5a600ac3..fc3477acf2d 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -448,6 +448,11 @@ static GArray *create_register_handles(GArray *gdbstub_regs)
+             continue;
+         }
+ 
++        /* skip the program counter */
++        if (g_ascii_strncasecmp(grd->name, "pc", 2) == 0) {
++            continue;
++        }
++
+         /* Create a record for the plugin */
+         desc.handle = GINT_TO_POINTER(grd->gdb_reg);
+         desc.name = g_intern_string(grd->name);
+-- 
+2.39.2
 
-I am not familiar with the trace mechanism. However, I think the
-approach in this patch may be useful not only for debugging purpose.
-Although not tried yet, maybe we can also use the approach to set
-some parameters at runtime like what procfs does?
-Just a rough thought.
-
-Fan
-
-
-> 
-> With regards,
-> Daniel
-> -- 
-> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-> |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-> 
 
