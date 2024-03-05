@@ -4,88 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD577C54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 15:38:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 889E7C54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 15:40:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhWrd-00047N-7H; Tue, 05 Mar 2024 10:37:57 -0500
+	id 1rhWuD-0005cU-TL; Tue, 05 Mar 2024 10:40:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rhWrb-00046y-J8
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 10:37:55 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhWu7-0005aO-73
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 10:40:32 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rhWrS-0004b9-Ij
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 10:37:54 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1dbae7b8ff2so27963335ad.3
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 07:37:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhWu1-00054Y-QX
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 10:40:30 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-412e6bdd454so13993745e9.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 07:40:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709653064; x=1710257864; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1709653224; x=1710258024; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=1ld3gl94UlupCDSFVzXjsYxI6WQPx/u7ZfDL4K61RZ8=;
- b=qOuTd2EJ2cZrarHeubSj3NEMM+mb2uXmYY/6hgwgMLhgUTETN0A3T7IKXU8650ImvY
- 3VQf489ED99W4C446Rsioai27D1LhlbLte0c8qZnkKGbhhXH+ZQ4XDLGCcHGqxfu2uUY
- Pj6Kh0hVmRZ7+OygEsBdLrKJlU0CgxDhHq5nAS9RX21YhjrNUrVH2J3EGBvNDrGXx2qd
- 7Qn+W5FdQQFEwmxzoatueTlP/sy3ogf2aFRjYf4aGxkJd4setJmZ9hPCod42crM2Ft3c
- rg2WgHF/DTZ4nCa4QVv3CBCN27eNqMoQqFzuyGIJ465ghwg/xBw6rRZIqJfCKVT1E9lj
- rF2w==
+ bh=pk46VOydOiXXgzSHbizEopV9uHvauF7wEU0t0ZL10YU=;
+ b=umB5QghynSBRdO+1/SMs1n+eXUM/aqP0EHB+1LfGZ2EpA0aBQWXh114qCB9uX1t64t
+ ffQYhzu0xhZ15m3tCXiikJUcznWzrwMBvtw8bYqvXIyaPTnl3rU/Y6SFq8vLMe6Eel8A
+ lMMOWT1rcB83dW5YZKudVtaKvvH1Cts74yr0RiNPcTj66RFfB+mzx1r91vDGjFpjZizx
+ eudzfKEfEavTXUnRGjiPzY1CMMaH3EvNT4Lm1RvAogJRmDbtl+MVmEUDgLX/hDTUnw9x
+ FASjnCTYHcsvDRCqMcRYz45gEaFr/MXlzuJpqcSVyW1aMbekdSb1UuMBLDdWkMVTzal/
+ RtBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709653064; x=1710257864;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1709653224; x=1710258024;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1ld3gl94UlupCDSFVzXjsYxI6WQPx/u7ZfDL4K61RZ8=;
- b=Mb54qJ+ERh3mFEh849L/z75/PgUlFnSC0GfotL3F55Pjx7c+OPqcBqq0Sz3/25qsJt
- 4JD11NvaFV8nTRownRd6bC2evsolcoSWQMpURCAqRTyjgYu4ckBgsSHfIZdgYap0XqXW
- yJT4AJ7poKZv85Ft/4Q80cXQwf42pyWCXxtJ1M8sYAQqF0Fm1rlKERHGikHnzrX6auEF
- SAA0S0qXRJf79s3XO+K7SM7fMDhEPbLjSsGscVfug+ArkTG6iHt+TEdIFLMBeRwYEGp+
- riUzLQ/TDyHdK8dk3zctBNbrop/a6zWW47JYfo9S7gfJv0Yzua/rY+jProb+JmIzPU5a
- SKeQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWcmRchAz5zxtTOIQ2tURRZ7+UQFAH2uOZN+BI1eUj1MfTif5tk48LF3HWTPZj0ZLodpcUg5t8aCsxp5tmekQQDyHkLzeU=
-X-Gm-Message-State: AOJu0YyPPUX/NIf1VpmdyHjbj7KAqpbuOEVFFoarIXUBED90Bn3yfEAy
- +24IAk0RQCixnUAZj34gouJ4DVBHae0hAjsSx927k0mkGtH4ywy/xa7CO96no4k=
-X-Google-Smtp-Source: AGHT+IGWV8d4nINgFkteuk3SsJ0Eha3JGDVmSahjCia/VH76asCjkn1xpX5ROHhmMJ/8Nc4VDABYng==
-X-Received: by 2002:a17:902:edc2:b0:1dc:1ff5:3dfe with SMTP id
- q2-20020a170902edc200b001dc1ff53dfemr1706223plk.27.1709653064376; 
- Tue, 05 Mar 2024 07:37:44 -0800 (PST)
-Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
- [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- h15-20020a170902680f00b001dd090a7c00sm5231084plk.292.2024.03.05.07.37.42
+ bh=pk46VOydOiXXgzSHbizEopV9uHvauF7wEU0t0ZL10YU=;
+ b=Dv/V7dm8qhSjfWbjUq3En8+olTW0dsx7NF+0S3sTxEz3Mifo5hzLvB7HiWygW6h3XB
+ lVy7STy808jfyTYYZ8/kDqpJlHWwIi5FxxxAmsNyEXbDDVMTiqQqCCiaW8BlRbti5k1p
+ Wxdjx4sdTvvPE0OxwSvcud1PXFEjnMKrCPqKGKm83nNEdW6vYGVndJg0ysxmugW75JSR
+ /XLocbJEJ4tWFibg/DYOzyKefDLRtrhTEmU/vFw3wP8lkxMKpSSQSeC7Obs0fWmYV3Hm
+ eUrCsbk05GLExRzJPFgkc8Us4lcbMTwtHt3u4abvx3yrjdO0rnSjJ6YDeNmo7ZtwNBZX
+ YJaA==
+X-Gm-Message-State: AOJu0Ywh8iICYNKK69+AjB51WDkccMqwiz2l7qZ2/qvHRqHD1U9HopCt
+ 4CDO3COtl89zI/JMIfQGRR1rZo/PhEebO/7sKy9SgnrJiXTCXtpC1H8JlLxKrHw=
+X-Google-Smtp-Source: AGHT+IEO9N4O+18Hqdpco3w9+bVRuN6PAb8BHG5amIx+cF2ovF8IIRWXFJ73SrJMjvTa0IoHn4CdFg==
+X-Received: by 2002:a05:600c:46ce:b0:412:6c5f:d971 with SMTP id
+ q14-20020a05600c46ce00b004126c5fd971mr9536241wmo.11.1709653224138; 
+ Tue, 05 Mar 2024 07:40:24 -0800 (PST)
+Received: from [192.168.69.100] ([176.176.177.70])
+ by smtp.gmail.com with ESMTPSA id
+ jn3-20020a05600c6b0300b004128e903b2csm20845222wmb.39.2024.03.05.07.40.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Mar 2024 07:37:43 -0800 (PST)
-Message-ID: <dd5d998d-2c2e-4757-8e18-ae424df4f6a2@linaro.org>
-Date: Tue, 5 Mar 2024 05:37:39 -1000
+ Tue, 05 Mar 2024 07:40:23 -0800 (PST)
+Message-ID: <bf7d183c-21a3-484e-8820-f334bd4c9be4@linaro.org>
+Date: Tue, 5 Mar 2024 16:40:21 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 1/1] target/loongarch: Fixed tlb huge page loading issue
-To: lixianglai <lixianglai@loongson.cn>, qemu-devel@nongnu.org
-Cc: maobibo@loongson.cn, Song Gao <gaosong@loongson.cn>,
- Xiaojuan Yang <yangxiaojuan@loongson.cn>, zhaotianrui@loongson.cn
-References: <cover.1709610311.git.lixianglai@loongson.cn>
- <5b23421ee1ebf59142c7d7a3bc1082fff910f2fa.1709610311.git.lixianglai@loongson.cn>
- <5d3c7aa7-16d2-4812-a72b-dae5e567b9b8@linaro.org>
- <aa2670bd-b01d-6cc5-d6ad-9e807ed0abe4@loongson.cn>
+Subject: Re: [RFC PATCH v2 1/9] Add Rust SEV library as subproject
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <aa2670bd-b01d-6cc5-d6ad-9e807ed0abe4@loongson.cn>
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Tyler Fanelli <tfanelli@redhat.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mtosatti@redhat.com,
+ stefanha@redhat.com, marcandre.lureau@gmail.com
+References: <20231004203418.56508-1-tfanelli@redhat.com>
+ <20231004203418.56508-2-tfanelli@redhat.com> <ZecieNcFinT76L0k@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ZecieNcFinT76L0k@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,87 +96,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/4/24 20:21, lixianglai wrote:
-> Hi Richard:
->> On 3/4/24 17:51, Xianglai Li wrote:
->>> When we use qemu tcg simulation, the page size of bios is 4KB.
->>> When using the level 2 super large page (page size is 1G) to create the page table,
->>> it is found that the content of the corresponding address space is abnormal,
->>> resulting in the bios can not start the operating system and graphical interface normally.
->>>
->>> The lddir and ldpte instruction emulation has
->>> a problem with the use of super large page processing above level 2.
->>> The page size is not correctly calculated,
->>> resulting in the wrong page size of the table entry found by tlb.
->>>
->>> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
->>> Cc: maobibo@loongson.cn
->>> Cc: Song Gao <gaosong@loongson.cn>
->>> Cc: Xiaojuan Yang <yangxiaojuan@loongson.cn>
->>> Cc: zhaotianrui@loongson.cn
->>> ---
->>>   target/loongarch/cpu.h            |  1 +
->>>   target/loongarch/tcg/tlb_helper.c | 21 ++++++++++++---------
->>>   2 files changed, 13 insertions(+), 9 deletions(-)
->>>
->>> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
->>> index ec37579fd6..eab3e41c71 100644
->>> --- a/target/loongarch/cpu.h
->>> +++ b/target/loongarch/cpu.h
->>> @@ -292,6 +292,7 @@ typedef struct CPUArchState {
->>>       uint32_t fcsr0_mask;
->>>         uint32_t cpucfg[21];
->>> +    uint32_t lddir_ps;
+On 5/3/24 14:47, Daniel P. Berrangé wrote:
+> On Wed, Oct 04, 2023 at 04:34:10PM -0400, Tyler Fanelli wrote:
+>> The Rust sev library provides a C API for the AMD SEV launch ioctls, as
+>> well as the ability to build with meson. Add the Rust sev library as a
+>> QEMU subproject with the goal of outsourcing all SEV launch ioctls to C
+>> APIs provided by it.
 >>
->> This magical cpu state does not appear in the manual.
-> 
-> The hardware instruction manual is hosted on github at
-> 
-> https://github.com/loongson/LoongArch-Documentation
-> 
->> Are you sure that large pages above level 2 are really supported by LDDIR?
-> 
-> 
-> Yes,We have done tests on the physical cpu of loongarch64 and
-> 
-> it works fine with a level 2 large page on the physical cpu.
-> 
-> 
->>
->> Some explanation from the hardware engineering side is required.
-> 
-> The description of lddir hardware manual is as follows:
-> 
-> 
-> Instruction formats:
-> 
-> |lddir rd, rj, level|
-> 
-> The|LDDIR|instruction is used for accessing directory entries during software page table 
-> walking.
-> 
-> If bit|[6]|of the general register|rj|is|0|, it means that the content of|rj|is the 
-> physical address of the
-> 
-> base address of the level page table at this time. In this case, the|LDDIR|instruction 
-> will access the level
-> 
-> page table according to the current TLB refill address, retrieve the base address of the 
-> corresponding
-> 
-> |level+1|page table, and write it to the general register|rd|.
-> 
-> 
-> reference:
-> 
-> https://loongson.github.io/LoongArch-Documentation/LoongArch-Vol1-EN.html
-> 
-> 
->           4.2.5.1.|LDDIR|
-
-Yes, I have this manual.  Please highlight the portion of this description that 
-corresponds to the LDDIR_PS variable that you add.
+>> Signed-off-by: Tyler Fanelli <tfanelli@redhat.com>
+>> ---
+>>   meson.build                   | 8 ++++++++
+>>   meson_options.txt             | 2 ++
+>>   scripts/meson-buildoptions.sh | 3 +++
+>>   subprojects/sev.wrap          | 6 ++++++
+>>   target/i386/meson.build       | 2 +-
+>>   5 files changed, 20 insertions(+), 1 deletion(-)
+>>   create mode 100644 subprojects/sev.wrap
 
 
-r~
+> Now, the second issue is that my patch to QEMU's meson.build where
+> I look for "CONFIG_SEV" is wrong. I've not tested whether it behaves
+> correctly on non-x86 hosts - basically I'm hoping that CONFIG_SEV is
+> *NOT* present if building qemu-system-x86_64 on an aarch64 host.
+
+See hw/i386/Kconfig:
+
+   config SEV
+       bool
+       ...
+       depends on KVM
+
+and meson.build ($cpu is the host):
+
+   ...
+elif cpu == 'x86'
+   host_arch = 'i386'
+
+if cpu in ['x86', 'x86_64']
+   kvm_targets = ['i386-softmmu', 'x86_64-softmmu']
+
+So SEV is only on selectable on x86 hosts, with KVM enabled.
+
+> Assuming we get this logic correct though, this unblocks one issue
+> with getting this merged - Rust platform support.
+> 
+> We've said we want Rust platform support to be a match for QEMU's
+> platform support. We're probably pretty close, but still it is a
+> review stumbling block.
+> 
+> If, however, we demonstrate that we /only/ try to use libsev crate
+> when building on an x86_64 host, then we don't need to think about
+> Rust platform support in any detail. We know Rust is fully supported
+> on x86_64 on Linux, and we're not introducing any Rust dependency
+> for QEMU on other build target arches.
+> 
+> With regards,
+> Daniel
+
 
