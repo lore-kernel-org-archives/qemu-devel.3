@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75253C54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 12:12:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CD90C54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 12:14:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhTeF-0003c8-2L; Tue, 05 Mar 2024 07:11:55 -0500
+	id 1rhTel-0005PB-It; Tue, 05 Mar 2024 07:12:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhTdT-00023c-Ko
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 07:11:08 -0500
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
+ id 1rhTdJ-0001uW-GG
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 07:11:03 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhTcr-0001Wj-Ap
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 07:11:06 -0500
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-2d22b8801b9so79370241fa.0
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 04:10:24 -0800 (PST)
+ id 1rhTch-0001RA-6F
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 07:10:48 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-33e17342ea7so2937944f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 04:10:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709640623; x=1710245423; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709640613; x=1710245413; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=si4aR9NfjrmIkwaCSp8Q5XtDAxgYAPx/w5B7UtqWjho=;
- b=DjAAfgbkXid8Jvq6ps+FrrYz/20f0pvH+z/1MU9sm2QKSYxp/aj83sYZPpHkcGj9zB
- jwp3PilAYwnV4fvio7ZQ49VyPPriPuOLzsPINkXrhg63/IzIzeXlEK65rF3OIZhy4IJ/
- wGa0kkCk5NWYfKbGVXX4Et0s8NEL022922HTkGXO45B4KL0nMcbf9rlqMDAhaWjacaJ+
- X75Ydri2WX42KY52i30S6GmokH2pVpHTgaZ3l9LnoAMJNX3wDzEF2kn/+COD7XubdjDD
- Zng3Au8eeJIWyplOAJ/EJZnlkxLGs2y1GPKJHBMowfEG1QuuYhH6sxhE36HO4RPZUXN6
- oZaA==
+ bh=z3nYyAloWCoquTZDPSpE+htB2DaRlvaFvDRPXpKYUIk=;
+ b=YlFCKI8D4IjhTyxkzLiRopaNtPIX37FxRBi1OzfI+a2AT1584F69fMVJ3KKOqx7QjF
+ opGcuuKMB+fqM+Zxu14VpLoaqh5q5RwaaWRb2BewYcV48M0nbJY5cSu84AzHqw7tUxSu
+ JfHaF8T/UJ4XsAINnvuGx1JOcIOhNd+LIbx1Ssp3SzcuTKsUWScOUn49pN62ERdQtL+9
+ RjkzGORywaC+fweFJP6JvoLgSzMULbFUDolRUhNQtZv0afdCtPuO9zwhPIn4fF2iWkVz
+ Mu2OGYh23Io5P9ixAGmDNOF2kB7cYeZIkJA8Kg8rxZz1gwDq9lmq1VGYzd7msGmAlw2x
+ bQEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709640623; x=1710245423;
+ d=1e100.net; s=20230601; t=1709640613; x=1710245413;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=si4aR9NfjrmIkwaCSp8Q5XtDAxgYAPx/w5B7UtqWjho=;
- b=a0lCFYwmQOqnPTdVqBRQSrjcsbfc062KjGxCDW9T/LgZIP8LxCfkAQfcEl1J777vpX
- pv1V6f5ITXipeylYUh3OjEl6WkrQ7bH5CDBseKPeuAKkp/ArqXbrFm0vVv5Oz7BOaw/B
- COnm7En8oDfNOWm0ZuI6Jodyo8NgWu9jvkzyVKoRgwcfNEcDzRISKB/I5TY1kf4lw9dE
- aNe6XZ97GJquN0C+qa7IoWYXJy4yurvWSUL1ceDURXWL4N8ZSAWHsLwJl7pAxRFH3bUq
- xy4I4fbgIXHPqxX4AUKTsigFoQVq+OxM8cflksqfO8w1uzGU//g3PvZJ6imVukC6zSyP
- agQA==
-X-Gm-Message-State: AOJu0Yw+eQNOpWGZn4T+qxeHZGMjTV1k1DD2NQ2ZD/+5STAcJ+HepbFA
- S/erLCZJ1C1POlltI5XAvcoF8I0Vk0n4VxZvBKVcYqGYeriOsJVOQhfNtEB5adg=
-X-Google-Smtp-Source: AGHT+IGGF4YSwijsmfFzPsi+Kumnb9yXuKRux5ssF5J9Y8pyMD69wuVgpPZpBxiLmtDbzc66aVpc1A==
-X-Received: by 2002:a05:6512:78:b0:512:a966:eb5 with SMTP id
- i24-20020a056512007800b00512a9660eb5mr1030745lfo.21.1709640622984; 
- Tue, 05 Mar 2024 04:10:22 -0800 (PST)
+ bh=z3nYyAloWCoquTZDPSpE+htB2DaRlvaFvDRPXpKYUIk=;
+ b=GvOoWiKGkthPFkXKrCtnJ6VAtFfPVGjB3Mb51eAAmDkn8LvdX+DLDdIba/sCke/ht4
+ hi+nJUTnrf76mzAuUw823mQK80jHVTEXtZBWenqB63nFCRHdHBG4fF5XeNGk78WWxG74
+ 4Ewb406I0M6+2H1z1mCAoVMrKoQIH4B4NGFCL0ObP5iVnrdXOZ5xnDwIGICyN0d4TNDk
+ JkgyhMVAGfBaLDBY55v8O0t+QZOpx4pz3PU+UWBCZUGnbI8BYqAPg31FtiEA4ALNCJ2T
+ RLGBFRHBCyMQe0GvRKaSNGsorT7fGMTgOnyHUmUwnh8vbydKZcNX0PV6XHqzu1HBevMT
+ +v8Q==
+X-Gm-Message-State: AOJu0YzMsgXZQlSxWLfIMO/92H1cjy8GoCcB5+le5awOX0HqxhKJP5Dd
+ Hj68lZkP30Ah44PhYLWoUnSGnaUE+pwTf0504zhWhEsNuQTYZMQ/d+fN3hoaWMU=
+X-Google-Smtp-Source: AGHT+IGxzfpc7Is8XIMk/vDb0IbU6uTaw89SmYiDYHhlZ4rm1tdamaAIUJBzXb/EBdpD9hAZjm5PWQ==
+X-Received: by 2002:a5d:55c4:0:b0:33e:854:8b24 with SMTP id
+ i4-20020a5d55c4000000b0033e08548b24mr7488915wrw.12.1709640613497; 
+ Tue, 05 Mar 2024 04:10:13 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- bu16-20020a056000079000b0033dc3f3d689sm14939377wrb.93.2024.03.05.04.10.14
+ i10-20020a05600011ca00b0033b60bad2fcsm14828243wrx.113.2024.03.05.04.10.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Mar 2024 04:10:19 -0800 (PST)
+ Tue, 05 Mar 2024 04:10:12 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9BEBA5F9F3;
- Tue,  5 Mar 2024 12:10:07 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 314165F95B;
+ Tue,  5 Mar 2024 12:10:06 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
@@ -94,24 +94,24 @@ Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
  Warner Losh <imp@bsdimp.com>, qemu-riscv@nongnu.org,
  Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH 23/29] contrib/plugins/howvec: migrate to new per_vcpu API
-Date: Tue,  5 Mar 2024 12:09:59 +0000
-Message-Id: <20240305121005.3528075-24-alex.bennee@linaro.org>
+Subject: [PATCH 07/29] {linux,bsd}-user: Pass pid to gdbserver_fork()
+Date: Tue,  5 Mar 2024 12:09:43 +0000
+Message-Id: <20240305121005.3528075-8-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240305121005.3528075-1-alex.bennee@linaro.org>
 References: <20240305121005.3528075-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x231.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,177 +127,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20240304130036.124418-11-pierrick.bouvier@linaro.org>
+The upcoming follow-fork-mode child support requires knowing the child
+pid. Pass it down.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-Id: <20240219141628.246823-7-iii@linux.ibm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- contrib/plugins/howvec.c | 53 ++++++++++++++++++++++++++++------------
- 1 file changed, 38 insertions(+), 15 deletions(-)
+ include/gdbstub/user.h | 2 +-
+ bsd-user/main.c        | 2 +-
+ gdbstub/user.c         | 2 +-
+ linux-user/main.c      | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/contrib/plugins/howvec.c b/contrib/plugins/howvec.c
-index 644a7856bb2..2d10c87e0fb 100644
---- a/contrib/plugins/howvec.c
-+++ b/contrib/plugins/howvec.c
-@@ -43,13 +43,13 @@ typedef struct {
-     uint32_t mask;
-     uint32_t pattern;
-     CountType what;
--    uint64_t count;
-+    qemu_plugin_u64 count;
- } InsnClassExecCount;
+diff --git a/include/gdbstub/user.h b/include/gdbstub/user.h
+index e33f8d9a9a6..3f9f45946e0 100644
+--- a/include/gdbstub/user.h
++++ b/include/gdbstub/user.h
+@@ -54,7 +54,7 @@ void gdbserver_fork_start(void);
+  * gdbserver_fork() - disable gdb stub for child processes.
+  * @cs: CPU
+  */
+-void gdbserver_fork(CPUState *cs);
++void gdbserver_fork(CPUState *cs, pid_t pid);
  
- typedef struct {
-     char *insn;
-     uint32_t opcode;
--    uint64_t count;
-+    qemu_plugin_u64 count;
-     InsnClassExecCount *class;
- } InsnExecCount;
- 
-@@ -159,7 +159,9 @@ static gint cmp_exec_count(gconstpointer a, gconstpointer b)
- {
-     InsnExecCount *ea = (InsnExecCount *) a;
-     InsnExecCount *eb = (InsnExecCount *) b;
--    return ea->count > eb->count ? -1 : 1;
-+    uint64_t count_a = qemu_plugin_u64_sum(ea->count);
-+    uint64_t count_b = qemu_plugin_u64_sum(eb->count);
-+    return count_a > count_b ? -1 : 1;
+ /**
+  * gdb_syscall_entry() - inform gdb of syscall entry and yield control to it
+diff --git a/bsd-user/main.c b/bsd-user/main.c
+index fca9b302043..0dbd1cf8801 100644
+--- a/bsd-user/main.c
++++ b/bsd-user/main.c
+@@ -138,7 +138,7 @@ void fork_end(pid_t pid)
+          */
+         qemu_init_cpu_list();
+         get_task_state(thread_cpu)->ts_tid = qemu_get_thread_id();
+-        gdbserver_fork(thread_cpu);
++        gdbserver_fork(thread_cpu, pid);
+     } else {
+         mmap_fork_end(child);
+         cpu_list_unlock();
+diff --git a/gdbstub/user.c b/gdbstub/user.c
+index 536fb43b03e..c61e1a0d1f6 100644
+--- a/gdbstub/user.c
++++ b/gdbstub/user.c
+@@ -375,7 +375,7 @@ static void disable_gdbstub(CPUState *thread_cpu)
  }
  
- static void free_record(gpointer data)
-@@ -167,12 +169,14 @@ static void free_record(gpointer data)
-     InsnExecCount *rec = (InsnExecCount *) data;
-     g_free(rec->insn);
-     g_free(rec);
-+    qemu_plugin_scoreboard_free(rec->count.score);
- }
- 
- static void plugin_exit(qemu_plugin_id_t id, void *p)
+ /* Disable gdb stub for child processes.  */
+-void gdbserver_fork(CPUState *cpu)
++void gdbserver_fork(CPUState *cpu, pid_t pid)
  {
-     g_autoptr(GString) report = g_string_new("Instruction Classes:\n");
-     int i;
-+    uint64_t total_count;
-     GList *counts;
-     InsnClassExecCount *class = NULL;
- 
-@@ -180,11 +184,12 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-         class = &class_table[i];
-         switch (class->what) {
-         case COUNT_CLASS:
--            if (class->count || verbose) {
-+            total_count = qemu_plugin_u64_sum(class->count);
-+            if (total_count || verbose) {
-                 g_string_append_printf(report,
-                                        "Class: %-24s\t(%" PRId64 " hits)\n",
-                                        class->class,
--                                       class->count);
-+                                       total_count);
-             }
-             break;
-         case COUNT_INDIVIDUAL:
-@@ -212,7 +217,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-                                    "Instr: %-24s\t(%" PRId64 " hits)"
-                                    "\t(op=0x%08x/%s)\n",
-                                    rec->insn,
--                                   rec->count,
-+                                   qemu_plugin_u64_sum(rec->count),
-                                    rec->opcode,
-                                    rec->class ?
-                                    rec->class->class : "un-categorised");
-@@ -221,6 +226,12 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-     }
- 
-     g_hash_table_destroy(insns);
-+    for (i = 0; i < ARRAY_SIZE(class_tables); i++) {
-+        for (int j = 0; j < class_tables[i].table_sz; ++j) {
-+            qemu_plugin_scoreboard_free(class_tables[i].table[j].count.score);
-+        }
-+    }
-+
- 
-     qemu_plugin_outs(report->str);
- }
-@@ -232,11 +243,12 @@ static void plugin_init(void)
- 
- static void vcpu_insn_exec_before(unsigned int cpu_index, void *udata)
- {
--    uint64_t *count = (uint64_t *) udata;
--    (*count)++;
-+    struct qemu_plugin_scoreboard *score = udata;
-+    qemu_plugin_u64_add(qemu_plugin_scoreboard_u64(score), cpu_index, 1);
- }
- 
--static uint64_t *find_counter(struct qemu_plugin_insn *insn)
-+static struct qemu_plugin_scoreboard *find_counter(
-+    struct qemu_plugin_insn *insn)
- {
-     int i;
-     uint64_t *cnt = NULL;
-@@ -265,7 +277,7 @@ static uint64_t *find_counter(struct qemu_plugin_insn *insn)
-     case COUNT_NONE:
-         return NULL;
-     case COUNT_CLASS:
--        return &class->count;
-+        return class->count.score;
-     case COUNT_INDIVIDUAL:
-     {
-         InsnExecCount *icount;
-@@ -279,13 +291,16 @@ static uint64_t *find_counter(struct qemu_plugin_insn *insn)
-             icount->opcode = opcode;
-             icount->insn = qemu_plugin_insn_disas(insn);
-             icount->class = class;
-+            struct qemu_plugin_scoreboard *score =
-+                qemu_plugin_scoreboard_new(sizeof(uint64_t));
-+            icount->count = qemu_plugin_scoreboard_u64(score);
- 
-             g_hash_table_insert(insns, GUINT_TO_POINTER(opcode),
-                                 (gpointer) icount);
+     if (!gdbserver_state.init || gdbserver_user_state.fd < 0) {
+         return;
+diff --git a/linux-user/main.c b/linux-user/main.c
+index cab95f5b0aa..70314e0ab6a 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -165,7 +165,7 @@ void fork_end(pid_t pid)
          }
-         g_mutex_unlock(&lock);
- 
--        return &icount->count;
-+        return icount->count.score;
+         qemu_init_cpu_list();
+         get_task_state(thread_cpu)->ts_tid = qemu_get_thread_id();
+-        gdbserver_fork(thread_cpu);
++        gdbserver_fork(thread_cpu, pid);
+     } else {
+         cpu_list_unlock();
      }
-     default:
-         g_assert_not_reached();
-@@ -300,14 +315,14 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-     size_t i;
- 
-     for (i = 0; i < n; i++) {
--        uint64_t *cnt;
-         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
--        cnt = find_counter(insn);
-+        struct qemu_plugin_scoreboard *cnt = find_counter(insn);
- 
-         if (cnt) {
-             if (do_inline) {
--                qemu_plugin_register_vcpu_insn_exec_inline(
--                    insn, QEMU_PLUGIN_INLINE_ADD_U64, cnt, 1);
-+                qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
-+                    insn, QEMU_PLUGIN_INLINE_ADD_U64,
-+                    qemu_plugin_scoreboard_u64(cnt), 1);
-             } else {
-                 qemu_plugin_register_vcpu_insn_exec_cb(
-                     insn, vcpu_insn_exec_before, QEMU_PLUGIN_CB_NO_REGS, cnt);
-@@ -322,6 +337,14 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
- {
-     int i;
- 
-+    for (i = 0; i < ARRAY_SIZE(class_tables); i++) {
-+        for (int j = 0; j < class_tables[i].table_sz; ++j) {
-+            struct qemu_plugin_scoreboard *score =
-+                qemu_plugin_scoreboard_new(sizeof(uint64_t));
-+            class_tables[i].table[j].count = qemu_plugin_scoreboard_u64(score);
-+        }
-+    }
-+
-     /* Select a class table appropriate to the guest architecture */
-     for (i = 0; i < ARRAY_SIZE(class_tables); i++) {
-         ClassSelector *entry = &class_tables[i];
 -- 
 2.39.2
 
