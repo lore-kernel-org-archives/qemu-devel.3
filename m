@@ -4,95 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D046FC54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 10:33:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03DA9C54E41
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 10:36:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhS6K-0002KO-1s; Tue, 05 Mar 2024 05:32:48 -0500
+	id 1rhS9k-0003Yg-HU; Tue, 05 Mar 2024 05:36:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1rhS6I-0002Jw-If
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 05:32:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jiangkunkun@huawei.com>)
+ id 1rhS9h-0003YV-43
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 05:36:17 -0500
+Received: from szxga04-in.huawei.com ([45.249.212.190])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1rhS6F-0003PM-G1
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 05:32:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709634762;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2vDMOG858kwohsjaFQnfhqCCejlVxFcw1ADU0gyslJk=;
- b=PxJdcyebzLDOQBbb2It9sf1BPhRfKQPVpmPktxLOJfnqbuDSOGLdGk2XCG2E64KLGJBV3l
- PaAXaGoUNvfgameIKvcjJV5dHpyujHbuCCiDPD9XMbOZ/VURNYroyHMxLCjGllHDltYu67
- EIWj2BE6DGkVnY/Zldo1dMo4cSXM12E=
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
- [209.85.210.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-365-AJpdIhm9OoaJ_DtdvMvStw-1; Tue, 05 Mar 2024 05:32:41 -0500
-X-MC-Unique: AJpdIhm9OoaJ_DtdvMvStw-1
-Received: by mail-pf1-f199.google.com with SMTP id
- d2e1a72fcca58-6e5d996a3dcso2372999b3a.2
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 02:32:40 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709634760; x=1710239560;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2vDMOG858kwohsjaFQnfhqCCejlVxFcw1ADU0gyslJk=;
- b=qZ0FdVelH+ggMYh/kiQ+XvmR9GTVrGPlxLHXrTD/GwCpV7WGxbIGlCdc5gvhvwhO3L
- Wx6uyRKzw3u2WufrZv3GYBn7CzHrXCZNE7GF8m7HEHMp4iZ8AN1pS7IHz9oVsafN6coB
- ZyHNKStC59liyjxC0i1dwsAu69HxBO/9PypaehLaL1qVNJdNu3+3gqOoVroDxT40BDIp
- LrQSmJH6i8N7Wyc8D8bVcBjZ//LJyIK8SEbUU9nn5jjxNbpSs4D9e9LkF46amp1yjASl
- shzkuvhbZVhBj6h4UzR7gOjzCpySyHpIKjvd76399KexuwO9Fs8TWKLlpbuxf2vnLIbU
- cLlw==
-X-Gm-Message-State: AOJu0YwS1CYg9hQFk52lS20RHp68xiuS0fAzagfPpVwaGeszDIkvy9uo
- kdWm914/SXP+ba+3DCP1iZ56OltSjUqgsSC2TW8lFz1qNiA/U1YmU2u5mvLFPu+dkrcUtLkKiag
- 69cQv/MkwCrL/UIBc9Hu4CJHMdzuA/GVBGELxjrTAmYmaAJib2bjF
-X-Received: by 2002:a05:6a00:2288:b0:6e5:fb97:ed35 with SMTP id
- f8-20020a056a00228800b006e5fb97ed35mr8011353pfe.18.1709634759903; 
- Tue, 05 Mar 2024 02:32:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHyz/i29xOvqC5LpAfkn519rkysFPw5L32Dxd2+STcTASTjwl2hw7012/AkBfNd5NZ95dSiwg==
-X-Received: by 2002:a05:6a00:2288:b0:6e5:fb97:ed35 with SMTP id
- f8-20020a056a00228800b006e5fb97ed35mr8011331pfe.18.1709634759542; 
- Tue, 05 Mar 2024 02:32:39 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- le6-20020a056a004fc600b006e6150a5392sm3748585pfb.155.2024.03.05.02.32.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Mar 2024 02:32:38 -0800 (PST)
-Date: Tue, 5 Mar 2024 11:32:32 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, pbonzini@redhat.com,
- gaosong@loongson.cn, alistair.francis@wdc.com, palmer@dabbelt.com,
- bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, anisinha@redhat.com, philmd@linaro.org,
- wangyanan55@huawei.com, eblake@redhat.com, armbru@redhat.com,
- qemu-arm@nongnu.org, qemu-riscv@nongnu.org, f.ebner@proxmox.com
-Subject: Re: [PATCH 00/19] Workaround Windows failing to find 64bit SMBIOS
- entry point with SeaBIOS
-Message-ID: <20240305113232.791c116e@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240305050735-mutt-send-email-mst@kernel.org>
-References: <20240227154749.1818189-1-imammedo@redhat.com>
- <20240305050735-mutt-send-email-mst@kernel.org>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <jiangkunkun@huawei.com>)
+ id 1rhS9e-0004FN-2t
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 05:36:16 -0500
+Received: from mail.maildlp.com (unknown [172.19.88.163])
+ by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4TpsPY6lqxz1xq7K;
+ Tue,  5 Mar 2024 18:34:25 +0800 (CST)
+Received: from kwepemm600007.china.huawei.com (unknown [7.193.23.208])
+ by mail.maildlp.com (Postfix) with ESMTPS id 89B1518002D;
+ Tue,  5 Mar 2024 18:36:02 +0800 (CST)
+Received: from [10.174.185.210] (10.174.185.210) by
+ kwepemm600007.china.huawei.com (7.193.23.208) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Tue, 5 Mar 2024 18:36:01 +0800
+Subject: Re: [Question] Can I start qemu-system-aarch64 with a vmlinux(ELF
+ format)?
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "wanghaibin.wang@huawei.com" <wanghaibin.wang@huawei.com>, Zenghui Yu
+ <yuzenghui@huawei.com>, <sundongxu3@huawei.com>
+References: <252c0f8d-08cd-2e7b-63b6-1bbf42ff32f8@huawei.com>
+ <CAFEAcA81xV6wvBFoaGNpH9=0oAjP=toMBS=MNV_poXm5RPK-iQ@mail.gmail.com>
+ <c91c1f3d-9ff1-a582-bf03-ecf182c78b1b@huawei.com>
+ <CAFEAcA-O00Sc9N_esAZ1CwfjmL7uprw_pcVcP=ZLFvu0-oA0AA@mail.gmail.com>
+Message-ID: <f7a4fcf6-10f2-70ba-8075-d991e0538b7e@huawei.com>
+Date: Tue, 5 Mar 2024 18:35:50 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -11
-X-Spam_score: -1.2
-X-Spam_bar: -
-X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+In-Reply-To: <CAFEAcA-O00Sc9N_esAZ1CwfjmL7uprw_pcVcP=ZLFvu0-oA0AA@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Originating-IP: [10.174.185.210]
+X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
+ kwepemm600007.china.huawei.com (7.193.23.208)
+Received-SPF: pass client-ip=45.249.212.190;
+ envelope-from=jiangkunkun@huawei.com; helo=szxga04-in.huawei.com
+X-Spam_score_int: -82
+X-Spam_score: -8.3
+X-Spam_bar: --------
+X-Spam_report: (-8.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-4.098,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,111 +73,52 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Kunkun Jiang <jiangkunkun@huawei.com>
+From:  Kunkun Jiang via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 5 Mar 2024 05:08:05 -0500
-"Michael S. Tsirkin" <mst@redhat.com> wrote:
+Hi Peter，
 
-> On Tue, Feb 27, 2024 at 04:47:30PM +0100, Igor Mammedov wrote:
-> > Windows (10) bootloader when running on top of SeaBIOS, fails to find            
-> > SMBIOSv3 entry point. Tracing it shows that it looks for v2 anchor markers       
-> > only and not v3. Tricking it into believing that entry point is found            
-> > lets Windows successfully locate and parse SMBIOSv3 tables. Whether it           
-> > will be fixed on Windows side is not clear so here goes a workaround.            
-> >                                                                                  
-> > Idea is to try build v2 tables if QEMU configuration permits,                    
-> > and fallback to v3 tables otherwise. That will mask Windows issue                
-> > form majority of users.                                                          
-> > However if VM configuration can't be described (typically large VMs)             
-> > by v2 tables, QEMU will use SMBIOSv3 and Windows will hit the issue              
-> > again. In this case complain to Microsoft and/or use UEFI instead of             
-> > SeaBIOS (requires reinstall).                                                      
-> 
-> Igor so you want to repost a version with a couple of patches squashed?
+On 2024/2/29 17:44, Peter Maydell wrote:
+> On Thu, 29 Feb 2024 at 03:01, Kunkun Jiang <jiangkunkun@huawei.com> wrote:
+>> Hi Peter,
+>>
+>> On 2024/2/27 23:28, Peter Maydell wrote:
+>>> On Tue, 27 Feb 2024 at 14:42, Kunkun Jiang via <qemu-devel@nongnu.org> wrote:
+>>>> Hi everybody,
+>>>>
+>>>> I want to start qemu-system-aarch64 with a vmlinux,
+>>>> which is an ELF format file. The arm_load_elf() is
+>>>> implemented in arm_setup_direct_kernel_boot(). So I
+>>>> thought it was supporting the ELF format file.
+>>> No, you can't do this. The hw/arm/boot.c code assumes
+>>> that ELF files are "bare metal" binaries, whereas
+>>> uImage format, AArch64 Image format, and raw binary files
+>>> are Linux kernels. Only the last three kinds of files will
+>>> be started with the boot protocol the Linux kernel expects.
+>>>
+>>> For AArch64, pass the -kernel option the path to the Image
+>>> file, not the vmlinux file.
+>> Yes, it works fine using Image files.
+>> I would also like to ask again, is it because AArch64 does not
+>> support vmlinux, or is it because qemu does not implement
+>> this capability?
+> As I said, it is because QEMU assumes that ELF files are
+> bare metal images, not Linux kernel images.
 
-requested changes where in several patches
-(style and making series easier to review),
+Sorry to bother you again. I still have a few questions.
+1. What does "bare metal images" mean? Are they used in tcg mode?
 
-I'll repost series with those changes today. 
- 
+2. How QEMU assumes an ELF file is a bare metal image? Can you post
+the corresponding code?
 
-> > Default compat setting of smbios-entry-point-type after series                   
-> > for pc/q35 machines:                                                             
-> >   * 9.0-newer: 'auto'                                                            
-> >   * 8.1-8.2: '64'                                                                
-> >   * 8.0-older: '32'                                                              
-> >                                                                                  
-> > Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2008                        
-> > CC: peter.maydell@linaro.org                                                     
-> > CC: pbonzini@redhat.com                                                          
-> > CC: mst@redhat.com                                                               
-> > CC: gaosong@loongson.cn                                                          
-> > CC: alistair.francis@wdc.com                                                     
-> > CC: palmer@dabbelt.com                                                           
-> > CC: bin.meng@windriver.com                                                       
-> > CC: liwei1518@gmail.com                                                          
-> > CC: dbarboza@ventanamicro.com                                                    
-> > CC: zhiwei_liu@linux.alibaba.com                                                 
-> > CC: imammedo@redhat.com                                                          
-> > CC: anisinha@redhat.com                                                          
-> > CC: philmd@linaro.org                                                            
-> > CC: wangyanan55@huawei.com                                                       
-> > CC: eblake@redhat.com                                                            
-> > CC: armbru@redhat.com                                                            
-> > CC: qemu-arm@nongnu.org                                                          
-> > CC: qemu-riscv@nongnu.org                                                        
-> > CC: f.ebner@proxmox.com                                                          
-> >                           
-> > Igor Mammedov (19):
-> >   tests: smbios: make it possible to write SMBIOS only test
-> >   tests: smbios: add test for -smbios type=11 option
-> >   tests: smbios: add test for legacy mode CLI options
-> >   smbios: cleanup smbios_get_tables() from legacy handling
-> >   smbios: get rid of smbios_smp_sockets global
-> >   smbios: get rid of smbios_legacy global
-> >   smbios: avoid mangling user provided tables
-> >   smbios: don't check type4 structures in legacy mode
-> >   smbios: build legacy mode code only for 'pc' machine
-> >   smbios: handle errors consistently
-> >   smbios: clear smbios_tables pointer after freeing
-> >   get rid of global smbios_ep_type
-> >   smbios: extend smbios-entry-point-type with 'auto' value
-> >   smbios: in case of entry point is 'auto' try to build v2 tables 1st
-> >   smbios: error out when building type 4 table is not possible
-> >   smbios: clear smbios_type4_count before building tables
-> >   tests: acpi/smbios: whitelist expected blobs
-> >   pc/q35: set SMBIOS entry point type to 'auto' by default
-> >   tests: acpi: update expected SSDT.dimmpxm blob
-> > 
-> >  hw/i386/fw_cfg.h                     |   3 +-
-> >  include/hw/firmware/smbios.h         |  29 +-
-> >  hw/arm/virt.c                        |   6 +-
-> >  hw/i386/Kconfig                      |   1 +
-> >  hw/i386/fw_cfg.c                     |  14 +-
-> >  hw/i386/pc.c                         |   4 +-
-> >  hw/i386/pc_piix.c                    |   4 +
-> >  hw/i386/pc_q35.c                     |   3 +
-> >  hw/loongarch/virt.c                  |   7 +-
-> >  hw/riscv/virt.c                      |   6 +-
-> >  hw/smbios/Kconfig                    |   2 +
-> >  hw/smbios/meson.build                |   4 +
-> >  hw/smbios/smbios.c                   | 481 +++++++++++----------------
-> >  hw/smbios/smbios_legacy.c            | 185 +++++++++++
-> >  hw/smbios/smbios_legacy_stub.c       |  16 +
-> >  qapi/machine.json                    |   5 +-
-> >  tests/data/acpi/q35/SSDT.dimmpxm     | Bin 1815 -> 1815 bytes
-> >  tests/data/smbios/type11_blob        | Bin 0 -> 11 bytes
-> >  tests/data/smbios/type11_blob.legacy | Bin 0 -> 10 bytes
-> >  tests/qtest/bios-tables-test.c       |  81 ++++-
-> >  20 files changed, 535 insertions(+), 316 deletions(-)
-> >  create mode 100644 hw/smbios/smbios_legacy.c
-> >  create mode 100644 hw/smbios/smbios_legacy_stub.c
-> >  create mode 100644 tests/data/smbios/type11_blob
-> >  create mode 100644 tests/data/smbios/type11_blob.legacy
-> > 
-> > -- 
-> > 2.39.3  
-> 
+3. How can I make the hw/arm/boot.c code assumes the ELF files are
+Linux kernels?
+
+Looking forward to your reply.
+
+Thanks,
+Kunkun Jiang
 
 
