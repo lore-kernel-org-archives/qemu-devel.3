@@ -4,84 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCE51C54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 09:12:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A47B5C54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 09:17:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhQqr-0002kl-Tn; Tue, 05 Mar 2024 04:12:46 -0500
+	id 1rhQtz-0003xk-8j; Tue, 05 Mar 2024 04:15:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <minhquangbui99@gmail.com>)
- id 1rhQqm-0002kL-Rj
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 04:12:41 -0500
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <minhquangbui99@gmail.com>)
- id 1rhQql-0006Jr-2S
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 04:12:40 -0500
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-29aa8c4710bso3942990a91.1
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 01:12:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709629956; x=1710234756; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=j/pDk8Gm8AhWT6NHV+YcJyeYchsigYf2/QZjCjOGo8M=;
- b=nqsD7QrTG8XrZm7e/mMhyfGKOm2uecT/awS6ik4H+qja5b/4KDyj1Jz36ATjzO/A5w
- s7qWpTh3/idcKX+QDu5nDjR/9X1unm8q97TyIb0UMKvZWBr/VWe+SCh4IH47Lu6ZL+mL
- a/vvLvI8ttE4GOI+kIav+P8uQrzKBtcqotKKtqTcCxroEqtCKkQAOZlrQ0Z9OL3kd34z
- Q/jIP32XbJ2SEg+YwERvqcxsFIfs7K9z28MCPoCnTmUmt+ECV6tTCQ1VGEA614iiedmd
- CZaMNfIBOK0fxXpevsIUtDEkUHTOpayxSML5npiNqWR4mNZl1sTtfptcL7FMMQ5lyU6I
- HG6g==
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1rhQte-0003sV-BN
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 04:15:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1rhQtV-0006ko-0u
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 04:15:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709630128;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9HTY+X2KO6kKRaIQrR95vtH8ooylQ2pgOWr5xDKhIos=;
+ b=Kmp7Q1Yg0g+kDeR+hB2DN08Vg5y51jaM/YO4L6OM5OvxwWOw000m6chii2Pjs+o4lSnBqY
+ uL/FZtJ23sZCa0KvmkteRG8HYqxMrGhqMGfvYnLqj08ogOE1H1CmWqzbhV0WXYgqGLh4ZC
+ wCGzWBKGvT3wEUd2pgxhOr01Wf26fH0=
+Received: from mail-oa1-f71.google.com (mail-oa1-f71.google.com
+ [209.85.160.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-82-TWCo05Q4N6SAFIDdiyvifg-1; Tue, 05 Mar 2024 04:15:25 -0500
+X-MC-Unique: TWCo05Q4N6SAFIDdiyvifg-1
+Received: by mail-oa1-f71.google.com with SMTP id
+ 586e51a60fabf-220a44546e3so4869756fac.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 01:15:25 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709629956; x=1710234756;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=j/pDk8Gm8AhWT6NHV+YcJyeYchsigYf2/QZjCjOGo8M=;
- b=QIJqmIv/fysby8W6leLb16vewTRdNGND8NeETud4LUW2en6MYAYneZZP/Cft2IJDbl
- j87PMk24Zx8GDfQt/5mLcNe5pQrrq0p0eHVsLmnfSy8Ba/ilQTQKUnCKtinZkjv7ETkM
- 7FEynWz/GJLbGQM9wI0tkKM6CA81MuV4yluoeGEawSdy9KBnMxIAXGS8/aCt7LTpZUeQ
- F33EPz+LlqZeh5clbopjoZ+osewsrESoIfITsha8FSNIXQDw+7/JTbZvq5maRNy4O8n5
- OzwJu323Sz+mYaOCk3dF2FLOo6BhdeVuY6wGl6Iz1FcqSpzUn5+7bGT4PR7fWlUm2uhr
- lkog==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWWx5rltHX8UMLUduM+aUDNb7FVJVPg+vNYAwT1bO0vkK2uXjp3cmoyYuHEbXk1VfIXUO9E0rpZFGNJ6zMFZfgaTgjZaVI=
-X-Gm-Message-State: AOJu0YwH7rt1dCBg5Jnmd1Ui1JMyuJAHeGMxJ5pigMjNGpqugG1TBL7c
- cc7bWhrT+7eCjAXrbijpvaJur3kZmIHHEWH4PQWCMHy74n/RyJfvf2cN4f84hljxCA==
-X-Google-Smtp-Source: AGHT+IHDqGOopUUL5J+oT3eimnL3Zz+IDeQPt93YSbPFoSuQt7fYsDIzVtBARVjI2Em2LoewMqR25g==
-X-Received: by 2002:a17:90a:a113:b0:29a:9dd1:d45b with SMTP id
- s19-20020a17090aa11300b0029a9dd1d45bmr2501600pjp.3.1709629955863; 
- Tue, 05 Mar 2024 01:12:35 -0800 (PST)
-Received: from [192.168.0.115] ([14.191.95.87])
- by smtp.gmail.com with ESMTPSA id
- s7-20020a17090a440700b002990cc5afe8sm9171782pjg.42.2024.03.05.01.12.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Mar 2024 01:12:35 -0800 (PST)
-Message-ID: <50c2e720-454b-49bb-acb8-696e86695dc6@gmail.com>
-Date: Tue, 5 Mar 2024 16:12:31 +0700
+ d=1e100.net; s=20230601; t=1709630125; x=1710234925;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9HTY+X2KO6kKRaIQrR95vtH8ooylQ2pgOWr5xDKhIos=;
+ b=rqTLPMGHqptFzhJLhG8P2147ihTZXdkdFKyfhWismn7E3PCgV6jjUzRRqeX/R29zgn
+ L7nhR8MiBL+2xd1cHuWmDnwbg/cqGbMqPwmaT+t+1fWANPz7Swm6jo3PR8w1EgiAd+ex
+ FLOJFzAH/iz8npufMAshozyFPnoxAePbiMQCJYggIvG+10DckA9CJn6fO46P4mmz0dpt
+ 1tnM81N2mEANIgnL7ChPSNU6pyXImfUw4fy9pf+tJWJC8LmrpdL6hhTyI9CCcz88wbQM
+ N6jiHcNQJit9lxJZZdFcfz48KUDUm5TqV9gITOSxGwNVVgpTNob09jRomvPUf1mio0jE
+ iFRg==
+X-Gm-Message-State: AOJu0YxeQHBHklE4ZUVk67iRQlnVxi5JI/PdpdAGhHFnhsx+cFUx3LW0
+ VQGn8uLehxqIxJe45Ww5mEddyrjqL0gyhw6BKZvhNCMnbEX8vfn+JFC398wb4gnc3d90gW7T1xU
+ XVOqbsIqSLOR7GY7Z8v3xRlneV0Pv18+ELLbhstz3K+44QxXIvpI1
+X-Received: by 2002:a05:6870:d07:b0:21e:a47f:ec31 with SMTP id
+ mk7-20020a0568700d0700b0021ea47fec31mr1122613oab.43.1709630124874; 
+ Tue, 05 Mar 2024 01:15:24 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG5f0idmnHOJFCmu/LZ7Cb0S5HthJTa2Fcn2AfOoB/vCCu6+LAGAETMWrPvtr3yYmCt1ILnVw==
+X-Received: by 2002:a05:6870:d07:b0:21e:a47f:ec31 with SMTP id
+ mk7-20020a0568700d0700b0021ea47fec31mr1122597oab.43.1709630124610; 
+ Tue, 05 Mar 2024 01:15:24 -0800 (PST)
+Received: from fc37-ani ([203.163.238.152])
+ by smtp.googlemail.com with ESMTPSA id
+ g29-20020aa79ddd000000b006e6291c30dcsm2475475pfq.104.2024.03.05.01.15.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 05 Mar 2024 01:15:24 -0800 (PST)
+Date: Tue, 5 Mar 2024 14:45:15 +0530 (IST)
+From: Ani Sinha <anisinha@redhat.com>
+To: Igor Mammedov <imammedo@redhat.com>
+cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, pbonzini@redhat.com, 
+ mst@redhat.com, gaosong@loongson.cn, alistair.francis@wdc.com, 
+ palmer@dabbelt.com, bin.meng@windriver.com, liwei1518@gmail.com, 
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, philmd@linaro.org, 
+ wangyanan55@huawei.com, eblake@redhat.com, armbru@redhat.com, 
+ qemu-arm@nongnu.org, qemu-riscv@nongnu.org, f.ebner@proxmox.com
+Subject: Re: [PATCH 13/19] smbios: extend smbios-entry-point-type with 'auto'
+ value
+In-Reply-To: <20240227154749.1818189-14-imammedo@redhat.com>
+Message-ID: <a9f674ed-0e94-86a1-8e8d-fa65a27a8aa0@redhat.com>
+References: <20240227154749.1818189-1-imammedo@redhat.com>
+ <20240227154749.1818189-14-imammedo@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/intc/apic: fix memory leak
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240304224133.267640-1-pbonzini@redhat.com>
-Content-Language: en-US
-From: Bui Quang Minh <minhquangbui99@gmail.com>
-In-Reply-To: <20240304224133.267640-1-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=minhquangbui99@gmail.com; helo=mail-pj1-x1034.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Content-Type: text/plain; charset=US-ASCII
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -11
+X-Spam_score: -1.2
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,59 +105,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/5/24 05:41, Paolo Bonzini wrote:
-> deliver_bitmask is allocated on the heap in apic_deliver(), but there
-> are many paths in the function that return before the corresponding
-> g_free() is reached.  Fix this by switching to g_autofree and, while at
-> it, also switch to g_new.  Do the same in apic_deliver_irq() as well
-> for consistency.
-> 
-> Fixes: b5ee0468e9d ("apic: add support for x2APIC mode", 2024-02-14)
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+
+
+On Tue, 27 Feb 2024, Igor Mammedov wrote:
+
+> later patches will use it to pick SMBIOS version at runtime
+> depending on configuration.
+>
+> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
+
 > ---
->   hw/intc/apic.c | 6 ++----
->   1 file changed, 2 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/intc/apic.c b/hw/intc/apic.c
-> index 1d887d66b86..4186c57b34c 100644
-> --- a/hw/intc/apic.c
-> +++ b/hw/intc/apic.c
-> @@ -291,14 +291,13 @@ static void apic_deliver_irq(uint32_t dest, uint8_t dest_mode,
->                                uint8_t delivery_mode, uint8_t vector_num,
->                                uint8_t trigger_mode)
->   {
-> -    uint32_t *deliver_bitmask = g_malloc(max_apic_words * sizeof(uint32_t));
-> +    g_autofree uint32_t *deliver_bitmask = g_new(uint32_t, max_apic_words);
->   
->       trace_apic_deliver_irq(dest, dest_mode, delivery_mode, vector_num,
->                              trigger_mode);
->   
->       apic_get_delivery_bitmask(deliver_bitmask, dest, dest_mode);
->       apic_bus_deliver(deliver_bitmask, delivery_mode, vector_num, trigger_mode);
-> -    g_free(deliver_bitmask);
->   }
->   
->   bool is_x2apic_mode(DeviceState *dev)
-> @@ -662,7 +661,7 @@ static void apic_deliver(DeviceState *dev, uint32_t dest, uint8_t dest_mode,
->       APICCommonState *s = APIC(dev);
->       APICCommonState *apic_iter;
->       uint32_t deliver_bitmask_size = max_apic_words * sizeof(uint32_t);
-> -    uint32_t *deliver_bitmask = g_malloc(deliver_bitmask_size);
-> +    g_autofree uint32_t *deliver_bitmask = g_new(uint32_t, max_apic_words);
->       uint32_t current_apic_id;
->   
->       if (is_x2apic_mode(dev)) {
-> @@ -708,7 +707,6 @@ static void apic_deliver(DeviceState *dev, uint32_t dest, uint8_t dest_mode,
->       }
->   
->       apic_bus_deliver(deliver_bitmask, delivery_mode, vector_num, trigger_mode);
-> -    g_free(deliver_bitmask);
->   }
->   
->   static bool apic_check_pic(APICCommonState *s)
+>  qapi/machine.json | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/qapi/machine.json b/qapi/machine.json
+> index 93b4677286..4c68528507 100644
+> --- a/qapi/machine.json
+> +++ b/qapi/machine.json
+> @@ -1802,10 +1802,13 @@
+>  #
+>  # @64: SMBIOS version 3.0 (64-bit) Entry Point
+>  #
+> +# @auto: Either 2.x or 3.x SMBIOS version, 2.x if configuration can be described
+> +#        by it and 3.x otherwise (since: 9.0)
+> +#
+>  # Since: 7.0
+>  ##
+>  { 'enum': 'SmbiosEntryPointType',
+> -  'data': [ '32', '64' ] }
+> +  'data': [ '32', '64', 'auto' ] }
+>
+>  ##
+>  # @MemorySizeConfiguration:
+> --
+> 2.39.3
+>
+>
 
-Reviewed-by: Bui Quang Minh <minhquangbui99@gmail.com>
-
-Thanks,
-Quang Minh.
 
