@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F5ACC54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:55:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 571DEC54E41
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:56:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhVEv-0001pR-Ih; Tue, 05 Mar 2024 08:53:53 -0500
+	id 1rhVEy-00021W-4a; Tue, 05 Mar 2024 08:53:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhVE6-0000yD-NA
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:53:09 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1rhVDx-0000x2-8U
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:53:06 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhVDs-0005yV-Mm
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:52:56 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-412cf3c5cdeso27802655e9.2
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:52:48 -0800 (PST)
+ id 1rhVDp-0005xv-Qw
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:52:52 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-33d509ab80eso374434f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:52:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709646767; x=1710251567; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709646764; x=1710251564; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=J1DzK1oxT+Ly6WdUrENKHs1cSZQkyZRc92vsYauFXPY=;
- b=PtmHBvHsBSYd/ZWwKQsFObyipiJhX2IaPfWR3sPjUreuM12U8nl2vfnHA0mWZ3nfy0
- esEfIX/zACZOyQiyPiMi/iDJR9qkIJo2cWN73CKm5wRHgPqve/wC+pwyRS0vxYpo5jIY
- grWmzAGnHyoEgFluNRYZ40NgTUzzUwae8A4eSYe+WVDBxvuTsD8pxUMNjtNFHLioooQz
- A94m4XkblfXUGLjXVQhMYGuYePisQ0grS9Lp0C2UD9HJGoqu2sG/kWflO8I5vo1+gUj+
- w6543xVXf8m+U/FHCWQ5aIgI0ArfYuEZwewwHeb531PF3kr365Uo4rGwBmJ4UioddU0p
- MafA==
+ :reply-to; bh=bVTp8B0By/XCvljzAaX1UWqxflzJT37GS6jVUdEA9Gw=;
+ b=G9EfxxhXb5qWrhLoWn7ZE9ovTfX6ezQG75EHUNMeRP4BahBvt3T5mipTkV37YtwTwa
+ m/I2OlUsINIo4mzSfQ8HjfbB+QywQqN21rHAhIJaR+EsvT8Nvh/HPH7OsbPOhluE0DnG
+ R2wi7pIh5JziBFrFYsl6v6fVSnwdiTWRPbCZ5W/IqDjQ78LtD4W9fQM+2q1RbVXIbxPk
+ +x7ryHtjEyKFVsKvk7c3eXM2irFZYjHeJox71tqRRcIjwerbtafd+wMxSL9hf3yU7X86
+ FIK9o1efFzl7oEg/kGHR05bwK92FZHFe2g4g5i6gFHGfXRAuYkLVh8Ndg2aCAn4dv+9d
+ sMrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709646767; x=1710251567;
+ d=1e100.net; s=20230601; t=1709646764; x=1710251564;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=J1DzK1oxT+Ly6WdUrENKHs1cSZQkyZRc92vsYauFXPY=;
- b=PEKzXJap6S5y6RpXqVsOuRd798P0MVj/w5LVts6ybxtKbP1QupHrPYDzvL6G/rsVqt
- 7DVthkYZMFOzIe6MoDvpXN+Fo5twd3vUfWtCONnYRaPB9ajWFssjKibVkgop8NoljKHt
- fDhmYnViij7LBJFzxlmc6WScgG5lOINwPPQcCtfJEdOtath9TeKASS6KFzwwNZz4bAh+
- Y/1n+LKwDvgtIfr0XdbG4y9HXk5nBMJnrLw1PY2W3ZZvnokXmi5FodUZ+s5yoNEIXWs9
- fIK056VqfeSSnVRagF/ClO/bI/WPCGj12jvze4xysKWej0OOb53EB/e2V5/4xVPK2OlA
- vGWA==
-X-Gm-Message-State: AOJu0YyDxrqVt7R6uVTpH48LKhpnyOoojdiT6rJ6mLfDL+ObGsZMI9gP
- Pbp77h7/R6SnBB8cOgAXjVH2ZZ40wfAaUlx4dGW22IRZv64UEhMdfRMNsAmwi94+pOjeqXlZXQl
- T
-X-Google-Smtp-Source: AGHT+IF2xiwQ8BjRCsLL/QfaZa22vUZOZGBNdw6EvjX5NTQSgcyYmjSKthFYkW2Xj/uxR3DT81hoKQ==
-X-Received: by 2002:a05:600c:511e:b0:412:b816:1584 with SMTP id
- o30-20020a05600c511e00b00412b8161584mr8555503wms.32.1709646767331; 
- Tue, 05 Mar 2024 05:52:47 -0800 (PST)
+ bh=bVTp8B0By/XCvljzAaX1UWqxflzJT37GS6jVUdEA9Gw=;
+ b=LJXPj/V9JSVH21qY4ZpuYQuvfHcz+mfmr91mImjQD45H19SFqc62+JPrcDQXIwzk+n
+ Nvpc+novlAS/0380hMBuFQgR/P74WaLeiLAfg9heiITWwIcHR8Vdo4BFKFdHvh0VQ7ct
+ OLki74ZpJ9nMP+enNTpRtzXdeSmSquydXFOcVEG8LNYfs71DVLasWj7DS5OQfgZhahTR
+ GH+z/lOkfdQfIuz3HP+WX34DU3iEirp8+hKuzRj5nJUcIynBlJhThPn04lAMo5HAOb7m
+ 8gxzboETNS6bD/imHmCVTA3mWU5rxWJnVqKcQy5TrOJWFTn/m2eNlRrEowcA5Rv4t4Aq
+ 917g==
+X-Gm-Message-State: AOJu0YzqvTAN22RTp4VNGujnywgfFoFAO51+GXQMkMns9XM+4SPO2am2
+ G06st48u+4C3JBO09y6e7OamkyivhuzZ8/2vgEHPS+PYT+a6gK6yhGHiI8fZ/a+EuQEGMxp5c8X
+ f
+X-Google-Smtp-Source: AGHT+IFT0gcBOVZIIdD3Sptm6aZQ+DLOPgb1h1fx53GZFmbsvvflAd5Y9kOzYKOtRub1G09J+rhL+g==
+X-Received: by 2002:adf:9cc8:0:b0:33e:2155:6da4 with SMTP id
+ h8-20020adf9cc8000000b0033e21556da4mr8901603wre.55.1709646764279; 
+ Tue, 05 Mar 2024 05:52:44 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- x3-20020a5d6503000000b0033e206a0a7asm11797532wru.26.2024.03.05.05.52.47
+ x3-20020a5d6503000000b0033e206a0a7asm11797532wru.26.2024.03.05.05.52.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Mar 2024 05:52:47 -0800 (PST)
+ Tue, 05 Mar 2024 05:52:44 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 17/20] target/arm: Do memory type alignment check when
- translation disabled
-Date: Tue,  5 Mar 2024 13:52:34 +0000
-Message-Id: <20240305135237.3111642-18-peter.maydell@linaro.org>
+Subject: [PULL 11/20] hw/arm/stm32l4x5_soc.c: Use the RCC Sysclk
+Date: Tue,  5 Mar 2024 13:52:28 +0000
+Message-Id: <20240305135237.3111642-12-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240305135237.3111642-1-peter.maydell@linaro.org>
 References: <20240305135237.3111642-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,83 +94,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Arnaud Minier <arnaud.minier@telecom-paris.fr>
 
-If translation is disabled, the default memory type is Device, which
-requires alignment checking.  This is more optimally done early via
-the MemOp given to the TCG memory operation.
+Now that we can generate reliable clock frequencies from the RCC, remove
+the hacky definition of the sysclk in the b_l475e_iot01a initialisation
+code and use the correct RCC clock.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reported-by: Idan Horowitz <idan.horowitz@gmail.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240301204110.656742-6-richard.henderson@linaro.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1204
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20240303140643.81957-8-arnaud.minier@telecom-paris.fr
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/hflags.c | 34 ++++++++++++++++++++++++++++++++--
- 1 file changed, 32 insertions(+), 2 deletions(-)
+ include/hw/arm/stm32l4x5_soc.h |  3 ---
+ hw/arm/b-l475e-iot01a.c        | 10 +---------
+ hw/arm/stm32l4x5_soc.c         | 33 ++++-----------------------------
+ 3 files changed, 5 insertions(+), 41 deletions(-)
 
-diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
-index 8e5d35d9227..5da1b0fc1d4 100644
---- a/target/arm/tcg/hflags.c
-+++ b/target/arm/tcg/hflags.c
-@@ -26,6 +26,35 @@ static inline bool fgt_svc(CPUARMState *env, int el)
-         FIELD_EX64(env->cp15.fgt_exec[FGTREG_HFGITR], HFGITR_EL2, SVC_EL1);
+diff --git a/include/hw/arm/stm32l4x5_soc.h b/include/hw/arm/stm32l4x5_soc.h
+index 0b4f97e240e..af67b089efc 100644
+--- a/include/hw/arm/stm32l4x5_soc.h
++++ b/include/hw/arm/stm32l4x5_soc.h
+@@ -54,9 +54,6 @@ struct Stm32l4x5SocState {
+     MemoryRegion sram2;
+     MemoryRegion flash;
+     MemoryRegion flash_alias;
+-
+-    Clock *sysclk;
+-    Clock *refclk;
+ };
+ 
+ struct Stm32l4x5SocClass {
+diff --git a/hw/arm/b-l475e-iot01a.c b/hw/arm/b-l475e-iot01a.c
+index 6ecde2db15c..d862aa43fc3 100644
+--- a/hw/arm/b-l475e-iot01a.c
++++ b/hw/arm/b-l475e-iot01a.c
+@@ -26,27 +26,19 @@
+ #include "qapi/error.h"
+ #include "hw/boards.h"
+ #include "hw/qdev-properties.h"
+-#include "hw/qdev-clock.h"
+ #include "qemu/error-report.h"
+ #include "hw/arm/stm32l4x5_soc.h"
+ #include "hw/arm/boot.h"
+ 
+-/* Main SYSCLK frequency in Hz (80MHz) */
+-#define MAIN_SYSCLK_FREQ_HZ 80000000ULL
++/* B-L475E-IOT01A implementation is derived from netduinoplus2 */
+ 
+ static void b_l475e_iot01a_init(MachineState *machine)
+ {
+     const Stm32l4x5SocClass *sc;
+     DeviceState *dev;
+-    Clock *sysclk;
+-
+-    /* This clock doesn't need migration because it is fixed-frequency */
+-    sysclk = clock_new(OBJECT(machine), "SYSCLK");
+-    clock_set_hz(sysclk, MAIN_SYSCLK_FREQ_HZ);
+ 
+     dev = qdev_new(TYPE_STM32L4X5XG_SOC);
+     object_property_add_child(OBJECT(machine), "soc", OBJECT(dev));
+-    qdev_connect_clock_in(dev, "sysclk", sysclk);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+ 
+     sc = STM32L4X5_SOC_GET_CLASS(dev);
+diff --git a/hw/arm/stm32l4x5_soc.c b/hw/arm/stm32l4x5_soc.c
+index cb147050091..bf9926057be 100644
+--- a/hw/arm/stm32l4x5_soc.c
++++ b/hw/arm/stm32l4x5_soc.c
+@@ -110,9 +110,6 @@ static void stm32l4x5_soc_initfn(Object *obj)
+     }
+     object_initialize_child(obj, "syscfg", &s->syscfg, TYPE_STM32L4X5_SYSCFG);
+     object_initialize_child(obj, "rcc", &s->rcc, TYPE_STM32L4X5_RCC);
+-
+-    s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
+-    s->refclk = qdev_init_clock_in(DEVICE(s), "refclk", NULL, NULL, 0);
  }
  
-+/* Return true if memory alignment should be enforced. */
-+static bool aprofile_require_alignment(CPUARMState *env, int el, uint64_t sctlr)
-+{
-+#ifdef CONFIG_USER_ONLY
-+    return false;
-+#else
-+    /* Check the alignment enable bit. */
-+    if (sctlr & SCTLR_A) {
-+        return true;
-+    }
-+
-+    /*
-+     * If translation is disabled, then the default memory type is
-+     * Device(-nGnRnE) instead of Normal, which requires that alignment
-+     * be enforced.  Since this affects all ram, it is most efficient
-+     * to handle this during translation.
-+     */
-+    if (sctlr & SCTLR_M) {
-+        /* Translation enabled: memory type in PTE via MAIR_ELx. */
-+        return false;
-+    }
-+    if (el < 2 && (arm_hcr_el2_eff(env) & (HCR_DC | HCR_VM))) {
-+        /* Stage 2 translation enabled: memory type in PTE. */
-+        return false;
-+    }
-+    return true;
-+#endif
-+}
-+
- static CPUARMTBFlags rebuild_hflags_common(CPUARMState *env, int fp_el,
-                                            ARMMMUIdx mmu_idx,
-                                            CPUARMTBFlags flags)
-@@ -121,8 +150,9 @@ static CPUARMTBFlags rebuild_hflags_a32(CPUARMState *env, int fp_el,
- {
-     CPUARMTBFlags flags = {};
-     int el = arm_current_el(env);
-+    uint64_t sctlr = arm_sctlr(env, el);
+ static void stm32l4x5_soc_realize(DeviceState *dev_soc, Error **errp)
+@@ -124,30 +121,6 @@ static void stm32l4x5_soc_realize(DeviceState *dev_soc, Error **errp)
+     DeviceState *armv7m;
+     SysBusDevice *busdev;
  
--    if (arm_sctlr(env, el) & SCTLR_A) {
-+    if (aprofile_require_alignment(env, el, sctlr)) {
-         DP_TBFLAG_ANY(flags, ALIGN_MEM, 1);
-     }
- 
-@@ -223,7 +253,7 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
- 
-     sctlr = regime_sctlr(env, stage1);
- 
--    if (sctlr & SCTLR_A) {
-+    if (aprofile_require_alignment(env, el, sctlr)) {
-         DP_TBFLAG_ANY(flags, ALIGN_MEM, 1);
-     }
- 
+-    /*
+-     * We use s->refclk internally and only define it with qdev_init_clock_in()
+-     * so it is correctly parented and not leaked on an init/deinit; it is not
+-     * intended as an externally exposed clock.
+-     */
+-    if (clock_has_source(s->refclk)) {
+-        error_setg(errp, "refclk clock must not be wired up by the board code");
+-        return;
+-    }
+-
+-    if (!clock_has_source(s->sysclk)) {
+-        error_setg(errp, "sysclk clock must be wired up by the board code");
+-        return;
+-    }
+-
+-    /*
+-     * TODO: ideally we should model the SoC RCC and its ability to
+-     * change the sysclk frequency and define different sysclk sources.
+-     */
+-
+-    /* The refclk always runs at frequency HCLK / 8 */
+-    clock_set_mul_div(s->refclk, 8, 1);
+-    clock_set_source(s->refclk, s->sysclk);
+-
+     if (!memory_region_init_rom(&s->flash, OBJECT(dev_soc), "flash",
+                                 sc->flash_size, errp)) {
+         return;
+@@ -177,8 +150,10 @@ static void stm32l4x5_soc_realize(DeviceState *dev_soc, Error **errp)
+     qdev_prop_set_uint32(armv7m, "num-prio-bits", 4);
+     qdev_prop_set_string(armv7m, "cpu-type", ARM_CPU_TYPE_NAME("cortex-m4"));
+     qdev_prop_set_bit(armv7m, "enable-bitband", true);
+-    qdev_connect_clock_in(armv7m, "cpuclk", s->sysclk);
+-    qdev_connect_clock_in(armv7m, "refclk", s->refclk);
++    qdev_connect_clock_in(armv7m, "cpuclk",
++        qdev_get_clock_out(DEVICE(&(s->rcc)), "cortex-fclk-out"));
++    qdev_connect_clock_in(armv7m, "refclk",
++        qdev_get_clock_out(DEVICE(&(s->rcc)), "cortex-refclk-out"));
+     object_property_set_link(OBJECT(&s->armv7m), "memory",
+                              OBJECT(system_memory), &error_abort);
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->armv7m), errp)) {
 -- 
 2.34.1
 
