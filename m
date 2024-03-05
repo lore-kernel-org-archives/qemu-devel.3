@@ -4,95 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06A5BC54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 20:25:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09D96C54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 20:33:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhbL1-0002FQ-HO; Tue, 05 Mar 2024 15:24:35 -0500
+	id 1rhbSZ-0003n9-LH; Tue, 05 Mar 2024 15:32:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rhbKz-0002F9-Ov
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 15:24:33 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rhbSV-0003n0-Tk
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 15:32:21 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rhbKx-0006Id-Sq
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 15:24:33 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rhbSS-0007eF-3E
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 15:32:19 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id DD700353CD;
- Tue,  5 Mar 2024 20:24:25 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id D136D20B87;
+ Tue,  5 Mar 2024 20:32:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709670266; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1709670734; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=g7MZNgJbiWqSHlD7JBQFyTbDKezrdmQ5/4OxQLncoGg=;
- b=UzJIkVySIN7RwpWP+YN7eN/hOdBMNMSqBjC/1R/xTjS1ABaqYfnAbJ7qyR2+yg3MtWRDGz
- ntXSgTSeDqO7hhI9eR7POgfDD5CMZBjo9rzJOGTr9Y7rFHg4YjfpKPDA3j1lu8CYOfavBd
- LQP7xg7dmTXJjL6ITY2fgR7LWwQqpFU=
+ bh=XbbzrxeBj1mnwJM1QrxlTNkaGun0bTzks9YzZ4HvDe8=;
+ b=Iwrlp0jpKeJWitBBNM+OlgJAdim0P4+8+1kbQd67UvduvN2Viv2rVpdxEUptOV3u67aOQ8
+ 2wQhqDXa/YNwjaIh7PrGhaZQ9Y7z7U6ZuxIPd2pjLZUiKVYZGpZ7Hwa3L8l5P8fTynCY85
+ wFZgxCAMZUoh/aaiTuK6zQvZWrX/2lE=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709670266;
+ s=susede2_ed25519; t=1709670734;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=g7MZNgJbiWqSHlD7JBQFyTbDKezrdmQ5/4OxQLncoGg=;
- b=vIBT9K+piPQ3pkKoA5cUgoZACt05f0ZrH9FCFwlj6JOByAEYeCOsmaJrDl2tqXEXItrhRC
- 9Ej99g1ABVo4oqAw==
+ bh=XbbzrxeBj1mnwJM1QrxlTNkaGun0bTzks9YzZ4HvDe8=;
+ b=Sl9y3qeoxtVid0M86+gJOAOqxSzr9Cj4NXI5Ek+B/6BTmuOMI2tpuyRuPE1ynvGpiR5j1a
+ 8aSb/k7L2s7cDcAg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709670265; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1709670732; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=g7MZNgJbiWqSHlD7JBQFyTbDKezrdmQ5/4OxQLncoGg=;
- b=hQy6lQlsGHQxYf17Z8WAH7UlA1E8RgMhg5ZeH9SekTXnzJ9WGHIOjTkInAZtYZjSf4AgBe
- 1kc/Kl94l70daWtp7PS5dnob+oxDCQZ3N4IYn0xgxwzexv1LtQr+UT7loUi2/zzcd9LUsG
- /SPOFPPZAWQpekP7JdQlgZ0OnK+Q7yU=
+ bh=XbbzrxeBj1mnwJM1QrxlTNkaGun0bTzks9YzZ4HvDe8=;
+ b=UFxiUVONQv2oLp1ccgU4duFOO+8ySEq6S0O1uxwroIL0tRNDhBPaITdw6r6IFiSzyLsMrR
+ XchxhQygt0RvK6J1o/rcuJ2+MbYMW7qES7G4z+mGusFbVpZf8rDoJl+MuXPDVVWVNIcp+l
+ jeoTzGv5nMtDYQznPa4A12hGOX9Pyw0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709670265;
+ s=susede2_ed25519; t=1709670732;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=g7MZNgJbiWqSHlD7JBQFyTbDKezrdmQ5/4OxQLncoGg=;
- b=8RLqM+diJLoVvgcpcqstxBPNmI2sYugonUb3Lowp5kJ6HMSTBDalVrBQ59J5VU0pTnPgcb
- ohB4KQ8BZ7adIjAw==
+ bh=XbbzrxeBj1mnwJM1QrxlTNkaGun0bTzks9YzZ4HvDe8=;
+ b=2ak7vpmodfPIU/uFu81SojMk3yyu15Be8yzZ021El5GJury1qPzPqGNRtenawsNA3OW2sU
+ mIRj5i6daRQdemBQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 63D10139D0;
- Tue,  5 Mar 2024 20:24:25 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 56E96139D0;
+ Tue,  5 Mar 2024 20:32:12 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 5xYZC3l/52U2PQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 05 Mar 2024 20:24:25 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id Q8XeB0yB52V8PwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 05 Mar 2024 20:32:12 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Yuan Liu <yuan1.liu@intel.com>, peterx@redhat.com
 Cc: qemu-devel@nongnu.org, hao.xiang@bytedance.com,
  bryan.zhang@bytedance.com, yuan1.liu@intel.com, nanhai.zou@intel.com
-Subject: Re: [PATCH v4 2/8] migration/multifd: add get_iov_count in the
- multifd method
-In-Reply-To: <20240304140028.1590649-3-yuan1.liu@intel.com>
+Subject: Re: [PATCH v4 3/8] configure: add --enable-qpl build option
+In-Reply-To: <20240304140028.1590649-4-yuan1.liu@intel.com>
 References: <20240304140028.1590649-1-yuan1.liu@intel.com>
- <20240304140028.1590649-3-yuan1.liu@intel.com>
-Date: Tue, 05 Mar 2024 17:24:22 -0300
-Message-ID: <877cigig09.fsf@suse.de>
+ <20240304140028.1590649-4-yuan1.liu@intel.com>
+Date: Tue, 05 Mar 2024 17:32:09 -0300
+Message-ID: <874jdkifna.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-Authentication-Results: smtp-out1.suse.de;
-	none
-X-Spamd-Result: default: False [-4.30 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=UFxiUVON;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=2ak7vpmo
+X-Spamd-Result: default: False [-3.31 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
  FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; BAYES_HAM(-3.00)[100.00%];
  MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_THREE(0.00)[3];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; RCPT_COUNT_SEVEN(0.00)[7];
- DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ RCPT_COUNT_SEVEN(0.00)[7];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,intel.github.io:url,suse.de:dkim,meson.build:url,repology.org:url];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
  MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
  MID_RHS_MATCH_FROM(0.00)[]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: D136D20B87
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -117,172 +123,108 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Yuan Liu <yuan1.liu@intel.com> writes:
 
-> the new function get_iov_count is used to get the number of
-> IOVs required by a specified multifd method
+> add --enable-qpl and --disable-qpl options to enable and disable
+> the QPL compression method for multifd migration.
 >
-> Different multifd methods may require different numbers of IOVs.
-> Based on streaming compression of zlib and zstd, all pages will be
-> compressed to a data block, so an IOV is required to send this data
-> block. For no compression, each IOV is used to send a page, so the
-> number of IOVs required is the same as the number of pages.
-
-Let's just move the responsibility of allocating p->iov to the client
-code. You can move the allocation into send_setup() and the free into
-send_cleanup().
-
+> the Query Processing Library (QPL) is an open-source library
+> that supports data compression and decompression features.
+>
+> The QPL compression is based on the deflate compression algorithm
+> and use Intel In-Memory Analytics Accelerator(IAA) hardware for
+> compression and decompression acceleration.
+>
+> Please refer to the following for more information about QPL
+> https://intel.github.io/qpl/documentation/introduction_docs/introduction.html
 >
 > Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
 > Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
 > ---
->  migration/multifd-zlib.c | 18 +++++++++++++++++-
->  migration/multifd-zstd.c | 18 +++++++++++++++++-
->  migration/multifd.c      | 24 +++++++++++++++++++++---
->  migration/multifd.h      |  2 ++
->  4 files changed, 57 insertions(+), 5 deletions(-)
+>  meson.build                   | 18 ++++++++++++++++++
+>  meson_options.txt             |  2 ++
+>  scripts/meson-buildoptions.sh |  3 +++
+>  3 files changed, 23 insertions(+)
 >
-> diff --git a/migration/multifd-zlib.c b/migration/multifd-zlib.c
-> index 012e3bdea1..35187f2aff 100644
-> --- a/migration/multifd-zlib.c
-> +++ b/migration/multifd-zlib.c
-> @@ -313,13 +313,29 @@ static int zlib_recv_pages(MultiFDRecvParams *p, Error **errp)
->      return 0;
+> diff --git a/meson.build b/meson.build
+> index c1dc83e4c0..2dea1e6834 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -1197,6 +1197,22 @@ if not get_option('zstd').auto() or have_block
+>                      required: get_option('zstd'),
+>                      method: 'pkg-config')
+>  endif
+> +qpl = not_found
+> +if not get_option('qpl').auto()
+> +  libqpl = cc.find_library('qpl', required: false)
+> +  if not libqpl.found()
+> +    error('libqpl not found, please install it from ' +
+> +    'https://intel.github.io/qpl/documentation/get_started_docs/installation.html')
+> +  endif
+> +  libaccel = cc.find_library('accel-config', required: false)
+> +  if not libaccel.found()
+> +    error('libaccel-config not found, please install it from ' +
+> +    'https://github.com/intel/idxd-config')
+
+accel-config seems to be packaged by many distros, I'm not sure we need
+to reference the repository here.
+
+https://repology.org/project/accel-config/versions
+
+> +  endif
+> +  qpl = declare_dependency(dependencies: [libqpl, libaccel,
+> +        cc.find_library('dl', required: get_option('qpl'))],
+> +        link_args: ['-lstdc++'])
+> +endif
+>  virgl = not_found
+>  
+>  have_vhost_user_gpu = have_tools and host_os == 'linux' and pixman.found()
+> @@ -2298,6 +2314,7 @@ config_host_data.set('CONFIG_MALLOC_TRIM', has_malloc_trim)
+>  config_host_data.set('CONFIG_STATX', has_statx)
+>  config_host_data.set('CONFIG_STATX_MNT_ID', has_statx_mnt_id)
+>  config_host_data.set('CONFIG_ZSTD', zstd.found())
+> +config_host_data.set('CONFIG_QPL', qpl.found())
+>  config_host_data.set('CONFIG_FUSE', fuse.found())
+>  config_host_data.set('CONFIG_FUSE_LSEEK', fuse_lseek.found())
+>  config_host_data.set('CONFIG_SPICE_PROTOCOL', spice_protocol.found())
+> @@ -4438,6 +4455,7 @@ summary_info += {'snappy support':    snappy}
+>  summary_info += {'bzip2 support':     libbzip2}
+>  summary_info += {'lzfse support':     liblzfse}
+>  summary_info += {'zstd support':      zstd}
+> +summary_info += {'Query Processing Library support': qpl}
+>  summary_info += {'NUMA host support': numa}
+>  summary_info += {'capstone':          capstone}
+>  summary_info += {'libpmem support':   libpmem}
+> diff --git a/meson_options.txt b/meson_options.txt
+> index 0a99a059ec..06cd675572 100644
+> --- a/meson_options.txt
+> +++ b/meson_options.txt
+> @@ -259,6 +259,8 @@ option('xkbcommon', type : 'feature', value : 'auto',
+>         description: 'xkbcommon support')
+>  option('zstd', type : 'feature', value : 'auto',
+>         description: 'zstd compression support')
+> +option('qpl', type : 'feature', value : 'auto',
+> +       description: 'Query Processing Library support')
+>  option('fuse', type: 'feature', value: 'auto',
+>         description: 'FUSE block device export')
+>  option('fuse_lseek', type : 'feature', value : 'auto',
+> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+> index 680fa3f581..784f74fde9 100644
+> --- a/scripts/meson-buildoptions.sh
+> +++ b/scripts/meson-buildoptions.sh
+> @@ -222,6 +222,7 @@ meson_options_help() {
+>    printf "%s\n" '                  Xen PCI passthrough support'
+>    printf "%s\n" '  xkbcommon       xkbcommon support'
+>    printf "%s\n" '  zstd            zstd compression support'
+> +  printf "%s\n" '  qpl             Query Processing Library support'
 >  }
->  
-> +/**
-> + * zlib_get_iov_count: get the count of IOVs
-> + *
-> + * For zlib streaming compression, all pages will be compressed into a data
-> + * block, and an IOV is requested for sending this block.
-> + *
-> + * Returns the count of the IOVs
-> + *
-> + * @page_count: Indicate the maximum count of pages processed by multifd
-> + */
-> +static uint32_t zlib_get_iov_count(uint32_t page_count)
-> +{
-> +    return 1;
-> +}
-> +
->  static MultiFDMethods multifd_zlib_ops = {
->      .send_setup = zlib_send_setup,
->      .send_cleanup = zlib_send_cleanup,
->      .send_prepare = zlib_send_prepare,
->      .recv_setup = zlib_recv_setup,
->      .recv_cleanup = zlib_recv_cleanup,
-> -    .recv_pages = zlib_recv_pages
-> +    .recv_pages = zlib_recv_pages,
-> +    .get_iov_count = zlib_get_iov_count
->  };
->  
->  static void multifd_zlib_register(void)
-> diff --git a/migration/multifd-zstd.c b/migration/multifd-zstd.c
-> index dc8fe43e94..25ed1add2a 100644
-> --- a/migration/multifd-zstd.c
-> +++ b/migration/multifd-zstd.c
-> @@ -304,13 +304,29 @@ static int zstd_recv_pages(MultiFDRecvParams *p, Error **errp)
->      return 0;
+>  _meson_option_parse() {
+>    case $1 in
+> @@ -562,6 +563,8 @@ _meson_option_parse() {
+>      --disable-xkbcommon) printf "%s" -Dxkbcommon=disabled ;;
+>      --enable-zstd) printf "%s" -Dzstd=enabled ;;
+>      --disable-zstd) printf "%s" -Dzstd=disabled ;;
+> +    --enable-qpl) printf "%s" -Dqpl=enabled ;;
+> +    --disable-qpl) printf "%s" -Dqpl=disabled ;;
+>      *) return 1 ;;
+>    esac
 >  }
->  
-> +/**
-> + * zstd_get_iov_count: get the count of IOVs
-> + *
-> + * For zstd streaming compression, all pages will be compressed into a data
-> + * block, and an IOV is requested for sending this block.
-> + *
-> + * Returns the count of the IOVs
-> + *
-> + * @page_count: Indicate the maximum count of pages processed by multifd
-> + */
-> +static uint32_t zstd_get_iov_count(uint32_t page_count)
-> +{
-> +    return 1;
-> +}
-> +
->  static MultiFDMethods multifd_zstd_ops = {
->      .send_setup = zstd_send_setup,
->      .send_cleanup = zstd_send_cleanup,
->      .send_prepare = zstd_send_prepare,
->      .recv_setup = zstd_recv_setup,
->      .recv_cleanup = zstd_recv_cleanup,
-> -    .recv_pages = zstd_recv_pages
-> +    .recv_pages = zstd_recv_pages,
-> +    .get_iov_count = zstd_get_iov_count
->  };
->  
->  static void multifd_zstd_register(void)
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index adfe8c9a0a..787402247e 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -209,13 +209,29 @@ static int nocomp_recv_pages(MultiFDRecvParams *p, Error **errp)
->      return qio_channel_readv_all(p->c, p->iov, p->normal_num, errp);
->  }
->  
-> +/**
-> + * nocomp_get_iov_count: get the count of IOVs
-> + *
-> + * For no compression, the count of IOVs required is the same as the count of
-> + * pages
-> + *
-> + * Returns the count of the IOVs
-> + *
-> + * @page_count: Indicate the maximum count of pages processed by multifd
-> + */
-> +static uint32_t nocomp_get_iov_count(uint32_t page_count)
-> +{
-> +    return page_count;
-> +}
-> +
->  static MultiFDMethods multifd_nocomp_ops = {
->      .send_setup = nocomp_send_setup,
->      .send_cleanup = nocomp_send_cleanup,
->      .send_prepare = nocomp_send_prepare,
->      .recv_setup = nocomp_recv_setup,
->      .recv_cleanup = nocomp_recv_cleanup,
-> -    .recv_pages = nocomp_recv_pages
-> +    .recv_pages = nocomp_recv_pages,
-> +    .get_iov_count = nocomp_get_iov_count
->  };
->  
->  static MultiFDMethods *multifd_ops[MULTIFD_COMPRESSION__MAX] = {
-> @@ -998,6 +1014,8 @@ bool multifd_send_setup(void)
->      Error *local_err = NULL;
->      int thread_count, ret = 0;
->      uint32_t page_count = MULTIFD_PACKET_SIZE / qemu_target_page_size();
-> +    /* We need one extra place for the packet header */
-> +    uint32_t iov_count = 1;
->      uint8_t i;
->  
->      if (!migrate_multifd()) {
-> @@ -1012,6 +1030,7 @@ bool multifd_send_setup(void)
->      qemu_sem_init(&multifd_send_state->channels_ready, 0);
->      qatomic_set(&multifd_send_state->exiting, 0);
->      multifd_send_state->ops = multifd_ops[migrate_multifd_compression()];
-> +    iov_count += multifd_send_state->ops->get_iov_count(page_count);
->  
->      for (i = 0; i < thread_count; i++) {
->          MultiFDSendParams *p = &multifd_send_state->params[i];
-> @@ -1026,8 +1045,7 @@ bool multifd_send_setup(void)
->          p->packet->magic = cpu_to_be32(MULTIFD_MAGIC);
->          p->packet->version = cpu_to_be32(MULTIFD_VERSION);
->          p->name = g_strdup_printf("multifdsend_%d", i);
-> -        /* We need one extra place for the packet header */
-> -        p->iov = g_new0(struct iovec, page_count + 1);
-> +        p->iov = g_new0(struct iovec, iov_count);
->          p->page_size = qemu_target_page_size();
->          p->page_count = page_count;
->          p->write_flags = 0;
-> diff --git a/migration/multifd.h b/migration/multifd.h
-> index 8a1cad0996..d82495c508 100644
-> --- a/migration/multifd.h
-> +++ b/migration/multifd.h
-> @@ -201,6 +201,8 @@ typedef struct {
->      void (*recv_cleanup)(MultiFDRecvParams *p);
->      /* Read all pages */
->      int (*recv_pages)(MultiFDRecvParams *p, Error **errp);
-> +    /* Get the count of required IOVs */
-> +    uint32_t (*get_iov_count)(uint32_t page_count);
->  } MultiFDMethods;
->  
->  void multifd_register_ops(int method, MultiFDMethods *ops);
 
