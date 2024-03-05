@@ -4,100 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D293C54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 06:01:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38771C54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 06:20:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhNrI-00057a-MO; Tue, 05 Mar 2024 01:01:00 -0500
+	id 1rhO91-0000EG-9a; Tue, 05 Mar 2024 01:19:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1rhNrF-00055l-8n
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 01:00:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1rhNrD-0005hc-Jx
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 01:00:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709618454;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WG/8tjaYkx8u3OdWeMNWhdFumkizH8kgmlVXE9b7Voc=;
- b=dEQ99KmzW6gbcDceuVUa/oK+Yct/Hush17MemaV1ViLrMFb6f7vIZt7rlVCFQ4K2mKReo0
- 6xi65f+I1Bm+t1dJAd+o0iQcoj83hZQFOeBHHuIF3QzE20AXqeQjvrHf2eulJskqLrchTi
- ufEwq7wGzDCN0B1JiJu+qh2/6Dz6LjQ=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-180-uPr58if0MlaaifhLG61tmA-1; Tue, 05 Mar 2024 01:00:52 -0500
-X-MC-Unique: uPr58if0MlaaifhLG61tmA-1
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-1dc435b3e87so45964055ad.1
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 22:00:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1rhO8t-0000Bs-M9
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 01:19:13 -0500
+Received: from mail-vs1-xe32.google.com ([2607:f8b0:4864:20::e32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1rhO8q-0000R1-69
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 01:19:10 -0500
+Received: by mail-vs1-xe32.google.com with SMTP id
+ ada2fe7eead31-47259486a1fso1119799137.2
+ for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 22:19:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1709619542; x=1710224342; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=t9nqsjGsjHu0OgureRZqRYa80276z37A+29y5cW7SC8=;
+ b=XXMdfnPO2PRtt3lijXfsHNZJNiKFSV1W3NaqwK8dIG/z+HWOLqyvItFR/of0e5L0ZS
+ f2b0nzV+tY6QAV9RgmxYqylUK5QZN18gOxoZzNDE6WkuK/zxozlVamQEs0RBx1k43sx+
+ GCOq5V2otlDzgxo2vuqcaJ+aPXGzd7O/4WFXZXGcbRX/axmLpEUBUmh/XIuq0jgsa78c
+ QqRFsdTUJVWhxFxT6HlG0ritr9xQujF3JcU27P4ayCACPHnKuOOPXw5seFV2g1xG4dxR
+ 6GyKgq2F6PnX9uhE8M/dZ6THRvZhyec3ugZm/ZPooEBNqyhWTCARfu6ABTiOAyGwhHrT
+ rnlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709618451; x=1710223251;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=WG/8tjaYkx8u3OdWeMNWhdFumkizH8kgmlVXE9b7Voc=;
- b=vvxlQR1gZuapOy/4SZzK20gYqxlWrKCkhAUQu5QXdlkuiZkHWfRKIeFDhsbqPKO1eV
- ZCFNNealk8OMI0ascBdpYgVwXurkBfwh2Gl8z5fH/kqpQDaoHTfAyay3zLHOA6EqvIuH
- BiFE8fQjEAT3AnL9eQRnXkfwQl3vfoWByXDouoAVjCFvALbI7c/vtl6h7bl7SJb1tSzx
- r2t2vX/hJ40ap0gyEc4tvn904ThpqNkjJY0RKxAZ9est7p1A0C+lEGyA2KSZTrRHkC1E
- GEFKrpPQ97yHlxkuc56IAhYcUXl4Digjw3GY/bXy5DTbCuHvYHQqC6Rsyx2+6nt3cnVc
- aOdQ==
-X-Gm-Message-State: AOJu0YyqyI7WXXfMSyWjg6VHzZwJvCrmMK9SaecZsVsBm8fXSTTIHgT8
- Hb7fi8sTPjm0ZWE3uNv8yE2/+zIWg7oapTdcZwWEi7E6W1YTe4e2+fatDdTqHQ7SLA/uj021N2g
- 2i5gBd4LJfKJvs9xNFlt43BoVYW9yiBr4DhA2E9XkOTvXfIqIcGHk
-X-Received: by 2002:a17:902:cece:b0:1dc:6373:3cc with SMTP id
- d14-20020a170902cece00b001dc637303ccmr1126282plg.50.1709618451563; 
- Mon, 04 Mar 2024 22:00:51 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEu6t+V2j0FglZmJ4c5A4vULyC4SF/KsjFudUQnUvAI5X3mu+7/EdJUXAlw84NaFAWpaxBV9A==
-X-Received: by 2002:a17:902:cece:b0:1dc:6373:3cc with SMTP id
- d14-20020a170902cece00b001dc637303ccmr1126246plg.50.1709618451011; 
- Mon, 04 Mar 2024 22:00:51 -0800 (PST)
-Received: from smtpclient.apple ([203.163.238.152])
- by smtp.gmail.com with ESMTPSA id
- y18-20020a170902e19200b001dc95e7e191sm9559181pla.298.2024.03.04.22.00.43
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 04 Mar 2024 22:00:50 -0800 (PST)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.400.31\))
-Subject: Re: [PATCH 14/19] smbios: in case of entry point is 'auto' try to
- build v2 tables 1st
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <20240227154749.1818189-15-imammedo@redhat.com>
-Date: Tue, 5 Mar 2024 11:30:29 +0530
-Cc: QEMU Developers <qemu-devel@nongnu.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Song Gao <gaosong@loongson.cn>,
- Alistair Francis <alistair.francis@wdc.com>, palmer@dabbelt.com,
- bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, philmd@linaro.org, wangyanan55@huawei.com,
- eblake@redhat.com, armbru@redhat.com, qemu-arm@nongnu.org,
- qemu-riscv@nongnu.org, f.ebner@proxmox.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <5705CEF6-9217-41A1-8DF9-8DD74FB5E5B7@redhat.com>
-References: <20240227154749.1818189-1-imammedo@redhat.com>
- <20240227154749.1818189-15-imammedo@redhat.com>
-To: Igor Mammedov <imammedo@redhat.com>
-X-Mailer: Apple Mail (2.3774.400.31)
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -11
-X-Spam_score: -1.2
-X-Spam_bar: -
-X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ d=1e100.net; s=20230601; t=1709619542; x=1710224342;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=t9nqsjGsjHu0OgureRZqRYa80276z37A+29y5cW7SC8=;
+ b=SCM6lX54Z/01HTbrL2R9mJkuJnevK/lXWZ6vbEEvbiq9Cw8EEGaFEbWaC0yau+wQya
+ zRhJUYmVyjS/y5x1zlKxyNcnqgyGdQPz9osH2qSz22ivAuwUGLJzmSUnZvSa+22W1N1e
+ R92s3KpOAwWcK5xdiR9rvbmnsvu7TolpkNIOlf3zaHEGbFk46+UqYKKDldVNHuysckF4
+ 5dON6TfJG2OGvwIqkgH3kg1Ut6wBrWZgPWdljOWWDiAlEFmQh+zn2kt0hbEUa83+jx0G
+ Hs44WgpzcMQv6sMFVYZ2sYGTT2P3WZn8nHXInMElslWJgw2T7L/bVnnvssQsgllunYgP
+ NVtg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV4gb9piNUvEIVvw0LgNOI5FLptgFKBipn3env1ozkkDzNnFHsdRBfIOhN2xzI/NaqX/Jk/TsCZ06n+eumFgrhmABlFfi0=
+X-Gm-Message-State: AOJu0YzZQuc+h5+3HYTgthWlQq5IabtvtbIxWlzG4JpYqlkX5bWuNJuz
+ NfgSAkEUmmUs4KeVePe1KsY7xprTSSlGCrSZbWiKuRcLgdPPlDqt82DU+u5wCFOLRDOQKIi9vfl
+ cRM3IFw0xgH4t9B5tpGwjepcPQdl+EAMvhQK6Og==
+X-Google-Smtp-Source: AGHT+IFTEtlS723KrD/sGIZR/iFRVUXunrKnfzDUdAb2xqPpk4so46bQuE/ZCyGuFmv4UDEUNbTKdFRhL65Y2+n3Wks=
+X-Received: by 2002:a67:e9da:0:b0:472:990d:84a with SMTP id
+ q26-20020a67e9da000000b00472990d084amr962104vso.20.1709619542310; Mon, 04 Mar
+ 2024 22:19:02 -0800 (PST)
+MIME-Version: 1.0
+References: <20240301082248.3456086-1-horenchuang@bytedance.com>
+ <87frx6btqp.fsf@yhuang6-desk2.ccr.corp.intel.com>
+In-Reply-To: <87frx6btqp.fsf@yhuang6-desk2.ccr.corp.intel.com>
+From: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
+Date: Mon, 4 Mar 2024 22:18:51 -0800
+Message-ID: <CAKPbEqqvdN=6773pKRbzRcu1Rgkiv2gWBX13bm6v1aWzEOQmww@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH v1 0/1] Improved Memory Tier Creation for
+ CPUless NUMA Nodes
+To: "Huang, Ying" <ying.huang@intel.com>
+Cc: Gregory Price <gourry.memverge@gmail.com>, aneesh.kumar@linux.ibm.com,
+ mhocko@suse.com, 
+ tj@kernel.org, john@jagalactic.com, Eishan Mirakhur <emirakhur@micron.com>, 
+ Vinicius Tavares Petrucci <vtavarespetr@micron.com>,
+ Ravis OpenSrc <Ravis.OpenSrc@micron.com>, 
+ Alistair Popple <apopple@nvidia.com>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Len Brown <lenb@kernel.org>, 
+ Andrew Morton <akpm@linux-foundation.org>, Dave Jiang <dave.jiang@intel.com>, 
+ Dan Williams <dan.j.williams@intel.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>, 
+ linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mm@kvack.org, 
+ "Ho-Ren (Jack) Chuang" <horenc@vt.edu>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>, linux-cxl@vger.kernel.org, 
+ qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000008567cb0612e3d108"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e32;
+ envelope-from=horenchuang@bytedance.com; helo=mail-vs1-xe32.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,130 +104,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--0000000000008567cb0612e3d108
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Sun, Mar 3, 2024 at 6:47=E2=80=AFPM Huang, Ying <ying.huang@intel.com> w=
+rote:
+>
+> "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> writes:
+>
+> > The memory tiering component in the kernel is functionally useless for
+> > CPUless memory/non-DRAM devices like CXL1.1 type3 memory because the
+nodes
+> > are lumped together in the DRAM tier.
+> >
+https://lore.kernel.org/linux-mm/PH0PR08MB7955E9F08CCB64F23963B5C3A860A@PH0=
+PR08MB7955.namprd08.prod.outlook.com/T/
+>
+> I think that it's unfair to call it "useless".  Yes, it doesn't work if
+> the CXL memory device are not enumerate via drivers/dax/kmem.c.  So,
+> please be specific about in which cases it doesn't work instead of too
+> general "useless".
+
+Thank you and I didn't mean anything specific. I simply reused phrases we
+discussed
+
+earlier in the previous patchset. I will change them to the following in v2=
+:
 
 
-> On 27-Feb-2024, at 21:17, Igor Mammedov <imammedo@redhat.com> wrote:
->=20
-> QEMU for some time now uses SMBIOS 3.0 for PC/Q35 machines by
-> default, however Windows has a bug in locating SMBIOS 3.0
-> entrypoint and fails to find tables when booted on SeaBIOS
-> (on UEFI SMBIOS 3.0 tables work fine since firmware hands
-> over tables in another way)
->=20
-> Missing SMBIOS tables may lead to some issues for guest
-> though (worst are: possible reactiveation, inability to
-> get virtio drivers from 'Windows Update')
->=20
-> It's unclear  at this point if MS will fix the issue on their
-> side. So instead of it (or rather in addition) this patch
-> will try to workaround the issue.
->=20
-> aka, use smbios-entry-point-type=3Dauto to make QEMU try
-> generating conservative SMBIOS 2.0 tables and if that
-> fails (due to limits/requested configuration) fallback
-> to SMBIOS 3.0 tables.
->=20
-> With this in place majority of users will use SMBIOS 2.0
-> tables which work fine with (Windows + legacy BIOS).
-> The configurations that is not to possible to describe
-> with SMBIOS 2.0 will switch automatically to SMBIOS 3.0
-> (which will trigger Windows bug but there is nothing
-> QEMU can do here, so go and aks Microsoft to real fix).
->=20
-> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+"At boot time, current memory tiering assigns all detected memory nodes
 
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
+to the same DRAM tier. This results in CPUless memory/non-DRAM devices,
 
-> ---
-> hw/smbios/smbios.c | 52 +++++++++++++++++++++++++++++++++++++++++++---
-> 1 file changed, 49 insertions(+), 3 deletions(-)
->=20
-> diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
-> index 5a791fd9eb..e54a9f21e6 100644
-> --- a/hw/smbios/smbios.c
-> +++ b/hw/smbios/smbios.c
-> @@ -959,7 +959,7 @@ static void =
-smbios_entry_point_setup(SmbiosEntryPointType ep_type)
->     }
-> }
->=20
-> -void smbios_get_tables(MachineState *ms,
-> +static bool smbios_get_tables_ep(MachineState *ms,
->                        SmbiosEntryPointType ep_type,
->                        const struct smbios_phys_mem_area *mem_array,
->                        const unsigned int mem_array_size,
-> @@ -968,6 +968,7 @@ void smbios_get_tables(MachineState *ms,
->                        Error **errp)
-> {
->     unsigned i, dimm_cnt, offset;
-> +    ERRP_GUARD();
->=20
->     assert(ep_type =3D=3D SMBIOS_ENTRY_POINT_TYPE_32 ||
->            ep_type =3D=3D SMBIOS_ENTRY_POINT_TYPE_64);
-> @@ -1052,11 +1053,56 @@ void smbios_get_tables(MachineState *ms,
->         abort();
->     }
->=20
-> -    return;
-> +    return true;
-> err_exit:
->     g_free(smbios_tables);
->     smbios_tables =3D NULL;
-> -    return;
-> +    return false;
-> +}
-> +
-> +void smbios_get_tables(MachineState *ms,
-> +                       SmbiosEntryPointType ep_type,
-> +                       const struct smbios_phys_mem_area *mem_array,
-> +                       const unsigned int mem_array_size,
-> +                       uint8_t **tables, size_t *tables_len,
-> +                       uint8_t **anchor, size_t *anchor_len,
-> +                       Error **errp)
-> +{
-> +    Error *local_err =3D NULL;
-> +    bool is_valid;
-> +    ERRP_GUARD();
-> +
-> +    switch (ep_type) {
-> +    case SMBIOS_ENTRY_POINT_TYPE_AUTO:
-> +    case SMBIOS_ENTRY_POINT_TYPE_32:
-> +        is_valid =3D smbios_get_tables_ep(ms, =
-SMBIOS_ENTRY_POINT_TYPE_32,
-> +                                        mem_array, mem_array_size,
-> +                                        tables, tables_len,
-> +                                        anchor, anchor_len,
-> +                                        &local_err);
-> +        if (is_valid || ep_type !=3D SMBIOS_ENTRY_POINT_TYPE_AUTO) {
-> +            break;
-> +        }
-> +        /*
-> +         * fall through in case AUTO endpoint is selected and
-> +         * SMBIOS 2.x tables can't be generated, to try if SMBIOS 3.x
-> +         * tables would work
-> +         */
-> +    case SMBIOS_ENTRY_POINT_TYPE_64:
-> +        error_free(local_err);
-> +        local_err =3D NULL;
-> +        is_valid =3D smbios_get_tables_ep(ms, =
-SMBIOS_ENTRY_POINT_TYPE_64,
-> +                                        mem_array, mem_array_size,
-> +                                        tables, tables_len,
-> +                                        anchor, anchor_len,
-> +                                        &local_err);
-> +        break;
-> +    default:
-> +        abort();
-> +    }
-> +    if (!is_valid) {
-> +        error_propagate(errp, local_err);
-> +    }
-> }
->=20
-> static void save_opt(const char **dest, QemuOpts *opts, const char =
-*name)
-> --=20
-> 2.39.3
->=20
+such as CXL1.1 type3 memory, being unable to be assigned to the correct
+memory tier,
 
+leading to the inability to migrate pages between different types of
+memory."
+
+
+Please see if this looks more specific.
+
+> > This patchset automatically resolves the issues. It delays the
+initialization
+> > of memory tiers for CPUless NUMA nodes until they obtain HMAT
+information
+> > at boot time, eliminating the need for user intervention.
+> > If no HMAT specified, it falls back to using `default_dram_type`.
+> >
+> > Example usecase:
+> > We have CXL memory on the host, and we create VMs with a new system
+memory
+> > device backed by host CXL memory. We inject CXL memory performance
+attributes
+> > through QEMU, and the guest now sees memory nodes with performance
+attributes
+> > in HMAT. With this change, we enable the guest kernel to construct
+> > the correct memory tiering for the memory nodes.
+> >
+> > Ho-Ren (Jack) Chuang (1):
+> >   memory tier: acpi/hmat: create CPUless memory tiers after obtaining
+> >     HMAT info
+> >
+> >  drivers/acpi/numa/hmat.c     |  3 ++
+> >  include/linux/memory-tiers.h |  6 +++
+> >  mm/memory-tiers.c            | 76 ++++++++++++++++++++++++++++++++----
+> >  3 files changed, 77 insertions(+), 8 deletions(-)
+>
+> --
+> Best Regards,
+> Huang, Ying
+
+--
+Best regards,
+Ho-Ren (Jack) Chuang
+=E8=8E=8A=E8=B3=80=E4=BB=BB
+
+--0000000000008567cb0612e3d108
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><br><br>On Sun, Mar 3, 2024 at 6:47=E2=80=AFPM Huang, Ying=
+ &lt;<a href=3D"mailto:ying.huang@intel.com">ying.huang@intel.com</a>&gt; w=
+rote:<br>&gt;<br>&gt; &quot;Ho-Ren (Jack) Chuang&quot; &lt;<a href=3D"mailt=
+o:horenchuang@bytedance.com">horenchuang@bytedance.com</a>&gt; writes:<br>&=
+gt;<br>&gt; &gt; The memory tiering component in the kernel is functionally=
+ useless for<br>&gt; &gt; CPUless memory/non-DRAM devices like CXL1.1 type3=
+ memory because the nodes<br>&gt; &gt; are lumped together in the DRAM tier=
+.<br>&gt; &gt; <a href=3D"https://lore.kernel.org/linux-mm/PH0PR08MB7955E9F=
+08CCB64F23963B5C3A860A@PH0PR08MB7955.namprd08.prod.outlook.com/T/">https://=
+lore.kernel.org/linux-mm/PH0PR08MB7955E9F08CCB64F23963B5C3A860A@PH0PR08MB79=
+55.namprd08.prod.outlook.com/T/</a><br>&gt;<br>&gt; I think that it&#39;s u=
+nfair to call it &quot;useless&quot;.=C2=A0 Yes, it doesn&#39;t work if<br>=
+&gt; the CXL memory device are not enumerate via drivers/dax/kmem.c.=C2=A0 =
+So,<br>&gt; please be specific about in which cases it doesn&#39;t work ins=
+tead of too<br>&gt; general &quot;useless&quot;.<br><br><div><p class=3D"gm=
+ail-p1" style=3D"margin:0px;font-variant-numeric:normal;font-variant-east-a=
+sian:normal;font-variant-alternates:normal;font-kerning:auto;font-feature-s=
+ettings:normal;font-stretch:normal;font-size:13px;line-height:normal;font-f=
+amily:&quot;Helvetica Neue&quot;">Thank=C2=A0you and I didn&#39;t mean anyt=
+hing specific. I simply reused phrases we discussed</p><p class=3D"gmail-p1=
+" style=3D"margin:0px;font-variant-numeric:normal;font-variant-east-asian:n=
+ormal;font-variant-alternates:normal;font-kerning:auto;font-feature-setting=
+s:normal;font-stretch:normal;font-size:13px;line-height:normal;font-family:=
+&quot;Helvetica Neue&quot;">earlier in the previous=C2=A0<span style=3D"fon=
+t-family:Arial,Helvetica,sans-serif;font-size:small">patchset</span>. I wil=
+l change them to the following in v2:<span class=3D"gmail-Apple-converted-s=
+pace">=C2=A0</span></p><p class=3D"gmail-p1" style=3D"margin:0px;font-varia=
+nt-numeric:normal;font-variant-east-asian:normal;font-variant-alternates:no=
+rmal;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;fon=
+t-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;">&quo=
+t;At boot time, current memory tiering assigns all detected memory nodes</p=
+><p class=3D"gmail-p1" style=3D"margin:0px;font-variant-numeric:normal;font=
+-variant-east-asian:normal;font-variant-alternates:normal;font-kerning:auto=
+;font-feature-settings:normal;font-stretch:normal;font-size:13px;line-heigh=
+t:normal;font-family:&quot;Helvetica Neue&quot;">to the same DRAM tier. Thi=
+s results in CPUless memory/non-DRAM devices,</p><p class=3D"gmail-p1" styl=
+e=3D"margin:0px;font-variant-numeric:normal;font-variant-east-asian:normal;=
+font-variant-alternates:normal;font-kerning:auto;font-feature-settings:norm=
+al;font-stretch:normal;font-size:13px;line-height:normal;font-family:&quot;=
+Helvetica Neue&quot;">such as CXL1.1 type3 memory, being unable to be assig=
+ned to the correct memory tier,</p><p class=3D"gmail-p1" style=3D"margin:0p=
+x;font-variant-numeric:normal;font-variant-east-asian:normal;font-variant-a=
+lternates:normal;font-kerning:auto;font-feature-settings:normal;font-stretc=
+h:normal;font-size:13px;line-height:normal;font-family:&quot;Helvetica Neue=
+&quot;">leading to the inability to migrate pages between different=C2=A0ty=
+pes of memory.&quot;</p><p class=3D"gmail-p1" style=3D"margin:0px;font-vari=
+ant-numeric:normal;font-variant-east-asian:normal;font-variant-alternates:n=
+ormal;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;fo=
+nt-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;"><br=
+></p></div><div>Please see if this looks more specific.</div><br>&gt; &gt; =
+This patchset automatically resolves the issues. It delays the initializati=
+on<br>&gt; &gt; of memory tiers for CPUless NUMA nodes until they obtain HM=
+AT information<br>&gt; &gt; at boot time, eliminating the need for user int=
+ervention.<br>&gt; &gt; If no HMAT specified, it falls back to using `defau=
+lt_dram_type`.<br>&gt; &gt;<br>&gt; &gt; Example usecase:<br>&gt; &gt; We h=
+ave CXL memory on the host, and we create VMs with a new system memory<br>&=
+gt; &gt; device backed by host CXL memory. We inject CXL memory performance=
+ attributes<br>&gt; &gt; through QEMU, and the guest now sees memory nodes =
+with performance attributes<br>&gt; &gt; in HMAT. With this change, we enab=
+le the guest kernel to construct<br>&gt; &gt; the correct memory tiering fo=
+r the memory nodes.<br>&gt; &gt;<br>&gt; &gt; Ho-Ren (Jack) Chuang (1):<br>=
+&gt; &gt; =C2=A0 memory tier: acpi/hmat: create CPUless memory tiers after =
+obtaining<br>&gt; &gt; =C2=A0 =C2=A0 HMAT info<br>&gt; &gt;<br>&gt; &gt; =
+=C2=A0drivers/acpi/numa/hmat.c =C2=A0 =C2=A0 | =C2=A03 ++<br>&gt; &gt; =C2=
+=A0include/linux/memory-tiers.h | =C2=A06 +++<br>&gt; &gt; =C2=A0mm/memory-=
+tiers.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 76 +++++++++++++++++++++=
++++++++++++----<br>&gt; &gt; =C2=A03 files changed, 77 insertions(+), 8 del=
+etions(-)<br>&gt;<br>&gt; --<br>&gt; Best Regards,<br>&gt; Huang, Ying<br><=
+br>--<br>Best regards,<br>Ho-Ren (Jack) Chuang<br>=E8=8E=8A=E8=B3=80=E4=BB=
+=BB</div>
+
+--0000000000008567cb0612e3d108--
 
