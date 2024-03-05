@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C7C8C54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:54:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAA2EC54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:54:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhVF7-0002mP-1r; Tue, 05 Mar 2024 08:54:05 -0500
+	id 1rhVEt-0001dd-Us; Tue, 05 Mar 2024 08:53:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhVE7-0000yX-HD
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:53:09 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1rhVDw-0000wb-QH
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:53:06 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhVDt-0005yY-I6
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:53:01 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-33d28468666so3791254f8f.0
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:52:48 -0800 (PST)
+ id 1rhVDo-0005xn-T7
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:52:52 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-33d118a181fso3650373f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:52:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709646768; x=1710251568; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709646763; x=1710251563; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=FXV4byW7NW0KAiWMPyEzYmL7ozL2tTK1qICThutJLjQ=;
- b=zcASCyfmUFjW6ottGt8EJa+TuxnPrNmeHGMBV39T0JkibWYHpsDCq/zz8p0W/KS1he
- b51re6mcXhj/V0sKt/xNmjTcSF4rlfTaSZk6NcmuUILZ1+dBJ0Ha6v9MEWw5HO1FH2U1
- JxwGmgkDGA1CO4zofBrU2xZNe6AK7nBcR/Jftm92Ba3PXItu81/uiew5oNE3iYnG3h8E
- jILwiFldwApkZwlZCHtkoKayzIq1yyoCe+HgzZZpsSaF+PPlr7gyvkqNQyNe2khhfcED
- TTNyVMzx3Oxm8GG5s5KyTFIEPD+67KOL5+W1cSolw2IXW7WNUVaCd+rlJS11nQdqc9eM
- lM0g==
+ :reply-to; bh=JNI+Qpco22VWGAbmNYNkaRO2Lu4QWjoV4nttCF019Tw=;
+ b=FWDFtzvPdK8F2XMbz5X8EQPfHNA18peyhQrifWh1FNCz7yUnze41Kwu6sM9KVAEWT4
+ 5fmzObsBX/+pVPbzZRzJR8WY16Fy0prXdFhRm7n9IE4JKwr/AldFqX0qIrkgLtOusP3n
+ caHoF/rjK0pH8qg6Nv6eC09dkKDh7q5xoi8W9EUzOW515404K6Csi5zm3AOtCAd+ok8g
+ sGKiHtzBnjJip6K7FjsLvZi02cG87q5TqrW46HDwLlcRBrfhVRTjSmpOG1bWUj2TdECi
+ 76UdrvX5rc0PufxRI2HsJ6qhK4d69nCi8qoKPJ5rUcskXFxOW/4Vaom7tOUAZM/x+3Y9
+ EW4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709646768; x=1710251568;
+ d=1e100.net; s=20230601; t=1709646763; x=1710251563;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FXV4byW7NW0KAiWMPyEzYmL7ozL2tTK1qICThutJLjQ=;
- b=MhUFq/bqhkB9cbQBuHqYM/ImPg4jkKe/D4qhoa9k1j972rzNrB21LMl1/vxo/AP6Rc
- toyGUyqlWI4U/XKuBGsybDL6Mj3DGw4L4G4tPKE/pN9zEgtK8A8Jb3wDiHc6JZrRPf2v
- 04FZGCDYU5DAvyXKZRboSGXTjnr/Vaq0eDbPAMTSr4cxSogGCD7NDz9TFmnM3g3xTbQ6
- qhG58SRpVA329oQw4lw0cV44rkPBqn4htU856ZEI9z7dXhT6gHTARsGfPiHpVrjoaXkM
- 4J5WROlfS2joawGa5nNWkyOm27hQTRfMneFm3jE5yRsEvV2PCztrKtRFgCncxnVgtdX4
- mzGA==
-X-Gm-Message-State: AOJu0YxpfK0DlXALXgfL/YtLmwMf0Td/dcaCO02wt6bE3XEdfhVOpP/c
- ioB5pHjRJ5UHrj0vKIg+IWEfE/zPQtfDuY4LMLmRZG942poSp0eDCZEm28adSgLlz6ueNjgPScp
- E
-X-Google-Smtp-Source: AGHT+IEm8P39LQghdUDn7PFnk1waqB1EKiy7jsZThAleW+37bydRn7e8mVahJLHu4Chdjd1RXfNZLQ==
-X-Received: by 2002:a5d:550b:0:b0:33d:47d1:38c3 with SMTP id
- b11-20020a5d550b000000b0033d47d138c3mr9364064wrv.36.1709646767727; 
- Tue, 05 Mar 2024 05:52:47 -0800 (PST)
+ bh=JNI+Qpco22VWGAbmNYNkaRO2Lu4QWjoV4nttCF019Tw=;
+ b=lUtu9y0STLLkHXlfp9CxLXDtwTcwUHTie0yhdjpXCXz9til1suG426ARhaizalQFge
+ mACVKL7efvkox8oObgyGHjklntCPb6ltPdzpEXGzzkZrV/JJ/1e4SunP1dS79m2m7AS6
+ BLWnM9VsmgkiHy+DfiCNEyCHubWpT7DO/SYY/VXVq8DWksd5hEW1TC5iccARf46weH4R
+ Fb9X5/S3hxjsuFwdOzicDd44hSqNmB5YX7GMqsnc6ug+4+NLh3aglyIH5jurAW87TCK4
+ kyNy3j+nTP2Hi4nY7mJzwafwbco3YhncXDeDHGW7TFUrb5A3F4qD+V0iFovbBk7+3cR3
+ OFmA==
+X-Gm-Message-State: AOJu0Yy3UpmkmVneD2thY/TbwXEtKoXIQb2X80auSyu+hkO9qqwlki8k
+ fy+lbLFYoJ4Vftsu5qndR0B5H5umakK4IIimQHbzZ3akfsSpeO3sqhTaElg6ebvQiDaeBq8MqWF
+ r
+X-Google-Smtp-Source: AGHT+IFX9fzPerwWVI1nba94s/HZaX2JI3CF1eoPMWG3ZOiCqNik3STSzl3XdanxoXZBTAJW3ioKAQ==
+X-Received: by 2002:a05:6000:3c5:b0:33e:4590:8bd8 with SMTP id
+ b5-20020a05600003c500b0033e45908bd8mr4370759wrg.60.1709646763442; 
+ Tue, 05 Mar 2024 05:52:43 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- x3-20020a5d6503000000b0033e206a0a7asm11797532wru.26.2024.03.05.05.52.47
+ x3-20020a5d6503000000b0033e206a0a7asm11797532wru.26.2024.03.05.05.52.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Mar 2024 05:52:47 -0800 (PST)
+ Tue, 05 Mar 2024 05:52:43 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 18/20] target/arm: Do memory type alignment check when
- translation enabled
-Date: Tue,  5 Mar 2024 13:52:35 +0000
-Message-Id: <20240305135237.3111642-19-peter.maydell@linaro.org>
+Subject: [PULL 09/20] hw/misc/stm32l4x5_rcc: Handle Register Updates
+Date: Tue,  5 Mar 2024 13:52:26 +0000
+Message-Id: <20240305135237.3111642-10-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240305135237.3111642-1-peter.maydell@linaro.org>
 References: <20240305135237.3111642-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,93 +94,674 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Arnaud Minier <arnaud.minier@telecom-paris.fr>
 
-If translation is enabled, and the PTE memory type is Device,
-enable checking alignment via TLB_CHECK_ALIGNMENT.  While the
-check is done later than it should be per the ARM, it's better
-than not performing the check at all.
+Update the RCC state and propagate frequency changes when writing to the
+RCC registers. Currently, ICSCR, CIER, the reset registers and the stop
+mode registers are not implemented.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240301204110.656742-7-richard.henderson@linaro.org
-[PMM: tweaks to comment text]
+Some fields  have not been implemented due to uncertainty about
+how to handle them (Like the clock security system or bypassing
+mecanisms).
+
+Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+Message-id: 20240303140643.81957-6-arnaud.minier@telecom-paris.fr
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/ptw.c | 39 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ hw/misc/stm32l4x5_rcc.c | 524 +++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 512 insertions(+), 12 deletions(-)
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index ba1a27ca2b5..31ae43f60ed 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -471,6 +471,16 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
-     return false;
+diff --git a/hw/misc/stm32l4x5_rcc.c b/hw/misc/stm32l4x5_rcc.c
+index 083c0ad9ef5..2109f809e2b 100644
+--- a/hw/misc/stm32l4x5_rcc.c
++++ b/hw/misc/stm32l4x5_rcc.c
+@@ -28,6 +28,7 @@
+ #include "hw/qdev-clock.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/qdev-properties-system.h"
++#include "hw/registerfields.h"
+ #include "trace.h"
+ 
+ #define HSE_DEFAULT_FRQ 48000000ULL
+@@ -363,6 +364,9 @@ static void pll_set_channel_divider(RccPllState *pll,
+ 
+ static void rcc_update_irq(Stm32l4x5RccState *s)
+ {
++    /*
++     * TODO: Handle LSECSSF and CSSF flags when the CSS is implemented.
++     */
+     if (s->cifr & CIFR_IRQ_MASK) {
+         qemu_irq_raise(s->irq);
+     } else {
+@@ -370,6 +374,472 @@ static void rcc_update_irq(Stm32l4x5RccState *s)
+     }
  }
  
-+static bool S1_attrs_are_device(uint8_t attrs)
++static void rcc_update_cr_register(Stm32l4x5RccState *s)
 +{
-+    /*
-+     * This slightly under-decodes the MAIR_ELx field:
-+     * 0b0000dd01 is Device with FEAT_XS, otherwise UNPREDICTABLE;
-+     * 0b0000dd1x is UNPREDICTABLE.
-+     */
-+    return (attrs & 0xf0) == 0;
-+}
++    int val;
 +
- static bool S2_attrs_are_device(uint64_t hcr, uint8_t attrs)
- {
-     /*
-@@ -1684,6 +1694,7 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-     bool aarch64 = arm_el_is_aa64(env, el);
-     uint64_t descriptor, new_descriptor;
-     ARMSecuritySpace out_space;
-+    bool device;
- 
-     /* TODO: This code does not support shareability levels. */
-     if (aarch64) {
-@@ -2106,6 +2117,12 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-     if (regime_is_stage2(mmu_idx)) {
-         result->cacheattrs.is_s2_format = true;
-         result->cacheattrs.attrs = extract32(attrs, 2, 4);
-+        /*
-+         * Security state does not really affect HCR_EL2.FWB;
-+         * we only need to filter FWB for aa32 or other FEAT.
-+         */
-+        device = S2_attrs_are_device(arm_hcr_el2_eff(env),
-+                                     result->cacheattrs.attrs);
-     } else {
-         /* Index into MAIR registers for cache attributes */
-         uint8_t attrindx = extract32(attrs, 2, 3);
-@@ -2118,6 +2135,28 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-         if (aarch64 && cpu_isar_feature(aa64_bti, cpu)) {
-             result->f.extra.arm.guarded = extract64(attrs, 50, 1); /* GP */
-         }
-+        device = S1_attrs_are_device(result->cacheattrs.attrs);
++    /* PLLSAI2ON and update PLLSAI2RDY */
++    val = FIELD_EX32(s->cr, CR, PLLSAI2ON);
++    pll_set_enable(&s->plls[RCC_PLL_PLLSAI2], val);
++    s->cr = (s->cr & ~R_CR_PLLSAI2RDY_MASK) |
++            (val << R_CR_PLLSAI2RDY_SHIFT);
++    if (s->cier & R_CIER_PLLSAI2RDYIE_MASK) {
++        s->cifr |= R_CIFR_PLLSAI2RDYF_MASK;
 +    }
 +
++    /* PLLSAI1ON and update PLLSAI1RDY */
++    val = FIELD_EX32(s->cr, CR, PLLSAI1ON);
++    pll_set_enable(&s->plls[RCC_PLL_PLLSAI1], val);
++    s->cr = (s->cr & ~R_CR_PLLSAI1RDY_MASK) |
++            (val << R_CR_PLLSAI1RDY_SHIFT);
++    if (s->cier & R_CIER_PLLSAI1RDYIE_MASK) {
++        s->cifr |= R_CIFR_PLLSAI1RDYF_MASK;
++    }
++
++    /* PLLON and update PLLRDY */
++    val = FIELD_EX32(s->cr, CR, PLLON);
++    pll_set_enable(&s->plls[RCC_PLL_PLL], val);
++    s->cr = (s->cr & ~R_CR_PLLRDY_MASK) |
++            (val << R_CR_PLLRDY_SHIFT);
++    if (s->cier & R_CIER_PLLRDYIE_MASK) {
++        s->cifr |= R_CIFR_PLLRDYF_MASK;
++    }
++
++    /* CSSON: TODO */
++    /* HSEBYP: TODO */
++
++    /* HSEON and update HSERDY */
++    val = FIELD_EX32(s->cr, CR, HSEON);
++    s->cr = (s->cr & ~R_CR_HSERDY_MASK) |
++            (val << R_CR_HSERDY_SHIFT);
++    if (val) {
++        clock_update_hz(s->hse, s->hse_frequency);
++        if (s->cier & R_CIER_HSERDYIE_MASK) {
++            s->cifr |= R_CIFR_HSERDYF_MASK;
++        }
++    } else {
++        clock_update(s->hse, 0);
++    }
++
++    /* HSIAFS: TODO*/
++    /* HSIKERON: TODO*/
++
++    /* HSION and update HSIRDY*/
++    val = FIELD_EX32(s->cr, CR, HSION);
++    s->cr = (s->cr & ~R_CR_HSIRDY_MASK) |
++            (val << R_CR_HSIRDY_SHIFT);
++    if (val) {
++        clock_update_hz(s->hsi16_rc, HSI_FRQ);
++        if (s->cier & R_CIER_HSIRDYIE_MASK) {
++            s->cifr |= R_CIFR_HSIRDYF_MASK;
++        }
++    } else {
++        clock_update(s->hsi16_rc, 0);
++    }
++
++    static const uint32_t msirange[] = {
++        100000, 200000, 400000, 800000, 1000000, 2000000,
++        4000000, 8000000, 16000000, 24000000, 32000000, 48000000
++    };
++    /* MSIRANGE and MSIRGSEL */
++    val = FIELD_EX32(s->cr, CR, MSIRGSEL);
++    if (val) {
++        /* MSIRGSEL is set, use the MSIRANGE field */
++        val = FIELD_EX32(s->cr, CR, MSIRANGE);
++    } else {
++        /* MSIRGSEL is not set, use the MSISRANGE field */
++        val = FIELD_EX32(s->csr, CSR, MSISRANGE);
++    }
++
++    if (val < ARRAY_SIZE(msirange)) {
++        clock_update_hz(s->msi_rc, msirange[val]);
++    } else {
++        clock_update_hz(s->msi_rc, MSI_DEFAULT_FRQ);
++        /* TODO: there is a write protection if the value is out of bound,
++           implement that instead of setting the default */
++    }
++
++    /* MSIPLLEN */
++
++    /* MSION and update MSIRDY */
++    val = FIELD_EX32(s->cr, CR, MSION);
++    s->cr = (s->cr & ~R_CR_MSIRDY_MASK) |
++            (val << R_CR_MSIRDY_SHIFT);
++    if (s->cier & R_CIER_MSIRDYIE_MASK) {
++        s->cifr |= R_CIFR_MSIRDYF_MASK;
++    }
++    rcc_update_irq(s);
++}
++
++static void rcc_update_cfgr_register(Stm32l4x5RccState *s)
++{
++    uint32_t val;
++    /* MCOPRE */
++    val = FIELD_EX32(s->cfgr, CFGR, MCOPRE);
++    assert(val <= 0b100);
++    clock_mux_set_factor(&s->clock_muxes[RCC_CLOCK_MUX_MCO],
++                         1, 1 << val);
++
++    /* MCOSEL */
++    val = FIELD_EX32(s->cfgr, CFGR, MCOSEL);
++    assert(val <= 0b111);
++    if (val == 0) {
++        clock_mux_set_enable(&s->clock_muxes[RCC_CLOCK_MUX_MCO], false);
++    } else {
++        clock_mux_set_enable(&s->clock_muxes[RCC_CLOCK_MUX_MCO], true);
++        clock_mux_set_source(&s->clock_muxes[RCC_CLOCK_MUX_MCO],
++                             val - 1);
++    }
++
++    /* STOPWUCK */
++    /* TODO */
++
++    /* PPRE2 */
++    val = FIELD_EX32(s->cfgr, CFGR, PPRE2);
++    if (val < 0b100) {
++        clock_mux_set_factor(&s->clock_muxes[RCC_CLOCK_MUX_PCLK2],
++                             1, 1);
++    } else {
++        clock_mux_set_factor(&s->clock_muxes[RCC_CLOCK_MUX_PCLK2],
++                             1, 1 << (val - 0b11));
++    }
++
++    /* PPRE1 */
++    val = FIELD_EX32(s->cfgr, CFGR, PPRE1);
++    if (val < 0b100) {
++        clock_mux_set_factor(&s->clock_muxes[RCC_CLOCK_MUX_PCLK1],
++                             1, 1);
++    } else {
++        clock_mux_set_factor(&s->clock_muxes[RCC_CLOCK_MUX_PCLK1],
++                             1, 1 << (val - 0b11));
++    }
++
++    /* HPRE */
++    val = FIELD_EX32(s->cfgr, CFGR, HPRE);
++    if (val < 0b1000) {
++        clock_mux_set_factor(&s->clock_muxes[RCC_CLOCK_MUX_HCLK],
++                             1, 1);
++    } else {
++        clock_mux_set_factor(&s->clock_muxes[RCC_CLOCK_MUX_HCLK],
++                             1, 1 << (val - 0b111));
++    }
++
++    /* Update SWS */
++    val = FIELD_EX32(s->cfgr, CFGR, SW);
++    clock_mux_set_source(&s->clock_muxes[RCC_CLOCK_MUX_SYSCLK],
++                         val);
++    s->cfgr &= ~R_CFGR_SWS_MASK;
++    s->cfgr |= val << R_CFGR_SWS_SHIFT;
++}
++
++static void rcc_update_ahb1enr(Stm32l4x5RccState *s)
++{
++    #define AHB1ENR_SET_ENABLE(_peripheral_name) \
++        clock_mux_set_enable(&s->clock_muxes[RCC_CLOCK_MUX_##_peripheral_name], \
++            FIELD_EX32(s->ahb1enr, AHB1ENR, _peripheral_name##EN))
++
++    /* DMA2DEN: reserved for STM32L475xx */
++    AHB1ENR_SET_ENABLE(TSC);
++    AHB1ENR_SET_ENABLE(CRC);
++    AHB1ENR_SET_ENABLE(FLASH);
++    AHB1ENR_SET_ENABLE(DMA2);
++    AHB1ENR_SET_ENABLE(DMA1);
++
++    #undef AHB1ENR_SET_ENABLE
++}
++
++static void rcc_update_ahb2enr(Stm32l4x5RccState *s)
++{
++    #define AHB2ENR_SET_ENABLE(_peripheral_name) \
++        clock_mux_set_enable(&s->clock_muxes[RCC_CLOCK_MUX_##_peripheral_name], \
++            FIELD_EX32(s->ahb2enr, AHB2ENR, _peripheral_name##EN))
++
++    AHB2ENR_SET_ENABLE(RNG);
++    /* HASHEN: reserved for STM32L475xx */
++    AHB2ENR_SET_ENABLE(AES);
++    /* DCMIEN: reserved for STM32L475xx */
++    AHB2ENR_SET_ENABLE(ADC);
++    AHB2ENR_SET_ENABLE(OTGFS);
++    /* GPIOIEN: reserved for STM32L475xx */
++    AHB2ENR_SET_ENABLE(GPIOA);
++    AHB2ENR_SET_ENABLE(GPIOB);
++    AHB2ENR_SET_ENABLE(GPIOC);
++    AHB2ENR_SET_ENABLE(GPIOD);
++    AHB2ENR_SET_ENABLE(GPIOE);
++    AHB2ENR_SET_ENABLE(GPIOF);
++    AHB2ENR_SET_ENABLE(GPIOG);
++    AHB2ENR_SET_ENABLE(GPIOH);
++
++    #undef AHB2ENR_SET_ENABLE
++}
++
++static void rcc_update_ahb3enr(Stm32l4x5RccState *s)
++{
++    #define AHB3ENR_SET_ENABLE(_peripheral_name) \
++        clock_mux_set_enable(&s->clock_muxes[RCC_CLOCK_MUX_##_peripheral_name], \
++            FIELD_EX32(s->ahb3enr, AHB3ENR, _peripheral_name##EN))
++
++    AHB3ENR_SET_ENABLE(QSPI);
++    AHB3ENR_SET_ENABLE(FMC);
++
++    #undef AHB3ENR_SET_ENABLE
++}
++
++static void rcc_update_apb1enr(Stm32l4x5RccState *s)
++{
++    #define APB1ENR1_SET_ENABLE(_peripheral_name) \
++        clock_mux_set_enable(&s->clock_muxes[RCC_CLOCK_MUX_##_peripheral_name], \
++            FIELD_EX32(s->apb1enr1, APB1ENR1, _peripheral_name##EN))
++    #define APB1ENR2_SET_ENABLE(_peripheral_name) \
++        clock_mux_set_enable(&s->clock_muxes[RCC_CLOCK_MUX_##_peripheral_name], \
++            FIELD_EX32(s->apb1enr2, APB1ENR2, _peripheral_name##EN))
++
++    /* APB1ENR1 */
++    APB1ENR1_SET_ENABLE(LPTIM1);
++    APB1ENR1_SET_ENABLE(OPAMP);
++    APB1ENR1_SET_ENABLE(DAC1);
++    APB1ENR1_SET_ENABLE(PWR);
++    /* CAN2: reserved for STM32L4x5 */
++    APB1ENR1_SET_ENABLE(CAN1);
++    /* CRSEN: reserved for STM32L4x5 */
++    APB1ENR1_SET_ENABLE(I2C3);
++    APB1ENR1_SET_ENABLE(I2C2);
++    APB1ENR1_SET_ENABLE(I2C1);
++    APB1ENR1_SET_ENABLE(UART5);
++    APB1ENR1_SET_ENABLE(UART4);
++    APB1ENR1_SET_ENABLE(USART3);
++    APB1ENR1_SET_ENABLE(USART2);
++    APB1ENR1_SET_ENABLE(SPI3);
++    APB1ENR1_SET_ENABLE(SPI2);
++    APB1ENR1_SET_ENABLE(WWDG);
++    /* RTCAPB: reserved for STM32L4x5 */
++    APB1ENR1_SET_ENABLE(LCD);
++    APB1ENR1_SET_ENABLE(TIM7);
++    APB1ENR1_SET_ENABLE(TIM6);
++    APB1ENR1_SET_ENABLE(TIM5);
++    APB1ENR1_SET_ENABLE(TIM4);
++    APB1ENR1_SET_ENABLE(TIM3);
++    APB1ENR1_SET_ENABLE(TIM2);
++
++    /* APB1ENR2 */
++    APB1ENR2_SET_ENABLE(LPTIM2);
++    APB1ENR2_SET_ENABLE(SWPMI1);
++    /* I2C4EN: reserved for STM32L4x5 */
++    APB1ENR2_SET_ENABLE(LPUART1);
++
++    #undef APB1ENR1_SET_ENABLE
++    #undef APB1ENR2_SET_ENABLE
++}
++
++static void rcc_update_apb2enr(Stm32l4x5RccState *s)
++{
++    #define APB2ENR_SET_ENABLE(_peripheral_name) \
++        clock_mux_set_enable(&s->clock_muxes[RCC_CLOCK_MUX_##_peripheral_name], \
++            FIELD_EX32(s->apb2enr, APB2ENR, _peripheral_name##EN))
++
++    APB2ENR_SET_ENABLE(DFSDM1);
++    APB2ENR_SET_ENABLE(SAI2);
++    APB2ENR_SET_ENABLE(SAI1);
++    APB2ENR_SET_ENABLE(TIM17);
++    APB2ENR_SET_ENABLE(TIM16);
++    APB2ENR_SET_ENABLE(TIM15);
++    APB2ENR_SET_ENABLE(USART1);
++    APB2ENR_SET_ENABLE(TIM8);
++    APB2ENR_SET_ENABLE(SPI1);
++    APB2ENR_SET_ENABLE(TIM1);
++    APB2ENR_SET_ENABLE(SDMMC1);
++    APB2ENR_SET_ENABLE(FW);
++    APB2ENR_SET_ENABLE(SYSCFG);
++
++    #undef APB2ENR_SET_ENABLE
++}
++
++/*
++ * The 3 PLLs share the same register layout
++ * so we can use the same function for all of them
++ * Note: no frequency bounds checking is done here.
++ */
++static void rcc_update_pllsaixcfgr(Stm32l4x5RccState *s, RccPll pll_id)
++{
++    uint32_t reg, val;
++    switch (pll_id) {
++    case RCC_PLL_PLL:
++        reg = s->pllcfgr;
++        break;
++    case RCC_PLL_PLLSAI1:
++        reg = s->pllsai1cfgr;
++        break;
++    case RCC_PLL_PLLSAI2:
++        reg = s->pllsai2cfgr;
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Invalid PLL ID: %u\n", __func__, pll_id);
++        return;
++    }
++
++    /* PLLPDIV */
++    val = FIELD_EX32(reg, PLLCFGR, PLLPDIV);
++    /* 1 is a reserved value */
++    if (val == 0) {
++        /* Get PLLP value */
++        val = FIELD_EX32(reg, PLLCFGR, PLLP);
++        pll_set_channel_divider(&s->plls[pll_id], RCC_PLL_COMMON_CHANNEL_P,
++            (val ? 17 : 7));
++    } else if (val > 1) {
++        pll_set_channel_divider(&s->plls[pll_id], RCC_PLL_COMMON_CHANNEL_P,
++            val);
++    }
++
++
++    /* PLLR */
++    val = FIELD_EX32(reg, PLLCFGR, PLLR);
++    pll_set_channel_divider(&s->plls[pll_id], RCC_PLL_COMMON_CHANNEL_R,
++        2 * (val + 1));
++
++    /* PLLREN */
++    val = FIELD_EX32(reg, PLLCFGR, PLLREN);
++    pll_set_channel_enable(&s->plls[pll_id], RCC_PLL_COMMON_CHANNEL_R, val);
++
++    /* PLLQ */
++    val = FIELD_EX32(reg, PLLCFGR, PLLQ);
++    pll_set_channel_divider(&s->plls[pll_id], RCC_PLL_COMMON_CHANNEL_Q,
++        2 * (val + 1));
++
++    /* PLLQEN */
++    val = FIELD_EX32(reg, PLLCFGR, PLLQEN);
++    pll_set_channel_enable(&s->plls[pll_id], RCC_PLL_COMMON_CHANNEL_Q, val);
++
++    /* PLLPEN */
++    val = FIELD_EX32(reg, PLLCFGR, PLLPEN);
++    pll_set_channel_enable(&s->plls[pll_id], RCC_PLL_COMMON_CHANNEL_P, val);
++
++    /* PLLN */
++    val = FIELD_EX32(reg, PLLCFGR, PLLN);
++    pll_set_vco_multiplier(&s->plls[pll_id], val);
++}
++
++static void rcc_update_pllcfgr(Stm32l4x5RccState *s)
++{
++    int val;
++
++    /* Use common layout */
++    rcc_update_pllsaixcfgr(s, RCC_PLL_PLL);
++
++    /* Fetch specific fields for pllcfgr */
++
++    /* PLLM */
++    val = FIELD_EX32(s->pllcfgr, PLLCFGR, PLLM);
++    clock_mux_set_factor(&s->clock_muxes[RCC_CLOCK_MUX_PLL_INPUT], 1, (val + 1));
++
++    /* PLLSRC */
++    val = FIELD_EX32(s->pllcfgr, PLLCFGR, PLLSRC);
++    if (val == 0) {
++        clock_mux_set_enable(&s->clock_muxes[RCC_CLOCK_MUX_PLL_INPUT], false);
++    } else {
++        clock_mux_set_source(&s->clock_muxes[RCC_CLOCK_MUX_PLL_INPUT], val - 1);
++        clock_mux_set_enable(&s->clock_muxes[RCC_CLOCK_MUX_PLL_INPUT], true);
++    }
++}
++
++static void rcc_update_ccipr(Stm32l4x5RccState *s)
++{
++    #define CCIPR_SET_SOURCE(_peripheral_name) \
++        clock_mux_set_source(&s->clock_muxes[RCC_CLOCK_MUX_##_peripheral_name], \
++            FIELD_EX32(s->ccipr, CCIPR, _peripheral_name##SEL))
++
++    CCIPR_SET_SOURCE(DFSDM1);
++    CCIPR_SET_SOURCE(SWPMI1);
++    CCIPR_SET_SOURCE(ADC);
++    CCIPR_SET_SOURCE(CLK48);
++    CCIPR_SET_SOURCE(SAI2);
++    CCIPR_SET_SOURCE(SAI1);
++    CCIPR_SET_SOURCE(LPTIM2);
++    CCIPR_SET_SOURCE(LPTIM1);
++    CCIPR_SET_SOURCE(I2C3);
++    CCIPR_SET_SOURCE(I2C2);
++    CCIPR_SET_SOURCE(I2C1);
++    CCIPR_SET_SOURCE(LPUART1);
++    CCIPR_SET_SOURCE(UART5);
++    CCIPR_SET_SOURCE(UART4);
++    CCIPR_SET_SOURCE(USART3);
++    CCIPR_SET_SOURCE(USART2);
++    CCIPR_SET_SOURCE(USART1);
++
++    #undef CCIPR_SET_SOURCE
++}
++
++static void rcc_update_bdcr(Stm32l4x5RccState *s)
++{
++    int val;
++
++    /* LSCOSEL */
++    val = FIELD_EX32(s->bdcr, BDCR, LSCOSEL);
++    clock_mux_set_source(&s->clock_muxes[RCC_CLOCK_MUX_LSCO], val);
++
++    val = FIELD_EX32(s->bdcr, BDCR, LSCOEN);
++    clock_mux_set_enable(&s->clock_muxes[RCC_CLOCK_MUX_LSCO], val);
++
++    /* BDRST */
 +    /*
-+     * Enable alignment checks on Device memory.
-+     *
-+     * Per R_XCHFJ, this check is mis-ordered. The correct ordering
-+     * for alignment, permission, and stage 2 faults should be:
-+     *    - Alignment fault caused by the memory type
-+     *    - Permission fault
-+     *    - A stage 2 fault on the memory access
-+     * but due to the way the TCG softmmu TLB operates, we will have
-+     * implicitly done the permission check and the stage2 lookup in
-+     * finding the TLB entry, so the alignment check cannot be done sooner.
-+     *
-+     * In v7, for a CPU without the Virtualization Extensions this
-+     * access is UNPREDICTABLE; we choose to make it take the alignment
-+     * fault as is required for a v7VE CPU. (QEMU doesn't emulate any
-+     * CPUs with ARM_FEATURE_LPAE but not ARM_FEATURE_V7VE anyway.)
++     * The documentation is not clear if the RTCEN flag disables the RTC and
++     * the LCD common mux or if it only affects the RTC.
++     * As the LCDEN flag exists, we assume here that it only affects the RTC.
 +     */
-+    if (device) {
-+        result->f.tlb_fill_flags |= TLB_CHECK_ALIGNED;
-     }
++    val = FIELD_EX32(s->bdcr, BDCR, RTCEN);
++    clock_mux_set_enable(&s->clock_muxes[RCC_CLOCK_MUX_RTC], val);
++    /* LCD and RTC share the same clock */
++    val = FIELD_EX32(s->bdcr, BDCR, RTCSEL);
++    clock_mux_set_source(&s->clock_muxes[RCC_CLOCK_MUX_LCD_AND_RTC_COMMON], val);
++
++    /* LSECSSON */
++    /* LSEDRV[1:0] */
++    /* LSEBYP */
++
++    /* LSEON: Update LSERDY at the same time */
++    val = FIELD_EX32(s->bdcr, BDCR, LSEON);
++    if (val) {
++        clock_update_hz(s->lse_crystal, LSE_FRQ);
++        s->bdcr |= R_BDCR_LSERDY_MASK;
++        if (s->cier & R_CIER_LSERDYIE_MASK) {
++            s->cifr |= R_CIFR_LSERDYF_MASK;
++        }
++    } else {
++        clock_update(s->lse_crystal, 0);
++        s->bdcr &= ~R_BDCR_LSERDY_MASK;
++    }
++
++    rcc_update_irq(s);
++}
++
++static void rcc_update_csr(Stm32l4x5RccState *s)
++{
++    int val;
++
++    /* Reset flags: Not implemented */
++    /* MSISRANGE: Not implemented after reset */
++
++    /* LSION: Update LSIRDY at the same time */
++    val = FIELD_EX32(s->csr, CSR, LSION);
++    if (val) {
++        clock_update_hz(s->lsi_rc, LSI_FRQ);
++        s->csr |= R_CSR_LSIRDY_MASK;
++        if (s->cier & R_CIER_LSIRDYIE_MASK) {
++            s->cifr |= R_CIFR_LSIRDYF_MASK;
++        }
++    } else {
++        /*
++         * TODO: Handle when the LSI is set independently of LSION.
++         * E.g. when the LSI is set by the RTC.
++         * See the reference manual for more details.
++         */
++        clock_update(s->lsi_rc, 0);
++        s->csr &= ~R_CSR_LSIRDY_MASK;
++    }
++
++    rcc_update_irq(s);
++}
++
+ static void stm32l4x5_rcc_reset_hold(Object *obj)
+ {
+     Stm32l4x5RccState *s = STM32L4X5_RCC(obj);
+@@ -529,24 +999,33 @@ static void stm32l4x5_rcc_write(void *opaque, hwaddr addr,
+     case A_CR:
+         s->cr = (s->cr & CR_READ_SET_MASK) |
+                 (value & (CR_READ_SET_MASK | ~CR_READ_ONLY_MASK));
++        rcc_update_cr_register(s);
+         break;
+     case A_ICSCR:
+         s->icscr = value & ~ICSCR_READ_ONLY_MASK;
++        qemu_log_mask(LOG_UNIMP,
++                "%s: Side-effects not implemented for ICSCR\n", __func__);
+         break;
+     case A_CFGR:
+         s->cfgr = value & ~CFGR_READ_ONLY_MASK;
++        rcc_update_cfgr_register(s);
+         break;
+     case A_PLLCFGR:
+         s->pllcfgr = value;
++        rcc_update_pllcfgr(s);
+         break;
+     case A_PLLSAI1CFGR:
+         s->pllsai1cfgr = value;
++        rcc_update_pllsaixcfgr(s, RCC_PLL_PLLSAI1);
+         break;
+     case A_PLLSAI2CFGR:
+         s->pllsai2cfgr = value;
++        rcc_update_pllsaixcfgr(s, RCC_PLL_PLLSAI2);
+         break;
+     case A_CIER:
+         s->cier = value;
++        qemu_log_mask(LOG_UNIMP,
++                "%s: Side-effects not implemented for CIER\n", __func__);
+         break;
+     case A_CIFR:
+         qemu_log_mask(LOG_GUEST_ERROR,
+@@ -561,67 +1040,100 @@ static void stm32l4x5_rcc_write(void *opaque, hwaddr addr,
+     /* Reset behaviors are not implemented */
+     case A_AHB1RSTR:
+         s->ahb1rstr = value;
++        qemu_log_mask(LOG_UNIMP,
++                "%s: Side-effects not implemented for AHB1RSTR\n", __func__);
+         break;
+     case A_AHB2RSTR:
+         s->ahb2rstr = value;
++        qemu_log_mask(LOG_UNIMP,
++                "%s: Side-effects not implemented for AHB2RSTR\n", __func__);
+         break;
+     case A_AHB3RSTR:
+         s->ahb3rstr = value;
++        qemu_log_mask(LOG_UNIMP,
++                "%s: Side-effects not implemented for AHB3RSTR\n", __func__);
+         break;
+     case A_APB1RSTR1:
+         s->apb1rstr1 = value;
++        qemu_log_mask(LOG_UNIMP,
++                "%s: Side-effects not implemented for APB1RSTR1\n", __func__);
+         break;
+     case A_APB1RSTR2:
+         s->apb1rstr2 = value;
++        qemu_log_mask(LOG_UNIMP,
++                "%s: Side-effects not implemented for APB1RSTR2\n", __func__);
+         break;
+     case A_APB2RSTR:
+         s->apb2rstr = value;
++        qemu_log_mask(LOG_UNIMP,
++                "%s: Side-effects not implemented for APB2RSTR\n", __func__);
+         break;
+     case A_AHB1ENR:
+         s->ahb1enr = value;
++        rcc_update_ahb1enr(s);
+         break;
+     case A_AHB2ENR:
+         s->ahb2enr = value;
++        rcc_update_ahb2enr(s);
+         break;
+     case A_AHB3ENR:
+         s->ahb3enr = value;
++        rcc_update_ahb3enr(s);
+         break;
+     case A_APB1ENR1:
+         s->apb1enr1 = value;
++        rcc_update_apb1enr(s);
+         break;
+     case A_APB1ENR2:
+         s->apb1enr2 = value;
++        rcc_update_apb1enr(s);
+         break;
+     case A_APB2ENR:
+         s->apb2enr = (s->apb2enr & APB2ENR_READ_SET_MASK) | value;
++        rcc_update_apb2enr(s);
+         break;
+     /* Behaviors for Sleep and Stop modes are not implemented */
+     case A_AHB1SMENR:
+         s->ahb1smenr = value;
++        qemu_log_mask(LOG_UNIMP,
++                "%s: Side-effects not implemented for AHB1SMENR\n", __func__);
+         break;
+     case A_AHB2SMENR:
+         s->ahb2smenr = value;
++        qemu_log_mask(LOG_UNIMP,
++                "%s: Side-effects not implemented for AHB2SMENR\n", __func__);
+         break;
+     case A_AHB3SMENR:
+         s->ahb3smenr = value;
++        qemu_log_mask(LOG_UNIMP,
++                "%s: Side-effects not implemented for AHB3SMENR\n", __func__);
+         break;
+     case A_APB1SMENR1:
+         s->apb1smenr1 = value;
++        qemu_log_mask(LOG_UNIMP,
++                "%s: Side-effects not implemented for APB1SMENR1\n", __func__);
+         break;
+     case A_APB1SMENR2:
+         s->apb1smenr2 = value;
++        qemu_log_mask(LOG_UNIMP,
++                "%s: Side-effects not implemented for APB1SMENR2\n", __func__);
+         break;
+     case A_APB2SMENR:
+         s->apb2smenr = value;
++        qemu_log_mask(LOG_UNIMP,
++                "%s: Side-effects not implemented for APB2SMENR\n", __func__);
+         break;
+     case A_CCIPR:
+         s->ccipr = value;
++        rcc_update_ccipr(s);
+         break;
+     case A_BDCR:
+         s->bdcr = value & ~BDCR_READ_ONLY_MASK;
++        rcc_update_bdcr(s);
+         break;
+     case A_CSR:
+         s->csr = value & ~CSR_READ_ONLY_MASK;
++        rcc_update_csr(s);
+         break;
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR,
+@@ -831,18 +1343,6 @@ static void stm32l4x5_rcc_realize(DeviceState *dev, Error **errp)
+     clock_update_hz(s->sai1_extclk, s->sai1_extclk_frequency);
+     clock_update_hz(s->sai2_extclk, s->sai2_extclk_frequency);
+     clock_update(s->gnd, 0);
+-
+-    /*
+-     * Dummy values to make compilation pass.
+-     * Removed in later commits.
+-     */
+-    clock_mux_set_source(&s->clock_muxes[0], RCC_CLOCK_MUX_SRC_GND);
+-    clock_mux_set_enable(&s->clock_muxes[0], true);
+-    clock_mux_set_factor(&s->clock_muxes[0], 1, 1);
+-    pll_set_channel_divider(&s->plls[0], 0, 1);
+-    pll_set_enable(&s->plls[0], true);
+-    pll_set_channel_enable(&s->plls[0], 0, true);
+-    pll_set_vco_multiplier(&s->plls[0], 1);
+ }
  
-     /*
+ static Property stm32l4x5_rcc_properties[] = {
 -- 
 2.34.1
 
