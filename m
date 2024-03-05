@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8993C54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:54:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93A66C54E41
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:54:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhVEo-0001Vq-Pi; Tue, 05 Mar 2024 08:53:48 -0500
+	id 1rhVEy-00029t-TK; Tue, 05 Mar 2024 08:53:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhVE0-0000xQ-DW
+ id 1rhVE0-0000xR-F6
  for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:53:09 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhVDl-0005xA-Ku
+ id 1rhVDq-0005y2-GE
  for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:52:56 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-412e4619e5eso14927335e9.2
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:52:41 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-33e17fc5aceso2809900f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:52:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709646760; x=1710251560; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709646765; x=1710251565; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=0JKYOkSiA03lg7OUJXJjM4ddPzSRWI5RZ/kNlzuzX60=;
- b=D1rcJLyeQ2PiUOb2D30FgExMbMZEtXlwhqSpalXn3ERQ5TXA3s+ncI3y0cNy8oaAXg
- kB/ShYrsZ5H79i2IOyphOipciU9uLAtQO7v0KDDapyLfpLKVk4wcAw8r5mrI0uE9bXkC
- Y6aFUkrfS9NY/Ege83WRjq/1L+m/Kt469GPiR6JddWA53oN4wfdKTLzzoWuaCT5MKW9Y
- srDwqFEasKzhlRls5FM7jwY9dcXCWtyvOttnfi0DYC3lPB9bDEDuonz8EbZAScb7N/4L
- BVBbCrOY9KeDql/UZw5srhW6RFdxwdmjGUqdV1VrmrcfP+6sxr13QPiWq9jSdCo/KqSb
- L2aQ==
+ :reply-to; bh=vOhlpnaKiIrRTqIJyTUzsqtsVnUpM/KK2Ic7nx0Sh9Y=;
+ b=yOuA8s/dbp0qDXLV5edxebPSQDbt8GK3tVkoZxqruEFzSoz9n8o8/frg3qa6yAYKSE
+ EcerqsSzaDAjJZAzy8AAfASXrhv3q/kiuJqHcptFUTanKjLpMPCLzJ+CIDx5eTEZrTh/
+ KEasIy6i5KFGejRfm0TD8nJvD4YjTFrUUOnGUn4ZU4HMmLYzIYRJMbPEzCPDn3OUhfRM
+ oQxUMbvj5ChfP83pJ2uKEPeS3wWs89ZAiHN546DuhwYORNvVWK9Cky0v8s/pab4dOlKg
+ Upa3z2Ekx9oTdaAAwcL/+zqKx92Q2prHj40wHAdYNK6sw3KrHtyuKSh0fVLUbdjA50+d
+ oGFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709646760; x=1710251560;
+ d=1e100.net; s=20230601; t=1709646765; x=1710251565;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0JKYOkSiA03lg7OUJXJjM4ddPzSRWI5RZ/kNlzuzX60=;
- b=qd0PisARcNy+KV1+QZ9TgZb08dCzW+JZw+3nVtpOLOw2Cr+sYbkCUUuEaSYNdQ6VPy
- JP1q47U3/Nc1+ONRNqzizLP0+v4EM+D0IbKyXP59ZhGGe8e6lTRHCsWK88HoMn8kh9Vn
- K2LveXHGHoxArToTvy5UCdfTnFc9xYx+1ulnYvXjXQtBbXyi5WbDGLLFVMZr0ldsh+1T
- z2uALbU6rsVa2Ru8/hFEH3qNe7TVWZd9dnA66TGxBFJhi3oCyAGDBzMrvJT9PKHjeClL
- DfRzWlkTdUfxTVYDbdsc/tN0LaL/7l62dRzfgPBZ2tQ5irCYNElmrUN68YKAMdgipZkl
- 7yQg==
-X-Gm-Message-State: AOJu0Yw56zWkxW4Jhuv7EUhQXe0sEnBvOqyWMqQcD+L6ZEeSJaTWEivg
- YODMxQe8rqv+AxpRAHF764nUtSYuSn3Q/fl+I1aNfllaCWJkIyeOxVnq3Zdu7TSkBiFNbF9RIEp
- C
-X-Google-Smtp-Source: AGHT+IESMTb40rfLN+eVEomIVwYgZ4YAgp6J+3yvU2V0IpDUkQd3CxwMbmy4mywL0soppmyaB6r69w==
-X-Received: by 2002:adf:db0f:0:b0:33e:c9b:396d with SMTP id
- s15-20020adfdb0f000000b0033e0c9b396dmr10725192wri.8.1709646759722; 
- Tue, 05 Mar 2024 05:52:39 -0800 (PST)
+ bh=vOhlpnaKiIrRTqIJyTUzsqtsVnUpM/KK2Ic7nx0Sh9Y=;
+ b=ilIxBsQ01+wMoApC5MuVmJlpfmzRRy6iAk/udu9lksGJSSyRU4Ofu8oLjDBbwvRrpE
+ eZAOp17Zy39IV5GaWUQGA83jK0o/QAmmbUCyAcQTzp/ks5BVWSUF5Wu3YZroKZV3mP7b
+ iiBjXqkNMprXavM71T2Ez7cspsAbeJ6H+FYGohbdqzhAKQB+D68qic/1fNCMFIccZRX0
+ 3VhMKYsGqz4rJay5mCgeTu6CrFMfN+D/k58kywweVtDQZ683WZGqIIxhyg8k+YG8fLUJ
+ 3AQ0+W2Sk8VQgqZvcXWZ6cKbGS/mvaphNzDRSicrBbgebhxP+BpUmXkkNEY9RXWtqIEr
+ XXzA==
+X-Gm-Message-State: AOJu0YyT0f+a8J5t/7f2b/nGNp4+qC+ApqmrTOSaKO7hel/WwjngqTzQ
+ HCnW/nCUf+Q4e7bfodN/a72rMZ+OOoH28JFsBm9lurLouQmXH1vSEsiZ3AldyOBUtDLfEx/sTds
+ l
+X-Google-Smtp-Source: AGHT+IH81vnmpCX1h++MpYkRjnTasMN6vldyHEubxFyBF4bpo7tVC33tkdtResnTJpOCwZTHjBZ0DA==
+X-Received: by 2002:adf:9dc9:0:b0:33e:2219:9804 with SMTP id
+ q9-20020adf9dc9000000b0033e22199804mr1922498wre.25.1709646764694; 
+ Tue, 05 Mar 2024 05:52:44 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- x3-20020a5d6503000000b0033e206a0a7asm11797532wru.26.2024.03.05.05.52.39
+ x3-20020a5d6503000000b0033e206a0a7asm11797532wru.26.2024.03.05.05.52.44
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Mar 2024 05:52:39 -0800 (PST)
+ Tue, 05 Mar 2024 05:52:44 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/20] hw/arm: Connect BSC to BCM2835 board as I2C0,
- I2C1 and I2C2
-Date: Tue,  5 Mar 2024 13:52:19 +0000
-Message-Id: <20240305135237.3111642-3-peter.maydell@linaro.org>
+Subject: [PULL 12/20] tests/qtest/stm32l4x5_rcc-test.c: Add tests for the
+ STM32L4x5_RCC
+Date: Tue,  5 Mar 2024 13:52:29 +0000
+Message-Id: <20240305135237.3111642-13-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240305135237.3111642-1-peter.maydell@linaro.org>
 References: <20240305135237.3111642-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,129 +95,235 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Rayhan Faizel <rayhan.faizel@gmail.com>
+From: Arnaud Minier <arnaud.minier@telecom-paris.fr>
 
-BCM2835 has three I2C controllers. All of them share the same interrupt line.
+Tests:
+- the ability to change the sysclk of the device
+- the ability to enable/disable/configure the PLLs
+- if the clock multiplexers work
+- the register flags and the generation of irqs
 
-Signed-off-by: Rayhan Faizel <rayhan.faizel@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240224191038.2409945-3-rayhan.faizel@gmail.com
+Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+Acked-by: Thomas Huth <thuth@redhat.com>
+Message-id: 20240303140643.81957-9-arnaud.minier@telecom-paris.fr
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/arm/bcm2835_peripherals.h |  4 ++-
- hw/arm/bcm2835_peripherals.c         | 45 ++++++++++++++++++++++++++--
- hw/arm/Kconfig                       |  1 +
- 3 files changed, 46 insertions(+), 4 deletions(-)
+ tests/qtest/stm32l4x5_rcc-test.c | 189 +++++++++++++++++++++++++++++++
+ tests/qtest/meson.build          |   3 +-
+ 2 files changed, 191 insertions(+), 1 deletion(-)
+ create mode 100644 tests/qtest/stm32l4x5_rcc-test.c
 
-diff --git a/include/hw/arm/bcm2835_peripherals.h b/include/hw/arm/bcm2835_peripherals.h
-index 1fc96218f82..636203baa5a 100644
---- a/include/hw/arm/bcm2835_peripherals.h
-+++ b/include/hw/arm/bcm2835_peripherals.h
-@@ -32,6 +32,7 @@
- #include "hw/timer/bcm2835_systmr.h"
- #include "hw/usb/hcd-dwc2.h"
- #include "hw/ssi/bcm2835_spi.h"
-+#include "hw/i2c/bcm2835_i2c.h"
- #include "hw/misc/unimp.h"
- #include "qom/object.h"
+diff --git a/tests/qtest/stm32l4x5_rcc-test.c b/tests/qtest/stm32l4x5_rcc-test.c
+new file mode 100644
+index 00000000000..d927c655d13
+--- /dev/null
++++ b/tests/qtest/stm32l4x5_rcc-test.c
+@@ -0,0 +1,189 @@
++/*
++ * QTest testcase for STM32L4x5_RCC
++ *
++ * Copyright (c) 2023 Arnaud Minier <arnaud.minier@telecom-paris.fr>
++ * Copyright (c) 2023 Inès Varhol <ines.varhol@telecom-paris.fr>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
++
++#include "qemu/osdep.h"
++#include "hw/registerfields.h"
++#include "libqtest-single.h"
++#include "hw/misc/stm32l4x5_rcc_internals.h"
++
++#define RCC_BASE_ADDR 0x40021000
++#define NVIC_ISER 0xE000E100
++#define NVIC_ISPR 0xE000E200
++#define NVIC_ICPR 0xE000E280
++#define RCC_IRQ 5
++
++static void enable_nvic_irq(unsigned int n)
++{
++    writel(NVIC_ISER, 1 << n);
++}
++
++static void unpend_nvic_irq(unsigned int n)
++{
++    writel(NVIC_ICPR, 1 << n);
++}
++
++static bool check_nvic_pending(unsigned int n)
++{
++    return readl(NVIC_ISPR) & (1 << n);
++}
++
++static void rcc_writel(unsigned int offset, uint32_t value)
++{
++    writel(RCC_BASE_ADDR + offset, value);
++}
++
++static uint32_t rcc_readl(unsigned int offset)
++{
++    return readl(RCC_BASE_ADDR + offset);
++}
++
++static void test_init_msi(void)
++{
++    /* MSIRANGE can be set only when MSI is OFF or READY */
++    rcc_writel(A_CR, R_CR_MSION_MASK);
++    /* Wait until MSI is stable */
++    g_assert_true((rcc_readl(A_CR) & R_CR_MSIRDY_MASK) == R_CR_MSIRDY_MASK);
++    /* TODO find a way to test MSI value */
++}
++
++static void test_set_msi_as_sysclk(void)
++{
++    /* Clocking from MSI, in case MSI was not the default source */
++    rcc_writel(A_CFGR, 0);
++    /* Wait until MSI is selected and stable */
++    g_assert_true((rcc_readl(A_CFGR) & R_CFGR_SWS_MASK) == 0);
++}
++
++static void test_init_pll(void)
++{
++    uint32_t value;
++
++    /*
++     * Update PLL and set MSI as the source clock.
++     * PLLM = 1 --> 000
++     * PLLN = 40 --> 40
++     * PPLLR = 2 --> 00
++     * PLLDIV = unused, PLLP = unused (SAI3), PLLQ = unused (48M1)
++     * SRC = MSI --> 01
++     */
++    rcc_writel(A_PLLCFGR, R_PLLCFGR_PLLREN_MASK |
++            (40 << R_PLLCFGR_PLLN_SHIFT) |
++            (0b01 << R_PLLCFGR_PLLSRC_SHIFT));
++
++    /* PLL activation */
++    value = rcc_readl(A_CR);
++    rcc_writel(A_CR, value | R_CR_PLLON_MASK);
++
++    /* Waiting for PLL lock. */
++    g_assert_true((rcc_readl(A_CR) & R_CR_PLLRDY_MASK) == R_CR_PLLRDY_MASK);
++
++    /* Switches on the PLL clock source */
++    value = rcc_readl(A_CFGR);
++    rcc_writel(A_CFGR, (value & ~R_CFGR_SW_MASK) |
++        (0b11 << R_CFGR_SW_SHIFT));
++
++    /* Wait until SYSCLK is stable. */
++    g_assert_true((rcc_readl(A_CFGR) & R_CFGR_SWS_MASK) ==
++        (0b11 << R_CFGR_SWS_SHIFT));
++}
++
++static void test_activate_lse(void)
++{
++    /* LSE activation, no LSE Bypass */
++    rcc_writel(A_BDCR, R_BDCR_LSEDRV_MASK | R_BDCR_LSEON_MASK);
++    g_assert_true((rcc_readl(A_BDCR) & R_BDCR_LSERDY_MASK) == R_BDCR_LSERDY_MASK);
++}
++
++static void test_irq(void)
++{
++    enable_nvic_irq(RCC_IRQ);
++
++    rcc_writel(A_CIER, R_CIER_LSIRDYIE_MASK);
++    rcc_writel(A_CSR, R_CSR_LSION_MASK);
++    g_assert_true(check_nvic_pending(RCC_IRQ));
++    rcc_writel(A_CICR, R_CICR_LSIRDYC_MASK);
++    unpend_nvic_irq(RCC_IRQ);
++
++    rcc_writel(A_CIER, R_CIER_LSERDYIE_MASK);
++    rcc_writel(A_BDCR, R_BDCR_LSEON_MASK);
++    g_assert_true(check_nvic_pending(RCC_IRQ));
++    rcc_writel(A_CICR, R_CICR_LSERDYC_MASK);
++    unpend_nvic_irq(RCC_IRQ);
++
++    /*
++     * MSI has been enabled by previous tests,
++     * shouln't generate an interruption.
++     */
++    rcc_writel(A_CIER, R_CIER_MSIRDYIE_MASK);
++    rcc_writel(A_CR, R_CR_MSION_MASK);
++    g_assert_false(check_nvic_pending(RCC_IRQ));
++
++    rcc_writel(A_CIER, R_CIER_HSIRDYIE_MASK);
++    rcc_writel(A_CR, R_CR_HSION_MASK);
++    g_assert_true(check_nvic_pending(RCC_IRQ));
++    rcc_writel(A_CICR, R_CICR_HSIRDYC_MASK);
++    unpend_nvic_irq(RCC_IRQ);
++
++    rcc_writel(A_CIER, R_CIER_HSERDYIE_MASK);
++    rcc_writel(A_CR, R_CR_HSEON_MASK);
++    g_assert_true(check_nvic_pending(RCC_IRQ));
++    rcc_writel(A_CICR, R_CICR_HSERDYC_MASK);
++    unpend_nvic_irq(RCC_IRQ);
++
++    /*
++     * PLL has been enabled by previous tests,
++     * shouln't generate an interruption.
++     */
++    rcc_writel(A_CIER, R_CIER_PLLRDYIE_MASK);
++    rcc_writel(A_CR, R_CR_PLLON_MASK);
++    g_assert_false(check_nvic_pending(RCC_IRQ));
++
++    rcc_writel(A_CIER, R_CIER_PLLSAI1RDYIE_MASK);
++    rcc_writel(A_CR, R_CR_PLLSAI1ON_MASK);
++    g_assert_true(check_nvic_pending(RCC_IRQ));
++    rcc_writel(A_CICR, R_CICR_PLLSAI1RDYC_MASK);
++    unpend_nvic_irq(RCC_IRQ);
++
++    rcc_writel(A_CIER, R_CIER_PLLSAI2RDYIE_MASK);
++    rcc_writel(A_CR, R_CR_PLLSAI2ON_MASK);
++    g_assert_true(check_nvic_pending(RCC_IRQ));
++    rcc_writel(A_CICR, R_CICR_PLLSAI2RDYC_MASK);
++    unpend_nvic_irq(RCC_IRQ);
++}
++
++int main(int argc, char **argv)
++{
++    int ret;
++
++    g_test_init(&argc, &argv, NULL);
++    g_test_set_nonfatal_assertions();
++    /*
++     * These test separately that we can enable the plls, change the sysclk,
++     * and enable different devices.
++     * They are dependent on one another.
++     * We assume that all operations that would take some time to have an effect
++     * (e.g. changing the PLL frequency) are done instantaneously.
++     */
++    qtest_add_func("stm32l4x5/rcc/init_msi", test_init_msi);
++    qtest_add_func("stm32l4x5/rcc/set_msi_as_sysclk",
++        test_set_msi_as_sysclk);
++    qtest_add_func("stm32l4x5/rcc/activate_lse", test_activate_lse);
++    qtest_add_func("stm32l4x5/rcc/init_pll", test_init_pll);
++
++    qtest_add_func("stm32l4x5/rcc/irq", test_irq);
++
++    qtest_start("-machine b-l475e-iot01a");
++    ret = g_test_run();
++    qtest_end();
++
++    return ret;
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index bdc8bba7a98..31b9f4ede47 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -203,7 +203,8 @@ qtests_aspeed = \
  
-@@ -68,7 +69,8 @@ struct BCMSocPeripheralBaseState {
-     BCM2835SDHostState sdhost;
-     UnimplementedDeviceState i2s;
-     BCM2835SPIState spi[1];
--    UnimplementedDeviceState i2c[3];
-+    BCM2835I2CState i2c[3];
-+    OrIRQState orgated_i2c_irq;
-     UnimplementedDeviceState otp;
-     UnimplementedDeviceState dbus;
-     UnimplementedDeviceState ave0;
-diff --git a/hw/arm/bcm2835_peripherals.c b/hw/arm/bcm2835_peripherals.c
-index a0bbe76f264..1695d8b453a 100644
---- a/hw/arm/bcm2835_peripherals.c
-+++ b/hw/arm/bcm2835_peripherals.c
-@@ -30,6 +30,9 @@
- #define SEPARATE_DMA_IRQ_MAX 10
- #define ORGATED_DMA_IRQ_COUNT 4
+ qtests_stm32l4x5 = \
+   ['stm32l4x5_exti-test',
+-   'stm32l4x5_syscfg-test']
++   'stm32l4x5_syscfg-test',
++   'stm32l4x5_rcc-test']
  
-+/* All three I2C controllers share the same IRQ */
-+#define ORGATED_I2C_IRQ_COUNT 3
-+
- void create_unimp(BCMSocPeripheralBaseState *ps,
-                   UnimplementedDeviceState *uds,
-                   const char *name, hwaddr ofs, hwaddr size)
-@@ -157,6 +160,19 @@ static void raspi_peripherals_base_init(Object *obj)
-     /* SPI */
-     object_initialize_child(obj, "bcm2835-spi0", &s->spi[0],
-                             TYPE_BCM2835_SPI);
-+
-+    /* I2C */
-+    object_initialize_child(obj, "bcm2835-i2c0", &s->i2c[0],
-+                            TYPE_BCM2835_I2C);
-+    object_initialize_child(obj, "bcm2835-i2c1", &s->i2c[1],
-+                            TYPE_BCM2835_I2C);
-+    object_initialize_child(obj, "bcm2835-i2c2", &s->i2c[2],
-+                            TYPE_BCM2835_I2C);
-+
-+    object_initialize_child(obj, "orgated-i2c-irq",
-+                            &s->orgated_i2c_irq, TYPE_OR_IRQ);
-+    object_property_set_int(OBJECT(&s->orgated_i2c_irq), "num-lines",
-+                            ORGATED_I2C_IRQ_COUNT, &error_abort);
- }
- 
- static void bcm2835_peripherals_realize(DeviceState *dev, Error **errp)
-@@ -453,14 +469,37 @@ void bcm_soc_peripherals_common_realize(DeviceState *dev, Error **errp)
-                                               BCM2835_IC_GPU_IRQ,
-                                               INTERRUPT_SPI));
- 
-+    /* I2C */
-+    for (n = 0; n < 3; n++) {
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->i2c[n]), errp)) {
-+            return;
-+        }
-+    }
-+
-+    memory_region_add_subregion(&s->peri_mr, BSC0_OFFSET,
-+            sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->i2c[0]), 0));
-+    memory_region_add_subregion(&s->peri_mr, BSC1_OFFSET,
-+            sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->i2c[1]), 0));
-+    memory_region_add_subregion(&s->peri_mr, BSC2_OFFSET,
-+            sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->i2c[2]), 0));
-+
-+    if (!qdev_realize(DEVICE(&s->orgated_i2c_irq), NULL, errp)) {
-+        return;
-+    }
-+    for (n = 0; n < ORGATED_I2C_IRQ_COUNT; n++) {
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->i2c[n]), 0,
-+                           qdev_get_gpio_in(DEVICE(&s->orgated_i2c_irq), n));
-+    }
-+    qdev_connect_gpio_out(DEVICE(&s->orgated_i2c_irq), 0,
-+                          qdev_get_gpio_in_named(DEVICE(&s->ic),
-+                                                 BCM2835_IC_GPU_IRQ,
-+                                                 INTERRUPT_I2C));
-+
-     create_unimp(s, &s->txp, "bcm2835-txp", TXP_OFFSET, 0x1000);
-     create_unimp(s, &s->armtmr, "bcm2835-sp804", ARMCTRL_TIMER0_1_OFFSET, 0x40);
-     create_unimp(s, &s->i2s, "bcm2835-i2s", I2S_OFFSET, 0x100);
-     create_unimp(s, &s->smi, "bcm2835-smi", SMI_OFFSET, 0x100);
-     create_unimp(s, &s->bscsl, "bcm2835-spis", BSC_SL_OFFSET, 0x100);
--    create_unimp(s, &s->i2c[0], "bcm2835-i2c0", BSC0_OFFSET, 0x20);
--    create_unimp(s, &s->i2c[1], "bcm2835-i2c1", BSC1_OFFSET, 0x20);
--    create_unimp(s, &s->i2c[2], "bcm2835-i2c2", BSC2_OFFSET, 0x20);
-     create_unimp(s, &s->otp, "bcm2835-otp", OTP_OFFSET, 0x80);
-     create_unimp(s, &s->dbus, "bcm2835-dbus", DBUS_OFFSET, 0x8000);
-     create_unimp(s, &s->ave0, "bcm2835-ave0", AVE0_OFFSET, 0x8000);
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 7caebdd98e1..3c157376844 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -438,6 +438,7 @@ config RASPI
-     select SDHCI
-     select USB_DWC2
-     select BCM2835_SPI
-+    select BCM2835_I2C
- 
- config STM32F100_SOC
-     bool
+ qtests_arm = \
+   (config_all_devices.has_key('CONFIG_MPS2') ? ['sse-timer-test'] : []) + \
 -- 
 2.34.1
 
