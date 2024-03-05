@@ -4,77 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C036FC54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 11:59:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA4FAC54E49
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 12:11:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhTRN-0005Q7-9t; Tue, 05 Mar 2024 06:58:37 -0500
+	id 1rhTck-0001Yl-FP; Tue, 05 Mar 2024 07:10:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rhTR3-0005Hm-Gc
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 06:58:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rhTR1-0006kD-IP
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 06:58:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709639894;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aKwhmBuTWb1mos2F+eLZ6xOv4/u4fxphsdrliS55SgA=;
- b=Onpk/c0nLm2miyyeihlUwZkS/dCqYV1AF4MxHg34mCrpQW9X5i0Q4ZYRhodjtrBwlPdL9d
- 7jN3dYqCOm8RK3Ss/AdplGbPdma39p/1Z4l9OzHRIHD9Sy0t4puhbDLQQWGQBAp5Uy+OgI
- xoVBwbvNWWGANiFrB/Ir5uo7RRnFrno=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-688-Kx_79SudM5WnC6aQHhlHoQ-1; Tue, 05 Mar 2024 06:58:11 -0500
-X-MC-Unique: Kx_79SudM5WnC6aQHhlHoQ-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C3797800268;
- Tue,  5 Mar 2024 11:58:10 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.66])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id CE36C8173;
- Tue,  5 Mar 2024 11:58:08 +0000 (UTC)
-Date: Tue, 5 Mar 2024 11:58:06 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Eduardo Habkost <ehabkost@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: Re: [PATCH] hw/rtc/sun4v-rtc: Relicense to GPLv2-or-later
-Message-ID: <ZecIzqmNouZZBrbv@redhat.com>
-References: <20240223161300.938542-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rhTce-0001Uo-TM
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 07:10:17 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rhTcZ-0001CO-24
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 07:10:15 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-412eb6e15ceso5331625e9.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 04:10:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709640609; x=1710245409; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eXVZ712kv8O0GudxyxBx9w6g4YMMrljfTMdLsClf+YA=;
+ b=RcINmoG+xMHt9q/k+fAZ8LS0fjeBljWIr4vE7yejfzIcLiy4EDXIQWu4wgzso6JaAh
+ uAzoj1QkErBlHgWww87wPtYbRcDPeD1MRqv4rpEpB5RoK7ZnzdpM+gXDlgOakkDE1cRT
+ rx1bADQs0UgF1g7X/gwT2rMNpLqJiOqRA/ZTIjBiLqmJnXabyacRneeGw3CW3EE40dLi
+ 71GsG4u5izvSbkCcKiRCm7hRcYPf7Ha0CYnTBtWjqB0WTXM9iCmdaUUGLoo0kyjzPsQI
+ si8Q+9oRIi+awF2dS1CZ82ueE9d0nCNLSTyHUXUP3zR/o3Egj0LwkAMzegaV0p4c4kRQ
+ JfvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709640609; x=1710245409;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=eXVZ712kv8O0GudxyxBx9w6g4YMMrljfTMdLsClf+YA=;
+ b=itms4X9ZxrfW+S+rD4LDp1HI2ECcGnU5v9TG3jMU/sAAunjkmoB3hLOPzqW4V2cy4t
+ H8Dj0AWcsmr7N06fRsKgW5lLYvQ+MIRuwa/MZp/Qih9z3NqKoj8+NF7US41b6Gq4gGmI
+ EVDATVn/pbhwFx6IZBCGmvsvvp4TApuL/TKwoY2TIxHIi+VrFLp8sJVf+pTaemG8dY/G
+ Cmmt5NfIB65JAJX9tYak+6juITTVtOlAokSMHIuiqiRnrQZOq9ut3ZeiU/hM/GKBa45e
+ ZMzUeGGFDx5doSwC90FeLHiXUO66icgHLF/6vDkgn6Z83eFDxUko9sOQwXFUdBEozsAg
+ M+TA==
+X-Gm-Message-State: AOJu0Ywx/Bad/IhSWGxKgzQtOZnSQqkm0EbQEhEnmQzzE7rh4XIgL65T
+ CX9dTr2zHsN68EsvLwvhE8cx0numrH2dveuONrV8msFM3BqBTVa6N1PmP/gPD0M=
+X-Google-Smtp-Source: AGHT+IHQ4i0dFCyKCBlBz10LPdPw3naUXzQQwwBcn89plaep75sEakGwaM/+QbeQmq87VPUT584+Ww==
+X-Received: by 2002:a05:600c:1da6:b0:412:e95f:51bb with SMTP id
+ p38-20020a05600c1da600b00412e95f51bbmr1999744wms.32.1709640608816; 
+ Tue, 05 Mar 2024 04:10:08 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a12-20020a05600c348c00b00412ef5a0c78sm758146wmq.43.2024.03.05.04.10.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 05 Mar 2024 04:10:08 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 009A65F956;
+ Tue,  5 Mar 2024 12:10:06 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, qemu-s390x@nongnu.org,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Michael Rolnik <mrolnik@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Laurent Vivier <laurent@vivier.eu>, Thomas Huth <thuth@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Brad Smith <brad@comstyle.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Brian Cain <bcain@quicinc.com>, Cleber Rosa <crosa@redhat.com>,
+ John Snow <jsnow@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Riku Voipio <riku.voipio@iki.fi>,
+ qemu-arm@nongnu.org, qemu-ppc@nongnu.org, Weiwei Li <liwei1518@gmail.com>,
+ Bin Meng <bin.meng@windriver.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Beraldo Leal <bleal@redhat.com>, Kyle Evans <kevans@freebsd.org>,
+ David Hildenbrand <david@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Warner Losh <imp@bsdimp.com>, qemu-riscv@nongnu.org,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH 05/29] gdbstub: Introduce gdbserver_fork_start()
+Date: Tue,  5 Mar 2024 12:09:41 +0000
+Message-Id: <20240305121005.3528075-6-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240305121005.3528075-1-alex.bennee@linaro.org>
+References: <20240305121005.3528075-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240223161300.938542-1-peter.maydell@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,47 +124,82 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 23, 2024 at 04:13:00PM +0000, Peter Maydell wrote:
-> The sun4v RTC device model added under commit a0e893039cf2ce0 in 2016
-> was unfortunately added with a license of GPL-v3-or-later, which is
-> not compatible with other QEMU code which has a GPL-v2-only license.
-> 
-> Relicense the code in the .c and the .h file to GPL-v2-or-later,
-> to make it compatible with the rest of QEMU.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> Before we can commit this to either head-of-git or any stable branch,
-> we need a Signed-off-by: from everybody who's touched this file (or,
-> for corporate contributions, from somebody from the relevant company
-> who can confirm that the company is OK with the licensing, which is
-> RedHat and Linaro in this case).
-> 
-> The full list of people who've made changes to the file is:
->  Artyom Tarasenko <atar4qemu@gmail.com>
->  Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-NB mailmap translations - the commit was philmd@redhat.com originally
+The upcoming follow-fork-mode child support requires knowing when
+fork() is about to happen in order to initialize its state. Add a hook
+for that.
 
->  Markus Armbruster <armbru@redhat.com>
->  Eduardo Habkost <ehabkost@redhat.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-Id: <20240219141628.246823-5-iii@linux.ibm.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ include/gdbstub/user.h | 5 +++++
+ bsd-user/main.c        | 1 +
+ gdbstub/user.c         | 4 ++++
+ linux-user/main.c      | 1 +
+ 4 files changed, 11 insertions(+)
 
-On behalf of Red Hat, I can confirm that any contributions to
-this file where Red Hat would hold copyright are acceptable
-to relicense to GPL-v2-or-later.
-
-  Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-
-
-With regards,
-Daniel
+diff --git a/include/gdbstub/user.h b/include/gdbstub/user.h
+index 68b6534130c..e33f8d9a9a6 100644
+--- a/include/gdbstub/user.h
++++ b/include/gdbstub/user.h
+@@ -45,6 +45,11 @@ static inline int gdb_handlesig(CPUState *cpu, int sig)
+  */
+ void gdb_signalled(CPUArchState *as, int sig);
+ 
++/**
++ * gdbserver_fork_start() - inform gdb of the upcoming fork()
++ */
++void gdbserver_fork_start(void);
++
+ /**
+  * gdbserver_fork() - disable gdb stub for child processes.
+  * @cs: CPU
+diff --git a/bsd-user/main.c b/bsd-user/main.c
+index e39eef3040f..517c6b3ec2f 100644
+--- a/bsd-user/main.c
++++ b/bsd-user/main.c
+@@ -113,6 +113,7 @@ void fork_start(void)
+     start_exclusive();
+     cpu_list_lock();
+     mmap_fork_start();
++    gdbserver_fork_start();
+ }
+ 
+ void fork_end(int child)
+diff --git a/gdbstub/user.c b/gdbstub/user.c
+index 3ce20b7bbfc..536fb43b03e 100644
+--- a/gdbstub/user.c
++++ b/gdbstub/user.c
+@@ -356,6 +356,10 @@ int gdbserver_start(const char *port_or_path)
+     return -1;
+ }
+ 
++void gdbserver_fork_start(void)
++{
++}
++
+ static void disable_gdbstub(CPUState *thread_cpu)
+ {
+     CPUState *cpu;
+diff --git a/linux-user/main.c b/linux-user/main.c
+index 699da773714..755c566d6d2 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -145,6 +145,7 @@ void fork_start(void)
+     mmap_fork_start();
+     cpu_list_lock();
+     qemu_plugin_user_prefork_lock();
++    gdbserver_fork_start();
+ }
+ 
+ void fork_end(int child)
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.39.2
 
 
