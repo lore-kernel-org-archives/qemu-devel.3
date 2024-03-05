@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24D1AC54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:29:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE9A7C54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:30:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhUqg-0003Sg-18; Tue, 05 Mar 2024 08:28:50 -0500
+	id 1rhUro-00046V-7n; Tue, 05 Mar 2024 08:30:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhUqd-0003S7-St
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:28:47 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1rhUrk-00045N-5n
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:29:56 -0500
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhUqc-00017i-3F
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:28:47 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-565d1656c12so10042998a12.1
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:28:45 -0800 (PST)
+ id 1rhUrh-0001CK-O5
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:29:55 -0500
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-565d1656c12so10045287a12.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:29:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709645324; x=1710250124; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709645392; x=1710250192; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=0Xe6exx90pvEc3LSbvhPAoz0w7ulU3MxN74Lo0j7dUc=;
- b=Wc4c6NSRzRxO7fmUvkCBcsb+Nwlw8V+Jjzgn027qIzLeqHnNaFfX6uw3XDj9PduNCr
- Ysts6DYs+VAUICln3lbce/gX6ymW0MpTPiB1SnbT+PjtAbuXKkJyxsoNv9L/FOJW7h/d
- Gdfq+YJn1f/bbmHhBgFTlIwGD+IHjgqc0wGQaD0r0B+IvixJLDy70L1nqG3SDY98b1V6
- 7p8CdGfrRf1T5eEq3vGIfM//Xjy0lGYdAz7PKLvRbWGr5C+QWn+A4/ij+ZDFt42I+E1d
- Wmfc9d4NbkPEXBsyrTUZspSt3T5ioHyJg/MCJ9c9Is02oYPZFeq6/5JPYlSh98v+UzuY
- dmuQ==
+ bh=Ap3AybvaUQ0kuW3zA15LOOm9W7EMN77RM6On5Dbbezk=;
+ b=yLpIIU0vexz3KFVRUoLpuiJ3xuqhXvUsLccZeo8VflMNcwGjsEMLaTvw+/NBZWTvJ1
+ bLgn/QtqF4wHshT1iQ5Da3WV5oojQn1kVAqgCT9w2VdL1V5mUyfsHKxbWINRK39kVuza
+ yPb/3yGlFAyQGKJ5HsmE9UNvUln+qJUkX+opDmZh143YV590rvXlEjwNosfunOCCty6Q
+ gay8/mGAOAJtujlGKTolpamdaFtxRVlMa57880FE1MgRXy7bGYM9c+RDajD2OHbRfBz1
+ /4/gGC26lOU434K7Wdadmdk5yv0mSik5ypPtwutki35wda4ju5/6FRluPvu8grXdSkTY
+ EYwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709645324; x=1710250124;
+ d=1e100.net; s=20230601; t=1709645392; x=1710250192;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=0Xe6exx90pvEc3LSbvhPAoz0w7ulU3MxN74Lo0j7dUc=;
- b=OEeQXx/sfRz8F/LwVcwbyd1tZVTKbn65i9Vd7/OTiL0oSlQoo085Di4NPdC2Rln/HB
- yYDo5Ozcv7b1yegvfx+rqtpDkfMpEKQJ4dn+sLnpoiKZhc06+objpQ4rdUuToXkV70Tm
- R7krESX2fRKV26b+OV2+35NJvJvEZi/eCO5bshw5lmsXn4XTfPQblhqsLfVCL9RpsfKx
- WcFAMoDlSFhUaKPIWkpVyfO97SJalAPyu5Tsz+GMm79d+vjx3lsKEJ0V281vQ9RDuFO6
- TrwE2D8XDe+jqrDm+MtGwlJn+hTF6jNX4mJ9+TnLGUcpxGTEU7QzAZCZ8Te0oqwpsH7s
- Qp4g==
+ bh=Ap3AybvaUQ0kuW3zA15LOOm9W7EMN77RM6On5Dbbezk=;
+ b=vgLD/boTJd2KSp2u1PQA2w4dwufX6+H38NcxVX20o/r4BOjGmFelgwT67gyp2e+FrY
+ ocXexR/GcnnUNWteCuAD1x7Qv/j3PVcdomsVb8FlRXVYB8Gzsh1vWZoPLRQVPW34ZO8F
+ yh6lD+uWu/T2+e8Q4CLud0zlNmJrtN/dBKGeuDxzS+hYbbBvCrU7QGVB65Cl/o50ngqo
+ e5cwXkPQlTbanAZ+S6a+3XSW8EUOgeHHfL4oXuDpol8gTOpcxoF5Eo8lHgijIF9lIXqt
+ Lz12x0wkPlu5pgBb1ToPnN5AOzTdntuUZUswc40GTqbaveEibRj+AnYCoNIBxMX+V0Ho
+ zsxg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVExAugy6iG1eb5QCr+Tv57bEwHDVVLxJZOT1pA66N+N2sjNq3RphuqqrjPoR29JDGddQXRTztrsGWgg1uVuzrdUTn6Ig8=
-X-Gm-Message-State: AOJu0YwmfJe0NjSwn5trxuP/UygFRibAjgwJWOctry9Vee3bbN+Qn1ji
- zbn0mmS3X+FPIBrvWCHcFoatfi3A1lPk1IqbGGabD7auEbTfRIwrgKTS7LWIeMVjkit2x/FVB0R
- D6WO2nvNuEdCPGg0Zm1eXnU39JgEQdDZMf63kPA==
-X-Google-Smtp-Source: AGHT+IGuPIMI/tDpVE7qppPA+DZTMRjehZc5eP1YB+u8rNMGbH21rGTnf8aeZa8tcZnQTEouDfMoeohgNea8yoh1JU0=
-X-Received: by 2002:a50:c8cd:0:b0:566:fb8d:ed8f with SMTP id
- k13-20020a50c8cd000000b00566fb8ded8fmr2637643edh.14.1709645324371; Tue, 05
- Mar 2024 05:28:44 -0800 (PST)
+ AJvYcCWaKmvXGzH5HCfIg7Tmay7fRRQLZAL2LbSU2diurTxtQhPcebHdc+0GrQrYmEE4ICivfonnSExUTk8PzaD/zqMFsOfWiB0=
+X-Gm-Message-State: AOJu0YwbkBVGjczG+GkLVTEU6rvx+44x7z1rzwS9V+B2tso6CMu/PXiL
+ 4IMZF8rj7QhE0rWzcvn7kjJ9JY89+LJ1UJnNKMjAOA/NOpnar+3O6ErBMVDH127D6qwxmrbL56s
+ bzBWtEpNrTo1WttIx7vJCJ7ODDTe0dXYDQDy/1A==
+X-Google-Smtp-Source: AGHT+IHAqfJlf2RjpAjws/ed1jlFoSZ+dXrlFzzPxTbmg11jJGGVxhq/htMruCIUf4bk0IHFsxqquywgjq5CV6lUmxY=
+X-Received: by 2002:a50:c94b:0:b0:566:78ff:b24e with SMTP id
+ p11-20020a50c94b000000b0056678ffb24emr2643532edh.17.1709645391813; Tue, 05
+ Mar 2024 05:29:51 -0800 (PST)
 MIME-Version: 1.0
 References: <20240305-elf2dmp-v2-0-86ff2163ad32@daynix.com>
- <20240305-elf2dmp-v2-4-86ff2163ad32@daynix.com>
-In-Reply-To: <20240305-elf2dmp-v2-4-86ff2163ad32@daynix.com>
+ <20240305-elf2dmp-v2-5-86ff2163ad32@daynix.com>
+In-Reply-To: <20240305-elf2dmp-v2-5-86ff2163ad32@daynix.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 5 Mar 2024 13:28:33 +0000
-Message-ID: <CAFEAcA8HdgZuOf67yjAVZJ0e-ZazOShh=ji4W5CuFyfrRMqNCw@mail.gmail.com>
-Subject: Re: [PATCH v2 04/13] contrib/elf2dmp: Conform to the error reporting
- pattern
+Date: Tue, 5 Mar 2024 13:29:41 +0000
+Message-ID: <CAFEAcA-P_hEFV5J==LXxp9CtLb28d17pBhmdn_QBqLMVfA1qUg@mail.gmail.com>
+Subject: Re: [PATCH v2 05/13] contrib/elf2dmp: Always check for PA resolution
+ failure
 To: Akihiko Odaki <akihiko.odaki@daynix.com>
 Cc: Viktor Prutyanov <viktor.prutyanov@phystech.edu>, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,99 +93,11 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Tue, 5 Mar 2024 at 07:36, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
 >
-> include/qapi/error.h says:
-> > We recommend
-> > * bool-valued functions return true on success / false on failure,
-> > ...
+> Not checking PA resolution failure can result in NULL deference.
 >
 > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  contrib/elf2dmp/addrspace.h |   6 +--
->  contrib/elf2dmp/download.h  |   2 +-
->  contrib/elf2dmp/pdb.h       |   2 +-
->  contrib/elf2dmp/qemu_elf.h  |   2 +-
->  contrib/elf2dmp/addrspace.c |  12 ++---
->  contrib/elf2dmp/download.c  |  10 ++--
->  contrib/elf2dmp/main.c      | 114 +++++++++++++++++++++-----------------------
->  contrib/elf2dmp/pdb.c       |  50 +++++++++----------
->  contrib/elf2dmp/qemu_elf.c  |  32 ++++++-------
->  9 files changed, 112 insertions(+), 118 deletions(-)
 
-This is a bit big to review easily. Converting one function
-(or a small set of closely related functions) at once would
-make for an easier to review split.
-
-
-> diff --git a/contrib/elf2dmp/download.c b/contrib/elf2dmp/download.c
-> index 902dc04ffa5c..ec8d33ba1e4b 100644
-> --- a/contrib/elf2dmp/download.c
-> +++ b/contrib/elf2dmp/download.c
-> @@ -9,14 +9,14 @@
->  #include <curl/curl.h>
->  #include "download.h"
->
-> -int download_url(const char *name, const char *url)
-> +bool download_url(const char *name, const char *url)
->  {
-> -    int err = 1;
-> +    bool success = false;
->      FILE *file;
->      CURL *curl = curl_easy_init();
->
->      if (!curl) {
-> -        return 1;
-> +        return success;
-
-Why not just "return false" ? "return success" makes it look
-like a success-path, not a failure-path.
-
->      }
->
->      file = fopen(name, "wb");
-> @@ -33,11 +33,11 @@ int download_url(const char *name, const char *url)
->          unlink(name);
->          fclose(file);
->      } else {
-> -        err = fclose(file);
-> +        success = !fclose(file);
->      }
->
->  out_curl:
->      curl_easy_cleanup(curl);
->
-> -    return err;
-> +    return success;
->  }
-
-> @@ -186,13 +186,13 @@ static void win_context_init_from_qemu_cpu_state(WinContext64 *ctx,
->   * Finds paging-structure hierarchy base,
->   * if previously set doesn't give access to kernel structures
->   */
-> -static int fix_dtb(struct va_space *vs, QEMU_Elf *qe)
-> +static bool fix_dtb(struct va_space *vs, QEMU_Elf *qe)
->  {
->      /*
->       * Firstly, test previously set DTB.
->       */
->      if (va_space_resolve(vs, SharedUserData)) {
-> -        return 0;
-> +        return true;
->      }
->
->      /*
-> @@ -206,7 +206,7 @@ static int fix_dtb(struct va_space *vs, QEMU_Elf *qe)
->              va_space_set_dtb(vs, s->cr[3]);
->              printf("DTB 0x%016"PRIx64" has been found from CPU #%zu"
->                      " as system task CR3\n", vs->dtb, i);
-> -            return !(va_space_resolve(vs, SharedUserData));
-> +            return !!(va_space_resolve(vs, SharedUserData));
-
-If the function returns bool type, we don't need the !! idiom
-to coerce the value to bool.
-
->          }
->      }
->
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
