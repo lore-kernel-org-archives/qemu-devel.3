@@ -4,134 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C482C54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 07:28:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B919CC5478C
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 07:30:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhPDY-00033X-HL; Tue, 05 Mar 2024 02:28:04 -0500
+	id 1rhPF7-0003qB-LI; Tue, 05 Mar 2024 02:29:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rhPDU-00032T-EE
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 02:28:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rhPEn-0003lD-4P
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 02:29:24 -0500
+Received: from mgamail.intel.com ([198.175.65.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rhPDS-0004Lf-O7
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 02:28:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709623677;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=wSDlwUjKQ3h/+oMby1NULjzvaM/98uHLBBJBALNFrNo=;
- b=RhQTQSEcmOrZRyk6v9kk+ikgZ2XVu3FCsWaPj/eJWE/aPeVktJodGL/9lC4p/j2Q71k5Ka
- EoXTqKofYFfFNuzglRQ7CTuMG7IfEeci6isrj+7UrXVgTSIU4eP9Nkf4AkeH5GGmkmxtz9
- auRKHuTf466VGp/RcQ4kMEwiixPr6qs=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-294-trxOGFiZPtmSdhcSQfEKLQ-1; Tue, 05 Mar 2024 02:27:55 -0500
-X-MC-Unique: trxOGFiZPtmSdhcSQfEKLQ-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-5673cc14ca4so847222a12.3
- for <qemu-devel@nongnu.org>; Mon, 04 Mar 2024 23:27:55 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709623674; x=1710228474;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wSDlwUjKQ3h/+oMby1NULjzvaM/98uHLBBJBALNFrNo=;
- b=dglJufrDcU5PNUWPqbyeVLdvlxZtR4sYERUePH68s0sMX9rBB0fFcjPWBW5CKD2PeS
- r8itVP4labVk99yTK8XOKi6GXeI910bGLSehuVWUvLwRZR9K8iacQpeEwrwF/P6oO+v/
- 9K5mlCIMo586scU7qilwP/uVRXn1nsNaJ7XSW+9I95iG4caab9qHNEZoHL52LmnxpCMN
- hJDYpmsXx/gIUWKoxjirREyToZW+IVDWw9uNVOeXJwOcrZXbLLjYhp2JnLMz4BKDC2Bn
- A+mFirpN3h11hoT/PVJELb6wu9q2tkkH15nMD7oui+/eEYi0ttHgmDf46YXthde6wpZU
- Xe1g==
-X-Gm-Message-State: AOJu0YwLl0Ak0H2KKqY8WH1Ct+OgxkcBP/K8BvuhRwX7Il1ED/3IQ5uR
- GAJJfWHo1h0QM010j9NAZwp4b+OQg61YS//Hd3OYzQhuXkqey6AEF95qjdZsnZujaM2hdJSm+3+
- ddm37h6ot+rZgA3SOHYWlB1AlJQ3QmxrqxpueIRsvTJeeuk0pv/ji
-X-Received: by 2002:a05:6402:40c8:b0:567:15a6:848e with SMTP id
- z8-20020a05640240c800b0056715a6848emr5808232edb.18.1709623674141; 
- Mon, 04 Mar 2024 23:27:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGVh5ofpakgtUzKbVnO5m0VVOEJYNo6MfBW6fbVz4FsRfChwwtulUgsWwJfO8NE3OMIUiS0pw==
-X-Received: by 2002:a05:6402:40c8:b0:567:15a6:848e with SMTP id
- z8-20020a05640240c800b0056715a6848emr5808218edb.18.1709623673821; 
- Mon, 04 Mar 2024 23:27:53 -0800 (PST)
-Received: from [192.168.0.9] (ip-109-43-178-243.web.vodafone.de.
- [109.43.178.243]) by smtp.gmail.com with ESMTPSA id
- l17-20020aa7cad1000000b005673b5a2370sm2419214edt.44.2024.03.04.23.27.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 Mar 2024 23:27:53 -0800 (PST)
-Message-ID: <4f6e1748-a917-4b2b-847d-fbfe04a3e43e@redhat.com>
-Date: Tue, 5 Mar 2024 08:27:52 +0100
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rhPEj-0004RO-34
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 02:29:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1709623758; x=1741159758;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=hHWJ4wliT2zqlRJCUZ4iaQ7U9nvHb62eTPrAtUOqRB0=;
+ b=VF5oz4R6ek4z5WFljbbLqODkCPdSz7zY7H7/V+yooEBNTouSOkKIc/2l
+ nePc/wsrEypoI9sO4s99Sc7CBQCOYIzFqXAopX4dDqPcWHJbc2g0Umf46
+ 1X/q4ckpCTejJQAvu5I9qA0zON409KosiMBNa+JgUE9h833baFVcxOFW7
+ qjCNMDxgZ532ABly3a6VmgO8qxb4TKQqQpES/yQmwj1FjZ2uHUoB6r7u3
+ FKrWimeOCthE0FnMT6faInYxVKA4aHh6VGOnDfBGcQKk3ZgfNzMshaGVB
+ Xx3E+2a8c/7Sm0mYOWrYIFakgr7im+pNMhf34n4Xwrutao0kp3HpCYEhf A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11003"; a="4317140"
+X-IronPort-AV: E=Sophos;i="6.06,205,1705392000"; 
+   d="scan'208";a="4317140"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Mar 2024 23:29:13 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,205,1705392000"; d="scan'208";a="40160157"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa002.jf.intel.com with ESMTP; 04 Mar 2024 23:29:10 -0800
+Date: Tue, 5 Mar 2024 15:42:55 +0800
+From: Zhao Liu <zhao1.liu@linux.intel.com>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, devel@lists.libvirt.org,
+ qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH] hw/core/machine-smp: Remove deprecated "parameter=0" SMP
+ configurations
+Message-ID: <ZebM/2for1NVjeuc@intel.com>
+References: <20240304044510.2305849-1-zhao1.liu@linux.intel.com>
+ <CAE8KmOxvZFjtKkHiGGREx_b0QgfDjPWZ7Ex3nqAQQbiPKa_wrQ@mail.gmail.com>
+ <ZeVyKMux7Ysjo/lY@intel.com>
+ <CAE8KmOxJECe7oNkB1Oiuk-+_4J4drmdJTL2mBzQz+Zu+6XpxrQ@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] hw/mem/cxl_type3: Fix problem with g_steal_pointer()
-Content-Language: en-US
-To: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-Cc: qemu-devel@nongnu.org, Fan Ni <fan.ni@samsung.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-trivial@nongnu.org
-References: <20240304104406.59855-1-thuth@redhat.com>
- <20240304104406.59855-4-thuth@redhat.com>
- <20240304151037.00000f6c@Huawei.com>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240304151037.00000f6c@Huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 7
-X-Spam_score: 0.7
-X-Spam_bar: /
-X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAE8KmOxJECe7oNkB1Oiuk-+_4J4drmdJTL2mBzQz+Zu+6XpxrQ@mail.gmail.com>
+Received-SPF: none client-ip=198.175.65.17;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,56 +87,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/03/2024 16.10, Jonathan Cameron wrote:
-> On Mon,  4 Mar 2024 11:44:06 +0100
-> Thomas Huth <thuth@redhat.com> wrote:
+Hi Prasad,
+
+> On Mon, 4 Mar 2024 at 12:19, Zhao Liu <zhao1.liu@linux.intel.com> wrote:
+> > > unsigned maxcpus = config->has_maxcpus ? config->maxcpus : 0;
+> >
+> > This indicates the default maxcpus is initialized as 0 if user doesn't
+> > specifies it.
 > 
->> When setting GLIB_VERSION_MAX_ALLOWED to GLIB_VERSION_2_58 or higher,
->> glib adds type safety checks to the g_steal_pointer() macro. This
->> triggers errors in the ct3_build_cdat_entries_for_mr() function which
->> uses the g_steal_pointer() for type-casting from one pointer type to
->> the other (which also looks quite weird since the local pointers have
->> all been declared with g_autofree though they are never freed here).
->> Fix it by using a proper typecast instead. For making this possible, we
->> have to remove the QEMU_PACKED attribute from some structs since GCC
->> otherwise complains that the source and destination pointer might
->> have different alignment restrictions. Removing the QEMU_PACKED should
->> be fine here since the structs are already naturally aligned. Anyway,
->> add some QEMU_BUILD_BUG_ON() statements to make sure that we've got
->> the right sizes (without padding in the structs).
+> * 'has_maxcpus' should be set only if maxcpus > 0. If maxcpus == 0,
+> then setting 'has_maxcpus=1' seems convoluted.
+
+After simple test, if user sets maxcpus as 0, the has_maxcpus will be
+true as well...I think it's related with QAPI code generation logic.
+
+> > However, we could initialize maxcpus as other default value, e.g.,
+> >
+> >     maxcpus = config->has_maxcpus ? config->maxcpus : 1.
+> ===
+> hw/core/machine.c
+>  machine_initfn
+>     /* default to mc->default_cpus */
+>     ms->smp.cpus = mc->default_cpus;
+>     ms->smp.max_cpus = mc->default_cpus;
 > 
-> I missed these as well when getting rid of the false handling
-> of failure of g_new0 calls.
+>    static void machine_class_base_init(ObjectClass *oc, void *data)
+>    {
+>        MachineClass *mc = MACHINE_CLASS(oc);
+>        mc->max_cpus = mc->max_cpus ?: 1;
+>        mc->min_cpus = mc->min_cpus ?: 1;
+>        mc->default_cpus = mc->default_cpus ?: 1;
+>    }
+> ===
+> * Looking at the above bits, it seems smp.cpus & smp.max_cpus are
+> initialised to 1 via default_cpus in MachineClass object.
+
+Yes.
+
+The maxcpus I mentioned is a local virable in
+machine_parse_smp_config(), whihc is used to do sanity-check check.
+
+In machine_parse_smp_config(), when we can confirm the topology is
+valid, then ms->smp.cpus and ms->smp.max_cpus are set with the valid
+virables (cpus and maxcpus).
+
+> >>  if (config->has_maxcpus && config->maxcpus == 0)
+> > This check only wants to identify the case that user sets the 0.
+> > If the default maxcpus is initialized as 0, then (maxcpus == 0) will
+> > fail if user doesn't set maxcpus.
+> >
+> > But it is still necessary to distinguish whether maxcpus is user-set or
+> > auto-initialized.
 > 
-> Another alternative would be to point to the head structures rather
-> than the containing structure - would avoid need to cast.
-> That might be neater?  Should I think also remove the alignment
-> question?
+> * If it is set to zero(0) either by user or by auto-initialise, it is
+> still invalid, right?
 
-I gave it a try, but it does not help against the alignment issue, I still get:
+The latter, "auto-initialise", means user could omit "cpus" and "maxcpus"
+parameters in -smp.
 
-../../devel/qemu/hw/mem/cxl_type3.c: In function 
-‘ct3_build_cdat_entries_for_mr’:
-../../devel/qemu/hw/mem/cxl_type3.c:138:34: error: taking address of packed 
-member of ‘struct CDATDsmas’ may result in an unaligned pointer value 
-[-Werror=address-of-packed-member]
-   138 |     cdat_table[CT3_CDAT_DSMAS] = &dsmas->header;
-       |                                  ^~~~~~~~~~~~~~
+Even though the local variable "cpus" and "maxcpus" are initialized as
+0, eventually ms->smp.cpus and ms->smp.max_cpus will still have the
+valid values.
 
- From my experience, it's better anyway to avoid __attribute__((packed)) on 
-structures unless it is really really required. At least we should avoid it 
-as good as possible as long as we still support running QEMU on Sparc hosts 
-(that don't support misaligned memory accesses), since otherwise you can end 
-up with non-working code there, see e.g.:
+> > If it is user-set, -smp should fail is there's invalid maxcpus/invalid
+> > topology.
+> >
+> > Otherwise, if it is auto-initialized, its value should be adjusted based
+> > on other topology components as the above calculation in (*).
+> 
+> * Why have such diverging ways?
+> * Could we simplify it as
+>    - If cpus/maxcpus==0, it is invalid, show an error and exit.
 
-  https://www.mail-archive.com/qemu-devel@nongnu.org/msg439899.html
+Hmm, the origial behavior means if user doesn't set cpus=*/maxcpus=* in
+-smp, then QEMU will auto-complete these 2 fields.
 
-or:
+If we also return error for the above case that user omits cpus and
+maxcpus parameters, then this change the QEMU's API and we need to mark
+feature that the cpus/maxcpus parameter can be omitted as deprecated and
+remove it out. Just like what I did in this patch for zeroed-parameter
+case.
 
-  https://gitlab.com/qemu-project/qemu/-/commit/cb89b349074310ff9eb7ebe18a
+I feel if there's no issue then it's not necessary to change the API. Do
+you agree?
 
-Thus I'd rather prefer to keep this patch as it is right now.
+>    - If cpus/maxcpus > 0, but incorrect for topology, then
+> re-calculate the correct value based on topology parameters. If the
+> re-calculated value is still incorrect or unsatisfactory, then show an
+> error and exit.
 
-  Thomas
+Yes, this case is right.
+
+> * Saying that user setting cpu/maxcpus=0 is invalid and
+> auto-initialising it to zero(0) is valid, is not consistent.
+>
+
+I think "auto-initialising it to zero(0)" doesn't means we re-initialize
+ms->smp.cpus and ms->smp.max_cpus as 0 (these 2 fields store actual basic
+topology information and they're defult as 1 as you said above).
+
+Does my explaination address your concern? ;-)
+
+Thanks,
+Zhao
 
 
