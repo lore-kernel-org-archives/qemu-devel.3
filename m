@@ -4,77 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 072CCC54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 09:45:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6940CC54E4A
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 09:45:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhRLb-0004H4-Nd; Tue, 05 Mar 2024 04:44:33 -0500
+	id 1rhRML-0004Sb-Go; Tue, 05 Mar 2024 04:45:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhRLV-0004Gd-QD
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 04:44:25 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1rhRLl-0004Ka-7F
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 04:44:47 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhRLU-0003Uu-8L
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 04:44:25 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5673b5a356eso420550a12.0
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 01:44:23 -0800 (PST)
+ id 1rhRLj-0003Xf-94
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 04:44:40 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-563d32ee33aso6537298a12.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 01:44:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709631862; x=1710236662; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=R53Bvic1SeMhQKdeIaLoa6d5Ix+oSquUnDBt4vPEXbA=;
- b=gjqJGxgQBKxpvnkcpLsIFv4AaDJXOUb4l+GZ5E9Y97o0CU0oeG4tmSLP42JT7pcjwJ
- bvZ4F9W8qiUzPKrupSi0XYydn+hBpHdcWEKIFO1+QH4CztIUr5/wfF03nBDTHKXc+PiX
- a+iVo1OFcva7+lSC8VATG3tcn8ViyuQ2v/psVn14LT/GYZ3uwQ+bjaJuyHo6WIFMkX94
- lGBXMwcXKiWn7M432H0ynnnfoGhixZXIWX5Ot71JP5FKQSvDOPIwAmEF9CkYuI4GraQ5
- nySRMxwCAbXqLE0Nb7JHOuJJR+w6EdDzY2HrDA9qX61ofsXjv/Ma0VN7xD4d4jU4MCyu
- QwmA==
+ d=linaro.org; s=google; t=1709631877; x=1710236677; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=JeZCWv7cmtNskpcCCtjczX0TjupB0fz4ZZyNX+ULMfk=;
+ b=D3/S8WBj7GZtKC9em9k0vBtQm0VuiUoZ54GeEuioLHnLQCZcRg+uYnw4Ij1pDdEfNr
+ QsXhoA9Bi8NQfrI9WqGcfld4oZ3mrzNaOfFhL9w/su2raLlFaOaUlRs+5lZgLqxrOZ4n
+ aLdQa0OoDlyMmIheo/mkK5sxyjcAps7EhNMNC1c/UvYHhjehKjs7ewg43bGpvE0DHBY8
+ tBX+LurjdcPdLN4oxzxRiMDT0jxr7opxdutuBETWbYWHz+jS37bWAgUI4/Cd1dfJYwVa
+ 8FddhgfpQiMISsVE/HjcUc92yhOfMrMR4IrNyCyqwYy3DayNU2jWIG2R64xOdR8eY+Vx
+ lUAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709631862; x=1710236662;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=R53Bvic1SeMhQKdeIaLoa6d5Ix+oSquUnDBt4vPEXbA=;
- b=Og0KJCsO5loOFSM8GjSXQR1ApihGWFkTfrN1U4vzgjFZRMX5TMX0j5FpuifSOGzq7a
- qA4z76s1EJbSW9qJaPZjtkBaGxg1Mio+lQSjZzLkNb5OUUXld8CoKcgq3OuoHTkCYpYK
- 3B3ewkcv5WUVseQPsO6z+tpRH04ba0wk6YzfsWAqpUTHgwLaMocNn06h0aBsuTTM708V
- NNokPtdF4ASrL6h8cPlu3nRNOzoUF07CSQ7odh2BxpSomeq/TUjFyz98RrAcqiVlO9cl
- dXFOtYV4ELrG48bQTGBNlKvD8C+bZTklzDfLGsG8J1/dtzDQ+fDN7PG+Y9yeOGfw2qR7
- uCMg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVJ2YF1gUus9f+v6LfTcMbW7WGbVz4nEl0DbZlqvxDmRUxttGkHuyeyhkPGpDGYNZnfs07WfOtNLTNnLMojOnGLCJDeiuA=
-X-Gm-Message-State: AOJu0YxlrVfnzps8vb3a9TtbiFiZDhNhbxNGbY4NcAwGuoMnTmriQcog
- BkgG646zU76/jhvHUQkKK47ucF1s6eVWif3TLvR3R49djKAV6xfJy/dTrtEKUzHvPELRyHoBpOC
- XSVRGKur8PPXB037/v0eQZSJl0xv7Z1ar6n9+lg==
-X-Google-Smtp-Source: AGHT+IFcnnrZE19wwgfTkrwadA6Dt5E7dotJw7SjAeUAYVo2Bu1qPUqBzp0LB4a5Vv1PmGy6eeM2UENkAiC0d2ufmWo=
-X-Received: by 2002:a05:6402:1bce:b0:565:ff64:33b0 with SMTP id
- ch14-20020a0564021bce00b00565ff6433b0mr7401789edb.22.1709631861715; Tue, 05
- Mar 2024 01:44:21 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709631877; x=1710236677;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JeZCWv7cmtNskpcCCtjczX0TjupB0fz4ZZyNX+ULMfk=;
+ b=pKgoasBNntOJl+Djwk9OjiLNRrJlqU+ELMA//VSLRVfHoNbVheR+ot3+ap66w1gspZ
+ QehdSSWya4bfj4L3OdeyPJvNY1l5pp0IyP6/XrBbDt5vju7K5BwbYk8j7daK0Qtrdtsv
+ bnFFBo0qFopWUjmfqNE56/yUbuf5PLXVe7TJ2bHvTCfAun5jL9JcwX+GKFQ36GYmfxb5
+ UUBtsSVvhgGBgkmMWmNYhhXrFZFfbvJgHGs0JFP261XRDND0evXWnAUS9bc8QdivSG+k
+ LRexTBnc8BnzZKQU7OKBb7GaHmhfzduvhtoVEaJJu2dzMzyKY70lsjYyRxCbUl3+f3pY
+ A8wg==
+X-Gm-Message-State: AOJu0YxaFBEHsZh544LMDdwwM73i/oHeeP1YEMnZruFPo7vb1eLL03WH
+ L/+VU/OO2d98etKugPEx0QeYsK0yHODa0O0ZM5Ik2Lr35xugY0nCDEaKFSEgydQL2VDMbN69HFU
+ 0D24Bd5ThW0PBed3+dtpIlmcoYGIpeQN3oWfxEw==
+X-Google-Smtp-Source: AGHT+IEzAsFW13XbjLQ0aevpIO3MOSu0QR9Jaiszj6/S+bpC7xB/uOXg0SG9/uufutb3gmXxmXRwNih6UJu7dIzHH1Y=
+X-Received: by 2002:a05:6402:2151:b0:565:f9c1:d925 with SMTP id
+ bq17-20020a056402215100b00565f9c1d925mr8136052edb.0.1709631877065; Tue, 05
+ Mar 2024 01:44:37 -0800 (PST)
 MIME-Version: 1.0
-References: <20240304144456.3825935-1-berrange@redhat.com>
- <87jzmhwvdg.fsf@draig.linaro.org>
-In-Reply-To: <87jzmhwvdg.fsf@draig.linaro.org>
+References: <20240303054645.3004-1-deller@kernel.org>
+In-Reply-To: <20240303054645.3004-1-deller@kernel.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 5 Mar 2024 09:44:09 +0000
-Message-ID: <CAFEAcA_sODqXoRcAJbC+EeYxmTLpuLf1Xj8jsLhZQFdbzZOfbA@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Fix CI build on Free BSD 13
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Beraldo Leal <bleal@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 5 Mar 2024 09:44:26 +0000
+Message-ID: <CAFEAcA-TD2Auf4duTP=Debpkn4T27xVD3oHR1qDhqsvRsxu9yA@mail.gmail.com>
+Subject: Re: [PULL 0/5] Hppa latest patches
+To: deller@kernel.org
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ deller@gmx.de
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,22 +88,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 4 Mar 2024 at 21:17, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
-e:
+On Sun, 3 Mar 2024 at 05:47, <deller@kernel.org> wrote:
 >
-> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+> From: Helge Deller <deller@gmx.de>
 >
-> > FreeBSD seems to have prematurely purged the 13.2 images from gcloud,
-> > despite 13.3 not being announced until tomorrow. Historically the old
-> > images were left available for quite some time, until we noticed ports
-> > failing due to missing symbols. Either way we need to update to 13.3
-> >
-> > This exposed a clang bug so needs a workaround adding too.
+> The following changes since commit e1007b6bab5cf97705bf4f2aaec1f607787355b8:
 >
-> Queued to testing/next, thanks.
+>   Merge tag 'pull-request-2024-03-01' of https://gitlab.com/thuth/qemu into staging (2024-03-01 10:14:32 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://github.com/hdeller/qemu-hppa.git tags/hppa-latest-pull-request
+>
+> for you to fetch changes up to 839a88e8bd1a1efe05844c39a59985482894f4de:
+>
+>   roms/hppa: Add build rules for hppa-firmware (2024-03-03 06:41:19 +0100)
+>
+> ----------------------------------------------------------------
+> HPPA64 updates
+>
+> ----------------------------------------------------------------
 
-I've applied this directly to git to fix the CI.
 
-thanks
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
+for any user-visible changes.
+
 -- PMM
 
