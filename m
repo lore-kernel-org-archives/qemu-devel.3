@@ -4,77 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E878AC54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:22:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F52BC54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:22:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhUjQ-0007J1-0P; Tue, 05 Mar 2024 08:21:20 -0500
+	id 1rhUkJ-0007d9-Hb; Tue, 05 Mar 2024 08:22:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhUjL-0007IT-1s
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:21:15 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rhUkF-0007ax-IR
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:22:12 -0500
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhUjI-0007v2-HQ
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:21:13 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-33d28468666so3767627f8f.0
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:21:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rhUkE-0008Al-3q
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:22:11 -0500
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-56647babfe6so8289386a12.3
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:22:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709644870; x=1710249670; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LxN5fSZ0mYuXpILGo+jbfEWTaiqX4vsJYUndZBpbOno=;
- b=ni2CC60uFuD5Zvk6RJTNyKcrWXwU3lAYdnt3qC5dhA45R51qG8sre1NYv4OYRZs6bS
- W9JBRzWLHmNsaw23mvWrhxT0ZF4Lx6O1V7+hQQI5gmuzl9ofKxjtIHJS3Yq2MG3ci/W8
- f+fqbb2OdJ7p+pFbojdiharGyXAPLvKmIAwtYqmlYhKGYhC3cAIz+Ho6ngYZAbQ4UG93
- y3T84ZNMxutYfmmMa6ebJH2Q7dZO9LgECzm6JeBi9eA6P8+uN2fwz6lPMGLxMdxMZD6M
- 7mmOj3Sx57ATvUwFwIncIZO7Er4NgQK34nqGQM1/vmnx/eNh1QEWikhmIfuoylL8WcNV
- ibSQ==
+ d=linaro.org; s=google; t=1709644927; x=1710249727; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=guxUlDWqzb4lkXIhpafKSXkFiU9Da23V+a6YnevCJ68=;
+ b=ra9/URbwSMS0coC4g4/cAgSR4QxG8kbPQHvy9vIbeeReRrOK4wWMXXGE5z0XQaN0np
+ kMJ5A43xryRpqDgPc9L6vPeldPetvgW4yy+WaYEj+KgVzkpZ2NVKs7vnyD6+yoPCncHE
+ kpTvyUqpUdMXs+HRH/WJ8xI9vER2aW8zZWqtY8zKnqikGbi6fIJpk6dx5fymFxsWUTyF
+ UKwQ03zn8cRTOJ7amP+te/KoKmKMMsxXdAAdq2GQZx6Yfj9DJxpgqehK9bQjUGXElIN+
+ hNTuzt1cNNvgH7FsG0XpB1jlPUlYct+Q6kw4K3kSmBHre3i5xXs1Jtf3RWaVIBXMVbuW
+ SY0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709644870; x=1710249670;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=LxN5fSZ0mYuXpILGo+jbfEWTaiqX4vsJYUndZBpbOno=;
- b=qtziLErU4EXyq9vUsq2p3ykRpVY31H7xy2XYtfOsxXUr4PQs0Ui4QRPfZSmNDNS4Zd
- xQIMwhfN7Vxv1qAGfZnh+Qa9RpwCh6LcUU9YYXjgwynwE4FO6bA9D2k44tnzUoWBG7vb
- tN+cFbJBkkLXQTf9N4pnbC84yJtdN0PDC9mlXkV0iJ0Eeyyqpj9p/ir5GJTuJRr0Vjd1
- C4dDV1THVr8+Z6glBQ0/LKTppHJTk9Xek5osVSMApiS0CVfXk+YhPqmvhYHAPk4FgeKF
- +8vUXVjFVF1vTpucUcy+GtQB7FZQeARfrYerhK3aq389isqatW+B42UwUR2l6hF7fN3e
- +ajg==
-X-Gm-Message-State: AOJu0YxGAuD8oy5zlqc6slAMWIDA3v9b9gujej4kJiJTlwD1Xw+MNrgf
- ttMetYBm6giIniIbq9FeOEcakFxpq3TrpLe3zD/BNGUfkuxrlbxeW6YvGyCe9U0=
-X-Google-Smtp-Source: AGHT+IEmEHpdzm6GHwi+fnU6z0042A+QmWDgNKEvUVwU4FVSJVt/BxWTp3zvIQ6LzHYGz5iNgXHBZQ==
-X-Received: by 2002:adf:9782:0:b0:33d:61d9:2d5d with SMTP id
- s2-20020adf9782000000b0033d61d92d5dmr7724439wrb.34.1709644870368; 
- Tue, 05 Mar 2024 05:21:10 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- j16-20020a5d6190000000b0033e0019b814sm14904270wru.34.2024.03.05.05.21.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Mar 2024 05:21:10 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 93ED15F888;
- Tue,  5 Mar 2024 13:21:09 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,  minhquangbui99@gmail.com
-Subject: Re: [PATCH] hw/intc/apic: fix memory leak
-In-Reply-To: <20240304224133.267640-1-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Mon, 4 Mar 2024 23:41:33 +0100")
-References: <20240304224133.267640-1-pbonzini@redhat.com>
-User-Agent: mu4e 1.12.1; emacs 29.1
-Date: Tue, 05 Mar 2024 13:21:09 +0000
-Message-ID: <878r2wx1a2.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1709644927; x=1710249727;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=guxUlDWqzb4lkXIhpafKSXkFiU9Da23V+a6YnevCJ68=;
+ b=laAxr6X/0HIlsx/qiNdjd6Srar+3S1Mo2ka6jijpHeHvguEKZNomwfiO5FrJVExHKl
+ ye8CjxDNVK44oeoZ4tPtedIz/ca6iYf+Yaytfa19MEGhNZzW7oXc50bv2w/U/5hK3YpM
+ M26oFG4zBe1FdFE1neA4CZqCGmXp+sZ3QY1U6KTPb/pLVi2eMYcGNzC9S7bwIvHz+RPY
+ zqaeuWGj7R0NwvBHzXew4L4DAGWfWt46kG1lPiEILVYTWdYDEbwxMEVLDgGAc4FiSgMf
+ BqrCVGfAZmbOW5zVob13ztnZx2PegQ9sAaJBBAdgLeHSGnw66Ekup0/6gNjNrzBDam/n
+ Y+Cg==
+X-Gm-Message-State: AOJu0YyQEmEapQplurcMSSTp46cbbZRlFhZ9KznZWZfnthhKJHdQHx9a
+ yD5lICEhcZBauBQDfLbEtovQL2zRGV+SeK4p82KA9dSWUOllmtUn0DE2xoh0dzfQR4ruYj6da0c
+ bJT+M0gHfU9r0avWC1uCw5DIfo9VfN8Zs0Xs64UvIssIesqR4
+X-Google-Smtp-Source: AGHT+IHzvB4nTjho/F3Usz1hDmTXIrm8uscwFRhgvx3y8nBTLR8TaTjDnYUukLvrlV1iKwJ8KPIqOJ5wV7HVclQ/XIo=
+X-Received: by 2002:a05:6402:34c6:b0:567:3ed0:47ec with SMTP id
+ w6-20020a05640234c600b005673ed047ecmr5291132edc.23.1709644927425; Tue, 05 Mar
+ 2024 05:22:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
+References: <20240305013016.2268-1-steven.shen@jaguarmicro.com>
+In-Reply-To: <20240305013016.2268-1-steven.shen@jaguarmicro.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 5 Mar 2024 13:21:56 +0000
+Message-ID: <CAFEAcA_BOgDPAmb1ksSWOLtEaHQozze1C2hiu4BS7k8CHsKz_Q@mail.gmail.com>
+Subject: Re: [PATCH] qemu-options.hx: Fix uncorrect description of "-serial"
+To: "steven.shen@jaguarmicro.com" <steven.shen@jaguarmicro.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,19 +87,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
-
-> deliver_bitmask is allocated on the heap in apic_deliver(), but there
-> are many paths in the function that return before the corresponding
-> g_free() is reached.  Fix this by switching to g_autofree and, while at
-> it, also switch to g_new.  Do the same in apic_deliver_irq() as well
-> for consistency.
+On Tue, 5 Mar 2024 at 01:31, steven.shen@jaguarmicro.com
+<steven.shen@jaguarmicro.com> wrote:
 >
-> Fixes: b5ee0468e9d ("apic: add support for x2APIC mode", 2024-02-14)
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Before v2.12, serial_hds used MAX_SERIAL_PORTS(4) for
+> resources of serials.The limitaion description of "-serial"
+> option: "This option can be used several times to simulate
+> up to 4 serial ports."
+> In latest qemu, serial_hds have been replaced by "Chardev **"
+> and now is dynamically allocated through "g_renew".
+> So the limitation description is not suitable now.
+> Update to "This option can be used several times to simulate
+> multiple serial ports." to avoid misleading.
+>
+> Signed-off-by: Steven Shen <steven.shen@jaguarmicro.com>
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Thanks for this documentation fix! I've applied it to target-arm.next
+(with some tweaks to the commit message), so it should appear in
+upstream git within a week or so.
+
+-- PMM
 
