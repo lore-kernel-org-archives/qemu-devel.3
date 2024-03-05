@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2624C54E49
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:54:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18930C54E41
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:54:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhVEw-0001sK-M9; Tue, 05 Mar 2024 08:53:54 -0500
+	id 1rhVF0-0002Hr-DS; Tue, 05 Mar 2024 08:53:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhVE6-0000yF-OJ
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:53:09 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1rhVDx-0000x8-Qk
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:53:06 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhVDt-0005yf-IJ
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:52:56 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-412e783c94fso13192975e9.1
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:52:49 -0800 (PST)
+ id 1rhVDq-0005y6-HH
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:52:53 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-33d90dfe73cso3056036f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:52:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709646768; x=1710251568; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709646765; x=1710251565; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Qo1L26oNcI76C41AKC9KqnoX02ELXCqY0+XddiR1gdk=;
- b=Fd3pAAHCuNku85Ffdpd5V332juMm/Ul+/1O+FIc1ivmJGyEhCYo26NeERdPOg2eXGU
- 3Hn/SArveE40vEIUISDkN3jEJRnPh5EArW6FlddK2IZeU/U95qD4qy5ETsysIU+Wr7wC
- 7/r6cbmdg+hoUfWf8LTyw0z06t4GbuyET9sVFz2jX6Seocr6PtqP3jmQUp0zvt03sjMy
- cIzUMR8BId0hRMe0R8av9KNnyaFGF8wGtCujoE0eZYzh3EnnR34M0g+cXt4Rez2Kg6DD
- j3HamYT3gZV44sXLspheQIXLBeNBFtbOJC1s9ljPS/iSkY6dKNgQ92k6XUD+Ffncnnfh
- Yvmg==
+ :reply-to; bh=fdVthnX6h3tPLZ/up3/0m51wR74fwYyRgEQm5STtv5M=;
+ b=lsi9HgN5xeuAdoqgoLYZekjfyQPOfAz9142+IDLLrMfvpEackRNDvBneEI8UXCjyyf
+ J8KeD9moVWgLS0Rov+oQgFKqvpBuevvzE3q37N3jpfl78YXvYH/WtbUfkA1Pg3vI4Wfn
+ kX0piJ8J+CUp9UKOxGcP91KqJJq1kn18go1SuFIcIeAXTs1D33nQxDXmFRRbggu+CN/a
+ tbzCAMOl+TkpKTN3w4/oejdieSMwkKLP1JmMhcnnwfxU5kUYzMo/FPvvLEoQP3VA4Dgx
+ KKcZ1skRqlHQO6+gjObdrSkdOJfITv7Eazf1NzZI+jQrCIPliQ/kKDhjjAbOALyPfR0P
+ rltg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709646768; x=1710251568;
+ d=1e100.net; s=20230601; t=1709646765; x=1710251565;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Qo1L26oNcI76C41AKC9KqnoX02ELXCqY0+XddiR1gdk=;
- b=CyOhzsEAGRqxrVsxReZeuMkYsSgaKebXCvvIHgFMHniadaM+2t+DuAnY0i/UFoOYmX
- mcxVxe8A1fH8agQq2H0DKDiJJjfIwpAB8Pl4HnlyTQxJXdZ9g34NWIeB5RYI325D/Aok
- ng5jJQLB6paSd2yacHFqs+0QGuNjepXPnMKT+/vHkg65nvPyqIJyU3EggoeWnvw7rR2G
- HFmhjLPwU3XWbu16EX82I1gr5gxmyrKpU89BMhq08D59/m51W95LIbFtFW7UvL5XKIry
- oKCwD9yO4ttRihbg4iXCxa73WsSZLqBXPfMpEs22HsUi83Qw6LedmskM+ie9Q7HcLOZU
- q4qw==
-X-Gm-Message-State: AOJu0YypXND3CDI8N2fdsiMTri/aPWaopnEuvGb/cQaO8cyyzAirVuAM
- 8MdjdGMztuK9ooC2ub8UOMHlTvGnvjQFbhkvJr8h1qORMg7UmoVMAKYlJ+OO5Y6ATb3e5yqSxcy
- Z
-X-Google-Smtp-Source: AGHT+IGDBzKouDiNBepXRThxi2xvp3tifkJjJqZSWYKvIg5mACroqcZ0+l/uaIB126kDSkJaBODy4A==
-X-Received: by 2002:a05:600c:1c88:b0:412:e55e:8516 with SMTP id
- k8-20020a05600c1c8800b00412e55e8516mr3513452wms.12.1709646768214; 
- Tue, 05 Mar 2024 05:52:48 -0800 (PST)
+ bh=fdVthnX6h3tPLZ/up3/0m51wR74fwYyRgEQm5STtv5M=;
+ b=hkL26FuDIgiYlWJQPDgNDS5Hq53Xb8dpl1fepptmnzF0Dqi1Es/5ej+ND0m+RHehAe
+ dTRdnBDt8c/JK5s/5WlN8fPth4GxsNNglwrjtM6BnKTZoxpQleIuneubcHNBKSB+um0y
+ hl+dJqF4LIBFrOPB1zagE3M2OFFfY1FXDGTQSUFe3Tx9VvRDxJWSvCuT6X/zsNqrKGrg
+ 4lNVUTrUY51Apc/oqEB4yfrkB20nKvOqDio75JqAXTwHonz9w4X7S1XJJSBPnupTiOaI
+ 4KlaYo/V8jak6nEXnIcUb2zK3O8LprnknWsYnhiCvs5dinvdfXVBpivCMGZzJ7l4g4wD
+ 4oEg==
+X-Gm-Message-State: AOJu0YxysWMSYZKCBDpgVMWdPnz2jeoCvoMnm9uvOZihtNO6FPeomSgS
+ eOZ1RAmopJtzmlFyzr5fE9T8o7ay8xfUJV2LExCZ4RPMG3inufxDZpsr1QOjOBdXPwrOxhX0tuK
+ K
+X-Google-Smtp-Source: AGHT+IF+TSwvseQswoO+IT09xQXNmdexvZAq3Ve8Q8uhYS9atC7/sfsEn87Z8xIEBtDuSDwqV5EfNA==
+X-Received: by 2002:adf:b646:0:b0:33e:1f2b:8cc5 with SMTP id
+ i6-20020adfb646000000b0033e1f2b8cc5mr3250857wre.0.1709646765138; 
+ Tue, 05 Mar 2024 05:52:45 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- x3-20020a5d6503000000b0033e206a0a7asm11797532wru.26.2024.03.05.05.52.47
+ x3-20020a5d6503000000b0033e206a0a7asm11797532wru.26.2024.03.05.05.52.44
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Mar 2024 05:52:47 -0800 (PST)
+ Tue, 05 Mar 2024 05:52:44 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 19/20] atomic.h: Reword confusing comment for qatomic_cmpxchg
-Date: Tue,  5 Mar 2024 13:52:36 +0000
-Message-Id: <20240305135237.3111642-20-peter.maydell@linaro.org>
+Subject: [PULL 13/20] target/arm: Support 32-byte alignment in pow2_align
+Date: Tue,  5 Mar 2024 13:52:30 +0000
+Message-Id: <20240305135237.3111642-14-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240305135237.3111642-1-peter.maydell@linaro.org>
 References: <20240305135237.3111642-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,36 +94,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The qatomic_cmpxchg() and qatomic_cmpxchg__nocheck() macros have
-a comment that reads:
- Returns the eventual value, failed or not
+From: Richard Henderson <richard.henderson@linaro.org>
 
-This is somewhere between cryptic and wrong, since the value actually
-returned is the value that was in memory before the cmpxchg.  Reword
-to match how we describe these macros in atomics.rst.
+Now that we have removed TARGET_PAGE_BITS_MIN-6 from
+TLB_FLAGS_MASK, we can test for 32-byte alignment.
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240301204110.656742-2-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Message-id: 20240223182035.1048541-1-peter.maydell@linaro.org
 ---
- include/qemu/atomic.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/arm/tcg/translate.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/include/qemu/atomic.h b/include/qemu/atomic.h
-index f1d3d1702a9..99110abefb3 100644
---- a/include/qemu/atomic.h
-+++ b/include/qemu/atomic.h
-@@ -202,7 +202,7 @@
-     qatomic_xchg__nocheck(ptr, i);                          \
- })
- 
--/* Returns the eventual value, failed or not */
-+/* Returns the old value of '*ptr' (whether the cmpxchg failed or not) */
- #define qatomic_cmpxchg__nocheck(ptr, old, new)    ({                   \
-     typeof_strip_qual(*ptr) _old = (old);                               \
-     (void)__atomic_compare_exchange_n(ptr, &_old, new, false,           \
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index f947c62c6be..c8a24706750 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -900,13 +900,7 @@ static inline void store_reg_from_load(DisasContext *s, int reg, TCGv_i32 var)
+ MemOp pow2_align(unsigned i)
+ {
+     static const MemOp mop_align[] = {
+-        0, MO_ALIGN_2, MO_ALIGN_4, MO_ALIGN_8, MO_ALIGN_16,
+-        /*
+-         * FIXME: TARGET_PAGE_BITS_MIN affects TLB_FLAGS_MASK such
+-         * that 256-bit alignment (MO_ALIGN_32) cannot be supported:
+-         * see get_alignment_bits(). Enforce only 128-bit alignment for now.
+-         */
+-        MO_ALIGN_16
++        0, MO_ALIGN_2, MO_ALIGN_4, MO_ALIGN_8, MO_ALIGN_16, MO_ALIGN_32
+     };
+     g_assert(i < ARRAY_SIZE(mop_align));
+     return mop_align[i];
 -- 
 2.34.1
 
