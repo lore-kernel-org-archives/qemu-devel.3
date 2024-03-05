@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15738C54E49
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 15:52:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E96FC54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 15:52:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhX4G-0000NB-EF; Tue, 05 Mar 2024 10:51:00 -0500
+	id 1rhX4Z-0000OX-CL; Tue, 05 Mar 2024 10:51:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhX4E-0000Ml-F4
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 10:50:59 -0500
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhX4W-0000ON-TG
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 10:51:16 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhX47-0007K9-Gt
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 10:50:57 -0500
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-51326436876so6374520e87.1
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 07:50:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhX4V-0007Mf-7h
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 10:51:16 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-33d0a7f2424so533547f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 07:51:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709653849; x=1710258649; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=oIU4ccuy4HU8mf1H46sACHHovBTUOj3TeYnZ8oicqRE=;
- b=ySyPM7/g2tcWGkfPEQGxATy0Gkc55x0EY2A9gLG2fL6tQvK02HsOWCWlQM56UzKQlC
- jaurvm0kcgZW/+juJePTsmahMWY5GS+avfxHuscVWg6VnBERsqDTtZ7MToDivBWG3zTP
- ugvR0PpOvmiMJ6v4gaaTajASU2lY3kFILhwXCTj9HklZnmyL/ezbVaZLQKmn63eQ2H1t
- 9420dekIGnTHrz4aZWduUYiMpIjBYNKHjKCLUP6rQem0NDHz71mOqKljNG50p6ZE012x
- Ra+Tyyhxggqa1i622hs4JhSCReMJ6g1UQkSdEu/ftMTSM+MhQMnOszX19kjkvM0llyUz
- TB+g==
+ d=linaro.org; s=google; t=1709653873; x=1710258673; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Dm6l6PfIksSdR29ispgG3Rt2suMFawhN66ke9hIjHHs=;
+ b=exm0CRYexud/AZL8E3738U41JcdvntgiXB9K1kOi7fTUo4GwkB/Z6r/hhPYuY8ul06
+ QLQvDIJ0EMnbvRouz0/T35wyHGnJmwaEC+5hbFOpO+u/hSovb3yccpkAg23pIk3LjhCv
+ n+2OBUOJdc4aGyL3CdV46gEmUv534VlQX1wSAKup6sVkc2hcR8kPDD97Az9Cz4/zLgYA
+ u5mC/zILokKjT5wYtC3IToANmjDHYlJaZB6qVC4nQffWt7hA6bhJCi/2XHmS0gEAUPl1
+ vERI2pubdUWFdVk+5/Gb/cyv14eBlGO7DoXm+5vUI7rhb2mZlSymxh2K8/95ruvF5QyM
+ du3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709653849; x=1710258649;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oIU4ccuy4HU8mf1H46sACHHovBTUOj3TeYnZ8oicqRE=;
- b=C82ctCkQo9czYfFnysV+VbOIz4mp2Wa47drIyRudIUhYB7dIl2lrc9jC+flGGboOcA
- Ca3IAa4V0bo5hjn2JIkNb5Bn/7yg97VxuWjVdSUF6C46n8sjlBrKQe2dxUO2VH03/6hA
- Ob9rDXt9nWagP/RXmgQVu6doDizhA6KkY+QNT1m+Ut6CCfE64VI6E1dA2QsV6sEJuCyK
- 6XITvzrwZbSJxKgtwyoyasN2i2A7umtGZ5UXbolcQ5T7JugI4TkluN8FviOzuZ8EDPjV
- TpZ42kEBTdReSiMZtSxgMm+CXNXmSy+FUq11lZUT/GbySKSx1HMkZYItQQYgO7rJrnsM
- IrFQ==
-X-Gm-Message-State: AOJu0Yy2/vSOyX1iUqsm6J/gen8rq2QfQWNR6Icx0XjX3K4832L4x8z7
- yCEWtrPEmd39InIgpTZO8o8cA5HQrCkoJISi77d0yNA7X9HenWsiU4xXrpYFN4A=
-X-Google-Smtp-Source: AGHT+IFqOK061YemKyDyJXq8WfdSjvCdmKBALdPLKpbnSzfPq8BFdw6sYj4Cb3dmtSnNBHMWKkAjig==
-X-Received: by 2002:ac2:44c2:0:b0:513:3faf:a2aa with SMTP id
- d2-20020ac244c2000000b005133fafa2aamr1514764lfm.29.1709653848740; 
- Tue, 05 Mar 2024 07:50:48 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- u21-20020a7bc055000000b004129a1097e7sm20807439wmc.12.2024.03.05.07.50.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Mar 2024 07:50:48 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CBF645F8B4;
- Tue,  5 Mar 2024 15:50:47 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: Mark Burton <mburton@qti.qualcomm.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Alistair Francis <alistair.francis@wdc.com>, Bin
- Meng <bin.meng@windriver.com>, Edgar E. Iglesias
- <edgar.iglesias@gmail.com>, Stefano Stabellini <sstabellini@kernel.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Don Harbin
- <don.harbin@linaro.org>, Alessandro Di Federico <ale@rev.ng>, Anton
- Johansson <anjo@rev.ng>, =?utf-8?Q?Fran=C3=A7ois?= Ozog <ff@shokubai.tech>,
- Song Gao
- <gaosong@loongson.cn>, Michael Rolnik <mrolnik@gmail.com>, Brian Cain
- <bcain@quicinc.com>, Christoph Muellner <christoph.muellner@vrull.eu>,
- Philipp Tomsich <philipp.tomsich@vrull.eu>, Max Filippov
- <jcmvbkbc@gmail.com>, Francisco Iglesias <francisco.iglesias@amd.com>
-Subject: Any interest in the QEMU community attending DVCon Europe October
- 2024?
-User-Agent: mu4e 1.12.1; emacs 29.1
-Date: Tue, 05 Mar 2024 15:50:47 +0000
-Message-ID: <8734t4wuco.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1709653873; x=1710258673;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Dm6l6PfIksSdR29ispgG3Rt2suMFawhN66ke9hIjHHs=;
+ b=kxeAlizfFUFrs4YDfIxMZoHHF8C5/Vlg7EM0pBLJ4tmVcbXD9RvTwovs3OHTTOFu9i
+ TRP8MX9FbEpap2sF/kiSsxChf6ZDWMrPz+4Oe3bTDZLw6I29Iw1ufn4arcz/hQEN5w6z
+ 7fWTmz+6sP36bs/fzVxdA6QWYXzQ84VEbqJxkRi9dYe9pzP9lSAFEmfwQ3mzAnTBdt/s
+ iQEEr6uwnY0hnQNXllLAgP1EqWG3TxC661VpYz6cVJtoAX7LAsdDGEn8cWOrFAgsUiG1
+ 5HbstguP2XAhI60B+/oc8GHGO1FyezKJTgMrkCOzx5nV2ceGZ8uNuI0AB/3TMoo4JID+
+ oeAQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU7o/M3O+PJixK12etJOFkwVL/XVYNOsv8hdn5/0vB1yu3pZxX4idvOq4/OcM83QJPbBmRt2ZGePEuKlw585e1b2nRXuQo=
+X-Gm-Message-State: AOJu0Yy4gYJv/TP+Uk8y6iVB4gLD13P21o8aac28BxsJjsuIK0T/v5Ox
+ fuQRX7RNVyYWiRfv6OM51GGPvRVmSMVdqtfZKtNPXC+Qm/o8pX7mwEjC+Ah7Qdg=
+X-Google-Smtp-Source: AGHT+IFVjOvjg9Yw52kYfS3v3xCnyvI7xZguu7DbGzvchroDBK59U0SmRhMVYJSg9L36cacqawBQlA==
+X-Received: by 2002:adf:fc8e:0:b0:33d:2f2f:b135 with SMTP id
+ g14-20020adffc8e000000b0033d2f2fb135mr10172856wrr.46.1709653872769; 
+ Tue, 05 Mar 2024 07:51:12 -0800 (PST)
+Received: from [192.168.69.100] ([176.176.177.70])
+ by smtp.gmail.com with ESMTPSA id
+ j3-20020adff003000000b0033e01e397d6sm15208015wro.54.2024.03.05.07.51.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 Mar 2024 07:51:12 -0800 (PST)
+Message-ID: <ce5356ac-81e2-4eb1-845d-c444fcd48abe@linaro.org>
+Date: Tue, 5 Mar 2024 16:51:09 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x134.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/4] hw/i386/pc: Remove "rtc_state" link again
+Content-Language: en-US
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Jason Wang <jasowang@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Sergio Lopez <slp@redhat.com>, Paul Durrant <paul@xen.org>,
+ David Woodhouse <dwmw2@infradead.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+References: <20240303185332.1408-1-shentey@gmail.com>
+ <20240303185332.1408-2-shentey@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240303185332.1408-2-shentey@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,55 +102,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 3/3/24 19:53, Bernhard Beschow wrote:
+> Commit 99e1c1137b6f "hw/i386/pc: Populate RTC attribute directly" made linking
+> the "rtc_state" property unnecessary and removed it. Commit 84e945aad2d0 "vl,
+> pc: turn -no-fd-bootchk into a machine property" accidently reintroduced the
+> link. Remove it again since it is not needed.
 
-Hi,
+Argh 🤦
 
-Over recent years there has been a push to make QEMU more flexible for
-EDA type applications. As long time developers know there are a number
-of downstream forks of QEMU which have their own solutions for modelling
-heterogeneous systems and integrating with hardware models. The work by
-Philippe, Anton and others to build a single binary with composable
-hardware is aiming at least to solve the heterogeneous modelling problem
-in the upstream project.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-While we do discuss these "TCG" topics during KVM Forum the project may
-benefit from doing some outreach at some conferences where simulation
-and emulation are the primary focus.
+> Fixes: 84e945aad2d0 "vl, pc: turn -no-fd-bootchk into a machine property"
+> Cc: Paolo Bonzini <pbonzini@redhat.com>
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> ---
+>   hw/i386/pc.c | 8 --------
+>   1 file changed, 8 deletions(-)
 
-The Design and Verification Conference & Exhibition Europe (DVCon
-Europe) is the premier European technical conference on system,
-software, design, verification, validation and integration. This year it
-will be on the 15-16 October 2024 in Munich. See: https://dvcon-europe.org/
-
-There have been a number of papers and workshops on QEMU/KVM topics over
-the years. Unfortunately the website doesn't provide slides or videos of
-the talks but topics have included how QEMU can be used as a fast
-instruction simulator alongside things such as SystemC models or
-virtualisation can be leveraged to accelerate full system emulation.
-
-The main tracks are fairly academic where engineering and research
-papers are submitted and if accepted can then be presented at the
-conference. This is probably over the top for QEMU related stuff but
-their is a tutorial track (deadline for Abstracts 1st July) which could
-be a good target for a introduction to the features and capabilities of
-the QEMU upstream. I suspect there would be interest in the wider
-modelling community to find out more about how to use the upstream
-project directly.
-
-There is a co-located "SystemC Evolution Day" on the 17th where there
-might well be a strong overlap between SystemC users and QEMU. Mark
-Burton is involved with that and is keen for proposals talking about
-integrating SystemC models with QEMU. Please send a message to
-mburton@quicinc.com if you're interested.
-
-So is anyone interested?
-
-Should we do more within the community to network and discuss our plans
-for QEMU as a modelling solution?
-
-Any other thoughts?
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
