@@ -4,88 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA2F7C54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 19:10:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43F15C54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 19:13:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhaAO-0001mn-Jq; Tue, 05 Mar 2024 14:09:32 -0500
+	id 1rhaEO-0003nK-E4; Tue, 05 Mar 2024 14:13:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rhaAN-0001me-8A
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 14:09:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
+ id 1rhaEM-0003n1-9n
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 14:13:38 -0500
+Received: from wfhigh5-smtp.messagingengine.com ([64.147.123.156])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rhaAI-0002CW-AU
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 14:09:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709665765;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=8vYdse8NbojB3Nud/OllehdhrkH1XAu5HQMFbB9PSe8=;
- b=BEPg++pN3xZQZVVS6yzHY2W69xDDTMRelzk427BgpFkqUdBy6uxCEuO4Jxx002arCxignH
- cTrN2Fxx0bWSBXoW4tIKeFKzxtJ+aWF+JX9RZSYACCJNXYMjcNa2agZb2Euefep0m/SdcE
- I4mveO9JsWq8ECWASouQo4+DmvB+Ej4=
-Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
- [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-460-TpOg0MvbO_qLsCXIxL4uOA-1; Tue, 05 Mar 2024 14:09:20 -0500
-X-MC-Unique: TpOg0MvbO_qLsCXIxL4uOA-1
-Received: by mail-lj1-f198.google.com with SMTP id
- 38308e7fff4ca-2d34ef51653so34330851fa.3
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 11:09:20 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709665744; x=1710270544;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8vYdse8NbojB3Nud/OllehdhrkH1XAu5HQMFbB9PSe8=;
- b=uG8J9K87bccfNfHvUm68hnqZWDAvdYqlMImn6S+s6ZrIgA1SzOn91gOD2M4u6pp7jM
- VlGkrHITxnGbANnHufTLLEtyC4bE7eBls2pJY8HNAwr2JN0OrOOBK10VFD7APRb5zXm/
- W/MGVFd8fq+MQAGRg9ZkpOet+T2cT0cV7exahb2tXhKCYbEehkLhE4JW2de04OjaGPnw
- 9F7RnuY17rZ70y0ViPiBvG7tIemuYeFH4lHl0s/YymhQdOz9BobUnvAINAd86X7zv6/B
- 71eGme9OQwu34UQe7ozyDMG7z0IqRNpQarbF+SC2tEtD0p6cEpHwtbYI8o+WTNxoXgEi
- 0/dw==
-X-Gm-Message-State: AOJu0YwXRxwYIlfkexZIZcsuvBszhLNwO+XVMX/IVb/ZlPzopvaPUMU8
- tsqx+Tpuo54NGt06WSNfNmEzTbApaL8i3kk+YjcWO/c7R+Q0cyB3cRCWrTq9zMFKIupqcXmIV+t
- DK4AZjlK4PQ13SGUMRK5HukpR/npTw85lwxuJtp8k4NTdpIvy5TPK5N+yx3ariMy8fPfrZB4d+r
- LF69RSvPxa2IiYqcjPLQbC7ya5cHHTWRnXvduO
-X-Received: by 2002:a05:651c:a0a:b0:2d2:a2f5:596e with SMTP id
- k10-20020a05651c0a0a00b002d2a2f5596emr2448516ljq.38.1709665743769; 
- Tue, 05 Mar 2024 11:09:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHKHBXOrjVnyhZ0frcgul7YrdUPCLCE3nYYsGXiA/JMBMXxbi7BhhrF62tzMtGjEScYDRClGQ==
-X-Received: by 2002:a05:651c:a0a:b0:2d2:a2f5:596e with SMTP id
- k10-20020a05651c0a0a00b002d2a2f5596emr2448498ljq.38.1709665743284; 
- Tue, 05 Mar 2024 11:09:03 -0800 (PST)
-Received: from [192.168.10.118] ([151.49.77.21])
- by smtp.gmail.com with ESMTPSA id
- ds13-20020a0564021ccd00b00564da28dfe2sm6129582edb.19.2024.03.05.11.09.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Mar 2024 11:09:02 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
+ id 1rhaEK-0002rf-2v
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 14:13:38 -0500
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailfhigh.west.internal (Postfix) with ESMTP id 9573F18000D5;
+ Tue,  5 Mar 2024 14:13:31 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute4.internal (MEProxy); Tue, 05 Mar 2024 14:13:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ invisiblethingslab.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:from:from:in-reply-to
+ :message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
+ t=1709666011; x=1709752411; bh=VSUlkpuYOEcRplvlXrjlVafcExCQb+jf
+ CPZC81dIcIs=; b=EVK+O2lxJWxJMjL8Oz2Ln1tBkVKuV/WmtIkwnGMYtjdQR57j
+ 6RJ3sUPaktu1KQ/hDsH9MuntTEwWscWxOpyXdZAVeR1HDGm2Vlg7Hd7lph9Bunjg
+ rUGQlXZN5DauNZchbhTVNcVPEMuusvo7zB3+w/4+42WmfPwse7zXdmkC65kBoO0y
+ Yxh8fdzLB+w60FMcxA+qsaE+ShPFWsFvc06lN3mXV6hnKezs+W2nXrp6QfiOj563
+ ExhpFgwLMfjuabTXq1fSXwKsy4M94aMYqBnrnoKvnVgQJ3QLUVsVt6ChzGwBnze3
+ t0FGKN9t/kKdW1veUNNBJiyIQJcd6VTiBxxzXw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm1; t=1709666011; x=1709752411; bh=VSUlkpuYOEcRp
+ lvlXrjlVafcExCQb+jfCPZC81dIcIs=; b=qkaTI3+FUieGvdWlljrO44qas8wzF
+ irqTvhOq699K6VfLAbSR/soYcSPh1/aJOOwr8zhS6VFx9GqpV7psSo1WYfMuvqLk
+ 0gry0PSzPdRUHlWsAc8JHcZTPx3JDLe0iOJ9xDSrn+I80hgV8sRedfNZGxNs9ROY
+ a66VjjnjxaYn/1H0aT72UOVsmRgN5U3/70EYi516VZg8Ax4C8F0yVO6H4QNzRrU8
+ EZMsnWumZa1D72vAAoIl3h0Xith7VTGL1jYIqJ9C/XEzaPecFRqX4+ZPfTUNAgjT
+ MX2rXHJtuPSOF8s0yWdRwcqHC/hfCv3QSYmwaKjqAByXdC1HwJMtgU0sA==
+X-ME-Sender: <xms:2m7nZWE1lza5p4rOPJy3hgNffTitUBYBk9yK4303__vLkAY2fcodAw>
+ <xme:2m7nZXX8uLPnDITswcN8q8nxvjbhA9-xj6QaY8AqgUTxNpWGHNhgAI_gi1C0HD2NL
+ XovxQkVWaWsug>
+X-ME-Received: <xmr:2m7nZQL00OE653sb9kpyBCZPtFycLXDKbZCGWsZE8NGM98d-TyNhBpPucqxdfxaSjWvQzBVXK-2zOHPgS9iyfv6OnMdVjOk1Hkci3ws0Uz0c1rf5Q6E>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrheelgdduudekucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhephffvvefufffkofggtgfgsehtkeertdertdejnecuhfhrohhmpeforghrvghk
+ ucforghrtgiihihkohifshhkihdqifpkrhgvtghkihcuoehmrghrmhgrrhgvkhesihhnvh
+ hishhisghlvghthhhinhhgshhlrggsrdgtohhmqeenucggtffrrghtthgvrhhnpeelkefh
+ udelteelleelteetveeffeetffekteetjeehlefggeekleeghefhtdehvdenucevlhhush
+ htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehmrghrmhgrrhgvkhes
+ ihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhm
+X-ME-Proxy: <xmx:2m7nZQEd7dNhshAAvFLNNCvQ-8It477Pz5wWmFrVNwlOxAFMK5U6EQ>
+ <xmx:2m7nZcUDNBuOd5a7NfbfwM1hdk0U_lsKny4TQxo2RFulxHpYLrmlmg>
+ <xmx:2m7nZTM1CyHc4nF0cUbAjzYBmYLIpPmKJ4f8cnGJTxbhauDFM5s5kA>
+ <xmx:227nZeK0MEbDpp6aBs-zT9bA32nfgte8re4UnPZWUlCinDdkHuFWFesaclE>
+Feedback-ID: i1568416f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 5 Mar 2024 14:13:29 -0500 (EST)
+From: =?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?=
+ <marmarek@invisiblethingslab.com>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
-	berrange@redhat.com
-Subject: [PATCH 0/2] ci: allow running Coverity Scan uploads via GitLab
-Date: Tue,  5 Mar 2024 20:09:00 +0100
-Message-ID: <20240305190902.364753-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.43.2
+Cc: Jason Andryuk <jandryuk@gmail.com>,
+ =?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?=
+ <marmarek@invisiblethingslab.com>, 
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
+ xen-devel@lists.xenproject.org (open list:X86 Xen CPUs)
+Subject: [PATCH v2 1/2] hw/xen: detect when running inside stubdomain
+Date: Tue,  5 Mar 2024 20:12:29 +0100
+Message-ID: <20240305191312.321127-1-marmarek@invisiblethingslab.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: none client-ip=64.147.123.156;
+ envelope-from=marmarek@invisiblethingslab.com;
+ helo=wfhigh5-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.568,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,42 +109,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The machine that is used to upload QEMU builds to Coverity is used daily
-as a development machine by Emanuele and myself, and as a result sometimes
-its podman/docker setup gets messed up.  When this happens, Coverity
-uploads might stop for extended periods of time.
+Introduce global xen_is_stubdomain variable when qemu is running inside
+a stubdomain instead of dom0. This will be relevant for subsequent
+patches, as few things like accessing PCI config space need to be done
+differently.
 
-In the interest of tightening this and of depending less on infrastructure
-maintained by specific people, replace the manually-managed crontab
-entry with a new job in GitLab's CI; this is also what Libvirt does.
-The rules to trigger it are a bit different compared to other jobs:
+Signed-off-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+---
+Changes in v2:
+- use sigend int for domid to match xenstore_read_int() types, domid is
+  in a signed range anyway
+- fix code style
+---
+ hw/xen/xen-legacy-backend.c | 16 ++++++++++++++++
+ include/hw/xen/xen.h        |  1 +
+ system/globals.c            |  1 +
+ 3 files changed, 18 insertions(+)
 
-* on mainline, it only runs as part of scheduled pipeline runs.  Rules
-  are added to remove all other jobs when running from a scheduled pipeline.
-
-* on forks, it is always manual (and only appears if QEMU_CI=1 or 2,
-  like other build jobs)
-
-For now I implemented these rules directly in the buildtest.yml file,
-but it is also possible to add a QEMU_JOB_SCHEDULE variable.
-
-Example of a working run: https://gitlab.com/qemu-project/qemu/-/jobs/6324308338
-
-Example of a run that is over quota: https://gitlab.com/qemu-project/qemu/-/jobs/6320681674
-
-Paolo
-
-Paolo Bonzini (2):
-  run-coverity-scan: add --check-upload-only option
-  gitlab-ci: add manual job to run Coverity
-
- .gitlab-ci.d/base.yml                   |  4 ++
- .gitlab-ci.d/buildtest.yml              | 38 ++++++++++++++++++
- .gitlab-ci.d/opensbi.yml                |  4 ++
- scripts/coverity-scan/run-coverity-scan | 51 ++++++++++++++++++-------
- 4 files changed, 84 insertions(+), 13 deletions(-)
-
+diff --git a/hw/xen/xen-legacy-backend.c b/hw/xen/xen-legacy-backend.c
+index 124dd5f3d6..6bd4e6eb2f 100644
+--- a/hw/xen/xen-legacy-backend.c
++++ b/hw/xen/xen-legacy-backend.c
+@@ -603,6 +603,20 @@ static void xen_set_dynamic_sysbus(void)
+     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_XENSYSDEV);
+ }
+ 
++static bool xen_check_stubdomain(void)
++{
++    char *dm_path = g_strdup_printf("/local/domain/%d/image", xen_domid);
++    int32_t dm_domid;
++    bool is_stubdom = false;
++
++    if (!xenstore_read_int(dm_path, "device-model-domid", &dm_domid)) {
++        is_stubdom = dm_domid != 0;
++    }
++
++    g_free(dm_path);
++    return is_stubdom;
++}
++
+ void xen_be_init(void)
+ {
+     xenstore = qemu_xen_xs_open();
+@@ -616,6 +630,8 @@ void xen_be_init(void)
+         exit(1);
+     }
+ 
++    xen_is_stubdomain = xen_check_stubdomain();
++
+     xen_sysdev = qdev_new(TYPE_XENSYSDEV);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(xen_sysdev), &error_fatal);
+     xen_sysbus = qbus_new(TYPE_XENSYSBUS, xen_sysdev, "xen-sysbus");
+diff --git a/include/hw/xen/xen.h b/include/hw/xen/xen.h
+index 37ecc91fc3..ecb89ecfc1 100644
+--- a/include/hw/xen/xen.h
++++ b/include/hw/xen/xen.h
+@@ -36,6 +36,7 @@ enum xen_mode {
+ extern uint32_t xen_domid;
+ extern enum xen_mode xen_mode;
+ extern bool xen_domid_restrict;
++extern bool xen_is_stubdomain;
+ 
+ int xen_pci_slot_get_pirq(PCIDevice *pci_dev, int irq_num);
+ int xen_set_pci_link_route(uint8_t link, uint8_t irq);
+diff --git a/system/globals.c b/system/globals.c
+index b6d4e72530..ac27d88bd4 100644
+--- a/system/globals.c
++++ b/system/globals.c
+@@ -62,6 +62,7 @@ bool qemu_uuid_set;
+ uint32_t xen_domid;
+ enum xen_mode xen_mode = XEN_DISABLED;
+ bool xen_domid_restrict;
++bool xen_is_stubdomain;
+ struct evtchn_backend_ops *xen_evtchn_ops;
+ struct gnttab_backend_ops *xen_gnttab_ops;
+ struct foreignmem_backend_ops *xen_foreignmem_ops;
 -- 
-2.43.2
+2.43.0
 
 
