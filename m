@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0EB2C54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:36:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2380C54E41
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:39:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhUxK-0007on-BY; Tue, 05 Mar 2024 08:35:42 -0500
+	id 1rhV0a-0000mb-S3; Tue, 05 Mar 2024 08:39:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhUxG-0007me-U5
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:35:39 -0500
-Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
+ id 1rhV0W-0000mM-FZ
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:39:00 -0500
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhUxF-0002du-5B
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:35:38 -0500
-Received: by mail-lj1-x22f.google.com with SMTP id
- 38308e7fff4ca-2d2305589a2so86524301fa.1
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:35:35 -0800 (PST)
+ id 1rhV0V-0003Hy-14
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:39:00 -0500
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-565d1656c12so10063605a12.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:38:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709645734; x=1710250534; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709645937; x=1710250737; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=H7grErJGCiiBui7zAEjcphfBPQmjn5plbM0BRw5vzok=;
- b=QicprYWSpc6VwISNKZaaQShjss7DgXPuhK/ueICOqYLXBstt9281X8z5wqsd+aXKSE
- AMw/iDG9bJIkjDnUfuqttdl9mLsQ8/Qr0UVCpWYkUs7UauRSZbasCOAUuUg6d4IFA2sO
- SuyXZa0cElqirn35TNrC0T3ILqdgJh18Six13dZYtzrM9QU9laK27HKD161Wr2lJiHN6
- cpwSD6s3mGis9YtEMlt6kjW39gqyftLY2O98kOrYgUxZmykVPJCCtpWpFoaWLGMJAnG+
- PlakweM0M1acr+/4SMRH50/jCe2jnbq/rEul/G1FZCzC4rOi5w65h5/1mYTtAQRaHU3p
- ujHQ==
+ bh=fU9PHk2pIf+KsWH/egAKI1bXCce8nbZLlO1v00TPkPA=;
+ b=iinuImxBjMXq9Dw49vYKqXaX+VUXN3D3PO4y4eVUI5YEPS+wTh5qZ2vNCq1CpMOC7O
+ 7vZUySOgAO/i6Ch/hF8263zcwVBjvA1SRURtaDIEpnxhiCcMeyw/afZShkTrhC1LjOEc
+ n/eBayEMH258Oya00u4UH/961arK2pZ6vRc2Enw5S5f24lvBgiHS0qStTlCRuUVQBeQf
+ kv+IrfktSXLYimo3eUbn3IBdl5bT6301xPjEdcH9pPb7JQ7bst/y30DXV+Vzg2mIH7Kd
+ E3ZXgOX/iUXFu0ZV/5V4z96FkJVpOkw17oRz+b8ZPIlBXvwEcq+RsRaMkecktqEKp2I2
+ VONA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709645734; x=1710250534;
+ d=1e100.net; s=20230601; t=1709645937; x=1710250737;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=H7grErJGCiiBui7zAEjcphfBPQmjn5plbM0BRw5vzok=;
- b=mYqSx07rgoHlwFJNorp6W/Ugdht7rJE3KA9BDJScUn3cexIcjsBSWCLZ3v8Q/VGh6q
- qx5oYX1m7SshRCECGp5l2t9YA8we9aEBK6YVbPExOP206TFU4ZvJhgC8sXgpWueE5HzA
- Wm7ybCDmpOzzm2hP9wOMOF8Gs4PcCCe3AwOEiMIcuC0cuJJ19dpSwvbRfWl01IKpYMAA
- BNhifTbzgx9wWhND6PR5xtZ/CbbSg3o8lIwI4AfnqWkYzLR4d6NSOWVN8tg8X8QhVImj
- KTfq8HVwELgQLEXg+wjlKPhb8DukFbm350W1z/FhdMk8Ldca5rQ9FA64XOWw8GWC+Zr7
- fmjA==
+ bh=fU9PHk2pIf+KsWH/egAKI1bXCce8nbZLlO1v00TPkPA=;
+ b=l66Q4vpCT2IKSw2DFMG9xwkNzdu4nVUequEDAfcWjzI7uUm8tAjrheCw9iB9Kb2C7O
+ TLofNA7dttyAvvBtU2XRsOQKYqYFNYtPTHLOtSpNqK23FMPwLG1Upspwk8BJGpabP0HM
+ wNKRwKZyo4155CFL+RQGYBweqxguacNCJe/dPX8ZBWbfaygTlBOrVXJ02Pg5+SNPyY2j
+ LvYdX4Cbduy6gfzzPzuKLbQKDw529qTl4pyghsfFw734lTGkNdEIjiekXe7SUEsKvrZF
+ hPMERPs2nVmjLycVFHUGOlbeCBU9YWZKhdRVNZJXsRa1GbV6nxsy0CB7joETi+AQKRDW
+ zwzw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWZVU7zc5O+36X1X9vxQnn6sK6xQKKFoV1oeNNkr+EsllD91gJd7IQKK446/xP7T9+lY7iwCl5tQPOvJmifFVykIgmzhrU=
-X-Gm-Message-State: AOJu0YyfZpSezHySrFoS6y6XX4LxEFnbVqf4kei+Z6CrPfC3IfVyj/0l
- yFpWVNWKJw7dIs3MUFhKsLolnfB39yBzG0SxyT6VeNgx+CCFSxGnQvqdvEDPCHoiSh6Cve8kI1p
- oEiekwkSm4bR4GIWmntQTkpHJ0wmaS1nwlv3OPw==
-X-Google-Smtp-Source: AGHT+IE5apbx2HeNbV9cNvPHoG0nkbPmPj/tyzf5RGOY8+YB/qGyAFUN70EMuq2WUN7Z5xXwS/QqbnHA8Nno++I2+tY=
-X-Received: by 2002:a2e:879a:0:b0:2d3:a7da:b17b with SMTP id
- n26-20020a2e879a000000b002d3a7dab17bmr1434620lji.4.1709645733950; Tue, 05 Mar
- 2024 05:35:33 -0800 (PST)
+ AJvYcCX9zip/plz0/xEXEpOv5daxmj8td7EPRfaDh0nbkdMHLPStGZeDkRRdV1yf4vzdI4Ft7nbsIA7L/QQ/8aj0U1jrDtx8DOI=
+X-Gm-Message-State: AOJu0YxQj0snqeRdidyD1eNOWWHKRYcwrMG9tMn9wocL5f69a8mTv06Y
+ vK32xNOO5YQZpBevAU64rIOmXaRYsAEtO8MKw4+Q7BOFnR2Nlp2wXV711UUU7rA6AQPqcP5HWhP
+ B2gwrmOiYBzLD1vcWkC4f1ebZzUu35B8WmZPRgA==
+X-Google-Smtp-Source: AGHT+IEwm6CWL0zwGVUEIqiM4JwyLAjHDCGOjGwtBDxsri+SkBtkFiaiiH6uUp+5kX6+RSJJFAx0neW2WgM64CWbebk=
+X-Received: by 2002:a50:8e05:0:b0:566:85aa:e63e with SMTP id
+ 5-20020a508e05000000b0056685aae63emr2606500edw.9.1709645936925; Tue, 05 Mar
+ 2024 05:38:56 -0800 (PST)
 MIME-Version: 1.0
 References: <20240305-elf2dmp-v2-0-86ff2163ad32@daynix.com>
- <20240305-elf2dmp-v2-12-86ff2163ad32@daynix.com>
-In-Reply-To: <20240305-elf2dmp-v2-12-86ff2163ad32@daynix.com>
+ <20240305-elf2dmp-v2-13-86ff2163ad32@daynix.com>
+In-Reply-To: <20240305-elf2dmp-v2-13-86ff2163ad32@daynix.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 5 Mar 2024 13:35:22 +0000
-Message-ID: <CAFEAcA8H-ThU_GP8AhXzzGESzLBGgudUKn_MJu_khwWcFkSowg@mail.gmail.com>
-Subject: Re: [PATCH v2 12/13] contrib/elf2dmp: Use GPtrArray
+Date: Tue, 5 Mar 2024 13:38:46 +0000
+Message-ID: <CAFEAcA9or3wfwokpNRorFDZbNGNFz9mx4_9F1athf+mcz4cpKQ@mail.gmail.com>
+Subject: Re: [PATCH v2 13/13] contrib/elf2dmp: Clamp QEMU note to file size
 To: Akihiko Odaki <akihiko.odaki@daynix.com>
 Cc: Viktor Prutyanov <viktor.prutyanov@phystech.edu>, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,8 +92,9 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Tue, 5 Mar 2024 at 07:37, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
 >
-> This removes the need to enumarate QEMUCPUState twice and saves code.
+> This fixes crashes with truncated dumps.
 >
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2202
 > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
