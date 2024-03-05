@@ -4,73 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 872AAC54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 14:44:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CADEC54E41
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 14:46:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhW1F-0006NR-B4; Tue, 05 Mar 2024 09:43:49 -0500
+	id 1rhW3H-0007NG-Io; Tue, 05 Mar 2024 09:45:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rhW1E-0006NI-Al
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 09:43:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rhW1C-0000ip-LW
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 09:43:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709649824;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CNRYa9peycsNpT1IuZWuqtF9ZCyMJ8PXBEPEb3LTRps=;
- b=S/4keS0RC1WUoPtNjX+3lVZQuDicAUCRuBPg4vulnHAFl7xQ1MUfZu/M3+yfzlc70Wya9v
- kp9xqAerdYgleSImop2DI1VBq3sEXCTFo0b5eGfMVbf9mfCU2skzYnpuDRJnaoBZgjuZqG
- BHz0RWJMW0Jaq+Ef80YETkQL7bUE0ao=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-xgmUZfifMxGDL5V-g_75mQ-1; Tue,
- 05 Mar 2024 09:43:43 -0500
-X-MC-Unique: xgmUZfifMxGDL5V-g_75mQ-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8DB701C54025;
- Tue,  5 Mar 2024 14:43:42 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.3])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 478C4200B01D;
- Tue,  5 Mar 2024 14:43:42 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1C76821E6A24; Tue,  5 Mar 2024 15:43:41 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Maksim Davydov <davydov-max@yandex-team.ru>,  qemu-devel@nongnu.org,
- vsementsov@yandex-team.ru,  jsnow@redhat.com,  philmd@linaro.org,
- armbru@redhat.com,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PULL 0/4] machine development tool
-In-Reply-To: <CAFEAcA9acSfGP6PcErqp1rTmSd3G+AwUUx_aF-5KJy4iS6BqaQ@mail.gmail.com>
- (Peter Maydell's message of "Tue, 5 Mar 2024 13:49:55 +0000")
-References: <20240304135145.154860-1-davydov-max@yandex-team.ru>
- <CAFEAcA9acSfGP6PcErqp1rTmSd3G+AwUUx_aF-5KJy4iS6BqaQ@mail.gmail.com>
-Date: Tue, 05 Mar 2024 15:43:41 +0100
-Message-ID: <874jdkn3he.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rhW3B-0007LQ-EC
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 09:45:49 -0500
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rhW38-00016e-LF
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 09:45:49 -0500
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5673b5a356eso867755a12.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 06:45:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709649944; x=1710254744; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iar5Yqz2ndMcxExgXO/Vr1XhhBonegkGTYBbQCldPzg=;
+ b=o4/20KFyfihYNWhfG++X9L+KeAL4FiLkk4+/GhVaalU6MAmGnFhlTkJ//+Nm2HanKk
+ NkSU6vbZVQZpJvxX29rtjdeR/gluZc2odKVM6winjqE6p29NpCMetighBeQ3DRQLJC8h
+ ipGFLamnqUIQgqzfS10323PZ3VDhEEcPhapF5K48rGFqGmcj6WYunklSFMwMhCvMSzVo
+ gIjolI3EJa3nza4jMc+rlHwOhAcgpccUCuKM5kKppdcwaN3ZBONXbGRCNieuSvrgL5Do
+ vGb4aPzZsZtE/LPNxgclgGDlhNodj3pLL0lOJ8CIH4H+7eFB9SD3V5DXBdceVbqO2taR
+ 2DoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709649944; x=1710254744;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=iar5Yqz2ndMcxExgXO/Vr1XhhBonegkGTYBbQCldPzg=;
+ b=unWclgWqPmagacpURo9uEWuDgyMDCRy9xzRu2PEXimUs+2QuEXbm5zGC60TqFLJrQM
+ sBMbIoLNq4iQ+8+NVtKiY3pByVhomEvyWxhI2zvWqmT3ituW+UGGixzODgfKg42hqf75
+ NSdExbqdhFAv7VCywpZ3UPbKw/1Y25nbtpXsfyNLYVopJqCb7lyu2IzQzl1fvkDWR23P
+ cbyJpT+s+V780zjBAfD4a4qYI1byyFV7M9DZTtXfovD5MQLmQJ4V/7oicmKTyB5xWhT4
+ lepXNZ6mkPuI9vIgFlXKOJPr6+AOkK5F78RxI9ixMCOaFz9NucqECtRpDZFKoqG2GxaN
+ kwXA==
+X-Gm-Message-State: AOJu0YyaDOP9ORMKmvChoUJIKZjh18sER1HAohL/F40yETcCM8/INKVh
+ 2bMmX21BvQ6VxV3sRGMNSS3tJBQTVTFTrEZQ+3FfwfhzcEbKSTbjBXSW+xWvE9cNyi/Vxmx9MAb
+ GrPlDS2DLLx1pCFO9LKYNR+5ocipe0SPCtCbyDA==
+X-Google-Smtp-Source: AGHT+IHD6utqPbacIH7U+XJmv2tIvemKmpl3Q5AUkz2UXFLSPUZA3kuZNOMVabVqGvvBYJDNxM4BLNTT9WIHcfa9q00=
+X-Received: by 2002:a05:6402:1d18:b0:566:4dc1:522c with SMTP id
+ dg24-20020a0564021d1800b005664dc1522cmr8461452edb.15.1709649944413; Tue, 05
+ Mar 2024 06:45:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20240223161300.938542-1-peter.maydell@linaro.org>
+ <CABgObfZ_FOs29mZJKcXWTJurWO8wDDWkhfFW9g9ppzOGG2_dKA@mail.gmail.com>
+In-Reply-To: <CABgObfZ_FOs29mZJKcXWTJurWO8wDDWkhfFW9g9ppzOGG2_dKA@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 5 Mar 2024 14:45:33 +0000
+Message-ID: <CAFEAcA9JWQp39SQtB4JOZun9aYYvLKaaFH7Lto-Qet-0UAfJDw@mail.gmail.com>
+Subject: Re: [PATCH] hw/rtc/sun4v-rtc: Relicense to GPLv2-or-later
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Markus Armbruster <armbru@redhat.com>, Eduardo Habkost <ehabkost@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.568,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,35 +94,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
-
-> On Mon, 4 Mar 2024 at 13:52, Maksim Davydov <davydov-max@yandex-team.ru> wrote:
->>
->> The following changes since commit e1007b6bab5cf97705bf4f2aaec1f607787355b8:
->>
->>   Merge tag 'pull-request-2024-03-01' of https://gitlab.com/thuth/qemu into staging (2024-03-01 10:14:32 +0000)
->>
->> are available in the Git repository at:
->>
->>   https://gitlab.com/davydov-max/qemu.git tags/pull-compare-mt-2024-03-04
->>
->> for you to fetch changes up to 7693a2e8518811a907d73a85807ee71dac8fabcb:
->>
->>   scripts: add script to compare compatibility properties (2024-03-04 14:10:53 +0300)
->>
->> ----------------------------------------------------------------
->> Please note. This is the first pull request from me.
->> My public GPG key is available here
->> https://keys.openpgp.org/vks/v1/by-fingerprint/CDB5BEEF8837142579F5CDFE8E927E10F72F78D4
->>
->> ----------------------------------------------------------------
->> scripts: add a new script for machine development
->>
->> ----------------------------------------------------------------
+On Tue, 5 Mar 2024 at 14:29, Paolo Bonzini <pbonzini@redhat.com> wrote:
 >
-> Hi; I would prefer this to go through some existing submaintainer
-> tree if possible, please.
+> On Fri, Feb 23, 2024 at 5:13=E2=80=AFPM Peter Maydell <peter.maydell@lina=
+ro.org> wrote:
+> >
+> > The sun4v RTC device model added under commit a0e893039cf2ce0 in 2016
+> > was unfortunately added with a license of GPL-v3-or-later, which is
+> > not compatible with other QEMU code which has a GPL-v2-only license.
+> >
+> > Relicense the code in the .c and the .h file to GPL-v2-or-later,
+> > to make it compatible with the rest of QEMU.
+> >
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> > Before we can commit this to either head-of-git or any stable branch,
+> > we need a Signed-off-by: from everybody who's touched this file (or,
+> > for corporate contributions, from somebody from the relevant company
+> > who can confirm that the company is OK with the licensing, which is
+> > RedHat and Linaro in this case).
+>
+> All contributions from Red Hat are GPLv2 or later (though it's nice
+> that Markus signed off on his own), so
+>
+> Signed-off-by: Paolo Bonzini (for Red Hat) <pbonzini@redhat.com>
 
-Migration?  QOM?  Not sure.  Cc'ing the maintainers anyway.
+Excellent. I believe that is then everybody's signoff that
+we need, so I'll make sure this gets into a pullreq by the end
+of the week (and add the cc:stable tag for it).
 
+Thanks everybody for your assistance in getting this sorted out.
+
+-- PMM
 
