@@ -4,81 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86365C54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 09:45:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C37A0C54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 09:52:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhRMM-0004Ui-N8; Tue, 05 Mar 2024 04:45:18 -0500
+	id 1rhRSA-0007Xs-Ks; Tue, 05 Mar 2024 04:51:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhRMD-0004S0-KN
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 04:45:13 -0500
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1rhRS3-0007TX-S9
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 04:51:15 -0500
+Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhRMB-0003ZD-IW
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 04:45:09 -0500
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-565b434f90aso7832161a12.3
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 01:45:07 -0800 (PST)
+ id 1rhRS2-0004rX-4w
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 04:51:11 -0500
+Received: by mail-lj1-x22e.google.com with SMTP id
+ 38308e7fff4ca-2d28e465655so80890081fa.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 01:51:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709631906; x=1710236706; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RAIl01WGOF0F2UYKMcUryilupG38mJbdkfGRs5fn+nU=;
- b=d5/gS/ZZgOzf/2cip6Blz9UIafJv6OctpkWQsONEIsymmT+pWRzTiBhwgqfkb6M4q9
- xZ4gK2n8qt7/4bQfY9QbR3jL9JSiv/BCx5NFbdT3NTdWtnQzKU4KZGOhQnlBO/TnGTFz
- mjrDE/GKjLJTOlEdQJ9kiiiX7hYsBAQRwNEZilMWSwx8glNB8SspUTK6qyt5EZQ03VFM
- KukLrnHv7qkoajwetlwEhN6sKvAh6Yr6wvtcDSbUE/S6ePCzBBtG/u7Qyy7jnfoefa52
- /pV1jHFbIi5pO/Ms64qbrOg9Uka+bsb93j2JXXb1KcS9BSzQhHNuR6Verfstgxec6jaV
- lYlg==
+ d=linaro.org; s=google; t=1709632268; x=1710237068; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=6yszCMBnv6yrW4v75vQbGMUQ+SwUrE/AX6IsgS7+B5A=;
+ b=T85ckAXUIZYBo9n1VNaUA/87czYXhgjsTjRkLIBTQSpc6kb/s8ZEq6G3+8CxleBirH
+ Hap6LAgkNq2UyPF4UkKgLIMhLmawFISXAfbZ/bBLfNoXSF6nObYdismg8wQwaRhCXdfg
+ jbqilCcCn2DEyKqzpPNWDU0f05e7KdQ/oSM5QftyHLe3HnPrpoZ8Aj3LF0elm4j+XQ6z
+ hnmLQ4Wzv+wF5cOOp/G1YXc3mJCmcuQxsp1xdVsZmjxm5Y0/QdxXHo+Wokkludr73i82
+ FMjp5iFBriLOLSpDYGVWhBBKN/T67IfaqdAEZyGceTW4QZ4iXBGT02n5j7dAeY74JKi9
+ +yhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709631906; x=1710236706;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=RAIl01WGOF0F2UYKMcUryilupG38mJbdkfGRs5fn+nU=;
- b=EfVMJs1eQBHyDvYnVqbmpYGK7MGXMjrE5nzxVfCjWH2GkM/WxO+O9/r56IHlq22AfV
- +k8tnA8dXfjWfvzScN1JUJvZblhGwSrJFs0btvhcazr/5ZXk1VEQaEIGz6N7uqJdASih
- UPCxiRq0GsR86+U18aFf8GvM1TxrFJmBH4himjFeF0ueX9okNYe+9fxdzX7U+Cpxh3ed
- Q7Xr4uZ5gFi1p8DOFI4uXHhaDaviAu7kUFz6yyljq7bJF77ruseagv+iqvXwyXcg0KaU
- OSlepuIdGyMcyJlCKlJoYkd3fL/eIR3WIhp13yAdFQiLrMv0ik4dnCz0fqlkPBzG4Af5
- bdpg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW69zeXZvVmneJ75TLIWflTb2psumPnYFrF6FR8GWkb8//EbxRWq4A/KNsmiYNDnjkVYUckNbN4gEWYNqHYsfAOFOum3Z8=
-X-Gm-Message-State: AOJu0YyHFMKNbI6xTid8PtiM0zeqFZnClpH4Sb/4zhYn15hfuPh2PUhb
- Oy6ct038oLDYlY5Cl60wDakCg0CW88ynMzYZwVYctDnWqBB6wuqDpvdEcsyGhWC+qSWthOazsHs
- UPGYaO1RgXvq5DPDi05gtU7pYRiDwI74nhcJY0Q==
-X-Google-Smtp-Source: AGHT+IHsFJDedywn9K4f+VU8ZHaH0suVVF2cJDYMD2PtV1UcMl6cSuLfi04EEhC8WQDsqL7qcEYrQoHoD0jmon0Uu0E=
-X-Received: by 2002:a05:6402:31ae:b0:566:1725:1c86 with SMTP id
- dj14-20020a05640231ae00b0056617251c86mr6941013edb.12.1709631905813; Tue, 05
- Mar 2024 01:45:05 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709632268; x=1710237068;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=6yszCMBnv6yrW4v75vQbGMUQ+SwUrE/AX6IsgS7+B5A=;
+ b=wU8vq/cg1LV6HEVLqHQQqvHlkiKHecfXH+bTMkl3KUFInGdEzshOafi13N5dgik6xQ
+ z0cQgcjQ6Vt0rgBezVofgav1aI6KCimby9COTRXwWaPOvwvoO7+H1tinfeSLWsZsRGTv
+ ELTm37Y2hWVM+VipukYwcvCckomAs1ybu0YKEMAFGytBI8TFc0YHJMO87PrR0uXwJypu
+ 0029w8WY1noKjOMeo73aonhTLJNYH3jSbBapiHBJ50hJDbisND4O2gc0ks1PD2ogxgXX
+ 9Oc7g9tLrxCRHrk3uD235e/qcmyeWXXAYj8Wo4NOTlN+gQx6Wt3fiHbDgb7mnWjfNZ+O
+ Umtw==
+X-Gm-Message-State: AOJu0YySazrn6QymEVXK11oZY4sU2Ku9e8a/gQI8p2n1ksqY6HKMwwxT
+ 3hzKJReBizhap/QCvXhxFSsHXli4t3FWwru7Bnx7D7cvRemJkvb9DQM6uru9dIU8lcGjmH1ShZg
+ Nt1yvAV9hy7PM8S+qcQsYUfMNjajCAXaGtQBB5w==
+X-Google-Smtp-Source: AGHT+IE2rf6fHqPPK1unennceWJxafif5pzFsdwxAIDtpCuNqy3WTfVfljsXqHr2OyYBzNmimCC1gVt2gbJ4O/yHB74=
+X-Received: by 2002:a2e:8e98:0:b0:2d2:5f8b:1382 with SMTP id
+ z24-20020a2e8e98000000b002d25f8b1382mr998518ljk.2.1709632268143; Tue, 05 Mar
+ 2024 01:51:08 -0800 (PST)
 MIME-Version: 1.0
-References: <20240304130403.129543-1-thuth@redhat.com>
- <87plw9wvep.fsf@draig.linaro.org>
-In-Reply-To: <87plw9wvep.fsf@draig.linaro.org>
+References: <20240304185149.1475336-1-mjt@tls.msk.ru>
+In-Reply-To: <20240304185149.1475336-1-mjt@tls.msk.ru>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 5 Mar 2024 09:44:54 +0000
-Message-ID: <CAFEAcA8bq=rpANwtJWkEEQQYKWk1iM=_WoOWP0HB-8ajgq_46A@mail.gmail.com>
-Subject: Re: [PATCH v2] docs/conf.py: Remove usage of distutils
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- qemu-stable@nongnu.org, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Date: Tue, 5 Mar 2024 09:50:57 +0000
+Message-ID: <CAFEAcA92XprxAegJMj=iTsJNmmWY4RG89M48C9EOARgGHJxcyA@mail.gmail.com>
+Subject: Re: [PATCH] make-release: switch to .xz format by default
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, Michael Roth <Michael.Roth@amd.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,54 +88,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 4 Mar 2024 at 21:15, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
-e:
+On Mon, 4 Mar 2024 at 18:52, Michael Tokarev <mjt@tls.msk.ru> wrote:
 >
-> Thomas Huth <thuth@redhat.com> writes:
->
-> > The macOS jobs in our CI recently started failing, complaining that
-> > the distutils module is not available anymore. And indeed, according to
-> > https://peps.python.org/pep-0632/ it's been deprecated since a while
-> > and now likely got removed in recent Python versions.
-> >
-> > Fortunately, we only use it for a version check via LooseVersion here
-> > which we don't really need anymore - according to Repology.org, these
-> > are the versions of sphinx-rtd-theme that are currently used by the
-> > various distros:
-> >
-> >  centos_stream_8: 0.3.1
-> >  centos_stream_9: 0.5.1
-> >  fedora_38: 1.1.1
-> >  fedora_39: 1.2.2
-> >  freebsd: 1.0.0
-> >  haikuports_master: 1.2.1
-> >  openbsd: 1.2.2
-> >  opensuse_leap_15_5: 0.5.1
-> >  pkgsrc_current: 2.0.0
-> >  debian_11: 0.5.1
-> >  debian_12: 1.2.0
-> >  ubuntu_20_04: 0.4.3
-> >  ubuntu_22_04: 1.0.0
-> >  ubuntu_24_04: 2.0.0
-> >
-> > So except for CentOS 8, all distros are using a newer version of
-> > sphinx-rtd-theme, and for CentOS 8 we don't support compiling with
-> > the Sphinx of the distro anymore anyway, since it's based on the
-> > Python 3.6 interpreter there. For compiling on CentOS 8, you have
-> > to use the alternative Python 3.8 interpreter which comes without
-> > Sphinx, so that needs the Sphinx installed via pip in the venv
-> > instead, and that is using a newer version, too, according to our
-> > pythondeps.toml file.
-> >
-> > Thus we can simply drop the version check now to get rid of the
-> > distutils dependency here.
-> >
-> > Signed-off-by: Thomas Huth <thuth@redhat.com>
->
-> Queued to testing/next, thanks.
+> For a long time, we provide two compression formats in the
+> download area, .bz2 and .xz.  There's absolutely no reason
+> to provide two in parallel, .xz compresses better, and all
+> the links we use points to .xz.  Downstream distributions
+> mostly use .xz too.
 
-I've applied this directly upstream to fix CI (give or take
-the homebrew side of it).
+Seems reasonable. Out of curiosity, do we have the
+download stats on how many .xz vs .bz2 downloads we get?
+Stefan or Paolo, do you have the webserver info?
+(Probably not worth bothering if it's a big pain to
+get the data.)
 
 thanks
 -- PMM
