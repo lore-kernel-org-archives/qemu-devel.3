@@ -4,92 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AA56C54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 12:39:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FBDDC54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 12:57:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhU3K-0000XT-SU; Tue, 05 Mar 2024 07:37:51 -0500
+	id 1rhULI-0007wT-SK; Tue, 05 Mar 2024 07:56:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1rhU3I-0000WK-7t
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 07:37:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1rhU3F-0007lb-8g
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 07:37:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709642263;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=plNEadc4l2nqVXCB2Weke2+3sBBFTvcURorDySHleko=;
- b=YGD0AB8/w/1XfGnRoPPznOoiOa2LfJG60NZRJdlXUo8gypCaCCiOJd6uerTRpasCXrdgwB
- nhsc5CEulWbRwIMYZmZnmDspUyPu0VWtMfX+c2QXNoMSVjlo1H+6xWoQLcQh2YflLgMny8
- r43b08ABmhFrSJhq8ctfoNo1KiakDlA=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-481-9pldRLURMcejOhkfCniO6A-1; Tue, 05 Mar 2024 07:37:42 -0500
-X-MC-Unique: 9pldRLURMcejOhkfCniO6A-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-412dbc77740so18122885e9.2
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 04:37:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1rhULF-0007tK-FU
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 07:56:21 -0500
+Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1rhULC-0002uJ-UZ
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 07:56:21 -0500
+Received: by mail-qt1-x82b.google.com with SMTP id
+ d75a77b69052e-42e8758fd52so40845951cf.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 04:56:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1709643377; x=1710248177; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=B7TS9nBP/KqF+Q6q/v+qlv2NgIROPSOybWMJjEjsQWE=;
+ b=i/6g6hsrOHsKEZJ6k2pOTJi9kpWao8K2ycxtGPtsQ9k9OrdQ9gTqNGqEozN5p0r4eA
+ dE6nVoEPF7qaqtCJrY1ipHUfiSmO6hPNlU7A3XaXIclnXrXOANmPosaiyMDXwAAVkKFz
+ ELqz7lPFDy6XNLZfeQZhzcCaSYhXJg+duszygdCDlb1o0E40/HuHyngQF0C9htwZV6FN
+ yGmjGPxsFDK1uDXDn1x1aiLKYCbM8LYGFEUM8sFD/jmEed6pCY3ToRiYk5Bzm4WW3D4I
+ CmgwkMrDwrsU/edKv9tz68hs1EjJTsVSJ5q5t0yzaHTF4cGTJMX9EUVkNJuYEt06Pt8c
+ qZnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709642261; x=1710247061;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=plNEadc4l2nqVXCB2Weke2+3sBBFTvcURorDySHleko=;
- b=k3qg7sS15jE2uVXujHQ4rvrnAbyYySJMqsO2XNZdRcObF/O3OGA47ovgkzYlfh/a9U
- Rh1kZyKrgfkdRm2eqm9qE8VROwWBKXG14XvEUMvCNELkqjIHVi0vm6OgP/m9fs7vlAAL
- 8bWveBNuj5V9ChL3tlNzI7WuecxTgit0AVZ60sHydUCFuAD9Fl3KvvN5pgf1s5MVIPI6
- LtT24WVYWX8zEH3tP0H18X6dzJuIMpJ2aLgY6OS1LCSAh1wud7uP+9fZw68m/8RGG/I+
- lz1J549LGHibsh5AtFpXK1r3aZZaSyi8iYbLjKByMIkYqFw4XXZrMPx2ETqTJnNEBKQY
- MFQg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX6NERqIGNhwHTsKBH6K7PTS0WCOkJCd8hWfXo8sBgrEr7Dyg4OUeCfkitprRcEWlzi/+2Uf0wH+JStjJ3FTyw/Sulp75I=
-X-Gm-Message-State: AOJu0Yw+282IcOIcxrLtANPg8IhIL84cYhhyNUJIf/V2makTo+9NAJaV
- gA3TrscmXZoTEaFn7GqQi4OsYOWNcjBa70Z5bqSRD/yiFL0JAFnx2jTXEkwMiLCZNLS2mWhPoIf
- ylG2FDZm2ZEpeWXOlngCq08b9xc/zsCgBFovEmlXEUZbl1N+IGvTiqWNk6UZy0y89lt9ldzCZfM
- sBbJZ18CngM+78DqUue5cXaP5sgyF8CinhrzvH8kTF
-X-Received: by 2002:a05:600c:314b:b0:412:afed:5ce0 with SMTP id
- h11-20020a05600c314b00b00412afed5ce0mr9629298wmo.8.1709642261223; 
- Tue, 05 Mar 2024 04:37:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHPJ6cNafAbjek5t9P1ai0T6av8pppN37c09Zwb1mdv6DMuChe6na6tpLqFmKbXR1Ysca4z0mvlBgDx70aEXVs=
-X-Received: by 2002:a05:600c:314b:b0:412:afed:5ce0 with SMTP id
- h11-20020a05600c314b00b00412afed5ce0mr9629284wmo.8.1709642260903; Tue, 05 Mar
- 2024 04:37:40 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709643377; x=1710248177;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=B7TS9nBP/KqF+Q6q/v+qlv2NgIROPSOybWMJjEjsQWE=;
+ b=IYrl55+vqQ8cwRAheSuojj/mvUCH+auahYZKYqzWo3F1D0y3+YwoYC0v9wNGNyI0sJ
+ /LYymyArTb3/eoLat/wXrlC12yNY04pfIbzpty1p8/33EmIytiZyWNh3sVoJzvPxS4hj
+ atSz2ZJZBcQxbP9wZEfD/NyxSuVMyYEZlIuUcN7PjdDPcDX1OMyh2AVHovCTkWG0QlNO
+ F9dOllFzZrKrsPa3PGjj5WfwrDnsvYNwrnI6bK5XqzxAekZmXPLnQQjJHhd7LZGVLoEP
+ 4OBk/XrfxeiT0FZQi7AYYssQvWSyYNcbCou8pMp7piI/KWd6qsMXWRyKCZs/NvhI5fVU
+ 4m8g==
+X-Gm-Message-State: AOJu0Yw+ccRsD8EoOkT75P1c44kVfubTt8gjAEOEhmsV+iYkhROD7mAX
+ MJcw5Sze+AhpqNZaHzqGF/DjaotrR34Eegiiu0J5KHmNRAYlwKPAMgTQRpDVP/94665hLOHslRm
+ bLKBBejqzKH9CcbVjbAanlK2uLx5PZwz0
+X-Google-Smtp-Source: AGHT+IHY5fCduZpICYXroDqmo+sOab/MYRjpdfHmg6YRb+lxlUFWkxCiGMS8MqA9ccK6rl+VPGAwhPawIHN32Z7bJy0=
+X-Received: by 2002:a05:622a:1394:b0:42e:ecae:16e with SMTP id
+ o20-20020a05622a139400b0042eecae016emr1891439qtk.68.1709643376833; Tue, 05
+ Mar 2024 04:56:16 -0800 (PST)
 MIME-Version: 1.0
-References: <20240304044510.2305849-1-zhao1.liu@linux.intel.com>
- <CAE8KmOxvZFjtKkHiGGREx_b0QgfDjPWZ7Ex3nqAQQbiPKa_wrQ@mail.gmail.com>
- <ZeVyKMux7Ysjo/lY@intel.com>
- <CAE8KmOxJECe7oNkB1Oiuk-+_4J4drmdJTL2mBzQz+Zu+6XpxrQ@mail.gmail.com>
- <ZebM/2for1NVjeuc@intel.com>
-In-Reply-To: <ZebM/2for1NVjeuc@intel.com>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Tue, 5 Mar 2024 18:07:24 +0530
-Message-ID: <CAE8KmOwXrrLe9nCm=8qiyde2M2bg35-1THAhtO4Tg-TrTwRz_g@mail.gmail.com>
-Subject: Re: [PATCH] hw/core/machine-smp: Remove deprecated "parameter=0" SMP
- configurations
-To: Zhao Liu <zhao1.liu@linux.intel.com>
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, devel@lists.libvirt.org, qemu-devel@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>
+References: <20231204184051.16873-1-dongwon.kim@intel.com>
+ <20231213202419.15459-1-dongwon.kim@intel.com>
+ <20231213202419.15459-3-dongwon.kim@intel.com>
+In-Reply-To: <20231213202419.15459-3-dongwon.kim@intel.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 5 Mar 2024 16:56:05 +0400
+Message-ID: <CAJ+F1CJjRZORH-LbA5dhY_0OZo0AHMbkJ3WkY=SA1ot9=-t0cg@mail.gmail.com>
+Subject: Re: [PATCH 3/3] virtio-gpu: first surface update with blob scanout
+ after resumed
+To: Dongwon Kim <dongwon.kim@intel.com>
+Cc: qemu-devel@nongnu.org, Vivek Kasireddy <vivek.kasireddy@intel.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.568,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,38 +92,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Hi Dongwon Kim
 
-On Tue, 5 Mar 2024 at 12:59, Zhao Liu <zhao1.liu@linux.intel.com> wrote:
-> After simple test, if user sets maxcpus as 0, the has_maxcpus will be
-> true as well...I think it's related with QAPI code generation logic.
+On Thu, Dec 14, 2023 at 8:26=E2=80=AFAM Dongwon Kim <dongwon.kim@intel.com>=
+ wrote:
+>
+> The guest surface needs to be updated with a blob scanout after resumed
+> from saved vm state if blob is enabled.
+>
+> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
 
-* Right.
+Can you resend the last version of the series?
 
-[Maybe we digressed a bit in the discussion, so I snipped much of the
-details here. Sorry about that.]
+thanks
 
-* "if user sets maxcpus as 0, the has_maxcpus will be true as well",
-ie if 'has_*' fields are always set
+> ---
+>  hw/display/virtio-gpu.c | 22 +++++++++++++++-------
+>  1 file changed, 15 insertions(+), 7 deletions(-)
+>
+> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+> index b016d3bac8..34dc0ab9fc 100644
+> --- a/hw/display/virtio-gpu.c
+> +++ b/hw/display/virtio-gpu.c
+> @@ -1417,19 +1417,27 @@ static int virtio_gpu_post_load(void *opaque, int=
+ version_id)
+>          if (!res) {
+>              return -EINVAL;
+>          }
+> -        scanout->ds =3D qemu_create_displaysurface_pixman(res->image);
+> -        if (!scanout->ds) {
+> -            return -EINVAL;
+> -        }
+> +
+> +        if (res->blob_size) {
+> +            assert(g->dmabuf.primary[i] !=3D NULL);
+> +            g->dmabuf.primary[i]->buf.fd =3D res->dmabuf_fd;
+> +            dpy_gl_scanout_dmabuf(scanout->con, &g->dmabuf.primary[i]->b=
+uf);
+> +        } else {
+> +            scanout->ds =3D qemu_create_displaysurface_pixman(res->image=
+);
+> +            if (!scanout->ds) {
+> +                return -EINVAL;
+> +            }
+>  #ifdef WIN32
+> -        qemu_displaysurface_win32_set_handle(scanout->ds, res->handle, 0=
+);
+> +            qemu_displaysurface_win32_set_handle(scanout->ds, res->handl=
+e, 0);
+>  #endif
+> +            dpy_gfx_replace_surface(scanout->con, scanout->ds);
+> +            dpy_gfx_update_full(scanout->con);
+> +        }
+>
+> -        dpy_gfx_replace_surface(scanout->con, scanout->ds);
+> -        dpy_gfx_update_full(scanout->con);
+>          if (scanout->cursor.resource_id) {
+>              update_cursor(g, &scanout->cursor);
+>          }
+> +
+>          res->scanout_bitmask |=3D (1 << i);
+>      }
+>
+> --
+> 2.34.1
+>
+>
 
-    unsigned maxcpus = config->has_maxcpus ? config->maxcpus : 0;
 
-then checking 'config->has_maxcpus ?' above is probably not required I
-think. It could just be
-
-   maxcpus = config->maxcpus
-
-If a user does not specify config->maxcpus with -smp option, then it
-could default to zero(0) in 'config' parameter? (same for other config
-fields)
-
-* If such change requires API changes (I'm not sure how), then
-probably it is outside the scope of this patch.
-
-...wdyt?
-
-Thank you.
----
-  - Prasad
-
+--=20
+Marc-Andr=C3=A9 Lureau
 
