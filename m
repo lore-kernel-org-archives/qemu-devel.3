@@ -4,76 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8058C54798
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 10:03:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C43A9C54E41
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 10:08:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhRd9-0002mF-4s; Tue, 05 Mar 2024 05:02:39 -0500
+	id 1rhRiW-00043t-IA; Tue, 05 Mar 2024 05:08:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rhRd5-0002lu-4s
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 05:02:36 -0500
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1rhRiU-00042P-PD
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 05:08:10 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rhRd2-000722-Sd
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 05:02:34 -0500
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1rhRiS-0007nH-B5
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 05:08:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709632951;
+ s=mimecast20190719; t=1709633286;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dmDB9Z2wQMBTvmc3KQ/Tyg3UyjiPJNdPK/ZYJ0YfkFg=;
- b=OWraMoT2IxwzUWJXBGwWUZjZMcKKcasQQqVgqX7V0mgj5bh1UgMW8czhhef43GQrO6Eo+P
- 6QpL+x2N7ZLXZ+YqBkcaW5Riw7345Wzw2EYziArNS01fHGjKqHzyocySa3aQLD0gltjLgW
- dYvToDrGbPG0WG60DedhY1HQ2DJdlms=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tALNwQdrB2bpcYhWUnfhrfy/GgGGJmfc56O01qraNVE=;
+ b=HtVdkKJ31lvW2mWIi1Ku+mplEFi9QfRagpCOIGsdvkngLWklILQAo5IozyoV95tAsxzP74
+ n/a1FDIk/SdU7StcztCJzlukPyq29rc4/jYhA7N2YLmZM0W33cCUA5RVZkkP9Zm66U2iUB
+ Du6C68GHQJL6IeXDjUwJuxiPPImGZbI=
+Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
+ [209.85.161.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-151-TQVhbjRcN5m5nSiHzPyWgQ-1; Tue, 05 Mar 2024 05:02:28 -0500
-X-MC-Unique: TQVhbjRcN5m5nSiHzPyWgQ-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-33d841c7a3dso2271573f8f.3
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 02:02:28 -0800 (PST)
+ us-mta-588-Vb58ZVnuNLWsEe59Z3nj6w-1; Tue, 05 Mar 2024 05:07:00 -0500
+X-MC-Unique: Vb58ZVnuNLWsEe59Z3nj6w-1
+Received: by mail-oo1-f71.google.com with SMTP id
+ 006d021491bc7-5a0d2b86e19so5510453eaf.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 02:07:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709632947; x=1710237747;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dmDB9Z2wQMBTvmc3KQ/Tyg3UyjiPJNdPK/ZYJ0YfkFg=;
- b=Otf2t+DapVptoBxGJBN4qKVy9OxlSHUKjHYd4lMU3sYmA3ETHsj72YuqaCmuT4pu79
- 4Ckh8aDJd+nBJm5k4yadZ1CVsCf0ipWq0HOejaNHwz87QvQ8rtv643KP9aIGSI+n3rkQ
- LZIng3c4kTJEnv+bR136Oay2GUuDBHN6XCrmm0Ikr+PQ+9Vt4/oEHraa5lmZ0xXuoB0U
- NDC6JrhIc2RGZzC6TndiIGufwAkBRr+FsFkvTAodzl30R+jEFtVLXwFppOs2QovdDH3D
- JT9DO2aM6xnIaycktEHN9vWu3QDp8MEPd5DilMDIjRzG01+6WZMjF56cBdLG1A35yY2c
- vPfw==
-X-Gm-Message-State: AOJu0YxPCmkgvf+6mDm7liA1VnTyNAazfuiSsMEe6VyLjdGNZ/M6629W
- jLhI4jO2zGl4Zjp52E2jddnczMmCRp8h6T9WuUWuahY/gqj3iI4DOLisU3Iym5wwhvxukki6t7+
- pJoaQ1pFhhATe5QkiKg8N4EMn+Gndwc+hfbpzcmRDFI3Vg3Y3XuQgpzwkqEELy9EAvBFqTSrxw3
- hKMWA2/x8GUOoWEaQccQFS5OS8iAw=
-X-Received: by 2002:adf:ef84:0:b0:33d:b014:9e3a with SMTP id
- d4-20020adfef84000000b0033db0149e3amr9474292wro.56.1709632947723; 
- Tue, 05 Mar 2024 02:02:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGAd4LLSUk14qj5YCgMoX7D8stRMqZvRBmCNgLFF1/x2udsz2rF6A/zkA7Ov1tNP1xukB4o+uBjmbAWNMDhn2E=
-X-Received: by 2002:adf:ef84:0:b0:33d:b014:9e3a with SMTP id
- d4-20020adfef84000000b0033db0149e3amr9474268wro.56.1709632947295; Tue, 05 Mar
- 2024 02:02:27 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709633220; x=1710238020;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tALNwQdrB2bpcYhWUnfhrfy/GgGGJmfc56O01qraNVE=;
+ b=TfHAe0SvwOyblhiAS1NsFfcrG6FHXEEfctl8NToyRPoDN+eyDeMF4E5KDLkiBdP2XG
+ zIYlfu5BcclQ70Q42ly1JpAUXrZLT4xSQmJnTi8R6vjOaCrYgdsA6kuC8t3aENeu+ZzL
+ MXsd+pQ3J4NsTv/UrUyAm9z30qoLSM4zrK5pgeeJxkfkL82b6meygee6XNsdysj2Ou12
+ +TkEonjCbuM333bgllh4FS+4bPctvnkOtul0o0V/ZAw9YJi5rrATvPSjjp6spCKRfTrh
+ gWbA1DkIjowZOcxkEmQ6/iSoXPORkqtE7FkU3crXYBAh6CzJAXxDkCR7LHUc95CyRV2P
+ fRpw==
+X-Gm-Message-State: AOJu0Ywqmic6vyy4WGUFx73g2u5cZ1MxiPjbTI/pPcIYN1w2q271K7Zn
+ S+U9xjqhQgzPu23V/ygP61/RIZ6z0nrC3xQBP/Yqid1FmwUsdQXMiuJIJJV3vChmnxjqBooi01p
+ xwjDZbiXPTVbLNtQtqaEb8wXtqqZMEkd7nnTbiOvnOKZk4Iea21uD
+X-Received: by 2002:a05:6358:6f0e:b0:17c:1da1:aa8f with SMTP id
+ r14-20020a0563586f0e00b0017c1da1aa8fmr1193960rwn.24.1709633220220; 
+ Tue, 05 Mar 2024 02:07:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFKQLVFDZXrEwEB6Pj2T8wX8KAPmKWOv4HnnXY+AsrXx44Qg0GfOfL3cdpVHieMsz3vi9DA5w==
+X-Received: by 2002:a05:6358:6f0e:b0:17c:1da1:aa8f with SMTP id
+ r14-20020a0563586f0e00b0017c1da1aa8fmr1193951rwn.24.1709633219940; 
+ Tue, 05 Mar 2024 02:06:59 -0800 (PST)
+Received: from [192.168.100.30] ([82.142.8.70])
+ by smtp.gmail.com with ESMTPSA id
+ qr6-20020a05620a390600b007882e50260fsm1393404qkn.104.2024.03.05.02.06.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 Mar 2024 02:06:59 -0800 (PST)
+Message-ID: <622dabbe-a215-476a-b72c-41d1103b7cb6@redhat.com>
+Date: Tue, 5 Mar 2024 11:06:57 +0100
 MIME-Version: 1.0
-References: <20240304193702.3195255-1-alex.bennee@linaro.org>
-In-Reply-To: <20240304193702.3195255-1-alex.bennee@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 5 Mar 2024 11:02:14 +0100
-Message-ID: <CABgObfZEqCzm7MYaTQiY+O7=YoBDUNTwit+X=a4c9ZqR2dEGrQ@mail.gmail.com>
-Subject: Re: [RFC PATCH] tests: bump QOS_PATH_MAX_ELEMENT_SIZE again
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
- Laurent Vivier <lvivier@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] e1000e: fix link state on resume
+Content-Language: en-US
+To: Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>
+References: <20240124104006.335166-1-lvivier@redhat.com>
+ <CACGkMEtzqCA_x1hg-ddp0d-Q-+XLH01k2Pf0KziiYSeLmDwaXA@mail.gmail.com>
+From: Laurent Vivier <lvivier@redhat.com>
+In-Reply-To: <CACGkMEtzqCA_x1hg-ddp0d-Q-+XLH01k2Pf0KziiYSeLmDwaXA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=lvivier@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -97,27 +105,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 4, 2024 at 10:06=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linar=
-o.org> wrote:
->
-> We "fixed" a bug with LTO builds with 100c459f194 (tests/qtest: bump
-> up QOS_PATH_MAX_ELEMENT_SIZE) but it seems it has triggered again.
-> Lets be more assertive raising QOS_PATH_MAX_ELEMENT_SIZE to make it go
-> away again.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1186 (again)
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+On 2/1/24 06:45, Jason Wang wrote:
+> On Wed, Jan 24, 2024 at 6:40 PM Laurent Vivier <lvivier@redhat.com> wrote:
+>>
+>> On resume e1000e_vm_state_change() always calls e1000e_autoneg_resume()
+>> that sets link_down to false, and thus activates the link even
+>> if we have disabled it.
+>>
+>> The problem can be reproduced starting qemu in paused state (-S) and
+>> then set the link to down. When we resume the machine the link appears
+>> to be up.
+>>
+>> Reproducer:
+>>
+>>     # qemu-system-x86_64 ... -device e1000e,netdev=netdev0,id=net0 -S
+>>
+>>     {"execute": "qmp_capabilities" }
+>>     {"execute": "set_link", "arguments": {"name": "net0", "up": false}}
+>>     {"execute": "cont" }
+>>
+>> To fix the problem, merge the content of e1000e_vm_state_change()
+>> into e1000e_core_post_load() as e1000 does.
+>>
+>> Buglink: https://issues.redhat.com/browse/RHEL-21867
+>> Fixes: 6f3fbe4ed06a ("net: Introduce e1000e device emulation")
+>> Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+>> ---
+>>
+> 
+> I've queued this.
 
-The array is sized according to the maximum anticipated length of a
-path on the graph. However, the worst case for a depth-first search is
-to push all nodes on the graph. So it's not really LTO, it depends on
-the ordering of the constructors.
+Ping?
 
-I had a patch to implement the stack as a linked list, but I never
-sent it because IIRC it caused failures that I never had time to
-debug. This patch is okay as long as this information is included in
-the commit message and/or code.
-
-Paolo
+Thanks,
+Laurent
 
 
