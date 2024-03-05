@@ -4,97 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE580C54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 08:24:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DE5AC54798
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 08:24:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhQ5n-0000pu-1c; Tue, 05 Mar 2024 03:24:07 -0500
+	id 1rhQ6W-0001wz-V0; Tue, 05 Mar 2024 03:24:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rhQ5i-0000eI-Np
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 03:24:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1rhQ6V-0001tL-7d; Tue, 05 Mar 2024 03:24:51 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rhQ5Z-0005yR-Pu
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 03:24:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709627033;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=t97PPAvAR+1evBiiddKA2s1dqRYW7WAJ8wooILuMRtI=;
- b=Xmw/ojKjjoQ5p2vfr/NFhZRPoHFzspQcoM9RvmbCxgs3De/ChTl/cqK+W25cJfX1SSSZsX
- XfhJnmYpSioaCvWsD2tPyOuH9XYjq6fxJRfi2C/52a2xCpu0kBAOZ7dZyl5wHt8bWmnMYv
- ph+B7+hJbLtbKed175pmPru1TcEDIqs=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-326-IpkaTYVhMn-BppT_oxNC2g-1; Tue, 05 Mar 2024 03:23:51 -0500
-X-MC-Unique: IpkaTYVhMn-BppT_oxNC2g-1
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-788228e459dso270239285a.0
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 00:23:51 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709627031; x=1710231831;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=t97PPAvAR+1evBiiddKA2s1dqRYW7WAJ8wooILuMRtI=;
- b=RfJBux4J+kqk6XRiAZE6iCBYW1AYD3/IAboMNtD1uABRX0KaqZeXgh4JyZOHhScZVF
- Q3W7Yp4JOxc70ksjegig/TKMOTsYVTs4tHBQcUo3ZD8RJzyARx4iLztW8wIthOAH8eDL
- QBQ2luSjo4CDz92dnZi+1lfSUi1xxsaC6abrHzisqMHXukU0DS4wHA2lI+0nTNuGGIPC
- TCGkvEkmeJYuHscOT4aSBTewx7GN9NnleUGHpuuBy+7L338w2qz3CLst4tjVSvr6m+GF
- Zgex7AFjAHRU8+IZ5nQ/69F0F9AL9vlj9fCeS8RQalNdqZGWcTZwS3UujEtRlxKYLd+N
- QOzA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWvtx/4fHYphHqLCnPJuRuXSXnyZ8pZ+RYnKZew81I3qEOtljOrdh6V4FY8vVBXaXg2nJeZL1vilNvXIYB5hks1bDxWwmI=
-X-Gm-Message-State: AOJu0YxNdkT0XNBzqV2eBEXlZUk0NHuz76AHT1n7N6hptIeSGlISazFa
- r6Kp/W4rENmxkA9L3/xY3cdHph01+39I2HB8QuRLtMbf17G+gcSzLnF0TPEcUOwnFfMO4KnutuL
- E3aMPI4MuIzPk27oj/1CrFckuifUBt+DOYoVd+v1IjcCIhpYPuoVQ
-X-Received: by 2002:a05:620a:149a:b0:788:20bb:6bc6 with SMTP id
- w26-20020a05620a149a00b0078820bb6bc6mr1181928qkj.17.1709627031314; 
- Tue, 05 Mar 2024 00:23:51 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEVgMV6SBXunoTYJzb6DLZLDLPxGuE1B2YzjcmpVqlD4qFOf7znxfUzoUXbyPk7O2NQNLjIgw==
-X-Received: by 2002:a05:620a:149a:b0:788:20bb:6bc6 with SMTP id
- w26-20020a05620a149a00b0078820bb6bc6mr1181913qkj.17.1709627030975; 
- Tue, 05 Mar 2024 00:23:50 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- a17-20020a05620a125100b007881f769315sm2802681qkl.68.2024.03.05.00.23.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Mar 2024 00:23:50 -0800 (PST)
-Message-ID: <2dae4a33-14de-4ab6-9848-da48d08ff9b3@redhat.com>
-Date: Tue, 5 Mar 2024 09:23:47 +0100
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1rhQ6T-00065e-0k; Tue, 05 Mar 2024 03:24:50 -0500
+Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 4258CYV9027906; Tue, 5 Mar 2024 08:24:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=5loK+Mn5osnSFm2O7VOBgMZsOFa5THJOPY+KpquOHkE=;
+ b=ZRQYNz/A3aFWuzqSa/ng+HMXJxF6wYtZfhdGJixr6YH2uLwWrES8CfvzbsiHqoObshxW
+ +ICGK+mr/ttFeQJbgXx1NPIRZBxdhUX8fhlK3sX4kyzaY2HikYgIt1qDDvOhroF07NyQ
+ +8w782W3zpeJ7lYEjdr7FGJgDC/kNWg/2Xwxih5yMlN9EyRtiuLRfVdAnTiBnWyomb5E
+ cdaed/IyhzrZwakGQpgDlqDJORpkKrgulC/ZllSb8/ATaPj7oqLXCi0TnXg56gL9LFTy
+ HseFJJ2m4ipZf06l4SOZg6o9nsYvA+eC03ObFAS+7bj8THjhrOYNbVqBm4WZYohnwf/O 5Q== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wnyp8g8n5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 05 Mar 2024 08:24:42 +0000
+Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4258CkbH028339;
+ Tue, 5 Mar 2024 08:24:31 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wnyp8g83q-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 05 Mar 2024 08:24:31 +0000
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 4258GBHe026216; Tue, 5 Mar 2024 08:24:22 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3wmfenp7pf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 05 Mar 2024 08:24:22 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4258OJvl21627592
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 5 Mar 2024 08:24:21 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 73D0858055;
+ Tue,  5 Mar 2024 08:24:19 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B16875805D;
+ Tue,  5 Mar 2024 08:24:16 +0000 (GMT)
+Received: from [9.109.243.35] (unknown [9.109.243.35])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  5 Mar 2024 08:24:16 +0000 (GMT)
+Message-ID: <2f21d567-6f24-4dc4-8265-cf4c95f0561f@linux.ibm.com>
+Date: Tue, 5 Mar 2024 13:54:15 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 03/26] migration: Always report an error in
- block_save_setup()
-Content-Language: en-US, fr
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Alex Williamson
- <alex.williamson@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Stefan Hajnoczi
- <stefanha@redhat.com>, qemu-block@nongnu.org
-References: <20240304122844.1888308-1-clg@redhat.com>
- <20240304122844.1888308-4-clg@redhat.com> <87plw9hfoa.fsf@suse.de>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <87plw9hfoa.fsf@suse.de>
+Subject: Re: [PATCH v4 14/15] spapr: nested: Introduce cap-nested-papr for
+ Nested PAPR API
+Content-Language: en-US
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: clegoate@redhat.com, mikey@neuling.org, amachhiw@linux.vnet.ibm.com,
+ vaibhav@linux.ibm.com, sbhat@linux.ibm.com, danielhb413@gmail.com,
+ qemu-devel@nongnu.org
+References: <20240220083609.748325-1-harshpb@linux.ibm.com>
+ <20240220083609.748325-15-harshpb@linux.ibm.com>
+ <CZFSC6VAMZY1.3ULCR8539CKCF@wheely>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <CZFSC6VAMZY1.3ULCR8539CKCF@wheely>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: nQGmUT6IbFv-VZ59zfD_yBC5GaoeZhjF
+X-Proofpoint-GUID: L5LxYDYuDRtmt3yDYKLSRWcbPc9cO4-U
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-05_05,2024-03-04_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 mlxlogscore=999
+ lowpriorityscore=0 clxscore=1015 suspectscore=0 malwarescore=0 spamscore=0
+ phishscore=0 impostorscore=0 mlxscore=0 priorityscore=1501 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
+ definitions=main-2403050065
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.571,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,125 +118,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/4/24 22:04, Fabiano Rosas wrote:
-> Cédric Le Goater <clg@redhat.com> writes:
-> 
->> This will prepare ground for futur changes adding an Error** argument
->> to the save_setup() handler. We need to make sure that on failure,
->> block_save_setup() always sets a new error.
+
+
+On 2/27/24 15:52, Nicholas Piggin wrote:
+> On Tue Feb 20, 2024 at 6:36 PM AEST, Harsh Prateek Bora wrote:
+>> Introduce a SPAPR capability cap-nested-papr which enables nested PAPR
+>> API for nested guests. This new API is to enable support for KVM on PowerVM
+>> and the support in Linux kernel has already merged upstream.
 >>
->> Cc: Stefan Hajnoczi <stefanha@redhat.com>
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>> Signed-off-by: Michael Neuling <mikey@neuling.org>
+>> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 >> ---
->>   migration/block.c | 18 +++++++++++++-----
->>   1 file changed, 13 insertions(+), 5 deletions(-)
+>>   include/hw/ppc/spapr.h |  6 ++++-
+>>   hw/ppc/spapr.c         |  2 ++
+>>   hw/ppc/spapr_caps.c    | 56 ++++++++++++++++++++++++++++++++++++++++++
+>>   hw/ppc/spapr_nested.c  | 19 ++++++++++++--
+>>   4 files changed, 80 insertions(+), 3 deletions(-)
 >>
->> diff --git a/migration/block.c b/migration/block.c
->> index 8c6ebafacc1ffe930d1d4f19d968817b14852c69..06f5857cf049df3261d2cf1d7c3607ab92350ac6 100644
->> --- a/migration/block.c
->> +++ b/migration/block.c
->> @@ -367,7 +367,7 @@ static void unset_dirty_tracking(void)
+>> diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+>> index 036a7db2bc..1b1d37123a 100644
+>> --- a/include/hw/ppc/spapr.h
+>> +++ b/include/hw/ppc/spapr.h
+>> @@ -81,8 +81,10 @@ typedef enum {
+>>   #define SPAPR_CAP_RPT_INVALIDATE        0x0B
+>>   /* Support for AIL modes */
+>>   #define SPAPR_CAP_AIL_MODE_3            0x0C
+>> +/* Nested PAPR */
+>> +#define SPAPR_CAP_NESTED_PAPR           0x0D
+>>   /* Num Caps */
+>> -#define SPAPR_CAP_NUM                   (SPAPR_CAP_AIL_MODE_3 + 1)
+>> +#define SPAPR_CAP_NUM                   (SPAPR_CAP_NESTED_PAPR + 1)
+>>   
+>>   /*
+>>    * Capability Values
+>> @@ -994,6 +996,7 @@ extern const VMStateDescription vmstate_spapr_cap_sbbc;
+>>   extern const VMStateDescription vmstate_spapr_cap_ibs;
+>>   extern const VMStateDescription vmstate_spapr_cap_hpt_maxpagesize;
+>>   extern const VMStateDescription vmstate_spapr_cap_nested_kvm_hv;
+>> +extern const VMStateDescription vmstate_spapr_cap_nested_papr;
+>>   extern const VMStateDescription vmstate_spapr_cap_large_decr;
+>>   extern const VMStateDescription vmstate_spapr_cap_ccf_assist;
+>>   extern const VMStateDescription vmstate_spapr_cap_fwnmi;
+>> @@ -1041,5 +1044,6 @@ void spapr_watchdog_init(SpaprMachineState *spapr);
+>>   void spapr_register_nested_hv(void);
+>>   void spapr_unregister_nested_hv(void);
+>>   void spapr_register_nested_papr(void);
+>> +void spapr_unregister_nested_papr(void);
+>>   
+>>   #endif /* HW_SPAPR_H */
+>> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+>> index 3453b30a57..cb556ae6a8 100644
+>> --- a/hw/ppc/spapr.c
+>> +++ b/hw/ppc/spapr.c
+>> @@ -2120,6 +2120,7 @@ static const VMStateDescription vmstate_spapr = {
+>>           &vmstate_spapr_cap_fwnmi,
+>>           &vmstate_spapr_fwnmi,
+>>           &vmstate_spapr_cap_rpt_invalidate,
+>> +        &vmstate_spapr_cap_nested_papr,
+>>           NULL
+>>       }
+>>   };
+>> @@ -4688,6 +4689,7 @@ static void spapr_machine_class_init(ObjectClass *oc, void *data)
+>>       smc->default_caps.caps[SPAPR_CAP_IBS] = SPAPR_CAP_WORKAROUND;
+>>       smc->default_caps.caps[SPAPR_CAP_HPT_MAXPAGESIZE] = 16; /* 64kiB */
+>>       smc->default_caps.caps[SPAPR_CAP_NESTED_KVM_HV] = SPAPR_CAP_OFF;
+>> +    smc->default_caps.caps[SPAPR_CAP_NESTED_PAPR] = SPAPR_CAP_OFF;
+>>       smc->default_caps.caps[SPAPR_CAP_LARGE_DECREMENTER] = SPAPR_CAP_ON;
+>>       smc->default_caps.caps[SPAPR_CAP_CCF_ASSIST] = SPAPR_CAP_ON;
+>>       smc->default_caps.caps[SPAPR_CAP_FWNMI] = SPAPR_CAP_ON;
+>> diff --git a/hw/ppc/spapr_caps.c b/hw/ppc/spapr_caps.c
+>> index 721ddad23b..9a29ce1872 100644
+>> --- a/hw/ppc/spapr_caps.c
+>> +++ b/hw/ppc/spapr_caps.c
+>> @@ -487,12 +487,58 @@ static void cap_nested_kvm_hv_apply(SpaprMachineState *spapr,
+>>               error_append_hint(errp, "Try appending -machine cap-nested-hv=off "
+>>                                       "or use threads=1 with -smp\n");
+>>           }
+>> +        if (spapr->nested.api) {
+>> +            warn_report("nested.api already set as %d, re-init to kvm-hv",
+>> +                        spapr->nested.api);
+>> +        }
+> 
+> Does this warning trigger when you reset the machine?
+> 
+> It's trying to catch both caps enabled? I would make that an error and
+> fail and tell user to enable only one or the other.
+> 
+> (In a future patch I think we should try permit both to be enabled at
+> the same time, but for now restricting it is fine)
+
+Yeh, we had kept it mutually exclusive initially in v1, and looks like 
+we want it to be exclusive for now. Future possibilities can be explored 
+later as suggested.
+
+
+> 
+>>           spapr->nested.api = NESTED_API_KVM_HV;
+>>           spapr_unregister_nested_hv(); /* reset across reboots */
+>>           spapr_register_nested_hv();
 >>       }
 >>   }
 >>   
->> -static int init_blk_migration(QEMUFile *f)
->> +static int init_blk_migration(QEMUFile *f, Error **errp)
->>   {
->>       BlockDriverState *bs;
->>       BlkMigDevState *bmds;
->> @@ -378,7 +378,6 @@ static int init_blk_migration(QEMUFile *f)
->>           BlkMigDevState *bmds;
->>           BlockDriverState *bs;
->>       } *bmds_bs;
->> -    Error *local_err = NULL;
->>       int ret;
->>   
->>       GRAPH_RDLOCK_GUARD_MAINLOOP();
-> 
-> There's a negative return below at:
-> 
->      for (i = 0, bs = bdrv_first(&it); bs; bs = bdrv_next(&it), i++) {
->          if (bdrv_is_read_only(bs)) {
->              continue;
->          }
-> 
->          sectors = bdrv_nb_sectors(bs);
->          if (sectors <= 0) {
->              ret = sectors;
->                  ^
->              bdrv_next_cleanup(&it);
->              goto out;
->          }
->          ...
-
-
-Indeed.
-
-I understand that the bdrv_nb_sectors() == 0 case only breaks the loop but
-it is not considered as an error. Could the block folks confirm please ?
-
-Thanks,
-
-C.
-
-> 
-> I presume that must be covered by an error as well. A similar function
-> somewhere else reports:
-> 
->          total_sectors = blk_nb_sectors(blk);
->          if (total_sectors <= 0) {
->              error_report("Error getting length of block device %s",
->                           device_name);
->              return -EINVAL;
->          }
->
->> @@ -439,9 +438,8 @@ static int init_blk_migration(QEMUFile *f)
->>           bs = bmds_bs[i].bs;
->>   
->>           if (bmds) {
->> -            ret = blk_insert_bs(bmds->blk, bs, &local_err);
->> +            ret = blk_insert_bs(bmds->blk, bs, errp);
->>               if (ret < 0) {
->> -                error_report_err(local_err);
->>                   goto out;
->>               }
->>   
->> @@ -711,6 +709,7 @@ static void block_migration_cleanup(void *opaque)
->>   static int block_save_setup(QEMUFile *f, void *opaque)
->>   {
->>       int ret;
->> +    Error *local_err = NULL;
->>   
->>       trace_migration_block_save("setup", block_mig_state.submitted,
->>                                  block_mig_state.transferred);
->> @@ -718,18 +717,27 @@ static int block_save_setup(QEMUFile *f, void *opaque)
->>       warn_report("block migration is deprecated;"
->>                   " use blockdev-mirror with NBD instead");
->>   
->> -    ret = init_blk_migration(f);
->> +    ret = init_blk_migration(f, &local_err);
->>       if (ret < 0) {
->> +        error_report_err(local_err);
->>           return ret;
->>       }
->>   
->>       /* start track dirty blocks */
->>       ret = set_dirty_tracking();
->>       if (ret) {
->> +        error_setg_errno(&local_err, -ret,
->> +                         "Failed to start block dirty tracking");
->> +        error_report_err(local_err);
->>           return ret;
->>       }
->>   
->>       ret = flush_blks(f);
->> +    if (ret) {
->> +        error_setg_errno(&local_err, -ret, "Flushing block failed");
->> +        error_report_err(local_err);
->> +        return ret;
+>> +static void cap_nested_papr_apply(SpaprMachineState *spapr,
+>> +                                    uint8_t val, Error **errp)
+>> +{
+>> +    ERRP_GUARD();
+>> +    PowerPCCPU *cpu = POWERPC_CPU(first_cpu);
+>> +    CPUPPCState *env = &cpu->env;
+>> +
+>> +    if (!val) {
+>> +        /* capability disabled by default */
+>> +        return;
 >> +    }
->>       blk_mig_reset_dirty_cursor();
->>       qemu_put_be64(f, BLK_MIG_FLAG_EOS);
+>> +
+>> +    if (tcg_enabled()) {
+>> +        if (!(env->insns_flags2 & PPC2_ISA300)) {
+>> +            error_setg(errp, "Nested-PAPR only supported on POWER9 and later");
+>> +            error_append_hint(errp,
+>> +                              "Try appending -machine cap-nested-papr=off\n");
+>> +            return;
+>> +        }
+>> +    } else if (kvm_enabled()) {
+>> +        /*
+>> +         * this gets executed in L1 qemu when L2 is launched,
+>> +         * needs kvm-hv support in L1 kernel.
+>> +         */
+>> +        if (!kvmppc_has_cap_nested_kvm_hv()) {
+>> +            error_setg(errp,
+>> +                       "KVM implementation does not support Nested-HV");
+>> +        } else if (kvmppc_set_cap_nested_kvm_hv(val) < 0) {
+>> +            error_setg(errp, "Error enabling Nested-HV with KVM");
+>> +        }
+>> +    }
+>> +    if (spapr->nested.api) {
+>> +        warn_report("nested.api already set as %d, re-init to nested-papr",
+>> +                    spapr->nested.api);
+>> +    }
+>> +    spapr->nested.api = NESTED_API_PAPR;
+>> +    spapr->nested.capabilities_set = false;
+>> +    spapr_unregister_nested_papr(); /* reset across reboots */
+>> +    spapr_register_nested_papr();
+>> +    spapr_nested_gsb_init();
+>> +}
+>> +
+>>   static void cap_large_decr_apply(SpaprMachineState *spapr,
+>>                                    uint8_t val, Error **errp)
+>>   {
+>> @@ -738,6 +784,15 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
+>>           .type = "bool",
+>>           .apply = cap_nested_kvm_hv_apply,
+>>       },
+>> +    [SPAPR_CAP_NESTED_PAPR] = {
+>> +        .name = "nested-papr",
+>> +        .description = "Allow Nested HV (PAPR API)",
+>> +        .index = SPAPR_CAP_NESTED_PAPR,
+>> +        .get = spapr_cap_get_bool,
+>> +        .set = spapr_cap_set_bool,
+>> +        .type = "bool",
+>> +        .apply = cap_nested_papr_apply,
+>> +    },
+>>       [SPAPR_CAP_LARGE_DECREMENTER] = {
+>>           .name = "large-decr",
+>>           .description = "Allow Large Decrementer",
+>> @@ -922,6 +977,7 @@ SPAPR_CAP_MIG_STATE(sbbc, SPAPR_CAP_SBBC);
+>>   SPAPR_CAP_MIG_STATE(ibs, SPAPR_CAP_IBS);
+>>   SPAPR_CAP_MIG_STATE(hpt_maxpagesize, SPAPR_CAP_HPT_MAXPAGESIZE);
+>>   SPAPR_CAP_MIG_STATE(nested_kvm_hv, SPAPR_CAP_NESTED_KVM_HV);
+>> +SPAPR_CAP_MIG_STATE(nested_papr, SPAPR_CAP_NESTED_PAPR);
+>>   SPAPR_CAP_MIG_STATE(large_decr, SPAPR_CAP_LARGE_DECREMENTER);
+>>   SPAPR_CAP_MIG_STATE(ccf_assist, SPAPR_CAP_CCF_ASSIST);
+>>   SPAPR_CAP_MIG_STATE(fwnmi, SPAPR_CAP_FWNMI);
+>> diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
+>> index db1c59a8f5..6e6a90616e 100644
+>> --- a/hw/ppc/spapr_nested.c
+>> +++ b/hw/ppc/spapr_nested.c
+>> @@ -13,8 +13,6 @@
+>>   void spapr_nested_init(SpaprMachineState *spapr)
+>>   {
+>>       spapr->nested.api = 0;
+>> -    spapr->nested.capabilities_set = false;
+>> -    spapr_nested_gsb_init();
+>>   }
+>>   
+>>   uint8_t spapr_nested_api(SpaprMachineState *spapr)
+>> @@ -1821,6 +1819,18 @@ void spapr_register_nested_papr(void)
+>>       spapr_register_hypercall(H_GUEST_RUN_VCPU        , h_guest_run_vcpu);
+>>   }
+>>   
+>> +void spapr_unregister_nested_papr(void)
+>> +{
+>> +    spapr_unregister_hypercall(H_GUEST_GET_CAPABILITIES);
+>> +    spapr_unregister_hypercall(H_GUEST_SET_CAPABILITIES);
+>> +    spapr_unregister_hypercall(H_GUEST_CREATE);
+>> +    spapr_unregister_hypercall(H_GUEST_DELETE);
+>> +    spapr_unregister_hypercall(H_GUEST_CREATE_VCPU);
+>> +    spapr_unregister_hypercall(H_GUEST_SET_STATE);
+>> +    spapr_unregister_hypercall(H_GUEST_GET_STATE);
+>> +    spapr_unregister_hypercall(H_GUEST_RUN_VCPU);
+>> +}
 > 
+> Oh they all came at once here.
+> 
+> And... you're not doing the same thing with the register_hypercall I
+> guess because then you have function defined but not used warnings?
+> I would just add the unregister in the same patches that add the
+> register.
 
+Yeh, v5 shall have unregistrations and registrations for each hcall 
+together.
+
+regards,
+Harsh
+> 
+> Thanks,
+> Nick
 
