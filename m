@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AFB3C54E41
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:53:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6116EC54E41
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 Mar 2024 13:54:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhVEo-0001V4-Ne; Tue, 05 Mar 2024 08:53:48 -0500
+	id 1rhVEt-0001dc-V2; Tue, 05 Mar 2024 08:53:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhVE0-0000xP-CM
+ id 1rhVDw-0000wa-Lr
  for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:53:06 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rhVDr-0005yL-RA
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:52:56 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-33e17fc5aceso2809921f8f.0
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:52:47 -0800 (PST)
+ id 1rhVDp-0005xr-Cw
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 08:52:52 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-412eddd14b9so4116195e9.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 05:52:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709646766; x=1710251566; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709646764; x=1710251564; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=vYTT5LKkD29WLg/lq++0uN/w1V7H7bdZ2aB09S5WWmU=;
- b=yyw65yUizfuHOcaRTiTiZvnPMkygeNYm7qBTCVjFnyZwgwFoFguRQLHoTx7qQFUiN/
- ZqZrU7ss7KPD2ofYJHUhurITxsaytLIy/Nzj8qLiEHXOm+uVQRd1gCxdAbMlJoexBc7l
- SBZoGJios7RS6vqMliJPkl1isNU0ukc4OG3xNP2Lx3PnN1Aai+9OSJi6Db47HpilDOYS
- 4wI0oMRdvTJMRQ6JcEXUMh5IF6gseAVnNATimV5IinMmX7ug+J9vMRKgToY9U5L+ch1W
- +xpGWUjL8d8R/YbUCbf51435mPLfafbPeTxNNHRnDTsP/FDfz/P9K1A5rfZRpvcYnJ8R
- rg7Q==
+ :reply-to; bh=naDQJUm1BWCDp8wycCBq304iBQf/tU4pZQ1OtaRD1ng=;
+ b=AYiky35Yi+n41/UhLOa1alchbNfw0mStGPwSDv+FAmkMsyXkWDdIQTR/TuWOeTHM4Z
+ iJ8B9Zni+RJZU6MGsRaoxDsY4RUW/f9yNUDEB9+bSxblCSRM+tPgTA7DwoI1p8I5HirU
+ gB0AqJp2d9BlT4Kgd6/fvT+XencI+ayVnls6DLT9htjC5d+w5/tHlUDHut9bDIIM5024
+ hV3xbFk/VFKH3z3tT3hIBJlstZrbUfW0BU0pEBp2l24ZBxl7F0+NuwTQApRmeSwvnSjJ
+ BDoV4XcTbrfil+0Jud23IkT87CO1c8JgqTzW1wqrtUdguK5iQQjVC2UXBJ88Ngeqex2J
+ SK5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709646766; x=1710251566;
+ d=1e100.net; s=20230601; t=1709646764; x=1710251564;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vYTT5LKkD29WLg/lq++0uN/w1V7H7bdZ2aB09S5WWmU=;
- b=q4qJ8wgUpGgLnqRulAjbXHgKamDUjUikzpQ4E6roLLM2y2li3xdakmdrI3mhYQtDRq
- +PJiFcOg82hpevlH0D1OZGeUq2URnhFwkPjHARr3fxuBGy8uMKo84LKb/KGvs0xnZJUh
- g1YDF4e+cJnyyGjRx2ddrnOB90YkGWc6VYEVZyo7O8BvUfL0EY3KVcKl6WIJny9nyehO
- iDr6yuhFpp6Opk0KYc+pjrV4bvQrPdh598dwAdG2ZiYNTi1CJvya9rUSwGccDo53GYZ5
- fwt22lb7Mm+BmTUKgntxY/FQcYJTv3JP1KCm6RWnYNel85C8IUgyiEMxhI/QPuDFeA+E
- ik/Q==
-X-Gm-Message-State: AOJu0Yx0SQswQi1L3w/VG5EIC9L/TTr77ktONeo34m+uCnmPATwApqRb
- TlsuRme90ytGMg3Z1ViKAfVv2mbimKJH/C9dKhr+it43sux8mb3KdSy4l506kOVBgoBlb41Mqsr
- u
-X-Google-Smtp-Source: AGHT+IH4JHeW54sIWhAbnjMSkVOGpZxbpjvvp7KrrvGgqWWP3pf2VIe0a/s0xwyBJsxvEQwfIGa82A==
-X-Received: by 2002:adf:c793:0:b0:33e:1651:2a04 with SMTP id
- l19-20020adfc793000000b0033e16512a04mr2689928wrg.8.1709646766497; 
- Tue, 05 Mar 2024 05:52:46 -0800 (PST)
+ bh=naDQJUm1BWCDp8wycCBq304iBQf/tU4pZQ1OtaRD1ng=;
+ b=p3JbcvI7atSOXADpeDQJgjUivdfmkLM8+ERHaaU6V6GOec6GB/DpJBp5h9kOywv9qq
+ Ou5L/Drk5OK+yLcTiZcnYl5Z3cHjcwKJ+2VUnOwQ+E0/Do1C7Wmrqdz1CeWcjOi6XS2w
+ D2drsw7xogZbwVoOsRVKS3Es8pOJEclKPhH0IYuY6t23o0ZEMekY+gHIwkrIJV3exj7l
+ VqnfDV84kBgAXmuoa4GSTHq5MY4s78QbkP0OAetfAYwa7XF4BJF5DnQRw1+NzPKd8ZwO
+ DTGhj3qeRs5LZo0TsORcsi1zJEexqVdf8AqAtSnY9BUREr7Qh9JwZlc0oR2Cq43V9yhR
+ dhUw==
+X-Gm-Message-State: AOJu0YxUl2BGqrgpF4By/Ngpi6sefvNXJXcMB/CGx02fENfQ1NTBMt+d
+ 2AOkdgoShHNb+44wR+bJkPvIQD2nv8kyJ5BIjHKLzOf42Ee5BiR5RY3Z+FILJTNxDHeRYR4hzlf
+ K
+X-Google-Smtp-Source: AGHT+IEyQzZZOiwJg+/6I3K2YT9t6bJeI302y/YEaUz3b63Qz1ZcMDIDKaOnjBX73XTsAmNZ/XjPqQ==
+X-Received: by 2002:adf:f20a:0:b0:33d:2473:4716 with SMTP id
+ p10-20020adff20a000000b0033d24734716mr8088802wro.57.1709646763844; 
+ Tue, 05 Mar 2024 05:52:43 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- x3-20020a5d6503000000b0033e206a0a7asm11797532wru.26.2024.03.05.05.52.46
+ x3-20020a5d6503000000b0033e206a0a7asm11797532wru.26.2024.03.05.05.52.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Mar 2024 05:52:46 -0800 (PST)
+ Tue, 05 Mar 2024 05:52:43 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 15/20] accel/tcg: Add tlb_fill_flags to CPUTLBEntryFull
-Date: Tue,  5 Mar 2024 13:52:32 +0000
-Message-Id: <20240305135237.3111642-16-peter.maydell@linaro.org>
+Subject: [PULL 10/20] hw/misc/stm32l4x5_rcc: Add write protections to CR
+ register
+Date: Tue,  5 Mar 2024 13:52:27 +0000
+Message-Id: <20240305135237.3111642-11-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240305135237.3111642-1-peter.maydell@linaro.org>
 References: <20240305135237.3111642-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,84 +95,244 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Arnaud Minier <arnaud.minier@telecom-paris.fr>
 
-Allow the target to set tlb flags to apply to all of the
-comparators.  Remove MemTxAttrs.byte_swap, as the bit is
-not relevant to memory transactions, only the page mapping.
-Adjust target/sparc to set TLB_BSWAP directly.
+Add write protections for the fields in the CR register.
+PLL configuration write protections (among others) have not
+been handled yet. This is planned in a future patch set.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240301204110.656742-4-richard.henderson@linaro.org
+Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+Message-id: 20240303140643.81957-7-arnaud.minier@telecom-paris.fr
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/exec/memattrs.h   | 2 --
- include/hw/core/cpu.h     | 3 +++
- accel/tcg/cputlb.c        | 5 +----
- target/sparc/mmu_helper.c | 2 +-
- 4 files changed, 5 insertions(+), 7 deletions(-)
+ hw/misc/stm32l4x5_rcc.c | 166 ++++++++++++++++++++++++++++------------
+ 1 file changed, 115 insertions(+), 51 deletions(-)
 
-diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
-index afa885f9830..14cdd8d5824 100644
---- a/include/exec/memattrs.h
-+++ b/include/exec/memattrs.h
-@@ -52,8 +52,6 @@ typedef struct MemTxAttrs {
-     unsigned int memory:1;
-     /* Requester ID (for MSI for example) */
-     unsigned int requester_id:16;
--    /* Invert endianness for this page */
--    unsigned int byte_swap:1;
- } MemTxAttrs;
- 
- /* Bus masters which don't specify any attributes will get this,
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index d0e345419fc..ec14f74ce5d 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -230,6 +230,9 @@ typedef struct CPUTLBEntryFull {
-     /* @lg_page_size contains the log2 of the page size. */
-     uint8_t lg_page_size;
- 
-+    /* Additional tlb flags requested by tlb_fill. */
-+    uint8_t tlb_fill_flags;
-+
-     /*
-      * Additional tlb flags for use by the slow path. If non-zero,
-      * the corresponding CPUTLBEntry comparator must have TLB_FORCE_SLOW.
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 6243bcb1791..ac986cb8ea5 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -1145,14 +1145,11 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
-               " prot=%x idx=%d\n",
-               addr, full->phys_addr, prot, mmu_idx);
- 
--    read_flags = 0;
-+    read_flags = full->tlb_fill_flags;
-     if (full->lg_page_size < TARGET_PAGE_BITS) {
-         /* Repeat the MMU check and TLB fill on every access.  */
-         read_flags |= TLB_INVALID_MASK;
+diff --git a/hw/misc/stm32l4x5_rcc.c b/hw/misc/stm32l4x5_rcc.c
+index 2109f809e2b..bc2d63528ba 100644
+--- a/hw/misc/stm32l4x5_rcc.c
++++ b/hw/misc/stm32l4x5_rcc.c
+@@ -374,9 +374,47 @@ static void rcc_update_irq(Stm32l4x5RccState *s)
      }
--    if (full->attrs.byte_swap) {
--        read_flags |= TLB_BSWAP;
+ }
+ 
+-static void rcc_update_cr_register(Stm32l4x5RccState *s)
++static void rcc_update_msi(Stm32l4x5RccState *s, uint32_t previous_value)
++{
++    uint32_t val;
++
++    static const uint32_t msirange[] = {
++        100000, 200000, 400000, 800000, 1000000, 2000000,
++        4000000, 8000000, 16000000, 24000000, 32000000, 48000000
++    };
++    /* MSIRANGE and MSIRGSEL */
++    val = extract32(s->cr, R_CR_MSIRGSEL_SHIFT, R_CR_MSIRGSEL_LENGTH);
++    if (val) {
++        /* MSIRGSEL is set, use the MSIRANGE field */
++        val = extract32(s->cr, R_CR_MSIRANGE_SHIFT, R_CR_MSIRANGE_LENGTH);
++    } else {
++        /* MSIRGSEL is not set, use the MSISRANGE field */
++        val = extract32(s->csr, R_CSR_MSISRANGE_SHIFT, R_CSR_MSISRANGE_LENGTH);
++    }
++
++    if (val < ARRAY_SIZE(msirange)) {
++        clock_update_hz(s->msi_rc, msirange[val]);
++    } else {
++        /*
++         * There is a hardware write protection if the value is out of bound.
++         * Restore the previous value.
++         */
++        s->cr = (s->cr & ~R_CSR_MSISRANGE_MASK) |
++                (previous_value & R_CSR_MSISRANGE_MASK);
++    }
++}
++
++/*
++ * TODO: Add write-protection for all registers:
++ * DONE: CR
++ */
++
++static void rcc_update_cr_register(Stm32l4x5RccState *s, uint32_t previous_value)
+ {
+     int val;
++    const RccClockMuxSource current_pll_src =
++        CLOCK_MUX_INIT_INFO[RCC_CLOCK_MUX_PLL_INPUT].src_mapping[
++            s->clock_muxes[RCC_CLOCK_MUX_PLL_INPUT].src];
+ 
+     /* PLLSAI2ON and update PLLSAI2RDY */
+     val = FIELD_EX32(s->cr, CR, PLLSAI2ON);
+@@ -396,77 +434,101 @@ static void rcc_update_cr_register(Stm32l4x5RccState *s)
+         s->cifr |= R_CIFR_PLLSAI1RDYF_MASK;
+     }
+ 
+-    /* PLLON and update PLLRDY */
++    /*
++     * PLLON and update PLLRDY
++     * PLLON cannot be reset if the PLL clock is used as the system clock.
++     */
+     val = FIELD_EX32(s->cr, CR, PLLON);
+-    pll_set_enable(&s->plls[RCC_PLL_PLL], val);
+-    s->cr = (s->cr & ~R_CR_PLLRDY_MASK) |
+-            (val << R_CR_PLLRDY_SHIFT);
+-    if (s->cier & R_CIER_PLLRDYIE_MASK) {
+-        s->cifr |= R_CIFR_PLLRDYF_MASK;
++    if (FIELD_EX32(s->cfgr, CFGR, SWS) != 0b11) {
++        pll_set_enable(&s->plls[RCC_PLL_PLL], val);
++        s->cr = (s->cr & ~R_CR_PLLRDY_MASK) |
++                (val << R_CR_PLLRDY_SHIFT);
++        if (s->cier & R_CIER_PLLRDYIE_MASK) {
++            s->cifr |= R_CIFR_PLLRDYF_MASK;
++        }
++    } else {
++        s->cr |= R_CR_PLLON_MASK;
+     }
+ 
+     /* CSSON: TODO */
+     /* HSEBYP: TODO */
+ 
+-    /* HSEON and update HSERDY */
++    /*
++     * HSEON and update HSERDY.
++     * HSEON cannot be reset if the HSE oscillator is used directly or
++     * indirectly as the system clock.
++     */
+     val = FIELD_EX32(s->cr, CR, HSEON);
+-    s->cr = (s->cr & ~R_CR_HSERDY_MASK) |
+-            (val << R_CR_HSERDY_SHIFT);
+-    if (val) {
+-        clock_update_hz(s->hse, s->hse_frequency);
+-        if (s->cier & R_CIER_HSERDYIE_MASK) {
+-            s->cifr |= R_CIFR_HSERDYF_MASK;
++    if (FIELD_EX32(s->cfgr, CFGR, SWS) != 0b10 &&
++        current_pll_src != RCC_CLOCK_MUX_SRC_HSE) {
++        s->cr = (s->cr & ~R_CR_HSERDY_MASK) |
++                (val << R_CR_HSERDY_SHIFT);
++        if (val) {
++            clock_update_hz(s->hse, s->hse_frequency);
++            if (s->cier & R_CIER_HSERDYIE_MASK) {
++                s->cifr |= R_CIFR_HSERDYF_MASK;
++            }
++        } else {
++            clock_update(s->hse, 0);
+         }
+     } else {
+-        clock_update(s->hse, 0);
++        s->cr |= R_CR_HSEON_MASK;
+     }
+ 
+     /* HSIAFS: TODO*/
+     /* HSIKERON: TODO*/
+ 
+-    /* HSION and update HSIRDY*/
+-    val = FIELD_EX32(s->cr, CR, HSION);
+-    s->cr = (s->cr & ~R_CR_HSIRDY_MASK) |
+-            (val << R_CR_HSIRDY_SHIFT);
+-    if (val) {
++    /*
++     * HSION and update HSIRDY
++     * HSION is set by hardware if the HSI16 is used directly
++     * or indirectly as system clock.
++     */
++    if (FIELD_EX32(s->cfgr, CFGR, SWS) == 0b01 ||
++        current_pll_src == RCC_CLOCK_MUX_SRC_HSI) {
++        s->cr |= (R_CR_HSION_MASK | R_CR_HSIRDY_MASK);
+         clock_update_hz(s->hsi16_rc, HSI_FRQ);
+         if (s->cier & R_CIER_HSIRDYIE_MASK) {
+             s->cifr |= R_CIFR_HSIRDYF_MASK;
+         }
+     } else {
+-        clock_update(s->hsi16_rc, 0);
++        val = FIELD_EX32(s->cr, CR, HSION);
++        if (val) {
++            clock_update_hz(s->hsi16_rc, HSI_FRQ);
++            s->cr |= R_CR_HSIRDY_MASK;
++            if (s->cier & R_CIER_HSIRDYIE_MASK) {
++                s->cifr |= R_CIFR_HSIRDYF_MASK;
++            }
++        } else {
++            clock_update(s->hsi16_rc, 0);
++            s->cr &= ~R_CR_HSIRDY_MASK;
++        }
+     }
+ 
+-    static const uint32_t msirange[] = {
+-        100000, 200000, 400000, 800000, 1000000, 2000000,
+-        4000000, 8000000, 16000000, 24000000, 32000000, 48000000
+-    };
+-    /* MSIRANGE and MSIRGSEL */
+-    val = FIELD_EX32(s->cr, CR, MSIRGSEL);
+-    if (val) {
+-        /* MSIRGSEL is set, use the MSIRANGE field */
+-        val = FIELD_EX32(s->cr, CR, MSIRANGE);
++    /* MSIPLLEN: TODO */
++
++    /*
++     * MSION and update MSIRDY
++     * Set by hardware when used directly or indirectly as system clock.
++     */
++    if (FIELD_EX32(s->cfgr, CFGR, SWS) == 0b00 ||
++        current_pll_src == RCC_CLOCK_MUX_SRC_MSI) {
++            s->cr |= (R_CR_MSION_MASK | R_CR_MSIRDY_MASK);
++            if (!(previous_value & R_CR_MSION_MASK) && (s->cier & R_CIER_MSIRDYIE_MASK)) {
++                s->cifr |= R_CIFR_MSIRDYF_MASK;
++            }
++            rcc_update_msi(s, previous_value);
+     } else {
+-        /* MSIRGSEL is not set, use the MSISRANGE field */
+-        val = FIELD_EX32(s->csr, CSR, MSISRANGE);
 -    }
+-
+-    if (val < ARRAY_SIZE(msirange)) {
+-        clock_update_hz(s->msi_rc, msirange[val]);
+-    } else {
+-        clock_update_hz(s->msi_rc, MSI_DEFAULT_FRQ);
+-        /* TODO: there is a write protection if the value is out of bound,
+-           implement that instead of setting the default */
+-    }
+-
+-    /* MSIPLLEN */
+-
+-    /* MSION and update MSIRDY */
+-    val = FIELD_EX32(s->cr, CR, MSION);
+-    s->cr = (s->cr & ~R_CR_MSIRDY_MASK) |
+-            (val << R_CR_MSIRDY_SHIFT);
+-    if (s->cier & R_CIER_MSIRDYIE_MASK) {
+-        s->cifr |= R_CIFR_MSIRDYF_MASK;
++        val = FIELD_EX32(s->cr, CR, MSION);
++        if (val) {
++            s->cr |= R_CR_MSIRDY_MASK;
++            rcc_update_msi(s, previous_value);
++            if (s->cier & R_CIER_MSIRDYIE_MASK) {
++                s->cifr |= R_CIFR_MSIRDYF_MASK;
++            }
++        } else {
++            s->cr &= ~R_CR_MSIRDY_MASK;
++            clock_update(s->msi_rc, 0);
++        }
+     }
+     rcc_update_irq(s);
+ }
+@@ -991,15 +1053,17 @@ static void stm32l4x5_rcc_write(void *opaque, hwaddr addr,
+                                   uint64_t val64, unsigned int size)
+ {
+     Stm32l4x5RccState *s = opaque;
++    uint32_t previous_value = 0;
+     const uint32_t value = val64;
  
-     is_ram = memory_region_is_ram(section->mr);
-     is_romd = memory_region_is_romd(section->mr);
-diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
-index 5170a668bb4..e7b1997d54e 100644
---- a/target/sparc/mmu_helper.c
-+++ b/target/sparc/mmu_helper.c
-@@ -580,7 +580,7 @@ static int get_physical_address_data(CPUSPARCState *env, CPUTLBEntryFull *full,
-             int do_fault = 0;
+     trace_stm32l4x5_rcc_write(addr, value);
  
-             if (TTE_IS_IE(env->dtlb[i].tte)) {
--                full->attrs.byte_swap = true;
-+                full->tlb_fill_flags |= TLB_BSWAP;
-             }
- 
-             /* access ok? */
+     switch (addr) {
+     case A_CR:
++        previous_value = s->cr;
+         s->cr = (s->cr & CR_READ_SET_MASK) |
+                 (value & (CR_READ_SET_MASK | ~CR_READ_ONLY_MASK));
+-        rcc_update_cr_register(s);
++        rcc_update_cr_register(s, previous_value);
+         break;
+     case A_ICSCR:
+         s->icscr = value & ~ICSCR_READ_ONLY_MASK;
 -- 
 2.34.1
 
