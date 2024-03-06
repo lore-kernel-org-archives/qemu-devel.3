@@ -4,86 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27E15C5475B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 20:43:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9554C5475B
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 20:44:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhy64-0004M0-Cf; Wed, 06 Mar 2024 15:42:40 -0500
+	id 1rhy7p-00057F-Su; Wed, 06 Mar 2024 15:44:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhy62-0004Lc-PD
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 15:42:38 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhy7o-00056o-33
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 15:44:28 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhy61-0004Mt-7k
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 15:42:38 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-412fc5f5099so1528265e9.2
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 12:42:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhy7m-0004yt-DF
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 15:44:27 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-412ee78edbbso1895365e9.0
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 12:44:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709757755; x=1710362555; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709757863; x=1710362663; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=DPx0WKsr3WD8stnEbU6nk/HiuAb1e9AnM+Gm0M50IM4=;
- b=K4jPZqftQBnscYizISbCv/2PzNvlC1kQ609Kohx8Qu9fxcLCfArls3NDw89uC1byFH
- IH3zpfvDhGy/XokuirkLuAN+ExVTMk4bUBsvbETyTII5gGTLndkqSsp9YHz3CHTT1AFh
- oNoypCP2js8vTHaF1IP6cMQV2TtQWekgPwkNxaHJ8sB6iv0CqGteFOP7kUQPTcSFu4Bx
- TzLiNviBhNE81kMTNw9++X7tVWakBxic11HFf9hU6C7pdnr44z1cUUaYC80GOTzkvoOS
- KLK8LWbsojsIrKAXXjIjtqQrQt2kz/4c5tjzIBEZXG9V6GfdV9GBwHnYIUKtwe4T2zPE
- O/Yw==
+ bh=qOs77BSVkN26lRtJwEwSVGiJq8nL5CI5avAC0pC8yu4=;
+ b=Q1NexMJLu6VVVPFa0SPj2OiMXQ3RqsMg39HMOtYrGh0HOd1U/+0B7V+wcUoz7l933h
+ pf6egPUMdA49GJXQLSD3jbJb/+DoMci+bX+t/UocjljyDXjHFxubteN6X351YD4EFBOF
+ rfufWvKOX8v1eX5Y1WWkuJ0Fq3t9N2BIS8OIdMRLebi8oAIPfJZIT+5bOB+3F2Dpt3JN
+ y1/v9hBmaBi+0/o9UwKZsEKk8v5l7ltpNyIwiHuj5x/RNLZQusjB5VcFz2XT+plDb3nS
+ CuT15YNN0xuIL+0MIAfxmzyotRiVuJIORSWBu0bup3zB+wYmBIm0K8vPJH1AUJHs8HBu
+ rI9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709757755; x=1710362555;
+ d=1e100.net; s=20230601; t=1709757863; x=1710362663;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DPx0WKsr3WD8stnEbU6nk/HiuAb1e9AnM+Gm0M50IM4=;
- b=Cuyff/fpuDn5mFuyeKSOoxB6PhbJHyyBIC7R0HNsl1YCwLyRo9Lnun9qLrpYxPkYnT
- IA4hEk+ccw93FdYKtNQ0ls9L9FpTrru1hPiJsyIYxxqDyGiFtt2hzYnfObNgKYDikrbd
- eSSIV/SSmwvTAnz8Kdj4h0V8YdiE/V0+Tj1oD49Wgm/qTRWf5l6Jza85uE2eecFHUn0v
- VYLUEEKnGPEydURz9zTd3zNwSSdPvSm4S7wAqqyec60Sho0ukGxxiqIt8Lyx/lpyJgT5
- cxI2kXOfP2ikeLRrHS89IY6roszkaCUnQGsarQUWXAlhxCald5+8tI91UcCxbUGk1bM5
- WfAg==
+ bh=qOs77BSVkN26lRtJwEwSVGiJq8nL5CI5avAC0pC8yu4=;
+ b=GXKEdPdIKh4voAKbE/Khqu2pO/Gd+PFhC3kqKav2xu3uSoNpqKisJQVb05LllHhMZK
+ lj5+TXVmGQnK9hWs2bn0LtAuvmQeYxMOhOLDyZij50Y37twQtc2pyJoCS9v7BPklXYgV
+ kpi9HZfHFf4CmQUBrVvoasiBMgIBY2snyn2Qr0uaK/FVq4ha+p8n7YedRJYz/H9YrkZF
+ K3hnhYK/gpKiCuMweGxUjZ+JlB+63O8R2vbBm+tNL2kJKKhE3mXdcnDa6j85kIdNERyF
+ RbW4FOhwjubHCy1YM1zzxZF+rOMMMRvH0tPajJUMnVyMFTzgM+Tho6jq3ioKrgmT5l8q
+ h8RA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX5/mYyZLfxwy6lkrbCanTmsalY4mkwy2F5w7MjHMP4C5F/1Hl2/OZqxLyPp2b/KJA9KD4t5Z3kqBgDcN2+z1MH0DjGf0c=
-X-Gm-Message-State: AOJu0YwRA5kPrOcY/9xTQ4onaFEb/Um3pJ2xkjmXoxSMvC7p0byzXtcg
- 6rdqBXJtE34Nsx9oDMsdEzwLxDtPdABkU3AVh4FnWXRVBTxpHLZw1B4ZbsykWxY=
-X-Google-Smtp-Source: AGHT+IEJ9ILdKfidupcWR4qRrm9ea8ASr3oQgB5S3mF2qAxXsNXDlMNDxk5Csj1Ukm88AwBsFg1ApA==
-X-Received: by 2002:a05:600c:468a:b0:412:bcc9:32dc with SMTP id
- p10-20020a05600c468a00b00412bcc932dcmr12859000wmo.31.1709757755325; 
- Wed, 06 Mar 2024 12:42:35 -0800 (PST)
+ AJvYcCXSJMPHt0LzWWCcO4cZ76DNu1OmjOJDvuHL+gwmW5XhH8ynFDExaJERZeEWgagYU5GON+5bWmtobqUqPrFwG1XfLnYhdXM=
+X-Gm-Message-State: AOJu0YwJsTtEjIjJtFqRJ/9E+7pgPtI8wxKcIbTDELWdR3tBDakBzgk8
+ tvMS5mvMoo+/u42UH/xVGdYioQyRpqnXeQPcmB2gn3BV3B2NNslQX1pQ65N2D+M=
+X-Google-Smtp-Source: AGHT+IEp2E3Um59CqfmAJFIs+3ECHPDuyhQA4LAIJ6b6TEXi5BO/Xa7IIwwa40vJt7rPqAJ29ZFyDA==
+X-Received: by 2002:a05:600c:cc5:b0:412:df1b:4875 with SMTP id
+ fk5-20020a05600c0cc500b00412df1b4875mr7975337wmb.30.1709757863682; 
+ Wed, 06 Mar 2024 12:44:23 -0800 (PST)
 Received: from [192.168.69.100] (vau06-h02-176-184-43-100.dsl.sta.abo.bbox.fr.
  [176.184.43.100]) by smtp.gmail.com with ESMTPSA id
- bg13-20020a05600c3c8d00b00412fe0eb806sm367392wmb.14.2024.03.06.12.42.33
+ jg7-20020a05600ca00700b00412f778c4c7sm364335wmb.16.2024.03.06.12.44.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Mar 2024 12:42:34 -0800 (PST)
-Message-ID: <970fa729-46be-44e7-b882-34a87e328319@linaro.org>
-Date: Wed, 6 Mar 2024 21:42:32 +0100
+ Wed, 06 Mar 2024 12:44:23 -0800 (PST)
+Message-ID: <fcaf95d2-bb09-4c55-a333-21a93a707ad2@linaro.org>
+Date: Wed, 6 Mar 2024 21:44:20 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 7/9] trans_rvv.c.inc: remove redundant mark_vs_dirty()
- calls
+Subject: Re: [PATCH v7 4/9] qemu-options.hx: Document the virtio-iommu-pci
+ granule option
 Content-Language: en-US
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240306171932.549549-1-dbarboza@ventanamicro.com>
- <20240306171932.549549-8-dbarboza@ventanamicro.com>
+To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, mst@redhat.com,
+ jean-philippe@linaro.org, imammedo@redhat.com, peter.maydell@linaro.org,
+ clg@redhat.com, yanghliu@redhat.com, zhenzhong.duan@intel.com
+Cc: alex.williamson@redhat.com, jasowang@redhat.com, pbonzini@redhat.com,
+ berrange@redhat.com
+References: <20240306203348.65776-1-eric.auger@redhat.com>
+ <20240306203348.65776-5-eric.auger@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240306171932.549549-8-dbarboza@ventanamicro.com>
+In-Reply-To: <20240306203348.65776-5-eric.auger@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,20 +101,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/24 18:19, Daniel Henrique Barboza wrote:
-> trans_vmv_v_i , trans_vfmv_v_f and the trans_##NAME macro from
-> GEN_VMV_WHOLE_TRANS() are calling mark_vs_dirty() in both branches of
-> their 'ifs'. conditionals.
+On 6/3/24 21:32, Eric Auger wrote:
+> We are missing an entry for the virtio-iommu-pci device. Add the
+> information on which machine it is currently supported and document
+> the new granule option.
 > 
-> Call it just once in the end like other functions are doing.
-> 
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
 > ---
->   target/riscv/insn_trans/trans_rvv.c.inc | 11 +++--------
->   1 file changed, 3 insertions(+), 8 deletions(-)
+>   qemu-options.hx | 8 ++++++++
+>   1 file changed, 8 insertions(+)
+> 
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index 9a47385c15..757df3eac0 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -1172,6 +1172,14 @@ SRST
+>       Please also refer to the wiki page for general scenarios of VT-d
+>       emulation in QEMU: https://wiki.qemu.org/Features/VT-d.
+>   
+> +``-device virtio-iommu-pci[,option=...]``
+> +    This is only supported by ``-machine q35`` and ``-machine virt``.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Don't we need to precise x86 and arm here?
+
+> +    It supports below options:
+> +
+> +    ``granule=val`` (possible values are 4k, 8k, 16k, 64k and host; default: host)
+> +        This decides the default granule to be be exposed by the
+> +        virtio-iommu. If host, the granule matches the host page size.
+> +
+>   ERST
+>   
+>   DEF("name", HAS_ARG, QEMU_OPTION_name,
 
 
