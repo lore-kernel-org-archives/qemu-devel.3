@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 918F7C5475B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 18:31:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6C1AC5475B
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 18:38:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhw26-0002BH-7T; Wed, 06 Mar 2024 13:30:26 -0500
+	id 1rhw98-0004qv-1W; Wed, 06 Mar 2024 13:37:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rhw23-0002Am-Kv
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 13:30:23 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rhw96-0004qj-1y
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 13:37:40 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rhw1z-000434-Hs
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 13:30:20 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rhw93-0007y5-Qv
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 13:37:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709749818;
+ s=mimecast20190719; t=1709750256;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=k7KgayFbR+hNyRj6m2G0t2A8yhp89iJhEkkZnVmMqZg=;
- b=N7jrJbDGIs43I0GvSMLOCUYiL75hvGdlYOfbVi5DAXdM35UzHKNkSFfRbWyrC7fyutycZ7
- GfIJrjCH4hngBfwpJvMQO4KN84ohO8V4GWPwk8lpwLa0eg3T6E3h64AeTlXouGxusbwp7U
- M4okEE/WkC48YCVivjGnpQvrV3mwkRs=
+ bh=X864d1QVqITGbbV4mJu9JgFeSGvjt/VRT0OHec/qfzk=;
+ b=S62xbrX0IOwJzqN222vjc0AHV58vS7z5t44LbYbIhcBdmNwaOWrf4s5EM/2EbrtyLTn6XE
+ KaderGwe7BDzdzaCSzSHBWRIo8tiRFbxJ+MK6Ln9doROrPD708BLbTs89DFn5bywi1MnTe
+ Rd5n+qM5EyrisKUGgfs7+ADVHpwrOgc=
 Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
  [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-357-XsTfEfDjMmK3eqDZJBpA6w-1; Wed, 06 Mar 2024 13:30:16 -0500
-X-MC-Unique: XsTfEfDjMmK3eqDZJBpA6w-1
+ us-mta-639-jHFokoJcNpO6fDDuy5z2kA-1; Wed, 06 Mar 2024 13:37:35 -0500
+X-MC-Unique: jHFokoJcNpO6fDDuy5z2kA-1
 Received: by mail-lf1-f70.google.com with SMTP id
- 2adb3069b0e04-51337da375dso4811369e87.3
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 10:30:15 -0800 (PST)
+ 2adb3069b0e04-5136f815e65so548247e87.1
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 10:37:35 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709749814; x=1710354614;
+ d=1e100.net; s=20230601; t=1709749948; x=1710354748;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=k7KgayFbR+hNyRj6m2G0t2A8yhp89iJhEkkZnVmMqZg=;
- b=wvXuMdvZGR3wmChoyW/ZWUiI7fqA6tq7Sv5oIyj+NM1fCp8E4kzsw2XL6FCxxctBdb
- RHXV9i5U5rWygC6/tw+nQnmx+sVupSd7A+yNcY71k7e5PtYtI3TC/XF2IzaS3xc6M4PZ
- Zrv7FlsIYayil5VrvD3UXYmrVOH501Z7yPR9hFqsFkJmdgW4l421AQHl+JPxSlq4N7ai
- Xvj7jKNXX+grBPXbOC1/XPHgJ29tTDdJPirDbXLp85CFTbHiwUWeAQTpU5wGb6ORPakm
- GnQ4dTw6nMXQ1XkLRiM2J+KwlShp2j88vFBTN21II0qu/6Gr5ltZLfEiXNNT6TB1LwaI
- QqeQ==
+ bh=X864d1QVqITGbbV4mJu9JgFeSGvjt/VRT0OHec/qfzk=;
+ b=lsCwopAMHbabXcbEuId1WRy4ukFllMHuF2T0BA8czud6ZIqZd7gy7TNNH1qO4m9wl5
+ Z5i39AHpaudYFHwtzISkvGgSvjpdPH9C5xIuVbXIMfz5s/F7dhIfPTGfsGkZJkak5I0k
+ rb0UKeLdnHm6ZpHL5VoC4tG7ILs+7Pw9pGICYVXF7kKlDxTGPyLkfWcFm9/6csZ1zkc4
+ mtqV5Et0XzC2zirycm+Wjam5je0n1HtFff5jTEgeaM880m/DBkDKtf8awGZKcuL4j2iG
+ iXNLQ4lTTlg+Ctt8BOZSo3nO2K7jkwxhgpkgcCIm/WY1haK1XNJ68qgcnhUBDJBgJHzU
+ uO0A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXuEbCNLSY+D9EuNsua69tTA4+0EWaxwczbuoBpZE35k67t5pyyUPH/foX42AdiXaHJS1jB6dVNXpNvtzvjVTKafzWaI98=
-X-Gm-Message-State: AOJu0YyIFds61jLVv/+TP4yNfSGI3v4rFpVm6g6Iw4g45BWFx9cI17ue
- 1QlFR1KVQlNOCF1Hlf7bS5UwGTjd3LcMAbjQXxWz9Ms6SeqhJY+In9zntTeivnJfXzuI92BXPGx
- b85/RUULspjaPWg2OTBjBLLVK6B5YRnVrxOXVN48CwzlLhvZ9LC3+
-X-Received: by 2002:a05:6512:148:b0:513:26fd:5c13 with SMTP id
- m8-20020a056512014800b0051326fd5c13mr3863711lfo.52.1709749814719; 
- Wed, 06 Mar 2024 10:30:14 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFnQWxdZjVtvijqTnq9PdLFe6OMtKx6FhU+4/c9ObET/W6uD/MiWEzV38Iq+/ZhCVVhBmHZwA==
-X-Received: by 2002:a05:6512:148:b0:513:26fd:5c13 with SMTP id
- m8-20020a056512014800b0051326fd5c13mr3863688lfo.52.1709749814363; 
- Wed, 06 Mar 2024 10:30:14 -0800 (PST)
+ AJvYcCXb6Zyx31UbYSgrwCpd9ljoKQGT6pezNdSXaM7Vn9BO/3AWjAdJl6qndW8RUG/TBRaHgp4Y48sjJ5Fr/IGPrVwA7XHWqOQ=
+X-Gm-Message-State: AOJu0YxqHJ4JZQdU5aJI6oALiBtlzI2NqYD0M+f+J9ke+fr21+j0a9Gx
+ om3+YVz4D6lP87TTyIatTPd+EfspRF+9gLe7+IzkEn8uIMi8XO2l6yn27r7nVFBcD0lrBiBmSP3
+ dMs9kgbnGhHsEze5pDVbzkEYytKFCj7z4g1xQaAXyCIQ/6OVcZYn3
+X-Received: by 2002:a19:7711:0:b0:513:5a38:f54f with SMTP id
+ s17-20020a197711000000b005135a38f54fmr2132794lfc.63.1709749948769; 
+ Wed, 06 Mar 2024 10:32:28 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGtn0K8sXtVQm/GuN/vWPnsldnSryb02WelYC7s79/1SCOzMTVySx3fKCPyBHbaXTUel2zq4A==
+X-Received: by 2002:a19:7711:0:b0:513:5a38:f54f with SMTP id
+ s17-20020a197711000000b005135a38f54fmr2132783lfc.63.1709749948372; 
+ Wed, 06 Mar 2024 10:32:28 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-178-151.web.vodafone.de.
  [109.43.178.151]) by smtp.gmail.com with ESMTPSA id
- gc9-20020a170906c8c900b00a4498726bb9sm6255742ejb.173.2024.03.06.10.30.12
+ bh23-20020a170906a0d700b00a45acb058ffsm1798413ejb.216.2024.03.06.10.32.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Mar 2024 10:30:14 -0800 (PST)
-Message-ID: <c66d3c14-962d-439d-bc33-6d52d0f776be@redhat.com>
-Date: Wed, 6 Mar 2024 19:30:12 +0100
+ Wed, 06 Mar 2024 10:32:27 -0800 (PST)
+Message-ID: <3faf44cd-147c-4bc0-abfb-4ab1d968570b@redhat.com>
+Date: Wed, 6 Mar 2024 19:32:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1 17/18] target/i386: Remove
- X86CPU::kvm_no_smi_migration field
+Subject: Re: [PATCH-for-9.1 18/18] hw/i386/pc: Replace
+ PCMachineClass::acpi_data_size by PC_ACPI_DATA_SIZE
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -80,9 +80,10 @@ Cc: Igor Mammedov <imammedo@redhat.com>,
  David Hildenbrand <david@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>
 References: <20240305134221.30924-1-philmd@linaro.org>
- <20240305134221.30924-18-philmd@linaro.org>
+ <20240305134221.30924-19-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -126,7 +127,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240305134221.30924-18-philmd@linaro.org>
+In-Reply-To: <20240305134221.30924-19-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -154,67 +155,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 05/03/2024 14.42, Philippe Mathieu-Daudé wrote:
-> X86CPU::kvm_no_smi_migration was only used by the
-> pc-i440fx-2.3 machine, which got removed. Remove it
-> and simplify kvm_put_vcpu_events().
+> PCMachineClass::acpi_data_size was only used by the pc-i440fx-2.0
+> machine, which got removed. Since it is constant, replace the class
+> field by a definition.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/i386/cpu.h     | 3 ---
->   target/i386/cpu.c     | 2 --
->   target/i386/kvm/kvm.c | 6 ------
->   3 files changed, 11 deletions(-)
-> 
-> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index 952174bb6f..bdc640e844 100644
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
-> @@ -2018,9 +2018,6 @@ struct ArchCPU {
->       /* if set, limit maximum value for phys_bits when host_phys_bits is true */
->       uint8_t host_phys_bits_limit;
->   
-> -    /* Stop SMI delivery for migration compatibility with old machines */
-> -    bool kvm_no_smi_migration;
-> -
->       /* Forcefully disable KVM PV features not exposed in guest CPUIDs */
->       bool kvm_pv_enforce_cpuid;
->   
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 2666ef3808..0e3ad8db2b 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -7905,8 +7905,6 @@ static Property x86_cpu_properties[] = {
->       DEFINE_PROP_BOOL("x-vendor-cpuid-only", X86CPU, vendor_cpuid_only, true),
->       DEFINE_PROP_BOOL("lmce", X86CPU, enable_lmce, false),
->       DEFINE_PROP_BOOL("l3-cache", X86CPU, enable_l3_cache, true),
-> -    DEFINE_PROP_BOOL("kvm-no-smi-migration", X86CPU, kvm_no_smi_migration,
-> -                     false),
->       DEFINE_PROP_BOOL("kvm-pv-enforce-cpuid", X86CPU, kvm_pv_enforce_cpuid,
->                        false),
->       DEFINE_PROP_BOOL("vmware-cpuid-freq", X86CPU, vmware_cpuid_freq, true),
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index 42970ab046..571cbbf1fc 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -4344,12 +4344,6 @@ static int kvm_put_vcpu_events(X86CPU *cpu, int level)
->               events.smi.pending = 0;
->               events.smi.latched_init = 0;
->           }
-> -        /* Stop SMI delivery on old machine types to avoid a reboot
-> -         * on an inward migration of an old VM.
-> -         */
-> -        if (!cpu->kvm_no_smi_migration) {
-> -            events.flags |= KVM_VCPUEVENT_VALID_SMM;
-> -        }
+>   include/hw/i386/pc.h |  4 ----
+>   hw/i386/pc.c         | 19 ++++++++++++-------
+>   2 files changed, 12 insertions(+), 11 deletions(-)
 
-Shouldn't it be the other way round, i.e. that the flag is now always set?
-
-pc_compat_2_3[] had:
-
-     { TYPE_X86_CPU, "kvm-no-smi-migration", "on" },
-
-... so I think kvm_no_smi_migration was set to true for the old machines?
-
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
