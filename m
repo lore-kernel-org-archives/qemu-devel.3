@@ -4,85 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D723C54E41
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 09:38:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFD37C5475B
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 09:41:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhnih-0006QW-8f; Wed, 06 Mar 2024 04:37:52 -0500
+	id 1rhnlP-0007Ph-4K; Wed, 06 Mar 2024 04:40:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rhnid-0006PH-UZ
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 04:37:49 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rhnib-0001RM-8X
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 04:37:46 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1dc13fb0133so49278895ad.3
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 01:37:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1709717863; x=1710322663; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=fNvmPfvH9W7Kwn40uZp3Qj0TVVLusroseZdtJTf9XT8=;
- b=btDw0Ew3t1smuWbYfdJbQt4m4eebc4VzkpKTv5JnU45yFTJJCGeyzfGwwIyuBnqzXB
- Q1szbW4tLGu855tuUwzocTwaRAQ//tV36C1xEszJfNGk8lnwlBUaMNaAPf9ZeosIBEYD
- 3BX32c3NqIip83n6rO0MfqXw/xbTSh2X4NS1PMqtxuXEP2y5TKVGBqpKNq/ZpSSu1nWS
- W7WzV+57EXhECx0/w6s4cVGDqeupxKEd6lnsUXryEdsLPkpUI3bwnNmZENaebsDPcZPm
- 20ZJOgTiFOzkr5oYrpl5S89/h1CPN6Gcwmetb3yvAyhheT4RuqDJ++GgIby9RE4B2n7a
- WoQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709717863; x=1710322663;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fNvmPfvH9W7Kwn40uZp3Qj0TVVLusroseZdtJTf9XT8=;
- b=BX9R4BItSWggQqrWri7jssnFOhJWUsiM/E0xFDVrLdqA/feEHsl5pWyQk6bk+3kdXo
- /Ge9/bJ92qzxy7V5BwRjduZjlwip831aRYTC/UepT/NHYluSiXgHafKp6OsEVnzVobnA
- 3jM/7dcYmdIkQL6c08z1sDwg24Tn0/FHl1C579xoS1Ldmu39zSainMUu7nFyYa94LRzu
- clygqELrCX92EhLfhmoD11QkkuVfUjE5rEXT+7MjDayGk5X7TsY3MKYTA9AS1aTAbcAh
- e5hdSCGfjzkIStM/LG1p4ctiYuA6ya+ldrkO0etUEaaA+cCSTYfIriAWvLgZvmjvui2V
- MdpA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX/Q64sy9LnDwFeOp3GDq/6SsYymSCGLSko2O6SMhLtMzmxU4e3UGafU+2WbBNFs3e7bjFB0xUXpaR7gbc3zXXgZaO7Grk=
-X-Gm-Message-State: AOJu0Ywdmel9g2v7MmYT3kLi7WbOIxOvIVNLSWRnm/U4E00gPW/IpfZv
- 1W8LD/MYbB+rl+RPqfWyF27WoBuUe3JgLIuZTH97wlFBqdJPXYWOXPwGt/ikphU=
-X-Google-Smtp-Source: AGHT+IGt81MdIZX2EcH6UTdpm/R4YbgCQsmn15v4Pg+/oxq9Jk2yJ+29PHVTMnVZoTzuZq8E/kH3bA==
-X-Received: by 2002:a17:902:db86:b0:1dc:c8d3:52ba with SMTP id
- m6-20020a170902db8600b001dcc8d352bamr4279236pld.56.1709717862902; 
- Wed, 06 Mar 2024 01:37:42 -0800 (PST)
-Received: from [192.168.68.110] ([177.94.15.159])
- by smtp.gmail.com with ESMTPSA id
- c1-20020a170903234100b001db594c9d17sm12081686plh.254.2024.03.06.01.37.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Mar 2024 01:37:42 -0800 (PST)
-Message-ID: <339358de-fc57-42fb-80ec-9413648ea44f@ventanamicro.com>
-Date: Wed, 6 Mar 2024 06:37:39 -0300
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rhnlN-0007PD-FZ
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 04:40:37 -0500
+Received: from mgamail.intel.com ([198.175.65.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rhnlL-00020k-LV
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 04:40:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1709718036; x=1741254036;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=aeA2s9T7ZHBvx6ENH8YGd6wH3Oj/Qq+YESJhKmgsOC0=;
+ b=M0z6+Zwp4M9LsnA985kbkwOqYqcq7lizTBCBOpzoBkRNS+YAXziITbEV
+ r8Jmlve9AWQTufldn4LBOy2buGJB+dk2EodmaQJOB4N1xiQMd6zg0GEWC
+ sBc705DRnjCTE7zxJGHt9J7oK0Y+R0SePhFn1APrmtj1Y2zTqmTN8rcbB
+ W95QbLc1yMjtqSvseBGoO+mnsuOZGIKAChfukvnUNQmnF+22B+qHA2TSu
+ 3LkWKURBBwCW9Ne89yOmHs07r5txJVf4FiBqU5TbxTXgcSSh1VB52ZsU8
+ rHkTkB5sRm7xVkX/c0uRQlGgn/7F4kCyF3680TC6Dkf8QxqjJD236UNjv A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11004"; a="14897814"
+X-IronPort-AV: E=Sophos;i="6.06,207,1705392000"; d="scan'208";a="14897814"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Mar 2024 01:40:33 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,207,1705392000"; d="scan'208";a="32854129"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
+ by fmviesa002.fm.intel.com with ESMTP; 06 Mar 2024 01:40:30 -0800
+From: Zhao Liu <zhao1.liu@linux.intel.com>
+To: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org
+Cc: Xiaoling Song <xiaoling.song@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
+ devel@lists.libvirt.org
+Subject: [PATCH 02/14] hw/core/machine-smp: Deprecate unsupported
+ "parameter=1" SMP configurations
+Date: Wed,  6 Mar 2024 17:53:55 +0800
+Message-Id: <20240306095407.3058909-3-zhao1.liu@linux.intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240306095407.3058909-1-zhao1.liu@linux.intel.com>
+References: <20240306095407.3058909-1-zhao1.liu@linux.intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] target/riscv: Fix shift count overflow
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: "demin.han" <demin.han@starfivetech.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, philmd@linaro.org
-References: <20240225174114.5298-1-demin.han@starfivetech.com>
- <a5c8ed1b-0b67-449a-83b9-accf0754c562@ventanamicro.com>
-In-Reply-To: <a5c8ed1b-0b67-449a-83b9-accf0754c562@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: none client-ip=198.175.65.11;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.568,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,56 +83,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alistair,
+From: Zhao Liu <zhao1.liu@intel.com>
 
+Currentlt, it was allowed for users to specify the unsupported
+topology parameter as "1". For example, x86 PC machine doesn't
+support drawer/book/cluster topology levels, but user could specify
+"-smp drawers=1,books=1,clusters=1".
 
-Please don't forget to queue this up. Thanks,
+This is meaningless and confusing, so that the support for this kind of
+configurations is marked depresated since 9.0. And report warning
+message for such case like:
 
+qemu-system-x86_64: warning: Deprecated CPU topology (considered invalid):
+                    Unsupported clusters parameter mustn't be specified as 1
+qemu-system-x86_64: warning: Deprecated CPU topology (considered invalid):
+                    Unsupported books parameter mustn't be specified as 1
+qemu-system-x86_64: warning: Deprecated CPU topology (considered invalid):
+                    Unsupported drawers parameter mustn't be specified as 1
 
-Daniel
+Users have to ensure that all the topology members described with -smp
+are supported by the target machine.
 
-On 2/26/24 06:31, Daniel Henrique Barboza wrote:
-> 
-> 
-> On 2/25/24 14:41, demin.han wrote:
->> The result of (8 - 3 - vlmul) is negative when vlmul >= 6,
->> and results in wrong vill.
->>
->> Signed-off-by: demin.han <demin.han@starfivetech.com>
->> ---
-> 
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> 
->> Changes in v2:
->> - Add vlen var
->>
->> Changes in v3:
->> - Fix commit msg typo
->>
->>   target/riscv/vector_helper.c | 5 ++---
->>   1 file changed, 2 insertions(+), 3 deletions(-)
->>
->> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
->> index 84cec73eb2..fe56c007d5 100644
->> --- a/target/riscv/vector_helper.c
->> +++ b/target/riscv/vector_helper.c
->> @@ -44,6 +44,7 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
->>       target_ulong reserved = s2 &
->>                               MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
->>                                               xlen - 1 - R_VTYPE_RESERVED_SHIFT);
->> +    uint16_t vlen = cpu->cfg.vlenb << 3;
->>       int8_t lmul;
->>       if (vlmul & 4) {
->> @@ -53,10 +54,8 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
->>            * VLEN * LMUL >= SEW
->>            * VLEN >> (8 - lmul) >= sew
->>            * (vlenb << 3) >> (8 - lmul) >= sew
->> -         * vlenb >> (8 - 3 - lmul) >= sew
->>            */
->> -        if (vlmul == 4 ||
->> -            cpu->cfg.vlenb >> (8 - 3 - vlmul) < sew) {
->> +        if (vlmul == 4 || (vlen >> (8 - vlmul)) < sew) {
->>               vill = true;
->>           }
->>       }
+Cc: devel@lists.libvirt.org
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ docs/about/deprecated.rst | 14 +++++++++
+ hw/core/machine-smp.c     | 63 +++++++++++++++++++++++++++++----------
+ 2 files changed, 61 insertions(+), 16 deletions(-)
+
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 872974640252..2e782e83e952 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -47,6 +47,20 @@ as short-form boolean values, and passed to plugins as ``arg_name=on``.
+ However, short-form booleans are deprecated and full explicit ``arg_name=on``
+ form is preferred.
+ 
++``-smp`` (Unsopported "parameter=1" SMP configurations) (since 9.0)
++'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++
++Specified CPU topology parameters must be supported by the machine.
++
++In the SMP configuration, users should provide the CPU topology parameters that
++are supported by the target machine.
++
++However, historically it was allowed for users to specify the unsupported
++topology parameter as "1", which is meaningless. So support for this kind of
++configurations (e.g. -smp drawers=1,books=1,clusters=1 for x86 PC machine) is
++marked depresated since 9.0, users have to ensure that all the topology members
++described with -smp are supported by the target machine.
++
+ QEMU Machine Protocol (QMP) commands
+ ------------------------------------
+ 
+diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
+index 96533886b14e..50a5a40dbc3d 100644
+--- a/hw/core/machine-smp.c
++++ b/hw/core/machine-smp.c
+@@ -112,30 +112,61 @@ void machine_parse_smp_config(MachineState *ms,
+ 
+     /*
+      * If not supported by the machine, a topology parameter must be
+-     * omitted or specified equal to 1.
++     * omitted.
+      */
+-    if (!mc->smp_props.dies_supported && dies > 1) {
+-        error_setg(errp, "dies not supported by this machine's CPU topology");
+-        return;
+-    }
+-    if (!mc->smp_props.clusters_supported && clusters > 1) {
+-        error_setg(errp, "clusters not supported by this machine's CPU topology");
+-        return;
++    if (!mc->smp_props.clusters_supported && config->has_clusters) {
++        if (config->clusters > 1) {
++            error_setg(errp, "clusters not supported by this "
++                       "machine's CPU topology");
++            return;
++        } else {
++            /* Here clusters only equals 1 since we've checked zero case. */
++            warn_report("Deprecated CPU topology (considered invalid): "
++                        "Unsupported clusters parameter mustn't be "
++                        "specified as 1");
++        }
+     }
++    clusters = clusters > 0 ? clusters : 1;
+ 
++    if (!mc->smp_props.dies_supported && config->has_dies) {
++        if (config->dies > 1) {
++            error_setg(errp, "dies not supported by this "
++                       "machine's CPU topology");
++            return;
++        } else {
++            /* Here dies only equals 1 since we've checked zero case. */
++            warn_report("Deprecated CPU topology (considered invalid): "
++                        "Unsupported dies parameter mustn't be "
++                        "specified as 1");
++        }
++    }
+     dies = dies > 0 ? dies : 1;
+-    clusters = clusters > 0 ? clusters : 1;
+ 
+-    if (!mc->smp_props.books_supported && books > 1) {
+-        error_setg(errp, "books not supported by this machine's CPU topology");
+-        return;
++    if (!mc->smp_props.books_supported && config->has_books) {
++        if (config->books > 1) {
++            error_setg(errp, "books not supported by this "
++                       "machine's CPU topology");
++            return;
++        } else {
++            /* Here books only equals 1 since we've checked zero case. */
++            warn_report("Deprecated CPU topology (considered invalid): "
++                        "Unsupported books parameter mustn't be "
++                        "specified as 1");
++        }
+     }
+     books = books > 0 ? books : 1;
+ 
+-    if (!mc->smp_props.drawers_supported && drawers > 1) {
+-        error_setg(errp,
+-                   "drawers not supported by this machine's CPU topology");
+-        return;
++    if (!mc->smp_props.drawers_supported && config->has_drawers) {
++        if (config->drawers > 1) {
++            error_setg(errp, "drawers not supported by this "
++                       "machine's CPU topology");
++            return;
++        } else {
++            /* Here drawers only equals 1 since we've checked zero case. */
++            warn_report("Deprecated CPU topology (considered invalid): "
++                        "Unsupported drawers parameter mustn't be "
++                        "specified as 1");
++        }
+     }
+     drawers = drawers > 0 ? drawers : 1;
+ 
+-- 
+2.34.1
+
 
