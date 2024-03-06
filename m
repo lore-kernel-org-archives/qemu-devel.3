@@ -4,76 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5D84C54798
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 02:28:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8380EC54E49
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 02:30:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhh0W-0001En-HG; Tue, 05 Mar 2024 21:27:48 -0500
+	id 1rhh2z-0001wM-O0; Tue, 05 Mar 2024 21:30:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
- id 1rhh0Q-0001EY-D5
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 21:27:43 -0500
-Received: from mgamail.intel.com ([192.198.163.18])
+ (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
+ id 1rhh2t-0001vu-Sp
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 21:30:15 -0500
+Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
- id 1rhh0N-0003mv-9p
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 21:27:42 -0500
+ (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
+ id 1rhh2n-00049k-Hs
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 21:30:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709692059; x=1741228059;
- h=from:to:cc:subject:in-reply-to:references:date:
- message-id:mime-version:content-transfer-encoding;
- bh=XDNTXC9Xxd0YQ5QcW7RTouxzsRfUoLkVDKJefb4p6HY=;
- b=SC7ocSVNXO6H2nSUqywU/fggaRh5qRJGXv6KF1pUajjNIUDCqof9tdWz
- RISSpIZlo7W72mSQoj7K0JakmhxV3KCXrFRpiW/MwAEmfcyWnncDv+ixi
- KSZEO9f1FDCHoFUDYieGtCL2WM1MIw4fUoWI+RJxMMsY6h2PbbhP26+RP
- WICSHQ3GTt6Bca9W/tWNxLABGK6v55kwvkbFtaOwPIlI9/P8RzCxYkjrR
- pQjp+1fEHbbv34Fw5SuSQlkN+0tzd0Ce/fvjvkODabdUWIf9I98EIzMWQ
- eH/ZsHY7znhq86Sijd8olxsWzi/quHBEioSummE5vuMGeiLkrazX1J81q w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11004"; a="4142088"
-X-IronPort-AV: E=Sophos;i="6.06,207,1705392000"; 
-   d="scan'208";a="4142088"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Mar 2024 18:27:36 -0800
+ t=1709692209; x=1741228209;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=DXtEs7SR+1VaWSci6DrMn5054e2IrBkwur4+jP2UEaM=;
+ b=ZmhDvGR7nDRLRukcx2/UrYfH0LUu7V4KhZJl3UwdyYxPD+dN8Fqxb2gD
+ irtSAt33kpJRM6+E5jQzOa0SPHiamQKcPlM1Ks/NE4zssIJrkKiRJjwYL
+ N7c+ilvvNPG8BnAXirPWAZAF/vNPgza7bKnC/ppAWuMyvTq5e20zYP7hP
+ O00kWtMJII+IQN59+cg88jm0q4XWBpuFvrgw0vIo1yo0zuRIkl3QABnWb
+ 8/31RIMeFiTIVLTQyREhDz8LVEeDxOctrXKQutrWXcYPM6vrS0kh3BMBn
+ HweUnWzl25YD+0McmO07YnoaBsiNt8QRnWzS0fTeGaRWNhJtA/qm25MLU Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11004"; a="15429935"
+X-IronPort-AV: E=Sophos;i="6.06,207,1705392000"; d="scan'208";a="15429935"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Mar 2024 18:30:07 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,207,1705392000"; 
-   d="scan'208";a="9994256"
-Received: from yhuang6-desk2.sh.intel.com (HELO
- yhuang6-desk2.ccr.corp.intel.com) ([10.238.208.55])
- by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Mar 2024 18:27:30 -0800
-From: "Huang, Ying" <ying.huang@intel.com>
-To: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
-Cc: Gregory Price <gourry.memverge@gmail.com>,  aneesh.kumar@linux.ibm.com,
- mhocko@suse.com,  tj@kernel.org,  john@jagalactic.com,  Eishan Mirakhur
- <emirakhur@micron.com>,  Vinicius Tavares Petrucci
- <vtavarespetr@micron.com>,  Ravis OpenSrc <Ravis.OpenSrc@micron.com>,
- Alistair Popple <apopple@nvidia.com>,  "Rafael J. Wysocki"
- <rafael@kernel.org>,  Len Brown <lenb@kernel.org>,  Andrew Morton
- <akpm@linux-foundation.org>,  Dave Jiang <dave.jiang@intel.com>,  Dan
- Williams <dan.j.williams@intel.com>,  Jonathan Cameron
- <Jonathan.Cameron@huawei.com>,  linux-acpi@vger.kernel.org,
- linux-kernel@vger.kernel.org,  linux-mm@kvack.org,  "Ho-Ren (Jack)
- Chuang" <horenc@vt.edu>,  "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>,
- linux-cxl@vger.kernel.org,  qemu-devel@nongnu.org
-Subject: Re: [External] Re: [PATCH v1 1/1] memory tier: acpi/hmat: create
- CPUless memory tiers after obtaining HMAT info
-In-Reply-To: <CAKPbEqrti2x05n5QhXtefhu+C=xmMUaH8mMwDy83LVN3Fj6nDw@mail.gmail.com>
- (Ho-Ren Chuang's message of "Tue, 5 Mar 2024 01:28:55 -0800")
-References: <20240301082248.3456086-1-horenchuang@bytedance.com>
- <20240301082248.3456086-2-horenchuang@bytedance.com>
- <87jzmibtyh.fsf@yhuang6-desk2.ccr.corp.intel.com>
- <CAKPbEqrti2x05n5QhXtefhu+C=xmMUaH8mMwDy83LVN3Fj6nDw@mail.gmail.com>
-Date: Wed, 06 Mar 2024 10:25:35 +0800
-Message-ID: <87edco85b4.fsf@yhuang6-desk2.ccr.corp.intel.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+   d="scan'208";a="9669239"
+Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
+ by orviesa009.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 05 Mar 2024 18:30:07 -0800
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Tue, 5 Mar 2024 18:30:06 -0800
+Received: from fmsmsx602.amr.corp.intel.com (10.18.126.82) by
+ fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Tue, 5 Mar 2024 18:30:05 -0800
+Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
+ fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35 via Frontend Transport; Tue, 5 Mar 2024 18:30:05 -0800
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (104.47.58.169)
+ by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Tue, 5 Mar 2024 18:30:05 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=bM9VPPAIXqRBfGiTjjZGZUtuBPlMrrx32i6FDi7wE7yINdzEb5XTlKe8VvPYyOsta3wP0aKIeOC18jHdSDJqtSA+7tOFS53BljJYyy9Kx96ls/yAKNTiQQ7jcK5sRvDPdTaswuM9mpd1LHMAb306Qfr1vRU4wwWz09Bdec0LoFtrCvlvFvGoNFBg2fshKIMPLCW809O6Duefj4VPfXP185PvSIJI9rl2YIE3fuzkydy6QIKh4qogdWU0II/5c/RI65Rk/gj50MELFx/LduTlelOKzeAls+dqO29/hd6rd44S8aTA2gj+r46bX6e493SkKVCS0+f1zOVe/nJVY/ngaQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hQscT9md+SK4B+LFJ2+ozsyDkUtcRHQ3AVRuErOdi38=;
+ b=m5/l8ijJXbDrIEod+pWhUYdqdbqRSVlG9IaJJboRWbWl2JLgj2ncNZyknk7cuSHtR4yli5jyIjL4qaIjrHCQtGRukWtcFqRZhqZpBfF1sHI/+0AgPQNd1OFwQTK5rfkgjG9eJMq2TcPMmGjzp+dP+Pa7W1EafEO061jlifnvQsyOUvOVYhmQ/0XkqKKrKVzG+HjtpKIee2BepnQj9pbVkwuEcIBQeaswA0+bq4EzA4U8IW5PaiSkqrWtjqx0BhpP30EdKHKvk+A2y5eHaCn6IW7I+s+6R44wHDO4voCSJZ0RqdB4UZ0b4WlDqXP5HeLwtOfdsAD+fhTg1b4ncBGp3Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from PH7PR11MB5941.namprd11.prod.outlook.com (2603:10b6:510:13d::20)
+ by DM6PR11MB4641.namprd11.prod.outlook.com (2603:10b6:5:2a9::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.24; Wed, 6 Mar
+ 2024 02:29:58 +0000
+Received: from PH7PR11MB5941.namprd11.prod.outlook.com
+ ([fe80::f0ec:877c:fd93:a04c]) by PH7PR11MB5941.namprd11.prod.outlook.com
+ ([fe80::f0ec:877c:fd93:a04c%3]) with mapi id 15.20.7362.019; Wed, 6 Mar 2024
+ 02:29:58 +0000
+From: "Liu, Yuan1" <yuan1.liu@intel.com>
+To: Fabiano Rosas <farosas@suse.de>, "peterx@redhat.com" <peterx@redhat.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "hao.xiang@bytedance.com"
+ <hao.xiang@bytedance.com>, "bryan.zhang@bytedance.com"
+ <bryan.zhang@bytedance.com>, "Zou, Nanhai" <nanhai.zou@intel.com>
+Subject: RE: [PATCH v4 4/8] migration/multifd: add qpl compression method
+Thread-Topic: [PATCH v4 4/8] migration/multifd: add qpl compression method
+Thread-Index: AQHabsDAdjT45HdR/0u2+lGVPFPhfbEpojUAgABbZUA=
+Date: Wed, 6 Mar 2024 02:29:57 +0000
+Message-ID: <PH7PR11MB59410E606FFBD8DFC048BDC4A3212@PH7PR11MB5941.namprd11.prod.outlook.com>
+References: <20240304140028.1590649-1-yuan1.liu@intel.com>
+ <20240304140028.1590649-5-yuan1.liu@intel.com> <87wmqggzv5.fsf@suse.de>
+In-Reply-To: <87wmqggzv5.fsf@suse.de>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PH7PR11MB5941:EE_|DM6PR11MB4641:EE_
+x-ms-office365-filtering-correlation-id: 25c5b245-fcdb-44b8-8497-08dc3d855122
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: moCwkMZ9W1hMuCBKPKqAiKuy20cC0SRe2DUm6oeMk+Rc+Om7BDDJXuhW+hLAIU0H8cr2cqUNU6QSk5IjY8UhXiQWYpuA7CEDxfP5Ks+T8xpG3ynlt6EBvmojPuScoAcs8FBRZS5kDMzAiW6i2atvtAxC8/OnvL8Uu4kuNC+x5fQjAQm2lJtOZNOmAT6aBBipN8QRNIFw9jpaoGdA5VtJlJvO/D13Z5bHSdHtxjHvWYchXNFhphlUxBR8Z40QMoCmz7kTLjPBrIhBmqd2TmkmRd43DqhZHEkvIJuP6PLFST7qXYyq3rzn7St+W7haOMwYBqkXyyXRlRhyg9yoIiimLvOkZy0G5QKqSVq7zjQW8dIzBk+1sPIF0X7x/uAoYCO8Tn4TiO8qe9q9G3V1QF9NdztRYpR3EnHhs3Zm7sNK2d4yg9QJhDO84xpGdKulLc+jpWLMJRvv3eLwbfvB9HpqlI5BxT2Q6GGV251c9tRSVJofOWxZxvpt6nZsJvgyeuA6sGOSH5KcAQB0Sc5+PllSZGpO9+XovzgcVvRRcDcB2UJ7/1NBqNDBMTwTqTDaknugHgtL+Q1YyJmnQK3+Xi0pRQzgALNGwnR+s3dEACwIjyV191EgGPToLDagXpdkqq0JKLfNhows26HQS8P/vI729Kb3jL5OMRaX9jXDN13Mobk1zF5+FoyPjw8fJ5cTsyfibcAi8iYBxaqiU8m8NVfhE9G6wto/2ws/XjNlO7RDHCY=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH7PR11MB5941.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(376005)(38070700009); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?mF+agaMEYqDGjnSPNFs1HSDUCwMLVw6RB6gVd1z7ktHX3QUrUoBLE0+1wIwb?=
+ =?us-ascii?Q?ibnx88nda/gltorwK7pAofPaS6HUN3cdLKRlgwalgL+8/8+nEi3GjDy+VqOQ?=
+ =?us-ascii?Q?UK1pUKG4zkhvj5+5otkFYljkmTv2CAlxO0BEBU1/T9P03E2et1n9vQwqlK/z?=
+ =?us-ascii?Q?sr+hKFkwxqeGbhmfI7rFd05+HpLu+nJ+68G8dzIfqwQ+JKmRsEhc1Qa7eD7g?=
+ =?us-ascii?Q?on7UoS+F2pBztT5Jyq1VNfWxtAHXiHKZC2RAmWv2AIZtPAvV2kIMFCmb2/MD?=
+ =?us-ascii?Q?CO/TnJFEuftgO8rBm11gVfgnrZvGa2dBrXI4BtqYL9+NMjnD8Xuwz3F7dFGn?=
+ =?us-ascii?Q?5jUfAec6r3W2Ez6a8Yaogzt4SSp/l9K7FjixspDcNGVoDY/O5sFy8YQkdKTW?=
+ =?us-ascii?Q?FCDDQT1/d5pn00W7t/gTstfrg2IsHatK36xrKRZgfnBcVaOzIqw5NVP+DT04?=
+ =?us-ascii?Q?IpnYTNcCbJBkKByh7YVzS2JjpK7/lsjdz+BB1F4SA+hDnnOhTu93gRZzhG6Y?=
+ =?us-ascii?Q?C4oZva4eZ3yMDuEm19JrwIFXRPKlKJnfXX4L4No+d0fk2a1RAXtp2CsRDOx3?=
+ =?us-ascii?Q?9wT+oT99+9Y1AfDFcvtEoLD/sJG8SRS3YKmNJbjdPyHYBxMIAtQEUdxWL73C?=
+ =?us-ascii?Q?EbEaWeaRkLxrYq6p/25SfIAKPTN4WZucVrGFIaSt6pdoMjjNREcLow3QdpP6?=
+ =?us-ascii?Q?fCVRU4mMX+jIY6+/IJceABy/PUTfw/f6siNeyBb23FcRPXk1jmfz9UoxmT3Y?=
+ =?us-ascii?Q?7w7Enuc2TtAoOYO7dnL4blAGICIPNmyO0u+BVqxmeaKs2pPW3UyILQP1qZsg?=
+ =?us-ascii?Q?kAayrJAO05Z7Vsxv7Vs9dAQojWngiBbUxaCli8vbSf2EMpJ3gMkffhT3Q+gp?=
+ =?us-ascii?Q?8D+vstCer0Bn/BJM/KVwaekZEHCEDTNO5XCQgfpcciQbB/58imkaRc755tr1?=
+ =?us-ascii?Q?EalVUY+L8CMszn9FM3Q0i4mK5YKdWlATB+QrYizzpCmDzDS/aRdzGXdKYc/g?=
+ =?us-ascii?Q?k8IMXLjP2k1nMyzQjyYzHoL6XSUiC3Fgp6XebP4H53nu0p4Qu8cTK4toltKv?=
+ =?us-ascii?Q?DOOhqb7pTlgEDO/qEnbRwiyQXc/4u0kCjgu270llN3FJgPXC3btnB6cdKdkd?=
+ =?us-ascii?Q?3Z+dAV09X3TeH76Ap8KTZ8lC7AiG+eJcEPa0pDAAYr6ZLlV9zMT6EInem+yW?=
+ =?us-ascii?Q?b6ZhwbEpLx9pSjUTSXV6vht2OvBMAmjzU8hTMFVRCzjx2sPgDF+UTYyJ7TW5?=
+ =?us-ascii?Q?5dJMSjJ7uzn0nPKCmHyQkhQIVA7Z/nx4y4pvU3yppfIu1HPdbbxLL8joM6hh?=
+ =?us-ascii?Q?UVHdrBqkFU71b4CHsCKamRpCWL/HJv5dRmTYluCL/xQ+zIkpLxe6cloa+GE1?=
+ =?us-ascii?Q?vOMmgVr0J2y/NOjp6pwK4PHifMnWRCyntVxoF3QHUU8CFg3X0m6IVu4iDSA8?=
+ =?us-ascii?Q?wxHnEzfz+QMyUj5f2DeES4ztI2Mt4Fe9OcFnJBnJ1wR9cmvDWNtrlA9JrkoH?=
+ =?us-ascii?Q?MyIpxQq8R8y+CkiIUfz2x9Y4bbzslhtE9zXuuVrZ1c6TM/wYky9ECO3+RJXx?=
+ =?us-ascii?Q?PZYjS01jBA+oZmuLL2y0KzwU4cmExV3xIhTbYwyf?=
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=192.198.163.18; envelope-from=ying.huang@intel.com;
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR11MB5941.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 25c5b245-fcdb-44b8-8497-08dc3d855122
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Mar 2024 02:29:57.9080 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: aClFDmsy0dhyF+2TAyGeXezdgMiEpSgaF+xpHBovcSyO4JLlFEji9TS7ivquArT3O3gEwe2K1PrnCkplRiMI8A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR11MB4641
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.13; envelope-from=yuan1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -97,333 +172,303 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> writes:
+> -----Original Message-----
+> From: Fabiano Rosas <farosas@suse.de>
+> Sent: Wednesday, March 6, 2024 4:58 AM
+> To: Liu, Yuan1 <yuan1.liu@intel.com>; peterx@redhat.com
+> Cc: qemu-devel@nongnu.org; hao.xiang@bytedance.com;
+> bryan.zhang@bytedance.com; Liu, Yuan1 <yuan1.liu@intel.com>; Zou, Nanhai
+> <nanhai.zou@intel.com>
+> Subject: Re: [PATCH v4 4/8] migration/multifd: add qpl compression method
+>=20
+> Yuan Liu <yuan1.liu@intel.com> writes:
+>=20
+> > add the Query Processing Library (QPL) compression method
+> >
+> > Although both qpl and zlib support deflate compression, qpl will
+> > only use the In-Memory Analytics Accelerator(IAA) for compression
+> > and decompression, and IAA is not compatible with the Zlib in
+> > migration, so qpl is used as a new compression method for migration.
+> >
+> > How to enable qpl compression during migration:
+> > migrate_set_parameter multifd-compression qpl
+> >
+> > The qpl only supports one compression level, there is no qpl
+> > compression level parameter added, users do not need to specify
+> > the qpl compression level.
+> >
+> > Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
+> > Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
+> > ---
+> >  hw/core/qdev-properties-system.c |   2 +-
+> >  migration/meson.build            |   1 +
+> >  migration/multifd-qpl.c          | 158 +++++++++++++++++++++++++++++++
+> >  migration/multifd.h              |   1 +
+> >  qapi/migration.json              |   7 +-
+> >  5 files changed, 167 insertions(+), 2 deletions(-)
+> >  create mode 100644 migration/multifd-qpl.c
+> >
+> > diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties=
+-
+> system.c
+> > index 1a396521d5..b4f0e5cbdb 100644
+> > --- a/hw/core/qdev-properties-system.c
+> > +++ b/hw/core/qdev-properties-system.c
+> > @@ -658,7 +658,7 @@ const PropertyInfo qdev_prop_fdc_drive_type =3D {
+> >  const PropertyInfo qdev_prop_multifd_compression =3D {
+> >      .name =3D "MultiFDCompression",
+> >      .description =3D "multifd_compression values, "
+> > -                   "none/zlib/zstd",
+> > +                   "none/zlib/zstd/qpl",
+> >      .enum_table =3D &MultiFDCompression_lookup,
+> >      .get =3D qdev_propinfo_get_enum,
+> >      .set =3D qdev_propinfo_set_enum,
+> > diff --git a/migration/meson.build b/migration/meson.build
+> > index 92b1cc4297..c155c2d781 100644
+> > --- a/migration/meson.build
+> > +++ b/migration/meson.build
+> > @@ -40,6 +40,7 @@ if get_option('live_block_migration').allowed()
+> >    system_ss.add(files('block.c'))
+> >  endif
+> >  system_ss.add(when: zstd, if_true: files('multifd-zstd.c'))
+> > +system_ss.add(when: qpl, if_true: files('multifd-qpl.c'))
+> >
+> >  specific_ss.add(when: 'CONFIG_SYSTEM_ONLY',
+> >                  if_true: files('ram.c',
+> > diff --git a/migration/multifd-qpl.c b/migration/multifd-qpl.c
+> > new file mode 100644
+> > index 0000000000..6b94e732ac
+> > --- /dev/null
+> > +++ b/migration/multifd-qpl.c
+> > @@ -0,0 +1,158 @@
+> > +/*
+> > + * Multifd qpl compression accelerator implementation
+> > + *
+> > + * Copyright (c) 2023 Intel Corporation
+> > + *
+> > + * Authors:
+> > + *  Yuan Liu<yuan1.liu@intel.com>
+> > + *
+> > + * This work is licensed under the terms of the GNU GPL, version 2 or
+> later.
+> > + * See the COPYING file in the top-level directory.
+> > + */
+> > +
+> > +#include "qemu/osdep.h"
+> > +#include "qemu/rcu.h"
+> > +#include "exec/ramblock.h"
+> > +#include "exec/target_page.h"
+> > +#include "qapi/error.h"
+> > +#include "migration.h"
+> > +#include "trace.h"
+> > +#include "options.h"
+> > +#include "multifd.h"
+> > +#include "qpl/qpl.h"
+>=20
+> I don't mind adding a skeleton upfront before adding the implementation,
+> but adding the headers here hurts the review process. Reviewers will
+> have to go digging through the next patches to be able to validate each
+> of these. It's better to include them along with their usage.
+>=20
+> What I would do in this patch is maybe just add the new option, the
+> .json and meson changes and this file with just:
+>=20
+> static void multifd_qpl_register(void)
+> {
+>     /* noop */
+> }
+>=20
+> Then in the next commit you can implement all the methods in one
+> go. That way, the docstrings come along with the implementation, which
+> also facilitates review.
 
-> On Sun, Mar 3, 2024 at 6:42=E2=80=AFPM Huang, Ying <ying.huang@intel.com>=
- wrote:
->>
->> Hi, Jack,
->>
->> "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> writes:
->>
->> > * Introduce `mt_init_with_hmat()`
->> > We defer memory tier initialization for those CPUless NUMA nodes
->> > until acquiring HMAT info. `mt_init_with_hmat()` is introduced to
->> > post-create CPUless memory tiers after obtaining HMAT info.
->> > It iterates through each CPUless memory node, creating memory tiers if
->> > necessary. Finally, it calculates demotion tables again at the end.
->> >
->> > * Introduce `hmat_find_alloc_memory_type()`
->> > Find or allocate a memory type in the `hmat_memory_types` list.
->> >
->> > * Make `set_node_memory_tier()` more generic
->> > This function can also be used for setting other memory types for a no=
-de.
->> > To do so, a new argument is added to specify a memory type.
->> >
->> > * Handle cases where there is no HMAT when creating memory tiers
->> > If no HMAT is specified, it falls back to using `default_dram_type`.
->> >
->> > * Change adist calculation code to use another new lock, mt_perf_lock.
->> > Iterating through CPUlist nodes requires holding the `memory_tier_lock=
-`.
->> > However, `mt_calc_adistance()` will end up trying to acquire the same =
-lock,
->> > leading to a potential deadlock. Therefore, we propose introducing a
->> > standalone `mt_perf_lock` to protect `default_dram_perf`. This approac=
-h not
->> > only avoids deadlock but also prevents holding a large lock simultaneo=
-usly.
->>
->> The patch description is used to described why we need the change, and
->> how we do that, but not what we do.  People can tell what is done from
->> the code itself.
->>
->
-> Got it. Thanks. Will rewrite it after the code is finalized.
->
->> > Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
->> > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
->> > ---
->> >  drivers/acpi/numa/hmat.c     |  3 ++
->> >  include/linux/memory-tiers.h |  6 +++
->> >  mm/memory-tiers.c            | 76 ++++++++++++++++++++++++++++++++----
->> >  3 files changed, 77 insertions(+), 8 deletions(-)
->> >
->> > diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
->> > index d6b85f0f6082..9f57338b3cb5 100644
->> > --- a/drivers/acpi/numa/hmat.c
->> > +++ b/drivers/acpi/numa/hmat.c
->> > @@ -1038,6 +1038,9 @@ static __init int hmat_init(void)
->> >       if (!hmat_set_default_dram_perf())
->> >               register_mt_adistance_algorithm(&hmat_adist_nb);
->> >
->> > +     /* Post-create CPUless memory tiers after getting HMAT info */
->> > +     mt_init_with_hmat();
->> > +
->> >       return 0;
->> >  out_put:
->> >       hmat_free_structures();
->> > diff --git a/include/linux/memory-tiers.h b/include/linux/memory-tiers=
-.h
->> > index 69e781900082..2f845e90c033 100644
->> > --- a/include/linux/memory-tiers.h
->> > +++ b/include/linux/memory-tiers.h
->> > @@ -48,6 +48,7 @@ int mt_calc_adistance(int node, int *adist);
->> >  int mt_set_default_dram_perf(int nid, struct access_coordinate *perf,
->> >                            const char *source);
->> >  int mt_perf_to_adistance(struct access_coordinate *perf, int *adist);
->> > +void mt_init_with_hmat(void);
->>
->> HMAT isn't universally available.  It's a driver in fact.  So, don't put
->> driver specific code in general code.
->>
->
-> Please see below regarding "move code to hmat.c"
->
->> >  #ifdef CONFIG_MIGRATION
->> >  int next_demotion_node(int node);
->> >  void node_get_allowed_targets(pg_data_t *pgdat, nodemask_t *targets);
->> > @@ -136,5 +137,10 @@ static inline int mt_perf_to_adistance(struct acc=
-ess_coordinate *perf, int *adis
->> >  {
->> >       return -EIO;
->> >  }
->> > +
->> > +static inline void mt_init_with_hmat(void)
->> > +{
->> > +
->> > +}
->> >  #endif       /* CONFIG_NUMA */
->> >  #endif  /* _LINUX_MEMORY_TIERS_H */
->> > diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
->> > index 0537664620e5..7a0a579b3deb 100644
->> > --- a/mm/memory-tiers.c
->> > +++ b/mm/memory-tiers.c
->> > @@ -35,7 +35,9 @@ struct node_memory_type_map {
->> >  };
->> >
->> >  static DEFINE_MUTEX(memory_tier_lock);
->> > +static DEFINE_MUTEX(mt_perf_lock);
->> >  static LIST_HEAD(memory_tiers);
->> > +static LIST_HEAD(hmat_memory_types);
->> >  static struct node_memory_type_map node_memory_types[MAX_NUMNODES];
->> >  struct memory_dev_type *default_dram_type;
->> >
->> > @@ -502,7 +504,7 @@ static inline void __init_node_memory_type(int nod=
-e, struct memory_dev_type *mem
->> >       }
->> >  }
->> >
->> > -static struct memory_tier *set_node_memory_tier(int node)
->> > +static struct memory_tier *set_node_memory_tier(int node, struct memo=
-ry_dev_type *new_memtype)
->>
->> No. memory_dev_type are passed to the function via node_memory_types[nod=
-e].memtype.
->>
->
-> Got it. Will mimic the way kmem.c does. Thanks.
->
->> >  {
->> >       struct memory_tier *memtier;
->> >       struct memory_dev_type *memtype;
->> > @@ -514,7 +516,7 @@ static struct memory_tier *set_node_memory_tier(in=
-t node)
->> >       if (!node_state(node, N_MEMORY))
->> >               return ERR_PTR(-EINVAL);
->> >
->> > -     __init_node_memory_type(node, default_dram_type);
->> > +     __init_node_memory_type(node, new_memtype);
->> >
->> >       memtype =3D node_memory_types[node].memtype;
->> >       node_set(node, memtype->nodes);
->> > @@ -623,6 +625,56 @@ void clear_node_memory_type(int node, struct memo=
-ry_dev_type *memtype)
->> >  }
->> >  EXPORT_SYMBOL_GPL(clear_node_memory_type);
->> >
->> > +static struct memory_dev_type *hmat_find_alloc_memory_type(int adist)
->>
->> Similar function existed in drivers/dax/kmem.c.  Please abstract them
->> and move them here.
->>
->
-> Got it. Will try. Thanks.
->
->> > +{
->> > +     bool found =3D false;
->> > +     struct memory_dev_type *mtype;
->> > +
->> > +     list_for_each_entry(mtype, &hmat_memory_types, list) {
->> > +             if (mtype->adistance =3D=3D adist) {
->> > +                     found =3D true;
->> > +                     break;
->> > +             }
->> > +     }
->> > +     if (!found) {
->> > +             mtype =3D alloc_memory_type(adist);
->> > +             if (!IS_ERR(mtype))
->> > +                     list_add(&mtype->list, &hmat_memory_types);
->> > +     }
->> > +     return mtype;
->> > +}
->> > +
->> > +static void mt_create_with_hmat(int node)
->> > +{
->> > +     struct memory_dev_type *mtype =3D NULL;
->> > +     int adist =3D MEMTIER_ADISTANCE_DRAM;
->> > +
->> > +     mt_calc_adistance(node, &adist);
->> > +     if (adist !=3D MEMTIER_ADISTANCE_DRAM) {
->> > +             mtype =3D hmat_find_alloc_memory_type(adist);
->> > +             if (IS_ERR(mtype))
->> > +                     pr_err("%s() failed to allocate a tier\n", __fun=
-c__);
->> > +     } else {
->> > +             mtype =3D default_dram_type;
->> > +     }
->> > +
->> > +     set_node_memory_tier(node, mtype);
->> > +}
->> > +
->> > +void mt_init_with_hmat(void)
->> > +{
->> > +     int nid;
->> > +
->> > +     mutex_lock(&memory_tier_lock);
->> > +     for_each_node_state(nid, N_MEMORY)
->> > +             if (!node_state(nid, N_CPU))
->> > +                     mt_create_with_hmat(nid);
->> > +
->> > +     establish_demotion_targets();
->> > +     mutex_unlock(&memory_tier_lock);
->> > +}
->> > +EXPORT_SYMBOL_GPL(mt_init_with_hmat);
->> > +
->>
->> I guess that we can put most hmat related code above in hmat.c.
->>
->
-> To put the heat-related code to hmat.c I will need to export some
-> static functions in memory-tiers.c, like set_node_memory_tier() and
-> establish_demotion_targets(). Is that ok?
+Thanks for the guidance, I will implement it in the next version.
 
-Think about this again.  In fact, although there are "_hmat" in the name
-of the above functions, the code has nothing to do with hmat.  So, we
-should rename these functions, but don't need to move them to hmat.c.
-And, to set memory_tier for CPUless node on system without HMAT.  We
-should call mt_init_with_hmat() with late_initcall().  Where HMAT
-information is expected to be available on system with HMAT.  On system
-without HMAT, default_dram_type will be used.
+> > +
+> > +struct qpl_data {
+>=20
+> typedef struct {} QplData/QPLData, following QEMU's coding style.
 
->> >  static void dump_hmem_attrs(struct access_coordinate *coord, const ch=
-ar *prefix)
->> >  {
->> >       pr_info(
->> > @@ -636,7 +688,7 @@ int mt_set_default_dram_perf(int nid, struct acces=
-s_coordinate *perf,
->> >  {
->> >       int rc =3D 0;
->> >
->> > -     mutex_lock(&memory_tier_lock);
->> > +     mutex_lock(&mt_perf_lock);
->> >       if (default_dram_perf_error) {
->> >               rc =3D -EIO;
->> >               goto out;
->> > @@ -684,7 +736,7 @@ int mt_set_default_dram_perf(int nid, struct acces=
-s_coordinate *perf,
->> >       }
->> >
->> >  out:
->> > -     mutex_unlock(&memory_tier_lock);
->> > +     mutex_unlock(&mt_perf_lock);
->> >       return rc;
->> >  }
->> >
->> > @@ -700,7 +752,7 @@ int mt_perf_to_adistance(struct access_coordinate =
-*perf, int *adist)
->> >           perf->read_bandwidth + perf->write_bandwidth =3D=3D 0)
->> >               return -EINVAL;
->> >
->> > -     mutex_lock(&memory_tier_lock);
->> > +     mutex_lock(&mt_perf_lock);
->> >       /*
->> >        * The abstract distance of a memory node is in direct proportio=
-n to
->> >        * its memory latency (read + write) and inversely proportional =
-to its
->> > @@ -713,7 +765,7 @@ int mt_perf_to_adistance(struct access_coordinate =
-*perf, int *adist)
->> >               (default_dram_perf.read_latency + default_dram_perf.writ=
-e_latency) *
->> >               (default_dram_perf.read_bandwidth + default_dram_perf.wr=
-ite_bandwidth) /
->> >               (perf->read_bandwidth + perf->write_bandwidth);
->> > -     mutex_unlock(&memory_tier_lock);
->> > +     mutex_unlock(&mt_perf_lock);
->> >
->> >       return 0;
->> >  }
->> > @@ -797,7 +849,7 @@ static int __meminit memtier_hotplug_callback(stru=
-ct notifier_block *self,
->> >               break;
->> >       case MEM_ONLINE:
->> >               mutex_lock(&memory_tier_lock);
->> > -             memtier =3D set_node_memory_tier(arg->status_change_nid);
->> > +             memtier =3D set_node_memory_tier(arg->status_change_nid,=
- default_dram_type);
->> >               if (!IS_ERR(memtier))
->> >                       establish_demotion_targets();
->> >               mutex_unlock(&memory_tier_lock);
->> > @@ -836,7 +888,15 @@ static int __init memory_tier_init(void)
->> >        * types assigned.
->> >        */
->> >       for_each_node_state(node, N_MEMORY) {
->> > -             memtier =3D set_node_memory_tier(node);
->> > +             if (!node_state(node, N_CPU))
->> > +                     /*
->> > +                      * Defer memory tier initialization on CPUless n=
-uma nodes.
->> > +                      * These will be initialized when HMAT informati=
-on is
->> > +                      * available.
->> > +                      */
->> > +                     continue;
->> > +
->> > +             memtier =3D set_node_memory_tier(node, default_dram_type=
-);
->>
->> On system with HMAT, how to fall back CPU-less node to
->> default_dram_type?  I found your description, but I don't find it in cod=
-e.
->>
-> I assume you meant without HMAT, if so,
-> because if no HMAT, adist will not be updated in mt_calc_adistance():
+I will fix it in next version
 
-Sorry, typo.  On system with HMAT, mt_init_with_hmat() will not be
-called.  I have a solution in above comment.
+> > +    qpl_job **job_array;
+> > +    /* the number of allocated jobs */
+> > +    uint32_t job_num;
+> > +    /* the size of data processed by a qpl job */
+> > +    uint32_t data_size;
+> > +    /* compressed data buffer */
+> > +    uint8_t *zbuf;
+> > +    /* the length of compressed data */
+> > +    uint32_t *zbuf_hdr;
+> > +};
+> > +
+> > +/**
+> > + * qpl_send_setup: setup send side
+> > + *
+> > + * Setup each channel with QPL compression.
+> > + *
+> > + * Returns 0 for success or -1 for error
+> > + *
+> > + * @p: Params for the channel that we are using
+> > + * @errp: pointer to an error
+> > + */
+> > +static int qpl_send_setup(MultiFDSendParams *p, Error **errp)
+> > +{
+> > +    /* Implement in next patch */
+> > +    return -1;
+> > +}
+> > +
+> > +/**
+> > + * qpl_send_cleanup: cleanup send side
+> > + *
+> > + * Close the channel and return memory.
+> > + *
+> > + * @p: Params for the channel that we are using
+> > + * @errp: pointer to an error
+> > + */
+> > +static void qpl_send_cleanup(MultiFDSendParams *p, Error **errp)
+> > +{
+> > +    /* Implement in next patch */
+> > +}
+> > +
+> > +/**
+> > + * qpl_send_prepare: prepare data to be able to send
+> > + *
+> > + * Create a compressed buffer with all the pages that we are going to
+> > + * send.
+> > + *
+> > + * Returns 0 for success or -1 for error
+> > + *
+> > + * @p: Params for the channel that we are using
+> > + * @errp: pointer to an error
+> > + */
+> > +static int qpl_send_prepare(MultiFDSendParams *p, Error **errp)
+> > +{
+> > +    /* Implement in next patch */
+> > +    return -1;
+> > +}
+> > +
+> > +/**
+> > + * qpl_recv_setup: setup receive side
+> > + *
+> > + * Create the compressed channel and buffer.
+> > + *
+> > + * Returns 0 for success or -1 for error
+> > + *
+> > + * @p: Params for the channel that we are using
+> > + * @errp: pointer to an error
+> > + */
+> > +static int qpl_recv_setup(MultiFDRecvParams *p, Error **errp)
+> > +{
+> > +    /* Implement in next patch */
+> > +    return -1;
+> > +}
+> > +
+> > +/**
+> > + * qpl_recv_cleanup: setup receive side
+> > + *
+> > + * Close the channel and return memory.
+> > + *
+> > + * @p: Params for the channel that we are using
+> > + */
+> > +static void qpl_recv_cleanup(MultiFDRecvParams *p)
+> > +{
+> > +    /* Implement in next patch */
+> > +}
+> > +
+> > +/**
+> > + * qpl_recv_pages: read the data from the channel into actual pages
+> > + *
+> > + * Read the compressed buffer, and uncompress it into the actual
+> > + * pages.
+> > + *
+> > + * Returns 0 for success or -1 for error
+> > + *
+> > + * @p: Params for the channel that we are using
+> > + * @errp: pointer to an error
+> > + */
+> > +static int qpl_recv_pages(MultiFDRecvParams *p, Error **errp)
+> > +{
+> > +    /* Implement in next patch */
+> > +    return -1;
+> > +}
+> > +
+> > +/**
+> > + * qpl_get_iov_count: get the count of IOVs
+> > + *
+> > + * For QPL compression, in addition to requesting the same number of
+> IOVs
+> > + * as the page, it also requires an additional IOV to store all
+> compressed
+> > + * data lengths.
+> > + *
+> > + * Returns the count of the IOVs
+> > + *
+> > + * @page_count: Indicate the maximum count of pages processed by
+> multifd
+> > + */
+> > +static uint32_t qpl_get_iov_count(uint32_t page_count)
+> > +{
+> > +    return page_count + 1;
+> > +}
+> > +
+> > +static MultiFDMethods multifd_qpl_ops =3D {
+> > +    .send_setup =3D qpl_send_setup,
+> > +    .send_cleanup =3D qpl_send_cleanup,
+> > +    .send_prepare =3D qpl_send_prepare,
+> > +    .recv_setup =3D qpl_recv_setup,
+> > +    .recv_cleanup =3D qpl_recv_cleanup,
+> > +    .recv_pages =3D qpl_recv_pages,
+> > +    .get_iov_count =3D qpl_get_iov_count
+> > +};
+> > +
+> > +static void multifd_qpl_register(void)
+> > +{
+> > +    multifd_register_ops(MULTIFD_COMPRESSION_QPL, &multifd_qpl_ops);
+> > +}
+> > +
+> > +migration_init(multifd_qpl_register);
+> > diff --git a/migration/multifd.h b/migration/multifd.h
+> > index d82495c508..0e9361df2a 100644
+> > --- a/migration/multifd.h
+> > +++ b/migration/multifd.h
+> > @@ -33,6 +33,7 @@ bool multifd_queue_page(RAMBlock *block, ram_addr_t
+> offset);
+> >  #define MULTIFD_FLAG_NOCOMP (0 << 1)
+> >  #define MULTIFD_FLAG_ZLIB (1 << 1)
+> >  #define MULTIFD_FLAG_ZSTD (2 << 1)
+> > +#define MULTIFD_FLAG_QPL (4 << 1)
+> >
+> >  /* This value needs to be a multiple of qemu_target_page_size() */
+> >  #define MULTIFD_PACKET_SIZE (512 * 1024)
+> > diff --git a/qapi/migration.json b/qapi/migration.json
+> > index 5a565d9b8d..e48e3d7065 100644
+> > --- a/qapi/migration.json
+> > +++ b/qapi/migration.json
+> > @@ -625,11 +625,16 @@
+> >  #
+> >  # @zstd: use zstd compression method.
+> >  #
+> > +# @qpl: use qpl compression method. Query Processing Library(qpl) is
+> based on
+> > +#       the deflate compression algorithm and use the Intel In-Memory
+> Analytics
+> > +#       Accelerator(IAA) hardware accelerated compression and
+> decompression.
+>=20
+> Missing: (since 9.0)
 
---
-Best Regards,
-Huang, Ying
+Sure, I will add it in next version
 
-> + int adist =3D MEMTIER_ADISTANCE_DRAM;
-> +
-> + mt_calc_adistance(node, &adist);
-> + if (adist !=3D MEMTIER_ADISTANCE_DRAM) {
-> =E2=80=A6
-> + } else {
-> + mtype =3D default_dram_type;
-> + }
-> +
-> + set_node_memory_tier(node, mtype);
->
->> >               if (IS_ERR(memtier))
->> >                       /*
->> >                        * Continue with memtiers we are able to setup
->>
->> --
->> Best Regards,
->> Huang, Ying
+> > +#
+> >  # Since: 5.0
+> >  ##
+> >  { 'enum': 'MultiFDCompression',
+> >    'data': [ 'none', 'zlib',
+> > -            { 'name': 'zstd', 'if': 'CONFIG_ZSTD' } ] }
+> > +            { 'name': 'zstd', 'if': 'CONFIG_ZSTD' },
+> > +            { 'name': 'qpl', 'if': 'CONFIG_QPL' } ] }
+> >
+> >  ##
+> >  # @MigMode:
 
