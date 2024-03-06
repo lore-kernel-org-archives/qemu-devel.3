@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28FABC5475B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E620C54E41
 	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 14:41:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhsS9-0007k4-G7; Wed, 06 Mar 2024 09:41:05 -0500
+	id 1rhsSF-00081X-6V; Wed, 06 Mar 2024 09:41:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhsS6-0007W4-Jc
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:41:02 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1rhsSA-0007mg-2O
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:41:06 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhsRz-0001UR-HF
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:41:02 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-412f1fc5613so8572795e9.2
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 06:40:55 -0800 (PST)
+ id 1rhsS2-0001V3-DB
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:41:05 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-412f8bf3718so3790335e9.0
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 06:40:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709736054; x=1710340854; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709736057; x=1710340857; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=u7+jt6o7kz3/aqRrKxY2ocgaFJKGCRn1g3WUam5fQ0Y=;
- b=vGceSL6h/1qkl72t5S9OGzPwU76taEmq21CWH0O9s3ptfXNX+HKXr3tfx1A0R8ysBs
- gsJTUztOQCnNKL8AKkJAIEM+5zK2Aa4WgEvH7t8VbD/UBlujzA3h1fpQhvZuUiKq71gE
- Eur5+OoDlmm67Xuy0KKNXiOzk/Y/gRiN7VpdYQ+IDAJY7JZpHkQ8RvRhJFatVKRD8ffd
- BMlpeW2zx/+PN9QXVa9P/RacsgjXeGQgZP8C8PQMBL0CWT/7tvVBO1RsqG8S0n8+y4UK
- aoaBnkWNyORaRWtbSqjY0HjomJacwYem0t8u+czhUgu67WF5KD1qKzexW46xkzC7pGL6
- xIKw==
+ bh=WeX6qqRx0pytmE8w24sI4eHsdCeMyxlJGMKYFHwnPzA=;
+ b=Jrl6vp6FJoF1hfOaItWg19v2bqoONNTZzRqhlV0Qgm70YZ9pUmP21i5Ibgzyu21wzm
+ sgXdVsEvo5Aex7jcNXUUotcohsuKgGqSS08msI+z2OhrUCpVT4AxSzGVo4e38HIWB7oV
+ C3822CCXxRMmYctOBV4ro1W+Jud4bAiW1th4GL74DGxUUCBZ4TkeaW6G/mtB9OxHw6o1
+ Wmowt2Jb6AXWidwTRvLaptbxUdqFuR/fSiplnMqfOw0C/b7b+AVDEm2my3KrvRtSKubO
+ 1Bs2F78hI8mJjLtgSCjlKyNR63znSf5gsJ4FYojypI9AbZF3qgAy15lLLV8l4nH+gu/H
+ LBQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709736054; x=1710340854;
+ d=1e100.net; s=20230601; t=1709736057; x=1710340857;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=u7+jt6o7kz3/aqRrKxY2ocgaFJKGCRn1g3WUam5fQ0Y=;
- b=UdFb99Op+0C5kBCuyyGSp/JzSuf35ODVbn2sAJitMHjYHLWoJIVrGJiqFPhZFDlFL6
- BaO/7suVQTUMUczzB1tHcGH/DpNsZU3oRXD+LMdc5Pd3goblJQNbsj4KA8PEDyv9DCK+
- qjtchGXJg3WkV26e8WQEiBT6Bnj4gbWzq5pAxFVAW8PGaZvwEFYjdLXmgtsqaxHZ9wr9
- s+EPki+/qLId/EXHfGnxdnYlXkq6IjvSAAx0yhoUihYLtGMZ4F7ZZVC/iD6RMufzozbN
- 0ONw/TtTlq72zLngFm7K1nC23xRlBaHe6lZ+67BZ+hCEuSDqAR9cMscoEsyawm59UntZ
- KRFg==
-X-Gm-Message-State: AOJu0Yw/Ia6Xv0YI9sqfhQ7L/t9EBk8OYMf2OW73yDfXYKnZVEqSDlnL
- 8hHYh6Mn1fR0CT3c1XzobC5ynsAIy+bH0qd7ZXfaiLVptD1tBqBl0gWPoTBxc2M=
-X-Google-Smtp-Source: AGHT+IHKIQuxhqwm86v1aQJqUi+mDo0urmvXGYrxz1sUrw3l8GURDrPe5QWPzjmhkXw4SheFRwvLgw==
-X-Received: by 2002:a05:600c:4691:b0:411:fe7d:ac4 with SMTP id
- p17-20020a05600c469100b00411fe7d0ac4mr11264724wmo.24.1709736054084; 
- Wed, 06 Mar 2024 06:40:54 -0800 (PST)
+ bh=WeX6qqRx0pytmE8w24sI4eHsdCeMyxlJGMKYFHwnPzA=;
+ b=Orgfzvpgm3dKZZoClUM0oXMfFkNtW43j70Vb+NiaoYwwniQUTZag3900Pr0Emz/5xr
+ Lh2UtqAiu3q7guaCcqCi/AjfmB1ocp+VrKU4tRzGKzAimMg74kx3qTJY059l5kw024Re
+ 2Jl/gHf2QqRuYOKLB3F1KIyvj3kDhWkNXO206hgcn5yDoxdrlxtANYcA3EHFVPFaorsY
+ PfTRZKqqwHuk+ehhtcRbWnt1EuzoReIL3njJvlTqnV/J741YxyU9oJTQdTuX1I06jqFH
+ VFxIoqCS1hxsnHp9AMGB54PpG0ELfpiWroDll0MlvWML2f+9ragTTx8HjbA+4p6vBkHH
+ jaeA==
+X-Gm-Message-State: AOJu0Yzm4GPVk3xBQShuRRxEWyb4J7WpABJh0oA51qEfsa9+OvPdagt+
+ r3xryeuNEEC9tHDHsDeNlpzSPWkbmN9VuiioQEmf/j49Vlt/VmPsqsxCXUGVGbul5bMhBSr5U5o
+ a
+X-Google-Smtp-Source: AGHT+IGKjqxDyhYCDrBbE7jw8x5AzFB43vP4bKaS8fAN6f3X6A8yD93/9zXoml9lT4ckokQuBfftNQ==
+X-Received: by 2002:a05:600c:1c9c:b0:412:e675:f807 with SMTP id
+ k28-20020a05600c1c9c00b00412e675f807mr5295062wms.31.1709736056647; 
+ Wed, 06 Mar 2024 06:40:56 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a14-20020a05600c348e00b00412f74d25b6sm1772674wmq.39.2024.03.06.06.40.45
+ o39-20020a05600c512700b00412d60cb914sm14475022wms.5.2024.03.06.06.40.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Mar 2024 06:40:52 -0800 (PST)
+ Wed, 06 Mar 2024 06:40:53 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1BC495F9DE;
+ by draig.lan (Postfix) with ESMTP id 5CD1D5F9E0;
  Wed,  6 Mar 2024 14:40:43 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+ Luc Michel <luc.michel@amd.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PULL 16/29] plugins: implement inline operation relative to cpu_index
-Date: Wed,  6 Mar 2024 14:40:28 +0000
-Message-Id: <20240306144041.3787188-17-alex.bennee@linaro.org>
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 19/29] tests/plugin/mem: migrate to new per_vcpu API
+Date: Wed,  6 Mar 2024 14:40:31 +0000
+Message-Id: <20240306144041.3787188-20-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240306144041.3787188-1-alex.bennee@linaro.org>
 References: <20240306144041.3787188-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,202 +104,117 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Instead of working on a fixed memory location, allow to address it based
-on cpu_index, an element size and a given offset.
-Result address: ptr + offset + cpu_index * element_size.
-
-With this, we can target a member in a struct array from a base pointer.
-
-Current semantic is not modified, thus inline operation still targets
-always the same memory location.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Luc Michel <luc.michel@amd.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20240304130036.124418-4-pierrick.bouvier@linaro.org>
+Message-Id: <20240304130036.124418-7-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240305121005.3528075-17-alex.bennee@linaro.org>
+Message-Id: <20240305121005.3528075-20-alex.bennee@linaro.org>
 
-diff --git a/plugins/plugin.h b/plugins/plugin.h
-index 043c740067d..3bf1aaf5c2d 100644
---- a/plugins/plugin.h
-+++ b/plugins/plugin.h
-@@ -99,7 +99,7 @@ void plugin_register_vcpu_mem_cb(GArray **arr,
-                                  enum qemu_plugin_mem_rw rw,
-                                  void *udata);
+diff --git a/tests/plugin/mem.c b/tests/plugin/mem.c
+index 44e91065ba7..b650dddcce1 100644
+--- a/tests/plugin/mem.c
++++ b/tests/plugin/mem.c
+@@ -16,9 +16,14 @@
  
--void exec_inline_op(struct qemu_plugin_dyn_cb *cb);
-+void exec_inline_op(struct qemu_plugin_dyn_cb *cb, int cpu_index);
+ QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
  
- int plugin_num_vcpus(void);
- 
-diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-index ac6b52b9ec9..0f8be53d394 100644
---- a/accel/tcg/plugin-gen.c
-+++ b/accel/tcg/plugin-gen.c
-@@ -133,16 +133,28 @@ static void gen_empty_udata_cb_no_rwg(void)
-  */
- static void gen_empty_inline_cb(void)
+-static uint64_t inline_mem_count;
+-static uint64_t cb_mem_count;
+-static uint64_t io_count;
++typedef struct {
++    uint64_t mem_count;
++    uint64_t io_count;
++} CPUCount;
++
++static struct qemu_plugin_scoreboard *counts;
++static qemu_plugin_u64 mem_count;
++static qemu_plugin_u64 io_count;
+ static bool do_inline, do_callback;
+ static bool do_haddr;
+ static enum qemu_plugin_mem_rw rw = QEMU_PLUGIN_MEM_RW;
+@@ -27,16 +32,16 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
  {
-+    TCGv_i32 cpu_index = tcg_temp_ebb_new_i32();
-+    TCGv_ptr cpu_index_as_ptr = tcg_temp_ebb_new_ptr();
-     TCGv_i64 val = tcg_temp_ebb_new_i64();
-     TCGv_ptr ptr = tcg_temp_ebb_new_ptr();
+     g_autoptr(GString) out = g_string_new("");
  
-+    tcg_gen_ld_i32(cpu_index, tcg_env,
-+                   -offsetof(ArchCPU, env) + offsetof(CPUState, cpu_index));
-+    /* second operand will be replaced by immediate value */
-+    tcg_gen_mul_i32(cpu_index, cpu_index, cpu_index);
-+    tcg_gen_ext_i32_ptr(cpu_index_as_ptr, cpu_index);
-+
-     tcg_gen_movi_ptr(ptr, 0);
-+    tcg_gen_add_ptr(ptr, ptr, cpu_index_as_ptr);
-     tcg_gen_ld_i64(val, ptr, 0);
--    /* pass an immediate != 0 so that it doesn't get optimized away */
--    tcg_gen_addi_i64(val, val, 0xdeadface);
-+    /* second operand will be replaced by immediate value */
-+    tcg_gen_add_i64(val, val, val);
-+
-     tcg_gen_st_i64(val, ptr, 0);
-     tcg_temp_free_ptr(ptr);
-     tcg_temp_free_i64(val);
-+    tcg_temp_free_ptr(cpu_index_as_ptr);
-+    tcg_temp_free_i32(cpu_index);
+-    if (do_inline) {
+-        g_string_printf(out, "inline mem accesses: %" PRIu64 "\n", inline_mem_count);
+-    }
+-    if (do_callback) {
+-        g_string_append_printf(out, "callback mem accesses: %" PRIu64 "\n", cb_mem_count);
++    if (do_inline || do_callback) {
++        g_string_printf(out, "mem accesses: %" PRIu64 "\n",
++                        qemu_plugin_u64_sum(mem_count));
+     }
+     if (do_haddr) {
+-        g_string_append_printf(out, "io accesses: %" PRIu64 "\n", io_count);
++        g_string_append_printf(out, "io accesses: %" PRIu64 "\n",
++                               qemu_plugin_u64_sum(io_count));
+     }
+     qemu_plugin_outs(out->str);
++    qemu_plugin_scoreboard_free(counts);
  }
  
- static void gen_empty_mem_cb(TCGv_i64 addr, uint32_t info)
-@@ -290,12 +302,37 @@ static TCGOp *copy_const_ptr(TCGOp **begin_op, TCGOp *op, void *ptr)
-     return op;
- }
- 
-+static TCGOp *copy_ld_i32(TCGOp **begin_op, TCGOp *op)
-+{
-+    return copy_op(begin_op, op, INDEX_op_ld_i32);
-+}
-+
-+static TCGOp *copy_ext_i32_ptr(TCGOp **begin_op, TCGOp *op)
-+{
-+    if (UINTPTR_MAX == UINT32_MAX) {
-+        op = copy_op(begin_op, op, INDEX_op_mov_i32);
-+    } else {
-+        op = copy_op(begin_op, op, INDEX_op_ext_i32_i64);
-+    }
-+    return op;
-+}
-+
-+static TCGOp *copy_add_ptr(TCGOp **begin_op, TCGOp *op)
-+{
-+    if (UINTPTR_MAX == UINT32_MAX) {
-+        op = copy_op(begin_op, op, INDEX_op_add_i32);
-+    } else {
-+        op = copy_op(begin_op, op, INDEX_op_add_i64);
-+    }
-+    return op;
-+}
-+
- static TCGOp *copy_ld_i64(TCGOp **begin_op, TCGOp *op)
- {
-     if (TCG_TARGET_REG_BITS == 32) {
-         /* 2x ld_i32 */
--        op = copy_op(begin_op, op, INDEX_op_ld_i32);
--        op = copy_op(begin_op, op, INDEX_op_ld_i32);
-+        op = copy_ld_i32(begin_op, op);
-+        op = copy_ld_i32(begin_op, op);
+ static void vcpu_mem(unsigned int cpu_index, qemu_plugin_meminfo_t meminfo,
+@@ -46,12 +51,12 @@ static void vcpu_mem(unsigned int cpu_index, qemu_plugin_meminfo_t meminfo,
+         struct qemu_plugin_hwaddr *hwaddr;
+         hwaddr = qemu_plugin_get_hwaddr(meminfo, vaddr);
+         if (qemu_plugin_hwaddr_is_io(hwaddr)) {
+-            io_count++;
++            qemu_plugin_u64_add(io_count, cpu_index, 1);
+         } else {
+-            cb_mem_count++;
++            qemu_plugin_u64_add(mem_count, cpu_index, 1);
+         }
      } else {
-         /* ld_i64 */
-         op = copy_op(begin_op, op, INDEX_op_ld_i64);
-@@ -331,6 +368,13 @@ static TCGOp *copy_add_i64(TCGOp **begin_op, TCGOp *op, uint64_t v)
-     return op;
- }
- 
-+static TCGOp *copy_mul_i32(TCGOp **begin_op, TCGOp *op, uint32_t v)
-+{
-+    op = copy_op(begin_op, op, INDEX_op_mul_i32);
-+    op->args[2] = tcgv_i32_arg(tcg_constant_i32(v));
-+    return op;
-+}
-+
- static TCGOp *copy_st_ptr(TCGOp **begin_op, TCGOp *op)
- {
-     if (UINTPTR_MAX == UINT32_MAX) {
-@@ -396,18 +440,17 @@ static TCGOp *append_inline_cb(const struct qemu_plugin_dyn_cb *cb,
-                                TCGOp *begin_op, TCGOp *op,
-                                int *unused)
- {
--    /* const_ptr */
--    op = copy_const_ptr(&begin_op, op, cb->userp);
--
--    /* ld_i64 */
-+    char *ptr = cb->userp;
-+    size_t elem_size = 0;
-+    size_t offset = 0;
-+    op = copy_ld_i32(&begin_op, op);
-+    op = copy_mul_i32(&begin_op, op, elem_size);
-+    op = copy_ext_i32_ptr(&begin_op, op);
-+    op = copy_const_ptr(&begin_op, op, ptr + offset);
-+    op = copy_add_ptr(&begin_op, op);
-     op = copy_ld_i64(&begin_op, op);
--
--    /* add_i64 */
-     op = copy_add_i64(&begin_op, op, cb->inline_insn.imm);
--
--    /* st_i64 */
-     op = copy_st_i64(&begin_op, op);
--
-     return op;
- }
- 
-diff --git a/plugins/api.c b/plugins/api.c
-index 8910cbb2c46..fa1daee8254 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -106,7 +106,8 @@ void qemu_plugin_register_vcpu_tb_exec_inline(struct qemu_plugin_tb *tb,
-                                               void *ptr, uint64_t imm)
- {
-     if (!tb->mem_only) {
--        plugin_register_inline_op(&tb->cbs[PLUGIN_CB_INLINE], 0, op, ptr, imm);
-+        plugin_register_inline_op(&tb->cbs[PLUGIN_CB_INLINE],
-+                                  0, op, ptr, imm);
+-        cb_mem_count++;
++        qemu_plugin_u64_add(mem_count, cpu_index, 1);
      }
  }
  
-diff --git a/plugins/core.c b/plugins/core.c
-index 63f4c6c6ce3..65d5611f797 100644
---- a/plugins/core.c
-+++ b/plugins/core.c
-@@ -318,7 +318,8 @@ static struct qemu_plugin_dyn_cb *plugin_get_dyn_cb(GArray **arr)
+@@ -64,9 +69,10 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
  
- void plugin_register_inline_op(GArray **arr,
-                                enum qemu_plugin_mem_rw rw,
--                               enum qemu_plugin_op op, void *ptr,
-+                               enum qemu_plugin_op op,
-+                               void *ptr,
-                                uint64_t imm)
- {
-     struct qemu_plugin_dyn_cb *dyn_cb;
-@@ -474,9 +475,12 @@ void qemu_plugin_flush_cb(void)
-     plugin_cb__simple(QEMU_PLUGIN_EV_FLUSH);
- }
+         if (do_inline) {
+-            qemu_plugin_register_vcpu_mem_inline(insn, rw,
+-                                                 QEMU_PLUGIN_INLINE_ADD_U64,
+-                                                 &inline_mem_count, 1);
++            qemu_plugin_register_vcpu_mem_inline_per_vcpu(
++                insn, rw,
++                QEMU_PLUGIN_INLINE_ADD_U64,
++                mem_count, 1);
+         }
+         if (do_callback) {
+             qemu_plugin_register_vcpu_mem_cb(insn, vcpu_mem,
+@@ -117,6 +123,16 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+         }
+     }
  
--void exec_inline_op(struct qemu_plugin_dyn_cb *cb)
-+void exec_inline_op(struct qemu_plugin_dyn_cb *cb, int cpu_index)
- {
--    uint64_t *val = cb->userp;
-+    char *ptr = cb->userp;
-+    size_t elem_size = 0;
-+    size_t offset = 0;
-+    uint64_t *val = (uint64_t *)(ptr + offset + cpu_index * elem_size);
++    if (do_inline && do_callback) {
++        fprintf(stderr,
++                "can't enable inline and callback counting at the same time\n");
++        return -1;
++    }
++
++    counts = qemu_plugin_scoreboard_new(sizeof(CPUCount));
++    mem_count = qemu_plugin_scoreboard_u64_in_struct(
++        counts, CPUCount, mem_count);
++    io_count = qemu_plugin_scoreboard_u64_in_struct(counts, CPUCount, io_count);
+     qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+     return 0;
+diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
+index a4c25908fb7..f21be50d3b2 100644
+--- a/tests/tcg/Makefile.target
++++ b/tests/tcg/Makefile.target
+@@ -168,7 +168,7 @@ RUN_TESTS+=$(EXTRA_RUNS)
  
-     switch (cb->inline_insn.op) {
-     case QEMU_PLUGIN_INLINE_ADD_U64:
-@@ -509,7 +513,7 @@ void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
-                            vaddr, cb->userp);
-             break;
-         case PLUGIN_CB_INLINE:
--            exec_inline_op(cb);
-+            exec_inline_op(cb, cpu->cpu_index);
-             break;
-         default:
-             g_assert_not_reached();
+ # Some plugins need additional arguments above the default to fully
+ # exercise things. We can define them on a per-test basis here.
+-run-plugin-%-with-libmem.so: PLUGIN_ARGS=$(COMMA)inline=true$(COMMA)callback=true
++run-plugin-%-with-libmem.so: PLUGIN_ARGS=$(COMMA)inline=true
+ 
+ ifeq ($(filter %-softmmu, $(TARGET)),)
+ run-%: %
 -- 
 2.39.2
 
