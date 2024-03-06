@@ -4,87 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C189C54798
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 00:53:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB260C54E49
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 01:17:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhfWj-0002bi-Sb; Tue, 05 Mar 2024 19:52:57 -0500
+	id 1rhftp-0006JB-Md; Tue, 05 Mar 2024 20:16:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rhfWg-0002aY-SY
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 19:52:54 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
+ id 1rhfto-0006J3-Bf
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 20:16:48 -0500
+Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rhfWf-0000yr-A3
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 19:52:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709686372;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SM793RLiry5Pz04P6mkBId83yzcwrqaezLUL62PJWpA=;
- b=DejuH37pfBX4KTHSgquAWk34QDqmmM3QM05G5Sh1pm654nQjVVZcJF8SoUCEXAhbpVJ5tY
- t9fDJ1pvdmMyp9IGHjOGBmthwB4XqpufkHbbDC1jA6M0rTTos48qOJ3N3vFC8hy+DUdwMh
- efvpy8VA9sOSs/3QJPQINeCs9eAg4HU=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-411-vuX-BjnRP2aShRjU_kCW9w-1; Tue, 05 Mar 2024 19:52:50 -0500
-X-MC-Unique: vuX-BjnRP2aShRjU_kCW9w-1
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-5d57b2d2758so1337734a12.0
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 16:52:50 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709686369; x=1710291169;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SM793RLiry5Pz04P6mkBId83yzcwrqaezLUL62PJWpA=;
- b=fMavp9bsnGDzYxOnqmHCoCCaZmgncQ4VOGQ65RL2XHHCI4muxoFilSLRkwVZGxlH44
- kqRxEE/rYcjFRc+JEx5mJmOpn42MiOObsxOCH/lFX5NeQ51Ueo9Q3lvBM6+DotqQ4g7j
- kIEu3LWcLFrZjgJZ3bT5LikNJFrF1pxT6MYkj3giqp/XTCLbFeSl3C/0tyBx2HEeVklI
- MjDPAzEuKpkRb48E+OFlw6jKmAENvraO0GYG1BXuF038UVena3+/AjpxExEELg59KRhX
- H6lCFbFF46+xAA1vELJVdZy/ECnFjN9SUeQYCeZH1mF8VaeHbtjXmnLrQZeSrTs5pj2z
- KwlQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXCjWq3sTgduwE61Z3ihofalg5qpO3uPPUmYxB3gKYGALvPfASZI1EDQS7ZDcRXBtZCS9+KZZqGXFe+J/6aKdRiwEVPOVI=
-X-Gm-Message-State: AOJu0Yxm1iHz1JaZ4XSWekYx7tINnnN+F/ZivqzaAoc7eCeEPOUq7je7
- 0rZyYNpEdczZg6MUjp7xrdvJIj10SB1U+najiX37bJLiBUFEwdF+KPfID9lYxbhCzktR6bhIWfU
- meGnbrY62DtjuSiHC+tyB0orh4V2mLY+JFWGeyKOQVM1E8LLZWwQw
-X-Received: by 2002:a05:6a20:bb9a:b0:1a1:4aa7:b8d0 with SMTP id
- fd26-20020a056a20bb9a00b001a14aa7b8d0mr1654138pzb.5.1709686369581; 
- Tue, 05 Mar 2024 16:52:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG8/RSxHVsVaVMs6DwS5rI1yIVecGIDdM+eIPz6j41nU5c1oxIryvLZYr9yXro5SOT5iuTHvA==
-X-Received: by 2002:a05:6a20:bb9a:b0:1a1:4aa7:b8d0 with SMTP id
- fd26-20020a056a20bb9a00b001a14aa7b8d0mr1654125pzb.5.1709686369152; 
- Tue, 05 Mar 2024 16:52:49 -0800 (PST)
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- mq12-20020a170902fd4c00b001dc8f1e06eesm11202639plb.291.2024.03.05.16.52.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Mar 2024 16:52:48 -0800 (PST)
-Date: Wed, 6 Mar 2024 08:52:41 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] migration/multifd: Don't fsync when closing QIOChannelFile
-Message-ID: <Zee-WYQg9c19Up-T@x1n>
-References: <20240305174332.2553-1-farosas@suse.de>
- <ZedbLT2pFNyRoX90@redhat.com>
+ (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
+ id 1rhftk-0007cb-V6
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 20:16:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1709687806; x=1741223806;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=PvqVwpQ66wM1Of/uqLoY6dXRZzCMBtacrpLutdrcWvo=;
+ b=bRIgRHth+CWq/nEhJXH/8AHgebUzjDoj37u+wi2Nw+5H8Wg38bFojeiT
+ PzwPCxP0FX224j37ArSCZglHrcR5j1IqkL872QSD1FIfJ4/vtc46QceX5
+ 4pwu10RNtA3na3Qw9X854g7PsyoVjW0HT277H+3iRgfneYnjbpltWO/eR
+ OWks5ug1T3Lj2G7npnheOD7NqEuepXgnayHNprFpOe4DhZfabX9NMzGN+
+ 8qHj3MaY+nhoanmIj/cB9mEqXL/gIxULLYOJNFWu9RZ+jeGN00pQXVUVD
+ UZVy+kGOylGkk3hM/Y1g4e6Yrbn5dlVTvGzc7TT5z6R+SC6ahG1ti75Hz Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11004"; a="26736622"
+X-IronPort-AV: E=Sophos;i="6.06,207,1705392000"; d="scan'208";a="26736622"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Mar 2024 17:16:29 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,207,1705392000"; d="scan'208";a="14230326"
+Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
+ by orviesa003.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 05 Mar 2024 17:16:29 -0800
+Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
+ ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Tue, 5 Mar 2024 17:16:28 -0800
+Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
+ orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35 via Frontend Transport; Tue, 5 Mar 2024 17:16:28 -0800
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (104.47.59.168)
+ by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Tue, 5 Mar 2024 17:16:28 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=F0AnNbyJaqtXSEctb01GKMApdvtcFjLSff7S/hGehB4HmaPyR/kO+t5SJFHQTADQ9DMU6aXEMDVKXAWYSMV+rZMXX9IbvJHAhbvtd/Nd4j0xe6x174NolT3u5EVUB+nFijPm+ox40woWmED0F7lTqkA0YeUbJ29VuHoJz94srg8P+XwLyr9N38WO9CB2dSUh3/OYhvFLu/VhaRb2Vs5Blzrf7ZSr4uppKThK5Waa8tkCwHyyLCzxVtS49DRmOZTkfMdXj5fQqZn7LlWC+7IsmAhHD3SwMOCmcFgVDBYLSCrcBCCO2ZRjck0SNIeFFHZGcDxcoyN2IcpYP0KrtDHr2g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=12PoUuYQwmvCMDWihyk1/nmKHF17JCZsJx5IRJ5X3H8=;
+ b=FFirEfpRpb10zUV/o6hqqIXzZeF0Sp6o6/Dumgxlhx+0YankcI5LV5tumS3SGy7klG4oCQa2qIzFHom/DwNbpZBWib2T6W758ze2Rg2o9sNh75K9XoWkf1+QjWtXVDxFXsvOaswkYPWq+Uc/13xEeYXicLGE8ca72L8hVgSBClbb0ZoJWgbnNsLe0lNhlNax5X7aHmlVwYLtwvtFiRWFM8XU1h3zzuQekBuLn7iuZqWYtHYjp/w2nNKZml4J05kxthj4K96DH2ZADWMsN5qNOJbnJ5wA14enPMOv+CbHLL/qXcnSodRi1TycQoMcXZp3Uy/UjiQygoclwXU6pCc5HQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from PH7PR11MB5941.namprd11.prod.outlook.com (2603:10b6:510:13d::20)
+ by SN7PR11MB7114.namprd11.prod.outlook.com (2603:10b6:806:299::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.24; Wed, 6 Mar
+ 2024 01:16:25 +0000
+Received: from PH7PR11MB5941.namprd11.prod.outlook.com
+ ([fe80::f0ec:877c:fd93:a04c]) by PH7PR11MB5941.namprd11.prod.outlook.com
+ ([fe80::f0ec:877c:fd93:a04c%3]) with mapi id 15.20.7362.019; Wed, 6 Mar 2024
+ 01:16:25 +0000
+From: "Liu, Yuan1" <yuan1.liu@intel.com>
+To: Fabiano Rosas <farosas@suse.de>, "peterx@redhat.com" <peterx@redhat.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "hao.xiang@bytedance.com"
+ <hao.xiang@bytedance.com>, "bryan.zhang@bytedance.com"
+ <bryan.zhang@bytedance.com>, "Zou, Nanhai" <nanhai.zou@intel.com>
+Subject: RE: [PATCH v4 2/8] migration/multifd: add get_iov_count in the
+ multifd method
+Thread-Topic: [PATCH v4 2/8] migration/multifd: add get_iov_count in the
+ multifd method
+Thread-Index: AQHabsC1Zs6yhFgmDkGz4exNY6Yo37EpmLYAgABQweA=
+Date: Wed, 6 Mar 2024 01:16:25 +0000
+Message-ID: <PH7PR11MB5941DE1B794B24DFAF017B3FA3212@PH7PR11MB5941.namprd11.prod.outlook.com>
+References: <20240304140028.1590649-1-yuan1.liu@intel.com>
+ <20240304140028.1590649-3-yuan1.liu@intel.com> <877cigig09.fsf@suse.de>
+In-Reply-To: <877cigig09.fsf@suse.de>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PH7PR11MB5941:EE_|SN7PR11MB7114:EE_
+x-ms-office365-filtering-correlation-id: becbc485-0f06-49c6-92bb-08dc3d7b0b31
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: vTVag1P9DnkAx9yoZ+DaY0GZbX+KZQVqSQioiYyIM5wmdPljYMzshSbFtx3hl6Y67e+1k04eFxOvB/rJ6D4yxRQqDYK4UF24qzr0OkdEOiKsgC+DG+Igr5zAieti/8ICtQAlmBLF/xD+O7gMZipz/8lrW/3sM/9LWoBAitgdQf7VgqwFvTNKZxUROQPcN7vcSame50tI2hrXuUenlPdcm2vx3XZK+2zjUhmJGM92WRyH/JXOtihFHSacLpTaKPjanGiE9XEFEWO8UhXG+nlEwBCfCV05XHJEriY6xXm3Xi14Lqh81MhSN/aZxakCHYIpB/l9OwkM16tnejv5JXHLtZU04iQSl0OgIqm+P7Ioudcm2lkHektnMu3g9lSCUYOHMW3cAl3mAYRThAiA0+fe+MVmHGVuigpD527tWa1HAnIC7cJPG9Q5dZv1GHxO5Pah/dRlFrFVtNfnpejHlNwz7NtqOSpyicoUSsodQWkcOvNhA/6nRQTLGyYJ5RWVLGnz1UfqdvUUzwnfrI3tyzdVs1/rKa0T6Gr9VBdNNQaqPfhWUQf8RVV0KIQPT3jeVk9qA4yq+frQwn1xHNRiqr/eC1X7ZwfT8kW15y/IuKFZKPyoVOCGLcuEDYCMT6mJUyA3cVf0uUf0Ut/+iniMEI3zcCLcT4rs62IIgWUTcC65DqvvTTIe9ApVULxl1/0ckwSI2Pe6NUemCXV3QkNw56KESCPWTFA8EMLfkl+VRblmVWk=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH7PR11MB5941.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(376005)(38070700009); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?yb1Bgl6ZUmYMcDAjNcQUDoauYthSBsnClV0tnor+cQoEtI9rM3Bn/4EkNI9O?=
+ =?us-ascii?Q?KHbFuk36z4yGWfaP9lTGj5qdrivMmP2PcGV0/M6Zbhx3UDU9Beahy0hlZLno?=
+ =?us-ascii?Q?dxsGS4l/bwRtbdbOorQkPtk1qsdecN43sg8ySazhtOtoMMoXZj7xZgMKVZ/M?=
+ =?us-ascii?Q?q8ajWne+/vDo0XlwcvUoR1BYOm0T5oLYS5PFP6bvN1BXy9KsdMxPnzwz+/of?=
+ =?us-ascii?Q?vBIqoFLARNmTTgIYIvDo8bF0FTMqdP4p3BsBNNRiBcs5UVXimKZJt0YO4iIu?=
+ =?us-ascii?Q?YrU1cGWENsejIt/4agFb4edCFaJxZcJRykm9H6r7fk89ig6o9D6gTnytX9DV?=
+ =?us-ascii?Q?OcIHydDwfJm2futD2P6M5DK5lG/bFh3tlDF/uRZfUP+QE7FxcjgeH9yh/s2/?=
+ =?us-ascii?Q?tkc3eZYlHmUeiU5RkwHioC3xUvEIm/iBi8RlUs0TzyyeeQyaGJnm6EagWpK/?=
+ =?us-ascii?Q?KKrEhFrKC6QqCKgQoG0zYWAexlLQ/ttXCNvFL5pNXPMCiVTQMdHf7xPcfYnJ?=
+ =?us-ascii?Q?wNMfnPNH80aHNiAy38FybwE7zgzUQZXPGmpg/CuOPRtUjimqeYzTBF0WHOLa?=
+ =?us-ascii?Q?ROaeojCkhdKRv1S7/DOQDb9/bPwP7VMKDPYlAVka3b65JqHLr1OQVrVKIzxq?=
+ =?us-ascii?Q?7ozRnLUXD+9A8jaDPo+PXXCpD7yT3IWZTjZ84VUKnZsEIi5CcwRQxpSYOuVF?=
+ =?us-ascii?Q?5ST1O5yW/84fC6QvDiyHefsg8cgrmhW9C/6mRp5b3y2IJYPgZ3uujPINAcnX?=
+ =?us-ascii?Q?c2btqrTXdeZ5OdAZQ4UEL4erAu8rY7ul/ouTcRKFIfAH/POE2xSIt9+txt49?=
+ =?us-ascii?Q?dtZZEy6NyfBI2kHb+1XYYpq0ENvc7YATrhB/cAYtQFzDvyBY/sGM7jlhxNsD?=
+ =?us-ascii?Q?ESsu9greNJrjgZQZtelX2pBKIz/yyOX4KHZoGtSfDcwCJhlWWhfybCImtcn2?=
+ =?us-ascii?Q?9f0Bk47aOt5Uolyz62l4UbnCm+EXFnYcjTMwBYtUpOzeBUgVPBfgLR2cjog9?=
+ =?us-ascii?Q?RA1872WI4KGZ1HkFQt9wXAKGwj0NraH26LMDHGU8mKKqMK9rKJsuiuFXL2ZV?=
+ =?us-ascii?Q?WAtBtiQitphciMjulpykH7scZX7+zyWH+/Fmje5HF4jBD4CAG0XNTSDuHuiH?=
+ =?us-ascii?Q?uCnjOAirTrVRyNu0pwSvZgJNOZJaI0PAFJwMs8D7/Y08Sh+rapWvrshPVUmD?=
+ =?us-ascii?Q?qnSoawStnUcX2ke7Ml5vXMTaD5x9OPvAaPDw/5H87e7IK+8oEp77gJB6fFCR?=
+ =?us-ascii?Q?YDAbp813ObuJHsLQCYbQ49b5+VnNcC6YB+2m/f0edSPsSFdZx3T+5gclEgTx?=
+ =?us-ascii?Q?fFEv5dpPJXUYrYsLnsxuZ0pp59KzJ//IJoZmFBD84pOOGV7gw6Fbljus/3U3?=
+ =?us-ascii?Q?XGGnArWVrxERa9IwkxD0heDilbEBKQkxCwmOoadtYbmywNt60DxKV8RRKP+O?=
+ =?us-ascii?Q?ky51QSenmL2PIZuDe1LMWHyGqfpi3CWUfGQmt9u/gxgJm1av2LgiqrnVqPX8?=
+ =?us-ascii?Q?tiu2R/3RR0Oofi2ws/mi+hvMs/60Wj08iE+AmHUSurzbFn9zCC9vaE6ZiBb3?=
+ =?us-ascii?Q?TPYuv2r7dMVUEMby90W2uB5hJ5rLWooStmyyhTSv?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZedbLT2pFNyRoX90@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR11MB5941.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: becbc485-0f06-49c6-92bb-08dc3d7b0b31
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Mar 2024 01:16:25.7633 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: S5ZlLG+Gx8ZS2+c7JIUoD3nYdlPj1nSU1N52+Q5SsbJ5jG2OfDY+WVssfTJMXPRgU1qMbR1+xqSONfPrwKppaQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB7114
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.9; envelope-from=yuan1.liu@intel.com;
+ helo=mgamail.intel.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.568,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,26 +169,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 05, 2024 at 05:49:33PM +0000, Daniel P. Berrangé wrote:
-> I don't think you should be removing this. Calling qio_channel_close()
-> remains recommended best practice, even with fdatasync() removed, as
-> it provides a strong guarantee that the FD is released which you don't
-> get if you rely on the ref count being correctly decremented in all
-> code paths.
+> -----Original Message-----
+> From: Fabiano Rosas <farosas@suse.de>
+> Sent: Wednesday, March 6, 2024 4:24 AM
+> To: Liu, Yuan1 <yuan1.liu@intel.com>; peterx@redhat.com
+> Cc: qemu-devel@nongnu.org; hao.xiang@bytedance.com;
+> bryan.zhang@bytedance.com; Liu, Yuan1 <yuan1.liu@intel.com>; Zou, Nanhai
+> <nanhai.zou@intel.com>
+> Subject: Re: [PATCH v4 2/8] migration/multifd: add get_iov_count in the
+> multifd method
+>=20
+> Yuan Liu <yuan1.liu@intel.com> writes:
+>=20
+> > the new function get_iov_count is used to get the number of
+> > IOVs required by a specified multifd method
+> >
+> > Different multifd methods may require different numbers of IOVs.
+> > Based on streaming compression of zlib and zstd, all pages will be
+> > compressed to a data block, so an IOV is required to send this data
+> > block. For no compression, each IOV is used to send a page, so the
+> > number of IOVs required is the same as the number of pages.
+>=20
+> Let's just move the responsibility of allocating p->iov to the client
+> code. You can move the allocation into send_setup() and the free into
+> send_cleanup().
 
-Hmm, I have the confusion on why ioc->fd is more special than the ioc
-itself when leaked.  It'll be a bug anyway if we leak any of them?  Leaking
-fds may also help us to find such issue easier (e.g. by seeing stale fds
-under /proc).  From that POV I tend to agree on the original proposal.
+Yes, this is a good way, I will implement it in the next version
 
-Now we removed the data sync, IIUC it means the mgmt can always flush the
-cache with/without the fd closed in QEMU even if it's leaked.  So I don't
-yet see other side effects of leaking the fd which will cause a difference
-comparing to leaking the ioc?
-
-Thanks,
-
--- 
-Peter Xu
-
+> >
+> > Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
+> > Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
+> > ---
+> >  migration/multifd-zlib.c | 18 +++++++++++++++++-
+> >  migration/multifd-zstd.c | 18 +++++++++++++++++-
+> >  migration/multifd.c      | 24 +++++++++++++++++++++---
+> >  migration/multifd.h      |  2 ++
+> >  4 files changed, 57 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/migration/multifd-zlib.c b/migration/multifd-zlib.c
+> > index 012e3bdea1..35187f2aff 100644
+> > --- a/migration/multifd-zlib.c
+> > +++ b/migration/multifd-zlib.c
+> > @@ -313,13 +313,29 @@ static int zlib_recv_pages(MultiFDRecvParams *p,
+> Error **errp)
+> >      return 0;
+> >  }
+> >
+> > +/**
+> > + * zlib_get_iov_count: get the count of IOVs
+> > + *
+> > + * For zlib streaming compression, all pages will be compressed into a
+> data
+> > + * block, and an IOV is requested for sending this block.
+> > + *
+> > + * Returns the count of the IOVs
+> > + *
+> > + * @page_count: Indicate the maximum count of pages processed by
+> multifd
+> > + */
+> > +static uint32_t zlib_get_iov_count(uint32_t page_count)
+> > +{
+> > +    return 1;
+> > +}
+> > +
+> >  static MultiFDMethods multifd_zlib_ops =3D {
+> >      .send_setup =3D zlib_send_setup,
+> >      .send_cleanup =3D zlib_send_cleanup,
+> >      .send_prepare =3D zlib_send_prepare,
+> >      .recv_setup =3D zlib_recv_setup,
+> >      .recv_cleanup =3D zlib_recv_cleanup,
+> > -    .recv_pages =3D zlib_recv_pages
+> > +    .recv_pages =3D zlib_recv_pages,
+> > +    .get_iov_count =3D zlib_get_iov_count
+> >  };
+> >
+> >  static void multifd_zlib_register(void)
+> > diff --git a/migration/multifd-zstd.c b/migration/multifd-zstd.c
+> > index dc8fe43e94..25ed1add2a 100644
+> > --- a/migration/multifd-zstd.c
+> > +++ b/migration/multifd-zstd.c
+> > @@ -304,13 +304,29 @@ static int zstd_recv_pages(MultiFDRecvParams *p,
+> Error **errp)
+> >      return 0;
+> >  }
+> >
+> > +/**
+> > + * zstd_get_iov_count: get the count of IOVs
+> > + *
+> > + * For zstd streaming compression, all pages will be compressed into a
+> data
+> > + * block, and an IOV is requested for sending this block.
+> > + *
+> > + * Returns the count of the IOVs
+> > + *
+> > + * @page_count: Indicate the maximum count of pages processed by
+> multifd
+> > + */
+> > +static uint32_t zstd_get_iov_count(uint32_t page_count)
+> > +{
+> > +    return 1;
+> > +}
+> > +
+> >  static MultiFDMethods multifd_zstd_ops =3D {
+> >      .send_setup =3D zstd_send_setup,
+> >      .send_cleanup =3D zstd_send_cleanup,
+> >      .send_prepare =3D zstd_send_prepare,
+> >      .recv_setup =3D zstd_recv_setup,
+> >      .recv_cleanup =3D zstd_recv_cleanup,
+> > -    .recv_pages =3D zstd_recv_pages
+> > +    .recv_pages =3D zstd_recv_pages,
+> > +    .get_iov_count =3D zstd_get_iov_count
+> >  };
+> >
+> >  static void multifd_zstd_register(void)
+> > diff --git a/migration/multifd.c b/migration/multifd.c
+> > index adfe8c9a0a..787402247e 100644
+> > --- a/migration/multifd.c
+> > +++ b/migration/multifd.c
+> > @@ -209,13 +209,29 @@ static int nocomp_recv_pages(MultiFDRecvParams *p=
+,
+> Error **errp)
+> >      return qio_channel_readv_all(p->c, p->iov, p->normal_num, errp);
+> >  }
+> >
+> > +/**
+> > + * nocomp_get_iov_count: get the count of IOVs
+> > + *
+> > + * For no compression, the count of IOVs required is the same as the
+> count of
+> > + * pages
+> > + *
+> > + * Returns the count of the IOVs
+> > + *
+> > + * @page_count: Indicate the maximum count of pages processed by
+> multifd
+> > + */
+> > +static uint32_t nocomp_get_iov_count(uint32_t page_count)
+> > +{
+> > +    return page_count;
+> > +}
+> > +
+> >  static MultiFDMethods multifd_nocomp_ops =3D {
+> >      .send_setup =3D nocomp_send_setup,
+> >      .send_cleanup =3D nocomp_send_cleanup,
+> >      .send_prepare =3D nocomp_send_prepare,
+> >      .recv_setup =3D nocomp_recv_setup,
+> >      .recv_cleanup =3D nocomp_recv_cleanup,
+> > -    .recv_pages =3D nocomp_recv_pages
+> > +    .recv_pages =3D nocomp_recv_pages,
+> > +    .get_iov_count =3D nocomp_get_iov_count
+> >  };
+> >
+> >  static MultiFDMethods *multifd_ops[MULTIFD_COMPRESSION__MAX] =3D {
+> > @@ -998,6 +1014,8 @@ bool multifd_send_setup(void)
+> >      Error *local_err =3D NULL;
+> >      int thread_count, ret =3D 0;
+> >      uint32_t page_count =3D MULTIFD_PACKET_SIZE /
+> qemu_target_page_size();
+> > +    /* We need one extra place for the packet header */
+> > +    uint32_t iov_count =3D 1;
+> >      uint8_t i;
+> >
+> >      if (!migrate_multifd()) {
+> > @@ -1012,6 +1030,7 @@ bool multifd_send_setup(void)
+> >      qemu_sem_init(&multifd_send_state->channels_ready, 0);
+> >      qatomic_set(&multifd_send_state->exiting, 0);
+> >      multifd_send_state->ops =3D
+> multifd_ops[migrate_multifd_compression()];
+> > +    iov_count +=3D multifd_send_state->ops->get_iov_count(page_count);
+> >
+> >      for (i =3D 0; i < thread_count; i++) {
+> >          MultiFDSendParams *p =3D &multifd_send_state->params[i];
+> > @@ -1026,8 +1045,7 @@ bool multifd_send_setup(void)
+> >          p->packet->magic =3D cpu_to_be32(MULTIFD_MAGIC);
+> >          p->packet->version =3D cpu_to_be32(MULTIFD_VERSION);
+> >          p->name =3D g_strdup_printf("multifdsend_%d", i);
+> > -        /* We need one extra place for the packet header */
+> > -        p->iov =3D g_new0(struct iovec, page_count + 1);
+> > +        p->iov =3D g_new0(struct iovec, iov_count);
+> >          p->page_size =3D qemu_target_page_size();
+> >          p->page_count =3D page_count;
+> >          p->write_flags =3D 0;
+> > diff --git a/migration/multifd.h b/migration/multifd.h
+> > index 8a1cad0996..d82495c508 100644
+> > --- a/migration/multifd.h
+> > +++ b/migration/multifd.h
+> > @@ -201,6 +201,8 @@ typedef struct {
+> >      void (*recv_cleanup)(MultiFDRecvParams *p);
+> >      /* Read all pages */
+> >      int (*recv_pages)(MultiFDRecvParams *p, Error **errp);
+> > +    /* Get the count of required IOVs */
+> > +    uint32_t (*get_iov_count)(uint32_t page_count);
+> >  } MultiFDMethods;
+> >
+> >  void multifd_register_ops(int method, MultiFDMethods *ops);
 
