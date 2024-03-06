@@ -4,69 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41E1CC54E49
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 02:07:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F1AFC54E49
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 02:10:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhgg9-0004iq-KA; Tue, 05 Mar 2024 21:06:45 -0500
+	id 1rhgjJ-0005Vc-1K; Tue, 05 Mar 2024 21:10:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rhgg8-0004ii-HC
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 21:06:44 -0500
-Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
+ id 1rhgjH-0005VL-Ta; Tue, 05 Mar 2024 21:09:59 -0500
+Received: from mail-vk1-xa35.google.com ([2607:f8b0:4864:20::a35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rhgg5-0005Iu-F7
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 21:06:44 -0500
-Received: by mail-ua1-x92e.google.com with SMTP id
- a1e0cc1a2514c-7d130979108so3449914241.1
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 18:06:41 -0800 (PST)
+ id 1rhgjC-0005sm-OT; Tue, 05 Mar 2024 21:09:58 -0500
+Received: by mail-vk1-xa35.google.com with SMTP id
+ 71dfb90a1353d-4d341065550so1535398e0c.0; 
+ Tue, 05 Mar 2024 18:09:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709690800; x=1710295600; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1709690993; x=1710295793; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qyR8PObAyGC0ZZugWj2pxEMXVKgbD6ai1+gsSKnuYg8=;
- b=GwhkPvC23R204d7+MKxwFhAcnX4wFNoFh1qQIOWzLsMVkQO4v6BjItaXz6K2WOZZCX
- XIz2K1zgPZp2brTgHCYbvYVRvacyhUYpcbCOZuHf+SiNhtn5vNjGt5WxtWdOtpUaVyOP
- FIIJlcqDfotLJgDHZ5zAsonD9QHzT0oFX47PjAGIvPcMJMjsvpzckf+nkaixRzjh/FgX
- dmVFZRD5kxyKxFkNOt6iLNzqDYDNYJlVtg2o4DPYPFWJtaPgKZXDrNRs5j96osJqstoN
- fKtta4KNXxP0MXJrq4dV1L4DtkfRGn1ij7pxoe/jeNaODhM4AGcAPEUHV8Ltk/t0FE0D
- zU5A==
+ bh=MlaGsRsxLDFD2vK1wTM+A2GN5ep38P4ZodZZQFXJAvc=;
+ b=PSAKiLh5dAUK/rkcMvXr/MD5mlJ2qMboWGTbDTfS3x2CRa2ix4l3hOgeXf/wHZOX5m
+ X88scVhndxCsEEwUDlfClJksC2sQGxwpIekKq69zlN3gAKqpJofzsndHdj8660FRP7/J
+ vOtBkCetXAEpegoOxO29Uc1JDqFrWqSywFe2ZBw6T0VqVxQOGvjcohWZMYeQX6uR1xKQ
+ fFkS77tjZkLyq9HJjr9U103vs2fFyQnqVki45zVpTOsYiIUxzd7Pa1ej3CFQb+dGxzcM
+ 6yiuu5gp2yL/giljE3jl2TruFoa7V1Uz5CoKQjCQfzjp0C2mBpA4gGijZl+f/a0S5lqP
+ 83DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709690800; x=1710295600;
+ d=1e100.net; s=20230601; t=1709690993; x=1710295793;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qyR8PObAyGC0ZZugWj2pxEMXVKgbD6ai1+gsSKnuYg8=;
- b=mrHWRl92IUW1OZ6gHBuyfdSZ5V42FFnsUPVgFc82Tk8wUoyLSHkZ7r5Opp96X5Etm9
- VVrGHolBT4uV4RF0hFhR+hLCpnkU0mhjunt0xwTLdhYjgbi1ZdeRammXfppi3JVzXdW0
- bA8EGXXF3EuRWxVuA1WHyj+gbFRtjKMjrxg9nkqs5/sbqzSXoc8iIzevV6W5APTnTPZE
- oAxINGNVZMdtSPxYzOsLEkg/DUy1+OuT0jyzFcQr3HdtPT6E9Qg+HB/AyO3Tm43K8xLi
- sNDktHbfFeSt37+LsvpyEFqvf5WorshcqHVMqFVFuaT4ipMD3X8iuzTpkGjwrHxTXwJJ
- ohaQ==
-X-Gm-Message-State: AOJu0YzlJip0cc1bzWfC/q2/m9xS5o9MT/+MQZg/g41NED1rO+nw4syq
- n2FqKQreuzdwoTjb3578Vpl8GQ3UQjiUqdXwnonLD7fN5a5d6Gf9jh9Bh1NHlQ/FvCH1swuXGF7
- 5exM/xLle9qZlaykN5pGWuZxotn+SgK4k4h0=
-X-Google-Smtp-Source: AGHT+IHAm7uIGu+WJ7yhdMrIMFbb+4M3axgLLKHE6tEknzTH9g3XwNJquqEAoirAVnG7GPK+LgiUrh/vARyhuWyDNX4=
-X-Received: by 2002:a05:6122:4c86:b0:4d3:499a:830c with SMTP id
- fg6-20020a0561224c8600b004d3499a830cmr3500429vkb.13.1709690800125; Tue, 05
- Mar 2024 18:06:40 -0800 (PST)
+ bh=MlaGsRsxLDFD2vK1wTM+A2GN5ep38P4ZodZZQFXJAvc=;
+ b=m1Zvyq/eiFIPQefoonrrQW07MrSsZQ8lVGGHsejXahSigBxWgTNZzBqhkSk8DTjt9d
+ i3UpK8q0dJ8Xw5Pa9+skQQplGXcCGsiILuEC3C3l2Qb1DJxUIumvmL7MPRZxUH/MCFmc
+ opje7No34aDHGPw6JJOYGMwfewWTw7aMeBDn/ubDZPD0xGRwB4O9kHc/HuWn5c7XHmJz
+ ZXJksO372oAJUoudYQpOli1eNIiNL2KMhBus2/TP0bL18N+IGPYdUc25nCPDqYBfHCkG
+ VwTS2YOsFUTlxVsmefq7djU+OV5kL24DZX4oGxyPkinwobx4IsyLgXDoBbOHzez4ETgR
+ CLQg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW0ENruFEy2bYSf0XptLte2JcW+kyGY9HKfWnitsPDjwIL/Md1Op0sSVnzMGJYF3LkUZ2IALVnE424vfp9bHBXFhi4BWfg=
+X-Gm-Message-State: AOJu0YyFaQALRoaJKqHLRFP8NUO9KSuH3nRIMT/v5xCVH8mNgem1finQ
+ 27PfH1EBseTRtecGqApsN3bOv1cO9Ak9kRDfUNy2p1bXOufPgfZaJdf2JRuRoso6iuPkZBYVEov
+ VC4waC6TirRUqfNUA6v6tOdGBJY8=
+X-Google-Smtp-Source: AGHT+IHWu6AbNeqqa44H4ALwITqgUNCF8C0n12UkxH74+jfzlK+dyRqQUuwLgnL+L5WpdGOme366jJr3RQxfLUolrLI=
+X-Received: by 2002:a05:6122:30c:b0:4b8:383e:8266 with SMTP id
+ c12-20020a056122030c00b004b8383e8266mr2904657vko.11.1709690992320; Tue, 05
+ Mar 2024 18:09:52 -0800 (PST)
 MIME-Version: 1.0
-References: <PH7PR11MB8551419922FD4495F89B9655FB592@PH7PR11MB8551.namprd11.prod.outlook.com>
-In-Reply-To: <PH7PR11MB8551419922FD4495F89B9655FB592@PH7PR11MB8551.namprd11.prod.outlook.com>
+References: <20240304134732.386590-1-dbarboza@ventanamicro.com>
+ <20240304134732.386590-2-dbarboza@ventanamicro.com>
+In-Reply-To: <20240304134732.386590-2-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 6 Mar 2024 12:06:14 +1000
-Message-ID: <CAKmqyKO3FpTu-t0o8rLKvjW77aA0j2CSNvDV=oGF7h+RjUopGQ@mail.gmail.com>
-Subject: Re: Qemu sdhci-pci device can't be recognized by Linux kernel
-To: "Li, Yong" <yong.li@intel.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Date: Wed, 6 Mar 2024 12:09:25 +1000
+Message-ID: <CAKmqyKPncWHcUKyQeRuPzx8jJPAz63=TcM8xNjAMTyD+oreUwQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] linux-headers: Update to Linux v6.8-rc6
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com, ajones@ventanamicro.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a35;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa35.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -90,300 +93,1098 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 28, 2024 at 12:19=E2=80=AFAM Li, Yong <yong.li@intel.com> wrote=
-:
+On Mon, Mar 4, 2024 at 11:48=E2=80=AFPM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
 >
-> Hello,
+> The idea with this update is to get the latest KVM caps for RISC-V.
 >
-> QEMU virt platform of RISCV-64 can emulate the mmc device by using below =
-parameters:
-> -device sdhci-pci,sd-spec-version=3D3 \
-> -drive if=3Dnone,file=3Ddisk.img,format=3Draw,id=3DMMC1 \
-> -device sd-card,drive=3DMMC1
->
-> And as to u-boot, it do can recognize the mmc device and load the linux k=
-ernel from the sdcard partition.
-> But the mmc device can't be recognized by the linux kernel so that the ro=
-ot filesystem in the sdcard can't be loaded.
->
-> The logs are as below, any thoughts ? Thanks
->
->
-> Starting kernel ...
->
-> [    0.000000] Linux version 6.7.0-rc3-g2bb52284d571-dirty (intel@intel-O=
-ptiPlex-7090) (riscv64-linux-gnu-gcc (Ubuntu 9.4.0-1ubuntu1~20.04) 9.4.0, G=
-NU ld (GNU Binutils for Ubuntu) 2.34) #11 SMP Tue Feb 27 16:04:26 CST 2024
-> [    0.000000] random: crng init done
-> [    0.000000] Machine model: riscv-virtio,qemu
-> [    0.000000] SBI specification v1.0 detected
-> [    0.000000] SBI implementation ID=3D0x1 Version=3D0x10003
-> [    0.000000] SBI TIME extension detected
-> [    0.000000] SBI IPI extension detected
-> [    0.000000] SBI RFENCE extension detected
-> [    0.000000] earlycon: ns16550a0 at MMIO 0x0000000010000000 (options ''=
-)
-> [    0.000000] printk: legacy bootconsole [ns16550a0] enabled
-> [    0.000000] efi: UEFI not found.
-> [    0.000000] OF: reserved mem: 0x0000000080000000..0x000000008003ffff (=
-256 KiB) nomap non-reusable mmode_resv1@80000000
-> [    0.000000] OF: reserved mem: 0x0000000080040000..0x000000008005ffff (=
-128 KiB) nomap non-reusable mmode_resv0@80040000
-> [    0.000000] Zone ranges:
-> [    0.000000]   DMA32    [mem 0x0000000080000000-0x00000000ffffffff]
-> [    0.000000]   Normal   [mem 0x0000000100000000-0x000000017fffffff]
-> [    0.000000] Movable zone start for each node
-> [    0.000000] Early memory node ranges
-> [    0.000000]   node   0: [mem 0x0000000080000000-0x000000008005ffff]
-> [    0.000000]   node   0: [mem 0x0000000080060000-0x000000017fffffff]
-> [    0.000000] Initmem setup node 0 [mem 0x0000000080000000-0x000000017ff=
-fffff]
-> [    0.000000] SBI HSM extension detected
-> [    0.000000] CPU with hartid=3D1 is not available
-> [    0.000000] Falling back to deprecated "riscv,isa"
-> [    0.000000] riscv: base ISA extensions acdfhim
-> [    0.000000] riscv: ELF capabilities acdfim
-> [    0.000000] percpu: Embedded 20 pages/cpu s41976 r8192 d31752 u81920
-> [    0.000000] Kernel command line: root=3D/dev/vda1 ro earlycon console=
-=3DttyS0,115200n8
-> [    0.000000] Dentry cache hash table entries: 524288 (order: 10, 419430=
-4 bytes, linear)
-> [    0.000000] Inode-cache hash table entries: 262144 (order: 9, 2097152 =
-bytes, linear)
-> [    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 103=
-2192
-> [    0.000000] mem auto-init: stack:off, heap alloc:off, heap free:off
-> [    0.000000] software IO TLB: area num 1.
-> [    0.000000] software IO TLB: mapped [mem 0x00000000faec6000-0x00000000=
-feec6000] (64MB)
-> [    0.000000] Virtual kernel memory layout:
-> [    0.000000]       fixmap : 0xff1bfffffea00000 - 0xff1bffffff000000   (=
-6144 kB)
-> [    0.000000]       pci io : 0xff1bffffff000000 - 0xff1c000000000000   (=
-  16 MB)
-> [    0.000000]      vmemmap : 0xff1c000000000000 - 0xff20000000000000   (=
-1024 TB)
-> [    0.000000]      vmalloc : 0xff20000000000000 - 0xff60000000000000   (=
-16384 TB)
-> [    0.000000]      modules : 0xffffffff01589000 - 0xffffffff80000000   (=
-2026 MB)
-> [    0.000000]       lowmem : 0xff60000000000000 - 0xff60000100000000   (=
-4096 MB)
-> [    0.000000]       kernel : 0xffffffff80000000 - 0xffffffffffffffff   (=
-2047 MB)
-> [    0.000000] Memory: 4016708K/4194304K available (9472K kernel code, 49=
-86K rwdata, 4096K rodata, 2222K init, 502K bss, 177596K reserved, 0K cma-re=
-served)
-> [    0.000000] SLUB: HWalign=3D64, Order=3D0-3, MinObjects=3D0, CPUs=3D1,=
- Nodes=3D1
-> [    0.000000] rcu: Hierarchical RCU implementation.
-> [    0.000000] rcu:     RCU restricting CPUs from NR_CPUS=3D64 to nr_cpu_=
-ids=3D1.
-> [    0.000000] rcu:     RCU debug extended QS entry/exit.
-> [    0.000000]  Tracing variant of Tasks RCU enabled.
-> [    0.000000] rcu: RCU calculated value of scheduler-enlistment delay is=
- 25 jiffies.
-> [    0.000000] rcu: Adjusting geometry for rcu_fanout_leaf=3D16, nr_cpu_i=
-ds=3D1
-> [    0.000000] NR_IRQS: 64, nr_irqs: 64, preallocated irqs: 0
-> [    0.000000] riscv-intc: 64 local interrupts mapped using AIA
-> [    0.000000] riscv-imsic: imsics@28000000: invalid cpuid for parent irq=
-1
-> [    0.000000] riscv-imsic: imsics@28000000: providing IPIs using interru=
-pt 1
-> [    0.000000] rcu: srcu_init: Setting srcu_struct sizes based on content=
-ion.
-> [    0.000000] clocksource: riscv_clocksource: mask: 0xffffffffffffffff m=
-ax_cycles: 0x24e6a1710, max_idle_ns: 440795202120 ns
-> [    0.000084] sched_clock: 64 bits at 10MHz, resolution 100ns, wraps eve=
-ry 4398046511100ns
-> [    0.000338] riscv-timer: Timer interrupt in S-mode is available via ss=
-tc extension
-> [    0.005139] Console: colour dummy device 80x25
-> [    0.008888] Calibrating delay loop (skipped), value calculated using t=
-imer frequency.. 20.00 BogoMIPS (lpj=3D40000)
-> [    0.009171] pid_max: default: 32768 minimum: 301
-> [    0.010237] LSM: initializing lsm=3Dcapability,integrity
-> [    0.014518] Mount-cache hash table entries: 8192 (order: 4, 65536 byte=
-s, linear)
-> [    0.014778] Mountpoint-cache hash table entries: 8192 (order: 4, 65536=
- bytes, linear)
-> [    0.033936] CPU node for /cpus/cpu@1 exist but the possible cpu range =
-is :0
-> [    0.044500] RCU Tasks Trace: Setting shift to 0 and lim to 1 rcu_task_=
-cb_adjust=3D1.
-> [    0.045051] riscv: ELF compat mode supported
-> [    0.045275] ASID allocator using 16 bits (65536 entries)
-> [    0.046454] rcu: Hierarchical SRCU implementation.
-> [    0.046577] rcu:     Max phase no-delay instances is 1000.
-> [    0.048704] EFI services will not be available.
-> [    0.050031] smp: Bringing up secondary CPUs ...
-> [    0.051095] smp: Brought up 1 node, 1 CPU
-> [    0.063329] devtmpfs: initialized
-> [    0.074382] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xfffff=
-fff, max_idle_ns: 7645041785100000 ns
-> [    0.074689] futex hash table entries: 256 (order: 2, 16384 bytes, line=
-ar)
-> [    0.076688] pinctrl core: initialized pinctrl subsystem
-> [    0.080864] sse: Missing SBI SSE extension
-> [    0.082410] NET: Registered PF_NETLINK/PF_ROUTE protocol family
-> [    0.090488] DMA: preallocated 512 KiB GFP_KERNEL pool for atomic alloc=
-ations
-> [    0.091007] DMA: preallocated 512 KiB GFP_KERNEL|GFP_DMA32 pool for at=
-omic allocations
-> [    0.091370] audit: initializing netlink subsys (disabled)
-> [    0.094571] thermal_sys: Registered thermal governor 'step_wise'
-> [    0.095183] audit: type=3D2000 audit(0.084:1): state=3Dinitialized aud=
-it_enabled=3D0 res=3D1
-> [    0.095906] cpuidle: using governor menu
-> [    0.120192] cpu0: Ratio of byte access time to unaligned word access i=
-s 7.30, unaligned accesses are fast
-> [    0.121054] riscv-rpxy: SBI RPXY extension detected
-> [    0.143014] HugeTLB: registered 2.00 MiB page size, pre-allocated 0 pa=
-ges
-> [    0.143168] HugeTLB: 28 KiB vmemmap can be freed for a 2.00 MiB page
-> [    0.147680] ACPI: Interpreter disabled.
-> [    0.148204] iommu: Default domain type: Translated
-> [    0.148299] iommu: DMA domain TLB invalidation policy: strict mode
-> [    0.150202] SCSI subsystem initialized
-> [    0.152031] usbcore: registered new interface driver usbfs
-> [    0.152332] usbcore: registered new interface driver hub
-> [    0.152545] usbcore: registered new device driver usb
-> [    0.154011] Advanced Linux Sound Architecture Driver Initialized.
-> [    0.164653] vgaarb: loaded
-> [    0.168952] clocksource: Switched to clocksource riscv_clocksource
-> [    0.170805] pnp: PnP ACPI: disabled
-> [    0.187515] NET: Registered PF_INET protocol family
-> [    0.188635] IP idents hash table entries: 65536 (order: 7, 524288 byte=
-s, linear)
-> [    0.196372] tcp_listen_portaddr_hash hash table entries: 2048 (order: =
-4, 65536 bytes, linear)
-> [    0.196668] Table-perturb hash table entries: 65536 (order: 6, 262144 =
-bytes, linear)
-> [    0.196857] TCP established hash table entries: 32768 (order: 6, 26214=
-4 bytes, linear)
-> [    0.197276] TCP bind hash table entries: 32768 (order: 9, 2097152 byte=
-s, linear)
-> [    0.201318] TCP: Hash tables configured (established 32768 bind 32768)
-> [    0.202392] UDP hash table entries: 2048 (order: 5, 196608 bytes, line=
-ar)
-> [    0.202904] UDP-Lite hash table entries: 2048 (order: 5, 196608 bytes,=
- linear)
-> [    0.204091] NET: Registered PF_UNIX/PF_LOCAL protocol family
-> [    0.206864] RPC: Registered named UNIX socket transport module.
-> [    0.207015] RPC: Registered udp transport module.
-> [    0.207090] RPC: Registered tcp transport module.
-> [    0.207181] RPC: Registered tcp-with-tls transport module.
-> [    0.207256] RPC: Registered tcp NFSv4.1 backchannel transport module.
-> [    0.207489] PCI: CLS 0 bytes, default 64
-> [    0.213042] workingset: timestamp_bits=3D46 max_order=3D20 bucket_orde=
-r=3D0
-> [    0.214484] squashfs: version 4.0 (2009/01/31) Phillip Lougher
-> [    0.216473] NFS: Registering the id_resolver key type
-> [    0.217281] Key type id_resolver registered
-> [    0.217377] Key type id_legacy registered
-> [    0.217680] nfs4filelayout_init: NFSv4 File Layout Driver Registering.=
-..
-> [    0.217865] nfs4flexfilelayout_init: NFSv4 Flexfile Layout Driver Regi=
-stering...
-> [    0.218602] 9p: Installing v9fs 9p2000 file system support
-> [    0.221381] NET: Registered PF_ALG protocol family
-> [    0.221731] Block layer SCSI generic (bsg) driver version 0.4 loaded (=
-major 244)
-> [    0.221978] io scheduler mq-deadline registered
-> [    0.222128] io scheduler kyber registered
-> [    0.222306] io scheduler bfq registered
-> [    0.224296] riscv-imsic: imsics@28000000: hart-index-bits: 0,  guest-i=
-ndex-bits: 0
-> [    0.224426] riscv-imsic: imsics@28000000: group-index-bits: 1, group-i=
-ndex-shift: 24
-> [    0.224566] riscv-imsic: imsics@28000000: per-CPU IDs 255 at base PPN =
-0x0000000028000000
-> [    0.224711] riscv-imsic: imsics@28000000: total 254 interrupts availab=
-le
-> [    0.227558] pci-host-generic 30000000.pci: host bridge /soc/pci@300000=
-00 ranges:
-> [    0.228230] pci-host-generic 30000000.pci:       IO 0x0003000000..0x00=
-0300ffff -> 0x0000000000
-> [    0.228676] pci-host-generic 30000000.pci:      MEM 0x0040000000..0x00=
-7fffffff -> 0x0040000000
-> [    0.228857] pci-host-generic 30000000.pci:      MEM 0x0400000000..0x07=
-ffffffff -> 0x0400000000
-> [    0.229362] pci-host-generic 30000000.pci: Memory resource size exceed=
-s max for 32 bits
-> [    0.229814] pci-host-generic 30000000.pci: ECAM at [mem 0x30000000-0x3=
-fffffff] for [bus 00-ff]
-> [    0.232176] pci-host-generic 30000000.pci: PCI host bridge to bus 0000=
-:00
-> [    0.232487] pci_bus 0000:00: root bus resource [bus 00-ff]
-> [    0.232634] pci_bus 0000:00: root bus resource [io  0x0000-0xffff]
-> [    0.232765] pci_bus 0000:00: root bus resource [mem 0x40000000-0x7ffff=
-fff]
-> [    0.232899] pci_bus 0000:00: root bus resource [mem 0x400000000-0x7fff=
-fffff]
-> [    0.234091] pci 0000:00:00.0: [1b36:0008] type 00 class 0x060000
-> [    0.236786] pci 0000:00:01.0: [1b36:0007] type 00 class 0x080501
-> [    0.237291] pci 0000:00:01.0: reg 0x10: [mem 0x40000000-0x400000ff]
-> [    0.239022] pci 0000:00:02.0: [1af4:1000] type 00 class 0x020000
-> [    0.239705] pci 0000:00:02.0: reg 0x10: [io  0x1000-0x101f]
-> [    0.240324] pci 0000:00:02.0: reg 0x14: [mem 0x40001000-0x40001fff]
-> [    0.242455] pci 0000:00:02.0: reg 0x20: [mem 0x40004000-0x40007fff 64b=
-it pref]
-> [    0.243046] pci 0000:00:02.0: reg 0x30: [mem 0x40040000-0x4007ffff pre=
-f]
-> [    0.245209] pci 0000:00:02.0: BAR 6: assigned [mem 0x40000000-0x4003ff=
-ff pref]
-> [    0.245492] pci 0000:00:02.0: BAR 4: assigned [mem 0x400000000-0x40000=
-3fff 64bit pref]
-> [    0.245989] pci 0000:00:02.0: BAR 1: assigned [mem 0x40040000-0x40040f=
-ff]
-> [    0.246294] pci 0000:00:01.0: BAR 0: assigned [mem 0x40041000-0x400410=
-ff]
-> [    0.246655] pci 0000:00:02.0: BAR 0: assigned [io  0x0020-0x003f]
-> [    0.252094] clk-sbi-rpxy soc:sbi-rpxy-clk: RPMI Clock Service Group Pr=
-obe Failed
-> [    0.255411] irq: no irq domain found for aplic@d008000 !
-> [    0.338181] Serial: 8250/16550 driver, 4 ports, IRQ sharing disabled
-> [    0.347886] SuperH (H)SCI(F) driver initialized
-> [    0.363037] loop: module loaded
-> [    0.373271] genirq: irq_chip IMSIC-PCI did not update eff. affinity ma=
-sk of irq 11
-> [    0.378037] e1000e: Intel(R) PRO/1000 Network Driver
-> [    0.378140] e1000e: Copyright(c) 1999 - 2015 Intel Corporation.
-> [    0.380675] usbcore: registered new interface driver uas
-> [    0.380903] usbcore: registered new interface driver usb-storage
-> [    0.381666] mousedev: PS/2 mouse device common for all mice
-> [    0.384073] sdhci: Secure Digital Host Controller Interface driver
-> [    0.384182] sdhci: Copyright(c) Pierre Ossman
-> [    0.384361] sdhci-pltfm: SDHCI platform and OF driver helper
-> [    0.385528] usbcore: registered new interface driver usbhid
-> [    0.385646] usbhid: USB HID core driver
-> [    0.386192] riscv-pmu-sbi: SBI PMU extension is available
-> [    0.386646] riscv-pmu-sbi: 16 firmware and 18 hardware counters
-> [    0.386789] riscv-pmu-sbi: Perf sampling/filtering is not supported as=
- sscof extension is not available
-> [    0.387628] irq: no irq domain found for aplic@d008000 !
-> [    0.387809] sdhci-pci 0000:00:01.0: SDHCI controller found [1b36:0007]=
- (rev 0)
-> [    0.417829] mmc0: Failed to request IRQ 0: -22
-> [    0.421338] sdhci-pci: probe of 0000:00:01.0 failed with error -22
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-It seems like interrupts aren't getting set up correctly.
-
-You could try a different interrupt controller. It looks like you are
-using the aplic, you could try the aplic-imsic maybe [1]?
-
-Otherwise having a look at the kernel driver and trying to figure out
-what is failing is probably the best bet.
-
-1: https://www.qemu.org/docs/master/system/riscv/virt.html
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
+> ---
+>  include/standard-headers/drm/drm_fourcc.h     |  10 +-
+>  include/standard-headers/linux/ethtool.h      |  41 +++--
+>  .../standard-headers/linux/virtio_config.h    |   8 +-
+>  include/standard-headers/linux/virtio_pci.h   |  68 +++++++++
+>  include/standard-headers/linux/virtio_pmem.h  |   7 +
+>  linux-headers/asm-generic/unistd.h            |  15 +-
+>  linux-headers/asm-mips/mman.h                 |   2 +-
+>  linux-headers/asm-mips/unistd_n32.h           |   5 +
+>  linux-headers/asm-mips/unistd_n64.h           |   5 +
+>  linux-headers/asm-mips/unistd_o32.h           |   5 +
+>  linux-headers/asm-powerpc/unistd_32.h         |   5 +
+>  linux-headers/asm-powerpc/unistd_64.h         |   5 +
+>  linux-headers/asm-riscv/kvm.h                 |  40 +++++
+>  linux-headers/asm-s390/unistd_32.h            |   5 +
+>  linux-headers/asm-s390/unistd_64.h            |   5 +
+>  linux-headers/asm-x86/kvm.h                   |   3 +
+>  linux-headers/asm-x86/unistd_32.h             |   5 +
+>  linux-headers/asm-x86/unistd_64.h             |   5 +
+>  linux-headers/asm-x86/unistd_x32.h            |   5 +
+>  linux-headers/linux/iommufd.h                 |  79 ++++++++++
+>  linux-headers/linux/kvm.h                     | 140 +++++++-----------
+>  linux-headers/linux/userfaultfd.h             |  29 +++-
+>  linux-headers/linux/vfio.h                    |   1 +
+>  23 files changed, 381 insertions(+), 112 deletions(-)
+>
+> diff --git a/include/standard-headers/drm/drm_fourcc.h b/include/standard=
+-headers/drm/drm_fourcc.h
+> index 3afb70160f..b72917073d 100644
+> --- a/include/standard-headers/drm/drm_fourcc.h
+> +++ b/include/standard-headers/drm/drm_fourcc.h
+> @@ -53,7 +53,7 @@ extern "C" {
+>   * Format modifiers may change any property of the buffer, including the=
+ number
+>   * of planes and/or the required allocation size. Format modifiers are
+>   * vendor-namespaced, and as such the relationship between a fourcc code=
+ and a
+> - * modifier is specific to the modifer being used. For example, some mod=
+ifiers
+> + * modifier is specific to the modifier being used. For example, some mo=
+difiers
+>   * may preserve meaning - such as number of planes - from the fourcc cod=
+e,
+>   * whereas others may not.
+>   *
+> @@ -78,7 +78,7 @@ extern "C" {
+>   *   format.
+>   * - Higher-level programs interfacing with KMS/GBM/EGL/Vulkan/etc: thes=
+e users
+>   *   see modifiers as opaque tokens they can check for equality and inte=
+rsect.
+> - *   These users musn't need to know to reason about the modifier value
+> + *   These users mustn't need to know to reason about the modifier value
+>   *   (i.e. they are not expected to extract information out of the modif=
+ier).
+>   *
+>   * Vendors should document their modifier usage in as much detail as
+> @@ -539,7 +539,7 @@ extern "C" {
+>   * This is a tiled layout using 4Kb tiles in row-major layout.
+>   * Within the tile pixels are laid out in 16 256 byte units / sub-tiles =
+which
+>   * are arranged in four groups (two wide, two high) with column-major la=
+yout.
+> - * Each group therefore consits out of four 256 byte units, which are al=
+so laid
+> + * Each group therefore consists out of four 256 byte units, which are a=
+lso laid
+>   * out as 2x2 column-major.
+>   * 256 byte units are made out of four 64 byte blocks of pixels, produci=
+ng
+>   * either a square block or a 2:1 unit.
+> @@ -1102,7 +1102,7 @@ drm_fourcc_canonicalize_nvidia_format_mod(uint64_t =
+modifier)
+>   */
+>
+>  /*
+> - * The top 4 bits (out of the 56 bits alloted for specifying vendor spec=
+ific
+> + * The top 4 bits (out of the 56 bits allotted for specifying vendor spe=
+cific
+>   * modifiers) denote the category for modifiers. Currently we have three
+>   * categories of modifiers ie AFBC, MISC and AFRC. We can have a maximum=
+ of
+>   * sixteen different categories.
+> @@ -1418,7 +1418,7 @@ drm_fourcc_canonicalize_nvidia_format_mod(uint64_t =
+modifier)
+>   * Amlogic FBC Memory Saving mode
+>   *
+>   * Indicates the storage is packed when pixel size is multiple of word
+> - * boudaries, i.e. 8bit should be stored in this mode to save allocation
+> + * boundaries, i.e. 8bit should be stored in this mode to save allocatio=
+n
+>   * memory.
+>   *
+>   * This mode reduces body layout to 3072 bytes per 64x32 superblock with
+> diff --git a/include/standard-headers/linux/ethtool.h b/include/standard-=
+headers/linux/ethtool.h
+> index 99fcddf04f..dfb54eff6f 100644
+> --- a/include/standard-headers/linux/ethtool.h
+> +++ b/include/standard-headers/linux/ethtool.h
+> @@ -1266,6 +1266,8 @@ struct ethtool_rxfh_indir {
+>   *     hardware hash key.
+>   * @hfunc: Defines the current RSS hash function used by HW (or to be se=
+t to).
+>   *     Valid values are one of the %ETH_RSS_HASH_*.
+> + * @input_xfrm: Defines how the input data is transformed. Valid values =
+are one
+> + *     of %RXH_XFRM_*.
+>   * @rsvd8: Reserved for future use; see the note on reserved space.
+>   * @rsvd32: Reserved for future use; see the note on reserved space.
+>   * @rss_config: RX ring/queue index for each hash value i.e., indirectio=
+n table
+> @@ -1285,7 +1287,8 @@ struct ethtool_rxfh {
+>         uint32_t   indir_size;
+>         uint32_t   key_size;
+>         uint8_t hfunc;
+> -       uint8_t rsvd8[3];
+> +       uint8_t input_xfrm;
+> +       uint8_t rsvd8[2];
+>         uint32_t        rsvd32;
+>         uint32_t   rss_config[];
+>  };
+> @@ -1992,6 +1995,15 @@ static inline int ethtool_validate_duplex(uint8_t =
+duplex)
+>
+>  #define WOL_MODE_COUNT         8
+>
+> +/* RSS hash function data
+> + * XOR the corresponding source and destination fields of each specified
+> + * protocol. Both copies of the XOR'ed fields are fed into the RSS and R=
+XHASH
+> + * calculation. Note that this XORing reduces the input set entropy and =
+could
+> + * be exploited to reduce the RSS queue spread.
+> + */
+> +#define        RXH_XFRM_SYM_XOR        (1 << 0)
+> +#define        RXH_XFRM_NO_CHANGE      0xff
+> +
+>  /* L2-L4 network traffic flow types */
+>  #define        TCP_V4_FLOW     0x01    /* hash or spec (tcp_ip4_spec) */
+>  #define        UDP_V4_FLOW     0x02    /* hash or spec (udp_ip4_spec) */
+> @@ -2128,18 +2140,6 @@ enum ethtool_reset_flags {
+>   *     refused. For drivers: ignore this field (use kernel's
+>   *     __ETHTOOL_LINK_MODE_MASK_NBITS instead), any change to it will
+>   *     be overwritten by kernel.
+> - * @supported: Bitmap with each bit meaning given by
+> - *     %ethtool_link_mode_bit_indices for the link modes, physical
+> - *     connectors and other link features for which the interface
+> - *     supports autonegotiation or auto-detection.  Read-only.
+> - * @advertising: Bitmap with each bit meaning given by
+> - *     %ethtool_link_mode_bit_indices for the link modes, physical
+> - *     connectors and other link features that are advertised through
+> - *     autonegotiation or enabled for auto-detection.
+> - * @lp_advertising: Bitmap with each bit meaning given by
+> - *     %ethtool_link_mode_bit_indices for the link modes, and other
+> - *     link features that the link partner advertised through
+> - *     autonegotiation; 0 if unknown or not applicable.  Read-only.
+>   * @transceiver: Used to distinguish different possible PHY types,
+>   *     reported consistently by PHYLIB.  Read-only.
+>   * @master_slave_cfg: Master/slave port mode.
+> @@ -2181,6 +2181,21 @@ enum ethtool_reset_flags {
+>   * %set_link_ksettings() should validate all fields other than @cmd
+>   * and @link_mode_masks_nwords that are not described as read-only or
+>   * deprecated, and must ignore all fields described as read-only.
+> + *
+> + * @link_mode_masks is divided into three bitfields, each of length
+> + * @link_mode_masks_nwords:
+> + * - supported: Bitmap with each bit meaning given by
+> + *     %ethtool_link_mode_bit_indices for the link modes, physical
+> + *     connectors and other link features for which the interface
+> + *     supports autonegotiation or auto-detection.  Read-only.
+> + * - advertising: Bitmap with each bit meaning given by
+> + *     %ethtool_link_mode_bit_indices for the link modes, physical
+> + *     connectors and other link features that are advertised through
+> + *     autonegotiation or enabled for auto-detection.
+> + * - lp_advertising: Bitmap with each bit meaning given by
+> + *     %ethtool_link_mode_bit_indices for the link modes, and other
+> + *     link features that the link partner advertised through
+> + *     autonegotiation; 0 if unknown or not applicable.  Read-only.
+>   */
+>  struct ethtool_link_settings {
+>         uint32_t        cmd;
+> diff --git a/include/standard-headers/linux/virtio_config.h b/include/sta=
+ndard-headers/linux/virtio_config.h
+> index bfd1ca643e..45be0fa1bc 100644
+> --- a/include/standard-headers/linux/virtio_config.h
+> +++ b/include/standard-headers/linux/virtio_config.h
+> @@ -52,7 +52,7 @@
+>   * rest are per-device feature bits.
+>   */
+>  #define VIRTIO_TRANSPORT_F_START       28
+> -#define VIRTIO_TRANSPORT_F_END         41
+> +#define VIRTIO_TRANSPORT_F_END         42
+>
+>  #ifndef VIRTIO_CONFIG_NO_LEGACY
+>  /* Do we get callbacks when the ring is completely used, even if we've
+> @@ -112,4 +112,10 @@
+>   * This feature indicates that the driver can reset a queue individually=
+.
+>   */
+>  #define VIRTIO_F_RING_RESET            40
+> +
+> +/*
+> + * This feature indicates that the device support administration virtque=
+ues.
+> + */
+> +#define VIRTIO_F_ADMIN_VQ              41
+> +
+>  #endif /* _LINUX_VIRTIO_CONFIG_H */
+> diff --git a/include/standard-headers/linux/virtio_pci.h b/include/standa=
+rd-headers/linux/virtio_pci.h
+> index b7fdfd0668..3e2bc2c97e 100644
+> --- a/include/standard-headers/linux/virtio_pci.h
+> +++ b/include/standard-headers/linux/virtio_pci.h
+> @@ -175,6 +175,9 @@ struct virtio_pci_modern_common_cfg {
+>
+>         uint16_t queue_notify_data;     /* read-write */
+>         uint16_t queue_reset;           /* read-write */
+> +
+> +       uint16_t admin_queue_index;     /* read-only */
+> +       uint16_t admin_queue_num;               /* read-only */
+>  };
+>
+>  /* Fields in VIRTIO_PCI_CAP_PCI_CFG: */
+> @@ -215,7 +218,72 @@ struct virtio_pci_cfg_cap {
+>  #define VIRTIO_PCI_COMMON_Q_USEDHI     52
+>  #define VIRTIO_PCI_COMMON_Q_NDATA      56
+>  #define VIRTIO_PCI_COMMON_Q_RESET      58
+> +#define VIRTIO_PCI_COMMON_ADM_Q_IDX    60
+> +#define VIRTIO_PCI_COMMON_ADM_Q_NUM    62
+>
+>  #endif /* VIRTIO_PCI_NO_MODERN */
+>
+> +/* Admin command status. */
+> +#define VIRTIO_ADMIN_STATUS_OK         0
+> +
+> +/* Admin command opcode. */
+> +#define VIRTIO_ADMIN_CMD_LIST_QUERY    0x0
+> +#define VIRTIO_ADMIN_CMD_LIST_USE      0x1
+> +
+> +/* Admin command group type. */
+> +#define VIRTIO_ADMIN_GROUP_TYPE_SRIOV  0x1
+> +
+> +/* Transitional device admin command. */
+> +#define VIRTIO_ADMIN_CMD_LEGACY_COMMON_CFG_WRITE       0x2
+> +#define VIRTIO_ADMIN_CMD_LEGACY_COMMON_CFG_READ                0x3
+> +#define VIRTIO_ADMIN_CMD_LEGACY_DEV_CFG_WRITE          0x4
+> +#define VIRTIO_ADMIN_CMD_LEGACY_DEV_CFG_READ           0x5
+> +#define VIRTIO_ADMIN_CMD_LEGACY_NOTIFY_INFO            0x6
+> +
+> +struct QEMU_PACKED virtio_admin_cmd_hdr {
+> +       uint16_t opcode;
+> +       /*
+> +        * 1 - SR-IOV
+> +        * 2-65535 - reserved
+> +        */
+> +       uint16_t group_type;
+> +       /* Unused, reserved for future extensions. */
+> +       uint8_t reserved1[12];
+> +       uint64_t group_member_id;
+> +};
+> +
+> +struct QEMU_PACKED virtio_admin_cmd_status {
+> +       uint16_t status;
+> +       uint16_t status_qualifier;
+> +       /* Unused, reserved for future extensions. */
+> +       uint8_t reserved2[4];
+> +};
+> +
+> +struct QEMU_PACKED virtio_admin_cmd_legacy_wr_data {
+> +       uint8_t offset; /* Starting offset of the register(s) to write. *=
+/
+> +       uint8_t reserved[7];
+> +       uint8_t registers[];
+> +};
+> +
+> +struct QEMU_PACKED virtio_admin_cmd_legacy_rd_data {
+> +       uint8_t offset; /* Starting offset of the register(s) to read. */
+> +};
+> +
+> +#define VIRTIO_ADMIN_CMD_NOTIFY_INFO_FLAGS_END 0
+> +#define VIRTIO_ADMIN_CMD_NOTIFY_INFO_FLAGS_OWNER_DEV 0x1
+> +#define VIRTIO_ADMIN_CMD_NOTIFY_INFO_FLAGS_OWNER_MEM 0x2
+> +
+> +#define VIRTIO_ADMIN_CMD_MAX_NOTIFY_INFO 4
+> +
+> +struct QEMU_PACKED virtio_admin_cmd_notify_info_data {
+> +       uint8_t flags; /* 0 =3D end of list, 1 =3D owner device, 2 =3D me=
+mber device */
+> +       uint8_t bar; /* BAR of the member or the owner device */
+> +       uint8_t padding[6];
+> +       uint64_t offset; /* Offset within bar. */
+> +};
+> +
+> +struct virtio_admin_cmd_notify_info_result {
+> +       struct virtio_admin_cmd_notify_info_data entries[VIRTIO_ADMIN_CMD=
+_MAX_NOTIFY_INFO];
+> +};
+> +
+>  #endif
+> diff --git a/include/standard-headers/linux/virtio_pmem.h b/include/stand=
+ard-headers/linux/virtio_pmem.h
+> index fc029de798..1a2576d017 100644
+> --- a/include/standard-headers/linux/virtio_pmem.h
+> +++ b/include/standard-headers/linux/virtio_pmem.h
+> @@ -14,6 +14,13 @@
+>  #include "standard-headers/linux/virtio_ids.h"
+>  #include "standard-headers/linux/virtio_config.h"
+>
+> +/* Feature bits */
+> +/* guest physical address range will be indicated as shared memory regio=
+n 0 */
+> +#define VIRTIO_PMEM_F_SHMEM_REGION 0
+> +
+> +/* shmid of the shared memory region corresponding to the pmem */
+> +#define VIRTIO_PMEM_SHMEM_REGION_ID 0
+> +
+>  struct virtio_pmem_config {
+>         uint64_t start;
+>         uint64_t size;
+> diff --git a/linux-headers/asm-generic/unistd.h b/linux-headers/asm-gener=
+ic/unistd.h
+> index 756b013fb8..75f00965ab 100644
+> --- a/linux-headers/asm-generic/unistd.h
+> +++ b/linux-headers/asm-generic/unistd.h
+> @@ -829,8 +829,21 @@ __SYSCALL(__NR_futex_wait, sys_futex_wait)
+>  #define __NR_futex_requeue 456
+>  __SYSCALL(__NR_futex_requeue, sys_futex_requeue)
+>
+> +#define __NR_statmount   457
+> +__SYSCALL(__NR_statmount, sys_statmount)
+> +
+> +#define __NR_listmount   458
+> +__SYSCALL(__NR_listmount, sys_listmount)
+> +
+> +#define __NR_lsm_get_self_attr 459
+> +__SYSCALL(__NR_lsm_get_self_attr, sys_lsm_get_self_attr)
+> +#define __NR_lsm_set_self_attr 460
+> +__SYSCALL(__NR_lsm_set_self_attr, sys_lsm_set_self_attr)
+> +#define __NR_lsm_list_modules 461
+> +__SYSCALL(__NR_lsm_list_modules, sys_lsm_list_modules)
+> +
+>  #undef __NR_syscalls
+> -#define __NR_syscalls 457
+> +#define __NR_syscalls 462
+>
+>  /*
+>   * 32 bit systems traditionally used different
+> diff --git a/linux-headers/asm-mips/mman.h b/linux-headers/asm-mips/mman.=
+h
+> index c6e1fc77c9..9c48d9a21a 100644
+> --- a/linux-headers/asm-mips/mman.h
+> +++ b/linux-headers/asm-mips/mman.h
+> @@ -88,7 +88,7 @@
+>  #define MADV_HUGEPAGE  14              /* Worth backing with hugepages *=
+/
+>  #define MADV_NOHUGEPAGE 15             /* Not worth backing with hugepag=
+es */
+>
+> -#define MADV_DONTDUMP  16              /* Explicity exclude from the cor=
+e dump,
+> +#define MADV_DONTDUMP  16              /* Explicitly exclude from core d=
+ump,
+>                                            overrides the coredump filter =
+bits */
+>  #define MADV_DODUMP    17              /* Clear the MADV_NODUMP flag */
+>
+> diff --git a/linux-headers/asm-mips/unistd_n32.h b/linux-headers/asm-mips=
+/unistd_n32.h
+> index 994b6f008f..ce2e050a9b 100644
+> --- a/linux-headers/asm-mips/unistd_n32.h
+> +++ b/linux-headers/asm-mips/unistd_n32.h
+> @@ -385,5 +385,10 @@
+>  #define __NR_futex_wake (__NR_Linux + 454)
+>  #define __NR_futex_wait (__NR_Linux + 455)
+>  #define __NR_futex_requeue (__NR_Linux + 456)
+> +#define __NR_statmount (__NR_Linux + 457)
+> +#define __NR_listmount (__NR_Linux + 458)
+> +#define __NR_lsm_get_self_attr (__NR_Linux + 459)
+> +#define __NR_lsm_set_self_attr (__NR_Linux + 460)
+> +#define __NR_lsm_list_modules (__NR_Linux + 461)
+>
+>  #endif /* _ASM_UNISTD_N32_H */
+> diff --git a/linux-headers/asm-mips/unistd_n64.h b/linux-headers/asm-mips=
+/unistd_n64.h
+> index 41dcf5877a..5bfb3733ff 100644
+> --- a/linux-headers/asm-mips/unistd_n64.h
+> +++ b/linux-headers/asm-mips/unistd_n64.h
+> @@ -361,5 +361,10 @@
+>  #define __NR_futex_wake (__NR_Linux + 454)
+>  #define __NR_futex_wait (__NR_Linux + 455)
+>  #define __NR_futex_requeue (__NR_Linux + 456)
+> +#define __NR_statmount (__NR_Linux + 457)
+> +#define __NR_listmount (__NR_Linux + 458)
+> +#define __NR_lsm_get_self_attr (__NR_Linux + 459)
+> +#define __NR_lsm_set_self_attr (__NR_Linux + 460)
+> +#define __NR_lsm_list_modules (__NR_Linux + 461)
+>
+>  #endif /* _ASM_UNISTD_N64_H */
+> diff --git a/linux-headers/asm-mips/unistd_o32.h b/linux-headers/asm-mips=
+/unistd_o32.h
+> index ae9d334d96..02eaecd020 100644
+> --- a/linux-headers/asm-mips/unistd_o32.h
+> +++ b/linux-headers/asm-mips/unistd_o32.h
+> @@ -431,5 +431,10 @@
+>  #define __NR_futex_wake (__NR_Linux + 454)
+>  #define __NR_futex_wait (__NR_Linux + 455)
+>  #define __NR_futex_requeue (__NR_Linux + 456)
+> +#define __NR_statmount (__NR_Linux + 457)
+> +#define __NR_listmount (__NR_Linux + 458)
+> +#define __NR_lsm_get_self_attr (__NR_Linux + 459)
+> +#define __NR_lsm_set_self_attr (__NR_Linux + 460)
+> +#define __NR_lsm_list_modules (__NR_Linux + 461)
+>
+>  #endif /* _ASM_UNISTD_O32_H */
+> diff --git a/linux-headers/asm-powerpc/unistd_32.h b/linux-headers/asm-po=
+werpc/unistd_32.h
+> index b9b23d66d7..bbab08d6ec 100644
+> --- a/linux-headers/asm-powerpc/unistd_32.h
+> +++ b/linux-headers/asm-powerpc/unistd_32.h
+> @@ -438,6 +438,11 @@
+>  #define __NR_futex_wake 454
+>  #define __NR_futex_wait 455
+>  #define __NR_futex_requeue 456
+> +#define __NR_statmount 457
+> +#define __NR_listmount 458
+> +#define __NR_lsm_get_self_attr 459
+> +#define __NR_lsm_set_self_attr 460
+> +#define __NR_lsm_list_modules 461
 >
 >
-> Thanks,
-> Yong Li
+>  #endif /* _ASM_UNISTD_32_H */
+> diff --git a/linux-headers/asm-powerpc/unistd_64.h b/linux-headers/asm-po=
+werpc/unistd_64.h
+> index cbb4b3e8f7..af34cde70f 100644
+> --- a/linux-headers/asm-powerpc/unistd_64.h
+> +++ b/linux-headers/asm-powerpc/unistd_64.h
+> @@ -410,6 +410,11 @@
+>  #define __NR_futex_wake 454
+>  #define __NR_futex_wait 455
+>  #define __NR_futex_requeue 456
+> +#define __NR_statmount 457
+> +#define __NR_listmount 458
+> +#define __NR_lsm_get_self_attr 459
+> +#define __NR_lsm_set_self_attr 460
+> +#define __NR_lsm_list_modules 461
+>
+>
+>  #endif /* _ASM_UNISTD_64_H */
+> diff --git a/linux-headers/asm-riscv/kvm.h b/linux-headers/asm-riscv/kvm.=
+h
+> index 60d3b21dea..7499e88a94 100644
+> --- a/linux-headers/asm-riscv/kvm.h
+> +++ b/linux-headers/asm-riscv/kvm.h
+> @@ -139,6 +139,33 @@ enum KVM_RISCV_ISA_EXT_ID {
+>         KVM_RISCV_ISA_EXT_ZIHPM,
+>         KVM_RISCV_ISA_EXT_SMSTATEEN,
+>         KVM_RISCV_ISA_EXT_ZICOND,
+> +       KVM_RISCV_ISA_EXT_ZBC,
+> +       KVM_RISCV_ISA_EXT_ZBKB,
+> +       KVM_RISCV_ISA_EXT_ZBKC,
+> +       KVM_RISCV_ISA_EXT_ZBKX,
+> +       KVM_RISCV_ISA_EXT_ZKND,
+> +       KVM_RISCV_ISA_EXT_ZKNE,
+> +       KVM_RISCV_ISA_EXT_ZKNH,
+> +       KVM_RISCV_ISA_EXT_ZKR,
+> +       KVM_RISCV_ISA_EXT_ZKSED,
+> +       KVM_RISCV_ISA_EXT_ZKSH,
+> +       KVM_RISCV_ISA_EXT_ZKT,
+> +       KVM_RISCV_ISA_EXT_ZVBB,
+> +       KVM_RISCV_ISA_EXT_ZVBC,
+> +       KVM_RISCV_ISA_EXT_ZVKB,
+> +       KVM_RISCV_ISA_EXT_ZVKG,
+> +       KVM_RISCV_ISA_EXT_ZVKNED,
+> +       KVM_RISCV_ISA_EXT_ZVKNHA,
+> +       KVM_RISCV_ISA_EXT_ZVKNHB,
+> +       KVM_RISCV_ISA_EXT_ZVKSED,
+> +       KVM_RISCV_ISA_EXT_ZVKSH,
+> +       KVM_RISCV_ISA_EXT_ZVKT,
+> +       KVM_RISCV_ISA_EXT_ZFH,
+> +       KVM_RISCV_ISA_EXT_ZFHMIN,
+> +       KVM_RISCV_ISA_EXT_ZIHINTNTL,
+> +       KVM_RISCV_ISA_EXT_ZVFH,
+> +       KVM_RISCV_ISA_EXT_ZVFHMIN,
+> +       KVM_RISCV_ISA_EXT_ZFA,
+>         KVM_RISCV_ISA_EXT_MAX,
+>  };
+>
+> @@ -157,9 +184,16 @@ enum KVM_RISCV_SBI_EXT_ID {
+>         KVM_RISCV_SBI_EXT_EXPERIMENTAL,
+>         KVM_RISCV_SBI_EXT_VENDOR,
+>         KVM_RISCV_SBI_EXT_DBCN,
+> +       KVM_RISCV_SBI_EXT_STA,
+>         KVM_RISCV_SBI_EXT_MAX,
+>  };
+>
+> +/* SBI STA extension registers for KVM_GET_ONE_REG and KVM_SET_ONE_REG *=
+/
+> +struct kvm_riscv_sbi_sta {
+> +       unsigned long shmem_lo;
+> +       unsigned long shmem_hi;
+> +};
+> +
+>  /* Possible states for kvm_riscv_timer */
+>  #define KVM_RISCV_TIMER_STATE_OFF      0
+>  #define KVM_RISCV_TIMER_STATE_ON       1
+> @@ -241,6 +275,12 @@ enum KVM_RISCV_SBI_EXT_ID {
+>  #define KVM_REG_RISCV_VECTOR_REG(n)    \
+>                 ((n) + sizeof(struct __riscv_v_ext_state) / sizeof(unsign=
+ed long))
+>
+> +/* Registers for specific SBI extensions are mapped as type 10 */
+> +#define KVM_REG_RISCV_SBI_STATE                (0x0a << KVM_REG_RISCV_TY=
+PE_SHIFT)
+> +#define KVM_REG_RISCV_SBI_STA          (0x0 << KVM_REG_RISCV_SUBTYPE_SHI=
+FT)
+> +#define KVM_REG_RISCV_SBI_STA_REG(name)                \
+> +               (offsetof(struct kvm_riscv_sbi_sta, name) / sizeof(unsign=
+ed long))
+> +
+>  /* Device Control API: RISC-V AIA */
+>  #define KVM_DEV_RISCV_APLIC_ALIGN              0x1000
+>  #define KVM_DEV_RISCV_APLIC_SIZE               0x4000
+> diff --git a/linux-headers/asm-s390/unistd_32.h b/linux-headers/asm-s390/=
+unistd_32.h
+> index c093e6d5f9..a3ece69d82 100644
+> --- a/linux-headers/asm-s390/unistd_32.h
+> +++ b/linux-headers/asm-s390/unistd_32.h
+> @@ -429,5 +429,10 @@
+>  #define __NR_futex_wake 454
+>  #define __NR_futex_wait 455
+>  #define __NR_futex_requeue 456
+> +#define __NR_statmount 457
+> +#define __NR_listmount 458
+> +#define __NR_lsm_get_self_attr 459
+> +#define __NR_lsm_set_self_attr 460
+> +#define __NR_lsm_list_modules 461
+>
+>  #endif /* _ASM_S390_UNISTD_32_H */
+> diff --git a/linux-headers/asm-s390/unistd_64.h b/linux-headers/asm-s390/=
+unistd_64.h
+> index 114c0569a4..8c5fd93495 100644
+> --- a/linux-headers/asm-s390/unistd_64.h
+> +++ b/linux-headers/asm-s390/unistd_64.h
+> @@ -377,5 +377,10 @@
+>  #define __NR_futex_wake 454
+>  #define __NR_futex_wait 455
+>  #define __NR_futex_requeue 456
+> +#define __NR_statmount 457
+> +#define __NR_listmount 458
+> +#define __NR_lsm_get_self_attr 459
+> +#define __NR_lsm_set_self_attr 460
+> +#define __NR_lsm_list_modules 461
+>
+>  #endif /* _ASM_S390_UNISTD_64_H */
+> diff --git a/linux-headers/asm-x86/kvm.h b/linux-headers/asm-x86/kvm.h
+> index 2b3a8f7bd2..003fb74534 100644
+> --- a/linux-headers/asm-x86/kvm.h
+> +++ b/linux-headers/asm-x86/kvm.h
+> @@ -560,4 +560,7 @@ struct kvm_pmu_event_filter {
+>  /* x86-specific KVM_EXIT_HYPERCALL flags. */
+>  #define KVM_EXIT_HYPERCALL_LONG_MODE   BIT(0)
+>
+> +#define KVM_X86_DEFAULT_VM     0
+> +#define KVM_X86_SW_PROTECTED_VM        1
+> +
+>  #endif /* _ASM_X86_KVM_H */
+> diff --git a/linux-headers/asm-x86/unistd_32.h b/linux-headers/asm-x86/un=
+istd_32.h
+> index 329649c377..5c9c329e93 100644
+> --- a/linux-headers/asm-x86/unistd_32.h
+> +++ b/linux-headers/asm-x86/unistd_32.h
+> @@ -447,6 +447,11 @@
+>  #define __NR_futex_wake 454
+>  #define __NR_futex_wait 455
+>  #define __NR_futex_requeue 456
+> +#define __NR_statmount 457
+> +#define __NR_listmount 458
+> +#define __NR_lsm_get_self_attr 459
+> +#define __NR_lsm_set_self_attr 460
+> +#define __NR_lsm_list_modules 461
+>
+>
+>  #endif /* _ASM_UNISTD_32_H */
+> diff --git a/linux-headers/asm-x86/unistd_64.h b/linux-headers/asm-x86/un=
+istd_64.h
+> index 4583606ce6..d9aab7ae87 100644
+> --- a/linux-headers/asm-x86/unistd_64.h
+> +++ b/linux-headers/asm-x86/unistd_64.h
+> @@ -369,6 +369,11 @@
+>  #define __NR_futex_wake 454
+>  #define __NR_futex_wait 455
+>  #define __NR_futex_requeue 456
+> +#define __NR_statmount 457
+> +#define __NR_listmount 458
+> +#define __NR_lsm_get_self_attr 459
+> +#define __NR_lsm_set_self_attr 460
+> +#define __NR_lsm_list_modules 461
+>
+>
+>  #endif /* _ASM_UNISTD_64_H */
+> diff --git a/linux-headers/asm-x86/unistd_x32.h b/linux-headers/asm-x86/u=
+nistd_x32.h
+> index 146d74d8e4..63cdd1ee43 100644
+> --- a/linux-headers/asm-x86/unistd_x32.h
+> +++ b/linux-headers/asm-x86/unistd_x32.h
+> @@ -321,6 +321,11 @@
+>  #define __NR_futex_wake (__X32_SYSCALL_BIT + 454)
+>  #define __NR_futex_wait (__X32_SYSCALL_BIT + 455)
+>  #define __NR_futex_requeue (__X32_SYSCALL_BIT + 456)
+> +#define __NR_statmount (__X32_SYSCALL_BIT + 457)
+> +#define __NR_listmount (__X32_SYSCALL_BIT + 458)
+> +#define __NR_lsm_get_self_attr (__X32_SYSCALL_BIT + 459)
+> +#define __NR_lsm_set_self_attr (__X32_SYSCALL_BIT + 460)
+> +#define __NR_lsm_list_modules (__X32_SYSCALL_BIT + 461)
+>  #define __NR_rt_sigaction (__X32_SYSCALL_BIT + 512)
+>  #define __NR_rt_sigreturn (__X32_SYSCALL_BIT + 513)
+>  #define __NR_ioctl (__X32_SYSCALL_BIT + 514)
+> diff --git a/linux-headers/linux/iommufd.h b/linux-headers/linux/iommufd.=
+h
+> index 806d98d09c..72e8f4b9dd 100644
+> --- a/linux-headers/linux/iommufd.h
+> +++ b/linux-headers/linux/iommufd.h
+> @@ -49,6 +49,7 @@ enum {
+>         IOMMUFD_CMD_GET_HW_INFO,
+>         IOMMUFD_CMD_HWPT_SET_DIRTY_TRACKING,
+>         IOMMUFD_CMD_HWPT_GET_DIRTY_BITMAP,
+> +       IOMMUFD_CMD_HWPT_INVALIDATE,
+>  };
+>
+>  /**
+> @@ -613,4 +614,82 @@ struct iommu_hwpt_get_dirty_bitmap {
+>  #define IOMMU_HWPT_GET_DIRTY_BITMAP _IO(IOMMUFD_TYPE, \
+>                                         IOMMUFD_CMD_HWPT_GET_DIRTY_BITMAP=
+)
+>
+> +/**
+> + * enum iommu_hwpt_invalidate_data_type - IOMMU HWPT Cache Invalidation
+> + *                                        Data Type
+> + * @IOMMU_HWPT_INVALIDATE_DATA_VTD_S1: Invalidation data for VTD_S1
+> + */
+> +enum iommu_hwpt_invalidate_data_type {
+> +       IOMMU_HWPT_INVALIDATE_DATA_VTD_S1,
+> +};
+> +
+> +/**
+> + * enum iommu_hwpt_vtd_s1_invalidate_flags - Flags for Intel VT-d
+> + *                                           stage-1 cache invalidation
+> + * @IOMMU_VTD_INV_FLAGS_LEAF: Indicates whether the invalidation applies
+> + *                            to all-levels page structure cache or just
+> + *                            the leaf PTE cache.
+> + */
+> +enum iommu_hwpt_vtd_s1_invalidate_flags {
+> +       IOMMU_VTD_INV_FLAGS_LEAF =3D 1 << 0,
+> +};
+> +
+> +/**
+> + * struct iommu_hwpt_vtd_s1_invalidate - Intel VT-d cache invalidation
+> + *                                       (IOMMU_HWPT_INVALIDATE_DATA_VTD=
+_S1)
+> + * @addr: The start address of the range to be invalidated. It needs to
+> + *        be 4KB aligned.
+> + * @npages: Number of contiguous 4K pages to be invalidated.
+> + * @flags: Combination of enum iommu_hwpt_vtd_s1_invalidate_flags
+> + * @__reserved: Must be 0
+> + *
+> + * The Intel VT-d specific invalidation data for user-managed stage-1 ca=
+che
+> + * invalidation in nested translation. Userspace uses this structure to
+> + * tell the impacted cache scope after modifying the stage-1 page table.
+> + *
+> + * Invalidating all the caches related to the page table by setting @add=
+r
+> + * to be 0 and @npages to be U64_MAX.
+> + *
+> + * The device TLB will be invalidated automatically if ATS is enabled.
+> + */
+> +struct iommu_hwpt_vtd_s1_invalidate {
+> +       __aligned_u64 addr;
+> +       __aligned_u64 npages;
+> +       __u32 flags;
+> +       __u32 __reserved;
+> +};
+> +
+> +/**
+> + * struct iommu_hwpt_invalidate - ioctl(IOMMU_HWPT_INVALIDATE)
+> + * @size: sizeof(struct iommu_hwpt_invalidate)
+> + * @hwpt_id: ID of a nested HWPT for cache invalidation
+> + * @data_uptr: User pointer to an array of driver-specific cache invalid=
+ation
+> + *             data.
+> + * @data_type: One of enum iommu_hwpt_invalidate_data_type, defining the=
+ data
+> + *             type of all the entries in the invalidation request array=
+. It
+> + *             should be a type supported by the hwpt pointed by @hwpt_i=
+d.
+> + * @entry_len: Length (in bytes) of a request entry in the request array
+> + * @entry_num: Input the number of cache invalidation requests in the ar=
+ray.
+> + *             Output the number of requests successfully handled by ker=
+nel.
+> + * @__reserved: Must be 0.
+> + *
+> + * Invalidate the iommu cache for user-managed page table. Modifications=
+ on a
+> + * user-managed page table should be followed by this operation to sync =
+cache.
+> + * Each ioctl can support one or more cache invalidation requests in the=
+ array
+> + * that has a total size of @entry_len * @entry_num.
+> + *
+> + * An empty invalidation request array by setting @entry_num=3D=3D0 is a=
+llowed, and
+> + * @entry_len and @data_uptr would be ignored in this case. This can be =
+used to
+> + * check if the given @data_type is supported or not by kernel.
+> + */
+> +struct iommu_hwpt_invalidate {
+> +       __u32 size;
+> +       __u32 hwpt_id;
+> +       __aligned_u64 data_uptr;
+> +       __u32 data_type;
+> +       __u32 entry_len;
+> +       __u32 entry_num;
+> +       __u32 __reserved;
+> +};
+> +#define IOMMU_HWPT_INVALIDATE _IO(IOMMUFD_TYPE, IOMMUFD_CMD_HWPT_INVALID=
+ATE)
+>  #endif
+> diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
+> index 549fea3a97..17839229b2 100644
+> --- a/linux-headers/linux/kvm.h
+> +++ b/linux-headers/linux/kvm.h
+> @@ -16,76 +16,6 @@
+>
+>  #define KVM_API_VERSION 12
+>
+> -/* *** Deprecated interfaces *** */
+> -
+> -#define KVM_TRC_SHIFT           16
+> -
+> -#define KVM_TRC_ENTRYEXIT       (1 << KVM_TRC_SHIFT)
+> -#define KVM_TRC_HANDLER         (1 << (KVM_TRC_SHIFT + 1))
+> -
+> -#define KVM_TRC_VMENTRY         (KVM_TRC_ENTRYEXIT + 0x01)
+> -#define KVM_TRC_VMEXIT          (KVM_TRC_ENTRYEXIT + 0x02)
+> -#define KVM_TRC_PAGE_FAULT      (KVM_TRC_HANDLER + 0x01)
+> -
+> -#define KVM_TRC_HEAD_SIZE       12
+> -#define KVM_TRC_CYCLE_SIZE      8
+> -#define KVM_TRC_EXTRA_MAX       7
+> -
+> -#define KVM_TRC_INJ_VIRQ         (KVM_TRC_HANDLER + 0x02)
+> -#define KVM_TRC_REDELIVER_EVT    (KVM_TRC_HANDLER + 0x03)
+> -#define KVM_TRC_PEND_INTR        (KVM_TRC_HANDLER + 0x04)
+> -#define KVM_TRC_IO_READ          (KVM_TRC_HANDLER + 0x05)
+> -#define KVM_TRC_IO_WRITE         (KVM_TRC_HANDLER + 0x06)
+> -#define KVM_TRC_CR_READ          (KVM_TRC_HANDLER + 0x07)
+> -#define KVM_TRC_CR_WRITE         (KVM_TRC_HANDLER + 0x08)
+> -#define KVM_TRC_DR_READ          (KVM_TRC_HANDLER + 0x09)
+> -#define KVM_TRC_DR_WRITE         (KVM_TRC_HANDLER + 0x0A)
+> -#define KVM_TRC_MSR_READ         (KVM_TRC_HANDLER + 0x0B)
+> -#define KVM_TRC_MSR_WRITE        (KVM_TRC_HANDLER + 0x0C)
+> -#define KVM_TRC_CPUID            (KVM_TRC_HANDLER + 0x0D)
+> -#define KVM_TRC_INTR             (KVM_TRC_HANDLER + 0x0E)
+> -#define KVM_TRC_NMI              (KVM_TRC_HANDLER + 0x0F)
+> -#define KVM_TRC_VMMCALL          (KVM_TRC_HANDLER + 0x10)
+> -#define KVM_TRC_HLT              (KVM_TRC_HANDLER + 0x11)
+> -#define KVM_TRC_CLTS             (KVM_TRC_HANDLER + 0x12)
+> -#define KVM_TRC_LMSW             (KVM_TRC_HANDLER + 0x13)
+> -#define KVM_TRC_APIC_ACCESS      (KVM_TRC_HANDLER + 0x14)
+> -#define KVM_TRC_TDP_FAULT        (KVM_TRC_HANDLER + 0x15)
+> -#define KVM_TRC_GTLB_WRITE       (KVM_TRC_HANDLER + 0x16)
+> -#define KVM_TRC_STLB_WRITE       (KVM_TRC_HANDLER + 0x17)
+> -#define KVM_TRC_STLB_INVAL       (KVM_TRC_HANDLER + 0x18)
+> -#define KVM_TRC_PPC_INSTR        (KVM_TRC_HANDLER + 0x19)
+> -
+> -struct kvm_user_trace_setup {
+> -       __u32 buf_size;
+> -       __u32 buf_nr;
+> -};
+> -
+> -#define __KVM_DEPRECATED_MAIN_W_0x06 \
+> -       _IOW(KVMIO, 0x06, struct kvm_user_trace_setup)
+> -#define __KVM_DEPRECATED_MAIN_0x07 _IO(KVMIO, 0x07)
+> -#define __KVM_DEPRECATED_MAIN_0x08 _IO(KVMIO, 0x08)
+> -
+> -#define __KVM_DEPRECATED_VM_R_0x70 _IOR(KVMIO, 0x70, struct kvm_assigned=
+_irq)
+> -
+> -struct kvm_breakpoint {
+> -       __u32 enabled;
+> -       __u32 padding;
+> -       __u64 address;
+> -};
+> -
+> -struct kvm_debug_guest {
+> -       __u32 enabled;
+> -       __u32 pad;
+> -       struct kvm_breakpoint breakpoints[4];
+> -       __u32 singlestep;
+> -};
+> -
+> -#define __KVM_DEPRECATED_VCPU_W_0x87 _IOW(KVMIO, 0x87, struct kvm_debug_=
+guest)
+> -
+> -/* *** End of deprecated interfaces *** */
+> -
+> -
+>  /* for KVM_SET_USER_MEMORY_REGION */
+>  struct kvm_userspace_memory_region {
+>         __u32 slot;
+> @@ -95,6 +25,19 @@ struct kvm_userspace_memory_region {
+>         __u64 userspace_addr; /* start of the userspace allocated memory =
+*/
+>  };
+>
+> +/* for KVM_SET_USER_MEMORY_REGION2 */
+> +struct kvm_userspace_memory_region2 {
+> +       __u32 slot;
+> +       __u32 flags;
+> +       __u64 guest_phys_addr;
+> +       __u64 memory_size;
+> +       __u64 userspace_addr;
+> +       __u64 guest_memfd_offset;
+> +       __u32 guest_memfd;
+> +       __u32 pad1;
+> +       __u64 pad2[14];
+> +};
+> +
+>  /*
+>   * The bit 0 ~ bit 15 of kvm_userspace_memory_region::flags are visible =
+for
+>   * userspace, other bits are reserved for kvm internal use which are def=
+ined
+> @@ -102,6 +45,7 @@ struct kvm_userspace_memory_region {
+>   */
+>  #define KVM_MEM_LOG_DIRTY_PAGES        (1UL << 0)
+>  #define KVM_MEM_READONLY       (1UL << 1)
+> +#define KVM_MEM_GUEST_MEMFD    (1UL << 2)
+>
+>  /* for KVM_IRQ_LINE */
+>  struct kvm_irq_level {
+> @@ -265,6 +209,7 @@ struct kvm_xen_exit {
+>  #define KVM_EXIT_RISCV_CSR        36
+>  #define KVM_EXIT_NOTIFY           37
+>  #define KVM_EXIT_LOONGARCH_IOCSR  38
+> +#define KVM_EXIT_MEMORY_FAULT     39
+>
+>  /* For KVM_EXIT_INTERNAL_ERROR */
+>  /* Emulate instruction failed. */
+> @@ -514,6 +459,13 @@ struct kvm_run {
+>  #define KVM_NOTIFY_CONTEXT_INVALID     (1 << 0)
+>                         __u32 flags;
+>                 } notify;
+> +               /* KVM_EXIT_MEMORY_FAULT */
+> +               struct {
+> +#define KVM_MEMORY_EXIT_FLAG_PRIVATE   (1ULL << 3)
+> +                       __u64 flags;
+> +                       __u64 gpa;
+> +                       __u64 size;
+> +               } memory_fault;
+>                 /* Fix the size of the union. */
+>                 char padding[256];
+>         };
+> @@ -941,9 +893,6 @@ struct kvm_ppc_resize_hpt {
+>   */
+>  #define KVM_GET_VCPU_MMAP_SIZE    _IO(KVMIO,   0x04) /* in bytes */
+>  #define KVM_GET_SUPPORTED_CPUID   _IOWR(KVMIO, 0x05, struct kvm_cpuid2)
+> -#define KVM_TRACE_ENABLE          __KVM_DEPRECATED_MAIN_W_0x06
+> -#define KVM_TRACE_PAUSE           __KVM_DEPRECATED_MAIN_0x07
+> -#define KVM_TRACE_DISABLE         __KVM_DEPRECATED_MAIN_0x08
+>  #define KVM_GET_EMULATED_CPUID   _IOWR(KVMIO, 0x09, struct kvm_cpuid2)
+>  #define KVM_GET_MSR_FEATURE_INDEX_LIST    _IOWR(KVMIO, 0x0a, struct kvm_=
+msr_list)
+>
+> @@ -1197,6 +1146,11 @@ struct kvm_ppc_resize_hpt {
+>  #define KVM_CAP_ARM_EAGER_SPLIT_CHUNK_SIZE 228
+>  #define KVM_CAP_ARM_SUPPORTED_BLOCK_SIZES 229
+>  #define KVM_CAP_ARM_SUPPORTED_REG_MASK_RANGES 230
+> +#define KVM_CAP_USER_MEMORY2 231
+> +#define KVM_CAP_MEMORY_FAULT_INFO 232
+> +#define KVM_CAP_MEMORY_ATTRIBUTES 233
+> +#define KVM_CAP_GUEST_MEMFD 234
+> +#define KVM_CAP_VM_TYPES 235
+>
+>  #ifdef KVM_CAP_IRQ_ROUTING
+>
+> @@ -1287,6 +1241,7 @@ struct kvm_x86_mce {
+>  #define KVM_XEN_HVM_CONFIG_EVTCHN_2LEVEL       (1 << 4)
+>  #define KVM_XEN_HVM_CONFIG_EVTCHN_SEND         (1 << 5)
+>  #define KVM_XEN_HVM_CONFIG_RUNSTATE_UPDATE_FLAG        (1 << 6)
+> +#define KVM_XEN_HVM_CONFIG_PVCLOCK_TSC_UNSTABLE        (1 << 7)
+>
+>  struct kvm_xen_hvm_config {
+>         __u32 flags;
+> @@ -1479,6 +1434,8 @@ struct kvm_vfio_spapr_tce {
+>                                         struct kvm_userspace_memory_regio=
+n)
+>  #define KVM_SET_TSS_ADDR          _IO(KVMIO,   0x47)
+>  #define KVM_SET_IDENTITY_MAP_ADDR _IOW(KVMIO,  0x48, __u64)
+> +#define KVM_SET_USER_MEMORY_REGION2 _IOW(KVMIO, 0x49, \
+> +                                        struct kvm_userspace_memory_regi=
+on2)
+>
+>  /* enable ucontrol for s390 */
+>  struct kvm_s390_ucas_mapping {
+> @@ -1503,20 +1460,8 @@ struct kvm_s390_ucas_mapping {
+>                         _IOW(KVMIO,  0x67, struct kvm_coalesced_mmio_zone=
+)
+>  #define KVM_UNREGISTER_COALESCED_MMIO \
+>                         _IOW(KVMIO,  0x68, struct kvm_coalesced_mmio_zone=
+)
+> -#define KVM_ASSIGN_PCI_DEVICE     _IOR(KVMIO,  0x69, \
+> -                                      struct kvm_assigned_pci_dev)
+>  #define KVM_SET_GSI_ROUTING       _IOW(KVMIO,  0x6a, struct kvm_irq_rout=
+ing)
+> -/* deprecated, replaced by KVM_ASSIGN_DEV_IRQ */
+> -#define KVM_ASSIGN_IRQ            __KVM_DEPRECATED_VM_R_0x70
+> -#define KVM_ASSIGN_DEV_IRQ        _IOW(KVMIO,  0x70, struct kvm_assigned=
+_irq)
+>  #define KVM_REINJECT_CONTROL      _IO(KVMIO,   0x71)
+> -#define KVM_DEASSIGN_PCI_DEVICE   _IOW(KVMIO,  0x72, \
+> -                                      struct kvm_assigned_pci_dev)
+> -#define KVM_ASSIGN_SET_MSIX_NR    _IOW(KVMIO,  0x73, \
+> -                                      struct kvm_assigned_msix_nr)
+> -#define KVM_ASSIGN_SET_MSIX_ENTRY _IOW(KVMIO,  0x74, \
+> -                                      struct kvm_assigned_msix_entry)
+> -#define KVM_DEASSIGN_DEV_IRQ      _IOW(KVMIO,  0x75, struct kvm_assigned=
+_irq)
+>  #define KVM_IRQFD                 _IOW(KVMIO,  0x76, struct kvm_irqfd)
+>  #define KVM_CREATE_PIT2                  _IOW(KVMIO,  0x77, struct kvm_p=
+it_config)
+>  #define KVM_SET_BOOT_CPU_ID       _IO(KVMIO,   0x78)
+> @@ -1533,9 +1478,6 @@ struct kvm_s390_ucas_mapping {
+>  *  KVM_CAP_VM_TSC_CONTROL to set defaults for a VM */
+>  #define KVM_SET_TSC_KHZ           _IO(KVMIO,  0xa2)
+>  #define KVM_GET_TSC_KHZ           _IO(KVMIO,  0xa3)
+> -/* Available with KVM_CAP_PCI_2_3 */
+> -#define KVM_ASSIGN_SET_INTX_MASK  _IOW(KVMIO,  0xa4, \
+> -                                      struct kvm_assigned_pci_dev)
+>  /* Available with KVM_CAP_SIGNAL_MSI */
+>  #define KVM_SIGNAL_MSI            _IOW(KVMIO,  0xa5, struct kvm_msi)
+>  /* Available with KVM_CAP_PPC_GET_SMMU_INFO */
+> @@ -1588,8 +1530,6 @@ struct kvm_s390_ucas_mapping {
+>  #define KVM_SET_SREGS             _IOW(KVMIO,  0x84, struct kvm_sregs)
+>  #define KVM_TRANSLATE             _IOWR(KVMIO, 0x85, struct kvm_translat=
+ion)
+>  #define KVM_INTERRUPT             _IOW(KVMIO,  0x86, struct kvm_interrup=
+t)
+> -/* KVM_DEBUG_GUEST is no longer supported, use KVM_SET_GUEST_DEBUG inste=
+ad */
+> -#define KVM_DEBUG_GUEST           __KVM_DEPRECATED_VCPU_W_0x87
+>  #define KVM_GET_MSRS              _IOWR(KVMIO, 0x88, struct kvm_msrs)
+>  #define KVM_SET_MSRS              _IOW(KVMIO,  0x89, struct kvm_msrs)
+>  #define KVM_SET_CPUID             _IOW(KVMIO,  0x8a, struct kvm_cpuid)
+> @@ -2263,4 +2203,24 @@ struct kvm_s390_zpci_op {
+>  /* flags for kvm_s390_zpci_op->u.reg_aen.flags */
+>  #define KVM_S390_ZPCIOP_REGAEN_HOST    (1 << 0)
+>
+> +/* Available with KVM_CAP_MEMORY_ATTRIBUTES */
+> +#define KVM_SET_MEMORY_ATTRIBUTES              _IOW(KVMIO,  0xd2, struct=
+ kvm_memory_attributes)
+> +
+> +struct kvm_memory_attributes {
+> +       __u64 address;
+> +       __u64 size;
+> +       __u64 attributes;
+> +       __u64 flags;
+> +};
+> +
+> +#define KVM_MEMORY_ATTRIBUTE_PRIVATE           (1ULL << 3)
+> +
+> +#define KVM_CREATE_GUEST_MEMFD _IOWR(KVMIO,  0xd4, struct kvm_create_gue=
+st_memfd)
+> +
+> +struct kvm_create_guest_memfd {
+> +       __u64 size;
+> +       __u64 flags;
+> +       __u64 reserved[6];
+> +};
+> +
+>  #endif /* __LINUX_KVM_H */
+> diff --git a/linux-headers/linux/userfaultfd.h b/linux-headers/linux/user=
+faultfd.h
+> index 953c75feda..4283de22d5 100644
+> --- a/linux-headers/linux/userfaultfd.h
+> +++ b/linux-headers/linux/userfaultfd.h
+> @@ -41,7 +41,8 @@
+>                            UFFD_FEATURE_WP_HUGETLBFS_SHMEM |    \
+>                            UFFD_FEATURE_WP_UNPOPULATED |        \
+>                            UFFD_FEATURE_POISON |                \
+> -                          UFFD_FEATURE_WP_ASYNC)
+> +                          UFFD_FEATURE_WP_ASYNC |              \
+> +                          UFFD_FEATURE_MOVE)
+>  #define UFFD_API_IOCTLS                                \
+>         ((__u64)1 << _UFFDIO_REGISTER |         \
+>          (__u64)1 << _UFFDIO_UNREGISTER |       \
+> @@ -50,6 +51,7 @@
+>         ((__u64)1 << _UFFDIO_WAKE |             \
+>          (__u64)1 << _UFFDIO_COPY |             \
+>          (__u64)1 << _UFFDIO_ZEROPAGE |         \
+> +        (__u64)1 << _UFFDIO_MOVE |             \
+>          (__u64)1 << _UFFDIO_WRITEPROTECT |     \
+>          (__u64)1 << _UFFDIO_CONTINUE |         \
+>          (__u64)1 << _UFFDIO_POISON)
+> @@ -73,6 +75,7 @@
+>  #define _UFFDIO_WAKE                   (0x02)
+>  #define _UFFDIO_COPY                   (0x03)
+>  #define _UFFDIO_ZEROPAGE               (0x04)
+> +#define _UFFDIO_MOVE                   (0x05)
+>  #define _UFFDIO_WRITEPROTECT           (0x06)
+>  #define _UFFDIO_CONTINUE               (0x07)
+>  #define _UFFDIO_POISON                 (0x08)
+> @@ -92,6 +95,8 @@
+>                                       struct uffdio_copy)
+>  #define UFFDIO_ZEROPAGE                _IOWR(UFFDIO, _UFFDIO_ZEROPAGE, \
+>                                       struct uffdio_zeropage)
+> +#define UFFDIO_MOVE            _IOWR(UFFDIO, _UFFDIO_MOVE,     \
+> +                                     struct uffdio_move)
+>  #define UFFDIO_WRITEPROTECT    _IOWR(UFFDIO, _UFFDIO_WRITEPROTECT, \
+>                                       struct uffdio_writeprotect)
+>  #define UFFDIO_CONTINUE                _IOWR(UFFDIO, _UFFDIO_CONTINUE, \
+> @@ -222,6 +227,9 @@ struct uffdio_api {
+>          * asynchronous mode is supported in which the write fault is
+>          * automatically resolved and write-protection is un-set.
+>          * It implies UFFD_FEATURE_WP_UNPOPULATED.
+> +        *
+> +        * UFFD_FEATURE_MOVE indicates that the kernel supports moving an
+> +        * existing page contents from userspace.
+>          */
+>  #define UFFD_FEATURE_PAGEFAULT_FLAG_WP         (1<<0)
+>  #define UFFD_FEATURE_EVENT_FORK                        (1<<1)
+> @@ -239,6 +247,7 @@ struct uffdio_api {
+>  #define UFFD_FEATURE_WP_UNPOPULATED            (1<<13)
+>  #define UFFD_FEATURE_POISON                    (1<<14)
+>  #define UFFD_FEATURE_WP_ASYNC                  (1<<15)
+> +#define UFFD_FEATURE_MOVE                      (1<<16)
+>         __u64 features;
+>
+>         __u64 ioctls;
+> @@ -347,6 +356,24 @@ struct uffdio_poison {
+>         __s64 updated;
+>  };
+>
+> +struct uffdio_move {
+> +       __u64 dst;
+> +       __u64 src;
+> +       __u64 len;
+> +       /*
+> +        * Especially if used to atomically remove memory from the
+> +        * address space the wake on the dst range is not needed.
+> +        */
+> +#define UFFDIO_MOVE_MODE_DONTWAKE              ((__u64)1<<0)
+> +#define UFFDIO_MOVE_MODE_ALLOW_SRC_HOLES       ((__u64)1<<1)
+> +       __u64 mode;
+> +       /*
+> +        * "move" is written by the ioctl and must be at the end: the
+> +        * copy_from_user will not read the last 8 bytes.
+> +        */
+> +       __s64 move;
+> +};
+> +
+>  /*
+>   * Flags for the userfaultfd(2) system call itself.
+>   */
+> diff --git a/linux-headers/linux/vfio.h b/linux-headers/linux/vfio.h
+> index 8e175ece31..b4be37b225 100644
+> --- a/linux-headers/linux/vfio.h
+> +++ b/linux-headers/linux/vfio.h
+> @@ -1219,6 +1219,7 @@ enum vfio_device_mig_state {
+>         VFIO_DEVICE_STATE_RUNNING_P2P =3D 5,
+>         VFIO_DEVICE_STATE_PRE_COPY =3D 6,
+>         VFIO_DEVICE_STATE_PRE_COPY_P2P =3D 7,
+> +       VFIO_DEVICE_STATE_NR,
+>  };
+>
+>  /**
+> --
+> 2.43.2
 >
 >
 
