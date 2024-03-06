@@ -4,100 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A932C5475B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 07:48:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81304C54E49
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 08:12:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhm0S-0002P4-Lw; Wed, 06 Mar 2024 02:48:04 -0500
+	id 1rhmNn-0005Ys-M8; Wed, 06 Mar 2024 03:12:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1rhm0R-0002OT-27
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 02:48:03 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1rhmNk-0005YJ-Ih
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 03:12:09 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1rhm0P-0004j7-Ed
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 02:48:02 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1rhmNh-0007ui-Rh
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 03:12:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709711280;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1709712724;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=szLotHqHrLAWgY/IdU0Id4a22ZuDv3jSIc1NZf1CiDk=;
- b=dLzoY0rLh7HhxlxjrRATcDfGSYh0yILHlx0/DpYzBChcfPw0lvdtTIOmuR6rGLF60FnrM1
- 6svKYkJQKMQ61ddfkwwkdyEd79yGMN0yVJWx8IUO7plq43y9y9iGpzleY1PA/0Oey3JTKq
- Z0cdrV27QZ3gyqZaPXfOd+BF6Q39myw=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=pLVAwEcxEBBxu2flhfM3oC7axrJcqk6FEbJ62gCArig=;
+ b=TxDYWKKG/r0d8bcXKVzO9JcvJA4Ol0fP4f3izTMh4d2VSdqt8sQncBLSOSxObe98CUcZNm
+ /S+qAimR253CyvVDfyTPl/nfLAmcasT0JHONK/7NiDOLeD/x9m84IsGwJI140ix5x7JKPG
+ m+bLwirycAToPq6EEPhf9FbEjD2ZtPM=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-302-GyWUGp2aNWO6oEgyo_r5NQ-1; Wed, 06 Mar 2024 02:47:58 -0500
-X-MC-Unique: GyWUGp2aNWO6oEgyo_r5NQ-1
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-1dbe3ca6bb7so4048935ad.0
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 23:47:58 -0800 (PST)
+ us-mta-510-yXQ4cEQ_O1i0VotnmXBZVg-1; Wed, 06 Mar 2024 03:12:02 -0500
+X-MC-Unique: yXQ4cEQ_O1i0VotnmXBZVg-1
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-427b56e96a6so19163051cf.3
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 00:12:02 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709711277; x=1710316077;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=szLotHqHrLAWgY/IdU0Id4a22ZuDv3jSIc1NZf1CiDk=;
- b=Vpx/ldHjzhHOkuENS5NbAQ1Wh6s0lsl8KHN5rcnRWYOUbtyRZdDRxdrSWEhc6PCcXo
- d0gvpZ2+6jMIc7qYiySykc8nF/5T+sCCt48dkpImw0X+0UmhalSabT7ziKAFBKy147lB
- fb7Ya/IJ8xhw986d8ZDiStaatUII5pAdP6AA8d9kfcUXZ8VXN9sSTRPSTZjiZZPsCpob
- txm62kAwJf8YQ2xA9qW7Ko5pe4z1LqusGM5pbPNPq/GoUW/BDS7JPmd7+maiTjIpAo6z
- lxymLodJPD6Gl90jLEYa0ZBkr1H7Nt2zTkOu+zegsAIzKNcSvGnsjdtn5ydIyf0KAPh+
- ZzVQ==
-X-Gm-Message-State: AOJu0Yz7WgW1lCKQJtJZqWmuiCTeabj6s210g6nn17kq8C8f7xghTyaK
- c68yG2zy+1hOBmpMc9n3UMYchy5x4Od6FsV6APJdxng/U0mpjGffm1SRqTfkie5PHXutQyjeIzx
- oWRUAT9H6DC3OOhzhxmfcasee/r+0uzP4rl65CkDqcwm3p4fsUrX1
-X-Received: by 2002:a17:902:e804:b0:1dc:fccb:e05c with SMTP id
- u4-20020a170902e80400b001dcfccbe05cmr6391394plg.20.1709711277612; 
- Tue, 05 Mar 2024 23:47:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEtCYpqRjiblNXbOBNFPns/efleZA+zp+WkxR1UHwUIfC1PlZO9fUZZYCuqA5s80X1IP7nE6A==
-X-Received: by 2002:a17:902:e804:b0:1dc:fccb:e05c with SMTP id
- u4-20020a170902e80400b001dcfccbe05cmr6391378plg.20.1709711277270; 
- Tue, 05 Mar 2024 23:47:57 -0800 (PST)
-Received: from smtpclient.apple ([115.96.30.47])
+ d=1e100.net; s=20230601; t=1709712722; x=1710317522;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pLVAwEcxEBBxu2flhfM3oC7axrJcqk6FEbJ62gCArig=;
+ b=mxMyoopNXYLQljWPdriRPaKP4Ls3YZdX7KTdB3hj8VwXJeeZQx65Ex9bwex01k0rQX
+ 5f/rILIK85WJHdo7PA4k05jGIK1IDPWXDGYb4OFaI4MDIqSCfZiarW2tPLtG6La+/5Xx
+ lfpCSXcyEUCmviCe52t88u8B2duZjE/WpF5blkZ3HseXOZ+XuXgBOi8i86ESdWy1+Mmf
+ q3BrHverRoPp4Zia6Pf6t+ZaL+zz3xIuECx41N8827iRZn3eY/eqyF3Ulp43Mm3IhWM2
+ 7xOLeLERDqwXowensm2vAHN17kkoyUZDufdaxqOehcPM5qFm2HoE7Hfe42CEFYqL+eiM
+ 7WvA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVrY8jooiV/1ajp+TyfleLIGjqL4szMIazfZsXWQ7xxyML72lZF1ITU822Ws4+Tm41Ju1lapdWSl/S0Hx2bkxDxtB9Fdm8=
+X-Gm-Message-State: AOJu0YyuzW5TTJ4p2TprlQiPpsNHMDk/fK5bSNEXUbkkid/vGXR1LfIw
+ e3bOg/u0McO9ADAOptkkM6aBHvyp/DWmdHC1ZSAOFHA862nNWoUCZuNfVT9/BQVEr0OxchT/CpM
+ M1Ud2BpKf6K1pY1EkgeeFjWmJ8PxiMZjKWVjWOfCdviycRrotDQsP
+X-Received: by 2002:ac8:5701:0:b0:42e:e644:6a1b with SMTP id
+ 1-20020ac85701000000b0042ee6446a1bmr4635460qtw.1.1709712722500; 
+ Wed, 06 Mar 2024 00:12:02 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFLrlOWtIySmvuOisy5s4QGvFgoh0cuJZd8sx4IC3v3tEQRjSp8a5E5++fFHIPLlXqaB1QpeA==
+X-Received: by 2002:ac8:5701:0:b0:42e:e644:6a1b with SMTP id
+ 1-20020ac85701000000b0042ee6446a1bmr4635437qtw.1.1709712722264; 
+ Wed, 06 Mar 2024 00:12:02 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 12-20020a170902e9cc00b001db9fa23407sm11867440plk.195.2024.03.05.23.47.50
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 05 Mar 2024 23:47:56 -0800 (PST)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.400.31\))
-Subject: Re: [PATCH v2 17/20] smbios: clear smbios_type4_count before building
- tables
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <20240305155724.2047069-18-imammedo@redhat.com>
-Date: Wed, 6 Mar 2024 13:17:39 +0530
-Cc: QEMU Developers <qemu-devel@nongnu.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Song Gao <gaosong@loongson.cn>,
- Alistair Francis <alistair.francis@wdc.com>, palmer@dabbelt.com,
- bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, philmd@linaro.org, wangyanan55@huawei.com,
- eblake@redhat.com, armbru@redhat.com, qemu-arm@nongnu.org,
- qemu-riscv@nongnu.org, f.ebner@proxmox.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <6A030F09-22CE-4489-9F7A-D7343966DBAC@redhat.com>
-References: <20240305155724.2047069-1-imammedo@redhat.com>
- <20240305155724.2047069-18-imammedo@redhat.com>
-To: Igor Mammedov <imammedo@redhat.com>
-X-Mailer: Apple Mail (2.3774.400.31)
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.568,
+ h1-20020a05620a400100b007881fbfea7bsm3867890qko.24.2024.03.06.00.11.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 Mar 2024 00:12:00 -0800 (PST)
+Message-ID: <cc0afb73-efc5-4495-816e-a15786b7e943@redhat.com>
+Date: Wed, 6 Mar 2024 09:11:58 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 8/9] hw/arm/virt: Set virtio-iommu aw-bits default
+ value to 48
+Content-Language: en-US
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
+ "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "mst@redhat.com"
+ <mst@redhat.com>, "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+ "imammedo@redhat.com" <imammedo@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "clg@redhat.com" <clg@redhat.com>, "yanghliu@redhat.com"
+ <yanghliu@redhat.com>
+Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>
+References: <20240305180734.48515-1-eric.auger@redhat.com>
+ <20240305180734.48515-9-eric.auger@redhat.com>
+ <SJ0PR11MB674472228A664E543C15CD7092212@SJ0PR11MB6744.namprd11.prod.outlook.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <SJ0PR11MB674472228A664E543C15CD7092212@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -11
+X-Spam_score: -1.2
+X-Spam_bar: -
+X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.568,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,47 +119,75 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-> On 05-Mar-2024, at 21:27, Igor Mammedov <imammedo@redhat.com> wrote:
->=20
-> it will help to keep type 4 tables accounting correct in case
-> SMBIOS tables are built multiple times.
+On 3/6/24 04:25, Duan, Zhenzhong wrote:
+>
+>> -----Original Message-----
+>> From: Eric Auger <eric.auger@redhat.com>
+>> Subject: [PATCH v6 8/9] hw/arm/virt: Set virtio-iommu aw-bits default value
+>> to 48
+>>
+>> On ARM we set 48b as a default (matching SMMUv3 SMMU_IDR5.VAX == 0).
+>>
+>> hw_compat_8_2 is used to handle the compatibility for machine types
+>> before 9.0 (default was 64 bits).
+>>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>> ---
+>> hw/arm/virt.c | 17 +++++++++++++++++
+>> 1 file changed, 17 insertions(+)
+>>
+>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+>> index 0af1943697..dcfb25369b 100644
+>> --- a/hw/arm/virt.c
+>> +++ b/hw/arm/virt.c
+>> @@ -85,11 +85,28 @@
+>> #include "hw/char/pl011.h"
+>> #include "qemu/guest-random.h"
+>>
+>> +GlobalProperty arm_virt_compat[] = {
+>> +    { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
+>> +};
+>> +const size_t arm_virt_compat_len = G_N_ELEMENTS(arm_virt_compat);
+> This can be static, otherwise,
+sure
+>
+> Reviewed-by: Zhenzhong Duan <Zhenzhong.duan@intel.com>
+thanks!
 
-
-I suggest you arrange this before patch 15 where you are actually =
-calling smbios_get_tables_ep() multiple times. That way there is no =
-window where things can break between patches.
-
->=20
-> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-> Tested-by: Fiona Ebner <f.ebner@proxmox.com>
-> ---
-> hw/smbios/smbios.c | 1 +
-> 1 file changed, 1 insertion(+)
->=20
-> diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
-> index bf5c7a8885..b64d3bc227 100644
-> --- a/hw/smbios/smbios.c
-> +++ b/hw/smbios/smbios.c
-> @@ -981,6 +981,7 @@ static bool smbios_get_tables_ep(MachineState *ms,
->            ep_type =3D=3D SMBIOS_ENTRY_POINT_TYPE_64);
->=20
->     g_free(smbios_tables);
-> +    smbios_type4_count =3D 0;
-
-Nit: Can you put this before g_free() because gfree(smbios_tables) and =
-smbios_tables =3D memdup2() etc are related. This is kind of coming in =
-between.
-
->     smbios_tables =3D g_memdup2(usr_blobs, usr_blobs_len);
->     smbios_tables_len =3D usr_blobs_len;
->     smbios_table_max =3D usr_table_max;
-> --=20
-> 2.39.3
->=20
+Eric
+>
+> Thanks
+> Zhenzhong
+>
+>> +
+>> +/*
+>> + * This cannot be called from the virt_machine_class_init() because
+>> + * TYPE_VIRT_MACHINE is abstract and mc->compat_props
+>> g_ptr_array_new()
+>> + * only is called on virt non abstract class init.
+>> + */
+>> +static void arm_virt_compat_set(MachineClass *mc)
+>> +{
+>> +    compat_props_add(mc->compat_props, arm_virt_compat,
+>> +                     arm_virt_compat_len);
+>> +}
+>> +
+>> #define DEFINE_VIRT_MACHINE_LATEST(major, minor, latest) \
+>>     static void virt_##major##_##minor##_class_init(ObjectClass *oc, \
+>>                                                     void *data) \
+>>     { \
+>>         MachineClass *mc = MACHINE_CLASS(oc); \
+>> +        arm_virt_compat_set(mc); \
+>>         virt_machine_##major##_##minor##_options(mc); \
+>>         mc->desc = "QEMU " # major "." # minor " ARM Virtual Machine"; \
+>>         if (latest) { \
+>> --
+>> 2.41.0
 
 
