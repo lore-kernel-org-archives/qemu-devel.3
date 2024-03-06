@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B30CC54E49
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 01:41:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B639FC54E49
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 01:48:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhgGu-000706-FU; Tue, 05 Mar 2024 20:40:40 -0500
+	id 1rhgNy-0000Hr-Ak; Tue, 05 Mar 2024 20:47:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rhgGc-0006rE-UB; Tue, 05 Mar 2024 20:40:24 -0500
-Received: from mail-ua1-x931.google.com ([2607:f8b0:4864:20::931])
+ id 1rhgNw-0000H4-HO; Tue, 05 Mar 2024 20:47:56 -0500
+Received: from mail-vs1-xe35.google.com ([2607:f8b0:4864:20::e35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rhgGb-0005oj-EL; Tue, 05 Mar 2024 20:40:22 -0500
-Received: by mail-ua1-x931.google.com with SMTP id
- a1e0cc1a2514c-7dad83f225cso181219241.2; 
- Tue, 05 Mar 2024 17:40:20 -0800 (PST)
+ id 1rhgNu-0000UE-JR; Tue, 05 Mar 2024 20:47:56 -0500
+Received: by mail-vs1-xe35.google.com with SMTP id
+ ada2fe7eead31-4726608233fso1007049137.2; 
+ Tue, 05 Mar 2024 17:47:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709689220; x=1710294020; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1709689670; x=1710294470; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jfz18h3LH3supqkqIwvmvij97PQDzrOba52pvfQEjDY=;
- b=bdusj8jJvoB1EFUf0ydoeQLF/pMl0y+K8q0bUlt0EBjhvBt6WARwEzCQKq6H77SKZ+
- uvDF7iFyp5HSkmtv3vucO7+NBr1sibjFPjkjgWPo2LY4oNndpFid/iDvTYUyKtOMQSBP
- NGIBYnQ7F3qyJX8d+UXC18q6eGPQ+hZvStrPvQJqUBYbo48fBHIm/BKGZQcgnYFXxMwa
- 8AuiXiTYQXHt9ZBFDzKwiXEyPlRVhyB7XvKdcRX2Tn1aBbrGtNReTgYxiYUh4qYEfOgu
- Bix0ak4UPLvyqU0i9XYLsFpXg7CMYRrYBY8sv+++FTYcnSTVJaWzSnAYlo/hPqtwH7Ke
- DLpQ==
+ bh=EL8Yafyl4cnQOSXldTKS5ZEaAlLFa0fm8kJqJANsbtI=;
+ b=kPBZKJplhKKvMTXVtPXteF85cFyulNFyOy1SHhMax5tBX2wONDkCfCk9mKYjvcK6Su
+ EWlZXirKt1JKp575ZHRglUbmcyCkz2YHXyp3ih7A/RyWQK7DUIEPzvSXg6y7YUUBiYP9
+ /yHmTTFA7yPV+uBw9IhrtPQz+Za2FY9eUFit5FwS0H4mNsDmkED4LTq7gOpPc5DZFFHG
+ uKCNU6AlZ7PbFd6b65p76zO4r9WwKSDQS3JkVI39SHpEWiM/1/fauzc5PTAaUO7qGeTf
+ Rkcdrwo9zNnKh38cp7XUzl8b48KWJDv9XPleNwJmxNi46/bxmANTjfHz60mx4CRqya1m
+ uI6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709689220; x=1710294020;
+ d=1e100.net; s=20230601; t=1709689670; x=1710294470;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jfz18h3LH3supqkqIwvmvij97PQDzrOba52pvfQEjDY=;
- b=XCW194xuVog3dZxfPLLYiCCznXpXDSj3p+n9jScuVkGc71X22MkVEjSkPWu2zsBWLj
- q8iJRAx8KGsWqj8wD7ncvuioG8K5Zm/4RK7yDIO26yYucR9Rqw4lGJM2qcnJVlqP2lN3
- GLxyGKR0FRvSYl7jokhlOx5esi2htmlqVeIfSKgqtk2oJEihC9mYRlQ/FTvWfbtIMkAB
- rSJzuJOFKDmFwy3pQJkhYOO2maPRMTBqOfVaUCvDYeyZ/vflw0ANKtJ5ibnjaFuzUdqK
- 4CXN5PaZG7MYQlB8LAfaPnKs/nSUUGHUS20c1/fIlBNAdEu/Wn3s6aWbC6DnQB5yjl2C
- f9sQ==
+ bh=EL8Yafyl4cnQOSXldTKS5ZEaAlLFa0fm8kJqJANsbtI=;
+ b=of7c9YKCbl7qVW17xtNYIwnv0AjW5+gLSBmMbQo15Qb3PD0XbTnsyJDk/SoElb+hg2
+ 3qMUjEZstFfhnADnrXaGBNBPaW3ZA9L+5sXL5P0u9q6bRLhsRG9wPJtRFBpZ+SuoBNH2
+ 0onZW8OoSiNQvz8IqLN3uFHfvTiR+5wzoFcSLTFYHlJpbDTFH7lgxdySzwpz9muCzhhF
+ 4Gw2O66yldWIMUCUwKXzQ11M7nAPdpErBos4PiLlyeZWPffesUCgcODQsfUT7wsEevCf
+ V/PHRP7d5S4wjy+n1KZwsx3l7gKCUAq7JK0fT2Vnk1n45ECCui+Rb+SLcgP+NDfKDYmv
+ Kdbg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU7t7oi2djNcQn4FGKntVgtuA71y0gTc19DSX7XyvLeB1IeOaEpFOF8c5vviQQSchr6W/EgZ3DFP/+6yFHM6l/tdnWQuZo=
-X-Gm-Message-State: AOJu0YxtSgnPdmadNntjhGzG4EwIYqgNvzcd41jXwaZtj6qYmJgySS47
- BsWcdTjP5o2ZnxsZPV2SxceFmGQQYowK2HyIE36UsWpcDYSO2cmh3k+rPXNbZzZdLIxQnDhuVwo
- cVmhFpeK4PMnwSff2NTsKUCDmg90=
-X-Google-Smtp-Source: AGHT+IGUy5ZE5Huym3oo1bSdfQhK4P/xhmoHCFOnJubii75pWWON+PQ4tkg01SZs90+OzZHf+b1wrvUkRTdxn1OO0yg=
-X-Received: by 2002:a05:6122:1d15:b0:4d3:45a2:ae53 with SMTP id
- gc21-20020a0561221d1500b004d345a2ae53mr3739496vkb.16.1709689219805; Tue, 05
- Mar 2024 17:40:19 -0800 (PST)
+ AJvYcCW8aXXEvQ7Ji8/zcJ2H8UiaNxfbDsvaiyecJ2fGjs21Dc+sHbjKATMpAaK6u3ceNyTl08+3j2Ibun2PNyp4wGzpD8i2b68=
+X-Gm-Message-State: AOJu0YyDSfQkIfGHESqLyR2lSiw8waVDASLZ7ulApEhWEHbt7RqI4UHb
+ i6Fvmgpb4ZfeoVBKREHQ5IR0k3LvcifiDNXQyXh8d2HhXWm5vUThHwhkI4L7bTHUUbg5oEIO3Ae
+ jghjL8u26AowdXY6Bxpooh5SDcbw=
+X-Google-Smtp-Source: AGHT+IFVNrR593g0cS8tlJXlNlVEEWuY6Dt7R5EWWccwRKugmNM7LregUe7InRyoSGtZOBUp8Vwkz8RsYNITk9T1wLo=
+X-Received: by 2002:a05:6102:3754:b0:472:69ec:97da with SMTP id
+ u20-20020a056102375400b0047269ec97damr4102901vst.27.1709689670439; Tue, 05
+ Mar 2024 17:47:50 -0800 (PST)
 MIME-Version: 1.0
-References: <20240221213140.365232-1-dbarboza@ventanamicro.com>
- <20240221213140.365232-10-dbarboza@ventanamicro.com>
-In-Reply-To: <20240221213140.365232-10-dbarboza@ventanamicro.com>
+References: <20240229180656.1208881-1-christoph.muellner@vrull.eu>
+In-Reply-To: <20240229180656.1208881-1-christoph.muellner@vrull.eu>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 6 Mar 2024 11:39:53 +1000
-Message-ID: <CAKmqyKMWRRqqNDyyCgpxe7bGC8QFuLXVn3D9m1e-1KnSF-NRyw@mail.gmail.com>
-Subject: Re: [PATCH v6 9/9] target/riscv/vector_helper.c: optimize loops in
- ldst helpers
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, richard.henderson@linaro.org, max.chou@sifive.com
+Date: Wed, 6 Mar 2024 11:47:24 +1000
+Message-ID: <CAKmqyKPaTSS6LMGM9svgFGG4VtuHC46Bk9JWiLn__k_tnX=XFA@mail.gmail.com>
+Subject: Re: [PATCH] tests: riscv64: Use 'zfa' instead of 'Zfa'
+To: =?UTF-8?Q?Christoph_M=C3=BCllner?= <christoph.muellner@vrull.eu>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
+ Philipp Tomsich <philipp.tomsich@vrull.eu>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Andrew Jones <ajones@ventanamicro.com>, 
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::931;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x931.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e35;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe35.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -94,58 +96,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 22, 2024 at 7:33=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+On Fri, Mar 1, 2024 at 4:07=E2=80=AFAM Christoph M=C3=BCllner
+<christoph.muellner@vrull.eu> wrote:
 >
-> Change the for loops in ldst helpers to do a single increment in the
-> counter, and assign it env->vstart, to avoid re-reading from vstart
-> every time.
+> Running test-fcvtmod triggers the following deprecation warning:
+>   warning: CPU property 'Zfa' is deprecated. Please use 'zfa' instead
+> Let's fix that.
 >
-> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Signed-off-by: Christoph M=C3=BCllner <christoph.muellner@vrull.eu>
 
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  target/riscv/vector_helper.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+>  tests/tcg/riscv64/Makefile.target | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index cc7290a1bb..1ab386830a 100644
-> --- a/target/riscv/vector_helper.c
-> +++ b/target/riscv/vector_helper.c
-> @@ -208,7 +208,7 @@ vext_ldst_stride(void *vd, void *v0, target_ulong bas=
-e,
->      uint32_t esz =3D 1 << log2_esz;
->      uint32_t vma =3D vext_vma(desc);
->
-> -    for (i =3D env->vstart; i < env->vl; i++, env->vstart++) {
-> +    for (i =3D env->vstart; i < env->vl; env->vstart =3D ++i) {
->          k =3D 0;
->          while (k < nf) {
->              if (!vm && !vext_elem_mask(v0, i)) {
-> @@ -274,7 +274,7 @@ vext_ldst_us(void *vd, target_ulong base, CPURISCVSta=
-te *env, uint32_t desc,
->      uint32_t esz =3D 1 << log2_esz;
->
->      /* load bytes from guest memory */
-> -    for (i =3D env->vstart; i < evl; i++, env->vstart++) {
-> +    for (i =3D env->vstart; i < evl; env->vstart =3D ++i) {
->          k =3D 0;
->          while (k < nf) {
->              target_ulong addr =3D base + ((i * nf + k) << log2_esz);
-> @@ -388,7 +388,7 @@ vext_ldst_index(void *vd, void *v0, target_ulong base=
-,
->      uint32_t vma =3D vext_vma(desc);
->
->      /* load bytes from guest memory */
-> -    for (i =3D env->vstart; i < env->vl; i++, env->vstart++) {
-> +    for (i =3D env->vstart; i < env->vl; env->vstart =3D ++i) {
->          k =3D 0;
->          while (k < nf) {
->              if (!vm && !vext_elem_mask(v0, i)) {
+> diff --git a/tests/tcg/riscv64/Makefile.target b/tests/tcg/riscv64/Makefi=
+le.target
+> index a7e390c384..4da5b9a3b3 100644
+> --- a/tests/tcg/riscv64/Makefile.target
+> +++ b/tests/tcg/riscv64/Makefile.target
+> @@ -17,4 +17,4 @@ run-test-aes: QEMU_OPTS +=3D -cpu rv64,zk=3Don
+>  TESTS +=3D test-fcvtmod
+>  test-fcvtmod: CFLAGS +=3D -march=3Drv64imafdc
+>  test-fcvtmod: LDFLAGS +=3D -static
+> -run-test-fcvtmod: QEMU_OPTS +=3D -cpu rv64,d=3Dtrue,Zfa=3Dtrue
+> +run-test-fcvtmod: QEMU_OPTS +=3D -cpu rv64,d=3Dtrue,zfa=3Dtrue
 > --
 > 2.43.2
 >
