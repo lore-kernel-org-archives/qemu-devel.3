@@ -4,79 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05E90C5475B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 04:49:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38B6DC54E49
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 04:50:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhjCx-0008Pw-2u; Tue, 05 Mar 2024 23:48:47 -0500
+	id 1rhjEG-0000qB-52; Tue, 05 Mar 2024 23:50:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rhjCv-0008Pj-Q5; Tue, 05 Mar 2024 23:48:45 -0500
-Received: from mail-ua1-x92c.google.com ([2607:f8b0:4864:20::92c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rhjCp-0000of-21; Tue, 05 Mar 2024 23:48:45 -0500
-Received: by mail-ua1-x92c.google.com with SMTP id
- a1e0cc1a2514c-7d698a8d93cso3747716241.3; 
- Tue, 05 Mar 2024 20:48:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709700517; x=1710305317; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IzyAnx1YN+A682ycpv4XsKOHK1WzO+bUua81MOBC7Os=;
- b=QzVL5Lu62XULlrcepSNJ+1AimwmWaY+G2fBHQOMTs6a2fs+mc0UcoZIoA2ucgHTVhi
- q9KJGfJ9eZ0no8YCvV17GX2AeIkGjKX6rQDCY1Rn2lvcCeukygSptfINtPGMoUT/HWEv
- 3Vj5mWuhictDcd9/wR95mxP0scbcZCCvQ6Quhf8JI6JyUbAPmFDB2jnMScktlqjz0h01
- xkO025p38V7Kzbckx38c1kUzyjB+sJnAbwTJK5/NdbNZSwxeQgY8z0w3wcsxb2Mgt0ZE
- 5qpSOUaZssoHC0baAaKJGhw0kTr7C2SpuIkZZjWm675cs+IphaZJaEbLYzsrHpb+kPrW
- 37ww==
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1rhjEC-0000pK-E3
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 23:50:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1rhjEA-000113-R4
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 23:50:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709700600;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=brxeoM5MMRlWQIVwZxaJKn04xhpMI3Sk2CnNNuiu6A8=;
+ b=OP3QSo7G4LmvOKdX1WLuWff7k+pt6AKxV/OyGh27IVuCQ5r9/7nPGFrqe4BA/UT/6D3RgE
+ UnC2Y5/ytIa87MgYPs0uFiZw5RKYmA3omIvvDUJxeFnBdNrNtax8Xo3Zsp8aOFHpvEf8zW
+ ZkOjYMFkvaeEWat2qVPvk4ykxkV4B2Q=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-590-j2IQessfMWeoo9cPkM0LCw-1; Tue, 05 Mar 2024 23:49:59 -0500
+X-MC-Unique: j2IQessfMWeoo9cPkM0LCw-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-33d7e755f52so2839978f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 20:49:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709700517; x=1710305317;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IzyAnx1YN+A682ycpv4XsKOHK1WzO+bUua81MOBC7Os=;
- b=UuYmwa8U+uN7BNJG/mAjsW0rJxUt6LzgWvRpB+kgmM/gbG+jOHvE2r6JCWZJF2HqC5
- XG1fB29Hefu4cy9P48qpbHSU5HlwrorfODKi8GFzLmwj5HAITF5zIsTxH3MzMXG7r1BF
- y9azkSzcVdEgZYEv/egRkgOQ7uXoRKK8DtgXSDK4wBCW7tBZuzI857h+npWTFUEfQoGB
- +nLGvgsHA0g6wEDQqW45DH77hWmh6JtpCD6X/ise4H3GMNtwo0MoWRpSFWYxiAqBNLbM
- VsZnhfdJK8pQjyd1v+JIWsToZiDqWHvFX3/69oqHcUrNV38P+w7vdqluZFCNJ7vaKy74
- y6Ug==
+ d=1e100.net; s=20230601; t=1709700598; x=1710305398;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=brxeoM5MMRlWQIVwZxaJKn04xhpMI3Sk2CnNNuiu6A8=;
+ b=Az/YNxe1oisj8yN+clyI6Ma/J61zTBboldUY/vK6xoQjEzqfFFo9cN5aIHO8On5z4C
+ JgddDDy0eL9lqDn/FPjhIOA6cWskQrGslXil442/Bak1O/r/sipk2qyv/qAFD2wJ/i2D
+ 64jhXlLxBulv7sVs/sAWG1V4Ivd6H8YGPdtY3Lymtkr41u5talXGJQr9tfAz7TqOoG7c
+ MhagyAVCh3iWwM42WYAZZLeeFp3myjlsTJae667p0ycOggIyBJqi4zn+VQXdV+PNVxPs
+ qleeHiF0RUpX5BBOa7gGg5OqtybbhIr8pbvsSOGSr1nmcnpmAbf3AmdJ0hQRHjgVQlB0
+ E0Hg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVL2/99EwYF/l/ooFF7avy86gDe2RBdMO3wLuUyj3kkVomrL3Jsj8p9CoZNCI7BVMB7Y41PigMIlhCleo71qFDIYL4GCbo=
-X-Gm-Message-State: AOJu0YywvfGE3Ds5durNMqrgDzwqBYgULQxorAI9mnvPOWJyoSSXfZlr
- XlV8NaFeOVJD04rxLIbq3aRxIiD7lXHQneBfKfb3IkStG2hgVccC4GrJVzBafycugBKrI8TG6q1
- Ak+cyhR5W2dej7OtedEGGFOaDTeQ=
-X-Google-Smtp-Source: AGHT+IEBYMWz78ZOcCO2F0pLHZIQQYmgBu2HFNMl/fKjdrVnrPKzWs5XgutWqve1HJjkCW7MppfjKG7vHYNJNsUeN/4=
-X-Received: by 2002:a05:6102:38d2:b0:472:8d0d:1700 with SMTP id
- k18-20020a05610238d200b004728d0d1700mr4658562vst.2.1709700517571; Tue, 05 Mar
- 2024 20:48:37 -0800 (PST)
+ AJvYcCUXgtAW33BTUeFGInASN8MsMlvs2jzAGodaM4UG2tp8l7uUwxa5L5HYjXCQK8Yl/uEeoHeoosYzG6kNcX0bovU4w/LFf+Y=
+X-Gm-Message-State: AOJu0YyCHpM38dP6EEciAxUF5hISWccmk4xVyL5ZQkUsz74l8XSq5Dnv
+ xA6GuzAYefVHfg/Icok4bZQzgEAF/rK8nvuP6Vg91PFlrazLjVvIwUFxsQuHpZDvTPxthhCMh7w
+ 2ywbwq9PIX30oCVE+RhcCD09qNNDUTpd2iDc7ukVJu++l2np0xmCaeKxPlsusL5Ty22O4rtFjaJ
+ FPxu3QwVxff6X4Isbl7BdeBMeeeGQ=
+X-Received: by 2002:adf:fc8e:0:b0:33d:284a:401 with SMTP id
+ g14-20020adffc8e000000b0033d284a0401mr10761894wrr.68.1709700597974; 
+ Tue, 05 Mar 2024 20:49:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEbPjX7ZpP8r/EJMt6XSZnAs1kBwGtI+ronsr8LgsACZiB5HhW9Uit9SIiE7uOjVFUGZ1czEYcm8LbcSRmm5Os=
+X-Received: by 2002:adf:fc8e:0:b0:33d:284a:401 with SMTP id
+ g14-20020adffc8e000000b0033d284a0401mr10761884wrr.68.1709700597648; Tue, 05
+ Mar 2024 20:49:57 -0800 (PST)
 MIME-Version: 1.0
-References: <20240301144053.265964-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20240301144053.265964-1-dbarboza@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 6 Mar 2024 14:48:11 +1000
-Message-ID: <CAKmqyKNGTChTAAnQ90LEw0pkxMtyZ4vQ27-Z4f4-kS8ndq7HMQ@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: move ratified/frozen exts to
- non-experimental
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, ajones@ventanamicro.com
+References: <20240304044510.2305849-1-zhao1.liu@linux.intel.com>
+ <CAE8KmOxvZFjtKkHiGGREx_b0QgfDjPWZ7Ex3nqAQQbiPKa_wrQ@mail.gmail.com>
+ <ZeVyKMux7Ysjo/lY@intel.com>
+ <CAE8KmOxJECe7oNkB1Oiuk-+_4J4drmdJTL2mBzQz+Zu+6XpxrQ@mail.gmail.com>
+ <ZebM/2for1NVjeuc@intel.com>
+ <CAE8KmOwXrrLe9nCm=8qiyde2M2bg35-1THAhtO4Tg-TrTwRz_g@mail.gmail.com>
+ <Zefj+boRnrtkxXsE@intel.com>
+In-Reply-To: <Zefj+boRnrtkxXsE@intel.com>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Wed, 6 Mar 2024 10:19:41 +0530
+Message-ID: <CAE8KmOxzh7+NZiPAJPpmiKtJxi=uwDcRLVy=PT_ZohuTTWkHvw@mail.gmail.com>
+Subject: Re: [PATCH] hw/core/machine-smp: Remove deprecated "parameter=0" SMP
+ configurations
+To: Zhao Liu <zhao1.liu@linux.intel.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, devel@lists.libvirt.org, qemu-devel@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92c;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92c.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.568,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,91 +110,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Mar 2, 2024 at 12:41=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
-> smaia and ssaia were ratified in August 25th 2023 [1].
->
-> zvfh and zvfhmin were ratified in August 2nd 2023 [2].
->
-> zfbfmin and zvfbf(min|wma) are frozen and moved to public review since
-> Dec 16th 2023 [3].
->
-> zaamo and zalrsc are both marked as "Frozen" since January 24th 2024
-> [4].
->
-> [1] https://jira.riscv.org/browse/RVS-438
-> [2] https://jira.riscv.org/browse/RVS-871
-> [3] https://jira.riscv.org/browse/RVS-704
-> [4] https://jira.riscv.org/browse/RVS-1995
->
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Hello Zhao,
 
-Thanks!
+On Wed, 6 Mar 2024 at 08:49, Zhao Liu <zhao1.liu@linux.intel.com> wrote:
+>> then checking 'config->has_maxcpus ?' above is probably not required I
+>> think. It could just be
+>>
+>>    maxcpus = config->maxcpus
+>
+> Yes.
+>
+> > If a user does not specify config->maxcpus with -smp option, then it
+> > could default to zero(0) in 'config' parameter? (same for other config
+> > fields)
+>
+> Yes. I could post another series for this cleanup soon.
+> The above change you suggested doesn't require API changes ;-).
 
-Applied to riscv-to-apply.next
+* Great!  (Communication is the most difficult skill to master. :))
 
-Alistair
+* If you plan to send a separate patch for above refactoring, then I'd
+add Reviewed-by for this one.
 
-> ---
->  target/riscv/cpu.c | 22 +++++++++-------------
->  1 file changed, 9 insertions(+), 13 deletions(-)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index fd0c7efdda..f5d30510ef 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -1463,17 +1463,26 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions=
-[] =3D {
->      MULTI_EXT_CFG_BOOL("zihintntl", ext_zihintntl, true),
->      MULTI_EXT_CFG_BOOL("zihintpause", ext_zihintpause, true),
->      MULTI_EXT_CFG_BOOL("zacas", ext_zacas, false),
-> +    MULTI_EXT_CFG_BOOL("zaamo", ext_zaamo, false),
-> +    MULTI_EXT_CFG_BOOL("zalrsc", ext_zalrsc, false),
->      MULTI_EXT_CFG_BOOL("zawrs", ext_zawrs, true),
->      MULTI_EXT_CFG_BOOL("zfa", ext_zfa, true),
-> +    MULTI_EXT_CFG_BOOL("zfbfmin", ext_zfbfmin, false),
->      MULTI_EXT_CFG_BOOL("zfh", ext_zfh, false),
->      MULTI_EXT_CFG_BOOL("zfhmin", ext_zfhmin, false),
->      MULTI_EXT_CFG_BOOL("zve32f", ext_zve32f, false),
->      MULTI_EXT_CFG_BOOL("zve64f", ext_zve64f, false),
->      MULTI_EXT_CFG_BOOL("zve64d", ext_zve64d, false),
-> +    MULTI_EXT_CFG_BOOL("zvfbfmin", ext_zvfbfmin, false),
-> +    MULTI_EXT_CFG_BOOL("zvfbfwma", ext_zvfbfwma, false),
-> +    MULTI_EXT_CFG_BOOL("zvfh", ext_zvfh, false),
-> +    MULTI_EXT_CFG_BOOL("zvfhmin", ext_zvfhmin, false),
->      MULTI_EXT_CFG_BOOL("sstc", ext_sstc, true),
->
-> +    MULTI_EXT_CFG_BOOL("smaia", ext_smaia, false),
->      MULTI_EXT_CFG_BOOL("smepmp", ext_smepmp, false),
->      MULTI_EXT_CFG_BOOL("smstateen", ext_smstateen, false),
-> +    MULTI_EXT_CFG_BOOL("ssaia", ext_ssaia, false),
->      MULTI_EXT_CFG_BOOL("svade", ext_svade, false),
->      MULTI_EXT_CFG_BOOL("svadu", ext_svadu, true),
->      MULTI_EXT_CFG_BOOL("svinval", ext_svinval, false),
-> @@ -1561,19 +1570,6 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts=
-[] =3D {
->
->  /* These are experimental so mark with 'x-' */
->  const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] =3D {
-> -    MULTI_EXT_CFG_BOOL("x-smaia", ext_smaia, false),
-> -    MULTI_EXT_CFG_BOOL("x-ssaia", ext_ssaia, false),
-> -
-> -    MULTI_EXT_CFG_BOOL("x-zaamo", ext_zaamo, false),
-> -    MULTI_EXT_CFG_BOOL("x-zalrsc", ext_zalrsc, false),
-> -
-> -    MULTI_EXT_CFG_BOOL("x-zvfh", ext_zvfh, false),
-> -    MULTI_EXT_CFG_BOOL("x-zvfhmin", ext_zvfhmin, false),
-> -
-> -    MULTI_EXT_CFG_BOOL("x-zfbfmin", ext_zfbfmin, false),
-> -    MULTI_EXT_CFG_BOOL("x-zvfbfmin", ext_zvfbfmin, false),
-> -    MULTI_EXT_CFG_BOOL("x-zvfbfwma", ext_zvfbfwma, false),
-> -
->      DEFINE_PROP_END_OF_LIST(),
->  };
->
-> --
-> 2.43.2
->
->
+Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
+
+Thank you.
+---
+  - Prasad
+
 
