@@ -4,79 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06F12C5475B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 08:44:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CD87C5475B
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 09:13:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhmrg-0003aU-DE; Wed, 06 Mar 2024 03:43:04 -0500
+	id 1rhnKb-0000qs-El; Wed, 06 Mar 2024 04:12:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1rhmre-0003W2-00
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 03:43:02 -0500
-Received: from mail-qk1-x733.google.com ([2607:f8b0:4864:20::733])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1rhmra-000339-9E
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 03:43:01 -0500
-Received: by mail-qk1-x733.google.com with SMTP id
- af79cd13be357-787990149edso357588885a.3
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 00:42:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709714577; x=1710319377; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zWJXEnfLu7aJeG3d6E+CNystN42syJyzv2NPa5pf3fE=;
- b=eE2WasX/48aV/FPZMwLZckBZ/zDVNgrKs+JidUOVFS4/DiqPSSxpjgbcGeoLT/JyAU
- iLFbdpZMjzthv2iQy/fmYfCCMyhW+QZ1peGwgdgB8RfOzKkHwXZKiNe3hsQn0skuWC6e
- m+IP6T+/9hoBW22AB7109IoahAqEoiwkzxhZV9gRTc6cCF66XxIVEIJYr5VfliKI/qpu
- EV5ELIlJMR1FINOpFT1vBcHZPA8+4ifjLhF10cDV5FXb8LOe0x+V4vN2T7YdZTwq5Hfc
- pFl3q/HNbRuu0bUbg2MaTLGyMA71D2XQBWN+mIrCxluR4vdGwKgomhBBnxqXKxfWxLUz
- GFFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709714577; x=1710319377;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zWJXEnfLu7aJeG3d6E+CNystN42syJyzv2NPa5pf3fE=;
- b=hRF+HACUsTC1CFzhsvjsZa5afHlMDlUTzjcWZG3b/jIzmCDwCXRce72HIsVqLmEW2R
- RZiBP3Tf8oXD/1OnBc83hf8ClnmnG3xZrzqKdsTcpTOXX4FYkp2Jo2tiDAxI/2bsTRfw
- jqecM/Sjg1XNeV67el5fkZCWJx4US/XmaphBIyqot12iphhH5SFr0mwQSbb3K/XVAMtT
- syIFG8gOYRIUbOPEphGNp0EV08rUHCEC7DjoTisnNn3TvOjW6aT+yGxHFw1E8Xx6smjc
- m8viApw03MhgpMWdVXaflpe914RgfgFu7T2RPbPmo1s88IXGB2DsGt2uO3G6IHcLl6Kr
- TH+Q==
-X-Gm-Message-State: AOJu0YyCFz0HiJMcEvw539CpSuASorbBGispsF5/FEQbqqteoM8tODOE
- tWykxDhKTTkJL8VSlDTskWowhyZk+VX0hdE58jLG5dlI8ja130ysaKMv4w5ob0AQ9ZmKJJfdHX4
- cHuI2BguyOSLzf9iykBjlJ0oHxxE=
-X-Google-Smtp-Source: AGHT+IGHh11Am6q3u7+C8lhEP8AZmoA/HZuC5NnjRWjGeDm444Rsn5xtozavJvKMRPZqKGgtatdE7Kl/3ZK+J5vyIfM=
-X-Received: by 2002:a05:622a:1792:b0:42e:e949:7a40 with SMTP id
- s18-20020a05622a179200b0042ee9497a40mr5212197qtk.52.1709714576873; Wed, 06
- Mar 2024 00:42:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rhnKZ-0000qc-Ab; Wed, 06 Mar 2024 04:12:55 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rhnKV-0007cU-A3; Wed, 06 Mar 2024 04:12:54 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TqRR40drBz67hqY;
+ Wed,  6 Mar 2024 17:07:44 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 15F27140DF4;
+ Wed,  6 Mar 2024 17:12:43 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Wed, 6 Mar
+ 2024 09:12:42 +0000
+Date: Wed, 6 Mar 2024 09:12:41 +0000
+To: Jonathan Cameron via <qemu-devel@nongnu.org>
+CC: Jonathan Cameron <Jonathan.Cameron@Huawei.com>, <ankita@nvidia.com>,
+ <jgg@nvidia.com>, <alex.williamson@redhat.com>, <clg@redhat.com>,
+ <shannon.zhaosl@gmail.com>, <peter.maydell@linaro.org>, <ani@anisinha.ca>,
+ <berrange@redhat.com>, <eduardo@habkost.net>, <imammedo@redhat.com>,
+ <mst@redhat.com>, <eblake@redhat.com>, <armbru@redhat.com>,
+ <david@redhat.com>, <gshan@redhat.com>, <zhiw@nvidia.com>,
+ <mochs@nvidia.com>, <pbonzini@redhat.com>, <aniketa@nvidia.com>,
+ <cjia@nvidia.com>, <kwankhede@nvidia.com>, <targupta@nvidia.com>,
+ <vsethi@nvidia.com>, <acurrid@nvidia.com>, <dnigam@nvidia.com>,
+ <udhoke@nvidia.com>, <qemu-arm@nongnu.org>
+Subject: Re: [PATCH v7 2/2] hw/acpi: Implement the SRAT GI affinity structure
+Message-ID: <20240306091241.0000432b@Huawei.com>
+In-Reply-To: <20240226164229.00001536@Huawei.com>
+References: <20240223124223.800078-1-ankita@nvidia.com>
+ <20240223124223.800078-3-ankita@nvidia.com>
+ <20240226164229.00001536@Huawei.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <CAJ+F1CJjRZORH-LbA5dhY_0OZo0AHMbkJ3WkY=SA1ot9=-t0cg@mail.gmail.com>
- <20240305222252.3232608-1-dongwon.kim@intel.com>
- <20240305222252.3232608-2-dongwon.kim@intel.com>
-In-Reply-To: <20240305222252.3232608-2-dongwon.kim@intel.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Wed, 6 Mar 2024 12:42:45 +0400
-Message-ID: <CAJ+F1C+1bS5OOL31dm+4Ms5zpJetrOpQX-qoc5ihb9yjCS3ddQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] virtio-gpu: first surface update with blob scanout
- after resumed
-To: dongwon.kim@intel.com
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::733;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qk1-x733.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml100006.china.huawei.com (7.191.160.224) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,83 +74,83 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Dongwon Kim
+On Mon, 26 Feb 2024 16:42:29 +0000
+Jonathan Cameron via <qemu-devel@nongnu.org> wrote:
 
-On Wed, Mar 6, 2024 at 2:24=E2=80=AFAM <dongwon.kim@intel.com> wrote:
->
-> From: Dongwon Kim <dongwon.kim@intel.com>
->
-> The guest surface needs to be updated with a blob scanout after resumed
-> from saved vm state if blob is enabled.
->
-> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
-> ---
->  hw/display/virtio-gpu.c | 21 ++++++++++++++-------
->  1 file changed, 14 insertions(+), 7 deletions(-)
->
+> On Fri, 23 Feb 2024 12:42:23 +0000
+> <ankita@nvidia.com> wrote:
+> 
+> > From: Ankit Agrawal <ankita@nvidia.com>
+> > 
+> > ACPI spec provides a scheme to associate "Generic Initiators" [1]
+> > (e.g. heterogeneous processors and accelerators, GPUs, and I/O devices with
+> > integrated compute or DMA engines GPUs) with Proximity Domains. This is
+> > achieved using Generic Initiator Affinity Structure in SRAT. During bootup,
+> > Linux kernel parse the ACPI SRAT to determine the PXM ids and create a NUMA
+> > node for each unique PXM ID encountered. Qemu currently do not implement
+> > these structures while building SRAT.
+> > 
+> > Add GI structures while building VM ACPI SRAT. The association between
+> > device and node are stored using acpi-generic-initiator object. Lookup
+> > presence of all such objects and use them to build these structures.
+> > 
+> > The structure needs a PCI device handle [2] that consists of the device BDF.
+> > The vfio-pci device corresponding to the acpi-generic-initiator object is
+> > located to determine the BDF.
+> > 
+> > [1] ACPI Spec 6.3, Section 5.2.16.6
+> > [2] ACPI Spec 6.3, Table 5.80
+> > 
+> > Signed-off-by: Ankit Agrawal <ankita@nvidia.com>  
+> 
+> One thing I forgot.
+And another :)
 
+It might be nice to also support x86 from the start (apparently people still
+care about that old architecture)
 
-The way you send patches to the ML confuses patchew, and they are not
-properly triaged or tested.
-(https://patchew.org/search?q=3Dproject%3AQEMU+from%3Adongwon.kim%40intel.c=
-om)
+https://gitlab.com/jic23/qemu/-/commit/ccfb4fe22167e035173390cf147d9c226951b9b6
+is what I'm carrying for this (see below)
 
-Please send a series of your pending patches, with a new version. It's
-confusing with the various mails otherwise. And it's then easier to
-deal with regular patch series that are tracked by patchew.
+We could do this later as part of the generic ports series (which is also on
+that tree if you are curious).
 
-thanks
-
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index 1c1ee230b3..01bc4f9565 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -1422,16 +1422,23 @@ static int virtio_gpu_post_load(void *opaque, int=
- version_id)
->          if (!res) {
->              return -EINVAL;
->          }
-> -        scanout->ds =3D qemu_create_displaysurface_pixman(res->image);
-> -        if (!scanout->ds) {
-> -            return -EINVAL;
-> -        }
-> +
-> +        if (res->blob_size) {
-> +            assert(g->dmabuf.primary[i] !=3D NULL);
-> +            g->dmabuf.primary[i]->buf.fd =3D res->dmabuf_fd;
-> +            dpy_gl_scanout_dmabuf(scanout->con, &g->dmabuf.primary[i]->b=
-uf);
-> +        } else {
-> +            scanout->ds =3D qemu_create_displaysurface_pixman(res->image=
-);
-> +            if (!scanout->ds) {
-> +                return -EINVAL;
-> +            }
->  #ifdef WIN32
-> -        qemu_displaysurface_win32_set_handle(scanout->ds, res->handle, 0=
-);
-> +            qemu_displaysurface_win32_set_handle(scanout->ds, res->handl=
-e, 0);
->  #endif
-> +            dpy_gfx_replace_surface(scanout->con, scanout->ds);
-> +            dpy_gfx_update_full(scanout->con);
-> +        }
->
-> -        dpy_gfx_replace_surface(scanout->con, scanout->ds);
-> -        dpy_gfx_update_full(scanout->con);
->          if (scanout->cursor.resource_id) {
->              update_cursor(g, &scanout->cursor);
->          }
-> --
-> 2.34.1
->
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index 2d2bb0a325b83f5e3fb4666a462a693aea1a2220..54462d3a46c379a4159b4d71d7689a107745fa4c 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -68,6 +68,7 @@
+ #include "hw/acpi/utils.h"
+ #include "hw/acpi/pci.h"
+ #include "hw/acpi/cxl.h"
++#include "hw/acpi/acpi-generic-initiator.h"
+ 
+ #include "qom/qom-qobject.h"
+ #include "hw/i386/amd_iommu.h"
+@@ -2097,6 +2098,7 @@ build_srat(GArray *table_data, BIOSLinker *linker, MachineState *machine)
+         }
+     }
+ 
++    build_srat_generic_pci_initiator(table_data);
+     if (machine->nvdimms_state->is_enabled) {
+         nvdimm_build_srat(table_data);
+     }
 
 
---=20
-Marc-Andr=C3=A9 Lureau
+
+
+> 
+> Please add a test.  tests/qtest/bios-tables-test.c
+> + relevant table dumps.
+> 
+> Could also hook this up for x86 with a oneline addition and improve
+> test coverage.  If not, I'll do it when I add Generic Ports as annoyingly
+> people still care about x86 for some reason.
+> 
+
 
