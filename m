@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44FA2C54E41
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 17:18:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36032C5475B
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 17:19:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhuuZ-0006o4-9C; Wed, 06 Mar 2024 12:18:35 -0500
+	id 1rhuvE-0007Ot-Ef; Wed, 06 Mar 2024 12:19:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rhuuX-0006mI-TE
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:18:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rhuvB-0007OI-CZ
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:19:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rhuuW-0000Rr-ET
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:18:33 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rhuv9-0000Vx-0Y
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:19:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709745511;
+ s=mimecast20190719; t=1709745549;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=1Ydr15yj5uaSflubi3seQTmmw/6T2QcyxkefdZwGlGA=;
- b=Z4vNQh5qSJ2i+rRGsJrCtYAPW59o4sxHWtmvVcnPKK2Jjj0zF/mhFBolw+zQ505WR/EN2i
- jjCzn+Lb2ssbDjPo8ShVzkb/+y4PrcFh+IrBGl0b0CUe31RYdi6q87AtxCBAipCgCUZYCv
- oE3C/e6pFRK2trW5gkhJQ5Ve3CYnhfc=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/TX21u/ef6HOiL7g8DIdkeX4viSiRzHzpEGnOmQj8q4=;
+ b=U81x0mNgDGiR832zm7O4irzKaB+BmU//MAb/zqoedkAJDkPkoxmBPIfDubDG9nCVov5q1Q
+ tyYn2ojtGSrzmtn/w0MyUpTz1OCBuhmb+x6mo6xxO7o9kWFQ3Jsr/2uk8+8oiInZUTBn0f
+ NziUUADxSZPSdePyZ4yo5u150jdCrJc=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-550-8NccUPdnOlCjWo_rgLMjuQ-1; Wed, 06 Mar 2024 12:18:28 -0500
-X-MC-Unique: 8NccUPdnOlCjWo_rgLMjuQ-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a44460e6c06so504866b.1
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 09:18:28 -0800 (PST)
+ us-mta-523-OMB6UCPmMm6oErPlfriAEw-1; Wed, 06 Mar 2024 12:19:08 -0500
+X-MC-Unique: OMB6UCPmMm6oErPlfriAEw-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a450c660cdeso140988566b.3
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 09:19:07 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709745507; x=1710350307;
+ d=1e100.net; s=20230601; t=1709745547; x=1710350347;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1Ydr15yj5uaSflubi3seQTmmw/6T2QcyxkefdZwGlGA=;
- b=Tp/3VF7c0WF21QfVtRf6b7pSjP5a9guwPDLaCs33dK0xFJDsk6QlXEHg4VMWByG2bW
- W8tnZ/70fhmwppljQwrWw0hoYr+t0QINcgc0aotS4gXxg+mHs26fxmapekwj8LDVh43x
- 7mybEaPk/bGNqAKzJ2M6YPppV7b75S8uKULiBu99V4+rZY2DBilZC+Sc/tU6rl9Up5iI
- csOrfKiMtZ4tPyOlEepv8+eyerMrb2o29aM9eF0wKhvRgspQzIsrnogZGZEVv3crh2d/
- NnodtDgGrTgRMBihNAMMh1eFm1/DNylG1ei8DDK8aulWduwbTfRTBUZCDU7Z9POgO/cM
- bG1w==
+ bh=/TX21u/ef6HOiL7g8DIdkeX4viSiRzHzpEGnOmQj8q4=;
+ b=h3PCUT8a9nglfClVEyhnBZH1+03zO5okVutRNKl3s3NR9hE1gnQecmDnh5iuap4g/g
+ cWczgjOOd6Z6ewvo/J0iFx72oI7gRXsFXuaK4XN/knWAOO2U322bDNdOaj5oISWSd7xV
+ sRUBHvtuFDjpnGyEUu7eAVmPNHZvrWxURQbLb3K17KMml86CFQx/MgPuIALAq3DpKpLh
+ MsPFh+suBcVJmEOYJyjpd7UjXhEirCyMjZng047jyxDyK3ysYYuwt9kvNs8B6Yg2M6Sl
+ 4cOQ8dYs+vhIdnR0J3UZ+3TMCXRub3SmAwMJbhzsNPvGKl715BNuU3uEPvdztb/Xqn75
+ P/bg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWoqmczGfjMDMFRK8ti6TIMloLfj7WEb4OmIab2uqfa0t5xQuGHhnBWZPTnu9FkfzWWygwEefTcqlsvNXLqiK/eQ3p0PmE=
-X-Gm-Message-State: AOJu0YzUtRaqcwSqJYNYDw6urKsmbM01oVZm9VDCX1Cdte8BXJEN+y0R
- Sw3Oc3R2xxhqxnemIhWPhG9NHx6WxEdirpxeHMd3wFR+saIhnOs7Dva86NDJEtl+jCFF3o5bdb3
- MtyzCiv1eT/KRXoioAj8QljGHNmXEYcGPrEPJtHHClEszZsuB5QbN
-X-Received: by 2002:a17:906:3941:b0:a3f:ce8:1234 with SMTP id
- g1-20020a170906394100b00a3f0ce81234mr10874523eje.68.1709745507244; 
- Wed, 06 Mar 2024 09:18:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGj8TT2W1utQYYB8sOG6p+2oVtoAhvB7cAz+/v303oOYvnweRrDtoE/5KD6MUDoyDYogcH1lg==
-X-Received: by 2002:a17:906:3941:b0:a3f:ce8:1234 with SMTP id
- g1-20020a170906394100b00a3f0ce81234mr10874516eje.68.1709745506956; 
- Wed, 06 Mar 2024 09:18:26 -0800 (PST)
+ AJvYcCXw+22Eg56IOZi1vNHw90XavJ/TwSgsAQ9ZLKjHPwZZiP8m04YuFSXXOPmYHKUV/nGdfLU9T4JsXqxpOsM3DcP8A13oz+M=
+X-Gm-Message-State: AOJu0YzjMWef+RJ5E9oruc82XzK5muug2ZR5Yu3YLFXMlCFAsULwo+/w
+ VzXyrc2w1lsrqkFx9lYdDa+LLjm4NT7CX/vdevS1rweGoagHVmfruF882BcgeMQukM2Q7DO2Lg0
+ 03fJUHtEllev6nK28h2lMfqO7q1qpaYraM3hfdRzOit9ObBJoaZvq
+X-Received: by 2002:a17:906:cc93:b0:a43:3f37:4d94 with SMTP id
+ oq19-20020a170906cc9300b00a433f374d94mr10697970ejb.16.1709745546957; 
+ Wed, 06 Mar 2024 09:19:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHwpaWs3bYacbkL72QALOOUBMtoAH5WRm+jEECXofZ8lRDUKGc8SmiLmsNiEy8tOBT4feayug==
+X-Received: by 2002:a17:906:cc93:b0:a43:3f37:4d94 with SMTP id
+ oq19-20020a170906cc9300b00a433f374d94mr10697941ejb.16.1709745546548; 
+ Wed, 06 Mar 2024 09:19:06 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-178-151.web.vodafone.de.
  [109.43.178.151]) by smtp.gmail.com with ESMTPSA id
- ld15-20020a170906f94f00b00a44e7afde87sm5113636ejb.148.2024.03.06.09.18.25
+ ld15-20020a170906f94f00b00a44e7afde87sm5113636ejb.148.2024.03.06.09.19.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Mar 2024 09:18:26 -0800 (PST)
-Message-ID: <0fa16043-1def-4256-a773-fc0d0897fd37@redhat.com>
-Date: Wed, 6 Mar 2024 18:18:24 +0100
+ Wed, 06 Mar 2024 09:19:06 -0800 (PST)
+Message-ID: <c16375c4-38ff-4bee-aaab-b961bf9fb21b@redhat.com>
+Date: Wed, 6 Mar 2024 18:19:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1 14/18] hw/i386/pc: Remove
- PCMachineClass::rsdp_in_ram
+Subject: Re: [PATCH-for-9.1 15/18] hw/i386/acpi: Remove AcpiBuildState::rsdp
+ field
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -83,7 +83,7 @@ Cc: Igor Mammedov <imammedo@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>
 References: <20240305134221.30924-1-philmd@linaro.org>
- <20240305134221.30924-15-philmd@linaro.org>
+ <20240305134221.30924-16-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -127,18 +127,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240305134221.30924-15-philmd@linaro.org>
+In-Reply-To: <20240305134221.30924-16-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,16 +155,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 05/03/2024 14.42, Philippe Mathieu-Daudé wrote:
-> PCMachineClass::rsdp_in_ram was only used by the
-> pc-i440fx-2.2 machine, which got removed. It is
-> now always true. Remove it, simplifying acpi_setup().
+> AcpiBuildState::rsdp is always NULL, remove it,
+> simplifying acpi_build_update().
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/hw/i386/pc.h |  1 -
->   hw/i386/acpi-build.c | 35 ++++-------------------------------
->   hw/i386/pc.c         |  1 -
->   3 files changed, 4 insertions(+), 33 deletions(-)
+>   hw/i386/acpi-build.c | 8 +-------
+>   1 file changed, 1 insertion(+), 7 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
