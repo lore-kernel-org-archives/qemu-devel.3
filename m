@@ -4,75 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85273C54E41
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 07:39:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A932C5475B
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 07:48:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhlrS-00018o-Gq; Wed, 06 Mar 2024 02:38:46 -0500
+	id 1rhm0S-0002P4-Lw; Wed, 06 Mar 2024 02:48:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1rhlrP-00018g-Rp
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 02:38:43 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1rhlrM-000112-Tn
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 02:38:43 -0500
-Received: from loongson.cn (unknown [10.20.42.173])
- by gateway (Coremail) with SMTP id _____8AxafB1Hehl1QYVAA--.52921S3;
- Wed, 06 Mar 2024 15:38:29 +0800 (CST)
-Received: from [10.20.42.173] (unknown [10.20.42.173])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8CxrhNxHehl0RRPAA--.23630S3; 
- Wed, 06 Mar 2024 15:38:27 +0800 (CST)
-Subject: Re: [PATCH V2 1/1] target/loongarch: Fixed tlb huge page loading issue
-To: Richard Henderson <richard.henderson@linaro.org>,
- lixianglai <lixianglai@loongson.cn>, qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>, Xiaojuan Yang <yangxiaojuan@loongson.cn>, 
- zhaotianrui@loongson.cn, Huacai Chen <chenhuacai@kernel.org>
-References: <cover.1709610311.git.lixianglai@loongson.cn>
- <5b23421ee1ebf59142c7d7a3bc1082fff910f2fa.1709610311.git.lixianglai@loongson.cn>
- <5d3c7aa7-16d2-4812-a72b-dae5e567b9b8@linaro.org>
- <aa2670bd-b01d-6cc5-d6ad-9e807ed0abe4@loongson.cn>
- <dd5d998d-2c2e-4757-8e18-ae424df4f6a2@linaro.org>
- <5325b63b-2a51-8448-bf70-c0659497db61@loongson.cn>
- <fa6b408c-43fd-4011-b704-ac7ae256fcbf@linaro.org>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <051240a2-4c9d-94f9-32f0-daa399b48a8e@loongson.cn>
-Date: Wed, 6 Mar 2024 15:38:24 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
-MIME-Version: 1.0
-In-Reply-To: <fa6b408c-43fd-4011-b704-ac7ae256fcbf@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8CxrhNxHehl0RRPAA--.23630S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7tFyfArWrtryrGF18uFWDKFX_yoW8KrWrpa
- y5CF43tayqqay0v3Z7Z3WSvFyrCF4Igay5ur1rGryYyFs8Xry2kF1IyFZ8tFWUXr97C3WI
- qr4Utw4UuFWDAagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07j8
- yCJUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -38
-X-Spam_score: -3.9
-X-Spam_bar: ---
-X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.98,
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1rhm0R-0002OT-27
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 02:48:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1rhm0P-0004j7-Ed
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 02:48:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709711280;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=szLotHqHrLAWgY/IdU0Id4a22ZuDv3jSIc1NZf1CiDk=;
+ b=dLzoY0rLh7HhxlxjrRATcDfGSYh0yILHlx0/DpYzBChcfPw0lvdtTIOmuR6rGLF60FnrM1
+ 6svKYkJQKMQ61ddfkwwkdyEd79yGMN0yVJWx8IUO7plq43y9y9iGpzleY1PA/0Oey3JTKq
+ Z0cdrV27QZ3gyqZaPXfOd+BF6Q39myw=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-302-GyWUGp2aNWO6oEgyo_r5NQ-1; Wed, 06 Mar 2024 02:47:58 -0500
+X-MC-Unique: GyWUGp2aNWO6oEgyo_r5NQ-1
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-1dbe3ca6bb7so4048935ad.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 23:47:58 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709711277; x=1710316077;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=szLotHqHrLAWgY/IdU0Id4a22ZuDv3jSIc1NZf1CiDk=;
+ b=Vpx/ldHjzhHOkuENS5NbAQ1Wh6s0lsl8KHN5rcnRWYOUbtyRZdDRxdrSWEhc6PCcXo
+ d0gvpZ2+6jMIc7qYiySykc8nF/5T+sCCt48dkpImw0X+0UmhalSabT7ziKAFBKy147lB
+ fb7Ya/IJ8xhw986d8ZDiStaatUII5pAdP6AA8d9kfcUXZ8VXN9sSTRPSTZjiZZPsCpob
+ txm62kAwJf8YQ2xA9qW7Ko5pe4z1LqusGM5pbPNPq/GoUW/BDS7JPmd7+maiTjIpAo6z
+ lxymLodJPD6Gl90jLEYa0ZBkr1H7Nt2zTkOu+zegsAIzKNcSvGnsjdtn5ydIyf0KAPh+
+ ZzVQ==
+X-Gm-Message-State: AOJu0Yz7WgW1lCKQJtJZqWmuiCTeabj6s210g6nn17kq8C8f7xghTyaK
+ c68yG2zy+1hOBmpMc9n3UMYchy5x4Od6FsV6APJdxng/U0mpjGffm1SRqTfkie5PHXutQyjeIzx
+ oWRUAT9H6DC3OOhzhxmfcasee/r+0uzP4rl65CkDqcwm3p4fsUrX1
+X-Received: by 2002:a17:902:e804:b0:1dc:fccb:e05c with SMTP id
+ u4-20020a170902e80400b001dcfccbe05cmr6391394plg.20.1709711277612; 
+ Tue, 05 Mar 2024 23:47:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEtCYpqRjiblNXbOBNFPns/efleZA+zp+WkxR1UHwUIfC1PlZO9fUZZYCuqA5s80X1IP7nE6A==
+X-Received: by 2002:a17:902:e804:b0:1dc:fccb:e05c with SMTP id
+ u4-20020a170902e80400b001dcfccbe05cmr6391378plg.20.1709711277270; 
+ Tue, 05 Mar 2024 23:47:57 -0800 (PST)
+Received: from smtpclient.apple ([115.96.30.47])
+ by smtp.gmail.com with ESMTPSA id
+ 12-20020a170902e9cc00b001db9fa23407sm11867440plk.195.2024.03.05.23.47.50
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 05 Mar 2024 23:47:56 -0800 (PST)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.400.31\))
+Subject: Re: [PATCH v2 17/20] smbios: clear smbios_type4_count before building
+ tables
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <20240305155724.2047069-18-imammedo@redhat.com>
+Date: Wed, 6 Mar 2024 13:17:39 +0530
+Cc: QEMU Developers <qemu-devel@nongnu.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Song Gao <gaosong@loongson.cn>,
+ Alistair Francis <alistair.francis@wdc.com>, palmer@dabbelt.com,
+ bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com, philmd@linaro.org, wangyanan55@huawei.com,
+ eblake@redhat.com, armbru@redhat.com, qemu-arm@nongnu.org,
+ qemu-riscv@nongnu.org, f.ebner@proxmox.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <6A030F09-22CE-4489-9F7A-D7343966DBAC@redhat.com>
+References: <20240305155724.2047069-1-imammedo@redhat.com>
+ <20240305155724.2047069-18-imammedo@redhat.com>
+To: Igor Mammedov <imammedo@redhat.com>
+X-Mailer: Apple Mail (2.3774.400.31)
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.568,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,58 +113,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sorry, manual is updated already and we do not notice that still.
 
-https://www.loongson.cn/uploads/images/2023102309132647981.%E9%BE%99%E8%8A%AF%E6%9E%B6%E6%9E%84%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C%E5%8D%B7%E4%B8%80_r1p10.pdf
 
-It is Chinese web link, English manual is not updated. Here is English 
-translation by manual with instruction  "lddir rd, rj, level"
+> On 05-Mar-2024, at 21:27, Igor Mammedov <imammedo@redhat.com> wrote:
+>=20
+> it will help to keep type 4 tables accounting correct in case
+> SMBIOS tables are built multiple times.
 
-If the bit[14:13] of the register rj is not equal to 0 and its bit[6] 
-is 1, the value of the register rj is a marked as HugePage page entries. 
-In this case, the value from register rj is written directly to register rd.
 
-If the bit[14:13] of the register rj is equal to 0 and its bit[6] is 1, 
-the value of the register rj is an Hugepage table entry. In this case, 
-replace the bit[14:13] of the register RJ value with level[1:0], the val 
-is written to the register rd.
+I suggest you arrange this before patch 15 where you are actually =
+calling smbios_get_tables_ep() multiple times. That way there is no =
+window where things can break between patches.
 
-If the bit[6] bit of register rj is 0, the value of the universal 
-register rj is the page table entry, it is  physical address base page 
-table. In this case, if the LDDIR command is executed, the address will 
-be refilled according to the TLB currently processed. Retrieve the base 
-address of the next-level page table and write it to the common register 
-rd.
+>=20
+> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> Tested-by: Fiona Ebner <f.ebner@proxmox.com>
+> ---
+> hw/smbios/smbios.c | 1 +
+> 1 file changed, 1 insertion(+)
+>=20
+> diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
+> index bf5c7a8885..b64d3bc227 100644
+> --- a/hw/smbios/smbios.c
+> +++ b/hw/smbios/smbios.c
+> @@ -981,6 +981,7 @@ static bool smbios_get_tables_ep(MachineState *ms,
+>            ep_type =3D=3D SMBIOS_ENTRY_POINT_TYPE_64);
+>=20
+>     g_free(smbios_tables);
+> +    smbios_type4_count =3D 0;
 
-We will remove temporary lddir_ps, and record page size with bit[14:13] 
-in next version.
+Nit: Can you put this before g_free() because gfree(smbios_tables) and =
+smbios_tables =3D memdup2() etc are related. This is kind of coming in =
+between.
 
-Regards
-Bibo Mao
-
-On 2024/3/6 下午12:10, Richard Henderson wrote:
-> On 3/5/24 17:52, lixianglai wrote:
->> The LDDIR_PS variable is not described in detail in the manual, but is 
->> only an intermediate variable to assist in page size calculation 
->> during tcg simulation.
-> 
-> This is exactly why I believe adding this intermediate variable is wrong.
-> 
-> What happens if LDPTE is *not* preceded by LDDIR?  It's not the usual 
-> way a tlb fill routine works, but *something* should happen if you 
-> construct a valid huge page tlb entry by hand and pass it directly to 
-> LDPTE.
-> 
-> With your implementation, this will not work because lddir_ps will not 
-> be initialized. But I expect that on real hardware it would work.
-> 
-> If this does not work on real hardware, then there *is* some heretofore 
-> undocumented hardware state.  If so, then we need a description of this 
-> state from the hardware engineers -- the documentation of LDDIR and 
-> LDPTE need updating.  Finally, this new hardware state needs to be added 
-> to the migration state.
-> 
-> 
-> r~
+>     smbios_tables =3D g_memdup2(usr_blobs, usr_blobs_len);
+>     smbios_tables_len =3D usr_blobs_len;
+>     smbios_table_max =3D usr_table_max;
+> --=20
+> 2.39.3
+>=20
 
 
