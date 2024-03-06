@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A2A4C5475B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B486C54E41
 	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 14:49:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhsa4-0006nM-AH; Wed, 06 Mar 2024 09:49:16 -0500
+	id 1rhsZz-0006k1-Q4; Wed, 06 Mar 2024 09:49:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhsZq-0006bk-1U
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:49:03 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1rhsZu-0006e9-Bx
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:49:08 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhsZn-0004E6-J9
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:49:01 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-412f8bf3718so3873115e9.0
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 06:48:59 -0800 (PST)
+ id 1rhsZq-0004MF-Ez
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:49:06 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-33e17342ea7so3737227f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 06:49:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709736537; x=1710341337; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709736540; x=1710341340; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1JocjxziTQra/6RBeDrs7o1Pv+xkFGssg8gkJHYaEJo=;
- b=W6+HXhzf+Hu/xAMuF6Lgxo0UcX53JJzSzimSFIxe8g6x4kWWA9H++nilnvSiNjLsgf
- U6ziuCcsTPuTcrF/B6b3DpDd1+5MgmH0kTXAamUCsOgrS8ChXMcMrZdAzqIom0faGcSb
- 2RtqQpAbMWJIeopFX3iUH8/4GhIUJ0ejlEIuZiNZCCTFz1bsMHHoTbgw4Xp298a4Llft
- 45f82u8xJqlvNY88/G+BHnpCqwNdghVTiqMY56VNnRZwbZvw8qYS8jzs0u0Z8nRmn5dC
- WlRLqtJlavNXo4ETekvK8Cbzcf0ciSCCcJrSr/GnmY/6OMvOBd+sahHMPQNR7WbNeiJE
- DCug==
+ bh=6J3ZwnAK+ALQL60EUhgyEtMB8C5fHpZxHXot9QnmFTw=;
+ b=TF2nCDUlt7aeRNT3pGcuXBa6/sleXVq7XSPXbrLGP7I4Gwk7cF9fdMzXsdqXMV2/u+
+ UXh7boYSVdLFJRL99MVH/tc5Buh2GXSW/LmcgNAq9jU+uNB5ujQ3Ht6/9Fgcr3vWnRKg
+ 420EzTxoJHwCE2cBXyTpBdjM7lVFIfGiP4/f8PYOZXKv7UNAg9BrMlOMgjswiSlgHqGf
+ KKy90BWtPfF2cPpGFVdLxslft12/0EFJ/mwGPww3U63/HY0jB5V+/ack+84nvMRfMAuY
+ cMyJj0Ggq64c+ylxVIfS3iQb3Q7beqJ+lz+I1DgkMniZYA9p8PWgl3G5XEh0EUSVfAcY
+ /GiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709736537; x=1710341337;
+ d=1e100.net; s=20230601; t=1709736540; x=1710341340;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1JocjxziTQra/6RBeDrs7o1Pv+xkFGssg8gkJHYaEJo=;
- b=kTekzTPaSMItb5wplsdSJtb0Ha+mOzba3sxVI94sdKG/RHftKQlKYk4C5fxQbx+bO5
- ijCx6aPNeMNA/Tz9aWuyHxxyLmRjuiMd9JUYG53NLLMW9lsbgKYU0spb495/TyMrns8h
- E4lWRF3f+aADTwGJZbcd32HeyPGuJTaAZ3P9B4X0gNxOon+rVxGSY+W9MIB5T6U3dZb4
- 0dmOrbeFmBpBBGlhl1/Jn5uI/sHRNM18F+eeiyZet61ddH49YDbgI/7ri7Vn703dO/XI
- B6q/SIBLhHUC4mp0tp/4msTxT/MrT4i+rIFxavvk0uHf6SFhlE7HuC6gidg3Oj6+6iZ3
- BOSg==
-X-Gm-Message-State: AOJu0YwhqLbVjzc5nf8RIc2AmyMtibvR4jmDNwxjTNg6tuErz8+UfWsM
- KDFW7iXyO9fqEQ/KPmhBcylWnnXfZopmtL6D8IC/GkLEHk/0X95mGFdKDodYECfG9AUnhqNslRD
- h
-X-Google-Smtp-Source: AGHT+IFXYoEebiF+4U26Zsyi+7OvJvDsbnJJD9Gbo+YjdlX27SRFYI97uT4iwbIfDxlAn0Gy7SWcmQ==
-X-Received: by 2002:a05:600c:190a:b0:412:c9e7:202d with SMTP id
- j10-20020a05600c190a00b00412c9e7202dmr10835994wmq.6.1709736537368; 
- Wed, 06 Mar 2024 06:48:57 -0800 (PST)
+ bh=6J3ZwnAK+ALQL60EUhgyEtMB8C5fHpZxHXot9QnmFTw=;
+ b=shZh2bvjnmBRFNYpBdhNRtR7Slc1XRD72pgXL8Bo5Bk3PEDPohecKZEYCniq9niZnf
+ jAz8z+VoYwLnKYoAObDTcIY074iZHJ7StOio5bLIs0eAtvfSXrkvRMsI9fkONlKtco5n
+ Scwbs2U4kXjveSjjzvrIprBtzPZpqcnmoco2asclPtOiMaDamShI0vFIgeVEPyJjilWl
+ hDaZ2DqpM08OEAcm6o9jzs+CJy+ubBsv6Fbxn/oehichVhP1+Kyp6eaguo5k/SAH4Lo1
+ Cz19yDTstRZqvSR/KXXleThNIoysnleEBAg+dUPDXxMcMGbGePvwmU6HzQtc2i7oSZVs
+ TVGA==
+X-Gm-Message-State: AOJu0Yya+vivNDkO0lNycBm0LswSU/SS4ThzvqrORndl/nGhgjfwlESP
+ /NMmEcM7DxlLV+sE6356onrZOkydZAsgMVSysT+HKeMubluPVjPmIuGpars4jQlTFFVdCCZV2NY
+ U
+X-Google-Smtp-Source: AGHT+IFey4MwKpp+UrR+vxXokP/QbnAq5N2iEXlOLcWGFIg/9c2BZA7GB/q/0Jr40Rf9Ygr/3HJNqw==
+X-Received: by 2002:adf:a1d2:0:b0:33e:5da6:36c3 with SMTP id
+ v18-20020adfa1d2000000b0033e5da636c3mr222208wrv.5.1709736539990; 
+ Wed, 06 Mar 2024 06:48:59 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- bg14-20020a05600c3c8e00b004122b7a680dsm21560544wmb.21.2024.03.06.06.48.56
+ az23-20020adfe197000000b0033e4403c6a9sm7039586wrb.22.2024.03.06.06.48.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 06 Mar 2024 06:48:57 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0141B5F9F4;
+ by draig.lan (Postfix) with ESMTP id 132365F9FA;
  Wed,  6 Mar 2024 14:40:44 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 27/29] disas/hppa: honour show_opcodes
-Date: Wed,  6 Mar 2024 14:40:39 +0000
-Message-Id: <20240306144041.3787188-28-alex.bennee@linaro.org>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Song Gao <gaosong@loongson.cn>
+Subject: [PULL 28/29] target/loongarch: honour show_opcodes when disassembling
+Date: Wed,  6 Mar 2024 14:40:40 +0000
+Message-Id: <20240306144041.3787188-29-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240306144041.3787188-1-alex.bennee@linaro.org>
 References: <20240306144041.3787188-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,29 +99,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This makes the output suitable when used for plugins.
+
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240305121005.3528075-28-alex.bennee@linaro.org>
+Message-Id: <20240305121005.3528075-29-alex.bennee@linaro.org>
 
-diff --git a/disas/hppa.c b/disas/hppa.c
-index 22dce9b41bb..49e2231ae62 100644
---- a/disas/hppa.c
-+++ b/disas/hppa.c
-@@ -1972,9 +1972,11 @@ print_insn_hppa (bfd_vma memaddr, disassemble_info *info)
+diff --git a/target/loongarch/disas.c b/target/loongarch/disas.c
+index 2040f3e44db..63989a6282d 100644
+--- a/target/loongarch/disas.c
++++ b/target/loongarch/disas.c
+@@ -120,10 +120,15 @@ static const char *get_csr_name(unsigned num)
+            csr_names[num] : "Undefined CSR";
+ }
  
-   insn = bfd_getb32 (buffer);
+-#define output(C, INSN, FMT, ...)                                   \
+-{                                                                   \
+-    (C)->info->fprintf_func((C)->info->stream, "%08x   %-9s\t" FMT, \
+-                            (C)->insn, INSN, ##__VA_ARGS__);        \
++#define output(C, INSN, FMT, ...)                                      \
++ {                                                                     \
++    if ((C)->info->show_opcodes) {                                     \
++        (C)->info->fprintf_func((C)->info->stream, "%08x   %-9s\t" FMT,\
++                            (C)->insn, INSN, ##__VA_ARGS__);           \
++    } else {                                                           \
++        (C)->info->fprintf_func((C)->info->stream, "%-9s\t" FMT,       \
++                            INSN, ##__VA_ARGS__);                      \
++    }                                                                  \
+ }
  
--  info->fprintf_func(info->stream, " %02x %02x %02x %02x   ",
--                (insn >> 24) & 0xff, (insn >> 16) & 0xff,
--                (insn >>  8) & 0xff, insn & 0xff);
-+  if (info->show_opcodes) {
-+      info->fprintf_func(info->stream, " %02x %02x %02x %02x   ",
-+                         (insn >> 24) & 0xff, (insn >> 16) & 0xff,
-+                         (insn >>  8) & 0xff, insn & 0xff);
-+  }
- 
-   for (i = 0; i < NUMOPCODES; ++i)
-     {
+ #include "decode-insns.c.inc"
 -- 
 2.39.2
 
