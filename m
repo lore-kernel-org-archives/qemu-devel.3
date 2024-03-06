@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6700C54E41
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 16:11:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FB94C5475B
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 16:13:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhtr4-0006B0-0B; Wed, 06 Mar 2024 11:10:54 -0500
+	id 1rhtte-0007OK-9L; Wed, 06 Mar 2024 11:13:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1rhtr1-00064X-SO
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 11:10:51 -0500
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhttb-0007O9-HB
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 11:13:31 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1rhtqz-00081w-5r
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 11:10:51 -0500
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-29954bb87b4so4650111a91.2
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 08:10:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhttZ-0000CJ-UI
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 11:13:31 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-412e92deb18so21286435e9.1
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 08:13:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1709741445; x=1710346245; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=npEeaAAo3oCK9gf/6CQOc1KZa2+QOGbXENzn0EtNKw4=;
- b=NMNx874c9bSrUioPP9qsGvbQa2Cez6XKaKGewrq2nj9CS0jPSL56WmOnv5CkQ0ZIVE
- XP1ggEs6ycFgnLnHMd7YB1WU6FDh7EGo1RpyGa/gl4iAUDZiugtIzQZNtEr+Z+oKSfXh
- 9h5EIQEL4mUG4ZS9KtG0qVVbf75Wzk6l0sOxTkL6CzmL9gSDXoUZygZNeHEnrgY51itf
- psp674360hjW0quN8ImHjW9hK/FTZbY1rBJFcPHkVKBDNsLwJ1vpfVTPNUTegx/Yh+XY
- +mCovhrEypcljPCbkClVtbtdkKUV7BAFbiGF5zIFBxUZL1YZeHGTbmSFv4AKkTVzDRQl
- +0HQ==
+ d=linaro.org; s=google; t=1709741608; x=1710346408; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FdwjQz+9lAI07uHlSjq+LXx53u/8Xe8M+RVUi6EDcgI=;
+ b=moe0P3uS/ULQQjpJSnELIY2rAzDdUt7qwNrU75Awy5aRHrryeL/+LUiSJt5RPZoIW5
+ gsppbNz3GS24vgMTNgoWo+hRmVZ1ozcJwG95xVPWCPGNYyTFpKi0CQjGJVn0tQwlAE+V
+ K1P92BLXECDz7l6cXa5o6N0fbQGsy6p1q3uips06dLddDnmNM7kupLte62eKGBkSKYw7
+ ZMm/xPmOjzaRIjdx900VwpLcL+IOuFe5taRmETMoxly3fL4bta4uBZGRfOsdrtZ8kfr6
+ 1okvffknoZinRbu/zq+hSxCO0/2uRRTNH3ot0l8a91woXVppgm6vrKjZQ187W5P0K6vt
+ PPcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709741445; x=1710346245;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=npEeaAAo3oCK9gf/6CQOc1KZa2+QOGbXENzn0EtNKw4=;
- b=vDn+HBTrCf5zVG5eundT8wYlqRR8hP8CLAj4KWxwq2PuLpqxJjNjr4s21EJNVr2Q66
- 0njIhU9mbLpibaI8oTdqhYATSduwhvQAyxnsot8VZcvWSk4dZdPkTkYUiau9iu/Pw1lU
- gwykDvk0ADobG2ztifqo7TurOyGezxUSRlI8Mu8aDWZnznygOrTSyPMECz4ITOc//Stu
- BWbrELkH8sxB9l8aeh9PJW/ukQkmHW5J+CDYryyGlvKJ19WdUcRsAi4Co91uLTsfNVGh
- z2D7ESNHvvEO+3XmBO4qWJjjcyPbYOrWvKCRvXDce6uYOqhmvo5yjdrLyV5fHZIHg1U5
- Wgpw==
-X-Gm-Message-State: AOJu0Yx801L6yjnFeUMdJ3HNvstCc776VSgOM4gjVz9Q9wIYh/b2YLuI
- k0Jv1SlkED8ZujtlCkcRHpL58wEZQ5fRV5T2kTiLOpkt7Cr5og8y5O65IdQDoI76AkBFrxqWKyS
- 905RelFCwAI0CZTaQibPeiaYc2LeFb+i2X1uCrVTUi76S0QWTY3HrICX+99udZyaZNNHcJSQr6B
- RfjbqGN5+mn4vXNLEj8buCTAvGySDBtlYG7PB4ywx/
-X-Google-Smtp-Source: AGHT+IEqPnPG+bO4zBfFIKPhmTsTQGzMMvlcZQSKfqvxg3I/yda0WfXw+k5CReCmZc/fi1z/YZf+1w==
-X-Received: by 2002:a17:90b:711:b0:29a:9952:67b7 with SMTP id
- s17-20020a17090b071100b0029a995267b7mr12392900pjz.48.1709741445298; 
- Wed, 06 Mar 2024 08:10:45 -0800 (PST)
-Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
- [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- h21-20020a17090a9c1500b0029b73f2a0besm1605497pjp.45.2024.03.06.08.10.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Mar 2024 08:10:45 -0800 (PST)
-From: Max Chou <max.chou@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Max Chou <max.chou@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [PATCH] target/riscv/vector_helper.c: Avoid shifting negative in
- fractional LMUL checking
-Date: Thu,  7 Mar 2024 00:10:22 +0800
-Message-Id: <20240306161036.938931-1-max.chou@sifive.com>
-X-Mailer: git-send-email 2.34.1
+ d=1e100.net; s=20230601; t=1709741608; x=1710346408;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=FdwjQz+9lAI07uHlSjq+LXx53u/8Xe8M+RVUi6EDcgI=;
+ b=e/D/Q8LQQkamo2/xy65flcyaENo82KBoDyUBLjvSRQYH3v75BTFkrIEdgrx/UFm4V+
+ xfpDC0qDTvr6k0mxwh/l+ckM/A9acpY8VSHn4XBVAcNDOoJcUp0StuJEixqoSgFDsCgv
+ bogRisFu+4vA3kwh9YY1bdIj6Xsdd/p+fUWKXzySQEMEl1E1HNDSIZotUPSoXVH8aP5j
+ MaASnimehatTzs5VDHN17+Ua8tODgxLSfV5S4mgeYKOyu1v31Vqu1TGVwN5mGrbZs6b/
+ C3yZY3V8C1ZpVeUa/y5X45Bx/VDAEGb2K9kplNroHpBsc1SdIubYO3itKgadHHLDZU3B
+ tgmQ==
+X-Gm-Message-State: AOJu0Yy0pFjgFljIS1dtVE97r2qg7m11wfA0vzHoe56oyuvtdik0gfDG
+ ANqpGbyCPg7Nr+zAftG+iHguDC4tXzFU4pMnoeVjLhg24sSsaI5z9Bawys+ASKs=
+X-Google-Smtp-Source: AGHT+IFazx68sypsjEzrxqLYGovBqjsPmXJw1qKWj9SLjwGyiwrgnf2UOVwemlQJCp9VaPQ2/6K9gA==
+X-Received: by 2002:a05:600c:5116:b0:412:529c:356f with SMTP id
+ o22-20020a05600c511600b00412529c356fmr11001085wms.28.1709741608215; 
+ Wed, 06 Mar 2024 08:13:28 -0800 (PST)
+Received: from [192.168.69.100] ([176.187.210.193])
+ by smtp.gmail.com with ESMTPSA id
+ fk15-20020a05600c0ccf00b00412ff1acf05sm932589wmb.7.2024.03.06.08.13.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 Mar 2024 08:13:27 -0800 (PST)
+Message-ID: <74c18024-45fe-46fd-8ea9-8cd4384e0a46@linaro.org>
+Date: Wed, 6 Mar 2024 17:13:25 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] docs/interop/firmware.json: Fix doc for
+ FirmwareFlashMode
+To: =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Kashyap Chamarthy <kchamart@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20240306-qapi-firmware-json-v1-0-619f7122a249@linutronix.de>
+ <20240306-qapi-firmware-json-v1-2-619f7122a249@linutronix.de>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240306-qapi-firmware-json-v1-2-619f7122a249@linutronix.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=max.chou@sifive.com; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,31 +97,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When vlmul is larger than 5, the original fractional LMUL checking may
-gets unexpected result.
+On 6/3/24 11:31, Thomas Weißschuh wrote:
+> The doc title did not match the actual definition.
+> 
 
-Signed-off-by: Max Chou <max.chou@sifive.com>
----
- target/riscv/vector_helper.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+Fixes: 2720ceda05 ("docs: expand firmware descriptor to allow flash 
+without NVRAM")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 84cec73eb20..adceec378fd 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -53,10 +53,9 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
-          * VLEN * LMUL >= SEW
-          * VLEN >> (8 - lmul) >= sew
-          * (vlenb << 3) >> (8 - lmul) >= sew
--         * vlenb >> (8 - 3 - lmul) >= sew
-          */
-         if (vlmul == 4 ||
--            cpu->cfg.vlenb >> (8 - 3 - vlmul) < sew) {
-+            ((cpu->cfg.vlenb << 3) >> (8 - vlmul)) < sew) {
-             vill = true;
-         }
-     }
--- 
-2.34.1
+> Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+> ---
+>   docs/interop/firmware.json | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
+> index a024f1b9bf3f..54a1fc6c1041 100644
+> --- a/docs/interop/firmware.json
+> +++ b/docs/interop/firmware.json
+> @@ -223,7 +223,7 @@
+>   
+>   
+>   ##
+> -# @FirmwareFlashType:
+> +# @FirmwareFlashMode:
+>   #
+>   # Describes how the firmware build handles code versus variable
+>   # persistence.
+> 
 
 
