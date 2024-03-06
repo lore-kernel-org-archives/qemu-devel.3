@@ -4,72 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D3BAC5475B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 03:53:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F41AC54E49
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 03:55:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhiKc-0007Y4-2A; Tue, 05 Mar 2024 22:52:38 -0500
+	id 1rhiNM-0008E0-Jx; Tue, 05 Mar 2024 22:55:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
- id 1rhiKZ-0007Xw-Gh
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 22:52:35 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lixianglai@loongson.cn>) id 1rhiKW-0005Oq-3j
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 22:52:35 -0500
-Received: from loongson.cn (unknown [10.20.42.32])
- by gateway (Coremail) with SMTP id _____8Dxfet26Odllv0UAA--.52179S3;
- Wed, 06 Mar 2024 11:52:22 +0800 (CST)
-Received: from [10.20.42.32] (unknown [10.20.42.32])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8DxM8xy6Odli_5OAA--.3173S2; 
- Wed, 06 Mar 2024 11:52:20 +0800 (CST)
-Subject: Re: [PATCH V2 1/1] target/loongarch: Fixed tlb huge page loading issue
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: maobibo@loongson.cn, Song Gao <gaosong@loongson.cn>,
- Xiaojuan Yang <yangxiaojuan@loongson.cn>, zhaotianrui@loongson.cn
-References: <cover.1709610311.git.lixianglai@loongson.cn>
- <5b23421ee1ebf59142c7d7a3bc1082fff910f2fa.1709610311.git.lixianglai@loongson.cn>
- <5d3c7aa7-16d2-4812-a72b-dae5e567b9b8@linaro.org>
- <aa2670bd-b01d-6cc5-d6ad-9e807ed0abe4@loongson.cn>
- <dd5d998d-2c2e-4757-8e18-ae424df4f6a2@linaro.org>
-From: lixianglai <lixianglai@loongson.cn>
-Message-ID: <5325b63b-2a51-8448-bf70-c0659497db61@loongson.cn>
-Date: Wed, 6 Mar 2024 11:52:18 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1rhiNI-0008Ds-2D
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 22:55:24 -0500
+Received: from mail-ua1-x934.google.com ([2607:f8b0:4864:20::934])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1rhiNE-0005mN-TU
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 22:55:23 -0500
+Received: by mail-ua1-x934.google.com with SMTP id
+ a1e0cc1a2514c-7d5cbc4a585so2733665241.3
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 19:55:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1709697318; x=1710302118; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uztHPh5m6/k/YQgSozU3xl+sBK6noaMrM17GF/+3NFs=;
+ b=Hmkpl9tbp9GEBP6bDMExktFBIMkorrmiWyq7Kfktf9pgqm8LkHOaaJXi2v5F9nMyax
+ XUKaVu74DFyu76Ocgk0kyZSfzlWaCuOc4t/uzYwxgL8mfzr4ZZrnSgtGAuRDWXsvFLcE
+ 1tOWbKmwtNNB0CdHEFoptKOn1kxD/MaBW7cQjtMLk80pUq6GOMJDZJadzR3BISLyzyl2
+ svXPpyL2SZSu98p8KJhbURsvHDXaQ6kYUv+PWIANKX2s14D1aAn5D5c+g7XuPeWrH0LY
+ ALWDIYHp7Tr4kgn4KhtqrgzN9/x48mbJi+6iPnhRoPIbnIiUj8Mipg1eDUL35+UuaoaC
+ fONA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709697318; x=1710302118;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=uztHPh5m6/k/YQgSozU3xl+sBK6noaMrM17GF/+3NFs=;
+ b=BjoaNO9nPBorxe102tLhLHb1KJcKEmSsN4N5BaLU+5tD7MKTWn+7K1JxZMHsDdXZuJ
+ VsAkUvJpKM7EWMIzyQ5KfVub9INmTarqI9Nrlg0WkG2YqAaLK7ZI9gQ1cXbhRbLjeTkW
+ cdM8yPeTYMW4DCwumnLOEvAbZVTvd6AYAnxPT1dhEVdUSlaNTSlOjBkFBho5jMK+4XGo
+ eENa6TesaV2kVuV1acamXJU8WReahns6XXxTM6Epe4zwkSaEOENKXZq8SgbLOhH0OSxG
+ JzBl8nPjG8h+XIYNBanDe+stCmzFczUdY2D5slMb1g7gw69WxRSi5Y29guvv/3JW0cye
+ IGaA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXSF7hBfiIrLPha1DrEYwE8/IcBPsDUTm8lpZD4Zf0GT3QkqzTHcAcwVwPv8eTxMiklFUPNu1I9n5X6NlIyLmrf9zzhFxk=
+X-Gm-Message-State: AOJu0YxlKGK0N+fJ9MT5h92Qessj/nLtGgT6uClDAZ7xk/WnUtmHkLuY
+ HDYti8SxY0cauDvM8H7c0miCwEj2hckesf0HIU/MiGoSoBGI5decPVgbXhX1A7T4i/rYejhKmK5
+ vvEEcXg0lv3bUhb0vlLKVBeBwmIhIVvDN7GrsEA==
+X-Google-Smtp-Source: AGHT+IFL4Fnwe2jyRS6YBPBmNcPht468oprH/h2dgRAKYEKhGBH97gw91noZEOItrRp8dylLlQ8oLiX9iDiaYDigGIw=
+X-Received: by 2002:a05:6102:3bcf:b0:472:eca1:46c with SMTP id
+ a15-20020a0561023bcf00b00472eca1046cmr721701vsv.30.1709697318414; Tue, 05 Mar
+ 2024 19:55:18 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <dd5d998d-2c2e-4757-8e18-ae424df4f6a2@linaro.org>
-Content-Type: multipart/alternative;
- boundary="------------E02E5233BAB56D870F4B7EFD"
-Content-Language: en-US
-X-CM-TRANSID: AQAAf8DxM8xy6Odli_5OAA--.3173S2
-X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBj93XoWxZr18WF4Dtry5AF18KryDurX_yoWrGw4UpF
- WxX34fKF95tFWIgrn7Xa48XFy3Aan5G3y7AF1xGFyrCwnxX34I9r10vrWYgF1UuFWfAFy0
- qr4jyryDZa1kA3cCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnRJUUUvjb4IE77IF4wAF
- F20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r
- 106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAF
- wI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67
- AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4UJVWxJr1le2I262IYc4CY6c8I
- j28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAv7VC0I7IYx2IY67AKxVWUJVWUGw
- Av7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMx8G
- jcxK6IxK0xIIj40E5I8CrwCYjI0SjxkI62AI1cAE67vIY487MxAIw28IcxkI7VAKI48JMx
- C20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_JrI_JrWlx2IqxVCjr7xvwVAF
- wI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20x
- vE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v2
- 0xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxV
- WUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUz4SrUUUUU
-Received-SPF: pass client-ip=114.242.206.163;
- envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
-X-Spam_score_int: -38
-X-Spam_score: -3.9
-X-Spam_bar: ---
-X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, HTML_MESSAGE=0.001,
- NICE_REPLY_A=-1.98, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20240301082248.3456086-1-horenchuang@bytedance.com>
+ <20240301082248.3456086-2-horenchuang@bytedance.com>
+ <87jzmibtyh.fsf@yhuang6-desk2.ccr.corp.intel.com>
+ <CAKPbEqrti2x05n5QhXtefhu+C=xmMUaH8mMwDy83LVN3Fj6nDw@mail.gmail.com>
+ <87edco85b4.fsf@yhuang6-desk2.ccr.corp.intel.com>
+In-Reply-To: <87edco85b4.fsf@yhuang6-desk2.ccr.corp.intel.com>
+From: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
+Date: Tue, 5 Mar 2024 19:55:07 -0800
+Message-ID: <CAKPbEqoz8eqH30f_q9v2CiR+3D2xN9K+=NEZ1DcQ0OaR1KMTXA@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH v1 1/1] memory tier: acpi/hmat: create
+ CPUless memory tiers after obtaining HMAT info
+To: "Huang, Ying" <ying.huang@intel.com>
+Cc: Gregory Price <gourry.memverge@gmail.com>, aneesh.kumar@linux.ibm.com,
+ mhocko@suse.com, 
+ tj@kernel.org, john@jagalactic.com, Eishan Mirakhur <emirakhur@micron.com>, 
+ Vinicius Tavares Petrucci <vtavarespetr@micron.com>,
+ Ravis OpenSrc <Ravis.OpenSrc@micron.com>, 
+ Alistair Popple <apopple@nvidia.com>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Len Brown <lenb@kernel.org>, 
+ Andrew Morton <akpm@linux-foundation.org>, Dave Jiang <dave.jiang@intel.com>, 
+ Dan Williams <dan.j.williams@intel.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>, 
+ linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mm@kvack.org, 
+ "Ho-Ren (Jack) Chuang" <horenc@vt.edu>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>, linux-cxl@vger.kernel.org, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::934;
+ envelope-from=horenchuang@bytedance.com; helo=mail-ua1-x934.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,633 +109,355 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------E02E5233BAB56D870F4B7EFD
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-
-Hi Richard :
-> On 3/4/24 20:21, lixianglai wrote:
->> Hi Richard:
->>> On 3/4/24 17:51, Xianglai Li wrote:
->>>> When we use qemu tcg simulation, the page size of bios is 4KB.
->>>> When using the level 2 super large page (page size is 1G) to create 
->>>> the page table,
->>>> it is found that the content of the corresponding address space is 
->>>> abnormal,
->>>> resulting in the bios can not start the operating system and 
->>>> graphical interface normally.
->>>>
->>>> The lddir and ldpte instruction emulation has
->>>> a problem with the use of super large page processing above level 2.
->>>> The page size is not correctly calculated,
->>>> resulting in the wrong page size of the table entry found by tlb.
->>>>
->>>> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
->>>> Cc: maobibo@loongson.cn
->>>> Cc: Song Gao <gaosong@loongson.cn>
->>>> Cc: Xiaojuan Yang <yangxiaojuan@loongson.cn>
->>>> Cc: zhaotianrui@loongson.cn
->>>> ---
->>>>   target/loongarch/cpu.h            |  1 +
->>>>   target/loongarch/tcg/tlb_helper.c | 21 ++++++++++++---------
->>>>   2 files changed, 13 insertions(+), 9 deletions(-)
->>>>
->>>> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
->>>> index ec37579fd6..eab3e41c71 100644
->>>> --- a/target/loongarch/cpu.h
->>>> +++ b/target/loongarch/cpu.h
->>>> @@ -292,6 +292,7 @@ typedef struct CPUArchState {
->>>>       uint32_t fcsr0_mask;
->>>>         uint32_t cpucfg[21];
->>>> +    uint32_t lddir_ps;
->>>
->>> This magical cpu state does not appear in the manual.
->>
->> The hardware instruction manual is hosted on github at
->>
->> https://github.com/loongson/LoongArch-Documentation
->>
->>> Are you sure that large pages above level 2 are really supported by 
->>> LDDIR?
->>
->>
->> Yes,We have done tests on the physical cpu of loongarch64 and
->>
->> it works fine with a level 2 large page on the physical cpu.
->>
->>
->>>
->>> Some explanation from the hardware engineering side is required.
->>
->> The description of lddir hardware manual is as follows:
->>
->>
->> Instruction formats:
->>
->> |lddir rd, rj, level|
->>
->> The|LDDIR|instruction is used for accessing directory entries during 
->> software page table walking.
->>
->> If bit|[6]|of the general register|rj|is|0|, it means that the 
->> content of|rj|is the physical address of the
->>
->> base address of the level page table at this time. In this case, 
->> the|LDDIR|instruction will access the level
->>
->> page table according to the current TLB refill address, retrieve the 
->> base address of the corresponding
->>
->> |level+1|page table, and write it to the general register|rd|.
->>
->>
->> reference:
->>
->> https://loongson.github.io/LoongArch-Documentation/LoongArch-Vol1-EN.html 
->>
->>
->>
->>           4.2.5.1.|LDDIR|
+On Tue, Mar 5, 2024 at 6:27=E2=80=AFPM Huang, Ying <ying.huang@intel.com> w=
+rote:
 >
-> Yes, I have this manual.  Please highlight the portion of this 
-> description that corresponds to the LDDIR_PS variable that you add.
+> "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> writes:
+>
+> > On Sun, Mar 3, 2024 at 6:42=E2=80=AFPM Huang, Ying <ying.huang@intel.co=
+m> wrote:
+> >>
+> >> Hi, Jack,
+> >>
+> >> "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> writes:
+> >>
+> >> > * Introduce `mt_init_with_hmat()`
+> >> > We defer memory tier initialization for those CPUless NUMA nodes
+> >> > until acquiring HMAT info. `mt_init_with_hmat()` is introduced to
+> >> > post-create CPUless memory tiers after obtaining HMAT info.
+> >> > It iterates through each CPUless memory node, creating memory tiers =
+if
+> >> > necessary. Finally, it calculates demotion tables again at the end.
+> >> >
+> >> > * Introduce `hmat_find_alloc_memory_type()`
+> >> > Find or allocate a memory type in the `hmat_memory_types` list.
+> >> >
+> >> > * Make `set_node_memory_tier()` more generic
+> >> > This function can also be used for setting other memory types for a =
+node.
+> >> > To do so, a new argument is added to specify a memory type.
+> >> >
+> >> > * Handle cases where there is no HMAT when creating memory tiers
+> >> > If no HMAT is specified, it falls back to using `default_dram_type`.
+> >> >
+> >> > * Change adist calculation code to use another new lock, mt_perf_loc=
+k.
+> >> > Iterating through CPUlist nodes requires holding the `memory_tier_lo=
+ck`.
+> >> > However, `mt_calc_adistance()` will end up trying to acquire the sam=
+e lock,
+> >> > leading to a potential deadlock. Therefore, we propose introducing a
+> >> > standalone `mt_perf_lock` to protect `default_dram_perf`. This appro=
+ach not
+> >> > only avoids deadlock but also prevents holding a large lock simultan=
+eously.
+> >>
+> >> The patch description is used to described why we need the change, and
+> >> how we do that, but not what we do.  People can tell what is done from
+> >> the code itself.
+> >>
+> >
+> > Got it. Thanks. Will rewrite it after the code is finalized.
+> >
+> >> > Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
+> >> > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
+> >> > ---
+> >> >  drivers/acpi/numa/hmat.c     |  3 ++
+> >> >  include/linux/memory-tiers.h |  6 +++
+> >> >  mm/memory-tiers.c            | 76 ++++++++++++++++++++++++++++++++-=
+---
+> >> >  3 files changed, 77 insertions(+), 8 deletions(-)
+> >> >
+> >> > diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
+> >> > index d6b85f0f6082..9f57338b3cb5 100644
+> >> > --- a/drivers/acpi/numa/hmat.c
+> >> > +++ b/drivers/acpi/numa/hmat.c
+> >> > @@ -1038,6 +1038,9 @@ static __init int hmat_init(void)
+> >> >       if (!hmat_set_default_dram_perf())
+> >> >               register_mt_adistance_algorithm(&hmat_adist_nb);
+> >> >
+> >> > +     /* Post-create CPUless memory tiers after getting HMAT info */
+> >> > +     mt_init_with_hmat();
+> >> > +
+> >> >       return 0;
+> >> >  out_put:
+> >> >       hmat_free_structures();
+> >> > diff --git a/include/linux/memory-tiers.h b/include/linux/memory-tie=
+rs.h
+> >> > index 69e781900082..2f845e90c033 100644
+> >> > --- a/include/linux/memory-tiers.h
+> >> > +++ b/include/linux/memory-tiers.h
+> >> > @@ -48,6 +48,7 @@ int mt_calc_adistance(int node, int *adist);
+> >> >  int mt_set_default_dram_perf(int nid, struct access_coordinate *per=
+f,
+> >> >                            const char *source);
+> >> >  int mt_perf_to_adistance(struct access_coordinate *perf, int *adist=
+);
+> >> > +void mt_init_with_hmat(void);
+> >>
+> >> HMAT isn't universally available.  It's a driver in fact.  So, don't p=
+ut
+> >> driver specific code in general code.
+> >>
+> >
+> > Please see below regarding "move code to hmat.c"
+> >
+> >> >  #ifdef CONFIG_MIGRATION
+> >> >  int next_demotion_node(int node);
+> >> >  void node_get_allowed_targets(pg_data_t *pgdat, nodemask_t *targets=
+);
+> >> > @@ -136,5 +137,10 @@ static inline int mt_perf_to_adistance(struct a=
+ccess_coordinate *perf, int *adis
+> >> >  {
+> >> >       return -EIO;
+> >> >  }
+> >> > +
+> >> > +static inline void mt_init_with_hmat(void)
+> >> > +{
+> >> > +
+> >> > +}
+> >> >  #endif       /* CONFIG_NUMA */
+> >> >  #endif  /* _LINUX_MEMORY_TIERS_H */
+> >> > diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
+> >> > index 0537664620e5..7a0a579b3deb 100644
+> >> > --- a/mm/memory-tiers.c
+> >> > +++ b/mm/memory-tiers.c
+> >> > @@ -35,7 +35,9 @@ struct node_memory_type_map {
+> >> >  };
+> >> >
+> >> >  static DEFINE_MUTEX(memory_tier_lock);
+> >> > +static DEFINE_MUTEX(mt_perf_lock);
+> >> >  static LIST_HEAD(memory_tiers);
+> >> > +static LIST_HEAD(hmat_memory_types);
+> >> >  static struct node_memory_type_map node_memory_types[MAX_NUMNODES];
+> >> >  struct memory_dev_type *default_dram_type;
+> >> >
+> >> > @@ -502,7 +504,7 @@ static inline void __init_node_memory_type(int n=
+ode, struct memory_dev_type *mem
+> >> >       }
+> >> >  }
+> >> >
+> >> > -static struct memory_tier *set_node_memory_tier(int node)
+> >> > +static struct memory_tier *set_node_memory_tier(int node, struct me=
+mory_dev_type *new_memtype)
+> >>
+> >> No. memory_dev_type are passed to the function via node_memory_types[n=
+ode].memtype.
+> >>
+> >
+> > Got it. Will mimic the way kmem.c does. Thanks.
+> >
+> >> >  {
+> >> >       struct memory_tier *memtier;
+> >> >       struct memory_dev_type *memtype;
+> >> > @@ -514,7 +516,7 @@ static struct memory_tier *set_node_memory_tier(=
+int node)
+> >> >       if (!node_state(node, N_MEMORY))
+> >> >               return ERR_PTR(-EINVAL);
+> >> >
+> >> > -     __init_node_memory_type(node, default_dram_type);
+> >> > +     __init_node_memory_type(node, new_memtype);
+> >> >
+> >> >       memtype =3D node_memory_types[node].memtype;
+> >> >       node_set(node, memtype->nodes);
+> >> > @@ -623,6 +625,56 @@ void clear_node_memory_type(int node, struct me=
+mory_dev_type *memtype)
+> >> >  }
+> >> >  EXPORT_SYMBOL_GPL(clear_node_memory_type);
+> >> >
+> >> > +static struct memory_dev_type *hmat_find_alloc_memory_type(int adis=
+t)
+> >>
+> >> Similar function existed in drivers/dax/kmem.c.  Please abstract them
+> >> and move them here.
+> >>
+> >
+> > Got it. Will try. Thanks.
+> >
+> >> > +{
+> >> > +     bool found =3D false;
+> >> > +     struct memory_dev_type *mtype;
+> >> > +
+> >> > +     list_for_each_entry(mtype, &hmat_memory_types, list) {
+> >> > +             if (mtype->adistance =3D=3D adist) {
+> >> > +                     found =3D true;
+> >> > +                     break;
+> >> > +             }
+> >> > +     }
+> >> > +     if (!found) {
+> >> > +             mtype =3D alloc_memory_type(adist);
+> >> > +             if (!IS_ERR(mtype))
+> >> > +                     list_add(&mtype->list, &hmat_memory_types);
+> >> > +     }
+> >> > +     return mtype;
+> >> > +}
+> >> > +
+> >> > +static void mt_create_with_hmat(int node)
+> >> > +{
+> >> > +     struct memory_dev_type *mtype =3D NULL;
+> >> > +     int adist =3D MEMTIER_ADISTANCE_DRAM;
+> >> > +
+> >> > +     mt_calc_adistance(node, &adist);
+> >> > +     if (adist !=3D MEMTIER_ADISTANCE_DRAM) {
+> >> > +             mtype =3D hmat_find_alloc_memory_type(adist);
+> >> > +             if (IS_ERR(mtype))
+> >> > +                     pr_err("%s() failed to allocate a tier\n", __f=
+unc__);
+> >> > +     } else {
+> >> > +             mtype =3D default_dram_type;
+> >> > +     }
+> >> > +
+> >> > +     set_node_memory_tier(node, mtype);
+> >> > +}
+> >> > +
+> >> > +void mt_init_with_hmat(void)
+> >> > +{
+> >> > +     int nid;
+> >> > +
+> >> > +     mutex_lock(&memory_tier_lock);
+> >> > +     for_each_node_state(nid, N_MEMORY)
+> >> > +             if (!node_state(nid, N_CPU))
+> >> > +                     mt_create_with_hmat(nid);
+> >> > +
+> >> > +     establish_demotion_targets();
+> >> > +     mutex_unlock(&memory_tier_lock);
+> >> > +}
+> >> > +EXPORT_SYMBOL_GPL(mt_init_with_hmat);
+> >> > +
+> >>
+> >> I guess that we can put most hmat related code above in hmat.c.
+> >>
+> >
+> > To put the heat-related code to hmat.c I will need to export some
+> > static functions in memory-tiers.c, like set_node_memory_tier() and
+> > establish_demotion_targets(). Is that ok?
+>
+> Think about this again.  In fact, although there are "_hmat" in the name
+> of the above functions, the code has nothing to do with hmat.  So, we
+> should rename these functions, but don't need to move them to hmat.c.
+> And, to set memory_tier for CPUless node on system without HMAT.  We
+> should call mt_init_with_hmat() with late_initcall().  Where HMAT
+> information is expected to be available on system with HMAT.  On system
+> without HMAT, default_dram_type will be used.
 >
 
-Sorry, I don't think I quite understand what you mean.
+Sounds good and thank you! I'm working on v2 according to the feedback.
 
-Do you mean that you want me to point out the detailed description of 
-LDDIR_PS in the manual
-
-or suggest that I add a corresponding comment to the LDDIR_PS variable 
-in the patch?
-
-
-I think the description I quoted is missing a key part:
-
-If bit|[6]|of general register|rj|is|1|, it means that the content 
-in|rj|is a large page (Huge Page) page table entry. In this case, after 
-executing the|LDDRI|instruction, the value in the general 
-register|rj|will be written directly to the general register|rd|.
-
-The LDDIR_PS variable is not described in detail in the manual, but is 
-only an intermediate variable to assist in page size calculation during 
-tcg simulation.
-
-However, in section 5.4.2 TLB, we learned that TLB is divided into STLB 
-and MTLB.
-
-The PS field in MTLB has the same meaning as the variable LDDIR_PS we 
-defined.
-
-Since TLB is divided into parity entries, Therefore, when the TLB is 
-generated,
-
-the size of each parity entry becomes half, that is, LDDIR_PS-1.
-
-It should be noted here that all large-page tlb entries will be placed 
-in the MTLB, because the PS field is only meaningful in the MTLB.
-
-
-Thanks,
-
-Xianglai.
-
-
-
-
+> >> >  static void dump_hmem_attrs(struct access_coordinate *coord, const =
+char *prefix)
+> >> >  {
+> >> >       pr_info(
+> >> > @@ -636,7 +688,7 @@ int mt_set_default_dram_perf(int nid, struct acc=
+ess_coordinate *perf,
+> >> >  {
+> >> >       int rc =3D 0;
+> >> >
+> >> > -     mutex_lock(&memory_tier_lock);
+> >> > +     mutex_lock(&mt_perf_lock);
+> >> >       if (default_dram_perf_error) {
+> >> >               rc =3D -EIO;
+> >> >               goto out;
+> >> > @@ -684,7 +736,7 @@ int mt_set_default_dram_perf(int nid, struct acc=
+ess_coordinate *perf,
+> >> >       }
+> >> >
+> >> >  out:
+> >> > -     mutex_unlock(&memory_tier_lock);
+> >> > +     mutex_unlock(&mt_perf_lock);
+> >> >       return rc;
+> >> >  }
+> >> >
+> >> > @@ -700,7 +752,7 @@ int mt_perf_to_adistance(struct access_coordinat=
+e *perf, int *adist)
+> >> >           perf->read_bandwidth + perf->write_bandwidth =3D=3D 0)
+> >> >               return -EINVAL;
+> >> >
+> >> > -     mutex_lock(&memory_tier_lock);
+> >> > +     mutex_lock(&mt_perf_lock);
+> >> >       /*
+> >> >        * The abstract distance of a memory node is in direct proport=
+ion to
+> >> >        * its memory latency (read + write) and inversely proportiona=
+l to its
+> >> > @@ -713,7 +765,7 @@ int mt_perf_to_adistance(struct access_coordinat=
+e *perf, int *adist)
+> >> >               (default_dram_perf.read_latency + default_dram_perf.wr=
+ite_latency) *
+> >> >               (default_dram_perf.read_bandwidth + default_dram_perf.=
+write_bandwidth) /
+> >> >               (perf->read_bandwidth + perf->write_bandwidth);
+> >> > -     mutex_unlock(&memory_tier_lock);
+> >> > +     mutex_unlock(&mt_perf_lock);
+> >> >
+> >> >       return 0;
+> >> >  }
+> >> > @@ -797,7 +849,7 @@ static int __meminit memtier_hotplug_callback(st=
+ruct notifier_block *self,
+> >> >               break;
+> >> >       case MEM_ONLINE:
+> >> >               mutex_lock(&memory_tier_lock);
+> >> > -             memtier =3D set_node_memory_tier(arg->status_change_ni=
+d);
+> >> > +             memtier =3D set_node_memory_tier(arg->status_change_ni=
+d, default_dram_type);
+> >> >               if (!IS_ERR(memtier))
+> >> >                       establish_demotion_targets();
+> >> >               mutex_unlock(&memory_tier_lock);
+> >> > @@ -836,7 +888,15 @@ static int __init memory_tier_init(void)
+> >> >        * types assigned.
+> >> >        */
+> >> >       for_each_node_state(node, N_MEMORY) {
+> >> > -             memtier =3D set_node_memory_tier(node);
+> >> > +             if (!node_state(node, N_CPU))
+> >> > +                     /*
+> >> > +                      * Defer memory tier initialization on CPUless=
+ numa nodes.
+> >> > +                      * These will be initialized when HMAT informa=
+tion is
+> >> > +                      * available.
+> >> > +                      */
+> >> > +                     continue;
+> >> > +
+> >> > +             memtier =3D set_node_memory_tier(node, default_dram_ty=
+pe);
+> >>
+> >> On system with HMAT, how to fall back CPU-less node to
+> >> default_dram_type?  I found your description, but I don't find it in c=
+ode.
+> >>
+> > I assume you meant without HMAT, if so,
+> > because if no HMAT, adist will not be updated in mt_calc_adistance():
 >
-> r~
+> Sorry, typo.  On system with HMAT, mt_init_with_hmat() will not be
+> called.  I have a solution in above comment.
+>
+> --
+> Best Regards,
+> Huang, Ying
+>
+> > + int adist =3D MEMTIER_ADISTANCE_DRAM;
+> > +
+> > + mt_calc_adistance(node, &adist);
+> > + if (adist !=3D MEMTIER_ADISTANCE_DRAM) {
+> > =E2=80=A6
+> > + } else {
+> > + mtype =3D default_dram_type;
+> > + }
+> > +
+> > + set_node_memory_tier(node, mtype);
+> >
+> >> >               if (IS_ERR(memtier))
+> >> >                       /*
+> >> >                        * Continue with memtiers we are able to setup
+> >>
+> >> --
+> >> Best Regards,
+> >> Huang, Ying
 
---------------E02E5233BAB56D870F4B7EFD
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
 
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    Hi Richard :<br>
-    <blockquote type="cite"
-      cite="mid:dd5d998d-2c2e-4757-8e18-ae424df4f6a2@linaro.org">On
-      3/4/24 20:21, lixianglai wrote:
-      <br>
-      <blockquote type="cite">Hi Richard:
-        <br>
-        <blockquote type="cite">On 3/4/24 17:51, Xianglai Li wrote:
-          <br>
-          <blockquote type="cite">When we use qemu tcg simulation, the
-            page size of bios is 4KB.
-            <br>
-            When using the level 2 super large page (page size is 1G) to
-            create the page table,
-            <br>
-            it is found that the content of the corresponding address
-            space is abnormal,
-            <br>
-            resulting in the bios can not start the operating system and
-            graphical interface normally.
-            <br>
-            <br>
-            The lddir and ldpte instruction emulation has
-            <br>
-            a problem with the use of super large page processing above
-            level 2.
-            <br>
-            The page size is not correctly calculated,
-            <br>
-            resulting in the wrong page size of the table entry found by
-            tlb.
-            <br>
-            <br>
-            Signed-off-by: Xianglai Li <a class="moz-txt-link-rfc2396E" href="mailto:lixianglai@loongson.cn">&lt;lixianglai@loongson.cn&gt;</a>
-            <br>
-            Cc: <a class="moz-txt-link-abbreviated" href="mailto:maobibo@loongson.cn">maobibo@loongson.cn</a>
-            <br>
-            Cc: Song Gao <a class="moz-txt-link-rfc2396E" href="mailto:gaosong@loongson.cn">&lt;gaosong@loongson.cn&gt;</a>
-            <br>
-            Cc: Xiaojuan Yang <a class="moz-txt-link-rfc2396E" href="mailto:yangxiaojuan@loongson.cn">&lt;yangxiaojuan@loongson.cn&gt;</a>
-            <br>
-            Cc: <a class="moz-txt-link-abbreviated" href="mailto:zhaotianrui@loongson.cn">zhaotianrui@loongson.cn</a>
-            <br>
-            ---
-            <br>
-              target/loongarch/cpu.h            |  1 +
-            <br>
-              target/loongarch/tcg/tlb_helper.c | 21
-            ++++++++++++---------
-            <br>
-              2 files changed, 13 insertions(+), 9 deletions(-)
-            <br>
-            <br>
-            diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-            <br>
-            index ec37579fd6..eab3e41c71 100644
-            <br>
-            --- a/target/loongarch/cpu.h
-            <br>
-            +++ b/target/loongarch/cpu.h
-            <br>
-            @@ -292,6 +292,7 @@ typedef struct CPUArchState {
-            <br>
-                  uint32_t fcsr0_mask;
-            <br>
-                    uint32_t cpucfg[21];
-            <br>
-            +    uint32_t lddir_ps;
-            <br>
-          </blockquote>
-          <br>
-          This magical cpu state does not appear in the manual.
-          <br>
-        </blockquote>
-        <br>
-        The hardware instruction manual is hosted on github at
-        <br>
-        <br>
-        <a class="moz-txt-link-freetext" href="https://github.com/loongson/LoongArch-Documentation">https://github.com/loongson/LoongArch-Documentation</a>
-        <br>
-        <br>
-        <blockquote type="cite">Are you sure that large pages above
-          level 2 are really supported by LDDIR?
-          <br>
-        </blockquote>
-        <br>
-        <br>
-        Yes,We have done tests on the physical cpu of loongarch64 and
-        <br>
-        <br>
-        it works fine with a level 2 large page on the physical cpu.
-        <br>
-        <br>
-        <br>
-        <blockquote type="cite">
-          <br>
-          Some explanation from the hardware engineering side is
-          required.
-          <br>
-        </blockquote>
-        <br>
-        The description of lddir hardware manual is as follows:
-        <br>
-        <br>
-        <br>
-        Instruction formats:
-        <br>
-        <br>
-        |lddir rd, rj, level|
-        <br>
-        <br>
-        The|LDDIR|instruction is used for accessing directory entries
-        during software page table walking.
-        <br>
-        <br>
-        If bit|[6]|of the general register|rj|is|0|, it means that the
-        content of|rj|is the physical address of the
-        <br>
-        <br>
-        base address of the level page table at this time. In this case,
-        the|LDDIR|instruction will access the level
-        <br>
-        <br>
-        page table according to the current TLB refill address, retrieve
-        the base address of the corresponding
-        <br>
-        <br>
-        |level+1|page table, and write it to the general register|rd|.
-        <br>
-        <br>
-        <br>
-        reference:
-        <br>
-        <br>
-<a class="moz-txt-link-freetext" href="https://loongson.github.io/LoongArch-Documentation/LoongArch-Vol1-EN.html">https://loongson.github.io/LoongArch-Documentation/LoongArch-Vol1-EN.html</a>
-        <br>
-        <br>
-        <br>
-                  4.2.5.1.|LDDIR|
-        <br>
-      </blockquote>
-      <br>
-      Yes, I have this manual.  Please highlight the portion of this
-      description that corresponds to the LDDIR_PS variable that you
-      add.
-      <br>
-      <br>
-    </blockquote>
-    <p><br>
-    </p>
-    <p>Sorry, I don't think I quite understand what you mean.<br>
-    </p>
-    <p>Do you mean that you want me to point out the detailed
-      description of LDDIR_PS in the manual <br>
-    </p>
-    <p>or suggest that I add a corresponding comment to the LDDIR_PS
-      variable in the patch?</p>
-    <p><br>
-    </p>
-    <p>I think the description I quoted is missing a key part:</p>
-    <p><span style="color: rgba(0, 0, 0, 0.8); font-family: &quot;Noto
-        Serif&quot;, &quot;DejaVu Serif&quot;, serif; font-size: 17px;
-        font-style: normal; font-variant-ligatures: normal;
-        font-variant-caps: normal; font-weight: 400; letter-spacing:
-        -0.17px; orphans: 2; text-align: start; text-indent: 0px;
-        text-transform: none; white-space: normal; widows: 2;
-        word-spacing: 0px; -webkit-text-stroke-width: 0px;
-        background-color: rgb(255, 255, 255); text-decoration-thickness:
-        initial; text-decoration-style: initial; text-decoration-color:
-        initial; display: inline !important; float: none;">If bit<span> </span></span><code
-        style="box-sizing: border-box; font-family: &quot;Droid Sans
-        Mono&quot;, &quot;DejaVu Sans Mono&quot;, monospace; font-size:
-        0.9375em; font-weight: 400; color: rgba(0, 0, 0, 0.9);
-        letter-spacing: 0px; padding: 0.1em 0.5ex; word-spacing:
-        -0.15em; background-color: rgb(247, 247, 248); border-radius:
-        4px; line-height: 1.45; text-rendering: optimizespeed;
-        font-style: normal; font-variant-ligatures: normal;
-        font-variant-caps: normal; orphans: 2; text-align: start;
-        text-indent: 0px; text-transform: none; white-space: normal;
-        widows: 2; -webkit-text-stroke-width: 0px;
-        text-decoration-thickness: initial; text-decoration-style:
-        initial; text-decoration-color: initial;">[6]</code><span
-        style="color: rgba(0, 0, 0, 0.8); font-family: &quot;Noto
-        Serif&quot;, &quot;DejaVu Serif&quot;, serif; font-size: 17px;
-        font-style: normal; font-variant-ligatures: normal;
-        font-variant-caps: normal; font-weight: 400; letter-spacing:
-        -0.17px; orphans: 2; text-align: start; text-indent: 0px;
-        text-transform: none; white-space: normal; widows: 2;
-        word-spacing: 0px; -webkit-text-stroke-width: 0px;
-        background-color: rgb(255, 255, 255); text-decoration-thickness:
-        initial; text-decoration-style: initial; text-decoration-color:
-        initial; display: inline !important; float: none;"><span> </span>of
-        general register<span> </span></span><code style="box-sizing:
-        border-box; font-family: &quot;Droid Sans Mono&quot;,
-        &quot;DejaVu Sans Mono&quot;, monospace; font-size: 0.9375em;
-        font-weight: 400; color: rgba(0, 0, 0, 0.9); letter-spacing:
-        0px; padding: 0.1em 0.5ex; word-spacing: -0.15em;
-        background-color: rgb(247, 247, 248); border-radius: 4px;
-        line-height: 1.45; text-rendering: optimizespeed; font-style:
-        normal; font-variant-ligatures: normal; font-variant-caps:
-        normal; orphans: 2; text-align: start; text-indent: 0px;
-        text-transform: none; white-space: normal; widows: 2;
-        -webkit-text-stroke-width: 0px; text-decoration-thickness:
-        initial; text-decoration-style: initial; text-decoration-color:
-        initial;">rj</code><span style="color: rgba(0, 0, 0, 0.8);
-        font-family: &quot;Noto Serif&quot;, &quot;DejaVu Serif&quot;,
-        serif; font-size: 17px; font-style: normal;
-        font-variant-ligatures: normal; font-variant-caps: normal;
-        font-weight: 400; letter-spacing: -0.17px; orphans: 2;
-        text-align: start; text-indent: 0px; text-transform: none;
-        white-space: normal; widows: 2; word-spacing: 0px;
-        -webkit-text-stroke-width: 0px; background-color: rgb(255, 255,
-        255); text-decoration-thickness: initial; text-decoration-style:
-        initial; text-decoration-color: initial; display: inline
-        !important; float: none;"><span> </span>is<span> </span></span><code
-        style="box-sizing: border-box; font-family: &quot;Droid Sans
-        Mono&quot;, &quot;DejaVu Sans Mono&quot;, monospace; font-size:
-        0.9375em; font-weight: 400; color: rgba(0, 0, 0, 0.9);
-        letter-spacing: 0px; padding: 0.1em 0.5ex; word-spacing:
-        -0.15em; background-color: rgb(247, 247, 248); border-radius:
-        4px; line-height: 1.45; text-rendering: optimizespeed;
-        font-style: normal; font-variant-ligatures: normal;
-        font-variant-caps: normal; orphans: 2; text-align: start;
-        text-indent: 0px; text-transform: none; white-space: normal;
-        widows: 2; -webkit-text-stroke-width: 0px;
-        text-decoration-thickness: initial; text-decoration-style:
-        initial; text-decoration-color: initial;">1</code><span
-        style="color: rgba(0, 0, 0, 0.8); font-family: &quot;Noto
-        Serif&quot;, &quot;DejaVu Serif&quot;, serif; font-size: 17px;
-        font-style: normal; font-variant-ligatures: normal;
-        font-variant-caps: normal; font-weight: 400; letter-spacing:
-        -0.17px; orphans: 2; text-align: start; text-indent: 0px;
-        text-transform: none; white-space: normal; widows: 2;
-        word-spacing: 0px; -webkit-text-stroke-width: 0px;
-        background-color: rgb(255, 255, 255); text-decoration-thickness:
-        initial; text-decoration-style: initial; text-decoration-color:
-        initial; display: inline !important; float: none;">, it means
-        that the content in<span> </span></span><code style="box-sizing:
-        border-box; font-family: &quot;Droid Sans Mono&quot;,
-        &quot;DejaVu Sans Mono&quot;, monospace; font-size: 0.9375em;
-        font-weight: 400; color: rgba(0, 0, 0, 0.9); letter-spacing:
-        0px; padding: 0.1em 0.5ex; word-spacing: -0.15em;
-        background-color: rgb(247, 247, 248); border-radius: 4px;
-        line-height: 1.45; text-rendering: optimizespeed; font-style:
-        normal; font-variant-ligatures: normal; font-variant-caps:
-        normal; orphans: 2; text-align: start; text-indent: 0px;
-        text-transform: none; white-space: normal; widows: 2;
-        -webkit-text-stroke-width: 0px; text-decoration-thickness:
-        initial; text-decoration-style: initial; text-decoration-color:
-        initial;">rj</code><span style="color: rgba(0, 0, 0, 0.8);
-        font-family: &quot;Noto Serif&quot;, &quot;DejaVu Serif&quot;,
-        serif; font-size: 17px; font-style: normal;
-        font-variant-ligatures: normal; font-variant-caps: normal;
-        font-weight: 400; letter-spacing: -0.17px; orphans: 2;
-        text-align: start; text-indent: 0px; text-transform: none;
-        white-space: normal; widows: 2; word-spacing: 0px;
-        -webkit-text-stroke-width: 0px; background-color: rgb(255, 255,
-        255); text-decoration-thickness: initial; text-decoration-style:
-        initial; text-decoration-color: initial; display: inline
-        !important; float: none;"><span> </span>is a large page (Huge
-        Page) page table entry. In this case, after executing the<span> </span></span><code
-        style="box-sizing: border-box; font-family: &quot;Droid Sans
-        Mono&quot;, &quot;DejaVu Sans Mono&quot;, monospace; font-size:
-        0.9375em; font-weight: 400; color: rgba(0, 0, 0, 0.9);
-        letter-spacing: 0px; padding: 0.1em 0.5ex; word-spacing:
-        -0.15em; background-color: rgb(247, 247, 248); border-radius:
-        4px; line-height: 1.45; text-rendering: optimizespeed;
-        font-style: normal; font-variant-ligatures: normal;
-        font-variant-caps: normal; orphans: 2; text-align: start;
-        text-indent: 0px; text-transform: none; white-space: normal;
-        widows: 2; -webkit-text-stroke-width: 0px;
-        text-decoration-thickness: initial; text-decoration-style:
-        initial; text-decoration-color: initial;">LDDRI</code><span
-        style="color: rgba(0, 0, 0, 0.8); font-family: &quot;Noto
-        Serif&quot;, &quot;DejaVu Serif&quot;, serif; font-size: 17px;
-        font-style: normal; font-variant-ligatures: normal;
-        font-variant-caps: normal; font-weight: 400; letter-spacing:
-        -0.17px; orphans: 2; text-align: start; text-indent: 0px;
-        text-transform: none; white-space: normal; widows: 2;
-        word-spacing: 0px; -webkit-text-stroke-width: 0px;
-        background-color: rgb(255, 255, 255); text-decoration-thickness:
-        initial; text-decoration-style: initial; text-decoration-color:
-        initial; display: inline !important; float: none;"><span> </span>instruction,
-        the value in the general register<span> </span></span><code
-        style="box-sizing: border-box; font-family: &quot;Droid Sans
-        Mono&quot;, &quot;DejaVu Sans Mono&quot;, monospace; font-size:
-        0.9375em; font-weight: 400; color: rgba(0, 0, 0, 0.9);
-        letter-spacing: 0px; padding: 0.1em 0.5ex; word-spacing:
-        -0.15em; background-color: rgb(247, 247, 248); border-radius:
-        4px; line-height: 1.45; text-rendering: optimizespeed;
-        font-style: normal; font-variant-ligatures: normal;
-        font-variant-caps: normal; orphans: 2; text-align: start;
-        text-indent: 0px; text-transform: none; white-space: normal;
-        widows: 2; -webkit-text-stroke-width: 0px;
-        text-decoration-thickness: initial; text-decoration-style:
-        initial; text-decoration-color: initial;">rj</code><span
-        style="color: rgba(0, 0, 0, 0.8); font-family: &quot;Noto
-        Serif&quot;, &quot;DejaVu Serif&quot;, serif; font-size: 17px;
-        font-style: normal; font-variant-ligatures: normal;
-        font-variant-caps: normal; font-weight: 400; letter-spacing:
-        -0.17px; orphans: 2; text-align: start; text-indent: 0px;
-        text-transform: none; white-space: normal; widows: 2;
-        word-spacing: 0px; -webkit-text-stroke-width: 0px;
-        background-color: rgb(255, 255, 255); text-decoration-thickness:
-        initial; text-decoration-style: initial; text-decoration-color:
-        initial; display: inline !important; float: none;"><span> </span>will
-        be written directly to the general register<span> </span></span><code
-        style="box-sizing: border-box; font-family: &quot;Droid Sans
-        Mono&quot;, &quot;DejaVu Sans Mono&quot;, monospace; font-size:
-        0.9375em; font-weight: 400; color: rgba(0, 0, 0, 0.9);
-        letter-spacing: 0px; padding: 0.1em 0.5ex; word-spacing:
-        -0.15em; background-color: rgb(247, 247, 248); border-radius:
-        4px; line-height: 1.45; text-rendering: optimizespeed;
-        font-style: normal; font-variant-ligatures: normal;
-        font-variant-caps: normal; orphans: 2; text-align: start;
-        text-indent: 0px; text-transform: none; white-space: normal;
-        widows: 2; -webkit-text-stroke-width: 0px;
-        text-decoration-thickness: initial; text-decoration-style:
-        initial; text-decoration-color: initial;">rd</code><span
-        style="color: rgba(0, 0, 0, 0.8); font-family: &quot;Noto
-        Serif&quot;, &quot;DejaVu Serif&quot;, serif; font-size: 17px;
-        font-style: normal; font-variant-ligatures: normal;
-        font-variant-caps: normal; font-weight: 400; letter-spacing:
-        -0.17px; orphans: 2; text-align: start; text-indent: 0px;
-        text-transform: none; white-space: normal; widows: 2;
-        word-spacing: 0px; -webkit-text-stroke-width: 0px;
-        background-color: rgb(255, 255, 255); text-decoration-thickness:
-        initial; text-decoration-style: initial; text-decoration-color:
-        initial; display: inline !important; float: none;">.</span></p>
-    <p><span style="color: rgba(0, 0, 0, 0.8); font-family: &quot;Noto
-        Serif&quot;, &quot;DejaVu Serif&quot;, serif; font-size: 17px;
-        font-style: normal; font-variant-ligatures: normal;
-        font-variant-caps: normal; font-weight: 400; letter-spacing:
-        -0.17px; orphans: 2; text-align: start; text-indent: 0px;
-        text-transform: none; white-space: normal; widows: 2;
-        word-spacing: 0px; -webkit-text-stroke-width: 0px;
-        background-color: rgb(255, 255, 255); text-decoration-thickness:
-        initial; text-decoration-style: initial; text-decoration-color:
-        initial; display: inline !important; float: none;">The LDDIR_PS
-        variable is not described in detail in the manual, but is only
-        an intermediate variable to assist in page size calculation
-        during tcg simulation.<br>
-      </span></p>
-    <p><span style="color: rgba(0, 0, 0, 0.8); font-family: &quot;Noto
-        Serif&quot;, &quot;DejaVu Serif&quot;, serif; font-size: 17px;
-        font-style: normal; font-variant-ligatures: normal;
-        font-variant-caps: normal; font-weight: 400; letter-spacing:
-        -0.17px; orphans: 2; text-align: start; text-indent: 0px;
-        text-transform: none; white-space: normal; widows: 2;
-        word-spacing: 0px; -webkit-text-stroke-width: 0px;
-        background-color: rgb(255, 255, 255); text-decoration-thickness:
-        initial; text-decoration-style: initial; text-decoration-color:
-        initial; display: inline !important; float: none;">However, in
-        section 5.4.2 TLB, we learned that TLB is divided into STLB and
-        MTLB. <br>
-      </span></p>
-    <p><span style="color: rgba(0, 0, 0, 0.8); font-family: &quot;Noto
-        Serif&quot;, &quot;DejaVu Serif&quot;, serif; font-size: 17px;
-        font-style: normal; font-variant-ligatures: normal;
-        font-variant-caps: normal; font-weight: 400; letter-spacing:
-        -0.17px; orphans: 2; text-align: start; text-indent: 0px;
-        text-transform: none; white-space: normal; widows: 2;
-        word-spacing: 0px; -webkit-text-stroke-width: 0px;
-        background-color: rgb(255, 255, 255); text-decoration-thickness:
-        initial; text-decoration-style: initial; text-decoration-color:
-        initial; display: inline !important; float: none;">The PS field
-        in MTLB has the same meaning as the variable LDDIR_PS we
-        defined. <br>
-      </span></p>
-    <p><span style="color: rgba(0, 0, 0, 0.8); font-family: &quot;Noto
-        Serif&quot;, &quot;DejaVu Serif&quot;, serif; font-size: 17px;
-        font-style: normal; font-variant-ligatures: normal;
-        font-variant-caps: normal; font-weight: 400; letter-spacing:
-        -0.17px; orphans: 2; text-align: start; text-indent: 0px;
-        text-transform: none; white-space: normal; widows: 2;
-        word-spacing: 0px; -webkit-text-stroke-width: 0px;
-        background-color: rgb(255, 255, 255); text-decoration-thickness:
-        initial; text-decoration-style: initial; text-decoration-color:
-        initial; display: inline !important; float: none;">Since TLB is
-        divided into parity entries, Therefore, when the TLB is
-        generated, <br>
-      </span></p>
-    <p><span style="color: rgba(0, 0, 0, 0.8); font-family: &quot;Noto
-        Serif&quot;, &quot;DejaVu Serif&quot;, serif; font-size: 17px;
-        font-style: normal; font-variant-ligatures: normal;
-        font-variant-caps: normal; font-weight: 400; letter-spacing:
-        -0.17px; orphans: 2; text-align: start; text-indent: 0px;
-        text-transform: none; white-space: normal; widows: 2;
-        word-spacing: 0px; -webkit-text-stroke-width: 0px;
-        background-color: rgb(255, 255, 255); text-decoration-thickness:
-        initial; text-decoration-style: initial; text-decoration-color:
-        initial; display: inline !important; float: none;">the size of
-        each parity entry becomes half, that is, LDDIR_PS-1. <br>
-      </span></p>
-    <p><span style="color: rgba(0, 0, 0, 0.8); font-family: &quot;Noto
-        Serif&quot;, &quot;DejaVu Serif&quot;, serif; font-size: 17px;
-        font-style: normal; font-variant-ligatures: normal;
-        font-variant-caps: normal; font-weight: 400; letter-spacing:
-        -0.17px; orphans: 2; text-align: start; text-indent: 0px;
-        text-transform: none; white-space: normal; widows: 2;
-        word-spacing: 0px; -webkit-text-stroke-width: 0px;
-        background-color: rgb(255, 255, 255); text-decoration-thickness:
-        initial; text-decoration-style: initial; text-decoration-color:
-        initial; display: inline !important; float: none;">It should be
-        noted here that all large-page tlb entries will be placed in the
-        MTLB, because the PS field is only meaningful in the MTLB.<br>
-      </span></p>
-    <p><span style="color: rgba(0, 0, 0, 0.8); font-family: &quot;Noto
-        Serif&quot;, &quot;DejaVu Serif&quot;, serif; font-size: 17px;
-        font-style: normal; font-variant-ligatures: normal;
-        font-variant-caps: normal; font-weight: 400; letter-spacing:
-        -0.17px; orphans: 2; text-align: start; text-indent: 0px;
-        text-transform: none; white-space: normal; widows: 2;
-        word-spacing: 0px; -webkit-text-stroke-width: 0px;
-        background-color: rgb(255, 255, 255); text-decoration-thickness:
-        initial; text-decoration-style: initial; text-decoration-color:
-        initial; display: inline !important; float: none;"><br>
-      </span></p>
-    <p><span style="color: rgba(0, 0, 0, 0.8); font-family: &quot;Noto
-        Serif&quot;, &quot;DejaVu Serif&quot;, serif; font-size: 17px;
-        font-style: normal; font-variant-ligatures: normal;
-        font-variant-caps: normal; font-weight: 400; letter-spacing:
-        -0.17px; orphans: 2; text-align: start; text-indent: 0px;
-        text-transform: none; white-space: normal; widows: 2;
-        word-spacing: 0px; -webkit-text-stroke-width: 0px;
-        background-color: rgb(255, 255, 255); text-decoration-thickness:
-        initial; text-decoration-style: initial; text-decoration-color:
-        initial; display: inline !important; float: none;">Thanks,</span></p>
-    <p><span style="color: rgba(0, 0, 0, 0.8); font-family: &quot;Noto
-        Serif&quot;, &quot;DejaVu Serif&quot;, serif; font-size: 17px;
-        font-style: normal; font-variant-ligatures: normal;
-        font-variant-caps: normal; font-weight: 400; letter-spacing:
-        -0.17px; orphans: 2; text-align: start; text-indent: 0px;
-        text-transform: none; white-space: normal; widows: 2;
-        word-spacing: 0px; -webkit-text-stroke-width: 0px;
-        background-color: rgb(255, 255, 255); text-decoration-thickness:
-        initial; text-decoration-style: initial; text-decoration-color:
-        initial; display: inline !important; float: none;">Xianglai.</span></p>
-    <p><span style="color: rgba(0, 0, 0, 0.8); font-family: &quot;Noto
-        Serif&quot;, &quot;DejaVu Serif&quot;, serif; font-size: 17px;
-        font-style: normal; font-variant-ligatures: normal;
-        font-variant-caps: normal; font-weight: 400; letter-spacing:
-        -0.17px; orphans: 2; text-align: start; text-indent: 0px;
-        text-transform: none; white-space: normal; widows: 2;
-        word-spacing: 0px; -webkit-text-stroke-width: 0px;
-        background-color: rgb(255, 255, 255); text-decoration-thickness:
-        initial; text-decoration-style: initial; text-decoration-color:
-        initial; display: inline !important; float: none;"><br>
-      </span></p>
-    <p><span style="color: rgba(0, 0, 0, 0.8); font-family: &quot;Noto
-        Serif&quot;, &quot;DejaVu Serif&quot;, serif; font-size: 17px;
-        font-style: normal; font-variant-ligatures: normal;
-        font-variant-caps: normal; font-weight: 400; letter-spacing:
-        -0.17px; orphans: 2; text-align: start; text-indent: 0px;
-        text-transform: none; white-space: normal; widows: 2;
-        word-spacing: 0px; -webkit-text-stroke-width: 0px;
-        background-color: rgb(255, 255, 255); text-decoration-thickness:
-        initial; text-decoration-style: initial; text-decoration-color:
-        initial; display: inline !important; float: none;"><br>
-      </span></p>
-    <p><span style="color: rgba(0, 0, 0, 0.8); font-family: &quot;Noto
-        Serif&quot;, &quot;DejaVu Serif&quot;, serif; font-size: 17px;
-        font-style: normal; font-variant-ligatures: normal;
-        font-variant-caps: normal; font-weight: 400; letter-spacing:
-        -0.17px; orphans: 2; text-align: start; text-indent: 0px;
-        text-transform: none; white-space: normal; widows: 2;
-        word-spacing: 0px; -webkit-text-stroke-width: 0px;
-        background-color: rgb(255, 255, 255); text-decoration-thickness:
-        initial; text-decoration-style: initial; text-decoration-color:
-        initial; display: inline !important; float: none;"><br>
-      </span></p>
-    <blockquote type="cite"
-      cite="mid:dd5d998d-2c2e-4757-8e18-ae424df4f6a2@linaro.org">
-      <br>
-      r~
-      <br>
-    </blockquote>
-  </body>
-</html>
 
---------------E02E5233BAB56D870F4B7EFD--
-
+--=20
+Best regards,
+Ho-Ren (Jack) Chuang
+=E8=8E=8A=E8=B3=80=E4=BB=BB
 
