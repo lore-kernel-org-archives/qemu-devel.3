@@ -4,70 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DC74C54E41
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 14:37:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75722C54E41
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 14:37:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhsNb-0003nc-RO; Wed, 06 Mar 2024 09:36:23 -0500
+	id 1rhsOH-0004Ay-19; Wed, 06 Mar 2024 09:37:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rhsNZ-0003nM-4V
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:36:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rhsNV-0000Ir-2a
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:36:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709735772;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=Gru3gzw3VMJogQbW2Ua9aC4l1yvDtjSIVPunGTtv2DM=;
- b=b9ssCNDNFrxp9jLo8/hWWmkdl28QRcJGx4s3x7dAKhmfuwjOat9XCa9RrPTZ0sxHROVOOQ
- 1aPyJGqSM+sGgQzGTq4aHew2FvkHRZbrjJtSrSCuRkV/pb6YWscvij4aMDZD7pqyezdieQ
- wYvk94B36jxaxhIrjml/4axhfi9w0aE=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-386-IUNsR5iTOUamxhHoREpBJA-1; Wed, 06 Mar 2024 09:36:10 -0500
-X-MC-Unique: IUNsR5iTOUamxhHoREpBJA-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rhsOF-0004Ai-RG
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:37:03 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rhsOE-0000jE-2r
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:37:03 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8D023185A786;
- Wed,  6 Mar 2024 14:36:10 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.115])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 1085E111DD02;
- Wed,  6 Mar 2024 14:36:09 +0000 (UTC)
-Date: Wed, 6 Mar 2024 14:36:08 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Chun Feng Wu <wucf@cn.ibm.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: Does "-object" support structured options now?
-Message-ID: <Zeh_WFMQU3eehD0N@redhat.com>
-References: <PH7PR15MB6503236A69BD173E62FC6791F7232@PH7PR15MB6503.namprd15.prod.outlook.com>
- <ZeWA8VrzgjKjETXh@redhat.com>
- <PH7PR15MB6503A217E33561AB9E193FA5F7212@PH7PR15MB6503.namprd15.prod.outlook.com>
+ by smtp-out2.suse.de (Postfix) with ESMTPS id DF7DD76E31;
+ Wed,  6 Mar 2024 14:36:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1709735817; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Wzpm4moMCrZkekS+MbNzkre1f7RV3LS474wvycCr7Uc=;
+ b=MljCZEpx+24N+Lijy4RCul4Qq6riM0BDLKSOJxEl0xL7ON2MGcXvgIRnx4QkAj1P9YFsZh
+ AzT7ze93YrN1AS8VvnroRqBqLqecpak7BBz7eL0V3UKY4JQrZBuEYRiKkC6Nh3Oslh9vfF
+ B+Icx0YrDAYj6vuHeRu+LoSoUED5QDE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1709735817;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Wzpm4moMCrZkekS+MbNzkre1f7RV3LS474wvycCr7Uc=;
+ b=anfnwgcG31zrrTpvjcB8PmumYWb24OPP46QX30Y+5pOzeI4ZHBIJxfhL2w8eFvXRemIK1Y
+ /nOFSyNuE7nS5aDg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1709735815; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Wzpm4moMCrZkekS+MbNzkre1f7RV3LS474wvycCr7Uc=;
+ b=reuN4gAucjb6XFb9Q6v1JY4K2/8EOVWx+8St5zKw3vXqX/aqLJOhOGfArU8j3F/yqM8TLP
+ V9NLyYktJEcLFhD8CAR0uy68gITj2SA7A9W4TvrYrDqMvLCWWm9bp0z+JrW+/D16CCP8BE
+ 3otDgF9Sy6cdBgXqh0q6YrfWz2USKko=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1709735815;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Wzpm4moMCrZkekS+MbNzkre1f7RV3LS474wvycCr7Uc=;
+ b=VzyvtLwcx2oCgCs/MZv7eovnmGv9TOojBBZc2Oelu3es2Qg9gfXzNks4GepqsNHBqgjlap
+ y6mZbtmfxeEA7fAw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5C3A613A67;
+ Wed,  6 Mar 2024 14:36:55 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id t7L8CId/6GXJRwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 06 Mar 2024 14:36:55 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Het Gala <het.gala@nutanix.com>, qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com, thuth@redhat.com, lvivier@redhat.com,
+ pbonzini@redhat.com, peterx@redhat.com, Het Gala <het.gala@nutanix.com>
+Subject: Re: [PATCH v3 4/7] Add migrate_set_ports into migrate_qmp to change
+ migration port number
+In-Reply-To: <20240306104958.39857-5-het.gala@nutanix.com>
+References: <20240306104958.39857-1-het.gala@nutanix.com>
+ <20240306104958.39857-5-het.gala@nutanix.com>
+Date: Wed, 06 Mar 2024 11:36:52 -0300
+Message-ID: <87sf13s9yz.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <PH7PR15MB6503A217E33561AB9E193FA5F7212@PH7PR15MB6503.namprd15.prod.outlook.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=reuN4gAu;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=VzyvtLwc
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-6.51 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; BAYES_HAM(-3.00)[100.00%];
+ MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ DWL_DNSWL_MED(-2.00)[suse.de:dkim]; RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ RCPT_COUNT_SEVEN(0.00)[8];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[nutanix.com:email,suse.de:dkim,suse.de:email]; 
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[]
+X-Rspamd-Queue-Id: DF7DD76E31
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,32 +120,94 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 06, 2024 at 02:33:05PM +0000, Chun Feng Wu wrote:
-> Thanks Daniel for your response!
-> 
-> I tried it with the following cmd
-> 
-> qemu-system-x86_64 [other options...] \
->   -object '{"qom-type":"throttle-group","id":"limits0","limits":{"iops-total":200}}'
-> 
-> And I got error:
-> qemu-system-x86_64: -object {"qom-type":"throttle-group","id":"limits0","limits":{"iops-total":200}}: Parameter 'id' is missing
-> 
-> Do you know why such error happens?
+Het Gala <het.gala@nutanix.com> writes:
 
-You have made a mistake somewhere in invoking it ?
+> Add a migrate_set_ports() function that from each QDict, fills in
+> the port in case it was 0 in the test.
+> Handle a list of channels so we can add a negative test that
+> passes more than one channel.
+>
+> Signed-off-by: Het Gala <het.gala@nutanix.com>
+> Suggested-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  tests/qtest/migration-helpers.c | 26 ++++++++++++++++++++++++++
+>  1 file changed, 26 insertions(+)
+>
+> diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
+> index 478c1f259b..df4978bf17 100644
+> --- a/tests/qtest/migration-helpers.c
+> +++ b/tests/qtest/migration-helpers.c
+> @@ -17,6 +17,8 @@
+>  #include "qapi/qapi-visit-sockets.h"
+>  #include "qapi/qobject-input-visitor.h"
+>  #include "qapi/error.h"
+> +#include "qapi/qmp/qlist.h"
+> +
 
-The first command line you show above works fine when i test it myself.
+Extra line here. This is unwanted because it sometimes trips git into
+thinking there's a conflict here when another patch changes the
+surrounding lines.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+>  
+>  #include "migration-helpers.h"
+>  
+> @@ -73,6 +75,29 @@ migrate_get_socket_address(QTestState *who, const char *parameter)
+>      return result;
+>  }
+>  
+> +static void migrate_set_ports(QTestState *to, QList *channelList)
+> +{
+> +    g_autofree char *addr = NULL;
+> +    g_autofree char *addr_port = NULL;
+> +    QListEntry *entry;
+> +
+> +    addr = migrate_get_socket_address(to, "socket-address");
+> +    addr_port = g_strsplit(addr, ":", 3)[2];
 
+Will this always to the right thing when the src/dst use different types
+of channels? If there is some kind of mismatch (say one side uses vsock
+and the other inet), it's better that this function doesn't touch the
+channels dict instead of putting garbage in the port field.
+
+Also what happens if the dst is using unix: or fd:?
+
+> +
+> +    QLIST_FOREACH_ENTRY(channelList, entry) {
+> +        QDict *channel = qobject_to(QDict, qlist_entry_obj(entry));
+> +        QObject *addr_obj = qdict_get(channel, "addr");
+> +
+> +        if (qobject_type(addr_obj) == QTYPE_QDICT) {
+> +            QDict *addrdict = qobject_to(QDict, addr_obj);
+
+You might not need these two lines if at the start you use:
+
+QDict *addr = qdict_get_dict(channel, "addr");
+
+> +            if (qdict_haskey(addrdict, "port") &&
+> +            (strcmp(qdict_get_str(addrdict, "port"), "0") == 0)) {
+> +                qdict_put_str(addrdict, "port", addr_port);
+> +            }
+> +        }
+> +    }
+> +}
+> +
+>  bool migrate_watch_for_events(QTestState *who, const char *name,
+>                                QDict *event, void *opaque)
+>  {
+> @@ -143,6 +168,7 @@ void migrate_qmp(QTestState *who, QTestState *to, const char *uri,
+>      if (!uri) {
+>          connect_uri = migrate_get_socket_address(to, "socket-address");
+>      }
+> +    migrate_set_ports(to, NULL);
+
+migrate_set_ports is not prepared to take NULL. This breaks the tests in
+this commit. All individual commits should work, otherwise it will break
+bisecting.
+
+>      qdict_put_str(args, "uri", uri ? uri : connect_uri);
+>  
+>      qtest_qmp_assert_success(who,
 
