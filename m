@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7A02C54E41
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 09:44:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51341C5475B
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 09:44:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhnlo-0007bl-8D; Wed, 06 Mar 2024 04:41:04 -0500
+	id 1rhnlQ-0007Py-On; Wed, 06 Mar 2024 04:40:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rhnlm-0007Yg-Ip
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 04:41:02 -0500
+ id 1rhnlP-0007Pi-Bu
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 04:40:39 -0500
 Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rhnlk-0002K2-M8
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 04:41:02 -0500
+ id 1rhnlN-00025v-ED
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 04:40:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709718061; x=1741254061;
+ t=1709718037; x=1741254037;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=rraLgOEmHua+mvXN56GiEb4WBRb2OqKXWSN7c0wTjoc=;
- b=lc+jGJCueT5oFH6DcQMqpPndpDs+4KGjX+tDvy1FFQo+2O4ak177gt/e
- TCg/S/B/Ez3cAofT7bWqpMqUDTZzUm8TOAbLa6aYKv2yX34ImhebwMiMe
- dwPw1fLqXLyupwCHoFiHES3CM7Xgz+mCc3NK/WMSlgZ+bnOIrJzJXyRnx
- zK/wsEi+MU6w3dAy+opdyrw8FU6dv9OQx7Zb4tyTVZw17fbW4XUwo1blF
- pwNg25K6qlDgeMtw6Fd2pZ+y4VSi/xEB7caHP5NQSvxLbT+PK36KpS4lx
- V71q5eWn7q/ADOXguOPBw0FG2RfrrVAVeSwmQdgLLMUFH+E1Qe+pft/22 w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11004"; a="14897931"
-X-IronPort-AV: E=Sophos;i="6.06,207,1705392000"; d="scan'208";a="14897931"
+ bh=0Oqv2Y548yUJEQ3jZWHP1266B+OXZuHqGaMfM6j07uY=;
+ b=LE6KjFnJvhCeLYt15oMiKTOmSFzo+duvXF+Y++HPKuNJuFT0BDd2oAnW
+ xaDqjyNhGKPuikHFVh5u1b+7Z3fmNxXS0xOY/f118UkqJe6lF4FA1CJS2
+ BzPRXbvaH6F43ipgZU4x5XHjdQlaUmkDnwPOTzHtZ6OVcCiJPo+2jC9XV
+ qfRQflCeXJuuoM2kVFtLMo7XFKxoRmY1hxWrcReFqMvdy4j9v/4XVRvW9
+ xtZx9Y4cIGfjH5QeFNoAJE5CBaTuZtzBi8m8c815ZTgfZQb2ARq3A4ZVX
+ pTG0m2gmoS94DrMWgBXjrgeuR+BsB8aEwMDBYbG0urI3AJmcGK1JlYLpO Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11004"; a="14897833"
+X-IronPort-AV: E=Sophos;i="6.06,207,1705392000"; d="scan'208";a="14897833"
 Received: from fmviesa002.fm.intel.com ([10.60.135.142])
  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Mar 2024 01:41:00 -0800
+ 06 Mar 2024 01:40:36 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,207,1705392000"; d="scan'208";a="32854174"
+X-IronPort-AV: E=Sophos;i="6.06,207,1705392000"; d="scan'208";a="32854134"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa002.fm.intel.com with ESMTP; 06 Mar 2024 01:40:57 -0800
+ by fmviesa002.fm.intel.com with ESMTP; 06 Mar 2024 01:40:33 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -49,12 +49,12 @@ To: Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org
-Cc: Xiaoling Song <xiaoling.song@intel.com>,
-	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 11/14] tests/unit/test-smp-parse: Test "drawers" and "books"
- combination case
-Date: Wed,  6 Mar 2024 17:54:04 +0800
-Message-Id: <20240306095407.3058909-12-zhao1.liu@linux.intel.com>
+Cc: Xiaoling Song <xiaoling.song@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: [PATCH 03/14] hw/core/machine-smp: Simplify variables' initialization
+ in machine_parse_smp_config()
+Date: Wed,  6 Mar 2024 17:53:56 +0800
+Message-Id: <20240306095407.3058909-4-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240306095407.3058909-1-zhao1.liu@linux.intel.com>
 References: <20240306095407.3058909-1-zhao1.liu@linux.intel.com>
@@ -85,158 +85,46 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-Since s390 machine supports both "drawers" and "books" in -smp, add the
-"drawers" and "books" combination test case to match the actual topology
-usage scenario.
+SMPConfiguration initializes its int64_t members as 0 by default.
 
+Therefore, in machine_parse_smp_config(), initialize local topology
+variables with SMPConfiguration's members directly.
+
+Suggested-by: Prasad Pandit <pjp@fedoraproject.org>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Tested-by: Xiaoling Song <xiaoling.song@intel.com>
 ---
- tests/unit/test-smp-parse.c | 103 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 103 insertions(+)
+ hw/core/machine-smp.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/tests/unit/test-smp-parse.c b/tests/unit/test-smp-parse.c
-index aea1b2e73a55..0cf611519865 100644
---- a/tests/unit/test-smp-parse.c
-+++ b/tests/unit/test-smp-parse.c
-@@ -445,6 +445,33 @@ static const struct SMPTestData data_with_drawers_invalid[] = {
-     },
- };
- 
-+static const struct SMPTestData data_with_drawers_books_invalid[] = {
-+    {
-+        /*
-+         * config: -smp 200,drawers=2,books=2,sockets=2,cores=4,\
-+         * threads=2,maxcpus=200
-+         */
-+        .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 200, T, 3, T, 5, T,
-+                                                2, T, 4, T, 2, T, 200),
-+        .expect_error = "Invalid CPU topology: "
-+                        "product of the hierarchy must match maxcpus: "
-+                        "drawers (3) * books (5) * sockets (2) * "
-+                        "cores (4) * threads (2) != maxcpus (200)",
-+    }, {
-+        /*
-+         * config: -smp 242,drawers=2,books=2,sockets=2,cores=4,\
-+         * threads=2,maxcpus=240
-+         */
-+        .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 242, T, 3, T, 5, T,
-+                                                2, T, 4, T, 2, T, 240),
-+        .expect_error = "Invalid CPU topology: "
-+                        "maxcpus must be equal to or greater than smp: "
-+                        "drawers (3) * books (5) * sockets (2) * "
-+                        "cores (4) * threads (2) "
-+                        "== maxcpus (240) < smp_cpus (242)",
-+    },
-+};
-+
- static char *smp_config_to_string(const SMPConfiguration *config)
+diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
+index 50a5a40dbc3d..3d9799aef039 100644
+--- a/hw/core/machine-smp.c
++++ b/hw/core/machine-smp.c
+@@ -82,15 +82,15 @@ void machine_parse_smp_config(MachineState *ms,
+                               const SMPConfiguration *config, Error **errp)
  {
-     return g_strdup_printf(
-@@ -698,6 +725,14 @@ static void machine_with_drawers_class_init(ObjectClass *oc, void *data)
-     mc->smp_props.drawers_supported = true;
- }
+     MachineClass *mc = MACHINE_GET_CLASS(ms);
+-    unsigned cpus    = config->has_cpus ? config->cpus : 0;
+-    unsigned drawers = config->has_drawers ? config->drawers : 0;
+-    unsigned books   = config->has_books ? config->books : 0;
+-    unsigned sockets = config->has_sockets ? config->sockets : 0;
+-    unsigned dies    = config->has_dies ? config->dies : 0;
+-    unsigned clusters = config->has_clusters ? config->clusters : 0;
+-    unsigned cores   = config->has_cores ? config->cores : 0;
+-    unsigned threads = config->has_threads ? config->threads : 0;
+-    unsigned maxcpus = config->has_maxcpus ? config->maxcpus : 0;
++    unsigned cpus     = config->cpus;
++    unsigned drawers  = config->drawers;
++    unsigned books    = config->books;
++    unsigned sockets  = config->sockets;
++    unsigned dies     = config->dies;
++    unsigned clusters = config->clusters;
++    unsigned cores    = config->cores;
++    unsigned threads  = config->threads;
++    unsigned maxcpus  = config->maxcpus;
  
-+static void machine_with_drawers_books_class_init(ObjectClass *oc, void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-+    mc->smp_props.drawers_supported = true;
-+    mc->smp_props.books_supported = true;
-+}
-+
- static void test_generic_valid(const void *opaque)
- {
-     const char *machine_type = opaque;
-@@ -936,6 +971,67 @@ static void test_with_drawers(const void *opaque)
-     object_unref(obj);
- }
- 
-+static void test_with_drawers_books(const void *opaque)
-+{
-+    const char *machine_type = opaque;
-+    Object *obj = object_new(machine_type);
-+    MachineState *ms = MACHINE(obj);
-+    MachineClass *mc = MACHINE_GET_CLASS(obj);
-+    SMPTestData data = {};
-+    unsigned int num_drawers = 5, num_books = 3;
-+    int i;
-+
-+    for (i = 0; i < ARRAY_SIZE(data_generic_valid); i++) {
-+        data = data_generic_valid[i];
-+        unsupported_params_init(mc, &data);
-+
-+        /*
-+         * when drawers and books parameters are omitted, they will
-+         * be both set as 1.
-+         */
-+        data.expect_prefer_sockets.drawers = 1;
-+        data.expect_prefer_sockets.books = 1;
-+        data.expect_prefer_cores.drawers = 1;
-+        data.expect_prefer_cores.books = 1;
-+
-+        smp_parse_test(ms, &data, true);
-+
-+        /* when drawers and books parameters are both specified */
-+        data.config.has_drawers = true;
-+        data.config.drawers = num_drawers;
-+        data.config.has_books = true;
-+        data.config.books = num_books;
-+
-+        if (data.config.has_cpus) {
-+            data.config.cpus *= num_drawers * num_books;
-+        }
-+        if (data.config.has_maxcpus) {
-+            data.config.maxcpus *= num_drawers * num_books;
-+        }
-+
-+        data.expect_prefer_sockets.drawers = num_drawers;
-+        data.expect_prefer_sockets.books = num_books;
-+        data.expect_prefer_sockets.cpus *= num_drawers * num_books;
-+        data.expect_prefer_sockets.max_cpus *= num_drawers * num_books;
-+
-+        data.expect_prefer_cores.drawers = num_drawers;
-+        data.expect_prefer_cores.books = num_books;
-+        data.expect_prefer_cores.cpus *= num_drawers * num_books;
-+        data.expect_prefer_cores.max_cpus *= num_drawers * num_books;
-+
-+        smp_parse_test(ms, &data, true);
-+    }
-+
-+    for (i = 0; i < ARRAY_SIZE(data_with_drawers_books_invalid); i++) {
-+        data = data_with_drawers_books_invalid[i];
-+        unsupported_params_init(mc, &data);
-+
-+        smp_parse_test(ms, &data, false);
-+    }
-+
-+    object_unref(obj);
-+}
-+
- /* Type info of the tested machine */
- static const TypeInfo smp_machine_types[] = {
-     {
-@@ -968,6 +1064,10 @@ static const TypeInfo smp_machine_types[] = {
-         .name           = MACHINE_TYPE_NAME("smp-with-drawers"),
-         .parent         = TYPE_MACHINE,
-         .class_init     = machine_with_drawers_class_init,
-+    }, {
-+        .name           = MACHINE_TYPE_NAME("smp-with-drawers-books"),
-+        .parent         = TYPE_MACHINE,
-+        .class_init     = machine_with_drawers_books_class_init,
-     }
- };
- 
-@@ -997,6 +1097,9 @@ int main(int argc, char *argv[])
-     g_test_add_data_func("/test-smp-parse/with_drawers",
-                          MACHINE_TYPE_NAME("smp-with-drawers"),
-                          test_with_drawers);
-+    g_test_add_data_func("/test-smp-parse/with_drawers_books",
-+                         MACHINE_TYPE_NAME("smp-with-drawers-books"),
-+                         test_with_drawers_books);
- 
-     g_test_run();
- 
+     /*
+      * Specified CPU topology parameters must be greater than zero,
 -- 
 2.34.1
 
