@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C368AC5475B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 23:16:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CEABC54E41
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 23:37:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ri0U8-0007Uz-Dq; Wed, 06 Mar 2024 18:15:40 -0500
+	id 1ri0ok-00048O-0O; Wed, 06 Mar 2024 18:36:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1ri0U5-0007Uh-DL
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 18:15:38 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1ri0oi-00047x-7z
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 18:36:56 -0500
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1ri0U3-0000bk-9Z
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 18:15:37 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1dc49b00bdbso2386885ad.3
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 15:15:34 -0800 (PST)
+ id 1ri0of-0003WT-VS
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 18:36:55 -0500
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-6e5d7f1f25fso232773b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 15:36:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709766933; x=1710371733; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1709768211; x=1710373011; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Id/V3NEpLU2tiqiNwwAXaXlUYzvDYW4eeAi92PZrxBg=;
- b=kNiFXCjeD7rKlicTbu+8OMqFeiNFN1b7KtKfRJkz3uLX1oUrR5GZ3XdFK4kvnuJgow
- juqCfOf2J5XHYjbhUV4OWIrS7SkEqgvi8F7nY0ruh7pFl8ulwLAf0atsdZn+ns8v9SPi
- tuf7btuq2LZIv144U/cds/Y07INsYMEr1XjTZR55T6l1OgBvy0/lzKlkLiq3OeunX4H0
- PFVdPUmTu4uOTH71ugJZj7CYk1zVSKfbUlGmcBhW3xtGrk0Fpsa2gRcsDFm/NKxHBBFd
- WPRr5CAxzUEyh3lcWX7MPhJntg/qXzt42NIa7LChVQpw7+q1sDtkHTlZNAbVUFdfxMRE
- TgjQ==
+ bh=G3NByaC7e2vU7KXkuTFn4jau+iZXlsPs1U5JLg/SDIM=;
+ b=HIzUkWAzz73zImZo7PRNM7J5jTHsqXb+uboLNQVm0YwcofQzrYyVlUHI2VSX9SSHLM
+ 1hoEhN2ZxIIHg9Iz4Ud/BD6+biX1KX0CKahrnGyadpABVnTKFsKJNkNkL6gUlz5GSTYQ
+ nL6ExCJemj9IN7CSobAVKBZajBAYLLnPatiUIt/Q2aLlcHLSzUekTuWFnZZSDslEc6l/
+ rCGzoHRbCwZ4+p2yxwlhi0WQoMAcgRKPvg1543pHkr5MDVluwjL4opq/o9RnyvWxsxeH
+ 66Drk2HSP0Z/OphU+B14sLYZ2ti5aXMvLavxB0x9yJil41WeCjc2D8WQUQMX59TxRptJ
+ Sz1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709766933; x=1710371733;
+ d=1e100.net; s=20230601; t=1709768211; x=1710373011;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Id/V3NEpLU2tiqiNwwAXaXlUYzvDYW4eeAi92PZrxBg=;
- b=mCCgD1UbbkBNxbBR/3aFqIfgXRlfwR7rtWks9+8g6hzcM9pYFqtG5wzusiY2jRgqIH
- cLNvuNYQAk4J8X+BdsZrhOWppZd6NRUdjeP3kG6D1cl2fb+9nNg9Qc7lCfphAVx9pHMD
- INHdKfuYC4xWPE/vBu+QcbqWeSHCGQqIjn6z+oHA5T6QzuPFBRs2HM+0yPZIspYGhPc+
- dQqw36Wvjowatzn27xR5W4y7FksZyRe0mTnqmOQjEfYHxyndLaX0KARGRoDxxVDnkOZm
- JluDIRiyaH5emiQTKrrGHX9A+kTio81Vvpeo3mZRxkRz10R03TmWkEy/JqjB2+0maHWz
- 8ueA==
+ bh=G3NByaC7e2vU7KXkuTFn4jau+iZXlsPs1U5JLg/SDIM=;
+ b=HXQN30yb7TbRaNkmWkDwshKNhNaGTuSWxICRG3ocyKrnXkfpKnbtDyfq/d1WqUy9CH
+ Ic3Blx9CpB97//On9s7BSsfbR9FWT95VYrImdSli29AKB3edIQet2Mf8b3ND2U1a+4Hf
+ PpRi7PAV+i0WImiV2BZHHyQ27jwL+dsLn8aGtKZkCtCpK+CXlvTdN1vVLwyARDDKgpk9
+ YwLslMdfuzTNp4R3yM7l05NEago865oFjbDfUuksFHPYn4fWlZGwg94+4cX5oMMG7zlU
+ N4yL/oz3HFLbRerF9rBaSEXl+jN2OYOlSUZiRBvpmYDcTZI4zHrwh28Lta92Ho5ped4B
+ rEBA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWRCFZXj1C3nsUy7RqFwMdTLulwGb5Gh2iyC6WzNMD/NbM4P2yZzUAIN2HhNT+/ne/eiQRLCjB/AyH7l6Y5tbnKxFAir+4=
-X-Gm-Message-State: AOJu0YwX8mCjnaKm2rdKOllpPlYEygpyzwEGuHCs02HOH+XH8EgKrvLK
- yF1QNC8Hrpxx8/DZfc2CpmflCkmWRWl97LqtYnkzSstjRC6lMTF/
-X-Google-Smtp-Source: AGHT+IHC4n6g6JZ8b8UX0f61GtFy2ythZAVB/WHpm1wDMOTMRWsUDf9ruwcnTgdITBdJGgTgiRZ+jw==
-X-Received: by 2002:a17:902:bc86:b0:1dc:16:9000 with SMTP id
- bb6-20020a170902bc8600b001dc00169000mr6126594plb.16.1709766933398; 
- Wed, 06 Mar 2024 15:15:33 -0800 (PST)
+ AJvYcCUchdAW96IgSOWzWGm9qC7Sb5WNlYLf9mqxTX86N4tOAEWSpN6cOsY7+jhi+AavL0PZrMhCg2QofjVD+65sVQptLNCS/B4=
+X-Gm-Message-State: AOJu0YwiwPo13bJ0Jkha8RGY/r+YEZM0AjfWhV8kjxYGK4PxhBM8/Ofh
+ /KxxmXhY1Q0Zdnc+PRXaXz6qdrM5EaFlKpHhZhoTQgxJhWchzys+
+X-Google-Smtp-Source: AGHT+IEwtRMhFbSxQb/KZXhLcR9EIwBKij6+ixLsZ46fWXDn9wg1tZGHwoGvcDjNQ8MYSr5vZ+jMkA==
+X-Received: by 2002:a05:6a00:10ca:b0:6e6:3f05:74d8 with SMTP id
+ d10-20020a056a0010ca00b006e63f0574d8mr6160393pfu.3.1709768211057; 
+ Wed, 06 Mar 2024 15:36:51 -0800 (PST)
 Received: from debian ([2601:641:300:14de:57cf:345:75f0:2085])
  by smtp.gmail.com with ESMTPSA id
- kx3-20020a170902f94300b001dca40bb727sm13205906plb.88.2024.03.06.15.15.32
+ k19-20020a63ff13000000b005cfb6e7b0c7sm11710093pgi.39.2024.03.06.15.36.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Mar 2024 15:15:33 -0800 (PST)
+ Wed, 06 Mar 2024 15:36:50 -0800 (PST)
 From: fan <nifan.cxl@gmail.com>
 X-Google-Original-From: fan <fan@debian>
-Date: Wed, 6 Mar 2024 15:15:30 -0800
+Date: Wed, 6 Mar 2024 15:36:38 -0800
 To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Cc: nifan.cxl@gmail.com, qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
  gregory.price@memverge.com, ira.weiny@intel.com,
@@ -71,7 +71,7 @@ Cc: nifan.cxl@gmail.com, qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
  Fan Ni <fan.ni@samsung.com>
 Subject: Re: [PATCH v5 09/13] hw/cxl/events: Add qmp interfaces to
  add/release dynamic capacity extents
-Message-ID: <Zej5EuQXytgeWGfj@debian>
+Message-ID: <Zej-Bg7ooVyswHXZ@debian>
 References: <20240304194331.1586191-1-nifan.cxl@gmail.com>
  <20240304194331.1586191-10-nifan.cxl@gmail.com>
  <20240306174811.000029fd@Huawei.com>
@@ -79,8 +79,8 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <20240306174811.000029fd@Huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -331,18 +331,10 @@ On Wed, Mar 06, 2024 at 05:48:11PM +0000, Jonathan Cameron wrote:
 > to do two passes so we know this has happened early (or perhaps this is a later
 > patch in which case a todo here would help).
 
-Skip here does not mean the extent is invalid, it just means the extent
-is still pending to add, so remove them from pending list would be
-enough to reject the extent, no need to release further. That is based
-on your feedback on v4.
+If the second skip_extent case, I will reject earlier instead of
+skipping.
 
-The loop here is only to collect the extents to sent to the event log. 
-But as you said, we need one pass before updating pending list.
-Actually if we do not allow the above case where extents to release is
-still in the pending to add list, we can just return here with error, no
-extra dry run needed. 
-
-What do you think?
+Fan
 
 > 
 > > +        
@@ -359,14 +351,6 @@ What do you think?
 > > +        if (!skip_extent) {
 > > +            i++;
 > Problem is if we skip one in the middle the records will be wrong below.
-
-Why? Only extents passed the check will be stored in variable extents and
-processed further and i be updated. 
-For skipped ones, since i is not updated, they will be
-overwritten by following valid ones.
-
-Fan
-
 > > +        }
 > > +    }
 > > +    num_extents = i;
