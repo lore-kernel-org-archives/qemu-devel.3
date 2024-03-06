@@ -4,38 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C75CEC5475B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 04:01:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88F29C54E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 04:01:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhiQP-0000nV-3O; Tue, 05 Mar 2024 22:58:37 -0500
+	id 1rhiQW-0000ws-Tr; Tue, 05 Mar 2024 22:58:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rhiQN-0000m5-1P; Tue, 05 Mar 2024 22:58:35 -0500
-Received: from szxga05-in.huawei.com ([45.249.212.191])
+ id 1rhiQV-0000vM-Af; Tue, 05 Mar 2024 22:58:43 -0500
+Received: from szxga06-in.huawei.com ([45.249.212.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rhiQK-0006kG-FD; Tue, 05 Mar 2024 22:58:34 -0500
-Received: from mail.maildlp.com (unknown [172.19.163.17])
- by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4TqJWX6RpJz1h1C4;
- Wed,  6 Mar 2024 11:56:08 +0800 (CST)
+ id 1rhiQT-0006nF-Ld; Tue, 05 Mar 2024 22:58:43 -0500
+Received: from mail.maildlp.com (unknown [172.19.163.44])
+ by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4TqJYg08qcz1vw70;
+ Wed,  6 Mar 2024 11:57:59 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 9265B1A0172;
- Wed,  6 Mar 2024 11:58:29 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 1B8AD1400E8;
+ Wed,  6 Mar 2024 11:58:39 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Wed, 6 Mar
- 2024 11:58:29 +0800
+ 2024 11:58:38 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [RFC PATCH v7 03/23] target/arm: Add support for FEAT_NMI,
- Non-maskable Interrupt
-Date: Wed, 6 Mar 2024 03:57:01 +0000
-Message-ID: <20240306035721.2333531-4-ruanjinjie@huawei.com>
+Subject: [RFC PATCH v7 14/23] hw/intc/arm_gicv3_redist: Implement GICR_INMIR0
+Date: Wed, 6 Mar 2024 03:57:12 +0000
+Message-ID: <20240306035721.2333531-15-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240306035721.2333531-1-ruanjinjie@huawei.com>
 References: <20240306035721.2333531-1-ruanjinjie@huawei.com>
@@ -45,8 +44,8 @@ Content-Type: text/plain
 X-Originating-IP: [10.67.174.55]
 X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
  kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.191;
- envelope-from=ruanjinjie@huawei.com; helo=szxga05-in.huawei.com
+Received-SPF: pass client-ip=45.249.212.32; envelope-from=ruanjinjie@huawei.com;
+ helo=szxga06-in.huawei.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
@@ -70,33 +69,76 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for FEAT_NMI. NMI (FEAT_NMI) is an mandatory feature in
-ARMv8.8-A and ARM v9.3-A.
+Add GICR_INMIR0 register and support access GICR_INMIR0.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
-v3:
+v6:
 - Add Reviewed-by.
-- Adjust to before the MSR patches.
+v4:
+- Make the GICR_INMIR0 implementation more clearer.
 ---
- target/arm/internals.h | 3 +++
- 1 file changed, 3 insertions(+)
+ hw/intc/arm_gicv3_redist.c | 19 +++++++++++++++++++
+ hw/intc/gicv3_internal.h   |  1 +
+ 2 files changed, 20 insertions(+)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 860bcc0c66..980af3c1c1 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1078,6 +1078,9 @@ static inline uint32_t aarch64_pstate_valid_mask(const ARMISARegisters *id)
-     if (isar_feature_aa64_mte(id)) {
-         valid |= PSTATE_TCO;
-     }
-+    if (isar_feature_aa64_nmi(id)) {
-+        valid |= PSTATE_ALLINT;
-+    }
- 
-     return valid;
+diff --git a/hw/intc/arm_gicv3_redist.c b/hw/intc/arm_gicv3_redist.c
+index 8153525849..7a16a058b1 100644
+--- a/hw/intc/arm_gicv3_redist.c
++++ b/hw/intc/arm_gicv3_redist.c
+@@ -35,6 +35,15 @@ static int gicr_ns_access(GICv3CPUState *cs, int irq)
+     return extract32(cs->gicr_nsacr, irq * 2, 2);
  }
+ 
++static void gicr_write_bitmap_reg(GICv3CPUState *cs, MemTxAttrs attrs,
++                                  uint32_t *reg, uint32_t val)
++{
++    /* Helper routine to implement writing to a "set" register */
++    val &= mask_group(cs, attrs);
++    *reg = val;
++    gicv3_redist_update(cs);
++}
++
+ static void gicr_write_set_bitmap_reg(GICv3CPUState *cs, MemTxAttrs attrs,
+                                       uint32_t *reg, uint32_t val)
+ {
+@@ -406,6 +415,10 @@ static MemTxResult gicr_readl(GICv3CPUState *cs, hwaddr offset,
+         *data = value;
+         return MEMTX_OK;
+     }
++    case GICR_INMIR0:
++        *data = cs->gic->nmi_support ?
++                gicr_read_bitmap_reg(cs, attrs, cs->gicr_isuperprio) : 0;
++        return MEMTX_OK;
+     case GICR_ICFGR0:
+     case GICR_ICFGR1:
+     {
+@@ -555,6 +568,12 @@ static MemTxResult gicr_writel(GICv3CPUState *cs, hwaddr offset,
+         gicv3_redist_update(cs);
+         return MEMTX_OK;
+     }
++    case GICR_INMIR0:
++        if (cs->gic->nmi_support) {
++            gicr_write_bitmap_reg(cs, attrs, &cs->gicr_isuperprio, value);
++        }
++        return MEMTX_OK;
++
+     case GICR_ICFGR0:
+         /* Register is all RAZ/WI or RAO/WI bits */
+         return MEMTX_OK;
+diff --git a/hw/intc/gicv3_internal.h b/hw/intc/gicv3_internal.h
+index 29d5cdc1b6..f35b7d2f03 100644
+--- a/hw/intc/gicv3_internal.h
++++ b/hw/intc/gicv3_internal.h
+@@ -109,6 +109,7 @@
+ #define GICR_ICFGR1           (GICR_SGI_OFFSET + 0x0C04)
+ #define GICR_IGRPMODR0        (GICR_SGI_OFFSET + 0x0D00)
+ #define GICR_NSACR            (GICR_SGI_OFFSET + 0x0E00)
++#define GICR_INMIR0           (GICR_SGI_OFFSET + 0x0F80)
+ 
+ /* VLPI redistributor registers, offsets from VLPI_base */
+ #define GICR_VPROPBASER       (GICR_VLPI_OFFSET + 0x70)
 -- 
 2.34.1
 
