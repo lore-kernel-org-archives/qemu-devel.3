@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B69E3C5475B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 09:43:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85FD0C5475B
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 09:44:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhnm8-00085o-TP; Wed, 06 Mar 2024 04:41:24 -0500
+	id 1rhnlc-0007Wo-4R; Wed, 06 Mar 2024 04:40:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rhnm7-00085T-1m
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 04:41:23 -0500
+ id 1rhnla-0007V0-80
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 04:40:50 -0500
 Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rhnm4-0002dF-7X
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 04:41:22 -0500
+ id 1rhnlY-0002EH-Hm
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 04:40:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709718080; x=1741254080;
+ t=1709718048; x=1741254048;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=AyRMlDMPyeK2zIKXag691XL6Lf4SeMfVoV8Ojv6fvFk=;
- b=gJReOePo5eCcVs/hZ3hpWiIoTGyTxLMiti5eoKhGyZsZEi0nYEl9aySW
- I8fcsbsM47eJ0osypxoz/+8owA/b9VvkEWz6aB+LzEP9OT4CqkfCtZAxI
- KTgyZYLWmoQ6oxwK0Cqlxmss6fJScx47jz2FLzwkEwl+4u/jZ5LVvaZb+
- 6XNDrPemJ4sFaiOHa93OqYQjKIaK8cGJIrDK2XpGff0RbNK3JP+sBvO37
- Oz9x5sKVfXA8gJ0or9iyfnIY4LwTW68neQWCQSl1CCuHSZFMseAV1Rg4T
- M4+1vmL8+aBwLeyfO+UTfqjje72oZvClFDUIJzqQa2GPPzCQDyMYXhxiN A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11004"; a="14897959"
-X-IronPort-AV: E=Sophos;i="6.06,207,1705392000"; d="scan'208";a="14897959"
+ bh=qD3+/mxiUeFA8qjNfSYQGL/xmY6O+NdeVswkRvGf0gA=;
+ b=jWvNhnilNV9RjQck4crAI+c4aDQO/Otm7QdmI8bEN6oqSpy2DhAUME9B
+ 202003Q5tsML8R6E+UU8qS1l+dWXR5onXOddrIf5xDyP85S0Vu8hYNnI3
+ zpWJTOxrgg/0H6yFAtW2rejqkC2dL+mDUF5EMAKVxw37hzUu65f277aWk
+ bxrBq7ks5zVbB+/XZn9RAqEVcGOcSrxNcyQUwfysDcZ4BlgDnYTYKmIlq
+ 97ID9V0ZuXt6SV8b60QcD/HJztem//ZtxmS3eFZjSJE7NvwwjFYm79hGC
+ pDX8aI1OP3YdKvI/tTbp9Dhv6UjajPNmDgzYwq0+ZNcUTxJ/ep/oCbe7j Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11004"; a="14897877"
+X-IronPort-AV: E=Sophos;i="6.06,207,1705392000"; d="scan'208";a="14897877"
 Received: from fmviesa002.fm.intel.com ([10.60.135.142])
  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Mar 2024 01:41:09 -0800
+ 06 Mar 2024 01:40:47 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,207,1705392000"; d="scan'208";a="32854209"
+X-IronPort-AV: E=Sophos;i="6.06,207,1705392000"; d="scan'208";a="32854153"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa002.fm.intel.com with ESMTP; 06 Mar 2024 01:41:06 -0800
+ by fmviesa002.fm.intel.com with ESMTP; 06 Mar 2024 01:40:45 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -51,10 +51,9 @@ To: Eduardo Habkost <eduardo@habkost.net>,
  Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org
 Cc: Xiaoling Song <xiaoling.song@intel.com>,
 	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 14/14] tests/unit/test-smp-parse: Test "parameter=0" SMP
- configurations
-Date: Wed,  6 Mar 2024 17:54:07 +0800
-Message-Id: <20240306095407.3058909-15-zhao1.liu@linux.intel.com>
+Subject: [PATCH 07/14] tests/unit/test-smp-parse: Bump max_cpus to 4096
+Date: Wed,  6 Mar 2024 17:54:00 +0800
+Message-Id: <20240306095407.3058909-8-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240306095407.3058909-1-zhao1.liu@linux.intel.com>
 References: <20240306095407.3058909-1-zhao1.liu@linux.intel.com>
@@ -85,125 +84,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-The support for "parameter=0" SMP configurations is removed, and QEMU
-returns error for those cases.
+The q35 machine is trying to support up to 4096 vCPUs [1], so it's
+necessary to bump max_cpus in test-smp-parse to 4096 to cover the
+topological needs of future machines.
 
-So add the related test cases to ensure parameters can't accept 0.
+[1]: https://lore.kernel.org/qemu-devel/20240228143351.3967-1-anisinha@redhat.com/
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Tested-by: Xiaoling Song <xiaoling.song@intel.com>
 ---
- tests/unit/test-smp-parse.c | 92 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 92 insertions(+)
+ tests/unit/test-smp-parse.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/tests/unit/test-smp-parse.c b/tests/unit/test-smp-parse.c
-index d39cfdc19bfe..8994337e12c7 100644
+index 84e342277452..2eb9533bc505 100644
 --- a/tests/unit/test-smp-parse.c
 +++ b/tests/unit/test-smp-parse.c
-@@ -524,6 +524,91 @@ static const struct SMPTestData data_full_topo_invalid[] = {
+@@ -20,8 +20,8 @@
+ #define T true
+ #define F false
+ 
+-#define MIN_CPUS 1   /* set the min CPUs supported by the machine as 1 */
+-#define MAX_CPUS 512 /* set the max CPUs supported by the machine as 512 */
++#define MIN_CPUS 1    /* set the min CPUs supported by the machine as 1 */
++#define MAX_CPUS 4096 /* set the max CPUs supported by the machine as 4096 */
+ 
+ #define SMP_MACHINE_NAME "TEST-SMP"
+ 
+@@ -333,13 +333,13 @@ static const struct SMPTestData data_generic_invalid[] = {
+                         "by machine '" SMP_MACHINE_NAME "' is 2",
+     }, {
+         /*
+-         * config: -smp 512
++         * config: -smp 4096
+          * The test machine should tweak the supported max CPUs to
+-         * 511 (MAX_CPUS - 1) for testing.
++         * 4095 (MAX_CPUS - 1) for testing.
+          */
+-        .config = SMP_CONFIG_GENERIC(T, MAX_CPUS, F, 0, F, 0, F, 0, F, 0),
+-        .expect_error = "Invalid SMP CPUs 512. The max CPUs supported "
+-                        "by machine '" SMP_MACHINE_NAME "' is 511",
++        .config = SMP_CONFIG_GENERIC(T, 4096, F, 0, F, 0, F, 0, F, 0),
++        .expect_error = "Invalid SMP CPUs 4096. The max CPUs supported "
++                        "by machine '" SMP_MACHINE_NAME "' is 4095",
      },
  };
- 
-+static const struct SMPTestData data_zero_topo_invalid[] = {
-+    {
-+        /*
-+         * Test "cpus=0".
-+         * config: -smp 0,drawers=1,books=1,sockets=1,dies=1,\
-+         *              clusters=1,cores=1,threads=1,maxcpus=1
-+         */
-+        .config = SMP_CONFIG_WITH_FULL_TOPO(0, 1, 1, 1, 1, 1, 1, 1, 1),
-+        .expect_error = "Invalid CPU topology: CPU topology parameters must "
-+                        "be greater than zero",
-+    }, {
-+        /*
-+         * Test "drawers=0".
-+         * config: -smp 1,drawers=0,books=1,sockets=1,dies=1,\
-+         *              clusters=1,cores=1,threads=1,maxcpus=1
-+         */
-+        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 0, 1, 1, 1, 1, 1, 1, 1),
-+        .expect_error = "Invalid CPU topology: CPU topology parameters must "
-+                        "be greater than zero",
-+    }, {
-+        /*
-+         * Test "books=0".
-+         * config: -smp 1,drawers=1,books=0,sockets=1,dies=1,\
-+         *              clusters=1,cores=1,threads=1,maxcpus=1
-+         */
-+        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 0, 1, 1, 1, 1, 1, 1),
-+        .expect_error = "Invalid CPU topology: CPU topology parameters must "
-+                        "be greater than zero",
-+    }, {
-+        /*
-+         * Test "sockets=0".
-+         * config: -smp 1,drawers=1,books=1,sockets=0,dies=1,\
-+         *              clusters=1,cores=1,threads=1,maxcpus=1
-+         */
-+        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 0, 1, 1, 1, 1, 1),
-+        .expect_error = "Invalid CPU topology: CPU topology parameters must "
-+                        "be greater than zero",
-+    }, {
-+        /*
-+         * Test "dies=0".
-+         * config: -smp 1,drawers=1,books=1,sockets=1,dies=0,\
-+         *              clusters=1,cores=1,threads=1,maxcpus=1
-+         */
-+        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 1, 0, 1, 1, 1, 1),
-+        .expect_error = "Invalid CPU topology: CPU topology parameters must "
-+                        "be greater than zero",
-+    }, {
-+        /*
-+         * Test "clusters=0".
-+         * config: -smp 1,drawers=1,books=1,sockets=1,dies=1,\
-+         *              clusters=0,cores=1,threads=1,maxcpus=1
-+         */
-+        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 1, 1, 0, 1, 1, 1),
-+        .expect_error = "Invalid CPU topology: CPU topology parameters must "
-+                        "be greater than zero",
-+    }, {
-+        /*
-+         * Test "cores=0".
-+         * config: -smp 1,drawers=1,books=1,sockets=1,dies=1,\
-+         *              clusters=1,cores=0,threads=1,maxcpus=1
-+         */
-+        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 1, 1, 1, 0, 1, 1),
-+        .expect_error = "Invalid CPU topology: CPU topology parameters must "
-+                        "be greater than zero",
-+    }, {
-+        /*
-+         * Test "threads=0".
-+         * config: -smp 1,drawers=1,books=1,sockets=1,dies=1,\
-+         *              clusters=1,cores=1,threads=0,maxcpus=1
-+         */
-+        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 1, 1, 1, 1, 0, 1),
-+        .expect_error = "Invalid CPU topology: CPU topology parameters must "
-+                        "be greater than zero",
-+    }, {
-+        /*
-+         * Test "maxcpus=0".
-+         * config: -smp 1,drawers=1,books=1,sockets=1,dies=1,\
-+         *              clusters=1,cores=1,threads=1,maxcpus=0
-+         */
-+        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 1, 1, 1, 1, 1, 0),
-+        .expect_error = "Invalid CPU topology: CPU topology parameters must "
-+                        "be greater than zero",
-+    },
-+};
-+
- static char *smp_config_to_string(const SMPConfiguration *config)
- {
-     return g_strdup_printf(
-@@ -1173,6 +1258,13 @@ static void test_full_topo(const void *opaque)
-         smp_parse_test(ms, &data, false);
-     }
- 
-+    for (i = 0; i < ARRAY_SIZE(data_zero_topo_invalid); i++) {
-+        data = data_zero_topo_invalid[i];
-+        unsupported_params_init(mc, &data);
-+
-+        smp_parse_test(ms, &data, false);
-+    }
-+
-     object_unref(obj);
- }
  
 -- 
 2.34.1
