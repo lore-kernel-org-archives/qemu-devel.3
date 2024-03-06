@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBB71C54E4A
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 13:04:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E027CC54E41
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 13:04:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhqvZ-00017e-RQ; Wed, 06 Mar 2024 08:03:21 -0500
+	id 1rhqvc-000187-0C; Wed, 06 Mar 2024 08:03:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1rhnXq-0004Rv-HG; Wed, 06 Mar 2024 04:26:38 -0500
-Received: from out30-98.freemail.mail.aliyun.com ([115.124.30.98])
+ id 1rhnYl-0004Yi-Rd; Wed, 06 Mar 2024 04:27:37 -0500
+Received: from out30-99.freemail.mail.aliyun.com ([115.124.30.99])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1rhnXi-0006E0-DW; Wed, 06 Mar 2024 04:26:38 -0500
+ id 1rhnYh-0006Ku-PB; Wed, 06 Mar 2024 04:27:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1709717183; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=4K6e2MPRTa6Tpk/7RgCfeTMAtB6IBdBOBHumxnbKaM4=;
- b=U/Pu+pocZFSF34iBP6xN6jPXPNUpzOW5t+VZlSNc9/RMASvTC85KxNTXAJo8D4esPw15x4N2tB7y9nPd2YA1i3j5sKV5YqB53iUbQDEnPhraHzPD2qJ5G2RgHKOPnaKHEVuYWmQ8TwcDr93u78J1VkEFpo+Lq7Bh0cZHOTEZRy4=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R151e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018045192;
+ t=1709717247; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=LIzolYSPEY8lQqokyCBzX1llQAG/f1M6mvqTokSnVhA=;
+ b=AwpJcVwIf7gpbdAhNCHM1iORiHqK45OkZal+Der3N9QuFsP3fe+bvs25HheCDmJSg54zMaGrRTS1Hwc3a567oTZZmaZXs91setmf4TjRmElj2V+2Qh6PPf3paK57OytfrUuNX45y1odKbL2c3OkdPZ4NtTNuEFdD/kV8AouKs98=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R191e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046056;
  MF=eric.huang@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
- TI=SMTPD_---0W1xCBW4_1709716874; 
+ TI=SMTPD_---0W1wzahE_1709716938; 
 Received: from localhost.localdomain(mailfrom:eric.huang@linux.alibaba.com
- fp:SMTPD_---0W1xCBW4_1709716874) by smtp.aliyun-inc.com;
- Wed, 06 Mar 2024 17:21:15 +0800
+ fp:SMTPD_---0W1wzahE_1709716938) by smtp.aliyun-inc.com;
+ Wed, 06 Mar 2024 17:22:19 +0800
 From: Huang Tao <eric.huang@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com, bin.meng@windriver.com,
  alistair.francis@wdc.com, palmer@dabbelt.com,
  Huang Tao <eric.huang@linux.alibaba.com>
-Subject: [PATCH 1/4] target/riscv: Rename vext_set_elems_1s function
-Date: Wed,  6 Mar 2024 17:20:09 +0800
-Message-ID: <20240306092013.21231-2-eric.huang@linux.alibaba.com>
+Subject: [PATCH 3/4] target/riscv: Replace element agnostic for vector
+ instructions
+Date: Wed,  6 Mar 2024 17:20:11 +0800
+Message-ID: <20240306092013.21231-4-eric.huang@linux.alibaba.com>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240306092013.21231-1-eric.huang@linux.alibaba.com>
 References: <20240306092013.21231-1-eric.huang@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.98;
+Received-SPF: pass client-ip=115.124.30.99;
  envelope-from=eric.huang@linux.alibaba.com;
- helo=out30-98.freemail.mail.aliyun.com
+ helo=out30-99.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -71,32 +72,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In RVV and vcrypto instructions, the masked and tail elements are set to 1s
-using vext_set_elems_1s function if the vma/vta bit is set. It is the element
-agnostic policy.
-
-However, this function can't deal the big endian situation. We rename the
-function, adding '_le' to the end of the name, to indicate that it only
-suits little endian situation.
+Replace vext_set_elems_1s_le with vext_set_elems_1s for RVV and
+vcrypto.
 
 Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
 ---
  target/riscv/vcrypto_helper.c   | 32 ++++++------
  target/riscv/vector_helper.c    | 92 ++++++++++++++++-----------------
- target/riscv/vector_internals.c | 10 ++--
- target/riscv/vector_internals.h |  6 +--
- 4 files changed, 70 insertions(+), 70 deletions(-)
+ target/riscv/vector_internals.c |  8 +--
+ target/riscv/vector_internals.h |  4 +-
+ 4 files changed, 68 insertions(+), 68 deletions(-)
 
 diff --git a/target/riscv/vcrypto_helper.c b/target/riscv/vcrypto_helper.c
-index e2d719b13b..f818749a63 100644
+index f818749a63..d6c52c1fd0 100644
 --- a/target/riscv/vcrypto_helper.c
 +++ b/target/riscv/vcrypto_helper.c
 @@ -235,7 +235,7 @@ static inline void xor_round_key(AESState *round_state, AESState *round_key)
          }                                                                 \
          env->vstart = 0;                                                  \
          /* set tail elements to 1s */                                     \
--        vext_set_elems_1s(vd, vta, vl * 4, total_elems * 4);              \
-+        vext_set_elems_1s_le(vd, vta, vl * 4, total_elems * 4);              \
+-        vext_set_elems_1s_le(vd, vta, vl * 4, total_elems * 4);              \
++        vext_set_elems_1s(vd, vta, 4, vl, total_elems * 4);               \
      }
  
  #define GEN_ZVKNED_HELPER_VS(NAME, ...)                                   \
@@ -104,8 +100,8 @@ index e2d719b13b..f818749a63 100644
          }                                                                 \
          env->vstart = 0;                                                  \
          /* set tail elements to 1s */                                     \
--        vext_set_elems_1s(vd, vta, vl * 4, total_elems * 4);              \
-+        vext_set_elems_1s_le(vd, vta, vl * 4, total_elems * 4);              \
+-        vext_set_elems_1s_le(vd, vta, vl * 4, total_elems * 4);              \
++        vext_set_elems_1s(vd, vta, 4, vl, total_elems * 4);               \
      }
  
  GEN_ZVKNED_HELPER_VV(vaesef_vv, aesenc_SB_SR_AK(&round_state,
@@ -113,8 +109,8 @@ index e2d719b13b..f818749a63 100644
      }
      env->vstart = 0;
      /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vta, vl * 4, total_elems * 4);
-+    vext_set_elems_1s_le(vd, vta, vl * 4, total_elems * 4);
+-    vext_set_elems_1s_le(vd, vta, vl * 4, total_elems * 4);
++    vext_set_elems_1s(vd, vta, 4, vl, total_elems * 4);
  }
  
  void HELPER(vaeskf2_vi)(void *vd_vptr, void *vs2_vptr, uint32_t uimm,
@@ -122,8 +118,8 @@ index e2d719b13b..f818749a63 100644
      }
      env->vstart = 0;
      /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vta, vl * 4, total_elems * 4);
-+    vext_set_elems_1s_le(vd, vta, vl * 4, total_elems * 4);
+-    vext_set_elems_1s_le(vd, vta, vl * 4, total_elems * 4);
++    vext_set_elems_1s(vd, vta, 4, vl, total_elems * 4);
  }
  
  static inline uint32_t sig0_sha256(uint32_t x)
@@ -131,8 +127,8 @@ index e2d719b13b..f818749a63 100644
      }
      /* set tail elements to 1s */
      total_elems = vext_get_total_elems(env, desc, esz);
--    vext_set_elems_1s(vd, vta, env->vl * esz, total_elems * esz);
-+    vext_set_elems_1s_le(vd, vta, env->vl * esz, total_elems * esz);
+-    vext_set_elems_1s_le(vd, vta, env->vl * esz, total_elems * esz);
++    vext_set_elems_1s(vd, vta, esz, env->vl, total_elems * esz);
      env->vstart = 0;
  }
  
@@ -140,8 +136,8 @@ index e2d719b13b..f818749a63 100644
  
      /* set tail elements to 1s */
      total_elems = vext_get_total_elems(env, desc, esz);
--    vext_set_elems_1s(vd, vta, env->vl * esz, total_elems * esz);
-+    vext_set_elems_1s_le(vd, vta, env->vl * esz, total_elems * esz);
+-    vext_set_elems_1s_le(vd, vta, env->vl * esz, total_elems * esz);
++    vext_set_elems_1s(vd, vta, esz, env->vl, total_elems * esz);
      env->vstart = 0;
  }
  
@@ -149,8 +145,8 @@ index e2d719b13b..f818749a63 100644
  
      /* set tail elements to 1s */
      total_elems = vext_get_total_elems(env, desc, esz);
--    vext_set_elems_1s(vd, vta, env->vl * esz, total_elems * esz);
-+    vext_set_elems_1s_le(vd, vta, env->vl * esz, total_elems * esz);
+-    vext_set_elems_1s_le(vd, vta, env->vl * esz, total_elems * esz);
++    vext_set_elems_1s(vd, vta, esz, env->vl, total_elems * esz);
      env->vstart = 0;
  }
  
@@ -158,8 +154,8 @@ index e2d719b13b..f818749a63 100644
  
      /* set tail elements to 1s */
      total_elems = vext_get_total_elems(env, desc, esz);
--    vext_set_elems_1s(vd, vta, env->vl * esz, total_elems * esz);
-+    vext_set_elems_1s_le(vd, vta, env->vl * esz, total_elems * esz);
+-    vext_set_elems_1s_le(vd, vta, env->vl * esz, total_elems * esz);
++    vext_set_elems_1s(vd, vta, esz, env->vl, total_elems * esz);
      env->vstart = 0;
  }
  
@@ -167,8 +163,8 @@ index e2d719b13b..f818749a63 100644
  
      /* set tail elements to 1s */
      total_elems = vext_get_total_elems(env, desc, esz);
--    vext_set_elems_1s(vd, vta, env->vl * esz, total_elems * esz);
-+    vext_set_elems_1s_le(vd, vta, env->vl * esz, total_elems * esz);
+-    vext_set_elems_1s_le(vd, vta, env->vl * esz, total_elems * esz);
++    vext_set_elems_1s(vd, vta, esz, env->vl, total_elems * esz);
      env->vstart = 0;
  }
  
@@ -176,8 +172,8 @@ index e2d719b13b..f818749a63 100644
              vd[(i * 8) + j] = bswap32(w[H4(j + 16)]);
          }
      }
--    vext_set_elems_1s(vd_vptr, vta, env->vl * esz, total_elems * esz);
-+    vext_set_elems_1s_le(vd_vptr, vta, env->vl * esz, total_elems * esz);
+-    vext_set_elems_1s_le(vd_vptr, vta, env->vl * esz, total_elems * esz);
++    vext_set_elems_1s(vd_vptr, vta, esz, env->vl, total_elems * esz);
      env->vstart = 0;
  }
  
@@ -185,8 +181,8 @@ index e2d719b13b..f818749a63 100644
              vd[i * 8 + k] = bswap32(v1[H4(k)]);
          }
      }
--    vext_set_elems_1s(vd_vptr, vta, env->vl * esz, total_elems * esz);
-+    vext_set_elems_1s_le(vd_vptr, vta, env->vl * esz, total_elems * esz);
+-    vext_set_elems_1s_le(vd_vptr, vta, env->vl * esz, total_elems * esz);
++    vext_set_elems_1s(vd_vptr, vta, esz, env->vl, total_elems * esz);
      env->vstart = 0;
  }
  
@@ -194,8 +190,8 @@ index e2d719b13b..f818749a63 100644
          vd[i * 2 + 1] = brev8(Z[1]);
      }
      /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vta, env->vl * 4, total_elems * 4);
-+    vext_set_elems_1s_le(vd, vta, env->vl * 4, total_elems * 4);
+-    vext_set_elems_1s_le(vd, vta, env->vl * 4, total_elems * 4);
++    vext_set_elems_1s(vd, vta, 4, env->vl, total_elems * 4);
      env->vstart = 0;
  }
  
@@ -203,8 +199,8 @@ index e2d719b13b..f818749a63 100644
          vd[i * 2 + 1] = brev8(Z[1]);
      }
      /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vta, env->vl * 4, total_elems * 4);
-+    vext_set_elems_1s_le(vd, vta, env->vl * 4, total_elems * 4);
+-    vext_set_elems_1s_le(vd, vta, env->vl * 4, total_elems * 4);
++    vext_set_elems_1s(vd, vta, 4, env->vl, total_elems * 4);
      env->vstart = 0;
  }
  
@@ -212,8 +208,8 @@ index e2d719b13b..f818749a63 100644
  
      env->vstart = 0;
      /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vext_vta(desc), env->vl * esz, total_elems * esz);
-+    vext_set_elems_1s_le(vd, vext_vta(desc), env->vl * esz, total_elems * esz);
+-    vext_set_elems_1s_le(vd, vext_vta(desc), env->vl * esz, total_elems * esz);
++    vext_set_elems_1s(vd, vext_vta(desc), esz, env->vl, total_elems * esz);
  }
  
  static void do_sm4_round(uint32_t *rk, uint32_t *buf)
@@ -221,8 +217,8 @@ index e2d719b13b..f818749a63 100644
  
      env->vstart = 0;
      /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vext_vta(desc), env->vl * esz, total_elems * esz);
-+    vext_set_elems_1s_le(vd, vext_vta(desc), env->vl * esz, total_elems * esz);
+-    vext_set_elems_1s_le(vd, vext_vta(desc), env->vl * esz, total_elems * esz);
++    vext_set_elems_1s(vd, vext_vta(desc), esz, env->vl, total_elems * esz);
  }
  
  void HELPER(vsm4r_vs)(void *vd, void *vs2, CPURISCVState *env, uint32_t desc)
@@ -230,19 +226,19 @@ index e2d719b13b..f818749a63 100644
  
      env->vstart = 0;
      /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vext_vta(desc), env->vl * esz, total_elems * esz);
-+    vext_set_elems_1s_le(vd, vext_vta(desc), env->vl * esz, total_elems * esz);
+-    vext_set_elems_1s_le(vd, vext_vta(desc), env->vl * esz, total_elems * esz);
++    vext_set_elems_1s(vd, vext_vta(desc), esz, env->vl, total_elems * esz);
  }
 diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 84cec73eb2..6ed73ed70a 100644
+index 6ed73ed70a..4816439815 100644
 --- a/target/riscv/vector_helper.c
 +++ b/target/riscv/vector_helper.c
 @@ -187,7 +187,7 @@ static void vext_set_tail_elems_1s(target_ulong vl, void *vd,
      }
  
      for (k = 0; k < nf; ++k) {
--        vext_set_elems_1s(vd, vta, (k * max_elems + vl) * esz,
-+        vext_set_elems_1s_le(vd, vta, (k * max_elems + vl) * esz,
+-        vext_set_elems_1s_le(vd, vta, (k * max_elems + vl) * esz,
++        vext_set_elems_1s(vd, vta, esz, k * max_elems + vl,
                            (k * max_elems + max_elems) * esz);
      }
  }
@@ -250,8 +246,8 @@ index 84cec73eb2..6ed73ed70a 100644
          while (k < nf) {
              if (!vm && !vext_elem_mask(v0, i)) {
                  /* set masked-off elements to 1s */
--                vext_set_elems_1s(vd, vma, (i + k * max_elems) * esz,
-+                vext_set_elems_1s_le(vd, vma, (i + k * max_elems) * esz,
+-                vext_set_elems_1s_le(vd, vma, (i + k * max_elems) * esz,
++                vext_set_elems_1s(vd, vma, esz, i + k * max_elems,
                                    (i + k * max_elems + 1) * esz);
                  k++;
                  continue;
@@ -259,8 +255,8 @@ index 84cec73eb2..6ed73ed70a 100644
          while (k < nf) {
              if (!vm && !vext_elem_mask(v0, i)) {
                  /* set masked-off elements to 1s */
--                vext_set_elems_1s(vd, vma, (i + k * max_elems) * esz,
-+                vext_set_elems_1s_le(vd, vma, (i + k * max_elems) * esz,
+-                vext_set_elems_1s_le(vd, vma, (i + k * max_elems) * esz,
++                vext_set_elems_1s(vd, vma, esz, i + k * max_elems,
                                    (i + k * max_elems + 1) * esz);
                  k++;
                  continue;
@@ -268,8 +264,8 @@ index 84cec73eb2..6ed73ed70a 100644
          while (k < nf) {
              if (!vm && !vext_elem_mask(v0, i)) {
                  /* set masked-off elements to 1s */
--                vext_set_elems_1s(vd, vma, (i + k * max_elems) * esz,
-+                vext_set_elems_1s_le(vd, vma, (i + k * max_elems) * esz,
+-                vext_set_elems_1s_le(vd, vma, (i + k * max_elems) * esz,
++                vext_set_elems_1s(vd, vma, esz, i + k * max_elems,
                                    (i + k * max_elems + 1) * esz);
                  k++;
                  continue;
@@ -277,8 +273,8 @@ index 84cec73eb2..6ed73ed70a 100644
      }                                                         \
      env->vstart = 0;                                          \
      /* set tail elements to 1s */                             \
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);  \
-+    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);  \
+-    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);  \
++    vext_set_elems_1s(vd, vta, esz, vl, total_elems * esz);   \
  }
  
  GEN_VEXT_VADC_VVM(vadc_vvm_b, uint8_t,  H1, DO_VADC)
@@ -286,8 +282,8 @@ index 84cec73eb2..6ed73ed70a 100644
      }                                                                    \
      env->vstart = 0;                                                     \
      /* set tail elements to 1s */                                        \
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);             \
-+    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);             \
+-    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);             \
++    vext_set_elems_1s(vd, vta, esz, vl, total_elems * esz);              \
  }
  
  GEN_VEXT_VADC_VXM(vadc_vxm_b, uint8_t,  H1, DO_VADC)
@@ -295,8 +291,8 @@ index 84cec73eb2..6ed73ed70a 100644
      for (i = env->vstart; i < vl; i++) {                                  \
          if (!vm && !vext_elem_mask(v0, i)) {                              \
              /* set masked-off elements to 1s */                           \
--            vext_set_elems_1s(vd, vma, i * esz, (i + 1) * esz);           \
-+            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);           \
+-            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);           \
++            vext_set_elems_1s(vd, vma, esz, i, (i + 1) * esz);            \
              continue;                                                     \
          }                                                                 \
          TS1 s1 = *((TS1 *)vs1 + HS1(i));                                  \
@@ -304,8 +300,8 @@ index 84cec73eb2..6ed73ed70a 100644
      }                                                                     \
      env->vstart = 0;                                                      \
      /* set tail elements to 1s */                                         \
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);              \
-+    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);              \
+-    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);              \
++    vext_set_elems_1s(vd, vta, esz, vl, total_elems * esz);               \
  }
  
  GEN_VEXT_SHIFT_VV(vsll_vv_b, uint8_t,  uint8_t, H1, H1, DO_SLL, 0x7)
@@ -313,8 +309,8 @@ index 84cec73eb2..6ed73ed70a 100644
      for (i = env->vstart; i < vl; i++) {                    \
          if (!vm && !vext_elem_mask(v0, i)) {                \
              /* set masked-off elements to 1s */             \
--            vext_set_elems_1s(vd, vma, i * esz,             \
-+            vext_set_elems_1s_le(vd, vma, i * esz,             \
+-            vext_set_elems_1s_le(vd, vma, i * esz,             \
++            vext_set_elems_1s(vd, vma, esz, i,              \
                                (i + 1) * esz);               \
              continue;                                       \
          }                                                   \
@@ -322,8 +318,8 @@ index 84cec73eb2..6ed73ed70a 100644
      }                                                       \
      env->vstart = 0;                                        \
      /* set tail elements to 1s */                           \
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);\
-+    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);\
+-    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);\
++    vext_set_elems_1s(vd, vta, esz, vl, total_elems * esz); \
  }
  
  GEN_VEXT_SHIFT_VX(vsll_vx_b, uint8_t, int8_t, H1, H1, DO_SLL, 0x7)
@@ -331,8 +327,8 @@ index 84cec73eb2..6ed73ed70a 100644
      }                                                                \
      env->vstart = 0;                                                 \
      /* set tail elements to 1s */                                    \
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);         \
-+    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);         \
+-    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);         \
++    vext_set_elems_1s(vd, vta, esz, vl, total_elems * esz);          \
  }
  
  GEN_VEXT_VMV_VV(vmv_v_v_b, int8_t,  H1)
@@ -340,8 +336,8 @@ index 84cec73eb2..6ed73ed70a 100644
      }                                                                \
      env->vstart = 0;                                                 \
      /* set tail elements to 1s */                                    \
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);         \
-+    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);         \
+-    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);         \
++    vext_set_elems_1s(vd, vta, esz, vl, total_elems * esz);          \
  }
  
  GEN_VEXT_VMV_VX(vmv_v_x_b, int8_t,  H1)
@@ -349,8 +345,8 @@ index 84cec73eb2..6ed73ed70a 100644
      }                                                                \
      env->vstart = 0;                                                 \
      /* set tail elements to 1s */                                    \
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);         \
-+    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);         \
+-    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);         \
++    vext_set_elems_1s(vd, vta, esz, vl, total_elems * esz);          \
  }
  
  GEN_VEXT_VMERGE_VV(vmerge_vvm_b, int8_t,  H1)
@@ -358,8 +354,8 @@ index 84cec73eb2..6ed73ed70a 100644
      }                                                                \
      env->vstart = 0;                                                 \
      /* set tail elements to 1s */                                    \
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);         \
-+    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);         \
+-    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);         \
++    vext_set_elems_1s(vd, vta, esz, vl, total_elems * esz);          \
  }
  
  GEN_VEXT_VMERGE_VX(vmerge_vxm_b, int8_t,  H1)
@@ -367,8 +363,8 @@ index 84cec73eb2..6ed73ed70a 100644
      for (uint32_t i = env->vstart; i < vl; i++) {
          if (!vm && !vext_elem_mask(v0, i)) {
              /* set masked-off elements to 1s */
--            vext_set_elems_1s(vd, vma, i * esz, (i + 1) * esz);
-+            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);
+-            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);
++            vext_set_elems_1s(vd, vma, esz, i, (i + 1) * esz);
              continue;
          }
          fn(vd, vs1, vs2, i, env, vxrm);
@@ -376,8 +372,8 @@ index 84cec73eb2..6ed73ed70a 100644
          break;
      }
      /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);
-+    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);
+-    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);
++    vext_set_elems_1s(vd, vta, esz, vl, total_elems * esz);
  }
  
  /* generate helpers for fixed point instructions with OPIVV format */
@@ -385,8 +381,8 @@ index 84cec73eb2..6ed73ed70a 100644
      for (uint32_t i = env->vstart; i < vl; i++) {
          if (!vm && !vext_elem_mask(v0, i)) {
              /* set masked-off elements to 1s */
--            vext_set_elems_1s(vd, vma, i * esz, (i + 1) * esz);
-+            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);
+-            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);
++            vext_set_elems_1s(vd, vma, esz, i, (i + 1) * esz);
              continue;
          }
          fn(vd, s1, vs2, i, env, vxrm);
@@ -394,8 +390,8 @@ index 84cec73eb2..6ed73ed70a 100644
          break;
      }
      /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);
-+    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);
+-    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);
++    vext_set_elems_1s(vd, vta, esz, vl, total_elems * esz);
  }
  
  /* generate helpers for fixed point instructions with OPIVX format */
@@ -403,8 +399,8 @@ index 84cec73eb2..6ed73ed70a 100644
      for (i = env->vstart; i < vl; i++) {                  \
          if (!vm && !vext_elem_mask(v0, i)) {              \
              /* set masked-off elements to 1s */           \
--            vext_set_elems_1s(vd, vma, i * ESZ,           \
-+            vext_set_elems_1s_le(vd, vma, i * ESZ,           \
+-            vext_set_elems_1s_le(vd, vma, i * ESZ,           \
++            vext_set_elems_1s(vd, vma, ESZ, i,            \
                                (i + 1) * ESZ);             \
              continue;                                     \
          }                                                 \
@@ -412,8 +408,8 @@ index 84cec73eb2..6ed73ed70a 100644
      }                                                     \
      env->vstart = 0;                                      \
      /* set tail elements to 1s */                         \
--    vext_set_elems_1s(vd, vta, vl * ESZ,                  \
-+    vext_set_elems_1s_le(vd, vta, vl * ESZ,                  \
+-    vext_set_elems_1s_le(vd, vta, vl * ESZ,                  \
++    vext_set_elems_1s(vd, vta, ESZ, vl,                   \
                        total_elems * ESZ);                 \
  }
  
@@ -421,8 +417,8 @@ index 84cec73eb2..6ed73ed70a 100644
      for (i = env->vstart; i < vl; i++) {                  \
          if (!vm && !vext_elem_mask(v0, i)) {              \
              /* set masked-off elements to 1s */           \
--            vext_set_elems_1s(vd, vma, i * ESZ,           \
-+            vext_set_elems_1s_le(vd, vma, i * ESZ,           \
+-            vext_set_elems_1s_le(vd, vma, i * ESZ,           \
++            vext_set_elems_1s(vd, vma, ESZ, i,            \
                                (i + 1) * ESZ);             \
              continue;                                     \
          }                                                 \
@@ -430,8 +426,8 @@ index 84cec73eb2..6ed73ed70a 100644
      }                                                     \
      env->vstart = 0;                                      \
      /* set tail elements to 1s */                         \
--    vext_set_elems_1s(vd, vta, vl * ESZ,                  \
-+    vext_set_elems_1s_le(vd, vta, vl * ESZ,                  \
+-    vext_set_elems_1s_le(vd, vta, vl * ESZ,                  \
++    vext_set_elems_1s(vd, vta, ESZ, vl,                   \
                        total_elems * ESZ);                 \
  }
  
@@ -439,16 +435,16 @@ index 84cec73eb2..6ed73ed70a 100644
      for (i = env->vstart; i < vl; i++) {               \
          if (!vm && !vext_elem_mask(v0, i)) {           \
              /* set masked-off elements to 1s */        \
--            vext_set_elems_1s(vd, vma, i * ESZ,        \
-+            vext_set_elems_1s_le(vd, vma, i * ESZ,        \
+-            vext_set_elems_1s_le(vd, vma, i * ESZ,        \
++            vext_set_elems_1s(vd, vma, ESZ, i,         \
                                (i + 1) * ESZ);          \
              continue;                                  \
          }                                              \
          do_##NAME(vd, vs2, i, env);                    \
      }                                                  \
      env->vstart = 0;                                   \
--    vext_set_elems_1s(vd, vta, vl * ESZ,               \
-+    vext_set_elems_1s_le(vd, vta, vl * ESZ,               \
+-    vext_set_elems_1s_le(vd, vta, vl * ESZ,               \
++    vext_set_elems_1s(vd, vta, ESZ, vl,                \
                        total_elems * ESZ);              \
  }
  
@@ -456,8 +452,8 @@ index 84cec73eb2..6ed73ed70a 100644
      }                                                         \
      env->vstart = 0;                                          \
      /* set tail elements to 1s */                             \
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);  \
-+    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);  \
+-    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);  \
++    vext_set_elems_1s(vd, vta, esz, vl, total_elems * esz);   \
  }
  
  GEN_VFMERGE_VF(vfmerge_vfm_h, int16_t, H2)
@@ -465,8 +461,8 @@ index 84cec73eb2..6ed73ed70a 100644
      *((TD *)vd + HD(0)) = s1;                             \
      env->vstart = 0;                                      \
      /* set tail elements to 1s */                         \
--    vext_set_elems_1s(vd, vta, esz, vlenb);               \
-+    vext_set_elems_1s_le(vd, vta, esz, vlenb);               \
+-    vext_set_elems_1s_le(vd, vta, esz, vlenb);               \
++    vext_set_elems_1s(vd, vta, esz, 1, vlenb);            \
  }
  
  /* vd[0] = sum(vs1[0], vs2[*]) */
@@ -474,8 +470,8 @@ index 84cec73eb2..6ed73ed70a 100644
      *((TD *)vd + HD(0)) = s1;                              \
      env->vstart = 0;                                       \
      /* set tail elements to 1s */                          \
--    vext_set_elems_1s(vd, vta, esz, vlenb);                \
-+    vext_set_elems_1s_le(vd, vta, esz, vlenb);                \
+-    vext_set_elems_1s_le(vd, vta, esz, vlenb);                \
++    vext_set_elems_1s(vd, vta, esz, 1, vlenb);             \
  }
  
  /* Unordered sum */
@@ -483,8 +479,8 @@ index 84cec73eb2..6ed73ed70a 100644
      for (i = env->vstart; i < vl; i++) {                                  \
          if (!vm && !vext_elem_mask(v0, i)) {                              \
              /* set masked-off elements to 1s */                           \
--            vext_set_elems_1s(vd, vma, i * esz, (i + 1) * esz);           \
-+            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);           \
+-            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);           \
++            vext_set_elems_1s(vd, vma, esz, i, (i + 1) * esz);            \
              continue;                                                     \
          }                                                                 \
          *((ETYPE *)vd + H(i)) = sum;                                      \
@@ -492,8 +488,8 @@ index 84cec73eb2..6ed73ed70a 100644
      }                                                                     \
      env->vstart = 0;                                                      \
      /* set tail elements to 1s */                                         \
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);              \
-+    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);              \
+-    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);              \
++    vext_set_elems_1s(vd, vta, esz, vl, total_elems * esz);               \
  }
  
  GEN_VEXT_VIOTA_M(viota_m_b, uint8_t,  H1)
@@ -501,16 +497,16 @@ index 84cec73eb2..6ed73ed70a 100644
      for (i = env->vstart; i < vl; i++) {                                  \
          if (!vm && !vext_elem_mask(v0, i)) {                              \
              /* set masked-off elements to 1s */                           \
--            vext_set_elems_1s(vd, vma, i * esz, (i + 1) * esz);           \
-+            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);           \
+-            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);           \
++            vext_set_elems_1s(vd, vma, esz, i, (i + 1) * esz);            \
              continue;                                                     \
          }                                                                 \
          *((ETYPE *)vd + H(i)) = i;                                        \
      }                                                                     \
      env->vstart = 0;                                                      \
      /* set tail elements to 1s */                                         \
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);              \
-+    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);              \
+-    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);              \
++    vext_set_elems_1s(vd, vta, esz, vl, total_elems * esz);               \
  }
  
  GEN_VEXT_VID_V(vid_v_b, uint8_t,  H1)
@@ -518,15 +514,15 @@ index 84cec73eb2..6ed73ed70a 100644
      for (i = i_min; i < vl; i++) {                                        \
          if (!vm && !vext_elem_mask(v0, i)) {                              \
              /* set masked-off elements to 1s */                           \
--            vext_set_elems_1s(vd, vma, i * esz, (i + 1) * esz);           \
-+            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);           \
+-            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);           \
++            vext_set_elems_1s(vd, vma, esz, i, (i + 1) * esz);            \
              continue;                                                     \
          }                                                                 \
          *((ETYPE *)vd + H(i)) = *((ETYPE *)vs2 + H(i - offset));          \
      }                                                                     \
      /* set tail elements to 1s */                                         \
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);              \
-+    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);              \
+-    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);              \
++    vext_set_elems_1s(vd, vta, esz, vl, total_elems * esz);               \
  }
  
  /* vslideup.vx vd, vs2, rs1, vm # vd[i+rs1] = vs2[i] */
@@ -534,8 +530,8 @@ index 84cec73eb2..6ed73ed70a 100644
      for (i = env->vstart; i < i_max; ++i) {                               \
          if (!vm && !vext_elem_mask(v0, i)) {                              \
              /* set masked-off elements to 1s */                           \
--            vext_set_elems_1s(vd, vma, i * esz, (i + 1) * esz);           \
-+            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);           \
+-            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);           \
++            vext_set_elems_1s(vd, vma, esz, i, (i + 1) * esz);            \
              continue;                                                     \
          }                                                                 \
          *((ETYPE *)vd + H(i)) = *((ETYPE *)vs2 + H(i + s1));              \
@@ -543,8 +539,8 @@ index 84cec73eb2..6ed73ed70a 100644
                                                                            \
      env->vstart = 0;                                                      \
      /* set tail elements to 1s */                                         \
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);              \
-+    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);              \
+-    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);              \
++    vext_set_elems_1s(vd, vta, esz, vl, total_elems * esz);               \
  }
  
  /* vslidedown.vx vd, vs2, rs1, vm # vd[i] = vs2[i+rs1] */
@@ -552,8 +548,8 @@ index 84cec73eb2..6ed73ed70a 100644
      for (i = env->vstart; i < vl; i++) {                                    \
          if (!vm && !vext_elem_mask(v0, i)) {                                \
              /* set masked-off elements to 1s */                             \
--            vext_set_elems_1s(vd, vma, i * esz, (i + 1) * esz);             \
-+            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);             \
+-            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);             \
++            vext_set_elems_1s(vd, vma, esz, i, (i + 1) * esz);              \
              continue;                                                       \
          }                                                                   \
          if (i == 0) {                                                       \
@@ -561,8 +557,8 @@ index 84cec73eb2..6ed73ed70a 100644
      }                                                                       \
      env->vstart = 0;                                                        \
      /* set tail elements to 1s */                                           \
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);                \
-+    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);                \
+-    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);                \
++    vext_set_elems_1s(vd, vta, esz, vl, total_elems * esz);                 \
  }
  
  GEN_VEXT_VSLIE1UP(8,  H1)
@@ -570,8 +566,8 @@ index 84cec73eb2..6ed73ed70a 100644
      for (i = env->vstart; i < vl; i++) {                                      \
          if (!vm && !vext_elem_mask(v0, i)) {                                  \
              /* set masked-off elements to 1s */                               \
--            vext_set_elems_1s(vd, vma, i * esz, (i + 1) * esz);               \
-+            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);            \
+-            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);            \
++            vext_set_elems_1s(vd, vma, esz, i, (i + 1) * esz);                \
              continue;                                                         \
          }                                                                     \
          if (i == vl - 1) {                                                    \
@@ -579,8 +575,8 @@ index 84cec73eb2..6ed73ed70a 100644
      }                                                                         \
      env->vstart = 0;                                                          \
      /* set tail elements to 1s */                                             \
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);                  \
-+    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);               \
+-    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);               \
++    vext_set_elems_1s(vd, vta, esz, vl, total_elems * esz);                   \
  }
  
  GEN_VEXT_VSLIDE1DOWN(8,  H1)
@@ -588,8 +584,8 @@ index 84cec73eb2..6ed73ed70a 100644
      for (i = env->vstart; i < vl; i++) {                                  \
          if (!vm && !vext_elem_mask(v0, i)) {                              \
              /* set masked-off elements to 1s */                           \
--            vext_set_elems_1s(vd, vma, i * esz, (i + 1) * esz);           \
-+            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);           \
+-            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);           \
++            vext_set_elems_1s(vd, vma, esz, i, (i + 1) * esz);            \
              continue;                                                     \
          }                                                                 \
          index = *((TS1 *)vs1 + HS1(i));                                   \
@@ -597,8 +593,8 @@ index 84cec73eb2..6ed73ed70a 100644
      }                                                                     \
      env->vstart = 0;                                                      \
      /* set tail elements to 1s */                                         \
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);              \
-+    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);              \
+-    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);              \
++    vext_set_elems_1s(vd, vta, esz, vl, total_elems * esz);               \
  }
  
  /* vd[i] = (vs1[i] >= VLMAX) ? 0 : vs2[vs1[i]]; */
@@ -606,8 +602,8 @@ index 84cec73eb2..6ed73ed70a 100644
      for (i = env->vstart; i < vl; i++) {                                  \
          if (!vm && !vext_elem_mask(v0, i)) {                              \
              /* set masked-off elements to 1s */                           \
--            vext_set_elems_1s(vd, vma, i * esz, (i + 1) * esz);           \
-+            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);           \
+-            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);           \
++            vext_set_elems_1s(vd, vma, esz, i, (i + 1) * esz);            \
              continue;                                                     \
          }                                                                 \
          if (index >= vlmax) {                                             \
@@ -615,8 +611,8 @@ index 84cec73eb2..6ed73ed70a 100644
      }                                                                     \
      env->vstart = 0;                                                      \
      /* set tail elements to 1s */                                         \
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);              \
-+    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);              \
+-    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);              \
++    vext_set_elems_1s(vd, vta, esz, vl, total_elems * esz);               \
  }
  
  /* vd[i] = (x[rs1] >= VLMAX) ? 0 : vs2[rs1] */
@@ -624,8 +620,8 @@ index 84cec73eb2..6ed73ed70a 100644
      }                                                                     \
      env->vstart = 0;                                                      \
      /* set tail elements to 1s */                                         \
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);              \
-+    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);              \
+-    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);              \
++    vext_set_elems_1s(vd, vta, esz, vl, total_elems * esz);               \
  }
  
  /* Compress into vd elements of vs2 where vs1 is enabled */
@@ -633,92 +629,74 @@ index 84cec73eb2..6ed73ed70a 100644
      for (i = env->vstart; i < vl; i++) {                         \
          if (!vm && !vext_elem_mask(v0, i)) {                     \
              /* set masked-off elements to 1s */                  \
--            vext_set_elems_1s(vd, vma, i * esz, (i + 1) * esz);  \
-+            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);  \
+-            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);  \
++            vext_set_elems_1s(vd, vma, esz, i, (i + 1) * esz);   \
              continue;                                            \
          }                                                        \
          *((ETYPE *)vd + HD(i)) = *((DTYPE *)vs2 + HS1(i));       \
      }                                                            \
      env->vstart = 0;                                             \
      /* set tail elements to 1s */                                \
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);     \
-+    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);     \
+-    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);     \
++    vext_set_elems_1s(vd, vta, esz, vl, total_elems * esz);      \
  }
  
  GEN_VEXT_INT_EXT(vzext_vf2_h, uint16_t, uint8_t,  H2, H1)
 diff --git a/target/riscv/vector_internals.c b/target/riscv/vector_internals.c
-index 12f5964fbb..349b24f4ae 100644
+index 455be96996..0166e81e02 100644
 --- a/target/riscv/vector_internals.c
 +++ b/target/riscv/vector_internals.c
-@@ -20,7 +20,7 @@
- #include "vector_internals.h"
- 
- /* set agnostic elements to 1s */
--void vext_set_elems_1s(void *base, uint32_t is_agnostic, uint32_t cnt,
-+void vext_set_elems_1s_le(void *base, uint32_t is_agnostic, uint32_t cnt,
-                        uint32_t tot)
- {
-     if (is_agnostic == 0) {
-@@ -47,14 +47,14 @@ void do_vext_vv(void *vd, void *v0, void *vs1, void *vs2,
+@@ -100,14 +100,14 @@ void do_vext_vv(void *vd, void *v0, void *vs1, void *vs2,
      for (i = env->vstart; i < vl; i++) {
          if (!vm && !vext_elem_mask(v0, i)) {
              /* set masked-off elements to 1s */
--            vext_set_elems_1s(vd, vma, i * esz, (i + 1) * esz);
-+            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);
+-            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);
++            vext_set_elems_1s(vd, vma, esz, i, (i + 1) * esz);
              continue;
          }
          fn(vd, vs1, vs2, i);
      }
      env->vstart = 0;
      /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);
-+    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);
+-    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);
++    vext_set_elems_1s(vd, vta, esz, vl, total_elems * esz);
  }
  
  void do_vext_vx(void *vd, void *v0, target_long s1, void *vs2,
-@@ -71,12 +71,12 @@ void do_vext_vx(void *vd, void *v0, target_long s1, void *vs2,
+@@ -124,12 +124,12 @@ void do_vext_vx(void *vd, void *v0, target_long s1, void *vs2,
      for (i = env->vstart; i < vl; i++) {
          if (!vm && !vext_elem_mask(v0, i)) {
              /* set masked-off elements to 1s */
--            vext_set_elems_1s(vd, vma, i * esz, (i + 1) * esz);
-+            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);
+-            vext_set_elems_1s_le(vd, vma, i * esz, (i + 1) * esz);
++            vext_set_elems_1s(vd, vma, esz, i, (i + 1) * esz);
              continue;
          }
          fn(vd, s1, vs2, i);
      }
      env->vstart = 0;
      /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);
-+    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);
+-    vext_set_elems_1s_le(vd, vta, vl * esz, total_elems * esz);
++    vext_set_elems_1s(vd, vta, esz, vl, total_elems * esz);
  }
 diff --git a/target/riscv/vector_internals.h b/target/riscv/vector_internals.h
-index 842765f6c1..fa599f60ca 100644
+index c96e52f926..de7d2681e6 100644
 --- a/target/riscv/vector_internals.h
 +++ b/target/riscv/vector_internals.h
-@@ -114,7 +114,7 @@ static inline uint32_t vext_get_total_elems(CPURISCVState *env, uint32_t desc,
- }
- 
- /* set agnostic elements to 1s */
--void vext_set_elems_1s(void *base, uint32_t is_agnostic, uint32_t cnt,
-+void vext_set_elems_1s_le(void *base, uint32_t is_agnostic, uint32_t cnt,
-                        uint32_t tot);
- 
- /* expand macro args before macro */
-@@ -154,7 +154,7 @@ void HELPER(NAME)(void *vd, void *v0, void *vs2,       \
+@@ -156,7 +156,7 @@ void HELPER(NAME)(void *vd, void *v0, void *vs2,       \
      for (i = env->vstart; i < vl; i++) {               \
          if (!vm && !vext_elem_mask(v0, i)) {           \
              /* set masked-off elements to 1s */        \
--            vext_set_elems_1s(vd, vma, i * ESZ,        \
-+            vext_set_elems_1s_le(vd, vma, i * ESZ,        \
+-            vext_set_elems_1s_le(vd, vma, i * ESZ,        \
++            vext_set_elems_1s(vd, vma, ESZ, i,         \
                                (i + 1) * ESZ);          \
              continue;                                  \
          }                                              \
-@@ -162,7 +162,7 @@ void HELPER(NAME)(void *vd, void *v0, void *vs2,       \
+@@ -164,7 +164,7 @@ void HELPER(NAME)(void *vd, void *v0, void *vs2,       \
      }                                                  \
      env->vstart = 0;                                   \
      /* set tail elements to 1s */                      \
--    vext_set_elems_1s(vd, vta, vl * ESZ,               \
-+    vext_set_elems_1s_le(vd, vta, vl * ESZ,               \
+-    vext_set_elems_1s_le(vd, vta, vl * ESZ,               \
++    vext_set_elems_1s(vd, vta, ESZ, vl,                \
                        total_elems * ESZ);              \
  }
  
