@@ -4,84 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51784C54E41
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 14:57:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCB0AC54E41
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 14:59:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhshQ-0003DD-1S; Wed, 06 Mar 2024 09:56:55 -0500
+	id 1rhsjQ-0004Iz-QR; Wed, 06 Mar 2024 09:58:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zltjiangshi@gmail.com>)
- id 1rhsgz-0003CL-2D
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:56:28 -0500
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zltjiangshi@gmail.com>)
- id 1rhsgx-000793-Iw
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:56:24 -0500
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-a2f22bfb4e6so292370166b.0
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 06:56:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709736981; x=1710341781; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HynQNevTRFTnhhBTBFXt+8D5Wmwb8gSgwzclZoQWLxA=;
- b=c0F1r8JWrJ0VuA0KmDkaZncbFitAa/KC6AyhwTUmfss5PT3rve9YbuTSGBqBA1tZQ6
- 0fKewD4CQ2JVcoNug1+Or7spKYNruMZMJjh8Z3SEQNFK+4bt8pzpx/Ilq/rxi6c7I7JZ
- 1dUQjoZn7Dr6JBavFzPaIN//5ojSVqyp/xK1tjkHYenwtw+5vhCOll2GCNFPE7vGuSW3
- te0Rq3D8NkTL36HtzdJfis9Xrl5PgwJglqtEnJffZNt9mT7PoynQQPi1fKgp3I7Twj4Z
- Zn4ywNcTJ24Z0VRH5CKAY5yUnEJnCEosU0znnjRXlA5Rpqf/CUj4Ekarv8hATnSpPVZY
- xTmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709736981; x=1710341781;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HynQNevTRFTnhhBTBFXt+8D5Wmwb8gSgwzclZoQWLxA=;
- b=IePK/z3h8UD9C7vYXa3jscTt/cWTD7GLKOZS9MPEBmJCG42A33mYK3up+SKWmsJqxe
- J2FfOTEvecII7ib/ernig1wBASrRnTfaSoK2qxWNsB1rt6A06tWFCwAFUrdjD+hQcn+K
- olTo2NC6MBbZnNaueq4tjLKIsfj9e6BZQzESFE+UXzn03XlirbqspIP7RX1eJohI7PWY
- D7MkyDI0ZUImSWP7xfPVJCwznxjHqXsLm9tg5d0DWqmvlnm7KvkecTiK1dXA+NCCEpzV
- G+T7IUJBw0D4nIA6y+2qZ1nZEQgs7WRBRpGFp16P73GxF+k93TURB3PsI4hvOEe1GSRP
- 9BXg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXJRaWkRF3ecK4thryuj7b4F6I0JPGhj2QtpuX8hdVw3gL5Ml4wj6hNVnyNUAEPQ07b0vQlkUm2H/oRRVGuy58L1lXTPH0=
-X-Gm-Message-State: AOJu0YxWDaGnkdXgR1p2THDE+408/zNLbloF9KhdWn4tP/gn3IJyICI3
- +FS1CcSQsQOC7rOVF73jrIKTX4inX4zHSS889D4IojEGDVjcu+Fbl5vZ0tdOkJjHiUq0sL7TElQ
- zURzIXoLuwusIWoOVkskXqybm7ck=
-X-Google-Smtp-Source: AGHT+IEL989t5WltwZxkjyflbwkyLMIJz1YVe3rxti+SoQuUW3ljeYQ+vFYp50rlDPRczOnU1QtL7ARtKuntXMyZWac=
-X-Received: by 2002:a17:906:c5b:b0:a45:c2f6:eadb with SMTP id
- t27-20020a1709060c5b00b00a45c2f6eadbmr653538ejf.73.1709736980718; Wed, 06 Mar
- 2024 06:56:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rhsj4-0004EK-Mk
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:58:34 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rhsj0-0008GX-Eb
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:58:34 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Tqb691fKtz6K62Z;
+ Wed,  6 Mar 2024 22:53:37 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 79DFD140DDC;
+ Wed,  6 Mar 2024 22:58:24 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Wed, 6 Mar
+ 2024 14:58:23 +0000
+Date: Wed, 6 Mar 2024 14:58:23 +0000
+To: fan <nifan.cxl@gmail.com>
+CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
+ <gregory.price@memverge.com>, <ira.weiny@intel.com>,
+ <dan.j.williams@intel.com>, <a.manzanares@samsung.com>, <dave@stgolabs.net>,
+ <nmtadam.samsung@gmail.com>, <jim.harris@samsung.com>, Fan Ni
+ <fan.ni@samsung.com>
+Subject: Re: [PATCH v4 08/10] hw/cxl/cxl-mailbox-utils: Add mailbox commands
+ to support add/release dynamic capacity response
+Message-ID: <20240306145823.000028ee@Huawei.com>
+In-Reply-To: <ZeFR_Z9nInhyf-W_@debian>
+References: <20240221182020.1086096-1-nifan.cxl@gmail.com>
+ <20240221182020.1086096-9-nifan.cxl@gmail.com>
+ <20240226180417.00004dc4@Huawei.com> <Zd00YhCejwN6NuU6@debian>
+ <20240227103909.00002a92@Huawei.com> <ZeFR_Z9nInhyf-W_@debian>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20240229113842.619738-1-gaosong@loongson.cn>
- <20240229113842.619738-2-gaosong@loongson.cn>
- <168d29d9-b82e-4dd5-abdd-93759037033c@linaro.org>
- <5e2419ec-6c1f-e21c-2105-fadb5971239c@loongson.cn>
-In-Reply-To: <5e2419ec-6c1f-e21c-2105-fadb5971239c@loongson.cn>
-From: chen huacai <zltjiangshi@gmail.com>
-Date: Wed, 6 Mar 2024 22:56:10 +0800
-Message-ID: <CABDp7VqyOL9OdxRohru74CyhQzR7W6MwKcg8WCvOVWJz1echMA@mail.gmail.com>
-Subject: Re: [PULL v2 1/1] loongarch: Change the UEFI loading mode to loongarch
-To: lixianglai <lixianglai@loongson.cn>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org, peter.maydell@linaro.org,
- Andrea Bolognani <abologna@redhat.com>, maobibo@loongson.cn,
- zhaotianrui@loongson.cn
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=zltjiangshi@gmail.com; helo=mail-ej1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,75 +73,103 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, Xianglai,
+...
 
-How to pass the BIOS file to qemu after this patch? With the old
-cmdline I get an RCU stall and freeze the kvm host.
+> > > I cannot find anything specific to this in the specification either.
+> > > Since we have already detected the case where the extent range across
+> > > multiple regions, the only case we need to capture here is one/multiple
+> > > portions of an extents getting released and causing extent overflow.
+> > > I think we can handle it after we introduce the bitmaps (PATCH 10) which
+> > > indicates DPA ranges mapped by valid extents in the device.
+> > > 
+> > > With that, The release workflow would be
+> > > 
+> > > 1) detecting malformed extent lists; if passed
+> > > 2) do cxl_detect_extent_overflow {
+> > >     delta = 0;
+> > >     make a copy of the bitmap as bitmap_copy;
+> > >     for each extent in the updated_extent_list; do
+> > >         if (extent range not fully set in the bitmap_copy)
+> > >             return error;
+> > >         else {
+> > >             if gap at the front based on the bitmap_copy:
+> > >                 delta += 1;
+> > >             if gap at the end based on the bitmap_copy:
+> > >                 delta += 1;
+> > >             delta -= 1;
+> > >             // NOTE: current_extent_count will not be updated in the
+> > >             // loop since delta will track the whole loop
+> > >             if (delta + current_extent_count > max_extent_count)
+> > >                 return resource exhausted;
+> > >             update bitmap_copy to clear the range covered by the extent
+> > >             under consideration;
+> > >         }
+> > >     done
+> > > 
+> > > }; if pass
+> > > 3. do real release: in the pass, we will not need to detect extent
+> > > errors;
+> > > 
+> > > Does the above solution sound reasonable? If so, do we want to go this
+> > > way? do we need to introduce the bitmap earlier in the series?  
+> > 
+> > Yes, something along these lines should work nicely.
+> > 
+> > Jonathan  
+> 
+> Hi Jonathan,
+> I updated the code based on your feedback and now we can process extent
+> release request more flexible.
 
-Huacai
+Excellent!
 
-On Sat, Mar 2, 2024 at 12:14=E2=80=AFPM lixianglai <lixianglai@loongson.cn>=
- wrote:
->
-> Hi Philippe:
->
-> On 29/2/24 12:38, Song Gao wrote:
->
-> From: Xianglai Li <lixianglai@loongson.cn>
->
-> The UEFI loading mode in loongarch is very different
-> from that in other architectures:loongarch's UEFI code
-> is in rom, while other architectures' UEFI code is in flash.
->
-> loongarch UEFI can be loaded as follows:
-> -machine virt,pflash=3Dpflash0-format
-> -bios ./QEMU_EFI.fd
->
-> Other architectures load UEFI using the following methods:
-> -machine virt,pflash0=3Dpflash0-format,pflash1=3Dpflash1-format
->
-> loongarch's UEFI loading method makes qemu and libvirt incompatible
-> when using NVRAM, and the cost of loongarch's current loading method
-> far outweighs the benefits, so we decided to use the same UEFI loading
-> scheme as other architectures.
->
->
-> FYI I'm still trying to find a way to avoid that, planning to discuss
-> more with libvirt folks. Well, maybe it is a waste of my time and I
-> should just stop worrying / caring about this long standing issue.
->
-> Thank you so much for your attention to this issue
->
-> and your long-standing contributions to the community!!:-)
->
-> Best regards,
->
-> Xianglai.
->
->
-> Cc: Andrea Bolognani <abologna@redhat.com>
-> Cc: maobibo@loongson.cn
-> Cc: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Cc: Song Gao <gaosong@loongson.cn>
-> Cc: zhaotianrui@loongson.cn
-> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-> Tested-by: Andrea Bolognani <abologna@redhat.com>
-> Reviewed-by: Song Gao <gaosong@loongson.cn>
-> Message-Id: <0bd892aa9b88e0f4cc904cb70efd0251fc1cde29.1708336919.git.lixi=
-anglai@loongson.cn>
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->   hw/loongarch/acpi-build.c   |  29 +++++++++--
->   hw/loongarch/virt.c         | 101 ++++++++++++++++++++++++++----------
->   include/hw/loongarch/virt.h |  10 ++--
->   3 files changed, 107 insertions(+), 33 deletions(-)
->
->
+> We can now support superset release (actually it can do even more,
+> as long as the DPA range is coverd by accepted extents, we can release).
+> 
+> I have run following tests and the code works as expected,
+> 1. Add multiple extents, and removing them one by one, passed;
+> 2. Superset release: add multiple extents with continuous DPA ranges, and
+>    remove all of them with a single release request with an extent covering the
+>    whole DPA range, passed;
+> 3. Partial extent release: add a large extent and release only part of it,
+>    passed;
+> 4. Partial+superset release: add multiple extents,and release it with some
+>    leftover with one request with an extent. For example, add extents [0-128M]
+>    and [128M-256M], release [64M-256M]. Passed;
+> 5. Release extent not aligned to block size, failed as expected;
+> 6. Extents have overlaps, fail the request as expected;
+> 7. Extent has uncovered DPA range, skip the extent as expected;
+> 
+> The only limitation is that for superset release case, if we find
+> part of its DPA range is still pending to add, while the other is
+> accepted, we reject it through QMP interface.
 
+I think that is a reasonable limitation as we don't expect people
+to do that crazy on QMP side.   Maybe long term we'll want a
+'release all' type command (I'm thinking virtualized device usecases)
+but we can deal with that later.
 
---=20
-Huacai Chen
+> 
+> The latest code is https://github.com/moking/qemu/tree/dcd-v5.
+> 
+> The main changes are in the last three commits. 
+> Btw, in the last commit, I introduce new QMP interfaces to print out
+> accepted and pending-to-add list in the device to a file "/tmp/qmp.txt",
+> do we want it? If yes, I can polish it a little bit, otherwise I will
+> keep it for my own test purpose.
+Ah. I missed this mail and replied directly.  That needs a rethink
+as the thread has concluded I think. I'll carry it on my tree, but not
+look to upstream it.
+> 
+> I will test more and send out v5 if the above looks reasonable to you.
+> 
+Sorry for slow reply - I'm a bit behind with mailing lists.
+Great you sent it out in the meantime.
+
+Jonathan
 
