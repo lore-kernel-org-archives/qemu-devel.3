@@ -4,155 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69518C54E41
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 724BDC54E4A
 	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 17:17:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhusX-0004RM-Gd; Wed, 06 Mar 2024 12:16:29 -0500
+	id 1rhusj-0004gf-5r; Wed, 06 Mar 2024 12:16:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dan.j.williams@intel.com>)
- id 1rhusV-0004MD-GM
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:16:27 -0500
-Received: from mgamail.intel.com ([198.175.65.13])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dan.j.williams@intel.com>)
- id 1rhusS-00006K-Se
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:16:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709745386; x=1741281386;
- h=date:from:to:cc:subject:message-id:references:
- in-reply-to:mime-version;
- bh=Gh3jfiSKnSN1xov5ue79ocPJrZoPgLWQsyBh5l+yjG4=;
- b=g5yubTs7mCmNIGG2dLuRptJ23xJ6N12mKh81Ca/7yheZEkTkBJpKnFU0
- 5fmwACtHVxyIbaww/4T8+j9lhmOoJ4ou7x0NF3LHYmoaZaNMLjbSiTfdU
- 9bDwvtk9HstZRk/Z0QmUvltiIJpYUr4B3qTIok6v5LnlGOq5aEsOKXz6n
- VLoqMG5J4LeASEqKUK1/mWMEMRDD51FEmYxdg9LLUTIClzWvO46uyPIoM
- oXdpd55ggysGkBxTjthO8qXovyMO4iTajSLGg/IXGYwH4AD8FHPMVT5Oe
- seA47VohlxckZvWfkOCInXHNRNDAN64nwKsaN8EAswFdKCnvzRmm/I6/M Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11005"; a="15512947"
-X-IronPort-AV: E=Sophos;i="6.06,208,1705392000"; d="scan'208";a="15512947"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Mar 2024 09:16:21 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,208,1705392000"; 
-   d="scan'208";a="9911708"
-Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
- by fmviesa008.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 06 Mar 2024 09:16:15 -0800
-Received: from fmsmsx601.amr.corp.intel.com (10.18.126.81) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Wed, 6 Mar 2024 09:16:12 -0800
-Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Wed, 6 Mar 2024 09:16:12 -0800
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.100)
- by edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Wed, 6 Mar 2024 09:16:11 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=PaFnVaUjYpuIZYsM5pmHHDdiyVVj+UM1VygpEM7Bcx6zRnzFVnJVuRN1H3+so+j+I0W4RPa3tAwNry0UKZeUguGER3OkSLb74sMNmkaNTdV8WFz7ipApokHcBdN79rpWk7m/ayAGiP8Nq1r8cR+P1pEhUacnt4sfUxeSnT1He8TXTZenKegjDhXxcL5pfj19G44EneWu/nVus9wUavfrKWcMkZP6jTIYXVpwQg8udrEEahJrPKkTv7WDdRYFcrgBAE/fWRR8riikKzyvJyOJJ6dgWUyL2J27RJcb+sFfmXVNCPBRzpHBvw8K5zdR++0Ro7hImTcAB4+p7ZsbTdHXkw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UYk7jKGp/1G/K+bCBo6YncWTvUD2mFly70BudsC3Wro=;
- b=VdtLUp+tzdU6W2BeN7ROQBlD/js6214U66KAiDIJQ/o0+7ErkOddO6q3XvtpkSMiL4NpeKYL65tUBS6zDM4fd5JxEQcnMbZSLATtucVcnXTS1wO3CfhFDJI/hoHVx2T/OHA3Tz2CUPHm7LoIvfkagpbiPeqULIDXV9UoG/ONhXePM695fCMnSrFJRINn2xhp5kdMG2q4ImoBCYKoU/qulZTiYyIJLk3oX0OvpMjJcVGFDkb4X6N79h2Jz3Gjs8vS64qTFYpMlvXjYxodz3UWpLOM9qmEVFXG98g82geKO9FCLJkpV6XI3U9q5Oy8XZWmXjhm8JwoimXYly7B8ZrV4w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from PH8PR11MB8107.namprd11.prod.outlook.com (2603:10b6:510:256::6)
- by DM4PR11MB7254.namprd11.prod.outlook.com (2603:10b6:8:10e::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.24; Wed, 6 Mar
- 2024 17:16:09 +0000
-Received: from PH8PR11MB8107.namprd11.prod.outlook.com
- ([fe80::82fd:75df:40d7:ed71]) by PH8PR11MB8107.namprd11.prod.outlook.com
- ([fe80::82fd:75df:40d7:ed71%4]) with mapi id 15.20.7362.019; Wed, 6 Mar 2024
- 17:16:09 +0000
-Date: Wed, 6 Mar 2024 09:16:07 -0800
-From: Dan Williams <dan.j.williams@intel.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Yuquan Wang
- <wangyuquan1236@phytium.com.cn>
-CC: <linux-cxl@vger.kernel.org>, <qemu-devel@nongnu.org>, Robert Richter
- <rrichter@amd.com>, Terry Bowman <Terry.Bowman@amd.com>,
- <dan.williams@intel.com>, <ming4.li@intel.com>
-Subject: RE: Enabling internal errors for VH CXL devices: [was: Re: Questions
- about CXL RAS injection test in qemu]
-Message-ID: <65e8a4d74a411_1ecd294f@dwillia2-xfh.jf.intel.com.notmuch>
-References: <20240306112707.3116081-1-wangyuquan1236@phytium.com.cn>
- <20240306132359.00001956@Huawei.com>
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240306132359.00001956@Huawei.com>
-X-ClientProxiedBy: MW4PR03CA0305.namprd03.prod.outlook.com
- (2603:10b6:303:dd::10) To PH8PR11MB8107.namprd11.prod.outlook.com
- (2603:10b6:510:256::6)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhusd-0004eQ-S6
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:16:35 -0500
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhusc-00007Y-7j
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:16:35 -0500
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-5131c0691feso9279770e87.1
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 09:16:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709745392; x=1710350192; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=MTstlGT/a18Frjz+rGLei+v7kWgyirApdQCesjszieE=;
+ b=c4K//9h3X10zlTwcYhfwQ7ZoClvj9zhmdQ2SJl49Ch4SuuN1dJZyAwVeF92lkfJKwN
+ 0f7mO1etj61cf2UbFQLlsuSNxSkop3Fcmq77/B1xP2D7XgmnaaVfaiu/MWFPH46W3im7
+ 2B1r04D5lG+geNmpzUwcN6BCF3vLNOpsI7Z+JrYMHaH6UaCcDVs9XzMtsbocoJI3NgYw
+ 28Bn1RgUpC8MZKEkY1F9ChONfdtfv0jcqAAV/UBc0EuYF1hTZvKG4bENc1kbWJZxCQjb
+ vW2vVHlfYclZZEgNG21WMa9VGRHhCA6fyRZagStLh4xUmPB/meGiv5m7jXxdTpr7Q+3o
+ QC9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709745392; x=1710350192;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=MTstlGT/a18Frjz+rGLei+v7kWgyirApdQCesjszieE=;
+ b=oUo7nI97woGmjHFCbFX6fLTRp5Cig6eG4yjru7sH3JFV6d+oQwfC+4RTpO8DifCW+b
+ ltRa0gmnsgBgrBKfai0cE+hT7wS1w12xhbAV0Pw6Fl7OpVM1t0lu5qPIaDbFCE0VSkzj
+ dFWqUd0uHfqwXWw232GSk+SMavAELmtqs/zVuSO2GcVUGqUsJaa/gKu8MGk9EF8P0uhZ
+ CVGzl5a2EiEXFGqzC8pleLcblUr7BIk0PARR0On3YCkn9lBukZFTW2ex1pe7H4B90L7o
+ XMWyVUM8hFdClc+2PvL6Z/dCY3nz5aDMtCHqVfj1Uh59W1ke73VxA7Y7bsuHf/yFh/Zk
+ zeWA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVNwiLvjZE7dNviGEY7GRW8zUTfbWXdIZ2N4N5X/9y1xxGFk3wX8TCDdNv2npxUTNGrWTS47KfUdp8xxjh1CMmnsv9de0g=
+X-Gm-Message-State: AOJu0YxeH7fcePXOnA3w3ON0V+q3gu8O4+8T1qxtLXo4hwJWiVpIudBT
+ GqwMOCWK2gSoZby80NDbYnR9yf3xc7rI9WMm7rvRmYQ+G12kwJt9+TvZ21mpIIc=
+X-Google-Smtp-Source: AGHT+IEEEm27HQQ1yt59I8k1pXk5Kp9RWbi0wEjybB+XpiWEN9134OAxfJLk1YHC0bnesbA0/Cv8CA==
+X-Received: by 2002:a05:6512:1152:b0:513:5203:e255 with SMTP id
+ m18-20020a056512115200b005135203e255mr4652979lfg.7.1709745392070; 
+ Wed, 06 Mar 2024 09:16:32 -0800 (PST)
+Received: from [192.168.69.100] (vau06-h02-176-184-43-100.dsl.sta.abo.bbox.fr.
+ [176.184.43.100]) by smtp.gmail.com with ESMTPSA id
+ m26-20020a17090607da00b00a441ff174a3sm7372337ejc.90.2024.03.06.09.16.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 Mar 2024 09:16:31 -0800 (PST)
+Message-ID: <6de50dbc-9525-4e25-ba70-55aea0d3f044@linaro.org>
+Date: Wed, 6 Mar 2024 18:16:29 +0100
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH8PR11MB8107:EE_|DM4PR11MB7254:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3ef8dabf-5c59-4c93-3bdc-08dc3e011d9e
-X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: bJRFXusn2ljwOt3HjTrTeMEjDnpYw4VpGP9WD7SkeI6zpg7KXn+kUU3O9oGIZSN5iMT3I2BnCqjc9iPfJLz2IJGj3gKvJs2wWLtqG+oB1mQ56HeDo+MHTIEagXR/uQvpN5zbYT2AadE/lTX+R8TQF292de/csy2Yp0z2zf9VKBrV6PVOWbtDm/1qpoFseF+w0ZdZlRwy4QvoLsbXefmbysqvCoRAbZWGzlpXCyrE2g3oa4jNz0DHNKc1JP4tddd0nx3HmhYx47nkTooC4zuLBJcWLbZwQjAdlMzAAlhPGRKNnUZLf/RyNXTtf6cfSTH7Pvsd9mAifBnzww+H+uL9wHzGeSiaqjLwZMBKBuhJJIDIzQ+2ibyjNbhrYBiqesBzVW/b5ozLUgHD0E25o/lfvhdNjyKvnJTnKDvhcbhKY7EWzjAJLGx1j5JzW5WeIHn/I3zVDtlX/0byB+pPHYwXHkyT/iAB/AaTicIGmE6RZqFnvNOausUZHteUbn1wK8fDXeTERo/cyO9uaY1IaG6ixgVP07vNL+Hrw0VNfC0KLq6PGxwOS3bFxQqhjczz/zcnwV+QJpE8IA1gj1mHTagbu8yVP5jX+xSYCbUcN5BLmF2WMRtHDmvu9hJ3LXQ19kX8oJGVRFYwo5Z3CLkaAtl6cbegjiKFt3UXiAlc9UODk7g=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH8PR11MB8107.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(376005); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?DCCxt6my0SLUS2ZjI4qlmztUdC4GFthpg3PaUxrCgwzqhZPfTgxnduLFFR0d?=
- =?us-ascii?Q?jNbE3+4mgE1WeqOdbnEv6f8bLKEt30/sk0t1yEc39uToEu1SbO1IDAUReymF?=
- =?us-ascii?Q?tMGO/zafYxlSKP6jZJk2YqgTGlJPjUVTOii4WAOa/2VEbj1m8KMNN1zmMwIZ?=
- =?us-ascii?Q?yNilRla65g4HZLT8yIDWXh7+13amHKVHBUyr6ikHiFKAR8Y2e3/b7AAlfL/p?=
- =?us-ascii?Q?cljHyaDhouwN9kn4zm33rXdG3N2MCu+oBkabwQDQ6o/kI5/7eMuHxfyRm3P1?=
- =?us-ascii?Q?4pJRULwzoXF/Qyiv7M1fnU3ppgZ8PM0dSejxiyqz5LtKN76mTGdohzK9jwVf?=
- =?us-ascii?Q?Bvm4JiwPYQUSb2Ydup1qsLkL2Smd/SJ8NijZOHBFTzM7CzW/ehQj//G0f03s?=
- =?us-ascii?Q?5JTBSdiV25oxRcM6KNVdTKxV6JQH0m5AedaEHnFp9ofPr+cUjwCbR0knfYZO?=
- =?us-ascii?Q?1XCFtdaoLAMrhjRmXc5RFeDkfvf7v5bCtxilOSlWHYZ2ndOIwv8XotooYyOL?=
- =?us-ascii?Q?IoC+FsY247UwIUR8Tiz+oJ6MmkilKc3qHp1xxwaJ6mVKPXvLnvq+BkZDB9GD?=
- =?us-ascii?Q?qoSPwffaB6tUnEk2aFjWIJXFWrwGKqFIpkGfcsbUYit5QF6uxj3hqP+/7O7/?=
- =?us-ascii?Q?ec9BN7xYIIrQ5Qef822te/sENmVNqbbcHETSul2+l0StJJ1D7U/PxDnljeT0?=
- =?us-ascii?Q?364yLwXzeW9Jq5C1haErhlmQliCdQ2au2LCqTRlE0ovOP+xSQttsH2tYs1lx?=
- =?us-ascii?Q?0cXS2TO6nx4Y/rZR+BtW9Gj8mwZ8DiAf0VcFV519JfeRxJl1gJzajXulWn6N?=
- =?us-ascii?Q?jQPjUzCehCBbxRonQtUhtsUKnrrD/CAIqFml+8PxVoE2fXC/hZ/F7bOoTvpZ?=
- =?us-ascii?Q?C2deqRVIeeO0Gt4y4NnKffSCofPPwU1J/iXjIz2yMmzpYmCEdTO79ItYgbqm?=
- =?us-ascii?Q?qWOnqB4stN4XrY0wVbede4bc2iCkOnltkIUVx8R9cY75Yt3si1XcX1bdLlRG?=
- =?us-ascii?Q?627IOkOP3e/3s+s/JzwjyL78R2htpv4N8BDRtYi4hJK5vJ4wEg9G/rioswn4?=
- =?us-ascii?Q?vOXpuTlnE3gR2gxbtOhKT4GfrJMqPprx2JPe0E4ksUTxaW7YKNUm5qJIxciP?=
- =?us-ascii?Q?ASz/9CPQnuHif3fUdp24qVE1QIlVCcjAwpdjzKzASOGXGDXXVjrLv+EgE5NH?=
- =?us-ascii?Q?3AjoNhAy7uQNmtLntLW4aQCT28x2gQH1Sinqw50CW3b5MJ6w0F6RacY2GaD4?=
- =?us-ascii?Q?oMTCgNTNZLNt0HIgz12zNhL3ZOdj0SlpbEGVr8fibIFMC/5n4tD0EnFDBY1h?=
- =?us-ascii?Q?PWg+EDW7g/wS/1TIflmnhcRFbqxvcnNk4Tw30C2P2D/opQScv6nyRaKWFOxr?=
- =?us-ascii?Q?6kKBOv4VmbyJLDL/IogoyBuh5rDtAAi1vOY56pgSMd7V/1TZykhq1xuNZfOR?=
- =?us-ascii?Q?dGWVggrhjEaNP24xgyqVVbv/dLQKxkV1Z/uy97uqhgubf6As3H/WMszE11xo?=
- =?us-ascii?Q?ULqdEx+CITjLyZyXqmk3Zzr9xz7n0FswuDTQdC2B/W+LHMPH7Cfz7biSXrts?=
- =?us-ascii?Q?KOPPMK7nVfgVdmPyew0nSS/sexlFYbnHQvV722m1ZWg9IYHp1s1uC4/gPgdK?=
- =?us-ascii?Q?6Q=3D=3D?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3ef8dabf-5c59-4c93-3bdc-08dc3e011d9e
-X-MS-Exchange-CrossTenant-AuthSource: PH8PR11MB8107.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Mar 2024 17:16:09.3941 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: VY3imdhUkcXWWu40hkIVQJnikzpE/WEik9C+4MWdjpqi6IBwni3xnBH8TVDhRbdi2XAuRs0JojdJX9+EmhNFtW5cALy8OlfPUrWnotxUJ4M=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB7254
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.13;
- envelope-from=dan.j.williams@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH-for-9.0 v2 13/19] hw/xen: Remove use of 'target_ulong'
+ in handle_ioreq()
+Content-Language: en-US
+To: David Woodhouse <dwmw@amazon.co.uk>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paul Durrant <paul@xen.org>, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, David Woodhouse <dwmw2@infradead.org>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ xen-devel@lists.xenproject.org, qemu-block@nongnu.org,
+ Anthony Perard <anthony.perard@citrix.com>, kvm@vger.kernel.org,
+ Thomas Huth <thuth@redhat.com>, Anton Johansson <anjo@rev.ng>
+References: <20231114143816.71079-1-philmd@linaro.org>
+ <20231114143816.71079-14-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20231114143816.71079-14-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -169,105 +104,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-[ add Li Ming ]
+Cc'ing Anton.
 
-Jonathan Cameron wrote:
-[..]
-> Robert / Terry, I tracked down the patch where you enabled this for RCHs and there was
-> some discussion on walking out on VH as well to enable this, but seems it
-> never happened. Can you remember why?  Just kicked back for a future occasion?
+On 14/11/23 15:38, Philippe Mathieu-Daudé wrote:
+> Per commit f17068c1c7 ("xen-hvm: reorganize xen-hvm and move common
+> function to xen-hvm-common"), handle_ioreq() is expected to be
+> target-agnostic. However it uses 'target_ulong', which is a target
+> specific definition.
 > 
-
-Li Ming has this patch below waiting in wings. Li Ming, this patch is
-timely for this dicussion, care to send out the full series? I expect it
-needs to be an RFC given concerns with integrating with the pending port
-switch error handling work.
-
--- 8< --
-From: Li Ming <ming4.li@intel.com>
-Subject: [PATCH RFC v3 3/6] PCI/AER: Enable RCEC to report internal error for CXL root port
-Date: Thu, 1 Feb 2024 05:58:08 +0000
-
-Per CXL r3.1 section 12.2.2, RCEC is possible to log the CXL.cachemem
-protocol errors detected by CXL root port as PCI_ERR_UNC_INTN or
-PCI_ERR_COR_INTERNAL in AER Capability. So unmask PCI_ERR_UNC_INTN and
-PCI_ERR_COR_INTERNAL for that case.
-
-Signed-off-by: Li Ming <ming4.li@intel.com>
----
- drivers/pci/pcie/aer.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
-
-diff --git a/drivers/pci/pcie/aer.c b/drivers/pci/pcie/aer.c
-index 42a3bd35a3e1..ef8fd77cb920 100644
---- a/drivers/pci/pcie/aer.c
-+++ b/drivers/pci/pcie/aer.c
-@@ -985,7 +985,7 @@ static bool cxl_error_is_native(struct pci_dev *dev)
- {
- 	struct pci_host_bridge *host = pci_find_host_bridge(dev->bus);
- 
--	return (pcie_ports_native || host->native_aer);
-+	return (pcie_ports_native || host->native_aer) && host->is_cxl;
- }
- 
- static bool is_internal_error(struct aer_err_info *info)
-@@ -1041,8 +1041,14 @@ static int handles_cxl_error_iter(struct pci_dev *dev, void *data)
- {
- 	bool *handles_cxl = data;
- 
--	if (!*handles_cxl)
--		*handles_cxl = is_cxl_mem_dev(dev) && cxl_error_is_native(dev);
-+	if (!*handles_cxl) {
-+		if (pci_pcie_type(dev) == PCI_EXP_TYPE_RC_END &&
-+		    is_cxl_mem_dev(dev) && cxl_error_is_native(dev))
-+			*handles_cxl = true;
-+		if (pci_pcie_type(dev) == PCI_EXP_TYPE_ROOT_PORT &&
-+		    cxl_error_is_native(dev))
-+			*handles_cxl = true;
-+	}
- 
- 	/* Non-zero terminates iteration */
- 	return *handles_cxl;
-@@ -1054,13 +1060,18 @@ static bool handles_cxl_errors(struct pci_dev *rcec)
- 
- 	if (pci_pcie_type(rcec) == PCI_EXP_TYPE_RC_EC &&
- 	    pcie_aer_is_native(rcec))
--		pcie_walk_rcec(rcec, handles_cxl_error_iter, &handles_cxl);
-+		pcie_walk_rcec_all(rcec, handles_cxl_error_iter, &handles_cxl);
- 
- 	return handles_cxl;
- }
- 
--static void cxl_rch_enable_rcec(struct pci_dev *rcec)
-+static void cxl_enable_rcec(struct pci_dev *rcec)
- {
-+	/*
-+	 * Enable RCEC's internal error report for two cases:
-+	 * 1. RCiEP detected CXL.cachemem protocol errors
-+	 * 2. CXL root port detected CXL.cachemem protocol errors.
-+	 */
- 	if (!handles_cxl_errors(rcec))
- 		return;
- 
-@@ -1069,7 +1080,7 @@ static void cxl_rch_enable_rcec(struct pci_dev *rcec)
- }
- 
- #else
--static inline void cxl_rch_enable_rcec(struct pci_dev *dev) { }
-+static inline void cxl_enable_rcec(struct pci_dev *dev) { }
- static inline void cxl_rch_handle_error(struct pci_dev *dev,
- 					struct aer_err_info *info) { }
- #endif
-@@ -1494,7 +1505,7 @@ static int aer_probe(struct pcie_device *dev)
- 		return status;
- 	}
- 
--	cxl_rch_enable_rcec(port);
-+	cxl_enable_rcec(port);
- 	aer_enable_rootport(rpc);
- 	pci_info(port, "enabled with IRQ %d\n", dev->irq);
- 	return 0;
--- 
-2.40.1
+> Per xen/include/public/hvm/ioreq.h header:
+> 
+>    struct ioreq {
+>      uint64_t addr;          /* physical address */
+>      uint64_t data;          /* data (or paddr of data) */
+>      uint32_t count;         /* for rep prefixes */
+>      uint32_t size;          /* size in bytes */
+>      uint32_t vp_eport;      /* evtchn for notifications to/from device model */
+>      uint16_t _pad0;
+>      uint8_t state:4;
+>      uint8_t data_is_ptr:1;  /* if 1, data above is the guest paddr
+>                               * of the real data to use. */
+>      uint8_t dir:1;          /* 1=read, 0=write */
+>      uint8_t df:1;
+>      uint8_t _pad1:1;
+>      uint8_t type;           /* I/O type */
+>    };
+>    typedef struct ioreq ioreq_t;
+> 
+> If 'data' is not a pointer, it is a u64.
+> 
+> - In PIO / VMWARE_PORT modes, only 32-bit are used.
+> 
+> - In MMIO COPY mode, memory is accessed by chunks of 64-bit
+> 
+> - In PCI_CONFIG mode, access is u8 or u16 or u32.
+> 
+> - None of TIMEOFFSET / INVALIDATE use 'req'.
+> 
+> - Fallback is only used in x86 for VMWARE_PORT.
+> 
+> Masking the upper bits of 'data' to keep 'req->size' low bits
+> is irrelevant of the target word size. Remove the word size
+> check and always extract the relevant bits.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/xen/xen-hvm-common.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
+> index bb3cfb200c..fb81bd8fbc 100644
+> --- a/hw/xen/xen-hvm-common.c
+> +++ b/hw/xen/xen-hvm-common.c
+> @@ -1,5 +1,6 @@
+>   #include "qemu/osdep.h"
+>   #include "qemu/units.h"
+> +#include "qemu/bitops.h"
+>   #include "qapi/error.h"
+>   #include "trace.h"
+>   
+> @@ -426,9 +427,8 @@ static void handle_ioreq(XenIOState *state, ioreq_t *req)
+>       trace_handle_ioreq(req, req->type, req->dir, req->df, req->data_is_ptr,
+>                          req->addr, req->data, req->count, req->size);
+>   
+> -    if (!req->data_is_ptr && (req->dir == IOREQ_WRITE) &&
+> -            (req->size < sizeof (target_ulong))) {
+> -        req->data &= ((target_ulong) 1 << (8 * req->size)) - 1;
+> +    if (!req->data_is_ptr && (req->dir == IOREQ_WRITE)) {
+> +        req->data = extract64(req->data, 0, BITS_PER_BYTE * req->size);
+>       }
+>   
+>       if (req->dir == IOREQ_WRITE)
 
 
