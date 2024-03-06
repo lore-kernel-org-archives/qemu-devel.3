@@ -4,61 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 344E0C54E41
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 16:28:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2031DC5475B
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 16:31:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhu83-0006sJ-IH; Wed, 06 Mar 2024 11:28:28 -0500
+	id 1rhuAQ-0007f1-C9; Wed, 06 Mar 2024 11:30:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rhu81-0006qh-7B
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 11:28:25 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rhu7x-0005k6-DS
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 11:28:24 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Tqd6r69FZz6K8tX;
- Thu,  7 Mar 2024 00:24:20 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id E8F351400D7;
- Thu,  7 Mar 2024 00:28:17 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Wed, 6 Mar
- 2024 16:28:17 +0000
-Date: Wed, 6 Mar 2024 16:28:16 +0000
-To: <nifan.cxl@gmail.com>
-CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
- <gregory.price@memverge.com>, <ira.weiny@intel.com>,
- <dan.j.williams@intel.com>, <a.manzanares@samsung.com>, <dave@stgolabs.net>,
- <nmtadam.samsung@gmail.com>, <jim.harris@samsung.com>,
- <Jorgen.Hansen@wdc.com>, <wj28.lee@gmail.com>, Fan Ni <fan.ni@samsung.com>
-Subject: Re: [PATCH v5 06/13] hw/mem/cxl_type3: Add host backend and address
- space handling for DC regions
-Message-ID: <20240306162816.00002e0e@Huawei.com>
-In-Reply-To: <20240304194331.1586191-7-nifan.cxl@gmail.com>
-References: <20240304194331.1586191-1-nifan.cxl@gmail.com>
- <20240304194331.1586191-7-nifan.cxl@gmail.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhuAC-0007eW-DI
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 11:30:40 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhuA9-0006HI-Dk
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 11:30:39 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-412fe981ef1so3026245e9.1
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 08:30:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709742636; x=1710347436; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=KowFkOSPnogRGGL42CIVvgjXOmyPDd66hJPaZzgbCl4=;
+ b=Yn9dhLyhOGcCf5o0wghsxeYQglak36MYCNJSRq0jO7m6Sngst/fVSvYbaSJmX8wpVv
+ +/GeXJyiZMy6egGC5Rec+W66zfSAOduxyndHeaAeFcsfPxjxTojXTWH+hwjqepG5XwZB
+ x4gjRhOfx+XlyfZtwYH1taIXNq+eQwSvsYnP9nF1G5JTV7xTTKsTjbqxc/dctkeVCdqX
+ h63mpyxqXBItUy0JAfA+q3f8W8e1NhGpeNhScZh3ojyg5Q+iJxr4wTxELBRkF80idL3l
+ xizf/zwcV955VuU3flNCARh1gErypU1oLhZq0kMls55WDy9qYMOg7HS+2ECptfTaHWvi
+ CcSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709742636; x=1710347436;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KowFkOSPnogRGGL42CIVvgjXOmyPDd66hJPaZzgbCl4=;
+ b=dovRnHzLgGxQaHHktM4hBmF8iSAc+81b7gTjrD7+VzmtVdHvzUhOSZAWfIQN0Spr6Y
+ 8b+3vmRK1O5OgBW3OtpoQf74gCXQi53a0degYSXkdH+8atOIAtcUWD97h1oMTWxU6wZ6
+ BbAbY9W7egDB8S2tnv80Z3UyfmZnqoRz3lRZ7ACbtuO66FMaC+oVYuBJJ/gPYsxWPuka
+ hs5U2wvCtPfXzCWMJKbj6CD7kzmPSmXHMsPXqmyTFT7s5Tu6i83/R+X98bsa/w7AD6DA
+ Z0obfiRgXWmXSaf5l0vA7C1k62OND81fdwSaltemGzMmXp/CZlvhq4gHt6RpsTYYVUO7
+ cHMQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXLpZ4qj4FYi398Rb7Vi6dQS1hBFCJS8RJD/FKtwiVzjNQ1f8A0TeWD6mrZkM+FxqL8gno/043S7SFLtOBp2lBJyFhGpG4=
+X-Gm-Message-State: AOJu0YzxQPAd3H1PyCT4R7oi/egyvBm98HiTdP3y6/ZrPmeRbSvloIRk
+ rsGR9lW0LnAPL4hX8iG0M1HO+Y9cN9PTkHk/kNxHnWiJgwS8lLPQ6DaqvWU0tKw=
+X-Google-Smtp-Source: AGHT+IHcviSlk4+y21JgOqi8479lwR2Xdz0/KRP6FrEeFC/vNFiGwpmjEb2+d41UuS69ZCk+fw1WeQ==
+X-Received: by 2002:a05:600c:5119:b0:412:bca4:6a00 with SMTP id
+ o25-20020a05600c511900b00412bca46a00mr5670167wms.18.1709742635764; 
+ Wed, 06 Mar 2024 08:30:35 -0800 (PST)
+Received: from [192.168.69.100] (vau06-h02-176-184-43-100.dsl.sta.abo.bbox.fr.
+ [176.184.43.100]) by smtp.gmail.com with ESMTPSA id
+ jr18-20020a05600c561200b004127057d6b9sm24049906wmb.35.2024.03.06.08.30.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 Mar 2024 08:30:35 -0800 (PST)
+Message-ID: <04da4267-8fe8-4653-90a2-f64e3be64037@linaro.org>
+Date: Wed, 6 Mar 2024 17:30:32 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+User-Agent: Mozilla Thunderbird
+Subject: Re: Problem with migration/rdma
+Content-Language: en-US
+To: Yu Zhang <yu.zhang@ionos.com>, Het Gala <het.gala@nutanix.com>,
+ qemu-devel <qemu-devel@nongnu.org>, Li Zhijian <lizhijian@fujitsu.com>,
+ Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>
+Cc: Jinpu Wang <jinpu.wang@ionos.com>,
+ Alexei Pastuchov <alexei.pastuchov@ionos.com>,
+ Elmar Gerdes <elmar.gerdes@ionos.com>
+References: <CAHEcVy7HXSwn4Ow_Kog+Q+TN6f_kMeiCHevz1qGM-fbxBPp1hQ@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAHEcVy7HXSwn4Ow_Kog+Q+TN6f_kMeiCHevz1qGM-fbxBPp1hQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml100001.china.huawei.com (7.191.160.183) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,212 +96,96 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon,  4 Mar 2024 11:34:01 -0800
-nifan.cxl@gmail.com wrote:
+Cc'ing RDMA migration reviewers/maintainers:
 
-> From: Fan Ni <fan.ni@samsung.com>
+$ ./scripts/get_maintainer.pl -f migration/rdma.c
+Li Zhijian <lizhijian@fujitsu.com> (reviewer:RDMA Migration)
+Peter Xu <peterx@redhat.com> (maintainer:Migration)
+Fabiano Rosas <farosas@suse.de> (maintainer:Migration)
+
+On 5/3/24 22:32, Yu Zhang wrote:
+> Hello Het and all,
 > 
-> Add (file/memory backed) host backend, all the dynamic capacity regions
-> will share a single, large enough host backend. Set up address space for
-> DC regions to support read/write operations to dynamic capacity for DCD.
+> while I was testing qemu-8.2, I saw a lot of our migration test cases failed.
+> After debugging the commits of the 8.2 branch, I saw the issue and mad a diff:
 > 
-> With the change, following supports are added:
-> 1. Add a new property to type3 device "volatile-dc-memdev" to point to host
->    memory backend for dynamic capacity. Currently, all dc regions share one
->    host backend.
-> 2. Add namespace for dynamic capacity for read/write support;
-> 3. Create cdat entries for each dynamic capacity region;
-> 4. Fix dvsec range registers to include DC regions.
+> diff --git a/migration/rdma.c b/migration/rdma.c
+> index 6a29e53daf..f10d56f556 100644
+> --- a/migration/rdma.c
+> +++ b/migration/rdma.c
+> @@ -3353,9 +3353,9 @@ static int qemu_rdma_accept(RDMAContext *rdma)
+>           goto err_rdma_dest_wait;
+>       }
 > 
-> Signed-off-by: Fan Ni <fan.ni@samsung.com>
-Hi Fan, 
-
-This one has a few more significant comments inline.
-
-thanks,
-
-Jonathan
-
-> ---
-
-> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> index c045fee32d..2b380a260b 100644
-> --- a/hw/mem/cxl_type3.c
-> +++ b/hw/mem/cxl_type3.c
-> @@ -45,7 +45,8 @@ enum {
->  
->  static void ct3_build_cdat_entries_for_mr(CDATSubHeader **cdat_table,
->                                            int dsmad_handle, uint64_t size,
-> -                                          bool is_pmem, uint64_t dpa_base)
-> +                                          bool is_pmem, bool is_dynamic,
-> +                                          uint64_t dpa_base)
->  {
->      g_autofree CDATDsmas *dsmas = NULL;
->      g_autofree CDATDslbis *dslbis0 = NULL;
-
-There is a fixlet going through for these as the autofree doesn't do anything.
-Will require a rebase.  I'll do it on my tree, but might not push that out for a
-few days so this is just a heads up for anyone using these.
-
-https://lore.kernel.org/qemu-devel/20240304104406.59855-1-thuth@redhat.com/
-
-It went in clean for me, so may not even be something anyone notices!
-
-> @@ -61,7 +62,8 @@ static void ct3_build_cdat_entries_for_mr(CDATSubHeader **cdat_table,
->              .length = sizeof(*dsmas),
->          },
->          .DSMADhandle = dsmad_handle,
-> -        .flags = is_pmem ? CDAT_DSMAS_FLAG_NV : 0,
-> +        .flags = (is_pmem ? CDAT_DSMAS_FLAG_NV : 0) |
-> +                 (is_dynamic ? CDAT_DSMAS_FLAG_DYNAMIC_CAP : 0),
->          .DPA_base = dpa_base,
->          .DPA_length = size,
->      };
-> @@ -149,12 +151,13 @@ static int ct3_build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
->      g_autofree CDATSubHeader **table = NULL;
->  
->  
-> @@ -176,21 +179,55 @@ static int ct3_build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
->          pmr_size = memory_region_size(nonvolatile_mr);
->      }
->  
-> +    if (ct3d->dc.num_regions) {
-> +        if (ct3d->dc.host_dc) {
-> +            dc_mr = host_memory_backend_get_memory(ct3d->dc.host_dc);
-> +            if (!dc_mr) {
-> +                return -EINVAL;
-> +            }
-> +            len += CT3_CDAT_NUM_ENTRIES * ct3d->dc.num_regions;
-> +        } else {
-> +            return -EINVAL;
-
-Flip logic to get the error out the way first and reduce indent.
-
-     if (ct3d->dc.num_regions) {
-        if (!ct3d->dc.host_dc) {
-            return -EINVAL;
-        }
-        dc_mr = host_memory_backend_get_memory(ct3d->dc.host_dc);
-        if (!dc_mr) {
-            return -EINVAL;
-        }
-        len += CT3...
-     }
-
-> +        }
-> +    }
-> +
-
->  
->      *cdat_table = g_steal_pointer(&table);
-> @@ -300,11 +337,24 @@ static void build_dvsecs(CXLType3Dev *ct3d)
->              range2_size_hi = ct3d->hostpmem->size >> 32;
->              range2_size_lo = (2 << 5) | (2 << 2) | 0x3 |
->                               (ct3d->hostpmem->size & 0xF0000000);
-> +        } else if (ct3d->dc.host_dc) {
-> +            range2_size_hi = ct3d->dc.host_dc->size >> 32;
-> +            range2_size_lo = (2 << 5) | (2 << 2) | 0x3 |
-> +                             (ct3d->dc.host_dc->size & 0xF0000000);
->          }
-> -    } else {
-> +    } else if (ct3d->hostpmem) {
->          range1_size_hi = ct3d->hostpmem->size >> 32;
->          range1_size_lo = (2 << 5) | (2 << 2) | 0x3 |
->                           (ct3d->hostpmem->size & 0xF0000000);
-> +        if (ct3d->dc.host_dc) {
-> +            range2_size_hi = ct3d->dc.host_dc->size >> 32;
-> +            range2_size_lo = (2 << 5) | (2 << 2) | 0x3 |
-> +                             (ct3d->dc.host_dc->size & 0xF0000000);
-> +        }
-> +    } else {
-> +        range1_size_hi = ct3d->dc.host_dc->size >> 32;
-> +        range1_size_lo = (2 << 5) | (2 << 2) | 0x3 |
-> +                         (ct3d->dc.host_dc->size & 0xF0000000);
-
-I've forgotten if we ever closed out on the right thing to do
-with the legacy range registers.   Maybe, just ignoring DC is the
-right option for now?  So I'd drop this block of changes.
-Maybe Linux will do the wrong thing if we do, but then we should
-make Linux more flexible on this.
-
-If we did get a clarification that this is the right way to go
-then add a note here.
-
-
->      }
->  
->      dvsec = (uint8_t *)&(CXLDVSECDevice){
-> @@ -579,11 +629,27 @@ static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
->  {
->      int i;
->      uint64_t region_base = 0;
-> -    uint64_t region_len =  2 * GiB;
-> -    uint64_t decode_len = 2 * GiB;
-> +    uint64_t region_len;
-> +    uint64_t decode_len;
->      uint64_t blk_size = 2 * MiB;
->      CXLDCRegion *region;
->      MemoryRegion *mr;
-> +    uint64_t dc_size;
-> +
-> +    mr = host_memory_backend_get_memory(ct3d->dc.host_dc);
-> +    dc_size = memory_region_size(mr);
-> +    region_len = DIV_ROUND_UP(dc_size, ct3d->dc.num_regions);
-> +
-> +    if (region_len * ct3d->dc.num_regions > dc_size) {
-This check had me scratching my head for a minute.
-Why not just check
-
-	if (dc_size % (ct3d->dc.num_regions * CXL_CAPACITY_MULTIPLER) != 0) {
-		error_setg(errp, "host backend must by a multiple of 256MiB and region len);
-		return false;
-	}
-> +        error_setg(errp, "host backend size must be multiples of region len");
-> +        return false;
-> +    }
-> +    if (region_len % CXL_CAPACITY_MULTIPLIER != 0) {
-> +        error_setg(errp, "DC region size is unaligned to %lx",
-> +                   CXL_CAPACITY_MULTIPLIER);
-> +        return false;
-> +    }
-> +    decode_len = region_len;
-
-
-
-
-> @@ -868,16 +974,24 @@ static int cxl_type3_hpa_to_as_and_dpa(CXLType3Dev *ct3d,
->                                         AddressSpace **as,
->                                         uint64_t *dpa_offset)
->  {
-> -    MemoryRegion *vmr = NULL, *pmr = NULL;
-> +    MemoryRegion *vmr = NULL, *pmr = NULL, *dc_mr = NULL;
-> +    uint64_t vmr_size = 0, pmr_size = 0, dc_size = 0;
->  
->      if (ct3d->hostvmem) {
->          vmr = host_memory_backend_get_memory(ct3d->hostvmem);
-> +        vmr_size = memory_region_size(vmr);
->      }
->      if (ct3d->hostpmem) {
->          pmr = host_memory_backend_get_memory(ct3d->hostpmem);
-> +        pmr_size = memory_region_size(pmr);
-> +    }
-> +    if (ct3d->dc.host_dc) {
-> +        dc_mr = host_memory_backend_get_memory(ct3d->dc.host_dc);
-> +        /* Do we want dc_size to be dc_mr->size or not?? */
-
-Maybe - definitely don't want to leave this comment here
-unanswered and I think you enforce it above anyway.
-
-So if we get here ct3d->dc.total_capacity == memory_region_size(ct3d->dc.host_dc);
-As such we could just not stash total_capacity at all?
-
-
-> +        dc_size = ct3d->dc.total_capacity;
->      }
+> -    isock->host = rdma->host;
+> +    isock->host = g_strdup_printf("%s", rdma->host);
+>       isock->port = g_strdup_printf("%d", rdma->port);
+> 
+> which was introduced by the commit below:
+> 
+> commit 3fa9642ff7d51f7fc3ba68e6ccd13a939d5bd609 (HEAD)
+> Author: Het Gala <het.gala@nutanix.com>
+> Date:   Mon Oct 23 15:20:45 2023 -0300
+> 
+>      migration: convert rdma backend to accept MigrateAddress
+> 
+>      RDMA based transport backend for 'migrate'/'migrate-incoming' QAPIs
+>      accept new wire protocol of MigrateAddress struct.
+> 
+>      It is achived by parsing 'uri' string and storing migration parameters
+>      required for RDMA connection into well defined InetSocketAddress struct.
+>      ...
+> 
+> A debug line
+>       isock->host = rdma->host;
+>       isock->port = g_strdup_printf("%d", rdma->port);
+> +fprintf(stdout, "QEMU: %s, host %s, port %s\n", __func__,
+> isock->host, isock->port);
+> 
+> produced this error:
+> QEMU: qemu_rdma_accept, host ::, port 8089
+> corrupted size vs. prev_size in fastbins
+> 
+> on the target host, which may indicate a crash related to the memory
+> allocation or a memory
+> corruption of the data. With the patch, it doesn't happen any more,
+> and the migration is fine.
+> Could you be kind to test this and confirm the issue?
+> 
+> Furthermore, I'm confused by the two struct:
+> 
+> struct InetSocketAddressBase {
+>      char *host;
+>      char *port;
+> };
+> 
+> struct InetSocketAddress {
+>      /* Members inherited from InetSocketAddressBase: */
+>      char *host;
+>      char *port;
+> 
+> To my understanding, they are used to consolidate the separated data
+> to a well-defined
+> struct "MigrateAddress", while the struct whose member receive their
+> data has a different type:
+> 
+> typedef struct RDMAContext {
+>      char *host;
+>      int port;
+>      ...
+> }
+> 
+> Is there any reason to keep "port" like this (char* instead of int) or
+> can we improve it?
+> Thank you so much for any of your comments!
+> 
+> Best regards,
+> 
+> Yu Zhang @ IONOS Compute Platform
+> 05.03.2024
+> 
 
 
