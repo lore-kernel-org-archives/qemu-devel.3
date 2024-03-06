@@ -4,155 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 687CBC5475B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 21:32:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1466CC5475B
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 21:40:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhyqs-0005F5-1k; Wed, 06 Mar 2024 16:31:02 -0500
+	id 1rhyzd-0007EI-2t; Wed, 06 Mar 2024 16:40:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
- id 1rhyqq-0005EO-My
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 16:31:00 -0500
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
- id 1rhyqo-0005wu-2x
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 16:31:00 -0500
-Received: from pps.filterd (m0127840.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id
- 426JRd3W008789; Wed, 6 Mar 2024 13:30:55 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- content-type:message-id:date:subject:to:cc:references:from
- :in-reply-to:mime-version; s=proofpoint20171006; bh=P3gKmMaVbSRU
- FkQsbeRNb+3/oKoLC9NNOyQHYBKzRSk=; b=At8NAX/sM6M6I88CMWq5KtqrhMI3
- 0dd6VqfifVO1NvnY+ECBx/zC5YQMzdOZ7tUvGuLqKYvdGOxbliEhR7rqTqqepyOo
- cdGZZXR6JebPTTYXG7S3da3R/VhpNMwaq1umUBhdv1XZ/4eQhQRp1iLQB/nYHLJH
- EpGb6BVaQgnQO0jexgLNGgofFiw3mvSZOzAzb6CGlepPfRg7azYFiw2HSiL8VBYV
- P1PQBLvZYOztQ+9w8dcFmfVbftLtiqd3yz6WxiVhy2nBshDArpLN6uk1rMcvfyj0
- 7YS2Wx8fE+9G8DW26xCgQorVkDAGsK+X/47VAq82XEBElg4wiIbvm9AhIQ==
-Received: from nam12-mw2-obe.outbound.protection.outlook.com
- (mail-mw2nam12lp2040.outbound.protection.outlook.com [104.47.66.40])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 3wm1avsykh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 06 Mar 2024 13:30:54 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=REV82Q4r3iJvsJn92IxFLod3iljjcNDQ0SC0l5V6moibteI220mJSFVTA7GhyAzd0GV//u6qmzgIRENAe4IZq3ZDQZSxY6kbjtP6GCXnOXxEAJa8d7MNG9/myK/fN7xjsQw8k8LEqBhVTfeUnACMcne1o0NUgI9PiHORo9SmT8eMW23mVGb1UGDX/E9ClHLIqU+6SnQUl+c/vzkXfcOAUF8f1YGzXnasEYX3VeEFC3t70t7ohI1bRD3yEaHr3WfKd6tYcceSuxTUIZCob/Wr4KNbiUV3PhGGiOlfPIM0+kpgpsezPdvCJZ/cy9fgtiFCfKf4utvbrIpICuN5rI4ojQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=P3gKmMaVbSRUFkQsbeRNb+3/oKoLC9NNOyQHYBKzRSk=;
- b=LZtgbmJEJpron6ZO7+cJ1tevIhGNOT6Jr+gFJ87JHBzZt8G7HTmQelc52qc4I7gfCv8jMCzxF9eA9iw5CCakzT+hLP5nHmHcaGJe0O//j7UJjm91+6av49JYeM9VODeaybkgjXNfwFQcMMPIFo8A5jzMf7WWBkuWid+Fj5PvDhyduUPteLcrY7b+/KnRFiACywdcpDfTEP8JJCZJb6tA1olX33SqmCtBXeWctb0MpBXgTkKoERTS4DtLBvAAVnBEWpEJFahDupSKM8/OJOVcqL8OT9APhMJpzTNK0CPgPjbp3BfZHJxusNMoyEHZpTxeUTDTa5Z0uRISckeHDfdCRw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=P3gKmMaVbSRUFkQsbeRNb+3/oKoLC9NNOyQHYBKzRSk=;
- b=yRFEgkZyDVUxP3TOvoJD1of0YgJmF+mmzkyyTTi5egrBIGJk27W/7MZ28SfxgKSIX3Ahr+1wx/AoKT/owyjozfGlULX4cLA2zCRyKeb9fjp5W0VbLKCmxFizYqcY7BtJ1dJ1gGEBAls3Cp3UKdZ53sxdBttXDd25sDr9MAC+liKkSnlrBkRwr5/jTzing64sW1p4uxFMosU6mO38y07DrOA2yxO4wzW3j07O3NrVPCdMaq304NlgMD/FXIU4lAkfsDvNAQTBTzlL3pv1Mtzy3N/pdln7GiA3uB726QbAerF9IY7HdH3nO4caMVudgDT8IlNHf5I6V9TPHmLT2oUdYg==
-Received: from SJ2PR02MB9955.namprd02.prod.outlook.com (2603:10b6:a03:55f::16)
- by SJ0PR02MB7646.namprd02.prod.outlook.com (2603:10b6:a03:318::6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.24; Wed, 6 Mar
- 2024 21:30:51 +0000
-Received: from SJ2PR02MB9955.namprd02.prod.outlook.com
- ([fe80::225c:2edd:87e:7cf0]) by SJ2PR02MB9955.namprd02.prod.outlook.com
- ([fe80::225c:2edd:87e:7cf0%7]) with mapi id 15.20.7362.019; Wed, 6 Mar 2024
- 21:30:51 +0000
-Content-Type: multipart/alternative;
- boundary="------------haOlHo5rsUxKDM9LFNxjLT3a"
-Message-ID: <28018429-e5ab-4dec-b742-99d7daa416b2@nutanix.com>
-Date: Thu, 7 Mar 2024 03:00:43 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/7] Add migrate_set_ports into migrate_qmp to change
- migration port number
-Content-Language: en-US
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, thuth@redhat.com, lvivier@redhat.com,
- pbonzini@redhat.com, peterx@redhat.com
-References: <20240306104958.39857-1-het.gala@nutanix.com>
- <20240306104958.39857-5-het.gala@nutanix.com> <87sf13s9yz.fsf@suse.de>
- <0238e330-cb9f-4d72-9ca8-ca7a1b51dddf@nutanix.com> <878r2vs61j.fsf@suse.de>
-From: Het Gala <het.gala@nutanix.com>
-In-Reply-To: <878r2vs61j.fsf@suse.de>
-X-ClientProxiedBy: MA1PR01CA0153.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a00:71::23) To SJ2PR02MB9955.namprd02.prod.outlook.com
- (2603:10b6:a03:55f::16)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1rhyzY-0007Ca-05
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 16:40:00 -0500
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1rhyzT-0001Of-Fv
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 16:39:57 -0500
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-6e55b33ad14so136436b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 13:39:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1709761193; x=1710365993; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=6Keos2S+rJXmnG4LMBOndrAMBiWeEOgfIdyIn3rwUN4=;
+ b=j1+ruJzRyYLP+qFdw44knTe+q98iw2y+GNOe+YQrd7yptxT+8gRcxEJdclEbRrcf41
+ i9LYOy6BtpIEOgkcKSoT4Sy7/kuUn5ohD9f4QQ4xlnAaKYIUG4k/qxJWi5uzD17nFyT8
+ UOEM9QDalxrmhYkM+e2ojg6pCMWYGQ/HTjrLUTcGUnn8tOujiMunQTuBfHxSzRZgrPSr
+ ncuc62pxdH/Rqd9TB5eQgDZe/5q6IxL53BRY6KA389c6Wzdy9LxMvsADmapc2W2uwrUf
+ UcGEdGPEzpxtizUeVInkLsS0swdcyXWssB6tWWQmMOzECbjATXBi4n7V+tGyZ+bh88yU
+ Dx/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709761193; x=1710365993;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6Keos2S+rJXmnG4LMBOndrAMBiWeEOgfIdyIn3rwUN4=;
+ b=fzOPlRaMA4zIFoeFdcFIezVF7a6+QARp+p00gff4+LNskhtHpis+tt8GtWyiX/yInf
+ pnin6jqYi8jwL4OnpbQhR38h0zrP2Q7IR5VNz+iAvtlL/LmZZXI53Io7w9cvCshHKqSs
+ 2DcR0mnmqTcRxILKVyAClGIJMsdnV8Do55Uu/0FFYf0rWfSDzRTmEF4B0ia8YEHcu0U0
+ f2iEcOZlagLGRj1wNsfiPiVNY0JrxhWrM94jF8EFFdgTUs+nc6jxariaVT+jaxLAjWZ4
+ jdLkiLRKovcypdmCBZaCu6mLSbAlfFjYsm1Za244DFpQ5nx4OnhhdqWOIjucYNrzCPxY
+ c8lA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW4KUb9wyw3j6JoRrX2tup9N+dSSICLAqb+ZbL2FzhzwRBaSic9jDPKZPIDx9gYbAWZpsw4fjdpEafI0kkLeVqBKfILeEI=
+X-Gm-Message-State: AOJu0YzyU/M9ForotSX6C9IvT8grgM2XREdh0xm9dSYsU9wDBphYAzc+
+ 0W0tRj+c9qHHwzhr3dUUSGWdbvpODL5eAdE+yNQDIcbjhIlRpweN
+X-Google-Smtp-Source: AGHT+IGBnHAp18QUa/bdAbfj8/hvqUvY85VUm7X6g38qS3jxX+VgorvLDZkeIMaU4Ra3mp24QyBBzA==
+X-Received: by 2002:a05:6a00:148a:b0:6e5:3684:807f with SMTP id
+ v10-20020a056a00148a00b006e53684807fmr17808432pfu.6.1709761193130; 
+ Wed, 06 Mar 2024 13:39:53 -0800 (PST)
+Received: from debian ([2601:641:300:14de:57cf:345:75f0:2085])
+ by smtp.gmail.com with ESMTPSA id
+ g27-20020aa79ddb000000b006e651246848sm1281919pfq.137.2024.03.06.13.39.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 06 Mar 2024 13:39:52 -0800 (PST)
+From: fan <nifan.cxl@gmail.com>
+X-Google-Original-From: fan <fan@debian>
+Date: Wed, 6 Mar 2024 13:39:50 -0800
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: nifan.cxl@gmail.com, qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
+ gregory.price@memverge.com, ira.weiny@intel.com,
+ dan.j.williams@intel.com, a.manzanares@samsung.com,
+ dave@stgolabs.net, nmtadam.samsung@gmail.com,
+ jim.harris@samsung.com, Jorgen.Hansen@wdc.com, wj28.lee@gmail.com,
+ Fan Ni <fan.ni@samsung.com>
+Subject: Re: [PATCH v5 08/13] hw/cxl/cxl-mailbox-utils: Add mailbox commands
+ to support add/release dynamic capacity response
+Message-ID: <ZejipnoILw6_Z-Cl@debian>
+References: <20240304194331.1586191-1-nifan.cxl@gmail.com>
+ <20240304194331.1586191-9-nifan.cxl@gmail.com>
+ <20240306172827.000052dc@Huawei.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR02MB9955:EE_|SJ0PR02MB7646:EE_
-X-MS-Office365-Filtering-Correlation-Id: fca667aa-3e78-46f9-7c36-08dc3e24b208
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: TB5QJ7pWfZnG3HYzwVub3lc+8KgrduQSbtw563C6ro0IJlKGD9C8IVQ0PT6dkA5T/iow57OTNfa68o8Ws7k+h2Ak5EmpHKX7q1p+etyuMSRNZBYKw0+S60HlzFLAH3jpQSmsbo/iKFcJaJaosD8N3vZhuOCZyVDePEy2hmw8SxjcIs2PD4j6ArQOP6Sy8+WrDSGHVJUKqh4ft8h+rlnZU9anzn1ul8e0eunJ6asrqXwFrE7fLfwOiMagM10k7Q5DYJCrb63p4NzG1hTGV4zK84WUOxhnr6GP3I7d3sN5mdYycHbc0NDcS6SxohVhV0jDH2yF1JmFpYeM2+tJdCvUQkP0xV7Lz+dp+guOuiNJCSAVbb5Vgr3NWBflNF6yWVLwBSD5IkZPHubqTTVfys3OM+MGd4nlOmzV4I586iiOZJDregdcD5kXe0/23dpTQ2Wur5frQAwXooOEDNjiYHrG72KbPomYBgGK9uDgdIS8cssbehOltX9dxpnlM/+3yNSNOhNByk0kG1boPzV08HSfUh2Y5Z/weFiZGD5s/ncCTW5LQqE4lsAz1DCRqgUeLDZB2gG8UuZHrmnouthNWeO3Q+fiFo3ELTv4nMHGBiZNWVM1sPtOuA714Gpdl7I/P9kuyc7fDoQp6vbVwAG1I04IvUr7FrWfOp7RBWz8TAhFAnY=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ2PR02MB9955.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(376005); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Q0F3U1Q4eEpLaHhTWlZuaTR5WTNmdFRVTmVCcFB2cWY5aGZhWVVDWlQvWkV5?=
- =?utf-8?B?VEJmYVZqTklzVDFaa2JmSVVQVENuM1FTMnNDK05IdnV6S2tWWFluKzFNTkdV?=
- =?utf-8?B?aWNrbjJUSjNtRmE4WmpNd3cvUm5Bd2RTTzVKWVN3cSttckFMc0FnL3hpOXMx?=
- =?utf-8?B?ZU43WDRVR3ZodUcxQjRPTHZCVXdGZjdUT29PNlJSV3F1L3NYYjFTeHpPYzM2?=
- =?utf-8?B?MnFXYW1zbVU4b081QS8wSFdYdmIvNWk1dzNsZWFjaWxwdy9JaWhpcGJVNWRs?=
- =?utf-8?B?QklpOVNwZVlLNU5wVWxwbTUvcGc4MGF2OS8zbkk5NkNaRWVuTzgwSGYxOXpB?=
- =?utf-8?B?ZE1MVnJtR05pdTFrQ0laejJxeGNiTW1MNzI4K3VGTFFZSzZ3UC9hMkNEd1FP?=
- =?utf-8?B?dTRPMjVVbC93aGxmRnFXSzQ3ZHYwelNqelV3ZUROcmluV0RGeTE0cm1TdWpi?=
- =?utf-8?B?Q1VJcG1nL1pFdENxdGp5TWVkZENiUHFhajhvUU8xOWRnbExsdEYybzlBbmtX?=
- =?utf-8?B?Vk96eWJOaFhyUzBTdC8xbmNZQXQ4R1VoVVM4bHlZTnZqNVlEV3Jna2Qzb2FL?=
- =?utf-8?B?SXVEejk0SU5SV1RzekZvRis0UGRqMXdIeHVGWnNXZ1MxanRkZzduMVo5NE40?=
- =?utf-8?B?NEx2Y0hlSFZjaExaaTFrdTNuSytTdC9yRnVHN051dGQwL3dQNVc4QzRqaHQ2?=
- =?utf-8?B?M01RemlpcjJTcHZmSGpFem5xajFHVGN1U09tSkhpVDA3dmJSc21GSGdORm9k?=
- =?utf-8?B?ejl6RkgxcFFHbEVqYW9VWEFaSTY3M0JnOG9XUEN1cHUvZitJeEdVQjkvUzYw?=
- =?utf-8?B?QUt0RTVCV0p4SVd5dGwvN2JrbWx1YTY4VUlHZHplVGNJVkd1U3lOMzIrRWZV?=
- =?utf-8?B?MENqRSt0QXZVY0tNdXVlTlI0c2N6ZloreDhoKy8rK0hIdWxpUFlhZEJaOGNo?=
- =?utf-8?B?OHE4MEFSY010MFdNWDE2NmlUTWRURWQyS1FhclB2L0J6VWh5eWhtekZyUGcx?=
- =?utf-8?B?dzlJaVJBYXVDNktlL01KcGVzN3h0V3hUTkx4b0grWFRvc250TjZWdEFteVpx?=
- =?utf-8?B?eXRPakVGOWdEWDZEYzg5Y25SMEFkclh6eUtYUENpWkcySmMyL29tRXZVYUt0?=
- =?utf-8?B?UWtWRzNja0lUclZEejNyQkNjNXB4ZCtQNXJJYmhmREU1NUxHcGZtVjd6WmQ0?=
- =?utf-8?B?Rk5DMTVBLytyaWY1MkFCZnVpT0M4cmVjYjJHRXUrNzFnNEF1dmdVaUlnMmJJ?=
- =?utf-8?B?ZlZsSENiQWd5SFBGS0Ztekcyb3R6STZxZTc3Q0J5UzdEQTVXOUdSU0M5anFL?=
- =?utf-8?B?MGloaWlaZFJ4QnFVeG5vL2pNd3pDL2EzVlhCSXJYVzlKcHVodWVUdld2aGhP?=
- =?utf-8?B?OXQxQy9BZ3lsNmhwY0I4WFpjendhOEdUVFVsMnp0b1A5M3g4SG5TWkNDQlkz?=
- =?utf-8?B?eWtxQlRzU2c1aVY1YXQwMURuQkk4Wm5nQmsvaGd1TThiMkIrWkRoR3hId24r?=
- =?utf-8?B?YjVqNkVRaWprb1RIbkN6YTlFSDMvcTRnTGt5L2hpRzhkRlFLODhDaDNVUThX?=
- =?utf-8?B?TFlFQnE0K2lCb3ZITGxaV0V6YmVpU1oxaDk0elhkV2RRWmxCRkY1eTBiK0sv?=
- =?utf-8?B?TU9yUkFjZjZ0ZHJ2VHhRL3hsZm9CTjhGRWJrY0NwRzd0L1VLQVdubWhQSnFG?=
- =?utf-8?B?bmNVTXNHVXUvTmlwd3FpdjhkQkd0YXp2YlI3dHB6WFI1ZVlVOThOZ3UvQ3Fa?=
- =?utf-8?B?bmtLZHFENVR5Z1d6SDlRa2xqRjBJZ1JXcUtLZncrb1IxcWtlRDIyQW9KdGRQ?=
- =?utf-8?B?a01NNzlWTnJaZy8weUpNb3JyK0daMlFDQUVUUEZlNXNlNlNacVJlVVFWNEsv?=
- =?utf-8?B?MUhrUEx5dlFzdlBDWHRIMXVNYWxhV213WGFwVTFwSzl0Q1ZsYzEvbUpnTURL?=
- =?utf-8?B?SUlOcW1KZ2w5eUZRN3RKVXZTMEJoRGg0aEtGMU5TUHE4ZUxTTVl6R2w1UDQ3?=
- =?utf-8?B?TXlLQ0ttb094azZjUVhNTVFNYmE5S1VieUJ4NkFzVGU3bzByQ21vc294ZGFw?=
- =?utf-8?B?a0E0ZU1Qb2cyanM3aGJIMEF5TkkzTGdSSmFPcThaSFcydzByZXpRSVFFZjRG?=
- =?utf-8?Q?siZGsUX1il5UJBVx93XofJz1R?=
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fca667aa-3e78-46f9-7c36-08dc3e24b208
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR02MB9955.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Mar 2024 21:30:50.9698 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: bS+Xw+dnsnCot5IVjFvURiEJcYNdyXRVEixa6Vs04h5aXW2ntwlbSmQZEK034nlmMK1vzSNmT3VMVXM2j6w+4A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR02MB7646
-X-Proofpoint-GUID: 4g6CcBPn4SxDpDLs-A0AtU-nifPgqkqY
-X-Proofpoint-ORIG-GUID: 4g6CcBPn4SxDpDLs-A0AtU-nifPgqkqY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-06_12,2024-03-05_01,2023-05-22_02
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68; envelope-from=het.gala@nutanix.com;
- helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240306172827.000052dc@Huawei.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -169,192 +103,356 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---------------haOlHo5rsUxKDM9LFNxjLT3a
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+On Wed, Mar 06, 2024 at 05:28:27PM +0000, Jonathan Cameron wrote:
+> On Mon,  4 Mar 2024 11:34:03 -0800
+> nifan.cxl@gmail.com wrote:
+> 
+> > From: Fan Ni <fan.ni@samsung.com>
+> > 
+> > Per CXL spec 3.1, two mailbox commands are implemented:
+> > Add Dynamic Capacity Response (Opcode 4802h) 8.2.9.9.9.3, and
+> > Release Dynamic Capacity (Opcode 4803h) 8.2.9.9.9.4.
+> > 
+> > Signed-off-by: Fan Ni <fan.ni@samsung.com>
+> 
+> Hmm. So I had a thought which would work for what you
+> have here. See include/qemu/range.h
+> I like the region merging stuff that is also in the list operators
+> but we shouldn't use that because we have other reasons not to
+> fuse ranges (sequence numbering etc)
+> 
+> We could make an extent a wrapper around a struct Range though
+> so that we can use the comparison stuff directly.
+> + we can use the list manipulation in there as the basis for a future
+> extent merging infrastructure that is tag and sequence number (if
+> provided - so shared capacity or pmem) aware.
+> 
+> Jonathan
+> 
+> 
+> > ---
+> > +
+> > +/*
+> > + * CXL r3.1 Table 8-168: Add Dynamic Capacity Response Input Payload
+> > + * CXL r3.1 Table 8-170: Release Dynamic Capacity Input Payload
+> > + */
+> > +typedef struct CXLUpdateDCExtentListInPl {
+> > +    uint32_t num_entries_updated;
+> > +    uint8_t flags;
+> > +    uint8_t rsvd[3];
+> > +    /* CXL r3.1 Table 8-169: Updated Extent */
+> > +    struct {
+> > +        uint64_t start_dpa;
+> > +        uint64_t len;
+> > +        uint8_t rsvd[8];
+> > +    } QEMU_PACKED updated_entries[];
+> > +} QEMU_PACKED CXLUpdateDCExtentListInPl;
+> > +
+> > +/*
+> > + * For the extents in the extent list to operate, check whether they are valid
+> > + * 1. The extent should be in the range of a valid DC region;
+> > + * 2. The extent should not cross multiple regions;
+> > + * 3. The start DPA and the length of the extent should align with the block
+> > + * size of the region;
+> > + * 4. The address range of multiple extents in the list should not overlap.
+> 
+> Hmm. Interesting.  I was thinking a given add / remove command rather than
+> just the extents can't overlap a region.  However I can't find text on that
+> so I believe your interpretation is correct. It is only specified for the
+> event records, but that is good enough I think.  We might want to propose
+> tightening the spec on this to allow devices to say no to such complex
+> extent lists. Maybe a nice friendly Memory vendor should query this one if
+> it's a potential problem for real devices.  Might not be!
+> 
+> > + */
+> > +static CXLRetCode cxl_detect_malformed_extent_list(CXLType3Dev *ct3d,
+> > +        const CXLUpdateDCExtentListInPl *in)
+> > +{
+> > +    uint64_t min_block_size = UINT64_MAX;
+> > +    CXLDCRegion *region = &ct3d->dc.regions[0];
+> > +    CXLDCRegion *lastregion = &ct3d->dc.regions[ct3d->dc.num_regions - 1];
+> > +    g_autofree unsigned long *blk_bitmap = NULL;
+> > +    uint64_t dpa, len;
+> > +    uint32_t i;
+> > +
+> > +    for (i = 0; i < ct3d->dc.num_regions; i++) {
+> > +        region = &ct3d->dc.regions[i];
+> > +        min_block_size = MIN(min_block_size, region->block_size);
+> > +    }
+> > +
+> > +    blk_bitmap = bitmap_new((lastregion->base + lastregion->len -
+> > +                             ct3d->dc.regions[0].base) / min_block_size);
+> > +
+> > +    for (i = 0; i < in->num_entries_updated; i++) {
+> > +        dpa = in->updated_entries[i].start_dpa;
+> > +        len = in->updated_entries[i].len;
+> > +
+> > +        region = cxl_find_dc_region(ct3d, dpa, len);
+> > +        if (!region) {
+> > +            return CXL_MBOX_INVALID_PA;
+> > +        }
+> > +
+> > +        dpa -= ct3d->dc.regions[0].base;
+> > +        if (dpa % region->block_size || len % region->block_size) {
+> > +            return CXL_MBOX_INVALID_EXTENT_LIST;
+> > +        }
+> > +        /* the dpa range already covered by some other extents in the list */
+> > +        if (test_any_bits_set(blk_bitmap, dpa / min_block_size,
+> > +            len / min_block_size)) {
+> > +            return CXL_MBOX_INVALID_EXTENT_LIST;
+> > +        }
+> > +        bitmap_set(blk_bitmap, dpa / min_block_size, len / min_block_size);
+> > +   }
+> > +
+> > +    return CXL_MBOX_SUCCESS;
+> > +}
+> > +
+> > +/*
+> > + * CXL r3.1 section 8.2.9.9.9.3: Add Dynamic Capacity Response (Opcode 4802h)
+> > + * An extent is added to the extent list and becomes usable only after the
+> > + * response is processed successfully
+> > + */
+> > +static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
+> > +                                          uint8_t *payload_in,
+> > +                                          size_t len_in,
+> > +                                          uint8_t *payload_out,
+> > +                                          size_t *len_out,
+> > +                                          CXLCCI *cci)
+> > +{
+> > +    CXLUpdateDCExtentListInPl *in = (void *)payload_in;
+> > +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+> > +    CXLDCExtentList *extent_list = &ct3d->dc.extents;
+> > +    CXLDCExtent *ent;
+> > +    uint32_t i;
+> > +    uint64_t dpa, len;
+> > +    CXLRetCode ret;
+> > +
+> > +    if (in->num_entries_updated == 0) {
+> > +        return CXL_MBOX_SUCCESS;
+> > +    }
+> > +
+> > +    /* Adding extents causes exceeding device's extent tracking ability. */
+> > +    if (in->num_entries_updated + ct3d->dc.total_extent_count >
+> > +        CXL_NUM_EXTENTS_SUPPORTED) {
+> > +        return CXL_MBOX_RESOURCES_EXHAUSTED;
+> > +    }
+> > +
+> > +    ret = cxl_detect_malformed_extent_list(ct3d, in);
+> > +    if (ret != CXL_MBOX_SUCCESS) {
+> > +        return ret;
+> > +    }
+> > +
+> > +    for (i = 0; i < in->num_entries_updated; i++) {
+> > +        dpa = in->updated_entries[i].start_dpa;
+> > +        len = in->updated_entries[i].len;
+> > +
+> > +        /*
+> > +         * Check if the DPA range of the to-be-added extent overlaps with
+> > +         * existing extent list maintained by the device.
+> > +         */
+> > +        QTAILQ_FOREACH(ent, extent_list, node) {
+> 
+> There are too many checks in here for an overlapping test.
+> 
+> Conditions are
+> 
+> 	|  Extent tested against |
+> |  Overlap entirely                 |
+> | overlap left edge |
+>                     | overlap right edge |
+> Think of it in the inverse condition and it is easier to reason about.
+> 
+>               | Extent tested against |
+> | to left |---                        ---| to right |
+> 
+> which I think is something like.
+> 
+>         if (!((dpa + len <= ent->start_dpa) || (dpa >= ent->start_dpa + ent->len)) {
+> 		 return CXL_MBOX_INVALID_PA;
+> 	}
+> 
+> Hmm. For internal tracking (not the exposed values) we should probably use
+> struct range from include/qemu/range.h.
+> Felt like there had to be something better than doing this ourselves so I went
+> looking.  Note it uses inclusive upper bound so be careful with that!
+> 
+> Advantage is we get this checks for free.
+> https://elixir.bootlin.com/qemu/latest/source/include/qemu/range.h#L152
+> range_overlaps_range()
+> 
+> There are functions to set them up nicely for us and by base and size
+> as well which should tidy that part up.
+> 
+> 	    
+> 
+> > +            if (ent->start_dpa <= dpa &&
+> > +                    dpa + len <= ent->start_dpa + ent->len) {
+> > +                return CXL_MBOX_INVALID_PA;
+> > +            /* Overlapping one end of the other */
+> > +            } else if ((dpa < ent->start_dpa + ent->len &&
+> > +                        dpa + len > ent->start_dpa + ent->len) ||
+> > +                       (dpa < ent->start_dpa && dpa + len > ent->start_dpa)) {
+> > +                return CXL_MBOX_INVALID_PA;
+> > +            }
+> > +        }
+> > +
+> > +        /*
+> > +         * TODO: we will add a pending extent list based on event log record
+> > +         * and verify the input response; also, the "More" flag is not
+> > +         * considered at the moment.
+> > +         */
+> > +
+> > +        cxl_insert_extent_to_extent_list(extent_list, dpa, len, NULL, 0);
+> > +        ct3d->dc.total_extent_count += 1;
+> > +    }
+> > +
+> > +    return CXL_MBOX_SUCCESS;
+> > +}
+> > +
+> > +/*
+> > + * CXL r3.1 section 8.2.9.9.9.4: Release Dynamic Capacity (Opcode 4803h)
+> > + */
+> > +static CXLRetCode cmd_dcd_release_dyn_cap(const struct cxl_cmd *cmd,
+> > +                                          uint8_t *payload_in,
+> > +                                          size_t len_in,
+> > +                                          uint8_t *payload_out,
+> > +                                          size_t *len_out,
+> > +                                          CXLCCI *cci)
+> > +{
+> > +    CXLUpdateDCExtentListInPl *in = (void *)payload_in;
+> > +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+> > +    CXLDCExtentList *extent_list = &ct3d->dc.extents;
+> > +    CXLDCExtent *ent;
+> > +    uint32_t i;
+> > +    uint64_t dpa, len;
+> > +    CXLRetCode ret;
+> > +
+> > +    if (in->num_entries_updated == 0) {
+> > +        return CXL_MBOX_INVALID_INPUT;
+> > +    }
+> > +
+> > +    ret = cxl_detect_malformed_extent_list(ct3d, in);
+> > +    if (ret != CXL_MBOX_SUCCESS) {
+> > +        return ret;
+> > +    }
+> > +
+> > +    for (i = 0; i < in->num_entries_updated; i++) {
+> > +        bool found = false;
+> > +
+> > +        dpa = in->updated_entries[i].start_dpa;
+> > +        len = in->updated_entries[i].len;
+> > +
+> > +        QTAILQ_FOREACH(ent, extent_list, node) {
+> > +            /* Found the extent overlapping with */
+> > +            if (ent->start_dpa <= dpa && dpa < ent->start_dpa + ent->len) {
+> > +                if (dpa + len <= ent->start_dpa + ent->len) {
+> > +                    /*
+> > +                     * The incoming extent covers a portion of an extent
+> > +                     * in the device extent list, remove only the overlapping
+> > +                     * portion, meaning
+> > +                     * 1. the portions that are not covered by the incoming
+> > +                     *    extent at both end of the original extent will become
+> > +                     *    new extents and inserted to the extent list; and
+> > +                     * 2. the original extent is removed from the extent list;
+> > +                     * 3. DC extent count is updated accordingly.
+> > +                     */
+> > +                    uint64_t ent_start_dpa = ent->start_dpa;
+> > +                    uint64_t ent_len = ent->len;
+> > +                    uint64_t len1 = dpa - ent_start_dpa;
+> > +                    uint64_t len2 = ent_start_dpa + ent_len - dpa - len;
+> > +
+> > +                    /*
+> > +                     * TODO: checking for possible extent overflow, will be
+> > +                     * moved into a dedicated function of detecting extent
+> > +                     * overflow.
+> > +                     */
+> > +                    if (len1 && len2 && ct3d->dc.total_extent_count ==
+> > +                        CXL_NUM_EXTENTS_SUPPORTED) {
+> > +                        return CXL_MBOX_RESOURCES_EXHAUSTED;
+> > +                    }
+> > +
+> > +                    found = true;
+> > +                    cxl_remove_extent_from_extent_list(extent_list, ent);
+> > +                    ct3d->dc.total_extent_count -= 1;
+> > +
+> > +                    if (len1) {
+> > +                        cxl_insert_extent_to_extent_list(extent_list,
+> > +                                                         ent_start_dpa, len1,
+> > +                                                         NULL, 0);
+> > +                        ct3d->dc.total_extent_count += 1;
+> > +                    }
+> > +                    if (len2) {
+> > +                        cxl_insert_extent_to_extent_list(extent_list, dpa + len,
+> > +                                                         len2, NULL, 0);
+> > +                        ct3d->dc.total_extent_count += 1;
+> > +                    }
+> > +                    break;
+> Maybe this makes sense after the support below is added, but at this
+> point in the series 
+> 			return CXL_MBOX_SUCCESS;
+> then found isn't relevant so can drop that. Looks like you drop it later in the
+> series anyway.
 
+We cannot return directly as we have more extents to release.
+One thing I think I need to add is a dry run to test if any extent in
+the income list is not contained by an extent in the extent list and
+return error before starting to do the real release. The spec just says
+we need to return invalid PA but not specify whether we should update the list
+until we found a "bad" extent or reject the request directly. Current code
+leaves a situation where we may have updated the extent list until we found a
+"bad" extent to release.
 
-On 06/03/24 9:31 pm, Fabiano Rosas wrote:
-> Het Gala<het.gala@nutanix.com>  writes:
->
->> On 06/03/24 8:06 pm, Fabiano Rosas wrote:
->>> Het Gala<het.gala@nutanix.com>   writes:
->>>
->>>> Add a migrate_set_ports() function that from each QDict, fills in
->>>> the port in case it was 0 in the test.
->>>> Handle a list of channels so we can add a negative test that
->>>> passes more than one channel.
->>>>
->>>> Signed-off-by: Het Gala<het.gala@nutanix.com>
->>>> Suggested-by: Fabiano Rosas<farosas@suse.de>
->>>> ---
->>>>    tests/qtest/migration-helpers.c | 26 ++++++++++++++++++++++++++
->>>>    1 file changed, 26 insertions(+)
->>>>
->>>> diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
->>>> index 478c1f259b..df4978bf17 100644
->>>> --- a/tests/qtest/migration-helpers.c
->>>> +++ b/tests/qtest/migration-helpers.c
->>>> @@ -17,6 +17,8 @@
->>>>    #include "qapi/qapi-visit-sockets.h"
->>>>    #include "qapi/qobject-input-visitor.h"
->>>>    #include "qapi/error.h"
->>>> +#include "qapi/qmp/qlist.h"
->>>> +
->>> Extra line here. This is unwanted because it sometimes trips git into
->>> thinking there's a conflict here when another patch changes the
->>> surrounding lines.
->> Ack, that makes sense
->>>>    
->>>>    #include "migration-helpers.h"
->>>>    
->>>> @@ -73,6 +75,29 @@ migrate_get_socket_address(QTestState *who, const char *parameter)
->>>>        return result;
->>>>    }
->>>>    
->>>> +static void migrate_set_ports(QTestState *to, QList *channelList)
->>>> +{
->>>> +    g_autofree char *addr = NULL;
->>>> +    g_autofree char *addr_port = NULL;
->>>> +    QListEntry *entry;
->>>> +
->>>> +    addr = migrate_get_socket_address(to, "socket-address");
->>>> +    addr_port = g_strsplit(addr, ":", 3)[2];
->>> Will this always do the right thing when the src/dst use different types
->>> of channels? If there is some kind of mismatch (say one side uses vsock
->>> and the other inet), it's better that this function doesn't touch the
->>> channels dict instead of putting garbage in the port field.
->> Yes you are right. This will fail if there is a mismatch in type of
->> channels.
->>
->> Better idea would be to check if 'port' key is present in both, i.e. in
->> 'addr'
->> as well as 'addrdict' and only then change the port ?
->>
-> Yep, either parse the type from string or add a version of
-> migrate_get_socket_address that returns a dict. Then check if type
-> matches and port exists.
+> 
+> > +                } else {
+> > +                    /*
+> > +                     * TODO: we reject the attempt to remove an extent that
+> > +                     * overlaps with multiple extents in the device for now,
+> > +                     * once the bitmap indicating whether a DPA range is
+> > +                     * covered by valid extents is introduced, will allow it.
+> > +                     */
+> > +                    return CXL_MBOX_INVALID_PA;
+> > +                }
+> > +            }
+> > +        }
+> > +
+> > +        if (!found) {
+> > +            /* Try to remove a non-existing extent. */
+> > +            return CXL_MBOX_INVALID_PA;
+> > +        }
+> > +    }
+> > +
+> > +    return CXL_MBOX_SUCCESS;
+> > +}
+> > +
+> 
+> >  static const struct cxl_cmd cxl_cmd_set_sw[256][256] = {
+> > diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> > index 102fa8151e..dccfaaad3a 100644
+> > --- a/hw/mem/cxl_type3.c
+> > +++ b/hw/mem/cxl_type3.c
+> > @@ -678,6 +678,16 @@ static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
+> >      return true;
+> >  }
+> >  
+> > +static void cxl_destroy_dc_regions(CXLType3Dev *ct3d)
+> > +{
+> > +    CXLDCExtent *ent;
+> > +
+> > +    while (!QTAILQ_EMPTY(&ct3d->dc.extents)) {
+> > +        ent = QTAILQ_FIRST(&ct3d->dc.extents);
+> > +        cxl_remove_extent_from_extent_list(&ct3d->dc.extents, ent);
+> 
+> Isn't this same a something like.
+>     QTAILQ_FOREACH_SAFE(ent, &ct3d->dc.extents, node)) {
+> 	cxl_remove_extent_from_extent_list(&ct3d->dc.extents, ent);
+>         //This wrapper is small enough I'd be tempted to just have the
+>         //code inline at the places it's called.
+Good point, will update.
 
-one silly question here, why are we not having tests for exec and rdma 
-specifically ?
-
-Another suggestion required: Parsing uri to qdict is easy to implement 
-but (little)
-messy codewise, and the other hand migrate_get_qdict looks clean, but 
-under the hood we would convert it to socketaddress and then call 
-SocketAddress_to_qdict. Which one we can prefer more here ?
-
-Regards,
-
-Het Gala
-
---------------haOlHo5rsUxKDM9LFNxjLT3a
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-
-<!DOCTYPE html><html><head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  </head>
-  <body>
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">On 06/03/24 9:31 pm, Fabiano Rosas
-      wrote:<br>
-    </div>
-    <blockquote type="cite" cite="mid:878r2vs61j.fsf@suse.de">
-      <pre class="moz-quote-pre" wrap="">Het Gala <a class="moz-txt-link-rfc2396E" href="mailto:het.gala@nutanix.com">&lt;het.gala@nutanix.com&gt;</a> writes:
-
-</pre>
-      <blockquote type="cite">
-        <pre class="moz-quote-pre" wrap="">On 06/03/24 8:06 pm, Fabiano Rosas wrote:
-</pre>
-        <blockquote type="cite">
-          <pre class="moz-quote-pre" wrap="">Het Gala<a class="moz-txt-link-rfc2396E" href="mailto:het.gala@nutanix.com">&lt;het.gala@nutanix.com&gt;</a>  writes:
-
-</pre>
-          <blockquote type="cite">
-            <pre class="moz-quote-pre" wrap="">Add a migrate_set_ports() function that from each QDict, fills in
-the port in case it was 0 in the test.
-Handle a list of channels so we can add a negative test that
-passes more than one channel.
-
-Signed-off-by: Het Gala<a class="moz-txt-link-rfc2396E" href="mailto:het.gala@nutanix.com">&lt;het.gala@nutanix.com&gt;</a>
-Suggested-by: Fabiano Rosas<a class="moz-txt-link-rfc2396E" href="mailto:farosas@suse.de">&lt;farosas@suse.de&gt;</a>
----
-  tests/qtest/migration-helpers.c | 26 ++++++++++++++++++++++++++
-  1 file changed, 26 insertions(+)
-
-diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
-index 478c1f259b..df4978bf17 100644
---- a/tests/qtest/migration-helpers.c
-+++ b/tests/qtest/migration-helpers.c
-@@ -17,6 +17,8 @@
-  #include &quot;qapi/qapi-visit-sockets.h&quot;
-  #include &quot;qapi/qobject-input-visitor.h&quot;
-  #include &quot;qapi/error.h&quot;
-+#include &quot;qapi/qmp/qlist.h&quot;
-+
-</pre>
-          </blockquote>
-          <pre class="moz-quote-pre" wrap="">Extra line here. This is unwanted because it sometimes trips git into
-thinking there's a conflict here when another patch changes the
-surrounding lines.
-</pre>
-        </blockquote>
-        <pre class="moz-quote-pre" wrap="">Ack, that makes sense
-</pre>
-        <blockquote type="cite">
-          <blockquote type="cite">
-            <pre class="moz-quote-pre" wrap="">  
-  #include &quot;migration-helpers.h&quot;
-  
-@@ -73,6 +75,29 @@ migrate_get_socket_address(QTestState *who, const char *parameter)
-      return result;
-  }
-  
-+static void migrate_set_ports(QTestState *to, QList *channelList)
-+{
-+    g_autofree char *addr = NULL;
-+    g_autofree char *addr_port = NULL;
-+    QListEntry *entry;
-+
-+    addr = migrate_get_socket_address(to, &quot;socket-address&quot;);
-+    addr_port = g_strsplit(addr, &quot;:&quot;, 3)[2];
-</pre>
-          </blockquote>
-          <pre class="moz-quote-pre" wrap="">Will this always do the right thing when the src/dst use different types
-of channels? If there is some kind of mismatch (say one side uses vsock
-and the other inet), it's better that this function doesn't touch the
-channels dict instead of putting garbage in the port field.
-</pre>
-        </blockquote>
-        <pre class="moz-quote-pre" wrap="">
-Yes you are right. This will fail if there is a mismatch in type of 
-channels.
-
-Better idea would be to check if 'port' key is present in both, i.e. in 
-'addr'
-as well as 'addrdict' and only then change the port ?
-
-</pre>
-      </blockquote>
-      <pre class="moz-quote-pre" wrap="">
-Yep, either parse the type from string or add a version of
-migrate_get_socket_address that returns a dict. Then check if type
-matches and port exists.</pre>
-    </blockquote>
-    <p><font face="monospace">one silly question here, why are we not
-        having tests for exec and rdma specifically ?</font></p>
-    <p><font face="monospace">Another suggestion required: Parsing uri
-        to qdict is easy to implement but (little)<br>
-        messy codewise, and the other hand <span style="white-space: pre-wrap">migrate_get_qdict looks clean, but under the hood
-we would convert it to socketaddress and then call SocketAddress_to_qdict. Which one
-we can prefer more here ?</span></font></p>
-    <p><font face="monospace"><span style="white-space: pre-wrap">Regards,</span></font></p>
-    <p><font face="monospace"><span style="white-space: pre-wrap">Het Gala
-</span></font></p>
-  </body>
-</html>
-
---------------haOlHo5rsUxKDM9LFNxjLT3a--
+Fan
+> 
+>     }
+> > +    }
+> > +}
+> 
 
