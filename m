@@ -4,84 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62D38C54E41
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 16:27:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 344E0C54E41
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 16:28:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhu6v-0006Cn-3O; Wed, 06 Mar 2024 11:27:17 -0500
+	id 1rhu83-0006sJ-IH; Wed, 06 Mar 2024 11:28:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhu6t-0006CR-Nb
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 11:27:15 -0500
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhu6o-0005cn-O9
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 11:27:15 -0500
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a45b6fcd5e8so129793766b.1
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 08:27:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709742427; x=1710347227; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7e15dIZpLQgAh6CGa/cDD5YfSifUjp0dN+jEODvmCFM=;
- b=manqkOYFFRWbl6kHQFeiDRLxOCYBicwryzgb0iT0aqOC45bBzbrypbutQVE+roq8iR
- bNWD05YnxqWZWzfeZ9VmZ015vUvZW6xJ0Evicams2H7qJqLOxm5RDwZmLv5fbBoMDt7G
- Lu+PFKf45bcYqHbEanCA0Yt3ONOE2AVrcKaJpU0I3WD+6x+mXWzr9c6B3VhiGrOJhynC
- /VKwl1t0S8xO4Yf0yS7MkPpDdlOq3vF6dNQEUXcsGkBHrVBE+0lIstNKzLhYRh9HHmyn
- 4JtyNFQzaDIKi/rjEeCLW06gB6rdBj8WCP4MEbOfH7hjNil3I/QsXsJW0ts1VHRv4nxW
- CzWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709742427; x=1710347227;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7e15dIZpLQgAh6CGa/cDD5YfSifUjp0dN+jEODvmCFM=;
- b=WYv7m6BajAxo6XWzGIjlydirHEZ57OxoY3f5Nwng84KxrLZjWgEVSCwCsEeS7zqs37
- vzK+VABeknM0bfKTEESKpYhtJuSlJezGmv3SPyprfNbaNYE/mZ7CFvGBrm2vkkHGPZS4
- HCp3b/jb2PNsHswtxZrjRTdubuxz6mE1vleNi2WjgMDvNhcn2U8HmBkFxiVSyV1pC5lU
- XZo2alSxB7mV/B5hcN6PyZxkXfa5Jz5zYSjrcw1mtiNXEjWUltWlT4Qv5Xkw98bHpDHX
- 2jDv8TdESVl2+xfLzYQbdzYTxIV9+97Llc/hm0RawEWdoZ9t4wuNogeUt9aUG8mD3fmG
- dBpw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXXsJNgHzGl7mEKEWKH+/nc/tvN1ycQdbhVycXkTChOjf6aycq8kvxbTB3+AseyEKUuY+OriO+qW4YKJOax/h/wJqZ7op4=
-X-Gm-Message-State: AOJu0YwUJX0l3GjgSTgCPj4IQhtk86nuwXvGnlr/swcVDAwQefdILJjI
- YnVvGO6c8Tkhq6yZ5By6yvOQpuOQw6TdRrqdhIfMu7TfWZ9lms2Rluw1naAUjxPrCdtl25GjnH8
- +
-X-Google-Smtp-Source: AGHT+IFht5Tqsu8boM73seYwEPOnC9mx+cH1c4lZZduryvfhX6GCvGO1C9kkaxOX+eImkbwLSk2XNA==
-X-Received: by 2002:a17:907:397:b0:a3e:b188:fcf3 with SMTP id
- ss23-20020a170907039700b00a3eb188fcf3mr9708927ejb.48.1709742427446; 
- Wed, 06 Mar 2024 08:27:07 -0800 (PST)
-Received: from [192.168.69.100] (vau06-h02-176-184-43-100.dsl.sta.abo.bbox.fr.
- [176.184.43.100]) by smtp.gmail.com with ESMTPSA id
- q18-20020a170906361200b00a45c2e93438sm414322ejb.143.2024.03.06.08.27.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Mar 2024 08:27:06 -0800 (PST)
-Message-ID: <fc7756ff-e810-47a6-af10-93e5edaab899@linaro.org>
-Date: Wed, 6 Mar 2024 17:27:05 +0100
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rhu81-0006qh-7B
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 11:28:25 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rhu7x-0005k6-DS
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 11:28:24 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Tqd6r69FZz6K8tX;
+ Thu,  7 Mar 2024 00:24:20 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id E8F351400D7;
+ Thu,  7 Mar 2024 00:28:17 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Wed, 6 Mar
+ 2024 16:28:17 +0000
+Date: Wed, 6 Mar 2024 16:28:16 +0000
+To: <nifan.cxl@gmail.com>
+CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
+ <gregory.price@memverge.com>, <ira.weiny@intel.com>,
+ <dan.j.williams@intel.com>, <a.manzanares@samsung.com>, <dave@stgolabs.net>,
+ <nmtadam.samsung@gmail.com>, <jim.harris@samsung.com>,
+ <Jorgen.Hansen@wdc.com>, <wj28.lee@gmail.com>, Fan Ni <fan.ni@samsung.com>
+Subject: Re: [PATCH v5 06/13] hw/mem/cxl_type3: Add host backend and address
+ space handling for DC regions
+Message-ID: <20240306162816.00002e0e@Huawei.com>
+In-Reply-To: <20240304194331.1586191-7-nifan.cxl@gmail.com>
+References: <20240304194331.1586191-1-nifan.cxl@gmail.com>
+ <20240304194331.1586191-7-nifan.cxl@gmail.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: How do I enumerate devices connected to i2c busses on running
- QEMU?
-Content-Language: en-US
-To: Paz Offer <poffer@nvidia.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-References: <MW4PR12MB699791410D2714B76FE8E863A0212@MW4PR12MB6997.namprd12.prod.outlook.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <MW4PR12MB699791410D2714B76FE8E863A0212@MW4PR12MB6997.namprd12.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml100001.china.huawei.com (7.191.160.183) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,51 +71,212 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paz,
+On Mon,  4 Mar 2024 11:34:01 -0800
+nifan.cxl@gmail.com wrote:
 
-On 6/3/24 12:44, Paz Offer wrote:
-> Hi,
+> From: Fan Ni <fan.ni@samsung.com>
 > 
-> I want to enumerate all devices connected to i2c busses in running QEMU 
-> hosting Linux.
-> I understand I need to use 'qom-list' and 'qom-get' in monitor mode, but 
-> I did not find documentation on how to use them for specific information.
-
-Try "info qtree":
-
-$ qemu-system-i386 -M q35 -S -monitor stdio
-(qemu) help info qtree
-info qtree  -- show device tree
-(qemu) info qtree
-bus: main-system-bus
-   type System
-   dev: q35-pcihost, id ""
-     bus: pcie.0
-       dev: ICH9-SMB, id ""
-         bus: i2c
-           type i2c-bus
-           dev: smbus-eeprom, id ""
-             address = 87 (0x57)
-           dev: smbus-eeprom, id ""
-             address = 86 (0x56)
-           dev: smbus-eeprom, id ""
-             address = 85 (0x55)
-           dev: smbus-eeprom, id ""
-             address = 84 (0x54)
-           dev: smbus-eeprom, id ""
-             address = 83 (0x53)
-           dev: smbus-eeprom, id ""
-             address = 82 (0x52)
-           dev: smbus-eeprom, id ""
-             address = 81 (0x51)
-           dev: smbus-eeprom, id ""
-             address = 80 (0x50)
-
+> Add (file/memory backed) host backend, all the dynamic capacity regions
+> will share a single, large enough host backend. Set up address space for
+> DC regions to support read/write operations to dynamic capacity for DCD.
 > 
-> Thanks for any tip,
-> Paz
+> With the change, following supports are added:
+> 1. Add a new property to type3 device "volatile-dc-memdev" to point to host
+>    memory backend for dynamic capacity. Currently, all dc regions share one
+>    host backend.
+> 2. Add namespace for dynamic capacity for read/write support;
+> 3. Create cdat entries for each dynamic capacity region;
+> 4. Fix dvsec range registers to include DC regions.
+> 
+> Signed-off-by: Fan Ni <fan.ni@samsung.com>
+Hi Fan, 
+
+This one has a few more significant comments inline.
+
+thanks,
+
+Jonathan
+
+> ---
+
+> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> index c045fee32d..2b380a260b 100644
+> --- a/hw/mem/cxl_type3.c
+> +++ b/hw/mem/cxl_type3.c
+> @@ -45,7 +45,8 @@ enum {
+>  
+>  static void ct3_build_cdat_entries_for_mr(CDATSubHeader **cdat_table,
+>                                            int dsmad_handle, uint64_t size,
+> -                                          bool is_pmem, uint64_t dpa_base)
+> +                                          bool is_pmem, bool is_dynamic,
+> +                                          uint64_t dpa_base)
+>  {
+>      g_autofree CDATDsmas *dsmas = NULL;
+>      g_autofree CDATDslbis *dslbis0 = NULL;
+
+There is a fixlet going through for these as the autofree doesn't do anything.
+Will require a rebase.  I'll do it on my tree, but might not push that out for a
+few days so this is just a heads up for anyone using these.
+
+https://lore.kernel.org/qemu-devel/20240304104406.59855-1-thuth@redhat.com/
+
+It went in clean for me, so may not even be something anyone notices!
+
+> @@ -61,7 +62,8 @@ static void ct3_build_cdat_entries_for_mr(CDATSubHeader **cdat_table,
+>              .length = sizeof(*dsmas),
+>          },
+>          .DSMADhandle = dsmad_handle,
+> -        .flags = is_pmem ? CDAT_DSMAS_FLAG_NV : 0,
+> +        .flags = (is_pmem ? CDAT_DSMAS_FLAG_NV : 0) |
+> +                 (is_dynamic ? CDAT_DSMAS_FLAG_DYNAMIC_CAP : 0),
+>          .DPA_base = dpa_base,
+>          .DPA_length = size,
+>      };
+> @@ -149,12 +151,13 @@ static int ct3_build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
+>      g_autofree CDATSubHeader **table = NULL;
+>  
+>  
+> @@ -176,21 +179,55 @@ static int ct3_build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
+>          pmr_size = memory_region_size(nonvolatile_mr);
+>      }
+>  
+> +    if (ct3d->dc.num_regions) {
+> +        if (ct3d->dc.host_dc) {
+> +            dc_mr = host_memory_backend_get_memory(ct3d->dc.host_dc);
+> +            if (!dc_mr) {
+> +                return -EINVAL;
+> +            }
+> +            len += CT3_CDAT_NUM_ENTRIES * ct3d->dc.num_regions;
+> +        } else {
+> +            return -EINVAL;
+
+Flip logic to get the error out the way first and reduce indent.
+
+     if (ct3d->dc.num_regions) {
+        if (!ct3d->dc.host_dc) {
+            return -EINVAL;
+        }
+        dc_mr = host_memory_backend_get_memory(ct3d->dc.host_dc);
+        if (!dc_mr) {
+            return -EINVAL;
+        }
+        len += CT3...
+     }
+
+> +        }
+> +    }
+> +
+
+>  
+>      *cdat_table = g_steal_pointer(&table);
+> @@ -300,11 +337,24 @@ static void build_dvsecs(CXLType3Dev *ct3d)
+>              range2_size_hi = ct3d->hostpmem->size >> 32;
+>              range2_size_lo = (2 << 5) | (2 << 2) | 0x3 |
+>                               (ct3d->hostpmem->size & 0xF0000000);
+> +        } else if (ct3d->dc.host_dc) {
+> +            range2_size_hi = ct3d->dc.host_dc->size >> 32;
+> +            range2_size_lo = (2 << 5) | (2 << 2) | 0x3 |
+> +                             (ct3d->dc.host_dc->size & 0xF0000000);
+>          }
+> -    } else {
+> +    } else if (ct3d->hostpmem) {
+>          range1_size_hi = ct3d->hostpmem->size >> 32;
+>          range1_size_lo = (2 << 5) | (2 << 2) | 0x3 |
+>                           (ct3d->hostpmem->size & 0xF0000000);
+> +        if (ct3d->dc.host_dc) {
+> +            range2_size_hi = ct3d->dc.host_dc->size >> 32;
+> +            range2_size_lo = (2 << 5) | (2 << 2) | 0x3 |
+> +                             (ct3d->dc.host_dc->size & 0xF0000000);
+> +        }
+> +    } else {
+> +        range1_size_hi = ct3d->dc.host_dc->size >> 32;
+> +        range1_size_lo = (2 << 5) | (2 << 2) | 0x3 |
+> +                         (ct3d->dc.host_dc->size & 0xF0000000);
+
+I've forgotten if we ever closed out on the right thing to do
+with the legacy range registers.   Maybe, just ignoring DC is the
+right option for now?  So I'd drop this block of changes.
+Maybe Linux will do the wrong thing if we do, but then we should
+make Linux more flexible on this.
+
+If we did get a clarification that this is the right way to go
+then add a note here.
+
+
+>      }
+>  
+>      dvsec = (uint8_t *)&(CXLDVSECDevice){
+> @@ -579,11 +629,27 @@ static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
+>  {
+>      int i;
+>      uint64_t region_base = 0;
+> -    uint64_t region_len =  2 * GiB;
+> -    uint64_t decode_len = 2 * GiB;
+> +    uint64_t region_len;
+> +    uint64_t decode_len;
+>      uint64_t blk_size = 2 * MiB;
+>      CXLDCRegion *region;
+>      MemoryRegion *mr;
+> +    uint64_t dc_size;
+> +
+> +    mr = host_memory_backend_get_memory(ct3d->dc.host_dc);
+> +    dc_size = memory_region_size(mr);
+> +    region_len = DIV_ROUND_UP(dc_size, ct3d->dc.num_regions);
+> +
+> +    if (region_len * ct3d->dc.num_regions > dc_size) {
+This check had me scratching my head for a minute.
+Why not just check
+
+	if (dc_size % (ct3d->dc.num_regions * CXL_CAPACITY_MULTIPLER) != 0) {
+		error_setg(errp, "host backend must by a multiple of 256MiB and region len);
+		return false;
+	}
+> +        error_setg(errp, "host backend size must be multiples of region len");
+> +        return false;
+> +    }
+> +    if (region_len % CXL_CAPACITY_MULTIPLIER != 0) {
+> +        error_setg(errp, "DC region size is unaligned to %lx",
+> +                   CXL_CAPACITY_MULTIPLIER);
+> +        return false;
+> +    }
+> +    decode_len = region_len;
+
+
+
+
+> @@ -868,16 +974,24 @@ static int cxl_type3_hpa_to_as_and_dpa(CXLType3Dev *ct3d,
+>                                         AddressSpace **as,
+>                                         uint64_t *dpa_offset)
+>  {
+> -    MemoryRegion *vmr = NULL, *pmr = NULL;
+> +    MemoryRegion *vmr = NULL, *pmr = NULL, *dc_mr = NULL;
+> +    uint64_t vmr_size = 0, pmr_size = 0, dc_size = 0;
+>  
+>      if (ct3d->hostvmem) {
+>          vmr = host_memory_backend_get_memory(ct3d->hostvmem);
+> +        vmr_size = memory_region_size(vmr);
+>      }
+>      if (ct3d->hostpmem) {
+>          pmr = host_memory_backend_get_memory(ct3d->hostpmem);
+> +        pmr_size = memory_region_size(pmr);
+> +    }
+> +    if (ct3d->dc.host_dc) {
+> +        dc_mr = host_memory_backend_get_memory(ct3d->dc.host_dc);
+> +        /* Do we want dc_size to be dc_mr->size or not?? */
+
+Maybe - definitely don't want to leave this comment here
+unanswered and I think you enforce it above anyway.
+
+So if we get here ct3d->dc.total_capacity == memory_region_size(ct3d->dc.host_dc);
+As such we could just not stash total_capacity at all?
+
+
+> +        dc_size = ct3d->dc.total_capacity;
+>      }
 
 
