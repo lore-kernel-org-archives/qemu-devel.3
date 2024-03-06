@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD2CDC5475B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 03:59:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1472BC54E49
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 03:59:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhiQW-0000wD-7C; Tue, 05 Mar 2024 22:58:44 -0500
+	id 1rhiQQ-0000pH-Mm; Tue, 05 Mar 2024 22:58:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rhiQS-0000s2-K9; Tue, 05 Mar 2024 22:58:40 -0500
+ id 1rhiQO-0000mq-I4; Tue, 05 Mar 2024 22:58:36 -0500
 Received: from szxga04-in.huawei.com ([45.249.212.190])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rhiQR-0006mI-1D; Tue, 05 Mar 2024 22:58:40 -0500
-Received: from mail.maildlp.com (unknown [172.19.88.234])
- by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4TqJXW0dM7z1xqDN;
- Wed,  6 Mar 2024 11:56:59 +0800 (CST)
+ id 1rhiQK-0006kF-Vt; Tue, 05 Mar 2024 22:58:36 -0500
+Received: from mail.maildlp.com (unknown [172.19.88.214])
+ by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4TqJWW5txJz2BfMs;
+ Wed,  6 Mar 2024 11:56:07 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 77AAC14011A;
- Wed,  6 Mar 2024 11:58:36 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id AF2FB1A016C;
+ Wed,  6 Mar 2024 11:58:28 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Wed, 6 Mar
- 2024 11:58:35 +0800
+ 2024 11:58:28 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [RFC PATCH v7 11/23] hw/intc/arm_gicv3: Add external IRQ lines for NMI
-Date: Wed, 6 Mar 2024 03:57:09 +0000
-Message-ID: <20240306035721.2333531-12-ruanjinjie@huawei.com>
+Subject: [RFC PATCH v7 02/23] target/arm: Add PSTATE.ALLINT
+Date: Wed, 6 Mar 2024 03:57:00 +0000
+Message-ID: <20240306035721.2333531-3-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240306035721.2333531-1-ruanjinjie@huawei.com>
 References: <20240306035721.2333531-1-ruanjinjie@huawei.com>
@@ -69,65 +69,42 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Augment the GICv3's QOM device interface by adding one
-new set of sysbus IRQ line, to signal NMI to each CPU.
+When PSTATE.ALLINT is set, an IRQ or FIQ interrupt that is targeted to
+ELx, with or without superpriority is masked.
+
+As Richard suggested, place ALLINT bit in PSTATE in env->pstate.
+
+With the change to pstate_read/write, exception entry
+and return are automatically handled.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
-v4:
+v5:
+- Remove the ALLINT comment, as it is covered by "all other bits".
 - Add Reviewed-by.
+v4:
+- Keep PSTATE.ALLINT in env->pstate but not env->allint.
+- Update the commit message.
 v3:
-- Add support for VNMI.
+- Remove ALLINT dump in aarch64_cpu_dump_state().
+- Update the commit message.
 ---
- hw/intc/arm_gicv3_common.c         | 6 ++++++
- include/hw/intc/arm_gic_common.h   | 2 ++
- include/hw/intc/arm_gicv3_common.h | 2 ++
- 3 files changed, 10 insertions(+)
+ target/arm/cpu.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
-index cb55c72681..c52f060026 100644
---- a/hw/intc/arm_gicv3_common.c
-+++ b/hw/intc/arm_gicv3_common.c
-@@ -299,6 +299,12 @@ void gicv3_init_irqs_and_mmio(GICv3State *s, qemu_irq_handler handler,
-     for (i = 0; i < s->num_cpu; i++) {
-         sysbus_init_irq(sbd, &s->cpu[i].parent_vfiq);
-     }
-+    for (i = 0; i < s->num_cpu; i++) {
-+        sysbus_init_irq(sbd, &s->cpu[i].parent_nmi);
-+    }
-+    for (i = 0; i < s->num_cpu; i++) {
-+        sysbus_init_irq(sbd, &s->cpu[i].parent_vnmi);
-+    }
- 
-     memory_region_init_io(&s->iomem_dist, OBJECT(s), ops, s,
-                           "gicv3_dist", 0x10000);
-diff --git a/include/hw/intc/arm_gic_common.h b/include/hw/intc/arm_gic_common.h
-index 7080375008..97fea4102d 100644
---- a/include/hw/intc/arm_gic_common.h
-+++ b/include/hw/intc/arm_gic_common.h
-@@ -71,6 +71,8 @@ struct GICState {
-     qemu_irq parent_fiq[GIC_NCPU];
-     qemu_irq parent_virq[GIC_NCPU];
-     qemu_irq parent_vfiq[GIC_NCPU];
-+    qemu_irq parent_nmi[GIC_NCPU];
-+    qemu_irq parent_vnmi[GIC_NCPU];
-     qemu_irq maintenance_irq[GIC_NCPU];
- 
-     /* GICD_CTLR; for a GIC with the security extensions the NS banked version
-diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
-index 4e2fb518e7..7324c7d983 100644
---- a/include/hw/intc/arm_gicv3_common.h
-+++ b/include/hw/intc/arm_gicv3_common.h
-@@ -155,6 +155,8 @@ struct GICv3CPUState {
-     qemu_irq parent_fiq;
-     qemu_irq parent_virq;
-     qemu_irq parent_vfiq;
-+    qemu_irq parent_nmi;
-+    qemu_irq parent_vnmi;
- 
-     /* Redistributor */
-     uint32_t level;                  /* Current IRQ level */
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index a5b3d8f7da..9402d23a93 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1536,6 +1536,7 @@ FIELD(VTCR, SL2, 33, 1)
+ #define PSTATE_D (1U << 9)
+ #define PSTATE_BTYPE (3U << 10)
+ #define PSTATE_SSBS (1U << 12)
++#define PSTATE_ALLINT (1U << 13)
+ #define PSTATE_IL (1U << 20)
+ #define PSTATE_SS (1U << 21)
+ #define PSTATE_PAN (1U << 22)
 -- 
 2.34.1
 
