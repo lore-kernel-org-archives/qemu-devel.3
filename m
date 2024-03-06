@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91E42C54E49
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 06:13:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD56AC54E41
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 06:13:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhkW9-0004uU-4U; Wed, 06 Mar 2024 01:12:42 -0500
+	id 1rhkWG-0004yE-Ey; Wed, 06 Mar 2024 01:12:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rhkVv-0004sl-Vm
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 01:12:30 -0500
-Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
+ id 1rhkW1-0004tG-VA
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 01:12:34 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rhkVu-0006Es-0g
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 01:12:27 -0500
-Received: by mail-ot1-x32b.google.com with SMTP id
- 46e09a7af769-6e4f8f140c1so544025a34.2
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 22:12:25 -0800 (PST)
+ id 1rhkVq-0006En-QG
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 01:12:31 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1dd2dca2007so11351295ad.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 22:12:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709705544; x=1710310344;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709705541; x=1710310341;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=A243LVbp1AwfUXsMdD+blJLZP6SXZ8l0TiQS7QSUs3I=;
- b=0ey7GjYD8BO8VBFAWirzUhGeZBZ/g8MJ51yCQX24p7Fd927WCwnUSMY05nLb8WCQj1
- yfxPIervzMHyHMx/DDl48yCEqlMM5v+siiuVUQCZ/PeAvlxY7tolL0VLeXfcXZPCv0S1
- q1Uoyq4g0kJxYKPMs5bckO+jCGJkxIfL78aY1KjTd4X/E2RTNUQvCvckAwxt6PVtW4n4
- 80NwJZuf2/hcSE2ETsUsIa+25yBhE+2HoyImig8o683m1NAq7pcAIA9IXoXVbcV/IXLB
- 6HR9LQhI1xhHpVHGeX9ToQeLrG+HumfITVHpk3rmEt5vnJBiyLGMhMXa7xKsflL0w6gL
- ec0g==
+ :reply-to; bh=uEl9gr+JRIy2uRLCAmnmdcgL5kP09OBXfeuQ6yoOxrY=;
+ b=rQrAES2FrN53fNKZs9iGNtBiY/cuhz73CxP+Z5StyrungnV6cyLwJXJawEF0yXmziQ
+ uLD2urLqcGYVYFSDVlAa38iI1SDRBDaOD0xRgJ+mJcK4cRJNi67QAjaCm8ZbhNWu2T5L
+ Glh4Qc8lRyt6yLrjasn8vqhwg8iG15xnqEYndbyTw/AY4pA1vNCMZBVwFGPVdYpy1kmS
+ UorGyu8p5xIVonfh6gg4jT5aUySXY90gsfZYaeugzcz1CUhuLOiXXzoKabZxkzWYN5mR
+ q/vDVyYJsPMKLjfPoTXWWcUyXb8xe26EClEP2w1cd/Q7yvZM21aihHEgNKxcifcMbUSS
+ QC/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709705544; x=1710310344;
+ d=1e100.net; s=20230601; t=1709705541; x=1710310341;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=A243LVbp1AwfUXsMdD+blJLZP6SXZ8l0TiQS7QSUs3I=;
- b=ROul20OUhvuqhcZ0sxMsTPZL9FNCkyqR4r9MVXXzMkIX42CBRU6K+BnnDjEXzqyNAn
- hJOha8vgblYKDpgFNjBdPMXdrnH5c6a88XZ0cxV5QmrPsP/GxDuKUdfbOq16KgJPvXTe
- yu7aU9qzcqYBlkq35j0HaHv6TCkrGGQoLezgcW9RjK8Q8pmdjKi4Y/olGvqe0qfcOVso
- cfxN8d6rBam0YXlZ//z2b9Af0WmPTe8nQJ7TtHbH/Lhl+xD7+HGBSK2pYYB5/yVEGggt
- EB+RqVJgur3XO95QryelTEcCE7KDt42ppM37+miPnh0ElWE3CIV7s//V8Joi5bI13Qwg
- hMKA==
-X-Gm-Message-State: AOJu0YztLm3rDVvngSzspTTrgM6FuFK9SNh7/lLEEILR8VmhlRyOZhvb
- P2U3anmegbalJ0GqU7IsgsW+dBMqvln49khp0C0CRhbyNEq34MhuzfNzC88llUg=
-X-Google-Smtp-Source: AGHT+IGIuNTAzeTjpTyz4eoSmNr4CNTwQROCJ7aTf8C06E27X0rBrChP7GI38YwD+YE4BxFZAKo95A==
-X-Received: by 2002:a05:6830:61b:b0:6e4:b891:c9eb with SMTP id
- w27-20020a056830061b00b006e4b891c9ebmr4685323oti.30.1709705544507; 
- Tue, 05 Mar 2024 22:12:24 -0800 (PST)
+ bh=uEl9gr+JRIy2uRLCAmnmdcgL5kP09OBXfeuQ6yoOxrY=;
+ b=nVQ6jNJSOGk71uOpsciNNqH1gXitTbhqrbJIek6Lv4bHVI0TxZHu+35PbN5C98dGxl
+ b8+biOCAjimZ79CUopOSJF4HA1szWEhPeJ1L4xaJ7JIuVxIKvfcLcNunuOGC8ZEKQSwG
+ 5BhN3O7mR5ytFzZU5cBpyGlC76iEvBZUSOKu9/IxbwDuzNmTaVEh8Amy6HV75LtSoD7r
+ Ja4XJvW3qrvMPaoVa7Eyq3JuhoD+QD+c+5cF2sgHXIns3CLkpmuszrigeAmXTCjGCarK
+ hE+c73wBr1qrZk2vT8IpcLg34bdQN6S1V3fECOXPFWRKqJjluoLi9iyV+dKQGIL9T8r1
+ Rsiw==
+X-Gm-Message-State: AOJu0YykSB3AVlcmKFs7qh8iiMcUb32BCwmOQiP7pabVOqQq6VaCn8tT
+ JGZRukpDjz340k9H48VSoPfQUK4Xhke+hfsndQTdYPPm0PLRsiUCppGuJ6zcGko=
+X-Google-Smtp-Source: AGHT+IGnrQtv9CU49UlrunUwPuisZ0cy6FKJehTDJv0w89pgyt9DfJRJLYbIIWyzbgZ4h3MoPRdWug==
+X-Received: by 2002:a17:902:6b02:b0:1dc:af82:98b2 with SMTP id
+ o2-20020a1709026b0200b001dcaf8298b2mr3772218plk.43.1709705541061; 
+ Tue, 05 Mar 2024 22:12:21 -0800 (PST)
 Received: from localhost ([157.82.206.27]) by smtp.gmail.com with UTF8SMTPSA id
- b22-20020a63cf56000000b005dc884e9f5bsm10328337pgj.38.2024.03.05.22.12.23
+ kz12-20020a170902f9cc00b001db8f7720e2sm11647298plb.288.2024.03.05.22.12.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Mar 2024 22:12:24 -0800 (PST)
+ Tue, 05 Mar 2024 22:12:20 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Wed, 06 Mar 2024 15:12:10 +0900
-Subject: [PATCH v3 04/19] contrib/elf2dmp: Change pa_space_create() signature
+Date: Wed, 06 Mar 2024 15:12:09 +0900
+Subject: [PATCH v3 03/19] contrib/elf2dmp: Continue even contexts are lacking
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240306-elf2dmp-v3-4-d74e6c3da49c@daynix.com>
+Message-Id: <20240306-elf2dmp-v3-3-d74e6c3da49c@daynix.com>
 References: <20240306-elf2dmp-v3-0-d74e6c3da49c@daynix.com>
 In-Reply-To: <20240306-elf2dmp-v3-0-d74e6c3da49c@daynix.com>
 To: Viktor Prutyanov <viktor.prutyanov@phystech.edu>, 
  Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::32b;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-ot1-x32b.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::632;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -93,67 +93,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-pa_space_create() used to return an integer to propagate error, but
-it never fails so let it return void.
+Let fill_context() continue even if it fails to fill contexts of some
+CPUs. A dump may still contain valuable information even if it lacks
+contexts of some CPUs due to dump corruption or a failure before
+starting CPUs.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- contrib/elf2dmp/addrspace.h | 2 +-
- contrib/elf2dmp/addrspace.c | 4 +---
- contrib/elf2dmp/main.c      | 5 +----
- 3 files changed, 3 insertions(+), 8 deletions(-)
+ contrib/elf2dmp/main.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/contrib/elf2dmp/addrspace.h b/contrib/elf2dmp/addrspace.h
-index 039c70c5b079..c868d6473873 100644
---- a/contrib/elf2dmp/addrspace.h
-+++ b/contrib/elf2dmp/addrspace.h
-@@ -33,7 +33,7 @@ struct va_space {
-     struct pa_space *ps;
- };
- 
--int pa_space_create(struct pa_space *ps, QEMU_Elf *qemu_elf);
-+void pa_space_create(struct pa_space *ps, QEMU_Elf *qemu_elf);
- void pa_space_destroy(struct pa_space *ps);
- 
- void va_space_create(struct va_space *vs, struct pa_space *ps, uint64_t dtb);
-diff --git a/contrib/elf2dmp/addrspace.c b/contrib/elf2dmp/addrspace.c
-index 6f608a517b1e..4c127c9b1ec4 100644
---- a/contrib/elf2dmp/addrspace.c
-+++ b/contrib/elf2dmp/addrspace.c
-@@ -57,7 +57,7 @@ static void pa_block_align(struct pa_block *b)
-     b->paddr += low_align;
+diff --git a/contrib/elf2dmp/main.c b/contrib/elf2dmp/main.c
+index 9b278f392e39..86e709e6da3a 100644
+--- a/contrib/elf2dmp/main.c
++++ b/contrib/elf2dmp/main.c
+@@ -336,8 +336,13 @@ static int fill_header(WinDumpHeader64 *hdr, struct pa_space *ps,
+     return 0;
  }
  
--int pa_space_create(struct pa_space *ps, QEMU_Elf *qemu_elf)
-+void pa_space_create(struct pa_space *ps, QEMU_Elf *qemu_elf)
+-static int fill_context(KDDEBUGGER_DATA64 *kdbg,
+-        struct va_space *vs, QEMU_Elf *qe)
++/*
++ * fill_context() continues even if it fails to fill contexts of some CPUs.
++ * A dump may still contain valuable information even if it lacks contexts of
++ * some CPUs due to dump corruption or a failure before starting CPUs.
++ */
++static void fill_context(KDDEBUGGER_DATA64 *kdbg,
++                         struct va_space *vs, QEMU_Elf *qe)
  {
-     Elf64_Half phdr_nr = elf_getphdrnum(qemu_elf->map);
-     Elf64_Phdr *phdr = elf64_getphdr(qemu_elf->map);
-@@ -87,8 +87,6 @@ int pa_space_create(struct pa_space *ps, QEMU_Elf *qemu_elf)
-     }
+     int i;
  
-     ps->block_nr = block_i;
+@@ -350,7 +355,7 @@ static int fill_context(KDDEBUGGER_DATA64 *kdbg,
+         if (va_space_rw(vs, kdbg->KiProcessorBlock + sizeof(Prcb) * i,
+                     &Prcb, sizeof(Prcb), 0)) {
+             eprintf("Failed to read CPU #%d PRCB location\n", i);
+-            return 1;
++            continue;
+         }
+ 
+         if (!Prcb) {
+@@ -361,7 +366,7 @@ static int fill_context(KDDEBUGGER_DATA64 *kdbg,
+         if (va_space_rw(vs, Prcb + kdbg->OffsetPrcbContext,
+                     &Context, sizeof(Context), 0)) {
+             eprintf("Failed to read CPU #%d ContextFrame location\n", i);
+-            return 1;
++            continue;
+         }
+ 
+         printf("Filling context for CPU #%d...\n", i);
+@@ -369,11 +374,9 @@ static int fill_context(KDDEBUGGER_DATA64 *kdbg,
+ 
+         if (va_space_rw(vs, Context, &ctx, sizeof(ctx), 1)) {
+             eprintf("Failed to fill CPU #%d context\n", i);
+-            return 1;
++            continue;
+         }
+     }
 -
 -    return 0;
  }
  
- void pa_space_destroy(struct pa_space *ps)
-diff --git a/contrib/elf2dmp/main.c b/contrib/elf2dmp/main.c
-index 86e709e6da3a..8a71e2efd281 100644
---- a/contrib/elf2dmp/main.c
-+++ b/contrib/elf2dmp/main.c
-@@ -543,10 +543,7 @@ int main(int argc, char *argv[])
-         return 1;
+ static int pe_get_data_dir_entry(uint64_t base, void *start_addr, int idx,
+@@ -619,9 +622,7 @@ int main(int argc, char *argv[])
+         goto out_kdbg;
      }
  
--    if (pa_space_create(&ps, &qemu_elf)) {
--        eprintf("Failed to initialize physical address space\n");
--        goto out_elf;
+-    if (fill_context(kdbg, &vs, &qemu_elf)) {
+-        goto out_kdbg;
 -    }
-+    pa_space_create(&ps, &qemu_elf);
++    fill_context(kdbg, &vs, &qemu_elf);
  
-     state = qemu_elf.state[0];
-     printf("CPU #0 CR3 is 0x%016"PRIx64"\n", state->cr[3]);
+     if (write_dump(&ps, &header, argv[2])) {
+         eprintf("Failed to save dump\n");
 
 -- 
 2.44.0
