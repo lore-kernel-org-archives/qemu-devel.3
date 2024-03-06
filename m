@@ -4,99 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0714BC54E41
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 07:34:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85273C54E41
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 07:39:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhlnA-00008f-6f; Wed, 06 Mar 2024 02:34:20 -0500
+	id 1rhlrS-00018o-Gq; Wed, 06 Mar 2024 02:38:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rhln3-000086-CS
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 02:34:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rhlmz-0008Qh-Jh
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 02:34:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709710448;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=yy49i5Xj3EUwTsmXyabM8hcAjOz2YG0lxCiaC6/VxsY=;
- b=fLP44gTfavbhy/+/RTBLEOXNOSS2zMfbT4hicklLu4pj5Qb4yD2R8x0Rov+o1CLHPirTRH
- y1cAXkuAPQrLNdxmDLr4OvXRBRBqe1yrRKltDHRRwmuFY1frtY+09ov/a6VB2A3rNTjPaj
- SL+ymIOFp6JQEkq8iFSZOaBjgExgC6s=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-42-yGvynyq_PYyUppUFopBgFA-1; Wed, 06 Mar 2024 02:34:06 -0500
-X-MC-Unique: yGvynyq_PYyUppUFopBgFA-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-412e51c20fdso17197875e9.2
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 23:34:06 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709710446; x=1710315246;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yy49i5Xj3EUwTsmXyabM8hcAjOz2YG0lxCiaC6/VxsY=;
- b=egnytZFtQ6tWLdP1j+apANFz2osYETKwIcFC4sOOHiYIF1YjPpvoM6HMQoFUO42l3z
- R1xSCllNwhd+bMT7HF50CHnNG8t/HcEfqB6EhnlyC0T6UmAlCEYeiEKHR+U16mScmOv3
- GGSrMWCp5YkEW+6ie07TeRpotNdrGad70hKD42kxIxf835T5UHRDGcZVLreiOJBShbNB
- ruhlHuKuUI99NDsZ5grAw6t3mAYmsWNt2ldN4UUrpEZiz3StrdaDGpM0RmD+2mqP5Rm6
- U4HKpYANtTMGcTK1Boto91AOzs3C5q2uNnNsljWwngNUxNg3CHDFG3Ia9Y9/liw4PKfz
- 78ng==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWa2u98O6MVCIwWYszZ0Ow+Ua2W/n66MUiPDEvt3hauwoTP1xZQ/mwhggVIEguHwEGDHXd2EGM2rucarzyLeG5Mwquvju0=
-X-Gm-Message-State: AOJu0Yx4a2kVZ4HOYmi4gzGJ4crRXvnni5+R6aMA5m51TKNJaPR/Y9wn
- HMZLGA3dKLVPNwt5Z+RUP2vigPTNdmhfpETDTvstc0MA6CD+MhRhL2tp4Gyf284IpxXdRMi34aY
- tdiq2N4h8RYY4mBrwYedJujizxfoTViay4ZF7teLMbvVkiJYgQX+n
-X-Received: by 2002:a05:600c:1d16:b0:412:b2fe:6e46 with SMTP id
- l22-20020a05600c1d1600b00412b2fe6e46mr9383987wms.27.1709710445667; 
- Tue, 05 Mar 2024 23:34:05 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEjX6LQmRlN+VclGnIdPOs3sbAWM4s1HefaMvv67PxSRsmMdUm5tVwl+gXGE85WA2+gNv9o5g==
-X-Received: by 2002:a05:600c:1d16:b0:412:b2fe:6e46 with SMTP id
- l22-20020a05600c1d1600b00412b2fe6e46mr9383960wms.27.1709710444979; 
- Tue, 05 Mar 2024 23:34:04 -0800 (PST)
-Received: from redhat.com ([2a02:14f:1ef:f330:b8:b56b:3f3d:2015])
- by smtp.gmail.com with ESMTPSA id
- g11-20020a05600c4ecb00b00412e293bee9sm9274933wmq.38.2024.03.05.23.34.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 Mar 2024 23:34:04 -0800 (PST)
-Date: Wed, 6 Mar 2024 02:33:58 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Eugenio Perez Martin <eperezma@redhat.com>
-Cc: Jason Wang <jasowang@redhat.com>,
- Jonah Palmer <jonah.palmer@oracle.com>, qemu-devel@nongnu.org,
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com,
- raphael@enfabrica.net, kwolf@redhat.com, hreitz@redhat.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, thuth@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com,
- cohuck@redhat.com, pbonzini@redhat.com, fam@euphon.net,
- stefanha@redhat.com, qemu-block@nongnu.org, qemu-s390x@nongnu.org,
- virtio-fs@lists.linux.dev
-Subject: Re: [PATCH v1 0/8] virtio,vhost: Add VIRTIO_F_NOTIFICATION_DATA
- support
-Message-ID: <20240306023143-mutt-send-email-mst@kernel.org>
-References: <20240304194612.611660-1-jonah.palmer@oracle.com>
- <CACGkMEtoA3SN9e9WnNpFyR32rkf_pWUNj-6uj2TZBzjB0E+3SQ@mail.gmail.com>
- <CAJaqyWdAFTkjGBJBmxvmTZT8UUiH86UGgE74X_bcq22nd-WwHA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1rhlrP-00018g-Rp
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 02:38:43 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1rhlrM-000112-Tn
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 02:38:43 -0500
+Received: from loongson.cn (unknown [10.20.42.173])
+ by gateway (Coremail) with SMTP id _____8AxafB1Hehl1QYVAA--.52921S3;
+ Wed, 06 Mar 2024 15:38:29 +0800 (CST)
+Received: from [10.20.42.173] (unknown [10.20.42.173])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8CxrhNxHehl0RRPAA--.23630S3; 
+ Wed, 06 Mar 2024 15:38:27 +0800 (CST)
+Subject: Re: [PATCH V2 1/1] target/loongarch: Fixed tlb huge page loading issue
+To: Richard Henderson <richard.henderson@linaro.org>,
+ lixianglai <lixianglai@loongson.cn>, qemu-devel@nongnu.org
+Cc: Song Gao <gaosong@loongson.cn>, Xiaojuan Yang <yangxiaojuan@loongson.cn>, 
+ zhaotianrui@loongson.cn, Huacai Chen <chenhuacai@kernel.org>
+References: <cover.1709610311.git.lixianglai@loongson.cn>
+ <5b23421ee1ebf59142c7d7a3bc1082fff910f2fa.1709610311.git.lixianglai@loongson.cn>
+ <5d3c7aa7-16d2-4812-a72b-dae5e567b9b8@linaro.org>
+ <aa2670bd-b01d-6cc5-d6ad-9e807ed0abe4@loongson.cn>
+ <dd5d998d-2c2e-4757-8e18-ae424df4f6a2@linaro.org>
+ <5325b63b-2a51-8448-bf70-c0659497db61@loongson.cn>
+ <fa6b408c-43fd-4011-b704-ac7ae256fcbf@linaro.org>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <051240a2-4c9d-94f9-32f0-daa399b48a8e@loongson.cn>
+Date: Wed, 6 Mar 2024 15:38:24 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <fa6b408c-43fd-4011-b704-ac7ae256fcbf@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJaqyWdAFTkjGBJBmxvmTZT8UUiH86UGgE74X_bcq22nd-WwHA@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.568,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-CM-TRANSID: AQAAf8CxrhNxHehl0RRPAA--.23630S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7tFyfArWrtryrGF18uFWDKFX_yoW8KrWrpa
+ y5CF43tayqqay0v3Z7Z3WSvFyrCF4Igay5ur1rGryYyFs8Xry2kF1IyFZ8tFWUXr97C3WI
+ qr4Utw4UuFWDAagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07j8
+ yCJUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -38
+X-Spam_score: -3.9
+X-Spam_bar: ---
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.98,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -114,91 +90,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 06, 2024 at 08:07:31AM +0100, Eugenio Perez Martin wrote:
-> On Wed, Mar 6, 2024 at 6:34 AM Jason Wang <jasowang@redhat.com> wrote:
-> >
-> > On Tue, Mar 5, 2024 at 3:46 AM Jonah Palmer <jonah.palmer@oracle.com> wrote:
-> > >
-> > > The goal of these patches are to add support to a variety of virtio and
-> > > vhost devices for the VIRTIO_F_NOTIFICATION_DATA transport feature. This
-> > > feature indicates that a driver will pass extra data (instead of just a
-> > > virtqueue's index) when notifying the corresponding device.
-> > >
-> > > The data passed in by the driver when this feature is enabled varies in
-> > > format depending on if the device is using a split or packed virtqueue
-> > > layout:
-> > >
-> > >  Split VQ
-> > >   - Upper 16 bits: shadow_avail_idx
-> > >   - Lower 16 bits: virtqueue index
-> > >
-> > >  Packed VQ
-> > >   - Upper 16 bits: 1-bit wrap counter & 15-bit shadow_avail_idx
-> > >   - Lower 16 bits: virtqueue index
-> > >
-> > > Also, due to the limitations of ioeventfd not being able to carry the
-> > > extra provided by the driver, ioeventfd is left disabled for any devices
-> > > using this feature.
-> >
-> > Is there any method to overcome this? This might help for vhost.
-> >
+Sorry, manual is updated already and we do not notice that still.
+
+https://www.loongson.cn/uploads/images/2023102309132647981.%E9%BE%99%E8%8A%AF%E6%9E%B6%E6%9E%84%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C%E5%8D%B7%E4%B8%80_r1p10.pdf
+
+It is Chinese web link, English manual is not updated. Here is English 
+translation by manual with instruction  "lddir rd, rj, level"
+
+If the bit[14:13] of the register rj is not equal to 0 and its bit[6] 
+is 1, the value of the register rj is a marked as HugePage page entries. 
+In this case, the value from register rj is written directly to register rd.
+
+If the bit[14:13] of the register rj is equal to 0 and its bit[6] is 1, 
+the value of the register rj is an Hugepage table entry. In this case, 
+replace the bit[14:13] of the register RJ value with level[1:0], the val 
+is written to the register rd.
+
+If the bit[6] bit of register rj is 0, the value of the universal 
+register rj is the page table entry, it is  physical address base page 
+table. In this case, if the LDDIR command is executed, the address will 
+be refilled according to the TLB currently processed. Retrieve the base 
+address of the next-level page table and write it to the common register 
+rd.
+
+We will remove temporary lddir_ps, and record page size with bit[14:13] 
+in next version.
+
+Regards
+Bibo Mao
+
+On 2024/3/6 下午12:10, Richard Henderson wrote:
+> On 3/5/24 17:52, lixianglai wrote:
+>> The LDDIR_PS variable is not described in detail in the manual, but is 
+>> only an intermediate variable to assist in page size calculation 
+>> during tcg simulation.
 > 
-> As a half-baked idea, read(2)ing an eventfd descriptor returns an
-> 8-byte integer already. The returned value of read depends on eventfd
-> flags, but both have to do with the number of writes of the other end.
+> This is exactly why I believe adding this intermediate variable is wrong.
 > 
-> My proposal is to replace this value with the last value written by
-> the guest, so we can extract the virtio notification data from there.
-> The behavior of read is similar to not-EFD_SEMAPHORE, reading a value
-> and then blocking if read again without writes. The behavior of KVM
-> writes is different, as it is not a counter anymore.
+> What happens if LDPTE is *not* preceded by LDDIR?  It's not the usual 
+> way a tlb fill routine works, but *something* should happen if you 
+> construct a valid huge page tlb entry by hand and pass it directly to 
+> LDPTE.
 > 
-> Thanks!
-
-
-I doubt you will be able to support this in ioeventfd...
-But vhost does not really need the value at all.
-So why mask out ioeventfd with vhost?
-vhost-vdpa is probably the only one that might need it...
-
-
-
-> > Thanks
-> >
-> > >
-> > > A significant aspect of this effort has been to maintain compatibility
-> > > across different backends. As such, the feature is offered by backend
-> > > devices only when supported, with fallback mechanisms where backend
-> > > support is absent.
-> > >
-> > > Jonah Palmer (8):
-> > >   virtio/virtio-pci: Handle extra notification data
-> > >   virtio-pci: Lock ioeventfd state with VIRTIO_F_NOTIFICATION_DATA
-> > >   virtio-mmio: Handle extra notification data
-> > >   virtio-mmio: Lock ioeventfd state with VIRTIO_F_NOTIFICATION_DATA
-> > >   virtio-ccw: Handle extra notification data
-> > >   virtio-ccw: Lock ioeventfd state with VIRTIO_F_NOTIFICATION_DATA
-> > >   vhost/vhost-user: Add VIRTIO_F_NOTIFICATION_DATA to vhost feature bits
-> > >   virtio: Add VIRTIO_F_NOTIFICATION_DATA property definition
-> > >
-> > >  hw/block/vhost-user-blk.c    |  1 +
-> > >  hw/net/vhost_net.c           |  2 ++
-> > >  hw/s390x/s390-virtio-ccw.c   | 16 ++++++++++++----
-> > >  hw/s390x/virtio-ccw.c        |  6 ++++--
-> > >  hw/scsi/vhost-scsi.c         |  1 +
-> > >  hw/scsi/vhost-user-scsi.c    |  1 +
-> > >  hw/virtio/vhost-user-fs.c    |  2 +-
-> > >  hw/virtio/vhost-user-vsock.c |  1 +
-> > >  hw/virtio/virtio-mmio.c      | 15 +++++++++++----
-> > >  hw/virtio/virtio-pci.c       | 16 +++++++++++-----
-> > >  hw/virtio/virtio.c           | 18 ++++++++++++++++++
-> > >  include/hw/virtio/virtio.h   |  5 ++++-
-> > >  net/vhost-vdpa.c             |  1 +
-> > >  13 files changed, 68 insertions(+), 17 deletions(-)
-> > >
-> > > --
-> > > 2.39.3
-> > >
-> >
+> With your implementation, this will not work because lddir_ps will not 
+> be initialized. But I expect that on real hardware it would work.
+> 
+> If this does not work on real hardware, then there *is* some heretofore 
+> undocumented hardware state.  If so, then we need a description of this 
+> state from the hardware engineers -- the documentation of LDDIR and 
+> LDPTE need updating.  Finally, this new hardware state needs to be added 
+> to the migration state.
+> 
+> 
+> r~
 
 
