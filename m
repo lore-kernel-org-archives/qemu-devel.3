@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F836C54E49
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 02:50:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABB4EC54E49
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 02:54:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhhM4-00061h-Ed; Tue, 05 Mar 2024 21:50:04 -0500
+	id 1rhhPc-0006uY-PW; Tue, 05 Mar 2024 21:53:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rhhM2-00061S-I0; Tue, 05 Mar 2024 21:50:02 -0500
-Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
+ id 1rhhPb-0006uK-9N; Tue, 05 Mar 2024 21:53:43 -0500
+Received: from mail-ua1-x92c.google.com ([2607:f8b0:4864:20::92c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rhhM0-0002If-Pb; Tue, 05 Mar 2024 21:50:02 -0500
-Received: by mail-vk1-xa2f.google.com with SMTP id
- 71dfb90a1353d-4d33d049cbaso99866e0c.0; 
- Tue, 05 Mar 2024 18:49:59 -0800 (PST)
+ id 1rhhPZ-0002vI-S0; Tue, 05 Mar 2024 21:53:43 -0500
+Received: by mail-ua1-x92c.google.com with SMTP id
+ a1e0cc1a2514c-7d5bfdd2366so3467030241.3; 
+ Tue, 05 Mar 2024 18:53:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709693398; x=1710298198; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1709693619; x=1710298419; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yV8p/jxSHQGeqxodYmectXNgzFk+bokfX/wqvyoYatg=;
- b=Yc8jY5zvPGIzg+bZSZp8tdDQBGA6PIvcfZP0JK4afP5yEyntUzMmzptNSz2wr89KBJ
- F1Xi/6KTKzBMfpzSdlE+krOw/gmiJGiOh8nj/sutCrfLq0tmeb9VqblxLKYTwTplO6Zt
- cwi3xt8S/5vn8HsHZY3BWpxkVfqT/uu+jHdNQHcoCzgnlROZyoqelS8ukP8Mu0Vlbdzq
- 7XqA8WaZ/o6sUTylQSW6hGkvYOXnbxqqJaz2RiEAWlAJTlvpnDciVFgbOPyZBvKvKxZJ
- DqHM3gMEfW4NiLRiI5P9/k409LZX6oQ3b+/P9ZfNN1wANFNPxv+VMefdQI6cN11erV/h
- M2uA==
+ bh=zHi4YE8tq+lgh+dnv2SG687E5JCQxhq83mPPIfidnTY=;
+ b=RTRUdTCl+AYVIoPUzVEWblmYx04XfQlGaaL3eN9gnw2vDBpGOm7ev8dRQzFn7NmPKK
+ r45Q++B3PvufCPEbok9GCA5qIHvPS5YPWHZe7y2zChHfjHlSYcZBEzMujFtRQ2O9Ejf3
+ ENgqDDcQk/7uov977tJVfW15rpkmVnaV9Jy/26a9N4ljdWVOnYhRTfGhDq16LvcxO7uG
+ V88nrmZMfbBVxsl+9QeHxLsuISvQpw+tAEdkw5brJsLLWfxTixMSJBIql2fcJZXpgt/t
+ iWxaHsSmSH/G8XkDhZ9KX7Qaehf+uidaY6RGUiyCNRVL+bs89e+GEQvddk1dTt1cULgr
+ dc0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709693398; x=1710298198;
+ d=1e100.net; s=20230601; t=1709693619; x=1710298419;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yV8p/jxSHQGeqxodYmectXNgzFk+bokfX/wqvyoYatg=;
- b=hTKIh+ON/oHLgjFssrS+v07mZUL9umQ6+knF6nmEhTPzHbjsdpBNsN45jdMOptgnGv
- EWV3+HQiwvdrmwjKow+BC10iKc3ADzIeLHwBlhbymMLLtKCSljzR4vas4jwPylNoKyOd
- ZRomxrc8bw9s3D/5vKZOf8HmJOlpDR6y/9G9cOmN9+NdoadNZqccxOWsnNgxYTPjT1Z8
- fGjaFV96nkk+tmVI2rTTH8mBGjSa0UB1spPO6kDB9HlRL6MyscxYPvkVWUOB3ljlsKP8
- 2q78iDCZ6AWOm+yO0/X5f/PnyvIGpjuYWagOcFMpcSqxINMUS/vCSTZeV2JaFD/RJeZ1
- mVtQ==
+ bh=zHi4YE8tq+lgh+dnv2SG687E5JCQxhq83mPPIfidnTY=;
+ b=nOR7SJLdwvmGNRhMxIbdg5cLhtPLzs/N0zmZf+y2rda9KnpjtjwIC0oY9IeOMhS4PW
+ Nyn3CdV8MrQTS0uevRQIHKFL9Rm+Md5uFyl7tBCfwzgb8P4A9I4QA6xdG73vCV/+ryeT
+ 75OXvX76guIE5+IjOU1FrtvbpddQT9lZCBus/n3Sg4ORZ4T2KzOmwAH3a3wwjxokcUTS
+ OeK77+Ufp3+acLSGnwHtX1p01CYHGlnFlx641Mjx2I2w3JwYPSsJeyKuX2nF/MbHSEy1
+ duDofERmKuvYA086DZXuuxYd7a4Q53COaynmFdabqOrv1afN6EVVltRXBz2T3T9Rc8QQ
+ G/jw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVkIbj96e89YSMjcO0I4bZQvH1itRsJc/O54jR9zjTU6r3lRMlijy1muwl/zsoPg2TjCQNNW3nXEY+Car+ZzLF/GddJpCM=
-X-Gm-Message-State: AOJu0Ywgznu07BiJPdbJn5tIuR2rOrsJcaMWHSV/I6GFalrNDQHisdN/
- Bw2ZO15qF7o1osYElvisbmUl2K+l3D0EfVa/NMksISVsksXOgNveaEPTjCMNfH93XSFS/ZFbpE2
- wpgH+16NX2Nqu0mLXkcZpJ2axnaI=
-X-Google-Smtp-Source: AGHT+IGKvmW8n6c3IPYHvMw4i+KcFC5tKQULiRb3Adt7vUh/lu7TtdvakOX3pCagp7ZE71aGOB8HZ9xsKNtnL949wSM=
-X-Received: by 2002:a05:6122:1d15:b0:4d3:45a2:ae53 with SMTP id
- gc21-20020a0561221d1500b004d345a2ae53mr3829407vkb.16.1709693398626; Tue, 05
- Mar 2024 18:49:58 -0800 (PST)
+ AJvYcCU8+Q2PhYfLmsRnp7Uf8JIRTzAeE14SMjLkoTdstQsr90GA1eOhej2RCaTz5wix3nYS1d1kaSP0T1QTuPuuOybHX/do3x0=
+X-Gm-Message-State: AOJu0YxmILH/6dWIlXqDWtS+0b3Ju8OIlu954PtUvszoX1mZzYJy4G07
+ wYtiH32NOxZEmVBIPXa2wXzZZJv4q/e1HWdqbUOAoL0pbwDqmNUUqZzQxDlfCafdLbj5HfsPeA/
+ Ktth+rhEBPOXz1srExP5b6gOqMKs=
+X-Google-Smtp-Source: AGHT+IGrwUIqd83X4wlAuInJiOqaShFfcXk8VZFhzNu9vyXnK8raSsTMYOCaaqdHO2MxUlehAU8nf6YqCAF6EfxfXMg=
+X-Received: by 2002:ac5:ce9e:0:b0:4c0:254f:75d5 with SMTP id
+ 30-20020ac5ce9e000000b004c0254f75d5mr3820012vke.10.1709693619462; Tue, 05 Mar
+ 2024 18:53:39 -0800 (PST)
 MIME-Version: 1.0
 References: <20240304134732.386590-1-dbarboza@ventanamicro.com>
- <20240304134732.386590-3-dbarboza@ventanamicro.com>
-In-Reply-To: <20240304134732.386590-3-dbarboza@ventanamicro.com>
+In-Reply-To: <20240304134732.386590-1-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 6 Mar 2024 12:49:32 +1000
-Message-ID: <CAKmqyKPwpST+x+SKv6vsSCgW2N3oN5fW13ffrhyMYnARjftiNw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] target/riscv/kvm: update KVM exts to Linux 6.8
+Date: Wed, 6 Mar 2024 12:53:13 +1000
+Message-ID: <CAKmqyKMvbLheLiExSgKQEykc7XAgSLw+TZsoKU=etJmi0nkAMw@mail.gmail.com>
+Subject: Re: [PATCH 0/2] target/riscv/kvm: update KVM exts to Linux 6.8
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  palmer@rivosinc.com, ajones@ventanamicro.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92c;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -77,8 +76,7 @@ X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,68 +95,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Mon, Mar 4, 2024 at 11:48=E2=80=AFPM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> The last KVM extensions added were back in 6.6. Sync them to Linux 6.8.
+> Hi,
 >
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Let's update QEMU KVM extension support up to 6.8-rc6 before the 9.0
+> freeze.
+>
+> Patches based on alistair/riscv-to-apply.next.
+>
+> Daniel Henrique Barboza (2):
+>   linux-headers: Update to Linux v6.8-rc6
+>   target/riscv/kvm: update KVM exts to Linux 6.8
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
-> ---
->  target/riscv/kvm/kvm-cpu.c | 29 +++++++++++++++++++++++++++++
->  1 file changed, 29 insertions(+)
 >
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index 422e4f121c..c7afdb1e81 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -275,13 +275,42 @@ static KVMCPUConfig kvm_multi_ext_cfgs[] =3D {
->      KVM_EXT_CFG("zicbom", ext_zicbom, KVM_RISCV_ISA_EXT_ZICBOM),
->      KVM_EXT_CFG("zicboz", ext_zicboz, KVM_RISCV_ISA_EXT_ZICBOZ),
->      KVM_EXT_CFG("zicntr", ext_zicntr, KVM_RISCV_ISA_EXT_ZICNTR),
-> +    KVM_EXT_CFG("zicond", ext_zicond, KVM_RISCV_ISA_EXT_ZICOND),
->      KVM_EXT_CFG("zicsr", ext_zicsr, KVM_RISCV_ISA_EXT_ZICSR),
->      KVM_EXT_CFG("zifencei", ext_zifencei, KVM_RISCV_ISA_EXT_ZIFENCEI),
-> +    KVM_EXT_CFG("zihintntl", ext_zihintntl, KVM_RISCV_ISA_EXT_ZIHINTNTL)=
-,
->      KVM_EXT_CFG("zihintpause", ext_zihintpause, KVM_RISCV_ISA_EXT_ZIHINT=
-PAUSE),
->      KVM_EXT_CFG("zihpm", ext_zihpm, KVM_RISCV_ISA_EXT_ZIHPM),
-> +    KVM_EXT_CFG("zfa", ext_zfa, KVM_RISCV_ISA_EXT_ZFA),
-> +    KVM_EXT_CFG("zfh", ext_zfh, KVM_RISCV_ISA_EXT_ZFH),
-> +    KVM_EXT_CFG("zfhmin", ext_zfhmin, KVM_RISCV_ISA_EXT_ZFHMIN),
->      KVM_EXT_CFG("zba", ext_zba, KVM_RISCV_ISA_EXT_ZBA),
->      KVM_EXT_CFG("zbb", ext_zbb, KVM_RISCV_ISA_EXT_ZBB),
-> +    KVM_EXT_CFG("zbc", ext_zbc, KVM_RISCV_ISA_EXT_ZBC),
-> +    KVM_EXT_CFG("zbkb", ext_zbkb, KVM_RISCV_ISA_EXT_ZBKB),
-> +    KVM_EXT_CFG("zbkc", ext_zbkc, KVM_RISCV_ISA_EXT_ZBKC),
-> +    KVM_EXT_CFG("zbkx", ext_zbkx, KVM_RISCV_ISA_EXT_ZBKX),
->      KVM_EXT_CFG("zbs", ext_zbs, KVM_RISCV_ISA_EXT_ZBS),
-> +    KVM_EXT_CFG("zknd", ext_zknd, KVM_RISCV_ISA_EXT_ZKND),
-> +    KVM_EXT_CFG("zkne", ext_zkne, KVM_RISCV_ISA_EXT_ZKNE),
-> +    KVM_EXT_CFG("zknh", ext_zknh, KVM_RISCV_ISA_EXT_ZKNH),
-> +    KVM_EXT_CFG("zkr", ext_zkr, KVM_RISCV_ISA_EXT_ZKR),
-> +    KVM_EXT_CFG("zksed", ext_zksed, KVM_RISCV_ISA_EXT_ZKSED),
-> +    KVM_EXT_CFG("zksh", ext_zksh, KVM_RISCV_ISA_EXT_ZKSH),
-> +    KVM_EXT_CFG("zkt", ext_zkt, KVM_RISCV_ISA_EXT_ZKT),
-> +    KVM_EXT_CFG("zvbb", ext_zvbb, KVM_RISCV_ISA_EXT_ZVBB),
-> +    KVM_EXT_CFG("zvbc", ext_zvbc, KVM_RISCV_ISA_EXT_ZVBC),
-> +    KVM_EXT_CFG("zvfh", ext_zvfh, KVM_RISCV_ISA_EXT_ZVFH),
-> +    KVM_EXT_CFG("zvfhmin", ext_zvfhmin, KVM_RISCV_ISA_EXT_ZVFHMIN),
-> +    KVM_EXT_CFG("zvkb", ext_zvkb, KVM_RISCV_ISA_EXT_ZVKB),
-> +    KVM_EXT_CFG("zvkg", ext_zvkg, KVM_RISCV_ISA_EXT_ZVKG),
-> +    KVM_EXT_CFG("zvkned", ext_zvkned, KVM_RISCV_ISA_EXT_ZVKNED),
-> +    KVM_EXT_CFG("zvknha", ext_zvknha, KVM_RISCV_ISA_EXT_ZVKNHA),
-> +    KVM_EXT_CFG("zvknhb", ext_zvknhb, KVM_RISCV_ISA_EXT_ZVKNHB),
-> +    KVM_EXT_CFG("zvksed", ext_zvksed, KVM_RISCV_ISA_EXT_ZVKSED),
-> +    KVM_EXT_CFG("zvksh", ext_zvksh, KVM_RISCV_ISA_EXT_ZVKSH),
-> +    KVM_EXT_CFG("zvkt", ext_zvkt, KVM_RISCV_ISA_EXT_ZVKT),
-> +    KVM_EXT_CFG("smstateen", ext_smstateen, KVM_RISCV_ISA_EXT_SMSTATEEN)=
-,
->      KVM_EXT_CFG("ssaia", ext_ssaia, KVM_RISCV_ISA_EXT_SSAIA),
->      KVM_EXT_CFG("sstc", ext_sstc, KVM_RISCV_ISA_EXT_SSTC),
->      KVM_EXT_CFG("svinval", ext_svinval, KVM_RISCV_ISA_EXT_SVINVAL),
+>  include/standard-headers/drm/drm_fourcc.h     |  10 +-
+>  include/standard-headers/linux/ethtool.h      |  41 +++--
+>  .../standard-headers/linux/virtio_config.h    |   8 +-
+>  include/standard-headers/linux/virtio_pci.h   |  68 +++++++++
+>  include/standard-headers/linux/virtio_pmem.h  |   7 +
+>  linux-headers/asm-generic/unistd.h            |  15 +-
+>  linux-headers/asm-mips/mman.h                 |   2 +-
+>  linux-headers/asm-mips/unistd_n32.h           |   5 +
+>  linux-headers/asm-mips/unistd_n64.h           |   5 +
+>  linux-headers/asm-mips/unistd_o32.h           |   5 +
+>  linux-headers/asm-powerpc/unistd_32.h         |   5 +
+>  linux-headers/asm-powerpc/unistd_64.h         |   5 +
+>  linux-headers/asm-riscv/kvm.h                 |  40 +++++
+>  linux-headers/asm-s390/unistd_32.h            |   5 +
+>  linux-headers/asm-s390/unistd_64.h            |   5 +
+>  linux-headers/asm-x86/kvm.h                   |   3 +
+>  linux-headers/asm-x86/unistd_32.h             |   5 +
+>  linux-headers/asm-x86/unistd_64.h             |   5 +
+>  linux-headers/asm-x86/unistd_x32.h            |   5 +
+>  linux-headers/linux/iommufd.h                 |  79 ++++++++++
+>  linux-headers/linux/kvm.h                     | 140 +++++++-----------
+>  linux-headers/linux/userfaultfd.h             |  29 +++-
+>  linux-headers/linux/vfio.h                    |   1 +
+>  target/riscv/kvm/kvm-cpu.c                    |  29 ++++
+>  24 files changed, 410 insertions(+), 112 deletions(-)
+>
 > --
 > 2.43.2
 >
