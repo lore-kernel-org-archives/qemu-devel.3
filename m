@@ -4,81 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B639FC54E49
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 01:48:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59D3FC54E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 01:58:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhgNy-0000Hr-Ak; Tue, 05 Mar 2024 20:47:58 -0500
+	id 1rhgXH-00028k-O0; Tue, 05 Mar 2024 20:57:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rhgNw-0000H4-HO; Tue, 05 Mar 2024 20:47:56 -0500
-Received: from mail-vs1-xe35.google.com ([2607:f8b0:4864:20::e35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rhgNu-0000UE-JR; Tue, 05 Mar 2024 20:47:56 -0500
-Received: by mail-vs1-xe35.google.com with SMTP id
- ada2fe7eead31-4726608233fso1007049137.2; 
- Tue, 05 Mar 2024 17:47:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709689670; x=1710294470; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EL8Yafyl4cnQOSXldTKS5ZEaAlLFa0fm8kJqJANsbtI=;
- b=kPBZKJplhKKvMTXVtPXteF85cFyulNFyOy1SHhMax5tBX2wONDkCfCk9mKYjvcK6Su
- EWlZXirKt1JKp575ZHRglUbmcyCkz2YHXyp3ih7A/RyWQK7DUIEPzvSXg6y7YUUBiYP9
- /yHmTTFA7yPV+uBw9IhrtPQz+Za2FY9eUFit5FwS0H4mNsDmkED4LTq7gOpPc5DZFFHG
- uKCNU6AlZ7PbFd6b65p76zO4r9WwKSDQS3JkVI39SHpEWiM/1/fauzc5PTAaUO7qGeTf
- Rkcdrwo9zNnKh38cp7XUzl8b48KWJDv9XPleNwJmxNi46/bxmANTjfHz60mx4CRqya1m
- uI6A==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rhgXG-00028X-4a
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 20:57:34 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rhgXB-0002mC-Fq
+ for qemu-devel@nongnu.org; Tue, 05 Mar 2024 20:57:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709690247;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=LQdGQl20jZC2CZgCCzn3ATSQ140fF/bNQwe8oYfTI90=;
+ b=dGvcvO+tGUgvY6oallVLP15uSRblLNcCnyLNNdLnIrW+rASkGikFjx2nNaoEUPdW1mfS/W
+ J5QHeXojJuIdj5e1X3uhGxbRfmGCZ38NTzGBX8Z4D2X+Y86ey5sEeIs3RnoI36EG9hU3uE
+ 8RqrxP6J6jzOnokQyHyKKZ/9BqoiP24=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-543-5iYIM5YkPE-NI4Png1tgdw-1; Tue, 05 Mar 2024 20:57:25 -0500
+X-MC-Unique: 5iYIM5YkPE-NI4Png1tgdw-1
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-5c683944ab0so1660805a12.0
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 17:57:25 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709689670; x=1710294470;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=EL8Yafyl4cnQOSXldTKS5ZEaAlLFa0fm8kJqJANsbtI=;
- b=of7c9YKCbl7qVW17xtNYIwnv0AjW5+gLSBmMbQo15Qb3PD0XbTnsyJDk/SoElb+hg2
- 3qMUjEZstFfhnADnrXaGBNBPaW3ZA9L+5sXL5P0u9q6bRLhsRG9wPJtRFBpZ+SuoBNH2
- 0onZW8OoSiNQvz8IqLN3uFHfvTiR+5wzoFcSLTFYHlJpbDTFH7lgxdySzwpz9muCzhhF
- 4Gw2O66yldWIMUCUwKXzQ11M7nAPdpErBos4PiLlyeZWPffesUCgcODQsfUT7wsEevCf
- V/PHRP7d5S4wjy+n1KZwsx3l7gKCUAq7JK0fT2Vnk1n45ECCui+Rb+SLcgP+NDfKDYmv
- Kdbg==
+ d=1e100.net; s=20230601; t=1709690245; x=1710295045;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LQdGQl20jZC2CZgCCzn3ATSQ140fF/bNQwe8oYfTI90=;
+ b=naXg1HAF8LFW5FAovbx9XeyKUV+RmwyQnTiw1tqLCXH64bsSYCEtO63qV77GZw4Vas
+ AKgIyQ5GfJiuM72W/vsSZBL0V3Nj4U6j/v3k2kZIiQK0tFIou6p79kZP16PLNZGG9002
+ D65Bw9A/l4qYTDKcxdDcu3yC0jPYH4b+aUaljTHK3/ueitNOZWkiI2tHOh/ieDCipoK1
+ 7P4/rjtqZ1pxHVxLxFyJkvh41TYKGvf/SxDeV09hKJ1U6ck43BMvdUhwUOdZpwGsbCXJ
+ h2cuHhuzEEwokYy1W29Kg1pGAEbfaSPxdc5XJ1fAOv9V2VXw0Oqf4KxdyWQzR2qLtEBy
+ F14A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW8aXXEvQ7Ji8/zcJ2H8UiaNxfbDsvaiyecJ2fGjs21Dc+sHbjKATMpAaK6u3ceNyTl08+3j2Ibun2PNyp4wGzpD8i2b68=
-X-Gm-Message-State: AOJu0YyDSfQkIfGHESqLyR2lSiw8waVDASLZ7ulApEhWEHbt7RqI4UHb
- i6Fvmgpb4ZfeoVBKREHQ5IR0k3LvcifiDNXQyXh8d2HhXWm5vUThHwhkI4L7bTHUUbg5oEIO3Ae
- jghjL8u26AowdXY6Bxpooh5SDcbw=
-X-Google-Smtp-Source: AGHT+IFVNrR593g0cS8tlJXlNlVEEWuY6Dt7R5EWWccwRKugmNM7LregUe7InRyoSGtZOBUp8Vwkz8RsYNITk9T1wLo=
-X-Received: by 2002:a05:6102:3754:b0:472:69ec:97da with SMTP id
- u20-20020a056102375400b0047269ec97damr4102901vst.27.1709689670439; Tue, 05
- Mar 2024 17:47:50 -0800 (PST)
+ AJvYcCV9l4YYRWsuVgZipX1HDjmMwVUrsA4E8qOZOCJnd4orhtPAr0vb+buNUA9k8/aI3HvPC33k3DLurqqJhnUb7pXTbNIYeOI=
+X-Gm-Message-State: AOJu0YyF3QQ6N/PAec1Suf34+GaEMiqYpEfIzvdFKsni3OPcppMXtxXF
+ +shFg2LRKwV5HdKrQ+JGQ5mThVtFfmYmXjcXTMZy2isWeEurbMxcuM+zf20DiwWjRLd2ou5Qin9
+ hbmT0oUkQWybjYXvW5lyvKhMQuWnid9ILdZRHD9Q8GwxVkFjyB+3v
+X-Received: by 2002:a05:6a00:14cf:b0:6e4:8dda:691 with SMTP id
+ w15-20020a056a0014cf00b006e48dda0691mr2536677pfu.3.1709690244636; 
+ Tue, 05 Mar 2024 17:57:24 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFaVOzxlUhRGkU/TM7joblhRyu3ZTiJiUp4aEcjlGx9ATdzZ6lMkPsercG8lSpBULIH7b36fw==
+X-Received: by 2002:a05:6a00:14cf:b0:6e4:8dda:691 with SMTP id
+ w15-20020a056a0014cf00b006e48dda0691mr2536663pfu.3.1709690244255; 
+ Tue, 05 Mar 2024 17:57:24 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ fx14-20020a056a00820e00b006e632056c40sm2697917pfb.0.2024.03.05.17.57.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 05 Mar 2024 17:57:23 -0800 (PST)
+Date: Wed, 6 Mar 2024 09:57:16 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Maksim Davydov <davydov-max@yandex-team.ru>, qemu-devel@nongnu.org,
+ vsementsov@yandex-team.ru, jsnow@redhat.com, philmd@linaro.org,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PULL 0/4] machine development tool
+Message-ID: <ZefNfJ3BwudA-M7t@x1n>
+References: <20240304135145.154860-1-davydov-max@yandex-team.ru>
+ <CAFEAcA9acSfGP6PcErqp1rTmSd3G+AwUUx_aF-5KJy4iS6BqaQ@mail.gmail.com>
+ <874jdkn3he.fsf@pond.sub.org>
 MIME-Version: 1.0
-References: <20240229180656.1208881-1-christoph.muellner@vrull.eu>
-In-Reply-To: <20240229180656.1208881-1-christoph.muellner@vrull.eu>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 6 Mar 2024 11:47:24 +1000
-Message-ID: <CAKmqyKPaTSS6LMGM9svgFGG4VtuHC46Bk9JWiLn__k_tnX=XFA@mail.gmail.com>
-Subject: Re: [PATCH] tests: riscv64: Use 'zfa' instead of 'Zfa'
-To: =?UTF-8?Q?Christoph_M=C3=BCllner?= <christoph.muellner@vrull.eu>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
- Philipp Tomsich <philipp.tomsich@vrull.eu>, Palmer Dabbelt <palmer@dabbelt.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Andrew Jones <ajones@ventanamicro.com>, 
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e35;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe35.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <874jdkn3he.fsf@pond.sub.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.568,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,36 +105,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 1, 2024 at 4:07=E2=80=AFAM Christoph M=C3=BCllner
-<christoph.muellner@vrull.eu> wrote:
->
-> Running test-fcvtmod triggers the following deprecation warning:
->   warning: CPU property 'Zfa' is deprecated. Please use 'zfa' instead
-> Let's fix that.
->
-> Signed-off-by: Christoph M=C3=BCllner <christoph.muellner@vrull.eu>
+On Tue, Mar 05, 2024 at 03:43:41PM +0100, Markus Armbruster wrote:
+> Peter Maydell <peter.maydell@linaro.org> writes:
+> 
+> > On Mon, 4 Mar 2024 at 13:52, Maksim Davydov <davydov-max@yandex-team.ru> wrote:
+> >>
+> >> The following changes since commit e1007b6bab5cf97705bf4f2aaec1f607787355b8:
+> >>
+> >>   Merge tag 'pull-request-2024-03-01' of https://gitlab.com/thuth/qemu into staging (2024-03-01 10:14:32 +0000)
+> >>
+> >> are available in the Git repository at:
+> >>
+> >>   https://gitlab.com/davydov-max/qemu.git tags/pull-compare-mt-2024-03-04
+> >>
+> >> for you to fetch changes up to 7693a2e8518811a907d73a85807ee71dac8fabcb:
+> >>
+> >>   scripts: add script to compare compatibility properties (2024-03-04 14:10:53 +0300)
+> >>
+> >> ----------------------------------------------------------------
+> >> Please note. This is the first pull request from me.
+> >> My public GPG key is available here
+> >> https://keys.openpgp.org/vks/v1/by-fingerprint/CDB5BEEF8837142579F5CDFE8E927E10F72F78D4
+> >>
+> >> ----------------------------------------------------------------
+> >> scripts: add a new script for machine development
+> >>
+> >> ----------------------------------------------------------------
+> >
+> > Hi; I would prefer this to go through some existing submaintainer
+> > tree if possible, please.
+> 
+> Migration?  QOM?  Not sure.  Cc'ing the maintainers anyway.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Yeah this seems like migration relevant.. however now I'm slightly confused
+on when this script should be useful.
 
-Alistair
+According to:
 
-> ---
->  tests/tcg/riscv64/Makefile.target | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/tests/tcg/riscv64/Makefile.target b/tests/tcg/riscv64/Makefi=
-le.target
-> index a7e390c384..4da5b9a3b3 100644
-> --- a/tests/tcg/riscv64/Makefile.target
-> +++ b/tests/tcg/riscv64/Makefile.target
-> @@ -17,4 +17,4 @@ run-test-aes: QEMU_OPTS +=3D -cpu rv64,zk=3Don
->  TESTS +=3D test-fcvtmod
->  test-fcvtmod: CFLAGS +=3D -march=3Drv64imafdc
->  test-fcvtmod: LDFLAGS +=3D -static
-> -run-test-fcvtmod: QEMU_OPTS +=3D -cpu rv64,d=3Dtrue,Zfa=3Dtrue
-> +run-test-fcvtmod: QEMU_OPTS +=3D -cpu rv64,d=3Dtrue,zfa=3Dtrue
-> --
-> 2.43.2
->
->
+https://lore.kernel.org/qemu-devel/20240222153912.646053-5-davydov-max@yandex-team.ru/
+
+        This script runs QEMU to obtain compat_props of machines and
+        default values of different types of drivers to produce comparison
+        table. This table can be used to compare machine types to choose
+        the most suitable machine or compare binaries to be sure that
+        migration to the newer version will save all device
+        properties. Also the json or csv format of this table can be used
+        to check does a new machine affect the previous ones by comparing
+        tables with and without the new machine.
+
+In regards to "choose the most suitable machine": why do you need to choose
+a machine?
+
+If it's pretty standalone setup, shouldn't we always try to use the latest
+machine type if possible (as normally compat props are only used to keep
+compatible with old machine types, and the default should always be
+preferred). If it's a cluster setup, IMHO it should depend on the oldest
+QEMU version that plans to be supported.  I don't see how such comparison
+helps yet in either of the cases..
+
+In regards to "compare binaries to be sure that migration to the newer
+version will save all device properties": do we even support migrating
+_between_ machine types??
+
+Sololy relying on compat properties to detect device compatibility is also
+not reliable.  For example, see VMStateField.field_exists() or similarly,
+VMStateDescription.needed(), which are hooks that device can provide to
+dynamically decide what device state to be saved/loaded.  Such things are
+not reflected in compat properties, so even if compat properties of all
+devices are the same between two machine types, it may not mean that the
+migration stream will always be compatible.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
