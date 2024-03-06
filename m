@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C3A1C54E41
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 06:16:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3E72C54E41
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 06:16:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhkWY-0005DN-2n; Wed, 06 Mar 2024 01:13:06 -0500
+	id 1rhkX8-0005zO-M0; Wed, 06 Mar 2024 01:13:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rhkWS-00054f-B0
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 01:13:00 -0500
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ id 1rhkWi-0005SU-7D
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 01:13:18 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rhkWQ-0006HS-0j
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 01:13:00 -0500
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-5d8b519e438so6015059a12.1
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 22:12:57 -0800 (PST)
+ id 1rhkWf-0006M8-Mh
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 01:13:15 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-1dd10a37d68so27382775ad.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 22:13:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709705577; x=1710310377;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709705592; x=1710310392;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=yGeMs1iCZ0kYFimT5ghb04qtjFZ9LFucaNJHUGnodnI=;
- b=KrFz/HSMEuAYcW4zzh91quGXRXsCDYnR2Uo9t9p1yZsigRTtBK7I5Ocnzbzy2kTR85
- AMXAWkwsOjR/RYf0uBerAe65q3KTQIR4YC0b4JM+5efhy/gr6SII9EHnHdPliAvzR2Sm
- 4nijgBlH4K5z11lQVWTCEuwKpHnY8typ5/BNDK/0XVCQc1r0WcsKJ5+wzuTsKRh1TEgD
- 9CNZdi+2piMe/S7Xv1I5qRAzNEKzmrMfleKvM18Q/XZiLjsMh7gAEhRrDw0FJcLGQ+O+
- D/m4VlRDHbaeSq1DgEnMJ/l5P7VGa/+8wITcTzPFPEfo4aSJ9fGdlASRc06NHe5PDx5b
- 2J8A==
+ :reply-to; bh=vWeSXxnvukh1qTIQXUJcznaqlBnX6VJYT1GjqHDMtek=;
+ b=dhDpM6IRbgxb47pI5hrmD+/qnx+FF82VqZ//GokGv1HDVFhs06Ml6qCZEhnJo1M3eJ
+ vqMcuIGrrqyncJzq0VZhNIz0R91HC4y3nI7pPgFuEiOWk2xPvxZzCzBXMKpzjEuuVsDg
+ 8w6JKW12y5994355igUN6vTwWuTCMutB8Vi6C3ZmL6DesBh5y55yVJD8tWEF9FS+2S7P
+ YWNtmth9C/QdD81R1BTaBntmC1SfL4vIMXvqmDSuaHzazSL38xUl7ZzYwbUxsiUYwCOj
+ TK/7oMPeBMvS+hnawLMbcBa2JplEffaRCrYtDaHXZROiG7Xn8wJgZ+zT2dkz/h1++rTa
+ /BMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709705577; x=1710310377;
+ d=1e100.net; s=20230601; t=1709705592; x=1710310392;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yGeMs1iCZ0kYFimT5ghb04qtjFZ9LFucaNJHUGnodnI=;
- b=Xtq4JiEGGQdzFSl0w1pO0znokVIe9aw5lIWkb5TQNvHdzZHL3x6rtDvltJxJQNVfMD
- yl059xRKL6f0Hn2lgLIO9dQHFVi4mvY6KpGfRHrJdY+DKtxRtrFqttI1XkTQHXvJu6Df
- S6+XI52BSCYc8x/EsKTaWJam5VTOCJ+/pyPaXed8GoqqVQZNMzIbV1WBP9snPxAOl2L5
- KhVw7Wd/4Wyl6t50ZVKEeS/drk4Ys6pR92Eys6ssh8WDzMs+HummfK/0z0WfZGyBXwuz
- q52xc+zTb4UYi3S839XQJUOXjpzQxq60ZG769wiVE2QuHkeP6jSYqsrxQMwSjzNdWdRL
- R1eQ==
-X-Gm-Message-State: AOJu0Yz6MGZ9vvLqi91mQ8/NQCD0tktSp1obDUYLGgEAMHllmYItdGuk
- +UidRG81Pl5J8Ffwcl6bfrlaHwmW5jmC+Pt5WCyCJW3tbRA8KN6itakQO9yW0jg=
-X-Google-Smtp-Source: AGHT+IGrkiDILy/5lZjvpi5U7foXOTMdKbyQzXaBxkcKse70tbDLJjNMfb6HC17MBWa8fnZSspNF0w==
-X-Received: by 2002:a05:6a20:7350:b0:1a1:67b2:8cf7 with SMTP id
- v16-20020a056a20735000b001a167b28cf7mr614478pzc.31.1709705576740; 
- Tue, 05 Mar 2024 22:12:56 -0800 (PST)
+ bh=vWeSXxnvukh1qTIQXUJcznaqlBnX6VJYT1GjqHDMtek=;
+ b=SQLqVNnhD3KVEDs1Xj8+1TZ5/jlZ5n0pAJtCXDCTXjHzmPyIOjsh1dPA4Zuvm2dcLx
+ mPfeyo4gA/zoIpffJJ+X9Glen9Dc9c0QqDhiYjA6KbFKxNxU+HrSrevVL//oMWbb3L8D
+ oyUhboB41S4/tWWIpIt5aG+hi6ZERqDzyMmGeciOFvZGYebEjqdOehczVdfVY0DvPkjF
+ XHpfZbSXP9GyF6Hut9hrKfd6TzqBHIVJn3Mxb44724BOgr2K7jj4o97Po7PfDX7+nbwE
+ kX3q79UJJAMt62LddlsSFjEtPF57exVssrddseWZsyKyHv6wFloyWHY8Aug52fq1GHcd
+ 9SZQ==
+X-Gm-Message-State: AOJu0YwJMsw0DSrKiRvrdp7tjQETDpC7DCmgOngRvPtewKvReHBC7HfA
+ 9V0lDjmvcpC3Q3fTEH4tc6nVHxIm5lsH2sDWeZfvI4OpYPVx3X/LP0Ebbnv7e+Q=
+X-Google-Smtp-Source: AGHT+IEQaCP7Atw9WKvSqj7bSVsujj8hc1pUllt0aKPOEcwic7uWYrt346WbsIYi5vvH8/Un5e0AQA==
+X-Received: by 2002:a17:902:d50b:b0:1dc:d773:ac with SMTP id
+ b11-20020a170902d50b00b001dcd77300acmr4613895plg.7.1709705592254; 
+ Tue, 05 Mar 2024 22:13:12 -0800 (PST)
 Received: from localhost ([157.82.206.27]) by smtp.gmail.com with UTF8SMTPSA id
- kw13-20020a170902f90d00b001dc90ac1cecsm11598573plb.284.2024.03.05.22.12.55
+ l14-20020a170902f68e00b001c407fac227sm11584615plg.41.2024.03.05.22.13.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Mar 2024 22:12:56 -0800 (PST)
+ Tue, 05 Mar 2024 22:13:11 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Wed, 06 Mar 2024 15:12:20 +0900
-Subject: [PATCH v3 14/19] contrib/elf2dmp: Use rol64() to decode
+Date: Wed, 06 Mar 2024 15:12:25 +0900
+Subject: [PATCH v3 19/19] contrib/elf2dmp: Ensure phdrs fit in file
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240306-elf2dmp-v3-14-d74e6c3da49c@daynix.com>
+Message-Id: <20240306-elf2dmp-v3-19-d74e6c3da49c@daynix.com>
 References: <20240306-elf2dmp-v3-0-d74e6c3da49c@daynix.com>
 In-Reply-To: <20240306-elf2dmp-v3-0-d74e6c3da49c@daynix.com>
 To: Viktor Prutyanov <viktor.prutyanov@phystech.edu>, 
  Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::530;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x530.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::635;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -93,48 +93,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-rol64() is roubust against too large shift values and fixes UBSan
-warnings.
+Callers of elf64_getphdr() and elf_getphdrnum() assume phdrs are
+accessible.
 
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2202
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- contrib/elf2dmp/main.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ contrib/elf2dmp/qemu_elf.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/contrib/elf2dmp/main.c b/contrib/elf2dmp/main.c
-index 51e1abe26a17..e404612bec00 100644
---- a/contrib/elf2dmp/main.c
-+++ b/contrib/elf2dmp/main.c
-@@ -6,6 +6,7 @@
-  */
+diff --git a/contrib/elf2dmp/qemu_elf.c b/contrib/elf2dmp/qemu_elf.c
+index 8d750adf904a..c9bad6e82cf3 100644
+--- a/contrib/elf2dmp/qemu_elf.c
++++ b/contrib/elf2dmp/qemu_elf.c
+@@ -132,6 +132,7 @@ static void exit_states(QEMU_Elf *qe)
+ static bool check_ehdr(QEMU_Elf *qe)
+ {
+     Elf64_Ehdr *ehdr = qe->map;
++    uint64_t phendoff;
  
- #include "qemu/osdep.h"
-+#include "qemu/bitops.h"
- 
- #include "err.h"
- #include "addrspace.h"
-@@ -47,11 +48,6 @@ static const uint64_t SharedUserData = 0xfffff78000000000;
-     s ? printf(#s" = 0x%016"PRIx64"\n", s) :\
-     eprintf("Failed to resolve "#s"\n"), s)
- 
--static uint64_t rol(uint64_t x, uint64_t y)
--{
--    return (x << y) | (x >> (64 - y));
--}
--
- /*
-  * Decoding algorithm can be found in Volatility project
-  */
-@@ -64,7 +60,7 @@ static void kdbg_decode(uint64_t *dst, uint64_t *src, size_t size,
-         uint64_t block;
- 
-         block = src[i];
--        block = rol(block ^ kwn, (uint8_t)kwn);
-+        block = rol64(block ^ kwn, kwn);
-         block = __builtin_bswap64(block ^ kdbe) ^ kwa;
-         dst[i] = block;
+     if (sizeof(Elf64_Ehdr) > qe->size) {
+         eprintf("Invalid input dump file size\n");
+@@ -173,6 +174,13 @@ static bool check_ehdr(QEMU_Elf *qe)
+         return false;
      }
+ 
++    if (umul64_overflow(ehdr->e_phnum, sizeof(Elf64_Phdr), &phendoff) ||
++        uadd64_overflow(phendoff, ehdr->e_phoff, &phendoff) ||
++        phendoff > qe->size) {
++        eprintf("phdrs do not fit in file\n");
++        return false;
++    }
++
+     return true;
+ }
+ 
 
 -- 
 2.44.0
