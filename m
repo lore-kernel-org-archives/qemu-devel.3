@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D1C8C5475B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 05:04:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E928C5475B
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 05:30:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhjRm-0004PZ-U8; Wed, 06 Mar 2024 00:04:07 -0500
+	id 1rhjqk-0007TC-5D; Wed, 06 Mar 2024 00:29:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rhjRf-0004PK-PI
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 00:04:01 -0500
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rhjRe-0004pH-4a
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 00:03:59 -0500
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-5ce6b5e3c4eso4764066a12.2
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 21:03:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709701436; x=1710306236;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vLOgOufL1xXlPTRAz4seRIZEhhSd5N/oK3LE59hce98=;
- b=R6R+B1rrRYSDkBgWMR3kj+cdmF/Pjgn2swIlpYDC35ggwx4H7ISWjo+88wluWpdpC+
- fHLc6EkzZWN8RuYE6XPRtrOB7MH8Jv6EprfIrUj93W1zRMvIr2g9l1OTE4C1U1pioqL0
- I4+VcH/RTA8X8x+FNr+ghKXpzeGXQQXYTMKn3lUVdBUGMwRIgBQRKoMk1IqAOnLMyJYP
- hDR9DjRvyTjsv7FIjqpxz9PpFA7tRk6J6WcbFtUO82m6er2qIvfnG9lz+9wAfo2Gal6w
- k84wZgkuvLxWsre8Chkzo0yvwTXk0W0zbZ3IACLmwq2eWdBMrDQSASd/6yaqFrVET9QE
- h0KA==
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rhjqj-0007T4-3W
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 00:29:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rhjqh-0006Vh-Hb
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 00:29:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709702989;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/R0GdTWXOkU/gU8Q4bgJFQWh+HWS3OWXk4lLAkqpsAA=;
+ b=SfG5oIm7FRshBjfSSCC0o82aI0sH1omx223GMjJy7y7TW5YW39tLf1UYIustQeGtmDr2pm
+ 3Re6hJ8kvmwH9IwUnYJPe+eam3ypW5zfqjNocUEAIp9qzehw+KLrfas5mdJYL0z4gfUGr7
+ ByETrcBjJD7LDxhwHWjmx+HbgEuYiW8=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-104-yXSNIao4N9Ozkqc5Il7GUA-1; Wed, 06 Mar 2024 00:29:47 -0500
+X-MC-Unique: yXSNIao4N9Ozkqc5Il7GUA-1
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-5c670f70a37so452176a12.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 21:29:47 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709701436; x=1710306236;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vLOgOufL1xXlPTRAz4seRIZEhhSd5N/oK3LE59hce98=;
- b=ZAjTGSJti6nunXiWCN3CfLnuMVo5cEGeNah8Pb0MOckjY3j5BalzNpCIX5IsThiaiz
- bcF+u6ODEmYnxRpQOhbFAAAyy+/qWprrXlpIZazCLt0UprBW7qzM+8cUjv//5oX4ImPo
- gz+I96sROU5JqRvgk9FElbKUqzs6cpbyWFq35zEk+ElAfriL8z0orkhVg1qxhvR24jyL
- RLy4fAR2/4wZUxieFs7mqiZRnGrgz+9TSSPgeu9jQjN+0ojLDI0DZkspL2sN/7XH0NHA
- NOwchlT1WYpyZPWC4o0nqnwICbm4EDejTW0SEqSCf8IWFSdqEwjSVRXFazD5oJs2/uUZ
- 7Rkg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWtcPbOOIUuCtg0PvzD+va10Jo5yxVYKM87RREHnj45/tfwB6ZmgKveO+bVj0jwi/5NgjsZM6KmXspB32M4+dRJ070fn8k=
-X-Gm-Message-State: AOJu0Yw/3LwtgQgCY5tj9fwpwpsNCN9uQJgES5bKuJWPrNQsLdx4lomE
- iKgDwGVkvK+k4ZSuwRU2DQLNQmy/694VFnaK9UYYOpA0t30BzcwZiJgEUlGqJnw=
-X-Google-Smtp-Source: AGHT+IEF0/zTjgA/4y0pkgsb+qKg2nYtfRrW4JdKKa8/LLiD6xvZ6EQYLfojO3CWY5MPVW41Nletrg==
-X-Received: by 2002:a05:6a20:d48c:b0:1a1:4757:927e with SMTP id
- im12-20020a056a20d48c00b001a14757927emr4696292pzb.33.1709701435997; 
- Tue, 05 Mar 2024 21:03:55 -0800 (PST)
-Received: from [157.82.206.27] ([157.82.206.27])
- by smtp.gmail.com with ESMTPSA id
- du6-20020a056a002b4600b006e5933a0da9sm9837504pfb.165.2024.03.05.21.03.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Mar 2024 21:03:55 -0800 (PST)
-Message-ID: <e36f5302-1d0e-4ecd-a69b-8791cbb84e0e@daynix.com>
-Date: Wed, 6 Mar 2024 14:03:53 +0900
+ d=1e100.net; s=20230601; t=1709702986; x=1710307786;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/R0GdTWXOkU/gU8Q4bgJFQWh+HWS3OWXk4lLAkqpsAA=;
+ b=Ua/OQSVtyLF/+Y+D1ouLVEhcZ4XBYPH9Us3y6D7u0Emebi9yvVj0v7r8hS1qflrxeN
+ sm8YUO9Pdy+ptwZJ5OM61ZCv209ICUKxxGr2EFw6ozXvRGkxmoU2AS20xp6y/F+qPxfP
+ 6H8gWUHrKaq5+tEq9NF2eYG+H/ZE7RT/9VtpAnpnddp8FM55Nk457GKb2sXX1hGdqMGW
+ JM+66zgIRzTLPU3a1VOZ/zeIPV4Lw/EBg+GmUQkwNldsq57qL3blAjNGHnvtNzdq0727
+ Q5QnSkpHuKXp12AKdk41PDYfS2/SujC6mG5knbYDeCdW86D1AsKSM8NK0mX+7adZX/he
+ CWgw==
+X-Gm-Message-State: AOJu0Yw8HtxGVDjc+uyxB08fkMbhI8pKu+r1cS0Lc5L2KwKSh/JF6NYa
+ VIR4C+14DEnbsnV3YPMqzSvv6IQTAWjrpGmivStpUdVgH6UtLpmBZ3TGWil/Emm9JBNEMhNxTDy
+ GlC+rs02Mhxc16hZtwjCtizrrq8haROIl/z6B7SqymECuXoeQyqt7D4+7M1jQyEb5dcwo5xJ7Dq
+ oErn19SMB9UStaZeaqgwVC+APrTEY=
+X-Received: by 2002:a05:6a20:9151:b0:1a1:511b:edb2 with SMTP id
+ x17-20020a056a20915100b001a1511bedb2mr4386737pzc.29.1709702986475; 
+ Tue, 05 Mar 2024 21:29:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHPshDxSKynKQVawAweCf1h9rcGRUEWBUwZ6S8c4Uuag+bryqZ9UuJqk2+nFqNnRYEGRadoZx2F1vayITWraIU=
+X-Received: by 2002:a05:6a20:9151:b0:1a1:511b:edb2 with SMTP id
+ x17-20020a056a20915100b001a1511bedb2mr4386726pzc.29.1709702986188; Tue, 05
+ Mar 2024 21:29:46 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 11/13] contrib/elf2dmp: Build only for little endian
- host
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Viktor Prutyanov <viktor.prutyanov@phystech.edu>, qemu-devel@nongnu.org
-References: <20240305-elf2dmp-v2-0-86ff2163ad32@daynix.com>
- <20240305-elf2dmp-v2-11-86ff2163ad32@daynix.com>
- <CAFEAcA8LoGjtzeh9DYurbb_xEOuKzYMPWG=3ucOkNVvdVTd_=g@mail.gmail.com>
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CAFEAcA8LoGjtzeh9DYurbb_xEOuKzYMPWG=3ucOkNVvdVTd_=g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::533;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x533.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240124104006.335166-1-lvivier@redhat.com>
+ <CACGkMEtzqCA_x1hg-ddp0d-Q-+XLH01k2Pf0KziiYSeLmDwaXA@mail.gmail.com>
+ <622dabbe-a215-476a-b72c-41d1103b7cb6@redhat.com>
+In-Reply-To: <622dabbe-a215-476a-b72c-41d1103b7cb6@redhat.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Wed, 6 Mar 2024 13:29:35 +0800
+Message-ID: <CACGkMEuNHUgmujv+c=5+HOkqtOE8=Xf_GC3czug66ZhmEJp3vw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] e1000e: fix link state on resume
+To: Laurent Vivier <lvivier@redhat.com>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>, 
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.568,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,34 +101,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/03/05 22:33, Peter Maydell wrote:
-> On Tue, 5 Mar 2024 at 07:37, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>
->> elf2dmp assumes little endian host in many places.
->>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   contrib/elf2dmp/meson.build | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/contrib/elf2dmp/meson.build b/contrib/elf2dmp/meson.build
->> index 6707d43c4fa5..046569861f7a 100644
->> --- a/contrib/elf2dmp/meson.build
->> +++ b/contrib/elf2dmp/meson.build
->> @@ -1,4 +1,4 @@
->> -if curl.found()
->> +if curl.found() and host_machine.endian() == 'little'
->>     executable('elf2dmp', files('main.c', 'addrspace.c', 'download.c', 'pdb.c', 'qemu_elf.c'), genh,
->>                dependencies: [glib, curl],
->>                install: true)
-> 
-> If it assumes a little-endian host that is a bug and we
-> should fix it, not just disable building the tool on
-> big-endian systems.
+Hi Laurent:
 
-I will accept if someone submits a proper fix in the future, but I'm not 
-going to put effort on that. This is the best thing I can offer for now.
+On Tue, Mar 5, 2024 at 6:07=E2=80=AFPM Laurent Vivier <lvivier@redhat.com> =
+wrote:
+>
+> On 2/1/24 06:45, Jason Wang wrote:
+> > On Wed, Jan 24, 2024 at 6:40=E2=80=AFPM Laurent Vivier <lvivier@redhat.=
+com> wrote:
+> >>
+> >> On resume e1000e_vm_state_change() always calls e1000e_autoneg_resume(=
+)
+> >> that sets link_down to false, and thus activates the link even
+> >> if we have disabled it.
+> >>
+> >> The problem can be reproduced starting qemu in paused state (-S) and
+> >> then set the link to down. When we resume the machine the link appears
+> >> to be up.
+> >>
+> >> Reproducer:
+> >>
+> >>     # qemu-system-x86_64 ... -device e1000e,netdev=3Dnetdev0,id=3Dnet0=
+ -S
+> >>
+> >>     {"execute": "qmp_capabilities" }
+> >>     {"execute": "set_link", "arguments": {"name": "net0", "up": false}=
+}
+> >>     {"execute": "cont" }
+> >>
+> >> To fix the problem, merge the content of e1000e_vm_state_change()
+> >> into e1000e_core_post_load() as e1000 does.
+> >>
+> >> Buglink: https://issues.redhat.com/browse/RHEL-21867
+> >> Fixes: 6f3fbe4ed06a ("net: Introduce e1000e device emulation")
+> >> Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> >> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+> >> ---
+> >>
+> >
+> > I've queued this.
+>
+> Ping?
 
-Regards,
-Akihiko Odaki
+Plan to send a pull request with this by the end of this week.
+
+Thanks
+
+>
+> Thanks,
+> Laurent
+>
+
 
