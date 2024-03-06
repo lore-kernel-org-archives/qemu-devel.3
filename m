@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E928C5475B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 05:30:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4D30C54E41
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 05:34:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhjqk-0007TC-5D; Wed, 06 Mar 2024 00:29:54 -0500
+	id 1rhjus-0000BG-Na; Wed, 06 Mar 2024 00:34:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rhjqj-0007T4-3W
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 00:29:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1rhjuj-0000Ag-FR
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 00:34:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rhjqh-0006Vh-Hb
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 00:29:52 -0500
+ id 1rhjuh-0001Oc-PQ
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 00:34:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709702989;
+ s=mimecast20190719; t=1709703238;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/R0GdTWXOkU/gU8Q4bgJFQWh+HWS3OWXk4lLAkqpsAA=;
- b=SfG5oIm7FRshBjfSSCC0o82aI0sH1omx223GMjJy7y7TW5YW39tLf1UYIustQeGtmDr2pm
- 3Re6hJ8kvmwH9IwUnYJPe+eam3ypW5zfqjNocUEAIp9qzehw+KLrfas5mdJYL0z4gfUGr7
- ByETrcBjJD7LDxhwHWjmx+HbgEuYiW8=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+jRY4LIfjrPdAXEdTkFyXRjOdZ0+3Sq/cJmK6iyjR/o=;
+ b=aJcl3bcDRiCMWLG/ibVh0sqTtPTkPW+ZJ8GnNck7HoBtPxTUyFMCVmsLHYBxeYcu1ShkQ0
+ mS/qcoXYDZdRgmsBmQyKLnHxg5H5O0S0erD3Y40ZJ7wBxNSy93+S5hEXjrBUI2mF/m80SP
+ +9nu6saDowsRj79zf1kZcC5EWy8wRnQ=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-104-yXSNIao4N9Ozkqc5Il7GUA-1; Wed, 06 Mar 2024 00:29:47 -0500
-X-MC-Unique: yXSNIao4N9Ozkqc5Il7GUA-1
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-5c670f70a37so452176a12.2
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 21:29:47 -0800 (PST)
+ us-mta-187-Rbq4cMwHMeGyFpAsUgXPjg-1; Wed, 06 Mar 2024 00:33:57 -0500
+X-MC-Unique: Rbq4cMwHMeGyFpAsUgXPjg-1
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-5cfc2041cdfso5179069a12.2
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 21:33:57 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709702986; x=1710307786;
+ d=1e100.net; s=20230601; t=1709703236; x=1710308036;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/R0GdTWXOkU/gU8Q4bgJFQWh+HWS3OWXk4lLAkqpsAA=;
- b=Ua/OQSVtyLF/+Y+D1ouLVEhcZ4XBYPH9Us3y6D7u0Emebi9yvVj0v7r8hS1qflrxeN
- sm8YUO9Pdy+ptwZJ5OM61ZCv209ICUKxxGr2EFw6ozXvRGkxmoU2AS20xp6y/F+qPxfP
- 6H8gWUHrKaq5+tEq9NF2eYG+H/ZE7RT/9VtpAnpnddp8FM55Nk457GKb2sXX1hGdqMGW
- JM+66zgIRzTLPU3a1VOZ/zeIPV4Lw/EBg+GmUQkwNldsq57qL3blAjNGHnvtNzdq0727
- Q5QnSkpHuKXp12AKdk41PDYfS2/SujC6mG5knbYDeCdW86D1AsKSM8NK0mX+7adZX/he
- CWgw==
-X-Gm-Message-State: AOJu0Yw8HtxGVDjc+uyxB08fkMbhI8pKu+r1cS0Lc5L2KwKSh/JF6NYa
- VIR4C+14DEnbsnV3YPMqzSvv6IQTAWjrpGmivStpUdVgH6UtLpmBZ3TGWil/Emm9JBNEMhNxTDy
- GlC+rs02Mhxc16hZtwjCtizrrq8haROIl/z6B7SqymECuXoeQyqt7D4+7M1jQyEb5dcwo5xJ7Dq
- oErn19SMB9UStaZeaqgwVC+APrTEY=
-X-Received: by 2002:a05:6a20:9151:b0:1a1:511b:edb2 with SMTP id
- x17-20020a056a20915100b001a1511bedb2mr4386737pzc.29.1709702986475; 
- Tue, 05 Mar 2024 21:29:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHPshDxSKynKQVawAweCf1h9rcGRUEWBUwZ6S8c4Uuag+bryqZ9UuJqk2+nFqNnRYEGRadoZx2F1vayITWraIU=
-X-Received: by 2002:a05:6a20:9151:b0:1a1:511b:edb2 with SMTP id
- x17-20020a056a20915100b001a1511bedb2mr4386726pzc.29.1709702986188; Tue, 05
- Mar 2024 21:29:46 -0800 (PST)
+ bh=+jRY4LIfjrPdAXEdTkFyXRjOdZ0+3Sq/cJmK6iyjR/o=;
+ b=ng7gauovuBlQoXpxBS+Sj17ntjLHtv0d2OWxD72OHocJbWGwuqnYInwMRAoaLkLpVb
+ d2V5gcYgPS9N5MOm9xQxsMeKEQZRsW/pFlLyQURSCHrqM5RSZ2Aw/xQal7/bNglWWr/7
+ l19J3hKp2ZJjTidxbRPXl76g7JQ1G6Mdw5Yo6DwTqSZmke9ZnRuaaFqmXLcvThJDj1wg
+ Q3bTdzLvYXkI91LtVANFUwm2IKtLQt+c+Rfn9fZ15wguq9OqhwEJjewKEsJL+vxHlwax
+ q+qxFh6jyj2dLrujg4RwRsMarXnMu+fCn6A2fhay2N3zItma3/X0CILZ27mYsek+0yPA
+ vq2w==
+X-Gm-Message-State: AOJu0YzNEI6e5goDCoI4qSVbIPS/2PKvupraeOmwBLGDHIfki7yaG/XH
+ HoEL6CEj6aqTD5ieYTcK9QCpxSlU3wNCrHpGjvKsCWpGtgPMoJy2BXEfK/r2GMFMcWhllRiBOwU
+ b21GTWnpSAnJ9m0X6i6LT5Cg9IXgI0u/4fmZQ11hYTn2mfL1kLH03v20gayhvM+QNioWe3VojkX
+ EOGGpiyKT6x4KPTQqJB5Dr/mHfPhU=
+X-Received: by 2002:a05:6a20:9381:b0:1a1:4d8b:73ce with SMTP id
+ x1-20020a056a20938100b001a14d8b73cemr4088536pzh.18.1709703236264; 
+ Tue, 05 Mar 2024 21:33:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFc9YubHmxLH2HgvNsaW29Pgi7ZOeVeII/wN72253bi/8jTx93xeFrQDmOaVi8CGLMc8Qkt7RZCXSHTxCZaNU4=
+X-Received: by 2002:a05:6a20:9381:b0:1a1:4d8b:73ce with SMTP id
+ x1-20020a056a20938100b001a14d8b73cemr4088513pzh.18.1709703235945; Tue, 05 Mar
+ 2024 21:33:55 -0800 (PST)
 MIME-Version: 1.0
-References: <20240124104006.335166-1-lvivier@redhat.com>
- <CACGkMEtzqCA_x1hg-ddp0d-Q-+XLH01k2Pf0KziiYSeLmDwaXA@mail.gmail.com>
- <622dabbe-a215-476a-b72c-41d1103b7cb6@redhat.com>
-In-Reply-To: <622dabbe-a215-476a-b72c-41d1103b7cb6@redhat.com>
+References: <20240304194612.611660-1-jonah.palmer@oracle.com>
+In-Reply-To: <20240304194612.611660-1-jonah.palmer@oracle.com>
 From: Jason Wang <jasowang@redhat.com>
-Date: Wed, 6 Mar 2024 13:29:35 +0800
-Message-ID: <CACGkMEuNHUgmujv+c=5+HOkqtOE8=Xf_GC3czug66ZhmEJp3vw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] e1000e: fix link state on resume
-To: Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>, 
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>
+Date: Wed, 6 Mar 2024 13:33:44 +0800
+Message-ID: <CACGkMEtoA3SN9e9WnNpFyR32rkf_pWUNj-6uj2TZBzjB0E+3SQ@mail.gmail.com>
+Subject: Re: [PATCH v1 0/8] virtio,
+ vhost: Add VIRTIO_F_NOTIFICATION_DATA support
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, eperezma@redhat.com, 
+ si-wei.liu@oracle.com, boris.ostrovsky@oracle.com, raphael@enfabrica.net, 
+ kwolf@redhat.com, hreitz@redhat.com, pasic@linux.ibm.com, 
+ borntraeger@linux.ibm.com, farman@linux.ibm.com, thuth@redhat.com, 
+ richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com, 
+ cohuck@redhat.com, pbonzini@redhat.com, fam@euphon.net, stefanha@redhat.com, 
+ qemu-block@nongnu.org, qemu-s390x@nongnu.org, virtio-fs@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.568,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,55 +103,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Laurent:
-
-On Tue, Mar 5, 2024 at 6:07=E2=80=AFPM Laurent Vivier <lvivier@redhat.com> =
-wrote:
+On Tue, Mar 5, 2024 at 3:46=E2=80=AFAM Jonah Palmer <jonah.palmer@oracle.co=
+m> wrote:
 >
-> On 2/1/24 06:45, Jason Wang wrote:
-> > On Wed, Jan 24, 2024 at 6:40=E2=80=AFPM Laurent Vivier <lvivier@redhat.=
-com> wrote:
-> >>
-> >> On resume e1000e_vm_state_change() always calls e1000e_autoneg_resume(=
-)
-> >> that sets link_down to false, and thus activates the link even
-> >> if we have disabled it.
-> >>
-> >> The problem can be reproduced starting qemu in paused state (-S) and
-> >> then set the link to down. When we resume the machine the link appears
-> >> to be up.
-> >>
-> >> Reproducer:
-> >>
-> >>     # qemu-system-x86_64 ... -device e1000e,netdev=3Dnetdev0,id=3Dnet0=
- -S
-> >>
-> >>     {"execute": "qmp_capabilities" }
-> >>     {"execute": "set_link", "arguments": {"name": "net0", "up": false}=
-}
-> >>     {"execute": "cont" }
-> >>
-> >> To fix the problem, merge the content of e1000e_vm_state_change()
-> >> into e1000e_core_post_load() as e1000 does.
-> >>
-> >> Buglink: https://issues.redhat.com/browse/RHEL-21867
-> >> Fixes: 6f3fbe4ed06a ("net: Introduce e1000e device emulation")
-> >> Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> >> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-> >> ---
-> >>
-> >
-> > I've queued this.
+> The goal of these patches are to add support to a variety of virtio and
+> vhost devices for the VIRTIO_F_NOTIFICATION_DATA transport feature. This
+> feature indicates that a driver will pass extra data (instead of just a
+> virtqueue's index) when notifying the corresponding device.
 >
-> Ping?
+> The data passed in by the driver when this feature is enabled varies in
+> format depending on if the device is using a split or packed virtqueue
+> layout:
+>
+>  Split VQ
+>   - Upper 16 bits: shadow_avail_idx
+>   - Lower 16 bits: virtqueue index
+>
+>  Packed VQ
+>   - Upper 16 bits: 1-bit wrap counter & 15-bit shadow_avail_idx
+>   - Lower 16 bits: virtqueue index
+>
+> Also, due to the limitations of ioeventfd not being able to carry the
+> extra provided by the driver, ioeventfd is left disabled for any devices
+> using this feature.
 
-Plan to send a pull request with this by the end of this week.
+Is there any method to overcome this? This might help for vhost.
 
 Thanks
 
 >
-> Thanks,
-> Laurent
+> A significant aspect of this effort has been to maintain compatibility
+> across different backends. As such, the feature is offered by backend
+> devices only when supported, with fallback mechanisms where backend
+> support is absent.
+>
+> Jonah Palmer (8):
+>   virtio/virtio-pci: Handle extra notification data
+>   virtio-pci: Lock ioeventfd state with VIRTIO_F_NOTIFICATION_DATA
+>   virtio-mmio: Handle extra notification data
+>   virtio-mmio: Lock ioeventfd state with VIRTIO_F_NOTIFICATION_DATA
+>   virtio-ccw: Handle extra notification data
+>   virtio-ccw: Lock ioeventfd state with VIRTIO_F_NOTIFICATION_DATA
+>   vhost/vhost-user: Add VIRTIO_F_NOTIFICATION_DATA to vhost feature bits
+>   virtio: Add VIRTIO_F_NOTIFICATION_DATA property definition
+>
+>  hw/block/vhost-user-blk.c    |  1 +
+>  hw/net/vhost_net.c           |  2 ++
+>  hw/s390x/s390-virtio-ccw.c   | 16 ++++++++++++----
+>  hw/s390x/virtio-ccw.c        |  6 ++++--
+>  hw/scsi/vhost-scsi.c         |  1 +
+>  hw/scsi/vhost-user-scsi.c    |  1 +
+>  hw/virtio/vhost-user-fs.c    |  2 +-
+>  hw/virtio/vhost-user-vsock.c |  1 +
+>  hw/virtio/virtio-mmio.c      | 15 +++++++++++----
+>  hw/virtio/virtio-pci.c       | 16 +++++++++++-----
+>  hw/virtio/virtio.c           | 18 ++++++++++++++++++
+>  include/hw/virtio/virtio.h   |  5 ++++-
+>  net/vhost-vdpa.c             |  1 +
+>  13 files changed, 68 insertions(+), 17 deletions(-)
+>
+> --
+> 2.39.3
 >
 
 
