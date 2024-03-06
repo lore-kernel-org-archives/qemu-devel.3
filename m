@@ -4,100 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68450C5475B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 14:40:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A413C54E41
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 14:40:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhsRG-0006UP-KT; Wed, 06 Mar 2024 09:40:10 -0500
+	id 1rhsRT-0006Wg-LI; Wed, 06 Mar 2024 09:40:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rhsRE-0006U5-Jp
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:40:09 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rhsRB-000190-VT
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:40:08 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rhsRP-0006WA-Ls
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:40:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rhsRO-0001AL-7A
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:40:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709736017;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=giVr0uN5B+wsUImoh4c6PHnlOzh/h4/ezMiPhUn9ahU=;
+ b=OHtBHTEY8KRvthKDdou8qadX7VT29vkwU8DvmtCSCWgCEf6yA3CMR8qgXGK92Nfl6tBWpK
+ nz+0WzIMDiKESGXpVPrBt75+wH87djRjz4iTeQdi0938Bk66PEaceRgeOHAnPWlCuJZZGD
+ O6EQOPdcY3VeQ5Cdj7A06ChEDX+DuW4=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-154-PcV3m4ndM2KjdM2Zb8dxfw-1; Wed,
+ 06 Mar 2024 09:40:15 -0500
+X-MC-Unique: PcV3m4ndM2KjdM2Zb8dxfw-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id A680376DDF;
- Wed,  6 Mar 2024 14:40:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709736004; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=aiWkhtCuxGbVFIPddj3khfr4+s8obheTPIArBE/DeP0=;
- b=sywZYfwIsbjOW5pzIsYj+klyNTFL/GRO+oaX6+ZZyVJETU9RYi4kuh1FfoxPCB3089ypsM
- M5Qr2LjsUHTVeLEAOL/p3JjAQMboclrRBjGgFWrV/VakTswFBSvivJh0uy/+NvR5DARPgR
- UYH1d64TUR41aulDwUPlG2M1mJc3HtA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709736004;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=aiWkhtCuxGbVFIPddj3khfr4+s8obheTPIArBE/DeP0=;
- b=F/OpZVnf1ttmwXWp8EHlCNGnMVyPGCJQLj0S7XbadGz2QqfPfR1JbIQXN8zqkzjZquTXNp
- j8NaYtnY+FntV6Ag==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709736004; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=aiWkhtCuxGbVFIPddj3khfr4+s8obheTPIArBE/DeP0=;
- b=sywZYfwIsbjOW5pzIsYj+klyNTFL/GRO+oaX6+ZZyVJETU9RYi4kuh1FfoxPCB3089ypsM
- M5Qr2LjsUHTVeLEAOL/p3JjAQMboclrRBjGgFWrV/VakTswFBSvivJh0uy/+NvR5DARPgR
- UYH1d64TUR41aulDwUPlG2M1mJc3HtA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709736004;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=aiWkhtCuxGbVFIPddj3khfr4+s8obheTPIArBE/DeP0=;
- b=F/OpZVnf1ttmwXWp8EHlCNGnMVyPGCJQLj0S7XbadGz2QqfPfR1JbIQXN8zqkzjZquTXNp
- j8NaYtnY+FntV6Ag==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2D78713A67;
- Wed,  6 Mar 2024 14:40:03 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id zwYeOUOA6GWXSAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 06 Mar 2024 14:40:03 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Het Gala <het.gala@nutanix.com>, qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, thuth@redhat.com, lvivier@redhat.com,
- pbonzini@redhat.com, peterx@redhat.com, Het Gala <het.gala@nutanix.com>
-Subject: Re: [PATCH v3 3/7] Add channels parameter in migrate_qmp_fail
-In-Reply-To: <20240306104958.39857-4-het.gala@nutanix.com>
-References: <20240306104958.39857-1-het.gala@nutanix.com>
- <20240306104958.39857-4-het.gala@nutanix.com>
-Date: Wed, 06 Mar 2024 11:40:01 -0300
-Message-ID: <87jzmfs9tq.fsf@suse.de>
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 800172823F6E;
+ Wed,  6 Mar 2024 14:40:15 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.3])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 5E38440C6CB7;
+ Wed,  6 Mar 2024 14:40:15 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4953E21E6A24; Wed,  6 Mar 2024 15:40:14 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Chun Feng Wu <wucf@cn.ibm.com>
+Cc: Daniel Berrange <berrange@redhat.com>,  "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+Subject: Re: Does "-object" support structured options now?
+In-Reply-To: <PH7PR15MB6503A217E33561AB9E193FA5F7212@PH7PR15MB6503.namprd15.prod.outlook.com>
+ (Chun Feng Wu's message of "Wed, 6 Mar 2024 14:33:05 +0000")
+References: <PH7PR15MB6503236A69BD173E62FC6791F7232@PH7PR15MB6503.namprd15.prod.outlook.com>
+ <ZeWA8VrzgjKjETXh@redhat.com>
+ <PH7PR15MB6503A217E33561AB9E193FA5F7212@PH7PR15MB6503.namprd15.prod.outlook.com>
+Date: Wed, 06 Mar 2024 15:40:14 +0100
+Message-ID: <871q8nxw35.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spamd-Result: default: False [-3.10 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
- RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_SEVEN(0.00)[8];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,nutanix.com:email];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,95 +85,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Het Gala <het.gala@nutanix.com> writes:
+Chun Feng Wu <wucf@cn.ibm.com> writes:
 
-> Alter migrate_qmp_fail() to allow both uri and channels
-> independently. For channels, convert string to a Dict.
-> No dealing with migrate_get_socket_address() here because
-> we will fail before starting the migration anyway.
+> Thanks Daniel for your response!
 >
-> Signed-off-by: Het Gala <het.gala@nutanix.com>
-> Suggested-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  tests/qtest/migration-helpers.c | 15 +++++++++++++--
->  tests/qtest/migration-helpers.h |  5 +++--
->  tests/qtest/migration-test.c    |  4 ++--
->  3 files changed, 18 insertions(+), 6 deletions(-)
+> I tried it with the following cmd
 >
-> diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
-> index 9af3c7d4d5..478c1f259b 100644
-> --- a/tests/qtest/migration-helpers.c
-> +++ b/tests/qtest/migration-helpers.c
-> @@ -92,17 +92,28 @@ bool migrate_watch_for_events(QTestState *who, const char *name,
->      return false;
->  }
->  
-> -void migrate_qmp_fail(QTestState *who, const char *uri, const char *fmt, ...)
-> +void migrate_qmp_fail(QTestState *who, const char *uri,
-> +                      const char *channels, const char *fmt, ...)
->  {
->      va_list ap;
->      QDict *args, *err;
-> +    Error *error_abort = NULL;
+> qemu-system-x86_64 [other options...] \
+>   -object '{"qom-type":"throttle-group","id":"limits0","limits":{"iops-total":200}}'
+>
+> And I got error:
+> qemu-system-x86_64: -object {"qom-type":"throttle-group","id":"limits0","limits":{"iops-total":200}}: Parameter 'id' is missing
+>
+> Do you know why such error happens?
 
-The error_abort needs to be the one defined in error.c. Just remove this
-line.
+Can't reproduce the error.
 
-> +    QObject *channels_obj = NULL;
->  
->      va_start(ap, fmt);
->      args = qdict_from_vjsonf_nofail(fmt, ap);
->      va_end(ap);
->  
->      g_assert(!qdict_haskey(args, "uri"));
-> -    qdict_put_str(args, "uri", uri);
-> +    if (uri) {
-> +        qdict_put_str(args, "uri", uri);
-> +    }
-> +
-> +    g_assert(!qdict_haskey(args, "channels"));
-> +    if (channels) {
-> +        channels_obj = qobject_from_json(channels, &error_abort);
-> +        qdict_put_obj(args, "channels", channels_obj);
-> +    }
->  
->      err = qtest_qmp_assert_failure_ref(
->          who, "{ 'execute': 'migrate', 'arguments': %p}", args);
-> diff --git a/tests/qtest/migration-helpers.h b/tests/qtest/migration-helpers.h
-> index e16a34c796..4e664148a5 100644
-> --- a/tests/qtest/migration-helpers.h
-> +++ b/tests/qtest/migration-helpers.h
-> @@ -33,8 +33,9 @@ G_GNUC_PRINTF(3, 4)
->  void migrate_incoming_qmp(QTestState *who, const char *uri,
->                            const char *fmt, ...);
->  
-> -G_GNUC_PRINTF(3, 4)
-> -void migrate_qmp_fail(QTestState *who, const char *uri, const char *fmt, ...);
-> +G_GNUC_PRINTF(4, 5)
-> +void migrate_qmp_fail(QTestState *who, const char *uri,
-> +                      const char *channels, const char *fmt, ...);
->  
->  void migrate_set_capability(QTestState *who, const char *capability,
->                              bool value);
-> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-> index 20b1dd031a..19bb93cb7d 100644
-> --- a/tests/qtest/migration-test.c
-> +++ b/tests/qtest/migration-test.c
-> @@ -1721,7 +1721,7 @@ static void test_precopy_common(MigrateCommon *args)
->      }
->  
->      if (args->result == MIG_TEST_QMP_ERROR) {
-> -        migrate_qmp_fail(from, args->connect_uri, "{}");
-> +        migrate_qmp_fail(from, args->connect_uri, NULL, "{}");
->          goto finish;
->      }
->  
-> @@ -1816,7 +1816,7 @@ static void test_file_common(MigrateCommon *args, bool stop_src)
->      }
->  
->      if (args->result == MIG_TEST_QMP_ERROR) {
-> -        migrate_qmp_fail(from, args->connect_uri, "{}");
-> +        migrate_qmp_fail(from, args->connect_uri, NULL, "{}");
->          goto finish;
->      }
 
