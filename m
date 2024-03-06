@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A28E1C54E41
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 17:22:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47A59C54E41
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 17:29:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhuwA-0008CV-D1; Wed, 06 Mar 2024 12:20:14 -0500
+	id 1rhv4N-0007iw-HU; Wed, 06 Mar 2024 12:28:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rhuw6-0008BI-Fp
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:20:10 -0500
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rhuw3-0001CY-OB
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:20:10 -0500
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-29a858a0981so5130237a91.0
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 09:20:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1709745606; x=1710350406; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dMBh/u49DOAEejhXpEpyFUDYeRYjhmZaHILM+RyspVc=;
- b=buQP+H7dSgIibeHkksDhYh4nRQ00st3y+chtl7r9LeVqaxHDmLb+PBSfJCvyFgsFcr
- kvfHjigtg9mACKuJlmvmsbO2GeSBoY7huF5G0ryWkjt8K+WIIrb0KZookYfUWbcf+eJ/
- MdulE+xhkxzG9n96G2cElp8XQ02Lf4YRZKcXZxgHSKQbJZSddpM4r47mJs+EcRTUVYvx
- B4tv9ca8IiDzogO3ck6Bf37rzFYFsM69D3KbTTG5BnvEcPuzq1/l/d35gFKBwBmQNoJO
- 7ypcmBJtMKleQgi291GbwuVFJFuYM52AlZLgkzeDEoUxcp8U4wPOrpIdIaNStGKp2jcc
- sK3g==
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1rhv4K-0007gi-P2
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:28:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1rhv4J-0004yQ-78
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:28:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709746117;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=wVm8nopxhdTnNxV+C/CxgiL7Ajx4dWRfRy27MeCc6HQ=;
+ b=Q1R5DViiI3qTwp+rrHnCCSb1wrrLG3wLQ4VeI9dHkHnmlpHMW3IyUtW5NAo2mO6cfNfo1l
+ /V06NIroDK3QJDp10ssasmH3w8bUf+A9mXD60iguSr+kVGmYh9IRjHX00HnSwkOxuw8U0K
+ AAmL4gW7hr5dmKdtb5qi9pN79jdbwLw=
+Received: from mail-yb1-f200.google.com (mail-yb1-f200.google.com
+ [209.85.219.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-147-s0L7WuszMX2voAGcnjfqRQ-1; Wed, 06 Mar 2024 12:28:36 -0500
+X-MC-Unique: s0L7WuszMX2voAGcnjfqRQ-1
+Received: by mail-yb1-f200.google.com with SMTP id
+ 3f1490d57ef6-dc693399655so13164584276.1
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 09:28:36 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709745606; x=1710350406;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1709746116; x=1710350916;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dMBh/u49DOAEejhXpEpyFUDYeRYjhmZaHILM+RyspVc=;
- b=hCTldYSwxQ37lYyviEUjLy3U4YMWmvSK0sAtYEL4fVOuz55gzvl5PkEswzG5pQgjBo
- Wp7LK7whscTwnq1Eu2Dq6BgiLLwyqnMahuaCWENQBIqhatJKDlUmWWV4VMwwlNSbwoCu
- p79cFGmlFrnzZcmGPJo8NtgkUpt4tS44RboEOUYxMbNHUBJ4flyHgytHzuoBsYyzTKyc
- 3zDtYrkr6ScHiuM0V2+lwxnCzlxxH5CLIVqK6cWKK435xJjZJ4HIdcJgnTfDiozU7nMv
- drXQy4oGYefuODxa+wsA00ISJtwICJPQNE0ySvzGlF0HD4Lx0uIrxGxlPBXfq9lvgFyh
- MFbg==
-X-Gm-Message-State: AOJu0YyOA61qwDy1w7XlO0osB0zZ1B4uSesUL6SMfpcnYWRITXLOa5Pi
- 6SuUE+9Fq9oFwdf9djfke/NBPGA/MuPeJQQ6tXuqaDq0W/5a06f4Rj7OwkaPjUZPFUL96ajqOex
- u
-X-Google-Smtp-Source: AGHT+IGBMs2oJ/Cl1sXwLlnooX6Yypww/85KPJYpEssH5fcRlOmZO+eJNN41uOy69frFsPwdnTodHw==
-X-Received: by 2002:a17:90b:3585:b0:29b:f79:2b75 with SMTP id
- mm5-20020a17090b358500b0029b0f792b75mr13683412pjb.7.1709745606002; 
- Wed, 06 Mar 2024 09:20:06 -0800 (PST)
-Received: from grind.dc1.ventanamicro.com ([177.94.15.159])
- by smtp.gmail.com with ESMTPSA id
- p17-20020a170902c71100b001dbb6fef41fsm12869712plp.257.2024.03.06.09.20.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Mar 2024 09:20:05 -0800 (PST)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v7 9/9] target/riscv/vector_helper.c: optimize loops in ldst
- helpers
-Date: Wed,  6 Mar 2024 14:19:32 -0300
-Message-ID: <20240306171932.549549-10-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240306171932.549549-1-dbarboza@ventanamicro.com>
-References: <20240306171932.549549-1-dbarboza@ventanamicro.com>
+ bh=wVm8nopxhdTnNxV+C/CxgiL7Ajx4dWRfRy27MeCc6HQ=;
+ b=blijCa4Edn2/FcqZ1vJAhFo8NcJKclttdkXKslYksBWAfFtedsFphovj6wRhRPCmAW
+ cciMj4Pf7aW6ikk3fD8aM+CanfEcg9uv2VYJ/u2DEoS5vToHLveE5bqvV1xMGfTsm8sW
+ s/cNd4YEKaBccyEEhS0ByIYcadcvg5CqiMLOaKRPhQb9dejjqwOp+2aQoskGmPtVT6lV
+ gXenAxUI6n1/eaHY7GUgfI5udHbviHn9vUT5n1Ptl6OREYBKHS4Z0AECFcW8X4sRLmBT
+ SoQr03ZN3DNeuigLfQKF6USjlazydQ2dqfBdpAogEdGO7TCBeifffC0ZEpblazpwDbOd
+ tPPw==
+X-Gm-Message-State: AOJu0YwHbb5HcsRjryZ6oTSNJXMhxJrU06sXvnQ9doaPbGuP5txWF94K
+ AIjWCtXXN1FqP+PYHIaGGNuDCJkMnkA/0jbVdIvriwPcQE49sZZJZEM2Q1GQAPR8/A325CUhhdZ
+ imoFf++weiQFSuOFpckCrlQ5yg2UouKCZNcQZXK1xglOuiQwKE5z8BWrzbDNWsx6QsZ/Q+taGud
+ p84v3XDzKL+vaUiHW0vDAmOd2N56A=
+X-Received: by 2002:a25:c546:0:b0:dc6:ff66:87a8 with SMTP id
+ v67-20020a25c546000000b00dc6ff6687a8mr12041330ybe.51.1709746116113; 
+ Wed, 06 Mar 2024 09:28:36 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFYuMtoaDSNe4eC4y86ctGMazVJdja/luVm7OBljWJX901XH0rGCP62zwMGS6fIiO/887UWwYJZ96dZ93OyEDE=
+X-Received: by 2002:a25:c546:0:b0:dc6:ff66:87a8 with SMTP id
+ v67-20020a25c546000000b00dc6ff6687a8mr12041305ybe.51.1709746115780; Wed, 06
+ Mar 2024 09:28:35 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x102e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <1707911419-11758-1-git-send-email-si-wei.liu@oracle.com>
+In-Reply-To: <1707911419-11758-1-git-send-email-si-wei.liu@oracle.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Wed, 6 Mar 2024 18:27:59 +0100
+Message-ID: <CAJaqyWcrSFszNH6kG2m8qBg-CzKeQfshVCAC9=9s6+3MSiFR7w@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] vhost: dirty log should be per backend type
+To: Si-Wei Liu <si-wei.liu@oracle.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, jasowang@redhat.com, 
+ joao.m.martins@oracle.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,50 +97,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Change the for loops in ldst helpers to do a single increment in the
-counter, and assign it env->vstart, to avoid re-reading from vstart
-every time.
+On Wed, Feb 14, 2024 at 2:01=E2=80=AFPM Si-Wei Liu <si-wei.liu@oracle.com> =
+wrote:
+>
+> There could be a mix of both vhost-user and vhost-kernel clients
+> in the same QEMU process, where separate vhost loggers for the
+> specific vhost type have to be used. Make the vhost logger per
+> backend type, and have them properly reference counted.
+>
+> Suggested-by: Michael S. Tsirkin <mst@redhat.com>
+> Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/riscv/vector_helper.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+It seems to me you missed the cover letter and sent 01/02 as the first mess=
+age?
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index cc7290a1bb..1ab386830a 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -208,7 +208,7 @@ vext_ldst_stride(void *vd, void *v0, target_ulong base,
-     uint32_t esz = 1 << log2_esz;
-     uint32_t vma = vext_vma(desc);
- 
--    for (i = env->vstart; i < env->vl; i++, env->vstart++) {
-+    for (i = env->vstart; i < env->vl; env->vstart = ++i) {
-         k = 0;
-         while (k < nf) {
-             if (!vm && !vext_elem_mask(v0, i)) {
-@@ -274,7 +274,7 @@ vext_ldst_us(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
-     uint32_t esz = 1 << log2_esz;
- 
-     /* load bytes from guest memory */
--    for (i = env->vstart; i < evl; i++, env->vstart++) {
-+    for (i = env->vstart; i < evl; env->vstart = ++i) {
-         k = 0;
-         while (k < nf) {
-             target_ulong addr = base + ((i * nf + k) << log2_esz);
-@@ -388,7 +388,7 @@ vext_ldst_index(void *vd, void *v0, target_ulong base,
-     uint32_t vma = vext_vma(desc);
- 
-     /* load bytes from guest memory */
--    for (i = env->vstart; i < env->vl; i++, env->vstart++) {
-+    for (i = env->vstart; i < env->vl; env->vstart = ++i) {
-         k = 0;
-         while (k < nf) {
-             if (!vm && !vext_elem_mask(v0, i)) {
--- 
-2.43.2
+> ---
+>  hw/virtio/vhost.c | 49 +++++++++++++++++++++++++++++++++++++------------
+>  1 file changed, 37 insertions(+), 12 deletions(-)
+>
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index 2c9ac79..ef6d9b5 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -43,8 +43,8 @@
+>      do { } while (0)
+>  #endif
+>
+> -static struct vhost_log *vhost_log;
+> -static struct vhost_log *vhost_log_shm;
+> +static struct vhost_log *vhost_log[VHOST_BACKEND_TYPE_MAX];
+> +static struct vhost_log *vhost_log_shm[VHOST_BACKEND_TYPE_MAX];
+>
+>  /* Memslots used by backends that support private memslots (without an f=
+d). */
+>  static unsigned int used_memslots;
+> @@ -287,6 +287,8 @@ static int vhost_set_backend_type(struct vhost_dev *d=
+ev,
+>          r =3D -1;
+>      }
+>
+> +    assert(dev->vhost_ops->backend_type =3D=3D backend_type || r < 0);
+
+Is this a debug leftover (at least the r<0)? This should never be
+reached effectively, but then it does not make sense to leave the
+default switch branch.
+
+> +
+>      return r;
+>  }
+>
+> @@ -319,16 +321,23 @@ static struct vhost_log *vhost_log_alloc(uint64_t s=
+ize, bool share)
+>      return log;
+>  }
+>
+> -static struct vhost_log *vhost_log_get(uint64_t size, bool share)
+> +static struct vhost_log *vhost_log_get(VhostBackendType backend_type,
+> +                                       uint64_t size, bool share)
+>  {
+> -    struct vhost_log *log =3D share ? vhost_log_shm : vhost_log;
+> +    struct vhost_log *log;
+> +
+> +    if (backend_type =3D=3D VHOST_BACKEND_TYPE_NONE ||
+> +        backend_type >=3D VHOST_BACKEND_TYPE_MAX)
+> +        return NULL;
+
+The callers (vhost_log_resize, etc) don't expect vhost_log_get to
+return NULL. I think all of these should be an assertion, if any.
+
+The rest looks good to me.
+
+> +
+> +    log =3D share ? vhost_log_shm[backend_type] : vhost_log[backend_type=
+];
+>
+>      if (!log || log->size !=3D size) {
+>          log =3D vhost_log_alloc(size, share);
+>          if (share) {
+> -            vhost_log_shm =3D log;
+> +            vhost_log_shm[backend_type] =3D log;
+>          } else {
+> -            vhost_log =3D log;
+> +            vhost_log[backend_type] =3D log;
+>          }
+>      } else {
+>          ++log->refcnt;
+> @@ -340,11 +349,20 @@ static struct vhost_log *vhost_log_get(uint64_t siz=
+e, bool share)
+>  static void vhost_log_put(struct vhost_dev *dev, bool sync)
+>  {
+>      struct vhost_log *log =3D dev->log;
+> +    VhostBackendType backend_type;
+>
+>      if (!log) {
+>          return;
+>      }
+>
+> +    assert(dev->vhost_ops);
+> +    backend_type =3D dev->vhost_ops->backend_type;
+> +
+> +    if (backend_type =3D=3D VHOST_BACKEND_TYPE_NONE ||
+> +        backend_type >=3D VHOST_BACKEND_TYPE_MAX) {
+> +        return;
+> +    }
+> +
+>      --log->refcnt;
+>      if (log->refcnt =3D=3D 0) {
+>          /* Sync only the range covered by the old log */
+> @@ -352,13 +370,13 @@ static void vhost_log_put(struct vhost_dev *dev, bo=
+ol sync)
+>              vhost_log_sync_range(dev, 0, dev->log_size * VHOST_LOG_CHUNK=
+ - 1);
+>          }
+>
+> -        if (vhost_log =3D=3D log) {
+> +        if (vhost_log[backend_type] =3D=3D log) {
+>              g_free(log->log);
+> -            vhost_log =3D NULL;
+> -        } else if (vhost_log_shm =3D=3D log) {
+> +            vhost_log[backend_type] =3D NULL;
+> +        } else if (vhost_log_shm[backend_type] =3D=3D log) {
+>              qemu_memfd_free(log->log, log->size * sizeof(*(log->log)),
+>                              log->fd);
+> -            vhost_log_shm =3D NULL;
+> +            vhost_log_shm[backend_type] =3D NULL;
+>          }
+>
+>          g_free(log);
+> @@ -376,7 +394,8 @@ static bool vhost_dev_log_is_shared(struct vhost_dev =
+*dev)
+>
+>  static inline void vhost_dev_log_resize(struct vhost_dev *dev, uint64_t =
+size)
+>  {
+> -    struct vhost_log *log =3D vhost_log_get(size, vhost_dev_log_is_share=
+d(dev));
+> +    struct vhost_log *log =3D vhost_log_get(dev->vhost_ops->backend_type=
+,
+> +                                          size, vhost_dev_log_is_shared(=
+dev));
+>      uint64_t log_base =3D (uintptr_t)log->log;
+>      int r;
+>
+> @@ -2037,8 +2056,14 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIO=
+Device *vdev, bool vrings)
+>          uint64_t log_base;
+>
+>          hdev->log_size =3D vhost_get_log_size(hdev);
+> -        hdev->log =3D vhost_log_get(hdev->log_size,
+> +        hdev->log =3D vhost_log_get(hdev->vhost_ops->backend_type,
+> +                                  hdev->log_size,
+>                                    vhost_dev_log_is_shared(hdev));
+> +        if (!hdev->log) {
+> +            VHOST_OPS_DEBUG(r, "vhost_log_get failed");
+> +            goto fail_vq;
+> +        }
+> +
+>          log_base =3D (uintptr_t)hdev->log->log;
+>          r =3D hdev->vhost_ops->vhost_set_log_base(hdev,
+>                                                  hdev->log_size ? log_bas=
+e : 0,
+> --
+> 1.8.3.1
+>
+>
 
 
