@@ -4,78 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FACBC54E41
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 21:08:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E16D6C54E41
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 21:08:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhyUv-00074N-1g; Wed, 06 Mar 2024 16:08:22 -0500
+	id 1rhyUv-00074U-0k; Wed, 06 Mar 2024 16:08:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <info@maximka.de>) id 1rhxZq-0007c8-LC
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 15:09:22 -0500
-Received: from mo4-p00-ob.smtp.rzone.de ([85.215.255.24])
+ (Exim 4.90_1) (envelope-from <info@maximka.de>) id 1rhxJk-0004u9-2V
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 14:52:44 -0500
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <info@maximka.de>) id 1rhxZo-0001H7-Fw
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 15:09:22 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1709755757; cv=none;
+ (Exim 4.90_1) (envelope-from <info@maximka.de>) id 1rhxJi-00025g-4P
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 14:52:43 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1709754757; cv=none;
  d=strato.com; s=strato-dkim-0002;
- b=InKuDc0l/gjetXp2NAmuc6OoHXwShFbzNW0FmSPUerSorkq9GycEfZrmfwpXV/6VGI
- XhL310C/t+zVw4PR4D0utmKmfyOszFQ8s2GU4iMsmoZKb2lz/WUqLaNQFYza7RLxj3yG
- Itu+e/yQ5L8FS2xV9mshs2q++So8TTFheOFXMqaLVVGJyiNk1r/JcEe+3HV+ML1TP3JU
- NdgjSY5vghVt1s4BSKWJGyKwaKpzewN9RQ2IAU8f307akDeuwJ3bTB3dN8iMLM4GCuBr
- gojeEows8As/1zFhYyFmchr1FQjaXv22I7XishvZPeCzbEEA2gL49IZLHa3o8AFEfkEN
- nlPw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1709755757;
+ b=I/MmsUGHTxZMVWJ79/1iEoo1GgNQnJSAk7IAQLzQOeWqQ/6lVwEaQ0fXLAbGCokQPN
+ UH70iNNhvfzgWEiyV5aVxKeKE4UU7Zy0UKIZxiqG/t3tJDUi0oCVz0kZVhOA9qLOgaOV
+ eIu0akJkzWpSaAb3nL62wG85y5Ec8tD2IFdHq/tncAjdlDgfmIYPFxiwoo8XHf3I+xP6
+ fcR+AySY7xZYiDK6r1CoWYPXOOjwcVXK1pb1oBCeOBMgrHE1O17A5UZeQFfBZY1ie8o0
+ Ev5CDbAOGM69po139s63lTsTaJL7ENTghigukTGivZ3fbQpA3MySX1hj3YkWCrOU5q7v
+ 5FwA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1709754757;
  s=strato-dkim-0002; d=strato.com;
- h=Subject:References:In-Reply-To:Message-ID:Cc:To:From:Date:Cc:Date:
- From:Subject:Sender;
- bh=YF8zFMPbz9tAx4AxBHaHiO1/wbg8L5PKI1PZjveRaaw=;
- b=ZRMW0p4FxvbSY3sOo2SlyeSCtIh4HhmsRXsYDRBkWjhRWDO/UOdLvrUcYBF9O6wUuX
- 7ofnI29AVbus/yzFMGMCYGChhnJ+A415o510gyNTIuN83B6KYp7jg4+kcZzGSGeHLNZK
- Dv86znliw3BUE2frWtxUM+0UwIKxxVtZvp+hLLfZ8JAkII2rv+bzwU1O2iOis9aOj/ux
- EmYYORhBBnkGGjZJcE6VAwgknn+Q2WV8MsNZy2qxfCYhWm/fE27JuJpQx9075UiF9MEA
- 8BkzqBKe2HDRRr8pscjsNOz4aO5MoNh14c2YDAOp15HGzPhVmGcHxTvCLWOjV+kQN59M
- n4jA==
+ h=Subject:Message-ID:Cc:To:From:Date:Cc:Date:From:Subject:Sender;
+ bh=CgMlrG0sN6rez4LMHO61MIUdUmQSTGn8nr0uVeiuK/4=;
+ b=INcWFgpGyUClIiBmB84BfB1c6kw8t88566Fc/QobTXnWT16AOxEGcglz2R5KWQuwVc
+ UDY6YZD8pXjBMhXrqZnC7GI5/lrM4CP5eWYr3KlH2xtJq+NMbnLgaWyd7+J/jVCtDBAO
+ 5vGULPZmyQxXAZnfkfpJZxpG+oafWCPy8zQskOJxSeSoazxEuRhBNKOwbBk2PkUryg9P
+ Wh/GPhLXx7UOiS5dxvXX9fXEqGDgZBLW/S1K1wgVdi3DnQHZQ0T+/zU59NHu78O/82vP
+ XnyF+l4AOXwNOoaqw3cfRy1GGAy9OT/LfuWYuarEFG4B1SyHBkY/grnT++iZi7kmmv2K
+ 0eFg==
 ARC-Authentication-Results: i=1; strato.com;
     arc=none;
     dkim=none
 X-RZG-CLASS-ID: mo00
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1709755757;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1709754757;
  s=strato-dkim-0002; d=maximka.de;
- h=Subject:References:In-Reply-To:Message-ID:Cc:To:From:Date:Cc:Date:
- From:Subject:Sender;
- bh=YF8zFMPbz9tAx4AxBHaHiO1/wbg8L5PKI1PZjveRaaw=;
- b=RqZ04BPBGQMXAsAJe2SG6sH3wiOg47wWdQwVdZ3wG4K4+uyR4tWI81afFlZOSIFNA/
- OLz2yRUBW3c3c5wKv2Mnj+cGE9qwTdMSK6gXlLlB4xs/EpvlbZhe2rugt3i5OM0wmBU/
- M60Pye6bOKTUmtnQFIK9PY3ul6aT6A9ZJ0SySChejBdFk+WNPtOV2oDxpIB6h68t8kWe
- X52EqWZM+MDdOHy4oA7TZelHJ7IRZHnK924wih/W7256bITZgXorRSZf+alClSEO3yn7
- KEBs6xIF7lfcfICMkC9avuf9nzpwsAQtS6IS3nZUKVO/4ch1Pdn/Vo6ko1TS6L9z9bh0
- jRzA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1709755757;
+ h=Subject:Message-ID:Cc:To:From:Date:Cc:Date:From:Subject:Sender;
+ bh=CgMlrG0sN6rez4LMHO61MIUdUmQSTGn8nr0uVeiuK/4=;
+ b=WXGjenqluvovWK2gnhdquErsikOFhiZa6+Ita6Ojy16iLdAKTPfzv3z6xyv6ffx35V
+ 9y6LzIvJpjxPNcMHYyfAdJRW3ha0o6Dt+RJr86EvfOAAtT73YLKFiqGlk8UjVijZsj5t
+ nwiYtEnoUF8aJJD63j4bOcHJucN2s6t0oYqK4SwN9SI0Pg+UyDBLotjGAVn4DzErY/yK
+ Qf87Szr/cISH64lQa54kKSjUkTILxwyqmMh6i8yoQo8xb1Ib9qeO2XqXfxySwlMy1wmL
+ Q+ixLASbXAtiiTf5vD1NhmIponi+ombsdt12+/6UNVQApXnllOcU1i6mxuh9YXusFpOY
+ G7ww==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1709754757;
  s=strato-dkim-0003; d=maximka.de;
- h=Subject:References:In-Reply-To:Message-ID:Cc:To:From:Date:Cc:Date:
- From:Subject:Sender;
- bh=YF8zFMPbz9tAx4AxBHaHiO1/wbg8L5PKI1PZjveRaaw=;
- b=yXkGXlEN7PCNSTrEME5UMbuhqNSMMXdK3MyqDNUY+kV5ptaElKxldJkzT2gVGsuUUo
- 3csgyfF0EqUrKw0ctSCg==
+ h=Subject:Message-ID:Cc:To:From:Date:Cc:Date:From:Subject:Sender;
+ bh=CgMlrG0sN6rez4LMHO61MIUdUmQSTGn8nr0uVeiuK/4=;
+ b=SCwoOCywQOqt+ZOHXf6e5WPsQRvgYTxGru7ghw3u8KKT5CA9R4winsy8c0m1iv7Nau
+ WDiADOxixQxYlw46tRCQ==
 X-RZG-AUTH: ":JWICemCleucEZGNurnXz/7xIHdyVrBVseu4t8zsQBJLrlG+xkMbI/m4uBgE3i1hBaQM7bDIKr1/ge0kZWL8z684/OOeKaw=="
 Received: from ox-live-app303.back.ox.d0m.de
- by smtp-ox.front (RZmta 50.2.0 AUTH) with ESMTPSA id Y6d679026K9HiTv
+ by smtp-ox.front (RZmta 50.2.0 AUTH) with ESMTPSA id Y6d679026JqbiND
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve X9_62_prime256v1
  with 256 ECDH bits, eq. 3072 bits RSA))
  (Client did not present a certificate);
- Wed, 6 Mar 2024 21:09:17 +0100 (CET)
-Date: Wed, 6 Mar 2024 21:09:17 +0100 (CET)
+ Wed, 6 Mar 2024 20:52:37 +0100 (CET)
+Date: Wed, 6 Mar 2024 20:52:37 +0100 (CET)
 From: info@maximka.de
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Message-ID: <994784261.2558198.1709755757517@webmail.strato.de>
-In-Reply-To: <CAJSP0QWcE=SxYqFKj8XiGJgwSK40M9HZzAEAsvhNrTJWNR8T1A@mail.gmail.com>
-References: <2048170974.2556839.1709754757016@webmail.strato.de>
- <CAJSP0QWcE=SxYqFKj8XiGJgwSK40M9HZzAEAsvhNrTJWNR8T1A@mail.gmail.com>
-Subject: Re: no target for a link in the post "How to access libvirt domains
- in KubeVirt"
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "stefanha@gmail.com" <stefanha@gmail.com>
+Message-ID: <2048170974.2556839.1709754757016@webmail.strato.de>
+Subject: no target for a link in the post "How to access libvirt domains in
+ KubeVirt"
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
@@ -83,7 +77,7 @@ X-Priority: 3
 Importance: Normal
 X-Mailer: Open-Xchange Mailer v7.10.6-Rev60
 X-Originating-Client: open-xchange-appsuite
-Received-SPF: none client-ip=85.215.255.24; envelope-from=info@maximka.de;
+Received-SPF: none client-ip=81.169.146.217; envelope-from=info@maximka.de;
  helo=mo4-p00-ob.smtp.rzone.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -109,26 +103,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Stefan, you made the update swiftly;-)
-BTW thank you for your meaningful posts.
+Hello, thank you for the post.
+
+The href in the link
+<a href="https://kubevirt.io/user-guide/debug_virt_stack/">Virtualization Debugging</a>
+
+should be replaced by
+https://kubevirt.io/user-guide/debug_virt_stack/logging/
+
 Best,
 Alexei
-  
-> On 06/03/2024 21:04 CET Stefan Hajnoczi <stefanha@gmail.com> wrote:
-> 
->  
-> On Wed, 6 Mar 2024 at 14:52, <info@maximka.de> wrote:
-> >
-> > Hello, thank you for the post.
-> >
-> > The href in the link
-> > <a href="https://kubevirt.io/user-guide/debug_virt_stack/">Virtualization Debugging</a>
-> >
-> > should be replaced by
-> > https://kubevirt.io/user-guide/debug_virt_stack/logging/
-> 
-> Hi Alexei,
-> Thanks for pointing out the broken link! The blog post has been updated.
-> 
-> Stefan
 
