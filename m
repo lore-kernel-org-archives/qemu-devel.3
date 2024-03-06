@@ -4,79 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FF9EC54E41
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 20:51:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B72AEC54E41
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 20:57:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhyEh-000824-Kh; Wed, 06 Mar 2024 15:51:35 -0500
+	id 1rhyJg-00034B-Os; Wed, 06 Mar 2024 15:56:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhyEf-00081g-Nz
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 15:51:33 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhyJe-00033z-Oy
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 15:56:42 -0500
+Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhyEd-0008IS-Oz
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 15:51:33 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-412fc5f5152so1726355e9.0
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 12:51:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rhyJd-0001Ku-Ax
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 15:56:42 -0500
+Received: by mail-lj1-x22a.google.com with SMTP id
+ 38308e7fff4ca-2d3f4fef377so1120711fa.1
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 12:56:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709758290; x=1710363090; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709758599; x=1710363399; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=zDlwdnMzWpfgxirVMfSqhya+/ChMKA7X5OQPV9rxm4w=;
- b=LsYpDWV+9AEHDLa76SHCATGRmIcfqcApHca0lGvjE4pjs8CPSnILgWoj6YFPVP6Ep1
- ePST47r3B4ALfPmPZFHkB3+vZYan9DvvvuaZAkE8d0LFcwTB97bLJaiAJlVLE5jICjth
- sbpJ3uDu0jVWw1rGEYsfi9LoI2WQdiW+2ODL9oEq3VKJqv0utlV7u9ONLvbCSaL0rDsY
- uwklbzEVKAniNCt7gj6WUVGdwwQJ7Lz53c1trMO3oK2dTF4lBcpVARKqbbFb0ab/PHpX
- XhJboICFxxdyu1FdviqwubQCp2zxsBzzNEHhdIHsOapxFY0LTNbe/XIxqTxjr8OUMC44
- vTJA==
+ bh=PHbwU2HRXntGLyOsLMl5iC2LPtKiWekG3p/lykF1u2o=;
+ b=JrnA9mwg1SRPp/OFGhXuSgDNxK2THxAww95avBdD8tNGqd5XOYKMSUrK3zbhaLa02P
+ JF6sIuFymOWgQxoFuPNl4zziiG567LDO0YhUdTz0ZeMNCJxSyzrN1epSMBrS+DRBW3p0
+ IJmA6ko1Kj6UJtHQn0KGO/Hzr6vORJj898IohLfEZoUj1JNxQcs5eWX+jA65sOEfJUYn
+ y0Up2GO6nr8qGEtnVT3r+b8UIttFOZQVBT0u1nGOTsn3BgMTcXIkFz6Ih9W+wC4Eprt6
+ Myksi3zZg/aXxCH+NY2ZpPFJJu1pyoM32OtZr57mdoGR7RdyrWFPrdeXi2hovCDq7EHn
+ mkKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709758290; x=1710363090;
+ d=1e100.net; s=20230601; t=1709758599; x=1710363399;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zDlwdnMzWpfgxirVMfSqhya+/ChMKA7X5OQPV9rxm4w=;
- b=dc3BNCYsDezlg0SBn77c//115zAHpihyj0s/BynGdU0QYdbFx80Em1F+H4Eyc1OL/i
- VmeWqw5CS1aBcJmsU2PRLRQAi8u9lMG1skbpxdvEHhMNwnZbX1XhbZt5/hLflGtNMsbo
- BeAOhaiHlcezDIiBB9hQGBPHI3Ntkn7PRCMC7wOobTDr8gGNdrkd1V4/KdkVL/8Hc16O
- 1wcQSkVSE2xcMYygUFD9TTbV0ZwHf6j5xy9I/JXokt7dR/kpw+k2/P1KU7IjAWIQelFU
- dgCYzv0I4kIoQnrRgVpJYfAJVb0kRpCceAUAO6Vfrs4r7ZP61p2FttJC/dHV1z8aZxXn
- nnZw==
+ bh=PHbwU2HRXntGLyOsLMl5iC2LPtKiWekG3p/lykF1u2o=;
+ b=r19ciGud9SwQtbTMK3+WugrQ3ntN/3lBtuUCRMV4lsm5jQa1SPjdXj00lMQkJ3Y/+2
+ rt6it0ot3yU9lSWi32nIMqh5vjR/mjvKjM0ceQctzgevSmQ/TOiFRFyq7k4UQ35hdBSl
+ aBJ6gXEZKXMk/52TnjTZNTcs1X1uxzV98OHxwDOMoPtELDzmW+hycsCeEUWOxVLjZ6yS
+ Wd/pJp7MkEtmL5U3sCMZ7feiQyOIh48F2XipknkjVFWrjnyyh8qxQygNUiUsbJdmGe39
+ ZXKIkHif/TWU+nv9WeflNcSCYs8n1kf+SVQY6n4nnKIdYIqOuQshZ0BlB3YvK6i/7C8P
+ 5S0A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVsE9s/yujn/8Fvd/Irs/8t0BmZ3h8jlyPiJk+jX9xq178Esc5UC7kwn84omA37t7OoV6dP7nEXSYFSvQTDQ0CtWc01Tjs=
-X-Gm-Message-State: AOJu0YxOKc7mZmltOvz3YDSjFzsvCEResTCBB8AL11MDNe2ao+eXlTrE
- TOwTRjwtJOnswn0In9YZnzkT0oasd/s6xPUgs3sjefWre4ZzMNvcbCUTILtyg5U=
-X-Google-Smtp-Source: AGHT+IGTOolS7n/Q9BTdkXqMwqVx9WWwWQCsV4JAIkWDVUaG6XhclbUrrsK5ngxFR+EeDehgs1fOBA==
-X-Received: by 2002:a05:600c:3b96:b0:413:49a:c3b0 with SMTP id
- n22-20020a05600c3b9600b00413049ac3b0mr791850wms.2.1709758289795; 
- Wed, 06 Mar 2024 12:51:29 -0800 (PST)
+ AJvYcCUUtuvyrzevv6k6C0/b1FAMjJD58kqrSuvgT+FBnw6Ns/+RFyfwdITC1lPqlFaxCu7wcA1Bk8AUmmx+qq1Xc8Fl3Lcl0dA=
+X-Gm-Message-State: AOJu0Ywft0iCiOdBkMIHQO2GxoOqziKb0xbTVBfj3ytWav6vDul6A8NV
+ H6F21pWkHhYnET9ZqKfQWuUN9CbK6kwfY2n4hcAj3zs/a/xULtEt+BDL6OGlP7M=
+X-Google-Smtp-Source: AGHT+IFCgA9OsNEws2mp6ug7lTiQtcgqeXqbrLSlfjHslSFoNcrkYoHjywRe7/SHxofVssCqQdpSDw==
+X-Received: by 2002:a05:6512:61c:b0:513:7:fc3c with SMTP id
+ b28-20020a056512061c00b005130007fc3cmr122735lfe.55.1709758598862; 
+ Wed, 06 Mar 2024 12:56:38 -0800 (PST)
 Received: from [192.168.69.100] (vau06-h02-176-184-43-100.dsl.sta.abo.bbox.fr.
  [176.184.43.100]) by smtp.gmail.com with ESMTPSA id
- 14-20020a5d47ae000000b0033cf80ad6f5sm18920951wrb.60.2024.03.06.12.51.28
+ i27-20020a170906265b00b00a441c8c56d0sm7502525ejc.218.2024.03.06.12.56.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Mar 2024 12:51:29 -0800 (PST)
-Message-ID: <bd25d169-cd34-4670-9194-04ee0ff18ef5@linaro.org>
-Date: Wed, 6 Mar 2024 21:51:27 +0100
+ Wed, 06 Mar 2024 12:56:38 -0800 (PST)
+Message-ID: <a875237e-1026-41d1-99a2-87e3d2ec7196@linaro.org>
+Date: Wed, 6 Mar 2024 21:56:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 21/25] vfio: Reverse test on vfio_get_dirty_bitmap()
+Subject: Re: [PATCH 04/14] hw/core/machine-smp: Calculate total CPUs once in
+ machine_parse_smp_config()
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Markus Armbruster <armbru@redhat.com>,
- Prasad Pandit <pjp@fedoraproject.org>
-References: <20240306133441.2351700-1-clg@redhat.com>
- <20240306133441.2351700-22-clg@redhat.com>
+To: Zhao Liu <zhao1.liu@linux.intel.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org
+Cc: Xiaoling Song <xiaoling.song@intel.com>, Zhao Liu <zhao1.liu@intel.com>
+References: <20240306095407.3058909-1-zhao1.liu@linux.intel.com>
+ <20240306095407.3058909-5-zhao1.liu@linux.intel.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240306133441.2351700-22-clg@redhat.com>
+In-Reply-To: <20240306095407.3058909-5-zhao1.liu@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,50 +103,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/24 14:34, Cédric Le Goater wrote:
-> It will simplify the changes coming after.
+On 6/3/24 10:53, Zhao Liu wrote:
+> From: Zhao Liu <zhao1.liu@intel.com>
 > 
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> In machine_parse_smp_config(), the number of total CPUs is calculated
+> by:
+> 
+>      drawers * books * sockets * dies * clusters * cores * threads
+> 
+> To avoid missing the future new topology level, use a local variable to
+> cache the calculation result so that total CPUs are only calculated
+> once.
+> 
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
->   hw/vfio/common.c | 22 +++++++++++++---------
->   1 file changed, 13 insertions(+), 9 deletions(-)
-> 
-> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-> index 5b2e6a179cdd5f8ca5be84b7097661e96b391456..6820d2efe4923d5043da7eb8deecb6ff20e1fd16 100644
-> --- a/hw/vfio/common.c
-> +++ b/hw/vfio/common.c
-> @@ -1241,16 +1241,20 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
->       }
->   
->       rcu_read_lock();
-> -    if (vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL)) {
-> -        ret = vfio_get_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
-> -                                    translated_addr);
-> -        if (ret) {
-> -            error_report("vfio_iommu_map_dirty_notify(%p, 0x%"HWADDR_PRIx", "
-> -                         "0x%"HWADDR_PRIx") = %d (%s)",
-> -                         bcontainer, iova, iotlb->addr_mask + 1, ret,
-> -                         strerror(-ret));
-> -        }
-> +    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL)) {
-> +        goto out_lock;
->       }
-> +
-> +    ret = vfio_get_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
-> +                                translated_addr);
-> +    if (ret) {
-> +        error_report("vfio_iommu_map_dirty_notify(%p, 0x%"HWADDR_PRIx", "
-> +                     "0x%"HWADDR_PRIx") = %d (%s)",
-> +                     bcontainer, iova, iotlb->addr_mask + 1, ret,
-> +                     strerror(-ret));
-> +    }
-> +
-> +out_lock:
+>   hw/core/machine-smp.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
 
-Alternatively use WITH_RCU_READ_LOCK_GUARD() to avoid label.
-
->       rcu_read_unlock();
->   
->   out:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
