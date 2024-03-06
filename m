@@ -4,85 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77B96C54E49
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 04:22:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0221C54E49
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 04:28:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhinI-0003qK-Mt; Tue, 05 Mar 2024 23:22:16 -0500
+	id 1rhisq-0004oQ-H3; Tue, 05 Mar 2024 23:28:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rhinG-0003pV-9z
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 23:22:14 -0500
-Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rhiso-0004o8-Fe; Tue, 05 Mar 2024 23:27:58 -0500
+Received: from mail-vk1-xa2e.google.com ([2607:f8b0:4864:20::a2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rhinE-0007hX-Fx
- for qemu-devel@nongnu.org; Tue, 05 Mar 2024 23:22:14 -0500
-Received: by mail-oi1-x22f.google.com with SMTP id
- 5614622812f47-3bbbc6b4ed1so4909855b6e.2
- for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 20:22:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rhisn-0000O3-0B; Tue, 05 Mar 2024 23:27:58 -0500
+Received: by mail-vk1-xa2e.google.com with SMTP id
+ 71dfb90a1353d-4d36196a7f7so1158532e0c.2; 
+ Tue, 05 Mar 2024 20:27:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709698931; x=1710303731; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=t3WFj/NxX7PbGY8RQmPQs/URWPmD9tQBuwxIK9h/vSs=;
- b=g5kPZkYLhO/++dGfXTLdkgIkTpJ2VgO+QromU0uwD1y0hD6o0G8irGaVHuelY7+qrQ
- hZaSDJwL/FLlXhiiwQ7ZTa2SDBEVfn3REF7wKVg/ZolJTIPvzIrErNv9uFD3k3Ly2RLp
- /2orOaBw9/S2XC0f0X3mV5xK8q3Qa7Un1bd7c6z5pYmOu5od04RrW21snBNUH9ydMmIf
- cewm4ATBdc4+6dBnHf7mTqeIStSG9049wX0fPctiH8/wCWPNd2uuu4gxR0lEmzjJSF4p
- t4qa0bUIpM8VNlk/oLS5AG4diY7wINW0bvy4cmoiVl4Ne3SYSDoD7p1IKbRiTiCNr0/N
- sYFg==
+ d=gmail.com; s=20230601; t=1709699274; x=1710304074; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=oXVq4tRnLWMHtGLTpCQRpvrFFW2YlrbpZOnhzL1zuzI=;
+ b=gInhlFPJeiOKFPgfUIHfY1faUhzi/h10i/CmR9/ALJOJNDmfAC+sIg0Ig/0J3oKDLK
+ MJD+N20NfL7ezJbh745WoWr7NqODAj+gK6RxSto+eHI1R5pW0b7F+ufaVmjWGmiWJH2a
+ BOJbjw560+swWBsM7vk1ZhEE4KlUKqR2goYImhiHDfSEJA57J8wnCUrgfqTFF001xvwn
+ Dp/+J63BfBjRqW+Crieg07sTZkdEDovhIaKX8rnRudGSBdYdVIMcxck0XNpRC2JBESp9
+ RNYLZe7VeAPr5jrX5fE25P/0wmQbYHpxraNKKlgJ/NxQUn6OWcFbaHovO7JybTQB75vV
+ rq+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709698931; x=1710303731;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=t3WFj/NxX7PbGY8RQmPQs/URWPmD9tQBuwxIK9h/vSs=;
- b=Cppn09hBkjvQHQ8OSkLLQM9aa1DkOFmr+/SD60LAbyTGmeSV44aGc5SsmaRdmUGpOH
- Xi1vsimu/f/TYTBLqBNAjxsxCbq4Zv+q2XjO4rwSv+vMl0LdBHz4fwDAMmnGjF9iGObA
- ixB6gcWqy9U0iJbu6Oy3AkfvbSD823nfkfyJYItngRzEBX3TYCFRaFZTO1N0ZJautP++
- mNJvVU9EPqs/IUH22/VqtssfBQ2GgFHvPYxu+6xoDn1yzUmeVB1FZbWxxRLv5NV+LnGg
- 8pncrjzzK8DRjHbXr4N9j3Np28bmtCZv1GSWMQdPv7K9l1XJy2nTb5x5KJaaMqprWLcL
- ctdA==
+ d=1e100.net; s=20230601; t=1709699274; x=1710304074;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=oXVq4tRnLWMHtGLTpCQRpvrFFW2YlrbpZOnhzL1zuzI=;
+ b=alkxu+DIsf1S795hhJqIuxuUCu+zMbL7HZpKvGkDArFPEi6Cz+3jOC7h3WvhUCP7YF
+ KhZDUriJaT8LOXMbbqbdlptHqk5pPW7e+My6HMh7hqpNV/uAh+7E6aL/pPbKzyug/rUz
+ 3GkeDrgeie2gnamnJmJ75X1eGAp5qWQzhtsOZzrQDCEPwfjWLGnQnRXJiF0B5S6+c4EI
+ pBHstp6BDZEGZBOOa0xN2ZctHYHroZ01AZZ9McXRJhpbTRC+sFWaceP3ffJY3Osou0Jg
+ I47Q6Hz8Ov+vtcW0Jf/+dQFcLaUAIBd1/9HaIu5MlZNKG2GdkE0OcqO7fsVUAyjlxd1C
+ Dp6A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUX4xpg915onljk+SsCPq520KpJqyH+wabd2zBm3xk8OLJXdmKGBeEbIzPzOEnliaeXbGdFB1Ed/YJEvw/2F2a2iy0okp8=
-X-Gm-Message-State: AOJu0YxCtBhOh1+AOlUiVb5KtMBdcJzPBjXJ3G18wzV9NCjcv0x2BJgx
- GWl5zCVILVM1Tx3Jop5VheRhwFCL1uzvROD23SZLjs4yHUIHNgmkplFIoqpO1SK4Fi0gRRR5AXP
- p
-X-Google-Smtp-Source: AGHT+IFGSMycbmn4zSum8VAk0wTvyzSit5UMRAiuVKWnIrY9q0Bj4e9lY7oAgSk5nkCQirL1my4yig==
-X-Received: by 2002:a05:6808:2092:b0:3c1:ef08:6976 with SMTP id
- s18-20020a056808209200b003c1ef086976mr4436176oiw.10.1709698931247; 
- Tue, 05 Mar 2024 20:22:11 -0800 (PST)
-Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
- [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- o189-20020a62cdc6000000b006e5597994c8sm10198339pfg.5.2024.03.05.20.22.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 Mar 2024 20:22:10 -0800 (PST)
-Message-ID: <fd515ea4-ca4b-4d54-9d9b-59683ccd683e@linaro.org>
-Date: Tue, 5 Mar 2024 18:22:06 -1000
+ AJvYcCXlywjSI/zIu53SCrSK4Kb/GKkkyROAhQtqXS+QG6g0l0LSo/zQWqvKB6IHYP46/Fb7HlAY6ggM1V6374f3xJC+84vTSflHU5ItBltRhrGdqBXTf6QN2Mi2KIiSsSo=
+X-Gm-Message-State: AOJu0YzbwPHKYrZOyzIqHtIzGaDGkNTxLNBvDhvJMlt4EoI8gdfBlaNf
+ nqLlUh753Torcsry+XQ7+FcAS9r7O/ZfEkoV4tc/dbeIEanWF4qGE2dtGkZ9S0YhuVn6p63ZRQo
+ +X1TtuubMa8AKroVpHwMUn0nYtPw=
+X-Google-Smtp-Source: AGHT+IHQCRPo2SSnTcnAPGwo0WvBiyYmz6APZXDYCcvrjAYEC+1DpAeumiRA2yPOVDtw65zIZOdTYKC2Q2afFppU1t4=
+X-Received: by 2002:a05:6122:4e8c:b0:4c0:9ec7:b324 with SMTP id
+ gf12-20020a0561224e8c00b004c09ec7b324mr3552094vkb.0.1709699274361; Tue, 05
+ Mar 2024 20:27:54 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v7 00/23] target/arm: Implement FEAT_NMI and
- FEAT_GICv3_NMI
-Content-Language: en-US
-To: Jinjie Ruan <ruanjinjie@huawei.com>, peter.maydell@linaro.org,
- eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
-References: <20240306035721.2333531-1-ruanjinjie@huawei.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240306035721.2333531-1-ruanjinjie@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <qemu-stable-8.2.1-20240128204849@cover.tls.msk.ru>
+ <20240128175035.812352-7-mjt@tls.msk.ru> <87ttlnehb1.fsf@linux-m68k.org>
+In-Reply-To: <87ttlnehb1.fsf@linux-m68k.org>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 6 Mar 2024 14:27:28 +1000
+Message-ID: <CAKmqyKMGODCT3BetDRL_1MLuEKcBhQjUBgZ99eMQvN-Aeo+CAg@mail.gmail.com>
+Subject: Re: [Stable-8.2.1 61/71] linux-user/riscv: Adjust vdso signal frame
+ cfa offsets
+To: Andreas Schwab <schwab@linux-m68k.org>
+Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
+ qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Vineet Gupta <vineetg@rivosinc.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Alistair Francis <alistair.francis@wdc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2e;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2e.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,34 +96,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/5/24 17:56, Jinjie Ruan via wrote:
-> This patch set implements FEAT_NMI and FEAT_GICv3_NMI for armv8. These
-> introduce support for a new category of interrupts in the architecture
-> which we can use to provide NMI like functionality.
-> 
-> There are two modes for using this FEAT_NMI. When PSTATE.ALLINT or
-> PSTATE.SP & SCTLR_ELx.SCTLR_SPINTMASK is set, any entry to ELx causes all
-> interrupts including those with superpriority to be masked on entry to ELn
-> until the mask is explicitly removed by software or hardware. PSTATE.ALLINT
-> can be managed by software using the new register control ALLINT.ALLINT.
-> Independent controls are provided for this feature at each EL, usage at EL1
-> should not disrupt EL2 or EL3.
-> 
-> I have tested it with the following linux patches which try to support
-> FEAT_NMI in linux kernel:
-> 
-> 	https://lore.kernel.org/linux-arm-kernel/Y4sH5qX5bK9xfEBp@lpieralisi/T/#mb4ba4a2c045bf72c10c2202c1dd1b82d3240dc88
-> 
-> In the test, SGI, PPI and SPI interrupts can all be set to have super priority
-> to be converted to a hardware NMI interrupt. The SGI is tested with kernel
-> IPI as NMI framework, softlockup, hardlockup and kgdb test cases, and the PPI
-> interrupt is tested with "perf top" command with hardware NMI enabled, and
-> the SPI interrupt is tested with a custom test module, in which NMI interrupts
-> can be received and sent normally.
+On Sun, Mar 3, 2024 at 8:34=E2=80=AFPM Andreas Schwab <schwab@linux-m68k.or=
+g> wrote:
+>
+> On Jan 28 2024, Michael Tokarev wrote:
+>
+> > From: Richard Henderson <richard.henderson@linaro.org>
+> >
+> > A typo in sizeof_reg put the registers at the wrong offset.
+> >
+> > Simplify the expressions to use positive addresses from the
+> > start of uc_mcontext instead of negative addresses from the
+> > end of uc_mcontext.
+>
+> This breaks the testsuite of libunwind.  The test Gtest-resume-sig and
+> all dependent tests hang.  Reverting this commit fixes them.
 
-As far as I can see, this patch set is good to go.  I'm fairly confident of the CPU side 
-of the equation, but the GIC could use a second set of eyes.
+Do you have any more details? It seems strange that this commit is
+breaking something as it looks to be correct
 
+Alistair
 
-r~
+>
+> --
+> Andreas Schwab, schwab@linux-m68k.org
+> GPG Key fingerprint =3D 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC=
+1
+> "And now for something completely different."
+>
 
