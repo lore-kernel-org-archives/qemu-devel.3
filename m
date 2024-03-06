@@ -4,172 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5743BC54798
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 02:42:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F836C54E49
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 02:50:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhhDw-0004LB-Am; Tue, 05 Mar 2024 21:41:40 -0500
+	id 1rhhM4-00061h-Ed; Tue, 05 Mar 2024 21:50:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fei2.wu@intel.com>)
- id 1rhhDt-0004Ku-Sn; Tue, 05 Mar 2024 21:41:38 -0500
-Received: from mgamail.intel.com ([192.198.163.15])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fei2.wu@intel.com>)
- id 1rhhDr-0007h1-Fy; Tue, 05 Mar 2024 21:41:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709692895; x=1741228895;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=iCYqWfblRWc/89nHH14jMPzZ4arZOOp2Gqj2lz3/cNU=;
- b=P0miICQGLL12Dy2LuJx9iXnoqK7YuUaxsraH0TnN97pzTt9Dve87VYZZ
- ecSHhM+v9mqudAMOQl3nVwQdQT5i0xx4pi7V68290Gh9KKUrFMrba9Qzu
- mDRsrrSg+V1gpEIFka+njJuGHTLY7hhw138LoY5jJi8pqw5zN0Y5gj/GZ
- QM8mjwe+3xBdAp2MxaR4JOB2m/463M0ZthbviIg/hHt1z7xrFFz3blQ56
- gKqntWZcJ/j1Y5KlJBmBAXNNgnTwGmE8DWduKBo7VufoU1l3zhNci7iDB
- 2Ni+Uz4tfywIZjivNv7KODAkbRZ7pde6uqOc00KlP7mOJypYvlBWPH3zN A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11004"; a="4455841"
-X-IronPort-AV: E=Sophos;i="6.06,207,1705392000"; 
-   d="scan'208";a="4455841"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Mar 2024 18:41:29 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,207,1705392000"; d="scan'208";a="40471474"
-Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
- by orviesa002.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 05 Mar 2024 18:41:30 -0800
-Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Tue, 5 Mar 2024 18:41:28 -0800
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Tue, 5 Mar 2024 18:41:28 -0800
-Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Tue, 5 Mar 2024 18:41:28 -0800
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (104.47.58.100)
- by edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Tue, 5 Mar 2024 18:41:27 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=id54OYHF6oSjf0moZO1I4IubntSXbXuIpiuMzJRsrAeWHs3MJskFPqGFRZScVsJmziJqwleeLtpJcapgo4Ou9dmlKeFXRZKoLp3TCdEUsqu8KbV3z87PoG083PufcmMLcMHcIdMRXb/5fPI2EJuSXGm+wP12MbOhgYYGXNaPn/wtmdfCOJGQLfRz3+IqQHAyhGT+df3RcEAMzEx5I1k0Dy5jDUGBk0eakADB3muSXg7MMgbHd0vkyAf9kHDM+UU9VavVVIidsUbpzbHKRnclNOE/GqTMhUZ14kwvSILlFCwypQ+4rNLijnSFWvaPoq3Hghyw5SYc8h9olHJsWKlQ1Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kwizUWbrwVdfZv75o4qQOrpBB/ij9emI+Mef4Dwe6hs=;
- b=ZlKH7o2u8W01TIdn5+VHxQevO7UoF6cGx1hlU8atS8a+grjcWLGoPIz7ixsP6b2i4ngmfij1/OWn5lZUbZlXmlqtDgYO6iiLHK85C2bEUzvadkDohoy5bDgxqU/fuQbPFvr1JJfPDpv7bQ3lXr/NkMwiSPWiLxsr9D/VDIBELk5EdKsnQtL7b6gxy/xxvHiqZZm/nzHk2yCBCQVvBgpLRS/a1dYe89URqHXoQl1mSIeD7vjawl6ueBivD3FbolyYU5Kla6nQvVVBPzrNSrvnkzgIhyGEcYp67TUvhRyDov35c+MfHu4qtOOx2qNUgRYweiuJsOrr2sFJOAgKRQvYGA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from CH3PR11MB7895.namprd11.prod.outlook.com (2603:10b6:610:12f::12)
- by PH0PR11MB5046.namprd11.prod.outlook.com (2603:10b6:510:3b::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.24; Wed, 6 Mar
- 2024 02:41:25 +0000
-Received: from CH3PR11MB7895.namprd11.prod.outlook.com
- ([fe80::8ff0:84de:f95c:5261]) by CH3PR11MB7895.namprd11.prod.outlook.com
- ([fe80::8ff0:84de:f95c:5261%4]) with mapi id 15.20.7362.019; Wed, 6 Mar 2024
- 02:41:25 +0000
-Message-ID: <9e1b19eb-2775-4950-ad60-fbf7d92a6ac6@intel.com>
-Date: Wed, 6 Mar 2024 10:41:14 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 1/2] hw/riscv: Add server platform reference machine
-To: Conor Dooley <conor@kernel.org>
-CC: <pbonzini@redhat.com>, <palmer@dabbelt.com>, <alistair.francis@wdc.com>,
- <bin.meng@windriver.com>, <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>, 
- <zhiwei_liu@linux.alibaba.com>, <qemu-devel@nongnu.org>,
- <qemu-riscv@nongnu.org>, <andrei.warkentin@intel.com>,
- <shaolin.xie@alibaba-inc.com>, <ved@rivosinc.com>,
- <sunilvl@ventanamicro.com>, <haibo1.xu@intel.com>, <evan.chai@intel.com>,
- <yin.wang@intel.com>, <tech-server-platform@lists.riscv.org>,
- <tech-server-soc@lists.riscv.org>
-References: <20240304102540.2789225-1-fei2.wu@intel.com>
- <20240304102540.2789225-2-fei2.wu@intel.com>
- <20240306-peddling-superglue-fce995d0be84@spud>
-Content-Language: en-US
-From: "Wu, Fei" <fei2.wu@intel.com>
-In-Reply-To: <20240306-peddling-superglue-fce995d0be84@spud>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SI2PR02CA0046.apcprd02.prod.outlook.com
- (2603:1096:4:196::15) To CH3PR11MB7895.namprd11.prod.outlook.com
- (2603:10b6:610:12f::12)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rhhM2-00061S-I0; Tue, 05 Mar 2024 21:50:02 -0500
+Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rhhM0-0002If-Pb; Tue, 05 Mar 2024 21:50:02 -0500
+Received: by mail-vk1-xa2f.google.com with SMTP id
+ 71dfb90a1353d-4d33d049cbaso99866e0c.0; 
+ Tue, 05 Mar 2024 18:49:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1709693398; x=1710298198; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yV8p/jxSHQGeqxodYmectXNgzFk+bokfX/wqvyoYatg=;
+ b=Yc8jY5zvPGIzg+bZSZp8tdDQBGA6PIvcfZP0JK4afP5yEyntUzMmzptNSz2wr89KBJ
+ F1Xi/6KTKzBMfpzSdlE+krOw/gmiJGiOh8nj/sutCrfLq0tmeb9VqblxLKYTwTplO6Zt
+ cwi3xt8S/5vn8HsHZY3BWpxkVfqT/uu+jHdNQHcoCzgnlROZyoqelS8ukP8Mu0Vlbdzq
+ 7XqA8WaZ/o6sUTylQSW6hGkvYOXnbxqqJaz2RiEAWlAJTlvpnDciVFgbOPyZBvKvKxZJ
+ DqHM3gMEfW4NiLRiI5P9/k409LZX6oQ3b+/P9ZfNN1wANFNPxv+VMefdQI6cN11erV/h
+ M2uA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709693398; x=1710298198;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yV8p/jxSHQGeqxodYmectXNgzFk+bokfX/wqvyoYatg=;
+ b=hTKIh+ON/oHLgjFssrS+v07mZUL9umQ6+knF6nmEhTPzHbjsdpBNsN45jdMOptgnGv
+ EWV3+HQiwvdrmwjKow+BC10iKc3ADzIeLHwBlhbymMLLtKCSljzR4vas4jwPylNoKyOd
+ ZRomxrc8bw9s3D/5vKZOf8HmJOlpDR6y/9G9cOmN9+NdoadNZqccxOWsnNgxYTPjT1Z8
+ fGjaFV96nkk+tmVI2rTTH8mBGjSa0UB1spPO6kDB9HlRL6MyscxYPvkVWUOB3ljlsKP8
+ 2q78iDCZ6AWOm+yO0/X5f/PnyvIGpjuYWagOcFMpcSqxINMUS/vCSTZeV2JaFD/RJeZ1
+ mVtQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVkIbj96e89YSMjcO0I4bZQvH1itRsJc/O54jR9zjTU6r3lRMlijy1muwl/zsoPg2TjCQNNW3nXEY+Car+ZzLF/GddJpCM=
+X-Gm-Message-State: AOJu0Ywgznu07BiJPdbJn5tIuR2rOrsJcaMWHSV/I6GFalrNDQHisdN/
+ Bw2ZO15qF7o1osYElvisbmUl2K+l3D0EfVa/NMksISVsksXOgNveaEPTjCMNfH93XSFS/ZFbpE2
+ wpgH+16NX2Nqu0mLXkcZpJ2axnaI=
+X-Google-Smtp-Source: AGHT+IGKvmW8n6c3IPYHvMw4i+KcFC5tKQULiRb3Adt7vUh/lu7TtdvakOX3pCagp7ZE71aGOB8HZ9xsKNtnL949wSM=
+X-Received: by 2002:a05:6122:1d15:b0:4d3:45a2:ae53 with SMTP id
+ gc21-20020a0561221d1500b004d345a2ae53mr3829407vkb.16.1709693398626; Tue, 05
+ Mar 2024 18:49:58 -0800 (PST)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR11MB7895:EE_|PH0PR11MB5046:EE_
-X-MS-Office365-Filtering-Correlation-Id: 037a1c58-7c1a-41f0-919e-08dc3d86ea9d
-X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 67KN3hrP+ix9iiYkLhTc5dWDJwDgNnpJu9VkQu4WeKHBJQJNg/ZqSRbbSd+BeoGfZcO+Cf1UNHay1000oiCdt1xsJjaINWcmkjGPYE+GyvkmQagyLHT4zS5yjinD1O0f42vMcqOaJwZ8dI1b05XOgW/ATgGQaGb2hRAE2HfF4YHXy4+gAcbLEZtmLgCSkiZKhkHHSw6eXf4zzgYcX9rtz6VBZ2jeD7prFiZ2sYPmyLfgol8JJXDKsHi2XAmw/BNF2bHRpEBrwLzNzV8ufHgqKFyRUdntdSSkMmRA6LBZEY4y8jAdrrkP35famqJQLnBK6xPdZMyP1TNubrTh89fINaOC7BbKQHtIChmgeo4+6YzVnzzKhrNS463nqPh0luZe54SQ7Y82ExdEiB+6q88Y0X6RlzTjKLGl+/dkgTCtELX8a73moT44MF9GFEzF7mVZX0nammTM1oQLo2zU1zFpojldRpHCHl8elKc3QXo9Lw0Xmd++qqtQQ7WEWmsgc/jjTCFP3uXpnM8ZNpUYaOP8Jh5jZ0dUTujKDmjEdRjP+gkk8pJRF7eUOOSq7+6JUUi6ROatKtlT8H2OzmG19+NenEAHQBr4HOfWSfVrfSGy3lSA49NUGG3TyMlAaVAmvcS9O50gBymnmXNTL4megXpUIcWxkCFlybgOBXfd2D+poOQ=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR11MB7895.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(376005); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TmlUVDBZRHM3SEpUdlZPMjBES2thWDNQTEcwV0dFSDBaNVY2bUYwNmRBbDlI?=
- =?utf-8?B?Mi82Y2ltemczazVKYlE2eHNzTTFMcjBnbjNwMGtlWGJIY3dIRGtjSEVwRTVr?=
- =?utf-8?B?U3BTZDAzNTBCSW15c1ZISUZ0dGxocjRBMDdEcDhUQzFCa3FNY3NyWDgzYWVB?=
- =?utf-8?B?NWp5czhld3RzdU1iZW1jSTkxMmRSS3ExMVZtMm5raEw3Vk84d2dMYnRGY1l4?=
- =?utf-8?B?Vk80Nlc4VzR0d3phYTRjYlJ4ZXplbHFvYjQ1dWdmRnpmREtCdVRNVEhGV2tK?=
- =?utf-8?B?RS8zbFppWm9QN2oxVXg5dlpaRGZIWGhoNFFTN2ZJNSszUERFQVpIVXNTTHli?=
- =?utf-8?B?KzFQRkJLZEpQRTJ6SUtuOWQwa2JqSDNXandjL2RtTVRhRFNpVGtiNFYyU0VC?=
- =?utf-8?B?NzIrVEg2QTlIQUpwdEFWSkZuQ1pxeUI3bDhGRzA1NVJJTGpUbDZYWHh0enV6?=
- =?utf-8?B?RXVLTkZBU29TNVRWQWhub05RNk1NYVd0aFhaUW15ZzhpR0tGMm1abkplaGFT?=
- =?utf-8?B?VTZVczY0OC83OU0rODhaQnFFdkhMTEJja3czVWFhalYzK3NPbHI3SnNPbWxq?=
- =?utf-8?B?YlZReVVRYTIwM2QzajhiUjZQQ2VRbW9BYkFHOVRQY0VBeTZxKzFtS0luZW1D?=
- =?utf-8?B?Y2p4QWhaZHdzcGtVNWFjV1N5S3pyYjlOdjNaU1FWMHlwSE1TdHhzdWNsa1Ba?=
- =?utf-8?B?NytJbEN5ZTNwQzVTT1VaRWZWdXNLK3VhK3BZVi9KVjFQTldid3NyYnNod09i?=
- =?utf-8?B?QXRqekNDeDNKMEduMEpmS1pta0FWUld3UVFmSHRaMDV6NisyZGtEcFVpeWFx?=
- =?utf-8?B?V0pLSHI2b1F2MW9PYTE3QTE4MElNbyt3SGdMSEdrdWxWVHpERjM3QXY0SG9X?=
- =?utf-8?B?bWc3cktQYnZmdFpmdjFGeXRqYXNid3JrWFhSOGZaQittSiswMFV5eUpmRVkx?=
- =?utf-8?B?RGlhUS81bFFSTHB3U0pHZHZaV3dLWHNJeFdVZkFNajgzYnBtNHVudkVDQm51?=
- =?utf-8?B?Y3p1ZU05RGY5LzdCc3NIUk15eVRLcDV3b2F6TG0yVEUybGZpbnBQTzJaZnFo?=
- =?utf-8?B?N24zQnpTVzQ2ek9yYzRCYnZNa0FyVDFPTlV6UG11UGNBODlOYTZQU1FJdXFH?=
- =?utf-8?B?Z2Ywb1lJcHlKOFh5TXMySGxSRk92dkxFK0lwQXlkRWwxNHQvRmUyc2ljeE5X?=
- =?utf-8?B?dUhDN1E2RnhJQ1JJSUZPd1UycWFyV0Z1dGh5V2s5bHhVcTlzY2lJN3o3V3JO?=
- =?utf-8?B?WTRsNXpRalBvNEh0Ui9vVTJaVjdabTdMcXhITUgyK1kwVkFoTVlwaFNvckJR?=
- =?utf-8?B?WkpSNHhYSitmRTJ3czY0SEc0cExPTkZoUnZjeE03TWpGUDRuUjNsRnU2Wjd2?=
- =?utf-8?B?SmtGdDF6Q2s4eEtJRTVGWEtVWExBRXdSOFFOTmx6RU03TUttZU9PK3FIVTdZ?=
- =?utf-8?B?azk4WE8wbFlmUFVhMllVSUZ6cGlDVWVtUS9MQzd4VmpES1gybXpFbzhCeXZQ?=
- =?utf-8?B?NXFRMVhMbUtsb1VVUFZ2Ym1rWEk0UzZId25rSHllZ25hUHhYdTVkc2Fqd0xI?=
- =?utf-8?B?ZDRBMm9PbWlrbkM4NTgvSlMwZ1pPUis5aWUvaXN4WjkzWjQvRGIwSkpGeVRl?=
- =?utf-8?B?QUV0b0RvMUN2cG5BZmxTeUg5V08xRk1SVGs5bE1Idk1seUdFcmo3Q0loTXZo?=
- =?utf-8?B?Wmc1ZnlXVnRLQ2lCeFQ5dzhDTWdqU1JsWnhsemJaMml4aU1pTC9GT1BSdnpa?=
- =?utf-8?B?emQrVC9DaGpEZXl1d3BoNUpla2hyazNWbmNNSk9XdUdZV0trSXo3ZmJZbWVy?=
- =?utf-8?B?ZU9ONkxFY3VFOHNmVWxaOVgvTEY4WVB3WVo1aHRTNU5HeTNqTUdjWHlSMkxB?=
- =?utf-8?B?Uk5YL1hVZlA3U1VDaHM1NXNBcW1iRkVua3QxZWVRdDEvZnN0bmlYK3BuZ3ZH?=
- =?utf-8?B?OE0xY0EyamxSNFBrSGV1RkREdFc3N0VmclBHa0YrUWZyUDN0OVlkSG5iQi9h?=
- =?utf-8?B?Y01BTzRJTG50U2Q4aG1SRUFWTThTTjFoVExHTWRtdW8wVW5SK1ROSXNhalNl?=
- =?utf-8?B?VmhYY0k0NWpzWWRTTDloNGppSGNOZDMyZmpxN3B3RGFZWC91bkNEVi9GSXZq?=
- =?utf-8?Q?HsPNC4aexme75P39yxWo1YuT+?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 037a1c58-7c1a-41f0-919e-08dc3d86ea9d
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR11MB7895.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Mar 2024 02:41:25.4388 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: af37MnhF+Bvfy4Nkz6D1q8QQfypsJdfiKmmyt/tmZRJuShkZbKbzNtwBEW7CWQICju/ufQAwnCi+z1lEtPxazQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB5046
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=fei2.wu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.568,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240304134732.386590-1-dbarboza@ventanamicro.com>
+ <20240304134732.386590-3-dbarboza@ventanamicro.com>
+In-Reply-To: <20240304134732.386590-3-dbarboza@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 6 Mar 2024 12:49:32 +1000
+Message-ID: <CAKmqyKPwpST+x+SKv6vsSCgW2N3oN5fW13ffrhyMYnARjftiNw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] target/riscv/kvm: update KVM exts to Linux 6.8
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com, ajones@ventanamicro.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -185,25 +94,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Conor,
+On Mon, Mar 4, 2024 at 11:48=E2=80=AFPM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+> The last KVM extensions added were back in 6.6. Sync them to Linux 6.8.
+>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-On 3/6/2024 8:27 AM, Conor Dooley wrote:
-> On Mon, Mar 04, 2024 at 06:25:39PM +0800, Fei Wu wrote:
-> 
->> +        name = riscv_isa_string(cpu_ptr);
->> +        qemu_fdt_setprop_string(ms->fdt, cpu_name, "riscv,isa", name);
->> +        g_free(name);
-> 
-> Please use riscv_isa_write_fdt() here so that you populate more than the
-> deprecated property here please.
-> 
-Sure, I saw it's been done in virt.c recently, I will catch up all the
-improvements from virt.c to this board.
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-Thanks,
-Fei.
+Alistair
 
-> Thanks,
-> Conor.
-
+> ---
+>  target/riscv/kvm/kvm-cpu.c | 29 +++++++++++++++++++++++++++++
+>  1 file changed, 29 insertions(+)
+>
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index 422e4f121c..c7afdb1e81 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -275,13 +275,42 @@ static KVMCPUConfig kvm_multi_ext_cfgs[] =3D {
+>      KVM_EXT_CFG("zicbom", ext_zicbom, KVM_RISCV_ISA_EXT_ZICBOM),
+>      KVM_EXT_CFG("zicboz", ext_zicboz, KVM_RISCV_ISA_EXT_ZICBOZ),
+>      KVM_EXT_CFG("zicntr", ext_zicntr, KVM_RISCV_ISA_EXT_ZICNTR),
+> +    KVM_EXT_CFG("zicond", ext_zicond, KVM_RISCV_ISA_EXT_ZICOND),
+>      KVM_EXT_CFG("zicsr", ext_zicsr, KVM_RISCV_ISA_EXT_ZICSR),
+>      KVM_EXT_CFG("zifencei", ext_zifencei, KVM_RISCV_ISA_EXT_ZIFENCEI),
+> +    KVM_EXT_CFG("zihintntl", ext_zihintntl, KVM_RISCV_ISA_EXT_ZIHINTNTL)=
+,
+>      KVM_EXT_CFG("zihintpause", ext_zihintpause, KVM_RISCV_ISA_EXT_ZIHINT=
+PAUSE),
+>      KVM_EXT_CFG("zihpm", ext_zihpm, KVM_RISCV_ISA_EXT_ZIHPM),
+> +    KVM_EXT_CFG("zfa", ext_zfa, KVM_RISCV_ISA_EXT_ZFA),
+> +    KVM_EXT_CFG("zfh", ext_zfh, KVM_RISCV_ISA_EXT_ZFH),
+> +    KVM_EXT_CFG("zfhmin", ext_zfhmin, KVM_RISCV_ISA_EXT_ZFHMIN),
+>      KVM_EXT_CFG("zba", ext_zba, KVM_RISCV_ISA_EXT_ZBA),
+>      KVM_EXT_CFG("zbb", ext_zbb, KVM_RISCV_ISA_EXT_ZBB),
+> +    KVM_EXT_CFG("zbc", ext_zbc, KVM_RISCV_ISA_EXT_ZBC),
+> +    KVM_EXT_CFG("zbkb", ext_zbkb, KVM_RISCV_ISA_EXT_ZBKB),
+> +    KVM_EXT_CFG("zbkc", ext_zbkc, KVM_RISCV_ISA_EXT_ZBKC),
+> +    KVM_EXT_CFG("zbkx", ext_zbkx, KVM_RISCV_ISA_EXT_ZBKX),
+>      KVM_EXT_CFG("zbs", ext_zbs, KVM_RISCV_ISA_EXT_ZBS),
+> +    KVM_EXT_CFG("zknd", ext_zknd, KVM_RISCV_ISA_EXT_ZKND),
+> +    KVM_EXT_CFG("zkne", ext_zkne, KVM_RISCV_ISA_EXT_ZKNE),
+> +    KVM_EXT_CFG("zknh", ext_zknh, KVM_RISCV_ISA_EXT_ZKNH),
+> +    KVM_EXT_CFG("zkr", ext_zkr, KVM_RISCV_ISA_EXT_ZKR),
+> +    KVM_EXT_CFG("zksed", ext_zksed, KVM_RISCV_ISA_EXT_ZKSED),
+> +    KVM_EXT_CFG("zksh", ext_zksh, KVM_RISCV_ISA_EXT_ZKSH),
+> +    KVM_EXT_CFG("zkt", ext_zkt, KVM_RISCV_ISA_EXT_ZKT),
+> +    KVM_EXT_CFG("zvbb", ext_zvbb, KVM_RISCV_ISA_EXT_ZVBB),
+> +    KVM_EXT_CFG("zvbc", ext_zvbc, KVM_RISCV_ISA_EXT_ZVBC),
+> +    KVM_EXT_CFG("zvfh", ext_zvfh, KVM_RISCV_ISA_EXT_ZVFH),
+> +    KVM_EXT_CFG("zvfhmin", ext_zvfhmin, KVM_RISCV_ISA_EXT_ZVFHMIN),
+> +    KVM_EXT_CFG("zvkb", ext_zvkb, KVM_RISCV_ISA_EXT_ZVKB),
+> +    KVM_EXT_CFG("zvkg", ext_zvkg, KVM_RISCV_ISA_EXT_ZVKG),
+> +    KVM_EXT_CFG("zvkned", ext_zvkned, KVM_RISCV_ISA_EXT_ZVKNED),
+> +    KVM_EXT_CFG("zvknha", ext_zvknha, KVM_RISCV_ISA_EXT_ZVKNHA),
+> +    KVM_EXT_CFG("zvknhb", ext_zvknhb, KVM_RISCV_ISA_EXT_ZVKNHB),
+> +    KVM_EXT_CFG("zvksed", ext_zvksed, KVM_RISCV_ISA_EXT_ZVKSED),
+> +    KVM_EXT_CFG("zvksh", ext_zvksh, KVM_RISCV_ISA_EXT_ZVKSH),
+> +    KVM_EXT_CFG("zvkt", ext_zvkt, KVM_RISCV_ISA_EXT_ZVKT),
+> +    KVM_EXT_CFG("smstateen", ext_smstateen, KVM_RISCV_ISA_EXT_SMSTATEEN)=
+,
+>      KVM_EXT_CFG("ssaia", ext_ssaia, KVM_RISCV_ISA_EXT_SSAIA),
+>      KVM_EXT_CFG("sstc", ext_sstc, KVM_RISCV_ISA_EXT_SSTC),
+>      KVM_EXT_CFG("svinval", ext_svinval, KVM_RISCV_ISA_EXT_SVINVAL),
+> --
+> 2.43.2
+>
+>
 
