@@ -4,87 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D8DDC5475B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 14:42:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E853CC54E41
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 14:42:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhsSH-0008F9-Ui; Wed, 06 Mar 2024 09:41:13 -0500
+	id 1rhsSC-0007sY-95; Wed, 06 Mar 2024 09:41:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhsSA-0007ny-Fv
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:41:06 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1rhsS9-0007mK-V9
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:41:05 -0500
+Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhsS2-0001Uz-Om
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:41:06 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-33e151a1434so2420205f8f.2
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 06:40:58 -0800 (PST)
+ id 1rhsRx-0001TI-9F
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:41:04 -0500
+Received: by mail-lf1-x130.google.com with SMTP id
+ 2adb3069b0e04-5134f830488so2860879e87.0
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 06:40:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709736056; x=1710340856; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7HiJVoF4HTxTyfZqmxfdNDwSSt/1/19ukV8tNZkwTQ4=;
- b=W5Jlz7bgA1ug3WWitQJ9VZ+SfAhG8TaKjq4lu5H888Bv3U2NJKuRRmRwZJA5wJpzkR
- HvxyBB29CKEl+/o4/0rIEQ6Sc6vmrvAQAYXguuAP9mDPpVxsmIClMDjvkiJVOQOw8L8i
- 11xhewUhTM7eUFZ3UrZSDgTa2T2WpwDe76GSA2f/RaUvdOX0tia69AV6XFhTzb4T505Z
- ijVMeglW8xN4fb14PSmOGVGno7x37PSeJOc3O1SWBgE5d4I+xNkuRWuaRVHhCc5XTKMh
- cS2WO+8uhZ3DGy+e7HEONBbWF8IsqzMFgIDVgsLnbhva8UfQGDNpWwr5zQscyyJXqzvo
- 0mRQ==
+ d=linaro.org; s=google; t=1709736043; x=1710340843; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=IYbIZXvWJUe0g9sZHqzUXajgboo5sOG8ohcMURUMfLA=;
+ b=igd1PCp114duNeIFQOQjfDGzRV4UCk86r0Ak0RY7LZxJhb+NvsqhGb0MAguSRnK+ic
+ fEwET2LC5PhzsMQ4mxm+JJCBvZW5hE7f8WNpbI+eIUpZfT/pedO+Wdipa11Yl44Jl7vf
+ qFQ7FyADlxJncrFgUDxmX7kuTmDnDfxXiCw1wqthBPoqz+6KI6jfO2BwlVbn+CjPtbgc
+ OWcDJbVX4ICU3Bl4XUpgLXSGSnMqwEYRZuwSMstxukKaCvX+/bmu17TyAMfrZZVqMuf1
+ eMr2s8wY78OspebBqi0vgkS+2WMbkjt9QAvobVLFnnNv7r5gUki+4VB2khm1nVmJ+zs0
+ FkCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709736056; x=1710340856;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7HiJVoF4HTxTyfZqmxfdNDwSSt/1/19ukV8tNZkwTQ4=;
- b=t4dtUWuW1VMqH6cC00mUdggi8BeY0KZW/cSely9mWg9xT4kk5a/j5t8LugDu0fWpxq
- MOghM3bDKN6+T+ZJtPFvsOeOvn20TxEkpwhc3vLZoPHUfo6MkKyTw5mDFmsTOHbciUY5
- A4Bg84H0JwEaY/m+YuB91IZmTkWqBht1aUymjGrXwYzoaRE5GFXptEcDWrJcKiBijelL
- TKa0yr33+JQ+umbBe7q82HpeGVqYNr9IMF4t5iULBC+cmDGkfwDJyOvU8iayjGm+WwRj
- 0xOMkEaFr1E24WeMHWIqKgF3ELSOcf2/N+Y0MKfIQyZ9XTfer+ThRJ4njV5DaGkbGBoA
- gsnw==
-X-Gm-Message-State: AOJu0YwDXcS8nQNa/3HYlK/I4MkTB4WD1YR2s7AGEitMsN41tZPafz2m
- 7yzRLeLRLmFZve5ZTPWHU3+R8gYlk/nSSIGqXTphmoWp49UgR243tX1jfHOp1aQ=
-X-Google-Smtp-Source: AGHT+IFN8t2VjrZaVQbbuC8QDjI8PuGZqOBDb6MkifpIbTkUR5kuiE/rtKD3pAr3dWymg64oFmUu5Q==
-X-Received: by 2002:adf:e84b:0:b0:33e:d0c:1ed0 with SMTP id
- d11-20020adfe84b000000b0033e0d0c1ed0mr10247148wrn.57.1709736056253; 
- Wed, 06 Mar 2024 06:40:56 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709736043; x=1710340843;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=IYbIZXvWJUe0g9sZHqzUXajgboo5sOG8ohcMURUMfLA=;
+ b=lAu67UrUyLysx6TvP3lNuJpDRhBbIkE1NKmJGWRnijJAbWb8j0i+km7O7WEr2jt+Hv
+ ZH3wsxSJQnfh+MhhoMmmVirXTgSLKj8JpAqqaOpuzxV/Bn3ANUzbDCJUa+kRjP7urWW0
+ EVuH8DNnQoGhZznxlc0KFJ/iZwLs+rMs6Y+OBqXx2CF2kPkKp/VeL4KytwHpNc8O2DFo
+ vNcI5xg/1rTaKvKMS4JIhdEW9Ag9u3DrdU8+tsWa05yEv+liy5Kk5LGB4uMHJ0D1EfDA
+ E/o4l/+DmVEGKOIsDZOsjYTM8v9/TJkFsH2P35FGgLtYCljVINDLq4gtHObGded3AZ0j
+ sGQA==
+X-Gm-Message-State: AOJu0YyGPvZa8bQAwlFsz93TodVpep3OfVsGKM4SjTmz2e7LIHhwScSc
+ 5RXcqiqrs2dpEQxbI3phPtx8+5TsMfAx6INFb4Z3/iRRxT+qM+bYtxmULp8kYpo3i7QJslnTbvc
+ f
+X-Google-Smtp-Source: AGHT+IEDdq0IlSpMchrNAJq3ThCj3AqU8AUa5PbtlNJyAql3kuf68RSAsp0i5Szq5AP0Gqd2GCT9Pg==
+X-Received: by 2002:a19:910f:0:b0:512:d5e4:1aa4 with SMTP id
+ t15-20020a19910f000000b00512d5e41aa4mr3457324lfd.60.1709736042629; 
+ Wed, 06 Mar 2024 06:40:42 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- i10-20020adff30a000000b0033b6e26f0f9sm17781896wro.42.2024.03.06.06.40.45
+ t14-20020a05600c198e00b00412f02bff2csm3783373wmq.37.2024.03.06.06.40.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Mar 2024 06:40:52 -0800 (PST)
+ Wed, 06 Mar 2024 06:40:42 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 05FFA5F9DA;
- Wed,  6 Mar 2024 14:40:43 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 8EAF15F891;
+ Wed,  6 Mar 2024 14:40:41 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PULL 15/29] plugins: define qemu_plugin_u64
-Date: Wed,  6 Mar 2024 14:40:27 +0000
-Message-Id: <20240306144041.3787188-16-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL for 9.0 00/29] maintainer updates (tests, gdbstub, plugins)
+Date: Wed,  6 Mar 2024 14:40:12 +0000
+Message-Id: <20240306144041.3787188-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240306144041.3787188-1-alex.bennee@linaro.org>
-References: <20240306144041.3787188-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::130;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,158 +94,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+The following changes since commit db596ae19040574e41d086e78469014191d7d7fc:
 
-Additionally to the scoreboard, we define a qemu_plugin_u64, which is a
-simple struct holding a pointer to a scoreboard, and a given offset.
-This allows to have a scoreboard containing structs, without having to
-bring offset to operate on a specific field.
+  Merge tag 'pull-target-arm-20240305' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-03-05 13:54:54 +0000)
 
-Since most of the plugins are simply collecting a sum of per-cpu values,
-qemu_plugin_u64 directly support this operation as well.
+are available in the Git repository at:
 
-All inline operations defined later will use a qemu_plugin_u64 as input.
+  https://gitlab.com/stsquad/qemu.git tags/pull-maintainer-updates-060324-1
 
-New functions:
-- qemu_plugin_u64_add
-- qemu_plugin_u64_get
-- qemu_plugin_u64_set
-- qemu_plugin_u64_sum
-New macros:
-- qemu_plugin_scoreboard_u64
-- qemu_plugin_scoreboard_u64_in_struct
+for you to fetch changes up to db7e8b1f75662cf957f6bfad938ed112488518ed:
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20240304130036.124418-3-pierrick.bouvier@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240305121005.3528075-16-alex.bennee@linaro.org>
+  target/riscv: honour show_opcodes when disassembling (2024-03-06 12:35:51 +0000)
 
-diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-index 31c468ddb2c..ebf9a645e15 100644
---- a/include/qemu/qemu-plugin.h
-+++ b/include/qemu/qemu-plugin.h
-@@ -225,6 +225,17 @@ struct qemu_plugin_insn;
- /** struct qemu_plugin_scoreboard - Opaque handle for a scoreboard */
- struct qemu_plugin_scoreboard;
- 
-+/**
-+ * typedef qemu_plugin_u64 - uint64_t member of an entry in a scoreboard
-+ *
-+ * This field allows to access a specific uint64_t member in one given entry,
-+ * located at a specified offset. Inline operations expect this as entry.
-+ */
-+typedef struct {
-+    struct qemu_plugin_scoreboard *score;
-+    size_t offset;
-+} qemu_plugin_u64;
-+
- /**
-  * enum qemu_plugin_cb_flags - type of callback
-  *
-@@ -784,4 +795,45 @@ QEMU_PLUGIN_API
- void *qemu_plugin_scoreboard_find(struct qemu_plugin_scoreboard *score,
-                                   unsigned int vcpu_index);
- 
-+/* Macros to define a qemu_plugin_u64 */
-+#define qemu_plugin_scoreboard_u64(score) \
-+    (qemu_plugin_u64) {score, 0}
-+#define qemu_plugin_scoreboard_u64_in_struct(score, type, member) \
-+    (qemu_plugin_u64) {score, offsetof(type, member)}
-+
-+/**
-+ * qemu_plugin_u64_add() - add a value to a qemu_plugin_u64 for a given vcpu
-+ * @entry: entry to query
-+ * @vcpu_index: entry index
-+ * @added: value to add
-+ */
-+QEMU_PLUGIN_API
-+void qemu_plugin_u64_add(qemu_plugin_u64 entry, unsigned int vcpu_index,
-+                         uint64_t added);
-+
-+/**
-+ * qemu_plugin_u64_get() - get value of a qemu_plugin_u64 for a given vcpu
-+ * @entry: entry to query
-+ * @vcpu_index: entry index
-+ */
-+QEMU_PLUGIN_API
-+uint64_t qemu_plugin_u64_get(qemu_plugin_u64 entry, unsigned int vcpu_index);
-+
-+/**
-+ * qemu_plugin_u64_set() - set value of a qemu_plugin_u64 for a given vcpu
-+ * @entry: entry to query
-+ * @vcpu_index: entry index
-+ * @val: new value
-+ */
-+QEMU_PLUGIN_API
-+void qemu_plugin_u64_set(qemu_plugin_u64 entry, unsigned int vcpu_index,
-+                         uint64_t val);
-+
-+/**
-+ * qemu_plugin_u64_sum() - return sum of all vcpu entries in a scoreboard
-+ * @entry: entry to sum
-+ */
-+QEMU_PLUGIN_API
-+uint64_t qemu_plugin_u64_sum(qemu_plugin_u64 entry);
-+
- #endif /* QEMU_QEMU_PLUGIN_H */
-diff --git a/plugins/api.c b/plugins/api.c
-index 76b2e652b9c..8910cbb2c46 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -484,3 +484,37 @@ void *qemu_plugin_scoreboard_find(struct qemu_plugin_scoreboard *score,
-     char *base_ptr = score->data->data;
-     return base_ptr + vcpu_index * g_array_get_element_size(score->data);
- }
-+
-+static uint64_t *plugin_u64_address(qemu_plugin_u64 entry,
-+                                    unsigned int vcpu_index)
-+{
-+    char *ptr = qemu_plugin_scoreboard_find(entry.score, vcpu_index);
-+    return (uint64_t *)(ptr + entry.offset);
-+}
-+
-+void qemu_plugin_u64_add(qemu_plugin_u64 entry, unsigned int vcpu_index,
-+                         uint64_t added)
-+{
-+    *plugin_u64_address(entry, vcpu_index) += added;
-+}
-+
-+uint64_t qemu_plugin_u64_get(qemu_plugin_u64 entry,
-+                             unsigned int vcpu_index)
-+{
-+    return *plugin_u64_address(entry, vcpu_index);
-+}
-+
-+void qemu_plugin_u64_set(qemu_plugin_u64 entry, unsigned int vcpu_index,
-+                         uint64_t val)
-+{
-+    *plugin_u64_address(entry, vcpu_index) = val;
-+}
-+
-+uint64_t qemu_plugin_u64_sum(qemu_plugin_u64 entry)
-+{
-+    uint64_t total = 0;
-+    for (int i = 0, n = qemu_plugin_num_vcpus(); i < n; ++i) {
-+        total += qemu_plugin_u64_get(entry, i);
-+    }
-+    return total;
-+}
-diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
-index 3f93e7d6b13..6204453d0fd 100644
---- a/plugins/qemu-plugins.symbols
-+++ b/plugins/qemu-plugins.symbols
-@@ -44,6 +44,10 @@
-   qemu_plugin_tb_get_insn;
-   qemu_plugin_tb_n_insns;
-   qemu_plugin_tb_vaddr;
-+  qemu_plugin_u64_add;
-+  qemu_plugin_u64_get;
-+  qemu_plugin_u64_set;
-+  qemu_plugin_u64_sum;
-   qemu_plugin_uninstall;
-   qemu_plugin_vcpu_for_each;
- };
+----------------------------------------------------------------
+maintainer updates (tests, gdbstub, plugins):
+
+  - expand QOS_PATH_MAX_ELEMENT_SIZE to avoid LTO issues
+  - support fork-follow-mode in gdbstub
+  - new thread-safe scoreboard API for TCG plugins
+  - suppress showing opcodes in plugin disassembly
+
+----------------------------------------------------------------
+Alex Bennée (5):
+      tests: bump QOS_PATH_MAX_ELEMENT_SIZE again
+      disas: introduce show_opcodes
+      disas/hppa: honour show_opcodes
+      target/loongarch: honour show_opcodes when disassembling
+      target/riscv: honour show_opcodes when disassembling
+
+Ilya Leoshkevich (12):
+      gdbstub: Support disablement in a multi-threaded process
+      {linux,bsd}-user: Introduce get_task_state()
+      {linux,bsd}-user: Update ts_tid after fork()
+      gdbstub: Introduce gdbserver_fork_start()
+      {linux,bsd}-user: Pass pid to fork_end()
+      {linux,bsd}-user: Pass pid to gdbserver_fork()
+      gdbstub: Call gdbserver_fork() both in parent and in child
+      gdbstub: Introduce gdb_handle_query_supported_user()
+      gdbstub: Introduce gdb_handle_set_thread_user()
+      gdbstub: Introduce gdb_handle_detach_user()
+      gdbstub: Implement follow-fork-mode child
+      tests/tcg: Add two follow-fork-mode tests
+
+Pierrick Bouvier (12):
+      plugins: scoreboard API
+      plugins: define qemu_plugin_u64
+      plugins: implement inline operation relative to cpu_index
+      plugins: add inline operation per vcpu
+      tests/plugin: add test plugin for inline operations
+      tests/plugin/mem: migrate to new per_vcpu API
+      tests/plugin/insn: migrate to new per_vcpu API
+      tests/plugin/bb: migrate to new per_vcpu API
+      contrib/plugins/hotblocks: migrate to new per_vcpu API
+      contrib/plugins/howvec: migrate to new per_vcpu API
+      plugins: remove non per_vcpu inline operation from API
+      plugins: cleanup codepath for previous inline operation
+
+ bsd-user/bsd-file.h                                |   2 +-
+ bsd-user/freebsd/os-proc.h                         |   6 +-
+ bsd-user/qemu.h                                    |   7 +-
+ gdbstub/internals.h                                |   3 +
+ include/disas/dis-asm.h                            |   8 +
+ include/gdbstub/user.h                             |  10 +-
+ include/qemu/plugin.h                              |   7 +
+ include/qemu/qemu-plugin.h                         | 142 +++++++++---
+ include/user/safe-syscall.h                        |   2 +-
+ linux-user/m68k/target_cpu.h                       |   2 +-
+ linux-user/qemu.h                                  |   5 +
+ linux-user/signal-common.h                         |   2 +-
+ linux-user/user-internals.h                        |   2 +-
+ plugins/plugin.h                                   |  17 +-
+ tests/qtest/libqos/qgraph.h                        |   2 +-
+ accel/tcg/plugin-gen.c                             |  69 +++++-
+ bsd-user/main.c                                    |   9 +-
+ bsd-user/signal.c                                  |  20 +-
+ contrib/plugins/hotblocks.c                        |  50 +++--
+ contrib/plugins/howvec.c                           |  53 +++--
+ disas/disas.c                                      |   1 +
+ disas/hppa.c                                       |   8 +-
+ disas/riscv.c                                      |  28 +--
+ gdbstub/gdbstub.c                                  |  29 ++-
+ gdbstub/user-target.c                              |   4 +-
+ gdbstub/user.c                                     | 244 ++++++++++++++++++++-
+ linux-user/aarch64/cpu_loop.c                      |   2 +-
+ linux-user/arm/cpu_loop.c                          |   4 +-
+ linux-user/arm/signal.c                            |   2 +-
+ linux-user/cris/cpu_loop.c                         |   2 +-
+ linux-user/elfload.c                               |   2 +-
+ linux-user/hppa/signal.c                           |   2 +-
+ linux-user/linuxload.c                             |   2 +-
+ linux-user/m68k/cpu_loop.c                         |   2 +-
+ linux-user/main.c                                  |   8 +-
+ linux-user/mips/cpu_loop.c                         |   2 +-
+ linux-user/ppc/signal.c                            |   4 +-
+ linux-user/riscv/cpu_loop.c                        |   2 +-
+ linux-user/signal.c                                |  30 +--
+ linux-user/syscall.c                               |  32 +--
+ linux-user/vm86.c                                  |  18 +-
+ linux-user/xtensa/signal.c                         |   2 +-
+ plugins/api.c                                      | 100 +++++++--
+ plugins/core.c                                     |  79 ++++++-
+ semihosting/arm-compat-semi.c                      |   8 +-
+ target/loongarch/disas.c                           |  13 +-
+ tests/plugin/bb.c                                  |  63 +++---
+ tests/plugin/inline.c                              | 186 ++++++++++++++++
+ tests/plugin/insn.c                                | 106 +++++----
+ tests/plugin/mem.c                                 |  46 ++--
+ tests/tcg/multiarch/follow-fork-mode.c             |  56 +++++
+ plugins/qemu-plugins.symbols                       |  13 +-
+ tests/plugin/meson.build                           |   2 +-
+ tests/tcg/Makefile.target                          |   2 +-
+ tests/tcg/multiarch/Makefile.target                |  17 +-
+ .../multiarch/gdbstub/follow-fork-mode-child.py    |  40 ++++
+ .../multiarch/gdbstub/follow-fork-mode-parent.py   |  16 ++
+ 57 files changed, 1257 insertions(+), 338 deletions(-)
+ create mode 100644 tests/plugin/inline.c
+ create mode 100644 tests/tcg/multiarch/follow-fork-mode.c
+ create mode 100644 tests/tcg/multiarch/gdbstub/follow-fork-mode-child.py
+ create mode 100644 tests/tcg/multiarch/gdbstub/follow-fork-mode-parent.py
+
 -- 
 2.39.2
 
