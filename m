@@ -4,82 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63402C54E41
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 17:11:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8187C54E41
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 17:12:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhuly-0006O6-KI; Wed, 06 Mar 2024 12:09:42 -0500
+	id 1rhulp-0006MR-Pq; Wed, 06 Mar 2024 12:09:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1rhulq-0006NF-Fe
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:09:34 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1rhuld-0006Jy-7X
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:09:23 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1rhuln-0004F4-7r
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:09:33 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-1dc139ed11fso8272095ad.0
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 09:09:30 -0800 (PST)
+ id 1rhulb-0004DB-Co
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:09:20 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1dd10ae77d8so30380735ad.0
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 09:09:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1709744969; x=1710349769; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JTvIsCuHcJLg34GV3VTBVJWhiBcUvjuqYOwBpB04ACY=;
- b=nwHrcRV+RrZA2cXFRJRuS/ANpmZ0eynbqtuoQKhJrchM5G/p/oyu7eYrVV0vS/4NOm
- fAi4tIBtFRUfit9iymccEQ7XAG9HzwN4d1za0wqxN2YKoBqmqac1mnpfikQ/aX2U8AlK
- Rdo6faAxfeRlU7bGuhL9OlcWScMjyxbEeIgUoaSkNwAKqQZvsGEqz61NoBrFioiSQT0H
- B8gxBUb9BONSBUitXOCb7Bi5LJOQEZMdiVzjG0gIx4BtUPzcXrMmlhdCGAzxct12k1Fz
- OzJi6fNTTGFfK0dMBKQVG4TLA/O0r8Pgy4avMfMcHjmVUQsS6H+GjiEbRAxkjd06SDPc
- Xi/Q==
+ d=sifive.com; s=google; t=1709744957; x=1710349757; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=5jiD4ngO6RXGlAuwMlJfzGW+Jl5alSTBUPN7JW336io=;
+ b=N+Z7pr075wYBixe34W1MfBpWmJC7Gqs1ASqzgRLJNqWW9Fwb/DNAWyjXMy7aI6Of4j
+ qm/+ZI1hPS+UcRjGSuQCxf/1NMmK90mRMcVuU68Z1ZmOC6ua19vDmEmpJoA+DxC+eggd
+ ey3t3hJNFWu3GZWi+zRepqR0oiHZlazfz3hkLRDIbQEllrur3HyyiBym8C3OQzrZOLDy
+ Z5nxzFfuL0eGUNwtGlEiR3+Vl/YQVO3FODuYBkl7sC/0j+CibB0MSokBbNMytdhuFeo+
+ oPdxMUzNCrAeIpMD4rP3XBbm8tz+1hUBKUeSbUH3tkGaNka6kozm+/X2ck0y6P407khy
+ nhDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709744969; x=1710349769;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JTvIsCuHcJLg34GV3VTBVJWhiBcUvjuqYOwBpB04ACY=;
- b=g36MKH65gQJLvEPBeGAlIEKZrDM5i7jkLjkIz6xnenllBHedltqZds9kv0H1FvZen2
- j6BR+F7m2pADYhR6AnP/2YUyXNdVPgodmg2CHcrcTqmUaL4kxFZ19Gz4rAs0hN1V5ruH
- 2GYAkkQXG2KRkCXqI8sCso0eEZVIneewgI0JgCNUionmbKvgRt0HuH8n4TP8YpnrX5oA
- iK+ThESpRAWqUC6sHyGx9gdcpsz4s1StECCbE117xb3NwTU409ZOOa9LqzFrLBDp07QJ
- VeFMmY/+A0da3c3NYojT5gvvI5o5QJNLdyNb38xHdDWL4lt4AxPLnZm/8HQek12DMM7j
- x6fg==
-X-Gm-Message-State: AOJu0YxNt2QQZmxqen6jJPXCBNwNZaJ9zmwnc1PHbTXv3NdnYMiwhPsF
- cKD5/IIhN2rGva7l0st8NRgOVvQKhdGq2EiIeu2iND0VhCQbl0eFZD6MBEfgRs30UB087nhvPLZ
- RXN3hpGMUlH6jLhMPB6Lm8BhdAgbXrHAhUbzeMkrhym8UUSei1s8uwLOfhdbAEmikd80TzPvr7o
- rjyGHOCy6tnCY8qPBKJcnp6ghtOvZbOC0ZI/Yp1B4=
-X-Google-Smtp-Source: AGHT+IGs8nHkDmG1WlZxQ96qkOY5xK/vB6Y6qcUKD9Lbb7I5AbcRPEqeXN2fTH6Ry4gTSstUUQxOQA==
-X-Received: by 2002:a17:903:110c:b0:1dc:f964:bfe1 with SMTP id
- n12-20020a170903110c00b001dcf964bfe1mr8271015plh.26.1709744969353; 
- Wed, 06 Mar 2024 09:09:29 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709744957; x=1710349757;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5jiD4ngO6RXGlAuwMlJfzGW+Jl5alSTBUPN7JW336io=;
+ b=vwAp2EOYGxuzRKht3YodO6JDIzAAaKc6G9YbMOYhuCZJxCjNTeoK7tBJlfZ/3oIWD5
+ 2YqXmpRK/MF1VKwydCUleEgiwptoKqWDXXBk4LJyVnlH6WJGES4gGHY9EmOWPzEYdyFI
+ L0pYYrenL0Jc5D1LaGZXl4nTbb2naVCGqBqbuOsjp5E9eQFxUd2fTialzM4Li+3TXt/K
+ KhplZUbn5GfRbH+y+jshKT1v5BDoRzKkR8STKAshSMqxrjTCIkgB5nqccEf9YnUmYpjJ
+ cyu/r33pc/5oEU0Mie6Abkg0jA0KwBF9D+DNwzrr0UiR5ox0O+oppaSrMXVuRHFx8bJ6
+ P/8Q==
+X-Gm-Message-State: AOJu0YyhFS3wjJjk9P0KiMl2OvDeQlG7/GCPIPacWg/sCcVkoiycFrqU
+ s9kHgpXaQptLdFfGxoGAOWqc7DeBjeLSPrZmbk3qCjAEgzw7+5fh8OBzJmC7p5naJm+6ZUg5n4U
+ sgcg/n8DVf7dekZiZxT+akfGA79974c/LvDAJFThoLRcZHOVdPAgDLH1yTl74HJvo57xgRpPBYQ
+ 0nb50bIdTNWh1FB9YxAwpx8CXJnnbnNfb+dYO/gB4=
+X-Google-Smtp-Source: AGHT+IEjeWFk+0aA0rZ/kWury4JfLVFI1pkLzpV/7Nl8aiYEBgafztfRDjMDpwN7eg0hPsQDRYWXUQ==
+X-Received: by 2002:a17:902:d508:b0:1dc:f91b:5e96 with SMTP id
+ b8-20020a170902d50800b001dcf91b5e96mr7080893plg.59.1709744955884; 
+ Wed, 06 Mar 2024 09:09:15 -0800 (PST)
 Received: from hsinchu16.internal.sifive.com
  (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
  by smtp.gmail.com with ESMTPSA id
- p8-20020a170902e74800b001dd091cbc4esm7230076plf.181.2024.03.06.09.09.27
+ p8-20020a170902e74800b001dd091cbc4esm7230076plf.181.2024.03.06.09.09.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Mar 2024 09:09:28 -0800 (PST)
+ Wed, 06 Mar 2024 09:09:15 -0800 (PST)
 From: Jason Chien <jason.chien@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
-Cc: Jason Chien <jason.chien@sifive.com>, Frank Chang <frank.chang@sifive.com>,
- Max Chou <max.chou@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [PATCH 2/5] target/riscv: Expose Zve32x extension to users
-Date: Thu,  7 Mar 2024 01:08:35 +0800
-Message-ID: <20240306170855.24341-3-jason.chien@sifive.com>
+Cc: Jason Chien <jason.chien@sifive.com>
+Subject: [PATCH 0/5] target/riscv: Support Zve32x and Zve64x extensions
+Date: Thu,  7 Mar 2024 01:08:33 +0800
+Message-ID: <20240306170855.24341-1-jason.chien@sifive.com>
 X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240306170855.24341-1-jason.chien@sifive.com>
-References: <20240306170855.24341-1-jason.chien@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=jason.chien@sifive.com; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=jason.chien@sifive.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,25 +94,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Jason Chien <jason.chien@sifive.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Max Chou <max.chou@sifive.com>
----
- target/riscv/cpu.c | 1 +
- 1 file changed, 1 insertion(+)
+This patch series adds the support for Zve32x and Zvx64x and makes vector
+registers visible in GDB if any of the V/Zve*/Zvk* extensions is enabled.
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 10ccae3323..37e4557b47 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1469,6 +1469,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
-     MULTI_EXT_CFG_BOOL("zfh", ext_zfh, false),
-     MULTI_EXT_CFG_BOOL("zfhmin", ext_zfhmin, false),
-     MULTI_EXT_CFG_BOOL("zve32f", ext_zve32f, false),
-+    MULTI_EXT_CFG_BOOL("zve32x", ext_zve32x, false),
-     MULTI_EXT_CFG_BOOL("zve64f", ext_zve64f, false),
-     MULTI_EXT_CFG_BOOL("zve64d", ext_zve64d, false),
-     MULTI_EXT_CFG_BOOL("sstc", ext_sstc, true),
+Jason Chien (5):
+  target/riscv: Add support for Zve32x extension
+  target/riscv: Expose Zve32x extension to users
+  target/riscv: Add support for Zve64x extension
+  target/riscv: Expose Zve64x extension to users
+  target/riscv: Relax vector register check in RISCV gdbstub
+
+ target/riscv/cpu.c                      |  4 +++
+ target/riscv/cpu_cfg.h                  |  2 ++
+ target/riscv/cpu_helper.c               |  2 +-
+ target/riscv/csr.c                      |  2 +-
+ target/riscv/gdbstub.c                  |  2 +-
+ target/riscv/insn_trans/trans_rvv.c.inc |  4 +--
+ target/riscv/tcg/tcg-cpu.c              | 33 ++++++++++++++-----------
+ 7 files changed, 30 insertions(+), 19 deletions(-)
+
 -- 
 2.43.2
 
