@@ -4,74 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72F22C5475B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 17:21:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A28E1C54E41
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 17:22:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhuxY-00036x-HP; Wed, 06 Mar 2024 12:21:40 -0500
+	id 1rhuwA-0008CV-D1; Wed, 06 Mar 2024 12:20:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ross.lagerwall@cloud.com>)
- id 1rhuxS-0002vX-KH
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:21:36 -0500
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rhuw6-0008BI-Fp
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:20:10 -0500
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ross.lagerwall@cloud.com>)
- id 1rhuxO-0002J8-G5
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:21:33 -0500
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-5dca1efad59so6045644a12.2
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 09:21:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rhuw3-0001CY-OB
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:20:10 -0500
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-29a858a0981so5130237a91.0
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 09:20:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=citrix.com; s=google; t=1709745682; x=1710350482; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=ventanamicro.com; s=google; t=1709745606; x=1710350406; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BsKaXF6T5lctqg+Z+tqPG0l0FMUSQCzD4kDFkhOcA1c=;
- b=EXS2hI+HgYgWA2No8ishCRxRSN4SybPZ3JwGeB+G02F6SCAKJxF4LpzG09HaTHLCbc
- KvZiGIwVgIfEVJ+i7gW6RhBuvt6Z4jXLcdyAojoV4c24ks6SeqPrkJCDM/EIH2RLeKKx
- VjqXexSv5OzpjHFXT8Cf2gSQri4Dy+pUidqhY=
+ bh=dMBh/u49DOAEejhXpEpyFUDYeRYjhmZaHILM+RyspVc=;
+ b=buQP+H7dSgIibeHkksDhYh4nRQ00st3y+chtl7r9LeVqaxHDmLb+PBSfJCvyFgsFcr
+ kvfHjigtg9mACKuJlmvmsbO2GeSBoY7huF5G0ryWkjt8K+WIIrb0KZookYfUWbcf+eJ/
+ MdulE+xhkxzG9n96G2cElp8XQ02Lf4YRZKcXZxgHSKQbJZSddpM4r47mJs+EcRTUVYvx
+ B4tv9ca8IiDzogO3ck6Bf37rzFYFsM69D3KbTTG5BnvEcPuzq1/l/d35gFKBwBmQNoJO
+ 7ypcmBJtMKleQgi291GbwuVFJFuYM52AlZLgkzeDEoUxcp8U4wPOrpIdIaNStGKp2jcc
+ sK3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709745682; x=1710350482;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1709745606; x=1710350406;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BsKaXF6T5lctqg+Z+tqPG0l0FMUSQCzD4kDFkhOcA1c=;
- b=hqv08xz1gj8slXLh8IMrHJr/yzvF+KY/500a9o7MobmnePXVbosjvKEGvISfnwqLFK
- 1rdIZa+Udd8QAoN5duS1tll2j/2oP6LDCdE/05TcK/seCwj7UHUwbYaolsO/lE5Wm8DW
- DK/kO64j1uqxoOuyw1vgs+KkC3Rg1ElwDooVMqoLenr+ZUDW9qgtM9Z8a7H5unL3JESi
- JPpEujJ+iZe4S+2VvswSxMIlCMPtykiClmhrJhHYsD4rLpdaTAM7mqPJILUXihr0fFaz
- GGwUi/2E0qkT93TU+3r2pQF/TT0nziP2nOxAtEBu9ZIDp0tGFAqKboFpNq0YydCTOlgV
- bpBw==
-X-Gm-Message-State: AOJu0YzSP/3Pqge92WALK8huGP2l+5RVMf4gzpXGek/CNdi/msWKmtGt
- ew0CNCsr5hbetBCiJYf9DEf1doe4s7MPS34otV+CXr8wQMVsTov1PPL16sbkQmbf5RWAxGT06oe
- Eb9C26/BJrJsR9w7CZEfigxjWIYDgGIERCq3pFuWfyxpCc7S3XQ==
-X-Google-Smtp-Source: AGHT+IG0Fe6HcRJ5aDPmKh9ZZHK23qhHejwA4K8v5I++vsoJWhUGwTXQZCEGevBFM5VgKdkFSSC2EmDT0tnkXZwoR4M=
-X-Received: by 2002:a17:90a:7563:b0:299:41de:9fea with SMTP id
- q90-20020a17090a756300b0029941de9feamr12825105pjk.15.1709745682441; Wed, 06
- Mar 2024 09:21:22 -0800 (PST)
+ bh=dMBh/u49DOAEejhXpEpyFUDYeRYjhmZaHILM+RyspVc=;
+ b=hCTldYSwxQ37lYyviEUjLy3U4YMWmvSK0sAtYEL4fVOuz55gzvl5PkEswzG5pQgjBo
+ Wp7LK7whscTwnq1Eu2Dq6BgiLLwyqnMahuaCWENQBIqhatJKDlUmWWV4VMwwlNSbwoCu
+ p79cFGmlFrnzZcmGPJo8NtgkUpt4tS44RboEOUYxMbNHUBJ4flyHgytHzuoBsYyzTKyc
+ 3zDtYrkr6ScHiuM0V2+lwxnCzlxxH5CLIVqK6cWKK435xJjZJ4HIdcJgnTfDiozU7nMv
+ drXQy4oGYefuODxa+wsA00ISJtwICJPQNE0ySvzGlF0HD4Lx0uIrxGxlPBXfq9lvgFyh
+ MFbg==
+X-Gm-Message-State: AOJu0YyOA61qwDy1w7XlO0osB0zZ1B4uSesUL6SMfpcnYWRITXLOa5Pi
+ 6SuUE+9Fq9oFwdf9djfke/NBPGA/MuPeJQQ6tXuqaDq0W/5a06f4Rj7OwkaPjUZPFUL96ajqOex
+ u
+X-Google-Smtp-Source: AGHT+IGBMs2oJ/Cl1sXwLlnooX6Yypww/85KPJYpEssH5fcRlOmZO+eJNN41uOy69frFsPwdnTodHw==
+X-Received: by 2002:a17:90b:3585:b0:29b:f79:2b75 with SMTP id
+ mm5-20020a17090b358500b0029b0f792b75mr13683412pjb.7.1709745606002; 
+ Wed, 06 Mar 2024 09:20:06 -0800 (PST)
+Received: from grind.dc1.ventanamicro.com ([177.94.15.159])
+ by smtp.gmail.com with ESMTPSA id
+ p17-20020a170902c71100b001dbb6fef41fsm12869712plp.257.2024.03.06.09.20.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 06 Mar 2024 09:20:05 -0800 (PST)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v7 9/9] target/riscv/vector_helper.c: optimize loops in ldst
+ helpers
+Date: Wed,  6 Mar 2024 14:19:32 -0300
+Message-ID: <20240306171932.549549-10-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240306171932.549549-1-dbarboza@ventanamicro.com>
+References: <20240306171932.549549-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-References: <20240212114541.1440728-1-ross.lagerwall@citrix.com>
-In-Reply-To: <20240212114541.1440728-1-ross.lagerwall@citrix.com>
-From: Ross Lagerwall <ross.lagerwall@citrix.com>
-Date: Wed, 6 Mar 2024 17:21:10 +0000
-Message-ID: <CAG7k0EprxAGBY6BA3oanN=THCsT-SYZmFNURnFeDbYTcJOXTEQ@mail.gmail.com>
-Subject: Re: [PATCH] main-loop: Avoid some unnecessary poll calls
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=ross.lagerwall@cloud.com; helo=mail-pg1-x533.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,131 +98,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 12, 2024 at 11:45=E2=80=AFAM Ross Lagerwall
-<ross.lagerwall@citrix.com> wrote:
->
-> A common pattern is seen where a timer fires, the callback does some
-> work, then rearms the timer which implicitly calls qemu_notify_event().
->
-> qemu_notify_event() is supposed to interrupt the main loop's poll() by
-> calling qemu_bh_schedule(). In the case that this is being called from a
-> main loop callback, the main loop is already not waiting on poll() and
-> instead it means the main loop does an addition iteration with a timeout
-> of 0 to handle the bottom half wakeup, before once again polling with
-> the expected timeout value.
->
-> Detect this situation by skipping the qemu_bh_schedule() call if the
-> default main context is currently owned by the caller. i.e. it is being
-> called as part of a poll / timer callback. Adjust the scope of the main
-> context acquire / release to cover the timer callbacks in
-> qemu_clock_run_all_timers().
->
-> Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
-> ---
->  util/main-loop.c | 24 +++++++++++++-----------
->  1 file changed, 13 insertions(+), 11 deletions(-)
->
-> diff --git a/util/main-loop.c b/util/main-loop.c
-> index a0386cfeb60c..a2afbb7d0e13 100644
-> --- a/util/main-loop.c
-> +++ b/util/main-loop.c
-> @@ -145,10 +145,16 @@ AioContext *qemu_get_aio_context(void)
->
->  void qemu_notify_event(void)
->  {
-> +    GMainContext *context;
-> +
->      if (!qemu_aio_context) {
->          return;
->      }
-> -    qemu_bh_schedule(qemu_notify_bh);
-> +
-> +    context =3D g_main_context_default();
-> +    if (!g_main_context_is_owner(context)) {
-> +        qemu_bh_schedule(qemu_notify_bh);
-> +    }
->  }
->
->  static GArray *gpollfds;
-> @@ -292,11 +298,8 @@ static void glib_pollfds_poll(void)
->
->  static int os_host_main_loop_wait(int64_t timeout)
->  {
-> -    GMainContext *context =3D g_main_context_default();
->      int ret;
->
-> -    g_main_context_acquire(context);
-> -
->      glib_pollfds_fill(&timeout);
->
->      bql_unlock();
-> @@ -309,8 +312,6 @@ static int os_host_main_loop_wait(int64_t timeout)
->
->      glib_pollfds_poll();
->
-> -    g_main_context_release(context);
-> -
->      return ret;
->  }
->  #else
-> @@ -470,15 +471,12 @@ static int os_host_main_loop_wait(int64_t timeout)
->      fd_set rfds, wfds, xfds;
->      int nfds;
->
-> -    g_main_context_acquire(context);
-> -
->      /* XXX: need to suppress polling by better using win32 events */
->      ret =3D 0;
->      for (pe =3D first_polling_entry; pe !=3D NULL; pe =3D pe->next) {
->          ret |=3D pe->func(pe->opaque);
->      }
->      if (ret !=3D 0) {
-> -        g_main_context_release(context);
->          return ret;
->      }
->
-> @@ -538,8 +536,6 @@ static int os_host_main_loop_wait(int64_t timeout)
->          g_main_context_dispatch(context);
->      }
->
-> -    g_main_context_release(context);
-> -
->      return select_ret || g_poll_ret;
->  }
->  #endif
-> @@ -559,6 +555,7 @@ void main_loop_poll_remove_notifier(Notifier *notify)
->
->  void main_loop_wait(int nonblocking)
->  {
-> +    GMainContext *context =3D g_main_context_default();
->      MainLoopPoll mlpoll =3D {
->          .state =3D MAIN_LOOP_POLL_FILL,
->          .timeout =3D UINT32_MAX,
-> @@ -586,7 +583,10 @@ void main_loop_wait(int nonblocking)
->                                        timerlistgroup_deadline_ns(
->                                            &main_loop_tlg));
->
-> +    g_main_context_acquire(context);
-> +
->      ret =3D os_host_main_loop_wait(timeout_ns);
-> +
->      mlpoll.state =3D ret < 0 ? MAIN_LOOP_POLL_ERR : MAIN_LOOP_POLL_OK;
->      notifier_list_notify(&main_loop_poll_notifiers, &mlpoll);
->
-> @@ -598,6 +598,8 @@ void main_loop_wait(int nonblocking)
->          icount_start_warp_timer();
->      }
->      qemu_clock_run_all_timers();
-> +
-> +    g_main_context_release(context);
->  }
->
->  /* Functions to operate on the main QEMU AioContext.  */
-> --
-> 2.43.0
->
+Change the for loops in ldst helpers to do a single increment in the
+counter, and assign it env->vstart, to avoid re-reading from vstart
+every time.
 
-Ping?
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/riscv/vector_helper.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Ross
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index cc7290a1bb..1ab386830a 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -208,7 +208,7 @@ vext_ldst_stride(void *vd, void *v0, target_ulong base,
+     uint32_t esz = 1 << log2_esz;
+     uint32_t vma = vext_vma(desc);
+ 
+-    for (i = env->vstart; i < env->vl; i++, env->vstart++) {
++    for (i = env->vstart; i < env->vl; env->vstart = ++i) {
+         k = 0;
+         while (k < nf) {
+             if (!vm && !vext_elem_mask(v0, i)) {
+@@ -274,7 +274,7 @@ vext_ldst_us(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
+     uint32_t esz = 1 << log2_esz;
+ 
+     /* load bytes from guest memory */
+-    for (i = env->vstart; i < evl; i++, env->vstart++) {
++    for (i = env->vstart; i < evl; env->vstart = ++i) {
+         k = 0;
+         while (k < nf) {
+             target_ulong addr = base + ((i * nf + k) << log2_esz);
+@@ -388,7 +388,7 @@ vext_ldst_index(void *vd, void *v0, target_ulong base,
+     uint32_t vma = vext_vma(desc);
+ 
+     /* load bytes from guest memory */
+-    for (i = env->vstart; i < env->vl; i++, env->vstart++) {
++    for (i = env->vstart; i < env->vl; env->vstart = ++i) {
+         k = 0;
+         while (k < nf) {
+             if (!vm && !vext_elem_mask(v0, i)) {
+-- 
+2.43.2
+
 
