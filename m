@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BE4BC54E41
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 16:42:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3372C54E41
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 16:54:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhuLF-0003G9-Cw; Wed, 06 Mar 2024 11:42:05 -0500
+	id 1rhuW4-0005dY-5P; Wed, 06 Mar 2024 11:53:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rhuL7-0003DR-3t
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 11:41:58 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rhuW2-0005dP-Ko
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 11:53:14 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rhuL0-0002gh-3d
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 11:41:56 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rhuW1-0007KI-77
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 11:53:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709743308;
+ s=mimecast20190719; t=1709743992;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=V8VOOJzg7EU1rcgDZalKtXvCRPqpjoeKlonHGIvbJe0=;
- b=ILOz7FdHGd1Rw7D9fw5cbPHFCxB4fWvlhlat5QavHesW5HWyZ33FFN49fgxfLxC/SZt8WW
- MhX3itJTAkOIzyPNsRnCihzEv8eWtkSjDHl8p99GMH6uucIEEFCUt30jarzSYRiqkBnz3G
- GFdRZ/ziV/JrUB+OT1pyhKyt20iMSEU=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=WutCinmYz1M7S4R9mNKtvtvrjQFirF94DXtp/OLsS34=;
+ b=b0HLmXZvNwsZ0DicIn7WLJ7eURO1z092wdeIln3Zyf5JMHXI/7ospasl2erGds9r6tPDe4
+ DBafk7kuV7+4ykE2SCqvzxapPTcd0NfIUnr2hv+fAUP+vah5JBUVxuSsfd6aMJ/aL+Nsri
+ p4AOk5RwtWwESqRj4e30Uy9SrZJ1N20=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-Xa5u0vRzOkKBNppjvmowhg-1; Wed, 06 Mar 2024 11:41:47 -0500
-X-MC-Unique: Xa5u0vRzOkKBNppjvmowhg-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-567279be640so1600586a12.2
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 08:41:47 -0800 (PST)
+ us-mta-232-BMGlMp1UO4anJ2ZFjVm1xQ-1; Wed, 06 Mar 2024 11:53:10 -0500
+X-MC-Unique: BMGlMp1UO4anJ2ZFjVm1xQ-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-56544b5af9dso4767671a12.2
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 08:53:10 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709743306; x=1710348106;
+ d=1e100.net; s=20230601; t=1709743989; x=1710348789;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=V8VOOJzg7EU1rcgDZalKtXvCRPqpjoeKlonHGIvbJe0=;
- b=CHoK5h7ILm7cwKxPZKWbMVJSNUqwgaVWPRLzQvVR8nUX26TbbsDQDLYqApjJH9OacW
- pYKNvIjdEz68YwoCiHaWDGmOh0Cob3/MOBqzpHjKP3pSnPIHEvR9cYyUv54x+J8/2jZp
- cXV9XDwJ0IadjDr9gMjVkKAjcmj7SQRFIg9Z1pf4yU2hXA9ycttdmOQD0jPMtMkc9lb9
- SZm4uYAVwbRIrWIhREq5waHbSsGSiw8vhjZHb6unBH0ue4rZdgf0y7XmznWs47y6jHIP
- vaitiszqpOb1+ao2fujp890DuQPyF7ShbYg5pR0Gt2EmwcKQwMPYG9Et89imOimO5qga
- KUVw==
+ bh=WutCinmYz1M7S4R9mNKtvtvrjQFirF94DXtp/OLsS34=;
+ b=ubhT21Vqtj3rwvH9biPty2nif31CXLRj7Ii330WXnESkurJkg6bmzxN4rPBDbtaXaY
+ ylwxEDvr1xHSaPXZzGXBEYul87vdVqSbrK0ffx8YcrqKhQDsqvGDjDidcVjnuOC4y78d
+ ZdZAMYfsGDQh72cr8AQEwHqQ1kwb31JcSSzrM67jKZ9f1nRWzfXH/uf3HLolpbc/+z0L
+ tYQSeUWtTzeNgv81ealOJbZuT/QHnJTMEfHZ6ppjhusS76JRgNc1Q9NSRrWeJLjVZMni
+ qbhtI9HKNkEhImSMfc5d21b4ETzzU5nHnXasrARpkYbcS9vpXZ9vPQswGHUTSx+wBp7v
+ 6BvQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWK6q+HfkwgWPOlkEW4cx7K5z8aoYkhO2Lu3C5zGGGKKLYhsL8DS9p/tHe80i3ZQ2PxXhCe2qm2Df/+zLRC9MRfcN86gCs=
-X-Gm-Message-State: AOJu0YwXAlohR7KRhRJ21m3HlbGpgm+6yXJRRVc6yJsNeYN+OzpHBpeu
- oEBYM/mwCl5mlNyINO5gw2jj2fYFP9tOCjE8ZqPaV4U7ha6MYRYy90ACJe8ug9m4mtiFdMbw3iO
- Zoh6/h/DZEXQ/vCZW0pF5cixsqHuuNPHrxstwrdQXALzyvQU0YtPn
-X-Received: by 2002:a50:8d86:0:b0:566:825b:98 with SMTP id
- r6-20020a508d86000000b00566825b0098mr11232270edh.6.1709743306159; 
- Wed, 06 Mar 2024 08:41:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEL4qHcVN9nkeyWoAJu9LMysctnxQMaIsiMCnnrKmreq1AJI22WOebtuymhBjq2UGu7Q7XllQ==
-X-Received: by 2002:a50:8d86:0:b0:566:825b:98 with SMTP id
- r6-20020a508d86000000b00566825b0098mr11232254edh.6.1709743305859; 
- Wed, 06 Mar 2024 08:41:45 -0800 (PST)
+ AJvYcCVX3WrQquPmaRaXlZ+26+ziE4SvvCudtwLEkddXG7FpWUCBz2+4brBHRjKBgzCcEsfOF+DBgIlx9Dyd83a6pB2MFD6uFCM=
+X-Gm-Message-State: AOJu0Yx0OFexxton8favNKSsdSgrAvFy7Ce/sguRQ6M1se/b/6W42zdv
+ hTLjKsp0wEOf9C9H3ZrW8xeoQWP4waRk1bHoFEkUf6pIl1QusfLsbreoS/JJiSEb7vO3AikW2VP
+ LENnDvTu7WKS+hIOUIjyVkXhc72ePxDnsfizA3Wxli8j/FEzJnXk3
+X-Received: by 2002:a05:6402:b6e:b0:567:6a67:664e with SMTP id
+ cb14-20020a0564020b6e00b005676a67664emr5496802edb.34.1709743989697; 
+ Wed, 06 Mar 2024 08:53:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF0ZAwykGq5coisNisdkWKGr0v1zQ1r5R2rU52uz15Lq6vXH1hNu1l+xgRAW+1GduwlQVwt6w==
+X-Received: by 2002:a05:6402:b6e:b0:567:6a67:664e with SMTP id
+ cb14-20020a0564020b6e00b005676a67664emr5496787edb.34.1709743989182; 
+ Wed, 06 Mar 2024 08:53:09 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-178-151.web.vodafone.de.
  [109.43.178.151]) by smtp.gmail.com with ESMTPSA id
- s12-20020a056402520c00b0056691924615sm7068330edd.2.2024.03.06.08.41.44
+ fe3-20020a056402390300b00567c34d8a82sm1335445edb.85.2024.03.06.08.53.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Mar 2024 08:41:45 -0800 (PST)
-Message-ID: <571fb716-2f13-4ad7-b47b-8104ec46d1d3@redhat.com>
-Date: Wed, 6 Mar 2024 17:41:43 +0100
+ Wed, 06 Mar 2024 08:53:08 -0800 (PST)
+Message-ID: <8bfad1f4-8fcb-42ad-ad43-80a72a448959@redhat.com>
+Date: Wed, 6 Mar 2024 17:53:07 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1 01/18] hw/i386/pc: Remove deprecated pc-i440fx-2.0
- machine
+Subject: Re: [PATCH-for-9.1 07/18] target/i386/kvm: Remove
+ x86_cpu_change_kvm_default() and 'kvm-cpu.h'
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -80,10 +80,9 @@ Cc: Igor Mammedov <imammedo@redhat.com>,
  David Hildenbrand <david@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
 References: <20240305134221.30924-1-philmd@linaro.org>
- <20240305134221.30924-2-philmd@linaro.org>
+ <20240305134221.30924-8-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -127,7 +126,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240305134221.30924-2-philmd@linaro.org>
+In-Reply-To: <20240305134221.30924-8-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -156,85 +155,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 05/03/2024 14.42, Philippe Mathieu-Daudé wrote:
-> The pc-i440fx-2.0 machine was deprecated for the 8.2
-> release (see commit c7437f0ddb "docs/about: Mark the
-> old pc-i440fx-2.0 - 2.3 machine types as deprecated"),
-> time to remove it.
+> x86_cpu_change_kvm_default() was only used out of kvm-cpu.c by
+> the pc-i440fx-2.1 machine, which got removed. Inline it, and
+
+s/Inline/Make it static/ ?
+(since it is not a real inlining here)
+
+> remove its declaration. "kvm-cpu.h" is now empty, remove it too.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   docs/about/deprecated.rst       |  2 +-
->   docs/about/removed-features.rst |  2 +-
->   include/hw/i386/pc.h            |  3 ---
->   hw/i386/pc.c                    | 15 -------------
->   hw/i386/pc_piix.c               | 37 ---------------------------------
->   5 files changed, 2 insertions(+), 57 deletions(-)
-> 
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 8565644da6..6d4738ca20 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -221,7 +221,7 @@ deprecated; use the new name ``dtb-randomness`` instead. The new name
->   better reflects the way this property affects all random data within
->   the device tree blob, not just the ``kaslr-seed`` node.
->   
-> -``pc-i440fx-2.0`` up to ``pc-i440fx-2.3`` (since 8.2)
-> +``pc-i440fx-2.1`` up to ``pc-i440fx-2.3`` (since 8.2)
->   '''''''''''''''''''''''''''''''''''''''''''''''''''''
->   
->   These old machine types are quite neglected nowadays and thus might have
-> diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-> index 417a0e4fa1..156737989e 100644
-> --- a/docs/about/removed-features.rst
-> +++ b/docs/about/removed-features.rst
-> @@ -801,7 +801,7 @@ mips ``fulong2e`` machine alias (removed in 6.0)
->   
->   This machine has been renamed ``fuloong2e``.
->   
-> -``pc-0.10`` up to ``pc-i440fx-1.7`` (removed in 4.0 up to 8.2)
-> +``pc-0.10`` up to ``pc-i440fx-2.0`` (removed in 4.0 up to 9.0)
->   ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
->   
->   These machine types were very old and likely could not be used for live
-> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-> index b958023187..3360ca2307 100644
-> --- a/include/hw/i386/pc.h
-> +++ b/include/hw/i386/pc.h
-> @@ -285,9 +285,6 @@ extern const size_t pc_compat_2_2_len;
->   extern GlobalProperty pc_compat_2_1[];
->   extern const size_t pc_compat_2_1_len;
->   
-> -extern GlobalProperty pc_compat_2_0[];
-> -extern const size_t pc_compat_2_0_len;
-> -
->   #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
->       static void pc_machine_##suffix##_class_init(ObjectClass *oc, void *data) \
->       { \
-> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> index f5ff970acf..bb7ef31af2 100644
-> --- a/hw/i386/pc.c
-> +++ b/hw/i386/pc.c
-> @@ -311,21 +311,6 @@ GlobalProperty pc_compat_2_1[] = {
->   };
->   const size_t pc_compat_2_1_len = G_N_ELEMENTS(pc_compat_2_1);
->   
-> -GlobalProperty pc_compat_2_0[] = {
-> -    PC_CPU_MODEL_IDS("2.0.0")
-> -    { "virtio-scsi-pci", "any_layout", "off" },
-> -    { "PIIX4_PM", "memory-hotplug-support", "off" },
-> -    { "apic", "version", "0x11" },
-> -    { "nec-usb-xhci", "superspeed-ports-first", "off" },
-> -    { "nec-usb-xhci", "force-pcie-endcap", "on" },
-> -    { "pci-serial", "prog_if", "0" },
-> -    { "pci-serial-2x", "prog_if", "0" },
-> -    { "pci-serial-4x", "prog_if", "0" },
-> -    { "virtio-net-pci", "guest_announce", "off" },
-> -    { "ICH9-LPC", "memory-hotplug-support", "off" },
+>   target/i386/kvm/kvm-cpu.h | 41 ---------------------------------------
+>   target/i386/kvm/kvm-cpu.c |  3 +--
+>   2 files changed, 1 insertion(+), 43 deletions(-)
+>   delete mode 100644 target/i386/kvm/kvm-cpu.h
 
-I think you could clean up memory-hotplug-support for the ICH9-LPC device 
-now, too (in a separate patch).
-
-For this patch here:
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
