@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E19FC5475B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 22:51:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29B11C5475B
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 22:52:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ri05s-0002Ga-N1; Wed, 06 Mar 2024 17:50:36 -0500
+	id 1ri07B-0002vf-LX; Wed, 06 Mar 2024 17:51:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ri05r-0002GR-4R
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 17:50:35 -0500
+ id 1ri076-0002v0-Do
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 17:51:52 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ri05o-0001ES-1j
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 17:50:33 -0500
+ id 1ri074-0001mx-R7
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 17:51:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709765429;
+ s=mimecast20190719; t=1709765509;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=6/xvQU8rXItkULsiiSVQuN/RKusV0WKlNtmQo2+vXZs=;
- b=IWseiZzjFna4/VV3Ev3xyUuBX47w0i2JJFXnIG+eVikftoZIPB6JU/6HLXXZpgQwiRm3cX
- UGK+XuMqcfoPfZoYCPLa0UJxb6xqU2AuEU95YOW8nh02GXsPQsFeetZJUF1iu91ssefmVG
- EZI169QE1LgH9+7Q1qfFcBy2rDZp/Fg=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=H+214zJq4+PGenKyaJZt8PX4Iig/W74yJ6h+EMR0lKM=;
+ b=Zo9snahbsbxwKeZXXHS01mOrTqtDogchVMN+cnugSLaWwJTW33OKLxPrXa6LQcc/GE4Fxq
+ mUftg8ES/TLN2uCmF8f4hLRM/5xMrwr5l3n4Wmg8wQz3WwO66b6yliPv3nMqBQB1KmRFi/
+ 7JUbE+tJiRe6WAYuf4xEwcbj4sZqY58=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-617-on0QR_azOkKohbGDr-OhhA-1; Wed, 06 Mar 2024 17:50:28 -0500
-X-MC-Unique: on0QR_azOkKohbGDr-OhhA-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-33d30a3d6f8so34413f8f.3
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 14:50:28 -0800 (PST)
+ us-mta-335-KkaMGeyjMNSXJOAC77bmZQ-1; Wed, 06 Mar 2024 17:51:48 -0500
+X-MC-Unique: KkaMGeyjMNSXJOAC77bmZQ-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-40d62d3ae0cso1622875e9.2
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 14:51:47 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709765427; x=1710370227;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6/xvQU8rXItkULsiiSVQuN/RKusV0WKlNtmQo2+vXZs=;
- b=TbEkxKME9fEo2Duh2bN5SV55GT6eUNPIPKxBnPfpsZPJWVZST0dFqnOKaw6uttokq+
- 1SoBRGd76X0esn4fcpe3v+WrzVjz74fYcPJ19fkklv+1hYLqhJ4dOGBYfFvBpbmElpML
- doTnJrOg4q6XwTouEBmbADI2ws40I06i4c7f2/+vWacAZhCG1/Kt43yQUuvZ0nvLlk1b
- ek6K8uFYtY4YJr3/vO2vnMhurEUFbqnXweq7gb0dqSKH2/G0BB8xnW+KSONXQJ65RMFX
- C1xGslrtKYCZWtOR6GiXPC5RVUjpC2MfwR2deom6kmXVp79HczqUiIXy14fqkQs+rhzo
- thPg==
+ d=1e100.net; s=20230601; t=1709765507; x=1710370307;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=H+214zJq4+PGenKyaJZt8PX4Iig/W74yJ6h+EMR0lKM=;
+ b=oD66RYXR3TSN3L3YrkFeea6VcbUfvXfR6vmS34UXP2Rths0w8yGdrMUOBQwIrj7hqm
+ WbKioeqsZyTIK+IMxrSl6lkK/GJRXShPnSHLgxuqwNdXcOQoEyQeDUfX7yKNVYgllqnH
+ fdpeFnn5WOQeXEhYmkzqLvzAnrxi3LDT2GErU9hxQNG489lH5nR/6r4czG8oDHn+uQUu
+ QnR2oarathFVhSBixLOxko1//UXIB/Y+AntqIN6OnDUzlmssAYikJcxwIy2LoZm6x1Fq
+ T6RR1jICl4V1Z9dMMzmvlRdQd8TPZOu23hVfaUq3ps9qLN/s9EvXzk6AUbuyu14N9BqU
+ M/Hw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW4k8TLBe79S+sRRcGfBRUAQrae091teTc9uT9n42OrQEBl5mQ0K3FErBKlZlrWfElDAkk+nu1q99FifFdC4cAXu0go8LQ=
-X-Gm-Message-State: AOJu0YwfMPcbcMtUtd2eizE9RDysgsLcM9ukXRw5MT5iNoNaDJ6TQOsj
- TAHq9Migf3avCm2q9g1y+5tJOmh1j49p/QyBPNbK6om913W5MiddAZfo0m05MbLD4ups/5O6hlq
- S69mfj7hw83rLDe02Fak520WBY1RFe3qElHk9XPrlj9nYMFXkRRV/
-X-Received: by 2002:a5d:50cf:0:b0:33d:755c:6f17 with SMTP id
- f15-20020a5d50cf000000b0033d755c6f17mr12255937wrt.67.1709765427017; 
- Wed, 06 Mar 2024 14:50:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEA7uXWB+3Z9PeOzXCeOgVR0ragsJl4ePwSQczk4y4RIdzayCU1MC2m6/dfsN0RVOTm2yTaYQ==
-X-Received: by 2002:a5d:50cf:0:b0:33d:755c:6f17 with SMTP id
- f15-20020a5d50cf000000b0033d755c6f17mr12255927wrt.67.1709765426618; 
- Wed, 06 Mar 2024 14:50:26 -0800 (PST)
+ AJvYcCVlN+StUt+h9wl6g98uK4MHHnVF09TzQBxG4GQUPSJBYy3ODDaw2xVTpLTnfX7TPFTOeE8c1BGsejJmsMDe2Y+klyKFBaA=
+X-Gm-Message-State: AOJu0YxHzvI1RrJFqZPVi4ccbKevtcw65NGde/4GWgEMeZWrFZ1ibfk2
+ XL5bcyiynfG2NWhMDyrUXCeXMSV2OunBsD32vnyUpFEMXWdqHWi6DkIVg0gUK3Y5hW+VJi0zWIB
+ b+Nn4iWugJjJXZjip3cxu7NruUwgJT91hadyWhklMoPFdfPdALZ3N
+X-Received: by 2002:a05:600c:1c89:b0:412:d149:254c with SMTP id
+ k9-20020a05600c1c8900b00412d149254cmr9760666wms.17.1709765506883; 
+ Wed, 06 Mar 2024 14:51:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHyy9kRGSYZILnWvvlPVhZ51eJbxvphBCxuj9yEWlawmPdeIT8WA5Y7KS8iOIhWaop5KJd00g==
+X-Received: by 2002:a05:600c:1c89:b0:412:d149:254c with SMTP id
+ k9-20020a05600c1c8900b00412d149254cmr9760659wms.17.1709765506553; 
+ Wed, 06 Mar 2024 14:51:46 -0800 (PST)
 Received: from [192.168.10.118] ([151.49.77.21])
  by smtp.googlemail.com with ESMTPSA id
- b29-20020a05600c4a9d00b00412f4afab4csm1203055wmp.1.2024.03.06.14.50.25
+ b29-20020a05600c4a9d00b00412f4afab4csm1203055wmp.1.2024.03.06.14.51.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Mar 2024 14:50:26 -0800 (PST)
-Message-ID: <71f2c072-b25b-4980-938e-d832740cbefa@redhat.com>
-Date: Wed, 6 Mar 2024 23:50:24 +0100
+ Wed, 06 Mar 2024 14:51:46 -0800 (PST)
+Message-ID: <33bac01d-6343-4bbb-8baf-f6a741b026ce@redhat.com>
+Date: Wed, 6 Mar 2024 23:51:45 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] kvm: add support for guest physical bits
-To: Xiaoyao Li <xiaoyao.li@intel.com>, Gerd Hoffmann <kraxel@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org
-References: <20240301101713.356759-1-kraxel@redhat.com>
- <20240301101713.356759-2-kraxel@redhat.com>
- <3ab64c0f-7387-4738-b78c-cf798528d5f4@intel.com>
+Subject: Re: [PATCH] vmbus: Print a warning when enabled without the
+ recommended set of features
 Content-Language: en-US
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>, qemu-devel@nongnu.org
+Cc: Marcelo Tosatti <mtosatti@redhat.com>,
+ David Hildenbrand <david@redhat.com>, kvm@vger.kernel.org
+References: <e2d961d56d795fe42ea54f1272c7157e40aeae1e.1706198618.git.maciej.szmigiero@oracle.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
 Autocrypt: addr=pbonzini@redhat.com; keydata=
  xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
@@ -116,9 +114,9 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
  dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <3ab64c0f-7387-4738-b78c-cf798528d5f4@intel.com>
+In-Reply-To: <e2d961d56d795fe42ea54f1272c7157e40aeae1e.1706198618.git.maciej.szmigiero@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -143,55 +141,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/4/24 02:54, Xiaoyao Li wrote:
-> On 3/1/2024 6:17 PM, Gerd Hoffmann wrote:
->> query kvm for supported guest physical address bits using
->> KVM_CAP_VM_GPA_BITS.  Expose the value to the guest via cpuid
->> (leaf 0x80000008, eax, bits 16-23).
->>
->> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
->> ---
->>   target/i386/cpu.h     | 1 +
->>   target/i386/cpu.c     | 1 +
->>   target/i386/kvm/kvm.c | 8 ++++++++
->>   3 files changed, 10 insertions(+)
->>
->> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
->> index 952174bb6f52..d427218827f6 100644
->> --- a/target/i386/cpu.h
->> +++ b/target/i386/cpu.h
->> @@ -2026,6 +2026,7 @@ struct ArchCPU {
->>       /* Number of physical address bits supported */
->>       uint32_t phys_bits;
->> +    uint32_t guest_phys_bits;
->>       /* in order to simplify APIC support, we leave this pointer to the
->>          user */
->> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
->> index 2666ef380891..1a6cfc75951e 100644
->> --- a/target/i386/cpu.c
->> +++ b/target/i386/cpu.c
->> @@ -6570,6 +6570,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t 
->> index, uint32_t count,
->>           if (env->features[FEAT_8000_0001_EDX] & CPUID_EXT2_LM) {
->>               /* 64 bit processor */
->>                *eax |= (cpu_x86_virtual_addr_width(env) << 8);
->> +             *eax |= (cpu->guest_phys_bits << 16);
+On 1/25/24 17:19, Maciej S. Szmigiero wrote:
+> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 > 
-> I think you misunderstand this field.
+> Some Windows versions crash at boot or fail to enable the VMBus device if
+> they don't see the expected set of Hyper-V features (enlightenments).
 > 
-> If you expose this field to guest, it's the information for nested 
-> guest. i.e., the guest itself runs as a hypervisor will know its nested 
-> guest can have guest_phys_bits for physical addr.
+> Since this provides poor user experience let's warn user if the VMBus
+> device is enabled without the recommended set of Hyper-V features.
+> 
+> The recommended set is the minimum set of Hyper-V features required to make
+> the VMBus device work properly in Windows Server versions 2016, 2019 and
+> 2022.
+> 
+> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 
-It's one possible interpretation of AMD's definition. However there's no 
-processor that has different MAXPHYADDR with/without nested paging, so 
-there's no real benefit in adopting that interpretation.
+Acked-by: Paolo Bonzini <pbonzini@redhat.com>
 
-The only architectural case in which you have two conflicting values for 
-the guest MAXPHYADDR is hCR4.LA57=0 (and likewise for Intel 4-level EPT) 
-with MAXPHYADDR=52, so it's useful to treat GuestPhysAddrSize as a way 
-to communicate this situation to the guest.
+Thanks,
 
 Paolo
+
+> ---
+>   hw/hyperv/hyperv.c            | 12 ++++++++++++
+>   hw/hyperv/vmbus.c             |  6 ++++++
+>   include/hw/hyperv/hyperv.h    |  4 ++++
+>   target/i386/kvm/hyperv-stub.c |  4 ++++
+>   target/i386/kvm/hyperv.c      |  5 +++++
+>   target/i386/kvm/hyperv.h      |  2 ++
+>   target/i386/kvm/kvm.c         |  7 +++++++
+>   7 files changed, 40 insertions(+)
+> 
+> diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
+> index 57b402b95610..2c91de7ff4a8 100644
+> --- a/hw/hyperv/hyperv.c
+> +++ b/hw/hyperv/hyperv.c
+> @@ -947,3 +947,15 @@ uint64_t hyperv_syndbg_query_options(void)
+>   
+>       return msg.u.query_options.options;
+>   }
+> +
+> +static bool vmbus_recommended_features_enabled;
+> +
+> +bool hyperv_are_vmbus_recommended_features_enabled(void)
+> +{
+> +    return vmbus_recommended_features_enabled;
+> +}
+> +
+> +void hyperv_set_vmbus_recommended_features_enabled(void)
+> +{
+> +    vmbus_recommended_features_enabled = true;
+> +}
+> diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
+> index 380239af2c7b..f33afeeea27d 100644
+> --- a/hw/hyperv/vmbus.c
+> +++ b/hw/hyperv/vmbus.c
+> @@ -2631,6 +2631,12 @@ static void vmbus_bridge_realize(DeviceState *dev, Error **errp)
+>           return;
+>       }
+>   
+> +    if (!hyperv_are_vmbus_recommended_features_enabled()) {
+> +        warn_report("VMBus enabled without the recommended set of Hyper-V features: "
+> +                    "hv-stimer, hv-vapic and hv-runtime. "
+> +                    "Some Windows versions might not boot or enable the VMBus device");
+> +    }
+> +
+>       bridge->bus = VMBUS(qbus_new(TYPE_VMBUS, dev, "vmbus"));
+>   }
+>   
+> diff --git a/include/hw/hyperv/hyperv.h b/include/hw/hyperv/hyperv.h
+> index 015c3524b1c2..d717b4e13d40 100644
+> --- a/include/hw/hyperv/hyperv.h
+> +++ b/include/hw/hyperv/hyperv.h
+> @@ -139,4 +139,8 @@ typedef struct HvSynDbgMsg {
+>   } HvSynDbgMsg;
+>   typedef uint16_t (*HvSynDbgHandler)(void *context, HvSynDbgMsg *msg);
+>   void hyperv_set_syndbg_handler(HvSynDbgHandler handler, void *context);
+> +
+> +bool hyperv_are_vmbus_recommended_features_enabled(void);
+> +void hyperv_set_vmbus_recommended_features_enabled(void);
+> +
+>   #endif
+> diff --git a/target/i386/kvm/hyperv-stub.c b/target/i386/kvm/hyperv-stub.c
+> index 778ed782e6fc..3263dcf05d31 100644
+> --- a/target/i386/kvm/hyperv-stub.c
+> +++ b/target/i386/kvm/hyperv-stub.c
+> @@ -52,3 +52,7 @@ void hyperv_x86_synic_reset(X86CPU *cpu)
+>   void hyperv_x86_synic_update(X86CPU *cpu)
+>   {
+>   }
+> +
+> +void hyperv_x86_set_vmbus_recommended_features_enabled(void)
+> +{
+> +}
+> diff --git a/target/i386/kvm/hyperv.c b/target/i386/kvm/hyperv.c
+> index 6825c89af374..f2a3fe650a18 100644
+> --- a/target/i386/kvm/hyperv.c
+> +++ b/target/i386/kvm/hyperv.c
+> @@ -149,3 +149,8 @@ int kvm_hv_handle_exit(X86CPU *cpu, struct kvm_hyperv_exit *exit)
+>           return -1;
+>       }
+>   }
+> +
+> +void hyperv_x86_set_vmbus_recommended_features_enabled(void)
+> +{
+> +    hyperv_set_vmbus_recommended_features_enabled();
+> +}
+> diff --git a/target/i386/kvm/hyperv.h b/target/i386/kvm/hyperv.h
+> index 67543296c3a4..e3982c8f4dd1 100644
+> --- a/target/i386/kvm/hyperv.h
+> +++ b/target/i386/kvm/hyperv.h
+> @@ -26,4 +26,6 @@ int hyperv_x86_synic_add(X86CPU *cpu);
+>   void hyperv_x86_synic_reset(X86CPU *cpu);
+>   void hyperv_x86_synic_update(X86CPU *cpu);
+>   
+> +void hyperv_x86_set_vmbus_recommended_features_enabled(void);
+> +
+>   #endif
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index e88e65fe014c..d3d01b3cf82d 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -1650,6 +1650,13 @@ static int hyperv_init_vcpu(X86CPU *cpu)
+>           }
+>       }
+>   
+> +    /* Skip SynIC and VP_INDEX since they are hard deps already */
+> +    if (hyperv_feat_enabled(cpu, HYPERV_FEAT_STIMER) &&
+> +        hyperv_feat_enabled(cpu, HYPERV_FEAT_VAPIC) &&
+> +        hyperv_feat_enabled(cpu, HYPERV_FEAT_RUNTIME)) {
+> +        hyperv_x86_set_vmbus_recommended_features_enabled();
+> +    }
+> +
+>       return 0;
+>   }
+>   
+> 
+> 
 
 
