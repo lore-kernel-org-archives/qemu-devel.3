@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFD37C5475B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 09:41:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3140EC5475B
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 09:41:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhnlP-0007Ph-4K; Wed, 06 Mar 2024 04:40:39 -0500
+	id 1rhnlL-0007PC-Ig; Wed, 06 Mar 2024 04:40:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rhnlN-0007PD-FZ
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 04:40:37 -0500
+ id 1rhnlJ-0007OS-6t
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 04:40:33 -0500
 Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rhnlL-00020k-LV
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 04:40:37 -0500
+ id 1rhnlH-0001xp-Dd
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 04:40:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709718036; x=1741254036;
+ t=1709718031; x=1741254031;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=aeA2s9T7ZHBvx6ENH8YGd6wH3Oj/Qq+YESJhKmgsOC0=;
- b=M0z6+Zwp4M9LsnA985kbkwOqYqcq7lizTBCBOpzoBkRNS+YAXziITbEV
- r8Jmlve9AWQTufldn4LBOy2buGJB+dk2EodmaQJOB4N1xiQMd6zg0GEWC
- sBc705DRnjCTE7zxJGHt9J7oK0Y+R0SePhFn1APrmtj1Y2zTqmTN8rcbB
- W95QbLc1yMjtqSvseBGoO+mnsuOZGIKAChfukvnUNQmnF+22B+qHA2TSu
- 3LkWKURBBwCW9Ne89yOmHs07r5txJVf4FiBqU5TbxTXgcSSh1VB52ZsU8
- rHkTkB5sRm7xVkX/c0uRQlGgn/7F4kCyF3680TC6Dkf8QxqjJD236UNjv A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11004"; a="14897814"
-X-IronPort-AV: E=Sophos;i="6.06,207,1705392000"; d="scan'208";a="14897814"
+ bh=IfvbKnZ8U91lJU/dyibC1pSk1jQ3WaOU4RwX+q9xdr8=;
+ b=TzjxxhVEawjpmViczxgS9MhaeXiPHfElRnr0so1pVweptpJK3gLzI5qV
+ QgRPWx9ZzdMpW0SrRDmcrLr3Bfl7AwjeCrAGp9kGKt2rEvHCZv16wnHfF
+ ToofmSJSWaJna0tZBwiEQbHKmn3KULyseavjRP4NZWeHgQCC18BGIcIpg
+ jI9r9pgayIgqkqBtETiMogJijDMN/bJMvCIpJwZO9mUEmL8Ir7MLHEoOA
+ XVnIU0bmDZOBg4WN+mNuuJnl9ynFG8dHNRKfXAPG9OAjUdZ+iXTujqVXB
+ LHXML8y7+ext2DqVroSf4umG2D6vloUIjaQvd5XadERCoMoRkejj3dnjA Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11004"; a="14897805"
+X-IronPort-AV: E=Sophos;i="6.06,207,1705392000"; d="scan'208";a="14897805"
 Received: from fmviesa002.fm.intel.com ([10.60.135.142])
  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Mar 2024 01:40:33 -0800
+ 06 Mar 2024 01:40:30 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,207,1705392000"; d="scan'208";a="32854129"
+X-IronPort-AV: E=Sophos;i="6.06,207,1705392000"; d="scan'208";a="32854124"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa002.fm.intel.com with ESMTP; 06 Mar 2024 01:40:30 -0800
+ by fmviesa002.fm.intel.com with ESMTP; 06 Mar 2024 01:40:27 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -50,11 +50,11 @@ To: Eduardo Habkost <eduardo@habkost.net>,
  Thomas Huth <thuth@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org
 Cc: Xiaoling Song <xiaoling.song@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
- devel@lists.libvirt.org
-Subject: [PATCH 02/14] hw/core/machine-smp: Deprecate unsupported
- "parameter=1" SMP configurations
-Date: Wed,  6 Mar 2024 17:53:55 +0800
-Message-Id: <20240306095407.3058909-3-zhao1.liu@linux.intel.com>
+ devel@lists.libvirt.org, Prasad Pandit <pjp@fedoraproject.org>
+Subject: [PATCH 01/14] hw/core/machine-smp: Remove deprecated "parameter=0"
+ SMP configurations
+Date: Wed,  6 Mar 2024 17:53:54 +0800
+Message-Id: <20240306095407.3058909-2-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240306095407.3058909-1-zhao1.liu@linux.intel.com>
 References: <20240306095407.3058909-1-zhao1.liu@linux.intel.com>
@@ -85,139 +85,94 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-Currentlt, it was allowed for users to specify the unsupported
-topology parameter as "1". For example, x86 PC machine doesn't
-support drawer/book/cluster topology levels, but user could specify
-"-smp drawers=1,books=1,clusters=1".
+The "parameter=0" SMP configurations have been marked as deprecated
+since v6.2.
 
-This is meaningless and confusing, so that the support for this kind of
-configurations is marked depresated since 9.0. And report warning
-message for such case like:
+For these cases, -smp currently returns the warning and adjusts the
+zeroed parameters to 1 by default.
 
-qemu-system-x86_64: warning: Deprecated CPU topology (considered invalid):
-                    Unsupported clusters parameter mustn't be specified as 1
-qemu-system-x86_64: warning: Deprecated CPU topology (considered invalid):
-                    Unsupported books parameter mustn't be specified as 1
-qemu-system-x86_64: warning: Deprecated CPU topology (considered invalid):
-                    Unsupported drawers parameter mustn't be specified as 1
-
-Users have to ensure that all the topology members described with -smp
-are supported by the target machine.
+Remove the above compatibility logic in v9.0, and return error directly
+if any -smp parameter is set as 0.
 
 Cc: devel@lists.libvirt.org
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
 ---
- docs/about/deprecated.rst | 14 +++++++++
- hw/core/machine-smp.c     | 63 +++++++++++++++++++++++++++++----------
- 2 files changed, 61 insertions(+), 16 deletions(-)
+ docs/about/deprecated.rst       | 16 ----------------
+ docs/about/removed-features.rst | 15 +++++++++++++++
+ hw/core/machine-smp.c           |  5 +++--
+ 3 files changed, 18 insertions(+), 18 deletions(-)
 
 diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 872974640252..2e782e83e952 100644
+index 36bd3e15ef06..872974640252 100644
 --- a/docs/about/deprecated.rst
 +++ b/docs/about/deprecated.rst
-@@ -47,6 +47,20 @@ as short-form boolean values, and passed to plugins as ``arg_name=on``.
- However, short-form booleans are deprecated and full explicit ``arg_name=on``
- form is preferred.
+@@ -36,22 +36,6 @@ and will cause a warning.
+ The replacement for the ``nodelay`` short-form boolean option is ``nodelay=on``
+ rather than ``delay=off``.
  
-+``-smp`` (Unsopported "parameter=1" SMP configurations) (since 9.0)
-+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-+
-+Specified CPU topology parameters must be supported by the machine.
-+
-+In the SMP configuration, users should provide the CPU topology parameters that
-+are supported by the target machine.
-+
-+However, historically it was allowed for users to specify the unsupported
-+topology parameter as "1", which is meaningless. So support for this kind of
-+configurations (e.g. -smp drawers=1,books=1,clusters=1 for x86 PC machine) is
-+marked depresated since 9.0, users have to ensure that all the topology members
-+described with -smp are supported by the target machine.
-+
- QEMU Machine Protocol (QMP) commands
- ------------------------------------
+-``-smp`` ("parameter=0" SMP configurations) (since 6.2)
+-'''''''''''''''''''''''''''''''''''''''''''''''''''''''
+-
+-Specified CPU topology parameters must be greater than zero.
+-
+-In the SMP configuration, users should either provide a CPU topology
+-parameter with a reasonable value (greater than zero) or just omit it
+-and QEMU will compute the missing value.
+-
+-However, historically it was implicitly allowed for users to provide
+-a parameter with zero value, which is meaningless and could also possibly
+-cause unexpected results in the -smp parsing. So support for this kind of
+-configurations (e.g. -smp 8,sockets=0) is deprecated since 6.2 and will
+-be removed in the near future, users have to ensure that all the topology
+-members described with -smp are greater than zero.
+-
+ Plugin argument passing through ``arg=<string>`` (since 6.1)
+ ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
  
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index 417a0e4fa1d9..f9cf874f7b1f 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -489,6 +489,21 @@ The ``-singlestep`` option has been turned into an accelerator property,
+ and given a name that better reflects what it actually does.
+ Use ``-accel tcg,one-insn-per-tb=on`` instead.
+ 
++``-smp`` ("parameter=0" SMP configurations) (removed in 9.0)
++''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++
++Specified CPU topology parameters must be greater than zero.
++
++In the SMP configuration, users should either provide a CPU topology
++parameter with a reasonable value (greater than zero) or just omit it
++and QEMU will compute the missing value.
++
++However, historically it was implicitly allowed for users to provide
++a parameter with zero value, which is meaningless and could also possibly
++cause unexpected results in the -smp parsing. So support for this kind of
++configurations (e.g. -smp 8,sockets=0) is removed since 9.0, users have
++to ensure that all the topology members described with -smp are greater
++than zero.
+ 
+ User-mode emulator command line arguments
+ -----------------------------------------
 diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
-index 96533886b14e..50a5a40dbc3d 100644
+index 25019c91ee36..96533886b14e 100644
 --- a/hw/core/machine-smp.c
 +++ b/hw/core/machine-smp.c
-@@ -112,30 +112,61 @@ void machine_parse_smp_config(MachineState *ms,
+@@ -105,8 +105,9 @@ void machine_parse_smp_config(MachineState *ms,
+         (config->has_cores && config->cores == 0) ||
+         (config->has_threads && config->threads == 0) ||
+         (config->has_maxcpus && config->maxcpus == 0)) {
+-        warn_report("Deprecated CPU topology (considered invalid): "
+-                    "CPU topology parameters must be greater than zero");
++        error_setg(errp, "Invalid CPU topology: "
++                   "CPU topology parameters must be greater than zero");
++        return;
+     }
  
      /*
-      * If not supported by the machine, a topology parameter must be
--     * omitted or specified equal to 1.
-+     * omitted.
-      */
--    if (!mc->smp_props.dies_supported && dies > 1) {
--        error_setg(errp, "dies not supported by this machine's CPU topology");
--        return;
--    }
--    if (!mc->smp_props.clusters_supported && clusters > 1) {
--        error_setg(errp, "clusters not supported by this machine's CPU topology");
--        return;
-+    if (!mc->smp_props.clusters_supported && config->has_clusters) {
-+        if (config->clusters > 1) {
-+            error_setg(errp, "clusters not supported by this "
-+                       "machine's CPU topology");
-+            return;
-+        } else {
-+            /* Here clusters only equals 1 since we've checked zero case. */
-+            warn_report("Deprecated CPU topology (considered invalid): "
-+                        "Unsupported clusters parameter mustn't be "
-+                        "specified as 1");
-+        }
-     }
-+    clusters = clusters > 0 ? clusters : 1;
- 
-+    if (!mc->smp_props.dies_supported && config->has_dies) {
-+        if (config->dies > 1) {
-+            error_setg(errp, "dies not supported by this "
-+                       "machine's CPU topology");
-+            return;
-+        } else {
-+            /* Here dies only equals 1 since we've checked zero case. */
-+            warn_report("Deprecated CPU topology (considered invalid): "
-+                        "Unsupported dies parameter mustn't be "
-+                        "specified as 1");
-+        }
-+    }
-     dies = dies > 0 ? dies : 1;
--    clusters = clusters > 0 ? clusters : 1;
- 
--    if (!mc->smp_props.books_supported && books > 1) {
--        error_setg(errp, "books not supported by this machine's CPU topology");
--        return;
-+    if (!mc->smp_props.books_supported && config->has_books) {
-+        if (config->books > 1) {
-+            error_setg(errp, "books not supported by this "
-+                       "machine's CPU topology");
-+            return;
-+        } else {
-+            /* Here books only equals 1 since we've checked zero case. */
-+            warn_report("Deprecated CPU topology (considered invalid): "
-+                        "Unsupported books parameter mustn't be "
-+                        "specified as 1");
-+        }
-     }
-     books = books > 0 ? books : 1;
- 
--    if (!mc->smp_props.drawers_supported && drawers > 1) {
--        error_setg(errp,
--                   "drawers not supported by this machine's CPU topology");
--        return;
-+    if (!mc->smp_props.drawers_supported && config->has_drawers) {
-+        if (config->drawers > 1) {
-+            error_setg(errp, "drawers not supported by this "
-+                       "machine's CPU topology");
-+            return;
-+        } else {
-+            /* Here drawers only equals 1 since we've checked zero case. */
-+            warn_report("Deprecated CPU topology (considered invalid): "
-+                        "Unsupported drawers parameter mustn't be "
-+                        "specified as 1");
-+        }
-     }
-     drawers = drawers > 0 ? drawers : 1;
- 
 -- 
 2.34.1
 
