@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE2B2C5475B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 20:04:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0F6DC54E41
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 20:25:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhxV4-0006Xt-9Y; Wed, 06 Mar 2024 15:04:26 -0500
+	id 1rhxp1-00020v-L1; Wed, 06 Mar 2024 15:25:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1rhxV2-0006XP-3f
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 15:04:24 -0500
-Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
+ id 1rhxoz-00020U-Mr
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 15:25:01 -0500
+Received: from mail-oa1-x35.google.com ([2001:4860:4864:20::35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1rhxUx-0007Kx-U4
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 15:04:23 -0500
-Received: by mail-ot1-x333.google.com with SMTP id
- 46e09a7af769-6e5027608a9so80535a34.1
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 12:04:19 -0800 (PST)
+ id 1rhxou-0006J2-Jx
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 15:25:01 -0500
+Received: by mail-oa1-x35.google.com with SMTP id
+ 586e51a60fabf-21f70f72fb5so23232fac.1
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 12:24:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709755458; x=1710360258; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1709756694; x=1710361494; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=iroqX7Bbaz9mpJpRO8he7rH6TWj+86PBVrUrlNXUp2E=;
- b=Igv92Uxi7Tach7pK68ofG+25jLJk1YwNhYkV3a9Zr+q0CaCzQd+Sz16El0Z8hardI1
- WTodGb/11KdrizZOW407YQDJKXd4Tt1mywVfth+rtPlWakfYDacjUt3ulozDCO/JTYsg
- ZDOKJbBGk3ICi94hXudgMcs2Ykenerx9Q82+vNPD9oM+GExtqbOROxw67eKl+64r8rZJ
- rYQQG+Ba+etkBYCc/AdrK0DWM4Mkc4PQ3e/2zDe/dTSh+SjIv2mX+SCHVPSTvQELPy7a
- drktxsZJdRtK5jGRoX1QZnBo8KrbXakxbOlYyy6Ye7x6Q21smFDbe6aCVmxtcF1Bxv6s
- 8FZw==
+ bh=OW9BBVNBgb82vsC6loZohU8IkohxnNTqJK9JrZBcelg=;
+ b=VdBHQqirRxGQS6TEhtCwjy3E5+PZNrccmP1J2jX55ucUjje0TwNMqdgYI5rz1xG99W
+ 0kF88xTQk0Etn3chdB1q8BoGCl6FUZy69B1WUAXvPf3W7LZ0p5t6lCCQz6CqUURQGCfj
+ V6GgXZmBCxpNKaEpJWYxmLVXU5zq9pqReJeDOMh/BvPDdITQKkATZqlbLq/h/BrblXWR
+ jJJBaZ3ti2ozfRkmvDBAXbNgQY/hYLquOu2N7bilpq/s9Jge9zfFTFYc79cab6DtxrP+
+ WAsysaVfQ/iGhNq893hKGkTHXG8Hb88SFK1vbPE/E5s1rpYGhSQW9D7WQ1C7ccWeNuFu
+ Q9Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709755458; x=1710360258;
+ d=1e100.net; s=20230601; t=1709756694; x=1710361494;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=iroqX7Bbaz9mpJpRO8he7rH6TWj+86PBVrUrlNXUp2E=;
- b=lblWCZkSSDxyCAIQ+8bBmyQmYTi6l7W/a9repaGTdA0VykCx4aJJ6iV9tnYZDBz9bu
- eUzC8UzaJRxrvRnIs6HDrX9lUEUXfFCgrQRFYjO1gxwfJPXwvXbJpr0VU1GRjRV4zLTV
- 3N/DAG/jSmVJBVG1Z6BVyVekhwSegvycI9bUBsL1R6a75rHNn0bQAk27rW4+sU6BAHJf
- vu0kBHp6MB87V4O7QdQjDn74YCrS/wGSY/a/E78LZcK61QNliHNJSwqylDrJY8kEmWuK
- HM/Gt7h9KETcqCuWx5CwR4UPVjw8f0so27/CQ4zDFje5+Qm/OnnOvimib6OAMmrAfWQq
- /umQ==
-X-Gm-Message-State: AOJu0YytBytDK+qa/+O5WcVlEMsrgYvW1jGAutu+u2LJMDXIgPlonRT6
- TG2DJprRRZCo2eM/El1vsVXLgcbpvV/BNH0NP4vC6k2z5I0xK/xoQJ1emOZCaUxdXSXqeQdY3Po
- dV00xUuj9PWEvRE76OQJgcp5RXck=
-X-Google-Smtp-Source: AGHT+IGt6hbSaxdNwDLiiw7xJW7HAwABHnxW+osg9bKJsBUDBiHm6SVmp+B4BihqgeUDFdc19htpUBkStKrAzWhOFAQ=
-X-Received: by 2002:a05:6870:d28b:b0:220:c9cd:b2b6 with SMTP id
- d11-20020a056870d28b00b00220c9cdb2b6mr6765208oae.14.1709755458187; Wed, 06
- Mar 2024 12:04:18 -0800 (PST)
+ bh=OW9BBVNBgb82vsC6loZohU8IkohxnNTqJK9JrZBcelg=;
+ b=EmkHdDCUAo8lUPPN/jNDRsp+Iq+ZxVDzinp0xRHgIxKQ3P9pM54v1fVO4ntrf2Mj3c
+ uV4/G92GfyKgTrVauQOTkz5bfN6jWI72fEF3aC0h3aietokAmVMkDI7AroFh3FvSRAr7
+ owqafUjjIZiCauiOZ64e8ETZdMAHOrkk1EEsHk/42vE17gq7oSIixnvF0gpXbT68q4v9
+ eqOY/j7j5yRtbxWkZBlGpSHtbyln0QJP+6bHZbnus9i0TODKi3jU2kehAzPTJ/gon7hj
+ 0XAhwozYxD0dazcd9s77JyqS0HOYZVG52TyF7SIVSbRMYwvMgrXqGI4mOk+cIWIGdHuU
+ oZFg==
+X-Gm-Message-State: AOJu0YyapKuiR/8iW3/832f1tLx4n18PjqZPhgWKZcCeGIcyLTQLiMJd
+ GbokQhu2y9Pba6lI79Aio0y66qxS7HLEOaOE23eU/ho+ELC2HuFKmCxex5deam8cqVipvZlQq4F
+ pR/KC9xjAale7q89bdWvCTkN0J6H0kJ0C
+X-Google-Smtp-Source: AGHT+IFyOhGvW1xbXcOIeEX+9W1D3CHmHxryJbnUIARxrroMaQwitZ94BZd+xZjHgGngDq1yJRMXSnvSbSaeOGLgFUc=
+X-Received: by 2002:a05:6870:b69c:b0:21e:392a:29e with SMTP id
+ cy28-20020a056870b69c00b0021e392a029emr6776426oab.8.1709756694068; Wed, 06
+ Mar 2024 12:24:54 -0800 (PST)
 MIME-Version: 1.0
 References: <2048170974.2556839.1709754757016@webmail.strato.de>
-In-Reply-To: <2048170974.2556839.1709754757016@webmail.strato.de>
+ <CAJSP0QWcE=SxYqFKj8XiGJgwSK40M9HZzAEAsvhNrTJWNR8T1A@mail.gmail.com>
+ <994784261.2558198.1709755757517@webmail.strato.de>
+In-Reply-To: <994784261.2558198.1709755757517@webmail.strato.de>
 From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Wed, 6 Mar 2024 15:04:05 -0500
-Message-ID: <CAJSP0QWcE=SxYqFKj8XiGJgwSK40M9HZzAEAsvhNrTJWNR8T1A@mail.gmail.com>
+Date: Wed, 6 Mar 2024 15:24:41 -0500
+Message-ID: <CAJSP0QXYcw4CQf2NOqLqf0r0hVj8bB3kumfkXngL-FG2gkfZ0w@mail.gmail.com>
 Subject: Re: no target for a link in the post "How to access libvirt domains
  in KubeVirt"
 To: info@maximka.de
 Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::333;
- envelope-from=stefanha@gmail.com; helo=mail-ot1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2001:4860:4864:20::35;
+ envelope-from=stefanha@gmail.com; helo=mail-oa1-x35.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,18 +90,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 6 Mar 2024 at 14:52, <info@maximka.de> wrote:
->
-> Hello, thank you for the post.
->
-> The href in the link
-> <a href="https://kubevirt.io/user-guide/debug_virt_stack/">Virtualization Debugging</a>
->
-> should be replaced by
-> https://kubevirt.io/user-guide/debug_virt_stack/logging/
+On Wed, 6 Mar 2024 at 15:09, <info@maximka.de> wrote:
+> BTW thank you for your meaningful posts.
 
-Hi Alexei,
-Thanks for pointing out the broken link! The blog post has been updated.
+Thanks for the kind words!
 
 Stefan
 
