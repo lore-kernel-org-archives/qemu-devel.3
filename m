@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53A4AC54E49
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 03:59:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64D36C54E55
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 03:59:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhiQg-0001B5-Un; Tue, 05 Mar 2024 22:58:55 -0500
+	id 1rhiQO-0000nN-Vr; Tue, 05 Mar 2024 22:58:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rhiQd-00013n-Fe; Tue, 05 Mar 2024 22:58:51 -0500
+ id 1rhiQM-0000m4-Sw; Tue, 05 Mar 2024 22:58:34 -0500
 Received: from szxga05-in.huawei.com ([45.249.212.191])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rhiQb-0006pN-MY; Tue, 05 Mar 2024 22:58:51 -0500
-Received: from mail.maildlp.com (unknown [172.19.163.44])
- by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4TqJZR1PZcz1FLpS;
- Wed,  6 Mar 2024 11:58:39 +0800 (CST)
+ id 1rhiQK-0006k4-AE; Tue, 05 Mar 2024 22:58:34 -0500
+Received: from mail.maildlp.com (unknown [172.19.163.17])
+ by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4TqJZ373KMz1FLpS;
+ Wed,  6 Mar 2024 11:58:19 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id F3E041400E8;
- Wed,  6 Mar 2024 11:58:46 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id C1CD11A0172;
+ Wed,  6 Mar 2024 11:58:27 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Wed, 6 Mar
- 2024 11:58:46 +0800
+ 2024 11:58:27 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [RFC PATCH v7 23/23] hw/arm/virt: Add FEAT_GICv3_NMI feature support
- in virt GIC
-Date: Wed, 6 Mar 2024 03:57:21 +0000
-Message-ID: <20240306035721.2333531-24-ruanjinjie@huawei.com>
+Subject: [RFC PATCH v7 01/23] target/arm: Handle HCR_EL2 accesses for bits
+ introduced with FEAT_NMI
+Date: Wed, 6 Mar 2024 03:56:59 +0000
+Message-ID: <20240306035721.2333531-2-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240306035721.2333531-1-ruanjinjie@huawei.com>
 References: <20240306035721.2333531-1-ruanjinjie@huawei.com>
@@ -70,61 +70,57 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A PE that implements FEAT_NMI and FEAT_GICv3 also implements
-FEAT_GICv3_NMI. A PE that does not implement FEAT_NMI, does not implement
-FEAT_GICv3_NMI
-
-So included support FEAT_GICv3_NMI feature as part of virt platform
-GIC initialization if FEAT_NMI and FEAT_GICv3 supported.
+FEAT_NMI defines another three new bits in HCRX_EL2: TALLINT, HCRX_VINMI and
+HCRX_VFNMI. When the feature is enabled, allow these bits to be written in
+HCRX_EL2.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
 v4:
-- Add Reviewed-by.
+- Update the comment for FEAT_NMI in hcrx_write().
+- Update the commit message, s/thress/three/g.
 v3:
-- Adjust to be the last after add FEAT_NMI to max.
-- Check whether support FEAT_NMI and FEAT_GICv3 for FEAT_GICv3_NMI.
+- Add Reviewed-by.
+- Add HCRX_VINMI and HCRX_VFNMI support in HCRX_EL2.
+- Upate the commit messsage.
 ---
- hw/arm/virt.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ target/arm/cpu-features.h | 5 +++++
+ target/arm/helper.c       | 5 +++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 2d4a187fd5..c12307ccd9 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -712,6 +712,19 @@ static void create_v2m(VirtMachineState *vms)
-     vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 7567854db6..2ad1179be7 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -681,6 +681,11 @@ static inline bool isar_feature_aa64_sme(const ARMISARegisters *id)
+     return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, SME) != 0;
  }
  
-+/*
-+ * A PE that implements FEAT_NMI and FEAT_GICv3 also implements
-+ * FEAT_GICv3_NMI. A PE that does not implement FEAT_NMI, does not implement
-+ * FEAT_GICv3_NMI.
-+ */
-+static bool gicv3_nmi_present(VirtMachineState *vms)
++static inline bool isar_feature_aa64_nmi(const ARMISARegisters *id)
 +{
-+    ARMCPU *cpu = ARM_CPU(qemu_get_cpu(0));
-+
-+    return cpu_isar_feature(aa64_nmi, cpu) &&
-+           (vms->gic_version != VIRT_GIC_VERSION_2);
++    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, NMI) != 0;
 +}
 +
- static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+ static inline bool isar_feature_aa64_tgran4_lpa2(const ARMISARegisters *id)
  {
-     MachineState *ms = MACHINE(vms);
-@@ -785,6 +798,11 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
-                               vms->virt);
-         }
+     return FIELD_SEX64(id->id_aa64mmfr0, ID_AA64MMFR0, TGRAN4) >= 1;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 90c4fb72ce..affa493141 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -6056,6 +6056,11 @@ static void hcrx_write(CPUARMState *env, const ARMCPRegInfo *ri,
+         valid_mask |= HCRX_MSCEN | HCRX_MCE2;
      }
-+
-+    if (gicv3_nmi_present(vms)) {
-+        qdev_prop_set_bit(vms->gic, "has-nmi", true);
+ 
++    /* FEAT_NMI adds TALLINT, VINMI and VFNMI */
++    if (cpu_isar_feature(aa64_nmi, env_archcpu(env))) {
++        valid_mask |= HCRX_TALLINT | HCRX_VINMI | HCRX_VFNMI;
 +    }
 +
-     gicbusdev = SYS_BUS_DEVICE(vms->gic);
-     sysbus_realize_and_unref(gicbusdev, &error_fatal);
-     sysbus_mmio_map(gicbusdev, 0, vms->memmap[VIRT_GIC_DIST].base);
+     /* Clear RES0 bits.  */
+     env->cp15.hcrx_el2 = value & valid_mask;
+ }
 -- 
 2.34.1
 
