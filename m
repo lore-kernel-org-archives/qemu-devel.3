@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EF6EC54798
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 01:33:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0D9FC54798
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 01:36:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhg9V-0003TC-Df; Tue, 05 Mar 2024 20:33:01 -0500
+	id 1rhgCY-0004XR-48; Tue, 05 Mar 2024 20:36:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rhg9P-0003Sz-Ty; Tue, 05 Mar 2024 20:32:56 -0500
-Received: from mail-vs1-xe2c.google.com ([2607:f8b0:4864:20::e2c])
+ id 1rhgCU-0004X1-7f; Tue, 05 Mar 2024 20:36:06 -0500
+Received: from mail-ua1-x92a.google.com ([2607:f8b0:4864:20::92a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rhg9N-0004Af-Cr; Tue, 05 Mar 2024 20:32:54 -0500
-Received: by mail-vs1-xe2c.google.com with SMTP id
- ada2fe7eead31-472e7dc2b6eso101887137.2; 
- Tue, 05 Mar 2024 17:32:52 -0800 (PST)
+ id 1rhgCS-00052P-Q0; Tue, 05 Mar 2024 20:36:05 -0500
+Received: by mail-ua1-x92a.google.com with SMTP id
+ a1e0cc1a2514c-7d130979108so3435137241.1; 
+ Tue, 05 Mar 2024 17:36:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709688772; x=1710293572; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1709688963; x=1710293763; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=l7XhNwWqmh7Hb4VDmGCvrwyQ9xPGFQOjs7Zij6i9PLU=;
- b=gkHRcLxw41T8YBcNP1dtwrnyu5UnWxNC9YWrodCJcRqMAbYNjubliCKCBQJ2E9nZB0
- o1q86K/7jcImCDoApfuxUAbMQVOnNWTpGnjnIFcQaagd1LZxYGEUA626kHOthig07bT3
- 2GJkoMfEHzPKjRmo7V56w82iBrOP2mOTIEbc3ZksWs5GaDYVPt9bGW6Y3LSjzEI8MIFr
- Ksq3hx3I7FdrZH0uCgOWlR88Wy2RmLzpI6C57Ffo53LmvG150Q3mgp+Rbfg0NEgPO4ME
- fNChO3bQEVLXgm8igzPEkZDNPv8k3mqtimzXNu3fh6zTwGnWHLXwRGm1lx62XceS4xso
- FNWw==
+ bh=C2pGG4seocb3FPWxQugyJjdavtNuZb0jLZIY0fjwnOI=;
+ b=C0Fs2Px+gYc9ILG6Ibgf9uN3tW2OJtdn+bnB0kWIcHFiE1EoiN7GQFmKJ8XtXJVGQV
+ yYN8b1XY1LQCK1kL9ICtq+1B/koby1eBDGlvhO7ORBEGmXBQUhDqSvSyjTtJl1GAr154
+ O/Q2Mv9C66jEibZ5VXk3FIqpx9kFkU+1YZJCQBjxhmpJpQJcUB9OSJwA0aySnXalJlow
+ MbXQjmrwe7tvisC8Gkvoc7opoF2FH5E1wnRjPN/RXilVniJir3VZBUEdG3WiWwEiDXT3
+ sTkbAtnHWW3Od6n8210R5Foig5rpIVmS9+cVHPfTswYUC9P7qZniaQuHf0wpbV8ZzNIE
+ aoGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709688772; x=1710293572;
+ d=1e100.net; s=20230601; t=1709688963; x=1710293763;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=l7XhNwWqmh7Hb4VDmGCvrwyQ9xPGFQOjs7Zij6i9PLU=;
- b=QyNdXP1VtgMdcDVpHD9/mF4bvQdL30KnBfbMXoelcQdriOPpYlgte3Y6b7yWa7iOmg
- ueZvIEuWcA96+h6T+bM2TRhe/pTNfSAeDY30BJkrytGBmP+4eGYJ//2G8Qh8hFo9QF/r
- UzRJ0p3huT53+9qaiLwwLzklfO89RUYJgwKuUDNujTvq16xS9ADiMKW8HRKPqmK637FB
- KB+PziwUwO/u+k8mMBcof0LwkowpL2kikf8Y3E1724Tjkfa9PEPqpkQHx2UGnReQqPXU
- LKeYP21Ib9iMuZI2eebCkQTjrSjJAwX7YoJXRgIleMjHbObKGC4jMhasvEa4zawj51kN
- VZQw==
+ bh=C2pGG4seocb3FPWxQugyJjdavtNuZb0jLZIY0fjwnOI=;
+ b=b5r/vLAGgAokKaypXdqtPIecC3LV6Yw/qT7w+yzmYzUk5V2JML6MqwB06muiBsiYAh
+ 5G419L2tbtiipPAGpIjogGvQavB2osooe/XMwRDlpali3SaCnjIXIro12LGa8IiHdFug
+ DnJ5SOpoqRvJNOBe7VnEA3y+E/vCxZC/FOTPxcwcmRxY2FxxIAxEVOHO6oD73ryxRUqv
+ szAozYfzq25XjGNGQ68HfRxPbaPvTS0NPHbZ0fic/L1eotabVPhzZctv1qnzgx9CKZlm
+ 7JHBrpTHgOWPgWC90KAy9Ggm2jUKd3YsR2KhEH00zy7OEVv/EPV65umNuGtux7uDPVlr
+ mo0Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUNXv7ZTNfWy9/K/HN74Dhn/oQBjyts9bKSADC43SDznlAtiO9lE72w3eqQceZu0rWMs/qMxJArMZool+AOhJX2g52LUB0=
-X-Gm-Message-State: AOJu0YyxBMegqtY3TmAtqcQE8GlUN2oiXS9744P2ukh6uIwhBiV7Kk7P
- wXXSvfeek+6aZZbkOaqcD8r7EweAF3NzbDqfPwELNjYsGmtzHAJpE6sIFikdmB4XQdRa9PHqZWK
- rmsIJV+2QQaLKSllZCEJdHeIC/do=
-X-Google-Smtp-Source: AGHT+IEa9FkV+XTGpJKBvX8mNezWE0xPvv7OFIgleFDcJd8Tf4I7Ci4mnVG9lQLSnv9o0/+RqBNwBzpdznVRK6BTdpg=
-X-Received: by 2002:a05:6102:34ed:b0:472:ebae:771e with SMTP id
- bi13-20020a05610234ed00b00472ebae771emr728528vsb.2.1709688771938; Tue, 05 Mar
- 2024 17:32:51 -0800 (PST)
+ AJvYcCXcViwEUUfd/mqHPMQhBSfymcrKi0A2+EydpdsQnqGkVSqiCTp4DMvKsLK3V8l9/sG7KfZI6i+0Ct9me8MmVEWiB3+rumg=
+X-Gm-Message-State: AOJu0YypwYVrKulSEkoppF5SZZlf/tWN1mZVR8eFGlJvgbjZbWRYRyA1
+ jx0MYkE2JljkdmL/7somhOvr0uX4JI/Eu/WOrIonYj2XBwxLQE5i2KXY52fglALMhiKndK/zFK+
+ 1bpHmR9UgXCs3Gw5UlJjHsYJ+FIo=
+X-Google-Smtp-Source: AGHT+IEJkRsbtcC9+TlPFlsCvgMnFZTKFzSBg9BZGllnLu9v8UjKx/vWPlZyuQ3utXK4kjqr1Rbol0paq+aW4mN7c0k=
+X-Received: by 2002:a05:6122:d8d:b0:4d3:4aad:37f6 with SMTP id
+ bc13-20020a0561220d8d00b004d34aad37f6mr3642331vkb.0.1709688962464; Tue, 05
+ Mar 2024 17:36:02 -0800 (PST)
 MIME-Version: 1.0
 References: <20240221213140.365232-1-dbarboza@ventanamicro.com>
- <20240221213140.365232-6-dbarboza@ventanamicro.com>
-In-Reply-To: <20240221213140.365232-6-dbarboza@ventanamicro.com>
+ <20240221213140.365232-7-dbarboza@ventanamicro.com>
+In-Reply-To: <20240221213140.365232-7-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 6 Mar 2024 11:32:26 +1000
-Message-ID: <CAKmqyKNOoxZ1gUr4Jd9nhV_x7T8ONDFTdB58F1iyRu3_CGbnEw@mail.gmail.com>
-Subject: Re: [PATCH v6 5/9] target/riscv: remove 'cpu_vl' global
+Date: Wed, 6 Mar 2024 11:35:36 +1000
+Message-ID: <CAKmqyKPxVABAQEL=0ZdKtWnMh4EZLSCdLNCumVsONXUTAS_Qdw@mail.gmail.com>
+Subject: Re: [PATCH v6 6/9] target/riscv/vector_helper.c: set vstart = 0 in
+ GEN_VEXT_VSLIDEUP_VX()
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  palmer@rivosinc.com, richard.henderson@linaro.org, max.chou@sifive.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2c;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92a;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92a.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -96,61 +97,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Thu, Feb 22, 2024 at 7:34=E2=80=AFAM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> At this moment the global is used only in do_vsetvl(). Do a direct env
-> load in do_vsetvl() to read 'vl' and remove the global.
+> The helper isn't setting env->vstart =3D 0 after its execution, as it is
+> expected from every vector instruction that completes successfully.
 >
-> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  target/riscv/insn_trans/trans_rvv.c.inc | 2 +-
->  target/riscv/translate.c                | 3 +--
->  2 files changed, 2 insertions(+), 3 deletions(-)
+>  target/riscv/vector_helper.c | 1 +
+>  1 file changed, 1 insertion(+)
 >
-> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_=
-trans/trans_rvv.c.inc
-> index 58299d9bb8..69f32d081e 100644
-> --- a/target/riscv/insn_trans/trans_rvv.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
-> @@ -157,7 +157,7 @@ static bool do_vsetvl(DisasContext *s, int rd, int rs=
-1, TCGv s2)
->
->      if (rd =3D=3D 0 && rs1 =3D=3D 0) {
->          s1 =3D tcg_temp_new();
-> -        tcg_gen_mov_tl(s1, cpu_vl);
-> +        tcg_gen_ld_tl(s1, tcg_env, offsetof(CPURISCVState, vl));
->      } else if (rs1 =3D=3D 0) {
->          /* As the mask is at least one bit, RV_VLEN_MAX is >=3D VLMAX */
->          s1 =3D tcg_constant_tl(RV_VLEN_MAX);
-> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-> index f2f0593830..3040f5e0e4 100644
-> --- a/target/riscv/translate.c
-> +++ b/target/riscv/translate.c
-> @@ -38,7 +38,7 @@
->  #undef  HELPER_H
->
->  /* global register indices */
-> -static TCGv cpu_gpr[32], cpu_gprh[32], cpu_pc, cpu_vl;
-> +static TCGv cpu_gpr[32], cpu_gprh[32], cpu_pc;
->  static TCGv_i64 cpu_fpr[32]; /* assume F and D extensions */
->  static TCGv load_res;
->  static TCGv load_val;
-> @@ -1320,7 +1320,6 @@ void riscv_translate_init(void)
->      }
->
->      cpu_pc =3D tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, pc), =
-"pc");
-> -    cpu_vl =3D tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, vl), =
-"vl");
->      load_res =3D tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, loa=
-d_res),
->                               "load_res");
->      load_val =3D tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, loa=
-d_val),
+> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+> index 84cec73eb2..cc7290a1bb 100644
+> --- a/target/riscv/vector_helper.c
+> +++ b/target/riscv/vector_helper.c
+> @@ -4782,6 +4782,7 @@ void HELPER(NAME)(void *vd, void *v0, target_ulong =
+s1, void *vs2,         \
+>          }                                                               =
+  \
+>          *((ETYPE *)vd + H(i)) =3D *((ETYPE *)vs2 + H(i - offset));      =
+    \
+>      }                                                                   =
+  \
+> +    env->vstart =3D 0;                                                  =
+    \
+>      /* set tail elements to 1s */                                       =
+  \
+>      vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);            =
+  \
+>  }
 > --
 > 2.43.2
 >
