@@ -4,74 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E853CC54E41
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 14:42:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 625A4C5475B
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 14:43:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhsSC-0007sY-95; Wed, 06 Mar 2024 09:41:08 -0500
+	id 1rhsS4-0007Q4-KR; Wed, 06 Mar 2024 09:41:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhsS9-0007mK-V9
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:41:05 -0500
-Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ id 1rhsS3-0007Or-If
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:40:59 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhsRx-0001TI-9F
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:41:04 -0500
-Received: by mail-lf1-x130.google.com with SMTP id
- 2adb3069b0e04-5134f830488so2860879e87.0
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 06:40:44 -0800 (PST)
+ id 1rhsRx-0001Tz-8z
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:40:59 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-33d9c3f36c2so1158809f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 06:40:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709736043; x=1710340843; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=IYbIZXvWJUe0g9sZHqzUXajgboo5sOG8ohcMURUMfLA=;
- b=igd1PCp114duNeIFQOQjfDGzRV4UCk86r0Ak0RY7LZxJhb+NvsqhGb0MAguSRnK+ic
- fEwET2LC5PhzsMQ4mxm+JJCBvZW5hE7f8WNpbI+eIUpZfT/pedO+Wdipa11Yl44Jl7vf
- qFQ7FyADlxJncrFgUDxmX7kuTmDnDfxXiCw1wqthBPoqz+6KI6jfO2BwlVbn+CjPtbgc
- OWcDJbVX4ICU3Bl4XUpgLXSGSnMqwEYRZuwSMstxukKaCvX+/bmu17TyAMfrZZVqMuf1
- eMr2s8wY78OspebBqi0vgkS+2WMbkjt9QAvobVLFnnNv7r5gUki+4VB2khm1nVmJ+zs0
- FkCg==
+ d=linaro.org; s=google; t=1709736049; x=1710340849; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=soJfHp369BNDgXM8MEutI1aVk/FtLr15JEFPPe/Y+aw=;
+ b=BN9ky0vGmQDhv6nUjiPsINkWHSt8zA3q8wcMkLECZOy10slKLaSW5ZEsqZpm69MVIC
+ rdOWTDmaKmI9u+c5+hV81YEQjRaJTctmOFChnRGg7IS+jrEgrardBoEeLix/8aAiBGzQ
+ lyU0bGPTSly9SlmtwSr3LofDDmBVyCdy0yMJ8S9cvTCuQqnJD4nrRrMNgcUk4863udkb
+ 4Y+WJuUF5g4t2QsMkeFzFPugWfUF25yuHPDKixVENgwnxvNUdQmphginqKIJnqkUgrog
+ 7QJXoQ9mep1BcWve5Xu4JzZb/Rr5C28NVpCkyxpvkRyqHYtJIpdbmjY2di6Lt9pJkTqV
+ S9rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709736043; x=1710340843;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=IYbIZXvWJUe0g9sZHqzUXajgboo5sOG8ohcMURUMfLA=;
- b=lAu67UrUyLysx6TvP3lNuJpDRhBbIkE1NKmJGWRnijJAbWb8j0i+km7O7WEr2jt+Hv
- ZH3wsxSJQnfh+MhhoMmmVirXTgSLKj8JpAqqaOpuzxV/Bn3ANUzbDCJUa+kRjP7urWW0
- EVuH8DNnQoGhZznxlc0KFJ/iZwLs+rMs6Y+OBqXx2CF2kPkKp/VeL4KytwHpNc8O2DFo
- vNcI5xg/1rTaKvKMS4JIhdEW9Ag9u3DrdU8+tsWa05yEv+liy5Kk5LGB4uMHJ0D1EfDA
- E/o4l/+DmVEGKOIsDZOsjYTM8v9/TJkFsH2P35FGgLtYCljVINDLq4gtHObGded3AZ0j
- sGQA==
-X-Gm-Message-State: AOJu0YyGPvZa8bQAwlFsz93TodVpep3OfVsGKM4SjTmz2e7LIHhwScSc
- 5RXcqiqrs2dpEQxbI3phPtx8+5TsMfAx6INFb4Z3/iRRxT+qM+bYtxmULp8kYpo3i7QJslnTbvc
- f
-X-Google-Smtp-Source: AGHT+IEDdq0IlSpMchrNAJq3ThCj3AqU8AUa5PbtlNJyAql3kuf68RSAsp0i5Szq5AP0Gqd2GCT9Pg==
-X-Received: by 2002:a19:910f:0:b0:512:d5e4:1aa4 with SMTP id
- t15-20020a19910f000000b00512d5e41aa4mr3457324lfd.60.1709736042629; 
- Wed, 06 Mar 2024 06:40:42 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709736049; x=1710340849;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=soJfHp369BNDgXM8MEutI1aVk/FtLr15JEFPPe/Y+aw=;
+ b=KiLUMb96W2ub1kuZvaoGx28dVb5YgeKxrUsY3hbR+fCQ2F/pnhUDGPSvAVvk5dISXz
+ kGZw7QGRHd3jlkDIn6xFNIDpMq5r+rZjNfg1oCR3O3KB5OIVsmapK/PtHDiRYGy5vDlx
+ 8Smf/R+qXVOf8Joy1QHzQRaEjVm7mC8SYz6HHbPf2Fvnz0FdBSceammVW4D22eFmlcPD
+ TUOeaR9yKdoDoqdVFebt5BQDIvNXOHfWsCcNvGUf5Knm+Hdaki4jiBpM9s2hQUAI5KqK
+ QU7/zIsQBXg0lPEmrforUyd5snqQtWfeRaW5SxBFgMEEoW/rfGi7HlkRVKcJE9UPW7mv
+ VF9Q==
+X-Gm-Message-State: AOJu0YyjwE5RlaR1uJ+/wp9HAL5WDDv5x3sv8Tj4X3WwCOAE/XWSwA9Z
+ m8DRV6TSxOBwO33PFWWMyvZQNRL8ufBW6Cl1oGQ6RRJ8WayMSkYuxN152g+9nqs=
+X-Google-Smtp-Source: AGHT+IGd1z+Vh9m+OUvvvf14GpCGogGRJepxf8zuguXq/e0sEOVfhrAcgxSwGi2m9JNmWpbQhbmTxg==
+X-Received: by 2002:adf:e60b:0:b0:33e:ed4:f9f6 with SMTP id
+ p11-20020adfe60b000000b0033e0ed4f9f6mr11093285wrm.37.1709736049335; 
+ Wed, 06 Mar 2024 06:40:49 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- t14-20020a05600c198e00b00412f02bff2csm3783373wmq.37.2024.03.06.06.40.42
+ v7-20020a5d59c7000000b0033e475940fasm5392620wry.66.2024.03.06.06.40.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Mar 2024 06:40:42 -0800 (PST)
+ Wed, 06 Mar 2024 06:40:45 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8EAF15F891;
- Wed,  6 Mar 2024 14:40:41 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 78B705F9CE;
+ Wed,  6 Mar 2024 14:40:42 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL for 9.0 00/29] maintainer updates (tests, gdbstub, plugins)
-Date: Wed,  6 Mar 2024 14:40:12 +0000
-Message-Id: <20240306144041.3787188-1-alex.bennee@linaro.org>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 09/29] gdbstub: Introduce gdb_handle_query_supported_user()
+Date: Wed,  6 Mar 2024 14:40:21 +0000
+Message-Id: <20240306144041.3787188-10-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240306144041.3787188-1-alex.bennee@linaro.org>
+References: <20240306144041.3787188-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::130;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x130.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,125 +99,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit db596ae19040574e41d086e78469014191d7d7fc:
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-  Merge tag 'pull-target-arm-20240305' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-03-05 13:54:54 +0000)
+The upcoming follow-fork-mode child support requires advertising the
+fork-events feature, which is user-specific. Introduce a user-specific
+hook for this.
 
-are available in the Git repository at:
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-Id: <20240219141628.246823-9-iii@linux.ibm.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20240305121005.3528075-10-alex.bennee@linaro.org>
 
-  https://gitlab.com/stsquad/qemu.git tags/pull-maintainer-updates-060324-1
-
-for you to fetch changes up to db7e8b1f75662cf957f6bfad938ed112488518ed:
-
-  target/riscv: honour show_opcodes when disassembling (2024-03-06 12:35:51 +0000)
-
-----------------------------------------------------------------
-maintainer updates (tests, gdbstub, plugins):
-
-  - expand QOS_PATH_MAX_ELEMENT_SIZE to avoid LTO issues
-  - support fork-follow-mode in gdbstub
-  - new thread-safe scoreboard API for TCG plugins
-  - suppress showing opcodes in plugin disassembly
-
-----------------------------------------------------------------
-Alex Bennée (5):
-      tests: bump QOS_PATH_MAX_ELEMENT_SIZE again
-      disas: introduce show_opcodes
-      disas/hppa: honour show_opcodes
-      target/loongarch: honour show_opcodes when disassembling
-      target/riscv: honour show_opcodes when disassembling
-
-Ilya Leoshkevich (12):
-      gdbstub: Support disablement in a multi-threaded process
-      {linux,bsd}-user: Introduce get_task_state()
-      {linux,bsd}-user: Update ts_tid after fork()
-      gdbstub: Introduce gdbserver_fork_start()
-      {linux,bsd}-user: Pass pid to fork_end()
-      {linux,bsd}-user: Pass pid to gdbserver_fork()
-      gdbstub: Call gdbserver_fork() both in parent and in child
-      gdbstub: Introduce gdb_handle_query_supported_user()
-      gdbstub: Introduce gdb_handle_set_thread_user()
-      gdbstub: Introduce gdb_handle_detach_user()
-      gdbstub: Implement follow-fork-mode child
-      tests/tcg: Add two follow-fork-mode tests
-
-Pierrick Bouvier (12):
-      plugins: scoreboard API
-      plugins: define qemu_plugin_u64
-      plugins: implement inline operation relative to cpu_index
-      plugins: add inline operation per vcpu
-      tests/plugin: add test plugin for inline operations
-      tests/plugin/mem: migrate to new per_vcpu API
-      tests/plugin/insn: migrate to new per_vcpu API
-      tests/plugin/bb: migrate to new per_vcpu API
-      contrib/plugins/hotblocks: migrate to new per_vcpu API
-      contrib/plugins/howvec: migrate to new per_vcpu API
-      plugins: remove non per_vcpu inline operation from API
-      plugins: cleanup codepath for previous inline operation
-
- bsd-user/bsd-file.h                                |   2 +-
- bsd-user/freebsd/os-proc.h                         |   6 +-
- bsd-user/qemu.h                                    |   7 +-
- gdbstub/internals.h                                |   3 +
- include/disas/dis-asm.h                            |   8 +
- include/gdbstub/user.h                             |  10 +-
- include/qemu/plugin.h                              |   7 +
- include/qemu/qemu-plugin.h                         | 142 +++++++++---
- include/user/safe-syscall.h                        |   2 +-
- linux-user/m68k/target_cpu.h                       |   2 +-
- linux-user/qemu.h                                  |   5 +
- linux-user/signal-common.h                         |   2 +-
- linux-user/user-internals.h                        |   2 +-
- plugins/plugin.h                                   |  17 +-
- tests/qtest/libqos/qgraph.h                        |   2 +-
- accel/tcg/plugin-gen.c                             |  69 +++++-
- bsd-user/main.c                                    |   9 +-
- bsd-user/signal.c                                  |  20 +-
- contrib/plugins/hotblocks.c                        |  50 +++--
- contrib/plugins/howvec.c                           |  53 +++--
- disas/disas.c                                      |   1 +
- disas/hppa.c                                       |   8 +-
- disas/riscv.c                                      |  28 +--
- gdbstub/gdbstub.c                                  |  29 ++-
- gdbstub/user-target.c                              |   4 +-
- gdbstub/user.c                                     | 244 ++++++++++++++++++++-
- linux-user/aarch64/cpu_loop.c                      |   2 +-
- linux-user/arm/cpu_loop.c                          |   4 +-
- linux-user/arm/signal.c                            |   2 +-
- linux-user/cris/cpu_loop.c                         |   2 +-
- linux-user/elfload.c                               |   2 +-
- linux-user/hppa/signal.c                           |   2 +-
- linux-user/linuxload.c                             |   2 +-
- linux-user/m68k/cpu_loop.c                         |   2 +-
- linux-user/main.c                                  |   8 +-
- linux-user/mips/cpu_loop.c                         |   2 +-
- linux-user/ppc/signal.c                            |   4 +-
- linux-user/riscv/cpu_loop.c                        |   2 +-
- linux-user/signal.c                                |  30 +--
- linux-user/syscall.c                               |  32 +--
- linux-user/vm86.c                                  |  18 +-
- linux-user/xtensa/signal.c                         |   2 +-
- plugins/api.c                                      | 100 +++++++--
- plugins/core.c                                     |  79 ++++++-
- semihosting/arm-compat-semi.c                      |   8 +-
- target/loongarch/disas.c                           |  13 +-
- tests/plugin/bb.c                                  |  63 +++---
- tests/plugin/inline.c                              | 186 ++++++++++++++++
- tests/plugin/insn.c                                | 106 +++++----
- tests/plugin/mem.c                                 |  46 ++--
- tests/tcg/multiarch/follow-fork-mode.c             |  56 +++++
- plugins/qemu-plugins.symbols                       |  13 +-
- tests/plugin/meson.build                           |   2 +-
- tests/tcg/Makefile.target                          |   2 +-
- tests/tcg/multiarch/Makefile.target                |  17 +-
- .../multiarch/gdbstub/follow-fork-mode-child.py    |  40 ++++
- .../multiarch/gdbstub/follow-fork-mode-parent.py   |  16 ++
- 57 files changed, 1257 insertions(+), 338 deletions(-)
- create mode 100644 tests/plugin/inline.c
- create mode 100644 tests/tcg/multiarch/follow-fork-mode.c
- create mode 100644 tests/tcg/multiarch/gdbstub/follow-fork-mode-child.py
- create mode 100644 tests/tcg/multiarch/gdbstub/follow-fork-mode-parent.py
-
+diff --git a/gdbstub/internals.h b/gdbstub/internals.h
+index 56b7c13b750..e6063835b1f 100644
+--- a/gdbstub/internals.h
++++ b/gdbstub/internals.h
+@@ -196,6 +196,7 @@ void gdb_handle_v_file_pread(GArray *params, void *user_ctx); /* user */
+ void gdb_handle_v_file_readlink(GArray *params, void *user_ctx); /* user */
+ void gdb_handle_query_xfer_exec_file(GArray *params, void *user_ctx); /* user */
+ void gdb_handle_set_catch_syscalls(GArray *params, void *user_ctx); /* user */
++void gdb_handle_query_supported_user(const char *gdb_supported); /* user */
+ 
+ void gdb_handle_query_attached(GArray *params, void *user_ctx); /* both */
+ 
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index 2909bc8c69f..7be4418dcb5 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -1655,9 +1655,15 @@ static void handle_query_supported(GArray *params, void *user_ctx)
+     g_string_append(gdbserver_state.str_buf, ";qXfer:exec-file:read+");
+ #endif
+ 
+-    if (params->len &&
+-        strstr(get_param(params, 0)->data, "multiprocess+")) {
+-        gdbserver_state.multiprocess = true;
++    if (params->len) {
++        const char *gdb_supported = get_param(params, 0)->data;
++
++        if (strstr(gdb_supported, "multiprocess+")) {
++            gdbserver_state.multiprocess = true;
++        }
++#if defined(CONFIG_USER_ONLY)
++        gdb_handle_query_supported_user(gdb_supported);
++#endif
+     }
+ 
+     g_string_append(gdbserver_state.str_buf, ";vContSupported+;multiprocess+");
+diff --git a/gdbstub/user.c b/gdbstub/user.c
+index 866a25f9c06..c9e8b83d720 100644
+--- a/gdbstub/user.c
++++ b/gdbstub/user.c
+@@ -382,6 +382,10 @@ void gdbserver_fork_end(CPUState *cpu, pid_t pid)
+     disable_gdbstub(cpu);
+ }
+ 
++void gdb_handle_query_supported_user(const char *gdb_supported)
++{
++}
++
+ /*
+  * Execution state helpers
+  */
 -- 
 2.39.2
 
