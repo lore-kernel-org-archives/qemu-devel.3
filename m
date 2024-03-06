@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07013C5475B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 14:50:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51784C54E41
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 14:57:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhsZy-0006gm-9Y; Wed, 06 Mar 2024 09:49:10 -0500
+	id 1rhshQ-0003DD-1S; Wed, 06 Mar 2024 09:56:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhsZq-0006bm-Ae
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:49:04 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <zltjiangshi@gmail.com>)
+ id 1rhsgz-0003CL-2D
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:56:28 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rhsZn-0004E8-Bi
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:49:02 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-412e80e13abso22491725e9.3
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 06:48:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zltjiangshi@gmail.com>)
+ id 1rhsgx-000793-Iw
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:56:24 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-a2f22bfb4e6so292370166b.0
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 06:56:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709736537; x=1710341337; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1709736981; x=1710341781; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gifdqyHFmpDZP+wxb+8YBxi+kUVbKDtu2FB/0Orwvkw=;
- b=FeMwaEDWFIEUAZ6E6GpHs0CuGQoSMT1OVozcJF2yqKPlV8BS3M9qe8dDwvgRcz59Up
- wVhS/2Wd9/7OaPpHRXORMMiBggZap6FjLcxzqRRCynywrXnm9SttwBc7FeHQAFcDo5JX
- oxNbZXSj6oz3czhr3ldvK9aX4mT6mklJCFdslxoe+iz8Ao+WOoR3eJ+UFbRBx/2hSIOF
- UChKfp5Myo7SgiLC41F8WZL2oT8t9ZWzF05R5aNBgTkYBqUNHNVntBanNa3YQ7XjLlGn
- Cn/r4pByne9tpI5ECkwBr8UVBQcsGciQbFyu+XynVkj05hQJs9OFe+rj808NSktUDAXb
- Z6ww==
+ bh=HynQNevTRFTnhhBTBFXt+8D5Wmwb8gSgwzclZoQWLxA=;
+ b=c0F1r8JWrJ0VuA0KmDkaZncbFitAa/KC6AyhwTUmfss5PT3rve9YbuTSGBqBA1tZQ6
+ 0fKewD4CQ2JVcoNug1+Or7spKYNruMZMJjh8Z3SEQNFK+4bt8pzpx/Ilq/rxi6c7I7JZ
+ 1dUQjoZn7Dr6JBavFzPaIN//5ojSVqyp/xK1tjkHYenwtw+5vhCOll2GCNFPE7vGuSW3
+ te0Rq3D8NkTL36HtzdJfis9Xrl5PgwJglqtEnJffZNt9mT7PoynQQPi1fKgp3I7Twj4Z
+ Zn4ywNcTJ24Z0VRH5CKAY5yUnEJnCEosU0znnjRXlA5Rpqf/CUj4Ekarv8hATnSpPVZY
+ xTmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709736537; x=1710341337;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1709736981; x=1710341781;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gifdqyHFmpDZP+wxb+8YBxi+kUVbKDtu2FB/0Orwvkw=;
- b=MmL9Bxn9TZHf7Uh1CbHBJIXGb2UecvCN5ttdmj/QWSx0kNd/Wax9Acvc9JkKwQY/Sa
- 4p6bcbPUfJVsUowZveaKOKyr4TITEvNMQbgVR+dTf0L4ZziAfgBVsKqTUyMj0223d3JH
- YTd7xoOeUZaPTVH391YZEN9XJmP4P7N1vBlKjQ4sW49sn+PgTPiDEImk5P5TPSg0PW56
- +q9kqxpe7FpqqzZUIPe0gF82pqzfiCnIE/ZLh0+fHTvzVZDBSaURCVG0Vs7Y0v0Q0qfm
- tY4MqiqVnuizo27AjgePrnRWe8qIKhV/VDMURVELE0MrUzRsiMXNRNA34NbcyrZQcNJs
- 6lLA==
-X-Gm-Message-State: AOJu0YwmbbEztSyI+46SnBMhBGa5ZgpPo6zqDZ1wQMO/jSuRJ0ofsWbL
- bh0ABjmyCsoxJKGpj5rEuvb4+tHf5OYnpPZEoJw5DgRqyKdMZ1kP5tKY1GlhLGY=
-X-Google-Smtp-Source: AGHT+IFPZ2Mq6Jmn9F3p0pPkxbwTPa8cmOyFPmx0mzIeYIcBfEAQHP/E3YvZ2r8vkka0un1RkqEF6w==
-X-Received: by 2002:a05:600c:1da6:b0:412:e95f:51bb with SMTP id
- p38-20020a05600c1da600b00412e95f51bbmr4520679wms.32.1709736537548; 
- Wed, 06 Mar 2024 06:48:57 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- fk15-20020a05600c0ccf00b00412ff1acf05sm715566wmb.7.2024.03.06.06.48.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Mar 2024 06:48:57 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 819A55F9E4;
- Wed,  6 Mar 2024 14:40:43 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Luc Michel <luc.michel@amd.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PULL 21/29] tests/plugin/bb: migrate to new per_vcpu API
-Date: Wed,  6 Mar 2024 14:40:33 +0000
-Message-Id: <20240306144041.3787188-22-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240306144041.3787188-1-alex.bennee@linaro.org>
-References: <20240306144041.3787188-1-alex.bennee@linaro.org>
+ bh=HynQNevTRFTnhhBTBFXt+8D5Wmwb8gSgwzclZoQWLxA=;
+ b=IePK/z3h8UD9C7vYXa3jscTt/cWTD7GLKOZS9MPEBmJCG42A33mYK3up+SKWmsJqxe
+ J2FfOTEvecII7ib/ernig1wBASrRnTfaSoK2qxWNsB1rt6A06tWFCwAFUrdjD+hQcn+K
+ olTo2NC6MBbZnNaueq4tjLKIsfj9e6BZQzESFE+UXzn03XlirbqspIP7RX1eJohI7PWY
+ D7MkyDI0ZUImSWP7xfPVJCwznxjHqXsLm9tg5d0DWqmvlnm7KvkecTiK1dXA+NCCEpzV
+ G+T7IUJBw0D4nIA6y+2qZ1nZEQgs7WRBRpGFp16P73GxF+k93TURB3PsI4hvOEe1GSRP
+ 9BXg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXJRaWkRF3ecK4thryuj7b4F6I0JPGhj2QtpuX8hdVw3gL5Ml4wj6hNVnyNUAEPQ07b0vQlkUm2H/oRRVGuy58L1lXTPH0=
+X-Gm-Message-State: AOJu0YxWDaGnkdXgR1p2THDE+408/zNLbloF9KhdWn4tP/gn3IJyICI3
+ +FS1CcSQsQOC7rOVF73jrIKTX4inX4zHSS889D4IojEGDVjcu+Fbl5vZ0tdOkJjHiUq0sL7TElQ
+ zURzIXoLuwusIWoOVkskXqybm7ck=
+X-Google-Smtp-Source: AGHT+IEL989t5WltwZxkjyflbwkyLMIJz1YVe3rxti+SoQuUW3ljeYQ+vFYp50rlDPRczOnU1QtL7ARtKuntXMyZWac=
+X-Received: by 2002:a17:906:c5b:b0:a45:c2f6:eadb with SMTP id
+ t27-20020a1709060c5b00b00a45c2f6eadbmr653538ejf.73.1709736980718; Wed, 06 Mar
+ 2024 06:56:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
+References: <20240229113842.619738-1-gaosong@loongson.cn>
+ <20240229113842.619738-2-gaosong@loongson.cn>
+ <168d29d9-b82e-4dd5-abdd-93759037033c@linaro.org>
+ <5e2419ec-6c1f-e21c-2105-fadb5971239c@loongson.cn>
+In-Reply-To: <5e2419ec-6c1f-e21c-2105-fadb5971239c@loongson.cn>
+From: chen huacai <zltjiangshi@gmail.com>
+Date: Wed, 6 Mar 2024 22:56:10 +0800
+Message-ID: <CABDp7VqyOL9OdxRohru74CyhQzR7W6MwKcg8WCvOVWJz1echMA@mail.gmail.com>
+Subject: Re: [PULL v2 1/1] loongarch: Change the UEFI loading mode to loongarch
+To: lixianglai <lixianglai@loongson.cn>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ Andrea Bolognani <abologna@redhat.com>, maobibo@loongson.cn,
+ zhaotianrui@loongson.cn
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=zltjiangshi@gmail.com; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,141 +97,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Hi, Xianglai,
 
-Reviewed-by: Luc Michel <luc.michel@amd.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20240304130036.124418-9-pierrick.bouvier@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240305121005.3528075-22-alex.bennee@linaro.org>
+How to pass the BIOS file to qemu after this patch? With the old
+cmdline I get an RCU stall and freeze the kvm host.
 
-diff --git a/tests/plugin/bb.c b/tests/plugin/bb.c
-index df50d1fd3bc..36776dee1e1 100644
---- a/tests/plugin/bb.c
-+++ b/tests/plugin/bb.c
-@@ -17,27 +17,25 @@
- QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
- 
- typedef struct {
--    GMutex lock;
--    int index;
-     uint64_t bb_count;
-     uint64_t insn_count;
- } CPUCount;
- 
--/* Used by the inline & linux-user counts */
--static bool do_inline;
--static CPUCount inline_count;
-+static struct qemu_plugin_scoreboard *counts;
-+static qemu_plugin_u64 bb_count;
-+static qemu_plugin_u64 insn_count;
- 
-+static bool do_inline;
- /* Dump running CPU total on idle? */
- static bool idle_report;
--static GPtrArray *counts;
--static int max_cpus;
- 
--static void gen_one_cpu_report(CPUCount *count, GString *report)
-+static void gen_one_cpu_report(CPUCount *count, GString *report,
-+                               unsigned int cpu_index)
- {
-     if (count->bb_count) {
-         g_string_append_printf(report, "CPU%d: "
-                                "bb's: %" PRIu64", insns: %" PRIu64 "\n",
--                               count->index,
-+                               cpu_index,
-                                count->bb_count, count->insn_count);
-     }
- }
-@@ -46,20 +44,23 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
- {
-     g_autoptr(GString) report = g_string_new("");
- 
--    if (do_inline || !max_cpus) {
--        g_string_printf(report, "bb's: %" PRIu64", insns: %" PRIu64 "\n",
--                        inline_count.bb_count, inline_count.insn_count);
--    } else {
--        g_ptr_array_foreach(counts, (GFunc) gen_one_cpu_report, report);
-+    for (int i = 0; i < qemu_plugin_num_vcpus(); ++i) {
-+        CPUCount *count = qemu_plugin_scoreboard_find(counts, i);
-+        gen_one_cpu_report(count, report, i);
-     }
-+    g_string_append_printf(report, "Total: "
-+                           "bb's: %" PRIu64", insns: %" PRIu64 "\n",
-+                           qemu_plugin_u64_sum(bb_count),
-+                           qemu_plugin_u64_sum(insn_count));
-     qemu_plugin_outs(report->str);
-+    qemu_plugin_scoreboard_free(counts);
- }
- 
- static void vcpu_idle(qemu_plugin_id_t id, unsigned int cpu_index)
- {
--    CPUCount *count = g_ptr_array_index(counts, cpu_index);
-+    CPUCount *count = qemu_plugin_scoreboard_find(counts, cpu_index);
-     g_autoptr(GString) report = g_string_new("");
--    gen_one_cpu_report(count, report);
-+    gen_one_cpu_report(count, report, cpu_index);
- 
-     if (report->len > 0) {
-         g_string_prepend(report, "Idling ");
-@@ -69,14 +70,11 @@ static void vcpu_idle(qemu_plugin_id_t id, unsigned int cpu_index)
- 
- static void vcpu_tb_exec(unsigned int cpu_index, void *udata)
- {
--    CPUCount *count = max_cpus ?
--        g_ptr_array_index(counts, cpu_index) : &inline_count;
-+    CPUCount *count = qemu_plugin_scoreboard_find(counts, cpu_index);
- 
-     uintptr_t n_insns = (uintptr_t)udata;
--    g_mutex_lock(&count->lock);
-     count->insn_count += n_insns;
-     count->bb_count++;
--    g_mutex_unlock(&count->lock);
- }
- 
- static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-@@ -84,11 +82,10 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-     size_t n_insns = qemu_plugin_tb_n_insns(tb);
- 
-     if (do_inline) {
--        qemu_plugin_register_vcpu_tb_exec_inline(tb, QEMU_PLUGIN_INLINE_ADD_U64,
--                                                 &inline_count.bb_count, 1);
--        qemu_plugin_register_vcpu_tb_exec_inline(tb, QEMU_PLUGIN_INLINE_ADD_U64,
--                                                 &inline_count.insn_count,
--                                                 n_insns);
-+        qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
-+            tb, QEMU_PLUGIN_INLINE_ADD_U64, bb_count, 1);
-+        qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
-+            tb, QEMU_PLUGIN_INLINE_ADD_U64, insn_count, n_insns);
-     } else {
-         qemu_plugin_register_vcpu_tb_exec_cb(tb, vcpu_tb_exec,
-                                              QEMU_PLUGIN_CB_NO_REGS,
-@@ -121,18 +118,10 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-         }
-     }
- 
--    if (info->system_emulation && !do_inline) {
--        max_cpus = info->system.max_vcpus;
--        counts = g_ptr_array_new();
--        for (i = 0; i < max_cpus; i++) {
--            CPUCount *count = g_new0(CPUCount, 1);
--            g_mutex_init(&count->lock);
--            count->index = i;
--            g_ptr_array_add(counts, count);
--        }
--    } else if (!do_inline) {
--        g_mutex_init(&inline_count.lock);
--    }
-+    counts = qemu_plugin_scoreboard_new(sizeof(CPUCount));
-+    bb_count = qemu_plugin_scoreboard_u64_in_struct(counts, CPUCount, bb_count);
-+    insn_count = qemu_plugin_scoreboard_u64_in_struct(
-+        counts, CPUCount, insn_count);
- 
-     if (idle_report) {
-         qemu_plugin_register_vcpu_idle_cb(id, vcpu_idle);
--- 
-2.39.2
+Huacai
 
+On Sat, Mar 2, 2024 at 12:14=E2=80=AFPM lixianglai <lixianglai@loongson.cn>=
+ wrote:
+>
+> Hi Philippe:
+>
+> On 29/2/24 12:38, Song Gao wrote:
+>
+> From: Xianglai Li <lixianglai@loongson.cn>
+>
+> The UEFI loading mode in loongarch is very different
+> from that in other architectures:loongarch's UEFI code
+> is in rom, while other architectures' UEFI code is in flash.
+>
+> loongarch UEFI can be loaded as follows:
+> -machine virt,pflash=3Dpflash0-format
+> -bios ./QEMU_EFI.fd
+>
+> Other architectures load UEFI using the following methods:
+> -machine virt,pflash0=3Dpflash0-format,pflash1=3Dpflash1-format
+>
+> loongarch's UEFI loading method makes qemu and libvirt incompatible
+> when using NVRAM, and the cost of loongarch's current loading method
+> far outweighs the benefits, so we decided to use the same UEFI loading
+> scheme as other architectures.
+>
+>
+> FYI I'm still trying to find a way to avoid that, planning to discuss
+> more with libvirt folks. Well, maybe it is a waste of my time and I
+> should just stop worrying / caring about this long standing issue.
+>
+> Thank you so much for your attention to this issue
+>
+> and your long-standing contributions to the community!!:-)
+>
+> Best regards,
+>
+> Xianglai.
+>
+>
+> Cc: Andrea Bolognani <abologna@redhat.com>
+> Cc: maobibo@loongson.cn
+> Cc: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Cc: Song Gao <gaosong@loongson.cn>
+> Cc: zhaotianrui@loongson.cn
+> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+> Tested-by: Andrea Bolognani <abologna@redhat.com>
+> Reviewed-by: Song Gao <gaosong@loongson.cn>
+> Message-Id: <0bd892aa9b88e0f4cc904cb70efd0251fc1cde29.1708336919.git.lixi=
+anglai@loongson.cn>
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> ---
+>   hw/loongarch/acpi-build.c   |  29 +++++++++--
+>   hw/loongarch/virt.c         | 101 ++++++++++++++++++++++++++----------
+>   include/hw/loongarch/virt.h |  10 ++--
+>   3 files changed, 107 insertions(+), 33 deletions(-)
+>
+>
+
+
+--=20
+Huacai Chen
 
