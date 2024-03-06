@@ -4,84 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47A59C54E41
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 17:29:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F54CC54E41
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 17:29:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhv4N-0007iw-HU; Wed, 06 Mar 2024 12:28:43 -0500
+	id 1rhv4O-0007hi-4H; Wed, 06 Mar 2024 12:28:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rhv4K-0007gi-P2
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:28:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rhv4I-0007gV-MN
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:28:38 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rhv4J-0004yQ-78
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:28:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709746117;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wVm8nopxhdTnNxV+C/CxgiL7Ajx4dWRfRy27MeCc6HQ=;
- b=Q1R5DViiI3qTwp+rrHnCCSb1wrrLG3wLQ4VeI9dHkHnmlpHMW3IyUtW5NAo2mO6cfNfo1l
- /V06NIroDK3QJDp10ssasmH3w8bUf+A9mXD60iguSr+kVGmYh9IRjHX00HnSwkOxuw8U0K
- AAmL4gW7hr5dmKdtb5qi9pN79jdbwLw=
-Received: from mail-yb1-f200.google.com (mail-yb1-f200.google.com
- [209.85.219.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-147-s0L7WuszMX2voAGcnjfqRQ-1; Wed, 06 Mar 2024 12:28:36 -0500
-X-MC-Unique: s0L7WuszMX2voAGcnjfqRQ-1
-Received: by mail-yb1-f200.google.com with SMTP id
- 3f1490d57ef6-dc693399655so13164584276.1
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 09:28:36 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709746116; x=1710350916;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wVm8nopxhdTnNxV+C/CxgiL7Ajx4dWRfRy27MeCc6HQ=;
- b=blijCa4Edn2/FcqZ1vJAhFo8NcJKclttdkXKslYksBWAfFtedsFphovj6wRhRPCmAW
- cciMj4Pf7aW6ikk3fD8aM+CanfEcg9uv2VYJ/u2DEoS5vToHLveE5bqvV1xMGfTsm8sW
- s/cNd4YEKaBccyEEhS0ByIYcadcvg5CqiMLOaKRPhQb9dejjqwOp+2aQoskGmPtVT6lV
- gXenAxUI6n1/eaHY7GUgfI5udHbviHn9vUT5n1Ptl6OREYBKHS4Z0AECFcW8X4sRLmBT
- SoQr03ZN3DNeuigLfQKF6USjlazydQ2dqfBdpAogEdGO7TCBeifffC0ZEpblazpwDbOd
- tPPw==
-X-Gm-Message-State: AOJu0YwHbb5HcsRjryZ6oTSNJXMhxJrU06sXvnQ9doaPbGuP5txWF94K
- AIjWCtXXN1FqP+PYHIaGGNuDCJkMnkA/0jbVdIvriwPcQE49sZZJZEM2Q1GQAPR8/A325CUhhdZ
- imoFf++weiQFSuOFpckCrlQ5yg2UouKCZNcQZXK1xglOuiQwKE5z8BWrzbDNWsx6QsZ/Q+taGud
- p84v3XDzKL+vaUiHW0vDAmOd2N56A=
-X-Received: by 2002:a25:c546:0:b0:dc6:ff66:87a8 with SMTP id
- v67-20020a25c546000000b00dc6ff6687a8mr12041330ybe.51.1709746116113; 
- Wed, 06 Mar 2024 09:28:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFYuMtoaDSNe4eC4y86ctGMazVJdja/luVm7OBljWJX901XH0rGCP62zwMGS6fIiO/887UWwYJZ96dZ93OyEDE=
-X-Received: by 2002:a25:c546:0:b0:dc6:ff66:87a8 with SMTP id
- v67-20020a25c546000000b00dc6ff6687a8mr12041305ybe.51.1709746115780; Wed, 06
- Mar 2024 09:28:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rhv4F-0004wc-Cz
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 12:28:38 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TqfRL0w1dz6K62q;
+ Thu,  7 Mar 2024 01:23:42 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 51EA7140AA7;
+ Thu,  7 Mar 2024 01:28:29 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Wed, 6 Mar
+ 2024 17:28:28 +0000
+Date: Wed, 6 Mar 2024 17:28:27 +0000
+To: <nifan.cxl@gmail.com>
+CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
+ <gregory.price@memverge.com>, <ira.weiny@intel.com>,
+ <dan.j.williams@intel.com>, <a.manzanares@samsung.com>, <dave@stgolabs.net>,
+ <nmtadam.samsung@gmail.com>, <jim.harris@samsung.com>,
+ <Jorgen.Hansen@wdc.com>, <wj28.lee@gmail.com>, Fan Ni <fan.ni@samsung.com>
+Subject: Re: [PATCH v5 08/13] hw/cxl/cxl-mailbox-utils: Add mailbox commands
+ to support add/release dynamic capacity response
+Message-ID: <20240306172827.000052dc@Huawei.com>
+In-Reply-To: <20240304194331.1586191-9-nifan.cxl@gmail.com>
+References: <20240304194331.1586191-1-nifan.cxl@gmail.com>
+ <20240304194331.1586191-9-nifan.cxl@gmail.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <1707911419-11758-1-git-send-email-si-wei.liu@oracle.com>
-In-Reply-To: <1707911419-11758-1-git-send-email-si-wei.liu@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Wed, 6 Mar 2024 18:27:59 +0100
-Message-ID: <CAJaqyWcrSFszNH6kG2m8qBg-CzKeQfshVCAC9=9s6+3MSiFR7w@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] vhost: dirty log should be per backend type
-To: Si-Wei Liu <si-wei.liu@oracle.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, jasowang@redhat.com, 
- joao.m.martins@oracle.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,172 +71,347 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 14, 2024 at 2:01=E2=80=AFPM Si-Wei Liu <si-wei.liu@oracle.com> =
-wrote:
->
-> There could be a mix of both vhost-user and vhost-kernel clients
-> in the same QEMU process, where separate vhost loggers for the
-> specific vhost type have to be used. Make the vhost logger per
-> backend type, and have them properly reference counted.
->
-> Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-> Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
+On Mon,  4 Mar 2024 11:34:03 -0800
+nifan.cxl@gmail.com wrote:
 
-It seems to me you missed the cover letter and sent 01/02 as the first mess=
-age?
+> From: Fan Ni <fan.ni@samsung.com>
+> 
+> Per CXL spec 3.1, two mailbox commands are implemented:
+> Add Dynamic Capacity Response (Opcode 4802h) 8.2.9.9.9.3, and
+> Release Dynamic Capacity (Opcode 4803h) 8.2.9.9.9.4.
+> 
+> Signed-off-by: Fan Ni <fan.ni@samsung.com>
+
+Hmm. So I had a thought which would work for what you
+have here. See include/qemu/range.h
+I like the region merging stuff that is also in the list operators
+but we shouldn't use that because we have other reasons not to
+fuse ranges (sequence numbering etc)
+
+We could make an extent a wrapper around a struct Range though
+so that we can use the comparison stuff directly.
++ we can use the list manipulation in there as the basis for a future
+extent merging infrastructure that is tag and sequence number (if
+provided - so shared capacity or pmem) aware.
+
+Jonathan
+
 
 > ---
->  hw/virtio/vhost.c | 49 +++++++++++++++++++++++++++++++++++++------------
->  1 file changed, 37 insertions(+), 12 deletions(-)
->
-> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> index 2c9ac79..ef6d9b5 100644
-> --- a/hw/virtio/vhost.c
-> +++ b/hw/virtio/vhost.c
-> @@ -43,8 +43,8 @@
->      do { } while (0)
->  #endif
->
-> -static struct vhost_log *vhost_log;
-> -static struct vhost_log *vhost_log_shm;
-> +static struct vhost_log *vhost_log[VHOST_BACKEND_TYPE_MAX];
-> +static struct vhost_log *vhost_log_shm[VHOST_BACKEND_TYPE_MAX];
->
->  /* Memslots used by backends that support private memslots (without an f=
-d). */
->  static unsigned int used_memslots;
-> @@ -287,6 +287,8 @@ static int vhost_set_backend_type(struct vhost_dev *d=
-ev,
->          r =3D -1;
->      }
->
-> +    assert(dev->vhost_ops->backend_type =3D=3D backend_type || r < 0);
-
-Is this a debug leftover (at least the r<0)? This should never be
-reached effectively, but then it does not make sense to leave the
-default switch branch.
-
 > +
->      return r;
->  }
->
-> @@ -319,16 +321,23 @@ static struct vhost_log *vhost_log_alloc(uint64_t s=
-ize, bool share)
->      return log;
->  }
->
-> -static struct vhost_log *vhost_log_get(uint64_t size, bool share)
-> +static struct vhost_log *vhost_log_get(VhostBackendType backend_type,
-> +                                       uint64_t size, bool share)
->  {
-> -    struct vhost_log *log =3D share ? vhost_log_shm : vhost_log;
-> +    struct vhost_log *log;
+> +/*
+> + * CXL r3.1 Table 8-168: Add Dynamic Capacity Response Input Payload
+> + * CXL r3.1 Table 8-170: Release Dynamic Capacity Input Payload
+> + */
+> +typedef struct CXLUpdateDCExtentListInPl {
+> +    uint32_t num_entries_updated;
+> +    uint8_t flags;
+> +    uint8_t rsvd[3];
+> +    /* CXL r3.1 Table 8-169: Updated Extent */
+> +    struct {
+> +        uint64_t start_dpa;
+> +        uint64_t len;
+> +        uint8_t rsvd[8];
+> +    } QEMU_PACKED updated_entries[];
+> +} QEMU_PACKED CXLUpdateDCExtentListInPl;
 > +
-> +    if (backend_type =3D=3D VHOST_BACKEND_TYPE_NONE ||
-> +        backend_type >=3D VHOST_BACKEND_TYPE_MAX)
-> +        return NULL;
+> +/*
+> + * For the extents in the extent list to operate, check whether they are valid
+> + * 1. The extent should be in the range of a valid DC region;
+> + * 2. The extent should not cross multiple regions;
+> + * 3. The start DPA and the length of the extent should align with the block
+> + * size of the region;
+> + * 4. The address range of multiple extents in the list should not overlap.
 
-The callers (vhost_log_resize, etc) don't expect vhost_log_get to
-return NULL. I think all of these should be an assertion, if any.
+Hmm. Interesting.  I was thinking a given add / remove command rather than
+just the extents can't overlap a region.  However I can't find text on that
+so I believe your interpretation is correct. It is only specified for the
+event records, but that is good enough I think.  We might want to propose
+tightening the spec on this to allow devices to say no to such complex
+extent lists. Maybe a nice friendly Memory vendor should query this one if
+it's a potential problem for real devices.  Might not be!
 
-The rest looks good to me.
-
+> + */
+> +static CXLRetCode cxl_detect_malformed_extent_list(CXLType3Dev *ct3d,
+> +        const CXLUpdateDCExtentListInPl *in)
+> +{
+> +    uint64_t min_block_size = UINT64_MAX;
+> +    CXLDCRegion *region = &ct3d->dc.regions[0];
+> +    CXLDCRegion *lastregion = &ct3d->dc.regions[ct3d->dc.num_regions - 1];
+> +    g_autofree unsigned long *blk_bitmap = NULL;
+> +    uint64_t dpa, len;
+> +    uint32_t i;
 > +
-> +    log =3D share ? vhost_log_shm[backend_type] : vhost_log[backend_type=
-];
->
->      if (!log || log->size !=3D size) {
->          log =3D vhost_log_alloc(size, share);
->          if (share) {
-> -            vhost_log_shm =3D log;
-> +            vhost_log_shm[backend_type] =3D log;
->          } else {
-> -            vhost_log =3D log;
-> +            vhost_log[backend_type] =3D log;
->          }
->      } else {
->          ++log->refcnt;
-> @@ -340,11 +349,20 @@ static struct vhost_log *vhost_log_get(uint64_t siz=
-e, bool share)
->  static void vhost_log_put(struct vhost_dev *dev, bool sync)
->  {
->      struct vhost_log *log =3D dev->log;
-> +    VhostBackendType backend_type;
->
->      if (!log) {
->          return;
->      }
->
-> +    assert(dev->vhost_ops);
-> +    backend_type =3D dev->vhost_ops->backend_type;
-> +
-> +    if (backend_type =3D=3D VHOST_BACKEND_TYPE_NONE ||
-> +        backend_type >=3D VHOST_BACKEND_TYPE_MAX) {
-> +        return;
+> +    for (i = 0; i < ct3d->dc.num_regions; i++) {
+> +        region = &ct3d->dc.regions[i];
+> +        min_block_size = MIN(min_block_size, region->block_size);
 > +    }
 > +
->      --log->refcnt;
->      if (log->refcnt =3D=3D 0) {
->          /* Sync only the range covered by the old log */
-> @@ -352,13 +370,13 @@ static void vhost_log_put(struct vhost_dev *dev, bo=
-ol sync)
->              vhost_log_sync_range(dev, 0, dev->log_size * VHOST_LOG_CHUNK=
- - 1);
->          }
->
-> -        if (vhost_log =3D=3D log) {
-> +        if (vhost_log[backend_type] =3D=3D log) {
->              g_free(log->log);
-> -            vhost_log =3D NULL;
-> -        } else if (vhost_log_shm =3D=3D log) {
-> +            vhost_log[backend_type] =3D NULL;
-> +        } else if (vhost_log_shm[backend_type] =3D=3D log) {
->              qemu_memfd_free(log->log, log->size * sizeof(*(log->log)),
->                              log->fd);
-> -            vhost_log_shm =3D NULL;
-> +            vhost_log_shm[backend_type] =3D NULL;
->          }
->
->          g_free(log);
-> @@ -376,7 +394,8 @@ static bool vhost_dev_log_is_shared(struct vhost_dev =
-*dev)
->
->  static inline void vhost_dev_log_resize(struct vhost_dev *dev, uint64_t =
-size)
->  {
-> -    struct vhost_log *log =3D vhost_log_get(size, vhost_dev_log_is_share=
-d(dev));
-> +    struct vhost_log *log =3D vhost_log_get(dev->vhost_ops->backend_type=
-,
-> +                                          size, vhost_dev_log_is_shared(=
-dev));
->      uint64_t log_base =3D (uintptr_t)log->log;
->      int r;
->
-> @@ -2037,8 +2056,14 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIO=
-Device *vdev, bool vrings)
->          uint64_t log_base;
->
->          hdev->log_size =3D vhost_get_log_size(hdev);
-> -        hdev->log =3D vhost_log_get(hdev->log_size,
-> +        hdev->log =3D vhost_log_get(hdev->vhost_ops->backend_type,
-> +                                  hdev->log_size,
->                                    vhost_dev_log_is_shared(hdev));
-> +        if (!hdev->log) {
-> +            VHOST_OPS_DEBUG(r, "vhost_log_get failed");
-> +            goto fail_vq;
+> +    blk_bitmap = bitmap_new((lastregion->base + lastregion->len -
+> +                             ct3d->dc.regions[0].base) / min_block_size);
+> +
+> +    for (i = 0; i < in->num_entries_updated; i++) {
+> +        dpa = in->updated_entries[i].start_dpa;
+> +        len = in->updated_entries[i].len;
+> +
+> +        region = cxl_find_dc_region(ct3d, dpa, len);
+> +        if (!region) {
+> +            return CXL_MBOX_INVALID_PA;
 > +        }
 > +
->          log_base =3D (uintptr_t)hdev->log->log;
->          r =3D hdev->vhost_ops->vhost_set_log_base(hdev,
->                                                  hdev->log_size ? log_bas=
-e : 0,
-> --
-> 1.8.3.1
->
->
+> +        dpa -= ct3d->dc.regions[0].base;
+> +        if (dpa % region->block_size || len % region->block_size) {
+> +            return CXL_MBOX_INVALID_EXTENT_LIST;
+> +        }
+> +        /* the dpa range already covered by some other extents in the list */
+> +        if (test_any_bits_set(blk_bitmap, dpa / min_block_size,
+> +            len / min_block_size)) {
+> +            return CXL_MBOX_INVALID_EXTENT_LIST;
+> +        }
+> +        bitmap_set(blk_bitmap, dpa / min_block_size, len / min_block_size);
+> +   }
+> +
+> +    return CXL_MBOX_SUCCESS;
+> +}
+> +
+> +/*
+> + * CXL r3.1 section 8.2.9.9.9.3: Add Dynamic Capacity Response (Opcode 4802h)
+> + * An extent is added to the extent list and becomes usable only after the
+> + * response is processed successfully
+> + */
+> +static CXLRetCode cmd_dcd_add_dyn_cap_rsp(const struct cxl_cmd *cmd,
+> +                                          uint8_t *payload_in,
+> +                                          size_t len_in,
+> +                                          uint8_t *payload_out,
+> +                                          size_t *len_out,
+> +                                          CXLCCI *cci)
+> +{
+> +    CXLUpdateDCExtentListInPl *in = (void *)payload_in;
+> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+> +    CXLDCExtentList *extent_list = &ct3d->dc.extents;
+> +    CXLDCExtent *ent;
+> +    uint32_t i;
+> +    uint64_t dpa, len;
+> +    CXLRetCode ret;
+> +
+> +    if (in->num_entries_updated == 0) {
+> +        return CXL_MBOX_SUCCESS;
+> +    }
+> +
+> +    /* Adding extents causes exceeding device's extent tracking ability. */
+> +    if (in->num_entries_updated + ct3d->dc.total_extent_count >
+> +        CXL_NUM_EXTENTS_SUPPORTED) {
+> +        return CXL_MBOX_RESOURCES_EXHAUSTED;
+> +    }
+> +
+> +    ret = cxl_detect_malformed_extent_list(ct3d, in);
+> +    if (ret != CXL_MBOX_SUCCESS) {
+> +        return ret;
+> +    }
+> +
+> +    for (i = 0; i < in->num_entries_updated; i++) {
+> +        dpa = in->updated_entries[i].start_dpa;
+> +        len = in->updated_entries[i].len;
+> +
+> +        /*
+> +         * Check if the DPA range of the to-be-added extent overlaps with
+> +         * existing extent list maintained by the device.
+> +         */
+> +        QTAILQ_FOREACH(ent, extent_list, node) {
+
+There are too many checks in here for an overlapping test.
+
+Conditions are
+
+	|  Extent tested against |
+|  Overlap entirely                 |
+| overlap left edge |
+                    | overlap right edge |
+Think of it in the inverse condition and it is easier to reason about.
+
+              | Extent tested against |
+| to left |---                        ---| to right |
+
+which I think is something like.
+
+        if (!((dpa + len <= ent->start_dpa) || (dpa >= ent->start_dpa + ent->len)) {
+		 return CXL_MBOX_INVALID_PA;
+	}
+
+Hmm. For internal tracking (not the exposed values) we should probably use
+struct range from include/qemu/range.h.
+Felt like there had to be something better than doing this ourselves so I went
+looking.  Note it uses inclusive upper bound so be careful with that!
+
+Advantage is we get this checks for free.
+https://elixir.bootlin.com/qemu/latest/source/include/qemu/range.h#L152
+range_overlaps_range()
+
+There are functions to set them up nicely for us and by base and size
+as well which should tidy that part up.
+
+	    
+
+> +            if (ent->start_dpa <= dpa &&
+> +                    dpa + len <= ent->start_dpa + ent->len) {
+> +                return CXL_MBOX_INVALID_PA;
+> +            /* Overlapping one end of the other */
+> +            } else if ((dpa < ent->start_dpa + ent->len &&
+> +                        dpa + len > ent->start_dpa + ent->len) ||
+> +                       (dpa < ent->start_dpa && dpa + len > ent->start_dpa)) {
+> +                return CXL_MBOX_INVALID_PA;
+> +            }
+> +        }
+> +
+> +        /*
+> +         * TODO: we will add a pending extent list based on event log record
+> +         * and verify the input response; also, the "More" flag is not
+> +         * considered at the moment.
+> +         */
+> +
+> +        cxl_insert_extent_to_extent_list(extent_list, dpa, len, NULL, 0);
+> +        ct3d->dc.total_extent_count += 1;
+> +    }
+> +
+> +    return CXL_MBOX_SUCCESS;
+> +}
+> +
+> +/*
+> + * CXL r3.1 section 8.2.9.9.9.4: Release Dynamic Capacity (Opcode 4803h)
+> + */
+> +static CXLRetCode cmd_dcd_release_dyn_cap(const struct cxl_cmd *cmd,
+> +                                          uint8_t *payload_in,
+> +                                          size_t len_in,
+> +                                          uint8_t *payload_out,
+> +                                          size_t *len_out,
+> +                                          CXLCCI *cci)
+> +{
+> +    CXLUpdateDCExtentListInPl *in = (void *)payload_in;
+> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+> +    CXLDCExtentList *extent_list = &ct3d->dc.extents;
+> +    CXLDCExtent *ent;
+> +    uint32_t i;
+> +    uint64_t dpa, len;
+> +    CXLRetCode ret;
+> +
+> +    if (in->num_entries_updated == 0) {
+> +        return CXL_MBOX_INVALID_INPUT;
+> +    }
+> +
+> +    ret = cxl_detect_malformed_extent_list(ct3d, in);
+> +    if (ret != CXL_MBOX_SUCCESS) {
+> +        return ret;
+> +    }
+> +
+> +    for (i = 0; i < in->num_entries_updated; i++) {
+> +        bool found = false;
+> +
+> +        dpa = in->updated_entries[i].start_dpa;
+> +        len = in->updated_entries[i].len;
+> +
+> +        QTAILQ_FOREACH(ent, extent_list, node) {
+> +            /* Found the extent overlapping with */
+> +            if (ent->start_dpa <= dpa && dpa < ent->start_dpa + ent->len) {
+> +                if (dpa + len <= ent->start_dpa + ent->len) {
+> +                    /*
+> +                     * The incoming extent covers a portion of an extent
+> +                     * in the device extent list, remove only the overlapping
+> +                     * portion, meaning
+> +                     * 1. the portions that are not covered by the incoming
+> +                     *    extent at both end of the original extent will become
+> +                     *    new extents and inserted to the extent list; and
+> +                     * 2. the original extent is removed from the extent list;
+> +                     * 3. DC extent count is updated accordingly.
+> +                     */
+> +                    uint64_t ent_start_dpa = ent->start_dpa;
+> +                    uint64_t ent_len = ent->len;
+> +                    uint64_t len1 = dpa - ent_start_dpa;
+> +                    uint64_t len2 = ent_start_dpa + ent_len - dpa - len;
+> +
+> +                    /*
+> +                     * TODO: checking for possible extent overflow, will be
+> +                     * moved into a dedicated function of detecting extent
+> +                     * overflow.
+> +                     */
+> +                    if (len1 && len2 && ct3d->dc.total_extent_count ==
+> +                        CXL_NUM_EXTENTS_SUPPORTED) {
+> +                        return CXL_MBOX_RESOURCES_EXHAUSTED;
+> +                    }
+> +
+> +                    found = true;
+> +                    cxl_remove_extent_from_extent_list(extent_list, ent);
+> +                    ct3d->dc.total_extent_count -= 1;
+> +
+> +                    if (len1) {
+> +                        cxl_insert_extent_to_extent_list(extent_list,
+> +                                                         ent_start_dpa, len1,
+> +                                                         NULL, 0);
+> +                        ct3d->dc.total_extent_count += 1;
+> +                    }
+> +                    if (len2) {
+> +                        cxl_insert_extent_to_extent_list(extent_list, dpa + len,
+> +                                                         len2, NULL, 0);
+> +                        ct3d->dc.total_extent_count += 1;
+> +                    }
+> +                    break;
+Maybe this makes sense after the support below is added, but at this
+point in the series 
+			return CXL_MBOX_SUCCESS;
+then found isn't relevant so can drop that. Looks like you drop it later in the
+series anyway.
+
+> +                } else {
+> +                    /*
+> +                     * TODO: we reject the attempt to remove an extent that
+> +                     * overlaps with multiple extents in the device for now,
+> +                     * once the bitmap indicating whether a DPA range is
+> +                     * covered by valid extents is introduced, will allow it.
+> +                     */
+> +                    return CXL_MBOX_INVALID_PA;
+> +                }
+> +            }
+> +        }
+> +
+> +        if (!found) {
+> +            /* Try to remove a non-existing extent. */
+> +            return CXL_MBOX_INVALID_PA;
+> +        }
+> +    }
+> +
+> +    return CXL_MBOX_SUCCESS;
+> +}
+> +
+
+>  static const struct cxl_cmd cxl_cmd_set_sw[256][256] = {
+> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> index 102fa8151e..dccfaaad3a 100644
+> --- a/hw/mem/cxl_type3.c
+> +++ b/hw/mem/cxl_type3.c
+> @@ -678,6 +678,16 @@ static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
+>      return true;
+>  }
+>  
+> +static void cxl_destroy_dc_regions(CXLType3Dev *ct3d)
+> +{
+> +    CXLDCExtent *ent;
+> +
+> +    while (!QTAILQ_EMPTY(&ct3d->dc.extents)) {
+> +        ent = QTAILQ_FIRST(&ct3d->dc.extents);
+> +        cxl_remove_extent_from_extent_list(&ct3d->dc.extents, ent);
+
+Isn't this same a something like.
+    QTAILQ_FOREACH_SAFE(ent, &ct3d->dc.extents, node)) {
+	cxl_remove_extent_from_extent_list(&ct3d->dc.extents, ent);
+        //This wrapper is small enough I'd be tempted to just have the
+        //code inline at the places it's called.
+
+    }
+> +    }
+> +}
 
 
