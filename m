@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 409CDC54E41
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 14:38:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68450C5475B
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 14:40:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhsOu-000544-RJ; Wed, 06 Mar 2024 09:37:44 -0500
+	id 1rhsRG-0006UP-KT; Wed, 06 Mar 2024 09:40:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rhsOp-00050c-N6
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:37:40 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rhsRE-0006U5-Jp
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:40:09 -0500
 Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rhsOo-0000or-Cp
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:37:39 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rhsRB-000190-VT
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 09:40:08 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 40F1176EDC;
- Wed,  6 Mar 2024 14:37:37 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id A680376DDF;
+ Wed,  6 Mar 2024 14:40:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709735857; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1709736004; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=AoL3N2AgECQ0hEF/jh5nNDqlT3EQZ6VJ8VOv9mnzqfc=;
- b=nyA56gO6I19kTmcRZl1MFupyQ0/BOAFR/gVsYKXl1iqTSeF9Aj7g7BdrhwE8/nFMRCa4/o
- t3Dcrl/ShROR5Q/DMIyWYiIuO3kwg0KRqTntzs7szJOl253tXPKAiDM9V0jGsKUmjT8JAK
- r5SHVPMkTwkgM2SnI4ypnbIeM6zHVg4=
+ bh=aiWkhtCuxGbVFIPddj3khfr4+s8obheTPIArBE/DeP0=;
+ b=sywZYfwIsbjOW5pzIsYj+klyNTFL/GRO+oaX6+ZZyVJETU9RYi4kuh1FfoxPCB3089ypsM
+ M5Qr2LjsUHTVeLEAOL/p3JjAQMboclrRBjGgFWrV/VakTswFBSvivJh0uy/+NvR5DARPgR
+ UYH1d64TUR41aulDwUPlG2M1mJc3HtA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709735857;
+ s=susede2_ed25519; t=1709736004;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=AoL3N2AgECQ0hEF/jh5nNDqlT3EQZ6VJ8VOv9mnzqfc=;
- b=tCJbkaPGdfJytn4TdsPImItJ2JMIwajZoiVfut6SDSBe8n7gnie2fFrK0l8rwoacvSjCfO
- 9YNnNEWtxLOKKICw==
+ bh=aiWkhtCuxGbVFIPddj3khfr4+s8obheTPIArBE/DeP0=;
+ b=F/OpZVnf1ttmwXWp8EHlCNGnMVyPGCJQLj0S7XbadGz2QqfPfR1JbIQXN8zqkzjZquTXNp
+ j8NaYtnY+FntV6Ag==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709735857; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1709736004; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=AoL3N2AgECQ0hEF/jh5nNDqlT3EQZ6VJ8VOv9mnzqfc=;
- b=nyA56gO6I19kTmcRZl1MFupyQ0/BOAFR/gVsYKXl1iqTSeF9Aj7g7BdrhwE8/nFMRCa4/o
- t3Dcrl/ShROR5Q/DMIyWYiIuO3kwg0KRqTntzs7szJOl253tXPKAiDM9V0jGsKUmjT8JAK
- r5SHVPMkTwkgM2SnI4ypnbIeM6zHVg4=
+ bh=aiWkhtCuxGbVFIPddj3khfr4+s8obheTPIArBE/DeP0=;
+ b=sywZYfwIsbjOW5pzIsYj+klyNTFL/GRO+oaX6+ZZyVJETU9RYi4kuh1FfoxPCB3089ypsM
+ M5Qr2LjsUHTVeLEAOL/p3JjAQMboclrRBjGgFWrV/VakTswFBSvivJh0uy/+NvR5DARPgR
+ UYH1d64TUR41aulDwUPlG2M1mJc3HtA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709735857;
+ s=susede2_ed25519; t=1709736004;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=AoL3N2AgECQ0hEF/jh5nNDqlT3EQZ6VJ8VOv9mnzqfc=;
- b=tCJbkaPGdfJytn4TdsPImItJ2JMIwajZoiVfut6SDSBe8n7gnie2fFrK0l8rwoacvSjCfO
- 9YNnNEWtxLOKKICw==
+ bh=aiWkhtCuxGbVFIPddj3khfr4+s8obheTPIArBE/DeP0=;
+ b=F/OpZVnf1ttmwXWp8EHlCNGnMVyPGCJQLj0S7XbadGz2QqfPfR1JbIQXN8zqkzjZquTXNp
+ j8NaYtnY+FntV6Ag==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BEE3113A67;
- Wed,  6 Mar 2024 14:37:36 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2D78713A67;
+ Wed,  6 Mar 2024 14:40:03 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id S2cXIbB/6GX2RwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 06 Mar 2024 14:37:36 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id zwYeOUOA6GWXSAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 06 Mar 2024 14:40:03 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Het Gala <het.gala@nutanix.com>, qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com, thuth@redhat.com, lvivier@redhat.com,
  pbonzini@redhat.com, peterx@redhat.com, Het Gala <het.gala@nutanix.com>
-Subject: Re: [PATCH v3 1/7] Add 'to' object into migrate_qmp()
-In-Reply-To: <20240306104958.39857-2-het.gala@nutanix.com>
+Subject: Re: [PATCH v3 3/7] Add channels parameter in migrate_qmp_fail
+In-Reply-To: <20240306104958.39857-4-het.gala@nutanix.com>
 References: <20240306104958.39857-1-het.gala@nutanix.com>
- <20240306104958.39857-2-het.gala@nutanix.com>
-Date: Wed, 06 Mar 2024 11:37:34 -0300
-Message-ID: <87plw7s9xt.fsf@suse.de>
+ <20240306104958.39857-4-het.gala@nutanix.com>
+Date: Wed, 06 Mar 2024 11:40:01 -0300
+Message-ID: <87jzmfs9tq.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
 Authentication-Results: smtp-out2.suse.de;
 	none
-X-Spamd-Result: default: False [-3.08 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-2.98)[99.90%];
+X-Spamd-Result: default: False [-3.10 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
  FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
  TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
  RCVD_COUNT_THREE(0.00)[3];
@@ -116,13 +116,93 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Het Gala <het.gala@nutanix.com> writes:
 
-> Add the 'to' object into migrate_qmp(), so we can use
-> migrate_get_socket_address() inside migrate_qmp() to get
-> the port value. This is not applied to other migrate_qmp*
-> because they don't need the port.
+> Alter migrate_qmp_fail() to allow both uri and channels
+> independently. For channels, convert string to a Dict.
+> No dealing with migrate_get_socket_address() here because
+> we will fail before starting the migration anyway.
 >
 > Signed-off-by: Het Gala <het.gala@nutanix.com>
 > Suggested-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  tests/qtest/migration-helpers.c | 15 +++++++++++++--
+>  tests/qtest/migration-helpers.h |  5 +++--
+>  tests/qtest/migration-test.c    |  4 ++--
+>  3 files changed, 18 insertions(+), 6 deletions(-)
+>
+> diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
+> index 9af3c7d4d5..478c1f259b 100644
+> --- a/tests/qtest/migration-helpers.c
+> +++ b/tests/qtest/migration-helpers.c
+> @@ -92,17 +92,28 @@ bool migrate_watch_for_events(QTestState *who, const char *name,
+>      return false;
+>  }
+>  
+> -void migrate_qmp_fail(QTestState *who, const char *uri, const char *fmt, ...)
+> +void migrate_qmp_fail(QTestState *who, const char *uri,
+> +                      const char *channels, const char *fmt, ...)
+>  {
+>      va_list ap;
+>      QDict *args, *err;
+> +    Error *error_abort = NULL;
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+The error_abort needs to be the one defined in error.c. Just remove this
+line.
+
+> +    QObject *channels_obj = NULL;
+>  
+>      va_start(ap, fmt);
+>      args = qdict_from_vjsonf_nofail(fmt, ap);
+>      va_end(ap);
+>  
+>      g_assert(!qdict_haskey(args, "uri"));
+> -    qdict_put_str(args, "uri", uri);
+> +    if (uri) {
+> +        qdict_put_str(args, "uri", uri);
+> +    }
+> +
+> +    g_assert(!qdict_haskey(args, "channels"));
+> +    if (channels) {
+> +        channels_obj = qobject_from_json(channels, &error_abort);
+> +        qdict_put_obj(args, "channels", channels_obj);
+> +    }
+>  
+>      err = qtest_qmp_assert_failure_ref(
+>          who, "{ 'execute': 'migrate', 'arguments': %p}", args);
+> diff --git a/tests/qtest/migration-helpers.h b/tests/qtest/migration-helpers.h
+> index e16a34c796..4e664148a5 100644
+> --- a/tests/qtest/migration-helpers.h
+> +++ b/tests/qtest/migration-helpers.h
+> @@ -33,8 +33,9 @@ G_GNUC_PRINTF(3, 4)
+>  void migrate_incoming_qmp(QTestState *who, const char *uri,
+>                            const char *fmt, ...);
+>  
+> -G_GNUC_PRINTF(3, 4)
+> -void migrate_qmp_fail(QTestState *who, const char *uri, const char *fmt, ...);
+> +G_GNUC_PRINTF(4, 5)
+> +void migrate_qmp_fail(QTestState *who, const char *uri,
+> +                      const char *channels, const char *fmt, ...);
+>  
+>  void migrate_set_capability(QTestState *who, const char *capability,
+>                              bool value);
+> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+> index 20b1dd031a..19bb93cb7d 100644
+> --- a/tests/qtest/migration-test.c
+> +++ b/tests/qtest/migration-test.c
+> @@ -1721,7 +1721,7 @@ static void test_precopy_common(MigrateCommon *args)
+>      }
+>  
+>      if (args->result == MIG_TEST_QMP_ERROR) {
+> -        migrate_qmp_fail(from, args->connect_uri, "{}");
+> +        migrate_qmp_fail(from, args->connect_uri, NULL, "{}");
+>          goto finish;
+>      }
+>  
+> @@ -1816,7 +1816,7 @@ static void test_file_common(MigrateCommon *args, bool stop_src)
+>      }
+>  
+>      if (args->result == MIG_TEST_QMP_ERROR) {
+> -        migrate_qmp_fail(from, args->connect_uri, "{}");
+> +        migrate_qmp_fail(from, args->connect_uri, NULL, "{}");
+>          goto finish;
+>      }
 
