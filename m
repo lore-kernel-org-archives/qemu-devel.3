@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EE36C54E41
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F86DC54E49
 	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 10:32:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhoYs-0004w9-TS; Wed, 06 Mar 2024 05:31:47 -0500
+	id 1rhoYq-0004ri-HB; Wed, 06 Mar 2024 05:31:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <t-8ch@linutronix.de>)
- id 1rhoYn-0004oQ-Nq
+ id 1rhoYn-0004oP-Oh
  for qemu-devel@nongnu.org; Wed, 06 Mar 2024 05:31:42 -0500
-Received: from galois.linutronix.de ([193.142.43.55])
+Received: from galois.linutronix.de ([2a0a:51c0:0:12e:550::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <t-8ch@linutronix.de>)
- id 1rhoYl-0007c1-4v
+ id 1rhoYk-0007bZ-Do
  for qemu-devel@nongnu.org; Wed, 06 Mar 2024 05:31:41 -0500
 From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
- s=2020; t=1709721087;
+ s=2020; t=1709721085;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=IJN5C7mPg4JpTDfs4+Z0qlukHU9wN5HwlA6H1wdCiPM=;
- b=TdTfq+Wvof3D3EGlugd1qz+oCdwtAgbKKpgsm1sdN86NjgrfYZBxKzXUq+iUYXoBdX41Dv
- Hb4Pr9zNzUJU5mmRq5ItoDnLMZCoRAZKjYq2egnNj0v2yh+dPR8e3j9AHze8WKgngTUd5s
- IULIadE5V7+xSmm6gqh0iUrgG3XzKEkPzOtmiSk42Qoo1TFfRzQa3BAL26MemuMLG0f6rq
- 9xLGx4Bx191hIqLrAM1tCE2aXPrrqWsZGgoYQ+s0ouWCI90L8PFXdBe0iVYTZVaw3WN1oH
- 1+hPXttiU6r37u79IgUg+ebexYcPv+JoErwIgrpqyPj356PsAOnoL2vz6oLBmw==
+ content-transfer-encoding:content-transfer-encoding;
+ bh=OtA/QiUqtSmMzFP6J0LwSLTKy/Ge/8kwtxsDyLo56h8=;
+ b=Y9j1FYzVsRcf1vOy6BoFrkkIlPeRNSDzciiaS9XoD/je2XzLo/Ke/9sw5887Pj1/zGpzaK
+ vMhgryOZ4qlFxIrrXYc+yhkXWS4jHQFvpXcij9hUazCik3jLbWS9inJyHxqohql3KSvJvG
+ Go8MRHEKfSZ8I/eSbzy3FTQ0UfybyISKxdCIHCTT5ekPzCM83oiNAC0pSD0q0QN2a1t2p6
+ sDFwA1mHoHEwnbPsDKNOJORbWFt5B94/2gkr0i6NG0/m/rwsS5wjFttWqaOUwLyW9CpNoF
+ 2RefnixPiAM2r32sLaVW2XBqR+PtHlCcNxPLZ+xoNTU0zg0o9pT4rMNydDKoTg==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
- s=2020e; t=1709721087;
+ s=2020e; t=1709721085;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=IJN5C7mPg4JpTDfs4+Z0qlukHU9wN5HwlA6H1wdCiPM=;
- b=qvjiTQSFvBpV/5R33i1y6QCPYDzkAQ39TrGdzOPflGHB8hQWXo0GSEz7ksm/6BwRu6t3gZ
- QGp9UosJbyTLOIAA==
-Date: Wed, 06 Mar 2024 11:31:24 +0100
-Subject: [PATCH 3/4] docs/interop/firmware.json: Use full include paths
+ content-transfer-encoding:content-transfer-encoding;
+ bh=OtA/QiUqtSmMzFP6J0LwSLTKy/Ge/8kwtxsDyLo56h8=;
+ b=Ldn0zai+jBntpvgkl+SwgDAn+pC1+T5HRRoK75HIit6ZflCVQN1X3wfXhyzn7eNavFf0/o
+ cWtVXvuipnxpe+CQ==
+Subject: [PATCH 0/4] docs/interop/firmware.json: scripts/qapi-gen.py
+ compatibility
+Date: Wed, 06 Mar 2024 11:31:21 +0100
+Message-Id: <20240306-qapi-firmware-json-v1-0-619f7122a249@linutronix.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20240306-qapi-firmware-json-v1-3-619f7122a249@linutronix.de>
-References: <20240306-qapi-firmware-json-v1-0-619f7122a249@linutronix.de>
-In-Reply-To: <20240306-qapi-firmware-json-v1-0-619f7122a249@linutronix.de>
+X-B4-Tracking: v=1; b=H4sIAPlF6GUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDYwMz3cLEgkzdtMyi3PLEolTdrOL8PF2ztCRDI0NjS2OzlBQloMaCotS
+ 0zAqwodGxtbUAdeUvVGQAAAA=
 To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Kashyap Chamarthy <kchamart@redhat.com>
 Cc: qemu-devel@nongnu.org, 
  =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1709721085; l=692;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1709721085; l=803;
  i=thomas.weissschuh@linutronix.de; s=20240209; h=from:subject:message-id;
- bh=edhsrNNWkc8ZNoA2dLKp83fwmLRb+lKMvBbZImT+cGU=;
- b=WyctScn4oRfEehHAbO+tqWCjC18VfFrO6879EA7ReQSI4cBFFDZa3n2cO/0qRGlhaPl9M2/hF
- PytBMjxn0pkCgkvGV94qKUQvKXYT3w2DbiWhSmKtyhMiLLcMrzqRy7f
+ bh=EVtrlZq5eeXONSP6QtwodpnfAxHW7OGxNW1th3b2MOk=;
+ b=xNQ0TqUe7hqktDQkojzLNZ3TAmHPSoGHZrdjZ3DEVq5Gsnz3hYKuGZxnEr0w5WRWbRToF8g+i
+ xhYnQodnw8DDq4WFkJdymyieuo/3imYuH5hM9la8crSnjFJ8xH1V2R6
 X-Developer-Key: i=thomas.weissschuh@linutronix.de; a=ed25519;
  pk=pfvxvpFUDJV2h2nY0FidLUml22uGLSjByFbM6aqQQws=
-Received-SPF: pass client-ip=193.142.43.55; envelope-from=t-8ch@linutronix.de;
- helo=galois.linutronix.de
+Received-SPF: pass client-ip=2a0a:51c0:0:12e:550::1;
+ envelope-from=t-8ch@linutronix.de; helo=galois.linutronix.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -86,31 +86,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The included files are part of the toplevel QAPI directory and need to
-be included from there.
+docs/interop/firmware.json is currently not usable with qapi-gen.py due
+to various non-functional issues.
+Fix those issue to provide compatibility.
 
 Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 ---
- docs/interop/firmware.json | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Thomas Weißschuh (4):
+      docs/interop/firmware.json: Align examples
+      docs/interop/firmware.json: Fix doc for FirmwareFlashMode
+      docs/interop/firmware.json: Use full include paths
+      docs/interop/firmware.json: Include pragma.json
 
-diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
-index 54a1fc6c1041..4ac840e2b413 100644
---- a/docs/interop/firmware.json
-+++ b/docs/interop/firmware.json
-@@ -14,8 +14,8 @@
- # = Firmware
- ##
- 
--{ 'include' : 'machine.json' }
--{ 'include' : 'block-core.json' }
-+{ 'include' : '../../qapi/machine.json' }
-+{ 'include' : '../../qapi/block-core.json' }
- 
- ##
- # @FirmwareOSInterface:
+ docs/interop/firmware.json | 392 +++++++++++++++++++++++----------------------
+ 1 file changed, 197 insertions(+), 195 deletions(-)
+---
+base-commit: db596ae19040574e41d086e78469014191d7d7fc
+change-id: 20240306-qapi-firmware-json-6fb1213936dd
 
+Best regards,
 -- 
-2.44.0
+Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
 
