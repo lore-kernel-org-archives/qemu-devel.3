@@ -4,82 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8659DC54E49
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 04:59:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35D35C54E49
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 Mar 2024 05:01:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rhjMI-0002oX-6y; Tue, 05 Mar 2024 23:58:26 -0500
+	id 1rhjP0-0003gA-Ub; Wed, 06 Mar 2024 00:01:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rhjMG-0002oI-Sx; Tue, 05 Mar 2024 23:58:24 -0500
-Received: from mail-vk1-xa31.google.com ([2607:f8b0:4864:20::a31])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rhjOv-0003ft-Qi
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 00:01:10 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rhjMF-0002of-7z; Tue, 05 Mar 2024 23:58:24 -0500
-Received: by mail-vk1-xa31.google.com with SMTP id
- 71dfb90a1353d-4cb26623dc1so560485e0c.2; 
- Tue, 05 Mar 2024 20:58:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rhjOq-00041z-1D
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 00:01:09 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-1dbae7b8ff2so32799695ad.3
+ for <qemu-devel@nongnu.org>; Tue, 05 Mar 2024 21:01:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709701100; x=1710305900; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=41HrMy30v1IUXtbxZKNSp568/6VVI2dUQ4+0SauBPAE=;
- b=bg9rZKpfCkOhd9O0cYy7YXoxy5qhxMIIvM1s78Juh4kWBk6da1TYTALdi/CI2kMeE2
- WTi2yqhygxWqxjIicOY30Iplok0f69hKEe0+M79cO3AIRV8We1aHxHaqH05E1sejY/zR
- Hf28mApUUFNoSfLbmWvmvo9T+zujR4/AvCxhP9AfEZqNhFlBU5JZfnF1riR0yKwhAd1w
- rxSL9U1J+GLTaBQvBF/6PQSyWG99zqhxrIcmrQfGcQvvvRJGgRJRhQAauylB1LE0EjwJ
- GKpAlc1vl7QNj95Bi2iqmlGnlLfvUgvN3WftEmFAuqXlp2Yk64FXvUcTS06jyA/h8PBH
- CgcQ==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709701261; x=1710306061;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=I6yMAQumNZ+pJK6ySQ+OvbDpNUqZR1uJ6iQTlSg/XDU=;
+ b=dypbONi3EpCJzhB0Uip+FTk77+R47e4Nssi8XcmiVg6LK891z4zBlOI2JJA1B7tZwc
+ BYDMBsjvSYhn8nfyDo2pAkcC+vuetofryYPnKK70Ekm+Xb52MD7jRrqZuVI9PjOP8aJ+
+ vmjIcZOQLt/Zor4TTX9b4QC8F5c49YfbogE3jEMQ3Y3VRKKJi7QqJ9L6t8vFlOaQoH2w
+ XAAiJ7wgnVqChIEGu0tqR+PT5bBzBt41k1E0qummEoL2WpCW0McbS9xSkMhXMkShzkZU
+ FhuSPyfDeFNWxdDS4DBziPgTCHxcPpZ5nyIQO3VHcKL5owV0yS+NMK/8TzhbjZqJaMFg
+ umhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709701100; x=1710305900;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=41HrMy30v1IUXtbxZKNSp568/6VVI2dUQ4+0SauBPAE=;
- b=NnmT78VkoR7WeQiWYph2smkT+Vb+FCfvvN0w1qIMaYWEb5sas4zx7g5oRb+svQlJv3
- cuBHT+/wUpDe0QTy9sNXf5M5hGEjJtf31T/AMdwBN4ecv0XeP3GYBBULHZS8reWpvcWP
- tq7HpQvBF8tfh8UsUlkc11WoDMMtN/3O5MeUUVtWzsvzrUV14LbBo6C5i1rwS1+anmB3
- FCSLxq6hHvllm9nRPHzhMA9zmqesMbEv/hGw7DSyD8JoWkPWmYUBcHL0KVNQsykE8Oi/
- p8Jg6rnccevNXtD+kUqfWLOJSbn6LT0nYRzogmhhBsnSxdCr09SSH7H8y63kGYcFD0Ap
- lk/w==
+ d=1e100.net; s=20230601; t=1709701261; x=1710306061;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=I6yMAQumNZ+pJK6ySQ+OvbDpNUqZR1uJ6iQTlSg/XDU=;
+ b=XIZFQA1FwdzE931jRajLQB7L9IwIGwGXbYXoplrH7ALUIqJmMcSRgOKThcBUvLb/eJ
+ Jgj5vpxsoDJJ98DRp3rWqftsRsDF4kh/An3rIBleHMgNsC7esz3Al7cvBqFWQ8K1jv7U
+ lOrvAuE1i3XbSyJi2zHrcXrfPjpc6xVwxvwaItfPtlvDSrTRcSew4F84BKg3hylG9rMQ
+ 4IhnPUmn3HSCGcddY8zSfTEkxGb+StfcOagN0V/Ocx+vCcKe9SP2tIjxlS5HK+D9w00f
+ JMOiAnLfdEi5Y9s2VxsUZlRC+DNSSnK4eImXBe7M7yrWDK2al9k/Sxonaefo5Ui5Hp4J
+ Pkfw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXZ2cNey5HUGr/QksMG9pJwHL3tyj/eKCMi0O9DX3gchb2vJ9xUKWeDPqvfgs93s1Em7TsUw0R3xlzJiRCZqjKBWesusT0=
-X-Gm-Message-State: AOJu0YwmjOltCCKXwpZKYjqeOe5rddRTenMdhLfUieEbFwp85jFH/4bh
- 95v4uFSaKny1Q3LMWsh9gGwsJc7veyO2Xel2EaltenH4RTO48RNYcHSKg31yy36mD3lBNYmTvWz
- v49wKm2XKH0qH1pvHvSK7L+fABFQ=
-X-Google-Smtp-Source: AGHT+IGJsTeNeTuAtk1l2u+g7+WmsE29NO/mOMNeCoOkEWIgbcy3vMsBBlD23Ja4SVwQFRGI+VsbnHoyGXDDQ5OGaUc=
-X-Received: by 2002:a1f:fcc1:0:b0:4c7:e255:728b with SMTP id
- a184-20020a1ffcc1000000b004c7e255728bmr3392874vki.12.1709701100611; Tue, 05
- Mar 2024 20:58:20 -0800 (PST)
+ AJvYcCVr51Qv1MNJRf7wwHMjahgo40hSQk22RiYnF9+ThZDQ+fSFHu1MOi50lO79YFwpMZIb1qex7vCo79+xhuV6lqeHg5T6aNs=
+X-Gm-Message-State: AOJu0YwJmaYCz+s2zIoYC+68niI83br0Rd8JzT4GRvNE8H+oVWt0OtMs
+ C+pdLqbZ1mvam17+DLi9dkvMaiqE8Z0XHVnARmu5zkxxNrLgJf0xG3l1TmElUXo=
+X-Google-Smtp-Source: AGHT+IFb3GmgxrOH6n2M1AAeUcaFKllxakb8+qVvzT1jeJdtWUD9TrvobBf2h5W4v3JFsB9a3UrLPQ==
+X-Received: by 2002:a17:902:ecd1:b0:1dc:8c27:9a07 with SMTP id
+ a17-20020a170902ecd100b001dc8c279a07mr5032531plh.31.1709701260751; 
+ Tue, 05 Mar 2024 21:01:00 -0800 (PST)
+Received: from [157.82.206.27] ([157.82.206.27])
+ by smtp.gmail.com with ESMTPSA id
+ t1-20020a170902e84100b001dcfae45ab7sm7521865plg.57.2024.03.05.21.00.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 Mar 2024 21:01:00 -0800 (PST)
+Message-ID: <ad039353-0666-4f92-a348-f6fca4a4339a@daynix.com>
+Date: Wed, 6 Mar 2024 14:00:58 +0900
 MIME-Version: 1.0
-References: <20240202113919.18236-1-vadim.shakirov@syntacore.com>
-In-Reply-To: <20240202113919.18236-1-vadim.shakirov@syntacore.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 6 Mar 2024 14:57:54 +1000
-Message-ID: <CAKmqyKMQ9wQ2yeQ=kiwriM-8WXpB-oBaYcXcfjc3LZWfM+YVFw@mail.gmail.com>
-Subject: Re: [PATCH v4] target/riscv: mcountinhibit, mcounteren, scounteren,
- hcounteren is 32-bit
-To: Vadim Shakirov <vadim.shakirov@syntacore.com>
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a31;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa31.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 04/13] contrib/elf2dmp: Conform to the error reporting
+ pattern
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Viktor Prutyanov <viktor.prutyanov@phystech.edu>, qemu-devel@nongnu.org
+References: <20240305-elf2dmp-v2-0-86ff2163ad32@daynix.com>
+ <20240305-elf2dmp-v2-4-86ff2163ad32@daynix.com>
+ <CAFEAcA8HdgZuOf67yjAVZJ0e-ZazOShh=ji4W5CuFyfrRMqNCw@mail.gmail.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <CAFEAcA8HdgZuOf67yjAVZJ0e-ZazOShh=ji4W5CuFyfrRMqNCw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::630;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,103 +100,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 2, 2024 at 9:42=E2=80=AFPM Vadim Shakirov
-<vadim.shakirov@syntacore.com> wrote:
->
-> mcountinhibit, mcounteren, scounteren and hcounteren must always be 32-bi=
-t
-> by privileged spec
->
-> Signed-off-by: Vadim Shakirov <vadim.shakirov@syntacore.com>
+On 2024/03/05 22:28, Peter Maydell wrote:
+> On Tue, 5 Mar 2024 at 07:36, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>>
+>> include/qapi/error.h says:
+>>> We recommend
+>>> * bool-valued functions return true on success / false on failure,
+>>> ...
+>>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
+>>   contrib/elf2dmp/addrspace.h |   6 +--
+>>   contrib/elf2dmp/download.h  |   2 +-
+>>   contrib/elf2dmp/pdb.h       |   2 +-
+>>   contrib/elf2dmp/qemu_elf.h  |   2 +-
+>>   contrib/elf2dmp/addrspace.c |  12 ++---
+>>   contrib/elf2dmp/download.c  |  10 ++--
+>>   contrib/elf2dmp/main.c      | 114 +++++++++++++++++++++-----------------------
+>>   contrib/elf2dmp/pdb.c       |  50 +++++++++----------
+>>   contrib/elf2dmp/qemu_elf.c  |  32 ++++++-------
+>>   9 files changed, 112 insertions(+), 118 deletions(-)
+> 
+> This is a bit big to review easily. Converting one function
+> (or a small set of closely related functions) at once would
+> make for an easier to review split.
 
-Thanks!
+I'll split patches for each source files.
 
-Applied to riscv-to-apply.next
+> 
+> 
+>> diff --git a/contrib/elf2dmp/download.c b/contrib/elf2dmp/download.c
+>> index 902dc04ffa5c..ec8d33ba1e4b 100644
+>> --- a/contrib/elf2dmp/download.c
+>> +++ b/contrib/elf2dmp/download.c
+>> @@ -9,14 +9,14 @@
+>>   #include <curl/curl.h>
+>>   #include "download.h"
+>>
+>> -int download_url(const char *name, const char *url)
+>> +bool download_url(const char *name, const char *url)
+>>   {
+>> -    int err = 1;
+>> +    bool success = false;
+>>       FILE *file;
+>>       CURL *curl = curl_easy_init();
+>>
+>>       if (!curl) {
+>> -        return 1;
+>> +        return success;
+> 
+> Why not just "return false" ? "return success" makes it look
+> like a success-path, not a failure-path.
 
-Alistair
+It is a mistake. I'll fix in the next version.
 
-> ---
->  target/riscv/cpu.h     |  8 ++++----
->  target/riscv/machine.c | 16 ++++++++--------
->  2 files changed, 12 insertions(+), 12 deletions(-)
->
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 5138187727..cf1867a6e2 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -271,7 +271,7 @@ struct CPUArchState {
->      target_ulong hstatus;
->      target_ulong hedeleg;
->      uint64_t hideleg;
-> -    target_ulong hcounteren;
-> +    uint32_t hcounteren;
->      target_ulong htval;
->      target_ulong htinst;
->      target_ulong hgatp;
-> @@ -334,10 +334,10 @@ struct CPUArchState {
->       */
->      bool two_stage_indirect_lookup;
->
-> -    target_ulong scounteren;
-> -    target_ulong mcounteren;
-> +    uint32_t scounteren;
-> +    uint32_t mcounteren;
->
-> -    target_ulong mcountinhibit;
-> +    uint32_t mcountinhibit;
->
->      /* PMU counter state */
->      PMUCTRState pmu_ctrs[RV_MAX_MHPMCOUNTERS];
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index 72fe2374dc..a4d47ec17e 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -79,14 +79,14 @@ static bool hyper_needed(void *opaque)
->
->  static const VMStateDescription vmstate_hyper =3D {
->      .name =3D "cpu/hyper",
-> -    .version_id =3D 3,
-> -    .minimum_version_id =3D 3,
-> +    .version_id =3D 4,
-> +    .minimum_version_id =3D 4,
->      .needed =3D hyper_needed,
->      .fields =3D (const VMStateField[]) {
->          VMSTATE_UINTTL(env.hstatus, RISCVCPU),
->          VMSTATE_UINTTL(env.hedeleg, RISCVCPU),
->          VMSTATE_UINT64(env.hideleg, RISCVCPU),
-> -        VMSTATE_UINTTL(env.hcounteren, RISCVCPU),
-> +        VMSTATE_UINT32(env.hcounteren, RISCVCPU),
->          VMSTATE_UINTTL(env.htval, RISCVCPU),
->          VMSTATE_UINTTL(env.htinst, RISCVCPU),
->          VMSTATE_UINTTL(env.hgatp, RISCVCPU),
-> @@ -354,8 +354,8 @@ static const VMStateDescription vmstate_jvt =3D {
->
->  const VMStateDescription vmstate_riscv_cpu =3D {
->      .name =3D "cpu",
-> -    .version_id =3D 9,
-> -    .minimum_version_id =3D 9,
-> +    .version_id =3D 10,
-> +    .minimum_version_id =3D 10,
->      .post_load =3D riscv_cpu_post_load,
->      .fields =3D (const VMStateField[]) {
->          VMSTATE_UINTTL_ARRAY(env.gpr, RISCVCPU, 32),
-> @@ -398,9 +398,9 @@ const VMStateDescription vmstate_riscv_cpu =3D {
->          VMSTATE_UINTTL(env.mtval, RISCVCPU),
->          VMSTATE_UINTTL(env.miselect, RISCVCPU),
->          VMSTATE_UINTTL(env.siselect, RISCVCPU),
-> -        VMSTATE_UINTTL(env.scounteren, RISCVCPU),
-> -        VMSTATE_UINTTL(env.mcounteren, RISCVCPU),
-> -        VMSTATE_UINTTL(env.mcountinhibit, RISCVCPU),
-> +        VMSTATE_UINT32(env.scounteren, RISCVCPU),
-> +        VMSTATE_UINT32(env.mcounteren, RISCVCPU),
-> +        VMSTATE_UINT32(env.mcountinhibit, RISCVCPU),
->          VMSTATE_STRUCT_ARRAY(env.pmu_ctrs, RISCVCPU, RV_MAX_MHPMCOUNTERS=
-, 0,
->                               vmstate_pmu_ctr_state, PMUCTRState),
->          VMSTATE_UINTTL_ARRAY(env.mhpmevent_val, RISCVCPU, RV_MAX_MHPMEVE=
-NTS),
-> --
-> 2.34.1
->
->
+> 
+>>       }
+>>
+>>       file = fopen(name, "wb");
+>> @@ -33,11 +33,11 @@ int download_url(const char *name, const char *url)
+>>           unlink(name);
+>>           fclose(file);
+>>       } else {
+>> -        err = fclose(file);
+>> +        success = !fclose(file);
+>>       }
+>>
+>>   out_curl:
+>>       curl_easy_cleanup(curl);
+>>
+>> -    return err;
+>> +    return success;
+>>   }
+> 
+>> @@ -186,13 +186,13 @@ static void win_context_init_from_qemu_cpu_state(WinContext64 *ctx,
+>>    * Finds paging-structure hierarchy base,
+>>    * if previously set doesn't give access to kernel structures
+>>    */
+>> -static int fix_dtb(struct va_space *vs, QEMU_Elf *qe)
+>> +static bool fix_dtb(struct va_space *vs, QEMU_Elf *qe)
+>>   {
+>>       /*
+>>        * Firstly, test previously set DTB.
+>>        */
+>>       if (va_space_resolve(vs, SharedUserData)) {
+>> -        return 0;
+>> +        return true;
+>>       }
+>>
+>>       /*
+>> @@ -206,7 +206,7 @@ static int fix_dtb(struct va_space *vs, QEMU_Elf *qe)
+>>               va_space_set_dtb(vs, s->cr[3]);
+>>               printf("DTB 0x%016"PRIx64" has been found from CPU #%zu"
+>>                       " as system task CR3\n", vs->dtb, i);
+>> -            return !(va_space_resolve(vs, SharedUserData));
+>> +            return !!(va_space_resolve(vs, SharedUserData));
+> 
+> If the function returns bool type, we don't need the !! idiom
+> to coerce the value to bool.
+
+va_space_resolve() returns void *.
+
+Regards,
+Akihiko Odaki
 
