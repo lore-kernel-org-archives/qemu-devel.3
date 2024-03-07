@@ -4,90 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE674C54E4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 22:16:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4745CC54798
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 22:19:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riM1l-00047m-KF; Thu, 07 Mar 2024 17:15:49 -0500
+	id 1riM54-0005Tc-T6; Thu, 07 Mar 2024 17:19:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1riM1k-00047V-KD
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 17:15:48 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1riM1i-0004lB-MC
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 17:15:48 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-55a179f5fa1so2135377a12.0
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 14:15:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709849744; x=1710454544; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:organization:from:references
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zmjDmzPadsEgKKJ21Btsh2Sccjz80mxMZr2P9sopgO0=;
- b=QjTzJ236r+6Fhqx/nMY9O+IrV5nrekebe9q9oJJO5EW8JKZGPQ3NVD55mh2fklW2UY
- 7o5IcOF9JLN3JoDWX8Y4IFCU/T96e2aUx49EBZOt5HxMvJNjeK+28Sc+QhZY9VcRD7tn
- LzAMeRvwfIih3/DfOjX4KE/X6hzEfU+ldjPEsfOLgNs7GOTo75/Unu0alZWp+3Ak/Dmm
- 2czfvFCpBvymdZtRFGl3gGrR+iJHE72kaajvQNQFTzJaTmtJDaIGcvhLtuamkzqB/gVL
- y4c99trzJVhLnbtn0i+A6Ac0PkQGy3zkAZajx5ILvBMuV9q8mZy7jjLAF97H+E7Za3vw
- 7e3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709849744; x=1710454544;
- h=content-transfer-encoding:in-reply-to:organization:from:references
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zmjDmzPadsEgKKJ21Btsh2Sccjz80mxMZr2P9sopgO0=;
- b=IBezFIaWA2SiQPllLJSPJoA34e9NOMcbL0AUI6cr32re2MAgjsuJi4fLWwMU11I1Sv
- FaDeZl8jxPDe+texm5OI6QAQt/sqSR0zToK2eVWmIIarQO2yhZHIQmMh7uQaxAebZ5Nz
- 0BX3QJsPJqqELmtGCwYoy1z26SDbfTT4KeGtx5ZGaEcld7dcOoyLWkmnOu1qA6nD+Dkd
- U1mt2/PjI9YZya3EV1TFEMr1ld+p+NrhlP9US1W5q7W5bvf1NAtM5mxLqdr7mbroR9JH
- AWWdEbbv01tyr28eOrIr7VVl0+/TKJ7WvVm2a1Fpc5SAM5lEhaRrMcIwzom9XDcZT6mZ
- tQBQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUDak25O0bhARbbJbUeVNiFtfKDJPgmXOyVMjD9M7eVom2bpHeHD9wWVKC/qgOjaaQSqOvg2FCqOXNtBp2IIB7VCAePay4=
-X-Gm-Message-State: AOJu0YxtVhZcilMdZrxnsodVuEGBvXX8bbQazBDXC6zlywk5w/VaDqul
- a6lf0DIimDUuy0aUYoVUN+YBfUkZ/Ygd8QWsvEYg+NQ6dsgPliucUItwjLE6h3U=
-X-Google-Smtp-Source: AGHT+IHkQgAuL4F3lHzy+lEYugLu1Uzq7ctx9d1LLrPsX6l/nVXCE7uUsYL5k7Rj4s3Pl6Ct4/FVYg==
-X-Received: by 2002:a50:8d52:0:b0:565:dd45:48cb with SMTP id
- t18-20020a508d52000000b00565dd4548cbmr760982edt.4.1709849744278; 
- Thu, 07 Mar 2024 14:15:44 -0800 (PST)
-Received: from [192.168.200.106] (83.11.22.169.ipv4.supernova.orange.pl.
- [83.11.22.169]) by smtp.gmail.com with ESMTPSA id
- g3-20020a056402180300b00566ea8e9f38sm7001471edy.40.2024.03.07.14.15.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 Mar 2024 14:15:43 -0800 (PST)
-Message-ID: <ff1b2b2a-dc8e-4346-92de-bee9c4b4b31f@linaro.org>
-Date: Thu, 7 Mar 2024 23:15:41 +0100
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1riM53-0005TS-EW
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 17:19:13 -0500
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1riM51-0005Pa-SA
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 17:19:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=rqRx8RizlcBxi0vUv3CPGMIuDZKZWJG4DPQZDSqDNZg=; b=Tbf1ZWN7cv+nDkppfWlCItlzVF
+ qk2lGsOXNVVeLB2HzrR+LKrHw8b4Soon+k6k/NMrmNxGomYRBL5OCy51hSeEV6nL1Qb8M/HCKnXvS
+ 4/T2IBUfkki1/CjfspVrSQseRs1Th/qVw89v8jonrgcsXrGY2J2c+L7cvI/ZnjP8XPNqMR5xpneAp
+ qHQ1CCnX0uNAYeJVmtUaTmMb9ZKQ+wZL32yTi/haO2lt/NkJSSA3CEQ3Wj3zv/uoHXQ8ywNAEz1xf
+ /LvNu48p9tCaKzJLq/L+Xo67ZdMx8BQftXnoQQI01bhzG0zmbvIatfj1V9Ejfrb6osGJzwP5NCZhr
+ ThA3b3Fppw77cWudAkuUISvczFKcOztRONxJp+F9XjOivbGphA4wBnBLijlS4dTaLcqOTunp2oJpK
+ 2pQtzzOM6QFrdzAlDkKL1fFkALVvqOwcSf+je9i6xEjoIcFM97bcUku0Rkia8V/2v/Am8UOWUGuzp
+ 14hmbal5lv68xrfCFboGYgDcZzGKfTwokJ8UeDniWbYwTrJh1QiU2K+PuspJK9brBvBbEpqO3ea0k
+ p2Cgmz5ovTmon1AtNtjL2N+lrZUHwkQQFIBrsXP56ytPW/D7AmW4I0Qv1oEXmcsRvxEHIAXxrYVkL
+ dQvQs4UR2sdQbrbSo9hszRDJ03ejZzPUf4aGOr2NQ=;
+Received: from host86-159-123-79.range86-159.btcentralplus.com
+ ([86.159.123.79] helo=[10.8.0.6])
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1riM49-0005VC-0G; Thu, 07 Mar 2024 22:18:21 +0000
+Message-ID: <411c8012-a507-4efe-88b7-273bf6f328b0@ilande.co.uk>
+Date: Thu, 7 Mar 2024 22:19:00 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 0/2] Add RISC-V Server Platform Reference Board
-Content-Language: pl-PL, en-GB, en-HK
-To: Fei Wu <fei2.wu@intel.com>, pbonzini@redhat.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, bin.meng@windriver.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org, andrei.warkentin@intel.com,
- shaolin.xie@alibaba-inc.com, ved@rivosinc.com, sunilvl@ventanamicro.com,
- haibo1.xu@intel.com, evan.chai@intel.com, yin.wang@intel.com,
- tech-server-platform@lists.riscv.org, tech-server-soc@lists.riscv.org
-References: <20240304102540.2789225-1-fei2.wu@intel.com>
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Organization: Linaro
-In-Reply-To: <20240304102540.2789225-1-fei2.wu@intel.com>
+Content-Language: en-US
+To: Laurent Vivier <laurent@vivier.eu>, qemu-devel@nongnu.org
+Cc: Daniel Palmer <daniel@0x0f.com>
+References: <20240223155742.2790252-1-laurent@vivier.eu>
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20240223155742.2790252-1-laurent@vivier.eu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-ed1-x533.google.com
+X-SA-Exim-Connect-IP: 86.159.123.79
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH] virt: set the CPU type in BOOTINFO
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,42 +105,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-W dniu 4.03.2024 o 11:25, Fei Wu pisze:
+On 23/02/2024 15:57, Laurent Vivier wrote:
 
-> The RISC-V Server Platform specification[1] defines a standardized
-> set of hardware and software capabilities, that portable system
-> software, such as OS and hypervisors can rely on being present in a
-> RISC-V server platform. This patchset provides a RISC-V Server
-> Platform (RVSP) reference implementation on qemu which is in
-> compliance with the spec as faithful as possible.
+> BI_CPUTYPE/BI_MMUTYPE/BI_FPUTYPE were statically assigned to the
+> 68040 information.
+> This patch changes the code to set in bootinfo the information
+> provided by the command line '-cpu' parameter.
+> 
+> Bug: https://gitlab.com/qemu-project/qemu/-/issues/2091
+> Reported-by: Daniel Palmer <daniel@0x0f.com>
+> Signed-off-by: Laurent Vivier <laurent@vivier.eu>
+> ---
+>   hw/m68k/virt.c | 17 ++++++++++++++---
+>   1 file changed, 14 insertions(+), 3 deletions(-)
+> 
+> diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
+> index e2792ef46d93..b8e5e102e6b9 100644
+> --- a/hw/m68k/virt.c
+> +++ b/hw/m68k/virt.c
+> @@ -239,9 +239,20 @@ static void virt_init(MachineState *machine)
+>           param_ptr = param_blob;
+>   
+>           BOOTINFO1(param_ptr, BI_MACHTYPE, MACH_VIRT);
+> -        BOOTINFO1(param_ptr, BI_FPUTYPE, FPU_68040);
+> -        BOOTINFO1(param_ptr, BI_MMUTYPE, MMU_68040);
+> -        BOOTINFO1(param_ptr, BI_CPUTYPE, CPU_68040);
+> +        if (m68k_feature(&cpu->env, M68K_FEATURE_M68020)) {
+> +            BOOTINFO1(param_ptr, BI_CPUTYPE, CPU_68020);
+> +        } else if (m68k_feature(&cpu->env, M68K_FEATURE_M68030)) {
+> +            BOOTINFO1(param_ptr, BI_MMUTYPE, MMU_68030);
+> +            BOOTINFO1(param_ptr, BI_CPUTYPE, CPU_68030);
+> +        } else if (m68k_feature(&cpu->env, M68K_FEATURE_M68040)) {
+> +            BOOTINFO1(param_ptr, BI_FPUTYPE, FPU_68040);
+> +            BOOTINFO1(param_ptr, BI_MMUTYPE, MMU_68040);
+> +            BOOTINFO1(param_ptr, BI_CPUTYPE, CPU_68040);
+> +        } else if (m68k_feature(&cpu->env, M68K_FEATURE_M68060)) {
+> +            BOOTINFO1(param_ptr, BI_FPUTYPE, FPU_68060);
+> +            BOOTINFO1(param_ptr, BI_MMUTYPE, MMU_68060);
+> +            BOOTINFO1(param_ptr, BI_CPUTYPE, CPU_68060);
+> +        }
+>           BOOTINFO2(param_ptr, BI_MEMCHUNK, 0, ram_size);
+>   
+>           BOOTINFO1(param_ptr, BI_VIRT_QEMU_VERSION,
 
-I am working on sbsa-ref which is AArch64 Standard Server Platform 
-implementation. Will not go through details of rvsp-ref but give some 
-potential hints from my work with our platform.
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
 
-1. Consider versioning the platform.
+ATB,
 
-We have 'platform_version'.'major/minor' exported in 
-DeviceTree-formatted data. This allows for firmware to know which of 
-non-discoverable hardware features exists and which not. We use it to 
-disable XHCI controller on older platform version.
-
-
-2. If specification allows to have non-discoverable devices then add some.
-
-This will require you to handle them in firmware in some way. Sooner or 
-later some physical hardware will be in same situation so they can use 
-your firmware code as reference. We have AHCI and XHCI on system bus 
-(hardcoded in firmware).
-
-
-3. You are going to use EDK2 with ACPI. Hide DT from code there with 
-some hardware information library.
-
-For sbsa-ref we created SbsaHardwareInfoLib in 
-https://openfw.io/edk2-devel/20240306-no-dt-for-cpu-v6-0-acd8727a1b59@linaro.org/ 
-patchset.
-
+Mark.
 
 
