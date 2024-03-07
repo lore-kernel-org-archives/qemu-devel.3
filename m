@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B732DC54E58
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 20:41:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E1BCC54E4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 20:41:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riKXH-0001iI-EY; Thu, 07 Mar 2024 15:40:15 -0500
+	id 1riKYX-00032a-J7; Thu, 07 Mar 2024 15:41:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1riKXF-0001ho-2P
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 15:40:13 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1riKYW-00032A-Ij
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 15:41:32 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1riKXC-0001Wi-RM
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 15:40:12 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1dc0e5b223eso762475ad.1
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 12:40:10 -0800 (PST)
+ id 1riKYU-0001go-W1
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 15:41:32 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-1dbae7b8ff2so11443215ad.3
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 12:41:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709844009; x=1710448809; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709844089; x=1710448889; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Jeq9gSKzeoxfVpU5+KRTxtVJY2HCer0A1/AnLyg+uMk=;
- b=iuL1QsjI8ZAWk2cslvo5IecTJfx6W3y9MDS/d8C4RHTzy6jctOjAMmetmWN0ye8zCX
- jeXjIX2+udQ1pzimsa61CiXGqUhN5K5CE4cti+3JO5Acpu72M0rEu9llVb2H1VI18rdz
- PW2fpeM0Q19Vp0jAV/jGENvi48TtynlXyZIHpzbF9JYZEpfpjwE5PMEH6nzNKGUgtEtW
- AUarlPBUWPOC8tQFlPiSK1D/fYv1W+PnBCMtSidUfHB3LHmredZKfGYlpuIwOGc7yT9y
- glPzATDziwMf+sTF3rHSv6aZw8Us07HKv6eZ4F2KuvwBUZDRQm9OIUqb1sw6vAz5t6HF
- wV5A==
+ bh=xHAR0e6dARjvh6LKsJ+nKdTHFX+sMTEm5DbrspikR+g=;
+ b=GBBmCYf/WFPZr76HqoxeuJz2MA1f+KMMugad/H+cl6swt8d0JDzXi3ZC6mJXM2aEDU
+ G8P2K7praQYz77A4NuGFbIuNAzz19NP4SdRxQyYqD2OXInwZ0W99R1ri2jIIBPG7S5QH
+ Z/+6aDbH8XlwyaErh974STO5Fc3mHT/h3H1pQtlCUlUnbthBwFc84/Nr+iu7i/rbZ6xL
+ i9HObZ/bosq2ike47IXlzeird8B/7JmFJQqtDPvF97n2As5WKWkfMabcWce2vSB1959Q
+ E53+1taETvTrSbsVcwUIeqnc+LDi9amUPT76iNB6oJFIs1MRdSjbwwHmPD9OVqLGf72S
+ F0QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709844009; x=1710448809;
+ d=1e100.net; s=20230601; t=1709844089; x=1710448889;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Jeq9gSKzeoxfVpU5+KRTxtVJY2HCer0A1/AnLyg+uMk=;
- b=lFp4BmqbHHNAGN+T9B+gTy6tCl0l1UK4DYz4W6OrFf/XSiZhftu8Y6cwWrjkIJvmM6
- Eex+KJWwC1fOmclJcGg7diZKbae78ZjRIU51vxo0KbsO2Cy/YkkTMEcKemTR6LXY0SU2
- DQ237jYHEAVqG8UjX552bc30kdrUVLW4WiBbyuuEhlvY0oKTXP+DaZYaf8I9pSdbL6Tv
- iR2sg0s7qSFAmGFV1y2K055mA4XTYwBpk1R8hNHMzk8InGPCErDl8ho30nU1hqRuoWrJ
- arxmRho5gEgz2vaAu+KIcETqWsXxMp55zvqnWFNL1V0SVLl5lI1gEwTUvVKp+GuhpIn3
- WI9A==
+ bh=xHAR0e6dARjvh6LKsJ+nKdTHFX+sMTEm5DbrspikR+g=;
+ b=oJRnncThr4v4CaY1yUIkckOZ6M1LbQw+bXiVN2lAj0V6SCZK0tMTy67KGcybJdE0Xp
+ jYSomD/nHaWOeDn3ASMo9PGijMH4baDs4quXzTNh5TSr5RVDZS4dlTx44e2JEXpmPbNw
+ 6c1hrUVwcqkmwQ41e+Blme7LzafPuVmauXdZ8zyWHoE+0nXOdzOu10O8eRxXVNwZao5j
+ ct1HVkBF7Wg0viQPb5+N1pnBSN8nD33M+N1iRCbLxYhCzJSgDJouxFf0lnP7OsYDqn0S
+ 0zkKlS5ADyqJIe+3yizNLY5VvhZRnZnthfLXmlOWKbYsAXXGDxcuytIo3RyXfwBMlOwn
+ A5aw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUgUpaYyE2878A/Jq8tRUaODa9f2bmG4GyfiBbrQNtbyPEb5sZPs0dLZfBT8PECbs1xG24i25ScuY1qJgbKZ4H41ttwu4o=
-X-Gm-Message-State: AOJu0YxnQ2hxELzjduHkkoCwV5hZzoRfFgebItQUP229qS4jhEt4bKTA
- hUmsH11VYUbPAWrsmUDFBKdSGCD97ElADiwKttZJYDcigqUniR0hEhKVBLIjO1g=
-X-Google-Smtp-Source: AGHT+IEHp+jwMLyU2ShYRHY9jFXeiXS4aIz9/IcZwa/dK0uVvbMVYFO2ALXgFdl0KJv/JZrOTdVJPQ==
-X-Received: by 2002:a17:903:2348:b0:1dc:d4f9:ef21 with SMTP id
- c8-20020a170903234800b001dcd4f9ef21mr9723348plh.52.1709844008959; 
- Thu, 07 Mar 2024 12:40:08 -0800 (PST)
+ AJvYcCWDJlVug1gcLgT/STt/JIXiUo8k+vnsC0gOSjOh368HH+fSmJM2C9yewXjeJkJyKJimJtpOtbjg4eIzJEvqnr80ro0/8BE=
+X-Gm-Message-State: AOJu0Yz6+sQHEbiBg5LbXdBiHfrLuS53JeBwbxmcXVLBuM6fvdIE/FC7
+ DizwqB0PspgJ7qoTd7QMvmwM6jK+y+wIEHTspnoCmie2A86uGIYM3T1eT7ic7I9c5WW9GL0zLF0
+ m
+X-Google-Smtp-Source: AGHT+IE3xl/BcwT6RFMov65u+N02oL6bXPKyk+mZd3xCgsIqGthqrXZ2kI3tOkBnuf8vcYgvsFzo7w==
+X-Received: by 2002:a17:902:c94d:b0:1dd:54a6:63e5 with SMTP id
+ i13-20020a170902c94d00b001dd54a663e5mr3325737pla.14.1709844089484; 
+ Thu, 07 Mar 2024 12:41:29 -0800 (PST)
 Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
  [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- w7-20020a170902e88700b001dba739d15bsm15109796plg.76.2024.03.07.12.40.08
+ w7-20020a170902e88700b001dba739d15bsm15109796plg.76.2024.03.07.12.41.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 Mar 2024 12:40:08 -0800 (PST)
-Message-ID: <4a559ba6-c467-4bdb-9a8e-780850413aa0@linaro.org>
-Date: Thu, 7 Mar 2024 10:40:05 -1000
+ Thu, 07 Mar 2024 12:41:29 -0800 (PST)
+Message-ID: <ee463c40-8134-4eb7-91ef-23b5f428bb3d@linaro.org>
+Date: Thu, 7 Mar 2024 10:41:27 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] include/exec: remove warning_printed from MemoryRegion
+Subject: Re: [PATCH 4/5] include/exec: annotate all the MemoryRegion fields
 Content-Language: en-US
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 References: <20240307181105.4081793-1-alex.bennee@linaro.org>
- <20240307181105.4081793-4-alex.bennee@linaro.org>
+ <20240307181105.4081793-5-alex.bennee@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240307181105.4081793-4-alex.bennee@linaro.org>
+In-Reply-To: <20240307181105.4081793-5-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,15 +100,70 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/7/24 08:11, Alex Bennée wrote:
-> Since d197063fcf9 (memory: move unassigned_mem_ops to memory.c) this
-> field is unused.
-> 
-> Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   include/exec/memory.h | 1 -
->   1 file changed, 1 deletion(-)
+>   include/exec/memory.h | 47 +++++++++++++++++++++++++++++++++++++++----
+>   1 file changed, 43 insertions(+), 4 deletions(-)
+> 
+> diff --git a/include/exec/memory.h b/include/exec/memory.h
+> index 17b741bc4f5..312ed564dbe 100644
+> --- a/include/exec/memory.h
+> +++ b/include/exec/memory.h
+> @@ -778,9 +778,48 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+>   typedef struct CoalescedMemoryRange CoalescedMemoryRange;
+>   typedef struct MemoryRegionIoeventfd MemoryRegionIoeventfd;
+>   
+> -/** MemoryRegion:
+> - *
+> - * A struct representing a memory region.
+> +/**
+> + * struct MemoryRegion - represents a memory region
+> + * @parent_obj: parent QOM object for the region
+> + * @romd_mode: if true ROM devices accessed directly rather than with @ops
+> + * @ram: true if a RAM-type device with a @ram_block
+> + * @subpage: true if region covers a subpage
+> + * @readonly: true for RAM-type devices that are readonly
+> + * @nonvolatile: true for nonvolatile RAM-type devices (e.g. NVDIMM)
+> + * @rom_device: true for a ROM device, see also @romd_mode
+> + * @flush_coalesced_mmio: true to flush any queued coalesced MMIO
+> + * operations before access
+> + * @unmergeable: this section should not get merged with adjacent
+> + * sections
+> + * @dirty_log_mask: dirty events region cares about (see DIRTY_ flags)
+> + * @is_iommu: true if part of an IOMMU device
+> + * @ram_block: backing @RamBlock if @ram is true
+> + * @owner: base QOM object that owns this region
+> + * @dev: base Device that owns this region
+> + * @ops: access operations for MMIO or @romd_mode devices
+> + * @opaque: @dev specific data, passed with @ops
+> + * @container: parent `MemoryRegion`
+> + * @mapped_via_alias: number of times mapped via @alias, container
+> + * might be NULL
+> + * @size: size of @MemoryRegion
+> + * @addr: physical hwaddr of @MemoryRegion
+> + * @destructor: cleanup function when @MemoryRegion finalized
+> + * @align: alignment requirements for any physical backing store
+> + * @terminates: true if this @MemoryRegion is a leaf node
+> + * @ram_device: true if @ram device should use @ops to access
+> + * @enabled: true once initialised, false once finalized
+> + * @vga_logging_count: count of memory logging clients
+> + * @alias: link to aliased @MemoryRegion
+> + * @alias_offset: offset into aliased region
+> + * @priority: priority when resolving overlapping regions
+> + * @subregions: list of subregions in this region
+> + * @subregions_link: next subregion in the chain
+> + * @coalesced: list of coalesced memory ranges
+> + * @name: name of memory region
+> + * @ioeventfd_nb: count of @ioeventfds for region
+> + * @ioeventfds: ioevent notifiers for region
+> + * @rdm: if exists see #RamDiscardManager
+> + * @disable_reentrancy_guard: if true don't error if device accesses itself
+>    */
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Why as one big block rather than line by line?
+The block is less likely to be properly kept up-to-date and is much harder to read.
+
 
 r~
+
 
