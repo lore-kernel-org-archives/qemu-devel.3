@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AE9FC54798
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 12:06:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FA1DC48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 12:06:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riCVr-0004Ki-W9; Thu, 07 Mar 2024 07:06:16 -0500
+	id 1riCVp-0004KI-Uz; Thu, 07 Mar 2024 07:06:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <t-8ch@linutronix.de>)
- id 1riCVm-0004Ja-48
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 07:06:10 -0500
+ id 1riCVk-0004J1-Mq
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 07:06:08 -0500
 Received: from galois.linutronix.de ([193.142.43.55])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <t-8ch@linutronix.de>)
- id 1riCVj-0005ZS-9Y
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 07:06:09 -0500
+ id 1riCVX-0005NV-8w
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 07:06:08 -0500
 From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
- s=2020; t=1709813143;
+ s=2020; t=1709813142;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Hh8LY9SFh1cJe50bavbUhMkEhXra+MC2tsZynx59ktA=;
- b=b8Wi3Oxhh0f34+rdmMReU2aBRwfY1VCZPryKd4U5lcwmkimn6+1OsEm7QfOocI2akalOx6
- ty7R3OF8oE1HBdNusrDOZQkPauJ52Biu4/B2sIrlEUzbiN6cOgnG2rbcTVoh8Cwjo10B6e
- fY7WjOwxWgCBA/ZmtrxSOR9HkbC/7MVfah0/8aDdN/1He3LS1V2MqIZwedzMP42x90TxF4
- e+bvrYz+ugp9/L1UJNjcXSuD3pvImJqRstXzEe4/G2atP4axz8R4ddxmrFTmr10X9jvxfe
- XGMOL5BSlLrg3HDTOTzjPw6uVD3sVH23or0YRjX313PmKvLneOkjYeFtbJoeqg==
+ bh=IJN5C7mPg4JpTDfs4+Z0qlukHU9wN5HwlA6H1wdCiPM=;
+ b=zXInkvftyzufq7B4w8dSyDHOZ04MYu50941ddC1nLutoTbM+79gOtCk7CaVGfjcV6p4PfD
+ pW4iRPShzsVtksgkc2NsEDtUvZceoMrO/tm6tUKs6Jsfgeno9s3E2I/jWyFp0Hc1lVDjZm
+ u3K2KtENVcwPEcfrhhHkFR1IwIGQvvqlfxlm+tNXF1LBkGDQdWImHVXVQrM+J/wkIzP+YX
+ Tgj2WMz591dFP5/iWfsDQigfri0186PRZPnVUjHbBeRPUG2DcyHDQ7hbB2IkHAN3HCVToH
+ 2LDWkmDxGCvRtJOlv+IjUTKXhxNJjaKyNBpCSkAxGq14XfmsoAvF4sPw8jKJ3g==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
- s=2020e; t=1709813143;
+ s=2020e; t=1709813142;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Hh8LY9SFh1cJe50bavbUhMkEhXra+MC2tsZynx59ktA=;
- b=GjyJPy3Uo7ZB4ZhjFKgKnfAKYyUESxbsYLYyhxHSnEAbVye0kxlp/fODRdi7NFSgL/EYMo
- qeQ6dAbQAEOm6hDQ==
-Date: Thu, 07 Mar 2024 13:05:38 +0100
-Subject: [PATCH v2 5/5] docs: add test for firmware.json QAPI
+ bh=IJN5C7mPg4JpTDfs4+Z0qlukHU9wN5HwlA6H1wdCiPM=;
+ b=vhwfWVsScftblelYX7S/vWnBodvWqg4EkimEJZCapt0qivl6rVTk+VY80MabC60W2Esxk5
+ NpCOv36GaoILkGAw==
+Date: Thu, 07 Mar 2024 13:05:36 +0100
+Subject: [PATCH v2 3/5] docs/interop/firmware.json: Use full include paths
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20240307-qapi-firmware-json-v2-5-3b29eabb9b9a@linutronix.de>
+Message-Id: <20240307-qapi-firmware-json-v2-3-3b29eabb9b9a@linutronix.de>
 References: <20240307-qapi-firmware-json-v2-0-3b29eabb9b9a@linutronix.de>
 In-Reply-To: <20240307-qapi-firmware-json-v2-0-3b29eabb9b9a@linutronix.de>
 To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
@@ -55,11 +55,11 @@ To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Kashyap Chamarthy <kchamart@redhat.com>
 Cc: qemu-devel@nongnu.org, 
  =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1709813140; l=892;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1709813140; l=692;
  i=thomas.weissschuh@linutronix.de; s=20240209; h=from:subject:message-id;
- bh=ZTPnmxO3GaQAbwRnHrwYEOYFCggyLqxrMW5WVuKlvxY=;
- b=BUx+0FNhYCGRpkmfHyuCi+aUVziyYHtR5ZGec117+23Y6HdCARemjTyjUvJ3+S/FoUq47sUMO
- vSDWPDvpdSVD1KdFfxDh1TyPw2EnY1CNpu7vPWSe5wdAkmVYXr7P7He
+ bh=edhsrNNWkc8ZNoA2dLKp83fwmLRb+lKMvBbZImT+cGU=;
+ b=R9NFmz752ponVr+LpPHRsQE6WQ/7GKUQW51nEjErILFPbQi8avj+4dPlDENGTQSxRHXfdik/Z
+ BCPYPg+4ZjqB7vOHTE6jwI0YrDrbjtpwFC3W9M3RIZZtDv3XrSQP2pK
 X-Developer-Key: i=thomas.weissschuh@linutronix.de; a=ed25519;
  pk=pfvxvpFUDJV2h2nY0FidLUml22uGLSjByFbM6aqQQws=
 Received-SPF: pass client-ip=193.142.43.55; envelope-from=t-8ch@linutronix.de;
@@ -86,28 +86,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To make sure that the QAPI description stays valid add a testcase.
+The included files are part of the toplevel QAPI directory and need to
+be included from there.
 
-Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/d9ce0234-4beb-4b90-b14c-76810d3b81d7@linaro.org/
 Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 ---
- docs/meson.build | 5 +++++
- 1 file changed, 5 insertions(+)
+ docs/interop/firmware.json | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/docs/meson.build b/docs/meson.build
-index 9040f860ae1a..bcca45a342a3 100644
---- a/docs/meson.build
-+++ b/docs/meson.build
-@@ -99,3 +99,8 @@ if build_docs
-   alias_target('html', sphinxdocs)
-   alias_target('man', sphinxmans)
- endif
-+
-+test('QAPI firmware.json regression tests', python,
-+     args: [qapi_gen.full_path(), '-o', meson.current_build_dir() / 'qapi',
-+            meson.current_source_dir() / 'interop/firmware.json'],
-+     env: test_env, suite: ['qapi-schema', 'qapi-interop'])
+diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
+index 54a1fc6c1041..4ac840e2b413 100644
+--- a/docs/interop/firmware.json
++++ b/docs/interop/firmware.json
+@@ -14,8 +14,8 @@
+ # = Firmware
+ ##
+ 
+-{ 'include' : 'machine.json' }
+-{ 'include' : 'block-core.json' }
++{ 'include' : '../../qapi/machine.json' }
++{ 'include' : '../../qapi/block-core.json' }
+ 
+ ##
+ # @FirmwareOSInterface:
 
 -- 
 2.44.0
