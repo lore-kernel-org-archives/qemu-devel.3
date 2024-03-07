@@ -4,86 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F14F6C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 09:46:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD95CC54E49
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 09:47:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riAKq-0005wr-9c; Thu, 07 Mar 2024 04:46:44 -0500
+	id 1riALH-0006NL-Vg; Thu, 07 Mar 2024 04:47:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vkuznets@redhat.com>)
- id 1riAKo-0005wU-O7
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 04:46:42 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1riALF-0006Fi-KT
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 04:47:09 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vkuznets@redhat.com>)
- id 1riAKm-0004FJ-Oc
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 04:46:42 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1riAL3-0004Hf-SX
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 04:47:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709804798;
+ s=mimecast20190719; t=1709804816;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Gn3w3P0oyjgFKje9JWf7VjYF9RtlVwptZtpY8/vJq40=;
- b=YSBgKcsGbKSWbyagc5FQJr+o0oyHDcWmxNvOjyRgxCXpOaPhxwM9me/Y5p9+iTnViEuUde
- 72XUvEiAK3n83Ru7GEIwv1CWzwCtcKSZyxqqQ7i6BLn+ZkAmgSqZLFnPmiryBBCt67pJ8v
- j4hMpPC60iJya/anUlEQKrb+16Iwmvg=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-619-KShqYsUPMJm1oNOVKxnkSQ-1; Thu, 07 Mar 2024 04:46:35 -0500
-X-MC-Unique: KShqYsUPMJm1oNOVKxnkSQ-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-33e6b0f5d23so81387f8f.0
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 01:46:34 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709804794; x=1710409594;
- h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Gn3w3P0oyjgFKje9JWf7VjYF9RtlVwptZtpY8/vJq40=;
- b=T1RzmIhbKepVvDP0yF4A6mF7Co12j/9HFt5+SZtWEfMzvI3DteEoZM3/NA9kE1Q02L
- 6KXeUyobZ5WHkhL33t3H6q0AGzeFBrH0amU+n/pBmD5/yKpMQuyuQ06AaLTI6eM8YHFB
- H77vLxnYqOgiAphpx/XBwqUL48MBVInCTEl1PyCiE5ajI+BEwRZ9Q6Qh+W0pAl+dHNoz
- h14/s3WKzGFpvZ6W5EFQPyxhXFztRiszAS6lBKfIuImO887UJ8ss6ZWVH3XhZwaEbOhm
- zeRL0eSSpRBtQy1dFpIalnqU2GevNsfBKNGroKyeZaY5XizLVpLl7OQDiouZ8IauJQuu
- DdGQ==
-X-Gm-Message-State: AOJu0YwU7V34Lu8O0u18OblALpaLUVisC/o4PGE56KQ+hqRQyZvj96Za
- +wOoIdbRnu2egOsfHFf+Hz80M2BbBEJobj7u3n9Jud8CND/3HhQdXtc2mvCdeqeM3WhRh1zJKPm
- biAf5+9l3Ie1dITbRYOxKrW8earCcvkSXh671C3YwuO2MxRs2q6fd
-X-Received: by 2002:adf:cc06:0:b0:33d:afbc:6c76 with SMTP id
- x6-20020adfcc06000000b0033dafbc6c76mr13425256wrh.1.1709804794019; 
- Thu, 07 Mar 2024 01:46:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGEIfbYb3BaP7pNmWRJV04PCVuRJlDIahTOdfbqjRR/fzltzm3dgzqCZntU+2QJkKExwV86nQ==
-X-Received: by 2002:adf:cc06:0:b0:33d:afbc:6c76 with SMTP id
- x6-20020adfcc06000000b0033dafbc6c76mr13425244wrh.1.1709804793646; 
- Thu, 07 Mar 2024 01:46:33 -0800 (PST)
-Received: from fedora (g2.ign.cz. [91.219.240.8])
- by smtp.gmail.com with ESMTPSA id
- ch10-20020a5d5d0a000000b0033e26c81b11sm15055266wrb.92.2024.03.07.01.46.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 Mar 2024 01:46:32 -0800 (PST)
-From: Vitaly Kuznetsov <vkuznets@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH RESEND v3 3/3] docs/system: Add recommendations to
- Hyper-V enlightenments doc
-In-Reply-To: <Zel7612e3rSgcBjv@intel.com>
-References: <20240305164204.525575-1-vkuznets@redhat.com>
- <20240305164204.525575-4-vkuznets@redhat.com> <Zel7612e3rSgcBjv@intel.com>
-Date: Thu, 07 Mar 2024 10:46:32 +0100
-Message-ID: <87sf12l6h3.fsf@redhat.com>
+ bh=KjRhZfBsT8BzzABwscVBH7P7vOb7F/A+ZcDjGHpMePY=;
+ b=LezlEZH3eRnBcW7OxpkIYTG1Wyz9NAaj3GPFDN415LqG+qlTyXHuaB9X3yZIbedTZVF+xW
+ kOtVOZywAMfwEwvbMU3xRvjO1R9C0CgLAYJlN0P+8Oxziznec5HphWns7xjzeoc9F0pzZs
+ C5efvWLZvfCzXzy6oSZuYabWSkVMgk8=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-653-PUZFDSpBOqeNlQjsObuW8g-1; Thu,
+ 07 Mar 2024 04:46:50 -0500
+X-MC-Unique: PUZFDSpBOqeNlQjsObuW8g-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7BF203C40B5F;
+ Thu,  7 Mar 2024 09:46:50 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.3])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 28BFD111DCF0;
+ Thu,  7 Mar 2024 09:46:50 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 0062E21E6A24; Thu,  7 Mar 2024 10:46:48 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-block@nongnu.org,  raphael@enfabrica.net,  mst@redhat.com,
+ kwolf@redhat.com,  hreitz@redhat.com,  pbonzini@redhat.com,
+ berrange@redhat.com,  eduardo@habkost.net,  dave@treblig.org,
+ eblake@redhat.com,  qemu-devel@nongnu.org,  yc-core@yandex-team.ru
+Subject: Re: [PATCH v2 3/6] qdev-monitor: add option to report GenericError
+ from find_device_state
+In-Reply-To: <20240301171143.809835-4-vsementsov@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Fri, 1 Mar 2024 20:11:40 +0300")
+References: <20240301171143.809835-1-vsementsov@yandex-team.ru>
+ <20240301171143.809835-4-vsementsov@yandex-team.ru>
+Date: Thu, 07 Mar 2024 10:46:48 +0100
+Message-ID: <87sf12cr1z.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=vkuznets@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,108 +86,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhao Liu <zhao1.liu@intel.com> writes:
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-> Hi Vitaly,
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> ---
+>  system/qdev-monitor.c | 15 +++++++++++----
+>  1 file changed, 11 insertions(+), 4 deletions(-)
 >
-> On Tue, Mar 05, 2024 at 05:42:04PM +0100, Vitaly Kuznetsov wrote:
->> Date: Tue,  5 Mar 2024 17:42:04 +0100
->> From: Vitaly Kuznetsov <vkuznets@redhat.com>
->> Subject: [PATCH RESEND v3 3/3] docs/system: Add recommendations to Hyper-V
->>  enlightenments doc
->> 
->> While hyperv.rst already has all currently implemented Hyper-V
->> enlightenments documented, it may be unclear what is the recommended set to
->> achieve the best result. Add the corresponding section to the doc.
->> 
->> Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
->> ---
->>  docs/system/i386/hyperv.rst | 30 ++++++++++++++++++++++++++++++
->>  1 file changed, 30 insertions(+)
->> 
->> diff --git a/docs/system/i386/hyperv.rst b/docs/system/i386/hyperv.rst
->> index 009947e39141..1c1de77feb65 100644
->> --- a/docs/system/i386/hyperv.rst
->> +++ b/docs/system/i386/hyperv.rst
->> @@ -283,6 +283,36 @@ Supplementary features
->>    feature alters this behavior and only allows the guest to use exposed Hyper-V
->>    enlightenments.
->>  
->> +Recommendations
->> +---------------
->
-> This guide is very helpful!
->
->> +To achieve the best performance of Windows and Hyper-V guests and unless there
->> +are any specific requirements (e.g. migration to older QEMU/KVM versions,
->> +emulating specific Hyper-V version, ...), it is recommended to enable all
->> +currently implemented Hyper-V enlightenments with the following exceptions:
->> +
->> +- ``hv-syndbg``, ``hv-passthrough``, ``hv-enforce-cpuid`` should not be enabled
->> +  in production configurations as these are debugging/development features.
->> +- ``hv-reset`` can be avoided as modern Hyper-V versions don't expose it.
->
-> Does the "Hyper-V versions" means Hyper-V guest version or Microsoft's Hyper-V
-> hypervisor version? 
-> It would be better to clarify Hyper-V guest and Hyper-v hypervisor.
->
-> And it would be better to have a clear version number.
+> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+> index 9febb743f1..cf7481e416 100644
+> --- a/system/qdev-monitor.c
+> +++ b/system/qdev-monitor.c
+> @@ -877,13 +877,20 @@ void qmp_device_add(QDict *qdict, QObject **ret_data, Error **errp)
+>      object_unref(OBJECT(dev));
+>  }
+>  
+> -static DeviceState *find_device_state(const char *id, Error **errp)
+> +/*
+> + * Note that creating new APIs using error classes other than GenericError is
+> + * not recommended. Set use_generic_error=true for new interfaces.
+> + */
+> +static DeviceState *find_device_state(const char *id, bool use_generic_error,
+> +                                      Error **errp)
+>  {
+>      Object *obj = object_resolve_path_at(qdev_get_peripheral(), id);
+>      DeviceState *dev;
+>  
+>      if (!obj) {
+> -        error_set(errp, ERROR_CLASS_DEVICE_NOT_FOUND,
+> +        error_set(errp,
+> +                  (use_generic_error ?
+> +                   ERROR_CLASS_GENERIC_ERROR : ERROR_CLASS_DEVICE_NOT_FOUND),
+>                    "Device '%s' not found", id);
+>          return NULL;
+>      }
+> @@ -947,7 +954,7 @@ void qdev_unplug(DeviceState *dev, Error **errp)
+>  
+>  void qmp_device_del(const char *id, Error **errp)
+>  {
+> -    DeviceState *dev = find_device_state(id, errp);
+> +    DeviceState *dev = find_device_state(id, false, errp);
+>      if (dev != NULL) {
+>          if (dev->pending_deleted_event &&
+>              (dev->pending_deleted_expires_ms == 0 ||
+> @@ -1067,7 +1074,7 @@ BlockBackend *blk_by_qdev_id(const char *id, Error **errp)
+>  
+>      GLOBAL_STATE_CODE();
+>  
+> -    dev = find_device_state(id, errp);
+> +    dev = find_device_state(id, false, errp);
+>      if (dev == NULL) {
+>          return NULL;
+>      }
 
-This is about QEMU/KVM emulating certain Hyper-V version, not about
-guest Hyper-V version. To be honest, I'm not sure what was the last
-version of Hyper-V which was exposing HV_SYSTEM_RESET_RECOMMENDED. I
-don't have anything older that WS2016 around now and the bit is not
-there. If I'm not mistaken, it was already missing in 2012R2. I would
-appreciate if anyone has more precise historical info to add here.
+I appreciate the attempt to curb the spread of DeviceNotFound errors.
+Two issues:
 
->
->> +- ``hv-evmcs`` can (and should) be enabled on Intel CPUs only. While the feature
->> +  is only used in nested configurations (Hyper-V, WSL2), enabling it for regular
->> +  Windows guests should not have any negative effects.
->> +- ``hv-no-nonarch-coresharing`` must only be enabled if vCPUs are properly pinned
->> +  so no non-architectural core sharing is possible.
->> +- ``hv-vendor-id``, ``hv-version-id-build``, ``hv-version-id-major``,
->> +  ``hv-version-id-minor``, ``hv-version-id-spack``, ``hv-version-id-sbranch``,
->> +  ``hv-version-id-snumber`` can be left unchanged, guests are not supposed to
->> +  behave differently when different Hyper-V version is presented to them.
->> +- ``hv-crash`` must only be enabled if the crash information is consumed via
->> +  QAPI by higher levels of the virtualization stack. Enabling this feature
->> +  effectively prevents Windows from creating dumps upon crashes.
->> +- ``hv-reenlightenment`` can only be used on hardware which supports TSC
->> +  scaling or when guest migration is not needed.
->> +- ``hv-spinlocks`` should be set to e.g. 0xfff when host CPUs are overcommited
->> +  (meaning there are other scheduled tasks or guests) and can be left unchanged
->> +  from the default value (0xffffffff) otherwise.
->> +- ``hv-avic``/``hv-apicv`` should not be enabled if the hardware does not
->> +  support APIC virtualization (Intel APICv, AMD AVIC).
->>
->
-> It's also better to add blank lines between paragraphs above.
+* Copy-pasting find_device_state() with a false argument is an easy
+  error to make.
 
-Np, if I am to re-send this I'll add these (hope it's not an acceptance
-blocker, we can always do a follow-up).
+* Most uses of find_device_state() are via blk_by_qdev_id() and
+  qmp_get_blk().  Any new uses of qemu_get_blk() will still produce
+  DeviceNotFound.
 
->
-> BTW, may I ask another Windows question? I understand that Windows such
-> as Windows 10 and later is already a virtualized architecture with
-> built-in Hyper-V to run root partation.
->
-> So is it true that booting Windows VM via KVM + QEMU is running Windows
-> Guest in L2? Or what is the relationship between Hyper-V within Windows
-> and Hyper-V enlightenments with QEMU + KVM?
-
-Hyper-V is a role you can enable in various Windows versions, both
-server and client. When enabled, you get a hypervisor (which is called
-'Microsoft Hypervisor' as I was told) and your Windows becomes the root
-partition (similar to Xen Dom0). In case you run this on KVM, Windows
-becomes L2. Hyper-V enlightenments provided by KVM/QEMU are consumed by
-the hypervisor then.
-
-Note: Hyper-V role is optional, in many cases Windows guests run without
-it (no Hyper-V VMs, no WSL2, ...) and thus consume KVM's Hyper-V
-enlightenments directly, no nested virt involved.
-
--- 
-Vitaly
+Hmm.
 
 
