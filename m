@@ -4,72 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C1D3C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 12:07:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B96BC54798
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 12:07:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riCVv-0004LU-3S; Thu, 07 Mar 2024 07:06:19 -0500
+	id 1riCWX-0005EN-B8; Thu, 07 Mar 2024 07:06:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <t-8ch@linutronix.de>)
- id 1riCVl-0004JR-DL
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 07:06:09 -0500
-Received: from galois.linutronix.de ([193.142.43.55])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1riCWU-0005AW-8e
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 07:06:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <t-8ch@linutronix.de>)
- id 1riCVV-0005NP-36
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 07:06:09 -0500
-From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
- s=2020; t=1709813141;
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1riCWR-0005fb-TX
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 07:06:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709813210;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=On8HB8y1tTMJab2j+fd5XKn/1OC8xVc0eTzEZSkIC8Y=;
- b=OXQWrvobi+jc9Pa4cd6hCRd0Y3a+7dkitJ223zmGQxbS/wR7NHPSM0f3lqwYYePtMNTNb0
- PjrxXSOR0vhJ0yZef6nzFxEeHweH8qRfKn3NrGIH5mAhoh3qJNpm33CxvKQ9siyEMpTuGN
- OvJDmLemdndz/dYFzhdQb67S4++Sl0vMzPYG6WRfYc9h29iWTVJZq1b3isF6KASJhdIkt7
- j72w4QrXaRKaxbG8ROGd7NMjl2qQFr2OCdCXEN52B47KLZawqv/UijaSltaWR2YSvgpzRF
- 8TDyGT2D+PH70kfsGGQ8NMs2/7kklOYuIoDp4ZINz/T54l20Swmqhe0Hl276mg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
- s=2020e; t=1709813141;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=On8HB8y1tTMJab2j+fd5XKn/1OC8xVc0eTzEZSkIC8Y=;
- b=HlZ78iZcDuPaeV/LiGqDqLkTEzSv6ZU7ei0gev0PT+Oaao+7qrDgxuYv3WM1zFiMa3yyLK
- 2UfuzvgpjrAwS9Cw==
-Date: Thu, 07 Mar 2024 13:05:34 +0100
-Subject: [PATCH v2 1/5] docs/interop/firmware.json: Align examples
+ bh=tqLNZtKKzJp+wo8PF9wPGvq/IGCF2nsRyWfkY6OmsuE=;
+ b=aAl3Zsc6CiFUSAruMVoxhtrNqMDFTFtgh9KgOhrxumZkN0B1DFKfrlkJp/Icoe+n2ia11W
+ 0jGQ/IHCIzWNAWzJYZXJt0v4alK59Jvq97SrZWBZ9Xt3B/wQNOmR+kJ30SgdGFGE7BH5Rg
+ Y1wvhrY8+5LMZ0HCFszoEa6aQ0ygOJQ=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-150-20mL4WB0ObCIr24Axy0BeA-1; Thu, 07 Mar 2024 07:06:48 -0500
+X-MC-Unique: 20mL4WB0ObCIr24Axy0BeA-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-33d8d208be9so478610f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 04:06:48 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709813206; x=1710418006;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tqLNZtKKzJp+wo8PF9wPGvq/IGCF2nsRyWfkY6OmsuE=;
+ b=kFTdqjSrCIJNmYgExtEp2nix3kxTzTLC5fo3EzKEflVyGVfbERSS75WKltUDrITjy9
+ WfutDMEY0dwz/s0PIzFKWRgzcj2iINDOEzqbd3yTDZ5aBobRylnRI/9SIFjeeuqTRuy2
+ vN5iUEyc3QLh5/6m18H7brTYltkmEw3jVBsJr3LpxBp5TN47+fk9dfnbQKbb2LqqQL+b
+ sHSRTdJW2c1xGXHc7P4NGM/gdR46zHzjOKlBvKymmNr4Ay5np7c4cYhz8AiZM9a2leeu
+ 5x0BGJDBaM/JQKY62tvuGO+cU0CG+CaStqbPQq1QyglZEqRAxvAIKNW1KtMHuozLAPcK
+ 2NkQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW5+JNHURsElpCgVi/AHvL+XYt5XZt6gv37qZZBtlbZvpn+UaFptQ+E8vwnRI3aTzMKEFG9W0ZpEkGP9m0TDxLkj9R3ibo=
+X-Gm-Message-State: AOJu0Yz+djH72pjVlX47EH6Kde8wwU0U0+PVdbRKEmk6dzFLwoQUoifh
+ 3N0nehm2L5AF4LhXNFL5QN3yF0Fo25o2bX85FGKeET2pggQW9UtvsMbu7pQVavQmOEIerOR9e0g
+ PIJ0sTcBLKcnu5WYQr131/u/2OwjE0DoFrhHYw9TqswQyEXElJxLB9arJKeAc
+X-Received: by 2002:a5d:5490:0:b0:33d:6ca1:3058 with SMTP id
+ h16-20020a5d5490000000b0033d6ca13058mr12116097wrv.56.1709813206582; 
+ Thu, 07 Mar 2024 04:06:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGKt/XfUdwaZTRVvt7UUAI6Vh7ULLapNT4+3CuArmsuc0E4FrHVpttXpMcREsew6NCjtJn87g==
+X-Received: by 2002:a5d:5490:0:b0:33d:6ca1:3058 with SMTP id
+ h16-20020a5d5490000000b0033d6ca13058mr12116083wrv.56.1709813206234; 
+ Thu, 07 Mar 2024 04:06:46 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ v13-20020adfd04d000000b0033d202abf01sm20037804wrh.28.2024.03.07.04.06.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 07 Mar 2024 04:06:45 -0800 (PST)
+Message-ID: <7202b70e-cba0-4dcf-b0a4-485e7dc3eba6@redhat.com>
+Date: Thu, 7 Mar 2024 13:06:44 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 16/25] vfio: Add Error** argument to
+ .set_dirty_page_tracking() handler
+Content-Language: en-US, fr
+To: Eric Auger <eauger@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
+ Prasad Pandit <pjp@fedoraproject.org>
+References: <20240306133441.2351700-1-clg@redhat.com>
+ <20240306133441.2351700-17-clg@redhat.com>
+ <9250446e-c48b-4465-b50c-da4fe3c1ee2f@redhat.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <9250446e-c48b-4465-b50c-da4fe3c1ee2f@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Message-Id: <20240307-qapi-firmware-json-v2-1-3b29eabb9b9a@linutronix.de>
-References: <20240307-qapi-firmware-json-v2-0-3b29eabb9b9a@linutronix.de>
-In-Reply-To: <20240307-qapi-firmware-json-v2-0-3b29eabb9b9a@linutronix.de>
-To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Kashyap Chamarthy <kchamart@redhat.com>
-Cc: qemu-devel@nongnu.org, 
- =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1709813140; l=11093;
- i=thomas.weissschuh@linutronix.de; s=20240209; h=from:subject:message-id;
- bh=GMe7kp9V6sMusbYpESY64Sjm/vPnPDkcVXvAuqt/pIQ=;
- b=asNTfEWpUp2kFJBfzwgzwaLT8ElrJOW5XcqIUa0jy3SJN5ANHX42Sku8/ZLIiGE4ocbDxUh9t
- eEKuhMsHlTfDCIovN0yknHWMCszgsMee1Cj4ncllDipWtb38RDuAB8z
-X-Developer-Key: i=thomas.weissschuh@linutronix.de; a=ed25519;
- pk=pfvxvpFUDJV2h2nY0FidLUml22uGLSjByFbM6aqQQws=
-Received-SPF: pass client-ip=193.142.43.55; envelope-from=t-8ch@linutronix.de;
- helo=galois.linutronix.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,415 +111,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The QAPI generator now validates the alignment and rejects this file.
+On 3/7/24 09:09, Eric Auger wrote:
+> Hi Cédric,
+> 
+> On 3/6/24 14:34, Cédric Le Goater wrote:
+>> We will use the Error object to improve error reporting in the
+>> .log_global*() handlers of VFIO. Add documentation while at it.
+>>
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>> ---
+>>
+>>   Changes in v3:
+>>
+>>   - Use error_setg_errno() in vfio_legacy_set_dirty_page_tracking()
+>>   
+>>   include/hw/vfio/vfio-container-base.h | 18 ++++++++++++++++--
+>>   hw/vfio/common.c                      |  4 ++--
+>>   hw/vfio/container-base.c              |  4 ++--
+>>   hw/vfio/container.c                   |  6 +++---
+>>   4 files changed, 23 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+>> index 3582d5f97a37877b2adfc0d0b06996c82403f8b7..c76984654a596e3016a8cf833e10143eb872e102 100644
+>> --- a/include/hw/vfio/vfio-container-base.h
+>> +++ b/include/hw/vfio/vfio-container-base.h
+>> @@ -82,7 +82,7 @@ int vfio_container_add_section_window(VFIOContainerBase *bcontainer,
+>>   void vfio_container_del_section_window(VFIOContainerBase *bcontainer,
+>>                                          MemoryRegionSection *section);
+>>   int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
+>> -                                           bool start);
+>> +                                           bool start, Error **errp);
+>>   int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+>>                                         VFIOBitmap *vbmap,
+>>                                         hwaddr iova, hwaddr size);
+>> @@ -121,9 +121,23 @@ struct VFIOIOMMUClass {
+>>       int (*attach_device)(const char *name, VFIODevice *vbasedev,
+>>                            AddressSpace *as, Error **errp);
+>>       void (*detach_device)(VFIODevice *vbasedev);
+>> +
+>>       /* migration feature */
+>> +
+>> +    /**
+>> +     * @set_dirty_page_tracking
+>> +     *
+>> +     * Start or stop dirty pages tracking on VFIO container
+>> +     *
+>> +     * @bcontainer: #VFIOContainerBase on which to de/activate dirty
+>> +     *              pages tracking
+> s/pages/page?
 
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
----
- docs/interop/firmware.json | 384 ++++++++++++++++++++++-----------------------
- 1 file changed, 192 insertions(+), 192 deletions(-)
+yep
 
-diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
-index cc8f86918681..a024f1b9bf3f 100644
---- a/docs/interop/firmware.json
-+++ b/docs/interop/firmware.json
-@@ -435,203 +435,203 @@
- #
- # Examples:
- #
--# {
--#     "description": "SeaBIOS",
--#     "interface-types": [
--#         "bios"
--#     ],
--#     "mapping": {
--#         "device": "memory",
--#         "filename": "/usr/share/seabios/bios-256k.bin"
--#     },
--#     "targets": [
--#         {
--#             "architecture": "i386",
--#             "machines": [
--#                 "pc-i440fx-*",
--#                 "pc-q35-*"
--#             ]
-+#     {
-+#         "description": "SeaBIOS",
-+#         "interface-types": [
-+#             "bios"
-+#         ],
-+#         "mapping": {
-+#             "device": "memory",
-+#             "filename": "/usr/share/seabios/bios-256k.bin"
- #         },
--#         {
--#             "architecture": "x86_64",
--#             "machines": [
--#                 "pc-i440fx-*",
--#                 "pc-q35-*"
--#             ]
--#         }
--#     ],
--#     "features": [
--#         "acpi-s3",
--#         "acpi-s4"
--#     ],
--#     "tags": [
--#         "CONFIG_BOOTSPLASH=n",
--#         "CONFIG_ROM_SIZE=256",
--#         "CONFIG_USE_SMM=n"
--#     ]
--# }
--#
--# {
--#     "description": "OVMF with SB+SMM, empty varstore",
--#     "interface-types": [
--#         "uefi"
--#     ],
--#     "mapping": {
--#         "device": "flash",
--#         "executable": {
--#             "filename": "/usr/share/OVMF/OVMF_CODE.secboot.fd",
--#             "format": "raw"
-+#         "targets": [
-+#             {
-+#                 "architecture": "i386",
-+#                 "machines": [
-+#                     "pc-i440fx-*",
-+#                     "pc-q35-*"
-+#                 ]
-+#             },
-+#             {
-+#                 "architecture": "x86_64",
-+#                 "machines": [
-+#                     "pc-i440fx-*",
-+#                     "pc-q35-*"
-+#                 ]
-+#             }
-+#         ],
-+#         "features": [
-+#             "acpi-s3",
-+#             "acpi-s4"
-+#         ],
-+#         "tags": [
-+#             "CONFIG_BOOTSPLASH=n",
-+#             "CONFIG_ROM_SIZE=256",
-+#             "CONFIG_USE_SMM=n"
-+#         ]
-+#     }
-+#
-+#     {
-+#         "description": "OVMF with SB+SMM, empty varstore",
-+#         "interface-types": [
-+#             "uefi"
-+#         ],
-+#         "mapping": {
-+#             "device": "flash",
-+#             "executable": {
-+#                 "filename": "/usr/share/OVMF/OVMF_CODE.secboot.fd",
-+#                 "format": "raw"
-+#             },
-+#             "nvram-template": {
-+#                 "filename": "/usr/share/OVMF/OVMF_VARS.fd",
-+#                 "format": "raw"
-+#             }
- #         },
--#         "nvram-template": {
--#             "filename": "/usr/share/OVMF/OVMF_VARS.fd",
--#             "format": "raw"
--#         }
--#     },
--#     "targets": [
--#         {
--#             "architecture": "x86_64",
--#             "machines": [
--#                 "pc-q35-*"
--#             ]
--#         }
--#     ],
--#     "features": [
--#         "acpi-s3",
--#         "amd-sev",
--#         "requires-smm",
--#         "secure-boot",
--#         "verbose-dynamic"
--#     ],
--#     "tags": [
--#         "-a IA32",
--#         "-a X64",
--#         "-p OvmfPkg/OvmfPkgIa32X64.dsc",
--#         "-t GCC48",
--#         "-b DEBUG",
--#         "-D SMM_REQUIRE",
--#         "-D SECURE_BOOT_ENABLE",
--#         "-D FD_SIZE_4MB"
--#     ]
--# }
--#
--# {
--#     "description": "OVMF with SB+SMM, SB enabled, MS certs enrolled",
--#     "interface-types": [
--#         "uefi"
--#     ],
--#     "mapping": {
--#         "device": "flash",
--#         "executable": {
--#             "filename": "/usr/share/OVMF/OVMF_CODE.secboot.fd",
--#             "format": "raw"
-+#         "targets": [
-+#             {
-+#                 "architecture": "x86_64",
-+#                 "machines": [
-+#                     "pc-q35-*"
-+#                 ]
-+#             }
-+#         ],
-+#         "features": [
-+#             "acpi-s3",
-+#             "amd-sev",
-+#             "requires-smm",
-+#             "secure-boot",
-+#             "verbose-dynamic"
-+#         ],
-+#         "tags": [
-+#             "-a IA32",
-+#             "-a X64",
-+#             "-p OvmfPkg/OvmfPkgIa32X64.dsc",
-+#             "-t GCC48",
-+#             "-b DEBUG",
-+#             "-D SMM_REQUIRE",
-+#             "-D SECURE_BOOT_ENABLE",
-+#             "-D FD_SIZE_4MB"
-+#         ]
-+#     }
-+#
-+#     {
-+#         "description": "OVMF with SB+SMM, SB enabled, MS certs enrolled",
-+#         "interface-types": [
-+#             "uefi"
-+#         ],
-+#         "mapping": {
-+#             "device": "flash",
-+#             "executable": {
-+#                 "filename": "/usr/share/OVMF/OVMF_CODE.secboot.fd",
-+#                 "format": "raw"
-+#             },
-+#             "nvram-template": {
-+#                 "filename": "/usr/share/OVMF/OVMF_VARS.secboot.fd",
-+#                 "format": "raw"
-+#             }
- #         },
--#         "nvram-template": {
--#             "filename": "/usr/share/OVMF/OVMF_VARS.secboot.fd",
--#             "format": "raw"
--#         }
--#     },
--#     "targets": [
--#         {
--#             "architecture": "x86_64",
--#             "machines": [
--#                 "pc-q35-*"
--#             ]
--#         }
--#     ],
--#     "features": [
--#         "acpi-s3",
--#         "amd-sev",
--#         "enrolled-keys",
--#         "requires-smm",
--#         "secure-boot",
--#         "verbose-dynamic"
--#     ],
--#     "tags": [
--#         "-a IA32",
--#         "-a X64",
--#         "-p OvmfPkg/OvmfPkgIa32X64.dsc",
--#         "-t GCC48",
--#         "-b DEBUG",
--#         "-D SMM_REQUIRE",
--#         "-D SECURE_BOOT_ENABLE",
--#         "-D FD_SIZE_4MB"
--#     ]
--# }
--#
--# {
--#     "description": "OVMF with SEV-ES support",
--#     "interface-types": [
--#         "uefi"
--#     ],
--#     "mapping": {
--#         "device": "flash",
--#         "executable": {
--#             "filename": "/usr/share/OVMF/OVMF_CODE.fd",
--#             "format": "raw"
-+#         "targets": [
-+#             {
-+#                 "architecture": "x86_64",
-+#                 "machines": [
-+#                     "pc-q35-*"
-+#                 ]
-+#             }
-+#         ],
-+#         "features": [
-+#             "acpi-s3",
-+#             "amd-sev",
-+#             "enrolled-keys",
-+#             "requires-smm",
-+#             "secure-boot",
-+#             "verbose-dynamic"
-+#         ],
-+#         "tags": [
-+#             "-a IA32",
-+#             "-a X64",
-+#             "-p OvmfPkg/OvmfPkgIa32X64.dsc",
-+#             "-t GCC48",
-+#             "-b DEBUG",
-+#             "-D SMM_REQUIRE",
-+#             "-D SECURE_BOOT_ENABLE",
-+#             "-D FD_SIZE_4MB"
-+#         ]
-+#     }
-+#
-+#     {
-+#         "description": "OVMF with SEV-ES support",
-+#         "interface-types": [
-+#             "uefi"
-+#         ],
-+#         "mapping": {
-+#             "device": "flash",
-+#             "executable": {
-+#                 "filename": "/usr/share/OVMF/OVMF_CODE.fd",
-+#                 "format": "raw"
-+#             },
-+#             "nvram-template": {
-+#                 "filename": "/usr/share/OVMF/OVMF_VARS.fd",
-+#                 "format": "raw"
-+#             }
- #         },
--#         "nvram-template": {
--#             "filename": "/usr/share/OVMF/OVMF_VARS.fd",
--#             "format": "raw"
--#         }
--#     },
--#     "targets": [
--#         {
--#             "architecture": "x86_64",
--#             "machines": [
--#                 "pc-q35-*"
--#             ]
--#         }
--#     ],
--#     "features": [
--#         "acpi-s3",
--#         "amd-sev",
--#         "amd-sev-es",
--#         "verbose-dynamic"
--#     ],
--#     "tags": [
--#         "-a X64",
--#         "-p OvmfPkg/OvmfPkgX64.dsc",
--#         "-t GCC48",
--#         "-b DEBUG",
--#         "-D FD_SIZE_4MB"
--#     ]
--# }
--#
--# {
--#     "description": "UEFI firmware for ARM64 virtual machines",
--#     "interface-types": [
--#         "uefi"
--#     ],
--#     "mapping": {
--#         "device": "flash",
--#         "executable": {
--#             "filename": "/usr/share/AAVMF/AAVMF_CODE.fd",
--#             "format": "raw"
-+#         "targets": [
-+#             {
-+#                 "architecture": "x86_64",
-+#                 "machines": [
-+#                     "pc-q35-*"
-+#                 ]
-+#             }
-+#         ],
-+#         "features": [
-+#             "acpi-s3",
-+#             "amd-sev",
-+#             "amd-sev-es",
-+#             "verbose-dynamic"
-+#         ],
-+#         "tags": [
-+#             "-a X64",
-+#             "-p OvmfPkg/OvmfPkgX64.dsc",
-+#             "-t GCC48",
-+#             "-b DEBUG",
-+#             "-D FD_SIZE_4MB"
-+#         ]
-+#     }
-+#
-+#     {
-+#         "description": "UEFI firmware for ARM64 virtual machines",
-+#         "interface-types": [
-+#             "uefi"
-+#         ],
-+#         "mapping": {
-+#             "device": "flash",
-+#             "executable": {
-+#                 "filename": "/usr/share/AAVMF/AAVMF_CODE.fd",
-+#                 "format": "raw"
-+#             },
-+#             "nvram-template": {
-+#                 "filename": "/usr/share/AAVMF/AAVMF_VARS.fd",
-+#                 "format": "raw"
-+#             }
- #         },
--#         "nvram-template": {
--#             "filename": "/usr/share/AAVMF/AAVMF_VARS.fd",
--#             "format": "raw"
--#         }
--#     },
--#     "targets": [
--#         {
--#             "architecture": "aarch64",
--#             "machines": [
--#                 "virt-*"
--#             ]
--#         }
--#     ],
--#     "features": [
--#
--#     ],
--#     "tags": [
--#         "-a AARCH64",
--#         "-p ArmVirtPkg/ArmVirtQemu.dsc",
--#         "-t GCC48",
--#         "-b DEBUG",
--#         "-D DEBUG_PRINT_ERROR_LEVEL=0x80000000"
--#     ]
--# }
-+#         "targets": [
-+#             {
-+#                 "architecture": "aarch64",
-+#                 "machines": [
-+#                     "virt-*"
-+#                 ]
-+#             }
-+#         ],
-+#         "features": [
-+#
-+#         ],
-+#         "tags": [
-+#             "-a AARCH64",
-+#             "-p ArmVirtPkg/ArmVirtQemu.dsc",
-+#             "-t GCC48",
-+#             "-b DEBUG",
-+#             "-D DEBUG_PRINT_ERROR_LEVEL=0x80000000"
-+#         ]
-+#     }
- ##
- { 'struct' : 'Firmware',
-   'data'   : { 'description'     : 'str',
+> for my education is the "#"VFIOContainerBase formalized somewhere?
 
--- 
-2.44.0
+It's QEMU specific. See 4cf41794411f ("docs: tweak kernel-doc for QEMU
+coding standards").
+
+> +     * @start: indicates whether to start or stop dirty pages tracking
+>> +     * @errp: pointer to Error*, to store an error if it happens.
+>> +     *
+>> +     * Returns zero to indicate success and negative for error
+>> +     */
+>>       int (*set_dirty_page_tracking)(const VFIOContainerBase *bcontainer,
+>> -                                   bool start);
+>> +                                   bool start, Error **errp);
+>>       int (*query_dirty_bitmap)(const VFIOContainerBase *bcontainer,
+>>                                 VFIOBitmap *vbmap,
+>>                                 hwaddr iova, hwaddr size);
+>> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+>> index 800ba0aeac84b8dcc83b042bb70c37b4bf78d3f4..5598a508399a6c0b3a20ba17311cbe83d84250c5 100644
+>> --- a/hw/vfio/common.c
+>> +++ b/hw/vfio/common.c
+>> @@ -1085,7 +1085,7 @@ static bool vfio_listener_log_global_start(MemoryListener *listener,
+>>       if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
+>>           ret = vfio_devices_dma_logging_start(bcontainer);
+>>       } else {
+>> -        ret = vfio_container_set_dirty_page_tracking(bcontainer, true);
+>> +        ret = vfio_container_set_dirty_page_tracking(bcontainer, true, NULL);
+> It is not obvious why we don't pass errp here. Also there is ana
+> error_report below. Why isn't the error propagated? (not related to your
+> patch though)
+
+When I started this series, I was trying to find a way to introduce
+progressively the changes and this patch is preparing ground for
+what is coming next. It could be merged with the following if you prefer.
+
+
+Thanks,
+
+C.
+
+
+
+
+>>       }
+>>   
+>>       if (ret) {
+>> @@ -1105,7 +1105,7 @@ static void vfio_listener_log_global_stop(MemoryListener *listener)
+>>       if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
+>>           vfio_devices_dma_logging_stop(bcontainer);
+>>       } else {
+>> -        ret = vfio_container_set_dirty_page_tracking(bcontainer, false);
+>> +        ret = vfio_container_set_dirty_page_tracking(bcontainer, false, NULL);
+>>       }
+>>   
+>>       if (ret) {
+>> diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+>> index 913ae49077c4f09b7b27517c1231cfbe4befb7fb..7c0764121d24b02b6c4e66e368d7dff78a6d65aa 100644
+>> --- a/hw/vfio/container-base.c
+>> +++ b/hw/vfio/container-base.c
+>> @@ -53,14 +53,14 @@ void vfio_container_del_section_window(VFIOContainerBase *bcontainer,
+>>   }
+>>   
+>>   int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
+>> -                                           bool start)
+>> +                                           bool start, Error **errp)
+>>   {
+>>       if (!bcontainer->dirty_pages_supported) {
+>>           return 0;
+>>       }
+>>   
+>>       g_assert(bcontainer->ops->set_dirty_page_tracking);
+>> -    return bcontainer->ops->set_dirty_page_tracking(bcontainer, start);
+>> +    return bcontainer->ops->set_dirty_page_tracking(bcontainer, start, errp);
+>>   }
+>>   
+>>   int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+>> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+>> index 096d77eac3946a9c38fc2a98116b93353f71f06e..6524575aeddcea8470b5fd10caf57475088d1813 100644
+>> --- a/hw/vfio/container.c
+>> +++ b/hw/vfio/container.c
+>> @@ -210,7 +210,7 @@ static int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
+>>   
+>>   static int
+>>   vfio_legacy_set_dirty_page_tracking(const VFIOContainerBase *bcontainer,
+>> -                                    bool start)
+>> +                                    bool start, Error **errp)
+>>   {
+>>       const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
+>>                                                     bcontainer);
+>> @@ -228,8 +228,8 @@ vfio_legacy_set_dirty_page_tracking(const VFIOContainerBase *bcontainer,
+>>       ret = ioctl(container->fd, VFIO_IOMMU_DIRTY_PAGES, &dirty);
+>>       if (ret) {
+>>           ret = -errno;
+>> -        error_report("Failed to set dirty tracking flag 0x%x errno: %d",
+>> -                     dirty.flags, errno);
+>> +        error_setg_errno(errp, errno, "Failed to set dirty tracking flag 0x%x",
+>> +                         dirty.flags);
+>>       }
+>>   
+>>       return ret;
+> 
+> Thanks
+> 
+> Eric
+> 
 
 
