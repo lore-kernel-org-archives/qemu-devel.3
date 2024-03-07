@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F289C54798
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 16:08:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85375C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 16:08:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riGDo-0005AE-IA; Thu, 07 Mar 2024 11:03:52 -0500
+	id 1riGEd-0006Kg-BI; Thu, 07 Mar 2024 11:04:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1riGDa-000566-0x
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 11:03:42 -0500
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1riGET-0006E9-7x
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 11:04:33 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1riGDP-000636-K6
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 11:03:37 -0500
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-6e63e9abf6aso869638b3a.2
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 08:03:26 -0800 (PST)
+ id 1riGEK-0006TV-Ob
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 11:04:31 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1dc5d0162bcso9386705ad.0
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 08:04:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1709827405; x=1710432205; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=XpDoYt2Qb/Km1f+I5GhoGYGwXZarW4PqGG8m8YQiDcM=;
- b=CfO7RreE4XDloWpbUpxBKvnSVQXepvMZuJzXwhSTc27TsD4SSwJ5PelDngneUgfET8
- wIK/kZk7kynvsWwDOKkOF/TOnm4CtjbyPV5dpNNbhfncuxNneGVZu5ZIPToXumycJRht
- a0u55wwcgvhXKUo7M6Bblm1lnkxLNDAdhuLCPJHEZWd9yzegYEoTlja8+1lDnC46Ekpu
- vkyL+sL79vhrpDWaNxau2ao4PyWfmp+m8uRYc0824HcMzpXQuYIXv28xdxFY/4/VpOtw
- bUaT8Ra3O2MnSb+GcbkaYRaNUC37fIkQ4o4ZL9mkQa2oBKPtRp6HUpY86J0VjWtXz5fP
- B1KA==
+ d=ventanamicro.com; s=google; t=1709827460; x=1710432260; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1aXRP2KVTe35bDOq459aCYA3XDBPGwRmCn+nfWu9Dtg=;
+ b=K2L8Ji48bxE+Tf21r93ixkNye5ZgEwesNZrDQRieyvwplDZSq+N133WLQSVhpmMiVF
+ RaLuVpETuSRtS0x81m9zzaLhLRpUcbIerW6xbPp70PGTmYqo8thl/mTiI+Law+zVjzIS
+ FHki9PYt6S2vusWW3d85LBQy0HM+jtHEcMvdW90YRVgB9ACmNJsADoc2qKsZXt03soLK
+ 4dOYKyKag+Vmr5jY6useJwQ8Z1JBHJ3D9t9wdR3/jqq5Dqu1sdSkpBuaa+hEpCKFdzB7
+ npGUbXg6uar3DCBaAvCn6cuEACI6z7sQR4MdW/tGrwB++7zDab/ZfiXKjlZ4hHw++L4I
+ 3hBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709827405; x=1710432205;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XpDoYt2Qb/Km1f+I5GhoGYGwXZarW4PqGG8m8YQiDcM=;
- b=KHhwop4RhMZMmBixsHmcra2DAIhbDPs48aS+TT37FDiOOCRZSzJk606a2/T4ZrEP9c
- O9sqXc5Dq+3ADqU969O46bTST25R7IxdbrkqrK+IOhuvoJoE4zan/KN4LyJWTn/geNFE
- rKQUJdIDGkBgwU4kP0L0WqW8OUqDH81b5WG4qyJMUtrI1b/orH+JS5rTSRYx51BA2M4u
- UkuBR6mMbJlTiHfT5P+9Hd69amzQH4ydRkOJdkWl7N44noZlVvoHOyBfKYb2kJr3p60G
- fIBDw2umditHnAV0uB4ZTWf5ybDg4Xjmi3MhLicqs90lFFwA0F3GNaFIlihX8TQBOT5F
- lvxw==
-X-Gm-Message-State: AOJu0Yyw71snmXyiq2o5IXWgz0hG6iMHT+rqi9IzPOJCnUpL3icYTZqw
- /Yfo2/BzhvA9lEfC4CMn9nB7x6ARj4rmUE8u8Vtxz4bA1fVs+ja3uzlszaJhIoNSzXwVGfxnK5Z
- j
-X-Google-Smtp-Source: AGHT+IHSaCML1erTlBWTp535Xj99gR8/V4Mw6i8kmGQD/Kk3sTS0iEgIeGWWOPI29u18kD4paQphJQ==
-X-Received: by 2002:a17:902:c146:b0:1db:9a69:293d with SMTP id
- 6-20020a170902c14600b001db9a69293dmr7412480plj.24.1709827405287; 
- Thu, 07 Mar 2024 08:03:25 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709827460; x=1710432260;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=1aXRP2KVTe35bDOq459aCYA3XDBPGwRmCn+nfWu9Dtg=;
+ b=U0HbA+HGZjaEz7AMvVLtqxe/aN0yL1QRSUwdpjhdcYhY0WtUtAn8/VW2xBDnjR13I/
+ iP08p0YhcXYtaL9OsAZfBoRuaemk7FlvC8jAq21+dBkN9MLvZ131S5DFJLnwVHcIZgUH
+ QvGjQebfstYkB3DTWGIhQpC+5JcS5dt0zQ9ATdPlhBCGqa+kyvonuwdlaa9rih7Wlg6G
+ OYjhoFgwrXHaYkebwbJjGWIriIPFzTIUCe6ldhFuXYkz95xBxaemRj43zyPUX+NiS7wm
+ TeMm6EDb+YmtL1UprvR7mxo1XnsvPnw/TrJHZBVwPF+VBDo5y+z5BRph2p7Az8CfSPMG
+ vicA==
+X-Gm-Message-State: AOJu0YzR/Z6Quqye2mVEHxaj2Jievi7rOf1ENx9lm0J5nXKIKJPU8L+1
+ rEzKuIBLpzz3EpKS0Jf/S1R0ZdPqlCly1oUxnIxTJ/0YS3rudYrFt1HOP/UHKBpcoT29oB/bStu
+ d
+X-Google-Smtp-Source: AGHT+IGoFS2MF0reIo/AKEmeI92FN3H728A+uxneGTTHUYFyLi7GdBPRQBQNqP0YBROznPlPMSgQKQ==
+X-Received: by 2002:a17:902:7c92:b0:1dc:cc09:ebad with SMTP id
+ y18-20020a1709027c9200b001dccc09ebadmr6875109pll.28.1709827459524; 
+ Thu, 07 Mar 2024 08:04:19 -0800 (PST)
 Received: from grind.dc1.ventanamicro.com ([177.94.15.159])
  by smtp.gmail.com with ESMTPSA id
- u11-20020a170903124b00b001db2b8b2da7sm14663136plh.122.2024.03.07.08.03.22
+ u11-20020a170903124b00b001db2b8b2da7sm14663136plh.122.2024.03.07.08.04.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 Mar 2024 08:03:24 -0800 (PST)
+ Thu, 07 Mar 2024 08:04:19 -0800 (PST)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- ajones@ventanamicro.com, tjeznach@rivosinc.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v2 00/15] riscv: QEMU RISC-V IOMMU Support
-Date: Thu,  7 Mar 2024 13:03:03 -0300
-Message-ID: <20240307160319.675044-1-dbarboza@ventanamicro.com>
+ ajones@ventanamicro.com, tjeznach@rivosinc.com
+Subject: [PATCH v2 15/15] hw/misc: EDU: add ATS/PRI capability
+Date: Thu,  7 Mar 2024 13:03:18 -0300
+Message-ID: <20240307160319.675044-16-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240307160319.675044-1-dbarboza@ventanamicro.com>
+References: <20240307160319.675044-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,99 +96,375 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+From: Tomasz Jeznach <tjeznach@rivosinc.com>
 
-This is the second version of the work Tomasz sent in July 2023 [1].
-I'll be helping Tomasz upstreaming it. 
+Mimic ATS interface with IOMMU translate request with IOMMU_NONE.  If
+mapping exists, translation service will return current permission
+flags, otherwise will report no permissions.
 
-The core emulation code is left unchanged but a few tweaks were made in
-v2:
+Implement and register the IOMMU memory region listener to be notified
+whenever an ATS invalidation request is sent from the IOMMU.
 
-- The most notable difference in this version is that the code was split
-  in smaller chunks. Patch 03 is still a 1700 lines patch, which is an
-  improvement from the 3800 lines patch from v1, but we can only go so
-  far when splitting the core components of the emulation. The reality
-  is that the IOMMU emulation is a rather complex piece of software and
-  there's not much we can do to alleviate it;
+Implement and register the IOMMU memory region listener to be notified
+whenever an ATS page request group response is triggered from the IOMMU.
 
-- I'm not contributing the HPM support that was present in v1. It shaved
-  off 600 lines of code from the series, which is already large enough
-  as is. We'll introduce HPM in later versions or as a follow-up;
+Introduces a retry mechanism to the timer design so that any page that's
+not available should be only accessed after the PRGR notification has
+been received.
 
-- The riscv-iommu-header.h header was also trimmed. I shaved it of 300
-  or so from it, all of them from definitions that the emulation isn't
-  using it. The header will be eventually be imported from the Linux
-  driver (not upstream yet), so for now we can live with a trimmed
-  header for the emulation usage alone;
+Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
+Signed-off-by: Sebastien Boeuf <seb@rivosinc.com>
+---
+ hw/misc/edu.c | 258 ++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 251 insertions(+), 7 deletions(-)
 
-- I added libqos tests for the riscv-iommu-pci device. The idea of these
-  tests is to give us more confidence in the emulation code;
-
-- 'edu' device support. The support was retrieved from Tomasz EDU branch
-  [2]. This device can then be used to test PCI passthrough to exercise
-  the IOMMU.
-
-
-Patches based on alistair/riscv-to-apply.next.
-
-v1 link: https://lore.kernel.org/qemu-riscv/cover.1689819031.git.tjeznach@rivosinc.com/
-
-[1] https://lore.kernel.org/qemu-riscv/cover.1689819031.git.tjeznach@rivosinc.com/
-[2] https://github.com/tjeznach/qemu.git, branch 'riscv_iommu_edu_impl'
-
-Andrew Jones (1):
-  hw/riscv/riscv-iommu: Add another irq for mrif notifications
-
-Daniel Henrique Barboza (2):
-  test/qtest: add riscv-iommu-pci tests
-  qtest/riscv-iommu-test: add init queues test
-
-Tomasz Jeznach (12):
-  exec/memtxattr: add process identifier to the transaction attributes
-  hw/riscv: add riscv-iommu-bits.h
-  hw/riscv: add RISC-V IOMMU base emulation
-  hw/riscv: add riscv-iommu-pci device
-  hw/riscv: add riscv-iommu-sys platform device
-  hw/riscv/virt.c: support for RISC-V IOMMU PCIDevice hotplug
-  hw/riscv/riscv-iommu: add Address Translation Cache (IOATC)
-  hw/riscv/riscv-iommu: add s-stage and g-stage support
-  hw/riscv/riscv-iommu: add ATS support
-  hw/riscv/riscv-iommu: add DBG support
-  hw/misc: EDU: added PASID support
-  hw/misc: EDU: add ATS/PRI capability
-
- hw/misc/edu.c                    |  297 ++++-
- hw/riscv/Kconfig                 |    4 +
- hw/riscv/meson.build             |    1 +
- hw/riscv/riscv-iommu-bits.h      |  407 ++++++
- hw/riscv/riscv-iommu-pci.c       |  173 +++
- hw/riscv/riscv-iommu-sys.c       |   93 ++
- hw/riscv/riscv-iommu.c           | 2085 ++++++++++++++++++++++++++++++
- hw/riscv/riscv-iommu.h           |  146 +++
- hw/riscv/trace-events            |   15 +
- hw/riscv/trace.h                 |    2 +
- hw/riscv/virt.c                  |   33 +-
- include/exec/memattrs.h          |    5 +
- include/hw/riscv/iommu.h         |   40 +
- meson.build                      |    1 +
- tests/qtest/libqos/meson.build   |    4 +
- tests/qtest/libqos/riscv-iommu.c |   79 ++
- tests/qtest/libqos/riscv-iommu.h |   96 ++
- tests/qtest/meson.build          |    1 +
- tests/qtest/riscv-iommu-test.c   |  234 ++++
- 19 files changed, 3704 insertions(+), 12 deletions(-)
- create mode 100644 hw/riscv/riscv-iommu-bits.h
- create mode 100644 hw/riscv/riscv-iommu-pci.c
- create mode 100644 hw/riscv/riscv-iommu-sys.c
- create mode 100644 hw/riscv/riscv-iommu.c
- create mode 100644 hw/riscv/riscv-iommu.h
- create mode 100644 hw/riscv/trace-events
- create mode 100644 hw/riscv/trace.h
- create mode 100644 include/hw/riscv/iommu.h
- create mode 100644 tests/qtest/libqos/riscv-iommu.c
- create mode 100644 tests/qtest/libqos/riscv-iommu.h
- create mode 100644 tests/qtest/riscv-iommu-test.c
-
+diff --git a/hw/misc/edu.c b/hw/misc/edu.c
+index 522cec85b3..f4f6c15ec6 100644
+--- a/hw/misc/edu.c
++++ b/hw/misc/edu.c
+@@ -45,6 +45,14 @@ DECLARE_INSTANCE_CHECKER(EduState, EDU,
+ #define DMA_START       0x40000
+ #define DMA_SIZE        4096
+ 
++/*
++ * Number of tries before giving up on page request group response.
++ * Given the timer callback is scheduled to be run again after 100ms,
++ * 10 tries give roughly a second for the PRGR notification to be
++ * received.
++ */
++#define NUM_TRIES       10
++
+ struct EduState {
+     PCIDevice pdev;
+     MemoryRegion mmio;
+@@ -55,6 +63,7 @@ struct EduState {
+     bool stopping;
+ 
+     bool enable_pasid;
++    uint32_t try;
+ 
+     uint32_t addr4;
+     uint32_t fact;
+@@ -81,6 +90,20 @@ struct EduState {
+     QEMUTimer dma_timer;
+     char dma_buf[DMA_SIZE];
+     uint64_t dma_mask;
++
++    MemoryListener iommu_listener;
++    QLIST_HEAD(, edu_iommu) iommu_list;
++
++    bool prgr_rcvd;
++    bool prgr_success;
++};
++
++struct edu_iommu {
++    EduState *edu;
++    IOMMUMemoryRegion *iommu_mr;
++    hwaddr iommu_offset;
++    IOMMUNotifier n;
++    QLIST_ENTRY(edu_iommu) iommu_next;
+ };
+ 
+ static bool edu_msi_enabled(EduState *edu)
+@@ -136,11 +159,65 @@ static dma_addr_t edu_clamp_addr(const EduState *edu, dma_addr_t addr)
+     return res;
+ }
+ 
++static bool __find_iommu_mr_cb(Int128 start, Int128 len, const MemoryRegion *mr,
++    hwaddr offset_in_region, void *opaque)
++{
++    IOMMUMemoryRegion **iommu_mr = opaque;
++    *iommu_mr = memory_region_get_iommu((MemoryRegion *)mr);
++    return *iommu_mr != NULL;
++}
++
++static int pci_dma_perm(PCIDevice *pdev, dma_addr_t iova, MemTxAttrs attrs)
++{
++    IOMMUMemoryRegion *iommu_mr = NULL;
++    IOMMUMemoryRegionClass *imrc;
++    int iommu_idx;
++    FlatView *fv;
++    EduState *edu = EDU(pdev);
++    struct edu_iommu *iommu;
++
++    RCU_READ_LOCK_GUARD();
++
++    fv = address_space_to_flatview(pci_get_address_space(pdev));
++
++    /* Find first IOMMUMemoryRegion */
++    flatview_for_each_range(fv, __find_iommu_mr_cb, &iommu_mr);
++
++    if (iommu_mr) {
++        imrc = memory_region_get_iommu_class_nocheck(iommu_mr);
++
++        /* IOMMU Index is mapping to memory attributes (PASID, etc) */
++        iommu_idx = imrc->attrs_to_index ?
++                    imrc->attrs_to_index(iommu_mr, attrs) : 0;
++
++        /* Update IOMMU notifiers with proper index */
++        QLIST_FOREACH(iommu, &edu->iommu_list, iommu_next) {
++            if (iommu->iommu_mr == iommu_mr &&
++                iommu->n.iommu_idx != iommu_idx) {
++                memory_region_unregister_iommu_notifier(
++                    MEMORY_REGION(iommu->iommu_mr), &iommu->n);
++                iommu->n.iommu_idx = iommu_idx;
++                memory_region_register_iommu_notifier(
++                    MEMORY_REGION(iommu->iommu_mr), &iommu->n, NULL);
++            }
++        }
++
++        /* Translate request with IOMMU_NONE is an ATS request */
++        IOMMUTLBEntry iotlb = imrc->translate(iommu_mr, iova, IOMMU_NONE,
++                                              iommu_idx);
++
++        return iotlb.perm;
++    }
++
++    return IOMMU_NONE;
++}
++
+ static void edu_dma_timer(void *opaque)
+ {
+     EduState *edu = opaque;
+     bool raise_irq = false;
+     MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
++    MemTxResult res;
+ 
+     if (!(edu->dma.cmd & EDU_DMA_RUN)) {
+         return;
+@@ -155,18 +232,70 @@ static void edu_dma_timer(void *opaque)
+ 
+     if (EDU_DMA_DIR(edu->dma.cmd) == EDU_DMA_FROM_PCI) {
+         uint64_t dst = edu->dma.dst;
++        uint64_t src = edu_clamp_addr(edu, edu->dma.src);
+         edu_check_range(dst, edu->dma.cnt, DMA_START, DMA_SIZE);
+         dst -= DMA_START;
+-        pci_dma_rw(&edu->pdev, edu_clamp_addr(edu, edu->dma.src),
+-                edu->dma_buf + dst, edu->dma.cnt,
+-                DMA_DIRECTION_TO_DEVICE, attrs);
++        if (edu->try-- == NUM_TRIES) {
++            edu->prgr_rcvd = false;
++            if (!(pci_dma_perm(&edu->pdev, src, attrs) & IOMMU_RO)) {
++                timer_mod(&edu->dma_timer,
++                          qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + 100);
++                return;
++            }
++        } else if (edu->try) {
++            if (!edu->prgr_rcvd) {
++                timer_mod(&edu->dma_timer,
++                          qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + 100);
++                return;
++            }
++            if (!edu->prgr_success) {
++                /* PRGR failure, fail DMA. */
++                edu->dma.cmd &= ~EDU_DMA_RUN;
++                return;
++            }
++        } else {
++            /* timeout, fail DMA. */
++            edu->dma.cmd &= ~EDU_DMA_RUN;
++            return;
++        }
++        res = pci_dma_rw(&edu->pdev, src, edu->dma_buf + dst, edu->dma.cnt,
++            DMA_DIRECTION_TO_DEVICE, attrs);
++        if (res != MEMTX_OK) {
++            hw_error("EDU: DMA transfer TO 0x%"PRIx64" failed.\n", dst);
++        }
+     } else {
+         uint64_t src = edu->dma.src;
++        uint64_t dst = edu_clamp_addr(edu, edu->dma.dst);
+         edu_check_range(src, edu->dma.cnt, DMA_START, DMA_SIZE);
+         src -= DMA_START;
+-        pci_dma_rw(&edu->pdev, edu_clamp_addr(edu, edu->dma.dst),
+-                edu->dma_buf + src, edu->dma.cnt,
+-                DMA_DIRECTION_FROM_DEVICE, attrs);
++        if (edu->try-- == NUM_TRIES) {
++            edu->prgr_rcvd = false;
++            if (!(pci_dma_perm(&edu->pdev, dst, attrs) & IOMMU_WO)) {
++                timer_mod(&edu->dma_timer,
++                          qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + 100);
++                return;
++            }
++        } else if (edu->try) {
++            if (!edu->prgr_rcvd) {
++                timer_mod(&edu->dma_timer,
++                          qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + 100);
++                return;
++            }
++            if (!edu->prgr_success) {
++                /* PRGR failure, fail DMA. */
++                edu->dma.cmd &= ~EDU_DMA_RUN;
++                return;
++            }
++        } else {
++            /* timeout, fail DMA. */
++            edu->dma.cmd &= ~EDU_DMA_RUN;
++            return;
++        }
++        res = pci_dma_rw(&edu->pdev, dst, edu->dma_buf + src, edu->dma.cnt,
++            DMA_DIRECTION_FROM_DEVICE, attrs);
++        if (res != MEMTX_OK) {
++            hw_error("EDU: DMA transfer FROM 0x%"PRIx64" failed.\n", src);
++        }
+     }
+ 
+     edu->dma.cmd &= ~EDU_DMA_RUN;
+@@ -193,6 +322,7 @@ static void dma_rw(EduState *edu, bool write, dma_addr_t *val, dma_addr_t *dma,
+     }
+ 
+     if (timer) {
++        edu->try = NUM_TRIES;
+         timer_mod(&edu->dma_timer, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + 100);
+     }
+ }
+@@ -376,9 +506,92 @@ static void *edu_fact_thread(void *opaque)
+     return NULL;
+ }
+ 
++static void edu_iommu_ats_prgr_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
++{
++    struct edu_iommu *iommu = container_of(n, struct edu_iommu, n);
++    EduState *edu = iommu->edu;
++    edu->prgr_success = (iotlb->perm != IOMMU_NONE);
++    barrier();
++    edu->prgr_rcvd = true;
++}
++
++static void edu_iommu_ats_inval_notify(IOMMUNotifier *n,
++                                       IOMMUTLBEntry *iotlb)
++{
++
++}
++
++static void edu_iommu_region_add(MemoryListener *listener,
++                                   MemoryRegionSection *section)
++{
++    EduState *edu = container_of(listener, EduState, iommu_listener);
++    struct edu_iommu *iommu;
++    Int128 end;
++    int iommu_idx;
++    IOMMUMemoryRegion *iommu_mr;
++
++    if (!memory_region_is_iommu(section->mr)) {
++        return;
++    }
++
++    iommu_mr = IOMMU_MEMORY_REGION(section->mr);
++
++    /* Register ATS.INVAL notifier */
++    iommu = g_malloc0(sizeof(*iommu));
++    iommu->iommu_mr = iommu_mr;
++    iommu->iommu_offset = section->offset_within_address_space -
++                          section->offset_within_region;
++    iommu->edu = edu;
++    end = int128_add(int128_make64(section->offset_within_region),
++                     section->size);
++    end = int128_sub(end, int128_one());
++    iommu_idx = memory_region_iommu_attrs_to_index(iommu_mr,
++                                                   MEMTXATTRS_UNSPECIFIED);
++    iommu_notifier_init(&iommu->n, edu_iommu_ats_inval_notify,
++                        IOMMU_NOTIFIER_DEVIOTLB_UNMAP,
++                        section->offset_within_region,
++                        int128_get64(end),
++                        iommu_idx);
++    memory_region_register_iommu_notifier(section->mr, &iommu->n, NULL);
++    QLIST_INSERT_HEAD(&edu->iommu_list, iommu, iommu_next);
++
++    /* Register ATS.PRGR notifier */
++    iommu = g_memdup2(iommu, sizeof(*iommu));
++    iommu_notifier_init(&iommu->n, edu_iommu_ats_prgr_notify,
++                        IOMMU_NOTIFIER_MAP,
++                        section->offset_within_region,
++                        int128_get64(end),
++                        iommu_idx);
++    memory_region_register_iommu_notifier(section->mr, &iommu->n, NULL);
++    QLIST_INSERT_HEAD(&edu->iommu_list, iommu, iommu_next);
++}
++
++static void edu_iommu_region_del(MemoryListener *listener,
++                                   MemoryRegionSection *section)
++{
++    EduState *edu = container_of(listener, EduState, iommu_listener);
++    struct edu_iommu *iommu;
++
++    if (!memory_region_is_iommu(section->mr)) {
++        return;
++    }
++
++    QLIST_FOREACH(iommu, &edu->iommu_list, iommu_next) {
++        if (MEMORY_REGION(iommu->iommu_mr) == section->mr &&
++            iommu->n.start == section->offset_within_region) {
++            memory_region_unregister_iommu_notifier(section->mr,
++                                                    &iommu->n);
++            QLIST_REMOVE(iommu, iommu_next);
++            g_free(iommu);
++            break;
++        }
++    }
++}
++
+ static void pci_edu_realize(PCIDevice *pdev, Error **errp)
+ {
+     EduState *edu = EDU(pdev);
++    AddressSpace *dma_as = NULL;
+     uint8_t *pci_conf = pdev->config;
+     int pos;
+ 
+@@ -390,9 +603,28 @@ static void pci_edu_realize(PCIDevice *pdev, Error **errp)
+     pos = PCI_CONFIG_SPACE_SIZE;
+     if (edu->enable_pasid) {
+         /* PCIe Spec 7.8.9 PASID Extended Capability Structure */
+-        pcie_add_capability(pdev, 0x1b, 1, pos, 8);
++        pcie_add_capability(pdev, PCI_EXT_CAP_ID_PASID, 1, pos, 8);
+         pci_set_long(pdev->config + pos + 4, 0x00001400);
+         pci_set_long(pdev->wmask + pos + 4,  0xfff0ffff);
++        pos += 8;
++
++        /* ATS Capability */
++        pcie_ats_init(pdev, pos, true);
++        pos += PCI_EXT_CAP_ATS_SIZEOF;
++
++        /* PRI Capability */
++        pcie_add_capability(pdev, PCI_EXT_CAP_ID_PRI, 1, pos, 16);
++        /* PRI STOPPED */
++        pci_set_long(pdev->config + pos +  4, 0x01000000);
++        /* PRI ENABLE bit writable */
++        pci_set_long(pdev->wmask  + pos +  4, 0x00000001);
++        /* PRI Capacity Supported */
++        pci_set_long(pdev->config + pos +  8, 0x00000080);
++        /* PRI Allocations Allowed, 32 */
++        pci_set_long(pdev->config + pos + 12, 0x00000040);
++        pci_set_long(pdev->wmask  + pos + 12, 0x0000007f);
++
++        pos += 8;
+     }
+ 
+     if (msi_init(pdev, 0, 1, true, false, errp)) {
+@@ -409,12 +641,24 @@ static void pci_edu_realize(PCIDevice *pdev, Error **errp)
+     memory_region_init_io(&edu->mmio, OBJECT(edu), &edu_mmio_ops, edu,
+                     "edu-mmio", 1 * MiB);
+     pci_register_bar(pdev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY, &edu->mmio);
++
++    /* Register IOMMU listener */
++    edu->iommu_listener = (MemoryListener) {
++        .name = "edu-iommu",
++        .region_add = edu_iommu_region_add,
++        .region_del = edu_iommu_region_del,
++    };
++
++    dma_as = pci_device_iommu_address_space(pdev);
++    memory_listener_register(&edu->iommu_listener, dma_as);
+ }
+ 
+ static void pci_edu_uninit(PCIDevice *pdev)
+ {
+     EduState *edu = EDU(pdev);
+ 
++    memory_listener_unregister(&edu->iommu_listener);
++
+     qemu_mutex_lock(&edu->thr_mutex);
+     edu->stopping = true;
+     qemu_mutex_unlock(&edu->thr_mutex);
 -- 
 2.43.2
 
