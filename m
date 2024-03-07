@@ -4,74 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2115C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 12:50:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46189C54798
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 12:57:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riDCE-0008KX-Sd; Thu, 07 Mar 2024 07:50:03 -0500
+	id 1riDHf-0001jP-BC; Thu, 07 Mar 2024 07:55:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1riDC4-0008Gu-Nf
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 07:49:54 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1riDC0-0002oo-CG
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 07:49:51 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-55a5e7fa471so1243348a12.1
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 04:49:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709815786; x=1710420586; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=zJ7VaqbJclpxZItJ5O2/a9RjPhH7hcEalo9E3OydZ4M=;
- b=xuZUiDuQA+u3xFAYoRA3vwSBrKDdo01chT8dd/TOShkuZYgEvwpc/ErkYJ6pJLNU+U
- zNYdGwnLbjy6b10JQ8ZNhpvZUWyeL1EWscND59X6OB3c5OMS/SaYXJgoUa3a29EksuZY
- H+GZeuO4HHUmn5FBgkourQ93ANandX1BBBm0MgbrTljxZWcJqvpLIFJpd6Hc11b2lksw
- 5CDZUKspy1/AFVzaBnVuht7PKQdoCzoLAOaQr7oOxR4IbZZmBGOIA5Kdoi8nJeA1a40J
- MKI/bye3627si6tteIqZCzQHTq3O34samvbp3hyLC8qQEnzAMI3eqWEpogsvGisTavQf
- 9ixg==
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1riDHZ-0001ib-So
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 07:55:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1riDHX-0004w1-Jh
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 07:55:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709816130;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=at8BC76ZbcOCvnYmCuLdtC1vcmwWzolgXKE7VcZPyGU=;
+ b=WZjlTrL+Oi2y59ddJ/Uu7svgZ9+yOhnZ4iBf1W7J4045lwWjHiiKGFXIVptEIsIzaXgxyN
+ bQOhQcaE507nPbt7OLOYjAcDG7aO7b1BsVonr3TlKJZ0ymMChvpVPpSlijR/W988drxqxz
+ FHJhdfDcaTX211nkTlpSfOkDt6tabkA=
+Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com
+ [209.85.167.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-437-uo24iBwHN-afw54KqhjD4A-1; Thu, 07 Mar 2024 07:55:28 -0500
+X-MC-Unique: uo24iBwHN-afw54KqhjD4A-1
+Received: by mail-oi1-f197.google.com with SMTP id
+ 5614622812f47-3bbaf0ee0d9so811288b6e.1
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 04:55:28 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709815786; x=1710420586;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1709816126; x=1710420926;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=zJ7VaqbJclpxZItJ5O2/a9RjPhH7hcEalo9E3OydZ4M=;
- b=jYToCGM+rZuNdlH43NdddmU5ec/wCLB6UpBCMROMPEchjN2kYHtWovCQdl8ZhbI2VI
- tX7TEe3h8agbMC4CpFw+Y5o3GL48pBj1ufbaAkXOxPEX92CE2eeOX8zP8GCtzcDMmyn9
- CPIfK4XZokALlIDo25fk5CHrik5zDeelSA2RBmbLrLN2fA1Zzqtzic5aeBIf4jQ5uZSB
- PqK9Redod6tPjiFyn2kN5WYtTm6KpuvBE2ltfwGTYegD4pMmQ1qRUFEuZO90yU6bkrCJ
- BP67wFT7HXiHNWxcU1QeEbIZhEGim1M/vM7zuKQvmO04RIz/TpvnZnfXBsGb4e5xYKw1
- oalQ==
-X-Gm-Message-State: AOJu0Yzs99J6qrCpPbvRJcgbq3dIfjOM7fZQAQE4/D0+gMEFiXzNKtLQ
- /mwvA4A+AjUAFQv7ONf9wo7/veTgJBahY1EhGeZuHHwE5WMcRer78yiwoqxfZyosTuE3sL74iKi
- JJYwh4qGXeOaR1BK/TP080Kfz6Cp5JUYjYci6bg==
-X-Google-Smtp-Source: AGHT+IHMUAgvIJdRNuiXI5k3LnNcfr1/KeQ8j8HSLqSLlfszZFhW6G4nztrbntuSJA3j5n7OSx9nKupFRKb+A3T5zYA=
-X-Received: by 2002:a05:6402:8d1:b0:567:fb9b:37d5 with SMTP id
- d17-20020a05640208d100b00567fb9b37d5mr2280052edz.32.1709815786335; Thu, 07
- Mar 2024 04:49:46 -0800 (PST)
+ bh=at8BC76ZbcOCvnYmCuLdtC1vcmwWzolgXKE7VcZPyGU=;
+ b=pceZdYEOuIzvoWXDwMQ5OZsjiBz82njOpAy3d9tGEnEcIj/H35wGwAXZsp3FFGc1QY
+ nzCjyo/ZrBCXkuvmCuiFo1QwwPXG+htLxdUtdEUohX2hnFfpeoYtspUwfQ8gSzqw0dgm
+ kWqMN9AV4aafYRLyKsws11ksJRU4MMnIwB37H+g0txPqmd7bb33LDV99i0/I0vsEOLw7
+ 5YxWWXvnrR29JO1cJZzLXnawBOKkwgncC6EX7bnN6IySA2YUeLWeLhnkHN6MzzW3a2eE
+ FUUKid2KR3q/OQ0K09qxPn9CLNRjcziD/0Gne0m8rZ13bYKRLcDy5r0qtM6UYuQ1gRgp
+ RTsQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVjbTYPzIdzhHI6OuqsxyxqaRqr2xjrmSb+rW8+1tTiGkx6I8QJ3KlhQutdjzqvA8g6DcthU/HArhn2uus0mLvShEPYfbs=
+X-Gm-Message-State: AOJu0YwtzPTQYPkLUdisxPPXO7ycjcpdn8h0UT4bMjEXVgtOP3J9khMU
+ 5rWxNAHSOcp8gzpECjsqWfDELWbQoX5Faj3LPBZPZN1IL5nQV8VVBlrn5RU7bjvDbrsqD7Sb70U
+ ujvf5h9a7oEdGjIx0ZDZxBqXaPC8L+ZlqSnvHPU4xr9TjaJ4F+FNT
+X-Received: by 2002:a05:6808:634c:b0:3c1:c8fb:89f9 with SMTP id
+ eb12-20020a056808634c00b003c1c8fb89f9mr7526145oib.39.1709816126417; 
+ Thu, 07 Mar 2024 04:55:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH56NG/TchSst+ygxKgGqdok3zc30lHjLaOpFlHLmVemFO9i0I266u1rapCbapRiG2YfRT+nA==
+X-Received: by 2002:a05:6808:634c:b0:3c1:c8fb:89f9 with SMTP id
+ eb12-20020a056808634c00b003c1c8fb89f9mr7526132oib.39.1709816126006; 
+ Thu, 07 Mar 2024 04:55:26 -0800 (PST)
+Received: from localhost.localdomain ([116.73.135.231])
+ by smtp.googlemail.com with ESMTPSA id
+ x7-20020a626307000000b006e624f5c866sm7288282pfb.145.2024.03.07.04.55.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 07 Mar 2024 04:55:25 -0800 (PST)
+From: Ani Sinha <anisinha@redhat.com>
+To: Ani Sinha <anisinha@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-trivial@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH] docs/acpi/bits: add some clarity and details and improve
+ formating
+Date: Thu,  7 Mar 2024 18:25:18 +0530
+Message-ID: <20240307125518.6268-1-anisinha@redhat.com>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
-References: <20240305163931.242795-1-richard.henderson@linaro.org>
-In-Reply-To: <20240305163931.242795-1-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 7 Mar 2024 12:49:35 +0000
-Message-ID: <CAFEAcA-uhJy2jVyNqc=774bW70-FByPOXVJoQUH5jw-aAS2YcA@mail.gmail.com>
-Subject: Re: [PATCH v2] target/arm: Fix 32-bit SMOPA
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -11
+X-Spam_score: -1.2
+X-Spam_bar: -
+X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.583,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,24 +102,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 5 Mar 2024 at 16:39, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> While the 8-bit input elements are sequential in the input vector,
-> the 32-bit output elements are not sequential in the output matrix.
-> Do not attempt to compute 2 32-bit outputs at the same time.
->
-> Cc: qemu-stable@nongnu.org
-> Fixes: 23a5e3859f5 ("target/arm: Implement SME integer outer product")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2083
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->
-> v2: Fixed endian issue; double-checked on s390x.
->
+Update bios-bits docs to add more details on why a pre-OS environment for
+testing bioses is useful. Add author's FOSDEM talk link.
 
+CC: qemu-trivial@nongnu.org
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
+---
+ docs/devel/acpi-bits.rst | 55 ++++++++++++++++++++++++++++------------
+ 1 file changed, 39 insertions(+), 16 deletions(-)
 
-Applied to target-arm.next, thanks.
+diff --git a/docs/devel/acpi-bits.rst b/docs/devel/acpi-bits.rst
+index 9677b0098f..1ec394f5fb 100644
+--- a/docs/devel/acpi-bits.rst
++++ b/docs/devel/acpi-bits.rst
+@@ -1,26 +1,48 @@
+ =============================================================================
+ ACPI/SMBIOS avocado tests using biosbits
+ =============================================================================
+-
++************
++Introduction
++************
+ Biosbits is a software written by Josh Triplett that can be downloaded
+ from https://biosbits.org/. The github codebase can be found
+-`here <https://github.com/biosbits/bits/tree/master>`__. It is a software that executes
+-the bios components such as acpi and smbios tables directly through acpica
+-bios interpreter (a freely available C based library written by Intel,
++`here <https://github.com/biosbits/bits/tree/master>`__. It is a software that
++executes the bios components such as acpi and smbios tables directly through
++acpica bios interpreter (a freely available C based library written by Intel,
+ downloadable from https://acpica.org/ and is included with biosbits) without an
+-operating system getting involved in between.
++operating system getting involved in between. Bios-bits has python integration
++with grub so actual routines that executes bios components can be written in
++python instead of bash-ish (grub's native scripting language).
+ There are several advantages to directly testing the bios in a real physical
+-machine or VM as opposed to indirectly discovering bios issues through the
+-operating system. For one thing, the OSes tend to hide bios problems from the
+-end user. The other is that we have more control of what we wanted to test
+-and how by directly using acpica interpreter on top of the bios on a running
+-system. More details on the inspiration for developing biosbits and its real
+-life uses can be found in [#a]_ and [#b]_.
++machine or in a VM as opposed to indirectly discovering bios issues through the
++operating system (the OS). Operating systems tend to bypass bios problems and
++hide them from the end user. We have more control of what we wanted to test and
++how by being as close to the bios on a running system as possible without a
++complicated software component such as an operating system coming in between.
++Another issue is that we cannot exercise bios components such as ACPI and
++SMBIOS without being in the highest hardware privilege level, ring 0 for
++example in case of x86. Since the OS executes from ring 0 whereas normal user
++land software resides in unprivileged ring 3, operating system must be modified
++in order to write our test routines that exercise and test the bios. This is
++not possible in all cases. Lastly, test frameworks and routines are preferably
++written using a high level scripting language such as python. OSes and
++OS modules are generally written using low level languages such as C and
++low level assembly machine language. Writing test routines in a low level
++language makes things more cumbersome. These and other reasons makes using
++bios-bits very attractive for testing bioses. More details on the inspiration
++for developing biosbits and its real life uses can be found in [#a]_ and [#b]_.
++
+ For QEMU, we maintain a fork of bios bits in gitlab along with all the
+-dependent submodules here: https://gitlab.com/qemu-project/biosbits-bits
++dependent submodules `here <https://gitlab.com/qemu-project/biosbits-bits>`__.
+ This fork contains numerous fixes, a newer acpica and changes specific to
+ running this avocado QEMU tests using bits. The author of this document
+-is the sole maintainer of the QEMU fork of bios bits repo.
++is the sole maintainer of the QEMU fork of bios bits repository. For more
++information, please see author's `FOSDEM talk on this bios-bits based test
++framework <https://fosdem.org/2024/schedule/event/fosdem-2024-2262-exercising-qemu-generated-acpi-smbios-tables-using-biosbits-from-within-a-guest-vm-/>`__.
++
++*********************************
++Description of the test framework
++*********************************
+ 
+ Under the directory ``tests/avocado/``, ``acpi-bits.py`` is a QEMU avocado
+ test that drives all this.
+@@ -120,8 +142,9 @@ Under ``tests/avocado/`` as the root we have:
+        (b) Add a SPDX license header.
+        (c) Perform modifications to the test.
+ 
+-   Commits (a), (b) and (c) should go under separate commits so that the original
+-   test script and the changes we have made are separated and clear.
++   Commits (a), (b) and (c) preferably should go under separate commits so that
++   the original test script and the changes we have made are separated and
++   clear. (a) and (b) can sometimes be combined into a single step.
+ 
+    The test framework will then use your modified test script to run the test.
+    No further changes would be needed. Please check the logs to make sure that
+@@ -141,4 +164,4 @@ References:
+ -----------
+ .. [#a] https://blog.linuxplumbersconf.org/2011/ocw/system/presentations/867/original/bits.pdf
+ .. [#b] https://www.youtube.com/watch?v=36QIepyUuhg
+-
++.. [#c] https://fosdem.org/2024/schedule/event/fosdem-2024-2262-exercising-qemu-generated-acpi-smbios-tables-using-biosbits-from-within-a-guest-vm-/
+-- 
+2.42.0
 
--- PMM
 
