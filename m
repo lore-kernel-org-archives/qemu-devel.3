@@ -4,86 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6C2EC54E58
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99DECC54E4A
 	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 18:48:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riIlv-00008P-AL; Thu, 07 Mar 2024 13:47:15 -0500
+	id 1riImA-00009c-IW; Thu, 07 Mar 2024 13:47:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1riIlq-00005N-Pq
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 13:47:12 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1riIll-0006QU-6E
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 13:47:10 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-412f62edf25so9102665e9.3
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 10:47:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709837220; x=1710442020; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=N8Qz1x9clynGqowTz32C3Vm9jSdmorRYF1B/gnKBtaQ=;
- b=snUK9C8k5jSSixxw5LEZkl/XsUjgh4jfU6EY8uwP82Wx/+8FzOqZa9QKV6QpgQ+SfH
- Bt/QzfdUFjelVibEcMQUALBpcyukaecUNQTmCqsICIWk5m4QQkO9rSINSEkWjZz3U4jJ
- 0vqX/XPE/n+7lGiwncUyO7wAstV19QbLuH6SWHzpaDko1mYDZA8NOscveCJEwJJqnv5w
- hXf1GuA2BniRYeK6wNZjLQYijg1EbghufoPncSOXIC2BPHLaTPtt2bY88IDYT1nNfVbS
- xWGFoxIZ4gZeh620KdXMHfeJLTBy7YWPinS9MzcR4EdCNH0IWOc2neMIMx4lpfkI7odD
- TZFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709837220; x=1710442020;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=N8Qz1x9clynGqowTz32C3Vm9jSdmorRYF1B/gnKBtaQ=;
- b=l3TINozRx5SvN9qd0fqNu/YM2dbvBBmNGizLXtfFUxUAXODUyei2EtSjRiKRptgvfw
- Ki9ko3DrIRi8P3ImQaD3uxfTBonRtJ/0M4Bk9n/HJ3bZlHpE2RCdPnmB3NMZdIaM3Fsj
- 4uxYtuPUXsS48fFKojuqCTg6ZvLGztMc7Enp0cJfDL08JRZ6SNJc/OgDnhfBQR7gz4yN
- K7THbv8Z+e3lBSWUfV3Yv3KDlQnylPXzjjVKYZZZP5j0hWl6M0n9Tz+VXyXvgWWLBTWf
- CUzw5ohoO7gVj1/gxTYi+luzadHvE65uPKKv6e6LSfczSPi3RcRVzyLmftydyyGnV+vL
- JXDA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXUXILGeB9v3Yu0XQtLxbX7pZ5nB3Jt97cfZlKRqVWsDkDa9MxZKhXGxqFVf2fYvVPt4rloGZRxSvwmS3YVCn2CMJku9qg=
-X-Gm-Message-State: AOJu0Yy8Qb9xoaUBFHXBcJFbxN7KsgkkPKvrlhskqKWFUI5bCR1PR8KN
- bsjUg+Mx6pCeU+96VxRZb17VIuoZMiGrJmH8AlNe1vDqCvFDmd0Rwphd5t4X8ig=
-X-Google-Smtp-Source: AGHT+IHAEhZMpnHD+zXbbvPpdzj4NPYMt2hmw0FvuWLWEJCfMUMoGrvgJTKaf8o+DIJggh2kfHGGtA==
-X-Received: by 2002:a05:600c:5185:b0:412:f6cd:ad8f with SMTP id
- fa5-20020a05600c518500b00412f6cdad8fmr4296215wmb.4.1709837220344; 
- Thu, 07 Mar 2024 10:47:00 -0800 (PST)
-Received: from [192.168.69.100] (pir44-h02-176-184-37-132.dsl.sta.abo.bbox.fr.
- [176.184.37.132]) by smtp.gmail.com with ESMTPSA id
- n12-20020a05600c3b8c00b00412f698af9esm3794450wms.17.2024.03.07.10.46.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 Mar 2024 10:46:59 -0800 (PST)
-Message-ID: <6368b121-7286-471f-8d22-7aa2bdd16a73@linaro.org>
-Date: Thu, 7 Mar 2024 19:46:58 +0100
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1riIlz-00009C-Vp
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 13:47:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1riIll-0006QB-AI
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 13:47:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709837219;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=MYyijcAL9CcydVCUK1c8IV7uW8HhtncdigbsWgKmzL4=;
+ b=AEocW2nr9nxae6vAAEVnAkOljvd9hVgUqA/p+NvoAuucA8ngG5Fric22FA3BCDmms6Hn7+
+ j4jRpsfNE1c4gq4SRM7HkaDWqt0KJxehieWrEEalQqcWKd+f39fFf5BGjpmjyAtCNQPrGZ
+ K/qeAyFXjkqJl7cQzAMDhEPAUZ3sjT0=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-195-HEuH7plxMAay-fcsbZsT8Q-1; Thu, 07 Mar 2024 13:46:57 -0500
+X-MC-Unique: HEuH7plxMAay-fcsbZsT8Q-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A5464185A786;
+ Thu,  7 Mar 2024 18:46:57 +0000 (UTC)
+Received: from omen.home.shazbot.org (unknown [10.22.8.4])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id C71DF17475;
+ Thu,  7 Mar 2024 18:46:56 +0000 (UTC)
+From: Alex Williamson <alex.williamson@redhat.com>
+To: mst@redhat.com,
+	marcel.apfelbaum@gmail.com
+Cc: Alex Williamson <alex.williamson@redhat.com>, qemu-devel@nongnu.org,
+ clg@redhat.com
+Subject: [PATCH] pci: Add option to disable device level INTx masking
+Date: Thu,  7 Mar 2024 11:46:42 -0700
+Message-ID: <20240307184645.104349-1-alex.williamson@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] target/sparc/cpu: Improve the CPU help text
-Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20240307174334.130407-1-thuth@redhat.com>
- <20240307174334.130407-4-thuth@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240307174334.130407-4-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=alex.williamson@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.583,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,19 +80,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/24 18:43, Thomas Huth wrote:
-> Remove the unnecessary "Sparc" at the beginning of the line and
-> put the chip information into parentheses so that it is clearer
-> which part of the line have to be passed to "-cpu" to specify a
-> different CPU.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2141
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   target/sparc/cpu.c | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
+The PCI 2.3 spec added definitions of the INTx disable and status bits,
+in the command and status registers respectively.  The command register
+bit, commonly known as DisINTx in lspci, controls whether the device
+can assert the INTx signal.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Operating systems will often write to this bit to test whether a device
+supports this style of legacy interrupt masking.  When using device
+assignment, such as with vfio-pci, the result of this test dictates
+whether the device can use a shared or exclusive interrupt (ie. generic
+INTx masking at the device via DisINTx or IRQ controller level INTx
+masking).
 
+Add an experimental option to the base set of properties for PCI
+devices which allows the DisINTx bit to be excluded from wmask, making
+it read-only to the guest for testing purposes related to INTx masking.
+
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+---
+ hw/pci/pci.c         | 14 ++++++++++----
+ include/hw/pci/pci.h |  2 ++
+ 2 files changed, 12 insertions(+), 4 deletions(-)
+
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 6496d027ca61..8c78326ad67f 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -85,6 +85,8 @@ static Property pci_props[] = {
+                     QEMU_PCIE_ERR_UNC_MASK_BITNR, true),
+     DEFINE_PROP_BIT("x-pcie-ari-nextfn-1", PCIDevice, cap_present,
+                     QEMU_PCIE_ARI_NEXTFN_1_BITNR, false),
++    DEFINE_PROP_BIT("x-pci-disintx", PCIDevice, cap_present,
++                    QEMU_PCI_DISINTX_BITNR, true),
+     DEFINE_PROP_END_OF_LIST()
+ };
+ 
+@@ -861,13 +863,17 @@ static void pci_init_cmask(PCIDevice *dev)
+ static void pci_init_wmask(PCIDevice *dev)
+ {
+     int config_size = pci_config_size(dev);
++    uint16_t cmd_wmask = PCI_COMMAND_IO | PCI_COMMAND_MEMORY |
++                         PCI_COMMAND_MASTER | PCI_COMMAND_SERR;
+ 
+     dev->wmask[PCI_CACHE_LINE_SIZE] = 0xff;
+     dev->wmask[PCI_INTERRUPT_LINE] = 0xff;
+-    pci_set_word(dev->wmask + PCI_COMMAND,
+-                 PCI_COMMAND_IO | PCI_COMMAND_MEMORY | PCI_COMMAND_MASTER |
+-                 PCI_COMMAND_INTX_DISABLE);
+-    pci_word_test_and_set_mask(dev->wmask + PCI_COMMAND, PCI_COMMAND_SERR);
++
++    if (dev->cap_present & QEMU_PCI_DISINTX) {
++        cmd_wmask |= PCI_COMMAND_INTX_DISABLE;
++    }
++
++    pci_set_word(dev->wmask + PCI_COMMAND, cmd_wmask);
+ 
+     memset(dev->wmask + PCI_CONFIG_HEADER_SIZE, 0xff,
+            config_size - PCI_CONFIG_HEADER_SIZE);
+diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+index eaa3fc99d884..45f0fac435cc 100644
+--- a/include/hw/pci/pci.h
++++ b/include/hw/pci/pci.h
+@@ -212,6 +212,8 @@ enum {
+     QEMU_PCIE_ERR_UNC_MASK = (1 << QEMU_PCIE_ERR_UNC_MASK_BITNR),
+ #define QEMU_PCIE_ARI_NEXTFN_1_BITNR 12
+     QEMU_PCIE_ARI_NEXTFN_1 = (1 << QEMU_PCIE_ARI_NEXTFN_1_BITNR),
++#define QEMU_PCI_DISINTX_BITNR 13
++    QEMU_PCI_DISINTX = (1 << QEMU_PCI_DISINTX_BITNR),
+ };
+ 
+ typedef struct PCIINTxRoute {
+-- 
+2.44.0
 
 
