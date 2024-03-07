@@ -4,65 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7447C54E49
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 11:48:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 427C5C54E49
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 11:49:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riCEC-0004KH-Ef; Thu, 07 Mar 2024 06:48:00 -0500
+	id 1riCFE-00058p-8M; Thu, 07 Mar 2024 06:49:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1riCEB-0004Jd-5X
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 06:47:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1riCE8-0008Jn-Md
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 06:47:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709812075;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=8kEblIqoELw8OFCFilnKCdt5cSamlEFc5dmGJYg/KDE=;
- b=MBmaZqmn2crgYPFYkJs93Tci3XQCfiUi9MEvXwfD4cWeZxXALjEAEUiEJZyWQfpEeDY5an
- KGc+d8CjQr7tg55M7unypy6HwS6fKU/RCIdWoeMfrDyBxXVx4+UwB4ziwjBN76d+Y8eB50
- zzga1/nCRjZyMsuYc/CehwZoyZZ9FTs=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-W1r_QzweOuqL21sh2t1rVg-1; Thu,
- 07 Mar 2024 06:47:52 -0500
-X-MC-Unique: W1r_QzweOuqL21sh2t1rVg-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 30F9928B6AA4;
- Thu,  7 Mar 2024 11:47:52 +0000 (UTC)
-Received: from kaapi.redhat.com (unknown [10.39.192.24])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 0793B17A96;
- Thu,  7 Mar 2024 11:47:49 +0000 (UTC)
-From: Prasad Pandit <ppandit@redhat.com>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Prasad Pandit <pjp@fedoraproject.org>
-Subject: [PATCH] linux-aio: add IO_CMD_FDSYNC command support
-Date: Thu,  7 Mar 2024 17:17:44 +0530
-Message-ID: <20240307114744.1135711-1-ppandit@redhat.com>
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1riCFB-00057Y-Sh
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 06:49:01 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1riCFA-0008Q2-B7
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 06:49:01 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-413131d40f4so1535025e9.3
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 03:48:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709812139; x=1710416939; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=G/SbbEMUCs/VycRuaZQyQX/2EumGC/JTHxyB6vdSb1o=;
+ b=qt5v3AjDbin5KRRelugwE7u1bl9j6wai4BnQbvaDpbub1yJQX8ZceL8gg5uvtQtuDY
+ 1/DXz1UCi4A/PgL86CK7rS2ON5aMB8fPIw1+GvKS9I5UqqqgwZSVkg03Fje88/YeEyCH
+ gL9zzCBYPk02pVSNksLmZwoVgxiiJttXTzB2LQG8ewMMXLCmHl2fgF3Msj2C1x39RUCy
+ puJJv3Rr3jsD9Oxv5LpLM175mXCAyEt8mCbp5MtoKOZbpoUPJnL2bJDjk/mtsaviu123
+ NVaoSLhPeENEl9IMH+vdjazDPtZ/lYhYZGMdzo+UZyI1ZhZo65LbPmLczijMu2qLK/ie
+ 0CBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709812139; x=1710416939;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=G/SbbEMUCs/VycRuaZQyQX/2EumGC/JTHxyB6vdSb1o=;
+ b=FjWnG+0Q5910ihTDHa9/M5L7o6AMc1V0q/b8pTrR7sqj1ygHBtcD0GDFqWMm5W0oaW
+ ZKvu2Th8N+SYZSW9ABg86bWuIrV42ERcJtpBBHw5UIZsEPvTg29dCoB+IZ2HjIvwf9/H
+ 1Zszof65V1SVoaI1wcJdMhooxl1UKmWEjqNV6OUMYesjCnbPwSWXbX5M95s8s3ayU78A
+ Ot0aRrlx0LDjkZjyww/kJXWyNUx5Kvv2bwy0uCQ0gY8eGzb8bvaTO5P1B3lIW5BUbIDD
+ rlgVS1XeRT5aOFZD3VDUVp/JWCec6ZpdiBDkSBxmsQYEqKFGwkFAgH/eAX9+5yS0hPZz
+ OSTw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVCuWHiMBvaK7aEP2AStQczgzgaUcw62g5ePUf12Yi+Z7wHAXYPzKQRDudqPcpcYT1Q7a3Dp6runA9V2hwvCBJZX4ig5S8=
+X-Gm-Message-State: AOJu0YyR7hFnRTVkZ+UPTuFABRKcrtMjYmy4lYk1INIip8TEB4mlfZtp
+ UGST3RGogspZ0ELKUjVUGPGJDp6ZXbYoUolHTYfXBdCxeYdhxafRdjHV2sbM83Y=
+X-Google-Smtp-Source: AGHT+IGkmoMw3a1DPayc7QnWHr4dDS3sIBh8SO1Tg4XHtfrHtXIYWWCQjxeTzAsb6sqGUSlj3ULtUw==
+X-Received: by 2002:a05:600c:3c86:b0:412:8d98:78a with SMTP id
+ bg6-20020a05600c3c8600b004128d98078amr14629463wmb.13.1709812138686; 
+ Thu, 07 Mar 2024 03:48:58 -0800 (PST)
+Received: from meli.delivery (adsl-101.109.242.224.tellas.gr.
+ [109.242.224.101]) by smtp.gmail.com with ESMTPSA id
+ fa18-20020a05600c519200b004130c1dc29csm2432000wmb.22.2024.03.07.03.48.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 07 Mar 2024 03:48:58 -0800 (PST)
+Date: Thu, 07 Mar 2024 13:46:27 +0200
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: qemu-arm@nongnu.org,
+ Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
+ David Woodhouse <dwmw@amazon.co.uk>, Thomas Huth <thuth@redhat.com>,
+ qemu-arm@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alex Benn=?UTF-8?B?w6k=?= e <alex.bennee@linaro.org>,
+ xen-devel@lists.xenproject.org,
+ Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH-for-9.0 2/9] hw/xen/hvm: Propagate page_mask to a pair of
+ functions
+User-Agent: meli 0.8.5-rc.3
+References: <20231114163123.74888-1-philmd@linaro.org>
+ <20231114163123.74888-3-philmd@linaro.org>
+In-Reply-To: <20231114163123.74888-3-philmd@linaro.org>
+Message-ID: <9z7hk.qddjfbvts5k7@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,62 +110,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Prasad Pandit <pjp@fedoraproject.org>
+On Tue, 14 Nov 2023 18:31, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>We are going to replace TARGET_PAGE_MASK by a
+>runtime variable. In order to reduce code duplication,
+>propagate TARGET_PAGE_MASK to get_physmapping() and
+>xen_phys_offset_to_gaddr().
+>
+>Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>---
+> hw/i386/xen/xen-hvm.c | 18 ++++++++++--------
+> 1 file changed, 10 insertions(+), 8 deletions(-)
+>
+>diff --git a/hw/i386/xen/xen-hvm.c b/hw/i386/xen/xen-hvm.c
+>index 8aa6a1ec3b..3b10425986 100644
+>--- a/hw/i386/xen/xen-hvm.c
+>+++ b/hw/i386/xen/xen-hvm.c
+>@@ -174,11 +174,12 @@ static void xen_ram_init(PCMachineState *pcms,
+>     }
+> }
+> 
+>-static XenPhysmap *get_physmapping(hwaddr start_addr, ram_addr_t size)
+>+static XenPhysmap *get_physmapping(hwaddr start_addr, ram_addr_t size,
+>+                                   int page_mask)
+> {
+>     XenPhysmap *physmap = NULL;
+> 
+>-    start_addr &= TARGET_PAGE_MASK;
+>+    start_addr &= page_mask;
+> 
+>     QLIST_FOREACH(physmap, &xen_physmap, list) {
+>         if (range_covers_byte(physmap->start_addr, physmap->size, start_addr)) {
+>@@ -188,9 +189,10 @@ static XenPhysmap *get_physmapping(hwaddr start_addr, ram_addr_t size)
+>     return NULL;
+> }
+> 
+>-static hwaddr xen_phys_offset_to_gaddr(hwaddr phys_offset, ram_addr_t size)
+>+static hwaddr xen_phys_offset_to_gaddr(hwaddr phys_offset, ram_addr_t size,
+>+                                       int page_mask)
+> {
+>-    hwaddr addr = phys_offset & TARGET_PAGE_MASK;
+>+    hwaddr addr = phys_offset & page_mask;
+>     XenPhysmap *physmap = NULL;
+> 
+>     QLIST_FOREACH(physmap, &xen_physmap, list) {
+>@@ -252,7 +254,7 @@ static int xen_add_to_physmap(XenIOState *state,
+>     hwaddr phys_offset = memory_region_get_ram_addr(mr);
+>     const char *mr_name;
+> 
+>-    if (get_physmapping(start_addr, size)) {
+>+    if (get_physmapping(start_addr, size, TARGET_PAGE_MASK)) {
+>         return 0;
+>     }
+>     if (size <= 0) {
+>@@ -325,7 +327,7 @@ static int xen_remove_from_physmap(XenIOState *state,
+>     XenPhysmap *physmap = NULL;
+>     hwaddr phys_offset = 0;
+> 
+>-    physmap = get_physmapping(start_addr, size);
+>+    physmap = get_physmapping(start_addr, size, TARGET_PAGE_MASK);
+>     if (physmap == NULL) {
+>         return -1;
+>     }
+>@@ -373,7 +375,7 @@ static void xen_sync_dirty_bitmap(XenIOState *state,
+>     int rc, i, j;
+>     const XenPhysmap *physmap = NULL;
+> 
+>-    physmap = get_physmapping(start_addr, size);
+>+    physmap = get_physmapping(start_addr, size, TARGET_PAGE_MASK);
+>     if (physmap == NULL) {
+>         /* not handled */
+>         return;
+>@@ -633,7 +635,7 @@ void xen_hvm_modified_memory(ram_addr_t start, ram_addr_t length)
+>         int rc;
+>         ram_addr_t start_pfn, nb_pages;
+> 
+>-        start = xen_phys_offset_to_gaddr(start, length);
+>+        start = xen_phys_offset_to_gaddr(start, length, TARGET_PAGE_MASK);
+> 
+>         if (length == 0) {
+>             length = TARGET_PAGE_SIZE;
+>-- 
+>2.41.0
+>
+>
 
-Libaio defines IO_CMD_FDSYNC command to sync all outstanding
-asynchronous I/O operations, by flushing out file data to the
-disk storage.
 
-Enable linux-aio to submit such aio request. This helps to
-reduce latency induced via pthread_create calls by
-thread-pool (aio=threads).
-
-Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
----
- block/file-posix.c | 5 +++++
- block/linux-aio.c  | 5 ++++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
-
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 35684f7e21..4ef6c6c9e5 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -2599,6 +2599,11 @@ static int coroutine_fn raw_co_flush_to_disk(BlockDriverState *bs)
-     if (raw_check_linux_io_uring(s)) {
-         return luring_co_submit(bs, s->fd, 0, NULL, QEMU_AIO_FLUSH);
-     }
-+#endif
-+#ifdef CONFIG_LINUX_AIO
-+    if (raw_check_linux_aio(s)) {
-+        return laio_co_submit(s->fd, 0, NULL, QEMU_AIO_FLUSH, 0);
-+    }
- #endif
-     return raw_thread_pool_submit(handle_aiocb_flush, &acb);
- }
-diff --git a/block/linux-aio.c b/block/linux-aio.c
-index ec05d946f3..d940d029e3 100644
---- a/block/linux-aio.c
-+++ b/block/linux-aio.c
-@@ -384,6 +384,9 @@ static int laio_do_submit(int fd, struct qemu_laiocb *laiocb, off_t offset,
-     case QEMU_AIO_READ:
-         io_prep_preadv(iocbs, fd, qiov->iov, qiov->niov, offset);
-         break;
-+    case QEMU_AIO_FLUSH:
-+        io_prep_fdsync(iocbs, fd);
-+        break;
-     /* Currently Linux kernel does not support other operations */
-     default:
-         fprintf(stderr, "%s: invalid AIO request type 0x%x.\n",
-@@ -412,7 +415,7 @@ int coroutine_fn laio_co_submit(int fd, uint64_t offset, QEMUIOVector *qiov,
-     AioContext *ctx = qemu_get_current_aio_context();
-     struct qemu_laiocb laiocb = {
-         .co         = qemu_coroutine_self(),
--        .nbytes     = qiov->size,
-+        .nbytes     = qiov ? qiov->size : 0,
-         .ctx        = aio_get_linux_aio(ctx),
-         .ret        = -EINPROGRESS,
-         .is_read    = (type == QEMU_AIO_READ),
--- 
-2.44.0
-
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
