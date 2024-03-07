@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6754AC54E58
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 10:21:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E05FC54E5C
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 10:21:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riArz-0004OS-RC; Thu, 07 Mar 2024 05:20:59 -0500
+	id 1riAs1-0004Ro-Cf; Thu, 07 Mar 2024 05:21:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1riArv-0004NB-Ux
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 05:20:55 -0500
-Received: from mail-oi1-x22a.google.com ([2607:f8b0:4864:20::22a])
+ id 1riArx-0004OV-IK
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 05:20:59 -0500
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1riArr-0006qO-G2
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 05:20:55 -0500
-Received: by mail-oi1-x22a.google.com with SMTP id
- 5614622812f47-3c1ec2d05feso299638b6e.0
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 02:20:50 -0800 (PST)
+ id 1riArw-0006qc-2l
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 05:20:57 -0500
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-5ca29c131ebso630097a12.0
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 02:20:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709806850; x=1710411650;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709806853; x=1710411653;
  darn=nongnu.org; 
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=vUIoAxak06g1eA3FZ4SX1yMCOAyq07X3SYL1Av4lwIY=;
- b=X7YhvUqs8DETveIOP544c2a4j3EIVT+eruIrDQWCk1yw7TkNlexpMi9YyIl9CAjk9d
- EMJI4aT6CR94JeC969MT6QiVJziKOIqr3u4gI0fSoA4dYrGVqw3OkusN8gqU1z6x1+OE
- EpxlVQ8X1mNIpe2YDsr/pf6zMEk3ojNGnrWFuv1B6RKloszy8PvwHsT4lz//DLNOiYEM
- cY046sYCMDpV0HmmVcFDjRZWpii8YmbXkL4y1HRoeWrS6Pfb061XBBAzY2lKoDT0vrqs
- e1O4fTUFBJRU0lFDypww0sSqmdqcqhUDcfM58k3pHbQqrNq8KFF93z3eivEu6qx/SZu4
- bl7w==
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=D5kUM6n9+j+qbS1SUPTKf/+dgcMdpwuEc/L8WCg7irw=;
+ b=X5NkaWZSsSZhQo7NIesYwNStXrDDOQStBZExsIR8KarZrWWt/5SvgsrSfzc1Fow6u1
+ gJpfux2/LVWIQE2cLvWyQqHl8amEHBJac6wY2B62gwkAdBBRWfe0AfioSO3tsGbTHn6D
+ x9Hw7IqOyqZNPuzoKHP+HzXcgoAfPG+DntNN1AnAty9gFpEo5gAH2L/byYqq072vwnhi
+ MiESO4U/NvS1zdGZqsSeRGFo2BcjBD3CD9uNUym7pevrosyBDTBG60hxietMc8ZBCN93
+ MlB+0/97Wmefk0B6CNuFf3ydKo621xpp/szCvRek5pViOYPSLcZ4rz56f/UZyHGcBxaz
+ rwJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709806850; x=1710411650;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=vUIoAxak06g1eA3FZ4SX1yMCOAyq07X3SYL1Av4lwIY=;
- b=L6vIa94rLrY+Ed6cN6uxYHTFQ/w+R0W9eXKEKK1CcaFw46GqEE+8YMRfJExB5E6IuU
- 5GQPHqnEW1kSFooomtXOtpiNgkNq6Tm6CXqyFka9wnj7To7OYE5lLhKAuROaUJyozyKn
- bNsDNwOn5kNvP0fgYP/by4gq+EYrpdoMrPkiJtKqYAPjdlVXGgKpDGBLLZN85G6sAUvS
- oepnvZ7AL/M0QS0fIRODT3PBL2185xBcVcp3pZ/7vJHmaKwRLVnToAxRlYEmI29Gwg8M
- aqge1tDvWXINBgElhOcdJ+2QD3sEkd8ARJHXGd+VvJc+cCLawqPywmGf9Xe+gmQJyZdX
- Iubw==
-X-Gm-Message-State: AOJu0YwNzfjLUUxW/3k3B4TxCBWtbeZPXnSn1Zmd7FX6NYFMpri6WI1m
- 92U4ieaEcqx0++rxmI+r+U4rjGRV4J3qfF7gF31eKBDG4mnmx8I6nT1ouG4K/tc=
-X-Google-Smtp-Source: AGHT+IGimWN6ioy3F3yA1caxgIfXqumVFEZ+Kqhm5kqbYqf/vnP1o3JfU2UwS205OmFTuaupTdDTnw==
-X-Received: by 2002:a05:6871:7a03:b0:21e:e6d1:616c with SMTP id
- pc3-20020a0568717a0300b0021ee6d1616cmr8507099oac.31.1709806849869; 
- Thu, 07 Mar 2024 02:20:49 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709806853; x=1710411653;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=D5kUM6n9+j+qbS1SUPTKf/+dgcMdpwuEc/L8WCg7irw=;
+ b=UtQGz8hU/UL2Ytt50AbJLKR+f+PqJDxIo/d662z3TFY3uTusYkZC0LOjgcbWyM2472
+ kOPZ38zoKtFPCv9PHQBu6GnWAceG92PRQih3DN20qr4NF9yrYMhxFbaeI1QDIiRudiX1
+ GmPpzTOkRqGOo0uQx2TJQI8jZomN+rtzYGAwf/8LALmihWt9XdITLiZAFZytZssMnWz6
+ 53+u9QrQwgZoOehLFMxBQvHyFqem1kW1EG5GnGwU7YMDQPpgItWC2/EHzZ+No2/sMAMD
+ R0LYVmD2WRIwTmMEeP1L2QUz+ejsFbi6/J1pPdltyDMGwttqZy1we8ZYNN9tH9cix9Hv
+ uDBg==
+X-Gm-Message-State: AOJu0Ywju54pkHT+hrgRuvQPxxwWR7j5xCT53fQbMgAwdf79o+9g2TEZ
+ D2k09jRdWjWnKlU5iMJ4WZmgsAgsq0HcCJ2U0wui0OMbH4qSaCSvcKVbIOTdp8qxX2JhHZapKUM
+ 4
+X-Google-Smtp-Source: AGHT+IG/BP+CMvtNKeNBxVJNQQQPYRwZajj1WLf5260/BULR9evmpbMyeimALlMxFDqkx/MjPm384A==
+X-Received: by 2002:a05:6a20:3c9f:b0:1a1:45e4:845a with SMTP id
+ b31-20020a056a203c9f00b001a145e4845amr8091556pzj.11.1709806853183; 
+ Thu, 07 Mar 2024 02:20:53 -0800 (PST)
 Received: from localhost ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
  by smtp.gmail.com with UTF8SMTPSA id
- s189-20020a632cc6000000b005dc507e8d13sm12348737pgs.91.2024.03.07.02.20.48
+ h15-20020a170902680f00b001dd090a7c00sm8800575plk.292.2024.03.07.02.20.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 Mar 2024 02:20:49 -0800 (PST)
+ Thu, 07 Mar 2024 02:20:52 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH v4 00/19] contrib/elf2dmp: Improve robustness
-Date: Thu, 07 Mar 2024 19:20:43 +0900
-Message-Id: <20240307-elf2dmp-v4-0-4f324ad4d99d@daynix.com>
+Date: Thu, 07 Mar 2024 19:20:44 +0900
+Subject: [PATCH v4 01/19] contrib/elf2dmp: Remove unnecessary err flags
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAPuU6WUC/2XMTQ6CMBCG4auQrq2hnTKCK+9hXFQ6lSbyk2IaC
- OHuFhIF4/KbzPNOrCfvqGfnZGKegutd28ShDgkrK908iDsTN5OpVCmkgtPTSlN3XGjUWSZsjgg
- sfneerBvW0vUWd+X6V+vHNRzEcv004NsIgqf8ThpRFZaA8GL02LjhWLY1WyJB7mG2QRlhjtZKg
- aANyD8Ie4gbhAjNSRGWYLQqyh84z/MbfydH8hEBAAA=
+Message-Id: <20240307-elf2dmp-v4-1-4f324ad4d99d@daynix.com>
+References: <20240307-elf2dmp-v4-0-4f324ad4d99d@daynix.com>
+In-Reply-To: <20240307-elf2dmp-v4-0-4f324ad4d99d@daynix.com>
 To: Viktor Prutyanov <viktor.prutyanov@phystech.edu>, 
  Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::22a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x22a.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -96,83 +95,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-elf2dmp sometimes fails to work with partially corrupted dumps, and also
-emits warnings when sanitizers are in use. This series are collections
-of changes to improve the situation.
+They are always evaluated to 1.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
-Changes in v4:
-- Remove unnecessary !! idiom (Peter Maydell)
-- Link to v3: https://lore.kernel.org/r/20240306-elf2dmp-v3-0-d74e6c3da49c@daynix.com
+ contrib/elf2dmp/pdb.c | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
-Changes in v3:
-- Split patch "contrib/elf2dmp: Conform to the error reporting pattern".
-  (Peter Maydell)
-- Stated that the relevant value is little-endian in patch
-  "contrib/elf2dmp: Use lduw_le_p() to read PDB".
-- Added a message saying "Build it only for little endian hosts until
-  they are fixed." for patch "contrib/elf2dmp: Build only for little
-  endian host".
-- Added patch "contrib/elf2dmp: Ensure phdrs fit in file" to fix
-  https://gitlab.com/qemu-project/qemu/-/issues/2202 as patch
-  "contrib/elf2dmp: Clamp QEMU note to file size" was not really fixing
-  the crash.
-- Link to v2: https://lore.kernel.org/r/20240305-elf2dmp-v2-0-86ff2163ad32@daynix.com
+diff --git a/contrib/elf2dmp/pdb.c b/contrib/elf2dmp/pdb.c
+index 40991f5f4c34..abf17c2e7c12 100644
+--- a/contrib/elf2dmp/pdb.c
++++ b/contrib/elf2dmp/pdb.c
+@@ -177,7 +177,6 @@ static int pdb_init_segments(struct pdb_reader *r)
+ 
+ static int pdb_init_symbols(struct pdb_reader *r)
+ {
+-    int err = 0;
+     PDB_SYMBOLS *symbols;
+ 
+     symbols = pdb_ds_read_file(r, 3);
+@@ -196,7 +195,6 @@ static int pdb_init_symbols(struct pdb_reader *r)
+     /* Read global symbol table */
+     r->modimage = pdb_ds_read_file(r, symbols->gsym_file);
+     if (!r->modimage) {
+-        err = 1;
+         goto out_symbols;
+     }
+ 
+@@ -205,7 +203,7 @@ static int pdb_init_symbols(struct pdb_reader *r)
+ out_symbols:
+     g_free(symbols);
+ 
+-    return err;
++    return 1;
+ }
+ 
+ static int pdb_reader_ds_init(struct pdb_reader *r, PDB_DS_HEADER *hdr)
+@@ -228,7 +226,6 @@ static int pdb_reader_ds_init(struct pdb_reader *r, PDB_DS_HEADER *hdr)
+ 
+ static int pdb_reader_init(struct pdb_reader *r, void *data)
+ {
+-    int err = 0;
+     const char pdb7[] = "Microsoft C/C++ MSF 7.00";
+ 
+     if (memcmp(data, pdb7, sizeof(pdb7) - 1)) {
+@@ -241,17 +238,14 @@ static int pdb_reader_init(struct pdb_reader *r, void *data)
+ 
+     r->ds.root = pdb_ds_read_file(r, 1);
+     if (!r->ds.root) {
+-        err = 1;
+         goto out_ds;
+     }
+ 
+     if (pdb_init_symbols(r)) {
+-        err = 1;
+         goto out_root;
+     }
+ 
+     if (pdb_init_segments(r)) {
+-        err = 1;
+         goto out_sym;
+     }
+ 
+@@ -264,7 +258,7 @@ out_root:
+ out_ds:
+     pdb_reader_ds_exit(r);
+ 
+-    return err;
++    return 1;
+ }
+ 
+ static void pdb_reader_exit(struct pdb_reader *r)
+@@ -278,7 +272,6 @@ static void pdb_reader_exit(struct pdb_reader *r)
+ int pdb_init_from_file(const char *name, struct pdb_reader *reader)
+ {
+     GError *gerr = NULL;
+-    int err = 0;
+     void *map;
+ 
+     reader->gmf = g_mapped_file_new(name, TRUE, &gerr);
+@@ -291,7 +284,6 @@ int pdb_init_from_file(const char *name, struct pdb_reader *reader)
+     reader->file_size = g_mapped_file_get_length(reader->gmf);
+     map = g_mapped_file_get_contents(reader->gmf);
+     if (pdb_reader_init(reader, map)) {
+-        err = 1;
+         goto out_unmap;
+     }
+ 
+@@ -300,7 +292,7 @@ int pdb_init_from_file(const char *name, struct pdb_reader *reader)
+ out_unmap:
+     g_mapped_file_unref(reader->gmf);
+ 
+-    return err;
++    return 1;
+ }
+ 
+ void pdb_exit(struct pdb_reader *reader)
 
-Changes in v2:
-- Added patch "contrib/elf2dmp: Remove unnecessary err flags".
-- Added patch "contrib/elf2dmp: Assume error by default".
-- Added patch "contrib/elf2dmp: Conform to the error reporting pattern".
-- Added patch "contrib/elf2dmp: Build only for little endian host".
-- Added patch "contrib/elf2dmp: Use GPtrArray".
-- Added patch "contrib/elf2dmp: Clamp QEMU note to file size".
-- Changed error handling in patch "contrib/elf2dmp: Ensure segment fits
-  in file" (Peter Maydell)
-- Added a comment to fill_context() that it continues on failure.
-  (Peter Maydell)
-- Link to v1: https://lore.kernel.org/r/20240303-elf2dmp-v1-0-bea6649fe3e6@daynix.com
-
----
-Akihiko Odaki (19):
-      contrib/elf2dmp: Remove unnecessary err flags
-      contrib/elf2dmp: Assume error by default
-      contrib/elf2dmp: Continue even contexts are lacking
-      contrib/elf2dmp: Change pa_space_create() signature
-      contrib/elf2dmp: Fix error reporting style in addrspace.c
-      contrib/elf2dmp: Fix error reporting style in download.c
-      contrib/elf2dmp: Fix error reporting style in pdb.c
-      contrib/elf2dmp: Fix error reporting style in qemu_elf.c
-      contrib/elf2dmp: Fix error reporting style in main.c
-      contrib/elf2dmp: Always check for PA resolution failure
-      contrib/elf2dmp: Always destroy PA space
-      contrib/elf2dmp: Ensure segment fits in file
-      contrib/elf2dmp: Use lduw_le_p() to read PDB
-      contrib/elf2dmp: Use rol64() to decode
-      MAINTAINERS: Add Akihiko Odaki as a elf2dmp reviewer
-      contrib/elf2dmp: Build only for little endian host
-      contrib/elf2dmp: Use GPtrArray
-      contrib/elf2dmp: Clamp QEMU note to file size
-      contrib/elf2dmp: Ensure phdrs fit in file
-
- MAINTAINERS                 |   1 +
- contrib/elf2dmp/addrspace.h |   6 +-
- contrib/elf2dmp/download.h  |   2 +-
- contrib/elf2dmp/pdb.h       |   2 +-
- contrib/elf2dmp/qemu_elf.h  |   2 +-
- contrib/elf2dmp/addrspace.c |  63 ++++++++++-------
- contrib/elf2dmp/download.c  |  12 ++--
- contrib/elf2dmp/main.c      | 168 ++++++++++++++++++++------------------------
- contrib/elf2dmp/pdb.c       |  61 +++++++---------
- contrib/elf2dmp/qemu_elf.c  | 150 ++++++++++++++++++++++-----------------
- contrib/elf2dmp/meson.build |   2 +-
- 11 files changed, 238 insertions(+), 231 deletions(-)
----
-base-commit: bfe8020c814a30479a4241aaa78b63960655962b
-change-id: 20240301-elf2dmp-1a6a551f8663
-
-Best regards,
 -- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+2.44.0
 
 
