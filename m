@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE5E3C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 10:22:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7841C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 10:23:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riAs2-0004T2-3c; Thu, 07 Mar 2024 05:21:02 -0500
+	id 1riAsY-0004vD-PI; Thu, 07 Mar 2024 05:21:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1riAs1-0004RL-7P
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 05:21:01 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1riAsX-0004q2-PL
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 05:21:33 -0500
+Received: from mail-oi1-x233.google.com ([2607:f8b0:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1riArx-0006qr-BM
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 05:21:00 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1dc29f1956cso5291585ad.0
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 02:20:56 -0800 (PST)
+ id 1riAsW-0007BZ-9a
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 05:21:33 -0500
+Received: by mail-oi1-x233.google.com with SMTP id
+ 5614622812f47-3bbbc6b4ed1so376135b6e.2
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 02:21:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709806856; x=1710411656;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709806891; x=1710411691;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=WBQ8wkR+EtpXcrRFUmJL0m8euRcerqarx8Jtcq9C72A=;
- b=Kn6e5KWwBK7WM0OwcVmR3L7+rvbpMRuMoSsKqHhVil/yjojMUuKShKbdHmeJzGfKVr
- yCykZZLLIER+W9YUkAOw2vQZShc2atdvPn6EIuXzxEzKbMxobbm7JZ8tGBJ6j/5CO7XA
- VBcFrxahp9hjuv9SxlBsbm+9y9hxXmgWjlmAT5os/TDIi9bp9YzcWxlP83zKtKRhJe7j
- qTXPYHa2597P0ZFOKOfd5LM7MS7uDF2jIEoaEltymVhWp1vJfjpaSd4IQE8WFfdfRliP
- DEBTcj5iqCQ/iYtzkkhJij/IxF8sDfMBVDOzh8OaBOpkUgw09FR7seyluEIIa7e+3fvl
- Lbsw==
+ :reply-to; bh=G+hvr6O3ORvjAgJg+6YyeFVM5M5tHwrDPGaC/yhxpOs=;
+ b=edEN9G8aIFLBqHy1kI+n9Vy4Yxzd0XzU1jwxcbC7Ccn1qOZz7Lbg+tGoEdD9QOWggQ
+ Iw4QxyNv2FrdNnTtbSkQDx/BWS/9TskUtwbIj/WWGeTusxni8bXxCpv7DpqexxbH7VXN
+ BsTk7TMsbtebn+8y0oac8vLybB8FAAPuH57Zdp3YU17xqf9UccxAC7czjEGxos4Q6P8x
+ +mjaGXlI2XpZs6nlSYPa3icBjYc2hhVqs6CzacU2d4uazNhB2YVNwiaNOUkdEjNoAvQs
+ NyigP6nxUr2cu1u3Tu2lETfbS2O9x4hQ8zpXZyZFFssKdx3YsJZTn0gXYKquB+YcQnZa
+ aM0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709806856; x=1710411656;
+ d=1e100.net; s=20230601; t=1709806891; x=1710411691;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WBQ8wkR+EtpXcrRFUmJL0m8euRcerqarx8Jtcq9C72A=;
- b=TU8xPmmAN6dQLRUjZZRNqx2OZAUPDSUo1ZRAz+mhDgNDoPfeY1ZaDYGDoNbuqeKV7u
- d4pfGXreYhjFlkJBz9BoOnb3pWVcIPoLZyWGt+b8VhJZqPqCqO3b3ipGqwmX8qijhUlY
- DIBtjV2CL12vtE6ZpImCxvrA5QxSRrs+U30e++bKkDhwzmNXot4tjhf1mmmMvK0MLUC2
- MCyhKVP8vjV89DCjNHUSW2p9umJxZGJ2gZwIwIyu6TOpd1AvoJOHLCNAbOB8qP9Y4YjP
- qEpruJ0d0A91DjrdJrtHWzgnLBeHMUAUiJ/IC00AzZQ9cHY8pT0iRMsxDhS1x2QukGRQ
- hxvg==
-X-Gm-Message-State: AOJu0Yx0KCxfGM7/cUude3/+QeHvrbIMFtFSzKFnqJK+Rk0rnEk/REBp
- S3ZLaeAjgLQAzTqOWYXOJXS6yzj1PQAV4iaGhGc5umrJKu4Fh/vV9c8Cp/SUwKk=
-X-Google-Smtp-Source: AGHT+IH7LtUCCaMRojonRof2MgK29sUVz9nymfvxPhS9MuGx48/VthnsbjgDs/bjCBpHETxdo4Y5Ig==
-X-Received: by 2002:a17:902:ea04:b0:1db:92e1:2e53 with SMTP id
- s4-20020a170902ea0400b001db92e12e53mr9633335plg.40.1709806856083; 
- Thu, 07 Mar 2024 02:20:56 -0800 (PST)
+ bh=G+hvr6O3ORvjAgJg+6YyeFVM5M5tHwrDPGaC/yhxpOs=;
+ b=KoZbsVMTDqXL8A1mDBydv9WhV34nEi9NKTU95bR1SMd7envQtyHi2fVNZs1Ei6hdLH
+ H76ltEIqxsoTm8txD/O7KbtyZ8lsZFwH3wIuX5wJqB7SjV+HxIW4ZUAouYySVyb5DrM2
+ g3rAqdRjxTBId+dhGfVoonR4ogS/4+gVhmEL/YoCv5T++5K2V1jZxBLZIDdXJ9Y9fwuF
+ KvKWDciAb06OHbV220ti5phLjajvw2JYzWsM8KbIJbRI/4X4SuDq2fha9EEryUqa0GKp
+ 0R/id0q2bMS/E0ODF7Io/BOWrW5P7LlL/lmRYWW9sshQVVCchfJ6aBdHEW6y6CfjHA04
+ 9rSQ==
+X-Gm-Message-State: AOJu0Yz9fw8UHKZe8dv6MNo6vkfnGuO1yTIEqMz3dYE1wxXGXjhdDfiI
+ mvh5mnNKVDHWvlMC6T3ihueixXp5Jnu/+6sWqDO3oqKPsuUHe7CS7/1JLmlia3R5SztWU+poBiQ
+ X
+X-Google-Smtp-Source: AGHT+IE+5K8qNDUXcyBZ8B5kfZtu1smKEb2NTTloy3SIIj84alLgPs4HIz0J7yI2piRYpT2ixl1Kkg==
+X-Received: by 2002:a05:6808:6297:b0:3c1:e999:467d with SMTP id
+ du23-20020a056808629700b003c1e999467dmr7439216oib.40.1709806890801; 
+ Thu, 07 Mar 2024 02:21:30 -0800 (PST)
 Received: from localhost ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
  by smtp.gmail.com with UTF8SMTPSA id
- f12-20020a170902e98c00b001dd5f5b1ca4sm210323plb.309.2024.03.07.02.20.54
+ u23-20020aa78497000000b006e5092fb3efsm12237604pfn.159.2024.03.07.02.21.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 Mar 2024 02:20:55 -0800 (PST)
+ Thu, 07 Mar 2024 02:21:30 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Thu, 07 Mar 2024 19:20:45 +0900
-Subject: [PATCH v4 02/19] contrib/elf2dmp: Assume error by default
+Date: Thu, 07 Mar 2024 19:20:54 +0900
+Subject: [PATCH v4 11/19] contrib/elf2dmp: Always destroy PA space
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240307-elf2dmp-v4-2-4f324ad4d99d@daynix.com>
+Message-Id: <20240307-elf2dmp-v4-11-4f324ad4d99d@daynix.com>
 References: <20240307-elf2dmp-v4-0-4f324ad4d99d@daynix.com>
 In-Reply-To: <20240307-elf2dmp-v4-0-4f324ad4d99d@daynix.com>
 To: Viktor Prutyanov <viktor.prutyanov@phystech.edu>, 
  Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::62b;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62b.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::233;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x233.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -94,140 +95,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A common construct in contrib/elf2dmp is to set "err" flag and goto
-in error paths. In such a construct, there is only one successful path
-while there are several error paths, so it will be more simpler to
-initialize "err" flag set, and clear it in the successful path.
+Destroy PA space even if paging base couldn't be found, fixing memory
+leak.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- contrib/elf2dmp/download.c |  4 +---
- contrib/elf2dmp/main.c     | 15 +++------------
- 2 files changed, 4 insertions(+), 15 deletions(-)
+ contrib/elf2dmp/main.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/contrib/elf2dmp/download.c b/contrib/elf2dmp/download.c
-index bd7650a7a27f..902dc04ffa5c 100644
---- a/contrib/elf2dmp/download.c
-+++ b/contrib/elf2dmp/download.c
-@@ -11,7 +11,7 @@
- 
- int download_url(const char *name, const char *url)
- {
--    int err = 0;
-+    int err = 1;
-     FILE *file;
-     CURL *curl = curl_easy_init();
- 
-@@ -21,7 +21,6 @@ int download_url(const char *name, const char *url)
- 
-     file = fopen(name, "wb");
-     if (!file) {
--        err = 1;
-         goto out_curl;
-     }
- 
-@@ -33,7 +32,6 @@ int download_url(const char *name, const char *url)
-             || curl_easy_perform(curl) != CURLE_OK) {
-         unlink(name);
-         fclose(file);
--        err = 1;
-     } else {
-         err = fclose(file);
-     }
 diff --git a/contrib/elf2dmp/main.c b/contrib/elf2dmp/main.c
-index cbc38a7c103a..9b278f392e39 100644
+index 9347b0cd5a2d..32dc8bac6a30 100644
 --- a/contrib/elf2dmp/main.c
 +++ b/contrib/elf2dmp/main.c
-@@ -511,7 +511,7 @@ static void pe_get_pdb_symstore_hash(OMFSignatureRSDS *rsds, char *hash)
- 
- int main(int argc, char *argv[])
- {
--    int err = 0;
-+    int err = 1;
-     QEMU_Elf qemu_elf;
-     struct pa_space ps;
-     struct va_space vs;
-@@ -542,7 +542,6 @@ int main(int argc, char *argv[])
- 
-     if (pa_space_create(&ps, &qemu_elf)) {
-         eprintf("Failed to initialize physical address space\n");
--        err = 1;
-         goto out_elf;
-     }
- 
-@@ -552,7 +551,6 @@ int main(int argc, char *argv[])
+@@ -549,7 +549,7 @@ int main(int argc, char *argv[])
      va_space_create(&vs, &ps, state->cr[3]);
-     if (fix_dtb(&vs, &qemu_elf)) {
+     if (!fix_dtb(&vs, &qemu_elf)) {
          eprintf("Failed to find paging base\n");
--        err = 1;
-         goto out_elf;
+-        goto out_elf;
++        goto out_ps;
      }
  
-@@ -561,7 +559,6 @@ int main(int argc, char *argv[])
-     if (va_space_rw(&vs, state->idt.base,
-                 &first_idt_desc, sizeof(first_idt_desc), 0)) {
-         eprintf("Failed to get CPU #0 IDT[0]\n");
--        err = 1;
-         goto out_ps;
-     }
-     printf("CPU #0 IDT[0] -> 0x%016"PRIx64"\n", idt_desc_addr(first_idt_desc));
-@@ -586,7 +583,6 @@ int main(int argc, char *argv[])
+     printf("CPU #0 IDT is at 0x%016"PRIx64"\n", state->idt.base);
+@@ -634,7 +634,6 @@ out_pdb_file:
+     unlink(PDB_NAME);
+ out_ps:
+     pa_space_destroy(&ps);
+-out_elf:
+     QEMU_Elf_exit(&qemu_elf);
  
-     if (!kernel_found) {
-         eprintf("Failed to find NT kernel image\n");
--        err = 1;
-         goto out_ps;
-     }
- 
-@@ -600,45 +596,40 @@ int main(int argc, char *argv[])
- 
-     if (download_url(PDB_NAME, pdb_url)) {
-         eprintf("Failed to download PDB file\n");
--        err = 1;
-         goto out_ps;
-     }
- 
-     if (pdb_init_from_file(PDB_NAME, &pdb)) {
-         eprintf("Failed to initialize PDB reader\n");
--        err = 1;
-         goto out_pdb_file;
-     }
- 
-     if (!SYM_RESOLVE(KernBase, &pdb, KdDebuggerDataBlock) ||
-             !SYM_RESOLVE(KernBase, &pdb, KdVersionBlock)) {
--        err = 1;
-         goto out_pdb;
-     }
- 
-     kdbg = get_kdbg(KernBase, &pdb, &vs, KdDebuggerDataBlock);
-     if (!kdbg) {
--        err = 1;
-         goto out_pdb;
-     }
- 
-     if (fill_header(&header, &ps, &vs, KdDebuggerDataBlock, kdbg,
-             KdVersionBlock, qemu_elf.state_nr)) {
--        err = 1;
-         goto out_kdbg;
-     }
- 
-     if (fill_context(kdbg, &vs, &qemu_elf)) {
--        err = 1;
-         goto out_kdbg;
-     }
- 
-     if (write_dump(&ps, &header, argv[2])) {
-         eprintf("Failed to save dump\n");
--        err = 1;
-         goto out_kdbg;
-     }
- 
-+    err = 0;
-+
- out_kdbg:
-     g_free(kdbg);
- out_pdb:
+     return err;
 
 -- 
 2.44.0
