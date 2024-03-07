@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 690E0C54E49
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 15:39:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 437E9C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 15:53:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riFq1-0004wO-Du; Thu, 07 Mar 2024 10:39:17 -0500
+	id 1riG3U-0001Fp-7F; Thu, 07 Mar 2024 10:53:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1riFpy-0004sm-FG
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 10:39:14 -0500
+ id 1riG3S-0001FW-4Z
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 10:53:10 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1riFpw-000259-8K
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 10:39:14 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TrD4C2VsMz6D8bw;
- Thu,  7 Mar 2024 23:39:07 +0800 (CST)
+ id 1riG3O-00018L-AE
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 10:53:09 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TrDNC2tlHz6D8dw;
+ Thu,  7 Mar 2024 23:52:59 +0800 (CST)
 Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id A334C140DF4;
- Thu,  7 Mar 2024 23:39:10 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id BC884140D1D;
+ Thu,  7 Mar 2024 23:53:02 +0800 (CST)
 Received: from SecurePC-101-06.china.huawei.com (10.122.247.231) by
  lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Thu, 7 Mar 2024 15:39:10 +0000
-To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, David
- Hildenbrand <david@redhat.com>, =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, <qemu-devel@nongnu.org>
-CC: <linuxarm@huawei.com>
-Subject: [PATCH v2 4/4] physmem: Fix wrong address in large
- address_space_read/write_cached_slow()
-Date: Thu, 7 Mar 2024 15:37:10 +0000
-Message-ID: <20240307153710.30907-5-Jonathan.Cameron@huawei.com>
+ 15.1.2507.35; Thu, 7 Mar 2024 15:53:02 +0000
+To: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost
+ <eduardo@habkost.net>, <qemu-devel@nongnu.org>,
+ <richard.henderson@linaro.org>
+CC: Peter Maydell <peter.maydell@linaro.org>, Gregory Price
+ <gregory.price@memverge.com>, =?UTF-8?q?Alex=20Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, <linuxarm@huawei.com>
+Subject: [PATCH v3 0/1] target/i386: Fix page walking from MMIO memory.
+Date: Thu, 7 Mar 2024 15:53:03 +0000
+Message-ID: <20240307155304.31241-1-Jonathan.Cameron@huawei.com>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240307153710.30907-1-Jonathan.Cameron@huawei.com>
-References: <20240307153710.30907-1-Jonathan.Cameron@huawei.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-Originating-IP: [10.122.247.231]
-X-ClientProxiedBy: lhrpeml500001.china.huawei.com (7.191.163.213) To
+X-ClientProxiedBy: lhrpeml500002.china.huawei.com (7.191.160.78) To
  lhrpeml500005.china.huawei.com (7.191.163.240)
 Received-SPF: pass client-ip=185.176.79.56;
  envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
@@ -72,127 +71,61 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the access is bigger than the MemoryRegion supports,
-flatview_read/write_continue() will attempt to update the Memory Region.
-but the address passed to flatview_translate() is relative to the cache, not
-to the FlatView.
+Previously: tcg/i386: Page tables in MMIO memory fixes (CXL)
+Richard Henderson picked up patches 1 and 3 which were architecture independent
+leaving just this x86 specific patch.
 
-On arm/virt with interleaved CXL memory emulation and virtio-blk-pci this
-lead to the first part of descriptor being read from the CXL memory and the
-second part from PA 0x8 which happens to be a blank region
-of a flash chip and all ffs on this particular configuration.
-Note this test requires the out of tree ARM support for CXL, but
-the problem is more general.
+No change to the patch. Resending because it's hard to spot individual
+unapplied patches in a larger series.
 
-Avoid this by adding new address_space_read_continue_cached()
-and address_space_write_continue_cached() which share all the logic
-with the flatview versions except for the MemoryRegion lookup which
-is unnecessary as the MemoryRegionCache only covers one MemoryRegion.
+Original cover letter (edited).
 
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
----
-v2: Review from Peter Xu
-- Drop additional lookups of the MemoryRegion via
-address_space_translate_cached() as it will always return the same
-answer.
-- Drop various parameters that are then unused.
-- rename addr1 to mr_addr.
-- Drop a fuzz_dma_read_cb(). Could put this back but it means
-  carrying the address into the inner call and the only in tree
-  fuzzer checks if it is normal RAM and if not does nothing anyway.
-  We don't hit this path for normal RAM.
----
- system/physmem.c | 63 +++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 57 insertions(+), 6 deletions(-)
+CXL memory is interleaved at granularities as fine as 64 bytes.
+To emulate this each read and write access undergoes address translation
+similar to that used in physical hardware. This is done using
+cfmws_ops for a memory region per CXL Fixed Memory Window (the PA address
+range in the host that is interleaved across host bridges and beyond.
+The OS programs interleaved decoders in the CXL Root Bridges, switch
+upstream ports and the corresponding decoders CXL type 3 devices who
+have to know the Host PA to Device PA mappings).
 
-diff --git a/system/physmem.c b/system/physmem.c
-index 1264eab24b..701bea27dd 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -3381,6 +3381,59 @@ static inline MemoryRegion *address_space_translate_cached(
-     return section.mr;
- }
- 
-+/* Called within RCU critical section.  */
-+static MemTxResult address_space_write_continue_cached(MemTxAttrs attrs,
-+                                                       const void *ptr,
-+                                                       hwaddr len,
-+                                                       hwaddr mr_addr,
-+                                                       hwaddr l,
-+                                                       MemoryRegion *mr)
-+{
-+    MemTxResult result = MEMTX_OK;
-+    const uint8_t *buf = ptr;
-+
-+    for (;;) {
-+        result |= flatview_write_continue_step(attrs, buf, len, mr_addr, &l,
-+                                               mr);
-+
-+        len -= l;
-+        buf += l;
-+        mr_addr += l;
-+
-+        if (!len) {
-+            break;
-+        }
-+
-+        l = len;
-+    }
-+
-+    return result;
-+}
-+
-+/* Called within RCU critical section.  */
-+static MemTxResult address_space_read_continue_cached(MemTxAttrs attrs,
-+                                                      void *ptr, hwaddr len,
-+                                                      hwaddr mr_addr, hwaddr l,
-+                                                      MemoryRegion *mr)
-+{
-+    MemTxResult result = MEMTX_OK;
-+    uint8_t *buf = ptr;
-+
-+    for (;;) {
-+        result |= flatview_read_continue_step(attrs, buf, len, mr_addr, &l, mr);
-+        len -= l;
-+        buf += l;
-+        mr_addr += l;
-+
-+        if (!len) {
-+            break;
-+        }
-+        l = len;
-+    }
-+
-+    return result;
-+}
-+
- /* Called from RCU critical section. address_space_read_cached uses this
-  * out of line function when the target is an MMIO or IOMMU region.
-  */
-@@ -3394,9 +3447,8 @@ address_space_read_cached_slow(MemoryRegionCache *cache, hwaddr addr,
-     l = len;
-     mr = address_space_translate_cached(cache, addr, &mr_addr, &l, false,
-                                         MEMTXATTRS_UNSPECIFIED);
--    return flatview_read_continue(cache->fv,
--                                  addr, MEMTXATTRS_UNSPECIFIED, buf, len,
--                                  mr_addr, l, mr);
-+    return address_space_read_continue_cached(MEMTXATTRS_UNSPECIFIED,
-+                                              buf, len, mr_addr, l, mr);
- }
- 
- /* Called from RCU critical section. address_space_write_cached uses this
-@@ -3412,9 +3464,8 @@ address_space_write_cached_slow(MemoryRegionCache *cache, hwaddr addr,
-     l = len;
-     mr = address_space_translate_cached(cache, addr, &mr_addr, &l, true,
-                                         MEMTXATTRS_UNSPECIFIED);
--    return flatview_write_continue(cache->fv,
--                                   addr, MEMTXATTRS_UNSPECIFIED, buf, len,
--                                   mr_addr, l, mr);
-+    return address_space_write_continue_cached(MEMTXATTRS_UNSPECIFIED,
-+                                               buf, len, mr_addr, l, mr);
- }
- 
- #define ARG1_DECL                MemoryRegionCache *cache
+Unfortunately this CXL memory may be used as normal memory and anything
+that can end up in RAM can be placed within it. As Linux has become
+more capable of handling this memory we've started to get quite a few
+bug reports for the QEMU support. However terrible the performance is
+people seem to like running actual software stacks on it :(
+
+This doesn't work for KVM - so for now CXL emulation remains TCG only.
+(unless you are very careful on how it is used!)  I plan to add some
+safety guards at a later date to make it slightly harder for people
+to shoot themselves in the foot + a more limited set of CXL functionality
+that is safe (no interleaving!)
+
+Previously we had some issues with TCG reading instructions from CXL
+memory but that is now all working. This time the issues are around
+the Page Tables being in the CXL memory + DMA buffers being placed in it.
+
+The test setup I've been using is simple 2 way interleave via 2 root
+ports below a single CXL root complex.  After configuration in Linux
+these are mapped to their own Numa Node and
+numactl --membind=1 ls
+followed by powering down the machine is sufficient to hit all the bugs
+addressed in this series.
+
+Thanks to Gregory, Peter and Alex for their help figuring this lot
+out.
+
+Whilst thread started back at:
+https://lore.kernel.org/all/CAAg4PaqsGZvkDk_=PH+Oz-yeEUVcVsrumncAgegRKuxe_YoFhA@mail.gmail.com/
+The QEMU part is from.
+https://lore.kernel.org/all/20240201130438.00001384@Huawei.com/
+
+Gregory Price (1):
+  target/i386: Enable page walking from MMIO memory
+
+ target/i386/tcg/sysemu/excp_helper.c | 57 +++++++++++++++-------------
+ 1 file changed, 30 insertions(+), 27 deletions(-)
+
 -- 
 2.39.2
 
