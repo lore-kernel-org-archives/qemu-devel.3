@@ -4,92 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4745CC54798
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 22:19:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BE30C54E4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 22:34:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riM54-0005Tc-T6; Thu, 07 Mar 2024 17:19:14 -0500
+	id 1riMIo-0007bd-Uu; Thu, 07 Mar 2024 17:33:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1riM53-0005TS-EW
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 17:19:13 -0500
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1riM51-0005Pa-SA
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 17:19:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=rqRx8RizlcBxi0vUv3CPGMIuDZKZWJG4DPQZDSqDNZg=; b=Tbf1ZWN7cv+nDkppfWlCItlzVF
- qk2lGsOXNVVeLB2HzrR+LKrHw8b4Soon+k6k/NMrmNxGomYRBL5OCy51hSeEV6nL1Qb8M/HCKnXvS
- 4/T2IBUfkki1/CjfspVrSQseRs1Th/qVw89v8jonrgcsXrGY2J2c+L7cvI/ZnjP8XPNqMR5xpneAp
- qHQ1CCnX0uNAYeJVmtUaTmMb9ZKQ+wZL32yTi/haO2lt/NkJSSA3CEQ3Wj3zv/uoHXQ8ywNAEz1xf
- /LvNu48p9tCaKzJLq/L+Xo67ZdMx8BQftXnoQQI01bhzG0zmbvIatfj1V9Ejfrb6osGJzwP5NCZhr
- ThA3b3Fppw77cWudAkuUISvczFKcOztRONxJp+F9XjOivbGphA4wBnBLijlS4dTaLcqOTunp2oJpK
- 2pQtzzOM6QFrdzAlDkKL1fFkALVvqOwcSf+je9i6xEjoIcFM97bcUku0Rkia8V/2v/Am8UOWUGuzp
- 14hmbal5lv68xrfCFboGYgDcZzGKfTwokJ8UeDniWbYwTrJh1QiU2K+PuspJK9brBvBbEpqO3ea0k
- p2Cgmz5ovTmon1AtNtjL2N+lrZUHwkQQFIBrsXP56ytPW/D7AmW4I0Qv1oEXmcsRvxEHIAXxrYVkL
- dQvQs4UR2sdQbrbSo9hszRDJ03ejZzPUf4aGOr2NQ=;
-Received: from host86-159-123-79.range86-159.btcentralplus.com
- ([86.159.123.79] helo=[10.8.0.6])
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1riM49-0005VC-0G; Thu, 07 Mar 2024 22:18:21 +0000
-Message-ID: <411c8012-a507-4efe-88b7-273bf6f328b0@ilande.co.uk>
-Date: Thu, 7 Mar 2024 22:19:00 +0000
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1riMIm-0007b9-JS
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 17:33:24 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1riMIk-00020I-RO
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 17:33:24 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-41317cc388dso907995e9.2
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 14:33:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709850801; x=1710455601; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3hyM+80BYWzVWFiaczS48nW8SEV1JCraWr4rPcjyUUE=;
+ b=e5GUKM3EPVggE2sRKMq0U9zFHTuImZL2jcvgbA6c4UQCBLYl+PeMvIzJRzQcRXacDE
+ x7SeDYNJls+7xIqRbyQFDrTTNyj+jTKPVFq6Csk/VL3d2ZqymG2dXK8qqsrQ+O/Dkff2
+ wTNWG5j+Aa4YDCzw3Yo0QhpfoG059whDTIpNrtV1DDP+ndXyD4/NfZFTFxePDMIi/uM0
+ /AqXEhbjp24bCNz9Ho43nfE+BofVsTesDhhBReQ7TWIIQVWCQcmTh6vBsdIWE0MHfK1I
+ /7qmCkJfzvATPnqBG735XFfhu5DVpzRkJbH2oFR2cUydtEd7GXgPve0k4TI9bAcsD6EP
+ Zp9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709850801; x=1710455601;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=3hyM+80BYWzVWFiaczS48nW8SEV1JCraWr4rPcjyUUE=;
+ b=jS0R0a66RUQxM12sD/9UbvVoOfntc/XxBHE7dmjrMfjQWzysHSJxSlSgdNu/+Vmb94
+ zwwdRcNMUxWpx+bL4p/CVJ+B1rXuxYodCy0PSePRr1TIM+4tJfvAlsFrV1d/t1bo2g9X
+ 6SQEq8xNpAhctXCoHxZCdUrn/3clKD0AFPs6eOHJBJWZAF80kTlDL93GA1AsgN5YBCQm
+ W+GfvQcbDAZxFUsiOTIahQxRsG89AizqYWFI1ioF/F+gUzLiMJiMKhhW6KzJoFA9Vyni
+ gDP0v5Kd7Qu8qgGZs/D7U/cpX4IZ9z0YrutALEvln4apLhKS5CwzExZfTXqa5y/5I0oP
+ Ercw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUQmlUhx09jRp4siW0q3oQGdgMje02BlBQ0fVagnyYJ43Z5x/U+t078giMdRYo5gQnY55cQnXUMsyjKWLumvmzOgMtuZGI=
+X-Gm-Message-State: AOJu0YyS1zyy3nVY5lB8GPQNA6WLLFy+JMXre0HzZzV39tKaTQe1lFG1
+ rTWcVclO8oYfmpgyMrXdp4VJag+uLg+J7kQyPIO8dRURSm9e5p6Maj2Y8vmb214=
+X-Google-Smtp-Source: AGHT+IHZLa+EXPjw7AiCozIGW49n8Ui0K1aJ9r9gj0FkvX6ssHpzLE2Pi65BuQg7jgOIwsAfE9CI7w==
+X-Received: by 2002:adf:e6cc:0:b0:33d:6fd8:90d3 with SMTP id
+ y12-20020adfe6cc000000b0033d6fd890d3mr13676125wrm.4.1709850800658; 
+ Thu, 07 Mar 2024 14:33:20 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ h18-20020a5d5052000000b0033cf4e47496sm21162621wrt.51.2024.03.07.14.33.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 07 Mar 2024 14:33:20 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id C17A05F7AD;
+ Thu,  7 Mar 2024 22:33:19 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Gustavo Romero <gustavo.romero@linaro.org>,  qemu-devel@nongnu.org,
+ peter.maydell@linaro.org,  laurent@vivier.eu,  philmd@linaro.org
+Subject: Re: [PATCH v2 3/5] gdbstub: Save target's siginfo
+In-Reply-To: <637e4407-4519-4d87-981a-acd9b5124970@linaro.org> (Richard
+ Henderson's message of "Thu, 7 Mar 2024 11:09:54 -1000")
+References: <20240307182623.1450717-1-gustavo.romero@linaro.org>
+ <20240307182623.1450717-3-gustavo.romero@linaro.org>
+ <637e4407-4519-4d87-981a-acd9b5124970@linaro.org>
+User-Agent: mu4e 1.12.1; emacs 29.1
+Date: Thu, 07 Mar 2024 22:33:19 +0000
+Message-ID: <87y1atu0y8.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Laurent Vivier <laurent@vivier.eu>, qemu-devel@nongnu.org
-Cc: Daniel Palmer <daniel@0x0f.com>
-References: <20240223155742.2790252-1-laurent@vivier.eu>
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20240223155742.2790252-1-laurent@vivier.eu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 86.159.123.79
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH] virt: set the CPU type in BOOTINFO
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,54 +102,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/02/2024 15:57, Laurent Vivier wrote:
+Richard Henderson <richard.henderson@linaro.org> writes:
 
-> BI_CPUTYPE/BI_MMUTYPE/BI_FPUTYPE were statically assigned to the
-> 68040 information.
-> This patch changes the code to set in bootinfo the information
-> provided by the command line '-cpu' parameter.
-> 
-> Bug: https://gitlab.com/qemu-project/qemu/-/issues/2091
-> Reported-by: Daniel Palmer <daniel@0x0f.com>
-> Signed-off-by: Laurent Vivier <laurent@vivier.eu>
-> ---
->   hw/m68k/virt.c | 17 ++++++++++++++---
->   1 file changed, 14 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
-> index e2792ef46d93..b8e5e102e6b9 100644
-> --- a/hw/m68k/virt.c
-> +++ b/hw/m68k/virt.c
-> @@ -239,9 +239,20 @@ static void virt_init(MachineState *machine)
->           param_ptr = param_blob;
->   
->           BOOTINFO1(param_ptr, BI_MACHTYPE, MACH_VIRT);
-> -        BOOTINFO1(param_ptr, BI_FPUTYPE, FPU_68040);
-> -        BOOTINFO1(param_ptr, BI_MMUTYPE, MMU_68040);
-> -        BOOTINFO1(param_ptr, BI_CPUTYPE, CPU_68040);
-> +        if (m68k_feature(&cpu->env, M68K_FEATURE_M68020)) {
-> +            BOOTINFO1(param_ptr, BI_CPUTYPE, CPU_68020);
-> +        } else if (m68k_feature(&cpu->env, M68K_FEATURE_M68030)) {
-> +            BOOTINFO1(param_ptr, BI_MMUTYPE, MMU_68030);
-> +            BOOTINFO1(param_ptr, BI_CPUTYPE, CPU_68030);
-> +        } else if (m68k_feature(&cpu->env, M68K_FEATURE_M68040)) {
-> +            BOOTINFO1(param_ptr, BI_FPUTYPE, FPU_68040);
-> +            BOOTINFO1(param_ptr, BI_MMUTYPE, MMU_68040);
-> +            BOOTINFO1(param_ptr, BI_CPUTYPE, CPU_68040);
-> +        } else if (m68k_feature(&cpu->env, M68K_FEATURE_M68060)) {
-> +            BOOTINFO1(param_ptr, BI_FPUTYPE, FPU_68060);
-> +            BOOTINFO1(param_ptr, BI_MMUTYPE, MMU_68060);
-> +            BOOTINFO1(param_ptr, BI_CPUTYPE, CPU_68060);
-> +        }
->           BOOTINFO2(param_ptr, BI_MEMCHUNK, 0, ram_size);
->   
->           BOOTINFO1(param_ptr, BI_VIRT_QEMU_VERSION,
+> On 3/7/24 08:26, Gustavo Romero wrote:
+>> Save target's siginfo into gdbserver_state so it can be used later, for
+>> example, in any stub that requires the target's si_signo and si_code.
+>> This change affects only linux-user mode.
+>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+>> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   gdbstub/internals.h    |  3 +++
+>>   gdbstub/user-target.c  |  3 ++-
+>>   gdbstub/user.c         | 14 ++++++++++----
+>>   include/gdbstub/user.h |  6 +++++-
+>>   linux-user/main.c      |  2 +-
+>>   linux-user/signal.c    |  5 ++++-
+>>   6 files changed, 25 insertions(+), 8 deletions(-)
+>> diff --git a/gdbstub/internals.h b/gdbstub/internals.h
+>> index 56b7c13b75..a7cc69dab3 100644
+>> --- a/gdbstub/internals.h
+>> +++ b/gdbstub/internals.h
+>> @@ -58,6 +58,9 @@ typedef struct GDBState {
+>>       int line_csum; /* checksum at the end of the packet */
+>>       GByteArray *last_packet;
+>>       int signal;
+>> +#ifdef CONFIG_USER_ONLY
+>> +    uint8_t siginfo[MAX_SIGINFO_LENGTH];
+>> +#endif
+>
+> If we this in GDBUserState in user.c -- no need for ifdefs then.
 
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Although it does break on FreeBSD's user target:
 
+  FAILED: libqemu-arm-bsd-user.fa.p/gdbstub_user-target.c.o=20
+  cc -m64 -mcx16 -Ilibqemu-arm-bsd-user.fa.p -I. -I.. -Itarget/arm -I../tar=
+get/arm -I../common-user/host/x86_64 -I../bsd-user/include -Ibsd-user/freeb=
+sd -I../bsd-user/freebsd -I../bsd-user/host/x86_64 -Ibsd-user -I../bsd-user=
+ -I../bsd-user/arm -Iqapi -Itrace -Iui -Iui/shader -I/usr/local/include/cap=
+stone -I/usr/local/include/glib-2.0 -I/usr/local/lib/glib-2.0/include -I/us=
+r/local/include -fdiagnostics-color=3Dauto -Wall -Winvalid-pch -Werror -std=
+=3Dgnu11 -O2 -g -fstack-protector-strong -Wempty-body -Wendif-labels -Wexpa=
+nsion-to-defined -Wformat-security -Wformat-y2k -Wignored-qualifiers -Winit=
+-self -Wmissing-format-attribute -Wmissing-prototypes -Wnested-externs -Wol=
+d-style-definition -Wredundant-decls -Wstrict-prototypes -Wtype-limits -Wun=
+def -Wvla -Wwrite-strings -Wno-gnu-variable-sized-type-not-at-end -Wno-init=
+ializer-overrides -Wno-missing-include-dirs -Wno-psabi -Wno-shift-negative-=
+value -Wno-string-plus-int -Wno-tautological-type-limit-compare -Wno-typede=
+f-redefinition -Wthread-safety -iquote . -iquote /tmp/cirrus-ci-build -iquo=
+te /tmp/cirrus-ci-build/include -iquote /tmp/cirrus-ci-build/host/include/x=
+86_64 -iquote /tmp/cirrus-ci-build/host/include/generic -iquote /tmp/cirrus=
+-ci-build/tcg/i386 -pthread -D_GNU_SOURCE -D_FILE_OFFSET_BITS=3D64 -D_LARGE=
+FILE_SOURCE -fno-strict-aliasing -fno-common -fwrapv -ftrivial-auto-var-ini=
+t=3Dzero -fPIE -DNEED_CPU_H '-DCONFIG_TARGET=3D"arm-bsd-user-config-target.=
+h"' '-DCONFIG_DEVICES=3D"arm-bsd-user-config-devices.h"' -MD -MQ libqemu-ar=
+m-bsd-user.fa.p/gdbstub_user-target.c.o -MF libqemu-arm-bsd-user.fa.p/gdbst=
+ub_user-target.c.o.d -o libqemu-arm-bsd-user.fa.p/gdbstub_user-target.c.o -=
+c ../gdbstub/user-target.c
+  In file included from ../gdbstub/user-target.c:18:
+  ../gdbstub/internals.h:62:21: error: use of undeclared identifier 'MAX_SI=
+GINFO_LENGTH'
+     62 |     uint8_t siginfo[MAX_SIGINFO_LENGTH];
+        |                     ^
+  1 error generated.
+  [2084/6731] Compiling C object libqemu-arm
 
-ATB,
+See: https://gitlab.com/stsquad/qemu/-/jobs/6345829419
 
-Mark.
+<snip>
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
