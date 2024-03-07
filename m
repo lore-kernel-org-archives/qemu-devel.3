@@ -4,65 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F426C54798
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 14:54:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37DE6C54798
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 14:55:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riF70-0000XX-3A; Thu, 07 Mar 2024 09:52:46 -0500
+	id 1riF9W-0001pB-D8; Thu, 07 Mar 2024 09:55:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1riF6s-0000TV-Jt
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 09:52:38 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1riF6o-0003Tc-SC
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 09:52:36 -0500
-Received: from loongson.cn (unknown [43.156.43.207])
- by gateway (Coremail) with SMTP id _____8Bx3+uw1Oll7fMVAA--.54222S3;
- Thu, 07 Mar 2024 22:52:32 +0800 (CST)
-Received: from VM-4-14-ubuntu.. (unknown [43.156.43.207])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8AxTs2Y1OllbElQAA--.15045S11; 
- Thu, 07 Mar 2024 22:52:31 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Song Gao <gaosong@loongson.cn>,
- Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL 09/17] hw/loongarch: Fix fdt memory node wrong 'reg'
-Date: Thu,  7 Mar 2024 22:51:59 +0800
-Message-Id: <20240307145207.247913-10-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240307145207.247913-1-gaosong@loongson.cn>
-References: <20240307145207.247913-1-gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1riF93-0001WC-C9
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 09:54:55 -0500
+Received: from mail-pg1-x544.google.com ([2607:f8b0:4864:20::544])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1riF91-0004JJ-89
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 09:54:53 -0500
+Received: by mail-pg1-x544.google.com with SMTP id
+ 41be03b00d2f7-5d8b887bb0cso732600a12.2
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 06:54:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1709823289; x=1710428089; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Oms6NqjkzEUyYaiJ7fG+Vq3lEerqyjhlXE29cWwJoZ0=;
+ b=PP5BnBjG3sjxwhEVN36G7PQoprnmLZWZnpRCYi/lI6T4zD+mVLSUo6aLGKivXWGLcz
+ E0pqqQuqGX5opKpMvnrwCKo5UUbEtUvcmwRo5oXLgX6FkCi2sRI5s8l3ax10J903FfUJ
+ sHkT2Rnst7oFdRp2mVo0TFPgZCOr6uoN5p82quAz9wHIVlr4qeuN69uG02W+JuRFDuAs
+ DvErJ3ifCRuuVAvqtOWb7tO6knp98zc5XtxhUGxMkS1faKF039u/4coX0kZAIsqvmh0/
+ hUQ3K9yDQ6mvhLCJ574BHRjaY4276ovNkUuWQaeSAHrcr+LPj1EMVhmDbpf/k/rlrOc6
+ 94tg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709823289; x=1710428089;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Oms6NqjkzEUyYaiJ7fG+Vq3lEerqyjhlXE29cWwJoZ0=;
+ b=RwwJR81mHlTzuNSWM92FYEINxK49XhN5Lh9CwwMlJYr260saoJEuIOfcPTExBcbBQl
+ TGWBg0HuqX2Ba1eQgcT72hRMlwy9MIc1l7uCO/lap4lp+gcvnpeWt9gvKBfj7PyIb5yL
+ KCYJURO+RBju7RwM7yE0jz9Gb927dg+lrae6IM692jvSsnx6tAgqFTQSTNfqKkl2ZhXG
+ 9FShuUDH0X4pJTlbtkD7rmX1feMyXpnJ0ct3pmsZIjoQ91xhbu3mTuW8Fsew6obVVc9w
+ GERo8hfQqrt86SnbiDk6xnPY1whHTsgGcD4ijsw68KZ3qf8GCaSHA3r7EoHfc5BxJWfT
+ 85JQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWjYLJsf1GtVpUDup6jzpfEmefrlrelaE7emOEiqwzV/3jEqY4UV+QHADVPlg9L7Ly3PHbu936aMC6IyIzkvy6NOc+J6dk=
+X-Gm-Message-State: AOJu0Yy0af1ca2JMhqYHlw4eBA9QJleku993XOLu8uD84CXH5e0Qu9Tn
+ IxvcksHGzNqAlJWykO4VjsuAc2qqvmJKafil/24RNbjwDWbdZPW6mQfFd8rUnLpRdxrpN/qx9g3
+ LjMlvce/C
+X-Google-Smtp-Source: AGHT+IGWe13Bj6DO8kJXxNG28L7AF4P0SccTo8h7CKv7i3Q57w/Kp+gxIZ706eaVo/nag6PmGJAsTw==
+X-Received: by 2002:a17:90a:d996:b0:29b:3527:8c1d with SMTP id
+ d22-20020a17090ad99600b0029b35278c1dmr13279502pjv.15.1709823289576; 
+ Thu, 07 Mar 2024 06:54:49 -0800 (PST)
+Received: from [100.64.0.1] ([136.226.240.169])
+ by smtp.gmail.com with ESMTPSA id
+ jj21-20020a170903049500b001d717e644e2sm14683488plb.247.2024.03.07.06.54.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 07 Mar 2024 06:54:49 -0800 (PST)
+Message-ID: <60931dcf-5dee-628f-f5ab-b3f148500e25@sifive.com>
+Date: Thu, 7 Mar 2024 22:54:46 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.15.1
+Subject: Re: [PATCH] target/riscv/vector_helper.c: Avoid shifting negative in
+ fractional LMUL checking
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20240306161036.938931-1-max.chou@sifive.com>
+ <99a59762-105a-4982-9c93-ce3e3e242152@ventanamicro.com>
+Content-Language: en-US
+From: Max Chou <max.chou@sifive.com>
+In-Reply-To: <99a59762-105a-4982-9c93-ce3e3e242152@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8AxTs2Y1OllbElQAA--.15045S11
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9xXoW7GryruF43ZryDJr4kJFWrJFc_yoWkJFg_uF
- 4xuwn3urs8J3WxWa9xX347Ja4xKan7Z3Z5Z3Z3Grn2q3W5tr9xGFWaqFsrZrn2qrWUAwnx
- A34UXrn0yr4vgosvyTuYvTs0mTUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvT
- s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
- cSsGvfJTRUUUb28YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_JrI_Jryl8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
- W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jw0_WrylYx0Ex4A2jsIE
- 14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x
- 0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E
- 7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcV
- C0I7IYx2IY67AKxVW8JVW5JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF
- 04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7
- CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jOdb8UUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::544;
+ envelope-from=max.chou@sifive.com; helo=mail-pg1-x544.google.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-2.08,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,40 +105,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The right fdt memory node like [1], not [2]
+Looks liked that I missed this one.
 
-  [1]
-        memory@0 {
-                device_type = "memory";
-                reg = <0x00 0x00 0x00 0x10000000>;
-        };
-  [2]
-        memory@0 {
-                device_type = "memory";
-                reg = <0x02 0x00 0x02 0x10000000>;
-        };
+Thank you Daniel
 
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
-Message-Id: <20240301093839.663947-10-gaosong@loongson.cn>
----
- hw/loongarch/virt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Max.
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 8981b57b12..10fdfec5dd 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -325,7 +325,7 @@ static void fdt_add_memory_node(MachineState *ms,
-     char *nodename = g_strdup_printf("/memory@%" PRIx64, base);
- 
-     qemu_fdt_add_subnode(ms->fdt, nodename);
--    qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 2, base, 2, size);
-+    qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 0, base, 0, size);
-     qemu_fdt_setprop_string(ms->fdt, nodename, "device_type", "memory");
- 
-     if (ms->numa_state && ms->numa_state->num_nodes) {
--- 
-2.34.1
-
+On 2024/3/7 1:17 AM, Daniel Henrique Barboza wrote:
+>
+>
+> On 3/6/24 13:10, Max Chou wrote:
+>> When vlmul is larger than 5, the original fractional LMUL checking may
+>> gets unexpected result.
+>>
+>> Signed-off-by: Max Chou <max.chou@sifive.com>
+>> ---
+>
+> There's already a fix for it in the ML:
+>
+> "[PATCH v3] target/riscv: Fix shift count overflow"
+>
+> https://lore.kernel.org/qemu-riscv/20240225174114.5298-1-demin.han@starfivetech.com/ 
+>
+>
+>
+> Hopefully it'll be queued for the next PR. Thanks,
+>
+>
+> Daniel
+>
+>
+>>   target/riscv/vector_helper.c | 3 +--
+>>   1 file changed, 1 insertion(+), 2 deletions(-)
+>>
+>> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+>> index 84cec73eb20..adceec378fd 100644
+>> --- a/target/riscv/vector_helper.c
+>> +++ b/target/riscv/vector_helper.c
+>> @@ -53,10 +53,9 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, 
+>> target_ulong s1,
+>>            * VLEN * LMUL >= SEW
+>>            * VLEN >> (8 - lmul) >= sew
+>>            * (vlenb << 3) >> (8 - lmul) >= sew
+>> -         * vlenb >> (8 - 3 - lmul) >= sew
+>>            */
+>>           if (vlmul == 4 ||
+>> -            cpu->cfg.vlenb >> (8 - 3 - vlmul) < sew) {
+>> +            ((cpu->cfg.vlenb << 3) >> (8 - vlmul)) < sew) {
+>>               vill = true;
+>>           }
+>>       }
 
