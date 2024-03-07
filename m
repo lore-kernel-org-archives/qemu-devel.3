@@ -4,84 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3965DC54E41
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 00:15:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16AABC5475B
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 00:39:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ri1Pb-0002sy-OM; Wed, 06 Mar 2024 19:15:03 -0500
+	id 1ri1m2-00065m-IQ; Wed, 06 Mar 2024 19:38:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ri1Pa-0002sl-IT
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 19:15:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ri1PY-0007sK-Np
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 19:15:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709770499;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=W8G8PpZqFA/uVDbGya+JXbZO+YcoIxy06Z1t6yPZvRI=;
- b=O5DGJiP/Brl706BUM4q8NAwcZ6De1T4jdSN6UtWESXq3IEyFIUhkqF69ChBxISpiaJPQrC
- eMwcL/xl1kdVi9lxaShmZiyhE6dcQ/Y5e6oVi/+Kn3hktdFqwZ9Stb7e9ic7+hfdnQhHSf
- 3TZCkBZHARH2Uc8+LrymYE3RPt1HM0k=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-543-ko_5A-xZNPysnQjB0zyVmA-1; Wed, 06 Mar 2024 19:14:57 -0500
-X-MC-Unique: ko_5A-xZNPysnQjB0zyVmA-1
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-1dc2d4c7310so827775ad.0
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 16:14:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1ri1lz-00065J-SV; Wed, 06 Mar 2024 19:38:11 -0500
+Received: from mail-vk1-xa34.google.com ([2607:f8b0:4864:20::a34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1ri1ly-0000cd-5f; Wed, 06 Mar 2024 19:38:11 -0500
+Received: by mail-vk1-xa34.google.com with SMTP id
+ 71dfb90a1353d-4d346e4242fso91575e0c.3; 
+ Wed, 06 Mar 2024 16:38:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1709771888; x=1710376688; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+b82yz/PWPSbIk7u3wkU2gko4HUYl4EFp7HRPSeZD6A=;
+ b=OIR5xWsoTuJGaVM7HAQ/uIoe/JU/qMHjbPXXTR09uaL+595YdWXGztPyTXx6qXstQq
+ Jit5y3KyYEUm80tRzGJs8McnCgJeVEx2bts4n9MM1IvILMYWuHBab+Z931qd3obWzzqi
+ jt0LzFB/YdMgYHG4k/amBxuAhMC4bIW4dEQ58FSLncePDtvooo1q352nf7+nHv8OxJbC
+ jfxfzDv/gr2wVkIkJyjgdmI5PAPTjq1aF3DpWHzzyi4XBmF1p+CeSf8YkYmyw3ph6jkI
+ SAsyspl2LYgRrrarC/r/osAVdgrL+Ah/A+yln90yuBlfA1shuQ90hgx47aiPAl1Eljpg
+ xR3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709770497; x=1710375297;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=W8G8PpZqFA/uVDbGya+JXbZO+YcoIxy06Z1t6yPZvRI=;
- b=EH/sdIHe0eDPqRbq+a4z7itjnyM/iVDn7gf4I451FTouTEcaJE++vm8/MRggDLDxb+
- vlkWvk9PUfN4SrkJsav31y4h8EW0+T3uhbtNwGWaISKNYWObfvPcCNvn96l7VfmUEr4o
- I17jeHOGHc+PNsKKHAWN6KR6tBamF1erpgrnSRJM16ybJGZGFRWIYZIqjTpNAyKS93G3
- a1koQQwt3YdLwDyDSTxzT6dI9xdCOYldRAf1S6OfaUhTXT1ydtmjxnhmsNitIuSMSc33
- EYhiJyZZdh6NuraVHkNwpElqNkAP3qjRHUxThxIYgwqS07xRNecDhIdSQYUGJZHst2yU
- pUiA==
-X-Gm-Message-State: AOJu0Yy5ZfkvzS+dBYbXIR43BpPk9brAIuwqSk5iWCUGgS/jboV+7ZH3
- i1MIdiGCRPD0RNbpOADnt0EDBIgM9ZPPJ2JaTIE6N2Cz8gGbyHzmE1gwCK+32xz8QNGQdkmRb4t
- JLFkdn4jVMFITD9lmrXXGtoqera3ZdVM4y53OA7UcHwTXXUlZjyf/
-X-Received: by 2002:a17:902:ea06:b0:1dd:e36:1b8a with SMTP id
- s6-20020a170902ea0600b001dd0e361b8amr601653plg.1.1709770496910; 
- Wed, 06 Mar 2024 16:14:56 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHG29T3vIVVQRRXMVAxKUzRWNdWsGgiXXr/Bnecz4l54Crju5R1xGO5DIz+SDrElOxisqV88w==
-X-Received: by 2002:a17:902:ea06:b0:1dd:e36:1b8a with SMTP id
- s6-20020a170902ea0600b001dd0e361b8amr601641plg.1.1709770496507; 
- Wed, 06 Mar 2024 16:14:56 -0800 (PST)
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- le8-20020a170902fb0800b001dc8db3150asm13256697plb.199.2024.03.06.16.14.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Mar 2024 16:14:56 -0800 (PST)
-Date: Thu, 7 Mar 2024 08:14:49 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com
-Subject: Re: [PATCH v2] migration/multifd: Don't fsync when closing
- QIOChannelFile
-Message-ID: <ZekG-fTq51VRJFz1@x1n>
-References: <20240305195629.9922-1-farosas@suse.de>
+ d=1e100.net; s=20230601; t=1709771888; x=1710376688;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+b82yz/PWPSbIk7u3wkU2gko4HUYl4EFp7HRPSeZD6A=;
+ b=ZeZ5SdGyDVSbOv1E2QwH3onw+WCgRCyWX3gL1Wj1nH46pI5S7/+sl5Tnr5wQAfGKNC
+ MJG2uLx3RVufIJguZyvo3rS5nSeaxzeLDcedtN9Y1S7nltJCPJGWNYsG2IEIRdEqseFq
+ XYjQjySvFEYeJNwNoyOUVAY8m4XBT80+bcsDUxk/WhDVuzjsq6Fpjp0vCHxWPty2rT80
+ VDhSoYumtwNiNbFyjNUgnnbkadM7apI4PqGqAibypY+UhsVbxoOJnuU/kzLh5QhyAxww
+ uHJPE2CKNyRtbl14gMmXNjlYKOjADONTX01aKziq/ZafrvAtAiRgDACRjrUD5hyh8MmQ
+ fOJA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU8uiCEu3pUG3mrDn7oDkBLZeUFLhSmCG7BUoknSyZR/081bfYRjeeUm+DDqxtlDuegNpkhUSk+89OLPTMCEhS7LCiST+Q=
+X-Gm-Message-State: AOJu0YxiAxKjheDjguriGDnd6tullluf0S3lQUG4yn8LGW9jfTLA8AGi
+ LE4/3MoiZdppYXA/Ra3peerZHCp+Rf0okrUNqBolrovDCf1p1DUHszoZXLKGLjD3kfF5xViYYwr
+ c/QnMtaow5MMP8QGX90Z/jD+4gp8=
+X-Google-Smtp-Source: AGHT+IH2aDg2820AIFDOyTMgNXdzbbDVhB8RQRqlcpZS6kPPV6JDedjzjsqohqOgxEylcaMLHcbmpdHzPl/VFyjHzbA=
+X-Received: by 2002:a05:6122:2a50:b0:4cb:2930:7477 with SMTP id
+ fx16-20020a0561222a5000b004cb29307477mr7450172vkb.3.1709771888119; Wed, 06
+ Mar 2024 16:38:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240305195629.9922-1-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+References: <20240306171932.549549-1-dbarboza@ventanamicro.com>
+In-Reply-To: <20240306171932.549549-1-dbarboza@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 7 Mar 2024 10:37:42 +1000
+Message-ID: <CAKmqyKM9CdC_6R9z4+QhCVS2JUY6hX0h4+ZEAsLsgttgrA0cTg@mail.gmail.com>
+Subject: Re: [PATCH v7 0/9] riscv: set vstart_eq_zero on mark_vs_dirty
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a34;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa34.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,67 +92,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 05, 2024 at 04:56:29PM -0300, Fabiano Rosas wrote:
-> Commit bc38feddeb ("io: fsync before closing a file channel") added a
-> fsync/fdatasync at the closing point of the QIOChannelFile to ensure
-> integrity of the migration stream in case of QEMU crash.
-> 
-> The decision to do the sync at qio_channel_close() was not the best
-> since that function runs in the main thread and the fsync can cause
-> QEMU to hang for several minutes, depending on the migration size and
-> disk speed.
-> 
-> To fix the hang, remove the fsync from qio_channel_file_close().
-> 
-> At this moment, the migration code is the only user of the fsync and
-> we're taking the tradeoff of not having a sync at all, leaving the
-> responsibility to the upper layers.
-> 
-> Fixes: bc38feddeb ("io: fsync before closing a file channel")
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+On Thu, Mar 7, 2024 at 3:20=E2=80=AFAM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+> Hi,
+>
+> This version is rebased on top of alistair/riscv-to-apply.next, fixing
+> onflicts with the Ztso changes in ldst_us_trans().
+>
+> No other changes made. All patches acked.
+>
+> v6 link: https://lore.kernel.org/qemu-riscv/20240221213140.365232-1-dbarb=
+oza@ventanamicro.com/
+>
+> Daniel Henrique Barboza (8):
+>   trans_rvv.c.inc: mark_vs_dirty() before loads and stores
+>   trans_rvv.c.inc: remove 'is_store' bool from load/store fns
+>   target/riscv: remove 'over' brconds from vector trans
+>   target/riscv/translate.c: remove 'cpu_vstart' global
+>   target/riscv: remove 'cpu_vl' global
+>   target/riscv/vector_helper.c: set vstart =3D 0 in GEN_VEXT_VSLIDEUP_VX(=
+)
+>   trans_rvv.c.inc: remove redundant mark_vs_dirty() calls
+>   target/riscv/vector_helper.c: optimize loops in ldst helpers
+>
+> Ivan Klokov (1):
+>   target/riscv: Clear vstart_qe_zero flag
 
-Since 9.0 is reaching and it's important we avoid such hang, I queued this
-version.
+Thanks!
 
-However to make sure we can still remember why we do this after a few
-years, I added a rich comment and will squash into this patch:
+Applied to riscv-to-apply.next
 
-=======
+Alistair
 
-diff --git a/migration/multifd.c b/migration/multifd.c
-index 0a8fef046b..bf9d483f7a 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -714,6 +714,22 @@ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
-          * released because finalize() of the iochannel is only
-          * triggered on the last reference and it's not guaranteed
-          * that we always hold the last refcount when reaching here.
-+         *
-+         * Closing the fd explicitly has the benefit that if there is any
-+         * registered I/O handler callbacks on such fd, that will get a
-+         * POLLNVAL event and will further trigger the cleanup to finally
-+         * release the IOC.
-+         *
-+         * FIXME: It should logically be guaranteed that all multifd
-+         * channels have no I/O handler callback registered when reaching
-+         * here, because migration thread will wait for all multifd channel
-+         * establishments to complete during setup.  Since
-+         * migrate_fd_cleanup() will be scheduled in main thread too, all
-+         * previous callbacks should guarantee to be completed when
-+         * reaching here.  See multifd_send_state.channels_created and its
-+         * usage.  In the future, we could replace this with an assert
-+         * making sure we're the last reference, or simply drop it if above
-+         * is more clear to be justified.
-          */
-         qio_channel_close(p->c, &error_abort);
-         object_unref(OBJECT(p->c));
-
-========
-
-Thanks,
-
--- 
-Peter Xu
-
+>
+>  target/riscv/insn_trans/trans_rvbf16.c.inc |  18 +-
+>  target/riscv/insn_trans/trans_rvv.c.inc    | 283 ++++++---------------
+>  target/riscv/insn_trans/trans_rvvk.c.inc   |  30 +--
+>  target/riscv/translate.c                   |  11 +-
+>  target/riscv/vector_helper.c               |   7 +-
+>  5 files changed, 99 insertions(+), 250 deletions(-)
+>
+> --
+> 2.43.2
+>
+>
 
