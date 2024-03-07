@@ -4,83 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D713C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 11:31:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABF51C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 11:40:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riBxj-0005pj-Vt; Thu, 07 Mar 2024 06:31:00 -0500
+	id 1riC6F-0007sc-2t; Thu, 07 Mar 2024 06:39:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1riBxc-0005pL-DM
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 06:30:54 -0500
-Received: from mgamail.intel.com ([192.198.163.7])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1riC6C-0007sK-Tv
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 06:39:45 -0500
+Received: from forwardcorp1c.mail.yandex.net
+ ([2a02:6b8:c03:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1riBxa-0002R8-CQ
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 06:30:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709811050; x=1741347050;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=A10UBKhRS/a5V9sC5bEpT6S/qORoPkNjQunvfSxHJ6I=;
- b=Q4/p/2fnEtratJx0JjD0tBIzGaLMzSvLLfOYI8pm6gC9xVggH20o3FCI
- MjWrH+vsyq4I9tdmKrI81tvWU/oasZx2eZgXnaxQmtwfM+6RJg7ZwzUCS
- M+P4ekjV6fY18e/eQoyGB8zEJP770N99SsbNRI9QvsmvqwNMEJOu5B9Ic
- 5NJy/Ek6In9+LmFlyVGAJHKnpcWub4JMLQ4cwbyWarR9+ApyLo+G41/qw
- kBLY7Qu3b6fTjUDEgsyxaDV+xA/QEjyHWIVWxqUsPS7lh3TAfA57XgwNG
- fuqmVoqPlo9e0OuH+KjpGDquUVatgPY09TZcUc2k9CI6uS6hiMxE9cxxr g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11005"; a="29916226"
-X-IronPort-AV: E=Sophos;i="6.07,211,1708416000"; d="scan'208";a="29916226"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Mar 2024 03:30:47 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,211,1708416000"; d="scan'208";a="33237722"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.242.48])
- ([10.124.242.48])
- by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Mar 2024 03:30:41 -0800
-Message-ID: <d5cb6e5e-0bc1-40bd-8fc1-50a03f42e9cf@intel.com>
-Date: Thu, 7 Mar 2024 19:30:37 +0800
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1riC67-0004MM-9Z
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 06:39:44 -0500
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:dad:0:640:1761:0])
+ by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id 06820608EB;
+ Thu,  7 Mar 2024 14:39:33 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:7204::1:28] (unknown
+ [2a02:6b8:b081:7204::1:28])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id Vdf2fq0IhKo0-a4iBfpOe; Thu, 07 Mar 2024 14:39:32 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1709811572;
+ bh=nAG3ETzOzP+L5Ue4D/pVzlydVOx/sHlkFMD9/vKCZ/4=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=Dh/UCiS0YGSu6WyJF0LAQ+x2HvNzi6PoNMYg+fm52VNWEETiccvU4wEpxwKzv0FW5
+ rmi3xcT4JJmO0o6CQv7EY6qJ+hBJqVBD4LbuIKJTGSvHANvpvKsVjjtCWyxBKliVG3
+ /+wqoGIBAACPySvIrXwpcXO6rNRFoBvIwG4j+pqw=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <8930276b-c87b-4afd-b4e0-489dcaccc4e8@yandex-team.ru>
+Date: Thu, 7 Mar 2024 14:39:31 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 52/65] i386/tdx: Wire TDX_REPORT_FATAL_ERROR with
- GuestPanic facility
+Subject: Re: [PATCH v4 11/25] migration: Add Error** argument to .save_setup()
+ handler
 Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand
- <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ani Sinha <anisinha@redhat.com>, Peter Xu <peterx@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eric Blake <eblake@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
- Claudio Fontana <cfontana@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
- Isaku Yamahata <isaku.yamahata@gmail.com>,
- Chenyi Qiang <chenyi.qiang@intel.com>
-References: <20240229063726.610065-1-xiaoyao.li@intel.com>
- <20240229063726.610065-53-xiaoyao.li@intel.com> <874jdr1wmt.fsf@pond.sub.org>
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <874jdr1wmt.fsf@pond.sub.org>
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
+ Prasad Pandit <pjp@fedoraproject.org>, Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Halil Pasic
+ <pasic@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Eric Blake <eblake@redhat.com>, John Snow <jsnow@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+References: <20240306133441.2351700-1-clg@redhat.com>
+ <20240306133441.2351700-12-clg@redhat.com>
+ <669aaa46-0ed8-46c8-9684-fc4ccc485d4d@yandex-team.ru>
+ <38414ab8-7b29-478c-9fc6-09804cc17842@redhat.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <38414ab8-7b29-478c-9fc6-09804cc17842@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.7; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -11
-X-Spam_score: -1.2
+Received-SPF: pass client-ip=2a02:6b8:c03:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.276, HK_RANDOM_FROM=0.999, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,121 +88,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/29/2024 4:51 PM, Markus Armbruster wrote:
-> Xiaoyao Li <xiaoyao.li@intel.com> writes:
-> 
->> Integrate TDX's TDX_REPORT_FATAL_ERROR into QEMU GuestPanic facility
+On 07.03.24 13:31, Cédric Le Goater wrote:
+> On 3/7/24 10:53, Vladimir Sementsov-Ogievskiy wrote:
+>> On 06.03.24 16:34, Cédric Le Goater wrote:
+>>> The purpose is to record a potential error in the migration stream if
+>>> qemu_savevm_state_setup() fails. Most of the current .save_setup()
+>>> handlers can be modified to use the Error argument instead of managing
+>>> their own and calling locally error_report().
+>>>
+>>> Cc: Nicholas Piggin <npiggin@gmail.com>
+>>> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>>> Cc: Halil Pasic <pasic@linux.ibm.com>
+>>> Cc: Thomas Huth <thuth@redhat.com>
+>>> Cc: Eric Blake <eblake@redhat.com>
+>>> Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>>> Cc: John Snow <jsnow@redhat.com>
+>>> Cc: Stefan Hajnoczi <stefanha@redhat.com>
+>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> Reviewed-by: Peter Xu <peterx@redhat.com>
+>>> Reviewed-by: Thomas Huth <thuth@redhat.com>
+>>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 >>
->> Originated-from: Isaku Yamahata <isaku.yamahata@intel.com>
->> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->> ---
->> Changes in v5:
->> - mention additional error information in gpa when it presents;
->> - refine the documentation; (Markus)
+>> Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 >>
->> Changes in v4:
->> - refine the documentation; (Markus)
+>> Still, if you resend, please add error_prepend in the case below:
 >>
->> Changes in v3:
->> - Add docmentation of new type and struct; (Daniel)
->> - refine the error message handling; (Daniel)
->> ---
->>   qapi/run-state.json   | 31 +++++++++++++++++++++--
->>   system/runstate.c     | 58 +++++++++++++++++++++++++++++++++++++++++++
->>   target/i386/kvm/tdx.c | 24 +++++++++++++++++-
->>   3 files changed, 110 insertions(+), 3 deletions(-)
+>>> diff --git a/migration/savevm.c b/migration/savevm.c
+>>> index 63fdbb5ad7d4dbfaef1d2094350bf302cc677602..52d35b2a72c6238bfe5dcb4d81c1af8d2bf73013 100644
+>>> --- a/migration/savevm.c
+>>> +++ b/migration/savevm.c
+>>> @@ -1342,11 +1342,9 @@ int qemu_savevm_state_setup(QEMUFile *f, Error **errp)
+>>>           }
+>>>           save_section_header(f, se, QEMU_VM_SECTION_START);
+>>> -        ret = se->ops->save_setup(f, se->opaque);
+>>> +        ret = se->ops->save_setup(f, se->opaque, errp);
+>>>           save_section_footer(f, se);
+>>>           if (ret < 0) {
+>>> -            error_setg(errp, "failed to setup SaveStateEntry with id(name): "
+>>> -                       "%d(%s): %d", se->section_id, se->idstr, ret);
 >>
->> diff --git a/qapi/run-state.json b/qapi/run-state.json
->> index dd0770b379e5..b71dd1884eb6 100644
->> --- a/qapi/run-state.json
->> +++ b/qapi/run-state.json
->> @@ -483,10 +483,12 @@
->>   #
->>   # @s390: s390 guest panic information type (Since: 2.12)
->>   #
->> +# @tdx: tdx guest panic information type (Since: 9.0)
->> +#
->>   # Since: 2.9
->>   ##
->>   { 'enum': 'GuestPanicInformationType',
->> -  'data': [ 'hyper-v', 's390' ] }
->> +  'data': [ 'hyper-v', 's390', 'tdx' ] }
->>   
->>   ##
->>   # @GuestPanicInformation:
->> @@ -501,7 +503,8 @@
->>    'base': {'type': 'GuestPanicInformationType'},
->>    'discriminator': 'type',
->>    'data': {'hyper-v': 'GuestPanicInformationHyperV',
->> -          's390': 'GuestPanicInformationS390'}}
->> +          's390': 'GuestPanicInformationS390',
->> +          'tdx' : 'GuestPanicInformationTdx'}}
->>   
->>   ##
->>   # @GuestPanicInformationHyperV:
->> @@ -564,6 +567,30 @@
->>             'psw-addr': 'uint64',
->>             'reason': 'S390CrashReason'}}
->>   
->> +##
->> +# @GuestPanicInformationTdx:
->> +#
->> +# TDX Guest panic information specific to TDX, as specified in the
->> +# "Guest-Hypervisor Communication Interface (GHCI) Specification",
->> +# section TDG.VP.VMCALL<ReportFatalError>.
->> +#
->> +# @error-code: TD-specific error code
->> +#
->> +# @message: Human-readable error message provided by the guest. Not
->> +#     to be trusted.
->> +#
->> +# @gpa: guest-physical address of a page that contains more verbose
->> +#     error information, as zero-terminated string.  Present when the
->> +#     "GPA valid" bit (bit 63) is set in @error-code.
+>> You drop a good bit of information, let's use error_prepend to save it.
 > 
-> Uh, peeking at GHCI Spec section 3.4 TDG.VP.VMCALL<ReportFatalError>, I
-> see operand R12 consists of
+> I kind of agree but the call stack is quite deep and the callees also use
+> error_prepend. The error becomes quite long. Here's an example of what we
+> get today :
 > 
->      bits    name                        description
->      31:0    TD-specific error code      TD-specific error code
->                                          Panic – 0x0.
->                                          Values – 0x1 to 0xFFFFFFFF
->                                          reserved.
->      62:32   TD-specific extended        TD-specific extended error code.
->              error code                  TD software defined.
->      63      GPA Valid                   Set if the TD specified additional
->                                          information in the GPA parameter
->                                          (R13).
+>    (qemu) migrate -d tcp:10.8.3.15:1234
+>    (qemu)
+>    (qemu) qemu-system-x86_64: vfio: Could not start dirty page tracking - 0000:b1:00.2: Failed to start DMA logging: Invalid argument
 > 
-> Is @error-code all of R12, or just bits 31:0?
+> If the subsystems implementing a .save_setup() handler use a component
+> identifier, the failure should be fairly easy to identify.
 > 
-> If it's all of R12, description of @error-code as "TD-specific error
-> code" is misleading.
+> What's the best practice for such cases ?
+> 
+> Can we use multiline errors maybe ? Less practical for grep though.
+> 
+> May be a verbose error mode would help getting more information ?
+> 
+> Anyhow, I can add a new trace event for "failed to setup SaveStateEntry ... "
+> or use error_prepend() as you suggested.
+> 
+> Let's see what the others have to say.
+> 
+> 
+>>
+>>>               qemu_file_set_error(f, ret);
+>>>               break;
+>>
+>> Not about this patch:
+>>
+>> Better do explicit "return ret" instead of this "break" (and one more break above in that loop):
+>>
+>> 1. making a jump to do just do "return ret" seems overkill. It would make sense if we had some more "cleanup" code than just a "return ret", and if so, more classic and readable thing is "goto fail;".
+>> 2. "break" make me think, that there may be more logic after it, which will probably fail, and I should be careful, as errp is already set (and second attempt to set it will crash). Again, "goto fail;" is better, as I don't expect more failures when see it.
+> 
+> Sure. If I respin, I can drop the break and simply return. 
 
-We pass all of R12 to @error_code.
+If so, you should also make simple return instead of one another break in same loop. And drop "if (ret < 0) { return ret }" after loop.
 
-Here it wants to use "error_code" as generic as the whole R12. Do you 
-have any better description of it ?
+> Although,
+> I would be glad to have most of this series merged in QEMU 9.0. So,
+> unless there is something major, I will keep that for followups.
+> 
 
-> If it's just bits 31:0, then 'Present when the "GPA valid" bit (bit 63)
-> is set in @error-code' is wrong.  Could go with 'Only present when the
-> guest provides this information'.
+Agree
+
 > 
->> +#
->> +#
+> Thanks for the review,
 > 
-> Drop one of these two lines, please.
+> C.
 > 
->> +# Since: 9.0
->> +##
->> +{'struct': 'GuestPanicInformationTdx',
->> + 'data': {'error-code': 'uint64',
->> +          'message': 'str',
->> +          '*gpa': 'uint64'}}
->> +
->>   ##
->>   # @MEMORY_FAILURE:
->>   #
 > 
+> 
+> 
+> 
+> 
+
+-- 
+Best regards,
+Vladimir
 
 
