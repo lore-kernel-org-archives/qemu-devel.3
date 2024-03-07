@@ -4,93 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDDF4C54E49
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 11:46:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FC65C54E49
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 11:47:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riCCi-0002oL-Bn; Thu, 07 Mar 2024 06:46:28 -0500
+	id 1riCDY-0003fj-Ij; Thu, 07 Mar 2024 06:47:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1riCCc-0002nR-Qh
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 06:46:23 -0500
-Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1riCDW-0003ed-V4
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 06:47:18 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1riCCa-0007A5-PN
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 06:46:22 -0500
-Received: by mail-lf1-x130.google.com with SMTP id
- 2adb3069b0e04-512b3b04995so575174e87.3
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 03:46:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709811977; x=1710416777; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=3FEKikgmbE/r5zzOA+k0Nr1gqI/iXTequF89jFi37Kw=;
- b=Z36s6xhVAc9ZmFLjTnCoRv9XWYy6Grc0ktoRpiklBS0qCZxny84w+5m+U0xuZNXBR6
- wIHLYKY5ikOvDMCzxYibHIubFH/tX9Gqf7WHhFXzR/iVbTaltF1l+2m7RUBn9aBSNVdE
- YUcBNVQLQllCSLIujUuWdbNEDMfo2eeYNjB/dvqsTe44qPMRJaZd9XvR25lppO+fV4L4
- BRvHhjeUHRd1+VuFwqDn8jnoG8ahIO6UxPI4Y0Ahp8sWUpGGcyMC5c7YBu78OUxQKNKi
- O/GIiFMHLQusKdCVLXvUc3SkSTMSu/TmIHzwiCjtia8wPRqs+Wmc/TsAY7+iN/0xLoEx
- e9wA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709811977; x=1710416777;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3FEKikgmbE/r5zzOA+k0Nr1gqI/iXTequF89jFi37Kw=;
- b=hs+JbmUeQuIwwEDzP02va7DJnyxWNqVeM/h/86IlpukMv+QzrtCWqxlFhTP0uLn49K
- vIClFe77xPFdvbmBc7UfRF0mWUJuoXZ378BCGXuNzLVhvQsL29wYaQ1gdYOsstLzhiLp
- tLqVVcZITnWDBgKdHAVz6tTXyMmRExlm6is/vr6PDWmBRoLxSMmsdoNQHMEYinvijLew
- ddzGzuRaLgaWyp8U22APSix2asRwUtLlIAn+lB7YlYunYpDxPyGgmp/FQYUNPZ2PXDI/
- UV1Xhi3qvUGHXJm00MYrAAkZ+Mkx8epixcq+iRhDq4IS3lRGgwmkWuamspIxkAB8L66+
- 4k3g==
-X-Gm-Message-State: AOJu0Yz8TmhStO5CqjpJ3MBfTf4XtP4NeQbaUVnWGyNXRK90q1diwOnS
- H3vLdS+Xefg5yFc7Ombkt0zXQnN9aFx4nbY4WV8Le+4ZYKQAz6GtPsyMCLlnksLpkNPfkTaEeTV
- 2BQw=
-X-Google-Smtp-Source: AGHT+IFH3wkwuGOA+F/yj5AIdWusXZJacoA67XWG5i8L99raCDY6RqXWR5e9a7fc4f3xfADZKnZc2w==
-X-Received: by 2002:ac2:5223:0:b0:513:4777:f8c9 with SMTP id
- i3-20020ac25223000000b005134777f8c9mr1204156lfl.6.1709811976634; 
- Thu, 07 Mar 2024 03:46:16 -0800 (PST)
-Received: from meli.delivery (adsl-101.37.6.0.tellas.gr. [37.6.0.101])
- by smtp.gmail.com with ESMTPSA id
- j33-20020a05600c1c2100b00413101235b0sm1951412wms.2.2024.03.07.03.46.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 Mar 2024 03:46:16 -0800 (PST)
-Date: Thu, 07 Mar 2024 13:43:50 +0200
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qemu-devel@nongnu.org,
- Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>
-Cc: Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
- David Woodhouse <dwmw@amazon.co.uk>, Thomas Huth <thuth@redhat.com>,
- qemu-arm@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Alex Benn=?UTF-8?B?w6k=?= e <alex.bennee@linaro.org>,
- xen-devel@lists.xenproject.org,
- Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: [PATCH-for-9.0 1/9] hw/xen/hvm: Inline TARGET_PAGE_ALIGN() macro
-User-Agent: meli 0.8.5-rc.3
-References: <20231114163123.74888-1-philmd@linaro.org>
- <20231114163123.74888-2-philmd@linaro.org>
-In-Reply-To: <20231114163123.74888-2-philmd@linaro.org>
-Message-ID: <9z7d2.v9odatywozfr@linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1riCDV-0007qL-4x
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 06:47:18 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id A17EC4988;
+ Thu,  7 Mar 2024 11:24:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1709810666; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=eI8zwx0I/o3RkUEC8LW+WGeZz7baexBy3D709xDCkMA=;
+ b=jQ+LDca36DK1CU68zz7HKarCWs6DIDupZhuU55z9rD3UuKzVrD/PvfgGtkj6ycEiHhEVpw
+ QDZW7OHmdw1DZACjXd5PyPKWFmg/bJFBzEAtpNzE3HRgjJUnmVy+pJt9wNAcHnbl/7cG6R
+ BXw4ZNCuUX8hcHATNJbUy/Vf7+7PQHo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1709810666;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=eI8zwx0I/o3RkUEC8LW+WGeZz7baexBy3D709xDCkMA=;
+ b=zbUTkrdzs7Sn5LTPpIKCD6QLyudZsYNZt971BiOHTtBEOxVL/rIjl4nYKVItg4oA8sT+Li
+ pZIU3AfdpDHLedDA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1709810666; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=eI8zwx0I/o3RkUEC8LW+WGeZz7baexBy3D709xDCkMA=;
+ b=jQ+LDca36DK1CU68zz7HKarCWs6DIDupZhuU55z9rD3UuKzVrD/PvfgGtkj6ycEiHhEVpw
+ QDZW7OHmdw1DZACjXd5PyPKWFmg/bJFBzEAtpNzE3HRgjJUnmVy+pJt9wNAcHnbl/7cG6R
+ BXw4ZNCuUX8hcHATNJbUy/Vf7+7PQHo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1709810666;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=eI8zwx0I/o3RkUEC8LW+WGeZz7baexBy3D709xDCkMA=;
+ b=zbUTkrdzs7Sn5LTPpIKCD6QLyudZsYNZt971BiOHTtBEOxVL/rIjl4nYKVItg4oA8sT+Li
+ pZIU3AfdpDHLedDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2C03712FC5;
+ Thu,  7 Mar 2024 11:24:25 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id KhcHOemj6WXpNgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 07 Mar 2024 11:24:25 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com
+Subject: Re: [PATCH v2] migration/multifd: Don't fsync when closing
+ QIOChannelFile
+In-Reply-To: <ZekG-fTq51VRJFz1@x1n>
+References: <20240305195629.9922-1-farosas@suse.de> <ZekG-fTq51VRJFz1@x1n>
+Date: Thu, 07 Mar 2024 08:24:23 -0300
+Message-ID: <87wmqeqo7s.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::130;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lf1-x130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Authentication-Results: smtp-out2.suse.de;
+	none
+X-Spamd-Result: default: False [-3.10 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,31 +117,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 14 Nov 2023 18:31, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->Use TARGET_PAGE_SIZE to calculate TARGET_PAGE_ALIGN.
->
->Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->---
-> hw/i386/xen/xen-hvm.c | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
->
->diff --git a/hw/i386/xen/xen-hvm.c b/hw/i386/xen/xen-hvm.c
->index f1c30d1384..8aa6a1ec3b 100644
->--- a/hw/i386/xen/xen-hvm.c
->+++ b/hw/i386/xen/xen-hvm.c
->@@ -678,7 +678,7 @@ void xen_arch_set_memory(XenIOState *state, MemoryRegionSection *section,
->     trace_xen_client_set_memory(start_addr, size, log_dirty);
-> 
->     start_addr &= TARGET_PAGE_MASK;
->-    size = TARGET_PAGE_ALIGN(size);
->+    size = ROUND_UP(size, TARGET_PAGE_SIZE);
-> 
->     if (add) {
->         if (!memory_region_is_rom(section->mr)) {
->-- 
->2.41.0
->
->
+Peter Xu <peterx@redhat.com> writes:
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> On Tue, Mar 05, 2024 at 04:56:29PM -0300, Fabiano Rosas wrote:
+>> Commit bc38feddeb ("io: fsync before closing a file channel") added a
+>> fsync/fdatasync at the closing point of the QIOChannelFile to ensure
+>> integrity of the migration stream in case of QEMU crash.
+>>=20
+>> The decision to do the sync at qio_channel_close() was not the best
+>> since that function runs in the main thread and the fsync can cause
+>> QEMU to hang for several minutes, depending on the migration size and
+>> disk speed.
+>>=20
+>> To fix the hang, remove the fsync from qio_channel_file_close().
+>>=20
+>> At this moment, the migration code is the only user of the fsync and
+>> we're taking the tradeoff of not having a sync at all, leaving the
+>> responsibility to the upper layers.
+>>=20
+>> Fixes: bc38feddeb ("io: fsync before closing a file channel")
+>> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>
+> Since 9.0 is reaching and it's important we avoid such hang, I queued this
+> version.
+>
+> However to make sure we can still remember why we do this after a few
+> years, I added a rich comment and will squash into this patch:
+>
+> =3D=3D=3D=3D=3D=3D=3D
+>
+> diff --git a/migration/multifd.c b/migration/multifd.c
+> index 0a8fef046b..bf9d483f7a 100644
+> --- a/migration/multifd.c
+> +++ b/migration/multifd.c
+> @@ -714,6 +714,22 @@ static bool multifd_send_cleanup_channel(MultiFDSend=
+Params *p, Error **errp)
+>           * released because finalize() of the iochannel is only
+>           * triggered on the last reference and it's not guaranteed
+>           * that we always hold the last refcount when reaching here.
+> +         *
+> +         * Closing the fd explicitly has the benefit that if there is any
+> +         * registered I/O handler callbacks on such fd, that will get a
+> +         * POLLNVAL event and will further trigger the cleanup to finally
+> +         * release the IOC.
+> +         *
+> +         * FIXME: It should logically be guaranteed that all multifd
+> +         * channels have no I/O handler callback registered when reaching
+> +         * here, because migration thread will wait for all multifd chan=
+nel
+> +         * establishments to complete during setup.  Since
+> +         * migrate_fd_cleanup() will be scheduled in main thread too, all
+> +         * previous callbacks should guarantee to be completed when
+> +         * reaching here.  See multifd_send_state.channels_created and i=
+ts
+> +         * usage.  In the future, we could replace this with an assert
+> +         * making sure we're the last reference, or simply drop it if ab=
+ove
+> +         * is more clear to be justified.
+>           */
+>          qio_channel_close(p->c, &error_abort);
+>          object_unref(OBJECT(p->c));
+>
+> =3D=3D=3D=3D=3D=3D=3D=3D
+
+Ack. Thanks Peter!
 
