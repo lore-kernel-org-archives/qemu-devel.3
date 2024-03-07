@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0179BC54798
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 14:54:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F426C54798
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 14:54:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riF7I-0001Ni-91; Thu, 07 Mar 2024 09:53:04 -0500
+	id 1riF70-0000XX-3A; Thu, 07 Mar 2024 09:52:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1riF7E-0000x2-NM
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 09:53:00 -0500
+ id 1riF6s-0000TV-Jt
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 09:52:38 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1riF77-0003XT-38
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 09:53:00 -0500
+ (envelope-from <gaosong@loongson.cn>) id 1riF6o-0003Tc-SC
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 09:52:36 -0500
 Received: from loongson.cn (unknown [43.156.43.207])
- by gateway (Coremail) with SMTP id _____8BxHOu41Oll+PMVAA--.44308S3;
- Thu, 07 Mar 2024 22:52:40 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Bx3+uw1Oll7fMVAA--.54222S3;
+ Thu, 07 Mar 2024 22:52:32 +0800 (CST)
 Received: from VM-4-14-ubuntu.. (unknown [43.156.43.207])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8AxTs2Y1OllbElQAA--.15045S15; 
- Thu, 07 Mar 2024 22:52:39 +0800 (CST)
+ AQAAf8AxTs2Y1OllbElQAA--.15045S11; 
+ Thu, 07 Mar 2024 22:52:31 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
-	Song Gao <gaosong@loongson.cn>
-Subject: [PULL 13/17] hw/loongarch: fdt adds pch_msi Controller
-Date: Thu,  7 Mar 2024 22:52:03 +0800
-Message-Id: <20240307145207.247913-14-gaosong@loongson.cn>
+Cc: peter.maydell@linaro.org, Song Gao <gaosong@loongson.cn>,
+ Bibo Mao <maobibo@loongson.cn>
+Subject: [PULL 09/17] hw/loongarch: Fix fdt memory node wrong 'reg'
+Date: Thu,  7 Mar 2024 22:51:59 +0800
+Message-Id: <20240307145207.247913-10-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240307145207.247913-1-gaosong@loongson.cn>
 References: <20240307145207.247913-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8AxTs2Y1OllbElQAA--.15045S15
+X-CM-TRANSID: AQAAf8AxTs2Y1OllbElQAA--.15045S11
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxAF47Jr1UGFykAFy5AFyfZrc_yoW5ZrWxpF
- ZrAFZxZr4UWa47XFZav342ywsxAr1fu34jqF429ry0kFyDu3srXr48Aa93GryUAw48XFn0
- vFZ5X3srW3ZrGwcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvab4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1q6rW5McIj6I8E87Iv
- 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41l42xK82IYc2
- Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1l4IxYO2xFxVAFwI0_Jrv_JF1lx2IqxVAq
- x4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r
- 17MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Xr0_Ar1lIxAIcVC0I7IYx2IY6xkF
- 7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxV
- W8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxU
- cHUqUUUUU
+X-Coremail-Antispam: 1Uk129KBj9xXoW7GryruF43ZryDJr4kJFWrJFc_yoWkJFg_uF
+ 4xuwn3urs8J3WxWa9xX347Ja4xKan7Z3Z5Z3Z3Grn2q3W5tr9xGFWaqFsrZrn2qrWUAwnx
+ A34UXrn0yr4vgosvyTuYvTs0mTUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvT
+ s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
+ cSsGvfJTRUUUb28YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+ vaj40_Wr0E3s1l1IIY67AEw4v_JrI_Jryl8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+ w2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+ W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jw0_WrylYx0Ex4A2jsIE
+ 14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x
+ 0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E
+ 7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcV
+ C0I7IYx2IY67AKxVW8JVW5JwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF
+ 04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7
+ CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jOdb8UUUUU=
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -18
@@ -79,89 +78,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-fdt adds pch msi controller, we use 'loongson,pch-msi-1.0'.
+The right fdt memory node like [1], not [2]
 
-See:
-https://github.com/torvalds/linux/blob/v6.7/drivers/irqchip/irq-loongson-pch-msi.c
-https://lore.kernel.org/r/20200528152757.1028711-6-jiaxun.yang@flygoat.com
+  [1]
+        memory@0 {
+                device_type = "memory";
+                reg = <0x00 0x00 0x00 0x10000000>;
+        };
+  [2]
+        memory@0 {
+                device_type = "memory";
+                reg = <0x02 0x00 0x02 0x10000000>;
+        };
 
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
-Message-Id: <20240301093839.663947-14-gaosong@loongson.cn>
+Message-Id: <20240301093839.663947-10-gaosong@loongson.cn>
 ---
- hw/loongarch/virt.c        | 33 ++++++++++++++++++++++++++++++++-
- include/hw/pci-host/ls7a.h |  1 +
- 2 files changed, 33 insertions(+), 1 deletion(-)
+ hw/loongarch/virt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 2b7b653fc1..1e767c49f8 100644
+index 8981b57b12..10fdfec5dd 100644
 --- a/hw/loongarch/virt.c
 +++ b/hw/loongarch/virt.c
-@@ -173,6 +173,34 @@ static void fdt_add_pch_pic_node(LoongArchMachineState *lams,
-     g_free(nodename);
- }
+@@ -325,7 +325,7 @@ static void fdt_add_memory_node(MachineState *ms,
+     char *nodename = g_strdup_printf("/memory@%" PRIx64, base);
  
-+static void fdt_add_pch_msi_node(LoongArchMachineState *lams,
-+                                 uint32_t *eiointc_phandle,
-+                                 uint32_t *pch_msi_phandle)
-+{
-+    MachineState *ms = MACHINE(lams);
-+    char *nodename;
-+    hwaddr pch_msi_base = VIRT_PCH_MSI_ADDR_LOW;
-+    hwaddr pch_msi_size = VIRT_PCH_MSI_SIZE;
-+
-+    *pch_msi_phandle = qemu_fdt_alloc_phandle(ms->fdt);
-+    nodename = g_strdup_printf("/msi@%" PRIx64, pch_msi_base);
-+    qemu_fdt_add_subnode(ms->fdt, nodename);
-+    qemu_fdt_setprop_cell(ms->fdt, nodename, "phandle", *pch_msi_phandle);
-+    qemu_fdt_setprop_string(ms->fdt, nodename, "compatible",
-+                            "loongson,pch-msi-1.0");
-+    qemu_fdt_setprop_cells(ms->fdt, nodename, "reg",
-+                           0, pch_msi_base,
-+                           0, pch_msi_size);
-+    qemu_fdt_setprop(ms->fdt, nodename, "interrupt-controller", NULL, 0);
-+    qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
-+                          *eiointc_phandle);
-+    qemu_fdt_setprop_cell(ms->fdt, nodename, "loongson,msi-base-vec",
-+                          VIRT_PCH_PIC_IRQ_NUM);
-+    qemu_fdt_setprop_cell(ms->fdt, nodename, "loongson,msi-num-vecs",
-+                          EXTIOI_IRQS - VIRT_PCH_PIC_IRQ_NUM);
-+    g_free(nodename);
-+}
-+
- static void fdt_add_flash_node(LoongArchMachineState *lams)
- {
-     MachineState *ms = MACHINE(lams);
-@@ -594,7 +622,7 @@ static void loongarch_irq_init(LoongArchMachineState *lams)
-     CPULoongArchState *env;
-     CPUState *cpu_state;
-     int cpu, pin, i, start, num;
--    uint32_t cpuintc_phandle, eiointc_phandle, pch_pic_phandle;
-+    uint32_t cpuintc_phandle, eiointc_phandle, pch_pic_phandle, pch_msi_phandle;
+     qemu_fdt_add_subnode(ms->fdt, nodename);
+-    qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 2, base, 2, size);
++    qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 0, base, 0, size);
+     qemu_fdt_setprop_string(ms->fdt, nodename, "device_type", "memory");
  
-     /*
-      * The connection of interrupts:
-@@ -702,6 +730,9 @@ static void loongarch_irq_init(LoongArchMachineState *lams)
-                               qdev_get_gpio_in(extioi, i + start));
-     }
- 
-+    /* Add PCH MSI node */
-+    fdt_add_pch_msi_node(lams, &eiointc_phandle, &pch_msi_phandle);
-+
-     loongarch_devices_init(pch_pic, lams);
- }
- 
-diff --git a/include/hw/pci-host/ls7a.h b/include/hw/pci-host/ls7a.h
-index fe260f0183..cd7c9ec7bc 100644
---- a/include/hw/pci-host/ls7a.h
-+++ b/include/hw/pci-host/ls7a.h
-@@ -25,6 +25,7 @@
- #define VIRT_IOAPIC_REG_BASE     (VIRT_PCH_REG_BASE)
- #define VIRT_PCH_MSI_ADDR_LOW    0x2FF00000UL
- #define VIRT_PCH_REG_SIZE        0x400
-+#define VIRT_PCH_MSI_SIZE        0x8
- 
- /*
-  * GSI_BASE is hard-coded with 64 in linux kernel, else kernel fails to boot
+     if (ms->numa_state && ms->numa_state->num_nodes) {
 -- 
 2.34.1
 
