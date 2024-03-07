@@ -4,111 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36571C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 12:37:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02717C54798
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 12:47:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riCz9-0001vW-10; Thu, 07 Mar 2024 07:36:31 -0500
+	id 1riD8n-0004zG-Ca; Thu, 07 Mar 2024 07:46:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1riCz8-0001vO-1w
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 07:36:30 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1riCz5-0006fn-5o
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 07:36:28 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 879234EE99;
- Thu,  7 Mar 2024 12:28:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709814537; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Kaw11T3IabFvIEmVmolOgSHiwS1mYzlIGrPPU9BinWs=;
- b=MpmQhfh5mpnyISUS+UjLWEHDgprDQRJDnit8etUpvF0dWiV3YMt1woIVBseoY7PKpO9+0b
- 4ELytF8vWcZ02LK3rdWRyWKPvqCKff+CcDL+AJvalzlpaghoAbjA85olM7aIje0GFI+anK
- 0qTpzbYl0gx2nr8YNM+tE/LrYcq6ngM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709814537;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Kaw11T3IabFvIEmVmolOgSHiwS1mYzlIGrPPU9BinWs=;
- b=9FYEqgczt4Khax1LnB1PWf+J+WuEiVfRmiTjXdYN2RCbxUqz4W/LePNgzPnJ8baiubZtw+
- NhIGUImjSEsXPICg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1709814537; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Kaw11T3IabFvIEmVmolOgSHiwS1mYzlIGrPPU9BinWs=;
- b=MpmQhfh5mpnyISUS+UjLWEHDgprDQRJDnit8etUpvF0dWiV3YMt1woIVBseoY7PKpO9+0b
- 4ELytF8vWcZ02LK3rdWRyWKPvqCKff+CcDL+AJvalzlpaghoAbjA85olM7aIje0GFI+anK
- 0qTpzbYl0gx2nr8YNM+tE/LrYcq6ngM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1709814537;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Kaw11T3IabFvIEmVmolOgSHiwS1mYzlIGrPPU9BinWs=;
- b=9FYEqgczt4Khax1LnB1PWf+J+WuEiVfRmiTjXdYN2RCbxUqz4W/LePNgzPnJ8baiubZtw+
- NhIGUImjSEsXPICg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 09E7D136BA;
- Thu,  7 Mar 2024 12:28:56 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 59tsMAiz6WURRwAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 07 Mar 2024 12:28:56 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Alex Williamson
- <alex.williamson@redhat.com>, Avihai Horon <avihaih@nvidia.com>, Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Markus Armbruster
- <armbru@redhat.com>,
- Prasad Pandit <pjp@fedoraproject.org>, =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>
-Subject: Re: [PATCH v4 08/25] migration: Always report an error in
- ram_save_setup()
-In-Reply-To: <20240306133441.2351700-9-clg@redhat.com>
-References: <20240306133441.2351700-1-clg@redhat.com>
- <20240306133441.2351700-9-clg@redhat.com>
-Date: Thu, 07 Mar 2024 09:28:54 -0300
-Message-ID: <87jzmeql89.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1riD8c-0004u6-Id
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 07:46:22 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1riD8V-0002MD-4p
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 07:46:17 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Tr87p5JjBz6K9C7;
+ Thu,  7 Mar 2024 20:41:58 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 147B3140736;
+ Thu,  7 Mar 2024 20:45:57 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Thu, 7 Mar
+ 2024 12:45:56 +0000
+Date: Thu, 7 Mar 2024 12:45:55 +0000
+To: fan <nifan.cxl@gmail.com>
+CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
+ <gregory.price@memverge.com>, <ira.weiny@intel.com>,
+ <dan.j.williams@intel.com>, <a.manzanares@samsung.com>, <dave@stgolabs.net>,
+ <nmtadam.samsung@gmail.com>, <jim.harris@samsung.com>,
+ <Jorgen.Hansen@wdc.com>, <wj28.lee@gmail.com>, Fan Ni <fan.ni@samsung.com>
+Subject: Re: [PATCH v5 09/13] hw/cxl/events: Add qmp interfaces to
+ add/release dynamic capacity extents
+Message-ID: <20240307124555.00001408@Huawei.com>
+In-Reply-To: <Zej5EuQXytgeWGfj@debian>
+References: <20240304194331.1586191-1-nifan.cxl@gmail.com>
+ <20240304194331.1586191-10-nifan.cxl@gmail.com>
+ <20240306174811.000029fd@Huawei.com> <Zej5EuQXytgeWGfj@debian>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Authentication-Results: smtp-out1.suse.de;
-	none
-X-Spamd-Result: default: False [-3.08 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-2.98)[99.90%];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
- RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_SEVEN(0.00)[9];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml500003.china.huawei.com (7.191.162.67) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,16 +72,116 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-C=C3=A9dric Le Goater <clg@redhat.com> writes:
+...
 
-> This will prepare ground for future changes adding an Error** argument
-> to the save_setup() handler. We need to make sure that on failure,
-> ram_save_setup() sets a new error.
->
-> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
+> > > +    list = records;
+> > > +    extents = g_new0(CXLDCExtentRaw, num_extents);
+> > > +    while (list) {
+> > > +        CXLDCExtent *ent;
+> > > +        bool skip_extent = false;
+> > > +
+> > > +        offset = list->value->offset;
+> > > +        len = list->value->len;
+> > > +
+> > > +        extents[i].start_dpa = offset + dcd->dc.regions[rid].base;
+> > > +        extents[i].len = len;
+> > > +        memset(extents[i].tag, 0, 0x10);
+> > > +        extents[i].shared_seq = 0;
+> > > +
+> > > +        if (type == DC_EVENT_RELEASE_CAPACITY ||
+> > > +            type == DC_EVENT_FORCED_RELEASE_CAPACITY) {
+> > > +            /*
+> > > +             *  if the extent is still pending to be added to the host,  
+> > 
+> > Odd spacing.
+> >   
+> > > +             * remove it from the pending extent list, so later when the add
+> > > +             * response for the extent arrives, the device can reject the
+> > > +             * extent as it is not in the pending list.
+> > > +             */
+> > > +            ent = cxl_dc_extent_exists(&dcd->dc.extents_pending_to_add,
+> > > +                        &extents[i]);
+> > > +            if (ent) {
+> > > +                QTAILQ_REMOVE(&dcd->dc.extents_pending_to_add, ent, node);
+> > > +                g_free(ent);
+> > > +                skip_extent = true;
+> > > +            } else if (!cxl_dc_extent_exists(&dcd->dc.extents, &extents[i])) {
+> > > +                /* If the exact extent is not in the accepted list, skip */
+> > > +                skip_extent = true;
+> > > +            }  
+> > I think we need to reject case of some extents skipped and others not.
+> > That's not supported yet so we need to complain if we get it at least. Maybe we need
+> > to do two passes so we know this has happened early (or perhaps this is a later
+> > patch in which case a todo here would help).  
+> 
+> Skip here does not mean the extent is invalid, it just means the extent
+> is still pending to add, so remove them from pending list would be
+> enough to reject the extent, no need to release further. That is based
+> on your feedback on v4.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Ah. I'd missunderstood.
+
+> 
+> The loop here is only to collect the extents to sent to the event log. 
+> But as you said, we need one pass before updating pending list.
+> Actually if we do not allow the above case where extents to release is
+> still in the pending to add list, we can just return here with error, no
+> extra dry run needed. 
+> 
+> What do you think?
+
+I think we need a way to back out extents from the pending to add list
+so we can create the race where they are offered to the OS and it takes
+forever to accept and by the time it does we've removed them.
+
+> 
+> >   
+> > > +        
+> > > +
+> > > +        /* No duplicate or overlapped extents are allowed */
+> > > +        if (test_any_bits_set(blk_bitmap, offset / block_size,
+> > > +                              len / block_size)) {
+> > > +            error_setg(errp, "duplicate or overlapped extents are detected");
+> > > +            return;
+> > > +        }
+> > > +        bitmap_set(blk_bitmap, offset / block_size, len / block_size);
+> > > +
+> > > +        list = list->next;
+> > > +        if (!skip_extent) {
+> > > +            i++;  
+> > Problem is if we skip one in the middle the records will be wrong below.  
+> 
+> Why? Only extents passed the check will be stored in variable extents and
+> processed further and i be updated. 
+> For skipped ones, since i is not updated, they will be
+> overwritten by following valid ones.
+Ah. I'd missed the fact you store into the extent without a check on validity
+but only move the index on if they were valid. Then rely on not passing a trailing
+entry at the end.
+If would be more readable I think if local variables were used for the parameters
+until we've decided not to skip and the this ended with
+
+        if (!skip_extent) {
+            extents[i] = (DCXLDCExtentRaw) {
+                .start_dpa = ...
+	        ...
+            };
+            i++
+        }
+We have local len already so probably just need
+uint64_t start_dpa = offset + dcd->dc.regions[rid].base;
+
+Also maybe skip_extent_evlog or something like that to explain we are only
+skipping that part. 
+Helps people like me who read it completely wrong!
+
+Jonathan
+
+ 
+
 
