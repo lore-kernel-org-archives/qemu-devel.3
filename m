@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B49BCC54798
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 21:14:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07D47C54798
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 21:17:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riL4A-0002Hn-Cm; Thu, 07 Mar 2024 16:14:14 -0500
+	id 1riL6r-0003Et-Gz; Thu, 07 Mar 2024 16:17:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1riL42-0002H5-4K
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 16:14:08 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1riL6p-0003Cr-Ek
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 16:16:59 -0500
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1riL40-0002k3-KW
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 16:14:05 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1dcafff3c50so10601035ad.0
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 13:14:02 -0800 (PST)
+ id 1riL6n-0003Nv-W9
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 16:16:59 -0500
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-53fa455cd94so1143103a12.2
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 13:16:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709846041; x=1710450841; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709846216; x=1710451016; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=OhVW7G2xyj65zUqR8hboFxkIAwOIB1jwL99RPEVZsec=;
- b=sdiwsyD+dlQWwRvVjWHjVmhipFO7z+ZsVM5libKDtrMcXhG0k7pXOR4LoHo/UPX2WT
- 15XIvT2e1i9AKOKmadEmzD63pqW4S4rGhhM2nYKQEVFsw65ROqS0U83PklSpNVm3hfTM
- gz0lFSW8ubAEInfmEdSFh53c+wBWHlUjTNVeHJcF593fgdMWCz+HG2qanbYvGI6GG0dy
- 8XgMg1rAgYA2buTpTuO/dmfAKldrZNTaX83M2VZUNxk6MJMoaBgUhwD95a4A/hI5eySJ
- Cn87KwyJvtUyRiYij11BrquAMr/uxZUtjc7zJiZwxBG6JH605UIHP762N0ZyY4eN4cTb
- giXA==
+ bh=AL6FSYWCh12FPJunLG3Yw2OO7xg2mu2CK39Vd7Rmvdw=;
+ b=indK0n+ccL5mlcTTi9f7SrHGr4OO1ldP9ZVzfrmQ1vV3Kdd0UrmpbP77fjZIqBakMn
+ /Nk24vuG1QMceJhL9rOr9i1Gvki3hBalnXzckc9FfwSlAGwvHdibmTBk52IZqtZVoJpM
+ R7s1IwTcHsSPA6WZ+CBa8U3X9WdkOzz00+8u19JGak2rJ2Gl/KR4Sey95myL0L9e98h6
+ WUzoDYMVdsslpUvAsJ/kcMBi5FK6FTGyqaPkTkHb3MdjBC+ZlwOH9gG7//aX0kPtEla6
+ qt/k7TKMDZr2MF7bFuCy6WpeYNpIO9arjdRBgsYSBsxxNni22TEqcoa2ySfQU9SBU0Wa
+ mq9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709846041; x=1710450841;
+ d=1e100.net; s=20230601; t=1709846216; x=1710451016;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OhVW7G2xyj65zUqR8hboFxkIAwOIB1jwL99RPEVZsec=;
- b=wW9Nd5cIziTmkrEGNqi+041p5mDCQed918RbAbt9EcR+cRTMxsEGUqf315dXqdE6Gx
- UcJ457hyXG6WfOU2YQN7e6ejtZn6igaPOQkdHWE6VZYfFZ+AFnfFKomkzGj8ZOrruEw4
- 8L1EtP5jhVCP3AlJJf8IwyyJfu8ty4rvdNW5MGWGuV2uFcrV8a9sfNdj/QPE0xr4cayo
- HqQMmnRW1ONYvpiZTVSbWKd/CujFmIETYeeEWKybiZc2wgmXWok0dtkrNDX/D0cgMh0L
- t3x0ymyHwVj6Elav+/nzA63/jlQImpHMRo1zaX7X8hC9/WkB6mwKeBb9eEAkVI4dW5kf
- mkMg==
+ bh=AL6FSYWCh12FPJunLG3Yw2OO7xg2mu2CK39Vd7Rmvdw=;
+ b=uyLfFfIqE2MIs0GEqlL8AFSMOAari6Hlus8G0qlZzT3HAc2AcAqEH2cuetrorw1E2x
+ Uex2xrqvYGf5fZtQmzQrXrh4zH6lsEdzl9sXx6cNvjNCDj+YRgYQvNWA8v8jT+QKF1XU
+ J0oGVAe4//cnQ/+fret2uww85Pji9yTfxvuSCWCGqeNsmWWJIv4RATLh2q+F3orzfstK
+ e57ZNLpKy44eUT0zfXIpuMfaxS04/v75gve9p5w54hmoK79dR2eWBaj4FTxD6P/nINsT
+ y89JAPpfjCSNSo7BGZIpz0E0f3WaHhmkImwucY36lPciLLVTgRU8gla6DHE9pHsb0z59
+ Q7iQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU+wg0mX7DtTjY8pZBxQzL3H7SOK8B+XElZ/kBN7eopb4uxujmw8/GBDqWfwjjG2rWtS+O9M1ar/968RvnqJ0TuZKPGKjA=
-X-Gm-Message-State: AOJu0YygbFN0WeK2cgP/Qidq3VWfiyCxxyzqBVZ5mlleMibc9lQhuA1W
- 0FeHukS7wNP/uab6ZPzoQyiegS1gini6F1Ymnfgm56bFMoZEMHfTJ5dYqxv1xlo=
-X-Google-Smtp-Source: AGHT+IHlqwVJtRXhnvf++XzOEqym0hvOtw9f8Ty+btMrkKosYSQSaaoHiQPRdJFvuneRM5UJ60zBuA==
-X-Received: by 2002:a17:902:d4d1:b0:1dc:fae0:1c85 with SMTP id
- o17-20020a170902d4d100b001dcfae01c85mr11274541plg.4.1709846041252; 
- Thu, 07 Mar 2024 13:14:01 -0800 (PST)
+ AJvYcCUDPT076LlAEMJC5f1V58AMeIXYKCNtZQnXOpgPnqdUHmNjrDQySzs52IRDBwsW0Nn7cLspMjJ8KxHw4f/G0GCFcqbaDpE=
+X-Gm-Message-State: AOJu0YxDHOnuA6E8tlKtrXxUTDWv4JDC6wV8iYldcaMSLyIrIz8LgiVp
+ FgHwVZWKsBt6JO/c+QqDuy5ZycodKxDIR7aWWORFdtRROqsyH+iWPKeVJBQ6v30=
+X-Google-Smtp-Source: AGHT+IFPA4+dJwu6Bi8P5AZQ4PvN1DT8s6Tmqewn6wzgjeKkOuS7j//F398UQE8dCJJh5Aart70iJQ==
+X-Received: by 2002:a17:902:f707:b0:1dd:689a:6ff2 with SMTP id
+ h7-20020a170902f70700b001dd689a6ff2mr27734plo.63.1709846216079; 
+ Thu, 07 Mar 2024 13:16:56 -0800 (PST)
 Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
  [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- y22-20020a17090264d600b001dd61bc14f2sm730825pli.8.2024.03.07.13.13.59
+ li4-20020a170903294400b001d8f82c61cdsm15139090plb.231.2024.03.07.13.16.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 Mar 2024 13:14:00 -0800 (PST)
-Message-ID: <68dc0d72-ae67-4e7e-8c1f-670aa59e92c9@linaro.org>
-Date: Thu, 7 Mar 2024 11:13:57 -1000
+ Thu, 07 Mar 2024 13:16:55 -0800 (PST)
+Message-ID: <bbad4f51-5e8e-49ad-ad24-ffe6f044dc39@linaro.org>
+Date: Thu, 7 Mar 2024 11:16:52 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/5] gdbstub: Add Xfer:siginfo:read stub
+Subject: Re: [PATCH v2 5/5] tests/tcg: Add multiarch test for
+ Xfer:siginfo:read stub
 Content-Language: en-US
 To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org, peter.maydell@linaro.org, laurent@vivier.eu,
  philmd@linaro.org
 References: <20240307182623.1450717-1-gustavo.romero@linaro.org>
- <20240307182623.1450717-4-gustavo.romero@linaro.org>
+ <20240307182623.1450717-5-gustavo.romero@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240307182623.1450717-4-gustavo.romero@linaro.org>
+In-Reply-To: <20240307182623.1450717-5-gustavo.romero@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,26 +101,19 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/7/24 08:26, Gustavo Romero wrote:
-> +void gdb_handle_query_xfer_siginfo(GArray *params, void *user_ctx)
-> +{
-> +    unsigned long offset, len;
-> +    uint8_t *siginfo_offset;
-> +
-> +    offset = get_param(params, 0)->val_ul;
-> +    len = get_param(params, 1)->val_ul;
-> +
-> +    if (offset + len > sizeof(target_siginfo_t)) {
+> Add multiarch test for testing if Xfer:siginfo:read query is properly
+> handled by gdbstub.
+> 
+> Signed-off-by: Gustavo Romero<gustavo.romero@linaro.org>
+> ---
+>   tests/tcg/multiarch/Makefile.target           | 10 ++++++-
+>   .../gdbstub/test-qxfer-siginfo-read.py        | 26 +++++++++++++++++++
+>   tests/tcg/multiarch/segfault.c                | 14 ++++++++++
+>   3 files changed, 49 insertions(+), 1 deletion(-)
+>   create mode 100644 tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py
+>   create mode 100644 tests/tcg/multiarch/segfault.c
 
-If you save the siginfo_len from gdb_handlesig, you can place this in user.c.
-
-Is it really correct to reject (offset == 0) + (len == large), rather than truncate len?
-
-> +    /* Reply */
-> +    g_string_assign(gdbserver_state.str_buf, "l");
-> +    gdb_memtox(gdbserver_state.str_buf, (const char *)siginfo_offset, len);
-
-It seems easy enough to reply with the exact length remaining...
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
