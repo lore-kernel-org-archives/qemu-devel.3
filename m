@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8F9BC54E49
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 10:22:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9610C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 10:22:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riAso-0005PZ-DP; Thu, 07 Mar 2024 05:21:50 -0500
+	id 1riAsw-0005dJ-A9; Thu, 07 Mar 2024 05:21:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1riAsi-0005Ow-Na
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 05:21:44 -0500
-Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
+ id 1riAsp-0005WB-Vb
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 05:21:52 -0500
+Received: from mail-oi1-x22a.google.com ([2607:f8b0:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1riAsf-0007CU-Cg
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 05:21:44 -0500
-Received: by mail-ot1-x32a.google.com with SMTP id
- 46e09a7af769-6e4a0e80d14so554215a34.1
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 02:21:40 -0800 (PST)
+ id 1riAso-0007F5-Dp
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 05:21:51 -0500
+Received: by mail-oi1-x22a.google.com with SMTP id
+ 5614622812f47-3bd72353d9fso307265b6e.3
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 02:21:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709806899; x=1710411699;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709806909; x=1710411709;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=3/84n3G740Rm4hmj3TunpldInJlo341Vetn+9WdD47E=;
- b=eXBavnflLvZ3nKviTKvbDLXC35tYgkUqajS8Ahtw26qTj/AJ21da0I1FQ6ShSXdo6s
- Hm+M8WsQnQSdCs+r1YtqtgQpH9og8JZVqnaPki0E+euu7Y3OKkKy6IXNLB0N1Lv7VgHn
- uHb2LH5heyUW0ps6aEiNpFSEUy60+VUgxtozsOe+6acp4ayymJMWZfeHnyc3p2JDViaT
- rNh7GExz+AQzasW57qvtRYEjrLqCtznWCp6zjrZf3OcqBbqKECTu0UVX+n9F2PEfgN6g
- dqGr8mA5Q8AFbEBPNfOhYulR6+1xENIz3irEdC4j2wY0t4PsVQ6vcaRtHpzW6y0ND7Ml
- hdcw==
+ :reply-to; bh=SWv/n6ZKj2r4AuXL4UqGI23kMpuzOnRejuu9Q3uLHrw=;
+ b=1/Qkl/BSvuZ6Pe3LVvtuswGUfBtm7SsFOUeu8q4a2/hmrZyqrPf83Yce+6tiziCs1Z
+ MX8QreJRjSHCheIMIUNYPZOQ7YRSpKRIGccBfUOqcT4SFUvCgGQA7849dFjKqPszT2vQ
+ nKcPShyWvF+XwJpN1zgTn7FhDKTGb5YK/mbca3luGdM2maRvYmAWvZtitT0Mzod8e+bG
+ CZ1BUiphKfr5R5ltj0Sbc12Zv9j3wOr45Bb9g4xCzJbsUywxIIKcbvXYjpR0MoXfQJxi
+ V9B1eVJjQkHKPByE8uWjMt4ObMRdTLuMSgZuF7NJZxMf4z6bLNuPPsprXNbBEIPrPG8n
+ +L5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709806899; x=1710411699;
+ d=1e100.net; s=20230601; t=1709806909; x=1710411709;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3/84n3G740Rm4hmj3TunpldInJlo341Vetn+9WdD47E=;
- b=vxfSHuFbGnRKCdPJ3yklTKUlp/16+qrtdittpjl7u79UNOEuoMW9MwNJcOJIYcTj8b
- G2YpqDemNxLyn3fBugjnVtUpcxkcNld9Avpg6VbRUcQPOFRliYyolIW7+kssMLfUbUz1
- p55Sr9lw3mmSgasCeugNByn63s1unzGyNQl0KREzavfV5F/D/KS2NslQH0MiJJCsUW4r
- bxE0wJVDhr2ZeV2Da8kXxpl83X4hcU3Y7sdY6I8jmCQwZ3KJRemoIk0AzYblbLewUFoj
- 2P3HCK+LTGVdkpOGlmL/kgLb6cwMK6iruWLCCZfVMhaLeL466aTzaJbIpHZiF4V9t6uh
- KrsA==
-X-Gm-Message-State: AOJu0Yzn5Xsa7d2J8k3ORcFlUxYrirsW+x5Q+asXyVWvCnIMZJoxG2Qz
- pG2QaWGrGAVmSzZ6S1cklrfxjU36CHB5lX3EA5wIJKxXc6xhMyoBQYIyIY4wUuo=
-X-Google-Smtp-Source: AGHT+IFh3G/9ZepsXtxbhdUpXFx3vDivziBUBOZ/ZDpSEbsqw9dGzIm9WId/UrIg3ew0NhlmcfOz3w==
-X-Received: by 2002:a9d:75cc:0:b0:6e4:e7c5:d4c7 with SMTP id
- c12-20020a9d75cc000000b006e4e7c5d4c7mr8127384otl.19.1709806899615; 
- Thu, 07 Mar 2024 02:21:39 -0800 (PST)
+ bh=SWv/n6ZKj2r4AuXL4UqGI23kMpuzOnRejuu9Q3uLHrw=;
+ b=WWE6mut/BExNniJ2LHmQHuW4CBZB9aXyhO95NEyLiVrSWaYtxBHt6UNZUOIoG35hnY
+ 5VNmDL+VXLkPOJOJ0Ux+QsNBmPwaMd7yZPXK3w1Fbt2bUbZzs7TIqx9aeWVJmF7OF/hT
+ zGTAdNe7+z1uhX7yY0G3vfAqvxOtF0445oVvWW4x08iLGif76SDauJChqdo5ZppbeG9b
+ oIqOdaNDgP4js0CbRWQH7+9dPDxfqLOFWHHEOLLGlAIOKbcPFLjMH/+PTyRxMmpJxfZ0
+ tdsT0UMvb1QSI103nGCVOeBfsQJNSMHp/M2XrXLeF321wyqg6qavOwzbs93GqPxg7/XJ
+ pcPg==
+X-Gm-Message-State: AOJu0YyaA8CwGnWgnhB2frDql62ufe4ScBUILiBMtwJuBQ3QaZZCABL5
+ /DkDTooMwofGC8otzHaqvm3VIwj4xS1XWlZM3Sr11ro7HJd5HSZBkQ9JbrtfCnJQBVokuDQg33M
+ K
+X-Google-Smtp-Source: AGHT+IGwXSPAhhT9Q4vOFxyGynKFUYnnavYEGXAQmIVBHM/YfXvH1OF/25PjupTjV2WjuH/DqXkvgQ==
+X-Received: by 2002:a05:6870:a70a:b0:21e:5a2b:58ac with SMTP id
+ g10-20020a056870a70a00b0021e5a2b58acmr7672016oam.15.1709806909126; 
+ Thu, 07 Mar 2024 02:21:49 -0800 (PST)
 Received: from localhost ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
  by smtp.gmail.com with UTF8SMTPSA id
- b16-20020a630c10000000b005dbed0ffb10sm12353454pgl.83.2024.03.07.02.21.38
+ r11-20020a63ec4b000000b005d880b41598sm12186644pgj.94.2024.03.07.02.21.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 Mar 2024 02:21:39 -0800 (PST)
+ Thu, 07 Mar 2024 02:21:48 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Thu, 07 Mar 2024 19:20:57 +0900
-Subject: [PATCH v4 14/19] contrib/elf2dmp: Use rol64() to decode
+Date: Thu, 07 Mar 2024 19:21:00 +0900
+Subject: [PATCH v4 17/19] contrib/elf2dmp: Use GPtrArray
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240307-elf2dmp-v4-14-4f324ad4d99d@daynix.com>
+Message-Id: <20240307-elf2dmp-v4-17-4f324ad4d99d@daynix.com>
 References: <20240307-elf2dmp-v4-0-4f324ad4d99d@daynix.com>
 In-Reply-To: <20240307-elf2dmp-v4-0-4f324ad4d99d@daynix.com>
 To: Viktor Prutyanov <viktor.prutyanov@phystech.edu>, 
  Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::32a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-ot1-x32a.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::22a;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x22a.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -94,48 +95,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-rol64() is roubust against too large shift values and fixes UBSan
-warnings.
+This removes the need to enumarate QEMUCPUState twice and saves code.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- contrib/elf2dmp/main.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ contrib/elf2dmp/qemu_elf.c | 25 ++++++++-----------------
+ 1 file changed, 8 insertions(+), 17 deletions(-)
 
-diff --git a/contrib/elf2dmp/main.c b/contrib/elf2dmp/main.c
-index 32dc8bac6a30..d046a72ae67f 100644
---- a/contrib/elf2dmp/main.c
-+++ b/contrib/elf2dmp/main.c
-@@ -6,6 +6,7 @@
-  */
+diff --git a/contrib/elf2dmp/qemu_elf.c b/contrib/elf2dmp/qemu_elf.c
+index a22c057d3ec3..7d896cac5b15 100644
+--- a/contrib/elf2dmp/qemu_elf.c
++++ b/contrib/elf2dmp/qemu_elf.c
+@@ -66,7 +66,7 @@ static bool init_states(QEMU_Elf *qe)
+     Elf64_Nhdr *start = (void *)((uint8_t *)qe->map + phdr[0].p_offset);
+     Elf64_Nhdr *end = (void *)((uint8_t *)start + phdr[0].p_memsz);
+     Elf64_Nhdr *nhdr;
+-    size_t cpu_nr = 0;
++    GPtrArray *states;
  
- #include "qemu/osdep.h"
-+#include "qemu/bitops.h"
- 
- #include "err.h"
- #include "addrspace.h"
-@@ -47,11 +48,6 @@ static const uint64_t SharedUserData = 0xfffff78000000000;
-     s ? printf(#s" = 0x%016"PRIx64"\n", s) :\
-     eprintf("Failed to resolve "#s"\n"), s)
- 
--static uint64_t rol(uint64_t x, uint64_t y)
--{
--    return (x << y) | (x >> (64 - y));
--}
--
- /*
-  * Decoding algorithm can be found in Volatility project
-  */
-@@ -64,7 +60,7 @@ static void kdbg_decode(uint64_t *dst, uint64_t *src, size_t size,
-         uint64_t block;
- 
-         block = src[i];
--        block = rol(block ^ kwn, (uint8_t)kwn);
-+        block = rol64(block ^ kwn, kwn);
-         block = __builtin_bswap64(block ^ kdbe) ^ kwa;
-         dst[i] = block;
+     if (phdr[0].p_type != PT_NOTE) {
+         eprintf("Failed to find PT_NOTE\n");
+@@ -74,38 +74,29 @@ static bool init_states(QEMU_Elf *qe)
      }
+ 
+     qe->has_kernel_gs_base = 1;
++    states = g_ptr_array_new();
+ 
+     for (nhdr = start; nhdr < end; nhdr = nhdr_get_next(nhdr)) {
+         if (!strcmp(nhdr_get_name(nhdr), QEMU_NOTE_NAME)) {
+             QEMUCPUState *state = nhdr_get_desc(nhdr);
+ 
+             if (state->size < sizeof(*state)) {
+-                eprintf("CPU #%zu: QEMU CPU state size %u doesn't match\n",
+-                        cpu_nr, state->size);
++                eprintf("CPU #%u: QEMU CPU state size %u doesn't match\n",
++                        states->len, state->size);
+                 /*
+                  * We assume either every QEMU CPU state has KERNEL_GS_BASE or
+                  * no one has.
+                  */
+                 qe->has_kernel_gs_base = 0;
+             }
+-            cpu_nr++;
++            g_ptr_array_add(states, state);
+         }
+     }
+ 
+-    printf("%zu CPU states has been found\n", cpu_nr);
++    printf("%u CPU states has been found\n", states->len);
+ 
+-    qe->state = g_new(QEMUCPUState*, cpu_nr);
+-
+-    cpu_nr = 0;
+-
+-    for (nhdr = start; nhdr < end; nhdr = nhdr_get_next(nhdr)) {
+-        if (!strcmp(nhdr_get_name(nhdr), QEMU_NOTE_NAME)) {
+-            qe->state[cpu_nr] = nhdr_get_desc(nhdr);
+-            cpu_nr++;
+-        }
+-    }
+-
+-    qe->state_nr = cpu_nr;
++    qe->state_nr = states->len;
++    qe->state = (void *)g_ptr_array_free(states, FALSE);
+ 
+     return true;
+ }
 
 -- 
 2.44.0
