@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50AE8C54E55
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 06:08:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D5A9C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 06:11:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ri6v5-0002Ll-Ms; Thu, 07 Mar 2024 01:07:55 -0500
+	id 1ri6yP-0003Eh-Jq; Thu, 07 Mar 2024 01:11:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ri6v3-0002LJ-Jb
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 01:07:53 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ri6yN-0003DP-Kq
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 01:11:19 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ri6v1-0007wM-Ul
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 01:07:53 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ri6yL-0000vG-7P
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 01:11:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709791671;
+ s=mimecast20190719; t=1709791876;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=tW6GZrePSbngs484fE2xRrRcWfq7gTab+KL0v1lNTjg=;
- b=hTMieT7+AhMOCqipSSgxyKQjOt7T/ergevsHz0ec/R7h4l4Z7O1Ef/Ok+EoueEY7Goy0zm
- v25erYzJySt0l+qtxpk7louxjTNjpwBpxNg0mWS0f0YvO3cwg9njgPSXTOSN26n7S/bQBX
- 1CpqFtVbmLWInny2fhNO34rRzdHcRsw=
+ bh=otQS+WzTqecVja2b1outR49VfJfSQU/3pyuLeYKUmvI=;
+ b=Y3WPpH3bGT10kKjAzsffCyYhdQRyMWGTNRqlXbcoiEccVTuYkWAfSHrS5nxRNyTqhHqbaN
+ qrlSz3UZtkBdlzydQploipZyCVzmJmf0tuV045CKPJAZCiarmPZ5qxbQBWirKSgRqAxw0G
+ qd7CkWEoyKqwDOfDYzraSo76kUOM0vA=
 Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
  [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-484-HFs5vk9SO3C9JfOPAgMY7A-1; Thu, 07 Mar 2024 01:07:48 -0500
-X-MC-Unique: HFs5vk9SO3C9JfOPAgMY7A-1
+ us-mta-380-rqX1EFuANGuhTbF4RCdEsw-1; Thu, 07 Mar 2024 01:11:14 -0500
+X-MC-Unique: rqX1EFuANGuhTbF4RCdEsw-1
 Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a45ac612a4dso174878366b.0
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 22:07:48 -0800 (PST)
+ a640c23a62f3a-a3fb52f121eso33906566b.0
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 22:11:14 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709791668; x=1710396468;
+ d=1e100.net; s=20230601; t=1709791873; x=1710396673;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tW6GZrePSbngs484fE2xRrRcWfq7gTab+KL0v1lNTjg=;
- b=GdMOBvktjxZd5gqDKiOk4gDWpnLaveR4EpsdylWTemvmHpG1rpIax90Yq0AByYIOQh
- Z9bu/NA9saZPwZhf1bqQNxWjvRsfzMoVP5I+sLzj0ma2Cp1NAIMv88iTQtSmTVAbyzen
- 11Dy7Kur1jm7QToXS0oi5HmwozUg+9ExsdUdbB1AsNn7sdb53jV/shNOplJJuyoRmo7c
- rMUp5QD2+bQpXMnvUxixbeGJwmIneMj4lDg48tRF4xdxq7VfWGRmcTSv5J+ChwVpCtgB
- wOu8ramkGe037dHrI/HGuPqc0MCdbFrYivkUVfx/Wg+sCa6gtWECc6t33eza+6S3IyxQ
- OThw==
+ bh=otQS+WzTqecVja2b1outR49VfJfSQU/3pyuLeYKUmvI=;
+ b=YjB9/E8s4lKdSRjIQaB3sIDqSj6wcpt3D2jtC4naDKhIiRkU437mhRs0mNaUNB1QN0
+ K1vuH2PjVYGNaDYIE/t4VJNBTIzh60fRynGI6SqF9nyyZRWh/BQPCGSd5pRu3eZyJbgJ
+ EAUv76/+FBQCXJ64x7LaPft3dWwwhmzsdNp8fG00wWQELJadw2WNvIQMbAfburodKXSl
+ XcnNNE1jA/leaUzVu6MDuBTbEsHjzrqHuNc+Kd8U2WDHwJ5JA1KYJsy8OBwGfSmb0eXK
+ PLn46HjkHPpf/j41bItXUSDy3rVsHk52j1vLeSsLYe6CjTfKYkYJ5ogWMXUfEokJVciF
+ nlsA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV8pknh3aJF2Ep/kM2d74WCBR5XggLsCRu8A284iGLJ2dTGGLfLEBxwj0J46orjkwM97VhVvz8t760+kHnH0MJ1G2JPrLU=
-X-Gm-Message-State: AOJu0YwR3g9f0vQHVmbUUZsoZRlKaVgGbzStji2Xzav1mTReBEDIOzOl
- gpXb05mMRJjJQetVgd0xlJvtmIzHlu5FBqg+CjpHeewwzoSuMjb5J0tixIp1b/Sx0ttq3XGCxZ7
- CtlkxhwZfFFzHaWlNYFWetF3LxQV9gGslW7EKAmTmSrHeNEIhbrJw
-X-Received: by 2002:a17:906:11d9:b0:a45:ada9:4bf1 with SMTP id
- o25-20020a17090611d900b00a45ada94bf1mr424377eja.12.1709791667746; 
- Wed, 06 Mar 2024 22:07:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFusPxhPQ5//eVC3tdZpOZBd6dKZbNAAdVyihLUFwXvetpIZ60j/x/W8BsH5klFgk7G4OdayQ==
-X-Received: by 2002:a17:906:11d9:b0:a45:ada9:4bf1 with SMTP id
- o25-20020a17090611d900b00a45ada94bf1mr424353eja.12.1709791667374; 
- Wed, 06 Mar 2024 22:07:47 -0800 (PST)
+ AJvYcCV10En00g9qpa1Dt8sdVH2Cdv+fU6yXAY8H4avfZhl2TRBpzj3LVwcmwoUgPWPZcfhirz458Nvz5+xSx8+JtqKFYuv2hZk=
+X-Gm-Message-State: AOJu0Yzl4Z+LilA4DmRTWOhZKwQMFCojujNGpA4R9xzULYgQJLcRy+eB
+ qbs4SYKWmzanmYi1UWSkkLyuY+UWDqTS3S2xhyXNrrjezvK2s4bmkpzmE3F2M5iaKNkJZgqnkZp
+ ivpXlOKKn6gsIJEZ5UPVZE3BVc+NWyq51ueIqEGvfR7gPtWUkWAu+/Mz26w28
+X-Received: by 2002:a17:907:20b9:b0:a43:6cd2:7a27 with SMTP id
+ pw25-20020a17090720b900b00a436cd27a27mr10953973ejb.19.1709791873190; 
+ Wed, 06 Mar 2024 22:11:13 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGGc3aZBX5zh1ca80yDWFlHlQSu5l2WOHYL9vTdv++4WZYM6Zu/bsW7BpXSd9Rz+9yCk/wzhg==
+X-Received: by 2002:a17:907:20b9:b0:a43:6cd2:7a27 with SMTP id
+ pw25-20020a17090720b900b00a436cd27a27mr10953963ejb.19.1709791872914; 
+ Wed, 06 Mar 2024 22:11:12 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-178-151.web.vodafone.de.
  [109.43.178.151]) by smtp.gmail.com with ESMTPSA id
- ef5-20020a17090697c500b00a449cb924dbsm6535442ejb.124.2024.03.06.22.07.45
+ lk11-20020a170906cb0b00b00a4577ffe69csm3546741ejb.78.2024.03.06.22.11.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Mar 2024 22:07:46 -0800 (PST)
-Message-ID: <363f8d66-646f-43cf-a49c-cf47af7dec19@redhat.com>
-Date: Thu, 7 Mar 2024 07:07:45 +0100
+ Wed, 06 Mar 2024 22:11:12 -0800 (PST)
+Message-ID: <67fb8df8-bfe5-4e6c-bfa5-30579cb4ae4a@redhat.com>
+Date: Thu, 7 Mar 2024 07:11:11 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/14] tests/unit/test-smp-parse: Test "drawers" and
- "books" combination case
+Subject: Re: [PATCH 14/14] tests/unit/test-smp-parse: Test "parameter=0" SMP
+ configurations
 Content-Language: en-US
 To: Zhao Liu <zhao1.liu@linux.intel.com>,
  Eduardo Habkost <eduardo@habkost.net>,
@@ -79,11 +79,10 @@ To: Zhao Liu <zhao1.liu@linux.intel.com>,
  Yanan Wang <wangyanan55@huawei.com>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
- qemu-devel@nongnu.org, Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- qemu-s390x <qemu-s390x@nongnu.org>
+ qemu-devel@nongnu.org
 Cc: Xiaoling Song <xiaoling.song@intel.com>, Zhao Liu <zhao1.liu@intel.com>
 References: <20240306095407.3058909-1-zhao1.liu@linux.intel.com>
- <20240306095407.3058909-12-zhao1.liu@linux.intel.com>
+ <20240306095407.3058909-15-zhao1.liu@linux.intel.com>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -127,7 +126,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240306095407.3058909-12-zhao1.liu@linux.intel.com>
+In-Reply-To: <20240306095407.3058909-15-zhao1.liu@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -139,7 +138,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,160 +157,17 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 06/03/2024 10.54, Zhao Liu wrote:
 > From: Zhao Liu <zhao1.liu@intel.com>
 > 
-> Since s390 machine supports both "drawers" and "books" in -smp, add the
-> "drawers" and "books" combination test case to match the actual topology
-> usage scenario.
+> The support for "parameter=0" SMP configurations is removed, and QEMU
+> returns error for those cases.
+> 
+> So add the related test cases to ensure parameters can't accept 0.
 > 
 > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> Tested-by: Xiaoling Song <xiaoling.song@intel.com>
 > ---
->   tests/unit/test-smp-parse.c | 103 ++++++++++++++++++++++++++++++++++++
->   1 file changed, 103 insertions(+)
+>   tests/unit/test-smp-parse.c | 92 +++++++++++++++++++++++++++++++++++++
+>   1 file changed, 92 insertions(+)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-
-> diff --git a/tests/unit/test-smp-parse.c b/tests/unit/test-smp-parse.c
-> index aea1b2e73a55..0cf611519865 100644
-> --- a/tests/unit/test-smp-parse.c
-> +++ b/tests/unit/test-smp-parse.c
-> @@ -445,6 +445,33 @@ static const struct SMPTestData data_with_drawers_invalid[] = {
->       },
->   };
->   
-> +static const struct SMPTestData data_with_drawers_books_invalid[] = {
-> +    {
-> +        /*
-> +         * config: -smp 200,drawers=2,books=2,sockets=2,cores=4,\
-> +         * threads=2,maxcpus=200
-> +         */
-> +        .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 200, T, 3, T, 5, T,
-> +                                                2, T, 4, T, 2, T, 200),
-> +        .expect_error = "Invalid CPU topology: "
-> +                        "product of the hierarchy must match maxcpus: "
-> +                        "drawers (3) * books (5) * sockets (2) * "
-> +                        "cores (4) * threads (2) != maxcpus (200)",
-> +    }, {
-> +        /*
-> +         * config: -smp 242,drawers=2,books=2,sockets=2,cores=4,\
-> +         * threads=2,maxcpus=240
-> +         */
-> +        .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 242, T, 3, T, 5, T,
-> +                                                2, T, 4, T, 2, T, 240),
-> +        .expect_error = "Invalid CPU topology: "
-> +                        "maxcpus must be equal to or greater than smp: "
-> +                        "drawers (3) * books (5) * sockets (2) * "
-> +                        "cores (4) * threads (2) "
-> +                        "== maxcpus (240) < smp_cpus (242)",
-> +    },
-> +};
-> +
->   static char *smp_config_to_string(const SMPConfiguration *config)
->   {
->       return g_strdup_printf(
-> @@ -698,6 +725,14 @@ static void machine_with_drawers_class_init(ObjectClass *oc, void *data)
->       mc->smp_props.drawers_supported = true;
->   }
->   
-> +static void machine_with_drawers_books_class_init(ObjectClass *oc, void *data)
-> +{
-> +    MachineClass *mc = MACHINE_CLASS(oc);
-> +
-> +    mc->smp_props.drawers_supported = true;
-> +    mc->smp_props.books_supported = true;
-> +}
-> +
->   static void test_generic_valid(const void *opaque)
->   {
->       const char *machine_type = opaque;
-> @@ -936,6 +971,67 @@ static void test_with_drawers(const void *opaque)
->       object_unref(obj);
->   }
->   
-> +static void test_with_drawers_books(const void *opaque)
-> +{
-> +    const char *machine_type = opaque;
-> +    Object *obj = object_new(machine_type);
-> +    MachineState *ms = MACHINE(obj);
-> +    MachineClass *mc = MACHINE_GET_CLASS(obj);
-> +    SMPTestData data = {};
-> +    unsigned int num_drawers = 5, num_books = 3;
-> +    int i;
-> +
-> +    for (i = 0; i < ARRAY_SIZE(data_generic_valid); i++) {
-> +        data = data_generic_valid[i];
-> +        unsupported_params_init(mc, &data);
-> +
-> +        /*
-> +         * when drawers and books parameters are omitted, they will
-> +         * be both set as 1.
-> +         */
-> +        data.expect_prefer_sockets.drawers = 1;
-> +        data.expect_prefer_sockets.books = 1;
-> +        data.expect_prefer_cores.drawers = 1;
-> +        data.expect_prefer_cores.books = 1;
-> +
-> +        smp_parse_test(ms, &data, true);
-> +
-> +        /* when drawers and books parameters are both specified */
-> +        data.config.has_drawers = true;
-> +        data.config.drawers = num_drawers;
-> +        data.config.has_books = true;
-> +        data.config.books = num_books;
-> +
-> +        if (data.config.has_cpus) {
-> +            data.config.cpus *= num_drawers * num_books;
-> +        }
-> +        if (data.config.has_maxcpus) {
-> +            data.config.maxcpus *= num_drawers * num_books;
-> +        }
-> +
-> +        data.expect_prefer_sockets.drawers = num_drawers;
-> +        data.expect_prefer_sockets.books = num_books;
-> +        data.expect_prefer_sockets.cpus *= num_drawers * num_books;
-> +        data.expect_prefer_sockets.max_cpus *= num_drawers * num_books;
-> +
-> +        data.expect_prefer_cores.drawers = num_drawers;
-> +        data.expect_prefer_cores.books = num_books;
-> +        data.expect_prefer_cores.cpus *= num_drawers * num_books;
-> +        data.expect_prefer_cores.max_cpus *= num_drawers * num_books;
-> +
-> +        smp_parse_test(ms, &data, true);
-> +    }
-> +
-> +    for (i = 0; i < ARRAY_SIZE(data_with_drawers_books_invalid); i++) {
-> +        data = data_with_drawers_books_invalid[i];
-> +        unsupported_params_init(mc, &data);
-> +
-> +        smp_parse_test(ms, &data, false);
-> +    }
-> +
-> +    object_unref(obj);
-> +}
-> +
->   /* Type info of the tested machine */
->   static const TypeInfo smp_machine_types[] = {
->       {
-> @@ -968,6 +1064,10 @@ static const TypeInfo smp_machine_types[] = {
->           .name           = MACHINE_TYPE_NAME("smp-with-drawers"),
->           .parent         = TYPE_MACHINE,
->           .class_init     = machine_with_drawers_class_init,
-> +    }, {
-> +        .name           = MACHINE_TYPE_NAME("smp-with-drawers-books"),
-> +        .parent         = TYPE_MACHINE,
-> +        .class_init     = machine_with_drawers_books_class_init,
->       }
->   };
->   
-> @@ -997,6 +1097,9 @@ int main(int argc, char *argv[])
->       g_test_add_data_func("/test-smp-parse/with_drawers",
->                            MACHINE_TYPE_NAME("smp-with-drawers"),
->                            test_with_drawers);
-> +    g_test_add_data_func("/test-smp-parse/with_drawers_books",
-> +                         MACHINE_TYPE_NAME("smp-with-drawers-books"),
-> +                         test_with_drawers_books);
->   
->       g_test_run();
->   
 
 
