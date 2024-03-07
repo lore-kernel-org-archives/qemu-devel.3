@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D5A9C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 06:11:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD5AAC54E49
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 06:23:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ri6yP-0003Eh-Jq; Thu, 07 Mar 2024 01:11:21 -0500
+	id 1ri792-0005Wb-5D; Thu, 07 Mar 2024 01:22:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ri6yN-0003DP-Kq
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 01:11:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ri791-0005WS-0P
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 01:22:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ri6yL-0000vG-7P
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 01:11:19 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1ri78z-0004hM-2s
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 01:22:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709791876;
+ s=mimecast20190719; t=1709792535;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=otQS+WzTqecVja2b1outR49VfJfSQU/3pyuLeYKUmvI=;
- b=Y3WPpH3bGT10kKjAzsffCyYhdQRyMWGTNRqlXbcoiEccVTuYkWAfSHrS5nxRNyTqhHqbaN
- qrlSz3UZtkBdlzydQploipZyCVzmJmf0tuV045CKPJAZCiarmPZ5qxbQBWirKSgRqAxw0G
- qd7CkWEoyKqwDOfDYzraSo76kUOM0vA=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ARACsLOwO7FbT98c8ku8fiqn/wSjVpf6GkrOfgzyZNQ=;
+ b=a//4AAGbz5Izq3BsdsIXUIZ1+fallEGeUB6IS3U9wtX6MqdGoKK87wjMKtKla7lz19YMUi
+ iEfIjTaoRI/TWAGOd8Wv8d7N4JZWq9Bf+LF+Xv9VkwmFAzOfUBROEdhNumw3Dw4QI6pW8K
+ yo2F2RkNkVwJn7okx5KpEnyIaxEBZ24=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-380-rqX1EFuANGuhTbF4RCdEsw-1; Thu, 07 Mar 2024 01:11:14 -0500
-X-MC-Unique: rqX1EFuANGuhTbF4RCdEsw-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a3fb52f121eso33906566b.0
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 22:11:14 -0800 (PST)
+ us-mta-683-GlqgrJ5zNMuzBAsxTiDGvg-1; Thu, 07 Mar 2024 01:22:14 -0500
+X-MC-Unique: GlqgrJ5zNMuzBAsxTiDGvg-1
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-5135dbd79e7so637742e87.3
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 22:22:14 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709791873; x=1710396673;
+ d=1e100.net; s=20230601; t=1709792533; x=1710397333;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=otQS+WzTqecVja2b1outR49VfJfSQU/3pyuLeYKUmvI=;
- b=YjB9/E8s4lKdSRjIQaB3sIDqSj6wcpt3D2jtC4naDKhIiRkU437mhRs0mNaUNB1QN0
- K1vuH2PjVYGNaDYIE/t4VJNBTIzh60fRynGI6SqF9nyyZRWh/BQPCGSd5pRu3eZyJbgJ
- EAUv76/+FBQCXJ64x7LaPft3dWwwhmzsdNp8fG00wWQELJadw2WNvIQMbAfburodKXSl
- XcnNNE1jA/leaUzVu6MDuBTbEsHjzrqHuNc+Kd8U2WDHwJ5JA1KYJsy8OBwGfSmb0eXK
- PLn46HjkHPpf/j41bItXUSDy3rVsHk52j1vLeSsLYe6CjTfKYkYJ5ogWMXUfEokJVciF
- nlsA==
+ bh=ARACsLOwO7FbT98c8ku8fiqn/wSjVpf6GkrOfgzyZNQ=;
+ b=OZM4Tl53rkRJO22dGhUjS8QKpD7pxTNMlGjbQBHDjpD/QSKBfoozbsh6keHZjAqAHm
+ UGK9BIBytBXSsVU6WgcnXTII+MPBfQowzJdjvKDN8ouU69OjafQqhRNATovkkdIJW1Fm
+ 0Udb1DKDCM0aKwpcEwpkniAPqYbJlj4Ve5zDIzOfltKHE5oFY0hpd0sGW5n812AcYt+u
+ i+ZBI1Kgq3kS8g+Ei1xeCCbHqgaDPPpFgpKG6tJv0Mrpqw34WQFduXsUqpXbfZ1vmv9q
+ WViFEae3OwxIKEVoYL3Tur6zJ/n5k6U1+NyPYO8Vzoq+AxeAZAH962JxSLONu+Q+UzMJ
+ unJw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV10En00g9qpa1Dt8sdVH2Cdv+fU6yXAY8H4avfZhl2TRBpzj3LVwcmwoUgPWPZcfhirz458Nvz5+xSx8+JtqKFYuv2hZk=
-X-Gm-Message-State: AOJu0Yzl4Z+LilA4DmRTWOhZKwQMFCojujNGpA4R9xzULYgQJLcRy+eB
- qbs4SYKWmzanmYi1UWSkkLyuY+UWDqTS3S2xhyXNrrjezvK2s4bmkpzmE3F2M5iaKNkJZgqnkZp
- ivpXlOKKn6gsIJEZ5UPVZE3BVc+NWyq51ueIqEGvfR7gPtWUkWAu+/Mz26w28
-X-Received: by 2002:a17:907:20b9:b0:a43:6cd2:7a27 with SMTP id
- pw25-20020a17090720b900b00a436cd27a27mr10953973ejb.19.1709791873190; 
- Wed, 06 Mar 2024 22:11:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGGc3aZBX5zh1ca80yDWFlHlQSu5l2WOHYL9vTdv++4WZYM6Zu/bsW7BpXSd9Rz+9yCk/wzhg==
-X-Received: by 2002:a17:907:20b9:b0:a43:6cd2:7a27 with SMTP id
- pw25-20020a17090720b900b00a436cd27a27mr10953963ejb.19.1709791872914; 
- Wed, 06 Mar 2024 22:11:12 -0800 (PST)
+ AJvYcCVIZFzuPrEV7Mn9xBsZP4DkpL94SwJhld2tg3GTyD+4dXivpdL7FIr0gA5ecM8GITgLA4GpGuPgaSjTcsfdc+Vj8kBsn/4=
+X-Gm-Message-State: AOJu0YwyfDmCdTMi19zfWcoPSA1qfuuZetqGD8XUGd17xNqKacIM26ma
+ tL+bpB01dkxuGR20QnqlaXjM38Y/YvYq9533J4+CINmFauYOH3QpBrQXrte15j3sKeQ6+U1/WrB
+ LHpxW0DC/9YGHPF1QcjUkPlWu1xCdsoYLI5Pm6eLN6uHX/UWxSbu/
+X-Received: by 2002:a05:6512:224c:b0:513:596a:e660 with SMTP id
+ i12-20020a056512224c00b00513596ae660mr763212lfu.42.1709792532802; 
+ Wed, 06 Mar 2024 22:22:12 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFd+8OimFcaJtZfZlD8YrNlaod7u79W1gz63au2s/CLugpNY2T+kKRl69eSiv24FXyBdMCcaw==
+X-Received: by 2002:a05:6512:224c:b0:513:596a:e660 with SMTP id
+ i12-20020a056512224c00b00513596ae660mr763194lfu.42.1709792532417; 
+ Wed, 06 Mar 2024 22:22:12 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-178-151.web.vodafone.de.
  [109.43.178.151]) by smtp.gmail.com with ESMTPSA id
- lk11-20020a170906cb0b00b00a4577ffe69csm3546741ejb.78.2024.03.06.22.11.12
+ z19-20020a170906075300b00a44cf710cc3sm5882195ejb.182.2024.03.06.22.22.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Mar 2024 22:11:12 -0800 (PST)
-Message-ID: <67fb8df8-bfe5-4e6c-bfa5-30579cb4ae4a@redhat.com>
-Date: Thu, 7 Mar 2024 07:11:11 +0100
+ Wed, 06 Mar 2024 22:22:11 -0800 (PST)
+Message-ID: <5aafc78f-8c2e-429c-9599-4d2e1bb184e9@redhat.com>
+Date: Thu, 7 Mar 2024 07:22:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/14] tests/unit/test-smp-parse: Test "parameter=0" SMP
- configurations
+Subject: Re: [PATCH 02/14] hw/core/machine-smp: Deprecate unsupported
+ "parameter=1" SMP configurations
 Content-Language: en-US
 To: Zhao Liu <zhao1.liu@linux.intel.com>,
  Eduardo Habkost <eduardo@habkost.net>,
@@ -80,9 +80,10 @@ To: Zhao Liu <zhao1.liu@linux.intel.com>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
  qemu-devel@nongnu.org
-Cc: Xiaoling Song <xiaoling.song@intel.com>, Zhao Liu <zhao1.liu@intel.com>
+Cc: Xiaoling Song <xiaoling.song@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
+ devel@lists.libvirt.org
 References: <20240306095407.3058909-1-zhao1.liu@linux.intel.com>
- <20240306095407.3058909-15-zhao1.liu@linux.intel.com>
+ <20240306095407.3058909-3-zhao1.liu@linux.intel.com>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -126,18 +127,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240306095407.3058909-15-zhao1.liu@linux.intel.com>
+In-Reply-To: <20240306095407.3058909-3-zhao1.liu@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -154,20 +154,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06/03/2024 10.54, Zhao Liu wrote:
+On 06/03/2024 10.53, Zhao Liu wrote:
 > From: Zhao Liu <zhao1.liu@intel.com>
 > 
-> The support for "parameter=0" SMP configurations is removed, and QEMU
-> returns error for those cases.
+> Currentlt, it was allowed for users to specify the unsupported
+
+s/Currentlt/Currently/
+
+> topology parameter as "1". For example, x86 PC machine doesn't
+> support drawer/book/cluster topology levels, but user could specify
+> "-smp drawers=1,books=1,clusters=1".
 > 
-> So add the related test cases to ensure parameters can't accept 0.
+> This is meaningless and confusing, so that the support for this kind of
+> configurations is marked depresated since 9.0. And report warning
+
+s/depresated/deprecated/
+
+> message for such case like:
 > 
+> qemu-system-x86_64: warning: Deprecated CPU topology (considered invalid):
+>                      Unsupported clusters parameter mustn't be specified as 1
+> qemu-system-x86_64: warning: Deprecated CPU topology (considered invalid):
+>                      Unsupported books parameter mustn't be specified as 1
+> qemu-system-x86_64: warning: Deprecated CPU topology (considered invalid):
+>                      Unsupported drawers parameter mustn't be specified as 1
+> 
+> Users have to ensure that all the topology members described with -smp
+> are supported by the target machine.
+> 
+> Cc: devel@lists.libvirt.org
 > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
->   tests/unit/test-smp-parse.c | 92 +++++++++++++++++++++++++++++++++++++
->   1 file changed, 92 insertions(+)
+>   docs/about/deprecated.rst | 14 +++++++++
+>   hw/core/machine-smp.c     | 63 +++++++++++++++++++++++++++++----------
+>   2 files changed, 61 insertions(+), 16 deletions(-)
+> 
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 872974640252..2e782e83e952 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -47,6 +47,20 @@ as short-form boolean values, and passed to plugins as ``arg_name=on``.
+>   However, short-form booleans are deprecated and full explicit ``arg_name=on``
+>   form is preferred.
+>   
+> +``-smp`` (Unsopported "parameter=1" SMP configurations) (since 9.0)
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+s/Unsopported/Unsupported/
+
+> +'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+> +
+> +Specified CPU topology parameters must be supported by the machine.
+> +
+> +In the SMP configuration, users should provide the CPU topology parameters that
+> +are supported by the target machine.
+> +
+> +However, historically it was allowed for users to specify the unsupported
+> +topology parameter as "1", which is meaningless. So support for this kind of
+> +configurations (e.g. -smp drawers=1,books=1,clusters=1 for x86 PC machine) is
+> +marked depresated since 9.0, users have to ensure that all the topology members
+
+s/depresated/deprecated/
+
+> +described with -smp are supported by the target machine.
+> +
+>   QEMU Machine Protocol (QMP) commands
+>   ------------------------------------
+>   
+> diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
+> index 96533886b14e..50a5a40dbc3d 100644
+> --- a/hw/core/machine-smp.c
+> +++ b/hw/core/machine-smp.c
+> @@ -112,30 +112,61 @@ void machine_parse_smp_config(MachineState *ms,
+>   
+>       /*
+>        * If not supported by the machine, a topology parameter must be
+> -     * omitted or specified equal to 1.
+> +     * omitted.
+>        */
+> -    if (!mc->smp_props.dies_supported && dies > 1) {
+> -        error_setg(errp, "dies not supported by this machine's CPU topology");
+> -        return;
+> -    }
+> -    if (!mc->smp_props.clusters_supported && clusters > 1) {
+> -        error_setg(errp, "clusters not supported by this machine's CPU topology");
+> -        return;
+> +    if (!mc->smp_props.clusters_supported && config->has_clusters) {
+> +        if (config->clusters > 1) {
+> +            error_setg(errp, "clusters not supported by this "
+> +                       "machine's CPU topology");
+> +            return;
+> +        } else {
+> +            /* Here clusters only equals 1 since we've checked zero case. */
+> +            warn_report("Deprecated CPU topology (considered invalid): "
+> +                        "Unsupported clusters parameter mustn't be "
+> +                        "specified as 1");
+> +        }
+>       }
+> +    clusters = clusters > 0 ? clusters : 1;
+>   
+> +    if (!mc->smp_props.dies_supported && config->has_dies) {
+> +        if (config->dies > 1) {
+> +            error_setg(errp, "dies not supported by this "
+> +                       "machine's CPU topology");
+> +            return;
+> +        } else {
+> +            /* Here dies only equals 1 since we've checked zero case. */
+> +            warn_report("Deprecated CPU topology (considered invalid): "
+> +                        "Unsupported dies parameter mustn't be "
+> +                        "specified as 1");
+> +        }
+> +    }
+>       dies = dies > 0 ? dies : 1;
+> -    clusters = clusters > 0 ? clusters : 1;
+>   
+> -    if (!mc->smp_props.books_supported && books > 1) {
+> -        error_setg(errp, "books not supported by this machine's CPU topology");
+> -        return;
+> +    if (!mc->smp_props.books_supported && config->has_books) {
+> +        if (config->books > 1) {
+> +            error_setg(errp, "books not supported by this "
+> +                       "machine's CPU topology");
+> +            return;
+> +        } else {
+> +            /* Here books only equals 1 since we've checked zero case. */
+> +            warn_report("Deprecated CPU topology (considered invalid): "
+> +                        "Unsupported books parameter mustn't be "
+> +                        "specified as 1");
+> +        }
+>       }
+>       books = books > 0 ? books : 1;
+>   
+> -    if (!mc->smp_props.drawers_supported && drawers > 1) {
+> -        error_setg(errp,
+> -                   "drawers not supported by this machine's CPU topology");
+> -        return;
+> +    if (!mc->smp_props.drawers_supported && config->has_drawers) {
+> +        if (config->drawers > 1) {
+> +            error_setg(errp, "drawers not supported by this "
+> +                       "machine's CPU topology");
+> +            return;
+> +        } else {
+> +            /* Here drawers only equals 1 since we've checked zero case. */
+> +            warn_report("Deprecated CPU topology (considered invalid): "
+> +                        "Unsupported drawers parameter mustn't be "
+> +                        "specified as 1");
+> +        }
+>       }
+>       drawers = drawers > 0 ? drawers : 1;
+
+Apart from the typos, patch looks fine. I recommend to run "checkpath.pl" 
+with the --codespell parameter, that helps to avoid those.
+
+  Thomas
 
 
 
