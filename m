@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E1BCC54E4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 20:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 726D6C54798
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 20:44:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riKYX-00032a-J7; Thu, 07 Mar 2024 15:41:33 -0500
+	id 1riKb0-0003vN-8U; Thu, 07 Mar 2024 15:44:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1riKYW-00032A-Ij
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 15:41:32 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1riKat-0003uu-D7
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 15:44:03 -0500
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1riKYU-0001go-W1
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 15:41:32 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-1dbae7b8ff2so11443215ad.3
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 12:41:30 -0800 (PST)
+ id 1riKaq-0002Dt-8G
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 15:43:57 -0500
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-29a8911d11cso881211a91.1
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 12:43:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709844089; x=1710448889; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=linaro.org; s=google; t=1709844232; x=1710449032; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=xHAR0e6dARjvh6LKsJ+nKdTHFX+sMTEm5DbrspikR+g=;
- b=GBBmCYf/WFPZr76HqoxeuJz2MA1f+KMMugad/H+cl6swt8d0JDzXi3ZC6mJXM2aEDU
- G8P2K7praQYz77A4NuGFbIuNAzz19NP4SdRxQyYqD2OXInwZ0W99R1ri2jIIBPG7S5QH
- Z/+6aDbH8XlwyaErh974STO5Fc3mHT/h3H1pQtlCUlUnbthBwFc84/Nr+iu7i/rbZ6xL
- i9HObZ/bosq2ike47IXlzeird8B/7JmFJQqtDPvF97n2As5WKWkfMabcWce2vSB1959Q
- E53+1taETvTrSbsVcwUIeqnc+LDi9amUPT76iNB6oJFIs1MRdSjbwwHmPD9OVqLGf72S
- F0QQ==
+ bh=+m/ao1DrGxKl6KMlsfP8COmGyncwprW0Bsh5ZR7VlUw=;
+ b=adXRvhAsb+HxOWVHeVgqeFcMiWHT94ICF/FKzDnLksmC8WPM6knlvcaaSaa2CZdA1w
+ pK52r4dyJzirEFMeV11CBrJ6pWPZBJ96Bkxwk7dVspFc59Fu9D5NZ9muLbC8MBaCi69A
+ SNq4rn0X9pBkXJm+zKhRMpYFtMNw4KIG6UqckxNYIwX3wRfxheak6UJ1FMDC1tx15/Kv
+ gJi/zkzecX5/m+acZ/TTZOry0fCCAOOTIc0b8SIjuHSy8zbCuaT0PlNpHtVnvJl2KVYc
+ IBdDkJ3Oipyn2O756Be8CVF8ZPNSpp0H7DNfpaLoaTQ1W6nI2mHn1+zj08pQs7Vqziqf
+ ORGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709844089; x=1710448889;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=1e100.net; s=20230601; t=1709844232; x=1710449032;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xHAR0e6dARjvh6LKsJ+nKdTHFX+sMTEm5DbrspikR+g=;
- b=oJRnncThr4v4CaY1yUIkckOZ6M1LbQw+bXiVN2lAj0V6SCZK0tMTy67KGcybJdE0Xp
- jYSomD/nHaWOeDn3ASMo9PGijMH4baDs4quXzTNh5TSr5RVDZS4dlTx44e2JEXpmPbNw
- 6c1hrUVwcqkmwQ41e+Blme7LzafPuVmauXdZ8zyWHoE+0nXOdzOu10O8eRxXVNwZao5j
- ct1HVkBF7Wg0viQPb5+N1pnBSN8nD33M+N1iRCbLxYhCzJSgDJouxFf0lnP7OsYDqn0S
- 0zkKlS5ADyqJIe+3yizNLY5VvhZRnZnthfLXmlOWKbYsAXXGDxcuytIo3RyXfwBMlOwn
- A5aw==
+ bh=+m/ao1DrGxKl6KMlsfP8COmGyncwprW0Bsh5ZR7VlUw=;
+ b=m0C/nFjbQ1H/8fWzBQdAoHEOd7t1mT0jV8btftZZPXyUAKHXiFLvzhOkzUghI30jrP
+ 5Q2KsJ9tskFBXMJWoMFy5gvv+hrhChREImHclUL+QRRwSutBITylyteLTes+zIjPTAzQ
+ ikcpBZA8yKtFrB7zV6VRgVXpkU4X86W/4dV0/tgvJIXQxhoeaT5YIn+vV2y6XAqBW7ZF
+ h26q7Srkh/RvHtnWMavF2s9HQqX6k2hXW0zQr6lRX8sc0/82II64yPzxc9qmnn+jAjMn
+ +Ub2dBd1TjSPM9n/prEmt1HXU/bWKc/KOCJQmgaXDrD+Q9GwUX1h6j5svKKUxkvRocje
+ OkVg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWDJlVug1gcLgT/STt/JIXiUo8k+vnsC0gOSjOh368HH+fSmJM2C9yewXjeJkJyKJimJtpOtbjg4eIzJEvqnr80ro0/8BE=
-X-Gm-Message-State: AOJu0Yz6+sQHEbiBg5LbXdBiHfrLuS53JeBwbxmcXVLBuM6fvdIE/FC7
- DizwqB0PspgJ7qoTd7QMvmwM6jK+y+wIEHTspnoCmie2A86uGIYM3T1eT7ic7I9c5WW9GL0zLF0
- m
-X-Google-Smtp-Source: AGHT+IE3xl/BcwT6RFMov65u+N02oL6bXPKyk+mZd3xCgsIqGthqrXZ2kI3tOkBnuf8vcYgvsFzo7w==
-X-Received: by 2002:a17:902:c94d:b0:1dd:54a6:63e5 with SMTP id
- i13-20020a170902c94d00b001dd54a663e5mr3325737pla.14.1709844089484; 
- Thu, 07 Mar 2024 12:41:29 -0800 (PST)
+ AJvYcCVs0UWg1Sqr4v5lu5k1jsKvj3KFSRCi0jYixUoHqtdNqUBvt9G/Kjev0JI3SqhIlx0OcDiptx2gjPy+EDZSuXbFj+aPko8=
+X-Gm-Message-State: AOJu0YxIRExlFokNsz4lxFjudc7jZRH01k2itU1UzIFZq7hAboz7lm5b
+ ASsFPBlwuHtL3cOGieJuciLsZO9VEsNs16zLUYJ2vhLSRem8UfxK8rA+7UZ5NXU=
+X-Google-Smtp-Source: AGHT+IFo9URIH0ONESxQfNBFrIJakMtPZKAFDudD7bF6Fs6eOLHFAGkrZKy5fuTivnryDL2+yZMG7g==
+X-Received: by 2002:a17:90b:1bd0:b0:29b:3d08:c644 with SMTP id
+ oa16-20020a17090b1bd000b0029b3d08c644mr13281957pjb.9.1709844232495; 
+ Thu, 07 Mar 2024 12:43:52 -0800 (PST)
 Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
  [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- w7-20020a170902e88700b001dba739d15bsm15109796plg.76.2024.03.07.12.41.28
+ p1-20020a17090adf8100b0029b178a7068sm1961051pjv.50.2024.03.07.12.43.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 Mar 2024 12:41:29 -0800 (PST)
-Message-ID: <ee463c40-8134-4eb7-91ef-23b5f428bb3d@linaro.org>
-Date: Thu, 7 Mar 2024 10:41:27 -1000
+ Thu, 07 Mar 2024 12:43:52 -0800 (PST)
+Message-ID: <f9ef93da-8936-4ffc-8a21-ad90f475845a@linaro.org>
+Date: Thu, 7 Mar 2024 10:43:48 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] include/exec: annotate all the MemoryRegion fields
+Subject: Re: [PATCH v2 1/5] gdbstub: Rename back gdb_handlesig
 Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-References: <20240307181105.4081793-1-alex.bennee@linaro.org>
- <20240307181105.4081793-5-alex.bennee@linaro.org>
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, peter.maydell@linaro.org, laurent@vivier.eu,
+ philmd@linaro.org
+References: <20240307182623.1450717-1-gustavo.romero@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240307181105.4081793-5-alex.bennee@linaro.org>
+In-Reply-To: <20240307182623.1450717-1-gustavo.romero@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,71 +98,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/7/24 08:11, Alex Bennée wrote:
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   include/exec/memory.h | 47 +++++++++++++++++++++++++++++++++++++++----
->   1 file changed, 43 insertions(+), 4 deletions(-)
+On 3/7/24 08:26, Gustavo Romero wrote:
+> Rename gdb_handlesig_reason back to gdb_handlesig. There is no need to
+> add a wrapper for gdb_handlesig and rename it when a new parameter is
+> added.
 > 
-> diff --git a/include/exec/memory.h b/include/exec/memory.h
-> index 17b741bc4f5..312ed564dbe 100644
-> --- a/include/exec/memory.h
-> +++ b/include/exec/memory.h
-> @@ -778,9 +778,48 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
->   typedef struct CoalescedMemoryRange CoalescedMemoryRange;
->   typedef struct MemoryRegionIoeventfd MemoryRegionIoeventfd;
->   
-> -/** MemoryRegion:
-> - *
-> - * A struct representing a memory region.
-> +/**
-> + * struct MemoryRegion - represents a memory region
-> + * @parent_obj: parent QOM object for the region
-> + * @romd_mode: if true ROM devices accessed directly rather than with @ops
-> + * @ram: true if a RAM-type device with a @ram_block
-> + * @subpage: true if region covers a subpage
-> + * @readonly: true for RAM-type devices that are readonly
-> + * @nonvolatile: true for nonvolatile RAM-type devices (e.g. NVDIMM)
-> + * @rom_device: true for a ROM device, see also @romd_mode
-> + * @flush_coalesced_mmio: true to flush any queued coalesced MMIO
-> + * operations before access
-> + * @unmergeable: this section should not get merged with adjacent
-> + * sections
-> + * @dirty_log_mask: dirty events region cares about (see DIRTY_ flags)
-> + * @is_iommu: true if part of an IOMMU device
-> + * @ram_block: backing @RamBlock if @ram is true
-> + * @owner: base QOM object that owns this region
-> + * @dev: base Device that owns this region
-> + * @ops: access operations for MMIO or @romd_mode devices
-> + * @opaque: @dev specific data, passed with @ops
-> + * @container: parent `MemoryRegion`
-> + * @mapped_via_alias: number of times mapped via @alias, container
-> + * might be NULL
-> + * @size: size of @MemoryRegion
-> + * @addr: physical hwaddr of @MemoryRegion
-> + * @destructor: cleanup function when @MemoryRegion finalized
-> + * @align: alignment requirements for any physical backing store
-> + * @terminates: true if this @MemoryRegion is a leaf node
-> + * @ram_device: true if @ram device should use @ops to access
-> + * @enabled: true once initialised, false once finalized
-> + * @vga_logging_count: count of memory logging clients
-> + * @alias: link to aliased @MemoryRegion
-> + * @alias_offset: offset into aliased region
-> + * @priority: priority when resolving overlapping regions
-> + * @subregions: list of subregions in this region
-> + * @subregions_link: next subregion in the chain
-> + * @coalesced: list of coalesced memory ranges
-> + * @name: name of memory region
-> + * @ioeventfd_nb: count of @ioeventfds for region
-> + * @ioeventfds: ioevent notifiers for region
-> + * @rdm: if exists see #RamDiscardManager
-> + * @disable_reentrancy_guard: if true don't error if device accesses itself
->    */
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> ---
+>   gdbstub/user.c         |  8 ++++----
+>   include/gdbstub/user.h | 15 ++-------------
+>   linux-user/main.c      |  2 +-
+>   linux-user/signal.c    |  2 +-
+>   4 files changed, 8 insertions(+), 19 deletions(-)
 
-Why as one big block rather than line by line?
-The block is less likely to be properly kept up-to-date and is much harder to read.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
-
 
