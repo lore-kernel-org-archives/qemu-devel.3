@@ -4,72 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09DB6C54E4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 13:56:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B02EC54798
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 13:56:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riE7V-0006u2-9b; Thu, 07 Mar 2024 08:49:17 -0500
+	id 1riE9M-0000zr-HG; Thu, 07 Mar 2024 08:51:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1riE4h-0005Bf-Ry
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 08:46:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1riE62-0005zi-El; Thu, 07 Mar 2024 08:47:44 -0500
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1riE3q-0007G3-Em
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 08:46:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709819114;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cyZooDCSfcEkdv9/7vg+GOMr/LkugjJbT4YX/tuXRXs=;
- b=ZTENNedP0cxdrZtqzyVp21ocE8cxGsz0G0qnZUPlLgZf7uWjn6uHRrGMYMJ7N7oZLghcNS
- +zhSZNHSlZ11DWp/GVvBbpcpcqYDXFGKlDKdKoRQznMNd4pW9+MQ4zW5mYuskJ4QZxVcvr
- X/6jlm6Sh2jJCpT/ICIdtp4Y8UT7xqI=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-587-59MbehsMP5GZ5I9H-EObkw-1; Thu,
- 07 Mar 2024 08:45:11 -0500
-X-MC-Unique: 59MbehsMP5GZ5I9H-EObkw-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C6D2A3C0EAA3;
- Thu,  7 Mar 2024 13:45:10 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.39.193.114])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 4BC1E17AA5;
- Thu,  7 Mar 2024 13:45:07 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, mst@redhat.com, jean-philippe@linaro.org,
- imammedo@redhat.com, peter.maydell@linaro.org, clg@redhat.com,
- yanghliu@redhat.com, zhenzhong.duan@intel.com
-Cc: alex.williamson@redhat.com, jasowang@redhat.com, pbonzini@redhat.com,
- berrange@redhat.com
-Subject: [PATCH v8 5/9] virtio-iommu: Trace domain range limits as unsigned int
-Date: Thu,  7 Mar 2024 14:43:06 +0100
-Message-ID: <20240307134445.92296-6-eric.auger@redhat.com>
-In-Reply-To: <20240307134445.92296-1-eric.auger@redhat.com>
-References: <20240307134445.92296-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1riE5z-000880-Gx; Thu, 07 Mar 2024 08:47:42 -0500
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 882F64888C;
+ Thu,  7 Mar 2024 14:47:16 +0100 (CET)
+From: Fiona Ebner <f.ebner@proxmox.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, armbru@redhat.com, eblake@redhat.com,
+ hreitz@redhat.com, kwolf@redhat.com, vsementsov@yandex-team.ru,
+ jsnow@redhat.com, f.gruenbichler@proxmox.com, t.lamprecht@proxmox.com,
+ mahaocong@didichuxing.com, xiechanglong.d@gmail.com,
+ wencongyang2@huawei.com
+Subject: [PATCH v2 0/4] mirror: allow specifying working bitmap
+Date: Thu,  7 Mar 2024 14:47:07 +0100
+Message-Id: <20240307134711.709816-1-f.ebner@proxmox.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,29 +57,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use %u format to trace domain_range limits.
+Changes from RFC/v1 (discussion here [0]):
+* Add patch to split BackupSyncMode and MirrorSyncMode.
+* Drop bitmap-mode parameter and use passed-in bitmap as the working
+  bitmap instead. Users can get the desired behaviors by
+  using the block-dirty-bitmap-clear and block-dirty-bitmap-merge
+  calls (see commit message in patch 2/4 for how exactly).
+* Add patch to check whether target image's cluster size is at most
+  mirror job's granularity. Optional, it's an extra safety check
+  that's useful when the target is a "diff" image that does not have
+  previously synced data.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
----
- hw/virtio/trace-events | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Use cases:
+* Possibility to resume a failed mirror later.
+* Possibility to only mirror deltas to a previously mirrored volume.
+* Possibility to (efficiently) mirror an drive that was previously
+  mirrored via some external mechanism (e.g. ZFS replication).
 
-diff --git a/hw/virtio/trace-events b/hw/virtio/trace-events
-index 77905d1994..2350849fbd 100644
---- a/hw/virtio/trace-events
-+++ b/hw/virtio/trace-events
-@@ -111,7 +111,7 @@ virtio_iommu_device_reset(void) "reset!"
- virtio_iommu_system_reset(void) "system reset!"
- virtio_iommu_get_features(uint64_t features) "device supports features=0x%"PRIx64
- virtio_iommu_device_status(uint8_t status) "driver status = %d"
--virtio_iommu_get_config(uint64_t page_size_mask, uint64_t start, uint64_t end, uint32_t domain_start, uint32_t domain_end, uint32_t probe_size, uint8_t bypass) "page_size_mask=0x%"PRIx64" input range start=0x%"PRIx64" input range end=0x%"PRIx64" domain range start=%d domain range end=%d probe_size=0x%x bypass=0x%x"
-+virtio_iommu_get_config(uint64_t page_size_mask, uint64_t start, uint64_t end, uint32_t domain_start, uint32_t domain_end, uint32_t probe_size, uint8_t bypass) "page_size_mask=0x%"PRIx64" input range start=0x%"PRIx64" input range end=0x%"PRIx64" domain range start=%u domain range end=%u probe_size=0x%x bypass=0x%x"
- virtio_iommu_set_config(uint8_t bypass) "bypass=0x%x"
- virtio_iommu_attach(uint32_t domain_id, uint32_t ep_id) "domain=%d endpoint=%d"
- virtio_iommu_detach(uint32_t domain_id, uint32_t ep_id) "domain=%d endpoint=%d"
+We are using the last one in production without any issues since about
+4 years now. In particular, like mentioned in [1]:
+
+> - create bitmap(s)
+> - (incrementally) replicate storage volume(s) out of band (using ZFS)
+> - incrementally drive mirror as part of a live migration of VM
+> - drop bitmap(s)
+
+
+Now, the IO test added in patch 4/4 actually contains yet another use
+case, namely doing incremental mirrors to stand-alone qcow2 "diff"
+images, that only contain the delta and can be rebased later. I had to
+adapt the IO test, because its output expected the mirror bitmap to
+still be dirty, but nowadays the mirror is apparently already done
+when the bitmaps are queried. So I thought, I'll just use
+'write-blocking' mode to avoid any potential timing issues.
+
+But this exposed an issue with the diff image approach. If a write is
+not aligned to the granularity of the mirror target, then rebasing the
+diff image onto a backing image will not yield the desired result,
+because the full cluster is considered to be allocated and will "hide"
+some part of the base/backing image. The failure can be seen by either
+using 'write-blocking' mode in the IO test or setting the (bitmap)
+granularity to 32 KiB rather than the current 64 KiB.
+
+For the latter case, patch 4/4 adds a check. For the former, the
+limitation is documented (I'd expect this to be a niche use case in
+practice).
+
+[0]: https://lore.kernel.org/qemu-devel/b91dba34-7969-4d51-ba40-96a91038cc54@yandex-team.ru/T/#m4ae27dc8ca1fb053e0a32cc4ffa2cfab6646805c
+[1]: https://lore.kernel.org/qemu-devel/1599127031.9uxdp5h9o2.astroid@nora.none/
+
+
+Fabian Grünbichler (1):
+  iotests: add test for bitmap mirror
+
+Fiona Ebner (2):
+  qapi/block-core: avoid the re-use of MirrorSyncMode for backup
+  blockdev: mirror: check for target's cluster size when using bitmap
+
+John Snow (1):
+  mirror: allow specifying working bitmap
+
+ block/backup.c                                |   18 +-
+ block/mirror.c                                |  102 +-
+ block/monitor/block-hmp-cmds.c                |    2 +-
+ block/replication.c                           |    2 +-
+ blockdev.c                                    |   84 +-
+ include/block/block_int-global-state.h        |    7 +-
+ qapi/block-core.json                          |   64 +-
+ tests/qemu-iotests/tests/bitmap-sync-mirror   |  571 ++++
+ .../qemu-iotests/tests/bitmap-sync-mirror.out | 2946 +++++++++++++++++
+ tests/unit/test-block-iothread.c              |    2 +-
+ 10 files changed, 3729 insertions(+), 69 deletions(-)
+ create mode 100755 tests/qemu-iotests/tests/bitmap-sync-mirror
+ create mode 100644 tests/qemu-iotests/tests/bitmap-sync-mirror.out
+
 -- 
-2.41.0
+2.39.2
+
 
 
