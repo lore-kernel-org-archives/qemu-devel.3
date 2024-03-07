@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BCA7C54E58
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59543C54E4A
 	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 18:11:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riID7-0002U4-9p; Thu, 07 Mar 2024 13:11:17 -0500
+	id 1riID5-0002TO-KH; Thu, 07 Mar 2024 13:11:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1riID2-0002Rp-IL
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 13:11:12 -0500
-Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
+ id 1riID4-0002SV-54
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 13:11:14 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1riICy-0004Rs-Q6
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 13:11:12 -0500
-Received: by mail-lf1-x129.google.com with SMTP id
- 2adb3069b0e04-51336ab1fb7so34595e87.1
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 10:11:08 -0800 (PST)
+ id 1riID2-0004SJ-4q
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 13:11:13 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-412f62edf25so8876145e9.3
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 10:11:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709835067; x=1710439867; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709835070; x=1710439870; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mZ/K3PBuLzDgapFrWwRRkSM6VPt2uSmyXpXI8zQY5GY=;
- b=Df+asfrAa+JCIwaLmhJZx67qTcFJ/1ZLqlUfcKKmTJ3x9BcWMHFd7nR0i0Yangw+4v
- cio2PAW4lnJFWoUguZ2pY2uGpf0Ac8BjyFYDFj0oINBUNrFsi676jIg3rrq4iIdpKx1Q
- FPd7B8OE9W749wfX9MC5oRx2/HSEeKeh52rwdAx2IwFWLo6ld8lpeO2tEqHLNS7dwkPh
- G7bwgI0qcEFSyzdjo13211cHFHY9SrWOUydW00YoHGd4wJMzXjOOyoeXyLGcLf+y+nS4
- 7BmzGA2cKPh6nHeLVjK+lLPs1RedCSQTU3eBNN73lCa1NBNOCrbqE2Wtz9OVJDHqQ0ga
- cehg==
+ bh=oL9yBj/gQtPHfe3iZvA3nzS0UYJu6qOXKEO5ee6KSH8=;
+ b=u4YfgHelJoWz1Yvc63MUBFgP9eYbwqdo6DB6Up8oI7912MHFzugytCigz0bnGBJIB1
+ CxtOZN0U09Mc5hsiM/Wy9TGwO6c3jalcpqg2N9PZqp0KJWkoT7mSPoFh25DtJYqi2x1K
+ EAdwICXgGwQlfc2rKBneJP5kuPYFSSMwzCaMadJb2q0DilF+mIWCVw46kXiJyiA6ufMl
+ Vl9iPdFeRWZEIKetyYGlguPpSRwxpp3tHW9vd/sDfvPXDl7HvRj5wh6ddzVahB8yTd4J
+ t/ubPVsFpkHD58F9Rc2CrLTEcKsGM+QI5pPN3X+vLFDca8oDq0gOcV8YeMFnj+1tRXS9
+ 7l6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709835067; x=1710439867;
+ d=1e100.net; s=20230601; t=1709835070; x=1710439870;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mZ/K3PBuLzDgapFrWwRRkSM6VPt2uSmyXpXI8zQY5GY=;
- b=AURzWtTPMBhl4A9jb37ir1r4tQs97nnlwnM4/zrKT7yuleA8XM01Y24b7MTZvyN3wF
- vKbiNtsGZtVCwTegaf2t1iDuq9U1NkhTT0KIM4ycuTHGjiQR6mQXsau4P+vuyC4RSpFf
- YR9xdthxPwfVz8ml/OG1FVkBxhWrverZEbIZrt9cnQw2WbwSmcIMqo0SCuyvwlbVjHKH
- MWQf6NkbsngYtfCFOqglE8oa6/bXUrNaJiVTmizqTUWHsCSGfS7AvvuxJmOi2URiH/FQ
- AQYZZS9cMcKOCGgBiiSisURBGtt8aySHGnP5L/u572o+Cahwbl2xRvsGPRnI1M0XpT4H
- X3vw==
-X-Gm-Message-State: AOJu0YzzbmUUbBMHvP4acwz5sEMPxv/qAVDg2vkEHtxlQEuCmtxs37QH
- 1g74RV2YoFdfUy1tm/wWX7qlPhtGm+9W604xfX3xtC2jCLwtYm3FaXEGDZ2O+CA=
-X-Google-Smtp-Source: AGHT+IG5wz9hIRUpzgy3sMHaOG8O1jpbPGx9KIW4VTVk32PdhZ5SkNsNiyq2yXdRlMSxBfxriIWTFg==
-X-Received: by 2002:a19:ca4c:0:b0:512:b696:e312 with SMTP id
- h12-20020a19ca4c000000b00512b696e312mr1839900lfj.46.1709835066664; 
- Thu, 07 Mar 2024 10:11:06 -0800 (PST)
+ bh=oL9yBj/gQtPHfe3iZvA3nzS0UYJu6qOXKEO5ee6KSH8=;
+ b=O7rUp1oUEpJO2cCtPfk+jIt1vVigbHoJM7sydONscI+C/c8WxXnVH6oibebNF6nYRN
+ RIMrKtq6XWXLnmDxhbsjLbfNnSv0sDUDohvonWlXvrDaUm5oO/3uin/2sSfYn/b7qogQ
+ 1vrXCd4j7rnkWiBqG2PbRT8+Db0yOiqJCCSHIHRkXujiqqcIq8Jz+9cEvCk3iEebjPMX
+ b8fv9ohaUiVN+mj75xgwXs7gNCf47qm0ghhkWlYO09V3fxqyW3xHg3/0otWxh0DLXa0u
+ 3SpbrNTZ3FAcfL7x/VGp8igvIpRHYn5faxwKXK2tkus0MobNMgeLNJ4m0EnvT8pf6HdS
+ HDvw==
+X-Gm-Message-State: AOJu0YxdzHpUzc94wtiCb8ynMA4qa0r910Jajag6HlLLxfpOxASPwRYe
+ pi1ri2BQ4NRgMva5cWy8cywk49yvGMTGYoxfe/t1LahsforJUPaZrNLwIWteDXI=
+X-Google-Smtp-Source: AGHT+IG3HM/Z2boLhLDttmaJVoSrTwiAH1rBFBSnfEiRM1iYQnLnF7z5gSy9RnZuENob6L9BPASg6w==
+X-Received: by 2002:a05:600c:1c84:b0:412:e555:818c with SMTP id
+ k4-20020a05600c1c8400b00412e555818cmr8774998wms.26.1709835069608; 
+ Thu, 07 Mar 2024 10:11:09 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- fs23-20020a05600c3f9700b00412f195426dsm3343613wmb.15.2024.03.07.10.11.06
+ l14-20020a7bc44e000000b00412f6c695d1sm3293442wmi.43.2024.03.07.10.11.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 Mar 2024 10:11:06 -0800 (PST)
+ Thu, 07 Mar 2024 10:11:09 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C8A745F954;
+ by draig.lan (Postfix) with ESMTP id DBA785F956;
  Thu,  7 Mar 2024 18:11:05 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -77,17 +77,17 @@ Cc: Elena Ufimtseva <elena.ufimtseva@oracle.com>,
  Thomas Huth <thuth@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>, peter.maydell@linaro.org,
  David Hildenbrand <david@redhat.com>
-Subject: [PATCH 4/5] include/exec: annotate all the MemoryRegion fields
-Date: Thu,  7 Mar 2024 18:11:04 +0000
-Message-Id: <20240307181105.4081793-5-alex.bennee@linaro.org>
+Subject: [PATCH 5/5] docs/devel: mark out defined functions and structures
+Date: Thu,  7 Mar 2024 18:11:05 +0000
+Message-Id: <20240307181105.4081793-6-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240307181105.4081793-1-alex.bennee@linaro.org>
 References: <20240307181105.4081793-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::129;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x129.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,76 +110,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This allows sphinx to hyperlink the references to their kdoc
+definitions for easy navigation.
+
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- include/exec/memory.h | 47 +++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 43 insertions(+), 4 deletions(-)
+ docs/devel/memory.rst | 48 +++++++++++++++++++++----------------------
+ 1 file changed, 24 insertions(+), 24 deletions(-)
 
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 17b741bc4f5..312ed564dbe 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -778,9 +778,48 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
- typedef struct CoalescedMemoryRange CoalescedMemoryRange;
- typedef struct MemoryRegionIoeventfd MemoryRegionIoeventfd;
+diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
+index ed24708fce3..193f31198b0 100644
+--- a/docs/devel/memory.rst
++++ b/docs/devel/memory.rst
+@@ -16,11 +16,11 @@ The memory model provides support for
+ - setting up coalesced memory for kvm
+ - setting up ioeventfd regions for kvm
  
--/** MemoryRegion:
-- *
-- * A struct representing a memory region.
-+/**
-+ * struct MemoryRegion - represents a memory region
-+ * @parent_obj: parent QOM object for the region
-+ * @romd_mode: if true ROM devices accessed directly rather than with @ops
-+ * @ram: true if a RAM-type device with a @ram_block
-+ * @subpage: true if region covers a subpage
-+ * @readonly: true for RAM-type devices that are readonly
-+ * @nonvolatile: true for nonvolatile RAM-type devices (e.g. NVDIMM)
-+ * @rom_device: true for a ROM device, see also @romd_mode
-+ * @flush_coalesced_mmio: true to flush any queued coalesced MMIO
-+ * operations before access
-+ * @unmergeable: this section should not get merged with adjacent
-+ * sections
-+ * @dirty_log_mask: dirty events region cares about (see DIRTY_ flags)
-+ * @is_iommu: true if part of an IOMMU device
-+ * @ram_block: backing @RamBlock if @ram is true
-+ * @owner: base QOM object that owns this region
-+ * @dev: base Device that owns this region
-+ * @ops: access operations for MMIO or @romd_mode devices
-+ * @opaque: @dev specific data, passed with @ops
-+ * @container: parent `MemoryRegion`
-+ * @mapped_via_alias: number of times mapped via @alias, container
-+ * might be NULL
-+ * @size: size of @MemoryRegion
-+ * @addr: physical hwaddr of @MemoryRegion
-+ * @destructor: cleanup function when @MemoryRegion finalized
-+ * @align: alignment requirements for any physical backing store
-+ * @terminates: true if this @MemoryRegion is a leaf node
-+ * @ram_device: true if @ram device should use @ops to access
-+ * @enabled: true once initialised, false once finalized
-+ * @vga_logging_count: count of memory logging clients
-+ * @alias: link to aliased @MemoryRegion
-+ * @alias_offset: offset into aliased region
-+ * @priority: priority when resolving overlapping regions
-+ * @subregions: list of subregions in this region
-+ * @subregions_link: next subregion in the chain
-+ * @coalesced: list of coalesced memory ranges
-+ * @name: name of memory region
-+ * @ioeventfd_nb: count of @ioeventfds for region
-+ * @ioeventfds: ioevent notifiers for region
-+ * @rdm: if exists see #RamDiscardManager
-+ * @disable_reentrancy_guard: if true don't error if device accesses itself
-  */
- struct MemoryRegion {
-     Object parent_obj;
-@@ -806,7 +845,7 @@ struct MemoryRegion {
-     const MemoryRegionOps *ops;
-     void *opaque;
-     MemoryRegion *container;
--    int mapped_via_alias; /* Mapped via an alias, container might be NULL */
-+    int mapped_via_alias;
-     Int128 size;
-     hwaddr addr;
-     void (*destructor)(MemoryRegion *mr);
+-Memory is modelled as an acyclic graph of MemoryRegion objects.  Sinks
++Memory is modelled as an acyclic graph of `MemoryRegion` objects.  Sinks
+ (leaves) are RAM and MMIO regions, while other nodes represent
+ buses, memory controllers, and memory regions that have been rerouted.
+ 
+-In addition to MemoryRegion objects, the memory API provides AddressSpace
++In addition to `MemoryRegion` objects, the memory API provides `AddressSpace`
+ objects for every root and possibly for intermediate MemoryRegions too.
+ These represent memory as seen from the CPU or a device's viewpoint.
+ 
+@@ -28,17 +28,17 @@ Types of regions
+ ----------------
+ 
+ There are multiple types of memory regions (all represented by a single C type
+-MemoryRegion):
++`MemoryRegion`):
+ 
+ - RAM: a RAM region is simply a range of host memory that can be made available
+   to the guest.
+-  You typically initialize these with memory_region_init_ram().  Some special
+-  purposes require the variants memory_region_init_resizeable_ram(),
+-  memory_region_init_ram_from_file(), or memory_region_init_ram_ptr().
++  You typically initialize these with `memory_region_init_ram()`.  Some special
++  purposes require the variants `memory_region_init_resizeable_ram()`,
++  `memory_region_init_ram_from_file()`, or `memory_region_init_ram_ptr()`.
+ 
+ - MMIO: a range of guest memory that is implemented by host callbacks;
+   each read or write causes a callback to be called on the host.
+-  You initialize these with memory_region_init_io(), passing it a
++  You initialize these with `memory_region_init_io()`, passing it a
+   MemoryRegionOps structure describing the callbacks.
+ 
+ - ROM: a ROM memory region works like RAM for reads (directly accessing
+@@ -53,7 +53,7 @@ MemoryRegion):
+ - IOMMU region: an IOMMU region translates addresses of accesses made to it
+   and forwards them to some other target memory region.  As the name suggests,
+   these are only needed for modelling an IOMMU, not for simple devices.
+-  You initialize these with memory_region_init_iommu().
++  You initialize these with `memory_region_init_iommu()`.
+ 
+ - container: a container simply includes other memory regions, each at
+   a different offset.  Containers are useful for grouping several regions
+@@ -65,7 +65,7 @@ MemoryRegion):
+   can overlay a subregion of RAM with MMIO or ROM, or a PCI controller
+   that does not prevent card from claiming overlapping BARs.
+ 
+-  You initialize a pure container with memory_region_init().
++  You initialize a pure container with `memory_region_init()`.
+ 
+ - alias: a subsection of another region. Aliases allow a region to be
+   split apart into discontiguous regions. Examples of uses are memory
+@@ -83,7 +83,7 @@ MemoryRegion):
+   It claims I/O space that is not supposed to be handled by QEMU itself.
+   The typical use is to track parts of the address space which will be
+   handled by the host kernel when KVM is enabled.  You initialize these
+-  by passing a NULL callback parameter to memory_region_init_io().
++  by passing a NULL callback parameter to `memory_region_init_io()`.
+ 
+ It is valid to add subregions to a region which is not a pure container
+ (that is, to an MMIO, RAM or ROM region). This means that the region
+@@ -104,28 +104,28 @@ copied to the destination on migration. These APIs which allocate
+ the host memory for you will also register the memory so it is
+ migrated:
+ 
+-- memory_region_init_ram()
+-- memory_region_init_rom()
+-- memory_region_init_rom_device()
++- `memory_region_init_ram()`
++- `memory_region_init_rom()`
++- `memory_region_init_rom_device()`
+ 
+ For most devices and boards this is the correct thing. If you
+ have a special case where you need to manage the migration of
+ the backing memory yourself, you can call the functions:
+ 
+-- memory_region_init_ram_nomigrate()
+-- memory_region_init_rom_nomigrate()
+-- memory_region_init_rom_device_nomigrate()
++- `memory_region_init_ram_nomigrate()`
++- `memory_region_init_rom_nomigrate()`
++- `memory_region_init_rom_device_nomigrate()`
+ 
+ which only initialize the MemoryRegion and leave handling
+ migration to the caller.
+ 
+ The functions:
+ 
+-- memory_region_init_resizeable_ram()
+-- memory_region_init_ram_from_file()
+-- memory_region_init_ram_from_fd()
+-- memory_region_init_ram_ptr()
+-- memory_region_init_ram_device_ptr()
++- `memory_region_init_resizeable_ram()`
++- `memory_region_init_ram_from_file()`
++- `memory_region_init_ram_from_fd()`
++- `memory_region_init_ram_ptr()`
++- `memory_region_init_ram_device_ptr()`
+ 
+ are for special cases only, and so they do not automatically
+ register the backing memory for migration; the caller must
+@@ -150,8 +150,8 @@ device.  For example, the owner object will not die between an
+ address_space_map operation and the corresponding address_space_unmap.
+ 
+ After creation, a region can be added to an address space or a
+-container with memory_region_add_subregion(), and removed using
+-memory_region_del_subregion().
++container with `memory_region_add_subregion()`, and removed using
++`memory_region_del_subregion()`.
+ 
+ Various region attributes (read-only, dirty logging, coalesced mmio,
+ ioeventfd) can be changed during the region lifecycle.  They take effect
+@@ -213,7 +213,7 @@ allows the region to overlap any other region in the same container, and
+ specifies a priority that allows the core to decide which of two regions at
+ the same address are visible (highest wins).
+ Priority values are signed, and the default value is zero. This means that
+-you can use memory_region_add_subregion_overlap() both to specify a region
++you can use `memory_region_add_subregion_overlap()` both to specify a region
+ that must sit 'above' any others (with a positive priority) and also a
+ background region that sits 'below' others (with a negative priority).
+ 
 -- 
 2.39.2
 
