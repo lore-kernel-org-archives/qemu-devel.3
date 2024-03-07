@@ -4,92 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5892EC48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 09:22:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 957CBC54E49
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 09:24:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ri9xR-0004GS-G6; Thu, 07 Mar 2024 04:22:33 -0500
+	id 1ri9ye-00056D-AJ; Thu, 07 Mar 2024 04:23:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1ri9xO-0004Fw-KU
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 04:22:30 -0500
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1ri9xK-000565-Q6
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 04:22:29 -0500
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-6e5760eeb7aso482426b3a.1
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 01:22:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1709803345; x=1710408145; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=FTVxRU5K7bUdUsDj3xGcg7m+v5jwrvME7QShy0kv7CE=;
- b=aW3OGytaK95bhdfCrj9NA9Nbj6o+pikZedExwZ4PFI5MM1JjJq8zvRL0uA7LhmnADn
- Re06TSg1Eoz/BADBrbPvKzHcNs7/5hibdxXajSDZxVFlz1AryPraQmdAWLZds8725Qei
- b/WqYancVB3cqVpkJJFVNEUHWX0Cfid9fSrKRmVHvKLEBEwnYJEHzky8Dp6DJrePxi+Q
- JhQuTnqMSMJqyLgl6n07c12iYWL0YQaoc+QiJbiIpU5DvEW5Rz1oLqwzbRTfHQeTDNbR
- hLLqQ7BQbtYU+EGK+eXRUEpmKGpEKGiML0gbI7OUIFL+G+2jaEsVLIV05kmeDv4NMHl4
- SX0g==
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1ri9yc-000562-7H
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 04:23:46 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1ri9ya-0005FW-6L
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 04:23:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709803422;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Vl22hqxItbeweZssfysbZOJUEhUg6dAIqZ0k4psyFCU=;
+ b=goMBhSeim8jJcOC+Y3CYe0bz7EcdKjKPyBZX1fzbWjGmXnlL3e7i2wgNXJm+5h1Gc5Uhg/
+ DxzVDPYqXQXxzhN+d21QZx76+uh2BuRjQKSWr2xBRHM5SOILRJSU4bKcn374N+V0CITP/y
+ kFZtTW5F1Oh2zehFMOKw0GdrBA6FAe8=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-577-GPkjO0QBOdCFTeET2OY4_g-1; Thu, 07 Mar 2024 04:23:40 -0500
+X-MC-Unique: GPkjO0QBOdCFTeET2OY4_g-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-33d7fcb70c2so778897f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 01:23:40 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709803345; x=1710408145;
+ d=1e100.net; s=20230601; t=1709803419; x=1710408219;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FTVxRU5K7bUdUsDj3xGcg7m+v5jwrvME7QShy0kv7CE=;
- b=q5uETvVR3uX4PQgfDctLzs9KkFNN8o7hTystCINOPVhxchLkHMqnOKJw1Tj9qbRQxO
- g6AJkCXCAQ9Pn327kdtKWlVrGGZzXNu8pUXR2dilaQa9Tb6CiKrlCnN6Iw/OuGpgcU2R
- W5+vh4U/jAwJ9uTkLyyT7GXI1VmF+IzHgEZU6mC2cEj4n0hSFr0WBL+atrjZTw/35WoP
- eY1mCPXZYVRAglUgCTA36u/jU5doR+LmtsLXnPG9aC709HcPgBsjQ0bHkA+nQh3qKi72
- 7GB1f5NR5twsZzH1oBUy6d3YvRPQxo1m3BWA5lapvAQG4Sl5H77vfblhenFaVOFCPy+l
- 89OQ==
+ bh=Vl22hqxItbeweZssfysbZOJUEhUg6dAIqZ0k4psyFCU=;
+ b=lL6TgmbhgfGwCz28PyfZLFTZs5rD606J02kXNLkkxP5cM9UNlvJ1/V3jeUVZXYPJF+
+ SLg+10FTdajscUyNqxrvqSfCiIPrBnZ9CfQ3C/l3yI+bxlGFLjdm6rS92BOYCspU1ymx
+ pl4A9Jelkxo894PmD+ZfAB+S7Ycv30VQP0m03xnw7gJ9vYCltbHtyttByTmj5Wf5mfY3
+ o3anfV1Slwm0Li+ICPHmTQOP+UZ8NjcRM1olPd7YD9YBbmUCwNxr/KBBeTvrHfZadiPb
+ YLPQCj0IkfaoNDk4QTeVthsAatRasya6ir6bixy20ufQW9GbMOW889mNk/n/pEGiZ7Vc
+ uEBg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUIcFo+SF6I9zI/6n20VUvc0FH7psalkvcZWM3If8et28/2Kx0KFyWwFaVwylYAHXqqBLOJogvApj8/zLEuSqTGYhtuy1w=
-X-Gm-Message-State: AOJu0YyCp4hN2BnrXuOe789P+9JDT65MN21iKgCVMjavwPkfBLzpRZIk
- wqr+GyfgDKD7wSBHoUJqFR8KV8t6XRnv1tzkij/93yin7Xxy0YJf2APjBkN6HjM=
-X-Google-Smtp-Source: AGHT+IGbMnzCEKnnGB0j+VF9nWDCuAhlATuYU198L6+CZN3Bmn/TqWWJFyoTFZe1Q8WIS2enbFU7OQ==
-X-Received: by 2002:a05:6a00:2d13:b0:6e5:fb97:ed05 with SMTP id
- fa19-20020a056a002d1300b006e5fb97ed05mr16479893pfb.25.1709803345223; 
- Thu, 07 Mar 2024 01:22:25 -0800 (PST)
-Received: from [192.168.68.110] ([177.94.15.159])
+ AJvYcCXOhErwdJg0zTERfbJP/EY8gLXW52AoMrAyqn7kAY8OZmrBJFKbrdg0pXPwJoFVVFL3bVnmYAYLUwFHzXZol9krtCNOMmo=
+X-Gm-Message-State: AOJu0YywZvtntJlLWXtptf8BVHUMEdnLUed2/9QQDJMv+AP62MmFhmAT
+ 0M1lDxxxcAzmMBX9UEHq60zMUK2e5Nz8G5TCJGZAng0iyU7F6dvUHRCqInSqQ7X/PgGiIpE0/ZE
+ abXfa+qIt/LM9FKqIK1GdwZmO+ajX1f6U40mOOFOjds2PT+dlL9rU
+X-Received: by 2002:adf:ab03:0:b0:33e:bdf:a7e6 with SMTP id
+ q3-20020adfab03000000b0033e0bdfa7e6mr807716wrc.25.1709803419107; 
+ Thu, 07 Mar 2024 01:23:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHIMjw14wS0WVyacBPndTNAZkML3H8Q+wdjatOohJN+BgzOpV9jEQCNb7FNzHOH5+LEwELGFA==
+X-Received: by 2002:adf:ab03:0:b0:33e:bdf:a7e6 with SMTP id
+ q3-20020adfab03000000b0033e0bdfa7e6mr807686wrc.25.1709803418683; 
+ Thu, 07 Mar 2024 01:23:38 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- c11-20020a056a00008b00b006e5ce366f0csm9790621pfj.89.2024.03.07.01.22.20
+ i8-20020adfb648000000b0033e0ed396bdsm19659074wre.106.2024.03.07.01.23.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 Mar 2024 01:22:24 -0800 (PST)
-Message-ID: <b50a1d69-4978-4aa9-a30b-24f5c8f8d306@ventanamicro.com>
-Date: Thu, 7 Mar 2024 06:22:18 -0300
+ Thu, 07 Mar 2024 01:23:38 -0800 (PST)
+Message-ID: <91e409f4-19b0-4154-8e0a-6996df8d88e7@redhat.com>
+Date: Thu, 7 Mar 2024 10:23:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] hw/arm/virt-acpi-build.c: Migrate SPCR creation to
- common location
+Subject: Re: [PATCH v4 23/25] vfio: Add Error** argument to
+ .get_dirty_bitmap() handler
 Content-Language: en-US
-To: Sunil V L <sunilvl@ventanamicro.com>,
- Alistair Francis <alistair23@gmail.com>
-Cc: Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org, mst@redhat.com,
- imammedo@redhat.com, anisinha@redhat.com, peter.maydell@linaro.org,
- shannon.zhaosl@gmail.com, palmer@dabbelt.com, alistair.francis@wdc.com,
- bin.meng@windriver.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com
-References: <20240116010930.43433-1-jeeheng.sia@starfivetech.com>
- <20240116010930.43433-2-jeeheng.sia@starfivetech.com>
- <49d0d8d3-c7fd-4039-aeed-6c31ba16557a@ventanamicro.com>
- <CAKmqyKPE-ERHShmAJQH3VNc7XqOfOeKYYyCRswJSUwf7hqm1xA@mail.gmail.com>
- <Zek4cO8ci2O38NFJ@sunil-laptop>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <Zek4cO8ci2O38NFJ@sunil-laptop>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
+ Prasad Pandit <pjp@fedoraproject.org>
+References: <20240306133441.2351700-1-clg@redhat.com>
+ <20240306133441.2351700-24-clg@redhat.com>
+From: Eric Auger <eauger@redhat.com>
+In-Reply-To: <20240306133441.2351700-24-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eauger@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,165 +111,291 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 3/7/24 00:45, Sunil V L wrote:
-> On Thu, Mar 07, 2024 at 11:33:25AM +1000, Alistair Francis wrote:
->> On Thu, Mar 7, 2024 at 4:59 AM Daniel Henrique Barboza
->> <dbarboza@ventanamicro.com> wrote:
->>>
->>> Hi,
->>>
->>> This patch break check-qtest, most specifically 'bios-table'test', for aarch64.
->>> I found this while running riscv-to-apply.next in the Gitlab pipeline.
->>>
->>>
->>> Here's the output:
->>>
->>> $ make -j && QTEST_QEMU_BINARY=./qemu-system-aarch64 V=1 ./tests/qtest/bios-tables-test
->>> TAP version 13
->>> # random seed: R02Sf0f2fa0a3fac5d540b1681c820621b7d
->>> # starting QEMU: exec ./qemu-system-aarch64 -qtest unix:/tmp/qtest-591353.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-591353.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -machine none -accel qtest
->>> 1..8
->>> # Start of aarch64 tests
->>> # Start of acpi tests
->>> # starting QEMU: exec ./qemu-system-aarch64 -qtest unix:/tmp/qtest-591353.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-591353.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -machine virt  -accel tcg -nodefaults -nographic -drive if=pflash,format=raw,file=pc-bios/edk2-aarch64-code.fd,readonly=on -drive if=pflash,format=raw,file=pc-bios/edk2-arm-vars.fd,snapshot=on -cdrom tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2 -cpu cortex-a57 -smbios type=4,max-speed=2900,current-speed=2700 -accel qtest
->>> acpi-test: Warning! SPCR binary file mismatch. Actual [aml:/tmp/aml-9G53J2], Expected [aml:tests/data/acpi/virt/SPCR].
->>> See source file tests/qtest/bios-tables-test.c for instructions on how to update expected files.
->>> acpi-test: Warning! SPCR mismatch. Actual [asl:/tmp/asl-SR53J2.dsl, aml:/tmp/aml-9G53J2], Expected [asl:/tmp/asl-4Z33J2.dsl, aml:tests/data/acpi/virt/SPCR].
->>>
->>> The diff is here:
->>>
->>> --- /tmp/asl-4Z33J2.dsl 2024-03-06 15:40:24.879879348 -0300
->>> +++ /tmp/asl-SR53J2.dsl 2024-03-06 15:40:24.877879347 -0300
->>> @@ -1,57 +1,49 @@
->>>    /*
->>>     * Intel ACPI Component Architecture
->>>     * AML/ASL+ Disassembler version 20220331 (64-bit version)
->>>     * Copyright (c) 2000 - 2022 Intel Corporation
->>>
->>> (...)
->>>
->>>    [000h 0000   4]                    Signature : "SPCR"    [Serial Port Console Redirection Table]
->>> -[004h 0004   4]                 Table Length : 00000050
->>> +[004h 0004   4]                 Table Length : 0000004F
->>>    [008h 0008   1]                     Revision : 02
->>> -[009h 0009   1]                     Checksum : B1
->>> +[009h 0009   1]                     Checksum : B2
->>>    [00Ah 0010   6]                       Oem ID : "BOCHS "
->>>
->>> (...)
->>>
->>> -[042h 0066   2]                PCI Vendor ID : FFFF
->>> +[042h 0066   2]                PCI Vendor ID : 00FF
->>>
->>>
->>> After inspecting the common helper and what the original ARM code was doing
->>> I found out that we're missing something down there:
->>>
->>>
->>> On 1/15/24 22:09, Sia Jee Heng wrote:
->>>> RISC-V should also generate the SPCR in a manner similar to ARM.
->>>> Therefore, instead of replicating the code, relocate this function
->>>> to the common AML build.
->>>>
->>>> Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
->>>> ---
->>>>    hw/acpi/aml-build.c         | 51 ++++++++++++++++++++++++++++
->>>>    hw/arm/virt-acpi-build.c    | 68 +++++++++++++++----------------------
->>>>    include/hw/acpi/acpi-defs.h | 33 ++++++++++++++++++
->>>>    include/hw/acpi/aml-build.h |  4 +++
->>>>    4 files changed, 115 insertions(+), 41 deletions(-)
->>>>
->>>> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
->>>> index af66bde0f5..f3904650e4 100644
->>>> --- a/hw/acpi/aml-build.c
->>>> +++ b/hw/acpi/aml-build.c
->>>> @@ -1994,6 +1994,57 @@ static void build_processor_hierarchy_node(GArray *tbl, uint32_t flags,
->>>>        }
->>>>    }
->>>>
->>>> +void build_spcr(GArray *table_data, BIOSLinker *linker,
->>>> +                const AcpiSpcrData *f, const uint8_t rev,
->>>> +                const char *oem_id, const char *oem_table_id)
->>>> +{
->>>> +    AcpiTable table = { .sig = "SPCR", .rev = rev, .oem_id = oem_id,
->>>> +                        .oem_table_id = oem_table_id };
->>>> +
->>>> +    acpi_table_begin(&table, table_data);
->>>> +    /* Interface type */
->>>> +    build_append_int_noprefix(table_data, f->interface_type, 1);
->>>> +    /* Reserved */
->>>> +    build_append_int_noprefix(table_data, 0, 3);
->>>> +    /* Base Address */
->>>> +    build_append_gas(table_data, f->base_addr.id, f->base_addr.width,
->>>> +                     f->base_addr.offset, f->base_addr.size,
->>>> +                     f->base_addr.addr);
->>>> +    /* Interrupt type */
->>>> +    build_append_int_noprefix(table_data, f->interrupt_type, 1);
->>>> +    /* IRQ */
->>>> +    build_append_int_noprefix(table_data, f->pc_interrupt, 1);
->>>> +    /* Global System Interrupt */
->>>> +    build_append_int_noprefix(table_data, f->interrupt, 4);
->>>> +    /* Baud Rate */
->>>> +    build_append_int_noprefix(table_data, f->baud_rate, 1);
->>>> +    /* Parity */
->>>> +    build_append_int_noprefix(table_data, f->parity, 1);
->>>> +    /* Stop Bits */
->>>> +    build_append_int_noprefix(table_data, f->stop_bits, 1);
->>>> +    /* Flow Control */
->>>> +    build_append_int_noprefix(table_data, f->flow_control, 1);
->>>
->>> Here. We're missing the "Language" entry.
->>>
->>>
->>> This diff fixes the broken test:
->>>
->>>
->>> $ git diff
->>> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
->>> index f3904650e4..6d4517cfbe 100644
->>> --- a/hw/acpi/aml-build.c
->>> +++ b/hw/acpi/aml-build.c
->>> @@ -2024,6 +2024,8 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
->>>        build_append_int_noprefix(table_data, f->stop_bits, 1);
->>>        /* Flow Control */
->>>        build_append_int_noprefix(table_data, f->flow_control, 1);
->>> +    /* Language */
->>> +    build_append_int_noprefix(table_data, f->language, 1);
->>>        /* Terminal Type */
->>>        build_append_int_noprefix(table_data, f->terminal_type, 1);
->>>        /* PCI Device ID  */
->>
->> Thanks! I added this to the patch
->>
->>>
->>>
->>>
->>> As a side note, it seems like 'bios-table-test' isn't being run for RISC-V. Not sure if this
->>> is intentional or a foresight.
->>
->> I think you are looking for oversight :)
->>
->> I think it's just an oversight, not intentional.
->>
-> Adding these test cases is WIP. Drew had already pointed this. Myself
-> and Haibo are looking at it. But I doubt patches can be sent before 9.0
-> deadlines. Can we add them post 9.0?
-
-I don't recall the last time I had to deal with a new test being added after the
-code freeze. It's not a new feature, it increases test coverage and it might find
-bugs, so my guess is that it's fine.
-
-Alistair/Peter, any thoughts?
-
-
-Thanks,
-
-Daniel
-
-
-
-
+On 3/6/24 14:34, Cédric Le Goater wrote:
+> Let the callers do the error reporting. Add documentation while at it.
 > 
-> Thanks,
-> Sunil
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>  include/hw/vfio/vfio-common.h         |  4 +-
+>  include/hw/vfio/vfio-container-base.h | 17 +++++++-
+>  hw/vfio/common.c                      | 59 ++++++++++++++++++---------
+>  hw/vfio/container-base.c              |  5 ++-
+>  hw/vfio/container.c                   | 13 +++---
+>  5 files changed, 67 insertions(+), 31 deletions(-)
+> 
+> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+> index 46f88493634b5634a9c14a5caa33a463fbf2c50d..68911d36676667352e94a97895828aff4b194b57 100644
+> --- a/include/hw/vfio/vfio-common.h
+> +++ b/include/hw/vfio/vfio-common.h
+> @@ -274,9 +274,9 @@ bool
+>  vfio_devices_all_device_dirty_tracking(const VFIOContainerBase *bcontainer);
+>  int vfio_devices_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+>                                      VFIOBitmap *vbmap, hwaddr iova,
+> -                                    hwaddr size);
+> +                                    hwaddr size, Error **errp);
+>  int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
+> -                          uint64_t size, ram_addr_t ram_addr);
+> +                          uint64_t size, ram_addr_t ram_addr, Error **errp);
+>  
+>  /* Returns 0 on success, or a negative errno. */
+>  int vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
+> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+> index c76984654a596e3016a8cf833e10143eb872e102..ebc49ebfbe7de862450941b1129faad5d62b3769 100644
+> --- a/include/hw/vfio/vfio-container-base.h
+> +++ b/include/hw/vfio/vfio-container-base.h
+> @@ -85,7 +85,7 @@ int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
+>                                             bool start, Error **errp);
+>  int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+>                                        VFIOBitmap *vbmap,
+> -                                      hwaddr iova, hwaddr size);
+> +                                      hwaddr iova, hwaddr size, Error **errp);
+>  
+>  void vfio_container_init(VFIOContainerBase *bcontainer,
+>                           VFIOAddressSpace *space,
+> @@ -138,9 +138,22 @@ struct VFIOIOMMUClass {
+>       */
+>      int (*set_dirty_page_tracking)(const VFIOContainerBase *bcontainer,
+>                                     bool start, Error **errp);
+> +    /**
+> +     * @query_dirty_bitmap
+> +     *
+> +     * Get list of dirty pages from container
+> +     *
+> +     * @bcontainer: #VFIOContainerBase from which to get dirty pages
+> +     * @vbmap: #VFIOBitmap internal bitmap structure
+> +     * @iova: iova base address
+> +     * @size: size of iova range
+> +     * @errp: pointer to Error*, to store an error if it happens.
+> +     *
+> +     * Returns zero to indicate success and negative for error
+> +     */
+>      int (*query_dirty_bitmap)(const VFIOContainerBase *bcontainer,
+>                                VFIOBitmap *vbmap,
+> -                              hwaddr iova, hwaddr size);
+> +                              hwaddr iova, hwaddr size, Error **errp);
+>      /* PCI specific */
+>      int (*pci_hot_reset)(VFIODevice *vbasedev, bool single);
+>  
+> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+> index 496e5adaf8f18e9ae7e86dd69be0b9e71e86404f..65a11dc088524647541db97b7b8d6f07e5044728 100644
+> --- a/hw/vfio/common.c
+> +++ b/hw/vfio/common.c
+> @@ -1158,7 +1158,7 @@ static int vfio_device_dma_logging_report(VFIODevice *vbasedev, hwaddr iova,
+>  
+>  int vfio_devices_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+>                                      VFIOBitmap *vbmap, hwaddr iova,
+> -                                    hwaddr size)
+> +                                    hwaddr size, Error **errp)
+>  {
+>      VFIODevice *vbasedev;
+>      int ret;
+> @@ -1167,10 +1167,10 @@ int vfio_devices_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+>          ret = vfio_device_dma_logging_report(vbasedev, iova, size,
+>                                               vbmap->bitmap);
+>          if (ret) {
+> -            error_report("%s: Failed to get DMA logging report, iova: "
+> -                         "0x%" HWADDR_PRIx ", size: 0x%" HWADDR_PRIx
+> -                         ", err: %d (%s)",
+> -                         vbasedev->name, iova, size, ret, strerror(-ret));
+> +            error_setg(errp, "%s: Failed to get DMA logging report, iova: "
+> +                       "0x%" HWADDR_PRIx ", size: 0x%" HWADDR_PRIx
+> +                       ", err: %d (%s)",
+> +                       vbasedev->name, iova, size, ret, strerror(-ret));
+use error_setg_errno as below?
+>  
+>              return ret;
+>          }
+> @@ -1180,7 +1180,7 @@ int vfio_devices_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+>  }
+>  
+>  int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
+> -                          uint64_t size, ram_addr_t ram_addr)
+> +                          uint64_t size, ram_addr_t ram_addr, Error **errp)
+>  {
+>      bool all_device_dirty_tracking =
+>          vfio_devices_all_device_dirty_tracking(bcontainer);
+> @@ -1197,13 +1197,17 @@ int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
+>  
+>      ret = vfio_bitmap_alloc(&vbmap, size);
+>      if (ret) {
+> +        error_setg_errno(errp, -ret,
+> +                         "Failed to allocate dirty tracking bitmap");
+>          return ret;
+>      }
+>  
+>      if (all_device_dirty_tracking) {
+> -        ret = vfio_devices_query_dirty_bitmap(bcontainer, &vbmap, iova, size);
+> +        ret = vfio_devices_query_dirty_bitmap(bcontainer, &vbmap, iova, size,
+> +                                              errp);
+>      } else {
+> -        ret = vfio_container_query_dirty_bitmap(bcontainer, &vbmap, iova, size);
+> +        ret = vfio_container_query_dirty_bitmap(bcontainer, &vbmap, iova, size,
+> +                                                errp);
+>      }
+>  
+>      if (ret) {
+> @@ -1251,12 +1255,13 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>      }
+>  
+>      ret = vfio_get_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
+> -                                translated_addr);
+> +                                translated_addr, &local_err);
+>      if (ret) {
+> -        error_report("vfio_iommu_map_dirty_notify(%p, 0x%"HWADDR_PRIx", "
+> -                     "0x%"HWADDR_PRIx") = %d (%s)",
+> -                     bcontainer, iova, iotlb->addr_mask + 1, ret,
+> -                     strerror(-ret));
+> +        error_prepend(&local_err,
+> +                      "vfio_iommu_map_dirty_notify(%p, 0x%"HWADDR_PRIx", "
+> +                      "0x%"HWADDR_PRIx") failed :", bcontainer, iova,
+nit in previous prepends you used "-" instead of ":" at the end. Maybe
+align.
+> +                      iotlb->addr_mask + 1);
+> +        error_report_err(local_err);
+>      }
+>  
+>  out_lock:
+> @@ -1276,12 +1281,19 @@ static int vfio_ram_discard_get_dirty_bitmap(MemoryRegionSection *section,
+>      const ram_addr_t ram_addr = memory_region_get_ram_addr(section->mr) +
+>                                  section->offset_within_region;
+>      VFIORamDiscardListener *vrdl = opaque;
+> +    Error *local_err = NULL;
+> +    int ret;
+>  
+>      /*
+>       * Sync the whole mapped region (spanning multiple individual mappings)
+>       * in one go.
+>       */
+> -    return vfio_get_dirty_bitmap(vrdl->bcontainer, iova, size, ram_addr);
+> +    ret = vfio_get_dirty_bitmap(vrdl->bcontainer, iova, size, ram_addr,
+> +                                &local_err);
+> +    if (ret) {
+> +        error_report_err(local_err);
+> +    }
+> +    return ret;
+>  }
+>  
+>  static int
+> @@ -1313,7 +1325,7 @@ vfio_sync_ram_discard_listener_dirty_bitmap(VFIOContainerBase *bcontainer,
+>  }
+>  
+>  static int vfio_sync_dirty_bitmap(VFIOContainerBase *bcontainer,
+> -                                  MemoryRegionSection *section)
+> +                                  MemoryRegionSection *section, Error **errp)
+>  {
+>      ram_addr_t ram_addr;
+>  
+> @@ -1344,7 +1356,14 @@ static int vfio_sync_dirty_bitmap(VFIOContainerBase *bcontainer,
+>          }
+>          return 0;
+>      } else if (memory_region_has_ram_discard_manager(section->mr)) {
+> -        return vfio_sync_ram_discard_listener_dirty_bitmap(bcontainer, section);
+> +        int ret;
+> +
+> +        ret = vfio_sync_ram_discard_listener_dirty_bitmap(bcontainer, section);
+> +        if (ret) {
+> +            error_setg(errp,
+> +                       "Failed to sync dirty bitmap with RAM discard listener");
+> +            return ret;
+> +        }
+>      }
+>  
+>      ram_addr = memory_region_get_ram_addr(section->mr) +
+> @@ -1352,7 +1371,7 @@ static int vfio_sync_dirty_bitmap(VFIOContainerBase *bcontainer,
+>  
+>      return vfio_get_dirty_bitmap(bcontainer,
+>                     REAL_HOST_PAGE_ALIGN(section->offset_within_address_space),
+> -                   int128_get64(section->size), ram_addr);
+> +                                 int128_get64(section->size), ram_addr, errp);
+>  }
+>  
+>  static void vfio_listener_log_sync(MemoryListener *listener,
+> @@ -1361,16 +1380,16 @@ static void vfio_listener_log_sync(MemoryListener *listener,
+>      VFIOContainerBase *bcontainer = container_of(listener, VFIOContainerBase,
+>                                                   listener);
+>      int ret;
+> +    Error *local_err = NULL;
+>  
+>      if (vfio_listener_skipped_section(section)) {
+>          return;
+>      }
+>  
+>      if (vfio_devices_all_dirty_tracking(bcontainer)) {
+> -        ret = vfio_sync_dirty_bitmap(bcontainer, section);
+> +        ret = vfio_sync_dirty_bitmap(bcontainer, section, &local_err);
+>          if (ret) {
+> -            error_report("vfio: Failed to sync dirty bitmap, err: %d (%s)", ret,
+> -                         strerror(-ret));
+> +            error_report_err(local_err);
+>              vfio_set_migration_error(ret);
+>          }
+>      }
+> diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+> index 7c0764121d24b02b6c4e66e368d7dff78a6d65aa..8db59881873c3b1edee81104b966af737e5fa6f6 100644
+> --- a/hw/vfio/container-base.c
+> +++ b/hw/vfio/container-base.c
+> @@ -65,10 +65,11 @@ int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
+>  
+>  int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+>                                        VFIOBitmap *vbmap,
+> -                                      hwaddr iova, hwaddr size)
+> +                                      hwaddr iova, hwaddr size, Error **errp)
+>  {
+>      g_assert(bcontainer->ops->query_dirty_bitmap);
+> -    return bcontainer->ops->query_dirty_bitmap(bcontainer, vbmap, iova, size);
+> +    return bcontainer->ops->query_dirty_bitmap(bcontainer, vbmap, iova, size,
+> +                                               errp);
+>  }
+>  
+>  void vfio_container_init(VFIOContainerBase *bcontainer, VFIOAddressSpace *space,
+> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+> index 6524575aeddcea8470b5fd10caf57475088d1813..475d96eaaa927998c6aa8cc9aa9f2115f5a1efda 100644
+> --- a/hw/vfio/container.c
+> +++ b/hw/vfio/container.c
+> @@ -131,6 +131,7 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
+>      };
+>      bool need_dirty_sync = false;
+>      int ret;
+> +    Error *local_err = NULL;
+>  
+>      if (iotlb && vfio_devices_all_running_and_mig_active(bcontainer)) {
+>          if (!vfio_devices_all_device_dirty_tracking(bcontainer) &&
+> @@ -166,8 +167,9 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
+>  
+>      if (need_dirty_sync) {
+>          ret = vfio_get_dirty_bitmap(bcontainer, iova, size,
+> -                                    iotlb->translated_addr);
+> +                                    iotlb->translated_addr, &local_err);
+>          if (ret) {
+> +            error_report_err(local_err);
+>              return ret;
+>          }
+>      }
+> @@ -237,7 +239,8 @@ vfio_legacy_set_dirty_page_tracking(const VFIOContainerBase *bcontainer,
+>  
+>  static int vfio_legacy_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+>                                            VFIOBitmap *vbmap,
+> -                                          hwaddr iova, hwaddr size)
+> +                                          hwaddr iova, hwaddr size,
+> +                                          Error **errp)
+>  {
+>      const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
+>                                                    bcontainer);
+> @@ -265,9 +268,9 @@ static int vfio_legacy_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+>      ret = ioctl(container->fd, VFIO_IOMMU_DIRTY_PAGES, dbitmap);
+>      if (ret) {
+>          ret = -errno;
+> -        error_report("Failed to get dirty bitmap for iova: 0x%"PRIx64
+> -                " size: 0x%"PRIx64" err: %d", (uint64_t)range->iova,
+> -                (uint64_t)range->size, errno);
+> +        error_setg(errp, "Failed to get dirty bitmap for iova: 0x%"PRIx64
+> +                   " size: 0x%"PRIx64" err: %d", (uint64_t)range->iova,
+> +                   (uint64_t)range->size, errno);
+use errno flavour?
+
+Eric
+>      }
+>  
+>      g_free(dbitmap);
+
 
