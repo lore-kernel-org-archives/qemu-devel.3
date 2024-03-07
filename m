@@ -4,84 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D797C5475B
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 03:25:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AA61C5475B
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 03:42:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ri4ME-0001UO-CU; Wed, 06 Mar 2024 22:23:46 -0500
+	id 1ri4e4-0000nF-JS; Wed, 06 Mar 2024 22:42:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1ri4MC-0001Tm-Uf
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 22:23:45 -0500
-Received: from mail-io1-xd2b.google.com ([2607:f8b0:4864:20::d2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1ri4MA-0005lD-7X
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 22:23:44 -0500
-Received: by mail-io1-xd2b.google.com with SMTP id
- ca18e2360f4ac-7c8773a9599so15585139f.0
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 19:23:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709781820; x=1710386620; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2kAEgIdBp6Ue1btIM+Uj1VoaSgxC8giYiH5Kmbwpsfk=;
- b=cyPfGzXavmN2LsqNm0HomWcTyPazEM18FEX3+uzVXVLiAMpHgRJYxwTGZwhBvdCvqz
- JB7fl+I2JgyVDcTVVgKh17vdMH9LwZKcK3FVJ+q6C+qqY0rne72A+NsvooPEj/9+UFAq
- OUeqcw+R2cCgzizITNoWQfbBexK5xgTNEMmk6qs2XZh4TEHOTGFL/b2A9InpVy3wsal2
- /ZIKVmO9j6Y728tz+TnYjqSc+/ArvhFedUTdHtqlcqzgCc11ZMzQPvv/B5gQg4p/Dkjj
- MBgzjo59xRl6hOrrvUEHPj0inzBzm4GGQc1Ww9tVM9TuO0rKBkyuHVHUnzQzauqe94Rh
- tJUw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ri4e2-0000ms-OA
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 22:42:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ri4e0-0002H2-PM
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 22:42:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709782927;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mXgI93MvArIHZk0roA8hzXyEZjpMVU6Y/TtLoru20Oc=;
+ b=FLhW/PZKPk9LL291rvJUGHubqI309IKCg+YwDhlCDLZhFRKAw2E9qFpJSENCeG4M37owdO
+ B5kB852XKmHXOG4TEZ9ta2AXaX8vwOdZp50UWKD1dku88D8N77CBh6PHkpRyqtjt7gRbNA
+ OAtp0Wk2dZH4Si1+VwImF61HkVpskt4=
+Received: from mail-ot1-f70.google.com (mail-ot1-f70.google.com
+ [209.85.210.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-49-Qwv3SbraP-CTVY9NktJJsw-1; Wed, 06 Mar 2024 22:42:05 -0500
+X-MC-Unique: Qwv3SbraP-CTVY9NktJJsw-1
+Received: by mail-ot1-f70.google.com with SMTP id
+ 46e09a7af769-6e4fe655c93so183790a34.1
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 19:42:05 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709781820; x=1710386620;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2kAEgIdBp6Ue1btIM+Uj1VoaSgxC8giYiH5Kmbwpsfk=;
- b=N+BpgopYudfWy4NGqaIep2FvHb5d4F+OivEIL7cCkDX/0u4cE2VnaX8bK0gTW96vGn
- PibgRRrlLBmEJMukdRNI7pTO+n4Yi12k9hzC8mc4YqbqD/hgbzo/TVm/eLVGn3tqTP5c
- lJqhMEa0uQuFGCMSPGZ/ldSZdqO5YC5q4w7YyAMZPqfx4wyQ5xHpR2GNZ/A3xhjGUFzP
- jJqlCZaBi7hxdAflAG3sz+u2CZqtl18PHZq7JMxispEhcNACXxONbADHN7OSFFfYsYGL
- qaw1xLHDp/Oe970xiGvOsLxqBnaZaulV0mzBMD+sNPR6R4uxGeniQ9omwok3336g3tXf
- KHqw==
-X-Gm-Message-State: AOJu0YwEbobrs+BrA7FufhBHD6Yp4Bf7aF5ENlnpvh++/oB6v5BZvB49
- VrLOoxDRXi9oYHVv0iTmWbMM+dHp37R2Dt/rP5F2upMqBdzSUkuSbjP1wd0tmgQ=
-X-Google-Smtp-Source: AGHT+IHIT2T4ZZKYpTAA7Wdp5OaYrH7yq6hRAa/ziZwQR33SvCttjkGp5NpYH2MCxrsEj+9vKsk9Zg==
-X-Received: by 2002:a5e:a50e:0:b0:7c8:3c53:1e42 with SMTP id
- 14-20020a5ea50e000000b007c83c531e42mr14403007iog.14.1709781820258; 
- Wed, 06 Mar 2024 19:23:40 -0800 (PST)
-Received: from taylor-ubuntu.hsd1.co.comcast.net
- (c-73-169-12-54.hsd1.co.comcast.net. [73.169.12.54])
- by smtp.gmail.com with ESMTPSA id
- h20-20020a02c734000000b00474e9a77424sm2233990jao.147.2024.03.06.19.23.38
+ d=1e100.net; s=20230601; t=1709782621; x=1710387421;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mXgI93MvArIHZk0roA8hzXyEZjpMVU6Y/TtLoru20Oc=;
+ b=wmGpn2NlnoIb8/0DImRG3giD3wuEVm1bKAxXLhzNkhyuDJR9ub+GJKdC6LrCUNy1s3
+ GoRRLMxv1/voH24CTu5DbeCXKYzdhfepC0a14sxkjLQVGpds6onu6nvn+NAT9lJr7in4
+ zfcC5OM36u2F8zfi5XdRFvVvuS6FJAANWHD9e+NDn50c3rGHORWqzh6354V5jJp1rAnB
+ Y5nDmymJyV5v10drbtNpx4qDiSWNUr119joh95AMOqwKKHYKETDD4kYHQOXwr3c9vfNK
+ cP3DMd0jN0V7YUugi7z6CFdHub5GmqM2S/F3zQltGKAoupBvllVkrfNy2F/U1dV+F+QE
+ JfGg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU3NADsc/OKIEQQsAMKfr7IrYP9golAo68+F6GpK5TQyKFbFP0T9u94aLBJj1BCM/WkAEemnw3iw3u68DHFVFukijMmb7Y=
+X-Gm-Message-State: AOJu0YyEmtKvfLhkJ6MBFAvLRi7xODN3dle0khJ1dQwiot1bC/GBbM/Y
+ kAQRiypzq490T3jwTFyGVVFpqtF+t4i9YRjSR4jGG9UR7obd8T8VJJf/ZIV4M0ecyPcC6Z+6RHz
+ 0DkLIHkSCig1FpkFy53z8lMqcgCFgB22xxSpZUwG9gLFWE5kHQ/i5
+X-Received: by 2002:a05:6358:590c:b0:178:f482:6e59 with SMTP id
+ g12-20020a056358590c00b00178f4826e59mr1059185rwf.3.1709782620980; 
+ Wed, 06 Mar 2024 19:37:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFGHe2vSGDQ52w/jnag9+ORPF/RTl2ZvzLZVd2U+JQrmS+aHrXhLvsC2CMrGpaqhg5hKTuAFQ==
+X-Received: by 2002:a05:6358:590c:b0:178:f482:6e59 with SMTP id
+ g12-20020a056358590c00b00178f4826e59mr1059179rwf.3.1709782620544; 
+ Wed, 06 Mar 2024 19:37:00 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ h11-20020a63210b000000b005e2b0671987sm11600738pgh.51.2024.03.06.19.36.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Mar 2024 19:23:39 -0800 (PST)
-From: Taylor Simpson <ltaylorsimpson@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: bcain@quicinc.com, quic_mathbern@quicinc.com, sidneym@quicinc.com,
- quic_mliebel@quicinc.com, richard.henderson@linaro.org, philmd@linaro.org,
- ale@rev.ng, anjo@rev.ng, ltaylorsimpson@gmail.com
-Subject: [PATCH v2 8/9] Hexagon (target/hexagon) Remove gen_shortcode.py
-Date: Wed,  6 Mar 2024 20:23:26 -0700
-Message-Id: <20240307032327.4799-9-ltaylorsimpson@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240307032327.4799-1-ltaylorsimpson@gmail.com>
-References: <20240307032327.4799-1-ltaylorsimpson@gmail.com>
+ Wed, 06 Mar 2024 19:37:00 -0800 (PST)
+Date: Thu, 7 Mar 2024 11:36:48 +0800
+From: Peter Xu <peterx@redhat.com>
+To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yu Zhang <yu.zhang@ionos.com>, Het Gala <het.gala@nutanix.com>,
+ qemu-devel <qemu-devel@nongnu.org>, Fabiano Rosas <farosas@suse.de>,
+ Jinpu Wang <jinpu.wang@ionos.com>,
+ Alexei Pastuchov <alexei.pastuchov@ionos.com>,
+ Elmar Gerdes <elmar.gerdes@ionos.com>
+Subject: Re: Problem with migration/rdma
+Message-ID: <Zek2UFoAyVrC7yh6@x1n>
+References: <CAHEcVy7HXSwn4Ow_Kog+Q+TN6f_kMeiCHevz1qGM-fbxBPp1hQ@mail.gmail.com>
+ <04da4267-8fe8-4653-90a2-f64e3be64037@linaro.org>
+ <a0d9e2c2-3687-4b7d-8fac-887ce262c38a@fujitsu.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d2b;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-io1-xd2b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+In-Reply-To: <a0d9e2c2-3687-4b7d-8fac-887ce262c38a@fujitsu.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,143 +107,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This data structure is not used
+On Thu, Mar 07, 2024 at 02:41:37AM +0000, Zhijian Li (Fujitsu) via wrote:
+> Yu,
+> 
+> 
+> On 07/03/2024 00:30, Philippe Mathieu-Daudé wrote:
+> > Cc'ing RDMA migration reviewers/maintainers:
+> > 
+> > $ ./scripts/get_maintainer.pl -f migration/rdma.c
+> > Li Zhijian <lizhijian@fujitsu.com> (reviewer:RDMA Migration)
+> > Peter Xu <peterx@redhat.com> (maintainer:Migration)
+> > Fabiano Rosas <farosas@suse.de> (maintainer:Migration)
+> > 
+> > On 5/3/24 22:32, Yu Zhang wrote:
+> >> Hello Het and all,
+> >>
+> >> while I was testing qemu-8.2, I saw a lot of our migration test cases failed.
+> >> After debugging the commits of the 8.2 branch, I saw the issue and mad a diff:
+> >>
+> >> diff --git a/migration/rdma.c b/migration/rdma.c
+> >> index 6a29e53daf..f10d56f556 100644
+> >> --- a/migration/rdma.c
+> >> +++ b/migration/rdma.c
+> >> @@ -3353,9 +3353,9 @@ static int qemu_rdma_accept(RDMAContext *rdma)
+> >>           goto err_rdma_dest_wait;
+> >>       }
+> >>
+> >> -    isock->host = rdma->host;
+> >> +    isock->host = g_strdup_printf("%s", rdma->host);
+> >>       isock->port = g_strdup_printf("%d", rdma->port);
+> 
+> 
+> Thanks for your analysis.
+> 
+> It will be great if you send this as a patch.
+> 
+> 
+> isock is defined as a _autoptr VVV
+> 3333 _autoptr(InetSocketAddress) isock = g_new0(InetSocketAddress, 1);
+> 
+> I'm surprised that it seems the auto free scheme will free the member of isock as well
+> see below valrind log. That will cause a double free.
 
-Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
----
- target/hexagon/opcodes.c        |  7 ----
- target/hexagon/README           |  1 -
- target/hexagon/gen_shortcode.py | 63 ---------------------------------
- target/hexagon/meson.build      | 10 ------
- 4 files changed, 81 deletions(-)
- delete mode 100755 target/hexagon/gen_shortcode.py
+Right, all the QAPI-free is a deep one.  Thanks for checking this up,
+Zhijian.
 
-diff --git a/target/hexagon/opcodes.c b/target/hexagon/opcodes.c
-index 02ae9cf787..c8bde2f9e9 100644
---- a/target/hexagon/opcodes.c
-+++ b/target/hexagon/opcodes.c
-@@ -37,13 +37,6 @@ const char * const opcode_names[] = {
- };
- 
- 
--const char * const opcode_short_semantics[] = {
--#define DEF_SHORTCODE(TAG, SHORTCODE)              [TAG] = #SHORTCODE,
--#include "shortcode_generated.h.inc"
--#undef DEF_SHORTCODE
--    NULL
--};
--
- DECLARE_BITMAP(opcode_attribs[XX_LAST_OPCODE], A_ZZ_LASTATTRIB);
- 
- static void init_attribs(int tag, ...)
-diff --git a/target/hexagon/README b/target/hexagon/README
-index 065c05154d..65b4fcc0fa 100644
---- a/target/hexagon/README
-+++ b/target/hexagon/README
-@@ -46,7 +46,6 @@ header files in <BUILD_DIR>/target/hexagon
-         gen_printinsn.py                -> printinsn_generated.h.inc
-         gen_op_attribs.py               -> op_attribs_generated.h.inc
-         gen_helper_protos.py            -> helper_protos_generated.h.inc
--        gen_shortcode.py                -> shortcode_generated.h.inc
-         gen_tcg_funcs.py                -> tcg_funcs_generated.c.inc
-         gen_tcg_func_table.py           -> tcg_func_table_generated.c.inc
-         gen_helper_funcs.py             -> helper_funcs_generated.c.inc
-diff --git a/target/hexagon/gen_shortcode.py b/target/hexagon/gen_shortcode.py
-deleted file mode 100755
-index deb94446c4..0000000000
---- a/target/hexagon/gen_shortcode.py
-+++ /dev/null
-@@ -1,63 +0,0 @@
--#!/usr/bin/env python3
--
--##
--##  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
--##
--##  This program is free software; you can redistribute it and/or modify
--##  it under the terms of the GNU General Public License as published by
--##  the Free Software Foundation; either version 2 of the License, or
--##  (at your option) any later version.
--##
--##  This program is distributed in the hope that it will be useful,
--##  but WITHOUT ANY WARRANTY; without even the implied warranty of
--##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
--##  GNU General Public License for more details.
--##
--##  You should have received a copy of the GNU General Public License
--##  along with this program; if not, see <http://www.gnu.org/licenses/>.
--##
--
--import sys
--import re
--import string
--import hex_common
--
--
--def gen_shortcode(f, tag):
--    f.write(f"DEF_SHORTCODE({tag}, {hex_common.semdict[tag]})\n")
--
--
--def main():
--    hex_common.read_semantics_file(sys.argv[1])
--    hex_common.read_attribs_file(sys.argv[2])
--    hex_common.calculate_attribs()
--    tagregs = hex_common.get_tagregs()
--    tagimms = hex_common.get_tagimms()
--
--    with open(sys.argv[3], "w") as f:
--        f.write("#ifndef DEF_SHORTCODE\n")
--        f.write("#define DEF_SHORTCODE(TAG,SHORTCODE)    /* Nothing */\n")
--        f.write("#endif\n")
--
--        for tag in hex_common.tags:
--            ## Skip the priv instructions
--            if "A_PRIV" in hex_common.attribdict[tag]:
--                continue
--            ## Skip the guest instructions
--            if "A_GUEST" in hex_common.attribdict[tag]:
--                continue
--            ## Skip the diag instructions
--            if tag == "Y6_diag":
--                continue
--            if tag == "Y6_diag0":
--                continue
--            if tag == "Y6_diag1":
--                continue
--
--            gen_shortcode(f, tag)
--
--        f.write("#undef DEF_SHORTCODE\n")
--
--
--if __name__ == "__main__":
--    main()
-diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
-index b3a0944d3b..988e7489ba 100644
---- a/target/hexagon/meson.build
-+++ b/target/hexagon/meson.build
-@@ -42,21 +42,11 @@ hexagon_ss.add(semantics_generated)
- #
- # Step 2
- # We use Python scripts to generate the following files
--#     shortcode_generated.h.inc
- #     tcg_func_table_generated.c.inc
- #     printinsn_generated.h.inc
- #     op_attribs_generated.h.inc
- #     opcodes_def_generated.h.inc
- #
--shortcode_generated = custom_target(
--    'shortcode_generated.h.inc',
--    output: 'shortcode_generated.h.inc',
--    depends: [semantics_generated],
--    depend_files: [hex_common_py, attribs_def],
--    command: [python, files('gen_shortcode.py'), semantics_generated, attribs_def, '@OUTPUT@'],
--)
--hexagon_ss.add(shortcode_generated)
--
- tcg_func_table_generated = custom_target(
-     'tcg_func_table_generated.c.inc',
-     output: 'tcg_func_table_generated.c.inc',
+Yu, would you please send a formal patch (better before this week ends) so
+that I can include it for the last pull for 9.0 soft-freeze (March 12th)?
+As 8.2 affected, please also attach proper tags:
+
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Fixes: 3fa9642ff7 ("migration: convert rdma backend to accept MigrateAddress")
+
+> 
+> ==809138== Invalid free() / delete / delete[] / realloc()
+> ==809138==    at 0x483A9F5: free (vg_replace_malloc.c:538)
+> ==809138==    by 0x598F70C: g_free (in /usr/lib64/libglib-2.0.so.0.6600.8)
+> ==809138==    by 0x79B6AD: qemu_rdma_cleanup (rdma.c:2432)
+> ==809138==    by 0x79CEE6: qio_channel_rdma_close_rcu (rdma.c:3108)
+> ==809138==    by 0xC2E339: call_rcu_thread (rcu.c:301)
+> ==809138==    by 0xC2116A: qemu_thread_start (qemu-thread-posix.c:541)
+> ==809138==    by 0x72683F8: ??? (in /usr/lib64/libpthread-2.32.so)
+> ==809138==    by 0x73824C2: clone (in /usr/lib64/libc-2.32.so)
+> ==809138==  Address 0x13daa070 is 0 bytes inside a block of size 14 free'd
+> ==809138==    at 0x483A9F5: free (vg_replace_malloc.c:538)
+> ==809138==    by 0x598F70C: g_free (in /usr/lib64/libglib-2.0.so.0.6600.8)
+> ==809138==    by 0xC058CF: qapi_dealloc_type_str (qapi-dealloc-visitor.c:68)
+> ==809138==    by 0xC09EF3: visit_type_str (qapi-visit-core.c:349)
+> ==809138==    by 0xBDDECC: visit_type_InetSocketAddressBase_members (qapi-visit-sockets.c:29)
+> ==809138==    by 0xBDE055: visit_type_InetSocketAddress_members (qapi-visit-sockets.c:67)
+> ==809138==    by 0xBDE30D: visit_type_InetSocketAddress (qapi-visit-sockets.c:119)
+> ==809138==    by 0xBDDB38: qapi_free_InetSocketAddress (qapi-types-sockets.c:51)
+> ==809138==    by 0x792351: glib_autoptr_clear_InetSocketAddress (qapi-types-sockets.h:109)
+> ==809138==    by 0x79236F: glib_autoptr_cleanup_InetSocketAddress (qapi-types-sockets.h:109)
+> ==809138==    by 0x79D956: qemu_rdma_accept (rdma.c:3341)
+> ==809138==    by 0x79F05A: rdma_accept_incoming_migration (rdma.c:4041)
+> ==809138==  Block was alloc'd at
+> ==809138==    at 0x4839809: malloc (vg_replace_malloc.c:307)
+> ==809138==    by 0x5992BB8: g_malloc (in /usr/lib64/libglib-2.0.so.0.6600.8)
+> ==809138==    by 0x59A7FE3: g_strdup (in /usr/lib64/libglib-2.0.so.0.6600.8)
+> ==809138==    by 0x79C2A8: qemu_rdma_data_init (rdma.c:2731)
+> ==809138==    by 0x79F183: rdma_start_incoming_migration (rdma.c:4081)
+> ==809138==    by 0x76F200: qemu_start_incoming_migration (migration.c:581)
+> ==809138==    by 0x77193A: qmp_migrate_incoming (migration.c:1735)
+> ==809138==    by 0x74B3D3: qmp_x_exit_preconfig (vl.c:2718)
+> ==809138==    by 0x74DB6F: qemu_init (vl.c:3753)
+> ==809138==    by 0xA14F3F: main (main.c:47)
+
 -- 
-2.34.1
+Peter Xu
 
 
