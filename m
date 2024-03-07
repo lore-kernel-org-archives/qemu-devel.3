@@ -4,87 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37D81C54E4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 18:12:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F191C54798
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 18:28:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riID6-0002Te-O0; Thu, 07 Mar 2024 13:11:16 -0500
+	id 1riISd-0001DQ-TT; Thu, 07 Mar 2024 13:27:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1riID2-0002Rk-Cz
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 13:11:12 -0500
-Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1riISc-0001DF-AW
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 13:27:18 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1riICy-0004Qi-Px
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 13:11:12 -0500
-Received: by mail-lf1-x135.google.com with SMTP id
- 2adb3069b0e04-51321e71673so1265967e87.2
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 10:11:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1riISa-0000c4-QB
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 13:27:18 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1dc96f64c10so9846065ad.1
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 10:27:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709835066; x=1710439866; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=IH8YxlTbSFFE6WXD8byS5PFVC3jXcSt1MmTksNm3ntE=;
- b=yhOr1oPKCSw5KaRZ8hdxvTrGPCS5NLTjbwjGpjEdDTnUhzqPeYfK1q1Og6cnzL2ByB
- 8xFqNzpLXHDCwBwsrooddBYP7kRwiLR2gEnriy4J/MmWVH9topx4ukbeddKTROV2VTje
- PUHbPWHC/q7CuCJ29/I+EQUJmJ3ZS6oeCp4vyCb3RaRNRTksRNk04otcJwAYE7o4crkT
- bCHHcalWabDzl6RduWk4cxCF1fQSKRYQsB91WFOzBFyp4017gSlmjIGSdLWeAi8kRFE3
- XgBMx9Y+0j1zB6Ak/Dy3VVS6w9XFdp/Qq0u2hjuO8griKLz492riPblLuzgnUXfZZzqN
- zd7Q==
+ d=linaro.org; s=google; t=1709836034; x=1710440834; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1J82rSzajf0utMtQj7GKwdIJ1FdozcoqFW6lAvgBRhQ=;
+ b=QUexHbdV1wdtv7uCUBTYyxayRa4ROypRl26nyLk8hVVasWw785NWfg0tYA4T7QXFOb
+ R6Uxx2XDX4PxAF/n6plSal+gBHYyJjLYtlgoRkN4/LcqPu2xvqvoG1dBTazoqDupmakS
+ J9gZFBKZSraZO+1ST8A4/ts85aiK5yjwoCCUyfDdINZojJX1Bt6fTXuSlm8vYCLwofoM
+ ssp2qFkyOIxOnBKmW1FkwGRbUWnGCZsYxtF0fp/wPWe2PVRzE0QCVcni27LpnFw7BnE4
+ tZ9T3FxaQwxy5AglP/uG+N8gOGwiI1q3xkl1GzPtiL9+wAJftahKjyultxrP34cqlSnT
+ zViA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709835066; x=1710439866;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=IH8YxlTbSFFE6WXD8byS5PFVC3jXcSt1MmTksNm3ntE=;
- b=vjIf/OGD98rFRGGsWcOnqkXxdCO1KcrW3ceSCr+QLsegERLvkUqIsReh5ejkjFVAdA
- /3HtOFbfxV7XwH9rZBauQ4OvhPLM59GpI5Qd4uc6/Jyn3tUB2S64XxlIAU3MXjdwj+Zd
- +Ln0RuBTLe8fU4cliUVbX08cmLuFEhjdFudQDY41XlTJCJyyQYgsjAABt2pPTZcpA26H
- 4TSwyQ4V/1IBADqnX9LY8LFRtucIXlA64yZgg6JthQgA8sa3c5Qb75e5npxD/1VFxU6+
- WDN9AOMy4fubAgCaLSrnHzt3wsCExb8SuOa+cY6GkYZz8LlGY9OrAp19WP8oFeMH7jbT
- R+Rg==
-X-Gm-Message-State: AOJu0YzePfdthVjoqyhwZ52XV+dateYB9XyxVKag+nHMVCRXLohnBeLj
- BUFb88hvJhoGepKQKIgIsY3SMQCGMvY4MTPusFtXNaKsENpqMb7VL4pPvksveNo=
-X-Google-Smtp-Source: AGHT+IHWxAPLvpkmB1sblxbLye5fV1cNX8vt1XeXz5dm0RJ8Hy39vcqfyAOH+HTkw+baz7LPLylPZQ==
-X-Received: by 2002:a05:6512:104b:b0:513:28b9:76da with SMTP id
- c11-20020a056512104b00b0051328b976damr2557089lfb.46.1709835066238; 
- Thu, 07 Mar 2024 10:11:06 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- u15-20020a05600c138f00b00412706c3ddasm3460168wmf.18.2024.03.07.10.11.05
+ d=1e100.net; s=20230601; t=1709836034; x=1710440834;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=1J82rSzajf0utMtQj7GKwdIJ1FdozcoqFW6lAvgBRhQ=;
+ b=c+YPxJ3SkYMLjpZ4BRt/U9zm8qc7v8o8fwoA3ls49+2+MKLzRjqrgviT8WIe8PQ7pB
+ UEVY8kN1S7qKCP9ubKFO9zqDGeaabQ0oDi2z7/O9dHoSG0r89c2gq6RzaTzhygw6ykWq
+ AUC5xZOu2CKMvZfCSvAjUnu25aE5DDPK9LMLvaFmUsIrkKsugiyi5zSda+8lNFP/vSB7
+ g+g8QajQUtp9u1GReyux/zKlsSxmZs6l5tOzVo/yllSOT6SIibHUUUqJjJYqEeyHFK7Q
+ 12s+UmwG8d1iZUCd1eS9mobrSfXkW12N7a5EjmRc5C3U2a3oULrKcgnryiqjxNfYYB/l
+ dI3Q==
+X-Gm-Message-State: AOJu0Yyo2FkZCZQs21vrmE8v3ki/Xq7wMiXHawNooCB8s0qUy1Mi1enP
+ o4fSEkUUV/TRAWVsAwnuPOiB3TYFC1t727pB0CgoIc0KQfCoTvr98Hwiusf+4D9N4Pw05cAu2bG
+ yIDE=
+X-Google-Smtp-Source: AGHT+IEKUWSrEuDQvP16mlKP3XOvHW+v4L1nSFtpagMohqv5SJDiyPdFU5AvTs5PN8biqMJMcEE1Mw==
+X-Received: by 2002:a17:902:9009:b0:1db:f965:470d with SMTP id
+ a9-20020a170902900900b001dbf965470dmr8035885plp.24.1709836033942; 
+ Thu, 07 Mar 2024 10:27:13 -0800 (PST)
+Received: from amd.. ([2804:7f0:b401:120f:3e7c:3fff:fe7a:e83b])
+ by smtp.gmail.com with ESMTPSA id
+ mm12-20020a1709030a0c00b001dc96d1a662sm14939068plb.197.2024.03.07.10.27.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 Mar 2024 10:11:05 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7844D5F7D9;
- Thu,  7 Mar 2024 18:11:05 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- John G Johnson <john.g.johnson@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Peter Xu <peterx@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Juan Quintela <quintela@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, peter.maydell@linaro.org,
- David Hildenbrand <david@redhat.com>
-Subject: [PATCH 0/5] docs: improve the memory API documentation
-Date: Thu,  7 Mar 2024 18:11:00 +0000
-Message-Id: <20240307181105.4081793-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.2
+ Thu, 07 Mar 2024 10:27:13 -0800 (PST)
+From: Gustavo Romero <gustavo.romero@linaro.org>
+To: qemu-devel@nongnu.org,
+	richard.henderson@linaro.org
+Cc: alex.bennee@linaro.org, peter.maydell@linaro.org, laurent@vivier.eu,
+ philmd@linaro.org, gustavo.romero@linaro.org
+Subject: [PATCH v2 4/5] gdbstub: Add Xfer:siginfo:read stub
+Date: Thu,  7 Mar 2024 18:26:22 +0000
+Message-Id: <20240307182623.1450717-4-gustavo.romero@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240307182623.1450717-1-gustavo.romero@linaro.org>
+References: <20240307182623.1450717-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::135;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x135.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,34 +96,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As I've been looking through the Memory API for our Xen work I thought
-I should take the time to clean it up. I needed to teach kdoc about
-our QLIST_ macros and I found at least one unused field in the
-structure.
+Add stub to handle Xfer:siginfo:read packet query that requests the
+machine's siginfo data.
 
-Looking through the definitions I do wander if the meaning of
-romd_mode and ram_device could be cleaned up to a single bool
-(directly_mapped or use_ops?).
+This is used when GDB user executes 'print $_siginfo' and when the
+machine stops due to a signal, for instance, on SIGSEGV. The information
+in siginfo allows GDB to determiner further details on the signal, like
+the fault address/insn when the SIGSEGV is caught.
 
-Anyway for now just cosmetic improvements to the docs as we are close
-to softfreeze.
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+---
+ gdbstub/gdbstub.c     |  8 ++++++++
+ gdbstub/internals.h   |  1 +
+ gdbstub/user-target.c | 23 +++++++++++++++++++++++
+ 3 files changed, 32 insertions(+)
 
-Alex.
-
-Alex Bennée (5):
-  scripts/kernel-doc: teach kdoc about QLIST_ macros
-  docs: include ramblock.h in the memory API docs
-  include/exec: remove warning_printed from MemoryRegion
-  include/exec: annotate all the MemoryRegion fields
-  docs/devel: mark out defined functions and structures
-
- docs/devel/memory.rst   | 49 +++++++++++++-------------
- include/exec/memory.h   | 48 +++++++++++++++++++++++---
- include/exec/ramblock.h | 76 +++++++++++++++++++++++++++--------------
- scripts/kernel-doc      |  9 ++++-
- 4 files changed, 127 insertions(+), 55 deletions(-)
-
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index 2909bc8c69..ab38cea46b 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -1651,6 +1651,8 @@ static void handle_query_supported(GArray *params, void *user_ctx)
+         g_string_append(gdbserver_state.str_buf, ";qXfer:auxv:read+");
+     }
+     g_string_append(gdbserver_state.str_buf, ";QCatchSyscalls+");
++
++    g_string_append(gdbserver_state.str_buf, ";qXfer:siginfo:read+");
+ #endif
+     g_string_append(gdbserver_state.str_buf, ";qXfer:exec-file:read+");
+ #endif
+@@ -1799,6 +1801,12 @@ static const GdbCmdParseEntry gdb_gen_query_table[] = {
+         .cmd_startswith = 1,
+         .schema = "l,l0"
+     },
++    {
++        .handler = gdb_handle_query_xfer_siginfo,
++        .cmd = "Xfer:siginfo:read::",
++        .cmd_startswith = 1,
++        .schema = "l,l0"
++     },
+ #endif
+     {
+         .handler = gdb_handle_query_xfer_exec_file,
+diff --git a/gdbstub/internals.h b/gdbstub/internals.h
+index a7cc69dab3..15c01c525a 100644
+--- a/gdbstub/internals.h
++++ b/gdbstub/internals.h
+@@ -193,6 +193,7 @@ typedef union GdbCmdVariant {
+ void gdb_handle_query_rcmd(GArray *params, void *user_ctx); /* softmmu */
+ void gdb_handle_query_offsets(GArray *params, void *user_ctx); /* user */
+ void gdb_handle_query_xfer_auxv(GArray *params, void *user_ctx); /*user */
++void gdb_handle_query_xfer_siginfo(GArray *params, void *user_ctx); /*user */
+ void gdb_handle_v_file_open(GArray *params, void *user_ctx); /* user */
+ void gdb_handle_v_file_close(GArray *params, void *user_ctx); /* user */
+ void gdb_handle_v_file_pread(GArray *params, void *user_ctx); /* user */
+diff --git a/gdbstub/user-target.c b/gdbstub/user-target.c
+index 215bf33ab3..93739852b0 100644
+--- a/gdbstub/user-target.c
++++ b/gdbstub/user-target.c
+@@ -285,6 +285,29 @@ void gdb_handle_query_xfer_auxv(GArray *params, void *user_ctx)
+     gdb_put_packet_binary(gdbserver_state.str_buf->str,
+                       gdbserver_state.str_buf->len, true);
+ }
++
++void gdb_handle_query_xfer_siginfo(GArray *params, void *user_ctx)
++{
++    unsigned long offset, len;
++    uint8_t *siginfo_offset;
++
++    offset = get_param(params, 0)->val_ul;
++    len = get_param(params, 1)->val_ul;
++
++    if (offset + len > sizeof(target_siginfo_t)) {
++        /* Invalid offset and/or requested length. */
++        gdb_put_packet("E01");
++        return;
++    }
++
++    siginfo_offset = (uint8_t *)gdbserver_state.siginfo + offset;
++
++    /* Reply */
++    g_string_assign(gdbserver_state.str_buf, "l");
++    gdb_memtox(gdbserver_state.str_buf, (const char *)siginfo_offset, len);
++    gdb_put_packet_binary(gdbserver_state.str_buf->str,
++                          gdbserver_state.str_buf->len, true);
++}
+ #endif
+ 
+ static const char *get_filename_param(GArray *params, int i)
 -- 
-2.39.2
+2.34.1
 
 
