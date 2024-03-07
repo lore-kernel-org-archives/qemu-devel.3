@@ -4,71 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57F94C54E4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 22:39:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE1A0C54E4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 23:35:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riMNn-0000Ve-Cr; Thu, 07 Mar 2024 17:38:35 -0500
+	id 1riNG2-0000s9-KU; Thu, 07 Mar 2024 18:34:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <angelo@kernel-space.org>)
- id 1riMHu-0007Wj-Ef
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 17:32:30 -0500
-Received: from mail.kernel-space.org ([195.201.34.187])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <angelo@kernel-space.org>)
- id 1riMHo-0001ad-2E
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 17:32:30 -0500
-Received: from kernel-space.org (localhost [127.0.0.1])
- by kernel-space.org (OpenSMTPD) with ESMTP id 4b2621f6;
- Thu, 7 Mar 2024 22:29:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kernel-space.org; h=from
- :to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding; s=s1; bh=WJUUy3rjmGQ96LDDLXs4int4T00
- =; b=pdOWE2qI8JYVHclphUFxbzfiztIuk+0tFTHVD7A15+KmZF9uho+3kz+d2cE
- S7ds3dTqTQn6eQYBQ02gBXKB+dRsgV5yMADY7WvsGy34msrkFFnryQbp8PtfySmi
- Mcgr27Xc9JPrGhKsehV8BRKecD0ikCbQtT76XC2WJ7MxtotA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=kernel-space.org; h=from:to
- :cc:subject:date:message-id:mime-version
- :content-transfer-encoding; q=dns; s=s1; b=UWxFwEMTOrYCEzXqkHeht
- xSXEICIw/KVcDF36sQXOcJUj91tVYDuViUuQszspZ0MX5GMoJ4WZgHvnbxf0C/0N
- 7MUFBnaHh+x27AhISh9fg2zG0ggzd6Iq1sTvy3pLmg2IE1bQLAgRqj0vXQgAPP++
- +97WaYUYO4qTnRcYkX2rrw=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel-space.org;
- s=s1; t=1709850588;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=rD5abJrS/1qaVIIVgWVqD38GjZDcefohfHLK99a/vmo=;
- b=chhS//F+dtNpqtUDkjb6WTDUABhzAzsOAuk1RkBIIruM524R8lNkjuY5L4Ic4ZWZ+MuEx+
- gHQPJ+Plxc0RvJKSWSIN4pN+TlP/2qtqXjpPynrY0CLQlgXpI0ZPZ3/BRplYvBlPdPwBDe
- yxZYxgmR93DvPFNdOB0FmURUNq/dgFU=
-Received: from localhost.localdomain
- (host-79-51-238-97.retail.telecomitalia.it [79.51.238.97])
- by kernel-space.org (OpenSMTPD) with ESMTPSA id cf0165d4
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Thu, 7 Mar 2024 22:29:48 +0000 (UTC)
-From: Angelo Dureghello <angelo@kernel-space.org>
-To: huth@tuxfamily.org
-Cc: qemu-devel@nongnu.org,
-	Angelo Dureghello <angelo@kernel-space.org>
-Subject: [PATCH] hw/m68k/mcf5208: add support for reset
-Date: Thu,  7 Mar 2024 23:31:41 +0100
-Message-ID: <20240307223141.795214-1-angelo@kernel-space.org>
-X-Mailer: git-send-email 2.44.0
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1riNG1-0000s1-Dl
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 18:34:37 -0500
+Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1riNFz-0004kI-UG
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 18:34:37 -0500
+Received: by mail-ot1-x32f.google.com with SMTP id
+ 46e09a7af769-6e4e9cdb604so685904a34.2
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 15:34:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1709854474; x=1710459274; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=TvtzYXlBxDIQHvkk7OR+1bPqq72EzlsJeV1HC/bhQGk=;
+ b=g769FRuibgPng2yU8BXliGLov5qgtZdcpD2polXs/vN1zKbkuxR7AyB6PFoOGn9A4b
+ L+QD+dXpPY3l5iqOa+7YJ422+KGUovOSigNIPE3OoavyIdgS6CsfUcHSRu7QvSZHJwRc
+ Jcht6YnvjCmGUMr7n+RjqlcJ7AIFvr6zoM+BzZZpMe2un95d69qWeoRgfoRElgKNp4rA
+ C1OhW+gRIOWxbSXGWqe10VzAt6FLl8wr7ZmTKWhZ75ARKml1p2bWYbgHeecGk6rQHRqy
+ neavoX4QahKm6Q7qYY5Aw4q4rJE9FAtzHwv5cT0a4nvkhHs4PZGQMkjywx/3Jkv2xcyE
+ od0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709854474; x=1710459274;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TvtzYXlBxDIQHvkk7OR+1bPqq72EzlsJeV1HC/bhQGk=;
+ b=BwY8VmVl/yWLy9JFaenR73Frf00R+me0nfvSegby95OKxWJDrEmp888J7p2YpWbxWK
+ oK2KQFhmRrSkIPNXUgQ94Qfa7ZOzJOSka3+BC/IssyrZOKXjI7SwOeW9JYWO7YJqizzL
+ nDWSLzvgLRr+3o44YCgZRb4eRde005NwAzq3lmouWjYy3PqOXlQRSaG4x3ST5vU24+7m
+ yU8JUPItSlZMO2F/prxqK3l8reTd9CgzBoa0zBJg0aXWkUg0esgv4alt/YHvX5Afi23Z
+ Fj/PwT03k81RE7WRF9FsOS2b2sATyuFGM5gyoH6VxHp9sJnEcvkC/P9ulzhsjWl1iM/Q
+ liLQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWkAGjRbviqs4etMtCIDq7Fc1eKkN0YYU4YojEHs+WZ6WrSNgqHSjLDgwwNKGcb+g4V0X95piR2zQlBAKp+/lgyXY6iceQ=
+X-Gm-Message-State: AOJu0Yy4NELWIshv1+lFhRYWxaYuUSK5oWFY7Ui1cisjQ67wJeao478B
+ IES/o5qrnF8pfksa2qQpJv3K/0tZUEvqGfv71fFfTFOKZngI6lIa
+X-Google-Smtp-Source: AGHT+IH3n+2HDtXDeYfwWqHEIFObS9DfRE9bAsUrfAaSVz9lXI49vjH9TOCljpp7WUM5ovliUJEAHg==
+X-Received: by 2002:a05:6830:1db5:b0:6e4:74e9:ece1 with SMTP id
+ z21-20020a0568301db500b006e474e9ece1mr10323287oti.23.1709854474261; 
+ Thu, 07 Mar 2024 15:34:34 -0800 (PST)
+Received: from debian ([2601:641:300:14de:a807:195f:7661:96fe])
+ by smtp.gmail.com with ESMTPSA id
+ p28-20020a631e5c000000b005d6a0b2efb3sm13021593pgm.21.2024.03.07.15.34.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 07 Mar 2024 15:34:33 -0800 (PST)
+From: fan <nifan.cxl@gmail.com>
+X-Google-Original-From: fan <fan@debian>
+Date: Thu, 7 Mar 2024 15:34:18 -0800
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: fan <nifan.cxl@gmail.com>, qemu-devel@nongnu.org,
+ linux-cxl@vger.kernel.org, gregory.price@memverge.com,
+ ira.weiny@intel.com, dan.j.williams@intel.com,
+ a.manzanares@samsung.com, dave@stgolabs.net,
+ nmtadam.samsung@gmail.com, jim.harris@samsung.com,
+ Jorgen.Hansen@wdc.com, wj28.lee@gmail.com, Fan Ni <fan.ni@samsung.com>
+Subject: Re: [PATCH v5 06/13] hw/mem/cxl_type3: Add host backend and address
+ space handling for DC regions
+Message-ID: <ZepO-qfbXX7yOeIK@debian>
+References: <20240304194331.1586191-1-nifan.cxl@gmail.com>
+ <20240304194331.1586191-7-nifan.cxl@gmail.com>
+ <20240306162816.00002e0e@Huawei.com> <ZejAh2O7fDBCcG-N@debian>
+ <20240307121605.00002d7f@Huawei.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=195.201.34.187;
- envelope-from=angelo@kernel-space.org; helo=mail.kernel-space.org
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240307121605.00002d7f@Huawei.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-ot1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 07 Mar 2024 17:38:33 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,102 +104,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add reset support.
+On Thu, Mar 07, 2024 at 12:16:05PM +0000, Jonathan Cameron wrote:
+> > > > @@ -868,16 +974,24 @@ static int cxl_type3_hpa_to_as_and_dpa(CXLType3Dev *ct3d,
+> > > >                                         AddressSpace **as,
+> > > >                                         uint64_t *dpa_offset)
+> > > >  {
+> > > > -    MemoryRegion *vmr = NULL, *pmr = NULL;
+> > > > +    MemoryRegion *vmr = NULL, *pmr = NULL, *dc_mr = NULL;
+> > > > +    uint64_t vmr_size = 0, pmr_size = 0, dc_size = 0;
+> > > >  
+> > > >      if (ct3d->hostvmem) {
+> > > >          vmr = host_memory_backend_get_memory(ct3d->hostvmem);
+> > > > +        vmr_size = memory_region_size(vmr);
+> > > >      }
+> > > >      if (ct3d->hostpmem) {
+> > > >          pmr = host_memory_backend_get_memory(ct3d->hostpmem);
+> > > > +        pmr_size = memory_region_size(pmr);
+> > > > +    }
+> > > > +    if (ct3d->dc.host_dc) {
+> > > > +        dc_mr = host_memory_backend_get_memory(ct3d->dc.host_dc);
+> > > > +        /* Do we want dc_size to be dc_mr->size or not?? */  
+> > > 
+> > > Maybe - definitely don't want to leave this comment here
+> > > unanswered and I think you enforce it above anyway.
+> > > 
+> > > So if we get here ct3d->dc.total_capacity == memory_region_size(ct3d->dc.host_dc);
+> > > As such we could just not stash total_capacity at all?  
+> > 
+> > I cannot identify a case where these two will be different. But
+> > total_capacity is referenced at quite some places, it may be nice to have
+> > it so we do not need to call the function to get the value every time?
+> 
+> I kind of like having it via one path so that there is no confusion
+> for the reader, but up to you on this one.  The function called is trivial
+> (other than some magic to handle very large memory regions) so
+> this is just a readability question, not a perf one.
+> 
+> Whatever, don't leave the question behind.  Find to have something
+> that says they are always the same size if you don't get rid
+> of the total_capacity representation.
+> 
+I will fix it.
 
-Signed-off-by: Angelo Dureghello <angelo@kernel-space.org>
----
- hw/m68k/mcf5208.c | 51 ++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 48 insertions(+), 3 deletions(-)
+For static capability, we have a variable static_mem_size, although we
+can calculate it from volatile and non-volatile memory region size.
+There are quite some places need to get the dynamic capacity, it is much
+more convenient to have a variable ready to use, I will keep it for
+now.
 
-diff --git a/hw/m68k/mcf5208.c b/hw/m68k/mcf5208.c
-index 0cfb806c20..b1ab3896d0 100644
---- a/hw/m68k/mcf5208.c
-+++ b/hw/m68k/mcf5208.c
-@@ -20,6 +20,7 @@
- #include "hw/ptimer.h"
- #include "sysemu/sysemu.h"
- #include "sysemu/qtest.h"
-+#include "sysemu/runstate.h"
- #include "net/net.h"
- #include "hw/boards.h"
- #include "hw/loader.h"
-@@ -40,6 +41,8 @@
- #define PCSR_PRE_SHIFT  8
- #define PCSR_PRE_MASK   0x0f00
- 
-+#define RCR_SOFTRST     0x80
-+
- typedef struct {
-     MemoryRegion iomem;
-     qemu_irq irq;
-@@ -185,13 +188,55 @@ static const MemoryRegionOps m5208_sys_ops = {
-     .endianness = DEVICE_NATIVE_ENDIAN,
- };
- 
--static void mcf5208_sys_init(MemoryRegion *address_space, qemu_irq *pic)
-+static uint64_t m5208_rcm_read(void *opaque, hwaddr addr,
-+                               unsigned size)
-+{
-+    qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%" HWADDR_PRIX "\n",
-+                  __func__, addr);
-+    return 0;
-+}
-+
-+static void m5208_rcm_write(void *opaque, hwaddr addr,
-+                            uint64_t value, unsigned size)
-+{
-+    switch (addr) {
-+    case 0x0: /* RCR */
-+        if (value & RCR_SOFTRST) {
-+            M68kCPU *cpu = opaque;
-+            CPUState *cs = CPU(cpu);
-+
-+            cpu_reset(cs);
-+            cpu->env.aregs[7] = ldl_phys(cs->as, 0);
-+            cpu->env.pc = ldl_phys(cs->as, 4);
-+            //qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-+        }
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%" HWADDR_PRIX "\n",
-+                      __func__, addr);
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps m5208_rcm_ops = {
-+    .read = m5208_rcm_read,
-+    .write = m5208_rcm_write,
-+    .endianness = DEVICE_NATIVE_ENDIAN,
-+};
-+
-+static void mcf5208_sys_init(MemoryRegion *address_space, qemu_irq *pic,
-+                             M68kCPU *cpu)
- {
--    MemoryRegion *iomem = g_new(MemoryRegion, 1);
-+    MemoryRegion *iomem;
-     m5208_timer_state *s;
-     int i;
- 
-+    /* RCM */
-+    iomem = g_new(MemoryRegion, 1);
-+    memory_region_init_io(iomem, NULL, &m5208_rcm_ops, cpu, "m5208-rcm", 0x00000080);
-+    memory_region_add_subregion(address_space, 0xfc0a0000, iomem);
-     /* SDRAMC.  */
-+    iomem = g_new(MemoryRegion, 1);
-     memory_region_init_io(iomem, NULL, &m5208_sys_ops, NULL, "m5208-sys", 0x00004000);
-     memory_region_add_subregion(address_space, 0xfc0a8000, iomem);
-     /* Timers.  */
-@@ -265,7 +310,7 @@ static void mcf5208evb_init(MachineState *machine)
-     mcf_uart_create_mmap(0xfc064000, pic[27], serial_hd(1));
-     mcf_uart_create_mmap(0xfc068000, pic[28], serial_hd(2));
- 
--    mcf5208_sys_init(address_space_mem, pic);
-+    mcf5208_sys_init(address_space_mem, pic, cpu);
- 
-     mcf_fec_init(address_space_mem, 0xfc030000, pic + 36);
- 
--- 
-2.44.0
-
+Fan
+> 
+> Jonathan
 
