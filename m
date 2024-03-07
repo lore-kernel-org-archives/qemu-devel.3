@@ -4,96 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C343C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 11:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41BDCC48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 11:25:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riBk8-0001Xq-2x; Thu, 07 Mar 2024 06:16:56 -0500
+	id 1riBrT-0003uh-5r; Thu, 07 Mar 2024 06:24:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1riBk6-0001Wy-24
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 06:16:54 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1riBrQ-0003uP-VQ
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 06:24:29 -0500
+Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1riBk3-0005hz-Cs
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 06:16:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709810210;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=IrM9V3Les7c2pOgU8QkEtywlg42IO/HWCy3/3IGeckM=;
- b=hqsAgbj+hQjubgQtgL378A7qL8MkvF2WVEKEcjcH6LwFZtOLW0o0WMvy1pJnoxpueLM8vr
- lYwssqi6F8oOjA1BY0i6heW2kgDZRsxtGDQIUR3drNTCvFT3ARR7iTYv2Mo1FUZQESjAU/
- 4XlN85TkCa7Wf7jxBMqeYvGRbuDay9k=
-Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
- [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-571-v-2WeOSvN5OuEHJKFr2c_w-1; Thu, 07 Mar 2024 06:16:48 -0500
-X-MC-Unique: v-2WeOSvN5OuEHJKFr2c_w-1
-Received: by mail-yb1-f198.google.com with SMTP id
- 3f1490d57ef6-dcbee93a3e1so1161513276.3
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 03:16:48 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709810208; x=1710415008;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IrM9V3Les7c2pOgU8QkEtywlg42IO/HWCy3/3IGeckM=;
- b=vvMziDPIwSl6qAT82tSq0n9MDLxXQS9cdhblqPH6b4Gd02gmSApH6oNCXHdjMNrf2q
- gFAWo3OHT5jGiDVYKgWZ4WvAhyI10Zats19a18RpMYRZRLroRvdnJoK+W3m2OMg4P1cm
- uQe+xZROJFXjpe2YtSxyqMIow6oeOs028+yqIeaFwlAJo4DlW6AWQ7y9fkOgiH4tLNr2
- VtGmu4GJbb5d13fKLc1Ni3T3jE3C++gtYRbG59MsQYZFeW36TLLnbgUkHwuUmr16CXtz
- xqYBPc08LINbPiGrDLHlK87t6HGFzfgvxY+Tzazl+Q/r+QFKmV3FwjrxG409DXDbIv2l
- 1DxQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWIevpH94vQNgw4hqW8LYEaCKzRcy799gaBfMPo3LqaNrbtwKDvbD+bjyiI5TDN0cI++CkkNTpMlwFgMnwvXkDirzIvmA0=
-X-Gm-Message-State: AOJu0YyQWfKWgtIzZp7I7jexdPp7wBK9F5vmJkG9aW+oa+I1K3qxgHIt
- ITauNxBZBUd+/cz0F0Gr9VVdkjt/a1QHqRpcEzO1TnZ1xlq2J+CNta0DqFzH0kkHVOlw99Sk8AR
- tab95ApP46Igxhu8OLPFILqlF/Ct0ISKOcwo5KnNIFnhsS9AQPyZdYqAcinlEtnl9GoLy/AIdB7
- M3eb64uwzAr2B1H3laW1EKNK9C1DY=
-X-Received: by 2002:a25:9192:0:b0:dc6:49d3:dd52 with SMTP id
- w18-20020a259192000000b00dc649d3dd52mr15022147ybl.34.1709810208241; 
- Thu, 07 Mar 2024 03:16:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHjDRsVuX4Q24gAs5STcWHZQncfKJPCgrPy5VzGN1y5ajUzJz6F+YJ+ckolBSjNGMovf1oSe0dqMWXTww0VTBQ=
-X-Received: by 2002:a25:9192:0:b0:dc6:49d3:dd52 with SMTP id
- w18-20020a259192000000b00dc649d3dd52mr15022120ybl.34.1709810207948; Thu, 07
- Mar 2024 03:16:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1riBrN-00084k-47
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 06:24:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1709810665; x=1741346665;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=eKQJMp2KjcRGiZeV5u89MH7FjELomniIJ5L02BqxnT8=;
+ b=OcUWZuT2D98e8sCPB26uF6/tp7J+HQ10O2xeb/O4nBpWu2UvMIrmHxvP
+ Y0HWEIkvq74NyAgSwRrhCciNFQaIri4DOYNAqoCeMCujRCThKOaGtRoPC
+ tQi0B7u0jIwGzliZKTqoAUEfkmZNIAWnms9DvR2cEC1zrGCAUc3PrEoFo
+ klPfX9FrBgoL3VunJoADUe6V842zRxot8OdFGMATIBfZC51E5tXGYhT1k
+ v5TPeDXYtMFqrp11kg+FeplYvaryk3LwAJwRADtGYecwWmI3N8SLbM8r6
+ fUPe3yXhuBHIfjq3P2kD2pPZtmk/LztlL3+CniQMtcV19XKCWdcBX+xon Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11005"; a="4327510"
+X-IronPort-AV: E=Sophos;i="6.07,211,1708416000"; 
+   d="scan'208";a="4327510"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Mar 2024 03:24:14 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,211,1708416000"; d="scan'208";a="10527562"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.242.48])
+ ([10.124.242.48])
+ by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Mar 2024 03:24:08 -0800
+Message-ID: <0f3df4b7-ffb9-4fc5-90eb-8a1d6fea5786@intel.com>
+Date: Thu, 7 Mar 2024 19:24:04 +0800
 MIME-Version: 1.0
-References: <20240304194612.611660-1-jonah.palmer@oracle.com>
- <CACGkMEtoA3SN9e9WnNpFyR32rkf_pWUNj-6uj2TZBzjB0E+3SQ@mail.gmail.com>
- <CAJaqyWdAFTkjGBJBmxvmTZT8UUiH86UGgE74X_bcq22nd-WwHA@mail.gmail.com>
- <20240306023143-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20240306023143-mutt-send-email-mst@kernel.org>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Thu, 7 Mar 2024 12:16:11 +0100
-Message-ID: <CAJaqyWcDMu58H6P3FvyTM7L-GphLB1kj7fcOTBw6FC-O2DcpZA@mail.gmail.com>
-Subject: Re: [PATCH v1 0/8] virtio,
- vhost: Add VIRTIO_F_NOTIFICATION_DATA support
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Jason Wang <jasowang@redhat.com>, Jonah Palmer <jonah.palmer@oracle.com>,
- qemu-devel@nongnu.org, 
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com, raphael@enfabrica.net, 
- kwolf@redhat.com, hreitz@redhat.com, pasic@linux.ibm.com, 
- borntraeger@linux.ibm.com, farman@linux.ibm.com, thuth@redhat.com, 
- richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com, 
- cohuck@redhat.com, pbonzini@redhat.com, fam@euphon.net, stefanha@redhat.com, 
- qemu-block@nongnu.org, qemu-s390x@nongnu.org, virtio-fs@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 30/65] i386/tdx: Support user configurable
+ mrconfigid/mrowner/mrownerconfig
+Content-Language: en-US
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand
+ <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
+ Claudio Fontana <cfontana@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
+ Isaku Yamahata <isaku.yamahata@gmail.com>,
+ Chenyi Qiang <chenyi.qiang@intel.com>
+References: <20240229063726.610065-1-xiaoyao.li@intel.com>
+ <20240229063726.610065-31-xiaoyao.li@intel.com> <87edcv1x9j.fsf@pond.sub.org>
+ <f9774e89-399c-42ad-8fa8-dd4050ee46da@intel.com>
+ <871q8vxuzx.fsf@pond.sub.org>
+ <4602df24-029e-4a40-bdec-1b0a6aa30a3c@intel.com>
+ <87v85yv3j9.fsf@pond.sub.org>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <87v85yv3j9.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.19; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -11
+X-Spam_score: -1.2
+X-Spam_bar: -
+X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ HK_RANDOM_ENVFROM=0.276, HK_RANDOM_FROM=0.999, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,126 +101,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 6, 2024 at 8:34=E2=80=AFAM Michael S. Tsirkin <mst@redhat.com> =
-wrote:
->
-> On Wed, Mar 06, 2024 at 08:07:31AM +0100, Eugenio Perez Martin wrote:
-> > On Wed, Mar 6, 2024 at 6:34=E2=80=AFAM Jason Wang <jasowang@redhat.com>=
- wrote:
-> > >
-> > > On Tue, Mar 5, 2024 at 3:46=E2=80=AFAM Jonah Palmer <jonah.palmer@ora=
-cle.com> wrote:
-> > > >
-> > > > The goal of these patches are to add support to a variety of virtio=
- and
-> > > > vhost devices for the VIRTIO_F_NOTIFICATION_DATA transport feature.=
- This
-> > > > feature indicates that a driver will pass extra data (instead of ju=
-st a
-> > > > virtqueue's index) when notifying the corresponding device.
-> > > >
-> > > > The data passed in by the driver when this feature is enabled varie=
-s in
-> > > > format depending on if the device is using a split or packed virtqu=
-eue
-> > > > layout:
-> > > >
-> > > >  Split VQ
-> > > >   - Upper 16 bits: shadow_avail_idx
-> > > >   - Lower 16 bits: virtqueue index
-> > > >
-> > > >  Packed VQ
-> > > >   - Upper 16 bits: 1-bit wrap counter & 15-bit shadow_avail_idx
-> > > >   - Lower 16 bits: virtqueue index
-> > > >
-> > > > Also, due to the limitations of ioeventfd not being able to carry t=
-he
-> > > > extra provided by the driver, ioeventfd is left disabled for any de=
-vices
-> > > > using this feature.
-> > >
-> > > Is there any method to overcome this? This might help for vhost.
-> > >
-> >
-> > As a half-baked idea, read(2)ing an eventfd descriptor returns an
-> > 8-byte integer already. The returned value of read depends on eventfd
-> > flags, but both have to do with the number of writes of the other end.
-> >
-> > My proposal is to replace this value with the last value written by
-> > the guest, so we can extract the virtio notification data from there.
-> > The behavior of read is similar to not-EFD_SEMAPHORE, reading a value
-> > and then blocking if read again without writes. The behavior of KVM
-> > writes is different, as it is not a counter anymore.
-> >
-> > Thanks!
->
->
-> I doubt you will be able to support this in ioeventfd...
+On 3/7/2024 4:39 PM, Markus Armbruster wrote:
+> Xiaoyao Li <xiaoyao.li@intel.com> writes:
+> 
+>> On 2/29/2024 9:25 PM, Markus Armbruster wrote:
+>>> Xiaoyao Li <xiaoyao.li@intel.com> writes:
+>>>
+>>>> On 2/29/2024 4:37 PM, Markus Armbruster wrote:
+>>>>> Xiaoyao Li <xiaoyao.li@intel.com> writes:
+>>>>>
+>>>>>> From: Isaku Yamahata <isaku.yamahata@intel.com>
+>>>>>>
+>>>>>> Three sha384 hash values, mrconfigid, mrowner and mrownerconfig, of a TD
+>>>>>> can be provided for TDX attestation. Detailed meaning of them can be
+>>>>>> found: https://lore.kernel.org/qemu-devel/31d6dbc1-f453-4cef-ab08-4813f4e0ff92@intel.com/
+>>>>>>
+>>>>>> Allow user to specify those values via property mrconfigid, mrowner and
+>>>>>> mrownerconfig. They are all in base64 format.
+>>>>>>
+>>>>>> example
+>>>>>> -object tdx-guest, \
+>>>>>>      mrconfigid=ASNFZ4mrze8BI0VniavN7wEjRWeJq83vASNFZ4mrze8BI0VniavN7wEjRWeJq83v,\
+>>>>>>      mrowner=ASNFZ4mrze8BI0VniavN7wEjRWeJq83vASNFZ4mrze8BI0VniavN7wEjRWeJq83v,\
+>>>>>>      mrownerconfig=ASNFZ4mrze8BI0VniavN7wEjRWeJq83vASNFZ4mrze8BI0VniavN7wEjRWeJq83v
+>>>>>>
+>>>>>> Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
+>>>>>> Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>>>>>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>>> [...]
+>>>
+>>>>>> diff --git a/qapi/qom.json b/qapi/qom.json
+>>>>>> index 89ed89b9b46e..cac875349a3a 100644
+>>>>>> --- a/qapi/qom.json
+>>>>>> +++ b/qapi/qom.json
+>>>>>> @@ -905,10 +905,25 @@
+>>>>>>    #     pages.  Some guest OS (e.g., Linux TD guest) may require this to
+>>>>>>    #     be set, otherwise they refuse to boot.
+>>>>>>    #
+>>>>>> +# @mrconfigid: ID for non-owner-defined configuration of the guest TD,
+>>>>>> +#     e.g., run-time or OS configuration (base64 encoded SHA384 digest).
+>>>>>> +#     (A default value 0 of SHA384 is used when absent).
+>>>>>
+>>>>> Suggest to drop the parenthesis in the last sentence.
+>>>>>
+>>>>> @mrconfigid is a string, so the default value can't be 0.  Actually,
+>>>>> it's not just any string, but a base64 encoded SHA384 digest, which
+>>>>> means it must be exactly 96 hex digits.  So it can't be "0", either.  It
+>>>>> could be
+>>>>> "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000".
+>>>>
+>>>> I thought value 0 of SHA384 just means it.
+>>>>
+>>>> That's my fault and my poor english.
+>>>
+>>> "Fault" is too harsh :)  It's not as precise as I want our interface
+>>> documentation to be.  We work together to get there.
+>>>
+>>>>> More on this below.
+>>>>>
+>>>>>> +#
+>>>>>> +# @mrowner: ID for the guest TD’s owner (base64 encoded SHA384 digest).
+>>>>>> +#     (A default value 0 of SHA384 is used when absent).
+>>>>>> +#
+>>>>>> +# @mrownerconfig: ID for owner-defined configuration of the guest TD,
+>>>>>> +#     e.g., specific to the workload rather than the run-time or OS
+>>>>>> +#     (base64 encoded SHA384 digest). (A default value 0 of SHA384 is
+>>>>>> +#     used when absent).
+>>>>>> +#
+>>>>>>    # Since: 9.0
+>>>>>>    ##
+>>>>>>    { 'struct': 'TdxGuestProperties',
+>>>>>> -  'data': { '*sept-ve-disable': 'bool' } }
+>>>>>> +  'data': { '*sept-ve-disable': 'bool',
+>>>>>> +            '*mrconfigid': 'str',
+>>>>>> +            '*mrowner': 'str',
+>>>>>> +            '*mrownerconfig': 'str' } }
+>>>>>>    ##
+>>>>>>    # @ThreadContextProperties:
+>>>>>> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+>>>>>> index d0ad4f57b5d0..4ce2f1d082ce 100644
+>>>>>> --- a/target/i386/kvm/tdx.c
+>>>>>> +++ b/target/i386/kvm/tdx.c
+>>>>>> @@ -13,6 +13,7 @@
+>>>>>>    #include "qemu/osdep.h"
+>>>>>>    #include "qemu/error-report.h"
+>>>>>> +#include "qemu/base64.h"
+>>>>>>    #include "qapi/error.h"
+>>>>>>    #include "qom/object_interfaces.h"
+>>>>>>    #include "standard-headers/asm-x86/kvm_para.h"
+>>>>>> @@ -516,6 +517,7 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+>>>>>>        X86CPU *x86cpu = X86_CPU(cpu);
+>>>>>>        CPUX86State *env = &x86cpu->env;
+>>>>>>        g_autofree struct kvm_tdx_init_vm *init_vm = NULL;
+>>>>>> +    size_t data_len;
+>>>>>>        int r = 0;
+>>>>>>        object_property_set_bool(OBJECT(cpu), "pmu", false, &error_abort);
+>>>>>> @@ -528,6 +530,38 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+>>>>>>        init_vm = g_malloc0(sizeof(struct kvm_tdx_init_vm) +
+>>>>>>                            sizeof(struct kvm_cpuid_entry2) * KVM_MAX_CPUID_ENTRIES);
+>>>>>> +#define SHA384_DIGEST_SIZE  48
+>>>>>> +
+>>>>>> +    if (tdx_guest->mrconfigid) {
+>>>>>> +        g_autofree uint8_t *data = qbase64_decode(tdx_guest->mrconfigid,
+>>>>>> +                              strlen(tdx_guest->mrconfigid), &data_len, errp);
+>>>>>> +        if (!data || data_len != SHA384_DIGEST_SIZE) {
+>>>>>> +            error_setg(errp, "TDX: failed to decode mrconfigid");
+>>>>>> +            return -1;
+>>>>>> +        }
+>>>>>> +        memcpy(init_vm->mrconfigid, data, data_len);
+>>>>>> +    }
+>>>>>
+>>>>> When @mrconfigid is absent, the property remains null, and this
+>>>>> conditional is not executed.  init_vm->mrconfigid[], an array of 6
+>>>>> __u64, remains all zero.  How does the kernel treat that?
+>>>>
+>>>> A all-zero SHA384 value is still a valid value, isn't it?
+>>>>
+>>>> KVM treats it with no difference.
+>>>
+>>> Can you point me to the spot in the kernel where mrconfigid is used?
+>>
+>> https://github.com/intel/tdx/blob/66a10e258636fa8ec9f5ce687607bf2196a92341/arch/x86/kvm/vmx/tdx.c#L2322
+>>
+>> KVM just copy what QEMU provides into its own data structure @td_params. The format @of td_params is defined by TDX spec, and @td_params needs to be passed to TDX module when initialize the context of TD via SEAMCALL(TDH.MNG.INIT): https://github.com/intel/tdx/blob/66a10e258636fa8ec9f5ce687607bf2196a92341/arch/x86/kvm/vmx/tdx.c#L2450
+>>
+>>
+>> In fact, all the three SHA384 fields, will be hashed together with some other fields (in td_params and other content of TD) to compromise the initial measurement of TD.
+>>
+>> TDX module doesn't care the value of td_params->mrconfigid.
+> 
+> My problem is that I don't understand when and why users would omit the
+> optional @mrFOO.
 
-I agree.
+When users don't care it and don't have an explicit value for them, they 
+can omit it. Then a default all-zero value is used.
 
-> But vhost does not really need the value at all.
-> So why mask out ioeventfd with vhost?
+If making it mandatory field, then users have to explicit pass a 
+all-zero value when they don't care it.
 
-The interface should not be able to start with vhost-kernel because
-the feature is not offered by the vhost-kernel device. So ioeventfd is
-always enabled with vhost-kernel.
+> I naively expected absent @mrFOO to mean something like "no attestation
+> of FOO".
+> 
+> But I see that they default to
+> "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000".
+> 
+> If this zero value is special and means "no attestation", then we
+> accidentally get no attestation when whatever is being hashed happens to
+> hash to this zero value.  Unlikely, but possible.
+> 
+> If it's not special, then when and why is the ability to omit it useful?
+> 
+At some point, the zero value is special, because it is the default 
+value if no explicit one provided by user. But for TDX point of view, it 
+is not special. The field is a must for any TD, and whatever value it 
+is, it will be hashed into MRTD (Build-time Measurement Register) for 
+later attestation.
 
-Or do you mean we should allow it and let vhost-kernel fetch data from
-the avail ring as usual? I'm ok with that but then the guest can place
-any value to it, so the driver cannot be properly "validated by
-software" that way.
+TDX architecture defines what fields are always hashed into measurement 
+and also provide other mechanism to hash optional field into 
+measurement. All this is known to users of TDX, and users can calculate 
+the final measurement by itself and compare to what gets reported by TDX 
+to see they are identical.
 
-> vhost-vdpa is probably the only one that might need it...
+For these three fields, they are must-to-have fields to be hashed into 
+measurement. For user's convenience, we don't want to make it mandatory 
+input because not everyone cares it and have a specific value to input.
+What people needs to know is that, when no explicit value is provided 
+for these three field, a all-zero value is used.
 
-Right, but vhost-vdpa already supports doorbell memory regions so I
-guess it has little use, isn't it?
-
-Thanks!
-
->
->
->
-> > > Thanks
-> > >
-> > > >
-> > > > A significant aspect of this effort has been to maintain compatibil=
-ity
-> > > > across different backends. As such, the feature is offered by backe=
-nd
-> > > > devices only when supported, with fallback mechanisms where backend
-> > > > support is absent.
-> > > >
-> > > > Jonah Palmer (8):
-> > > >   virtio/virtio-pci: Handle extra notification data
-> > > >   virtio-pci: Lock ioeventfd state with VIRTIO_F_NOTIFICATION_DATA
-> > > >   virtio-mmio: Handle extra notification data
-> > > >   virtio-mmio: Lock ioeventfd state with VIRTIO_F_NOTIFICATION_DATA
-> > > >   virtio-ccw: Handle extra notification data
-> > > >   virtio-ccw: Lock ioeventfd state with VIRTIO_F_NOTIFICATION_DATA
-> > > >   vhost/vhost-user: Add VIRTIO_F_NOTIFICATION_DATA to vhost feature=
- bits
-> > > >   virtio: Add VIRTIO_F_NOTIFICATION_DATA property definition
-> > > >
-> > > >  hw/block/vhost-user-blk.c    |  1 +
-> > > >  hw/net/vhost_net.c           |  2 ++
-> > > >  hw/s390x/s390-virtio-ccw.c   | 16 ++++++++++++----
-> > > >  hw/s390x/virtio-ccw.c        |  6 ++++--
-> > > >  hw/scsi/vhost-scsi.c         |  1 +
-> > > >  hw/scsi/vhost-user-scsi.c    |  1 +
-> > > >  hw/virtio/vhost-user-fs.c    |  2 +-
-> > > >  hw/virtio/vhost-user-vsock.c |  1 +
-> > > >  hw/virtio/virtio-mmio.c      | 15 +++++++++++----
-> > > >  hw/virtio/virtio-pci.c       | 16 +++++++++++-----
-> > > >  hw/virtio/virtio.c           | 18 ++++++++++++++++++
-> > > >  include/hw/virtio/virtio.h   |  5 ++++-
-> > > >  net/vhost-vdpa.c             |  1 +
-> > > >  13 files changed, 68 insertions(+), 17 deletions(-)
-> > > >
-> > > > --
-> > > > 2.39.3
-> > > >
-> > >
->
 
 
