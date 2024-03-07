@@ -4,75 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3712FC54798
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 12:48:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62142C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 12:49:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riDAD-0006lD-T4; Thu, 07 Mar 2024 07:47:57 -0500
+	id 1riDBX-0007qk-Ff; Thu, 07 Mar 2024 07:49:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1riDAB-0006fk-Ft
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 07:47:55 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1riDBV-0007q4-K4
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 07:49:17 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1riDA7-0002Zv-Qr
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 07:47:55 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5654f700705so1015343a12.1
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 04:47:51 -0800 (PST)
+ id 1riDBT-0002kc-2z
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 07:49:17 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5682360e095so67833a12.1
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 04:49:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709815669; x=1710420469; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=zU8cJaohj3KsBqdHds23YRLEC8mn1sEBx34ESoVa04o=;
- b=rwcbcQeRpo1H/J6Ra+W3ungM3vybPYa7aSQLZCp426/uelDucYQVus1nbpHvrI+gFU
- y4yeYubl0WL+G1LZXzVapwsr/6BLMlrMuzsLMNZiEZdNxIB5axPV+vufvlfymf6Cz5kf
- Od2jlqqnqWwZJCMXwoCED9Ca1UrjjLDFg4yGPc0ew2AF46+mS+5S2HpEfHqHSNQVq+PJ
- cnMvTLn+Kb6QrznM4zI/K4WdFKhSGgClzdrhYhaxjRcXbuxLLmRVB4kB+oNlOrOTYZUM
- wqxsoTd5NN5QcZ62RAh1srhJzEJKKNUC+cm6sHVAjJMU+28j+mo/DH8es4klLrANfYy1
- MQ7g==
+ d=linaro.org; s=google; t=1709815753; x=1710420553; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NlhpGeDgoOR6m0QuS4p5ZaDkH420pj9/t2sQw+n+Jqo=;
+ b=t3LFh3obYoCnMb8u/qqHbpF3t4Qle96laH0Zxs1KdsquFHjQrfX9PeL7xEfVZstooO
+ s8Ln1atBpGUxqPJ7CMe+aCf4a09y0tWkoOyJHH6pPcFn1iS7OkpUmwLJ84pM1ITkVq5m
+ z3eIDt6jrAsPNzpmSEkK1oCivnbP9AOu2hAV3vWfVnkrsAP+W/1IVPWivEaM1mn3/lNt
+ xti6z62OJroXj8vxLCcunSKLk2hSSDHX54G25IK1FYY35fvXxIHwhPJCpfAgill7mixd
+ aw9E5c34NM1SrW2/25Akt8P5n/+CXV3Fq4LiOWX82fVWTqwtYG8wxbZMkUEYB13w+12h
+ 1Deg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709815669; x=1710420469;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=zU8cJaohj3KsBqdHds23YRLEC8mn1sEBx34ESoVa04o=;
- b=EFMVId8wdyWYiqo4BlcCIIuy4go5y+3cxEe7S/4xDLRygoIRerTSvxRF4rdl8mLmu9
- TPWVTa9TB4jCArXpz2Uj3VISAgJEhkjM+QjHSVbxFYZIrI1tUYdKi3znMtEP98HhIssy
- HgJWrSF573MrfoIdZ7XFRwhjOUTgZFHw7s6k5VACDFZyOdbOI/85I6Sk8d7qhd0c+2DM
- yGaaqe4gAlTw5YmoqeR1SgJa8Ln8BsnVF34cFvKNuePllHo5n39yZKsHZ2PyR1PMSKdn
- pQgXCcU1SPAew8eUcjC6d9y1KYD/z/VEQ4GpYOpAzaXSmGHWddTie/4NIlK//0/XpbVe
- SnbA==
-X-Gm-Message-State: AOJu0Yzjg9U8A778vKgA91lBqabHG/fCbGm+g8FstIC03aNeAzmSPYMr
- IVaHSROnwYsF8Jha6aW2wwTChEp9BBpKvihhopVMOjD4L5tLoRm72Q6j4w8Cxq+o/wdZ3nmocU6
- L0t5uXoe0HH5fwniTy0qlTCXpDMvN/g8SY9qQDw==
-X-Google-Smtp-Source: AGHT+IEFMVzFY6sTKLUKUFr9wPAxsJ1doVheir7D9go0L2P3zXfzrNcRsBPRTe6ogrxIdKgNI6UA4m4gJNPOmRJRuHc=
-X-Received: by 2002:a05:6402:2152:b0:566:ef8:a81a with SMTP id
- bq18-20020a056402215200b005660ef8a81amr14141990edb.7.1709815669261; Thu, 07
- Mar 2024 04:47:49 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709815753; x=1710420553;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NlhpGeDgoOR6m0QuS4p5ZaDkH420pj9/t2sQw+n+Jqo=;
+ b=fVq6dy6OmiwkceawJvDImkndvz+A0OpRGYOve9k5w1eT8jCz37a1P3XS40efxso9ra
+ h4Tnl0IUUx3WWKvt8CKlTVYOtLUDvU5CZWn16vI3blHwfwG3ArXtmRHLPGxxAdcSB06j
+ Ynd3DND3DsKqOHqxppmhJFlXKDfbuedxlqK1cLv+2GOq2F4n8NvBnxBByiHuxFs33hGq
+ yVrqpK5SOrP6j/OvKJ5j/CCFSCqhmXJKvmL9DQp98k2LHjeLO3hJdcnx3VV8CmUB49GC
+ zSs8x/NKdTZ4Z+a0MR/yEOqnMK45/Eg9L7VQvNxFBEklEtXRHt5Edq7Temimx/nS878V
+ Ns1A==
+X-Gm-Message-State: AOJu0Yx0qeEfQbT8QzXi5X09C+BnGDT17IWCHWwUhSRhsDgNfe1tEWct
+ NJITPIj0M7jt9MWgsZ8KoHT4wHkYP0jWG4Ztc2pI/7RFIvCbkKRl0+lRfoEeQw9aiNjQblAeI3E
+ a6N1MOAzX4eRifYtcpQfgnoLBMJuHsou4ABMXjX2klgLpfLve
+X-Google-Smtp-Source: AGHT+IE+azDNL66s6ASfIJQ5931w7u32Iwz9Ua8T1jM5brutl4NOH02a6mlQCE98X50jex7dMftcWbGpXe6Lgw6vDLw=
+X-Received: by 2002:a05:6402:2267:b0:564:5764:a5d8 with SMTP id
+ du7-20020a056402226700b005645764a5d8mr12750487edb.25.1709815753529; Thu, 07
+ Mar 2024 04:49:13 -0800 (PST)
 MIME-Version: 1.0
-References: <20240305190902.364753-1-pbonzini@redhat.com>
- <20240305190902.364753-2-pbonzini@redhat.com>
-In-Reply-To: <20240305190902.364753-2-pbonzini@redhat.com>
+References: <20240305210444.310665-1-ines.varhol@telecom-paris.fr>
+In-Reply-To: <20240305210444.310665-1-ines.varhol@telecom-paris.fr>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 7 Mar 2024 12:47:38 +0000
-Message-ID: <CAFEAcA9fbCT=i2b0KnZW1HDb5giCxsehvVbMK4-+RYpCX_yoOQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] run-coverity-scan: add --check-upload-only option
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com
+Date: Thu, 7 Mar 2024 12:49:02 +0000
+Message-ID: <CAFEAcA-3818ukCcer9rFed982_RJScFkvXrGCUdiBpWCxOLbsg@mail.gmail.com>
+Subject: Re: [PATCH v7 0/3] Add device STM32L4x5 GPIO
+To: =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Laurent Vivier <lvivier@redhat.com>, qemu-arm@nongnu.org, 
+ Samuel Tardieu <samuel.tardieu@telecom-paris.fr>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Alistair Francis <alistair@alistair23.me>,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>, 
+ Thomas Huth <thuth@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,63 +96,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 5 Mar 2024 at 19:09, Paolo Bonzini <pbonzini@redhat.com> wrote:
+On Tue, 5 Mar 2024 at 21:04, In=C3=A8s Varhol <ines.varhol@telecom-paris.fr=
+> wrote:
 >
-> Add an option to check if upload is permitted without actually
-> attempting a build.  This can be useful to add a third outcome
-> beyond success and failure---namely, a CI job can self-cancel
-> if the uploading quota has been reached.
+> This patch adds a new device STM32L4x5 GPIO device and is part
+> of a series implementing the STM32L4x5 with a few peripherals.
 >
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  scripts/coverity-scan/run-coverity-scan | 51 ++++++++++++++++++-------
->  1 file changed, 38 insertions(+), 13 deletions(-)
->
-> diff --git a/scripts/coverity-scan/run-coverity-scan b/scripts/coverity-scan/run-coverity-scan
-> index d56c9b66776..4bc991f70fd 100755
-> --- a/scripts/coverity-scan/run-coverity-scan
-> +++ b/scripts/coverity-scan/run-coverity-scan
-> @@ -28,6 +28,7 @@
->  # project settings, if you have maintainer access there.
->
->  # Command line options:
-> +#   --check-upload-only : return success if upload is possible
->  #   --dry-run : run the tools, but don't actually do the upload
->  #   --docker : create and work inside a container
->  #   --docker-engine : specify the container engine to use (docker/podman/auto);
-> @@ -57,18 +58,18 @@
->  # putting it in a file and using --tokenfile. Everything else has
->  # a reasonable default if this is run from a git tree.
->
-> -check_upload_permissions() {
-> +upload_permitted() {
->      # Check whether we can do an upload to the server; will exit the script
->      # with status 1 if the check failed (usually a bad token);
 
-This comment says we exit with status 1 on a failed check...
 
->      # will exit the script with status 0 if the check indicated that we
->      # can't upload yet (ie we are at quota)
-> -    # Assumes that COVERITY_TOKEN, PROJNAME and DRYRUN have been initialized.
-> +    # Assumes that COVERITY_TOKEN and PROJNAME have been initialized.
->
->      echo "Checking upload permissions..."
->
->      if ! up_perm="$(wget https://scan.coverity.com/api/upload_permitted --post-data "token=$COVERITY_TOKEN&project=$PROJNAME" -q -O -)"; then
->          echo "Coverity Scan API access denied: bad token?"
-> -        exit 1
-> +        exit 99
 
-...but these changes switch to exit 99 instead. It's not clear to
-me why -- the commit message doesn't say anything about changing
-the exit status.
+Applied to target-arm.next, thanks.
 
->      fi
->
->      # Really up_perm is a JSON response with either
-
-Otherwise this looks OK.
-
-thanks
 -- PMM
 
