@@ -4,67 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5267C54798
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 15:24:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1677C54798
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 15:24:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riFaM-00031i-AO; Thu, 07 Mar 2024 10:23:06 -0500
+	id 1riFb8-0003NF-1G; Thu, 07 Mar 2024 10:23:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1riFaG-00030t-Ao
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 10:23:00 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1riFaC-0002lz-9x
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 10:23:00 -0500
-Received: from loongson.cn (unknown [117.67.153.132])
- by gateway (Coremail) with SMTP id _____8DxJ+jJ2+llfvcVAA--.34575S3;
- Thu, 07 Mar 2024 23:22:50 +0800 (CST)
-Received: from [192.168.2.12] (unknown [117.67.153.132])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8CxZMyv2+llJ09QAA--.22814S3; 
- Thu, 07 Mar 2024 23:22:48 +0800 (CST)
-Subject: Re: [PULL 00/17] loongarch-to-apply queue
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-References: <20240307145207.247913-1-gaosong@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <4ff590f4-5656-6d88-469b-a116c2fdefbc@loongson.cn>
-Date: Thu, 7 Mar 2024 23:22:23 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1riFb6-0003MO-3s
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 10:23:52 -0500
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1riFb1-0003fy-6X
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 10:23:51 -0500
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-56682b85220so1417313a12.1
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 07:23:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709825025; x=1710429825; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=4kNPQimB748iBTllE96491bYxjiS/h4X3C2D8CliT8A=;
+ b=O2LGOk9zTbZBjHGU//Y6hG7V3AjzK3IIx6h++GnJTfQQeDzZCGybmMggn/79MvQAYA
+ LmgcjiWH8gmVUxcRAWIvuM5yuU4R/w5j0MWHni2FmDVSD+pKm/rq5W4jEtEQeOCtoygb
+ uvtZ6A6qry2tGU+k2K85pSgscSb1b8uPHMKb0qsRKF2Jxe8TooG4X5UuMhsUloQ60+Mx
+ BNi6/nwo9jkYID5WKAo1HX1m2wMYuGeQKg4oP86JADk8bKYLSi37YGXY6Sli0Gm3LDK/
+ KSYyelwvKkOZ5XkH8OqtHGkPjZA1EHdaSSsh3r/PCIAqQGMWypf2cd03lnL1PLzAyxSH
+ XbVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709825025; x=1710429825;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4kNPQimB748iBTllE96491bYxjiS/h4X3C2D8CliT8A=;
+ b=AF8HIQkp1cBWIOLlcGa5CuWOwBm13kpujU2uDp/1obkzOD9E2hHCXWTZRn4uJSfcCc
+ B+mlMB6BWTqpPO0/917S+B6f3IUZ8NbwrxEK+x2l1i5/h+Vhts5fuH92yfLfCqgR7+7e
+ /3Wc1WnP2SF1UQWl118AwRxpEI4Z/kddRrh+USA3qPeAgErcCKPtqHpUhwwgI5+Yh4JU
+ GJPl4deHdsoz69EYgRXVMzfhD/5TOgy68PtwSHt/EGayez8jEIOGTHKwYugZOrSAwFou
+ R5L9bNQG5cs5M5lpZdeKizfHFtJSExQUqN2gAddkhBE2NQxYtJn2TGX9Za067Str9Y9X
+ 5j2Q==
+X-Gm-Message-State: AOJu0YwWdfcGowiAiYoaJNFbKArd7CDkI8ew290zZbgffdnFpgX6X0mh
+ OU2E0mbphMyO/S5mq+gj9OI1kUJt4lFW1gyZosFyJLtXQnhlbxW456HN6FW7FkAvuLuozQgkRvj
+ CRU+vj+PF9qOMoQiZx9DEUul4fFPkMNW7hfGm1d5TW2GZh3qt
+X-Google-Smtp-Source: AGHT+IHCaeFcWGxGgMM4SYDnp9nVDWzcAM/s4IicNV1flCGDx/eTwuBJgsMadE4CQqfhrPyK1by73Z4bC1cdyshCdnk=
+X-Received: by 2002:a50:8d52:0:b0:568:1c64:277c with SMTP id
+ t18-20020a508d52000000b005681c64277cmr92224edt.15.1709825024719; Thu, 07 Mar
+ 2024 07:23:44 -0800 (PST)
 MIME-Version: 1.0
+References: <20240307145207.247913-1-gaosong@loongson.cn>
 In-Reply-To: <20240307145207.247913-1-gaosong@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8CxZMyv2+llJ09QAA--.22814S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7KryDCw4xWFyUJw45Wr18tFc_yoW8uF4kpr
- W3Ary3Cr48GFZrArnav3sxXr98Arn7Gr12q3Waqr18CrW3AF1UXr1xArykZFyUt3y8Jryq
- vF1rCw1UWF4UJwcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07UW
- HqcUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-2.08, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 7 Mar 2024 15:23:33 +0000
+Message-ID: <CAFEAcA9g7yTRYLp3xE6p-Zh_RYpxn4MacbzRRi5UNFzKgP9QFw@mail.gmail.com>
+Subject: Re: [PULL 00/17] loongarch-to-apply queue
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,59 +87,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-Missing patch16.,17, please see v2 version
-
-Thanks.
-Song Gao
-ÔÚ 2024/3/7 22:51, Song Gao Ð´µÀ:
+On Thu, 7 Mar 2024 at 14:52, Song Gao <gaosong@loongson.cn> wrote:
+>
 > The following changes since commit 8f6330a807f2642dc2a3cdf33347aa28a4c00a87:
-> 
->    Merge tag 'pull-maintainer-updates-060324-1' of https://gitlab.com/stsquad/qemu into staging (2024-03-06 16:56:20 +0000)
-> 
+>
+>   Merge tag 'pull-maintainer-updates-060324-1' of https://gitlab.com/stsquad/qemu into staging (2024-03-06 16:56:20 +0000)
+>
 > are available in the Git repository at:
-> 
->    https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240307
-> 
+>
+>   https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240307
+>
 > for you to fetch changes up to 4dc2edfd6f8abfc38f0ba110502790aa5051b1b5:
-> 
->    hw/loongarch: Add cells missing from rtc node (2024-03-07 21:58:00 +0800)
-> 
+>
+>   hw/loongarch: Add cells missing from rtc node (2024-03-07 21:58:00 +0800)
+>
 > ----------------------------------------------------------------
 > pull-loongarch-20240307
-> 
+>
 > ----------------------------------------------------------------
 > Song Gao (17):
->        hw/loongarch: Move boot fucntions to boot.c
->        hw/loongarch: Add load initrd
->        hw/loongarch: Add slave cpu boot_code
->        hw/loongarch: Add init_cmdline
->        hw/loongarch: Init efi_system_table
->        hw/loongarch: Init efi_boot_memmap table
->        hw/loongarch: Init efi_initrd table
->        hw/loongarch: Init efi_fdt table
->        hw/loongarch: Fix fdt memory node wrong 'reg'
->        hw/loongarch: fdt adds cpu interrupt controller node
->        hw/loongarch: fdt adds Extend I/O Interrupt Controller
->        hw/loongarch: fdt adds pch_pic Controller
->        hw/loongarch: fdt adds pch_msi Controller
->        hw/loongarch: fdt adds pcie irq_map node
->        hw/loongarch: fdt remove unused irqchip node
->        hw/loongarch: Add cells missing from uart node
->        hw/loongarch: Add cells missing from rtc node
-> 
->   hw/loongarch/boot.c                | 330 +++++++++++++++++++++++++++++++++
->   hw/loongarch/meson.build           |   1 +
->   hw/loongarch/virt.c                | 363 +++++++++++++++++++++----------------
->   include/hw/intc/loongarch_extioi.h |   1 +
->   include/hw/loongarch/boot.h        | 109 +++++++++++
->   include/hw/loongarch/virt.h        |  14 ++
->   include/hw/pci-host/ls7a.h         |   2 +
->   target/loongarch/cpu.h             |   2 +
->   8 files changed, 662 insertions(+), 160 deletions(-)
->   create mode 100644 hw/loongarch/boot.c
->   create mode 100644 include/hw/loongarch/boot.h
-> 
+>       hw/loongarch: Move boot fucntions to boot.c
+>       hw/loongarch: Add load initrd
+>       hw/loongarch: Add slave cpu boot_code
+>       hw/loongarch: Add init_cmdline
+>       hw/loongarch: Init efi_system_table
+>       hw/loongarch: Init efi_boot_memmap table
+>       hw/loongarch: Init efi_initrd table
+>       hw/loongarch: Init efi_fdt table
+>       hw/loongarch: Fix fdt memory node wrong 'reg'
+>       hw/loongarch: fdt adds cpu interrupt controller node
+>       hw/loongarch: fdt adds Extend I/O Interrupt Controller
+>       hw/loongarch: fdt adds pch_pic Controller
+>       hw/loongarch: fdt adds pch_msi Controller
+>       hw/loongarch: fdt adds pcie irq_map node
+>       hw/loongarch: fdt remove unused irqchip node
+>       hw/loongarch: Add cells missing from uart node
+>       hw/loongarch: Add cells missing from rtc node
 
+Hi; this failed to build on openbsd:
+
+In file included from ../src/target/loongarch/cpu.c:109:
+In file included from
+/home/qemu/qemu-test.JIZtaO/src/include/hw/loongarch/virt.h:16:
+/home/qemu/qemu-test.JIZtaO/src/include/hw/loongarch/boot.h:69:14:
+error: expected member name or ';' after declaration specifiers
+    uint64_t stderr;
+    ~~~~~~~~ ^
+/usr/include/stdio.h:199:17: note: expanded from macro 'stderr'
+#define stderr  (&__sF[2])
+                 ^
+In file included from ../src/target/loongarch/cpu.c:109:
+In file included from
+/home/qemu/qemu-test.JIZtaO/src/include/hw/loongarch/virt.h:16:
+/home/qemu/qemu-test.JIZtaO/src/include/hw/loongarch/boot.h:69:14:
+error: expected ')'
+/usr/include/stdio.h:199:17: note: expanded from macro 'stderr'
+#define stderr  (&__sF[2])
+                 ^
+/home/qemu/qemu-test.JIZtaO/src/include/hw/loongarch/boot.h:69:14:
+note: to match this '('
+/usr/include/stdio.h:199:16: note: expanded from macro 'stderr'
+#define stderr  (&__sF[2])
+                ^
+
+You can't name a struct field "stderr" -- it can clash with how
+the host OS chooses to implement its stdio.h.
+
+thanks
+-- PMM
 
