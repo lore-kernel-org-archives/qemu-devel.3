@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2742DC54E4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 21:29:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3B1CC54798
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 21:32:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riLIL-0005w7-A1; Thu, 07 Mar 2024 16:28:53 -0500
+	id 1riLKp-0006mo-IX; Thu, 07 Mar 2024 16:31:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1riLIJ-0005vu-Sq
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 16:28:51 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1riLKm-0006mZ-MR
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 16:31:26 -0500
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1riLII-0006RZ-8C
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 16:28:51 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1dd3bdb6e9eso10120105ad.3
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 13:28:49 -0800 (PST)
+ id 1riLKl-0007GL-0i
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 16:31:24 -0500
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-6e5d7f1f25fso157433b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 13:31:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709846928; x=1710451728; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709847081; x=1710451881; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Zjmr0WVGj8oiIKzLEgtKZgPDzr7+fpHn7kLRhayF8oc=;
- b=FuoZZ1b7ojg1KdpSrThPi7YUkPI+TdyRBN49E8bchI0xHvB37nwf/0DpF/8t7oINp2
- p4ECY9cx9NJDtcF++hrLNm/RdTQoDdmRKbwoOGOd3MMxOqnY3sz1o/nWjh5UuOf0fcPy
- 7bog974EXPb4R5YFqOFR4GUSPJ7jiz7KCWQ7R/85jndTqIVYfSGJMjNhU8xbMWXYdXQU
- +kiR2nUCicDuRfp3G0tYdH1XRx5ab40UgwSZwcE2sj1AQQWwFFWUMqYNMhWuXvpp6YU7
- hLE9aVvGHBhW/WawJRctYFNGOFA/AfN452EG1+ba/ocr9S5gFfjpEpfsbgiD9aoOJCEg
- J8Gw==
+ bh=YutcmB2SuoGBo9GRtiubZ6yt+agU5S1HpNd46mXUpfs=;
+ b=iUM7qa6wnyDipFxOisPtjc8f/gTEzbyDOaBzeU+l/XRvo1gTGzU145I49vrOfY2kTx
+ QbDuldVXANbN2U9DB7CStzOSd9GifvAvbgM4D6vwwee2WwrMsZz7PPQ+s3C3opb5gpGN
+ KWoILA/7meLGmpN3lFCYhDoOQ1BACUkHXWIsL8gQvkBou5zncpasjR0GgWuQ6PfXgWLc
+ WTmcppTTtIS39wb4IfzUvYA7jdtRrr6rPq80uxfHOETKgheqSWxziM1X8tgjOg9YeOu8
+ /yl16CfxkKEv0cjddjjoiFogic18109sh8neXqc7pxGQjTMcHKyUm2boHO0aOI2uxmFP
+ uf5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709846928; x=1710451728;
+ d=1e100.net; s=20230601; t=1709847081; x=1710451881;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Zjmr0WVGj8oiIKzLEgtKZgPDzr7+fpHn7kLRhayF8oc=;
- b=KxNjswy1KbNYDuJJs/Z2IDseAhq+7fTiGMreOOhR33/jWA91JS/rQjnmKNSCEH2zpv
- 4MUuEC0mov2dE1ZTsk2PGm4ulq38z2sU1DgOzpxwzxLXg0rY4y2Sht/zcyp3gIqGbSAy
- +AZy1i3naXF+0Kb5+wjn25dfGGvZOLjlVH9T4EAk6nlZQ9S+uQNHPnsHv8bPXWNyZI9H
- kmP49/7cXdcAhD3z6TbaWFeoQlleqBmtFkMZtyMTfo9p48iU9XAcf4oq1ml8Usz6jzle
- 338wV/b6DeyAP16ehP8ikQ5WGf7Yyis86kDh8qdyY/sCKDIfqE1/IV/JEu7tsjC/oMeC
- pTGA==
+ bh=YutcmB2SuoGBo9GRtiubZ6yt+agU5S1HpNd46mXUpfs=;
+ b=DhEAvMMJfei9crZ2O47BeocVnAmSqqJjhkDotzA+g8K4FHxAbXh8ryXNTYiwX9tszP
+ ygJu8ZMj3pFLfJ775SGujP+3qLxmZh+dvj9eDZ6yPrD3clhrNZPqtlQA9rMAnVkghrfu
+ 37E/b87uMC+ibqmYjAGuVp69TgnSiKfiXe6G2Jht/a0JFIctkFj4cnci2CeQgmlrXr+Q
+ P9+3y1oVFiJ9IAVNP4Fd3qjgZKfdsQVzHRG2DSaYwh5mYqVI/iXxpWNbIQ1KUNENgMiZ
+ 9RB0kmh8aiNtPUxqYIyCHcmSETuQHo4gL2X6ZJbQ8fJoeH5lK6he7H7KGpxU/pArTFD9
+ I2iw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW+u+EeV2x6W5oCEt4IqWPIA4Vy4BYvFpBEdF2di7PNDF9DXfOtXf3ZSYaokQivo/esXx2q+9XrZYliyw2W4yEFrHxzU1U=
-X-Gm-Message-State: AOJu0YyTrj7kbvF8npO9yY+w5oM9uwHFBnVKQ9uG4Aod3IlbNSka4Qhj
- 1/uKv9kI+vrgADUcX4ohf57Hj/J5AHhg6tnYx37WCaHvKtl/32BiGApn9icw5PU=
-X-Google-Smtp-Source: AGHT+IEJazwISUNEB3oo3SwZE0vn6WjKubW1Znvb5/2LVxdmG2meWC/NQ/BErxHcxNPN+6duGOOM4Q==
-X-Received: by 2002:a17:902:e9cc:b0:1dc:30d7:ff41 with SMTP id
- 12-20020a170902e9cc00b001dc30d7ff41mr8770253plk.58.1709846928464; 
- Thu, 07 Mar 2024 13:28:48 -0800 (PST)
+ AJvYcCXuTvLN04AKqwfhX2XY7qGTPCN7VYgveRqha6vi3l6h9JMCd5fN0tTA8IpyNQq4lp8l1HHj2hKum/DboR7bdtVmy51MFhw=
+X-Gm-Message-State: AOJu0YyuUIrYyj/5zL1KiHQKvdQTOHihNASf7bV/bMAOaY0C/bpRydSY
+ Sp7VuPBjFluLfQfQ16LonPgO5E6tly8rcJ2qvS90fMuGmA1i6b7WHOgmeDl6HQo=
+X-Google-Smtp-Source: AGHT+IHbye9ahm0m2eV/ZYaXaIrqPrKUVIEAieA83A1Sds+rFrGgfvBsC8XTzPNZHvxxO2k4ju78ag==
+X-Received: by 2002:a05:6a21:6d95:b0:1a1:4da9:8d76 with SMTP id
+ wl21-20020a056a216d9500b001a14da98d76mr10468906pzb.13.1709847080926; 
+ Thu, 07 Mar 2024 13:31:20 -0800 (PST)
 Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
  [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- v10-20020a170902f0ca00b001dd635551f1sm518770pla.255.2024.03.07.13.28.46
+ j17-20020aa78d11000000b006e6454afe10sm4429120pfe.205.2024.03.07.13.31.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 Mar 2024 13:28:47 -0800 (PST)
-Message-ID: <daae9318-8e51-40ee-8f23-e1d4b589c123@linaro.org>
-Date: Thu, 7 Mar 2024 11:28:44 -1000
+ Thu, 07 Mar 2024 13:31:20 -0800 (PST)
+Message-ID: <7e7ded00-ece1-42d6-91f1-2bc2f34a1ee6@linaro.org>
+Date: Thu, 7 Mar 2024 11:31:17 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] target/sparc/cpu: Avoid spaces by default in the CPU
- names
+Subject: Re: [PATCH 3/5] target/sparc/cpu: Improve the CPU help text
 Content-Language: en-US
 To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
  Artyom Tarasenko <atar4qemu@gmail.com>,
@@ -74,13 +73,13 @@ Cc: Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
 References: <20240307174334.130407-1-thuth@redhat.com>
- <20240307174334.130407-3-thuth@redhat.com>
+ <20240307174334.130407-4-thuth@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240307174334.130407-3-thuth@redhat.com>
+In-Reply-To: <20240307174334.130407-4-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,32 +103,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/7/24 07:43, Thomas Huth wrote:
-> The output of "-cpu help" is currently rather confusing to the users:
-> It is not clear which part of the output defines the CPU names since
-> the CPU names contain white spaces (which we later have to convert
-> into dashes internally) For example:
+> Remove the unnecessary "Sparc" at the beginning of the line and
+> put the chip information into parentheses so that it is clearer
+> which part of the line have to be passed to "-cpu" to specify a
+> different CPU.
 > 
-> Sparc TI UltraSparc II IU 0017001120000000 FPU 00000000 MMU 00000000 NWINS 8
-> 
-> At a first glance, should the name for -cpu be "Sparc TI Ultrasparc II"
-> or "TI UltraSparc II IU" here? Both would be wrong, the right guess is
-> "TI UltraSparc II" only. Let's start cleaning up this mess by using
-> dashes instead of white spaces for the CPU names, like we're doing it
-> internally later (and like we're doing it in most other targets of QEMU).
-> Note that it is still possible to pass the CPU names with spaces to the
-> "-cpu" option, since sparc_cpu_type_name() still translates those to "-".
-> 
-> Buglink:https://gitlab.com/qemu-project/qemu/-/issues/2141
+> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/2141
 > Signed-off-by: Thomas Huth<thuth@redhat.com>
 > ---
->   target/sparc/cpu.c | 56 +++++++++++++++++++++++-----------------------
->   1 file changed, 28 insertions(+), 28 deletions(-)
-
-I think the names are still a bit too long, and the case sensitivity is a titch annoying. 
-But it's still an improvement, and I don't want to bike-shed this too much.
+>   target/sparc/cpu.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 r~
 
