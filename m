@@ -4,97 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB062C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 09:05:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3A74C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 09:07:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ri9gN-0006nI-0f; Thu, 07 Mar 2024 04:04:55 -0500
+	id 1ri9iv-0007k6-PN; Thu, 07 Mar 2024 04:07:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1ri9g7-0006jr-4d
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 04:04:39 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <davydov-max@yandex-team.ru>)
+ id 1ri9it-0007jx-OQ
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 04:07:32 -0500
+Received: from forwardcorp1c.mail.yandex.net
+ ([2a02:6b8:c03:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1ri9g5-0007hn-78
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 04:04:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709802276;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=G9KoXs/AdIIj6k7xcxxQYX166j+9j4JSvpO597fJrAA=;
- b=G3X4ULyz9zOLeYCpf/QEX/yjToOK934yw88AsIat7XUkTIVzgIzUsB+8GknOMsPwf2uVPK
- k6uj0T42iyhj1Xhuov1Svnalz6NNlGNyCozKP+AD/zo+ubHqZsaXYxH9HLAlTLNh9bXCMU
- ekBV/g59qgzMJuQg/Us7rXEbA7nNLFA=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-518--Q0tDj8yOmSECKr_HuAUmg-1; Thu, 07 Mar 2024 04:04:34 -0500
-X-MC-Unique: -Q0tDj8yOmSECKr_HuAUmg-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-33e43979853so376085f8f.1
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 01:04:34 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709802273; x=1710407073;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=G9KoXs/AdIIj6k7xcxxQYX166j+9j4JSvpO597fJrAA=;
- b=TK94zkF4qqneATtaDrIruiTywkHYBSTP68fDCGJHeXRljVl5+1KYftE+NRsbM27+ky
- D1nlvfKWASmdqk+bp9YLJNgsrMO5pz7H9GgaUUg+M2cCw+Y8tIrxKFKxjTEB1JD6GcZf
- f4S1t1Jp/ek+3Vc2iOFSE/6T74NGTbyXUM7GTbVFdjfUGnZ6lwDNjxBayysEIwc9FXJl
- sY5upW6B/rYD9MSVFCcSESEeOgvETfe1nZKx5eYn+NHrhLeii2kvDK5mcmchSED4kpm/
- 85Q+K+tpdRG+wrH4F4RVjl32/MWpb7pwEudNvlnA+X39d6hkGiVAipa2SmAtawAyLDtU
- I+Vg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXPuKG2FwUsv9DGktJTWMjUbR4JRNhmx7h7pYmthkvWFjAGFXTWjrRZ7TsAJjY49afE8E+tbK5p2eXLYajzjHNT5S0svfw=
-X-Gm-Message-State: AOJu0YzLxAO0riB08qy/uXuVK95mV1shMnHMWYuqB4kGxyshaSlWirRx
- iWPsYbRbKeZ38RV03k+xDq9MolipXAYNOMnFZBPWF+oHlP0aM0cmUdPcqubd4LHff8S5N4tGz4n
- pkkLGxq88Uf8YZ+R0p5z/AVOeO9FPJ9V34c5NoEAR9AzrIk2g1/GI
-X-Received: by 2002:a05:600c:190a:b0:412:c9e7:202d with SMTP id
- j10-20020a05600c190a00b00412c9e7202dmr12272789wmq.6.1709802273401; 
- Thu, 07 Mar 2024 01:04:33 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHEt4Jm7av4TZ8LeM0J0vBLZhNNJuSyEuTk3n8nd+QZVzbU7RoMCqio2JitCTKMBUTaYzJqyw==
-X-Received: by 2002:a05:600c:190a:b0:412:c9e7:202d with SMTP id
- j10-20020a05600c190a00b00412c9e7202dmr12272766wmq.6.1709802272991; 
- Thu, 07 Mar 2024 01:04:32 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- x3-20020a5d6503000000b0033e206a0a7asm16479827wru.26.2024.03.07.01.04.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 Mar 2024 01:04:32 -0800 (PST)
-Message-ID: <e930ebf3-6aa7-43be-8a24-a544361a8df5@redhat.com>
-Date: Thu, 7 Mar 2024 10:04:30 +0100
+ (Exim 4.90_1) (envelope-from <davydov-max@yandex-team.ru>)
+ id 1ri9iq-0008H2-Ka
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 04:07:31 -0500
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:dad:0:640:1761:0])
+ by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id 77FD160EB5;
+ Thu,  7 Mar 2024 12:07:21 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:8f:4:b109:a1eb:adad:8bd8] (unknown
+ [2a02:6b8:8f:4:b109:a1eb:adad:8bd8])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id x6dMao0Ika60-Ihps5BJC; Thu, 07 Mar 2024 12:07:20 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1709802440;
+ bh=gCrALSycJdOKU3RA3TnFzJb5CbfDN0WeWbKvQLQUl0c=;
+ h=In-Reply-To:Cc:Date:References:To:Subject:Message-ID:From;
+ b=f31fbUd6cWqaIuP7q6jqPZTvSiGw+7LQh9oNfJsU7aeM5DFuYkMXIswElrAdezia9
+ JHFewQyHB/p6kLN37DKJT4UqXrtEIB0ST8iKPNGALgEZNl3w9GNQU8BbgJHJ4y6e69
+ 2H2XZsKHa7pHuDnHcY+G4M6Kd2rXwRq5mc2muHvA=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Content-Type: multipart/alternative;
+ boundary="------------NVL33SzOfUKvq6j1zcFrpuy6"
+Message-ID: <117b4556-aadd-4287-909c-e5cf988214b5@yandex-team.ru>
+Date: Thu, 7 Mar 2024 12:06:59 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 19/25] vfio: Use new Error** argument in
- vfio_save_setup()
+Subject: Re: [PULL 0/4] machine development tool
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
- Prasad Pandit <pjp@fedoraproject.org>
-References: <20240306133441.2351700-1-clg@redhat.com>
- <20240306133441.2351700-20-clg@redhat.com>
-From: Eric Auger <eauger@redhat.com>
-In-Reply-To: <20240306133441.2351700-20-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eauger@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+To: Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ vsementsov@yandex-team.ru, jsnow@redhat.com, philmd@linaro.org,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+References: <20240304135145.154860-1-davydov-max@yandex-team.ru>
+ <CAFEAcA9acSfGP6PcErqp1rTmSd3G+AwUUx_aF-5KJy4iS6BqaQ@mail.gmail.com>
+ <874jdkn3he.fsf@pond.sub.org> <ZefNfJ3BwudA-M7t@x1n>
+From: Maksim Davydov <davydov-max@yandex-team.ru>
+In-Reply-To: <ZefNfJ3BwudA-M7t@x1n>
+Received-SPF: pass client-ip=2a02:6b8:c03:500:1:45:d181:df01;
+ envelope-from=davydov-max@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FROM_FMBLA_NEWDOM=1.499, HTML_MESSAGE=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,237 +83,234 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Cédric,
+This is a multi-part message in MIME format.
+--------------NVL33SzOfUKvq6j1zcFrpuy6
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 3/6/24 14:34, Cédric Le Goater wrote:
-> Add an Error** argument to vfio_migration_set_state() and adjust
-> callers, including vfio_save_setup(). The error will be propagated up
-> to qemu_savevm_state_setup() where the save_setup() handler is
-> executed.
-> 
-> Modify vfio_vmstate_change_prepare() and vfio_vmstate_change() to
-> store a reported error under the migration stream if a migration is in
-> progress.
-> 
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
-> 
->  Changes in v3:
-> 
->  - Use error_setg_errno() in vfio_save_setup() 
->  - Made sure an error is always set in case of failure in
->    vfio_load_setup()
->    
->  hw/vfio/migration.c | 67 ++++++++++++++++++++++++++-------------------
->  1 file changed, 39 insertions(+), 28 deletions(-)
-> 
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index a3bb1a92ba0b9c2c585efe54cfda0b774a81dcb9..71ade14a7942358094371a86c00718f5979113ea 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -84,7 +84,8 @@ static const char *mig_state_to_str(enum vfio_device_mig_state state)
->  
->  static int vfio_migration_set_state(VFIODevice *vbasedev,
->                                      enum vfio_device_mig_state new_state,
-> -                                    enum vfio_device_mig_state recover_state)
-> +                                    enum vfio_device_mig_state recover_state,
-> +                                    Error **errp)
->  {
->      VFIOMigration *migration = vbasedev->migration;
->      uint64_t buf[DIV_ROUND_UP(sizeof(struct vfio_device_feature) +
-> @@ -104,15 +105,15 @@ static int vfio_migration_set_state(VFIODevice *vbasedev,
->          ret = -errno;
->  
->          if (recover_state == VFIO_DEVICE_STATE_ERROR) {
-> -            error_report("%s: Failed setting device state to %s, err: %s. "
-> -                         "Recover state is ERROR. Resetting device",
-> -                         vbasedev->name, mig_state_to_str(new_state),
-> -                         strerror(errno));
-> +            error_setg(errp, "%s: Failed setting device state to %s, err: %s. "
-> +                       "Recover state is ERROR. Resetting device",
-> +                       vbasedev->name, mig_state_to_str(new_state),
-> +                       strerror(errno));
-you can use the error_setg_errno variant here and below.
->  
->              goto reset_device;
->          }
->  
-> -        error_report(
-> +        error_setg(errp,
->              "%s: Failed setting device state to %s, err: %s. Setting device in recover state %s",
->                       vbasedev->name, mig_state_to_str(new_state),
->                       strerror(errno), mig_state_to_str(recover_state));
-> @@ -120,7 +121,7 @@ static int vfio_migration_set_state(VFIODevice *vbasedev,
->          mig_state->device_state = recover_state;
->          if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
->              ret = -errno;
-> -            error_report(
-> +            error_setg(errp,
->                  "%s: Failed setting device in recover state, err: %s. Resetting device",
->                           vbasedev->name, strerror(errno));
->  
-> @@ -139,7 +140,7 @@ static int vfio_migration_set_state(VFIODevice *vbasedev,
->               * This can happen if the device is asynchronously reset and
->               * terminates a data transfer.
->               */
-> -            error_report("%s: data_fd out of sync", vbasedev->name);
-> +            error_setg(errp, "%s: data_fd out of sync", vbasedev->name);
->              close(mig_state->data_fd);
->  
->              return -EBADF;
-> @@ -170,10 +171,11 @@ reset_device:
->   */
->  static int
->  vfio_migration_set_state_or_reset(VFIODevice *vbasedev,
-> -                                  enum vfio_device_mig_state new_state)
-> +                                  enum vfio_device_mig_state new_state,
-> +                                  Error **errp)
->  {
->      return vfio_migration_set_state(vbasedev, new_state,
-> -                                    VFIO_DEVICE_STATE_ERROR);
-> +                                    VFIO_DEVICE_STATE_ERROR, errp);
->  }
->  
->  static int vfio_load_buffer(QEMUFile *f, VFIODevice *vbasedev,
-> @@ -401,10 +403,8 @@ static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
->          switch (migration->device_state) {
->          case VFIO_DEVICE_STATE_RUNNING:
->              ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_PRE_COPY,
-> -                                           VFIO_DEVICE_STATE_RUNNING);
-> +                                           VFIO_DEVICE_STATE_RUNNING, errp);
->              if (ret) {
-> -                error_setg(errp, "%s: Failed to set new PRE_COPY state",
-> -                           vbasedev->name);
->                  return ret;
->              }
->  
-> @@ -437,13 +437,20 @@ static void vfio_save_cleanup(void *opaque)
->  {
->      VFIODevice *vbasedev = opaque;
->      VFIOMigration *migration = vbasedev->migration;
-> +    Error *local_err = NULL;
-> +    int ret;
->  
->      /*
->       * Changing device state from STOP_COPY to STOP can take time. Do it here,
->       * after migration has completed, so it won't increase downtime.
->       */
->      if (migration->device_state == VFIO_DEVICE_STATE_STOP_COPY) {
-> -        vfio_migration_set_state_or_reset(vbasedev, VFIO_DEVICE_STATE_STOP);
-> +        ret = vfio_migration_set_state_or_reset(vbasedev,
-> +                                                VFIO_DEVICE_STATE_STOP,
-> +                                                &local_err);
-> +        if (ret) {
-> +            error_report_err(local_err);
-> +        }
->      }
->  
->      g_free(migration->data_buffer);
-> @@ -549,11 +556,13 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
->      VFIODevice *vbasedev = opaque;
->      ssize_t data_size;
->      int ret;
-> +    Error *local_err = NULL;
->  
->      /* We reach here with device state STOP or STOP_COPY only */
->      ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_STOP_COPY,
-> -                                   VFIO_DEVICE_STATE_STOP);
-> +                                   VFIO_DEVICE_STATE_STOP, &local_err);
->      if (ret) {
-> +        error_report_err(local_err);
->          return ret;
->      }
->  
-> @@ -591,14 +600,9 @@ static void vfio_save_state(QEMUFile *f, void *opaque)
->  static int vfio_load_setup(QEMUFile *f, void *opaque, Error **errp)
->  {
->      VFIODevice *vbasedev = opaque;
-> -    int ret;
->  
-> -    ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_RESUMING,
-> -                                   vbasedev->migration->device_state);
-> -    if (ret) {
-> -        error_setg(errp, "%s: Failed to set RESUMING state", vbasedev->name);
-> -    }
-> -    return ret;
-> +    return vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_RESUMING,
-> +                                    vbasedev->migration->device_state, errp);
->  }
->  
->  static int vfio_load_cleanup(void *opaque)
-> @@ -714,20 +718,22 @@ static void vfio_vmstate_change_prepare(void *opaque, bool running,
->      VFIODevice *vbasedev = opaque;
->      VFIOMigration *migration = vbasedev->migration;
->      enum vfio_device_mig_state new_state;
-> +    Error *local_err = NULL;
->      int ret;
->  
->      new_state = migration->device_state == VFIO_DEVICE_STATE_PRE_COPY ?
->                      VFIO_DEVICE_STATE_PRE_COPY_P2P :
->                      VFIO_DEVICE_STATE_RUNNING_P2P;
->  
-> -    ret = vfio_migration_set_state_or_reset(vbasedev, new_state);
-> +    ret = vfio_migration_set_state_or_reset(vbasedev, new_state, &local_err);
->      if (ret) {
->          /*
->           * Migration should be aborted in this case, but vm_state_notify()
->           * currently does not support reporting failures.
->           */
-if ret and we do not enter the condition below, we may leak the
-local_err. Same below.
 
-Eric
->          if (migrate_get_current()->to_dst_file) {
-> -            qemu_file_set_error(migrate_get_current()->to_dst_file, ret);
-> +            qemu_file_set_error_obj(migrate_get_current()->to_dst_file, ret,
-> +                                    local_err);
->          }
->      }
->  
-> @@ -740,6 +746,7 @@ static void vfio_vmstate_change(void *opaque, bool running, RunState state)
->  {
->      VFIODevice *vbasedev = opaque;
->      enum vfio_device_mig_state new_state;
-> +    Error *local_err = NULL;
->      int ret;
->  
->      if (running) {
-> @@ -752,14 +759,15 @@ static void vfio_vmstate_change(void *opaque, bool running, RunState state)
->                  VFIO_DEVICE_STATE_STOP;
->      }
->  
-> -    ret = vfio_migration_set_state_or_reset(vbasedev, new_state);
-> +    ret = vfio_migration_set_state_or_reset(vbasedev, new_state, &local_err);
->      if (ret) {
->          /*
->           * Migration should be aborted in this case, but vm_state_notify()
->           * currently does not support reporting failures.
->           */
->          if (migrate_get_current()->to_dst_file) {
-> -            qemu_file_set_error(migrate_get_current()->to_dst_file, ret);
-> +            qemu_file_set_error_obj(migrate_get_current()->to_dst_file, ret,
-> +                                    local_err);
->          }
->      }
->  
-> @@ -773,13 +781,16 @@ static int vfio_migration_state_notifier(NotifierWithReturn *notifier,
->      VFIOMigration *migration = container_of(notifier, VFIOMigration,
->                                              migration_state);
->      VFIODevice *vbasedev = migration->vbasedev;
-> +    int ret = 0;
->  
->      trace_vfio_migration_state_notifier(vbasedev->name, e->type);
->  
->      if (e->type == MIG_EVENT_PRECOPY_FAILED) {
-> -        vfio_migration_set_state_or_reset(vbasedev, VFIO_DEVICE_STATE_RUNNING);
-> +        ret = vfio_migration_set_state_or_reset(vbasedev,
-> +                                                VFIO_DEVICE_STATE_RUNNING,
-> +                                                errp);
->      }
-> -    return 0;
-> +    return ret;
->  }
->  
->  static void vfio_migration_free(VFIODevice *vbasedev)
+On 3/6/24 04:57, Peter Xu wrote:
+> On Tue, Mar 05, 2024 at 03:43:41PM +0100, Markus Armbruster wrote:
+>> Peter Maydell<peter.maydell@linaro.org>  writes:
+>>
+>>> On Mon, 4 Mar 2024 at 13:52, Maksim Davydov<davydov-max@yandex-team.ru>  wrote:
+>>>> The following changes since commit e1007b6bab5cf97705bf4f2aaec1f607787355b8:
+>>>>
+>>>>    Merge tag 'pull-request-2024-03-01' ofhttps://gitlab.com/thuth/qemu  into staging (2024-03-01 10:14:32 +0000)
+>>>>
+>>>> are available in the Git repository at:
+>>>>
+>>>>    https://gitlab.com/davydov-max/qemu.git  tags/pull-compare-mt-2024-03-04
+>>>>
+>>>> for you to fetch changes up to 7693a2e8518811a907d73a85807ee71dac8fabcb:
+>>>>
+>>>>    scripts: add script to compare compatibility properties (2024-03-04 14:10:53 +0300)
+>>>>
+>>>> ----------------------------------------------------------------
+>>>> Please note. This is the first pull request from me.
+>>>> My public GPG key is available here
+>>>> https://keys.openpgp.org/vks/v1/by-fingerprint/CDB5BEEF8837142579F5CDFE8E927E10F72F78D4
+>>>>
+>>>> ----------------------------------------------------------------
+>>>> scripts: add a new script for machine development
+>>>>
+>>>> ----------------------------------------------------------------
+>>> Hi; I would prefer this to go through some existing submaintainer
+>>> tree if possible, please.
+>> Migration?  QOM?  Not sure.  Cc'ing the maintainers anyway.
+> Yeah this seems like migration relevant.. however now I'm slightly confused
+> on when this script should be useful.
+>
+> According to:
+>
+> https://lore.kernel.org/qemu-devel/20240222153912.646053-5-davydov-max@yandex-team.ru/
+>
+>          This script runs QEMU to obtain compat_props of machines and
+>          default values of different types of drivers to produce comparison
+>          table. This table can be used to compare machine types to choose
+>          the most suitable machine or compare binaries to be sure that
+>          migration to the newer version will save all device
+>          properties. Also the json or csv format of this table can be used
+>          to check does a new machine affect the previous ones by comparing
+>          tables with and without the new machine.
+>
+> In regards to "choose the most suitable machine": why do you need to choose
+> a machine?
+>
+> If it's pretty standalone setup, shouldn't we always try to use the latest
+> machine type if possible (as normally compat props are only used to keep
+> compatible with old machine types, and the default should always be
+> preferred). If it's a cluster setup, IMHO it should depend on the oldest
+> QEMU version that plans to be supported.  I don't see how such comparison
+> helps yet in either of the cases..
+>
+> In regards to "compare binaries to be sure that migration to the newer
+> version will save all device properties": do we even support migrating
+> _between_ machine types??
+>
+> Sololy relying on compat properties to detect device compatibility is also
+> not reliable.  For example, see VMStateField.field_exists() or similarly,
+> VMStateDescription.needed(), which are hooks that device can provide to
+> dynamically decide what device state to be saved/loaded.  Such things are
+> not reflected in compat properties, so even if compat properties of all
+> devices are the same between two machine types, it may not mean that the
+> migration stream will always be compatible.
+>
+> Thanks,
 
+In fact, the last commit describes the meaning of this series best. Perhaps
+it should have been moved to the cover letter:
+Often, many teams have their own "machines" inherited from "upstream" to
+manage default values of devices. This is done because of the limitations
+imposed by the compatibility requirements or the desire to help their
+customers better configure their devices. And since machine type has
+a hard-to-read structure, it is very easy to make a mistake when 
+transferring
+default values from one machine to another. For example, when some property
+is set for the entire abstract class x86_64-cpu (which will be applied 
+to all
+models), and then rolled back for a specific model. The situation is about
+the same with changing the default values of devices: if the value changes
+in the description of the device itself, then you need to make sure that
+nothing changes when using the current machine.
+Therefore, there was a desire to make a dev tool that will help quickly 
+expand
+the definition of a machine or compare several machines from different 
+binary
+files. It can be used when rebasing to a new version of qemu and/or for
+automatic tests.
+
+-- 
+Best regards,
+Maksim Davydov
+
+--------------NVL33SzOfUKvq6j1zcFrpuy6
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 3/6/24 04:57, Peter Xu wrote:<br>
+    </div>
+    <blockquote type="cite" cite="mid:ZefNfJ3BwudA-M7t@x1n">
+      <pre class="moz-quote-pre" wrap="">On Tue, Mar 05, 2024 at 03:43:41PM +0100, Markus Armbruster wrote:
+</pre>
+      <blockquote type="cite">
+        <pre class="moz-quote-pre" wrap="">Peter Maydell <a class="moz-txt-link-rfc2396E" href="mailto:peter.maydell@linaro.org">&lt;peter.maydell@linaro.org&gt;</a> writes:
+
+</pre>
+        <blockquote type="cite">
+          <pre class="moz-quote-pre" wrap="">On Mon, 4 Mar 2024 at 13:52, Maksim Davydov <a class="moz-txt-link-rfc2396E" href="mailto:davydov-max@yandex-team.ru">&lt;davydov-max@yandex-team.ru&gt;</a> wrote:
+</pre>
+          <blockquote type="cite">
+            <pre class="moz-quote-pre" wrap="">
+The following changes since commit e1007b6bab5cf97705bf4f2aaec1f607787355b8:
+
+  Merge tag 'pull-request-2024-03-01' of <a class="moz-txt-link-freetext" href="https://gitlab.com/thuth/qemu">https://gitlab.com/thuth/qemu</a> into staging (2024-03-01 10:14:32 +0000)
+
+are available in the Git repository at:
+
+  <a class="moz-txt-link-freetext" href="https://gitlab.com/davydov-max/qemu.git">https://gitlab.com/davydov-max/qemu.git</a> tags/pull-compare-mt-2024-03-04
+
+for you to fetch changes up to 7693a2e8518811a907d73a85807ee71dac8fabcb:
+
+  scripts: add script to compare compatibility properties (2024-03-04 14:10:53 +0300)
+
+----------------------------------------------------------------
+Please note. This is the first pull request from me.
+My public GPG key is available here
+<a class="moz-txt-link-freetext" href="https://keys.openpgp.org/vks/v1/by-fingerprint/CDB5BEEF8837142579F5CDFE8E927E10F72F78D4">https://keys.openpgp.org/vks/v1/by-fingerprint/CDB5BEEF8837142579F5CDFE8E927E10F72F78D4</a>
+
+----------------------------------------------------------------
+scripts: add a new script for machine development
+
+----------------------------------------------------------------
+</pre>
+          </blockquote>
+          <pre class="moz-quote-pre" wrap="">
+Hi; I would prefer this to go through some existing submaintainer
+tree if possible, please.
+</pre>
+        </blockquote>
+        <pre class="moz-quote-pre" wrap="">
+Migration?  QOM?  Not sure.  Cc'ing the maintainers anyway.
+</pre>
+      </blockquote>
+      <pre class="moz-quote-pre" wrap="">
+Yeah this seems like migration relevant.. however now I'm slightly confused
+on when this script should be useful.
+
+According to:
+
+<a class="moz-txt-link-freetext" href="https://lore.kernel.org/qemu-devel/20240222153912.646053-5-davydov-max@yandex-team.ru/">https://lore.kernel.org/qemu-devel/20240222153912.646053-5-davydov-max@yandex-team.ru/</a>
+
+        This script runs QEMU to obtain compat_props of machines and
+        default values of different types of drivers to produce comparison
+        table. This table can be used to compare machine types to choose
+        the most suitable machine or compare binaries to be sure that
+        migration to the newer version will save all device
+        properties. Also the json or csv format of this table can be used
+        to check does a new machine affect the previous ones by comparing
+        tables with and without the new machine.
+
+In regards to "choose the most suitable machine": why do you need to choose
+a machine?
+
+If it's pretty standalone setup, shouldn't we always try to use the latest
+machine type if possible (as normally compat props are only used to keep
+compatible with old machine types, and the default should always be
+preferred). If it's a cluster setup, IMHO it should depend on the oldest
+QEMU version that plans to be supported.  I don't see how such comparison
+helps yet in either of the cases..
+
+In regards to "compare binaries to be sure that migration to the newer
+version will save all device properties": do we even support migrating
+_between_ machine types??
+
+Sololy relying on compat properties to detect device compatibility is also
+not reliable.  For example, see VMStateField.field_exists() or similarly,
+VMStateDescription.needed(), which are hooks that device can provide to
+dynamically decide what device state to be saved/loaded.  Such things are
+not reflected in compat properties, so even if compat properties of all
+devices are the same between two machine types, it may not mean that the
+migration stream will always be compatible.
+
+Thanks,
+</pre>
+    </blockquote>
+    <p><span style="white-space: pre-wrap">
+</span></p>
+    <p><span style="white-space: pre-wrap"><font face="monospace">In fact, the last commit describes the meaning of this series best. Perhaps</font></span><br>
+      <span style="white-space: pre-wrap"><font face="monospace">it should have been moved to the cover letter:</font></span><br>
+      <span style="white-space: pre-wrap"><font face="monospace">Often, many teams have their own "machines" inherited from "upstream" to</font></span><br>
+      <span style="white-space: pre-wrap"><font face="monospace">manage default values of devices. This is done because of the limitations</font></span><br>
+      <span style="white-space: pre-wrap"><font face="monospace">imposed by the compatibility requirements or the desire to help their</font></span><br>
+      <span style="white-space: pre-wrap"><font face="monospace">customers better configure their devices. And since machine type has</font></span><br>
+      <span style="white-space: pre-wrap"><font face="monospace">a hard-to-read structure, it is very easy to make a mistake when transferring</font></span><br>
+      <span style="white-space: pre-wrap"><font face="monospace">default values from one machine to another. For example, when some property</font></span><br>
+      <span style="white-space: pre-wrap"><font face="monospace">is set for the entire abstract class x86_64-cpu (which will be applied to all</font></span><br>
+      <span style="white-space: pre-wrap"><font face="monospace">models), and then rolled back for a specific model. The situation is about</font></span><br>
+      <span style="white-space: pre-wrap"><font face="monospace">the same with changing the default values of devices: if the value changes</font></span><br>
+      <span style="white-space: pre-wrap"><font face="monospace">in the description of the device itself, then you need to make sure that</font></span><br>
+      <span style="white-space: pre-wrap"><font face="monospace">nothing changes when using the current machine.</font></span><br>
+      <span style="white-space: pre-wrap"><font face="monospace">Therefore, there was a desire to make a dev tool that will help quickly expand</font></span><br>
+      <span style="white-space: pre-wrap"><font face="monospace">the definition of a machine or compare several machines from different binary</font></span><br>
+      <span style="white-space: pre-wrap"><font face="monospace">files. It can be used when rebasing to a new version of qemu and/or for</font></span><br>
+      <span style="white-space: pre-wrap"><font face="monospace">automatic tests.</font></span><br>
+      <span style="white-space: pre-wrap"></span></p>
+    <span style="white-space: pre-wrap">
+</span>
+    <pre class="moz-signature" cols="72">-- 
+Best regards,
+Maksim Davydov</pre>
+  </body>
+</html>
+
+--------------NVL33SzOfUKvq6j1zcFrpuy6--
 
