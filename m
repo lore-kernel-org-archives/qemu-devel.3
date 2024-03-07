@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09E0FC54E4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 21:44:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE674C54E4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 22:16:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riLWN-000092-TF; Thu, 07 Mar 2024 16:43:23 -0500
+	id 1riM1l-00047m-KF; Thu, 07 Mar 2024 17:15:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1riLWL-00008m-Di
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 16:43:21 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1riM1k-00047V-KD
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 17:15:48 -0500
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1riLWJ-0002WG-3G
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 16:43:20 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1dd6198c4e2so5819395ad.2
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 13:43:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1riM1i-0004lB-MC
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 17:15:48 -0500
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-55a179f5fa1so2135377a12.0
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 14:15:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1709847797; x=1710452597; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1709849744; x=1710454544; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:organization:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=MfK7W5gmvT+g0XsJfqW1j3QuE+eaaW8RgalDvnquAys=;
- b=betTI737nOWllJH4jRc7loJ2arygZcTVD0cVG5eHwrwT60eoWiUzTs0a1cFfm290R8
- n69RFEud5TXhmwULqdLoG7+hBBVJLZqpqFHoyuz1VjRMIoNL8wL3XuQMWczdirOuh0BQ
- 7NthX2wS0uHQIh56KGSxk6UkW1TQyKAqg8ZuCn3BMoH5kjEQ4U0kandQgc7hJ9WW7bCk
- rPX7e0xqmHTLxae8w1v23pl3pWNc5JYTg6hbCbNLm8diue9qWDNJl+Qv+NQsnLC7TMr4
- NgYjWJXKPmE4RpEXYK+54TpqRun4ok0FRw+sez9Hz8Bt4mRGYCGk5ZEZqxm1VpcBsTQb
- PAXg==
+ bh=zmjDmzPadsEgKKJ21Btsh2Sccjz80mxMZr2P9sopgO0=;
+ b=QjTzJ236r+6Fhqx/nMY9O+IrV5nrekebe9q9oJJO5EW8JKZGPQ3NVD55mh2fklW2UY
+ 7o5IcOF9JLN3JoDWX8Y4IFCU/T96e2aUx49EBZOt5HxMvJNjeK+28Sc+QhZY9VcRD7tn
+ LzAMeRvwfIih3/DfOjX4KE/X6hzEfU+ldjPEsfOLgNs7GOTo75/Unu0alZWp+3Ak/Dmm
+ 2czfvFCpBvymdZtRFGl3gGrR+iJHE72kaajvQNQFTzJaTmtJDaIGcvhLtuamkzqB/gVL
+ y4c99trzJVhLnbtn0i+A6Ac0PkQGy3zkAZajx5ILvBMuV9q8mZy7jjLAF97H+E7Za3vw
+ 7e3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709847797; x=1710452597;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1709849744; x=1710454544;
+ h=content-transfer-encoding:in-reply-to:organization:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MfK7W5gmvT+g0XsJfqW1j3QuE+eaaW8RgalDvnquAys=;
- b=l8LMvlC20mlpbibrP4nOyWRLnM3A29snBqXnPLJbYTuT0YQhAs0cZKEix4pT9b9qP0
- q4/ig9ZTeWpOc3Cb7plDay9nZgatfp+YbcFKNrL2ZWqIO0V8pHpT8F8bn/vxcnNGhKOx
- pRw7JGpq/y92XHsY1FcJkO52WG6iYzfEL4RbnZfXn/c+B58obeiVK36yMfN64/Vfh6JQ
- HJcJJc5VYU0zx/yWyWhGZSafyCdTE8jC538LlS0BPRajWdaSa4bJwZeG0m2kvozgJmQa
- TcIt9p2xUhxLr0xHHyTGpYzj2tv54OIQ5am2C0lwl7vSkeG6ctq1GX7e333STIoxNgTA
- PCyA==
+ bh=zmjDmzPadsEgKKJ21Btsh2Sccjz80mxMZr2P9sopgO0=;
+ b=IBezFIaWA2SiQPllLJSPJoA34e9NOMcbL0AUI6cr32re2MAgjsuJi4fLWwMU11I1Sv
+ FaDeZl8jxPDe+texm5OI6QAQt/sqSR0zToK2eVWmIIarQO2yhZHIQmMh7uQaxAebZ5Nz
+ 0BX3QJsPJqqELmtGCwYoy1z26SDbfTT4KeGtx5ZGaEcld7dcOoyLWkmnOu1qA6nD+Dkd
+ U1mt2/PjI9YZya3EV1TFEMr1ld+p+NrhlP9US1W5q7W5bvf1NAtM5mxLqdr7mbroR9JH
+ AWWdEbbv01tyr28eOrIr7VVl0+/TKJ7WvVm2a1Fpc5SAM5lEhaRrMcIwzom9XDcZT6mZ
+ tQBQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVoKKi2ZIesqaGidYPb2VYBkQrrgD73p+Z6l0hdlHXrHGBMopKyOhp0Qqvqk4CAbsRtkAdON3P1796gY5tNdMe5qq/MYEY=
-X-Gm-Message-State: AOJu0Yyxj0swTQ+MXlkiiaDeHq/5jV/VlQmnMaH/EYu0PQicyxfie5Zb
- xr0hzMRsJPJ1HBcbCbDabm6Q3UgzoxD+8v6bNpdZKqj86POqMtpHQojZ5q3Ju0M=
-X-Google-Smtp-Source: AGHT+IFzY53NaXnvaDMrTnW6KAyzNJf8LjMNfS43Qh/+YnZb/eQLoYo3cKQHBBErA1fB1yfnmtuCBg==
-X-Received: by 2002:a17:902:76c4:b0:1dd:8fe:cca5 with SMTP id
- j4-20020a17090276c400b001dd08fecca5mr9153279plt.47.1709847797611; 
- Thu, 07 Mar 2024 13:43:17 -0800 (PST)
-Received: from [192.168.68.110] ([177.94.15.159])
- by smtp.gmail.com with ESMTPSA id
- lc8-20020a170902fa8800b001dc8923a2c4sm15163849plb.294.2024.03.07.13.43.14
+ AJvYcCUDak25O0bhARbbJbUeVNiFtfKDJPgmXOyVMjD9M7eVom2bpHeHD9wWVKC/qgOjaaQSqOvg2FCqOXNtBp2IIB7VCAePay4=
+X-Gm-Message-State: AOJu0YxtVhZcilMdZrxnsodVuEGBvXX8bbQazBDXC6zlywk5w/VaDqul
+ a6lf0DIimDUuy0aUYoVUN+YBfUkZ/Ygd8QWsvEYg+NQ6dsgPliucUItwjLE6h3U=
+X-Google-Smtp-Source: AGHT+IHkQgAuL4F3lHzy+lEYugLu1Uzq7ctx9d1LLrPsX6l/nVXCE7uUsYL5k7Rj4s3Pl6Ct4/FVYg==
+X-Received: by 2002:a50:8d52:0:b0:565:dd45:48cb with SMTP id
+ t18-20020a508d52000000b00565dd4548cbmr760982edt.4.1709849744278; 
+ Thu, 07 Mar 2024 14:15:44 -0800 (PST)
+Received: from [192.168.200.106] (83.11.22.169.ipv4.supernova.orange.pl.
+ [83.11.22.169]) by smtp.gmail.com with ESMTPSA id
+ g3-20020a056402180300b00566ea8e9f38sm7001471edy.40.2024.03.07.14.15.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 Mar 2024 13:43:16 -0800 (PST)
-Message-ID: <18c0b9a4-2965-4897-9034-833530e99970@ventanamicro.com>
-Date: Thu, 7 Mar 2024 18:43:12 -0300
+ Thu, 07 Mar 2024 14:15:43 -0800 (PST)
+Message-ID: <ff1b2b2a-dc8e-4346-92de-bee9c4b4b31f@linaro.org>
+Date: Thu, 7 Mar 2024 23:15:41 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: Implement dynamic establishment of custom
- decoder
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>,
- Huang Tao <eric.huang@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com, liwei1518@gmail.com, 
- bin.meng@windriver.com, alistair.francis@wdc.com, palmer@dabbelt.com,
- Christoph Muellner <christoph.muellner@vrull.eu>
-References: <20240306093308.35188-1-eric.huang@linux.alibaba.com>
- <9b9c1af9-5dca-4270-8dfe-a62223c8cbbb@ventanamicro.com>
- <d86b22f7-e601-4bd0-9edc-88d84f572595@linaro.org>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <d86b22f7-e601-4bd0-9edc-88d84f572595@linaro.org>
+Subject: Re: [RFC 0/2] Add RISC-V Server Platform Reference Board
+Content-Language: pl-PL, en-GB, en-HK
+To: Fei Wu <fei2.wu@intel.com>, pbonzini@redhat.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, bin.meng@windriver.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org, andrei.warkentin@intel.com,
+ shaolin.xie@alibaba-inc.com, ved@rivosinc.com, sunilvl@ventanamicro.com,
+ haibo1.xu@intel.com, evan.chai@intel.com, yin.wang@intel.com,
+ tech-server-platform@lists.riscv.org, tech-server-soc@lists.riscv.org
+References: <20240304102540.2789225-1-fei2.wu@intel.com>
+From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Organization: Linaro
+In-Reply-To: <20240304102540.2789225-1-fei2.wu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62a.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,120 +103,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+W dniu 4.03.2024 o 11:25, Fei Wu pisze:
+
+> The RISC-V Server Platform specification[1] defines a standardized
+> set of hardware and software capabilities, that portable system
+> software, such as OS and hypervisors can rely on being present in a
+> RISC-V server platform. This patchset provides a RISC-V Server
+> Platform (RVSP) reference implementation on qemu which is in
+> compliance with the spec as faithful as possible.
+
+I am working on sbsa-ref which is AArch64 Standard Server Platform 
+implementation. Will not go through details of rvsp-ref but give some 
+potential hints from my work with our platform.
 
 
-On 3/7/24 17:11, Richard Henderson wrote:
-> On 3/7/24 09:55, Daniel Henrique Barboza wrote:
->> (--- adding Richard ---)
->>
->>
->> On 3/6/24 06:33, Huang Tao wrote:
->>> In this patch, we modify the decoder to be a freely composable data
->>> structure instead of a hardcoded one. It can be dynamically builded up
->>> according to the extensions.
->>> This approach has several benefits:
->>> 1. Provides support for heterogeneous cpu architectures. As we add decoder in
->>>     CPUArchState, each cpu can have their own decoder, and the decoders can be
->>>     different due to cpu's features.
->>> 2. Improve the decoding efficiency. We run the guard_func to see if the decoder
->>>     can be added to the dynamic_decoder when building up the decoder. Therefore,
->>>     there is no need to run the guard_func when decoding each instruction. It can
->>>     improve the decoding efficiency
->>> 3. For vendor or dynamic cpus, it allows them to customize their own decoder
->>>     functions to improve decoding efficiency, especially when vendor-defined
->>>     instruction sets increase. Because of dynamic building up, it can skip the other
->>>     decoder guard functions when decoding.
->>>
->>> Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
->>> Suggested-by: Christoph Muellner <christoph.muellner@vrull.eu>
->>> Co-authored-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
->>> ---
->>>   target/riscv/cpu.c         | 20 ++++++++++++++++++++
->>>   target/riscv/cpu.h         |  2 ++
->>>   target/riscv/cpu_decoder.h | 34 ++++++++++++++++++++++++++++++++++
->>>   target/riscv/translate.c   | 28 ++++++++++++----------------
->>>   4 files changed, 68 insertions(+), 16 deletions(-)
->>>   create mode 100644 target/riscv/cpu_decoder.h
->>>
->>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
->>> index 5ff0192c52..cadcd51b4f 100644
->>> --- a/target/riscv/cpu.c
->>> +++ b/target/riscv/cpu.c
->>> @@ -38,6 +38,7 @@
->>>   #include "kvm/kvm_riscv.h"
->>>   #include "tcg/tcg-cpu.h"
->>>   #include "tcg/tcg.h"
->>> +#include "cpu_decoder.h"
->>>   /* RISC-V CPU definitions */
->>>   static const char riscv_single_letter_exts[] = "IEMAFDQCBPVH";
->>> @@ -1102,6 +1103,23 @@ static void riscv_cpu_satp_mode_finalize(RISCVCPU *cpu, Error **errp)
->>>   }
->>>   #endif
->>> +static void riscv_cpu_finalize_dynamic_decoder(RISCVCPU *cpu)
->>> +{
->>> +    CPURISCVState *env = &cpu->env;
->>> +    decode_fn *dynamic_decoder;
->>> +    dynamic_decoder = g_new0(decode_fn, decoder_table_size);
->>> +    int j = 0;
->>> +    for (size_t i = 0; i < decoder_table_size; ++i) {
->>> +        if (decoder_table[i].guard_func &&
->>> +            decoder_table[i].guard_func(&cpu->cfg)) {
->>> +            dynamic_decoder[j] = decoder_table[i].decode_fn;
->>> +            j++;
->>> +        }
->>> +    }
->>> +
->>> +    env->decoder = dynamic_decoder;
+1. Consider versioning the platform.
 
-In time: I think we should rename this to 'decoders' to make it easier to figure out
-that it's an array instead of a single element. Same thing with the ctx->decoder pointer.
-
-> 
-> You should save J into ENV as well, or use GPtrArray which would carry the length along with it naturally.
-> 
-> Is the cpu configuration on each cpu, or on the cpu class?
-> 
-> Even if the configuration is per cpu, this new element belongs in ArchCPU not CPUArchState.  Usually all of CPUArchState is zeroed during reset.
-> 
->>> @@ -1153,9 +1149,8 @@ static void decode_opc(CPURISCVState *env, DisasContext *ctx, uint16_t opcode)
->>>                                                ctx->base.pc_next + 2));
->>>           ctx->opcode = opcode32;
->>> -        for (size_t i = 0; i < ARRAY_SIZE(decoders); ++i) {
->>> -            if (decoders[i].guard_func(ctx->cfg_ptr) &&
->>> -                decoders[i].decode_func(ctx, opcode32)) {
->>> +        for (size_t i = 0; i < decoder_table_size; ++i) {
->>> +            if (ctx->decoder[i](ctx, opcode32)) {
->>>                   return;
-> 
-> You definitely should not be using decoder_table_size here, because you eliminated elements, which are in fact NULL here.
-> 
->> Am I missing something? It seems we can just remove the ctx->decode pointer altogether
->> and use env->decoder.
-> 
-> We try to avoid placing env into DisasContext, so that it is much harder to make the mistake of referencing env fields at translation-time, when you really needed to generate tcg code to reference the fields at runtime.
-
-Right. And you mentioned that ArchState isn't the ideal place and we should put the
-decoders in ArchCPU, so there's that.
-
-In this case, if we were not to use ctx->decoders, we would need to retrieve a RISCVCPU
-in riscv_tr_translate_insn() to get access to them ....
+We have 'platform_version'.'major/minor' exported in 
+DeviceTree-formatted data. This allows for firmware to know which of 
+non-discoverable hardware features exists and which not. We use it to 
+disable XHCI controller on older platform version.
 
 
-I'd rather keep ctx->decoders and assign it in tr_init_disas() since that function already
-uses a RISCVCPU pointer. The extra pointer in DisasContext seems worthy in this case.
+2. If specification allows to have non-discoverable devices then add some.
+
+This will require you to handle them in firmware in some way. Sooner or 
+later some physical hardware will be in same situation so they can use 
+your firmware code as reference. We have AHCI and XHCI on system bus 
+(hardcoded in firmware).
 
 
-Thanks,
+3. You are going to use EDK2 with ACPI. Hide DT from code there with 
+some hardware information library.
 
-Daniel
+For sbsa-ref we created SbsaHardwareInfoLib in 
+https://openfw.io/edk2-devel/20240306-no-dt-for-cpu-v6-0-acd8727a1b59@linaro.org/ 
+patchset.
 
 
-
-
-
-> 
-> 
-> 
-> r~
-> 
 
