@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 527B3C54E4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 03:25:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27CACC5475B
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 03:25:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ri4M5-0001Rl-As; Wed, 06 Mar 2024 22:23:37 -0500
+	id 1ri4M6-0001SR-US; Wed, 06 Mar 2024 22:23:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1ri4M3-0001R1-Ck
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 22:23:35 -0500
-Received: from mail-il1-x12b.google.com ([2607:f8b0:4864:20::12b])
+ id 1ri4M5-0001Rm-DT
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 22:23:37 -0500
+Received: from mail-io1-xd31.google.com ([2607:f8b0:4864:20::d31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1ri4M1-0005fP-I9
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 22:23:35 -0500
-Received: by mail-il1-x12b.google.com with SMTP id
- e9e14a558f8ab-365aff1fa8dso895825ab.2
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 19:23:33 -0800 (PST)
+ id 1ri4M3-0005hL-QX
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 22:23:37 -0500
+Received: by mail-io1-xd31.google.com with SMTP id
+ ca18e2360f4ac-7c8406e4745so19124339f.3
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 19:23:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709781811; x=1710386611; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1709781814; x=1710386614; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=v3teDd8HDxktJH46jy4fSC2tTIGKstCq77/p/rg3zPo=;
- b=UE9/Be2Cw0BGRFW4Eozngb/VeaFDGKiOjoT4Tgw4vMx+QDGESHgLS1rVL8xbdR5BQ3
- wLRnW3d8lYh2IG75h6Z+lvjOHAvEzETXesd8ngSHReIUz4C7B/KQrIYkTlKwcZi5BlQd
- iKHisCHnae1B96f5mZ/lJuQD7QgXMECPcVILsCsEYPx9oVkjsM96g+QlA/yiYg0S8djb
- rQhjYek5cjrKTNCBPmmTnIjNsXKcKc9THLxmfrgxXhm0rW0qhVYiSmNaysKd3Ze/+Q6x
- WkS3cFxHv8BxiMpZpE6XoZjyf907r899HAkZGtrHZ1eQ5niike4WgjwOIm+THWotUx84
- J/vw==
+ bh=uuAflH+os+yu0r/DJ/rQ7cJGHjxjAdD2yR1xW/PppVE=;
+ b=GeIEYNPEtZ3TPW8ZH7eLTEIuzDSEmVT2YiECjzLR7AIqE85dEKy+z86GbfWFhXP+cG
+ Z4oLNr5Zzx3SvIQCcjfXGP0AMBcRdq1+qWEVrAeL5seiC63WV+6l57wy8NWYRpLgOWBa
+ nwXZ9DEB6HlG/mCqYIKoRcNn2ArBL81ssVJewLRXKgRoCR5J0MKl6KqG9xIumxZNg8Ct
+ i4AgbS5Cztd+wyGm0x72KshX2S4EIAzj05RKw9aBFCt94VfKQvX36vNRihFykwPFJbc5
+ hCvoaNm8U+Raz0lJzZ4noq3JQ5pnYOVEgdxOuiZV/TFAjp5xO9uESgGXXwskZqlZ4uf+
+ hD2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709781811; x=1710386611;
+ d=1e100.net; s=20230601; t=1709781814; x=1710386614;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=v3teDd8HDxktJH46jy4fSC2tTIGKstCq77/p/rg3zPo=;
- b=wkquRnr8g0TcQnwa1YJVEPN75FGUlcZ2pG6NpP2sHMC/txA+yYuvIv4bD9SNcsyQKi
- nJgVnqZdmnrwC7GCuZyG0OmWhMFBfzPTzcq5M2QqmdwvXXPXDRr+VATLSErMSW52WBQE
- CmThvkcDw+uYlE1VI5CwQmpwNtsQ0gJsq5/qMgNyIS4suFrlR2g3kDavRv1t+s12a/ji
- G/HMe55E3HtvgO3CHvvRABqITbE/cbE7w2QCkPyETcGjJAL9HKbH6ed88GA9Bn+VGSNh
- JQ2Zxj5+YmDO3AHczpvoqQOKA3l6fGJp9hZT0D6LgnhBfVO1e/ZdBO+G7mpOjThGpCBH
- FtZg==
-X-Gm-Message-State: AOJu0YzTU+gzI+ogbokEGJMxWQqJgmuWxpJXW5w/x0l74yu2RcRbb+fF
- JNANGKFBUokT177hVSQNpC3DeOnSjABhqCYIfomaosnSZVd4naSquZXk6J+SVYc=
-X-Google-Smtp-Source: AGHT+IHoEbcP+7wbWfLsHOZrllvtBPoQOAcEdIyYiIoOuuSu+B6VuzYN51GfKWoC4ASfv8HWnSAvaA==
-X-Received: by 2002:a05:6e02:148d:b0:365:1dd9:ee6b with SMTP id
- n13-20020a056e02148d00b003651dd9ee6bmr25409244ilk.25.1709781811024; 
- Wed, 06 Mar 2024 19:23:31 -0800 (PST)
+ bh=uuAflH+os+yu0r/DJ/rQ7cJGHjxjAdD2yR1xW/PppVE=;
+ b=kNYpcuqhhUvAx2hDs39Hu80O4NzTBLjSt9StIMU6SKX5Ugtmw6ayoH/l6+rnOUYvHe
+ UNoCKTrjsTCPwudLHxNw2mehTIJcLqExTr1/gU7u+i/71bgxF0KSU5+O7O6p1Bz3NhgG
+ V6wfAleA39AGTVvrr43quhNH2sPvzrq6wABqgmInGk7CL2K56ls53eyGpPAGOOvofaXJ
+ 1qAH9BGxnr7iDuiXmHaWHnEB8viN3qZ4oL+HUwNoy/XOkDPPIUvIR6dPZd7gQJbsYqbF
+ /bIQEiTDevLIiYDVVyhml1BwM9UVqmMMY91Sbb/NgjBUUjl6OVCDRFMYw2FjG31Ii0MO
+ EpTg==
+X-Gm-Message-State: AOJu0Yy42o8phCabHSpN0ClmodCwJ64ZImhlz2w55/3TFowMjdcXxY4g
+ /wiH4CxSxPLLGorMUj5WBKqZ3q1Ah+mc0BI7OOOnonC6/3ZF8zAdPNmaETPt8yM=
+X-Google-Smtp-Source: AGHT+IGbspPuomrW2XwnZZm1g8AoGBUSSlCeJ7/Vrxmu/ZV+VkudxmUEgDCmLntFz7SJ57Dr6UwTGw==
+X-Received: by 2002:a5d:9519:0:b0:7c8:5972:6e0e with SMTP id
+ d25-20020a5d9519000000b007c859726e0emr10175058iom.15.1709781813866; 
+ Wed, 06 Mar 2024 19:23:33 -0800 (PST)
 Received: from taylor-ubuntu.hsd1.co.comcast.net
  (c-73-169-12-54.hsd1.co.comcast.net. [73.169.12.54])
  by smtp.gmail.com with ESMTPSA id
- h20-20020a02c734000000b00474e9a77424sm2233990jao.147.2024.03.06.19.23.29
+ h20-20020a02c734000000b00474e9a77424sm2233990jao.147.2024.03.06.19.23.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Mar 2024 19:23:30 -0800 (PST)
+ Wed, 06 Mar 2024 19:23:33 -0800 (PST)
 From: Taylor Simpson <ltaylorsimpson@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: bcain@quicinc.com, quic_mathbern@quicinc.com, sidneym@quicinc.com,
  quic_mliebel@quicinc.com, richard.henderson@linaro.org, philmd@linaro.org,
  ale@rev.ng, anjo@rev.ng, ltaylorsimpson@gmail.com
-Subject: [PATCH v2 1/9] Hexagon (target/hexagon) Add is_old/is_new to Register
- class
-Date: Wed,  6 Mar 2024 20:23:19 -0700
-Message-Id: <20240307032327.4799-2-ltaylorsimpson@gmail.com>
+Subject: [PATCH v2 3/9] Hexagon (target/hexagon) Mark dest_idx in trans
+ functions
+Date: Wed,  6 Mar 2024 20:23:21 -0700
+Message-Id: <20240307032327.4799-4-ltaylorsimpson@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240307032327.4799-1-ltaylorsimpson@gmail.com>
 References: <20240307032327.4799-1-ltaylorsimpson@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12b;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-il1-x12b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d31;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-io1-xd31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,55 +98,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/hexagon/hex_common.py | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+Check that the value matches opcode_reginfo/opcode_wregs
 
-diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
-index 195620c7ec..4bacef223f 100755
---- a/target/hexagon/hex_common.py
-+++ b/target/hexagon/hex_common.py
-@@ -1,7 +1,7 @@
- #!/usr/bin/env python3
+Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+---
+ target/hexagon/insn.h                   | 1 +
+ target/hexagon/decode.c                 | 2 ++
+ target/hexagon/mmvec/decode_ext_mmvec.c | 2 ++
+ target/hexagon/gen_trans_funcs.py       | 6 ++++++
+ 4 files changed, 11 insertions(+)
+
+diff --git a/target/hexagon/insn.h b/target/hexagon/insn.h
+index 36502bf056..a770379958 100644
+--- a/target/hexagon/insn.h
++++ b/target/hexagon/insn.h
+@@ -40,6 +40,7 @@ struct Instruction {
+     uint32_t which_extended:1;    /* If has an extender, which immediate */
+     uint32_t new_value_producer_slot:4;
+     int32_t new_read_idx;
++    int32_t dest_idx;
  
+     bool part1;              /*
+                               * cmp-jumps are split into two insns.
+diff --git a/target/hexagon/decode.c b/target/hexagon/decode.c
+index 4595e30384..a4d8500fea 100644
+--- a/target/hexagon/decode.c
++++ b/target/hexagon/decode.c
+@@ -184,6 +184,8 @@ decode_fill_newvalue_regno(Packet *packet)
+ 
+             /* Now patch up the consumer with the register number */
+             dst_idx = dststr - opcode_reginfo[def_opcode];
++            g_assert(packet->insn[def_idx].dest_idx != -1 &&
++                     packet->insn[def_idx].dest_idx == dst_idx);
+             packet->insn[i].regno[use_regidx] =
+                 packet->insn[def_idx].regno[dst_idx];
+             /*
+diff --git a/target/hexagon/mmvec/decode_ext_mmvec.c b/target/hexagon/mmvec/decode_ext_mmvec.c
+index e9007f5d71..c1320406df 100644
+--- a/target/hexagon/mmvec/decode_ext_mmvec.c
++++ b/target/hexagon/mmvec/decode_ext_mmvec.c
+@@ -86,6 +86,8 @@ check_new_value(Packet *pkt)
+                     /* still not there, we have a bad packet */
+                     g_assert_not_reached();
+                 }
++                g_assert(pkt->insn[def_idx].dest_idx != -1 &&
++                         pkt->insn[def_idx].dest_idx == dststr - reginfo);
+                 int def_regnum = pkt->insn[def_idx].regno[dststr - reginfo];
+                 /* Now patch up the consumer with the register number */
+                 pkt->insn[i].regno[use_regidx] = def_regnum ^ def_oreg;
+diff --git a/target/hexagon/gen_trans_funcs.py b/target/hexagon/gen_trans_funcs.py
+index 8acecdb993..1201172dda 100755
+--- a/target/hexagon/gen_trans_funcs.py
++++ b/target/hexagon/gen_trans_funcs.py
+@@ -69,6 +69,7 @@ def mark_which_imm_extended(f, tag):
+ ##         insn->regno[1] = args->Rs;
+ ##         insn->regno[2] = args->Rt;
+ ##         insn->new_read_idx = -1;
++##         insn->dest_idx = 0;
+ ##         return true;
+ ##     }
  ##
--##  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+##  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
- ##
- ##  This program is free software; you can redistribute it and/or modify
- ##  it under the terms of the GNU General Public License as published by
-@@ -397,10 +397,18 @@ def is_readwrite(self):
- class OldSource(Source):
-     def reg_tcg(self):
-         return f"{self.regtype}{self.regid}V"
-+    def is_old(self):
-+        return True
-+    def is_new(self):
-+        return False
+@@ -86,6 +87,7 @@ def gen_trans_funcs(f):
+         """))
  
- class NewSource(Source):
-     def reg_tcg(self):
-         return f"{self.regtype}{self.regid}N"
-+    def is_old(self):
-+        return False
-+    def is_new(self):
-+        return True
+         new_read_idx = -1
++        dest_idx = -1
+         for regno, (reg_type, reg_id, *_) in enumerate(regs):
+             reg = hex_common.get_register(tag, reg_type, reg_id)
+             f.write(code_fmt(f"""\
+@@ -93,6 +95,9 @@ def gen_trans_funcs(f):
+             """))
+             if reg.is_read() and reg.is_new():
+                 new_read_idx = regno
++            # dest_idx should be the first destination, so check for -1
++            if reg.is_written() and dest_idx == -1:
++                dest_idx = regno
  
- class ReadWrite:
-     def reg_tcg(self):
-@@ -413,6 +421,10 @@ def is_read(self):
-         return True
-     def is_readwrite(self):
-         return True
-+    def is_old(self):
-+        return True
-+    def is_new(self):
-+        return False
+         if len(imms) != 0:
+             mark_which_imm_extended(f, tag)
+@@ -115,6 +120,7 @@ def gen_trans_funcs(f):
  
- class GprDest(Register, Single, Dest):
-     def decl_tcg(self, f, tag, regno):
+         f.write(code_fmt(f"""\
+             insn->new_read_idx = {new_read_idx};
++            insn->dest_idx = {dest_idx};
+         """))
+         f.write(textwrap.dedent(f"""\
+                 return true;
 -- 
 2.34.1
 
