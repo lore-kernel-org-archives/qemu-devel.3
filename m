@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 726D6C54798
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 20:44:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB507C54798
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 20:45:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riKb0-0003vN-8U; Thu, 07 Mar 2024 15:44:06 -0500
+	id 1riKbw-0004ZJ-CO; Thu, 07 Mar 2024 15:45:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1riKat-0003uu-D7
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 15:44:03 -0500
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ id 1riKbv-0004Z2-1w
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 15:45:03 -0500
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1riKaq-0002Dt-8G
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 15:43:57 -0500
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-29a8911d11cso881211a91.1
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 12:43:53 -0800 (PST)
+ id 1riKbt-0002mE-CY
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 15:45:02 -0500
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-5d3912c9a83so875381a12.3
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 12:45:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709844232; x=1710449032; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709844299; x=1710449099; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=+m/ao1DrGxKl6KMlsfP8COmGyncwprW0Bsh5ZR7VlUw=;
- b=adXRvhAsb+HxOWVHeVgqeFcMiWHT94ICF/FKzDnLksmC8WPM6knlvcaaSaa2CZdA1w
- pK52r4dyJzirEFMeV11CBrJ6pWPZBJ96Bkxwk7dVspFc59Fu9D5NZ9muLbC8MBaCi69A
- SNq4rn0X9pBkXJm+zKhRMpYFtMNw4KIG6UqckxNYIwX3wRfxheak6UJ1FMDC1tx15/Kv
- gJi/zkzecX5/m+acZ/TTZOry0fCCAOOTIc0b8SIjuHSy8zbCuaT0PlNpHtVnvJl2KVYc
- IBdDkJ3Oipyn2O756Be8CVF8ZPNSpp0H7DNfpaLoaTQ1W6nI2mHn1+zj08pQs7Vqziqf
- ORGQ==
+ bh=4qKnJm8WUgKUl5gXGhBURiml3FQfLJ/SDsCgAjuZtXk=;
+ b=ChMen/XEIyuBE69gmSq96LIt4KonyYuFdQXSJZPDY0v4IYVm+gCU80H8Jts1vPgGJe
+ YiQRP9uDkivjhoYlbVQkA09Y+45LjSswsF9WMJkTek2tVaB4cM3gvBVImLxUVyWN7G87
+ /5kdqcldU8runsrv6FKztX574135dr95eLeDXqkkdTcMZL3i0jibUAe0HIvDrbLYhbwU
+ 5HFiV9+GOqZLpUuDOsBRaauZom4jKHcfno+i0g7WNlbsNa2MrZ5uuYHLai6jYCSgpbbo
+ EzYWqX8ND3x+jHMmKD/qFeWRK9aPHJtlp6gwZ+4Z3DGpyyfj7jzRxVpreteKE8+TW3Ut
+ F13w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709844232; x=1710449032;
+ d=1e100.net; s=20230601; t=1709844299; x=1710449099;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+m/ao1DrGxKl6KMlsfP8COmGyncwprW0Bsh5ZR7VlUw=;
- b=m0C/nFjbQ1H/8fWzBQdAoHEOd7t1mT0jV8btftZZPXyUAKHXiFLvzhOkzUghI30jrP
- 5Q2KsJ9tskFBXMJWoMFy5gvv+hrhChREImHclUL+QRRwSutBITylyteLTes+zIjPTAzQ
- ikcpBZA8yKtFrB7zV6VRgVXpkU4X86W/4dV0/tgvJIXQxhoeaT5YIn+vV2y6XAqBW7ZF
- h26q7Srkh/RvHtnWMavF2s9HQqX6k2hXW0zQr6lRX8sc0/82II64yPzxc9qmnn+jAjMn
- +Ub2dBd1TjSPM9n/prEmt1HXU/bWKc/KOCJQmgaXDrD+Q9GwUX1h6j5svKKUxkvRocje
- OkVg==
+ bh=4qKnJm8WUgKUl5gXGhBURiml3FQfLJ/SDsCgAjuZtXk=;
+ b=mqF+rXnCWZXK1Xy4z95KwRw6bmYeMaHXFlKIEPY7CVKMEnt/oNcrgTTvVFN3VgwjW/
+ L1zlld9oYUI5tqxBrzPpJcO4qo2zx0l97Knf8fkktOzDfc4DktsEImDlyUbV21EQ3ZWG
+ /an1i2pxSRjSXwYIdswISAbs4ol9n9n1uB88wh7iCrYYvLocRZfgnOIzlCOvorQmuk1o
+ olkXrQp8xIJYpbcBv5AtQm5AoTDFZYsO6BSzh+xcotdP9s0GgXkd9zNfrEwY1VPTvsPk
+ FDZYsBrAobA9leB/jPakiUZ41V2QPiTo7hOwynblNFEnfeji7HkiW177SFPluDWut2St
+ tYEg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVs0UWg1Sqr4v5lu5k1jsKvj3KFSRCi0jYixUoHqtdNqUBvt9G/Kjev0JI3SqhIlx0OcDiptx2gjPy+EDZSuXbFj+aPko8=
-X-Gm-Message-State: AOJu0YxIRExlFokNsz4lxFjudc7jZRH01k2itU1UzIFZq7hAboz7lm5b
- ASsFPBlwuHtL3cOGieJuciLsZO9VEsNs16zLUYJ2vhLSRem8UfxK8rA+7UZ5NXU=
-X-Google-Smtp-Source: AGHT+IFo9URIH0ONESxQfNBFrIJakMtPZKAFDudD7bF6Fs6eOLHFAGkrZKy5fuTivnryDL2+yZMG7g==
-X-Received: by 2002:a17:90b:1bd0:b0:29b:3d08:c644 with SMTP id
- oa16-20020a17090b1bd000b0029b3d08c644mr13281957pjb.9.1709844232495; 
- Thu, 07 Mar 2024 12:43:52 -0800 (PST)
+ AJvYcCXMNla7qMjLtdeqqwxhJqBraJvmlflt2UJsZN96AjaM24Qn7uBhsysubDy1G0//9xK0u+4KzTqFXxmRRjRYPmQp20+LOeQ=
+X-Gm-Message-State: AOJu0YyUgWOrVgInWSWLN6B/WWoSCSkLgjqE9j5iFT/rDQYTT8s2yEeO
+ HGm52b7vvvp/cJyXad0Fn/pah+ALMfusutjgussFG59HqHPcvWhrtoIVHrZyDeQ=
+X-Google-Smtp-Source: AGHT+IExq8aPQlrhulioiZVR1CHetMb81mUbNtkqTx0JzB8OQQiQB9KhaFH99FUFxPc01CHqyTd43Q==
+X-Received: by 2002:a17:90a:5312:b0:29b:b5c:415d with SMTP id
+ x18-20020a17090a531200b0029b0b5c415dmr17311031pjh.38.1709844299691; 
+ Thu, 07 Mar 2024 12:44:59 -0800 (PST)
 Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
  [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- p1-20020a17090adf8100b0029b178a7068sm1961051pjv.50.2024.03.07.12.43.51
+ p1-20020a17090adf8100b0029b178a7068sm1961051pjv.50.2024.03.07.12.44.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 Mar 2024 12:43:52 -0800 (PST)
-Message-ID: <f9ef93da-8936-4ffc-8a21-ad90f475845a@linaro.org>
-Date: Thu, 7 Mar 2024 10:43:48 -1000
+ Thu, 07 Mar 2024 12:44:59 -0800 (PST)
+Message-ID: <065c0f23-d7a2-4280-bc8c-c82fa35be080@linaro.org>
+Date: Thu, 7 Mar 2024 10:44:57 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/5] gdbstub: Rename back gdb_handlesig
+Subject: Re: [PATCH v2 2/5] linux-user: Move tswap_siginfo out of target code
 Content-Language: en-US
 To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org, peter.maydell@linaro.org, laurent@vivier.eu,
  philmd@linaro.org
 References: <20240307182623.1450717-1-gustavo.romero@linaro.org>
+ <20240307182623.1450717-2-gustavo.romero@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240307182623.1450717-1-gustavo.romero@linaro.org>
+In-Reply-To: <20240307182623.1450717-2-gustavo.romero@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,17 +100,33 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/7/24 08:26, Gustavo Romero wrote:
-> Rename gdb_handlesig_reason back to gdb_handlesig. There is no need to
-> add a wrapper for gdb_handlesig and rename it when a new parameter is
-> added.
+> Move tswap_siginfo from target code to handle_pending_signal. This will
+> allow some cleanups and having the siginfo ready to be used in gdbstub.
 > 
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> Signed-off-by: Gustavo Romero<gustavo.romero@linaro.org>
+> Suggested-by: Richard Henderson<richard.henderson@linaro.org>
 > ---
->   gdbstub/user.c         |  8 ++++----
->   include/gdbstub/user.h | 15 ++-------------
->   linux-user/main.c      |  2 +-
->   linux-user/signal.c    |  2 +-
->   4 files changed, 8 insertions(+), 19 deletions(-)
+>   linux-user/aarch64/signal.c     |  2 +-
+>   linux-user/alpha/signal.c       |  2 +-
+>   linux-user/arm/signal.c         |  2 +-
+>   linux-user/hexagon/signal.c     |  2 +-
+>   linux-user/hppa/signal.c        |  2 +-
+>   linux-user/i386/signal.c        |  6 +++---
+>   linux-user/loongarch64/signal.c |  2 +-
+>   linux-user/m68k/signal.c        |  4 ++--
+>   linux-user/microblaze/signal.c  |  2 +-
+>   linux-user/mips/signal.c        |  4 ++--
+>   linux-user/nios2/signal.c       |  2 +-
+>   linux-user/openrisc/signal.c    |  2 +-
+>   linux-user/ppc/signal.c         |  4 ++--
+>   linux-user/riscv/signal.c       |  2 +-
+>   linux-user/s390x/signal.c       |  2 +-
+>   linux-user/sh4/signal.c         |  2 +-
+>   linux-user/signal-common.h      |  2 --
+>   linux-user/signal.c             | 10 ++++++++--
+>   linux-user/sparc/signal.c       |  2 +-
+>   linux-user/xtensa/signal.c      |  2 +-
+>   20 files changed, 31 insertions(+), 27 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
