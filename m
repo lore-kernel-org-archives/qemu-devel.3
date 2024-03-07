@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D613CC54798
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 14:10:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C117C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 14:52:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riER0-0003xJ-Nd; Thu, 07 Mar 2024 09:09:23 -0500
+	id 1riF60-00008P-WE; Thu, 07 Mar 2024 09:51:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1riEQz-0003ww-L0
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 09:09:21 -0500
+ id 1riF5z-00008D-HF
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 09:51:43 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1riEQv-0000Ju-Jr
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 09:09:21 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TrB4Q19MHz6D8c3;
- Thu,  7 Mar 2024 22:09:10 +0800 (CST)
+ id 1riF5w-00035j-NI
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 09:51:43 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TrBwh6jbDz6K8Kq;
+ Thu,  7 Mar 2024 22:47:32 +0800 (CST)
 Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 4AE8D140D1D;
- Thu,  7 Mar 2024 22:09:13 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 64D8F140736;
+ Thu,  7 Mar 2024 22:51:31 +0800 (CST)
 Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
  (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Thu, 7 Mar
- 2024 14:09:12 +0000
-Date: Thu, 7 Mar 2024 14:09:11 +0000
+ 2024 14:51:30 +0000
+Date: Thu, 7 Mar 2024 14:51:29 +0000
 To: Peter Xu <peterx@redhat.com>
 CC: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>, 
  Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  <qemu-devel@nongnu.org>, <linuxarm@huawei.com>
-Subject: Re: [PATCH 2/3] physmem: Factor out body of
- flatview_read/write_continue() loop
-Message-ID: <20240307140911.00003c1b@Huawei.com>
-In-Reply-To: <ZeFpHr0KU6NWMv1x@x1n>
+Subject: Re: [PATCH 3/3] physmem: Fix wrong MR in large
+ address_space_read/write_cached_slow()
+Message-ID: <20240307145129.000009e8@Huawei.com>
+In-Reply-To: <ZeFrIY6exon32X0s@x1n>
 References: <20240215142817.1904-1-Jonathan.Cameron@huawei.com>
- <20240215142817.1904-3-Jonathan.Cameron@huawei.com>
- <ZeFnoBLJ_fKhLD8r@x1n> <ZeFpHr0KU6NWMv1x@x1n>
+ <20240215142817.1904-4-Jonathan.Cameron@huawei.com>
+ <ZeFrIY6exon32X0s@x1n>
 Organization: Huawei Technologies Research and Development (UK) Ltd.
 X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml100001.china.huawei.com (7.191.160.183) To
+X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
  lhrpeml500005.china.huawei.com (7.191.163.240)
 Received-SPF: pass client-ip=185.176.79.56;
  envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
@@ -75,184 +75,140 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 1 Mar 2024 13:35:26 +0800
+On Fri, 1 Mar 2024 13:44:01 +0800
 Peter Xu <peterx@redhat.com> wrote:
 
-> On Fri, Mar 01, 2024 at 01:29:04PM +0800, Peter Xu wrote:
-> > On Thu, Feb 15, 2024 at 02:28:16PM +0000, Jonathan Cameron wrote:  
-> > > This code will be reused for the address_space_cached accessors
-> > > shortly.
-> > > 
-> > > Also reduce scope of result variable now we aren't directly
-> > > calling this in the loop.
-> > > 
-> > > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > > ---
-> > >  system/physmem.c | 165 ++++++++++++++++++++++++++++-------------------
-> > >  1 file changed, 98 insertions(+), 67 deletions(-)
-> > > 
-> > > diff --git a/system/physmem.c b/system/physmem.c
-> > > index 39b5ac751e..74f92bb3b8 100644
-> > > --- a/system/physmem.c
-> > > +++ b/system/physmem.c
-> > > @@ -2677,6 +2677,54 @@ static bool flatview_access_allowed(MemoryRegion *mr, MemTxAttrs attrs,
-> > >      return false;
-> > >  }
-> > >  
-> > > +static MemTxResult flatview_write_continue_step(hwaddr addr,  
+> On Thu, Feb 15, 2024 at 02:28:17PM +0000, Jonathan Cameron wrote:
 > 
-> One more thing: this addr var is not used, afaict.  We could drop addr1
-> below and use this to represent the MR offset.
-
-I'm tempted to keep the addr1 where it is in the parameter list just so that
-it matches up with the caller location but a rename makes a lot of sense.
-
+> Can we rename the subject?
 > 
-> I'm wondering whether we should start to use some better namings already
-> for memory API functions to show obviously what AS it is describing.  From
-> that POV, perhaps rename it to "mr_addr"?
+>   physmem: Fix wrong MR in large address_space_read/write_cached_slow()
+> 
+> IMHO "wrong MR" is misleading, as the MR was wrong only because the address
+> passed over is wrong at the first place.  Perhaps s/MR/addr/?
+> 
+> > If the access is bigger than the MemoryRegion supports,
+> > flatview_read/write_continue() will attempt to update the Memory Region.
+> > but the address passed to flatview_translate() is relative to the cache, not
+> > to the FlatView.
+> > 
+> > On arm/virt with interleaved CXL memory emulation and virtio-blk-pci this
+> > lead to the first part of descriptor being read from the CXL memory and the
+> > second part from PA 0x8 which happens to be a blank region
+> > of a flash chip and all ffs on this particular configuration.
+> > Note this test requires the out of tree ARM support for CXL, but
+> > the problem is more general.
+> > 
+> > Avoid this by adding new address_space_read_continue_cached()
+> > and address_space_write_continue_cached() which share all the logic
+> > with the flatview versions except for the MemoryRegion lookup.
+> > 
+> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> > ---
+> >  system/physmem.c | 78 ++++++++++++++++++++++++++++++++++++++++++++----
+> >  1 file changed, 72 insertions(+), 6 deletions(-)
+> >   
+> 
+> [...]
+> 
+> > +/* Called within RCU critical section.  */
+> > +static MemTxResult address_space_read_continue_cached(MemoryRegionCache *cache,
+> > +                                                      hwaddr addr,
+> > +                                                      MemTxAttrs attrs,
+> > +                                                      void *ptr, hwaddr len,
+> > +                                                      hwaddr addr1, hwaddr l,
+> > +                                                      MemoryRegion *mr)  
+> 
+> It looks like "addr" (of flatview AS) is not needed for a cached RW (see
+> below), because we should have a stable (cached) MR to operate anyway?
+> 
+> How about we also use "mr_addr" as the single addr of the MR, then drop
+> addr1?
 
-I'll add a precursor patch renaming these for the functions this series touches.
-We can tidy up other cases later.  I'll put a note in that patch below the cut
-to observe that the rename makes sense more widely.
+Agreed, but also need to drop the fuzz_dma_read_cb().
+However given the first thing that is checked by the only in tree fuzzing
+code is whether we are dealing with RAM, I think that's fine.
+> 
+> > +{
+> > +    MemTxResult result = MEMTX_OK;
+> > +    uint8_t *buf = ptr;
+> > +
+> > +    fuzz_dma_read_cb(addr, len, mr);
+> > +    for (;;) {
+> > +  
+> 
+> Remove empty line?
+> 
+> > +        result |= flatview_read_continue_step(addr, attrs, buf, len, addr1,
+> > +                                              &l, mr);
+> > +        len -= l;
+> > +        buf += l;
+> > +        addr += l;
+> > +
+> > +        if (!len) {
+> > +            break;
+> > +        }
+> > +        l = len;
+> > +
+> > +        mr = address_space_translate_cached(cache, addr, &addr1, &l, false,
+> > +                                            attrs);  
+> 
+> Here IIUC the mr will always be the same as before?  If so, maybe "mr_addr
+> += l" should be enough?
+> 
+I had the same thought originally but couldn't convince myself that there
+was no route to end up with a different MR here. I don't yet
+have a good enough grip on how this all fits together so I particularly
+appreciate your help.
 
-I've not picked up the RB given because of the parameter ordering question.
+With hindsight I should have called this out as a question in this patch set.
+
+Can drop passing in cache as well given it is no longer used within
+this function.
 
 Thanks,
 
 Jonathan
 
+> (similar comment applies to the writer side too)
 > 
-> > > +                                                MemTxAttrs attrs,
-> > > +                                                const uint8_t *buf,
-> > > +                                                hwaddr len, hwaddr addr1,
-> > > +                                                hwaddr *l, MemoryRegion *mr)
-> > > +{
-> > > +    if (!flatview_access_allowed(mr, attrs, addr1, *l)) {
-> > > +        return MEMTX_ACCESS_ERROR;
-> > > +    }
-> > > +
-> > > +    if (!memory_access_is_direct(mr, true)) {
-> > > +        uint64_t val;
-> > > +        MemTxResult result;
-> > > +        bool release_lock = prepare_mmio_access(mr);
-> > > +
-> > > +        *l = memory_access_size(mr, *l, addr1);
-> > > +        /* XXX: could force current_cpu to NULL to avoid
-> > > +           potential bugs */
-> > > +
-> > > +        /*
-> > > +         * Assure Coverity (and ourselves) that we are not going to OVERRUN
-> > > +         * the buffer by following ldn_he_p().
-> > > +         */
-> > > +#ifdef QEMU_STATIC_ANALYSIS
-> > > +        assert((*l == 1 && len >= 1) ||
-> > > +               (*l == 2 && len >= 2) ||
-> > > +               (*l == 4 && len >= 4) ||
-> > > +               (*l == 8 && len >= 8));
-> > > +#endif
-> > > +        val = ldn_he_p(buf, *l);
-> > > +        result = memory_region_dispatch_write(mr, addr1, val,
-> > > +                                              size_memop(*l), attrs);
-> > > +        if (release_lock) {
-> > > +            bql_unlock();
-> > > +        }
-> > > +
-> > > +        return result;
-> > > +    } else {
-> > > +        /* RAM case */
-> > > +        uint8_t *ram_ptr = qemu_ram_ptr_length(mr->ram_block, addr1, l, false);
-> > > +
-> > > +        memmove(ram_ptr, buf, *l);
-> > > +        invalidate_and_set_dirty(mr, addr1, *l);
-> > > +
-> > > +        return MEMTX_OK;
-> > > +    }
-> > > +}
-> > > +
-> > >  /* Called within RCU critical section.  */
-> > >  static MemTxResult flatview_write_continue(FlatView *fv, hwaddr addr,
-> > >                                             MemTxAttrs attrs,
-> > > @@ -2688,42 +2736,9 @@ static MemTxResult flatview_write_continue(FlatView *fv, hwaddr addr,
-> > >      const uint8_t *buf = ptr;
-> > >  
-> > >      for (;;) {
-> > > -        if (!flatview_access_allowed(mr, attrs, addr1, l)) {
-> > > -            result |= MEMTX_ACCESS_ERROR;
-> > > -            /* Keep going. */
-> > > -        } else if (!memory_access_is_direct(mr, true)) {
-> > > -            uint64_t val;
-> > > -            bool release_lock = prepare_mmio_access(mr);
-> > > -
-> > > -            l = memory_access_size(mr, l, addr1);
-> > > -            /* XXX: could force current_cpu to NULL to avoid
-> > > -               potential bugs */
-> > > -
-> > > -            /*
-> > > -             * Assure Coverity (and ourselves) that we are not going to OVERRUN
-> > > -             * the buffer by following ldn_he_p().
-> > > -             */
-> > > -#ifdef QEMU_STATIC_ANALYSIS
-> > > -            assert((l == 1 && len >= 1) ||
-> > > -                   (l == 2 && len >= 2) ||
-> > > -                   (l == 4 && len >= 4) ||
-> > > -                   (l == 8 && len >= 8));
-> > > -#endif
-> > > -            val = ldn_he_p(buf, l);
-> > > -            result |= memory_region_dispatch_write(mr, addr1, val,
-> > > -                                                   size_memop(l), attrs);
-> > > -            if (release_lock) {
-> > > -                bql_unlock();
-> > > -            }
-> > > -
-> > >  
-> > > -        } else {
-> > > -            /* RAM case */
-> > > -            uint8_t *ram_ptr = qemu_ram_ptr_length(mr->ram_block, addr1, &l,
-> > > -                                                   false);
-> > > -            memmove(ram_ptr, buf, l);
-> > > -            invalidate_and_set_dirty(mr, addr1, l);
-> > > -        }
-> > > +        result |= flatview_write_continue_step(addr, attrs, buf, len, addr1, &l,
-> > > +                                               mr);
-> > >  
-> > >          len -= l;
-> > >          buf += l;
-> > > @@ -2757,6 +2772,52 @@ static MemTxResult flatview_write(FlatView *fv, hwaddr addr, MemTxAttrs attrs,
-> > >                                     addr1, l, mr);
-> > >  }
-> > >  
-> > > +static MemTxResult flatview_read_continue_step(hwaddr addr,
-> > > +                                               MemTxAttrs attrs, uint8_t *buf,
-> > > +                                               hwaddr len, hwaddr addr1,
-> > > +                                               hwaddr *l,
-> > > +                                               MemoryRegion *mr)
-> > > +{
-> > > +    if (!flatview_access_allowed(mr, attrs, addr1, *l)) {
-> > > +        return  MEMTX_ACCESS_ERROR;  
-> >                   |
-> >                   ^ space
-> >   
-> > > +    }
-> > > +
-> > > +    if (!memory_access_is_direct(mr, false)) {
-> > > +        /* I/O case */
-> > > +        uint64_t val;
-> > > +        MemTxResult result;
-> > > +        bool release_lock = prepare_mmio_access(mr);
-> > > +
-> > > +        *l = memory_access_size(mr, *l, addr1);
-> > > +        result = memory_region_dispatch_read(mr, addr1, &val,
-> > > +                                                  size_memop(*l), attrs);  
-> > 
-> > Please do proper indents.
-> > 
-> > Other than that:
-> > 
-> > Reviewed-by: Peter Xu <peterx@redhat.com>
-> > 
+> > +    }
+> > +
+> > +    return result;
+> > +}
+> > +
+> >  /* Called from RCU critical section. address_space_read_cached uses this
+> >   * out of line function when the target is an MMIO or IOMMU region.
+> >   */
+> > @@ -3390,9 +3456,9 @@ address_space_read_cached_slow(MemoryRegionCache *cache, hwaddr addr,
+> >      l = len;
+> >      mr = address_space_translate_cached(cache, addr, &addr1, &l, false,
+> >                                          MEMTXATTRS_UNSPECIFIED);
+> > -    return flatview_read_continue(cache->fv,
+> > -                                  addr, MEMTXATTRS_UNSPECIFIED, buf, len,
+> > -                                  addr1, l, mr);
+> > +    return address_space_read_continue_cached(cache, addr,
+> > +                                              MEMTXATTRS_UNSPECIFIED, buf, len,
+> > +                                              addr1, l, mr);
+> >  }
+> >  
+> >  /* Called from RCU critical section. address_space_write_cached uses this
+> > @@ -3408,9 +3474,9 @@ address_space_write_cached_slow(MemoryRegionCache *cache, hwaddr addr,
+> >      l = len;
+> >      mr = address_space_translate_cached(cache, addr, &addr1, &l, true,
+> >                                          MEMTXATTRS_UNSPECIFIED);
+> > -    return flatview_write_continue(cache->fv,
+> > -                                   addr, MEMTXATTRS_UNSPECIFIED, buf, len,
+> > -                                   addr1, l, mr);
+> > +    return address_space_write_continue_cached(cache, addr,
+> > +                                               MEMTXATTRS_UNSPECIFIED,
+> > +                                               buf, len, addr1, l, mr);
+> >  }
+> >  
+> >  #define ARG1_DECL                MemoryRegionCache *cache
 > > -- 
-> > Peter Xu  
+> > 2.39.2
+> >   
 > 
 
 
