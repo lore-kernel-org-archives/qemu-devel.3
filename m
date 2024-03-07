@@ -4,96 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 957CBC54E49
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 09:24:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCD11C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 09:26:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ri9ye-00056D-AJ; Thu, 07 Mar 2024 04:23:48 -0500
+	id 1riA0m-0006AV-4G; Thu, 07 Mar 2024 04:26:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1ri9yc-000562-7H
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 04:23:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1ri9ya-0005FW-6L
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 04:23:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709803422;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Vl22hqxItbeweZssfysbZOJUEhUg6dAIqZ0k4psyFCU=;
- b=goMBhSeim8jJcOC+Y3CYe0bz7EcdKjKPyBZX1fzbWjGmXnlL3e7i2wgNXJm+5h1Gc5Uhg/
- DxzVDPYqXQXxzhN+d21QZx76+uh2BuRjQKSWr2xBRHM5SOILRJSU4bKcn374N+V0CITP/y
- kFZtTW5F1Oh2zehFMOKw0GdrBA6FAe8=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-577-GPkjO0QBOdCFTeET2OY4_g-1; Thu, 07 Mar 2024 04:23:40 -0500
-X-MC-Unique: GPkjO0QBOdCFTeET2OY4_g-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-33d7fcb70c2so778897f8f.1
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 01:23:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
+ id 1riA0j-0006AI-Dh
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 04:25:57 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
+ id 1riA0f-0005lA-KR
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 04:25:56 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1dd2dca2007so5117925ad.2
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 01:25:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1709803552; x=1710408352;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5OrQxlIgcunbm7YTHgdGJ0ZL3HnyooZNX2DqUotxHN0=;
+ b=xH1aA40KDBCEfqbiJgWA9qm6kRYgbiqHYUoH4vUkoLnAw8C6SOZ5O9rv9cur0C1Axn
+ oGIcuBZxepUofDYCNfpl6OufzQf/smAC++kbKXXyVC4++JGO5vFjdZPXPfY9k3q+HBkW
+ 98EwSsoLdkn871eQbT1CpMxqXiUuMzkktXevYEc28G2pJ+Cml6Htmoz5ljKPm2vM+gGB
+ QUAlX/4fdlTSjW/8mNV/tT0XhQ69BW7ZpO1BIh8X8ZZ/Hl89qriamWbrOpa5a/NcURo8
+ WtiQ8m47hvmFFIinUroPSkBOkaNP/W/wP4gUc3RsZweAThKaSwxQin44utdzbVrzOT0R
+ oFvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709803419; x=1710408219;
+ d=1e100.net; s=20230601; t=1709803552; x=1710408352;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Vl22hqxItbeweZssfysbZOJUEhUg6dAIqZ0k4psyFCU=;
- b=lL6TgmbhgfGwCz28PyfZLFTZs5rD606J02kXNLkkxP5cM9UNlvJ1/V3jeUVZXYPJF+
- SLg+10FTdajscUyNqxrvqSfCiIPrBnZ9CfQ3C/l3yI+bxlGFLjdm6rS92BOYCspU1ymx
- pl4A9Jelkxo894PmD+ZfAB+S7Ycv30VQP0m03xnw7gJ9vYCltbHtyttByTmj5Wf5mfY3
- o3anfV1Slwm0Li+ICPHmTQOP+UZ8NjcRM1olPd7YD9YBbmUCwNxr/KBBeTvrHfZadiPb
- YLPQCj0IkfaoNDk4QTeVthsAatRasya6ir6bixy20ufQW9GbMOW889mNk/n/pEGiZ7Vc
- uEBg==
+ bh=5OrQxlIgcunbm7YTHgdGJ0ZL3HnyooZNX2DqUotxHN0=;
+ b=MU0hAiwi6FNuX7QKEplbu4gwS9T90+VmsYsOk+oHPcQcNd+wkrPvhbs912btN8uAQW
+ 04LcMkWmfkwM/ocvXG5Q/g95inAQIcNbKqg9acEIIgCTzk/CLZsULfPaH0mPJDOdDjpj
+ GeouA1/gTPYSOTq9hR0HtQbEaSodsXKBOyKMjcYqZMK8SzRKPDOAZ24noeo9IgRYZcAu
+ OWf38cQkUyEdCj5+rmCigwYyywrwRIrUmVtqBkwJCl5I+pbSdSVReWY8+QzgdPUL1m9/
+ Ip+WUA3RRW7uVncy7iTsc450FQEsbxlOV+6xEK1z4Rr0xq0A42ZPROBUHc7JGM+tjeiP
+ VkTA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXOhErwdJg0zTERfbJP/EY8gLXW52AoMrAyqn7kAY8OZmrBJFKbrdg0pXPwJoFVVFL3bVnmYAYLUwFHzXZol9krtCNOMmo=
-X-Gm-Message-State: AOJu0YywZvtntJlLWXtptf8BVHUMEdnLUed2/9QQDJMv+AP62MmFhmAT
- 0M1lDxxxcAzmMBX9UEHq60zMUK2e5Nz8G5TCJGZAng0iyU7F6dvUHRCqInSqQ7X/PgGiIpE0/ZE
- abXfa+qIt/LM9FKqIK1GdwZmO+ajX1f6U40mOOFOjds2PT+dlL9rU
-X-Received: by 2002:adf:ab03:0:b0:33e:bdf:a7e6 with SMTP id
- q3-20020adfab03000000b0033e0bdfa7e6mr807716wrc.25.1709803419107; 
- Thu, 07 Mar 2024 01:23:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHIMjw14wS0WVyacBPndTNAZkML3H8Q+wdjatOohJN+BgzOpV9jEQCNb7FNzHOH5+LEwELGFA==
-X-Received: by 2002:adf:ab03:0:b0:33e:bdf:a7e6 with SMTP id
- q3-20020adfab03000000b0033e0bdfa7e6mr807686wrc.25.1709803418683; 
- Thu, 07 Mar 2024 01:23:38 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ AJvYcCXfEDkMuezuryzQd/EMFJAbvxaOkqQLUca5u6OhxKtx/+h/jVbILGhG7HYYrIcYGnOP2o8Q6hvlWMyH5AbTWF1K+PfoBzE=
+X-Gm-Message-State: AOJu0YyVEbTHiTbOQ6aSZ/6KF3v6dWqnhSetTZzLOgYmRVsBD4Eoe3Um
+ jO35t+y9Ka8hneEcDsVw6Cj4Zil+2an4p7+s4Q7MI7SlSi7gMJtnswM0bF4HD40=
+X-Google-Smtp-Source: AGHT+IEY9d009CCZu2HncHL/SbB1zQic8w+EkxUKWwa7Jp3dXhEs/Ucn1VNKtDKA9X6eqUnHQLb3BQ==
+X-Received: by 2002:a17:902:dac9:b0:1dc:696d:ec64 with SMTP id
+ q9-20020a170902dac900b001dc696dec64mr8691615plx.22.1709803551578; 
+ Thu, 07 Mar 2024 01:25:51 -0800 (PST)
+Received: from [172.16.0.23] (c-67-188-2-18.hsd1.ca.comcast.net. [67.188.2.18])
  by smtp.gmail.com with ESMTPSA id
- i8-20020adfb648000000b0033e0ed396bdsm19659074wre.106.2024.03.07.01.23.37
+ a6-20020a170902ecc600b001dcfbbb1ca5sm10058252plh.35.2024.03.07.01.25.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 Mar 2024 01:23:38 -0800 (PST)
-Message-ID: <91e409f4-19b0-4154-8e0a-6996df8d88e7@redhat.com>
-Date: Thu, 7 Mar 2024 10:23:36 +0100
+ Thu, 07 Mar 2024 01:25:51 -0800 (PST)
+Message-ID: <82541ad6-186f-4401-83df-38f98eb211fc@rivosinc.com>
+Date: Thu, 7 Mar 2024 01:25:49 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 23/25] vfio: Add Error** argument to
- .get_dirty_bitmap() handler
+Subject: Re: [PATCH v5 5/5] target/riscv: Implement privilege mode filtering
+ for cycle/instret
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
- Prasad Pandit <pjp@fedoraproject.org>
-References: <20240306133441.2351700-1-clg@redhat.com>
- <20240306133441.2351700-24-clg@redhat.com>
-From: Eric Auger <eauger@redhat.com>
-In-Reply-To: <20240306133441.2351700-24-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org, Weiwei Li
+ <liwei1518@gmail.com>, kaiwenxue1@gmail.com
+References: <20240228185116.1321730-1-atishp@rivosinc.com>
+ <20240228185116.1321730-6-atishp@rivosinc.com>
+ <165adab6-d41f-4d72-b059-b13219cd5ac9@linux.alibaba.com>
+From: Atish Patra <atishp@rivosinc.com>
+In-Reply-To: <165adab6-d41f-4d72-b059-b13219cd5ac9@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eauger@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=atishp@rivosinc.com; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,292 +106,373 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+On 3/4/24 22:47, LIU Zhiwei wrote:
+>
+> On 2024/2/29 2:51, Atish Patra wrote:
+>> Privilege mode filtering can also be emulated for cycle/instret by
+>> tracking host_ticks/icount during each privilege mode switch. This
+>> patch implements that for both cycle/instret and mhpmcounters. The
+>> first one requires Smcntrpmf while the other one requires Sscofpmf
+>> to be enabled.
+>>
+>> The cycle/instret are still computed using host ticks when icount
+>> is not enabled. Otherwise, they are computed using raw icount which
+>> is more accurate in icount mode.
+>>
+>> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>> Signed-off-by: Atish Patra <atishp@rivosinc.com>
+>> ---
+>>   target/riscv/cpu.h        | 11 +++++
+>>   target/riscv/cpu_bits.h   |  5 ++
+>>   target/riscv/cpu_helper.c | 17 ++++++-
+>>   target/riscv/csr.c        | 96 ++++++++++++++++++++++++++++++---------
+>>   target/riscv/pmu.c        | 64 ++++++++++++++++++++++++++
+>>   target/riscv/pmu.h        |  2 +
+>>   6 files changed, 171 insertions(+), 24 deletions(-)
+>>
+>> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+>> index 174e8ba8e847..9e21d7f7d635 100644
+>> --- a/target/riscv/cpu.h
+>> +++ b/target/riscv/cpu.h
+>> @@ -157,6 +157,15 @@ typedef struct PMUCTRState {
+>>       target_ulong irq_overflow_left;
+>>   } PMUCTRState;
+>>   +typedef struct PMUFixedCtrState {
+>> +        /* Track cycle and icount for each privilege mode */
+>> +        uint64_t counter[4];
+>> +        uint64_t counter_prev[4];
+>> +        /* Track cycle and icount for each privilege mode when V = 1*/
+>> +        uint64_t counter_virt[2];
+>> +        uint64_t counter_virt_prev[2];
+>> +} PMUFixedCtrState;
+>> +
+>>   struct CPUArchState {
+>>       target_ulong gpr[32];
+>>       target_ulong gprh[32]; /* 64 top bits of the 128-bit registers */
+>> @@ -353,6 +362,8 @@ struct CPUArchState {
+>>       /* PMU event selector configured values for RV32 */
+>>       target_ulong mhpmeventh_val[RV_MAX_MHPMEVENTS];
+>>   +    PMUFixedCtrState pmu_fixed_ctrs[2];
+>> +
+>>       target_ulong sscratch;
+>>       target_ulong mscratch;
+>>   diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+>> index e866c60a400c..5fe349e313dc 100644
+>> --- a/target/riscv/cpu_bits.h
+>> +++ b/target/riscv/cpu_bits.h
+>> @@ -920,6 +920,11 @@ typedef enum RISCVException {
+>>   #define MHPMEVENT_BIT_VUINH                BIT_ULL(58)
+>>   #define MHPMEVENTH_BIT_VUINH               BIT(26)
+>>   +#define MHPMEVENT_FILTER_MASK (MHPMEVENT_BIT_MINH  | \
+>> +                                            MHPMEVENT_BIT_SINH | \
+>> +                                            MHPMEVENT_BIT_UINH | \
+>> +                                            MHPMEVENT_BIT_VSINH | \
+>> + MHPMEVENT_BIT_VUINH)
+>>   #define MHPMEVENT_SSCOF_MASK _ULL(0xFFFF000000000000)
+>>   #define MHPMEVENT_IDX_MASK                 0xFFFFF
+>>   #define MHPMEVENT_SSCOF_RESVD              16
+>> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+>> index d462d95ee165..33965d843d46 100644
+>> --- a/target/riscv/cpu_helper.c
+>> +++ b/target/riscv/cpu_helper.c
+>> @@ -718,8 +718,21 @@ void riscv_cpu_set_mode(CPURISCVState *env, 
+>> target_ulong newpriv)
+>>   {
+>>       g_assert(newpriv <= PRV_M && newpriv != PRV_RESERVED);
+>>   -    if (icount_enabled() && newpriv != env->priv) {
+>> -        riscv_itrigger_update_priv(env);
+>> +    /*
+>> +     * Invoke cycle/instret update between priv mode changes or
+>> +     * VS->HS mode transition is SPV bit must be set
+>> +     * HS->VS mode transition where virt_enabled must be set
+>> +     * In both cases, priv will S mode only.
+>> +     */
+>> +    if (newpriv != env->priv ||
+>> +       (env->priv == PRV_S && newpriv == PRV_S &&
+>> +        (env->virt_enabled || get_field(env->hstatus, HSTATUS_SPV)))) {
+>> +        if (icount_enabled()) {
+>> +            riscv_itrigger_update_priv(env);
+>> +            riscv_pmu_icount_update_priv(env, newpriv);
+>> +        } else {
+>> +            riscv_pmu_cycle_update_priv(env, newpriv);
+>> +        }
+>>       }
+>>       /* tlb_flush is unnecessary as mode is contained in mmu_idx */
+>>       env->priv = newpriv;
+>> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+>> index ff9bac537593..482e212c5f74 100644
+>> --- a/target/riscv/csr.c
+>> +++ b/target/riscv/csr.c
+>> @@ -788,32 +788,16 @@ static RISCVException write_vcsr(CPURISCVState 
+>> *env, int csrno,
+>>       return RISCV_EXCP_NONE;
+>>   }
+>>   +#if defined(CONFIG_USER_ONLY)
+>>   /* User Timers and Counters */
+>>   static target_ulong get_ticks(bool shift)
+>>   {
+>> -    int64_t val;
+>> -    target_ulong result;
+>> -
+>> -#if !defined(CONFIG_USER_ONLY)
+>> -    if (icount_enabled()) {
+>> -        val = icount_get();
+>> -    } else {
+>> -        val = cpu_get_host_ticks();
+>> -    }
+>> -#else
+>> -    val = cpu_get_host_ticks();
+>> -#endif
+>> -
+>> -    if (shift) {
+>> -        result = val >> 32;
+>> -    } else {
+>> -        result = val;
+>> -    }
+>> +    int64_t val = cpu_get_host_ticks();
+>> +    target_ulong result = shift ? val >> 32 : val;
+>>         return result;
+>>   }
+>>   -#if defined(CONFIG_USER_ONLY)
+>>   static RISCVException read_time(CPURISCVState *env, int csrno,
+>>                                   target_ulong *val)
+>>   {
+>> @@ -952,6 +936,71 @@ static RISCVException 
+>> write_mhpmeventh(CPURISCVState *env, int csrno,
+>>       return RISCV_EXCP_NONE;
+>>   }
+>>   +static target_ulong 
+>> riscv_pmu_ctr_get_fixed_counters_val(CPURISCVState *env,
+>> +                                                         int 
+>> counter_idx,
+>> +                                                         bool 
+>> upper_half)
+>> +{
+>> +    uint64_t curr_val = 0;
+>> +    target_ulong result = 0;
+>> +    uint64_t *counter_arr = icount_enabled() ? 
+>> env->pmu_fixed_ctrs[1].counter :
+>> +                            env->pmu_fixed_ctrs[0].counter;
+>> +    uint64_t *counter_arr_virt = icount_enabled() ?
+>> + env->pmu_fixed_ctrs[1].counter_virt :
+>> + env->pmu_fixed_ctrs[0].counter_virt;
+>> +    uint64_t cfg_val = 0;
+>> +
+>> +    if (counter_idx == 0) {
+>> +        cfg_val = upper_half ? ((uint64_t)env->mcyclecfgh << 32) :
+>> +                  env->mcyclecfg;
+>> +    } else if (counter_idx == 2) {
+>> +        cfg_val = upper_half ? ((uint64_t)env->minstretcfgh << 32) :
+>> +                  env->minstretcfg;
+>> +    } else {
+>> +        cfg_val = upper_half ?
+>> + ((uint64_t)env->mhpmeventh_val[counter_idx] << 32) :
+>> +                  env->mhpmevent_val[counter_idx];
+>> +        cfg_val &= MHPMEVENT_FILTER_MASK;
+>> +    }
+>> +
+>> +    if (!cfg_val) {
+>> +        if (icount_enabled()) {
+>> +            curr_val = icount_get_raw();
+>> +        } else {
+>> +            curr_val = cpu_get_host_ticks();
+>> +        }
+>> +        goto done;
+>> +    }
+>> +
+>> +    if (!(cfg_val & MCYCLECFG_BIT_MINH)) {
+>> +        curr_val += counter_arr[PRV_M];
+>> +    }
+>> +
+>> +    if (!(cfg_val & MCYCLECFG_BIT_SINH)) {
+>> +        curr_val += counter_arr[PRV_S];
+>> +    }
+>> +
+>> +    if (!(cfg_val & MCYCLECFG_BIT_UINH)) {
+>> +        curr_val += counter_arr[PRV_U];
+>> +    }
+>> +
+>> +    if (!(cfg_val & MCYCLECFG_BIT_VSINH)) {
+>> +        curr_val += counter_arr_virt[PRV_S];
+>> +    }
+>> +
+>> +    if (!(cfg_val & MCYCLECFG_BIT_VUINH)) {
+>> +        curr_val += counter_arr_virt[PRV_U];
+>> +    }
+>> +
+>> +done:
+>> +    if (riscv_cpu_mxl(env) == MXL_RV32) {
+>> +        result = upper_half ? curr_val >> 32 : curr_val;
+>> +    } else {
+>> +        result = curr_val;
+>> +    }
+>> +
+>> +    return result;
+>> +}
+>> +
+>>   static RISCVException write_mhpmcounter(CPURISCVState *env, int csrno,
+>>                                           target_ulong val)
+>>   {
+>> @@ -962,7 +1011,8 @@ static RISCVException 
+>> write_mhpmcounter(CPURISCVState *env, int csrno,
+>>       counter->mhpmcounter_val = val;
+>>       if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
+>>           riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
+>> -        counter->mhpmcounter_prev = get_ticks(false);
+>> +        counter->mhpmcounter_prev = 
+>> riscv_pmu_ctr_get_fixed_counters_val(env,
+>> + ctr_idx, false);
+>>           if (ctr_idx > 2) {
+>>               if (riscv_cpu_mxl(env) == MXL_RV32) {
+>>                   mhpmctr_val = mhpmctr_val |
+>> @@ -990,7 +1040,8 @@ static RISCVException 
+>> write_mhpmcounterh(CPURISCVState *env, int csrno,
+>>       mhpmctr_val = mhpmctr_val | (mhpmctrh_val << 32);
+>>       if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
+>>           riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
+>> -        counter->mhpmcounterh_prev = get_ticks(true);
+>> +        counter->mhpmcounterh_prev = 
+>> riscv_pmu_ctr_get_fixed_counters_val(env,
+>> + ctr_idx, true);
+>>           if (ctr_idx > 2) {
+>>               riscv_pmu_setup_timer(env, mhpmctr_val, ctr_idx);
+>>           }
+>> @@ -1031,7 +1082,8 @@ static RISCVException 
+>> riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
+>>        */
+>>       if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
+>>           riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
+>> -        *val = get_ticks(upper_half) - ctr_prev + ctr_val;
+>> +        *val = riscv_pmu_ctr_get_fixed_counters_val(env, ctr_idx, 
+>> upper_half) -
+>> +                                                    ctr_prev + ctr_val;
+>>       } else {
+>>           *val = ctr_val;
+>>       }
+>> diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
+>> index 0e7d58b8a5c2..37309ff64cb6 100644
+>> --- a/target/riscv/pmu.c
+>> +++ b/target/riscv/pmu.c
+>> @@ -19,6 +19,7 @@
+>>   #include "qemu/osdep.h"
+>>   #include "qemu/log.h"
+>>   #include "qemu/error-report.h"
+>> +#include "qemu/timer.h"
+>>   #include "cpu.h"
+>>   #include "pmu.h"
+>>   #include "sysemu/cpu-timers.h"
+>> @@ -176,6 +177,69 @@ static int riscv_pmu_incr_ctr_rv64(RISCVCPU 
+>> *cpu, uint32_t ctr_idx)
+>>       return 0;
+>>   }
+>>   +void riscv_pmu_icount_update_priv(CPURISCVState *env, target_ulong 
+>> newpriv)
+>> +{
+>> +    uint64_t delta;
+>> +    uint64_t *counter_arr;
+>> +    uint64_t *counter_arr_prev;
+>> +    uint64_t current_icount = icount_get_raw();
+>> +
+>> +    if (env->virt_enabled) {
+>> +        counter_arr = env->pmu_fixed_ctrs[1].counter_virt;
+>> +        counter_arr_prev = env->pmu_fixed_ctrs[1].counter_virt_prev;
+>> +    } else {
+>> +        counter_arr = env->pmu_fixed_ctrs[1].counter;
+>> +        counter_arr_prev = env->pmu_fixed_ctrs[1].counter_prev;
+>> +    }
+>> +
+>> +    if (newpriv != env->priv) {
+>> +        delta = current_icount - counter_arr_prev[env->priv];
+>> +        counter_arr_prev[newpriv] = current_icount;
+>> +    } else {
+>> +        delta = current_icount - counter_arr_prev[env->priv];
+>> +        if (env->virt_enabled) {
+>> +            /* HS->VS transition.The previous value should 
+>> correspond to HS. */
+>
+> Hi Atish,
+>
+> Dose env->virt_enabled ensure HS->VS transition?
+>
+As per my understanding, riscv_cpu_set_virt_enabled always invoked 
+before riscv_cpu_set_mode.
 
-On 3/6/24 14:34, Cédric Le Goater wrote:
-> Let the callers do the error reporting. Add documentation while at it.
-> 
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->  include/hw/vfio/vfio-common.h         |  4 +-
->  include/hw/vfio/vfio-container-base.h | 17 +++++++-
->  hw/vfio/common.c                      | 59 ++++++++++++++++++---------
->  hw/vfio/container-base.c              |  5 ++-
->  hw/vfio/container.c                   | 13 +++---
->  5 files changed, 67 insertions(+), 31 deletions(-)
-> 
-> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-> index 46f88493634b5634a9c14a5caa33a463fbf2c50d..68911d36676667352e94a97895828aff4b194b57 100644
-> --- a/include/hw/vfio/vfio-common.h
-> +++ b/include/hw/vfio/vfio-common.h
-> @@ -274,9 +274,9 @@ bool
->  vfio_devices_all_device_dirty_tracking(const VFIOContainerBase *bcontainer);
->  int vfio_devices_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
->                                      VFIOBitmap *vbmap, hwaddr iova,
-> -                                    hwaddr size);
-> +                                    hwaddr size, Error **errp);
->  int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
-> -                          uint64_t size, ram_addr_t ram_addr);
-> +                          uint64_t size, ram_addr_t ram_addr, Error **errp);
->  
->  /* Returns 0 on success, or a negative errno. */
->  int vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
-> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
-> index c76984654a596e3016a8cf833e10143eb872e102..ebc49ebfbe7de862450941b1129faad5d62b3769 100644
-> --- a/include/hw/vfio/vfio-container-base.h
-> +++ b/include/hw/vfio/vfio-container-base.h
-> @@ -85,7 +85,7 @@ int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
->                                             bool start, Error **errp);
->  int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
->                                        VFIOBitmap *vbmap,
-> -                                      hwaddr iova, hwaddr size);
-> +                                      hwaddr iova, hwaddr size, Error **errp);
->  
->  void vfio_container_init(VFIOContainerBase *bcontainer,
->                           VFIOAddressSpace *space,
-> @@ -138,9 +138,22 @@ struct VFIOIOMMUClass {
->       */
->      int (*set_dirty_page_tracking)(const VFIOContainerBase *bcontainer,
->                                     bool start, Error **errp);
-> +    /**
-> +     * @query_dirty_bitmap
-> +     *
-> +     * Get list of dirty pages from container
-> +     *
-> +     * @bcontainer: #VFIOContainerBase from which to get dirty pages
-> +     * @vbmap: #VFIOBitmap internal bitmap structure
-> +     * @iova: iova base address
-> +     * @size: size of iova range
-> +     * @errp: pointer to Error*, to store an error if it happens.
-> +     *
-> +     * Returns zero to indicate success and negative for error
-> +     */
->      int (*query_dirty_bitmap)(const VFIOContainerBase *bcontainer,
->                                VFIOBitmap *vbmap,
-> -                              hwaddr iova, hwaddr size);
-> +                              hwaddr iova, hwaddr size, Error **errp);
->      /* PCI specific */
->      int (*pci_hot_reset)(VFIODevice *vbasedev, bool single);
->  
-> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-> index 496e5adaf8f18e9ae7e86dd69be0b9e71e86404f..65a11dc088524647541db97b7b8d6f07e5044728 100644
-> --- a/hw/vfio/common.c
-> +++ b/hw/vfio/common.c
-> @@ -1158,7 +1158,7 @@ static int vfio_device_dma_logging_report(VFIODevice *vbasedev, hwaddr iova,
->  
->  int vfio_devices_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
->                                      VFIOBitmap *vbmap, hwaddr iova,
-> -                                    hwaddr size)
-> +                                    hwaddr size, Error **errp)
->  {
->      VFIODevice *vbasedev;
->      int ret;
-> @@ -1167,10 +1167,10 @@ int vfio_devices_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
->          ret = vfio_device_dma_logging_report(vbasedev, iova, size,
->                                               vbmap->bitmap);
->          if (ret) {
-> -            error_report("%s: Failed to get DMA logging report, iova: "
-> -                         "0x%" HWADDR_PRIx ", size: 0x%" HWADDR_PRIx
-> -                         ", err: %d (%s)",
-> -                         vbasedev->name, iova, size, ret, strerror(-ret));
-> +            error_setg(errp, "%s: Failed to get DMA logging report, iova: "
-> +                       "0x%" HWADDR_PRIx ", size: 0x%" HWADDR_PRIx
-> +                       ", err: %d (%s)",
-> +                       vbasedev->name, iova, size, ret, strerror(-ret));
-use error_setg_errno as below?
->  
->              return ret;
->          }
-> @@ -1180,7 +1180,7 @@ int vfio_devices_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
->  }
->  
->  int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
-> -                          uint64_t size, ram_addr_t ram_addr)
-> +                          uint64_t size, ram_addr_t ram_addr, Error **errp)
->  {
->      bool all_device_dirty_tracking =
->          vfio_devices_all_device_dirty_tracking(bcontainer);
-> @@ -1197,13 +1197,17 @@ int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
->  
->      ret = vfio_bitmap_alloc(&vbmap, size);
->      if (ret) {
-> +        error_setg_errno(errp, -ret,
-> +                         "Failed to allocate dirty tracking bitmap");
->          return ret;
->      }
->  
->      if (all_device_dirty_tracking) {
-> -        ret = vfio_devices_query_dirty_bitmap(bcontainer, &vbmap, iova, size);
-> +        ret = vfio_devices_query_dirty_bitmap(bcontainer, &vbmap, iova, size,
-> +                                              errp);
->      } else {
-> -        ret = vfio_container_query_dirty_bitmap(bcontainer, &vbmap, iova, size);
-> +        ret = vfio_container_query_dirty_bitmap(bcontainer, &vbmap, iova, size,
-> +                                                errp);
->      }
->  
->      if (ret) {
-> @@ -1251,12 +1255,13 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
->      }
->  
->      ret = vfio_get_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
-> -                                translated_addr);
-> +                                translated_addr, &local_err);
->      if (ret) {
-> -        error_report("vfio_iommu_map_dirty_notify(%p, 0x%"HWADDR_PRIx", "
-> -                     "0x%"HWADDR_PRIx") = %d (%s)",
-> -                     bcontainer, iova, iotlb->addr_mask + 1, ret,
-> -                     strerror(-ret));
-> +        error_prepend(&local_err,
-> +                      "vfio_iommu_map_dirty_notify(%p, 0x%"HWADDR_PRIx", "
-> +                      "0x%"HWADDR_PRIx") failed :", bcontainer, iova,
-nit in previous prepends you used "-" instead of ":" at the end. Maybe
-align.
-> +                      iotlb->addr_mask + 1);
-> +        error_report_err(local_err);
->      }
->  
->  out_lock:
-> @@ -1276,12 +1281,19 @@ static int vfio_ram_discard_get_dirty_bitmap(MemoryRegionSection *section,
->      const ram_addr_t ram_addr = memory_region_get_ram_addr(section->mr) +
->                                  section->offset_within_region;
->      VFIORamDiscardListener *vrdl = opaque;
-> +    Error *local_err = NULL;
-> +    int ret;
->  
->      /*
->       * Sync the whole mapped region (spanning multiple individual mappings)
->       * in one go.
->       */
-> -    return vfio_get_dirty_bitmap(vrdl->bcontainer, iova, size, ram_addr);
-> +    ret = vfio_get_dirty_bitmap(vrdl->bcontainer, iova, size, ram_addr,
-> +                                &local_err);
-> +    if (ret) {
-> +        error_report_err(local_err);
-> +    }
-> +    return ret;
->  }
->  
->  static int
-> @@ -1313,7 +1325,7 @@ vfio_sync_ram_discard_listener_dirty_bitmap(VFIOContainerBase *bcontainer,
->  }
->  
->  static int vfio_sync_dirty_bitmap(VFIOContainerBase *bcontainer,
-> -                                  MemoryRegionSection *section)
-> +                                  MemoryRegionSection *section, Error **errp)
->  {
->      ram_addr_t ram_addr;
->  
-> @@ -1344,7 +1356,14 @@ static int vfio_sync_dirty_bitmap(VFIOContainerBase *bcontainer,
->          }
->          return 0;
->      } else if (memory_region_has_ram_discard_manager(section->mr)) {
-> -        return vfio_sync_ram_discard_listener_dirty_bitmap(bcontainer, section);
-> +        int ret;
-> +
-> +        ret = vfio_sync_ram_discard_listener_dirty_bitmap(bcontainer, section);
-> +        if (ret) {
-> +            error_setg(errp,
-> +                       "Failed to sync dirty bitmap with RAM discard listener");
-> +            return ret;
-> +        }
->      }
->  
->      ram_addr = memory_region_get_ram_addr(section->mr) +
-> @@ -1352,7 +1371,7 @@ static int vfio_sync_dirty_bitmap(VFIOContainerBase *bcontainer,
->  
->      return vfio_get_dirty_bitmap(bcontainer,
->                     REAL_HOST_PAGE_ALIGN(section->offset_within_address_space),
-> -                   int128_get64(section->size), ram_addr);
-> +                                 int128_get64(section->size), ram_addr, errp);
->  }
->  
->  static void vfio_listener_log_sync(MemoryListener *listener,
-> @@ -1361,16 +1380,16 @@ static void vfio_listener_log_sync(MemoryListener *listener,
->      VFIOContainerBase *bcontainer = container_of(listener, VFIOContainerBase,
->                                                   listener);
->      int ret;
-> +    Error *local_err = NULL;
->  
->      if (vfio_listener_skipped_section(section)) {
->          return;
->      }
->  
->      if (vfio_devices_all_dirty_tracking(bcontainer)) {
-> -        ret = vfio_sync_dirty_bitmap(bcontainer, section);
-> +        ret = vfio_sync_dirty_bitmap(bcontainer, section, &local_err);
->          if (ret) {
-> -            error_report("vfio: Failed to sync dirty bitmap, err: %d (%s)", ret,
-> -                         strerror(-ret));
-> +            error_report_err(local_err);
->              vfio_set_migration_error(ret);
->          }
->      }
-> diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
-> index 7c0764121d24b02b6c4e66e368d7dff78a6d65aa..8db59881873c3b1edee81104b966af737e5fa6f6 100644
-> --- a/hw/vfio/container-base.c
-> +++ b/hw/vfio/container-base.c
-> @@ -65,10 +65,11 @@ int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
->  
->  int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
->                                        VFIOBitmap *vbmap,
-> -                                      hwaddr iova, hwaddr size)
-> +                                      hwaddr iova, hwaddr size, Error **errp)
->  {
->      g_assert(bcontainer->ops->query_dirty_bitmap);
-> -    return bcontainer->ops->query_dirty_bitmap(bcontainer, vbmap, iova, size);
-> +    return bcontainer->ops->query_dirty_bitmap(bcontainer, vbmap, iova, size,
-> +                                               errp);
->  }
->  
->  void vfio_container_init(VFIOContainerBase *bcontainer, VFIOAddressSpace *space,
-> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-> index 6524575aeddcea8470b5fd10caf57475088d1813..475d96eaaa927998c6aa8cc9aa9f2115f5a1efda 100644
-> --- a/hw/vfio/container.c
-> +++ b/hw/vfio/container.c
-> @@ -131,6 +131,7 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
->      };
->      bool need_dirty_sync = false;
->      int ret;
-> +    Error *local_err = NULL;
->  
->      if (iotlb && vfio_devices_all_running_and_mig_active(bcontainer)) {
->          if (!vfio_devices_all_device_dirty_tracking(bcontainer) &&
-> @@ -166,8 +167,9 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
->  
->      if (need_dirty_sync) {
->          ret = vfio_get_dirty_bitmap(bcontainer, iova, size,
-> -                                    iotlb->translated_addr);
-> +                                    iotlb->translated_addr, &local_err);
->          if (ret) {
-> +            error_report_err(local_err);
->              return ret;
->          }
->      }
-> @@ -237,7 +239,8 @@ vfio_legacy_set_dirty_page_tracking(const VFIOContainerBase *bcontainer,
->  
->  static int vfio_legacy_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
->                                            VFIOBitmap *vbmap,
-> -                                          hwaddr iova, hwaddr size)
-> +                                          hwaddr iova, hwaddr size,
-> +                                          Error **errp)
->  {
->      const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
->                                                    bcontainer);
-> @@ -265,9 +268,9 @@ static int vfio_legacy_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
->      ret = ioctl(container->fd, VFIO_IOMMU_DIRTY_PAGES, dbitmap);
->      if (ret) {
->          ret = -errno;
-> -        error_report("Failed to get dirty bitmap for iova: 0x%"PRIx64
-> -                " size: 0x%"PRIx64" err: %d", (uint64_t)range->iova,
-> -                (uint64_t)range->size, errno);
-> +        error_setg(errp, "Failed to get dirty bitmap for iova: 0x%"PRIx64
-> +                   " size: 0x%"PRIx64" err: %d", (uint64_t)range->iova,
-> +                   (uint64_t)range->size, errno);
-use errno flavour?
+That means env->virt_enabled must be enabled before we enter into this 
+function. Let me know if I missed
 
-Eric
->      }
->  
->      g_free(dbitmap);
+an scenario.
 
+
+> I think VS->VS also keeps  env->virt_enabled to be true, where the 
+> previous value should correspond to VS.
+>
+yeah. good point. We should check HSTATUS_SPV here as well.
+
+
+> Thanks,
+> Zhiwei
+>
+>> + env->pmu_fixed_ctrs[1].counter_prev[PRV_S] = current_icount;
+>> +        } else if (get_field(env->hstatus, HSTATUS_SPV)) {
+>> +            /* VS->HS transition.The previous value should 
+>> correspond to VS. */
+>> +            env->pmu_fixed_ctrs[1].counter_virt_prev[PRV_S] = 
+>> current_icount;
+>> +        }
+>> +   }
+>> +
+>> +    counter_arr[env->priv] += delta;
+>> +}
+>> +
+>> +void riscv_pmu_cycle_update_priv(CPURISCVState *env, target_ulong 
+>> newpriv)
+>> +{
+>> +    uint64_t delta;
+>> +    uint64_t *counter_arr;
+>> +    uint64_t *counter_arr_prev;
+>> +    uint64_t current_host_ticks = cpu_get_host_ticks();
+>> +
+>> +    if (env->virt_enabled) {
+>> +        counter_arr = env->pmu_fixed_ctrs[0].counter_virt;
+>> +        counter_arr_prev = env->pmu_fixed_ctrs[0].counter_virt_prev;
+>> +    } else {
+>> +        counter_arr = env->pmu_fixed_ctrs[0].counter;
+>> +        counter_arr_prev = env->pmu_fixed_ctrs[0].counter_prev;
+>> +    }
+>> +
+>> +    if (newpriv != env->priv) {
+>> +        delta = current_host_ticks - counter_arr_prev[env->priv];
+>> +        counter_arr_prev[newpriv] = current_host_ticks;
+>> +    } else {
+>> +        delta = current_host_ticks - counter_arr_prev[env->priv];
+>> +        if (env->virt_enabled) {
+>> +            env->pmu_fixed_ctrs[0].counter_prev[PRV_S] = 
+>> current_host_ticks;
+>> +        } else if (get_field(env->hstatus, HSTATUS_SPV)) {
+>> +            env->pmu_fixed_ctrs[0].counter_virt_prev[PRV_S] =
+>> +            current_host_ticks;
+>> +        }
+>> +   }
+>> +
+>> +    counter_arr[env->priv] += delta;
+>> +}
+>> +
+>>   int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx 
+>> event_idx)
+>>   {
+>>       uint32_t ctr_idx;
+>> diff --git a/target/riscv/pmu.h b/target/riscv/pmu.h
+>> index 505fc850d38e..50de6031a730 100644
+>> --- a/target/riscv/pmu.h
+>> +++ b/target/riscv/pmu.h
+>> @@ -31,3 +31,5 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum 
+>> riscv_pmu_event_idx event_idx);
+>>   void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char 
+>> *pmu_name);
+>>   int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
+>>                             uint32_t ctr_idx);
+>> +void riscv_pmu_icount_update_priv(CPURISCVState *env, target_ulong 
+>> newpriv);
+>> +void riscv_pmu_cycle_update_priv(CPURISCVState *env, target_ulong 
+>> newpriv);
 
