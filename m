@@ -4,103 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A599C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 07:41:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0708C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 08:10:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ri8NH-0000vc-5S; Thu, 07 Mar 2024 02:41:07 -0500
+	id 1ri8oW-0005Cw-QC; Thu, 07 Mar 2024 03:09:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1ri8NC-0000uq-1G
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 02:41:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1ri8oS-00058x-Mu
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 03:09:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1ri8N9-0006Dp-Ja
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 02:41:01 -0500
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1ri8oO-0006pu-LD
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 03:09:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709797258;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1709798946;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TGeULhLH7J0MoPiH3k1U9ee8OhSUjcW+ZX4V3ZKxu7Y=;
- b=I07CX8aqeZDSD9bnnOyksjjwZgs4iq2xk86IcJUWRTUOJjw4xHoZBlyccp7CIDvBPBvG5K
- LaWoKmkD/I5Qk1wFKKhxCqs0+2JxKUMxyhoEvSzWhONY9skpUKWi4JFpx/oDHEQK7pTSof
- x1NpoO5Sa3BsDZxiqdVpjT2oPyeg1us=
+ bh=pzAWm958cd5iL7lRYHiHYf7ezJdqkP5u+o9xCGtfjIw=;
+ b=TRzbbRLTQGyet9FFwI1sB2Jg8jE1wnH7SNa1LoOxjJyGk1bUcVDJS7VmsT7k6eWw41uSf9
+ 8ZpjbiH3102yqY4+svcXnLVGGxXiFjmTEjInXTcZcMnGZnehwpPZzvGxLqHVtxVersIzYp
+ gt7TMwGXgzv930i7tjdOcgK5nibunfo=
 Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
  [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-414-DEoBd7NMN4a4wFsChvVkFA-1; Thu, 07 Mar 2024 02:40:57 -0500
-X-MC-Unique: DEoBd7NMN4a4wFsChvVkFA-1
+ us-mta-563-Dq1SU0GGNbeXPnbdK3lODA-1; Thu, 07 Mar 2024 03:09:04 -0500
+X-MC-Unique: Dq1SU0GGNbeXPnbdK3lODA-1
 Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-33d1d766f83so227960f8f.3
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 23:40:57 -0800 (PST)
+ ffacd0b85a97d-33d308b0c76so875939f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 00:09:04 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709797256; x=1710402056;
+ d=1e100.net; s=20230601; t=1709798943; x=1710403743;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=TGeULhLH7J0MoPiH3k1U9ee8OhSUjcW+ZX4V3ZKxu7Y=;
- b=nSviP3ht4eDQYttfaS8nLbXw7T/O9Qju/eucoM3rxGR/J2eItugSkgV4JMLLsI6/Bl
- gD1Da9YbgMBFOmwRb1yzLuUXmGL1h//F3kTrZFBw+62YtZ/ZX5TTrPV6qXSn6LPpr4Bz
- aiJNvQA8CLV6WsVRC5QrqlSamDmYmRlPHUU2fk01XtDFw0EF8texAODETc70CMHPd1OQ
- 7C7Z6OInVtQtTL5ye6Qd12Qt222uQWNgKFWdw8/8fTmDyHXj4Yc4FCcN57hATzAuCae8
- ei8SG3O42OPcWbLwMJ6I5GcYm+QClDTDrzTNi9gZ2TNYkL91BlXvpB3O5vaPm0zZ7oQj
- NZ/Q==
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=pzAWm958cd5iL7lRYHiHYf7ezJdqkP5u+o9xCGtfjIw=;
+ b=fORiZTfgZ5M7n+8aeI9QoNn5gr3U9mNwNdtsV770WChSLvToHNL6Fxfs41qHpy9Csj
+ SqBk+/lygj10oYTX1u/OVcpfZNM2bYAETVbCQMnMeNaTigW2hsfiJAtPKyVIcWMeuXII
+ pKqiMQGqVAJVwzX98zR16VJ5P5TuxNvdf5W3IRFcAbBq9nslyhzqR2MXbq3aZCxPgoH1
+ Onif6ZQI/AN+rt3LYm71SMMB2l6psFcSruj/6lkLgj+eoBtPhMmccG/6p0qYq35HsaEb
+ ByQi3hQBeSoU6gZp97vl5B6J2QmtPstQTSMhZb7h8v48Kyu+iFIpeqLYOHOY9vInP6o8
+ UZWw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW/Z/ZWsQHqJ6GbpNAslcUOiW2JUEJoGOTNye4whxlwWBUfV5N0xUQkaxyoWITMRTx1Qsvss1I/3Ely6Kecs+yegoqHGMk=
-X-Gm-Message-State: AOJu0YxvT9cCJS9B7oWcPhcT6q64JM6ViuumKWhBu1yCaoyQF+gHOrCK
- xMxzw/GhJJkbFZMoGBFi6L4CCmggUb8ENu4RCekroRtewGuBIpS3vM3fe5I0ZlWFaNeMUaUTwNo
- /ZdOZ9lfdJh/nVtC8hks6oNF0XQRWtgId0DPzpLFqLUw5qogSGSFA
-X-Received: by 2002:a5d:4445:0:b0:33e:10be:29cc with SMTP id
- x5-20020a5d4445000000b0033e10be29ccmr10716661wrr.28.1709797256193; 
- Wed, 06 Mar 2024 23:40:56 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGnV+CiTPxmlSO2s0rbjeqJ9b/DhSJUrpNkygPkATuYcQbV9wMeX2eTxu1DDpaiwemzz9CVWg==
-X-Received: by 2002:a5d:4445:0:b0:33e:10be:29cc with SMTP id
- x5-20020a5d4445000000b0033e10be29ccmr10716647wrr.28.1709797255844; 
- Wed, 06 Mar 2024 23:40:55 -0800 (PST)
+ AJvYcCUCtiE2Q3NTlsrDzotDfV2z5Ia/xvWRu17/qUoLiUt5RwIYk7ycK+QYFi3GXvckglaeCgU/fKjc0aL5fUpIuP36+a81SOM=
+X-Gm-Message-State: AOJu0Yw5M0AC5pQMc9DAEWF3ZDNxN8jhAzCJ/MTV3p/kUn+jR5sRiMsO
+ qdCTXohoJgfi7dpS7KmXo6BjtEEzYD9dvKgJE2AyS4enKrR8P0AAgVGHFZ5ifLRaxz3RWlsygDD
+ OGg0Y8WogSOcjW58C60mcNxp7Onw0R+1deEjVqE/JQ7IKLgNgdRma
+X-Received: by 2002:adf:a111:0:b0:33e:6a81:d8b9 with SMTP id
+ o17-20020adfa111000000b0033e6a81d8b9mr269842wro.20.1709798943456; 
+ Thu, 07 Mar 2024 00:09:03 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEjEZrk2dezyu94N53RJJ06N200keWc4DvwcsFF4uiXVeCUow6V1GhMS6ip6E+Ec3g015E+bg==
+X-Received: by 2002:adf:a111:0:b0:33e:6a81:d8b9 with SMTP id
+ o17-20020adfa111000000b0033e6a81d8b9mr269814wro.20.1709798943061; 
+ Thu, 07 Mar 2024 00:09:03 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
  ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- n18-20020adffe12000000b0033d67791dc0sm19523743wrr.43.2024.03.06.23.40.54
+ bt12-20020a056000080c00b0033e3a110d7fsm11354225wrb.71.2024.03.07.00.09.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 Mar 2024 23:40:55 -0800 (PST)
-Message-ID: <e0787278-7e21-494b-ac75-ddd6814ee102@redhat.com>
-Date: Thu, 7 Mar 2024 08:40:53 +0100
+ Thu, 07 Mar 2024 00:09:02 -0800 (PST)
+Message-ID: <9250446e-c48b-4465-b50c-da4fe3c1ee2f@redhat.com>
+Date: Thu, 7 Mar 2024 09:09:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 9/9] qemu-options.hx: Document the virtio-iommu-pci
- aw-bits option
+Subject: Re: [PATCH v4 16/25] vfio: Add Error** argument to
+ .set_dirty_page_tracking() handler
 Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- mst@redhat.com, jean-philippe@linaro.org, imammedo@redhat.com,
- peter.maydell@linaro.org, clg@redhat.com, yanghliu@redhat.com,
- zhenzhong.duan@intel.com
-Cc: alex.williamson@redhat.com, jasowang@redhat.com, pbonzini@redhat.com,
- berrange@redhat.com
-References: <20240306203348.65776-1-eric.auger@redhat.com>
- <20240306203348.65776-10-eric.auger@redhat.com>
- <359b4559-0ba1-42b9-8292-c90d65043898@linaro.org>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <359b4559-0ba1-42b9-8292-c90d65043898@linaro.org>
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
+ Prasad Pandit <pjp@fedoraproject.org>
+References: <20240306133441.2351700-1-clg@redhat.com>
+ <20240306133441.2351700-17-clg@redhat.com>
+From: Eric Auger <eauger@redhat.com>
+In-Reply-To: <20240306133441.2351700-17-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eauger@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,52 +106,142 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Cédric,
 
+On 3/6/24 14:34, Cédric Le Goater wrote:
+> We will use the Error object to improve error reporting in the
+> .log_global*() handlers of VFIO. Add documentation while at it.
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+> 
+>  Changes in v3:
+> 
+>  - Use error_setg_errno() in vfio_legacy_set_dirty_page_tracking()
+>  
+>  include/hw/vfio/vfio-container-base.h | 18 ++++++++++++++++--
+>  hw/vfio/common.c                      |  4 ++--
+>  hw/vfio/container-base.c              |  4 ++--
+>  hw/vfio/container.c                   |  6 +++---
+>  4 files changed, 23 insertions(+), 9 deletions(-)
+> 
+> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+> index 3582d5f97a37877b2adfc0d0b06996c82403f8b7..c76984654a596e3016a8cf833e10143eb872e102 100644
+> --- a/include/hw/vfio/vfio-container-base.h
+> +++ b/include/hw/vfio/vfio-container-base.h
+> @@ -82,7 +82,7 @@ int vfio_container_add_section_window(VFIOContainerBase *bcontainer,
+>  void vfio_container_del_section_window(VFIOContainerBase *bcontainer,
+>                                         MemoryRegionSection *section);
+>  int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
+> -                                           bool start);
+> +                                           bool start, Error **errp);
+>  int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+>                                        VFIOBitmap *vbmap,
+>                                        hwaddr iova, hwaddr size);
+> @@ -121,9 +121,23 @@ struct VFIOIOMMUClass {
+>      int (*attach_device)(const char *name, VFIODevice *vbasedev,
+>                           AddressSpace *as, Error **errp);
+>      void (*detach_device)(VFIODevice *vbasedev);
+> +
+>      /* migration feature */
+> +
+> +    /**
+> +     * @set_dirty_page_tracking
+> +     *
+> +     * Start or stop dirty pages tracking on VFIO container
+> +     *
+> +     * @bcontainer: #VFIOContainerBase on which to de/activate dirty
+> +     *              pages tracking
+s/pages/page?
+for my education is the "#"VFIOContainerBase formalized somewhere?
+> +     * @start: indicates whether to start or stop dirty pages tracking
+> +     * @errp: pointer to Error*, to store an error if it happens.
+> +     *
+> +     * Returns zero to indicate success and negative for error
+> +     */
+>      int (*set_dirty_page_tracking)(const VFIOContainerBase *bcontainer,
+> -                                   bool start);
+> +                                   bool start, Error **errp);
+>      int (*query_dirty_bitmap)(const VFIOContainerBase *bcontainer,
+>                                VFIOBitmap *vbmap,
+>                                hwaddr iova, hwaddr size);
+> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+> index 800ba0aeac84b8dcc83b042bb70c37b4bf78d3f4..5598a508399a6c0b3a20ba17311cbe83d84250c5 100644
+> --- a/hw/vfio/common.c
+> +++ b/hw/vfio/common.c
+> @@ -1085,7 +1085,7 @@ static bool vfio_listener_log_global_start(MemoryListener *listener,
+>      if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
+>          ret = vfio_devices_dma_logging_start(bcontainer);
+>      } else {
+> -        ret = vfio_container_set_dirty_page_tracking(bcontainer, true);
+> +        ret = vfio_container_set_dirty_page_tracking(bcontainer, true, NULL);
+It is not obvious why we don't pass errp here. Also there is ana
+error_report below. Why isn't the error propagated? (not related to your
+patch though)
+>      }
+>  
+>      if (ret) {
+> @@ -1105,7 +1105,7 @@ static void vfio_listener_log_global_stop(MemoryListener *listener)
+>      if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
+>          vfio_devices_dma_logging_stop(bcontainer);
+>      } else {
+> -        ret = vfio_container_set_dirty_page_tracking(bcontainer, false);
+> +        ret = vfio_container_set_dirty_page_tracking(bcontainer, false, NULL);
+>      }
+>  
+>      if (ret) {
+> diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+> index 913ae49077c4f09b7b27517c1231cfbe4befb7fb..7c0764121d24b02b6c4e66e368d7dff78a6d65aa 100644
+> --- a/hw/vfio/container-base.c
+> +++ b/hw/vfio/container-base.c
+> @@ -53,14 +53,14 @@ void vfio_container_del_section_window(VFIOContainerBase *bcontainer,
+>  }
+>  
+>  int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
+> -                                           bool start)
+> +                                           bool start, Error **errp)
+>  {
+>      if (!bcontainer->dirty_pages_supported) {
+>          return 0;
+>      }
+>  
+>      g_assert(bcontainer->ops->set_dirty_page_tracking);
+> -    return bcontainer->ops->set_dirty_page_tracking(bcontainer, start);
+> +    return bcontainer->ops->set_dirty_page_tracking(bcontainer, start, errp);
+>  }
+>  
+>  int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+> index 096d77eac3946a9c38fc2a98116b93353f71f06e..6524575aeddcea8470b5fd10caf57475088d1813 100644
+> --- a/hw/vfio/container.c
+> +++ b/hw/vfio/container.c
+> @@ -210,7 +210,7 @@ static int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
+>  
+>  static int
+>  vfio_legacy_set_dirty_page_tracking(const VFIOContainerBase *bcontainer,
+> -                                    bool start)
+> +                                    bool start, Error **errp)
+>  {
+>      const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
+>                                                    bcontainer);
+> @@ -228,8 +228,8 @@ vfio_legacy_set_dirty_page_tracking(const VFIOContainerBase *bcontainer,
+>      ret = ioctl(container->fd, VFIO_IOMMU_DIRTY_PAGES, &dirty);
+>      if (ret) {
+>          ret = -errno;
+> -        error_report("Failed to set dirty tracking flag 0x%x errno: %d",
+> -                     dirty.flags, errno);
+> +        error_setg_errno(errp, errno, "Failed to set dirty tracking flag 0x%x",
+> +                         dirty.flags);
+>      }
+>  
+>      return ret;
 
-On 3/6/24 21:48, Philippe Mathieu-Daudé wrote:
-> On 6/3/24 21:32, Eric Auger wrote:
->> Document the new aw-bits option.
->>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> Reviewed-by: Cédric Le Goater <clg@redhat.com>
->>
->> ---
->>
->> v4 -> v5
->> - tweek the aw-bits option description according to Cédric's
->>    suggestion
->> ---
->>   qemu-options.hx | 3 +++
->>   1 file changed, 3 insertions(+)
->>
->> diff --git a/qemu-options.hx b/qemu-options.hx
->> index 757df3eac0..87959ede08 100644
->> --- a/qemu-options.hx
->> +++ b/qemu-options.hx
->> @@ -1180,6 +1180,9 @@ SRST
->>           This decides the default granule to be be exposed by the
->>           virtio-iommu. If host, the granule matches the host page size.
->>   +    ``aw-bits=val`` (val between 32 and 64, default depends on
->> machine)
->> +        This decides the address width of IOVA address space. It
->> defaults
->
-> "It defaults"?
-Yes needs to be removed.
->
-> IMO this should be squashed in patch 6/9 "virtio-iommu: Add an option
-> to define the input range width".
-in [6/9] the default does not yet depend on machine, hence my choice to
-keep it separate and after 8/9
+Thanks
 
 Eric
->
->>   ERST
->>     DEF("name", HAS_ARG, QEMU_OPTION_name,
->
 
 
