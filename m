@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30F0CC48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 10:24:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B767CC54E49
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 10:24:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riAsT-0004XK-1t; Thu, 07 Mar 2024 05:21:29 -0500
+	id 1riAsV-0004e9-Ag; Thu, 07 Mar 2024 05:21:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1riAsM-0004Wn-Gq
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 05:21:23 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1riAsT-0004XM-2J
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 05:21:29 -0500
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1riAsK-00079x-PM
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 05:21:22 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-1dc49b00bdbso5849525ad.3
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 02:21:20 -0800 (PST)
+ id 1riAsQ-0007AS-OO
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 05:21:28 -0500
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-6e09143c7bdso556937b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 02:21:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709806879; x=1710411679;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709806885; x=1710411685;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=shZdRVaAuTUEJwuhgEsEU4+8uLO5iP81udj39ehMmZA=;
- b=WjaefdxVHQN+v/I9WYPxKM+HMLO4ZdStUxWPZgPB0SnJSeFDPC/AsktZSdRLV3/ZER
- i9RpxqI0oZhn3GuDDt5gebR+sGlnn0jSVKUzvIL8c7Uu72MU7WzJOxgJUlOoQUFv2+kf
- tJEtDsp9bRf8kNjRnNaOdbupdwFJLzM7VsAmrTO1Fif71WDbhOtTHCrnnNcOK3uXvzab
- WCTVBLky68oPwDtwKrsSne3xUMkKVuWNO+LjRvtRSo3gN98hJPEa40di6k7yZQYz/n0a
- aMNVXiJFb63ToizOxGuSrPUyMA7En+rIgA6oKfn0eeVnXZYWlBTzRyy3elCz5ohJD2hI
- 9/tw==
+ :reply-to; bh=Qu0/SyjtgjMsZVCuj2aWQAULDW+4uRg6GTgBSV1VdlA=;
+ b=Q59FXDaeG4uWzweQOwAVYxj6veFj589k2Tc2hrPlkadhzHOLfo7IJV8JeFM+4BXE09
+ 7funCeeWlPPGCGjTUdupsD14MecokXD59/DTwd1cm6j9UPvwvA6S07IfY4AzPLbK7alx
+ xXtdno/+MYbvHvsuI9dq5YDZ3UI+z/0tCrzBDrwGqVFwAItM8drQLr7pNXENwRKqv4vQ
+ 0zLOW4wmhvePXELV8M6rKboUJpEql8PdNw7zyJrZoq8DWBKBzp1Cagis6CBACMoXYexp
+ fhNlW6CIskK/YUyaUTWTFZJ8VrbM91mbuPADsFh3s10hKbfpmQr9QFpRFf52hg+fJoCz
+ PkbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709806879; x=1710411679;
+ d=1e100.net; s=20230601; t=1709806885; x=1710411685;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=shZdRVaAuTUEJwuhgEsEU4+8uLO5iP81udj39ehMmZA=;
- b=IpEBJxk1CmA7xqQ1rZ0kpZ1xO1I4GkFdRZqmGYBZGpR1m/+P8MKhi1o8pba05riNqO
- Kbi/CqpCQtE0kXhWwmAzL2my0tOlYhmOwRHDS8kJBVmr3zRYkKRQbi3iLfZyAyUFBsHD
- Fx6yfpCaHQ73unnGGwHWJ0skNvwkrLk4EbusYPfABwcTu11bD/+mhAU3xzg/bJL1NUM8
- 6VzyopS/mFaCB5JJV66+nuMtU2J2tHkXrEE9YTVFp3k/HmRwlfXcaNMtSWwJXyzp+Ul5
- Ctauu9VeCoh8oi3OYtHCJ4i2r9MuBf/LE+N9H7VmLHAQ09HgVMSj6OXDbn0A+ONryXb9
- 4isQ==
-X-Gm-Message-State: AOJu0YyeAcqqMNG2ULYb1GQ8hHOz4Q1RG2ht4462KYpu+0lDfONpwKBk
- lQV6yygXZC/srumZapvoEXDWFlAwe2qQ9Jqz6mmP0HrGdj98RFuojwNjFc87SjqhDdezaUUzYcw
- N
-X-Google-Smtp-Source: AGHT+IFS9E7on7QHqwRFZHe90iMnWgvKsB7MqViW/T92QQMSYdEGIhZPqDUIPtx/xxrlUegYzxNt1Q==
-X-Received: by 2002:a17:903:2289:b0:1dd:4064:9f2a with SMTP id
- b9-20020a170903228900b001dd40649f2amr4227472plh.38.1709806879020; 
- Thu, 07 Mar 2024 02:21:19 -0800 (PST)
+ bh=Qu0/SyjtgjMsZVCuj2aWQAULDW+4uRg6GTgBSV1VdlA=;
+ b=TzwUsMjLiDcZSxrNFiAzlRjPPvFUCHqgY5xzBzVStImfHgo9y/wpGrAouaVZGknqmK
+ YU4JE/EeTLaND6lPjB30JP1AhtVD8+EyrR1K+ib6mYi17R4Y7CJiwLIUXdtEq16lFD8U
+ fdrLL+VRWR/resDfFQEFEN34WSW1A9our67v8/6AO03OaIYBLx/v3D3FVlUkdJASVIN1
+ XV2wkK1LJGo6PeSZ7zJgMHQeKwVoeITGOj3MlyRt9oUnPwsxZrFKHknvotjd/0JEm/lE
+ mvoMzF4s4VuWVCQMtoS/cDWPdYRl9OQqFVuxmRt6Gqln7EprdJH6RvHOi2B2EF4rbRHD
+ QrJQ==
+X-Gm-Message-State: AOJu0Yx7Adgmo44YBrI4SpnBfKXp2yQkjOLtgXewTQnMiFB4kRqIgJjZ
+ ZFKcDBtkwXyTM5r3d3AsC78y2LTlAxHlxn8HRg0w3+MVgp9db/eC7vW9vjOTJe4=
+X-Google-Smtp-Source: AGHT+IEstnLOvrcK9UjgrpKxKaQLUIlooY+EA1yomeMLrX83yGcvlwQcdUPLi+1EU7JHEzlaz2j05A==
+X-Received: by 2002:aa7:8889:0:b0:6e5:69f8:e2c1 with SMTP id
+ z9-20020aa78889000000b006e569f8e2c1mr18172100pfe.22.1709806885015; 
+ Thu, 07 Mar 2024 02:21:25 -0800 (PST)
 Received: from localhost ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
  by smtp.gmail.com with UTF8SMTPSA id
- l4-20020a170902f68400b001dcbffec642sm14137868plg.133.2024.03.07.02.21.17
+ z12-20020aa785cc000000b006e56e5c09absm12597830pfn.14.2024.03.07.02.21.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 Mar 2024 02:21:18 -0800 (PST)
+ Thu, 07 Mar 2024 02:21:24 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Thu, 07 Mar 2024 19:20:50 +0900
-Subject: [PATCH v4 07/19] contrib/elf2dmp: Fix error reporting style in pdb.c
+Date: Thu, 07 Mar 2024 19:20:52 +0900
+Subject: [PATCH v4 09/19] contrib/elf2dmp: Fix error reporting style in main.c
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240307-elf2dmp-v4-7-4f324ad4d99d@daynix.com>
+Message-Id: <20240307-elf2dmp-v4-9-4f324ad4d99d@daynix.com>
 References: <20240307-elf2dmp-v4-0-4f324ad4d99d@daynix.com>
 In-Reply-To: <20240307-elf2dmp-v4-0-4f324ad4d99d@daynix.com>
 To: Viktor Prutyanov <viktor.prutyanov@phystech.edu>, 
  Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::62c;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62c.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::433;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -102,193 +101,215 @@ include/qapi/error.h says:
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- contrib/elf2dmp/pdb.h  |  2 +-
- contrib/elf2dmp/main.c |  2 +-
- contrib/elf2dmp/pdb.c  | 50 +++++++++++++++++++++++++-------------------------
- 3 files changed, 27 insertions(+), 27 deletions(-)
+ contrib/elf2dmp/main.c | 63 +++++++++++++++++++++++++-------------------------
+ 1 file changed, 32 insertions(+), 31 deletions(-)
 
-diff --git a/contrib/elf2dmp/pdb.h b/contrib/elf2dmp/pdb.h
-index 2a50da56ac96..feddf1862f08 100644
---- a/contrib/elf2dmp/pdb.h
-+++ b/contrib/elf2dmp/pdb.h
-@@ -233,7 +233,7 @@ struct pdb_reader {
-     size_t segs_size;
- };
- 
--int pdb_init_from_file(const char *name, struct pdb_reader *reader);
-+bool pdb_init_from_file(const char *name, struct pdb_reader *reader);
- void pdb_exit(struct pdb_reader *reader);
- uint64_t pdb_resolve(uint64_t img_base, struct pdb_reader *r, const char *name);
- uint64_t pdb_find_public_v3_symbol(struct pdb_reader *reader, const char *name);
 diff --git a/contrib/elf2dmp/main.c b/contrib/elf2dmp/main.c
-index d295fd92be2f..7a3a7225905e 100644
+index cb28971789e4..9347b0cd5a2d 100644
 --- a/contrib/elf2dmp/main.c
 +++ b/contrib/elf2dmp/main.c
-@@ -596,7 +596,7 @@ int main(int argc, char *argv[])
-         goto out_ps;
-     }
- 
--    if (pdb_init_from_file(PDB_NAME, &pdb)) {
-+    if (!pdb_init_from_file(PDB_NAME, &pdb)) {
-         eprintf("Failed to initialize PDB reader\n");
-         goto out_pdb_file;
-     }
-diff --git a/contrib/elf2dmp/pdb.c b/contrib/elf2dmp/pdb.c
-index abf17c2e7c12..1c5051425185 100644
---- a/contrib/elf2dmp/pdb.c
-+++ b/contrib/elf2dmp/pdb.c
-@@ -158,30 +158,30 @@ static void *pdb_ds_read_file(struct pdb_reader* r, uint32_t file_number)
-     return pdb_ds_read(r->ds.header, block_list, file_size[file_number]);
- }
- 
--static int pdb_init_segments(struct pdb_reader *r)
-+static bool pdb_init_segments(struct pdb_reader *r)
+@@ -186,13 +186,13 @@ static void win_context_init_from_qemu_cpu_state(WinContext64 *ctx,
+  * Finds paging-structure hierarchy base,
+  * if previously set doesn't give access to kernel structures
+  */
+-static int fix_dtb(struct va_space *vs, QEMU_Elf *qe)
++static bool fix_dtb(struct va_space *vs, QEMU_Elf *qe)
  {
-     unsigned stream_idx = r->segments;
- 
-     r->segs = pdb_ds_read_file(r, stream_idx);
-     if (!r->segs) {
--        return 1;
-+        return false;
+     /*
+      * Firstly, test previously set DTB.
+      */
+     if (va_space_resolve(vs, SharedUserData)) {
+-        return 0;
++        return true;
      }
  
-     r->segs_size = pdb_get_file_size(r, stream_idx);
-     if (!r->segs_size) {
--        return 1;
-+        return false;
+     /*
+@@ -206,7 +206,7 @@ static int fix_dtb(struct va_space *vs, QEMU_Elf *qe)
+             va_space_set_dtb(vs, s->cr[3]);
+             printf("DTB 0x%016"PRIx64" has been found from CPU #%zu"
+                     " as system task CR3\n", vs->dtb, i);
+-            return !(va_space_resolve(vs, SharedUserData));
++            return va_space_resolve(vs, SharedUserData);
+         }
      }
  
--    return 0;
-+    return true;
- }
+@@ -220,16 +220,16 @@ static int fix_dtb(struct va_space *vs, QEMU_Elf *qe)
+         uint64_t *cr3 = va_space_resolve(vs, Prcb + 0x7000);
  
--static int pdb_init_symbols(struct pdb_reader *r)
-+static bool pdb_init_symbols(struct pdb_reader *r)
- {
-     PDB_SYMBOLS *symbols;
+         if (!cr3) {
+-            return 1;
++            return false;
+         }
  
-     symbols = pdb_ds_read_file(r, 3);
-     if (!symbols) {
--        return 1;
-+        return false;
+         va_space_set_dtb(vs, *cr3);
+         printf("DirectoryTableBase = 0x%016"PRIx64" has been found from CPU #0"
+                 " as interrupt handling CR3\n", vs->dtb);
+-        return !(va_space_resolve(vs, SharedUserData));
++        return va_space_resolve(vs, SharedUserData);
      }
- 
-     r->symbols = symbols;
-@@ -198,18 +198,18 @@ static int pdb_init_symbols(struct pdb_reader *r)
-         goto out_symbols;
-     }
- 
--    return 0;
-+    return true;
- 
- out_symbols:
-     g_free(symbols);
  
 -    return 1;
-+    return false;
++    return true;
  }
  
--static int pdb_reader_ds_init(struct pdb_reader *r, PDB_DS_HEADER *hdr)
-+static bool pdb_reader_ds_init(struct pdb_reader *r, PDB_DS_HEADER *hdr)
+ static void try_merge_runs(struct pa_space *ps,
+@@ -268,9 +268,10 @@ static void try_merge_runs(struct pa_space *ps,
+     }
+ }
+ 
+-static int fill_header(WinDumpHeader64 *hdr, struct pa_space *ps,
+-        struct va_space *vs, uint64_t KdDebuggerDataBlock,
+-        KDDEBUGGER_DATA64 *kdbg, uint64_t KdVersionBlock, int nr_cpus)
++static bool fill_header(WinDumpHeader64 *hdr, struct pa_space *ps,
++                        struct va_space *vs, uint64_t KdDebuggerDataBlock,
++                        KDDEBUGGER_DATA64 *kdbg, uint64_t KdVersionBlock,
++                        int nr_cpus)
  {
-     if (hdr->block_size == 0) {
+     uint32_t *suite_mask = va_space_resolve(vs, SharedUserData +
+             KUSD_OFFSET_SUITE_MASK);
+@@ -283,12 +284,12 @@ static int fill_header(WinDumpHeader64 *hdr, struct pa_space *ps,
+     QEMU_BUILD_BUG_ON(KUSD_OFFSET_PRODUCT_TYPE >= ELF2DMP_PAGE_SIZE);
+ 
+     if (!suite_mask || !product_type) {
 -        return 1;
 +        return false;
      }
  
-     memset(r->file_used, 0, sizeof(r->file_used));
-@@ -218,22 +218,22 @@ static int pdb_reader_ds_init(struct pdb_reader *r, PDB_DS_HEADER *hdr)
-                 hdr->toc_page * hdr->block_size), hdr->toc_size);
- 
-     if (!r->ds.toc) {
+     if (!va_space_rw(vs, KdVersionBlock, &kvb, sizeof(kvb), 0)) {
+         eprintf("Failed to extract KdVersionBlock\n");
 -        return 1;
 +        return false;
      }
+ 
+     h = (WinDumpHeader64) {
+@@ -333,7 +334,7 @@ static int fill_header(WinDumpHeader64 *hdr, struct pa_space *ps,
+ 
+     *hdr = h;
  
 -    return 0;
 +    return true;
  }
  
--static int pdb_reader_init(struct pdb_reader *r, void *data)
-+static bool pdb_reader_init(struct pdb_reader *r, void *data)
+ /*
+@@ -379,8 +380,8 @@ static void fill_context(KDDEBUGGER_DATA64 *kdbg,
+     }
+ }
+ 
+-static int pe_get_data_dir_entry(uint64_t base, void *start_addr, int idx,
+-        void *entry, size_t size, struct va_space *vs)
++static bool pe_get_data_dir_entry(uint64_t base, void *start_addr, int idx,
++                                  void *entry, size_t size, struct va_space *vs)
  {
-     const char pdb7[] = "Microsoft C/C++ MSF 7.00";
+     const char e_magic[2] = "MZ";
+     const char Signature[4] = "PE\0\0";
+@@ -393,38 +394,38 @@ static int pe_get_data_dir_entry(uint64_t base, void *start_addr, int idx,
+     QEMU_BUILD_BUG_ON(sizeof(*dos_hdr) >= ELF2DMP_PAGE_SIZE);
  
-     if (memcmp(data, pdb7, sizeof(pdb7) - 1)) {
+     if (memcmp(&dos_hdr->e_magic, e_magic, sizeof(e_magic))) {
 -        return 1;
 +        return false;
      }
  
--    if (pdb_reader_ds_init(r, data)) {
+     if (!va_space_rw(vs, base + dos_hdr->e_lfanew,
+                      &nt_hdrs, sizeof(nt_hdrs), 0)) {
 -        return 1;
-+    if (!pdb_reader_ds_init(r, data)) {
 +        return false;
      }
  
-     r->ds.root = pdb_ds_read_file(r, 1);
-@@ -241,15 +241,15 @@ static int pdb_reader_init(struct pdb_reader *r, void *data)
-         goto out_ds;
+     if (memcmp(&nt_hdrs.Signature, Signature, sizeof(Signature)) ||
+             file_hdr->Machine != 0x8664 || opt_hdr->Magic != 0x020b) {
+-        return 1;
++        return false;
      }
  
--    if (pdb_init_symbols(r)) {
-+    if (!pdb_init_symbols(r)) {
-         goto out_root;
+     if (!va_space_rw(vs, base + data_dir[idx].VirtualAddress, entry, size, 0)) {
+-        return 1;
++        return false;
      }
  
--    if (pdb_init_segments(r)) {
-+    if (!pdb_init_segments(r)) {
-         goto out_sym;
-     }
+     printf("Data directory entry #%d: RVA = 0x%08"PRIx32"\n", idx,
+             (uint32_t)data_dir[idx].VirtualAddress);
  
 -    return 0;
 +    return true;
- 
- out_sym:
-     pdb_exit_symbols(r);
-@@ -258,7 +258,7 @@ out_root:
- out_ds:
-     pdb_reader_ds_exit(r);
- 
--    return 1;
-+    return false;
  }
  
- static void pdb_reader_exit(struct pdb_reader *r)
-@@ -269,7 +269,7 @@ static void pdb_reader_exit(struct pdb_reader *r)
-     pdb_reader_ds_exit(r);
- }
- 
--int pdb_init_from_file(const char *name, struct pdb_reader *reader)
-+bool pdb_init_from_file(const char *name, struct pdb_reader *reader)
+-static int write_dump(struct pa_space *ps,
+-        WinDumpHeader64 *hdr, const char *name)
++static bool write_dump(struct pa_space *ps,
++                       WinDumpHeader64 *hdr, const char *name)
  {
-     GError *gerr = NULL;
-     void *map;
-@@ -278,21 +278,21 @@ int pdb_init_from_file(const char *name, struct pdb_reader *reader)
-     if (gerr) {
-         eprintf("Failed to map PDB file \'%s\'\n", name);
-         g_error_free(gerr);
+     FILE *dmp_file = fopen(name, "wb");
+     size_t i;
+ 
+     if (!dmp_file) {
+         eprintf("Failed to open output file \'%s\'\n", name);
 -        return 1;
 +        return false;
      }
  
-     reader->file_size = g_mapped_file_get_length(reader->gmf);
-     map = g_mapped_file_get_contents(reader->gmf);
--    if (pdb_reader_init(reader, map)) {
-+    if (!pdb_reader_init(reader, map)) {
-         goto out_unmap;
+     printf("Writing header to file...\n");
+@@ -432,7 +433,7 @@ static int write_dump(struct pa_space *ps,
+     if (fwrite(hdr, sizeof(*hdr), 1, dmp_file) != 1) {
+         eprintf("Failed to write dump header\n");
+         fclose(dmp_file);
+-        return 1;
++        return false;
      }
  
--    return 0;
-+    return true;
+     for (i = 0; i < ps->block_nr; i++) {
+@@ -443,11 +444,11 @@ static int write_dump(struct pa_space *ps,
+         if (fwrite(b->addr, b->size, 1, dmp_file) != 1) {
+             eprintf("Failed to write block\n");
+             fclose(dmp_file);
+-            return 1;
++            return false;
+         }
+     }
  
- out_unmap:
-     g_mapped_file_unref(reader->gmf);
- 
--    return 1;
-+    return false;
+-    return fclose(dmp_file);
++    return !fclose(dmp_file);
  }
  
- void pdb_exit(struct pdb_reader *reader)
+ static bool pe_check_pdb_name(uint64_t base, void *start_addr,
+@@ -457,8 +458,8 @@ static bool pe_check_pdb_name(uint64_t base, void *start_addr,
+     IMAGE_DEBUG_DIRECTORY debug_dir;
+     char pdb_name[sizeof(PDB_NAME)];
+ 
+-    if (pe_get_data_dir_entry(base, start_addr, IMAGE_FILE_DEBUG_DIRECTORY,
+-                &debug_dir, sizeof(debug_dir), vs)) {
++    if (!pe_get_data_dir_entry(base, start_addr, IMAGE_FILE_DEBUG_DIRECTORY,
++                               &debug_dir, sizeof(debug_dir), vs)) {
+         eprintf("Failed to get Debug Directory\n");
+         return false;
+     }
+@@ -546,7 +547,7 @@ int main(int argc, char *argv[])
+     printf("CPU #0 CR3 is 0x%016"PRIx64"\n", state->cr[3]);
+ 
+     va_space_create(&vs, &ps, state->cr[3]);
+-    if (fix_dtb(&vs, &qemu_elf)) {
++    if (!fix_dtb(&vs, &qemu_elf)) {
+         eprintf("Failed to find paging base\n");
+         goto out_elf;
+     }
+@@ -611,14 +612,14 @@ int main(int argc, char *argv[])
+         goto out_pdb;
+     }
+ 
+-    if (fill_header(&header, &ps, &vs, KdDebuggerDataBlock, kdbg,
+-            KdVersionBlock, qemu_elf.state_nr)) {
++    if (!fill_header(&header, &ps, &vs, KdDebuggerDataBlock, kdbg,
++                     KdVersionBlock, qemu_elf.state_nr)) {
+         goto out_kdbg;
+     }
+ 
+     fill_context(kdbg, &vs, &qemu_elf);
+ 
+-    if (write_dump(&ps, &header, argv[2])) {
++    if (!write_dump(&ps, &header, argv[2])) {
+         eprintf("Failed to save dump\n");
+         goto out_kdbg;
+     }
 
 -- 
 2.44.0
