@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7782DC54E58
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84A47C54E5C
 	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 18:28:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riISZ-0001Ct-PW; Thu, 07 Mar 2024 13:27:15 -0500
+	id 1riISf-0001E8-Dn; Thu, 07 Mar 2024 13:27:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1riISY-0001CV-Fz
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 13:27:14 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1riISd-0001DP-R0
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 13:27:19 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1riISW-0000bc-TP
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 13:27:14 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-1dc0e5b223eso9549055ad.1
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 10:27:12 -0800 (PST)
+ id 1riISc-0000cL-8i
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 13:27:19 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1dd0d46ecc3so9508845ad.2
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 10:27:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709836031; x=1710440831; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709836036; x=1710440836; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tJRyVmau9ruD0qJjHtVWvNsb9E69SYPlhZ6E6+1O2KM=;
- b=mHCD6hzpO/GtSmVTiRElm/LOVxcgmpJhz6Xn3hpDE/IRyyJ4qJFpCkzZ2LVe5O8+dq
- 9TzNfd1etUCkGuY+//ii6hOP2lNhw3U3PtBtUoVqz5upamsSp+rhtogTp3CfsulIZaTN
- 6Xpp1gUJBCukx/nfQnjSSLkFdEKRhWEu25/nkP24cF8CaswlJ4U+Xl92BEdIxSPxqFSS
- BsL+3UIULmMubZ7HSvJq6VnawiSD0hbCQW0jyrQq+/beoO6EXOV2rMvo3s219BuleCfj
- eP7IH+IQyZfIh4mMVl5f7XE6E483tfUPGo1HRlQbR3HsmCPxROj6KLnzq34VSB/rD9z6
- gUjQ==
+ bh=o8huhRHNOBYWkXgN/4/yH0cLjdQL8crIEtN89AF3mvM=;
+ b=QjuhTniCu+O6egwC7OuADAoVOOK24tezDqkvR+cdOjNjCyvAS3d+oSQpmS4XpdvnSD
+ 24wYtYR/8YFDryVtM8/qhQ0b/tfnILeDFQN5wLbI8TycjUkRZtnPzI2d0zmtxgSncfni
+ ECSGLoa4ZiRx/It+NtrCvWc5xDBQ/+cFi2zcjX1AHOzA+O2jz8T8/znGAk+gDKNc2J1Z
+ kyZTHTb2iQ6TROVHwf0eNRb0vSkt6uT3AKMvIa2EFZiYqpa8SnzakIXv550m5ftdya9F
+ v30GHhEuqQ9LFD5e6+c69a6uO72hHDvaNhBDAgN/ByC0v+Jvwfeem+/yk+ufCfyc0xH2
+ xSmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709836031; x=1710440831;
+ d=1e100.net; s=20230601; t=1709836036; x=1710440836;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tJRyVmau9ruD0qJjHtVWvNsb9E69SYPlhZ6E6+1O2KM=;
- b=KA3VE5e5V+oIquvHSFNFuaGVu+lJW6PYMivvmcXlo8Od3c68/Jp5YfEWncfoKRVZkM
- apCn42+ncjdSO6i7Ax8cpcer7n+tL8Xraw9Q/P3j4os6C5RgRHe6yJtUXUy6SpkNey88
- Z5hlzcC4XXapZND1gczNt5sySDX5LCpvKfVP/UsxouWLA0lXh0Oo1XSqxpztz7gOKEc7
- xWET46Iah4nHQhjTtFw5VL15AKS8Bdqpe6SO9g3CylChn9GYScOJZqMrlBi1K+IP2k5N
- BDgeV9rUe1U9g4oh9OQnZMhFizmanG1O7FQ0UwSVr2U7hOuAyymN0yUPlfZOtDQKyQrv
- 7d4A==
-X-Gm-Message-State: AOJu0YykoVPtS5GX2eTShrYKa30A3V8bYOnf2yVf4V9v8+eGO6OQqQ9S
- 0jP9tAnU7JxowL6V5kMLaIHeoSF6GgBT4Ta6E2uZslkob+9VDWhxyN3e5n3e6wiLfvu5ZW5zmvD
- qM+s=
-X-Google-Smtp-Source: AGHT+IGnCXYvM4P+lmxIf9G0vNTgySsA2WBUPWkgkYKmwaojDlmMlGUo1xOBWPtP+36f6igCpdL5EA==
-X-Received: by 2002:a17:902:e847:b0:1dc:75ea:8562 with SMTP id
- t7-20020a170902e84700b001dc75ea8562mr9166374plg.32.1709836031390; 
- Thu, 07 Mar 2024 10:27:11 -0800 (PST)
+ bh=o8huhRHNOBYWkXgN/4/yH0cLjdQL8crIEtN89AF3mvM=;
+ b=wkWkya4/zT/C0aTu+HWC01NqinEqQYLTrvzJGU17IuiOPUS++f2zpYNUXd8I7/pt3A
+ jDXdlomjkOIk3l7JPM6ozyMV3BVb2b7XtGgnC+W44dDVqud1pcOar3ZdUNW7plUn2WkF
+ 4GoZrdHSg8NW8penb86hlOKus6dPYKZiW2/FRwtbxS3+R1LL+euU0Q0Tr5D/6KU4k5Id
+ w9xnUyMK0Lzzz1fZ4JajRVaOiATJfFZyR514zfQVN+ZarO5E50qqqJG0O4hZsc3UYxA0
+ Kl+cBkSw6NDd7XGPMNSAVzf3i+zd5wfB+nenv5by1RqXcIt1IbE+Ml8DYii7qdXRaPo/
+ X3Bg==
+X-Gm-Message-State: AOJu0Yza/Xu33NuLPewkFB0Q3qaEyQPotomeE0Bv4xaXY3ChZmNihaq4
+ dCuBQA2wxnGAN4xrZV5Ndvs6rwAVg8XTbY917oCtaCDHGCuIHGwcQhmXmQbvab8F1BY5agOB+Dq
+ 842g=
+X-Google-Smtp-Source: AGHT+IF7zfGjNUHvOU1sQnq2Px1J3l7zeCc3mOT096hKzCdg/VI20kizBNtzgthO+xFQCzzgG81pQQ==
+X-Received: by 2002:a17:902:d2c5:b0:1dc:b003:ed7a with SMTP id
+ n5-20020a170902d2c500b001dcb003ed7amr10982899plc.5.1709836036537; 
+ Thu, 07 Mar 2024 10:27:16 -0800 (PST)
 Received: from amd.. ([2804:7f0:b401:120f:3e7c:3fff:fe7a:e83b])
  by smtp.gmail.com with ESMTPSA id
- mm12-20020a1709030a0c00b001dc96d1a662sm14939068plb.197.2024.03.07.10.27.08
+ mm12-20020a1709030a0c00b001dc96d1a662sm14939068plb.197.2024.03.07.10.27.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 Mar 2024 10:27:10 -0800 (PST)
+ Thu, 07 Mar 2024 10:27:16 -0800 (PST)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org,
 	richard.henderson@linaro.org
 Cc: alex.bennee@linaro.org, peter.maydell@linaro.org, laurent@vivier.eu,
  philmd@linaro.org, gustavo.romero@linaro.org
-Subject: [PATCH v2 3/5] gdbstub: Save target's siginfo
-Date: Thu,  7 Mar 2024 18:26:21 +0000
-Message-Id: <20240307182623.1450717-3-gustavo.romero@linaro.org>
+Subject: [PATCH v2 5/5] tests/tcg: Add multiarch test for Xfer:siginfo:read
+ stub
+Date: Thu,  7 Mar 2024 18:26:23 +0000
+Message-Id: <20240307182623.1450717-5-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240307182623.1450717-1-gustavo.romero@linaro.org>
 References: <20240307182623.1450717-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,172 +97,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Save target's siginfo into gdbserver_state so it can be used later, for
-example, in any stub that requires the target's si_signo and si_code.
-
-This change affects only linux-user mode.
+Add multiarch test for testing if Xfer:siginfo:read query is properly
+handled by gdbstub.
 
 Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- gdbstub/internals.h    |  3 +++
- gdbstub/user-target.c  |  3 ++-
- gdbstub/user.c         | 14 ++++++++++----
- include/gdbstub/user.h |  6 +++++-
- linux-user/main.c      |  2 +-
- linux-user/signal.c    |  5 ++++-
- 6 files changed, 25 insertions(+), 8 deletions(-)
+ tests/tcg/multiarch/Makefile.target           | 10 ++++++-
+ .../gdbstub/test-qxfer-siginfo-read.py        | 26 +++++++++++++++++++
+ tests/tcg/multiarch/segfault.c                | 14 ++++++++++
+ 3 files changed, 49 insertions(+), 1 deletion(-)
+ create mode 100644 tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py
+ create mode 100644 tests/tcg/multiarch/segfault.c
 
-diff --git a/gdbstub/internals.h b/gdbstub/internals.h
-index 56b7c13b75..a7cc69dab3 100644
---- a/gdbstub/internals.h
-+++ b/gdbstub/internals.h
-@@ -58,6 +58,9 @@ typedef struct GDBState {
-     int line_csum; /* checksum at the end of the packet */
-     GByteArray *last_packet;
-     int signal;
-+#ifdef CONFIG_USER_ONLY
-+    uint8_t siginfo[MAX_SIGINFO_LENGTH];
-+#endif
-     bool multiprocess;
-     GDBProcess *processes;
-     int process_num;
-diff --git a/gdbstub/user-target.c b/gdbstub/user-target.c
-index b7d4c37cd8..215bf33ab3 100644
---- a/gdbstub/user-target.c
-+++ b/gdbstub/user-target.c
-@@ -10,11 +10,12 @@
- #include "qemu/osdep.h"
- #include "exec/gdbstub.h"
- #include "qemu.h"
--#include "internals.h"
- #ifdef CONFIG_LINUX
- #include "linux-user/loader.h"
- #include "linux-user/qemu.h"
-+#include "gdbstub/user.h"
- #endif
-+#include "internals.h"
+diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
+index f11f3b084d..5ab4ba89b2 100644
+--- a/tests/tcg/multiarch/Makefile.target
++++ b/tests/tcg/multiarch/Makefile.target
+@@ -71,6 +71,13 @@ run-gdbstub-qxfer-auxv-read: sha1
+ 		--bin $< --test $(MULTIARCH_SRC)/gdbstub/test-qxfer-auxv-read.py, \
+ 	basic gdbstub qXfer:auxv:read support)
  
- /*
-  * Map target signal numbers to GDB protocol signal numbers and vice
-diff --git a/gdbstub/user.c b/gdbstub/user.c
-index a157e67f95..777fa78ef4 100644
---- a/gdbstub/user.c
-+++ b/gdbstub/user.c
-@@ -131,7 +131,8 @@ void gdb_qemu_exit(int code)
-     exit(code);
- }
++run-gdbstub-qxfer-siginfo-read: segfault
++	$(call run-test, $@, $(GDB_SCRIPT) \
++		--gdb $(GDB) \
++		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
++		--bin "$< -s" --test $(MULTIARCH_SRC)/gdbstub/test-qxfer-siginfo-read.py, \
++	basic gdbstub qXfer:siginfo:read support)
++
+ run-gdbstub-proc-mappings: sha1
+ 	$(call run-test, $@, $(GDB_SCRIPT) \
+ 		--gdb $(GDB) \
+@@ -113,7 +120,8 @@ endif
+ EXTRA_RUNS += run-gdbstub-sha1 run-gdbstub-qxfer-auxv-read \
+ 	      run-gdbstub-proc-mappings run-gdbstub-thread-breakpoint \
+ 	      run-gdbstub-registers run-gdbstub-prot-none \
+-	      run-gdbstub-catch-syscalls
++	      run-gdbstub-catch-syscalls \
++	      run-gdbstub-qxfer-siginfo-read
  
--int gdb_handlesig(CPUState *cpu, int sig, const char *reason)
-+int gdb_handlesig(CPUState *cpu, int sig, const char *reason, void *siginfo,
-+                  int siginfo_len)
- {
-     char buf[256];
-     int n;
-@@ -140,6 +141,11 @@ int gdb_handlesig(CPUState *cpu, int sig, const char *reason)
-         return sig;
-     }
- 
-+    if (siginfo) {
-+        /* Save target-specific siginfo. */
-+        memcpy(gdbserver_state.siginfo, siginfo, siginfo_len);
+ # ARM Compatible Semi Hosting Tests
+ #
+diff --git a/tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py b/tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py
+new file mode 100644
+index 0000000000..862596b07a
+--- /dev/null
++++ b/tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py
+@@ -0,0 +1,26 @@
++from __future__ import print_function
++#
++# Test gdbstub Xfer:siginfo:read stub.
++#
++# The test runs a binary that causes a SIGSEGV and then looks for additional
++# info about the signal through printing GDB's '$_siginfo' special variable,
++# which sends a Xfer:siginfo:read query to the gdbstub.
++#
++# The binary causes a SIGSEGV at dereferencing a pointer with value 0xdeadbeef,
++# so the test looks for and checks if this address is correctly reported by the
++# gdbstub.
++#
++# This is launched via tests/guest-debug/run-test.py
++#
++
++import gdb
++from test_gdbstub import main, report
++
++def run_test():
++    "Run through the test"
++
++    gdb.execute("continue", False, True)
++    resp = gdb.execute("print/x $_siginfo", False, True)
++    report(resp.find("si_addr = 0xdeadbeef"), "Found fault address.")
++
++main(run_test)
+diff --git a/tests/tcg/multiarch/segfault.c b/tests/tcg/multiarch/segfault.c
+new file mode 100644
+index 0000000000..e6c8ff31ca
+--- /dev/null
++++ b/tests/tcg/multiarch/segfault.c
+@@ -0,0 +1,14 @@
++#include <stdio.h>
++#include <string.h>
++
++/* Cause a segfault for testing purposes. */
++
++int main(int argc, char *argv[])
++{
++    int *ptr = (void *)0xdeadbeef;
++
++    if (argc == 2 && strcmp(argv[1], "-s") == 0) {
++        /* Cause segfault. */
++        printf("%d\n", *ptr);
 +    }
-+
-     /* disable single step if it was enabled */
-     cpu_single_step(cpu, 0);
-     tb_flush(cpu);
-@@ -510,7 +516,7 @@ void gdb_breakpoint_remove_all(CPUState *cs)
- void gdb_syscall_handling(const char *syscall_packet)
- {
-     gdb_put_packet(syscall_packet);
--    gdb_handlesig(gdbserver_state.c_cpu, 0, NULL);
-+    gdb_handlesig(gdbserver_state.c_cpu, 0, NULL, NULL, 0);
- }
- 
- static bool should_catch_syscall(int num)
-@@ -528,7 +534,7 @@ void gdb_syscall_entry(CPUState *cs, int num)
- {
-     if (should_catch_syscall(num)) {
-         g_autofree char *reason = g_strdup_printf("syscall_entry:%x;", num);
--        gdb_handlesig(cs, gdb_target_sigtrap(), reason);
-+        gdb_handlesig(cs, gdb_target_sigtrap(), reason, NULL, 0);
-     }
- }
- 
-@@ -536,7 +542,7 @@ void gdb_syscall_return(CPUState *cs, int num)
- {
-     if (should_catch_syscall(num)) {
-         g_autofree char *reason = g_strdup_printf("syscall_return:%x;", num);
--        gdb_handlesig(cs, gdb_target_sigtrap(), reason);
-+        gdb_handlesig(cs, gdb_target_sigtrap(), reason, NULL, 0);
-     }
- }
- 
-diff --git a/include/gdbstub/user.h b/include/gdbstub/user.h
-index 6647af2123..0ec9a7e596 100644
---- a/include/gdbstub/user.h
-+++ b/include/gdbstub/user.h
-@@ -9,11 +9,15 @@
- #ifndef GDBSTUB_USER_H
- #define GDBSTUB_USER_H
- 
-+#define MAX_SIGINFO_LENGTH 128
-+
- /**
-  * gdb_handlesig() - yield control to gdb
-  * @cpu: CPU
-  * @sig: if non-zero, the signal number which caused us to stop
-  * @reason: stop reason for stop reply packet or NULL
-+ * @siginfo: target-specific siginfo struct
-+ * @siginfo_len: target-specific siginfo struct length
-  *
-  * This function yields control to gdb, when a user-mode-only target
-  * needs to stop execution. If @sig is non-zero, then we will send a
-@@ -25,7 +29,7 @@
-  * or 0 if no signal should be delivered, ie the signal that caused
-  * us to stop should be ignored.
-  */
--int gdb_handlesig(CPUState *, int, const char *);
-+int gdb_handlesig(CPUState *, int, const char *, void *, int);
- 
- /**
-  * gdb_signalled() - inform remote gdb of sig exit
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 049fd85a2a..3187be48d6 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -1014,7 +1014,7 @@ int main(int argc, char **argv, char **envp)
-                     gdbstub);
-             exit(EXIT_FAILURE);
-         }
--        gdb_handlesig(cpu, 0, NULL);
-+        gdb_handlesig(cpu, 0, NULL, NULL, 0);
-     }
- 
- #ifdef CONFIG_SEMIHOSTING
-diff --git a/linux-user/signal.c b/linux-user/signal.c
-index 7a4c8e416e..98d1eacffe 100644
---- a/linux-user/signal.c
-+++ b/linux-user/signal.c
-@@ -34,6 +34,9 @@
- #include "user/safe-syscall.h"
- #include "tcg/tcg.h"
- 
-+/* target_siginfo_t must fit in gdbstub's siginfo save area. */
-+QEMU_BUILD_BUG_ON(sizeof(target_siginfo_t) > MAX_SIGINFO_LENGTH);
-+
- static struct target_sigaction sigact_table[TARGET_NSIG];
- 
- static void host_signal_handler(int host_signum, siginfo_t *info,
-@@ -1186,7 +1189,7 @@ static void handle_pending_signal(CPUArchState *cpu_env, int sig,
-      */
-     tswap_siginfo(&k->info, &k->info);
- 
--    sig = gdb_handlesig(cpu, sig, NULL);
-+    sig = gdb_handlesig(cpu, sig, NULL, &k->info, sizeof(k->info));
-     if (!sig) {
-         sa = NULL;
-         handler = TARGET_SIG_IGN;
++}
 -- 
 2.34.1
 
