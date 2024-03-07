@@ -4,98 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBAFDC48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 14:07:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D613CC54798
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 14:10:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riENo-0001z5-Dg; Thu, 07 Mar 2024 09:06:04 -0500
+	id 1riER0-0003xJ-Nd; Thu, 07 Mar 2024 09:09:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1riENm-0001yf-PQ
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 09:06:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1riEQz-0003ww-L0
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 09:09:21 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1riENj-00058b-UY
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 09:06:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709820358;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=iNSbuumSe4tGdJSMXLtnLXXbcWoC8LN0SQvwDX4XPOQ=;
- b=c1cvbP/Cpy/4JjfVxY7qUufJfn3bKzK7YeqXLVviDNihJ18CDD3iREEoBX5T3fAdLqTYkJ
- wHXzHt1eDv9t59q0w26y0OvfQNFkaSORPofRU5Ka7XtYOXnrYV8HU4muAPa2plSthQE+Wv
- Ha3nztukS4/6BoYT2yybICbdtEzqo8Q=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-516-plnlnjAMPGKJO76fY58KWQ-1; Thu, 07 Mar 2024 09:05:56 -0500
-X-MC-Unique: plnlnjAMPGKJO76fY58KWQ-1
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-42ef02a3861so9975871cf.0
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 06:05:56 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709820356; x=1710425156;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iNSbuumSe4tGdJSMXLtnLXXbcWoC8LN0SQvwDX4XPOQ=;
- b=JiSJDrYU04TuSJASicVnUJ8epJ71LJE+L5mlQsItE4z1E6ck08+P7q87qZLdHvui2o
- +Akb0+7fUTBgE4DwvRV3J3m8dbW4PaGDdPOCxTOxgRaP/T/I4iM0BzicNj5LOrKiL4BZ
- GzmhjdzSbNY1d5nt6Odr3fxiT12OSTNcu4afH76FVNQKfMyE2QWsCZL4Gqw2UCYtHd8h
- mTecS6MHm2ILqbd0t16D+eEUipOsCjEMDijgurEASCu3UOT3epxMG/P5wxlb/S01/cz7
- I3cFBTGOYxGWd97AhI6AeRzAu3WpDr4Gpjl+9HNgZGauZN3OpXFd0JSXZnp+LbniyGlX
- Ps8g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWO4WhVSZowJuisrg916gzyPM0pbqYxmPvbi9xjivIeQSTVGmj+dYQ0jKd7JbqZVPKrUnKv/BkWrpaiAYNZ4nlMOuUFVFo=
-X-Gm-Message-State: AOJu0Yzmz2KYWlN61hOuAAAdw6uPLhRTXGrS/RNwfxeaEKkm5+SYNpeN
- HWvOVCSIEUAoMXjHZBQmlMJnZUOo+gZwgarSnqLvFgff9x7t1LmxCN8UqTjOuCCznY6VzxbwKSm
- uVY8gIuse+JRl76qwklW1e0C+cRr4tzSCAwVacRpGQUp9Qi3eIJPO
-X-Received: by 2002:a05:622a:1805:b0:42e:efce:136a with SMTP id
- t5-20020a05622a180500b0042eefce136amr9795199qtc.57.1709820355687; 
- Thu, 07 Mar 2024 06:05:55 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGg867z+7eC+JxjLbheZtpctswwLtT6LsLyMUxCS4PF71wfj+OuERmXaj5rKiB6IRK1/x64PA==
-X-Received: by 2002:a05:622a:1805:b0:42e:efce:136a with SMTP id
- t5-20020a05622a180500b0042eefce136amr9795151qtc.57.1709820355103; 
- Thu, 07 Mar 2024 06:05:55 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- b15-20020ac85bcf000000b0042e6093ff31sm7575367qtb.63.2024.03.07.06.05.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 Mar 2024 06:05:54 -0800 (PST)
-Message-ID: <1f370b66-1b28-4a4e-a84d-735b6f2f1716@redhat.com>
-Date: Thu, 7 Mar 2024 15:05:51 +0100
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1riEQv-0000Ju-Jr
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 09:09:21 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TrB4Q19MHz6D8c3;
+ Thu,  7 Mar 2024 22:09:10 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 4AE8D140D1D;
+ Thu,  7 Mar 2024 22:09:13 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Thu, 7 Mar
+ 2024 14:09:12 +0000
+Date: Thu, 7 Mar 2024 14:09:11 +0000
+To: Peter Xu <peterx@redhat.com>
+CC: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>, 
+ Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ <qemu-devel@nongnu.org>, <linuxarm@huawei.com>
+Subject: Re: [PATCH 2/3] physmem: Factor out body of
+ flatview_read/write_continue() loop
+Message-ID: <20240307140911.00003c1b@Huawei.com>
+In-Reply-To: <ZeFpHr0KU6NWMv1x@x1n>
+References: <20240215142817.1904-1-Jonathan.Cameron@huawei.com>
+ <20240215142817.1904-3-Jonathan.Cameron@huawei.com>
+ <ZeFnoBLJ_fKhLD8r@x1n> <ZeFpHr0KU6NWMv1x@x1n>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 18/25] vfio: Add Error** argument to
- vfio_devices_dma_logging_stop()
-Content-Language: en-US, fr
-To: Eric Auger <eauger@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
- Prasad Pandit <pjp@fedoraproject.org>
-References: <20240306133441.2351700-1-clg@redhat.com>
- <20240306133441.2351700-19-clg@redhat.com>
- <a1836566-0757-4b1b-84af-228e848c7a48@redhat.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <a1836566-0757-4b1b-84af-228e848c7a48@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.583,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml100001.china.huawei.com (7.191.160.183) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,106 +70,189 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/7/24 09:53, Eric Auger wrote:
-> 
-> 
-> On 3/6/24 14:34, Cédric Le Goater wrote:
->> This improves error reporting in the log_global_stop() VFIO handler.
->>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->> ---
->>
->>   Changes in v4:
->>
->>   - Dropped log_global_stop() and log_global_sync() changes
->>     
->>   Changes in v3:
->>
->>   - Use error_setg_errno() in vfio_devices_dma_logging_stop()
->>   
->>   hw/vfio/common.c | 19 ++++++++++++++-----
->>   1 file changed, 14 insertions(+), 5 deletions(-)
->>
->> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
->> index d6790557da2f2890398fa03dbbef18129cd2c1bb..5b2e6a179cdd5f8ca5be84b7097661e96b391456 100644
->> --- a/hw/vfio/common.c
->> +++ b/hw/vfio/common.c
->> @@ -938,12 +938,14 @@ static void vfio_dirty_tracking_init(VFIOContainerBase *bcontainer,
->>       memory_listener_unregister(&dirty.listener);
->>   }
->>   
->> -static void vfio_devices_dma_logging_stop(VFIOContainerBase *bcontainer)
->> +static int vfio_devices_dma_logging_stop(VFIOContainerBase *bcontainer,
->> +                                          Error **errp)
->>   {
->>       uint64_t buf[DIV_ROUND_UP(sizeof(struct vfio_device_feature),
->>                                 sizeof(uint64_t))] = {};
->>       struct vfio_device_feature *feature = (struct vfio_device_feature *)buf;
->>       VFIODevice *vbasedev;
->> +    int ret = 0;
->>   
->>       feature->argsz = sizeof(buf);
->>       feature->flags = VFIO_DEVICE_FEATURE_SET |
->> @@ -955,11 +957,17 @@ static void vfio_devices_dma_logging_stop(VFIOContainerBase *bcontainer)
->>           }
->>   
->>           if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
->> -            warn_report("%s: Failed to stop DMA logging, err %d (%s)",
->> -                        vbasedev->name, -errno, strerror(errno));
->> +            /* Keep first error */
->> +            if (!ret) {
->> +                ret = -errno;
->> +                error_setg_errno(errp, errno, "%s: Failed to stop DMA logging",
->> +                                 vbasedev->name);
-> maybe you can keep the previous warn_report in case errp is NULL
-> (rollback) or for subsequent failures?
+On Fri, 1 Mar 2024 13:35:26 +0800
+Peter Xu <peterx@redhat.com> wrote:
 
-Hmm, I wonder if we should keep this patch. It made sense when
-vfio_listener_log_global_stop() had an Error ** parameter. We
-dropped it in v4 for the sake of simplicity, so we might as
-well keep the previous behavior and simply warn the user when
-dirty tracking fails to stop. I will check for v5.
+> On Fri, Mar 01, 2024 at 01:29:04PM +0800, Peter Xu wrote:
+> > On Thu, Feb 15, 2024 at 02:28:16PM +0000, Jonathan Cameron wrote:  
+> > > This code will be reused for the address_space_cached accessors
+> > > shortly.
+> > > 
+> > > Also reduce scope of result variable now we aren't directly
+> > > calling this in the loop.
+> > > 
+> > > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> > > ---
+> > >  system/physmem.c | 165 ++++++++++++++++++++++++++++-------------------
+> > >  1 file changed, 98 insertions(+), 67 deletions(-)
+> > > 
+> > > diff --git a/system/physmem.c b/system/physmem.c
+> > > index 39b5ac751e..74f92bb3b8 100644
+> > > --- a/system/physmem.c
+> > > +++ b/system/physmem.c
+> > > @@ -2677,6 +2677,54 @@ static bool flatview_access_allowed(MemoryRegion *mr, MemTxAttrs attrs,
+> > >      return false;
+> > >  }
+> > >  
+> > > +static MemTxResult flatview_write_continue_step(hwaddr addr,  
+> 
+> One more thing: this addr var is not used, afaict.  We could drop addr1
+> below and use this to represent the MR offset.
+
+I'm tempted to keep the addr1 where it is in the parameter list just so that
+it matches up with the caller location but a rename makes a lot of sense.
+
+> 
+> I'm wondering whether we should start to use some better namings already
+> for memory API functions to show obviously what AS it is describing.  From
+> that POV, perhaps rename it to "mr_addr"?
+
+I'll add a precursor patch renaming these for the functions this series touches.
+We can tidy up other cases later.  I'll put a note in that patch below the cut
+to observe that the rename makes sense more widely.
+
+I've not picked up the RB given because of the parameter ordering question.
 
 Thanks,
 
-C.
-
-
+Jonathan
 
 > 
-> Eric
->> +            }
->>           }
->>           vbasedev->dirty_tracking = false;
->>       }
->> +
->> +    return ret;
->>   }
->>   
->>   static struct vfio_device_feature *
->> @@ -1068,7 +1076,8 @@ static int vfio_devices_dma_logging_start(VFIOContainerBase *bcontainer,
->>   
->>   out:
->>       if (ret) {
->> -        vfio_devices_dma_logging_stop(bcontainer);
->> +        /* Ignore the potential errors when doing rollback */
->> +        vfio_devices_dma_logging_stop(bcontainer, NULL);
->>       }
->>   
->>       vfio_device_feature_dma_logging_start_destroy(feature);
->> @@ -1104,7 +1113,7 @@ static void vfio_listener_log_global_stop(MemoryListener *listener)
->>       int ret = 0;
->>   
->>       if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
->> -        vfio_devices_dma_logging_stop(bcontainer);
->> +        ret = vfio_devices_dma_logging_stop(bcontainer, &local_err);
->>       } else {
->>           ret = vfio_container_set_dirty_page_tracking(bcontainer, false,
->>                                                        &local_err);
+> > > +                                                MemTxAttrs attrs,
+> > > +                                                const uint8_t *buf,
+> > > +                                                hwaddr len, hwaddr addr1,
+> > > +                                                hwaddr *l, MemoryRegion *mr)
+> > > +{
+> > > +    if (!flatview_access_allowed(mr, attrs, addr1, *l)) {
+> > > +        return MEMTX_ACCESS_ERROR;
+> > > +    }
+> > > +
+> > > +    if (!memory_access_is_direct(mr, true)) {
+> > > +        uint64_t val;
+> > > +        MemTxResult result;
+> > > +        bool release_lock = prepare_mmio_access(mr);
+> > > +
+> > > +        *l = memory_access_size(mr, *l, addr1);
+> > > +        /* XXX: could force current_cpu to NULL to avoid
+> > > +           potential bugs */
+> > > +
+> > > +        /*
+> > > +         * Assure Coverity (and ourselves) that we are not going to OVERRUN
+> > > +         * the buffer by following ldn_he_p().
+> > > +         */
+> > > +#ifdef QEMU_STATIC_ANALYSIS
+> > > +        assert((*l == 1 && len >= 1) ||
+> > > +               (*l == 2 && len >= 2) ||
+> > > +               (*l == 4 && len >= 4) ||
+> > > +               (*l == 8 && len >= 8));
+> > > +#endif
+> > > +        val = ldn_he_p(buf, *l);
+> > > +        result = memory_region_dispatch_write(mr, addr1, val,
+> > > +                                              size_memop(*l), attrs);
+> > > +        if (release_lock) {
+> > > +            bql_unlock();
+> > > +        }
+> > > +
+> > > +        return result;
+> > > +    } else {
+> > > +        /* RAM case */
+> > > +        uint8_t *ram_ptr = qemu_ram_ptr_length(mr->ram_block, addr1, l, false);
+> > > +
+> > > +        memmove(ram_ptr, buf, *l);
+> > > +        invalidate_and_set_dirty(mr, addr1, *l);
+> > > +
+> > > +        return MEMTX_OK;
+> > > +    }
+> > > +}
+> > > +
+> > >  /* Called within RCU critical section.  */
+> > >  static MemTxResult flatview_write_continue(FlatView *fv, hwaddr addr,
+> > >                                             MemTxAttrs attrs,
+> > > @@ -2688,42 +2736,9 @@ static MemTxResult flatview_write_continue(FlatView *fv, hwaddr addr,
+> > >      const uint8_t *buf = ptr;
+> > >  
+> > >      for (;;) {
+> > > -        if (!flatview_access_allowed(mr, attrs, addr1, l)) {
+> > > -            result |= MEMTX_ACCESS_ERROR;
+> > > -            /* Keep going. */
+> > > -        } else if (!memory_access_is_direct(mr, true)) {
+> > > -            uint64_t val;
+> > > -            bool release_lock = prepare_mmio_access(mr);
+> > > -
+> > > -            l = memory_access_size(mr, l, addr1);
+> > > -            /* XXX: could force current_cpu to NULL to avoid
+> > > -               potential bugs */
+> > > -
+> > > -            /*
+> > > -             * Assure Coverity (and ourselves) that we are not going to OVERRUN
+> > > -             * the buffer by following ldn_he_p().
+> > > -             */
+> > > -#ifdef QEMU_STATIC_ANALYSIS
+> > > -            assert((l == 1 && len >= 1) ||
+> > > -                   (l == 2 && len >= 2) ||
+> > > -                   (l == 4 && len >= 4) ||
+> > > -                   (l == 8 && len >= 8));
+> > > -#endif
+> > > -            val = ldn_he_p(buf, l);
+> > > -            result |= memory_region_dispatch_write(mr, addr1, val,
+> > > -                                                   size_memop(l), attrs);
+> > > -            if (release_lock) {
+> > > -                bql_unlock();
+> > > -            }
+> > > -
+> > >  
+> > > -        } else {
+> > > -            /* RAM case */
+> > > -            uint8_t *ram_ptr = qemu_ram_ptr_length(mr->ram_block, addr1, &l,
+> > > -                                                   false);
+> > > -            memmove(ram_ptr, buf, l);
+> > > -            invalidate_and_set_dirty(mr, addr1, l);
+> > > -        }
+> > > +        result |= flatview_write_continue_step(addr, attrs, buf, len, addr1, &l,
+> > > +                                               mr);
+> > >  
+> > >          len -= l;
+> > >          buf += l;
+> > > @@ -2757,6 +2772,52 @@ static MemTxResult flatview_write(FlatView *fv, hwaddr addr, MemTxAttrs attrs,
+> > >                                     addr1, l, mr);
+> > >  }
+> > >  
+> > > +static MemTxResult flatview_read_continue_step(hwaddr addr,
+> > > +                                               MemTxAttrs attrs, uint8_t *buf,
+> > > +                                               hwaddr len, hwaddr addr1,
+> > > +                                               hwaddr *l,
+> > > +                                               MemoryRegion *mr)
+> > > +{
+> > > +    if (!flatview_access_allowed(mr, attrs, addr1, *l)) {
+> > > +        return  MEMTX_ACCESS_ERROR;  
+> >                   |
+> >                   ^ space
+> >   
+> > > +    }
+> > > +
+> > > +    if (!memory_access_is_direct(mr, false)) {
+> > > +        /* I/O case */
+> > > +        uint64_t val;
+> > > +        MemTxResult result;
+> > > +        bool release_lock = prepare_mmio_access(mr);
+> > > +
+> > > +        *l = memory_access_size(mr, *l, addr1);
+> > > +        result = memory_region_dispatch_read(mr, addr1, &val,
+> > > +                                                  size_memop(*l), attrs);  
+> > 
+> > Please do proper indents.
+> > 
+> > Other than that:
+> > 
+> > Reviewed-by: Peter Xu <peterx@redhat.com>
+> > 
+> > -- 
+> > Peter Xu  
 > 
 
 
