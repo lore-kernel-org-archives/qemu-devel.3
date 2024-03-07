@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E080C54E49
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 16:52:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83F4EC54E49
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 16:53:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riGvO-0007EY-B1; Thu, 07 Mar 2024 11:48:54 -0500
+	id 1riGvV-0007Kq-Dh; Thu, 07 Mar 2024 11:49:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1riGvI-0007AK-Jc
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 11:48:48 -0500
+ id 1riGvQ-0007F5-0Z
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 11:48:56 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1riGvC-0002VL-80
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 11:48:46 -0500
+ (envelope-from <gaosong@loongson.cn>) id 1riGvN-0002WS-Ob
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 11:48:55 -0500
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxbOnl7+llCQEWAA--.44381S3;
- Fri, 08 Mar 2024 00:48:37 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxbOnp7+llKwEWAA--.44387S3;
+ Fri, 08 Mar 2024 00:48:41 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxnhPj7+llNmpQAA--.27604S3; 
- Fri, 08 Mar 2024 00:48:36 +0800 (CST)
+ AQAAf8BxnhPj7+llNmpQAA--.27604S19; 
+ Fri, 08 Mar 2024 00:48:41 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
 	maobibo@loongson.cn
-Subject: [PATCH v6 01/17] hw/loongarch: Move boot fucntions to boot.c
-Date: Fri,  8 Mar 2024 00:48:19 +0800
-Message-Id: <20240307164835.300412-2-gaosong@loongson.cn>
+Subject: [PATCH v6 17/17] hw/loongarch: Add cells missing from rtc node
+Date: Fri,  8 Mar 2024 00:48:35 +0800
+Message-Id: <20240307164835.300412-18-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20240307164835.300412-1-gaosong@loongson.cn>
 References: <20240307164835.300412-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8BxnhPj7+llNmpQAA--.27604S3
+X-CM-TRANSID: AQAAf8BxnhPj7+llNmpQAA--.27604S19
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,382 +65,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move some boot functions to boot.c and struct
-loongarch_boot_info into struct LoongArchMachineState.
+rtc node need interrupts and interrupt-parent cells.
 
 Signed-off-by: Song Gao <gaosong@loongson.cn>
-Message-Id: <20240301093839.663947-2-gaosong@loongson.cn>
+Message-Id: <20240301093839.663947-18-gaosong@loongson.cn>
 ---
- hw/loongarch/boot.c         | 128 ++++++++++++++++++++++++++++++++++++
- hw/loongarch/meson.build    |   1 +
- hw/loongarch/virt.c         | 121 +++-------------------------------
- include/hw/loongarch/boot.h |  21 ++++++
- include/hw/loongarch/virt.h |   2 +
- 5 files changed, 160 insertions(+), 113 deletions(-)
- create mode 100644 hw/loongarch/boot.c
- create mode 100644 include/hw/loongarch/boot.h
+ hw/loongarch/virt.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-new file mode 100644
-index 0000000000..a8a725a0a8
---- /dev/null
-+++ b/hw/loongarch/boot.c
-@@ -0,0 +1,128 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * LoongArch boot helper functions.
-+ *
-+ * Copyright (c) 2023 Loongson Technology Corporation Limited
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/units.h"
-+#include "target/loongarch/cpu.h"
-+#include "hw/loongarch/virt.h"
-+#include "hw/loader.h"
-+#include "elf.h"
-+#include "qemu/error-report.h"
-+#include "sysemu/reset.h"
-+#include "sysemu/qtest.h"
-+
-+static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
-+{
-+    return addr & MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
-+}
-+
-+static int64_t load_kernel_info(struct loongarch_boot_info *info)
-+{
-+    uint64_t kernel_entry, kernel_low, kernel_high;
-+    ssize_t kernel_size;
-+
-+    kernel_size = load_elf(info->kernel_filename, NULL,
-+                           cpu_loongarch_virt_to_phys, NULL,
-+                           &kernel_entry, &kernel_low,
-+                           &kernel_high, NULL, 0,
-+                           EM_LOONGARCH, 1, 0);
-+
-+    if (kernel_size < 0) {
-+        error_report("could not load kernel '%s': %s",
-+                     info->kernel_filename,
-+                     load_elf_strerror(kernel_size));
-+        exit(1);
-+    }
-+    return kernel_entry;
-+}
-+
-+static void reset_load_elf(void *opaque)
-+{
-+    LoongArchCPU *cpu = opaque;
-+    CPULoongArchState *env = &cpu->env;
-+
-+    cpu_reset(CPU(cpu));
-+    if (env->load_elf) {
-+        cpu_set_pc(CPU(cpu), env->elf_address);
-+    }
-+}
-+
-+static void fw_cfg_add_kernel_info(struct loongarch_boot_info *info,
-+                                   FWCfgState *fw_cfg)
-+{
-+    /*
-+     * Expose the kernel, the command line, and the initrd in fw_cfg.
-+     * We don't process them here at all, it's all left to the
-+     * firmware.
-+     */
-+    load_image_to_fw_cfg(fw_cfg,
-+                         FW_CFG_KERNEL_SIZE, FW_CFG_KERNEL_DATA,
-+                         info->kernel_filename,
-+                         false);
-+
-+    if (info->initrd_filename) {
-+        load_image_to_fw_cfg(fw_cfg,
-+                             FW_CFG_INITRD_SIZE, FW_CFG_INITRD_DATA,
-+                             info->initrd_filename, false);
-+    }
-+
-+    if (info->kernel_cmdline) {
-+        fw_cfg_add_i32(fw_cfg, FW_CFG_CMDLINE_SIZE,
-+                       strlen(info->kernel_cmdline) + 1);
-+        fw_cfg_add_string(fw_cfg, FW_CFG_CMDLINE_DATA,
-+                          info->kernel_cmdline);
-+    }
-+}
-+
-+static void loongarch_firmware_boot(LoongArchMachineState *lams,
-+                                    struct loongarch_boot_info *info)
-+{
-+    fw_cfg_add_kernel_info(info, lams->fw_cfg);
-+}
-+
-+static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
-+{
-+    int64_t kernel_addr = 0;
-+    LoongArchCPU *lacpu;
-+    CPUState *cs;
-+
-+    if (info->kernel_filename) {
-+        kernel_addr = load_kernel_info(info);
-+    } else {
-+        if (!qtest_enabled()) {
-+            error_report("Need kernel filename\n");
-+            exit(1);
-+        }
-+    }
-+
-+    CPU_FOREACH(cs) {
-+        lacpu = LOONGARCH_CPU(cs);
-+        lacpu->env.load_elf = true;
-+        lacpu->env.elf_address = kernel_addr;
-+    }
-+}
-+
-+void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
-+{
-+    LoongArchMachineState *lams = LOONGARCH_MACHINE(ms);
-+    int i;
-+
-+    /* register reset function */
-+    for (i = 0; i < ms->smp.cpus; i++) {
-+        qemu_register_reset(reset_load_elf, LOONGARCH_CPU(qemu_get_cpu(i)));
-+    }
-+
-+    info->kernel_filename = ms->kernel_filename;
-+    info->kernel_cmdline = ms->kernel_cmdline;
-+    info->initrd_filename = ms->initrd_filename;
-+
-+    if (lams->bios_loaded) {
-+        loongarch_firmware_boot(lams, info);
-+    } else {
-+        loongarch_direct_kernel_boot(info);
-+    }
-+}
-diff --git a/hw/loongarch/meson.build b/hw/loongarch/meson.build
-index c0421502ab..d306d82c2e 100644
---- a/hw/loongarch/meson.build
-+++ b/hw/loongarch/meson.build
-@@ -1,6 +1,7 @@
- loongarch_ss = ss.source_set()
- loongarch_ss.add(files(
-     'fw_cfg.c',
-+    'boot.c',
- ))
- loongarch_ss.add(when: 'CONFIG_LOONGARCH_VIRT', if_true: [files('virt.c'), fdt])
- loongarch_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-build.c'))
 diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 1e98d8bda5..bbd5cc1d4d 100644
+index 58957a8d9a..676f1f5227 100644
 --- a/hw/loongarch/virt.c
 +++ b/hw/loongarch/virt.c
-@@ -46,14 +46,6 @@
- #include "hw/block/flash.h"
- #include "qemu/error-report.h"
- 
--
--struct loaderparams {
--    uint64_t ram_size;
--    const char *kernel_filename;
--    const char *kernel_cmdline;
--    const char *initrd_filename;
--};
--
- static PFlashCFI01 *virt_flash_create1(LoongArchMachineState *lams,
-                                        const char *name,
-                                        const char *alias_prop_name)
-@@ -411,31 +403,6 @@ static void memmap_add_entry(uint64_t address, uint64_t length, uint32_t type)
-     memmap_entries++;
+@@ -231,7 +231,8 @@ static void fdt_add_flash_node(LoongArchMachineState *lams)
+     g_free(nodename);
  }
  
--static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
--{
--    return addr & MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
--}
--
--static int64_t load_kernel_info(const struct loaderparams *loaderparams)
--{
--    uint64_t kernel_entry, kernel_low, kernel_high;
--    ssize_t kernel_size;
--
--    kernel_size = load_elf(loaderparams->kernel_filename, NULL,
--                           cpu_loongarch_virt_to_phys, NULL,
--                           &kernel_entry, &kernel_low,
--                           &kernel_high, NULL, 0,
--                           EM_LOONGARCH, 1, 0);
--
--    if (kernel_size < 0) {
--        error_report("could not load kernel '%s': %s",
--                     loaderparams->kernel_filename,
--                     load_elf_strerror(kernel_size));
--        exit(1);
--    }
--    return kernel_entry;
--}
--
- static DeviceState *create_acpi_ged(DeviceState *pch_pic, LoongArchMachineState *lams)
+-static void fdt_add_rtc_node(LoongArchMachineState *lams)
++static void fdt_add_rtc_node(LoongArchMachineState *lams,
++                             uint32_t *pch_pic_phandle)
  {
-     DeviceState *dev;
-@@ -716,67 +683,6 @@ static void loongarch_firmware_init(LoongArchMachineState *lams)
-     }
+     char *nodename;
+     hwaddr base = VIRT_RTC_REG_BASE;
+@@ -240,8 +241,13 @@ static void fdt_add_rtc_node(LoongArchMachineState *lams)
+ 
+     nodename = g_strdup_printf("/rtc@%" PRIx64, base);
+     qemu_fdt_add_subnode(ms->fdt, nodename);
+-    qemu_fdt_setprop_string(ms->fdt, nodename, "compatible", "loongson,ls7a-rtc");
++    qemu_fdt_setprop_string(ms->fdt, nodename, "compatible",
++                            "loongson,ls7a-rtc");
+     qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg", 2, base, 2, size);
++    qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts",
++                           VIRT_RTC_IRQ - VIRT_GSI_BASE , 0x4);
++    qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
++                          *pch_pic_phandle);
+     g_free(nodename);
  }
  
--static void reset_load_elf(void *opaque)
--{
--    LoongArchCPU *cpu = opaque;
--    CPULoongArchState *env = &cpu->env;
--
--    cpu_reset(CPU(cpu));
--    if (env->load_elf) {
--        cpu_set_pc(CPU(cpu), env->elf_address);
--    }
--}
--
--static void fw_cfg_add_kernel_info(const struct loaderparams *loaderparams,
--                                   FWCfgState *fw_cfg)
--{
--    /*
--     * Expose the kernel, the command line, and the initrd in fw_cfg.
--     * We don't process them here at all, it's all left to the
--     * firmware.
--     */
--    load_image_to_fw_cfg(fw_cfg,
--                         FW_CFG_KERNEL_SIZE, FW_CFG_KERNEL_DATA,
--                         loaderparams->kernel_filename,
--                         false);
--
--    if (loaderparams->initrd_filename) {
--        load_image_to_fw_cfg(fw_cfg,
--                             FW_CFG_INITRD_SIZE, FW_CFG_INITRD_DATA,
--                             loaderparams->initrd_filename, false);
--    }
--
--    if (loaderparams->kernel_cmdline) {
--        fw_cfg_add_i32(fw_cfg, FW_CFG_CMDLINE_SIZE,
--                       strlen(loaderparams->kernel_cmdline) + 1);
--        fw_cfg_add_string(fw_cfg, FW_CFG_CMDLINE_DATA,
--                          loaderparams->kernel_cmdline);
--    }
--}
--
--static void loongarch_firmware_boot(LoongArchMachineState *lams,
--                                    const struct loaderparams *loaderparams)
--{
--    fw_cfg_add_kernel_info(loaderparams, lams->fw_cfg);
--}
--
--static void loongarch_direct_kernel_boot(LoongArchMachineState *lams,
--                                         const struct loaderparams *loaderparams)
--{
--    MachineState *machine = MACHINE(lams);
--    int64_t kernel_addr = 0;
--    LoongArchCPU *lacpu;
--    int i;
--
--    kernel_addr = load_kernel_info(loaderparams);
--    if (!machine->firmware) {
--        for (i = 0; i < machine->smp.cpus; i++) {
--            lacpu = LOONGARCH_CPU(qemu_get_cpu(i));
--            lacpu->env.load_elf = true;
--            lacpu->env.elf_address = kernel_addr;
--        }
--    }
--}
+@@ -647,7 +653,7 @@ static void loongarch_devices_init(DeviceState *pch_pic,
+     sysbus_create_simple("ls7a_rtc", VIRT_RTC_REG_BASE,
+                          qdev_get_gpio_in(pch_pic,
+                          VIRT_RTC_IRQ - VIRT_GSI_BASE));
+-    fdt_add_rtc_node(lams);
++    fdt_add_rtc_node(lams, pch_pic_phandle);
  
- static void loongarch_qemu_write(void *opaque, hwaddr addr,
-                                  uint64_t val, unsigned size)
-@@ -832,7 +738,6 @@ static void loongarch_init(MachineState *machine)
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
-     CPUState *cpu;
-     char *ramName = NULL;
--    struct loaderparams loaderparams = { };
- 
-     if (!cpu_model) {
-         cpu_model = LOONGARCH_CPU_TYPE_NAME("la464");
-@@ -935,24 +840,8 @@ static void loongarch_init(MachineState *machine)
-                         sizeof(struct memmap_entry) * (memmap_entries));
-     }
-     fdt_add_fw_cfg_node(lams);
--    loaderparams.ram_size = ram_size;
--    loaderparams.kernel_filename = machine->kernel_filename;
--    loaderparams.kernel_cmdline = machine->kernel_cmdline;
--    loaderparams.initrd_filename = machine->initrd_filename;
--    /* load the kernel. */
--    if (loaderparams.kernel_filename) {
--        if (lams->bios_loaded) {
--            loongarch_firmware_boot(lams, &loaderparams);
--        } else {
--            loongarch_direct_kernel_boot(lams, &loaderparams);
--        }
--    }
-     fdt_add_flash_node(lams);
--    /* register reset function */
--    for (i = 0; i < machine->smp.cpus; i++) {
--        lacpu = LOONGARCH_CPU(qemu_get_cpu(i));
--        qemu_register_reset(reset_load_elf, lacpu);
--    }
-+
-     /* Initialize the IO interrupt subsystem */
-     loongarch_irq_init(lams);
-     fdt_add_irqchip_node(lams);
-@@ -976,7 +865,13 @@ static void loongarch_init(MachineState *machine)
-      */
-     fdt_base = 1 * MiB;
-     qemu_fdt_dumpdtb(machine->fdt, lams->fdt_size);
--    rom_add_blob_fixed("fdt", machine->fdt, lams->fdt_size, fdt_base);
-+    rom_add_blob_fixed_as("fdt", machine->fdt, lams->fdt_size, fdt_base,
-+                          &address_space_memory);
-+    qemu_register_reset_nosnapshotload(qemu_fdt_randomize_seeds,
-+            rom_ptr_for_as(&address_space_memory, fdt_base, lams->fdt_size));
-+
-+    lams->bootinfo.ram_size = ram_size;
-+    loongarch_load_kernel(machine, &lams->bootinfo);
- }
- 
- bool loongarch_is_acpi_enabled(LoongArchMachineState *lams)
-diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
-new file mode 100644
-index 0000000000..3275c1e295
---- /dev/null
-+++ b/include/hw/loongarch/boot.h
-@@ -0,0 +1,21 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Definitions for LoongArch boot.
-+ *
-+ * Copyright (C) 2023 Loongson Technology Corporation Limited
-+ */
-+
-+#ifndef HW_LOONGARCH_BOOT_H
-+#define HW_LOONGARCH_BOOT_H
-+
-+struct loongarch_boot_info {
-+    uint64_t ram_size;
-+    const char *kernel_filename;
-+    const char *kernel_cmdline;
-+    const char *initrd_filename;
-+    uint64_t a0, a1, a2;
-+};
-+
-+void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info);
-+
-+#endif /* HW_LOONGARCH_BOOT_H */
-diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-index 252f7df7f4..cf2f2bfb19 100644
---- a/include/hw/loongarch/virt.h
-+++ b/include/hw/loongarch/virt.h
-@@ -13,6 +13,7 @@
- #include "qemu/queue.h"
- #include "hw/intc/loongarch_ipi.h"
- #include "hw/block/flash.h"
-+#include "hw/loongarch/boot.h"
- 
- #define LOONGARCH_MAX_CPUS      256
- 
-@@ -55,6 +56,7 @@ struct LoongArchMachineState {
-     MemoryRegion system_iocsr;
-     MemoryRegion iocsr_mem;
-     AddressSpace as_iocsr;
-+    struct loongarch_boot_info bootinfo;
- };
- 
- #define TYPE_LOONGARCH_MACHINE  MACHINE_TYPE_NAME("virt")
+     /* acpi ged */
+     lams->acpi_ged = create_acpi_ged(pch_pic, lams);
 -- 
 2.34.1
 
