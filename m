@@ -4,94 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AA61C5475B
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 03:42:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09DA6C54E41
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 03:46:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ri4e4-0000nF-JS; Wed, 06 Mar 2024 22:42:12 -0500
+	id 1ri4hy-0002HV-6I; Wed, 06 Mar 2024 22:46:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ri4e2-0000ms-OA
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 22:42:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1ri4e0-0002H2-PM
- for qemu-devel@nongnu.org; Wed, 06 Mar 2024 22:42:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709782927;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mXgI93MvArIHZk0roA8hzXyEZjpMVU6Y/TtLoru20Oc=;
- b=FLhW/PZKPk9LL291rvJUGHubqI309IKCg+YwDhlCDLZhFRKAw2E9qFpJSENCeG4M37owdO
- B5kB852XKmHXOG4TEZ9ta2AXaX8vwOdZp50UWKD1dku88D8N77CBh6PHkpRyqtjt7gRbNA
- OAtp0Wk2dZH4Si1+VwImF61HkVpskt4=
-Received: from mail-ot1-f70.google.com (mail-ot1-f70.google.com
- [209.85.210.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-49-Qwv3SbraP-CTVY9NktJJsw-1; Wed, 06 Mar 2024 22:42:05 -0500
-X-MC-Unique: Qwv3SbraP-CTVY9NktJJsw-1
-Received: by mail-ot1-f70.google.com with SMTP id
- 46e09a7af769-6e4fe655c93so183790a34.1
- for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 19:42:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1ri4hs-0002Ew-Bc
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 22:46:08 -0500
+Received: from mail-oo1-xc2a.google.com ([2607:f8b0:4864:20::c2a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1ri4ho-0003aT-6r
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 22:46:08 -0500
+Received: by mail-oo1-xc2a.google.com with SMTP id
+ 006d021491bc7-5a140a072fbso198492eaf.1
+ for <qemu-devel@nongnu.org>; Wed, 06 Mar 2024 19:46:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1709783162; x=1710387962; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=CfULBCBfNatDaXtj+xRudvsdZ/mVV9MMq0WpZxve08g=;
+ b=D/4mFgRzTw0Hj0YJ11ptB94HkrvidgjjFkC5mIpTbwe4kccl3oGg4lYYo1fD9stXeM
+ DQUeiQwtY2Z1UdF9NSw9neN0l8PdowNYgKV5aIfvFLeAp7APSE2YfSdIectWGokpc7JA
+ BRISDiZ9eUS5g1o8HTmgW+osTQhp4JCLEJNKNSMfSmAe0pO1QhkSQv4ohbahseJ/8yFF
+ IFBgYAA/BIAReMPQtKS1qEDcL4TI5oVFa13CE0ZFntXe29oDcq7lciH9/cM8Y1kRyQba
+ PoAtJlOrZs/RqFnL2I1trmbkkdOtTwWZR64+3SiGXhufY7S6rJ00ckjNHXgguQfRCAn7
+ xctw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709782621; x=1710387421;
+ d=1e100.net; s=20230601; t=1709783162; x=1710387962;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mXgI93MvArIHZk0roA8hzXyEZjpMVU6Y/TtLoru20Oc=;
- b=wmGpn2NlnoIb8/0DImRG3giD3wuEVm1bKAxXLhzNkhyuDJR9ub+GJKdC6LrCUNy1s3
- GoRRLMxv1/voH24CTu5DbeCXKYzdhfepC0a14sxkjLQVGpds6onu6nvn+NAT9lJr7in4
- zfcC5OM36u2F8zfi5XdRFvVvuS6FJAANWHD9e+NDn50c3rGHORWqzh6354V5jJp1rAnB
- Y5nDmymJyV5v10drbtNpx4qDiSWNUr119joh95AMOqwKKHYKETDD4kYHQOXwr3c9vfNK
- cP3DMd0jN0V7YUugi7z6CFdHub5GmqM2S/F3zQltGKAoupBvllVkrfNy2F/U1dV+F+QE
- JfGg==
+ bh=CfULBCBfNatDaXtj+xRudvsdZ/mVV9MMq0WpZxve08g=;
+ b=Wcr3T+viucV17QLly25B8ziMLQ6uhAxVdCE6d1CWfrSqsQ3+nGRhX/RSVNFmBJWgV1
+ IAtimsZmOmeZY/pGJ24T9LFpNQ0EvPG0llWz/jh9MWZT44ITgGnMHlTfFaLQBjCiiG8b
+ 7YO9mCO3KjIKTqZKx7DoKcxowFuU1iZ2yaOfMPMp6Iw938O+wXB2UfmA+UHdfX9vO2Z7
+ aWpulFU2CondQ7tVeA9eNwNlaZSqwHJtQu/yOXCfPdEdTXdPrQ8+Db+6qN35Ul2dQgFW
+ WNXpbQTuF2bc1ZU1BgIOmxMaQzaI0lSZFsVhF5i/HlBwp8ukU7aEpCuqc+zl+evlYO+u
+ Yhig==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU3NADsc/OKIEQQsAMKfr7IrYP9golAo68+F6GpK5TQyKFbFP0T9u94aLBJj1BCM/WkAEemnw3iw3u68DHFVFukijMmb7Y=
-X-Gm-Message-State: AOJu0YyEmtKvfLhkJ6MBFAvLRi7xODN3dle0khJ1dQwiot1bC/GBbM/Y
- kAQRiypzq490T3jwTFyGVVFpqtF+t4i9YRjSR4jGG9UR7obd8T8VJJf/ZIV4M0ecyPcC6Z+6RHz
- 0DkLIHkSCig1FpkFy53z8lMqcgCFgB22xxSpZUwG9gLFWE5kHQ/i5
-X-Received: by 2002:a05:6358:590c:b0:178:f482:6e59 with SMTP id
- g12-20020a056358590c00b00178f4826e59mr1059185rwf.3.1709782620980; 
- Wed, 06 Mar 2024 19:37:00 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFGHe2vSGDQ52w/jnag9+ORPF/RTl2ZvzLZVd2U+JQrmS+aHrXhLvsC2CMrGpaqhg5hKTuAFQ==
-X-Received: by 2002:a05:6358:590c:b0:178:f482:6e59 with SMTP id
- g12-20020a056358590c00b00178f4826e59mr1059179rwf.3.1709782620544; 
- Wed, 06 Mar 2024 19:37:00 -0800 (PST)
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- h11-20020a63210b000000b005e2b0671987sm11600738pgh.51.2024.03.06.19.36.56
+ AJvYcCXDnm9/4djxg7JaA0yAh4CXncAOZXdwIII2Lwk9zJHNvDpYe2kjXBF0bsvyj+9iHWR2VyhgRjXV3SN/bzQiT2RpWHCMBDg=
+X-Gm-Message-State: AOJu0YyCMy4P37JP9Eq7uzOg8EvEJ7z7D+SaZWcjzF2z1yDn8ycMerp3
+ EjvLRZ/N8GMUDn74XLZnNm/0VqJUdEVpysOwPxH9oTyQWn8dWFadnHXVniPzwf4=
+X-Google-Smtp-Source: AGHT+IGF3sRSL0xg996Owbn222sNmeKtn7l2xWxyolCZyY4TL5/Bq51QFgUfPRPsPMTKiZUxVy2Z8g==
+X-Received: by 2002:a05:6820:629:b0:5a1:1081:260a with SMTP id
+ e41-20020a056820062900b005a11081260amr8793488oow.4.1709783162173; 
+ Wed, 06 Mar 2024 19:46:02 -0800 (PST)
+Received: from sunil-laptop ([106.51.83.242]) by smtp.gmail.com with ESMTPSA id
+ n10-20020a4a848a000000b0059f5da15e99sm3201785oog.38.2024.03.06.19.45.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Mar 2024 19:37:00 -0800 (PST)
-Date: Thu, 7 Mar 2024 11:36:48 +0800
-From: Peter Xu <peterx@redhat.com>
-To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yu Zhang <yu.zhang@ionos.com>, Het Gala <het.gala@nutanix.com>,
- qemu-devel <qemu-devel@nongnu.org>, Fabiano Rosas <farosas@suse.de>,
- Jinpu Wang <jinpu.wang@ionos.com>,
- Alexei Pastuchov <alexei.pastuchov@ionos.com>,
- Elmar Gerdes <elmar.gerdes@ionos.com>
-Subject: Re: Problem with migration/rdma
-Message-ID: <Zek2UFoAyVrC7yh6@x1n>
-References: <CAHEcVy7HXSwn4Ow_Kog+Q+TN6f_kMeiCHevz1qGM-fbxBPp1hQ@mail.gmail.com>
- <04da4267-8fe8-4653-90a2-f64e3be64037@linaro.org>
- <a0d9e2c2-3687-4b7d-8fac-887ce262c38a@fujitsu.com>
+ Wed, 06 Mar 2024 19:46:01 -0800 (PST)
+Date: Thu, 7 Mar 2024 09:15:52 +0530
+From: Sunil V L <sunilvl@ventanamicro.com>
+To: Alistair Francis <alistair23@gmail.com>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org, mst@redhat.com,
+ imammedo@redhat.com, anisinha@redhat.com, peter.maydell@linaro.org,
+ shannon.zhaosl@gmail.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, bin.meng@windriver.com,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com
+Subject: Re: [PATCH v2 1/2] hw/arm/virt-acpi-build.c: Migrate SPCR creation
+ to common location
+Message-ID: <Zek4cO8ci2O38NFJ@sunil-laptop>
+References: <20240116010930.43433-1-jeeheng.sia@starfivetech.com>
+ <20240116010930.43433-2-jeeheng.sia@starfivetech.com>
+ <49d0d8d3-c7fd-4039-aeed-6c31ba16557a@ventanamicro.com>
+ <CAKmqyKPE-ERHShmAJQH3VNc7XqOfOeKYYyCRswJSUwf7hqm1xA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <a0d9e2c2-3687-4b7d-8fac-887ce262c38a@fujitsu.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+In-Reply-To: <CAKmqyKPE-ERHShmAJQH3VNc7XqOfOeKYYyCRswJSUwf7hqm1xA@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2a;
+ envelope-from=sunilvl@ventanamicro.com; helo=mail-oo1-xc2a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,94 +105,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 07, 2024 at 02:41:37AM +0000, Zhijian Li (Fujitsu) via wrote:
-> Yu,
+On Thu, Mar 07, 2024 at 11:33:25AM +1000, Alistair Francis wrote:
+> On Thu, Mar 7, 2024 at 4:59 AM Daniel Henrique Barboza
+> <dbarboza@ventanamicro.com> wrote:
+> >
+> > Hi,
+> >
+> > This patch break check-qtest, most specifically 'bios-table'test', for aarch64.
+> > I found this while running riscv-to-apply.next in the Gitlab pipeline.
+> >
+> >
+> > Here's the output:
+> >
+> > $ make -j && QTEST_QEMU_BINARY=./qemu-system-aarch64 V=1 ./tests/qtest/bios-tables-test
+> > TAP version 13
+> > # random seed: R02Sf0f2fa0a3fac5d540b1681c820621b7d
+> > # starting QEMU: exec ./qemu-system-aarch64 -qtest unix:/tmp/qtest-591353.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-591353.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -machine none -accel qtest
+> > 1..8
+> > # Start of aarch64 tests
+> > # Start of acpi tests
+> > # starting QEMU: exec ./qemu-system-aarch64 -qtest unix:/tmp/qtest-591353.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-591353.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -machine virt  -accel tcg -nodefaults -nographic -drive if=pflash,format=raw,file=pc-bios/edk2-aarch64-code.fd,readonly=on -drive if=pflash,format=raw,file=pc-bios/edk2-arm-vars.fd,snapshot=on -cdrom tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2 -cpu cortex-a57 -smbios type=4,max-speed=2900,current-speed=2700 -accel qtest
+> > acpi-test: Warning! SPCR binary file mismatch. Actual [aml:/tmp/aml-9G53J2], Expected [aml:tests/data/acpi/virt/SPCR].
+> > See source file tests/qtest/bios-tables-test.c for instructions on how to update expected files.
+> > acpi-test: Warning! SPCR mismatch. Actual [asl:/tmp/asl-SR53J2.dsl, aml:/tmp/aml-9G53J2], Expected [asl:/tmp/asl-4Z33J2.dsl, aml:tests/data/acpi/virt/SPCR].
+> >
+> > The diff is here:
+> >
+> > --- /tmp/asl-4Z33J2.dsl 2024-03-06 15:40:24.879879348 -0300
+> > +++ /tmp/asl-SR53J2.dsl 2024-03-06 15:40:24.877879347 -0300
+> > @@ -1,57 +1,49 @@
+> >   /*
+> >    * Intel ACPI Component Architecture
+> >    * AML/ASL+ Disassembler version 20220331 (64-bit version)
+> >    * Copyright (c) 2000 - 2022 Intel Corporation
+> >
+> > (...)
+> >
+> >   [000h 0000   4]                    Signature : "SPCR"    [Serial Port Console Redirection Table]
+> > -[004h 0004   4]                 Table Length : 00000050
+> > +[004h 0004   4]                 Table Length : 0000004F
+> >   [008h 0008   1]                     Revision : 02
+> > -[009h 0009   1]                     Checksum : B1
+> > +[009h 0009   1]                     Checksum : B2
+> >   [00Ah 0010   6]                       Oem ID : "BOCHS "
+> >
+> > (...)
+> >
+> > -[042h 0066   2]                PCI Vendor ID : FFFF
+> > +[042h 0066   2]                PCI Vendor ID : 00FF
+> >
+> >
+> > After inspecting the common helper and what the original ARM code was doing
+> > I found out that we're missing something down there:
+> >
+> >
+> > On 1/15/24 22:09, Sia Jee Heng wrote:
+> > > RISC-V should also generate the SPCR in a manner similar to ARM.
+> > > Therefore, instead of replicating the code, relocate this function
+> > > to the common AML build.
+> > >
+> > > Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
+> > > ---
+> > >   hw/acpi/aml-build.c         | 51 ++++++++++++++++++++++++++++
+> > >   hw/arm/virt-acpi-build.c    | 68 +++++++++++++++----------------------
+> > >   include/hw/acpi/acpi-defs.h | 33 ++++++++++++++++++
+> > >   include/hw/acpi/aml-build.h |  4 +++
+> > >   4 files changed, 115 insertions(+), 41 deletions(-)
+> > >
+> > > diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+> > > index af66bde0f5..f3904650e4 100644
+> > > --- a/hw/acpi/aml-build.c
+> > > +++ b/hw/acpi/aml-build.c
+> > > @@ -1994,6 +1994,57 @@ static void build_processor_hierarchy_node(GArray *tbl, uint32_t flags,
+> > >       }
+> > >   }
+> > >
+> > > +void build_spcr(GArray *table_data, BIOSLinker *linker,
+> > > +                const AcpiSpcrData *f, const uint8_t rev,
+> > > +                const char *oem_id, const char *oem_table_id)
+> > > +{
+> > > +    AcpiTable table = { .sig = "SPCR", .rev = rev, .oem_id = oem_id,
+> > > +                        .oem_table_id = oem_table_id };
+> > > +
+> > > +    acpi_table_begin(&table, table_data);
+> > > +    /* Interface type */
+> > > +    build_append_int_noprefix(table_data, f->interface_type, 1);
+> > > +    /* Reserved */
+> > > +    build_append_int_noprefix(table_data, 0, 3);
+> > > +    /* Base Address */
+> > > +    build_append_gas(table_data, f->base_addr.id, f->base_addr.width,
+> > > +                     f->base_addr.offset, f->base_addr.size,
+> > > +                     f->base_addr.addr);
+> > > +    /* Interrupt type */
+> > > +    build_append_int_noprefix(table_data, f->interrupt_type, 1);
+> > > +    /* IRQ */
+> > > +    build_append_int_noprefix(table_data, f->pc_interrupt, 1);
+> > > +    /* Global System Interrupt */
+> > > +    build_append_int_noprefix(table_data, f->interrupt, 4);
+> > > +    /* Baud Rate */
+> > > +    build_append_int_noprefix(table_data, f->baud_rate, 1);
+> > > +    /* Parity */
+> > > +    build_append_int_noprefix(table_data, f->parity, 1);
+> > > +    /* Stop Bits */
+> > > +    build_append_int_noprefix(table_data, f->stop_bits, 1);
+> > > +    /* Flow Control */
+> > > +    build_append_int_noprefix(table_data, f->flow_control, 1);
+> >
+> > Here. We're missing the "Language" entry.
+> >
+> >
+> > This diff fixes the broken test:
+> >
+> >
+> > $ git diff
+> > diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+> > index f3904650e4..6d4517cfbe 100644
+> > --- a/hw/acpi/aml-build.c
+> > +++ b/hw/acpi/aml-build.c
+> > @@ -2024,6 +2024,8 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
+> >       build_append_int_noprefix(table_data, f->stop_bits, 1);
+> >       /* Flow Control */
+> >       build_append_int_noprefix(table_data, f->flow_control, 1);
+> > +    /* Language */
+> > +    build_append_int_noprefix(table_data, f->language, 1);
+> >       /* Terminal Type */
+> >       build_append_int_noprefix(table_data, f->terminal_type, 1);
+> >       /* PCI Device ID  */
 > 
+> Thanks! I added this to the patch
 > 
-> On 07/03/2024 00:30, Philippe Mathieu-Daudé wrote:
-> > Cc'ing RDMA migration reviewers/maintainers:
-> > 
-> > $ ./scripts/get_maintainer.pl -f migration/rdma.c
-> > Li Zhijian <lizhijian@fujitsu.com> (reviewer:RDMA Migration)
-> > Peter Xu <peterx@redhat.com> (maintainer:Migration)
-> > Fabiano Rosas <farosas@suse.de> (maintainer:Migration)
-> > 
-> > On 5/3/24 22:32, Yu Zhang wrote:
-> >> Hello Het and all,
-> >>
-> >> while I was testing qemu-8.2, I saw a lot of our migration test cases failed.
-> >> After debugging the commits of the 8.2 branch, I saw the issue and mad a diff:
-> >>
-> >> diff --git a/migration/rdma.c b/migration/rdma.c
-> >> index 6a29e53daf..f10d56f556 100644
-> >> --- a/migration/rdma.c
-> >> +++ b/migration/rdma.c
-> >> @@ -3353,9 +3353,9 @@ static int qemu_rdma_accept(RDMAContext *rdma)
-> >>           goto err_rdma_dest_wait;
-> >>       }
-> >>
-> >> -    isock->host = rdma->host;
-> >> +    isock->host = g_strdup_printf("%s", rdma->host);
-> >>       isock->port = g_strdup_printf("%d", rdma->port);
+> >
+> >
+> >
+> > As a side note, it seems like 'bios-table-test' isn't being run for RISC-V. Not sure if this
+> > is intentional or a foresight.
 > 
+> I think you are looking for oversight :)
 > 
-> Thanks for your analysis.
+> I think it's just an oversight, not intentional.
 > 
-> It will be great if you send this as a patch.
-> 
-> 
-> isock is defined as a _autoptr VVV
-> 3333 _autoptr(InetSocketAddress) isock = g_new0(InetSocketAddress, 1);
-> 
-> I'm surprised that it seems the auto free scheme will free the member of isock as well
-> see below valrind log. That will cause a double free.
+Adding these test cases is WIP. Drew had already pointed this. Myself
+and Haibo are looking at it. But I doubt patches can be sent before 9.0
+deadlines. Can we add them post 9.0?
 
-Right, all the QAPI-free is a deep one.  Thanks for checking this up,
-Zhijian.
-
-Yu, would you please send a formal patch (better before this week ends) so
-that I can include it for the last pull for 9.0 soft-freeze (March 12th)?
-As 8.2 affected, please also attach proper tags:
-
-Cc: qemu-stable <qemu-stable@nongnu.org>
-Fixes: 3fa9642ff7 ("migration: convert rdma backend to accept MigrateAddress")
-
-> 
-> ==809138== Invalid free() / delete / delete[] / realloc()
-> ==809138==    at 0x483A9F5: free (vg_replace_malloc.c:538)
-> ==809138==    by 0x598F70C: g_free (in /usr/lib64/libglib-2.0.so.0.6600.8)
-> ==809138==    by 0x79B6AD: qemu_rdma_cleanup (rdma.c:2432)
-> ==809138==    by 0x79CEE6: qio_channel_rdma_close_rcu (rdma.c:3108)
-> ==809138==    by 0xC2E339: call_rcu_thread (rcu.c:301)
-> ==809138==    by 0xC2116A: qemu_thread_start (qemu-thread-posix.c:541)
-> ==809138==    by 0x72683F8: ??? (in /usr/lib64/libpthread-2.32.so)
-> ==809138==    by 0x73824C2: clone (in /usr/lib64/libc-2.32.so)
-> ==809138==  Address 0x13daa070 is 0 bytes inside a block of size 14 free'd
-> ==809138==    at 0x483A9F5: free (vg_replace_malloc.c:538)
-> ==809138==    by 0x598F70C: g_free (in /usr/lib64/libglib-2.0.so.0.6600.8)
-> ==809138==    by 0xC058CF: qapi_dealloc_type_str (qapi-dealloc-visitor.c:68)
-> ==809138==    by 0xC09EF3: visit_type_str (qapi-visit-core.c:349)
-> ==809138==    by 0xBDDECC: visit_type_InetSocketAddressBase_members (qapi-visit-sockets.c:29)
-> ==809138==    by 0xBDE055: visit_type_InetSocketAddress_members (qapi-visit-sockets.c:67)
-> ==809138==    by 0xBDE30D: visit_type_InetSocketAddress (qapi-visit-sockets.c:119)
-> ==809138==    by 0xBDDB38: qapi_free_InetSocketAddress (qapi-types-sockets.c:51)
-> ==809138==    by 0x792351: glib_autoptr_clear_InetSocketAddress (qapi-types-sockets.h:109)
-> ==809138==    by 0x79236F: glib_autoptr_cleanup_InetSocketAddress (qapi-types-sockets.h:109)
-> ==809138==    by 0x79D956: qemu_rdma_accept (rdma.c:3341)
-> ==809138==    by 0x79F05A: rdma_accept_incoming_migration (rdma.c:4041)
-> ==809138==  Block was alloc'd at
-> ==809138==    at 0x4839809: malloc (vg_replace_malloc.c:307)
-> ==809138==    by 0x5992BB8: g_malloc (in /usr/lib64/libglib-2.0.so.0.6600.8)
-> ==809138==    by 0x59A7FE3: g_strdup (in /usr/lib64/libglib-2.0.so.0.6600.8)
-> ==809138==    by 0x79C2A8: qemu_rdma_data_init (rdma.c:2731)
-> ==809138==    by 0x79F183: rdma_start_incoming_migration (rdma.c:4081)
-> ==809138==    by 0x76F200: qemu_start_incoming_migration (migration.c:581)
-> ==809138==    by 0x77193A: qmp_migrate_incoming (migration.c:1735)
-> ==809138==    by 0x74B3D3: qmp_x_exit_preconfig (vl.c:2718)
-> ==809138==    by 0x74DB6F: qemu_init (vl.c:3753)
-> ==809138==    by 0xA14F3F: main (main.c:47)
-
--- 
-Peter Xu
-
+Thanks,
+Sunil
 
