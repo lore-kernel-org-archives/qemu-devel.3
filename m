@@ -4,60 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED9E9C54798
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 15:09:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5267C54798
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 15:24:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riFMP-00087C-P2; Thu, 07 Mar 2024 10:08:41 -0500
+	id 1riFaM-00031i-AO; Thu, 07 Mar 2024 10:23:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1riFMN-00086y-VH
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 10:08:39 -0500
-Received: from mx.treblig.org ([2a00:1098:5b::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1riFMH-0003Xt-BA
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 10:08:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID
- :Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID
- :Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:
- Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe
- :List-Post:List-Owner:List-Archive;
- bh=h5ju99t+Idr1MInJaq3xmNrCIV4J4/IqAe6/w/DoVTE=; b=lbUQYrF3L53rv8xBwJLheISWY3
- M5YY/a17mpNf1PRw3sjs8m6ilsyDcgE4PDSYuV8v8bf/XwGIU5rx+ZGuJySNd3PuEHtolQ5FvoHVz
- 5X16HG92f6d1ibwI9zEY/o/MZXLWhBhxkMFLlYG/aQW0iYO6rhVT4FgTg9T5p5bUq3cBenrOQ4iRk
- jHH6tyOCr/8+GekPvQMx41FVoUqi6foXrz3x0HcvoUyPGHtorXF3MzE98oyWFqEuIbx0H4BHq3PNi
- y04BmnofgKjWdP8zbIE43dizG5NY/cHEUwLiW0Z81PxXcLBoaN8xj8Wuk6SfrWGU/KUPD1z305tIu
- vZNUezOQ==;
-Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1riFMC-00BYvS-2R;
- Thu, 07 Mar 2024 15:08:28 +0000
-Date: Thu, 7 Mar 2024 15:08:28 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, berrange@redhat.com
-Subject: Re: [PATCH] hmp: Add option to info qtree to omit details
-Message-ID: <ZenYbJW3K6WiiYMI@gallifrey>
-References: <20240301181229.332754E602B@zero.eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1riFaG-00030t-Ao
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 10:23:00 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1riFaC-0002lz-9x
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 10:23:00 -0500
+Received: from loongson.cn (unknown [117.67.153.132])
+ by gateway (Coremail) with SMTP id _____8DxJ+jJ2+llfvcVAA--.34575S3;
+ Thu, 07 Mar 2024 23:22:50 +0800 (CST)
+Received: from [192.168.2.12] (unknown [117.67.153.132])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8CxZMyv2+llJ09QAA--.22814S3; 
+ Thu, 07 Mar 2024 23:22:48 +0800 (CST)
+Subject: Re: [PULL 00/17] loongarch-to-apply queue
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+References: <20240307145207.247913-1-gaosong@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <4ff590f4-5656-6d88-469b-a116c2fdefbc@loongson.cn>
+Date: Thu, 7 Mar 2024 23:22:23 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <20240301181229.332754E602B@zero.eik.bme.hu>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.1.0-17-amd64 (x86_64)
-X-Uptime: 15:07:33 up 64 days, 17:57,  2 users,  load average: 0.06, 0.04, 0.00
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+In-Reply-To: <20240307145207.247913-1-gaosong@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8CxZMyv2+llJ09QAA--.22814S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7KryDCw4xWFyUJw45Wr18tFc_yoW8uF4kpr
+ W3Ary3Cr48GFZrArnav3sxXr98Arn7Gr12q3Waqr18CrW3AF1UXr1xArykZFyUt3y8Jryq
+ vF1rCw1UWF4UJwcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07UW
+ HqcUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-2.08, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,114 +81,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* BALATON Zoltan (balaton@eik.bme.hu) wrote:
-> The output of info qtree monitor command is very long. Add an option
-> to print a brief overview omitting all the details.
-> 
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Hi,
 
-Seems OK to me (I'm not sure I'd have both 'brief' and 'detailed',
-but rather stick to one or the other as variable names); still:
+Missing patch16.,17, please see v2 version
 
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+Thanks.
+Song Gao
+ÔÚ 2024/3/7 22:51, Song Gao Ð´µÀ:
+> The following changes since commit 8f6330a807f2642dc2a3cdf33347aa28a4c00a87:
+> 
+>    Merge tag 'pull-maintainer-updates-060324-1' of https://gitlab.com/stsquad/qemu into staging (2024-03-06 16:56:20 +0000)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240307
+> 
+> for you to fetch changes up to 4dc2edfd6f8abfc38f0ba110502790aa5051b1b5:
+> 
+>    hw/loongarch: Add cells missing from rtc node (2024-03-07 21:58:00 +0800)
+> 
+> ----------------------------------------------------------------
+> pull-loongarch-20240307
+> 
+> ----------------------------------------------------------------
+> Song Gao (17):
+>        hw/loongarch: Move boot fucntions to boot.c
+>        hw/loongarch: Add load initrd
+>        hw/loongarch: Add slave cpu boot_code
+>        hw/loongarch: Add init_cmdline
+>        hw/loongarch: Init efi_system_table
+>        hw/loongarch: Init efi_boot_memmap table
+>        hw/loongarch: Init efi_initrd table
+>        hw/loongarch: Init efi_fdt table
+>        hw/loongarch: Fix fdt memory node wrong 'reg'
+>        hw/loongarch: fdt adds cpu interrupt controller node
+>        hw/loongarch: fdt adds Extend I/O Interrupt Controller
+>        hw/loongarch: fdt adds pch_pic Controller
+>        hw/loongarch: fdt adds pch_msi Controller
+>        hw/loongarch: fdt adds pcie irq_map node
+>        hw/loongarch: fdt remove unused irqchip node
+>        hw/loongarch: Add cells missing from uart node
+>        hw/loongarch: Add cells missing from rtc node
+> 
+>   hw/loongarch/boot.c                | 330 +++++++++++++++++++++++++++++++++
+>   hw/loongarch/meson.build           |   1 +
+>   hw/loongarch/virt.c                | 363 +++++++++++++++++++++----------------
+>   include/hw/intc/loongarch_extioi.h |   1 +
+>   include/hw/loongarch/boot.h        | 109 +++++++++++
+>   include/hw/loongarch/virt.h        |  14 ++
+>   include/hw/pci-host/ls7a.h         |   2 +
+>   target/loongarch/cpu.h             |   2 +
+>   8 files changed, 662 insertions(+), 160 deletions(-)
+>   create mode 100644 hw/loongarch/boot.c
+>   create mode 100644 include/hw/loongarch/boot.h
+> 
 
-> ---
->  hmp-commands-info.hx  |  6 +++---
->  system/qdev-monitor.c | 24 +++++++++++++-----------
->  2 files changed, 16 insertions(+), 14 deletions(-)
-> 
-> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-> index da120f82a3..ad1b1306e3 100644
-> --- a/hmp-commands-info.hx
-> +++ b/hmp-commands-info.hx
-> @@ -540,9 +540,9 @@ ERST
->  
->      {
->          .name       = "qtree",
-> -        .args_type  = "",
-> -        .params     = "",
-> -        .help       = "show device tree",
-> +        .args_type  = "brief:-b",
-> +        .params     = "[-b]",
-> +        .help       = "show device tree (-b: brief, omit properties)",
->          .cmd        = hmp_info_qtree,
->      },
->  
-> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-> index a13db763e5..d5cef36800 100644
-> --- a/system/qdev-monitor.c
-> +++ b/system/qdev-monitor.c
-> @@ -744,7 +744,6 @@ DeviceState *qdev_device_add(QemuOpts *opts, Error **errp)
->  }
->  
->  #define qdev_printf(fmt, ...) monitor_printf(mon, "%*s" fmt, indent, "", ## __VA_ARGS__)
-> -static void qbus_print(Monitor *mon, BusState *bus, int indent);
->  
->  static void qdev_print_props(Monitor *mon, DeviceState *dev, Property *props,
->                               int indent)
-> @@ -784,13 +783,9 @@ static void bus_print_dev(BusState *bus, Monitor *mon, DeviceState *dev, int ind
->  static void qdev_print(Monitor *mon, DeviceState *dev, int indent)
->  {
->      ObjectClass *class;
-> -    BusState *child;
->      NamedGPIOList *ngl;
->      NamedClockList *ncl;
->  
-> -    qdev_printf("dev: %s, id \"%s\"\n", object_get_typename(OBJECT(dev)),
-> -                dev->id ? dev->id : "");
-> -    indent += 2;
->      QLIST_FOREACH(ngl, &dev->gpios, node) {
->          if (ngl->num_in) {
->              qdev_printf("gpio-in \"%s\" %d\n", ngl->name ? ngl->name : "",
-> @@ -814,12 +809,9 @@ static void qdev_print(Monitor *mon, DeviceState *dev, int indent)
->          class = object_class_get_parent(class);
->      } while (class != object_class_by_name(TYPE_DEVICE));
->      bus_print_dev(dev->parent_bus, mon, dev, indent);
-> -    QLIST_FOREACH(child, &dev->child_bus, sibling) {
-> -        qbus_print(mon, child, indent);
-> -    }
->  }
->  
-> -static void qbus_print(Monitor *mon, BusState *bus, int indent)
-> +static void qbus_print(Monitor *mon, BusState *bus, int indent, bool details)
->  {
->      BusChild *kid;
->  
-> @@ -827,16 +819,26 @@ static void qbus_print(Monitor *mon, BusState *bus, int indent)
->      indent += 2;
->      qdev_printf("type %s\n", object_get_typename(OBJECT(bus)));
->      QTAILQ_FOREACH(kid, &bus->children, sibling) {
-> +        BusState *child_bus;
->          DeviceState *dev = kid->child;
-> -        qdev_print(mon, dev, indent);
-> +        qdev_printf("dev: %s, id \"%s\"\n", object_get_typename(OBJECT(dev)),
-> +                    dev->id ? dev->id : "");
-> +        if (details) {
-> +            qdev_print(mon, dev, indent + 2);
-> +        }
-> +        QLIST_FOREACH(child_bus, &dev->child_bus, sibling) {
-> +            qbus_print(mon, child_bus, indent + 2, details);
-> +        }
->      }
->  }
->  #undef qdev_printf
->  
->  void hmp_info_qtree(Monitor *mon, const QDict *qdict)
->  {
-> +    bool brief = qdict_get_try_bool(qdict, "brief", false);
-> +
->      if (sysbus_get_default())
-> -        qbus_print(mon, sysbus_get_default(), 0);
-> +        qbus_print(mon, sysbus_get_default(), 0, !brief);
->  }
->  
->  void hmp_info_qdm(Monitor *mon, const QDict *qdict)
-> -- 
-> 2.30.9
-> 
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
 
