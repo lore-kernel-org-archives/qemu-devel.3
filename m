@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE573C54798
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 13:12:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30E0FC54798
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 13:14:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riDY3-0008SB-Ll; Thu, 07 Mar 2024 08:12:35 -0500
+	id 1riDa7-00011d-2l; Thu, 07 Mar 2024 08:14:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1riDXz-0008R2-C3
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 08:12:31 -0500
-Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
+ id 1riDZx-000119-RG
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 08:14:33 -0500
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1riDXx-0002iH-Om
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 08:12:31 -0500
-Received: by mail-lj1-x229.google.com with SMTP id
- 38308e7fff4ca-2d2505352e6so12198701fa.3
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 05:12:28 -0800 (PST)
+ id 1riDZw-00038F-5o
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 08:14:33 -0500
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-565b434f90aso1100719a12.3
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 05:14:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709817147; x=1710421947; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709817269; x=1710422069; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=i8O/oqpH7QUqOA1QMcdl7GzYfJcBUjyAGIWiEPVQ06A=;
- b=AvHprHRGGbpW3SMwpzP2o9YKSMZazRsYgl7lXpXpzmatzT0GIHIm0zKdvWbrpXVOWf
- PaxlX07actJWi2/YXcPcaMRjdgkIeaxTXPDyJ9Nt4qnKTXsbezP2udyR3VYQ24CgUkaS
- HWFAJohbxAwZ84O2zETGLda4vymNPHWphyaCVv0/SdhofIMd9TvjsY9SzOyFhjdqPUyD
- 2Z9QDkri5RcOZJ5M5De1FAwVHGhyBAc4w/fLudODHGVLujt5dbpr5QO5CgI77jFDr9lM
- DYiPdIb8eFIGlBpMHThwAFaKT2gA6YYiLvRsrzZF3KLWUjfvCWGNoYK6V1+5fseSV10Y
- u7pA==
+ bh=umYslEZ0CZzfXto0HMP2li6JHScMPmY5cbLxNVT/AyI=;
+ b=ELV8j7GgYNFhxze48LWuj65PHpagmBViBmKDAnkoiIeLj/Zid5GVAppBl6g1hrjXLW
+ TzASEj7mr0sfZiYpsLFAijIO4eT9hsxBQHDGsFJW2XFniIQMeIPal0h1WnMMV5E7mOFp
+ wHHI82WM1Sq7259JUDKnWgpYbd3qPCVj7HK5ea2VYKTzt0wT7IR8jtwxj7bYxPUzmU2G
+ VlMraU1iJgKArja01iB7jLXj6t8e5pEDd3DXR07Ak5DE7kg1OQZ0Ga1mNDTOB6ROxSwZ
+ Q9kkL/47QNHiMMJ/rR6EizpCny/MdlrnpqhmzeVn8NHqpYvjTJ2hkprt/u0CaswmmhLD
+ 4flg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709817147; x=1710421947;
+ d=1e100.net; s=20230601; t=1709817269; x=1710422069;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=i8O/oqpH7QUqOA1QMcdl7GzYfJcBUjyAGIWiEPVQ06A=;
- b=pRPGk/bx1JtmRHYLYzkIb8snh0Cm+zT1MJfUHNocbI5EFie3GsF1Rna32w9VWGG14y
- oI1FOpOOm+UtGg5ahlvSfdWao548Rop0WyKYrsRigkazQWv6NZwsbuGGuJ8BRwJmr4uU
- 8nO2/4W6z/EfGzfse4MFlU1XiPHYJR/ei+/cncEPKd8ILqWMrnhUks9sURhcAG7bQvtw
- 82MUC7R2D2QN/2qiGTP0DdhwwFPmMftW+2nzVSvlzzswfmL1Fy7U1AEjpocax7Ky3SM+
- lmtrzDsR+osQ7HauAFtWAIMoY1rsQaOgVMHw4y/EJvNvsXXdGwCwS/n1cBU7mOzY7TtS
- V3Bg==
+ bh=umYslEZ0CZzfXto0HMP2li6JHScMPmY5cbLxNVT/AyI=;
+ b=u4Qpv16nOAq25C//UKaKJev+nwKcw8fgbpzE5lIWpPp3nh5O3tQvy6JUJQMG2zAj0c
+ haG5jLPZritzICM9Hg+F5o4+enq2+wL77QmxLSy/d68LNTkILGFf3jiV2i0k1FjsxbIj
+ YCBv3TXtepZC1fCBYTwkPMfaCz9xSEu5/oaJ7DNiZL+Ygf5oZeuoMH9rRiwuzl6RqhfJ
+ Iy1GQNA0ek3eBcXm1v6MjWActHGzcYsyrtsSlmM1R3gGQxVNjG4IrVYjXCu7CXMZlaoc
+ k6Xn0qGTO5K06T7dOIWWtrPEs6GQ5GgDnmpQDNLjfWBj2VN1u7uiRIzFmAM5dpPP6wRN
+ qx+A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV11NgVwpPfP4JbzGSmxPTxBSdz31ozf8mAYvJrGjMDzyMTIAMYgfqcJRMhvxVPxoPe/WHisNyFxIdROARZwBF2W/oCOi4=
-X-Gm-Message-State: AOJu0YxBQMOrWlUH3nq3M6Sof+FxWYbpjvXhsDFXeCExmHdcO5KwF0ln
- DiKkS0ZuTR58UjSog2VgDvpWm84QnyAbPfwWv3dimzl/hNZTgPmK+IdKgrrd7i/3etfY8ar+Vlb
- Fj2FGr4CTurpinIKSnmEStV0u3bswLOYd9b8AfQ==
-X-Google-Smtp-Source: AGHT+IGrN97qK1D/8Z1+FCjUkSeOZGfLeMlGiqjNNBpWOLPHz9fPFPkw3aJQ4N+FPu8Yfalykgw7EyUgzqnoAbLB7I4=
-X-Received: by 2002:a2e:a0d8:0:b0:2d3:3aab:c278 with SMTP id
- f24-20020a2ea0d8000000b002d33aabc278mr1145656ljm.2.1709817146798; Thu, 07 Mar
- 2024 05:12:26 -0800 (PST)
+ AJvYcCW8Aa5fnHhk+rJLrQ9vgWofXHFPuhaXZ3ToE8R8Kq8gyrhb9Iug00wO5pQRMR57rUsV+Z5V84tOSFNuWfaNlBMBFOS+pUg=
+X-Gm-Message-State: AOJu0YxnX9qO+LSNpDrzp186wF6PLjcIbfVXZcrJowyNSqEGBTjX2Gvh
+ pGISofiv28arDvQxtdRNOK9Tml+YqovrlKdwqhbGH2hkCZooKt5QW0a1k03/CuvHavW6KNOJE7R
+ Y58O7bqcGkTFxg8pOQu2yNVdYOEZ5Op/ywLFcMQ==
+X-Google-Smtp-Source: AGHT+IHsWDRZfr/T1TgvYpieh0J1BA2RNf2O5YOdxiW6TvELlo4G+MKdWf+3A4CwYzvZPoT0X+duzvH9TmrqBSTT4T4=
+X-Received: by 2002:aa7:d1d1:0:b0:568:12ad:7c38 with SMTP id
+ g17-20020aa7d1d1000000b0056812ad7c38mr2178461edp.21.1709817269603; Thu, 07
+ Mar 2024 05:14:29 -0800 (PST)
 MIME-Version: 1.0
 References: <20240307-elf2dmp-v4-0-4f324ad4d99d@daynix.com>
- <20240307-elf2dmp-v4-9-4f324ad4d99d@daynix.com>
-In-Reply-To: <20240307-elf2dmp-v4-9-4f324ad4d99d@daynix.com>
+ <20240307-elf2dmp-v4-19-4f324ad4d99d@daynix.com>
+In-Reply-To: <20240307-elf2dmp-v4-19-4f324ad4d99d@daynix.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 7 Mar 2024 13:12:16 +0000
-Message-ID: <CAFEAcA9hX-XSFkQ8n6-jtgEXJ8R++=cZLpXBUYtO15aJFpU+4Q@mail.gmail.com>
-Subject: Re: [PATCH v4 09/19] contrib/elf2dmp: Fix error reporting style in
- main.c
+Date: Thu, 7 Mar 2024 13:14:18 +0000
+Message-ID: <CAFEAcA8Nv9nz=21X_mGU0N+NSrxio6JLVVvYo0F=HiN8=Ac+Qg@mail.gmail.com>
+Subject: Re: [PATCH v4 19/19] contrib/elf2dmp: Ensure phdrs fit in file
 To: Akihiko Odaki <akihiko.odaki@daynix.com>
 Cc: Viktor Prutyanov <viktor.prutyanov@phystech.edu>, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::229;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x229.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,11 +92,10 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Thu, 7 Mar 2024 at 10:21, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
 >
-> include/qapi/error.h says:
-> > We recommend
-> > * bool-valued functions return true on success / false on failure,
-> > ...
+> Callers of elf64_getphdr() and elf_getphdrnum() assume phdrs are
+> accessible.
 >
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2202
 > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
 
