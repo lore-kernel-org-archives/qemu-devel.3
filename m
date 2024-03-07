@@ -4,143 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41C4DC54E4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 19:26:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71FCEC54798
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 19:28:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riJNa-0001wK-UQ; Thu, 07 Mar 2024 14:26:10 -0500
+	id 1riJPD-0002g3-0B; Thu, 07 Mar 2024 14:27:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1riJNY-0001v0-LI
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 14:26:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1riJNW-0008LU-BU
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 14:26:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709839565;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=YDkgwdaxInvc7gvn2rkK6xaqbRC8CM1PVSdNoqffaTw=;
- b=YTppWH/XX5BaaQNYiOJwiTiLBofD620TqlGppUo4uZAYsiRBmMC4tevKUohW4ZxAJxF6Z2
- ab61+deC3aT9rvyIPGkSQ1RgAbzVa1OyNSOJ034ggUokVyjKnS8M1qwuhCFEBkdkfW9OPm
- VUlEenK8V7lBCb68sCtEj+KrLNZ3m0s=
-Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com
- [209.85.161.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-354-UtBQF1rGNOORuQ37ii3RDg-1; Thu, 07 Mar 2024 14:26:03 -0500
-X-MC-Unique: UtBQF1rGNOORuQ37ii3RDg-1
-Received: by mail-oo1-f70.google.com with SMTP id
- 006d021491bc7-59907104d88so1248276eaf.3
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 11:26:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1riJOz-0002fC-Lc
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 14:27:39 -0500
+Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1riJOi-0008Tc-VH
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 14:27:36 -0500
+Received: by mail-oi1-x22b.google.com with SMTP id
+ 5614622812f47-3c1a2f7e1d2so5001b6e.1
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 11:27:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1709839636; x=1710444436; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xDDEf++BkdQj7+uDCp7A7THqFceLnTiljmVi41v8cYM=;
+ b=gO0m6NsYEtOID//xBzF+tsEUlJhRKIljYkU0yV5MLtcZ6T2TGQedo/dO1T+yd8rAie
+ MHge20vChCV3kWac/CYlWvDnf0sSZZUwKavb9K0gTRc+lbP6/eOLeXI/Yl2YMk34UqUY
+ ZE++mHLFcR6aY8Z5UJW8OanSr9hYCDzRiTR3Q1uXG6yUDX5SjEmXpZED2nUHpgzUeas/
+ D0ZVf1lbnocU7fpwu3Bb8Eo2Qe3qKrlbbhQSTEoowzuGBE2jLXWHuP5E44GRBCdhzkGf
+ FbsXr0G0BK6dYhQhDNRQ1hruKmCzYxgJ3rlM0oE+tI4Vik/i4dRR4X1UoEYyX5xJ9hsm
+ Vd1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709839563; x=1710444363;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1709839636; x=1710444436;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YDkgwdaxInvc7gvn2rkK6xaqbRC8CM1PVSdNoqffaTw=;
- b=wKvyZdvyNCEfzYuYOLQII3ahdT1iHB1aV7ciVvBZN71IkIBIe81eFMNllYX0GyC+e1
- xdVt8+/EO2Pao8p1uKKc/a/9LL/71Jrg/dxmy1Qt6KWcYsGUghbpY4y6HZhoSsnBR78+
- t6QsW+VGjXezeNolvVy+Dep+b19hgxCsacY1cqkvvrzv3wWxfTp7R3t+uWDf13kCFct5
- yApLjmRR+0+DVsGkHMLPAvIjq9oT3zKfCXsT8F4jadUY4514jCR0J/0xZ4zGxmChdvOH
- sxYWsrfejzcwSW1C4+vOlu32UxEOeIUt5+t9ZdeWaeyhhXN5ZIwwatUeSjBmW48W5+bk
- +dCg==
+ bh=xDDEf++BkdQj7+uDCp7A7THqFceLnTiljmVi41v8cYM=;
+ b=Lt9DieRmz8LYMmQmHmuvGnzNcw/QG8jYV8xXgqPlUR3z0uGHyL1BjR9b8h54ZPV7xv
+ cVJBXLalUuE5NZ1g039GpGVu0pHI4PIdGfsa6s+n2eF8aKrEeXmhoIz++yElpUPH620A
+ xz8EWF4/vvcH9rRftuWSA/lTFQN5pRn6SsyRK5P3HsTzo9Mhpk+BFRBodDwUXaTCB5Jc
+ z8qXQc1NKb92GmgZPrfBEca0iO2VNElqmi084LS+05fw5ttgYNwMiynpzJ7Y6+RITxjA
+ 2fYF2o+f0RApQ7ZjpipVFVigMxYFUbiMWh5S+1BAZTyYNnV/ax/tr0EGnnFKm/L9ehJf
+ ZSow==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX5Mrg+RkAaIDbNqRox2GAXBqCARZdf9AmlNLCKohEG8e95kZHpOVP+G8B9jZxzZQ6iV0wrGfhjgR+h9B+z6zHBonWmRsc=
-X-Gm-Message-State: AOJu0Yzc2ksuw4gAQSydYMAcc80rtL0+oOavSlM0zoGoz/BFdB4pdvIU
- tG+JtKF3nk1c/SyRpLBKniX1pglvBNNwLFae20QGPUQgYy4LHVELwNcXP3W5fNKBeCfWI+Ma//O
- Pf9CC2w1sVbjdcSqKItwFvfgkH2jDXRNusoyuW/5QptE/pMy54O0Y
-X-Received: by 2002:a05:6358:998b:b0:17c:2214:6537 with SMTP id
- j11-20020a056358998b00b0017c22146537mr9956472rwb.30.1709839562647; 
- Thu, 07 Mar 2024 11:26:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHSrfGS1RpZQBZo7DKPwAqQutlaCtOv0ZIUQpgC+YOizU9xOcU2FGpqjMLeEnWdgXwYOeOa7Q==
-X-Received: by 2002:a05:6358:998b:b0:17c:2214:6537 with SMTP id
- j11-20020a056358998b00b0017c22146537mr9956386rwb.30.1709839561019; 
- Thu, 07 Mar 2024 11:26:01 -0800 (PST)
-Received: from [192.168.0.9] (ip-109-43-178-151.web.vodafone.de.
- [109.43.178.151]) by smtp.gmail.com with ESMTPSA id
- om13-20020a0562143d8d00b0069049135a69sm8873169qvb.118.2024.03.07.11.25.57
+ AJvYcCXUjwpcHU8NUArW7L4AKlad7UvxstHMcCqhkngl4p8a/lAVtUtmrRPQ1caHY/ZDFJ6cgZOoLV2YGaeDyEJ7szCWDtQG+2U=
+X-Gm-Message-State: AOJu0YwEBt/Rw4/YzpTYvRbnVoF44/0d4GnBdMtH2IStCNKF+jqnWxGC
+ XpgLT9yxqpUDv1c+bGBMma9+WHDCj0WECX7BWJ8A7XkMRhAIKpxD1oXgx1i7UXY=
+X-Google-Smtp-Source: AGHT+IFUap+Nxd6OoOHQgcvlzyNIhsIYQH36guqI9a7hoGffZr1yld203NFfaEVvEZ2doLIVcw+q0w==
+X-Received: by 2002:a05:6808:4408:b0:3c1:f571:f5b0 with SMTP id
+ eo8-20020a056808440800b003c1f571f5b0mr8453525oib.49.1709839636465; 
+ Thu, 07 Mar 2024 11:27:16 -0800 (PST)
+Received: from [192.168.68.110] ([177.94.15.159])
+ by smtp.gmail.com with ESMTPSA id
+ r21-20020a63d915000000b005d8b89bbf20sm12717545pgg.63.2024.03.07.11.27.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 Mar 2024 11:26:00 -0800 (PST)
-Message-ID: <3a7a9d7e-3639-4adc-84a5-1126f7a13a0c@redhat.com>
-Date: Thu, 7 Mar 2024 20:25:54 +0100
+ Thu, 07 Mar 2024 11:27:16 -0800 (PST)
+Message-ID: <36e03836-89d6-420d-8f8a-f93f7eabd5d5@ventanamicro.com>
+Date: Thu, 7 Mar 2024 16:27:08 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/17] hw/vfio/ap: Fix missing ERRP_GUARD() for
- error_prepend()
+Subject: Re: [RISC-V][tech-server-platform] [RISC-V][tech-server-soc] [RFC
+ 2/2] target/riscv: Add server platform reference cpu
 Content-Language: en-US
-To: Anthony Krowiak <akrowiak@linux.ibm.com>,
- Zhao Liu <zhao1.liu@linux.intel.com>, Markus Armbruster <armbru@redhat.com>,
- Michael Roth <michael.roth@amd.com>, Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>
-References: <20240229143914.1977550-1-zhao1.liu@linux.intel.com>
- <20240229143914.1977550-6-zhao1.liu@linux.intel.com>
- <7dadf54c-5a6f-4fe4-8dd3-1137e43c1756@redhat.com>
- <0fa974fe-6be5-4468-8581-85bccd4b720b@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <0fa974fe-6be5-4468-8581-85bccd4b720b@linux.ibm.com>
+To: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
+ "Wu, Fei2" <fei2.wu@intel.com>
+Cc: tech-server-soc@lists.riscv.org, pbonzini@redhat.com, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, bin.meng@windriver.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ andrei.warkentin@intel.com, shaolin.xie@alibaba-inc.com, ved@rivosinc.com,
+ sunilvl@ventanamicro.com, haibo1.xu@intel.com, evan.chai@intel.com,
+ yin.wang@intel.com, tech-server-platform@lists.riscv.org
+References: <20240304102540.2789225-1-fei2.wu@intel.com>
+ <20240304102540.2789225-3-fei2.wu@intel.com>
+ <bd34501b-3dda-40eb-aa92-73ea289297d1@ventanamicro.com>
+ <8ad091f3-c00f-4786-a89b-799304eace73@intel.com>
+ <56448108-c655-4684-bab9-b8d7747f79f7@intel.com>
+ <4e16f394-fe9b-4edf-80eb-fc3220bcf6e1@intel.com>
+ <95e45995-fb10-4c68-9937-fd9f7e032bf1@canonical.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <95e45995-fb10-4c68-9937-fd9f7e032bf1@canonical.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22b;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-oi1-x22b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.583,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,82 +110,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/03/2024 16.12, Anthony Krowiak wrote:
-> 
-> On 2/29/24 12:30 PM, Thomas Huth wrote:
->> On 29/02/2024 15.39, Zhao Liu wrote:
->>> From: Zhao Liu <zhao1.liu@intel.com>
+
+
+On 3/7/24 09:17, Heinrich Schuchardt wrote:
+> On 07.03.24 08:36, Wu, Fei2 wrote:
+>> On 3/6/2024 9:26 PM, Wu, Fei wrote:
+>>> On 3/5/2024 1:58 PM, Wu, Fei wrote:
+>>>> On 3/5/2024 3:43 AM, Daniel Henrique Barboza wrote:
+>>>>>
+>>>>>
+>>>>> On 3/4/24 07:25, Fei Wu wrote:
+>>>>>> The harts requirements of RISC-V server platform [1] require RVA23 ISA
+>>>>>> profile support, plus Sv48, Svadu, H, Sscofmpf etc. This patch provides
+>>>>>> a virt CPU type (rvsp-ref) as compliant as possible.
+>>>>>>
+>>>>>> [1]
+>>>>>> https://github.com/riscv-non-isa/riscv-server-platform/blob/main/server_platform_requirements.adoc
+>>>>>>
+>>>>>> Signed-off-by: Fei Wu <fei2.wu@intel.com>
+>>>>>> --->   hw/riscv/server_platform_ref.c |  6 +++-
+>>>>>>    target/riscv/cpu-qom.h         |  1 +
+>>>>>>    target/riscv/cpu.c             | 62 ++++++++++++++++++++++++++++++++++
+>>>>>>    3 files changed, 68 insertions(+), 1 deletion(-)
+>>>>>>
+>>>>>> diff --git a/hw/riscv/server_platform_ref.c
+>>>>>> b/hw/riscv/server_platform_ref.c
+>>>>>> index ae90c4b27a..52ec607cee 100644
+>>>>>> --- a/hw/riscv/server_platform_ref.c
+>>>>>> +++ b/hw/riscv/server_platform_ref.c
+>>>>>> @@ -1205,11 +1205,15 @@ static void
+>>>>>> rvsp_ref_machine_class_init(ObjectClass *oc, void *data)
+>>>>>>    {
+>>>>>>        char str[128];
+>>>>>>        MachineClass *mc = MACHINE_CLASS(oc);
+>>>>>> +    static const char * const valid_cpu_types[] = {
+>>>>>> +        TYPE_RISCV_CPU_RVSP_REF,
+>>>>>> +    };
+>>>>>>          mc->desc = "RISC-V Server SoC Reference board";
+>>>>>>        mc->init = rvsp_ref_machine_init;
+>>>>>>        mc->max_cpus = RVSP_CPUS_MAX;
+>>>>>> -    mc->default_cpu_type = TYPE_RISCV_CPU_BASE;
+>>>>>> +    mc->default_cpu_type = TYPE_RISCV_CPU_RVSP_REF;
+>>>>>> +    mc->valid_cpu_types = valid_cpu_types;
+>>>>>
+>>>>> I suggest introducing this patch first, then the new machine type that
+>>>>> will use it as a default
+>>>>> CPU. The reason is to facilitate future bisects. If we introduce the
+>>>>> board first, a future bisect
+>>>>> might hit the previous patch, the board will be run using RV64 instead
+>>>>> of the correct CPU, and
+>>>>> we'll have different results because of it.
+>>>>>
+>>>> Good suggestion.
+>>>>
+>>>>>>        mc->pci_allow_0_address = true;
+>>>>>>        mc->default_nic = "e1000e";
+>>>>>>        mc->possible_cpu_arch_ids = riscv_numa_possible_cpu_arch_ids;
+>>>>>> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+>>>>>> index 3670cfe6d9..adb934d19e 100644
+>>>>>> --- a/target/riscv/cpu-qom.h
+>>>>>> +++ b/target/riscv/cpu-qom.h
+>>>>>> @@ -49,6 +49,7 @@
+>>>>>>    #define TYPE_RISCV_CPU_SIFIVE_U54
+>>>>>> RISCV_CPU_TYPE_NAME("sifive-u54")
+>>>>>>    #define TYPE_RISCV_CPU_THEAD_C906
+>>>>>> RISCV_CPU_TYPE_NAME("thead-c906")
+>>>>>>    #define TYPE_RISCV_CPU_VEYRON_V1
+>>>>>> RISCV_CPU_TYPE_NAME("veyron-v1")
+>>>>>> +#define TYPE_RISCV_CPU_RVSP_REF         RISCV_CPU_TYPE_NAME("rvsp-ref")
+>>>>>>    #define TYPE_RISCV_CPU_HOST             RISCV_CPU_TYPE_NAME("host")
+>>>>>>      OBJECT_DECLARE_CPU_TYPE(RISCVCPU, RISCVCPUClass, RISCV_CPU)
+>>>>>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+>>>>>> index 5ff0192c52..bc91be702b 100644
+>>>>>> --- a/target/riscv/cpu.c
+>>>>>> +++ b/target/riscv/cpu.c
+>>>>>> @@ -2282,6 +2282,67 @@ static void rva22s64_profile_cpu_init(Object *obj)
+>>>>>>          RVA22S64.enabled = true;
+>>>>>>    }
+>>>>>> +
+>>>>>> +static void rv64_rvsp_ref_cpu_init(Object *obj)
+>>>>>> +{
+>>>>>> +    CPURISCVState *env = &RISCV_CPU(obj)->env;
+>>>>>> +    RISCVCPU *cpu = RISCV_CPU(obj);
+>>>>>> +
+>>>>>> +    riscv_cpu_set_misa_ext(env, RVG | RVC | RVS | RVU | RVH | RVV);
+>>>>>> +
+>>>>>> +    /* FIXME: change to 1.13 */
+>>>>>> +    env->priv_ver = PRIV_VERSION_1_12_0;
+>>>>>> +
+>>>>>> +    /* RVA22U64 */
+>>>>>> +    cpu->cfg.mmu = true;
+>>>>>> +    cpu->cfg.ext_zifencei = true;
+>>>>>> +    cpu->cfg.ext_zicsr = true;
+>>>>>> +    cpu->cfg.ext_zicntr = true;
+>>>>>> +    cpu->cfg.ext_zihpm = true;
+>>>>>> +    cpu->cfg.ext_zihintpause = true;
+>>>>>> +    cpu->cfg.ext_zba = true;
+>>>>>> +    cpu->cfg.ext_zbb = true;
+>>>>>> +    cpu->cfg.ext_zbs = true;
+>>>>>> +    cpu->cfg.zic64b = true;
+>>>>>> +    cpu->cfg.ext_zicbom = true;
+>>>>>> +    cpu->cfg.ext_zicbop = true;
+>>>>>> +    cpu->cfg.ext_zicboz = true;
+>>>>>> +    cpu->cfg.cbom_blocksize = 64;
+>>>>>> +    cpu->cfg.cbop_blocksize = 64;
+>>>>>> +    cpu->cfg.cboz_blocksize = 64;
+>>>>>> +    cpu->cfg.ext_zfhmin = true;
+>>>>>> +    cpu->cfg.ext_zkt = true;
+>>>>>
+>>>>> You can change this whole block with:
+>>>>>
+>>>>> RVA22U64.enabled = true;
+>>>>>
+>>>>>
+>>>>> riscv_cpu_add_profiles() will check if we have a profile enabled and, if
+>>>>> that's the
+>>>>> case, we'll enable all its extensions in the CPU.
+>>>>>
+>>>>> In the near future, when we implement a proper RVA23 support, we'll be
+>>>>> able to just do
+>>>>> a single RVA23S64.enabled = true in this cpu_init(). But for now we can
+>>>>> at least declare
+>>>>> RVA22U64 (perhaps RVA22S64) support for this CPU.
+>>>>>
 >>>
->>> As the comment in qapi/error, passing @errp to error_prepend() requires
->>> ERRP_GUARD():
+>>> Hi Daniel,
 >>>
->>> * = Why, when and how to use ERRP_GUARD() =
->>> *
->>> * Without ERRP_GUARD(), use of the @errp parameter is restricted:
->>> ...
->>> * - It should not be passed to error_prepend(), error_vprepend() or
->>> *   error_append_hint(), because that doesn't work with &error_fatal.
->>> * ERRP_GUARD() lifts these restrictions.
->>> *
->>> * To use ERRP_GUARD(), add it right at the beginning of the function.
->>> * @errp can then be used without worrying about the argument being
->>> * NULL or &error_fatal.
+>>> I'm not sure if it's a regression or the usage has been changed. I'm not
+>>> able to use '-cpu rva22s64' on latest qemu (db596ae190).
 >>>
->>> ERRP_GUARD() could avoid the case when @errp is the pointer of
->>> error_fatal, the user can't see this additional information, because
->>> exit() happens in error_setg earlier than information is added [1].
->>>
->>> The vfio_ap_realize() passes @errp to error_prepend(), and as a
->>> DeviceClass.realize method, its @errp is so widely sourced that it is
->>> necessary to protect it with ERRP_GUARD().
->>>
->>> To avoid the issue like [1] said, add missing ERRP_GUARD() at the
->>> beginning of this function.
->>>
->>> [1]: Issue description in the commit message of commit ae7c80a7bd73
->>>       ("error: New macro ERRP_GUARD()").
->>>
->>> Cc: Alex Williamson <alex.williamson@redhat.com>
->>> Cc: "Cédric Le Goater" <clg@redhat.com>
->>> Cc: Thomas Huth <thuth@redhat.com>
->>> Cc: Tony Krowiak <akrowiak@linux.ibm.com>
->>> Cc: Halil Pasic <pasic@linux.ibm.com>
->>> Cc: Jason Herne <jjherne@linux.ibm.com>
->>> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
->>> ---
->>>   hw/vfio/ap.c | 1 +
->>>   1 file changed, 1 insertion(+)
->>>
->>> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
->>> index e157aa1ff79c..7c4caa593863 100644
->>> --- a/hw/vfio/ap.c
->>> +++ b/hw/vfio/ap.c
->>> @@ -155,6 +155,7 @@ static void 
->>> vfio_ap_unregister_irq_notifier(VFIOAPDevice *vapdev,
->>>     static void vfio_ap_realize(DeviceState *dev, Error **errp)
->>>   {
->>> +    ERRP_GUARD();
->>>       int ret;
->>>       Error *err = NULL;
+>> I did a quick git bisect and found that commit d06f28db6 "target/riscv:
+>> move 'mmu' to riscv_cpu_properties[]" disabled mmu by default, so that
+>> an explicit mmu option should be added to qemu command line like '-cpu
+>> rva22s64,mmu=true', I think rva22s64 should enable it by default.
 >>
->> Now this function looks like we need both, ERRP_GUARD and the local "err" 
->> variable? ... patch looks ok to me, but maybe Markus has an idea how this 
->> could be done in a nicer way?
+>> Thanks,
+>> Fei.
 > 
+> It is nice that the MMU can be disabled. But is there any reason why the MMU should be disabled by default on the virt machine (which typically is used to run an operating system)?
+
+'mmu' is currently being handled as a CPU property, not a board property. So using
+the 'virt' board without a MMU is valid (albeit not that useful/common).
+
 > 
-> Correct me if I'm wrong, but my understanding from reading the prologue in 
-> error.h is that errp is used to pass errors back to the caller. The 'err' 
-> variable is used to report errors set by a call to the 
-> vfio_ap_register_irq_notification function after which this function returns 
-> cleanly.
+> Can we add mmu=true as default to the rv64 CPU?
 
-Right, no objections, that's what I meant with "this function looks like we 
-need both" ...
-But having both, "err" and "errp" in one function also looks somewhat 
-confusing at a first glance. No clue how this could be done much better 
-though, maybe rename "err" to "local_err" to make it clear that the two 
-variables are used independently?
+Excluding vendor CPUs (where every vendor can do whatever they want), all CPUs that
+aren't bare (rv32i, rv64i, rv32e, rv64e) are running with mmu=true. The behavior
+described by Fei with profile CPUs is fixed in riscv-to-apply and queued to be
+merged.
 
-  Thomas
 
+Thanks,
+
+Daniel
+
+
+> 
+> Best regards
+> 
+> Heinrich
 
