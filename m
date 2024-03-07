@@ -4,74 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76F26C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 09:41:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B3B0C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 09:44:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riAFG-00035l-MV; Thu, 07 Mar 2024 04:40:58 -0500
+	id 1riAH6-0003qT-NA; Thu, 07 Mar 2024 04:42:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1riAFE-00035J-I6
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 04:40:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1riAH5-0003py-2Q; Thu, 07 Mar 2024 04:42:51 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1riAFC-00026t-RN
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 04:40:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709804453;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=I/v4X4oBVsqDyu+zVfeDxffHIQ11OHc5jyDFyB4jGFQ=;
- b=P33wT3wEnlTH+Yb7pVceJHzrH3RJh3rjXaqOGkERL31crVXg1J4bE/46E/P3s9YUevZuRj
- yfa1MCLsGNLf+vIU57TMInC88ZBROYuF/AITQQYX36x+t/0DW4tLPhzWWJ8o9zwVaDmohg
- QFOC+adZlQkkcXdkQkszq8GDaZ78a/8=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-74-Xn5kKH84OZq4e8mdFJ4CWg-1; Thu,
- 07 Mar 2024 04:40:52 -0500
-X-MC-Unique: Xn5kKH84OZq4e8mdFJ4CWg-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DB6113830093;
- Thu,  7 Mar 2024 09:40:51 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.51])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 6DE4E17475;
- Thu,  7 Mar 2024 09:40:51 +0000 (UTC)
-Date: Thu, 7 Mar 2024 09:40:49 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: dongwon.kim@intel.com
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 1/3] ui/gtk: skip drawing guest scanout when associated
- VC is invisible
-Message-ID: <ZemLoa0JLXJW9l0F@redhat.com>
-References: <20240130234840.53122-1-dongwon.kim@intel.com>
- <20240130234840.53122-2-dongwon.kim@intel.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1riAH3-0002XV-7S; Thu, 07 Mar 2024 04:42:50 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Tr48z6fjbz6D8c3;
+ Thu,  7 Mar 2024 17:42:43 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 86853140B2A;
+ Thu,  7 Mar 2024 17:42:46 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Thu, 7 Mar
+ 2024 09:42:46 +0000
+Date: Thu, 7 Mar 2024 09:42:45 +0000
+To: Alistair Francis <alistair23@gmail.com>, <marcel.apfelbaum@gmail.com>,
+ <its@irrelevant.dk>, <mst@redhat.com>
+CC: <hchkuo@avery-design.com.tw>, <wilfred.mallawa@wdc.com>,
+ <cbrowy@avery-design.com>, <kbusch@kernel.org>, <lukas@wunner.de>,
+ <jiewen.yao@intel.com>, <qemu-devel@nongnu.org>, Alistair Francis
+ <alistair.francis@wdc.com>, <qemu-block@nongnu.org>, Paolo Bonzini
+ <pbonzini@redhat.com>
+Subject: Re: [PATCH v5 0/3] Initial support for SPDM Responders
+Message-ID: <20240307094245.00006490@Huawei.com>
+In-Reply-To: <20240307005859.356555-1-alistair.francis@wdc.com>
+References: <20240307005859.356555-1-alistair.francis@wdc.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240130234840.53122-2-dongwon.kim@intel.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.365,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,106 +68,90 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 30, 2024 at 03:48:38PM -0800, dongwon.kim@intel.com wrote:
-> From: Dongwon Kim <dongwon.kim@intel.com>
-> 
-> A new flag "visible" is added to show visibility status of the gfx console.
-> The flag is set to 'true' when the VC is visible but set to 'false' when
-> it is hidden or closed. When the VC is invisible, drawing guest frames
-> should be skipped as it will never be completed and it would potentially
-> lock up the guest display especially when blob scanout is used.
-> 
-> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Cc: Gerd Hoffmann <kraxel@redhat.com>
-> Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-> 
-> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
-> ---
->  include/ui/gtk.h |  1 +
->  ui/gtk-egl.c     |  8 ++++++++
->  ui/gtk-gl-area.c |  8 ++++++++
->  ui/gtk.c         | 10 +++++++++-
->  4 files changed, 26 insertions(+), 1 deletion(-)
-> 
-> diff --git a/include/ui/gtk.h b/include/ui/gtk.h
-> index aa3d637029..2de38e5724 100644
-> --- a/include/ui/gtk.h
-> +++ b/include/ui/gtk.h
-> @@ -57,6 +57,7 @@ typedef struct VirtualGfxConsole {
->      bool y0_top;
->      bool scanout_mode;
->      bool has_dmabuf;
-> +    bool visible;
->  #endif
->  } VirtualGfxConsole;
->  
-> diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-> index 3af5ac5bcf..993c283191 100644
-> --- a/ui/gtk-egl.c
-> +++ b/ui/gtk-egl.c
-> @@ -265,6 +265,10 @@ void gd_egl_scanout_dmabuf(DisplayChangeListener *dcl,
->  #ifdef CONFIG_GBM
->      VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
->  
-> +    if (!vc->gfx.visible) {
-> +        return;
-> +    }
-> +
->      eglMakeCurrent(qemu_egl_display, vc->gfx.esurface,
->                     vc->gfx.esurface, vc->gfx.ectx);
->  
-> @@ -363,6 +367,10 @@ void gd_egl_flush(DisplayChangeListener *dcl,
->      VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
->      GtkWidget *area = vc->gfx.drawing_area;
->  
-> +    if (!vc->gfx.visible) {
-> +        return;
-> +    }
-> +
->      if (vc->gfx.guest_fb.dmabuf && !vc->gfx.guest_fb.dmabuf->draw_submitted) {
->          graphic_hw_gl_block(vc->gfx.dcl.con, true);
->          vc->gfx.guest_fb.dmabuf->draw_submitted = true;
-> diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-> index 52dcac161e..04e07bd7ee 100644
-> --- a/ui/gtk-gl-area.c
-> +++ b/ui/gtk-gl-area.c
-> @@ -285,6 +285,10 @@ void gd_gl_area_scanout_flush(DisplayChangeListener *dcl,
->  {
->      VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
->  
-> +    if (!vc->gfx.visible) {
-> +        return;
-> +    }
-> +
->      if (vc->gfx.guest_fb.dmabuf && !vc->gfx.guest_fb.dmabuf->draw_submitted) {
->          graphic_hw_gl_block(vc->gfx.dcl.con, true);
->          vc->gfx.guest_fb.dmabuf->draw_submitted = true;
-> @@ -299,6 +303,10 @@ void gd_gl_area_scanout_dmabuf(DisplayChangeListener *dcl,
->  #ifdef CONFIG_GBM
->      VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
->  
-> +    if (!vc->gfx.visible) {
-> +        return;
-> +    }
-> +
->      gtk_gl_area_make_current(GTK_GL_AREA(vc->gfx.drawing_area));
->      egl_dmabuf_import_texture(dmabuf);
->      if (!dmabuf->texture) {
+On Thu,  7 Mar 2024 10:58:56 +1000
+Alistair Francis <alistair23@gmail.com> wrote:
 
-If we skip processing these requests, what happens when the
-QEMU windows is then re-displayed. Won't it now be missing
-updates to various regions of the guest display ?
+> The Security Protocol and Data Model (SPDM) Specification defines
+> messages, data objects, and sequences for performing message exchanges
+> over a variety of transport and physical media.
+>  - https://www.dmtf.org/sites/default/files/standards/documents/DSP0274_1.3.0.pdf
+> 
+> SPDM currently supports PCIe DOE and MCTP transports, but it can be
+> extended to support others in the future. This series adds
+> support to QEMU to connect to an external SPDM instance.
+> 
+> SPDM support can be added to any QEMU device by exposing a
+> TCP socket to a SPDM server. The server can then implement the SPDM
+> decoding/encoding support, generally using libspdm [1].
+> 
+> This is similar to how the current TPM implementation works and means
+> that the heavy lifting of setting up certificate chains, capabilities,
+> measurements and complex crypto can be done outside QEMU by a well
+> supported and tested library.
+> 
+> This series implements socket support and exposes SPDM for a NVMe device.
 
->
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Thanks Alastair,
+
+I'm really keen to seen this land soon as I have the CXL infrastructure
+for this backed up behind it.  Also will be needed for PCI (IDE) and CXL link
+encryption emulation and most if not all of the confidential computing stacks
+with QEMU emulating the host system + peripherals.
+
+I believe it's just waiting for a PCI Maintainer Ack at this point? Klaus said he
+was happy to take it through NVME but wanted a PCI Ack first.
+
+Michael / Marcel, if you have time to look at it that would be great.
+
+Thanks,
+
+Jonathan
+
+
+> 
+> 1: https://github.com/DMTF/libspdm
+> 
+> v5:
+>  - Update MAINTAINERS
+> v4:
+>  - Rebase
+> v3:
+>  - Spelling fixes
+>  - Support for SPDM-Utils
+> v2:
+>  - Add cover letter
+>  - A few code fixes based on comments
+>  - Document SPDM-Utils
+>  - A few tweaks and clarifications to the documentation
+> 
+> Alistair Francis (1):
+>   hw/pci: Add all Data Object Types defined in PCIe r6.0
+> 
+> Huai-Cheng Kuo (1):
+>   backends: Initial support for SPDM socket support
+> 
+> Wilfred Mallawa (1):
+>   hw/nvme: Add SPDM over DOE support
+> 
+>  MAINTAINERS                  |   6 +
+>  docs/specs/index.rst         |   1 +
+>  docs/specs/spdm.rst          | 122 ++++++++++++++++++++
+>  include/hw/pci/pci_device.h  |   5 +
+>  include/hw/pci/pcie_doe.h    |   5 +
+>  include/sysemu/spdm-socket.h |  44 +++++++
+>  backends/spdm-socket.c       | 216 +++++++++++++++++++++++++++++++++++
+>  hw/nvme/ctrl.c               |  53 +++++++++
+>  backends/Kconfig             |   4 +
+>  backends/meson.build         |   2 +
+>  10 files changed, 458 insertions(+)
+>  create mode 100644 docs/specs/spdm.rst
+>  create mode 100644 include/sysemu/spdm-socket.h
+>  create mode 100644 backends/spdm-socket.c
+> 
 
 
