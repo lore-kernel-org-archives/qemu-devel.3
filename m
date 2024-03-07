@@ -4,67 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1677C54798
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 15:24:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17CBCC48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 15:26:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riFb8-0003NF-1G; Thu, 07 Mar 2024 10:23:54 -0500
+	id 1riFd4-0004XJ-K9; Thu, 07 Mar 2024 10:25:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1riFb6-0003MO-3s
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 10:23:52 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ id 1riFd2-0004W7-69
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 10:25:53 -0500
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1riFb1-0003fy-6X
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 10:23:51 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-56682b85220so1417313a12.1
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 07:23:46 -0800 (PST)
+ id 1riFd0-0004gm-Bz
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 10:25:51 -0500
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-563d32ee33aso1191367a12.2
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 07:25:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709825025; x=1710429825; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=4kNPQimB748iBTllE96491bYxjiS/h4X3C2D8CliT8A=;
- b=O2LGOk9zTbZBjHGU//Y6hG7V3AjzK3IIx6h++GnJTfQQeDzZCGybmMggn/79MvQAYA
- LmgcjiWH8gmVUxcRAWIvuM5yuU4R/w5j0MWHni2FmDVSD+pKm/rq5W4jEtEQeOCtoygb
- uvtZ6A6qry2tGU+k2K85pSgscSb1b8uPHMKb0qsRKF2Jxe8TooG4X5UuMhsUloQ60+Mx
- BNi6/nwo9jkYID5WKAo1HX1m2wMYuGeQKg4oP86JADk8bKYLSi37YGXY6Sli0Gm3LDK/
- KSYyelwvKkOZ5XkH8OqtHGkPjZA1EHdaSSsh3r/PCIAqQGMWypf2cd03lnL1PLzAyxSH
- XbVA==
+ d=linaro.org; s=google; t=1709825149; x=1710429949; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PJxOAclKQrKBeMTfTkTD9ycvhPdDNXpKQnEPAhbjNMo=;
+ b=I854rYtbhU+jpywQYB0t9khIw9iP5iPoETu1Q27GSHX7+BvXppSnlfRnO47gMJ03m+
+ sRhx4XzmIyC/HuT0H2f/IoYTtUdR2xNzthux/lj1dz1F4MRlvcRVRbSqMCPyAKbR5pe1
+ htdntgVPcJxV+wJc6ZhLdX2sMZ87PuyWFzPDC1VdT2af/qsu1cdhJt3LsOe+strVhy7n
+ dzvAGWKDzn1cLyjOQlgikdfeBsTqCF1N6XHcuOQaovD7Ki1bZIH7xPbrVA6WK/jWVrXD
+ bVspmpElOxmGwkS1I+bacE26dk8AvqzQEv09wBL4iX9UaytODfCnZKXyBuf7SUWE3cPR
+ Aavg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709825025; x=1710429825;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4kNPQimB748iBTllE96491bYxjiS/h4X3C2D8CliT8A=;
- b=AF8HIQkp1cBWIOLlcGa5CuWOwBm13kpujU2uDp/1obkzOD9E2hHCXWTZRn4uJSfcCc
- B+mlMB6BWTqpPO0/917S+B6f3IUZ8NbwrxEK+x2l1i5/h+Vhts5fuH92yfLfCqgR7+7e
- /3Wc1WnP2SF1UQWl118AwRxpEI4Z/kddRrh+USA3qPeAgErcCKPtqHpUhwwgI5+Yh4JU
- GJPl4deHdsoz69EYgRXVMzfhD/5TOgy68PtwSHt/EGayez8jEIOGTHKwYugZOrSAwFou
- R5L9bNQG5cs5M5lpZdeKizfHFtJSExQUqN2gAddkhBE2NQxYtJn2TGX9Za067Str9Y9X
- 5j2Q==
-X-Gm-Message-State: AOJu0YwWdfcGowiAiYoaJNFbKArd7CDkI8ew290zZbgffdnFpgX6X0mh
- OU2E0mbphMyO/S5mq+gj9OI1kUJt4lFW1gyZosFyJLtXQnhlbxW456HN6FW7FkAvuLuozQgkRvj
- CRU+vj+PF9qOMoQiZx9DEUul4fFPkMNW7hfGm1d5TW2GZh3qt
-X-Google-Smtp-Source: AGHT+IHCaeFcWGxGgMM4SYDnp9nVDWzcAM/s4IicNV1flCGDx/eTwuBJgsMadE4CQqfhrPyK1by73Z4bC1cdyshCdnk=
-X-Received: by 2002:a50:8d52:0:b0:568:1c64:277c with SMTP id
- t18-20020a508d52000000b005681c64277cmr92224edt.15.1709825024719; Thu, 07 Mar
- 2024 07:23:44 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709825149; x=1710429949;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=PJxOAclKQrKBeMTfTkTD9ycvhPdDNXpKQnEPAhbjNMo=;
+ b=pj+8LB7vnohPcVL64Z/l5iCPGym9E7+G49jtbInNSTYcWTWqRsacx3/n25uPozJS09
+ uREoIAoP3E5LTR9mJlVo+xZmBdAo3xbYoVAdqD+cuUBB1XshpuqGvM3SXSuFLk/QxRk8
+ k/Ng312AHqMb/LO1zZ2fIireeY0P1TXy9bfsNwHzF6ZjPTJBVzHTF8QMKhTBPZzvmmE1
+ aNYZlwonxI3cuWSgZGT1Pf3YRO0pGXGPOzxI0LPFaRVB82TSykDvhR0e+sIs2YtUharX
+ 9/0N59ZngGMIO46R55eJp4Gpd1HNHaDGesUckcAxaNg89id9SJAYVau8u7bnpSpaBxAe
+ vFQA==
+X-Gm-Message-State: AOJu0YzPl3/lKt17qfNKa/fx2gTLwpKHxGq5uuSrTmxrpCkpJ9bLm9Zl
+ A53i18A9gbBRwdd9MyB2j0s1IdUdFOHMUDLpOfVCMukH1OtouBnh6GkN7O7ZVFyPb2mkifk+WbV
+ QZhusJVkzVLKRahrrblt+8zpx23Lafv6apTomlA==
+X-Google-Smtp-Source: AGHT+IFftyMGj7m32Q6Tnjs5lr+yKr2Bhj8eszkHY2A1d+x0XrfqLfYYi4G3SjpgbyHAWm10oEH5sW7GSvfIoZzhZEs=
+X-Received: by 2002:a50:8712:0:b0:565:6dde:ed2e with SMTP id
+ i18-20020a508712000000b005656ddeed2emr71862edb.33.1709825148940; Thu, 07 Mar
+ 2024 07:25:48 -0800 (PST)
 MIME-Version: 1.0
 References: <20240307145207.247913-1-gaosong@loongson.cn>
-In-Reply-To: <20240307145207.247913-1-gaosong@loongson.cn>
+ <CAFEAcA9g7yTRYLp3xE6p-Zh_RYpxn4MacbzRRi5UNFzKgP9QFw@mail.gmail.com>
+In-Reply-To: <CAFEAcA9g7yTRYLp3xE6p-Zh_RYpxn4MacbzRRi5UNFzKgP9QFw@mail.gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 7 Mar 2024 15:23:33 +0000
-Message-ID: <CAFEAcA9g7yTRYLp3xE6p-Zh_RYpxn4MacbzRRi5UNFzKgP9QFw@mail.gmail.com>
+Date: Thu, 7 Mar 2024 15:25:38 +0000
+Message-ID: <CAFEAcA9+P_i-GgLqKgcjg7DKBB9P4oBeZq5o-59V=17pAAQqkw@mail.gmail.com>
 Subject: Re: [PULL 00/17] loongarch-to-apply queue
 To: Song Gao <gaosong@loongson.cn>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,71 +90,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 7 Mar 2024 at 14:52, Song Gao <gaosong@loongson.cn> wrote:
+On Thu, 7 Mar 2024 at 15:23, Peter Maydell <peter.maydell@linaro.org> wrote=
+:
 >
-> The following changes since commit 8f6330a807f2642dc2a3cdf33347aa28a4c00a87:
+> On Thu, 7 Mar 2024 at 14:52, Song Gao <gaosong@loongson.cn> wrote:
+> >
+> > The following changes since commit 8f6330a807f2642dc2a3cdf33347aa28a4c0=
+0a87:
+> >
+> >   Merge tag 'pull-maintainer-updates-060324-1' of https://gitlab.com/st=
+squad/qemu into staging (2024-03-06 16:56:20 +0000)
+> >
+> > are available in the Git repository at:
+> >
+> >   https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240307
+> >
+> > for you to fetch changes up to 4dc2edfd6f8abfc38f0ba110502790aa5051b1b5=
+:
+> >
+> >   hw/loongarch: Add cells missing from rtc node (2024-03-07 21:58:00 +0=
+800)
+> >
+> > ----------------------------------------------------------------
+> > pull-loongarch-20240307
+> >
+> > ----------------------------------------------------------------
+> > Song Gao (17):
+> >       hw/loongarch: Move boot fucntions to boot.c
+> >       hw/loongarch: Add load initrd
+> >       hw/loongarch: Add slave cpu boot_code
+> >       hw/loongarch: Add init_cmdline
+> >       hw/loongarch: Init efi_system_table
+> >       hw/loongarch: Init efi_boot_memmap table
+> >       hw/loongarch: Init efi_initrd table
+> >       hw/loongarch: Init efi_fdt table
+> >       hw/loongarch: Fix fdt memory node wrong 'reg'
+> >       hw/loongarch: fdt adds cpu interrupt controller node
+> >       hw/loongarch: fdt adds Extend I/O Interrupt Controller
+> >       hw/loongarch: fdt adds pch_pic Controller
+> >       hw/loongarch: fdt adds pch_msi Controller
+> >       hw/loongarch: fdt adds pcie irq_map node
+> >       hw/loongarch: fdt remove unused irqchip node
+> >       hw/loongarch: Add cells missing from uart node
+> >       hw/loongarch: Add cells missing from rtc node
 >
->   Merge tag 'pull-maintainer-updates-060324-1' of https://gitlab.com/stsquad/qemu into staging (2024-03-06 16:56:20 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240307
->
-> for you to fetch changes up to 4dc2edfd6f8abfc38f0ba110502790aa5051b1b5:
->
->   hw/loongarch: Add cells missing from rtc node (2024-03-07 21:58:00 +0800)
->
-> ----------------------------------------------------------------
-> pull-loongarch-20240307
->
-> ----------------------------------------------------------------
-> Song Gao (17):
->       hw/loongarch: Move boot fucntions to boot.c
->       hw/loongarch: Add load initrd
->       hw/loongarch: Add slave cpu boot_code
->       hw/loongarch: Add init_cmdline
->       hw/loongarch: Init efi_system_table
->       hw/loongarch: Init efi_boot_memmap table
->       hw/loongarch: Init efi_initrd table
->       hw/loongarch: Init efi_fdt table
->       hw/loongarch: Fix fdt memory node wrong 'reg'
->       hw/loongarch: fdt adds cpu interrupt controller node
->       hw/loongarch: fdt adds Extend I/O Interrupt Controller
->       hw/loongarch: fdt adds pch_pic Controller
->       hw/loongarch: fdt adds pch_msi Controller
->       hw/loongarch: fdt adds pcie irq_map node
->       hw/loongarch: fdt remove unused irqchip node
->       hw/loongarch: Add cells missing from uart node
->       hw/loongarch: Add cells missing from rtc node
+> Hi; this failed to build on openbsd:
 
-Hi; this failed to build on openbsd:
+Also, please check that "make check" passes. I see this
+failure:
+https://gitlab.com/qemu-project/qemu/-/jobs/6343668904
 
-In file included from ../src/target/loongarch/cpu.c:109:
-In file included from
-/home/qemu/qemu-test.JIZtaO/src/include/hw/loongarch/virt.h:16:
-/home/qemu/qemu-test.JIZtaO/src/include/hw/loongarch/boot.h:69:14:
-error: expected member name or ';' after declaration specifiers
-    uint64_t stderr;
-    ~~~~~~~~ ^
-/usr/include/stdio.h:199:17: note: expanded from macro 'stderr'
-#define stderr  (&__sF[2])
-                 ^
-In file included from ../src/target/loongarch/cpu.c:109:
-In file included from
-/home/qemu/qemu-test.JIZtaO/src/include/hw/loongarch/virt.h:16:
-/home/qemu/qemu-test.JIZtaO/src/include/hw/loongarch/boot.h:69:14:
-error: expected ')'
-/usr/include/stdio.h:199:17: note: expanded from macro 'stderr'
-#define stderr  (&__sF[2])
-                 ^
-/home/qemu/qemu-test.JIZtaO/src/include/hw/loongarch/boot.h:69:14:
-note: to match this '('
-/usr/include/stdio.h:199:16: note: expanded from macro 'stderr'
-#define stderr  (&__sF[2])
-                ^
+>>> QTEST_QEMU_IMG=3D./qemu-img QTEST_QEMU_STORAGE_DAEMON_BINARY=3D./storag=
+e-daemon/qemu-storage-daemon QTEST_QEMU_BINARY=3D./qemu-system-loongarch64 =
+MALLOC_PERTURB_=3D138 PYTHON=3D/home/gitlab-runner/builds/E8PpwMky/0/qemu-p=
+roject/qemu/build/pyvenv/bin/python3 G_TEST_DBUS_DAEMON=3D/home/gitlab-runn=
+er/builds/E8PpwMky/0/qemu-project/qemu/tests/dbus-vmstate-daemon.sh /home/g=
+itlab-runner/builds/E8PpwMky/0/qemu-project/qemu/build/tests/qtest/test-hmp=
+ --tap -k
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95 =E2=9C=80 =E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95
+stderr:
+qemu-system-loongarch64: Need kernel filename
+Broken pipe
+../tests/qtest/libqtest.c:195: kill_qemu() tried to terminate QEMU
+process but encountered exit status 1 (expected 0)
+(test program exited with status code -6)
+TAP parsing error: Too few tests run (expected 3, got 1)
 
-You can't name a struct field "stderr" -- it can clash with how
-the host OS chooses to implement its stdio.h.
+
+Checks for filename arguments etc should generally be
+guarded by "if (!qtest_enabled())" to avoid problems with
+this category of test.
 
 thanks
 -- PMM
