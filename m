@@ -4,84 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CB7AC5475B
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 01:35:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AA19C54E41
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 01:36:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ri2dz-0007lH-Tx; Wed, 06 Mar 2024 20:33:59 -0500
+	id 1ri2gH-0000kh-6s; Wed, 06 Mar 2024 20:36:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ri2dx-0007kk-OU; Wed, 06 Mar 2024 20:33:57 -0500
-Received: from mail-vk1-xa29.google.com ([2607:f8b0:4864:20::a29])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ri2dv-0002Vb-U7; Wed, 06 Mar 2024 20:33:57 -0500
-Received: by mail-vk1-xa29.google.com with SMTP id
- 71dfb90a1353d-4d34dadcb23so44677e0c.1; 
- Wed, 06 Mar 2024 17:33:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709775232; x=1710380032; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0gKcgXUAqsrdbjOkYzokDH/fQSp9QAEthg8XXtAZaE4=;
- b=QX8e4Q1AD7TpfgpKjyzWLvwxoB5afLcn29c2/TdrfCWVMYYg3ECEjNnENLWJQZjJ5Y
- k+J+3gZsWss//ZPyaI64FZU6bQh3HNgDteZBYPKmjnKTUfAHKAwgfrT7nAz9uWEMWvQX
- QnG8Qerau0ENnzRhWR4kLoOqTMMQEFOxt3ZZ3NH7B+F4TL8qYmA6VNtxIczdzxA6DvF4
- PadCdtSTUuIwwdgoEkC4XJiLclWr0BgTPnV3Milz/86dKRt7J/nyEOxTMq7vnRZ9R9b4
- KqNaY2DVkTCv09cJkxz3K3AlzRYPiwv7dOJOhjeNmhN8LGufjzdghgTZEWTh+eDAciqG
- AOtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709775232; x=1710380032;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0gKcgXUAqsrdbjOkYzokDH/fQSp9QAEthg8XXtAZaE4=;
- b=TCvFByjS7Qw2cSeN3TNquu0F7KVps6StjtTUv8/y1y6OETEShsjR8z/AdQaftG/85v
- f/1D9u9bQxcX5Wn9U+BxyJYx7qGv0G5RmTaMc8pQ8A0RMzG7HN7AkiGkxOeP7GvPhdeB
- s67vqKobqWEy6IkUzzRIGKWPAfdls6MZB4UMcJvoDXEOfdlb7OIimZHdrynHfgUO9ddw
- ADB4tlUItI1CpO2hn6YT5M2Ti1JXxB9ZtXRFkBntvV44H3XWOlVXbe4e6bb4Ec30Xqgr
- aJtVqDOXMQsDhHLmzMlZmgU0nIZxhA8pPxI07mmo0O/tHRmEMyku1Pkp1OtPz9sTwu3u
- pfTg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCViUyxV0PwioLpQFtrhvHcYKcrz6z81ndu1Jbaj7J3qcPyNFvXfZGtql/7fPJOrxim1hiuEDrm9KxwvCl5Xd2VW2b8IzhRshO8/hy2hkmriEvqLGA/gkGuJs37SL+PZqJMA8A4kppnAN2+3qF8/H+qDxg==
-X-Gm-Message-State: AOJu0YypSpcBEAW+iR4N+/iEKfEHQ8j6Be1n8fTp9BSCYMBgNvxuUyBT
- UkfmhoeWQYa4FWLJMyfdXkRGSJzmTU6flo1y1hTrwZ6Pd3eUjmgK2DAHX2ZaYr2VBjdXKgpGDzs
- ndoeU3nPpv0P+k0y68Gw9KgWyJ1VM34lWtsE=
-X-Google-Smtp-Source: AGHT+IHY3UWOGy+9+X2nVxf/Ysi7r4zCI3OvsEg0coUJJWqkkLJWTsR28RLS6YK2hah5D6uhwuxuLFnMFEfggORIPs0=
-X-Received: by 2002:a05:6122:2212:b0:4cb:2662:3653 with SMTP id
- bb18-20020a056122221200b004cb26623653mr7551893vkb.9.1709775231737; Wed, 06
- Mar 2024 17:33:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1ri2gC-0000kV-V3
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 20:36:17 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1ri2gA-0003eS-8T
+ for qemu-devel@nongnu.org; Wed, 06 Mar 2024 20:36:16 -0500
+Received: from loongson.cn (unknown [10.20.42.32])
+ by gateway (Coremail) with SMTP id _____8DxqegJGullmnsVAA--.33879S3;
+ Thu, 07 Mar 2024 09:36:09 +0800 (CST)
+Received: from [10.20.42.32] (unknown [10.20.42.32])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8Bxb88GGullybBPAA--.12142S2; 
+ Thu, 07 Mar 2024 09:36:08 +0800 (CST)
+Subject: Re: [PULL v2 1/1] loongarch: Change the UEFI loading mode to loongarch
+To: chen huacai <zltjiangshi@gmail.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org,
+ peter.maydell@linaro.org, Andrea Bolognani <abologna@redhat.com>,
+ maobibo@loongson.cn, zhaotianrui@loongson.cn
+References: <20240229113842.619738-1-gaosong@loongson.cn>
+ <20240229113842.619738-2-gaosong@loongson.cn>
+ <168d29d9-b82e-4dd5-abdd-93759037033c@linaro.org>
+ <5e2419ec-6c1f-e21c-2105-fadb5971239c@loongson.cn>
+ <CABDp7VqyOL9OdxRohru74CyhQzR7W6MwKcg8WCvOVWJz1echMA@mail.gmail.com>
+From: lixianglai <lixianglai@loongson.cn>
+Message-ID: <9b241933-f172-6a2d-75eb-0cbd15b0d28a@loongson.cn>
+Date: Thu, 7 Mar 2024 09:36:06 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20240116010930.43433-1-jeeheng.sia@starfivetech.com>
- <20240116010930.43433-2-jeeheng.sia@starfivetech.com>
- <49d0d8d3-c7fd-4039-aeed-6c31ba16557a@ventanamicro.com>
-In-Reply-To: <49d0d8d3-c7fd-4039-aeed-6c31ba16557a@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 7 Mar 2024 11:33:25 +1000
-Message-ID: <CAKmqyKPE-ERHShmAJQH3VNc7XqOfOeKYYyCRswJSUwf7hqm1xA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] hw/arm/virt-acpi-build.c: Migrate SPCR creation to
- common location
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-arm@nongnu.org, 
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org, mst@redhat.com, 
- imammedo@redhat.com, anisinha@redhat.com, peter.maydell@linaro.org, 
- shannon.zhaosl@gmail.com, sunilvl@ventanamicro.com, palmer@dabbelt.com, 
- alistair.francis@wdc.com, bin.meng@windriver.com, liwei1518@gmail.com, 
- zhiwei_liu@linux.alibaba.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a29;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa29.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+In-Reply-To: <CABDp7VqyOL9OdxRohru74CyhQzR7W6MwKcg8WCvOVWJz1echMA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: AQAAf8Bxb88GGullybBPAA--.12142S2
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBj93XoW7AFy5tw1DGr17CFW3Wry8JFc_yoW5JrWfpF
+ W7C3WYkF4DJrW7ArnIvayIgrZIvrZ5KF97XF4Svry8Cw1DAwn5Xr1rKr1kAFyxXa4xG3Wj
+ vrW8KFyUWan8ArXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAF
+ wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
+ W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j0FALU
+ UUUU=
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.194,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,166 +89,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 7, 2024 at 4:59=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
-> Hi,
->
-> This patch break check-qtest, most specifically 'bios-table'test', for aa=
-rch64.
-> I found this while running riscv-to-apply.next in the Gitlab pipeline.
->
->
-> Here's the output:
->
-> $ make -j && QTEST_QEMU_BINARY=3D./qemu-system-aarch64 V=3D1 ./tests/qtes=
-t/bios-tables-test
-> TAP version 13
-> # random seed: R02Sf0f2fa0a3fac5d540b1681c820621b7d
-> # starting QEMU: exec ./qemu-system-aarch64 -qtest unix:/tmp/qtest-591353=
-.sock -qtest-log /dev/null -chardev socket,path=3D/tmp/qtest-591353.qmp,id=
-=3Dchar0 -mon chardev=3Dchar0,mode=3Dcontrol -display none -audio none -mac=
-hine none -accel qtest
-> 1..8
-> # Start of aarch64 tests
-> # Start of acpi tests
-> # starting QEMU: exec ./qemu-system-aarch64 -qtest unix:/tmp/qtest-591353=
-.sock -qtest-log /dev/null -chardev socket,path=3D/tmp/qtest-591353.qmp,id=
-=3Dchar0 -mon chardev=3Dchar0,mode=3Dcontrol -display none -audio none -mac=
-hine virt  -accel tcg -nodefaults -nographic -drive if=3Dpflash,format=3Dra=
-w,file=3Dpc-bios/edk2-aarch64-code.fd,readonly=3Don -drive if=3Dpflash,form=
-at=3Draw,file=3Dpc-bios/edk2-arm-vars.fd,snapshot=3Don -cdrom tests/data/ue=
-fi-boot-images/bios-tables-test.aarch64.iso.qcow2 -cpu cortex-a57 -smbios t=
-ype=3D4,max-speed=3D2900,current-speed=3D2700 -accel qtest
-> acpi-test: Warning! SPCR binary file mismatch. Actual [aml:/tmp/aml-9G53J=
-2], Expected [aml:tests/data/acpi/virt/SPCR].
-> See source file tests/qtest/bios-tables-test.c for instructions on how to=
- update expected files.
-> acpi-test: Warning! SPCR mismatch. Actual [asl:/tmp/asl-SR53J2.dsl, aml:/=
-tmp/aml-9G53J2], Expected [asl:/tmp/asl-4Z33J2.dsl, aml:tests/data/acpi/vir=
-t/SPCR].
->
-> The diff is here:
->
-> --- /tmp/asl-4Z33J2.dsl 2024-03-06 15:40:24.879879348 -0300
-> +++ /tmp/asl-SR53J2.dsl 2024-03-06 15:40:24.877879347 -0300
-> @@ -1,57 +1,49 @@
->   /*
->    * Intel ACPI Component Architecture
->    * AML/ASL+ Disassembler version 20220331 (64-bit version)
->    * Copyright (c) 2000 - 2022 Intel Corporation
->
-> (...)
->
->   [000h 0000   4]                    Signature : "SPCR"    [Serial Port C=
-onsole Redirection Table]
-> -[004h 0004   4]                 Table Length : 00000050
-> +[004h 0004   4]                 Table Length : 0000004F
->   [008h 0008   1]                     Revision : 02
-> -[009h 0009   1]                     Checksum : B1
-> +[009h 0009   1]                     Checksum : B2
->   [00Ah 0010   6]                       Oem ID : "BOCHS "
->
-> (...)
->
-> -[042h 0066   2]                PCI Vendor ID : FFFF
-> +[042h 0066   2]                PCI Vendor ID : 00FF
->
->
-> After inspecting the common helper and what the original ARM code was doi=
-ng
-> I found out that we're missing something down there:
->
->
-> On 1/15/24 22:09, Sia Jee Heng wrote:
-> > RISC-V should also generate the SPCR in a manner similar to ARM.
-> > Therefore, instead of replicating the code, relocate this function
-> > to the common AML build.
-> >
-> > Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
-> > ---
-> >   hw/acpi/aml-build.c         | 51 ++++++++++++++++++++++++++++
-> >   hw/arm/virt-acpi-build.c    | 68 +++++++++++++++---------------------=
--
-> >   include/hw/acpi/acpi-defs.h | 33 ++++++++++++++++++
-> >   include/hw/acpi/aml-build.h |  4 +++
-> >   4 files changed, 115 insertions(+), 41 deletions(-)
-> >
-> > diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-> > index af66bde0f5..f3904650e4 100644
-> > --- a/hw/acpi/aml-build.c
-> > +++ b/hw/acpi/aml-build.c
-> > @@ -1994,6 +1994,57 @@ static void build_processor_hierarchy_node(GArra=
-y *tbl, uint32_t flags,
-> >       }
-> >   }
-> >
-> > +void build_spcr(GArray *table_data, BIOSLinker *linker,
-> > +                const AcpiSpcrData *f, const uint8_t rev,
-> > +                const char *oem_id, const char *oem_table_id)
-> > +{
-> > +    AcpiTable table =3D { .sig =3D "SPCR", .rev =3D rev, .oem_id =3D o=
-em_id,
-> > +                        .oem_table_id =3D oem_table_id };
-> > +
-> > +    acpi_table_begin(&table, table_data);
-> > +    /* Interface type */
-> > +    build_append_int_noprefix(table_data, f->interface_type, 1);
-> > +    /* Reserved */
-> > +    build_append_int_noprefix(table_data, 0, 3);
-> > +    /* Base Address */
-> > +    build_append_gas(table_data, f->base_addr.id, f->base_addr.width,
-> > +                     f->base_addr.offset, f->base_addr.size,
-> > +                     f->base_addr.addr);
-> > +    /* Interrupt type */
-> > +    build_append_int_noprefix(table_data, f->interrupt_type, 1);
-> > +    /* IRQ */
-> > +    build_append_int_noprefix(table_data, f->pc_interrupt, 1);
-> > +    /* Global System Interrupt */
-> > +    build_append_int_noprefix(table_data, f->interrupt, 4);
-> > +    /* Baud Rate */
-> > +    build_append_int_noprefix(table_data, f->baud_rate, 1);
-> > +    /* Parity */
-> > +    build_append_int_noprefix(table_data, f->parity, 1);
-> > +    /* Stop Bits */
-> > +    build_append_int_noprefix(table_data, f->stop_bits, 1);
-> > +    /* Flow Control */
-> > +    build_append_int_noprefix(table_data, f->flow_control, 1);
->
-> Here. We're missing the "Language" entry.
->
->
-> This diff fixes the broken test:
->
->
-> $ git diff
-> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-> index f3904650e4..6d4517cfbe 100644
-> --- a/hw/acpi/aml-build.c
-> +++ b/hw/acpi/aml-build.c
-> @@ -2024,6 +2024,8 @@ void build_spcr(GArray *table_data, BIOSLinker *lin=
-ker,
->       build_append_int_noprefix(table_data, f->stop_bits, 1);
->       /* Flow Control */
->       build_append_int_noprefix(table_data, f->flow_control, 1);
-> +    /* Language */
-> +    build_append_int_noprefix(table_data, f->language, 1);
->       /* Terminal Type */
->       build_append_int_noprefix(table_data, f->terminal_type, 1);
->       /* PCI Device ID  */
+Hi huacai:
 
-Thanks! I added this to the patch
-
+> Hi, Xianglai,
 >
+> How to pass the BIOS file to qemu after this patch? With the old
+> cmdline I get an RCU stall and freeze the kvm host.
+
+The bios also has the corresponding code modification,
+
+you can update the code from the UEFI community to recompile UEFI,
+
+or you can directly obtain the compiled bios from the link below:
+
+https://github.com/lixianglai/LoongarchVirtFirmware
+
+Thanks,
+
+Xianglai.
+
+
+> Huacai
 >
+> On Sat, Mar 2, 2024 at 12:14 PM lixianglai <lixianglai@loongson.cn> wrote:
+>> Hi Philippe:
+>>
+>> On 29/2/24 12:38, Song Gao wrote:
+>>
+>> From: Xianglai Li <lixianglai@loongson.cn>
+>>
+>> The UEFI loading mode in loongarch is very different
+>> from that in other architectures:loongarch's UEFI code
+>> is in rom, while other architectures' UEFI code is in flash.
+>>
+>> loongarch UEFI can be loaded as follows:
+>> -machine virt,pflash=pflash0-format
+>> -bios ./QEMU_EFI.fd
+>>
+>> Other architectures load UEFI using the following methods:
+>> -machine virt,pflash0=pflash0-format,pflash1=pflash1-format
+>>
+>> loongarch's UEFI loading method makes qemu and libvirt incompatible
+>> when using NVRAM, and the cost of loongarch's current loading method
+>> far outweighs the benefits, so we decided to use the same UEFI loading
+>> scheme as other architectures.
+>>
+>>
+>> FYI I'm still trying to find a way to avoid that, planning to discuss
+>> more with libvirt folks. Well, maybe it is a waste of my time and I
+>> should just stop worrying / caring about this long standing issue.
+>>
+>> Thank you so much for your attention to this issue
+>>
+>> and your long-standing contributions to the community!!:-)
+>>
+>> Best regards,
+>>
+>> Xianglai.
+>>
+>>
+>> Cc: Andrea Bolognani <abologna@redhat.com>
+>> Cc: maobibo@loongson.cn
+>> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Cc: Song Gao <gaosong@loongson.cn>
+>> Cc: zhaotianrui@loongson.cn
+>> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+>> Tested-by: Andrea Bolognani <abologna@redhat.com>
+>> Reviewed-by: Song Gao <gaosong@loongson.cn>
+>> Message-Id: <0bd892aa9b88e0f4cc904cb70efd0251fc1cde29.1708336919.git.lixianglai@loongson.cn>
+>> Signed-off-by: Song Gao <gaosong@loongson.cn>
+>> ---
+>>    hw/loongarch/acpi-build.c   |  29 +++++++++--
+>>    hw/loongarch/virt.c         | 101 ++++++++++++++++++++++++++----------
+>>    include/hw/loongarch/virt.h |  10 ++--
+>>    3 files changed, 107 insertions(+), 33 deletions(-)
+>>
+>>
 >
-> As a side note, it seems like 'bios-table-test' isn't being run for RISC-=
-V. Not sure if this
-> is intentional or a foresight.
 
-I think you are looking for oversight :)
-
-I think it's just an oversight, not intentional.
-
-Alistair
 
