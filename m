@@ -4,87 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3DD4C54E41
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 01:00:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0186BC54E41
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 01:03:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ri26X-0000hC-TO; Wed, 06 Mar 2024 19:59:25 -0500
+	id 1ri2Ae-0003VK-A1; Wed, 06 Mar 2024 20:03:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ri26X-0000gn-2V; Wed, 06 Mar 2024 19:59:25 -0500
-Received: from mail-oo1-xc2f.google.com ([2607:f8b0:4864:20::c2f])
+ (Exim 4.90_1) (envelope-from <liuyb845@gmail.com>)
+ id 1ri2Ac-0003UX-19; Wed, 06 Mar 2024 20:03:38 -0500
+Received: from mail-pg1-x542.google.com ([2607:f8b0:4864:20::542])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ri26U-000849-VF; Wed, 06 Mar 2024 19:59:24 -0500
-Received: by mail-oo1-xc2f.google.com with SMTP id
- 006d021491bc7-5a14d7f0e66so144659eaf.1; 
- Wed, 06 Mar 2024 16:59:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <liuyb845@gmail.com>)
+ id 1ri2AZ-0000fw-I6; Wed, 06 Mar 2024 20:03:37 -0500
+Received: by mail-pg1-x542.google.com with SMTP id
+ 41be03b00d2f7-5cf2d73a183so1060313a12.1; 
+ Wed, 06 Mar 2024 17:03:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709773161; x=1710377961; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JHwAWctlffnFEsB9EUOTNU4LB0CsC5t0/licVpxihdA=;
- b=IYq09YD3mbSfUzedLH+YVxYgFGRSCro5YEHEEmLfZG2U42kROW61i+gbxfC0wY7Z5z
- tC2NXZTT1kSc8aMBLRradVEvCK5YZ7ZWdu8aJQn9s5c8CQ+JyAiit8a3zCeRs/qnNWlV
- Hdtk5fU6ZRXJBjQy0QhAy9onXJUP1Qdwe/lP5NQ8m1F3M98Mti/0lTyVEBB85Gi67BJB
- a+KDFQKTEUh3nn8ZxckZkVLzMP3DBSZeVFWr6aKNN6QCKEooqRZKq4Z4S9EIOBbOZRf7
- KMLJ4lpnQzfjh3jcZg8D/LH0gBX9hvBMVGYW72T/bvl8WJl6uSIxjI/WJk59j4PXCgSp
- P2Kg==
+ d=gmail.com; s=20230601; t=1709773412; x=1710378212; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=3/FRIEolAf8UChjRh93kLurFdF1eCFnXs9B6ZoCzHqM=;
+ b=C4AO9nVdWCMju+RDEL9vCZui8KlvbmOYHy9OL4WhbDO0RCKAYEmZhzoeRS+aHUx5aw
+ 59X6rQEiTAE9I1pwJ8oAe6TbE6wVterwy6BT7gu+74MRe+5VzGgBeznwo5KAEOTIWraB
+ DR60A5iYOOA6faDvkMCpw+w9epi7vY9xJplr8qJvCf3GZh6APG8/l6kgKHXd1VGkt5Yk
+ s3SF7Xz+DId7XYNgd16as6Z1KM1fpa+demyhhq482M1dp4MmO4VAhl5xqCQ+rwBIesNw
+ 4Hd0+dVHPcQh60CgxZPupU+VvbyBYhA42ip3mlhIoFaBuoB6liiDJ79wfndZF6deN17W
+ SimQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709773161; x=1710377961;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JHwAWctlffnFEsB9EUOTNU4LB0CsC5t0/licVpxihdA=;
- b=RiQ6EglwbX7RnMZVgFUPZN7JHP5S0sYZcfu8fMn52nAmo3JCUeIyxk6CXMkCinaWLG
- AmoXSyV2jvMT7e8z074nJtEq0jPQaiTEo+snEBeTdCY7yYI405kxTkEGGsP9qlR9aQ2A
- 8ZfWtCsvRtbj4B4lL7Tr0/qQjfP2n/oyuDD9+EISs1yL9/brZo55xRmo2cv4dw027B+k
- 8WJnCvegjP8mqLBQHtL/guGrCrL+2EL3Wky2bAi7V+mBtBzDdPfa2dld2saAHhZeLhpR
- TCg79EbxnLds4Wv0GupBRq2cXj4YGRLmKO1eCNm3ZJOX4KjxGnKvGxJv3fsjZsDGYiin
- 5D+w==
+ d=1e100.net; s=20230601; t=1709773412; x=1710378212;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3/FRIEolAf8UChjRh93kLurFdF1eCFnXs9B6ZoCzHqM=;
+ b=FDIfM5IF68/5tm38mrULy4lgGsQisC9e3ZpJ3YbSE8qmPtdyjbvL2DGXV8FR0aoHIJ
+ ZToSY3fH2Ttza5BZHNeRW2BNIgkxMeDOuakzB/DqtonCWkMy7A/dL5deqTfjEk3JdrUk
+ WaMhd+IgGIqshyXydw8qpSxf4nfC5qlEP1JzqGApkiKsB+9CKbdYGKG6NRGfDr/Me7J5
+ JMDTBSp0bOpw/6XANrjBHFp3j4GWOY1ami7HnMvscPZWwU7WhOahvdFQhtXAVlWbYvvU
+ GilVsc/DN/7w41taZy7nvrQkOq0PoMcuu7aoxomofzhBRQ/yCXc7/rGzcuN6nwtqqLI6
+ z/0A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUWEMik0qC0TUuh91OUD2w/tvSiNqAYA3h4JphGh0y12TaTXZe4bbDIPDPX7sa/FO+rq6NufABuVuInDLSHJurfeHdzt4IbTIFHq7tbsJh7zKgHOYPGoi3NOZgE8A==
-X-Gm-Message-State: AOJu0Yy22P6+MrHKSVZ5yNmwf2O/RIcw6u44C6JDyU8NZDvoRr69RBp0
- PZ0dliIhNPppsU+ttWFqa8OVl9+oqEznrW3txbdnpoabdN1qwZIU
-X-Google-Smtp-Source: AGHT+IFmEhqBEfOgCdogRcp59FGKbzSdDQtwHdXIqps6G/A9PjdjxQ/GA4krd68wyEAI68j/WhXAzg==
-X-Received: by 2002:a05:6358:4904:b0:17b:eec9:8ee8 with SMTP id
- w4-20020a056358490400b0017beec98ee8mr8117781rwn.12.1709773161347; 
- Wed, 06 Mar 2024 16:59:21 -0800 (PST)
-Received: from toolbox.alistair23.me
- (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
- [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
- by smtp.gmail.com with ESMTPSA id
- n21-20020a63f815000000b005dbd0facb4dsm11420276pgh.61.2024.03.06.16.59.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Mar 2024 16:59:20 -0800 (PST)
-From: Alistair Francis <alistair23@gmail.com>
-X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
-To: marcel.apfelbaum@gmail.com, Jonathan.Cameron@Huawei.com, its@irrelevant.dk,
- mst@redhat.com, hchkuo@avery-design.com.tw, wilfred.mallawa@wdc.com,
- cbrowy@avery-design.com, kbusch@kernel.org, lukas@wunner.de,
- jiewen.yao@intel.com, qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair.francis@wdc.com>, qemu-block@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, alistair23@gmail.com,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH v5 1/3] hw/pci: Add all Data Object Types defined in PCIe r6.0
-Date: Thu,  7 Mar 2024 10:58:57 +1000
-Message-ID: <20240307005859.356555-2-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240307005859.356555-1-alistair.francis@wdc.com>
-References: <20240307005859.356555-1-alistair.francis@wdc.com>
+ AJvYcCVcfKQPCiit7JJu/9NNScvuFvQCiTKuM34JWJG2k2wjr5QgvZEf8V3aBvlqsjFzfDnQlZ4EZsSn3iZzim55cuATHWFfZj+77Txl051PnOwaPecHiHHxE0mvJSo=
+X-Gm-Message-State: AOJu0Yzo72KJ3UzjbuiNRfdBzh0pOTpiQMkO/J6LRiM9uRjshyt0DR6S
+ KACfyIrd/t4ilSfYxRZf7gS7Rmct2XOGoxcyAaP8g2oNMPSoS0pmNUVQNEu0wKUnKcaHNKySJZs
+ r9GwWSVcqLfrmXZYQ6CpPWaOxWa8=
+X-Google-Smtp-Source: AGHT+IEZ4O8eR01dZGw/tLVwdgaKpdYxKZhVN2pz6cZk0/FvvmVKDH4ofS6Iey+19fFhVu9JLt+qvijBq2Tw6GfRjCA=
+X-Received: by 2002:a17:90a:fb4c:b0:29a:6395:a67a with SMTP id
+ iq12-20020a17090afb4c00b0029a6395a67amr28819pjb.4.1709773412187; Wed, 06 Mar
+ 2024 17:03:32 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2f;
- envelope-from=alistair23@gmail.com; helo=mail-oo1-xc2f.google.com
+References: <CAKstcpWLhcNswkippmDyQQz2bPKSN+w9F0jZzcZRGpuNWvW55g@mail.gmail.com>
+ <CAFEAcA-eDU_As==Yzd5+xhAPKGzfUp2DH_Kj1owL3jvm8s+qWg@mail.gmail.com>
+In-Reply-To: <CAFEAcA-eDU_As==Yzd5+xhAPKGzfUp2DH_Kj1owL3jvm8s+qWg@mail.gmail.com>
+From: yb liu <liuyb845@gmail.com>
+Date: Thu, 7 Mar 2024 09:03:20 +0800
+Message-ID: <CAKstcpVT-swdej7ghk6Sc3Ngwb-ZSrVDUw1=4Rxq5EHOgfjPvQ@mail.gmail.com>
+Subject: Re: QEMU Compatibility for Cortex-A55 AArch32 Firmware
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-discuss@nongnu.org, qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000e14923061307a4c6"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::542;
+ envelope-from=liuyb845@gmail.com; helo=mail-pg1-x542.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,30 +89,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add all of the defined protocols/features from the PCIe-SIG r6.0
-"Table 6-32 PCI-SIG defined Data Object Types (Vendor ID = 0001h)"
-table.
+--000000000000e14923061307a4c6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
----
- include/hw/pci/pcie_doe.h | 2 ++
- 1 file changed, 2 insertions(+)
+Thanks a lot for you respond me soon!
+The exact instruction is mrc, and the exception happended in early boot
+process. I have no idea to how to debug this error because it happended in
+code_gen_prologue.
+I need to comform that whether QEMU A55 fully supports aarch32 mode. If it
+need me to add addition instructions to support this function, I will
+suspend this task for now.
+I hope to get your respond as soon as possible.
+Best regards!
 
-diff --git a/include/hw/pci/pcie_doe.h b/include/hw/pci/pcie_doe.h
-index 87dc17dcef..15d94661f9 100644
---- a/include/hw/pci/pcie_doe.h
-+++ b/include/hw/pci/pcie_doe.h
-@@ -46,6 +46,8 @@ REG32(PCI_DOE_CAP_STATUS, 0)
- 
- /* PCI-SIG defined Data Object Types - r6.0 Table 6-32 */
- #define PCI_SIG_DOE_DISCOVERY       0x00
-+#define PCI_SIG_DOE_CMA             0x01
-+#define PCI_SIG_DOE_SECURED_CMA     0x02
- 
- #define PCI_DOE_DW_SIZE_MAX         (1 << 18)
- #define PCI_DOE_PROTOCOL_NUM_MAX    256
--- 
-2.44.0
+Peter Maydell <peter.maydell@linaro.org> =E4=BA=8E 2024=E5=B9=B43=E6=9C=886=
+=E6=97=A5=E5=91=A8=E4=B8=89 23:24=E5=86=99=E9=81=93=EF=BC=9A
 
+> On Wed, 6 Mar 2024 at 14:33, yb liu <liuyb845@gmail.com> wrote:
+> >
+> >
+> > Dear QEMU developers
+> >
+> > I hope this email finds you well. We are currently facing an issue
+> related to QEMU and the Cortex-A55 architecture. Specifically, we have
+> compiled a firmware for Cortex-A55 and would like it to run smoothly on
+> QEMU A55 in AArch32 mode.
+> >
+> > Despite our numerous attempts, we continue to encounter an "undefined
+> instruction" error when running the firmware in QEMU. Our question is
+> whether QEMU supports this particular use case=E2=80=94specifically, whet=
+her it can
+> handle A55 running AArch32 firmware.
+>
+> We have Cortex-A55 emulation, but you may be running into one
+> of a few problems:
+>  * we might have a bug
+>  * firmware sometimes does very low level stuff that no other guest
+>    code does, so it might run into something we didn't get round
+>    to implementing (eg it is trying to touch one of the implementation
+>    specific system registers: we tend to implement these as "does
+>    nothing" stubs, but it looks like we didn't bother for the A55,
+>    presumably because Linux didn't care)
+>  * your guest code might be doing something that works on the
+>    real A55 hardware but which is architecturally UNPREDICTABLE:
+>    QEMU doesn't try to exactly match device-specific IMPDEF
+>    and UNPREDICTABLE things
+>  * your guest code might be assuming the presence of some feature
+>    that your real A55 has but which QEMU doesn't implement
+>    (for instance we implement only the absolute minimum RAS
+>    support required by the architecture, not the full RAS
+>    that hardware implements)
+>
+> The thing you'd need to do is look at exactly what the UNDEF
+> instruction is (and what the guest code that causes it is
+> trying to do) to figure out which of these is the problem.
+> Some of these might be easy to fix; some would be harder.
+> If you're in a position to be able to modify the firmware
+> image then that would also allow you to work around missing
+> QEMU functionality if necessary.
+>
+> The more usual reason guest firmware not working in QEMU is
+> not the CPU emulation itself but lack of a model of the
+> device/SoC/etc hardware that the firmware assumes it's
+> running on.
+>
+> -- PMM
+>
+
+--000000000000e14923061307a4c6
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div dir=3D"auto">Thanks a lot for you respond me soon!</=
+div>The exact instruction is mrc, and the exception happended in early boot=
+ process. I have no idea to how to debug this error because it happended in=
+ code_gen_prologue.<div dir=3D"auto">I need to comform that whether QEMU A5=
+5 fully supports aarch32 mode. If it need me to add addition instructions t=
+o support this function, I will suspend this task for now.</div><div dir=3D=
+"auto">I hope to get your respond as soon as possible.</div><div dir=3D"aut=
+o">Best regards!</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr"=
+ class=3D"gmail_attr">Peter Maydell &lt;<a href=3D"mailto:peter.maydell@lin=
+aro.org">peter.maydell@linaro.org</a>&gt; =E4=BA=8E 2024=E5=B9=B43=E6=9C=88=
+6=E6=97=A5=E5=91=A8=E4=B8=89 23:24=E5=86=99=E9=81=93=EF=BC=9A<br></div><blo=
+ckquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #c=
+cc solid;padding-left:1ex">On Wed, 6 Mar 2024 at 14:33, yb liu &lt;<a href=
+=3D"mailto:liuyb845@gmail.com" target=3D"_blank" rel=3D"noreferrer">liuyb84=
+5@gmail.com</a>&gt; wrote:<br>
+&gt;<br>
+&gt;<br>
+&gt; Dear QEMU developers<br>
+&gt;<br>
+&gt; I hope this email finds you well. We are currently facing an issue rel=
+ated to QEMU and the Cortex-A55 architecture. Specifically, we have compile=
+d a firmware for Cortex-A55 and would like it to run smoothly on QEMU A55 i=
+n AArch32 mode.<br>
+&gt;<br>
+&gt; Despite our numerous attempts, we continue to encounter an &quot;undef=
+ined instruction&quot; error when running the firmware in QEMU. Our questio=
+n is whether QEMU supports this particular use case=E2=80=94specifically, w=
+hether it can handle A55 running AArch32 firmware.<br>
+<br>
+We have Cortex-A55 emulation, but you may be running into one<br>
+of a few problems:<br>
+=C2=A0* we might have a bug<br>
+=C2=A0* firmware sometimes does very low level stuff that no other guest<br=
+>
+=C2=A0 =C2=A0code does, so it might run into something we didn&#39;t get ro=
+und<br>
+=C2=A0 =C2=A0to implementing (eg it is trying to touch one of the implement=
+ation<br>
+=C2=A0 =C2=A0specific system registers: we tend to implement these as &quot=
+;does<br>
+=C2=A0 =C2=A0nothing&quot; stubs, but it looks like we didn&#39;t bother fo=
+r the A55,<br>
+=C2=A0 =C2=A0presumably because Linux didn&#39;t care)<br>
+=C2=A0* your guest code might be doing something that works on the<br>
+=C2=A0 =C2=A0real A55 hardware but which is architecturally UNPREDICTABLE:<=
+br>
+=C2=A0 =C2=A0QEMU doesn&#39;t try to exactly match device-specific IMPDEF<b=
+r>
+=C2=A0 =C2=A0and UNPREDICTABLE things<br>
+=C2=A0* your guest code might be assuming the presence of some feature<br>
+=C2=A0 =C2=A0that your real A55 has but which QEMU doesn&#39;t implement<br=
+>
+=C2=A0 =C2=A0(for instance we implement only the absolute minimum RAS<br>
+=C2=A0 =C2=A0support required by the architecture, not the full RAS<br>
+=C2=A0 =C2=A0that hardware implements)<br>
+<br>
+The thing you&#39;d need to do is look at exactly what the UNDEF<br>
+instruction is (and what the guest code that causes it is<br>
+trying to do) to figure out which of these is the problem.<br>
+Some of these might be easy to fix; some would be harder.<br>
+If you&#39;re in a position to be able to modify the firmware<br>
+image then that would also allow you to work around missing<br>
+QEMU functionality if necessary.<br>
+<br>
+The more usual reason guest firmware not working in QEMU is<br>
+not the CPU emulation itself but lack of a model of the<br>
+device/SoC/etc hardware that the firmware assumes it&#39;s<br>
+running on.<br>
+<br>
+-- PMM<br>
+</blockquote></div>
+
+--000000000000e14923061307a4c6--
 
