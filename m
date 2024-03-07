@@ -4,85 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 551FDC54E49
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 16:04:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F70AC54E49
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 16:05:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riGDt-0005DS-JC; Thu, 07 Mar 2024 11:03:57 -0500
+	id 1riGDw-0005HC-Rt; Thu, 07 Mar 2024 11:04:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1riGDp-0005Bs-Vm
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 11:03:54 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1riGDn-0006DH-Ft
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 11:03:53 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1dcab44747bso8775595ad.1
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 08:03:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1709827428; x=1710432228; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9qRmnU76/UCmmp+A+boOm+CPDeqxgW4n/Bjq20j2Tb8=;
- b=l4mHtViy85Of523V9Cvrw0NaIZDUdU2SmVTtcyqajV9s31VBdIHiumuywgw1TiR4w4
- ky4q5gfb5qlxI2pT3UYnxnDJ9ORbXefF+O9hUw/E8oJQ+pAx5a5aHq+/Yy0UK3rlktVE
- Q0hiq8S4szcbkVlfDRDp22qUSfe99qernoenb8kqlWussZCaHXRvR/lQPgcmDDWKSz2M
- Tv8wEr7X3v1mSbIXM1bJOC69Qc1f1T548dFtwzQRrL8dRsyG63jjZR/By3rW0Q1zyJGf
- aDntmh5Osu3sOYtu9EBE/FrC4BkkuiX4lcikcDBVAw/kRZBXMy9C2/JBqNsZA9bPIXM9
- VGJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709827428; x=1710432228;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9qRmnU76/UCmmp+A+boOm+CPDeqxgW4n/Bjq20j2Tb8=;
- b=Gu9+t35z57MGkAWohx73fpmSdOy8XtYKfw4BD60wYHvT9ichXf25r//3WBt6yYqLkq
- D7DOpoYZaEaineeA1DT2/hZdisOXCqrrDT48sluuSYcHW29/IOmjmQ/BXn7ZpAbBXNfH
- 0iNfM9oOa2PuodNS6hr8UrqnEnP+c/cO6h69+MjB3KcxQwjnVu3vEnAtYtlAxHINYjNF
- yzwFoghER7CRe60UDpRBiJ6j+q5kXSjECTvpqLaSXGdpK7Tej+yZpPJYSxtHk9Sc5TT+
- iDFBii/B5+fY8EUHnYaGPBDWbwFJ0kswzw7RFJgSggVUV+XPDI03Lo7Q7dNv7qnSc/Pc
- 6azg==
-X-Gm-Message-State: AOJu0YwljFwhhxKGBIqozjaG/nH/IvB2OvQSyOycQm3hdf7jN6yu+t/8
- orGEK2l6SAoYK8nSPIsO0DgncBDl/6wPbhsMz1oCTH6iYXlSxyp4FUlIORqReRv3V9CAaPICInH
- A
-X-Google-Smtp-Source: AGHT+IEQXFJxW2qiw239mRIxAT9uV5fFqfLPoC/vALE7OVlVWjokmyK2bDy3uQjKOcw2OR42WPf6/w==
-X-Received: by 2002:a17:902:7c0f:b0:1dc:ce55:e6fa with SMTP id
- x15-20020a1709027c0f00b001dcce55e6famr7265302pll.29.1709827428550; 
- Thu, 07 Mar 2024 08:03:48 -0800 (PST)
-Received: from grind.dc1.ventanamicro.com ([177.94.15.159])
- by smtp.gmail.com with ESMTPSA id
- u11-20020a170903124b00b001db2b8b2da7sm14663136plh.122.2024.03.07.08.03.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 Mar 2024 08:03:48 -0800 (PST)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- ajones@ventanamicro.com, tjeznach@rivosinc.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v2 06/15] hw/riscv/virt.c: support for RISC-V IOMMU PCIDevice
- hotplug
-Date: Thu,  7 Mar 2024 13:03:09 -0300
-Message-ID: <20240307160319.675044-7-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240307160319.675044-1-dbarboza@ventanamicro.com>
-References: <20240307160319.675044-1-dbarboza@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1riGDh-00056c-0B
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 11:03:48 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1riGDb-000634-Ux
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 11:03:44 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TrDVg0ZJVz67c1W;
+ Thu,  7 Mar 2024 23:58:35 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 3D440140C72;
+ Fri,  8 Mar 2024 00:03:25 +0800 (CST)
+Received: from SecurePC-101-06.china.huawei.com (10.122.247.231) by
+ lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Thu, 7 Mar 2024 16:03:24 +0000
+To: Liu Jingqi <jingqi.liu@intel.com>, <qemu-devel@nongnu.org>,
+ <ankita@nvidia.com>, "Michael S . Tsirkin" <mst@redhat.com>, Igor Mammedov
+ <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+CC: <linuxarm@huawei.com>, Markus Armbruster <armbru@redhat.com>, Daniel Black
+ <daniel@linux.ibm.com>
+Subject: [PATCH v2 0/2] hw/acpi/hmat: Misc fixes
+Date: Thu, 7 Mar 2024 16:03:24 +0000
+Message-ID: <20240307160326.31570-1-Jonathan.Cameron@huawei.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.122.247.231]
+X-ClientProxiedBy: lhrpeml500002.china.huawei.com (7.191.160.78) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,88 +65,77 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tomasz Jeznach <tjeznach@rivosinc.com>
+v2: Fixed a link in patch 1 description so it points somewhere stable.
 
-Generate device tree entry for riscv-iommu PCI device, along with
-mapping all PCI device identifiers to the single IOMMU device instance.
+Two unrelated fixes here:
+1) Linux really doesn't like it when you claim non existent memory
+   is directly connected to an initiator (here a CPU).
+   It is a nonsense entry, though I also plan to try and get
+   a relaxation of the condition into the kernel.
+   Maybe we need to care about migration, but I suspect no one
+   cares about this corner case (hence no one noticed the
+   problem!)
 
-Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- hw/riscv/virt.c | 33 ++++++++++++++++++++++++++++++++-
- 1 file changed, 32 insertions(+), 1 deletion(-)
+2) An access outside of the allocated array when building the
+   the latency and bandwidth tables.  Given this crashes QEMU
+   for me, I think we are fine with the potential table change.
 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index a094af97c3..67a8267747 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -32,6 +32,7 @@
- #include "hw/core/sysbus-fdt.h"
- #include "target/riscv/pmu.h"
- #include "hw/riscv/riscv_hart.h"
-+#include "hw/riscv/iommu.h"
- #include "hw/riscv/virt.h"
- #include "hw/riscv/boot.h"
- #include "hw/riscv/numa.h"
-@@ -1004,6 +1005,30 @@ static void create_fdt_virtio_iommu(RISCVVirtState *s, uint16_t bdf)
-                            bdf + 1, iommu_phandle, bdf + 1, 0xffff - bdf);
- }
- 
-+static void create_fdt_iommu(RISCVVirtState *s, uint16_t bdf)
-+{
-+    const char comp[] = "riscv,pci-iommu";
-+    void *fdt = MACHINE(s)->fdt;
-+    uint32_t iommu_phandle;
-+    g_autofree char *iommu_node = NULL;
-+    g_autofree char *pci_node = NULL;
-+
-+    pci_node = g_strdup_printf("/soc/pci@%lx",
-+                               (long) virt_memmap[VIRT_PCIE_ECAM].base);
-+    iommu_node = g_strdup_printf("%s/iommu@%x", pci_node, bdf);
-+    iommu_phandle = qemu_fdt_alloc_phandle(fdt);
-+    qemu_fdt_add_subnode(fdt, iommu_node);
-+
-+    qemu_fdt_setprop(fdt, iommu_node, "compatible", comp, sizeof(comp));
-+    qemu_fdt_setprop_cell(fdt, iommu_node, "#iommu-cells", 1);
-+    qemu_fdt_setprop_cell(fdt, iommu_node, "phandle", iommu_phandle);
-+    qemu_fdt_setprop_cells(fdt, iommu_node, "reg",
-+                           bdf << 8, 0, 0, 0, 0);
-+    qemu_fdt_setprop_cells(fdt, pci_node, "iommu-map",
-+                           0, iommu_phandle, 0, bdf,
-+                           bdf + 1, iommu_phandle, bdf + 1, 0xffff - bdf);
-+}
-+
- static void finalize_fdt(RISCVVirtState *s)
- {
-     uint32_t phandle = 1, irq_mmio_phandle = 1, msi_pcie_phandle = 1;
-@@ -1712,9 +1737,11 @@ static HotplugHandler *virt_machine_get_hotplug_handler(MachineState *machine,
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
- 
-     if (device_is_dynamic_sysbus(mc, dev) ||
--        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
-+        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI) ||
-+        object_dynamic_cast(OBJECT(dev), TYPE_RISCV_IOMMU_PCI)) {
-         return HOTPLUG_HANDLER(machine);
-     }
-+
-     return NULL;
- }
- 
-@@ -1735,6 +1762,10 @@ static void virt_machine_device_plug_cb(HotplugHandler *hotplug_dev,
-     if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
-         create_fdt_virtio_iommu(s, pci_get_bdf(PCI_DEVICE(dev)));
-     }
-+
-+    if (object_dynamic_cast(OBJECT(dev), TYPE_RISCV_IOMMU_PCI)) {
-+        create_fdt_iommu(s, pci_get_bdf(PCI_DEVICE(dev)));
-+    }
- }
- 
- static void virt_machine_class_init(ObjectClass *oc, void *data)
+Some notes on 1:
+- This structure is almost entirely pointless in general - most
+  of the fields were removed in HMAT v2.
+  What remains, is meant to convey memory controller location
+  when the memory is in a different Proximity Domain from the
+  memory controller (e.g. a SoC with both HBM and DDR will present
+  2 NUMA domains but memory controllers will be wherever we describe
+  the CPUs as being - typically with the DDR)
+  Currently QEMU creates these to indicate direct connection between
+  a CPU domain and memory in the same domain. Using the Proximity
+  domain in SRAT conveys the same. This adds no information but
+  it is harmless and avoids migration problems.
+
+Notes on 2:
+- I debated a follow up patch removing the entrees in the table
+  for initiators on nodes that don't have any initiators.
+  QEMU won't let you use them as initiators in the LB entries
+  anyway so there is no way to set those entries and they
+  end up reported as 0. OK for Bandwidth as no one is going to use
+  the zero bandwidth channel, but that's a very attractive latency,
+  but that's fine as no one will read the number as there are
+  no initiators? (right?)
+
+  There is a corner case in ACPI that bites us here.
+  ACPI Proximity domains are only defined in SRAT, but nothing says
+  they need to be fully defined.  Generic Initiators are optional
+  after all (newish feature) so it was common to use _PXM in DSDT
+  to define where various platform devices were (and PCI but that's
+  still not read by Linux - a story of pain and broken systems for
+  another day). That's fine if they are in a node with CPUs
+  (initiators) but not so much if they happen to be in a memory
+  only node. Today I think the only thing we can make hit this
+  condition in QEMU is a PCI Expander Bridge which doesn't initiate
+  transactions. But things behind it do and there are drivers out
+  there that do buffer placement based on SLIT distances. I'd
+  expect HMAT users to follow soon.
+
+  It would be nice to think all such systems will use Generic Port
+  Affinity Structures (and I have patches for those to follow shortly)
+  but that's overly optimistic beyond CXL where the kernel will use
+  them and which drove their introduction.
+
+Jonathan Cameron (2):
+  hmat acpi: Do not add Memory Proximity Domain Attributes Structure
+    targetting non existent memory.
+  hmat acpi: Fix out of bounds access due to missing use of indirection
+
+ hw/acpi/hmat.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
 -- 
-2.43.2
+2.39.2
 
 
