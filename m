@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DE3EC48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 15:32:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69533C48BF6
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 15:33:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riFhJ-0000IE-8O; Thu, 07 Mar 2024 10:30:17 -0500
+	id 1riFg4-0006Bs-4V; Thu, 07 Mar 2024 10:29:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1riFhH-0000FO-8c
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 10:30:15 -0500
+ id 1riFfu-00068E-VO
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 10:28:52 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1riFhC-00068U-DE
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 10:30:14 -0500
+ (envelope-from <gaosong@loongson.cn>) id 1riFfn-0005eK-1X
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 10:28:49 -0500
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8BxHOss3ellIPgVAA--.44341S3;
- Thu, 07 Mar 2024 23:28:44 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Cxruso3ellFfgVAA--.54343S3;
+ Thu, 07 Mar 2024 23:28:40 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8DxdMwk3ellNlBQAA--.33344S14; 
- Thu, 07 Mar 2024 23:28:44 +0800 (CST)
+ AQAAf8DxdMwk3ellNlBQAA--.33344S10; 
+ Thu, 07 Mar 2024 23:28:40 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
-Subject: [PULL v2 12/17] hw/loongarch: fdt adds pch_pic Controller
-Date: Thu,  7 Mar 2024 23:28:30 +0800
-Message-Id: <20240307152835.299233-13-gaosong@loongson.cn>
+Subject: [PULL v2 08/17] hw/loongarch: Init efi_fdt table
+Date: Thu,  7 Mar 2024 23:28:26 +0800
+Message-Id: <20240307152835.299233-9-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20240307152835.299233-1-gaosong@loongson.cn>
 References: <20240307152835.299233-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8DxdMwk3ellNlBQAA--.33344S14
+X-CM-TRANSID: AQAAf8DxdMwk3ellNlBQAA--.33344S10
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -64,86 +64,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-fdt adds pch pic controller, we use 'loongson,pch-pic-1.0'
-
-See:
-https://github.com/torvalds/linux/blob/v6.7/drivers/irqchip/irq-loongson-pch-pic.c
-https://lore.kernel.org/r/20200528152757.1028711-4-jiaxun.yang@flygoat.com
-
 Signed-off-by: Song Gao <gaosong@loongson.cn>
-Message-Id: <20240301093839.663947-13-gaosong@loongson.cn>
+Message-Id: <20240301093839.663947-9-gaosong@loongson.cn>
 ---
- hw/loongarch/virt.c        | 30 +++++++++++++++++++++++++++++-
- include/hw/pci-host/ls7a.h |  1 +
- 2 files changed, 30 insertions(+), 1 deletion(-)
+ hw/loongarch/boot.c         | 11 +++++++++++
+ include/hw/loongarch/boot.h |  4 ++++
+ 2 files changed, 15 insertions(+)
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 822f070c45..2b7b653fc1 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -148,6 +148,31 @@ static void fdt_add_eiointc_node(LoongArchMachineState *lams,
-     g_free(nodename);
+diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+index 6f56d4fd91..fe3e640508 100644
+--- a/hw/loongarch/boot.c
++++ b/hw/loongarch/boot.c
+@@ -111,6 +111,16 @@ static void init_efi_initrd_table(struct efi_system_table *systab,
+     initrd_table->size = initrd_size;
  }
  
-+static void fdt_add_pch_pic_node(LoongArchMachineState *lams,
-+                                 uint32_t *eiointc_phandle,
-+                                 uint32_t *pch_pic_phandle)
++static void init_efi_fdt_table(struct efi_system_table *systab)
 +{
-+    MachineState *ms = MACHINE(lams);
-+    char *nodename;
-+    hwaddr pch_pic_base = VIRT_PCH_REG_BASE;
-+    hwaddr pch_pic_size = VIRT_PCH_REG_SIZE;
++    efi_guid_t tbl_guid = DEVICE_TREE_GUID;
 +
-+    *pch_pic_phandle = qemu_fdt_alloc_phandle(ms->fdt);
-+    nodename = g_strdup_printf("/platic@%" PRIx64, pch_pic_base);
-+    qemu_fdt_add_subnode(ms->fdt, nodename);
-+    qemu_fdt_setprop_cell(ms->fdt,  nodename, "phandle", *pch_pic_phandle);
-+    qemu_fdt_setprop_string(ms->fdt, nodename, "compatible",
-+                            "loongson,pch-pic-1.0");
-+    qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 0,
-+                           pch_pic_base, 0, pch_pic_size);
-+    qemu_fdt_setprop(ms->fdt, nodename, "interrupt-controller", NULL, 0);
-+    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 2);
-+    qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
-+                          *eiointc_phandle);
-+    qemu_fdt_setprop_cell(ms->fdt, nodename, "loongson,pic-base-vec", 0);
-+    g_free(nodename);
++    /* efi_configuration_table 3 */
++    guidcpy(&systab->tables[2].guid, &tbl_guid);
++    systab->tables[2].table = (void *)0x100000; /* fdt_base 1MiB */
++    systab->nr_tables = 3;
 +}
 +
- static void fdt_add_flash_node(LoongArchMachineState *lams)
+ static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
  {
-     MachineState *ms = MACHINE(lams);
-@@ -569,7 +594,7 @@ static void loongarch_irq_init(LoongArchMachineState *lams)
-     CPULoongArchState *env;
-     CPUState *cpu_state;
-     int cpu, pin, i, start, num;
--    uint32_t cpuintc_phandle, eiointc_phandle;
-+    uint32_t cpuintc_phandle, eiointc_phandle, pch_pic_phandle;
+     void *bp_tables_start;
+@@ -136,6 +146,7 @@ static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
+                   sizeof(efi_memory_desc_t) * memmap_entries, 64);
+     init_efi_initrd_table(systab, p, start);
+     p += ROUND_UP(sizeof(struct efi_initrd), 64);
++    init_efi_fdt_table(systab);
  
-     /*
-      * The connection of interrupts:
-@@ -660,6 +685,9 @@ static void loongarch_irq_init(LoongArchMachineState *lams)
-         qdev_connect_gpio_out(DEVICE(d), i, qdev_get_gpio_in(extioi, i));
-     }
+     systab->tables = (struct efi_configuration_table *)(bp_tables_start - start);
+ }
+diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
+index ce47056608..bbe8c8dd5d 100644
+--- a/include/hw/loongarch/boot.h
++++ b/include/hw/loongarch/boot.h
+@@ -34,6 +34,10 @@ typedef struct {
+         EFI_GUID(0x5568e427, 0x68fc, 0x4f3d,  0xac, 0x74, \
+                  0xca, 0x55, 0x52, 0x31, 0xcc, 0x68)
  
-+    /* Add PCH PIC node */
-+    fdt_add_pch_pic_node(lams, &eiointc_phandle, &pch_pic_phandle);
++#define DEVICE_TREE_GUID \
++        EFI_GUID(0xb1b621d5, 0xf19c, 0x41a5,  0x83, 0x0b, \
++                 0xd9, 0x15, 0x2c, 0x69, 0xaa, 0xe0)
 +
-     pch_msi = qdev_new(TYPE_LOONGARCH_PCH_MSI);
-     start   =  num;
-     num = EXTIOI_IRQS - start;
-diff --git a/include/hw/pci-host/ls7a.h b/include/hw/pci-host/ls7a.h
-index e753449593..fe260f0183 100644
---- a/include/hw/pci-host/ls7a.h
-+++ b/include/hw/pci-host/ls7a.h
-@@ -24,6 +24,7 @@
- #define VIRT_PCH_REG_BASE        0x10000000UL
- #define VIRT_IOAPIC_REG_BASE     (VIRT_PCH_REG_BASE)
- #define VIRT_PCH_MSI_ADDR_LOW    0x2FF00000UL
-+#define VIRT_PCH_REG_SIZE        0x400
- 
- /*
-  * GSI_BASE is hard-coded with 64 in linux kernel, else kernel fails to boot
+ struct efi_config_table {
+     efi_guid_t guid;
+     uint64_t *ptr;
 -- 
 2.34.1
 
