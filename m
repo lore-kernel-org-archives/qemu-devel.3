@@ -4,105 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96390C54798
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 19:13:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA49DC54E4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 19:14:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riJA8-00067A-39; Thu, 07 Mar 2024 14:12:16 -0500
+	id 1riJCE-0006vG-T8; Thu, 07 Mar 2024 14:14:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1riJA0-00066T-SA; Thu, 07 Mar 2024 14:12:08 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1riJ9x-0004QC-AX; Thu, 07 Mar 2024 14:12:06 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 427J7IjV002150; Thu, 7 Mar 2024 19:11:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=ItXGLcMkeNS5nlIjWl8P7tBZRWXlkagoGpEE6Fdhlu0=;
- b=M+pMcemr2M8o/wKc0uaYCIhIRrSBNUcZhPEoslxBknHjHc2TcuOuMskDkAdTEF3eyC0t
- Dc2MFd83qPYjAe8YKPcJ7tZT1/dIYZRwx1s3Jrk5G0FLzDf1YbqObBTsg56wyZYJxPXC
- 6xjVb3SEFoc1IpM6socoLvGSvbrNE4EY9J4Z3ZkiYtnpFymfwB3CyQ2qheB1gvoOGqof
- 8iPLdro48f6SDLob/XS6xv4dZY4pertxKg92mR4e3mHEyXZuci83pmwtvkV8V7Qo8qad
- NFECsrgTl6Bw94AEwv1IxT7GIG3ILkkM54YgFy5XbfIxF0f+/+zUhJ8OqEXvqkhzXJ68 Pg== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wqkf2r2cv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 07 Mar 2024 19:11:54 +0000
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 427J8m5A006678;
- Thu, 7 Mar 2024 19:11:54 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wqkf2r2cp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 07 Mar 2024 19:11:54 +0000
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 427I37OV025376; Thu, 7 Mar 2024 19:11:52 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3wmetyytv7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 07 Mar 2024 19:11:52 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 427JBnYG41615714
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 7 Mar 2024 19:11:51 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1B7B45805D;
- Thu,  7 Mar 2024 19:11:49 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4D75158043;
- Thu,  7 Mar 2024 19:11:48 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  7 Mar 2024 19:11:48 +0000 (GMT)
-Message-ID: <3bfc8f83-f504-4039-8cc3-0c0fb6382692@linux.ibm.com>
-Date: Thu, 7 Mar 2024 14:11:47 -0500
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1riJCB-0006ur-2Q
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 14:14:23 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1riJC9-0004cV-JQ
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 14:14:22 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-412fc5f5152so9576705e9.0
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 11:14:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709838859; x=1710443659; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sylq+yNNqGwADLcXVsURvmSGes8QdqYhE4QjNOBiEgs=;
+ b=JT6Tma9bwJzDC0/FHmxyFgoEAnTiiK+LAn3RtosGuYMcrIH0eaGij2lDisQ5VFrrCP
+ cvvySXxWQeceLLGPcDZ3SY7GpHedNsxknW00dBno/9qK44UjIohhN4FG6kPIDBWGuHeG
+ mPLaff8eyxKCJ14WGYIgxAK9MQrHQVHbfwdKG3B4r5YiLTFw4TPKrHKvTRBltt6CUva4
+ B14GhLN7BGPSy+RcOkTBeeK2X1SwIrzc9NNr9DR5W3AfFbc3/2dVOTrNVJIGphUkQFq/
+ TmP4+G3hPEk5v4eE/L3gdohfHvjym8Age2VUd+QW0GUE8KxyjHWx3WW9jAb1PUcoBD0Q
+ 9p2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709838859; x=1710443659;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=sylq+yNNqGwADLcXVsURvmSGes8QdqYhE4QjNOBiEgs=;
+ b=tUY/fAHy/elne+vwvIS9qsN6jUVmYyWemCD6JDb/5i9QUk6roymxDcgwxKWJxSWvOb
+ o5LZ6T4pPEH8fuDT9lEw1GE+bYUuCzAcyfXzNioCdSKsUK01AL/T29M0B/1WPKE9cwqE
+ I5enha0qnS11zySlaXdtOr6p7855IdhoZyF1Zn6jOf8a6xBA4PueD5sP5+GPXuZa9mFM
+ 5Sz95rAyHdC7LjN9QrwuDBIvdjjZUIAlvOR0P2eGoTVtWxNue+geYjd4JEkAOSHO9P6V
+ 62jPTzXdOqpn+TkeYrjeqgfE1QYahd6a6SHIrmbNOrsJN7yGEoQ69BX4RJS4vBloKhns
+ kZPA==
+X-Gm-Message-State: AOJu0YyWMIPE5Djxbjho4gLuAoIxK3zOaxfMdC48lK5VzvEiWKp7lQjb
+ j+lL1ajrsPqb1RXHF9uFqRu5TagHIAWGPtNO2G0mRDjVXJRIsnrESAzpVZMaJ58=
+X-Google-Smtp-Source: AGHT+IFMY7RmRdcw+uMskLMpVPYuCTWsycH8Aq9Xfmrs1wSZ1WFGlvIEC/qw2lrsswEn9ftGFm8rqA==
+X-Received: by 2002:adf:e6d0:0:b0:33e:836:ea1a with SMTP id
+ y16-20020adfe6d0000000b0033e0836ea1amr11899596wrm.18.1709838858986; 
+ Thu, 07 Mar 2024 11:14:18 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ bp16-20020a5d5a90000000b0033e0567e90bsm21757432wrb.5.2024.03.07.11.14.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 07 Mar 2024 11:14:18 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 4CF3F5F737;
+ Thu,  7 Mar 2024 19:14:18 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Gustavo Romero <gustavo.romero@linaro.org>
+Cc: qemu-devel@nongnu.org,  richard.henderson@linaro.org,
+ peter.maydell@linaro.org,  laurent@vivier.eu,  philmd@linaro.org
+Subject: Re: [PATCH v2 1/5] gdbstub: Rename back gdb_handlesig
+In-Reply-To: <20240307182623.1450717-1-gustavo.romero@linaro.org> (Gustavo
+ Romero's message of "Thu, 7 Mar 2024 18:26:19 +0000")
+References: <20240307182623.1450717-1-gustavo.romero@linaro.org>
+User-Agent: mu4e 1.12.1; emacs 29.1
+Date: Thu, 07 Mar 2024 19:14:18 +0000
+Message-ID: <87cys5voqd.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/5] hw/ppc: SPI controller model - registers
- implementation
-Content-Language: en-US
-From: Stefan Berger <stefanb@linux.ibm.com>
-To: Chalapathi V <chalapathi.v@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
- clg@kaod.org, calebs@us.ibm.com, chalapathi.v@ibm.com,
- saif.abrar@linux.vnet.ibm.com
-References: <20240207160833.3437779-1-chalapathi.v@linux.ibm.com>
- <20240207160833.3437779-3-chalapathi.v@linux.ibm.com>
- <6ab8bb8e-5126-4322-bb91-6709e46c444a@linux.ibm.com>
-In-Reply-To: <6ab8bb8e-5126-4322-bb91-6709e46c444a@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: icatcpyL1xMhiEXl-UQvLtfmX7kj6K6k
-X-Proofpoint-GUID: 4o7iD2X7DURXjC4j4Ey11R-eJVo6A3mr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-07_14,2024-03-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=979
- lowpriorityscore=0 suspectscore=0 bulkscore=0 spamscore=0
- priorityscore=1501 malwarescore=0 phishscore=0 impostorscore=0
- adultscore=0 mlxscore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2311290000 definitions=main-2403070134
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,14 +98,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Gustavo Romero <gustavo.romero@linaro.org> writes:
 
+> Rename gdb_handlesig_reason back to gdb_handlesig. There is no need to
+> add a wrapper for gdb_handlesig and rename it when a new parameter is
+> added.
+>
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 
-On 3/7/24 13:54, Stefan Berger wrote:
-> 
-> 
-> On 2/7/24 11:08, Chalapathi V wrote:
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
->> +#define COUNTER_CONFIG_REG_SHIFT_COUNT_N1       PPC_BITMASK(0 , 7)
-
-No space before the ',' ==> PPC_BITMASK(0, 7)
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
