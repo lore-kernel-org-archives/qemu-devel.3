@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9451DC54E58
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 18:12:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37D81C54E4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 Mar 2024 18:12:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riID3-0002SH-FI; Thu, 07 Mar 2024 13:11:13 -0500
+	id 1riID6-0002Te-O0; Thu, 07 Mar 2024 13:11:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1riID1-0002RU-R6
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 13:11:11 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1riID2-0002Rk-Cz
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 13:11:12 -0500
+Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1riICy-0004RI-PT
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 13:11:10 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-33e2774bdc7so926148f8f.0
+ id 1riICy-0004Qi-Px
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 13:11:12 -0500
+Received: by mail-lf1-x135.google.com with SMTP id
+ 2adb3069b0e04-51321e71673so1265967e87.2
  for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 10:11:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1709835066; x=1710439866; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FP1Q7CJ3ufIn91uB7tqy2T7aeez+sSRO3vzBm+o+KRQ=;
- b=PF3E3R6+j6VLY6Jl+W7pE1u4PqpvsI1BONH18gTe9NfNs1/DvDKobIA2E2i5kydQUI
- +NJAQcg8iNtvnAzaeoEijg5EFQiqebmEf/w1gr1ESOIrn4bb8K2rjn36eNqFFDUnBHYS
- owE9WMUwe7C6Evz6IE6oaCajU96qwD2IFpJmoS1VkcB/Cu0TlPhCSw2dQynpwkVZNnpg
- 8otjnl/o693NAE+fJK4lq1Z/Mh9igEvHRvQ14iIpsSSW/L2Fxzli3Wf9f14vxXgARN+w
- rqJ8cCnnIJQEK8fj1CIOUMZKM0X09xZi4rUPn30+4FKqocue6Wu0oAoB3V/mIeD4Lud9
- j7jQ==
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=IH8YxlTbSFFE6WXD8byS5PFVC3jXcSt1MmTksNm3ntE=;
+ b=yhOr1oPKCSw5KaRZ8hdxvTrGPCS5NLTjbwjGpjEdDTnUhzqPeYfK1q1Og6cnzL2ByB
+ 8xFqNzpLXHDCwBwsrooddBYP7kRwiLR2gEnriy4J/MmWVH9topx4ukbeddKTROV2VTje
+ PUHbPWHC/q7CuCJ29/I+EQUJmJ3ZS6oeCp4vyCb3RaRNRTksRNk04otcJwAYE7o4crkT
+ bCHHcalWabDzl6RduWk4cxCF1fQSKRYQsB91WFOzBFyp4017gSlmjIGSdLWeAi8kRFE3
+ XgBMx9Y+0j1zB6Ak/Dy3VVS6w9XFdp/Qq0u2hjuO8griKLz492riPblLuzgnUXfZZzqN
+ zd7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1709835066; x=1710439866;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=FP1Q7CJ3ufIn91uB7tqy2T7aeez+sSRO3vzBm+o+KRQ=;
- b=ciTps+SD5xo876v5CDJoXG4LJX1WwDpHYRanBfKGbIe6NkoFNGe3WAszzrmMlGvHz9
- XIEKlwB5pJ6g5EUc7vkp6rZI6S8JxgSPu8p3Gznd1a9GRq38N4H5xd/0lTyD4Ik1WTJ6
- v1kR2W42moVCIpMgO4UiNQGF1cgfC2HLIukiBgGhB77qVjZoc+R39lTSJTw0q5yXfsAg
- 3lyu4WNqUwKFyiMzXtgphun+9MuCA+chtI8SMSp8OQSG49c77li5BSHbR6HImVuqh47w
- v18+IMG0J9UyEj5PYLA3W0uMnNEufmTfVnVavpp514IhrgPqGxobTJpEKMR0j5MaE1rF
- MHmw==
-X-Gm-Message-State: AOJu0YwKe1svzlksAb2H6A1LGlgLlRhS00zr6N+WOrd/rPCUTIujdVpy
- uSS7AgiQ+HQZ6jAA9dDNjGq9xzQHEVMOrr3ZGW1A/dDly9K8vkLi5781m3v8bOg=
-X-Google-Smtp-Source: AGHT+IH/OxZrTSOCBVuAysVaBer68U37JxerhjGQdG2hP3831z5YOBAhOhrIV5bd96KX/ZPFfkfPIQ==
-X-Received: by 2002:adf:f584:0:b0:33e:726d:e963 with SMTP id
- f4-20020adff584000000b0033e726de963mr656930wro.17.1709835066451; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=IH8YxlTbSFFE6WXD8byS5PFVC3jXcSt1MmTksNm3ntE=;
+ b=vjIf/OGD98rFRGGsWcOnqkXxdCO1KcrW3ceSCr+QLsegERLvkUqIsReh5ejkjFVAdA
+ /3HtOFbfxV7XwH9rZBauQ4OvhPLM59GpI5Qd4uc6/Jyn3tUB2S64XxlIAU3MXjdwj+Zd
+ +Ln0RuBTLe8fU4cliUVbX08cmLuFEhjdFudQDY41XlTJCJyyQYgsjAABt2pPTZcpA26H
+ 4TSwyQ4V/1IBADqnX9LY8LFRtucIXlA64yZgg6JthQgA8sa3c5Qb75e5npxD/1VFxU6+
+ WDN9AOMy4fubAgCaLSrnHzt3wsCExb8SuOa+cY6GkYZz8LlGY9OrAp19WP8oFeMH7jbT
+ R+Rg==
+X-Gm-Message-State: AOJu0YzePfdthVjoqyhwZ52XV+dateYB9XyxVKag+nHMVCRXLohnBeLj
+ BUFb88hvJhoGepKQKIgIsY3SMQCGMvY4MTPusFtXNaKsENpqMb7VL4pPvksveNo=
+X-Google-Smtp-Source: AGHT+IHWxAPLvpkmB1sblxbLye5fV1cNX8vt1XeXz5dm0RJ8Hy39vcqfyAOH+HTkw+baz7LPLylPZQ==
+X-Received: by 2002:a05:6512:104b:b0:513:28b9:76da with SMTP id
+ c11-20020a056512104b00b0051328b976damr2557089lfb.46.1709835066238; 
  Thu, 07 Mar 2024 10:11:06 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- v9-20020adfedc9000000b0033e712b1d9bsm713243wro.77.2024.03.07.10.11.05
+ u15-20020a05600c138f00b00412706c3ddasm3460168wmf.18.2024.03.07.10.11.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 Mar 2024 10:11:06 -0800 (PST)
+ Thu, 07 Mar 2024 10:11:05 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8CBEB5F8E1;
+ by draig.lan (Postfix) with ESMTP id 7844D5F7D9;
  Thu,  7 Mar 2024 18:11:05 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -77,17 +76,15 @@ Cc: Elena Ufimtseva <elena.ufimtseva@oracle.com>,
  Thomas Huth <thuth@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>, peter.maydell@linaro.org,
  David Hildenbrand <david@redhat.com>
-Subject: [PATCH 1/5] scripts/kernel-doc: teach kdoc about QLIST_ macros
-Date: Thu,  7 Mar 2024 18:11:01 +0000
-Message-Id: <20240307181105.4081793-2-alex.bennee@linaro.org>
+Subject: [PATCH 0/5] docs: improve the memory API documentation
+Date: Thu,  7 Mar 2024 18:11:00 +0000
+Message-Id: <20240307181105.4081793-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240307181105.4081793-1-alex.bennee@linaro.org>
-References: <20240307181105.4081793-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::135;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,35 +107,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The kernel-doc script does some pre-processing on structure
-definitions before parsing for names. Teach it about QLIST and replace
-with simplified structures representing the base type.
+As I've been looking through the Memory API for our Xen work I thought
+I should take the time to clean it up. I needed to teach kdoc about
+our QLIST_ macros and I found at least one unused field in the
+structure.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- scripts/kernel-doc | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+Looking through the definitions I do wander if the meaning of
+romd_mode and ram_device could be cleaned up to a single bool
+(directly_mapped or use_ops?).
 
-diff --git a/scripts/kernel-doc b/scripts/kernel-doc
-index 240923d509a..26c47562e79 100755
---- a/scripts/kernel-doc
-+++ b/scripts/kernel-doc
-@@ -1226,7 +1226,14 @@ sub dump_struct($$) {
- 	# replace DECLARE_KFIFO_PTR
- 	$members =~ s/DECLARE_KFIFO_PTR\s*\(([^,)]+),\s*([^,)]+)\)/$2 \*$1/gos;
- 
--	my $declaration = $members;
-+        # QEMU Specific Macros
-+
-+        # replace QLIST_ENTRY with base type and variable name
-+        $members =~ s/QLIST_ENTRY\(([^)]+)\)\s+([^;]+)/$1 \*$2/gos;
-+        # replace QLIST_HEAD, optionally capturing an anonymous struct marker, and capture type and variable name
-+        $members =~ s/QLIST_HEAD\(\s*,\s*([^)]+)\)\s+([^;]+)/struct { $1 *lh_first; } $2/gos;
-+
-+        my $declaration = $members;
- 
- 	# Split nested struct/union elements as newer ones
- 	while ($members =~ m/(struct|union)([^\{\};]+)\{([^\{\}]*)\}([^\{\}\;]*)\;/) {
+Anyway for now just cosmetic improvements to the docs as we are close
+to softfreeze.
+
+Alex.
+
+Alex Bennée (5):
+  scripts/kernel-doc: teach kdoc about QLIST_ macros
+  docs: include ramblock.h in the memory API docs
+  include/exec: remove warning_printed from MemoryRegion
+  include/exec: annotate all the MemoryRegion fields
+  docs/devel: mark out defined functions and structures
+
+ docs/devel/memory.rst   | 49 +++++++++++++-------------
+ include/exec/memory.h   | 48 +++++++++++++++++++++++---
+ include/exec/ramblock.h | 76 +++++++++++++++++++++++++++--------------
+ scripts/kernel-doc      |  9 ++++-
+ 4 files changed, 127 insertions(+), 55 deletions(-)
+
 -- 
 2.39.2
 
