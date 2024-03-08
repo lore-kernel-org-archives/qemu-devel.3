@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F75EC5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 08:40:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2FECC54E4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 08:41:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riVmC-0005LS-FF; Fri, 08 Mar 2024 03:40:24 -0500
+	id 1riVmk-0005iP-CI; Fri, 08 Mar 2024 03:40:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1riVm6-0005Fa-Uo
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:40:20 -0500
+ id 1riVmZ-0005fx-LM
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:40:49 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1riVm4-0004f2-6z
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:40:18 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1riVmW-0004h4-1i
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:40:47 -0500
 Received: from loongson.cn (unknown [10.20.42.173])
- by gateway (Coremail) with SMTP id _____8DxK+ntzuplUzoWAA--.36569S3;
- Fri, 08 Mar 2024 16:40:13 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxbOkJz+plXzoWAA--.44873S3;
+ Fri, 08 Mar 2024 16:40:41 +0800 (CST)
 Received: from [10.20.42.173] (unknown [10.20.42.173])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8Cxbs3rzuplCCxRAA--.16377S3; 
- Fri, 08 Mar 2024 16:40:11 +0800 (CST)
-Subject: Re: [PATCH v6 10/17] hw/loongarch: fdt adds cpu interrupt controller
- node
+ AQAAf8AxRMwJz+plPixRAA--.10176S3; 
+ Fri, 08 Mar 2024 16:40:41 +0800 (CST)
+Subject: Re: [PATCH v6 11/17] hw/loongarch: fdt adds Extend I/O Interrupt
+ Controller
 To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
 References: <20240307164835.300412-1-gaosong@loongson.cn>
- <20240307164835.300412-11-gaosong@loongson.cn>
+ <20240307164835.300412-12-gaosong@loongson.cn>
 From: maobibo <maobibo@loongson.cn>
-Message-ID: <28dabb62-0d2d-3e10-c09a-0c5ab4f4cbba@loongson.cn>
-Date: Fri, 8 Mar 2024 16:40:09 +0800
+Message-ID: <3929c990-0479-a57c-2587-5b1e7f503596@loongson.cn>
+Date: Fri, 8 Mar 2024 16:40:40 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <20240307164835.300412-11-gaosong@loongson.cn>
+In-Reply-To: <20240307164835.300412-12-gaosong@loongson.cn>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8Cxbs3rzuplCCxRAA--.16377S3
+X-CM-TRANSID: AQAAf8AxRMwJz+plPixRAA--.10176S3
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7Kw47GF1kWF4kuw48Xw13trc_yoW5Jr1UpF
- W7CanxWF4xtF17Xwsag34Y9rnxZr1xGFy2gwsFgrWIkasrWwn8Wr4xC3ykAFW8A34xXF1j
- vFs5JrW7W3Z2qrXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoWxCF48AF1rZF4fArWrtw4UWrX_yoW5tr1DpF
+ W7CFZ8ur47JF1xWrZaq34UAwn3Zrn3uFy2qw129rW0kFyDX34kXr48C397AF10kw18X3Wj
+ qFsYqryUu3ZrtwcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
  0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
  IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
@@ -87,65 +87,87 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 2024/3/8 上午12:48, Song Gao wrote:
-> fdt adds cpu interrupt controller node,
-> we use 'loongson,cpu-interrupt-controller'.
+> fdt adds Extend I/O Interrupt Controller,
+> we use 'loongson,ls2k2000-eiointc'.
 > 
 > See:
-> https://github.com/torvalds/linux/blob/v6.7/drivers/irqchip/irq-loongarch-cpu.c
-> https://lore.kernel.org/r/20221114113824.1880-2-liupeibao@loongson.cn
+> https://github.com/torvalds/linux/blob/v6.7/drivers/irqchip/irq-loongson-eiointc.c
+> https://lore.kernel.org/r/764e02d924094580ac0f1d15535f4b98308705c6.1683279769.git.zhoubinbin@loongson.cn
 > 
 > Signed-off-by: Song Gao <gaosong@loongson.cn>
-> Message-Id: <20240301093839.663947-11-gaosong@loongson.cn>
+> Message-Id: <20240301093839.663947-12-gaosong@loongson.cn>
 > ---
->   hw/loongarch/virt.c | 21 +++++++++++++++++++++
->   1 file changed, 21 insertions(+)
+>   hw/loongarch/virt.c                | 30 +++++++++++++++++++++++++++++-
+>   include/hw/intc/loongarch_extioi.h |  1 +
+>   2 files changed, 30 insertions(+), 1 deletion(-)
 > 
 > diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index 10fdfec5dd..d260f933a5 100644
+> index d260f933a5..822f070c45 100644
 > --- a/hw/loongarch/virt.c
 > +++ b/hw/loongarch/virt.c
-> @@ -106,6 +106,23 @@ static void virt_flash_map(LoongArchMachineState *lams,
->       virt_flash_map1(flash1, VIRT_FLASH1_BASE, VIRT_FLASH1_SIZE, sysmem);
+> @@ -123,6 +123,31 @@ static void fdt_add_cpuic_node(LoongArchMachineState *lams,
+>       g_free(nodename);
 >   }
 >   
-> +static void fdt_add_cpuic_node(LoongArchMachineState *lams,
-> +                               uint32_t *cpuintc_phandle)
+> +static void fdt_add_eiointc_node(LoongArchMachineState *lams,
+> +                                  uint32_t *cpuintc_phandle,
+> +                                  uint32_t *eiointc_phandle)
 > +{
 > +    MachineState *ms = MACHINE(lams);
 > +    char *nodename;
+> +    hwaddr extioi_base = APIC_BASE;
+> +    hwaddr extioi_size = EXTIOI_SIZE;
 > +
-> +    *cpuintc_phandle = qemu_fdt_alloc_phandle(ms->fdt);
-> +    nodename = g_strdup_printf("/cpuic");
+> +    *eiointc_phandle = qemu_fdt_alloc_phandle(ms->fdt);
+> +    nodename = g_strdup_printf("/eiointc@%" PRIx64, extioi_base);
 > +    qemu_fdt_add_subnode(ms->fdt, nodename);
-> +    qemu_fdt_setprop_cell(ms->fdt, nodename, "phandle", *cpuintc_phandle);
+> +    qemu_fdt_setprop_cell(ms->fdt, nodename, "phandle", *eiointc_phandle);
 > +    qemu_fdt_setprop_string(ms->fdt, nodename, "compatible",
-> +                            "loongson,cpu-interrupt-controller");
+> +                            "loongson,ls2k2000-eiointc");
 > +    qemu_fdt_setprop(ms->fdt, nodename, "interrupt-controller", NULL, 0);
 > +    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 1);
+> +    qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
+> +                          *cpuintc_phandle);
+> +    qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupts", 3);
+> +    qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 0x0,
+> +                           extioi_base, 0x0, extioi_size);
 > +    g_free(nodename);
 > +}
 > +
 >   static void fdt_add_flash_node(LoongArchMachineState *lams)
 >   {
 >       MachineState *ms = MACHINE(lams);
-> @@ -527,6 +544,7 @@ static void loongarch_irq_init(LoongArchMachineState *lams)
+> @@ -544,7 +569,7 @@ static void loongarch_irq_init(LoongArchMachineState *lams)
 >       CPULoongArchState *env;
 >       CPUState *cpu_state;
 >       int cpu, pin, i, start, num;
-> +    uint32_t cpuintc_phandle;
+> -    uint32_t cpuintc_phandle;
+> +    uint32_t cpuintc_phandle, eiointc_phandle;
 >   
 >       /*
 >        * The connection of interrupts:
-> @@ -561,6 +579,9 @@ static void loongarch_irq_init(LoongArchMachineState *lams)
->       memory_region_add_subregion(&lams->system_iocsr, MAIL_SEND_ADDR,
->                      sysbus_mmio_get_region(SYS_BUS_DEVICE(ipi), 1));
+> @@ -613,6 +638,9 @@ static void loongarch_irq_init(LoongArchMachineState *lams)
+>           }
+>       }
 >   
-> +    /* Add cpu interrupt-controller */
-> +    fdt_add_cpuic_node(lams, &cpuintc_phandle);
+> +    /* Add Extend I/O Interrupt Controller node */
+> +    fdt_add_eiointc_node(lams, &cpuintc_phandle, &eiointc_phandle);
 > +
->       for (cpu = 0; cpu < ms->smp.cpus; cpu++) {
->           cpu_state = qemu_get_cpu(cpu);
->           cpudev = DEVICE(cpu_state);
+>       pch_pic = qdev_new(TYPE_LOONGARCH_PCH_PIC);
+>       num = VIRT_PCH_PIC_IRQ_NUM;
+>       qdev_prop_set_uint32(pch_pic, "pch_pic_irq_num", num);
+> diff --git a/include/hw/intc/loongarch_extioi.h b/include/hw/intc/loongarch_extioi.h
+> index a0a46b888c..410c6e1121 100644
+> --- a/include/hw/intc/loongarch_extioi.h
+> +++ b/include/hw/intc/loongarch_extioi.h
+> @@ -39,6 +39,7 @@
+>   #define EXTIOI_COREISR_END           (0xB20 - APIC_OFFSET)
+>   #define EXTIOI_COREMAP_START         (0xC00 - APIC_OFFSET)
+>   #define EXTIOI_COREMAP_END           (0xD00 - APIC_OFFSET)
+> +#define EXTIOI_SIZE                  0x800
+>   
+>   typedef struct ExtIOICore {
+>       uint32_t coreisr[EXTIOI_IRQS_GROUP_COUNT];
 > 
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 
