@@ -4,82 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9026AC5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 20:06:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4660CC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 20:18:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rigTc-0000ij-IN; Fri, 08 Mar 2024 15:05:56 -0500
+	id 1rigeZ-0002kU-KH; Fri, 08 Mar 2024 15:17:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rigTa-0000h3-6i
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 15:05:54 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rigeX-0002k1-QQ
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 15:17:13 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rigTW-0008Bu-0m
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 15:05:52 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rigeW-000251-6V
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 15:17:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709928348;
+ s=mimecast20190719; t=1709929031;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Fcx6Gwd5Vtq3CQy3iiMAxXkvRq31hoWYHk2mb56x/q8=;
- b=M1bYp8DjerGpwVXx4JnBP7m+7xiPpcUDp7IDAFfEba5N8WtFbygCIVf+URiQ1HnwQA9iKG
- zlBnmP9C2ZScHB9flLPd/YkPylZVz5ZW1QxYIRzTYaXkYhiWBdFa4pRAq+BB+kFCdJgXcH
- c3wMBGXj5qa762CrI7Up6oK0g/uNNug=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=D3rY6gUN4XEadfm3H+Fhn8Wvy9CY5Sm31Db0V8RdJB0=;
+ b=WYF9klULUV0IRXp8DBL8OIJDcw2Xvcfm7Dw2zcfqgTZ1plQMtn5vGeRockrqH1K4ymwBgE
+ maC4sKh4ZSuwSkw9e0jhHMe+Lx6HKsbqnYsIwS96PUbBq7xgt0V98E3YE4b9GVfL5TEM1f
+ gVbwpQ+dd5JH5vSgmFVvq7/OPcKrK4M=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-477-St1yl74AMLWUzquI94uG-g-1; Fri, 08 Mar 2024 15:05:46 -0500
-X-MC-Unique: St1yl74AMLWUzquI94uG-g-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-412edc9d70aso14847895e9.0
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 12:05:46 -0800 (PST)
+ us-mta-269-bu0vMITjN9e93kBg8a9nyA-1; Fri, 08 Mar 2024 15:17:07 -0500
+X-MC-Unique: bu0vMITjN9e93kBg8a9nyA-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-5683ae8d37bso33749a12.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 12:17:07 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709928345; x=1710533145;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Fcx6Gwd5Vtq3CQy3iiMAxXkvRq31hoWYHk2mb56x/q8=;
- b=MH4P14KPaaGT+rMcGsM705zSnxyNbJOpHdWIlSmSXCM9if60SoKsfLB5FM6fPLqZm/
- z/OBf92lSC3dMaxq8VpuFg2MipOItfc+eEyKqCNfO9gfYVU1dpAAzUEeXYaBhjizM/nQ
- nqrTxNJ43b3M1v2G5Viv+8d1pfeRiNd+hdBVqU/N3Xt7oca+ONTVgMS06bfekfPAcwAX
- /iv8znzHPgKkwO1rpFAvW2wOLWXctb2XkX5WTwSpPUaWfa9dMAklCyR5Uyl15ZrG8Mjo
- tT9Mowl5FyDli/YjwbCx/zKaerrxmOhCSyBVMpMV6u2UkRZoOofE8Et5c8z0/qESKSzm
- HbbQ==
+ d=1e100.net; s=20230601; t=1709929027; x=1710533827;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=D3rY6gUN4XEadfm3H+Fhn8Wvy9CY5Sm31Db0V8RdJB0=;
+ b=lvhNxYX0pxdLt6NTgvllp5sCDErSc1W/nbt6xrI6JUnKZgJ2W4RkoAkvmiQqzXaWQY
+ wPVUsp427Jp3zFQSA4JBEprxZuLa9zH09JMF5UetZuAKV9majTl1CtGxoqEsL9tnyySS
+ GJjjIhT8mnVqYjmrkkyGA1bG+546g4t7GWCAdwo778ccKxq8BPe11Q0WcS6XHheB5iCB
+ v+KlFg7tvUhtdwISAQcqRendQgEv6S2eT8iFvvZNcE09zSbsX42wTpUczn9uefISi0+o
+ f9ZDyOP60PfwvLGnL+RQlH11Z7iAGIO11E4Jk4DrdWzaHuQfmIPaNP7ezrw+RsYBvkGk
+ 9n9w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV51m/GcJQX/8HB0JGEnmLQLsypE2Dwmx/CVdPK9MIPzZ2u/blcWK+YpbrxMKaFrMEvj36hvwyVFPbkjAt0JLmc7Ek7YhQ=
-X-Gm-Message-State: AOJu0YzqOtiCo85rD8j+kMiIyg4+JVnopTkw2ZWmkf9spb+l8I2cyTQP
- i1dKkUvxy0m916RuZieAnt3rPSBjxzpknmk3zFws+GcgowPzAdFDglrl1pFdBClFKtEvKLzd7Dh
- /10LDas0MdC8RVqr+rqsiK2Ha7Shd5XnFHpP2Va2OcWjNR1xBr5hC
-X-Received: by 2002:a05:600c:190e:b0:413:812:ce41 with SMTP id
- j14-20020a05600c190e00b004130812ce41mr207276wmq.34.1709928345344; 
- Fri, 08 Mar 2024 12:05:45 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEW1xAsxvKqW0VarESnn09OG81+z/kwp6vnCjHjcrlnmprV8xwlGsWE2s2Nvne+Yt2n/Hx1ZQ==
-X-Received: by 2002:a05:600c:190e:b0:413:812:ce41 with SMTP id
- j14-20020a05600c190e00b004130812ce41mr207242wmq.34.1709928344713; 
- Fri, 08 Mar 2024 12:05:44 -0800 (PST)
-Received: from redhat.com ([2a06:c701:73cd:f300:bc74:daca:b316:492a])
- by smtp.gmail.com with ESMTPSA id
- fm15-20020a05600c0c0f00b004131ec07b8fsm213717wmb.44.2024.03.08.12.05.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 12:05:44 -0800 (PST)
-Date: Fri, 8 Mar 2024 15:05:41 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Alex Williamson <alex.williamson@redhat.com>
-Cc: marcel.apfelbaum@gmail.com, qemu-devel@nongnu.org, clg@redhat.com
-Subject: Re: [PATCH] pci: Add option to disable device level INTx masking
-Message-ID: <20240308150359-mutt-send-email-mst@kernel.org>
-References: <20240307184645.104349-1-alex.williamson@redhat.com>
- <20240308115643-mutt-send-email-mst@kernel.org>
- <20240308102414.1826786c.alex.williamson@redhat.com>
- <20240308143400-mutt-send-email-mst@kernel.org>
- <20240308130201.769e7135.alex.williamson@redhat.com>
+ AJvYcCWNA4AWNrZxvOz3didK0mwIynWXJmVQgwPn44blXRcYra9K0PZ3mVsYzEWkTiiwOLIhycQc+xltL6yRPThrZyQ74gLfjBI=
+X-Gm-Message-State: AOJu0YwCcTWoH3oo8zyfup8PREZ5R06fyD6q5fIyWlqU2OtbRBCQXWxi
+ 1TwbtNP1AUt7qvIMWdoa+CG6IXaYxj3X5tlXxpVQGIrcLODA1Sb89i+cJdqNVSvZukZXMgwRU5P
+ SiSM3gVhxrk2ovza1AZ6cfC39qNpDyJNSw+f9Q6aECpN1+l/kislj
+X-Received: by 2002:a50:955e:0:b0:568:1b18:1d11 with SMTP id
+ v30-20020a50955e000000b005681b181d11mr172497eda.41.1709929026784; 
+ Fri, 08 Mar 2024 12:17:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHkeTALukqigA1TWPRGjmFmsHUfn78FXNkpY0ucGsnqNg9OpKHLDsKGYAduHpP9D4eupRFmlw==
+X-Received: by 2002:a50:955e:0:b0:568:1b18:1d11 with SMTP id
+ v30-20020a50955e000000b005681b181d11mr172489eda.41.1709929026421; 
+ Fri, 08 Mar 2024 12:17:06 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-178-151.web.vodafone.de.
+ [109.43.178.151]) by smtp.gmail.com with ESMTPSA id
+ n6-20020a056402060600b005682ed4335esm100842edv.91.2024.03.08.12.17.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 Mar 2024 12:17:05 -0800 (PST)
+Message-ID: <81c969b4-ffce-46c8-bcaf-25216e729fd0@redhat.com>
+Date: Fri, 8 Mar 2024 21:17:04 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240308130201.769e7135.alex.williamson@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/arm: Deprecate various old Arm machine types
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20240308171621.3749894-1-peter.maydell@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240308171621.3749894-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -87,7 +128,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,145 +144,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 08, 2024 at 01:02:01PM -0700, Alex Williamson wrote:
-> On Fri, 8 Mar 2024 14:37:06 -0500
-> "Michael S. Tsirkin" <mst@redhat.com> wrote:
+On 08/03/2024 18.16, Peter Maydell wrote:
+> QEMU includes some models of old Arm machine types which are
+> a bit problematic for us because:
+>   * they're written in a very old way that uses numerous APIs that we
+>     would like to get away from (eg they don't use qdev, they use
+>     qemu_system_reset_request(), they use vmstate_register(), etc)
+>   * they've been that way for a decade plus and nobody particularly has
+>     stepped up to try to modernise the code (beyond some occasional
+>     work here and there)
+>   * we often don't have test cases for them, which means that if we
+>     do try to do the necessary refactoring work on them we have no
+>     idea if they even still work at all afterwards
 > 
-> > On Fri, Mar 08, 2024 at 10:24:14AM -0700, Alex Williamson wrote:
-> > > On Fri, 8 Mar 2024 11:57:38 -0500
-> > > "Michael S. Tsirkin" <mst@redhat.com> wrote:
-> > >   
-> > > > On Thu, Mar 07, 2024 at 11:46:42AM -0700, Alex Williamson wrote:  
-> > > > > The PCI 2.3 spec added definitions of the INTx disable and status bits,
-> > > > > in the command and status registers respectively.  The command register
-> > > > > bit, commonly known as DisINTx in lspci, controls whether the device
-> > > > > can assert the INTx signal.
-> > > > > 
-> > > > > Operating systems will often write to this bit to test whether a device
-> > > > > supports this style of legacy interrupt masking.  When using device
-> > > > > assignment, such as with vfio-pci, the result of this test dictates
-> > > > > whether the device can use a shared or exclusive interrupt (ie. generic
-> > > > > INTx masking at the device via DisINTx or IRQ controller level INTx
-> > > > > masking).
-> > > > > 
-> > > > > Add an experimental option to the base set of properties for PCI
-> > > > > devices which allows the DisINTx bit to be excluded from wmask, making
-> > > > > it read-only to the guest for testing purposes related to INTx masking.
-> > > > >     
-> > > > 
-> > > > Could you clarify the use a bit more? It's unstable - do you
-> > > > expect to experiment with it and then make it permanent down
-> > > > the road?  
-> > > 
-> > > No, my aspirations end at providing an experimental option.
-> > > Technically all devices should support and honor this bit, so I don't
-> > > think we should provide a supported method of providing broken behavior,
-> > > but there do exist physical devices where this feature is broken or
-> > > unsupported.  Rather than implementing emulation of one of these broken
-> > > devices, with bug for bug compatibility, it's much easier to be able to
-> > > trigger broken DisINTx behavior on an arbitrary device, in an
-> > > unsupported fashion.  Thanks,
-> > > 
-> > > Alex  
-> > 
-> > Well, we tend not to merge patches for playing with random
-> > bits in config space just so people can experiment with
-> > whether this breaks guests, but given this is coming from
-> > a long term contributor and a maintainer, it's a different
-> > matter. So ok, to make another maintainer's life easier
-> > I'm prepared to take this. I'd like to figure out though -
-> > does your need extend to experimenting with all devices
-> > or just with vfio ones? If the later maybe keep it there
-> > where you understand what the actual need is... If the former
-> > as I said I'll merge it.
+> All these machine types are also of hardware that has largely passed
+> away into history and where I would not be surprised to find that
+> e.g. the Linux kernel support was never tested on real hardware
+> any more.
 > 
-> I'm actually looking at using it with non-vfio devices, for example I
-> have a dummy nvme driver that can configure either INTx, MSI, or MSI-X
-> interrupts.  The driver just stuffs nop commands into the admin queue to
-> trigger an interrupt.  This tests DMA mapping and interrupt paths.  I
-> intend to port this to a userspace vfio-pci driver that I can run in a
-> guest on an emulated nvme device, thereby enabling targeted testing
-> without any host hardware or device dependencies.  If I were to expose
-> two emulated nvme devices to the guest, one with DisINTx disabled, then
-> all variations could be tested.
+> After some consultation with the Linux kernel developers, we
+> are going to deprecate:
 > 
-> For full disclosure, the vfio-pci kernel driver does have a nointxmask
-> module option, so while I think it would be useful and provides a
-> little more flexibility that devices in QEMU can be specified with this
-> behavior, there are means to do it otherwise. The QEMU vfio-pci driver
-> certainly has experimental options that don't necessarily have a path
-> to become supported, I hadn't realized your intention/preference to
-> make it a staging ground for to-be-supported options for PCIDevice.
+> All PXA2xx machines:
 > 
-> If you have concerns about cluttering options or maintaining dead-end
-> experimental options, let's hold off on this until there's a case that
-> can't be met with the kernel module option.  Thanks,
+> akita                Sharp SL-C1000 (Akita) PDA (PXA270)
+> borzoi               Sharp SL-C3100 (Borzoi) PDA (PXA270)
+> connex               Gumstix Connex (PXA255)
+> mainstone            Mainstone II (PXA27x)
+> spitz                Sharp SL-C3000 (Spitz) PDA (PXA270)
+> terrier              Sharp SL-C3200 (Terrier) PDA (PXA270)
+> tosa                 Sharp SL-6000 (Tosa) PDA (PXA255)
+> verdex               Gumstix Verdex Pro XL6P COMs (PXA270)
+> z2                   Zipit Z2 (PXA27x)
 > 
-> Alex
+> All OMAP2 machines:
+> 
+> n800                 Nokia N800 tablet aka. RX-34 (OMAP2420)
+> n810                 Nokia N810 tablet aka. RX-44 (OMAP2420)
+> 
+> One of the OMAP1 machines:
+> 
+> cheetah              Palm Tungsten|E aka. Cheetah PDA (OMAP310)
+> 
+> Rationale:
+>   * for QEMU dropping individual machines is much less beneficial
+>     than if we can drop support for an entire SoC
+>   * the OMAP2 QEMU code in particular is large, old and unmaintained,
+>     and none of the OMAP2 kernel maintainers said they were using
+>     QEMU in any of their testing/development
+>   * although there is a setup that is booting test kernels on some
+>     of the PXA2xx machines, nobody seemed to be using them as part
+>     of their active kernel development and my impression from the
+>     email thread is that PXA is the closest of all these SoC families
+>     to being dropped from the kernel soon
+>   * nobody said they were using cheetah, so it's entirely
+>     untested and quite probably broken
+>   * on the other hand the OMAP1 sx1 model does seem to be being
+>     used as part of kernel development, and there was interest
+>     in keeping collie around
+> 
+> In particular, the mainstone, tosa and z2 machine types have
+> already been dropped from Linux.
+> 
+> Mark all these machine types as depprecated.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   docs/about/deprecated.rst | 15 +++++++++++++++
+>   hw/arm/gumstix.c          |  2 ++
+>   hw/arm/mainstone.c        |  1 +
+>   hw/arm/nseries.c          |  2 ++
+>   hw/arm/palm.c             |  1 +
+>   hw/arm/spitz.c            |  1 +
+>   hw/arm/tosa.c             |  1 +
+>   hw/arm/z2.c               |  1 +
+>   8 files changed, 24 insertions(+)
 
-That's the concern. But you decide. One maintainer's time is not more
-important than other's. If it helps you - just merge it.
-
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
-> > > > > Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
-> > > > > ---
-> > > > >  hw/pci/pci.c         | 14 ++++++++++----
-> > > > >  include/hw/pci/pci.h |  2 ++
-> > > > >  2 files changed, 12 insertions(+), 4 deletions(-)
-> > > > > 
-> > > > > diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> > > > > index 6496d027ca61..8c78326ad67f 100644
-> > > > > --- a/hw/pci/pci.c
-> > > > > +++ b/hw/pci/pci.c
-> > > > > @@ -85,6 +85,8 @@ static Property pci_props[] = {
-> > > > >                      QEMU_PCIE_ERR_UNC_MASK_BITNR, true),
-> > > > >      DEFINE_PROP_BIT("x-pcie-ari-nextfn-1", PCIDevice, cap_present,
-> > > > >                      QEMU_PCIE_ARI_NEXTFN_1_BITNR, false),
-> > > > > +    DEFINE_PROP_BIT("x-pci-disintx", PCIDevice, cap_present,
-> > > > > +                    QEMU_PCI_DISINTX_BITNR, true),
-> > > > >      DEFINE_PROP_END_OF_LIST()
-> > > > >  };
-> > > > >  
-> > > > > @@ -861,13 +863,17 @@ static void pci_init_cmask(PCIDevice *dev)
-> > > > >  static void pci_init_wmask(PCIDevice *dev)
-> > > > >  {
-> > > > >      int config_size = pci_config_size(dev);
-> > > > > +    uint16_t cmd_wmask = PCI_COMMAND_IO | PCI_COMMAND_MEMORY |
-> > > > > +                         PCI_COMMAND_MASTER | PCI_COMMAND_SERR;
-> > > > >  
-> > > > >      dev->wmask[PCI_CACHE_LINE_SIZE] = 0xff;
-> > > > >      dev->wmask[PCI_INTERRUPT_LINE] = 0xff;
-> > > > > -    pci_set_word(dev->wmask + PCI_COMMAND,
-> > > > > -                 PCI_COMMAND_IO | PCI_COMMAND_MEMORY | PCI_COMMAND_MASTER |
-> > > > > -                 PCI_COMMAND_INTX_DISABLE);
-> > > > > -    pci_word_test_and_set_mask(dev->wmask + PCI_COMMAND, PCI_COMMAND_SERR);
-> > > > > +
-> > > > > +    if (dev->cap_present & QEMU_PCI_DISINTX) {
-> > > > > +        cmd_wmask |= PCI_COMMAND_INTX_DISABLE;
-> > > > > +    }
-> > > > > +
-> > > > > +    pci_set_word(dev->wmask + PCI_COMMAND, cmd_wmask);
-> > > > >  
-> > > > >      memset(dev->wmask + PCI_CONFIG_HEADER_SIZE, 0xff,
-> > > > >             config_size - PCI_CONFIG_HEADER_SIZE);
-> > > > > diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-> > > > > index eaa3fc99d884..45f0fac435cc 100644
-> > > > > --- a/include/hw/pci/pci.h
-> > > > > +++ b/include/hw/pci/pci.h
-> > > > > @@ -212,6 +212,8 @@ enum {
-> > > > >      QEMU_PCIE_ERR_UNC_MASK = (1 << QEMU_PCIE_ERR_UNC_MASK_BITNR),
-> > > > >  #define QEMU_PCIE_ARI_NEXTFN_1_BITNR 12
-> > > > >      QEMU_PCIE_ARI_NEXTFN_1 = (1 << QEMU_PCIE_ARI_NEXTFN_1_BITNR),
-> > > > > +#define QEMU_PCI_DISINTX_BITNR 13
-> > > > > +    QEMU_PCI_DISINTX = (1 << QEMU_PCI_DISINTX_BITNR),
-> > > > >  };
-> > > > >  
-> > > > >  typedef struct PCIINTxRoute {
-> > > > > -- 
-> > > > > 2.44.0    
-> > > >   
-> > 
 
 
