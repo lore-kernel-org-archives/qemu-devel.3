@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0147DC54E58
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A821DC5475B
 	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 18:13:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rieiA-0007NE-CE; Fri, 08 Mar 2024 13:12:50 -0500
+	id 1riehj-00077p-Pf; Fri, 08 Mar 2024 13:12:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1riei7-0007Mu-Tr
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 13:12:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1riehe-00076d-9a
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 13:12:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1riei6-0005r6-0Q
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 13:12:47 -0500
+ id 1rieha-0005nR-5F
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 13:12:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709921565;
+ s=mimecast20190719; t=1709921533;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KXbzKzH8PjEmvYnCpJCIgE6b32sSxREKUdx9WpH18Vs=;
- b=IUvergt9NnR29h5XnrkgOMKEApfbgBxJ5Au7GEZvSlerD4w2F2OAzvdAMtbDmUx9hJ07V7
- Ru+lAaom6LLHNVWqtBwPIdBtjHSMb3XI+uwTluIjnkCK4zg+lphc1glm8BsA/LsAOBeVHc
- mT87gVEGekfK2PPO6cf78l1wF11lVtE=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=3zgiv6UZ6Oh2NFmnmSITDqW1+MhIa91EcBCRfhCM6ng=;
+ b=R3Dl5OWil3Tv6mrbFLl1G//UmrBvMzigLXQqCqIjRC/vcYPBj/6FRcLP4MNY3GQx3ex1lI
+ D8CwaykPz+iArlNF55bO5mDSidQ4fG9r09MrCzW3OixBrnqHYCVS7a4RXbmU9lxCVUmFpZ
+ zWPTXwgizww40RdPO/Gddm8QL8ayxbI=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-695-8l7F_5wLMzO8j6Zr5Ui22g-1; Fri, 08 Mar 2024 13:12:44 -0500
-X-MC-Unique: 8l7F_5wLMzO8j6Zr5Ui22g-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-412db897ef8so16808665e9.1
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 10:12:43 -0800 (PST)
+ us-mta-20-e02MUPo9OSisFZBaEPB4bQ-1; Fri, 08 Mar 2024 13:12:11 -0500
+X-MC-Unique: e02MUPo9OSisFZBaEPB4bQ-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a450265c7b6so142675066b.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 10:12:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709921562; x=1710526362;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1709921529; x=1710526329;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KXbzKzH8PjEmvYnCpJCIgE6b32sSxREKUdx9WpH18Vs=;
- b=GkjkWF68I+z2ctDrUS8UD9jioRRJeULQ5lIED1cC24i7QV+pdaTWxntU7YVjOYv1HV
- IutO8UzzLWhKPjJGdbTIsO718nDw7vUCgdzYPW93AnwW47sphiDahs7Yvv9f4kQH8OMj
- khF8eq3vjFuyNk/1Lt3ey9KzlWOYqxuOOqJORcsUNyqhNnpmjGv+uAjocv4ZIItGsHz/
- IFOKmTIE3CuMTDtNLK7pmSQIhI5s7DxC9jFpf1/MOUkQY9Cu/l23RgjsCoW7IKLoduCV
- 8pEb15vb8Cm1U4Mzo2o7dEtIEJDfUe62sv9LYsxXsZ/kwCCUwlzcoSf9UFmUhH9AjfWP
- iGWQ==
-X-Gm-Message-State: AOJu0YwRwkPyx/CLvF3XOBE3/QtnwLOA3SPEFcx5oQcENBXKK2ECEc/g
- kQjK5a9/3atbVLDxm8tLFWQwlU6iVGwL95mbeoAnNsOeZ7yNmKY/8OIb2CnQrm536r5JtLFQeyZ
- QWWcjY54uRvAIYr5y1nzrNzQgzDivGnEq1mpeq++ftog6f6sKmqpKvqqJ+Ft6ohkfhiG6RwiQMW
- kf/YTZJH1NGm4WntIvyWQZrEMIm0FA0ktNiiw=
-X-Received: by 2002:a5d:56cf:0:b0:33e:6962:fe44 with SMTP id
- m15-20020a5d56cf000000b0033e6962fe44mr1020553wrw.27.1709921562100; 
- Fri, 08 Mar 2024 10:12:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGMZWvzeZN4ik7yIoTJwEUvrkhyKYJUWmJlAjc3Bd181+H3bKzh3ZYldQMiTZVVgslZQLYD/neAbREsd8yneoI=
-X-Received: by 2002:a5d:56cf:0:b0:33e:6962:fe44 with SMTP id
- m15-20020a5d56cf000000b0033e6962fe44mr1020543wrw.27.1709921561911; Fri, 08
- Mar 2024 10:12:41 -0800 (PST)
-MIME-Version: 1.0
-References: <20240308145554.599614-1-pbonzini@redhat.com>
- <CAFEAcA-7N+tOGPcTiR2wUGcE6c_KPnbGPV+YpY-qcQGd2Q8qYA@mail.gmail.com>
-In-Reply-To: <CAFEAcA-7N+tOGPcTiR2wUGcE6c_KPnbGPV+YpY-qcQGd2Q8qYA@mail.gmail.com>
+ bh=3zgiv6UZ6Oh2NFmnmSITDqW1+MhIa91EcBCRfhCM6ng=;
+ b=mE/LcDqSVMHoPdEO38mNG5PXO9l6t5bHKPePuYGB5zMdR9iasS0rMDseSN/gWYWcLi
+ CHotN7664ae80XMVfQQDbx5uCJSy0GcKWeeZZ5OGlwQXMXhlTIzl4D/O+CfFCr7hqiNn
+ UcxtpIcqFGAUPAr5tqmw3Y7ws3ThtReyh+rRAwwWeGUhwfHqLv7rTpEyL8kVc10rbFIc
+ 0YwR6Y3EAjqh6sPyNTPvKSHZXFW09AmGz6C7kV+qLjBxmmdLGzPGMDjOTxm9QyzQkuU4
+ cTrNuevJUgO/81jup9SaP2WSMkdHhrROngzr8juOlmaSpB0nVWtHP9c6Ix2v+IDz3wAQ
+ yBmg==
+X-Gm-Message-State: AOJu0YwS1eC/4S0vjHi+kjuTl5DKlzPdia488IlnNknJjw4R/sJNerCV
+ Le3djbMGw8MbvLT7tkwMQFe9dpL9TJbPbei/466EL6O2BnWJ0tt6ccDIgkIurcf7klaE76Dzise
+ tzAbii6B0n5hvQDqr53QNGAwj3xWDtG95QUKpRnZyghq5xEmRmoYX3WhUqib/5GVtrmNpryp6ON
+ FzNXlB45QpmfMczXctGeNQjPoQB8s0GLZd7pqG
+X-Received: by 2002:a17:906:5a9a:b0:a44:48db:9060 with SMTP id
+ l26-20020a1709065a9a00b00a4448db9060mr13864474ejq.19.1709921529511; 
+ Fri, 08 Mar 2024 10:12:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGYXYgTpjHVOuKD6hlcLFJDwpr/l1BA+IeuIzlRiODg8q/CRESZpSO+iBDeDanQBBqO+b9I+A==
+X-Received: by 2002:a17:906:5a9a:b0:a44:48db:9060 with SMTP id
+ l26-20020a1709065a9a00b00a4448db9060mr13864461ejq.19.1709921529115; 
+ Fri, 08 Mar 2024 10:12:09 -0800 (PST)
+Received: from [192.168.10.118] ([151.49.77.21])
+ by smtp.gmail.com with ESMTPSA id
+ qk2-20020a170906d9c200b00a3fb9f1f10csm34462ejb.161.2024.03.08.10.12.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 08 Mar 2024 10:12:06 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 8 Mar 2024 19:12:30 +0100
-Message-ID: <CABgObfatkZD1CMsB4_4AJKJ54NriS_Bxc5DM5OLiCapXN18ceQ@mail.gmail.com>
-Subject: Re: [PULL 00/12] Misc fixes, i386 TSTEQ/TSTNE,
- coverity CI for 2024-03-08
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+To: qemu-devel@nongnu.org
+Cc: Dmitrii Gavrilov <ds-gavr@yandex-team.ru>,
+	qemu-stable@nongnu.org
+Subject: [PULL 2/9] system/qdev-monitor: move drain_call_rcu call under if
+ (!dev) in qmp_device_add()
+Date: Fri,  8 Mar 2024 19:11:54 +0100
+Message-ID: <20240308181202.617329-3-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240308181202.617329-1-pbonzini@redhat.com>
+References: <20240308181202.617329-1-pbonzini@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,13 +105,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 8, 2024 at 6:32=E2=80=AFPM Peter Maydell <peter.maydell@linaro.=
-org> wrote:
-> Looks like this hits a TCG assertion on aarch64 host:
-> https://gitlab.com/qemu-project/qemu/-/jobs/6353434430
+From: Dmitrii Gavrilov <ds-gavr@yandex-team.ru>
 
-Ok, I dropped the TSTEQ/TSTNE patches.
+Original goal of addition of drain_call_rcu to qmp_device_add was to cover
+the failure case of qdev_device_add. It seems call of drain_call_rcu was
+misplaced in 7bed89958bfbf40df what led to waiting for pending RCU callbacks
+under happy path too. What led to overall performance degradation of
+qmp_device_add.
 
-Paolo
+In this patch call of drain_call_rcu moved under handling of failure of
+qdev_device_add.
+
+Signed-off-by: Dmitrii Gavrilov <ds-gavr@yandex-team.ru>
+Message-ID: <20231103105602.90475-1-ds-gavr@yandex-team.ru>
+Fixes: 7bed89958bf ("device_core: use drain_call_rcu in in qmp_device_add", 2020-10-12)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ system/qdev-monitor.c | 23 +++++++++++------------
+ 1 file changed, 11 insertions(+), 12 deletions(-)
+
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index a13db763e5d..874d65191ce 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -858,19 +858,18 @@ void qmp_device_add(QDict *qdict, QObject **ret_data, Error **errp)
+         return;
+     }
+     dev = qdev_device_add(opts, errp);
+-
+-    /*
+-     * Drain all pending RCU callbacks. This is done because
+-     * some bus related operations can delay a device removal
+-     * (in this case this can happen if device is added and then
+-     * removed due to a configuration error)
+-     * to a RCU callback, but user might expect that this interface
+-     * will finish its job completely once qmp command returns result
+-     * to the user
+-     */
+-    drain_call_rcu();
+-
+     if (!dev) {
++        /*
++         * Drain all pending RCU callbacks. This is done because
++         * some bus related operations can delay a device removal
++         * (in this case this can happen if device is added and then
++         * removed due to a configuration error)
++         * to a RCU callback, but user might expect that this interface
++         * will finish its job completely once qmp command returns result
++         * to the user
++         */
++        drain_call_rcu();
++
+         qemu_opts_del(opts);
+         return;
+     }
+-- 
+2.43.2
 
 
