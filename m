@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E850C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 18:17:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E523CC54E4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 18:31:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riemk-0005Gp-Qt; Fri, 08 Mar 2024 13:17:34 -0500
+	id 1riezX-0007Rn-Dy; Fri, 08 Mar 2024 13:30:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1riemj-0005GY-0D
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 13:17:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1riemh-0006Wd-Mp
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 13:17:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709921850;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Q0rmMaJt4MALPwGW3i+DaPD4OmnBD3wO03Edu/ZWJ8Q=;
- b=FE4ryMavcyZ6916J4cggXQFDRK0pldo4TTNUdbTZZlSMhUxd2/qnfprEclQerFQNypGHo2
- W8dG5EtQMO8eYAzx5st6QIWUaxM6hC7F8e46Zfu+oAgya/dVLfd6NWBJApgkNVPFUQ02ua
- tGSqYDPA9ih8rn1LMHv3Y7+VPIelmMg=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-456-vDmTjBYzNmKYQzbsAww_rQ-1; Fri, 08 Mar 2024 13:17:29 -0500
-X-MC-Unique: vDmTjBYzNmKYQzbsAww_rQ-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-568375181b6so122545a12.3
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 10:17:28 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709921541; x=1710526341;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1riezU-0007RK-BI
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 13:30:44 -0500
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1riezS-0000NA-Q5
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 13:30:44 -0500
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-6e627596554so910697b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 10:30:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709922640; x=1710527440; darn=nongnu.org;
+ h=content-transfer-encoding:content-language:in-reply-to:mime-version
+ :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Q0rmMaJt4MALPwGW3i+DaPD4OmnBD3wO03Edu/ZWJ8Q=;
- b=snDXnMRLtkvRoRSD6ECFwiebHv8a97ffczmJ1JKwGdXyhgN5J098kbSgSRl+YHMgkJ
- Ws1y5GKNBMs8uDcsLuKeadePKD4CvMCZ1TtYoXe2vhcAlg9xfj+zb8JXlXLBP4k4P1cE
- n0U9hvdxr7gN+gM+aMkFSSwnHjn7YsbrQZQwDIL1J6x+y+Rs9zD9JTA4TxEGAohhVRgW
- trMPfYhPlOQkrADUnckBp66EzxvD9P2zjQeMfV3SRb3xBmgj4dmBijnqUB0m+iDBCII3
- 7lCYYdHhd2983gQAZGuPYhQySZQ1hhntkNmyiOIqwLxUTnTbxkTRRszoOlRiWzDjxO//
- MuUA==
-X-Gm-Message-State: AOJu0YzgdyWw4NXsgY1yPoE+bt2hVzoRdxs5ND0bBMz4zu4dhVnWeMz7
- ef3oJpvYJj6cUSt+sxL1O+qMYQUDjq2HXx6yauClMfk6yPp7TogEOf0QAOg+AMnTg/Xgn4WBYvp
- vR46HCPm5mFlWWAB86UaUjoThh99mvhEAg1c3c9EhDu2/+LtccDdKx5u36S7JIz0mLKZhqcLlW8
- MJkoFvOBgjFKK/uAJGBCL/F3ifQheqikH7zKPQ
-X-Received: by 2002:a50:9513:0:b0:568:3362:cccd with SMTP id
- u19-20020a509513000000b005683362cccdmr40805eda.18.1709921541229; 
- Fri, 08 Mar 2024 10:12:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEIX+EvfcKhby1K7uu2EGAt4ASAvNiB6e5c/doL/0Vyb/gRyefxKShNFntcuwMUtR051N/qvQ==
-X-Received: by 2002:a50:9513:0:b0:568:3362:cccd with SMTP id
- u19-20020a509513000000b005683362cccdmr40796eda.18.1709921540948; 
- Fri, 08 Mar 2024 10:12:20 -0800 (PST)
-Received: from [192.168.10.118] ([151.49.77.21])
+ bh=HLb6M5f4Mbfef99Y+oYRyiFfhLkz4lf3ZoCaYvaeQyo=;
+ b=NxjHrrIifyxjHetRyzmU8In7ZcCtibgm73of0povUn4nj3tyguzw37/qJ6SqU7EAtT
+ Znyx6BWRiykf5FGNzw44XXsiLjix09i2CgBpd+mTtWZTHOQGlCRLB1WJGw4zY184dHzZ
+ dDNzztAmT+6QYgFxhty/vDTAIuHr8hIxEKocOxW9tOwaER9VKUyDgCocJIT+i8m2xrlW
+ TOdA2KQDD/7yGyiIQn0TJiHDge1BRQ6ej82S258Dbl5x0vhIBZJUgRuFa1GXjKeOmYj/
+ RA3z6RVhyTpoZ9OsknNoOKOKBQJ4+ZL8OCmnwvovsKaleGFEwMxdwHWsbcEB56dfGprN
+ RWaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709922640; x=1710527440;
+ h=content-transfer-encoding:content-language:in-reply-to:mime-version
+ :user-agent:date:message-id:from:references:cc:to:subject
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=HLb6M5f4Mbfef99Y+oYRyiFfhLkz4lf3ZoCaYvaeQyo=;
+ b=moC8xqZWWtx88rKp5xpZnnmfqf6vME7Hau5v2CdqZr6BjClGmb1l1QrOykgiUL2yqa
+ RZEpqXWZjC2UoWSb9cr4T1yc81de7j30qBXqNk1jWFF4LVUrle4kxkWxgOd4TSjrzx2G
+ NWFRT20BwygQuIy2eZubPMzcZGsNlcVXJ07sfumWn+Xvk1ONZvmOIaQH3dhrWzt4JEOB
+ H7EqzlU/dRCXL8rkIz/OJQ1VKytmg3KbVo+ockIN6QilSkFCWq62jdBWUe29Hznj2u8O
+ QgJpuH7+hR1ZhXem2sNc+7HHvVEjPMu8Exk65YrON68/ZVivD4HWn2HyZwIZrAhTOuw7
+ zfVg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVukXrRV/5QLm7v8nMTkafdSkdzQlH1S36l4nuVrDg7vU12yUgGSFaaKcg1PGNr6daPMPt+EOcBhbq4uCdZIuaZULPoBa0=
+X-Gm-Message-State: AOJu0YyoTntjtW5g86Iy/UmVlwq7Pzw2rntKaXY0F7DQIUaS27DX0BXF
+ eCJjccOnFE354Ca+ac6OlklW1I4qgXsmOQ7tHd4ZwlPGbNTRonhSDXMo6SSiYq0=
+X-Google-Smtp-Source: AGHT+IGIp9nDfUzHxd+1xFnm9eu52SiDMQVVOoLGW7zjUZT9atUpwYyTL2hbEvcqVF5VflSYJ+a8IA==
+X-Received: by 2002:a17:902:9897:b0:1dd:5bd6:50c8 with SMTP id
+ s23-20020a170902989700b001dd5bd650c8mr4378051plp.64.1709922640288; 
+ Fri, 08 Mar 2024 10:30:40 -0800 (PST)
+Received: from ?IPv6:2804:7f0:b401:7e8e:216c:3f1a:12a4:d415?
+ ([2804:7f0:b401:7e8e:216c:3f1a:12a4:d415])
  by smtp.gmail.com with ESMTPSA id
- x25-20020aa7d6d9000000b005682aa466c0sm24090edr.29.2024.03.08.10.12.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 10:12:18 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Mark Kanda <mark.kanda@oracle.com>
-Subject: [PULL 6/9] oslib-posix: fix memory leak in touch_all_pages
-Date: Fri,  8 Mar 2024 19:11:58 +0100
-Message-ID: <20240308181202.617329-7-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240308181202.617329-1-pbonzini@redhat.com>
-References: <20240308181202.617329-1-pbonzini@redhat.com>
+ u14-20020a17090341ce00b001dd1096e365sm10409679ple.281.2024.03.08.10.30.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 Mar 2024 10:30:39 -0800 (PST)
+Subject: Re: [PATCH v2 4/5] gdbstub: Add Xfer:siginfo:read stub
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, peter.maydell@linaro.org, laurent@vivier.eu,
+ philmd@linaro.org
+References: <20240307182623.1450717-1-gustavo.romero@linaro.org>
+ <20240307182623.1450717-4-gustavo.romero@linaro.org>
+ <68dc0d72-ae67-4e7e-8c1f-670aa59e92c9@linaro.org>
+From: Gustavo Romero <gustavo.romero@linaro.org>
+Message-ID: <322b8643-d595-4ce0-1f11-5e6ee1138638@linaro.org>
+Date: Fri, 8 Mar 2024 15:30:36 -0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <68dc0d72-ae67-4e7e-8c1f-670aa59e92c9@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x42a.google.com
+X-Spam_score_int: -60
+X-Spam_score: -6.1
+X-Spam_bar: ------
+X-Spam_report: (-6.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-3.994,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,40 +102,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-touch_all_pages() can return early, before creating threads.  In this case,
-however, it leaks the MemsetContext that it has allocated at the
-beginning of the function.
+Hi Richard!
 
-Reported by Coverity as CID 1534922.
+On 3/7/24 6:13 PM, Richard Henderson wrote:
+> On 3/7/24 08:26, Gustavo Romero wrote:
+>> +void gdb_handle_query_xfer_siginfo(GArray *params, void *user_ctx)
+>> +{
+>> +    unsigned long offset, len;
+>> +    uint8_t *siginfo_offset;
+>> +
+>> +    offset = get_param(params, 0)->val_ul;
+>> +    len = get_param(params, 1)->val_ul;
+>> +
+>> +    if (offset + len > sizeof(target_siginfo_t)) {
+> 
+> If you save the siginfo_len from gdb_handlesig, you can place this in user.c
+Shouldn't all user-only stubs be placed in user-target.c? Like
+gdb_handle_query_xfer_auxv and gdb_handle_query_xfer_exec_file, and since
+what controls the inclusion in the build of user-target.c is CONFIG_USER_ONLY?
 
-Fixes: 04accf43df8 ("oslib-posix: initialize backend memory objects in parallel", 2024-02-06)
-Reviewed-by: Mark Kanda <mark.kanda@oracle.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- util/oslib-posix.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-index 3c379f96c26..e76441695bd 100644
---- a/util/oslib-posix.c
-+++ b/util/oslib-posix.c
-@@ -467,11 +467,13 @@ static int touch_all_pages(char *area, size_t hpagesize, size_t numpages,
-          * preallocating synchronously.
-          */
-         if (context->num_threads == 1 && !async) {
-+            ret = 0;
-             if (qemu_madvise(area, hpagesize * numpages,
-                              QEMU_MADV_POPULATE_WRITE)) {
--                return -errno;
-+                ret = -errno;
-             }
--            return 0;
-+            g_free(context);
-+            return ret;
-         }
-         touch_fn = do_madv_populate_write_pages;
-     } else {
--- 
-2.43.2
+> Is it really correct to reject (offset == 0) + (len == large), rather than truncate len?
 
+I think this is correct. GDB mentions briefly that an invalid offset
+should be treated as an error. Thus, I think that a valid offset but
+a non-existing/invalid (large) length should be treated the same,
+cause in the end data on invalid offsets are being requested anyways.
+
+
+>> +    /* Reply */
+>> +    g_string_assign(gdbserver_state.str_buf, "l");
+>> +    gdb_memtox(gdbserver_state.str_buf, (const char *)siginfo_offset, len);
+> 
+> It seems easy enough to reply with the exact length remaining...
+
+I think the correct is to reply an error in case GDB asks a data
+we don't have rather than returning anything else to satisfy GDB.
+If offset+len is inside target_siginfo_t, than that's ok, otherwise
+that's an error.
+
+
+Cheers,
+Gustavo
 
