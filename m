@@ -4,87 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DC8EC5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 08:19:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A933C54E4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 08:20:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riVRx-0007hF-ND; Fri, 08 Mar 2024 03:19:29 -0500
+	id 1riVSS-0008KM-0C; Fri, 08 Mar 2024 03:20:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1riVRu-0007a7-U8
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:19:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1riVRl-0007cX-W4
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:19:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709885957;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=c1/Me4NoGcTNWa4pk8Mp0wZ2ZYBg+jup03SvVrDUqkE=;
- b=OyRKYvJIEaUBq6Qfk8WyFsBedP0hoawDSxJhBB1qIFyO7XAF11up5fODv2TVXJwtcyUI1Z
- twe0Zvb9RsSDbYVA7UledI8+ZEqqYIqWRni3wC+i16lPtZannVqfbBnvkbkc6salUpecUd
- rGlVBHdDLwuYoaJldbF0beUKPE/C9b0=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-433-QRAStQR5O7irGJZRL9tYfg-1; Fri, 08 Mar 2024 03:19:15 -0500
-X-MC-Unique: QRAStQR5O7irGJZRL9tYfg-1
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-299783294a6so1485027a91.3
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 00:19:15 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709885654; x=1710490454;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=c1/Me4NoGcTNWa4pk8Mp0wZ2ZYBg+jup03SvVrDUqkE=;
- b=XFRYSKcwF+fGhr6fyIe3CmfAV54U5XxgfR8klnq1XqngwQUh7/Lp9XHKUu6NOtmPz9
- Lxhzx2UjLxPSuzK4zD3KFaMWE0Z69UKSHOCKPFu8uksCS+Nc4vu4izl9qfoA9A5q6SZ8
- KalQio67IA04w8ZU6m2NPIr1HbordmEMvSndVmlM1tZyiMNMUjQkJzxvSaqK/Ytq39u7
- rRA9REkpbsYR6IX6eW+8Kl4tdUb189BaPFsYoQZctZVT+WSdcrz4eaO6d3KnUM5qJzxU
- T7Xkzt03ZvEm2DnujbQF/6BJKx9TeprPtv2pFf+cB70t+UUIgDzHo6yGnix9oURzFI8k
- +SsQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXCIjmwP4zfGAGf4vNEuYetWxScT0Yz5GrhxziKT0yjgHF9nLhA1CVyIELzG/dnRUEmZtUFD839YAmkjUtbyS9FZOxb+Zk=
-X-Gm-Message-State: AOJu0YxPYm+zUUwX8Iz2gRv1JeWcK4oISxp/COSdma1o6jmeieF8lSI/
- FG7BgeU28Y+OW94TEexMJe7xd3JeJL9eXJyaGElcbPaZ4I9Cm8YjcElcKcpqSceoCiemT9oQwzU
- eAmWWNGEI0UXAYCmLzfznxyhYGYZhojLkjfE4CpVFmtlWg5GB/17yw6Icta7Pg/92l+Ge4YBCkF
- AUljdpztQswzYymR81tv6iWVK9JLM=
-X-Received: by 2002:a17:90a:fb46:b0:29b:bb75:8d14 with SMTP id
- iq6-20020a17090afb4600b0029bbb758d14mr120545pjb.23.1709885654630; 
- Fri, 08 Mar 2024 00:14:14 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGxT3q3TO20WPYT6SA66jcoFzj4FkDJmSvg09ERmGp00aTvxt9UjkUNut1iBaJOZyPzILZgMuuwmATjfu1mx/Y=
-X-Received: by 2002:a17:90a:fb46:b0:29b:bb75:8d14 with SMTP id
- iq6-20020a17090afb4600b0029bbb758d14mr120536pjb.23.1709885654381; Fri, 08 Mar
- 2024 00:14:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1riVSO-0008JT-SH
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:19:57 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1riVSL-0007ko-VC
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:19:56 -0500
+Received: from loongson.cn (unknown [10.20.42.173])
+ by gateway (Coremail) with SMTP id _____8Dxqeggyupl7DgWAA--.35352S3;
+ Fri, 08 Mar 2024 16:19:44 +0800 (CST)
+Received: from [10.20.42.173] (unknown [10.20.42.173])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8BxHBMfyuplnyNRAA--.19269S3; 
+ Fri, 08 Mar 2024 16:19:43 +0800 (CST)
+Subject: Re: [PATCH v6 02/17] hw/loongarch: Add load initrd
+To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+References: <20240307164835.300412-1-gaosong@loongson.cn>
+ <20240307164835.300412-3-gaosong@loongson.cn>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <7b23ff58-fe28-48ca-e8e4-dadf7c3b7451@loongson.cn>
+Date: Fri, 8 Mar 2024 16:19:42 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20240205165437.1965981-1-andrew@daynix.com>
- <20240205165437.1965981-5-andrew@daynix.com>
-In-Reply-To: <20240205165437.1965981-5-andrew@daynix.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Fri, 8 Mar 2024 16:14:03 +0800
-Message-ID: <CACGkMEtdYosQAGYE47sMLDvC-OvFV7JM-mNvxirHwsZTDTtcOQ@mail.gmail.com>
-Subject: Re: [PATCH v9 4/5] qmp: Added new command to retrieve eBPF blob.
-To: Andrew Melnychenko <andrew@daynix.com>
-Cc: mst@redhat.com, armbru@redhat.com, eblake@redhat.com, 
- qemu-devel@nongnu.org, berrange@redhat.com, yuri.benditovich@daynix.com, 
- yan@daynix.com, akihiko.odaki@daynix.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.583,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+In-Reply-To: <20240307164835.300412-3-gaosong@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8BxHBMfyuplnyNRAA--.19269S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7tF4rXw1ktw47AFW7Xw4fWFX_yoW8CrWkpF
+ ZxAF98CrySyFWxAwnxAa48uF93Aw18Kr15WF9xKryFvrZIgr1DZF18Zr97urWvva1fKFn0
+ qFn8Cw4j9a4DtrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1QV
+ y3UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.08,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,51 +83,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 6, 2024 at 12:55=E2=80=AFAM Andrew Melnychenko <andrew@daynix.c=
-om> wrote:
->
-> Now, the binary objects may be retrieved by id.
-> It would require for future qmp commands that may require specific
-> eBPF blob.
->
-> Added command "request-ebpf". This command returns
-> eBPF program encoded base64. The program taken from the
-> skeleton and essentially is an ELF object that can be
-> loaded in the future with libbpf.
->
-> The reason to use the command to provide the eBPF object
-> instead of a separate artifact was to avoid issues related
-> to finding the eBPF itself. eBPF object is an ELF binary
-> that contains the eBPF program and eBPF map description(BTF).
-> Overall, eBPF object should contain the program and enough
-> metadata to create/load eBPF with libbpf. As the eBPF
-> maps/program should correspond to QEMU, the eBPF can't
-> be used from different QEMU build.
->
-> The first solution was a helper that comes with QEMU
-> and loads appropriate eBPF objects. And the issue is
-> to find a proper helper if the system has several
-> different QEMUs installed and/or built from the source,
-> which helpers may not be compatible.
->
-> Another issue is QEMU updating while there is a running
-> QEMU instance. With an updated helper, it may not be
-> possible to hotplug virtio-net device to the already
-> running QEMU. Overall, requesting the eBPF object from
-> QEMU itself solves possible failures with acceptable effort.
->
-> Links:
-> [PATCH 3/5] qmp: Added the helper stamp check.
-> https://lore.kernel.org/all/20230219162100.174318-4-andrew@daynix.com/
->
-> Signed-off-by: Andrew Melnychenko <andrew@daynix.com>
+
+
+On 2024/3/8 上午12:48, Song Gao wrote:
+> we load initrd ramdisk after kernel_high address
+> 
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> Message-Id: <20240301093839.663947-3-gaosong@loongson.cn>
 > ---
->  ebpf/ebpf.c           | 69 +++++++++++++++++++++++++++++++++++++++++++
-
-Let's add ebpf.c to MAINTAINERS otherwise CI may warn like:
-
-https://gitlab.com/jasowang/qemu/-/jobs/6349138969
-
-Thanks
+>   hw/loongarch/boot.c | 29 ++++++++++++++++++++++++++++-
+>   1 file changed, 28 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+> index a8a725a0a8..149deb2e01 100644
+> --- a/hw/loongarch/boot.c
+> +++ b/hw/loongarch/boot.c
+> @@ -22,7 +22,8 @@ static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
+>   
+>   static int64_t load_kernel_info(struct loongarch_boot_info *info)
+>   {
+> -    uint64_t kernel_entry, kernel_low, kernel_high;
+> +    uint64_t kernel_entry, kernel_low, kernel_high, initrd_size;
+> +    ram_addr_t initrd_offset;
+>       ssize_t kernel_size;
+>   
+>       kernel_size = load_elf(info->kernel_filename, NULL,
+> @@ -37,6 +38,32 @@ static int64_t load_kernel_info(struct loongarch_boot_info *info)
+>                        load_elf_strerror(kernel_size));
+>           exit(1);
+>       }
+> +
+> +    if (info->initrd_filename) {
+> +        initrd_size = get_image_size(info->initrd_filename);
+> +        if (initrd_size > 0) {
+> +            initrd_offset = ROUND_UP(kernel_high + 4 * kernel_size, 64 * KiB);
+> +
+> +            if (initrd_offset + initrd_size > info->ram_size) {
+> +                error_report("memory too small for initial ram disk '%s'",
+> +                             info->initrd_filename);
+> +                exit(1);
+> +            }
+> +
+> +            initrd_size = load_image_targphys(info->initrd_filename, initrd_offset,
+> +                                              info->ram_size - initrd_offset);
+> +        }
+> +
+> +        if (initrd_size == (target_ulong)-1) {
+> +            error_report("could not load initial ram disk '%s'",
+> +                         info->initrd_filename);
+> +            exit(1);
+> +        }
+> +    } else {
+> +        error_report("Need initrd!");
+> +        exit(1);
+> +    }
+> +
+>       return kernel_entry;
+>   }
+>   
+> 
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 
 
