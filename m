@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FD41C54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 14:57:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BDD3C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 14:57:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ribeR-0003as-Hd; Fri, 08 Mar 2024 09:56:47 -0500
+	id 1ribeY-0003hT-50; Fri, 08 Mar 2024 09:56:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ribe8-0003LT-IS
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:56:30 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1ribeV-0003go-Uu
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:56:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ribe4-0005ZL-Di
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:56:28 -0500
+ id 1ribeT-0005ip-5f
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:56:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709909781;
+ s=mimecast20190719; t=1709909808;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GZeJTi1a4ei23fONx1W+yvOU8wtWevhrI6ZjoG75Hhc=;
- b=UROqXSCUBjhPg6baGechAeM6ou7Cp6/RgQ91jui2wJIRDDBv9ftO8rnm0LbH8nT4p++fYO
- rExNN6ti7/CBukBkOYUJoey65vQloy7CDDGhPgp2li8HJQnShV2BtwVt/O8nhrTjt1DPy/
- 87ShR5y9ry5Zi6+WYalI6/mlxDFW0zY=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TGNZVuIhxFM1n3kaB7ppDpIcYT9wBlyCHV+ALvaf7Sc=;
+ b=iJDO+L+ROICvn4AoZbr7cLLNqkEKPgQWKDb2dgap+Zrwbw5aycauvr9u1bsK3Ef1VYDsqS
+ XRxvXtSQDTiuG03LoimMDzUpFbxpJXkIaBLYiSi+eOHO4Zwgk+ajkmnLKW437ak/Y+7tOH
+ +fj72QhDHL0DV73fCwZTqjyLbed4lgs=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-574-LOfjeD8xNqOQ7WvnONkj2w-1; Fri, 08 Mar 2024 09:56:19 -0500
-X-MC-Unique: LOfjeD8xNqOQ7WvnONkj2w-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a45acc7f07cso135483366b.2
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 06:56:19 -0800 (PST)
+ us-mta-487-Hv6xXkshMXe0lItz7DAYzg-1; Fri, 08 Mar 2024 09:56:47 -0500
+X-MC-Unique: Hv6xXkshMXe0lItz7DAYzg-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a3fcf5b93faso119477366b.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 06:56:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709909777; x=1710514577;
+ d=1e100.net; s=20230601; t=1709909786; x=1710514586;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GZeJTi1a4ei23fONx1W+yvOU8wtWevhrI6ZjoG75Hhc=;
- b=X4zAB8sMpIbFbP3EvGnI3K6MzdIM3yX7TiWzb+bTarH1JUqQLokbNZmt6cwrcXQHNb
- 6lotdWhnDJprNbZixhOvz+L7KJ8yCxsHLGZ8sql66NeibX34e70VcCrgZNgQyOa1SmLC
- /71CDXdvBiq6YmX2rrgjETz2w5N4mLH6mknob1EFMuIMxrF0bMF6b9iKfK4796LHre3p
- jWaeDl8hZjrkMEkb7TZlvU9tRQeiZOyvdtstZTNM53CxCrxEyank6V3Hnb7AIlKli/bn
- guW/UtwuyZc5Vf+4EHqYKK9pRy6+KFJ40xIUi0ofsxmY7NEid6NQepVkrwkEWpF9Mkj3
- 8W6g==
-X-Gm-Message-State: AOJu0YxZJo0zm7gMDE/3gGGNZ4PpCSPw80rHbPRvxz6g2Zbr+yUY8xPy
- sPK/UgvCnEfPSA1tw1Te2TbvxfNkXtjOBxEIcsBU10DY1OrzYhleDNWHOHzHm3oFo3K26UVeFbZ
- YUBz5rpTRW3TyvkkI3+PbiZavZbTqLAJk7UIQxtNK0FJfdZg5SaGoW2pHIPQ0KyYoJV18h9DCkf
- sEy+zV7If4nZmdfsrRDLA77AYIarFHI7aKeQaF
-X-Received: by 2002:a17:906:3c58:b0:a45:547a:49e1 with SMTP id
- i24-20020a1709063c5800b00a45547a49e1mr9974789ejg.3.1709909777277; 
- Fri, 08 Mar 2024 06:56:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGo75h8RaSXUkUeetEEr17DUbDy/cQJVlaztv0fKIX53UTTxTp4pk/RN9DDlAgb5dzAMPgevA==
-X-Received: by 2002:a17:906:3c58:b0:a45:547a:49e1 with SMTP id
- i24-20020a1709063c5800b00a45547a49e1mr9974780ejg.3.1709909776925; 
- Fri, 08 Mar 2024 06:56:16 -0800 (PST)
+ bh=TGNZVuIhxFM1n3kaB7ppDpIcYT9wBlyCHV+ALvaf7Sc=;
+ b=YZoSgck5vPF25RstolD6hsVUc0ZVJQAV2uS/5yFh0MVGjQzp8RLS+4MiHNE9dBIdNA
+ +nN4rFP0mdvOmKTH0781Lclx1t0mmn6o2QVqwOJCQKYYm8Snpcd/YGne9XJvKe1mIWCY
+ ZSAbqAI7JFwYqLhB9XSl5GkgsOlJ09+33GwDmxqa6dS7/cs1kV2UAk078cTkDBemtLY2
+ kG1WY6VQpbRSUX+RHKVRtwQ0kBsbFxMtPPjI61s0elLKKnrjQtF3F3MT063Be6eflbRz
+ LGmT8CIdu9nNk2ZIgGfNdsotcis+476LyXu/4f7tS9H4AkOE4KdK+W03GViuawbUqew8
+ dlIw==
+X-Gm-Message-State: AOJu0YwTtbTXo6pqIm+hSq7AdFwgxQ1vUoAGL64JJhZIZkjrIAya/p1A
+ L9Ckc98BtZNFVNSD6YmZNME2Ff/Zu2RSUC5MvpLU4hN89X83u2UgIu/db++kaOiCRfHIMuzswDx
+ cSzXe+lI9wzq0bOFh1zveGDtyBjHJ17O/R/FAHmmeSUtRywdNiHxVIpk6ScqJ8k1R0PJI30dhfo
+ ERsqwUxu8LvjRFgBmAzxisUNDgatUStgedk6db
+X-Received: by 2002:a17:906:ce29:b0:a44:2218:4817 with SMTP id
+ sd9-20020a170906ce2900b00a4422184817mr12867498ejb.39.1709909785905; 
+ Fri, 08 Mar 2024 06:56:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHxbwu78hnXKyZ3CPhiWbIRgm2JjGOw4Obgrb5PmmIfprqDrtIvLc6l7jJzmBCpnlI9Xl0gfA==
+X-Received: by 2002:a17:906:ce29:b0:a44:2218:4817 with SMTP id
+ sd9-20020a170906ce2900b00a4422184817mr12867489ejb.39.1709909785545; 
+ Fri, 08 Mar 2024 06:56:25 -0800 (PST)
 Received: from [192.168.10.118] ([151.49.77.21])
  by smtp.gmail.com with ESMTPSA id
- le6-20020a170906ae0600b00a449b4f4aefsm8196522ejb.178.2024.03.08.06.56.14
+ sa24-20020a1709076d1800b00a440019ac45sm9334410ejc.69.2024.03.08.06.56.22
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 06:56:14 -0800 (PST)
+ Fri, 08 Mar 2024 06:56:23 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 09/12] target/i386: use TSTEQ/TSTNE to check flags
-Date: Fri,  8 Mar 2024 15:55:51 +0100
-Message-ID: <20240308145554.599614-10-pbonzini@redhat.com>
+Subject: [PULL 12/12] gitlab-ci: add manual job to run Coverity
+Date: Fri,  8 Mar 2024 15:55:54 +0100
+Message-ID: <20240308145554.599614-13-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240308145554.599614-1-pbonzini@redhat.com>
 References: <20240308145554.599614-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,110 +102,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The new conditions obviously come in handy when testing individual bits
-of EFLAGS, and they make it possible to remove the .mask field of
-CCPrepare.
+Add a job that can be run, either manually or on a schedule, to upload
+a build to Coverity Scan.  The job uses the run-coverity-scan script
+in multiple phases of check, download tools and upload, in order to
+avoid both wasting time (skip everything if you are above the upload
+quota) and avoid filling the log with the progress of downloading
+the tools.
 
-Lowering to shift+and is done by the optimizer if necessary.
+The job is intended to run on a scheduled pipeline run, and scheduled
+runs will not get any other job.  It requires two variables to be in
+GitLab CI, COVERITY_TOKEN and COVERITY_EMAIL.  Those are already set up
+in qemu-project's configuration as protected and masked variables.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/translate.c | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ .gitlab-ci.d/base.yml      |  4 ++++
+ .gitlab-ci.d/buildtest.yml | 37 +++++++++++++++++++++++++++++++++++++
+ .gitlab-ci.d/opensbi.yml   |  4 ++++
+ 3 files changed, 45 insertions(+)
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index fe9021833e3..63d520e0cba 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -995,8 +995,8 @@ static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
-     case CC_OP_EFLAGS:
-     case CC_OP_SARB ... CC_OP_SARQ:
-         /* CC_SRC & 1 */
--        return (CCPrepare) { .cond = TCG_COND_NE,
--                             .reg = cpu_cc_src, .mask = CC_C };
-+        return (CCPrepare) { .cond = TCG_COND_TSTNE,
-+                             .reg = cpu_cc_src, .mask = -1, .imm = CC_C };
+diff --git a/.gitlab-ci.d/base.yml b/.gitlab-ci.d/base.yml
+index ef173a34e63..2dd8a9b57cb 100644
+--- a/.gitlab-ci.d/base.yml
++++ b/.gitlab-ci.d/base.yml
+@@ -41,6 +41,10 @@ variables:
+     - if: '$CI_PROJECT_NAMESPACE == $QEMU_CI_UPSTREAM && $CI_COMMIT_TAG'
+       when: never
  
-     default:
-        /* The need to compute only C from CC_OP_DYNAMIC is important
-@@ -1013,8 +1013,8 @@ static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
- static CCPrepare gen_prepare_eflags_p(DisasContext *s, TCGv reg)
- {
-     gen_compute_eflags(s);
--    return (CCPrepare) { .cond = TCG_COND_NE, .reg = cpu_cc_src,
--                         .mask = CC_P };
-+    return (CCPrepare) { .cond = TCG_COND_TSTNE, .reg = cpu_cc_src,
-+                         .mask = -1, .imm = CC_P };
- }
++    # Scheduled runs on mainline don't get pipelines except for the special Coverity job
++    - if: '$CI_PROJECT_NAMESPACE == $QEMU_CI_UPSTREAM && $CI_PIPELINE_SOURCE == "schedule"'
++      when: never
++
+     # Cirrus jobs can't run unless the creds / target repo are set
+     - if: '$QEMU_JOB_CIRRUS && ($CIRRUS_GITHUB_REPO == null || $CIRRUS_API_TOKEN == null)'
+       when: never
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index 901265af95d..c7d92fc3018 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -729,3 +729,40 @@ pages:
+       - public
+   variables:
+     QEMU_JOB_PUBLISH: 1
++
++coverity:
++  image: $CI_REGISTRY_IMAGE/qemu/fedora:$QEMU_CI_CONTAINER_TAG
++  stage: build
++  allow_failure: true
++  timeout: 3h
++  needs:
++    - job: amd64-fedora-container
++      optional: true
++  before_script:
++    - dnf install -y curl wget
++  script:
++    # would be nice to cancel the job if over quota (https://gitlab.com/gitlab-org/gitlab/-/issues/256089)
++    # for example:
++    #   curl --request POST --header "PRIVATE-TOKEN: $CI_JOB_TOKEN" "${CI_SERVER_URL}/api/v4/projects/${CI_PROJECT_ID}/jobs/${CI_JOB_ID}/cancel
++    - 'scripts/coverity-scan/run-coverity-scan --check-upload-only || { exitcode=$?; if test $exitcode = 1; then
++        exit 0;
++      else
++        exit $exitcode;
++      fi; };
++      scripts/coverity-scan/run-coverity-scan --update-tools-only > update-tools.log 2>&1 || { cat update-tools.log; exit 1; };
++      scripts/coverity-scan/run-coverity-scan --no-update-tools'
++  rules:
++    - if: '$COVERITY_TOKEN == null'
++      when: never
++    - if: '$COVERITY_EMAIL == null'
++      when: never
++    # Never included on upstream pipelines, except for schedules
++    - if: '$CI_PROJECT_NAMESPACE == $QEMU_CI_UPSTREAM && $CI_PIPELINE_SOURCE == "schedule"'
++      when: on_success
++    - if: '$CI_PROJECT_NAMESPACE == $QEMU_CI_UPSTREAM'
++      when: never
++    # Forks don't get any pipeline unless QEMU_CI=1 or QEMU_CI=2 is set
++    - if: '$QEMU_CI != "1" && $QEMU_CI != "2"'
++      when: never
++    # Always manual on forks even if $QEMU_CI == "2"
++    - when: manual
+diff --git a/.gitlab-ci.d/opensbi.yml b/.gitlab-ci.d/opensbi.yml
+index fd293e6c317..42f137d624e 100644
+--- a/.gitlab-ci.d/opensbi.yml
++++ b/.gitlab-ci.d/opensbi.yml
+@@ -24,6 +24,10 @@
+     - if: '$QEMU_CI == "1" && $CI_PROJECT_NAMESPACE != "qemu-project" && $CI_COMMIT_MESSAGE =~ /opensbi/i'
+       when: manual
  
- /* compute eflags.S to reg */
-@@ -1028,8 +1028,8 @@ static CCPrepare gen_prepare_eflags_s(DisasContext *s, TCGv reg)
-     case CC_OP_ADCX:
-     case CC_OP_ADOX:
-     case CC_OP_ADCOX:
--        return (CCPrepare) { .cond = TCG_COND_NE, .reg = cpu_cc_src,
--                             .mask = CC_S };
-+        return (CCPrepare) { .cond = TCG_COND_TSTNE, .reg = cpu_cc_src,
-+                             .mask = -1, .imm = CC_S };
-     case CC_OP_CLR:
-     case CC_OP_POPCNT:
-         return (CCPrepare) { .cond = TCG_COND_NEVER, .mask = -1 };
-@@ -1057,8 +1057,8 @@ static CCPrepare gen_prepare_eflags_o(DisasContext *s, TCGv reg)
-                              .reg = cpu_cc_src, .mask = -1 };
-     default:
-         gen_compute_eflags(s);
--        return (CCPrepare) { .cond = TCG_COND_NE, .reg = cpu_cc_src,
--                             .mask = CC_O };
-+        return (CCPrepare) { .cond = TCG_COND_TSTNE, .reg = cpu_cc_src,
-+                             .mask = -1, .imm = CC_O };
-     }
- }
- 
-@@ -1073,8 +1073,8 @@ static CCPrepare gen_prepare_eflags_z(DisasContext *s, TCGv reg)
-     case CC_OP_ADCX:
-     case CC_OP_ADOX:
-     case CC_OP_ADCOX:
--        return (CCPrepare) { .cond = TCG_COND_NE, .reg = cpu_cc_src,
--                             .mask = CC_Z };
-+        return (CCPrepare) { .cond = TCG_COND_TSTNE, .reg = cpu_cc_src,
-+                             .mask = -1, .imm = CC_Z };
-     case CC_OP_CLR:
-         return (CCPrepare) { .cond = TCG_COND_ALWAYS, .mask = -1 };
-     case CC_OP_POPCNT:
-@@ -1152,8 +1152,8 @@ static CCPrepare gen_prepare_cc(DisasContext *s, int b, TCGv reg)
-             break;
-         case JCC_BE:
-             gen_compute_eflags(s);
--            cc = (CCPrepare) { .cond = TCG_COND_NE, .reg = cpu_cc_src,
--                               .mask = CC_Z | CC_C };
-+            cc = (CCPrepare) { .cond = TCG_COND_TSTNE, .reg = cpu_cc_src,
-+                               .mask = -1, .imm = CC_Z | CC_C };
-             break;
-         case JCC_S:
-             cc = gen_prepare_eflags_s(s, reg);
-@@ -1167,8 +1167,8 @@ static CCPrepare gen_prepare_cc(DisasContext *s, int b, TCGv reg)
-                 reg = s->tmp0;
-             }
-             tcg_gen_addi_tl(reg, cpu_cc_src, CC_O - CC_S);
--            cc = (CCPrepare) { .cond = TCG_COND_NE, .reg = reg,
--                               .mask = CC_O };
-+            cc = (CCPrepare) { .cond = TCG_COND_TSTNE, .reg = reg,
-+                               .mask = -1, .imm = CC_O };
-             break;
-         default:
-         case JCC_LE:
-@@ -1177,8 +1177,8 @@ static CCPrepare gen_prepare_cc(DisasContext *s, int b, TCGv reg)
-                 reg = s->tmp0;
-             }
-             tcg_gen_addi_tl(reg, cpu_cc_src, CC_O - CC_S);
--            cc = (CCPrepare) { .cond = TCG_COND_NE, .reg = reg,
--                               .mask = CC_O | CC_Z };
-+            cc = (CCPrepare) { .cond = TCG_COND_TSTNE, .reg = reg,
-+                               .mask = -1, .imm = CC_O | CC_Z };
-             break;
-         }
-         break;
++    # Scheduled runs on mainline don't get pipelines except for the special Coverity job
++    - if: '$CI_PROJECT_NAMESPACE == $QEMU_CI_UPSTREAM && $CI_PIPELINE_SOURCE == "schedule"'
++      when: never
++
+     # Run if any files affecting the build output are touched
+     - changes:
+         - .gitlab-ci.d/opensbi.yml
 -- 
 2.43.2
 
