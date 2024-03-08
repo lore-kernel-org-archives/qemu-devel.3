@@ -4,82 +4,166 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA19DC54798
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 00:10:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66263C54798
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 00:59:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riNnV-0000Re-0m; Thu, 07 Mar 2024 19:09:13 -0500
+	id 1riOYs-0006io-Bt; Thu, 07 Mar 2024 19:58:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rbagley@ventanamicro.com>)
- id 1riNnS-0000R0-EO
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 19:09:10 -0500
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rbagley@ventanamicro.com>)
- id 1riNnP-0000QF-Vf
- for qemu-devel@nongnu.org; Thu, 07 Mar 2024 19:09:10 -0500
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a2f22bfb4e6so237992766b.0
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 16:09:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1709856545; x=1710461345; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=pe3TR0NwUpdg1B/TXCHJ6oHW6ND3GseWYhsREVxqMVs=;
- b=VMCrwIEjWY0fc7FwZvfD+gKZ1oPgRSIIAPpnW1PCKlVwA0b8YtFjyfqg4zwK8UKbNN
- AGMPvCB/rtOdkAoSKh/w0L1Usy/Wv3OAkuRjjiLlJ+dBFgB+qZBYKhqaEB/CfeGPs1cY
- 3JDH+m+y3Dm0AiKVw8FvLGiexBpFCYJHAbwXtImyuDTacqwv5H01Ido4JhvykUQ7vHFG
- iCg7dFHY2VixSPRPAI8SzTdyLukXYUWWn3hYKyN1vq0ekZEPXlXNqirVWroL4NvOoECq
- 7ypEAHPl9xuAsnRL8FhEEXUoJSS5uQs+YD+asOabDyxtUimN5JkZS503MHgwUMCro+pR
- qsTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709856545; x=1710461345;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pe3TR0NwUpdg1B/TXCHJ6oHW6ND3GseWYhsREVxqMVs=;
- b=Pg+CjXZJPRMs/LvkfAjzpkvwWtlr6AghasmgFNAcY91H/p1ZYM/0rXc9FIs6cvs7NE
- vHZVBvuEtUwudHq70MLkAaDiye3KOqsRVRA6hbaZwQQxFQ12xgh9If0qN3Cez2Rlxv+v
- uhDpdrs+LwbpzvMcc8an4mD/PwmRgfYOhMRurWwWcItszaChAWU7Tr8h+0v4naYowafc
- 7R0xSlXm05jiDxaGsTCkpaUAb/tTl1HWpeZRuShdM4AalsW6Rl4TynngDD5KwMYDLXD9
- O2J2S6xqya5/Xy0uEHdpKar5xxDTApq7m6hcEKOYygslgV69KMZaVUxm6HvedyJstHlG
- 4GCg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXrFrDWsukkISExeZIpCU1gWmE1ewsZzfo3R8u/uwbP4P5VG5ghlcLbFPXGVufrpZlNdayIMpXqbTJPtpU5flWWQ/LjztU=
-X-Gm-Message-State: AOJu0YzdjP5Oo9BDNgFIsnUrf8Ocfg1TEXX6t0J0mT1X6/JIN2FtPHnD
- vsTnL0UaeEgFYqcTRBdYVyXVp8AgnkQiuMKFbEdQsT0cLd2fdx62FqPG7yhcqAgxTMw6CKsktjg
- WZiIoQlOh3ZUfh2PyDZYUXRrEucGv+U8dliI8Ww==
-X-Google-Smtp-Source: AGHT+IHTlKbSylt3BOX+EMy7sUosgo2yeibWWdktuGUzi5ceo9yXR9oXlhe30D1pYKyGcbGOLaB6I6JwGNCdd15sqeM=
-X-Received: by 2002:a17:906:c00d:b0:a45:b75d:2e6d with SMTP id
- e13-20020a170906c00d00b00a45b75d2e6dmr4878573ejz.14.1709856545019; Thu, 07
- Mar 2024 16:09:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1riOYn-0006ib-9X
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 19:58:06 -0500
+Received: from mgamail.intel.com ([198.175.65.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1riOYj-0005G1-IC
+ for qemu-devel@nongnu.org; Thu, 07 Mar 2024 19:58:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1709859482; x=1741395482;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=toK06Fbs5tXl7+LKjbm0Bk7KImmOGRVgHwKIcH5WVYc=;
+ b=VmdZx/4JQ4V/rSGQQWdxa4IpIdCJE6fs7tCxj2SvIl74EDwTD8hd8yv0
+ /0Vhi+z6YKxwrr6YVovVAiULkmvH4JC35Rt5ohxiUN2hb2/gYDL4ID72Q
+ fVeowGUOhoLm4iR/hq0m94NiBaFDzxrkt/L9K4W8yJf6QexjwuZ34wGtV
+ PSE/dpjmc2+WKnQp7jy8dDswSGPVwKNvuBYhxSTdAsIj9D+aI2+sDz7Hu
+ thnp0/qb2uDu8LQNvKB2Sm7Y0XXpm03cBXI3lrfc0yj0Y+28Z+RV69baZ
+ s0wJj6VdbRveTACj+jxeFJD6nSA+PzkenDpb13ZhqXdH7E8pgbaLjkbMN w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11006"; a="8382276"
+X-IronPort-AV: E=Sophos;i="6.07,108,1708416000"; 
+   d="scan'208";a="8382276"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Mar 2024 16:56:20 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,108,1708416000"; d="scan'208";a="10732131"
+Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
+ by orviesa007.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 07 Mar 2024 16:56:20 -0800
+Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Thu, 7 Mar 2024 16:56:19 -0800
+Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
+ ORSMSX612.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Thu, 7 Mar 2024 16:56:19 -0800
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35 via Frontend Transport; Thu, 7 Mar 2024 16:56:19 -0800
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (104.47.58.101)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Thu, 7 Mar 2024 16:56:18 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=NmMs+zLiJa3pI9EoqzstGQgdeOd45KDrDLB/oiMRcA48oQPl3YGbWFzchAfo/LwbhohAn+CLRNzZyVIyN3cKU8vM5GeGO/0Lj31H3nWVWeiz6NtnPhBz2mWqZDVPy46hX3tJkq60tXCttq0bI07J0iyvJzAlecw4DHxM+vYigjcy3uqqvmwV5cLqg5onSP8hSjr5x1vnTXeUwjQEzZmqpWYOLy3h8V95APSTvsmcSs+qSCrbvp1kY+4zugvOhWIO8RgN9BuiTVY+LX/ThSwKKyXPM00dNMtNqc/9ydABFnDh1xWeD5Jr5XHyJjR2WJTOUyldPWbyFiuNnEeZeiBQpQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=toK06Fbs5tXl7+LKjbm0Bk7KImmOGRVgHwKIcH5WVYc=;
+ b=ZPv5hvPGfedKzIS6nHSYHfwa89dxsrrIw2ZNVB1wmGhhWkx/L//7+QGseEEHUAGs7tH/T1dk7Y2Gj7+httbLPq1kNQ8E+/sIFu2YlyX/pkjdwlU1ttEe4viSEqn29gkE7V7UFOO+FWvp4NqSAlNj6Nt/k8lv2KQDfN4U/zjM28qMlhJwiZnLhtFXqdMvrKIc5W74lLVeYBoOENX0nD50V1Shyq9tzeRkk5fkz6QfvtGPSw7sP1H8/MurNmd91F07TXHCMipnPewkCAWQEugSuT84/mpHbr2nwih6mKZyh2FA3WrDoadUsSy9anxLMfpB3RiuML+8IPz66jkA20I0ag==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from PH8PR11MB6879.namprd11.prod.outlook.com (2603:10b6:510:229::22)
+ by SA0PR11MB4703.namprd11.prod.outlook.com (2603:10b6:806:9f::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.24; Fri, 8 Mar
+ 2024 00:56:16 +0000
+Received: from PH8PR11MB6879.namprd11.prod.outlook.com
+ ([fe80::6e15:2e:4421:ba9f]) by PH8PR11MB6879.namprd11.prod.outlook.com
+ ([fe80::6e15:2e:4421:ba9f%4]) with mapi id 15.20.7362.019; Fri, 8 Mar 2024
+ 00:56:16 +0000
+From: "Kim, Dongwon" <dongwon.kim@intel.com>
+To: =?utf-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, "P.
+ Berrange, Daniel" <berrange@redhat.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: RE: [PATCH 0/3] ui/gtk: introducing vc->visible
+Thread-Topic: [PATCH 0/3] ui/gtk: introducing vc->visible
+Thread-Index: AQHaVAOvhkQto5F1qE6VVrnPTRFP57EiL3xggAcW5QCAA/aJAA==
+Date: Fri, 8 Mar 2024 00:56:16 +0000
+Message-ID: <PH8PR11MB68793A3B7706245CE4F0E972FA272@PH8PR11MB6879.namprd11.prod.outlook.com>
+References: <20240130234840.53122-1-dongwon.kim@intel.com>
+ <PH8PR11MB6879F0CB84091A8436C3B891FA5E2@PH8PR11MB6879.namprd11.prod.outlook.com>
+ <CAMxuvay8Gir6r4EWE0L=Y_YxGUxu9WS3TwNyUMe5vYX8Qt2SyA@mail.gmail.com>
+In-Reply-To: <CAMxuvay8Gir6r4EWE0L=Y_YxGUxu9WS3TwNyUMe5vYX8Qt2SyA@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PH8PR11MB6879:EE_|SA0PR11MB4703:EE_
+x-ms-office365-filtering-correlation-id: c25cab6a-37e1-4ea3-6b0a-08dc3f0a8f56
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: CeXQrI8Bg9fuwjSxGFzo9BA98zRHyD4hb+n+fxGwF0UX/AoS3Ip0SFJrg8tu5VvwKsxDhK46Hjt2mA2TffexKnKljUysfpB0Q7jF+DLrH/RzLUdFPMp6nn2w46Pabf2lt+lW9tIMt+c5eUPRNlvfD1DW7kejHpc4J3qr5WGkJAH+RrsT5O0fqQ8CCn4RMjWcaezPSk1zQcW9+AWhWujsXJiscD2lpiwfqZGLicY/rpd2kcbJ5CO/dKI6uaUNZcPKEEiDMKYJpSDqB6VsUd7FS2iHoq/IJO3LY7LGGMurSrGd0TsdPrFFhZrShvNUTY8qIxjx1H2E4R38SpLpqbdyxMBuDX64sJWRblsXx25bORheUjbt3awNtu+UQZFeK9bry+i9cxLwQXBtuFrvL5k7j1BcuMxVD8QEDWTqfqkCbi+JTVumNdKb/MzZ6AkmAowLP2ltHv4nmDyq1FwiMzGbr6TQu78TxkCu7RID92teFCbEM+ofjW98TVMieeANJhlKqihYuiNQTdJd+zLI7HebjGqQ01gonX+jw25mr2PDVjLYyvMlXCFwBmQA1AVPUxtUCIcn4jCrWumDppBJj5Yt2SQKKlw/n3CDAQLgdblk9TrVav7tEQtTj3qwh52Cz8cJpGaE4LW/SlU2JYQvohflbO+2C7D6ee1wPAdUDVwp00sKPDHP/v0j4DzHKaRcxduG
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH8PR11MB6879.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(376005)(1800799015)(38070700009); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?T3V1dTI2R2YxQnZESTBUakpIcU1zL3JPYmNSRWViUmxMUHJRbm5CMG9WQWlL?=
+ =?utf-8?B?ekJvREVvRHNYeTQ4US81bnJmZTNhRU5td1pHLy9OQVVVUjA5N1RabWtjOHBz?=
+ =?utf-8?B?ZzF6TXNXMlA1Ukc2bWIxeFpDL0RIbEpDYnFBZ1VUeGs0Z2VqRjlwdjUwd1VQ?=
+ =?utf-8?B?SXBCTWtsTVloZENKVE83NGZjSlFYT1haK1ptbytTRkp2bkVIU1o3cUpxa0JG?=
+ =?utf-8?B?MXVWcHRBa0JBNDZ2eFExenA4VkxyZU1JckdsRW44SzBpM2JJdVkwajN3RFg5?=
+ =?utf-8?B?RHhUaDJqRlp4Z3NSdS91MkJNcmNtREZ6bXkya0xyN05QMFYxamJPMjhJS1Vj?=
+ =?utf-8?B?WStzWSs2bEwzVEhTd3NScFdtdVdEa0hja3VKWE5JVWV5elFUUjQ0eGpoRFps?=
+ =?utf-8?B?eElXbFRjejR3c2dYc1ExMitYTEZTWUVoaWNlT3pzbnNyM0IxNklSVWg0ZGFV?=
+ =?utf-8?B?MFRORmtSZGl0N2xxT0pMTXVMUXNaUnlFUmlaN1QrUElsYkpwV3BRSEcreUdT?=
+ =?utf-8?B?a082UllxK05ZTjA2NVdqUnIzd21ZQmgyY0Z4YUN3ZG9WOE0xcDdjblg0UmdM?=
+ =?utf-8?B?SmVpZ0oyM3VGcjlPc25zUlpianpQVHlHTVAvSFI0OGR1azBES1k3M1NyYUtP?=
+ =?utf-8?B?SkhUSmQ4aWpneXNBVE9jOWJkRDlXNEpKY2tZQ2VYeTdoWmtYanREdkZ4QVdE?=
+ =?utf-8?B?c2pqME5HaC85V2t2eWRKR1dmNzJ1cWwwWDRSVTRaZEVVdE1tdUtFR0VZQktV?=
+ =?utf-8?B?MzlhOTcydkl6Yjl0OXc1cVpCZkNpc29ZZXN2Wk5ORjIrY29FeGpRTHFuRmNZ?=
+ =?utf-8?B?c29ud3BtVzdVc1h0Tys2N1VDZGV6aUlTQWRacXl1N043aVBjOCt6VkFvV2wv?=
+ =?utf-8?B?TXJUUTltRndsTlZwaVVleTdaUXUwdXhPWHQ1d0o0Rm91dGJEazdpc2YzSzlo?=
+ =?utf-8?B?dUJKZGg1NEplU3MvQ3lDT1dsMDZ0bkorR0hObjBuWGx1cE45MHhhaGphWVln?=
+ =?utf-8?B?T0JhUCs1SXU4Vk1BaTVFNkpBSHVKUUozdGpqWDlyM0RHQVp2L1lTZnVMUXY4?=
+ =?utf-8?B?eERZVW0rU29WTmJFdWhjZjdCdFpaVE1pMkR6Q0F0YXBxeVN2TjVVaW43WFBJ?=
+ =?utf-8?B?YVN3aGRrK1VSV0FPV09sbm1RRnZSR0hhYXpZS1hEMlVpUVMvcWl3aW03K3pR?=
+ =?utf-8?B?R2JYZUN2MVBLSklXQktJdHEyc2c2K0lpNkkzdWdublZ5aSs0eG1ZTVduQXVV?=
+ =?utf-8?B?c3NJN2tGQnJxUFpYUm1BMVo3SzZUMTRtTXlIWkl5Rm9aencyQlV3T2VJSGxi?=
+ =?utf-8?B?aFRwejA1ek9NRGlUQUtEUERGWndZMk1La08waEg1VThxUmorZVBzZFV3TjJE?=
+ =?utf-8?B?T2Y1WjdWQkkxL2dHaUdYb0VuNE1XQk9Kd1huY1lzSVdHT3FBVG9JNG8zeGNT?=
+ =?utf-8?B?dGcyOFFEd0ZQNUhhcmRjK1lVUm1jNmRLdlBPcjc1eW12dGp0NFNRRGhKS3RH?=
+ =?utf-8?B?eWJ1a2FsM0VReGZ5WWV1TzlDT1owNWkzaTRqZG5xTHkxcXZDQzBEWWVJQ045?=
+ =?utf-8?B?Ui9wZXZXS2xMZlF6VnpFVlg0NU1vTTAyTVAwbmw0dzlmb2ZZZ3BweWpKaFBz?=
+ =?utf-8?B?Wm96UU5Ia1RFYk1INGtYZjVFaFpzN2RVYi9VZzhVcURxSFBZd2xWUXBLTVhI?=
+ =?utf-8?B?NlV4T3U5VlJnREZLNTl4eGxhbzFuUU9qc3NOQVBITUNBWmo3RHhGRjN4NUxD?=
+ =?utf-8?B?b3pzUlNPK2xVRDdZYW8wUjMybVlDd0xwazVGZ3UwcmYxdXhHdkRVWFNVcVVT?=
+ =?utf-8?B?QVo5L3VXUlpoajdJUnhmUTNlcjNsUndIWXM5MmZnT29rSVVEUlZrU0l0Ym9D?=
+ =?utf-8?B?MC9xTlVJUW81M0hwMHlQdGpwR0RmWGZUeEZUbXVmSFNwSWFSMy80elNLbUt0?=
+ =?utf-8?B?THBmcHZNVXdxZmpnM3NCVUUzMVRrZmRHRnlSOGNwenpDTVgyN0x6LzFkQVBS?=
+ =?utf-8?B?T0tHUTFMc3VLVWMwa1dJOWxZSnhmMk5ZTTdPUEdXTUV5azVFdml5WnFkTmZS?=
+ =?utf-8?B?UW9QcnhFMG5aOWYyOUMyLy9iZFY5c3VjNGdGVXN5MWlVTVB0T3duVjUyUDls?=
+ =?utf-8?Q?nD6wGGl8yT3zdmVxw6+So5+tN?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20230810-c9e1f2783168b48bc07a1aa2@orel>
- <mhng-a6344a0c-8820-41b5-a015-b82b261b463d@palmer-ri-x1c9>
- <20230810-e160f9edae60ded9d2606b8b@orel>
- <20230811-bc15b48d336b79d9ec1f0936@orel>
- <20230811-52e2c90dc3b91e108eb5e4e8@orel>
-In-Reply-To: <20230811-52e2c90dc3b91e108eb5e4e8@orel>
-From: Richard Bagley <rbagley@ventanamicro.com>
-Date: Thu, 7 Mar 2024 16:08:53 -0800
-Message-ID: <CAARkPA-P1U7xyLpdx+XD1M3Ji2NUfTb+88+GKUk8R2aFsOCMRw@mail.gmail.com>
-Subject: Re: [PATCH] disas/riscv: Further correction to LUI disassembly
-To: Andrew Jones <ajones@ventanamicro.com>
-Cc: Palmer Dabbelt <palmer@rivosinc.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, 
- Alistair Francis <Alistair.Francis@wdc.com>, bmeng@tinylab.org,
- liweiwei@iscas.ac.cn, 
- zhiwei_liu@linux.alibaba.com, dbarboza@ventanamicro.com
-Content-Type: multipart/alternative; boundary="000000000000fbaf1d06131afffe"
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=rbagley@ventanamicro.com; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PH8PR11MB6879.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c25cab6a-37e1-4ea3-6b0a-08dc3f0a8f56
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Mar 2024 00:56:16.6722 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 1KrZuXTE+P2dbVc3HZWBgL6u4H5DUSQED9MI5jnIz7Dv2JHfMtwPaSPoEchh2jyGD/h5eImHmLQP0K0aTBC/fg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR11MB4703
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.15; envelope-from=dongwon.kim@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.583,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,269 +181,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000fbaf1d06131afffe
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-NACK
-
-We have established that the change is a workaround for a bug in
-the assembler.
-I withdraw the merge request.
-
-Thank you for this careful review.
-
-On Fri, Aug 11, 2023 at 4:55=E2=80=AFAM Andrew Jones <ajones@ventanamicro.c=
-om>
-wrote:
-
-> On Fri, Aug 11, 2023 at 10:25:52AM +0200, Andrew Jones wrote:
-> > On Thu, Aug 10, 2023 at 06:27:50PM +0200, Andrew Jones wrote:
-> > > On Thu, Aug 10, 2023 at 09:12:42AM -0700, Palmer Dabbelt wrote:
-> > > > On Thu, 10 Aug 2023 08:31:46 PDT (-0700), ajones@ventanamicro.com
-> wrote:
-> > > > > On Mon, Jul 31, 2023 at 11:33:20AM -0700, Richard Bagley wrote:
-> > > > > > The recent commit 36df75a0a9 corrected one aspect of LUI
-> disassembly
-> > > > > > by recovering the immediate argument from the result of LUI wit=
-h
-> a
-> > > > > > shift right by 12. However, the shift right will left-fill with
-> the
-> > > > > > sign. By applying a mask we recover an unsigned representation
-> of the
-> > > > > > 20-bit field (which includes a sign bit).
-> > > > > >
-> > > > > > Example:
-> > > > > > 0xfffff000 >> 12 =3D 0xffffffff
-> > > > > > 0xfffff000 >> 12 & 0xfffff =3D 0x000fffff
-> > > > > >
-> > > > > > Fixes: 36df75a0a9 ("riscv/disas: Fix disas output of upper
-> immediates")
-> > > > > > Signed-off-by: Richard Bagley <rbagley@ventanamicro.com>
-> > > > > > ---
-> > > > > >  disas/riscv.c | 9 ++++++---
-> > > > > >  1 file changed, 6 insertions(+), 3 deletions(-)
-> > > > > >
-> > > > > > diff --git a/disas/riscv.c b/disas/riscv.c
-> > > > > > index 4023e3fc65..690eb4a1ac 100644
-> > > > > > --- a/disas/riscv.c
-> > > > > > +++ b/disas/riscv.c
-> > > > > > @@ -4723,9 +4723,12 @@ static void format_inst(char *buf, size_=
-t
-> buflen, size_t tab, rv_decode *dec)
-> > > > > >              break;
-> > > > > >          case 'U':
-> > > > > >              fmt++;
-> > > > > > -            snprintf(tmp, sizeof(tmp), "%d", dec->imm >> 12);
-> > > > > > -            append(buf, tmp, buflen);
-> > > > > > -            if (*fmt =3D=3D 'o') {
-> > > > > > +            if (*fmt =3D=3D 'i') {
-> > > > > > +                snprintf(tmp, sizeof(tmp), "%d", dec->imm >> 1=
-2
-> & 0xfffff);
-> > > > >
-> > > > > Why are we correcting LUI's output, but still outputting
-> sign-extended
-> > > > > values for AUIPC?
-> > > > >
-> > > > > We can't assemble 'auipc a1, 0xffffffff' or 'auipc a1, -1' withou=
-t
-> getting
-> > > > >
-> > > > >  Error: lui expression not in range 0..1048575
-> > > > >
-> > > > > (and additionally for 0xffffffff)
-> > > > >
-> > > > >  Error: value of 00000ffffffff000 too large for field of 4 bytes
-> at 0000000000000000
-> > > > >
-> > > > > either.
-> > > > >
-> > > > > (I see that the assembler's error messages state 'lui', but I was
-> trying
-> > > > > 'auipc'.)
-> > > > >
-> > > > > I'm using as from gnu binutils 2.40.0.20230214.
-> > > > >
-> > > > > (And, FWIW, I agree with Richard Henderson that these instruction=
-s
-> should
-> > > > > accept negative values.)
-> > > >
-> > > > I'm kind of lost here, and you saying binutils rejects this syntax?
-> If
-> > > > that's the case it's probably just an oversight, can you file a bug
-> in
-> > > > binutils land so folks can see?
-> > >
-> > > Will do.
-> > >
-> >
-> > https://sourceware.org/bugzilla/show_bug.cgi?id=3D30746
-> >
->
-> But, to try to bring this thread back to the patch under review. While th=
-e
-> binutils BZ may address our preferred way of providing immediates to the
-> assembler, this patch is trying to make QEMU's output consistent with
-> objdump. Since objdump always outputs long immediate values as hex, then
-> it doesn't need to care about negative signs. QEMU seems to prefer
-> decimal, though, and so does llvm-objdump, which outputs values for these
-> instructions in the range 0..1048575. So, I guess this patch is making
-> QEMU consistent with llvm-objdump.
->
-> Back to making suggestions for this patch...
->
-> 1. The commit message should probably say something along the lines of
->    what I just wrote in the preceding paragraph to better explain the
->    motivation.
->
-> 2. Unless I'm missing something, then this patch should also address
->    AUIPC.
->
-> Thanks,
-> drew
->
-
---000000000000fbaf1d06131afffe
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">NACK<br><br>We have established that the change is a worka=
-round for a=C2=A0bug in the=C2=A0assembler.<br>I withdraw the=C2=A0merge re=
-quest.<br><br>Thank=C2=A0you for this careful review.</div><br><div class=
-=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Aug 11, 2023=
- at 4:55=E2=80=AFAM Andrew Jones &lt;<a href=3D"mailto:ajones@ventanamicro.=
-com">ajones@ventanamicro.com</a>&gt; wrote:<br></div><blockquote class=3D"g=
-mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204=
-,204,204);padding-left:1ex">On Fri, Aug 11, 2023 at 10:25:52AM +0200, Andre=
-w Jones wrote:<br>
-&gt; On Thu, Aug 10, 2023 at 06:27:50PM +0200, Andrew Jones wrote:<br>
-&gt; &gt; On Thu, Aug 10, 2023 at 09:12:42AM -0700, Palmer Dabbelt wrote:<b=
-r>
-&gt; &gt; &gt; On Thu, 10 Aug 2023 08:31:46 PDT (-0700), <a href=3D"mailto:=
-ajones@ventanamicro.com" target=3D"_blank">ajones@ventanamicro.com</a> wrot=
-e:<br>
-&gt; &gt; &gt; &gt; On Mon, Jul 31, 2023 at 11:33:20AM -0700, Richard Bagle=
-y wrote:<br>
-&gt; &gt; &gt; &gt; &gt; The recent commit 36df75a0a9 corrected one aspect =
-of LUI disassembly<br>
-&gt; &gt; &gt; &gt; &gt; by recovering the immediate argument from the resu=
-lt of LUI with a<br>
-&gt; &gt; &gt; &gt; &gt; shift right by 12. However, the shift right will l=
-eft-fill with the<br>
-&gt; &gt; &gt; &gt; &gt; sign. By applying a mask we recover an unsigned re=
-presentation of the<br>
-&gt; &gt; &gt; &gt; &gt; 20-bit field (which includes a sign bit).<br>
-&gt; &gt; &gt; &gt; &gt; <br>
-&gt; &gt; &gt; &gt; &gt; Example:<br>
-&gt; &gt; &gt; &gt; &gt; 0xfffff000 &gt;&gt; 12 =3D 0xffffffff<br>
-&gt; &gt; &gt; &gt; &gt; 0xfffff000 &gt;&gt; 12 &amp; 0xfffff =3D 0x000ffff=
-f<br>
-&gt; &gt; &gt; &gt; &gt; <br>
-&gt; &gt; &gt; &gt; &gt; Fixes: 36df75a0a9 (&quot;riscv/disas: Fix disas ou=
-tput of upper immediates&quot;)<br>
-&gt; &gt; &gt; &gt; &gt; Signed-off-by: Richard Bagley &lt;<a href=3D"mailt=
-o:rbagley@ventanamicro.com" target=3D"_blank">rbagley@ventanamicro.com</a>&=
-gt;<br>
-&gt; &gt; &gt; &gt; &gt; ---<br>
-&gt; &gt; &gt; &gt; &gt;=C2=A0 disas/riscv.c | 9 ++++++---<br>
-&gt; &gt; &gt; &gt; &gt;=C2=A0 1 file changed, 6 insertions(+), 3 deletions=
-(-)<br>
-&gt; &gt; &gt; &gt; &gt; <br>
-&gt; &gt; &gt; &gt; &gt; diff --git a/disas/riscv.c b/disas/riscv.c<br>
-&gt; &gt; &gt; &gt; &gt; index 4023e3fc65..690eb4a1ac 100644<br>
-&gt; &gt; &gt; &gt; &gt; --- a/disas/riscv.c<br>
-&gt; &gt; &gt; &gt; &gt; +++ b/disas/riscv.c<br>
-&gt; &gt; &gt; &gt; &gt; @@ -4723,9 +4723,12 @@ static void format_inst(cha=
-r *buf, size_t buflen, size_t tab, rv_decode *dec)<br>
-&gt; &gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 br=
-eak;<br>
-&gt; &gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case &#39;U&#39;=
-:<br>
-&gt; &gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fm=
-t++;<br>
-&gt; &gt; &gt; &gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 snprint=
-f(tmp, sizeof(tmp), &quot;%d&quot;, dec-&gt;imm &gt;&gt; 12);<br>
-&gt; &gt; &gt; &gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 append(=
-buf, tmp, buflen);<br>
-&gt; &gt; &gt; &gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (*fm=
-t =3D=3D &#39;o&#39;) {<br>
-&gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (*fm=
-t =3D=3D &#39;i&#39;) {<br>
-&gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 snprintf(tmp, sizeof(tmp), &quot;%d&quot;, dec-&gt;imm &gt;&gt; 12 &=
-amp; 0xfffff);<br>
-&gt; &gt; &gt; &gt; <br>
-&gt; &gt; &gt; &gt; Why are we correcting LUI&#39;s output, but still outpu=
-tting sign-extended<br>
-&gt; &gt; &gt; &gt; values for AUIPC?<br>
-&gt; &gt; &gt; &gt; <br>
-&gt; &gt; &gt; &gt; We can&#39;t assemble &#39;auipc a1, 0xffffffff&#39; or=
- &#39;auipc a1, -1&#39; without getting<br>
-&gt; &gt; &gt; &gt; <br>
-&gt; &gt; &gt; &gt;=C2=A0 Error: lui expression not in range 0..1048575<br>
-&gt; &gt; &gt; &gt; <br>
-&gt; &gt; &gt; &gt; (and additionally for 0xffffffff)<br>
-&gt; &gt; &gt; &gt; <br>
-&gt; &gt; &gt; &gt;=C2=A0 Error: value of 00000ffffffff000 too large for fi=
-eld of 4 bytes at 0000000000000000<br>
-&gt; &gt; &gt; &gt; <br>
-&gt; &gt; &gt; &gt; either.<br>
-&gt; &gt; &gt; &gt; <br>
-&gt; &gt; &gt; &gt; (I see that the assembler&#39;s error messages state &#=
-39;lui&#39;, but I was trying<br>
-&gt; &gt; &gt; &gt; &#39;auipc&#39;.)<br>
-&gt; &gt; &gt; &gt; <br>
-&gt; &gt; &gt; &gt; I&#39;m using as from gnu binutils 2.40.0.20230214.<br>
-&gt; &gt; &gt; &gt; <br>
-&gt; &gt; &gt; &gt; (And, FWIW, I agree with Richard Henderson that these i=
-nstructions should<br>
-&gt; &gt; &gt; &gt; accept negative values.)<br>
-&gt; &gt; &gt; <br>
-&gt; &gt; &gt; I&#39;m kind of lost here, and you saying binutils rejects t=
-his syntax?=C2=A0 If<br>
-&gt; &gt; &gt; that&#39;s the case it&#39;s probably just an oversight, can=
- you file a bug in<br>
-&gt; &gt; &gt; binutils land so folks can see?<br>
-&gt; &gt; <br>
-&gt; &gt; Will do.<br>
-&gt; &gt;<br>
-&gt; <br>
-&gt; <a href=3D"https://sourceware.org/bugzilla/show_bug.cgi?id=3D30746" re=
-l=3D"noreferrer" target=3D"_blank">https://sourceware.org/bugzilla/show_bug=
-.cgi?id=3D30746</a><br>
-&gt;<br>
-<br>
-But, to try to bring this thread back to the patch under review. While the<=
-br>
-binutils BZ may address our preferred way of providing immediates to the<br=
->
-assembler, this patch is trying to make QEMU&#39;s output consistent with<b=
-r>
-objdump. Since objdump always outputs long immediate values as hex, then<br=
->
-it doesn&#39;t need to care about negative signs. QEMU seems to prefer<br>
-decimal, though, and so does llvm-objdump, which outputs values for these<b=
-r>
-instructions in the range 0..1048575. So, I guess this patch is making<br>
-QEMU consistent with llvm-objdump.<br>
-<br>
-Back to making suggestions for this patch...<br>
-<br>
-1. The commit message should probably say something along the lines of<br>
-=C2=A0 =C2=A0what I just wrote in the preceding paragraph to better explain=
- the<br>
-=C2=A0 =C2=A0motivation.<br>
-<br>
-2. Unless I&#39;m missing something, then this patch should also address<br=
->
-=C2=A0 =C2=A0AUIPC.<br>
-<br>
-Thanks,<br>
-drew<br>
-</blockquote></div>
-
---000000000000fbaf1d06131afffe--
+SGkgTWFyYy1BbmRyw6ksDQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTog
+TWFyYy1BbmRyw6kgTHVyZWF1IDxtYXJjYW5kcmUubHVyZWF1QHJlZGhhdC5jb20+DQo+IFNlbnQ6
+IFR1ZXNkYXksIE1hcmNoIDUsIDIwMjQgNDoxOCBBTQ0KPiBUbzogS2ltLCBEb25nd29uIDxkb25n
+d29uLmtpbUBpbnRlbC5jb20+OyBQLiBCZXJyYW5nZSwgRGFuaWVsDQo+IDxiZXJyYW5nZUByZWRo
+YXQuY29tPg0KPiBDYzogcWVtdS1kZXZlbEBub25nbnUub3JnDQo+IFN1YmplY3Q6IFJlOiBbUEFU
+Q0ggMC8zXSB1aS9ndGs6IGludHJvZHVjaW5nIHZjLT52aXNpYmxlDQo+IA0KPiBIaSBLaW0NCj4g
+DQo+IEkgYW0gdW5jb21mb3J0YWJsZSB3aXRoIHRoZSBzZXJpZXMgaW4gZ2VuZXJhbC4NCj4gDQo+
+IE5vdCBvbmx5IHdlIGRvbid0IGhhdmUgdGhlIG1lYW5zIHRvIGRyYXcgZG1hYnVmL3NjYW5vdXQg
+IndoZW4gcmVxdWlyZWQiLCBzbw0KPiByZXN1bWluZyBkcmF3aW5nIHdvbid0IHdvcmsgdW50aWwg
+dGhlIGd1ZXN0IGRyYXdzICh0aGlzIGlzIGFscmVhZHkgYSBwcm9ibGVtIGJ1dA0KW0tpbSwgRG9u
+Z3dvbl0gWWVzLCB0aGlzIGlzIHJpZ2h0LiBUaGUgZGlzcGxheSB3b24ndCBiZSB1cGRhdGVkIHVu
+dGlsIHRoZXJlIGlzIGEgbmV3IGZyYW1lIHN1Ym1pdHRlZC4NCj4geW91IGFyZSBvbmx5IG1ha2lu
+ZyBpdCB3b3JzZSkuIEFuZCBJIGFsc28gdGhpbmsgcmVjb25maWd1cmluZyB0aGUgZ3Vlc3QgYnkg
+bWVyZWx5DQo+IG1pbmltaXppbmcgb3Igc3dpdGNoaW5nIHdpbmRvdy90YWJzIGlzbid0IHdoYXQg
+bW9zdCB1c2VycyB3b3VsZCBleHBlY3QuDQpbS2ltLCBEb25nd29uXSBJIHVuZGVyc3RhbmQgeW91
+ciBjb25jZXJuLiBUaGVuIHdoYXQgZG8geW91IHN1Z2dlc3QgSSBuZWVkIHRvIGRvIG9yIGxvb2sg
+aW50byB0byBhdm9pZCB0aGUgc2l0dWF0aW9uIHdoZXJlIHRoZSBob3N0IHJlbmRlcmluZyBvZiB0
+aGUgZ3Vlc3QgZnJhbWUgaXMgc2NoZWR1bGVkIGJ1dCBwZW5kaW5nIGR1ZSB0byB0YWIgc3dpdGNo
+aW5nIG9yIG1pbmltaXphdGlvbiBvZiB3aW5kb3cgYXMgdGhlIGd1ZXN0ICh2aXJ0aW8tZ3B1IGRy
+dikgaXMgd2FpdGluZyBmb3IgdGhlIHJlc3BvbnNlIHRvIG1vdmUgb24gdG8gdGhlIG5leHQgZnJh
+bWU/IERvIHlvdSB0aGluayB0aGUgZnJhbWUgdXBkYXRlIHNob3VsZCBqdXN0IGNvbnRpbnVlIG9u
+IHRoZSBob3N0IHNpZGUgcmVnYXJkbGVzcyBvZiB2aXNpYmlsaXR5IG9mIHRoZSB3aW5kb3c/IChJ
+ZiB0aGlzIGlzIHRoZSBzdGFuZGFyZCBleHBlY3RhdGlvbiwgdGhlbiBvbmUgb2Ygb3VyIExpbnV4
+IGNvbmZpZ3VyYXRpb24gLSBZb2N0byArIElDRSBXTSBoYXMgc29tZSBidWcgaW4gaXQuKQ0KDQo+
+IA0KPiAoZndpdywgbXkgcGVyc29uYWwgb3BpbmlvbiBpcyB0aGF0IFFFTVUgc2hvdWxkbid0IHBy
+b3ZpZGUgVUlzIGFuZCBkaWZmZXJlbnQNCj4gY2xpZW50cyBzaG91bGQgYmUgYWJsZSB0byBpbXBs
+ZW1lbnQgZGlmZmVyZW50IGJlaGF2aW91cnMsIG91dCBvZiBwcm9jZXNzLi4gdGhhdA0KPiBtYWtl
+cyBtZSByZWxhdGl2ZWx5IGxlc3MgbW90aXZhdGVkIHRvIGJyZWFrIHRoaW5ncyBhbmQgYmUgcmVz
+cG9uc2libGUpDQo+IA0KPiBEYW5pZWwsIGNvdWxkIHlvdSBoYXZlIGEgbG9vayB0b28/DQo+IA0K
+PiB0aGFua3MNCj4gDQo+IE9uIEZyaSwgTWFyIDEsIDIwMjQgYXQgNDowNeKAr0FNIEtpbSwgRG9u
+Z3dvbiA8ZG9uZ3dvbi5raW1AaW50ZWwuY29tPg0KPiB3cm90ZToNCj4gPg0KPiA+IEhpIE1hcmMt
+QW5kcsOpIEx1cmVhdSwNCj4gPg0KPiA+IEp1c3QgYSByZW1pbmRlci4uIEkgbmVlZCB5b3VyIGhl
+bHAgcmV2aWV3aW5nIHRoaXMgcGF0Y2ggc2VyaWVzLiBQbGVhc2UNCj4gPiB0YWtlIGEgbG9vayBh
+dCBteSBtZXNzYWdlcyBhdA0KPiA+IGh0dHBzOi8vbGlzdHMuZ251Lm9yZy9hcmNoaXZlL2h0bWwv
+cWVtdS1kZXZlbC8yMDI0LTAxL21zZzA2NjM2Lmh0bWwNCj4gPiBhbmQNCj4gPiBodHRwczovL2xp
+c3RzLmdudS5vcmcvYXJjaGl2ZS9odG1sL3FlbXUtZGV2ZWwvMjAyNC0wMS9tc2cwNjYzNy5odG1s
+DQo+ID4NCj4gPiBUaGFua3MhIQ0KPiA+IERXDQo+ID4NCj4gPiA+IC0tLS0tT3JpZ2luYWwgTWVz
+c2FnZS0tLS0tDQo+ID4gPiBGcm9tOiBxZW11LWRldmVsLWJvdW5jZXMrZG9uZ3dvbi5raW09aW50
+ZWwuY29tQG5vbmdudS5vcmcgPHFlbXUtDQo+ID4gPiBkZXZlbC1ib3VuY2VzK2Rvbmd3b24ua2lt
+PWludGVsLmNvbUBub25nbnUub3JnPiBPbiBCZWhhbGYgT2YNCj4gPiA+IGRvbmd3b24ua2ltQGlu
+dGVsLmNvbQ0KPiA+ID4gU2VudDogVHVlc2RheSwgSmFudWFyeSAzMCwgMjAyNCAzOjQ5IFBNDQo+
+ID4gPiBUbzogcWVtdS1kZXZlbEBub25nbnUub3JnDQo+ID4gPiBTdWJqZWN0OiBbUEFUQ0ggMC8z
+XSB1aS9ndGs6IGludHJvZHVjaW5nIHZjLT52aXNpYmxlDQo+ID4gPg0KPiA+ID4gRnJvbTogRG9u
+Z3dvbiBLaW0gPGRvbmd3b24ua2ltQGludGVsLmNvbT4NCj4gPiA+DQo+ID4gPiBEcmF3aW5nIGd1
+ZXN0IGRpc3BsYXkgZnJhbWVzIGNhbid0IGJlIGNvbXBsZXRlZCB3aGlsZSB0aGUgVkMgaXMgbm90
+DQo+ID4gPiBpbiB2aXNpYmxlIHN0YXRlLCB3aGljaCBjb3VsZCByZXN1bHQgaW4gdGltZW91dCBp
+biBib3RoIHRoZSBob3N0IGFuZA0KPiA+ID4gdGhlIGd1ZXN0IGVzcGVjaWFsbHkgd2hlbiB1c2lu
+ZyBibG9iIHNjYW5vdXQuIFRoZXJlZm9yZSBpdCBpcyBuZWVkZWQNCj4gPiA+IHRvIHVwZGF0ZSBh
+bmQgdHJhY2sgdGhlIHZpc2libGl0eSBzdGF0dXMgb2YgdGhlIFZDIGFuZCB1bmJsb2NrIHRoZSBw
+aXBlbGluZSBpbg0KPiBjYXNlIHdoZW4gVkMgYmVjb21lcyBpbnZpc2libGUgKGUuZy4NCj4gPiA+
+IHdpbmRvd3MgbWluaW1pemF0aW9uLCBzd2l0Y2hpbmcgYW1vbmcgdGFicykgd2hpbGUgcHJvY2Vz
+c2luZyBhIGd1ZXN0DQo+IGZyYW1lLg0KPiA+ID4NCj4gPiA+IEZpcnN0IHBhdGNoICgwMDAxLXVp
+LWd0ay1za2lwLi4uKSBpcyBpbnRyb2R1Y2luZyBhIGZsYWcgJ3Zpc2libGUnIHRvDQo+ID4gPiBW
+aXJ0dWFsQ29uc29sZSBzdHJ1Y3QgdGhlbiBzZXQgaXQgb25seSBpZiB0aGUgVkMgYW5kIGl0cyB3
+aW5kb3cgaXMgdmlzaWJsZS4NCj4gPiA+DQo+ID4gPiBTZWNvbmQgcGF0Y2ggKDAwMDItdWktZ3Rr
+LXNldC0uLi4pIHNldHMgdGhlIHVpIHNpemUgdG8gMCB3aGVuIFZDIGlzDQo+ID4gPiBpbnZpc2li
+bGUgd2hlbiB0aGUgdGFiIGlzIGNsb3NlZCBvciBkZWFjdGl2YXRlZC4gVGhpcyBub3RpZmllcyB0
+aGUNCj4gPiA+IGd1ZXN0IHRoYXQgdGhlIGFzc29jaWF0ZWQgZ3Vlc3QgZGlzcGxheSBpcyBub3Qg
+YWN0aXZlIGFueW1vcmUuDQo+ID4gPg0KPiA+ID4gVGhpcmQgcGF0Y2ggKDAwMDMtdWktZ3RrLXJl
+c2V0LXZpc2libGUuLi4pIGFkZHMgYSBjYWxsYmFjayBmb3IgR1RLDQo+ID4gPiB3aW5kb3ctc3Rh
+dGUtIGV2ZW50LiBUaGUgZmxhZywgJ3Zpc2libGUnIGlzIHVwZGF0ZWQgYmFzZWQgb24gdGhlIG1p
+bml6YXRpb24NCj4gc3RhdHVzIG9mIHRoZSB3aW5kb3cuDQo+ID4gPg0KPiA+ID4gRG9uZ3dvbiBL
+aW0gKDMpOg0KPiA+ID4gICB1aS9ndGs6IHNraXAgZHJhd2luZyBndWVzdCBzY2Fub3V0IHdoZW4g
+YXNzb2NpYXRlZCBWQyBpcyBpbnZpc2libGUNCj4gPiA+ICAgdWkvZ3RrOiBzZXQgdGhlIHVpIHNp
+emUgdG8gMCB3aGVuIGludmlzaWJsZQ0KPiA+ID4gICB1aS9ndGs6IHJlc2V0IHZpc2libGUgZmxh
+ZyB3aGVuIHdpbmRvdyBpcyBtaW5pbWl6ZWQNCj4gPiA+DQo+ID4gPiAgaW5jbHVkZS91aS9ndGsu
+aCB8ICAxICsNCj4gPiA+ICB1aS9ndGstZWdsLmMgICAgIHwgIDggKysrKysrKw0KPiA+ID4gIHVp
+L2d0ay1nbC1hcmVhLmMgfCAgOCArKysrKysrDQo+ID4gPiAgdWkvZ3RrLmMgICAgICAgICB8IDYy
+ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKystLQ0KPiA+ID4g
+IDQgZmlsZXMgY2hhbmdlZCwgNzcgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkNCj4gPiA+
+DQo+ID4gPiAtLQ0KPiA+ID4gMi4zNC4xDQo+ID4gPg0KPiA+DQoNCg==
 
