@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82795C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 15:49:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6D47C54E5D
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 15:49:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ricSW-0000ca-PT; Fri, 08 Mar 2024 10:48:32 -0500
+	id 1ricSp-0000ln-Mo; Fri, 08 Mar 2024 10:48:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1ricSU-0000by-QX
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:48:30 -0500
+ id 1ricSn-0000lF-K2
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:48:49 -0500
 Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1ricST-000417-9O
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:48:30 -0500
+ id 1ricSl-000449-Re
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:48:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709912910; x=1741448910;
+ t=1709912928; x=1741448928;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=6WGcGPLsmeM9ujwFnIiG1nYtUcObQiTkGIz1UZVazz0=;
- b=S0HgMHGVoCHpRi0IZ+DTLdewIYp+bwaaW6KwzNn2n+nsVf1otiHZJo0F
- 45S/Jw4efojA6lgFHWpL32tbWQfKR9SDmVgjmHi5114+8WVv7VUBeZWLo
- jeRKLyDkqfLNI4Rf4metBc5GA8UcpSg3SEi94Jtapogk4Fo1xoqf71HK7
- 0wZ5nTtw6Nw+6g8XZRf6X/scvkZugQX1eHVjSx1HfDH9id70a+x+VhIR2
- kxyMc5cDcrWfzi1Exb9TnIcc2HpXfbhArTGvtPs0Ouh6Ljbc8EtRPifbP
- yf48aMMQd4z0ZxLB9BkmXPV2Gm2FZfyBRQg86tQwvHQP8qAWvAHyO/UXl Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11006"; a="4561053"
+ bh=9CNNd6/FqGn+vADBzcQTmk8SQKEglbZAI6+rVVgSS7Q=;
+ b=JE4ewhKX0iWNxzxw/NpsDtppS3aKErfc1yIsqkwmv+52J0Sxkl4eTbPW
+ hZRD6RCb2riinegVsTLeW/QVEn8zBtK3gzCRCihsIsSR2XF79GA95bOU7
+ WmZwRKR32+mjVtE8vEZuTa2Y5IvkKXRMcPIhApEUDwtDZSFBksYp53apq
+ ALeszjbjYtJada5So6d0OjdFSs8fuizgwOUtbcNUtaqos9eqy1zQn1AuM
+ tFJ2WjmNwQHG9ljEbwbYtqwyuCSikUv8GmgQSxt/7bwM610P5kGMsYkx3
+ pLDSvQ1Zhl5ADptKa7LeWcnH7Mr2b+GeSQRHyzcAWSMjB40o3CngJUDSk A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11006"; a="4561121"
 X-IronPort-AV: E=Sophos;i="6.07,110,1708416000"; 
-   d="scan'208";a="4561053"
+   d="scan'208";a="4561121"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Mar 2024 07:48:27 -0800
+ 08 Mar 2024 07:48:48 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,110,1708416000"; d="scan'208";a="10400332"
+X-IronPort-AV: E=Sophos;i="6.07,110,1708416000"; d="scan'208";a="10400364"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa007.fm.intel.com with ESMTP; 08 Mar 2024 07:48:24 -0800
+ by fmviesa007.fm.intel.com with ESMTP; 08 Mar 2024 07:48:44 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -52,10 +52,10 @@ To: Eduardo Habkost <eduardo@habkost.net>,
  Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org
 Cc: Xiaoling Song <xiaoling.song@intel.com>,
 	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 05/13] tests/unit/test-smp-parse: Use CPU number macros in
- invalid topology case
-Date: Sat,  9 Mar 2024 00:01:40 +0800
-Message-Id: <20240308160148.3130837-6-zhao1.liu@linux.intel.com>
+Subject: [PATCH v2 12/13] tests/unit/test-smp-parse: Test
+ smp_props.has_clusters
+Date: Sat,  9 Mar 2024 00:01:47 +0800
+Message-Id: <20240308160148.3130837-13-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240308160148.3130837-1-zhao1.liu@linux.intel.com>
 References: <20240308160148.3130837-1-zhao1.liu@linux.intel.com>
@@ -87,59 +87,90 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-Use MAX_CPUS/MIN_CPUS macros in invalid topology case. This gives us the
-flexibility to change the maximum and minimum CPU limits.
+The smp_props.has_clusters in MachineClass is not a user configured
+field, and it indicates if user specifies "clusters" in -smp.
+
+After -smp parsing, other module could aware if the cluster level
+is configured by user. This is used when the machine has only 1 cluster
+since there's only 1 cluster by default.
+
+Add the check to cover this field.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 Tested-by: Xiaoling Song <xiaoling.song@intel.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Acked-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/unit/test-smp-parse.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ tests/unit/test-smp-parse.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
 diff --git a/tests/unit/test-smp-parse.c b/tests/unit/test-smp-parse.c
-index 1874bea08609..84e342277452 100644
+index 75581691713c..d39cfdc19bfe 100644
 --- a/tests/unit/test-smp-parse.c
 +++ b/tests/unit/test-smp-parse.c
-@@ -323,15 +323,21 @@ static const struct SMPTestData data_generic_invalid[] = {
-                         "sockets (2) * cores (4) * threads (2) "
-                         "== maxcpus (16) < smp_cpus (18)",
-     }, {
--        /* config: -smp 1
--         * should tweak the supported min CPUs to 2 for testing */
--        .config = SMP_CONFIG_GENERIC(T, 1, F, 0, F, 0, F, 0, F, 0),
-+        /*
-+         * config: -smp 1
-+         * The test machine should tweak the supported min CPUs to
-+         * 2 (MIN_CPUS + 1) for testing.
-+         */
-+        .config = SMP_CONFIG_GENERIC(T, MIN_CPUS, F, 0, F, 0, F, 0, F, 0),
-         .expect_error = "Invalid SMP CPUs 1. The min CPUs supported "
-                         "by machine '" SMP_MACHINE_NAME "' is 2",
-     }, {
--        /* config: -smp 512
--         * should tweak the supported max CPUs to 511 for testing */
--        .config = SMP_CONFIG_GENERIC(T, 512, F, 0, F, 0, F, 0, F, 0),
-+        /*
-+         * config: -smp 512
-+         * The test machine should tweak the supported max CPUs to
-+         * 511 (MAX_CPUS - 1) for testing.
-+         */
-+        .config = SMP_CONFIG_GENERIC(T, MAX_CPUS, F, 0, F, 0, F, 0, F, 0),
-         .expect_error = "Invalid SMP CPUs 512. The max CPUs supported "
-                         "by machine '" SMP_MACHINE_NAME "' is 511",
-     },
-@@ -575,8 +581,8 @@ static void machine_generic_invalid_class_init(ObjectClass *oc, void *data)
-     MachineClass *mc = MACHINE_CLASS(oc);
+@@ -573,7 +573,8 @@ static unsigned int cpu_topology_get_cores_per_socket(const CpuTopology *topo)
  
-     /* Force invalid min CPUs and max CPUs */
--    mc->min_cpus = 2;
--    mc->max_cpus = 511;
-+    mc->min_cpus = MIN_CPUS + 1;
-+    mc->max_cpus = MAX_CPUS - 1;
+ static char *cpu_topology_to_string(const CpuTopology *topo,
+                                     unsigned int threads_per_socket,
+-                                    unsigned int cores_per_socket)
++                                    unsigned int cores_per_socket,
++                                    bool has_clusters)
+ {
+     return g_strdup_printf(
+         "(CpuTopology) {\n"
+@@ -588,17 +589,20 @@ static char *cpu_topology_to_string(const CpuTopology *topo,
+         "    .max_cpus           = %u,\n"
+         "    .threads_per_socket = %u,\n"
+         "    .cores_per_socket   = %u,\n"
++        "    .has_clusters       = %s,\n"
+         "}",
+         topo->cpus, topo->drawers, topo->books,
+         topo->sockets, topo->dies, topo->clusters,
+         topo->cores, topo->threads, topo->max_cpus,
+-        threads_per_socket, cores_per_socket);
++        threads_per_socket, cores_per_socket,
++        has_clusters ? "true" : "false");
  }
  
- static void machine_with_dies_class_init(ObjectClass *oc, void *data)
+ static void check_parse(MachineState *ms, const SMPConfiguration *config,
+                         const CpuTopology *expect_topo, const char *expect_err,
+                         bool is_valid)
+ {
++    MachineClass *mc = MACHINE_GET_CLASS(ms);
+     g_autofree char *config_str = smp_config_to_string(config);
+     g_autofree char *expect_topo_str = NULL, *output_topo_str = NULL;
+     unsigned int expect_threads_per_socket, expect_cores_per_socket;
+@@ -611,15 +615,18 @@ static void check_parse(MachineState *ms, const SMPConfiguration *config,
+                         cpu_topology_get_cores_per_socket(expect_topo);
+     expect_topo_str = cpu_topology_to_string(expect_topo,
+                                              expect_threads_per_socket,
+-                                             expect_cores_per_socket);
++                                             expect_cores_per_socket,
++                                             config->has_clusters);
+ 
+     /* call the generic parser */
+     machine_parse_smp_config(ms, config, &err);
+ 
+     ms_threads_per_socket = machine_topo_get_threads_per_socket(ms);
+     ms_cores_per_socket = machine_topo_get_cores_per_socket(ms);
+-    output_topo_str = cpu_topology_to_string(&ms->smp, ms_threads_per_socket,
+-                                             ms_cores_per_socket);
++    output_topo_str = cpu_topology_to_string(&ms->smp,
++                                             ms_threads_per_socket,
++                                             ms_cores_per_socket,
++                                             mc->smp_props.has_clusters);
+ 
+     /* when the configuration is supposed to be valid */
+     if (is_valid) {
+@@ -634,7 +641,8 @@ static void check_parse(MachineState *ms, const SMPConfiguration *config,
+             (ms->smp.threads == expect_topo->threads) &&
+             (ms->smp.max_cpus == expect_topo->max_cpus) &&
+             (ms_threads_per_socket == expect_threads_per_socket) &&
+-            (ms_cores_per_socket == expect_cores_per_socket)) {
++            (ms_cores_per_socket == expect_cores_per_socket) &&
++            (mc->smp_props.has_clusters == config->has_clusters)) {
+             return;
+         }
+ 
 -- 
 2.34.1
 
