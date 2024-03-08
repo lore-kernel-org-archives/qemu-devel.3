@@ -4,90 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A814C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 17:02:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF278C54E4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 17:02:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ridbB-0005de-QG; Fri, 08 Mar 2024 12:01:33 -0500
+	id 1ridbB-0005aN-1T; Fri, 08 Mar 2024 12:01:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1ridb7-0005WH-Jr
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 12:01:31 -0500
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1ridb5-0000VB-PV
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 12:01:29 -0500
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-6e66e8fcc2dso696528b3a.3
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 09:01:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709917286; x=1710522086; darn=nongnu.org;
- h=content-transfer-encoding:content-language:in-reply-to:mime-version
- :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
- :subject:date:message-id:reply-to;
- bh=WxOybcM2F4fKRXlQZqwFzYrl9MTV4DucrhrBkzOmzg4=;
- b=wvPlmVpf5ElruY4jKr9Dwa6dWIHyaay+e6odT3eBr0cYfMYT+apBctJDD1ZZV/yumh
- MYkB6sMtA0RHIudQGTcmhrQgyyMjl2mThySNMM9gLCtZWCbNNY9QeMM8BpFMSk5DEnwj
- q7loBEgV6dTTVsIWLCA+VjpMFvN0uNuPxLO+CZsYY4GZuRu6RDxYxApwG4ATAvc+bPdM
- muYQKpLdsgqDjhDo8zPSfiYYzAXdez7cAkJEb7O3xKrydZn919RoG9A/+BACrNZtifxN
- QyCT9bJE0PIOBEr8vYMQklOL2yrQcb0P7ZDrp/rbWK7OPAy84CE857T64j9uygJl0ehs
- HX2w==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ridai-0005KO-Pc
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 12:01:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ridae-0000RH-Dd
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 12:01:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709917259;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=G5mlJPTdJkWjqRDFmHZCmG622raxGwhz9st2Ydsv++Y=;
+ b=QIxxkbjFGlQPZxxu+17dwtcDfLtdt8xOWIoVAc7zHhXS/YXyS2hTQKZnpciYW4C+JwO5F1
+ ioF0Yfb5wlewqwEQ5O+NDc5jAITd4NjhUyUx5vFg1siu1gOTSNGJN+EfTJMTErMRf1ZCFZ
+ rLfc9vjWuqGJQxMT7rxGKRxT85cYEug=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-12-bmFawY9nNRqRyJmw1FeR_Q-1; Fri, 08 Mar 2024 12:00:57 -0500
+X-MC-Unique: bmFawY9nNRqRyJmw1FeR_Q-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-33dfefa9b1dso1188773f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 09:00:57 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709917286; x=1710522086;
- h=content-transfer-encoding:content-language:in-reply-to:mime-version
- :user-agent:date:message-id:from:references:cc:to:subject
+ d=1e100.net; s=20230601; t=1709917257; x=1710522057;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WxOybcM2F4fKRXlQZqwFzYrl9MTV4DucrhrBkzOmzg4=;
- b=K2SC1cJHcPU8BKflVDe1eRupxnAZER/lRl/Ct1Uib5isCO/n60bXI1zTABVQ4etlwa
- QMKccR9TmbByCnVAMddrwiLGWeE03oErkCuXMiHy+FlvAikhcXD3dsX1bNhi2fSfhjun
- NJUtuDaxI9IB5qwAnECoGt0rGFXTnPJb5ga29TIsKb102FgppaShIzeXpGJ2PDGLpA0J
- Adano3xCT94W8YEni7kS8h7wv2b3i3lamMqybj4HpI1zBiWolnNeYlN21f86887Xt4ta
- kEP7sVT25BDMdUq64fqhsUr123t6E0iuVhQEzsGkbT+6TAP/1UbJL2Ng48SAIJWJE1mp
- CJ2g==
-X-Gm-Message-State: AOJu0Yy+JOuNLZeE+LOWUBfpMmvLLL1lM3O6weIIJlTOLol3rCaRq3ZL
- 5bZLM8FuguPN6zov4B2fFEjVuGEDMy+XEtHGYwgM/+LAOnblImZKHwPoSDdmVK/DcXszijBpKJH
- d
-X-Google-Smtp-Source: AGHT+IFMLGPl/cd3pckMFnV/N/z/An6KIxg/ITCtL8w5KsOBJVIIYmRh6GJ8OnughLs0DVEYSJuqJw==
-X-Received: by 2002:a05:6a21:196:b0:1a1:4cd2:40a4 with SMTP id
- le22-20020a056a21019600b001a14cd240a4mr13312082pzb.6.1709917285877; 
- Fri, 08 Mar 2024 09:01:25 -0800 (PST)
-Received: from ?IPv6:2804:7f0:b401:7e8e:216c:3f1a:12a4:d415?
- ([2804:7f0:b401:7e8e:216c:3f1a:12a4:d415])
+ bh=G5mlJPTdJkWjqRDFmHZCmG622raxGwhz9st2Ydsv++Y=;
+ b=SUJp1S0Z0VC0ToI8HboRC+M7q/x5V9IfAtPG1TlG3TiGkjM70syoEU94mwzTKk8IM6
+ qulg1yyBeHi6ZfVbytT0QETj0h8Fi9+LSBtrq52arLtOsNDPcvUKRmFND2LzeIkgbMPO
+ Q9FwcMnwvXXDzmEIl09PqXbFfcFvVE9Io5+2JC/peR1hDXJ/Xb/Opqmg/N4RYKjn/4Tw
+ dh5t+KIuFTtO+GKyx4wBhN9xhSN0EkWL+OtgS33/SScIVL6kAt6hL94Bev6oRpvZuDDg
+ sIsApIcdBPM8oWOzEsjQi2pIe9D40+FRweqxOiYAhvYXECLraXCxsuP5xKSLk+jSagP7
+ kzxw==
+X-Gm-Message-State: AOJu0YyfgLSZFH2WzLQ2KzIU6atT9zV6GBnffylFTGoi4Bx4FXi41okM
+ hCCsOL9D5w25PLE9H3OBRNtLPLr7+MxWYw2q2MGj5YApEpK0pdPQw5Zmi5pFsJNZA1dfB8sH6lq
+ 0go/9M9uT2NyZcuQ4/NyqWPtHLwa0reP7rEBdIiuYpjEO/181nsYz
+X-Received: by 2002:adf:f74d:0:b0:33e:6a81:d8b9 with SMTP id
+ z13-20020adff74d000000b0033e6a81d8b9mr964619wrp.20.1709917256546; 
+ Fri, 08 Mar 2024 09:00:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE5+HudhTCCO9/AQo1CbSQZRDzjKBZSZp57vnRV8/sIdymJYpEjcFBPYQEqzecM/mPOfNdlCA==
+X-Received: by 2002:adf:f74d:0:b0:33e:6a81:d8b9 with SMTP id
+ z13-20020adff74d000000b0033e6a81d8b9mr964568wrp.20.1709917255979; 
+ Fri, 08 Mar 2024 09:00:55 -0800 (PST)
+Received: from redhat.com ([2a06:c701:73cd:f300:bc74:daca:b316:492a])
  by smtp.gmail.com with ESMTPSA id
- j17-20020aa78d11000000b006e6454afe10sm5782402pfe.205.2024.03.08.09.01.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Mar 2024 09:01:25 -0800 (PST)
-Subject: Re: [PATCH v2 3/5] gdbstub: Save target's siginfo
-To: =?UTF-8?Q?Alex_Benn=c3=a9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, laurent@vivier.eu,
- philmd@linaro.org
-References: <20240307182623.1450717-1-gustavo.romero@linaro.org>
- <20240307182623.1450717-3-gustavo.romero@linaro.org>
- <637e4407-4519-4d87-981a-acd9b5124970@linaro.org>
- <87y1atu0y8.fsf@draig.linaro.org>
-From: Gustavo Romero <gustavo.romero@linaro.org>
-Message-ID: <9fea440d-f0c5-0a7c-a60e-b75e4dcf73c3@linaro.org>
-Date: Fri, 8 Mar 2024 14:01:21 -0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
+ f14-20020a5d50ce000000b0033b66c2d61esm23296385wrt.48.2024.03.08.09.00.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 08 Mar 2024 09:00:55 -0800 (PST)
+Date: Fri, 8 Mar 2024 12:00:52 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: qemu-devel@nongnu.org, jasowang@redhat.com, eperezma@redhat.com,
+ si-wei.liu@oracle.com, boris.ostrovsky@oracle.com,
+ raphael@enfabrica.net, kwolf@redhat.com, hreitz@redhat.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, thuth@redhat.com,
+ richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com,
+ cohuck@redhat.com, pbonzini@redhat.com, fam@euphon.net,
+ stefanha@redhat.com, qemu-block@nongnu.org, qemu-s390x@nongnu.org,
+ virtio-fs@lists.linux.dev
+Subject: Re: [PATCH v1 2/8] virtio-pci: Lock ioeventfd state with
+ VIRTIO_F_NOTIFICATION_DATA
+Message-ID: <20240308115951-mutt-send-email-mst@kernel.org>
+References: <20240304194612.611660-1-jonah.palmer@oracle.com>
+ <20240304194612.611660-3-jonah.palmer@oracle.com>
 MIME-Version: 1.0
-In-Reply-To: <87y1atu0y8.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x434.google.com
-X-Spam_score_int: -60
-X-Spam_score: -6.1
-X-Spam_bar: ------
-X-Spam_report: (-6.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-3.994,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240304194612.611660-3-jonah.palmer@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,75 +110,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQWxleCwNCg0KT24gMy83LzI0IDc6MzMgUE0sIEFsZXggQmVubsOpZSB3cm90ZToNCj4g
-UmljaGFyZCBIZW5kZXJzb24gPHJpY2hhcmQuaGVuZGVyc29uQGxpbmFyby5vcmc+IHdyaXRl
-czoNCj4gDQo+PiBPbiAzLzcvMjQgMDg6MjYsIEd1c3Rhdm8gUm9tZXJvIHdyb3RlOg0KPj4+
-IFNhdmUgdGFyZ2V0J3Mgc2lnaW5mbyBpbnRvIGdkYnNlcnZlcl9zdGF0ZSBzbyBpdCBjYW4g
-YmUgdXNlZCBsYXRlciwgZm9yDQo+Pj4gZXhhbXBsZSwgaW4gYW55IHN0dWIgdGhhdCByZXF1
-aXJlcyB0aGUgdGFyZ2V0J3Mgc2lfc2lnbm8gYW5kIHNpX2NvZGUuDQo+Pj4gVGhpcyBjaGFu
-Z2UgYWZmZWN0cyBvbmx5IGxpbnV4LXVzZXIgbW9kZS4NCj4+PiBTaWduZWQtb2ZmLWJ5OiBH
-dXN0YXZvIFJvbWVybyA8Z3VzdGF2by5yb21lcm9AbGluYXJvLm9yZz4NCj4+PiBTdWdnZXN0
-ZWQtYnk6IFJpY2hhcmQgSGVuZGVyc29uIDxyaWNoYXJkLmhlbmRlcnNvbkBsaW5hcm8ub3Jn
-Pg0KPj4+IC0tLQ0KPj4+ICAgIGdkYnN0dWIvaW50ZXJuYWxzLmggICAgfCAgMyArKysNCj4+
-PiAgICBnZGJzdHViL3VzZXItdGFyZ2V0LmMgIHwgIDMgKystDQo+Pj4gICAgZ2Ric3R1Yi91
-c2VyLmMgICAgICAgICB8IDE0ICsrKysrKysrKystLS0tDQo+Pj4gICAgaW5jbHVkZS9nZGJz
-dHViL3VzZXIuaCB8ICA2ICsrKysrLQ0KPj4+ICAgIGxpbnV4LXVzZXIvbWFpbi5jICAgICAg
-fCAgMiArLQ0KPj4+ICAgIGxpbnV4LXVzZXIvc2lnbmFsLmMgICAgfCAgNSArKysrLQ0KPj4+
-ICAgIDYgZmlsZXMgY2hhbmdlZCwgMjUgaW5zZXJ0aW9ucygrKSwgOCBkZWxldGlvbnMoLSkN
-Cj4+PiBkaWZmIC0tZ2l0IGEvZ2Ric3R1Yi9pbnRlcm5hbHMuaCBiL2dkYnN0dWIvaW50ZXJu
-YWxzLmgNCj4+PiBpbmRleCA1NmI3YzEzYjc1Li5hN2NjNjlkYWIzIDEwMDY0NA0KPj4+IC0t
-LSBhL2dkYnN0dWIvaW50ZXJuYWxzLmgNCj4+PiArKysgYi9nZGJzdHViL2ludGVybmFscy5o
-DQo+Pj4gQEAgLTU4LDYgKzU4LDkgQEAgdHlwZWRlZiBzdHJ1Y3QgR0RCU3RhdGUgew0KPj4+
-ICAgICAgICBpbnQgbGluZV9jc3VtOyAvKiBjaGVja3N1bSBhdCB0aGUgZW5kIG9mIHRoZSBw
-YWNrZXQgKi8NCj4+PiAgICAgICAgR0J5dGVBcnJheSAqbGFzdF9wYWNrZXQ7DQo+Pj4gICAg
-ICAgIGludCBzaWduYWw7DQo+Pj4gKyNpZmRlZiBDT05GSUdfVVNFUl9PTkxZDQo+Pj4gKyAg
-ICB1aW50OF90IHNpZ2luZm9bTUFYX1NJR0lORk9fTEVOR1RIXTsNCj4+PiArI2VuZGlmDQo+
-Pg0KPj4gSWYgd2UgdGhpcyBpbiBHREJVc2VyU3RhdGUgaW4gdXNlci5jIC0tIG5vIG5lZWQg
-Zm9yIGlmZGVmcyB0aGVuLg0KPiANCj4gQWx0aG91Z2ggaXQgZG9lcyBicmVhayBvbiBGcmVl
-QlNEJ3MgdXNlciB0YXJnZXQ6DQo+IA0KPiAgICBGQUlMRUQ6IGxpYnFlbXUtYXJtLWJzZC11
-c2VyLmZhLnAvZ2Ric3R1Yl91c2VyLXRhcmdldC5jLm8NCj4gICAgY2MgLW02NCAtbWN4MTYg
-LUlsaWJxZW11LWFybS1ic2QtdXNlci5mYS5wIC1JLiAtSS4uIC1JdGFyZ2V0L2FybSAtSS4u
-L3RhcmdldC9hcm0gLUkuLi9jb21tb24tdXNlci9ob3N0L3g4Nl82NCAtSS4uL2JzZC11c2Vy
-L2luY2x1ZGUgLUlic2QtdXNlci9mcmVlYnNkIC1JLi4vYnNkLXVzZXIvZnJlZWJzZCAtSS4u
-L2JzZC11c2VyL2hvc3QveDg2XzY0IC1JYnNkLXVzZXIgLUkuLi9ic2QtdXNlciAtSS4uL2Jz
-ZC11c2VyL2FybSAtSXFhcGkgLUl0cmFjZSAtSXVpIC1JdWkvc2hhZGVyIC1JL3Vzci9sb2Nh
-bC9pbmNsdWRlL2NhcHN0b25lIC1JL3Vzci9sb2NhbC9pbmNsdWRlL2dsaWItMi4wIC1JL3Vz
-ci9sb2NhbC9saWIvZ2xpYi0yLjAvaW5jbHVkZSAtSS91c3IvbG9jYWwvaW5jbHVkZSAtZmRp
-YWdub3N0aWNzLWNvbG9yPWF1dG8gLVdhbGwgLVdpbnZhbGlkLXBjaCAtV2Vycm9yIC1zdGQ9
-Z251MTEgLU8yIC1nIC1mc3RhY2stcHJvdGVjdG9yLXN0cm9uZyAtV2VtcHR5LWJvZHkgLVdl
-bmRpZi1sYWJlbHMgLVdleHBhbnNpb24tdG8tZGVmaW5lZCAtV2Zvcm1hdC1zZWN1cml0eSAt
-V2Zvcm1hdC15MmsgLVdpZ25vcmVkLXF1YWxpZmllcnMgLVdpbml0LXNlbGYgLVdtaXNzaW5n
-LWZvcm1hdC1hdHRyaWJ1dGUgLVdtaXNzaW5nLXByb3RvdHlwZXMgLVduZXN0ZWQtZXh0ZXJu
-cyAtV29sZC1zdHlsZS1kZWZpbml0aW9uIC1XcmVkdW5kYW50LWRlY2xzIC1Xc3RyaWN0LXBy
-b3RvdHlwZXMgLVd0eXBlLWxpbWl0cyAtV3VuZGVmIC1XdmxhIC1Xd3JpdGUtc3RyaW5ncyAt
-V25vLWdudS12YXJpYWJsZS1zaXplZC10eXBlLW5vdC1hdC1lbmQgLVduby1pbml0aWFsaXpl
-ci1vdmVycmlkZXMgLVduby1taXNzaW5nLWluY2x1ZGUtZGlycyAtV25vLXBzYWJpIC1Xbm8t
-c2hpZnQtbmVnYXRpdmUtdmFsdWUgLVduby1zdHJpbmctcGx1cy1pbnQgLVduby10YXV0b2xv
-Z2ljYWwtdHlwZS1saW1pdC1jb21wYXJlIC1Xbm8tdHlwZWRlZi1yZWRlZmluaXRpb24gLVd0
-aHJlYWQtc2FmZXR5IC1pcXVvdGUgLiAtaXF1b3RlIC90bXAvY2lycnVzLWNpLWJ1aWxkIC1p
-cXVvdGUgL3RtcC9jaXJydXMtY2ktYnVpbGQvaW5jbHVkZSAtaXF1b3RlIC90bXAvY2lycnVz
-LWNpLWJ1aWxkL2hvc3QvaW5jbHVkZS94ODZfNjQgLWlxdW90ZSAvdG1wL2NpcnJ1cy1jaS1i
-dWlsZC9ob3N0L2luY2x1ZGUvZ2VuZXJpYyAtaXF1b3RlIC90bXAvY2lycnVzLWNpLWJ1aWxk
-L3RjZy9pMzg2IC1wdGhyZWFkIC1EX0dOVV9TT1VSQ0UgLURfRklMRV9PRkZTRVRfQklUUz02
-NCAtRF9MQVJHRUZJTEVfU09VUkNFIC1mbm8tc3RyaWN0LWFsaWFzaW5nIC1mbm8tY29tbW9u
-IC1md3JhcHYgLWZ0cml2aWFsLWF1dG8tdmFyLWluaXQ9emVybyAtZlBJRSAtRE5FRURfQ1BV
-X0ggJy1EQ09ORklHX1RBUkdFVD0iYXJtLWJzZC11c2VyLWNvbmZpZy10YXJnZXQuaCInICct
-RENPTkZJR19ERVZJQ0VTPSJhcm0tYnNkLXVzZXItY29uZmlnLWRldmljZXMuaCInIC1NRCAt
-TVEgbGlicWVtdS1hcm0tYnNkLXVzZXIuZmEucC9nZGJzdHViX3VzZXItdGFyZ2V0LmMubyAt
-TUYgbGlicWVtdS1hcm0tYnNkLXVzZXIuZmEucC9nZGJzdHViX3VzZXItdGFyZ2V0LmMuby5k
-IC1vIGxpYnFlbXUtYXJtLWJzZC11c2VyLmZhLnAvZ2Ric3R1Yl91c2VyLXRhcmdldC5jLm8g
-LWMgLi4vZ2Ric3R1Yi91c2VyLXRhcmdldC5jDQo+ICAgIEluIGZpbGUgaW5jbHVkZWQgZnJv
-bSAuLi9nZGJzdHViL3VzZXItdGFyZ2V0LmM6MTg6DQo+ICAgIC4uL2dkYnN0dWIvaW50ZXJu
-YWxzLmg6NjI6MjE6IGVycm9yOiB1c2Ugb2YgdW5kZWNsYXJlZCBpZGVudGlmaWVyICdNQVhf
-U0lHSU5GT19MRU5HVEgnDQo+ICAgICAgIDYyIHwgICAgIHVpbnQ4X3Qgc2lnaW5mb1tNQVhf
-U0lHSU5GT19MRU5HVEhdOw0KPiAgICAgICAgICB8ICAgICAgICAgICAgICAgICAgICAgXg0K
-PiAgICAxIGVycm9yIGdlbmVyYXRlZC4NCj4gICAgWzIwODQvNjczMV0gQ29tcGlsaW5nIEMg
-b2JqZWN0IGxpYnFlbXUtYXJtDQo+IA0KPiBTZWU6IGh0dHBzOi8vZ2l0bGFiLmNvbS9zdHNx
-dWFkL3FlbXUvLS9qb2JzLzYzNDU4Mjk0MTkNCg0KYXJnaCwgSSd2ZSB0ZXN0ZWQgYWxsIHRh
-cmdldHMgZm9yIGxpbnV4LXVzZXIsIGJ1dCBtaXNzZWQgYnNkLXVzZXIuIEkndmUgdHJpZWQN
-Cm9uY2UgdG8gYnVpbGQgaXQgYnV0IHRoYXQgcmVxdWlyZXMgYSBCU0QtbGlrZSBob3N0LCB3
-aGljaCBJIGRvbid0IGhhdmUgYXQgdGhlDQptb21lbnQsIHRoZW4gSSBmb3Jnb3QgYWJvdXQg
-aXQuLi4gTGV0IG1lIHNldHVwIG9uZSBhbmQgcmV2aWV3IHRoZSBjaGFuZ2UgaW4NCnRoZSBs
-aWdodCBvZiB0aGUgY29tbWVudHMgZnJvbSB5b3UgYW5kIFJpY2hhcmQuDQoNClRoYW5rcyEN
-Cg0KDQpDaGVlcnMsDQpHdXN0YXZvDQo=
+On Mon, Mar 04, 2024 at 02:46:06PM -0500, Jonah Palmer wrote:
+> Prevent ioeventfd from being enabled/disabled when a virtio-pci
+> device has negotiated the VIRTIO_F_NOTIFICATION_DATA transport
+> feature.
+> 
+> Due to ioeventfd not being able to carry the extra data associated with
+> this feature, the ioeventfd should be left in a disabled state for
+> emulated virtio-pci devices using this feature.
+> 
+> Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
+> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+
+I thought hard about this. I propose that for now,
+instead of disabling ioevetfd silently we error out unless
+user disabled it for us.
+WDYT?
+
+
+> ---
+>  hw/virtio/virtio-pci.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> index d12edc567f..287b8f7720 100644
+> --- a/hw/virtio/virtio-pci.c
+> +++ b/hw/virtio/virtio-pci.c
+> @@ -417,13 +417,15 @@ static void virtio_ioport_write(void *opaque, uint32_t addr, uint32_t val)
+>          }
+>          break;
+>      case VIRTIO_PCI_STATUS:
+> -        if (!(val & VIRTIO_CONFIG_S_DRIVER_OK)) {
+> +        if (!(val & VIRTIO_CONFIG_S_DRIVER_OK) &&
+> +            !virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
+>              virtio_pci_stop_ioeventfd(proxy);
+>          }
+>  
+>          virtio_set_status(vdev, val & 0xFF);
+>  
+> -        if (val & VIRTIO_CONFIG_S_DRIVER_OK) {
+> +        if ((val & VIRTIO_CONFIG_S_DRIVER_OK) &&
+> +            !virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
+>              virtio_pci_start_ioeventfd(proxy);
+>          }
+>  
+> -- 
+> 2.39.3
+
 
