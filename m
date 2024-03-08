@@ -4,140 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA9D5C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 13:23:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 798A7C54E58
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 13:28:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riaBT-0007jg-8s; Fri, 08 Mar 2024 08:22:48 -0500
+	id 1riaG9-0000k9-GN; Fri, 08 Mar 2024 08:27:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1riaBP-0007Zu-5q
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 08:22:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1riaBN-0001ez-LM
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 08:22:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709904161;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=RZkPuvENctrGwOkui5SIv1ia4S6fQfkQYne6Bs1QapM=;
- b=e14o6c+Rs08P3F44EeIKifEzlJ/LhlUxzp+l6k/7HL9SgtIF9cqiHHqGrGE/WOYNmFi2VL
- oHmXJJk9JDi1X/Xh1ExTvuYNZsbh3qiXPLyqtORn5Nd5uHEj+/KeivmYvLLKc1h5go3brU
- Q5mapyoEv2kq8v+j0OyRd9rtL0p3/8I=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-271-NEU8YEdIPEi93bL8KyMoww-1; Fri, 08 Mar 2024 08:22:39 -0500
-X-MC-Unique: NEU8YEdIPEi93bL8KyMoww-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6900ad85a4dso38724906d6.1
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 05:22:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1riaG8-0000i4-CF
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 08:27:36 -0500
+Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1riaFy-0003FN-R0
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 08:27:36 -0500
+Received: by mail-lj1-x22c.google.com with SMTP id
+ 38308e7fff4ca-2d094bc2244so29306691fa.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 05:27:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709904445; x=1710509245; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CMwrJpB/DJy52CSm232qW3g+OfPChW9UXY1c0q2947s=;
+ b=MMMHMZ3a6slhGLtxNCDxVa7+Yqwkf4PXXbrx6rVTZ3D7sUD2xCTxVCvtNrI6vYyT7G
+ gLb+UA4xzrw4YN6EAsb+nDBk8FZm/L80VG0EJZtNdEybD9wnJ1OqdS6+BUDpsOJsis0S
+ 2RbuNXtwV9iDtriMzFWHsDIQ5iYhONpfi85M15ltgG+xhz4m9tcGpeN+f+ouKWAKwZzA
+ aam/2ASuoeWHACnABXEHDXLYjqguF/la2lFoTVAIkSoszWYRj6djDKGL4/SW5WMmGctA
+ U4FsHc34YLyJvY5Nx6H7vXMeokOOAH74wN4nnb1mk5ryYyEoZird2GQcOvGG0Z0FCSYY
+ pM3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709904159; x=1710508959;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RZkPuvENctrGwOkui5SIv1ia4S6fQfkQYne6Bs1QapM=;
- b=wlxrXBJtVOscHL7SOyXcWxQLRL4DFLyDh1SDCbwcLe0xW5hWf434SCox8SlweQcWXU
- p3zAkFVfa76H8xLLqZcZGgBSyXPujPu+w8HXFZj6shVbZ2YWaIWPFNb1+FemXYP4ubZ9
- T35DphlNQ5diGDCls+8FOH1Og1Dz/lGvw6O/+flsqgNmVug2/M/9NydCrpoOorZtrtPY
- +vJ8QnXzY2F5iCqC89sH49qchp7rucVzklLWpZQrjSyKZJkZSJesknYPXG4pKClouMxf
- zhXVW2fR1Ea+JQwH/AOgUT7rcFs/dKypfra9ZpmOuWvmnR1zgKJ5HNC4WqheUS+vjecp
- qjVA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVkfXW3wVjMhR1YEzQ6zlaMccwhj6Q/YouqjEoB6mT6+ST5bNGnjwtUaEMW1oCmX1kDErjvIOZj77N3qoDSSbHR1ODmXss=
-X-Gm-Message-State: AOJu0Yy8iClMTy7UJi7tVoK5WNEFXIhsec52qZnKXnni3yhj+uhy8znJ
- Dum0ZU48R1na+QmPf2E2QNPnxuEKxwQEQ6jjub5pmxarD27TTuBNL6pCnzkfu8FgGBEXcxK3Jtx
- ReB92pr8UapS22EMNAEI+3pvR3nfw6qv5Hbvz0ffHOOo7BFixTGVU
-X-Received: by 2002:a05:6214:1306:b0:690:aaf7:64d6 with SMTP id
- pn6-20020a056214130600b00690aaf764d6mr480094qvb.3.1709904159136; 
- Fri, 08 Mar 2024 05:22:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFf/ryTycF+82w8BJFDgNGezKBSOYCnaOXGXqKzpiO7V2zPeN+jfRQheTaw8b0m0lGhFR1cgA==
-X-Received: by 2002:a05:6214:1306:b0:690:aaf7:64d6 with SMTP id
- pn6-20020a056214130600b00690aaf764d6mr480067qvb.3.1709904158897; 
- Fri, 08 Mar 2024 05:22:38 -0800 (PST)
-Received: from [192.168.0.9] (ip-109-43-178-151.web.vodafone.de.
- [109.43.178.151]) by smtp.gmail.com with ESMTPSA id
- x25-20020ac87319000000b0042f01e612bbsm3752216qto.37.2024.03.08.05.22.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Mar 2024 05:22:38 -0800 (PST)
-Message-ID: <2e844822-b46f-4da5-9935-febddb113dba@redhat.com>
-Date: Fri, 8 Mar 2024 14:22:33 +0100
+ d=1e100.net; s=20230601; t=1709904445; x=1710509245;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CMwrJpB/DJy52CSm232qW3g+OfPChW9UXY1c0q2947s=;
+ b=mQ1bidakoH+XSWzkqcUsD7SAAPI0rNhlbfOkBObuxqi4Z3KSyqxYdR7kihNc/gHoFH
+ tsX7cO15rbKQgYe5t75qQ1VQ6BfvScxk7hfWwj5++F8F+bmhfL6gRf/KJTfvRF20HXyK
+ zNLeSundLqmF0IyMed8UPGq2m/iZdD/oaeJneuVavRRAerm4OtYu2eo5+rat3RqvDAAI
+ fC6K5ZvGMLEUaUGrsj2DlJW4M6ngvCXiGm3uYvtaTFgEpwevPTqrKrggJ5Vh2ry+KNQK
+ mtfiYURzzgFdafNFHDD8HNgl9Uo9xhPMTwucVQhdycQiGNruxqYDANp2b75ei0w0kaxR
+ qBaA==
+X-Gm-Message-State: AOJu0YzFarXa/E8PWE+bqBBv6cfiuR1Fto3f+S8SG9CYaNGw+AzlhetE
+ D3a7ehB9xgRNWm0Ogu1mkvCaUDCCzOeJK3oatI1EKI154lAYymbf1g0PB/uGxidin3Ccb4ShiQY
+ jjZ+v3FIS9b5ayqdyBkU63/PPQQNcNyEkYWGWpg==
+X-Google-Smtp-Source: AGHT+IEFQkRHt7DHp2GZnlXxCq+W37/giJEYKGVsGTjsJC3bF02mSgmQxbAOPmFwlLBk+ZgX/iKdxNPNILRhpbYTAAY=
+X-Received: by 2002:a05:651c:2de:b0:2d2:acef:6aca with SMTP id
+ f30-20020a05651c02de00b002d2acef6acamr3290897ljo.41.1709904444869; Fri, 08
+ Mar 2024 05:27:24 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/14] tests/unit/test-smp-parse: Drop the unsupported
- "dies=1" case
-Content-Language: en-US
-To: Zhao Liu <zhao1.liu@linux.intel.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Xiaoling Song <xiaoling.song@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-References: <20240306095407.3058909-1-zhao1.liu@linux.intel.com>
- <20240306095407.3058909-6-zhao1.liu@linux.intel.com>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240306095407.3058909-6-zhao1.liu@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20240215175752.82828-1-philmd@linaro.org>
+ <20240215175752.82828-35-philmd@linaro.org>
+In-Reply-To: <20240215175752.82828-35-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 8 Mar 2024 13:27:14 +0000
+Message-ID: <CAFEAcA-HpKCk-n4HsnZPiz09xq9sk=Sh5nt05KpRymy-NQ2HEg@mail.gmail.com>
+Subject: Re: [PULL 34/56] hw/intc/grlib_irqmp: add ncpus property
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-arm@nongnu.org, 
+ qemu-block@nongnu.org, =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>, 
+ Frederic Konrad <konrad.frederic@yahoo.fr>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,34 +94,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06/03/2024 10.53, Zhao Liu wrote:
-> From: Zhao Liu <zhao1.liu@intel.com>
-> 
-> Unsupported "parameter=1" SMP configurations is marked as deprecated,
-> so drop the related test case.
-> 
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
->   tests/unit/test-smp-parse.c | 5 -----
->   1 file changed, 5 deletions(-)
-> 
-> diff --git a/tests/unit/test-smp-parse.c b/tests/unit/test-smp-parse.c
-> index 24972666a74d..1874bea08609 100644
-> --- a/tests/unit/test-smp-parse.c
-> +++ b/tests/unit/test-smp-parse.c
-> @@ -607,11 +607,6 @@ static void test_generic_valid(const void *opaque)
->           unsupported_params_init(mc, &data);
->   
->           smp_parse_test(ms, &data, true);
-> -
-> -        /* Unsupported parameters can be provided with their values as 1 */
-> -        data.config.has_dies = true;
-> -        data.config.dies = 1;
-> -        smp_parse_test(ms, &data, true);
->       }
->   
->       object_unref(obj);
+On Thu, 15 Feb 2024 at 18:04, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> From: Cl=C3=A9ment Chigot <chigot@adacore.com>
+>
+> This adds a "ncpus" property to the "grlib-irqmp" device to be used
+> later, this required a little refactoring of how we initialize the
+> device (ie: use realize instead of init).
+>
+> Co-developed-by: Frederic Konrad <konrad.frederic@yahoo.fr>
+> Signed-off-by: Cl=C3=A9ment Chigot <chigot@adacore.com>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Message-ID: <20240131085047.18458-3-chigot@adacore.com>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Hi; Coverity points out a bug in this commit (CID 1534914):
 
+
+> -static void grlib_irqmp_init(Object *obj)
+> +static void grlib_irqmp_realize(DeviceState *dev, Error **errp)
+>  {
+> -    IRQMP *irqmp =3D GRLIB_IRQMP(obj);
+> -    SysBusDevice *dev =3D SYS_BUS_DEVICE(obj);
+> +    IRQMP *irqmp =3D GRLIB_IRQMP(dev);
+>
+> -    qdev_init_gpio_in(DEVICE(obj), grlib_irqmp_set_irq, MAX_PILS);
+> -    qdev_init_gpio_out_named(DEVICE(obj), &irqmp->irq, "grlib-irq", 1);
+> -    memory_region_init_io(&irqmp->iomem, obj, &grlib_irqmp_ops, irqmp,
+> +    if ((!irqmp->ncpus) || (irqmp->ncpus > IRQMP_MAX_CPU)) {
+> +        error_setg(errp, "Invalid ncpus properties: "
+> +                   "%u, must be 0 < ncpus =3D< %u.", irqmp->ncpus,
+> +                   IRQMP_MAX_CPU);
+> +    }
+
+We detect the out-of-range 'ncpus' value, but forget the "return"
+statement, so execution will continue onward regardless, and
+overrun the irqmp->irq[] array when we call qdev_init_gpio_out_named().
+
+> +
+> +    qdev_init_gpio_in(dev, grlib_irqmp_set_irq, MAX_PILS);
+> +    qdev_init_gpio_out_named(dev, &irqmp->irq, "grlib-irq", 1);
+> +    memory_region_init_io(&irqmp->iomem, OBJECT(dev), &grlib_irqmp_ops, =
+irqmp,
+>                            "irqmp", IRQMP_REG_SIZE);
+>
+>      irqmp->state =3D g_malloc0(sizeof *irqmp->state);
+>
+> -    sysbus_init_mmio(dev, &irqmp->iomem);
+> +    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &irqmp->iomem);
+>  }
+
+thanks
+-- PMM
 
