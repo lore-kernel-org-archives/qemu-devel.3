@@ -4,88 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 456F0C54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 08:26:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEFB6C54E4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 08:28:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riVY5-00044A-JQ; Fri, 08 Mar 2024 03:25:49 -0500
+	id 1riVaN-0005gG-AW; Fri, 08 Mar 2024 03:28:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1riVY4-00042x-5V
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:25:48 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1riVXy-0001Bf-DL
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:25:47 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-33e2774bdc7so1477426f8f.0
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 00:25:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709886340; x=1710491140; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=2UtfhWlT/vgxdO7tkYN9dNOMDxmAQmSmTg+7eTDb7Ek=;
- b=HaSg9JiNKWCtryMBje0dp4EXcO0LYWGVo89PiGASNMWnknGT0+r0qyrHGroRziSh9k
- DJRdis49Z+APZj3Gc/AD7v40MB7BJGOOQuDDdCTOUbacQRaGQ7W/ODEkTKoxHooyhH7I
- K3HhXUjTPu9JYPsnHgSvKxiwSsaQ0hig4qFANSr6+VjFdFpQYXKAfgP7sye493rNKsRa
- 9kaoVynsgcIzp71CXXPi8FGCQFVMV+inqg+QnuxlC7JFUQzpCNcOLpOlVoB7HrZgXmb/
- gFsLQTUSNgxIoveN8cJLTaijh9I+u/A6aULD1DLN6YuE9suO0HicJlfvZPqO2HURBsQe
- +DWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709886340; x=1710491140;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2UtfhWlT/vgxdO7tkYN9dNOMDxmAQmSmTg+7eTDb7Ek=;
- b=Dfki/S9aMThHJ0dUREydTcU+f1GnuXutW4Tn5Gez++TR1ogxYJiMigI/oQSDG1RYNL
- 3rVHSEonTlLv7APYtM7pvztxQ4sLb/+R/zGNULRMxbxH65HA8jih2aW53kZmU8aMIHRq
- senWfSAxe5DD87QC12HgsScUB7Fb9vWcAQ7q8L9QIKvZKBlphnNQcVza8ovKA50OmDmL
- pN3jDN4XnYpJdX+8blpbkh/62iGXIQCjzMjtKtTR6LUIqUw1yIBfPXV/jVKbERvx5w06
- y1hcroz/hvW2rVWsnCFcF84qu0x/qqLLBbPIag4b2/aJPTAyjyTEs9zSLOZb9adqMTXS
- B25g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVer8ao8pJ5sJ+co8HiBtb3jjwJcE15WDFQs0MvLAmpkQPCKsZVsfH4mgGC3tIMN6EQrWiTUHwXIJd0C69cYigqGyK3j8A=
-X-Gm-Message-State: AOJu0YxQ+oqGqiNTtlZTxmRM8SikIAoeOjFh8VL0x+PzUXt6sUAAqDQX
- 8dFC0GiAp0CPoRLqIC2WdMzNmb5/GOUyfmZx/64XP6CdfbJ3X61HBSd8sJYMJ7I=
-X-Google-Smtp-Source: AGHT+IEUt7p+YhltOUiuV5RCEJH9DjJaqNBd917VEfSVFP4wi8a+tn5iN8aDB3WtRiGGiAqGmL1RaQ==
-X-Received: by 2002:a05:6000:1547:b0:33e:79c5:587a with SMTP id
- 7-20020a056000154700b0033e79c5587amr231519wry.36.1709886340626; 
- Fri, 08 Mar 2024 00:25:40 -0800 (PST)
-Received: from [192.168.69.100] (pir44-h02-176-184-37-132.dsl.sta.abo.bbox.fr.
- [176.184.37.132]) by smtp.gmail.com with ESMTPSA id
- f15-20020adffccf000000b0033dedd63382sm22328095wrs.101.2024.03.08.00.25.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Mar 2024 00:25:40 -0800 (PST)
-Message-ID: <2241e6fa-b40a-4fdf-909c-b3a7ef7ff5a1@linaro.org>
-Date: Fri, 8 Mar 2024 09:25:37 +0100
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1riVaK-0005fi-BQ
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:28:08 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1riVaH-0001rz-Hy
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:28:08 -0500
+Received: from loongson.cn (unknown [10.20.42.173])
+ by gateway (Coremail) with SMTP id _____8DxbOkSzOplZDkWAA--.44866S3;
+ Fri, 08 Mar 2024 16:28:02 +0800 (CST)
+Received: from [10.20.42.173] (unknown [10.20.42.173])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8DxPBMPzOplPSdRAA--.19016S3; 
+ Fri, 08 Mar 2024 16:28:02 +0800 (CST)
+Subject: Re: [PATCH v6 03/17] hw/loongarch: Add slave cpu boot_code
+To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org
+References: <20240307164835.300412-1-gaosong@loongson.cn>
+ <20240307164835.300412-4-gaosong@loongson.cn>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <aa286d89-1741-38cc-2064-2b5613432b4b@loongson.cn>
+Date: Fri, 8 Mar 2024 16:27:58 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 9/9] qemu-options.hx: Document the virtio-iommu-pci
- aw-bits option
+In-Reply-To: <20240307164835.300412-4-gaosong@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, mst@redhat.com,
- jean-philippe@linaro.org, imammedo@redhat.com, peter.maydell@linaro.org,
- clg@redhat.com, yanghliu@redhat.com, zhenzhong.duan@intel.com
-Cc: alex.williamson@redhat.com, jasowang@redhat.com, pbonzini@redhat.com,
- berrange@redhat.com
-References: <20240307134445.92296-1-eric.auger@redhat.com>
- <20240307134445.92296-10-eric.auger@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240307134445.92296-10-eric.auger@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-CM-TRANSID: AQAAf8DxPBMPzOplPSdRAA--.19016S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxZFWUXrWrXr4DCFWkWFyfAFc_yoWrJrWrpr
+ W3Zwn0vFZ5XrW7ZwsxtryUZr98Xa4FgF4aq34ftry0y3ZIqwnruw1UAr92vFWUKrn5XF40
+ vFnYyw12gF4DtagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8wN
+ VDUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.08,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,22 +83,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/24 14:43, Eric Auger wrote:
-> Document the new aw-bits option.
-> 
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> 
-> ---
-> v7 -> v8:
-> - remove "it defaults"
-> - removed Cedric's R-b
-> 
-> v4 -> v5
-> - tweek the aw-bits option description according to Cédric's
->    suggestion
-> ---
->   qemu-options.hx | 3 +++
->   1 file changed, 3 insertions(+)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+On 2024/3/8 上午12:48, Song Gao wrote:
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> Message-Id: <20240301093839.663947-4-gaosong@loongson.cn>
+> ---
+>   hw/loongarch/boot.c | 70 ++++++++++++++++++++++++++++++++++++++++++++-
+>   1 file changed, 69 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+> index 149deb2e01..e560ac178a 100644
+> --- a/hw/loongarch/boot.c
+> +++ b/hw/loongarch/boot.c
+> @@ -15,6 +15,54 @@
+>   #include "sysemu/reset.h"
+>   #include "sysemu/qtest.h"
+>   
+> +static const unsigned int slave_boot_code[] = {
+> +                  /* Configure reset ebase.         */
+> +    0x0400302c,   /* csrwr      $r12,0xc            */
+> +
+> +                  /* Disable interrupt.             */
+> +    0x0380100c,   /* ori        $r12,$r0,0x4        */
+> +    0x04000180,   /* csrxchg    $r0,$r12,0x0        */
+> +
+> +                  /* Clear mailbox.                 */
+> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
+> +    0x038081ad,   /* ori        $r13,$r13,0x20      */
+> +    0x06481da0,   /* iocsrwr.d  $r0,$r13            */
+> +
+> +                  /* Enable IPI interrupt.          */
+> +    0x1400002c,   /* lu12i.w    $r12,1(0x1)         */
+> +    0x0400118c,   /* csrxchg    $r12,$r12,0x4       */
+> +    0x02fffc0c,   /* addi.d     $r12,$r0,-1(0xfff)  */
+> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
+> +    0x038011ad,   /* ori        $r13,$r13,0x4       */
+> +    0x064819ac,   /* iocsrwr.w  $r12,$r13           */
+> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
+> +    0x038081ad,   /* ori        $r13,$r13,0x20      */
+> +
+> +                  /* Wait for wakeup  <.L11>:       */
+> +    0x06488000,   /* idle       0x0                 */
+> +    0x03400000,   /* andi       $r0,$r0,0x0         */
+> +    0x064809ac,   /* iocsrrd.w  $r12,$r13           */
+> +    0x43fff59f,   /* beqz       $r12,-12(0x7ffff4) # 48 <.L11> */
+> +
+> +                  /* Read and clear IPI interrupt.  */
+> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
+> +    0x064809ac,   /* iocsrrd.w  $r12,$r13           */
+> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
+> +    0x038031ad,   /* ori        $r13,$r13,0xc       */
+> +    0x064819ac,   /* iocsrwr.w  $r12,$r13           */
+> +
+> +                  /* Disable  IPI interrupt.        */
+> +    0x1400002c,   /* lu12i.w    $r12,1(0x1)         */
+> +    0x04001180,   /* csrxchg    $r0,$r12,0x4        */
+> +
+> +                  /* Read mail buf and jump to specified entry */
+> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
+> +    0x038081ad,   /* ori        $r13,$r13,0x20      */
+> +    0x06480dac,   /* iocsrrd.d  $r12,$r13           */
+> +    0x00150181,   /* move       $r1,$r12            */
+> +    0x4c000020,   /* jirl       $r0,$r1,0           */
+> +};
+> +
+>   static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
+>   {
+>       return addr & MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
+> @@ -111,8 +159,15 @@ static void loongarch_firmware_boot(LoongArchMachineState *lams,
+>       fw_cfg_add_kernel_info(info, lams->fw_cfg);
+>   }
+>   
+> +static void init_boot_rom(struct loongarch_boot_info *info, void *p)
+> +{
+> +    memcpy(p, &slave_boot_code, sizeof(slave_boot_code));
+> +    p += sizeof(slave_boot_code);
+> +}
+> +
+>   static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
+>   {
+> +    void  *p, *bp;
+>       int64_t kernel_addr = 0;
+>       LoongArchCPU *lacpu;
+>       CPUState *cs;
+> @@ -126,11 +181,24 @@ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
+>           }
+>       }
+>   
+> +    /* Load 'boot_rom' at [0 - 1MiB] */
+> +    p = g_malloc0(1 * MiB);
+> +    bp = p;
+> +    init_boot_rom(info, p);
+> +    rom_add_blob_fixed("boot_rom", bp, 1 * MiB, 0);
+> +
+The secondary cpu waiting on the bootrom located memory address 
+0x0-0x100000.
+
+Is it possible that primary cpu clears the memory located at bootrom
+and then wakeup the secondary cpu?
+
+Regards
+Bibo Mao
+
+>       CPU_FOREACH(cs) {
+>           lacpu = LOONGARCH_CPU(cs);
+>           lacpu->env.load_elf = true;
+> -        lacpu->env.elf_address = kernel_addr;
+> +        if (cs == first_cpu) {
+> +            lacpu->env.elf_address = kernel_addr;
+> +        } else {
+> +            lacpu->env.elf_address = 0;
+> +        }
+> +        lacpu->env.boot_info = info;
+>       }
+> +
+> +    g_free(bp);
+>   }
+>   
+>   void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
+> 
+
 
