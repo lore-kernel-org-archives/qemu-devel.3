@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EECD9C54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 18:13:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65138C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 18:13:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riehq-0007BY-8H; Fri, 08 Mar 2024 13:12:30 -0500
+	id 1riehu-0007Fd-B3; Fri, 08 Mar 2024 13:12:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rieho-0007Al-JQ
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 13:12:28 -0500
+ id 1riehs-0007Ds-SG
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 13:12:32 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1riehe-0005nj-05
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 13:12:28 -0500
+ id 1riehr-0005qF-1J
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 13:12:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709921536;
+ s=mimecast20190719; t=1709921550;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qSLSAV6AzeUGqChFbxsNaHAkQhSsp716NDVyKQt1iAM=;
- b=XiiMMfEJmsdY5ZpJEeohpLn/Edzpjc40ig3pvvHYr/ae5mmcdQ6hlSU83dsxycBzo5iETm
- U90VqnJLVxs6uCowGp/E+Ycu4yiq9mrHyfBdlJS1wDbWOo72prcEnH118HEpSZFiLSp0NU
- EFVUCiaE1AFWagjRmS62+6qtE8vZWtI=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Wm7tvlRtPpXlePloTVjRajx+JpxbgNJey9a3Qa3vQcU=;
+ b=dhxu0xCN71SuqofWqGWggFIyXm8mDsKjmBAMwJO5AKchGLqd2meJME6AXZZ6Lb+Q6TZNch
+ 9Rgk6ub/TndScO5egb0SXJMlz3QGNhR1zeMdsopbILr+qlqLD5qRPcsj1iwOdPJ+wJZJZa
+ j/oqmc8BYcegIis/YV7zunHLs5uMQiY=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-387-cmEtV2S-PemMw9SV7S3FXg-1; Fri, 08 Mar 2024 13:12:14 -0500
-X-MC-Unique: cmEtV2S-PemMw9SV7S3FXg-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a3fb52f121eso160594666b.0
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 10:12:14 -0800 (PST)
+ us-mta-619-1CleVlx5OgytrLIznhq_gA-1; Fri, 08 Mar 2024 13:12:29 -0500
+X-MC-Unique: 1CleVlx5OgytrLIznhq_gA-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a45ac612a4dso363314166b.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 10:12:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709921532; x=1710526332;
+ d=1e100.net; s=20230601; t=1709921545; x=1710526345;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qSLSAV6AzeUGqChFbxsNaHAkQhSsp716NDVyKQt1iAM=;
- b=cbjwyngxZ4YbKGHtvSoGdsgafTytBf26MsqEOYzqRvuC5417TtR9sKhH/1YDh74eDK
- V7WoE8906LZEIh5zoHc0mXmo4R8KXmWT/YMm9ud/xgLVLuO+AtKnY8qI74XucyOLqMoq
- UwafRwCw5G20YaMRkSRRlJ8lVV8JwxG60hscHu27crbXJOCn/y1L8KSleS8VwMgDrHvA
- 5jXYw2fEK/l3iE2YOfUXRd9dp9isHqemHjdDzIc3TyqRkxhCwqymmd7CwJN8bmuj4ZyQ
- UeRloWv7JkZZTMXi6/e4RRXbiu9t/HZRXVk5waTomW2F/naa36sjmrgkOyeQxNJgn+1t
- Qi3Q==
-X-Gm-Message-State: AOJu0YxsqIGrw+QDgt81ZFbgGtBqwcchT5IhUV9LYAKzF4SRt/bUOCdK
- WCEmI4mLVNYRhKgEpbb5avrbwVyE7rjbrJiztfSiOJ5YnLXuAzy5DmhCoMtR4loWOT2jsEGRfkc
- VsLk/dD6e9ZgWSeq19UYIetkr9MTA7hQntNTbnh0ibKw5eamH7Vpk5MACY7lu3WaM+FEBzlFGlE
- 41NeGqVRoqvqNMG3HiyMVb9xQXx7sEnnQr9lvh
-X-Received: by 2002:a17:906:55d3:b0:a45:ae8b:eece with SMTP id
- z19-20020a17090655d300b00a45ae8beecemr7403456ejp.59.1709921532401; 
- Fri, 08 Mar 2024 10:12:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGFej94m18XeJGwayhUbLTLyfuG5eHDVsXiw9n/XdoERJ+y/irFVZR8bGMQL0kyXcOIPKbUzQ==
-X-Received: by 2002:a17:906:55d3:b0:a45:ae8b:eece with SMTP id
- z19-20020a17090655d300b00a45ae8beecemr7403436ejp.59.1709921532051; 
- Fri, 08 Mar 2024 10:12:12 -0800 (PST)
+ bh=Wm7tvlRtPpXlePloTVjRajx+JpxbgNJey9a3Qa3vQcU=;
+ b=tOLmAvKc+hV+pXaWqNHGEnPIdv5ycWGxwlL4TuSPfOVoHj1hyyXoJ5APbk4vPb3DrC
+ a1Dr8FrivppOtcFxtRnm52TGZOPog9rniWnuUN7gWWfbvAtTI7EBZ9iWTVob+6mFYWJb
+ qyqpg/jS2HXjK9f2SELZl5vIqLj158l2E7G9eo7vtfjpONJDvkvqNktoh124ECr4jcoJ
+ i+v4Hgqje2NxHe7lV1DNzTFhKWjA7dUlKosj9GcETLA+EHnc+JRXM/DxIcme4Oh/JAYH
+ m18elgQILS5De536+qcr/BaAk3556izsDV2OnZyEhYi9Xvx6v+gNWFG7YygqaUEcVaT2
+ YnpA==
+X-Gm-Message-State: AOJu0YyU7/4HR3g0xu9AgpLZ1xWesWvgwNk8lS/Ei0jfDy9Ld+P1pPNT
+ c9k5iiQ2DZECrF5nrPSF5Dl83R9gJD2+YnKC49RHC2xaoPGAKT0nqBRfdqWoswTzn7SwT3pD9CF
+ fVe8VzBFyHXrIxmPWzlNKYjBrouzr0JFuCwy/+SqWoUcRyuGyZatf2BdSKJ/8J8LUXTnXUwCnVd
+ 2DeCzEzCHYV3mESWaG1pFyroWH+deKufbsegSI
+X-Received: by 2002:a17:906:68cd:b0:a45:af32:5e04 with SMTP id
+ y13-20020a17090668cd00b00a45af325e04mr932649ejr.30.1709921545333; 
+ Fri, 08 Mar 2024 10:12:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFoKUVenB5vA3VAfgooEXYtn6mNCEfmcVmEISv/gHiJ7o8U/9ZpLQtOH+7LnWWZJhZYbU+xug==
+X-Received: by 2002:a17:906:68cd:b0:a45:af32:5e04 with SMTP id
+ y13-20020a17090668cd00b00a45af325e04mr932636ejr.30.1709921544992; 
+ Fri, 08 Mar 2024 10:12:24 -0800 (PST)
 Received: from [192.168.10.118] ([151.49.77.21])
  by smtp.gmail.com with ESMTPSA id
- m22-20020a1709066d1600b00a451d07711csm40056ejr.82.2024.03.08.10.12.09
+ i10-20020a1709061cca00b00a3f28bf94f8sm33677ejh.199.2024.03.08.10.12.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 10:12:09 -0800 (PST)
+ Fri, 08 Mar 2024 10:12:24 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PULL 3/9] meson: Remove --warn-common ldflag
-Date: Fri,  8 Mar 2024 19:11:55 +0100
-Message-ID: <20240308181202.617329-4-pbonzini@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 8/9] run-coverity-scan: add --check-upload-only option
+Date: Fri,  8 Mar 2024 19:12:00 +0100
+Message-ID: <20240308181202.617329-9-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240308181202.617329-1-pbonzini@redhat.com>
 References: <20240308181202.617329-1-pbonzini@redhat.com>
@@ -102,50 +102,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Add an option to check if upload is permitted without actually
+attempting a build.  This can be useful to add a third outcome
+beyond success and failure---namely, a CI job can self-cancel
+if the uploading quota has been reached.
 
---warn-common ldflag causes warnings for multiple definitions of
-___asan_globals_registered when enabling AddressSanitizer with clang.
-The warning is somewhat obsolete so just remove it.
+There is a small change here in that a failure to do the upload
+check changes the exit code from 1 to 99.  99 was chosen because
+it is what Autotools and Meson use to represent a problem in the
+setup (as opposed to a failure in the test).
 
-The common block is used to allow duplicate definitions of uninitialized
-global variables. In the past, GCC and clang used to place such
-variables in a common block by default, which prevented programmers for
-noticing accidental duplicate definitions. Commit 49237acdb725 ("Enable
-ld flag --warn-common") added --warn-common ldflag so that ld warns in
-such a case.
-
-Today, both of GCC and clang don't use common blocks by default[1][2] so
-any remaining use of common blocks should be intentional. Remove
---warn-common ldflag to suppress warnings for intentional use of
-common blocks.
-
-[1]: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=85678
-[2]: https://reviews.llvm.org/D75056
-
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-ID: <20240304-common-v1-1-1a2005d1f350@daynix.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- meson.build | 5 -----
- 1 file changed, 5 deletions(-)
+ scripts/coverity-scan/run-coverity-scan | 59 ++++++++++++++++++-------
+ 1 file changed, 42 insertions(+), 17 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index c59ca496f2d..f9dbe7634e5 100644
---- a/meson.build
-+++ b/meson.build
-@@ -476,11 +476,6 @@ if host_os == 'windows'
-   qemu_ldflags += cc.get_supported_link_arguments('-Wl,--dynamicbase', '-Wl,--high-entropy-va')
- endif
+diff --git a/scripts/coverity-scan/run-coverity-scan b/scripts/coverity-scan/run-coverity-scan
+index d56c9b66776..43cf770f5e3 100755
+--- a/scripts/coverity-scan/run-coverity-scan
++++ b/scripts/coverity-scan/run-coverity-scan
+@@ -28,6 +28,7 @@
+ # project settings, if you have maintainer access there.
  
--# Exclude --warn-common with TSan to suppress warnings from the TSan libraries.
--if host_os != 'sunos' and not get_option('tsan')
--  qemu_ldflags += cc.get_supported_link_arguments('-Wl,--warn-common')
--endif
--
- if get_option('fuzzing')
-   # Specify a filter to only instrument code that is directly related to
-   # virtual-devices.
+ # Command line options:
++#   --check-upload-only : return success if upload is possible
+ #   --dry-run : run the tools, but don't actually do the upload
+ #   --docker : create and work inside a container
+ #   --docker-engine : specify the container engine to use (docker/podman/auto);
+@@ -57,18 +58,18 @@
+ # putting it in a file and using --tokenfile. Everything else has
+ # a reasonable default if this is run from a git tree.
+ 
+-check_upload_permissions() {
+-    # Check whether we can do an upload to the server; will exit the script
+-    # with status 1 if the check failed (usually a bad token);
+-    # will exit the script with status 0 if the check indicated that we
+-    # can't upload yet (ie we are at quota)
+-    # Assumes that COVERITY_TOKEN, PROJNAME and DRYRUN have been initialized.
++upload_permitted() {
++    # Check whether we can do an upload to the server; will exit *the script*
++    # with status 99 if the check failed (usually a bad token);
++    # will return from the function with status 1 if the check indicated
++    # that we can't upload yet (ie we are at quota)
++    # Assumes that COVERITY_TOKEN and PROJNAME have been initialized.
+ 
+     echo "Checking upload permissions..."
+ 
+     if ! up_perm="$(wget https://scan.coverity.com/api/upload_permitted --post-data "token=$COVERITY_TOKEN&project=$PROJNAME" -q -O -)"; then
+         echo "Coverity Scan API access denied: bad token?"
+-        exit 1
++        exit 99
+     fi
+ 
+     # Really up_perm is a JSON response with either
+@@ -76,25 +77,40 @@ check_upload_permissions() {
+     # We do some hacky string parsing instead of properly parsing it.
+     case "$up_perm" in
+         *upload_permitted*true*)
+-            echo "Coverity Scan: upload permitted"
++            return 0
+             ;;
+         *next_upload_permitted_at*)
+-            if [ "$DRYRUN" = yes ]; then
+-                echo "Coverity Scan: upload quota reached, continuing dry run"
+-            else
+-                echo "Coverity Scan: upload quota reached; stopping here"
+-                # Exit success as this isn't a build error.
+-                exit 0
+-            fi
++            return 1
+             ;;
+         *)
+             echo "Coverity Scan upload check: unexpected result $up_perm"
+-            exit 1
++            exit 99
+             ;;
+     esac
+ }
+ 
+ 
++check_upload_permissions() {
++    # Check whether we can do an upload to the server; will exit the script
++    # with status 99 if the check failed (usually a bad token);
++    # will exit the script with status 0 if the check indicated that we
++    # can't upload yet (ie we are at quota)
++    # Assumes that COVERITY_TOKEN, PROJNAME and DRYRUN have been initialized.
++
++    if upload_permitted; then
++        echo "Coverity Scan: upload permitted"
++    else
++        if [ "$DRYRUN" = yes ]; then
++            echo "Coverity Scan: upload quota reached, continuing dry run"
++        else
++            echo "Coverity Scan: upload quota reached; stopping here"
++            # Exit success as this isn't a build error.
++            exit 0
++        fi
++    fi
++}
++
++
+ build_docker_image() {
+     # build docker container including the coverity-scan tools
+     echo "Building docker container..."
+@@ -152,9 +168,14 @@ update_coverity_tools () {
+ DRYRUN=no
+ UPDATE=yes
+ DOCKER=no
++PROJNAME=QEMU
+ 
+ while [ "$#" -ge 1 ]; do
+     case "$1" in
++        --check-upload-only)
++            shift
++            DRYRUN=check
++            ;;
+         --dry-run)
+             shift
+             DRYRUN=yes
+@@ -251,6 +272,11 @@ if [ -z "$COVERITY_TOKEN" ]; then
+     exit 1
+ fi
+ 
++if [ "$DRYRUN" = check ]; then
++    upload_permitted
++    exit $?
++fi
++
+ if [ -z "$COVERITY_BUILD_CMD" ]; then
+     NPROC=$(nproc)
+     COVERITY_BUILD_CMD="make -j$NPROC"
+@@ -266,7 +292,6 @@ if [ -z "$SRCDIR" ]; then
+     SRCDIR="$PWD"
+ fi
+ 
+-PROJNAME=QEMU
+ TARBALL=cov-int.tar.xz
+ 
+ if [ "$UPDATE" = only ]; then
 -- 
 2.43.2
 
