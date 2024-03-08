@@ -4,80 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 621D6C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 06:31:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DF1FC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 06:56:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riTkp-0005Vm-Pd; Fri, 08 Mar 2024 01:30:51 -0500
+	id 1riU8v-0003rD-Rm; Fri, 08 Mar 2024 01:55:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1riTke-0005TW-Jl
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 01:30:42 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1riU8p-0003mJ-3f
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 01:55:39 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1riTkd-0007aa-2l
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 01:30:40 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1riU8m-0005Dp-71
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 01:55:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709879437;
+ s=mimecast20190719; t=1709880935;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=n+W6sRASvXqwjdCK7bojn9iVOysmj9ZzJ5/v2/KGCAI=;
- b=VU3I1BXYtA7P3b8v+RD/x8/zU9dmRJ+KYXN4UdkWNv3NcGLSUPldl1qx/3274ApvZyZUJ8
- YdJMKWPTroAc60W7ATgnSghnZnGFJOP3PuKo0rxeTmVOZ+WSMRqY20tvlqgpZcxDmWFC3d
- w8i8ljR8gKTkCGiTE4Tl5Nf28va5O7c=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=t7ggymyTbzzQbMJ4GHFdw7X6PQcf1ITQU8Uxp1lzpAg=;
+ b=Y7IvHdAkE1bRPZeiPaAiUk77i2h2xSUiYvyi2kF8cF1V4Z3DJoRY2Ltyl7PVVKF6bGqLGX
+ qs4MJHgsRzE1N3JLXT51SX9kZmTiRIH6xxoZyTul+Ov8s+F/T5GpwLKd5IiK4VrF8urrfU
+ 4O0vuHPksSn5hZPTvZzwU6NmAeCDo/w=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-214-AnhRxwCxPa29xDUQ2eOeWg-1; Fri, 08 Mar 2024 01:30:35 -0500
-X-MC-Unique: AnhRxwCxPa29xDUQ2eOeWg-1
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-299783294a6so1414049a91.3
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 22:30:35 -0800 (PST)
+ us-mta-674-iMDZEXIINDy-p0VCUu5K4A-1; Fri, 08 Mar 2024 01:55:32 -0500
+X-MC-Unique: iMDZEXIINDy-p0VCUu5K4A-1
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-5cf8663f2d6so437993a12.1
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 22:55:32 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709879434; x=1710484234;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=n+W6sRASvXqwjdCK7bojn9iVOysmj9ZzJ5/v2/KGCAI=;
- b=hhVR+5E/Jy3o+CuoSoe9SE64LlWc1WCG1Mnjxnro51t7oN8/M2OlySnNs96jdv9qdJ
- 8xDMrtlGZxo8K/vO066J0VGwHA+5EocmW9epupip1q6AfHQhu2TBZ7YfgqoPj9p8sDXX
- N4F7ZpwWtSzS68UPv4ZuJulDMtTeLEc747PI7HirigkkytY3sD8KqV/Mlu0sUjggI15B
- MOmnHpPBBYqsl/wAdncRepRr4CVTuKE2OXzeHG+g5sRDYCArSSLZSlTq7r4jbEWEOUzk
- uEci9BkGF86EmTpUsDIMmjJ6Bbjh1aEFvNKEPBCS04S8/PF8JW1FrbQnd4Pt6E0yB2X4
- 5InA==
+ d=1e100.net; s=20230601; t=1709880932; x=1710485732;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=t7ggymyTbzzQbMJ4GHFdw7X6PQcf1ITQU8Uxp1lzpAg=;
+ b=uV0plgxwOyjmFQ2OeNqaPRYOi1QZgR4iyi2rRH6nDtQDu1z7sSuY0R9oILe3xkKkgn
+ Ij3bekejFSPKMpbmnL4sdb98YE7h6oAZ4BxJqaXLSHMpqBJ/euhuqtv6hEomuoC77eMs
+ 7bmH8I54YjjHkDCewSibCLk1XQIgFOMjFNm1l8r+K2VNNE1DzvwCKuxZfnqa4GUVpv8h
+ 6sJj+VbApetDMD5/FjYqr59Z6kRyz1YxpsPhfkw0WggIZnf3x9SkCaz/zj9mntZTCAYv
+ vH02NQbxIz2RRSMP47rWw155VqT84LNV+7dQwwVsh8m+YjMYeCIN7VTtopdqBhA+8Usn
+ VO7Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX47s923BZQrCQi4z3dlcS0q9mk1f/6ps6zqbv5JS8oVBUCyiI+Q0hX0CtmpVP14ne9MX0LwIS6LFDQvN07LmBG6A9aV4s=
-X-Gm-Message-State: AOJu0YytAX7unu1almRFNfQTNqg46FmrzPHlzWhIsrwutroy0s9/pozT
- ymNY4LueuG3fNf1JD0cWnGoXJYe5IlAwsueWXTSBAPBSSVCCs48mM/ps9KFh+OjzzN4IpK275CB
- xu61VDYpBbq/QwT92LE3adNhotnms1ZFzCMe5OkD2vPBBYkzfTeO8ki/6diHbfaLs6c9nGAEvYo
- miqmZSCx7Xc610PPq72e2EQm1SURM=
-X-Received: by 2002:a17:90b:e02:b0:29b:aeed:169d with SMTP id
- ge2-20020a17090b0e0200b0029baeed169dmr1121160pjb.28.1709879434748; 
- Thu, 07 Mar 2024 22:30:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEvT/FManOp76nFcw1Cp2yZJGU43Hig0Gb87biZWYDgF46T7tuU4G6w+EgFzDKekWKnpRdeIGt27EedrdyrPHY=
-X-Received: by 2002:a17:90b:e02:b0:29b:aeed:169d with SMTP id
- ge2-20020a17090b0e0200b0029baeed169dmr1121144pjb.28.1709879434439; Thu, 07
- Mar 2024 22:30:34 -0800 (PST)
+ AJvYcCUvmNixtThryukZ6BEytWTZqAGrb/BZMIQn59+zMV0xwvDSlDlB6L3Grj6AjgHbf649oEVH12Wa6MJ41x/wDU44TbTR+nE=
+X-Gm-Message-State: AOJu0YwDSXP7wx1TbD9WYh4jzzpLo0KbB+jOtgUx5/9FGwd+ityvlUG8
+ OQ66DkqX0rrdwUc2rZlNG1Ti+LY9cxD4Is7n29wit1dv8qbQdbx9nwcN2Jr8eGfS2iIgWK7SzTl
+ oq1knGxZRUui5hVLk0XhzM6AeeAMDixebOLAeRgC1dViZZQ+4tZiR
+X-Received: by 2002:a05:6a20:9188:b0:1a1:6ced:a0e0 with SMTP id
+ v8-20020a056a20918800b001a16ceda0e0mr1568518pzd.1.1709880931798; 
+ Thu, 07 Mar 2024 22:55:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHMJXU9cfyjP16FretCsce+tChHBqhJ8dcUdwjLxJtixenckIYYgEWhciHsx19yWCJTLYDJMA==
+X-Received: by 2002:a05:6a20:9188:b0:1a1:6ced:a0e0 with SMTP id
+ v8-20020a056a20918800b001a16ceda0e0mr1568500pzd.1.1709880931437; 
+ Thu, 07 Mar 2024 22:55:31 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ gt17-20020a17090af2d100b00298cc4c56cdsm2553696pjb.22.2024.03.07.22.55.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 07 Mar 2024 22:55:31 -0800 (PST)
+Date: Fri, 8 Mar 2024 14:55:22 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Yu Zhang <yu.zhang@ionos.com>
+Cc: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Het Gala <het.gala@nutanix.com>, qemu-devel <qemu-devel@nongnu.org>,
+ Fabiano Rosas <farosas@suse.de>, Jinpu Wang <jinpu.wang@ionos.com>,
+ Alexei Pastuchov <alexei.pastuchov@ionos.com>,
+ Elmar Gerdes <elmar.gerdes@ionos.com>
+Subject: Re: Problem with migration/rdma
+Message-ID: <Zeq2WqDuBbKKNWPN@x1n>
+References: <CAHEcVy7HXSwn4Ow_Kog+Q+TN6f_kMeiCHevz1qGM-fbxBPp1hQ@mail.gmail.com>
+ <04da4267-8fe8-4653-90a2-f64e3be64037@linaro.org>
+ <a0d9e2c2-3687-4b7d-8fac-887ce262c38a@fujitsu.com>
+ <Zek2UFoAyVrC7yh6@x1n>
+ <CAHEcVy4L_D6tuhJ8h=xLR4WaPaprJE3nnxZAEyUnoTrxQ6CF5w@mail.gmail.com>
 MIME-Version: 1.0
-References: <20240205165437.1965981-1-andrew@daynix.com>
- <CABcq3pGy+Lp8YZnMZVC61wu6jDvE0BYj3kuuvuXCA+ewOtJVfg@mail.gmail.com>
-In-Reply-To: <CABcq3pGy+Lp8YZnMZVC61wu6jDvE0BYj3kuuvuXCA+ewOtJVfg@mail.gmail.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Fri, 8 Mar 2024 14:30:23 +0800
-Message-ID: <CACGkMEs9B+7SEy1naQCQwXQDd7bzRZGjxv2h_QHx8g_az6E=Fg@mail.gmail.com>
-Subject: Re: [PATCH v9 0/5] eBPF RSS through QMP support.
-To: Andrew Melnichenko <andrew@daynix.com>
-Cc: mst@redhat.com, armbru@redhat.com, eblake@redhat.com, 
- qemu-devel@nongnu.org, berrange@redhat.com, yuri.benditovich@daynix.com, 
- yan@daynix.com, akihiko.odaki@daynix.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAHEcVy4L_D6tuhJ8h=xLR4WaPaprJE3nnxZAEyUnoTrxQ6CF5w@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -102,14 +108,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 26, 2024 at 6:23=E2=80=AFPM Andrew Melnichenko <andrew@daynix.c=
-om> wrote:
->
-> Hi all,
-> Jason, can you please review the patch set, thank you.
+On Fri, Mar 08, 2024 at 07:27:59AM +0100, Yu Zhang wrote:
+> Hello Zhijian and Peter,
+> 
+> Thank you so much for testing and confirming it.
+> I created a patch in the email format, unfortunately got an issue for
+> setting up the
+> "Application-specific Password" in Gmail. It seems that in my gmail
+> account there
+> is no option at all for selecting "mail" before creating the
+> application password.
+> 
+> As it's tiny, I attached it in this email at this time (not elegant.),
 
-Queued.
+I ququed it, thanks!
 
-Thanks
+-- 
+Peter Xu
 
 
