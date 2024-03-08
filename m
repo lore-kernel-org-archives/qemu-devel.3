@@ -4,139 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91F80C54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 13:38:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DD3AC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 13:40:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riaQJ-0004P0-JM; Fri, 08 Mar 2024 08:38:07 -0500
+	id 1riaS4-00057d-7R; Fri, 08 Mar 2024 08:39:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <schalla@marvell.com>)
- id 1riaQH-0004Oq-Ho
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 08:38:05 -0500
-Received: from mx0b-0016f401.pphosted.com ([67.231.156.173])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1riaS3-00057H-ED
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 08:39:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <schalla@marvell.com>)
- id 1riaQF-0006Ey-Nc
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 08:38:05 -0500
-Received: from pps.filterd (m0045851.ppops.net [127.0.0.1])
- by mx0b-0016f401.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id
- 4288PKKQ020901; Fri, 8 Mar 2024 05:38:02 -0800
-Received: from nam10-bn7-obe.outbound.protection.outlook.com
- (mail-bn7nam10lp2100.outbound.protection.outlook.com [104.47.70.100])
- by mx0b-0016f401.pphosted.com (PPS) with ESMTPS id 3wqkj5tuvx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 08 Mar 2024 05:38:01 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=E2hyBwEvU0CIcQT7DZ3zFxy+3ELmcMybQ4g6Cc18290PbEqy4rfPDsUmfhCKb8fTZNEhLIPawcnBrVGavDqALWXuvcu0ShneDWEtAdeUNpZ8AJu1MHUeXYzc3eShRmVZt3HA/ENtkVx3zS42265yHgQpDpPk2u1lomd3EVV/pyYuCkyAR3T8cOT+YF0dxxVwSmHNRIpbR/rE+Z/2Omg74VWWLd+nq6/fR/dra14rG9m0E2I9PC4UiRrkBynWbj58bfybk9GG4NN5i8x9U4kequnxHqXZDL/ZFIfwsZE7pf+Zn9c8A1GGxzB4ggio4u5iJG/qTFzcmfocVq4y+iCx/w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5SGmw+mxe8ae94a49kAJD2aoPIFZ8wFgCALEcayGHvk=;
- b=RTVRSEtlMYT5PTKrMwzEBrvUW1ld50+Ir7UYQDNXvj+V1SGOQe+ND+ArqR593FuWQMyZTwWP8DPKBmbuPNlopkBNBuwQRtHWUeJc6Al8lrOngpQBxOMEc2a2J+ZuK1HY9C6pQ4pjCKv+lDjBBHxecUS9c4Vl62dnaMZDIPhFCTKuCir7TopeutcZcbguMgdv0iA4BHNvAV728BhmrdHOr44iv5PALBVUqrhl1dpV4CYqFxvSacpDLA1uII2YrnYobI1tMFpkc5PHqcLZWDgnqoAvEXQ/X/HiXZASU/1TaQodmRSXoitsUIxHDK17fWAjxjzqo2+2w2Hmql9OdNYLJA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=marvell.com; dmarc=pass action=none header.from=marvell.com;
- dkim=pass header.d=marvell.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=marvell.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5SGmw+mxe8ae94a49kAJD2aoPIFZ8wFgCALEcayGHvk=;
- b=Xmnm4suG0qKeViKkIKdAtnGm/wTvkk5Cn+z2WqMknphUJtoK59MUgI2SPAa7aKC/evTj4bXAm0a9eAMQl2O1PolM6Ir8t3T2U8SPNSM5WxSusX6YLUctinE4JcCIYPl7Rh79ZF7tL5iKH1aAYubs5xjryBdgS3kfs8eNR3Lk7J4=
-Received: from DS0PR18MB5368.namprd18.prod.outlook.com (2603:10b6:8:12f::17)
- by SA1PR18MB5965.namprd18.prod.outlook.com (2603:10b6:806:3e5::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.29; Fri, 8 Mar
- 2024 13:37:59 +0000
-Received: from DS0PR18MB5368.namprd18.prod.outlook.com
- ([fe80::9728:b607:b464:a2dc]) by DS0PR18MB5368.namprd18.prod.outlook.com
- ([fe80::9728:b607:b464:a2dc%7]) with mapi id 15.20.7362.024; Fri, 8 Mar 2024
- 13:37:59 +0000
-From: Srujana Challa <schalla@marvell.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Vamsi Krishna Attunuru
- <vattunuru@marvell.com>, Jerin Jacob <jerinj@marvell.com>, Jason Wang
- <jasowang@redhat.com>
-Subject: RE: [EXT] Re: [PATCH] vhost_net: add NOTIFICATION_DATA and IN_ORDER
- feature bits to vdpa_feature_bits
-Thread-Topic: [EXT] Re: [PATCH] vhost_net: add NOTIFICATION_DATA and IN_ORDER
- feature bits to vdpa_feature_bits
-Thread-Index: AQHaYxhbwHf1xjJpq0Wux4yyZKaw7bERiJqQgARw4sCAF/RcIA==
-Date: Fri, 8 Mar 2024 13:37:58 +0000
-Message-ID: <DS0PR18MB53681809B96E8745691192A1A0272@DS0PR18MB5368.namprd18.prod.outlook.com>
-References: <20240102111432.36817-1-schalla@marvell.com>
- <20240219044352-mutt-send-email-mst@kernel.org>
- <DS0PR18MB5368BA5DBD8D8CDDE1A68573A0512@DS0PR18MB5368.namprd18.prod.outlook.com>
- <DS0PR18MB536881ACD91AFC00D2E24744A0562@DS0PR18MB5368.namprd18.prod.outlook.com>
-In-Reply-To: <DS0PR18MB536881ACD91AFC00D2E24744A0562@DS0PR18MB5368.namprd18.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DS0PR18MB5368:EE_|SA1PR18MB5965:EE_
-x-ms-office365-filtering-correlation-id: 10dfe74b-21e9-4d25-cfa4-08dc3f74f803
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: o8FDnPB6EYJBiQF3vNZhc5g2Y8Vtf75A6qowW1xCfBpmf6HT79jrDZijYHiOSOT7xJ6iFHJGzjdeo00qEd3ZWIg3MV8MTuRKzxpwcrGGsAKz0fWmOo9s7HCMIkuvfp+8D/xwTsU2lkI4EX/x4GwBX1fW4N9MZE9taRNPFao07P7EJ9liYCMKTDv2+c2SlZ9oEtYOQMAt2qEn52QED/y5u5wOD6xrWQVGR/z2/a68dRHNAJhRpnTv/kj57nTl8ojmT+yG8F/KhIG482uU/LWo7BXKq4C5waoVibeJYsjEUy1D/Y3TKkU9O4TIVw5E5kxMbC6Lq84B0Sk8GehKVdiGRY1DNdm990niTJ1E2io+ruCmuOVfvD8+V9PnnUSP1AEeVWo7lypPhdTsxTpM7qQPPLXHdjDypbaKzIrS4t6RecwzpAX2iWAXpspCu4v2IU+aMG62Afe6gSiNh7ccOlJ+EsgS/jFvjsNkXvE+6hBhhqmIhsp2kfHUka82R4niC0ctFJ4wjPL9EHhF0A6lWAyhUqLq8FKtV8yDS7ha4sMFe54j45K9eV7NxO+wyfNtv5ZiOfCyhTysk1qvVMmJy2YHh4TldEzC1TZetdkAIT7VzfVShWBihZuaI3w4rSqQEs8R6s/3newKpa4x/U3IC4HdggKEb9AXs37RnskeM20rdiGW7VLhTVcBpYXEmXyrlUbHBFB1QukRVFEa1NlBJNmSpwlM1BXU5X0+Op4Qfs+yyPY=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DS0PR18MB5368.namprd18.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(1800799015)(376005)(38070700009); DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?FJmHW1jujglgDoZ7mubtGr8jSME5AFB+S1q2evhlif7BKvDyYpUyvDO5Tg3J?=
- =?us-ascii?Q?sBD0LNbb4N+s+1Y7zi+TOTVvZMV0OAvdVRmBQNceq+JbQnzvmkJeCYzijK1N?=
- =?us-ascii?Q?pTf3xWtTK8CJV6o3SDcq0z3X2oDcHjrowxgIHc1z3PicDBhdZMkIWMxODOro?=
- =?us-ascii?Q?Zac2QkvDy3dUodUMIS3C645IcYTTdrGyaNLZ9lrh95V94BuxXHmWzHNzcevn?=
- =?us-ascii?Q?y+InA7oH7Vimt8ZHPGupAwQZ0kWYXXpyyt56GbNWLlpB7A5xaRrCJJX+Posr?=
- =?us-ascii?Q?tHjjFNggj5jk/l/DbPO5SFOxR0HEvy7MlgmQy1AEiuuheJppeN7vMZ0SHIPO?=
- =?us-ascii?Q?/vFi58QsMpxY0HVcaP+u480sfU45EMHWcyVpHjnKuQqoq8gdKLgam+aqcM6m?=
- =?us-ascii?Q?DmK5bhK54WEQqBuv63hf38OmPVUNzJZPvRK7Rhmjk41p7F7wJ8tGPwgDg9IT?=
- =?us-ascii?Q?2l+OgqwIGwN+FgLn8t3cYfyMYUkflZWDHnfDioQTTFjxaxGlrID+AGc/OUKm?=
- =?us-ascii?Q?s5Feta4dREDS04Oldm5Jto8x7CmlwL/gSBXewLBSKSyiku8qQOhiwbSKlR4a?=
- =?us-ascii?Q?dZ3V9dR0A8xIlZBG7+a/Dj3lw3a+2jkY1D6rMtQYSjMWrXydonwdVi147+oO?=
- =?us-ascii?Q?1JB7QCIAjdy6fAgsIeVnc+Eq/0JA7iPDWw7+aGHcfj6IWVvvhve6KnAg1E7v?=
- =?us-ascii?Q?LXc+XZAOx1LOFIIsBI+2aj4Hf6hP7wMq/15Ck5vu7k1nkgcjwWRZVixE/ch8?=
- =?us-ascii?Q?XjP3QrNy/m4OmybAksm9c61G5imk+aTMX7vOWwg+81kweNXZEA4GBPI+IBqB?=
- =?us-ascii?Q?ln7Cnzxv8b91/VzqNPh09KJOfXHWlK+Wg/Ht3Ds3xDskw9YuAh2UApPG2tsJ?=
- =?us-ascii?Q?ykZYWoup9QgiHurkK9tFZ9T/fkKZaeCHsoR0Y8L4WmbV6dhI79XqTtBa+dbm?=
- =?us-ascii?Q?Qp5dXIwH2xOFn7/qmkQ/8mqJcEdOfFEOp8QWr4sBxidXOBbbrF19Y+C8s+Tr?=
- =?us-ascii?Q?j6wRzvgROpNC2YhC3mLuowlw4+Bbj1eOeCrQkZo1/Mk7C194KFw/V99PVqre?=
- =?us-ascii?Q?Orjbd27u5W/ev9MC6MdtV8UGOgMxjzcOcYuRW4dAIrYTFargw9I+kAamBG1L?=
- =?us-ascii?Q?4NbR3Z3MqscFc4OZmotX7IP0ALzd2wT5zndcsM7z2+oFfx1NMlnchhMbfhTc?=
- =?us-ascii?Q?e0zK77LWlMhRonTtVn9xWX38WgWNjH9LWJzmoLVsom3LcPTlyK+6zP6kVyvX?=
- =?us-ascii?Q?AOlplof2QPUITgPjiGkiHw/qo3kBO/h0JA9O9Mi+FdsO1fBZWa7eHFmvCe0k?=
- =?us-ascii?Q?0ZlmVNlnO+eRlYNdXi+pL8YdDhY9dHYuH6gOgTz8yrWttzbzN6nsOpaE9OxA?=
- =?us-ascii?Q?H/+91bguf3Ns9xsB8y9G5wzMKaYup5lbFz64ZpdT5jyBjKNvrL26EvDTDqbw?=
- =?us-ascii?Q?2Rss0eDZ/OXa71ARIM32ZHJGHZxUGEWGdq7T8o+QMYMQ0vE1Mbxq5o9L7jhV?=
- =?us-ascii?Q?lKHJ3mBvdhOh9KnujW47RWsOlDGNPLACtN6jNmCfG+A96B25T68XBYeE24ha?=
- =?us-ascii?Q?0KY9ALOzibpPW9fo+34350umUDkmDWua+a/QdE8u?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1riaS1-0006dl-EE
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 08:39:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709905192;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3/nzcf36H9h1M1ZVBO7XyYPyUTqK4LaY1YkD/FOK3pY=;
+ b=Y9M08xHV0YiNJ6yiClFSyralM75ew5bCXSXOjTIVGCPF/RgNxQa/TkFtnw1cQjEPPAaey8
+ e8XG7WiiSRPKQUjXY7Z4HQ8EohtKUKd00MXKqRzz5UoVG4As/JT1rP67i2IWp50Yx+Q43x
+ Xav/Ttq0yP2IEuQy5j2iRUNlwtmunvo=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-122-3WHtUFQfMmyeZ1IcrF_BSg-1; Fri, 08 Mar 2024 08:39:50 -0500
+X-MC-Unique: 3WHtUFQfMmyeZ1IcrF_BSg-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-51325a4d003so2318388e87.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 05:39:50 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709905189; x=1710509989;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3/nzcf36H9h1M1ZVBO7XyYPyUTqK4LaY1YkD/FOK3pY=;
+ b=gS6r4Ozh65um/gJ7lwq7m9IoEMKAnR2lThxiyeg5MgXIk2eJGsckrvl3xETH9lp9fh
+ +ZgXH06/SPse4qY/BUraXfVeiedwTm0bfnPwbGyHND2IM9VrpeIFKjDn8iAlCICqaTsS
+ hzemMAUn48H+UCM2uGMiyOH1NJlySmC1u+QUg+mwzuRH53RvZst5HjAcal1F7rNNXYj4
+ TeAPjz/wG1fTYWEWoUWSj0dGqsx6rQbimn6gCkW3Aohq06XJxi1BRVlaIF9oHBgQxfn8
+ 2vywUDiU2GEBE3mZymow+8Oom7ExES9o+VCDJ5GE8Fb81UEWxMrQotGmYwih7L6xP7rA
+ 90bA==
+X-Gm-Message-State: AOJu0YwhCa0spO4yk/PAtcepDobFyyyR84gbvMtLhaqYRIl+NGX3Rgx0
+ 7lmzp88u8zssTjlKsEPJs71YjwJN0smgRFZokDQHggSBoUw2MFIRwG4VTaP/da8/VmNep3XEvBW
+ uqo8b86zqChmn2YlcOq/+YWlVR+pprKZHBQHUWjaykuWZjphATEkd
+X-Received: by 2002:ac2:4e08:0:b0:513:8a5b:e3c7 with SMTP id
+ e8-20020ac24e08000000b005138a5be3c7mr2390151lfr.0.1709905189420; 
+ Fri, 08 Mar 2024 05:39:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHVBkLTJ4XrXXMMUnhdbvNNEZz8VzU1ChMQhY/9MGCI3ZYww4HWNPYFQnec5hwuV+5vMKb5ng==
+X-Received: by 2002:ac2:4e08:0:b0:513:8a5b:e3c7 with SMTP id
+ e8-20020ac24e08000000b005138a5be3c7mr2390134lfr.0.1709905189037; 
+ Fri, 08 Mar 2024 05:39:49 -0800 (PST)
+Received: from ?IPV6:2a01:cb19:853d:fa00:c28a:3e3d:34f3:3891?
+ ([2a01:cb19:853d:fa00:c28a:3e3d:34f3:3891])
+ by smtp.gmail.com with ESMTPSA id
+ bu16-20020a056000079000b0033dc3f3d689sm23150895wrb.93.2024.03.08.05.39.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 Mar 2024 05:39:48 -0800 (PST)
+Message-ID: <cd1ec55d-acdc-4960-8a9c-24c42ff669fa@redhat.com>
+Date: Fri, 8 Mar 2024 14:39:46 +0100
 MIME-Version: 1.0
-X-OriginatorOrg: marvell.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DS0PR18MB5368.namprd18.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 10dfe74b-21e9-4d25-cfa4-08dc3f74f803
-X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Mar 2024 13:37:58.9047 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 70e1fb47-1155-421d-87fc-2e58f638b6e0
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: z3HiPEFPexem83+10f8Liq9LDCi7GQ9wwW9oJMIxBVutXVYBREAbDTWNzta2lZqervKITyBV5D3AEoND3f7Jvg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR18MB5965
-X-Proofpoint-GUID: UJRyux-IX4PTwoDY_OmrhD9bu_WSG159
-X-Proofpoint-ORIG-GUID: UJRyux-IX4PTwoDY_OmrhD9bu_WSG159
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-08_08,2024-03-06_01,2023-05-22_02
-Received-SPF: pass client-ip=67.231.156.173; envelope-from=schalla@marvell.com;
- helo=mx0b-0016f401.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 10/25] migration: Add Error** argument to
+ qemu_savevm_state_setup()
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+To: Peter Xu <peterx@redhat.com>, Laurent Vivier <lvivier@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
+ Prasad Pandit <pjp@fedoraproject.org>
+References: <20240306133441.2351700-1-clg@redhat.com>
+ <20240306133441.2351700-11-clg@redhat.com> <ZesLDCwh3r_pV2r3@x1n>
+ <deec998e-cab5-4aff-8582-86031778b089@redhat.com>
+In-Reply-To: <deec998e-cab5-4aff-8582-86031778b089@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -153,108 +109,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Michael,
+On 3/8/24 14:14, Cédric Le Goater wrote:
+> On 3/8/24 13:56, Peter Xu wrote:
+>> On Wed, Mar 06, 2024 at 02:34:25PM +0100, Cédric Le Goater wrote:
+>>> This prepares ground for the changes coming next which add an Error**
+>>> argument to the .save_setup() handler. Callers of qemu_savevm_state_setup()
+>>> now handle the error and fail earlier setting the migration state from
+>>> MIGRATION_STATUS_SETUP to MIGRATION_STATUS_FAILED.
+>>>
+>>> In qemu_savevm_state(), move the cleanup to preserve the error
+>>> reported by .save_setup() handlers.
+>>>
+>>> Since the previous behavior was to ignore errors at this step of
+>>> migration, this change should be examined closely to check that
+>>> cleanups are still correctly done.
+>>>
+>>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>>> ---
+>>>
+>>>   Changes in v4:
+>>>   - Merged cleanup change in qemu_savevm_state()
+>>>   Changes in v3:
+>>>   - Set migration state to MIGRATION_STATUS_FAILED
+>>>   - Fixed error handling to be done under lock in bg_migration_thread()
+>>>   - Made sure an error is always set in case of failure in
+>>>     qemu_savevm_state_setup()
+>>>   migration/savevm.h    |  2 +-
+>>>   migration/migration.c | 27 ++++++++++++++++++++++++---
+>>>   migration/savevm.c    | 26 +++++++++++++++-----------
+>>>   3 files changed, 40 insertions(+), 15 deletions(-)
+>>>
+>>> diff --git a/migration/savevm.h b/migration/savevm.h
+>>> index 74669733dd63a080b765866c703234a5c4939223..9ec96a995c93a42aad621595f0ed58596c532328 100644
+>>> --- a/migration/savevm.h
+>>> +++ b/migration/savevm.h
+>>> @@ -32,7 +32,7 @@
+>>>   bool qemu_savevm_state_blocked(Error **errp);
+>>>   void qemu_savevm_non_migratable_list(strList **reasons);
+>>>   int qemu_savevm_state_prepare(Error **errp);
+>>> -void qemu_savevm_state_setup(QEMUFile *f);
+>>> +int qemu_savevm_state_setup(QEMUFile *f, Error **errp);
+>>>   bool qemu_savevm_state_guest_unplug_pending(void);
+>>>   int qemu_savevm_state_resume_prepare(MigrationState *s);
+>>>   void qemu_savevm_state_header(QEMUFile *f);
+>>> diff --git a/migration/migration.c b/migration/migration.c
+>>> index a49fcd53ee19df1ce0182bc99d7e064968f0317b..6d1544224e96f5edfe56939a9c8395d88ef29581 100644
+>>> --- a/migration/migration.c
+>>> +++ b/migration/migration.c
+>>> @@ -3408,6 +3408,8 @@ static void *migration_thread(void *opaque)
+>>>       int64_t setup_start = qemu_clock_get_ms(QEMU_CLOCK_HOST);
+>>>       MigThrError thr_error;
+>>>       bool urgent = false;
+>>> +    Error *local_err = NULL;
+>>> +    int ret;
+>>>       thread = migration_threads_add("live_migration", qemu_get_thread_id());
+>>> @@ -3451,9 +3453,17 @@ static void *migration_thread(void *opaque)
+>>>       }
+>>>       bql_lock();
+>>> -    qemu_savevm_state_setup(s->to_dst_file);
+>>> +    ret = qemu_savevm_state_setup(s->to_dst_file, &local_err);
+>>>       bql_unlock();
+>>> +    if (ret) {
+>>> +        migrate_set_error(s, local_err);
+>>> +        error_free(local_err);
+>>> +        migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
+>>> +                          MIGRATION_STATUS_FAILED);
+>>> +        goto out;
+>>> +     }
+>>
+>> There's a small indent issue, I can fix it.
+> 
+> checkpatch did report anything.
+> 
+>>
+>> The bigger problem is I _think_ this will trigger a ci failure in the
+>> virtio-net-failover test:
+>>
+>> ▶ 121/464 ERROR:../tests/qtest/virtio-net-failover.c:1203:test_migrate_abort_wait_unplug: assertion failed (status == "cancelling"): ("cancelled" == "cancelling") ERROR
+>> 121/464 qemu:qtest+qtest-x86_64 / qtest-x86_64/virtio-net-failover    ERROR            4.77s   killed by signal 6 SIGABRT
+>>>>> PYTHON=/builds/peterx/qemu/build/pyvenv/bin/python3.8 G_TEST_DBUS_DAEMON=/builds/peterx/qemu/tests/dbus-vmstate-daemon.sh MALLOC_PERTURB_=161 QTEST_QEMU_IMG=./qemu-img QTEST_QEMU_STORAGE_DAEMON_BINARY=./storage-daemon/qemu-storage-daemon QTEST_QEMU_BINARY=./qemu-system-x86_64 /builds/peterx/qemu/build/tests/qtest/virtio-net-failover --tap -k
+>> ――――――――――――――――――――――――――――――――――――― ✀  ―――――――――――――――――――――――――――――――――――――
+>> stderr:
+>> qemu-system-x86_64: ram_save_setup failed: Input/output error
+>> **
+>> ERROR:../tests/qtest/virtio-net-failover.c:1203:test_migrate_abort_wait_unplug: assertion failed (status == "cancelling"): ("cancelled" == "cancelling")
+>> (test program exited with status code -6)
+>> ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+>>
+>> I am not familiar enough with the failover code, and may not have time
+>> today to follow this up, copy Laurent.  Cedric, if you have time, please
+>> have a look. 
+> 
+> 
+> Sure. Weird because I usually run make check on x86_64, s390x, ppc64 and
+> aarch64. Let me check again.
 
-VIRTIO_F_NOTIFICATION_DATA needs to be exposed to make Marvell's device wor=
-ks
-with Qemu. Any other better ways to expose VIRTIO_F_NOTIFICATION_DATA featu=
-re
-bit for vhost vdpa use case?
+I see one timeout error on s390x but not always. See below. It occurs with
+or without this patchset. the other x86_64, ppc64 arches run fine (a part
+from one io  test failing from time to time)
 
 Thanks,
-Srujana.
 
-> Subject: RE: [EXT] Re: [PATCH] vhost_net: add NOTIFICATION_DATA and
-> IN_ORDER feature bits to vdpa_feature_bits
->=20
-> Ping.
->=20
-> > Subject: RE: [EXT] Re: [PATCH] vhost_net: add NOTIFICATION_DATA and
-> > IN_ORDER feature bits to vdpa_feature_bits
-> >
-> >
-> >
-> > > -----Original Message-----
-> > > From: Michael S. Tsirkin <mst@redhat.com>
-> > > Sent: Monday, February 19, 2024 3:15 PM
-> > > To: Srujana Challa <schalla@marvell.com>
-> > > Cc: qemu-devel@nongnu.org; Vamsi Krishna Attunuru
-> > > <vattunuru@marvell.com>; Jerin Jacob <jerinj@marvell.com>; Jason
-> > > Wang <jasowang@redhat.com>
-> > > Subject: [EXT] Re: [PATCH] vhost_net: add NOTIFICATION_DATA and
-> > > IN_ORDER feature bits to vdpa_feature_bits
-> > >
-> > > External Email
-> > >
-> > > --------------------------------------------------------------------
-> > > -- On Tue, Jan 02, 2024 at 04:44:32PM +0530, Srujana Challa wrote:
-> > > > Enables VIRTIO_F_NOTIFICATION_DATA and VIRTIO_F_IN_ORDER
-> feature
-> > > bits
-> > > > for vhost vdpa backend. Also adds code to consider all feature
-> > > > bits supported by vhost net client type for feature negotiation,
-> > > > so that vhost backend device supported features can be negotiated w=
-ith
-> guest.
-> > > >
-> > > > Signed-off-by: Srujana Challa <schalla@marvell.com>
-> > > > ---
-> > > >  hw/net/vhost_net.c | 10 ++++++++++
-> > > >  net/vhost-vdpa.c   |  2 ++
-> > > >  2 files changed, 12 insertions(+)
-> > > >
-> > > > diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c index
-> > > > e8e1661646..65ae8bcece 100644
-> > > > --- a/hw/net/vhost_net.c
-> > > > +++ b/hw/net/vhost_net.c
-> > > > @@ -117,6 +117,16 @@ static const int
-> > > > *vhost_net_get_feature_bits(struct vhost_net *net)
-> > > >
-> > > >  uint64_t vhost_net_get_features(struct vhost_net *net, uint64_t
-> > > > features)  {
-> > > > +    const int *bit =3D vhost_net_get_feature_bits(net);
-> > > > +
-> > > > +    /*
-> > > > +     * Consider all feature bits for feature negotiation with vhos=
-t backend,
-> > > > +     * so that all backend device supported features can be negoti=
-ated.
-> > > > +     */
-> > > > +    while (*bit !=3D VHOST_INVALID_FEATURE_BIT) {
-> > > > +        features |=3D (1ULL << *bit);
-> > > > +        bit++;
-> > > > +    }
-> > > >      return vhost_get_features(&net->dev,
-> vhost_net_get_feature_bits(net),
-> > > >              features);
-> > > >  }
-> > >
-> > > I don't think we should do this part. With vdpa QEMU is in control
-> > > of which features are exposed and that is intentional since features
-> > > are often tied to other behaviour.
-> >
-> > Vdpa Qemu can negotiate all the features which vdpa backend device
-> > supports with the guest right?
-> > Guest drivers (it could be userspace or kernel drivers) will negotiate
-> > their own features, so that frontend supported features will get the
-> > precedence.
-> >
-> > >
-> > > > diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c index
-> > > > 3726ee5d67..51334fcfe2 100644
-> > > > --- a/net/vhost-vdpa.c
-> > > > +++ b/net/vhost-vdpa.c
-> > > > @@ -57,7 +57,9 @@ typedef struct VhostVDPAState {
-> > > >   */
-> > > >  const int vdpa_feature_bits[] =3D {
-> > > >      VIRTIO_F_ANY_LAYOUT,
-> > > > +    VIRTIO_F_IN_ORDER,
-> > > >      VIRTIO_F_IOMMU_PLATFORM,
-> > > > +    VIRTIO_F_NOTIFICATION_DATA,
-> > > >      VIRTIO_F_NOTIFY_ON_EMPTY,
-> > > >      VIRTIO_F_RING_PACKED,
-> > > >      VIRTIO_F_RING_RESET,
-> > > > --
-> > > > 2.25.1
+C.
+
+
+
+
+
+
+# Start of compress tests
+# Running /s390x/migration/postcopy/recovery/compress/plain
+# Using machine type: s390-ccw-virtio-9.0
+# starting QEMU: exec ./qemu-system-s390x -qtest unix:/tmp/qtest-3064311.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-3064311.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -accel kvm -accel tcg -machine s390-ccw-virtio-9.0, -name source,debug-threads=on -m 128M -serial file:/tmp/migration-test-TO8BK2/src_serial -bios /tmp/migration-test-TO8BK2/bootsect    2>/dev/null -accel qtest
+# starting QEMU: exec ./qemu-system-s390x -qtest unix:/tmp/qtest-3064311.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-3064311.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -accel kvm -accel tcg -machine s390-ccw-virtio-9.0, -name target,debug-threads=on -m 128M -serial file:/tmp/migration-test-TO8BK2/dest_serial -incoming defer -bios /tmp/migration-test-TO8BK2/bootsect    2>/dev/null -accel qtest
+
+**
+ERROR:../tests/qtest/migration-helpers.c:205:wait_for_migration_status: assertion failed: (g_test_timer_elapsed() < MIGRATION_STATUS_WAIT_TIMEOUT)
+Bail out! ERROR:../tests/qtest/migration-helpers.c:205:wait_for_migration_status: assertion failed: (g_test_timer_elapsed() < MIGRATION_STATUS_WAIT_TIMEOUT)
+../tests/qtest/libqtest.c:204: kill_qemu() detected QEMU death from signal 9 (Killed)
+Aborted (core dumped)
 
 
