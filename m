@@ -4,93 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BEFEC54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 16:13:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02526C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 16:14:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ricqc-0006aU-BI; Fri, 08 Mar 2024 11:13:26 -0500
+	id 1ricrb-0007oq-Gb; Fri, 08 Mar 2024 11:14:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ricqT-0006WU-4a
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:13:17 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ricrT-0007jw-Te
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:14:20 -0500
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ricqE-0008SM-8k
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:13:16 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-563cb3ba9daso2557509a12.3
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 08:13:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ricrQ-00005X-5a
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:14:19 -0500
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a44ad785a44so128209066b.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 08:14:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709914379; x=1710519179; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MJ2bIR4RWpERTXGbwtYOeF30BF1NZkRmzn7glZuOhFo=;
- b=uixS1/Vf/BmPI7y/+qCaXqPKvS/baxN/oZ9fnZHF/GQb6PILtxWsul25BMUnhCuR9z
- /XaQ1IT3sun4NwrwjBTP7f6UsfxZvXUVbeRfIP7xa81VYRui8l2PnVShQ2UQJIlYcE8/
- Bwj06FV9CoKaX2FXH1VSCHmGP2IGGH06ixR4hg4dXp/FSXaX2qgjmLTz85bvrtrGKqcM
- hzinvxQZDsv2kfq73HgSOe5LNY9TN6PHjLsGUU64EFmorN8j/FsDHQ/Zy0IXidwGCRIo
- k3lxtGgyio5xiuyATQEISRU+FHUq2RjpKR+0s2AAFYMjk/1AU38ovvAPyQXDhaPFraB9
- PWWg==
+ d=linaro.org; s=google; t=1709914453; x=1710519253; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=GFuY10NRycju0TCEIzNu/SW5zTp5TLcxEWCaS61P9RE=;
+ b=cSdsyOJ/i1QyBFKO4fUBCfGV+6qDjfEVZCugJlyIm08R99kq6zbtsamSH1Vxdmp6kD
+ U8mXdVeHOxFs/HndQeGDHDyiMZ+vgXNrbZL+0HtTsJ9F8chiNS1fwUUY7D2N0qxbGere
+ 2D6podKmkE0c1o+Fw/ualGj5W7HTw7+LCyjFZDVvSTVyJPk5gOtIk/dqoxB1OzEXAi8g
+ SKdfF/dUwUqDfBI0I5fdQNg7xe5OJr5dySPhxQUNr+VkzQo7RcUJkmm2VBK3Z8Umzqkv
+ 2zkLBbQP1AtdrPZ3PQqipqdYBb5wFl2hd5D7pLggna1xVo1M8T4KLZ2k5wA/3UB8VKPC
+ HbkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709914379; x=1710519179;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=MJ2bIR4RWpERTXGbwtYOeF30BF1NZkRmzn7glZuOhFo=;
- b=UgW3JABJl7FRHrRyUAHb5AiTLCxgpF1Er5alyD+Uy4nCTQ1ira3H1iokgjTYDzgeNM
- OgBDXAhqXXHUCCrJd/nAlUdXvG2yhD4BWcXbTo6XardjIMcRXnllow5ITIODxPqdYjCX
- xvbj/x9O577B3ly8FXrMTW/lH42qSNc6zeY4M6DsRnKVSJ/+5+UnajbffyGbNlnD5z4x
- LtUBLviZzS9KilguJhT8Gfi7EZfvUqPOT4rf4tazxs+RdsIRAIhS0tDlz/9cG8FkRau7
- me70Odo0CQEpXHOLk+/xZ2qHNe2Zrra75iYzJTQHNopNSCSPTtmB3k6FhHhCiMajzbx6
- hj3g==
+ d=1e100.net; s=20230601; t=1709914453; x=1710519253;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=GFuY10NRycju0TCEIzNu/SW5zTp5TLcxEWCaS61P9RE=;
+ b=B4vaRcrUgmVcXTcH2LArw3mQJgVXQUEeeGSefiHRn+bCkqhd1qGz8BULBjyFWbNukf
+ JbzxVdeX52BsTw0LEp0VDOnWihFmao2qPn5eS2gB/nVicRcq1fBVTh5+sj+xtt2VrnGB
+ pliDpKYI8IzKJOloLRutwUiG3OrBqZwVb4Xnk3Y774jRIrUAHK0aC64g7fymVlwPXlJs
+ awBDaji5DM06SEL9g4c5Rtf7FR+e0ROxoS2hjjbkF2wXODwzi2WiKQdjZ2uq4le9T2dt
+ BqRHdvm7DhRbprEq5jqtQWjFFxLYzDybfgHz/OwjwC09VsBRTMWE/T+b3N2Ffe5LH8v9
+ LYbA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU2dFCrgosD3T68gTfmXRXDKfIcZDY/tNS8D38MgJg4WwuHsUrQYwQ13RxoqttpxDZjwaHs+yj1mdQPC251GVtTCnq+ULM=
-X-Gm-Message-State: AOJu0Yxh25QXTBzcF44BDGxy18P40Nu2kMWMXUp34U5JlLPEHyq38chy
- UziJQjsb0CeSrC1ScLt0uSbYkgvVVX8CqlhfIcJ6CgqdqONUvXJvHZSYj+FGxy7ECy1fKjn5/OW
- VRVPFMDiOiXmxnZtOGOqK3i+f3T619fqZceq+iw==
-X-Google-Smtp-Source: AGHT+IHGVIIYsZBHfw144013TzjqrPZM03f8G8skRME3zGJTho828PLAGLWnUr/vdTCyCjAUKXK1hkx535hXXvhboOM=
-X-Received: by 2002:a50:8e46:0:b0:566:2aff:2d38 with SMTP id
- 6-20020a508e46000000b005662aff2d38mr2361637edx.26.1709914379606; Fri, 08 Mar
- 2024 08:12:59 -0800 (PST)
+ AJvYcCWoNA/5CekHS3HYyrmwi88JzkC+sUPW6ACQtf73J8sSUd+QBMb296KlFsRYzkKOakwfthCDe3aTaQz1uttL7nVdGc7hF1g=
+X-Gm-Message-State: AOJu0YzEJ5EtmJriXcWW1fQbY51Qm/znSo4Tl5Qn6Oyhprr3uEFIhbHC
+ W9R59g1xY0vKtiAmIs6ZrrfiC7XIjSCLPD+3+8KDRM0ql4R000YgPI4EMeV5+vA=
+X-Google-Smtp-Source: AGHT+IF2A4OWFXpRboNCc9ynwfAm7QU71aymDqbs9H/LN6q5DAb9Klsc/GVqjbQWmh5JpzND1JZnDA==
+X-Received: by 2002:a17:906:ccc8:b0:a44:1a51:a1fd with SMTP id
+ ot8-20020a170906ccc800b00a441a51a1fdmr14045816ejb.64.1709914453592; 
+ Fri, 08 Mar 2024 08:14:13 -0800 (PST)
+Received: from [192.168.69.100] (pir44-h02-176-184-37-132.dsl.sta.abo.bbox.fr.
+ [176.184.37.132]) by smtp.gmail.com with ESMTPSA id
+ fw11-20020a170906c94b00b00a45a8c4edb4sm3995322ejb.48.2024.03.08.08.14.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 Mar 2024 08:14:13 -0800 (PST)
+Message-ID: <66729d0f-72af-4c96-8bf7-479f954b032e@linaro.org>
+Date: Fri, 8 Mar 2024 17:14:11 +0100
 MIME-Version: 1.0
-References: <20240226164913.94077-1-philmd@linaro.org>
- <20240226164913.94077-5-philmd@linaro.org>
- <Zd9iz9aIwM3cOqwt@intel.com> <5a42a295-bb1e-49f6-ae1d-94aec1efb61c@redhat.com>
- <6be774d0-6277-4d50-b97b-a0177cad8fd8@linaro.org>
- <52e08f6c-7698-4649-9bea-fd537f59fa2f@redhat.com>
-In-Reply-To: <52e08f6c-7698-4649-9bea-fd537f59fa2f@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 8 Mar 2024 16:12:48 +0000
-Message-ID: <CAFEAcA8V0hrD_-tJHV2Ph8tXFfiAwudrn=X6TO4+0XDuaTeGrQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 4/5] hw/i386/q35: Wire virtual SMI# lines to ICH9
- chipset
-To: Thomas Huth <thuth@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Zhao Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org, 
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, Anton Johansson <anjo@rev.ng>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Eduardo Habkost <eduardo@habkost.net>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Ani Sinha <anisinha@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Laszlo Ersek <lersek@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] docs/about: Deprecate the "mainstone", "tosa" and "z2"
+ machines
+Content-Language: en-US
+To: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+References: <20240308104206.480929-1-thuth@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240308104206.480929-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,51 +97,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 8 Mar 2024 at 16:06, Thomas Huth <thuth@redhat.com> wrote:
->
-> On 08/03/2024 09.08, Philippe Mathieu-Daud=C3=A9 wrote:
-> > This form isn't recommended as it confuses static analyzers,
-> > considering ICH9_VIRT_SMI_COUNT as part of the enum.
->
-> Never heard of that before. We're using it all over the place, e.g.:
->
-> typedef enum {
->      THROTTLE_BPS_TOTAL,
->      THROTTLE_BPS_READ,
->      THROTTLE_BPS_WRITE,
->      THROTTLE_OPS_TOTAL,
->      THROTTLE_OPS_READ,
->      THROTTLE_OPS_WRITE,
->      BUCKETS_COUNT,
-> } BucketType;
->
-> ... and even in our generated QAPI code, e.g.:
->
-> typedef enum QCryptoHashAlgorithm {
->      QCRYPTO_HASH_ALG_MD5,
->      QCRYPTO_HASH_ALG_SHA1,
->      QCRYPTO_HASH_ALG_SHA224,
->      QCRYPTO_HASH_ALG_SHA256,
->      QCRYPTO_HASH_ALG_SHA384,
->      QCRYPTO_HASH_ALG_SHA512,
->      QCRYPTO_HASH_ALG_RIPEMD160,
->      QCRYPTO_HASH_ALG__MAX,
-> } QCryptoHashAlgorithm;
->
-> Where did you see here a problem with static analyzers?
+Hi Thomas,
 
-Coverity tends to dislike this pattern if the enum is used
-as an index into an array; for example commit b12635ff08ab2
-("migration: fix coverity migrate_mode finding") is
-essentially a workaround for the way the QAPI generated code
-puts the MAX value inside the enum. Coverity assumes that
-if you have a variable foo which is a SomeEnum then it can take
-any of the valid values of the enum, so if you use foo
-as an index into an array that was defined as
-array[SOME_ENUM_MAX] where SOME_ENUM_MAX is a value of the
-enum type, and you don't explicitly check that foo
-is not SOME_ENUM_MAX, then it is an overrun.
+On 8/3/24 11:42, Thomas Huth wrote:
+> Support for these boards has been removed from the Linux kernel
+> in version 6.3 in 2023, so there are likely no users left for these
+> boards. Time to mark them as deprecated in QEMU, too!
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   docs/about/deprecated.rst | 8 ++++++++
+>   hw/arm/mainstone.c        | 1 +
+>   hw/arm/tosa.c             | 1 +
+>   hw/arm/z2.c               | 1 +
+>   4 files changed, 11 insertions(+)
+> 
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 8565644da6..da5cc91eec 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -247,6 +247,14 @@ to correct issues, mostly regarding migration compatibility. These are
+>   no longer maintained and removing them will make the code easier to
+>   read and maintain. Use versions 2.12 and above as a replacement.
+>   
+> +``mainstone``, ``tosa`` and ``z2`` PXA2xx arm machines (since 9.0)
+> +''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+> +
+> +Support for these boards has been removed from the Linux kernel
+> +in version 6.3 in 2023, so there are likely no users left for these
+> +boards, thus they will be removed without replacement.
 
-thanks
--- PMM
+While Linux host support makes sense for code removal, guest
+support isn't relevant IMHO. I.e. you can still run U-boot
+or any guest code you fancy, like my-first-rtos.
+
+(I noticed Peter want a more generic removal)
 
