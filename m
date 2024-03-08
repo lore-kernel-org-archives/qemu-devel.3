@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC507C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 06:14:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07E8EC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 06:19:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riTUs-0000Fe-ID; Fri, 08 Mar 2024 01:14:22 -0500
+	id 1riTZ8-0001Nw-7l; Fri, 08 Mar 2024 01:18:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1riTUq-0000FI-KB; Fri, 08 Mar 2024 01:14:20 -0500
+ id 1riTZ3-0001NP-3T; Fri, 08 Mar 2024 01:18:41 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1riTUo-0004Md-Rm; Fri, 08 Mar 2024 01:14:20 -0500
+ id 1riTZ1-0005H1-Fi; Fri, 08 Mar 2024 01:18:40 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id ECDE25407B;
- Fri,  8 Mar 2024 09:15:08 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 119AE5407E;
+ Fri,  8 Mar 2024 09:19:31 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id BBD6193A8C;
- Fri,  8 Mar 2024 09:14:15 +0300 (MSK)
-Message-ID: <1d74ef79-dd0b-4da9-bf7e-c42e698b1c8d@tls.msk.ru>
-Date: Fri, 8 Mar 2024 09:14:15 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id D7DB993A91;
+ Fri,  8 Mar 2024 09:18:37 +0300 (MSK)
+Message-ID: <45f690bd-8bb4-4bc7-8a2c-4e8c49c3c709@tls.msk.ru>
+Date: Fri, 8 Mar 2024 09:18:37 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] cxl: Fix issues with g_steal_pointer()
+Subject: Re: [PATCH v2] docs/acpi/bits: add some clarity and details while
+ also improving formating
 Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>, qemu-devel@nongnu.org
-Cc: Fan Ni <fan.ni@samsung.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-trivial@nongnu.org
-References: <20240304104406.59855-1-thuth@redhat.com>
+To: Ani Sinha <anisinha@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-trivial@nongnu.org, qemu-devel@nongnu.org
+References: <20240308042252.4083-1-anisinha@redhat.com>
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
@@ -60,7 +59,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240304104406.59855-1-thuth@redhat.com>
+In-Reply-To: <20240308042252.4083-1-anisinha@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -86,15 +85,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-04.03.2024 13:44, Thomas Huth wrote:
-> When setting GLIB_VERSION_MAX_ALLOWED to GLIB_VERSION_2_58 or higher
-> (which we'll certainly do in the not too distant future), glib adds
-> type safety checks to the g_steal_pointer() macro. This triggers
-> errors in the cxl code since the pointer types do not always match
-> here. Let's fix those errors now so we can switch to a newer version
-> of the glib in a future version of QEMU.
+08.03.2024 07:22, Ani Sinha :
+> Update bios-bits docs to add more details on why a pre-OS environment for
+> testing bioses is useful. Add author's FOSDEM talk link. Also improve the
+> formating of the document while at it.
+> 
+> CC: qemu-trivial@nongnu.org
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
 
-Picked up for qemu-trivial, thank you!
+Reviewed-by: Michael Tokarev <mjt@tls.mks.ru>
+
+and applied to qemu-trivial.  Thank you!
 
 /mjt
 
