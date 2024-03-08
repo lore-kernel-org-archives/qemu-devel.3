@@ -4,84 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB1B3C54E41
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 04:24:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E920EC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 05:13:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riRlQ-0001lW-Aw; Thu, 07 Mar 2024 23:23:20 -0500
+	id 1riSXV-00088z-FT; Fri, 08 Mar 2024 00:13:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1riRlO-0001kT-80; Thu, 07 Mar 2024 23:23:18 -0500
-Received: from mail-ua1-x92c.google.com ([2607:f8b0:4864:20::92c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1riRlM-00059S-Fe; Thu, 07 Mar 2024 23:23:17 -0500
-Received: by mail-ua1-x92c.google.com with SMTP id
- a1e0cc1a2514c-7db36dbd474so253508241.2; 
- Thu, 07 Mar 2024 20:23:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709871795; x=1710476595; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kI7dpnWwB6s/ZQkuEJJSSMaou9QniH5TFgTBPF+WHb4=;
- b=SW/EcUb/ht6amFEroRxU2RmUyT7mZHIy5HPthP/Unq8vtqUUCoCaE+His5ii5OIG3K
- OUKPc297PwTaFLCrQ3O2fSP7zTx0SA76w404UWYRI8wQT0/DRsvlBEzCCSSPe/gr6YdD
- /CnPjn1uBcTWv/JSNkAh8Dwm/ujcGnvdeLYJjDyXU7doxW7x+GG9AJi9tu6EfEJzpqjg
- OEKto2HUOfCwHWNFdoSG6d68bDLOj4QVHBSFlRYoHY6YCbP4CpMqr0LxS+jm/ThpcgqX
- ObiaFvHLt3smqg3Hsuf+6lwbCU7TT4HHrCK5k5DmB6YjTD6TI+JBkLy2MqV0iDSQLGu0
- xNpw==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1riSXT-00088r-Pn
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 00:12:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1riSXR-0000OU-VH
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 00:12:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709874776;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=7nAkU7cm7f85BDg+oumV91TbG7RunlUK9Bv2fRrQbEo=;
+ b=dVzjbX9Xo8CvfRoA7SoZSbTmuJX12IJ+L5Kb7gHZE3+R7CF9tIfABiZ+h+FgVslyKeTBb4
+ 3FHIc2IspMx+qWqIF/sJoCayYa4OJYVrkQi4uu+cJrhVdmjuS37iH19ZG3uxCjhjkfjHqk
+ jJf1Gxjm/P6OFqfJ2lUjoStVM7fyng8=
+Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
+ [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-530-K7mbdCoVMnWMSueZ34a7yg-1; Fri, 08 Mar 2024 00:12:53 -0500
+X-MC-Unique: K7mbdCoVMnWMSueZ34a7yg-1
+Received: by mail-lj1-f198.google.com with SMTP id
+ 38308e7fff4ca-2d2b9aa4e35so9918761fa.3
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 21:12:53 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709871795; x=1710476595;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kI7dpnWwB6s/ZQkuEJJSSMaou9QniH5TFgTBPF+WHb4=;
- b=Q25TNFq0bLfduN/u6Z3Nn3Kr1wCZVksPDJa4NPuWe+QsPF5k94Un4Eu63cktubMbrD
- a/xadmK0TsXuy2LMQVMrJBGL38tLTAhBuy112t85RgQXNovNwB9ITqUrstVNO5Oj9QiV
- 8yApKhx5EA8dM+o6QYcG1VTjwjSVAZjJJdRcrHozK3tDQGu1pmYMbenwAVmXYgldq2/P
- X/aZ2YZuE/b7j/DxskOPzl5j9TduAtSBz/1X/5e2M7bByVZU95p2WyNG2fAAfoCqbsp0
- te5n4fR/giEHKf+51jDocmUUDKIl5h8X+0tkwphoiZ/b7k5GdFJ1IMTBRHB0lzzu7ZG1
- ha0A==
+ d=1e100.net; s=20230601; t=1709874772; x=1710479572;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7nAkU7cm7f85BDg+oumV91TbG7RunlUK9Bv2fRrQbEo=;
+ b=MMtmL4ySVNwHboFyAIJFRM9U/lh0huIwkXhRvyKdHQaNtuEt0lJTrpt6ol+klGQPsI
+ C7sQwjMVgh0r00cqtGirRWfLPpUtSdsVmWb/X4hkbJ+vwtBewbKbDMBViglOzyHmRFW3
+ gbiBQRdSVuzuc/B6hRoFItx62fVbhCYkZdEXoyQHSTDaMcaH5AK/wYcDeLeBemMBX9Vw
+ hn2mP6cwCZ36bJGXnwcs+PhFX2hry6u9VWfi0y0MH2IaQ7mp2ZSEvy97sfcU4nB5qOT8
+ 1pYMUvJ2noTD5NxDwZHSz/rw1MxLHHh6+eCsV9oF9LtBtOeOu4t8Cva9y1GcwTBNjaIz
+ bkmA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWg2TPkSR3rtk0kpO8KAO9G6Npr6OiLEvFe8d0UOid6cqVHDfWfk7PorJQZj5+ETMNzKjOxMbLYM4RPRCLdWfJnBkAxJzQ=
-X-Gm-Message-State: AOJu0YyEdhhZO47/ltlvbtndvNItoU45RVhLOPQ3qbUnZhLF+3ahYOSH
- pzJkSRE6AGBLpBTmqGbQFH3q5V3ULP0kz/MSOBiR2t4Ltp0eyNgaR5gnD77N/IcANMAztLzl8fI
- WCVTxJ9V86nYM7aha8ok0IYsmYMw=
-X-Google-Smtp-Source: AGHT+IGyoJWVlIQgpgvi50gOn4PU+OHYMj2PlQWg4NtjXWtEtWvjErCOiLUaBZiuJZKj2HGJ1yzlsPcpGADnTwrHJ2o=
-X-Received: by 2002:a67:f5da:0:b0:473:884:7854 with SMTP id
- t26-20020a67f5da000000b0047308847854mr2388704vso.25.1709871794760; Thu, 07
- Mar 2024 20:23:14 -0800 (PST)
+ AJvYcCVhInGMhzCtArE/+FhZBSD9/I4A1rIFtih7rL+FZf3IEjih6iePNUqg8TVXcIOyVs4uCraqkBIA5o+zAxVrwEH/suTozFE=
+X-Gm-Message-State: AOJu0Yz2jZ0Nt9ATMoHPQGFTebo1fj1DzQjU8CjGMdaJ4oEpRgh0EqCa
+ 9ZEtzbTNsDEfSGs/JIXXc/GDXUAS1QH4d/IInzljTpijOa67vRM5ae6HISJmP1AhDVJxsqsUw5r
+ KXgXeV3Sv+ia4xRTpVmD6mth0wP+NvcfzKDVrBKJtNaX10LV+DNfm
+X-Received: by 2002:a05:651c:2127:b0:2d4:1369:697e with SMTP id
+ a39-20020a05651c212700b002d41369697emr2061457ljq.20.1709874772429; 
+ Thu, 07 Mar 2024 21:12:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFu4hH6RspwVBKoMC/vFBFB8dLvTi+2K0MeL2caF3nKym/oDXEgXvtXC/ux/uLm8H/hFgq7Yg==
+X-Received: by 2002:a05:651c:2127:b0:2d4:1369:697e with SMTP id
+ a39-20020a05651c212700b002d41369697emr2061447ljq.20.1709874772073; 
+ Thu, 07 Mar 2024 21:12:52 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-178-151.web.vodafone.de.
+ [109.43.178.151]) by smtp.gmail.com with ESMTPSA id
+ h7-20020aa7de07000000b005664afd1185sm8737890edv.17.2024.03.07.21.12.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 07 Mar 2024 21:12:51 -0800 (PST)
+Message-ID: <e11f53d6-2e87-47eb-8ccb-aa35d2e17919@redhat.com>
+Date: Fri, 8 Mar 2024 06:12:50 +0100
 MIME-Version: 1.0
-References: <20240207115926.887816-1-christoph.muellner@vrull.eu>
- <20240207115926.887816-3-christoph.muellner@vrull.eu>
-In-Reply-To: <20240207115926.887816-3-christoph.muellner@vrull.eu>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 8 Mar 2024 14:22:48 +1000
-Message-ID: <CAKmqyKMZqysJWyQULpD21LVHdHKAVHc4671sVe3hqJ9Ksz9a0Q@mail.gmail.com>
-Subject: Re: [PATCH 2/2] linux-user/riscv: Sync hwprobe keys with Linux
-To: =?UTF-8?Q?Christoph_M=C3=BCllner?= <christoph.muellner@vrull.eu>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
- Philipp Tomsich <philipp.tomsich@vrull.eu>, Palmer Dabbelt <palmer@dabbelt.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Andrew Jones <ajones@ventanamicro.com>, Laurent Vivier <laurent@vivier.eu>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92c;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92c.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/5] target/sparc/cpu: Rename the CPU models with a "+" in
+ their names
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20240307174334.130407-1-thuth@redhat.com>
+ <20240307174334.130407-2-thuth@redhat.com>
+ <79771813-9b46-4459-b286-e9ddb4549f83@linaro.org>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <79771813-9b46-4459-b286-e9ddb4549f83@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.583,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,143 +153,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 7, 2024 at 10:00=E2=80=AFPM Christoph M=C3=BCllner
-<christoph.muellner@vrull.eu> wrote:
->
-> Upstream Linux recently added many additional keys to the hwprobe API.
-> This patch adds support for all of them with the exception of Ztso,
-> which is currently not supported in QEMU.
->
-> Signed-off-by: Christoph M=C3=BCllner <christoph.muellner@vrull.eu>
-> ---
->  linux-user/syscall.c | 98 ++++++++++++++++++++++++++++++++++++++++----
->  1 file changed, 91 insertions(+), 7 deletions(-)
->
-> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> index 43467c9707..3ba20f99ad 100644
-> --- a/linux-user/syscall.c
-> +++ b/linux-user/syscall.c
-> @@ -8793,13 +8793,41 @@ static int do_getdents64(abi_long dirfd, abi_long=
- arg2, abi_long count)
->  #define     RISCV_HWPROBE_BASE_BEHAVIOR_IMA (1 << 0)
->
->  #define RISCV_HWPROBE_KEY_IMA_EXT_0     4
-> -#define     RISCV_HWPROBE_IMA_FD       (1 << 0)
-> -#define     RISCV_HWPROBE_IMA_C        (1 << 1)
-> -#define     RISCV_HWPROBE_IMA_V        (1 << 2)
-> -#define     RISCV_HWPROBE_EXT_ZBA      (1 << 3)
-> -#define     RISCV_HWPROBE_EXT_ZBB      (1 << 4)
-> -#define     RISCV_HWPROBE_EXT_ZBS      (1 << 5)
-> -#define     RISCV_HWPROBE_EXT_ZICBOZ   (1 << 6)
-> +#define                RISCV_HWPROBE_IMA_FD            (1 << 0)
-> +#define                RISCV_HWPROBE_IMA_C             (1 << 1)
-> +#define                RISCV_HWPROBE_IMA_V             (1 << 2)
-> +#define                RISCV_HWPROBE_EXT_ZBA           (1 << 3)
-> +#define                RISCV_HWPROBE_EXT_ZBB           (1 << 4)
-> +#define                RISCV_HWPROBE_EXT_ZBS           (1 << 5)
-> +#define                RISCV_HWPROBE_EXT_ZICBOZ        (1 << 6)
-> +#define                RISCV_HWPROBE_EXT_ZBC           (1 << 7)
-> +#define                RISCV_HWPROBE_EXT_ZBKB          (1 << 8)
-> +#define                RISCV_HWPROBE_EXT_ZBKC          (1 << 9)
-> +#define                RISCV_HWPROBE_EXT_ZBKX          (1 << 10)
-> +#define                RISCV_HWPROBE_EXT_ZKND          (1 << 11)
-> +#define                RISCV_HWPROBE_EXT_ZKNE          (1 << 12)
-> +#define                RISCV_HWPROBE_EXT_ZKNH          (1 << 13)
-> +#define                RISCV_HWPROBE_EXT_ZKSED         (1 << 14)
-> +#define                RISCV_HWPROBE_EXT_ZKSH          (1 << 15)
-> +#define                RISCV_HWPROBE_EXT_ZKT           (1 << 16)
-> +#define                RISCV_HWPROBE_EXT_ZVBB          (1 << 17)
-> +#define                RISCV_HWPROBE_EXT_ZVBC          (1 << 18)
-> +#define                RISCV_HWPROBE_EXT_ZVKB          (1 << 19)
-> +#define                RISCV_HWPROBE_EXT_ZVKG          (1 << 20)
-> +#define                RISCV_HWPROBE_EXT_ZVKNED        (1 << 21)
-> +#define                RISCV_HWPROBE_EXT_ZVKNHA        (1 << 22)
-> +#define                RISCV_HWPROBE_EXT_ZVKNHB        (1 << 23)
-> +#define                RISCV_HWPROBE_EXT_ZVKSED        (1 << 24)
-> +#define                RISCV_HWPROBE_EXT_ZVKSH         (1 << 25)
-> +#define                RISCV_HWPROBE_EXT_ZVKT          (1 << 26)
-> +#define                RISCV_HWPROBE_EXT_ZFH           (1 << 27)
-> +#define                RISCV_HWPROBE_EXT_ZFHMIN        (1 << 28)
-> +#define                RISCV_HWPROBE_EXT_ZIHINTNTL     (1 << 29)
-> +#define                RISCV_HWPROBE_EXT_ZVFH          (1 << 30)
-> +#define                RISCV_HWPROBE_EXT_ZVFHMIN       (1 << 31)
-> +#define                RISCV_HWPROBE_EXT_ZFA           (1ULL << 32)
-> +#define                RISCV_HWPROBE_EXT_ZACAS         (1ULL << 34)
-> +#define                RISCV_HWPROBE_EXT_ZICOND        (1ULL << 35)
+On 07/03/2024 22.22, Richard Henderson wrote:
+> On 3/7/24 07:43, Thomas Huth wrote:
+>> +    /* Fix up legacy names with '+' in it */
+>> +    if (g_str_equal(typename, SPARC_CPU_TYPE_NAME("Sun-UltraSparc-IV+"))) {
+>> +        g_free(typename);
+>> +        typename = g_strdup(SPARC_CPU_TYPE_NAME("Sun-UltraSparc-IVp"));
+>> +    } else if (g_str_equal(typename, 
+>> SPARC_CPU_TYPE_NAME("Sun-UltraSparc-IIIi+"))) {
+>> +        g_free(typename);
+>> +        typename = g_strdup(SPARC_CPU_TYPE_NAME("Sun-UltraSparc-IIIip"));
+>> +    }
+>> +
+> 
+> Legacy names don't include dashes.
 
-This fails to pass checkpatch
+This check is done after sparc_cpu_type_name() has been called, which 
+transforms the spaces into dashes, so we need the dashes here.
+(otherwise I'd need to check for all "valid" combinations, like 
+"Sun-UltraSparc-IV+", "Sun UltraSparc-IV+", "Sun-UltraSparc IV+" and "Sun 
+UltraSparc IV+").
 
-Alistair
+  Thomas
 
->
->  #define RISCV_HWPROBE_KEY_CPUPERF_0     5
->  #define     RISCV_HWPROBE_MISALIGNED_UNKNOWN     (0 << 0)
-> @@ -8860,6 +8888,62 @@ static void risc_hwprobe_fill_pairs(CPURISCVState =
-*env,
->                       RISCV_HWPROBE_EXT_ZBS : 0;
->              value |=3D cfg->ext_zicboz ?
->                       RISCV_HWPROBE_EXT_ZICBOZ : 0;
-> +            value |=3D cfg->ext_zbc ?
-> +                     RISCV_HWPROBE_EXT_ZBC : 0;
-> +            value |=3D cfg->ext_zbkb ?
-> +                     RISCV_HWPROBE_EXT_ZBKB : 0;
-> +            value |=3D cfg->ext_zbkc ?
-> +                     RISCV_HWPROBE_EXT_ZBKC : 0;
-> +            value |=3D cfg->ext_zbkx ?
-> +                     RISCV_HWPROBE_EXT_ZBKX : 0;
-> +            value |=3D cfg->ext_zknd ?
-> +                     RISCV_HWPROBE_EXT_ZKND : 0;
-> +            value |=3D cfg->ext_zkne ?
-> +                     RISCV_HWPROBE_EXT_ZKNE : 0;
-> +            value |=3D cfg->ext_zknh ?
-> +                     RISCV_HWPROBE_EXT_ZKNH : 0;
-> +            value |=3D cfg->ext_zksed ?
-> +                     RISCV_HWPROBE_EXT_ZKSED : 0;
-> +            value |=3D cfg->ext_zksh ?
-> +                     RISCV_HWPROBE_EXT_ZKSH : 0;
-> +            value |=3D cfg->ext_zkt ?
-> +                     RISCV_HWPROBE_EXT_ZKT : 0;
-> +            value |=3D cfg->ext_zvbb ?
-> +                     RISCV_HWPROBE_EXT_ZVBB : 0;
-> +            value |=3D cfg->ext_zvbc ?
-> +                     RISCV_HWPROBE_EXT_ZVBC : 0;
-> +            value |=3D cfg->ext_zvkb ?
-> +                     RISCV_HWPROBE_EXT_ZVKB : 0;
-> +            value |=3D cfg->ext_zvkg ?
-> +                     RISCV_HWPROBE_EXT_ZVKG : 0;
-> +            value |=3D cfg->ext_zvkned ?
-> +                     RISCV_HWPROBE_EXT_ZVKNED : 0;
-> +            value |=3D cfg->ext_zvknha ?
-> +                     RISCV_HWPROBE_EXT_ZVKNHA : 0;
-> +            value |=3D cfg->ext_zvknhb ?
-> +                     RISCV_HWPROBE_EXT_ZVKNHB : 0;
-> +            value |=3D cfg->ext_zvksed ?
-> +                     RISCV_HWPROBE_EXT_ZVKSED : 0;
-> +            value |=3D cfg->ext_zvksh ?
-> +                     RISCV_HWPROBE_EXT_ZVKSH : 0;
-> +            value |=3D cfg->ext_zvkt ?
-> +                     RISCV_HWPROBE_EXT_ZVKT : 0;
-> +            value |=3D cfg->ext_zfh ?
-> +                     RISCV_HWPROBE_EXT_ZFH : 0;
-> +            value |=3D cfg->ext_zfhmin ?
-> +                     RISCV_HWPROBE_EXT_ZFHMIN : 0;
-> +            value |=3D cfg->ext_zihintntl ?
-> +                     RISCV_HWPROBE_EXT_ZIHINTNTL : 0;
-> +            value |=3D cfg->ext_zvfh ?
-> +                     RISCV_HWPROBE_EXT_ZVFH : 0;
-> +            value |=3D cfg->ext_zvfhmin ?
-> +                     RISCV_HWPROBE_EXT_ZVFHMIN : 0;
-> +            value |=3D cfg->ext_zfa ?
-> +                     RISCV_HWPROBE_EXT_ZFA : 0;
-> +            value |=3D cfg->ext_zacas ?
-> +                     RISCV_HWPROBE_EXT_ZACAS : 0;
-> +            value |=3D cfg->ext_zicond ?
-> +                     RISCV_HWPROBE_EXT_ZICOND : 0;
->              __put_user(value, &pair->value);
->              break;
->          case RISCV_HWPROBE_KEY_CPUPERF_0:
-> --
-> 2.43.0
->
->
+
 
