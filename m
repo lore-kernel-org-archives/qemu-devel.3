@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D3F4C54E60
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 15:49:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2F2EC54E5E
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 15:49:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ricSX-0000cw-Ei; Fri, 08 Mar 2024 10:48:33 -0500
+	id 1ricSK-0000Xg-Dq; Fri, 08 Mar 2024 10:48:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1ricSW-0000cW-Km
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:48:32 -0500
+ id 1ricSH-0000X9-Vd
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:48:18 -0500
 Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1ricSU-00041N-Sz
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:48:32 -0500
+ id 1ricSF-0003yA-G8
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:48:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709912912; x=1741448912;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=hQQp1HLSgx+wpMrBVHO/awDehkcqUXAg5RqG126+NFg=;
- b=QnAozsdXK5tjqV/8Ixus5oq4CAL7K1B4xAn9yxEhbxGjT436ZIGgAlQq
- ayFa7mGecez1IRQ7beWEFFzFlbw+hraIJGLXBBsGPtMZs24pLpP016R4C
- +YrvgoyTVi5DArBcHZq08ps3nCP2mDc4nhGgGGg73bJ0cbRrgT1VZ7GjS
- 8Vf+4q/KYBkGKAsSDAnKyMnyFH9EVCa+5wUAYUvv2sI39B/ZfellcGNTf
- x4bdwHqlxtBXVGgsZBGPAR9xEKBqeU8q4gI7t52HbQ/vSPuJ4HvXMqqCR
- 1ytYdSy0cBbGxyVjaWRRdyCy+gp1JKPK27QJM5RioVQeKF533NIxNzX94 w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11006"; a="4561066"
+ t=1709912896; x=1741448896;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=SlAS9yX5j5dP2elx0rVWW8Uz1U3RxAWhNkK3q/6NEz4=;
+ b=bROjxydHN9kmhJ77ERqUmrwMSunVMWPdVD6/eVSLYai98r+uLHwDc8N2
+ hPFFwHEKXyOCmP49tJgMBoRxxmcVW7a+vkbXXbtNiNgw+hdYGUJMWrujJ
+ 9Ub3sffxbk3h2vP2Cf3KA3F9dNATPW/PbX8EXrIp806tqEhB96DTSh67D
+ XtArAiK19B2+LnbulpkP0QBxbg2EPDbEVyJ2pmvy+w/HkhEqQZseHiHlT
+ 809yiRWedMZqrRKkxc8h/l/uryZZftJt8/0RX6TLfjGP2wuALOE82cbX1
+ MVB3DSHCDaxJ1V/qDDxjkLRZw7RXpO3kbuglRxwaUdMBA/PV1PIGDudHp Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11006"; a="4560993"
 X-IronPort-AV: E=Sophos;i="6.07,110,1708416000"; 
-   d="scan'208";a="4561066"
+   d="scan'208";a="4560993"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Mar 2024 07:48:30 -0800
+ 08 Mar 2024 07:48:13 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,110,1708416000"; d="scan'208";a="10400335"
+X-IronPort-AV: E=Sophos;i="6.07,110,1708416000"; d="scan'208";a="10400311"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa007.fm.intel.com with ESMTP; 08 Mar 2024 07:48:27 -0800
+ by fmviesa007.fm.intel.com with ESMTP; 08 Mar 2024 07:48:10 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -52,13 +52,12 @@ To: Eduardo Habkost <eduardo@habkost.net>,
  Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org
 Cc: Xiaoling Song <xiaoling.song@intel.com>,
 	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 06/13] tests/unit/test-smp-parse: Bump max_cpus to 4096
-Date: Sat,  9 Mar 2024 00:01:41 +0800
-Message-Id: <20240308160148.3130837-7-zhao1.liu@linux.intel.com>
+Subject: [PATCH v2 00/13] Cleanup on SMP and its test
+Date: Sat,  9 Mar 2024 00:01:35 +0800
+Message-Id: <20240308160148.3130837-1-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240308160148.3130837-1-zhao1.liu@linux.intel.com>
-References: <20240308160148.3130837-1-zhao1.liu@linux.intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: none client-ip=198.175.65.21;
  envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
@@ -86,53 +85,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-The q35 machine is trying to support up to 4096 vCPUs [1], so it's
-necessary to bump max_cpus in test-smp-parse to 4096 to cover the
-topological needs of future machines.
+Hi,
 
-[1]: https://lore.kernel.org/qemu-devel/20240228143351.3967-1-anisinha@redhat.com/
+This is v2 to cleanup SMP and its test cases.
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Tested-by: Xiaoling Song <xiaoling.song@intel.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Compared with v1, v2 have these changes:
+ * Dropped the patch [2] about making default initialization based on
+   SMPConfiguration members. (Thomas)
+ * Fixed typos. (Thomas)
+
+This series includes:
+ * [Patch 1] Remove deprecated "parameter=0" SMP configurations, which
+             is marked as deprecated in v6.2.
+ * [Patch 2] Deprecate unsupported "parameter=1" SMP configurations.
+ * [Patch 3] Minor code cleanup for machine_parse_smp_config().
+ * [Patch 4 ~ 13] Test case enhancements to cover more SMP API changes.
+
+[1]: https://lore.kernel.org/qemu-devel/20240306095407.3058909-1-zhao1.liu@linux.intel.com/
+[2]: https://lore.kernel.org/qemu-devel/20240306095407.3058909-4-zhao1.liu@linux.intel.com/
+
+Thanks for your review!
+
+Best Regards,
+Zhao
 ---
- tests/unit/test-smp-parse.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+Zhao Liu (13):
+  hw/core/machine-smp: Remove deprecated "parameter=0" SMP
+    configurations
+  hw/core/machine-smp: Deprecate unsupported "parameter=1" SMP
+    configurations
+  hw/core/machine-smp: Calculate total CPUs once in
+    machine_parse_smp_config()
+  tests/unit/test-smp-parse: Drop the unsupported "dies=1" case
+  tests/unit/test-smp-parse: Use CPU number macros in invalid topology
+    case
+  tests/unit/test-smp-parse: Bump max_cpus to 4096
+  tests/unit/test-smp-parse: Make test cases aware of the book/drawer
+  tests/unit/test-smp-parse: Test "books" parameter in -smp
+  tests/unit/test-smp-parse: Test "drawers" parameter in -smp
+  tests/unit/test-smp-parse: Test "drawers" and "books" combination case
+  tests/unit/test-smp-parse: Test the full 7-levels topology hierarchy
+  tests/unit/test-smp-parse: Test smp_props.has_clusters
+  tests/unit/test-smp-parse: Test "parameter=0" SMP configurations
 
-diff --git a/tests/unit/test-smp-parse.c b/tests/unit/test-smp-parse.c
-index 84e342277452..2eb9533bc505 100644
---- a/tests/unit/test-smp-parse.c
-+++ b/tests/unit/test-smp-parse.c
-@@ -20,8 +20,8 @@
- #define T true
- #define F false
- 
--#define MIN_CPUS 1   /* set the min CPUs supported by the machine as 1 */
--#define MAX_CPUS 512 /* set the max CPUs supported by the machine as 512 */
-+#define MIN_CPUS 1    /* set the min CPUs supported by the machine as 1 */
-+#define MAX_CPUS 4096 /* set the max CPUs supported by the machine as 4096 */
- 
- #define SMP_MACHINE_NAME "TEST-SMP"
- 
-@@ -333,13 +333,13 @@ static const struct SMPTestData data_generic_invalid[] = {
-                         "by machine '" SMP_MACHINE_NAME "' is 2",
-     }, {
-         /*
--         * config: -smp 512
-+         * config: -smp 4096
-          * The test machine should tweak the supported max CPUs to
--         * 511 (MAX_CPUS - 1) for testing.
-+         * 4095 (MAX_CPUS - 1) for testing.
-          */
--        .config = SMP_CONFIG_GENERIC(T, MAX_CPUS, F, 0, F, 0, F, 0, F, 0),
--        .expect_error = "Invalid SMP CPUs 512. The max CPUs supported "
--                        "by machine '" SMP_MACHINE_NAME "' is 511",
-+        .config = SMP_CONFIG_GENERIC(T, 4096, F, 0, F, 0, F, 0, F, 0),
-+        .expect_error = "Invalid SMP CPUs 4096. The max CPUs supported "
-+                        "by machine '" SMP_MACHINE_NAME "' is 4095",
-     },
- };
- 
+ docs/about/deprecated.rst       |  30 +-
+ docs/about/removed-features.rst |  15 +
+ hw/core/machine-smp.c           |  76 ++--
+ tests/unit/test-smp-parse.c     | 612 ++++++++++++++++++++++++++++++--
+ 4 files changed, 669 insertions(+), 64 deletions(-)
+
 -- 
 2.34.1
 
