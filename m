@@ -4,135 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6488BC54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 11:33:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC0C6C54E4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 11:58:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riYT1-0001ly-BG; Fri, 08 Mar 2024 06:32:47 -0500
+	id 1riYqT-0000RZ-Eu; Fri, 08 Mar 2024 06:57:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1riYSz-0001k5-6x
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 06:32:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1riYSx-00082i-F5
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 06:32:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709897562;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=G5TwqMr/piQqEVlLmpiNbiRN/c+6k9A5RdoxxvDGtl0=;
- b=doQATUkzKJsS2yZkblURbRU8NG73BZ8SopiztFaEXSnTBj+4gEsJH4c3nqA6nRkzl6k2cL
- jJ7ZbBsTpSF2CSqkXL8f2ziagLDI6BQ5bEifkZLFHQjsKHOisIqraGYsomqDTrruJbP6d4
- mShkLsUhpa+liNxbr/tMnZL+JGU4GtU=
-Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
- [209.85.161.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-496-hHna2RE9N1y82tccqZ4_vQ-1; Fri, 08 Mar 2024 06:32:40 -0500
-X-MC-Unique: hHna2RE9N1y82tccqZ4_vQ-1
-Received: by mail-oo1-f72.google.com with SMTP id
- 006d021491bc7-59907104d88so1992310eaf.3
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 03:32:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <christoph.muellner@vrull.eu>)
+ id 1riYqR-0000QL-AT
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 06:56:59 -0500
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <christoph.muellner@vrull.eu>)
+ id 1riYqP-00087z-7D
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 06:56:59 -0500
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-29996cc6382so1416179a91.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 03:56:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=vrull.eu; s=google; t=1709899015; x=1710503815; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ciJX/JW8933uO3WRfae3QxoiJBeHecoR2sZBfpWJmWw=;
+ b=NbDc82ltpSNsVgMPDofgqbVufp+8SQH7ZJOvUHAO2jM9ATkYzD3rJz5uJy94aJbBcR
+ JvHfnBSs2cAE/HsdgugXBWGxktNDf7aN/GpnRjuSl/m54WjY9E5L9a4Wcuff7uzmwg5b
+ yXm3crfeULx+Zh25J6zMWrxhxcmHayhIet2u0PLDhb/rvpraYIdoWQq/ER4S+urk4uvJ
+ RdgcmuXN+6TzTtbC6sL8BAnSRXNgFA3Ehi1Rqnjw3IjAOWx+PKwZSYm6Gy4mn30YRV69
+ C8OCDZUDgdCobEkrJWgOt6Je/SO5IurAB0vc4UuC3+yJOe9u8onlqEY7S0jENzXA+skd
+ Ej6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709897560; x=1710502360;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=G5TwqMr/piQqEVlLmpiNbiRN/c+6k9A5RdoxxvDGtl0=;
- b=LrfUlEi2y1tsjoxDzCyZsZ24J46hcMpR59NO/x52zSxELmwqwiS/+3vYepo7Ao4XPt
- yJ8Bujm/dEMAzeI2XGO5WwUwtSVZImKr/VpNJ0zuX8YfPECbljQVQWfKDcCbeFfF02aT
- 8fltqRen4yEJ2+6zGJBXMfnRsqoSW4zKigCph55Asjqr24w294vmAzIR0JWAT2I9uSwZ
- BHojGFmpzqg7LEZN/ZIo2S8bTGdQMkngy+6waj+oMT7Uty75NObtYwB/R+CXtw8oy5BL
- Y/dEm3ZmHf69KEd82w/tfD2a0PDZjZjwoboptDdZ9iZEGCHZR2ab6URo3IMt+V6/6u49
- XigA==
+ d=1e100.net; s=20230601; t=1709899015; x=1710503815;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ciJX/JW8933uO3WRfae3QxoiJBeHecoR2sZBfpWJmWw=;
+ b=QQ2gZukB/VpAZ8LOfe8fuxVPO+jLKta6NMCglO+WCzoZPkpojiJ3rxdbhiesUZ4Us+
+ BRmJSxp9kf9C+AIPy7IDOeoaASmFgdYdto7VgUz0hdA4y0Ok6B4O5XiZr0iY6N9khibQ
+ oVr0Q2x7Wa9eAM1laVX5rt/Zz3BLgPntb+Or+VOf5ibHRNN9qgfhKc+JQdShO1LiE6ba
+ VR0Z4JTU0fWA3Sn5UvT79boJytgAu7G2Jria7Gmahf5p1LaaeSFsMRFU8WnuQeyLGie4
+ po7+Lv9blFlCsAhbO28E19627WzYTKE3hlgfx2LDrsmrH41EMQFSDGcRCiDI8zwPwbMC
+ Rrzg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWX6bT+/2zfY4BmhlLwkVnaYnhxwG/Q0M0bAFbMnZ/aNLH34Lk5256OG6IkCv1VaOMzBElw4icDL3V5Kx8hTQG2X/0E3ow=
-X-Gm-Message-State: AOJu0YxqE3yy5qEwUxAj2eLUF8ZkWfoISZ4jSE2N5qHJ3OQHx3WkERaE
- F6gDwSf40DSWNEtGc0RsDDhEe8IFHCQ29HCkXLmh3jJMMpuG9lW0mE9sdFSRRBaBrJKnAdEPPNw
- neTdUHGH1kXnSvyNaQeyCZE1d1bu2fYNDmSgmfytDtZ+O0y7pXL3j
-X-Received: by 2002:a05:6358:5685:b0:17b:f465:c67a with SMTP id
- o5-20020a056358568500b0017bf465c67amr12580562rwf.29.1709897559817; 
- Fri, 08 Mar 2024 03:32:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFv2qYR26jIaraZhcWQIT/fpffZfW127/qwbY1spN05upaI5eCRjABDM8LAeZ4crmysXnsMyA==
-X-Received: by 2002:a05:6358:5685:b0:17b:f465:c67a with SMTP id
- o5-20020a056358568500b0017bf465c67amr12580531rwf.29.1709897559478; 
- Fri, 08 Mar 2024 03:32:39 -0800 (PST)
-Received: from [192.168.0.9] (ip-109-43-178-151.web.vodafone.de.
- [109.43.178.151]) by smtp.gmail.com with ESMTPSA id
- 25-20020a05620a04d900b007882528475dsm5556975qks.49.2024.03.08.03.32.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Mar 2024 03:32:39 -0800 (PST)
-Message-ID: <bb66c3f5-73b9-4ee8-b186-8384168c8930@redhat.com>
-Date: Fri, 8 Mar 2024 12:32:35 +0100
+ AJvYcCX2Cc9HOYXoESLfSKwdzAe/hIvjQAFwdPNknK6aCt86lIMdqsMsSvdAz2ZNTbsVkFaT/H/B4JpyYij5JFE4yX9GC7kzC98=
+X-Gm-Message-State: AOJu0YxEfHRCY98QlaVPfDhIc0CBEFbbGvSd1CzlPKPXGTvQ6o9CHnuW
+ fwphAcPOtmlVwb1P6O547Dtyco6IlXBPYr3yLFjH/27iK55VKXbw6LQeaA7K4cFpiZDQd+GAC1K
+ FQRnNYQurnT+5V2yDAqOj64hfSU1wLQq/7UJBoBsZ2O3nxeXVYB0=
+X-Google-Smtp-Source: AGHT+IHD1OBDr0rnESxh2VrIx7Vdt6udRoR+4K1F2wynQ7YWTUkt1mFRYwvP75736vCpQUldXKsinLcBjh8jBbpOyl8=
+X-Received: by 2002:a17:90a:f404:b0:29b:bd2c:7238 with SMTP id
+ ch4-20020a17090af40400b0029bbd2c7238mr340750pjb.7.1709899015550; Fri, 08 Mar
+ 2024 03:56:55 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] configure: Fix error message when C compiler is not
- working
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-References: <20240308060034.139670-1-thuth@redhat.com>
- <CAFEAcA-0kNwed8SbceWuR89mFMvfwfPpQaJJfdoRoM3az8vttQ@mail.gmail.com>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CAFEAcA-0kNwed8SbceWuR89mFMvfwfPpQaJJfdoRoM3az8vttQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20240306093308.35188-1-eric.huang@linux.alibaba.com>
+ <9b9c1af9-5dca-4270-8dfe-a62223c8cbbb@ventanamicro.com>
+ <d86b22f7-e601-4bd0-9edc-88d84f572595@linaro.org>
+ <dc9f673a-3f5a-4703-b171-b8599bdec22e@linaro.org>
+In-Reply-To: <dc9f673a-3f5a-4703-b171-b8599bdec22e@linaro.org>
+From: =?UTF-8?Q?Christoph_M=C3=BCllner?= <christoph.muellner@vrull.eu>
+Date: Fri, 8 Mar 2024 12:56:43 +0100
+Message-ID: <CAEg0e7hS+pntt75jmEREJaUoGfT6fpqS4M9E-aJ2LTXtiM78Pw@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: Implement dynamic establishment of custom
+ decoder
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Huang Tao <eric.huang@linux.alibaba.com>, 
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com, 
+ liwei1518@gmail.com, bin.meng@windriver.com, alistair.francis@wdc.com, 
+ palmer@dabbelt.com, Philipp Tomsich <philipp.tomsich@vrull.eu>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=christoph.muellner@vrull.eu; helo=mail-pj1-x1029.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.583,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,62 +99,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/03/2024 12.26, Peter Maydell wrote:
-> On Fri, 8 Mar 2024 at 06:01, Thomas Huth <thuth@redhat.com> wrote:
->>
->> If you try to run the configure script on a system without a working
->> C compiler, you get a very misleading error message:
->>
->>   ERROR: Unrecognized host OS (uname -s reports 'Linux')
->>
->> We should rather tell the user that we were not able to use the C
->> compiler instead, otherwise they will have a hard time to figure
->> out what was going wrong.
->>
->> Fixes: 264b803721 ("configure: remove compiler sanity check")
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   configure | 12 +++++++-----
->>   1 file changed, 7 insertions(+), 5 deletions(-)
->>
->> diff --git a/configure b/configure
->> index 3cd736b139..a036923dee 100755
->> --- a/configure
->> +++ b/configure
->> @@ -411,7 +411,7 @@ else
->>     # Using uname is really broken, but it is just a fallback for architectures
->>     # that are going to use TCI anyway
->>     cpu=$(uname -m)
->> -  echo "WARNING: unrecognized host CPU, proceeding with 'uname -m' output '$cpu'"
->> +  echo "WARNING: could not determine host CPU, proceeding with 'uname -m' output '$cpu'"
->>   fi
->>
->>   # Normalise host CPU name to the values used by Meson cross files and in source
->> @@ -1000,10 +1000,12 @@ if test -z "$ninja"; then
->>   fi
->>
->>   if test "$host_os" = "bogus"; then
->> -    # Now that we know that we're not printing the help and that
->> -    # the compiler works (so the results of the check_defines we used
->> -    # to identify the OS are reliable), if we didn't recognize the
->> -    # host OS we should stop now.
->> +    # Now that we know that we're not printing the help, we should stop now
->> +    # if we didn't recognize the host OS (or the C compiler is not working).
->> +    write_c_skeleton;
->> +    if ! compile_object ; then
->> +        error_exit "C compiler \"$cc\" is not usable"
->> +    fi
->>       error_exit "Unrecognized host OS (uname -s reports '$(uname -s)')"
->>   fi
-> 
-> Why doesn't it work to check the C compiler works before we
-> do the "what is the host CPU" test ? Does that make the
-> --help output not work when there's no C compiler?
+On Thu, Mar 7, 2024 at 9:35=E2=80=AFPM Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> >>> -        for (size_t i =3D 0; i < ARRAY_SIZE(decoders); ++i) {
+> >>> -            if (decoders[i].guard_func(ctx->cfg_ptr) &&
+> >>> -                decoders[i].decode_func(ctx, opcode32)) {
+> >>> +        for (size_t i =3D 0; i < decoder_table_size; ++i) {
+> >>> +            if (ctx->decoder[i](ctx, opcode32)) {
+> >>>                   return;
+>
+> By the way, you're adding layers of pointer chasing, so I suspect you'll =
+find all of this
+> is a wash or worse, performance-wise.
+>
+>
+> Indeed, since some of the predicates are trivial, going the other way mig=
+ht help: allow
+> everything to be inlined:
+>
+>      if (decode_insn32(...)) {
+>          return;
+>      }
+>      if (has_xthead_p(...) && decode_xthead(...)) {
+>          return;
+>      }
+>      ...
+>
+>
+> Even if there are 10 entries here, so what?  All of the code has to be co=
+mpiled into QEMU.
+>   You're not going to somehow add truly dynamic code that you've loaded f=
+rom a module.
 
-Right, that's the problem: --help would not work when there is no working C 
-compiler.
+I just tested this with GCC -O2/-O3. The generated code from the
+existing decoder loop will
+result in exactly what you have listed here (loop unrolling,
+transforming the indirect calls
+to direct calls, inlining, and evaluation of statically known conditions).
+has_xthead_p() can get inlined as well, if the inlining costs are
+considered low enough
+(thank you, Richard, for giving some hints about that below).
 
-  Thomas
+What the commit message is not mentioning (and what this patch was
+actually addressing and
+therefore should have been mentioned):
+Having dynamic control of the decoder order was meant to allow adding
+a vendor_decoder
+before decode_insn32() with minimal overhead (no guard_func) for users
+that don't need
+this particular vendor_decoder.
 
+Being more explicit: there is interest in supporting the
+non-conforming (conflicting) instruction
+extension XTheadVector:
+  https://github.com/T-head-Semi/thead-extension-spec/blob/master/xtheadvec=
+tor.adoc
+XTheadVector uses the RVV 0.7.1 draft encoding, which conflicts with
+the ratified RVV spec.
+The idea is to avoid these conflicts with a call to
+decode_xtheadvector() before decode_insn32().
+This implies that everyone has to call has_xtheadvector_p() before
+calling decode_insn32().
+And the intent of this patch is to provide a mechanism to reduce this overh=
+ead.
 
+When suggesting the dynamic decoder list, I was not aware that
+always_true_p() will be
+eliminated by the compiler. Since this is the case, I agree with the
+"wash or worse" for
+decode_insn32(). The elimination of following guard functions for
+vendor decoders is likely
+less performance relevant.
+
+I don't think we should discuss efficiency any further unless we have
+some data to
+justify any changes. E.g. emulating a RISC-V SPEC CPU 2017 run on x86_64 an=
+d
+looking at the runtimes could give the relevant insights for the
+following scenarios:
+* existing code on upstream/master
+* existing code + adding a new extension that comes before
+decode_insn32 in decoders[]
+* existing code + this patch (dynamic decoders)
+Related overheads that could be measured: adding 20 new instructions
+to decode_insn32(),
+which are not executed (to put the costs into perspective).
+
+> You could perhaps streamline predicates such as has_xthead_p to not test =
+11 variables by
+> adding an artificial "ext_xthead_any" configuration entry that is the sum=
+ of all of those.
+>
+>
+> r~
 
