@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B4B2C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 13:05:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60C5AC54E58
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 13:06:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riZut-0006Cc-BV; Fri, 08 Mar 2024 08:05:40 -0500
+	id 1riZv0-0006Dr-Kv; Fri, 08 Mar 2024 08:05:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1riZuj-0006Bq-EL
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 08:05:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1riZue-0006Be-RS
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 08:05:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1riZuY-00055h-7y
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 08:05:24 -0500
+ id 1riZuW-00053D-Rf
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 08:05:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709903116;
+ s=mimecast20190719; t=1709903113;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jqVMWKpeXwC4Ylciagl3B8Eo/ho05hURMDmohc/QMjM=;
- b=fumqM6/kSktQEoMYhZFyoM52O/r0x7N6IliBvDqirrpWbfEmZ9lRPIcHQRtfWvXy+hsGnX
- mRrKcizyEe+Pkt6rU3ws1XL8/NiQyALOWubdcA1oSjIKAV3nOlaS0mGcXptg1Q8ie+edW9
- 4ARCWN+NGsXmjf7pTBKlLG/sBuBfXaY=
-Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
- [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=VvAfo45Jv4F6T6gd+Qjfxy0W0/zo7ts+kLTV8Nly7jA=;
+ b=PhurrY7sBVUbDF08DfvBcTnHHnwbmiqHO7NFEhcbcWii6zPhMPN4k3w2DHZqhTjKCj8yi+
+ E9MvKikzeWqVx0QOAJxxonRZF/E1vaGbeM6prL5qtvDftZmnJuA3sNjMyqkrW91GUuKhdB
+ eHntAIJfjcBIytEXJYqOAkDp+OPf6mY=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-529-ICUD7BT6OmiRkxYOxnY3iQ-1; Fri, 08 Mar 2024 08:05:14 -0500
-X-MC-Unique: ICUD7BT6OmiRkxYOxnY3iQ-1
-Received: by mail-lj1-f197.google.com with SMTP id
- 38308e7fff4ca-2d3fb557a1cso6097141fa.3
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 05:05:14 -0800 (PST)
+ us-mta-318-DMHnQDU-Mg-PA7872w5Yjw-1; Fri, 08 Mar 2024 08:05:12 -0500
+X-MC-Unique: DMHnQDU-Mg-PA7872w5Yjw-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a456c9d0717so112392466b.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 05:05:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709903112; x=1710507912;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jqVMWKpeXwC4Ylciagl3B8Eo/ho05hURMDmohc/QMjM=;
- b=XzfX2oUvUGOQ1d9X0j8uUKMFCcosxMjR3bEd5RLQcm4kD9msRf7WVdT6qRWa6W+vCC
- 1rTaY4TbM3e5FUWohGLoM1K1OYh7oMdO/Z6vmY1kulX5Y9WcPpjfnG7seSgRmouBImLe
- Tlz9Pkf3FLPymqYZI/qf6TH/E/6PyY3LngcCYpAt2l+je7andE3a3bo9DF5MR7sJgXm9
- H+07t2rjdAfc5DyLud8UNuo4uZYHyu8nZirYCGal6jyq4+85o2WVc/z5z3LpPj7t43kA
- bFUlu2/jlLpa62+zYIb09Mpis9lxCwZuQkyGQnGjpgg35kXmX7NDI4wXY2wytRqnDF3o
- NBgw==
-X-Gm-Message-State: AOJu0YxCWqOQLNKgmj1jG+nfXTdnH4jXd7AW2If0PiiwoF4p+Eu4R2Kc
- vHCgZHI7rdiXLUy40KnXCac2OxRu3Sj6xT2PHkx13/nU2qUC2Sqx6sv32/NnC8J+QCPoJCnPl4N
- K6BJnclpOIgLzx/By0Hsfs+Gs32t9vTbN2GrL5eGWpxyx8d7l9uExsWlciu6uCdD3EJGJM+L6Od
- kv6DslzCG8MK1DA1i1wJzoNxVBpSHeVdllv8P/
-X-Received: by 2002:a2e:3c0a:0:b0:2d2:d815:c894 with SMTP id
- j10-20020a2e3c0a000000b002d2d815c894mr3107625lja.51.1709903112260; 
- Fri, 08 Mar 2024 05:05:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IExjCSFAcPOirjaGbcbKC3Yo1CYAmuB6b7PtsOPW/Rl4JC87ruAzPfJ+BMkIYabPA6KkOhp3A==
-X-Received: by 2002:a2e:3c0a:0:b0:2d2:d815:c894 with SMTP id
- j10-20020a2e3c0a000000b002d2d815c894mr3107596lja.51.1709903111683; 
- Fri, 08 Mar 2024 05:05:11 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709903109; x=1710507909;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=VvAfo45Jv4F6T6gd+Qjfxy0W0/zo7ts+kLTV8Nly7jA=;
+ b=Tqknu8zOCxa1xItApM7RqgY1yXASNkay9avxlwp4MOjtWEOFFOdVoHtYT1wohPVGig
+ zCIoQyuvW6woPcVaz8OGBXHxMKT/85KmsZxHwKsRjKAedLeHAxISbkdDc3DyzVVAw7A1
+ h69r3gVhZCSR0DBvXVFvvKNBI5cnxKZhAf8mfP66Z4VPFyEE5I0idbhRGH58CyleLpLK
+ HSyIMwCZt/pFvZ0tLbgN5Bp+uxkF7TaQX/P8P1/w44Dg+BeLCyekavGL0sLyeVhb5wkp
+ WKcx2m8kkJi2HphtS6mmdqes/bIfivHc+rkp74aJBYhHVxCBiqijYACM+93XX3i2COyO
+ r98w==
+X-Gm-Message-State: AOJu0Yx4jqk7h94tJEydk/7/lmt336CYWRCIty55d4GP/6Cg6jFKY6Lm
+ REuRomHUe9LWnqA6Y2oAOU7VAEzU+14JoC0Esfh0TwTR9qN3rfaP3Tzj9iH5psyxsu6whspLbtF
+ M0Sj0wu2JpG/ro2xoVYoVCNPYJJLrj9a8o3isxdsB+S7XYeLZc+u6IplcMZS+pVYr3g+7w70P6C
+ 0sHi8AJo5abFY2TL20hrgT0iepKNqdiUeM8+9y
+X-Received: by 2002:a17:906:7f95:b0:a44:2b:cdd0 with SMTP id
+ f21-20020a1709067f9500b00a44002bcdd0mr15934525ejr.20.1709903108895; 
+ Fri, 08 Mar 2024 05:05:08 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG/M4zCrTHYlgks1Gx8Zxkk1FkCZBqCOd8ATYUJIfxN0mF4c3CHR8lH2XyajN5XoJF6pQfe4g==
+X-Received: by 2002:a17:906:7f95:b0:a44:2b:cdd0 with SMTP id
+ f21-20020a1709067f9500b00a44002bcdd0mr15934507ejr.20.1709903108441; 
+ Fri, 08 Mar 2024 05:05:08 -0800 (PST)
 Received: from [192.168.10.118] ([151.49.77.21])
  by smtp.gmail.com with ESMTPSA id
- p8-20020a05640243c800b00567fd12c7f8sm2390587edc.60.2024.03.08.05.05.09
+ fw17-20020a170906c95100b00a4576dd5a8csm4906778ejb.201.2024.03.08.05.05.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 05:05:09 -0800 (PST)
+ Fri, 08 Mar 2024 05:05:08 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
-Subject: [PATCH v2 1/2] run-coverity-scan: add --check-upload-only option
-Date: Fri,  8 Mar 2024 14:05:06 +0100
-Message-ID: <20240308130507.582097-2-pbonzini@redhat.com>
+Subject: [PATCH v2 0/2] ci: allow running Coverity Scan uploads via GitLab
+Date: Fri,  8 Mar 2024 14:05:05 +0100
+Message-ID: <20240308130507.582097-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240308130507.582097-1-pbonzini@redhat.com>
-References: <20240308130507.582097-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,144 +100,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add an option to check if upload is permitted without actually
-attempting a build.  This can be useful to add a third outcome
-beyond success and failure---namely, a CI job can self-cancel
-if the uploading quota has been reached.
+The machine that is used to upload QEMU builds to Coverity is used daily
+as a development machine by Emanuele and myself, and as a result sometimes
+its podman/docker setup gets messed up.  When this happens, Coverity
+uploads might stop for extended periods of time.
 
-There is a small change here in that a failure to do the upload
-check changes the exit code from 1 to 99.  99 was chosen because
-it is what Autotools and Meson use to represent a problem in the
-setup (as opposed to a failure in the test).
+In the interest of tightening this and of depending less on infrastructure
+maintained by specific people, replace the manually-managed crontab
+entry with a new job in GitLab's CI; this is also what Libvirt does.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
+The only change from v1 is better documentation of the changes in the
+script exit code when the upload check fails, for example due to a bad
+token.
+
+Paolo
+
+Paolo Bonzini (2):
+  run-coverity-scan: add --check-upload-only option
+  gitlab-ci: add manual job to run Coverity
+
+ .gitlab-ci.d/base.yml                   |  4 ++
+ .gitlab-ci.d/buildtest.yml              | 37 ++++++++++++++++
+ .gitlab-ci.d/opensbi.yml                |  4 ++
  scripts/coverity-scan/run-coverity-scan | 59 ++++++++++++++++++-------
- 1 file changed, 42 insertions(+), 17 deletions(-)
+ 4 files changed, 87 insertions(+), 17 deletions(-)
 
-diff --git a/scripts/coverity-scan/run-coverity-scan b/scripts/coverity-scan/run-coverity-scan
-index d56c9b66776..96d852aa362 100755
---- a/scripts/coverity-scan/run-coverity-scan
-+++ b/scripts/coverity-scan/run-coverity-scan
-@@ -28,6 +28,7 @@
- # project settings, if you have maintainer access there.
- 
- # Command line options:
-+#   --check-upload-only : return success if upload is possible
- #   --dry-run : run the tools, but don't actually do the upload
- #   --docker : create and work inside a container
- #   --docker-engine : specify the container engine to use (docker/podman/auto);
-@@ -57,18 +58,18 @@
- # putting it in a file and using --tokenfile. Everything else has
- # a reasonable default if this is run from a git tree.
- 
--check_upload_permissions() {
--    # Check whether we can do an upload to the server; will exit the script
--    # with status 1 if the check failed (usually a bad token);
--    # will exit the script with status 0 if the check indicated that we
--    # can't upload yet (ie we are at quota)
--    # Assumes that COVERITY_TOKEN, PROJNAME and DRYRUN have been initialized.
-+upload_permitted() {
-+    # Check whether we can do an upload to the server; will exit *the script*
-+    # with status 99 if the check failed (usually a bad token);
-+    # will return from the function with status 1 if the check indicated
-+    # that we can't upload yet (ie we are at quota)
-+    # Assumes that COVERITY_TOKEN and PROJNAME have been initialized.
- 
-     echo "Checking upload permissions..."
- 
-     if ! up_perm="$(wget https://scan.coverity.com/api/upload_permitted --post-data "token=$COVERITY_TOKEN&project=$PROJNAME" -q -O -)"; then
-         echo "Coverity Scan API access denied: bad token?"
--        exit 1
-+        exit 99
-     fi
- 
-     # Really up_perm is a JSON response with either
-@@ -76,25 +77,40 @@ check_upload_permissions() {
-     # We do some hacky string parsing instead of properly parsing it.
-     case "$up_perm" in
-         *upload_permitted*true*)
--            echo "Coverity Scan: upload permitted"
-+            return 0
-             ;;
-         *next_upload_permitted_at*)
--            if [ "$DRYRUN" = yes ]; then
--                echo "Coverity Scan: upload quota reached, continuing dry run"
--            else
--                echo "Coverity Scan: upload quota reached; stopping here"
--                # Exit success as this isn't a build error.
--                exit 0
--            fi
-+            return 1
-             ;;
-         *)
-             echo "Coverity Scan upload check: unexpected result $up_perm"
--            exit 1
-+            exit 99
-             ;;
-     esac
- }
- 
- 
-+check_upload_permissions() {
-+    # Check whether we can do an upload to the server; will exit the script
-+    # with status 1 if the check failed (usually a bad token);
-+    # will exit the script with status 0 if the check indicated that we
-+    # can't upload yet (ie we are at quota)
-+    # Assumes that COVERITY_TOKEN, PROJNAME and DRYRUN have been initialized.
-+
-+    if upload_permitted; then
-+        echo "Coverity Scan: upload permitted"
-+    else
-+        if [ "$DRYRUN" = yes ]; then
-+            echo "Coverity Scan: upload quota reached, continuing dry run"
-+        else
-+            echo "Coverity Scan: upload quota reached; stopping here"
-+            # Exit success as this isn't a build error.
-+            exit 0
-+        fi
-+    fi
-+}
-+
-+
- build_docker_image() {
-     # build docker container including the coverity-scan tools
-     echo "Building docker container..."
-@@ -152,9 +168,14 @@ update_coverity_tools () {
- DRYRUN=no
- UPDATE=yes
- DOCKER=no
-+PROJNAME=QEMU
- 
- while [ "$#" -ge 1 ]; do
-     case "$1" in
-+        --check-upload-only)
-+            shift
-+            DRYRUN=check
-+            ;;
-         --dry-run)
-             shift
-             DRYRUN=yes
-@@ -251,6 +272,11 @@ if [ -z "$COVERITY_TOKEN" ]; then
-     exit 1
- fi
- 
-+if [ "$DRYRUN" = check ]; then
-+    upload_permitted
-+    exit $?
-+fi
-+
- if [ -z "$COVERITY_BUILD_CMD" ]; then
-     NPROC=$(nproc)
-     COVERITY_BUILD_CMD="make -j$NPROC"
-@@ -266,7 +292,6 @@ if [ -z "$SRCDIR" ]; then
-     SRCDIR="$PWD"
- fi
- 
--PROJNAME=QEMU
- TARBALL=cov-int.tar.xz
- 
- if [ "$UPDATE" = only ]; then
 -- 
 2.43.2
 
