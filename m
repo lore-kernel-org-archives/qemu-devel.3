@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AF73C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 14:43:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FAA4C54E4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 14:47:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ribR3-0007Jk-SU; Fri, 08 Mar 2024 09:42:57 -0500
+	id 1ribV3-0008Kk-8t; Fri, 08 Mar 2024 09:47:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ribR1-0007Hz-DH
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:42:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ribQz-0001Zk-35
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:42:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709908971;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7o8o7RCiAdtaGqo/xQo5FFKNCdmcETJdy5AMBGCusOc=;
- b=EGrqfeJAWe+idUcD85rQR7GWf4rxriMBYbsW1YpqW/MVgp5A9RER5Y6agmEq2S8z3i7w5G
- MTOamXRph6E0ddKzXh+FRfYkihr5iJq4gK/q3kh8WRgSvZyn7+idYg8Q6bwCZk3TPRPH1M
- rXHQrqrRSUBfz3ELR/SQHFATjTh4U3o=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-eJyeGxFBNf2cISscjL0fDw-1; Fri,
- 08 Mar 2024 09:42:48 -0500
-X-MC-Unique: eJyeGxFBNf2cISscjL0fDw-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E953A2800089;
- Fri,  8 Mar 2024 14:42:47 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.3])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 7F1AE492BCD;
- Fri,  8 Mar 2024 14:42:47 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 6B06321E6A24; Fri,  8 Mar 2024 15:42:46 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Kashyap Chamarthy <kchamart@redhat.com>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH 1/4] docs/interop/firmware.json: Align examples
-In-Reply-To: <20240306-qapi-firmware-json-v1-1-619f7122a249@linutronix.de>
- ("Thomas =?utf-8?Q?Wei=C3=9Fschuh=22's?= message of "Wed, 06 Mar 2024
- 11:31:22 +0100")
-References: <20240306-qapi-firmware-json-v1-0-619f7122a249@linutronix.de>
- <20240306-qapi-firmware-json-v1-1-619f7122a249@linutronix.de>
-Date: Fri, 08 Mar 2024 15:42:46 +0100
-Message-ID: <87wmqc23a1.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ribV0-0008K6-NI
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:47:02 -0500
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ribUz-0002q9-AO
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:47:02 -0500
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5682ecd1f81so836727a12.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 06:46:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709909219; x=1710514019; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=U3hanExyLbHLGyRmNOddEGpvhs/TREzWCZGI+mjYB9A=;
+ b=DtxLdQ9yQldih7+ohrKDc/fMnWnsCn518J/P7sUe92BDTUhsvA8gonjpxsb5xkvH6h
+ JtrJlbX4fXYb6IReakMMbYf6Y2bGWbSsmfvt59sIt1U+97Wwf7RjXFwMWjXueXEF7Ioo
+ u6N0EPtEdHNIdHGSZi51/eqdYfyI4cAN11bT7VnPpJ8E1K0RBxRy45h71s50q7lBRxx/
+ sT25HUQowhvGggAhll03/Si2fB59AlDPHVx/6uv2sIa+sbONPsNJlg8Wr6Cuzt5Ajur6
+ 4LivecDmRsMv6yXRFycE9x9lHnbABNFC08r56i2fAWVdEGHNhUCij2gV9wxdK2ZcDdPh
+ T8bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709909219; x=1710514019;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=U3hanExyLbHLGyRmNOddEGpvhs/TREzWCZGI+mjYB9A=;
+ b=jUAC+UnFLFk51AVzmb1Q91HznwQESgTKwZoZIoO9y6ISZO+d8r5reqQ5OcHAVkLve6
+ iCNF27WehTbM1Xk1AgQQ29a+zSOAPyRqjee55iYFLj3rnq6CsdPOl8wxR0Btjyz/GXV9
+ WYrP5vDS6Gmr5QAetTrspvaKH7VzvxxA4QyDfa4ly1fznUSD0LL98zauZ/qGDsqYQkpr
+ xscSopnE1SLVcfx4+vz9X7hl/OjvFYjPrSeyewc2NKPY/ftdPK5cy1ntae1sBQKfJ2Jn
+ U/qHynE5GvHhWCYLj5alBFPgBvH3SAX0PHbCwIM2LjZpn5w2ouri8AEpZ37UkGguIV1g
+ egwQ==
+X-Gm-Message-State: AOJu0YzW0bLJmd522gu7YV/lmSioRK5ftaBIxnJPTvgX8hmVYZrs8jht
+ cF/i6dhomRq1aUOCAQn5+BJpQWNryDAWqky5+PYbVedyPaRA7HzXm2VZmtpcplVJ8+e2wcMwEYl
+ wrNv+ORGBDd12GSMOLjFRUddwF2OEPA0pkdxZ+g==
+X-Google-Smtp-Source: AGHT+IFZi/CUAkgXfofb/pwZNJkUwCBfIDF9WFSfUN4ZgJUbOYglWI/zbhhrtfon1Dm4xMGYWSgIbEEk1+TN4sLzzX4=
+X-Received: by 2002:a50:cb8d:0:b0:565:a252:e171 with SMTP id
+ k13-20020a50cb8d000000b00565a252e171mr2230514edi.39.1709909218779; Fri, 08
+ Mar 2024 06:46:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20240308141051.536599-1-thuth@redhat.com>
+In-Reply-To: <20240308141051.536599-1-thuth@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 8 Mar 2024 14:46:47 +0000
+Message-ID: <CAFEAcA8B9KLiHgUrH8uf2Lz7QiKaYwSaPkCU+KRwZ-7e-7UhCg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] target/arm: Allow compilation without
+ CONFIG_ARM_V7M
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,18 +88,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Wei=C3=9Fschuh <thomas.weissschuh@linutronix.de> writes:
-
-> The QAPI generator now validates the alignment and rejects this file.
-
-Perhaps
-
-  Adjust indentation for commit d23055b8db8 (qapi: Require descriptions
-  and tagged sections to be indented).
-
+On Fri, 8 Mar 2024 at 14:11, Thomas Huth <thuth@redhat.com> wrote:
 >
-> Signed-off-by: Thomas Wei=C3=9Fschuh <thomas.weissschuh@linutronix.de>
+> We've got a switch to disable v7m code since a long time - but it
+> currently cannot be disabled since linking then fails due to missing
+> functions. But thanks to the clean-ups that have been done during the
+> past years, it's not that difficult anymore to finally make it possible
+> to disable CONFIG_ARM_V7M: We just have to move some v7m-related code
+> out of cpu32.c to a separate file (that we only compile if the switch
+> CONFIG_ARM_V7M is enabled) and make sure to use the stub functions in
+> m_helper.c if it is disabled. Then we can finally remove the hard-coded
+> "select ARM_V7M" from the Kconfig file.
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+I've applied patch 1 to target-arm.next; thanks.
 
+-- PMM
 
