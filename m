@@ -4,92 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 845F5C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 13:14:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A9B3C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 13:16:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ria3A-0002Xx-M6; Fri, 08 Mar 2024 08:14:13 -0500
+	id 1ria5N-0003xD-3W; Fri, 08 Mar 2024 08:16:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ria38-0002Xl-1t
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 08:14:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ria35-0007bD-Vf
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 08:14:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709903647;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sx6/WbHa0+8z+D6kYcQTPV7lUcS8fuJktOyHRi6J4MM=;
- b=GpgYBWLCGS0N3ZPlJN7AFwdEMLFfjSh6brRCbONzGK2gsomu9+BpDvZeEjaiK+PZJGjfia
- 0ytob63tTxMKnzS01K3HC9nfcguq5Z8b7MzOb7WGh02gHNAeLMYbnOaWt021wUUU5pITFd
- OEpFgO0yJd4yfHZm3N9YsV49C/5aB5E=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-631-MF16t89VPFOupeL__nfS0g-1; Fri, 08 Mar 2024 08:14:05 -0500
-X-MC-Unique: MF16t89VPFOupeL__nfS0g-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-412d433bba5so3998455e9.0
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 05:14:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <christoph.muellner@vrull.eu>)
+ id 1ria5A-0003wx-BJ
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 08:16:16 -0500
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <christoph.muellner@vrull.eu>)
+ id 1ria56-00087e-PZ
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 08:16:16 -0500
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-29b7dbe39ccso1480821a91.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 05:16:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=vrull.eu; s=google; t=1709903769; x=1710508569; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UDRK+4HPpXEzoHdKcxNPERnbIRLfSl3WqHvIvJ8OTJk=;
+ b=Zy1D7QzJiTADE1yk61j0njYwb/4IuW2h95ICcx6IwARM+8CzULNk6ReCz3CNQbBHar
+ tLYlvCFJqY/0HE15Tbogc+QNLhDmF8YBqPCoK9CFx4Aq2cI2dHtvHs1c6sl4Wmfp4VGV
+ BZn1A1jLHGhGcemE91jjcMHEoqSkoiMzVz8eY9s48GjySyYaBk+lBAoIKh5WI1kxLnJV
+ xyOEYdEVATeBMDqTfNX0pM7E0q+HsIaQOYJ4SqPwiTGJxzGpKOez9xacKlUnkbAskePa
+ canSfXRfOfIINGUrbY1YMpyAWVq+s3+uXgWD5fj+DJkh/07Pcguvph3Cj6YE+5xV5KNg
+ p3Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709903645; x=1710508445;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sx6/WbHa0+8z+D6kYcQTPV7lUcS8fuJktOyHRi6J4MM=;
- b=lrzm2fVY+y/+mQxqrAfxetgSyo/5o8jgzdCCsEHqSda6de1AIjPsDcqIpJ/NGypxne
- HIZqFUJR8Q5b3gL0uBX5GheMdebMaWBS5amDBPyiDawmorbsfq1gkzym4j10n5KOwoI+
- IZn6u5sNb4DsCnHEsr6XC5FxWL7JYUMu1X/NY+NsasSzaV4Bn+QxvJCMi8mw4lq7Xfyi
- t2JDITG53Q+/3cT2kFLyc0QG1QoZEZNSoCQQMv0MLSWp7qhjuV1Vr/mmAHTCMHDs5Vea
- Fcg+a877uOBMXNLY2HyiMx2zrCKKp9ciuFBd//qZF/TC0Bp6Ikr3PlHB+5pk1x82rVNj
- ZyFg==
-X-Gm-Message-State: AOJu0YydqizUUjRajhs07q0sjOHp7HpK72OWlv0cY5b+xB3wr+s7O7hz
- pqs1Mmrksel6nc0vYDHmOrNhQUOkIpvoJLFSTOOvJ5gzrc3Wg8uUrKJURFHT4X3ovxbFjPc7Wpg
- CrxYW3n9STWgdbXBYwNsXmcdckXx20ht25nAZBnlrx1+Wb8pz9eRV
-X-Received: by 2002:a05:600c:19cf:b0:413:128a:403 with SMTP id
- u15-20020a05600c19cf00b00413128a0403mr3291821wmq.1.1709903644677; 
- Fri, 08 Mar 2024 05:14:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGIr6Seg2e9dhM2fLX+Pn9wCeIMJm4xzN+GlmxN7ulDHFg+iinSQ92dqUNITfM994T/bEl6qQ==
-X-Received: by 2002:a05:600c:19cf:b0:413:128a:403 with SMTP id
- u15-20020a05600c19cf00b00413128a0403mr3291797wmq.1.1709903644205; 
- Fri, 08 Mar 2024 05:14:04 -0800 (PST)
-Received: from ?IPV6:2a01:cb19:853d:fa00:c28a:3e3d:34f3:3891?
- ([2a01:cb19:853d:fa00:c28a:3e3d:34f3:3891])
- by smtp.gmail.com with ESMTPSA id
- t10-20020a05600c450a00b004131388d948sm3802611wmo.0.2024.03.08.05.14.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Mar 2024 05:14:03 -0800 (PST)
-Message-ID: <deec998e-cab5-4aff-8582-86031778b089@redhat.com>
-Date: Fri, 8 Mar 2024 14:14:00 +0100
+ d=1e100.net; s=20230601; t=1709903769; x=1710508569;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=UDRK+4HPpXEzoHdKcxNPERnbIRLfSl3WqHvIvJ8OTJk=;
+ b=ZiMm8pAhaU5eBudsy/+XndT/1xg+d53j2mgxyeDBjEb3idvt3j6XQ7tezAXUiRl6oO
+ pZ6ujeMo2UnYZEG9EJfAyLjMdKvXZtURLwG6lRRYsH7K3di2rv5SoQMw54AtZn6l+18Q
+ 31KHJj8ZiP/4ywwjtd+0oKedKLTaco0mhIVuue75ypzc1/O1Qd8oLnljUruVhagnXLyG
+ dkvfrUERpIKSp7CXrlW1zMWVIW3CeOY2r7pnkhNXhLjmoZeFYu5We09boCziFhzNX1nB
+ UmW/nayA4biBcr/Kw/gV3NGuKotMflUI2USQpQiiTw0CEclYZlDrBUldgN79ronh5wGV
+ 78hw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXk8jUO02vwS9jAKdu/Ja+ZpWCB450oZQrwwNRp7yxeDKG/7qc0Eh+BZctf+yuBjaDn3AjB9P2EI5T5wraD7xQhcGota7g=
+X-Gm-Message-State: AOJu0YyIF4Bs8x+VslicySECJQl36KlXK0rfdNR6bUM3VATInzfVLhtK
+ s+sDnixKH5uL83YmMeMeUcJpu9zpZV3t3XWuOzni0P/OuUSYWTVlN5YaKZGoE7FahMntQpHg4wD
+ B0G48iH9Y4jVOSh1NLoyDFNjoVv9UDDsTfQoGHdhsBly/Wv8g
+X-Google-Smtp-Source: AGHT+IECWl8+S1Vc9OuxxBMvqu+oATB5t64/dZcpAB6YSw5mCFwpMVrd+k2+dpcL+Dl4SV/AZx6ExPrbCV23q4tphQ4=
+X-Received: by 2002:a17:90a:fa12:b0:29b:ab15:73ed with SMTP id
+ cm18-20020a17090afa1200b0029bab1573edmr285181pjb.16.1709903769480; Fri, 08
+ Mar 2024 05:16:09 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 10/25] migration: Add Error** argument to
- qemu_savevm_state_setup()
-Content-Language: en-US, fr
-To: Peter Xu <peterx@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
- Prasad Pandit <pjp@fedoraproject.org>
-References: <20240306133441.2351700-1-clg@redhat.com>
- <20240306133441.2351700-11-clg@redhat.com> <ZesLDCwh3r_pV2r3@x1n>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <ZesLDCwh3r_pV2r3@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20240207115926.887816-1-christoph.muellner@vrull.eu>
+ <20240207115926.887816-3-christoph.muellner@vrull.eu>
+ <CAKmqyKMZqysJWyQULpD21LVHdHKAVHc4671sVe3hqJ9Ksz9a0Q@mail.gmail.com>
+In-Reply-To: <CAKmqyKMZqysJWyQULpD21LVHdHKAVHc4671sVe3hqJ9Ksz9a0Q@mail.gmail.com>
+From: =?UTF-8?Q?Christoph_M=C3=BCllner?= <christoph.muellner@vrull.eu>
+Date: Fri, 8 Mar 2024 14:15:58 +0100
+Message-ID: <CAEg0e7hqQ8opuNxgDx32dwQrGHX7XNiA1kQas1Urzv3aKwNgyg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] linux-user/riscv: Sync hwprobe keys with Linux
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
+ Philipp Tomsich <philipp.tomsich@vrull.eu>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Andrew Jones <ajones@ventanamicro.com>, Laurent Vivier <laurent@vivier.eu>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=christoph.muellner@vrull.eu; helo=mail-pj1-x102b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,245 +98,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/8/24 13:56, Peter Xu wrote:
-> On Wed, Mar 06, 2024 at 02:34:25PM +0100, Cédric Le Goater wrote:
->> This prepares ground for the changes coming next which add an Error**
->> argument to the .save_setup() handler. Callers of qemu_savevm_state_setup()
->> now handle the error and fail earlier setting the migration state from
->> MIGRATION_STATUS_SETUP to MIGRATION_STATUS_FAILED.
->>
->> In qemu_savevm_state(), move the cleanup to preserve the error
->> reported by .save_setup() handlers.
->>
->> Since the previous behavior was to ignore errors at this step of
->> migration, this change should be examined closely to check that
->> cleanups are still correctly done.
->>
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->> ---
->>
->>   Changes in v4:
->>   
->>   - Merged cleanup change in qemu_savevm_state()
->>     
->>   Changes in v3:
->>   
->>   - Set migration state to MIGRATION_STATUS_FAILED
->>   - Fixed error handling to be done under lock in bg_migration_thread()
->>   - Made sure an error is always set in case of failure in
->>     qemu_savevm_state_setup()
->>     
->>   migration/savevm.h    |  2 +-
->>   migration/migration.c | 27 ++++++++++++++++++++++++---
->>   migration/savevm.c    | 26 +++++++++++++++-----------
->>   3 files changed, 40 insertions(+), 15 deletions(-)
->>
->> diff --git a/migration/savevm.h b/migration/savevm.h
->> index 74669733dd63a080b765866c703234a5c4939223..9ec96a995c93a42aad621595f0ed58596c532328 100644
->> --- a/migration/savevm.h
->> +++ b/migration/savevm.h
->> @@ -32,7 +32,7 @@
->>   bool qemu_savevm_state_blocked(Error **errp);
->>   void qemu_savevm_non_migratable_list(strList **reasons);
->>   int qemu_savevm_state_prepare(Error **errp);
->> -void qemu_savevm_state_setup(QEMUFile *f);
->> +int qemu_savevm_state_setup(QEMUFile *f, Error **errp);
->>   bool qemu_savevm_state_guest_unplug_pending(void);
->>   int qemu_savevm_state_resume_prepare(MigrationState *s);
->>   void qemu_savevm_state_header(QEMUFile *f);
->> diff --git a/migration/migration.c b/migration/migration.c
->> index a49fcd53ee19df1ce0182bc99d7e064968f0317b..6d1544224e96f5edfe56939a9c8395d88ef29581 100644
->> --- a/migration/migration.c
->> +++ b/migration/migration.c
->> @@ -3408,6 +3408,8 @@ static void *migration_thread(void *opaque)
->>       int64_t setup_start = qemu_clock_get_ms(QEMU_CLOCK_HOST);
->>       MigThrError thr_error;
->>       bool urgent = false;
->> +    Error *local_err = NULL;
->> +    int ret;
->>   
->>       thread = migration_threads_add("live_migration", qemu_get_thread_id());
->>   
->> @@ -3451,9 +3453,17 @@ static void *migration_thread(void *opaque)
->>       }
->>   
->>       bql_lock();
->> -    qemu_savevm_state_setup(s->to_dst_file);
->> +    ret = qemu_savevm_state_setup(s->to_dst_file, &local_err);
->>       bql_unlock();
->>   
->> +    if (ret) {
->> +        migrate_set_error(s, local_err);
->> +        error_free(local_err);
->> +        migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
->> +                          MIGRATION_STATUS_FAILED);
->> +        goto out;
->> +     }
-> 
-> There's a small indent issue, I can fix it.
+On Fri, Mar 8, 2024 at 5:23=E2=80=AFAM Alistair Francis <alistair23@gmail.c=
+om> wrote:
+>
+> On Wed, Feb 7, 2024 at 10:00=E2=80=AFPM Christoph M=C3=BCllner
+> <christoph.muellner@vrull.eu> wrote:
+> >
+> > Upstream Linux recently added many additional keys to the hwprobe API.
+> > This patch adds support for all of them with the exception of Ztso,
+> > which is currently not supported in QEMU.
+> >
+> > Signed-off-by: Christoph M=C3=BCllner <christoph.muellner@vrull.eu>
+> > ---
+> >  linux-user/syscall.c | 98 ++++++++++++++++++++++++++++++++++++++++----
+> >  1 file changed, 91 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> > index 43467c9707..3ba20f99ad 100644
+> > --- a/linux-user/syscall.c
+> > +++ b/linux-user/syscall.c
+> > @@ -8793,13 +8793,41 @@ static int do_getdents64(abi_long dirfd, abi_lo=
+ng arg2, abi_long count)
+> >  #define     RISCV_HWPROBE_BASE_BEHAVIOR_IMA (1 << 0)
+> >
+> >  #define RISCV_HWPROBE_KEY_IMA_EXT_0     4
+> > -#define     RISCV_HWPROBE_IMA_FD       (1 << 0)
+> > -#define     RISCV_HWPROBE_IMA_C        (1 << 1)
+> > -#define     RISCV_HWPROBE_IMA_V        (1 << 2)
+> > -#define     RISCV_HWPROBE_EXT_ZBA      (1 << 3)
+> > -#define     RISCV_HWPROBE_EXT_ZBB      (1 << 4)
+> > -#define     RISCV_HWPROBE_EXT_ZBS      (1 << 5)
+> > -#define     RISCV_HWPROBE_EXT_ZICBOZ   (1 << 6)
+> > +#define                RISCV_HWPROBE_IMA_FD            (1 << 0)
+> > +#define                RISCV_HWPROBE_IMA_C             (1 << 1)
+> > +#define                RISCV_HWPROBE_IMA_V             (1 << 2)
+> > +#define                RISCV_HWPROBE_EXT_ZBA           (1 << 3)
+> > +#define                RISCV_HWPROBE_EXT_ZBB           (1 << 4)
+> > +#define                RISCV_HWPROBE_EXT_ZBS           (1 << 5)
+> > +#define                RISCV_HWPROBE_EXT_ZICBOZ        (1 << 6)
+> > +#define                RISCV_HWPROBE_EXT_ZBC           (1 << 7)
+> > +#define                RISCV_HWPROBE_EXT_ZBKB          (1 << 8)
+> > +#define                RISCV_HWPROBE_EXT_ZBKC          (1 << 9)
+> > +#define                RISCV_HWPROBE_EXT_ZBKX          (1 << 10)
+> > +#define                RISCV_HWPROBE_EXT_ZKND          (1 << 11)
+> > +#define                RISCV_HWPROBE_EXT_ZKNE          (1 << 12)
+> > +#define                RISCV_HWPROBE_EXT_ZKNH          (1 << 13)
+> > +#define                RISCV_HWPROBE_EXT_ZKSED         (1 << 14)
+> > +#define                RISCV_HWPROBE_EXT_ZKSH          (1 << 15)
+> > +#define                RISCV_HWPROBE_EXT_ZKT           (1 << 16)
+> > +#define                RISCV_HWPROBE_EXT_ZVBB          (1 << 17)
+> > +#define                RISCV_HWPROBE_EXT_ZVBC          (1 << 18)
+> > +#define                RISCV_HWPROBE_EXT_ZVKB          (1 << 19)
+> > +#define                RISCV_HWPROBE_EXT_ZVKG          (1 << 20)
+> > +#define                RISCV_HWPROBE_EXT_ZVKNED        (1 << 21)
+> > +#define                RISCV_HWPROBE_EXT_ZVKNHA        (1 << 22)
+> > +#define                RISCV_HWPROBE_EXT_ZVKNHB        (1 << 23)
+> > +#define                RISCV_HWPROBE_EXT_ZVKSED        (1 << 24)
+> > +#define                RISCV_HWPROBE_EXT_ZVKSH         (1 << 25)
+> > +#define                RISCV_HWPROBE_EXT_ZVKT          (1 << 26)
+> > +#define                RISCV_HWPROBE_EXT_ZFH           (1 << 27)
+> > +#define                RISCV_HWPROBE_EXT_ZFHMIN        (1 << 28)
+> > +#define                RISCV_HWPROBE_EXT_ZIHINTNTL     (1 << 29)
+> > +#define                RISCV_HWPROBE_EXT_ZVFH          (1 << 30)
+> > +#define                RISCV_HWPROBE_EXT_ZVFHMIN       (1 << 31)
+> > +#define                RISCV_HWPROBE_EXT_ZFA           (1ULL << 32)
+> > +#define                RISCV_HWPROBE_EXT_ZACAS         (1ULL << 34)
+> > +#define                RISCV_HWPROBE_EXT_ZICOND        (1ULL << 35)
+>
+> This fails to pass checkpatch
 
-checkpatch did report anything.
+I copied 1:1 from the kernel, so I guess it is the tabs.
+Sorry for this! And as you have already fixed that: thanks!
 
-> 
-> The bigger problem is I _think_ this will trigger a ci failure in the
-> virtio-net-failover test:
-> 
-> ▶ 121/464 ERROR:../tests/qtest/virtio-net-failover.c:1203:test_migrate_abort_wait_unplug: assertion failed (status == "cancelling"): ("cancelled" == "cancelling") ERROR
-> 121/464 qemu:qtest+qtest-x86_64 / qtest-x86_64/virtio-net-failover    ERROR            4.77s   killed by signal 6 SIGABRT
->>>> PYTHON=/builds/peterx/qemu/build/pyvenv/bin/python3.8 G_TEST_DBUS_DAEMON=/builds/peterx/qemu/tests/dbus-vmstate-daemon.sh MALLOC_PERTURB_=161 QTEST_QEMU_IMG=./qemu-img QTEST_QEMU_STORAGE_DAEMON_BINARY=./storage-daemon/qemu-storage-daemon QTEST_QEMU_BINARY=./qemu-system-x86_64 /builds/peterx/qemu/build/tests/qtest/virtio-net-failover --tap -k
-> ――――――――――――――――――――――――――――――――――――― ✀  ―――――――――――――――――――――――――――――――――――――
-> stderr:
-> qemu-system-x86_64: ram_save_setup failed: Input/output error
-> **
-> ERROR:../tests/qtest/virtio-net-failover.c:1203:test_migrate_abort_wait_unplug: assertion failed (status == "cancelling"): ("cancelled" == "cancelling")
-> (test program exited with status code -6)
-> ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-> 
-> I am not familiar enough with the failover code, and may not have time
-> today to follow this up, copy Laurent.  Cedric, if you have time, please
-> have a look.  
-
-
-Sure. Weird because I usually run make check on x86_64, s390x, ppc64 and
-aarch64. Let me check again.
-
-
-Thanks,
-
-C.
-
-
-
-> I'll give it a shot on Monday to find a solution, otherwise
-> we may need to postpone some of the patches to 9.1.
-> 
-> Thanks,
-> 
->> +
->>       qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
->>                                  MIGRATION_STATUS_ACTIVE);
->>   
->> @@ -3530,6 +3540,9 @@ static void *bg_migration_thread(void *opaque)
->>       MigThrError thr_error;
->>       QEMUFile *fb;
->>       bool early_fail = true;
->> +    bool setup_fail = true;
->> +    Error *local_err = NULL;
->> +    int ret;
->>   
->>       rcu_register_thread();
->>       object_ref(OBJECT(s));
->> @@ -3563,9 +3576,16 @@ static void *bg_migration_thread(void *opaque)
->>   
->>       bql_lock();
->>       qemu_savevm_state_header(s->to_dst_file);
->> -    qemu_savevm_state_setup(s->to_dst_file);
->> +    ret = qemu_savevm_state_setup(s->to_dst_file, &local_err);
->> +    if (ret) {
->> +        migrate_set_error(s, local_err);
->> +        error_free(local_err);
->> +        goto fail;
->> +    }
->>       bql_unlock();
->>   
->> +    setup_fail = false;
->> +
->>       qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
->>                                  MIGRATION_STATUS_ACTIVE);
->>   
->> @@ -3632,7 +3652,8 @@ static void *bg_migration_thread(void *opaque)
->>   
->>   fail:
->>       if (early_fail) {
->> -        migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
->> +        migrate_set_state(&s->state,
->> +                setup_fail ? MIGRATION_STATUS_SETUP : MIGRATION_STATUS_ACTIVE,
->>                   MIGRATION_STATUS_FAILED);
->>           bql_unlock();
->>       }
->> diff --git a/migration/savevm.c b/migration/savevm.c
->> index ee31ffb5e88cea723039c754c30ce2c8a0ef35f3..63fdbb5ad7d4dbfaef1d2094350bf302cc677602 100644
->> --- a/migration/savevm.c
->> +++ b/migration/savevm.c
->> @@ -1310,11 +1310,11 @@ int qemu_savevm_state_prepare(Error **errp)
->>       return 0;
->>   }
->>   
->> -void qemu_savevm_state_setup(QEMUFile *f)
->> +int qemu_savevm_state_setup(QEMUFile *f, Error **errp)
->>   {
->> +    ERRP_GUARD();
->>       MigrationState *ms = migrate_get_current();
->>       SaveStateEntry *se;
->> -    Error *local_err = NULL;
->>       int ret = 0;
->>   
->>       json_writer_int64(ms->vmdesc, "page_size", qemu_target_page_size());
->> @@ -1323,10 +1323,9 @@ void qemu_savevm_state_setup(QEMUFile *f)
->>       trace_savevm_state_setup();
->>       QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->>           if (se->vmsd && se->vmsd->early_setup) {
->> -            ret = vmstate_save(f, se, ms->vmdesc, &local_err);
->> +            ret = vmstate_save(f, se, ms->vmdesc, errp);
->>               if (ret) {
->> -                migrate_set_error(ms, local_err);
->> -                error_report_err(local_err);
->> +                migrate_set_error(ms, *errp);
->>                   qemu_file_set_error(f, ret);
->>                   break;
->>               }
->> @@ -1346,18 +1345,19 @@ void qemu_savevm_state_setup(QEMUFile *f)
->>           ret = se->ops->save_setup(f, se->opaque);
->>           save_section_footer(f, se);
->>           if (ret < 0) {
->> +            error_setg(errp, "failed to setup SaveStateEntry with id(name): "
->> +                       "%d(%s): %d", se->section_id, se->idstr, ret);
->>               qemu_file_set_error(f, ret);
->>               break;
->>           }
->>       }
->>   
->>       if (ret) {
->> -        return;
->> +        return ret;
->>       }
->>   
->> -    if (precopy_notify(PRECOPY_NOTIFY_SETUP, &local_err)) {
->> -        error_report_err(local_err);
->> -    }
->> +    /* TODO: Should we check that errp is set in case of failure ? */
->> +    return precopy_notify(PRECOPY_NOTIFY_SETUP, errp);
->>   }
->>   
->>   int qemu_savevm_state_resume_prepare(MigrationState *s)
->> @@ -1728,7 +1728,10 @@ static int qemu_savevm_state(QEMUFile *f, Error **errp)
->>       ms->to_dst_file = f;
->>   
->>       qemu_savevm_state_header(f);
->> -    qemu_savevm_state_setup(f);
->> +    ret = qemu_savevm_state_setup(f, errp);
->> +    if (ret) {
->> +        goto cleanup;
->> +    }
->>   
->>       while (qemu_file_get_error(f) == 0) {
->>           if (qemu_savevm_state_iterate(f, false) > 0) {
->> @@ -1741,10 +1744,11 @@ static int qemu_savevm_state(QEMUFile *f, Error **errp)
->>           qemu_savevm_state_complete_precopy(f, false, false);
->>           ret = qemu_file_get_error(f);
->>       }
->> -    qemu_savevm_state_cleanup();
->>       if (ret != 0) {
->>           error_setg_errno(errp, -ret, "Error while writing VM state");
->>       }
->> +cleanup:
->> +    qemu_savevm_state_cleanup();
->>   
->>       if (ret != 0) {
->>           status = MIGRATION_STATUS_FAILED;
->> -- 
->> 2.44.0
->>
-> 
-
+>
+> Alistair
+>
+> >
+> >  #define RISCV_HWPROBE_KEY_CPUPERF_0     5
+> >  #define     RISCV_HWPROBE_MISALIGNED_UNKNOWN     (0 << 0)
+> > @@ -8860,6 +8888,62 @@ static void risc_hwprobe_fill_pairs(CPURISCVStat=
+e *env,
+> >                       RISCV_HWPROBE_EXT_ZBS : 0;
+> >              value |=3D cfg->ext_zicboz ?
+> >                       RISCV_HWPROBE_EXT_ZICBOZ : 0;
+> > +            value |=3D cfg->ext_zbc ?
+> > +                     RISCV_HWPROBE_EXT_ZBC : 0;
+> > +            value |=3D cfg->ext_zbkb ?
+> > +                     RISCV_HWPROBE_EXT_ZBKB : 0;
+> > +            value |=3D cfg->ext_zbkc ?
+> > +                     RISCV_HWPROBE_EXT_ZBKC : 0;
+> > +            value |=3D cfg->ext_zbkx ?
+> > +                     RISCV_HWPROBE_EXT_ZBKX : 0;
+> > +            value |=3D cfg->ext_zknd ?
+> > +                     RISCV_HWPROBE_EXT_ZKND : 0;
+> > +            value |=3D cfg->ext_zkne ?
+> > +                     RISCV_HWPROBE_EXT_ZKNE : 0;
+> > +            value |=3D cfg->ext_zknh ?
+> > +                     RISCV_HWPROBE_EXT_ZKNH : 0;
+> > +            value |=3D cfg->ext_zksed ?
+> > +                     RISCV_HWPROBE_EXT_ZKSED : 0;
+> > +            value |=3D cfg->ext_zksh ?
+> > +                     RISCV_HWPROBE_EXT_ZKSH : 0;
+> > +            value |=3D cfg->ext_zkt ?
+> > +                     RISCV_HWPROBE_EXT_ZKT : 0;
+> > +            value |=3D cfg->ext_zvbb ?
+> > +                     RISCV_HWPROBE_EXT_ZVBB : 0;
+> > +            value |=3D cfg->ext_zvbc ?
+> > +                     RISCV_HWPROBE_EXT_ZVBC : 0;
+> > +            value |=3D cfg->ext_zvkb ?
+> > +                     RISCV_HWPROBE_EXT_ZVKB : 0;
+> > +            value |=3D cfg->ext_zvkg ?
+> > +                     RISCV_HWPROBE_EXT_ZVKG : 0;
+> > +            value |=3D cfg->ext_zvkned ?
+> > +                     RISCV_HWPROBE_EXT_ZVKNED : 0;
+> > +            value |=3D cfg->ext_zvknha ?
+> > +                     RISCV_HWPROBE_EXT_ZVKNHA : 0;
+> > +            value |=3D cfg->ext_zvknhb ?
+> > +                     RISCV_HWPROBE_EXT_ZVKNHB : 0;
+> > +            value |=3D cfg->ext_zvksed ?
+> > +                     RISCV_HWPROBE_EXT_ZVKSED : 0;
+> > +            value |=3D cfg->ext_zvksh ?
+> > +                     RISCV_HWPROBE_EXT_ZVKSH : 0;
+> > +            value |=3D cfg->ext_zvkt ?
+> > +                     RISCV_HWPROBE_EXT_ZVKT : 0;
+> > +            value |=3D cfg->ext_zfh ?
+> > +                     RISCV_HWPROBE_EXT_ZFH : 0;
+> > +            value |=3D cfg->ext_zfhmin ?
+> > +                     RISCV_HWPROBE_EXT_ZFHMIN : 0;
+> > +            value |=3D cfg->ext_zihintntl ?
+> > +                     RISCV_HWPROBE_EXT_ZIHINTNTL : 0;
+> > +            value |=3D cfg->ext_zvfh ?
+> > +                     RISCV_HWPROBE_EXT_ZVFH : 0;
+> > +            value |=3D cfg->ext_zvfhmin ?
+> > +                     RISCV_HWPROBE_EXT_ZVFHMIN : 0;
+> > +            value |=3D cfg->ext_zfa ?
+> > +                     RISCV_HWPROBE_EXT_ZFA : 0;
+> > +            value |=3D cfg->ext_zacas ?
+> > +                     RISCV_HWPROBE_EXT_ZACAS : 0;
+> > +            value |=3D cfg->ext_zicond ?
+> > +                     RISCV_HWPROBE_EXT_ZICOND : 0;
+> >              __put_user(value, &pair->value);
+> >              break;
+> >          case RISCV_HWPROBE_KEY_CPUPERF_0:
+> > --
+> > 2.43.0
+> >
+> >
 
