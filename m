@@ -4,69 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B81EC5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 09:09:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C93A2C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 09:21:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riWE6-00060N-0Z; Fri, 08 Mar 2024 04:09:14 -0500
+	id 1riWP8-0008P5-D4; Fri, 08 Mar 2024 04:20:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <angelo@kernel-space.org>)
- id 1riWE1-00060E-LP
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 04:09:09 -0500
-Received: from mail.kernel-space.org ([195.201.34.187])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <angelo@kernel-space.org>)
- id 1riWDw-00034M-NZ
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 04:09:09 -0500
-Received: from kernel-space.org (localhost [127.0.0.1])
- by kernel-space.org (OpenSMTPD) with ESMTP id 1f39f6f6;
- Fri, 8 Mar 2024 09:06:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kernel-space.org; h=from
- :to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding; s=s1; bh=WfrBjKyZG01ugPP3gB3fUo94jPE
- =; b=TH8yhEIt3Mem0UtNpzaZ1H3agG2uFKNBpcsNTeCFLj81ttY4nWV0dDXOdwu
- h5zO4wlYUjLf7Yk9cfwbGXiirxk8vackNUyjgQuZwG1jdYa55WVDX9MLosxij8v9
- 4ytSc/DZfta6SNHDAsqJ3mY5Sa9ilAwYaR32RB/g+UzoF33E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=kernel-space.org; h=from:to
- :cc:subject:date:message-id:mime-version
- :content-transfer-encoding; q=dns; s=s1; b=tc08dEKxLLxW13HLDhiAm
- pR128LdcvF0sbF1B8O6j2x7YguPL6g1GM8y6O+JHFNzOdj0+whiT4IPUdVMdwed2
- TB64MIQ1VRXku2Wp+ZDYY/rI23pzcAuhwgs73l6cr3KZ59Du7BhN1x2SnlurWzx3
- kv/EqCXvsgQyS+kJGugANI=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel-space.org;
- s=s1; t=1709888789;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=zx3i0PGwjQuNRJXVuYQUYLMuwDJfetMtlusraMs/YLo=;
- b=U89Ma/pCrR7Kt/czhuGcNza1/8ctqI9Ak/uklP5bL1uwidh2kuo06ISGflVgqpE+2vMYdt
- tOYAri+r/TP4TbW8nEb/OWFO5zc4sMpHjOHpJAZ6vTawipDkVqWfDe0Gs9c9NGVamBbUHH
- hB/uxZ2HTuO72+dMCnkRAgsqs1lbkPw=
-Received: from localhost.localdomain
- (host-79-51-238-97.retail.telecomitalia.it [79.51.238.97])
- by kernel-space.org (OpenSMTPD) with ESMTPSA id b5a408a0
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Fri, 8 Mar 2024 09:06:29 +0000 (UTC)
-From: Angelo Dureghello <angelo@kernel-space.org>
-To: huth@tuxfamily.org
-Cc: qemu-devel@nongnu.org,
-	Angelo Dureghello <angelo@kernel-space.org>
-Subject: [PATCH v2] hw/m68k/mcf5208: add support for reset
-Date: Fri,  8 Mar 2024 10:08:12 +0100
-Message-ID: <20240308090812.1316635-1-angelo@kernel-space.org>
-X-Mailer: git-send-email 2.44.0
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1riWOs-0008Oc-JK
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 04:20:22 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1riWOq-0005u7-9c
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 04:20:21 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-412f55695d1so15244245e9.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 01:20:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1709889619; x=1710494419; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=1DtM7SysaaTPWtbhSSlGg8jnxIgSal51MQROhQqVPeI=;
+ b=aHwu0JqMeeXLE4zFF+v7MnWsQqKCpJp5viMRi7itF+r7HDlHL+I8OGrMUpZepmLROh
+ 3QgTq24L4NLJnYfZvDl+L+SAiH8XBQfxoFhuGA5ezj/Y/72EhOCLgkBOFQrYLYW2S/JN
+ ge6ZwPK1Mx3VJQcrHcZ0TFUJixEVUwIuKq/L2+KSbBbOl8bjWTCA6UarIlXCRKEWnYqm
+ Eh3QTkWiDhVioP6bgcGS8DepP3SSuJ40TxZjk55gyiPVcVVzqFpJRdyqcr5iYLbIQt/x
+ +FSIAq3XuKmupmuQZ+fAbtH4BTl3tpNOKM5OAxR4kFsceTg3FH4u4xjRvcJ+VjyaPQjv
+ 4y8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709889619; x=1710494419;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1DtM7SysaaTPWtbhSSlGg8jnxIgSal51MQROhQqVPeI=;
+ b=rBRA14Nt6f5Mq5VZeltFCpvmyYIKijWRU19d5fYbJL1gwMEwusGVhCIMI6ynXuHo+O
+ p7jAhHmzc5zeHxRMYRGlbC5DnUX5D0R4n6l57aknLx8VTMGr9JxPIbc4c1X34jsOxkWX
+ CVEKji6uz+FrHkP/KpZ4uNSDBR6ltNSCAajPVvYMM6RciF0YCtOzLfOi+QQKVDwimFKQ
+ 3E0JV0XYb7DdV3dNh5ubgOvzEQGQwgad8JhyMRvFGux+tJyB+fD8N1wD4vwzmyXyqMVZ
+ KDH1c5lJJicW+X1uMbN0c/e52MhOQ9rznqiVn8r3MztYDIQT9Viu+aRfTrscfB3eGpVl
+ hSvA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXygOtQ2RaJu4yJ+xZVDsMPDo70Zg0E4lY5kqPsRHd3GsBJVxDfsot5n6+rkBQcDkupcWVB28xeaM43kIPW8FWAZjfADYo=
+X-Gm-Message-State: AOJu0Yx41CfVC2l+sQgHTHCgMvDxLmAqswkjUCbM75tRxlPS0rx/TEuB
+ C79M/rRVidJV4yMTZQHwkZJvQiILLs4/ji70gZZhhcyaVe6nnLZmOAeHHT1RnLQ=
+X-Google-Smtp-Source: AGHT+IFl50qbSuf4nEI74nS+9jCiaUms/aHCrf8f/zU7c70prJoiq6xWmPVfvSrVE0ZRfaM8jvBmUg==
+X-Received: by 2002:a05:600c:538b:b0:413:194d:12b8 with SMTP id
+ hg11-20020a05600c538b00b00413194d12b8mr514044wmb.40.1709889618527; 
+ Fri, 08 Mar 2024 01:20:18 -0800 (PST)
+Received: from localhost (cst2-173-16.cust.vodafone.cz. [31.30.173.16])
+ by smtp.gmail.com with ESMTPSA id
+ n8-20020a05600c4f8800b0041315c8ceeasm2734168wmq.24.2024.03.08.01.20.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 08 Mar 2024 01:20:18 -0800 (PST)
+Date: Fri, 8 Mar 2024 10:20:17 +0100
+From: Andrew Jones <ajones@ventanamicro.com>
+To: "Wu, Fei" <fei2.wu@intel.com>
+Cc: Alistair Francis <alistair23@gmail.com>, 
+ Atish Kumar Patra <atishp@rivosinc.com>, pbonzini@redhat.com,
+ palmer@dabbelt.com, 
+ alistair.francis@wdc.com, bin.meng@windriver.com, liwei1518@gmail.com, 
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, andrei.warkentin@intel.com, shaolin.xie@alibaba-inc.com,
+ ved@rivosinc.com, sunilvl@ventanamicro.com, haibo1.xu@intel.com, 
+ evan.chai@intel.com, yin.wang@intel.com, tech-server-platform@lists.riscv.org, 
+ tech-server-soc@lists.riscv.org
+Subject: Re: [RFC 1/2] hw/riscv: Add server platform reference machine
+Message-ID: <20240308-48ff9db3408048d387d6cfa4@orel>
+References: <20240304102540.2789225-1-fei2.wu@intel.com>
+ <20240304102540.2789225-2-fei2.wu@intel.com>
+ <CAKmqyKMQyDjLkeo+aU58rE6_Vb84QeeZP3FUafw5GuWpk1JmZQ@mail.gmail.com>
+ <8f5d6664-c075-4d31-bf33-ce24ceeb9b13@intel.com>
+ <CAHBxVyHP1hgGWg6EByX6XzqmTm_Tr0uw7tk65KWcytNYsKdw8w@mail.gmail.com>
+ <CAKmqyKM08RwR7RybMGaN6CpmbHJrLwx0DSjz_A1w6h0AkW12rQ@mail.gmail.com>
+ <18efc373-b98b-4a9f-96c5-c6821793138f@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=195.201.34.187;
- envelope-from=angelo@kernel-space.org; helo=mail.kernel-space.org
+In-Reply-To: <18efc373-b98b-4a9f-96c5-c6821793138f@intel.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,93 +110,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add reset support for mcf5208.
+On Thu, Mar 07, 2024 at 02:26:18PM +0800, Wu, Fei wrote:
+> On 3/7/2024 8:48 AM, Alistair Francis wrote:
+> > On Thu, Mar 7, 2024 at 5:13 AM Atish Kumar Patra <atishp@rivosinc.com> wrote:
+> >>
+> >> On Wed, Mar 6, 2024 at 4:56 AM Wu, Fei <fei2.wu@intel.com> wrote:
+> >>>
+> >>> On 3/6/2024 8:19 AM, Alistair Francis wrote:
+> >>>> On Mon, Mar 4, 2024 at 8:28 PM Fei Wu <fei2.wu@intel.com> wrote:
+...
+> >>>>> +config SERVER_PLATFORM_REF
+> >>>>> +    bool
+> >>>>> +    select RISCV_NUMA
+> >>>>> +    select GOLDFISH_RTC
+> >>>>> +    select PCI
+> >>>>> +    select PCI_EXPRESS_GENERIC_BRIDGE
+> >>>>> +    select PFLASH_CFI01
+> >>>>> +    select SERIAL
+> >>>>> +    select RISCV_ACLINT
+> >>>>> +    select RISCV_APLIC
+> >>>>> +    select RISCV_IMSIC
+> >>>>> +    select SIFIVE_TEST
+> >>>>
+> >>>> Do we really need SiFive Test in the server platform?
+> >>>>
+> >>> It's used to reset the system, is there any better choice?
+> > 
+> > If we add this now we are stuck with it forever (or at least a long
+> > time). So it'd be nice to think about these and decide if these really
+> > are the best way to do things. We don't have to just copy the existing
+> > virt machine.
+> > 
+> We need a solution to poweroff/reboot, and sifive test is one of the
+> hardware implementations, so in general I think it's okay. But I agree
+> Sifive test looks a device for testing only.
+> 
+> > There must be a more standard way to do this then MMIO mapped SiFive hardware?
+> > 
+> The mapped MMIO mechanism leveraged by Sifive test by itself is kinda
+> generic, the sbsa_ec for sbsa-ref is also an MMIO mapped device. These
+> two devices look very similar except different encodings of the
+> shutdown/reboot command.
+> 
+> Probably we can have a generic shutdown/reboot device in QEMU for both
+> sifive test and sbsa_ec, and likely more (not in this patch series). In
+> this way, sifive test device will be replaced by this more generic
+> device. Any suggestions?
 
-Signed-off-by: Angelo Dureghello <angelo@kernel-space.org>
----
- hw/m68k/mcf5208.c | 49 ++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 46 insertions(+), 3 deletions(-)
+Operating systems shouldn't need to implement odd-ball device drivers to
+function on a reference of a standard platform. So the reference platform
+should only be comprised of devices which have specifications and already,
+or will, have DT bindings. Generic devices would be best, but I don't
+think it should be a problem to use devices from multiple vendors. The
+devices just need to allow GPL drivers to be written. With all that in
+mind, what about adding a generic GPIO controller or using SiFive's GPIO
+controller. Then, we could add gpio-restart and gpio-poweroff.
 
-diff --git a/hw/m68k/mcf5208.c b/hw/m68k/mcf5208.c
-index 0cfb806c20..d8a38274d0 100644
---- a/hw/m68k/mcf5208.c
-+++ b/hw/m68k/mcf5208.c
-@@ -40,6 +40,8 @@
- #define PCSR_PRE_SHIFT  8
- #define PCSR_PRE_MASK   0x0f00
- 
-+#define RCR_SOFTRST     0x80
-+
- typedef struct {
-     MemoryRegion iomem;
-     qemu_irq irq;
-@@ -185,13 +187,54 @@ static const MemoryRegionOps m5208_sys_ops = {
-     .endianness = DEVICE_NATIVE_ENDIAN,
- };
- 
--static void mcf5208_sys_init(MemoryRegion *address_space, qemu_irq *pic)
-+static uint64_t m5208_rcm_read(void *opaque, hwaddr addr,
-+                               unsigned size)
-+{
-+    qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%" HWADDR_PRIX "\n",
-+                  __func__, addr);
-+    return 0;
-+}
-+
-+static void m5208_rcm_write(void *opaque, hwaddr addr,
-+                            uint64_t value, unsigned size)
-+{
-+    M68kCPU *cpu = opaque;
-+    CPUState *cs = CPU(cpu);
-+    switch (addr) {
-+    case 0x0: /* RCR */
-+        if (value & RCR_SOFTRST) {
-+            cpu_reset(cs);
-+            cpu->env.aregs[7] = ldl_phys(cs->as, 0);
-+            cpu->env.pc = ldl_phys(cs->as, 4);
-+        }
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%" HWADDR_PRIX "\n",
-+                      __func__, addr);
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps m5208_rcm_ops = {
-+    .read = m5208_rcm_read,
-+    .write = m5208_rcm_write,
-+    .endianness = DEVICE_NATIVE_ENDIAN,
-+};
-+
-+static void mcf5208_sys_init(MemoryRegion *address_space, qemu_irq *pic,
-+                             M68kCPU *cpu)
- {
--    MemoryRegion *iomem = g_new(MemoryRegion, 1);
-+    MemoryRegion *iomem;
-     m5208_timer_state *s;
-     int i;
- 
-+    /* RCM */
-+    iomem = g_new(MemoryRegion, 1);
-+    memory_region_init_io(iomem, NULL, &m5208_rcm_ops, cpu,
-+                          "m5208-rcm", 0x00000080);
-+    memory_region_add_subregion(address_space, 0xfc0a0000, iomem);
-     /* SDRAMC.  */
-+    iomem = g_new(MemoryRegion, 1);
-     memory_region_init_io(iomem, NULL, &m5208_sys_ops, NULL, "m5208-sys", 0x00004000);
-     memory_region_add_subregion(address_space, 0xfc0a8000, iomem);
-     /* Timers.  */
-@@ -265,7 +308,7 @@ static void mcf5208evb_init(MachineState *machine)
-     mcf_uart_create_mmap(0xfc064000, pic[27], serial_hd(1));
-     mcf_uart_create_mmap(0xfc068000, pic[28], serial_hd(2));
- 
--    mcf5208_sys_init(address_space_mem, pic);
-+    mcf5208_sys_init(address_space_mem, pic, cpu);
- 
-     mcf_fec_init(address_space_mem, 0xfc030000, pic + 36);
- 
--- 
-2.44.0
-
+Thanks,
+drew
 
