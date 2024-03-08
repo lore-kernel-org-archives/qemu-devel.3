@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 709EFC5475B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73ABDC54E5C
 	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 11:13:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riY9A-0006WQ-9S; Fri, 08 Mar 2024 06:12:16 -0500
+	id 1riY9S-0006bA-VG; Fri, 08 Mar 2024 06:12:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1riY98-0006WB-3k
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 06:12:14 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1riY9O-0006ZB-SQ
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 06:12:30 -0500
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1riY96-0001OM-40
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 06:12:13 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1dd1d9daf02so11744215ad.1
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 03:12:11 -0800 (PST)
+ id 1riY9I-0001Qh-QP
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 06:12:29 -0500
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-5e42b4bbfa4so477603a12.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 03:12:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709896330; x=1710501130; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1709896343; x=1710501143; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fXtIHKVY2AV8WUjzbtv3+hua/eWqofTiBpmxeUSggTA=;
- b=HQBTevj/qs4wRo1nDCXrq1+hTTw6pNPjuj0yqRlIK924vguE3yPmqNE8ytTkdG6aHi
- lz6Fg4rxRBz5EmnPPgYnAuwfywH0SfjY/rpzUejWO0/LdbG1SRgyHH4h3mpElM+3VteX
- S2DXYv1tb0J5+p4drkEL1n9k5kYMecMm/nq2VbCIgGXwOz+oUSRcwCISD6Bus+5Cn2ys
- LqSoEDXQ8eHwQJbLTV3ZcRZV5uXgM5zlzxluwh/gbv4Bg59+fFD748Jr/gvtr+HUt0Ek
- b3Z/ynzFZqKEArcMfZgJ+pPcjdF8DBj8Y28Cgm/YNkubsjAKSmD8vfffb8QHd/qguDGx
- aEug==
+ bh=5YioOzPq6dtbeSZOgq1vL0KqpugyX6Ofr7K2JZKU12I=;
+ b=T4lgGraNPoiRzbotKLoWCSZdjvl1iDyOrwdKmq8ezU1PAac1N2qbV/453SlbMkJRu0
+ YPgQeGriuvo/Y68tM+4XkvtZ750CbcYWsDR++5yjhvTj5QwUyoz/Sf7M7dSRMh+9n0Ci
+ b5OScSHtLpbvRmI0rKS9ItqHB0L9S/tM2m1kN5vF6DG+wPLtL75kkArT8rJyBzWRih4p
+ bVwNZkrXllB1QtRK3wdAt8M/e45fvPH0+R0XGSp4KBNNFsfqZry4IjImJ77DOTZBHbQM
+ OloBVRSepLKU0cVhd/ojp93/go3PvU52K3VOTWgfI5mvKn2NLqlNvkaBfeBTaSDV412w
+ 9sYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709896330; x=1710501130;
+ d=1e100.net; s=20230601; t=1709896343; x=1710501143;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fXtIHKVY2AV8WUjzbtv3+hua/eWqofTiBpmxeUSggTA=;
- b=DCdOtC9X9hxRT5K7syJhIw7bXcRR9nk05zWxpavcG4VRXU05Dp1GfxSp/WinCCSSGa
- /hMPuVDQ50xVPGfuR03A/1OBLr29UhpbQZBg4bOgCSUBkH8rQWCJCN2oVhnCxOkTrtzw
- /hF1Iecg9yp9wcLtghBwCuIoNulNQiG2ghLCjr1OUP2LVFOznLGPMAKFSCRD0Yk4slq5
- +QCILJBPw6OjAbHzuX209SCu8to9G18HjByfXTJALzxja/iGKMubPYZsqVqU4098+mhX
- VYxFubnfoQT7+ESS0JZtgLxoGtq6aFw5YWZu4nSn+WM04sNMtJq/2ho4E4lBXwz8AGVN
- 3qUw==
-X-Gm-Message-State: AOJu0YxUmfHvJ4V8kS2B3qdIhZ13wqMK1AcMmlzRj+DLG34mOLKpKwPG
- brOzJ0+RYercJ5KsD5IK0GA9HCp23M50YFWQQgwKFuDy4VvoCsJuSlaFvZ6XwNnEeA==
-X-Google-Smtp-Source: AGHT+IGxHkWk+fLymlvfEnuYTcZlt/XpPGLK3J0f0aIV8RzK00hNYrneYcJ/I89lIRc9pN15FEspPA==
-X-Received: by 2002:a17:902:c94d:b0:1dd:54a6:63e5 with SMTP id
- i13-20020a170902c94d00b001dd54a663e5mr5579854pla.14.1709896330384; 
- Fri, 08 Mar 2024 03:12:10 -0800 (PST)
+ bh=5YioOzPq6dtbeSZOgq1vL0KqpugyX6Ofr7K2JZKU12I=;
+ b=o4y6ukOX+es2XXmzyB14JEVJdNk/Fe6BDIQxzQ+VoUwkSMJCSiiX0PmuK9q3Afy+Tb
+ RrHt143aHay+bA6Trj9HAOWCuWYlwdzmJWa4Fkdmb2ROGw4o12TzEqzQGEDYjsZ90X5u
+ qjoV4joZ3zekYi8gs4m3Q964OL2EhL0MRyXKipAipGcVbza6ct1S56snm+p7sUjtFkGJ
+ +QfOqwRjTmtYT2fPoRmGWwuPpBhdN0fkdBqL0l42MpdnJx2DirCCMlbydck0ZX8fjF2G
+ YxUUhRXrYblBlMM4XvGK3lQAJ2JEdGWnRoyG6wJHfnubUfKu0VR0GVxm3MpomwukZx11
+ iRPA==
+X-Gm-Message-State: AOJu0YxF98ZsprquxL+8DSPyIa9RILBWI+P8Vi7Ud3Vkwz3nDtmhv8+w
+ yKjjl3GB0pJdZLL+qOLevqPN9z5tR3iBziq8AMR1N32hstM1EpAPun6cEiZ42qe4Zg==
+X-Google-Smtp-Source: AGHT+IGCzmAHbldIPGnKIRz/25j2l7X8eOZmOkRnqCN573FJnXvaB0ArnhcIochVFSQMoa55oHnofw==
+X-Received: by 2002:a05:6a20:6d90:b0:19e:bca3:213f with SMTP id
+ gl16-20020a056a206d9000b0019ebca3213fmr8796418pzb.52.1709896343114; 
+ Fri, 08 Mar 2024 03:12:23 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- a6-20020a170902ecc600b001dcfbbb1ca5sm12006468plh.35.2024.03.08.03.12.07
+ a6-20020a170902ecc600b001dcfbbb1ca5sm12006468plh.35.2024.03.08.03.12.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 03:12:09 -0800 (PST)
+ Fri, 08 Mar 2024 03:12:22 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Sia Jee Heng <jeeheng.sia@starfivetech.com>,
+Cc: alistair23@gmail.com,
+ =?UTF-8?q?Christoph=20M=C3=BCllner?= <christoph.muellner@vrull.eu>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 02/34] hw/arm/virt-acpi-build.c: Migrate SPCR creation to
- common location
-Date: Fri,  8 Mar 2024 21:11:20 +1000
-Message-ID: <20240308111152.2856137-3-alistair.francis@wdc.com>
+Subject: [PULL 06/34] linux-user/riscv: Sync hwprobe keys with Linux
+Date: Fri,  8 Mar 2024 21:11:24 +1000
+Message-ID: <20240308111152.2856137-7-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240308111152.2856137-1-alistair.francis@wdc.com>
 References: <20240308111152.2856137-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -83,7 +85,8 @@ X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,235 +102,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sia Jee Heng <jeeheng.sia@starfivetech.com>
+From: Christoph Müllner <christoph.muellner@vrull.eu>
 
-RISC-V should also generate the SPCR in a manner similar to ARM.
-Therefore, instead of replicating the code, relocate this function
-to the common AML build.
+Upstream Linux recently added many additional keys to the hwprobe API.
+This patch adds support for all of them with the exception of Ztso,
+which is currently not supported in QEMU.
 
-Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240129021440.17640-2-jeeheng.sia@starfivetech.com>
+Signed-off-by: Christoph Müllner <christoph.muellner@vrull.eu>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Message-ID: <20240207115926.887816-3-christoph.muellner@vrull.eu>
 [ Changes by AF:
- - Add missing Language SPCR entry
+ - Fixup whitespace
 ]
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- include/hw/acpi/acpi-defs.h | 33 ++++++++++++++++++
- include/hw/acpi/aml-build.h |  4 +++
- hw/acpi/aml-build.c         | 53 +++++++++++++++++++++++++++++
- hw/arm/virt-acpi-build.c    | 68 +++++++++++++++----------------------
- 4 files changed, 117 insertions(+), 41 deletions(-)
+ linux-user/syscall.c | 100 +++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 92 insertions(+), 8 deletions(-)
 
-diff --git a/include/hw/acpi/acpi-defs.h b/include/hw/acpi/acpi-defs.h
-index 2b42e4192b..0e6e82b339 100644
---- a/include/hw/acpi/acpi-defs.h
-+++ b/include/hw/acpi/acpi-defs.h
-@@ -90,6 +90,39 @@ typedef struct AcpiFadtData {
-     unsigned *xdsdt_tbl_offset;
- } AcpiFadtData;
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 81801f3dff..09239d2288 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -8808,14 +8808,42 @@ static int do_getdents64(abi_long dirfd, abi_long arg2, abi_long count)
+ #define RISCV_HWPROBE_KEY_BASE_BEHAVIOR 3
+ #define     RISCV_HWPROBE_BASE_BEHAVIOR_IMA (1 << 0)
  
-+typedef struct AcpiGas {
-+    uint8_t id;                /* Address space ID */
-+    uint8_t width;             /* Register bit width */
-+    uint8_t offset;            /* Register bit offset */
-+    uint8_t size;              /* Access size */
-+    uint64_t addr;             /* Address */
-+} AcpiGas;
-+
-+/* SPCR (Serial Port Console Redirection table) */
-+typedef struct AcpiSpcrData {
-+    uint8_t interface_type;
-+    uint8_t reserved[3];
-+    struct AcpiGas base_addr;
-+    uint8_t interrupt_type;
-+    uint8_t pc_interrupt;
-+    uint32_t interrupt;        /* Global system interrupt */
-+    uint8_t baud_rate;
-+    uint8_t parity;
-+    uint8_t stop_bits;
-+    uint8_t flow_control;
-+    uint8_t terminal_type;
-+    uint8_t language;
-+    uint8_t reserved1;
-+    uint16_t pci_device_id;    /* Must be 0xffff if not PCI device */
-+    uint16_t pci_vendor_id;    /* Must be 0xffff if not PCI device */
-+    uint8_t pci_bus;
-+    uint8_t pci_device;
-+    uint8_t pci_function;
-+    uint32_t pci_flags;
-+    uint8_t pci_segment;
-+    uint32_t reserved2;
-+} AcpiSpcrData;
-+
- #define ACPI_FADT_ARM_PSCI_COMPLIANT  (1 << 0)
- #define ACPI_FADT_ARM_PSCI_USE_HVC    (1 << 1)
+-#define RISCV_HWPROBE_KEY_IMA_EXT_0     4
+-#define     RISCV_HWPROBE_IMA_FD       (1 << 0)
+-#define     RISCV_HWPROBE_IMA_C        (1 << 1)
+-#define     RISCV_HWPROBE_IMA_V        (1 << 2)
+-#define     RISCV_HWPROBE_EXT_ZBA      (1 << 3)
+-#define     RISCV_HWPROBE_EXT_ZBB      (1 << 4)
+-#define     RISCV_HWPROBE_EXT_ZBS      (1 << 5)
+-#define     RISCV_HWPROBE_EXT_ZICBOZ   (1 << 6)
++#define RISCV_HWPROBE_KEY_IMA_EXT_0         4
++#define     RISCV_HWPROBE_IMA_FD            (1 << 0)
++#define     RISCV_HWPROBE_IMA_C             (1 << 1)
++#define     RISCV_HWPROBE_IMA_V             (1 << 2)
++#define     RISCV_HWPROBE_EXT_ZBA           (1 << 3)
++#define     RISCV_HWPROBE_EXT_ZBB           (1 << 4)
++#define     RISCV_HWPROBE_EXT_ZBS           (1 << 5)
++#define     RISCV_HWPROBE_EXT_ZICBOZ        (1 << 6)
++#define     RISCV_HWPROBE_EXT_ZBC           (1 << 7)
++#define     RISCV_HWPROBE_EXT_ZBKB          (1 << 8)
++#define     RISCV_HWPROBE_EXT_ZBKC          (1 << 9)
++#define     RISCV_HWPROBE_EXT_ZBKX          (1 << 10)
++#define     RISCV_HWPROBE_EXT_ZKND          (1 << 11)
++#define     RISCV_HWPROBE_EXT_ZKNE          (1 << 12)
++#define     RISCV_HWPROBE_EXT_ZKNH          (1 << 13)
++#define     RISCV_HWPROBE_EXT_ZKSED         (1 << 14)
++#define     RISCV_HWPROBE_EXT_ZKSH          (1 << 15)
++#define     RISCV_HWPROBE_EXT_ZKT           (1 << 16)
++#define     RISCV_HWPROBE_EXT_ZVBB          (1 << 17)
++#define     RISCV_HWPROBE_EXT_ZVBC          (1 << 18)
++#define     RISCV_HWPROBE_EXT_ZVKB          (1 << 19)
++#define     RISCV_HWPROBE_EXT_ZVKG          (1 << 20)
++#define     RISCV_HWPROBE_EXT_ZVKNED        (1 << 21)
++#define     RISCV_HWPROBE_EXT_ZVKNHA        (1 << 22)
++#define     RISCV_HWPROBE_EXT_ZVKNHB        (1 << 23)
++#define     RISCV_HWPROBE_EXT_ZVKSED        (1 << 24)
++#define     RISCV_HWPROBE_EXT_ZVKSH         (1 << 25)
++#define     RISCV_HWPROBE_EXT_ZVKT          (1 << 26)
++#define     RISCV_HWPROBE_EXT_ZFH           (1 << 27)
++#define     RISCV_HWPROBE_EXT_ZFHMIN        (1 << 28)
++#define     RISCV_HWPROBE_EXT_ZIHINTNTL     (1 << 29)
++#define     RISCV_HWPROBE_EXT_ZVFH          (1 << 30)
++#define     RISCV_HWPROBE_EXT_ZVFHMIN       (1 << 31)
++#define     RISCV_HWPROBE_EXT_ZFA           (1ULL << 32)
++#define     RISCV_HWPROBE_EXT_ZACAS         (1ULL << 34)
++#define     RISCV_HWPROBE_EXT_ZICOND        (1ULL << 35)
  
-diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
-index ff2a310270..a3784155cb 100644
---- a/include/hw/acpi/aml-build.h
-+++ b/include/hw/acpi/aml-build.h
-@@ -497,4 +497,8 @@ void build_fadt(GArray *tbl, BIOSLinker *linker, const AcpiFadtData *f,
- 
- void build_tpm2(GArray *table_data, BIOSLinker *linker, GArray *tcpalog,
-                 const char *oem_id, const char *oem_table_id);
-+
-+void build_spcr(GArray *table_data, BIOSLinker *linker,
-+                const AcpiSpcrData *f, const uint8_t rev,
-+                const char *oem_id, const char *oem_table_id);
- #endif
-diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-index af66bde0f5..6d4517cfbe 100644
---- a/hw/acpi/aml-build.c
-+++ b/hw/acpi/aml-build.c
-@@ -1994,6 +1994,59 @@ static void build_processor_hierarchy_node(GArray *tbl, uint32_t flags,
-     }
- }
- 
-+void build_spcr(GArray *table_data, BIOSLinker *linker,
-+                const AcpiSpcrData *f, const uint8_t rev,
-+                const char *oem_id, const char *oem_table_id)
-+{
-+    AcpiTable table = { .sig = "SPCR", .rev = rev, .oem_id = oem_id,
-+                        .oem_table_id = oem_table_id };
-+
-+    acpi_table_begin(&table, table_data);
-+    /* Interface type */
-+    build_append_int_noprefix(table_data, f->interface_type, 1);
-+    /* Reserved */
-+    build_append_int_noprefix(table_data, 0, 3);
-+    /* Base Address */
-+    build_append_gas(table_data, f->base_addr.id, f->base_addr.width,
-+                     f->base_addr.offset, f->base_addr.size,
-+                     f->base_addr.addr);
-+    /* Interrupt type */
-+    build_append_int_noprefix(table_data, f->interrupt_type, 1);
-+    /* IRQ */
-+    build_append_int_noprefix(table_data, f->pc_interrupt, 1);
-+    /* Global System Interrupt */
-+    build_append_int_noprefix(table_data, f->interrupt, 4);
-+    /* Baud Rate */
-+    build_append_int_noprefix(table_data, f->baud_rate, 1);
-+    /* Parity */
-+    build_append_int_noprefix(table_data, f->parity, 1);
-+    /* Stop Bits */
-+    build_append_int_noprefix(table_data, f->stop_bits, 1);
-+    /* Flow Control */
-+    build_append_int_noprefix(table_data, f->flow_control, 1);
-+    /* Language */
-+    build_append_int_noprefix(table_data, f->language, 1);
-+    /* Terminal Type */
-+    build_append_int_noprefix(table_data, f->terminal_type, 1);
-+    /* PCI Device ID  */
-+    build_append_int_noprefix(table_data, f->pci_device_id, 2);
-+    /* PCI Vendor ID */
-+    build_append_int_noprefix(table_data, f->pci_vendor_id, 2);
-+    /* PCI Bus Number */
-+    build_append_int_noprefix(table_data, f->pci_bus, 1);
-+    /* PCI Device Number */
-+    build_append_int_noprefix(table_data, f->pci_device, 1);
-+    /* PCI Function Number */
-+    build_append_int_noprefix(table_data, f->pci_function, 1);
-+    /* PCI Flags */
-+    build_append_int_noprefix(table_data, f->pci_flags, 4);
-+    /* PCI Segment */
-+    build_append_int_noprefix(table_data, f->pci_segment, 1);
-+    /* Reserved */
-+    build_append_int_noprefix(table_data, 0, 4);
-+
-+    acpi_table_end(linker, &table);
-+}
- /*
-  * ACPI spec, Revision 6.3
-  * 5.2.29 Processor Properties Topology Table (PPTT)
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index 84141228d5..6a1bde61ce 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -431,48 +431,34 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-  * Rev: 1.07
-  */
- static void
--build_spcr(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-+spcr_setup(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
- {
--    AcpiTable table = { .sig = "SPCR", .rev = 2, .oem_id = vms->oem_id,
--                        .oem_table_id = vms->oem_table_id };
--
--    acpi_table_begin(&table, table_data);
--
--    /* Interface Type */
--    build_append_int_noprefix(table_data, 3, 1); /* ARM PL011 UART */
--    build_append_int_noprefix(table_data, 0, 3); /* Reserved */
--    /* Base Address */
--    build_append_gas(table_data, AML_AS_SYSTEM_MEMORY, 32, 0, 3,
--                     vms->memmap[VIRT_UART].base);
--    /* Interrupt Type */
--    build_append_int_noprefix(table_data,
--        (1 << 3) /* Bit[3] ARMH GIC interrupt */, 1);
--    build_append_int_noprefix(table_data, 0, 1); /* IRQ */
--    /* Global System Interrupt */
--    build_append_int_noprefix(table_data,
--                              vms->irqmap[VIRT_UART] + ARM_SPI_BASE, 4);
--    build_append_int_noprefix(table_data, 3 /* 9600 */, 1); /* Baud Rate */
--    build_append_int_noprefix(table_data, 0 /* No Parity */, 1); /* Parity */
--    /* Stop Bits */
--    build_append_int_noprefix(table_data, 1 /* 1 Stop bit */, 1);
--    /* Flow Control */
--    build_append_int_noprefix(table_data,
--        (1 << 1) /* RTS/CTS hardware flow control */, 1);
--    /* Terminal Type */
--    build_append_int_noprefix(table_data, 0 /* VT100 */, 1);
--    build_append_int_noprefix(table_data, 0, 1); /* Language */
--    /* PCI Device ID  */
--    build_append_int_noprefix(table_data, 0xffff /* not a PCI device*/, 2);
--    /* PCI Vendor ID */
--    build_append_int_noprefix(table_data, 0xffff /* not a PCI device*/, 2);
--    build_append_int_noprefix(table_data, 0, 1); /* PCI Bus Number */
--    build_append_int_noprefix(table_data, 0, 1); /* PCI Device Number */
--    build_append_int_noprefix(table_data, 0, 1); /* PCI Function Number */
--    build_append_int_noprefix(table_data, 0, 4); /* PCI Flags */
--    build_append_int_noprefix(table_data, 0, 1); /* PCI Segment */
--    build_append_int_noprefix(table_data, 0, 4); /* Reserved */
-+    AcpiSpcrData serial = {
-+        .interface_type = 3,       /* ARM PL011 UART */
-+        .base_addr.id = AML_AS_SYSTEM_MEMORY,
-+        .base_addr.width = 32,
-+        .base_addr.offset = 0,
-+        .base_addr.size = 3,
-+        .base_addr.addr = vms->memmap[VIRT_UART].base,
-+        .interrupt_type = (1 << 3),/* Bit[3] ARMH GIC interrupt*/
-+        .pc_interrupt = 0,         /* IRQ */
-+        .interrupt = (vms->irqmap[VIRT_UART] + ARM_SPI_BASE),
-+        .baud_rate = 3,            /* 9600 */
-+        .parity = 0,               /* No Parity */
-+        .stop_bits = 1,            /* 1 Stop bit */
-+        .flow_control = 1 << 1,    /* RTS/CTS hardware flow control */
-+        .terminal_type = 0,        /* VT100 */
-+        .language = 0,             /* Language */
-+        .pci_device_id = 0xffff,   /* not a PCI device*/
-+        .pci_vendor_id = 0xffff,   /* not a PCI device*/
-+        .pci_bus = 0,
-+        .pci_device = 0,
-+        .pci_function = 0,
-+        .pci_flags = 0,
-+        .pci_segment = 0,
-+    };
- 
--    acpi_table_end(linker, &table);
-+    build_spcr(table_data, linker, &serial, 2, vms->oem_id, vms->oem_table_id);
- }
- 
- /*
-@@ -938,7 +924,7 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
-     }
- 
-     acpi_add_table(table_offsets, tables_blob);
--    build_spcr(tables_blob, tables->linker, vms);
-+    spcr_setup(tables_blob, tables->linker, vms);
- 
-     acpi_add_table(table_offsets, tables_blob);
-     build_dbg2(tables_blob, tables->linker, vms);
+ #define RISCV_HWPROBE_KEY_CPUPERF_0     5
+ #define     RISCV_HWPROBE_MISALIGNED_UNKNOWN     (0 << 0)
+@@ -8876,6 +8904,62 @@ static void risc_hwprobe_fill_pairs(CPURISCVState *env,
+                      RISCV_HWPROBE_EXT_ZBS : 0;
+             value |= cfg->ext_zicboz ?
+                      RISCV_HWPROBE_EXT_ZICBOZ : 0;
++            value |= cfg->ext_zbc ?
++                     RISCV_HWPROBE_EXT_ZBC : 0;
++            value |= cfg->ext_zbkb ?
++                     RISCV_HWPROBE_EXT_ZBKB : 0;
++            value |= cfg->ext_zbkc ?
++                     RISCV_HWPROBE_EXT_ZBKC : 0;
++            value |= cfg->ext_zbkx ?
++                     RISCV_HWPROBE_EXT_ZBKX : 0;
++            value |= cfg->ext_zknd ?
++                     RISCV_HWPROBE_EXT_ZKND : 0;
++            value |= cfg->ext_zkne ?
++                     RISCV_HWPROBE_EXT_ZKNE : 0;
++            value |= cfg->ext_zknh ?
++                     RISCV_HWPROBE_EXT_ZKNH : 0;
++            value |= cfg->ext_zksed ?
++                     RISCV_HWPROBE_EXT_ZKSED : 0;
++            value |= cfg->ext_zksh ?
++                     RISCV_HWPROBE_EXT_ZKSH : 0;
++            value |= cfg->ext_zkt ?
++                     RISCV_HWPROBE_EXT_ZKT : 0;
++            value |= cfg->ext_zvbb ?
++                     RISCV_HWPROBE_EXT_ZVBB : 0;
++            value |= cfg->ext_zvbc ?
++                     RISCV_HWPROBE_EXT_ZVBC : 0;
++            value |= cfg->ext_zvkb ?
++                     RISCV_HWPROBE_EXT_ZVKB : 0;
++            value |= cfg->ext_zvkg ?
++                     RISCV_HWPROBE_EXT_ZVKG : 0;
++            value |= cfg->ext_zvkned ?
++                     RISCV_HWPROBE_EXT_ZVKNED : 0;
++            value |= cfg->ext_zvknha ?
++                     RISCV_HWPROBE_EXT_ZVKNHA : 0;
++            value |= cfg->ext_zvknhb ?
++                     RISCV_HWPROBE_EXT_ZVKNHB : 0;
++            value |= cfg->ext_zvksed ?
++                     RISCV_HWPROBE_EXT_ZVKSED : 0;
++            value |= cfg->ext_zvksh ?
++                     RISCV_HWPROBE_EXT_ZVKSH : 0;
++            value |= cfg->ext_zvkt ?
++                     RISCV_HWPROBE_EXT_ZVKT : 0;
++            value |= cfg->ext_zfh ?
++                     RISCV_HWPROBE_EXT_ZFH : 0;
++            value |= cfg->ext_zfhmin ?
++                     RISCV_HWPROBE_EXT_ZFHMIN : 0;
++            value |= cfg->ext_zihintntl ?
++                     RISCV_HWPROBE_EXT_ZIHINTNTL : 0;
++            value |= cfg->ext_zvfh ?
++                     RISCV_HWPROBE_EXT_ZVFH : 0;
++            value |= cfg->ext_zvfhmin ?
++                     RISCV_HWPROBE_EXT_ZVFHMIN : 0;
++            value |= cfg->ext_zfa ?
++                     RISCV_HWPROBE_EXT_ZFA : 0;
++            value |= cfg->ext_zacas ?
++                     RISCV_HWPROBE_EXT_ZACAS : 0;
++            value |= cfg->ext_zicond ?
++                     RISCV_HWPROBE_EXT_ZICOND : 0;
+             __put_user(value, &pair->value);
+             break;
+         case RISCV_HWPROBE_KEY_CPUPERF_0:
 -- 
 2.44.0
 
