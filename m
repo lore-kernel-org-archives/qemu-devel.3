@@ -4,90 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C6C2C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 16:49:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D32FC54E4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 16:49:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ridO4-0007LO-UE; Fri, 08 Mar 2024 11:48:01 -0500
+	id 1ridPU-0008QA-0g; Fri, 08 Mar 2024 11:49:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ridO1-0007I2-BB
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:47:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ridNy-0006PO-I3
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:47:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709916470;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=d37ilDygHcnxIq+f+Uco6ClaOG0NV7691L91/UrctiU=;
- b=hm1HpixUTPcvGq4O33hqMadf3Uz+dN0rhvGQ+aSK7tjZ3WnGv9NOdwIQxDoZ8kgxWLttCR
- +ulqSF86H12FluC5Mu38GUvyTUHghPB8EOBfqYPgJyBdrQZREDLcuzv7uI+CgF7k2NPR/A
- QVPV1ZI9NqucQNRx0f7smvDbxHj1BdU=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-478-Crw0rmBWNp-dv_bwiuSCrw-1; Fri, 08 Mar 2024 11:47:47 -0500
-X-MC-Unique: Crw0rmBWNp-dv_bwiuSCrw-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-33d19951a9bso301621f8f.0
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 08:47:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ridPP-0008Mi-3S
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:49:23 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ridPC-0006c3-Ph
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:49:22 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-568307fe62eso910863a12.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 08:49:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709916549; x=1710521349; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=fnlbVSMPpB1kCKeMZkzCIPdEgio+rl8vlhNEleoaIkM=;
+ b=VJmFNg+HG2tvQKT7tl15LfzkNOPxbPt122WUSEwwQnwcIvthFmUGduEgGBrItA8woL
+ FijUSwQCo3y2zijNFzBft5TtbeHgR8jmweYpypVlrgRUKbc7taMwlzqgdjN0Zs18NJRv
+ kduKAAD/xCCBg0HngonHfl8igucvLFKIV+sWoKfVilb7RMVdML9CyGOuszeOgtp/tF05
+ mRfWDwTg2IQOMoCGc4AtPN6TX6P33JUpA8WCrTMS0BkTjYfHqIXTaOa9MIXIRyOiS5+s
+ kfGh5ErX0Gf6yLHYBm9uCivS+1+EcZgdecG3rmSpQGSNidfPRnyiQcqIcM7weaKDwTpm
+ nFUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709916466; x=1710521266;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=d37ilDygHcnxIq+f+Uco6ClaOG0NV7691L91/UrctiU=;
- b=LM+/XcEHeE6CBo4V7rd0tNfP8Ixk7Wq18RpRnZ69aPbGYHp2M1hn3XDGeQAmUqyu7f
- /TcsgGSPIStyGNTtTs0zoyXOOxppvsSg+CJdfIJbeoLQhwNTMDy0uEXx04fBR8HF2Rld
- 8qF8JSi6/8ks2ZXBz6c1VAAM7L5t3B75/hWm7cabTvgvh8N3BZof865wy5PXel8klFv5
- dfny1wmVEm1BNzmc1zwIQQCdhxco0HDRduTfm/nS+Uj+uIQw/4VHmgWHf93t7qAJKX+T
- m5uxaZHF3tIK+UWnRx/7xkdmk/F1FE2k/HgFi/RJIKefSUwaW6vyIe4F5A9EsxW50Dp9
- lsFw==
-X-Gm-Message-State: AOJu0YzhM4UoQbCm3FoHUmz2XmkEAfyzMWZUlRC/0ucdcULydnFWkr4U
- mFbQrIzXOZS58eUboLAooVDhfNXF+UY3s7T6GAOzSPYW++TvICVwkuGsiMxkZJbfovdthEvgTof
- m1fjVZ6eq6B3B4jTlewTNBj9aH1gWyUJ0+eMa6qFXpXGAhVps+HcK
-X-Received: by 2002:a5d:5490:0:b0:33d:6ca1:3058 with SMTP id
- h16-20020a5d5490000000b0033d6ca13058mr14489762wrv.56.1709916466559; 
- Fri, 08 Mar 2024 08:47:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEm3/PolLme7+BVs9F/BV+9fkxYL7pbIFYIulh3FjjfZETvnyKRZAk+/lnabQ3AKBlh4H96QQ==
-X-Received: by 2002:a5d:5490:0:b0:33d:6ca1:3058 with SMTP id
- h16-20020a5d5490000000b0033d6ca13058mr14489748wrv.56.1709916466169; 
- Fri, 08 Mar 2024 08:47:46 -0800 (PST)
-Received: from ?IPV6:2a01:cb19:9000:9100:7442:850e:5af1:aebf?
- ([2a01:cb19:9000:9100:7442:850e:5af1:aebf])
- by smtp.gmail.com with ESMTPSA id
- bo16-20020a056000069000b0033e422d0963sm13068657wrb.41.2024.03.08.08.47.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Mar 2024 08:47:45 -0800 (PST)
-Message-ID: <12e67a75-0d13-406e-9945-bccc8b179ca2@redhat.com>
-Date: Fri, 8 Mar 2024 17:47:44 +0100
+ d=1e100.net; s=20230601; t=1709916549; x=1710521349;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fnlbVSMPpB1kCKeMZkzCIPdEgio+rl8vlhNEleoaIkM=;
+ b=u7ahxqgsF3lK0N7mqFRF5EWwmtdOjBPJGu8OF8ts/zBkMs5sWRWwz2opfRJ6TIK99+
+ 1AHNh39WlCC/PHlm6KhDEv6rii06QNyreSYlQsZEvEUFmOwY9Qp69sxyS5RECvArZciR
+ w3HDCQFDosVoBX7NJgcVx9zQgAbb4nJc9b7HGcX8NLM9S5Q5aDGplPQw6euS7jTvABaK
+ vGd6WVvZXZvxPd4b8HEcfcD7tVyl69rx1ZgL+QThefxx/zNGdMX7uezptugPrqfSmJzV
+ zSzPtSqqSTUp9vqcug95qHIpPMfhaTe5PugKhDqHLmas4MHyBPvFzBGM3hWRIKb21j+W
+ h6qA==
+X-Gm-Message-State: AOJu0YzvWOKZG3rllLwNxfEnz2br0FCS16wvuL23RvBHhFF89IvdoU0V
+ XdXNKMLUVGLwK63winqWiNnzqu3E1pJFUbcRpmyQc+v1q96BLa4L0HLFNfoCiwTIqExYVT8w/Qy
+ x19mxx/ilNUbNGmRdQz6/MChaGdxD/LZN88rOqw==
+X-Google-Smtp-Source: AGHT+IEeCldgLZdvtBQxeB5LsQLeWTxhhTBPTiskmhv/LuGmDAa66ItNvKOBAjCViv/UhvayJs/COcotPRul1CmJllc=
+X-Received: by 2002:a50:bb41:0:b0:565:98c5:6c38 with SMTP id
+ y59-20020a50bb41000000b0056598c56c38mr2392594ede.7.1709916549258; Fri, 08 Mar
+ 2024 08:49:09 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pci: Add option to disable device level INTx masking
-Content-Language: en-US, fr
-To: Alex Williamson <alex.williamson@redhat.com>, mst@redhat.com,
- marcel.apfelbaum@gmail.com
-Cc: qemu-devel@nongnu.org
-References: <20240307184645.104349-1-alex.williamson@redhat.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240307184645.104349-1-alex.williamson@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20240308111152.2856137-1-alistair.francis@wdc.com>
+In-Reply-To: <20240308111152.2856137-1-alistair.francis@wdc.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 8 Mar 2024 16:48:57 +0000
+Message-ID: <CAFEAcA90Jjvcjn_wPkR0pa_BQvcFbjO0k=SM76aJo2pO0zp=ew@mail.gmail.com>
+Subject: Re: [PULL 00/34] riscv-to-apply queue
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,88 +87,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/7/24 19:46, Alex Williamson wrote:
-> The PCI 2.3 spec added definitions of the INTx disable and status bits,
-> in the command and status registers respectively.  The command register
-> bit, commonly known as DisINTx in lspci, controls whether the device
-> can assert the INTx signal.
-> 
-> Operating systems will often write to this bit to test whether a device
-> supports this style of legacy interrupt masking.  When using device
-> assignment, such as with vfio-pci, the result of this test dictates
-> whether the device can use a shared or exclusive interrupt (ie. generic
-> INTx masking at the device via DisINTx or IRQ controller level INTx
-> masking).
-> 
-> Add an experimental option to the base set of properties for PCI
-> devices which allows the DisINTx bit to be excluded from wmask, making
-> it read-only to the guest for testing purposes related to INTx masking.
-> 
-> Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+On Fri, 8 Mar 2024 at 11:13, Alistair Francis <alistair23@gmail.com> wrote:
+>
+> The following changes since commit 8f6330a807f2642dc2a3cdf33347aa28a4c00a87:
+>
+>   Merge tag 'pull-maintainer-updates-060324-1' of https://gitlab.com/stsquad/qemu into staging (2024-03-06 16:56:20 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20240308-1
+>
+> for you to fetch changes up to 301876597112218c1e465ecc2b2fef6b27d5c27b:
+>
+>   target/riscv: fix ACPI MCFG table (2024-03-08 21:00:37 +1000)
+>
+> ----------------------------------------------------------------
+> RISC-V PR for 9.0
+>
+> * Update $ra with current $pc in trans_cm_jalt
+> * Enable SPCR for SCPI virt machine
+> * Allow large kernels to boot by moving the initrd further away in RAM
+> * Sync hwprobe keys with kernel
+> * Named features riscv,isa, 'svade' rework
+> * FIX xATP_MODE validation
+> * Add missing include guard in pmu.h
+> * Add SRAT and SLIT ACPI tables
+> * libqos fixes and add a riscv machine
+> * Add Ztso extension
+> * Use 'zfa' instead of 'Zfa'
+> * Update KVM exts to Linux 6.8
+> * move ratified/frozen exts to non-experimental
+> * Ensure mcountinhibit, mcounteren, scounteren, hcounteren are 32-bit
+> * mark_vs_dirty() before loads and stores
+> * Remove 'is_store' bool from load/store fns
+> * Fix shift count overflow
+> * Fix setipnum_le write emulation for APLIC MSI-mode
+> * Fix in_clrip[x] read emulation
+> * Fix privilege mode of G-stage translation for debugging
+> * Fix ACPI MCFG table for virt machine
+>
 
 
-LGTM,
+Applied, thanks.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
+for any user-visible changes.
 
-Thanks,
-
-C.
-
-
-
-> ---
->   hw/pci/pci.c         | 14 ++++++++++----
->   include/hw/pci/pci.h |  2 ++
->   2 files changed, 12 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> index 6496d027ca61..8c78326ad67f 100644
-> --- a/hw/pci/pci.c
-> +++ b/hw/pci/pci.c
-> @@ -85,6 +85,8 @@ static Property pci_props[] = {
->                       QEMU_PCIE_ERR_UNC_MASK_BITNR, true),
->       DEFINE_PROP_BIT("x-pcie-ari-nextfn-1", PCIDevice, cap_present,
->                       QEMU_PCIE_ARI_NEXTFN_1_BITNR, false),
-> +    DEFINE_PROP_BIT("x-pci-disintx", PCIDevice, cap_present,
-> +                    QEMU_PCI_DISINTX_BITNR, true),
->       DEFINE_PROP_END_OF_LIST()
->   };
->   
-> @@ -861,13 +863,17 @@ static void pci_init_cmask(PCIDevice *dev)
->   static void pci_init_wmask(PCIDevice *dev)
->   {
->       int config_size = pci_config_size(dev);
-> +    uint16_t cmd_wmask = PCI_COMMAND_IO | PCI_COMMAND_MEMORY |
-> +                         PCI_COMMAND_MASTER | PCI_COMMAND_SERR;
->   
->       dev->wmask[PCI_CACHE_LINE_SIZE] = 0xff;
->       dev->wmask[PCI_INTERRUPT_LINE] = 0xff;
-> -    pci_set_word(dev->wmask + PCI_COMMAND,
-> -                 PCI_COMMAND_IO | PCI_COMMAND_MEMORY | PCI_COMMAND_MASTER |
-> -                 PCI_COMMAND_INTX_DISABLE);
-> -    pci_word_test_and_set_mask(dev->wmask + PCI_COMMAND, PCI_COMMAND_SERR);
-> +
-> +    if (dev->cap_present & QEMU_PCI_DISINTX) {
-> +        cmd_wmask |= PCI_COMMAND_INTX_DISABLE;
-> +    }
-> +
-> +    pci_set_word(dev->wmask + PCI_COMMAND, cmd_wmask);
->   
->       memset(dev->wmask + PCI_CONFIG_HEADER_SIZE, 0xff,
->              config_size - PCI_CONFIG_HEADER_SIZE);
-> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-> index eaa3fc99d884..45f0fac435cc 100644
-> --- a/include/hw/pci/pci.h
-> +++ b/include/hw/pci/pci.h
-> @@ -212,6 +212,8 @@ enum {
->       QEMU_PCIE_ERR_UNC_MASK = (1 << QEMU_PCIE_ERR_UNC_MASK_BITNR),
->   #define QEMU_PCIE_ARI_NEXTFN_1_BITNR 12
->       QEMU_PCIE_ARI_NEXTFN_1 = (1 << QEMU_PCIE_ARI_NEXTFN_1_BITNR),
-> +#define QEMU_PCI_DISINTX_BITNR 13
-> +    QEMU_PCI_DISINTX = (1 << QEMU_PCI_DISINTX_BITNR),
->   };
->   
->   typedef struct PCIINTxRoute {
-
+-- PMM
 
