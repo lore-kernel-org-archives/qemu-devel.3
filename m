@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DE85C54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 18:13:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1C97C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 18:13:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riehm-00079z-0P; Fri, 08 Mar 2024 13:12:26 -0500
+	id 1riehm-0007A7-HG; Fri, 08 Mar 2024 13:12:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1riehj-000780-UL
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 13:12:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1riehl-00079y-Si
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 13:12:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1riehh-0005o0-G8
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 13:12:23 -0500
+ id 1riehi-0005o9-2s
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 13:12:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709921539;
+ s=mimecast20190719; t=1709921541;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ff3Hzr/qQnFeHJ3R0iUom7wtGXBzK9NGYQzCU5YsyUA=;
- b=IuqpmqQhWftqmnZDu6ftGxdifvL87JTbFywVOaSolwdbpJxSeEimQnSJwp/OyuefJAgg9z
- aNTgrnSXigSJ3xaB9BnasDdndFi5hupmtRW19/wHg6FNGH/1tESUvz2DBMPs8q/M3IT9h3
- L6kAThQbz2xXbFgKTtGvm7zhBgQxqeo=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=is4uaTsB7JqW33WeDjUhKzI7gp3GUbX8PHe/5xTz5cQ=;
+ b=Pi2AYXJr5sRjKU8TsxFtTvjPlHBO1Kt2/r9FM5nyZH/Js8Wvu/ncA6MoYWihq5fxCvl1eF
+ /QZwWi4GQOkGjC9BAeBsBH/QSfxv64x4q5VX2sgcX/MT1dh4Y03nKmlGvtWgQL3HM8b98x
+ vAfFVrXlBk+uTWb9B6nBZv8WjsbIURo=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-642-JNZ7ypJBPZK1txaij32Wug-1; Fri, 08 Mar 2024 13:12:18 -0500
-X-MC-Unique: JNZ7ypJBPZK1txaij32Wug-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-5670ee87ca4so1108720a12.2
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 10:12:17 -0800 (PST)
+ us-mta-169-pNafbxupPzqctGn2qtm23A-1; Fri, 08 Mar 2024 13:12:20 -0500
+X-MC-Unique: pNafbxupPzqctGn2qtm23A-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a4489805a2dso43607966b.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 10:12:19 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709921535; x=1710526335;
+ d=1e100.net; s=20230601; t=1709921538; x=1710526338;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ff3Hzr/qQnFeHJ3R0iUom7wtGXBzK9NGYQzCU5YsyUA=;
- b=Bsb6T45IuTxHpNI0cFivXsjCG6ZlVuCwfOyLKToxNHMSpJhA9HGGbd+qz/JkccQCMt
- JXzWFsHwcgWFY9r44x9I6eQJB8nxcfhWOJLJnvVhzqCVwUd2z8TmckKWTwpSTE7p5z7R
- ZyCvXc8raw9aUUmcNxxXXc0AACIVLWk6DG6TWgIxjtMrZefStZ+VE7u6jNeVcJbEWFGb
- EHKbPUcHz59mcE/3Tvr9tmlYeEPXXn3x0U3G4TNLs8Lm8tcMYVWrcJOSOqeoU16iN+T6
- Dqihv8qv/+3kkzdHTE+mIi15hQYfKc5hFvhPJMHoI7Myl7wPJJAAWGCKaFxhs2MIaqS/
- fIgA==
-X-Gm-Message-State: AOJu0Yy3D4mXKn+h6dpY8hfc5ghgof+SECWFZL+qjRR5WGOHsURIqFbC
- ZCo074NBTy7lMFgePJAeqhZ7UUPnTtVISpBYPpfKm+Tf7Aez+aR98H5ckft7QbgvgppNictTTey
- r7sHQRrl3B0gYdER7IDghiNMWFiFF9ePHC3fqGqjSqKdxIAFUMYStH5RLlkx35JG6ED+E1dNH1o
- BLSpIPkDWRGuboNSUxwFEIWDCXaZutiWaX9rC3
-X-Received: by 2002:a50:9faa:0:b0:565:59a:a103 with SMTP id
- c39-20020a509faa000000b00565059aa103mr29893edf.33.1709921535244; 
- Fri, 08 Mar 2024 10:12:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFPnsqjXmf/kRkEMik4h43dtMchE9C+ZRTsPbTw4NMAyyI5/k3Ji+e91QH6IqGuhsqS1o5hsw==
-X-Received: by 2002:a50:9faa:0:b0:565:59a:a103 with SMTP id
- c39-20020a509faa000000b00565059aa103mr29876edf.33.1709921534821; 
- Fri, 08 Mar 2024 10:12:14 -0800 (PST)
+ bh=is4uaTsB7JqW33WeDjUhKzI7gp3GUbX8PHe/5xTz5cQ=;
+ b=k/EMQ5Sproozyqum9kuM7NRPYjvpqYFTZoToXjT4ALLx6Eh/9wFR7K/rHOTO+pSqom
+ 6jH30DtejNewApe77TuiUe1JOpMflgN/Y1cts9wqsLXDgRJk0e1u14zBOJCSJBOYEl1y
+ 0jg2OhXXXrDJnPFlr7zC/EWrKaVxBrN+tnTDQadRGhgaoYJP/7gNw+XdQ3Uq2kVc8qt+
+ tHipxqpjL4XGfY3eYfit4J+XZ0OtDx/zysofUK4x2KiGZgBA3veeJEUKAfII9m1X/a9d
+ mWzBicCzDyPDh+K/0y/y15aX6NsGLT04l4HQ9SCt0SJlAMPg/AKyv/IJYa9JdBcsbTex
+ oPAQ==
+X-Gm-Message-State: AOJu0YwjP0NY2zM5zrv3sL5q5jPZmTLu99udOaFGVmHMpkuyzvapOmbS
+ 6M9qciiSCGxxKNTmuIyAL1MTKSCYimJJtrPCDaqCgpvqfNe3qfn+8YWW3Ep4lITnV91Iy75iUHs
+ svVY/+yS+AVcFXRxkHwtUFOPKLeJewD/G7AUSJqvS2aa6GSFdsyKdiH60FmOW5FAJBynKbLkhK3
+ 5yNausWHqLd/RPd13ZA7NLgprbnK71Jdp4fmwp
+X-Received: by 2002:a17:906:4109:b0:a45:a3e9:debd with SMTP id
+ j9-20020a170906410900b00a45a3e9debdmr8126507ejk.59.1709921538571; 
+ Fri, 08 Mar 2024 10:12:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEGZIJA4sb4gzAYwgu1CNu5gtYm00yZm1oZIG1uSvRqPlfmJpJUKRZ7JaB/aeI+bBhxQpJwnw==
+X-Received: by 2002:a17:906:4109:b0:a45:a3e9:debd with SMTP id
+ j9-20020a170906410900b00a45a3e9debdmr8126498ejk.59.1709921538325; 
+ Fri, 08 Mar 2024 10:12:18 -0800 (PST)
 Received: from [192.168.10.118] ([151.49.77.21])
  by smtp.gmail.com with ESMTPSA id
- x14-20020aa7dace000000b005671100145dsm22397eds.55.2024.03.08.10.12.12
+ j7-20020a170906278700b00a4324ae24dbsm40450ejc.62.2024.03.08.10.12.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 10:12:13 -0800 (PST)
+ Fri, 08 Mar 2024 10:12:15 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Sven Schnelle <svens@stackframe.org>,
-	Helge Deller <deller@gmx.de>
-Subject: [PULL 4/9] hw/scsi/lsi53c895a: stop script on phase mismatch
-Date: Fri,  8 Mar 2024 19:11:56 +0100
-Message-ID: <20240308181202.617329-5-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Bui Quang Minh <minhquangbui99@gmail.com>
+Subject: [PULL 5/9] hw/intc/apic: fix memory leak
+Date: Fri,  8 Mar 2024 19:11:57 +0100
+Message-ID: <20240308181202.617329-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240308181202.617329-1-pbonzini@redhat.com>
 References: <20240308181202.617329-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,86 +104,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sven Schnelle <svens@stackframe.org>
+deliver_bitmask is allocated on the heap in apic_deliver(), but there
+are many paths in the function that return before the corresponding
+g_free() is reached.  Fix this by switching to g_autofree and, while at
+it, also switch to g_new.  Do the same in apic_deliver_irq() as well
+for consistency.
 
-Netbsd isn't happy with qemu lsi53c895a emulation:
-
-cd0(esiop0:0:2:0): command with tag id 0 reset
-esiop0: autoconfiguration error: phase mismatch without command
-esiop0: autoconfiguration error: unhandled scsi interrupt, sist=0x80 sstat1=0x0 DSA=0x23a64b1 DSP=0x50
-
-This is because lsi_bad_phase() triggers a phase mismatch, which
-stops SCRIPT processing. However, after returning to
-lsi_command_complete(), SCRIPT is restarted with lsi_resume_script().
-Fix this by adding a return value to lsi_bad_phase(), and only resume
-script processing when lsi_bad_phase() didn't trigger a host interrupt.
-
-Signed-off-by: Sven Schnelle <svens@stackframe.org>
-Tested-by: Helge Deller <deller@gmx.de>
-Message-ID: <20240302214453.2071388-1-svens@stackframe.org>
+Fixes: b5ee0468e9d ("apic: add support for x2APIC mode", 2024-02-14)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Bui Quang Minh <minhquangbui99@gmail.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/scsi/lsi53c895a.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ hw/intc/apic.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
-index 4ff94703816..59b88aff3fb 100644
---- a/hw/scsi/lsi53c895a.c
-+++ b/hw/scsi/lsi53c895a.c
-@@ -573,8 +573,9 @@ static inline void lsi_set_phase(LSIState *s, int phase)
-     s->sstat1 = (s->sstat1 & ~PHASE_MASK) | phase;
- }
- 
--static void lsi_bad_phase(LSIState *s, int out, int new_phase)
-+static int lsi_bad_phase(LSIState *s, int out, int new_phase)
+diff --git a/hw/intc/apic.c b/hw/intc/apic.c
+index 1d887d66b86..4186c57b34c 100644
+--- a/hw/intc/apic.c
++++ b/hw/intc/apic.c
+@@ -291,14 +291,13 @@ static void apic_deliver_irq(uint32_t dest, uint8_t dest_mode,
+                              uint8_t delivery_mode, uint8_t vector_num,
+                              uint8_t trigger_mode)
  {
-+    int ret = 0;
-     /* Trigger a phase mismatch.  */
-     if (s->ccntl0 & LSI_CCNTL0_ENPMJ) {
-         if ((s->ccntl0 & LSI_CCNTL0_PMJCTL)) {
-@@ -587,8 +588,10 @@ static void lsi_bad_phase(LSIState *s, int out, int new_phase)
-         trace_lsi_bad_phase_interrupt();
-         lsi_script_scsi_interrupt(s, LSI_SIST0_MA, 0);
-         lsi_stop_script(s);
-+        ret = 1;
-     }
-     lsi_set_phase(s, new_phase);
-+    return ret;
+-    uint32_t *deliver_bitmask = g_malloc(max_apic_words * sizeof(uint32_t));
++    g_autofree uint32_t *deliver_bitmask = g_new(uint32_t, max_apic_words);
+ 
+     trace_apic_deliver_irq(dest, dest_mode, delivery_mode, vector_num,
+                            trigger_mode);
+ 
+     apic_get_delivery_bitmask(deliver_bitmask, dest, dest_mode);
+     apic_bus_deliver(deliver_bitmask, delivery_mode, vector_num, trigger_mode);
+-    g_free(deliver_bitmask);
  }
  
+ bool is_x2apic_mode(DeviceState *dev)
+@@ -662,7 +661,7 @@ static void apic_deliver(DeviceState *dev, uint32_t dest, uint8_t dest_mode,
+     APICCommonState *s = APIC(dev);
+     APICCommonState *apic_iter;
+     uint32_t deliver_bitmask_size = max_apic_words * sizeof(uint32_t);
+-    uint32_t *deliver_bitmask = g_malloc(deliver_bitmask_size);
++    g_autofree uint32_t *deliver_bitmask = g_new(uint32_t, max_apic_words);
+     uint32_t current_apic_id;
  
-@@ -792,7 +795,7 @@ static int lsi_queue_req(LSIState *s, SCSIRequest *req, uint32_t len)
- static void lsi_command_complete(SCSIRequest *req, size_t resid)
- {
-     LSIState *s = LSI53C895A(req->bus->qbus.parent);
--    int out;
-+    int out, stop = 0;
+     if (is_x2apic_mode(dev)) {
+@@ -708,7 +707,6 @@ static void apic_deliver(DeviceState *dev, uint32_t dest, uint8_t dest_mode,
+     }
  
-     out = (s->sstat1 & PHASE_MASK) == PHASE_DO;
-     trace_lsi_command_complete(req->status);
-@@ -800,7 +803,10 @@ static void lsi_command_complete(SCSIRequest *req, size_t resid)
-     s->command_complete = 2;
-     if (s->waiting && s->dbc != 0) {
-         /* Raise phase mismatch for short transfers.  */
--        lsi_bad_phase(s, out, PHASE_ST);
-+        stop = lsi_bad_phase(s, out, PHASE_ST);
-+        if (stop) {
-+            s->waiting = 0;
-+        }
-     } else {
-         lsi_set_phase(s, PHASE_ST);
-     }
-@@ -810,7 +816,9 @@ static void lsi_command_complete(SCSIRequest *req, size_t resid)
-         lsi_request_free(s, s->current);
-         scsi_req_unref(req);
-     }
--    lsi_resume_script(s);
-+    if (!stop) {
-+        lsi_resume_script(s);
-+    }
+     apic_bus_deliver(deliver_bitmask, delivery_mode, vector_num, trigger_mode);
+-    g_free(deliver_bitmask);
  }
  
-  /* Callback to indicate that the SCSI layer has completed a transfer.  */
+ static bool apic_check_pic(APICCommonState *s)
 -- 
 2.43.2
 
