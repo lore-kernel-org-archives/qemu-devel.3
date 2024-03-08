@@ -4,74 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9937C54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 07:35:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DB42C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 07:37:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riUl2-0001wK-3p; Fri, 08 Mar 2024 02:35:08 -0500
+	id 1riUmr-0002nx-W5; Fri, 08 Mar 2024 02:37:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1riUkx-0001vn-Lp
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 02:35:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1riUmq-0002ni-Jl
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 02:37:00 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1riUkt-0006jD-Ry
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 02:35:02 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1riUmp-00078g-4D
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 02:37:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709883298;
+ s=mimecast20190719; t=1709883418;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=3YeEwiyecYJozWumeIWxnUE913G+WAH25sdBxNDiA9U=;
- b=jAkdaZZofUTp41fF1CERdcikd9Og/LccuB6Ve4qSH0ZCpbV80i/l/ESOgFOCSpStpTvDci
- V8iyxHR/9Yeg2WQeHoO0X0UvyQzlgNIIUk0bMc+oJp8Fr7iMmuG/YgG9z3jF1NbutGx8bg
- 28bCSaCJPHLbiGYM7ZiIubTv3UeVK/g=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=60fpAYJhgWjnQBzbhQo5ksoUi2CHjomo4docI3TtOf4=;
+ b=DhVW8jf2Y8mEkh35JDXw4wx5iMsMcF9ZIvAeOo9DzcjEaECrifGzKGBMieGBB+UI+QvxJY
+ MxgFlA3WcebcqNt4xPsfFBiY9pe+VtuxBWJxppaJw0YmQ+DvWLe1CtxZgUi2cCvrCVP5yk
+ ZNFHa1VnIEuxlUXJzUqqK7ttHV1KZgQ=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-402-Hwn7CjFcPHm0xMLUQ9fPqg-1; Fri, 08 Mar 2024 02:34:54 -0500
-X-MC-Unique: Hwn7CjFcPHm0xMLUQ9fPqg-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D289B185A781;
- Fri,  8 Mar 2024 07:34:53 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.3])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 75676C04120;
- Fri,  8 Mar 2024 07:34:53 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0B83621E6A24; Fri,  8 Mar 2024 08:34:52 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: qemu-devel@nongnu.org,  qemu-block@nongnu.org,  eblake@redhat.com,
- hreitz@redhat.com,  kwolf@redhat.com,  vsementsov@yandex-team.ru,
- jsnow@redhat.com,  f.gruenbichler@proxmox.com,  t.lamprecht@proxmox.com,
- mahaocong@didichuxing.com,  xiechanglong.d@gmail.com,
- wencongyang2@huawei.com
-Subject: Re: [PATCH v2 1/4] qapi/block-core: avoid the re-use of
- MirrorSyncMode for backup
-In-Reply-To: <20240307134711.709816-2-f.ebner@proxmox.com> (Fiona Ebner's
- message of "Thu, 7 Mar 2024 14:47:08 +0100")
-References: <20240307134711.709816-1-f.ebner@proxmox.com>
- <20240307134711.709816-2-f.ebner@proxmox.com>
-Date: Fri, 08 Mar 2024 08:34:52 +0100
-Message-ID: <87cys56usj.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ us-mta-423-FFu0j4euPqah7psBN38hhg-1; Fri, 08 Mar 2024 02:36:56 -0500
+X-MC-Unique: FFu0j4euPqah7psBN38hhg-1
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-299180d546bso448961a91.0
+ for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 23:36:55 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709883415; x=1710488215;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=60fpAYJhgWjnQBzbhQo5ksoUi2CHjomo4docI3TtOf4=;
+ b=UovIS4tV3XWU2Tbm0lldoUCvQP7dlDly61U/RUaH+9uwjchT0SGNcQXEwVs0enS9RU
+ t+3S6IkkVgv3ap30ZScluPZvWyalwWrjojn8XLVgdE6hkslsT04kbtkeAV5W1bMImM6O
+ 3VNjl+1tjDqlvgMOSOCyMbxXhOVdzyXhG/Ja8iaPCc9Nd7xM8Zuvzzu+UNGBQm1iZtL8
+ ruFD3QS3rGb8+c4n9XmIbbxxY8Msx6u4hxfeF4KSWI40LIBU5uLMCM3LZcoz2xeVsjvN
+ M2lRwpnHKf4DW3d/qZE/IsNvcC0j/et35yx1Gi16IK+UTgbxUJgo0cki5YBLpvkEnno5
+ X2sA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWz3R4GAHaCFfzntWRiP0GOa8mrMIV0jcKYWgUkpJEsMlhgS6qJAlacBz7ZrjRcFju1YG8DQxstKSw18r4y6z4uMen/20I=
+X-Gm-Message-State: AOJu0Yw8DDe/bKOM4d2/cb4eeCs7vLesqLOk28cEURH3Snk2wXMIPMd9
+ FvtUEYSb0yIBeLTUGvx3cwh5LIBZlMD00BsRh35quuzrIrGYl1ASSvASzi/9k0rTywYorxpwKM4
+ qMxsZBWHtIKMQWRSlO0jM9Y+gcmBdkpNZMHT5oeHpr8mxq1x16DLR
+X-Received: by 2002:a17:902:ed54:b0:1dc:c28e:2236 with SMTP id
+ y20-20020a170902ed5400b001dcc28e2236mr1427882plb.2.1709883415037; 
+ Thu, 07 Mar 2024 23:36:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHfbsbQDGS8GA72YUk7TjazH+Tj71MMHL7CiLzaqYcxrhFL4MNB4J7URiBnmdsvcw0YBjK51g==
+X-Received: by 2002:a17:902:ed54:b0:1dc:c28e:2236 with SMTP id
+ y20-20020a170902ed5400b001dcc28e2236mr1427872plb.2.1709883414601; 
+ Thu, 07 Mar 2024 23:36:54 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ p8-20020a63e648000000b005d68962e1a7sm13915832pgj.24.2024.03.07.23.36.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 07 Mar 2024 23:36:54 -0800 (PST)
+Date: Fri, 8 Mar 2024 15:36:46 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, linuxarm@huawei.com
+Subject: Re: [PATCH v2 0/4] physmem: Fix MemoryRegion for second access to
+ cached MMIO Address Space
+Message-ID: <ZerADmIeh6XnbOkG@x1n>
+References: <20240307153710.30907-1-Jonathan.Cameron@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240307153710.30907-1-Jonathan.Cameron@huawei.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.583,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,93 +102,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fiona Ebner <f.ebner@proxmox.com> writes:
+On Thu, Mar 07, 2024 at 03:37:06PM +0000, Jonathan Cameron wrote:
+> v2: (Thanks to Peter Xu for reviewing!)
+> - New patch 1 to rename addr1 to mr_addr in the interests of meaningful naming.
+> - Take advantage of a cached address space only allow for a single MR to simplify
+>   the new code.
+> - Various cleanups of indentation etc.
+> - Cover letter and some patch descriptions updated to reflect changes.
+> - Changes all called out in specific patches.
 
-> Backup supports all modes listed in MirrorSyncMode, while mirror does
-> not. Introduce BackupSyncMode by copying the current MirrorSyncMode
-> and drop the variants mirror does not support from MirrorSyncMode as
-> well as the corresponding manual check in mirror_start().
+All look good to me, thanks.  Having the new functions' first argument as
+MemTxAttrs is slightly weird to me, but that's not a big deal and we can
+clean it up later if wanted.  I guess it's good to fix this in 9.0 first as
+it's a real bug even if not trivial to hit.
 
-Results in tighter introspection: query-qmp-schema no longer reports
-drive-mirror and blockdev-mirror accepting @sync values they actually
-reject.  Suggest to mention this in the commit message.
+I queued it in my migration tree (with my "memory API" hat..).
 
-> Suggested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-> ---
->
-> I felt like keeping the "Since: X.Y" as before makes the most sense as
-> to not lose history. Or is it necessary to change this for
-> BackupSyncMode (and its members) since it got a new name?
+I won't send a pull until next Monday.  Please shoot if there's any objections!
 
-Doc comments are for users of the QMP interface.  Type names do not
-matter there.  I agree with your decision not to update the "since"
-tags.
-
-[...]
-
-> diff --git a/qapi/block-core.json b/qapi/block-core.json
-> index 1874f880a8..59d75b0793 100644
-> --- a/qapi/block-core.json
-> +++ b/qapi/block-core.json
-> @@ -1304,10 +1304,10 @@
->    'data': ['report', 'ignore', 'enospc', 'stop', 'auto'] }
->  
->  ##
-> -# @MirrorSyncMode:
-> +# @BackupSyncMode:
->  #
-> -# An enumeration of possible behaviors for the initial synchronization
-> -# phase of storage mirroring.
-> +# An enumeration of possible behaviors for image synchronization used
-> +# by backup jobs.
->  #
->  # @top: copies data in the topmost image to the destination
->  #
-> @@ -1323,7 +1323,7 @@
->  #
->  # Since: 1.3
->  ##
-> -{ 'enum': 'MirrorSyncMode',
-> +{ 'enum': 'BackupSyncMode',
->    'data': ['top', 'full', 'none', 'incremental', 'bitmap'] }
->  
->  ##
-> @@ -1347,6 +1347,23 @@
->  { 'enum': 'BitmapSyncMode',
->    'data': ['on-success', 'never', 'always'] }
->  
-> +##
-> +# @MirrorSyncMode:
-> +#
-> +# An enumeration of possible behaviors for the initial synchronization
-> +# phase of storage mirroring.
-> +#
-> +# @top: copies data in the topmost image to the destination
-> +#
-> +# @full: copies data from all images to the destination
-> +#
-> +# @none: only copy data written from now on
-> +#
-> +# Since: 1.3
-> +##
-> +{ 'enum': 'MirrorSyncMode',
-> +  'data': ['top', 'full', 'none'] }
-> +
->  ##
->  # @MirrorCopyMode:
->  #
-> @@ -1624,7 +1641,7 @@
->  ##
->  { 'struct': 'BackupCommon',
->    'data': { '*job-id': 'str', 'device': 'str',
-> -            'sync': 'MirrorSyncMode', '*speed': 'int',
-> +            'sync': 'BackupSyncMode', '*speed': 'int',
->              '*bitmap': 'str', '*bitmap-mode': 'BitmapSyncMode',
->              '*compress': 'bool',
->              '*on-source-error': 'BlockdevOnError',
-
-QAPI schema
-Acked-by: Markus Armbruster <armbru@redhat.com>
+-- 
+Peter Xu
 
 
