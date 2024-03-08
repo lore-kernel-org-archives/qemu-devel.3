@@ -4,56 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A31C9C54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 08:22:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB7A8C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 08:23:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riVUU-0001D7-Dv; Fri, 08 Mar 2024 03:22:06 -0500
+	id 1riVVb-0002Sg-IU; Fri, 08 Mar 2024 03:23:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1riVUS-0001CT-I8; Fri, 08 Mar 2024 03:22:04 -0500
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1riVVX-0002SA-RD
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:23:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1riVUQ-0000FH-HX; Fri, 08 Mar 2024 03:22:04 -0500
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 08E45488A0;
- Fri,  8 Mar 2024 09:21:59 +0100 (CET)
-Message-ID: <e8d80672-a5b5-45cc-a203-fa15a1164b72@proxmox.com>
-Date: Fri, 8 Mar 2024 09:21:52 +0100
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1riVVU-0000aZ-B4
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:23:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709886186;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nerhoR4SPqCxPeGtfxFQB+iKuTID4ofZFmp/M8lw9M8=;
+ b=VqgN8q14FtPVJNxykYGslv64+tdiZNHgAT2QRYMhNrRNar873bRKWhu1vFe8Zn3Czq3Gmy
+ 6TFZjVSHXsRiTVSFgE+EJ5xL8Cyn2ZFQpz6V3lPIIGJtOhDznWeogisyzwmeS3UBeRHf6J
+ eYSyOLnNII4FDWFDVcxYWQFh63zyKZo=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-67-Z9yBrcSyM3WRBjqoJrcD-A-1; Fri, 08 Mar 2024 03:23:05 -0500
+X-MC-Unique: Z9yBrcSyM3WRBjqoJrcD-A-1
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-1dd63773cf9so2890925ad.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 00:23:05 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709886184; x=1710490984;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nerhoR4SPqCxPeGtfxFQB+iKuTID4ofZFmp/M8lw9M8=;
+ b=agFoRgyUoLqwEmFPOLqFbTM9lFogNc1t+Zbo7ro2X47hXFksqyRPeGf3PKPfp+Er/f
+ plgTFUHTOsq4dJCMDDxZdAl9ac7MtiE1WQ1p4QarS7QIM3ALwPfue5QeG2Ky0R165UIg
+ PMHqd9IL+lC9/vrsVXBYFMUBIkhxPvbEFwAJBmqFu76UBSrATObAZSBjDRzCHMuVmwA+
+ dAJMEieDZbd8ZfUv19nrBxVWHDMm5g4SeKl2PNnTlJ+8R9J/4jXQGji5mtAMl5HgAY83
+ iaH0qUDrHaG5lm9t7k1FQFZAxhochWYFsCOPtbCJBtB3MPRmerWC5k7mYGOJUiZkszwh
+ VWTw==
+X-Gm-Message-State: AOJu0YyG9gUUixUjKFq5fAdd4wSJwIQYF4VPn25aQwFySOTjZWrUu8EH
+ +GdVQACgWr8v9bkGmHMsxs9vER4n46kwHt3qlVV06MymKteWAMlRnE5AqN0D05Q+8bRkaH/Fonh
+ XzM+UQ0//P77b71wjrDBU2DQydspEgZ27vNWljlz4aSueeMMo/XNi
+X-Received: by 2002:a17:902:ab87:b0:1d9:607d:8a26 with SMTP id
+ f7-20020a170902ab8700b001d9607d8a26mr1422544plr.6.1709886184422; 
+ Fri, 08 Mar 2024 00:23:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEtifd6U7mMV5dH/ROUONXK/ogjq5klcHfWkXh6f8QVH9YrRWILpzZWK0Gktt1m9eMu4PckVg==
+X-Received: by 2002:a17:902:ab87:b0:1d9:607d:8a26 with SMTP id
+ f7-20020a170902ab8700b001d9607d8a26mr1422525plr.6.1709886184014; 
+ Fri, 08 Mar 2024 00:23:04 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ j14-20020a170902da8e00b001dc96cb0358sm15744767plx.206.2024.03.08.00.22.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 08 Mar 2024 00:23:03 -0800 (PST)
+Date: Fri, 8 Mar 2024 16:22:50 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ John G Johnson <john.g.johnson@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Juan Quintela <quintela@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ peter.maydell@linaro.org, David Hildenbrand <david@redhat.com>
+Subject: Re: [PATCH 1/5] scripts/kernel-doc: teach kdoc about QLIST_ macros
+Message-ID: <ZerK2iI7FAGuQH1O@x1n>
+References: <20240307181105.4081793-1-alex.bennee@linaro.org>
+ <20240307181105.4081793-2-alex.bennee@linaro.org>
+ <ZerA34BH9NNf_K1Y@x1n> <87msr9taac.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/10] mirror: allow switching from background to
- active mode
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Peter Krempa <pkrempa@redhat.com>, Kevin Wolf <kwolf@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, eblake@redhat.com, hreitz@redhat.com,
- jsnow@redhat.com, den@virtuozzo.com, t.lamprecht@proxmox.com,
- alexander.ivanov@virtuozzo.com
-References: <20231009094619.469668-1-f.ebner@proxmox.com>
- <a5c48627-0bef-46cd-9426-587b358fe32d@yandex-team.ru>
- <993bfa5d-1a91-4b32-9bd8-165b7abba4f0@proxmox.com>
- <99dd287b-816b-4f4f-b156-32f94bbb62c2@yandex-team.ru>
- <87o7gbyy8w.fsf@pond.sub.org> <ZUTffE0wfjLH2u+e@redhat.com>
- <87cywqn84g.fsf@pond.sub.org>
- <1310efb0-e211-46f5-b166-d7d529507a43@yandex-team.ru>
- <ZeWnFhLKCamlP97y@redhat.com> <ZeWr3ZGrRUrciHH4@angien.pipo.sk>
- <65f517cd-3a1b-41bd-b326-e509cb208b92@yandex-team.ru>
-Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <65f517cd-3a1b-41bd-b326-e509cb208b92@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+In-Reply-To: <87msr9taac.fsf@draig.linaro.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.583,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,99 +112,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 07.03.24 um 20:42 schrieb Vladimir Sementsov-Ogievskiy:
-> On 04.03.24 14:09, Peter Krempa wrote:
->> On Mon, Mar 04, 2024 at 11:48:54 +0100, Kevin Wolf wrote:
->>> Am 28.02.2024 um 19:07 hat Vladimir Sementsov-Ogievskiy geschrieben:
->>>> On 03.11.23 18:56, Markus Armbruster wrote:
->>>>> Kevin Wolf<kwolf@redhat.com>  writes:
->>
->> [...]
->>
->>>>> Is the job abstraction a failure?
->>>>>
->>>>> We have
->>>>>
->>>>>       block-job- command      since   job- command    since
->>>>>       -----------------------------------------------------
->>>>>       block-job-set-speed     1.1
->>>>>       block-job-cancel        1.1     job-cancel      3.0
->>>>>       block-job-pause         1.3     job-pause       3.0
->>>>>       block-job-resume        1.3     job-resume      3.0
->>>>>       block-job-complete      1.3     job-complete    3.0
->>>>>       block-job-dismiss       2.12    job-dismiss     3.0
->>>>>       block-job-finalize      2.12    job-finalize    3.0
->>>>>       block-job-change        8.2
->>>>>       query-block-jobs        1.1     query-jobs
->>
->> [...]
->>
->>> I consider these strictly optional. We don't really have strong reasons
->>> to deprecate these commands (they are just thin wrappers), and I think
->>> libvirt still uses block-job-* in some places.
->>
->> Libvirt uses 'block-job-cancel' because it has different semantics from
->> 'job-cancel' which libvirt documented as the behaviour of the API that
->> uses it. (Semantics regarding the expectation of what is written to the
->> destination node at the point when the job is cancelled).
->>
+On Fri, Mar 08, 2024 at 08:09:15AM +0000, Alex Bennée wrote:
+> Peter Xu <peterx@redhat.com> writes:
 > 
-> That's the following semantics:
+> > On Thu, Mar 07, 2024 at 06:11:01PM +0000, Alex Bennée wrote:
+> >> The kernel-doc script does some pre-processing on structure
+> >> definitions before parsing for names. Teach it about QLIST and replace
+> >> with simplified structures representing the base type.
+> >> 
+> >> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> >> ---
+> >>  scripts/kernel-doc | 9 ++++++++-
+> >>  1 file changed, 8 insertions(+), 1 deletion(-)
+> >> 
+> >> diff --git a/scripts/kernel-doc b/scripts/kernel-doc
+> >> index 240923d509a..26c47562e79 100755
+> >> --- a/scripts/kernel-doc
+> >> +++ b/scripts/kernel-doc
+> >> @@ -1226,7 +1226,14 @@ sub dump_struct($$) {
+> >>  	# replace DECLARE_KFIFO_PTR
+> >>  	$members =~ s/DECLARE_KFIFO_PTR\s*\(([^,)]+),\s*([^,)]+)\)/$2 \*$1/gos;
+> >>  
+> >> -	my $declaration = $members;
+> >> +        # QEMU Specific Macros
+> >> +
+> >> +        # replace QLIST_ENTRY with base type and variable name
+> >> +        $members =~ s/QLIST_ENTRY\(([^)]+)\)\s+([^;]+)/$1 \*$2/gos;
+> >> +        # replace QLIST_HEAD, optionally capturing an anonymous struct marker, and capture type and variable name
+> >> +        $members =~ s/QLIST_HEAD\(\s*,\s*([^)]+)\)\s+([^;]+)/struct { $1 *lh_first; } $2/gos;
+> >> +
+> >> +        my $declaration = $members;
+> >
+> > May need a "tabify" here..
 > 
->   # Note that if you issue 'block-job-cancel' after 'drive-mirror' has
->   # indicated (via the event BLOCK_JOB_READY) that the source and
->   # destination are synchronized, then the event triggered by this
->   # command changes to BLOCK_JOB_COMPLETED, to indicate that the
->   # mirroring has ended and the destination now has a point-in-time copy
->   # tied to the time of the cancellation.
-> 
-> Hmm. Looking at this, it looks for me, that should probably a
-> 'block-job-complete" command (as leading to BLOCK_JOB_COMPLETED).
-> 
-> Actually, what is the difference between block-job-complete and
-> block-job-cancel(force=false) for mirror in ready state?
-> 
-> I only see the following differencies:
-> 
-> 1. block-job-complete documents that it completes the job
-> synchronously.. But looking at mirror code I see it just set
-> s->should_complete = true, which will be then handled asynchronously..
-> So I doubt that documentation is correct.
-> 
-> 2. block-job-complete will trigger final graph changes. block-job-cancel
-> will not.
-> 
-> Is [2] really useful? Seems yes: in case of some failure before starting
-> migration target, we'd like to continue executing source. So, no reason
-> to break block-graph in source, better keep it unchanged.
-> 
+> Ugg that file is a mess. Any idea what we should use for perl, tabs or
+> spaces? I can update editorconfig.
 
-FWIW, we also rely on these special semantics. We allow cloning the disk
-state of a running guest using drive-mirror (and before finishing,
-fsfreeze in the guest for consistency). We cannot use block-job-complete
-there, because we do not want to switch the source's drive.
+Indeed.. not perl expert here.
 
-> But I think, such behavior better be setup by mirror-job start
-> parameter, rather then by special option for cancel (or even compelete)
-> command, useful only for mirror.
-> 
-> So, what about the following substitution for block-job-cancel:
-> 
-> block-job-cancel(force=true)  -->  use job-cancel
-> 
-> block-job-cancel(force=false) for backup, stream, commit  -->  use
-> job-cancel
-> 
-> block-job-cancel(force=false) for mirror in ready mode  -->
-> 
->   instead, use block-job-complete. If you don't need final graph
-> modification which mirror job normally does, use graph-change=false
-> parameter for blockdev-mirror command.
-> 
+For this one it might be still good to keep the same with the code around
+before an attempt to clean it up.
 
-But yes, having a graph-change parameter would work for us too :)
+Thanks,
 
-Best Regards,
-Fiona
+-- 
+Peter Xu
 
 
