@@ -4,83 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEDE6C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 20:19:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EA17C54E41
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 20:24:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riggb-0003f3-Ol; Fri, 08 Mar 2024 15:19:21 -0500
+	id 1riglK-0005M5-B7; Fri, 08 Mar 2024 15:24:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1riggZ-0003eY-Ku
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 15:19:19 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1riglJ-0005Lw-39
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 15:24:13 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1riggX-0002M2-Pm
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 15:19:19 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-412e96284b9so18133695e9.3
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 12:19:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1riglH-0003Bi-5m
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 15:24:12 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1dc0d11d1b7so21144165ad.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 12:24:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709929155; x=1710533955; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=W1L10fpS77snLCD5zVXtHlawdcBUPIknU6UBpywCCvM=;
- b=vH638OIAYmSWu0sFu1Dp0Zd2Cc1dfxMxhSnXGKl2C6Du7xT6cWrGPYBhmbO64uOF2c
- MU4yWDLeUsOyhOBFLGqoT3fWjo5rXWhnGmlehL6zIHJdzNZyZLJLK1smVNJXpmFMDMW4
- /xxP+yHQ7nV7T9VYHQDxqQd6KPl5MazN3WRJUZUjDpl6o79VjaSRVvTCI7ijkVjA9XFW
- F0KpTSb4Pz6dZo0vq/mDLsm6Dsw6FrtKaMLlwdQw1iSn+rcKMkfnbIEXebFuNmEPPs1U
- Mxy8FXKnFykYEDWM4wER9G+hgdA+DrekLamXS6G0EXWN+58YT2WzZaAUyj/Fmu8GKajY
- C/Yg==
+ d=linaro.org; s=google; t=1709929449; x=1710534249; darn=nongnu.org;
+ h=content-transfer-encoding:content-language:in-reply-to:mime-version
+ :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=GoqmMpXPNri85j4sP3kEs506DCVeyrkzk6Zv5Mlibpc=;
+ b=G31c3XnfEGs7VisacZ/fY1VqZpmiiLwFw6fGDvEdp+h10QK0mUXARUaQ9UgqBIyJY+
+ LhPWY1y06OFo0cqwzZ0V6sRMtYMfOGn9PefZJJhW3e16uBrnR8KAyyLrZoLr+HWAidb6
+ MRF6J1obkn+UawtcUKDjzlOnSv+bMjUsfm/zuZe0UVwBW7xL9jqMqePTF3QzWbmMawHq
+ VSXSCnDASFI/X35+cj2scmnFgW/t0MLD5RkjxvF9m/hsvl2zhEtaMxwvmM/tH5tyXOjS
+ eya9JAOkUp2mmibZ8Ig8mvtcI8I4Qquk+3bx4iGZWv3NlN7+xq+max4P5wossm6Qn+Gz
+ 8o+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709929155; x=1710533955;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1709929449; x=1710534249;
+ h=content-transfer-encoding:content-language:in-reply-to:mime-version
+ :user-agent:date:message-id:from:references:cc:to:subject
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=W1L10fpS77snLCD5zVXtHlawdcBUPIknU6UBpywCCvM=;
- b=oMVXitAeBuJbSUiUXX41+OzVjksJc7h0VJoc4oc/Nynag9O9bosAQ1tLxDQhM1qHdt
- x+6S0CVHDqvub+jDZH69ZEQISwO+LVXbkN3hdfBE1sIof/iOG4akLpLKbmA3pF4mJcLZ
- krOZZNMPvUkvYZg8IhCJVSh3diU3gTp26eEEVtYsvafvKKncheGJ7FkoPTJfE15sdYFW
- 7rMh+t2+XMWNYpa+X9HmqDW9OpmjTU+heFVPaDY3BZxyJKsWGKjQq26YINt+iN6lGSxD
- C4dKm/VecAJG62uSUpJaXX68Q+rgxqmaReyJSA3Us0NSu0k0w4QpvZVTboWDz9Z2cpoj
- MDxg==
+ bh=GoqmMpXPNri85j4sP3kEs506DCVeyrkzk6Zv5Mlibpc=;
+ b=tkoMjCXVQZ/AbFCRrst65HrFNNert0747bdxM9pmWjU8FszU9v2pCelGoiu1ew2Ar0
+ 8Uh5SE7VOVc1F/bVS+t7NzF8TpY6XHlftNQQdtqfSRUifTD9OijePDiQ5bbk8VTdtXjb
+ 1mSvRiD0MlBX1Bjmd3VVep8MNeFFThWorajZo8KfhBRE2Hozo1DExW+z0V1D3JHy6zQR
+ J/LnoiMEX5a9ssof5sQrSpxopdfhfHfuqmGQNTOAfI1p+adWJvzM7TENmFzjYntrVk7f
+ /K6pgIgVQJ1h07llzp0BHNhRPntO2qEJcL0Fm4ze1MvbnAnz+wpIG1ZDdl/Z8G1VeiOa
+ q69w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWLcjo0SC6GZAYPqrsAb+Fq7VIeuOl+ADuYFr6+sk7ISiERLRu+Wn1KIUNF228sNeASvyLfzUWuYahbrBmabLY/wHXV27w=
-X-Gm-Message-State: AOJu0YwNhVZSLgBJ2t7yyybtHT54uOx3e+Bjk2Rjet6+KAqtko3XH/pZ
- dGnuFkPHWJZFfFfsiEEno2uJOA04lDbwrcvh1Y7JDcbC6AHUJYRFGQVf+Rx9J0s=
-X-Google-Smtp-Source: AGHT+IHKT65PBiFhRWjFkXiskHe/qCQdlY1nndRy903875DrD6uhxZ2fTZVvddIyDGIbV7vFMsyk4w==
-X-Received: by 2002:a05:600c:474b:b0:412:900e:84de with SMTP id
- w11-20020a05600c474b00b00412900e84demr197891wmo.38.1709929155447; 
- Fri, 08 Mar 2024 12:19:15 -0800 (PST)
-Received: from [192.168.69.100] (cvl92-h01-176-184-49-62.dsl.sta.abo.bbox.fr.
- [176.184.49.62]) by smtp.gmail.com with ESMTPSA id
- h3-20020adf9cc3000000b0033e73c58678sm241953wre.15.2024.03.08.12.19.14
+ AJvYcCXygMEMSPjbo+wDPN7aEbzFEhUeUozifTPJx41o4F3DKpa5krdRk66qhAfK7Dq1hUmxuK48+nVLw3pXX8wZAfCVIVPW3Fs=
+X-Gm-Message-State: AOJu0Yy+uSOfiA/BDWHYnROtQyhO+/CSO6TgMRtncQQ7CkVRUZcBwnEj
+ 28Syyfz9KsPesE/A/3K5kS4I7mi/DYHWwRiLizSJd7tT0lD/VSgzwj0qMJuxUbcbx9BPkyBhm/e
+ R
+X-Google-Smtp-Source: AGHT+IGchH34H+q5+GPPhw5ZCoe4Qd7zAtnPg6tG5kSwxl1J5+gByx8eKTaPMDgoVRGcedsquOJc+A==
+X-Received: by 2002:a17:902:ba83:b0:1db:5c84:9523 with SMTP id
+ k3-20020a170902ba8300b001db5c849523mr114129pls.67.1709929449467; 
+ Fri, 08 Mar 2024 12:24:09 -0800 (PST)
+Received: from ?IPv6:2804:7f0:b401:7e8e:216c:3f1a:12a4:d415?
+ ([2804:7f0:b401:7e8e:216c:3f1a:12a4:d415])
+ by smtp.gmail.com with ESMTPSA id
+ m7-20020a170902db0700b001dd54c4320esm45070plx.256.2024.03.08.12.24.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Mar 2024 12:19:14 -0800 (PST)
-Message-ID: <4857865b-94df-4152-92b6-aa030513df26@linaro.org>
-Date: Fri, 8 Mar 2024 21:19:13 +0100
+ Fri, 08 Mar 2024 12:24:09 -0800 (PST)
+Subject: Re: [PATCH v2 3/5] gdbstub: Save target's siginfo
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, peter.maydell@linaro.org, laurent@vivier.eu,
+ philmd@linaro.org
+References: <20240307182623.1450717-1-gustavo.romero@linaro.org>
+ <20240307182623.1450717-3-gustavo.romero@linaro.org>
+ <637e4407-4519-4d87-981a-acd9b5124970@linaro.org>
+From: Gustavo Romero <gustavo.romero@linaro.org>
+Message-ID: <0c484185-4d71-f35f-7eec-da4af962d979@linaro.org>
+Date: Fri, 8 Mar 2024 17:24:05 -0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/arm: Deprecate various old Arm machine types
+In-Reply-To: <637e4407-4519-4d87-981a-acd9b5124970@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>
-References: <20240308171621.3749894-1-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240308171621.3749894-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -60
+X-Spam_score: -6.1
+X-Spam_bar: ------
+X-Spam_report: (-6.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-3.994,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,87 +103,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/3/24 18:16, Peter Maydell wrote:
-> QEMU includes some models of old Arm machine types which are
-> a bit problematic for us because:
->   * they're written in a very old way that uses numerous APIs that we
->     would like to get away from (eg they don't use qdev, they use
->     qemu_system_reset_request(), they use vmstate_register(), etc)
->   * they've been that way for a decade plus and nobody particularly has
->     stepped up to try to modernise the code (beyond some occasional
->     work here and there)
->   * we often don't have test cases for them, which means that if we
->     do try to do the necessary refactoring work on them we have no
->     idea if they even still work at all afterwards
-> 
-> All these machine types are also of hardware that has largely passed
-> away into history and where I would not be surprised to find that
-> e.g. the Linux kernel support was never tested on real hardware
-> any more.
+Hi Richard,
 
-Thanks for writing that down.
+On 3/7/24 6:09 PM, Richard Henderson wrote:
+> On 3/7/24 08:26, Gustavo Romero wrote:
+>> Save target's siginfo into gdbserver_state so it can be used later, for
+>> example, in any stub that requires the target's si_signo and si_code.
+>>
+>> This change affects only linux-user mode.
+>>
+>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+>> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   gdbstub/internals.h    |  3 +++
+>>   gdbstub/user-target.c  |  3 ++-
+>>   gdbstub/user.c         | 14 ++++++++++----
+>>   include/gdbstub/user.h |  6 +++++-
+>>   linux-user/main.c      |  2 +-
+>>   linux-user/signal.c    |  5 ++++-
+>>   6 files changed, 25 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/gdbstub/internals.h b/gdbstub/internals.h
+>> index 56b7c13b75..a7cc69dab3 100644
+>> --- a/gdbstub/internals.h
+>> +++ b/gdbstub/internals.h
+>> @@ -58,6 +58,9 @@ typedef struct GDBState {
+>>       int line_csum; /* checksum at the end of the packet */
+>>       GByteArray *last_packet;
+>>       int signal;
+>> +#ifdef CONFIG_USER_ONLY
+>> +    uint8_t siginfo[MAX_SIGINFO_LENGTH];
+>> +#endif
+> 
+> If we this in GDBUserState in user.c -- no need for ifdefs then.
 
-> After some consultation with the Linux kernel developers, we
-> are going to deprecate:
-> 
-> All PXA2xx machines:
-> 
-> akita                Sharp SL-C1000 (Akita) PDA (PXA270)
-> borzoi               Sharp SL-C3100 (Borzoi) PDA (PXA270)
-> connex               Gumstix Connex (PXA255)
-> mainstone            Mainstone II (PXA27x)
-> spitz                Sharp SL-C3000 (Spitz) PDA (PXA270)
-> terrier              Sharp SL-C3200 (Terrier) PDA (PXA270)
-> tosa                 Sharp SL-6000 (Tosa) PDA (PXA255)
-> verdex               Gumstix Verdex Pro XL6P COMs (PXA270)
-> z2                   Zipit Z2 (PXA27x)
-> 
-> All OMAP2 machines:
-> 
-> n800                 Nokia N800 tablet aka. RX-34 (OMAP2420)
-> n810                 Nokia N810 tablet aka. RX-44 (OMAP2420)
-> 
-> One of the OMAP1 machines:
-> 
-> cheetah              Palm Tungsten|E aka. Cheetah PDA (OMAP310)
-> 
-> Rationale:
->   * for QEMU dropping individual machines is much less beneficial
->     than if we can drop support for an entire SoC
->   * the OMAP2 QEMU code in particular is large, old and unmaintained,
->     and none of the OMAP2 kernel maintainers said they were using
->     QEMU in any of their testing/development
->   * although there is a setup that is booting test kernels on some
->     of the PXA2xx machines, nobody seemed to be using them as part
->     of their active kernel development and my impression from the
->     email thread is that PXA is the closest of all these SoC families
->     to being dropped from the kernel soon
->   * nobody said they were using cheetah, so it's entirely
->     untested and quite probably broken
->   * on the other hand the OMAP1 sx1 model does seem to be being
->     used as part of kernel development, and there was interest
->     in keeping collie around
-> 
-> In particular, the mainstone, tosa and z2 machine types have
-> already been dropped from Linux.
-> 
-> Mark all these machine types as depprecated.
+Thanks, I've moved it to user.c.
 
-Typo "deprecated".
 
+>> --- a/gdbstub/user-target.c
+>> +++ b/gdbstub/user-target.c
+>> @@ -10,11 +10,12 @@
+>>   #include "qemu/osdep.h"
+>>   #include "exec/gdbstub.h"
+>>   #include "qemu.h"
+>> -#include "internals.h"
+>>   #ifdef CONFIG_LINUX
+>>   #include "linux-user/loader.h"
+>>   #include "linux-user/qemu.h"
+>> +#include "gdbstub/user.h"
+>>   #endif
+>> +#include "internals.h"
+>>   /*
+>>    * Map target signal numbers to GDB protocol signal numbers and vice
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   docs/about/deprecated.rst | 15 +++++++++++++++
->   hw/arm/gumstix.c          |  2 ++
->   hw/arm/mainstone.c        |  1 +
->   hw/arm/nseries.c          |  2 ++
->   hw/arm/palm.c             |  1 +
->   hw/arm/spitz.c            |  1 +
->   hw/arm/tosa.c             |  1 +
->   hw/arm/z2.c               |  1 +
->   8 files changed, 24 insertions(+)
+> Why are any changes required here?
+> Perhaps this is improper patch split from one of the others?
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+This was intentional. Because I declared siginfo[MAX_SIGINFO_LENGTH] in
+GDBState struct, which is in internals.h and MAX_SIGINFO_LENGTH is defined
+in gdbstub/user.h I had to move internals.h after user.h was included so
+MAX_SIGINFO_LENGTH could be found.
 
+I'm reverting it.
+
+
+>> @@ -140,6 +141,11 @@ int gdb_handlesig(CPUState *cpu, int sig, const char *reason)
+>>           return sig;
+>>       }
+>> +    if (siginfo) {
+>> +        /* Save target-specific siginfo. */
+>> +        memcpy(gdbserver_state.siginfo, siginfo, siginfo_len);
+>> +    }
+> 
+> A comment here about asserting the size at compile-time elsewhere would be welcome for future code browsers.
+
+Done.
+
+
+> Need to record siginfo_len for later use -- you don't want to expose all 128 bytes if the actual structure is smaller.
+
+In the stub, the full size is only used to check if the requested offset+len is valid.
+So the only size that matters for reading data from siginfo and assembling
+the reply is the length in the query, not siginfo_len. But I agree it's better, even
+more now that I moved the stub from user-target.c to user.c.
+
+
+>> @@ -510,7 +516,7 @@ void gdb_breakpoint_remove_all(CPUState *cs)
+>>   void gdb_syscall_handling(const char *syscall_packet)
+>>   {
+>>       gdb_put_packet(syscall_packet);
+>> -    gdb_handlesig(gdbserver_state.c_cpu, 0, NULL);
+>> +    gdb_handlesig(gdbserver_state.c_cpu, 0, NULL, NULL, 0);
+>>   }
+>>   static bool should_catch_syscall(int num)
+>> @@ -528,7 +534,7 @@ void gdb_syscall_entry(CPUState *cs, int num)
+>>   {
+>>       if (should_catch_syscall(num)) {
+>>           g_autofree char *reason = g_strdup_printf("syscall_entry:%x;", num);
+>> -        gdb_handlesig(cs, gdb_target_sigtrap(), reason);
+>> +        gdb_handlesig(cs, gdb_target_sigtrap(), reason, NULL, 0);
+>>       }
+>>   }
+>> @@ -536,7 +542,7 @@ void gdb_syscall_return(CPUState *cs, int num)
+>>   {
+>>       if (should_catch_syscall(num)) {
+>>           g_autofree char *reason = g_strdup_printf("syscall_return:%x;", num);
+>> -        gdb_handlesig(cs, gdb_target_sigtrap(), reason);
+>> +        gdb_handlesig(cs, gdb_target_sigtrap(), reason, NULL, 0);
+>>       }
+> 
+> All of this makes me wonder if we should provide a different interface for syscalls, even if it uses the same code paths internally.
+
+Should I address it in this series? I'm sure how that interface would be.
+
+
+> Do we want to zero the gdbserver siginfo to indicate that the contents are no longer valid?  I know it's not a real signal delivered to the process, but might we need to construct a simple siginfo struct to match the sigtrap?
+
+In gdb_handlesig we always copy the full size of siginfo to gdbserver_user_state siginfo,
+which is passed in siginfo_len and now recorded gdbserver siginfo_len too for later use.
+Isn't that copy guaranteeing that gdbserver siginfo has always no stale data?
+
+
+Cheers,
+Gustavo
 
