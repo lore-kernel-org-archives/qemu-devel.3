@@ -4,58 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9FC3C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 14:32:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7CFEC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 14:34:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ribGO-0000bp-Jz; Fri, 08 Mar 2024 09:31:57 -0500
+	id 1ribIv-0001aS-Ve; Fri, 08 Mar 2024 09:34:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yumin686@andestech.com>)
- id 1riWZq-0004hR-2M; Fri, 08 Mar 2024 04:31:50 -0500
-Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
- helo=Atcsqr.andestech.com)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ribIt-0001aJ-PY
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:34:32 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yumin686@andestech.com>)
- id 1riWZl-0000FS-UD; Fri, 08 Mar 2024 04:31:40 -0500
-Received: from Atcsqr.andestech.com (localhost [127.0.0.2] (may be forged))
- by Atcsqr.andestech.com with ESMTP id 4288fwTC081314;
- Fri, 8 Mar 2024 16:41:58 +0800 (+08)
- (envelope-from yumin686@andestech.com)
-Received: from mail.andestech.com (ATCPCS16.andestech.com [10.0.1.222])
- by Atcsqr.andestech.com with ESMTP id 4288fXsh081055;
- Fri, 8 Mar 2024 16:41:33 +0800 (+08)
- (envelope-from yumin686@andestech.com)
-Received: from lubuntu-vb.andestech.com (10.0.12.42) by ATCPCS16.andestech.com
- (10.0.1.222) with Microsoft SMTP Server id 14.3.498.0;
- Fri, 8 Mar 2024 16:41:33 +0800
-To: <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <bin.meng@windriver.com>,
- <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
- <zhiwei_liu@linux.alibaba.com>
-CC: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>, Yu-Ming Chang
- <yumin686@andestech.com>
-Subject: [PATCH] target/riscv: raise an exception when CSRRS/CSRRC writes a
- read-only CSR
-Date: Fri, 8 Mar 2024 16:40:14 +0800
-Message-ID: <20240308084014.22054-1-yumin686@andestech.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ribIq-0007bn-Gz
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:34:31 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TrpZv4zybz67fBs;
+ Fri,  8 Mar 2024 22:34:15 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id ADEAB140136;
+ Fri,  8 Mar 2024 22:34:21 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Fri, 8 Mar
+ 2024 14:34:21 +0000
+Date: Fri, 8 Mar 2024 14:34:20 +0000
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: "Michael S. Tsirkin" <mst@redhat.com>, <qemu-devel@nongnu.org>, Fan Ni
+ <fan.ni@samsung.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: Re: [PULL 53/60] hw/cxl: Standardize all references on CXL r3.1 and
+ minor updates
+Message-ID: <20240308143420.0000536e@Huawei.com>
+In-Reply-To: <CAFEAcA_W8BxG6rpcao2hCYntfU9aQfAzHQiy6RJQ-v3ZB4sNZg@mail.gmail.com>
+References: <cover.1707909001.git.mst@redhat.com>
+ <8700ee15de465a55e5c7281f87618ca4b4827441.1707909001.git.mst@redhat.com>
+ <CAFEAcA_W8BxG6rpcao2hCYntfU9aQfAzHQiy6RJQ-v3ZB4sNZg@mail.gmail.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.0.12.42]
-X-DNSRBL: 
-X-MAIL: Atcsqr.andestech.com 4288fwTC081314
-Received-SPF: pass client-ip=60.248.80.70; envelope-from=yumin686@andestech.com;
- helo=Atcsqr.andestech.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, RDNS_DYNAMIC=0.982,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001, TVD_RCVD_IP=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml500002.china.huawei.com (7.191.160.78) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 08 Mar 2024 09:31:54 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,102 +69,154 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Yu-Ming Chang <yumin686@andestech.com>
-From:  Yu-Ming Chang via <qemu-devel@nongnu.org>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Both CSRRS and CSRRC always read the addressed CSR and cause any read side
-effects regardless of rs1 and rd fields. Note that if rs1 specifies a register
-holding a zero value other than x0, the instruction will still attempt to write
-the unmodified value back to the CSR and will cause any attendant side effects.
+On Fri, 8 Mar 2024 13:47:47 +0000
+Peter Maydell <peter.maydell@linaro.org> wrote:
 
-So if CSRRS or CSRRC tries to write a read-only CSR with rs1 which specifies
-a register holding a zero value, an illegal instruction exception should be
-raised.
+> On Wed, 14 Feb 2024 at 11:16, Michael S. Tsirkin <mst@redhat.com> wrote:
+> >
+> > From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> >
+> > Previously not all references mentioned any spec version at all.
+> > Given r3.1 is the current specification available for evaluation at
+> > www.computeexpresslink.org update references to refer to that.
+> > Hopefully this won't become a never ending job.
+> >
+> > A few structure definitions have been updated to add new fields.
+> > Defaults of 0 and read only are valid choices for these new DVSEC
+> > registers so go with that for now.
+> >
+> > There are additional error codes and some of the 'questions' in
+> > the comments are resolved now.
+> >
+> > Update documentation reference to point to the CXL r3.1 specification
+> > with naming closer to what is on the cover.
+> >
+> > For cases where there are structure version numbers, add defines
+> > so they can be found next to the register definitions.  
+> 
+> Hi; Coverity points out that this change has introduced a
+> buffer overrun (CID 1534905). In hw/mem/cxl_type3.c:build_dvsecs()
+> we create a local struct of type CXLDVSecDevice, and then we
+> pass it to cxl_component_create_dvsec() as the body parameter,
+> passing it a length argument PCIE_CXL_DEVICE_DVSEC_LENGTH.
+> 
+> Before this change, both sizeof(CXLDVSecDevice) and
+> PCIE_CXL_DEVICE_DVSEC_LENGTH were 0x38, so this was fine.
+> But now...
+> 
+> > diff --git a/include/hw/cxl/cxl_pci.h b/include/hw/cxl/cxl_pci.h
+> > index ddf01a543b..265db6c407 100644
+> > --- a/include/hw/cxl/cxl_pci.h
+> > +++ b/include/hw/cxl/cxl_pci.h
+> > @@ -16,9 +16,8 @@
+> >  #define PCIE_DVSEC_HEADER1_OFFSET 0x4 /* Offset from start of extend cap */
+> >  #define PCIE_DVSEC_ID_OFFSET 0x8
+> >
+> > -#define PCIE_CXL_DEVICE_DVSEC_LENGTH 0x38
+> > -#define PCIE_CXL1_DEVICE_DVSEC_REVID 0
+> > -#define PCIE_CXL2_DEVICE_DVSEC_REVID 1
+> > +#define PCIE_CXL_DEVICE_DVSEC_LENGTH 0x3C
+> > +#define PCIE_CXL31_DEVICE_DVSEC_REVID 3
+> >
+> >  #define EXTENSIONS_PORT_DVSEC_LENGTH 0x28
+> >  #define EXTENSIONS_PORT_DVSEC_REVID 0  
+> 
+> ...PCIE_CXL_DEVICE_DVSEC_LENGTH is 0x3C...
+Gah.  Evil spec change - they defined only one extra
+u16 worth of data but added padding after it and I missed
+that in the structure definition.
 
-Signed-off-by: Yu-Ming Chang <yumin686@andestech.com>
----
- target/riscv/cpu.h       |  3 +++
- target/riscv/csr.c       | 18 +++++++++++++++---
- target/riscv/op_helper.c |  2 +-
- 3 files changed, 19 insertions(+), 4 deletions(-)
+> 
+> > -/* CXL 2.0 - 8.1.3 (ID 0001) */
+> > +/*
+> > + * CXL r3.1 Section 8.1.3: PCIe DVSEC for Devices
+> > + * DVSEC ID: 0, Revision: 3
+> > + */
+> >  typedef struct CXLDVSECDevice {
+> >      DVSECHeader hdr;
+> >      uint16_t cap;
+> > @@ -82,10 +91,14 @@ typedef struct CXLDVSECDevice {
+> >      uint32_t range2_size_lo;
+> >      uint32_t range2_base_hi;
+> >      uint32_t range2_base_lo;
+> > -} CXLDVSECDevice;
+> > -QEMU_BUILD_BUG_ON(sizeof(CXLDVSECDevice) != 0x38);
+> > +    uint16_t cap3;
+> > +} QEMU_PACKED CXLDVSECDevice;
+> > +QEMU_BUILD_BUG_ON(sizeof(CXLDVSECDevice) != 0x3A);  
+(this is the assert I mention below)
+> 
+> ...and CXLDVSECDevice is only size 0x3A, so we try to read off the
+> end of the struct.
+> 
+> What was supposed to happen here?
+needs an extra uint16_t resv; at the end.
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 5d291a7092..087ef64889 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -710,6 +710,9 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
- void riscv_cpu_update_mask(CPURISCVState *env);
- bool riscv_cpu_is_32bit(RISCVCPU *cpu);
- 
-+RISCVException riscv_csrr(CPURISCVState *env, int csrno,
-+                          target_ulong *ret_value,
-+                          target_ulong new_value, target_ulong write_mask);
- RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
-                            target_ulong *ret_value,
-                            target_ulong new_value, target_ulong write_mask);
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index d4e8ac13b9..3e49cf0df1 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -4306,7 +4306,7 @@ static RISCVException rmw_seed(CPURISCVState *env, int csrno,
- 
- static inline RISCVException riscv_csrrw_check(CPURISCVState *env,
-                                                int csrno,
--                                               bool write_mask)
-+                                               bool write)
- {
-     /* check privileges and return RISCV_EXCP_ILLEGAL_INST if check fails */
-     bool read_only = get_field(csrno, 0xC00) == 3;
-@@ -4328,7 +4328,7 @@ static inline RISCVException riscv_csrrw_check(CPURISCVState *env,
-     }
- 
-     /* read / write check */
--    if (write_mask && read_only) {
-+    if (write && read_only) {
-         return RISCV_EXCP_ILLEGAL_INST;
-     }
- 
-@@ -4415,11 +4415,23 @@ static RISCVException riscv_csrrw_do64(CPURISCVState *env, int csrno,
-     return RISCV_EXCP_NONE;
- }
- 
-+RISCVException riscv_csrr(CPURISCVState *env, int csrno,
-+                           target_ulong *ret_value,
-+                           target_ulong new_value, target_ulong write_mask)
-+{
-+    RISCVException ret = riscv_csrrw_check(env, csrno, false);
-+    if (ret != RISCV_EXCP_NONE) {
-+        return ret;
-+    }
-+
-+    return riscv_csrrw_do64(env, csrno, ret_value, new_value, write_mask);
-+}
-+
- RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
-                            target_ulong *ret_value,
-                            target_ulong new_value, target_ulong write_mask)
- {
--    RISCVException ret = riscv_csrrw_check(env, csrno, write_mask);
-+    RISCVException ret = riscv_csrrw_check(env, csrno, true);
-     if (ret != RISCV_EXCP_NONE) {
-         return ret;
-     }
-diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index f414aaebdb..76b0f5371d 100644
---- a/target/riscv/op_helper.c
-+++ b/target/riscv/op_helper.c
-@@ -51,7 +51,7 @@ target_ulong helper_csrr(CPURISCVState *env, int csr)
-     }
- 
-     target_ulong val = 0;
--    RISCVException ret = riscv_csrrw(env, csr, &val, 0, 0);
-+    RISCVException ret = riscv_csrr(env, csr, &val, 0, 0);
- 
-     if (ret != RISCV_EXCP_NONE) {
-         riscv_raise_exception(env, ret, GETPC());
--- 
-2.34.1
+> 
+> > --- a/hw/mem/cxl_type3.c
+> > +++ b/hw/mem/cxl_type3.c
+> > @@ -319,7 +319,7 @@ static void build_dvsecs(CXLType3Dev *ct3d)
+> >      cxl_component_create_dvsec(cxl_cstate, CXL2_TYPE3_DEVICE,
+> >                                 PCIE_CXL_DEVICE_DVSEC_LENGTH,
+> >                                 PCIE_CXL_DEVICE_DVSEC,
+> > -                               PCIE_CXL2_DEVICE_DVSEC_REVID, dvsec);
+> > +                               PCIE_CXL31_DEVICE_DVSEC_REVID, dvsec);
+> >
+> >      dvsec = (uint8_t *)&(CXLDVSECRegisterLocator){
+> >          .rsvd         = 0,  
+> 
+> Perhaps this call to cxl_component_create_dvsec() was
+> supposed to have the length argument changed, as seems
+> to have been done with this other call:
+> 
+> > @@ -346,9 +346,9 @@ static void build_dvsecs(CXLType3Dev *ct3d)
+> >          .rcvd_mod_ts_data_phase1 = 0xef, /* WTF? */
+> >      };
+> >      cxl_component_create_dvsec(cxl_cstate, CXL2_TYPE3_DEVICE,
+> > -                               PCIE_FLEXBUS_PORT_DVSEC_LENGTH_2_0,
+> > +                               PCIE_CXL3_FLEXBUS_PORT_DVSEC_LENGTH,
+> >                                 PCIE_FLEXBUS_PORT_DVSEC,
+> > -                               PCIE_FLEXBUS_PORT_DVSEC_REVID_2_0, dvsec);
+> > +                               PCIE_CXL3_FLEXBUS_PORT_DVSEC_REVID, dvsec);
+> >  }  
+> 
+>  static void hdm_decoder_commit(CXLType3Dev *ct3d, int which)
+> 
+> 
+> and with similar other calls in the commit ?
+> 
+> Is there a way we could write this that would catch this error?
+> I'm thinking maybe something like
+> 
+> #define CXL_CREATE_DVSEC(CXL, DEVTYPE, TYPE, DATA) do { \
+>      assert(sizeof(*DATA) == TYPE##_LENGTH); \
+>      cxl_component_create_dvsec(CXL, DEVTYPE, TYPE##_LENGTH, \
+>                                 TYPE, TYPE##_REVID, (uint8_t*)DATA); \
+>      } while (0)
+
+We should be able to use the length definitions in the original assert.
+I'm not sure why that wasn't done before.  I think there were some cases
+where we supported multiple versions and so the length can be shorter
+than the structure defintion but that doesn't matter on this one.
+
+So I think minimal fix is u16 of padding and update the assert.
+Can circle back to tidy up the multiple places the value is defined.
+Any mismatch in which the wrong length define is used should be easy
+enough to spot so not sure we need the macro you suggest.
+
+I'll send a patch shortly.
+
+Thanks,
+
+Jonathan
+
+> 
+> thanks
+> -- PMM
 
 
