@@ -4,94 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03F09C54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 14:59:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D419C54E4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 15:02:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ribgu-0005Yz-UO; Fri, 08 Mar 2024 09:59:20 -0500
+	id 1ribjD-0006aG-1T; Fri, 08 Mar 2024 10:01:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1ribgt-0005YQ-M0
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:59:19 -0500
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1ribj8-0006ZN-Ct
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:01:39 -0500
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1ribgr-0006Hj-SX
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:59:19 -0500
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-5e152c757a5so711469a12.2
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 06:59:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1ribj3-0007QA-C9
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:01:36 -0500
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-29b70bf6c58so749184a91.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 07:01:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709909956; x=1710514756; darn=nongnu.org;
- h=content-transfer-encoding:content-language:in-reply-to:mime-version
- :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
- :subject:date:message-id:reply-to;
- bh=McH2CAxbADs4vfJAx7zUq2p93qOKC5DAfjx+vHVHnPc=;
- b=RzFtqneOv96jaWiiuGOiVOkSdpRGI9v30ZwW/13fluuduOzA5+ps7P1EC++uBIqN0a
- r0bXLix9usC1fICa3GAQs6sFI5QX0amqZ02nN6G7ORegmsewyJ81/fQeJV8Y9IZpJORx
- S4g+ovHGPaKRH/4vaqWs/rqE6Os+WoKlNY79GK5lQWt/b6hHt0uLikp3STrrNqFME8Ya
- lb8+geAnOkS/0mJVxZ4YveieNUI601WkqvPwkfbBhoMVvqIFOgRzMWUCiO/DYsUcxzqo
- /zHxBL2XAHd4Qc5flDpIInpJP6gqKT+3CdiLVMkMjK4Ao9UgR+g8mbIR0mOWtr1SMzZi
- F9UQ==
+ d=adacore.com; s=google; t=1709910091; x=1710514891; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wgb4/nwWcRVUazmGKiAvCcoOR0ZggHLtVCwE62RSFCs=;
+ b=Z6fhbJBrpBF59OdtDEwr2O4lQrKNX6KJlmnBVopQrwwEP0OnPQgZ3Z6DtIv91yKA+/
+ 7VW84EBHrlSHdY7oa8F6Wdv5oHbj9NWBCc4dYJADWRSFKd93e2+OR49E37kfX0/kqks7
+ BvIDGoAltrwh+tT0j9sVvm/dZGMBe6ndTXsAdrahZR9LtOvnUAwZG59zFkhGjOx+Yv7A
+ 366HJ++S+JRb+yAFEBAf5i2SfWxtEVexX3pD3i3Giwo87u51+pgL78hiGDcCUd1JsaLi
+ D1pJxYBrqxXVyb8TFREqFXwdbWrSC77eLy+RbbFp9OlWeWCZ8sRE4SviK4oHnR6SSLAX
+ TESg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709909956; x=1710514756;
- h=content-transfer-encoding:content-language:in-reply-to:mime-version
- :user-agent:date:message-id:from:references:cc:to:subject
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=McH2CAxbADs4vfJAx7zUq2p93qOKC5DAfjx+vHVHnPc=;
- b=alrDOkgowxTjpFczdaTK9EeWN5IV54dqTHbEdogDECRvPUNanU4uWhtmxjytd9xy+0
- Am/ENkTmKvMj1fuH0MEef9HWHKrZfN6SS03tcvYeB44TWRmmGcYn/kCw3ot6yLPuKrZ7
- tsS8bWK9uli2P2lU43ig7ekjIOBggTzVA5qhuWoD1Zys+Kl64WHK4qAz9u1k7l1f3AG7
- nr7qpZ84QlACcm0mOt32J68Br2MW85jL20sB0hmJyhtiVBSfdfvydan3jRj+2lYrC8AQ
- XYN36hz/m7VoqcwMDQX7Bel9JHJJNEGXLmIhE5YkBBCni3F4U8dWOC+CA9+EH6W4WiEZ
- Qw8w==
+ d=1e100.net; s=20230601; t=1709910091; x=1710514891;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wgb4/nwWcRVUazmGKiAvCcoOR0ZggHLtVCwE62RSFCs=;
+ b=ErD5TPKjt6g3A5mRgxORHgLq9vF1d5D8r9VJCcq524cqVNBnMD9EsTnyItQDuQyBEe
+ F0zFhY+jGXZgI/+CiDu1AZK9/fCDMXBLZc0qeNMxtKu0usr5HKLFarn5KdlAJXmQmELk
+ MkeFpa8SVKTBgPdy8MLAfky0qV1H+t8a27NQ4sImpBnHBY6wfq5MxE3xg30Ic8rwgDTk
+ JdmfSK/bxOH0UGjYvH0pry3P3I1IVHzL9QjVG5Nu/5odtyjjxeQ1v80DGvPGaJohj2YL
+ gT1vGksjU3pC9vbRhjWEoQEInSZ+d08fCB7LWAxNu311X5uUO6nBkaEg8LYaL/F+zBIW
+ gASA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXrTfjFfgjcuyoTSnmvMJ7gc8XxhbB0rjnGqhnjaBOI9AaeikQ3TGHd0AfoXfSRyElwYCIvYYlOevar+xhwOnPVnSSDuSM=
-X-Gm-Message-State: AOJu0YwAXwhGzrZvnfK48UMy1LrHaFd70hfLwTLTz9ySxAj6e+97mc3g
- cjgxNQZk+l4xwZRcGwwFvoqK9mJebGsmk6WxMa6yVoaXPNKa8mpzF3hD2Zb4uv8=
-X-Google-Smtp-Source: AGHT+IEhlYGIYMde39/cBImRsS1QIzr/12djFkYeik8nwsIjxhslBMNTPeq8lZg4H32sJUEo6eOQaA==
-X-Received: by 2002:a17:90a:d517:b0:299:63fe:3a27 with SMTP id
- t23-20020a17090ad51700b0029963fe3a27mr220081pju.19.1709909956151; 
- Fri, 08 Mar 2024 06:59:16 -0800 (PST)
-Received: from ?IPv6:2804:7f0:b401:7e8e:216c:3f1a:12a4:d415?
- ([2804:7f0:b401:7e8e:216c:3f1a:12a4:d415])
- by smtp.gmail.com with ESMTPSA id
- cc9-20020a17090af10900b0029ab17eaa40sm3166067pjb.3.2024.03.08.06.59.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Mar 2024 06:59:15 -0800 (PST)
-Subject: Re: [PATCH 2/2] tests/tcg: Add multiarch test for Xfer:siginfo:read
- stub
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- alex.bennee@linaro.org
-Cc: peter.maydell@linaro.org
-References: <20240303192610.498490-1-gustavo.romero@linaro.org>
- <20240303192610.498490-2-gustavo.romero@linaro.org>
- <e33ab9ae-e2d4-41ba-b053-e7e918572808@linaro.org>
- <d98ef081-b25d-4dbf-7b67-fe27e09ff2f0@linaro.org>
- <cd6b5e0f-5a10-4acb-94d6-51073ceb5acf@linaro.org>
- <3973e3e8-cff0-19a3-3fed-f0eebc52d624@linaro.org>
- <43d5ea83-5fc1-47b0-a6d1-f8564c238d88@linaro.org>
-From: Gustavo Romero <gustavo.romero@linaro.org>
-Message-ID: <dcc0983b-8931-aab4-2179-f0e48f11e86a@linaro.org>
-Date: Fri, 8 Mar 2024 11:59:12 -0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
+ AJvYcCXC4CgE5q9VlqGeKeE7vGAHYMGraDYg2F9j6Lvy+LZLyNvuAyYvPpIoxVmJtMoRU2rTrGizSbrjZcXKUBQwC405RQfwI5M=
+X-Gm-Message-State: AOJu0YyaRY4BXQXQ8XSFx8t9K+z7Uf+Z6NfEkeiK1zParIfmrh/cywvz
+ x7NBEjYq2CELo1RhDrHvf3cqfpyT8RcRr5YkF9+pJnfwAih5IjfCIaDRFB0dWCo0SNBlIFDX9F4
+ KpSuGncb76ZrRFugt7bMlqTRLzkdJth+ddCdq
+X-Google-Smtp-Source: AGHT+IGpcKDhzHzRC0jynvLJzW/d6THioRVtB9D+SYqhSTmOgqw/WP3dRBW3ZF0NdNHNKGs1fVUZ93lR+ntNC5YMrUc=
+X-Received: by 2002:a17:90a:e544:b0:29b:178e:d9cb with SMTP id
+ ei4-20020a17090ae54400b0029b178ed9cbmr208905pjb.44.1709910090977; Fri, 08 Mar
+ 2024 07:01:30 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <43d5ea83-5fc1-47b0-a6d1-f8564c238d88@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pg1-x52e.google.com
-X-Spam_score_int: -60
-X-Spam_score: -6.1
-X-Spam_bar: ------
-X-Spam_report: (-6.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-3.994,
+References: <20240215175752.82828-1-philmd@linaro.org>
+ <20240215175752.82828-35-philmd@linaro.org>
+ <CAFEAcA-HpKCk-n4HsnZPiz09xq9sk=Sh5nt05KpRymy-NQ2HEg@mail.gmail.com>
+In-Reply-To: <CAFEAcA-HpKCk-n4HsnZPiz09xq9sk=Sh5nt05KpRymy-NQ2HEg@mail.gmail.com>
+From: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
+Date: Fri, 8 Mar 2024 16:01:19 +0100
+Message-ID: <CAJ307EhHYucqcYSDPzX6Bt9YYUxfWkOSEXLGwNTb2ivJhm=j3w@mail.gmail.com>
+Subject: Re: [PULL 34/56] hw/intc/grlib_irqmp: add ncpus property
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-arm@nongnu.org, 
+ qemu-block@nongnu.org, Frederic Konrad <konrad.frederic@yahoo.fr>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=chigot@adacore.com; helo=mail-pj1-x1036.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,102 +97,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, Mar 8, 2024 at 2:27=E2=80=AFPM Peter Maydell <peter.maydell@linaro.=
+org> wrote:
+>
+> On Thu, 15 Feb 2024 at 18:04, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.=
+org> wrote:
+> >
+> > From: Cl=C3=A9ment Chigot <chigot@adacore.com>
+> >
+> > This adds a "ncpus" property to the "grlib-irqmp" device to be used
+> > later, this required a little refactoring of how we initialize the
+> > device (ie: use realize instead of init).
+> >
+> > Co-developed-by: Frederic Konrad <konrad.frederic@yahoo.fr>
+> > Signed-off-by: Cl=C3=A9ment Chigot <chigot@adacore.com>
+> > Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> > Message-ID: <20240131085047.18458-3-chigot@adacore.com>
+> > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>
+> Hi; Coverity points out a bug in this commit (CID 1534914):
+>
+>
+> > -static void grlib_irqmp_init(Object *obj)
+> > +static void grlib_irqmp_realize(DeviceState *dev, Error **errp)
+> >  {
+> > -    IRQMP *irqmp =3D GRLIB_IRQMP(obj);
+> > -    SysBusDevice *dev =3D SYS_BUS_DEVICE(obj);
+> > +    IRQMP *irqmp =3D GRLIB_IRQMP(dev);
+> >
+> > -    qdev_init_gpio_in(DEVICE(obj), grlib_irqmp_set_irq, MAX_PILS);
+> > -    qdev_init_gpio_out_named(DEVICE(obj), &irqmp->irq, "grlib-irq", 1)=
+;
+> > -    memory_region_init_io(&irqmp->iomem, obj, &grlib_irqmp_ops, irqmp,
+> > +    if ((!irqmp->ncpus) || (irqmp->ncpus > IRQMP_MAX_CPU)) {
+> > +        error_setg(errp, "Invalid ncpus properties: "
+> > +                   "%u, must be 0 < ncpus =3D< %u.", irqmp->ncpus,
+> > +                   IRQMP_MAX_CPU);
+> > +    }
+>
+> We detect the out-of-range 'ncpus' value, but forget the "return"
+> statement, so execution will continue onward regardless, and
+> overrun the irqmp->irq[] array when we call qdev_init_gpio_out_named().
 
-On 3/7/24 4:31 PM, Richard Henderson wrote:
-> On 3/7/24 07:50, Gustavo Romero wrote:
->> Hi Richard,
->>
->> On 3/4/24 7:51 PM, Richard Henderson wrote:
->>> On 3/4/24 10:59, Gustavo Romero wrote:
->>>>> Perhaps just abort for SIGABRT instead?
->>>>
->>>> Although this can make a simpler test, the test can't control
->>>> the si_addr value easily, which I think is interesting to be tested.
->>>>
->>>> Why do you prefer SIGABRT?
->>>
->>> I missed that you were testing si_addr -- in which case SIGSEGV is a good match.
->>>
->>>
->>>>> A test using setitimer to raise SIGALRM would test the async path.
->>>>
->>>> SIGLARM doesn't generate any interesting siginfo?
->>>
->>> It should at minimum have si_sig = SIGALRM.
->>>
->>>>
->>>> gromero@arm64:~$ gdb -q ./sigalrm
->>>> Reading symbols from ./sigalrm...
->>>> (gdb) run
->>>> Starting program: /home/gromero/sigalrm
->>>>
->>>> Program terminated with signal SIGALRM, Alarm clock.
->>>> The program no longer exists.
->>>> (gdb) p $_siginfo
->>>> $1 = void
->>>
->>> Well that's because the program died.
->>> Do you need to have gdb handle the signal?
->>
->> ouch, right :)
->>
->> However, on a remote target, even if I catch that signal using
->> 'catch signal SIGALRM' the GDBstub only closes the connection
->> when SIGALRM is delivered. That's odd, I don't understand why.
->>
->> I'm using the same binary that pretty much works on GDB locally.
->>
->>
->> [Remote target]
->>
->> gromero@arm64:~$ gdb -q
->> gromero@arm64:~/qemu_tests$ gdb -q ./sigalrm
->> Reading symbols from ./sigalrm...
->> (gdb) catch signal SIGALRM
->> Catchpoint 1 (signal SIGALRM)
->> (gdb) c
->> The program is not being run.
->> (gdb) run
->> Starting program: /home/gromero/qemu_tests/sigalrm
->> [Inferior 1 (process 12732) exited normally]
->> (gdb) quit
->>
->> on the QEMU gdbstub side it reports "Alarm clock":
->>
->> gromero@amd:~/git/qemu/build$ ./qemu-aarch64 -g 1234 ./sigalrm -s
->> Alarm clock
->> gromero@amd:~/git/qemu/build$
->>
->>
->> [Locally]
->>
->> gromero@arm64:~/qemu_tests$ gdb -q ./sigalrm
->> Reading symbols from ./sigalrm...
->> (gdb) catch signal SIGALRM
->> Catchpoint 1 (signal SIGALRM)
->> (gdb) run -s
->> Starting program: /home/gromero/qemu_tests/sigalrm -s
->>
->> Catchpoint 1 (signal SIGALRM), 0x000000000041a410 in ualarm ()
->> (gdb) quit
->>
->>
->> I'd like to add for the async path using SIGALRM but I need more
->> time to understand what's going on regarding SIGLARM. I understand
->> that's nothing wrong with the Xfer:siginfo:read stub itself, and
->> because the main goal of the test is to test the stub, if you don't
->> mind, I'd like to keep only the test with SIGSEGV for v2 and leave
->> the async test as a follow-up.
-> 
-> Well that's certainly surprising.
-> Would you please file a bug report about this?
-> I think I know what the problem is, but let's track it anyway.
+Indeed, I'll send a patch.
+Thanks for pointing that out.
 
-Yeah.. I filed an issue here:
+Cl=C3=A9ment
 
-https://gitlab.com/qemu-project/qemu/-/issues/2214
-
-
-Cheers,
-Gustavo
+> > +
+> > +    qdev_init_gpio_in(dev, grlib_irqmp_set_irq, MAX_PILS);
+> > +    qdev_init_gpio_out_named(dev, &irqmp->irq, "grlib-irq", 1);
+> > +    memory_region_init_io(&irqmp->iomem, OBJECT(dev), &grlib_irqmp_ops=
+, irqmp,
+> >                            "irqmp", IRQMP_REG_SIZE);
+> >
+> >      irqmp->state =3D g_malloc0(sizeof *irqmp->state);
+> >
+> > -    sysbus_init_mmio(dev, &irqmp->iomem);
+> > +    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &irqmp->iomem);
+> >  }
+>
+> thanks
+> -- PMM
 
