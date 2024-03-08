@@ -4,87 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E863FC54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 15:27:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 298CAC54E4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 15:28:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ric7j-00089J-TE; Fri, 08 Mar 2024 10:27:03 -0500
+	id 1ric8M-0008In-7r; Fri, 08 Mar 2024 10:27:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anthony.perard@cloud.com>)
- id 1ric7h-00088s-KJ
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:27:01 -0500
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1ric8K-0008I4-AA
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:27:40 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <anthony.perard@cloud.com>)
- id 1ric7a-0007Ff-TL
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:27:01 -0500
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-a45f257b81fso81405466b.0
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 07:26:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1ric84-0007O5-PU
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:27:40 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-33e70d71756so913622f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 07:27:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cloud.com; s=cloud; t=1709911611; x=1710516411; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=e6fF84qOgCfbCnvQXCr7ZNpbBHM03v5U9YhZ2Fgrw8A=;
- b=BqeWc9WkM9ui660xWYbLOjgqdqEodbzxMRgjW6pB4EyUUGpdxiyZokVk7OCfElUryw
- QfB3o9U4ziP26h4Z4tGPIYTBpmO+jyhdkvomUeKCn7IJzc+dQwjhHRZvU/+ldst1bEze
- r1CqXBrBd84iM3FLUwXjxIEq65uckoDU2EaFU=
+ d=adacore.com; s=google; t=1709911642; x=1710516442; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=8rWxjERfBQLukJUYhiMHoSnMrSfR3ecMY1UceHVB5qM=;
+ b=jI5YeQC9iCuoipc0Tb1v9kdNT6o5QgKFWnbSeQHuJodWO77O2VUYNJvaF1fHocFz3M
+ C74S707xFcEqoZzznD92BkSEZit84la8rq/sCW0DzwOHgPPxqSe6H9BXX5pIwZL1NjxM
+ rBneUyRpCI7RUev5yU/Dw+PvwZHOv4WxQua4ZVTOkjAK97O3UCbWLh/yrq0LqGPEZwkl
+ HNB841GRt66oMiCPAk1UBiWopllTvjHOZjww7v8b+3izPO05PAtw4zG/iyCWEXj87S1o
+ FbYpTFHaxS6SZ/Abn/+r7A4jVyszAHOGgdRBxCi1n5nqxW1C/K6CK/DkPfBW/J7WmVGv
+ tpEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709911611; x=1710516411;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=e6fF84qOgCfbCnvQXCr7ZNpbBHM03v5U9YhZ2Fgrw8A=;
- b=ZhVNty9ePgrZWqXEAlKaSY9cdHh1IS/dclmOUzkWGs0v04vApmDc4FtZJIUCzFHeqG
- zNh0qjGmQrqHndMvRfQ/9wnvW4nrOHwrUNamB+y1d7F7BJKrHcWy06I8iAlo2uMUI3i1
- /7CJgeg2MpvGYIA0waK2Uf8MwJN/4SlohyiIaC9j0mr4wWU8TzIUmy/GqSCp2O5NVOaJ
- 9fl7U0ipyyUVObFMrhEk3JSrr6lSp0NLzbC/22O6iY6nnKezy9mOC4myvzPsPMlVa1gB
- PMpT0LeFiyh/lp5qCliDxoTn2fm9HJJIcnVh3/7QWs1vQVIm9aMk14tccZcuZa3qLqfw
- yIxQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXXcy1VyEWGrirW8hKlW/PIUuJlK94a+bnSIbYx1sUi4X8Q+Q4fqmbAfJBfFv2zdKZ2wm+73Y3Uru7G6dyrkH0q/AI9QK0=
-X-Gm-Message-State: AOJu0Yys5T1fUot1Etm/sH+x2zkpHLhF0gTenAgfGNfSGgnDK8ZHWHIh
- p4mkG7CB0lmdgwrK7wzSrEytIZl1w977Rfl3faTbIEI1IoZwHWXJPUIpxn2YIeI=
-X-Google-Smtp-Source: AGHT+IF8bpS/Lw7LZTkiFNoNorWDHb16BGAHMIBNBfb5gg03OYucnJeZMZZLnORdZk+jn66CYtXHuw==
-X-Received: by 2002:a17:907:100a:b0:a3e:b869:11b3 with SMTP id
- ox10-20020a170907100a00b00a3eb86911b3mr14901522ejb.55.1709911611379; 
- Fri, 08 Mar 2024 07:26:51 -0800 (PST)
-Received: from perard.uk.xensource.com (default-46-102-197-194.interdsl.co.uk.
- [46.102.197.194]) by smtp.gmail.com with ESMTPSA id
- af1-20020a170906998100b00a45aa7cb029sm3914977ejc.36.2024.03.08.07.26.50
+ d=1e100.net; s=20230601; t=1709911643; x=1710516443;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8rWxjERfBQLukJUYhiMHoSnMrSfR3ecMY1UceHVB5qM=;
+ b=Xwh0haEcc3XwxFfSUBQaY2vPpx8eZ5Q1sjqMXTgK1BBIGT9LP30q/5m+FUBBdHcqBz
+ Y9/pmABhpUEt0df7qVyqGFR2InO27IHbuJxtlbRh7rLH7hl8vJRCq95ircEyNmpT4Va4
+ YQOUIkV2St0lUNV4PBxA+bQTQ6ZGEDtZ885wJ8wf4SqL5C2AsrQt+Ola02Eoa3d2DCF4
+ 3vR+WIvk6JCoCBf355l+Te63X2GLYOUyFMx8njIYsKStDx/VhDsm7acAVOTOXKwECpIS
+ IBLXIzi8/uc1WI9MllxL2GyKXvY3NthOAT2WYXH0dE9HT0gUUJtPIKIMDg3MuqY5Yd9V
+ 478A==
+X-Gm-Message-State: AOJu0Yx0vbD6SgbGgVaFMvH6pyEaliwLReI65nx1vCI84A9phXNRn02s
+ 3rqcdIkPq+P5xhzTTU2aI+16sDSBMmcu6TvM7JWohxrrmSHT25ruhzU654+BS1/QLwSawMPJLj8
+ =
+X-Google-Smtp-Source: AGHT+IFdY3vDP48IjBaB/KLCn979HZks9r6MlUI5dbKOlfRXiYu3u1G2DlLsZG3bmtWBwoBBLJDy9A==
+X-Received: by 2002:adf:b19c:0:b0:33e:6ce4:feb8 with SMTP id
+ q28-20020adfb19c000000b0033e6ce4feb8mr581136wra.12.1709911642640; 
+ Fri, 08 Mar 2024 07:27:22 -0800 (PST)
+Received: from chigot-Dell.telnowedge.local
+ (lmontsouris-659-1-24-67.w81-250.abo.wanadoo.fr. [81.250.175.67])
+ by smtp.gmail.com with ESMTPSA id
+ n8-20020a056000170800b0033e2291fbc0sm19937686wrc.68.2024.03.08.07.27.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 07:26:51 -0800 (PST)
-Date: Fri, 8 Mar 2024 15:26:50 +0000
-From: Anthony PERARD <anthony.perard@cloud.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Zhao Liu <zhao1.liu@linux.intel.com>,
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Michael Tokarev <mjt@tls.msk.ru>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Paul Durrant <paul@xen.org>, Jason Wang <jasowang@redhat.com>
-Subject: Re: [PATCH 02/17] hw/net/xen_nic: Fix missing ERRP_GUARD() for
- error_prepend()
-Message-ID: <eb9066fd-e332-41f4-a234-4ddcaed9564c@perard>
-References: <20240229143914.1977550-1-zhao1.liu@linux.intel.com>
- <20240229143914.1977550-3-zhao1.liu@linux.intel.com>
- <b353cdec-2d6e-4ab6-bd4e-3e9cee5091a1@redhat.com>
+ Fri, 08 Mar 2024 07:27:22 -0800 (PST)
+From: =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
+To: qemu-devel@nongnu.org
+Cc: konrad.frederic@yahoo.fr, philmd@linaro.org, peter.maydell@linaro.org,
+ =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
+Subject: [PATCH] hw/intc/grlib_irqmp: abort realize when ncpus value is out of
+ range
+Date: Fri,  8 Mar 2024 16:27:19 +0100
+Message-Id: <20240308152719.591232-1-chigot@adacore.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b353cdec-2d6e-4ab6-bd4e-3e9cee5091a1@redhat.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=anthony.perard@cloud.com; helo=mail-ej1-x632.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=chigot@adacore.com; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,65 +94,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 29, 2024 at 06:25:40PM +0100, Thomas Huth wrote:
-> On 29/02/2024 15.38, Zhao Liu wrote:
-> > From: Zhao Liu <zhao1.liu@intel.com>
-> > 
-> > As the comment in qapi/error, passing @errp to error_prepend() requires
-> > ERRP_GUARD():
-> > 
-> > * = Why, when and how to use ERRP_GUARD() =
-> > *
-> > * Without ERRP_GUARD(), use of the @errp parameter is restricted:
-> > ...
-> > * - It should not be passed to error_prepend(), error_vprepend() or
-> > *   error_append_hint(), because that doesn't work with &error_fatal.
-> > * ERRP_GUARD() lifts these restrictions.
-> > *
-> > * To use ERRP_GUARD(), add it right at the beginning of the function.
-> > * @errp can then be used without worrying about the argument being
-> > * NULL or &error_fatal.
-> > 
-> > ERRP_GUARD() could avoid the case when @errp is the pointer of
-> > error_fatal, the user can't see this additional information, because
-> > exit() happens in error_setg earlier than information is added [1].
-> > 
-> > The xen_netdev_connect() passes @errp to error_prepend(), and its @errp
-> > parameter is from xen_device_frontend_changed().
-> > 
-> > Though its @errp points to @local_err of xen_device_frontend_changed(),
-> > to follow the requirement of @errp, add missing ERRP_GUARD() at the
-> > beginning of this function.
-> > 
-> > [1]: Issue description in the commit message of commit ae7c80a7bd73
-> >       ("error: New macro ERRP_GUARD()").
-> > 
-> > Cc: Stefano Stabellini <sstabellini@kernel.org>
-> > Cc: Anthony Perard <anthony.perard@citrix.com>
-> > Cc: Paul Durrant <paul@xen.org>
-> > Cc: Jason Wang <jasowang@redhat.com>
-> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> > ---
-> >   hw/net/xen_nic.c | 1 +
-> >   1 file changed, 1 insertion(+)
-> > 
-> > diff --git a/hw/net/xen_nic.c b/hw/net/xen_nic.c
-> > index 453fdb981983..89487b49baf9 100644
-> > --- a/hw/net/xen_nic.c
-> > +++ b/hw/net/xen_nic.c
-> > @@ -351,6 +351,7 @@ static bool net_event(void *_xendev)
-> >   static bool xen_netdev_connect(XenDevice *xendev, Error **errp)
-> >   {
-> > +    ERRP_GUARD();
-> >       XenNetDev *netdev = XEN_NET_DEVICE(xendev);
-> >       unsigned int port, rx_copy;
-> 
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
+Even if the error is set, the build is not aborted when the ncpus value
+is wrong, the return is missing.
 
-Acked-by: Anthony PERARD <anthony.perard@citrix.com>
+Signed-off-by: Clément Chigot <chigot@adacore.com>
+---
+ hw/intc/grlib_irqmp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thanks,
-
+diff --git a/hw/intc/grlib_irqmp.c b/hw/intc/grlib_irqmp.c
+index 144b121d48..c6c51a349c 100644
+--- a/hw/intc/grlib_irqmp.c
++++ b/hw/intc/grlib_irqmp.c
+@@ -356,6 +356,7 @@ static void grlib_irqmp_realize(DeviceState *dev, Error **errp)
+         error_setg(errp, "Invalid ncpus properties: "
+                    "%u, must be 0 < ncpus =< %u.", irqmp->ncpus,
+                    IRQMP_MAX_CPU);
++        return;
+     }
+ 
+     qdev_init_gpio_in(dev, grlib_irqmp_set_irq, MAX_PILS);
 -- 
-Anthony PERARD
+2.25.1
+
 
