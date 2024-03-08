@@ -4,84 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8492C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 16:58:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A814C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 17:02:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ridXd-0003mC-6R; Fri, 08 Mar 2024 11:57:53 -0500
+	id 1ridbB-0005de-QG; Fri, 08 Mar 2024 12:01:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ridXb-0003j1-Bw
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:57:51 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ridXZ-00083t-KB
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:57:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709917064;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=8h41LIQv5P1I/TGPAjsPO3yIcvwvreifU1dV3BqXUn4=;
- b=UZ0AU5EzUgFd4NUSdU/RKTcJhuQXIlp1DTsC0rifBnjc2FTiOaayGUgPznWLgS6Ncc5oCu
- +3x/xTku1D0XNi9bVqSgo2VJ/wI/ZFKa655/y1ytP/rVM0NBMSQPLmEyO6nFDGAGf75XJc
- /GThEw/I5aaaWiKYwxCOmi1QBSXoyfI=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-361-NSCZQ1H-Pci3sAdss6AL6g-1; Fri, 08 Mar 2024 11:57:43 -0500
-X-MC-Unique: NSCZQ1H-Pci3sAdss6AL6g-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-412dcaf0bd6so9714425e9.0
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 08:57:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1ridb7-0005WH-Jr
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 12:01:31 -0500
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1ridb5-0000VB-PV
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 12:01:29 -0500
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-6e66e8fcc2dso696528b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 09:01:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709917286; x=1710522086; darn=nongnu.org;
+ h=content-transfer-encoding:content-language:in-reply-to:mime-version
+ :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=WxOybcM2F4fKRXlQZqwFzYrl9MTV4DucrhrBkzOmzg4=;
+ b=wvPlmVpf5ElruY4jKr9Dwa6dWIHyaay+e6odT3eBr0cYfMYT+apBctJDD1ZZV/yumh
+ MYkB6sMtA0RHIudQGTcmhrQgyyMjl2mThySNMM9gLCtZWCbNNY9QeMM8BpFMSk5DEnwj
+ q7loBEgV6dTTVsIWLCA+VjpMFvN0uNuPxLO+CZsYY4GZuRu6RDxYxApwG4ATAvc+bPdM
+ muYQKpLdsgqDjhDo8zPSfiYYzAXdez7cAkJEb7O3xKrydZn919RoG9A/+BACrNZtifxN
+ QyCT9bJE0PIOBEr8vYMQklOL2yrQcb0P7ZDrp/rbWK7OPAy84CE857T64j9uygJl0ehs
+ HX2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709917062; x=1710521862;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8h41LIQv5P1I/TGPAjsPO3yIcvwvreifU1dV3BqXUn4=;
- b=KR1yNTQ7DNMQ6NMrqgcWtahWHTp3ejL/1OOpIZ1aMCkJTznDLG3vt/DfDd1emZs6Uk
- vqvvTFdke3Zk2CC8IFQ9xNf11BZLegXL82yn2c9buIFYhLn/Y0RWyuLroNhvkUveqF94
- o74XD94QwQmEgTelQEFOQjjFuh7X6g2oZpfzCpsorLwiEI9tz2R/WZHThLiN/fFoKxfe
- Pd8hrC4BanHpVhrVEhSDTKeAgVMsy4yrNs/SiuB6ZnA1BFayUb+DhB4jKcr2HXRnzPfN
- 8gyTGUKbmF/20futcW8NlbGz+DdCqZ6X4WsKJF4aJvSMTVZhUwEdJBFT896QljT0nriq
- wD8g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWeHGW4WG+yNszZo+7JUUPieXyhnL4HlVbtGrNy3B7DWerQou0xi3/x3sKfMgiPNWRwFduWq9g15mEra4chQeSpZ6gO5zk=
-X-Gm-Message-State: AOJu0YwUDFz1Ge/RnGMb7lzdjX1DRQPL0P6BjKgwD+XwMPIh5spSQmYG
- us+C0Y0xmn02IbbO0etPIdUiYdTv3xelu+hXd3A2YsOXrApua+ujYb4884VdtMbzqXqc/b6KjcT
- zgLEj7KuIxKD8pdzP8RYups4VdhtSQGfnOQtTrATV9uLE2vbzaLAB
-X-Received: by 2002:a05:600c:3111:b0:412:ffc9:d551 with SMTP id
- g17-20020a05600c311100b00412ffc9d551mr5585112wmo.14.1709917061908; 
- Fri, 08 Mar 2024 08:57:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHFZ/4yCpb42ZPPX7d0e/B/VlsQK74EohLqEtaPtIEI6fpzVfw2L5lVHV6qomtmGDUBpr8JVg==
-X-Received: by 2002:a05:600c:3111:b0:412:ffc9:d551 with SMTP id
- g17-20020a05600c311100b00412ffc9d551mr5585092wmo.14.1709917061420; 
- Fri, 08 Mar 2024 08:57:41 -0800 (PST)
-Received: from redhat.com ([2a06:c701:73cd:f300:bc74:daca:b316:492a])
+ d=1e100.net; s=20230601; t=1709917286; x=1710522086;
+ h=content-transfer-encoding:content-language:in-reply-to:mime-version
+ :user-agent:date:message-id:from:references:cc:to:subject
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=WxOybcM2F4fKRXlQZqwFzYrl9MTV4DucrhrBkzOmzg4=;
+ b=K2SC1cJHcPU8BKflVDe1eRupxnAZER/lRl/Ct1Uib5isCO/n60bXI1zTABVQ4etlwa
+ QMKccR9TmbByCnVAMddrwiLGWeE03oErkCuXMiHy+FlvAikhcXD3dsX1bNhi2fSfhjun
+ NJUtuDaxI9IB5qwAnECoGt0rGFXTnPJb5ga29TIsKb102FgppaShIzeXpGJ2PDGLpA0J
+ Adano3xCT94W8YEni7kS8h7wv2b3i3lamMqybj4HpI1zBiWolnNeYlN21f86887Xt4ta
+ kEP7sVT25BDMdUq64fqhsUr123t6E0iuVhQEzsGkbT+6TAP/1UbJL2Ng48SAIJWJE1mp
+ CJ2g==
+X-Gm-Message-State: AOJu0Yy+JOuNLZeE+LOWUBfpMmvLLL1lM3O6weIIJlTOLol3rCaRq3ZL
+ 5bZLM8FuguPN6zov4B2fFEjVuGEDMy+XEtHGYwgM/+LAOnblImZKHwPoSDdmVK/DcXszijBpKJH
+ d
+X-Google-Smtp-Source: AGHT+IFMLGPl/cd3pckMFnV/N/z/An6KIxg/ITCtL8w5KsOBJVIIYmRh6GJ8OnughLs0DVEYSJuqJw==
+X-Received: by 2002:a05:6a21:196:b0:1a1:4cd2:40a4 with SMTP id
+ le22-20020a056a21019600b001a14cd240a4mr13312082pzb.6.1709917285877; 
+ Fri, 08 Mar 2024 09:01:25 -0800 (PST)
+Received: from ?IPv6:2804:7f0:b401:7e8e:216c:3f1a:12a4:d415?
+ ([2804:7f0:b401:7e8e:216c:3f1a:12a4:d415])
  by smtp.gmail.com with ESMTPSA id
- t14-20020a05600c198e00b0041312c4865asm4739254wmq.2.2024.03.08.08.57.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 08:57:40 -0800 (PST)
-Date: Fri, 8 Mar 2024 11:57:38 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Alex Williamson <alex.williamson@redhat.com>
-Cc: marcel.apfelbaum@gmail.com, qemu-devel@nongnu.org, clg@redhat.com
-Subject: Re: [PATCH] pci: Add option to disable device level INTx masking
-Message-ID: <20240308115643-mutt-send-email-mst@kernel.org>
-References: <20240307184645.104349-1-alex.williamson@redhat.com>
+ j17-20020aa78d11000000b006e6454afe10sm5782402pfe.205.2024.03.08.09.01.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 Mar 2024 09:01:25 -0800 (PST)
+Subject: Re: [PATCH v2 3/5] gdbstub: Save target's siginfo
+To: =?UTF-8?Q?Alex_Benn=c3=a9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, laurent@vivier.eu,
+ philmd@linaro.org
+References: <20240307182623.1450717-1-gustavo.romero@linaro.org>
+ <20240307182623.1450717-3-gustavo.romero@linaro.org>
+ <637e4407-4519-4d87-981a-acd9b5124970@linaro.org>
+ <87y1atu0y8.fsf@draig.linaro.org>
+From: Gustavo Romero <gustavo.romero@linaro.org>
+Message-ID: <9fea440d-f0c5-0a7c-a60e-b75e4dcf73c3@linaro.org>
+Date: Fri, 8 Mar 2024 14:01:21 -0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240307184645.104349-1-alex.williamson@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+In-Reply-To: <87y1atu0y8.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x434.google.com
+X-Spam_score_int: -60
+X-Spam_score: -6.1
+X-Spam_bar: ------
+X-Spam_report: (-6.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-3.994,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,83 +103,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 07, 2024 at 11:46:42AM -0700, Alex Williamson wrote:
-> The PCI 2.3 spec added definitions of the INTx disable and status bits,
-> in the command and status registers respectively.  The command register
-> bit, commonly known as DisINTx in lspci, controls whether the device
-> can assert the INTx signal.
-> 
-> Operating systems will often write to this bit to test whether a device
-> supports this style of legacy interrupt masking.  When using device
-> assignment, such as with vfio-pci, the result of this test dictates
-> whether the device can use a shared or exclusive interrupt (ie. generic
-> INTx masking at the device via DisINTx or IRQ controller level INTx
-> masking).
-> 
-> Add an experimental option to the base set of properties for PCI
-> devices which allows the DisINTx bit to be excluded from wmask, making
-> it read-only to the guest for testing purposes related to INTx masking.
-> 
-
-Could you clarify the use a bit more? It's unstable - do you
-expect to experiment with it and then make it permanent down
-the road?
-
-> Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
-> ---
->  hw/pci/pci.c         | 14 ++++++++++----
->  include/hw/pci/pci.h |  2 ++
->  2 files changed, 12 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> index 6496d027ca61..8c78326ad67f 100644
-> --- a/hw/pci/pci.c
-> +++ b/hw/pci/pci.c
-> @@ -85,6 +85,8 @@ static Property pci_props[] = {
->                      QEMU_PCIE_ERR_UNC_MASK_BITNR, true),
->      DEFINE_PROP_BIT("x-pcie-ari-nextfn-1", PCIDevice, cap_present,
->                      QEMU_PCIE_ARI_NEXTFN_1_BITNR, false),
-> +    DEFINE_PROP_BIT("x-pci-disintx", PCIDevice, cap_present,
-> +                    QEMU_PCI_DISINTX_BITNR, true),
->      DEFINE_PROP_END_OF_LIST()
->  };
->  
-> @@ -861,13 +863,17 @@ static void pci_init_cmask(PCIDevice *dev)
->  static void pci_init_wmask(PCIDevice *dev)
->  {
->      int config_size = pci_config_size(dev);
-> +    uint16_t cmd_wmask = PCI_COMMAND_IO | PCI_COMMAND_MEMORY |
-> +                         PCI_COMMAND_MASTER | PCI_COMMAND_SERR;
->  
->      dev->wmask[PCI_CACHE_LINE_SIZE] = 0xff;
->      dev->wmask[PCI_INTERRUPT_LINE] = 0xff;
-> -    pci_set_word(dev->wmask + PCI_COMMAND,
-> -                 PCI_COMMAND_IO | PCI_COMMAND_MEMORY | PCI_COMMAND_MASTER |
-> -                 PCI_COMMAND_INTX_DISABLE);
-> -    pci_word_test_and_set_mask(dev->wmask + PCI_COMMAND, PCI_COMMAND_SERR);
-> +
-> +    if (dev->cap_present & QEMU_PCI_DISINTX) {
-> +        cmd_wmask |= PCI_COMMAND_INTX_DISABLE;
-> +    }
-> +
-> +    pci_set_word(dev->wmask + PCI_COMMAND, cmd_wmask);
->  
->      memset(dev->wmask + PCI_CONFIG_HEADER_SIZE, 0xff,
->             config_size - PCI_CONFIG_HEADER_SIZE);
-> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-> index eaa3fc99d884..45f0fac435cc 100644
-> --- a/include/hw/pci/pci.h
-> +++ b/include/hw/pci/pci.h
-> @@ -212,6 +212,8 @@ enum {
->      QEMU_PCIE_ERR_UNC_MASK = (1 << QEMU_PCIE_ERR_UNC_MASK_BITNR),
->  #define QEMU_PCIE_ARI_NEXTFN_1_BITNR 12
->      QEMU_PCIE_ARI_NEXTFN_1 = (1 << QEMU_PCIE_ARI_NEXTFN_1_BITNR),
-> +#define QEMU_PCI_DISINTX_BITNR 13
-> +    QEMU_PCI_DISINTX = (1 << QEMU_PCI_DISINTX_BITNR),
->  };
->  
->  typedef struct PCIINTxRoute {
-> -- 
-> 2.44.0
-
+SGkgQWxleCwNCg0KT24gMy83LzI0IDc6MzMgUE0sIEFsZXggQmVubsOpZSB3cm90ZToNCj4g
+UmljaGFyZCBIZW5kZXJzb24gPHJpY2hhcmQuaGVuZGVyc29uQGxpbmFyby5vcmc+IHdyaXRl
+czoNCj4gDQo+PiBPbiAzLzcvMjQgMDg6MjYsIEd1c3Rhdm8gUm9tZXJvIHdyb3RlOg0KPj4+
+IFNhdmUgdGFyZ2V0J3Mgc2lnaW5mbyBpbnRvIGdkYnNlcnZlcl9zdGF0ZSBzbyBpdCBjYW4g
+YmUgdXNlZCBsYXRlciwgZm9yDQo+Pj4gZXhhbXBsZSwgaW4gYW55IHN0dWIgdGhhdCByZXF1
+aXJlcyB0aGUgdGFyZ2V0J3Mgc2lfc2lnbm8gYW5kIHNpX2NvZGUuDQo+Pj4gVGhpcyBjaGFu
+Z2UgYWZmZWN0cyBvbmx5IGxpbnV4LXVzZXIgbW9kZS4NCj4+PiBTaWduZWQtb2ZmLWJ5OiBH
+dXN0YXZvIFJvbWVybyA8Z3VzdGF2by5yb21lcm9AbGluYXJvLm9yZz4NCj4+PiBTdWdnZXN0
+ZWQtYnk6IFJpY2hhcmQgSGVuZGVyc29uIDxyaWNoYXJkLmhlbmRlcnNvbkBsaW5hcm8ub3Jn
+Pg0KPj4+IC0tLQ0KPj4+ICAgIGdkYnN0dWIvaW50ZXJuYWxzLmggICAgfCAgMyArKysNCj4+
+PiAgICBnZGJzdHViL3VzZXItdGFyZ2V0LmMgIHwgIDMgKystDQo+Pj4gICAgZ2Ric3R1Yi91
+c2VyLmMgICAgICAgICB8IDE0ICsrKysrKysrKystLS0tDQo+Pj4gICAgaW5jbHVkZS9nZGJz
+dHViL3VzZXIuaCB8ICA2ICsrKysrLQ0KPj4+ICAgIGxpbnV4LXVzZXIvbWFpbi5jICAgICAg
+fCAgMiArLQ0KPj4+ICAgIGxpbnV4LXVzZXIvc2lnbmFsLmMgICAgfCAgNSArKysrLQ0KPj4+
+ICAgIDYgZmlsZXMgY2hhbmdlZCwgMjUgaW5zZXJ0aW9ucygrKSwgOCBkZWxldGlvbnMoLSkN
+Cj4+PiBkaWZmIC0tZ2l0IGEvZ2Ric3R1Yi9pbnRlcm5hbHMuaCBiL2dkYnN0dWIvaW50ZXJu
+YWxzLmgNCj4+PiBpbmRleCA1NmI3YzEzYjc1Li5hN2NjNjlkYWIzIDEwMDY0NA0KPj4+IC0t
+LSBhL2dkYnN0dWIvaW50ZXJuYWxzLmgNCj4+PiArKysgYi9nZGJzdHViL2ludGVybmFscy5o
+DQo+Pj4gQEAgLTU4LDYgKzU4LDkgQEAgdHlwZWRlZiBzdHJ1Y3QgR0RCU3RhdGUgew0KPj4+
+ICAgICAgICBpbnQgbGluZV9jc3VtOyAvKiBjaGVja3N1bSBhdCB0aGUgZW5kIG9mIHRoZSBw
+YWNrZXQgKi8NCj4+PiAgICAgICAgR0J5dGVBcnJheSAqbGFzdF9wYWNrZXQ7DQo+Pj4gICAg
+ICAgIGludCBzaWduYWw7DQo+Pj4gKyNpZmRlZiBDT05GSUdfVVNFUl9PTkxZDQo+Pj4gKyAg
+ICB1aW50OF90IHNpZ2luZm9bTUFYX1NJR0lORk9fTEVOR1RIXTsNCj4+PiArI2VuZGlmDQo+
+Pg0KPj4gSWYgd2UgdGhpcyBpbiBHREJVc2VyU3RhdGUgaW4gdXNlci5jIC0tIG5vIG5lZWQg
+Zm9yIGlmZGVmcyB0aGVuLg0KPiANCj4gQWx0aG91Z2ggaXQgZG9lcyBicmVhayBvbiBGcmVl
+QlNEJ3MgdXNlciB0YXJnZXQ6DQo+IA0KPiAgICBGQUlMRUQ6IGxpYnFlbXUtYXJtLWJzZC11
+c2VyLmZhLnAvZ2Ric3R1Yl91c2VyLXRhcmdldC5jLm8NCj4gICAgY2MgLW02NCAtbWN4MTYg
+LUlsaWJxZW11LWFybS1ic2QtdXNlci5mYS5wIC1JLiAtSS4uIC1JdGFyZ2V0L2FybSAtSS4u
+L3RhcmdldC9hcm0gLUkuLi9jb21tb24tdXNlci9ob3N0L3g4Nl82NCAtSS4uL2JzZC11c2Vy
+L2luY2x1ZGUgLUlic2QtdXNlci9mcmVlYnNkIC1JLi4vYnNkLXVzZXIvZnJlZWJzZCAtSS4u
+L2JzZC11c2VyL2hvc3QveDg2XzY0IC1JYnNkLXVzZXIgLUkuLi9ic2QtdXNlciAtSS4uL2Jz
+ZC11c2VyL2FybSAtSXFhcGkgLUl0cmFjZSAtSXVpIC1JdWkvc2hhZGVyIC1JL3Vzci9sb2Nh
+bC9pbmNsdWRlL2NhcHN0b25lIC1JL3Vzci9sb2NhbC9pbmNsdWRlL2dsaWItMi4wIC1JL3Vz
+ci9sb2NhbC9saWIvZ2xpYi0yLjAvaW5jbHVkZSAtSS91c3IvbG9jYWwvaW5jbHVkZSAtZmRp
+YWdub3N0aWNzLWNvbG9yPWF1dG8gLVdhbGwgLVdpbnZhbGlkLXBjaCAtV2Vycm9yIC1zdGQ9
+Z251MTEgLU8yIC1nIC1mc3RhY2stcHJvdGVjdG9yLXN0cm9uZyAtV2VtcHR5LWJvZHkgLVdl
+bmRpZi1sYWJlbHMgLVdleHBhbnNpb24tdG8tZGVmaW5lZCAtV2Zvcm1hdC1zZWN1cml0eSAt
+V2Zvcm1hdC15MmsgLVdpZ25vcmVkLXF1YWxpZmllcnMgLVdpbml0LXNlbGYgLVdtaXNzaW5n
+LWZvcm1hdC1hdHRyaWJ1dGUgLVdtaXNzaW5nLXByb3RvdHlwZXMgLVduZXN0ZWQtZXh0ZXJu
+cyAtV29sZC1zdHlsZS1kZWZpbml0aW9uIC1XcmVkdW5kYW50LWRlY2xzIC1Xc3RyaWN0LXBy
+b3RvdHlwZXMgLVd0eXBlLWxpbWl0cyAtV3VuZGVmIC1XdmxhIC1Xd3JpdGUtc3RyaW5ncyAt
+V25vLWdudS12YXJpYWJsZS1zaXplZC10eXBlLW5vdC1hdC1lbmQgLVduby1pbml0aWFsaXpl
+ci1vdmVycmlkZXMgLVduby1taXNzaW5nLWluY2x1ZGUtZGlycyAtV25vLXBzYWJpIC1Xbm8t
+c2hpZnQtbmVnYXRpdmUtdmFsdWUgLVduby1zdHJpbmctcGx1cy1pbnQgLVduby10YXV0b2xv
+Z2ljYWwtdHlwZS1saW1pdC1jb21wYXJlIC1Xbm8tdHlwZWRlZi1yZWRlZmluaXRpb24gLVd0
+aHJlYWQtc2FmZXR5IC1pcXVvdGUgLiAtaXF1b3RlIC90bXAvY2lycnVzLWNpLWJ1aWxkIC1p
+cXVvdGUgL3RtcC9jaXJydXMtY2ktYnVpbGQvaW5jbHVkZSAtaXF1b3RlIC90bXAvY2lycnVz
+LWNpLWJ1aWxkL2hvc3QvaW5jbHVkZS94ODZfNjQgLWlxdW90ZSAvdG1wL2NpcnJ1cy1jaS1i
+dWlsZC9ob3N0L2luY2x1ZGUvZ2VuZXJpYyAtaXF1b3RlIC90bXAvY2lycnVzLWNpLWJ1aWxk
+L3RjZy9pMzg2IC1wdGhyZWFkIC1EX0dOVV9TT1VSQ0UgLURfRklMRV9PRkZTRVRfQklUUz02
+NCAtRF9MQVJHRUZJTEVfU09VUkNFIC1mbm8tc3RyaWN0LWFsaWFzaW5nIC1mbm8tY29tbW9u
+IC1md3JhcHYgLWZ0cml2aWFsLWF1dG8tdmFyLWluaXQ9emVybyAtZlBJRSAtRE5FRURfQ1BV
+X0ggJy1EQ09ORklHX1RBUkdFVD0iYXJtLWJzZC11c2VyLWNvbmZpZy10YXJnZXQuaCInICct
+RENPTkZJR19ERVZJQ0VTPSJhcm0tYnNkLXVzZXItY29uZmlnLWRldmljZXMuaCInIC1NRCAt
+TVEgbGlicWVtdS1hcm0tYnNkLXVzZXIuZmEucC9nZGJzdHViX3VzZXItdGFyZ2V0LmMubyAt
+TUYgbGlicWVtdS1hcm0tYnNkLXVzZXIuZmEucC9nZGJzdHViX3VzZXItdGFyZ2V0LmMuby5k
+IC1vIGxpYnFlbXUtYXJtLWJzZC11c2VyLmZhLnAvZ2Ric3R1Yl91c2VyLXRhcmdldC5jLm8g
+LWMgLi4vZ2Ric3R1Yi91c2VyLXRhcmdldC5jDQo+ICAgIEluIGZpbGUgaW5jbHVkZWQgZnJv
+bSAuLi9nZGJzdHViL3VzZXItdGFyZ2V0LmM6MTg6DQo+ICAgIC4uL2dkYnN0dWIvaW50ZXJu
+YWxzLmg6NjI6MjE6IGVycm9yOiB1c2Ugb2YgdW5kZWNsYXJlZCBpZGVudGlmaWVyICdNQVhf
+U0lHSU5GT19MRU5HVEgnDQo+ICAgICAgIDYyIHwgICAgIHVpbnQ4X3Qgc2lnaW5mb1tNQVhf
+U0lHSU5GT19MRU5HVEhdOw0KPiAgICAgICAgICB8ICAgICAgICAgICAgICAgICAgICAgXg0K
+PiAgICAxIGVycm9yIGdlbmVyYXRlZC4NCj4gICAgWzIwODQvNjczMV0gQ29tcGlsaW5nIEMg
+b2JqZWN0IGxpYnFlbXUtYXJtDQo+IA0KPiBTZWU6IGh0dHBzOi8vZ2l0bGFiLmNvbS9zdHNx
+dWFkL3FlbXUvLS9qb2JzLzYzNDU4Mjk0MTkNCg0KYXJnaCwgSSd2ZSB0ZXN0ZWQgYWxsIHRh
+cmdldHMgZm9yIGxpbnV4LXVzZXIsIGJ1dCBtaXNzZWQgYnNkLXVzZXIuIEkndmUgdHJpZWQN
+Cm9uY2UgdG8gYnVpbGQgaXQgYnV0IHRoYXQgcmVxdWlyZXMgYSBCU0QtbGlrZSBob3N0LCB3
+aGljaCBJIGRvbid0IGhhdmUgYXQgdGhlDQptb21lbnQsIHRoZW4gSSBmb3Jnb3QgYWJvdXQg
+aXQuLi4gTGV0IG1lIHNldHVwIG9uZSBhbmQgcmV2aWV3IHRoZSBjaGFuZ2UgaW4NCnRoZSBs
+aWdodCBvZiB0aGUgY29tbWVudHMgZnJvbSB5b3UgYW5kIFJpY2hhcmQuDQoNClRoYW5rcyEN
+Cg0KDQpDaGVlcnMsDQpHdXN0YXZvDQo=
 
