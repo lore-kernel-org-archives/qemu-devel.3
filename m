@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93F8FC54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 14:58:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3F56C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 14:58:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ribe6-0003L7-4u; Fri, 08 Mar 2024 09:56:26 -0500
+	id 1ribe6-0003L8-5T; Fri, 08 Mar 2024 09:56:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ribe0-0003EA-0W
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:56:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1ribdw-0003As-0W
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:56:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ribdt-0005RW-VM
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:56:18 -0500
+ id 1ribdt-0005Pm-8y
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:56:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709909770;
+ s=mimecast20190719; t=1709909766;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=is4uaTsB7JqW33WeDjUhKzI7gp3GUbX8PHe/5xTz5cQ=;
- b=D1eoI+1qGf0d6wy7rzMdKqouQO2O9765Z9zGOLwUanDeUe03gdLnkvxwBP3ot9jQllMDxZ
- RMouJuG0rNRHToCGMSAR+JG5zngJdzpgv7h4fZDRjQ/heCe+J8Sfj3o0/oQjgoJb2afqgr
- j/AmzxqSIweypuUG5Wz6tNDnpbDd/Lo=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qSLSAV6AzeUGqChFbxsNaHAkQhSsp716NDVyKQt1iAM=;
+ b=DsiOWLYQyEjehj/davHMmzLJWdLgrwBXiVEjqQ7lDMpHqbgjjUXpjQZ2dFfrVBGJx4x2pv
+ GnnoQ8gG67npfjd6vWjSDCyt3LjPXAEhU3CX8OWkfJfNBzrTU78mCxHQL1//h3cRKDwUTN
+ SDpSu2CjApi7LFlNdUHWGMXURjZSKqE=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-373-MGS263DXPy2aF-Xw_7lUFw-1; Fri, 08 Mar 2024 09:56:09 -0500
-X-MC-Unique: MGS263DXPy2aF-Xw_7lUFw-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-5681b29771fso1443007a12.1
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 06:56:09 -0800 (PST)
+ us-mta-692-Q1yIcjEmP2CR8gc7cGp6fQ-1; Fri, 08 Mar 2024 09:56:04 -0500
+X-MC-Unique: Q1yIcjEmP2CR8gc7cGp6fQ-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a457ac99155so131103566b.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 06:56:04 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709909767; x=1710514567;
+ d=1e100.net; s=20230601; t=1709909762; x=1710514562;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=is4uaTsB7JqW33WeDjUhKzI7gp3GUbX8PHe/5xTz5cQ=;
- b=f3pPL3Kk1PDEOd1GXjKShW9ARbGPfae85CxOXhhGtc2lvAzIAWP2ZrwpCF4J5dhNEh
- lYHCPg4W9ec/JEA6Q/gnMMFznh3lvr8oNPJxEoDUoCaaEJlci4vFiFY9m8KAvSU9h9n0
- 5WHjMY2PKmTTvkcLOqm0m5x9CcWR7+W98f0ISzM/w4lwPJD/QBWxOYrBWO3HSard+YIW
- PfsL8cYkWjHhS6FCEUhM/Z0EPypSed3zFUGltRBbl716BzBEnCaCxLDWNCijbZANRd3S
- KqfFY2+oJpzh/CYgsyXgsH7hw4QJPT7aL7ygzoNqcGaDhIvp2Ve4s3Ef00SuOP1gKz9m
- luDg==
-X-Gm-Message-State: AOJu0YxsTv8KirPBkXpNno6xyGDI7KG0axCVe5M2goSjT4e3RmmavUX6
- Ik46Gyuc/i1ptvzHpquXHg/qE5T7Bl7p4GNlZG3QcCXWVt8MQ9bXQ6NRGlKoh+xFh6/BdXi4cjL
- FGa8aaWbctSSavHTcz1rfet339fR7eCoU4aeNVN3R4BBcUs2lBc3EeB2/chjNodUBMrYm/UJ82+
- cvbrmQ5RG1EqxaRCABUW8y4a17CRq3V8HhBrh1
-X-Received: by 2002:a50:858b:0:b0:568:2578:f520 with SMTP id
- a11-20020a50858b000000b005682578f520mr2276013edh.35.1709909766920; 
- Fri, 08 Mar 2024 06:56:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFxsfg4VgWuq0PlNF60MMntpa9IZmm3+ApzWnuA/xEI7440fFKuWoIrRRy6bY7ODPaCDeZONw==
-X-Received: by 2002:a50:858b:0:b0:568:2578:f520 with SMTP id
- a11-20020a50858b000000b005682578f520mr2275998edh.35.1709909766570; 
- Fri, 08 Mar 2024 06:56:06 -0800 (PST)
+ bh=qSLSAV6AzeUGqChFbxsNaHAkQhSsp716NDVyKQt1iAM=;
+ b=bhTPcG22Qcpdr6pZqrlJqQrfped2QU36i7FTONx6AwcL5Yld9xEZcwWLQ8hO2DjS6+
+ XE5lTB1lLeNmFUP7RFSiNvu4YefDiSTYMlvNNCB2uBObOXMAodOtm/OqFuUa8qBLOJQ/
+ fs+qdfjQQh6aTIUoY0yQx2RU9uhyKhzmQdkA8NEJhEHzSJ3G2Qf6DiYwN2yCJJs8CS7/
+ 2HcOtOZC82nnxxt+3CkhZlvz+yoUbczFkC6fuAtcVpDkx9BcMHMtcDRD1MnGphDv1Cdf
+ muq3fVZDK/zH4dbXbbdpFHuf4tn3Q+9F9Sb4bzh5E+6pZX92Jkt6JP7/1r2GpxAQiBmm
+ 81FA==
+X-Gm-Message-State: AOJu0YwYwMayrSsQxyXuqGZ+GnZJ6DyE6eh+0bAC8AdlagK6D8owVHwU
+ H7VoPDWBb9sbfiloFh8Sq6v7HkIKny3w5QSs2uGO5RLG52ddxBoPwhnKgsQcY/79FYvbxez2TsR
+ 1Cq4z/HAE/LQ+neiyQnPNfb7cdaRNMuzjYhHVrh1ulFSkETbqog4Xcc+CKGNrS0wLNNokPzpCKX
+ WtxrUnra+4U6j5pbk4gj+Fu/IY4I7B5Q+FKD8C
+X-Received: by 2002:a17:906:b00b:b0:a44:c583:dfc8 with SMTP id
+ v11-20020a170906b00b00b00a44c583dfc8mr13204650ejy.48.1709909762674; 
+ Fri, 08 Mar 2024 06:56:02 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEjL2A4G507V2UHYAxfkfrPJGD1Nj/8hej7IvqWvzBMm7Q60W9oIUkicLA4E2Lnlj2zw1KO5w==
+X-Received: by 2002:a17:906:b00b:b0:a44:c583:dfc8 with SMTP id
+ v11-20020a170906b00b00b00a44c583dfc8mr13204638ejy.48.1709909762358; 
+ Fri, 08 Mar 2024 06:56:02 -0800 (PST)
 Received: from [192.168.10.118] ([151.49.77.21])
  by smtp.gmail.com with ESMTPSA id
- i23-20020a0564020f1700b00567f780d4a2sm2686623eda.78.2024.03.08.06.56.04
+ f17-20020a170906049100b00a40f7ed6cb9sm9406185eja.4.2024.03.08.06.55.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 06:56:04 -0800 (PST)
+ Fri, 08 Mar 2024 06:55:59 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Bui Quang Minh <minhquangbui99@gmail.com>
-Subject: [PULL 05/12] hw/intc/apic: fix memory leak
-Date: Fri,  8 Mar 2024 15:55:47 +0100
-Message-ID: <20240308145554.599614-6-pbonzini@redhat.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+Subject: [PULL 03/12] meson: Remove --warn-common ldflag
+Date: Fri,  8 Mar 2024 15:55:45 +0100
+Message-ID: <20240308145554.599614-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240308145554.599614-1-pbonzini@redhat.com>
 References: <20240308145554.599614-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,57 +103,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-deliver_bitmask is allocated on the heap in apic_deliver(), but there
-are many paths in the function that return before the corresponding
-g_free() is reached.  Fix this by switching to g_autofree and, while at
-it, also switch to g_new.  Do the same in apic_deliver_irq() as well
-for consistency.
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Fixes: b5ee0468e9d ("apic: add support for x2APIC mode", 2024-02-14)
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Bui Quang Minh <minhquangbui99@gmail.com>
+--warn-common ldflag causes warnings for multiple definitions of
+___asan_globals_registered when enabling AddressSanitizer with clang.
+The warning is somewhat obsolete so just remove it.
+
+The common block is used to allow duplicate definitions of uninitialized
+global variables. In the past, GCC and clang used to place such
+variables in a common block by default, which prevented programmers for
+noticing accidental duplicate definitions. Commit 49237acdb725 ("Enable
+ld flag --warn-common") added --warn-common ldflag so that ld warns in
+such a case.
+
+Today, both of GCC and clang don't use common blocks by default[1][2] so
+any remaining use of common blocks should be intentional. Remove
+--warn-common ldflag to suppress warnings for intentional use of
+common blocks.
+
+[1]: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=85678
+[2]: https://reviews.llvm.org/D75056
+
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-ID: <20240304-common-v1-1-1a2005d1f350@daynix.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/intc/apic.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ meson.build | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/hw/intc/apic.c b/hw/intc/apic.c
-index 1d887d66b86..4186c57b34c 100644
---- a/hw/intc/apic.c
-+++ b/hw/intc/apic.c
-@@ -291,14 +291,13 @@ static void apic_deliver_irq(uint32_t dest, uint8_t dest_mode,
-                              uint8_t delivery_mode, uint8_t vector_num,
-                              uint8_t trigger_mode)
- {
--    uint32_t *deliver_bitmask = g_malloc(max_apic_words * sizeof(uint32_t));
-+    g_autofree uint32_t *deliver_bitmask = g_new(uint32_t, max_apic_words);
+diff --git a/meson.build b/meson.build
+index c59ca496f2d..f9dbe7634e5 100644
+--- a/meson.build
++++ b/meson.build
+@@ -476,11 +476,6 @@ if host_os == 'windows'
+   qemu_ldflags += cc.get_supported_link_arguments('-Wl,--dynamicbase', '-Wl,--high-entropy-va')
+ endif
  
-     trace_apic_deliver_irq(dest, dest_mode, delivery_mode, vector_num,
-                            trigger_mode);
- 
-     apic_get_delivery_bitmask(deliver_bitmask, dest, dest_mode);
-     apic_bus_deliver(deliver_bitmask, delivery_mode, vector_num, trigger_mode);
--    g_free(deliver_bitmask);
- }
- 
- bool is_x2apic_mode(DeviceState *dev)
-@@ -662,7 +661,7 @@ static void apic_deliver(DeviceState *dev, uint32_t dest, uint8_t dest_mode,
-     APICCommonState *s = APIC(dev);
-     APICCommonState *apic_iter;
-     uint32_t deliver_bitmask_size = max_apic_words * sizeof(uint32_t);
--    uint32_t *deliver_bitmask = g_malloc(deliver_bitmask_size);
-+    g_autofree uint32_t *deliver_bitmask = g_new(uint32_t, max_apic_words);
-     uint32_t current_apic_id;
- 
-     if (is_x2apic_mode(dev)) {
-@@ -708,7 +707,6 @@ static void apic_deliver(DeviceState *dev, uint32_t dest, uint8_t dest_mode,
-     }
- 
-     apic_bus_deliver(deliver_bitmask, delivery_mode, vector_num, trigger_mode);
--    g_free(deliver_bitmask);
- }
- 
- static bool apic_check_pic(APICCommonState *s)
+-# Exclude --warn-common with TSan to suppress warnings from the TSan libraries.
+-if host_os != 'sunos' and not get_option('tsan')
+-  qemu_ldflags += cc.get_supported_link_arguments('-Wl,--warn-common')
+-endif
+-
+ if get_option('fuzzing')
+   # Specify a filter to only instrument code that is directly related to
+   # virtual-devices.
 -- 
 2.43.2
 
