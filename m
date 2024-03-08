@@ -4,99 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB7A8C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 08:23:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 517BCC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 08:24:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riVVb-0002Sg-IU; Fri, 08 Mar 2024 03:23:15 -0500
+	id 1riVWi-00037m-Ge; Fri, 08 Mar 2024 03:24:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1riVVX-0002SA-RD
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:23:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1riVVU-0000aZ-B4
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:23:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709886186;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=nerhoR4SPqCxPeGtfxFQB+iKuTID4ofZFmp/M8lw9M8=;
- b=VqgN8q14FtPVJNxykYGslv64+tdiZNHgAT2QRYMhNrRNar873bRKWhu1vFe8Zn3Czq3Gmy
- 6TFZjVSHXsRiTVSFgE+EJ5xL8Cyn2ZFQpz6V3lPIIGJtOhDznWeogisyzwmeS3UBeRHf6J
- eYSyOLnNII4FDWFDVcxYWQFh63zyKZo=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-67-Z9yBrcSyM3WRBjqoJrcD-A-1; Fri, 08 Mar 2024 03:23:05 -0500
-X-MC-Unique: Z9yBrcSyM3WRBjqoJrcD-A-1
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-1dd63773cf9so2890925ad.1
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 00:23:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1riVWg-00037I-PS
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:24:22 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1riVWf-0000m6-3O
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:24:22 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-33e695d0614so348023f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 00:24:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709886258; x=1710491058; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=cP/7zi5aZT7PRRFJlFAMOl6R1BPyQi6hPQ7rPylzosQ=;
+ b=LYSgkTC7lCBRZr54JKoWtLzPCneD+NR2SoYzGy+PLV3JBkH8ETYoUkNqZXgsST1xR+
+ vtXg6bEtpIn40XKkYfdkxBzJ5RkbDRX9rtSsDAzjlXDjw6MiWKmVG+zM2v49nzD0sdTC
+ 3ltzawr3zsaw9uv6N2fpt0/R+m4lLvCC+osVEnPc6x7zKAk4zXaqrh+mXUNvs1I8lDAb
+ FsAh75D9UBHNNhrI1hi3y/QIBU+sE3hwfJRHpyh6VnPYsApZHVY8h28uO7AWXesaon7p
+ 8i1TTwU+qau5l8S5IhdvZPdXQXPW4M63WIE2oMyG5SHhNDB0ai0FKyq0aT8tC/UXGf1l
+ O85w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709886184; x=1710490984;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1709886258; x=1710491058;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nerhoR4SPqCxPeGtfxFQB+iKuTID4ofZFmp/M8lw9M8=;
- b=agFoRgyUoLqwEmFPOLqFbTM9lFogNc1t+Zbo7ro2X47hXFksqyRPeGf3PKPfp+Er/f
- plgTFUHTOsq4dJCMDDxZdAl9ac7MtiE1WQ1p4QarS7QIM3ALwPfue5QeG2Ky0R165UIg
- PMHqd9IL+lC9/vrsVXBYFMUBIkhxPvbEFwAJBmqFu76UBSrATObAZSBjDRzCHMuVmwA+
- dAJMEieDZbd8ZfUv19nrBxVWHDMm5g4SeKl2PNnTlJ+8R9J/4jXQGji5mtAMl5HgAY83
- iaH0qUDrHaG5lm9t7k1FQFZAxhochWYFsCOPtbCJBtB3MPRmerWC5k7mYGOJUiZkszwh
- VWTw==
-X-Gm-Message-State: AOJu0YyG9gUUixUjKFq5fAdd4wSJwIQYF4VPn25aQwFySOTjZWrUu8EH
- +GdVQACgWr8v9bkGmHMsxs9vER4n46kwHt3qlVV06MymKteWAMlRnE5AqN0D05Q+8bRkaH/Fonh
- XzM+UQ0//P77b71wjrDBU2DQydspEgZ27vNWljlz4aSueeMMo/XNi
-X-Received: by 2002:a17:902:ab87:b0:1d9:607d:8a26 with SMTP id
- f7-20020a170902ab8700b001d9607d8a26mr1422544plr.6.1709886184422; 
- Fri, 08 Mar 2024 00:23:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEtifd6U7mMV5dH/ROUONXK/ogjq5klcHfWkXh6f8QVH9YrRWILpzZWK0Gktt1m9eMu4PckVg==
-X-Received: by 2002:a17:902:ab87:b0:1d9:607d:8a26 with SMTP id
- f7-20020a170902ab8700b001d9607d8a26mr1422525plr.6.1709886184014; 
- Fri, 08 Mar 2024 00:23:04 -0800 (PST)
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- j14-20020a170902da8e00b001dc96cb0358sm15744767plx.206.2024.03.08.00.22.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 00:23:03 -0800 (PST)
-Date: Fri, 8 Mar 2024 16:22:50 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- John G Johnson <john.g.johnson@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Juan Quintela <quintela@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- peter.maydell@linaro.org, David Hildenbrand <david@redhat.com>
-Subject: Re: [PATCH 1/5] scripts/kernel-doc: teach kdoc about QLIST_ macros
-Message-ID: <ZerK2iI7FAGuQH1O@x1n>
-References: <20240307181105.4081793-1-alex.bennee@linaro.org>
- <20240307181105.4081793-2-alex.bennee@linaro.org>
- <ZerA34BH9NNf_K1Y@x1n> <87msr9taac.fsf@draig.linaro.org>
+ bh=cP/7zi5aZT7PRRFJlFAMOl6R1BPyQi6hPQ7rPylzosQ=;
+ b=JGsNOsLIHQhKioGJHUkAZAbByprAjfKDH3LQofetAgS+PrXR2+3/ofTaY+rvzM4SPZ
+ LJgVHKcVVoDffEZx7LnS3VX1Y1k/nrfaZixepJUbFvhs3lHQW4hFCFluEvKSRZ4ZZjva
+ OeuBRXj6kFtm6TE1Y5/UI6IlJnM5mFbVmC72cmenVeakz7cIu/Z2kKoz+J9GVoTw4NaV
+ 3dbnczKOEWVMo+WhgYX1buCnFnAw1/I8oV5HsNVm9U55hg2UBWv0c+pYVAVG3QC/5nwe
+ dRsqyoh+rOl2pkl4HGY39HicO5a3Ulffu5sb2B7Yc09CLcL+1t4XAdLx5X8i0gNLk2dY
+ b+hg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXhJ00/zClH9HBCuxRV1OSNHXdlTrwEF82JA4Pn6X8m1TY/eQnk6K6LI/bGALtQEzj3giGLlT3YpMVqYvAGgr5XkTRY4A8=
+X-Gm-Message-State: AOJu0Yx0alp6E9mScNYaI/zlkGXxwzq7aTYohD8X1iq0rVH/tRRgKLg9
+ /OgzQsjDRqcMNuC7DNq7Vaj6l+PKxUKgNvY1fF1ioonN374+/Iamr6AwRBLTR58=
+X-Google-Smtp-Source: AGHT+IEvyDbgmp4Xa0IiK1bvnUblWowE77pTDa3Rp0HD/WjSpOTAHPRlJekIqZRQVYl7wpykNex+4g==
+X-Received: by 2002:a05:6000:1972:b0:33e:5fb9:af21 with SMTP id
+ da18-20020a056000197200b0033e5fb9af21mr3415175wrb.56.1709886258297; 
+ Fri, 08 Mar 2024 00:24:18 -0800 (PST)
+Received: from [192.168.69.100] (pir44-h02-176-184-37-132.dsl.sta.abo.bbox.fr.
+ [176.184.37.132]) by smtp.gmail.com with ESMTPSA id
+ f15-20020adffccf000000b0033dedd63382sm22328095wrs.101.2024.03.08.00.24.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 Mar 2024 00:24:17 -0800 (PST)
+Message-ID: <9fc9084b-28ae-49ce-b4cb-887872b527c9@linaro.org>
+Date: Fri, 8 Mar 2024 09:24:14 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 4/9] qemu-options.hx: Document the virtio-iommu-pci
+ granule option
+Content-Language: en-US
+To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, mst@redhat.com,
+ jean-philippe@linaro.org, imammedo@redhat.com, peter.maydell@linaro.org,
+ clg@redhat.com, yanghliu@redhat.com, zhenzhong.duan@intel.com
+Cc: alex.williamson@redhat.com, jasowang@redhat.com, pbonzini@redhat.com,
+ berrange@redhat.com
+References: <20240307134445.92296-1-eric.auger@redhat.com>
+ <20240307134445.92296-5-eric.auger@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240307134445.92296-5-eric.auger@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87msr9taac.fsf@draig.linaro.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.583,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,50 +101,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 08, 2024 at 08:09:15AM +0000, Alex Bennée wrote:
-> Peter Xu <peterx@redhat.com> writes:
+On 7/3/24 14:43, Eric Auger wrote:
+> We are missing an entry for the virtio-iommu-pci device. Add the
+> information on which machine it is currently supported and document
+> the new granule option.
 > 
-> > On Thu, Mar 07, 2024 at 06:11:01PM +0000, Alex Bennée wrote:
-> >> The kernel-doc script does some pre-processing on structure
-> >> definitions before parsing for names. Teach it about QLIST and replace
-> >> with simplified structures representing the base type.
-> >> 
-> >> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> >> ---
-> >>  scripts/kernel-doc | 9 ++++++++-
-> >>  1 file changed, 8 insertions(+), 1 deletion(-)
-> >> 
-> >> diff --git a/scripts/kernel-doc b/scripts/kernel-doc
-> >> index 240923d509a..26c47562e79 100755
-> >> --- a/scripts/kernel-doc
-> >> +++ b/scripts/kernel-doc
-> >> @@ -1226,7 +1226,14 @@ sub dump_struct($$) {
-> >>  	# replace DECLARE_KFIFO_PTR
-> >>  	$members =~ s/DECLARE_KFIFO_PTR\s*\(([^,)]+),\s*([^,)]+)\)/$2 \*$1/gos;
-> >>  
-> >> -	my $declaration = $members;
-> >> +        # QEMU Specific Macros
-> >> +
-> >> +        # replace QLIST_ENTRY with base type and variable name
-> >> +        $members =~ s/QLIST_ENTRY\(([^)]+)\)\s+([^;]+)/$1 \*$2/gos;
-> >> +        # replace QLIST_HEAD, optionally capturing an anonymous struct marker, and capture type and variable name
-> >> +        $members =~ s/QLIST_HEAD\(\s*,\s*([^)]+)\)\s+([^;]+)/struct { $1 *lh_first; } $2/gos;
-> >> +
-> >> +        my $declaration = $members;
-> >
-> > May need a "tabify" here..
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
 > 
-> Ugg that file is a mess. Any idea what we should use for perl, tabs or
-> spaces? I can update editorconfig.
+> ---
+> 
+> v7 -> v8
+> - precise x86_64 and ARM
+> ---
+>   qemu-options.hx | 8 ++++++++
+>   1 file changed, 8 insertions(+)
 
-Indeed.. not perl expert here.
-
-For this one it might be still good to keep the same with the code around
-before an attempt to clean it up.
-
-Thanks,
-
--- 
-Peter Xu
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
