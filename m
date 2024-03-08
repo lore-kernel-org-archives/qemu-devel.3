@@ -4,75 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36E3BC5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 14:58:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5FC7C54E4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 14:58:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ribdt-00039L-0c; Fri, 08 Mar 2024 09:56:13 -0500
+	id 1ribeQ-0003WT-Kc; Fri, 08 Mar 2024 09:56:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ribdm-00037Q-3N
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:56:06 -0500
+ id 1ribe0-0003ED-1a
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:56:21 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ribdj-0005OE-IU
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:56:05 -0500
+ id 1ribdx-0005TA-QQ
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:56:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709909762;
+ s=mimecast20190719; t=1709909775;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:  content-type:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=pFRe+eNxjsQmTEV8XizhI98YKBf4MdVAbLm8WV/p8p8=;
- b=clkFWEC1DiIa4TWEqJHK3roIDqrXE9pJgi4tFNS/6JIypn5kj4mAqrddTucey9v58jJuPN
- 0hE0W+hybwIsnSHytplEts0UtqOnw9Q3D4SS9CpDIb+b3JAWXczz/OOOvhcGmIV8TFitYf
- tbCuC0o7NQtqGmj6XsAdALtTlkjAkPs=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3KoCC3GLxKllev6oWHU5ANiWBK8CXBJdkMjLAQdqd4w=;
+ b=gs9Ew1agtIEk4oYd5CzHkkadsULTJCMmgxfpUiAqlfsTaK8ZrNwmqzJ2W8R+WQegiyOmTa
+ EcNrEbQf3ESCQOfocvpaSX1Hb6cf2WpRmq918p3VaWA19TuvxelqdBIHUvlDfqF2BlfHL8
+ iU09Oun4mZS7zmVhFSuSZAMdqoZHGd8=
+Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
+ [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-282-thIJ6YcXNVenlIB0WfNL2A-1; Fri, 08 Mar 2024 09:55:58 -0500
-X-MC-Unique: thIJ6YcXNVenlIB0WfNL2A-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a44d0cb0596so62689966b.2
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 06:55:57 -0800 (PST)
+ us-mta-88-y2RrXjsOPyuhNrYwNnA2xw-1; Fri, 08 Mar 2024 09:56:14 -0500
+X-MC-Unique: y2RrXjsOPyuhNrYwNnA2xw-1
+Received: by mail-lj1-f198.google.com with SMTP id
+ 38308e7fff4ca-2d33a42c1f9so13730631fa.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 06:56:14 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709909756; x=1710514556;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pFRe+eNxjsQmTEV8XizhI98YKBf4MdVAbLm8WV/p8p8=;
- b=NXsEEjVXbm6VpLzbQ9H8pLRwbZFDtF0XAcmCqXxLgCONlHHycf90dfs6ht3W3kAsRY
- /vP8u9ovcZIGhy/wkjvjDk0rGXyV7wUifpJVBBKJhb1W7aLyi9FJjzRdFJWjnMcVJ5ry
- wpJPAf+ujuONASJFfvx81bQ11EWjMj7KJbJsL+V2EgbtVZjsrULIXht4zRLqw6LPpgYA
- Z+Hky0G/HjlMxSZw9z50GVGWMd8ehOTceGg4yLdOock6XUoC2CrbttQWG6N8ibFGg+uf
- p4RPWTnjlMG/zWISo6AzNUy5YviGalXEx+pme3t793xHxBqrX4RCVJBiKkWos/lnmf68
- Mrcw==
-X-Gm-Message-State: AOJu0YwtWEZOp+asm3YmOE9JF9dAde+3FyEOR9SbLJYnvJfNEEjPF2EY
- SCQUxi1ALN7xGOX7n0eQp2wJoDkKfsuW4cJzUgLyZdjWavplG6Fabp22G5j0qMLiOoFpu2BXnuv
- Q3Pkkrc7sAXWnndkPQfj9RaiqNS3LZx6GYowEIcE4b2567oj5jUjLiAwesKLXvAE28ycNKAV9id
- /Z4BwVV5zFwEkn8etleeKvc3utno8e/CU1qEbs
-X-Received: by 2002:a17:906:1114:b0:a43:bb3b:3b5a with SMTP id
- h20-20020a170906111400b00a43bb3b3b5amr15115343eja.22.1709909756282; 
- Fri, 08 Mar 2024 06:55:56 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH05MVnRJV0Krzujp+rdnFt//rvtKnBeW9DZ6PgaCBskckSX0yl6IUxN9dq/gUwKu3YaMiwgQ==
-X-Received: by 2002:a17:906:1114:b0:a43:bb3b:3b5a with SMTP id
- h20-20020a170906111400b00a43bb3b3b5amr15115332eja.22.1709909755764; 
- Fri, 08 Mar 2024 06:55:55 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709909772; x=1710514572;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3KoCC3GLxKllev6oWHU5ANiWBK8CXBJdkMjLAQdqd4w=;
+ b=F3X7YuZca8OV9GBG/4go11nV3ec2Ve/ZVqPOnMJ3ZggyBuTCHxjWvyKTB4PeB2H2MD
+ A95UAlpktwaOAdcZnlunxiF+fuV/GV46ZLCH7FGeI2YjEZbWMthiJEu/0u37/dlwvitY
+ DS/0znwa9Q3nFBNrB3ZTiO60gXV5yx/X/uiZw9VXqPHUrQrtVhKgA9tdH/fD3I59uDKu
+ teW8RTAEI2o/VKw8oDdmoS4el+lK9RdyFGWE71jCaqF0Xt1xkXn+pZ6/YWbtdUSMuJBX
+ AxqUuOtAm2O1nSspBzVKJpkdxm8+Wh5ZtUUYr6Qx2mVo2zslNTW2IA3SRepriyHi/YOy
+ fcjA==
+X-Gm-Message-State: AOJu0YyCuFAVF1ja4auSOd86kEDyhs18PgGrYsJSGWWb49xLQGoTJP1y
+ KCLgc4QMNtQNVDbViIDnYX9EZid5SbAo6wpxUlSbobakJWUeUxXUEg+kKIkPz+/+zdhctNgGWi8
+ db0dAnnI1MkPTgDUVz2LKT1mAP2u0FYEiNA7l9fs1Easpnol5R1DICFvX1C0SQwVnl2pa0PpVKG
+ MS1Edq3x3urAy5okjLr7XAj+8CdCGDPRZCHH0j
+X-Received: by 2002:a2e:9086:0:b0:2d2:a38c:d706 with SMTP id
+ l6-20020a2e9086000000b002d2a38cd706mr3524489ljg.17.1709909772272; 
+ Fri, 08 Mar 2024 06:56:12 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHijXF/FjI95bj6eq+GJznKzg26lWK6CM4VadJWHveEyYmaJdet9SVyOUiDjVgljWVcq5/JGw==
+X-Received: by 2002:a2e:9086:0:b0:2d2:a38c:d706 with SMTP id
+ l6-20020a2e9086000000b002d2a38cd706mr3524481ljg.17.1709909771900; 
+ Fri, 08 Mar 2024 06:56:11 -0800 (PST)
 Received: from [192.168.10.118] ([151.49.77.21])
  by smtp.gmail.com with ESMTPSA id
- mp7-20020a1709071b0700b00a440ceb4110sm9461772ejc.183.2024.03.08.06.55.55
+ j12-20020a170906094c00b00a3e5adf11c7sm9340780ejd.157.2024.03.08.06.56.09
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 06:55:55 -0800 (PST)
+ Fri, 08 Mar 2024 06:56:11 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/12] Misc fixes, i386 TSTEQ/TSTNE, coverity CI for 2024-03-08
-Date: Fri,  8 Mar 2024 15:55:42 +0100
-Message-ID: <20240308145554.599614-1-pbonzini@redhat.com>
+Subject: [PULL 07/12] mips: do not list individual devices from configs/
+Date: Fri,  8 Mar 2024 15:55:49 +0100
+Message-ID: <20240308145554.599614-8-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240308145554.599614-1-pbonzini@redhat.com>
+References: <20240308145554.599614-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -100,62 +103,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 8f6330a807f2642dc2a3cdf33347aa28a4c00a87:
+Add new "select" and "imply" directives if needed.  The resulting
+config-devices.mak files are the same as before.
+Builds without default devices will become much smaller
+than before, and qtests fail (as expected, though suboptimal)
+for mips64-softmmu because most tests do not use -nodefaults,
+so remove it from build-without-defaults
 
-  Merge tag 'pull-maintainer-updates-060324-1' of https://gitlab.com/stsquad/qemu into staging (2024-03-06 16:56:20 +0000)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ configs/devices/mips-softmmu/common.mak      | 28 +++-----------------
+ configs/devices/mips64el-softmmu/default.mak |  3 ---
+ .gitlab-ci.d/buildtest.yml                   |  2 +-
+ hw/display/Kconfig                           |  2 +-
+ hw/mips/Kconfig                              | 20 +++++++++++++-
+ 5 files changed, 25 insertions(+), 30 deletions(-)
 
-are available in the Git repository at:
-
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream
-
-for you to fetch changes up to 47791be8cc6efa0fb9c145a2b92da0417f4137b8:
-
-  gitlab-ci: add manual job to run Coverity (2024-03-08 15:52:26 +0100)
-
-----------------------------------------------------------------
-* target/i386: use TSTEQ/TSTNE
-* move Coverity builds to Gitlab CI
-* fix two memory leaks
-* bug fixes
-
-----------------------------------------------------------------
-Akihiko Odaki (1):
-      meson: Remove --warn-common ldflag
-
-Dmitrii Gavrilov (1):
-      system/qdev-monitor: move drain_call_rcu call under if (!dev) in qmp_device_add()
-
-Paolo Bonzini (8):
-      hw/intc/apic: fix memory leak
-      oslib-posix: fix memory leak in touch_all_pages
-      mips: do not list individual devices from configs/
-      target/i386: use TSTEQ/TSTNE to test low bits
-      target/i386: use TSTEQ/TSTNE to check flags
-      target/i386: remove mask from CCPrepare
-      run-coverity-scan: add --check-upload-only option
-      gitlab-ci: add manual job to run Coverity
-
-Sven Schnelle (2):
-      hw/scsi/lsi53c895a: add timer to scripts processing
-      hw/scsi/lsi53c895a: stop script on phase mismatch
-
- configs/devices/mips-softmmu/common.mak      |  28 +------
- configs/devices/mips64el-softmmu/default.mak |   3 -
- meson.build                                  |   5 --
- hw/intc/apic.c                               |   6 +-
- hw/scsi/lsi53c895a.c                         |  59 ++++++++++----
- system/qdev-monitor.c                        |  23 +++---
- target/i386/tcg/translate.c                  | 115 ++++++++++++---------------
- util/oslib-posix.c                           |   6 +-
- target/i386/tcg/emit.c.inc                   |   5 +-
- .gitlab-ci.d/base.yml                        |   4 +
- .gitlab-ci.d/buildtest.yml                   |  39 ++++++++-
- .gitlab-ci.d/opensbi.yml                     |   4 +
- hw/display/Kconfig                           |   2 +-
- hw/mips/Kconfig                              |  20 ++++-
- hw/scsi/trace-events                         |   2 +
- scripts/coverity-scan/run-coverity-scan      |  59 ++++++++++----
- 16 files changed, 228 insertions(+), 152 deletions(-)
+diff --git a/configs/devices/mips-softmmu/common.mak b/configs/devices/mips-softmmu/common.mak
+index 1a853841b27..416a5d353e8 100644
+--- a/configs/devices/mips-softmmu/common.mak
++++ b/configs/devices/mips-softmmu/common.mak
+@@ -1,28 +1,8 @@
+ # Common mips*-softmmu CONFIG defines
+ 
+-CONFIG_ISA_BUS=y
+-CONFIG_PCI=y
+-CONFIG_PCI_DEVICES=y
+-CONFIG_VGA_ISA=y
+-CONFIG_VGA_MMIO=y
+-CONFIG_VGA_CIRRUS=y
+-CONFIG_VMWARE_VGA=y
+-CONFIG_SERIAL=y
+-CONFIG_SERIAL_ISA=y
+-CONFIG_PARALLEL=y
+-CONFIG_I8254=y
+-CONFIG_PCSPK=y
+-CONFIG_PCKBD=y
+-CONFIG_FDC=y
+-CONFIG_I8257=y
+-CONFIG_IDE_ISA=y
+-CONFIG_PFLASH_CFI01=y
+-CONFIG_I8259=y
+-CONFIG_MC146818RTC=y
+-CONFIG_MIPS_CPS=y
+-CONFIG_MIPS_ITU=y
++# Uncomment the following lines to disable these optional devices:
++# CONFIG_PCI_DEVICES=n
++# CONFIG_TEST_DEVICES=n
++
+ CONFIG_MALTA=y
+-CONFIG_PCNET_PCI=y
+ CONFIG_MIPSSIM=y
+-CONFIG_SMBUS_EEPROM=y
+-CONFIG_TEST_DEVICES=y
+diff --git a/configs/devices/mips64el-softmmu/default.mak b/configs/devices/mips64el-softmmu/default.mak
+index d5188f7ea58..88a37cf27f1 100644
+--- a/configs/devices/mips64el-softmmu/default.mak
++++ b/configs/devices/mips64el-softmmu/default.mak
+@@ -3,8 +3,5 @@
+ include ../mips-softmmu/common.mak
+ CONFIG_FULOONG=y
+ CONFIG_LOONGSON3V=y
+-CONFIG_ATI_VGA=y
+-CONFIG_RTL8139_PCI=y
+ CONFIG_JAZZ=y
+-CONFIG_VT82C686=y
+ CONFIG_MIPS_BOSTON=y
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index a1c030337b1..901265af95d 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -659,7 +659,7 @@ build-without-defaults:
+       --disable-pie
+       --disable-qom-cast-debug
+       --disable-strip
+-    TARGETS: avr-softmmu mips64-softmmu s390x-softmmu sh4-softmmu
++    TARGETS: avr-softmmu s390x-softmmu sh4-softmmu
+       sparc64-softmmu hexagon-linux-user i386-linux-user s390x-linux-user
+     MAKE_CHECK_ARGS: check
+ 
+diff --git a/hw/display/Kconfig b/hw/display/Kconfig
+index 07acb37dc66..234c7de027c 100644
+--- a/hw/display/Kconfig
++++ b/hw/display/Kconfig
+@@ -55,7 +55,7 @@ config VGA_MMIO
+ 
+ config VMWARE_VGA
+     bool
+-    default y if PCI_DEVICES && PC_PCI
++    default y if PCI_DEVICES && (PC_PCI || MIPS)
+     depends on PCI
+     select VGA
+ 
+diff --git a/hw/mips/Kconfig b/hw/mips/Kconfig
+index e57db4f6412..5c83ef49cf6 100644
+--- a/hw/mips/Kconfig
++++ b/hw/mips/Kconfig
+@@ -1,8 +1,15 @@
+ config MALTA
+     bool
++    imply PCNET_PCI
++    imply PCI_DEVICES
++    imply TEST_DEVICES
+     select FDC37M81X
+     select GT64120
++    select MIPS_CPS
+     select PIIX
++    select PFLASH_CFI01
++    select SERIAL
++    select SMBUS_EEPROM
+ 
+ config MIPSSIM
+     bool
+@@ -31,17 +38,26 @@ config JAZZ
+ 
+ config FULOONG
+     bool
++    imply PCI_DEVICES
++    imply TEST_DEVICES
++    imply ATI_VGA
++    imply RTL8139_PCI
+     select PCI_BONITO
++    select SMBUS_EEPROM
+     select VT82C686
+ 
+ config LOONGSON3V
+     bool
++    imply PCI_DEVICES
++    imply TEST_DEVICES
++    imply VIRTIO_PCI
++    imply VIRTIO_NET
+     imply VIRTIO_VGA
+     imply QXL if SPICE
++    imply USB_OHCI_PCI
+     select SERIAL
+     select GOLDFISH_RTC
+     select LOONGSON_LIOINTC
+-    select PCI_DEVICES
+     select PCI_EXPRESS_GENERIC_BRIDGE
+     select MSI_NONBROKEN
+     select FW_CFG_MIPS
+@@ -53,6 +69,8 @@ config MIPS_CPS
+ 
+ config MIPS_BOSTON
+     bool
++    imply PCI_DEVICES
++    imply TEST_DEVICES
+     select FITLOADER
+     select MIPS_CPS
+     select PCI_EXPRESS_XILINX
 -- 
 2.43.2
 
