@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4659AC54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 14:58:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36E3BC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 14:58:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ribeT-0003fY-IS; Fri, 08 Mar 2024 09:56:49 -0500
+	id 1ribdt-00039L-0c; Fri, 08 Mar 2024 09:56:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ribe8-0003LS-Ht
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:56:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1ribdm-00037Q-3N
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:56:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1ribdz-0005VH-NC
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:56:28 -0500
+ id 1ribdj-0005OE-IU
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:56:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709909778;
+ s=mimecast20190719; t=1709909762;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kjw8zi9dZOFQVHo23DU2FKCgNcnZ27yeYMAa0tZsIGg=;
- b=Hkd7v0/4VC5Qt40Ik15aPX5eVcZDSd1Fbth1GQbg5NxEnv0fqAhD3EA+Ytz5yDMYzpI/td
- ZV3Ujq69wi+od3AHeLvPfUS6ACcC0W/dBi4jVTngdskh7tWbOoIAaYlBNT20r4QTdeI3j8
- XiNlDJPvhhXkvRV6WC5jv2FtvcPG9F8=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:  content-type:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=pFRe+eNxjsQmTEV8XizhI98YKBf4MdVAbLm8WV/p8p8=;
+ b=clkFWEC1DiIa4TWEqJHK3roIDqrXE9pJgi4tFNS/6JIypn5kj4mAqrddTucey9v58jJuPN
+ 0hE0W+hybwIsnSHytplEts0UtqOnw9Q3D4SS9CpDIb+b3JAWXczz/OOOvhcGmIV8TFitYf
+ tbCuC0o7NQtqGmj6XsAdALtTlkjAkPs=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-157-TmlILwM4O16dc8x4ct_96Q-1; Fri, 08 Mar 2024 09:56:17 -0500
-X-MC-Unique: TmlILwM4O16dc8x4ct_96Q-1
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-5683081bf4eso419868a12.3
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 06:56:16 -0800 (PST)
+ us-mta-282-thIJ6YcXNVenlIB0WfNL2A-1; Fri, 08 Mar 2024 09:55:58 -0500
+X-MC-Unique: thIJ6YcXNVenlIB0WfNL2A-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a44d0cb0596so62689966b.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 06:55:57 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709909774; x=1710514574;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kjw8zi9dZOFQVHo23DU2FKCgNcnZ27yeYMAa0tZsIGg=;
- b=i0L6M/KUsgZgCD3oOTljt3dpde2Opg3ap/jsuRcefI+qAeVKs2wmwejwrDoFxF8BAx
- 4dHrbobpp8U9c4Vx+yPrAoCicRpdKFNGpD4x5Qa5tExibbP9NEaKa5s6M38wvn/naMBa
- AYIIwoYRe13RH4B68TkHFoBMv9IgSrecxfmeDGf907JK98JBeBlEukTgmgzElNyAReOv
- uW+fQdbbDGeisZOzPIPH1r+TnQRNPFVOqQYveJb37QYtax5dgGncsbVKkOW6n7QLqBxC
- gJenXZlywnCfOJDcGWu6q4jaPc5kqpnpF3y8jmlVrHWuBp1dZgLPZHCf/qKkOmWWGeAH
- GvQA==
-X-Gm-Message-State: AOJu0YzntHN+D8dm1luY4j5CfjMoUn+nzUbZb8sHT+UD6A4/2KzqgVUO
- r5XdFPvNMJ59yNJjU2WC2OBSBtOeFAZ7npWrmP3mh18kHoY/pF5wDNyZwBtg5Gq0Qaw29TWL7UC
- wEpI5ALY9YepzL/HRtkR1nK7IqI4odBBqJhmUxQwVX2iy2+qMBJVS4GG52G/h0iS32CpIY+doyI
- i0g0g7cXiHSjCVUYCutpP80jJG4ApQLdaqQgyl
-X-Received: by 2002:a50:ab55:0:b0:567:2870:1f1c with SMTP id
- t21-20020a50ab55000000b0056728701f1cmr2221156edc.19.1709909774433; 
- Fri, 08 Mar 2024 06:56:14 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IECs8xfPFt5i9emABngjaUgDtqpL6VffBofNl2urdu7WqVMNanB2iL2j43p/QdrrJxB0ToSZw==
-X-Received: by 2002:a50:ab55:0:b0:567:2870:1f1c with SMTP id
- t21-20020a50ab55000000b0056728701f1cmr2221147edc.19.1709909774139; 
- Fri, 08 Mar 2024 06:56:14 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709909756; x=1710514556;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=pFRe+eNxjsQmTEV8XizhI98YKBf4MdVAbLm8WV/p8p8=;
+ b=NXsEEjVXbm6VpLzbQ9H8pLRwbZFDtF0XAcmCqXxLgCONlHHycf90dfs6ht3W3kAsRY
+ /vP8u9ovcZIGhy/wkjvjDk0rGXyV7wUifpJVBBKJhb1W7aLyi9FJjzRdFJWjnMcVJ5ry
+ wpJPAf+ujuONASJFfvx81bQ11EWjMj7KJbJsL+V2EgbtVZjsrULIXht4zRLqw6LPpgYA
+ Z+Hky0G/HjlMxSZw9z50GVGWMd8ehOTceGg4yLdOock6XUoC2CrbttQWG6N8ibFGg+uf
+ p4RPWTnjlMG/zWISo6AzNUy5YviGalXEx+pme3t793xHxBqrX4RCVJBiKkWos/lnmf68
+ Mrcw==
+X-Gm-Message-State: AOJu0YwtWEZOp+asm3YmOE9JF9dAde+3FyEOR9SbLJYnvJfNEEjPF2EY
+ SCQUxi1ALN7xGOX7n0eQp2wJoDkKfsuW4cJzUgLyZdjWavplG6Fabp22G5j0qMLiOoFpu2BXnuv
+ Q3Pkkrc7sAXWnndkPQfj9RaiqNS3LZx6GYowEIcE4b2567oj5jUjLiAwesKLXvAE28ycNKAV9id
+ /Z4BwVV5zFwEkn8etleeKvc3utno8e/CU1qEbs
+X-Received: by 2002:a17:906:1114:b0:a43:bb3b:3b5a with SMTP id
+ h20-20020a170906111400b00a43bb3b3b5amr15115343eja.22.1709909756282; 
+ Fri, 08 Mar 2024 06:55:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH05MVnRJV0Krzujp+rdnFt//rvtKnBeW9DZ6PgaCBskckSX0yl6IUxN9dq/gUwKu3YaMiwgQ==
+X-Received: by 2002:a17:906:1114:b0:a43:bb3b:3b5a with SMTP id
+ h20-20020a170906111400b00a43bb3b3b5amr15115332eja.22.1709909755764; 
+ Fri, 08 Mar 2024 06:55:55 -0800 (PST)
 Received: from [192.168.10.118] ([151.49.77.21])
  by smtp.gmail.com with ESMTPSA id
- ig10-20020a056402458a00b005657eefa8e9sm9256518edb.4.2024.03.08.06.56.12
+ mp7-20020a1709071b0700b00a440ceb4110sm9461772ejc.183.2024.03.08.06.55.55
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 06:56:12 -0800 (PST)
+ Fri, 08 Mar 2024 06:55:55 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 08/12] target/i386: use TSTEQ/TSTNE to test low bits
-Date: Fri,  8 Mar 2024 15:55:50 +0100
-Message-ID: <20240308145554.599614-9-pbonzini@redhat.com>
+Subject: [PULL 00/12] Misc fixes, i386 TSTEQ/TSTNE, coverity CI for 2024-03-08
+Date: Fri,  8 Mar 2024 15:55:42 +0100
+Message-ID: <20240308145554.599614-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240308145554.599614-1-pbonzini@redhat.com>
-References: <20240308145554.599614-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,108 +100,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When testing the sign bit or equality to zero of a partial register, it
-is useful to use a single TSTEQ or TSTNE operation.  It can also be used
-to test the parity flag, using bit 0 of the population count.
+The following changes since commit 8f6330a807f2642dc2a3cdf33347aa28a4c00a87:
 
-Do not do this for target_ulong-sized values however; the optimizer would
-produce a comparison against zero anyway, and it avoids shifts by 64
-which are undefined behavior.
+  Merge tag 'pull-maintainer-updates-060324-1' of https://gitlab.com/stsquad/qemu into staging (2024-03-06 16:56:20 +0000)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/tcg/translate.c | 28 ++++++++++++++++++++--------
- target/i386/tcg/emit.c.inc  |  5 ++---
- 2 files changed, 22 insertions(+), 11 deletions(-)
+are available in the Git repository at:
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 07f642dc9e9..fe9021833e3 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -927,11 +927,21 @@ typedef struct CCPrepare {
-     bool no_setcond;
- } CCPrepare;
- 
-+static CCPrepare gen_prepare_sign_nz(TCGv src, MemOp size)
-+{
-+    if (size == MO_TL) {
-+        return (CCPrepare) { .cond = TCG_COND_LT, .reg = src, .mask = -1 };
-+    } else {
-+        return (CCPrepare) { .cond = TCG_COND_TSTNE, .reg = src, .mask = -1,
-+                             .imm = 1ull << ((8 << size) - 1) };
-+    }
-+}
-+
- /* compute eflags.C to reg */
- static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
- {
-     TCGv t0, t1;
--    int size, shift;
-+    MemOp size;
- 
-     switch (s->cc_op) {
-     case CC_OP_SUBB ... CC_OP_SUBQ:
-@@ -966,9 +976,7 @@ static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
-     case CC_OP_SHLB ... CC_OP_SHLQ:
-         /* (CC_SRC >> (DATA_BITS - 1)) & 1 */
-         size = s->cc_op - CC_OP_SHLB;
--        shift = (8 << size) - 1;
--        return (CCPrepare) { .cond = TCG_COND_NE, .reg = cpu_cc_src,
--                             .mask = (target_ulong)1 << shift };
-+        return gen_prepare_sign_nz(cpu_cc_src, size);
- 
-     case CC_OP_MULB ... CC_OP_MULQ:
-         return (CCPrepare) { .cond = TCG_COND_NE,
-@@ -1028,8 +1036,7 @@ static CCPrepare gen_prepare_eflags_s(DisasContext *s, TCGv reg)
-     default:
-         {
-             MemOp size = (s->cc_op - CC_OP_ADDB) & 3;
--            TCGv t0 = gen_ext_tl(reg, cpu_cc_dst, size, true);
--            return (CCPrepare) { .cond = TCG_COND_LT, .reg = t0, .mask = -1 };
-+            return gen_prepare_sign_nz(cpu_cc_dst, size);
-         }
-     }
- }
-@@ -1076,8 +1083,13 @@ static CCPrepare gen_prepare_eflags_z(DisasContext *s, TCGv reg)
-     default:
-         {
-             MemOp size = (s->cc_op - CC_OP_ADDB) & 3;
--            TCGv t0 = gen_ext_tl(reg, cpu_cc_dst, size, false);
--            return (CCPrepare) { .cond = TCG_COND_EQ, .reg = t0, .mask = -1 };
-+            if (size == MO_TL) {
-+                return (CCPrepare) { .cond = TCG_COND_EQ, .reg = cpu_cc_dst,
-+                                     .mask = -1 };
-+            } else {
-+                return (CCPrepare) { .cond = TCG_COND_TSTEQ, .reg = cpu_cc_dst,
-+                                     .mask = -1, .imm = (1ull << (8 << size)) - 1 };
-+            }
-         }
-     }
- }
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index 6bcf88ecd71..0e00f6635dd 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -1209,7 +1209,7 @@ static void gen_CMPccXADD(DisasContext *s, CPUX86State *env, X86DecodedInsn *dec
-         [JCC_Z] = TCG_COND_EQ,
-         [JCC_BE] = TCG_COND_LEU,
-         [JCC_S] = TCG_COND_LT,  /* test sign bit by comparing against 0 */
--        [JCC_P] = TCG_COND_EQ,  /* even parity - tests low bit of popcount */
-+        [JCC_P] = TCG_COND_TSTEQ,  /* even parity - tests low bit of popcount */
-         [JCC_L] = TCG_COND_LT,
-         [JCC_LE] = TCG_COND_LE,
-     };
-@@ -1260,8 +1260,7 @@ static void gen_CMPccXADD(DisasContext *s, CPUX86State *env, X86DecodedInsn *dec
-     case JCC_P:
-         tcg_gen_ext8u_tl(s->tmp0, s->T0);
-         tcg_gen_ctpop_tl(s->tmp0, s->tmp0);
--        tcg_gen_andi_tl(s->tmp0, s->tmp0, 1);
--        cmp_lhs = s->tmp0, cmp_rhs = tcg_constant_tl(0);
-+        cmp_lhs = s->tmp0, cmp_rhs = tcg_constant_tl(1);
-         break;
- 
-     case JCC_S:
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+
+for you to fetch changes up to 47791be8cc6efa0fb9c145a2b92da0417f4137b8:
+
+  gitlab-ci: add manual job to run Coverity (2024-03-08 15:52:26 +0100)
+
+----------------------------------------------------------------
+* target/i386: use TSTEQ/TSTNE
+* move Coverity builds to Gitlab CI
+* fix two memory leaks
+* bug fixes
+
+----------------------------------------------------------------
+Akihiko Odaki (1):
+      meson: Remove --warn-common ldflag
+
+Dmitrii Gavrilov (1):
+      system/qdev-monitor: move drain_call_rcu call under if (!dev) in qmp_device_add()
+
+Paolo Bonzini (8):
+      hw/intc/apic: fix memory leak
+      oslib-posix: fix memory leak in touch_all_pages
+      mips: do not list individual devices from configs/
+      target/i386: use TSTEQ/TSTNE to test low bits
+      target/i386: use TSTEQ/TSTNE to check flags
+      target/i386: remove mask from CCPrepare
+      run-coverity-scan: add --check-upload-only option
+      gitlab-ci: add manual job to run Coverity
+
+Sven Schnelle (2):
+      hw/scsi/lsi53c895a: add timer to scripts processing
+      hw/scsi/lsi53c895a: stop script on phase mismatch
+
+ configs/devices/mips-softmmu/common.mak      |  28 +------
+ configs/devices/mips64el-softmmu/default.mak |   3 -
+ meson.build                                  |   5 --
+ hw/intc/apic.c                               |   6 +-
+ hw/scsi/lsi53c895a.c                         |  59 ++++++++++----
+ system/qdev-monitor.c                        |  23 +++---
+ target/i386/tcg/translate.c                  | 115 ++++++++++++---------------
+ util/oslib-posix.c                           |   6 +-
+ target/i386/tcg/emit.c.inc                   |   5 +-
+ .gitlab-ci.d/base.yml                        |   4 +
+ .gitlab-ci.d/buildtest.yml                   |  39 ++++++++-
+ .gitlab-ci.d/opensbi.yml                     |   4 +
+ hw/display/Kconfig                           |   2 +-
+ hw/mips/Kconfig                              |  20 ++++-
+ hw/scsi/trace-events                         |   2 +
+ scripts/coverity-scan/run-coverity-scan      |  59 ++++++++++----
+ 16 files changed, 228 insertions(+), 152 deletions(-)
 -- 
 2.43.2
 
