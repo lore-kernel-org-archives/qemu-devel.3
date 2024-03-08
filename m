@@ -4,84 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20103C54E4A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F424C5475B
 	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 14:36:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ribKc-00044x-P3; Fri, 08 Mar 2024 09:36:18 -0500
+	id 1ribKi-00049z-6Y; Fri, 08 Mar 2024 09:36:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <justinien.bouron@gmail.com>)
- id 1ribKb-00044o-7k
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:36:17 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ribKg-00048o-JH
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:36:22 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <justinien.bouron@gmail.com>)
- id 1ribKZ-0008Ha-IQ
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:36:16 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-1dc09556599so18717215ad.1
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 06:36:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709908573; x=1710513373; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=N14gErMDbvaBw7KJ9MdC2yIJBpsQ+Qy6Rp3hEVKaQ3I=;
- b=OZb+HNTYpav/U2sc6Vz1I6m2dNpgD08oaKYGk4aMyZ55FHFySWv6fF9e7AEcps8Y9e
- 83rPyJrF6PzBZQdVA3QZY8b9T7cUfCqz89G7f9w5nrUvo8n9L82qBhEGvj6uxdyifayq
- qoAv3VufCzAHCb6YTRYdEuaLGY9iCKThh4jWPbDJW4EvjAzf8MKbwzD1GTLmU0G9itCt
- EU2XIpYpyaRAL+xl5HckjmPTi3MArzTksW5SL/kCDdKslLbEm+IiCG0gmoQDfTnmkPUU
- MRfMLRNfrFxRJDaZIqxIWIrp0hfX/k1dBkf/0EKLDECcv04VU0eqRNxaS40n9mjtvM1e
- y2CQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709908573; x=1710513373;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=N14gErMDbvaBw7KJ9MdC2yIJBpsQ+Qy6Rp3hEVKaQ3I=;
- b=daJiPgUT6aMacFOiPy7zfhg1ZS0gkVEyAZZMjAYZOoHd6ijrHWKU6+gsVuzJQYDZ9M
- ob4gjAJggJV4hjjrg9FA5l9jIu7nIU3OnTU2yWQiHtxtZFP9ZoZNO70KfJ82sqHdqLdP
- pWKDO3uJqL72g0J6DGG326+14d8nzszVo3CTTly48alfwHzcGzM4I5tiZExrqMC7H2x9
- qpBn29dhhUh3GNxQLhOodOtsEpcuSFVsKkPB+2WFWQiOU+PTRcbbaECOtNpp/4o7ldo+
- MsNjmlGvBZzQ/XeR2l03QsrdWQEQ3S4B8nfTdP+yGXwXanzIDwDzf5c07Llo1zEXUhFO
- ax7Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV5yjSwS4Mx1c8kP5ng+5Z17/X9cF2C5haL5PV5mtsZyv+bPe2t/jKdlt0qrN4JJe/PU4lqEbBiWOFNfR6kxcsu/w3otNw=
-X-Gm-Message-State: AOJu0YwWSZnoc5+BSQE10V0UvB+pZvZPJt2tJz5piLnQ9xpq/PpQIbrt
- IAg+4DWZbugf9ciFzxoV9AfYvO15jKlQtg5us+Mvwbn7XPUpehpM
-X-Google-Smtp-Source: AGHT+IF0xvCl3QvxG1tuwzo11p5kb6ftnjqi+5s4WKeTkxu+CUyKIzO/6nX51QvPECtGLbfG6tL3og==
-X-Received: by 2002:a17:903:24c:b0:1da:eed:f25b with SMTP id
- j12-20020a170903024c00b001da0eedf25bmr13417581plh.46.1709908573256; 
- Fri, 08 Mar 2024 06:36:13 -0800 (PST)
-Received: from localhost.localdomain (c-24-7-119-110.hsd1.ca.comcast.net.
- [24.7.119.110]) by smtp.gmail.com with ESMTPSA id
- l1-20020a170903244100b001dc10796951sm16392091pls.19.2024.03.08.06.36.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 06:36:12 -0800 (PST)
-From: Justinien Bouron <justinien.bouron@gmail.com>
-To: berrange@redhat.com
-Cc: armbru@redhat.com, eblake@redhat.com, eduardo@habkost.net,
- justinien.bouron@gmail.com, kraxel@redhat.com, marcandre.lureau@redhat.com,
- pbonzini@redhat.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH] input-linux: Add option to not grab a device upon guest
- startup
-Date: Fri,  8 Mar 2024 06:34:59 -0800
-Message-ID: <20240308143459.2970899-1-justinien.bouron@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <ZerPYH7KkLpmgTEV@redhat.com>
-References: <ZerPYH7KkLpmgTEV@redhat.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1ribKe-0008IQ-IY
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:36:22 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 3B51D1FEEF;
+ Fri,  8 Mar 2024 14:36:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1709908578; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aMwiqtauxpEsa7dtEoLarkKkp3QFvCU9un/djpHlLC0=;
+ b=nIGkelzzTphjeFDh3e2WStNSpLjZKkxC6mKxUMKiUEYhp+UIFm/nsmh9TxM7zMSRwyR9BD
+ IhtpuS8We57LGD4zZp7yLS0JnARnGCXXWcOVu07oPk28Zn/jl9OO10Q3A/bGJwr3i6Ak29
+ +8/qtC2PHQ+lI10gI3iQDTUgbU/pNTA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1709908578;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aMwiqtauxpEsa7dtEoLarkKkp3QFvCU9un/djpHlLC0=;
+ b=90vRlzhtUMR28/1BJL5JXntvVX0Xfk0UAxtzoeRQK4yYNBBrmOuWWUjbS4eHsu5hZJ+wlH
+ pPPo+/fXC0L+kZBw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1709908578; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aMwiqtauxpEsa7dtEoLarkKkp3QFvCU9un/djpHlLC0=;
+ b=nIGkelzzTphjeFDh3e2WStNSpLjZKkxC6mKxUMKiUEYhp+UIFm/nsmh9TxM7zMSRwyR9BD
+ IhtpuS8We57LGD4zZp7yLS0JnARnGCXXWcOVu07oPk28Zn/jl9OO10Q3A/bGJwr3i6Ak29
+ +8/qtC2PHQ+lI10gI3iQDTUgbU/pNTA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1709908578;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aMwiqtauxpEsa7dtEoLarkKkp3QFvCU9un/djpHlLC0=;
+ b=90vRlzhtUMR28/1BJL5JXntvVX0Xfk0UAxtzoeRQK4yYNBBrmOuWWUjbS4eHsu5hZJ+wlH
+ pPPo+/fXC0L+kZBw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B7992133DC;
+ Fri,  8 Mar 2024 14:36:17 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id U8FQH2Ei62W6MwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 08 Mar 2024 14:36:17 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Alex Williamson
+ <alex.williamson@redhat.com>, Avihai Horon <avihaih@nvidia.com>, Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Markus Armbruster
+ <armbru@redhat.com>,
+ Prasad Pandit <pjp@fedoraproject.org>, =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>
+Subject: Re: [PATCH v4 10/25] migration: Add Error** argument to
+ qemu_savevm_state_setup()
+In-Reply-To: <20240306133441.2351700-11-clg@redhat.com>
+References: <20240306133441.2351700-1-clg@redhat.com>
+ <20240306133441.2351700-11-clg@redhat.com>
+Date: Fri, 08 Mar 2024 11:36:15 -0300
+Message-ID: <87plw44wps.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=justinien.bouron@gmail.com; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Authentication-Results: smtp-out2.suse.de;
+	none
+X-Spamd-Result: default: False [-4.30 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; RCPT_COUNT_SEVEN(0.00)[9];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,44 +123,244 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > > This last two lines doesn't make sense to me. Isn't the grab
-> > > toggling entirely in control of the QEMU process, regardless
-> > > of what state the guest is at ?
-> >
-> > Actually, you're right, they do not make sense. This issue of having the guest
-> > taking a while to start and the toggle keys not working, only seem to appear
-> > when running the VM under libvirt. I was not able to reproduce this issue when
-> > running qemu directly from the command line. So either this is a libvirt issue
-> > or something related to my setup (VFIO with GPU passthrough, so a lot can go
-> > wrong).
-> >
-> > Should I send a new version of the patch with an updated commit message that
-> > does not mention this issue?
-> 
-> If that probem does not exist, what is the compelling reason to
-> add this patch ?
+C=C3=A9dric Le Goater <clg@redhat.com> writes:
 
-I still think this patch is useful. Having the guest "steal" the kb/mouse from
-the host immediately upon starting is frankly annoying and most of the time
-unnecessary as at this point the guest is barely booting anyway. Most of the
-time I don't need/want to redirect the kb/mouse until the guest is fully booted
-and instead want to do something on the host while the guest is starting in the
-background. So I end up having to press the toggle keys every time after
-starting the guest just so I can keep control of my inputs. This might seem like
-a minor annoyance but it is still that, an annoyance.
+> This prepares ground for the changes coming next which add an Error**
+> argument to the .save_setup() handler. Callers of qemu_savevm_state_setup=
+()
+> now handle the error and fail earlier setting the migration state from
+> MIGRATION_STATUS_SETUP to MIGRATION_STATUS_FAILED.
+>
+> In qemu_savevm_state(), move the cleanup to preserve the error
+> reported by .save_setup() handlers.
+>
+> Since the previous behavior was to ignore errors at this step of
+> migration, this change should be examined closely to check that
+> cleanups are still correctly done.
+>
+> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
+> ---
+>
+>  Changes in v4:
+>=20=20
+>  - Merged cleanup change in qemu_savevm_state()
+>=20=20=20=20
+>  Changes in v3:
+>=20=20
+>  - Set migration state to MIGRATION_STATUS_FAILED=20
+>  - Fixed error handling to be done under lock in bg_migration_thread()
+>  - Made sure an error is always set in case of failure in
+>    qemu_savevm_state_setup()
+>=20=20=20=20
+>  migration/savevm.h    |  2 +-
+>  migration/migration.c | 27 ++++++++++++++++++++++++---
+>  migration/savevm.c    | 26 +++++++++++++++-----------
+>  3 files changed, 40 insertions(+), 15 deletions(-)
+>
+> diff --git a/migration/savevm.h b/migration/savevm.h
+> index 74669733dd63a080b765866c703234a5c4939223..9ec96a995c93a42aad621595f=
+0ed58596c532328 100644
+> --- a/migration/savevm.h
+> +++ b/migration/savevm.h
+> @@ -32,7 +32,7 @@
+>  bool qemu_savevm_state_blocked(Error **errp);
+>  void qemu_savevm_non_migratable_list(strList **reasons);
+>  int qemu_savevm_state_prepare(Error **errp);
+> -void qemu_savevm_state_setup(QEMUFile *f);
+> +int qemu_savevm_state_setup(QEMUFile *f, Error **errp);
+>  bool qemu_savevm_state_guest_unplug_pending(void);
+>  int qemu_savevm_state_resume_prepare(MigrationState *s);
+>  void qemu_savevm_state_header(QEMUFile *f);
+> diff --git a/migration/migration.c b/migration/migration.c
+> index a49fcd53ee19df1ce0182bc99d7e064968f0317b..6d1544224e96f5edfe56939a9=
+c8395d88ef29581 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -3408,6 +3408,8 @@ static void *migration_thread(void *opaque)
+>      int64_t setup_start =3D qemu_clock_get_ms(QEMU_CLOCK_HOST);
+>      MigThrError thr_error;
+>      bool urgent =3D false;
+> +    Error *local_err =3D NULL;
+> +    int ret;
+>=20=20
+>      thread =3D migration_threads_add("live_migration", qemu_get_thread_i=
+d());
+>=20=20
+> @@ -3451,9 +3453,17 @@ static void *migration_thread(void *opaque)
+>      }
+>=20=20
+>      bql_lock();
+> -    qemu_savevm_state_setup(s->to_dst_file);
+> +    ret =3D qemu_savevm_state_setup(s->to_dst_file, &local_err);
+>      bql_unlock();
+>=20=20
+> +    if (ret) {
+> +        migrate_set_error(s, local_err);
+> +        error_free(local_err);
+> +        migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
+> +                          MIGRATION_STATUS_FAILED);
+> +        goto out;
+> +     }
+> +
+>      qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
+>                                 MIGRATION_STATUS_ACTIVE);
 
-This can get particularly annoying if the guest is started from a script. In
-this situation the guest may not necessarily be started immediately upon running
-the script depending on what the script is doing prior to the `virsh start`
-command. So you can't tell exactly when your kb/mouse are going to be grabbed
-from you. If you do something else on your host in the meantime, while the
-script is running in the background, you end up having your inputs grabbed from
-you without notice.
+This^ should be before the new block it seems:
 
-There are a few posts[1][2] on the internet asking how to prevent evdev grabbing
-upon boot, so it seems that I am not the only one that would like to see such an
-option.
+GOOD:
+migrate_set_state new state setup
+migrate_set_state new state wait-unplug
+migrate_fd_cancel=20
+migrate_set_state new state cancelling
+migrate_fd_cleanup=20
+migrate_set_state new state cancelled
+migrate_fd_cancel=20
+ok 1 /x86_64/failover-virtio-net/migrate/abort/wait-unplug
 
-[1] https://www.reddit.com/r/VFIO/comments/14xuksq/evedv_passthough_dont_grab_on_start/
-[2] https://www.reddit.com/r/VFIO/comments/frbk0q/disabling_auto_keyboard_grab_evdev/
+BAD:
+migrate_set_state new state setup
+migrate_fd_cancel=20
+migrate_set_state new state cancelling
+migrate_fd_cleanup=20
+migrate_set_state new state cancelled
+qemu-system-x86_64: ram_save_setup failed: Input/output error
+**
+ERROR:../tests/qtest/virtio-net-failover.c:1203:test_migrate_abort_wait_unp=
+lug:
+assertion failed (status =3D=3D "cancelling"): ("cancelled" =3D=3D "cancell=
+ing")
+
+Otherwise migration_iteration_finish() will schedule the cleanup BH and
+that will run concurrently with migrate_fd_cancel() issued by the test
+and bad things happens.
+
+=3D=3D=3D=3D=3D
+PS: I guess the next level in our Freestyle Concurrency video-game is to
+make migrate_fd_cancel() stop setting state and poking files and only
+set a flag that's tested in the other parts of the code.
+
+>=20=20
+> @@ -3530,6 +3540,9 @@ static void *bg_migration_thread(void *opaque)
+>      MigThrError thr_error;
+>      QEMUFile *fb;
+>      bool early_fail =3D true;
+> +    bool setup_fail =3D true;
+> +    Error *local_err =3D NULL;
+> +    int ret;
+>=20=20
+>      rcu_register_thread();
+>      object_ref(OBJECT(s));
+> @@ -3563,9 +3576,16 @@ static void *bg_migration_thread(void *opaque)
+>=20=20
+>      bql_lock();
+>      qemu_savevm_state_header(s->to_dst_file);
+> -    qemu_savevm_state_setup(s->to_dst_file);
+> +    ret =3D qemu_savevm_state_setup(s->to_dst_file, &local_err);
+> +    if (ret) {
+> +        migrate_set_error(s, local_err);
+> +        error_free(local_err);
+> +        goto fail;
+> +    }
+>      bql_unlock();
+>=20=20
+> +    setup_fail =3D false;
+> +
+>      qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
+>                                 MIGRATION_STATUS_ACTIVE);
+>=20=20
+> @@ -3632,7 +3652,8 @@ static void *bg_migration_thread(void *opaque)
+>=20=20
+>  fail:
+>      if (early_fail) {
+> -        migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
+> +        migrate_set_state(&s->state,
+> +                setup_fail ? MIGRATION_STATUS_SETUP : MIGRATION_STATUS_A=
+CTIVE,
+>                  MIGRATION_STATUS_FAILED);
+>          bql_unlock();
+>      }
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index ee31ffb5e88cea723039c754c30ce2c8a0ef35f3..63fdbb5ad7d4dbfaef1d20943=
+50bf302cc677602 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -1310,11 +1310,11 @@ int qemu_savevm_state_prepare(Error **errp)
+>      return 0;
+>  }
+>=20=20
+> -void qemu_savevm_state_setup(QEMUFile *f)
+> +int qemu_savevm_state_setup(QEMUFile *f, Error **errp)
+>  {
+> +    ERRP_GUARD();
+>      MigrationState *ms =3D migrate_get_current();
+>      SaveStateEntry *se;
+> -    Error *local_err =3D NULL;
+>      int ret =3D 0;
+>=20=20
+>      json_writer_int64(ms->vmdesc, "page_size", qemu_target_page_size());
+> @@ -1323,10 +1323,9 @@ void qemu_savevm_state_setup(QEMUFile *f)
+>      trace_savevm_state_setup();
+>      QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
+>          if (se->vmsd && se->vmsd->early_setup) {
+> -            ret =3D vmstate_save(f, se, ms->vmdesc, &local_err);
+> +            ret =3D vmstate_save(f, se, ms->vmdesc, errp);
+>              if (ret) {
+> -                migrate_set_error(ms, local_err);
+> -                error_report_err(local_err);
+> +                migrate_set_error(ms, *errp);
+>                  qemu_file_set_error(f, ret);
+>                  break;
+>              }
+> @@ -1346,18 +1345,19 @@ void qemu_savevm_state_setup(QEMUFile *f)
+>          ret =3D se->ops->save_setup(f, se->opaque);
+>          save_section_footer(f, se);
+>          if (ret < 0) {
+> +            error_setg(errp, "failed to setup SaveStateEntry with id(nam=
+e): "
+> +                       "%d(%s): %d", se->section_id, se->idstr, ret);
+>              qemu_file_set_error(f, ret);
+>              break;
+>          }
+>      }
+>=20=20
+>      if (ret) {
+> -        return;
+> +        return ret;
+>      }
+>=20=20
+> -    if (precopy_notify(PRECOPY_NOTIFY_SETUP, &local_err)) {
+> -        error_report_err(local_err);
+> -    }
+> +    /* TODO: Should we check that errp is set in case of failure ? */
+> +    return precopy_notify(PRECOPY_NOTIFY_SETUP, errp);
+>  }
+>=20=20
+>  int qemu_savevm_state_resume_prepare(MigrationState *s)
+> @@ -1728,7 +1728,10 @@ static int qemu_savevm_state(QEMUFile *f, Error **=
+errp)
+>      ms->to_dst_file =3D f;
+>=20=20
+>      qemu_savevm_state_header(f);
+> -    qemu_savevm_state_setup(f);
+> +    ret =3D qemu_savevm_state_setup(f, errp);
+> +    if (ret) {
+> +        goto cleanup;
+> +    }
+>=20=20
+>      while (qemu_file_get_error(f) =3D=3D 0) {
+>          if (qemu_savevm_state_iterate(f, false) > 0) {
+> @@ -1741,10 +1744,11 @@ static int qemu_savevm_state(QEMUFile *f, Error *=
+*errp)
+>          qemu_savevm_state_complete_precopy(f, false, false);
+>          ret =3D qemu_file_get_error(f);
+>      }
+> -    qemu_savevm_state_cleanup();
+>      if (ret !=3D 0) {
+>          error_setg_errno(errp, -ret, "Error while writing VM state");
+>      }
+> +cleanup:
+> +    qemu_savevm_state_cleanup();
+>=20=20
+>      if (ret !=3D 0) {
+>          status =3D MIGRATION_STATUS_FAILED;
 
