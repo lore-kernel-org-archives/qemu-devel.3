@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21EADC54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 16:31:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F962C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 16:37:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rid83-0006Ja-UB; Fri, 08 Mar 2024 11:31:27 -0500
+	id 1ridDU-0000dT-N7; Fri, 08 Mar 2024 11:37:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rid81-0006J3-Ox
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:31:26 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rid80-0003Ak-5S
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:31:25 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-412fc5f5152so16635935e9.0
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 08:31:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709915482; x=1710520282; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ZceiDNe4Pk4vwFUlsXaNjT4fs3ZZIBnah+BnXTL1+6Y=;
- b=boJuzn/XrDmrOQ6bHO/zrFJ/4sYRqPzfvveRMWSGvWReBu4aWpizeiPgzlWIKvhRad
- +uW22UqBtdnqYZ1im8DyrcHLWavGugK0hZ/OQK+EIezxmkos6vO7oZZD4ep76iF9tQx8
- KYYlRsiBRRpKHfk4MevRFVPBodut14vZ6Sm8hH1YHZUOPpmx/aM9MmxUgqd1Ji0mP8Ug
- n1sXeocdvE9BpS6dF4r5KhcgIdogDRV81/Kr5dI2OVFNRMnMj802/Kqp4F9PCGhTdjUC
- afpWWFahkCrXt4MwtJrA9bn6YEK65CFdhzTwL6EXhQA/uZiKsaTLS/ekNsh4Dtn79aL4
- xKBg==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1ridDS-0000dA-F9
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:37:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1ridDP-0004Vn-IH
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:37:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709915817;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=chYTEO1AeIcKWm4PRBABZ+FX39nHkqOVTRV4hxtCrPw=;
+ b=Rk60WGL9+yC4/OHPPN7BYaRCxKCaMG2KiY+erIR775PJBFN4AM9ipIO5bVROU+YfSJ5ASf
+ M1pBlqaOgIzjUdPUqa7onXgbqN2ntfVhQXwoq3KWolpbmBmzHx3gjo5HlHxI+MPMlouyP0
+ GrWNG5pX6jFZoqLM9zyU3kCxP9ChtVM=
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
+ [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-629-hh8zbwMxNTGcxEyzx8C4jQ-1; Fri, 08 Mar 2024 11:36:55 -0500
+X-MC-Unique: hh8zbwMxNTGcxEyzx8C4jQ-1
+Received: by mail-lj1-f200.google.com with SMTP id
+ 38308e7fff4ca-2d2bac6e205so21790591fa.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 08:36:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709915482; x=1710520282;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZceiDNe4Pk4vwFUlsXaNjT4fs3ZZIBnah+BnXTL1+6Y=;
- b=QteMioOAWpyGHsS5emBGhgf1Of+zEOtAQgGnxVUntyhgOkhxkCo60AN9EhE8GLy3kg
- tfuUsWMnU1Rh0MFPWg7tmqZC7B1pFe+qUvJF+4vSyZpvQLcsvM29jRSmaxPvS3mvn+wq
- ubs3MygYNokFJyBXPX/BdP4vewCKNwAJDJ8ylfIOokejRXYZ44CV5ND4KyZzoZNBv0yJ
- q0+l5lTazD3m6vx6KbOm5i7KLgH2zictxUt8OLU43/HwJOGaxUJa0WTZtwWA+rNhH48k
- JX53oisfqgw25HMmqvo4zJGnT92q8alRx8hvne9PpksSuHtajF0pdcqrJ+FaR/UXi6Mq
- tI4A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXyUT+bnvxVfmOaYdNUk67kQniQn/t24lRQ9HTeU+BpILCXfTKQlUQ89m9OdX8Deo1q7bxi3LwHWmj68hbclWdVqsck9S0=
-X-Gm-Message-State: AOJu0YzE1bxv4RLuaQXYmk4fwheHxzE3i05vlE3nmEdArXZEKEVZvIQP
- PGFU9Aj4oPumOwIS2Qa0a13dfGXf8RRasmvhL31MBvI0gnc75+w7Pw/1nUgRJek=
-X-Google-Smtp-Source: AGHT+IFlhBazuzAF3FH28Z3HmZoMmuiZJJ0wsDu4xMWhByq6ZdxgdFwkjGEP51AgqXk/+rSl5muYiQ==
-X-Received: by 2002:a05:600c:3111:b0:412:ffc9:d551 with SMTP id
- g17-20020a05600c311100b00412ffc9d551mr5533835wmo.14.1709915481622; 
- Fri, 08 Mar 2024 08:31:21 -0800 (PST)
-Received: from [192.168.69.100] (cvl92-h01-176-184-49-62.dsl.sta.abo.bbox.fr.
- [176.184.49.62]) by smtp.gmail.com with ESMTPSA id
- t14-20020a05600c198e00b0041312c4865asm4682487wmq.2.2024.03.08.08.31.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Mar 2024 08:31:21 -0800 (PST)
-Message-ID: <a6c12d41-2801-4425-98e9-351851e2f7a4@linaro.org>
-Date: Fri, 8 Mar 2024 17:31:19 +0100
+ d=1e100.net; s=20230601; t=1709915813; x=1710520613;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=chYTEO1AeIcKWm4PRBABZ+FX39nHkqOVTRV4hxtCrPw=;
+ b=iGo6Lb6emfYCDgHOgdj2Zx3ZDErpy6QtJk7VqqXRoJXd9Ki9apQqHKLFkON/Gxidfv
+ MWolwW3wzX/cKYran6SpTvxichr4DWtf0FpETWsiU76URm3NnPnyNGLyJytRNi7zoVnm
+ p1B2L7KDj+pruVjXZfuHN+e1ro7U0xMK3sNetYj+FGKZRFtiMrI0T2PntLnDU9wsmQOo
+ n4wyWdjeh0VyfmWyQhrzMjhKddVCTxbFXp5iENJzsCUr3RjbtTdr1EfIFLpq5IZPlOMe
+ LWa4nhQtjLM2cEBmAe4GHNH/vBRklCjPm6CI8j+tlWlL+jOkeoHPgiHtQxJIVOd1ZZah
+ K3Nw==
+X-Gm-Message-State: AOJu0YwRDrg8FzmFj37rj2MGfk8RRt6C4ETsPfTOYRHzpKbGrI5HG0e2
+ 7s9Bp9lxpA7J4GVd87qno1iHNcqPOxxxzOD4CEWii3JIkXTpetgDF9labRRDRij05hTt9q+RnxW
+ TOLeBZ4TxHZsCSbWmZ85R6IZdBSKBEeb8E9LQSX6KS2aCMP7z9Fsm
+X-Received: by 2002:ac2:5545:0:b0:512:e220:d3ab with SMTP id
+ l5-20020ac25545000000b00512e220d3abmr3489145lfk.65.1709915813685; 
+ Fri, 08 Mar 2024 08:36:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHlMQAlsFau6CK27PiNToEyzApjg36WsdwDea6ywoa8ffr+fqL5qj4CUxP212lx6ixXX7ol4A==
+X-Received: by 2002:ac2:5545:0:b0:512:e220:d3ab with SMTP id
+ l5-20020ac25545000000b00512e220d3abmr3489125lfk.65.1709915813296; 
+ Fri, 08 Mar 2024 08:36:53 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ u12-20020a05600c19cc00b004126afe04f6sm6305359wmq.32.2024.03.08.08.36.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 08 Mar 2024 08:36:52 -0800 (PST)
+Date: Fri, 8 Mar 2024 17:36:52 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Tao Su <tao1.su@linux.intel.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, xiaoyao.li@intel.com
+Subject: Re: [PATCH] target/i386: Add new CPU model SierraForest
+Message-ID: <20240308173652.79500564@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20231206131923.1192066-1-tao1.su@linux.intel.com>
+References: <20231206131923.1192066-1-tao1.su@linux.intel.com>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/13] Cleanup on SMP and its test
-Content-Language: en-US
-To: Zhao Liu <zhao1.liu@linux.intel.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org
-Cc: Xiaoling Song <xiaoling.song@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-References: <20240308160148.3130837-1-zhao1.liu@linux.intel.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240308160148.3130837-1-zhao1.liu@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ UPPERCASE_50_75=0.008 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,39 +102,255 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhao,
+On Wed,  6 Dec 2023 21:19:23 +0800
+Tao Su <tao1.su@linux.intel.com> wrote:
 
-On 8/3/24 17:01, Zhao Liu wrote:
+> SierraForest is Intel's first generation E-core based Xeon server
+> processor, which will be released in the first half of 2024.
+> 
+> SierraForest mainly adds the following new features based on
+> GraniteRapids:
+> 
 
+*) Please specify chapter/table where it says that CPU model got
+this features
+
+> - CMPCCXADD CPUID.(EAX=7,ECX=1):EAX[bit 7]
+> - AVX-IFMA CPUID.(EAX=7,ECX=1):EAX[bit 23]
+> - AVX-VNNI-INT8 CPUID.(EAX=7,ECX=1):EDX[bit 4]
+> - AVX-NE-CONVERT CPUID.(EAX=7,ECX=1):EDX[bit 5]
+
+> - LAM CPUID.(EAX=7,ECX=1):EAX[bit 26]
+> - LASS CPUID.(EAX=7,ECX=1):EAX[bit 6]
+this implies that series adds these bit but later you say it doesn't,
+it's confusing at best.
+
+Also you've missed some other features mentioned in spec
+(for example: RDMSRLIST, UIRET, UC-Lock Disable, ENQCMD ...)
+so it makes above list even more inconsistent.
+Why some features were added while others not.
+ 
+
+ditto [*] for removed +
+where it says that it's GraniteRapids based.
+
+> and removes the following features based on GraniteRapids:
+> 
+> - HLE CPUID.(EAX=7,ECX=0):EBX[bit 4]
+> - RTM CPUID.(EAX=7,ECX=0):EBX[bit 11]
+> - AVX512F CPUID.(EAX=7,ECX=0):EBX[bit 16]
+> - AVX512DQ CPUID.(EAX=7,ECX=0):EBX[bit 17]
+> - AVX512_IFMA CPUID.(EAX=7,ECX=0):EBX[bit 21]
+> - AVX512CD CPUID.(EAX=7,ECX=0):EBX[bit 28]
+> - AVX512BW CPUID.(EAX=7,ECX=0):EBX[bit 30]
+> - AVX512VL CPUID.(EAX=7,ECX=0):EBX[bit 31]
+> - AVX512_VBMI CPUID.(EAX=7,ECX=0):ECX[bit 1]
+> - AVX512_VBMI2 CPUID.(EAX=7,ECX=0):ECX[bit 6]
+> - AVX512_VNNI CPUID.(EAX=7,ECX=0):ECX[bit 11]
+> - AVX512_BITALG CPUID.(EAX=7,ECX=0):ECX[bit 12]
+> - AVX512_VPOPCNTDQ CPUID.(EAX=7,ECX=0):ECX[bit 14]
+> - LA57 CPUID.(EAX=7,ECX=0):ECX[bit 16]
+> - TSXLDTRK CPUID.(EAX=7,ECX=0):EDX[bit 16]
+> - AMX-BF16 CPUID.(EAX=7,ECX=0):EDX[bit 22]
+> - AVX512_FP16 CPUID.(EAX=7,ECX=0):EDX[bit 23]
+> - AMX-TILE CPUID.(EAX=7,ECX=0):EDX[bit 24]
+> - AMX-INT8 CPUID.(EAX=7,ECX=0):EDX[bit 25]
+> - AVX512_BF16 CPUID.(EAX=7,ECX=1):EAX[bit 5]
+> - fast zero-length MOVSB CPUID.(EAX=7,ECX=1):EAX[bit 10]
+> - fast short CMPSB, SCASB CPUID.(EAX=7,ECX=1):EAX[bit 12]
+> - AMX-FP16 CPUID.(EAX=7,ECX=1):EAX[bit 21]
+> - PREFETCHI CPUID.(EAX=7,ECX=1):EDX[bit 14]
+> - XFD CPUID.(EAX=0xD,ECX=1):EAX[bit 4]
+> - EPT_PAGE_WALK_LENGTH_5 VMX_EPT_VPID_CAP(0x48c)[bit 7]
+
+
+> SierraForest doesn't support TSX, so TSX Async Abort(TAA) vulnerabilities
+> don't exist on SierraForest. On KVM side, if host doesn't enumerate RTM
+> or RTM gets disabled, ARCH_CAP_TAA_NO is reported as unsupported. To
+> avoid the confusing warning:
+> warning: host doesn't support requested feature: MSR(10AH).taa-no
+>          [bit 8]
+> 
+> just don't include TAA_NO in SierraForest CPU model.
+
+I probably missing something.
+
+If host is Sierra Forest it won't have TSX and so TAA_NO, right?
+If so, then how above warning can be triggered and why SierraForest
+might have when it shouldn't?
+/me confused
+
+
+> Currently LAM and LASS are not enabled in KVM mainline yet,  will add
+> them after merged.
+
+if you add features in this series while kernel side is missing,
+wouldn't they be filtered out since kernel doesn't support  them yet?
+
+> 
+> Signed-off-by: Tao Su <tao1.su@linux.intel.com>
 > ---
-> Zhao Liu (13):
->    hw/core/machine-smp: Remove deprecated "parameter=0" SMP
->      configurations
->    hw/core/machine-smp: Deprecate unsupported "parameter=1" SMP
->      configurations
->    hw/core/machine-smp: Calculate total CPUs once in
->      machine_parse_smp_config()
->    tests/unit/test-smp-parse: Drop the unsupported "dies=1" case
->    tests/unit/test-smp-parse: Use CPU number macros in invalid topology
->      case
->    tests/unit/test-smp-parse: Bump max_cpus to 4096
->    tests/unit/test-smp-parse: Make test cases aware of the book/drawer
->    tests/unit/test-smp-parse: Test "books" parameter in -smp
->    tests/unit/test-smp-parse: Test "drawers" parameter in -smp
->    tests/unit/test-smp-parse: Test "drawers" and "books" combination case
->    tests/unit/test-smp-parse: Test the full 7-levels topology hierarchy
->    tests/unit/test-smp-parse: Test smp_props.has_clusters
->    tests/unit/test-smp-parse: Test "parameter=0" SMP configurations
+> The new features can be found in Intel ISE[1].
+> LAM has just been accepted by KVM[2].
+> 
+> Although we would like to include all SierraForest features in the first
+> version of the CPU model, SierraForest will be released in the first half
+> of 2024[3], we would want user can have a first usable SierraForest CPU
+> model in the QEMU when they have the hardware in their hand.
+> 
+> [1] https://cdrdv2.intel.com/v1/dl/getContent/671368
 
-Can you share your base commit please?
+Links are ephemeral, so along with it add full spec name + rev/date
+so that readers could look it up.
+Also move this to the beginning of the main body (above --- line),
+so it won't be gone after commit 
 
-Applying: hw/core/machine-smp: Remove deprecated "parameter=0" SMP 
-configurations
-Applying: hw/core/machine-smp: Deprecate unsupported "parameter=1" SMP 
-configurations
-error: patch failed: docs/about/deprecated.rst:47
-error: docs/about/deprecated.rst: patch does not apply
-Patch failed at 0002 hw/core/machine-smp: Deprecate unsupported 
-"parameter=1" SMP configurations
+> [2]
+> https://lore.kernel.org/all/169810442917.2499338.3440694989716170017.b4-ty@google.com/
+> [3]
+> https://www.intel.com/content/www/us/en/newsroom/news/tackling-throughput-computing-sierra-forest.html
+> ---
+>  target/i386/cpu.c | 126 ++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 126 insertions(+)
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index cd16cb893d..2405c9e407 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -4099,6 +4099,132 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+>              { /* end of list */ },
+>          },
+>      },
+> +    {
+> +        .name = "SierraForest",
+> +        .level = 0x23,
+> +        .vendor = CPUID_VENDOR_INTEL,
+> +        .family = 6,
+> +        .model = 175,
+> +        .stepping = 0,
+> +        /*
+> +         * please keep the ascending order so that we can have a clear view of
+> +         * bit position of each feature.
+> +         */
+> +        .features[FEAT_1_EDX] =
+> +            CPUID_FP87 | CPUID_VME | CPUID_DE | CPUID_PSE | CPUID_TSC |
+> +            CPUID_MSR | CPUID_PAE | CPUID_MCE | CPUID_CX8 | CPUID_APIC |
+> +            CPUID_SEP | CPUID_MTRR | CPUID_PGE | CPUID_MCA | CPUID_CMOV |
+> +            CPUID_PAT | CPUID_PSE36 | CPUID_CLFLUSH | CPUID_MMX | CPUID_FXSR |
+> +            CPUID_SSE | CPUID_SSE2,
+> +        .features[FEAT_1_ECX] =
+> +            CPUID_EXT_SSE3 | CPUID_EXT_PCLMULQDQ | CPUID_EXT_SSSE3 |
+> +            CPUID_EXT_FMA | CPUID_EXT_CX16 | CPUID_EXT_PCID | CPUID_EXT_SSE41 |
+> +            CPUID_EXT_SSE42 | CPUID_EXT_X2APIC | CPUID_EXT_MOVBE |
+> +            CPUID_EXT_POPCNT | CPUID_EXT_TSC_DEADLINE_TIMER | CPUID_EXT_AES |
+> +            CPUID_EXT_XSAVE | CPUID_EXT_AVX | CPUID_EXT_F16C | CPUID_EXT_RDRAND,
+> +        .features[FEAT_8000_0001_EDX] =
+> +            CPUID_EXT2_SYSCALL | CPUID_EXT2_NX | CPUID_EXT2_PDPE1GB |
+> +            CPUID_EXT2_RDTSCP | CPUID_EXT2_LM,
+> +        .features[FEAT_8000_0001_ECX] =
+> +            CPUID_EXT3_LAHF_LM | CPUID_EXT3_ABM | CPUID_EXT3_3DNOWPREFETCH,
+> +        .features[FEAT_8000_0008_EBX] =
+> +            CPUID_8000_0008_EBX_WBNOINVD,
+> +        .features[FEAT_7_0_EBX] =
+> +            CPUID_7_0_EBX_FSGSBASE | CPUID_7_0_EBX_BMI1 | CPUID_7_0_EBX_AVX2 |
+> +            CPUID_7_0_EBX_SMEP | CPUID_7_0_EBX_BMI2 | CPUID_7_0_EBX_ERMS |
+> +            CPUID_7_0_EBX_INVPCID | CPUID_7_0_EBX_RDSEED | CPUID_7_0_EBX_ADX |
+> +            CPUID_7_0_EBX_SMAP | CPUID_7_0_EBX_CLFLUSHOPT | CPUID_7_0_EBX_CLWB |
+> +            CPUID_7_0_EBX_SHA_NI,
+> +        .features[FEAT_7_0_ECX] =
+> +            CPUID_7_0_ECX_UMIP | CPUID_7_0_ECX_PKU | CPUID_7_0_ECX_GFNI |
+> +            CPUID_7_0_ECX_VAES | CPUID_7_0_ECX_VPCLMULQDQ |
+> +            CPUID_7_0_ECX_RDPID | CPUID_7_0_ECX_BUS_LOCK_DETECT,
+> +        .features[FEAT_7_0_EDX] =
+> +            CPUID_7_0_EDX_FSRM | CPUID_7_0_EDX_SERIALIZE |
+> +            CPUID_7_0_EDX_SPEC_CTRL | CPUID_7_0_EDX_ARCH_CAPABILITIES |
+> +            CPUID_7_0_EDX_SPEC_CTRL_SSBD,
+> +        .features[FEAT_ARCH_CAPABILITIES] =
+> +            MSR_ARCH_CAP_RDCL_NO | MSR_ARCH_CAP_IBRS_ALL |
+> +            MSR_ARCH_CAP_SKIP_L1DFL_VMENTRY | MSR_ARCH_CAP_MDS_NO |
+> +            MSR_ARCH_CAP_PSCHANGE_MC_NO | MSR_ARCH_CAP_SBDR_SSDP_NO |
+> +            MSR_ARCH_CAP_FBSDP_NO | MSR_ARCH_CAP_PSDP_NO |
+> +            MSR_ARCH_CAP_PBRSB_NO,
+> +        .features[FEAT_XSAVE] =
+> +            CPUID_XSAVE_XSAVEOPT | CPUID_XSAVE_XSAVEC |
+> +            CPUID_XSAVE_XGETBV1 | CPUID_XSAVE_XSAVES,
+> +        .features[FEAT_6_EAX] =
+> +            CPUID_6_EAX_ARAT,
+> +        .features[FEAT_7_1_EAX] =
+> +            CPUID_7_1_EAX_AVX_VNNI | CPUID_7_1_EAX_CMPCCXADD |
+> +            CPUID_7_1_EAX_FSRS | CPUID_7_1_EAX_AVX_IFMA,
+> +        .features[FEAT_7_1_EDX] =
+> +            CPUID_7_1_EDX_AVX_VNNI_INT8 | CPUID_7_1_EDX_AVX_NE_CONVERT,
+> +        .features[FEAT_7_2_EDX] =
+> +            CPUID_7_2_EDX_MCDT_NO,
+> +        .features[FEAT_VMX_BASIC] =
+> +            MSR_VMX_BASIC_INS_OUTS | MSR_VMX_BASIC_TRUE_CTLS,
+> +        .features[FEAT_VMX_ENTRY_CTLS] =
+> +            VMX_VM_ENTRY_LOAD_DEBUG_CONTROLS | VMX_VM_ENTRY_IA32E_MODE |
+> +            VMX_VM_ENTRY_LOAD_IA32_PERF_GLOBAL_CTRL |
+> +            VMX_VM_ENTRY_LOAD_IA32_PAT | VMX_VM_ENTRY_LOAD_IA32_EFER,
+> +        .features[FEAT_VMX_EPT_VPID_CAPS] =
+> +            MSR_VMX_EPT_EXECONLY | MSR_VMX_EPT_PAGE_WALK_LENGTH_4 |
+> +            MSR_VMX_EPT_WB | MSR_VMX_EPT_2MB | MSR_VMX_EPT_1GB |
+> +            MSR_VMX_EPT_INVEPT | MSR_VMX_EPT_AD_BITS |
+> +            MSR_VMX_EPT_INVEPT_SINGLE_CONTEXT | MSR_VMX_EPT_INVEPT_ALL_CONTEXT |
+> +            MSR_VMX_EPT_INVVPID | MSR_VMX_EPT_INVVPID_SINGLE_ADDR |
+> +            MSR_VMX_EPT_INVVPID_SINGLE_CONTEXT |
+> +            MSR_VMX_EPT_INVVPID_ALL_CONTEXT |
+> +            MSR_VMX_EPT_INVVPID_SINGLE_CONTEXT_NOGLOBALS,
+> +        .features[FEAT_VMX_EXIT_CTLS] =
+> +            VMX_VM_EXIT_SAVE_DEBUG_CONTROLS |
+> +            VMX_VM_EXIT_LOAD_IA32_PERF_GLOBAL_CTRL |
+> +            VMX_VM_EXIT_ACK_INTR_ON_EXIT | VMX_VM_EXIT_SAVE_IA32_PAT |
+> +            VMX_VM_EXIT_LOAD_IA32_PAT | VMX_VM_EXIT_SAVE_IA32_EFER |
+> +            VMX_VM_EXIT_LOAD_IA32_EFER | VMX_VM_EXIT_SAVE_VMX_PREEMPTION_TIMER,
+> +        .features[FEAT_VMX_MISC] =
+> +            MSR_VMX_MISC_STORE_LMA | MSR_VMX_MISC_ACTIVITY_HLT |
+> +            MSR_VMX_MISC_VMWRITE_VMEXIT,
+> +        .features[FEAT_VMX_PINBASED_CTLS] =
+> +            VMX_PIN_BASED_EXT_INTR_MASK | VMX_PIN_BASED_NMI_EXITING |
+> +            VMX_PIN_BASED_VIRTUAL_NMIS | VMX_PIN_BASED_VMX_PREEMPTION_TIMER |
+> +            VMX_PIN_BASED_POSTED_INTR,
+> +        .features[FEAT_VMX_PROCBASED_CTLS] =
+> +            VMX_CPU_BASED_VIRTUAL_INTR_PENDING |
+> +            VMX_CPU_BASED_USE_TSC_OFFSETING | VMX_CPU_BASED_HLT_EXITING |
+> +            VMX_CPU_BASED_INVLPG_EXITING | VMX_CPU_BASED_MWAIT_EXITING |
+> +            VMX_CPU_BASED_RDPMC_EXITING | VMX_CPU_BASED_RDTSC_EXITING |
+> +            VMX_CPU_BASED_CR3_LOAD_EXITING | VMX_CPU_BASED_CR3_STORE_EXITING |
+> +            VMX_CPU_BASED_CR8_LOAD_EXITING | VMX_CPU_BASED_CR8_STORE_EXITING |
+> +            VMX_CPU_BASED_TPR_SHADOW | VMX_CPU_BASED_VIRTUAL_NMI_PENDING |
+> +            VMX_CPU_BASED_MOV_DR_EXITING | VMX_CPU_BASED_UNCOND_IO_EXITING |
+> +            VMX_CPU_BASED_USE_IO_BITMAPS | VMX_CPU_BASED_MONITOR_TRAP_FLAG |
+> +            VMX_CPU_BASED_USE_MSR_BITMAPS | VMX_CPU_BASED_MONITOR_EXITING |
+> +            VMX_CPU_BASED_PAUSE_EXITING |
+> +            VMX_CPU_BASED_ACTIVATE_SECONDARY_CONTROLS,
+> +        .features[FEAT_VMX_SECONDARY_CTLS] =
+> +            VMX_SECONDARY_EXEC_VIRTUALIZE_APIC_ACCESSES |
+> +            VMX_SECONDARY_EXEC_ENABLE_EPT | VMX_SECONDARY_EXEC_DESC |
+> +            VMX_SECONDARY_EXEC_RDTSCP |
+> +            VMX_SECONDARY_EXEC_VIRTUALIZE_X2APIC_MODE |
+> +            VMX_SECONDARY_EXEC_ENABLE_VPID | VMX_SECONDARY_EXEC_WBINVD_EXITING |
+> +            VMX_SECONDARY_EXEC_UNRESTRICTED_GUEST |
+> +            VMX_SECONDARY_EXEC_APIC_REGISTER_VIRT |
+> +            VMX_SECONDARY_EXEC_VIRTUAL_INTR_DELIVERY |
+> +            VMX_SECONDARY_EXEC_RDRAND_EXITING |
+> +            VMX_SECONDARY_EXEC_ENABLE_INVPCID |
+> +            VMX_SECONDARY_EXEC_ENABLE_VMFUNC | VMX_SECONDARY_EXEC_SHADOW_VMCS |
+> +            VMX_SECONDARY_EXEC_RDSEED_EXITING | VMX_SECONDARY_EXEC_ENABLE_PML |
+> +            VMX_SECONDARY_EXEC_XSAVES,
+> +        .features[FEAT_VMX_VMFUNC] =
+> +            MSR_VMX_VMFUNC_EPT_SWITCHING,
+> +        .xlevel = 0x80000008,
+> +        .model_id = "Intel Xeon Processor (SierraForest)",
+> +        .versions = (X86CPUVersionDefinition[]) {
+> +            { .version = 1 },
+> +            { /* end of list */ },
+> +        },
+> +    },
+>      {
+>          .name = "Denverton",
+>          .level = 21,
+> 
+> base-commit: d451e32ce8e1eef1b7d05d9f532113e9618f1fc1
 
 
