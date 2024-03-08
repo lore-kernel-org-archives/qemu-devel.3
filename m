@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBA4BC5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 11:14:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70469C54E4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 11:14:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riY9l-0006fO-GN; Fri, 08 Mar 2024 06:12:53 -0500
+	id 1riYAx-0002X8-Jo; Fri, 08 Mar 2024 06:14:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1riY9e-0006f7-2r
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 06:12:47 -0500
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ id 1riYAn-00024K-0J
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 06:13:57 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1riY9c-0001YN-El
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 06:12:45 -0500
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-517ab9a4a13so1723265a12.1
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 03:12:44 -0800 (PST)
+ id 1riYAl-0001oK-HR
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 06:13:56 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1dca3951ad9so15467065ad.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 03:13:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709896363; x=1710501163; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1709896434; x=1710501234; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=70LaACHuPy0nmyeYlSDuWjPnnxsGUPrekddZa3Ix8Gw=;
- b=XwamuOktu4GDJMHbO4U4hwO43ufVJZxMB3+rQrEJoHiPcggW3dCahXpPgQNz8/IY7j
- OZQ/tWbEYW9y9oruIS7niBQBl23+A+j/QlCIKiRHCJiA5JilHwrTopk7cda3rxhO8yzZ
- vhlX2bq2pfJ3L/DbCQtUhQktg39KOKUkO/zzM89vwNNxWdnCIFbf0ivH/Ec68EERpZ4i
- omAOGAxxwuPynTtfck8mGtRf0Q3CUdczK+2jq57XDjKX5p4jibZUc0BMurzVjvYWH5hV
- PwvPLLbIqYrFsmbFjjlHbchOGT0R5yEUY/o2GqMQu0L6RHwNGU1Cq3D7l80xTETi3PH8
- WZvA==
+ bh=BUfHetbQTbtHMLLjzmHwMZ6ZjeZkaLJCNXyb36srtfk=;
+ b=EKhbPO4sWP/LNatDD7iYlxj3Ujk67XhwLAPsW673Qr926PuTh7XfoBeTqCYuLM7Itm
+ BYBmt1SPCbwu4GQ6ARS/VkOatOsCtniuBHUmmJUQuN2i9WyqDH0aEevHigT87gaA/wJJ
+ T+u30y5YQIHndXd4BQ1ItNGcaXDp7KfP9fterzgtwf5vuT2rEtJvX/3e0dEuPmTthgKi
+ 5AwjWY2yw3Xx11OCKD13B/Bm22dazZaX+Uj0DL7OR9MdcEHGJoL/DV/g8vciGBbWDDOF
+ 1ZPKP/rF1b8Dw/aYfsStrldACLmSh/8cr+MD6cwJ2ej/k01JS4HU5hzpPNJVUe5UlWH1
+ +2Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709896363; x=1710501163;
+ d=1e100.net; s=20230601; t=1709896434; x=1710501234;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=70LaACHuPy0nmyeYlSDuWjPnnxsGUPrekddZa3Ix8Gw=;
- b=kuGfKK6/AUKMz6xxy7W29FcJpNcYl8oY5I8bq/p5VhLfgNC4X/88G3gXY6WXMaLmaz
- ojkH4L96gb2NTIlMJ/a2R9vfKE8o6WtMjNRnoEp22yKS4Y9eFn3yYfpLDqxjnxX39ZUD
- iCbk18C1dHkrmmwHstGDCebLJdl27MUrLKcsnikTJWZz/tRZMhcfcLQEt8fZDoibFmSS
- Lp31XXq+j5ZGLKcYQA9yyHwRaj2QBJnPSJRIR4K6QuWAuQJH0xLTpGdOo4TDeO4g9q9s
- l3U9bEQz9RN+rbjM6HSOkSOTApHSf31f0ppGUHf5FFufg/vrheMAD8h8KdzizwYmBO+X
- 9SnQ==
-X-Gm-Message-State: AOJu0YxgiypqsAVVA+XXVp/jQiVCCLcJu3hZzxIhw4DZG2GimFdESdeG
- GmjFF/dsiHUBUNTZP4ODlx6mJca/NObCMV9VeVRYvXfqFPDHkqHahLuQ3bvu8mvS1w==
-X-Google-Smtp-Source: AGHT+IEyjfVbp6nNtZifcjkLhwfBJ3bp0Z/vNSo7CFfk0Y0UzP8HCzzOXKdGV8XqKQ/RfHXYitYosw==
-X-Received: by 2002:a17:902:e552:b0:1dc:ce6e:bf06 with SMTP id
- n18-20020a170902e55200b001dcce6ebf06mr14032620plf.0.1709896362685; 
- Fri, 08 Mar 2024 03:12:42 -0800 (PST)
+ bh=BUfHetbQTbtHMLLjzmHwMZ6ZjeZkaLJCNXyb36srtfk=;
+ b=HdhJv1SESJiZVSExACBVY2wsn+pY5CSeKhIIp3Ds4JD/J638LvRFEMXh8sFDXetZYs
+ 8kdtq7afP8ERDhaB47/HgkWe+0MsxELzZQFM5wPdtLodQ5Con8YWh58Ojq4RIg99HZ1z
+ QgcUCp7lVMEYp3KxtIO7gowkLxylVIMGE0Dz160RjQvVd/CgTocappP0UouypEZ7D6Xn
+ arGBflqDw7FjdcHPTjmxlwQYMUIwojyoV+/2rMTtPCbU8dBKDHBDz1RxwY32wFQp6JwE
+ r6dpBH/BeZQsypbEsjlm07hAy4izwKkRXDmD9dBEHFCgSjuxF/Ziv38TdtjArds9duJr
+ J1EA==
+X-Gm-Message-State: AOJu0YxpwMokmp5z2j5ZA8Zbb426fqagDYN3ES7YzNtIU9r11HDo80NC
+ xAHLXBSsFEsknp7sX2bfRoppZ+FEj57z5T30pFbyGCxreckV6I8YBsKBcERw5I2mrw==
+X-Google-Smtp-Source: AGHT+IGN/bycU2fMZHrmdfXOngBxT5q4J+/ZhHJfzjHp0B8dRswRFN6JYHMKGwyWx0dIJI96T0gCSA==
+X-Received: by 2002:a17:902:cec8:b0:1dc:588b:99c8 with SMTP id
+ d8-20020a170902cec800b001dc588b99c8mr13238461plg.36.1709896433996; 
+ Fri, 08 Mar 2024 03:13:53 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- a6-20020a170902ecc600b001dcfbbb1ca5sm12006468plh.35.2024.03.08.03.12.39
+ a6-20020a170902ecc600b001dcfbbb1ca5sm12006468plh.35.2024.03.08.03.13.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 03:12:42 -0800 (PST)
+ Fri, 08 Mar 2024 03:13:53 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Andrew Jones <ajones@ventanamicro.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+Cc: alistair23@gmail.com, Ilya Chugin <danger_mail@list.ru>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Sunil V L <sunilvl@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 12/34] target/riscv: Promote svade to a normal extension
-Date: Fri,  8 Mar 2024 21:11:30 +1000
-Message-ID: <20240308111152.2856137-13-alistair.francis@wdc.com>
+Subject: [PULL 34/34] target/riscv: fix ACPI MCFG table
+Date: Fri,  8 Mar 2024 21:11:52 +1000
+Message-ID: <20240308111152.2856137-35-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240308111152.2856137-1-alistair.francis@wdc.com>
 References: <20240308111152.2856137-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x52c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -99,84 +101,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrew Jones <ajones@ventanamicro.com>
+From: Ilya Chugin <danger_mail@list.ru>
 
-Named features are extensions which don't make sense for users to
-control and are therefore not exposed on the command line. However,
-svade is an extension which makes sense for users to control, so treat
-it like a "normal" extension. The default is false, even for the max
-cpu type, since QEMU has always implemented hardware A/D PTE bit
-updating, so users must opt into svade (or get it from a CPU type
-which enables it by default).
+MCFG segments should point to PCI configuration range, not BAR MMIO.
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240215223955.969568-7-dbarboza@ventanamicro.com>
+Signed-off-by: Ilya Chugin <danger_mail@list.ru>
+Fixes: 55ecd83b36 ("hw/riscv/virt-acpi-build.c: Add IO controllers and devices")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
+Message-ID: <180d236d-c8e4-411a-b4d2-632eb82092fa@list.ru>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.c         | 9 ++-------
- target/riscv/tcg/tcg-cpu.c | 6 ++++++
- 2 files changed, 8 insertions(+), 7 deletions(-)
+ hw/riscv/virt-acpi-build.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index e9cf950d6b..71bdedc9bb 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1474,6 +1474,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
- 
-     MULTI_EXT_CFG_BOOL("smepmp", ext_smepmp, false),
-     MULTI_EXT_CFG_BOOL("smstateen", ext_smstateen, false),
-+    MULTI_EXT_CFG_BOOL("svade", ext_svade, false),
-     MULTI_EXT_CFG_BOOL("svadu", ext_svadu, true),
-     MULTI_EXT_CFG_BOOL("svinval", ext_svinval, false),
-     MULTI_EXT_CFG_BOOL("svnapot", ext_svnapot, false),
-@@ -1589,7 +1590,6 @@ const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
-  * and priv_ver like regular extensions.
-  */
- const RISCVCPUMultiExtConfig riscv_cpu_named_features[] = {
--    MULTI_EXT_CFG_BOOL("svade", ext_svade, true),
-     MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
- 
-     /*
-@@ -2237,8 +2237,6 @@ static RISCVCPUProfile RVA22U64 = {
-  * Other named features that we already implement: Sstvecd, Sstvala,
-  * Sscounterenw
-  *
-- * Named features that we need to enable: svade
-- *
-  * The remaining features/extensions comes from RVA22U64.
-  */
- static RISCVCPUProfile RVA22S64 = {
-@@ -2250,10 +2248,7 @@ static RISCVCPUProfile RVA22S64 = {
-     .ext_offsets = {
-         /* rva22s64 exts */
-         CPU_CFG_OFFSET(ext_zifencei), CPU_CFG_OFFSET(ext_svpbmt),
--        CPU_CFG_OFFSET(ext_svinval),
--
--        /* rva22s64 named features */
--        CPU_CFG_OFFSET(ext_svade),
-+        CPU_CFG_OFFSET(ext_svinval), CPU_CFG_OFFSET(ext_svade),
- 
-         RISCV_PROFILE_EXT_LIST_END
-     }
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index ccfb7b2dd3..ab6db817db 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -1282,6 +1282,12 @@ static void riscv_init_max_cpu_extensions(Object *obj)
-         isa_ext_update_enabled(cpu, prop->offset, true);
-     }
- 
-+    /*
-+     * Some extensions can't be added without backward compatibilty concerns.
-+     * Disable those, the user can still opt in to them on the command line.
-+     */
-+    cpu->cfg.ext_svade = false;
-+
-     /* set vector version */
-     env->vext_ver = VEXT_VERSION_1_00_0;
- 
+diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+index ef72db018e..0925528160 100644
+--- a/hw/riscv/virt-acpi-build.c
++++ b/hw/riscv/virt-acpi-build.c
+@@ -647,8 +647,8 @@ static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables)
+     acpi_add_table(table_offsets, tables_blob);
+     {
+         AcpiMcfgInfo mcfg = {
+-           .base = s->memmap[VIRT_PCIE_MMIO].base,
+-           .size = s->memmap[VIRT_PCIE_MMIO].size,
++           .base = s->memmap[VIRT_PCIE_ECAM].base,
++           .size = s->memmap[VIRT_PCIE_ECAM].size,
+         };
+         build_mcfg(tables_blob, tables->linker, &mcfg, s->oem_id,
+                    s->oem_table_id);
 -- 
 2.44.0
 
