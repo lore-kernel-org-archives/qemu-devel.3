@@ -4,85 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECA0CC5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 20:45:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41F5DC54E41
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 21:01:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rih4f-00019h-GL; Fri, 08 Mar 2024 15:44:13 -0500
+	id 1rihKJ-00041j-7E; Fri, 08 Mar 2024 16:00:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rih4e-00018a-6p
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 15:44:12 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rih4c-00074C-71
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 15:44:11 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-33e2774bdc5so1861010f8f.2
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 12:44:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709930648; x=1710535448; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3x5qrcX/Vesq43PITjbZccQG2661oOnRzIb5TFsL3Kc=;
- b=pmhVzHB5itfcPosPKfcyWUACw5/2A1A4bFVptLW9nV6nJg0W9HmDq3qB8MsxKcVNSC
- 9N8qCpuZttwAkVeC1zKKGjcpnN5/Jtxi2GZON8TQkUcuakBmSSM2X/28MeMoSIFV9DA/
- OFdPtVyIAfZ4nGF7nF6RLXmDqWVr1EeM2LbOt/h8xaYp5Avw5mBXV/i+UD6zGesqw8Yh
- 3f/3Pv53WpO6JkOD9+E92CD6EozmI1dXqXxD/aNUWEIbImJT/YtKtRlEsniqv9lYzfm1
- WnwFxxSmhL9HQpICUtzocbgC0u37QkewPKBCEsU4rejh1aIrxidRwUzQlAnc66QTeFIW
- AxLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709930648; x=1710535448;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3x5qrcX/Vesq43PITjbZccQG2661oOnRzIb5TFsL3Kc=;
- b=d9U22N3xdQ+A5q3fAgpCY7ZRzjuPnc33J8T4RTzFCH3eP3+Rvm/2ll+aac5HaZfjdi
- TeVslrjv6DzIjKGJS7LhmE4W0v05+vNUfe6KKvmRbzWRkpDDA02GhTlHGO6BCWO/7HYH
- pB/z+RYslC5JwBzcGBQL75gyHiKpePHbmYXkFF1qwMXAGpajUr6vBGCHM90SP2jKaRFR
- P7h3Kp3bUpYSKzHoq66rpTivRqK9HyNtCG30HPrhw5fqAE9qfLDdEeMtnhooHcchDoG9
- NMg1YrsQLC6/V757gU1z2hmU+Ce4gblJitaUQOuyio0Eaukzi8xH3FNkyJKvDxXdcVnV
- E/3w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUoRKGfUL52jtG6LRU7cNNthIknPIKZDbDzlygHJyWYp3pPS9oRow3+j32tw1KWNTxrTtt8/F/+BrjsBXIIXLXTbgflN/c=
-X-Gm-Message-State: AOJu0YyUFeRt8Rma9FzG4aYsZot5MLB5FnZGgfGbOwyag4JRi7hpEb9F
- Dbn4UbRskSi3/qdGIOzr2n2FPs+iOvDpzov/vOvqb9Pt2OFL1XmXFHf70xpfad3G1PYtU+ct36F
- f
-X-Google-Smtp-Source: AGHT+IHe1AkxIhFbe2lg0kgwcGCCuYmd2TjVd/i/NtqKniy8vm0lhFG0EHVBQlcm2SZ6tG/y1mcLmQ==
-X-Received: by 2002:adf:fd89:0:b0:33e:363b:a7dd with SMTP id
- d9-20020adffd89000000b0033e363ba7ddmr210527wrr.20.1709930648462; 
- Fri, 08 Mar 2024 12:44:08 -0800 (PST)
-Received: from [192.168.69.100] (cvl92-h01-176-184-49-62.dsl.sta.abo.bbox.fr.
- [176.184.49.62]) by smtp.gmail.com with ESMTPSA id
- bk5-20020a0560001d8500b0033e699fc6b4sm267654wrb.69.2024.03.08.12.44.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Mar 2024 12:44:08 -0800 (PST)
-Message-ID: <0cbde20b-db66-4894-b498-8360b8006693@linaro.org>
-Date: Fri, 8 Mar 2024 21:44:06 +0100
+ (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
+ id 1rihKC-00040R-NO
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 16:00:17 -0500
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
+ id 1rihK9-0001Nc-OD
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 16:00:16 -0500
+Received: from pps.filterd (m0127839.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id
+ 4287jeWZ031057; Fri, 8 Mar 2024 13:00:12 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ from:to:cc:subject:date:message-id:in-reply-to:references
+ :content-transfer-encoding:content-type:mime-version; s=
+ proofpoint20171006; bh=ZKX6PmgyWUejQgGzS6eT4tHbeRPAJ7rFbqSxbXSJl
+ Hc=; b=E7QxIV9Yxr0KlE0P0gJpn9Tk2HFX6SFjBaz6H5YpxpQ0v7flZRPug2K4h
+ wLUfCe+V46h00tyqHvRyVJuBH4wDaW3Z5le7LmNJ/W+/1nLE3ubGhCRUCmejSBwj
+ 436sfX3j1M4kqYf0yHy/PUseXyw3OJWTX52e4mAZuK41fC7EGC7g2ROAiRMg6CnO
+ oqXVdPgMS6REDFaZrXpRyuA9W6ezZ8b0wkB4CgPPbeXPBwOwEAgJs11km7R6+3PW
+ fI/ukELH2GvCSySw/x15xaZR7l2VUTxtL7ksnuRMaRlnixdQTLXxIinn6sCo5jtV
+ WR1dGJ8rjnpCUtHAnz/bKiclN5PZg==
+Received: from bl2pr02cu003.outbound.protection.outlook.com
+ (mail-eastusazlp17012019.outbound.protection.outlook.com [40.93.11.19])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 3wm42hp1m1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 08 Mar 2024 13:00:11 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=lrLHg5nmA9lItsWrNvk9JgeujlZ0rOQyoOO0260jsNjPOWpy0LSHx/yxFNZzumx/RqIVUSr5LAtg+q1aNbrB9sNVNj2UqLVNfBv9ofUfDcebMvVg/Tb7PUmGRPB+R7rUi1vMKVZvOoKCCGYqb5No59UCljG5Ve6Cr1uq+Kh3NvBcQkQ9eME5VKVrSA5iHo0A1vd7XmhDtF7SRj568Vepr+3/7WaBHc1S9kz83PSXFgpGgKHzFv7gG0xH7MNYZhWGL4Zu7E5sNrq/eShZsg+LeGo7yqh8I97qUOjvJv9Ac/u3zeI2OI03MGHqD4QTX6pMXOoG0ykMsaplEMZhHmUPng==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ZKX6PmgyWUejQgGzS6eT4tHbeRPAJ7rFbqSxbXSJlHc=;
+ b=HJlmASri/eemrUtnGuFVrAmp0DR218MlWc1yjQ80MJz4hPWFgaVTX7aKTv+3hDhabf2MYlYd67DeAVY1sZDrhXHp0337uG4HpF2fR9hUXNVnu9SQr9vz1bX0S1uzi/1gu8j2IA06VdXMl7PQr3qFjLu7CWJgJa2rViTit5fkeBk+nss77E5EHAV8kUwF5VGwO4dd343QL8RQ9YBwVRXQveDlIOCArxbtjd4FdMgO+eh/9jE+JXjKmL/dcoGJo7+hd3RrYiKQ2E/X2YVopU6PENunpfaonryTd0s4rAFk06olMCjebsM8lRzg0qESr7fVcpPahJ46E7PGh8Bl6wg6/A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ZKX6PmgyWUejQgGzS6eT4tHbeRPAJ7rFbqSxbXSJlHc=;
+ b=CZ7OzJTw6VEOqnUR2t7wpIsLXxHcxXFbqJUG7ww6TYoDFewsGShP7iePgEbVdAZJMfBkG4DkE/fnvj4obTaZpm2FS+e8dfopoMe279m95hIWisGvJkvreF57paFALficJc49CLTUQUPD6Jn2vpGVoNHrPAuJtDvK0vzOolVfe9zEN71M/qIxScz7TLFGPCQ3nJj5HA0qYxiBNFsXXwMADGq4VaS4XhO9w3ussg0mw4bgjzdwFxLVER6fQXMnMDiqIUAQhTLAXYvjRAlZUnfaEwnRmBxhYLm7l5e55w6e5hHkyYJCdUN2bgd7BhgM0d4gdz9FvylrOHzL1/I2mveWzQ==
+Received: from SJ2PR02MB9955.namprd02.prod.outlook.com (2603:10b6:a03:55f::16)
+ by BY5PR02MB6786.namprd02.prod.outlook.com (2603:10b6:a03:210::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.27; Fri, 8 Mar
+ 2024 21:00:10 +0000
+Received: from SJ2PR02MB9955.namprd02.prod.outlook.com
+ ([fe80::225c:2edd:87e:7cf0]) by SJ2PR02MB9955.namprd02.prod.outlook.com
+ ([fe80::225c:2edd:87e:7cf0%7]) with mapi id 15.20.7362.019; Fri, 8 Mar 2024
+ 21:00:10 +0000
+From: Het Gala <het.gala@nutanix.com>
+To: qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com, thuth@redhat.com, lvivier@redhat.com,
+ pbonzini@redhat.com, Het Gala <het.gala@nutanix.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: [PATCH v4 4/8] Add channels parameter in migrate_qmp_fail
+Date: Fri,  8 Mar 2024 20:59:47 +0000
+Message-Id: <20240308205951.111747-5-het.gala@nutanix.com>
+X-Mailer: git-send-email 2.22.3
+In-Reply-To: <20240308205951.111747-1-het.gala@nutanix.com>
+References: <20240308205951.111747-1-het.gala@nutanix.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: PH7PR17CA0011.namprd17.prod.outlook.com
+ (2603:10b6:510:324::20) To SJ2PR02MB9955.namprd02.prod.outlook.com
+ (2603:10b6:a03:55f::16)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw: gpio: introduce pcf8574 driver
-Content-Language: en-US
-To: Dmitriy Sharikhin <d.sharikhin@yadro.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: Igor Kononenko <i.kononenko@yadro.com>,
- "Alexander A. Filippov" <a.filippov@yadro.com>,
- Alexander Amelkin <a.amelkin@yadro.com>
-References: <ee386866ca7ba80add0c428b59efb936fd7ce797.camel@yadro.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ee386866ca7ba80add0c428b59efb936fd7ce797.camel@yadro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ2PR02MB9955:EE_|BY5PR02MB6786:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2df25f46-2044-4034-bf39-08dc3fb2bdac
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: Fcdjv8lYy0TxTElXAgjgbPdxXPXhNxmfPR2v+K1rHi0NrHjQjoEyDnSAWNJM2Wa7dZjag8nguSbXN3fNfMCmu2xuhbYs+rIFibBSQ7td5OYElGnEBLVCjgf2pAsPkF9KYZiaKwxAGScYfrgQdPN6+bOrScmBOwjJZ/7/ppGPDuavXQ1IWe30J4Pd12DB2Qcf/UJ805QZTNO+AAE+KOL9YsgYPBvsKmVfm5p5rmogmKdMpHT8R3jlyzIBKZ/N2eetmpD02GHP/uVqk3zOW/1MsuISqOe6AqUs+jlCXpiROpGhpDh4GcBbej4hdOPXJJm8WCNFKTNpTFLMPvBtyNm4xim/CeCAjRXRl3pAynWBubbqakXd908r7tWdjnElSuphAZmZchXC04hqjA9MlUiYGGBk0jetohXsHL7cRZsE93rFwOytxJdRXiEC3jaP0DAIwW+WEQrhRXH2Y+0zZfzkR+DezrO0DoZk4u7GauhS+cs8BkFqP7EGlT2AC+CVuTcrdwWLGAjmLk1vELcfOjBdcQut0xfbPuOPh7LfPhLtdyBgscrrDKEXgXJyoW08noLT5Q6FpRTrgQPqHv9CX6LthW5D0f9ARW4wW+7Xh2L+XAGLzvjJovp41H7Rc1JBfdqDeTQ1zoE9mjaHxxyOc1lM2RiN+TaCXXzgAo4nQa4kk2bO37BgkNBA0jAXuMdB/bn4JuPPLCNY27nA7mq7B9IjMAcdy99SQjMYL8WpklpgICo=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ2PR02MB9955.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(376005)(52116005)(1800799015)(38350700005); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?RYOzJAOeF+7x67zLjwbMe49qZ/EXG5Xin1qHKc1Cc5Xx1LBou8UQ4nCVnf/P?=
+ =?us-ascii?Q?mCH5zi7B1wM1KjgWC5CFI0c7jP36FX1xBG08McQGFyI5IYHbrDvqCgGnCl74?=
+ =?us-ascii?Q?RHlSQRtOoucoenfyU1ABRmx8aF7pVAdCBWIlYSUFUaU++IiyCQW5sx6EPPBa?=
+ =?us-ascii?Q?fOdPP21fktKxFnZyHge5Un0NOWDzw3W5khDr+tL40wbsQYblpc6Q+nurWNQm?=
+ =?us-ascii?Q?DBlpN8JBwl+GUxaekVB9moSW2P3FIns3VzNFaGbWuJXkVRSG2wF7wD5WJVXZ?=
+ =?us-ascii?Q?qAQJWQFkAVVj+NZNUQL/xLSgMcfwHlUXm4ss6NRC5M0v97aKq6NDFVdoF92V?=
+ =?us-ascii?Q?EaNTuauEvRAn8YOnZWLjvSgoyHZcao1MfRv0tl8XihwHFFoYthFqfqzECQjt?=
+ =?us-ascii?Q?dv9wiuWcc7XZgeGIUhEzc3/lzkERaMJyEG5oJH2xuHUBKKqXgAOpWpFwfEwn?=
+ =?us-ascii?Q?6hC9TtToXZscj8Ij0xkQekeHJvbB0yPcWCsD4Ljz11IpXykjSsYPlmj6U0bk?=
+ =?us-ascii?Q?gyRaLG8CFoM+7+EFCWcBZnmH1qaAhK4OmoZ9vyqDOglbocMeQlDDZUMSkkWx?=
+ =?us-ascii?Q?28Vd14rSIx6Ecz4VlF09fMJPjpNx5STw+A6UmrMsP+tSTtOljp9hWzB3TuYT?=
+ =?us-ascii?Q?MTJgVT/954wlziZtLuHK05voP9WjWcZBwSAivj9foHTEU3+20qtfpYMYraTw?=
+ =?us-ascii?Q?8npykXrr625CFxjOQh5etBGLq7tTHtuxuMvAvODlN9XozKZPoyemWTe3hYr/?=
+ =?us-ascii?Q?ZQMr3BBkW1DpW8pNsJzGy8i+/boFTrwSJ4PWM7OPJiIOoIDqhhF/r1SVdNX7?=
+ =?us-ascii?Q?AnV96WEuEdUKoNZb2N+9C6xdajSdpijFwXDKHRJ/8pV4FxbydQ2HREWWvaIW?=
+ =?us-ascii?Q?o3dRbG4oP9JlfNyx89EL1RCnajC5GU5nQPP08dt8casia+J+Mei+YP5UktB9?=
+ =?us-ascii?Q?RKz+o8dnVHyvW6K/3X6RlwLeyDl5yl3jfMWC2RvZA2Q2E9MVb4Smlkf5Vz9t?=
+ =?us-ascii?Q?hXboWkbh1C0M3M6Fnp8TgXK82GYW4w+jNNNZIa6r/6+k3crfZJ9p8GEu5udZ?=
+ =?us-ascii?Q?5EucG/UsYgMjiImVLdUyKFxjr3FhFJE7yyhm2cLaYIV5PIjQTfyOr+ja6ehy?=
+ =?us-ascii?Q?uAD1ODMk1pVbnLFFlT6OJaW13bAUnv8x4n3eQGz7R8Zoqcx8wP+Nwsp03KWs?=
+ =?us-ascii?Q?5RfSFOYjbDwjDeZRe3eQWyHnKnOKCYPRZux+dJ7CinHJ8CQDaCSCkhgsdsUz?=
+ =?us-ascii?Q?kQPP8YIt5jvhgaFNm3Ce5G8nP0QYFqGcI5ScPfrj+6x1HBLpb4DnJfiPYg5J?=
+ =?us-ascii?Q?cN8EOIkuam+Qdt3aZIOFEGht84XItGZoaZCS3sB/Kz+8peosdH2a6NvIQ5Wd?=
+ =?us-ascii?Q?npMvJ3ifKndCWf+b+ZKpW5fP9R0+Lg7xVX3At48OHU/8WZuEbGlb1iduTnzb?=
+ =?us-ascii?Q?WEFnH+pbcIzjEAp8iLY+3ikNvskx2rK2Fuq07C3552QWzmP7F61nuLEeKzVp?=
+ =?us-ascii?Q?d6oTBn3uzf7OXByiySm3WB1mvAzR05N9OdVKUBN0DADetokonn97NaOXIb8S?=
+ =?us-ascii?Q?Grp50y0XqR/Qq40sdmwqCG0ItiJ6YmHXTaRUofIN?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2df25f46-2044-4034-bf39-08dc3fb2bdac
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR02MB9955.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Mar 2024 21:00:09.9856 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: qHLYJ6R8NNsLruc8UM/4E5VouxyIGmmrAJt7oP1wxLcZoN5ZhiYYTE0VHoqWU5OMSGJJn+dXrpM4PtnuV7hAzg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR02MB6786
+X-Proofpoint-ORIG-GUID: XvhjonXErEAnUb5p8AJvZN1M1oL0WTHX
+X-Proofpoint-GUID: XvhjonXErEAnUb5p8AJvZN1M1oL0WTHX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-08_08,2024-03-06_01,2023-05-22_02
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68; envelope-from=het.gala@nutanix.com;
+ helo=mx0a-002c1b01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,252 +158,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Dmitriy,
+Alter migrate_qmp_fail() to allow both uri and channels
+independently. For channels, convert string to a Dict.
+No dealing with migrate_get_socket_address() here because
+we will fail before starting the migration anyway.
 
-On 1/3/24 08:36, Dmitriy Sharikhin wrote:
-> NXP PCF8574 and compatible ICs are simple I2C GPIO expanders.
-> PCF8574 incorporates quasi-bidirectional IO, and simple
-> communication protocol, when IO read is I2C byte read, and
-> IO write is I2C byte write. User can think of it as
-> open-drain port, when line high state is input and line low
-> state is output.
-> 
-> This patch allow to instantiate virtual I2C device called
-> "pcf8574" in machine init code via generic mechanism.
-> 
-> Signed-off-by: Dmitrii Sharikhin <d.sharikhin@yadro.com>
-> ---
->   hw/gpio/Kconfig           |   4 ++
->   hw/gpio/meson.build       |   1 +
->   hw/gpio/pcf8574.c         | 139 ++++++++++++++++++++++++++++++++++++++
->   include/hw/gpio/pcf8574.h |  15 ++++
->   4 files changed, 159 insertions(+)
->   create mode 100644 hw/gpio/pcf8574.c
->   create mode 100644 include/hw/gpio/pcf8574.h
-> 
-> diff --git a/hw/gpio/Kconfig b/hw/gpio/Kconfig
-> index d2cf3accc8..bb731ff4ce 100644
-> --- a/hw/gpio/Kconfig
-> +++ b/hw/gpio/Kconfig
-> @@ -16,3 +16,7 @@ config GPIO_PWR
->   
->   config SIFIVE_GPIO
->       bool
-> +
-> +config PCF8574
-> +    bool
-> +    depends on I2C
-> diff --git a/hw/gpio/meson.build b/hw/gpio/meson.build
-> index 8a8d03d885..c0d9a3c757 100644
-> --- a/hw/gpio/meson.build
-> +++ b/hw/gpio/meson.build
-> @@ -15,3 +15,4 @@ system_ss.add(when: 'CONFIG_RASPI', if_true: files(
->   ))
->   system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_gpio.c'))
->   system_ss.add(when: 'CONFIG_SIFIVE_GPIO', if_true: files('sifive_gpio.c'))
-> +system_ss.add(when: 'CONFIG_PCF8574', if_true: files('pcf8574.c'))
-> diff --git a/hw/gpio/pcf8574.c b/hw/gpio/pcf8574.c
-> new file mode 100644
-> index 0000000000..a6c6bd36fa
-> --- /dev/null
-> +++ b/hw/gpio/pcf8574.c
-> @@ -0,0 +1,139 @@
-> +/*
-> + * NXP PCF8574 8-port I2C GPIO expansion chip.
-> + *
-> + * Copyright (c) 2024 KNS Group (YADRO).
-> + * Written by Dmitrii Sharikhin <d.sharikhin@yadro.com>
-> + *
-> + * This file is licensed under GNU GPL.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "hw/i2c/i2c.h"
-> +#include "hw/gpio/pcf8574.h"
-> +#include "hw/irq.h"
-> +#include "migration/vmstate.h"
-> +#include "qemu/log.h"
-> +#include "qemu/module.h"
-> +#include "qom/object.h"
-> +
-> +/**
-> + * PCF8574 and compatible chips incorporate quasi-bidirectional
-> + * IO. Electrically it means that device sustain pull-up to line
-> + * unless IO port is configured as output _and_ driven low.
-> + *
-> + * IO access is implemented as simple I2C single-byte read
-> + * or write operation. So, to configure line to input user write 1
-> + * to corresponding bit. To configure line to output and drive it low
-> + * user write 0 to corresponding bit.
-> + *
-> + * In essence, user can think of quasi-bidirectional IO as
-> + * open-drain line, except presence of builtin rising edge acceleration
-> + * embedded in PCF8574 IC
-> + **/
+Signed-off-by: Het Gala <het.gala@nutanix.com>
+Suggested-by: Fabiano Rosas <farosas@suse.de>
+---
+ tests/qtest/migration-helpers.c | 13 +++++++++++--
+ tests/qtest/migration-helpers.h |  5 +++--
+ tests/qtest/migration-test.c    |  4 ++--
+ 3 files changed, 16 insertions(+), 6 deletions(-)
 
-#define PORTS_COUNT 8
+diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
+index 3c3fe9d8aa..91c8a817d2 100644
+--- a/tests/qtest/migration-helpers.c
++++ b/tests/qtest/migration-helpers.c
+@@ -102,7 +102,8 @@ bool migrate_watch_for_events(QTestState *who, const char *name,
+     return false;
+ }
+ 
+-void migrate_qmp_fail(QTestState *who, const char *uri, const char *fmt, ...)
++void migrate_qmp_fail(QTestState *who, const char *uri,
++                      const char *channels, const char *fmt, ...)
+ {
+     va_list ap;
+     QDict *args, *err;
+@@ -112,7 +113,15 @@ void migrate_qmp_fail(QTestState *who, const char *uri, const char *fmt, ...)
+     va_end(ap);
+ 
+     g_assert(!qdict_haskey(args, "uri"));
+-    qdict_put_str(args, "uri", uri);
++    if (uri) {
++        qdict_put_str(args, "uri", uri);
++    }
++
++    g_assert(!qdict_haskey(args, "channels"));
++    if (channels) {
++        QObject *channels_obj = qobject_from_json(channels, &error_abort);
++        qdict_put_obj(args, "channels", channels_obj);
++    }
+ 
+     err = qtest_qmp_assert_failure_ref(
+         who, "{ 'execute': 'migrate', 'arguments': %p}", args);
+diff --git a/tests/qtest/migration-helpers.h b/tests/qtest/migration-helpers.h
+index e16a34c796..4e664148a5 100644
+--- a/tests/qtest/migration-helpers.h
++++ b/tests/qtest/migration-helpers.h
+@@ -33,8 +33,9 @@ G_GNUC_PRINTF(3, 4)
+ void migrate_incoming_qmp(QTestState *who, const char *uri,
+                           const char *fmt, ...);
+ 
+-G_GNUC_PRINTF(3, 4)
+-void migrate_qmp_fail(QTestState *who, const char *uri, const char *fmt, ...);
++G_GNUC_PRINTF(4, 5)
++void migrate_qmp_fail(QTestState *who, const char *uri,
++                      const char *channels, const char *fmt, ...);
+ 
+ void migrate_set_capability(QTestState *who, const char *capability,
+                             bool value);
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index 01255e7e7e..61aa53c3f7 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -1721,7 +1721,7 @@ static void test_precopy_common(MigrateCommon *args)
+     }
+ 
+     if (args->result == MIG_TEST_QMP_ERROR) {
+-        migrate_qmp_fail(from, args->connect_uri, "{}");
++        migrate_qmp_fail(from, args->connect_uri, NULL, "{}");
+         goto finish;
+     }
+ 
+@@ -1816,7 +1816,7 @@ static void test_file_common(MigrateCommon *args, bool stop_src)
+     }
+ 
+     if (args->result == MIG_TEST_QMP_ERROR) {
+-        migrate_qmp_fail(from, args->connect_uri, "{}");
++        migrate_qmp_fail(from, args->connect_uri, NULL, "{}");
+         goto finish;
+     }
+ 
+-- 
+2.22.3
 
-> +
-> +OBJECT_DECLARE_SIMPLE_TYPE(PCF8574State, PCF8574)
-> +
-> +struct PCF8574State {
-> +    I2CSlave parent_obj;
-> +    uint8_t  input;      /* external electrical line state */
-> +    uint8_t  output;     /* Pull-up (1) or drive low (0) on bit */
-> +    qemu_irq handler[8];
-
-s/8/PORTS_COUNT/
-
-> +    qemu_irq *gpio_in;
-
-There is also a gpio_out, why not implement it?
-
-> +};
-> +
-> +static void pcf8574_reset(DeviceState *dev)
-> +{
-> +    PCF8574State *s = PCF8574(dev);
-> +    s->input  = 0xFF;
-> +    s->output = 0xFF;
-
-Alternatively MAKE_64BIT_MASK(0, PORTS_COUNT);
-
-> +}
-> +
-> +static inline uint8_t pcf8574_line_state(PCF8574State *s)
-> +{
-> +    // we driving line low or external circuit does that
-
-Comment as /* ... */, see
-https://www.qemu.org/docs/master/devel/style.html#comment-style
-
-> +    return s->input & s->output;
-> +}
-> +
-> +static uint8_t pcf8574_rx(I2CSlave *i2c)
-> +{
-> +    return pcf8574_line_state(PCF8574(i2c));
-> +}
-> +
-> +static int pcf8574_tx(I2CSlave *i2c, uint8_t data)
-> +{
-> +    PCF8574State *s = PCF8574(i2c);
-> +    uint8_t prev;
-> +    uint8_t diff;
-> +    uint8_t actual;
-> +    int line = 0;
-> +
-> +    prev = pcf8574_line_state(s);
-> +    s->output = data;
-> +    actual = pcf8574_line_state(s);
-> +
-> +    for (diff = (actual ^ prev); diff; diff &= ~(1 << line))
-
-No enter before brace.
-
-> +    {
-> +        line = ctz32(diff);
-> +        if (s->handler[line])
-
-Missing brace, see
-https://www.qemu.org/docs/master/devel/style.html#block-structure
-
-Please run scripts/checkpatch.pl, see
-https://www.qemu.org/docs/master/devel/submitting-a-patch.html#use-the-qemu-coding-style
-
-> +            qemu_set_irq(s->handler[line], (actual >> line) & 1);
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static const VMStateDescription vmstate_pcf8574 = {
-> +    .name = "pcf8574",
-> +    .version_id = 0,
-> +    .minimum_version_id = 0,
-> +    .fields = (VMStateField[]) {
-> +        VMSTATE_UINT8(input,  PCF8574State),
-> +        VMSTATE_UINT8(output, PCF8574State),
-> +        VMSTATE_I2C_SLAVE(parent_obj, PCF8574State),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
-> +static void pcf8574_gpio_set(void *opaque, int line, int level)
-> +{
-> +    PCF8574State *s = (PCF8574State *) opaque;
-> +    assert(line >= 0 && line < ARRAY_SIZE(s->handler));
-> +
-> +    if (level)
-> +        s->input |=  (1 << line);
-> +    else
-> +        s->input &= ~(1 << line);
-> +}
-> +
-> +static void pcf8574_realize(DeviceState *dev, Error **errp)
-> +{
-> +    PCF8574State *s = PCF8574(dev);
-> +
-> +    qdev_init_gpio_in(dev, pcf8574_gpio_set, ARRAY_SIZE(s->handler));
-> +    qdev_init_gpio_out(dev, s->handler, ARRAY_SIZE(s->handler));
-> +}
-> +
-> +static void pcf8574_class_init(ObjectClass *klass, void *data)
-> +{
-> +    DeviceClass   *dc = DEVICE_CLASS(klass);
-> +    I2CSlaveClass *k  = I2C_SLAVE_CLASS(klass);
-> +
-> +    k->recv     = pcf8574_rx;
-> +    k->send     = pcf8574_tx;
-> +    dc->realize = pcf8574_realize;
-> +    dc->reset   = pcf8574_reset;
-> +    dc->vmsd    = &vmstate_pcf8574;
-> +}
-> +
-> +static const TypeInfo pcf8574_info = {
-> +    .name          = TYPE_PCF8574,
-> +    .parent        = TYPE_I2C_SLAVE,
-> +    .instance_size = sizeof(PCF8574State),
-> +    .class_init    = pcf8574_class_init,
-> +};
-> +
-> +static void pcf8574_register_types(void)
-> +{
-> +    type_register_static(&pcf8574_info);
-> +}
-> +
-> +type_init(pcf8574_register_types)
-
-Preferably DEFINE_TYPES()
-
-> diff --git a/include/hw/gpio/pcf8574.h b/include/hw/gpio/pcf8574.h
-> new file mode 100644
-> index 0000000000..c690e73487
-> --- /dev/null
-> +++ b/include/hw/gpio/pcf8574.h
-> @@ -0,0 +1,15 @@
-> +/*
-> + * NXP PCF8574 8-port I2C GPIO expansion chip.
-> + *
-> + * Copyright (c) 2024 KNS Group (YADRO).
-> + * Written by Dmitrii Sharikhin <d.sharikhin@yadro.com>
-> + *
-> + * This file is licensed under GNU GPL.
-
-Which GPL version? Preferably add an explicit SPDX tag.
-
-> + */
-> +
-> +#ifndef _HW_GPIO_PCF8574
-> +#define _HW_GPIO_PCF8574
-> +
-> +#define TYPE_PCF8574 "pcf8574"
-> +
-> +#endif /* _HW_GPIO_PCF8574 */
-
-Overall LGTM, waiting for v2!
-
-Regards,
-
-Phil.
 
