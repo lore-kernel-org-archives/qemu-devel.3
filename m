@@ -4,82 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 441F8C54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 16:07:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B16C3C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 16:10:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rick8-00038y-5d; Fri, 08 Mar 2024 11:06:44 -0500
+	id 1ricn3-0004iA-7T; Fri, 08 Mar 2024 11:09:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rick0-0002xM-Jp
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:06:38 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ricjy-000739-B3
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:06:36 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4130ff11782so7249645e9.2
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 08:06:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709913992; x=1710518792; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1asEl1O5NRuq7BRNuytOhqZUbr+LzuSsHUkCznxMCfA=;
- b=Lv7/1NRY/mvPoCPuWU7zgO+HTMpQ4OBPHNnKuM+YvkVHNGL3fP2jlmdEzARMPJ2bFS
- KYa1JquDPG1JP4yoBR0ZUMj0lkHi81Z7rBuWxWZXtzPMfAozN01RT63oMZswd/6q0oBy
- dJ16sFgGC21b8aF3e4G6trTPDOoDrD5T3+cByPsKD8kT6H5V3sWN+T61VnwugG5L8EF+
- oi5OWxHV8zRUT3kykhO0fveB2cZyv50E/3+8p3I04hKSsygS5gHmGu7u+MAONL3epumX
- pWI47EEdjRZEqKe6LGLWSlDYVTQEEBRmaq+u1Hi0ZJVvY3OUXeqgNP1kmkcVGvS8TTjR
- L+ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709913992; x=1710518792;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1asEl1O5NRuq7BRNuytOhqZUbr+LzuSsHUkCznxMCfA=;
- b=vh78DTkKsj5vnCscJ7YB/JPbjct4AikCLQnpq42s/BG9Ih8EMzEzPoAVSBmrtwxk1w
- pgp3eLGzAmKJ9fGM3SdTZBpcY+TP68oVjeYILc8GG/nPaBo0VbPTsHM1RtItSpbw6rh0
- ddXSCh3lppRC7AF4pca0/NeiZpkQIGSOao6Kq3osVj3vxYD9p0l5/9uE20uXs+wouXAM
- oTV1GnSwj2dTEJOtg6A3OJb0JxHiVVQUKegl7RgIWdBNkuS0GXtSUVRN+8z8eKlppPvX
- i0+ifwv2iLIy7SQTOOYbRuzCEVTYN/jI96oRkoR5IA/Pp68E5d0Iq1WZKHmyHDF+1VX7
- FQeQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWAmmFTawTDsvPiq3hmMqUKhG/4fNv8znpQHOwB2/RVGTtyFfrh+z/8WeyULtrIr5qVyS7oiM4nFNIk24P8bqswo/ji4gM=
-X-Gm-Message-State: AOJu0YxmzahxSRBdkfmQE1wgd5dHtYOKdb4xV2D9LphqXqYtsb2yWYUb
- CqU2dQJSJCoBiKzLgPZmJ5GmSZf3pWy0DDBPy3npztkhAjWhFSGVtaW3EoF1CZA=
-X-Google-Smtp-Source: AGHT+IGRvIXuo4wrIs77IAb+1VHdabCyOExjQq5+w+q6Pk9o1pGYrGyZv93RdwqId5gp9ULsfKCH5w==
-X-Received: by 2002:a05:600c:4f07:b0:412:eae9:38df with SMTP id
- l7-20020a05600c4f0700b00412eae938dfmr7674425wmq.40.1709913992437; 
- Fri, 08 Mar 2024 08:06:32 -0800 (PST)
-Received: from [192.168.69.100] (pir44-h02-176-184-37-132.dsl.sta.abo.bbox.fr.
- [176.184.37.132]) by smtp.gmail.com with ESMTPSA id
- bo16-20020a056000069000b0033e422d0963sm12986710wrb.41.2024.03.08.08.06.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Mar 2024 08:06:32 -0800 (PST)
-Message-ID: <2d0bc502-b684-4b0c-ae88-085276c1b593@linaro.org>
-Date: Fri, 8 Mar 2024 17:06:30 +0100
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ricn1-0004hw-2R
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:09:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1ricmx-0007pv-4S
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:09:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709914178;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=CPxeNsvxLG5NRMHi6hbzOqSnDNMP1hFXhqS8FHQzYps=;
+ b=KY6+lEjp1HsPLXbwVAmIv0854WqJnwyrRFd2wMKFBszimxd3DUEETyO4OWXx81JqHcKx7W
+ a3awbdqKADgxv8AQ5JMtKibdnvdhQ7D+T5IRV77yAEZjfLEc9j6FBmRGfs65SwjE3NGMUO
+ 0youyVfL/pKU9VuJkS8Y9SiOK8csxtw=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-396-A5WpggXzOWu99_wDvps81Q-1; Fri,
+ 08 Mar 2024 11:09:37 -0500
+X-MC-Unique: A5WpggXzOWu99_wDvps81Q-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C163C1C00B8C;
+ Fri,  8 Mar 2024 16:09:36 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.78])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 00428492BFD;
+ Fri,  8 Mar 2024 16:09:35 +0000 (UTC)
+Date: Fri, 8 Mar 2024 16:09:33 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Kashyap Chamarthy <kchamart@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 3/4] docs/interop/firmware.json: Use full include paths
+Message-ID: <Zes4PfcvOLIE3LPD@redhat.com>
+References: <20240306-qapi-firmware-json-v1-0-619f7122a249@linutronix.de>
+ <20240306-qapi-firmware-json-v1-3-619f7122a249@linutronix.de>
+ <87le6s21kh.fsf@pond.sub.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/intc/grlib_irqmp: abort realize when ncpus value is
- out of range
-Content-Language: en-US
-To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>, qemu-devel@nongnu.org
-Cc: konrad.frederic@yahoo.fr, peter.maydell@linaro.org
-References: <20240308152719.591232-1-chigot@adacore.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240308152719.591232-1-chigot@adacore.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87le6s21kh.fsf@pond.sub.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,21 +83,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/3/24 16:27, Clément Chigot wrote:
-> Even if the error is set, the build is not aborted when the ncpus value
-> is wrong, the return is missing.
+On Fri, Mar 08, 2024 at 04:19:42PM +0100, Markus Armbruster wrote:
+> The coupling with the main QAPI schema is unfortunate.
 > 
-> Signed-off-by: Clément Chigot <chigot@adacore.com>
-> ---
->   hw/intc/grlib_irqmp.c | 1 +
->   1 file changed, 1 insertion(+)
+> The purpose of docs/interop/firmware.json is to serve as schema for
+> firmware descriptions: a firmware description is a JSON object that
+> conforms to this schema's struct Firmware.
+> 
+> Such a description should be installed along with each firmware binary.
+> 
+> QAPI tooling can be used to check conformance: parse the firmware
+> description JSON object, feed it to the generated visit_type_Firmware().
+> Success implies conformance.
+> 
+> If you find more uses for the C struct Firmware created by
+> visit_type_Firmware(), more power to you.
+> 
+> firmware.json needs machine.json for SysEmuTarget, and block-core.json
+> for BlockdevDriver.  The largest and the third-largest QAPI module just
+> for two enums.  Almost a quarter Mebibyte of code.
 
-Fixes: 6bf1478543 ("hw/intc/grlib_irqmp: add ncpus property")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+firmware.json can use BlockdevDriver, but we could question
+whether it /should/ use BlockdevDriver. Is there really a
+compelling reason to support every possible block driver for
+readonly firmware and tiny nvram file ? I thin kit would be
+totally reasonable to define a "FirmwareFormat" enum which
+only permitted 'raw' and 'qcow2'.   If someone wants to
+justify why we need another format, I'm all ears...
 
-Patch queued, thanks!
+For SysEmuTarget its a little more useful, as in theory the
+firmware could be extended to any QEMU target. In practice
+thus far we've only used it todescribe EFI based firmware,
+which is relevant for a subset of targets. It doesn't seem
+to be a huge downside to define a FirmwareTarget enum with
+only the arches we've actually got a use for so far. When
+someone comes along with a need for non-EFI we can extend
+it, and we'll need to extend libvirt at the same time anyway
+
+> qapi-gen.py generates more than 12kSLOC.  Without the include (and with
+> the enums dumbed down to 'str' to enable that), it generates less than
+> 800.
+> 
+> We could use Sphinx to generate a manual from firmware.json's document.
+> Except that manual would be useless, because of its 11,000 lines of
+> HTML, less than 800 are for firmware.json.
+> 
+> Options:
+> 
+> * Live with the mess.
+> 
+> * Refactor QAPI modules so firmware.json can include just the enums.
+> 
+>   Drawback: we spread the mess into qapi/.  Ugh.
+> 
+> * Copy the enums to firmware.json.
+> 
+>   Drawback: we risk them going stale.
+
+IMHO copy the enum. While the risk exists, I don't think it is a
+risk worth worrying about in reality. If someone points out a gap
+that's important is a matter of minutes to patch it.
+
+> * Dumb down to 'str'.
+> 
+>   Drawback: the conformance check no longer enforces the value of
+>   FirmwareTarget member @architecture and FirmwareFlashFile member
+>   @format is valid.
+
+
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
