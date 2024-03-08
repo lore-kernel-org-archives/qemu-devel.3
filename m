@@ -4,83 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AFF0C54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 08:46:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14C3EC54E4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 08:50:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riVsJ-0002hA-OG; Fri, 08 Mar 2024 03:46:43 -0500
+	id 1riVvL-0003kS-Gg; Fri, 08 Mar 2024 03:49:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1riVsG-0002gZ-FD
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:46:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1riVvI-0003ju-7T
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:49:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1riVsF-0006ZG-6y
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:46:40 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1riVvG-0006vc-PN
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:49:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709887598;
+ s=mimecast20190719; t=1709887786;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qAf1mU60cNYCOHcyWXyhP+vuFnjpN30y4IDi5VsCyEc=;
- b=YlrT+HK3/CWt1VwYPMH+FqoIcOIECy6YcyiQdHgcEsoeVePAsdO7vrqX5lqwyWUWkl2tL0
- hiRLQVaZoAFaudKTmanwPdprTGIztpIm+mvbL8746XCx01GgSZTda7ksl1Ico5Kl60az2A
- V6TDKxqLy+B5urIqQ7fjfvFE3gNn2Oc=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=pzv7in/SYP2w/qBa51YqARE4NVhqtRRLjFoeoRDXZWI=;
+ b=ObX9Vk1r69B7iVNcuRiC/Z1VRr5Mplj5jrEWJkFq3E4JhSCoeapt/I3w5fnN91lXF1BZqF
+ KCPU1wfbbpid1G8NEHHFgtDe3l/uyXwAwSFN/6NugXQyhb6hz0GaT9i16bld/HJ36iKYfq
+ tMMxrlQnqCERk8m6HUmi77CsuvKQUEE=
+Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
+ [209.85.161.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-232-NWW3jxHZOBWu3-BQkadshg-1; Fri, 08 Mar 2024 03:45:56 -0500
-X-MC-Unique: NWW3jxHZOBWu3-BQkadshg-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-5137de148easo2186607e87.0
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 00:45:55 -0800 (PST)
+ us-mta-207-Jej7ux6aORqxtrn4x9X9cw-1; Fri, 08 Mar 2024 03:49:44 -0500
+X-MC-Unique: Jej7ux6aORqxtrn4x9X9cw-1
+Received: by mail-oo1-f71.google.com with SMTP id
+ 006d021491bc7-5a032e40f41so1496047eaf.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 00:49:44 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709887554; x=1710492354;
+ d=1e100.net; s=20230601; t=1709887784; x=1710492584;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qAf1mU60cNYCOHcyWXyhP+vuFnjpN30y4IDi5VsCyEc=;
- b=eYuhUFRioT8vtCWBbJDQbXVPUaGp0P3V608s15XrKXhAwQP363i0h5cLr+A9RAvV7I
- KwD5dLrBWMV5R4XsGMobkcwHEuvSy9/7m8+qt/3Gpg3bZOzXIUYQmOYqKK4Y16HLM0tA
- p9puAVP9BDPQLcjtw1bOb2o79EpHS2xxSK8ytksHB++Hs+LlFOe5pWCe1UG2NN7PeSG7
- MNBQ/33tf2Y3yIBJbcC95+bjmYlCGsLs0rZvEL0MC5pa8os0ePMpFkTEVJ4TPeEa/Apa
- LZm1Ey/vUrMiRAEpawMt9kFu33B/081MDd/wXv3qzZ2qF5TSK9jHJN5OHnls57TJZk1T
- IHsA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXq2F1o/WTU6Fbw7JcF47VYeR+DHlzKnHN+o63hFPVKzrZYIf67acgjGQAnlRVSc6UEyDEhKljGi4kANmh0+jk7CQoWVqU=
-X-Gm-Message-State: AOJu0Yz59FRIlxmWcaGdkiRJCtXJHQm7kRGtmHK7ma6XvJ93dZoec7Oh
- ivXOMC1zjj1zi7jElwsgFKDYN1WZrC8gMcMeDil15zKZN3wEySeLKy2OY1MQICtsN5Q0kUNrugq
- WOShBla4oHyxOD4HKqEOjNZyLzh6I4qe2N6fU/CUca0YELAp8unZwy8VhR22O
-X-Received: by 2002:a05:6512:368e:b0:513:5a09:abbe with SMTP id
- d14-20020a056512368e00b005135a09abbemr2519305lfs.67.1709887554716; 
- Fri, 08 Mar 2024 00:45:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGrBHdTlQtq/qxnpNyARkUEwMg7Ee+4JRIVlMflv3t4Q6NuqbEmTGIi8RTEDx0Nz8qQoKVDlQ==
-X-Received: by 2002:a05:600c:470e:b0:412:bcc1:44cc with SMTP id
- v14-20020a05600c470e00b00412bcc144ccmr15683964wmo.3.1709887533985; 
- Fri, 08 Mar 2024 00:45:33 -0800 (PST)
+ bh=pzv7in/SYP2w/qBa51YqARE4NVhqtRRLjFoeoRDXZWI=;
+ b=FevCWH8Yv8WVGco6SacrbxqqMa7kNCwd6Qzx55j2hWq7b9EZIPV+3ryU23BQuLyWip
+ tVZ6Att8LIlq6g+OYUdv6grgx8jDfbnWvwuIREEipeRpJy5l34hL16m+rmuf6iNek78D
+ /kIat99YhVlXtzjrZnQu9o4meV3v7KFL7K34dYDed/YcFoqJ0cwnTwuBYO1ENgt2mFds
+ C4s5DnMXBo+//cFYBN20hvCVN4ZMSTIvjrANH+dvZsh2xllxffBckYrlXDk1gMJgDYX4
+ f5UW19tmAbZ2RzJX64ZdJyBX3hOh4BNmB38sBuiEHZtKZ+9MCjfU6L6lfnoSUqndb+P7
+ GI/Q==
+X-Gm-Message-State: AOJu0YxBhV8DEay/EzKRXzn/V6aO822+JFqLjDupB6yibYnDqXsxavnF
+ 6yQ7zxOvA+NaIUKKBXxiOQy4U7XjTonNJ/7UZvkiv4/SGtlzfBCpzaDY0t1fUb2JjzSN06wNCSm
+ Qj5rBIt9IEx4UmPfL+hZbXAFQm5WkY5gkO+4ziFYgSvMjkw45iT4c
+X-Received: by 2002:a05:6358:6f9e:b0:17b:f4cf:f51 with SMTP id
+ s30-20020a0563586f9e00b0017bf4cf0f51mr12729980rwn.17.1709887783881; 
+ Fri, 08 Mar 2024 00:49:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGABUDvjrkfg30CMAZFAWksbkY2Uy7OC6GvzKZekqaRN+Zr7dCF5qTa3p4XlPb+aw9Y6u2sJg==
+X-Received: by 2002:a05:6358:6f9e:b0:17b:f4cf:f51 with SMTP id
+ s30-20020a0563586f9e00b0017bf4cf0f51mr12729959rwn.17.1709887783540; 
+ Fri, 08 Mar 2024 00:49:43 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-178-151.web.vodafone.de.
  [109.43.178.151]) by smtp.gmail.com with ESMTPSA id
- fc20-20020a05600c525400b00412ae4b45b3sm5145677wmb.30.2024.03.08.00.45.32
+ g11-20020ae9e10b000000b007883a071e67sm3175902qkm.63.2024.03.08.00.49.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Mar 2024 00:45:33 -0800 (PST)
-Message-ID: <ee022589-eeb6-403e-825d-a2de407b61ae@redhat.com>
-Date: Fri, 8 Mar 2024 09:45:32 +0100
+ Fri, 08 Mar 2024 00:49:43 -0800 (PST)
+Message-ID: <9b70c85e-0c4f-47f6-ade2-a227c5b70401@redhat.com>
+Date: Fri, 8 Mar 2024 09:49:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 05/25] s390/stattrib: Add Error** argument to
- set_migrationmode() handler
+Subject: Re: [PATCH 1/5] scripts/kernel-doc: teach kdoc about QLIST_ macros
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
- Prasad Pandit <pjp@fedoraproject.org>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>
-References: <20240306133441.2351700-1-clg@redhat.com>
- <20240306133441.2351700-6-clg@redhat.com>
+To: Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ John G Johnson <john.g.johnson@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Juan Quintela <quintela@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, peter.maydell@linaro.org,
+ David Hildenbrand <david@redhat.com>
+References: <20240307181105.4081793-1-alex.bennee@linaro.org>
+ <20240307181105.4081793-2-alex.bennee@linaro.org> <ZerA34BH9NNf_K1Y@x1n>
+ <87msr9taac.fsf@draig.linaro.org> <ZerK2iI7FAGuQH1O@x1n>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -124,18 +129,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240306133441.2351700-6-clg@redhat.com>
+In-Reply-To: <ZerK2iI7FAGuQH1O@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.583,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -152,19 +156,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06/03/2024 14.34, Cédric Le Goater wrote:
-> This will prepare ground for future changes adding an Error** argument
-> to the save_setup() handler. We need to make sure that on failure,
-> set_migrationmode() always sets a new error. See the Rules section in
-> qapi/error.h.
+On 08/03/2024 09.22, Peter Xu wrote:
+> On Fri, Mar 08, 2024 at 08:09:15AM +0000, Alex Bennée wrote:
+>> Peter Xu <peterx@redhat.com> writes:
+>>
+>>> On Thu, Mar 07, 2024 at 06:11:01PM +0000, Alex Bennée wrote:
+>>>> The kernel-doc script does some pre-processing on structure
+>>>> definitions before parsing for names. Teach it about QLIST and replace
+>>>> with simplified structures representing the base type.
+>>>>
+>>>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+>>>> ---
+>>>>   scripts/kernel-doc | 9 ++++++++-
+>>>>   1 file changed, 8 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/scripts/kernel-doc b/scripts/kernel-doc
+>>>> index 240923d509a..26c47562e79 100755
+>>>> --- a/scripts/kernel-doc
+>>>> +++ b/scripts/kernel-doc
+>>>> @@ -1226,7 +1226,14 @@ sub dump_struct($$) {
+>>>>   	# replace DECLARE_KFIFO_PTR
+>>>>   	$members =~ s/DECLARE_KFIFO_PTR\s*\(([^,)]+),\s*([^,)]+)\)/$2 \*$1/gos;
+>>>>   
+>>>> -	my $declaration = $members;
+>>>> +        # QEMU Specific Macros
+>>>> +
+>>>> +        # replace QLIST_ENTRY with base type and variable name
+>>>> +        $members =~ s/QLIST_ENTRY\(([^)]+)\)\s+([^;]+)/$1 \*$2/gos;
+>>>> +        # replace QLIST_HEAD, optionally capturing an anonymous struct marker, and capture type and variable name
+>>>> +        $members =~ s/QLIST_HEAD\(\s*,\s*([^)]+)\)\s+([^;]+)/struct { $1 *lh_first; } $2/gos;
+>>>> +
+>>>> +        my $declaration = $members;
+>>>
+>>> May need a "tabify" here..
+>>
+>> Ugg that file is a mess. Any idea what we should use for perl, tabs or
+>> spaces? I can update editorconfig.
 > 
-> Cc: Halil Pasic <pasic@linux.ibm.com>
-> Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
-> Cc: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
+> Indeed.. not perl expert here.
+> 
+> For this one it might be still good to keep the same with the code around
+> before an attempt to clean it up.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+I think this file originate from the Linux kernel repo, so it might be a 
+good idea to keep it in sync with the version from there?
+
+  Thomas
 
 
 
