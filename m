@@ -4,87 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBCB7C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 08:06:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EB44C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 08:08:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riVFK-0004zN-NY; Fri, 08 Mar 2024 03:06:26 -0500
+	id 1riVHK-00060A-1O; Fri, 08 Mar 2024 03:08:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1riVFI-0004z4-4P
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:06:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1riVFG-0004Rt-NM
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:06:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709885182;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pdpfohmo8tS/IDjuDINcAQxkEpN9cXnmIvwbghdi63o=;
- b=bZaKw7rPnPvGWaTZXyfv1PBLP1jsymjTJGb+GeraVJuRvvFh8XBNmEbpT/qAs8KBlfEgvb
- KUTge+6mZ5Ckvf6h2AcYDNxmmByGW7NFLAXrYy+ljfVYa9il/7qvIxPDQ0uO0axhSCslUU
- BDWzIW0PpwIfB1WT6JG2k7ipHKWXqqw=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-49-2D-VD_JIMlq5j3sfaJCHXw-1; Fri, 08 Mar 2024 03:06:17 -0500
-X-MC-Unique: 2D-VD_JIMlq5j3sfaJCHXw-1
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-29ba8f333easo879702a91.0
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 00:06:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1riVHF-0005zB-KN
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:08:26 -0500
+Received: from mail-oi1-x22a.google.com ([2607:f8b0:4864:20::22a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1riVHC-0004pd-1I
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:08:24 -0500
+Received: by mail-oi1-x22a.google.com with SMTP id
+ 5614622812f47-3c19b7d9de7so1035837b6e.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 00:08:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709885293; x=1710490093; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ar3p53HMsIx8zBL94B0eF4lW4BnIQ4joZmAkoo/PXiE=;
+ b=dSn2ZDxdWXKz4HvedQdX8bbNiex/ASQG+yuU/Ug5j5Jj6VJovHw+XvVf6tiA+emzMD
+ CSi2l3U8zwSmSMz9gSxCoGmGILMP+U3b1vk7STQ0dVg1tAZoBJkxSSHY96QY9A/0QX9p
+ p2TF2fqNN0Sh2BV6GJ3pTYX6Nypdrh5DjaCNCc9EQ/CGUDqbUQJKp9cM33cM+IfO97Ia
+ jJSLApKHwidC6+S+SAvoONUvZrVg43dUtIr6VWidDoh5EH/tlc87eRmBqeBppED8dbLe
+ 7uYbiHqNJZN/f7K0jEBhNSIeTKIH4XmtdYMDnXX0p5/ZO/+ta/7YSihrKOvgmzUvFpC4
+ XM+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709885177; x=1710489977;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pdpfohmo8tS/IDjuDINcAQxkEpN9cXnmIvwbghdi63o=;
- b=h22cYtwvRG1JK6hXVjw3pF+espM8f/oDREQ0hqdR3Y5Dwo9oJ4Euv/e5wkpLMt8x6+
- iliUG3sVNtxN+xks4lQ9fRWJxh/H0rS7O97e7pTQB+u+z6qZqfLj8KXbE30UZoMcxicx
- H5QqMaUbViIYF2XtwfgSxzz1chRhsvfAQ8ZocgsIt9H8ciZCXq4AYxgi9tlbWsJZeohe
- 7OKnhIsAu3JrbsTOM8i3CSqvvN10d6RzUAFwKSyLnpuPjxm4INF7zvVQFcreLVj/W4sr
- V29kub9WtIPEatHeQH4LhfPbP8bPQbtzcQfmvlhJ+Hi+X1WQw9PGxgg8rWfkhY8Wj+XW
- mccQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXeHtrenZREnkCkOFF2E5savFjFuWwV+9zrvD/YDuR8Ym0CZc92HMVKsn6n1OIo+lpYrHVQ6IpvCBwS/10c4i0sih1gAWw=
-X-Gm-Message-State: AOJu0Yxd/MVtLCzh7y7qconGecx06IehDgJ2PTBKaIX8r54UzE2VmCL/
- HxXRIoQm2dlnfIJooInDXOjR3AKH9lyFuQ/vRwAk2qsSfhTYyWYSNzgBpkccx4Iifxm8Uit8FO7
- fEf+jnLnTHj1StYkO7zUYUpXMKxIS1YuJAflUQmUNzAPqRICpDrfi7KY0cevQZJK76mbnt9Sk3Y
- zGDbs9LvyN3QurQ1Qd+ANoNuyekWU=
-X-Received: by 2002:a17:90a:ebd1:b0:29b:6e9d:5897 with SMTP id
- cf17-20020a17090aebd100b0029b6e9d5897mr9866494pjb.23.1709885176792; 
- Fri, 08 Mar 2024 00:06:16 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHUEco3b4bk8XK2HX1Ju1UBcJr8vFf4EbdPvd6upOMc2zhp1ZDAlnH5n9ZDxC5GBnHnAwM3+NZrGD2/bbQM6DI=
-X-Received: by 2002:a17:90a:ebd1:b0:29b:6e9d:5897 with SMTP id
- cf17-20020a17090aebd100b0029b6e9d5897mr9866463pjb.23.1709885176519; Fri, 08
- Mar 2024 00:06:16 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709885293; x=1710490093;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ar3p53HMsIx8zBL94B0eF4lW4BnIQ4joZmAkoo/PXiE=;
+ b=ZpQRoucEszjKgEvhztjnnvIUU1Jk9cdNdSykH+rtT6acMqUE5W0hrZEHV5qW5+33sk
+ 5mrV3PL4xWYPA9zq20xB9f1d9Ck9A0OOtiIzzqfl6nk9QgdP0lahO9iuiC6Hqn+sCWL/
+ ICA1Q1+CKAK8k9RT+y7KH92WTY7Nd4bq2RrjHA/GY/EXAgwGUe5V3OcSy5hrbFg05MpN
+ zRHHOVUhDstZm0hkwo+L+pQxHVutqXlnb7klEZ6S6IGNzFmJGKd/YBczJ2AhkMYLOPRf
+ +QQuLYnDL3Oa4oq+/pT5x0emqI7131IiqqjPCUqOmXc021x2IIy0NPrrGCzIBXuFT9Qe
+ d5BQ==
+X-Gm-Message-State: AOJu0YxdtxA+KOeXe1Vamrrjl6azIbojN/zsBGtGwXoMuLJkVO3TKqi6
+ c74d41erzygL2Y2I9PXICHB3IXTA8oPKGtBsDzH3Et45qPGtquBcY9XqpXOHal8=
+X-Google-Smtp-Source: AGHT+IGWZiC0Ct8tCDDzdCvzueg8OeBB8V4/2g1o1vl39cnKx6iJ5YHfjcOF74P9tVS7tlJpcFAv0A==
+X-Received: by 2002:a05:6808:1d2:b0:3c2:16db:e955 with SMTP id
+ x18-20020a05680801d200b003c216dbe955mr8613483oic.48.1709885292792; 
+ Fri, 08 Mar 2024 00:08:12 -0800 (PST)
+Received: from [192.168.69.100] (pir44-h02-176-184-37-132.dsl.sta.abo.bbox.fr.
+ [176.184.37.132]) by smtp.gmail.com with ESMTPSA id
+ lp14-20020a056a003d4e00b006e5eb3cba7asm10563659pfb.96.2024.03.08.00.08.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 Mar 2024 00:08:12 -0800 (PST)
+Message-ID: <6be774d0-6277-4d50-b97b-a0177cad8fd8@linaro.org>
+Date: Fri, 8 Mar 2024 09:08:05 +0100
 MIME-Version: 1.0
-References: <20240205165437.1965981-1-andrew@daynix.com>
- <CABcq3pGy+Lp8YZnMZVC61wu6jDvE0BYj3kuuvuXCA+ewOtJVfg@mail.gmail.com>
- <CACGkMEs9B+7SEy1naQCQwXQDd7bzRZGjxv2h_QHx8g_az6E=Fg@mail.gmail.com>
-In-Reply-To: <CACGkMEs9B+7SEy1naQCQwXQDd7bzRZGjxv2h_QHx8g_az6E=Fg@mail.gmail.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Fri, 8 Mar 2024 16:06:05 +0800
-Message-ID: <CACGkMEvMoK+MZx7WkMzzVpyHw+agac38Td-aVq3Ygwb4jNhXmQ@mail.gmail.com>
-Subject: Re: [PATCH v9 0/5] eBPF RSS through QMP support.
-To: Andrew Melnichenko <andrew@daynix.com>
-Cc: mst@redhat.com, armbru@redhat.com, eblake@redhat.com, 
- qemu-devel@nongnu.org, berrange@redhat.com, yuri.benditovich@daynix.com, 
- yan@daynix.com, akihiko.odaki@daynix.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 4/5] hw/i386/q35: Wire virtual SMI# lines to ICH9
+ chipset
+Content-Language: en-US
+To: Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+ Anton Johansson <anjo@rev.ng>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Laszlo Ersek <lersek@redhat.com>
+References: <20240226164913.94077-1-philmd@linaro.org>
+ <20240226164913.94077-5-philmd@linaro.org> <Zd9iz9aIwM3cOqwt@intel.com>
+ <5a42a295-bb1e-49f6-ae1d-94aec1efb61c@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <5a42a295-bb1e-49f6-ae1d-94aec1efb61c@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22a;
+ envelope-from=philmd@linaro.org; helo=mail-oi1-x22a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.583,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,25 +107,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 8, 2024 at 2:30=E2=80=AFPM Jason Wang <jasowang@redhat.com> wro=
-te:
->
-> On Mon, Feb 26, 2024 at 6:23=E2=80=AFPM Andrew Melnichenko <andrew@daynix=
-.com> wrote:
-> >
-> > Hi all,
-> > Jason, can you please review the patch set, thank you.
->
-> Queued.
->
-> Thanks
+On 7/3/24 20:43, Thomas Huth wrote:
+> On 28/02/2024 17.43, Zhao Liu wrote:
+>> Hi Philippe,
+>>
+>>> +/*
+>>> + * Real ICH9 contains a single SMI output line and doesn't broadcast 
+>>> CPUs.
+>>> + * Virtualized ICH9 allows broadcasting upon negatiation with guest, 
+>>> see
+>>> + * commit 5ce45c7a2b.
+>>> + */
+>>> +enum {
+>>> +    ICH9_VIRT_SMI_BROADCAST,
+>>> +    ICH9_VIRT_SMI_CURRENT,
+>>> +#define ICH9_VIRT_SMI_COUNT 2
+>>> +};
+>>> +
+>>
+>> Just quick look here. Shouldn't ICH9_VIRT_SMI_COUNT be defined outside of
+>> enum {}?
+> 
+> Or even better, do it without a #define:
+> 
+> enum {
+>      ICH9_VIRT_SMI_BROADCAST,
+>      ICH9_VIRT_SMI_CURRENT,
+>      ICH9_VIRT_SMI_COUNT
 
-This seems to fail CI at:
+This form isn't recommended as it confuses static analyzers,
+considering ICH9_VIRT_SMI_COUNT as part of the enum.
 
-https://gitlab.com/jasowang/qemu/-/jobs/6348725269
-
-Please fix this.
-
-Thanks
+> };
+> 
+>   Thomas
+> 
 
 
