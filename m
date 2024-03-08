@@ -4,34 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42EBEC5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 17:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0BDDC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 17:04:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ridd4-0000V3-Ue; Fri, 08 Mar 2024 12:03:30 -0500
+	id 1riddG-0000au-VQ; Fri, 08 Mar 2024 12:03:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1ridcy-0000PE-10
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 12:03:24 -0500
+ id 1ridd8-0000YO-7v
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 12:03:34 -0500
 Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1ridcw-0000jF-1q
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 12:03:23 -0500
+ id 1ridd2-0000mT-RN
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 12:03:32 -0500
 Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <mail@maciej.szmigiero.name>)
- id 1ridck-0006GV-VX; Fri, 08 Mar 2024 18:03:10 +0100
+ id 1ridd0-0006Gp-Ub; Fri, 08 Mar 2024 18:03:26 +0100
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: qemu-devel@nongnu.org
-Subject: [PULL 0/3] Hyper-V Dynamic Memory and VMBus misc small patches
-Date: Fri,  8 Mar 2024 18:02:42 +0100
-Message-ID: <cover.1709916836.git.maciej.szmigiero@oracle.com>
+Subject: [PULL 3/3] vmbus: Print a warning when enabled without the
+ recommended set of features
+Date: Fri,  8 Mar 2024 18:02:45 +0100
+Message-ID: <6093637b4d32875f98cd59696ffc5f26884aa0b4.1709916836.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1709916836.git.maciej.szmigiero@oracle.com>
+References: <cover.1709916836.git.maciej.szmigiero@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=37.28.154.113;
  envelope-from=mail@maciej.szmigiero.name; helo=vps-vb.mhejs.net
@@ -57,45 +59,130 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-The following changes since commit 8f6330a807f2642dc2a3cdf33347aa28a4c00a87:
+Some Windows versions crash at boot or fail to enable the VMBus device if
+they don't see the expected set of Hyper-V features (enlightenments).
 
-  Merge tag 'pull-maintainer-updates-060324-1' of https://gitlab.com/stsquad/qemu into staging (2024-03-06 16:56:20 +0000)
+Since this provides poor user experience let's warn user if the VMBus
+device is enabled without the recommended set of Hyper-V features.
 
-are available in the Git repository at:
+The recommended set is the minimum set of Hyper-V features required to make
+the VMBus device work properly in Windows Server versions 2016, 2019 and
+2022.
 
-  https://github.com/maciejsszmigiero/qemu.git tags/pull-hv-balloon-20240308
+Acked-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+---
+ hw/hyperv/hyperv.c            | 12 ++++++++++++
+ hw/hyperv/vmbus.c             |  6 ++++++
+ include/hw/hyperv/hyperv.h    |  4 ++++
+ target/i386/kvm/hyperv-stub.c |  4 ++++
+ target/i386/kvm/hyperv.c      |  5 +++++
+ target/i386/kvm/hyperv.h      |  2 ++
+ target/i386/kvm/kvm.c         |  7 +++++++
+ 7 files changed, 40 insertions(+)
 
-for you to fetch changes up to 6093637b4d32875f98cd59696ffc5f26884aa0b4:
-
-  vmbus: Print a warning when enabled without the recommended set of features (2024-03-08 14:18:56 +0100)
-
-----------------------------------------------------------------
-Hyper-V Dynamic Memory and VMBus misc small patches
-
-This pull request contains two small patches to hv-balloon:
-the first one replacing alloca() usage with g_malloc0() + g_autofree
-and the second one adding additional declaration of a protocol message
-struct with an optional field explicitly defined to avoid a Coverity
-warning.
-
-Also included is a VMBus patch to print a warning when it is enabled
-without the recommended set of Hyper-V features (enlightenments) since
-some Windows versions crash at boot in this case.
-
-----------------------------------------------------------------
-Maciej S. Szmigiero (3):
-      hv-balloon: avoid alloca() usage
-      hv-balloon: define dm_hot_add_with_region to avoid Coverity warning
-      vmbus: Print a warning when enabled without the recommended set of features
-
- hw/hyperv/hv-balloon.c           | 18 ++++++++----------
- hw/hyperv/hyperv.c               | 12 ++++++++++++
- hw/hyperv/vmbus.c                |  6 ++++++
- include/hw/hyperv/dynmem-proto.h |  9 ++++++++-
- include/hw/hyperv/hyperv.h       |  4 ++++
- target/i386/kvm/hyperv-stub.c    |  4 ++++
- target/i386/kvm/hyperv.c         |  5 +++++
- target/i386/kvm/hyperv.h         |  2 ++
- target/i386/kvm/kvm.c            |  7 +++++++
- 9 files changed, 56 insertions(+), 11 deletions(-)
+diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
+index 6c4a18dd0e2a..3ea54ba818b2 100644
+--- a/hw/hyperv/hyperv.c
++++ b/hw/hyperv/hyperv.c
+@@ -951,3 +951,15 @@ uint64_t hyperv_syndbg_query_options(void)
+ 
+     return msg.u.query_options.options;
+ }
++
++static bool vmbus_recommended_features_enabled;
++
++bool hyperv_are_vmbus_recommended_features_enabled(void)
++{
++    return vmbus_recommended_features_enabled;
++}
++
++void hyperv_set_vmbus_recommended_features_enabled(void)
++{
++    vmbus_recommended_features_enabled = true;
++}
+diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
+index 380239af2c7b..f33afeeea27d 100644
+--- a/hw/hyperv/vmbus.c
++++ b/hw/hyperv/vmbus.c
+@@ -2631,6 +2631,12 @@ static void vmbus_bridge_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
++    if (!hyperv_are_vmbus_recommended_features_enabled()) {
++        warn_report("VMBus enabled without the recommended set of Hyper-V features: "
++                    "hv-stimer, hv-vapic and hv-runtime. "
++                    "Some Windows versions might not boot or enable the VMBus device");
++    }
++
+     bridge->bus = VMBUS(qbus_new(TYPE_VMBUS, dev, "vmbus"));
+ }
+ 
+diff --git a/include/hw/hyperv/hyperv.h b/include/hw/hyperv/hyperv.h
+index 015c3524b1c2..d717b4e13d40 100644
+--- a/include/hw/hyperv/hyperv.h
++++ b/include/hw/hyperv/hyperv.h
+@@ -139,4 +139,8 @@ typedef struct HvSynDbgMsg {
+ } HvSynDbgMsg;
+ typedef uint16_t (*HvSynDbgHandler)(void *context, HvSynDbgMsg *msg);
+ void hyperv_set_syndbg_handler(HvSynDbgHandler handler, void *context);
++
++bool hyperv_are_vmbus_recommended_features_enabled(void);
++void hyperv_set_vmbus_recommended_features_enabled(void);
++
+ #endif
+diff --git a/target/i386/kvm/hyperv-stub.c b/target/i386/kvm/hyperv-stub.c
+index 778ed782e6fc..3263dcf05d31 100644
+--- a/target/i386/kvm/hyperv-stub.c
++++ b/target/i386/kvm/hyperv-stub.c
+@@ -52,3 +52,7 @@ void hyperv_x86_synic_reset(X86CPU *cpu)
+ void hyperv_x86_synic_update(X86CPU *cpu)
+ {
+ }
++
++void hyperv_x86_set_vmbus_recommended_features_enabled(void)
++{
++}
+diff --git a/target/i386/kvm/hyperv.c b/target/i386/kvm/hyperv.c
+index 6825c89af374..f2a3fe650a18 100644
+--- a/target/i386/kvm/hyperv.c
++++ b/target/i386/kvm/hyperv.c
+@@ -149,3 +149,8 @@ int kvm_hv_handle_exit(X86CPU *cpu, struct kvm_hyperv_exit *exit)
+         return -1;
+     }
+ }
++
++void hyperv_x86_set_vmbus_recommended_features_enabled(void)
++{
++    hyperv_set_vmbus_recommended_features_enabled();
++}
+diff --git a/target/i386/kvm/hyperv.h b/target/i386/kvm/hyperv.h
+index 67543296c3a4..e3982c8f4dd1 100644
+--- a/target/i386/kvm/hyperv.h
++++ b/target/i386/kvm/hyperv.h
+@@ -26,4 +26,6 @@ int hyperv_x86_synic_add(X86CPU *cpu);
+ void hyperv_x86_synic_reset(X86CPU *cpu);
+ void hyperv_x86_synic_update(X86CPU *cpu);
+ 
++void hyperv_x86_set_vmbus_recommended_features_enabled(void);
++
+ #endif
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 42970ab046fa..e68cbe929302 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -1650,6 +1650,13 @@ static int hyperv_init_vcpu(X86CPU *cpu)
+         }
+     }
+ 
++    /* Skip SynIC and VP_INDEX since they are hard deps already */
++    if (hyperv_feat_enabled(cpu, HYPERV_FEAT_STIMER) &&
++        hyperv_feat_enabled(cpu, HYPERV_FEAT_VAPIC) &&
++        hyperv_feat_enabled(cpu, HYPERV_FEAT_RUNTIME)) {
++        hyperv_x86_set_vmbus_recommended_features_enabled();
++    }
++
+     return 0;
+ }
+ 
 
