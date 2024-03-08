@@ -4,90 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8521CC54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 07:41:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1A8EC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 07:42:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riUrE-0004pd-3r; Fri, 08 Mar 2024 02:41:32 -0500
+	id 1riUro-0005DX-T5; Fri, 08 Mar 2024 02:42:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1riUr1-0004of-S6
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 02:41:20 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1riUrj-0005AJ-Nq
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 02:42:04 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1riUqy-0007sL-7V
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 02:41:17 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1riUrd-0007wB-Cv
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 02:41:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709883673;
+ s=mimecast20190719; t=1709883716;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MyBCOTnr7Uq7mQ2iMN2HVNIOArVaBO+Llx5qwqLYEP4=;
- b=Jgs3Wa4VD8jEPt8WXVVDpHCDWoxPXV2nDL45/z1YEQwT0hjfFvAhOzrCGdfwHLHrzXFUdu
- gInLmHwUEU/jG9URJlr8P603c7C77yR8s0pZvuZVdP/N+rgKvokKxRQ3flfYn+xpODxWiX
- 3+2d7a6L+oCyhhttDK1QoySCWwy/1hY=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5uEh34mEbYn8guicwzp3Lpm2Ygc2hj4Le8h2zq8iJEg=;
+ b=htjG23hTAuoqBvwFbOQSKBdk4BvOmGx1dpUanISoAEp3de0lMrc4nlI7k5aRTGtCP5NmGk
+ wN62NBgiu7Y691cDGmoKpQ+YtxjhxhkqtaRgUWL0t47ynK1yi/go8mdADfAJA5vthezE1z
+ NuNPWrhF0Fxkdy69OGKVuh8GXZoa7s4=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-586-R-cMWmgCM9-xAamXEtg5-w-1; Fri, 08 Mar 2024 02:41:12 -0500
-X-MC-Unique: R-cMWmgCM9-xAamXEtg5-w-1
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-609d95434daso30884977b3.1
- for <qemu-devel@nongnu.org>; Thu, 07 Mar 2024 23:41:12 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709883672; x=1710488472;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MyBCOTnr7Uq7mQ2iMN2HVNIOArVaBO+Llx5qwqLYEP4=;
- b=sVbaq4GRk5cA09F8TrvJj0+dXZe4lM/aZDywogE8s3PtQ3GaXUwwrfTAsiwoMjt5cy
- JajIRkHTJ/zUzyTN6xYSztezD/U2EyH3Yv19yhh2v6iK+Z0qdgprHDwRS90Zyp5fN/X5
- yfAtpHo7HsJMcW7Tlwi4mNMGA12j4DXn3fAGXyW1JvJrGv6yR0ojJ81pCoLuNyt9A2Z3
- gwrxvckbGRxEVTPOcGIwWFzsnbPegzRq4JNTIvmHk/83IF4/3gX32gkxi8Bm0Q2vEYWb
- lGqHtRE7s5z8FxP5RfG+Isjr8SJbLWVPqinjyKJvkMo8YEok5ki1e3FwnHL9P065N78f
- xfPg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWPRZHDZmoZfVW7Lu6/cVp4X7OApH4mpMPUvi+aBbqxi9K2dfv5u+srW89lsnOLacQPPjgj3dG5WiihMQCytQ7w623X81k=
-X-Gm-Message-State: AOJu0YzZoPwg9h4cT5ZyD3cctUts3uORL07iWsxnq6AEfpAuxJetK8Ji
- torYmkxA7xTHvjwZmPAnzP4DD0VmkxCW3sLKeLvytrsBS8U/6t/6sZ8tKeNAcbY3Bt1Qg1W0czK
- y23WBEzC3UElEkVNeDjTDym0MjmULbsbC6l0s73b+UrQ9vpYovMSm
-X-Received: by 2002:a0d:d80c:0:b0:60a:448:ff4f with SMTP id
- a12-20020a0dd80c000000b0060a0448ff4fmr1017119ywe.41.1709883670715; 
- Thu, 07 Mar 2024 23:41:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFYfsFEaW1kDH8wJ7UXmgHta7Duf+krGHdHlAYxHP+Luh2QoAgvKAt1xafanzyWCM3VU2NxQQ==
-X-Received: by 2002:a0d:d80c:0:b0:60a:448:ff4f with SMTP id
- a12-20020a0dd80c000000b0060a0448ff4fmr1017076ywe.41.1709883668959; 
- Thu, 07 Mar 2024 23:41:08 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- t15-20020a81830f000000b0060a015c9da0sm279077ywf.72.2024.03.07.23.41.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 Mar 2024 23:41:08 -0800 (PST)
-Message-ID: <b51fb022-4f51-4fbc-8ebc-d8aaef537286@redhat.com>
-Date: Fri, 8 Mar 2024 08:41:06 +0100
+ us-mta-652-bqwS1JXCNmuYxP6dJak4mg-1; Fri, 08 Mar 2024 02:41:53 -0500
+X-MC-Unique: bqwS1JXCNmuYxP6dJak4mg-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E44CB18653A2;
+ Fri,  8 Mar 2024 07:41:52 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.3])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 73FA32022AB6;
+ Fri,  8 Mar 2024 07:41:52 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4B61121E6A24; Fri,  8 Mar 2024 08:41:51 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: qemu-devel@nongnu.org,  qemu-block@nongnu.org,  eblake@redhat.com,
+ hreitz@redhat.com,  kwolf@redhat.com,  vsementsov@yandex-team.ru,
+ jsnow@redhat.com,  f.gruenbichler@proxmox.com,  t.lamprecht@proxmox.com,
+ mahaocong@didichuxing.com,  xiechanglong.d@gmail.com,
+ wencongyang2@huawei.com
+Subject: Re: [PATCH v2 2/4] mirror: allow specifying working bitmap
+In-Reply-To: <20240307134711.709816-3-f.ebner@proxmox.com> (Fiona Ebner's
+ message of "Thu, 7 Mar 2024 14:47:09 +0100")
+References: <20240307134711.709816-1-f.ebner@proxmox.com>
+ <20240307134711.709816-3-f.ebner@proxmox.com>
+Date: Fri, 08 Mar 2024 08:41:51 +0100
+Message-ID: <877cid6ugw.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 20/25] vfio: Add Error** argument to
- .vfio_save_config() handler
-Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
- Prasad Pandit <pjp@fedoraproject.org>
-References: <20240306133441.2351700-1-clg@redhat.com>
- <20240306133441.2351700-21-clg@redhat.com>
- <c036626a-f1ff-46fd-ae34-a2b493f1720a@redhat.com>
- <dd7a8253-39f0-477e-88a0-2592a9134bbc@redhat.com>
-From: Eric Auger <eauger@redhat.com>
-In-Reply-To: <dd7a8253-39f0-477e-88a0-2592a9134bbc@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eauger@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -112,148 +89,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Fiona Ebner <f.ebner@proxmox.com> writes:
 
+> From: John Snow <jsnow@redhat.com>
+>
+> for the mirror job. The bitmap's granularity is used as the job's
+> granularity.
+>
+> The new @bitmap parameter is marked unstable in the QAPI and can
+> currently only be used for @sync=3Dfull mode.
+>
+> Clusters initially dirty in the bitmap as well as new writes are
+> copied to the target.
+>
+> Using block-dirty-bitmap-clear and block-dirty-bitmap-merge API,
+> callers can simulate the three kinds of @BitmapSyncMode (which is used
+> by backup):
+> 1. always: default, just pass bitmap as working bitmap.
+> 2. never: copy bitmap and pass copy to the mirror job.
+> 3. on-success: copy bitmap and pass copy to the mirror job and if
+>    successful, merge bitmap into original afterwards.
+>
+> When the target image is a fresh "diff image", i.e. one that was not
+> used as the target of a previous mirror and the target image's cluster
+> size is larger than the bitmap's granularity, or when
+> @copy-mode=3Dwrite-blocking is used, there is a pitfall, because the
+> cluster in the target image will be allocated, but not contain all the
+> data corresponding to the same region in the source image.
+>
+> An idea to avoid the limitation would be to mark clusters which are
+> affected by unaligned writes and are not allocated in the target image
+> dirty, so they would be copied fully later. However, for migration,
+> the invariant that an actively synced mirror stays actively synced
+> (unless an error happens) is useful, because without that invariant,
+> migration might inactivate block devices when mirror still got work
+> to do and run into an assertion failure [0].
+>
+> Another approach would be to read the missing data from the source
+> upon unaligned writes to be able to write the full target cluster
+> instead.
+>
+> But certain targets like NBD do not allow querying the cluster size.
+> To avoid limiting/breaking the use case of syncing to an existing
+> target, which is arguably more common than the diff image use case,
+> document the limiation in QAPI.
+>
+> This patch was originally based on one by Ma Haocong, but it has since
+> been modified pretty heavily, first by John and then again by Fiona.
+>
+> [0]: https://lore.kernel.org/qemu-devel/1db7f571-cb7f-c293-04cc-cd856e060=
+c3f@proxmox.com/
+>
+> Suggested-by: Ma Haocong <mahaocong@didichuxing.com>
+> Signed-off-by: Ma Haocong <mahaocong@didichuxing.com>
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> [FG: switch to bdrv_dirty_bitmap_merge_internal]
+> Signed-off-by: Fabian Gr=C3=BCnbichler <f.gruenbichler@proxmox.com>
+> Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
+> [FE: rebase for 9.0
+>      get rid of bitmap mode parameter
+>      use caller-provided bitmap as working bitmap
+>      turn bitmap parameter experimental]
+> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 
-On 3/7/24 14:55, Cédric Le Goater wrote:
-> On 3/7/24 10:13, Eric Auger wrote:
->>
->>
->> On 3/6/24 14:34, Cédric Le Goater wrote:
->>> Use vmstate_save_state_with_err() to improve error reporting in the
->>> callers and store a reported error under the migration stream. Add
->>> documentation while at it.
->>>
->>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->>> ---
->>>   include/hw/vfio/vfio-common.h | 25 ++++++++++++++++++++++++-
->>>   hw/vfio/migration.c           | 18 ++++++++++++------
->>>   hw/vfio/pci.c                 |  5 +++--
->>>   3 files changed, 39 insertions(+), 9 deletions(-)
->>>
->>> diff --git a/include/hw/vfio/vfio-common.h
->>> b/include/hw/vfio/vfio-common.h
->>> index
->>> b9da6c08ef41174610eb92726c590309a53696a3..46f88493634b5634a9c14a5caa33a463fbf2c50d 100644
->>> --- a/include/hw/vfio/vfio-common.h
->>> +++ b/include/hw/vfio/vfio-common.h
->>> @@ -133,7 +133,30 @@ struct VFIODeviceOps {
->>>       int (*vfio_hot_reset_multi)(VFIODevice *vdev);
->>>       void (*vfio_eoi)(VFIODevice *vdev);
->>>       Object *(*vfio_get_object)(VFIODevice *vdev);
->>> -    void (*vfio_save_config)(VFIODevice *vdev, QEMUFile *f);
->>> +
->>> +    /**
->>> +     * @vfio_save_config
->>> +     *
->>> +     * Save device config state
->>> +     *
->>> +     * @vdev: #VFIODevice for which to save the config
->>> +     * @f: #QEMUFile where to send the data
->>> +     * @errp: pointer to Error*, to store an error if it happens.
->>> +     *
->>> +     * Returns zero to indicate success and negative for error
->>> +     */
->>> +    int (*vfio_save_config)(VFIODevice *vdev, QEMUFile *f, Error
->>> **errp);
->>> +
->>> +    /**
->>> +     * @vfio_load_config
->>> +     *
->>> +     * Load device config state
->>> +     *
->>> +     * @vdev: #VFIODevice for which to load the config
->>> +     * @f: #QEMUFile where to get the data
->>> +     *
->>> +     * Returns zero to indicate success and negative for error
->>> +     */
->>>       int (*vfio_load_config)(VFIODevice *vdev, QEMUFile *f);
->>>   };
->>>   diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
->>> index
->>> 71ade14a7942358094371a86c00718f5979113ea..bd48f2ee472a5230c2c84bff829dae1e217db33f 100644
->>> --- a/hw/vfio/migration.c
->>> +++ b/hw/vfio/migration.c
->>> @@ -190,14 +190,19 @@ static int vfio_load_buffer(QEMUFile *f,
->>> VFIODevice *vbasedev,
->>>       return ret;
->>>   }
->>>   -static int vfio_save_device_config_state(QEMUFile *f, void *opaque)
->>> +static int vfio_save_device_config_state(QEMUFile *f, void *opaque,
->>> +                                         Error **errp)
->>>   {
->>>       VFIODevice *vbasedev = opaque;
->>> +    int ret;
->>>         qemu_put_be64(f, VFIO_MIG_FLAG_DEV_CONFIG_STATE);
->>>         if (vbasedev->ops && vbasedev->ops->vfio_save_config) {
->>> -        vbasedev->ops->vfio_save_config(vbasedev, f);
->>> +        ret = vbasedev->ops->vfio_save_config(vbasedev, f, errp);
->>> +        if (ret) {
->> I am not familiar enough with that case but don't you still want to set
->> the VFIO_MIG_FLAG_END_OF_STATE to "close" the state?
-> 
-> This is a delimiter used on the target side when loading the state.
-> 
-> When QEMU fails to capture the device state, the whole migration is marked
-> as in error. There is no need to end cleanly the device state, it is bogus
-> anyhow.
+[...]
 
-OK thanks
+> diff --git a/qapi/block-core.json b/qapi/block-core.json
+> index 59d75b0793..4859fffd48 100644
+> --- a/qapi/block-core.json
+> +++ b/qapi/block-core.json
+> @@ -2191,6 +2191,18 @@
+>  #     destination (all the disk, only the sectors allocated in the
+>  #     topmost image, or only new I/O).
+>  #
+> +# @bitmap: The name of a bitmap to use as a working bitmap for
+> +#     sync=3Dfull mode.  This argument must be not be present for other
+> +#     sync modes and not at the same time as @granularity.  The
+> +#     bitmap's granularity is used as the job's granularity.  When
+> +#     the target is a diff image, i.e. one that should only contain
+> +#     the delta and was not synced to previously, the target's
+> +#     cluster size must not be larger than the bitmap's granularity.
+> +#     For a diff image target, using copy-mode=3Dwrite-blocking should
+> +#     not be used, because unaligned writes will lead to allocated
+> +#     clusters with partial data in the target image!  The bitmap
+> +#     will be enabled after the job finishes.  (Since 9.0)
 
-Eric
-> 
-> Thanks,
-> 
-> C.
-> 
-> 
->>
->> Eric
->>> +            return ret;
->>> +        }
->>>       }
->>>         qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
->>> @@ -587,13 +592,14 @@ static int vfio_save_complete_precopy(QEMUFile
->>> *f, void *opaque)
->>>   static void vfio_save_state(QEMUFile *f, void *opaque)
->>>   {
->>>       VFIODevice *vbasedev = opaque;
->>> +    Error *local_err = NULL;
->>>       int ret;
->>>   -    ret = vfio_save_device_config_state(f, opaque);
->>> +    ret = vfio_save_device_config_state(f, opaque, &local_err);
->>>       if (ret) {
->>> -        error_report("%s: Failed to save device config space",
->>> -                     vbasedev->name);
->>> -        qemu_file_set_error(f, ret);
->>> +        error_prepend(&local_err, "%s: Failed to save device config
->>> space",
->>> +                      vbasedev->name);
->>> +        qemu_file_set_error_obj(f, ret, local_err);
->>>       }
->>>   }
->>>   diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->>> index
->>> 4fa387f0430d62ca2ba1b5ae5b7037f8f06b33f9..99d86e1d40ef25133fc76ad6e58294b07bd20843 100644
->>> --- a/hw/vfio/pci.c
->>> +++ b/hw/vfio/pci.c
->>> @@ -2585,11 +2585,12 @@ const VMStateDescription
->>> vmstate_vfio_pci_config = {
->>>       }
->>>   };
->>>   -static void vfio_pci_save_config(VFIODevice *vbasedev, QEMUFile *f)
->>> +static int vfio_pci_save_config(VFIODevice *vbasedev, QEMUFile *f,
->>> Error **errp)
->>>   {
->>>       VFIOPCIDevice *vdev = container_of(vbasedev, VFIOPCIDevice,
->>> vbasedev);
->>>   -    vmstate_save_state(f, &vmstate_vfio_pci_config, vdev, NULL);
->>> +    return vmstate_save_state_with_err(f, &vmstate_vfio_pci_config,
->>> vdev, NULL,
->>> +                                       errp);
->>>   }
->>>     static int vfio_pci_load_config(VFIODevice *vbasedev, QEMUFile *f)
->>
-> 
+That's a lot of restrictions and caveats.  Okay as long as the thing
+remains experimental, I guess.
+
+> +#
+>  # @granularity: granularity of the dirty bitmap, default is 64K if the
+>  #     image format doesn't have clusters, 4K if the clusters are
+>  #     smaller than that, else the cluster size.  Must be a power of 2
+> @@ -2228,12 +2240,18 @@
+>  #     disappear from the query list without user intervention.
+>  #     Defaults to true.  (Since 3.1)
+>  #
+> +# Features:
+> +#
+> +# @unstable: Member @bitmap is experimental.
+> +#
+>  # Since: 1.3
+>  ##
+>  { 'struct': 'DriveMirror',
+>    'data': { '*job-id': 'str', 'device': 'str', 'target': 'str',
+>              '*format': 'str', '*node-name': 'str', '*replaces': 'str',
+> -            'sync': 'MirrorSyncMode', '*mode': 'NewImageMode',
+> +            'sync': 'MirrorSyncMode',
+> +            '*bitmap': { 'type': 'str', 'features': [ 'unstable' ] },
+> +            '*mode': 'NewImageMode',
+>              '*speed': 'int', '*granularity': 'uint32',
+>              '*buf-size': 'int', '*on-source-error': 'BlockdevOnError',
+>              '*on-target-error': 'BlockdevOnError',
+> @@ -2513,6 +2531,18 @@
+>  #     destination (all the disk, only the sectors allocated in the
+>  #     topmost image, or only new I/O).
+>  #
+> +# @bitmap: The name of a bitmap to use as a working bitmap for
+> +#     sync=3Dfull mode.  This argument must be not be present for other
+> +#     sync modes and not at the same time as @granularity.  The
+> +#     bitmap's granularity is used as the job's granularity.  When
+> +#     the target is a diff image, i.e. one that should only contain
+> +#     the delta and was not synced to previously, the target's
+> +#     cluster size must not be larger than the bitmap's granularity.
+> +#     For a diff image target, using copy-mode=3Dwrite-blocking should
+> +#     not be used, because unaligned writes will lead to allocated
+> +#     clusters with partial data in the target image!  The bitmap
+> +#     will be enabled after the job finishes.  (Since 9.0)
+> +#
+>  # @granularity: granularity of the dirty bitmap, default is 64K if the
+>  #     image format doesn't have clusters, 4K if the clusters are
+>  #     smaller than that, else the cluster size.  Must be a power of 2
+> @@ -2548,6 +2578,10 @@
+>  #     disappear from the query list without user intervention.
+>  #     Defaults to true.  (Since 3.1)
+>  #
+> +# Features:
+> +#
+> +# @unstable: Member @bitmap is experimental.
+> +#
+>  # Since: 2.6
+>  #
+>  # Example:
+> @@ -2562,6 +2596,7 @@
+>    'data': { '*job-id': 'str', 'device': 'str', 'target': 'str',
+>              '*replaces': 'str',
+>              'sync': 'MirrorSyncMode',
+> +            '*bitmap': { 'type': 'str', 'features': [ 'unstable' ] },
+>              '*speed': 'int', '*granularity': 'uint32',
+>              '*buf-size': 'int', '*on-source-error': 'BlockdevOnError',
+>              '*on-target-error': 'BlockdevOnError',
+
+Acked-by: Markus Armbruster <armbru@redhat.com>
+
+[...]
 
 
