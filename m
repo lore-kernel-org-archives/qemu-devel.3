@@ -4,61 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2E4FC5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 15:08:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4904C54E4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 15:08:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ribp2-0000gL-Ap; Fri, 08 Mar 2024 10:07:44 -0500
+	id 1ribpI-0000wu-1l; Fri, 08 Mar 2024 10:08:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1riboz-0000bu-Sw
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:07:41 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ribov-0000lH-6p
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:07:41 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TrqDk2757z6K9Bf;
- Fri,  8 Mar 2024 23:03:34 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 38054140136;
- Fri,  8 Mar 2024 23:07:34 +0800 (CST)
-Received: from localhost (10.122.247.231) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Fri, 8 Mar
- 2024 15:07:33 +0000
-Date: Fri, 8 Mar 2024 15:07:33 +0000
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: "Michael S. Tsirkin" <mst@redhat.com>, <qemu-devel@nongnu.org>, Fan Ni
- <fan.ni@samsung.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: [PULL 53/60] hw/cxl: Standardize all references on CXL r3.1 and
- minor updates
-Message-ID: <20240308150733.00007e25@huawei.com>
-In-Reply-To: <CAFEAcA9jN7zO_tR3xmcDjSY3cuKimsdPwZtkE1JVhjAcpSreLg@mail.gmail.com>
-References: <cover.1707909001.git.mst@redhat.com>
- <8700ee15de465a55e5c7281f87618ca4b4827441.1707909001.git.mst@redhat.com>
- <CAFEAcA_W8BxG6rpcao2hCYntfU9aQfAzHQiy6RJQ-v3ZB4sNZg@mail.gmail.com>
- <20240308143420.0000536e@Huawei.com>
- <CAFEAcA9jN7zO_tR3xmcDjSY3cuKimsdPwZtkE1JVhjAcpSreLg@mail.gmail.com>
-Organization: Huawei Technologies R&D (UK) Ltd.
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.29; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1ribpF-0000qu-Lq
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:07:57 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1ribpC-0000sR-QX
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:07:57 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-412e6ba32easo6924045e9.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 07:07:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709910473; x=1710515273; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=DXkqpQ2d+nXcY4e+AOIltUbvXiT1OvsvmOZuFvpyCvA=;
+ b=NVkNYpdQcRWh++rJDaqXkRVvTptyPFVnZKrqgmsPCedfc88zaWYB9TyayBL0l6g93W
+ TY8fdtksTk/tC1HIJv75UWOMbVxENidwx8Ava6gyL2TkxUzLnhyxh0UnjynmIaeM7XVt
+ MxF6cRlNNakXESq8ojThM1uy+Te+aUsHAV/+cCQef+5qa5WhRy+XoOBl/5hhb4zLchAi
+ Dqa9VQUm1nDrf7RRvXuKLe5n78LL/13CJGsHcvxoX7PqqCMmHq7T+Y6UEWgsVXo1sEfz
+ 7aqi8KkcoaHDuBMPUpMELQvkxPHw18sMuaekW3/9TtJkHXSKjXF/zLAIopd5eY5Vx+do
+ Ky1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709910473; x=1710515273;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=DXkqpQ2d+nXcY4e+AOIltUbvXiT1OvsvmOZuFvpyCvA=;
+ b=ZMh2RaC/UARQ2UGlyp3qt6DGmm6J7i9ETn/69p2DhCjTS+9GijcE67aqC8ESt6MLUb
+ kQpezyfglrYODJ8NlhsAE6KDqJodc3ciq7ZPfwL4AyIz+q6raOV2U8cf/fQwdPlplQle
+ tR1bTu42jvYLkt0HXbLx0P0Tdn8UQk9FnmCjUSWeFwyAa5WaUcAIYcblWlKptU02J4Y6
+ ATxzUTumWxppAGSDvrJrzxriqhGjTY+8TWtOcZlUkbTdgYBcVMGG7EATkvULwQqzwPj9
+ yLxgGx8cLlI1A1BHzsDbFl0SGeocdu70GfoULt0/oB9gcvQF+/A4vnzK1pdM9fF843tj
+ 58hw==
+X-Gm-Message-State: AOJu0YwD3AZ+sRyfheGz8prwc9UVpLd0PrCQxUKzSiWpQp/SHj5eYyRP
+ hlyoP9Fe/493ewVAnXZoG7xAUYz6l3hZsN7vZvnez3Kpc2QdFBu4eETt3CfxqZ4=
+X-Google-Smtp-Source: AGHT+IF5cbysXBuu65fq32gdCih+C/ghQUW3kuOOAdJ3TM0rwyuj3dIy+wELybNOyPK9fvXUDHc2CA==
+X-Received: by 2002:adf:a34a:0:b0:33e:7b09:8a66 with SMTP id
+ d10-20020adfa34a000000b0033e7b098a66mr305155wrb.28.1709910473069; 
+ Fri, 08 Mar 2024 07:07:53 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ bw1-20020a0560001f8100b0033d6bc17d0esm23686459wrb.74.2024.03.08.07.07.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 08 Mar 2024 07:07:52 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 36BD15F753;
+ Fri,  8 Mar 2024 15:07:52 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>
+Subject: [RFC PATCH] gitlab: aggressively avoid extra GIT data
+Date: Fri,  8 Mar 2024 15:07:48 +0000
+Message-Id: <20240308150748.894699-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.122.247.231]
-X-ClientProxiedBy: lhrpeml100001.china.huawei.com (7.191.160.183) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,103 +94,83 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 8 Mar 2024 14:38:55 +0000
-Peter Maydell <peter.maydell@linaro.org> wrote:
+This avoids fetching blobs and tree references for branches we are not
+going to worry about. Also skip tag references which are similarly not
+useful and keep the default --prune. This keeps the .git data to
+around 100M rather than the ~400M even a shallow clone takes.
 
-> On Fri, 8 Mar 2024 at 14:34, Jonathan Cameron
-> <Jonathan.Cameron@huawei.com> wrote:
-> >
-> > On Fri, 8 Mar 2024 13:47:47 +0000
-> > Peter Maydell <peter.maydell@linaro.org> wrote:  
-> > > Is there a way we could write this that would catch this error?
-> > > I'm thinking maybe something like
-> > >
-> > > #define CXL_CREATE_DVSEC(CXL, DEVTYPE, TYPE, DATA) do { \
-> > >      assert(sizeof(*DATA) == TYPE##_LENGTH); \
-> > >      cxl_component_create_dvsec(CXL, DEVTYPE, TYPE##_LENGTH, \
-> > >                                 TYPE, TYPE##_REVID, (uint8_t*)DATA); \
-> > >      } while (0)  
-> >
-> > We should be able to use the length definitions in the original assert.
-> > I'm not sure why that wasn't done before.  I think there were some cases
-> > where we supported multiple versions and so the length can be shorter
-> > than the structure defintion but that doesn't matter on this one.
-> >
-> > So I think minimal fix is u16 of padding and update the assert.
-> > Can circle back to tidy up the multiple places the value is defined.
-> > Any mismatch in which the wrong length define is used should be easy
-> > enough to spot so not sure we need the macro you suggest.  
-> 
-> Well, I mean, you didn't in fact spot the mismatch between
-> the struct type you were passing and the length value you
-> were using. That's why I think it would be helpful to
-> assert() that the size of the struct really does match
-> the length value you're passing in. At the moment the
-> code completely throws away the type information the compiler
-> has by casting the pointer to the struct to a uint8_t*.
+So we can check the savings we also run a quick du while setting up
+the build.
 
-True, but the original assert at the structure definition would have
-fired if I'd actually used the define rather than a number :(
+We also have to have special settings of GIT_FETCH_EXTRA_FLAGS for the
+Windows build (git too old?) and the migration legacy test where we
+build an older QEMU alongside the main one.
 
-There is definitely more to do here - but fix wants to be on the light
-side of all the options.
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ .gitlab-ci.d/base.yml               | 4 ++++
+ .gitlab-ci.d/buildtest-template.yml | 1 +
+ .gitlab-ci.d/buildtest.yml          | 2 ++
+ .gitlab-ci.d/windows.yml            | 2 ++
+ 4 files changed, 9 insertions(+)
 
-cxl_component_create_dvsec() is an odd function in general as it has
-more code that varies depending on cxl_dev_type than is shared.
-
-So it might just make sense to split it up and provide some more
-trivial functions for the header writing. This is a case of code
-that has evolved and ended up as a far from ideal solution.
-
-We only carry the DVSECHeader in the structures so that the sizes can
-be read against the spec. It makes the code more complex though
-so maybe should consider dropping it and making the asserts next
-to the structure definitions more complex.
-
-The asserts in existing function can go (checking it fits etc is done
-by pcie_add_capability()).
-
-If not need something more like
-//awkward naming is because the second cxl needs to be there to match spec.
-void cxl_create_pcie_cxl_device_dvsec(CXLComponentState *cxl,
-				      CXLDVSECDevice *dvsec)
-{
-    PCIDevice *pdev = cxl->pdev;
-    uint16_t offset = cxl->dvsec_offset;
-    uint16_t length = sizeof(*dvsec);
-    uint8_t *wmask = pdev->wmask;
-
-    ///next block can probably be a helper or done in a simpler way.
-    /// A lot of what we have here is just to let us reuse this first call.
-    pcie_add_capability(pdev, PCI_EXT_CAP_ID_DVSEC, 1, offset, length);
-
-    ///These could be done by writing into dvsec, and memcpy ing more
-    ///but the offset will be even stranger if we do that.
-    pci_set_long(pdev->config + offset + PCIE_DVSEC_HEADER1_OFFSET,
-                 (length << 20) | (rev << 16) | CXL_VENDOR_ID);
-    pci_set_word(pdev->config + offset + PCIE_DEVSEC_ID_OFFSET,
-                 PCIE_CXL_DEVICE_DEVSEC);
-
-    memcpy(pdev->config + offset + sizeof(DVSEC_HEADER),
-           (uint8_t *)dvsec + sizeof(DVSECHeader),
-           length - sizeof(DVSECHEAEDR));
-
-// all the wmask stuff for this structure.
-}
-
-
-So I'm aiming for more drastic surgery than you were suggesting but
-not in the fix!
-
-Jonathan
-
-> 
-> thanks
-> -- PMM
+diff --git a/.gitlab-ci.d/base.yml b/.gitlab-ci.d/base.yml
+index ef173a34e6..7cb800fc3b 100644
+--- a/.gitlab-ci.d/base.yml
++++ b/.gitlab-ci.d/base.yml
+@@ -24,6 +24,10 @@ variables:
+     # Each script line from will be in a collapsible section in the job output
+     # and show the duration of each line.
+     FF_SCRIPT_SECTIONS: 1
++    # The project has a fairly fat GIT repo so we try and avoid bringing in things
++    # we don't need. The --filter options avoid blobs and tree references we aren't going to use
++    # and we also avoid fetching tags.
++    GIT_FETCH_EXTRA_FLAGS: --filter=blob:none --filter=tree:0 --no-tags --prune
+ 
+   interruptible: true
+ 
+diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
+index 4fbfeb6667..22045add80 100644
+--- a/.gitlab-ci.d/buildtest-template.yml
++++ b/.gitlab-ci.d/buildtest-template.yml
+@@ -14,6 +14,7 @@
+     - export CCACHE_DIR="$CCACHE_BASEDIR/ccache"
+     - export CCACHE_MAXSIZE="500M"
+     - export PATH="$CCACHE_WRAPPERSDIR:$PATH"
++    - du -sh .git
+     - mkdir build
+     - cd build
+     - ccache --zero-stats
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index a1c030337b..def469a9dc 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -187,6 +187,8 @@ build-previous-qemu:
+   variables:
+     IMAGE: opensuse-leap
+     TARGETS: x86_64-softmmu aarch64-softmmu
++    # Override the default flags as we need more to grab the old version
++    GIT_FETCH_EXTRA_FLAGS: --prune
+   before_script:
+     - export QEMU_PREV_VERSION="$(sed 's/\([0-9.]*\)\.[0-9]*/v\1.0/' VERSION)"
+     - git remote add upstream https://gitlab.com/qemu-project/qemu
+diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
+index f116b8012d..f9da745042 100644
+--- a/.gitlab-ci.d/windows.yml
++++ b/.gitlab-ci.d/windows.yml
+@@ -28,6 +28,8 @@ msys2-64bit:
+     # qTests don't run successfully with "--without-default-devices",
+     # so let's exclude the qtests from CI for now.
+     TEST_ARGS: --no-suite qtest
++    # The Windows git is a bit older so override the default
++    GIT_FETCH_EXTRA_FLAGS: --no-tags --prune
+   artifacts:
+     name: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
+     expire_in: 7 days
+-- 
+2.39.2
 
 
