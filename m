@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84B53C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 15:53:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2309FC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 15:53:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ricUP-0007og-EJ; Fri, 08 Mar 2024 10:50:29 -0500
+	id 1ricUZ-0000AG-Bu; Fri, 08 Mar 2024 10:50:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ricUK-0007MU-EN
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:50:24 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1ricUN-0007cz-Ke
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:50:27 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ricUH-0004LV-BB
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:50:23 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-33e4f15710aso587102f8f.2
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 07:50:20 -0800 (PST)
+ id 1ricUI-0004Si-KE
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:50:27 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-33e122c8598so1204266f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 07:50:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709913019; x=1710517819; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709913021; x=1710517821; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=jb73dre+liBKVTGsxSnPO/03s2fFvGwYZ1zKRjJSR7I=;
- b=M4VDsNidn9Bn7KPNEXM+6maZKeicqvRKrVgT78hLPgbtuBYtQWTsEkDyp+fj0pJPu4
- A8Y/pUaVz+LUteeyLV3m+kYNlBkzAWxfj1xv49XHf5aiFBUhZNu3ym91qjUB8BIbuAzW
- 4/GG06XBfsk+vvHcLiRQhStUp9Q5wAHXU430MVwoeNZtYlzkh/Hi/5RpgNsGSnwjKLuT
- ogC81dhh2iAnDz6Z271KDA1wsLgy6GZKSU8ltYD9e3hUBr6GOzSVCARXESMmeBg0eNWZ
- FhkkbgbCWGsl8Xq1omv/PLrzQC5bUL7uwGaDLYup4QbeTyk4RYHCF4FY2AnlIWodvsUj
- dqzw==
+ :reply-to; bh=4ZUGIJ7Dxq6i5SHXLd7JYUtJZpNzX4uxBVkyL+7w0k8=;
+ b=kqmqdEj06CpDcpuuKZG0kcNSmAauPNoBvvPj7oM59jvfUVra5WulwNlZA1bHg7WRUn
+ Srio+qgbxTf+nEaa1zxUzrXgxnYMLmebzAqwFvnbtaY4bhXtN6/OYiilcjQ5aP9istng
+ YItchuMlQfDdJAlaHKEKDQ9mP6tG7lfyNWfkIOKDSHLF+zmwVwoxqUpsPdekZN5Nh78E
+ Ym1nvgdm0ORQA+bKL3b4y4ePyBdLXO5eWNGZqSgx84J5nEfuuDzyfp76CjbnNZOJp2Rz
+ TwObtB4Gud4BWh+GdITghd2sUpCNpdF5veMBPP3iYx8MA9cSdAY7BrRpEaALswUJJ3RR
+ aBfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709913019; x=1710517819;
+ d=1e100.net; s=20230601; t=1709913021; x=1710517821;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jb73dre+liBKVTGsxSnPO/03s2fFvGwYZ1zKRjJSR7I=;
- b=PS4RNguEfiG7iBkAujnHWwri9eAak9mH6ynHnR8kkkE8ZiwCIG61iLkB05EHuCaY2D
- X5RJ2zIQAxi91LFr8tXTnFx5fUbStesSS+M+DyqmzuuBFxtOo4eMQz/vq2XrSsQU20C/
- QEL+SR+FMceyngCJWUeXNcSw0RxJxFCKZ9M91/m45LzS+TBRbi7xxDsXvr5VAam6L+ff
- 0G6b1ttTCjqOajagB50fCB8eDH2zACZ7rODG9ZUfWNUbXDCrTJcc9YcDNvVAK9XQeIiu
- Tezgu2Z0SdIPq7POqsGV3r5yFO7Tw+s3aEkE6to+ElG/60s6Z0cKts37/cDFVZj8wVXe
- 0HNA==
-X-Gm-Message-State: AOJu0YyfBNdn2HN7V6Z6jTi0hzSe8Oy+nU1m5l71tmZY6UgqDrRfmzW/
- kDfsLzmjvSXEbYwk2FBrV5nVMUFHSxtzTcBR4KtLLVAqy0dem4IKaO4HbcGNd9R3jPw+IGPhG0Q
- 5
-X-Google-Smtp-Source: AGHT+IGwl/XduBfbQLyG3b3xbY07BWFFDj/s9llYkszmORWH7BHgr3F0X3bHv5LA5xzk6Ab2XddRSg==
-X-Received: by 2002:adf:cd82:0:b0:33e:78d5:848e with SMTP id
- q2-20020adfcd82000000b0033e78d5848emr1182572wrj.12.1709913018842; 
- Fri, 08 Mar 2024 07:50:18 -0800 (PST)
+ bh=4ZUGIJ7Dxq6i5SHXLd7JYUtJZpNzX4uxBVkyL+7w0k8=;
+ b=Y9UtqeYtRevGw40CYaChfkm47sep3Q8DJ5XJCysacdekmA5h2ZdfFrqiURmwpeGtsr
+ 70+l7FWU8vAAt7WYIbmWBfZqFkVk5l4WPRDheoVYBRmLrjskEQxRGLgg7zCLYv6HIT5B
+ QA0NH++WCy0CJ6foh9YapTrSaKrT5otnvfCUH5ZrZrpr/tmTfdX8HMcIXNte4ILZt5aO
+ wukQxbygnLAhiTyhObkBForgzKnAHHG1qLhJ4Feu6OEEy57BLRCPVrU7n2CnXZ9oU/KU
+ 4pAcZnh+w+qWByU4e/fzV0z072HyHB49n5jGvrviPo5ZfBEITpto5Gl1reZ7gsZuufGr
+ YB9Q==
+X-Gm-Message-State: AOJu0YyBD/ocBcFD4ZMy8eX+b4r0Glj5eYZ8xrjDwdp7fxuMvqPZmxej
+ cWaG6tOmbBU/hM67Lnxd9wxvkjtnwRvJD9XWlKKjktgGiUKmHvSRKg5WE0wxlBDQ0ixmOJtP6cv
+ V
+X-Google-Smtp-Source: AGHT+IHQMscdsa47Vumu5Q0jWEx2iYJDHsp34b0dbpMeU+Pne8GTRy05mYLQATwoAIB2i5F3XoU81A==
+X-Received: by 2002:a5d:608b:0:b0:33e:4390:c039 with SMTP id
+ w11-20020a5d608b000000b0033e4390c039mr9830898wrt.33.1709913021133; 
+ Fri, 08 Mar 2024 07:50:21 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- f2-20020adff8c2000000b0033e7a204dc7sm856080wrq.32.2024.03.08.07.50.18
+ f2-20020adff8c2000000b0033e7a204dc7sm856080wrq.32.2024.03.08.07.50.20
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 07:50:18 -0800 (PST)
+ Fri, 08 Mar 2024 07:50:20 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 05/14] target/arm: Implement new FEAT_ECV trap bits
-Date: Fri,  8 Mar 2024 15:50:06 +0000
-Message-Id: <20240308155015.3637663-6-peter.maydell@linaro.org>
+Subject: [PULL 10/14] hw/arm: Connect STM32L4x5 GPIO to STM32L4x5 SoC
+Date: Fri,  8 Mar 2024 15:50:11 +0000
+Message-Id: <20240308155015.3637663-11-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240308155015.3637663-1-peter.maydell@linaro.org>
 References: <20240308155015.3637663-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,164 +94,232 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The functionality defined by ID_AA64MMFR0_EL1.ECV == 1 is:
- * four new trap bits for various counter and timer registers
- * the CNTHCTL_EL2.EVNTIS and CNTKCTL_EL1.EVNTIS bits which control
-   scaling of the event stream. This is a no-op for us, because we don't
-   implement the event stream (our WFE is a NOP): all we need to do is
-   allow CNTHCTL_EL2.ENVTIS to be read and written.
- * extensions to PMSCR_EL1.PCT, PMSCR_EL2.PCT, TRFCR_EL1.TS and
-   TRFCR_EL2.TS: these are all no-ops for us, because we don't implement
-   FEAT_SPE or FEAT_TRF.
- * new registers CNTPCTSS_EL0 and NCTVCTSS_EL0 which are
-   "self-sychronizing" views of the CNTPCT_EL0 and CNTVCT_EL0, meaning
-   that no barriers are needed around their accesses. For us these
-   are just the same as the normal views, because all our sysregs are
-   inherently self-sychronizing.
+From: Inès Varhol <ines.varhol@telecom-paris.fr>
 
-In this commit we implement the trap handling and permit the new
-CNTHCTL_EL2 bits to be written.
-
+Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-id: 20240305210444.310665-3-ines.varhol@telecom-paris.fr
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240301183219.2424889-6-peter.maydell@linaro.org
 ---
- target/arm/cpu-features.h |  5 ++++
- target/arm/helper.c       | 51 +++++++++++++++++++++++++++++++++++----
- 2 files changed, 51 insertions(+), 5 deletions(-)
+ include/hw/arm/stm32l4x5_soc.h     |  2 +
+ include/hw/gpio/stm32l4x5_gpio.h   |  1 +
+ include/hw/misc/stm32l4x5_syscfg.h |  3 +-
+ hw/arm/stm32l4x5_soc.c             | 71 +++++++++++++++++++++++-------
+ hw/misc/stm32l4x5_syscfg.c         |  1 +
+ hw/arm/Kconfig                     |  3 +-
+ 6 files changed, 63 insertions(+), 18 deletions(-)
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 7567854db63..b447ec5c0e6 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -741,6 +741,11 @@ static inline bool isar_feature_aa64_fgt(const ARMISARegisters *id)
-     return FIELD_EX64(id->id_aa64mmfr0, ID_AA64MMFR0, FGT) != 0;
- }
+diff --git a/include/hw/arm/stm32l4x5_soc.h b/include/hw/arm/stm32l4x5_soc.h
+index af67b089efc..ee5f3624055 100644
+--- a/include/hw/arm/stm32l4x5_soc.h
++++ b/include/hw/arm/stm32l4x5_soc.h
+@@ -30,6 +30,7 @@
+ #include "hw/misc/stm32l4x5_syscfg.h"
+ #include "hw/misc/stm32l4x5_exti.h"
+ #include "hw/misc/stm32l4x5_rcc.h"
++#include "hw/gpio/stm32l4x5_gpio.h"
+ #include "qom/object.h"
  
-+static inline bool isar_feature_aa64_ecv_traps(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64(id->id_aa64mmfr0, ID_AA64MMFR0, ECV) > 0;
-+}
-+
- static inline bool isar_feature_aa64_vh(const ARMISARegisters *id)
- {
-     return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, VH) != 0;
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 37845218527..46e0c3c4fcc 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -2530,6 +2530,11 @@ static CPAccessResult gt_counter_access(CPUARMState *env, int timeridx,
-              : !extract32(env->cp15.cnthctl_el2, 0, 1))) {
-             return CP_ACCESS_TRAP_EL2;
-         }
-+        if (has_el2 && timeridx == GTIMER_VIRT) {
-+            if (FIELD_EX64(env->cp15.cnthctl_el2, CNTHCTL, EL1TVCT)) {
-+                return CP_ACCESS_TRAP_EL2;
-+            }
-+        }
-         break;
-     }
-     return CP_ACCESS_OK;
-@@ -2573,6 +2578,11 @@ static CPAccessResult gt_timer_access(CPUARMState *env, int timeridx,
-                 }
-             }
-         }
-+        if (has_el2 && timeridx == GTIMER_VIRT) {
-+            if (FIELD_EX64(env->cp15.cnthctl_el2, CNTHCTL, EL1TVT)) {
-+                return CP_ACCESS_TRAP_EL2;
-+            }
-+        }
-         break;
-     }
-     return CP_ACCESS_OK;
-@@ -2982,6 +2992,14 @@ static void gt_cnthctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     if (cpu_isar_feature(aa64_rme, cpu)) {
-         valid_mask |= R_CNTHCTL_CNTVMASK_MASK | R_CNTHCTL_CNTPMASK_MASK;
-     }
-+    if (cpu_isar_feature(aa64_ecv_traps, cpu)) {
-+        valid_mask |=
-+            R_CNTHCTL_EL1TVT_MASK |
-+            R_CNTHCTL_EL1TVCT_MASK |
-+            R_CNTHCTL_EL1NVPCT_MASK |
-+            R_CNTHCTL_EL1NVVCT_MASK |
-+            R_CNTHCTL_EVNTIS_MASK;
-+    }
+ #define TYPE_STM32L4X5_SOC "stm32l4x5-soc"
+@@ -49,6 +50,7 @@ struct Stm32l4x5SocState {
+     OrIRQState exti_or_gates[NUM_EXTI_OR_GATES];
+     Stm32l4x5SyscfgState syscfg;
+     Stm32l4x5RccState rcc;
++    Stm32l4x5GpioState gpio[NUM_GPIOS];
  
-     /* Clear RES0 bits */
-     value &= valid_mask;
-@@ -6564,7 +6582,6 @@ static CPAccessResult e2h_access(CPUARMState *env, const ARMCPRegInfo *ri,
- {
-     if (arm_current_el(env) == 1) {
-         /* This must be a FEAT_NV access */
--        /* TODO: FEAT_ECV will need to check CNTHCTL_EL2 here */
-         return CP_ACCESS_OK;
-     }
-     if (!(arm_hcr_el2_eff(env) & HCR_E2H)) {
-@@ -6573,6 +6590,30 @@ static CPAccessResult e2h_access(CPUARMState *env, const ARMCPRegInfo *ri,
-     return CP_ACCESS_OK;
- }
+     MemoryRegion sram1;
+     MemoryRegion sram2;
+diff --git a/include/hw/gpio/stm32l4x5_gpio.h b/include/hw/gpio/stm32l4x5_gpio.h
+index 0d361f34105..878bd19fc9b 100644
+--- a/include/hw/gpio/stm32l4x5_gpio.h
++++ b/include/hw/gpio/stm32l4x5_gpio.h
+@@ -25,6 +25,7 @@
+ #define TYPE_STM32L4X5_GPIO "stm32l4x5-gpio"
+ OBJECT_DECLARE_SIMPLE_TYPE(Stm32l4x5GpioState, STM32L4X5_GPIO)
  
-+static CPAccessResult access_el1nvpct(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                      bool isread)
-+{
-+    if (arm_current_el(env) == 1) {
-+        /* This must be a FEAT_NV access with NVx == 101 */
-+        if (FIELD_EX64(env->cp15.cnthctl_el2, CNTHCTL, EL1NVPCT)) {
-+            return CP_ACCESS_TRAP_EL2;
-+        }
-+    }
-+    return e2h_access(env, ri, isread);
-+}
-+
-+static CPAccessResult access_el1nvvct(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                      bool isread)
-+{
-+    if (arm_current_el(env) == 1) {
-+        /* This must be a FEAT_NV access with NVx == 101 */
-+        if (FIELD_EX64(env->cp15.cnthctl_el2, CNTHCTL, EL1NVVCT)) {
-+            return CP_ACCESS_TRAP_EL2;
-+        }
-+    }
-+    return e2h_access(env, ri, isread);
-+}
-+
- /* Test if system register redirection is to occur in the current state.  */
- static bool redirect_for_e2h(CPUARMState *env)
- {
-@@ -8398,14 +8439,14 @@ static const ARMCPRegInfo vhe_reginfo[] = {
-     { .name = "CNTP_CTL_EL02", .state = ARM_CP_STATE_AA64,
-       .opc0 = 3, .opc1 = 5, .crn = 14, .crm = 2, .opc2 = 1,
-       .type = ARM_CP_IO | ARM_CP_ALIAS,
--      .access = PL2_RW, .accessfn = e2h_access,
-+      .access = PL2_RW, .accessfn = access_el1nvpct,
-       .nv2_redirect_offset = 0x180 | NV2_REDIR_NO_NV1,
-       .fieldoffset = offsetof(CPUARMState, cp15.c14_timer[GTIMER_PHYS].ctl),
-       .writefn = gt_phys_ctl_write, .raw_writefn = raw_write },
-     { .name = "CNTV_CTL_EL02", .state = ARM_CP_STATE_AA64,
-       .opc0 = 3, .opc1 = 5, .crn = 14, .crm = 3, .opc2 = 1,
-       .type = ARM_CP_IO | ARM_CP_ALIAS,
--      .access = PL2_RW, .accessfn = e2h_access,
-+      .access = PL2_RW, .accessfn = access_el1nvvct,
-       .nv2_redirect_offset = 0x170 | NV2_REDIR_NO_NV1,
-       .fieldoffset = offsetof(CPUARMState, cp15.c14_timer[GTIMER_VIRT].ctl),
-       .writefn = gt_virt_ctl_write, .raw_writefn = raw_write },
-@@ -8424,14 +8465,14 @@ static const ARMCPRegInfo vhe_reginfo[] = {
-       .type = ARM_CP_IO | ARM_CP_ALIAS,
-       .fieldoffset = offsetof(CPUARMState, cp15.c14_timer[GTIMER_PHYS].cval),
-       .nv2_redirect_offset = 0x178 | NV2_REDIR_NO_NV1,
--      .access = PL2_RW, .accessfn = e2h_access,
-+      .access = PL2_RW, .accessfn = access_el1nvpct,
-       .writefn = gt_phys_cval_write, .raw_writefn = raw_write },
-     { .name = "CNTV_CVAL_EL02", .state = ARM_CP_STATE_AA64,
-       .opc0 = 3, .opc1 = 5, .crn = 14, .crm = 3, .opc2 = 2,
-       .type = ARM_CP_IO | ARM_CP_ALIAS,
-       .nv2_redirect_offset = 0x168 | NV2_REDIR_NO_NV1,
-       .fieldoffset = offsetof(CPUARMState, cp15.c14_timer[GTIMER_VIRT].cval),
--      .access = PL2_RW, .accessfn = e2h_access,
-+      .access = PL2_RW, .accessfn = access_el1nvvct,
-       .writefn = gt_virt_cval_write, .raw_writefn = raw_write },
- #endif
++#define NUM_GPIOS 8
+ #define GPIO_NUM_PINS 16
+ 
+ struct Stm32l4x5GpioState {
+diff --git a/include/hw/misc/stm32l4x5_syscfg.h b/include/hw/misc/stm32l4x5_syscfg.h
+index 29c3522f9dd..23bb5641507 100644
+--- a/include/hw/misc/stm32l4x5_syscfg.h
++++ b/include/hw/misc/stm32l4x5_syscfg.h
+@@ -26,12 +26,11 @@
+ 
+ #include "hw/sysbus.h"
+ #include "qom/object.h"
++#include "hw/gpio/stm32l4x5_gpio.h"
+ 
+ #define TYPE_STM32L4X5_SYSCFG "stm32l4x5-syscfg"
+ OBJECT_DECLARE_SIMPLE_TYPE(Stm32l4x5SyscfgState, STM32L4X5_SYSCFG)
+ 
+-#define NUM_GPIOS 8
+-#define GPIO_NUM_PINS 16
+ #define SYSCFG_NUM_EXTICR 4
+ 
+ struct Stm32l4x5SyscfgState {
+diff --git a/hw/arm/stm32l4x5_soc.c b/hw/arm/stm32l4x5_soc.c
+index bf9926057be..40e294f838f 100644
+--- a/hw/arm/stm32l4x5_soc.c
++++ b/hw/arm/stm32l4x5_soc.c
+@@ -28,6 +28,7 @@
+ #include "sysemu/sysemu.h"
+ #include "hw/or-irq.h"
+ #include "hw/arm/stm32l4x5_soc.h"
++#include "hw/gpio/stm32l4x5_gpio.h"
+ #include "hw/qdev-clock.h"
+ #include "hw/misc/unimp.h"
+ 
+@@ -99,6 +100,22 @@ static const int exti_or_gate1_lines_in[EXTI_OR_GATE1_NUM_LINES_IN] = {
+     16, 35, 36, 37, 38,
  };
+ 
++static const struct {
++    uint32_t addr;
++    uint32_t moder_reset;
++    uint32_t ospeedr_reset;
++    uint32_t pupdr_reset;
++} stm32l4x5_gpio_cfg[NUM_GPIOS] = {
++    { 0x48000000, 0xABFFFFFF, 0x0C000000, 0x64000000 },
++    { 0x48000400, 0xFFFFFEBF, 0x00000000, 0x00000100 },
++    { 0x48000800, 0xFFFFFFFF, 0x00000000, 0x00000000 },
++    { 0x48000C00, 0xFFFFFFFF, 0x00000000, 0x00000000 },
++    { 0x48001000, 0xFFFFFFFF, 0x00000000, 0x00000000 },
++    { 0x48001400, 0xFFFFFFFF, 0x00000000, 0x00000000 },
++    { 0x48001800, 0xFFFFFFFF, 0x00000000, 0x00000000 },
++    { 0x48001C00, 0x0000000F, 0x00000000, 0x00000000 },
++};
++
+ static void stm32l4x5_soc_initfn(Object *obj)
+ {
+     Stm32l4x5SocState *s = STM32L4X5_SOC(obj);
+@@ -110,6 +127,11 @@ static void stm32l4x5_soc_initfn(Object *obj)
+     }
+     object_initialize_child(obj, "syscfg", &s->syscfg, TYPE_STM32L4X5_SYSCFG);
+     object_initialize_child(obj, "rcc", &s->rcc, TYPE_STM32L4X5_RCC);
++
++    for (unsigned i = 0; i < NUM_GPIOS; i++) {
++        g_autofree char *name = g_strdup_printf("gpio%c", 'a' + i);
++        object_initialize_child(obj, name, &s->gpio[i], TYPE_STM32L4X5_GPIO);
++    }
+ }
+ 
+ static void stm32l4x5_soc_realize(DeviceState *dev_soc, Error **errp)
+@@ -118,8 +140,9 @@ static void stm32l4x5_soc_realize(DeviceState *dev_soc, Error **errp)
+     Stm32l4x5SocState *s = STM32L4X5_SOC(dev_soc);
+     const Stm32l4x5SocClass *sc = STM32L4X5_SOC_GET_CLASS(dev_soc);
+     MemoryRegion *system_memory = get_system_memory();
+-    DeviceState *armv7m;
++    DeviceState *armv7m, *dev;
+     SysBusDevice *busdev;
++    uint32_t pin_index;
+ 
+     if (!memory_region_init_rom(&s->flash, OBJECT(dev_soc), "flash",
+                                 sc->flash_size, errp)) {
+@@ -160,17 +183,43 @@ static void stm32l4x5_soc_realize(DeviceState *dev_soc, Error **errp)
+         return;
+     }
+ 
++    /* GPIOs */
++    for (unsigned i = 0; i < NUM_GPIOS; i++) {
++        g_autofree char *name = g_strdup_printf("%c", 'A' + i);
++        dev = DEVICE(&s->gpio[i]);
++        qdev_prop_set_string(dev, "name", name);
++        qdev_prop_set_uint32(dev, "mode-reset",
++                             stm32l4x5_gpio_cfg[i].moder_reset);
++        qdev_prop_set_uint32(dev, "ospeed-reset",
++                             stm32l4x5_gpio_cfg[i].ospeedr_reset);
++        qdev_prop_set_uint32(dev, "pupd-reset",
++                            stm32l4x5_gpio_cfg[i].pupdr_reset);
++        busdev = SYS_BUS_DEVICE(&s->gpio[i]);
++        g_free(name);
++        name = g_strdup_printf("gpio%c-out", 'a' + i);
++        qdev_connect_clock_in(DEVICE(&s->gpio[i]), "clk",
++            qdev_get_clock_out(DEVICE(&(s->rcc)), name));
++        if (!sysbus_realize(busdev, errp)) {
++            return;
++        }
++        sysbus_mmio_map(busdev, 0, stm32l4x5_gpio_cfg[i].addr);
++    }
++
+     /* System configuration controller */
+     busdev = SYS_BUS_DEVICE(&s->syscfg);
+     if (!sysbus_realize(busdev, errp)) {
+         return;
+     }
+     sysbus_mmio_map(busdev, 0, SYSCFG_ADDR);
+-    /*
+-     * TODO: when the GPIO device is implemented, connect it
+-     * to SYCFG using `qdev_connect_gpio_out`, NUM_GPIOS and
+-     * GPIO_NUM_PINS.
+-     */
++
++    for (unsigned i = 0; i < NUM_GPIOS; i++) {
++        for (unsigned j = 0; j < GPIO_NUM_PINS; j++) {
++            pin_index = GPIO_NUM_PINS * i + j;
++            qdev_connect_gpio_out(DEVICE(&s->gpio[i]), j,
++                                  qdev_get_gpio_in(DEVICE(&s->syscfg),
++                                  pin_index));
++        }
++    }
+ 
+     /* EXTI device */
+     busdev = SYS_BUS_DEVICE(&s->exti);
+@@ -217,7 +266,7 @@ static void stm32l4x5_soc_realize(DeviceState *dev_soc, Error **errp)
+         }
+     }
+ 
+-    for (unsigned i = 0; i < 16; i++) {
++    for (unsigned i = 0; i < GPIO_NUM_PINS; i++) {
+         qdev_connect_gpio_out(DEVICE(&s->syscfg), i,
+                               qdev_get_gpio_in(DEVICE(&s->exti), i));
+     }
+@@ -302,14 +351,6 @@ static void stm32l4x5_soc_realize(DeviceState *dev_soc, Error **errp)
+     /* RESERVED:    0x40024400, 0x7FDBC00 */
+ 
+     /* AHB2 BUS */
+-    create_unimplemented_device("GPIOA",     0x48000000, 0x400);
+-    create_unimplemented_device("GPIOB",     0x48000400, 0x400);
+-    create_unimplemented_device("GPIOC",     0x48000800, 0x400);
+-    create_unimplemented_device("GPIOD",     0x48000C00, 0x400);
+-    create_unimplemented_device("GPIOE",     0x48001000, 0x400);
+-    create_unimplemented_device("GPIOF",     0x48001400, 0x400);
+-    create_unimplemented_device("GPIOG",     0x48001800, 0x400);
+-    create_unimplemented_device("GPIOH",     0x48001C00, 0x400);
+     /* RESERVED:    0x48002000, 0x7FDBC00 */
+     create_unimplemented_device("OTG_FS",    0x50000000, 0x40000);
+     create_unimplemented_device("ADC",       0x50040000, 0x400);
+diff --git a/hw/misc/stm32l4x5_syscfg.c b/hw/misc/stm32l4x5_syscfg.c
+index fd68cb800bb..3dafc00b49d 100644
+--- a/hw/misc/stm32l4x5_syscfg.c
++++ b/hw/misc/stm32l4x5_syscfg.c
+@@ -27,6 +27,7 @@
+ #include "hw/irq.h"
+ #include "migration/vmstate.h"
+ #include "hw/misc/stm32l4x5_syscfg.h"
++#include "hw/gpio/stm32l4x5_gpio.h"
+ 
+ #define SYSCFG_MEMRMP 0x00
+ #define SYSCFG_CFGR1 0x04
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index d58d820788c..893a7bff66b 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -473,9 +473,10 @@ config STM32L4X5_SOC
+     bool
+     select ARM_V7M
+     select OR_IRQ
+-    select STM32L4X5_SYSCFG
+     select STM32L4X5_EXTI
++    select STM32L4X5_SYSCFG
+     select STM32L4X5_RCC
++    select STM32L4X5_GPIO
+ 
+ config XLNX_ZYNQMP_ARM
+     bool
 -- 
 2.34.1
 
