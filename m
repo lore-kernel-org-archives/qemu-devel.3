@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9D27C54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 08:59:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 059DFC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 09:00:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riW4p-0002a4-89; Fri, 08 Mar 2024 03:59:39 -0500
+	id 1riW59-00030P-FS; Fri, 08 Mar 2024 04:00:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1riW4n-0002ZW-Hu
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:59:37 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1riW54-0002rx-Pb
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:59:55 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1riW4l-0000nV-Rq
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:59:37 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1riW53-0000pJ-4g
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:59:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709888375;
+ s=mimecast20190719; t=1709888391;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=G1pdnrWdOsdfosLHxG6IOb5DhKCyfNHTRR0+kPejn+s=;
- b=HRhgzh+Z2N2RAUULzY2yzYHoJmYOmyfEWVv4PH4G1VVepSqt4nBC/s+RESuH7hpkKHNAZd
- GhcuDfoFOQhSamiM1n8nv6B7xXGO9ySIWiK8hxA3ire8dVOV9LMnKlBmcCqOMjTfRlzYZF
- fJZFBrn2INLQwokMpbkqnsMCt5xEQCU=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/N1ybf2WAfWTvcoHcNsy6Ny7vVSfwmnepRD4JNtdw6E=;
+ b=emVprBCIZEtJRyNQBoe6i7hQCGFJTX2uzIdEOqFD2y8z5s2wGR+QNHp3LGGNQjOpq3jGXR
+ /9tqBPDwjgK8XH6K5o4wndbhRGE3z37ztezv7Q19kOT55DLgfs950Q8puk6/CJKlMvHgnU
+ JBe8HwdLthzmB4W0cR6O4MYZ5vCp20s=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-576-5qtrDflaP2SwyAlQ5RvWGg-1; Fri, 08 Mar 2024 03:59:33 -0500
-X-MC-Unique: 5qtrDflaP2SwyAlQ5RvWGg-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-412d1f1ee7cso9996475e9.3
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 00:59:33 -0800 (PST)
+ us-mta-244-_x5jbC_VP32JnbZIz0JQjQ-1; Fri, 08 Mar 2024 03:59:50 -0500
+X-MC-Unique: _x5jbC_VP32JnbZIz0JQjQ-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-33e6d36db5dso750309f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 00:59:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709888372; x=1710493172;
+ d=1e100.net; s=20230601; t=1709888389; x=1710493189;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
  :references:cc:to:content-language:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=G1pdnrWdOsdfosLHxG6IOb5DhKCyfNHTRR0+kPejn+s=;
- b=oHAzZ+w0NwjGl2eoa64KiBwLW03xWjlpKYWzNxs3wcAYRIP/uxgVEAc79bT+KNHzJj
- AgkacMnk6RmDHCWqo9F5mfU3ng7h2f3KSzFy4RysyMNqnYas6Wr+cQFulxmHtpRGjqFt
- ORXP4eiStQPm/kmb3w+s+clAC5af50m+hp1wAp3hhaKrAAn22Le5S1lqe5FKXdpKtwjQ
- jaxlW5agXLCzEiFgYrNnzpDJ4gQUWX53lPWltfO1YR6vzRU5PO/4Da+DwzHi7hDtP17W
- x5ngaF2NYdquFn2NbWxzyKMAgebwlr4HyMeARXxqQERG03G0jQs+FKrO7h5Dd4+jZMYk
- XnWA==
+ bh=/N1ybf2WAfWTvcoHcNsy6Ny7vVSfwmnepRD4JNtdw6E=;
+ b=NtKT/GrsDFpnc3ElScI88P6Fua2rDkvWWEmq8gNGLB3Zh0gbRi2H0XlYFfG8O17AzK
+ x0KUsc5V+OtLa+xc1Aly9tzZ4+/8k5CZLWSWQ+WX00VCDwN4sqFHMnuO+16wia0UBSaj
+ ECU0dCtFhnHiFgZH7IoSv5F5OtuA93X+gs3p7gBm7668rCQiCtyZ41n7Ux4fBNAvpRCE
+ dEFEsPnPqxzvl1lRIFRqqXfSuW+kVFDOZuZOehSC2Hi4BqbTfs9UFRzl14feLRlR3jwg
+ Bjy2deZcLfKXtDqWnTU0YqibDy9e8aBwqXiQJP0dnoDmuVD+sDFPyJWdXZnsySlntc97
+ pF1Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXmD5MOJ5tyZaF7sbTJvtp7+wemhS0BjeDlDkraFtIF+c39C8ybdiKsRuPty5myjT2LF7y89iKl7B65hzX4fbx78Nqs8GU=
-X-Gm-Message-State: AOJu0YwaFEgBz/dvkGe6CTj2Ij6kcLUptQj5NepiT1UAk4Tzytsh+4z5
- XytDwq3v4DF93oEaR1z2Rcs4Tgf+RwZFcTGTXjGMw5dc0Mm1NzOBajAy92/rSVozat0eBBoH6XN
- NRK9IWMWIY7132llR1ihttCxO8L/A0kVcc3Vv+RrCrkn0U7IXdJDP
-X-Received: by 2002:a05:600c:b93:b0:413:1aee:65c5 with SMTP id
- fl19-20020a05600c0b9300b004131aee65c5mr471644wmb.37.1709888372040; 
- Fri, 08 Mar 2024 00:59:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFAKBG2g131N0pDfpDXXQDv2toY5P3sCuznXYbd3ULSm3kFJs0QVGQrYgcBxIdfxB2HiXEGxg==
-X-Received: by 2002:a05:600c:b93:b0:413:1aee:65c5 with SMTP id
- fl19-20020a05600c0b9300b004131aee65c5mr471631wmb.37.1709888371637; 
- Fri, 08 Mar 2024 00:59:31 -0800 (PST)
+ AJvYcCWmg+00GxUsYC8w5JiE4rPGuqvJM6R5MWHNkrgBcbT49OMUHvg0u4X7ofH5BlsPC2Xs/BPDz+iR6bA8MzeTiFgoPNGh5YE=
+X-Gm-Message-State: AOJu0Yyi2ahc3eu8F6ttBXWZgWtUMJyuIdUBZf+PgG2d2VYkRGsMX1J1
+ VpwfclgqUWPlF6cGItryCujQd4bdQusKUqU7Fnqam7JW8uf6GpmYBhsvA7oYQ7fsYagkr0itaj7
+ kr1yhDWczp+jkvZdcahptqCBUetAEdVYD8DHJRNpqzRuJC5r+/7qh
+X-Received: by 2002:a05:6000:3c5:b0:33e:4590:8bd8 with SMTP id
+ b5-20020a05600003c500b0033e45908bd8mr13431645wrg.60.1709888389205; 
+ Fri, 08 Mar 2024 00:59:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHPKMB7bVvo+LtqHUg4pcYZaB9WQILf2MSEPHDyZa0mOlugEfRwD8o/r6EUQeaRsuBQO7XUog==
+X-Received: by 2002:a05:6000:3c5:b0:33e:4590:8bd8 with SMTP id
+ b5-20020a05600003c500b0033e45908bd8mr13431619wrg.60.1709888388826; 
+ Fri, 08 Mar 2024 00:59:48 -0800 (PST)
 Received: from ?IPV6:2003:cb:c707:3500:5cd0:78d9:ca49:21f3?
  (p200300cbc70735005cd078d9ca4921f3.dip0.t-ipconnect.de.
  [2003:cb:c707:3500:5cd0:78d9:ca49:21f3])
  by smtp.gmail.com with ESMTPSA id
- jh3-20020a05600ca08300b0041304100fa9sm5206380wmb.45.2024.03.08.00.59.30
+ jh3-20020a05600ca08300b0041304100fa9sm5206380wmb.45.2024.03.08.00.59.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Mar 2024 00:59:31 -0800 (PST)
-Message-ID: <20315e39-549c-44f7-885d-9d0ae568f4f0@redhat.com>
-Date: Fri, 8 Mar 2024 09:59:30 +0100
+ Fri, 08 Mar 2024 00:59:48 -0800 (PST)
+Message-ID: <ac1c7e46-9e8a-4a87-a3e1-e54f4f9421eb@redhat.com>
+Date: Fri, 8 Mar 2024 09:59:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] physmem: Fix wrong address in large
- address_space_read/write_cached_slow()
+Subject: Re: [PATCH v2 0/4] physmem: Fix MemoryRegion for second access to
+ cached MMIO Address Space
 Content-Language: en-US
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: linuxarm@huawei.com
+To: Peter Xu <peterx@redhat.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, linuxarm@huawei.com
 References: <20240307153710.30907-1-Jonathan.Cameron@huawei.com>
- <20240307153710.30907-5-Jonathan.Cameron@huawei.com>
+ <ZerADmIeh6XnbOkG@x1n>
 From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -128,7 +128,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20240307153710.30907-5-Jonathan.Cameron@huawei.com>
+In-Reply-To: <ZerADmIeh6XnbOkG@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
@@ -156,69 +156,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07.03.24 16:37, Jonathan Cameron wrote:
-> If the access is bigger than the MemoryRegion supports,
-> flatview_read/write_continue() will attempt to update the Memory Region.
-> but the address passed to flatview_translate() is relative to the cache, not
-> to the FlatView.
+On 08.03.24 08:36, Peter Xu wrote:
+> On Thu, Mar 07, 2024 at 03:37:06PM +0000, Jonathan Cameron wrote:
+>> v2: (Thanks to Peter Xu for reviewing!)
+>> - New patch 1 to rename addr1 to mr_addr in the interests of meaningful naming.
+>> - Take advantage of a cached address space only allow for a single MR to simplify
+>>    the new code.
+>> - Various cleanups of indentation etc.
+>> - Cover letter and some patch descriptions updated to reflect changes.
+>> - Changes all called out in specific patches.
 > 
-> On arm/virt with interleaved CXL memory emulation and virtio-blk-pci this
-> lead to the first part of descriptor being read from the CXL memory and the
-> second part from PA 0x8 which happens to be a blank region
-> of a flash chip and all ffs on this particular configuration.
-> Note this test requires the out of tree ARM support for CXL, but
-> the problem is more general.
+> All look good to me, thanks.  Having the new functions' first argument as
+> MemTxAttrs is slightly weird to me, but that's not a big deal and we can
+> clean it up later if wanted.  I guess it's good to fix this in 9.0 first as
+> it's a real bug even if not trivial to hit.
 > 
-> Avoid this by adding new address_space_read_continue_cached()
-> and address_space_write_continue_cached() which share all the logic
-> with the flatview versions except for the MemoryRegion lookup which
-> is unnecessary as the MemoryRegionCache only covers one MemoryRegion.
+> I queued it in my migration tree (with my "memory API" hat..).
 > 
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> ---
-> v2: Review from Peter Xu
-> - Drop additional lookups of the MemoryRegion via
-> address_space_translate_cached() as it will always return the same
-> answer.
-> - Drop various parameters that are then unused.
-> - rename addr1 to mr_addr.
-> - Drop a fuzz_dma_read_cb(). Could put this back but it means
->    carrying the address into the inner call and the only in tree
->    fuzzer checks if it is normal RAM and if not does nothing anyway.
->    We don't hit this path for normal RAM.
-> ---
->   system/physmem.c | 63 +++++++++++++++++++++++++++++++++++++++++++-----
->   1 file changed, 57 insertions(+), 6 deletions(-)
+> I won't send a pull until next Monday.  Please shoot if there's any objections!
 > 
-> diff --git a/system/physmem.c b/system/physmem.c
-> index 1264eab24b..701bea27dd 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -3381,6 +3381,59 @@ static inline MemoryRegion *address_space_translate_cached(
->       return section.mr;
->   }
->   
-> +/* Called within RCU critical section.  */
-> +static MemTxResult address_space_write_continue_cached(MemTxAttrs attrs,
-> +                                                       const void *ptr,
-> +                                                       hwaddr len,
-> +                                                       hwaddr mr_addr,
-> +                                                       hwaddr l,
-> +                                                       MemoryRegion *mr)
 
-The only thing that is really confusing is
-
-hwaddr len,
-...
-hwaddr l,
-
-ehm, what?
-
-... but it fits the style of flatview_read_continue(), so at least the 
-level of confusion this creates is consistent with the other code.
-
-
-Reviewed-by: David Hildenbrand <david@redhat.com>
+Works for me, thanks!
 
 -- 
 Cheers,
