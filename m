@@ -4,78 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A74CCC54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 17:58:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07849C54E4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 18:07:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rieTp-0004DB-GV; Fri, 08 Mar 2024 12:58:01 -0500
+	id 1riecN-0006EL-RI; Fri, 08 Mar 2024 13:06:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rieTm-0004CI-Vb
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 12:57:58 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1riecJ-0006Dz-RK
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 13:06:48 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rieTl-0003Lh-Cg
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 12:57:58 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-1dd5df90170so14243175ad.0
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 09:57:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1riecH-0004jS-Dt
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 13:06:47 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5682f48532eso1373351a12.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 10:06:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709920675; x=1710525475; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=MGIj4sa/0a6oJihBsfbSxlcUOeJaz+aH5AZRyH68X5c=;
- b=p2KpLNiaNKJRmIGnHvJtUxkzSZ527wXx5yuf/6SlIkLIenV5a4rXzPUyDBwt8piY8s
- 8fXnkQgEsF0cReGl6K589CFZNHqTdQCInCkwAmD1arx0K+8Gy6fz36rkPbF7JbnZHLeF
- GB/n+oj5+0m3aLR0b/HQkgx7gPGNR4J8tnTYn35RqGkY001+IHX7le/HRJEugJFhzWuB
- 98fOh2uCZtxy6B0yKggV4Kqd98EH8vbltnX1B5FVk/ZkRVFjtLmuSDcNpsCDGETnlkq6
- 4FEzzKRn4j2vB0k/DaaMDpRoMk49MmAC2tzJ5Wr2rLAA43ie5gC9L4gHeVghKBnzN7vC
- 1Qlg==
+ d=linaro.org; s=google; t=1709921202; x=1710526002; darn=nongnu.org;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=asfKzhxfax3+IWcjgDj/It1UC89hn5iDw83nZCbFf34=;
+ b=Bh5xd5fYAHQ4aYsIqw4GAXNPvs2EUaAj39JE34graOZExD3ZnTztBAVvVcW1GRm1f+
+ oYwrMaMxXgRXZwk36VIBD/Ct9hzPjeRkojqfyjQGECPdMp5i+Q/jW6rEg0UZS/YfVe6H
+ gKeXQQy4xmakofSNigOOpNbomSwztEr7rbgkhrEo3DqAvas0FHGrFkXl5DP0b2lqU2J9
+ WPtdYtoeGKl4xmPcDyhVsANdDBrTy5EWwW5inBbphb4IJFyuFliDSCMtLIWWt0Cj4y4o
+ WEpvv15Pox86E5LqLICwjNriEeFU0u32Yo24kLtUT1qcZtg76oZykeFS89EN5Vgm9aU1
+ +2xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709920675; x=1710525475;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MGIj4sa/0a6oJihBsfbSxlcUOeJaz+aH5AZRyH68X5c=;
- b=gPEUORMyY2kmuxw40NR60HH3hNdoaQR/TCKcsFyiaA0gF8ConY/UMLjBM2uh2D0UI0
- xg3/vWC+4Tv3k8u3AGDsPxQWbgn5cBgLgDfnLMSvsdYTriby1PDazaqYXkcnQmlhYka6
- CRBc7j67vFyngzhRRHsDVzncLfMBLiAKA0csDiaBBCqRNid0opOsrbnS0QYQ8bjrB0zD
- 1dKUm8usJ+oqmYiMLgE4bajUACTe6a69F9zZ5xtXFxrHWBsvjEwIfLE0eLC+2ZVVQYyD
- wOFqhMq0veLA/OkguAerzIn8gX/oiEFNXf4g7iBByrh/h1ExtUjrJ/xl9VU1RKwjS/H4
- yh3w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWuipEpCBTvH1fFuP0G/CbcePG4T1F0GZMtbsXnKDfbe5Zp0LJlvm1gD4DcNP4ZXTngYlc7ZrP4VyYEatmX6mv0TRthPU8=
-X-Gm-Message-State: AOJu0YxyfNkDpCyadz+4IjKD2oZXQz94YpmBLhuPGoSSwMkYB6E/VQ6k
- JRNtKFCEr7RAfJtblHhNTMHulwG2cJLymgb4G+hGdSF+fhMunT6EC81VJiHlOOE=
-X-Google-Smtp-Source: AGHT+IGOZEJqU1IVW0sjNgVq5cSGpoSUZCPebuwTKOGBR0nusR4ooJfi1Rg3e7x8bYU+/r86wl9lFg==
-X-Received: by 2002:a17:902:bf46:b0:1dc:7976:b52b with SMTP id
- u6-20020a170902bf4600b001dc7976b52bmr1273743pls.10.1709920675105; 
- Fri, 08 Mar 2024 09:57:55 -0800 (PST)
-Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
- [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- o8-20020a170902d4c800b001da1fae8a73sm16560715plg.12.2024.03.08.09.57.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Mar 2024 09:57:54 -0800 (PST)
-Message-ID: <467b4fbd-ef2b-449e-82cb-a4d939aa7669@linaro.org>
-Date: Fri, 8 Mar 2024 07:57:50 -1000
+ d=1e100.net; s=20230601; t=1709921202; x=1710526002;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=asfKzhxfax3+IWcjgDj/It1UC89hn5iDw83nZCbFf34=;
+ b=LfEMIJeHlEeOsxtTlCM2tG2hUinhy4vJgdfHbCfvGGezKUaiPBVO3bSIaNtZ7slUEv
+ ALq0JlQWqq2tm3hJ7DhiqWOoUr0ehnYITzbXzS5ycAehbcub0nzhHp9qaIBH2RQplJnZ
+ PxddcBltpScNoHHqamCtVGm/Sj7knYrQ7OqyWVCEXM6UaQWhji+BlN2mMunD9sy8gycN
+ aebIxq5z4DN9OZ9VzsAxUg86V9WZLqpeXYhUICHQiUen6lHNy23Y94Zo0sNCkmlS0GDE
+ Wg3WT4y5YwK62WBFJvcLsIloNOg6zX+pwm1qjGDA8llxyd7NqldqrdycHkbJetun5Bj3
+ lWCQ==
+X-Gm-Message-State: AOJu0YyXEYB2PxqiHXwz6Yn7Zblm7l3p1WpcfibzfFAcniwtFRZLS+lm
+ lk6gwLR+vkgLNLCts/O63ulKE0y+IcYQVSax8ZKNb9mKpxYL4ZacCDaA/3gMcmYqN/y6a93vbRH
+ fm78VhsVKeRVucP1L29WL1mWwGEiAZE/11pZ+5oqDPUmSwggc
+X-Google-Smtp-Source: AGHT+IFNVCo4BCi9QqAS55YD9DFMpJf8LEAoLa1ASCRGVIS/DPGbBSyuGEE8PcDCYbqgMugTOvohmC4KHjWt//9F5lg=
+X-Received: by 2002:a50:d648:0:b0:566:902e:65e4 with SMTP id
+ c8-20020a50d648000000b00566902e65e4mr822946edj.18.1709921202125; Fri, 08 Mar
+ 2024 10:06:42 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/arm: Deprecate various old Arm machine types
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>
-References: <20240308171621.3749894-1-peter.maydell@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240308171621.3749894-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 8 Mar 2024 18:06:30 +0000
+Message-ID: <CAFEAcA88=WtyqWC4S=vEjv-rW+GBrMYs7CEQmEk5XNnpFzRk4Q@mail.gmail.com>
+Subject: reminder: softfreeze coming up
+To: QEMU Developers <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,22 +83,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/8/24 07:16, Peter Maydell wrote:
-> Mark all these machine types as depprecated.
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
->   docs/about/deprecated.rst | 15 +++++++++++++++
->   hw/arm/gumstix.c          |  2 ++
->   hw/arm/mainstone.c        |  1 +
->   hw/arm/nseries.c          |  2 ++
->   hw/arm/palm.c             |  1 +
->   hw/arm/spitz.c            |  1 +
->   hw/arm/tosa.c             |  1 +
->   hw/arm/z2.c               |  1 +
->   8 files changed, 24 insertions(+)
+Hi; just a reminder that QEMU softfreeze is on the 12th March, next
+Tuesday. That means that all feature change work should be in a pullreq
+on the mailing list by that date.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Also, if you have outstanding bugs that you know ought to be fixed
+for the 9.0 release, now is a good time to make sure that they're
+in the issue tracker and tagged with the 9.0 milestone.
 
-r~
+thanks
+-- PMM
 
