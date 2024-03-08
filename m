@@ -4,125 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C691C54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 14:57:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 898C9C54E4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 14:57:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ribdl-0002zE-Po; Fri, 08 Mar 2024 09:56:05 -0500
+	id 1ribe1-0003DZ-BC; Fri, 08 Mar 2024 09:56:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ankita@nvidia.com>)
- id 1ribdV-0002qL-No; Fri, 08 Mar 2024 09:55:52 -0500
-Received: from mail-bn7nam10on20601.outbound.protection.outlook.com
- ([2a01:111:f403:2009::601]
- helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ribdv-00039p-4Q
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:56:15 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ankita@nvidia.com>)
- id 1ribdT-0005GL-E9; Fri, 08 Mar 2024 09:55:49 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=SVHd72ioXeZyLYa2wT4NSHwEFMOqubdlSz5n3nkaklNUzHX0RFL/XEYQdCcYpzdfFot+HIKTJst0FavkMedfju82hBdlQn0glqZyxKkGfx+7bDSjNnytmownk4IQvhJgmVtLQp4FY96wm6ergEIE67hLP5WmDHKPGjnS+FobVJqLjDV6IjWp4hvqjgPZznj3gNzbr2FhUQCh+bNqwMd0ug3jPB2sgBWMqi/oJbGNytdlhRD7GVtJsUISI6q2JhtUJ36KyH/bg7TAp9jSrv0syQEKHpY4XQdpd+jff+xETA8gJrxqFfoWiVwtxs2QdwASyDG++v74onYpCvTY45l1zg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XGmgSxq6TNQBYjYu+WNFcbEr7nGnqIQQnoVPHZz6jIg=;
- b=aAOtquiK+sSVgC5xa2AciD28JVb1dIRTF2RfF6zppfmapnptIWFgLaWe6C63EzTPSlY37tiwalRYacttXmY7YA4gpIOOyo8GLhEaygD5ygvsmk5kXiuvBgbhbZIWQhs9WQw+QUqaXKQQ7T0cuaNl+qEDzSRN4KKja4sFQjgWWviCXb6NlFanwoeon//a9VyK7y4wY3oX7aCoBpfMAJNSRBismycHVId8tlEA0UUNppj2qzHtwo6k8e/Nf+2HaMA4h/1Ewux7bVb+q/6XYADbMJNskw/iQfGzK8wE4VKp8XWP/VkHBfQ4iYE16LLcQAMku6um2nXSqz59lCOaXOKeHg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=huawei.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XGmgSxq6TNQBYjYu+WNFcbEr7nGnqIQQnoVPHZz6jIg=;
- b=udCzSrl1VO6IBzMjHf4XYoIyJZwlYyWpVXtuy6XZh8+aZHTj/WOYxpPdOdpR/7LwMns21+Fl3j3BLmfC8ejiY67lDTiWt+hNA3eau3PDfXOvH4eKiOFpMOL87SumGhiDQ+tgboDye1+obLNgfU78HR6GiQZTDYPBJ4Pk65p0LJ7v9fwi2Y3bPHQrWcFt3iZcr5TBFy7ZlJfN9Owel1AyZxEvwzMpjI0zWbJPm+Jy4v7O+20ll9imxmeCV8yXX5Vwu0pWbL6a7TBLyUTOIn+ur3um3BzcEfvOZaPEY4EnrXJG9748uCOgJFws+yX5PGqS14Q6XtvKE8jKJwYxT1Unfw==
-Received: from MW2PR16CA0011.namprd16.prod.outlook.com (2603:10b6:907::24) by
- IA1PR12MB7637.namprd12.prod.outlook.com (2603:10b6:208:427::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.27; Fri, 8 Mar
- 2024 14:55:40 +0000
-Received: from MWH0EPF000A6735.namprd04.prod.outlook.com
- (2603:10b6:907:0:cafe::2b) by MW2PR16CA0011.outlook.office365.com
- (2603:10b6:907::24) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7339.40 via Frontend
- Transport; Fri, 8 Mar 2024 14:55:40 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- MWH0EPF000A6735.mail.protection.outlook.com (10.167.249.27) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7362.11 via Frontend Transport; Fri, 8 Mar 2024 14:55:39 +0000
-Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 8 Mar 2024
- 06:55:26 -0800
-Received: from drhqmail203.nvidia.com (10.126.190.182) by
- drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1258.12; Fri, 8 Mar 2024 06:55:26 -0800
-Received: from host-10-63-191-31.nvidia.com (10.127.8.10) by mail.nvidia.com
- (10.126.190.182) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12 via Frontend
- Transport; Fri, 8 Mar 2024 06:55:26 -0800
-From: <ankita@nvidia.com>
-To: <ankita@nvidia.com>, <jgg@nvidia.com>, <marcel.apfelbaum@gmail.com>,
- <philmd@linaro.org>, <wangyanan55@huawei.com>, <alex.williamson@redhat.com>,
- <pbonzini@redhat.com>, <clg@redhat.com>, <shannon.zhaosl@gmail.com>,
- <peter.maydell@linaro.org>, <ani@anisinha.ca>, <berrange@redhat.com>,
- <eduardo@habkost.net>, <imammedo@redhat.com>, <mst@redhat.com>,
- <eblake@redhat.com>, <armbru@redhat.com>, <david@redhat.com>,
- <gshan@redhat.com>, <Jonathan.Cameron@huawei.com>
-CC: <aniketa@nvidia.com>, <cjia@nvidia.com>, <kwankhede@nvidia.com>,
- <targupta@nvidia.com>, <vsethi@nvidia.com>, <acurrid@nvidia.com>,
- <mochs@nvidia.com>, <dnigam@nvidia.com>, <udhoke@nvidia.com>,
- <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-Subject: [PATCH v9 2/3] hw/acpi: Implement the SRAT GI affinity structure
-Date: Fri, 8 Mar 2024 14:55:24 +0000
-Message-ID: <20240308145525.10886-3-ankita@nvidia.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240308145525.10886-1-ankita@nvidia.com>
-References: <20240308145525.10886-1-ankita@nvidia.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ribdj-0005OZ-QD
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:56:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709909762;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=btK1kyt8BalfNBwPiYgdVCxNdJNeq5gpu69gZVwdFqg=;
+ b=JyNg9R1TBVojOXtxJmgoYpwELIixPoq/1Hf1ysdiRLBKiEaPJTNs20acjjrcVMqezYluWG
+ hjDVIFH789+Uq+/r7J1BEmS1KW4ajq8Iq/6YkWj8wAR8M4CaXDy+mmwSDj5p1bJ8f7YV9Y
+ BpLOB0uvG8/nODYt5yGj8A8+l+oGvcY=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-442-3ucKmk94ND2BWiHIvJus9A-1; Fri, 08 Mar 2024 09:56:00 -0500
+X-MC-Unique: 3ucKmk94ND2BWiHIvJus9A-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a45b4f09107so77075466b.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 06:56:00 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709909758; x=1710514558;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=btK1kyt8BalfNBwPiYgdVCxNdJNeq5gpu69gZVwdFqg=;
+ b=sbTEpqR1GdbxTrpNVOO47LaT1qrdi4pa4sflNP5ckzYOqjpjyh8nA7vOxDf6BoNk+D
+ gIGyFwXJS463VS9zld3srEv6N0hu9uiANTgGz9L5yMo5MhJvjeUgj9+XCIl3P937KfkZ
+ TFZ8WhTbPuOcWMwcWHRV3+AttY7AhlDNJsqYaJ2ePiJX4iCeKhr4+aXEaLL8dWNJDC3/
+ FIdLTApUH+dGjQ1q2NSLA8uVwwfdXI1b418pCXeu2iFwlTGTH6tjZe6kfoK7EN0UV4WW
+ aRaIOEJkCv/25hQHAkKHrJDqYQ4Jbv6VvZqswOLEqep5LGihRP3dsVG/T3spGQ6XZBOW
+ 2dlA==
+X-Gm-Message-State: AOJu0Yxkr8rK5KOUxTxej0wTTDJ10C3jJUY6+q7q/591JkFg1qP/oVIf
+ qOTOlvNWKXyLiWW/pCC94NjgxnqyKliBNlvfrnhEVSZzQZn9OEJFnnjoc8k7ijdu4Kgr3ZHko9c
+ 4TmAwvK138zTEiE4MWnLUsqiRVLEsAghY7mj2o1UwARsPaKHrRnCgSfyW/BkWqA4LjjDnekR27p
+ Y7HhTRm5oR8uNAIOndmhc/It/wvThu6sIBEajm
+X-Received: by 2002:a17:906:685:b0:a44:fe70:1b82 with SMTP id
+ u5-20020a170906068500b00a44fe701b82mr11577605ejb.8.1709909758493; 
+ Fri, 08 Mar 2024 06:55:58 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG0VGffbk36jcCV7Y26SP+aMC6xKRFASDcXqvVrOOFne37+9IJrzfKS2xxMs+P8JPHwDUGiFg==
+X-Received: by 2002:a17:906:685:b0:a44:fe70:1b82 with SMTP id
+ u5-20020a170906068500b00a44fe701b82mr11577586ejb.8.1709909758014; 
+ Fri, 08 Mar 2024 06:55:58 -0800 (PST)
+Received: from [192.168.10.118] ([151.49.77.21])
+ by smtp.gmail.com with ESMTPSA id
+ mp7-20020a1709071b0700b00a440ceb4110sm9461798ejc.183.2024.03.08.06.55.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 08 Mar 2024 06:55:56 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Sven Schnelle <svens@stackframe.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 01/12] hw/scsi/lsi53c895a: add timer to scripts processing
+Date: Fri,  8 Mar 2024 15:55:43 +0100
+Message-ID: <20240308145554.599614-2-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240308145554.599614-1-pbonzini@redhat.com>
+References: <20240308145554.599614-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000A6735:EE_|IA1PR12MB7637:EE_
-X-MS-Office365-Filtering-Correlation-Id: a67b0b2b-7ca0-4679-19ea-08dc3f7fd230
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: XDeQ3cKhydEuhYMejZg7+eAqEeadcIZmjNZFfj3q+OXq6CmRk/PbX8eBa8HZV2SeQrXJCfOrkCAR6e1ehRGmZdta73GxXxvr7DZsKKQpMuO90eVWN3TJW2dPEgodEwPDucJPI+5rN9JZpmSczoRcSQ33Sl5CbxWNy01btI3xt5U+eur5D82KRpajQT6gtY6Hj05gTmnln2AA2CqhlikPQ2YiiIsXveoz4zhvAUMO8CxVoRPH4NuBoRdrGKCqdSFsRITW1ngKwOOFcherhhS1/T8W6j2b1Z/ct/JVfMg9s+1V+FAnl9+NtViH18eJTE5itcsobGUKkFC3zfjw2sXrW/A1PyUcgIVWLHnmcZeI1LN51OU3whJzY300aWosbp13A6+3O9f7BMbDzSYNVLvpT+QsJDXL6owW3aIglY0KdQ2lJakX6NuUsxzVWUhBcemRV9AoMAB6oYdffIlmyolg16L0OciiBP4FkEPUz8D/zkfRyBmUW2B+kJmzwIg1d9NxnJWEiujI1A2CGmAu+mB/b3tF8itOEfhQqC1YeONWSQt4HhiMYK2D+6xY5HKgj5LF9baqgvEFQ1x+v4aBnB3KIMJW+vx6sPwDzUN3iEWGOFkWnt0ZMrnHxtrXHApENQaumhLnaeXvS+dNLPngnRm/wThaL73a94pFrkk8lDPSk9DdzDMWkDGpgobFTcOyOix7q2eDYOk21iL0HLQpKyMf3uVQO5eGbkkohVvglXwp8SqWsvP9/0tEb9jStJmNM4Xcdr9xlak9DPHUOYM72wBTwg==
-X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
- SFS:(13230031)(1800799015)(82310400014)(36860700004)(376005)(7416005)(921011);
- DIR:OUT; SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Mar 2024 14:55:39.8750 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: a67b0b2b-7ca0-4679-19ea-08dc3f7fd230
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000A6735.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB7637
-Received-SPF: softfail client-ip=2a01:111:f403:2009::601;
- envelope-from=ankita@nvidia.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,243 +104,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ankit Agrawal <ankita@nvidia.com>
+From: Sven Schnelle <svens@stackframe.org>
 
-ACPI spec provides a scheme to associate "Generic Initiators" [1]
-(e.g. heterogeneous processors and accelerators, GPUs, and I/O devices with
-integrated compute or DMA engines GPUs) with Proximity Domains. This is
-achieved using Generic Initiator Affinity Structure in SRAT. During bootup,
-Linux kernel parse the ACPI SRAT to determine the PXM ids and create a NUMA
-node for each unique PXM ID encountered. Qemu currently do not implement
-these structures while building SRAT.
+HP-UX 10.20 seems to make the lsi53c895a spinning on a memory location
+under certain circumstances. As the SCSI controller and CPU are not
+running at the same time this loop will never finish. After some
+time, the check loop interrupts with a unexpected device disconnect.
+This works, but is slow because the kernel resets the scsi controller.
+Instead of signaling UDC, start a timer and exit the loop. Until the
+timer fires, the CPU can process instructions which might changes the
+memory location.
 
-Add GI structures while building VM ACPI SRAT. The association between
-device and node are stored using acpi-generic-initiator object. Lookup
-presence of all such objects and use them to build these structures.
+The limit of instructions is also reduced because scripts running on
+the SCSI processor are usually very short. This keeps the time until
+the loop is exit short.
 
-The structure needs a PCI device handle [2] that consists of the device BDF.
-The vfio-pci device corresponding to the acpi-generic-initiator object is
-located to determine the BDF.
-
-[1] ACPI Spec 6.3, Section 5.2.16.6
-[2] ACPI Spec 6.3, Table 5.80
-
-Cc: Jonathan Cameron <qemu-devel@nongnu.org>
-Cc: Alex Williamson <alex.williamson@redhat.com>
-Cc: Cedric Le Goater <clg@redhat.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Ankit Agrawal <ankita@nvidia.com>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Sven Schnelle <svens@stackframe.org>
+Message-ID: <20240229204407.1699260-1-svens@stackframe.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/acpi/acpi_generic_initiator.c         | 77 ++++++++++++++++++++++++
- hw/acpi/hmat.c                           |  2 +-
- hw/arm/virt-acpi-build.c                 |  3 +
- hw/core/numa.c                           |  3 +-
- include/hw/acpi/acpi_generic_initiator.h | 25 ++++++++
- include/sysemu/numa.h                    |  1 +
- 6 files changed, 109 insertions(+), 2 deletions(-)
+ hw/scsi/lsi53c895a.c | 43 +++++++++++++++++++++++++++++++++----------
+ hw/scsi/trace-events |  2 ++
+ 2 files changed, 35 insertions(+), 10 deletions(-)
 
-diff --git a/hw/acpi/acpi_generic_initiator.c b/hw/acpi/acpi_generic_initiator.c
-index 130d6ae8c1..17b9a052f5 100644
---- a/hw/acpi/acpi_generic_initiator.c
-+++ b/hw/acpi/acpi_generic_initiator.c
-@@ -5,7 +5,9 @@
+diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
+index d607a5f9fb1..4ff94703816 100644
+--- a/hw/scsi/lsi53c895a.c
++++ b/hw/scsi/lsi53c895a.c
+@@ -188,7 +188,7 @@ static const char *names[] = {
+ #define LSI_TAG_VALID     (1 << 16)
  
- #include "qemu/osdep.h"
- #include "hw/acpi/acpi_generic_initiator.h"
-+#include "hw/acpi/aml-build.h"
- #include "hw/boards.h"
-+#include "hw/pci/pci_device.h"
- #include "qemu/error-report.h"
+ /* Maximum instructions to process. */
+-#define LSI_MAX_INSN    10000
++#define LSI_MAX_INSN    100
  
- typedef struct AcpiGenericInitiatorClass {
-@@ -47,6 +49,7 @@ static void acpi_generic_initiator_set_node(Object *obj, Visitor *v,
-                                             Error **errp)
+ typedef struct lsi_request {
+     SCSIRequest *req;
+@@ -205,6 +205,7 @@ enum {
+     LSI_WAIT_RESELECT, /* Wait Reselect instruction has been issued */
+     LSI_DMA_SCRIPTS, /* processing DMA from lsi_execute_script */
+     LSI_DMA_IN_PROGRESS, /* DMA operation is in progress */
++    LSI_WAIT_SCRIPTS, /* SCRIPTS stopped because of instruction count limit */
+ };
+ 
+ enum {
+@@ -224,6 +225,7 @@ struct LSIState {
+     MemoryRegion ram_io;
+     MemoryRegion io_io;
+     AddressSpace pci_io_as;
++    QEMUTimer *scripts_timer;
+ 
+     int carry; /* ??? Should this be an a visible register somewhere?  */
+     int status;
+@@ -415,6 +417,7 @@ static void lsi_soft_reset(LSIState *s)
+     s->sbr = 0;
+     assert(QTAILQ_EMPTY(&s->queue));
+     assert(!s->current);
++    timer_del(s->scripts_timer);
+ }
+ 
+ static int lsi_dma_40bit(LSIState *s)
+@@ -1127,6 +1130,12 @@ static void lsi_wait_reselect(LSIState *s)
+     }
+ }
+ 
++static void lsi_scripts_timer_start(LSIState *s)
++{
++    trace_lsi_scripts_timer_start();
++    timer_mod(s->scripts_timer, qemu_clock_get_us(QEMU_CLOCK_VIRTUAL) + 500);
++}
++
+ static void lsi_execute_script(LSIState *s)
  {
-     AcpiGenericInitiator *gi = ACPI_GENERIC_INITIATOR(obj);
-+    MachineState *ms = MACHINE(qdev_get_machine());
-     uint32_t value;
+     PCIDevice *pci_dev = PCI_DEVICE(s);
+@@ -1136,6 +1145,11 @@ static void lsi_execute_script(LSIState *s)
+     int insn_processed = 0;
+     static int reentrancy_level;
  
-     if (!visit_type_uint32(v, name, &value, errp)) {
-@@ -60,6 +63,7 @@ static void acpi_generic_initiator_set_node(Object *obj, Visitor *v,
-     }
- 
-     gi->node = value;
-+    ms->numa_state->nodes[gi->node].has_gi = true;
- }
- 
- static void acpi_generic_initiator_class_init(ObjectClass *oc, void *data)
-@@ -69,3 +73,76 @@ static void acpi_generic_initiator_class_init(ObjectClass *oc, void *data)
-     object_class_property_add(oc, "node", "int", NULL,
-         acpi_generic_initiator_set_node, NULL, NULL);
- }
-+
-+/*
-+ * ACPI 6.3:
-+ * Table 5-78 Generic Initiator Affinity Structure
-+ */
-+static void
-+build_srat_generic_pci_initiator_affinity(GArray *table_data, int node,
-+                                          PCIDeviceHandle *handle)
-+{
-+    uint8_t index;
-+
-+    build_append_int_noprefix(table_data, 5, 1);  /* Type */
-+    build_append_int_noprefix(table_data, 32, 1); /* Length */
-+    build_append_int_noprefix(table_data, 0, 1);  /* Reserved */
-+    build_append_int_noprefix(table_data, 1, 1);  /* Device Handle Type: PCI */
-+    build_append_int_noprefix(table_data, node, 4);  /* Proximity Domain */
-+
-+    /* Device Handle - PCI */
-+    build_append_int_noprefix(table_data, handle->segment, 2);
-+    build_append_int_noprefix(table_data, handle->bdf, 2);
-+    for (index = 0; index < 12; index++) {
-+        build_append_int_noprefix(table_data, 0, 1);
++    if (s->waiting == LSI_WAIT_SCRIPTS) {
++        timer_del(s->scripts_timer);
++        s->waiting = LSI_NOWAIT;
 +    }
 +
-+    build_append_int_noprefix(table_data, GEN_AFFINITY_ENABLED, 4); /* Flags */
-+    build_append_int_noprefix(table_data, 0, 4);     /* Reserved */
-+}
-+
-+static int build_all_acpi_generic_initiators(Object *obj, void *opaque)
-+{
-+    MachineState *ms = MACHINE(qdev_get_machine());
-+    AcpiGenericInitiator *gi;
-+    GArray *table_data = opaque;
-+    PCIDeviceHandle dev_handle;
-+    PCIDevice *pci_dev;
-+    Object *o;
-+
-+    if (!object_dynamic_cast(obj, TYPE_ACPI_GENERIC_INITIATOR)) {
-+        return 0;
-+    }
-+
-+    gi = ACPI_GENERIC_INITIATOR(obj);
-+    if (gi->node >= ms->numa_state->num_nodes) {
-+        error_printf("%s: Specified node %d is invalid.\n",
-+                     TYPE_ACPI_GENERIC_INITIATOR, gi->node);
-+        exit(1);
-+    }
-+
-+    o = object_resolve_path_type(gi->pci_dev, TYPE_PCI_DEVICE, NULL);
-+    if (!o) {
-+        error_printf("%s: Specified device must be a PCI device.\n",
-+                     TYPE_ACPI_GENERIC_INITIATOR);
-+        exit(1);
-+    }
-+
-+    pci_dev = PCI_DEVICE(o);
-+
-+    dev_handle.segment = 0;
-+    dev_handle.bdf = PCI_BUILD_BDF(pci_bus_num(pci_get_bus(pci_dev)),
-+                                               pci_dev->devfn);
-+
-+    build_srat_generic_pci_initiator_affinity(table_data,
-+                                              gi->node, &dev_handle);
-+
-+    return 0;
-+}
-+
-+void build_srat_generic_pci_initiator(GArray *table_data)
-+{
-+    object_child_foreach_recursive(object_get_root(),
-+                                   build_all_acpi_generic_initiators,
-+                                   table_data);
-+}
-diff --git a/hw/acpi/hmat.c b/hw/acpi/hmat.c
-index 3042d223c8..2242981e18 100644
---- a/hw/acpi/hmat.c
-+++ b/hw/acpi/hmat.c
-@@ -214,7 +214,7 @@ static void hmat_build_table_structs(GArray *table_data, NumaState *numa_state)
-     }
+     reentrancy_level++;
  
-     for (i = 0; i < numa_state->num_nodes; i++) {
--        if (numa_state->nodes[i].has_cpu) {
-+        if (numa_state->nodes[i].has_cpu || numa_state->nodes[i].has_gi) {
-             initiator_list[num_initiator++] = i;
-         }
-     }
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index 8bc35a483c..a2b3a2eb25 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -58,6 +58,7 @@
- #include "migration/vmstate.h"
- #include "hw/acpi/ghes.h"
- #include "hw/acpi/viot.h"
-+#include "hw/acpi/acpi_generic_initiator.h"
- 
- #define ARM_SPI_BASE 32
- 
-@@ -558,6 +559,8 @@ build_srat(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-         }
-     }
- 
-+    build_srat_generic_pci_initiator(table_data);
-+
-     if (ms->nvdimms_state->is_enabled) {
-         nvdimm_build_srat(table_data);
-     }
-diff --git a/hw/core/numa.c b/hw/core/numa.c
-index f08956ddb0..58a32f1564 100644
---- a/hw/core/numa.c
-+++ b/hw/core/numa.c
-@@ -229,7 +229,8 @@ void parse_numa_hmat_lb(NumaState *numa_state, NumaHmatLBOptions *node,
-                    node->target, numa_state->num_nodes);
+     s->istat1 |= LSI_ISTAT1_SRUN;
+@@ -1143,8 +1157,8 @@ again:
+     /*
+      * Some windows drivers make the device spin waiting for a memory location
+      * to change. If we have executed more than LSI_MAX_INSN instructions then
+-     * assume this is the case and force an unexpected device disconnect. This
+-     * is apparently sufficient to beat the drivers into submission.
++     * assume this is the case and start a timer. Until the timer fires, the
++     * host CPU has a chance to run and change the memory location.
+      *
+      * Another issue (CVE-2023-0330) can occur if the script is programmed to
+      * trigger itself again and again. Avoid this problem by stopping after
+@@ -1152,13 +1166,8 @@ again:
+      * which should be enough for all valid use cases).
+      */
+     if (++insn_processed > LSI_MAX_INSN || reentrancy_level > 8) {
+-        if (!(s->sien0 & LSI_SIST0_UDC)) {
+-            qemu_log_mask(LOG_GUEST_ERROR,
+-                          "lsi_scsi: inf. loop with UDC masked");
+-        }
+-        lsi_script_scsi_interrupt(s, LSI_SIST0_UDC, 0);
+-        lsi_disconnect(s);
+-        trace_lsi_execute_script_stop();
++        s->waiting = LSI_WAIT_SCRIPTS;
++        lsi_scripts_timer_start(s);
+         reentrancy_level--;
          return;
      }
--    if (!numa_info[node->initiator].has_cpu) {
-+    if (!numa_info[node->initiator].has_cpu &&
-+        !numa_info[node->initiator].has_gi) {
-         error_setg(errp, "Invalid initiator=%d, it isn't an "
-                    "initiator proximity domain", node->initiator);
-         return;
-diff --git a/include/hw/acpi/acpi_generic_initiator.h b/include/hw/acpi/acpi_generic_initiator.h
-index 16de1d3d80..a304bad73e 100644
---- a/include/hw/acpi/acpi_generic_initiator.h
-+++ b/include/hw/acpi/acpi_generic_initiator.h
-@@ -19,4 +19,29 @@ typedef struct AcpiGenericInitiator {
-     uint16_t node;
- } AcpiGenericInitiator;
+@@ -2197,6 +2206,9 @@ static int lsi_post_load(void *opaque, int version_id)
+         return -EINVAL;
+     }
  
-+/*
-+ * ACPI 6.3:
-+ * Table 5-81 Flags – Generic Initiator Affinity Structure
-+ */
-+typedef enum {
-+    /*
-+     * If clear, the OSPM ignores the contents of the Generic
-+     * Initiator/Port Affinity Structure. This allows system firmware
-+     * to populate the SRAT with a static number of structures, but only
-+     * enable them as necessary.
-+     */
-+    GEN_AFFINITY_ENABLED = (1 << 0),
-+} GenericAffinityFlags;
++    if (s->waiting == LSI_WAIT_SCRIPTS) {
++        lsi_scripts_timer_start(s);
++    }
+     return 0;
+ }
+ 
+@@ -2294,6 +2306,15 @@ static const struct SCSIBusInfo lsi_scsi_info = {
+     .cancel = lsi_request_cancelled
+ };
+ 
++static void scripts_timer_cb(void *opaque)
++{
++    LSIState *s = opaque;
 +
-+/*
-+ * ACPI 6.3:
-+ * Table 5-80 Device Handle - PCI
-+ */
-+typedef struct PCIDeviceHandle {
-+    uint16_t segment;
-+    uint16_t bdf;
-+} PCIDeviceHandle;
++    trace_lsi_scripts_timer_triggered();
++    s->waiting = LSI_NOWAIT;
++    lsi_execute_script(s);
++}
 +
-+void build_srat_generic_pci_initiator(GArray *table_data);
-+
- #endif
-diff --git a/include/sysemu/numa.h b/include/sysemu/numa.h
-index 4173ef2afa..825cfe86bc 100644
---- a/include/sysemu/numa.h
-+++ b/include/sysemu/numa.h
-@@ -41,6 +41,7 @@ struct NodeInfo {
-     struct HostMemoryBackend *node_memdev;
-     bool present;
-     bool has_cpu;
-+    bool has_gi;
-     uint8_t lb_info_provided;
-     uint16_t initiator;
-     uint8_t distance[MAX_NODES];
+ static void lsi_scsi_realize(PCIDevice *dev, Error **errp)
+ {
+     LSIState *s = LSI53C895A(dev);
+@@ -2313,6 +2334,7 @@ static void lsi_scsi_realize(PCIDevice *dev, Error **errp)
+                           "lsi-ram", 0x2000);
+     memory_region_init_io(&s->io_io, OBJECT(s), &lsi_io_ops, s,
+                           "lsi-io", 256);
++    s->scripts_timer = timer_new_us(QEMU_CLOCK_VIRTUAL, scripts_timer_cb, s);
+ 
+     /*
+      * Since we use the address-space API to interact with ram_io, disable the
+@@ -2337,6 +2359,7 @@ static void lsi_scsi_exit(PCIDevice *dev)
+     LSIState *s = LSI53C895A(dev);
+ 
+     address_space_destroy(&s->pci_io_as);
++    timer_del(s->scripts_timer);
+ }
+ 
+ static void lsi_class_init(ObjectClass *klass, void *data)
+diff --git a/hw/scsi/trace-events b/hw/scsi/trace-events
+index d72f741ed85..f0f2a98c2ee 100644
+--- a/hw/scsi/trace-events
++++ b/hw/scsi/trace-events
+@@ -302,6 +302,8 @@ lsi_execute_script_stop(void) "SCRIPTS execution stopped"
+ lsi_awoken(void) "Woken by SIGP"
+ lsi_reg_read(const char *name, int offset, uint8_t ret) "Read reg %s 0x%x = 0x%02x"
+ lsi_reg_write(const char *name, int offset, uint8_t val) "Write reg %s 0x%x = 0x%02x"
++lsi_scripts_timer_triggered(void) "SCRIPTS timer triggered"
++lsi_scripts_timer_start(void) "SCRIPTS timer started"
+ 
+ # virtio-scsi.c
+ virtio_scsi_cmd_req(int lun, uint32_t tag, uint8_t cmd) "virtio_scsi_cmd_req lun=%u tag=0x%x cmd=0x%x"
 -- 
-2.34.1
+2.43.2
 
 
