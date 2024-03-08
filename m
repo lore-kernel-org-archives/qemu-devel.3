@@ -4,65 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72CBAC5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 06:01:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B06AC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 06:06:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riTHh-0005ld-FI; Fri, 08 Mar 2024 01:00:45 -0500
+	id 1riTML-0006z8-Bl; Fri, 08 Mar 2024 01:05:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1riTHg-0005lA-4J
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 01:00:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1riTM9-0006yK-Ct; Fri, 08 Mar 2024 01:05:23 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1riTHe-0001wE-Nu
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 01:00:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709877641;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=AbQcPYdeg9iY48jnsb4SHHwJNyPOCT1u+L3dPhNxTHo=;
- b=PUYyPMTlhpli+hoh4Cmk1oLKhRcQrO0Qa2GWZHVB9822QOt/BzyGVUmUtYmlQeKSy6ryES
- ZEmGatjiNbcyeGndrDmL4pP9CmAglvTfyfUOGGlN/O9fe+isB+UB7qYKdB1Gs0a7mHaves
- uNr3WkJvZbxCWCnNN3aGWO1isAIMs2o=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-172-kOmYtLRlN1mudMyqYxRs9A-1; Fri, 08 Mar 2024 01:00:37 -0500
-X-MC-Unique: kOmYtLRlN1mudMyqYxRs9A-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 60D21800265;
- Fri,  8 Mar 2024 06:00:37 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.9])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 08665492BCB;
- Fri,  8 Mar 2024 06:00:35 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-Subject: [PATCH] configure: Fix error message when C compiler is not working
-Date: Fri,  8 Mar 2024 07:00:34 +0100
-Message-ID: <20240308060034.139670-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1riTM3-0002bF-R8; Fri, 08 Mar 2024 01:05:21 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id BB7DE54077;
+ Fri,  8 Mar 2024 09:05:56 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 953AA93A81;
+ Fri,  8 Mar 2024 09:05:03 +0300 (MSK)
+Message-ID: <33636782-de00-4a9a-87e1-59beac29087f@tls.msk.ru>
+Date: Fri, 8 Mar 2024 09:05:03 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/4] hw/i386/pc: Trivial cleanups
+Content-Language: en-US
+To: Bernhard Beschow <shentey@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org
+References: <20240301185936.95175-1-philmd@linaro.org>
+ <2062822B-3D5E-4D17-A913-0036249CFB50@gmail.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <2062822B-3D5E-4D17-A913-0036249CFB50@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.583,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,52 +87,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If you try to run the configure script on a system without a working
-C compiler, you get a very misleading error message:
+07.03.2024 21:57, Bernhard Beschow :
+> Am 1. März 2024 18:59:32 UTC schrieb "Philippe Mathieu-Daudé" <philmd@linaro.org>:
+>> Trivial cleanups, mostly around the 'isapc' machine.
+>>
+>> Philippe Mathieu-Daudé (4):
+>>   hw/i386/pc: Remove pc_compat_1_4..1.7[] left over declarations
+>>   hw/i386/pc: Use generated NotifyVmexitOption_str()
+>>   hw/i386/pc: Remove 'host_type' argument from pc_init1()
+>>   hw/i386/pc: Have pc_init_isa() pass a NULL pci_type argument
+> 
+> Ping. Will this series make it into 9.0? AFAICS all patches are reviewed.
 
- ERROR: Unrecognized host OS (uname -s reports 'Linux')
+Philippe, are you submitting this through you misc tree, or should I
+pick it for trivial-patches?  I'm often a bit in doubt about patches
+you Cc to qemu-trivial@, - a few times we both tried to submit them.
 
-We should rather tell the user that we were not able to use the C
-compiler instead, otherwise they will have a hard time to figure
-out what was going wrong.
-
-Fixes: 264b803721 ("configure: remove compiler sanity check")
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- configure | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
-
-diff --git a/configure b/configure
-index 3cd736b139..a036923dee 100755
---- a/configure
-+++ b/configure
-@@ -411,7 +411,7 @@ else
-   # Using uname is really broken, but it is just a fallback for architectures
-   # that are going to use TCI anyway
-   cpu=$(uname -m)
--  echo "WARNING: unrecognized host CPU, proceeding with 'uname -m' output '$cpu'"
-+  echo "WARNING: could not determine host CPU, proceeding with 'uname -m' output '$cpu'"
- fi
- 
- # Normalise host CPU name to the values used by Meson cross files and in source
-@@ -1000,10 +1000,12 @@ if test -z "$ninja"; then
- fi
- 
- if test "$host_os" = "bogus"; then
--    # Now that we know that we're not printing the help and that
--    # the compiler works (so the results of the check_defines we used
--    # to identify the OS are reliable), if we didn't recognize the
--    # host OS we should stop now.
-+    # Now that we know that we're not printing the help, we should stop now
-+    # if we didn't recognize the host OS (or the C compiler is not working).
-+    write_c_skeleton;
-+    if ! compile_object ; then
-+        error_exit "C compiler \"$cc\" is not usable"
-+    fi
-     error_exit "Unrecognized host OS (uname -s reports '$(uname -s)')"
- fi
- 
--- 
-2.44.0
-
+/mjt
 
