@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02526C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 16:14:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C76C5C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 16:17:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ricrb-0007oq-Gb; Fri, 08 Mar 2024 11:14:29 -0500
+	id 1ricu7-000120-4y; Fri, 08 Mar 2024 11:17:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ricrT-0007jw-Te
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:14:20 -0500
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rictx-0000zr-9D
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:16:56 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ricrQ-00005X-5a
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:14:19 -0500
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a44ad785a44so128209066b.3
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 08:14:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rictv-0000aC-Mv
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:16:52 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5683247fd0fso853843a12.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 08:16:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709914453; x=1710519253; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709914610; x=1710519410; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=GFuY10NRycju0TCEIzNu/SW5zTp5TLcxEWCaS61P9RE=;
- b=cSdsyOJ/i1QyBFKO4fUBCfGV+6qDjfEVZCugJlyIm08R99kq6zbtsamSH1Vxdmp6kD
- U8mXdVeHOxFs/HndQeGDHDyiMZ+vgXNrbZL+0HtTsJ9F8chiNS1fwUUY7D2N0qxbGere
- 2D6podKmkE0c1o+Fw/ualGj5W7HTw7+LCyjFZDVvSTVyJPk5gOtIk/dqoxB1OzEXAi8g
- SKdfF/dUwUqDfBI0I5fdQNg7xe5OJr5dySPhxQUNr+VkzQo7RcUJkmm2VBK3Z8Umzqkv
- 2zkLBbQP1AtdrPZ3PQqipqdYBb5wFl2hd5D7pLggna1xVo1M8T4KLZ2k5wA/3UB8VKPC
- HbkA==
+ bh=VP2eBKDwKx+gPLsEVplNclfeo0f6GzdgsS4MMibtc0M=;
+ b=q16D5hmVX9FaBR9ogEGtQnXrzIX7Q2NUj+5zJlLssjZ8mM4w4L67luC4R7HPNtp6jk
+ +unF32tqmXdG6WWOHe6CMDV3eD6L1JvW3Rfpd+474EILydANrAeqYUBw1tnvDVCOynmp
+ eVcXO8AmraKe6EdKJZsqW/ZKESuZduFbJaZhHDE46Y1aVZCqUSr7xCIcrg11JtpweMMh
+ sJGakcJiwhOa5VV83MD9FyaP8Ukak1nhuQqw6+Y8F0P2kADyJrAwM1CdN2n1XqTUdu/e
+ qEH/SkfVOAnjQeW7HE+8eT+6pelsYDjuq+wQTvOOvSTxPB7lO0jUp2dUzH3mb65JdP0f
+ HgUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709914453; x=1710519253;
+ d=1e100.net; s=20230601; t=1709914610; x=1710519410;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GFuY10NRycju0TCEIzNu/SW5zTp5TLcxEWCaS61P9RE=;
- b=B4vaRcrUgmVcXTcH2LArw3mQJgVXQUEeeGSefiHRn+bCkqhd1qGz8BULBjyFWbNukf
- JbzxVdeX52BsTw0LEp0VDOnWihFmao2qPn5eS2gB/nVicRcq1fBVTh5+sj+xtt2VrnGB
- pliDpKYI8IzKJOloLRutwUiG3OrBqZwVb4Xnk3Y774jRIrUAHK0aC64g7fymVlwPXlJs
- awBDaji5DM06SEL9g4c5Rtf7FR+e0ROxoS2hjjbkF2wXODwzi2WiKQdjZ2uq4le9T2dt
- BqRHdvm7DhRbprEq5jqtQWjFFxLYzDybfgHz/OwjwC09VsBRTMWE/T+b3N2Ffe5LH8v9
- LYbA==
+ bh=VP2eBKDwKx+gPLsEVplNclfeo0f6GzdgsS4MMibtc0M=;
+ b=UZ9MV6O846quW7HZ5FqkVJ6GwfpNPoaPrz+HcICFpmv5jU7SWbOpCzht0IVpad2pwf
+ lIXH6tVmR/n9LBjuHEdeVJqqDLvNki7BHSes8fZEXJ8V2m7tMOQileYnOnml6fGaVsCv
+ AGThCFSPLp35TTw1iwNoHHeNWeBqkgO8r8sKr2Er1iv2yRuHzrovoMmW1eKzGdsAFH3/
+ tY2KjaOi3I7Q8+/mFzluQD2x+vvdM+/u1eHFx9Kc8piQFu2TWQlmIfl3ox6tq6ttlDVf
+ kzQ4SpJYa1kEqxWAjwiSgrbwHnNNsr4L+sDpext+2DOcCdnAPQGc7ydBHm+AN8sd+K1z
+ 3A0g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWoNA/5CekHS3HYyrmwi88JzkC+sUPW6ACQtf73J8sSUd+QBMb296KlFsRYzkKOakwfthCDe3aTaQz1uttL7nVdGc7hF1g=
-X-Gm-Message-State: AOJu0YzEJ5EtmJriXcWW1fQbY51Qm/znSo4Tl5Qn6Oyhprr3uEFIhbHC
- W9R59g1xY0vKtiAmIs6ZrrfiC7XIjSCLPD+3+8KDRM0ql4R000YgPI4EMeV5+vA=
-X-Google-Smtp-Source: AGHT+IF2A4OWFXpRboNCc9ynwfAm7QU71aymDqbs9H/LN6q5DAb9Klsc/GVqjbQWmh5JpzND1JZnDA==
-X-Received: by 2002:a17:906:ccc8:b0:a44:1a51:a1fd with SMTP id
- ot8-20020a170906ccc800b00a441a51a1fdmr14045816ejb.64.1709914453592; 
- Fri, 08 Mar 2024 08:14:13 -0800 (PST)
+ AJvYcCUvL4DM3IW6DoNGltdptG2YtrWJHd0N170XXvm24sxT6/VkPIfgQKsMzMk8Z5jDS1D5gbdzGjJkcvdPkTHA4CrO4r+/mDQ=
+X-Gm-Message-State: AOJu0YwWZYfrGfYC3V7zzkr/Ex5Ggzfp+xjIBphPOMIxSUwrleq2uGLF
+ kcJHEeYlDuDi08vHbvLnqammNTSSpsLqSUkBwGoYUwdA9ctJHQr05VET+XgIQ68=
+X-Google-Smtp-Source: AGHT+IEQcnyaJVu8R1Mh3SfFrKmPoltWVr5cbfmKQNyL4NaB2w8n1vxa44YEBKd85xNM92lrIDp5YA==
+X-Received: by 2002:a17:906:57d4:b0:a45:a2cc:eb8b with SMTP id
+ u20-20020a17090657d400b00a45a2cceb8bmr8318465ejr.13.1709914609719; 
+ Fri, 08 Mar 2024 08:16:49 -0800 (PST)
 Received: from [192.168.69.100] (pir44-h02-176-184-37-132.dsl.sta.abo.bbox.fr.
  [176.184.37.132]) by smtp.gmail.com with ESMTPSA id
- fw11-20020a170906c94b00b00a45a8c4edb4sm3995322ejb.48.2024.03.08.08.14.12
+ a14-20020a1709065f8e00b00a449756f727sm8255508eju.147.2024.03.08.08.16.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Mar 2024 08:14:13 -0800 (PST)
-Message-ID: <66729d0f-72af-4c96-8bf7-479f954b032e@linaro.org>
-Date: Fri, 8 Mar 2024 17:14:11 +0100
+ Fri, 08 Mar 2024 08:16:48 -0800 (PST)
+Message-ID: <6ea1d103-d6fe-4ca6-b522-d9a4cf4ef1d6@linaro.org>
+Date: Fri, 8 Mar 2024 17:16:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs/about: Deprecate the "mainstone", "tosa" and "z2"
- machines
+Subject: Re: [PATCH v2 0/4] physmem: Fix MemoryRegion for second access to
+ cached MMIO Address Space
 Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-References: <20240308104206.480929-1-thuth@redhat.com>
+To: Peter Xu <peterx@redhat.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: David Hildenbrand <david@redhat.com>, qemu-devel@nongnu.org,
+ linuxarm@huawei.com
+References: <20240307153710.30907-1-Jonathan.Cameron@huawei.com>
+ <ZerADmIeh6XnbOkG@x1n>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240308104206.480929-1-thuth@redhat.com>
+In-Reply-To: <ZerADmIeh6XnbOkG@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,39 +100,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Thomas,
+On 8/3/24 08:36, Peter Xu wrote:
 
-On 8/3/24 11:42, Thomas Huth wrote:
-> Support for these boards has been removed from the Linux kernel
-> in version 6.3 in 2023, so there are likely no users left for these
-> boards. Time to mark them as deprecated in QEMU, too!
+> I queued it in my migration tree (with my "memory API" hat..).
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   docs/about/deprecated.rst | 8 ++++++++
->   hw/arm/mainstone.c        | 1 +
->   hw/arm/tosa.c             | 1 +
->   hw/arm/z2.c               | 1 +
->   4 files changed, 11 insertions(+)
-> 
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 8565644da6..da5cc91eec 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -247,6 +247,14 @@ to correct issues, mostly regarding migration compatibility. These are
->   no longer maintained and removing them will make the code easier to
->   read and maintain. Use versions 2.12 and above as a replacement.
->   
-> +``mainstone``, ``tosa`` and ``z2`` PXA2xx arm machines (since 9.0)
-> +''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-> +
-> +Support for these boards has been removed from the Linux kernel
-> +in version 6.3 in 2023, so there are likely no users left for these
-> +boards, thus they will be removed without replacement.
+> I won't send a pull until next Monday.  Please shoot if there's any objections!
 
-While Linux host support makes sense for code removal, guest
-support isn't relevant IMHO. I.e. you can still run U-boot
-or any guest code you fancy, like my-first-rtos.
+Thanks!
 
-(I noticed Peter want a more generic removal)
 
