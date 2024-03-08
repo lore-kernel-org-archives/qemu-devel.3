@@ -4,67 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35CE6C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 15:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4DCDC54E4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 16:01:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ricYX-0007Lw-NH; Fri, 08 Mar 2024 10:54:45 -0500
+	id 1riceK-0000Xv-LR; Fri, 08 Mar 2024 11:00:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <t-8ch@linutronix.de>)
- id 1ricYW-0007LO-0q
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:54:44 -0500
-Received: from galois.linutronix.de ([2a0a:51c0:0:12e:550::1])
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1riceJ-0000Xi-NE; Fri, 08 Mar 2024 11:00:43 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <t-8ch@linutronix.de>)
- id 1ricYU-00051z-02
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:54:43 -0500
-Date: Fri, 8 Mar 2024 16:54:27 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
- s=2020; t=1709913269;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5xG59uKkO3wSO43BZ4/5KJJL6yb+z9MIWqd6jTvMli4=;
- b=h1QILic7CCUZzFncoUJrOiiu8dtCO9dzWVGbZq9tS2M1ijTAXNMZ9fzY8SaPV7O66Nz3NP
- gLcgJJdVu0SeXzD9UH7HCP3Ox+i10/9avOCNfgPc1WZd9/mDfy5mON8i08BSl0Bsa4t2uW
- wO+zpnc7H1QFmKaHLZJOVcu46/eHN+q3oNb6n/Q4EzziKIQEfq8RB0j/vXtMONgUt0k+hB
- +worhoiWBLyDoIRASCVRBGdfQr+NuKDQoGwoqnAaXCSgqaiEGirgtUcbKy9Xa8aduoGoob
- FspeDSi0JZk3wt61R6aSzBQ+kKOcgcC5Z7B5jhjwI50qUPTy6m5uvoraJFuN+w==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
- s=2020e; t=1709913269;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5xG59uKkO3wSO43BZ4/5KJJL6yb+z9MIWqd6jTvMli4=;
- b=GYM0hfugffLm5M0+5Ood5RP2CjPycLUN1mtxwxwrNV1GZMgCQBKafyHpsLrXzQCfQ4NYtj
- A67Ul2wNBuR1odCQ==
-From: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Kashyap Chamarthy <kchamart@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH 3/4] docs/interop/firmware.json: Use full include paths
-Message-ID: <20240308164620-2ed882af-2ff4-4d36-a3aa-148c2d48fcbf@linutronix.de>
-References: <20240306-qapi-firmware-json-v1-0-619f7122a249@linutronix.de>
- <20240306-qapi-firmware-json-v1-3-619f7122a249@linutronix.de>
- <87le6s21kh.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1riceG-0005wW-Dt; Fri, 08 Mar 2024 11:00:43 -0500
+Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 428FWWpP025533; Fri, 8 Mar 2024 16:00:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=We/Qzl9uxtUwIKI0EH/TeMAUlGhDa3PAYbpRUFNepTI=;
+ b=BWz2N5iHk+gjJVVcRhkJtUiMEruoLnAynRa+fMkmZocTanfUtqH4qf/gwXxi4NHzZlUU
+ 6hJ5VQC6HPBo/r10sWCRauyeRnUmeyddNnfWBCXjnTFxbvgQps9sNlx8yUT3vuepbGQ/
+ oBslAGPPn93+PB3VHYvI+UZzRm6wcrGHpddjwfssxjriIukQk6CncNEj3DzgkakYfhiu
+ GYFYpr8mHlLQB9ndh/gGubLWRIISao8sd1WyP/YlNqDWeyT3R3wkSRJkt1rAsoMY2hLU
+ PsMaQ04jxoaDgYlpJH7HbXn7WefVCMdvX/SwE6wgYa9WptaNwl3LdJ1lU5wRvh8qMLDf Pg== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wr5dcgg77-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 08 Mar 2024 16:00:30 +0000
+Received: from m0353727.ppops.net (m0353727.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 428Fxo3n003656;
+ Fri, 8 Mar 2024 16:00:29 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wr5dcgg6f-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 08 Mar 2024 16:00:29 +0000
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 428DGOpA025376; Fri, 8 Mar 2024 16:00:28 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3wmeu05ge5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 08 Mar 2024 16:00:28 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 428G0Niu33751510
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 8 Mar 2024 16:00:25 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E015658056;
+ Fri,  8 Mar 2024 16:00:21 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4E15758070;
+ Fri,  8 Mar 2024 16:00:21 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  8 Mar 2024 16:00:21 +0000 (GMT)
+Message-ID: <350fbdff-1fd6-43c2-a0e6-c20b2dc2e650@linux.ibm.com>
+Date: Fri, 8 Mar 2024 11:00:20 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87le6s21kh.fsf@pond.sub.org>
-Received-SPF: pass client-ip=2a0a:51c0:0:12e:550::1;
- envelope-from=t-8ch@linutronix.de; helo=galois.linutronix.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/5] hw/ppc: SPI responder model
+Content-Language: en-US
+To: Chalapathi V <chalapathi.v@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
+ clg@kaod.org, calebs@us.ibm.com, chalapathi.v@ibm.com,
+ saif.abrar@linux.vnet.ibm.com
+References: <20240207160833.3437779-1-chalapathi.v@linux.ibm.com>
+ <20240207160833.3437779-2-chalapathi.v@linux.ibm.com>
+From: Stefan Berger <stefanb@linux.ibm.com>
+In-Reply-To: <20240207160833.3437779-2-chalapathi.v@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 8Ieyp_2ceMGf1vOBGiZg__tFUvJTMFSa
+X-Proofpoint-GUID: ISdFtABRE12SC3cLOCTVIIhAfMFl45Eb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-08_08,2024-03-06_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=999 phishscore=0
+ adultscore=0 spamscore=0 malwarescore=0 priorityscore=1501 mlxscore=0
+ impostorscore=0 suspectscore=0 clxscore=1015 bulkscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2403080128
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,95 +117,380 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 08, 2024 at 04:19:42PM +0100, Markus Armbruster wrote:
-> Thomas Weiﬂschuh <thomas.weissschuh@linutronix.de> writes:
-> 
-> > The included files are part of the toplevel QAPI directory and need to
-> > be included from there.
-> >
-> > Signed-off-by: Thomas Weiﬂschuh <thomas.weissschuh@linutronix.de>
-> > ---
-> >  docs/interop/firmware.json | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
-> > index 54a1fc6c1041..4ac840e2b413 100644
-> > --- a/docs/interop/firmware.json
-> > +++ b/docs/interop/firmware.json
-> > @@ -14,8 +14,8 @@
-> >  # = Firmware
-> >  ##
-> >  
-> > -{ 'include' : 'machine.json' }
-> > -{ 'include' : 'block-core.json' }
-> > +{ 'include' : '../../qapi/machine.json' }
-> > +{ 'include' : '../../qapi/block-core.json' }
-> >  
-> >  ##
-> >  # @FirmwareOSInterface:
-> 
-> The coupling with the main QAPI schema is unfortunate.
-> 
-> The purpose of docs/interop/firmware.json is to serve as schema for
-> firmware descriptions: a firmware description is a JSON object that
-> conforms to this schema's struct Firmware.
-> 
-> Such a description should be installed along with each firmware binary.
-> 
-> QAPI tooling can be used to check conformance: parse the firmware
-> description JSON object, feed it to the generated visit_type_Firmware().
-> Success implies conformance.
-> 
-> If you find more uses for the C struct Firmware created by
-> visit_type_Firmware(), more power to you.
 
-I am writing a tool "qemu-firmware" that can be used to query and
-introspect those installed JSON description files.
-This is where my changes are coming from.
 
-That tool is meant to be pushed to qemu upstream but it's not ready yet.
+On 2/7/24 11:08, Chalapathi V wrote:
+> Serial pheripheral interface provides full-duplex synchronous serial
+> communication between single controller and multiple responder devices.
+> One SPI Controller is implemented and supported on a SPI Bus, there is
+> no support for multiple controllers on the SPI bus.
+> 
+> The current implemetation assumes that single responder is connected to
+> bus, hence chip_select is not modelled.
+> 
+> Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
+> ---
+>   include/hw/ppc/pnv_spi_responder.h | 109 +++++++++++++++++++
+>   hw/ppc/pnv_spi_responder.c         | 166 +++++++++++++++++++++++++++++
+>   hw/ppc/meson.build                 |   1 +
+>   3 files changed, 276 insertions(+)
+>   create mode 100644 include/hw/ppc/pnv_spi_responder.h
+>   create mode 100644 hw/ppc/pnv_spi_responder.c
+> 
+> diff --git a/include/hw/ppc/pnv_spi_responder.h b/include/hw/ppc/pnv_spi_responder.h
+> new file mode 100644
+> index 0000000000..1cf7279aad
+> --- /dev/null
+> +++ b/include/hw/ppc/pnv_spi_responder.h
+> @@ -0,0 +1,109 @@
+> +/*
+> + * QEMU SPI Responder.
+> + *
+> + * Copyright (c) 2024, IBM Corporation.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * SPI provides full-duplex synchronous serial communication between single
+> + * controller and multiple responder devices. One SPI Controller is
+> + * implemented and supported on a SPI Bus, there is no support for multiple
 
-> firmware.json needs machine.json for SysEmuTarget, and block-core.json
-> for BlockdevDriver.  The largest and the third-largest QAPI module just
-> for two enums.  Almost a quarter Mebibyte of code.
-> 
-> qapi-gen.py generates more than 12kSLOC.  Without the include (and with
-> the enums dumbed down to 'str' to enable that), it generates less than
-> 800.
+an SPI Bus
 
-The generated code also doesn't link properly because it has
-dependencies on various parts of qemu internals.
+> + * controllers on the SPI bus.
+> + *
+> + * The current implementation assumes that single responder is connected to > + * bus, hence chip_select is not modelled.
 
-In my "qemu-firmware" branch I have two more commits that split
-SysEmuTarget and BlockdevDriver into their own JSON files.
-Then everything works nicely.
-These commits were not submitted yet as they felt specific to my
-usecase.
+to the bus, hence chip_select is not modeled.
 
-> We could use Sphinx to generate a manual from firmware.json's document.
-> Except that manual would be useless, because of its 11,000 lines of
-> HTML, less than 800 are for firmware.json.
-> 
-> Options:
-> 
-> * Live with the mess.
-> 
-> * Refactor QAPI modules so firmware.json can include just the enums.
-> 
->   Drawback: we spread the mess into qapi/.  Ugh.
+> + */
+> +
+> +#ifndef PPC_PNV_SPI_RESPONDER_H
+> +#define PPC_PNV_SPI_RESPONDER_H
+> +
+> +#include "hw/qdev-core.h"
+> +#include "qom/object.h"
+> +#include "qemu/log.h"
+> +
+> +#define TYPE_PNV_SPI_RESPONDER "spi-responder"
+> +OBJECT_DECLARE_TYPE(PnvSpiResponder, PnvSpiResponderClass,
+> +                    PNV_SPI_RESPONDER)
+> +
+> +typedef struct xfer_buffer xfer_buffer;
+> +
+> +struct PnvSpiResponderClass {
+> +    DeviceClass parent_class;
+> +
+> +    /*
+> +     * These methods are from controller to responder and implemented
+> +     * by all responders.
+> +     * Connect_controller/disconnect_controller methods are called by
+> +     * controller to initiate/stop the SPI transfer.
+> +     */
+> +    void (*connect_controller)(PnvSpiResponder *responder, const char *port);
+> +    void (*disconnect_controller)(PnvSpiResponder *responder);
+> +    /*
+> +     * SPI transfer consists of a number of consecutive calls to the request
+> +     * method.
+> +     * The parameter first is true on first call of the transfer and last is on
+> +     * the final call of the transfer. Parameter bits and payload defines the
+> +     * number of bits and data payload sent by controller.
+> +     * Responder returns the response payload.
+> +     */
+> +    xfer_buffer *(*request)(PnvSpiResponder *responder, int first, int last,
+> +                    int bits, xfer_buffer *payload);
+> +};
+> +
+> +struct PnvSpiResponder {
+> +    DeviceState parent_obj;
+> +};
+> +
+> +#define TYPE_SPI_BUS "spi-bus"
+> +OBJECT_DECLARE_SIMPLE_TYPE(SpiBus, SPI_BUS)
+> +
+> +struct SpiBus {
+> +    BusState parent_obj;
+> +};
+> +
+> +/*
+> + * spi_realize_and_unref: realize and unref an SPI responder
+> + * @dev: SPI responder to realize
+> + * @bus: SPI bus to put it on
+> + * @errp: error pointer
+> + */
+> +bool spi_realize_and_unref(DeviceState *dev, SpiBus *bus, Error **errp);
+> +
+> +/*
+> + * spi_create_responder: create a SPI responder.
 
-As mentioned above, this is what I ended up doing and which I prefer for
-my usecase.
+a -> an
 
-> * Copy the enums to firmware.json.
-> 
->   Drawback: we risk them going stale.
-> 
-> * Dumb down to 'str'.
-> 
->   Drawback: the conformance check no longer enforces the value of
->   FirmwareTarget member @architecture and FirmwareFlashFile member
->   @format is valid.
-> 
-> Thoughts?
+> + * @bus: SPI bus to put it on
+> + * @name: name of the responder object.
+> + * call spi_realize_and_unref() after creating the responder.
+> + */
+> +
+> +PnvSpiResponder *spi_create_responder(SpiBus *bus, const char *name);
+> +
+> +/* xfer_buffer */
+> +typedef struct xfer_buffer {
+> +
+> +    uint32_t    len;
+> +    uint8_t    *data;
+> +
+> +} xfer_buffer;
+> +
+> +/*
+> + * xfer_buffer_read_ptr: Increment the payload length and return the pointer
+> + * to the data at offset
+> + */
+> +uint8_t *xfer_buffer_write_ptr(xfer_buffer *payload, uint32_t offset,
+> +                uint32_t length);
+> +/* xfer_buffer_read_ptr: Return the pointer to the data at offset */
+> +void xfer_buffer_read_ptr(xfer_buffer *payload, uint8_t **read_buf,
+> +                uint32_t offset, uint32_t length);
+> +/* xfer_buffer_new: Allocate memory and return the pointer */
+> +xfer_buffer *xfer_buffer_new(void);
+> +/* xfer_buffer_free: free the payload */
+> +void xfer_buffer_free(xfer_buffer *payload);
+> +
+> +/* Controller interface */
+> +SpiBus *spi_create_bus(DeviceState *parent, const char *name);
+> +xfer_buffer *spi_request(SpiBus *bus, int first, int last, int bits,
+> +                xfer_buffer *payload);
+> +bool spi_connect_controller(SpiBus *bus, const char *port);
+> +bool spi_disconnect_controller(SpiBus *bus);
+> +#endif /* PPC_PNV_SPI_SEEPROM_H */
+> diff --git a/hw/ppc/pnv_spi_responder.c b/hw/ppc/pnv_spi_responder.c
+> new file mode 100644
+> index 0000000000..c3bc659b1b
+> --- /dev/null
+> +++ b/hw/ppc/pnv_spi_responder.c
+> @@ -0,0 +1,166 @@
+> +/*
+> + * QEMU PowerPC SPI Responder
+> + *
+> + * Copyright (c) 2024, IBM Corporation.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "hw/ppc/pnv_spi_responder.h"
+> +#include "qapi/error.h"
+> +
+> +static const TypeInfo spi_bus_info = {
+> +    .name = TYPE_SPI_BUS,
+> +    .parent = TYPE_BUS,
+> +    .instance_size = sizeof(SpiBus),
+> +};
+> +
+> +SpiBus *spi_create_bus(DeviceState *parent, const char *name)
+> +{
+> +    BusState *bus;
+
+empty line after var decl
+
+> +    bus = qbus_new(TYPE_SPI_BUS, parent, name);
+> +    return SPI_BUS(bus);
+> +}
+> +
+> +/* xfer_buffer_methods */
+> +xfer_buffer *xfer_buffer_new(void)
+> +{
+> +    xfer_buffer *payload = g_malloc0(sizeof(*payload));
+
+empty line after var decl
+
+> +    payload->data = g_malloc0(payload->len * sizeof(uint8_t));
+
+sizeof(uint8_t) doesn't seem necessary
+
+
+> +    return payload;
+> +}
+> +
+> +void xfer_buffer_free(xfer_buffer *payload)
+> +{
+> +    free(payload->data);
+> +    payload->data = NULL;
+
+not necessary to do this
+
+> +    free(payload);
+> +}
+> +
+> +uint8_t *xfer_buffer_write_ptr(xfer_buffer *payload, uint32_t offset,
+> +                            uint32_t length)
+> +{
+> +    if (payload->len < (offset + length)) {
+> +        payload->len = offset + length;
+> +        payload->data = g_realloc(payload->data,
+> +                        payload->len * sizeof(uint8_t));
+
+sizeof(uint8_t)  does not seem necessary
+
+> +    }
+> +    return &payload->data[offset];
+> +}
+> +
+> +void xfer_buffer_read_ptr(xfer_buffer *payload, uint8_t **read_buf,
+> +                uint32_t offset, uint32_t length)
+> +{
+> +    static uint32_t prev_len;
+
+Why do you keep prev_len around?
+
+> +    uint32_t offset_org = offset;
+
+empty line after var decl
+
+> +    if (offset > payload->len) {
+if (offset + length > payload->len) ?
+
+> +        if (length < payload->len) {
+> +            offset = payload->len - length;
+> +        } else {
+> +            offset = 0;
+> +            length = payload->len;
+> +        }
+
+If the user passes in length (1000) and now you artificially lower it 
+(10) he may assume he got 1000 bytes to read and end up reading over the 
+end of the buffer in the end becasue there are only 10 bytes. I don't 
+think you should neither adjust offset nor length but realloc (if at all 
+necessary to do this here) to accomodate these values.
+
+> +        qemu_log_mask(LOG_GUEST_ERROR, "Read offset(%d) exceeds buffer "
+> +                        "length(%d), altered offset to %d and length to %d to "
+> +                        "read within buffer\n", offset_org, payload->len,
+> +                        offset, length);
+> +    } else if ((offset + length) > payload->len) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "Read length(%d) bytes from offset (%d)"
+> +                        ", exceeds buffer length(%d)\n", length, offset,
+> +                        payload->len);
+> +        length = payload->len - offset;
+> +    }
+> +
+> +    if ((prev_len != length) || (*read_buf == NULL)) {
+> +        *read_buf = g_realloc(*read_buf, length * sizeof(uint8_t));
+> +        prev_len = length;
+> +    }
+> +    *read_buf = &payload->data[offset];
+> +}
+> +
+> +/* Controller interface methods */
+> +bool spi_connect_controller(SpiBus *bus, const char *port)
+> +{
+> +    BusState *b = BUS(bus);
+> +    BusChild *kid;
+
+empty line
+
+> +    QTAILQ_FOREACH(kid, &b->children, sibling) {
+> +        PnvSpiResponder *r = PNV_SPI_RESPONDER(kid->child);
+> +        PnvSpiResponderClass *rc = PNV_SPI_RESPONDER_GET_CLASS(r);
+
+empty line
+
+> +        rc->connect_controller(r, port);
+> +        return true;
+
+you didn't process the whole list but returned on the first element?
+
+> +    }
+> +    return false;
+> +}
+> +bool spi_disconnect_controller(SpiBus *bus)
+> +{
+> +    BusState *b = BUS(bus);
+> +    BusChild *kid;
+
+empty line
+
+> +    QTAILQ_FOREACH(kid, &b->children, sibling) {
+> +        PnvSpiResponder *r = PNV_SPI_RESPONDER(kid->child);
+> +        PnvSpiResponderClass *rc = PNV_SPI_RESPONDER_GET_CLASS(r);
+> +        rc->disconnect_controller(r);
+> +        return true;
+
+same comments here
+
+> +    }
+> +    return false;
+> +}
+> +
+> +xfer_buffer *spi_request(SpiBus *bus,
+> +                int first, int last, int bits, xfer_buffer *payload)
+> +{
+> +    BusState *b = BUS(bus);
+> +    BusChild *kid;
+> +    xfer_buffer *rsp_payload = NULL;
+> +    uint8_t *buf = NULL;
+> +
+> +    QTAILQ_FOREACH(kid, &b->children, sibling) {
+> +        PnvSpiResponder *r = PNV_SPI_RESPONDER(kid->child);
+> +        PnvSpiResponderClass *rc = PNV_SPI_RESPONDER_GET_CLASS(r);
+> +        rsp_payload = rc->request(r, first, last, bits, payload);
+> +        return rsp_payload;
+
+Also here you seem to stop processing in the first element.
+
+> +    }
+> +    if (rsp_payload == NULL) {
+> +        rsp_payload = xfer_buffer_new();
+> +    }
+> +    buf = xfer_buffer_write_ptr(rsp_payload, 0, payload->len);
+> +    memset(buf, 0, payload->len);
+> +    return rsp_payload;
+> +}
+> +
+> +/* create and realise spi responder device */
+> +bool spi_realize_and_unref(DeviceState *dev, SpiBus *bus, Error **errp)
+> +{
+> +    return qdev_realize_and_unref(dev, &bus->parent_obj, errp);
+> +}
+> +
+> +PnvSpiResponder *spi_create_responder(SpiBus *bus, const char *name)
+> +{
+> +    DeviceState *dev = qdev_new(name);
+> +
+> +    spi_realize_and_unref(dev, bus, &error_fatal);
+> +    return PNV_SPI_RESPONDER(dev);
+> +}
+> +
+> +static void pnv_spi_responder_class_init(ObjectClass *klass, void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +
+> +    dc->desc = "PowerNV SPI RESPONDER";
+> +}
+> +
+> +static const TypeInfo pnv_spi_responder_info = {
+> +    .name          = TYPE_PNV_SPI_RESPONDER,
+> +    .parent        = TYPE_DEVICE,
+> +    .instance_size = sizeof(PnvSpiResponder),
+> +    .class_init    = pnv_spi_responder_class_init,
+> +    .abstract      = true,
+> +    .class_size    = sizeof(PnvSpiResponderClass),
+> +};
+> +
+> +static void pnv_spi_responder_register_types(void)
+> +{
+> +    type_register_static(&pnv_spi_responder_info);
+> +    type_register_static(&spi_bus_info);
+> +}
+> +
+> +type_init(pnv_spi_responder_register_types);
+> diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
+> index eba3406e7f..9bfd5a5613 100644
+> --- a/hw/ppc/meson.build
+> +++ b/hw/ppc/meson.build
+> @@ -53,6 +53,7 @@ ppc_ss.add(when: 'CONFIG_POWERNV', if_true: files(
+>     'pnv_bmc.c',
+>     'pnv_homer.c',
+>     'pnv_pnor.c',
+> +  'pnv_spi_responder.c',
+>   ))
+>   # PowerPC 4xx boards
+>   ppc_ss.add(when: 'CONFIG_PPC405', if_true: files(
 
