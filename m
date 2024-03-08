@@ -4,92 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EB44C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 08:08:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CEB8C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 08:09:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riVHK-00060A-1O; Fri, 08 Mar 2024 03:08:30 -0500
+	id 1riVI6-0006pw-SS; Fri, 08 Mar 2024 03:09:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1riVHF-0005zB-KN
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:08:26 -0500
-Received: from mail-oi1-x22a.google.com ([2607:f8b0:4864:20::22a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1riVHC-0004pd-1I
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:08:24 -0500
-Received: by mail-oi1-x22a.google.com with SMTP id
- 5614622812f47-3c19b7d9de7so1035837b6e.2
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 00:08:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709885293; x=1710490093; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ar3p53HMsIx8zBL94B0eF4lW4BnIQ4joZmAkoo/PXiE=;
- b=dSn2ZDxdWXKz4HvedQdX8bbNiex/ASQG+yuU/Ug5j5Jj6VJovHw+XvVf6tiA+emzMD
- CSi2l3U8zwSmSMz9gSxCoGmGILMP+U3b1vk7STQ0dVg1tAZoBJkxSSHY96QY9A/0QX9p
- p2TF2fqNN0Sh2BV6GJ3pTYX6Nypdrh5DjaCNCc9EQ/CGUDqbUQJKp9cM33cM+IfO97Ia
- jJSLApKHwidC6+S+SAvoONUvZrVg43dUtIr6VWidDoh5EH/tlc87eRmBqeBppED8dbLe
- 7uYbiHqNJZN/f7K0jEBhNSIeTKIH4XmtdYMDnXX0p5/ZO/+ta/7YSihrKOvgmzUvFpC4
- XM+w==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1riVI3-0006lW-2z
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:09:15 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1riVI1-00052F-Ok
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:09:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709885353;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=d1x1CbcWD8BgSBU1mwb3n5+g4oSkeRqdcwCFkah17Ko=;
+ b=IBoo97u/OEJRtgJbwaiChqybAA31LghX0bPYl7WvAtJEMkeAbWmWwi4yWHNpMPp+y+22Pl
+ x4N3uYndXKIJ28g7hF/+Abl7WOqAAt0yhFGEFzs0s1c5vU28WtyJeDKzy2yLT9zxlWQqE1
+ hNhBCg7x4wxqP/bLGkys5abK+Tt6QfE=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-657-Rp3AgluZOlqcVcNF2ZcuDw-1; Fri, 08 Mar 2024 03:09:11 -0500
+X-MC-Unique: Rp3AgluZOlqcVcNF2ZcuDw-1
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-299180d546bso457679a91.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 00:09:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709885293; x=1710490093;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ar3p53HMsIx8zBL94B0eF4lW4BnIQ4joZmAkoo/PXiE=;
- b=ZpQRoucEszjKgEvhztjnnvIUU1Jk9cdNdSykH+rtT6acMqUE5W0hrZEHV5qW5+33sk
- 5mrV3PL4xWYPA9zq20xB9f1d9Ck9A0OOtiIzzqfl6nk9QgdP0lahO9iuiC6Hqn+sCWL/
- ICA1Q1+CKAK8k9RT+y7KH92WTY7Nd4bq2RrjHA/GY/EXAgwGUe5V3OcSy5hrbFg05MpN
- zRHHOVUhDstZm0hkwo+L+pQxHVutqXlnb7klEZ6S6IGNzFmJGKd/YBczJ2AhkMYLOPRf
- +QQuLYnDL3Oa4oq+/pT5x0emqI7131IiqqjPCUqOmXc021x2IIy0NPrrGCzIBXuFT9Qe
- d5BQ==
-X-Gm-Message-State: AOJu0YxdtxA+KOeXe1Vamrrjl6azIbojN/zsBGtGwXoMuLJkVO3TKqi6
- c74d41erzygL2Y2I9PXICHB3IXTA8oPKGtBsDzH3Et45qPGtquBcY9XqpXOHal8=
-X-Google-Smtp-Source: AGHT+IGWZiC0Ct8tCDDzdCvzueg8OeBB8V4/2g1o1vl39cnKx6iJ5YHfjcOF74P9tVS7tlJpcFAv0A==
-X-Received: by 2002:a05:6808:1d2:b0:3c2:16db:e955 with SMTP id
- x18-20020a05680801d200b003c216dbe955mr8613483oic.48.1709885292792; 
- Fri, 08 Mar 2024 00:08:12 -0800 (PST)
-Received: from [192.168.69.100] (pir44-h02-176-184-37-132.dsl.sta.abo.bbox.fr.
- [176.184.37.132]) by smtp.gmail.com with ESMTPSA id
- lp14-20020a056a003d4e00b006e5eb3cba7asm10563659pfb.96.2024.03.08.00.08.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Mar 2024 00:08:12 -0800 (PST)
-Message-ID: <6be774d0-6277-4d50-b97b-a0177cad8fd8@linaro.org>
-Date: Fri, 8 Mar 2024 09:08:05 +0100
+ d=1e100.net; s=20230601; t=1709885350; x=1710490150;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=d1x1CbcWD8BgSBU1mwb3n5+g4oSkeRqdcwCFkah17Ko=;
+ b=BQfacP8D537vSpYkz8S5tSP9q3Bi3RQehigmabnYTrh/a8U08G70ZWRyqksUShX0jC
+ uXXeAkEGhVvel4L5Rx+T/8QQHU102QNG3DD+ncPgUPlxLf3WsFQGHNo77vuEdn5+Df1B
+ Ztd4DYT0mDzZrMdYDw/xYe3XYgONUJ50gh3eNW/oTSO7rBUz7/ee04W7KQ8A/8lto13R
+ TQYGIMolNJfCbDwEeAqdIWvbATTvilMO1I5xnY3rlc5+ydq82rGae50qmeWLSaBMg3fN
+ fz5ZNBpDLNxhuGH7y2yFyEBiUu0dt51hXQldYozt/lDp/WlGFBz1rxG7/nQt0LRGt4Dn
+ /P2w==
+X-Gm-Message-State: AOJu0YwlDGxLe3v17ktrXcY/gr9sb+Q7KfjfzU2Q0nQ6o2hLUEcnOzwT
+ inTYqXpG0HK7W+K7NFRkTXqylTcKrvcmlCssa9Qr2lQ/xKNLDYgGOzllpRRitdlGrAJrkmuDJLf
+ NJTLsB/q6gD/fqduWfnudpDV1pRzeR4/aEYVQ5vb/UgrHQ3pz9Agc
+X-Received: by 2002:a17:902:ead1:b0:1dc:e469:6f5d with SMTP id
+ p17-20020a170902ead100b001dce4696f5dmr1414117pld.4.1709885350616; 
+ Fri, 08 Mar 2024 00:09:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFs/jZi4bD0C8jLuLgqGbWSyg5Vu6LCAInRwprsZ+Zix37Nk3dopBct9t5JAgWyNJNdCApwUw==
+X-Received: by 2002:a17:902:ead1:b0:1dc:e469:6f5d with SMTP id
+ p17-20020a170902ead100b001dce4696f5dmr1414100pld.4.1709885350219; 
+ Fri, 08 Mar 2024 00:09:10 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ h15-20020a170902f54f00b001d974ffa1fcsm15801113plf.173.2024.03.08.00.09.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 08 Mar 2024 00:09:09 -0800 (PST)
+Date: Fri, 8 Mar 2024 16:08:58 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Prasad Pandit <pjp@fedoraproject.org>, Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Halil Pasic <pasic@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Eric Blake <eblake@redhat.com>, John Snow <jsnow@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PATCH v4 11/25] migration: Add Error** argument to
+ .save_setup() handler
+Message-ID: <ZerHmmoZJyGZH0Fd@x1n>
+References: <20240306133441.2351700-1-clg@redhat.com>
+ <20240306133441.2351700-12-clg@redhat.com>
+ <669aaa46-0ed8-46c8-9684-fc4ccc485d4d@yandex-team.ru>
+ <38414ab8-7b29-478c-9fc6-09804cc17842@redhat.com>
+ <8930276b-c87b-4afd-b4e0-489dcaccc4e8@yandex-team.ru>
+ <Zeq6CP5IOxqfoq-r@x1n>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 4/5] hw/i386/q35: Wire virtual SMI# lines to ICH9
- chipset
-Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Anton Johansson <anjo@rev.ng>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Peter Maydell <peter.maydell@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ani Sinha <anisinha@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Laszlo Ersek <lersek@redhat.com>
-References: <20240226164913.94077-1-philmd@linaro.org>
- <20240226164913.94077-5-philmd@linaro.org> <Zd9iz9aIwM3cOqwt@intel.com>
- <5a42a295-bb1e-49f6-ae1d-94aec1efb61c@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <5a42a295-bb1e-49f6-ae1d-94aec1efb61c@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22a;
- envelope-from=philmd@linaro.org; helo=mail-oi1-x22a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Zeq6CP5IOxqfoq-r@x1n>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.583,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,40 +112,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/24 20:43, Thomas Huth wrote:
-> On 28/02/2024 17.43, Zhao Liu wrote:
->> Hi Philippe,
->>
->>> +/*
->>> + * Real ICH9 contains a single SMI output line and doesn't broadcast 
->>> CPUs.
->>> + * Virtualized ICH9 allows broadcasting upon negatiation with guest, 
->>> see
->>> + * commit 5ce45c7a2b.
->>> + */
->>> +enum {
->>> +    ICH9_VIRT_SMI_BROADCAST,
->>> +    ICH9_VIRT_SMI_CURRENT,
->>> +#define ICH9_VIRT_SMI_COUNT 2
->>> +};
->>> +
->>
->> Just quick look here. Shouldn't ICH9_VIRT_SMI_COUNT be defined outside of
->> enum {}?
+On Fri, Mar 08, 2024 at 03:11:04PM +0800, Peter Xu wrote:
+> On Thu, Mar 07, 2024 at 02:39:31PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> > > I would be glad to have most of this series merged in QEMU 9.0. So,
+> > > unless there is something major, I will keep that for followups.
 > 
-> Or even better, do it without a #define:
-> 
-> enum {
->      ICH9_VIRT_SMI_BROADCAST,
->      ICH9_VIRT_SMI_CURRENT,
->      ICH9_VIRT_SMI_COUNT
+> Unfortunately I found this series won't apply to master.. starting from
+> "migration: Always report an error in ram_save_setup()".  Perhaps forgot to
+> pull before the repost?
 
-This form isn't recommended as it confuses static analyzers,
-considering ICH9_VIRT_SMI_COUNT as part of the enum.
+Scratch this.  It's myself who forgot to pull... :-( It applies all fine.
 
-> };
 > 
->   Thomas
-> 
+> It'll also be nice if we can get an ACK for the s390 patch from a
+> maintainer.
+
+I'll ping on the patch.
+
+-- 
+Peter Xu
 
 
