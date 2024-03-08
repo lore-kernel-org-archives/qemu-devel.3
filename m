@@ -4,78 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8127C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 21:54:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19541C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 21:55:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riiAc-0007TK-OP; Fri, 08 Mar 2024 16:54:26 -0500
+	id 1riiAa-0007Sj-TO; Fri, 08 Mar 2024 16:54:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1riiAZ-0007SI-HP
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 16:54:24 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1riiAU-0007Re-AW
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 16:54:18 -0500
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1riiAX-0001kR-PB
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 16:54:23 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1dbd32cff0bso22203965ad.0
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 13:54:21 -0800 (PST)
+ id 1riiAS-0001jU-8S
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 16:54:18 -0500
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-6e5eaf5bb3eso2290281b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 13:54:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1709934860; x=1710539660; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BTyg1i/1DQdgOJUu808vlkHFJKjnCQY7nU+Nk0IuvAs=;
- b=WVEgEPrOM7e9KJMqiFcmaMTvxQVB57TGN8XMcVnCGvhq9q3UZ2Qnpiwu24V+aaV3s4
- E63/EMvCU2E4Q8YXdJevJVWyZRK+Q6LxgyEzePD7my279wO4qeQoMYZoZ8tg+wTMMmFd
- 2gMV3lEJUjjh3RsE3r8xM2nulZnY5Xq2HDEaIUGdTFeaInQmDNdLULmxJK8gQ6deJemg
- UDHg4mGhLGPvLFMcyw3yEnonqHAzDcY2HeC4VY2sq7vTHDZSStIWXtEPXvUCfWKOaSa1
- HpePMjLnowE0FlsMZiOI5amlVs/6U0aitIneA+rkHinPx7u/MpgBciQDDrCR05ScFVX1
- dbqw==
+ d=ventanamicro.com; s=google; t=1709934853; x=1710539653; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=2FWd3NR8qEeKeoNTFFoRKGVbONwFQY61OESTh2K8iJo=;
+ b=elBLNtIsuy+bJxp7Sd1FNW5wWqItfWmiz5Yb8fkx0BEyr9s/9/DIXkEMBV6sYx7GT/
+ zIvGrBOdpCaMvbYczvqp02+58UFmayxTi1PHgIMBDSi4bgqu3KwJIk8kbb8B+YZKsZAh
+ GgzVqggIcA8nCpIflWW5GCZidbilxkt/whTCJ0UTxIcxy8Oj9RmRb0d7M5UXE7XPujBQ
+ aDPj6WdqwE2RPvEwD7UBTLF3qMvGLPjUfYh2+hLDChWwAW/77FZ5+WnRheqOSo9XI4XD
+ T1goFPd8IhFR/5fa1i9n5nTgnRePe5461n/WahG4h51lJlSzmIYxu0OmgpoPQGzNhPtd
+ CLow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709934860; x=1710539660;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=BTyg1i/1DQdgOJUu808vlkHFJKjnCQY7nU+Nk0IuvAs=;
- b=mT/Eya5eX6fav38NLDsue4vkOD9u0iMm9HUqzOmzJ+HtORXTNAwVpDh43I6C8OxaP7
- 2dcigfoMyGMY6lcSOBgeXEb+5qq/KlE2jgDrjuiwEoaHoTrYHCChmirZMIkl0zP6pje3
- nUoLQUpyFDHm2nkWmSt+Cvn6jUqLw/9H4XToh6E78NWF77BQ0H8iv8IjL0Ws9J9A4Tb9
- ZYPz3FJVQqGpCwp8i/Ur9y6OfZ0rCmVp2micnpSTpkUXsSmMMOADseBwmi/R05NceeL7
- fTDPWsvbTjBQx54zEG1MDFxPckPyDJWWLUvVTKMvNU3IhNP0OaqZRcb2JHK5m8hBNe4L
- +EyQ==
-X-Gm-Message-State: AOJu0YzsRXbYMfUsIRYUvjD9NQbv+L3azGTUHXUUuUmHDrPd96P2ohi0
- eYgptPqZn7q4r2bRoqEMGQ0FREIjfg0iviNObkjImvSJfGw6xUHqlmbDOCmAV3OpVyKl6PV1hS9
- s
-X-Google-Smtp-Source: AGHT+IFfgYLLflSfXnjBIB5m6JqbLzjEkuJAVESXq9k3wB6190Dc254em0EJ2FjNsYW7O/tZkpUqHg==
-X-Received: by 2002:a17:902:ef8c:b0:1dc:afd1:9c37 with SMTP id
- iz12-20020a170902ef8c00b001dcafd19c37mr298203plb.24.1709934859712; 
- Fri, 08 Mar 2024 13:54:19 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709934853; x=1710539653;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2FWd3NR8qEeKeoNTFFoRKGVbONwFQY61OESTh2K8iJo=;
+ b=kQcEBWsnT12TRl9QdubxBZBNjiTK+GNw24isOoyy9HEl0D6JJhsD0xTJJ8I8eIlVR0
+ 9nV5y2r3QGSSK9vU+z4OQSaj1g007EekiqUSRZGbP4oWTYoZ5uz/SjmCRZ23aYXzLRGa
+ Vv2BcRJGM/e0oAa3YTkJTLV60GFWIoCXOY1qw6cyVxXePZXvZhkd01/MvaHC96Yj2OI4
+ NIwzAY/eE2m7Hb3Ilt/t0dY5x20QTZOS+RTOWfCij77nnZT5w2i8bs1O/8DCa/ojDrRi
+ 8CkCA8DylLeqBGH6HPmbk/atONldTGJPkar00C4B7OxsaVVc52cvT+AOShGwdzvpXwe7
+ lx3Q==
+X-Gm-Message-State: AOJu0YwuhwDmTogoqGp6VME3j2nd8AHluHwqlY3FowiMxmJMp3htUEAH
+ gRoXmVbcKw20s4wwDZiLXiEG/7fy96/tXbUFvhgQYiZDQk0FzgUHrEmL159jzxSJtJN0X3MkReN
+ Z
+X-Google-Smtp-Source: AGHT+IFHnOpZEPUu8hvxAxTLNog2+z+C54r5kbuWjbxNmSwnr5rhAYKkCKXGUl9t8g6MkegWWU58Vw==
+X-Received: by 2002:a05:6a20:8baf:b0:1a1:5108:ab57 with SMTP id
+ m47-20020a056a208baf00b001a15108ab57mr261485pzh.60.1709934853193; 
+ Fri, 08 Mar 2024 13:54:13 -0800 (PST)
 Received: from grind.. ([177.94.15.159]) by smtp.gmail.com with ESMTPSA id
- d3-20020a170902b70300b001dd66e6ec91sm107702pls.140.2024.03.08.13.54.16
+ d3-20020a170902b70300b001dd66e6ec91sm107702pls.140.2024.03.08.13.54.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 13:54:19 -0800 (PST)
+ Fri, 08 Mar 2024 13:54:12 -0800 (PST)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
  richard.henderson@linaro.org, philmd@linaro.org,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v8 02/10] target/riscv: handle vstart >= vl in
- vext_set_tail_elems_1s()
-Date: Fri,  8 Mar 2024 18:53:42 -0300
-Message-ID: <20240308215402.117405-3-dbarboza@ventanamicro.com>
+Subject: [PATCH v8 00/10] riscv: set vstart_eq_zero on mark_vs_dirty
+Date: Fri,  8 Mar 2024 18:53:40 -0300
+Message-ID: <20240308215402.117405-1-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240308215402.117405-1-dbarboza@ventanamicro.com>
-References: <20240308215402.117405-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,111 +94,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We're going to make changes that will required each helper to be
-responsible for the 'vstart' management, i.e. we will relieve the
-'vstart < vl' assumption that helpers have today.
+Hi,
 
-To do that we'll need to deal with how we're updating tail elements
-first. We can't update them if vstart >= vl.
+In this new version we addressed the points rose by LIU Zhiwei in the v7
+version. Some patches had to go, additional patches were added:
 
-We already have the vext_set_tail_elems_1s() helper to update tail
-elements.  Change it to accept an 'env' pointer, where we can read both
-vstart and vl, and make it a no-op if vstart >= vl. Note that the
-callers will need to set env->start after the helper from now on.
+- patches 1 and 2 from v7: already queued and sent in the last PR.
 
-We'll enforce the use of this helper to update tail elements on all
-instructions, making everyone able to skip the tail update if vstart
-isn't adequate.
+- patch 6 from v7: moved to patch 1
 
-Let's also simplify the API a little by removing the 'nf' argument since
-it can be derived from 'desc'.
+- patches 2, 3, 4 and 5 (all new): rework how we update tail elements
 
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- target/riscv/vector_helper.c | 30 +++++++++++++++++-------------
- 1 file changed, 17 insertions(+), 13 deletions(-)
+  Version 7 has a problem with tail elements being updated regardless of
+  vstart >= vl because there's no guard for it. To fix that, and be able
+  to remove the the vstart >= vl brconds from the translation code (most
+  of them - more on that later), we changed vext_set_tail_elems_1s() to
+  be a no-op if vstart >= vl. After that we went through all the code
+  that was setting tail elems with vext_set_elems_1s() and converted it
+  to use vext_set_tail_elems_1s(). We'll not update tail elements if
+  vstart >= vl even without a brcond guard in the translation code.
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index ca79571ae2..db1d3f77ce 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -174,19 +174,27 @@ GEN_VEXT_ST_ELEM(ste_h, int16_t, H2, stw)
- GEN_VEXT_ST_ELEM(ste_w, int32_t, H4, stl)
- GEN_VEXT_ST_ELEM(ste_d, int64_t, H8, stq)
- 
--static void vext_set_tail_elems_1s(target_ulong vl, void *vd,
--                                   uint32_t desc, uint32_t nf,
--                                   uint32_t esz, uint32_t max_elems)
-+static void vext_set_tail_elems_1s(CPURISCVState *env, void *vd,
-+                                   uint32_t desc, uint32_t esz,
-+                                   uint32_t max_elems)
- {
-     uint32_t vta = vext_vta(desc);
-+    uint32_t nf = vext_nf(desc);
-     int k;
- 
--    if (vta == 0) {
-+    /*
-+     * Section 5.4 of the RVV spec mentions:
-+     * "When vstart ≥ vl, there are no body elements, and no
-+     *  elements are updated in any destination vector register
-+     *  group, including that no tail elements are updated
-+     *  with agnostic values."
-+     */
-+    if (vta == 0 || env->vstart >= env->vl) {
-         return;
-     }
- 
-     for (k = 0; k < nf; ++k) {
--        vext_set_elems_1s(vd, vta, (k * max_elems + vl) * esz,
-+        vext_set_elems_1s(vd, vta, (k * max_elems + env->vl) * esz,
-                           (k * max_elems + max_elems) * esz);
-     }
- }
-@@ -222,9 +230,8 @@ vext_ldst_stride(void *vd, void *v0, target_ulong base,
-             k++;
-         }
-     }
-+    vext_set_tail_elems_1s(env, vd, desc, esz, max_elems);
-     env->vstart = 0;
--
--    vext_set_tail_elems_1s(env->vl, vd, desc, nf, esz, max_elems);
- }
- 
- #define GEN_VEXT_LD_STRIDE(NAME, ETYPE, LOAD_FN)                        \
-@@ -281,9 +288,8 @@ vext_ldst_us(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
-             k++;
-         }
-     }
-+    vext_set_tail_elems_1s(env, vd, desc, esz, max_elems);
-     env->vstart = 0;
--
--    vext_set_tail_elems_1s(evl, vd, desc, nf, esz, max_elems);
- }
- 
- /*
-@@ -402,9 +408,8 @@ vext_ldst_index(void *vd, void *v0, target_ulong base,
-             k++;
-         }
-     }
-+    vext_set_tail_elems_1s(env, vd, desc, esz, max_elems);
-     env->vstart = 0;
--
--    vext_set_tail_elems_1s(env->vl, vd, desc, nf, esz, max_elems);
- }
- 
- #define GEN_VEXT_LD_INDEX(NAME, ETYPE, INDEX_FN, LOAD_FN)                  \
-@@ -532,9 +537,8 @@ ProbeSuccess:
-             k++;
-         }
-     }
-+    vext_set_tail_elems_1s(env, vd, desc, esz, max_elems);
-     env->vstart = 0;
--
--    vext_set_tail_elems_1s(env->vl, vd, desc, nf, esz, max_elems);
- }
- 
- #define GEN_VEXT_LDFF(NAME, ETYPE, LOAD_FN)               \
+- patch 6 (new): fix scalar move insns. They weren't setting vstart = 0.
+
+- patch 7 (patch 3 from v7): do not remove brconds from scalar move
+  insns
+
+  trans_vmv_s_x() and trans_vfmv_s_f() does not have a helper that will
+  handle vstart >= vl for them, so they need their brcond. 
+
+- patches 4 and 5 from v7: dropped. We're not removing all brconds, so
+  we can't get rid of cpu_vstart and cpu_vl.
+
+Series based on alistair/riscv-to-apply.next. 
+
+Patches missing review: 2, 3, 4, 5, 6.
+
+Daniel Henrique Barboza (9):
+  target/riscv/vector_helper.c: set vstart = 0 in GEN_VEXT_VSLIDEUP_VX()
+  target/riscv: handle vstart >= vl in vext_set_tail_elems_1s()
+  target/riscv/vector_helper.c: do vstart=0 after updating tail
+  target/riscv/vector_helper.c: update tail with
+    vext_set_tail_elems_1s()
+  target/riscv: use vext_set_tail_elems_1s() in vcrypto insns
+  trans_rvv.c.inc: set vstart = 0 in int scalar move insns
+  target/riscv: remove 'over' brconds from vector trans
+  trans_rvv.c.inc: remove redundant mark_vs_dirty() calls
+  target/riscv/vector_helper.c: optimize loops in ldst helpers
+
+Ivan Klokov (1):
+  target/riscv: Clear vstart_qe_zero flag
+
+ target/riscv/insn_trans/trans_rvbf16.c.inc |  18 +-
+ target/riscv/insn_trans/trans_rvv.c.inc    | 205 ++++++---------------
+ target/riscv/insn_trans/trans_rvvk.c.inc   |  30 +--
+ target/riscv/translate.c                   |   6 +
+ target/riscv/vcrypto_helper.c              |  63 +++----
+ target/riscv/vector_helper.c               | 168 ++++++-----------
+ target/riscv/vector_internals.c            |  28 +++
+ target/riscv/vector_internals.h            |   4 +
+ 8 files changed, 186 insertions(+), 336 deletions(-)
+
 -- 
 2.43.2
 
