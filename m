@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFEB7C54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 08:40:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F75EC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 08:40:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riVld-0004VZ-Nl; Fri, 08 Mar 2024 03:39:49 -0500
+	id 1riVmC-0005LS-FF; Fri, 08 Mar 2024 03:40:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1riVlb-0004Nl-5i
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:39:47 -0500
+ id 1riVm6-0005Fa-Uo
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:40:20 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1riVlZ-0004OJ-1P
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:39:46 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1riVm4-0004f2-6z
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:40:18 -0500
 Received: from loongson.cn (unknown [10.20.42.173])
- by gateway (Coremail) with SMTP id _____8BxC+nMzuplQDoWAA--.35030S3;
- Fri, 08 Mar 2024 16:39:41 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxK+ntzuplUzoWAA--.36569S3;
+ Fri, 08 Mar 2024 16:40:13 +0800 (CST)
 Received: from [10.20.42.173] (unknown [10.20.42.173])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8CxPs_Lzupl1CtRAA--.18255S3; 
- Fri, 08 Mar 2024 16:39:39 +0800 (CST)
-Subject: Re: [PATCH v6 09/17] hw/loongarch: Fix fdt memory node wrong 'reg'
+ AQAAf8Cxbs3rzuplCCxRAA--.16377S3; 
+ Fri, 08 Mar 2024 16:40:11 +0800 (CST)
+Subject: Re: [PATCH v6 10/17] hw/loongarch: fdt adds cpu interrupt controller
+ node
 To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
 References: <20240307164835.300412-1-gaosong@loongson.cn>
- <20240307164835.300412-10-gaosong@loongson.cn>
+ <20240307164835.300412-11-gaosong@loongson.cn>
 From: maobibo <maobibo@loongson.cn>
-Message-ID: <104d1a6d-d0a9-16c2-1aec-fbd04ece6dae@loongson.cn>
-Date: Fri, 8 Mar 2024 16:39:38 +0800
+Message-ID: <28dabb62-0d2d-3e10-c09a-0c5ab4f4cbba@loongson.cn>
+Date: Fri, 8 Mar 2024 16:40:09 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <20240307164835.300412-10-gaosong@loongson.cn>
+In-Reply-To: <20240307164835.300412-11-gaosong@loongson.cn>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8CxPs_Lzupl1CtRAA--.18255S3
+X-CM-TRANSID: AQAAf8Cxbs3rzuplCCxRAA--.16377S3
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7GFWUXr1xKFykXryUGw1kXrc_yoW8Jr1fpF
- WxCayDWF40qrnrCrZa93s8Ar13Cws2kFnFqF9F9r4jkr9rXwnYvr1xA3y0yr4UAa48JF1Y
- vFn8Kryjq3W0g3gCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoW7Kw47GF1kWF4kuw48Xw13trc_yoW5Jr1UpF
+ W7CanxWF4xtF17Xwsag34Y9rnxZr1xGFy2gwsFgrWIkasrWwn8Wr4xC3ykAFW8A34xXF1j
+ vFs5JrW7W3Z2qrXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
  0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
  IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
@@ -86,39 +87,65 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 2024/3/8 上午12:48, Song Gao wrote:
-> The right fdt memory node like [1], not [2]
+> fdt adds cpu interrupt controller node,
+> we use 'loongson,cpu-interrupt-controller'.
 > 
->    [1]
->          memory@0 {
->                  device_type = "memory";
->                  reg = <0x00 0x00 0x00 0x10000000>;
->          };
->    [2]
->          memory@0 {
->                  device_type = "memory";
->                  reg = <0x02 0x00 0x02 0x10000000>;
->          };
+> See:
+> https://github.com/torvalds/linux/blob/v6.7/drivers/irqchip/irq-loongarch-cpu.c
+> https://lore.kernel.org/r/20221114113824.1880-2-liupeibao@loongson.cn
 > 
-> Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 > Signed-off-by: Song Gao <gaosong@loongson.cn>
-> Message-Id: <20240301093839.663947-10-gaosong@loongson.cn>
+> Message-Id: <20240301093839.663947-11-gaosong@loongson.cn>
 > ---
->   hw/loongarch/virt.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   hw/loongarch/virt.c | 21 +++++++++++++++++++++
+>   1 file changed, 21 insertions(+)
 > 
 > diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index 8981b57b12..10fdfec5dd 100644
+> index 10fdfec5dd..d260f933a5 100644
 > --- a/hw/loongarch/virt.c
 > +++ b/hw/loongarch/virt.c
-> @@ -325,7 +325,7 @@ static void fdt_add_memory_node(MachineState *ms,
->       char *nodename = g_strdup_printf("/memory@%" PRIx64, base);
+> @@ -106,6 +106,23 @@ static void virt_flash_map(LoongArchMachineState *lams,
+>       virt_flash_map1(flash1, VIRT_FLASH1_BASE, VIRT_FLASH1_SIZE, sysmem);
+>   }
 >   
->       qemu_fdt_add_subnode(ms->fdt, nodename);
-> -    qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 2, base, 2, size);
-> +    qemu_fdt_setprop_cells(ms->fdt, nodename, "reg", 0, base, 0, size);
->       qemu_fdt_setprop_string(ms->fdt, nodename, "device_type", "memory");
+> +static void fdt_add_cpuic_node(LoongArchMachineState *lams,
+> +                               uint32_t *cpuintc_phandle)
+> +{
+> +    MachineState *ms = MACHINE(lams);
+> +    char *nodename;
+> +
+> +    *cpuintc_phandle = qemu_fdt_alloc_phandle(ms->fdt);
+> +    nodename = g_strdup_printf("/cpuic");
+> +    qemu_fdt_add_subnode(ms->fdt, nodename);
+> +    qemu_fdt_setprop_cell(ms->fdt, nodename, "phandle", *cpuintc_phandle);
+> +    qemu_fdt_setprop_string(ms->fdt, nodename, "compatible",
+> +                            "loongson,cpu-interrupt-controller");
+> +    qemu_fdt_setprop(ms->fdt, nodename, "interrupt-controller", NULL, 0);
+> +    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 1);
+> +    g_free(nodename);
+> +}
+> +
+>   static void fdt_add_flash_node(LoongArchMachineState *lams)
+>   {
+>       MachineState *ms = MACHINE(lams);
+> @@ -527,6 +544,7 @@ static void loongarch_irq_init(LoongArchMachineState *lams)
+>       CPULoongArchState *env;
+>       CPUState *cpu_state;
+>       int cpu, pin, i, start, num;
+> +    uint32_t cpuintc_phandle;
 >   
->       if (ms->numa_state && ms->numa_state->num_nodes) {
+>       /*
+>        * The connection of interrupts:
+> @@ -561,6 +579,9 @@ static void loongarch_irq_init(LoongArchMachineState *lams)
+>       memory_region_add_subregion(&lams->system_iocsr, MAIL_SEND_ADDR,
+>                      sysbus_mmio_get_region(SYS_BUS_DEVICE(ipi), 1));
+>   
+> +    /* Add cpu interrupt-controller */
+> +    fdt_add_cpuic_node(lams, &cpuintc_phandle);
+> +
+>       for (cpu = 0; cpu < ms->smp.cpus; cpu++) {
+>           cpu_state = qemu_get_cpu(cpu);
+>           cpudev = DEVICE(cpu_state);
 > 
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 
