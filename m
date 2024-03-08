@@ -4,88 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB898C54E5C
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 11:19:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F408C54E4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 11:21:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riYAZ-0001Lz-6R; Fri, 08 Mar 2024 06:13:43 -0500
+	id 1riYHz-00049E-7I; Fri, 08 Mar 2024 06:21:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1riYAX-00014f-QU
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 06:13:41 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1riYAV-0001kf-IT
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 06:13:41 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1dd6412da28so7890825ad.3
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 03:13:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709896418; x=1710501218; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MAWta+Jzv7NiikMtjRiNI+4OqxTM1Bzzl8PeXTNimdg=;
- b=EOXcwqDrYhkdEujQ+lOdrHpDt1nzrre09S1+uEwoDLEx0yfkLJ3UlSi1GbdMdrbrJZ
- Fgru1cRhz2k7E1XiQm/P6GQKJaHRigIu4H/jj5/fUEw+YFw1KGX9PY/IqZxlp1sWLLRn
- 1d8O7xJHNP5oONEPsBoPdPJC2c5dJH1lDOjXOF+O1O0gZWQuWlewsQMD3cWAidi6ZDzb
- XbdD/NszODRqScXUq/OPjmlFqZ4wATIpI6QOAcW0d/gW0Jhu1uxmrTzSfCq3zQRdyKYv
- VsbJ1yJBnFejVzZP7AERFlIg0l7Z5X2yUCz4ckFRchHX7PaHCUcUujVKhuQZcNJSbOyp
- UWGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709896418; x=1710501218;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=MAWta+Jzv7NiikMtjRiNI+4OqxTM1Bzzl8PeXTNimdg=;
- b=a6J0Bv6pC8V8Kbrnv2JodpPcn1+lTCcfLAEzixiaVvhLFMlZRUlb/IhognEt+PIpXT
- LtOO4slOYiTlkVZjjTFaeyiCwmrIJKRtDByj+kqDTiiBaGmmIXvABvjd79L+WHMPoeY5
- oGQxnE9hfqQbP/rdRNtaTqu2nGoFHUNpqJOKB4sWOvENPRkwwbrjDuyRdzXffRmB0WSY
- v8mLq24JtMLgHH6N/WVnSvm9yJtxnXjQEJESWIjzrid7uIWtHPLjUVjkFwtwYxrhGhq8
- /YAf97bGQHS0ZtUe+5fBrV97bjpj6ZQi+M1kjqWXXr7B4NBvU56J332n2WOCbGJ2HzM+
- 6aAg==
-X-Gm-Message-State: AOJu0YzNHNMbTmQmX2ihzla154bE7aYFUNd5Xbr+50LIBCTLzhq7tjhP
- 1nOXc6//j4TeCVFkDkLksVnM/ts1l1Wpzj402abrd4qQXmCBVDXGrv7FvRuPsuYsWg==
-X-Google-Smtp-Source: AGHT+IFOoSK6fPCg/wxhxK5gLfReRPBXhFvxnFOb4zyu2eQt9WDLySZcScXqpYrTgzQDkAG1aeoQ0g==
-X-Received: by 2002:a17:903:1112:b0:1dd:607e:852c with SMTP id
- n18-20020a170903111200b001dd607e852cmr3618459plh.27.1709896417789; 
- Fri, 08 Mar 2024 03:13:37 -0800 (PST)
-Received: from toolbox.alistair23.me
- (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
- [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
- by smtp.gmail.com with ESMTPSA id
- a6-20020a170902ecc600b001dcfbbb1ca5sm12006468plh.35.2024.03.08.03.13.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 03:13:37 -0800 (PST)
-From: Alistair Francis <alistair23@gmail.com>
-X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
-To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 29/34] trans_rvv.c.inc: remove 'is_store' bool from load/store
- fns
-Date: Fri,  8 Mar 2024 21:11:47 +1000
-Message-ID: <20240308111152.2856137-30-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240308111152.2856137-1-alistair.francis@wdc.com>
-References: <20240308111152.2856137-1-alistair.francis@wdc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1riYHv-00048j-1a; Fri, 08 Mar 2024 06:21:19 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1riYHs-0003uW-OY; Fri, 08 Mar 2024 06:21:18 -0500
+Received: from pps.filterd (m0353728.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 428Av6vA013751; Fri, 8 Mar 2024 11:20:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : content-transfer-encoding : mime-version; s=pp1;
+ bh=WPkj1PVXi0RjGloiC7Z0uBvgWd0olsz1JZukqX3J9N8=;
+ b=B33inSi6rrhmy7sl4aJXbFtvc6l9OHsp8KHi2ko3rxxACpJ+ZvPLrkIwhMSZdWpl3b0F
+ /q3VUPYCDFjrghjqkNCIGsWMUieU294pq2AFdJZdx1Vtk4hjhFn4yuXrBntF+0pk3QGE
+ smA7Muk2b9/wnQXhn2qiilSBMNVGcIYLkaBIt5UQBs7vhaFpU/DPKit7mY7ZxL7P15Ye
+ 0qbBVpgbb8/NW7z+9q/lUA85Fl77FSC6IBg7oskhQ93Jugwqa9+J6qqfyUVvBFJoahNb
+ UNcAXBda3CzjSjz4SyCkNqBQB2OIKqYqX9SMFh1UU/RaKVrTlWrpIKfFZ1cGwGKPznoO UQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wr1ce0c2a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 08 Mar 2024 11:20:31 +0000
+Received: from m0353728.ppops.net (m0353728.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 428Av9XU013799;
+ Fri, 8 Mar 2024 11:20:30 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wr1ce0c1u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 08 Mar 2024 11:20:30 +0000
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 428A84GK024193; Fri, 8 Mar 2024 11:20:29 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3wpjwsqag8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 08 Mar 2024 11:20:29 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 428BKNrI34668934
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 8 Mar 2024 11:20:25 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8F6F82004E;
+ Fri,  8 Mar 2024 11:20:23 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E4B8D2004D;
+ Fri,  8 Mar 2024 11:20:20 +0000 (GMT)
+Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.ibm.com.com (unknown
+ [9.171.30.1]) by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  8 Mar 2024 11:20:20 +0000 (GMT)
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+To: npiggin@gmail.com, qemu-ppc@nongnu.org
+Cc: clg@kaod.org, mikey@neuling.org, amachhiw@linux.vnet.ibm.com,
+ vaibhav@linux.ibm.com, sbhat@linux.ibm.com, danielhb413@gmail.com,
+ qemu-devel@nongnu.org
+Subject: [PATCH v5 00/14] Nested PAPR API (KVM on PowerVM)
+Date: Fri,  8 Mar 2024 16:49:26 +0530
+Message-Id: <20240308111940.1617660-1-harshpb@linux.ibm.com>
+X-Mailer: git-send-email 2.39.3
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: XqSMu_6038jg5w5bpivPhe9S5P1TC-9G
+X-Proofpoint-ORIG-GUID: 80hWjbDeT4zs6OuvJth-Jat1KrpNlnuX
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-08_08,2024-03-06_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ priorityscore=1501 bulkscore=0 clxscore=1011 malwarescore=0 suspectscore=0
+ phishscore=0 mlxscore=0 mlxlogscore=999 impostorscore=0 adultscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2403080089
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,154 +112,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+There is an existing Nested-HV API to enable nested guests on powernv
+machines. However, that is not supported on pseries/PowerVM LPARs.
+This patch series implements required hcall interfaces to enable nested
+guests with KVM on PowerVM.
+Unlike Nested-HV, with this API, entire L2 state is retained by L0
+during guest entry/exit and uses pre-defined Guest State Buffer (GSB)
+format to communicate guest state between L1 and L2 via L0.
 
-After the 'mark_vs_dirty' changes from the previous patch the 'is_store'
-bool is unused in some load/store functions that were changed. Remove it.
+L0 here refers to the phyp/PowerVM, or launching a Qemu TCG L0 with the
+newly introduced option cap-nested-papr=true.
+L1 refers to the LPAR host on PowerVM or Linux booted on Qemu TCG with
+above mentioned option cap-nested-papr=true.
+L2 refers to nested guest running on top of L1 using KVM.
+No SW changes needed for Qemu running in L1 Linux as well as L2 Kernel.
 
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240306171932.549549-3-dbarboza@ventanamicro.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Linux Kernel side support is already merged upstream:
 ---
- target/riscv/insn_trans/trans_rvv.c.inc | 58 ++++++++++++-------------
- 1 file changed, 29 insertions(+), 29 deletions(-)
+commit 19d31c5f115754c369c0995df47479c384757f82
+Author: Jordan Niethe <jniethe5@gmail.com>
+Date:   Thu Sep 14 13:05:59 2023 +1000
 
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index b838b8ea5b..e42728990e 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -796,7 +796,7 @@ typedef void gen_helper_ldst_stride(TCGv_ptr, TCGv_ptr, TCGv,
- 
- static bool ldst_stride_trans(uint32_t vd, uint32_t rs1, uint32_t rs2,
-                               uint32_t data, gen_helper_ldst_stride *fn,
--                              DisasContext *s, bool is_store)
-+                              DisasContext *s)
- {
-     TCGv_ptr dest, mask;
-     TCGv base, stride;
-@@ -843,7 +843,7 @@ static bool ld_stride_op(DisasContext *s, arg_rnfvm *a, uint8_t eew)
-     data = FIELD_DP32(data, VDATA, NF, a->nf);
-     data = FIELD_DP32(data, VDATA, VTA, s->vta);
-     data = FIELD_DP32(data, VDATA, VMA, s->vma);
--    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s, false);
-+    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s);
- }
- 
- static bool ld_stride_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
-@@ -877,7 +877,7 @@ static bool st_stride_op(DisasContext *s, arg_rnfvm *a, uint8_t eew)
-         return false;
-     }
- 
--    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s, true);
-+    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s);
- }
- 
- static bool st_stride_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
-@@ -900,7 +900,7 @@ typedef void gen_helper_ldst_index(TCGv_ptr, TCGv_ptr, TCGv,
- 
- static bool ldst_index_trans(uint32_t vd, uint32_t rs1, uint32_t vs2,
-                              uint32_t data, gen_helper_ldst_index *fn,
--                             DisasContext *s, bool is_store)
-+                             DisasContext *s)
- {
-     TCGv_ptr dest, mask, index;
-     TCGv base;
-@@ -967,7 +967,7 @@ static bool ld_index_op(DisasContext *s, arg_rnfvm *a, uint8_t eew)
-     data = FIELD_DP32(data, VDATA, NF, a->nf);
-     data = FIELD_DP32(data, VDATA, VTA, s->vta);
-     data = FIELD_DP32(data, VDATA, VMA, s->vma);
--    return ldst_index_trans(a->rd, a->rs1, a->rs2, data, fn, s, false);
-+    return ldst_index_trans(a->rd, a->rs1, a->rs2, data, fn, s);
- }
- 
- static bool ld_index_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
-@@ -1019,7 +1019,7 @@ static bool st_index_op(DisasContext *s, arg_rnfvm *a, uint8_t eew)
-     data = FIELD_DP32(data, VDATA, VM, a->vm);
-     data = FIELD_DP32(data, VDATA, LMUL, emul);
-     data = FIELD_DP32(data, VDATA, NF, a->nf);
--    return ldst_index_trans(a->rd, a->rs1, a->rs2, data, fn, s, true);
-+    return ldst_index_trans(a->rd, a->rs1, a->rs2, data, fn, s);
- }
- 
- static bool st_index_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
-@@ -1098,7 +1098,7 @@ typedef void gen_helper_ldst_whole(TCGv_ptr, TCGv, TCGv_env, TCGv_i32);
- 
- static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
-                              uint32_t width, gen_helper_ldst_whole *fn,
--                             DisasContext *s, bool is_store)
-+                             DisasContext *s)
- {
-     uint32_t evl = s->cfg_ptr->vlenb * nf / width;
-     TCGLabel *over = gen_new_label();
-@@ -1129,42 +1129,42 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
-  * load and store whole register instructions ignore vtype and vl setting.
-  * Thus, we don't need to check vill bit. (Section 7.9)
-  */
--#define GEN_LDST_WHOLE_TRANS(NAME, ARG_NF, WIDTH, IS_STORE)               \
-+#define GEN_LDST_WHOLE_TRANS(NAME, ARG_NF, WIDTH)               \
- static bool trans_##NAME(DisasContext *s, arg_##NAME * a)                 \
- {                                                                         \
-     if (require_rvv(s) &&                                                 \
-         QEMU_IS_ALIGNED(a->rd, ARG_NF)) {                                 \
-         return ldst_whole_trans(a->rd, a->rs1, ARG_NF, WIDTH,             \
--                                gen_helper_##NAME, s, IS_STORE);          \
-+                                gen_helper_##NAME, s);                    \
-     }                                                                     \
-     return false;                                                         \
- }
- 
--GEN_LDST_WHOLE_TRANS(vl1re8_v,  1, 1, false)
--GEN_LDST_WHOLE_TRANS(vl1re16_v, 1, 2, false)
--GEN_LDST_WHOLE_TRANS(vl1re32_v, 1, 4, false)
--GEN_LDST_WHOLE_TRANS(vl1re64_v, 1, 8, false)
--GEN_LDST_WHOLE_TRANS(vl2re8_v,  2, 1, false)
--GEN_LDST_WHOLE_TRANS(vl2re16_v, 2, 2, false)
--GEN_LDST_WHOLE_TRANS(vl2re32_v, 2, 4, false)
--GEN_LDST_WHOLE_TRANS(vl2re64_v, 2, 8, false)
--GEN_LDST_WHOLE_TRANS(vl4re8_v,  4, 1, false)
--GEN_LDST_WHOLE_TRANS(vl4re16_v, 4, 2, false)
--GEN_LDST_WHOLE_TRANS(vl4re32_v, 4, 4, false)
--GEN_LDST_WHOLE_TRANS(vl4re64_v, 4, 8, false)
--GEN_LDST_WHOLE_TRANS(vl8re8_v,  8, 1, false)
--GEN_LDST_WHOLE_TRANS(vl8re16_v, 8, 2, false)
--GEN_LDST_WHOLE_TRANS(vl8re32_v, 8, 4, false)
--GEN_LDST_WHOLE_TRANS(vl8re64_v, 8, 8, false)
-+GEN_LDST_WHOLE_TRANS(vl1re8_v,  1, 1)
-+GEN_LDST_WHOLE_TRANS(vl1re16_v, 1, 2)
-+GEN_LDST_WHOLE_TRANS(vl1re32_v, 1, 4)
-+GEN_LDST_WHOLE_TRANS(vl1re64_v, 1, 8)
-+GEN_LDST_WHOLE_TRANS(vl2re8_v,  2, 1)
-+GEN_LDST_WHOLE_TRANS(vl2re16_v, 2, 2)
-+GEN_LDST_WHOLE_TRANS(vl2re32_v, 2, 4)
-+GEN_LDST_WHOLE_TRANS(vl2re64_v, 2, 8)
-+GEN_LDST_WHOLE_TRANS(vl4re8_v,  4, 1)
-+GEN_LDST_WHOLE_TRANS(vl4re16_v, 4, 2)
-+GEN_LDST_WHOLE_TRANS(vl4re32_v, 4, 4)
-+GEN_LDST_WHOLE_TRANS(vl4re64_v, 4, 8)
-+GEN_LDST_WHOLE_TRANS(vl8re8_v,  8, 1)
-+GEN_LDST_WHOLE_TRANS(vl8re16_v, 8, 2)
-+GEN_LDST_WHOLE_TRANS(vl8re32_v, 8, 4)
-+GEN_LDST_WHOLE_TRANS(vl8re64_v, 8, 8)
- 
- /*
-  * The vector whole register store instructions are encoded similar to
-  * unmasked unit-stride store of elements with EEW=8.
-  */
--GEN_LDST_WHOLE_TRANS(vs1r_v, 1, 1, true)
--GEN_LDST_WHOLE_TRANS(vs2r_v, 2, 1, true)
--GEN_LDST_WHOLE_TRANS(vs4r_v, 4, 1, true)
--GEN_LDST_WHOLE_TRANS(vs8r_v, 8, 1, true)
-+GEN_LDST_WHOLE_TRANS(vs1r_v, 1, 1)
-+GEN_LDST_WHOLE_TRANS(vs2r_v, 2, 1)
-+GEN_LDST_WHOLE_TRANS(vs4r_v, 4, 1)
-+GEN_LDST_WHOLE_TRANS(vs8r_v, 8, 1)
- 
- /*
-  *** Vector Integer Arithmetic Instructions
+    KVM: PPC: Add support for nestedv2 guests
+---
+For more details, documentation can be referred in either of patch
+series.
+
+There are scripts available to assist in setting up an environment for
+testing nested guests at https://github.com/iamjpn/kvm-powervm-test
+
+A tree with this series is available at:
+https://github.com/planetharsh/qemu/tree/upstream-0305-v5
+
+Thanks to Michael Neuling, Shivaprasad Bhat, Amit Machhiwal, Kautuk
+Consul, Vaibhav Jain and Jordan Niethe.
+
+Changelog:
+v5: addressed review comments from Nick on v4
+v4: https://lore.kernel.org/qemu-devel/20240220083609.748325-1-harshpb@linux.ibm.com/
+v3: https://lore.kernel.org/qemu-devel/20240118052438.1475437-1-harshpb@linux.ibm.com/
+v2: https://lore.kernel.org/qemu-devel/20231012104951.194876-1-harshpb@linux.ibm.com/
+v1: https://lore.kernel.org/qemu-devel/20230906043333.448244-1-harshpb@linux.ibm.com/
+
+Harsh Prateek Bora (14):
+  spapr: nested: register nested-hv api hcalls only for cap-nested-hv
+  spapr: nested: move nested part of spapr_get_pate into spapr_nested.c
+  spapr: nested: Introduce SpaprMachineStateNested to store related
+    info.
+  spapr: nested: keep nested-hv related code restricted to its API.
+  spapr: nested: Document Nested PAPR API
+  spapr: nested: Introduce H_GUEST_[GET|SET]_CAPABILITIES hcalls.
+  spapr: nested: Introduce H_GUEST_[CREATE|DELETE] hcalls.
+  spapr: nested: Introduce H_GUEST_CREATE_VCPU hcall.
+  spapr: nested: Extend nested_ppc_state for nested PAPR API
+  spapr: nested: Initialize the GSB elements lookup table.
+  spapr: nested: Introduce H_GUEST_[GET|SET]_STATE hcalls.
+  spapr: nested: Use correct source for parttbl info for nested PAPR
+    API.
+  spapr: nested: Introduce H_GUEST_RUN_VCPU hcall.
+  spapr: nested: Introduce cap-nested-papr for Nested PAPR API
+
+ docs/devel/nested-papr.txt    |  119 +++
+ include/hw/ppc/spapr.h        |   27 +-
+ include/hw/ppc/spapr_nested.h |  428 ++++++++-
+ target/ppc/cpu.h              |    4 +
+ hw/ppc/ppc.c                  |   10 +
+ hw/ppc/spapr.c                |   35 +-
+ hw/ppc/spapr_caps.c           |   62 ++
+ hw/ppc/spapr_hcall.c          |   24 +-
+ hw/ppc/spapr_nested.c         | 1550 ++++++++++++++++++++++++++++++++-
+ 9 files changed, 2204 insertions(+), 55 deletions(-)
+ create mode 100644 docs/devel/nested-papr.txt
+
 -- 
-2.44.0
+2.39.3
 
 
