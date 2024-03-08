@@ -4,70 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBB38C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 13:49:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B502BC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 13:55:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riaZx-000818-0c; Fri, 08 Mar 2024 08:48:05 -0500
+	id 1riagj-00023Z-V5; Fri, 08 Mar 2024 08:55:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1riaZu-00080b-Lr
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 08:48:02 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1riagi-00020s-7G
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 08:55:04 -0500
+Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1riaZs-0000ZZ-RR
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 08:48:02 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-568241f40e9so1042217a12.0
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 05:47:59 -0800 (PST)
+ id 1riagd-0002fb-Mr
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 08:55:03 -0500
+Received: by mail-lj1-x22f.google.com with SMTP id
+ 38308e7fff4ca-2d220e39907so29614621fa.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 05:54:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709905678; x=1710510478; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=hlJKeHuliWcDUbk17OKyfKYAWXWxnwxLDrZDjVS3SFg=;
- b=JsH9WNTzF9xIKSyOk1FVVkHUqxvGQWux52GDP7vUFLZ1+flgA5LDPQW24WDKI0fbgA
- wI/Qxxb1wY7ofhE7hpioBr34A5FgbhQWzmHyhC9WqWyjrdi7/B6EymTIdnyi/QtXLbWm
- 3nqU9Db4eCe8SVrr/BOngNz9/p7hfXIwkYXq52fEd5cnSaV/dqFriLbCYiHRg9xwtIbE
- RNZOSJAhu0F8FikNSh+UtO76Us5C5XN2G+zXSm3NL5pRPmhuN+jt8zeIKrdqYCK+8qxY
- B0Lk5H0sezjo3ncZcrKEAQjpwaFoFF6BFE7hmWgoytuwebJIwDPxS/+D7TTonZ1BZdsj
- dxSA==
+ d=linaro.org; s=google; t=1709906091; x=1710510891; darn=nongnu.org;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=zOr3mOsvaZ0DUN7LJn5Yl96Wk0uYZTPx6ljKNcmwe18=;
+ b=vLM7JXb0uiGhs1QzqaisBtoSG3uroD+CgSf/pY7dAxSGwWjCguZoWmcVVmONLR0+G9
+ ICsk6QPR8QIoqPxB/ybtG4bemmCIVJzAs1gytNUcZfTOR12SF/GxEYN21L1Rrj7FDO5q
+ aA2Tqu8GWjvQfeCc62wrVuZl21ZjhM8aUxExvDF2BImcVPT3fESKvxqH03yP6T2QZf6t
+ hvMedJzmSA8mmfcjTD6+jCb4iMftJAD/kV+coXFt7xS7gbIyb6SYP6oFelrJLrupE2QE
+ VQXa+Ah+i25y7utMUNIQhmaC6MpIp2gb//x31E3ZnfpiKiSlK8pGLRUzAE+4UH/aqtju
+ w8vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709905678; x=1710510478;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hlJKeHuliWcDUbk17OKyfKYAWXWxnwxLDrZDjVS3SFg=;
- b=oI5BELGtBc/0W8XKT6ZbetfebNU+uJ9VsIo9pA6ooeS81X8cTHx/gFpVTk2E98xTiG
- wirp7gGZrd7Ov3RZi1eBQsF44arybQs6PliGr8SHZq9DJx3D7WJBhyH1JFk2+BtgWSEP
- ume0wnjxnfbxPp+uP49CO9mCu+KTFkOe7OWkRG0wREntWqnrhQONZXnBTV+TwkmFY+94
- hH2Mf6img5xKSNJGug24X4+KiuAHGbiNpbFyQ/X7jQpKbJA33wfSR/G6O0NBatNFIiPr
- hfPYJiBV7qGtoyISH8IurF1FAcFMNdCGRIpmQVXcEBDQHzWUM4jbroXhRQUb9Rs4edA1
- DpJg==
-X-Gm-Message-State: AOJu0Yz+r1r31y2MBcaG6QxqrrUJb4plXG4r0xkmsLJvHG+UNGg3pvMp
- 4579EFnFzKRMigJtlw3eXXcEq9Xv8GLr1mgJfK+hz84pPO9zpVzaIHeqv82x126rp3+T73UBzjw
- yv+wmXdwNxJGNIi2MPtnkBAGOOOInKP3vJRKRsw==
-X-Google-Smtp-Source: AGHT+IHEBM8fsNpcF8p6yrwpR9ILcXeyV1VsdP3DXQe0uyhVh1k3TbL1/3QVFBBtCW4tJc0cpiRjYiPJb09PpHZIBJk=
-X-Received: by 2002:a50:d603:0:b0:566:2f24:b063 with SMTP id
- x3-20020a50d603000000b005662f24b063mr2075479edi.23.1709905678526; Fri, 08 Mar
- 2024 05:47:58 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709906091; x=1710510891;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zOr3mOsvaZ0DUN7LJn5Yl96Wk0uYZTPx6ljKNcmwe18=;
+ b=DU5NTkIzQszMf5FdmGyGU0Wr1yxEvnbuqpw4wsmAemv+hk4CJP2VrxGpXQzQLLDDo6
+ lSoWyGTBvNbUo3bEkNiqc1JD8JPnV5aODvtDHhyRlfP12vhSrgkxP2Veh5Huyg7IKNYy
+ J7oQwyDvKwq8gGOZfAsPAMX7lxf7k6Rt0evmTXfNW3INNdyEZ5bP4OIOlOgAPLR80Nnw
+ SZMGpfPGq7qRBNqDQ1G7hHdcmsHsi8PmJka+a/oyeayij2SeON+JGoMsQbJSdphBWH6R
+ vNoLjZ20Zk3rSq0duJWDtFhbdzzkbydXfu5eYZqLYh1lNfrMkGywNCZsfjMzgqjWZ1N5
+ eP4Q==
+X-Gm-Message-State: AOJu0YzoxXkRuoF/Uph9yWcD7Gq5Sd3UKPPNAdEdtfpHabmiPuaFH/6C
+ E4W43wcXJScvg97vOoDog+lRlRtQ6dUXw5sz7wvbcUNdJeNHQpkBDtQ+Z6EjtYjgj4fpAlygJOw
+ R5S+XmBTc2ULf3wnknF/V7NnngXzV5qNQN+DTJxNRGaeXECka
+X-Google-Smtp-Source: AGHT+IErWeuboNbliv+RcoQ4uo9ZtcV1indKTJixC36jyqZhA1IeG1WNpH2LDyAuAem+6U92PkvbG62QK6n/T6kRN1o=
+X-Received: by 2002:a2e:b553:0:b0:2d1:276b:860 with SMTP id
+ a19-20020a2eb553000000b002d1276b0860mr3338843ljn.31.1709906091188; Fri, 08
+ Mar 2024 05:54:51 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1707909001.git.mst@redhat.com>
- <8700ee15de465a55e5c7281f87618ca4b4827441.1707909001.git.mst@redhat.com>
-In-Reply-To: <8700ee15de465a55e5c7281f87618ca4b4827441.1707909001.git.mst@redhat.com>
+References: <20240202153637.3710444-1-peter.maydell@linaro.org>
+ <20240202153637.3710444-34-peter.maydell@linaro.org>
+In-Reply-To: <20240202153637.3710444-34-peter.maydell@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 8 Mar 2024 13:47:47 +0000
-Message-ID: <CAFEAcA_W8BxG6rpcao2hCYntfU9aQfAzHQiy6RJQ-v3ZB4sNZg@mail.gmail.com>
-Subject: Re: [PULL 53/60] hw/cxl: Standardize all references on CXL r3.1 and
- minor updates
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Jonathan Cameron <Jonathan.Cameron@huawei.com>, 
- Fan Ni <fan.ni@samsung.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Date: Fri, 8 Mar 2024 13:54:40 +0000
+Message-ID: <CAFEAcA-p9NcQqH_DU70mdneJkd-oaioVUWqJdZoJt6fqaQrDpw@mail.gmail.com>
+Subject: Re: [PULL 33/36] hw/net: GMAC Tx Implementation
+To: qemu-devel@nongnu.org, Nabih Estefan <nabihestefan@google.com>, 
+ Tyrone Ting <kfting@nuvoton.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,120 +87,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 14 Feb 2024 at 11:16, Michael S. Tsirkin <mst@redhat.com> wrote:
+On Fri, 2 Feb 2024 at 15:36, Peter Maydell <peter.maydell@linaro.org> wrote:
 >
-> From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> From: Nabih Estefan Diaz <nabihestefan@google.com>
 >
-> Previously not all references mentioned any spec version at all.
-> Given r3.1 is the current specification available for evaluation at
-> www.computeexpresslink.org update references to refer to that.
-> Hopefully this won't become a never ending job.
+> - Implementation of Transmit function for packets
+> - Implementation for reading and writing from and to descriptors in
+>   memory for Tx
 >
-> A few structure definitions have been updated to add new fields.
-> Defaults of 0 and read only are valid choices for these new DVSEC
-> registers so go with that for now.
+> Added relevant trace-events
 >
-> There are additional error codes and some of the 'questions' in
-> the comments are resolved now.
+> NOTE: This function implements the steps detailed in the datasheet for
+> transmitting messages from the GMAC.
 >
-> Update documentation reference to point to the CXL r3.1 specification
-> with naming closer to what is on the cover.
->
-> For cases where there are structure version numbers, add defines
-> so they can be found next to the register definitions.
-
-Hi; Coverity points out that this change has introduced a
-buffer overrun (CID 1534905). In hw/mem/cxl_type3.c:build_dvsecs()
-we create a local struct of type CXLDVSecDevice, and then we
-pass it to cxl_component_create_dvsec() as the body parameter,
-passing it a length argument PCIE_CXL_DEVICE_DVSEC_LENGTH.
-
-Before this change, both sizeof(CXLDVSecDevice) and
-PCIE_CXL_DEVICE_DVSEC_LENGTH were 0x38, so this was fine.
-But now...
-
-> diff --git a/include/hw/cxl/cxl_pci.h b/include/hw/cxl/cxl_pci.h
-> index ddf01a543b..265db6c407 100644
-> --- a/include/hw/cxl/cxl_pci.h
-> +++ b/include/hw/cxl/cxl_pci.h
-> @@ -16,9 +16,8 @@
->  #define PCIE_DVSEC_HEADER1_OFFSET 0x4 /* Offset from start of extend cap */
->  #define PCIE_DVSEC_ID_OFFSET 0x8
->
-> -#define PCIE_CXL_DEVICE_DVSEC_LENGTH 0x38
-> -#define PCIE_CXL1_DEVICE_DVSEC_REVID 0
-> -#define PCIE_CXL2_DEVICE_DVSEC_REVID 1
-> +#define PCIE_CXL_DEVICE_DVSEC_LENGTH 0x3C
-> +#define PCIE_CXL31_DEVICE_DVSEC_REVID 3
->
->  #define EXTENSIONS_PORT_DVSEC_LENGTH 0x28
->  #define EXTENSIONS_PORT_DVSEC_REVID 0
-
-...PCIE_CXL_DEVICE_DVSEC_LENGTH is 0x3C...
-
-> -/* CXL 2.0 - 8.1.3 (ID 0001) */
-> +/*
-> + * CXL r3.1 Section 8.1.3: PCIe DVSEC for Devices
-> + * DVSEC ID: 0, Revision: 3
-> + */
->  typedef struct CXLDVSECDevice {
->      DVSECHeader hdr;
->      uint16_t cap;
-> @@ -82,10 +91,14 @@ typedef struct CXLDVSECDevice {
->      uint32_t range2_size_lo;
->      uint32_t range2_base_hi;
->      uint32_t range2_base_lo;
-> -} CXLDVSECDevice;
-> -QEMU_BUILD_BUG_ON(sizeof(CXLDVSECDevice) != 0x38);
-> +    uint16_t cap3;
-> +} QEMU_PACKED CXLDVSECDevice;
-> +QEMU_BUILD_BUG_ON(sizeof(CXLDVSECDevice) != 0x3A);
-
-...and CXLDVSECDevice is only size 0x3A, so we try to read off the
-end of the struct.
-
-What was supposed to happen here?
-
-> --- a/hw/mem/cxl_type3.c
-> +++ b/hw/mem/cxl_type3.c
-> @@ -319,7 +319,7 @@ static void build_dvsecs(CXLType3Dev *ct3d)
->      cxl_component_create_dvsec(cxl_cstate, CXL2_TYPE3_DEVICE,
->                                 PCIE_CXL_DEVICE_DVSEC_LENGTH,
->                                 PCIE_CXL_DEVICE_DVSEC,
-> -                               PCIE_CXL2_DEVICE_DVSEC_REVID, dvsec);
-> +                               PCIE_CXL31_DEVICE_DVSEC_REVID, dvsec);
->
->      dvsec = (uint8_t *)&(CXLDVSECRegisterLocator){
->          .rsvd         = 0,
-
-Perhaps this call to cxl_component_create_dvsec() was
-supposed to have the length argument changed, as seems
-to have been done with this other call:
-
-> @@ -346,9 +346,9 @@ static void build_dvsecs(CXLType3Dev *ct3d)
->          .rcvd_mod_ts_data_phase1 = 0xef, /* WTF? */
->      };
->      cxl_component_create_dvsec(cxl_cstate, CXL2_TYPE3_DEVICE,
-> -                               PCIE_FLEXBUS_PORT_DVSEC_LENGTH_2_0,
-> +                               PCIE_CXL3_FLEXBUS_PORT_DVSEC_LENGTH,
->                                 PCIE_FLEXBUS_PORT_DVSEC,
-> -                               PCIE_FLEXBUS_PORT_DVSEC_REVID_2_0, dvsec);
-> +                               PCIE_CXL3_FLEXBUS_PORT_DVSEC_REVID, dvsec);
->  }
-
- static void hdm_decoder_commit(CXLType3Dev *ct3d, int which)
+> Change-Id: Icf14f9fcc6cc7808a41acd872bca67c9832087e6
+> Signed-off-by: Nabih Estefan <nabihestefan@google.com>
+> Reviewed-by: Tyrone Ting <kfting@nuvoton.com>
+> Message-id: 20240131002800.989285-6-nabihestefan@google.com
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
 
 
-and with similar other calls in the commit ?
+Hi; Coverity points out an issue in this code (CID 1534027):
 
-Is there a way we could write this that would catch this error?
-I'm thinking maybe something like
 
-#define CXL_CREATE_DVSEC(CXL, DEVTYPE, TYPE, DATA) do { \
-     assert(sizeof(*DATA) == TYPE##_LENGTH); \
-     cxl_component_create_dvsec(CXL, DEVTYPE, TYPE##_LENGTH, \
-                                TYPE, TYPE##_REVID, (uint8_t*)DATA); \
-     } while (0)
+
+
+> +static void gmac_try_send_next_packet(NPCMGMACState *gmac)
+> +{
+> +    /*
+> +     * Comments about steps refer to steps for
+> +     * transmitting in page 384 of datasheet
+> +     */
+> +    uint16_t tx_buffer_size = 2048;
+> +    g_autofree uint8_t *tx_send_buffer = g_malloc(tx_buffer_size);
+> +    uint32_t desc_addr;
+> +    struct NPCMGMACTxDesc tx_desc;
+> +    uint32_t tx_buf_addr, tx_buf_len;
+> +    uint16_t length = 0;
+> +    uint8_t *buf = tx_send_buffer;
+> +    uint32_t prev_buf_size = 0;
+> +    int csum = 0;
+> +
+> +    /* steps 1&2 */
+> +    if (!gmac->regs[R_NPCM_DMA_HOST_TX_DESC]) {
+> +        gmac->regs[R_NPCM_DMA_HOST_TX_DESC] =
+> +            NPCM_DMA_HOST_TX_DESC_MASK(gmac->regs[R_NPCM_DMA_TX_BASE_ADDR]);
+> +    }
+> +    desc_addr = gmac->regs[R_NPCM_DMA_HOST_TX_DESC];
+> +
+> +    while (true) {
+
+In this loop...
+
+> +        gmac_dma_set_state(gmac, NPCM_DMA_STATUS_TX_PROCESS_STATE_SHIFT,
+> +            NPCM_DMA_STATUS_TX_RUNNING_FETCHING_STATE);
+> +        if (gmac_read_tx_desc(desc_addr, &tx_desc)) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "TX Descriptor @ 0x%x can't be read\n",
+> +                          desc_addr);
+> +            return;
+> +        }
+> +        /* step 3 */
+> +
+> +        trace_npcm_gmac_packet_desc_read(DEVICE(gmac)->canonical_path,
+> +            desc_addr);
+> +        trace_npcm_gmac_debug_desc_data(DEVICE(gmac)->canonical_path, &tx_desc,
+> +            tx_desc.tdes0, tx_desc.tdes1, tx_desc.tdes2, tx_desc.tdes3);
+> +
+> +        /* 1 = DMA Owned, 0 = Software Owned */
+> +        if (!(tx_desc.tdes0 & TX_DESC_TDES0_OWN)) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "TX Descriptor @ 0x%x is owned by software\n",
+> +                          desc_addr);
+> +            gmac->regs[R_NPCM_DMA_STATUS] |= NPCM_DMA_STATUS_TU;
+> +            gmac_dma_set_state(gmac, NPCM_DMA_STATUS_TX_PROCESS_STATE_SHIFT,
+> +                NPCM_DMA_STATUS_TX_SUSPENDED_STATE);
+> +            gmac_update_irq(gmac);
+> +            return;
+> +        }
+> +
+> +        gmac_dma_set_state(gmac, NPCM_DMA_STATUS_TX_PROCESS_STATE_SHIFT,
+> +            NPCM_DMA_STATUS_TX_RUNNING_READ_STATE);
+> +        /* Give the descriptor back regardless of what happens. */
+> +        tx_desc.tdes0 &= ~TX_DESC_TDES0_OWN;
+> +
+> +        if (tx_desc.tdes1 & TX_DESC_TDES1_FIRST_SEG_MASK) {
+> +            csum = gmac_tx_get_csum(tx_desc.tdes1);
+> +        }
+> +
+> +        /* step 4 */
+> +        tx_buf_addr = tx_desc.tdes2;
+> +        gmac->regs[R_NPCM_DMA_CUR_TX_BUF_ADDR] = tx_buf_addr;
+> +        tx_buf_len = TX_DESC_TDES1_BFFR1_SZ_MASK(tx_desc.tdes1);
+> +        buf = &tx_send_buffer[prev_buf_size];
+
+...we never use 'buf' before we initialize it down here in step 4...
+
+> +
+> +        if ((prev_buf_size + tx_buf_len) > sizeof(buf)) {
+> +            tx_buffer_size = prev_buf_size + tx_buf_len;
+> +            tx_send_buffer = g_realloc(tx_send_buffer, tx_buffer_size);
+> +            buf = &tx_send_buffer[prev_buf_size];
+> +        }
+> +
+> +        /* step 5 */
+> +        if (dma_memory_read(&address_space_memory, tx_buf_addr, buf,
+> +                            tx_buf_len, MEMTXATTRS_UNSPECIFIED)) {
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: Failed to read packet @ 0x%x\n",
+> +                        __func__, tx_buf_addr);
+> +            return;
+> +        }
+> +        length += tx_buf_len;
+> +        prev_buf_size += tx_buf_len;
+> +
+> +        /* If not chained we'll have a second buffer. */
+> +        if (!(tx_desc.tdes1 & TX_DESC_TDES1_SEC_ADDR_CHND_MASK)) {
+> +            tx_buf_addr = tx_desc.tdes3;
+> +            gmac->regs[R_NPCM_DMA_CUR_TX_BUF_ADDR] = tx_buf_addr;
+> +            tx_buf_len = TX_DESC_TDES1_BFFR2_SZ_MASK(tx_desc.tdes1);
+> +            buf = &tx_send_buffer[prev_buf_size];
+> +
+> +            if ((prev_buf_size + tx_buf_len) > sizeof(buf)) {
+> +                tx_buffer_size = prev_buf_size + tx_buf_len;
+> +                tx_send_buffer = g_realloc(tx_send_buffer, tx_buffer_size);
+> +                buf = &tx_send_buffer[prev_buf_size];
+> +            }
+> +
+> +            if (dma_memory_read(&address_space_memory, tx_buf_addr, buf,
+> +                                tx_buf_len, MEMTXATTRS_UNSPECIFIED)) {
+> +                qemu_log_mask(LOG_GUEST_ERROR,
+> +                              "%s: Failed to read packet @ 0x%x\n",
+> +                              __func__, tx_buf_addr);
+> +                return;
+> +            }
+> +            length += tx_buf_len;
+> +            prev_buf_size += tx_buf_len;
+> +        }
+> +        if (tx_desc.tdes1 & TX_DESC_TDES1_LAST_SEG_MASK) {
+> +            net_checksum_calculate(tx_send_buffer, length, csum);
+> +            qemu_send_packet(qemu_get_queue(gmac->nic), tx_send_buffer, length);
+> +            trace_npcm_gmac_packet_sent(DEVICE(gmac)->canonical_path, length);
+> +            buf = tx_send_buffer;
+> +            length = 0;
+
+...and in this bit of code, we set 'buf' to something else...
+
+> +        }
+> +
+> +        /* step 6 */
+> +        gmac_dma_set_state(gmac, NPCM_DMA_STATUS_TX_PROCESS_STATE_SHIFT,
+> +            NPCM_DMA_STATUS_TX_RUNNING_CLOSING_STATE);
+> +        gmac_write_tx_desc(desc_addr, &tx_desc);
+> +        if (tx_desc.tdes1 & TX_DESC_TDES1_TX_END_RING_MASK) {
+> +            desc_addr = gmac->regs[R_NPCM_DMA_TX_BASE_ADDR];
+> +        } else if (tx_desc.tdes1 & TX_DESC_TDES1_SEC_ADDR_CHND_MASK) {
+> +            desc_addr = tx_desc.tdes3;
+> +        } else {
+> +            desc_addr += sizeof(tx_desc);
+> +        }
+> +        gmac->regs[R_NPCM_DMA_HOST_TX_DESC] = desc_addr;
+> +
+> +        /* step 7 */
+> +        if (tx_desc.tdes1 & TX_DESC_TDES1_INTERR_COMP_MASK) {
+> +            gmac->regs[R_NPCM_DMA_STATUS] |= NPCM_DMA_STATUS_TI;
+> +            gmac_update_irq(gmac);
+> +        }
+
+...but we never use 'buf' in the rest of the loop before we go back
+around to the top again, so that value that we set will never be
+used before it is overwritten with something else in the next
+iteration's step 4.
+
+What was the intention here?
+
+> +    }
+> +}
 
 thanks
 -- PMM
