@@ -4,95 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74541C54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 16:53:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8492C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 16:58:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ridSx-0001pY-HH; Fri, 08 Mar 2024 11:53:03 -0500
+	id 1ridXd-0003mC-6R; Fri, 08 Mar 2024 11:57:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ridSw-0001pQ-DP
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:53:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ridXb-0003j1-Bw
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:57:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ridSu-0007OS-Tl
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:53:02 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ridXZ-00083t-KB
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 11:57:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709916779;
+ s=mimecast20190719; t=1709917064;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bv1Si3i/IqMy5otxtj4GrXf1cd1ke5LDJxOwFGXzj80=;
- b=XsMwK1u3a283MZz09ZFjx3neeDnc1Zn95316lAmOm0Ts4HQnU72INfxTbH3GLmGEzYSIlx
- 8CxiI4mab+GoxcreB+Iq7xQiV4URAt3ouQwQRtEiPOGvrYy5gS/JZusEzIgwM662P2zuwi
- jeTiLCJbY9ZKOudkABIzY83Y53UYmbw=
-Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com
- [209.85.222.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8h41LIQv5P1I/TGPAjsPO3yIcvwvreifU1dV3BqXUn4=;
+ b=UZ0AU5EzUgFd4NUSdU/RKTcJhuQXIlp1DTsC0rifBnjc2FTiOaayGUgPznWLgS6Ncc5oCu
+ +3x/xTku1D0XNi9bVqSgo2VJ/wI/ZFKa655/y1ytP/rVM0NBMSQPLmEyO6nFDGAGf75XJc
+ /GThEw/I5aaaWiKYwxCOmi1QBSXoyfI=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-570-YV75_5D6OCydq2FS_jQOSA-1; Fri, 08 Mar 2024 11:52:58 -0500
-X-MC-Unique: YV75_5D6OCydq2FS_jQOSA-1
-Received: by mail-ua1-f71.google.com with SMTP id
- a1e0cc1a2514c-7d604e82b38so846551241.3
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 08:52:58 -0800 (PST)
+ us-mta-361-NSCZQ1H-Pci3sAdss6AL6g-1; Fri, 08 Mar 2024 11:57:43 -0500
+X-MC-Unique: NSCZQ1H-Pci3sAdss6AL6g-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-412dcaf0bd6so9714425e9.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 08:57:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709916778; x=1710521578;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bv1Si3i/IqMy5otxtj4GrXf1cd1ke5LDJxOwFGXzj80=;
- b=umN+Ji0VsHDFNiPsqEd5nttM8caKnmhie83OMyFUe/9UB1vcZfw9tHB6wPcYf2e/jg
- kxVhYSqEzK8VrKc+Lf38/zOs85gCvBpm6z7gLVsomEdXXQBuatdagiS0lUIAlOeJg3a3
- GEAQYgOOBBWiBe7Kw++yJDVGF6MLUowv6vvO2d+orMRJxg2/W1v4xBVTAc15cuAGsVtO
- Ca8JUpndmKQM9RlaPXtTTRyjiW6Xkw+smC/TqgW0j8ttvBDSP8VMdoj4jfETjSDne3Q8
- /Bl49CZ/i+1KRWvQYCkXVEFhACX7LoQEVArnSNnqLmUcRAmLLJ9HUI1PAExUVhuurx2f
- Crow==
+ d=1e100.net; s=20230601; t=1709917062; x=1710521862;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8h41LIQv5P1I/TGPAjsPO3yIcvwvreifU1dV3BqXUn4=;
+ b=KR1yNTQ7DNMQ6NMrqgcWtahWHTp3ejL/1OOpIZ1aMCkJTznDLG3vt/DfDd1emZs6Uk
+ vqvvTFdke3Zk2CC8IFQ9xNf11BZLegXL82yn2c9buIFYhLn/Y0RWyuLroNhvkUveqF94
+ o74XD94QwQmEgTelQEFOQjjFuh7X6g2oZpfzCpsorLwiEI9tz2R/WZHThLiN/fFoKxfe
+ Pd8hrC4BanHpVhrVEhSDTKeAgVMsy4yrNs/SiuB6ZnA1BFayUb+DhB4jKcr2HXRnzPfN
+ 8gyTGUKbmF/20futcW8NlbGz+DdCqZ6X4WsKJF4aJvSMTVZhUwEdJBFT896QljT0nriq
+ wD8g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWd717D/VilmenjLKETj6Uxxmu3GE4+UHQ6yp/mUSWAcHbYVdq8dLCE7km/WQVYKM3z95GT6x/Yx3x9EjJxLO8ucUHgzno=
-X-Gm-Message-State: AOJu0YybYi7j55rR5vgY9lkBvmmbU/XieRGV0La0ghkKEDKR1Le6f74G
- IKv50FSSiigidQROYsOhXstYrjfkZN6bYXDd5BhZB6nkzGt42XiTrUkE4uKzBSf36QdRNU6jbeN
- xBV6gAeguiYWalTBz85Z2oSG2isIf+pqS8DzqFOHsm45WSYAa1Zn3
-X-Received: by 2002:a05:6122:50b:b0:4c7:b048:bb9c with SMTP id
- x11-20020a056122050b00b004c7b048bb9cmr11949594vko.15.1709916777973; 
- Fri, 08 Mar 2024 08:52:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGtals9IefCwdSO9oLMgU+hKEmm7tcfEaoOpjpZ8iWwEpf3f/JVghgg6QUpRkEUr7/qOTdcFw==
-X-Received: by 2002:a05:6122:50b:b0:4c7:b048:bb9c with SMTP id
- x11-20020a056122050b00b004c7b048bb9cmr11949520vko.15.1709916776232; 
- Fri, 08 Mar 2024 08:52:56 -0800 (PST)
-Received: from ?IPV6:2a01:cb19:9000:9100:7442:850e:5af1:aebf?
- ([2a01:cb19:9000:9100:7442:850e:5af1:aebf])
+ AJvYcCWeHGW4WG+yNszZo+7JUUPieXyhnL4HlVbtGrNy3B7DWerQou0xi3/x3sKfMgiPNWRwFduWq9g15mEra4chQeSpZ6gO5zk=
+X-Gm-Message-State: AOJu0YwUDFz1Ge/RnGMb7lzdjX1DRQPL0P6BjKgwD+XwMPIh5spSQmYG
+ us+C0Y0xmn02IbbO0etPIdUiYdTv3xelu+hXd3A2YsOXrApua+ujYb4884VdtMbzqXqc/b6KjcT
+ zgLEj7KuIxKD8pdzP8RYups4VdhtSQGfnOQtTrATV9uLE2vbzaLAB
+X-Received: by 2002:a05:600c:3111:b0:412:ffc9:d551 with SMTP id
+ g17-20020a05600c311100b00412ffc9d551mr5585112wmo.14.1709917061908; 
+ Fri, 08 Mar 2024 08:57:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHFZ/4yCpb42ZPPX7d0e/B/VlsQK74EohLqEtaPtIEI6fpzVfw2L5lVHV6qomtmGDUBpr8JVg==
+X-Received: by 2002:a05:600c:3111:b0:412:ffc9:d551 with SMTP id
+ g17-20020a05600c311100b00412ffc9d551mr5585092wmo.14.1709917061420; 
+ Fri, 08 Mar 2024 08:57:41 -0800 (PST)
+Received: from redhat.com ([2a06:c701:73cd:f300:bc74:daca:b316:492a])
  by smtp.gmail.com with ESMTPSA id
- mc8-20020a056214554800b0069030b7dee3sm8830037qvb.30.2024.03.08.08.52.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Mar 2024 08:52:55 -0800 (PST)
-Message-ID: <ef2b7486-54be-497c-a002-067493aa3a32@redhat.com>
-Date: Fri, 8 Mar 2024 17:52:50 +0100
+ t14-20020a05600c198e00b0041312c4865asm4739254wmq.2.2024.03.08.08.57.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 08 Mar 2024 08:57:40 -0800 (PST)
+Date: Fri, 8 Mar 2024 11:57:38 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Alex Williamson <alex.williamson@redhat.com>
+Cc: marcel.apfelbaum@gmail.com, qemu-devel@nongnu.org, clg@redhat.com
+Subject: Re: [PATCH] pci: Add option to disable device level INTx masking
+Message-ID: <20240308115643-mutt-send-email-mst@kernel.org>
+References: <20240307184645.104349-1-alex.williamson@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 00/14] allow cpr-reboot for vfio
-Content-Language: en-US, fr
-To: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, "Michael S. Tsirkin" <mst@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Marc-Andre Lureau <marcandre.lureau@redhat.com>
-References: <1708622920-68779-1-git-send-email-steven.sistare@oracle.com>
- <c95b3c15-0154-438c-baa0-98f4c539355a@oracle.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <c95b3c15-0154-438c-baa0-98f4c539355a@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240307184645.104349-1-alex.williamson@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,22 +99,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/22/24 18:33, Steven Sistare wrote:
-> Peter (and David if interested): these patches still need RB:
->    migration: notifier error checking
->    migration: stop vm for cpr
->    migration: update cpr-reboot description
->    migration: options incompatible with cpr
+On Thu, Mar 07, 2024 at 11:46:42AM -0700, Alex Williamson wrote:
+> The PCI 2.3 spec added definitions of the INTx disable and status bits,
+> in the command and status registers respectively.  The command register
+> bit, commonly known as DisINTx in lspci, controls whether the device
+> can assert the INTx signal.
 > 
-> Alex, these patches still need RB:
->    vfio: register container for cpr
->    vfio: allow cpr-reboot migration if suspended
+> Operating systems will often write to this bit to test whether a device
+> supports this style of legacy interrupt masking.  When using device
+> assignment, such as with vfio-pci, the result of this test dictates
+> whether the device can use a shared or exclusive interrupt (ie. generic
+> INTx masking at the device via DisINTx or IRQ controller level INTx
+> masking).
+> 
+> Add an experimental option to the base set of properties for PCI
+> devices which allows the DisINTx bit to be excluded from wmask, making
+> it read-only to the guest for testing purposes related to INTx masking.
+> 
 
-Applied to vfio-next.
+Could you clarify the use a bit more? It's unstable - do you
+expect to experiment with it and then make it permanent down
+the road?
 
-Thanks,
-
-C.
-
+> Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+> ---
+>  hw/pci/pci.c         | 14 ++++++++++----
+>  include/hw/pci/pci.h |  2 ++
+>  2 files changed, 12 insertions(+), 4 deletions(-)
+> 
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index 6496d027ca61..8c78326ad67f 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+> @@ -85,6 +85,8 @@ static Property pci_props[] = {
+>                      QEMU_PCIE_ERR_UNC_MASK_BITNR, true),
+>      DEFINE_PROP_BIT("x-pcie-ari-nextfn-1", PCIDevice, cap_present,
+>                      QEMU_PCIE_ARI_NEXTFN_1_BITNR, false),
+> +    DEFINE_PROP_BIT("x-pci-disintx", PCIDevice, cap_present,
+> +                    QEMU_PCI_DISINTX_BITNR, true),
+>      DEFINE_PROP_END_OF_LIST()
+>  };
+>  
+> @@ -861,13 +863,17 @@ static void pci_init_cmask(PCIDevice *dev)
+>  static void pci_init_wmask(PCIDevice *dev)
+>  {
+>      int config_size = pci_config_size(dev);
+> +    uint16_t cmd_wmask = PCI_COMMAND_IO | PCI_COMMAND_MEMORY |
+> +                         PCI_COMMAND_MASTER | PCI_COMMAND_SERR;
+>  
+>      dev->wmask[PCI_CACHE_LINE_SIZE] = 0xff;
+>      dev->wmask[PCI_INTERRUPT_LINE] = 0xff;
+> -    pci_set_word(dev->wmask + PCI_COMMAND,
+> -                 PCI_COMMAND_IO | PCI_COMMAND_MEMORY | PCI_COMMAND_MASTER |
+> -                 PCI_COMMAND_INTX_DISABLE);
+> -    pci_word_test_and_set_mask(dev->wmask + PCI_COMMAND, PCI_COMMAND_SERR);
+> +
+> +    if (dev->cap_present & QEMU_PCI_DISINTX) {
+> +        cmd_wmask |= PCI_COMMAND_INTX_DISABLE;
+> +    }
+> +
+> +    pci_set_word(dev->wmask + PCI_COMMAND, cmd_wmask);
+>  
+>      memset(dev->wmask + PCI_CONFIG_HEADER_SIZE, 0xff,
+>             config_size - PCI_CONFIG_HEADER_SIZE);
+> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+> index eaa3fc99d884..45f0fac435cc 100644
+> --- a/include/hw/pci/pci.h
+> +++ b/include/hw/pci/pci.h
+> @@ -212,6 +212,8 @@ enum {
+>      QEMU_PCIE_ERR_UNC_MASK = (1 << QEMU_PCIE_ERR_UNC_MASK_BITNR),
+>  #define QEMU_PCIE_ARI_NEXTFN_1_BITNR 12
+>      QEMU_PCIE_ARI_NEXTFN_1 = (1 << QEMU_PCIE_ARI_NEXTFN_1_BITNR),
+> +#define QEMU_PCI_DISINTX_BITNR 13
+> +    QEMU_PCI_DISINTX = (1 << QEMU_PCI_DISINTX_BITNR),
+>  };
+>  
+>  typedef struct PCIINTxRoute {
+> -- 
+> 2.44.0
 
 
