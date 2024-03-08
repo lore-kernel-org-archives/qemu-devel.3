@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23C89C54E5D
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 21:56:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 108D9C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 21:56:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riiAm-0007YZ-BC; Fri, 08 Mar 2024 16:54:36 -0500
+	id 1riiB1-0007gx-Dq; Fri, 08 Mar 2024 16:54:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1riiAk-0007Xv-L3
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 16:54:34 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1riiB0-0007gV-At
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 16:54:50 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1riiAi-0001lg-EU
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 16:54:34 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-1dbd32cff0bso22205135ad.0
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 13:54:32 -0800 (PST)
+ id 1riiAy-0001pM-Rx
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 16:54:50 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-1dc09556599so22257995ad.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 13:54:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1709934870; x=1710539670; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1709934887; x=1710539687; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kbLXBf9PZRgdI1o9+wy6/DHlIur7WPYPPRv0odsFMu4=;
- b=J05Cdj1RCYOdHnKgLUIbq37X7t3VwKRqTRpOsewx8IkTGLREFPMgTjgGWcRllXoo0d
- kd+3i5t2p4D//kCu8KSJxDEwq6k2px1zPzdQ9+u1v5MzNk/vRSUoQmFEZQeO1hG4T1ev
- 2wconuaavOdB+QuhHRxqx1x3Woln6sapbHmQc1r7YMg/6cNoFC7deJA4EaFp413pTQAZ
- E/HTD6g8I+v1qr4xbtbQ/dpqCnMjvQqTnLLMwM+PsEzIjCfYaTf0/OhgHW/UoQr5zFPt
- oXonIoWwMmyX/0w5vaBcHg6SVI40HDsWiVllWj56AW/0cdlxGGWSWipAtvc8ttwEnohY
- m34g==
+ bh=vqdrEu+JdpuCyxKRmCNFt9jzGsTG0D7Mm4+hNkdQdMw=;
+ b=j8kyjFXOb2kIc/xbO4XNA3eO4jzbfhgmb28CAoRqelEtT1RUtLYvKzjvWKI5UuEQs4
+ ZeCeVS3++/2ko6QuByFBUsxsyD6vqF7vNWZiz9FS4W0GRl+fHqENGKJL0dQyTFKWw4os
+ hMhyolNyiexbBWvgehxRYH+3FwHux3GF3kKP6RwvX79GES18JKZjUh0BH1M0GRY51bU2
+ lsGvTsW/1lFsG2aV0955RIo7saKpBue9ETN6iWrqthuKc6CEcdSVigseWtAD44+uKgne
+ SsPYdKtmAccxClL/gctuRtfu5dua17ygNOKNfPFqHyhaRP1chgJ9nUwujVIRx6sqDPR+
+ IL8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709934870; x=1710539670;
+ d=1e100.net; s=20230601; t=1709934887; x=1710539687;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kbLXBf9PZRgdI1o9+wy6/DHlIur7WPYPPRv0odsFMu4=;
- b=L0pW/OB9QByzB5heEu87OBsi6ho4uSgQnC2TQc3JmUcnY6q3qMLX5zz6U32mlZxSVY
- 2GLPY8qLULKHSp+DleKGBgJRo+Q9eDbIfwB6MkDdkuM6RjDPdTUO31FhNAr3J9jMi5sL
- TwUz8vbov0/OPra6z+qtUL3fC9YUk0ynrs/WlDIX3X4O33wjBipnigkUMgo7wvJzcVki
- Jw74Huvb0wIsKTZmHzCz78VQKQWNELkQZL7af0AKyp1vbYM9j3QgHvJ0ayeQ5HboOTn3
- 41UntqDbdaFMFRNrzHsE1cfAjg9AruKuoiCw/zuZljsl8XTS85p9Olw402fFSNFjjfY7
- A4Hg==
-X-Gm-Message-State: AOJu0YyyKnWWrSo1kQpg3gb4dEZMbFY4eX+ijT/kWi7k8B+TPqp/HDfU
- wFzWfNGThZeNuF0cCIodkLqHifTzmkG1kBZ0aTmxQy/kIE6x8dTYxg77BIIF5paMVCQq3E6trwq
- Q
-X-Google-Smtp-Source: AGHT+IGP0tOmGFEAISJLfLBe8Ve5CvC/QChmnyKzkKAggF2p5c2TT2a1acE5Dl/pG494VEihqWnlug==
-X-Received: by 2002:a17:902:f68b:b0:1db:8c35:c40d with SMTP id
- l11-20020a170902f68b00b001db8c35c40dmr412015plg.27.1709934870020; 
- Fri, 08 Mar 2024 13:54:30 -0800 (PST)
+ bh=vqdrEu+JdpuCyxKRmCNFt9jzGsTG0D7Mm4+hNkdQdMw=;
+ b=C/xb5jWmRZdSHBqDIDmWcmsz2sfZSmZS+CoZwAVwi5Z4qb49Tlz5V+yrPGpjQta2Gl
+ +spdwNA8eSXoy8JNfMW1N7O77LsFX5gZsLGYXWEp4LkVkf+r1e4qayD5iJdPTR3VGKJb
+ WnH7m5TRfcv1kRuqN5Rg/GCtdqvsl8XfbABlWzez0W2azk6WNJ9f0G9UckgAvJ9NDV68
+ 0rUkiAuV22kkPfkyD1G6cN4Dlph/Fi2Vxpu0EkWJAIDiJjAJSFHRHhUdxOSP+Bi/3EUZ
+ l1BTYzI/u06oouSmkfseUXSbqOq9pUjBEHd9Npj5YWuKRkQCTQrm2ZWdwUqxJEBURZjs
+ Qpdw==
+X-Gm-Message-State: AOJu0YxamSPQ2eGcLMlURlUi4nsfyWHQ+r9VSd6BIzfnzDyM6IEwvA3+
+ TZahi9WF/tSmKXQ6ZreGOjvvAqTxmbT/gOdsP0Khr90cxl7WUMjJsOyNmhyFgVbP4Uan4a1lXly
+ U
+X-Google-Smtp-Source: AGHT+IG1VeGv6gNKTA5/DkiD04JdE4ivV0RGgHvxk7pdlvehSFL+SHAw4amq1HYO8KaGWvX2oydYkw==
+X-Received: by 2002:a17:902:f688:b0:1dd:75c6:fab9 with SMTP id
+ l8-20020a170902f68800b001dd75c6fab9mr508973plg.3.1709934886752; 
+ Fri, 08 Mar 2024 13:54:46 -0800 (PST)
 Received: from grind.. ([177.94.15.159]) by smtp.gmail.com with ESMTPSA id
- d3-20020a170902b70300b001dd66e6ec91sm107702pls.140.2024.03.08.13.54.26
+ d3-20020a170902b70300b001dd66e6ec91sm107702pls.140.2024.03.08.13.54.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 13:54:29 -0800 (PST)
+ Fri, 08 Mar 2024 13:54:46 -0800 (PST)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
  richard.henderson@linaro.org, philmd@linaro.org,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v8 05/10] target/riscv: use vext_set_tail_elems_1s() in
- vcrypto insns
-Date: Fri,  8 Mar 2024 18:53:45 -0300
-Message-ID: <20240308215402.117405-6-dbarboza@ventanamicro.com>
+Subject: [PATCH v8 10/10] target/riscv/vector_helper.c: optimize loops in ldst
+ helpers
+Date: Fri,  8 Mar 2024 18:53:50 -0300
+Message-ID: <20240308215402.117405-11-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240308215402.117405-1-dbarboza@ventanamicro.com>
 References: <20240308215402.117405-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,390 +97,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vcrypto insns should also use the same helper the regular vector insns
-uses to update the tail elements.
+Change the for loops in ldst helpers to do a single increment in the
+counter, and assign it env->vstart, to avoid re-reading from vstart
+every time.
 
-Move vext_set_tail_elems_1s() to vector_internals.c and make it public.
-Use it in vcrypto_helper.c to set tail elements instead of
-vext_set_elems_1s(). Helpers must set env->vstart = 0 after setting the
-tail.
-
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/riscv/vcrypto_helper.c   | 63 ++++++++++++---------------------
- target/riscv/vector_helper.c    | 25 -------------
- target/riscv/vector_internals.c | 28 +++++++++++++++
- target/riscv/vector_internals.h |  4 +++
- 4 files changed, 55 insertions(+), 65 deletions(-)
+ target/riscv/vector_helper.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/target/riscv/vcrypto_helper.c b/target/riscv/vcrypto_helper.c
-index e2d719b13b..66d449c274 100644
---- a/target/riscv/vcrypto_helper.c
-+++ b/target/riscv/vcrypto_helper.c
-@@ -218,9 +218,7 @@ static inline void xor_round_key(AESState *round_state, AESState *round_key)
-     void HELPER(NAME)(void *vd, void *vs2, CPURISCVState *env,            \
-                       uint32_t desc)                                      \
-     {                                                                     \
--        uint32_t vl = env->vl;                                            \
-         uint32_t total_elems = vext_get_total_elems(env, desc, 4);        \
--        uint32_t vta = vext_vta(desc);                                    \
-                                                                           \
-         for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {        \
-             AESState round_key;                                           \
-@@ -233,18 +231,16 @@ static inline void xor_round_key(AESState *round_state, AESState *round_key)
-             *((uint64_t *)vd + H8(i * 2 + 0)) = round_state.d[0];         \
-             *((uint64_t *)vd + H8(i * 2 + 1)) = round_state.d[1];         \
-         }                                                                 \
--        env->vstart = 0;                                                  \
-         /* set tail elements to 1s */                                     \
--        vext_set_elems_1s(vd, vta, vl * 4, total_elems * 4);              \
-+        vext_set_tail_elems_1s(env, vd, desc, 4, total_elems);            \
-+        env->vstart = 0;                                                  \
-     }
- 
- #define GEN_ZVKNED_HELPER_VS(NAME, ...)                                   \
-     void HELPER(NAME)(void *vd, void *vs2, CPURISCVState *env,            \
-                       uint32_t desc)                                      \
-     {                                                                     \
--        uint32_t vl = env->vl;                                            \
-         uint32_t total_elems = vext_get_total_elems(env, desc, 4);        \
--        uint32_t vta = vext_vta(desc);                                    \
-                                                                           \
-         for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {        \
-             AESState round_key;                                           \
-@@ -257,9 +253,9 @@ static inline void xor_round_key(AESState *round_state, AESState *round_key)
-             *((uint64_t *)vd + H8(i * 2 + 0)) = round_state.d[0];         \
-             *((uint64_t *)vd + H8(i * 2 + 1)) = round_state.d[1];         \
-         }                                                                 \
--        env->vstart = 0;                                                  \
-         /* set tail elements to 1s */                                     \
--        vext_set_elems_1s(vd, vta, vl * 4, total_elems * 4);              \
-+        vext_set_tail_elems_1s(env, vd, desc, 4, total_elems);            \
-+        env->vstart = 0;                                                  \
-     }
- 
- GEN_ZVKNED_HELPER_VV(vaesef_vv, aesenc_SB_SR_AK(&round_state,
-@@ -301,9 +297,7 @@ void HELPER(vaeskf1_vi)(void *vd_vptr, void *vs2_vptr, uint32_t uimm,
- {
-     uint32_t *vd = vd_vptr;
-     uint32_t *vs2 = vs2_vptr;
--    uint32_t vl = env->vl;
-     uint32_t total_elems = vext_get_total_elems(env, desc, 4);
--    uint32_t vta = vext_vta(desc);
- 
-     uimm &= 0b1111;
-     if (uimm > 10 || uimm == 0) {
-@@ -337,9 +331,9 @@ void HELPER(vaeskf1_vi)(void *vd_vptr, void *vs2_vptr, uint32_t uimm,
-         vd[i * 4 + H4(2)] = rk[6];
-         vd[i * 4 + H4(3)] = rk[7];
-     }
--    env->vstart = 0;
-     /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vta, vl * 4, total_elems * 4);
-+    vext_set_tail_elems_1s(env, vd, desc, 4, total_elems);
-+    env->vstart = 0;
- }
- 
- void HELPER(vaeskf2_vi)(void *vd_vptr, void *vs2_vptr, uint32_t uimm,
-@@ -347,9 +341,7 @@ void HELPER(vaeskf2_vi)(void *vd_vptr, void *vs2_vptr, uint32_t uimm,
- {
-     uint32_t *vd = vd_vptr;
-     uint32_t *vs2 = vs2_vptr;
--    uint32_t vl = env->vl;
-     uint32_t total_elems = vext_get_total_elems(env, desc, 4);
--    uint32_t vta = vext_vta(desc);
- 
-     uimm &= 0b1111;
-     if (uimm > 14 || uimm < 2) {
-@@ -394,9 +386,9 @@ void HELPER(vaeskf2_vi)(void *vd_vptr, void *vs2_vptr, uint32_t uimm,
-         vd[i * 4 + H4(2)] = rk[10];
-         vd[i * 4 + H4(3)] = rk[11];
-     }
--    env->vstart = 0;
-     /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vta, vl * 4, total_elems * 4);
-+    vext_set_tail_elems_1s(env, vd, desc, 4, total_elems);
-+    env->vstart = 0;
- }
- 
- static inline uint32_t sig0_sha256(uint32_t x)
-@@ -455,7 +447,6 @@ void HELPER(vsha2ms_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
-     uint32_t sew = FIELD_EX64(env->vtype, VTYPE, VSEW);
-     uint32_t esz = sew == MO_32 ? 4 : 8;
-     uint32_t total_elems;
--    uint32_t vta = vext_vta(desc);
- 
-     for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {
-         if (sew == MO_32) {
-@@ -469,7 +460,7 @@ void HELPER(vsha2ms_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
-     }
-     /* set tail elements to 1s */
-     total_elems = vext_get_total_elems(env, desc, esz);
--    vext_set_elems_1s(vd, vta, env->vl * esz, total_elems * esz);
-+    vext_set_tail_elems_1s(env, vd, desc, esz, total_elems);
-     env->vstart = 0;
- }
- 
-@@ -570,7 +561,6 @@ void HELPER(vsha2ch32_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
- {
-     const uint32_t esz = 4;
-     uint32_t total_elems;
--    uint32_t vta = vext_vta(desc);
- 
-     for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {
-         vsha2c_32(((uint32_t *)vs2) + 4 * i, ((uint32_t *)vd) + 4 * i,
-@@ -579,7 +569,7 @@ void HELPER(vsha2ch32_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
- 
-     /* set tail elements to 1s */
-     total_elems = vext_get_total_elems(env, desc, esz);
--    vext_set_elems_1s(vd, vta, env->vl * esz, total_elems * esz);
-+    vext_set_tail_elems_1s(env, vd, desc, esz, total_elems);
-     env->vstart = 0;
- }
- 
-@@ -588,7 +578,6 @@ void HELPER(vsha2ch64_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
- {
-     const uint32_t esz = 8;
-     uint32_t total_elems;
--    uint32_t vta = vext_vta(desc);
- 
-     for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {
-         vsha2c_64(((uint64_t *)vs2) + 4 * i, ((uint64_t *)vd) + 4 * i,
-@@ -597,7 +586,7 @@ void HELPER(vsha2ch64_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
- 
-     /* set tail elements to 1s */
-     total_elems = vext_get_total_elems(env, desc, esz);
--    vext_set_elems_1s(vd, vta, env->vl * esz, total_elems * esz);
-+    vext_set_tail_elems_1s(env, vd, desc, esz, total_elems);
-     env->vstart = 0;
- }
- 
-@@ -606,7 +595,6 @@ void HELPER(vsha2cl32_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
- {
-     const uint32_t esz = 4;
-     uint32_t total_elems;
--    uint32_t vta = vext_vta(desc);
- 
-     for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {
-         vsha2c_32(((uint32_t *)vs2) + 4 * i, ((uint32_t *)vd) + 4 * i,
-@@ -615,7 +603,7 @@ void HELPER(vsha2cl32_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
- 
-     /* set tail elements to 1s */
-     total_elems = vext_get_total_elems(env, desc, esz);
--    vext_set_elems_1s(vd, vta, env->vl * esz, total_elems * esz);
-+    vext_set_tail_elems_1s(env, vd, desc, esz, total_elems);
-     env->vstart = 0;
- }
- 
-@@ -624,7 +612,6 @@ void HELPER(vsha2cl64_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
- {
-     uint32_t esz = 8;
-     uint32_t total_elems;
--    uint32_t vta = vext_vta(desc);
- 
-     for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {
-         vsha2c_64(((uint64_t *)vs2) + 4 * i, ((uint64_t *)vd) + 4 * i,
-@@ -633,7 +620,7 @@ void HELPER(vsha2cl64_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
- 
-     /* set tail elements to 1s */
-     total_elems = vext_get_total_elems(env, desc, esz);
--    vext_set_elems_1s(vd, vta, env->vl * esz, total_elems * esz);
-+    vext_set_tail_elems_1s(env, vd, desc, esz, total_elems);
-     env->vstart = 0;
- }
- 
-@@ -653,7 +640,6 @@ void HELPER(vsm3me_vv)(void *vd_vptr, void *vs1_vptr, void *vs2_vptr,
- {
-     uint32_t esz = memop_size(FIELD_EX64(env->vtype, VTYPE, VSEW));
-     uint32_t total_elems = vext_get_total_elems(env, desc, esz);
--    uint32_t vta = vext_vta(desc);
-     uint32_t *vd = vd_vptr;
-     uint32_t *vs1 = vs1_vptr;
-     uint32_t *vs2 = vs2_vptr;
-@@ -672,7 +658,7 @@ void HELPER(vsm3me_vv)(void *vd_vptr, void *vs1_vptr, void *vs2_vptr,
-             vd[(i * 8) + j] = bswap32(w[H4(j + 16)]);
-         }
-     }
--    vext_set_elems_1s(vd_vptr, vta, env->vl * esz, total_elems * esz);
-+    vext_set_tail_elems_1s(env, vd_vptr, desc, esz, total_elems);
-     env->vstart = 0;
- }
- 
-@@ -752,7 +738,6 @@ void HELPER(vsm3c_vi)(void *vd_vptr, void *vs2_vptr, uint32_t uimm,
- {
-     uint32_t esz = memop_size(FIELD_EX64(env->vtype, VTYPE, VSEW));
-     uint32_t total_elems = vext_get_total_elems(env, desc, esz);
--    uint32_t vta = vext_vta(desc);
-     uint32_t *vd = vd_vptr;
-     uint32_t *vs2 = vs2_vptr;
-     uint32_t v1[8], v2[8], v3[8];
-@@ -767,7 +752,7 @@ void HELPER(vsm3c_vi)(void *vd_vptr, void *vs2_vptr, uint32_t uimm,
-             vd[i * 8 + k] = bswap32(v1[H4(k)]);
-         }
-     }
--    vext_set_elems_1s(vd_vptr, vta, env->vl * esz, total_elems * esz);
-+    vext_set_tail_elems_1s(env, vd_vptr, desc, esz, total_elems);
-     env->vstart = 0;
- }
- 
-@@ -777,7 +762,6 @@ void HELPER(vghsh_vv)(void *vd_vptr, void *vs1_vptr, void *vs2_vptr,
-     uint64_t *vd = vd_vptr;
-     uint64_t *vs1 = vs1_vptr;
-     uint64_t *vs2 = vs2_vptr;
--    uint32_t vta = vext_vta(desc);
-     uint32_t total_elems = vext_get_total_elems(env, desc, 4);
- 
-     for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {
-@@ -805,7 +789,7 @@ void HELPER(vghsh_vv)(void *vd_vptr, void *vs1_vptr, void *vs2_vptr,
-         vd[i * 2 + 1] = brev8(Z[1]);
-     }
-     /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vta, env->vl * 4, total_elems * 4);
-+    vext_set_tail_elems_1s(env, vd, desc, 4, total_elems);
-     env->vstart = 0;
- }
- 
-@@ -814,7 +798,6 @@ void HELPER(vgmul_vv)(void *vd_vptr, void *vs2_vptr, CPURISCVState *env,
- {
-     uint64_t *vd = vd_vptr;
-     uint64_t *vs2 = vs2_vptr;
--    uint32_t vta = vext_vta(desc);
-     uint32_t total_elems = vext_get_total_elems(env, desc, 4);
- 
-     for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {
-@@ -839,7 +822,7 @@ void HELPER(vgmul_vv)(void *vd_vptr, void *vs2_vptr, CPURISCVState *env,
-         vd[i * 2 + 1] = brev8(Z[1]);
-     }
-     /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vta, env->vl * 4, total_elems * 4);
-+    vext_set_tail_elems_1s(env, vd, desc, 4, total_elems);
-     env->vstart = 0;
- }
- 
-@@ -881,9 +864,9 @@ void HELPER(vsm4k_vi)(void *vd, void *vs2, uint32_t uimm5, CPURISCVState *env,
-         }
-     }
- 
--    env->vstart = 0;
-     /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vext_vta(desc), env->vl * esz, total_elems * esz);
-+    vext_set_tail_elems_1s(env, vd, desc, esz, total_elems);
-+    env->vstart = 0;
- }
- 
- static void do_sm4_round(uint32_t *rk, uint32_t *buf)
-@@ -930,9 +913,9 @@ void HELPER(vsm4r_vv)(void *vd, void *vs2, CPURISCVState *env, uint32_t desc)
-         }
-     }
- 
--    env->vstart = 0;
-     /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vext_vta(desc), env->vl * esz, total_elems * esz);
-+    vext_set_tail_elems_1s(env, vd, desc, esz, total_elems);
-+    env->vstart = 0;
- }
- 
- void HELPER(vsm4r_vs)(void *vd, void *vs2, CPURISCVState *env, uint32_t desc)
-@@ -964,7 +947,7 @@ void HELPER(vsm4r_vs)(void *vd, void *vs2, CPURISCVState *env, uint32_t desc)
-         }
-     }
- 
--    env->vstart = 0;
-     /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vext_vta(desc), env->vl * esz, total_elems * esz);
-+    vext_set_tail_elems_1s(env, vd, desc, esz, total_elems);
-+    env->vstart = 0;
- }
 diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 2f715fea5e..1941c0e5f3 100644
+index 1941c0e5f3..2e50341806 100644
 --- a/target/riscv/vector_helper.c
 +++ b/target/riscv/vector_helper.c
-@@ -174,31 +174,6 @@ GEN_VEXT_ST_ELEM(ste_h, int16_t, H2, stw)
- GEN_VEXT_ST_ELEM(ste_w, int32_t, H4, stl)
- GEN_VEXT_ST_ELEM(ste_d, int64_t, H8, stq)
+@@ -190,7 +190,7 @@ vext_ldst_stride(void *vd, void *v0, target_ulong base,
+     uint32_t esz = 1 << log2_esz;
+     uint32_t vma = vext_vma(desc);
  
--static void vext_set_tail_elems_1s(CPURISCVState *env, void *vd,
--                                   uint32_t desc, uint32_t esz,
--                                   uint32_t max_elems)
--{
--    uint32_t vta = vext_vta(desc);
--    uint32_t nf = vext_nf(desc);
--    int k;
--
--    /*
--     * Section 5.4 of the RVV spec mentions:
--     * "When vstart ≥ vl, there are no body elements, and no
--     *  elements are updated in any destination vector register
--     *  group, including that no tail elements are updated
--     *  with agnostic values."
--     */
--    if (vta == 0 || env->vstart >= env->vl) {
--        return;
--    }
--
--    for (k = 0; k < nf; ++k) {
--        vext_set_elems_1s(vd, vta, (k * max_elems + env->vl) * esz,
--                          (k * max_elems + max_elems) * esz);
--    }
--}
--
- /*
-  * stride: access vector element from strided memory
-  */
-diff --git a/target/riscv/vector_internals.c b/target/riscv/vector_internals.c
-index 12f5964fbb..70d2da2c81 100644
---- a/target/riscv/vector_internals.c
-+++ b/target/riscv/vector_internals.c
-@@ -33,6 +33,34 @@ void vext_set_elems_1s(void *base, uint32_t is_agnostic, uint32_t cnt,
-     memset(base + cnt, -1, tot - cnt);
- }
+-    for (i = env->vstart; i < env->vl; i++, env->vstart++) {
++    for (i = env->vstart; i < env->vl; env->vstart = ++i) {
+         k = 0;
+         while (k < nf) {
+             if (!vm && !vext_elem_mask(v0, i)) {
+@@ -255,7 +255,7 @@ vext_ldst_us(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
+     uint32_t esz = 1 << log2_esz;
  
-+/*
-+ * This function is sensitive to env->vstart. Do not change
-+ * vstart before updating the tail elements.
-+ */
-+void vext_set_tail_elems_1s(CPURISCVState *env, void *vd, uint32_t desc,
-+                            uint32_t esz, uint32_t max_elems)
-+{
-+    uint32_t vta = vext_vta(desc);
-+    uint32_t nf = vext_nf(desc);
-+    int k;
-+
-+    /*
-+     * Section 5.4 of the RVV spec mentions:
-+     * "When vstart ≥ vl, there are no body elements, and no
-+     *  elements are updated in any destination vector register
-+     *  group, including that no tail elements are updated
-+     *  with agnostic values."
-+     */
-+    if (vta == 0 || env->vstart >= env->vl) {
-+        return;
-+    }
-+
-+    for (k = 0; k < nf; ++k) {
-+        vext_set_elems_1s(vd, vta, (k * max_elems + env->vl) * esz,
-+                          (k * max_elems + max_elems) * esz);
-+    }
-+}
-+
- void do_vext_vv(void *vd, void *v0, void *vs1, void *vs2,
-                 CPURISCVState *env, uint32_t desc,
-                 opivv2_fn *fn, uint32_t esz)
-diff --git a/target/riscv/vector_internals.h b/target/riscv/vector_internals.h
-index 842765f6c1..c5a2bc4bf3 100644
---- a/target/riscv/vector_internals.h
-+++ b/target/riscv/vector_internals.h
-@@ -117,6 +117,10 @@ static inline uint32_t vext_get_total_elems(CPURISCVState *env, uint32_t desc,
- void vext_set_elems_1s(void *base, uint32_t is_agnostic, uint32_t cnt,
-                        uint32_t tot);
+     /* load bytes from guest memory */
+-    for (i = env->vstart; i < evl; i++, env->vstart++) {
++    for (i = env->vstart; i < evl; env->vstart = ++i) {
+         k = 0;
+         while (k < nf) {
+             target_ulong addr = base + ((i * nf + k) << log2_esz);
+@@ -368,7 +368,7 @@ vext_ldst_index(void *vd, void *v0, target_ulong base,
+     uint32_t vma = vext_vma(desc);
  
-+void vext_set_tail_elems_1s(CPURISCVState *env, void *vd,
-+                            uint32_t desc, uint32_t esz,
-+                            uint32_t max_elems);
-+
- /* expand macro args before macro */
- #define RVVCALL(macro, ...)  macro(__VA_ARGS__)
- 
+     /* load bytes from guest memory */
+-    for (i = env->vstart; i < env->vl; i++, env->vstart++) {
++    for (i = env->vstart; i < env->vl; env->vstart = ++i) {
+         k = 0;
+         while (k < nf) {
+             if (!vm && !vext_elem_mask(v0, i)) {
 -- 
 2.43.2
 
