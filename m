@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C41B2C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 08:34:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5D47C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 08:36:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riVfw-0001YI-6C; Fri, 08 Mar 2024 03:33:56 -0500
+	id 1riViF-0002NK-Sd; Fri, 08 Mar 2024 03:36:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1riVfv-0001Y2-08
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:33:55 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1riViC-0002M3-3b
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:36:16 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1riVfs-0003AL-Tx
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:33:54 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-33e162b1b71so1660436f8f.1
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 00:33:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1riViA-0003n8-89
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:36:15 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-412ed3f1e3fso13453085e9.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 00:36:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709886831; x=1710491631; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709886972; x=1710491772; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=aLCE2h5YUGnTBXoVesyPEufQxdQajze+z3q0vIza6cI=;
- b=kzkfflScO2NU4bDVvfk9TsvE1kb0RIoPvUcYuEGHCZ2sg+tqJZ3UABuIed2fycXyMB
- 6nWycuDdzuyaqEqHhLRUKIHENLraVqUHANQUKFSEtpknENIOqo2rFJbO50Q3HA0Wza78
- jz1kEKpeOW7C4pjKtZFLazaam1GONrHl9ID5UMex+4joMyLR600KmpHgPAnno4uAcqih
- Bkjk2+qZxXM+BESfyw+LNSbm2DXL0uFFhqKQKUHYWvYBdY+7AXQ4Z0lRLSybY4rLyV3h
- zNchc+8XHKBDLzbb3/o6ytYebWrogs+htCY8Qa/0V5Q1TVUegTKMQon4InbqlHrOOFNu
- QDmw==
+ bh=CMQzgGqQFOezr+/sDklK2CGJjshJivMIT7kaCrunZRs=;
+ b=ayJxPwhwtvB2uBvt2Gq0slGi6CMHGzwOzdG2c2o9TK9++yNDt7wmlNo8QWsaSJipv4
+ bqLtzqnt5w/mgaIS0a0NKjMaGRoXSjSBzGQun66XbLT41fEVuLalK93GgkzdPxqU9hDP
+ VYWr6SVhBxi7yHElqAsW1VeDgh0ki5TbkSX7XAN2cbD417BnQ3dUYAhAdtnCpNEG1OOn
+ zhPM59nWulenNrj4EKAMJV2el10be/vufVQQuShjJijY+urCrfkj04vsG/1X28nX/MBm
+ i5lWY/hmtdIGVl88hA97E9tYjC5GB+16Hkmk8uLGZwrtGWj6yidQtuf7t6D+dziLUcqv
+ L5DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709886831; x=1710491631;
+ d=1e100.net; s=20230601; t=1709886972; x=1710491772;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aLCE2h5YUGnTBXoVesyPEufQxdQajze+z3q0vIza6cI=;
- b=HeJIrFyjLKC/ye37PgxmZLVR0cAOlvlzyGggZgeGfrK67ylx+pPGJdcmUbUmbN/9iD
- s12pK9oLEoYUplNzMxKJt9496ZVfdSKtWSkIxZEqfCCwkC46u88rSTOMLEGKro0tZvK+
- rOPY/LvHSzbsABIVcrtEbE3Ul/bEb3aqirda5x2c9CB8FvN+V8zqOBWnRUEqlZhPO52U
- cIH6Rg8tf6jglETKFe4Mx0Z3+HIum2bxho0vh8LU0WYVzDNp6frSNLA9PDVr/q5DjDre
- yfn427mQN7uFJL8qIRxRdc4XnPSUTA/c9xM9OyXKYzoSCFOo7bHX+k/avP15M2JS2K7C
- dzIQ==
+ bh=CMQzgGqQFOezr+/sDklK2CGJjshJivMIT7kaCrunZRs=;
+ b=CeHmk0bkUB9YlBeKLB5p8yq7ruMrbfxdH0edprjauEbg7ZF6WU7KdJ5iFzy5epB49g
+ ygvPMZuzefyZGd7joXJMQlWGhaH4O2EQUry6mjUQeBVcSLDQ3fdHYb2BZ0aOW8OcjBvg
+ Ie5QbciMZ1pS1rjE5xQgxqArmyd4tvRsHBm2L4NnKsGU4OyVkO8B9CTpQTjVuAlOIpoZ
+ t7Q0/hdIiVS+n2IFBbIXX93KRvLiSsdASHKS2bucST65f5HE+L8zkhATHUx7amYJC2D1
+ p/jKWNzwjjm8XYKWH59lqr2u30mdafWJSv+YGOAqn6L51Jghvw5aUVPmcXMUwCFlTisC
+ 9E5A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVRhoAkjsiRxMwQlFGOXYEkq7ovD9PR72Rp2K0+wrQ/gh8RFajLVT6FFhkKFlxgim/dbYoiTsV8lpNsnhYLYgzW7SlZsks=
-X-Gm-Message-State: AOJu0YxHJ9WxSHV6na7P0A1WiNdWQC5KM4IiPGh8E4ltE6kSbsAd3lcU
- 90hQ3OP51zqaQq8u55Ek5phEfgxLVfrOuPdNbDmqtol7Rvb0rCaNrj+H0qtIQl4=
-X-Google-Smtp-Source: AGHT+IHhXo62RoBrfXTZfOMIMAuT4iGHvfdly82LLuGYmyFQyzMhdOmMuucdTZbhYu4V7b4wkfeA7Q==
-X-Received: by 2002:a05:6000:400d:b0:33e:6d6c:8503 with SMTP id
- cp13-20020a056000400d00b0033e6d6c8503mr2778427wrb.16.1709886831334; 
- Fri, 08 Mar 2024 00:33:51 -0800 (PST)
+ AJvYcCXOG9ecuyDZhaLzn1Iv7xoOT9FS1vczxPv0iRbmQIitsSgye5H99yZSLRvqzeDABFbaz682pqyJtsQW5XApad91Ada/pkg=
+X-Gm-Message-State: AOJu0YxOPD9Zp3XtiNWLglYxUXNUDzwaxEbOq1VvM2wTO9WFALu6uG7i
+ rwYhKD0FnJvu251OK12yUxgoPNJr+ybq8MyW54Tc9kF+SVF2iRNholIcAULAUcI=
+X-Google-Smtp-Source: AGHT+IE/R0Nd/avD2MMc+jFSkNXS4TFjdQ6OthESonEB/oOGS0ZLZqx0k7DDD8GYeInbJwp2AflTbw==
+X-Received: by 2002:a05:600c:1f15:b0:413:1921:8698 with SMTP id
+ bd21-20020a05600c1f1500b0041319218698mr794944wmb.41.1709886972390; 
+ Fri, 08 Mar 2024 00:36:12 -0800 (PST)
 Received: from [192.168.69.100] (pir44-h02-176-184-37-132.dsl.sta.abo.bbox.fr.
  [176.184.37.132]) by smtp.gmail.com with ESMTPSA id
- bv28-20020a0560001f1c00b0033d70dd0e04sm22659229wrb.8.2024.03.08.00.33.50
+ bx10-20020a5d5b0a000000b0033df46f70dbsm23174476wrb.9.2024.03.08.00.36.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Mar 2024 00:33:50 -0800 (PST)
-Message-ID: <4dbf337e-1427-4f2a-ac3a-6a80b914d927@linaro.org>
-Date: Fri, 8 Mar 2024 09:33:49 +0100
+ Fri, 08 Mar 2024 00:36:12 -0800 (PST)
+Message-ID: <1df3c991-ff91-47dd-a86e-3b2cf6918460@linaro.org>
+Date: Fri, 8 Mar 2024 09:36:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 05/17] hw/loongarch: Init efi_system_table
+Subject: Re: [PATCH v6 07/17] hw/loongarch: Init efi_initrd table
 Content-Language: en-US
 To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, maobibo@loongson.cn
 References: <20240307164835.300412-1-gaosong@loongson.cn>
- <20240307164835.300412-6-gaosong@loongson.cn>
+ <20240307164835.300412-8-gaosong@loongson.cn>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240307164835.300412-6-gaosong@loongson.cn>
+In-Reply-To: <20240307164835.300412-8-gaosong@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,38 +96,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Song,
+
 On 7/3/24 17:48, Song Gao wrote:
-> Add init_systab and set boot_info->a2
-> 
 > Signed-off-by: Song Gao <gaosong@loongson.cn>
-> Message-Id: <20240301093839.663947-6-gaosong@loongson.cn>
+> Message-Id: <20240301093839.663947-8-gaosong@loongson.cn>
 > ---
->   hw/loongarch/boot.c         | 22 +++++++++++++++++
->   include/hw/loongarch/boot.h | 48 +++++++++++++++++++++++++++++++++++++
->   2 files changed, 70 insertions(+)
+>   hw/loongarch/boot.c         | 23 +++++++++++++++++++++--
+>   include/hw/loongarch/boot.h |  9 +++++++++
+>   2 files changed, 30 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+> index 2896c1ea40..6126a37858 100644
+> --- a/hw/loongarch/boot.c
+> +++ b/hw/loongarch/boot.c
+> @@ -15,6 +15,9 @@
+>   #include "sysemu/reset.h"
+>   #include "sysemu/qtest.h"
+>   
+> +ram_addr_t initrd_offset;
+> +uint64_t initrd_size;
 
+Where is that used?
 
+>   static const unsigned int slave_boot_code[] = {
+>                     /* Configure reset ebase.         */
+>       0x0400302c,   /* csrwr      $r12,0xc            */
+> @@ -94,6 +97,21 @@ static void init_efi_boot_memmap(struct efi_system_table *systab,
+>       }
+>   }
+>   
+> +static void init_efi_initrd_table(struct efi_system_table *systab,
+> +                                  void *p, void *start)
+> +{
+> +    efi_guid_t tbl_guid = LINUX_EFI_INITRD_MEDIA_GUID;
+> +    struct efi_initrd *initrd_table  = p;
+> +
+> +    /* efi_configuration_table 2 */
+> +    guidcpy(&systab->tables[1].guid, &tbl_guid);
+> +    systab->tables[1].table = (struct efi_configuration_table *)(p - start);
+> +    systab->nr_tables = 2;
+> +
+> +    initrd_table->base = initrd_offset;
+> +    initrd_table->size = initrd_size;
+> +}
+> +
+>   static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
+>   {
+>       void *bp_tables_start;
+> @@ -117,6 +135,8 @@ static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
+>       init_efi_boot_memmap(systab, p, start);
+>       p += ROUND_UP(sizeof(struct efi_boot_memmap) +
+>                     sizeof(efi_memory_desc_t) * memmap_entries, 64);
+> +    init_efi_initrd_table(systab, p, start);
+> +    p += ROUND_UP(sizeof(struct efi_initrd), 64);
+>   
+>       systab->tables = (struct efi_configuration_table *)(bp_tables_start - start);
+>   }
+> @@ -138,8 +158,7 @@ static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
+>   
+>   static int64_t load_kernel_info(struct loongarch_boot_info *info)
+>   {
+> -    uint64_t kernel_entry, kernel_low, kernel_high, initrd_size;
+> -    ram_addr_t initrd_offset;
+> +    uint64_t kernel_entry, kernel_low, kernel_high;
+>       ssize_t kernel_size;
+>   
+>       kernel_size = load_elf(info->kernel_filename, NULL,
 > diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
-> index 3275c1e295..65ad406f02 100644
+> index f71c693f43..ddcb279874 100644
 > --- a/include/hw/loongarch/boot.h
 > +++ b/include/hw/loongarch/boot.h
-> @@ -8,6 +8,54 @@
->   #ifndef HW_LOONGARCH_BOOT_H
->   #define HW_LOONGARCH_BOOT_H
+> @@ -30,6 +30,10 @@ typedef struct {
+>           EFI_GUID(0x800f683f, 0xd08b, 0x423a,  0xa2, 0x93, \
+>                    0x96, 0x5c, 0x3c, 0x6f, 0xe2, 0xb4)
 >   
-> +/* UEFI 2.10 */
-> +#define EFI_SYSTEM_TABLE_SIGNATURE       0x5453595320494249
-> +#define EFI_2_100_SYSTEM_TABLE_REVISION  ((2<<16) | (100))
-> +#define EFI_SPECIFICATION_VERSION        EFI_SYSTEM_TABLE_REVISION
-> +#define EFI_SYSTEM_TABLE_REVISION        EFI_2_100_SYSTEM_TABLE_REVISION
+> +#define LINUX_EFI_INITRD_MEDIA_GUID \
+> +        EFI_GUID(0x5568e427, 0x68fc, 0x4f3d,  0xac, 0x74, \
+> +                 0xca, 0x55, 0x52, 0x31, 0xcc, 0x68)
 > +
-> +#define FW_VERSION 0x1
-> +#define FW_PATCHLEVEL 0x0
+>   struct efi_config_table {
+>       efi_guid_t guid;
+>       uint64_t *ptr;
+> @@ -83,6 +87,11 @@ struct efi_boot_memmap {
+>       efi_memory_desc_t map[32];
+>   };
+>   
+> +struct efi_initrd {
+> +    uint64_t base;
+> +    uint64_t size;
+> +};
 > +
-> +typedef struct {
-> +    uint8_t b[16];
-> +} efi_guid_t __attribute__((aligned(8)));
-
-QEMU_ALIGNED(8)
+>   struct loongarch_boot_info {
+>       uint64_t ram_size;
+>       const char *kernel_filename;
 
 
