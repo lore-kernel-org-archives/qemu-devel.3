@@ -4,82 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D53FC54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 15:31:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FC1EC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 15:42:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ricBu-0001b2-CG; Fri, 08 Mar 2024 10:31:22 -0500
+	id 1ricMH-0003om-4I; Fri, 08 Mar 2024 10:42:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anthony.perard@cloud.com>)
- id 1ricBm-0001ZX-4m
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:31:15 -0500
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ricMF-0003oV-RH
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:42:04 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <anthony.perard@cloud.com>)
- id 1ricBh-00008i-Tr
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:31:13 -0500
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a45bdf6e9c2so269487766b.0
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 07:31:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ricMD-0002Mi-QU
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:42:03 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-565c6cf4819so5990588a12.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 07:42:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cloud.com; s=cloud; t=1709911867; x=1710516667; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=YH6MlDPdnoLWWPXoTTEpelfujeDTtrM788RsOZVvSv0=;
- b=WONxwXMDk6E7LCigw/BR3neWahDiERIgQTCKucCQmcOoSSm3N3tGw1L8iZE6/pi1eo
- 7BV+OcC3HMQ8eelVEwRq7QS7+fdzrhPFfZm/wTupXI6YdOmv509yO2dNR/hOfDPDqmOh
- yODEWQd0IvtTp26K98q9jZ6Sy7XRS16ekijWM=
+ d=linaro.org; s=google; t=1709912520; x=1710517320; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=MuJCFhvqT3ZKlqVaY9a/O3yhRkZaw9B/8BBmGsdaLfI=;
+ b=pCL8rl6r5IsO4H6RqgmZyPTd2veJp14/jZk+Y2cW5fHkLUdpxASccxdxUvE7cYaWVb
+ JrJPdwQybghVhVfsswCCKPMwHmPAuUmSkTqS5UI/y6S1T4tHpDTgfeZ9FYjth0AGefva
+ 8P/pV2Kxuxr/cWKeRS11fwtCsyNS3+Jz9HnpmvQhUCBfzbBNGYbrDTbTt19TXLGpvNQQ
+ YtxCjRRO3AOtcFa4awiiipQE80AyRlmuEFOuxM0fPTxFPdAsD4WCdiu5+r7MXD1kWLaA
+ JnB7u7L6UzPJhjqmX1xLgpzOa8S6fKXCRXKdFJcwWJ0nqyjpps9UzkF4RUFf8WJaBylR
+ roEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709911867; x=1710516667;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YH6MlDPdnoLWWPXoTTEpelfujeDTtrM788RsOZVvSv0=;
- b=rQL/ayyoULebkXIlnhZwD353lYNoovcymKA5rY6Sm7ach3BTjH0xPykwR6AoHwUfZl
- EsG3are+ohGpQPssa8BLG2z58D6imIfOn40VYP/KUeQEJOeYhYluWXMGG16EpqkRLt+5
- JnjL0pDqy/1w1E4mCX7eMreY9wH7+/9A5UtLZIKlzlYPsqo5X91WlrnNVaTZeD5JS2vC
- x3iPfVLXkOJLHI95mc0g6vX9AFtDqRvM/4uUBrkMnW4iF/4dTnggHuKzjwCwotVdF8/t
- 1wcuhG07amGrycR7q4pqJiWP3f/YodpHjne9T7VnvQ6PRne1B1Etcoz3nBd9n34GrQWB
- GjKw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWNmjY0CKz8FEVsDPxwb383ZN7kjKNSbdvtBym374eF90m8tb+kX920H9cjWstpCBNRbla/ziaPqRuvcHmauxTPvQCzJfk=
-X-Gm-Message-State: AOJu0YwXitqH62/OIkiniiuFyXMKOuIE14QOr1wd5dTfBo1UyGoG5ehX
- 9kgcQiJASFmJjVN7Y2M5pOj7c3b58Ysv+0zuZ6PpzoOA17YvuugfOzEjJngJt1I=
-X-Google-Smtp-Source: AGHT+IEBfIxsts55MLYdgyvsm2syWKaIzZJ/gQRQnI55gvIt3Qc/sVGj1iaCCCcqY8M5YHKD4JUpqQ==
-X-Received: by 2002:a17:906:84e:b0:a43:b269:d27f with SMTP id
- f14-20020a170906084e00b00a43b269d27fmr13273755ejd.64.1709911867295; 
- Fri, 08 Mar 2024 07:31:07 -0800 (PST)
-Received: from perard.uk.xensource.com (default-46-102-197-194.interdsl.co.uk.
- [46.102.197.194]) by smtp.gmail.com with ESMTPSA id
- js18-20020a170906ca9200b00a45be04f00fsm2848497ejb.171.2024.03.08.07.31.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 07:31:06 -0800 (PST)
-Date: Fri, 8 Mar 2024 15:31:06 +0000
-From: Anthony PERARD <anthony.perard@cloud.com>
-To: Zhao Liu <zhao1.liu@linux.intel.com>
-Cc: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Michael Tokarev <mjt@tls.msk.ru>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>,
- Stefano Stabellini <sstabellini@kernel.org>, Paul Durrant <paul@xen.org>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 14/16] hw/char/xen_console: Fix missing ERRP_GUARD() for
- error_prepend()
-Message-ID: <521de725-5d13-46ff-94d9-29e09fb90210@perard>
-References: <20240228163723.1775791-1-zhao1.liu@linux.intel.com>
- <20240228163723.1775791-15-zhao1.liu@linux.intel.com>
+ d=1e100.net; s=20230601; t=1709912520; x=1710517320;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=MuJCFhvqT3ZKlqVaY9a/O3yhRkZaw9B/8BBmGsdaLfI=;
+ b=onaj0/DAfQV8TjE6pEATge3vfOC4BOx3qhJwD0KRdsAm7NTerNMS0dY/ja30cHdKte
+ cXJp31ILV2wUarwcCE6U5yo92/SNnFSGsewvo1jivXDYgArHT9uQQueDH6fq/qcKbv1l
+ JQrZuUMmSmNFSikj8CbNYYA7Ay+o238oLxJBREBfCLB+ilddOhnPBHa+7qXp7Ce3B57w
+ bOB/rYlcr9CtzZ0fzL6jOIWEw929CSmdVNRpnQVMUnmdMYu6kGN/kEB8mwmd67/QAazm
+ m9h90WJUNuMz9fTMU4c3/7czjUyspn3erAbBJETEu7oJtXuhjsZSSk04Im23FSnZilta
+ Sdxg==
+X-Gm-Message-State: AOJu0Yz6K1N+XpjjSs+G5aed/5I6mJqt5w+B84cEo8AUxPJWSiYl0MDC
+ JKRN1AS9l3gxFAiRLPLz2TKZruEmwWRKkDp3fMWIOiwepkpkbn66GY7DI25acqVfxH9krmrBs1f
+ rHiy7qIM7gsEJjC2+ah1Rs8/TmnkO+8VZJnrjoQ==
+X-Google-Smtp-Source: AGHT+IG2TebH+X8C70I+HEzlziFQiuRt9TuV9e/9a5ltxwwODUeTQlbvCO2831bYkGno2KtggkHpVeDVEgX+AX5HQ+s=
+X-Received: by 2002:a50:9550:0:b0:565:9f59:b3b6 with SMTP id
+ v16-20020a509550000000b005659f59b3b6mr674446eda.3.1709912519417; Fri, 08 Mar
+ 2024 07:41:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240228163723.1775791-15-zhao1.liu@linux.intel.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=anthony.perard@cloud.com; helo=mail-ej1-x62a.google.com
+References: <CAFEAcA88UGhjh8-iBvhxx6GdWg74dinYouiguTcz=qEe51L7Ag@mail.gmail.com>
+ <fe5476c7-82e0-4353-a943-7f39b14e1b5b@roeck-us.net>
+ <CAFEAcA-bqOM4Ptws-tsEwo2HDZ6YSX1Y+xGkR0WueRD_dUd0+Q@mail.gmail.com>
+ <7bd858a2-9983-4ddf-8749-09c9b2e261f9@roeck-us.net>
+In-Reply-To: <7bd858a2-9983-4ddf-8749-09c9b2e261f9@roeck-us.net>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 8 Mar 2024 15:41:48 +0000
+Message-ID: <CAFEAcA_-eTfF8tVaLk4yLgWMSA1+KjPBYyS3EjMQNC+59hT0Aw@mail.gmail.com>
+Subject: Re: possible deprecation and removal of some old QEMU Arm machine
+ types (pxa2xx, omap, sa1110)
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>, 
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Aaro Koskinen <aaro.koskinen@iki.fi>, 
+ Janusz Krzysztofik <jmkrzyszt@gmail.com>, Tony Lindgren <tony@atomide.com>,
+ linux-omap@vger.kernel.org, 
+ Arnd Bergmann <arnd@arndb.de>, Daniel Mack <daniel@zonque.org>, 
+ Robert Jarzmik <robert.jarzmik@free.fr>,
+ Haojian Zhuang <haojian.zhuang@gmail.com>, Thomas Huth <thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,54 +98,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 29, 2024 at 12:37:21AM +0800, Zhao Liu wrote:
-> From: Zhao Liu <zhao1.liu@intel.com>
-> 
-> As the comment in qapi/error, passing @errp to error_prepend() requires
-> ERRP_GUARD():
-> 
-> * = Why, when and how to use ERRP_GUARD() =
-> *
-> * Without ERRP_GUARD(), use of the @errp parameter is restricted:
-> ...
-> * - It should not be passed to error_prepend(), error_vprepend() or
-> *   error_append_hint(), because that doesn't work with &error_fatal.
-> * ERRP_GUARD() lifts these restrictions.
-> *
-> * To use ERRP_GUARD(), add it right at the beginning of the function.
-> * @errp can then be used without worrying about the argument being
-> * NULL or &error_fatal.
-> 
-> ERRP_GUARD() could avoid the case when @errp is the pointer of
-> error_fatal, the user can't see this additional information, because
-> exit() happens in error_setg earlier than information is added [1].
-> 
-> The xen_console_connect() passes @errp to error_prepend() without
-> ERRP_GUARD().
-> 
-> There're 2 places will call xen_console_connect():
->  - xen_console_realize(): the @errp is from DeviceClass.realize()'s
-> 			  parameter.
->  - xen_console_frontend_changed(): the @errp points its caller's
->                                    @local_err.
-> 
-> To avoid the issue like [1] said, add missing ERRP_GUARD() at the
-> beginning of xen_console_connect().
-> 
-> [1]: Issue description in the commit message of commit ae7c80a7bd73
->      ("error: New macro ERRP_GUARD()").
-> 
-> Cc: Stefano Stabellini <sstabellini@kernel.org>
-> Cc: Anthony Perard <anthony.perard@citrix.com>
-> Cc: Paul Durrant <paul@xen.org>
-> Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+On Tue, 13 Feb 2024 at 15:36, Guenter Roeck <linux@roeck-us.net> wrote:
+>
+> On Tue, Feb 13, 2024 at 03:14:21PM +0000, Peter Maydell wrote:
+> > On Mon, 12 Feb 2024 at 14:36, Guenter Roeck <linux@roeck-us.net> wrote:
+> > > On 2/12/24 04:32, Peter Maydell wrote:
+> > > > The machines I have in mind are:
+> > > >
+> > > > PXA2xx machines:
+> > > >
+> > > > akita                Sharp SL-C1000 (Akita) PDA (PXA270)
+> > > > borzoi               Sharp SL-C3100 (Borzoi) PDA (PXA270)
+> > > > connex               Gumstix Connex (PXA255)
+> > > > mainstone            Mainstone II (PXA27x)
+> > > > spitz                Sharp SL-C3000 (Spitz) PDA (PXA270)
+> > > > terrier              Sharp SL-C3200 (Terrier) PDA (PXA270)
+> > > > tosa                 Sharp SL-6000 (Tosa) PDA (PXA255)
+> > > > verdex               Gumstix Verdex Pro XL6P COMs (PXA270)
+> > > > z2                   Zipit Z2 (PXA27x)
 
-Acked-by: Anthony PERARD <anthony.perard@citrix.com>
+> > > > OMAP1 machines:
+> > > >
+> > > > cheetah              Palm Tungsten|E aka. Cheetah PDA (OMAP310)
+> > > > sx1                  Siemens SX1 (OMAP310) V2
+> > > > sx1-v1               Siemens SX1 (OMAP310) V1
 
-Thanks,
+> > > > OMAP2 machines:
+> > > >
+> > > > n800                 Nokia N800 tablet aka. RX-34 (OMAP2420)
+> > > > n810                 Nokia N810 tablet aka. RX-44 (OMAP2420)
 
--- 
-Anthony PERARD
+> > > > The one SA1110 machine:
+> > > >
+> > > > collie               Sharp SL-5500 (Collie) PDA (SA-1110)
+
+> I am copying Arnd, the OMAP1 Linux kernel maintainers, PXA2 maintainers,
+> and the Linux omap mailing list for input. Sorry for the noise for those
+> who don't care, but I think it is useful to have your voices heard.
+
+Thanks to everybody for your input on this thread. My
+proposal is to drop from QEMU:
+ * all the PXA2xx machines
+ * all the OMAP2 machines
+ * the cheetah OMAP1 machine
+
+leaving (at least for now) sx1, sx1-v1, collie.
+
+Rationale:
+ * for QEMU dropping individual machines is much less beneficial
+   than if we can drop support for an entire SoC
+ * the OMAP2 QEMU code in particular is large, old and unmaintained,
+   and none of the OMAP2 kernel maintainers said they were using
+   QEMU in any of their testing/development
+ * although Guenter is currently booting test kernels on some
+   of the PXA2xx machines, nobody seemed to be using them as part
+   of their active kernel development and my impression from the
+   thread is that PXA is the closest of all these SoC families to
+   being dropped from the kernel soon
+ * nobody said they were using cheetah, so it's entirely
+   untested and quite probably broken
+ * on the other hand the OMAP1 sx1 model does seem to be being
+   used as part of kernel development, and there was interest
+   in keeping collie around
+
+I'm going to mark these as deprecated for the QEMU 9.0 release,
+which by our deprecate-and-drop policy means they will be
+still present in 9.0 (due out in April) and 9.1 (August-ish),
+and removed in 9.2 (December).
+
+I'm potentially open to persuasion if anybody thinks I'm
+being too drastic here; persuasion that came attached to
+a desire to help modernise the QEMU code for the relevant
+machines would be the most effective :-)
+
+thanks
+-- PMM
 
