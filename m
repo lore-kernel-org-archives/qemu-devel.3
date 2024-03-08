@@ -4,69 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D24C1C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 08:29:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B20E3C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 08:32:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riVbn-0007O1-1v; Fri, 08 Mar 2024 03:29:39 -0500
+	id 1riVe3-0008UI-V2; Fri, 08 Mar 2024 03:31:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1riVbk-0007NJ-UK
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:29:36 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1riVbi-00027p-0q
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:29:36 -0500
-Received: from loongson.cn (unknown [10.20.42.173])
- by gateway (Coremail) with SMTP id _____8CxifBqzOpliDkWAA--.55470S3;
- Fri, 08 Mar 2024 16:29:31 +0800 (CST)
-Received: from [10.20.42.173] (unknown [10.20.42.173])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8CxbRNozOplxidRAA--.19136S3; 
- Fri, 08 Mar 2024 16:29:28 +0800 (CST)
-Subject: Re: [PATCH v6 05/17] hw/loongarch: Init efi_system_table
-To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-References: <20240307164835.300412-1-gaosong@loongson.cn>
- <20240307164835.300412-6-gaosong@loongson.cn>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <75f9e3fd-7796-c743-c29c-0be11a5cf511@loongson.cn>
-Date: Fri, 8 Mar 2024 16:29:26 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1riVe1-0008U6-UX
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:31:58 -0500
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1riVdz-0002j7-7i
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 03:31:56 -0500
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-51336ab1fb7so812664e87.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 00:31:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709886712; x=1710491512; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=z6hM0Yf2lccp4Tc2J9h9jFZKi9GqFKiU/wACGxg8+TA=;
+ b=hsjGDtMdfwkeeuXXMpdWDk8j1mDbWRCD7UAUFSHGC6aEPMrxWKRP32d+lg0nW05tSS
+ KjOyb32tDgK6GwdnI0D9GUcbxWlLn9ncfYZTrr7N8ZmQJR3IyAwLMM0Y+orAeUUUJCCG
+ PGRViKD9b7KcDfWG9K40o0rce8cM/c+eXi2BxWJEG0eBBi/8VZEk2rE5CH9GoJ1RzmHq
+ mqy6t2/UaL6GiPfVAal+Xrt158vz7RpqyN72eLAYE/yOJZnN9c3zANOHTN91GJs/Wira
+ jaq8Vgh8xJk+6l6sA9CyG0uJnvVZRqtKlPWNtnxc4Tm9AuCnSZXy1pHroFqMhw2kiChU
+ 7RYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709886712; x=1710491512;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=z6hM0Yf2lccp4Tc2J9h9jFZKi9GqFKiU/wACGxg8+TA=;
+ b=Vn7A8vwkA4/16MA/8xAbzCNnGzuWnENGZGs7oduV4bl5w3wGTN7gW4wN8NF6TfLIWZ
+ gep5Yq5c6oUMxthM3hn+HzIjcy6ZC6Jd8gCy0hzDWntdnjYFOKZzJu6QzYf2T0Yplu3G
+ XKJgbzM/+5NdpQ/NjCX3O0eTdRoqVUjOpZHoM97ETH40Pty9Z3gZviuLBwLzsoPe/poB
+ BM3sb9cf69DGmq/7z9XzLCbFHPi8a2++33A/ZAH0cScAawEAzQBujs/0RyUCerCyjmQu
+ vGEVlBkLu81SMxr3h9abPxjg1hFJnPCso3CI9WbnlB9+xXr7SM9levuDewcYsUGCBnbo
+ gv0w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVtbQWZ/qksPU85C6YSuwz1cKxBITI0jxeqBXOVvlSbLNUycasLbAZyL3dtW7e1tmCCakhAbSf3XoBLEWYthWkMxCqsjD4=
+X-Gm-Message-State: AOJu0Yyrz6eKCLzNLFfbG6lRZnYcN+agPlXiLcb15qWkiyVxyLjnPtbf
+ VULayVMUT3cIlvB8HoUxCdEYb2ZmH9s5d1MTxghR9hlWcsLl7akJTHS1o3ybcEY=
+X-Google-Smtp-Source: AGHT+IFdNCMHajturIq62OFUmCM9kzzUNquBNqndSbzJFhy8WPloMhfIFBbCe5Apyk9tkugltzh0uQ==
+X-Received: by 2002:ac2:4d87:0:b0:512:d061:a1b with SMTP id
+ g7-20020ac24d87000000b00512d0610a1bmr2664774lfe.0.1709886712341; 
+ Fri, 08 Mar 2024 00:31:52 -0800 (PST)
+Received: from [192.168.69.100] (pir44-h02-176-184-37-132.dsl.sta.abo.bbox.fr.
+ [176.184.37.132]) by smtp.gmail.com with ESMTPSA id
+ h17-20020a05600c315100b004122b7a680dsm5252509wmo.21.2024.03.08.00.31.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 Mar 2024 00:31:51 -0800 (PST)
+Message-ID: <931b4105-9002-47d0-94ca-0826e85c3764@linaro.org>
+Date: Fri, 8 Mar 2024 09:31:49 +0100
 MIME-Version: 1.0
-In-Reply-To: <20240307164835.300412-6-gaosong@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 01/17] hw/loongarch: Move boot fucntions to boot.c
 Content-Language: en-US
+To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, maobibo@loongson.cn
+References: <20240307164835.300412-1-gaosong@loongson.cn>
+ <20240307164835.300412-2-gaosong@loongson.cn>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240307164835.300412-2-gaosong@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8CxbRNozOplxidRAA--.19136S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxAw4rGFy8tF4rXF17Gw13ZFc_yoWrJr15pF
- yrZry3Krs5JrnxWr93tF1akFn8Ars3GF1agr97J34Fyr4DJrykur1UKasFvFW8Jr4Fyw1Y
- vr1v93yUWFsav3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1q6rW5McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8xO
- z3UUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.08,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::133;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x133.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,125 +96,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2024/3/8 上午12:48, Song Gao wrote:
-> Add init_systab and set boot_info->a2
+On 7/3/24 17:48, Song Gao wrote:
+> Move some boot functions to boot.c and struct
+> loongarch_boot_info into struct LoongArchMachineState.
 > 
 > Signed-off-by: Song Gao <gaosong@loongson.cn>
-> Message-Id: <20240301093839.663947-6-gaosong@loongson.cn>
+> Message-Id: <20240301093839.663947-2-gaosong@loongson.cn>
 > ---
->   hw/loongarch/boot.c         | 22 +++++++++++++++++
->   include/hw/loongarch/boot.h | 48 +++++++++++++++++++++++++++++++++++++
->   2 files changed, 70 insertions(+)
-> 
-> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-> index ca65dfde07..1e31e2a59f 100644
-> --- a/hw/loongarch/boot.c
-> +++ b/hw/loongarch/boot.c
-> @@ -63,6 +63,25 @@ static const unsigned int slave_boot_code[] = {
->       0x4c000020,   /* jirl       $r0,$r1,0           */
->   };
->   
-> +static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
-> +{
-> +    struct efi_system_table *systab = p;
-> +
-> +    info->a2 = (uint64_t)p - (uint64_t)start;
-> +
-> +    systab->hdr.signature = EFI_SYSTEM_TABLE_SIGNATURE;
-> +    systab->hdr.revision = EFI_SPECIFICATION_VERSION;
-> +    systab->hdr.revision = sizeof(struct efi_system_table),
-> +    systab->fw_revision = FW_VERSION << 16 | FW_PATCHLEVEL << 8;
-> +    systab->runtime = 0;
-> +    systab->boottime = 0;
-> +    systab->nr_tables = 0;
-> +
-> +    p += ROUND_UP(sizeof(struct efi_system_table), 64);
-> +
-> +    systab->tables = p;
-> +}
-> +
->   static void init_cmdline(struct loongarch_boot_info *info, void *p, void *start)
->   {
->       hwaddr cmdline_addr = (hwaddr)p - (hwaddr)start;
-> @@ -135,6 +154,7 @@ static void reset_load_elf(void *opaque)
->   	if (cpu == LOONGARCH_CPU(first_cpu)) {
->               env->gpr[4] = env->boot_info->a0;
->               env->gpr[5] = env->boot_info->a1;
-> +            env->gpr[6] = env->boot_info->a2;
->           }
->           cpu_set_pc(CPU(cpu), env->elf_address);
->       }
-> @@ -182,6 +202,8 @@ static void init_boot_rom(struct loongarch_boot_info *info, void *p)
->   
->       init_cmdline(info, p, start);
->       p += COMMAND_LINE_SIZE;
-> +
-> +    init_systab(info, p, start);
->   }
->   
->   static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
-> diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
-> index 3275c1e295..65ad406f02 100644
-> --- a/include/hw/loongarch/boot.h
-> +++ b/include/hw/loongarch/boot.h
-> @@ -8,6 +8,54 @@
->   #ifndef HW_LOONGARCH_BOOT_H
->   #define HW_LOONGARCH_BOOT_H
->   
-> +/* UEFI 2.10 */
-> +#define EFI_SYSTEM_TABLE_SIGNATURE       0x5453595320494249
-> +#define EFI_2_100_SYSTEM_TABLE_REVISION  ((2<<16) | (100))
-> +#define EFI_SPECIFICATION_VERSION        EFI_SYSTEM_TABLE_REVISION
-> +#define EFI_SYSTEM_TABLE_REVISION        EFI_2_100_SYSTEM_TABLE_REVISION
-> +
-> +#define FW_VERSION 0x1
-> +#define FW_PATCHLEVEL 0x0
-> +
-> +typedef struct {
-> +    uint8_t b[16];
-> +} efi_guid_t __attribute__((aligned(8)));
-> +
-> +struct efi_config_table {
-> +    efi_guid_t guid;
-> +    uint64_t *ptr;
-> +    const char name[16];
-> +};
-> +
-> +typedef struct {
-> +    uint64_t signature;
-> +    uint32_t revision;
-> +    uint32_t headersize;
-> +    uint32_t crc32;
-> +    uint32_t reserved;
-> +} efi_table_hdr_t;
-> +
-> +struct efi_configuration_table {
-> +    efi_guid_t guid;
-> +    void *table;
-> +};
-> +
-> +struct efi_system_table {
-> +    efi_table_hdr_t hdr;
-> +    uint64_t fw_vendor;        /* physical addr of CHAR16 vendor string */
-> +    uint32_t fw_revision;
-> +    uint64_t con_in_handle;
-> +    uint64_t *con_in;
-> +    uint64_t con_out_handle;
-> +    uint64_t *con_out;
-> +    uint64_t stderr_handle;
-> +    uint64_t stderr_placeholder;
-> +    uint64_t *runtime;
-> +    uint64_t *boottime;
-> +    uint64_t nr_tables;
-> +    struct efi_configuration_table *tables;
-> +};
-> +
->   struct loongarch_boot_info {
->       uint64_t ram_size;
->       const char *kernel_filename;
-> 
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+>   hw/loongarch/boot.c         | 128 ++++++++++++++++++++++++++++++++++++
+>   hw/loongarch/meson.build    |   1 +
+>   hw/loongarch/virt.c         | 121 +++-------------------------------
+>   include/hw/loongarch/boot.h |  21 ++++++
+>   include/hw/loongarch/virt.h |   2 +
+>   5 files changed, 160 insertions(+), 113 deletions(-)
+>   create mode 100644 hw/loongarch/boot.c
+>   create mode 100644 include/hw/loongarch/boot.h
+
+Consider enabling scripts/git.orderfile.
+
+Typo "functions" in patch subject.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
