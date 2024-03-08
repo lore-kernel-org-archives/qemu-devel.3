@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFBAFC54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 11:13:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07BAAC54E4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 11:14:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riY9M-0006Yf-HT; Fri, 08 Mar 2024 06:12:28 -0500
+	id 1riYAG-0007QX-Kp; Fri, 08 Mar 2024 06:13:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1riY9I-0006XX-Aj
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 06:12:25 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1riYAF-0007He-9g
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 06:13:23 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1riY9G-0001QC-Fm
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 06:12:24 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-1dc09556599so17186295ad.1
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 03:12:21 -0800 (PST)
+ id 1riYAD-0001hW-3L
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 06:13:23 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-1dca3951ad9so15462645ad.3
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 03:13:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709896340; x=1710501140; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1709896399; x=1710501199; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=etHwFI7I+Yz5FbHjdcCLaiP9JL9CHdZOSFk9wh7o+cc=;
- b=ihhKKFda9ryDYtrqzuy7ylNDl6gb2jRyWfKTDMyYbVpH3Ym/t7mPE2KkLKpV8ERbat
- 1p9IRRiA4HuPZWBgqxNqHHuLFA922BbmAGlY7bbsq7A/YGyGzWVAg4LVXeToY88ebX6Q
- f4oqy+wRm6l+mBOSiycshBcbV99WuusW/iO5IgXf81w+0NXtgODkaOsqt42H4YGREQ/Y
- TL20tMLCBUKyjM31tA7PuvTd+FsgnwXGTuThkyHybs091ogLb6dOdn70V4y2xVrlTAmJ
- SpBIZfhTowNQnFKF7cwAuOSUOFZExlhIlU/txsuUStk1Jr0ji/zC5FiSU/iLAKNnG8kt
- cVbg==
+ bh=dGp8FCP6DqYm5MF5sGHTK5WHnrx+YfxNOewSUCkHhK0=;
+ b=RlcjzcDty6+ppUPS86AhXmwpj3zkMypUn22BKjHaXqf/c6oO+NGiuMiGP4Da8QB3TM
+ r/eF5hjixanHe+cqy/WcW0HJe9WViZ/sNEefq619c5PJoLQAfBKKyjQt3vqcrzKLP164
+ 472bBIX1KEweRZDhrUvBhkajN3hQzZ+tLsyl1UyN0QlE3uBvlYspWlu8ckY1nIWCwXRJ
+ n4vddVs1qgXZqEtOrTXaMUreLASCItBJPLvNfcfIrytWKOfv27K15f/FPaEuxIsi53+l
+ Hn4RX/QOGfBqDACSllyl/chD1fg28GsJEdycJdVfg99cgiaufuVNpmtguRFou7gYTXZC
+ Zs0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709896340; x=1710501140;
+ d=1e100.net; s=20230601; t=1709896399; x=1710501199;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=etHwFI7I+Yz5FbHjdcCLaiP9JL9CHdZOSFk9wh7o+cc=;
- b=ZYnY9UGnPExI/kOv4waPMAfmiwQjr+7i/yPnYY4eyIXrG7r0AS0DzbKALlSe5kPube
- vwFB/k9/VzZyXsnXOraQfZdCXflLcgx5EAfTDn4v42GoEStldm01zAt7CVxOI+fkrm1k
- GZXirT7QdEzVeMYPIdNoSEroHXPb8/MJgmzKYYzLCmaTLYqzKyPEG2bIB6TxLU+edzo+
- gnHCv7mgq2uGJfJHUCHGgfKM03EIIVapPBixM+zBhCulfc1XeS4Wol13mmGWxnaU51a9
- KSlbdy50LYdLAQWN91+AbVBnvKHe+nD3bg4PaUM4s+LzX5o9Mm6bdy5VOZIK+WGtllsH
- GA2Q==
-X-Gm-Message-State: AOJu0YzJYSmKs1CcL93uVES2HE5aJnJp8L6esKdDD6viShiJT/qVFqmL
- oWu9t94cACFiiCQSqAAmlxiFGr/wmS6GeKgcPN2Z8bEr05JWC4m/6F9qjTSNcG2gUg==
-X-Google-Smtp-Source: AGHT+IEybRiSKxrZvdHY9CqoReedF+dlp5GNPRXhczsVBDyQ2ZfkiY85CvvtH6Xr49SPPbWXBEhPOw==
-X-Received: by 2002:a17:902:c942:b0:1d4:cd4d:923b with SMTP id
- i2-20020a170902c94200b001d4cd4d923bmr13157507pla.54.1709896340025; 
- Fri, 08 Mar 2024 03:12:20 -0800 (PST)
+ bh=dGp8FCP6DqYm5MF5sGHTK5WHnrx+YfxNOewSUCkHhK0=;
+ b=Y8Jf43+DM2y+UdIvOIrXtCk8JUHAZOY4uEgc8obNpg8B2+N76q72Y79upBTjDSh25p
+ lIOQvwjEJpN9/vUNOwMle1FcIFAJnX5lHoiFCVOxxyokUZhOPzMNeMjBZall6lXTfVjq
+ tXAKmyz5c340DkZ2uMHMHn8dMvEJM5Ip+LcR6wzmM3/BDPGchmjknbED92+5bvWp0xZr
+ 3RtOfelwsD9cpv6fNIC8LCEt2/x7Nhu+EMFe78ElTVY2RpjmkntwYDbDRuTiK2joo6fs
+ BuUkt1GhnqeOKvWRnqKZANJf9OrldbnxKuN4Ewf6RKwz7Audmqbf/nG1vloWTLm1/htq
+ N6KA==
+X-Gm-Message-State: AOJu0YxPXVxBvnR2uaVl40vpRHT6GRoJuOkSkD0Z89wLRZOuW3xD5rcE
+ 5LPBRwWSt2sURj/q2rCnKZ3P3aKPAgJnrOzj4neqbeEQmRIUcdOmCNxZlrjIKJ9wHg==
+X-Google-Smtp-Source: AGHT+IHo9jgBxCFDDCs0dBzfVK/0maigiFfl10hB3UrJ6B+SuZBBXT7GAkw59sjOQB8jJR9dbK/oEQ==
+X-Received: by 2002:a17:902:d315:b0:1dd:6a2d:e5c8 with SMTP id
+ b21-20020a170902d31500b001dd6a2de5c8mr1036911plc.55.1709896398954; 
+ Fri, 08 Mar 2024 03:13:18 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- a6-20020a170902ecc600b001dcfbbb1ca5sm12006468plh.35.2024.03.08.03.12.17
+ a6-20020a170902ecc600b001dcfbbb1ca5sm12006468plh.35.2024.03.08.03.13.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 03:12:19 -0800 (PST)
+ Fri, 08 Mar 2024 03:13:18 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com,
  =?UTF-8?q?Christoph=20M=C3=BCllner?= <christoph.muellner@vrull.eu>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 05/34] linux-user/riscv: Add Zicboz extensions to hwprobe
-Date: Fri,  8 Mar 2024 21:11:23 +1000
-Message-ID: <20240308111152.2856137-6-alistair.francis@wdc.com>
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 23/34] tests: riscv64: Use 'zfa' instead of 'Zfa'
+Date: Fri,  8 Mar 2024 21:11:41 +1000
+Message-ID: <20240308111152.2856137-24-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240308111152.2856137-1-alistair.francis@wdc.com>
 References: <20240308111152.2856137-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -103,38 +104,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Christoph Müllner <christoph.muellner@vrull.eu>
 
-Upstream Linux recently added RISC-V Zicboz support to the hwprobe API.
-This patch introduces this for QEMU's user space emulator.
+Running test-fcvtmod triggers the following deprecation warning:
+  warning: CPU property 'Zfa' is deprecated. Please use 'zfa' instead
+Let's fix that.
 
 Signed-off-by: Christoph Müllner <christoph.muellner@vrull.eu>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-ID: <20240207115926.887816-2-christoph.muellner@vrull.eu>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240229180656.1208881-1-christoph.muellner@vrull.eu>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- linux-user/syscall.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tests/tcg/riscv64/Makefile.target | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 7f30defcb1..81801f3dff 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -8815,6 +8815,7 @@ static int do_getdents64(abi_long dirfd, abi_long arg2, abi_long count)
- #define     RISCV_HWPROBE_EXT_ZBA      (1 << 3)
- #define     RISCV_HWPROBE_EXT_ZBB      (1 << 4)
- #define     RISCV_HWPROBE_EXT_ZBS      (1 << 5)
-+#define     RISCV_HWPROBE_EXT_ZICBOZ   (1 << 6)
- 
- #define RISCV_HWPROBE_KEY_CPUPERF_0     5
- #define     RISCV_HWPROBE_MISALIGNED_UNKNOWN     (0 << 0)
-@@ -8873,6 +8874,8 @@ static void risc_hwprobe_fill_pairs(CPURISCVState *env,
-                      RISCV_HWPROBE_EXT_ZBB : 0;
-             value |= cfg->ext_zbs ?
-                      RISCV_HWPROBE_EXT_ZBS : 0;
-+            value |= cfg->ext_zicboz ?
-+                     RISCV_HWPROBE_EXT_ZICBOZ : 0;
-             __put_user(value, &pair->value);
-             break;
-         case RISCV_HWPROBE_KEY_CPUPERF_0:
+diff --git a/tests/tcg/riscv64/Makefile.target b/tests/tcg/riscv64/Makefile.target
+index a7e390c384..4da5b9a3b3 100644
+--- a/tests/tcg/riscv64/Makefile.target
++++ b/tests/tcg/riscv64/Makefile.target
+@@ -17,4 +17,4 @@ run-test-aes: QEMU_OPTS += -cpu rv64,zk=on
+ TESTS += test-fcvtmod
+ test-fcvtmod: CFLAGS += -march=rv64imafdc
+ test-fcvtmod: LDFLAGS += -static
+-run-test-fcvtmod: QEMU_OPTS += -cpu rv64,d=true,Zfa=true
++run-test-fcvtmod: QEMU_OPTS += -cpu rv64,d=true,zfa=true
 -- 
 2.44.0
 
