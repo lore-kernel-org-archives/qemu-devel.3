@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7925CC54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 15:20:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 032D1C54E4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 15:20:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ric0o-0005vI-Fg; Fri, 08 Mar 2024 10:19:54 -0500
+	id 1ric19-0006RJ-Qb; Fri, 08 Mar 2024 10:20:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ric0n-0005uc-0l
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:19:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1ric18-0006NV-3l
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:20:14 -0500
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ric0l-0004nt-8J
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:19:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709911189;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JZDnMCq+muF6Pb9qLjvISWa1J7/Q643ZeCzUrmoUL8g=;
- b=GVD2feLUloqaqCR9RwoP6+9qv0kHiUlqlgj7VzlxJGP7yuxRkNiJIBEug1EA4FJsOeaTXv
- ZhozJT1kaFivUpNXfDYcC/k+pNzAnBqvq4Xww3L0UC5ZoqGiVYj2Ri3yhSwS/NvilkupUz
- 7ubdne2LHzgibp4LmByn7GhHL91jQ34=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-pe19LvgLPyuCPmB1deWqQw-1; Fri,
- 08 Mar 2024 10:19:44 -0500
-X-MC-Unique: pe19LvgLPyuCPmB1deWqQw-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 047361C05EA7;
- Fri,  8 Mar 2024 15:19:44 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.3])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id D62F347CB;
- Fri,  8 Mar 2024 15:19:43 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C3EC921E6A24; Fri,  8 Mar 2024 16:19:42 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Kashyap Chamarthy <kchamart@redhat.com>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH 3/4] docs/interop/firmware.json: Use full include paths
-In-Reply-To: <20240306-qapi-firmware-json-v1-3-619f7122a249@linutronix.de>
- ("Thomas =?utf-8?Q?Wei=C3=9Fschuh=22's?= message of "Wed, 06 Mar 2024
- 11:31:24 +0100")
-References: <20240306-qapi-firmware-json-v1-0-619f7122a249@linutronix.de>
- <20240306-qapi-firmware-json-v1-3-619f7122a249@linutronix.de>
-Date: Fri, 08 Mar 2024 16:19:42 +0100
-Message-ID: <87le6s21kh.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1ric15-0004xR-QK
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:20:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1709911212; x=1741447212;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=37x1enO9CuT262PPueVsjTold9mUMUYf4OwlO+MhuoY=;
+ b=V4dw2kkCcgEm7TMnnTSgL23komvNmuF1K3a+eWNZjDYV1982L5Jei//k
+ wMCAwCXHI3AFdK6y3O1E4gplVNXyHAv8L+OB85sMy+oHGCDHwNIUSOpPX
+ RXWhllgrC5z9VsV1ntHTIf7TXoWhEu+qiJG3Em/SoA4yRQikT5kzQIURt
+ iVRC2XgPbozcqwu66lmTyjeb82jMkYy394wQgMII53LQLEC0qVqnp0gX9
+ L8Mt6JGTQbx0BsnEgIIshdCZwXxoIf7TdwrLooiMPXRxWQlVbwBk3cb6o
+ u+9UPjxuI4HSNbt3zaSONbl5CjG1vCU19zqfS/T4xJ0gmKPBqFWs5Xfbw g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11006"; a="22086167"
+X-IronPort-AV: E=Sophos;i="6.07,109,1708416000"; d="scan'208";a="22086167"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Mar 2024 07:20:09 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,109,1708416000"; d="scan'208";a="15164654"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa003.jf.intel.com with ESMTP; 08 Mar 2024 07:20:06 -0800
+Date: Fri, 8 Mar 2024 23:33:53 +0800
+From: Zhao Liu <zhao1.liu@linux.intel.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org,
+ Xiaoling Song <xiaoling.song@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH 03/14] hw/core/machine-smp: Simplify variables'
+ initialization in machine_parse_smp_config()
+Message-ID: <Zesv4W8DKteGeE/a@intel.com>
+References: <20240306095407.3058909-1-zhao1.liu@linux.intel.com>
+ <20240306095407.3058909-4-zhao1.liu@linux.intel.com>
+ <c2bd5503-7ab1-41b7-af81-2f5bf5992ad3@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c2bd5503-7ab1-41b7-af81-2f5bf5992ad3@redhat.com>
+Received-SPF: none client-ip=198.175.65.10;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,77 +88,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Wei=C3=9Fschuh <thomas.weissschuh@linutronix.de> writes:
+Hi Thomas,
 
-> The included files are part of the toplevel QAPI directory and need to
-> be included from there.
+On Fri, Mar 08, 2024 at 02:20:45PM +0100, Thomas Huth wrote:
+> Date: Fri, 8 Mar 2024 14:20:45 +0100
+> From: Thomas Huth <thuth@redhat.com>
+> Subject: Re: [PATCH 03/14] hw/core/machine-smp: Simplify variables'
+>  initialization in machine_parse_smp_config()
+> 
+> On 06/03/2024 10.53, Zhao Liu wrote:
+> > From: Zhao Liu <zhao1.liu@intel.com>
+> > 
+> > SMPConfiguration initializes its int64_t members as 0 by default.
+> 
+> Can we always rely on that? ... or is this just by luck due to the current
+> implementation? In the latter case, I'd maybe rather drop this patch again.
 >
-> Signed-off-by: Thomas Wei=C3=9Fschuh <thomas.weissschuh@linutronix.de>
-> ---
->  docs/interop/firmware.json | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
-> index 54a1fc6c1041..4ac840e2b413 100644
-> --- a/docs/interop/firmware.json
-> +++ b/docs/interop/firmware.json
-> @@ -14,8 +14,8 @@
->  # =3D Firmware
->  ##
->=20=20
-> -{ 'include' : 'machine.json' }
-> -{ 'include' : 'block-core.json' }
-> +{ 'include' : '../../qapi/machine.json' }
-> +{ 'include' : '../../qapi/block-core.json' }
->=20=20
->  ##
->  # @FirmwareOSInterface:
 
-The coupling with the main QAPI schema is unfortunate.
+Thanks for the correction, I revisited and referenced more similar use
+cases, and indeed, only if the flag "has_*" is true, its corresponding
+field should be considered reliable.
 
-The purpose of docs/interop/firmware.json is to serve as schema for
-firmware descriptions: a firmware description is a JSON object that
-conforms to this schema's struct Firmware.
+Keeping explicit checking on has_* and explicit initialization of these
+topology variables makes the code more readable.
 
-Such a description should be installed along with each firmware binary.
+This patch is over-optimized and I would drop it.
 
-QAPI tooling can be used to check conformance: parse the firmware
-description JSON object, feed it to the generated visit_type_Firmware().
-Success implies conformance.
+Regards,
+Zhao
 
-If you find more uses for the C struct Firmware created by
-visit_type_Firmware(), more power to you.
-
-firmware.json needs machine.json for SysEmuTarget, and block-core.json
-for BlockdevDriver.  The largest and the third-largest QAPI module just
-for two enums.  Almost a quarter Mebibyte of code.
-
-qapi-gen.py generates more than 12kSLOC.  Without the include (and with
-the enums dumbed down to 'str' to enable that), it generates less than
-800.
-
-We could use Sphinx to generate a manual from firmware.json's document.
-Except that manual would be useless, because of its 11,000 lines of
-HTML, less than 800 are for firmware.json.
-
-Options:
-
-* Live with the mess.
-
-* Refactor QAPI modules so firmware.json can include just the enums.
-
-  Drawback: we spread the mess into qapi/.  Ugh.
-
-* Copy the enums to firmware.json.
-
-  Drawback: we risk them going stale.
-
-* Dumb down to 'str'.
-
-  Drawback: the conformance check no longer enforces the value of
-  FirmwareTarget member @architecture and FirmwareFlashFile member
-  @format is valid.
-
-Thoughts?
 
 
