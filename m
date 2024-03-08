@@ -4,48 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01564C54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 15:50:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 894FEC5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 15:50:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ricTZ-0003kw-7D; Fri, 08 Mar 2024 10:49:37 -0500
+	id 1ricSd-0000iP-EG; Fri, 08 Mar 2024 10:48:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1ricTX-0003d8-JE; Fri, 08 Mar 2024 10:49:35 -0500
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1ricSc-0000i1-0u
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:48:38 -0500
+Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1ricTV-0004Al-Uy; Fri, 08 Mar 2024 10:49:35 -0500
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 70BD6488C0;
- Fri,  8 Mar 2024 16:49:32 +0100 (CET)
-Message-ID: <232bfccc-0ebf-4096-8f35-6a329beb492b@proxmox.com>
-Date: Fri, 8 Mar 2024 16:49:31 +0100
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1ricSa-00042e-6u
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:48:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1709912917; x=1741448917;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=7vGl3GjI8paiQ3I7X/TQ3issWbN5GAsKHFxMbtWltmk=;
+ b=VpjNh5+3G6LYzrrCLmvI27cwF/+wandby1e0BZANhPj4T6taW8kqp6Fw
+ BPSjjO6/ae5n5uT9sLfcgVv7gd+CZy33qJyogbVaVA3uLJCDa/GMeIo7H
+ 6v9Az55BL1/z3xNp3BoAJEEw3yJAT9cNUAWqVau8unAWloO4P+aj2Z/oy
+ fBmOUumeOGWFVSPcDsAk+PWcrGaeOA+X3uFJgWqVbS4OEBeR8mCQpFitV
+ 6vgUfQgjmNYcLOu2RevNiQhbxlqzdBfKNecn+CbaHACp9iQejaU6LRt4l
+ VV6LpFqus5L9z3bzyOTdcNsgC3yQTclVjOT4TXd+QAcihpvNQCtIED6bJ A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11006"; a="4561089"
+X-IronPort-AV: E=Sophos;i="6.07,110,1708416000"; 
+   d="scan'208";a="4561089"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Mar 2024 07:48:36 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,110,1708416000"; d="scan'208";a="10400345"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
+ by fmviesa007.fm.intel.com with ESMTP; 08 Mar 2024 07:48:33 -0800
+From: Zhao Liu <zhao1.liu@linux.intel.com>
+To: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org
+Cc: Xiaoling Song <xiaoling.song@intel.com>,
+	Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v2 08/13] tests/unit/test-smp-parse: Test "books" parameter in
+ -smp
+Date: Sat,  9 Mar 2024 00:01:43 +0800
+Message-Id: <20240308160148.3130837-9-zhao1.liu@linux.intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240308160148.3130837-1-zhao1.liu@linux.intel.com>
+References: <20240308160148.3130837-1-zhao1.liu@linux.intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/5] iotests: add backup-discard-source
-Content-Language: en-US
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, eblake@redhat.com,
- xiechanglong.d@gmail.com, wencongyang2@huawei.com, hreitz@redhat.com,
- kwolf@redhat.com, jsnow@redhat.com, den@virtuozzo.com,
- alexander.ivanov@virtuozzo.com
-References: <20240228141501.455989-1-vsementsov@yandex-team.ru>
- <20240228141501.455989-6-vsementsov@yandex-team.ru>
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <20240228141501.455989-6-vsementsov@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=198.175.65.21;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,34 +85,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 28.02.24 um 15:15 schrieb Vladimir Sementsov-Ogievskiy:
-> Add test for a new backup option: discard-source.
-> 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->  .../qemu-iotests/tests/backup-discard-source  | 151 ++++++++++++++++++
->  .../tests/backup-discard-source.out           |   5 +
->  2 files changed, 156 insertions(+)
->  create mode 100755 tests/qemu-iotests/tests/backup-discard-source
->  create mode 100644 tests/qemu-iotests/tests/backup-discard-source.out
-> 
-> diff --git a/tests/qemu-iotests/tests/backup-discard-source b/tests/qemu-iotests/tests/backup-discard-source
-> new file mode 100755
-> index 0000000000..8a88b0f6c4
-> --- /dev/null
-> +++ b/tests/qemu-iotests/tests/backup-discard-source
-> @@ -0,0 +1,151 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Test removing persistent bitmap from backing
-> +#
-> +# Copyright (c) 2022 Virtuozzo International GmbH.
-> +#
+From: Zhao Liu <zhao1.liu@intel.com>
 
-Title and copyright year are wrong.
+Although book was introduced to -smp along with drawer by s390 machine,
+as a general topology level in QEMU that may be reused by other arches
+in the future, it is desirable to cover this parameter's parsing in a
+separate case.
 
-Apart from that:
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Tested-by: Xiaoling Song <xiaoling.song@intel.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/unit/test-smp-parse.c | 105 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 105 insertions(+)
 
-Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
+diff --git a/tests/unit/test-smp-parse.c b/tests/unit/test-smp-parse.c
+index f656bbb6da27..090238ab23f8 100644
+--- a/tests/unit/test-smp-parse.c
++++ b/tests/unit/test-smp-parse.c
+@@ -75,6 +75,22 @@
+             .has_maxcpus  = hf, .maxcpus  = f,                \
+         }
+ 
++/*
++ * Currently a 5-level topology hierarchy is supported on s390 ccw machines
++ *  -drawers/books/sockets/cores/threads
++ */
++#define SMP_CONFIG_WITH_BOOKS_DRAWERS(ha, a, hb, b, hc, c, hd, \
++                                      d, he, e, hf, f, hg, g)  \
++        {                                                      \
++            .has_cpus     = ha, .cpus     = a,                 \
++            .has_drawers  = hb, .drawers  = b,                 \
++            .has_books    = hc, .books    = c,                 \
++            .has_sockets  = hd, .sockets  = d,                 \
++            .has_cores    = he, .cores    = e,                 \
++            .has_threads  = hf, .threads  = f,                 \
++            .has_maxcpus  = hg, .maxcpus  = g,                 \
++        }
++
+ /**
+  * @config - the given SMP configuration
+  * @expect_prefer_sockets - the expected parsing result for the
+@@ -308,6 +324,11 @@ static const struct SMPTestData data_generic_invalid[] = {
+         /* config: -smp 2,clusters=2 */
+         .config = SMP_CONFIG_WITH_CLUSTERS(T, 2, F, 0, T, 2, F, 0, F, 0, F, 0),
+         .expect_error = "clusters not supported by this machine's CPU topology",
++    }, {
++        /* config: -smp 2,books=2 */
++        .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 2, F, 0, T, 2, F,
++                                                0, F, 0, F, 0, F, 0),
++        .expect_error = "books not supported by this machine's CPU topology",
+     }, {
+         /* config: -smp 8,sockets=2,cores=4,threads=2,maxcpus=8 */
+         .config = SMP_CONFIG_GENERIC(T, 8, T, 2, T, 4, T, 2, T, 8),
+@@ -379,6 +400,26 @@ static const struct SMPTestData data_with_clusters_invalid[] = {
+     },
+ };
+ 
++static const struct SMPTestData data_with_books_invalid[] = {
++    {
++        /* config: -smp 16,books=2,sockets=2,cores=4,threads=2,maxcpus=16 */
++        .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 16, F, 1, T, 2, T,
++                                                2, T, 4, T, 2, T, 16),
++        .expect_error = "Invalid CPU topology: "
++                        "product of the hierarchy must match maxcpus: "
++                        "books (2) * sockets (2) * cores (4) * threads (2) "
++                        "!= maxcpus (16)",
++    }, {
++        /* config: -smp 34,books=2,sockets=2,cores=4,threads=2,maxcpus=32 */
++        .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 34, F, 1, T, 2, T,
++                                                2, T, 4, T, 2, T, 32),
++        .expect_error = "Invalid CPU topology: "
++                        "maxcpus must be equal to or greater than smp: "
++                        "books (2) * sockets (2) * cores (4) * threads (2) "
++                        "== maxcpus (32) < smp_cpus (34)",
++    },
++};
++
+ static char *smp_config_to_string(const SMPConfiguration *config)
+ {
+     return g_strdup_printf(
+@@ -618,6 +659,13 @@ static void machine_with_clusters_class_init(ObjectClass *oc, void *data)
+     mc->smp_props.clusters_supported = true;
+ }
+ 
++static void machine_with_books_class_init(ObjectClass *oc, void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++
++    mc->smp_props.books_supported = true;
++}
++
+ static void test_generic_valid(const void *opaque)
+ {
+     const char *machine_type = opaque;
+@@ -756,6 +804,56 @@ static void test_with_clusters(const void *opaque)
+     object_unref(obj);
+ }
+ 
++static void test_with_books(const void *opaque)
++{
++    const char *machine_type = opaque;
++    Object *obj = object_new(machine_type);
++    MachineState *ms = MACHINE(obj);
++    MachineClass *mc = MACHINE_GET_CLASS(obj);
++    SMPTestData data = {};
++    unsigned int num_books = 2;
++    int i;
++
++    for (i = 0; i < ARRAY_SIZE(data_generic_valid); i++) {
++        data = data_generic_valid[i];
++        unsupported_params_init(mc, &data);
++
++        /* when books parameter is omitted, it will be set as 1 */
++        data.expect_prefer_sockets.books = 1;
++        data.expect_prefer_cores.books = 1;
++
++        smp_parse_test(ms, &data, true);
++
++        /* when books parameter is specified */
++        data.config.has_books = true;
++        data.config.books = num_books;
++        if (data.config.has_cpus) {
++            data.config.cpus *= num_books;
++        }
++        if (data.config.has_maxcpus) {
++            data.config.maxcpus *= num_books;
++        }
++
++        data.expect_prefer_sockets.books = num_books;
++        data.expect_prefer_sockets.cpus *= num_books;
++        data.expect_prefer_sockets.max_cpus *= num_books;
++        data.expect_prefer_cores.books = num_books;
++        data.expect_prefer_cores.cpus *= num_books;
++        data.expect_prefer_cores.max_cpus *= num_books;
++
++        smp_parse_test(ms, &data, true);
++    }
++
++    for (i = 0; i < ARRAY_SIZE(data_with_books_invalid); i++) {
++        data = data_with_books_invalid[i];
++        unsupported_params_init(mc, &data);
++
++        smp_parse_test(ms, &data, false);
++    }
++
++    object_unref(obj);
++}
++
+ /* Type info of the tested machine */
+ static const TypeInfo smp_machine_types[] = {
+     {
+@@ -780,6 +878,10 @@ static const TypeInfo smp_machine_types[] = {
+         .name           = MACHINE_TYPE_NAME("smp-with-clusters"),
+         .parent         = TYPE_MACHINE,
+         .class_init     = machine_with_clusters_class_init,
++    }, {
++        .name           = MACHINE_TYPE_NAME("smp-with-books"),
++        .parent         = TYPE_MACHINE,
++        .class_init     = machine_with_books_class_init,
+     }
+ };
+ 
+@@ -803,6 +905,9 @@ int main(int argc, char *argv[])
+     g_test_add_data_func("/test-smp-parse/with_clusters",
+                          MACHINE_TYPE_NAME("smp-with-clusters"),
+                          test_with_clusters);
++    g_test_add_data_func("/test-smp-parse/with_books",
++                         MACHINE_TYPE_NAME("smp-with-books"),
++                         test_with_books);
+ 
+     g_test_run();
+ 
+-- 
+2.34.1
 
 
