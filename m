@@ -4,68 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EE8DC5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 15:43:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40662C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 15:44:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ricNr-0005RH-TX; Fri, 08 Mar 2024 10:43:43 -0500
+	id 1ricOH-0005kn-Nl; Fri, 08 Mar 2024 10:44:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ricNq-0005Kr-0X
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:43:42 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ id 1ricOC-0005ie-6O
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:44:04 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1ricNo-0002gL-G8
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:43:41 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-566e869f631so2714245a12.0
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 07:43:40 -0800 (PST)
+ id 1ricOA-0002ms-Lo
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 10:44:03 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-563bb51c36eso2407085a12.2
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 07:44:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709912619; x=1710517419; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=lcTpTZZ/2XI8WSkm7ytBCAZELUZXEe8MGU72YvT8FKw=;
- b=tNaMMZnKwVcipxHjupR3ssTEqZBG63RbGv1RKKOHg11yN4EjCKkF5V0L4Zetx+5ZEz
- III6+D8aKBaJzv2hvJ0AUnhXNbrNj0N1HDMbTTrahS/D8XynzeReuCtBnuuvf9CCOpl0
- H2jRt9n1WVlsSwX9fbd77TnH5571Yjxcy3WuQ+NCLlzCUCR4qyrkZ/Sa5WV49MwWO0Pm
- 9vLBQbWTKX+GKOg26i4JS4pS7bQpDhUldD+dsxKwOXy/nVJaHTBrJtQoKkRE7K7EpYom
- aBiXXoMInC0gmo9EP7QpHKI4NpFIqwj1T9+Zt9sLzKOdQMOOyiALgxnRV9jrPP1/6Oa8
- sr7Q==
+ d=linaro.org; s=google; t=1709912640; x=1710517440; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/yjIHGI8PiVw1qzNmSWLp6HHD4/WeGG/5twfE1v2y2s=;
+ b=Na/e+wNV9gRApgR54qvSRNFPKG7zYdzIiC3cZIm7YP+uv68rJbPYGU8tyt+5G5ICDW
+ Lg62tMAxAQ+fLg8FqgrKmkvGozPa3H2v5i9nV09TlBT8mL3n6CJUpJz59Wap1j2kA21X
+ aGGMDqJHIDX/Xjdk048Eb5m1UaItMiWcEyHAJupCBMMuXUv3zOOxw9nyETnYrYXOiLOE
+ NtEOpCTPLhXDl64u/fTpifsQy/v4XsZIT0tiyxnN3Pzte854H6CR77KNT4QZjfT3T1rg
+ T8TVEUS135CCLK5BVPq5DevN9DK7z2HXho+cAP+AIbtqq3dZg6J2sqRRIH0dg20mJUUs
+ KcXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709912619; x=1710517419;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lcTpTZZ/2XI8WSkm7ytBCAZELUZXEe8MGU72YvT8FKw=;
- b=WPRmSfvO+9v6RfJvo2lZkXe7mGpVAFn6GEcMICJhG751VaxiQ111ukUZVJ6ZJVmH6K
- MK1gibH6RMrnmTff7A3HcHqF9cYHqhOTzL+nUlDVAZf2pZp73GwCXmT1/NuPQk2PP66n
- 3PeSDYCH2pwaSMsZQbtgWLX+O3pDuSeqY+yerhgVWPVAGGxFm8ek8RXOgl+TqGK+GWgJ
- Usxl6Wi+T6NdDFBGSyyaTnvDcVYdFEQ3emFJQfBDpU/1yG5EOHxUs+5cNxWYi0UaY4QB
- NlOw+lm+9GD8R/mYdyvLkF8ph7e/W0PzIdrevDNwAyKRSoJf5y6ws/P2KBwYOsU33I85
- jXuA==
-X-Gm-Message-State: AOJu0Ywqka8nJzW8a5b6zSVDq2BuNnOccLeeDq93Bg7qIRu/Y3eLYWvN
- gH+q0b8IY16XsUeOQNQ3G/tFOaZuQu5EgFE5I5+IygRplwHXUmgBJPse/P4r5nTt6CaBTMBcSV5
- 4NqE7YOoQmRYhumoXS5ll7nbyNBUjy2dWNM82Vg==
-X-Google-Smtp-Source: AGHT+IG84v4Y0v2fGR7J3Z/ZTK8vCdPe5VYMhmXWuAcaHLJPEQIKDRnDq35S2gQ1VF2n9LyOhKCYvLKLYb27PqVAfFc=
-X-Received: by 2002:a05:6402:5c4:b0:567:9fef:f7ee with SMTP id
- n4-20020a05640205c400b005679feff7eemr2199933edx.16.1709912618790; Fri, 08 Mar
- 2024 07:43:38 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709912640; x=1710517440;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/yjIHGI8PiVw1qzNmSWLp6HHD4/WeGG/5twfE1v2y2s=;
+ b=iEFL9g4yF/BuhwYAz4ffDdyybXt28Oveow9ia9hOdvrrzF/UFwJeHv8uZoKXPPmVat
+ STEa4eWHLR9kkO/d4HUpbQbWijsiXtbIZCfqwNNU3a+SHNBywTh3f+2ryvxIa9xQ8ZqH
+ 6GAwdFVEMdTt5uGjUtEmubjDrvWirqfchQwAdhYHRUVEh4C666VJfdfoFMeSK2jXc0yh
+ A0/KRs3YDuEeAX7u9mBuAgx1O+PRfSOCL1opkmoa+S3984Z4dIG/obwHWPbZ5Tfqm9Rt
+ WWfyBZo+Dg+oMfV0I1mgZPGrfyhR/VPk4GD5jBxk9sxyExlcTZV95bohiaiHe0yvBbLl
+ 0hEw==
+X-Gm-Message-State: AOJu0YxN7RxknKoOhBQ+5gGk8tx9BxlWAtBVvHNVa29nARcfjkOjW+mg
+ 9usQdZD5U9baSWkBD2a1pdvLvoahU02uwMF6ge+jn7WUz9D2RtFVaooZkPWxBh/joI6TsCR3vRY
+ 5OTj3XTqHrC8yyGgyfTGZFEaGlHR/hjbQuhlmvw==
+X-Google-Smtp-Source: AGHT+IEUJhCDxAYhFVGIiT4alT8yVf0AO7npBarUj7+6BQPQ9BKIPy1Gzx+EadZw8E4e7zKrj/63s7Cr9FsFh8VLbzY=
+X-Received: by 2002:a50:ccd6:0:b0:568:3362:cccf with SMTP id
+ b22-20020a50ccd6000000b005683362cccfmr913267edj.7.1709912640090; Fri, 08 Mar
+ 2024 07:44:00 -0800 (PST)
 MIME-Version: 1.0
-References: <20240308104206.480929-1-thuth@redhat.com>
-In-Reply-To: <20240308104206.480929-1-thuth@redhat.com>
+References: <20240308152719.591232-1-chigot@adacore.com>
+In-Reply-To: <20240308152719.591232-1-chigot@adacore.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 8 Mar 2024 15:43:28 +0000
-Message-ID: <CAFEAcA8nsTfK1dBO+ZaCAzRAsJzn9+Kvpao_C8uwZeyeRQh9tw@mail.gmail.com>
-Subject: Re: [PATCH] docs/about: Deprecate the "mainstone",
- "tosa" and "z2" machines
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Date: Fri, 8 Mar 2024 15:43:49 +0000
+Message-ID: <CAFEAcA9AmjW-7u2Vkv8vdrKLgq_5zWZ=mEXBQmSRvFsqtoKjrw@mail.gmail.com>
+Subject: Re: [PATCH] hw/intc/grlib_irqmp: abort realize when ncpus value is
+ out of range
+To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
+Cc: qemu-devel@nongnu.org, konrad.frederic@yahoo.fr, philmd@linaro.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -88,24 +90,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 8 Mar 2024 at 10:42, Thomas Huth <thuth@redhat.com> wrote:
+On Fri, 8 Mar 2024 at 15:27, Cl=C3=A9ment Chigot <chigot@adacore.com> wrote=
+:
 >
-> Support for these boards has been removed from the Linux kernel
-> in version 6.3 in 2023, so there are likely no users left for these
-> boards. Time to mark them as deprecated in QEMU, too!
+> Even if the error is set, the build is not aborted when the ncpus value
+> is wrong, the return is missing.
 >
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Cl=C3=A9ment Chigot <chigot@adacore.com>
 > ---
->  docs/about/deprecated.rst | 8 ++++++++
->  hw/arm/mainstone.c        | 1 +
->  hw/arm/tosa.c             | 1 +
->  hw/arm/z2.c               | 1 +
->  4 files changed, 11 insertions(+)
+>  hw/intc/grlib_irqmp.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/hw/intc/grlib_irqmp.c b/hw/intc/grlib_irqmp.c
+> index 144b121d48..c6c51a349c 100644
+> --- a/hw/intc/grlib_irqmp.c
+> +++ b/hw/intc/grlib_irqmp.c
+> @@ -356,6 +356,7 @@ static void grlib_irqmp_realize(DeviceState *dev, Err=
+or **errp)
+>          error_setg(errp, "Invalid ncpus properties: "
+>                     "%u, must be 0 < ncpus =3D< %u.", irqmp->ncpus,
+>                     IRQMP_MAX_CPU);
+> +        return;
+>      }
+>
+>      qdev_init_gpio_in(dev, grlib_irqmp_set_irq, MAX_PILS);
 
-I agree that we should drop these, but I would like to be more
-drastic -- see my other email in the "possible deprecation and
-removal of some old QEMU Arm machine types (pxa2xx, omap, sa1110)"
-thread.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
