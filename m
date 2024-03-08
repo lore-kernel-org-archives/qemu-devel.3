@@ -4,64 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12E5AC5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 14:58:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93F8FC54E4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 14:58:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ribg0-0002G0-RT; Fri, 08 Mar 2024 09:58:24 -0500
+	id 1ribe6-0003L7-4u; Fri, 08 Mar 2024 09:56:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ribfz-0002A8-7s
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:58:23 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ribe0-0003EA-0W
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:56:21 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1ribfx-00060f-KZ
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:58:22 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1ribdt-0005RW-VM
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:56:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709909900;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1709909770;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=82z7YFeKfbRewTWWU5PYsKxbVxv4r8YpYoe/jrvAsQA=;
- b=F0lSH3WDKa0NCWTVcv3HWJfYKnsgR7HAqzmcffo3FlqWipgthh04vLpmRx7HMHKgqFhQDj
- FVxi+DHa4whAeHf51YBMeOIT3VPsxCZI16PAexWaYebNiR45CgNQjPXYoU7kmd8/aE6gYk
- qOCDZOC8qi7AxhEwFmZovGl2casCjCo=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=is4uaTsB7JqW33WeDjUhKzI7gp3GUbX8PHe/5xTz5cQ=;
+ b=D1eoI+1qGf0d6wy7rzMdKqouQO2O9765Z9zGOLwUanDeUe03gdLnkvxwBP3ot9jQllMDxZ
+ RMouJuG0rNRHToCGMSAR+JG5zngJdzpgv7h4fZDRjQ/heCe+J8Sfj3o0/oQjgoJb2afqgr
+ j/AmzxqSIweypuUG5Wz6tNDnpbDd/Lo=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-21-qt124p8pNYC5X1TGzAc_1A-1; Fri, 08 Mar 2024 09:58:17 -0500
-X-MC-Unique: qt124p8pNYC5X1TGzAc_1A-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C981087AA16;
- Fri,  8 Mar 2024 14:58:16 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.78])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 4BC8B17AB3;
- Fri,  8 Mar 2024 14:58:16 +0000 (UTC)
-Date: Fri, 8 Mar 2024 14:58:14 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org
-Subject: Re: [PATCH v2 2/2] gitlab-ci: add manual job to run Coverity
-Message-ID: <ZesnhndkCIQs0WXL@redhat.com>
-References: <20240308130507.582097-1-pbonzini@redhat.com>
- <20240308130507.582097-3-pbonzini@redhat.com>
+ us-mta-373-MGS263DXPy2aF-Xw_7lUFw-1; Fri, 08 Mar 2024 09:56:09 -0500
+X-MC-Unique: MGS263DXPy2aF-Xw_7lUFw-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-5681b29771fso1443007a12.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 06:56:09 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709909767; x=1710514567;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=is4uaTsB7JqW33WeDjUhKzI7gp3GUbX8PHe/5xTz5cQ=;
+ b=f3pPL3Kk1PDEOd1GXjKShW9ARbGPfae85CxOXhhGtc2lvAzIAWP2ZrwpCF4J5dhNEh
+ lYHCPg4W9ec/JEA6Q/gnMMFznh3lvr8oNPJxEoDUoCaaEJlci4vFiFY9m8KAvSU9h9n0
+ 5WHjMY2PKmTTvkcLOqm0m5x9CcWR7+W98f0ISzM/w4lwPJD/QBWxOYrBWO3HSard+YIW
+ PfsL8cYkWjHhS6FCEUhM/Z0EPypSed3zFUGltRBbl716BzBEnCaCxLDWNCijbZANRd3S
+ KqfFY2+oJpzh/CYgsyXgsH7hw4QJPT7aL7ygzoNqcGaDhIvp2Ve4s3Ef00SuOP1gKz9m
+ luDg==
+X-Gm-Message-State: AOJu0YxsTv8KirPBkXpNno6xyGDI7KG0axCVe5M2goSjT4e3RmmavUX6
+ Ik46Gyuc/i1ptvzHpquXHg/qE5T7Bl7p4GNlZG3QcCXWVt8MQ9bXQ6NRGlKoh+xFh6/BdXi4cjL
+ FGa8aaWbctSSavHTcz1rfet339fR7eCoU4aeNVN3R4BBcUs2lBc3EeB2/chjNodUBMrYm/UJ82+
+ cvbrmQ5RG1EqxaRCABUW8y4a17CRq3V8HhBrh1
+X-Received: by 2002:a50:858b:0:b0:568:2578:f520 with SMTP id
+ a11-20020a50858b000000b005682578f520mr2276013edh.35.1709909766920; 
+ Fri, 08 Mar 2024 06:56:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFxsfg4VgWuq0PlNF60MMntpa9IZmm3+ApzWnuA/xEI7440fFKuWoIrRRy6bY7ODPaCDeZONw==
+X-Received: by 2002:a50:858b:0:b0:568:2578:f520 with SMTP id
+ a11-20020a50858b000000b005682578f520mr2275998edh.35.1709909766570; 
+ Fri, 08 Mar 2024 06:56:06 -0800 (PST)
+Received: from [192.168.10.118] ([151.49.77.21])
+ by smtp.gmail.com with ESMTPSA id
+ i23-20020a0564020f1700b00567f780d4a2sm2686623eda.78.2024.03.08.06.56.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 08 Mar 2024 06:56:04 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Bui Quang Minh <minhquangbui99@gmail.com>
+Subject: [PULL 05/12] hw/intc/apic: fix memory leak
+Date: Fri,  8 Mar 2024 15:55:47 +0100
+Message-ID: <20240308145554.599614-6-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240308145554.599614-1-pbonzini@redhat.com>
+References: <20240308145554.599614-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240308130507.582097-3-pbonzini@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -82,37 +101,61 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 08, 2024 at 02:05:07PM +0100, Paolo Bonzini wrote:
-> Add a job that can be run, either manually or on a schedule, to upload
-> a build to Coverity Scan.  The job uses the run-coverity-scan script
-> in multiple phases of check, download tools and upload, in order to
-> avoid both wasting time (skip everything if you are above the upload
-> quota) and avoid filling the log with the progress of downloading
-> the tools.
-> 
-> The job is intended to run on a scheduled pipeline run, and scheduled
-> runs will not get any other job.  It requires two variables to be in
-> GitLab CI, COVERITY_TOKEN and COVERITY_EMAIL.  Those are already set up
-> in qemu-project's configuration as protected and masked variables.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  .gitlab-ci.d/base.yml      |  4 ++++
->  .gitlab-ci.d/buildtest.yml | 37 +++++++++++++++++++++++++++++++++++++
->  .gitlab-ci.d/opensbi.yml   |  4 ++++
->  3 files changed, 45 insertions(+)
+deliver_bitmask is allocated on the heap in apic_deliver(), but there
+are many paths in the function that return before the corresponding
+g_free() is reached.  Fix this by switching to g_autofree and, while at
+it, also switch to g_new.  Do the same in apic_deliver_irq() as well
+for consistency.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Fixes: b5ee0468e9d ("apic: add support for x2APIC mode", 2024-02-14)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Bui Quang Minh <minhquangbui99@gmail.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ hw/intc/apic.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-With regards,
-Daniel
+diff --git a/hw/intc/apic.c b/hw/intc/apic.c
+index 1d887d66b86..4186c57b34c 100644
+--- a/hw/intc/apic.c
++++ b/hw/intc/apic.c
+@@ -291,14 +291,13 @@ static void apic_deliver_irq(uint32_t dest, uint8_t dest_mode,
+                              uint8_t delivery_mode, uint8_t vector_num,
+                              uint8_t trigger_mode)
+ {
+-    uint32_t *deliver_bitmask = g_malloc(max_apic_words * sizeof(uint32_t));
++    g_autofree uint32_t *deliver_bitmask = g_new(uint32_t, max_apic_words);
+ 
+     trace_apic_deliver_irq(dest, dest_mode, delivery_mode, vector_num,
+                            trigger_mode);
+ 
+     apic_get_delivery_bitmask(deliver_bitmask, dest, dest_mode);
+     apic_bus_deliver(deliver_bitmask, delivery_mode, vector_num, trigger_mode);
+-    g_free(deliver_bitmask);
+ }
+ 
+ bool is_x2apic_mode(DeviceState *dev)
+@@ -662,7 +661,7 @@ static void apic_deliver(DeviceState *dev, uint32_t dest, uint8_t dest_mode,
+     APICCommonState *s = APIC(dev);
+     APICCommonState *apic_iter;
+     uint32_t deliver_bitmask_size = max_apic_words * sizeof(uint32_t);
+-    uint32_t *deliver_bitmask = g_malloc(deliver_bitmask_size);
++    g_autofree uint32_t *deliver_bitmask = g_new(uint32_t, max_apic_words);
+     uint32_t current_apic_id;
+ 
+     if (is_x2apic_mode(dev)) {
+@@ -708,7 +707,6 @@ static void apic_deliver(DeviceState *dev, uint32_t dest, uint8_t dest_mode,
+     }
+ 
+     apic_bus_deliver(deliver_bitmask, delivery_mode, vector_num, trigger_mode);
+-    g_free(deliver_bitmask);
+ }
+ 
+ static bool apic_check_pic(APICCommonState *s)
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.43.2
 
 
