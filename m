@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46426C5475B
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 11:14:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78B10C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 11:14:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riYAS-0008VV-AV; Fri, 08 Mar 2024 06:13:36 -0500
+	id 1riYAX-000132-Kj; Fri, 08 Mar 2024 06:13:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1riYAQ-0008L0-MU
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 06:13:34 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1riYAV-0000XT-0T
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 06:13:39 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1riYAO-0001jO-UY
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 06:13:34 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1dd01ea35b5so11612095ad.0
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 03:13:32 -0800 (PST)
+ id 1riYAR-0001js-UG
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 06:13:38 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-1dcab44747bso15209115ad.1
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 03:13:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709896411; x=1710501211; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1709896414; x=1710501214; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VusZNRxPzcdQ84f6CizRKShOJCxSLEZq7yv4bYvmfdM=;
- b=an+u5VV/yRMF+Jox631mXmXqfrSjVa07WKBDBaAfgWGtZrr/mSLrzOCwTa37UnEFeD
- gjxqoFupDom3/yJCgoc8wc3LCU8rHVqZ03iBltMzwlVfmBtijQvL9U6ptLrUA4sXhsfZ
- ji33VuzFRRQnNOf9eC6HGerHR6SW/WhoR/HUDeZpzt9qZCl63HJlFOtsh8Le/WUCvn/L
- oNn8uNnoinBQzbxAPSiJkWOTi6IEoknJjl9b6mtIMxgFbrrqCoWURnuw3dmrbLzjBTdG
- dBE4MtAeC2c2hSZcU6S1StiONFPm6e0x6vCYpnFZrc3XeKWCFbfOSsTuj7kwjoy5h/to
- EUxw==
+ bh=+NDTWrAd/QJQc24B/fwtUDVrM0y2WqUgaTFtOEdVeHs=;
+ b=MLer2seKcEtcY3wkmuw9aUGaHCyPMmw4LTlfRzkPElX3RFB2YV1BhpAZQAvqM65xTS
+ neWuTrP8bBLXgv3gq4tJfC7NsBPmcPsqBPA7ln7KQTZm8f0q+qDTegcqvu+afkqHzido
+ q6+yzro+d34EPi6tAeezDP4G1Ykxff14LWxjgzwylCV8ohM8IGHehFb6Yy2W6t7BHkvS
+ 9zogLpMgIZlS2vdufCZ5n/GbUNw+Stk/L9JtkOHDPaHzhL3NzNKBdDKwgmV7zLA4AhIe
+ U4We8Ffmp4Lhw0AtHPGU0wonCxEmL9eHVvqywU2cDgqAXicFJco+4qILK6n3Zpo63JH3
+ HIOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709896411; x=1710501211;
+ d=1e100.net; s=20230601; t=1709896414; x=1710501214;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VusZNRxPzcdQ84f6CizRKShOJCxSLEZq7yv4bYvmfdM=;
- b=IjEL06+L10INfYN4VXENENDML48fM+F20ig8sDNsC/ECaUsDaZGdwZvJM/lmXcIdqR
- whCjMSjkiwcpzTu2mzLKh/3bSfekkZPJou7jatE8IzikQMsn0GfsFoX4djMhQtl9vv7j
- BjKDNzGY0QTl1CoGcNfxwIZDYyk5rjz8/AvSf/QMbSFLv0ZiVcK0RciZkI74TPvZZQ7G
- iXlHLyiiAT6NNSJflzMTTaukS4ZFfZEk15/3L2ihfls7/0KXvxx/OkfwuNSpdzF1894A
- 22PHttfoMEkTGDskYMaYoKhL57h3MfnRU2lTheVSNlSnLIQCvHo8/tqM7gFNbteaNZSI
- 2ezg==
-X-Gm-Message-State: AOJu0YxftqE5NafQYrnL4qm89a3NF4oIKeqHydhQvcT+I3nRIlxmoRF4
- g71We5s4ENh7ZAoSksbMJn+zvrxrjmziZoOpX0EYEuSRkU1NDls59UEzXxX+zaQMZQ==
-X-Google-Smtp-Source: AGHT+IGmkMEqQBwd0ChujjBasCfzNz9BLDW3acw14agHX1XDLZ3AXV85ujHOE2s5vv1fNUX3Tdconw==
-X-Received: by 2002:a17:902:e5c8:b0:1dc:b01e:9ae0 with SMTP id
- u8-20020a170902e5c800b001dcb01e9ae0mr13087806plf.14.1709896411156; 
- Fri, 08 Mar 2024 03:13:31 -0800 (PST)
+ bh=+NDTWrAd/QJQc24B/fwtUDVrM0y2WqUgaTFtOEdVeHs=;
+ b=Z5yIj5GwmL3gtunxL86Tld8/cmgFv1PnJCZX/adhbr7gQd3+Klac1JcWo5jVcG2JXH
+ S0iIfQhZATps6YPItJsuGj39fuZCLZy/J74xSLmcoQkdUUbdrQdncVRfUYsOsmw9Gg7q
+ vl4VYO2i6NskeH2nHTge901j2E03T+dlLpqIaAIMdVU/aBilnJlfWYIdVPss09KPq5JF
+ hotunXkDDUYYUBSON/4xkR8AlkK8MbkUaGps6hfNZsQG8GMX4Dk6thPtX6HY5/uMRJ54
+ tx6CFDnKPr+yZW9zfrPh7YlC41gPoSGfwHN0fPg3uvFYa8b48uEluD0YFvRRKkKya8UM
+ OSNA==
+X-Gm-Message-State: AOJu0YzZPUIyEpKSAdptGomcF0Y3q6fsriWg+LyxpXEkSBEtNDDlBOV0
+ NqgcF1i0cJ3HdvoXm2c+syxTxeh7Tag9cbxmkheD753kogI5qWtD6WjS1HPT9QPJvg==
+X-Google-Smtp-Source: AGHT+IFSmIMVmsqeeuaXOPKR8ie55F8VQZhWPbYW2bzqDrL1ZKlFW06fdvcmT5RZuMZeFmzx4tVNLQ==
+X-Received: by 2002:a17:902:dac1:b0:1dc:4a8b:2e21 with SMTP id
+ q1-20020a170902dac100b001dc4a8b2e21mr13842515plx.19.1709896414349; 
+ Fri, 08 Mar 2024 03:13:34 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-321-6fb2-58f1-a1b1.ip6.aussiebb.net.
  [2403:580b:97e8:0:321:6fb2:58f1:a1b1])
  by smtp.gmail.com with ESMTPSA id
- a6-20020a170902ecc600b001dcfbbb1ca5sm12006468plh.35.2024.03.08.03.13.28
+ a6-20020a170902ecc600b001dcfbbb1ca5sm12006468plh.35.2024.03.08.03.13.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 Mar 2024 03:13:30 -0800 (PST)
+ Fri, 08 Mar 2024 03:13:33 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Vadim Shakirov <vadim.shakirov@syntacore.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Andrew Jones <ajones@ventanamicro.com>
-Subject: [PULL 27/34] target/riscv: mcountinhibit, mcounteren, scounteren,
- hcounteren is 32-bit
-Date: Fri,  8 Mar 2024 21:11:45 +1000
-Message-ID: <20240308111152.2856137-28-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 28/34] trans_rvv.c.inc: mark_vs_dirty() before loads and stores
+Date: Fri,  8 Mar 2024 21:11:46 +1000
+Message-ID: <20240308111152.2856137-29-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240308111152.2856137-1-alistair.francis@wdc.com>
 References: <20240308111152.2856137-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -100,94 +99,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vadim Shakirov <vadim.shakirov@syntacore.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-mcountinhibit, mcounteren, scounteren and hcounteren must always be 32-bit
-by privileged spec
+While discussing a problem with how we're (not) setting vstart_eq_zero
+Richard had the following to say w.r.t the conditional mark_vs_dirty()
+calls on load/store functions [1]:
 
-Signed-off-by: Vadim Shakirov <vadim.shakirov@syntacore.com>
+"I think it's required to have stores set dirty unconditionally, before
+the operation.
+
+Consider a store that traps on the 2nd element, leaving vstart = 2, and
+exiting to the main loop via exception. The exception enters the kernel
+page fault handler. The kernel may need to fault in the page for the
+process, and in the meantime task switch.
+
+If vs dirty is not already set, the kernel won't know to save vector
+state on task switch."
+
+Do a mark_vs_dirty() before both loads and stores.
+
+[1] https://lore.kernel.org/qemu-riscv/72c7503b-0f43-44b8-aa82-fbafed2aac0c@linaro.org/
+
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Message-ID: <20240202113919.18236-1-vadim.shakirov@syntacore.com>
+Message-ID: <20240306171932.549549-2-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h     |  8 ++++----
- target/riscv/machine.c | 16 ++++++++--------
- 2 files changed, 12 insertions(+), 12 deletions(-)
+ target/riscv/insn_trans/trans_rvv.c.inc | 23 ++++++++---------------
+ 1 file changed, 8 insertions(+), 15 deletions(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 5d291a7092..3b1a02b944 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -271,7 +271,7 @@ struct CPUArchState {
-     target_ulong hstatus;
-     target_ulong hedeleg;
-     uint64_t hideleg;
--    target_ulong hcounteren;
-+    uint32_t hcounteren;
-     target_ulong htval;
-     target_ulong htinst;
-     target_ulong hgatp;
-@@ -334,10 +334,10 @@ struct CPUArchState {
-      */
-     bool two_stage_indirect_lookup;
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index 742008f58b..b838b8ea5b 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -652,16 +652,14 @@ static bool ldst_us_trans(uint32_t vd, uint32_t rs1, uint32_t data,
+         tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
+     }
  
--    target_ulong scounteren;
--    target_ulong mcounteren;
-+    uint32_t scounteren;
-+    uint32_t mcounteren;
++    mark_vs_dirty(s);
++
+     fn(dest, mask, base, tcg_env, desc);
  
--    target_ulong mcountinhibit;
-+    uint32_t mcountinhibit;
+     if (!is_store && s->ztso) {
+         tcg_gen_mb(TCG_MO_ALL | TCG_BAR_LDAQ);
+     }
  
-     /* PMU counter state */
-     PMUCTRState pmu_ctrs[RV_MAX_MHPMCOUNTERS];
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 81cf22894e..76f2150f78 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -79,14 +79,14 @@ static bool hyper_needed(void *opaque)
+-    if (!is_store) {
+-        mark_vs_dirty(s);
+-    }
+-
+     gen_set_label(over);
+     return true;
+ }
+@@ -817,11 +815,9 @@ static bool ldst_stride_trans(uint32_t vd, uint32_t rs1, uint32_t rs2,
+     tcg_gen_addi_ptr(dest, tcg_env, vreg_ofs(s, vd));
+     tcg_gen_addi_ptr(mask, tcg_env, vreg_ofs(s, 0));
  
- static const VMStateDescription vmstate_hyper = {
-     .name = "cpu/hyper",
--    .version_id = 3,
--    .minimum_version_id = 3,
-+    .version_id = 4,
-+    .minimum_version_id = 4,
-     .needed = hyper_needed,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINTTL(env.hstatus, RISCVCPU),
-         VMSTATE_UINTTL(env.hedeleg, RISCVCPU),
-         VMSTATE_UINT64(env.hideleg, RISCVCPU),
--        VMSTATE_UINTTL(env.hcounteren, RISCVCPU),
-+        VMSTATE_UINT32(env.hcounteren, RISCVCPU),
-         VMSTATE_UINTTL(env.htval, RISCVCPU),
-         VMSTATE_UINTTL(env.htinst, RISCVCPU),
-         VMSTATE_UINTTL(env.hgatp, RISCVCPU),
-@@ -353,8 +353,8 @@ static const VMStateDescription vmstate_jvt = {
+-    fn(dest, mask, base, stride, tcg_env, desc);
++    mark_vs_dirty(s);
  
- const VMStateDescription vmstate_riscv_cpu = {
-     .name = "cpu",
--    .version_id = 9,
--    .minimum_version_id = 9,
-+    .version_id = 10,
-+    .minimum_version_id = 10,
-     .post_load = riscv_cpu_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINTTL_ARRAY(env.gpr, RISCVCPU, 32),
-@@ -397,9 +397,9 @@ const VMStateDescription vmstate_riscv_cpu = {
-         VMSTATE_UINTTL(env.mtval, RISCVCPU),
-         VMSTATE_UINTTL(env.miselect, RISCVCPU),
-         VMSTATE_UINTTL(env.siselect, RISCVCPU),
--        VMSTATE_UINTTL(env.scounteren, RISCVCPU),
--        VMSTATE_UINTTL(env.mcounteren, RISCVCPU),
--        VMSTATE_UINTTL(env.mcountinhibit, RISCVCPU),
-+        VMSTATE_UINT32(env.scounteren, RISCVCPU),
-+        VMSTATE_UINT32(env.mcounteren, RISCVCPU),
-+        VMSTATE_UINT32(env.mcountinhibit, RISCVCPU),
-         VMSTATE_STRUCT_ARRAY(env.pmu_ctrs, RISCVCPU, RV_MAX_MHPMCOUNTERS, 0,
-                              vmstate_pmu_ctr_state, PMUCTRState),
-         VMSTATE_UINTTL_ARRAY(env.mhpmevent_val, RISCVCPU, RV_MAX_MHPMEVENTS),
+-    if (!is_store) {
+-        mark_vs_dirty(s);
+-    }
++    fn(dest, mask, base, stride, tcg_env, desc);
+ 
+     gen_set_label(over);
+     return true;
+@@ -924,11 +920,9 @@ static bool ldst_index_trans(uint32_t vd, uint32_t rs1, uint32_t vs2,
+     tcg_gen_addi_ptr(index, tcg_env, vreg_ofs(s, vs2));
+     tcg_gen_addi_ptr(mask, tcg_env, vreg_ofs(s, 0));
+ 
+-    fn(dest, mask, base, index, tcg_env, desc);
++    mark_vs_dirty(s);
+ 
+-    if (!is_store) {
+-        mark_vs_dirty(s);
+-    }
++    fn(dest, mask, base, index, tcg_env, desc);
+ 
+     gen_set_label(over);
+     return true;
+@@ -1122,11 +1116,10 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
+     base = get_gpr(s, rs1, EXT_NONE);
+     tcg_gen_addi_ptr(dest, tcg_env, vreg_ofs(s, vd));
+ 
++    mark_vs_dirty(s);
++
+     fn(dest, base, tcg_env, desc);
+ 
+-    if (!is_store) {
+-        mark_vs_dirty(s);
+-    }
+     gen_set_label(over);
+ 
+     return true;
 -- 
 2.44.0
 
