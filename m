@@ -4,96 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10331C54E4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 13:56:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 133C8C5475B
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 Mar 2024 14:01:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riahm-0002cU-BY; Fri, 08 Mar 2024 08:56:11 -0500
+	id 1riamG-0005bI-LQ; Fri, 08 Mar 2024 09:00:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1riahS-0002Ek-0V
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 08:55:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1riahH-0002zS-AW
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 08:55:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709906138;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Kc/kxz6wlrJtESi2SvPeBi4ps7HsKxR0EZPbsh2Sh88=;
- b=CIJjY10yj3rR2nb892/oC2DzI9XOhEDhXhjcCgIJH86re7rSDoKkIjtVvgsAhdhWpEuV50
- AKb/U6qNdolepsuDzEBXX4R0UCRtEWT3JbRXfFPiLCKqLv3/PVPOUliwNA+lOxCAxuJPc0
- 6Vy/evFJZtG7SHS6sHkaBwee1Yloq5c=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-12-v3p5nzebO5meyTddIkQItg-1; Fri, 08 Mar 2024 08:55:36 -0500
-X-MC-Unique: v3p5nzebO5meyTddIkQItg-1
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-60a012e6888so16656647b3.2
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 05:55:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1riamF-0005Zt-8T
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:00:47 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1riamD-0005VG-Lr
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 09:00:47 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5673b5a356eso2477074a12.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 06:00:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709906444; x=1710511244; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=EiDkqkQueAxmA5vFzDdxheodnPSSYHnOKc8PTuYo+bE=;
+ b=eihrPLpHNNBWE4A8YqpbeJLkkViqZCMSQd5fkIV5kM2Ry4zsYEIR/4UtsMSYzyeBsA
+ K9Kc0pjv/tlitumfvQtp41UGzLo48SXuwFiPdwbXMIu1N/3NfXXHIRkQj17F5oT+3mwa
+ WCwcb+BOAr6L55KCDSdQoWgzmMit5xSAFFF6NVt3RisQULOjjomeQFw4Y5DDgYq9GxVi
+ wnyh/cYSjflwMuJ7bZOargcAnJt4qV8o9b1A7+6ykpSfU+PFRiQQ1Zr9fLoYLP/ZD234
+ mGMBnNFWDLNJi8LFxzbnttleEZ67lsnadXDK8A76rBkbA2mRfg+5fMf5slRLkYgdJFHj
+ 6N0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709906136; x=1710510936;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Kc/kxz6wlrJtESi2SvPeBi4ps7HsKxR0EZPbsh2Sh88=;
- b=PSLM69DaJjVvzuxSog4pp5hbKSA+lW3yPHjo/XjrfJbU2jjxE8e0ZjYyNJiAoLwOyD
- x6q74FSO63hosN/Bnm/A93qxDjMGzhkdSS4FmxHi2lphiC1G88q6eCjr316YiwbxyLRf
- 2Xjgwrbh7NvvM9YZsMGqGgIpnFD+gqszyaMnZ2PJWcy0L37ksfsYIePV+LE3RB4/fR5Z
- tnrLvmeEasOig+ZJAN8eqyJWeLWWo+Nctw4Mwehih7Gk9fmbpMitZ85uixIa6s5tWL6z
- 1qTzAM9tk+jvfu1ofcpA5pnqRqSaWJmi49rDs681p/V9Kgs02jWGPaa0jHPtdq0nU6RB
- dyeg==
-X-Gm-Message-State: AOJu0YyOjFzGzsxXqjMZ2waGRN14Ah9mCwAOAc/PEC5U3xQ6vQ8/wqk6
- A6WKSwXzilfsV6E6PMwWkAnvmj6iyx+9X+q55vdrhKaDLGs1VR/QWjbnBe0se1PnyFMMhImf5ni
- rFtA7FWryuLlW9MQqFA/MR5V7syQ2ZIxZHHNpuKxIIEYD8UBFewNZ
-X-Received: by 2002:a05:6902:1029:b0:dcc:4a0a:d0ba with SMTP id
- x9-20020a056902102900b00dcc4a0ad0bamr20877750ybt.63.1709906136375; 
- Fri, 08 Mar 2024 05:55:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGsA7XkuZb4yM4rkCCoYMtug8bZBpCDFrnga4PBcEAVYj8wP89WavgomnYtCvWOhVgoC/WWcg==
-X-Received: by 2002:a05:6902:1029:b0:dcc:4a0a:d0ba with SMTP id
- x9-20020a056902102900b00dcc4a0ad0bamr20877728ybt.63.1709906136015; 
- Fri, 08 Mar 2024 05:55:36 -0800 (PST)
-Received: from ?IPV6:2a01:cb19:853d:fa00:c28a:3e3d:34f3:3891?
- ([2a01:cb19:853d:fa00:c28a:3e3d:34f3:3891])
- by smtp.gmail.com with ESMTPSA id
- cz4-20020a05620a36c400b007883bee099fsm3150350qkb.22.2024.03.08.05.55.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Mar 2024 05:55:35 -0800 (PST)
-Message-ID: <9772e612-6ecc-4a8f-aae8-86884397f39d@redhat.com>
-Date: Fri, 8 Mar 2024 14:55:30 +0100
+ d=1e100.net; s=20230601; t=1709906444; x=1710511244;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=EiDkqkQueAxmA5vFzDdxheodnPSSYHnOKc8PTuYo+bE=;
+ b=Z5W7ELXUM1+EC6fulisnKbjdpNKJPHFWnsfJHYabh2eKgjCG3eJUs6cmxkWRWk6RiK
+ a4NSXWp8RQti18sUgCL5Xpy8l+M9ObihXKUDsfHn2qajDf+Uvoon6Bsxp4tfsiQ2gaGY
+ RDU1FsI4EpivdGoPd+qtZfjGUkO34getsa5qdydr7rC1XCo20bKf3r3LsJ0RKHCe74bP
+ Kn8u4hEW1Prim9OHMJdYPlnaJkAGV3q1jrum+/O0RqUnfx2o9RVTLLyV/MZntsZIRtD6
+ 6XPqxicqi3e8A7G6LBnVlk3275OXkkp9fcdJOAt86242QhRSB9itXAySOqze2ZdhJk+X
+ 2XNw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWCcVdgesVEXtUoNLutGZc0mftcByFjV2zt8C3X5PSjrYo+7i37Ci56YSalO6GhNoWondpzIJKMSWiGTytsC6XqBvYpjaA=
+X-Gm-Message-State: AOJu0YzBLehRP+6TidilAMyCQw0x4GcEcl8ngAMYWkquiNU1NcIioqgi
+ u1w6sab1eVTQSEUBCT1zjTDDCvVlDqQeGTgsBljYcTi/53yvUupJ3lcTs6l+LfnzC8J4XX4swqh
+ iqCySw2EccTbprexx00ruj5E5F/LS2kRJJfhYlg==
+X-Google-Smtp-Source: AGHT+IEdg7B9fpmiWENWDEoJxE2uqOHs+Hsa6wPdYWgFQCOfFyuPbDdFUROTbO7Kh6p8D8FWaGJaK53A6jcYAiE6ZWA=
+X-Received: by 2002:a50:9305:0:b0:567:a2d8:ca92 with SMTP id
+ m5-20020a509305000000b00567a2d8ca92mr2025478eda.23.1709906444028; Fri, 08 Mar
+ 2024 06:00:44 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 10/25] migration: Add Error** argument to
- qemu_savevm_state_setup()
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-To: Peter Xu <peterx@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
- Prasad Pandit <pjp@fedoraproject.org>
-References: <20240306133441.2351700-1-clg@redhat.com>
- <20240306133441.2351700-11-clg@redhat.com> <ZesLDCwh3r_pV2r3@x1n>
- <deec998e-cab5-4aff-8582-86031778b089@redhat.com>
- <cd1ec55d-acdc-4960-8a9c-24c42ff669fa@redhat.com>
-In-Reply-To: <cd1ec55d-acdc-4960-8a9c-24c42ff669fa@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+References: <20240129081835.137726-1-thuth@redhat.com>
+ <20240129081835.137726-3-thuth@redhat.com>
+ <CAFEAcA-yL8BAdtkF2xaWJOeFPUWRoBbuvPSEeorwjyei3oFjDQ@mail.gmail.com>
+ <d0ed3f33-b641-4e46-bfaa-f21fbcecbeb8@redhat.com>
+ <CAFEAcA-ye_3AqCkNS1acJ7GPzLEf=WCmjN3WXe9eRWB1x3y=7g@mail.gmail.com>
+ <f952b2d2-90cb-4427-a726-ab126ade8e71@redhat.com>
+In-Reply-To: <f952b2d2-90cb-4427-a726-ab126ade8e71@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 8 Mar 2024 14:00:33 +0000
+Message-ID: <CAFEAcA_oMMRdJ78PpPjCtT_TFaS0+yPhOH8Dc-qwrEEM_v+vsg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] target/arm/tcg/m_helper.c: Include the full
+ helpers only with CONFIG_ARM_V7M
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,127 +97,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/8/24 14:39, Cédric Le Goater wrote:
-> On 3/8/24 14:14, Cédric Le Goater wrote:
->> On 3/8/24 13:56, Peter Xu wrote:
->>> On Wed, Mar 06, 2024 at 02:34:25PM +0100, Cédric Le Goater wrote:
->>>> This prepares ground for the changes coming next which add an Error**
->>>> argument to the .save_setup() handler. Callers of qemu_savevm_state_setup()
->>>> now handle the error and fail earlier setting the migration state from
->>>> MIGRATION_STATUS_SETUP to MIGRATION_STATUS_FAILED.
->>>>
->>>> In qemu_savevm_state(), move the cleanup to preserve the error
->>>> reported by .save_setup() handlers.
->>>>
->>>> Since the previous behavior was to ignore errors at this step of
->>>> migration, this change should be examined closely to check that
->>>> cleanups are still correctly done.
->>>>
->>>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->>>> ---
->>>>
->>>>   Changes in v4:
->>>>   - Merged cleanup change in qemu_savevm_state()
->>>>   Changes in v3:
->>>>   - Set migration state to MIGRATION_STATUS_FAILED
->>>>   - Fixed error handling to be done under lock in bg_migration_thread()
->>>>   - Made sure an error is always set in case of failure in
->>>>     qemu_savevm_state_setup()
->>>>   migration/savevm.h    |  2 +-
->>>>   migration/migration.c | 27 ++++++++++++++++++++++++---
->>>>   migration/savevm.c    | 26 +++++++++++++++-----------
->>>>   3 files changed, 40 insertions(+), 15 deletions(-)
->>>>
->>>> diff --git a/migration/savevm.h b/migration/savevm.h
->>>> index 74669733dd63a080b765866c703234a5c4939223..9ec96a995c93a42aad621595f0ed58596c532328 100644
->>>> --- a/migration/savevm.h
->>>> +++ b/migration/savevm.h
->>>> @@ -32,7 +32,7 @@
->>>>   bool qemu_savevm_state_blocked(Error **errp);
->>>>   void qemu_savevm_non_migratable_list(strList **reasons);
->>>>   int qemu_savevm_state_prepare(Error **errp);
->>>> -void qemu_savevm_state_setup(QEMUFile *f);
->>>> +int qemu_savevm_state_setup(QEMUFile *f, Error **errp);
->>>>   bool qemu_savevm_state_guest_unplug_pending(void);
->>>>   int qemu_savevm_state_resume_prepare(MigrationState *s);
->>>>   void qemu_savevm_state_header(QEMUFile *f);
->>>> diff --git a/migration/migration.c b/migration/migration.c
->>>> index a49fcd53ee19df1ce0182bc99d7e064968f0317b..6d1544224e96f5edfe56939a9c8395d88ef29581 100644
->>>> --- a/migration/migration.c
->>>> +++ b/migration/migration.c
->>>> @@ -3408,6 +3408,8 @@ static void *migration_thread(void *opaque)
->>>>       int64_t setup_start = qemu_clock_get_ms(QEMU_CLOCK_HOST);
->>>>       MigThrError thr_error;
->>>>       bool urgent = false;
->>>> +    Error *local_err = NULL;
->>>> +    int ret;
->>>>       thread = migration_threads_add("live_migration", qemu_get_thread_id());
->>>> @@ -3451,9 +3453,17 @@ static void *migration_thread(void *opaque)
->>>>       }
->>>>       bql_lock();
->>>> -    qemu_savevm_state_setup(s->to_dst_file);
->>>> +    ret = qemu_savevm_state_setup(s->to_dst_file, &local_err);
->>>>       bql_unlock();
->>>> +    if (ret) {
->>>> +        migrate_set_error(s, local_err);
->>>> +        error_free(local_err);
->>>> +        migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
->>>> +                          MIGRATION_STATUS_FAILED);
->>>> +        goto out;
->>>> +     }
->>>
->>> There's a small indent issue, I can fix it.
->>
->> checkpatch did report anything.
->>
->>>
->>> The bigger problem is I _think_ this will trigger a ci failure in the
->>> virtio-net-failover test:
->>>
->>> ▶ 121/464 ERROR:../tests/qtest/virtio-net-failover.c:1203:test_migrate_abort_wait_unplug: assertion failed (status == "cancelling"): ("cancelled" == "cancelling") ERROR
->>> 121/464 qemu:qtest+qtest-x86_64 / qtest-x86_64/virtio-net-failover    ERROR            4.77s   killed by signal 6 SIGABRT
->>>>>> PYTHON=/builds/peterx/qemu/build/pyvenv/bin/python3.8 G_TEST_DBUS_DAEMON=/builds/peterx/qemu/tests/dbus-vmstate-daemon.sh MALLOC_PERTURB_=161 QTEST_QEMU_IMG=./qemu-img QTEST_QEMU_STORAGE_DAEMON_BINARY=./storage-daemon/qemu-storage-daemon QTEST_QEMU_BINARY=./qemu-system-x86_64 /builds/peterx/qemu/build/tests/qtest/virtio-net-failover --tap -k
->>> ――――――――――――――――――――――――――――――――――――― ✀  ―――――――――――――――――――――――――――――――――――――
->>> stderr:
->>> qemu-system-x86_64: ram_save_setup failed: Input/output error
->>> **
->>> ERROR:../tests/qtest/virtio-net-failover.c:1203:test_migrate_abort_wait_unplug: assertion failed (status == "cancelling"): ("cancelled" == "cancelling")
->>> (test program exited with status code -6)
->>> ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
->>>
->>> I am not familiar enough with the failover code, and may not have time
->>> today to follow this up, copy Laurent.  Cedric, if you have time, please
->>> have a look. 
->>
->>
->> Sure. Weird because I usually run make check on x86_64, s390x, ppc64 and
->> aarch64. Let me check again.
-> 
-> I see one timeout error on s390x but not always. See below. It occurs with
-> or without this patchset. the other x86_64, ppc64 arches run fine (a part
-> from one io  test failing from time to time)
+On Fri, 8 Mar 2024 at 12:54, Thomas Huth <thuth@redhat.com> wrote:
+> I gave it a try, but then we end up again with the problem that I already
+> mentioned in the discussion about patch 1: CONFIG_ARM_V7M is not set for the
+> linux-user binaries, so m_helper.c would not get included there anymore and
+> we end up with lots of link failures.
+>
+> So if you don't like the current shape, I guess this needs a little bit more
+> pondering 'til it gets acceptable.
+>
+> But could you maybe at least pick up the first patch already? ... since it's
+> a patch with lots of code movement in it, this is quite ugly to rebase it
+> each time someone touches some lines of code in that area...
 
-Ah ! I got this once on aarch64 :
+I don't object to taking the first patch, but... it doesn't apply
+so it needs rebasing :-/ If you can rebase and send it out this
+afternoon I can put it in a pullreq I'm working on.
 
-  161/486 ERROR:../tests/qtest/virtio-net-failover.c:1222:test_migrate_abort_wait_unplug: 'device' should not be NULL ERROR
-161/486 qemu:qtest+qtest-x86_64 / qtest-x86_64/virtio-net-failover                  ERROR            5.98s   killed by signal 6 SIGABRT
->>> G_TEST_DBUS_DAEMON=/home/legoater/work/qemu/qemu.git/tests/dbus-vmstate-daemon.sh MALLOC_PERTURB_=119 QTEST_QEMU_BINARY=./qemu-system-x86_64 QTEST_QEMU_IMG=./qemu-img PYTHON=/home/legoater/work/qemu/qemu.git/build/pyvenv/bin/python3 QTEST_QEMU_STORAGE_DAEMON_BINARY=./storage-daemon/qemu-storage-daemon /home/legoater/work/qemu/qemu.git/build/tests/qtest/virtio-net-failover --tap -k
-―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― ✀  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-stderr:
-qemu-system-x86_64: ram_save_setup failed: Input/output error
-**
-ERROR:../tests/qtest/virtio-net-failover.c:1222:test_migrate_abort_wait_unplug: 'device' should not be NULL
-
-(test program exited with status code -6)
-―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-
-I couldn't reproduce yet :/
-
-Thanks,
-
-C.
-
-
-
-
+-- PMM
 
