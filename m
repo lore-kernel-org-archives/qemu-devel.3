@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C877C54791
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 19:26:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90FC7C54791
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 19:27:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rj2Jb-0006n3-4E; Sat, 09 Mar 2024 14:25:07 -0500
+	id 1rj2Hw-0000dU-O1; Sat, 09 Mar 2024 14:23:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2JV-0006T4-9m
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:24:57 -0500
-Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2Hq-0000a8-Ue
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:23:16 -0500
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2JS-00034W-4L
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:24:56 -0500
-Received: by mail-lj1-x22f.google.com with SMTP id
- 38308e7fff4ca-2d269b2ff48so48618121fa.3
- for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 11:24:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2Hn-0002YZ-MA
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:23:14 -0500
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-2d28387db09so23614381fa.0
+ for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 11:23:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710012292; x=1710617092; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710012189; x=1710616989; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sOxMDvWG7fYCMvOESgkL1lEMXJ1JQ08vQMhMIpxGM9I=;
- b=J38xq4PGGwtuqZGaJYM1qDPUggGtv+n5tzGS4pYERNsyVkqA7CDjhVHDXk31MW16bc
- hhHWlc90iduw8WwVaHM32aJEIMcPLDc6O9Rf80Uu/llk9p4QamSL8FWHc17uyQ3P28Ej
- OMNYvEfRbWivCBJ9bu8OEdfIZ5uG3vYlTsAaxqUw5LD2QS/nlcvRDDlzTJv4e3fsyY+5
- KhVEBGQgZddbuwf2iD8L3jPXwPYgtB7sKt72wM/5lqcZhTvMmWBWVWe7nnc7ZDciE/cf
- JMi6fPQ8nMpSBq+SyEZQF6kgDd7w5KWK2pPp60Bd3Pg/Eeg/YyaD38bu0ax94ZqrfFd/
- ZKVQ==
+ bh=9jsjeEWjsUkRHeCpOh+pko9UBxzZs1OaWzN0fIY08/s=;
+ b=qD2laXfc0kbIGJy8+oNlHK2xm6IqvihqX4SHN+Uvtsw8Rw4xBcTI2H/edOX/ZtgCxW
+ +TL3JtMP/tOFwGHSn3gGzRzTqWx1WMPk9BG0HRUIs2CvKZ0OoosuhyAwn8qswI4xmGha
+ 9LHD3lAQFIJxZKJ6H1KU5rCwDnpMfaybNE3kb/H1udSbB14gMsQ2FcjeHxBk/ErivQD2
+ 0XbsHPpmbN5NL3ySvkHbbyfsi4uqrSGv7KKkevx+krlatDuelUd/RSHjrvhbBvIF5Mfc
+ S4knwHxmZnLne3WZaHpBI4l0CtZ/3tbfwmg+HgLpp2ZzJcW//aZSapzqAQy0dbgQ+nAx
+ IDTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710012292; x=1710617092;
+ d=1e100.net; s=20230601; t=1710012189; x=1710616989;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sOxMDvWG7fYCMvOESgkL1lEMXJ1JQ08vQMhMIpxGM9I=;
- b=AnQH+jBjzRnaVfg9W5NU/8OP9wyR9iJQkBhHalxYRKiSCYqWVHzQ9xNJIDZhW/Asa+
- 1m13kTr7zUlDjNh3n8ZeiTB100A/5AlmrZK/5q9yhnI/gX8wyjJn/vA/NzxQUzJ17K+F
- DlJrD/hwJqkst2vS91kNbjBUEd+Imw8HTuYN14zwQXAbw/6Jcs33DkJS04SdAxnhD2FK
- ROWj9mgOUTgKnHA1rI+EyfIVZZYWDybI1UmwvT3o/JNmzUfMXe7jvvY2x4rCQBY7H4ZF
- ctE08OtPPEpkVxL2o8Rc9WZZNfWM/GG8P0Yl0/5up3o30ZLKXVGzfWE2z9gMiur+z473
- J4Ag==
-X-Gm-Message-State: AOJu0YxOo33x5k9ef4I3bEH5awjw0Z6AO3YCmUyuixfbpeevwjfIggR7
- hKWH65Rzw6G2/nOylfaItFqBLw16q5QnX9w3DR/zcAOpO3xur2kXmR89YzgIpM6kLvVL+PvEeoG
- Z
-X-Google-Smtp-Source: AGHT+IEnx0UAhxsWu3vMT5zFaVAqvYzcPHl1DIzHmPysNIU33oUo3sm7kvUgkXVueeIazkYyYxJspA==
-X-Received: by 2002:a2e:9b8e:0:b0:2d3:fa6b:9104 with SMTP id
- z14-20020a2e9b8e000000b002d3fa6b9104mr1393478lji.20.1710012292045; 
- Sat, 09 Mar 2024 11:24:52 -0800 (PST)
+ bh=9jsjeEWjsUkRHeCpOh+pko9UBxzZs1OaWzN0fIY08/s=;
+ b=JNkbhiOqETN3159IMRdSfSwGSP+ttc84l3rWhFI7qBzsl5P0tZd1hE3VYYdqq+kf+H
+ 3e8jEC5aHnAzmDFxDoW8B2ZLnxbXi/cyL06qYeBsL6j3YRHzYa55eA74Q0R+jCqaK0J4
+ lGyP0vEiyIg2oYkibVPrUtl8xJ9w3AodO19KTcQ1LEFtfN5sr5fnTV7MKXUyCOfKj1eQ
+ OM5G8hE2s758xP7TKVEZLUq90tzJW3vxqHld4aNVZ/p/nPqD+acKVJtIKvpBWM3kdew3
+ fuHGR3mo07PEdNzoLdjlzo0r6M1Wsd28BoaRqoAvMsPn2qFmAoaXoMpZi3coSu5h3c2W
+ Ldkg==
+X-Gm-Message-State: AOJu0YxgFQijOoEBfIF6WztDPP3vMSj1xRtsSvPdkiJFcmAfmrDk4Wnm
+ 4bj8qbF14qLk+1AHVGgjhSmS/dcFeNbw+fLppgLk8/nVhlbIixinslQiSeiEbZjovMkoaWaoCzX
+ v
+X-Google-Smtp-Source: AGHT+IHVJYQKMJoF6M5h+nBzkB9MQSOKRczhtHaq4vuFR2+EzQeH6DE9+nIiaOsLgRl8gEGAHG9UzQ==
+X-Received: by 2002:a05:651c:61f:b0:2d4:22b6:e6a4 with SMTP id
+ k31-20020a05651c061f00b002d422b6e6a4mr1215415lje.30.1710012188800; 
+ Sat, 09 Mar 2024 11:23:08 -0800 (PST)
 Received: from m1x-phil.lan ([176.176.181.237])
  by smtp.gmail.com with ESMTPSA id
- n10-20020aa7d04a000000b0056826248468sm1156009edo.89.2024.03.09.11.24.50
+ fg3-20020a056402548300b005656bbb5b3fsm1153256edb.63.2024.03.09.11.23.07
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 09 Mar 2024 11:24:51 -0800 (PST)
+ Sat, 09 Mar 2024 11:23:08 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 26/43] mac_newworld: change timebase frequency from 100MHz to
- 25MHz for mac99 machine
-Date: Sat,  9 Mar 2024 20:21:53 +0100
-Message-ID: <20240309192213.23420-27-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ David Woodhouse <dwmw@amazon.co.uk>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
+ xen-devel@lists.xenproject.org
+Subject: [PULL 09/43] hw/xen/xen_pt: Add missing license
+Date: Sat,  9 Mar 2024 20:21:36 +0100
+Message-ID: <20240309192213.23420-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240309192213.23420-1-philmd@linaro.org>
 References: <20240309192213.23420-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x231.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,49 +98,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Commit eaab4d60d3 ("Introduce Xen PCI Passthrough, qdevice")
+introduced both xen_pt.[ch], but only added the license to
+xen_pt.c. Use the same license for xen_pt.h.
 
-MacOS X uses multiple techniques for calibrating timers depending upon the detected
-hardware. One of these calibration routines compares the change in the timebase
-against the KeyLargo timer and uses this to recalculate the clock frequency,
-timebase frequency and bus frequency if the calibration exceeds certain limits.
-This recalibration occurs despite the correct values being passed via the device
-tree, and is likely due to buggy firmware on some hardware.
-
-The timebase frequency of 100MHz was set way back in 2005 by commit fa296b0fb4
-("PIC fix - changed back TB frequency to 100 MHz") and with this value on a
-mac99,via=pmu machine the OSX 10.2 timer calibration incorrectly calculates the
-bus frequency as 400MHz instead of 100MHz. The most noticeable side-effect is
-the UI appears sluggish and not very responsive for normal use.
-
-Change the timebase frequency from 100MHz to 25MHz which matches that of a real
-G4 AGP machine (the closest match to QEMU's mac99 machine) and allows OSX 10.2
-to correctly detect all of the clock frequency, timebase frequency and bus
-frequency.
-
-Tested on various MacOS images from OS 9.2 through to OSX 10.4, along with Linux
-and NetBSD and I was unable to find any regressions from this change.
-
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240304073548.2098806-1-mark.cave-ayland@ilande.co.uk>
+Suggested-by: David Woodhouse <dwmw@amazon.co.uk>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: David Woodhouse <dwmw@amazon.co.uk>
+Message-Id: <20231114143816.71079-17-philmd@linaro.org>
 ---
- hw/ppc/mac_newworld.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/xen/xen_pt.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
-index 3e796d2f6d..ff9e490c4e 100644
---- a/hw/ppc/mac_newworld.c
-+++ b/hw/ppc/mac_newworld.c
-@@ -77,7 +77,7 @@
- 
- #define MAX_IDE_BUS 2
- #define CFG_ADDR 0xf0000510
--#define TBFREQ (100UL * 1000UL * 1000UL)
-+#define TBFREQ (25UL * 1000UL * 1000UL)
- #define CLOCKFREQ (900UL * 1000UL * 1000UL)
- #define BUSFREQ (100UL * 1000UL * 1000UL)
+diff --git a/hw/xen/xen_pt.h b/hw/xen/xen_pt.h
+index 31bcfdf705..d3180bb134 100644
+--- a/hw/xen/xen_pt.h
++++ b/hw/xen/xen_pt.h
+@@ -1,3 +1,13 @@
++/*
++ * Copyright (c) 2007, Neocleus Corporation.
++ * Copyright (c) 2007, Intel Corporation.
++ *
++ * SPDX-License-Identifier: GPL-2.0-only
++ *
++ * Alex Novik <alex@neocleus.com>
++ * Allen Kay <allen.m.kay@intel.com>
++ * Guy Zana <guy@neocleus.com>
++ */
+ #ifndef XEN_PT_H
+ #define XEN_PT_H
  
 -- 
 2.41.0
