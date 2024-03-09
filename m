@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A541BC54E41
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 16:30:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 429C5C54798
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 17:28:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rizZl-0001Uf-3D; Sat, 09 Mar 2024 11:29:33 -0500
+	id 1rj0Tx-0002Vo-Rp; Sat, 09 Mar 2024 12:27:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rizZj-0001Tm-2d
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 11:29:31 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rj0Tv-0002VB-Jx
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 12:27:35 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rizZh-0000L3-9R
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 11:29:30 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-33e2268ed96so1965339f8f.3
- for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 08:29:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rj0Tt-0001dI-Oh
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 12:27:35 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-56845954ffeso295427a12.2
+ for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 09:27:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710001766; x=1710606566; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=c+Qp+eRpNnuEw4WIaFD7l2PcKXeWbed1VsO5WF8bn70=;
- b=fU80+7RqYHzgTYsL/8Fb1q4LJUcdiWA2ASVJ4PZhYf2xT0kVRjYQNfpLWZL7l0OWGU
- mcckVx9vdO6IYdA/gidDyD0uzsuzaQIzMXfzcrVCbXNcwtvw1gHWeJWHPUv2X1CD6yiu
- 6qgg8JN5Tfj8VnIlb2rMaDRzNK2z+YihAZQt5C13voqBptii7OwJz59AC7VQnhJl3CtG
- bbJbm4ZNPRADZjXTP0u0kocw+yDJoZIqjNOEBX6LMqzQapYqKg9c7Pk4TZLGb5TsyyLb
- V/w0QkIehSwh23HG39j8/1BqWxd598R8z2xcdbMM49G41/2suzmrD0RbT1AWzLJvKtI+
- ZCVw==
+ d=linaro.org; s=google; t=1710005252; x=1710610052; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NtISaC2rZ5H27mk5DgNvV5g9DcHWAN+rZZkbEpZaChM=;
+ b=I/nPNq2955SeueKzzW4KdHy8fCWgCFZbnGqPMvGSjtBFUMy4sRyaw0bjXYg2eUdVXO
+ GKA7hZSuaXGQVufdri/QoJAD2QRiaMjzHXSUk5mn8NdN1KgSCxzQnxhgCQLxt3CKquew
+ isi1SV1UjnnYQdvqpV5dohZbLwuD9cSHk3C9qgy1B2fyJKxvnrE8F8qNvLA6Q9GszvYS
+ /Yh+8+q1WlB8R+wX+THJW2MTBpumM5uwt70j5HpzyrJoCrvKFa1fdZiqFIYmh2CLrfq5
+ Ghi7yvPXA/QhFaAZYctyIswGMQtqoFN2zI48mJ9Hx7R7OQvS/lC5Ce6Dau33KBfbbCoy
+ 7qhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710001766; x=1710606566;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=c+Qp+eRpNnuEw4WIaFD7l2PcKXeWbed1VsO5WF8bn70=;
- b=VnQHeU9IbglHd6hochHALNiGTJkGH5L8mUjiaHsvnMPptfYJNgrqIE86gzObT7C6Wm
- 2kY4yLjKLcne2walzrHXrdr5CkVCapals8+NiRli4sTnG1KiTKRgvOGBqXKoJGZtprbI
- g1wr86qr6oWjEgejhNi2INEzEb6uKHJ1hdCgoEqde7ldVTm5BFgPdosP8YDXD4TczXfV
- 899pHP1rHXiFo4Q18q3536PxyaROVZJwwX4vK6sQb9p3Gy3CF2Ye92Jf283JQdpN7K5X
- Kvp2YKc1pYsElwh4gPMwKjH9cnH3ljeLz9OUrMnDQA9Ze0bwtPUZxNhl2pNM2NWaW7Zi
- HCaQ==
+ d=1e100.net; s=20230601; t=1710005252; x=1710610052;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NtISaC2rZ5H27mk5DgNvV5g9DcHWAN+rZZkbEpZaChM=;
+ b=Sq/ULZ0qVgX+9fqPBwvNgzRP27pd76wlGJQbgLLGKkw8Vcv6g8j6Btc/pPvfzsyy7s
+ NPsgmGlqcI+zg1DJuZjKO9l62KkXAVJC2qzW52vehg7pD99Ky/bH599aEKP6nN/IPnrO
+ GkEDjwoduvVeNbTrddCFEqeeM17JNhYUOjCtInQHMXZtGAJ/Tkt/DfsHDNNtBTRXuYWH
+ 8r1Monn4U8PCuP2G2AfpDG41l+JbSD9K9XQouIokD1u4P6eRfyd6qTSLY6KOLmH4YaVB
+ q+BvDwjD2aNOVnTwT9C3QsoZfDsyH0c42FbFSlAfD6Rz8OKuz51Pwt+1LS9Oz9DrEwMJ
+ 6agA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXUQX+3itlXvsxuKkNTD8/fK0wty+yh6hf9CJUVlNm7j87YAosta86zq2WYnGH/rGJMrh83zZApLiaA2HTnYTRIHE0QMQs=
-X-Gm-Message-State: AOJu0YzRSOUwyEv0s8Wp0gP01K374ADsZxWRPPNz6+OR+42JLRVdq2/c
- d5iV/RwZlRppzXzkzVZ5w412OgUGpWu86rvZbJBWMAq3RK3iSMUuDUG2t5O+ul8=
-X-Google-Smtp-Source: AGHT+IGdV5djV7ebkyRfFbmxeybpKYUWZXPGQiVgxP6hnDjejPV88IO+hbeAoO+sn57nG+pTckNzhA==
-X-Received: by 2002:a5d:4e01:0:b0:33e:5fb9:af28 with SMTP id
- p1-20020a5d4e01000000b0033e5fb9af28mr1291195wrt.57.1710001765651; 
- Sat, 09 Mar 2024 08:29:25 -0800 (PST)
-Received: from [192.168.69.100] ([176.176.181.237])
- by smtp.gmail.com with ESMTPSA id
- n8-20020a5d51c8000000b0033e6ede34d3sm2148252wrv.39.2024.03.09.08.29.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 09 Mar 2024 08:29:25 -0800 (PST)
-Message-ID: <16c61c00-30e9-41a3-b202-ec05d778e296@linaro.org>
-Date: Sat, 9 Mar 2024 17:29:23 +0100
+ AJvYcCUgCtemNjr7X1+cnmSDGiWMBph+qM4Ok+5hCXLH7LB554NRVOa7vxzSSJyew4EOLL85hn/qrRnYt+u9pjETEXI7AqgR0W0=
+X-Gm-Message-State: AOJu0YxK0vowNeWhav8O/K6Xe1rJ3LZemocpIT4/GGYFGC9nZRh8ocw7
+ WQMihU7UXtD86OoOxOrnmqE7tcZre7ivYaBdKH1UKHNXfIy8LvjaCYNCOsEXjiZuyCW4IrI7iPy
+ ON3lIa14yIt2v2CKq99xxlZhVRulQytrOtY2pcw==
+X-Google-Smtp-Source: AGHT+IEw9N3y1TPM7mdZS7ke/zFEd0QIbC/CBGT0UYT+wKm+pZ3vIthQtj9ymj7xUItpbl+5D/kFs78Y3fTxld8b4dQ=
+X-Received: by 2002:a50:a45b:0:b0:568:3067:5191 with SMTP id
+ v27-20020a50a45b000000b0056830675191mr1441282edb.38.1710005251680; Sat, 09
+ Mar 2024 09:27:31 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] hw/pci-host/pam: Free PAMMemoryRegion from
- Intel-specific bit handling
-Content-Language: en-US
-To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-References: <20240309134056.1605-1-shentey@gmail.com>
- <20240309134056.1605-2-shentey@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240309134056.1605-2-shentey@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+References: <20240304130403.129543-1-thuth@redhat.com>
+ <CAFEAcA8rac2nEzrVWUWfRHAWYLmC6dSDMK=j6msD_SdPpn6ZtA@mail.gmail.com>
+ <3262c873-b845-4286-a71f-a53b96bbc8a9@redhat.com>
+ <ZeYNQdqW2bBA4gNL@redhat.com>
+ <86d80d62-8c82-4ec5-ab67-50c83041f979@redhat.com>
+In-Reply-To: <86d80d62-8c82-4ec5-ab67-50c83041f979@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sat, 9 Mar 2024 17:27:20 +0000
+Message-ID: <CAFEAcA8X6hR+GfnREQkWNqiOBk40r4o_dWPOiyfVT3n7YJqRVA@mail.gmail.com>
+Subject: Re: [PATCH v2] docs/conf.py: Remove usage of distutils
+To: Thomas Huth <thuth@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,95 +96,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Bernhard,
+On Tue, 5 Mar 2024 at 10:39, Thomas Huth <thuth@redhat.com> wrote:
+>
+> On 04/03/2024 19.04, Daniel P. Berrang=C3=A9 wrote:
+> > On Mon, Mar 04, 2024 at 06:11:58PM +0100, Thomas Huth wrote:
+> >> On 04/03/2024 17.56, Peter Maydell wrote:
+> >>> On Mon, 4 Mar 2024 at 13:04, Thomas Huth <thuth@redhat.com> wrote:
+> >>>>
+> >>>> The macOS jobs in our CI recently started failing, complaining that
+> >>>> the distutils module is not available anymore. And indeed, according=
+ to
+> >>>> https://peps.python.org/pep-0632/ it's been deprecated since a while
+> >>>> and now likely got removed in recent Python versions.
+> >>>
+> >>> This doesn't seem to be sufficient to fix the macos CI:
+> >>> something in glib seems to still be using it.
+> >>>
+> >>> https://gitlab.com/qemu-project/qemu/-/jobs/6313212803
+> >>>
+> >>> [281/6553] Generating ui/dbus-display gdbus-codegen with a custom com=
+mand
+> >>> FAILED: ui/dbus-display1.h ui/dbus-display1.c
+> >>> /opt/homebrew/Cellar/glib/2.78.4/bin/gdbus-codegen
+> >>> ui/dbus-display1.xml --glib-min-required 2.64 --output-directory
+> >>> /private/var/folders/xc/tpssff9959345bnqq4c6tlww0000gn/T/cirrus-ci-bu=
+ild/build/ui
+> >>> --interface-prefix org.qemu. --c-namespace QemuDBus --generate-c-code
+> >>> dbus-display1
+> >> ...
+> >>> ModuleNotFoundError: No module named 'distutils'
+> >>
+> >> Looking at the glib sources, I think this has been fixed here:
+> >>
+> >>   https://gitlab.gnome.org/GNOME/glib/-/commit/6ef967a0f930ce37a8c9b5a=
+ff96969
+> >>
+> >> The fix will be in glib 2.79, unfortunately homebrew still seems to us=
+e glib
+> >> 2.78 ...
+> >>
+> >> We could maybe temporarily work-around the problem by disabling the db=
+us
+> >> code in the CI job? Or just wait for homebrew to update the package?
+> >
+> > File a bug against homebrew. IME they are very quick (1-3 days) at
+> > putting out fixes for things like this, especially if you point them
+> > to the upstream solution.
+>
+> Ok, while I was writing my mail, I was looking at https://brew.sh/ and
+> didn't see a link to a bug tracker there ... but now I realized that they
+> are simply using the github tracker, so I went ahead and filed a bug ther=
+e:
+>
+>   https://github.com/Homebrew/brew/issues/16823
+>
+> Let's see how it goes...
 
-On 9/3/24 14:40, Bernhard Beschow wrote:
-> The PAM bit extraction is currently spread across pam.c and the northbridge
-> device models, making the extraction logic harder to comprehend. Also note how
-> pam_update() deals with PAM_REGIONS_COUNT, even though it handles exactly one
-> region. Fix this (at the cost of minor code duplication) by moving the bit
-> extraction into the northbridge device models. As a side effect, pam_update()
-> becomes less Intel-specific which would allow it to be reused e.g. in VIA
-> northbridges.
-> 
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> ---
->   include/hw/pci-host/pam.h |  7 +++----
->   hw/pci-host/i440fx.c      |  7 +++++--
->   hw/pci-host/pam.c         | 14 +++++++-------
->   hw/pci-host/q35.c         |  5 +++--
->   4 files changed, 18 insertions(+), 15 deletions(-)
-> 
-> diff --git a/include/hw/pci-host/pam.h b/include/hw/pci-host/pam.h
-> index 005916f826..b9b33aecc8 100644
-> --- a/include/hw/pci-host/pam.h
-> +++ b/include/hw/pci-host/pam.h
-> @@ -70,7 +70,6 @@
->   /* PAM registers: log nibble and high nibble*/
->   #define PAM_ATTR_WE     ((uint8_t)2)
->   #define PAM_ATTR_RE     ((uint8_t)1)
-> -#define PAM_ATTR_MASK   ((uint8_t)3)
+Seems to be going slowly. I notice that there's a comment in there
+saying that "brew install python-setuptools" is a workaround to
+get glib 2.78 working -- that seems like it would be good to get
+our CI back to green. Is there a way to test changes to the cirrus
+config short of committing it and seeing if it helps? I don't see
+the jobs available on a pipeline in my personal gitlab repo...
 
-Why not use PAM_ATTR_foo instead of MCH_HOST_BRIDGE_PAM_foo?
-
->   /* SMRAM register */
->   #define SMRAM_D_OPEN           ((uint8_t)(1 << 6))
-> @@ -83,13 +82,13 @@
->   #define PAM_REGIONS_COUNT       13
->   
->   typedef struct PAMMemoryRegion {
-> -    MemoryRegion alias[4];  /* index = PAM value */
-> -    unsigned current;
-> +    MemoryRegion alias[4];  /* index = mode value */
-> +    uint8_t mode;
->   } PAMMemoryRegion;
->   
->   void init_pam(PAMMemoryRegion *mem, Object *owner, MemoryRegion *ram,
->                 MemoryRegion *system, MemoryRegion *pci,
->                 uint32_t start, uint32_t size);
-> -void pam_update(PAMMemoryRegion *mem, int idx, uint8_t val);
-> +void pam_update(PAMMemoryRegion *mem, uint8_t mode);
->   
->   #endif /* QEMU_PAM_H */
-> diff --git a/hw/pci-host/i440fx.c b/hw/pci-host/i440fx.c
-> index 4f0a0438d7..cddd506ab0 100644
-> --- a/hw/pci-host/i440fx.c
-> +++ b/hw/pci-host/i440fx.c
-> @@ -64,6 +64,8 @@ struct I440FXState {
->   #define I440FX_PAM_SIZE 7
->   #define I440FX_SMRAM    0x72
->   
-> +#define I440FX_PAM_ATTR_MASK ((uint8_t)3)
-
-or (PAM_ATTR_RE|PAM_ATTR_WE)?
-
-It is odd to have I440FX_PAM_ATTR_MASK disconnected
-from the values it masks.
-
-> -void pam_update(PAMMemoryRegion *pam, int idx, uint8_t val)
-> +void pam_update(PAMMemoryRegion *pam, uint8_t mode)
->   {
-> -    assert(0 <= idx && idx < PAM_REGIONS_COUNT);
-> +    g_assert(mode < ARRAY_SIZE(pam->alias));
->   
-> -    memory_region_set_enabled(&pam->alias[pam->current], false);
-> -    pam->current = (val >> ((!(idx & 1)) * 4)) & PAM_ATTR_MASK;
-
-Can we pass the mask by argument instead?
-
-> -    memory_region_set_enabled(&pam->alias[pam->current], true);
-> +    memory_region_set_enabled(&pam->alias[pam->mode], false);
-> +    pam->mode = mode;
-> +    memory_region_set_enabled(&pam->alias[pam->mode], true);
->   }
-
-Are the VIA values different of the PAM_ATTR_foo ones?
-
-I'm not sure this is an helpful change, I'd rather
-remove the MCH_HOST_BRIDGE_PAM_foo definitions and
-use the PAM generic ones.
-
-Regards,
-
-Phil.
+thanks
+-- PMM
 
