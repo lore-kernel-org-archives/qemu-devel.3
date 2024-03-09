@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52272C54E60
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADC9AC54E66
 	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 19:27:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rj2Ha-0000L5-5E; Sat, 09 Mar 2024 14:22:58 -0500
+	id 1rj2Lb-0008HF-QZ; Sat, 09 Mar 2024 14:27:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2HY-0000KD-MG
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:22:56 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2Jx-00079l-Ib
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:25:32 -0500
+Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2HW-0002VD-Bx
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:22:56 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-5683089d4bbso1940965a12.2
- for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 11:22:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2Jr-0003Jc-RZ
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:25:23 -0500
+Received: by mail-lj1-x229.google.com with SMTP id
+ 38308e7fff4ca-2d41f33eb05so20557611fa.0
+ for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 11:25:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710012171; x=1710616971; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710012315; x=1710617115; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cFjMT6zDVz6FC8tPUCQ4kyyMrqKZ8chKsrslRHOyQyw=;
- b=CqXWBu1FQrLQrx2FmDdLdS/BGLFDvUZKB+rVoGQmVFwQSM90i1GsAC8swYDoNG2P5V
- G5fvHMbj5xk/pl4pEJYjA4RA6mZAa3R5uPHtRmnZ6I0lUK6ReqHtAvzIItNbGcJDpG9/
- xGQJVYMzDXEfB4cnsOW3ixx6Kphoz5jkh3fcqzxbcrzhzy9S3Q9iwO40Vd7rC8g7CcHS
- Vct4I2T/0psb1fk2hU7+yb0ZdTRF5Pd0/JCZlymvYVjAy39WFD37Yr2kpbrfhfJeE2gN
- MefBLQCB4Fm3dAuqCSe789RMLETLxxrcf9BkBGFmnjmMC0Pd0pGPXyLrBmOaVFdLPz0s
- 34BQ==
+ bh=XGUSMcXRtP0nqAsvDloxBVg/GDCFuWNCjxC0TZD6IEQ=;
+ b=VALzPcEGP+swjEk0CC2jH3D7xSbmEfKWg7llXc2ttAtVpaNLIEppsF/Ftm+ZNNNgSg
+ oLvw2R8ChC17kazIZUh79XAB2pKm06uskQLzYL3VjWa5up6toM1ECJU1yrhWX0np2Oo9
+ SBQkeSPdLXe7rjxkRiXDMstZc3OkNwdJuXy/ohn72Kl7dXGnISL67x4GVBso3PwXQ/qp
+ oszvkcWDuneq9HTi5WwRGHj9I5VFoS4Vr5Fhb1hcnh4vEBrsYkwYsyodAbUM/kO2MZmR
+ UA1avU3yP2CBcvLhie5FhQ9GlRfn+SHsDod8tpV6ZHfRiqs11AlzBW1WMODAxsKNCoDf
+ Yljw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710012171; x=1710616971;
+ d=1e100.net; s=20230601; t=1710012315; x=1710617115;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cFjMT6zDVz6FC8tPUCQ4kyyMrqKZ8chKsrslRHOyQyw=;
- b=NTVogR6y4ndzuGkYgAYEnexqYif2OOf5IHr9Ud0L12ivuUQ4lNc1jOtuA17uz2thbU
- PV0FJhM7/lY0zdt1iYG3WH8aaEGTj2GRMVVdEfswzmxg8SSL2hErWpryywUFuO3uVBxx
- u+wY6jcC0/C06rJ9DKrIWF0Bp7YzMATvJb+V9DX6SsOKTL5K08b7HbhEyMFanAtSNFS9
- BZZ3gzJ95eqABYQznTEW+GZp7/wRrDaOKZ0Ymu6UC76UlOzJx+jatJzSGRU8+aVNeo0F
- Bb60IZRUHB6C1G1kHiiyNrUR7qVAQx54kNmW0vNJYhk8q8NpN1sr6ZRfQoOrAOumbVXW
- QLUw==
-X-Gm-Message-State: AOJu0Yy4ylKiidZbEu73WzTwZYkn+RjeJ85omesmHraPitUrvflIhwX6
- ZK2o03EcZyb3fg8MJ+KwJQ5GBpqXmNX6QGIzZrX2nfpKh7NrUUr8jGn+rKNYFfE6pocUqwQSAed
- s
-X-Google-Smtp-Source: AGHT+IEOGwIBYdP/mzwuHWgPMjU0SlF6nHZcYJJa0Wt9irOScU0CVSd5Ssk82Pi/m/B9Cv/46kpyew==
-X-Received: by 2002:a50:934a:0:b0:568:1882:651f with SMTP id
- n10-20020a50934a000000b005681882651fmr1774495eda.25.1710012170814; 
- Sat, 09 Mar 2024 11:22:50 -0800 (PST)
+ bh=XGUSMcXRtP0nqAsvDloxBVg/GDCFuWNCjxC0TZD6IEQ=;
+ b=Uozv3eMf1pKfDbAAWF28qWe7EFYSBy3KOZZffFoQ0VMLNv6zKBGXHmt+B/GdrCHpd3
+ LfZyUW9GryoN4lVeFY9E7p9FMbeAekfcZbp7MaqY0ozQpLq9wmj9YaGqlWj1vo5+4RB1
+ a8g9H/9wTMm9JXKVqzrtL4i1/5oK89mq3HDwx5o0q5VEgK+VyWhJPqOqcI/ceiUKdemW
+ wGsL/OqlHhmmvLAbsICzCFhC20R5TQGe1oV0S2dHtA0oMWqZANAOlLQfr+4F8TTv3C1E
+ UyzmSE5fURygisiA22lzc1/+/wrr6RWyubfcElpjbv+yU+QP/bQQqSJCeQjPDVGR89hf
+ Yn9Q==
+X-Gm-Message-State: AOJu0YygUe1uIc7MlecbjbEhTmYE5uZH9P1n3Fq3zwuVvKzewe+0BS4l
+ 5mJPPb9kIcViJVJeTyo914iByp7cGZ+gGH052tLJBiHp+koDACunkOylBrvOzw4L1KYXUeTgkH0
+ z
+X-Google-Smtp-Source: AGHT+IEmK9UTnYDyWWDsJcs7b0d4OIlrfGDbTA9RfFxf5J0o4Iae+IN++bySO9CuxqRiaN6pq2r2Vg==
+X-Received: by 2002:a2e:9984:0:b0:2d2:71cc:253d with SMTP id
+ w4-20020a2e9984000000b002d271cc253dmr1466595lji.25.1710012315435; 
+ Sat, 09 Mar 2024 11:25:15 -0800 (PST)
 Received: from m1x-phil.lan ([176.176.181.237])
  by smtp.gmail.com with ESMTPSA id
- y18-20020a056402359200b005648d0eebdbsm1141497edc.96.2024.03.09.11.22.49
+ w10-20020a056402128a00b005657eefa8e9sm1154766edv.4.2024.03.09.11.25.13
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 09 Mar 2024 11:22:50 -0800 (PST)
+ Sat, 09 Mar 2024 11:25:15 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
+Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ Thomas Huth <thuth@redhat.com>, Prasad Pandit <pjp@fedoraproject.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- David Woodhouse <dwmw@amazon.co.uk>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
- Paolo Bonzini <pbonzini@redhat.com>, xen-devel@lists.xenproject.org
-Subject: [PULL 06/43] hw/xen: Remove unnecessary xen_hvm_inject_msi() stub
-Date: Sat,  9 Mar 2024 20:21:33 +0100
-Message-ID: <20240309192213.23420-7-philmd@linaro.org>
+ devel@lists.libvirt.org, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>
+Subject: [PULL 30/43] hw/core/machine-smp: Remove deprecated "parameter=0" SMP
+ configurations
+Date: Sat,  9 Mar 2024 20:21:57 +0100
+Message-ID: <20240309192213.23420-31-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240309192213.23420-1-philmd@linaro.org>
 References: <20240309192213.23420-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x536.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::229;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x229.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,31 +99,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 04b0de0ee8 ("xen: factor out common functions")
-xen_hvm_inject_msi() stub is not required.
+From: Zhao Liu <zhao1.liu@intel.com>
 
+The "parameter=0" SMP configurations have been marked as deprecated
+since v6.2.
+
+For these cases, -smp currently returns the warning and adjusts the
+zeroed parameters to 1 by default.
+
+Remove the above compatibility logic in v9.0, and return error directly
+if any -smp parameter is set as 0.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
+Message-ID: <20240308160148.3130837-2-zhao1.liu@linux.intel.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: David Woodhouse <dwmw@amazon.co.uk>
-Message-Id: <20231114143816.71079-8-philmd@linaro.org>
 ---
- stubs/xen-hw-stub.c | 4 ----
- 1 file changed, 4 deletions(-)
+ docs/about/deprecated.rst       | 16 ----------------
+ docs/about/removed-features.rst | 15 +++++++++++++++
+ hw/core/machine-smp.c           |  5 +++--
+ 3 files changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/stubs/xen-hw-stub.c b/stubs/xen-hw-stub.c
-index 7d7ffe83a9..6cf0e9a4c1 100644
---- a/stubs/xen-hw-stub.c
-+++ b/stubs/xen-hw-stub.c
-@@ -24,10 +24,6 @@ int xen_set_pci_link_route(uint8_t link, uint8_t irq)
-     return -1;
- }
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 8565644da6..6e2f557682 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -36,22 +36,6 @@ and will cause a warning.
+ The replacement for the ``nodelay`` short-form boolean option is ``nodelay=on``
+ rather than ``delay=off``.
  
--void xen_hvm_inject_msi(uint64_t addr, uint32_t data)
--{
--}
+-``-smp`` ("parameter=0" SMP configurations) (since 6.2)
+-'''''''''''''''''''''''''''''''''''''''''''''''''''''''
 -
- int xen_is_pirq_msi(uint32_t msi_data)
- {
-     return 0;
+-Specified CPU topology parameters must be greater than zero.
+-
+-In the SMP configuration, users should either provide a CPU topology
+-parameter with a reasonable value (greater than zero) or just omit it
+-and QEMU will compute the missing value.
+-
+-However, historically it was implicitly allowed for users to provide
+-a parameter with zero value, which is meaningless and could also possibly
+-cause unexpected results in the -smp parsing. So support for this kind of
+-configurations (e.g. -smp 8,sockets=0) is deprecated since 6.2 and will
+-be removed in the near future, users have to ensure that all the topology
+-members described with -smp are greater than zero.
+-
+ Plugin argument passing through ``arg=<string>`` (since 6.1)
+ ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index 417a0e4fa1..f9cf874f7b 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -489,6 +489,21 @@ The ``-singlestep`` option has been turned into an accelerator property,
+ and given a name that better reflects what it actually does.
+ Use ``-accel tcg,one-insn-per-tb=on`` instead.
+ 
++``-smp`` ("parameter=0" SMP configurations) (removed in 9.0)
++''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++
++Specified CPU topology parameters must be greater than zero.
++
++In the SMP configuration, users should either provide a CPU topology
++parameter with a reasonable value (greater than zero) or just omit it
++and QEMU will compute the missing value.
++
++However, historically it was implicitly allowed for users to provide
++a parameter with zero value, which is meaningless and could also possibly
++cause unexpected results in the -smp parsing. So support for this kind of
++configurations (e.g. -smp 8,sockets=0) is removed since 9.0, users have
++to ensure that all the topology members described with -smp are greater
++than zero.
+ 
+ User-mode emulator command line arguments
+ -----------------------------------------
+diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
+index 25019c91ee..96533886b1 100644
+--- a/hw/core/machine-smp.c
++++ b/hw/core/machine-smp.c
+@@ -105,8 +105,9 @@ void machine_parse_smp_config(MachineState *ms,
+         (config->has_cores && config->cores == 0) ||
+         (config->has_threads && config->threads == 0) ||
+         (config->has_maxcpus && config->maxcpus == 0)) {
+-        warn_report("Deprecated CPU topology (considered invalid): "
+-                    "CPU topology parameters must be greater than zero");
++        error_setg(errp, "Invalid CPU topology: "
++                   "CPU topology parameters must be greater than zero");
++        return;
+     }
+ 
+     /*
 -- 
 2.41.0
 
