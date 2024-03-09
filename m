@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ED16C54791
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0ADEC54E60
 	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 20:12:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rj32M-0006SC-2p; Sat, 09 Mar 2024 15:11:18 -0500
+	id 1rj32a-0006TY-SF; Sat, 09 Mar 2024 15:11:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rj32K-0006Rh-Ap
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 15:11:16 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1rj32Y-0006T4-LA
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 15:11:30 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rj32I-00020H-9t
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 15:11:16 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5682360e095so2949335a12.1
- for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 12:11:13 -0800 (PST)
+ id 1rj32X-00021U-1k
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 15:11:30 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-5684db9147dso134368a12.2
+ for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 12:11:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710015072; x=1710619872; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710015087; x=1710619887; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=qVlU4OMX+YaJ+7hrZpRAdZX3eg6PYc7U8L42CwKIv+4=;
- b=upklr5tUESL24XvowthK4k5pNHvQW5HbDtTvV/1Ay3/37+QJtIhQZmE4a0ZdFjB8AG
- fs/BwZ6SSCk77SJfpnvsm9cK3FUqvAdHxllYJCae3mXELcHc+TlAUG/ttx4zZ2Kx4u5Z
- VAeRxOhaoLRM9BdcicieccGzPy+RaPsJLs2EdQyArkKXxoxgFUYgV9Bm1tvrxuApbuQ1
- fRilRzyrmLKNVeMGHe5Dp0xUUOqNCmBa623bifZVdf6vuyqmLdvU5z7FR11yN1s7Y3U1
- CFdPw0+uz05pIdY9sEpLftJwChLmXI68Up4thtoyuWFDLxSLaqIzlD4HWBEqYR1muCVk
- 0Xbw==
+ bh=EX6MwxbpLOjlLYTjPU+oc0L2AGUTJwSiha1n1nEX3Cw=;
+ b=ok/DguVgJzWmfj/OlY5jJLo77RBNRQ/g18QG3x7RLg17I+w8ny8rb4tfTNDd9YG/TK
+ jdrmhEr57axSYmLxdVcUjCWQmI47AJnHLGuusOgaja6US0szrNraXG66GM0pavnYeaRu
+ Ygweedt54r4JFe6aaQeRF33SFaRoIvTpVwf6RpF/WJHHyDm55HqJzmllnH5l2BqmtqFi
+ PERHEJWBfYR/uBKBnTYUQJLn5L25IANEgQO3l6OPmUvmP+CVzZaAtcL+zPS0+xDrW5hB
+ hsy+S5Tv2XSQEV0yob8QCb09MPAgbo3z0wHk6svsm1yxh9N5JLEd+I6LyaOVm8b0UC90
+ UYtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710015072; x=1710619872;
+ d=1e100.net; s=20230601; t=1710015087; x=1710619887;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=qVlU4OMX+YaJ+7hrZpRAdZX3eg6PYc7U8L42CwKIv+4=;
- b=GOlgjd1sG3t2QNIgS539TS6yNbuq9lX/UV/0QeQBcuOi6omoD6IrDNZv1haeMgrjHE
- Tk8kg5K8y1JlkfKEzKAMhwqtceSihaxHfyRBYAh1poSybvSb763KTKnexugZljrL+dI3
- m5IVEk8bGbaHKVuTDg0grUnlncC0u1sefdpLZoKYisKUL0Acg1ZknffJ6sjShIrSh5sZ
- R0cVS8Osf1C8hhpMcOFlctPIq+OjjQQQaRjSvFvAO95LR2Bt5dYBCnq9/7FyB1cFHZD+
- erRgUobI+DYKH8QYKS+PQqwLDgaKkiP5d1Az7smLV2CzM/MRWo4n3AhRuK3SxhYSFk0w
- 0oTQ==
-X-Gm-Message-State: AOJu0Ywu7Iaym4GaRclFNiQf1nSWOEg6TYijBUauTwbLusICDXjnBdgo
- KbWtJFTyXZy84NXHKovhS33esClX1OGTej6lywz1ZOpNw55EyUzyf6TZiHHU2BeYCt6T2ys1NkH
- 0y6qZ4yeHgqmkclHCwasqdhtxC+FC7C6ikxCM6w==
-X-Google-Smtp-Source: AGHT+IHI4uGRT+6IYZQSvTC+Qdb4AHCq6ul6QAiaVNTEMAJ0stpQ/DR7Yx7HEqCzALb40uKoKvHLv+rZX50k8+x5Ry0=
-X-Received: by 2002:a50:cc0c:0:b0:568:2578:f50c with SMTP id
- m12-20020a50cc0c000000b005682578f50cmr1816061edi.36.1710015072073; Sat, 09
- Mar 2024 12:11:12 -0800 (PST)
+ bh=EX6MwxbpLOjlLYTjPU+oc0L2AGUTJwSiha1n1nEX3Cw=;
+ b=RYVpcdi4M6F3QsdFZVYPAv4O89VkwsbvTIrvy/GZXAQl3pyxpQTGtYZxz0FAeGrIr2
+ 0cjgccPdmq5u8+AIcBG3Q4Hjbvfb8lpOTqCs4IgzSEfj+AlO2TvzjJDZzVJIuQBW5bg6
+ Nltfxff1wy7HHIidgvCfT9lEyLwbdoh7XkxZwvCY5ZeK8unBUH2rTXJEZv1X18/vhtIs
+ TDqSPFQZNVRm5UuUgAYVBsKf/eoR5hSjsjpZhpzAtx0LPlgSIgMdP4clUWvlR3CebwK9
+ i2YXVtNKj4f9ilG14YrfsX43VqR6m/l7atBDxfdUmWTHhY2+b4qgpuLJw9XBLJQLsaFa
+ +CjA==
+X-Gm-Message-State: AOJu0YxOP/uGmzpcskNFXyWzAirab8I2A9LvgpCOzSh9IZlEPPsZVers
+ MOU+9Q/TqZiZ9wBpMg36LeM08WOj702S7hpkscxAJ4kH1Vp7fImmqlBB14A0J1L4++6/I1X7snD
+ oKr2x3OCY6x+0BCTHULx/FUSKDb4fyFzFJxzZutIgrCePgetC
+X-Google-Smtp-Source: AGHT+IEW+RjwfjJZE9X5pW3xalrlltu4W+vu9RyIMC/Ww6Y+ZqHFYhqv+XzHimAU+ysgjbVoMoJeXBzy4f4FA0OazWc=
+X-Received: by 2002:a05:6402:5c3:b0:565:b934:3301 with SMTP id
+ n3-20020a05640205c300b00565b9343301mr1595825edx.16.1710015087412; Sat, 09 Mar
+ 2024 12:11:27 -0800 (PST)
 MIME-Version: 1.0
-References: <20240308181202.617329-1-pbonzini@redhat.com>
-In-Reply-To: <20240308181202.617329-1-pbonzini@redhat.com>
+References: <cover.1709916836.git.maciej.szmigiero@oracle.com>
+In-Reply-To: <cover.1709916836.git.maciej.szmigiero@oracle.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 9 Mar 2024 20:11:00 +0000
-Message-ID: <CAFEAcA87jdkm+HdxJfFstrZMcsvFnPORR=yiBaW=i_wRiW6jEQ@mail.gmail.com>
-Subject: Re: [PULL v2 0/9] Misc fixes and coverity CI for 2024-03-08
-To: Paolo Bonzini <pbonzini@redhat.com>
+Date: Sat, 9 Mar 2024 20:11:16 +0000
+Message-ID: <CAFEAcA8kd6SRfq8381YyFbytGEq19kKkr4aDjTyO6z72CD0Xjg@mail.gmail.com>
+Subject: Re: [PULL 0/3] Hyper-V Dynamic Memory and VMBus misc small patches
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,7 +87,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 8 Mar 2024 at 18:13, Paolo Bonzini <pbonzini@redhat.com> wrote:
+On Fri, 8 Mar 2024 at 17:03, Maciej S. Szmigiero
+<mail@maciej.szmigiero.name> wrote:
+>
+> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >
 > The following changes since commit 8f6330a807f2642dc2a3cdf33347aa28a4c00a87:
 >
@@ -95,18 +98,31 @@ On Fri, 8 Mar 2024 at 18:13, Paolo Bonzini <pbonzini@redhat.com> wrote:
 >
 > are available in the Git repository at:
 >
->   https://gitlab.com/bonzini/qemu.git tags/for-upstream
+>   https://github.com/maciejsszmigiero/qemu.git tags/pull-hv-balloon-20240308
 >
-> for you to fetch changes up to 83aa1baa069c8f77aa9f7d9adfdeb11d90bdf78d:
+> for you to fetch changes up to 6093637b4d32875f98cd59696ffc5f26884aa0b4:
 >
->   gitlab-ci: add manual job to run Coverity (2024-03-08 19:08:23 +0100)
+>   vmbus: Print a warning when enabled without the recommended set of features (2024-03-08 14:18:56 +0100)
 >
-> Supersedes: <20240308145554.599614-1-pbonzini@redhat.com>
 > ----------------------------------------------------------------
-> * target/i386: use TSTEQ/TSTNE
-> * move Coverity builds to Gitlab CI
-> * fix two memory leaks
-> * bug fixes
+> Hyper-V Dynamic Memory and VMBus misc small patches
+>
+> This pull request contains two small patches to hv-balloon:
+> the first one replacing alloca() usage with g_malloc0() + g_autofree
+> and the second one adding additional declaration of a protocol message
+> struct with an optional field explicitly defined to avoid a Coverity
+> warning.
+>
+> Also included is a VMBus patch to print a warning when it is enabled
+> without the recommended set of Hyper-V features (enlightenments) since
+> some Windows versions crash at boot in this case.
+>
+> ----------------------------------------------------------------
+> Maciej S. Szmigiero (3):
+>       hv-balloon: avoid alloca() usage
+>       hv-balloon: define dm_hot_add_with_region to avoid Coverity warning
+>       vmbus: Print a warning when enabled without the recommended set of features
+>
 
 
 Applied, thanks.
