@@ -4,41 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1243C54798
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 15:59:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5279C54798
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 15:59:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riz5G-0007Mr-FT; Sat, 09 Mar 2024 10:58:03 -0500
+	id 1riz5G-0007Mp-Du; Sat, 09 Mar 2024 10:58:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1riz55-0007H0-TY; Sat, 09 Mar 2024 10:57:51 -0500
+ id 1riz5B-0007LT-Qy; Sat, 09 Mar 2024 10:57:57 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1riz54-0004HT-6c; Sat, 09 Mar 2024 10:57:51 -0500
+ id 1riz59-0004IL-3p; Sat, 09 Mar 2024 10:57:56 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D52065452A;
- Sat,  9 Mar 2024 18:58:32 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 53DB35452D;
+ Sat,  9 Mar 2024 18:58:37 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 565A9944BF;
- Sat,  9 Mar 2024 18:57:36 +0300 (MSK)
-Received: (nullmailer pid 1694659 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 8A922944C2;
+ Sat,  9 Mar 2024 18:57:40 +0300 (MSK)
+Received: (nullmailer pid 1694668 invoked by uid 1000);
  Sat, 09 Mar 2024 15:57:29 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-trivial@nongnu.org,
+Cc: Thomas Huth <thuth@redhat.com>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 05/11] char: Slightly better error reporting when chardev is in
- use
-Date: Sat,  9 Mar 2024 18:57:23 +0300
-Message-Id: <20240309155729.1694607-6-mjt@tls.msk.ru>
+Subject: [PULL 08/11] hw/cxl/cxl-cdat: Fix type of buf in ct3_load_cdat()
+Date: Sat,  9 Mar 2024 18:57:26 +0300
+Message-Id: <20240309155729.1694607-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240309155729.1694607-1-mjt@tls.msk.ru>
 References: <20240309155729.1694607-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,71 +61,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Markus Armbruster <armbru@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 
-Both
+When setting GLIB_VERSION_MAX_ALLOWED to GLIB_VERSION_2_58 or higher
+(which we'll certainly do in the not too distant future), glib adds
+type safety checks to the g_steal_pointer() macro. This trigger an
+error in the ct3_load_cdat() function: The local char *buf variable is
+assigned to uint8_t *buf in CDATObject, i.e. a pointer of a different
+type. Change the local variable to the same type as buf in CDATObject
+to avoid the error.
 
-    $ qemu-system-x86_64 -chardev null,id=chr0,mux=on -mon chardev=chr0 -mon chardev=chr0 -mon chardev=chr0 -mon chardev=chr0 -mon chardev=chr0
-
-and
-
-    $ qemu-system-x86_64 -chardev null,id=chr0 -mon chardev=chr0 -mon chardev=chr0
-fail with
-
-    qemu-system-x86_64: -mon chardev=chr0: Device 'chr0' is in use
-
-Improve to
-
-    qemu-system-x86_64: -mon chardev=chr0: too many uses of multiplexed chardev 'chr0' (maximum is 4)
-
-and
-
-    qemu-system-x86_64: -mon chardev=chr0: chardev 'chr0' is already in use
-
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- chardev/char-fe.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ hw/cxl/cxl-cdat.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/chardev/char-fe.c b/chardev/char-fe.c
-index 20222a4cad..66cee8475a 100644
---- a/chardev/char-fe.c
-+++ b/chardev/char-fe.c
-@@ -199,13 +199,18 @@ bool qemu_chr_fe_init(CharBackend *b, Chardev *s, Error **errp)
-             MuxChardev *d = MUX_CHARDEV(s);
+diff --git a/hw/cxl/cxl-cdat.c b/hw/cxl/cxl-cdat.c
+index 2fea975671..551545f782 100644
+--- a/hw/cxl/cxl-cdat.c
++++ b/hw/cxl/cxl-cdat.c
+@@ -114,7 +114,7 @@ static void ct3_build_cdat(CDATObject *cdat, Error **errp)
+ static void ct3_load_cdat(CDATObject *cdat, Error **errp)
+ {
+     g_autofree CDATEntry *cdat_st = NULL;
+-    g_autofree char *buf = NULL;
++    g_autofree uint8_t *buf = NULL;
+     uint8_t sum = 0;
+     int num_ent;
+     int i = 0, ent = 1;
+@@ -171,7 +171,7 @@ static void ct3_load_cdat(CDATObject *cdat, Error **errp)
+         cdat_st[ent].base = hdr;
+         cdat_st[ent].length = hdr->length;
  
-             if (d->mux_cnt >= MAX_MUX) {
--                goto unavailable;
-+                error_setg(errp,
-+                           "too many uses of multiplexed chardev '%s'"
-+                           " (maximum is " stringify(MAX_MUX) ")",
-+                           s->label);
-+                return false;
-             }
- 
-             d->backends[d->mux_cnt] = b;
-             tag = d->mux_cnt++;
-         } else if (s->be) {
--            goto unavailable;
-+            error_setg(errp, "chardev '%s' is already in use", s->label);
-+            return false;
-         } else {
-             s->be = b;
+-        while (buf + i < (char *)cdat_st[ent].base + cdat_st[ent].length) {
++        while (buf + i < (uint8_t *)cdat_st[ent].base + cdat_st[ent].length) {
+             assert(i < file_size);
+             sum += buf[i++];
          }
-@@ -215,10 +220,6 @@ bool qemu_chr_fe_init(CharBackend *b, Chardev *s, Error **errp)
-     b->tag = tag;
-     b->chr = s;
-     return true;
--
--unavailable:
--    error_setg(errp, QERR_DEVICE_IN_USE, s->label);
--    return false;
- }
- 
- void qemu_chr_fe_deinit(CharBackend *b, bool del)
 -- 
 2.39.2
 
