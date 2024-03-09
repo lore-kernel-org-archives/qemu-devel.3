@@ -4,89 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 832A6C54E41
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 13:56:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C65C6C54798
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 14:03:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rixBT-0003Mr-WD; Sat, 09 Mar 2024 08:56:20 -0500
+	id 1rixHj-00058W-6L; Sat, 09 Mar 2024 09:02:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rixBR-0003M7-HH
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 08:56:17 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rixHf-000565-Pz
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 09:02:44 -0500
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rixBP-0007UN-C6
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 08:56:17 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-41312c3ab40so13026065e9.3
- for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 05:56:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rixHe-0000iC-5k
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 09:02:43 -0500
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a446b5a08f0so527149466b.1
+ for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 06:02:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709992562; x=1710597362; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709992960; x=1710597760; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=j/HsoclK8oFQ4qi18yZzZcW2qu6FHeVgS9jILiPGy6w=;
- b=aBUthxm+GtpfGhBsBx589lYjXY8KzNlrdqUWfhnb2GPkHEDv28fHgFLWfUU67OutlG
- i4oOKYE9pUz0QA+lr/hj1pHDVxCPhonsneCUZ47kTE+BWpUjOVtx3YPozTXAoPdGKLta
- fPpwz9isZ2O6fbQjgpVXfP/54+bfc1uI+Y04J+glz4Gt06XZnS170yQs4Ui40+s2dtFb
- pr/ON5LfkZC4goqFH4gE08gRaOORdQSb9+1NUoOEYb8noLTmQEZLwse3tkWqGbqO1EoG
- yEd++w/xuSrX/IcCzhrykOKEpshjbxJX55Teq26NgkZfnyWzH/mrsjUact2wZjUX5iMT
- uy9A==
+ bh=HFT41bzVddHh6m4SBiS1v96R9WkJJN66wTsfxFXFbx4=;
+ b=LtdDUqES/y/Do8smOJkkMSHDmmoJUxIB/bQmXh6By+evtO84Np2gk0SZazmB66i0vH
+ cDgAKxFR0kDQb0AseiibtfvL/YCJVLHjcTkdVxmQ+U7gNr2HCmoMzw8CdU7r0xk3xR8X
+ 8l+Ed90470P9iq7D4M1IIf/yuwT82Uw509gFio0Xoa45pI0jNM73I7HrMv+OrJYNiION
+ 7fbL9KAYDnzNIXr6GMiph8SshupYkjo8u8aNFQ+6kUMHMm2IR5LqFHLAHNuqOCFfkbt/
+ MTjdR8CZ64976UmlwkkTvnG6r8hOnJNkhxKcWVEToZSRD0mcsK22niCXgqc2S4W//vZ0
+ ikmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709992562; x=1710597362;
+ d=1e100.net; s=20230601; t=1709992960; x=1710597760;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=j/HsoclK8oFQ4qi18yZzZcW2qu6FHeVgS9jILiPGy6w=;
- b=cDN0vDBBBg/vwPj6DJ1vLC7JxeoT7SDROy3vp38T8CjdZB7uIpk2VHMJaYwIqv8AZm
- +/XIW+mrEywueN11iGDmk6s22npzix1AfVQUTEXII7FYz9Nb+Y3/5s+FtYxX5EH4nL7K
- IXs8uBj0F2CdjT6MpJ2o6TCusuV448VLvEQe/1MqxPF3Yg7aiYa6Y504737anXM7nHGM
- VX2jBQjGB44AwWSsG3LwxHD/YxSf7vPCQUG64J4nVsoA24UIcRQ4NaIMwrX0MZn/V1v/
- VE1f9CO6Rzwsjcd45mkgT76oLPbh5ZNg71+aO/QXn3auLSu4uRdpj3PQLboEI1aXsdfX
- rT3A==
+ bh=HFT41bzVddHh6m4SBiS1v96R9WkJJN66wTsfxFXFbx4=;
+ b=ljt38+EoV+QQbWE9Sl9yUShAVFpHHZT//TggOCTTF4ZBzrds0/vGGQ13HsWyEZ6AJk
+ YyVy/Lhq4+V8bXGwW67vKTio+ZlrtztAixP38tw2gIHr7GWzxabY5tLBxOLKJ420c6NO
+ Xz51l3cfIhrexw8uJlC+ju7ETyoztbvvmxz7qrPEQ0Cg13Us8tFv2rEN0kWtLVOpYPy5
+ Mnf+w/RcCnNWnR58HU1lpBoQRxZWmLLe99/84pizmh+u/w7WfLhx7VYgSBZpynpeX1V8
+ lVxKlyPq1eXB7w/OlVhEJArTNYFGa+phNgxRuGt9c6LjwhstiJYF0i8kkKEdvq+QekXg
+ P4Tg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVg4wbUNQkpgUF0UIUT8FGEOr3nKK8rpEAn+c+K2xFiIW2++UiL2tFpcQIH0z3vLfvmrdIglp3h2LgyWfPZmlj/BlGJLtk=
-X-Gm-Message-State: AOJu0YzBXmaxcJMTfVre73VFviY6TIURCEjXAtqcbEKGbDUTDwO1IweA
- kU8Ds+JIux05An+DqojzXA/IE3dLi6b1DZcJgdj2bQZq9G2xfC+TWNO/CnnLkMez5ix9mIyxlN9
- K
-X-Google-Smtp-Source: AGHT+IHKLUNBAr4YLdH9TGDIUQwct/XsTIrbBBU17nMuxSw56x0i+whSOUvjDh/dd6RFzwAxA4ZfQQ==
-X-Received: by 2002:a05:600c:548e:b0:412:ed9b:621c with SMTP id
- iv14-20020a05600c548e00b00412ed9b621cmr1460363wmb.24.1709992562128; 
- Sat, 09 Mar 2024 05:56:02 -0800 (PST)
+ AJvYcCU0y03NpPKD1BnH+CjVUcA5vFs/lIwrWpCPlsX+VgCpBKUlh4LYZp5/nNaaxclTdpOqr61G54ZfAV8TWBBMGIdoK9pcm14=
+X-Gm-Message-State: AOJu0YwqUwM17eoCZC1jOpxUyFVbsPH0AqPju0gEkkNuz1Gq0QoQ8Fpx
+ qeoROelt2SoPfMpd9W260ay0YN/d2nDKDTYM4iipBVlNGxFNO5395FcMgB/c0X8=
+X-Google-Smtp-Source: AGHT+IFM+tnucGIKWaic7nwT3kscGnHBMo/O6qFkK7YaHMTXn9IHzTEOwLVhwYSVXGOw+PapqgdNUA==
+X-Received: by 2002:a17:906:3ad3:b0:a45:a2cc:eb93 with SMTP id
+ z19-20020a1709063ad300b00a45a2cceb93mr1349135ejd.4.1709992959751; 
+ Sat, 09 Mar 2024 06:02:39 -0800 (PST)
 Received: from [192.168.69.100] ([176.176.181.237])
  by smtp.gmail.com with ESMTPSA id
- fc19-20020a05600c525300b0041312855081sm2643627wmb.5.2024.03.09.05.55.59
+ k20-20020a17090627d400b00a453b2261b4sm916295ejc.184.2024.03.09.06.02.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 09 Mar 2024 05:56:01 -0800 (PST)
-Message-ID: <d58b22bb-43b4-42aa-8ed2-1975beb1f31c@linaro.org>
-Date: Sat, 9 Mar 2024 14:55:57 +0100
+ Sat, 09 Mar 2024 06:02:39 -0800 (PST)
+Message-ID: <75c0c7b7-a229-4c71-bdff-229bc8e54b24@linaro.org>
+Date: Sat, 9 Mar 2024 15:02:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 00/21] Introduce smp.modules for x86 in QEMU
+Subject: Re: [PATCH 2/2] hw/pci-host/pam: Remove northbridge-specific
+ PAM_REGIONS_COUNT
 Content-Language: en-US
-To: Zhao Liu <zhao1.liu@linux.intel.com>
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
- qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Zhuocheng Ding <zhuocheng.ding@intel.com>, Babu Moger <babu.moger@amd.com>,
- Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-References: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
- <17444096-9602-43e1-9042-2a7ce02b5e79@linaro.org>
- <ZeuyN8Eacq1Twsvg@intel.com>
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20240309134056.1605-1-shentey@gmail.com>
+ <20240309134056.1605-3-shentey@gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ZeuyN8Eacq1Twsvg@intel.com>
+In-Reply-To: <20240309134056.1605-3-shentey@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,34 +98,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhao,
-
-On 9/3/24 01:49, Zhao Liu wrote:
-> On Fri, Mar 08, 2024 at 05:36:38PM +0100, Philippe Mathieu-Daudé wrote:
->> Date: Fri, 8 Mar 2024 17:36:38 +0100
->> From: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Subject: Re: [PATCH v9 00/21] Introduce smp.modules for x86 in QEMU
->>
->> On 27/2/24 11:32, Zhao Liu wrote:
->>
->>> ---
->>> Zhao Liu (20):
->>>     hw/core/machine: Introduce the module as a CPU topology level
->>>     hw/core/machine: Support modules in -smp
->>>     hw/core: Introduce module-id as the topology subindex
->>>     hw/core: Support module-id in numa configuration
->>
->> Patches 1-4 queued, thanks!
+On 9/3/24 14:40, Bernhard Beschow wrote:
+> PAM_REGIONS_COUNT being 13 seems to be Intel-specific. There are VIA 82cXX
+> northbridges having only 10, for example. Communicate this by having
+> northbridge-specific constants.
 > 
-> Thanks Philippe!
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> 
+> --
+> 
+> Do we need the constants or can we omit them, given they're just used once?
 
-I dropped this 4 patches in favor of "Cleanup on SMP and its test"
-v2 
-(https://lore.kernel.org/qemu-devel/20240308160148.3130837-1-zhao1.liu@linux.intel.com/)
-which seems more important, to get the "parameter=0" deprecation
-in the next release. (Patch 2 diverged).
+We don't need but prefer, since the definition is self-explicit
+and we don't have to lookup datasheet for magic value.
 
-Regards,
+> ---
+>   include/hw/pci-host/i440fx.h | 4 +++-
+>   include/hw/pci-host/pam.h    | 2 --
+>   include/hw/pci-host/q35.h    | 4 +++-
+>   hw/pci-host/q35.c            | 2 +-
+>   4 files changed, 7 insertions(+), 5 deletions(-)
 
-Phil.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
