@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA170C54791
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 19:32:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE10AC54E60
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 19:33:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rj2JK-0005WU-2Q; Sat, 09 Mar 2024 14:24:46 -0500
+	id 1rj2IQ-0001Rf-KE; Sat, 09 Mar 2024 14:23:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2JI-0005VG-Mn
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:24:44 -0500
-Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2IK-00011k-7G
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:23:47 -0500
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2JG-0002wM-47
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:24:44 -0500
-Received: by mail-lf1-x12d.google.com with SMTP id
- 2adb3069b0e04-512f54fc2dbso2841812e87.1
- for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 11:24:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2II-0002dG-7H
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:23:43 -0500
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a3f893ad5f4so242826966b.2
+ for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 11:23:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710012280; x=1710617080; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710012220; x=1710617020; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=D23dj2T324O3GGxalmLgdyenzdMnRbpccgTLg/T9/aw=;
- b=ERIDBqFzmZ17pH8SpnAgGNi8hOYLx4icONDj6FjNkH8a9Lu86H+sb5p714/R3MmdMI
- tTUH/MCx004PSNJ3wsEPn89NsUoV8J/4Sh/boI3gwrhoBqepIm8kZh55/bJ+WzXUB3ra
- kAR0/XJCG7N+4vOUVvIq4mJ74GmNh7SyGInoY8frLjvAK+SBJloJjBpVhHidlL00fBIJ
- vw4XZkoXdP5AXC4BO4WeMEoOHqeThtvd8nyY6BWlm+IIEsKqm+89HhIXMJTSm9e9cH+a
- Nx0FFYvs1LRIVBZzPsr2nrq+yNk4SHW+/91JRl2ldY56z3sY6pVa+6QRc8K+mJyY8aeq
- ngzA==
+ bh=nJ7HW/Ft7i83AZTN2mskut6mEUi0nRJo8gD5MOoOvrw=;
+ b=T+m7ZfltFHJ7ycKtMIpk6QC45W396GSVtAi5n+ZrWKY3HMFd7SfOZ/RnwJt3XjBaaf
+ WKhaPGAuZ5nF29FTKUYJY+SJ4KZTfFkJMK09bDKIoGU1M5mMF7iO4fENHPgh8nqAEPDd
+ jgEor89q0C8t3Hk+tv5Dh04wkaH8Jl/EMcRbWPyxJwwp8rHdb/JYGQyGMDp+jh7+NE9Z
+ mO4CqXzfVhctMh/K4E5rruDz7+qpOlsZlpqOkoZ34utMrHxIrxrd7Lct5ueBZLZ4ZwEJ
+ 2eRBPKf1RAuEq+gqpE8gqiTQN6jUN1mYsYNBQuEFXopATGtCosLECW6cwEZMJZgktHzM
+ 9qTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710012280; x=1710617080;
+ d=1e100.net; s=20230601; t=1710012220; x=1710617020;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=D23dj2T324O3GGxalmLgdyenzdMnRbpccgTLg/T9/aw=;
- b=ntDEez+tGl/7z4ft651jjySZary/rgeuo5oOR/7zPKu9ol1WR+IIirkRNBH/+ZNF/v
- X0zkTD5dU4eTiwvDJoJjJEnMpKsBraLPAtZtfEUYwDvJsNOw2UM/Ag2SZCnIjg1AaOHp
- 4ZEB2tgwzxoakpqLSSNHblDdTVOFYKpDO88PmJGaJLbX+fxV+vxHwjFQ7r2ySMO6E04s
- yXwho4Te/nMq1DVQ/LOIeCPkEi4ZEKrn7yf/pqdd72RjdtD8AiceNJDkg9x5VpePTAkj
- lX4FwlMppS76l7rx0gs2h7mI41dJb/SZ75pqE2f+0x5UfSospROZZRN8gLtL+b7TFONx
- 0vhA==
-X-Gm-Message-State: AOJu0YyqL5b6+tKO1AcFoSvpwopsaJaaHwclmC2nIm4F97pLv7eh0fBK
- ozCyGuHQXAOi53mK5q3iSlW991xDvor4kX4nBLrDdAI/joHCj5iOcZFwBgjboFsq8vGerfCyHZR
- +
-X-Google-Smtp-Source: AGHT+IFA50J8VdobEnvhTgONujOFAQqMGumZmVsqPZm2tigiFmqnxLyrWPJ3fo4dD/omaGVJjcrkYQ==
-X-Received: by 2002:a05:6512:a96:b0:513:1cc7:ae4b with SMTP id
- m22-20020a0565120a9600b005131cc7ae4bmr2003705lfu.4.1710012280216; 
- Sat, 09 Mar 2024 11:24:40 -0800 (PST)
+ bh=nJ7HW/Ft7i83AZTN2mskut6mEUi0nRJo8gD5MOoOvrw=;
+ b=abBcZnBSui1e2fUfGBd2/is/UtDpE0db236ZqYNo+paqTR1HZB7uMFCi8u37se6u+W
+ iDS9vKAIh4H5L06dG0bMu8undH7CWAVRtl6rmbFzFhlwrm0VwugSwlnjVAC2l8hIkANd
+ YJoOesQ+dBEtbYX9qgDD1H4l0U7L4r2ouQ+kBGXdalj23A32yIM0Cnt0+rjthrDYXUIx
+ z4O5eWVhq6PKWu97Fzi0wgmjfrECejQ2rP7gknXQGEt0mulBEbJMmEo1rj6HMEuM9dcr
+ RZZiYY1zgtlIHERWEG5ojke+oY8Wd5GA2BNwvJnqvfPSAv2PPt1x8ctQLGyw4IESp0i+
+ eCdA==
+X-Gm-Message-State: AOJu0YxgG3v6mcszX379ONs4JeWq9OJJkTlSXlErnFGUcV1uBxA+fVwZ
+ /qkIONvxon+GCIvM/txa9jimnqXatQEOEjuw9oJMH4Q8efzNfED6xypbKByv+YuiYVhbp49rCvu
+ h
+X-Google-Smtp-Source: AGHT+IGJ8dRKKvAEJydBIDk5EIHimW4WL5gyfDXoimVbXutg1h6Ab0DpFGsPNz89nrlp7nNRGTQq2A==
+X-Received: by 2002:a17:907:96ab:b0:a44:17da:424 with SMTP id
+ hd43-20020a17090796ab00b00a4417da0424mr1554598ejc.56.1710012220525; 
+ Sat, 09 Mar 2024 11:23:40 -0800 (PST)
 Received: from m1x-phil.lan ([176.176.181.237])
  by smtp.gmail.com with ESMTPSA id
- rn16-20020a170906d93000b00a441a7a75b5sm1174678ejb.209.2024.03.09.11.24.38
+ k9-20020a1709063e0900b00a45a73e0be9sm1167156eji.180.2024.03.09.11.23.38
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 09 Mar 2024 11:24:39 -0800 (PST)
+ Sat, 09 Mar 2024 11:23:40 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
- Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 24/43] qdev: Add a granule_mode property
-Date: Sat,  9 Mar 2024 20:21:51 +0100
-Message-ID: <20240309192213.23420-25-philmd@linaro.org>
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ xen-devel@lists.xenproject.org
+Subject: [PULL 14/43] hw/xen/hvm: Get target page size at runtime
+Date: Sat,  9 Mar 2024 20:21:41 +0100
+Message-ID: <20240309192213.23420-15-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240309192213.23420-1-philmd@linaro.org>
 References: <20240309192213.23420-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,98 +103,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+In order to build this file once for all targets, replace:
 
-Introduce a new enum type property allowing to set an
-IOMMU granule. Values are 4k, 8k, 16k, 64k and host.
-This latter indicates the vIOMMU granule will match
-the host page size.
+  TARGET_PAGE_BITS -> qemu_target_page_bits()
+  TARGET_PAGE_SIZE -> qemu_target_page_size()
+  TARGET_PAGE_MASK -> -qemu_target_page_size()
 
-A subsequent patch will add such a property to the
-virtio-iommu device.
-
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240227165730.14099-2-eric.auger@redhat.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-Id: <20231114163123.74888-4-philmd@linaro.org>
 ---
- qapi/virtio.json                    | 18 ++++++++++++++++++
- include/hw/qdev-properties-system.h |  3 +++
- hw/core/qdev-properties-system.c    | 14 ++++++++++++++
- 3 files changed, 35 insertions(+)
+ hw/i386/xen/xen-hvm.c | 62 +++++++++++++++++++++++++++----------------
+ 1 file changed, 39 insertions(+), 23 deletions(-)
 
-diff --git a/qapi/virtio.json b/qapi/virtio.json
-index a79013fe89..95745fdfd7 100644
---- a/qapi/virtio.json
-+++ b/qapi/virtio.json
-@@ -957,3 +957,21 @@
+diff --git a/hw/i386/xen/xen-hvm.c b/hw/i386/xen/xen-hvm.c
+index 844b11ae08..7745cb3963 100644
+--- a/hw/i386/xen/xen-hvm.c
++++ b/hw/i386/xen/xen-hvm.c
+@@ -23,6 +23,7 @@
+ #include "hw/xen/xen-hvm-common.h"
+ #include "hw/xen/arch_hvm.h"
+ #include <xen/hvm/e820.h>
++#include "exec/target_page.h"
  
- { 'struct': 'DummyVirtioForceArrays',
-   'data': { 'unused-iothread-vq-mapping': ['IOThreadVirtQueueMapping'] } }
-+
-+##
-+# @GranuleMode:
-+#
-+# @4k: granule page size of 4KiB
-+#
-+# @8k: granule page size of 8KiB
-+#
-+# @16k: granule page size of 16KiB
-+#
-+# @64k: granule page size of 64KiB
-+#
-+# @host: granule matches the host page size
-+#
-+# Since: 9.0
-+##
-+{ 'enum': 'GranuleMode',
-+  'data': [ '4k', '8k', '16k', '64k', 'host' ] }
-diff --git a/include/hw/qdev-properties-system.h b/include/hw/qdev-properties-system.h
-index 06c359c190..626be87dd3 100644
---- a/include/hw/qdev-properties-system.h
-+++ b/include/hw/qdev-properties-system.h
-@@ -8,6 +8,7 @@ extern const PropertyInfo qdev_prop_macaddr;
- extern const PropertyInfo qdev_prop_reserved_region;
- extern const PropertyInfo qdev_prop_multifd_compression;
- extern const PropertyInfo qdev_prop_mig_mode;
-+extern const PropertyInfo qdev_prop_granule_mode;
- extern const PropertyInfo qdev_prop_losttickpolicy;
- extern const PropertyInfo qdev_prop_blockdev_on_error;
- extern const PropertyInfo qdev_prop_bios_chs_trans;
-@@ -47,6 +48,8 @@ extern const PropertyInfo qdev_prop_iothread_vq_mapping_list;
- #define DEFINE_PROP_MIG_MODE(_n, _s, _f, _d) \
-     DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_mig_mode, \
-                        MigMode)
-+#define DEFINE_PROP_GRANULE_MODE(_n, _s, _f, _d) \
-+    DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_granule_mode, GranuleMode)
- #define DEFINE_PROP_LOSTTICKPOLICY(_n, _s, _f, _d) \
-     DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_losttickpolicy, \
-                         LostTickPolicy)
-diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-index 1a396521d5..b45e90edb2 100644
---- a/hw/core/qdev-properties-system.c
-+++ b/hw/core/qdev-properties-system.c
-@@ -679,6 +679,20 @@ const PropertyInfo qdev_prop_mig_mode = {
-     .set_default_value = qdev_propinfo_set_default_value_enum,
- };
+ static MemoryRegion ram_640k, ram_lo, ram_hi;
+ static MemoryRegion *framebuffer;
+@@ -247,6 +248,9 @@ static int xen_add_to_physmap(XenIOState *state,
+                               MemoryRegion *mr,
+                               hwaddr offset_within_region)
+ {
++    unsigned target_page_bits = qemu_target_page_bits();
++    int page_size = qemu_target_page_size();
++    int page_mask = -page_size;
+     unsigned long nr_pages;
+     int rc = 0;
+     XenPhysmap *physmap = NULL;
+@@ -254,7 +258,7 @@ static int xen_add_to_physmap(XenIOState *state,
+     hwaddr phys_offset = memory_region_get_ram_addr(mr);
+     const char *mr_name;
  
-+/* --- GranuleMode --- */
-+
-+QEMU_BUILD_BUG_ON(sizeof(GranuleMode) != sizeof(int));
-+
-+const PropertyInfo qdev_prop_granule_mode = {
-+    .name = "GranuleMode",
-+    .description = "granule_mode values, "
-+                   "4k, 8k, 16k, 64k, host",
-+    .enum_table = &GranuleMode_lookup,
-+    .get = qdev_propinfo_get_enum,
-+    .set = qdev_propinfo_set_enum,
-+    .set_default_value = qdev_propinfo_set_default_value_enum,
-+};
-+
- /* --- Reserved Region --- */
+-    if (get_physmapping(start_addr, size, TARGET_PAGE_MASK)) {
++    if (get_physmapping(start_addr, size, page_mask)) {
+         return 0;
+     }
+     if (size <= 0) {
+@@ -294,9 +298,9 @@ go_physmap:
+         return 0;
+     }
  
- /*
+-    pfn = phys_offset >> TARGET_PAGE_BITS;
+-    start_gpfn = start_addr >> TARGET_PAGE_BITS;
+-    nr_pages = size >> TARGET_PAGE_BITS;
++    pfn = phys_offset >> target_page_bits;
++    start_gpfn = start_addr >> target_page_bits;
++    nr_pages = size >> target_page_bits;
+     rc = xendevicemodel_relocate_memory(xen_dmod, xen_domid, nr_pages, pfn,
+                                         start_gpfn);
+     if (rc) {
+@@ -310,8 +314,8 @@ go_physmap:
+     }
+ 
+     rc = xendevicemodel_pin_memory_cacheattr(xen_dmod, xen_domid,
+-                                   start_addr >> TARGET_PAGE_BITS,
+-                                   (start_addr + size - 1) >> TARGET_PAGE_BITS,
++                                   start_addr >> target_page_bits,
++                                   (start_addr + size - 1) >> target_page_bits,
+                                    XEN_DOMCTL_MEM_CACHEATTR_WB);
+     if (rc) {
+         error_report("pin_memory_cacheattr failed: %s", strerror(errno));
+@@ -323,11 +327,14 @@ static int xen_remove_from_physmap(XenIOState *state,
+                                    hwaddr start_addr,
+                                    ram_addr_t size)
+ {
++    unsigned target_page_bits = qemu_target_page_bits();
++    int page_size = qemu_target_page_size();
++    int page_mask = -page_size;
+     int rc = 0;
+     XenPhysmap *physmap = NULL;
+     hwaddr phys_offset = 0;
+ 
+-    physmap = get_physmapping(start_addr, size, TARGET_PAGE_MASK);
++    physmap = get_physmapping(start_addr, size, page_mask);
+     if (physmap == NULL) {
+         return -1;
+     }
+@@ -338,9 +345,9 @@ static int xen_remove_from_physmap(XenIOState *state,
+     DPRINTF("unmapping vram to %"HWADDR_PRIx" - %"HWADDR_PRIx", at "
+             "%"HWADDR_PRIx"\n", start_addr, start_addr + size, phys_offset);
+ 
+-    size >>= TARGET_PAGE_BITS;
+-    start_addr >>= TARGET_PAGE_BITS;
+-    phys_offset >>= TARGET_PAGE_BITS;
++    size >>= target_page_bits;
++    start_addr >>= target_page_bits;
++    phys_offset >>= target_page_bits;
+     rc = xendevicemodel_relocate_memory(xen_dmod, xen_domid, size, start_addr,
+                                         phys_offset);
+     if (rc) {
+@@ -369,13 +376,16 @@ static void xen_sync_dirty_bitmap(XenIOState *state,
+                                   hwaddr start_addr,
+                                   ram_addr_t size)
+ {
+-    hwaddr npages = size >> TARGET_PAGE_BITS;
++    unsigned target_page_bits = qemu_target_page_bits();
++    int page_size = qemu_target_page_size();
++    int page_mask = -page_size;
++    hwaddr npages = size >> target_page_bits;
+     const int width = sizeof(unsigned long) * 8;
+     size_t bitmap_size = DIV_ROUND_UP(npages, width);
+     int rc, i, j;
+     const XenPhysmap *physmap = NULL;
+ 
+-    physmap = get_physmapping(start_addr, size, TARGET_PAGE_MASK);
++    physmap = get_physmapping(start_addr, size, page_mask);
+     if (physmap == NULL) {
+         /* not handled */
+         return;
+@@ -389,7 +399,7 @@ static void xen_sync_dirty_bitmap(XenIOState *state,
+         return;
+     }
+ 
+-    rc = xen_track_dirty_vram(xen_domid, start_addr >> TARGET_PAGE_BITS,
++    rc = xen_track_dirty_vram(xen_domid, start_addr >> target_page_bits,
+                               npages, dirty_bitmap);
+     if (rc < 0) {
+ #ifndef ENODATA
+@@ -410,8 +420,7 @@ static void xen_sync_dirty_bitmap(XenIOState *state,
+             j = ctzl(map);
+             map &= ~(1ul << j);
+             memory_region_set_dirty(framebuffer,
+-                                    (i * width + j) * TARGET_PAGE_SIZE,
+-                                    TARGET_PAGE_SIZE);
++                                    (i * width + j) * page_size, page_size);
+         };
+     }
+ }
+@@ -631,17 +640,21 @@ void xen_register_framebuffer(MemoryRegion *mr)
+ 
+ void xen_hvm_modified_memory(ram_addr_t start, ram_addr_t length)
+ {
++    unsigned target_page_bits = qemu_target_page_bits();
++    int page_size = qemu_target_page_size();
++    int page_mask = -page_size;
++
+     if (unlikely(xen_in_migration)) {
+         int rc;
+         ram_addr_t start_pfn, nb_pages;
+ 
+-        start = xen_phys_offset_to_gaddr(start, length, TARGET_PAGE_MASK);
++        start = xen_phys_offset_to_gaddr(start, length, page_mask);
+ 
+         if (length == 0) {
+-            length = TARGET_PAGE_SIZE;
++            length = page_size;
+         }
+-        start_pfn = start >> TARGET_PAGE_BITS;
+-        nb_pages = ((start + length + TARGET_PAGE_SIZE - 1) >> TARGET_PAGE_BITS)
++        start_pfn = start >> target_page_bits;
++        nb_pages = ((start + length + page_size - 1) >> target_page_bits)
+             - start_pfn;
+         rc = xen_modified_memory(xen_domid, start_pfn, nb_pages);
+         if (rc) {
+@@ -664,6 +677,9 @@ void qmp_xen_set_global_dirty_log(bool enable, Error **errp)
+ void arch_xen_set_memory(XenIOState *state, MemoryRegionSection *section,
+                                 bool add)
+ {
++    unsigned target_page_bits = qemu_target_page_bits();
++    int page_size = qemu_target_page_size();
++    int page_mask = -page_size;
+     hwaddr start_addr = section->offset_within_address_space;
+     ram_addr_t size = int128_get64(section->size);
+     bool log_dirty = memory_region_is_logging(section->mr, DIRTY_MEMORY_VGA);
+@@ -679,8 +695,8 @@ void arch_xen_set_memory(XenIOState *state, MemoryRegionSection *section,
+ 
+     trace_xen_client_set_memory(start_addr, size, log_dirty);
+ 
+-    start_addr &= TARGET_PAGE_MASK;
+-    size = ROUND_UP(size, TARGET_PAGE_SIZE);
++    start_addr &= page_mask;
++    size = ROUND_UP(size, page_size);
+ 
+     if (add) {
+         if (!memory_region_is_rom(section->mr)) {
+@@ -689,8 +705,8 @@ void arch_xen_set_memory(XenIOState *state, MemoryRegionSection *section,
+         } else {
+             mem_type = HVMMEM_ram_ro;
+             if (xen_set_mem_type(xen_domid, mem_type,
+-                                 start_addr >> TARGET_PAGE_BITS,
+-                                 size >> TARGET_PAGE_BITS)) {
++                                 start_addr >> target_page_bits,
++                                 size >> target_page_bits)) {
+                 DPRINTF("xen_set_mem_type error, addr: "HWADDR_FMT_plx"\n",
+                         start_addr);
+             }
 -- 
 2.41.0
 
