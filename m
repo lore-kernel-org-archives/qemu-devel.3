@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF47AC54E60
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 19:28:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2177C54E66
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 19:28:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rj2Ld-000097-Kd; Sat, 09 Mar 2024 14:27:09 -0500
+	id 1rj2Lo-0001ih-PC; Sat, 09 Mar 2024 14:27:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2Js-000769-Mu
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:25:22 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2L6-0007w8-EZ
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:26:38 -0500
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2Jl-0003Is-SN
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:25:18 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-563cb3ba9daso3523889a12.3
- for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 11:25:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2L0-0003ZW-Qf
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:26:34 -0500
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-a449c5411e1so409136966b.1
+ for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 11:26:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710012309; x=1710617109; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710012387; x=1710617187; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=shKXB5mcwJL88T3p8o75GRzqkLr6uG1jmqPC2UukzhI=;
- b=pY4+LBsm4cXmBzCJybnR2Hy02QkbN0Bt/FH+E/VAwK8DCHjAFkyQ1ysrS7ckIyLDpr
- q0P1huPa1iAHzlkDqQlubQGYsdypCsGkrZO5sKMzurFY+tVGLt2OtcMm8klHbjwCYx1m
- UtVXzZSu3fZPpwQbwCwZIrihHeaPUVnR9iPJ9h3uIk0eOLoyUFZhUYkttNVJ5+LPHZB4
- DijuYjuOUsu/tYq9RB5OAou816u5NakeAhA8Gtu8xhiDNcqFzSSMD4EPU+840x1ZlyiP
- yfjX7bcmffnthpvWh8lUCMk4scgSetGPhNXbACO7o8uS3mJJfaR8tMQkoAI1kn5mFlHb
- CW+Q==
+ bh=3KwrSf6l5lMKRNbxBtTiB9ULE3uG/bpbp4V2erGNe1I=;
+ b=xek2MJMLHOBU6xUmmvY9xtDHjOjCIFggKBT7Tpatqn7ltm/hn7/gMJTzWocPOhJwZI
+ aDEgn7BIX1LE6+SREZXfUaIGAFgK91pmlcgXXTrRBMcXUGJeRsyJpcm0h4igL5UxFEAr
+ Ca3UAD1CSA1mpcrKOum5BVxB7x1ZoE2NiPXQfnpZxlPMk9hhFc0vtKt+/mrPiGjz2L0M
+ S9nLKVQk9l/JXlXc1oyt4G7AsvQzHJPcGzKTjgPYE1Pb1/vfmfPTdvquSE+4ZxXhWWd6
+ FGJbJ7cz5GSvWnpmBzETcdvDB0Wj5AVUVkmQsymjBL3zA5RqFrWl2vJ99Q1uYDx91PBd
+ psWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710012309; x=1710617109;
+ d=1e100.net; s=20230601; t=1710012387; x=1710617187;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=shKXB5mcwJL88T3p8o75GRzqkLr6uG1jmqPC2UukzhI=;
- b=PsnV/EXBSTrJazg9Aqr5hFN329JPxAdO7qv+otesJL/bxO5qghLHM2v/Ll9m33qmMA
- ePJRigyMqiMrunorat5su0C/vDY/UYLhC3GXkCWW0bSDJWqY5g0kp6JZnZBoUlLGtmq5
- bD4MnglLDmAg5VXHDIFCDpzH50URSLbcIQuP0tS3J1Cyal/Nd0O8KCpJQj0DYUF4CSQs
- 9t1Z/Hp30wXGSenliInJ0d6TiUl18YkGFFfOd1lgT+BS8oJSyb2zwNRokah0ZaeW4/BQ
- ZGWWBhcUWYgiqlzJjScLEaZ12pYaLB2BhEzdlV8oqBKOjXI6TpREQJMite2mlTDty23Q
- okjQ==
-X-Gm-Message-State: AOJu0YwHAa+eT3J9VTriNFDqRUjqkzm8pCoKdcT+sU/F5Gqjptt8TQaq
- R2Gb9XFWKmkL6ysxsNFfyOYSPthEPz5S1D6+iW5TIEzdM8AwhuMIKOeP/buoavwHTiEXstnAZEx
- T
-X-Google-Smtp-Source: AGHT+IEdf1UFTYo3MXGvdv4E79IPcLBj7o3BSzYa5lB994OSUOKUxtNFgLGUlUitgmHMkoPZUGHxPQ==
-X-Received: by 2002:a17:907:7856:b0:a44:415d:fa3a with SMTP id
- lb22-20020a170907785600b00a44415dfa3amr1436642ejc.40.1710012309349; 
- Sat, 09 Mar 2024 11:25:09 -0800 (PST)
+ bh=3KwrSf6l5lMKRNbxBtTiB9ULE3uG/bpbp4V2erGNe1I=;
+ b=Xja8apOyv/gj1rMpD7uiV8PDUvw1Nx+h59hu6HFCtvYcWKNLP2eQnsCNrhQefQB8jW
+ F46GVJAG8CYY8bTEm0gmKM1EI09CJsu+ad7xt9mtYWvSMhCbbSNS3702VD0hJ8dXUEaF
+ BGwx3jpvw4ypilHOsFFZGeXLP63mruy65bWV30naYNo+MPo66MuiufTRgodqptqt4Sms
+ q/X3Aj8fAqOBA8cJKGHQfuQgW5onN1I7JjNFKLONT7eFbeUo3KSQRV0NxTSjBnTR7Xon
+ OG1Fmxc6rVskQYAERnY2Py3JM6ICoxLCz2VER6c69y0KQ1dtYcywnlzyEr0KCa0qyIYn
+ pcNQ==
+X-Gm-Message-State: AOJu0Yx3U5kZZ9lqZ6qmUlyUeJHdd9FYtMhhO6ESiwzdsSr2lbxmL9gr
+ VrR/u6ET0rCtyLGwheqleL45zuzq43di0Pwlvi4lVYyCFTw9r9TPP3D0fsJHNAF5V6MSyf42swf
+ h
+X-Google-Smtp-Source: AGHT+IGIElPanJe/Ti8VGRYv0LI2UfeWcMivTBMYYVD03n7ExNVD9uCJSCKKPHlIvMXxCAfFQoWpOg==
+X-Received: by 2002:a17:906:b082:b0:a45:c99d:3625 with SMTP id
+ x2-20020a170906b08200b00a45c99d3625mr1214493ejy.23.1710012387502; 
+ Sat, 09 Mar 2024 11:26:27 -0800 (PST)
 Received: from m1x-phil.lan ([176.176.181.237])
  by smtp.gmail.com with ESMTPSA id
- y20-20020a17090629d400b00a45cc1e8fe3sm1169038eje.211.2024.03.09.11.25.08
+ k16-20020a1709067ad000b00a4537466591sm1178153ejo.32.2024.03.09.11.26.26
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 09 Mar 2024 11:25:09 -0800 (PST)
+ Sat, 09 Mar 2024 11:26:27 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
- =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Kashyap Chamarthy <kchamart@redhat.com>
-Subject: [PULL 29/43] docs/interop/firmware.json: Fix doc for FirmwareFlashMode
-Date: Sat,  9 Mar 2024 20:21:56 +0100
-Message-ID: <20240309192213.23420-30-philmd@linaro.org>
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>
+Subject: [PULL 42/43] tests/unit/test-smp-parse: Test "parameter=0" SMP
+ configurations
+Date: Sat,  9 Mar 2024 20:22:09 +0100
+Message-ID: <20240309192213.23420-43-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240309192213.23420-1-philmd@linaro.org>
 References: <20240309192213.23420-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,32 +99,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Zhao Liu <zhao1.liu@intel.com>
 
-The doc title did not match the actual definition.
+The support for "parameter=0" SMP configurations is removed, and QEMU
+returns error for those cases.
 
-Fixes: 2720ceda05 ("docs: expand firmware descriptor to allow flash without NVRAM")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240307-qapi-firmware-json-v2-2-3b29eabb9b9a@linutronix.de>
+So add the related test cases to ensure parameters can't accept 0.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20240308160148.3130837-14-zhao1.liu@linux.intel.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- docs/interop/firmware.json | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/unit/test-smp-parse.c | 92 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 92 insertions(+)
 
-diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
-index a024f1b9bf..54a1fc6c10 100644
---- a/docs/interop/firmware.json
-+++ b/docs/interop/firmware.json
-@@ -223,7 +223,7 @@
+diff --git a/tests/unit/test-smp-parse.c b/tests/unit/test-smp-parse.c
+index d39cfdc19b..8994337e12 100644
+--- a/tests/unit/test-smp-parse.c
++++ b/tests/unit/test-smp-parse.c
+@@ -524,6 +524,91 @@ static const struct SMPTestData data_full_topo_invalid[] = {
+     },
+ };
  
++static const struct SMPTestData data_zero_topo_invalid[] = {
++    {
++        /*
++         * Test "cpus=0".
++         * config: -smp 0,drawers=1,books=1,sockets=1,dies=1,\
++         *              clusters=1,cores=1,threads=1,maxcpus=1
++         */
++        .config = SMP_CONFIG_WITH_FULL_TOPO(0, 1, 1, 1, 1, 1, 1, 1, 1),
++        .expect_error = "Invalid CPU topology: CPU topology parameters must "
++                        "be greater than zero",
++    }, {
++        /*
++         * Test "drawers=0".
++         * config: -smp 1,drawers=0,books=1,sockets=1,dies=1,\
++         *              clusters=1,cores=1,threads=1,maxcpus=1
++         */
++        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 0, 1, 1, 1, 1, 1, 1, 1),
++        .expect_error = "Invalid CPU topology: CPU topology parameters must "
++                        "be greater than zero",
++    }, {
++        /*
++         * Test "books=0".
++         * config: -smp 1,drawers=1,books=0,sockets=1,dies=1,\
++         *              clusters=1,cores=1,threads=1,maxcpus=1
++         */
++        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 0, 1, 1, 1, 1, 1, 1),
++        .expect_error = "Invalid CPU topology: CPU topology parameters must "
++                        "be greater than zero",
++    }, {
++        /*
++         * Test "sockets=0".
++         * config: -smp 1,drawers=1,books=1,sockets=0,dies=1,\
++         *              clusters=1,cores=1,threads=1,maxcpus=1
++         */
++        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 0, 1, 1, 1, 1, 1),
++        .expect_error = "Invalid CPU topology: CPU topology parameters must "
++                        "be greater than zero",
++    }, {
++        /*
++         * Test "dies=0".
++         * config: -smp 1,drawers=1,books=1,sockets=1,dies=0,\
++         *              clusters=1,cores=1,threads=1,maxcpus=1
++         */
++        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 1, 0, 1, 1, 1, 1),
++        .expect_error = "Invalid CPU topology: CPU topology parameters must "
++                        "be greater than zero",
++    }, {
++        /*
++         * Test "clusters=0".
++         * config: -smp 1,drawers=1,books=1,sockets=1,dies=1,\
++         *              clusters=0,cores=1,threads=1,maxcpus=1
++         */
++        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 1, 1, 0, 1, 1, 1),
++        .expect_error = "Invalid CPU topology: CPU topology parameters must "
++                        "be greater than zero",
++    }, {
++        /*
++         * Test "cores=0".
++         * config: -smp 1,drawers=1,books=1,sockets=1,dies=1,\
++         *              clusters=1,cores=0,threads=1,maxcpus=1
++         */
++        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 1, 1, 1, 0, 1, 1),
++        .expect_error = "Invalid CPU topology: CPU topology parameters must "
++                        "be greater than zero",
++    }, {
++        /*
++         * Test "threads=0".
++         * config: -smp 1,drawers=1,books=1,sockets=1,dies=1,\
++         *              clusters=1,cores=1,threads=0,maxcpus=1
++         */
++        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 1, 1, 1, 1, 0, 1),
++        .expect_error = "Invalid CPU topology: CPU topology parameters must "
++                        "be greater than zero",
++    }, {
++        /*
++         * Test "maxcpus=0".
++         * config: -smp 1,drawers=1,books=1,sockets=1,dies=1,\
++         *              clusters=1,cores=1,threads=1,maxcpus=0
++         */
++        .config = SMP_CONFIG_WITH_FULL_TOPO(1, 1, 1, 1, 1, 1, 1, 1, 0),
++        .expect_error = "Invalid CPU topology: CPU topology parameters must "
++                        "be greater than zero",
++    },
++};
++
+ static char *smp_config_to_string(const SMPConfiguration *config)
+ {
+     return g_strdup_printf(
+@@ -1173,6 +1258,13 @@ static void test_full_topo(const void *opaque)
+         smp_parse_test(ms, &data, false);
+     }
  
- ##
--# @FirmwareFlashType:
-+# @FirmwareFlashMode:
- #
- # Describes how the firmware build handles code versus variable
- # persistence.
++    for (i = 0; i < ARRAY_SIZE(data_zero_topo_invalid); i++) {
++        data = data_zero_topo_invalid[i];
++        unsupported_params_init(mc, &data);
++
++        smp_parse_test(ms, &data, false);
++    }
++
+     object_unref(obj);
+ }
+ 
 -- 
 2.41.0
 
