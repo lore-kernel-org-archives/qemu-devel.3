@@ -4,83 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D12E0C54E49
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 13:49:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 832A6C54E41
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 13:56:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rix4m-0001IE-PA; Sat, 09 Mar 2024 08:49:24 -0500
+	id 1rixBT-0003Mr-WD; Sat, 09 Mar 2024 08:56:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rix4l-0001I3-Ml
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 08:49:23 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rixBR-0003M7-HH
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 08:56:17 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rix4k-00067R-4P
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 08:49:23 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-413216c3ea4so2164435e9.1
- for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 05:49:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rixBP-0007UN-C6
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 08:56:17 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-41312c3ab40so13026065e9.3
+ for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 05:56:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709992160; x=1710596960; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709992562; x=1710597362; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=FFfcaPHfFPOkirNUgsvCDV1qgYkXrUZ1RXVjrcvCM9M=;
- b=mm4N836jaNYk3Nt+6vvBJLIojkVZQd0g1B2gi2bIjVAR6wbYpzGyIaXmnmUeGQIdac
- aq3CqM5lKKswz426aD9zzAX9MJ46C99CNKErw0a4Os7E97B2U7XtMFE2pn8oOA4oUdGc
- 0B7BwoBabpqqeem247r9Ed7F6geTTzUoMF+cF4FzIafq15BlwViP27Ztzim21t5IsdUE
- yHw3dGpvNcIoG+Gdkw58pxIECBbZYhHGgn68IcSFmH6EIu7bX1WK+c6Bs5zsyg29VpV8
- 3WZHiEuuKsJ8e375DNMzaMC6ztQ96WskPv2GctOEV9RD4HHjqM/tcAQViwNuiZHoRk27
- WgZQ==
+ bh=j/HsoclK8oFQ4qi18yZzZcW2qu6FHeVgS9jILiPGy6w=;
+ b=aBUthxm+GtpfGhBsBx589lYjXY8KzNlrdqUWfhnb2GPkHEDv28fHgFLWfUU67OutlG
+ i4oOKYE9pUz0QA+lr/hj1pHDVxCPhonsneCUZ47kTE+BWpUjOVtx3YPozTXAoPdGKLta
+ fPpwz9isZ2O6fbQjgpVXfP/54+bfc1uI+Y04J+glz4Gt06XZnS170yQs4Ui40+s2dtFb
+ pr/ON5LfkZC4goqFH4gE08gRaOORdQSb9+1NUoOEYb8noLTmQEZLwse3tkWqGbqO1EoG
+ yEd++w/xuSrX/IcCzhrykOKEpshjbxJX55Teq26NgkZfnyWzH/mrsjUact2wZjUX5iMT
+ uy9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709992160; x=1710596960;
+ d=1e100.net; s=20230601; t=1709992562; x=1710597362;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FFfcaPHfFPOkirNUgsvCDV1qgYkXrUZ1RXVjrcvCM9M=;
- b=hdexY4Mq6hEfbOZ2cYxUYkiV5LXgpz47FPEGRorqqaCXIQlxhGqbIku4ztxL9gHU1x
- fN0XqnLlkGs98Ttqxj4BbSN4Qo0aQyOaG8grRbe4A0t3c9hpmxigC4rCc1nO8maVvX2W
- RUhTJ2MawWdL3MCt+JLmJSvMgNnqAifQ8M4ZxMU99/GZNVFH0iIbRgrT0kRjlAqtT5Tz
- 8silfvYPixaGxQ3bCnN0ZnMMTiCJNIGoTXMh9ThTLbMrL3F5q8OCrnkWZQo0y4+3cT1b
- GpRcWKlINadh0jqeA8zQ2kyWnM/aRxxXoF//OINsJ8mWhECB6hKC43NeOFzQzOEXDAAL
- Pzxw==
+ bh=j/HsoclK8oFQ4qi18yZzZcW2qu6FHeVgS9jILiPGy6w=;
+ b=cDN0vDBBBg/vwPj6DJ1vLC7JxeoT7SDROy3vp38T8CjdZB7uIpk2VHMJaYwIqv8AZm
+ +/XIW+mrEywueN11iGDmk6s22npzix1AfVQUTEXII7FYz9Nb+Y3/5s+FtYxX5EH4nL7K
+ IXs8uBj0F2CdjT6MpJ2o6TCusuV448VLvEQe/1MqxPF3Yg7aiYa6Y504737anXM7nHGM
+ VX2jBQjGB44AwWSsG3LwxHD/YxSf7vPCQUG64J4nVsoA24UIcRQ4NaIMwrX0MZn/V1v/
+ VE1f9CO6Rzwsjcd45mkgT76oLPbh5ZNg71+aO/QXn3auLSu4uRdpj3PQLboEI1aXsdfX
+ rT3A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUMGBaHskQziPuKexj9p67gjdeYNQV7BJKa2FCLK52rhmreiJCrKQukeN+/vwfwP2ZvDejJuSs2Kl2e18x/PQpk7NzYe/E=
-X-Gm-Message-State: AOJu0Yz9gWyHdbZNHJDQ+3sTBcXcXT5GiUGO1/aEh/XNCJ7DEpce6X+w
- Uil8RjRg//FK0VVYLiYmjBUCEBkyplJUh7cE4RdqaUwZabAb3f4yzBsEvjzxbz0=
-X-Google-Smtp-Source: AGHT+IE9HI8JDIQm6/0R+acqIqtMA8sVWqUL82U+g0QDTFt2L46fVvM7kS7TnIx16QOXU622no0yzQ==
-X-Received: by 2002:a05:600c:1383:b0:412:ff94:2d60 with SMTP id
- u3-20020a05600c138300b00412ff942d60mr1495887wmf.22.1709992160323; 
- Sat, 09 Mar 2024 05:49:20 -0800 (PST)
+ AJvYcCVg4wbUNQkpgUF0UIUT8FGEOr3nKK8rpEAn+c+K2xFiIW2++UiL2tFpcQIH0z3vLfvmrdIglp3h2LgyWfPZmlj/BlGJLtk=
+X-Gm-Message-State: AOJu0YzBXmaxcJMTfVre73VFviY6TIURCEjXAtqcbEKGbDUTDwO1IweA
+ kU8Ds+JIux05An+DqojzXA/IE3dLi6b1DZcJgdj2bQZq9G2xfC+TWNO/CnnLkMez5ix9mIyxlN9
+ K
+X-Google-Smtp-Source: AGHT+IHKLUNBAr4YLdH9TGDIUQwct/XsTIrbBBU17nMuxSw56x0i+whSOUvjDh/dd6RFzwAxA4ZfQQ==
+X-Received: by 2002:a05:600c:548e:b0:412:ed9b:621c with SMTP id
+ iv14-20020a05600c548e00b00412ed9b621cmr1460363wmb.24.1709992562128; 
+ Sat, 09 Mar 2024 05:56:02 -0800 (PST)
 Received: from [192.168.69.100] ([176.176.181.237])
  by smtp.gmail.com with ESMTPSA id
- j1-20020a05600c1c0100b00412ee7d65a6sm2598432wms.6.2024.03.09.05.49.18
+ fc19-20020a05600c525300b0041312855081sm2643627wmb.5.2024.03.09.05.55.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 09 Mar 2024 05:49:19 -0800 (PST)
-Message-ID: <94997958-3cc3-4e4b-bc92-2eb7e501539e@linaro.org>
-Date: Sat, 9 Mar 2024 14:49:17 +0100
+ Sat, 09 Mar 2024 05:56:01 -0800 (PST)
+Message-ID: <d58b22bb-43b4-42aa-8ed2-1975beb1f31c@linaro.org>
+Date: Sat, 9 Mar 2024 14:55:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/13] Cleanup on SMP and its test
+Subject: Re: [PATCH v9 00/21] Introduce smp.modules for x86 in QEMU
 Content-Language: en-US
 To: Zhao Liu <zhao1.liu@linux.intel.com>
 Cc: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
- qemu-devel@nongnu.org, Xiaoling Song <xiaoling.song@intel.com>,
- Zhao Liu <zhao1.liu@intel.com>
-References: <20240308160148.3130837-1-zhao1.liu@linux.intel.com>
- <a6c12d41-2801-4425-98e9-351851e2f7a4@linaro.org>
- <ZeuxcZmE9Ejr6acx@intel.com>
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Zhuocheng Ding <zhuocheng.ding@intel.com>, Babu Moger <babu.moger@amd.com>,
+ Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
+References: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
+ <17444096-9602-43e1-9042-2a7ce02b5e79@linaro.org>
+ <ZeuyN8Eacq1Twsvg@intel.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ZeuxcZmE9Ejr6acx@intel.com>
+In-Reply-To: <ZeuyN8Eacq1Twsvg@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,32 +109,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/24 01:46, Zhao Liu wrote:
-> Hi Philippe,
-> 
->>
->> Can you share your base commit please?
->>
->> Applying: hw/core/machine-smp: Remove deprecated "parameter=0" SMP
->> configurations
->> Applying: hw/core/machine-smp: Deprecate unsupported "parameter=1" SMP
->> configurations
->> error: patch failed: docs/about/deprecated.rst:47
->> error: docs/about/deprecated.rst: patch does not apply
->> Patch failed at 0002 hw/core/machine-smp: Deprecate unsupported
->> "parameter=1" SMP configurations
->>
-> 
-> The base commit is e1007b6bab5cf ("Merge tag 'pull-request-2024-03-01'
-> of https://gitlab.com/thuth/qemu into staging").
-> 
-> But I think this conflict is because of the first 4 patches of mudule
-> series you picked. Let me rebase this series on that module series and
-> refresh a v3.
+Hi Zhao,
 
-Ah no, it is due to commit 01e449809b ("*-user: Deprecate and
-disable -p pagesize").
+On 9/3/24 01:49, Zhao Liu wrote:
+> On Fri, Mar 08, 2024 at 05:36:38PM +0100, Philippe Mathieu-Daudé wrote:
+>> Date: Fri, 8 Mar 2024 17:36:38 +0100
+>> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Subject: Re: [PATCH v9 00/21] Introduce smp.modules for x86 in QEMU
+>>
+>> On 27/2/24 11:32, Zhao Liu wrote:
+>>
+>>> ---
+>>> Zhao Liu (20):
+>>>     hw/core/machine: Introduce the module as a CPU topology level
+>>>     hw/core/machine: Support modules in -smp
+>>>     hw/core: Introduce module-id as the topology subindex
+>>>     hw/core: Support module-id in numa configuration
+>>
+>> Patches 1-4 queued, thanks!
+> 
+> Thanks Philippe!
 
-No need to respin this series, I queued it in favor of the 4 other
-patches.
+I dropped this 4 patches in favor of "Cleanup on SMP and its test"
+v2 
+(https://lore.kernel.org/qemu-devel/20240308160148.3130837-1-zhao1.liu@linux.intel.com/)
+which seems more important, to get the "parameter=0" deprecation
+in the next release. (Patch 2 diverged).
+
+Regards,
+
+Phil.
 
