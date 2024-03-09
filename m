@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FF57C54E41
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B750CC54798
 	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 15:33:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riyhF-0001bl-VQ; Sat, 09 Mar 2024 10:33:13 -0500
+	id 1riyhF-0001bm-WE; Sat, 09 Mar 2024 10:33:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <isaacwoods.home@gmail.com>)
- id 1riyZw-0000H8-BI
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 10:25:42 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1riyax-0000oM-IA
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 10:26:43 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <isaacwoods.home@gmail.com>)
- id 1riyZs-0007vx-V4
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 10:25:38 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-412fc5f5152so22444745e9.0
- for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 07:25:27 -0800 (PST)
+ id 1riyav-00080z-Uz
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 10:26:43 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-33e570ef661so1735644f8f.1
+ for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 07:26:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709997926; x=1710602726; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1709998000; x=1710602800; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=p8duqk3DQZ4pwtbBPDMsGhD+I9fcYJiGxlPhWsv3q6Y=;
- b=YeJxoT8g1ukdv0joldVS46VSyLqruuwFa/j1KIyvvqmSS5U4xTGBjs2Q7Zg+hgHFYQ
- ja+1y3mtZvhbYAEF9ac6kK9p9WdsB9rclkYKXTGSAJoEI3IcIm8GnxTIPZ7e66ecylcF
- vgBqvso+0eV4hEuk145KIJOZnYVzt8KJ1KpOxAygzPSrih5Vg3ogDuLbouRooIZJii+H
- ldMpZjBV1gGy+z7JQ8RFH1Xz/hoDKU3oQFcHqfUOclSjXT5xjnKrXucf1UmOI6aZtCMM
- 8aTSl6ZQcXNiDp+Q70rlMlf0ZmuBkgFcmcorEoM88oUCXhOsodIaIHRtCYrhTDQbmn84
- p7wg==
+ bh=ROlM7I2/Q0FRFFC9PzXEvxysq3NaBgaLvX4fUXCMr7o=;
+ b=liVD8YLXfiqlIUS9FGHWTuyQoJK9+aezcgEND5i5jHGSMaVMXE4Xnk2M+RN1uI+g62
+ QonqXqXcl91nu1eaLrRa3wwfKhywu5gLxkx9OKhB2FDhoUT2+03lefjkrVYVLgnUo5SP
+ Z5CzJsrY86JwF3wTTircb/25vCj3lVLsNaUJQ2A8Jcj+YdeQ1GZxEx9KPkU2Qx8RiT3m
+ AVUP4guYycjybBs2260XWlyoEZremASEcudwdmU+v+Q8Jt4g7YscctKE85ZwM1ESXciy
+ iedHFnLQAWHlJYI77FGovLhYc+krJoDZz2Ro1ExxsJu+5x3USDcjFbJf9Vazztgq1Dgc
+ Of2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709997926; x=1710602726;
+ d=1e100.net; s=20230601; t=1709998000; x=1710602800;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=p8duqk3DQZ4pwtbBPDMsGhD+I9fcYJiGxlPhWsv3q6Y=;
- b=dfK+22YO+UjSo6OgxZBWE3zfXGmFEYU5pHectx/+yfZOr/ERzAex/VZN7xwc3gPlcJ
- yeieACOQWzcmNIGOdlrzmPAJ2Co26mS4urIq55TRdDmTA7MI10PeYFRVIsrAHdHGzrW8
- FNbPEgK5L/mdPO8qB7J96x/+01ekqFuJkI6IM2qR8MQH1db93hKqXWcwbS1RkjZvn7RK
- m1nFrhFcD/K+dknjH9cVXviDhAQlZnzb/6gl30a7DfiwCa9Mj81A4vHrginaBetUNBLp
- BKx9gE6bRMjHWwBJBQJ6UfX4e2kiK32EHZiWahKKXM99AWelVwuUq8Zz+e57hfsfvFst
- 2bBA==
-X-Gm-Message-State: AOJu0Yy6tl7AFqp43uJf1ypu8GbT84sutYSO/dqtjpTVbP2roy7VMwPT
- xpKDgimOcmSkgil+K4cX6pbPGA1PT4zdMF10z0fp9CgYEf8X3soy6sHc7S+4/SY=
-X-Google-Smtp-Source: AGHT+IGJv20BhtepCG4TLGuqnAhJKZLpD11MZ4BgQFpzAxfpVP9PauGJyERuOPocWdxKGaw7dAWk2A==
-X-Received: by 2002:a05:600c:5020:b0:412:dc02:9824 with SMTP id
- n32-20020a05600c502000b00412dc029824mr2025487wmr.9.1709997925480; 
- Sat, 09 Mar 2024 07:25:25 -0800 (PST)
+ bh=ROlM7I2/Q0FRFFC9PzXEvxysq3NaBgaLvX4fUXCMr7o=;
+ b=sFVMaale1owoll4iUbGko1M+cwYy0tcCd6rXbByIfB3fqeW0BbUh/h7cnCCbKcKc6j
+ NkcbLxR+Z9Z2G+GicvZoRTmynoc6OAXkslEFhus+qArSmCPAn0LeNQwjY7ZF1Sruud9f
+ xcDOZSZUY6YBkmVUkdFrAj/9tpnAKoalczHtZ/lmwC7DTMFe9V8Aw0A5AFKwxprpohgp
+ kRHcEoF+0nq24Xpcgy1aOd7kQqXXOw1Jwq4sRCAnzOLuVFaJemHvye5nO0kvqxYFgsWw
+ 2n7iWj8WUlt5kwK6I3vhxS1kFCa9/CZdcQJVqsB1EK7VxsFlLQT8krK6AlX/pGGX9zs+
+ ZOkA==
+X-Gm-Message-State: AOJu0YwhiVwosTT0mTQ2ThfYe0iXvaISs/sunedB21J3Ewyb+5J+MH9A
+ xLVTPIFIUXp389MlmOfyl6zTKoLchALYtceW6fbYAEoGblPHphh9T0CZ+6gsFMI=
+X-Google-Smtp-Source: AGHT+IECqvNfIT16bDadP3C2wDslIRHt0w0wN/8lvUs/sh2v4tUZq7qYHHuTvuJC4NNsuUBGRnCcPA==
+X-Received: by 2002:a5d:628e:0:b0:33d:c5c7:417d with SMTP id
+ k14-20020a5d628e000000b0033dc5c7417dmr1678869wru.43.1709998000039; 
+ Sat, 09 Mar 2024 07:26:40 -0800 (PST)
 Received: from localhost.localdomain (25.58.198.146.dyn.plus.net.
  [146.198.58.25]) by smtp.gmail.com with ESMTPSA id
- v9-20020a05600c470900b0041312e8ef2bsm2842322wmo.26.2024.03.09.07.25.24
+ g5-20020a5d6985000000b0033d6c928a95sm2054647wru.63.2024.03.09.07.26.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 09 Mar 2024 07:25:25 -0800 (PST)
+ Sat, 09 Mar 2024 07:26:39 -0800 (PST)
 From: Isaac Woods <isaacwoods.home@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: isaacwoods.home@gmail.com,
-	kraxel@redhat.com
+Cc: isaacwoods.home@gmail.com
 Subject: [PATCH] usb: add support for sending MSIs from EHCI PCI devices
-Date: Sat,  9 Mar 2024 15:10:32 +0000
-Message-ID: <20240309151031.29417-2-isaacwoods.home@gmail.com>
+Date: Sat,  9 Mar 2024 15:26:34 +0000
+Message-ID: <20240309152634.30291-1-isaacwoods.home@gmail.com>
 X-Mailer: git-send-email 2.44.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=isaacwoods.home@gmail.com; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=isaacwoods.home@gmail.com; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,6 +90,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
+
+This is a small patch that aims to add support for sending
+message-signalled interrupts from EHCI controllers on PCI busses.
+This was desirable for guests (in my case a hobbyist OS) that do not
+have support for legacy PCI interrupt routing but still want to / have to
+interface with EHCI controllers. I would guess most real EHCI
+controllers would not bother to support MSI, but it doesn't seem
+unreasonable to me for the QEMU one to when connected to a PCIe bus.
+
+This is my first contribution to QEMU, and so was modelled entirely off
+the XHCI controller's MSI support. I have tested it on RISC-V using the
+PLIC, which correctly receives the traditionally-wired interrupt, and
+using MSI, where the device is able to successfully dispatch an MSI
+to a IMSIC.
+
+This is also my first experience of `git send-mail` so please forgive
+any errors with the patch email.
 
 Signed-off-by: Isaac Woods <isaacwoods.home@gmail.com>
 ---
