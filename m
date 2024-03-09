@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6AE3C54791
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 18:51:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F54CC54E60
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 18:52:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rj1mY-0004XR-Uy; Sat, 09 Mar 2024 13:50:55 -0500
+	id 1rj1nU-0004oj-8m; Sat, 09 Mar 2024 13:51:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rj1mW-0004XB-VC
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 13:50:53 -0500
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rj1nS-0004o8-KK
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 13:51:50 -0500
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rj1mU-0006Q8-5i
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 13:50:52 -0500
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-a4467d570cdso221623266b.3
- for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 10:50:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rj1nR-0006Vb-56
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 13:51:50 -0500
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-5e42b4bbfa4so1309498a12.1
+ for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 10:51:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710010249; x=1710615049; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3yXI9wsVluGva8NwXKqchP6nNhaej6qzY4J4xF7tFn4=;
- b=hADGXD0H2YQd1OCQyi6Qf1R5szLHOUR+GKPW55wr5tgD7imblPXxwU0xSATM+VG0Xc
- AcaYqez/EtDioT4TTu1W7iGKlVgeu5khzXMW218xIZmuJ48S+VVvTakJ7T85oG1A7Tig
- 4O6BBiphuiGXdsb0kRuhhh5WoSBoqQijjoFwtW520cj9aPBC8fwDIe+iiFnZwRuU2VSV
- MYEYloxPg23p6b6L1RKgm+Cd2pNwe74lieqmdyq5+ISUbplnxDEEKvNaWl3VthWBrkgQ
- XR9HIAX9AkYQf2GVP2YFEJYJ+/k6fvdjXNGlhQ4I1V3H0N080YDASnfssaOkX2nonTvX
- oHrw==
+ d=linaro.org; s=google; t=1710010307; x=1710615107; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qT8iUAa/HsiarKSfacdT/ihvRTQvCnNoDb8cPYRBY+8=;
+ b=TiUK9HW5AgMmCrPMt/8I1TusO9jd9C94IJPh5dt4BLELId2D12dn0fNzOGqU0p6n+9
+ Ioh0MhmrRx6CI41qhcKGr+p9hwyF/SE1JJnIhYqbVg+KJDQDIm2QuV+DuAFKXJvrN9em
+ 0yBim/hZzgvJ3p+Jb+xPfhRbybWrhJGesQuSLQvx+0KDtaHSK6eZRMLkBJ/bVnt4qNj2
+ xNMXyH307N95LKvZH7ratfC1yRw5b/uFkK84fMn2ywqQiVShcRkmAu5xIp7tf/xSE+gn
+ eDVqrwDEuRde3TyFKg5t0jrDfbc7oRchxTWG0WrySL79L68NM9gLJuyToB8f5ocipswv
+ B2Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710010249; x=1710615049;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3yXI9wsVluGva8NwXKqchP6nNhaej6qzY4J4xF7tFn4=;
- b=av0B/yieLo7vOjGop68VuGRn5/zTlso/U+wGnlyN4VOJ9rZBoqZ3uwFLAMNNNN9mVL
- gxof/AIv/Fk05HWuaEBJ/EjiMX5QBPh219Ftn44iEulAnYr2u4e5pGrl1l8uPiPFVAhq
- JtOSUzhqqQYIrBlyV/CJ8yt8sCG9s4ADwLAw4bBYB/hVA091htXe1T/xeKMSsbEOTG/q
- U5LPiJpMF/bUo35kXjTn6FXAgiWYw8POohMCoGniMq1E8FeipVyVoPlKsxcS47Hmk1B4
- z8ZaPSCviCI2QZYVrdao/MIclCy4yIiHt05f5jMSGG2tPYxeUIBXv3p//QmnB3iSXHj3
- Xu+g==
+ d=1e100.net; s=20230601; t=1710010307; x=1710615107;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qT8iUAa/HsiarKSfacdT/ihvRTQvCnNoDb8cPYRBY+8=;
+ b=jmAh2WPclqLIcdZTM9pF+hFHVXQ40Fzvr18YAY4Oodm0vvq781Y2v8O5a6LrmTB8oV
+ r1WtyrskabP4q/H/T3KZ54ll0HA94MTYlAqZOSzMKtwKvrBSqKfkFPTnyXbOOSSRVN8J
+ hhnql/FAm/981x2dPgI/B2FFX/rTDaWHO8dLNyKs4sv6+TeyrMnqQZVFrTcnsGg/cgsA
+ R8ZwTmKY9kWRuAa9iQ22lQthZcCTR87r7GTO78WP8mJvq6Gm67fZ7SC3KB+6zonxv7CR
+ X/SM/tkEqYkAQlKE/Ym+6rxjqXGA7qlAooEbChmTMx1Sz01/WrzoL7idyMsq/ZkOXzz1
+ xdTA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUsn92JWWRzX9A61cDzfDVBnhkkBNn8/0a4OCWbYo1hBuAJkXUSUMVd2a4Om+LzZ7AGVoB+3pyrQV5okeRTrtTGrsiVELE=
-X-Gm-Message-State: AOJu0YwzBAGhg5tzy7eNNkT7M6vslEG+cwr/aKA+7vN/7CtHhGBRVS2i
- AuyY/eKHwCSaFbN3q8vR+fIrqyprV9sKRhLoGdoTiNJ0EPOR1Skn
-X-Google-Smtp-Source: AGHT+IFaarp6JkVZKQhkj2E9AlUUj3NIws/Kcj3OqMIRgWs0sFqSWG1AETTRQHxm6fYDV8BM3xHa4w==
-X-Received: by 2002:a17:907:7ea0:b0:a45:c66a:a062 with SMTP id
- qb32-20020a1709077ea000b00a45c66aa062mr1588871ejc.11.1710010248459; 
- Sat, 09 Mar 2024 10:50:48 -0800 (PST)
-Received: from [127.0.0.1] (dynamic-078-054-250-034.78.54.pool.telefonica.de.
- [78.54.250.34]) by smtp.gmail.com with ESMTPSA id
- kl24-20020a170907995800b00a4452ed413asm1164018ejc.16.2024.03.09.10.50.47
+ AJvYcCVYKOqiOWJxfWEraootgmeHZvzGNGEY6qUdUowJvyhaD7gtG3Tz7KSEpB6SfetNPQmBgi7J44vJxj2LsolnzV8PZ+UlJPg=
+X-Gm-Message-State: AOJu0YyY7Kne2BRMtO3d3lyFLMQGVmwC+Pt23YnopkAhotSfkIGDtF6z
+ Hv/k9bFUHClNYbTRCZX6YB4E5/T76et3eG2lVL4M/NsOhG0Z52A+MzR2Fl1cg1yiIhicEFrgIlZ
+ q
+X-Google-Smtp-Source: AGHT+IH5YljeZTCf29pwdec4hg5/7D/L2JhplHrZWKI8vPD7tbYuPNLNIhMew1VJ2zbT4nsQ1VlDZQ==
+X-Received: by 2002:a05:6a20:d906:b0:1a2:a596:4dce with SMTP id
+ jd6-20020a056a20d90600b001a2a5964dcemr3034822pzb.58.1710010306872; 
+ Sat, 09 Mar 2024 10:51:46 -0800 (PST)
+Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
+ [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
+ m14-20020a63ed4e000000b005dc816b2369sm1590261pgk.28.2024.03.09.10.51.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 09 Mar 2024 10:50:48 -0800 (PST)
-Date: Sat, 09 Mar 2024 18:50:37 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-CC: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_1/2=5D_hw/pci-host/pam=3A_Free_PAMMe?=
- =?US-ASCII?Q?moryRegion_from_Intel-specific_bit_handling?=
-In-Reply-To: <16c61c00-30e9-41a3-b202-ec05d778e296@linaro.org>
-References: <20240309134056.1605-1-shentey@gmail.com>
- <20240309134056.1605-2-shentey@gmail.com>
- <16c61c00-30e9-41a3-b202-ec05d778e296@linaro.org>
-Message-ID: <E8FA1314-C5A1-4E60-A44F-DD27BC0BA5F0@gmail.com>
+ Sat, 09 Mar 2024 10:51:46 -0800 (PST)
+Message-ID: <22c0cbee-a6f7-48e2-9a94-47bcc92b096f@linaro.org>
+Date: Sat, 9 Mar 2024 08:51:42 -1000
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62d.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 06/10] trans_rvv.c.inc: set vstart = 0 in int scalar
+ move insns
+Content-Language: en-US
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ philmd@linaro.org
+References: <20240308215402.117405-1-dbarboza@ventanamicro.com>
+ <20240308215402.117405-7-dbarboza@ventanamicro.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240308215402.117405-7-dbarboza@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,131 +102,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 3/8/24 11:53, Daniel Henrique Barboza wrote:
+> trans_vmv_x_s, trans_vmv_s_x, trans_vfmv_f_s and trans_vfmv_s_f aren't
+> setting vstart = 0 after execution. This is usually done by a helper in
+> vector_helper.c but these functions don't use helpers.
+> 
+> We'll set vstart after any potential 'over' brconds, and that will also
+> mandate a mark_vs_dirty() too.
+> 
+> Fixes: dedc53cbc9 ("target/riscv: rvv-1.0: integer scalar move instructions")
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> ---
+>   target/riscv/insn_trans/trans_rvv.c.inc | 17 +++++++++++++++--
+>   1 file changed, 15 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+> index e42728990e..f3caabc101 100644
+> --- a/target/riscv/insn_trans/trans_rvv.c.inc
+> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
+> @@ -3356,6 +3356,13 @@ static void vec_element_storei(DisasContext *s, int vreg,
+>       store_element(val, tcg_env, endian_ofs(s, vreg, idx), s->sew);
+>   }
+>   
+> +static void vec_set_vstart_zero(void)
+> +{
+> +    TCGv_i32 t_zero = tcg_constant_i32(0);
+> +
+> +    tcg_gen_st_i32(t_zero, tcg_env, offsetof(CPURISCVState, vstart));
+> +}
+
+If you have not removed cpu_vstart, then you must use tcg_gen_movi_i32.
+You cannot write to the backing store behind tcg's back.
 
 
-Am 9=2E M=C3=A4rz 2024 16:29:23 UTC schrieb "Philippe Mathieu-Daud=C3=A9" =
-<philmd@linaro=2Eorg>:
->Hi Bernhard,
->
->On 9/3/24 14:40, Bernhard Beschow wrote:
->> The PAM bit extraction is currently spread across pam=2Ec and the north=
-bridge
->> device models, making the extraction logic harder to comprehend=2E Also=
- note how
->> pam_update() deals with PAM_REGIONS_COUNT, even though it handles exact=
-ly one
->> region=2E Fix this (at the cost of minor code duplication) by moving th=
-e bit
->> extraction into the northbridge device models=2E As a side effect, pam_=
-update()
->> becomes less Intel-specific which would allow it to be reused e=2Eg=2E =
-in VIA
->> northbridges=2E
->>=20
->> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->> ---
->>   include/hw/pci-host/pam=2Eh |  7 +++----
->>   hw/pci-host/i440fx=2Ec      |  7 +++++--
->>   hw/pci-host/pam=2Ec         | 14 +++++++-------
->>   hw/pci-host/q35=2Ec         |  5 +++--
->>   4 files changed, 18 insertions(+), 15 deletions(-)
->>=20
->> diff --git a/include/hw/pci-host/pam=2Eh b/include/hw/pci-host/pam=2Eh
->> index 005916f826=2E=2Eb9b33aecc8 100644
->> --- a/include/hw/pci-host/pam=2Eh
->> +++ b/include/hw/pci-host/pam=2Eh
->> @@ -70,7 +70,6 @@
->>   /* PAM registers: log nibble and high nibble*/
->>   #define PAM_ATTR_WE     ((uint8_t)2)
->>   #define PAM_ATTR_RE     ((uint8_t)1)
->> -#define PAM_ATTR_MASK   ((uint8_t)3)
->
->Why not use PAM_ATTR_foo instead of MCH_HOST_BRIDGE_PAM_foo?
-
-Could be used indeed=2E See also below=2E
-
->
->>   /* SMRAM register */
->>   #define SMRAM_D_OPEN           ((uint8_t)(1 << 6))
->> @@ -83,13 +82,13 @@
->>   #define PAM_REGIONS_COUNT       13
->>     typedef struct PAMMemoryRegion {
->> -    MemoryRegion alias[4];  /* index =3D PAM value */
->> -    unsigned current;
->> +    MemoryRegion alias[4];  /* index =3D mode value */
->> +    uint8_t mode;
->>   } PAMMemoryRegion;
->>     void init_pam(PAMMemoryRegion *mem, Object *owner, MemoryRegion *ra=
-m,
->>                 MemoryRegion *system, MemoryRegion *pci,
->>                 uint32_t start, uint32_t size);
->> -void pam_update(PAMMemoryRegion *mem, int idx, uint8_t val);
->> +void pam_update(PAMMemoryRegion *mem, uint8_t mode);
->>     #endif /* QEMU_PAM_H */
->> diff --git a/hw/pci-host/i440fx=2Ec b/hw/pci-host/i440fx=2Ec
->> index 4f0a0438d7=2E=2Ecddd506ab0 100644
->> --- a/hw/pci-host/i440fx=2Ec
->> +++ b/hw/pci-host/i440fx=2Ec
->> @@ -64,6 +64,8 @@ struct I440FXState {
->>   #define I440FX_PAM_SIZE 7
->>   #define I440FX_SMRAM    0x72
->>   +#define I440FX_PAM_ATTR_MASK ((uint8_t)3)
->
->or (PAM_ATTR_RE|PAM_ATTR_WE)?
->
->It is odd to have I440FX_PAM_ATTR_MASK disconnected
->from the values it masks=2E
-
-PAM_ATTR_RE and PAM_ATTR_WE are swapped in case of VIA=2E I didn't bother =
-about these constants since both are currently not used at all=2E Shall I r=
-emove them in case of a respin?
-
->
->> -void pam_update(PAMMemoryRegion *pam, int idx, uint8_t val)
->> +void pam_update(PAMMemoryRegion *pam, uint8_t mode)
->>   {
->> -    assert(0 <=3D idx && idx < PAM_REGIONS_COUNT);
->> +    g_assert(mode < ARRAY_SIZE(pam->alias));
->>   -    memory_region_set_enabled(&pam->alias[pam->current], false);
->> -    pam->current =3D (val >> ((!(idx & 1)) * 4)) & PAM_ATTR_MASK;
->
->Can we pass the mask by argument instead?
-
-For VIA, each PAM region is defined by just two bits (rather than four as =
-for Intel)=2E So a byte contains attributes for four regions instead of two=
-=2E Therefore, passing a mask alone doesn't help, one needed to pass a shif=
-t value as well=2E Furthermore, since PAM_ATTR_RE and PAM_ATTR_WE are swapp=
-ed, it seems cleaner to just pass the final mode value=2E
-
-Do we consider avoiding the redundancies more worthwhile than having the b=
-it extraction logic together? If so, I'm fine with dropping the series unti=
-l a VIA northbridge gets accepted=2E Perhaps what's missing is a bit extrac=
-tion API which spans multiple bytes=2E Please let me know=2E
-
->
->> -    memory_region_set_enabled(&pam->alias[pam->current], true);
->> +    memory_region_set_enabled(&pam->alias[pam->mode], false);
->> +    pam->mode =3D mode;
->> +    memory_region_set_enabled(&pam->alias[pam->mode], true);
->>   }
->
->Are the VIA values different of the PAM_ATTR_foo ones?
-
-They are different except for PAM_ATTR_MASK=2E
-
->
->I'm not sure this is an helpful change, I'd rather
->remove the MCH_HOST_BRIDGE_PAM_foo definitions and
->use the PAM generic ones=2E
-
-PAM_ATTR_MASK could indeed be reused for VIA=2E I'd respin if this series =
-made sense in its own right=2E
-
-Best regsrds,
-Bernhard
-
->
->Regards,
->
->Phil=2E
+r~
 
