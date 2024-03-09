@@ -4,69 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 310DBC54798
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 09:36:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8828C54798
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 11:16:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rit7K-0002Nm-79; Sat, 09 Mar 2024 04:35:46 -0500
+	id 1riufy-000566-Fi; Sat, 09 Mar 2024 06:15:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <angelo@kernel-space.org>)
- id 1rit7H-0002NT-R6
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 04:35:43 -0500
-Received: from mail.kernel-space.org ([195.201.34.187])
+ (Exim 4.90_1) (envelope-from <rppt@kernel.org>) id 1riufw-00055s-KP
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 06:15:36 -0500
+Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <angelo@kernel-space.org>)
- id 1rit7F-0006ST-JB
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 04:35:43 -0500
-Received: from kernel-space.org (localhost [127.0.0.1])
- by kernel-space.org (OpenSMTPD) with ESMTP id 109dc69e;
- Sat, 9 Mar 2024 09:33:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kernel-space.org; h=from
- :to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding; s=s1; bh=hZwqIq0R7Q5x2X5pXNpiCWSKvo8
- =; b=TIXiyReUInSEht9pvtIBHlkQ6aREG0ttx9CbdO3jPccFvYSp9xPXpdCzrim
- F61xqMwvCZLTrazxsl2XPvLvbd+Nq7Y65xk3Ru9rfCLOjvmVclPaegzEUpJmZuIZ
- dS8ATEZKfXPrjSrITo3RSYtjOooNyXTKWohqBCpRjHI1FddM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=kernel-space.org; h=from:to
- :cc:subject:date:message-id:mime-version
- :content-transfer-encoding; q=dns; s=s1; b=sMr9i97J4nbm492pCitQP
- 5uFF68Bx07fUE5g5OwsmwV5ZS8dD1xJIk1HrONGM7KxXdPgGSC6sx+qlnkE7JZbE
- rUtjpUWXCclDbHBSv0JGWXifES4B9HPxgKQWHpJfrhHUej2gLQllTgBJqh1ZYdWZ
- 8HxRHRijS4n52LSXbxgfj8=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel-space.org;
- s=s1; t=1709976787;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=RhTm7ZUwb5pC4k/n/Wk7PbjmWWWIUggmraXNJnyAnvI=;
- b=M4eddSb0HjICV8GYysjrBJC5p1Gb649FseuQhXr5PSZEcP/sS2UIw8nRwwCNZISQCfadkU
- 7FczYhERPqZkPhFAd/2M6shC/FB6LPK3AF88SBdmxWbacM/hGaEcyH6CkwPru449FhSPkV
- 4iRASV2diO5NVGMJ5dSkrOpqeh1ZNu8=
-Received: from localhost.localdomain
- (host-79-51-238-97.retail.telecomitalia.it [79.51.238.97])
- by kernel-space.org (OpenSMTPD) with ESMTPSA id f60bb657
- (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
- Sat, 9 Mar 2024 09:33:07 +0000 (UTC)
-From: Angelo Dureghello <angelo@kernel-space.org>
-To: huth@tuxfamily.org
-Cc: qemu-devel@nongnu.org,
-	Angelo Dureghello <angelo@kernel-space.org>
-Subject: [PATCH v3] hw/m68k/mcf5208: add support for reset
-Date: Sat,  9 Mar 2024 10:34:59 +0100
-Message-ID: <20240309093459.984565-1-angelo@kernel-space.org>
-X-Mailer: git-send-email 2.44.0
+ (Exim 4.90_1) (envelope-from <rppt@kernel.org>) id 1riuft-0003Dd-Qz
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 06:15:35 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 23246601CF;
+ Sat,  9 Mar 2024 11:15:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB0EC433C7;
+ Sat,  9 Mar 2024 11:15:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1709982923;
+ bh=YaUuuk7Crsl2a1PUUVlftTiGcGES7hvpa0gsLJH4zXA=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=Rl9M6geC4ebyRSg/d2wRXYZOIlzGBGevef0ILal/PwLTfJYHxWnepu1EFQhJSJqp1
+ dqKzS8GKxJ+rhJToGRkhboVOZdHt+vU98vtpuGtVx1OYquHCjgIoWOt5kIIIUgUdkA
+ zVhFg8xuVaI+nt//g1J0r8SZk/3Q7xTmCC8eOzhi9FBsQ9Y0h+puyEVimWTJnC8oYu
+ Y7MxIveJTBKivuvGizPHVxJlu5YPSGFls3TxEPBEiRf30S5/tAKcIhqs0kqyYQkT4I
+ tS6X5kYMX/52fcixiE4zhGRDtQidSASFWNKNftwdz9lcEYoKUFz7B7hl+61ijvjwHK
+ DHGPLi3zffCQA==
+Date: Sat, 9 Mar 2024 13:14:24 +0200
+From: Mike Rapoport <rppt@kernel.org>
+To: Sean Christopherson <seanjc@google.com>
+Cc: James Gowans <jgowans@amazon.com>,
+ "akpm@linux-foundation.org" <akpm@linux-foundation.org>,
+ Patrick Roy <roypat@amazon.co.uk>,
+ "chao.p.peng@linux.intel.com" <chao.p.peng@linux.intel.com>,
+ Derek Manwaring <derekmn@amazon.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ David Woodhouse <dwmw@amazon.co.uk>,
+ Nikita Kalyazin <kalyazin@amazon.co.uk>,
+ "lstoakes@gmail.com" <lstoakes@gmail.com>,
+ "Liam.Howlett@oracle.com" <Liam.Howlett@oracle.com>,
+ "linux-mm@kvack.org" <linux-mm@kvack.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "kirill.shutemov@linux.intel.com" <kirill.shutemov@linux.intel.com>,
+ "vbabka@suse.cz" <vbabka@suse.cz>,
+ "mst@redhat.com" <mst@redhat.com>, "somlo@cmu.edu" <somlo@cmu.edu>,
+ Alexander Graf <graf@amazon.de>,
+ "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+ "linux-coco@lists.linux.dev" <linux-coco@lists.linux.dev>
+Subject: Re: Unmapping KVM Guest Memory from Host Kernel
+Message-ID: <ZexEkGkNe_7UY7w6@kernel.org>
+References: <cc1bb8e9bc3e1ab637700a4d3defeec95b55060a.camel@amazon.com>
+ <ZeudRmZz7M6fWPVM@google.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=195.201.34.187;
- envelope-from=angelo@kernel-space.org; helo=mail.kernel-space.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+In-Reply-To: <ZeudRmZz7M6fWPVM@google.com>
+Received-SPF: pass client-ip=139.178.84.217; envelope-from=rppt@kernel.org;
+ helo=dfw.source.kernel.org
+X-Spam_score_int: -76
+X-Spam_score: -7.7
+X-Spam_bar: -------
+X-Spam_report: (-7.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,88 +87,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add reset support for mcf5208.
+On Fri, Mar 08, 2024 at 03:22:50PM -0800, Sean Christopherson wrote:
+> On Fri, Mar 08, 2024, James Gowans wrote:
+> > However, memfd_secret doesn’t work out the box for KVM guest memory; the
+> > main reason seems to be that the GUP path is intentionally disabled for
+> > memfd_secret, so if we use a memfd_secret backed VMA for a memslot then
+> > KVM is not able to fault the memory in. If it’s been pre-faulted in by
+> > userspace then it seems to work.
+> 
+> Huh, that _shouldn't_ work.  The folio_is_secretmem() in gup_pte_range() is
+> supposed to prevent the "fast gup" path from getting secretmem pages.
 
-Signed-off-by: Angelo Dureghello <angelo@kernel-space.org>
----
- hw/m68k/mcf5208.c | 44 ++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 42 insertions(+), 2 deletions(-)
+I suspect this works because KVM only calls gup on faults and if the memory
+was pre-faulted via memfd_secret there won't be faults and no gups from
+KVM.
+ 
+> > With this in mind, what’s the best way to solve getting guest RAM out of
+> > the direct map? Is memfd_secret integration with KVM the way to go, or
+> > should we build a solution on top of guest_memfd, for example via some
+> > flag that causes it to leave memory in the host userspace’s page tables,
+> > but removes it from the direct map? 
+> 
+> memfd_secret obviously gets you a PoC much faster, but in the long term I'm quite
+> sure you'll be fighting memfd_secret all the way.  E.g. it's not dumpable, it
+> deliberately allocates at 4KiB granularity (though I suspect the bug you found
+> means that it can be inadvertantly mapped with 2MiB hugepages), it has no line
+> of sight to taking userspace out of the equation, etc.
+> 
+> With guest_memfd on the other hand, everyone contributing to and maintaining it
+> has goals that are *very* closely aligned with what you want to do.
 
-diff --git a/hw/m68k/mcf5208.c b/hw/m68k/mcf5208.c
-index 0cfb806c20..ec14096aa4 100644
---- a/hw/m68k/mcf5208.c
-+++ b/hw/m68k/mcf5208.c
-@@ -40,6 +40,8 @@
- #define PCSR_PRE_SHIFT  8
- #define PCSR_PRE_MASK   0x0f00
- 
-+#define RCR_SOFTRST     0x80
-+
- typedef struct {
-     MemoryRegion iomem;
-     qemu_irq irq;
-@@ -185,12 +187,50 @@ static const MemoryRegionOps m5208_sys_ops = {
-     .endianness = DEVICE_NATIVE_ENDIAN,
- };
- 
--static void mcf5208_sys_init(MemoryRegion *address_space, qemu_irq *pic)
-+static uint64_t m5208_rcm_read(void *opaque, hwaddr addr,
-+                               unsigned size)
-+{
-+    return 0;
-+}
-+
-+static void m5208_rcm_write(void *opaque, hwaddr addr,
-+                            uint64_t value, unsigned size)
-+{
-+    M68kCPU *cpu = opaque;
-+    CPUState *cs = CPU(cpu);
-+    switch (addr) {
-+    case 0x0: /* RCR */
-+        if (value & RCR_SOFTRST) {
-+            cpu_reset(cs);
-+            cpu->env.aregs[7] = ldl_phys(cs->as, 0);
-+            cpu->env.pc = ldl_phys(cs->as, 4);
-+        }
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%" HWADDR_PRIX "\n",
-+                      __func__, addr);
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps m5208_rcm_ops = {
-+    .read = m5208_rcm_read,
-+    .write = m5208_rcm_write,
-+    .endianness = DEVICE_NATIVE_ENDIAN,
-+};
-+
-+static void mcf5208_sys_init(MemoryRegion *address_space, qemu_irq *pic,
-+                             M68kCPU *cpu)
- {
-     MemoryRegion *iomem = g_new(MemoryRegion, 1);
-+    MemoryRegion *iomem_rcm = g_new(MemoryRegion, 1);
-     m5208_timer_state *s;
-     int i;
- 
-+    /* RCM */
-+    memory_region_init_io(iomem_rcm, NULL, &m5208_rcm_ops, cpu,
-+                          "m5208-rcm", 0x00000080);
-+    memory_region_add_subregion(address_space, 0xfc0a0000, iomem_rcm);
-     /* SDRAMC.  */
-     memory_region_init_io(iomem, NULL, &m5208_sys_ops, NULL, "m5208-sys", 0x00004000);
-     memory_region_add_subregion(address_space, 0xfc0a8000, iomem);
-@@ -265,7 +305,7 @@ static void mcf5208evb_init(MachineState *machine)
-     mcf_uart_create_mmap(0xfc064000, pic[27], serial_hd(1));
-     mcf_uart_create_mmap(0xfc068000, pic[28], serial_hd(2));
- 
--    mcf5208_sys_init(address_space_mem, pic);
-+    mcf5208_sys_init(address_space_mem, pic, cpu);
- 
-     mcf_fec_init(address_space_mem, 0xfc030000, pic + 36);
- 
+I agree with Sean, guest_memfd seems a better interface to use. It's
+integrated by design with KVM and removing guest memory from the direct map
+looks like a natural enhancement to guest_memfd. 
+
+Unless I'm missing something, for fast-and-dirty POC it'll be a oneliner
+that adds set_memory_np() to kvm_gmem_get_folio() and then figuring out
+what to do with virtio :)
+
 -- 
-2.44.0
-
+Sincerely yours,
+Mike.
 
