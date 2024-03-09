@@ -4,74 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8828C54798
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 11:16:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08A81C54798
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 11:35:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riufy-000566-Fi; Sat, 09 Mar 2024 06:15:38 -0500
+	id 1riuyQ-00078j-Vy; Sat, 09 Mar 2024 06:34:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rppt@kernel.org>) id 1riufw-00055s-KP
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 06:15:36 -0500
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1riuyP-00078S-Lh; Sat, 09 Mar 2024 06:34:41 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rppt@kernel.org>) id 1riuft-0003Dd-Qz
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 06:15:35 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 23246601CF;
- Sat,  9 Mar 2024 11:15:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB0EC433C7;
- Sat,  9 Mar 2024 11:15:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1709982923;
- bh=YaUuuk7Crsl2a1PUUVlftTiGcGES7hvpa0gsLJH4zXA=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=Rl9M6geC4ebyRSg/d2wRXYZOIlzGBGevef0ILal/PwLTfJYHxWnepu1EFQhJSJqp1
- dqKzS8GKxJ+rhJToGRkhboVOZdHt+vU98vtpuGtVx1OYquHCjgIoWOt5kIIIUgUdkA
- zVhFg8xuVaI+nt//g1J0r8SZk/3Q7xTmCC8eOzhi9FBsQ9Y0h+puyEVimWTJnC8oYu
- Y7MxIveJTBKivuvGizPHVxJlu5YPSGFls3TxEPBEiRf30S5/tAKcIhqs0kqyYQkT4I
- tS6X5kYMX/52fcixiE4zhGRDtQidSASFWNKNftwdz9lcEYoKUFz7B7hl+61ijvjwHK
- DHGPLi3zffCQA==
-Date: Sat, 9 Mar 2024 13:14:24 +0200
-From: Mike Rapoport <rppt@kernel.org>
-To: Sean Christopherson <seanjc@google.com>
-Cc: James Gowans <jgowans@amazon.com>,
- "akpm@linux-foundation.org" <akpm@linux-foundation.org>,
- Patrick Roy <roypat@amazon.co.uk>,
- "chao.p.peng@linux.intel.com" <chao.p.peng@linux.intel.com>,
- Derek Manwaring <derekmn@amazon.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- David Woodhouse <dwmw@amazon.co.uk>,
- Nikita Kalyazin <kalyazin@amazon.co.uk>,
- "lstoakes@gmail.com" <lstoakes@gmail.com>,
- "Liam.Howlett@oracle.com" <Liam.Howlett@oracle.com>,
- "linux-mm@kvack.org" <linux-mm@kvack.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "kirill.shutemov@linux.intel.com" <kirill.shutemov@linux.intel.com>,
- "vbabka@suse.cz" <vbabka@suse.cz>,
- "mst@redhat.com" <mst@redhat.com>, "somlo@cmu.edu" <somlo@cmu.edu>,
- Alexander Graf <graf@amazon.de>,
- "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
- "linux-coco@lists.linux.dev" <linux-coco@lists.linux.dev>
-Subject: Re: Unmapping KVM Guest Memory from Host Kernel
-Message-ID: <ZexEkGkNe_7UY7w6@kernel.org>
-References: <cc1bb8e9bc3e1ab637700a4d3defeec95b55060a.camel@amazon.com>
- <ZeudRmZz7M6fWPVM@google.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1riuyN-0006UD-J3; Sat, 09 Mar 2024 06:34:41 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id D12C54E6005;
+ Sat,  9 Mar 2024 12:34:32 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id V839Bh-F5IYA; Sat,  9 Mar 2024 12:34:30 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id D81494E6004; Sat,  9 Mar 2024 12:34:30 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id D68F47456B4;
+ Sat,  9 Mar 2024 12:34:30 +0100 (CET)
+Date: Sat, 9 Mar 2024 12:34:30 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+cc: Nicholas Piggin <npiggin@gmail.com>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>, clg@kaod.org
+Subject: Re: [PATCH] hw/ppc/sam460ex: Support short options for adding drives
+In-Reply-To: <20240305225721.E9A404E6005@zero.eik.bme.hu>
+Message-ID: <894f71b9-8e03-7459-1946-c95d24efee72@eik.bme.hu>
+References: <20240305225721.E9A404E6005@zero.eik.bme.hu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZeudRmZz7M6fWPVM@google.com>
-Received-SPF: pass client-ip=139.178.84.217; envelope-from=rppt@kernel.org;
- helo=dfw.source.kernel.org
-X-Spam_score_int: -76
-X-Spam_score: -7.7
-X-Spam_bar: -------
-X-Spam_report: (-7.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,45 +63,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 08, 2024 at 03:22:50PM -0800, Sean Christopherson wrote:
-> On Fri, Mar 08, 2024, James Gowans wrote:
-> > However, memfd_secret doesn’t work out the box for KVM guest memory; the
-> > main reason seems to be that the GUP path is intentionally disabled for
-> > memfd_secret, so if we use a memfd_secret backed VMA for a memslot then
-> > KVM is not able to fault the memory in. If it’s been pre-faulted in by
-> > userspace then it seems to work.
-> 
-> Huh, that _shouldn't_ work.  The folio_is_secretmem() in gup_pte_range() is
-> supposed to prevent the "fast gup" path from getting secretmem pages.
+On Tue, 5 Mar 2024, BALATON Zoltan wrote:
+> Having to use -drive if=none,... and -device ide-[cd,hd] is
+> inconvenient. Add support for shorter convenience options such as
+> -cdrom and -drive media=disk. Also adjust two nearby comments for code
+> style.
+>
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 
-I suspect this works because KVM only calls gup on faults and if the memory
-was pre-faulted via memfd_secret there won't be faults and no gups from
-KVM.
- 
-> > With this in mind, what’s the best way to solve getting guest RAM out of
-> > the direct map? Is memfd_secret integration with KVM the way to go, or
-> > should we build a solution on top of guest_memfd, for example via some
-> > flag that causes it to leave memory in the host userspace’s page tables,
-> > but removes it from the direct map? 
-> 
-> memfd_secret obviously gets you a PoC much faster, but in the long term I'm quite
-> sure you'll be fighting memfd_secret all the way.  E.g. it's not dumpable, it
-> deliberately allocates at 4KiB granularity (though I suspect the bug you found
-> means that it can be inadvertantly mapped with 2MiB hugepages), it has no line
-> of sight to taking userspace out of the equation, etc.
-> 
-> With guest_memfd on the other hand, everyone contributing to and maintaining it
-> has goals that are *very* closely aligned with what you want to do.
+Ping for freeze? (Forgot to cc qemu-ppc, now adding that too.)
 
-I agree with Sean, guest_memfd seems a better interface to use. It's
-integrated by design with KVM and removing guest memory from the direct map
-looks like a natural enhancement to guest_memfd. 
-
-Unless I'm missing something, for fast-and-dirty POC it'll be a oneliner
-that adds set_memory_np() to kvm_gmem_get_folio() and then figuring out
-what to do with virtio :)
-
--- 
-Sincerely yours,
-Mike.
+> ---
+> hw/ppc/sam460ex.c | 24 +++++++++++++++++++-----
+> 1 file changed, 19 insertions(+), 5 deletions(-)
+>
+> diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
+> index 7e34b6c5e0..d42b677898 100644
+> --- a/hw/ppc/sam460ex.c
+> +++ b/hw/ppc/sam460ex.c
+> @@ -33,6 +33,7 @@
+> #include "hw/char/serial.h"
+> #include "hw/i2c/ppc4xx_i2c.h"
+> #include "hw/i2c/smbus_eeprom.h"
+> +#include "hw/ide/pci.h"
+> #include "hw/usb/hcd-ehci.h"
+> #include "hw/ppc/fdt.h"
+> #include "hw/qdev-properties.h"
+> @@ -449,15 +450,27 @@ static void sam460ex_init(MachineState *machine)
+>
+>     /* PCI devices */
+>     pci_create_simple(pci_bus, PCI_DEVFN(6, 0), "sm501");
+> -    /* SoC has a single SATA port but we don't emulate that yet
+> +    /*
+> +     * SoC has a single SATA port but we don't emulate that
+>      * However, firmware and usual clients have driver for SiI311x
+> -     * so add one for convenience by default */
+> +     * PCI SATA card so add one for convenience by default
+> +     */
+>     if (defaults_enabled()) {
+> -        pci_create_simple(pci_bus, -1, "sii3112");
+> +        PCIIDEState *s = PCI_IDE(pci_create_simple(pci_bus, -1, "sii3112"));
+> +        DriveInfo *di;
+> +
+> +        di = drive_get_by_index(IF_IDE, 0);
+> +        if (di) {
+> +            ide_bus_create_drive(&s->bus[0], 0, di);
+> +        }
+> +        /* Use index 2 only if 1 does not exist, this allows -cdrom */
+> +        di = drive_get_by_index(IF_IDE, 1) ?: drive_get_by_index(IF_IDE, 2);
+> +        if (di) {
+> +            ide_bus_create_drive(&s->bus[1], 0, di);
+> +        }
+>     }
+>
+> -    /* SoC has 4 UARTs
+> -     * but board has only one wired and two are present in fdt */
+> +    /* SoC has 4 UARTs but board has only one wired and two described in fdt */
+>     if (serial_hd(0) != NULL) {
+>         serial_mm_init(get_system_memory(), 0x4ef600300, 0,
+>                        qdev_get_gpio_in(uic[1], 1),
+> @@ -531,6 +544,7 @@ static void sam460ex_machine_init(MachineClass *mc)
+> {
+>     mc->desc = "aCube Sam460ex";
+>     mc->init = sam460ex_init;
+> +    mc->block_default_type = IF_IDE;
+>     mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("460exb");
+>     mc->default_ram_size = 512 * MiB;
+>     mc->default_ram_id = "ppc4xx.sdram";
+>
 
