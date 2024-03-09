@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00582C54798
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 16:00:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC537C54E4A
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 16:00:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riz5O-0007RS-Kn; Sat, 09 Mar 2024 10:58:10 -0500
+	id 1riz58-0007Jn-Op; Sat, 09 Mar 2024 10:57:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1riz5E-0007Lq-MV; Sat, 09 Mar 2024 10:58:01 -0500
+ id 1riz54-0007EF-A4; Sat, 09 Mar 2024 10:57:50 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1riz5C-0004Iu-JR; Sat, 09 Mar 2024 10:58:00 -0500
+ id 1riz52-0004HG-LW; Sat, 09 Mar 2024 10:57:50 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8682F54531;
- Sat,  9 Mar 2024 18:58:38 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B66E554529;
+ Sat,  9 Mar 2024 18:58:31 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 08292944C3;
- Sat,  9 Mar 2024 18:57:41 +0300 (MSK)
-Received: (nullmailer pid 1694671 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 7E480944BE;
+ Sat,  9 Mar 2024 18:57:35 +0300 (MSK)
+Received: (nullmailer pid 1694656 invoked by uid 1000);
  Sat, 09 Mar 2024 15:57:29 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, qemu-trivial@nongnu.org,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 09/11] hw/pci-bridge/cxl_upstream: Fix problem with
- g_steal_pointer()
-Date: Sat,  9 Mar 2024 18:57:27 +0300
-Message-Id: <20240309155729.1694607-10-mjt@tls.msk.ru>
+Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-trivial@nongnu.org
+Subject: [PULL 04/11] make-release: switch to .xz format by default
+Date: Sat,  9 Mar 2024 18:57:22 +0300
+Message-Id: <20240309155729.1694607-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240309155729.1694607-1-mjt@tls.msk.ru>
 References: <20240309155729.1694607-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,87 +61,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+For a long time, we provide two compression formats in the
+download area, .bz2 and .xz.  There's absolutely no reason
+to provide two in parallel, .xz compresses better, and all
+the links we use points to .xz.  Downstream distributions
+mostly use .xz too.
 
-When setting GLIB_VERSION_MAX_ALLOWED to GLIB_VERSION_2_58 or higher,
-glib adds type safety checks to the g_steal_pointer() macro. This
-triggers errors in the build_cdat_table() function which uses the
-g_steal_pointer() for type-casting from one pointer type to the other
-(which also looks quite weird since the local pointers have all been
-declared with g_autofree though they are never freed here). Let's fix
-it by using a proper typecast instead. For making this possible, we
-have to remove the QEMU_PACKED attribute from some structs since GCC
-otherwise complains that the source and destination pointer might
-have different alignment restrictions. Removing the QEMU_PACKED should
-be fine here since the structs are already naturally aligned. Anyway,
-add some QEMU_BUILD_BUG_ON() statements to make sure that we've got
-the right sizes (without padding in the structs).
+For the release maintenance providing two formats is definitely
+extra burden too.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- hw/pci-bridge/cxl_upstream.c | 8 ++++----
- include/hw/cxl/cxl_cdat.h    | 8 +++++---
- 2 files changed, 9 insertions(+), 7 deletions(-)
+ scripts/make-release | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
-index e87eb40177..537f9affb8 100644
---- a/hw/pci-bridge/cxl_upstream.c
-+++ b/hw/pci-bridge/cxl_upstream.c
-@@ -192,8 +192,8 @@ enum {
- 
- static int build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
- {
--    g_autofree CDATSslbis *sslbis_latency = NULL;
--    g_autofree CDATSslbis *sslbis_bandwidth = NULL;
-+    CDATSslbis *sslbis_latency;
-+    CDATSslbis *sslbis_bandwidth;
-     CXLUpstreamPort *us = CXL_USP(priv);
-     PCIBus *bus = &PCI_BRIDGE(us)->sec_bus;
-     int devfn, sslbis_size, i;
-@@ -270,8 +270,8 @@ static int build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
-     *cdat_table = g_new0(CDATSubHeader *, CXL_USP_CDAT_NUM_ENTRIES);
- 
-     /* Header always at start of structure */
--    (*cdat_table)[CXL_USP_CDAT_SSLBIS_LAT] = g_steal_pointer(&sslbis_latency);
--    (*cdat_table)[CXL_USP_CDAT_SSLBIS_BW] = g_steal_pointer(&sslbis_bandwidth);
-+    (*cdat_table)[CXL_USP_CDAT_SSLBIS_LAT] = (CDATSubHeader *)sslbis_latency;
-+    (*cdat_table)[CXL_USP_CDAT_SSLBIS_BW] = (CDATSubHeader *)sslbis_bandwidth;
- 
-     return CXL_USP_CDAT_NUM_ENTRIES;
- }
-diff --git a/include/hw/cxl/cxl_cdat.h b/include/hw/cxl/cxl_cdat.h
-index 8e3d094608..b44cefaad6 100644
---- a/include/hw/cxl/cxl_cdat.h
-+++ b/include/hw/cxl/cxl_cdat.h
-@@ -130,7 +130,8 @@ typedef struct CDATSslbisHeader {
-     uint8_t data_type;
-     uint8_t reserved[3];
-     uint64_t entry_base_unit;
--} QEMU_PACKED CDATSslbisHeader;
-+} CDATSslbisHeader;
-+QEMU_BUILD_BUG_ON(sizeof(CDATSslbisHeader) != 16);
- 
- #define CDAT_PORT_ID_USP 0x100
- /* Switch Scoped Latency and Bandwidth Entry - CDAT Table 10 */
-@@ -139,12 +140,13 @@ typedef struct CDATSslbe {
-     uint16_t port_y_id;
-     uint16_t latency_bandwidth;
-     uint16_t reserved;
--} QEMU_PACKED CDATSslbe;
-+} CDATSslbe;
-+QEMU_BUILD_BUG_ON(sizeof(CDATSslbe) != 8);
- 
- typedef struct CDATSslbis {
-     CDATSslbisHeader sslbis_header;
-     CDATSslbe sslbe[];
--} QEMU_PACKED CDATSslbis;
-+} CDATSslbis;
- 
- typedef struct CDATEntry {
-     void *base;
+diff --git a/scripts/make-release b/scripts/make-release
+index 9c570b87f4..6e0433de24 100755
+--- a/scripts/make-release
++++ b/scripts/make-release
+@@ -47,5 +47,5 @@ meson subprojects download $SUBPROJECTS
+         CryptoPkg/Library/OpensslLib/openssl \
+         MdeModulePkg/Library/BrotliCustomDecompressLib/brotli)
+ popd
+-tar --exclude=.git -cjf ${destination}.tar.bz2 ${destination}
++tar --exclude=.git -cJf ${destination}.tar.xz ${destination}
+ rm -rf ${destination}
 -- 
 2.39.2
 
