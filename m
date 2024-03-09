@@ -4,70 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A46EC5475B
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 00:34:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69D5EC54E41
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 00:36:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rikeS-0004EF-Os; Fri, 08 Mar 2024 19:33:25 -0500
+	id 1rikhK-0004zo-FA; Fri, 08 Mar 2024 19:36:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rikeQ-0004Ds-H5
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 19:33:22 -0500
-Received: from mgamail.intel.com ([198.175.65.11])
+ id 1rikhJ-0004zd-85
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 19:36:21 -0500
+Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rike6-0004zV-IM
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 19:33:22 -0500
+ id 1rikhH-0005qE-J3
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 19:36:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709944382; x=1741480382;
+ t=1709944579; x=1741480579;
  h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=hx6j4/MUb1luJsn2GGe8j/JH5xwP6tDDG7xQJn722TY=;
- b=L00/1k+WpzMeS3RJwWOSPKA3p6yVhU7RMRut4GPB7c/pR6/cN1bbFqc7
- lRLUnphncwJ4fJwCnwPE4n580FFUYfeaEsu1wORaDcBHLj1h2nFE5ZGNc
- CgU9RL0myZS6PS/ncyN3JNM9bTHuw5W9ZqDn0U0ACb31iG59o8N9nk8Qf
- Yg+hd3Qv4yi1yLYPy+OuBixmMPziyh/zq8IEf/cvuEVXg91+GUUXSbqtz
- yLy71byu5mUxHWJuk/Gg+SYzZ+HB8FZpYpZltVh6EpNilU+wNuOIhjKSO
- LF23Ye1TwG2NwhsC8aPrJN+ULevBnGGQDaG3zIDTHuk7d+9ybiMG8dQff g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11007"; a="15248365"
-X-IronPort-AV: E=Sophos;i="6.07,111,1708416000"; d="scan'208";a="15248365"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Mar 2024 16:32:56 -0800
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=o7XYyBJ/wWxSY6FlKq2b4YXRb7dNIrJaoqiuXaqbcG8=;
+ b=CEwxMhXBRG8Bf69uKFRD/nqTLgDKEdQN5G6Rj+ZJ5BtM1TVncCnKhYtr
+ ixh47aqk96wHo8kL8dwKUy5iVGq+uyUrX2xeyjkdQlNf3A3XxlyBtQhXH
+ qizbsLNrIS9XvX2qgfCq1tq66yJN6wktvjNMziRDdNT8vApgd7avkR7rC
+ tzGHD37t0v9DU02tyyQQn8amixaTKYe8l3EoFhw22uTgl/yoxPgzb7+XW
+ 6JFfNx3nBZADuc+jJAlkzOP6u6p1PdE1RHbT/Nf3qYT4Qt/e2ePvqSAJX
+ 7u8a0TvC+fZ32qIysSWggSiTXrTLiSSQfEwFj9XCNHzMM5Msi2IqP49QB A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11007"; a="4534409"
+X-IronPort-AV: E=Sophos;i="6.07,111,1708416000"; 
+   d="scan'208";a="4534409"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Mar 2024 16:36:16 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,111,1708416000"; d="scan'208";a="11176915"
+X-IronPort-AV: E=Sophos;i="6.07,111,1708416000"; d="scan'208";a="15214569"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by orviesa008.jf.intel.com with ESMTP; 08 Mar 2024 16:32:54 -0800
-Date: Sat, 9 Mar 2024 08:46:41 +0800
+ by fmviesa004.fm.intel.com with ESMTP; 08 Mar 2024 16:36:12 -0800
+Date: Sat, 9 Mar 2024 08:49:59 +0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Yanan Wang <wangyanan55@huawei.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
  Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org,
- Xiaoling Song <xiaoling.song@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v2 00/13] Cleanup on SMP and its test
-Message-ID: <ZeuxcZmE9Ejr6acx@intel.com>
-References: <20240308160148.3130837-1-zhao1.liu@linux.intel.com>
- <a6c12d41-2801-4425-98e9-351851e2f7a4@linaro.org>
+ Xiaoyao Li <xiaoyao.li@intel.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Zhuocheng Ding <zhuocheng.ding@intel.com>,
+ Babu Moger <babu.moger@amd.com>, Yongwei Ma <yongwei.ma@intel.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v9 00/21] Introduce smp.modules for x86 in QEMU
+Message-ID: <ZeuyN8Eacq1Twsvg@intel.com>
+References: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
+ <17444096-9602-43e1-9042-2a7ce02b5e79@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <a6c12d41-2801-4425-98e9-351851e2f7a4@linaro.org>
-Received-SPF: none client-ip=198.175.65.11;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <17444096-9602-43e1-9042-2a7ce02b5e79@linaro.org>
+Received-SPF: none client-ip=192.198.163.19;
  envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,29 +93,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe,
-
+On Fri, Mar 08, 2024 at 05:36:38PM +0100, Philippe Mathieu-Daudé wrote:
+> Date: Fri, 8 Mar 2024 17:36:38 +0100
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Subject: Re: [PATCH v9 00/21] Introduce smp.modules for x86 in QEMU
 > 
-> Can you share your base commit please?
+> On 27/2/24 11:32, Zhao Liu wrote:
 > 
-> Applying: hw/core/machine-smp: Remove deprecated "parameter=0" SMP
-> configurations
-> Applying: hw/core/machine-smp: Deprecate unsupported "parameter=1" SMP
-> configurations
-> error: patch failed: docs/about/deprecated.rst:47
-> error: docs/about/deprecated.rst: patch does not apply
-> Patch failed at 0002 hw/core/machine-smp: Deprecate unsupported
-> "parameter=1" SMP configurations
->
+> > ---
+> > Zhao Liu (20):
+> >    hw/core/machine: Introduce the module as a CPU topology level
+> >    hw/core/machine: Support modules in -smp
+> >    hw/core: Introduce module-id as the topology subindex
+> >    hw/core: Support module-id in numa configuration
+> 
+> Patches 1-4 queued, thanks!
 
-The base commit is e1007b6bab5cf ("Merge tag 'pull-request-2024-03-01'
-of https://gitlab.com/thuth/qemu into staging").
-
-But I think this conflict is because of the first 4 patches of mudule
-series you picked. Let me rebase this series on that module series and
-refresh a v3.
-
-Thanks,
-Zhao
+Thanks Philippe!
 
 
