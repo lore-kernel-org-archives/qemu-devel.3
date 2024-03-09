@@ -4,88 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BAF9C5475B
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 00:59:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A54AEC5475B
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 02:07:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ril2s-0000Oq-Do; Fri, 08 Mar 2024 19:58:38 -0500
+	id 1rim6s-0000sB-U9; Fri, 08 Mar 2024 21:06:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ril2r-0000Og-ML
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 19:58:37 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ril2p-0002QD-GK
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 19:58:37 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1dd01ea35b5so15790985ad.0
- for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 16:58:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709945913; x=1710550713; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=CJlmnxBfN9cA2lyFLXeGfryENGzscnTyEmhaoG643do=;
- b=QonqO9Pt3XhFk6Vo2nnPh3ZPEurTjPDDJ0HZO2AYvZubmi5iVs+wifp3x5AJJ+ItqQ
- ZXyFLyYDpl5RDidgjFV+/F7ESb2dZ6TH2tQBv7oslSk9U55J+C1Np0j968Ejqexr/J9G
- v36jbmJEuj3VrivH/TYafUpkNSlirqiS0ixh7ru3WTOuUhSb65V2VL0ntYgxmRRZ47pk
- Tc6cwWQLv2IaKHxj/tOBGij79ELR8q3SZclLrvwb83AO742KRYlLwwgurfcjCQRrFBpY
- 5BS9RQ9VjbsMFXPG11TJady79xge7BFjhiDX6vbM2s4ZdCt/bYyq8tYRp13qEMSdR0Vb
- c+JQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709945913; x=1710550713;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CJlmnxBfN9cA2lyFLXeGfryENGzscnTyEmhaoG643do=;
- b=TUs5oekxGDO4ukqSZ+96+ab88jPYyktYqkuDj/A3Wvc3MpJJBzHf2d1wOEVmyS5vlc
- N58xkXNE7mKPT07Sa5tWAewylySh3MArdevd4dJqBWDjQfW8meaXeUBNHiJNbJNBb4nh
- 1Fc310XqJYgbolUAm3v7kKdvDU0ARDKrleWgg0mzNwo836bFEFFOaHTMsjWXg1qzLnhJ
- MiDDocz0NBxgCZvjXfx9MvoUP6KpYhqEA95wigJzBmcDeXoRaP8sE/H3kIIiQrBPUOEW
- 6f3aUnnWvV+VwN2qfU7AD1L8jzpYx42+0Q+Jku0gtsY1tM4SL1lyhOrgMRCOxb8DRQ4X
- VK2g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVwTQTz5JI8uEPBW/q2He1NTjBFEduj6Nnb8BdjVFHpPOOruHX4vZ3qKnsLGDu4q8OG+48WQ9X6mI9cs62QdJ24gqRBhRI=
-X-Gm-Message-State: AOJu0YyH5judwV8djt/mCauT9M1qHVe9zbcHxeQY0IeMm8sVkEtnB7fF
- jnlwelzupsZEUqoKtgCSVjKE/KQ8C6PAIe6MKl6mweCAA9X9MMD21zwBUnGhRnM=
-X-Google-Smtp-Source: AGHT+IFE02BY0sXqrZw4I+tREdWMDJllOIxCqmnj7aoWsIB/2z3aiEa4UD4cWVjVLxQvy5CZNL2snA==
-X-Received: by 2002:a17:902:c402:b0:1dc:696d:ec6e with SMTP id
- k2-20020a170902c40200b001dc696dec6emr361079plk.21.1709945913439; 
- Fri, 08 Mar 2024 16:58:33 -0800 (PST)
-Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
- [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- m7-20020a170902db0700b001dd54c4320esm236498plx.256.2024.03.08.16.58.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 Mar 2024 16:58:33 -0800 (PST)
-Message-ID: <bb51b489-e22e-424a-b6be-40f91f6f8875@linaro.org>
-Date: Fri, 8 Mar 2024 14:58:29 -1000
+ (Exim 4.90_1) (envelope-from <hao.xiang@linux.dev>)
+ id 1rim6j-0000q9-R6
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 21:06:43 -0500
+Received: from out-188.mta1.migadu.com ([95.215.58.188])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hao.xiang@linux.dev>)
+ id 1rim6g-0007o9-R0
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 21:06:41 -0500
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/5] gdbstub: Add Xfer:siginfo:read stub
-Content-Language: en-US
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, peter.maydell@linaro.org, laurent@vivier.eu,
- philmd@linaro.org
-References: <20240307182623.1450717-1-gustavo.romero@linaro.org>
- <20240307182623.1450717-4-gustavo.romero@linaro.org>
- <68dc0d72-ae67-4e7e-8c1f-670aa59e92c9@linaro.org>
- <322b8643-d595-4ce0-1f11-5e6ee1138638@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <322b8643-d595-4ce0-1f11-5e6ee1138638@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1709949996;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Pd08xPQhVaQ6pGBKUUmd8iemC2yjD7nMIhgWZ3CZ5CE=;
+ b=kdBR5uKEU7u+hN5Hj/hcSUpq+tkPMjN8q5p9cqsq0VNyAgR4nWHDQglH1BrL6cwxz1h/K4
+ lSWSnKuxlf5WlLWEMwxBwUz9WwdIqci0ZjVQ1QNTPT6j5IkuVUkG4/eEC9HTWbTcyd4tNH
+ 6GLo+T3poKbsg3dJIef4/3qCSu0eDvM=
+Date: Sat, 09 Mar 2024 02:06:33 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: hao.xiang@linux.dev
+Message-ID: <821fba91ac7c0d4cd481d91b8fc91c94304a677f@linux.dev>
+TLS-Required: No
+Subject: Re: [PATCH v4 3/7] migration/multifd: Implement
+ ram_save_target_page_multifd to handle multifd version of
+ MigrationOps::ram_save_target_page.
+To: peterx@redhat.com
+Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
+ farosas@suse.de, eblake@redhat.com, armbru@redhat.com, thuth@redhat.com,
+ lvivier@redhat.com, jdenemar@redhat.com, marcel.apfelbaum@gmail.com,
+ philmd@linaro.org, wangyanan55@huawei.com, qemu-devel@nongnu.org
+In-Reply-To: <CAAYibXhCzozRhHxp2Dk3L9BMhFhZtqyvgbwkj+8ZGMCHURZGug@mail.gmail.com>
+References: <20240301022829.3390548-1-hao.xiang@bytedance.com>
+ <20240301022829.3390548-4-hao.xiang@bytedance.com>
+ <ZeV8WaKyKEfw-em-@x1n>
+ <CAAYibXhCzozRhHxp2Dk3L9BMhFhZtqyvgbwkj+8ZGMCHURZGug@mail.gmail.com>
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=95.215.58.188; envelope-from=hao.xiang@linux.dev;
+ helo=out-188.mta1.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,38 +76,216 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/8/24 08:30, Gustavo Romero wrote:
-> Hi Richard!
-> 
-> On 3/7/24 6:13 PM, Richard Henderson wrote:
->> On 3/7/24 08:26, Gustavo Romero wrote:
->>> +void gdb_handle_query_xfer_siginfo(GArray *params, void *user_ctx)
->>> +{
->>> +    unsigned long offset, len;
->>> +    uint8_t *siginfo_offset;
->>> +
->>> +    offset = get_param(params, 0)->val_ul;
->>> +    len = get_param(params, 1)->val_ul;
->>> +
->>> +    if (offset + len > sizeof(target_siginfo_t)) {
->>
->> If you save the siginfo_len from gdb_handlesig, you can place this in user.c
-> Shouldn't all user-only stubs be placed in user-target.c? Like
-> gdb_handle_query_xfer_auxv and gdb_handle_query_xfer_exec_file, and since
-> what controls the inclusion in the build of user-target.c is CONFIG_USER_ONLY?
+>=20
+>=20On Sun, Mar 3, 2024 at 11:46 PM Peter Xu <peterx@redhat.com> wrote:
+>=20
+>=20>=20
+>=20> On Fri, Mar 01, 2024 at 02:28:25AM +0000, Hao Xiang wrote:
+> >=20
+>=20>  1. Add a dedicated handler for MigrationOps::ram_save_target_page =
+in
+> >=20
+>=20>  multifd live migration.
+> >=20
+>=20>  2. Refactor ram_save_target_page_legacy so that the legacy and mul=
+tifd
+> >=20
+>=20>  handlers don't have internal functions calling into each other.
+> >=20
+>=20>  Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
+> >=20
+>=20>  Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> >=20
+>=20>  Message-Id: <20240226195654.934709-4-hao.xiang@bytedance.com>
+> >=20
+>=20>  ---
+> >=20
+>=20>  migration/ram.c | 43 ++++++++++++++++++++++++++++++-------------
+> >=20
+>=20>  1 file changed, 30 insertions(+), 13 deletions(-)
+> >=20
+>=20>  diff --git a/migration/ram.c b/migration/ram.c
+> >=20
+>=20>  index e1fa229acf..f9d6ea65cc 100644
+> >=20
+>=20>  --- a/migration/ram.c
+> >=20
+>=20>  +++ b/migration/ram.c
+> >=20
+>=20>  @@ -1122,10 +1122,6 @@ static int save_zero_page(RAMState *rs, Pag=
+eSearchStatus *pss,
+> >=20
+>=20>  QEMUFile *file =3D pss->pss_channel;
+> >=20
+>=20>  int len =3D 0;
+> >=20
+>=20>  - if (migrate_zero_page_detection() =3D=3D ZERO_PAGE_DETECTION_NON=
+E) {
+> >=20
+>=20>  - return 0;
+> >=20
+>=20>  - }
+> >=20
+>=20>  We need to keep this to disable zero-page-detect on !multifd?
 
-user.c is also build for CONFIG_USER_ONLY, except that it is compiled only once, and has 
-no target-specific code in it.
+So if multifd is enabled, the new parameter takes effect. If multifd is n=
+ot enabled, zero page checking will always be done in the main thread, wh=
+ich is exactly the behavior it is now. I thought legacy migration is a de=
+precated feature so I am trying to not add new stuff to it.
 
->> Is it really correct to reject (offset == 0) + (len == large), rather than truncate len?
-> 
-> I think this is correct. GDB mentions briefly that an invalid offset
-> should be treated as an error. Thus, I think that a valid offset but
-> a non-existing/invalid (large) length should be treated the same,
-> cause in the end data on invalid offsets are being requested anyways.
+> >=20
+>=20>  -
+> >=20
+>=20>  if (!buffer_is_zero(p, TARGET_PAGE_SIZE)) {
+> >=20
+>=20>  return 0;
+> >=20
+>=20>  }
+> >=20
+>=20>  @@ -2045,7 +2041,6 @@ static bool save_compress_page(RAMState *rs,=
+ PageSearchStatus *pss,
+> >=20
+>=20>  */
+> >=20
+>=20>  static int ram_save_target_page_legacy(RAMState *rs, PageSearchSta=
+tus *pss)
+> >=20
+>=20>  {
+> >=20
+>=20>  - RAMBlock *block =3D pss->block;
+> >=20
+>=20>  ram_addr_t offset =3D ((ram_addr_t)pss->page) << TARGET_PAGE_BITS;
+> >=20
+>=20>  int res;
+> >=20
+>=20>  @@ -2061,17 +2056,34 @@ static int ram_save_target_page_legacy(RAM=
+State *rs, PageSearchStatus *pss)
+> >=20
+>=20>  return 1;
+> >=20
+>=20>  }
+> >=20
+>=20>  + return ram_save_page(rs, pss);
+> >=20
+>=20>  +}
+> >=20
+>=20>  +
+> >=20
+>=20>  +/**
+> >=20
+>=20>  + * ram_save_target_page_multifd: send one target page to multifd =
+workers
+> >=20
+>=20>  + *
+> >=20
+>=20>  + * Returns 1 if the page was queued, -1 otherwise.
+> >=20
+>=20>  + *
+> >=20
+>=20>  + * @rs: current RAM state
+> >=20
+>=20>  + * @pss: data about the page we want to send
+> >=20
+>=20>  + */
+> >=20
+>=20>  +static int ram_save_target_page_multifd(RAMState *rs, PageSearchS=
+tatus *pss)
+> >=20
+>=20>  +{
+> >=20
+>=20>  + RAMBlock *block =3D pss->block;
+> >=20
+>=20>  + ram_addr_t offset =3D ((ram_addr_t)pss->page) << TARGET_PAGE_BIT=
+S;
+> >=20
+>=20>  +
+> >=20
+>=20>  /*
+> >=20
+>=20>  - * Do not use multifd in postcopy as one whole host page should b=
+e
+> >=20
+>=20>  - * placed. Meanwhile postcopy requires atomic update of pages, so=
+ even
+> >=20
+>=20>  - * if host page size =3D=3D guest page size the dest guest during=
+ run may
+> >=20
+>=20>  - * still see partially copied pages which is data corruption.
+> >=20
+>=20>  + * Backward compatibility support. While using multifd live
+> >=20
+>=20>  We can also avoid mentioning "compatibility support" here - it's a
+> >=20
+>=20>  parameter, user can legally set it to anything.
 
-Ok.
+Will drop that.
 
-
-r~
+> >=20
+>=20>  + * migration, we still need to handle zero page checking on the
+> >=20
+>=20>  + * migration main thread.
+> >=20
+>=20>  */
+> >=20
+>=20>  - if (migrate_multifd() && !migration_in_postcopy()) {
+> >=20
+>=20>  - return ram_save_multifd_page(block, offset);
+> >=20
+>=20>  + if (migrate_zero_page_detection() =3D=3D ZERO_PAGE_DETECTION_LEG=
+ACY) {
+> >=20
+>=20>  + if (save_zero_page(rs, pss, offset)) {
+> >=20
+>=20>  + return 1;
+> >=20
+>=20>  + }
+> >=20
+>=20>  }
+> >=20
+>=20>  - return ram_save_page(rs, pss);
+> >=20
+>=20>  + return ram_save_multifd_page(block, offset);
+> >=20
+>=20>  }
+> >=20
+>=20>  /* Should be called before sending a host page */
+> >=20
+>=20>  @@ -2983,7 +2995,12 @@ static int ram_save_setup(QEMUFile *f, void=
+ *opaque)
+> >=20
+>=20>  }
+> >=20
+>=20>  migration_ops =3D g_malloc0(sizeof(MigrationOps));
+> >=20
+>=20>  - migration_ops->ram_save_target_page =3D ram_save_target_page_leg=
+acy;
+> >=20
+>=20>  +
+> >=20
+>=20>  + if (migrate_multifd()) {
+> >=20
+>=20>  + migration_ops->ram_save_target_page =3D ram_save_target_page_mul=
+tifd;
+> >=20
+>=20>  + } else {
+> >=20
+>=20>  + migration_ops->ram_save_target_page =3D ram_save_target_page_leg=
+acy;
+> >=20
+>=20>  + }
+> >=20
+>=20>  bql_unlock();
+> >=20
+>=20>  ret =3D multifd_send_sync_main();
+> >=20
+>=20>  --
+> >=20
+>=20>  2.30.2
+> >=20
+>=20>  --
+> >=20
+>=20>  Peter Xu
+> >
+>
 
