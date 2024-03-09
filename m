@@ -4,78 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF913C54798
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 13:41:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB3F0C54E41
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 13:42:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riwwv-0005cQ-3m; Sat, 09 Mar 2024 08:41:17 -0500
+	id 1riwwx-0005ci-46; Sat, 09 Mar 2024 08:41:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1riwwt-0005bG-B4
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1riwwt-0005bd-Hs
  for qemu-devel@nongnu.org; Sat, 09 Mar 2024 08:41:15 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1riwwr-0004cd-G0
+Received: from mgamail.intel.com ([198.175.65.14])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1riwwr-0004cg-G0
  for qemu-devel@nongnu.org; Sat, 09 Mar 2024 08:41:15 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-567bac94719so1971916a12.0
- for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 05:41:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709991670; x=1710596470; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=dulj40ayDF45vlir3cYjirF1h2M73oM2DWpOGZboE14=;
- b=Wd0GEs1ad0751UoOsCrKUdCc517UkLCpxGdZmXouAjKMLEmrn6u0V1DXUm5FAufUBF
- O0dLF0w/1Fk6b3kYpUCiuI92uBP8MTcP8iWuQb5yOvCIqsYR661TddrCwn20Rp4Z8DIY
- vNk3HVW2u5eU/aaFjzorfLdEfzpj3Jr5Em+0+uBlSboZkhDy9mI8qnhrZsOkw/pJ2xZi
- JIXF5kElv72pnjrX8GXXV0EUax9/9Bxh8RAL1Oh3RHlewe+/M+0WhovATDcUfmhcBg3M
- LhmX0HDST3SxCIvTSo0teAgSRPYA7iBdKWJt3IC5zOEWQ8NRGIl0t/2jjJd2qSqE/1hI
- jU1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709991670; x=1710596470;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dulj40ayDF45vlir3cYjirF1h2M73oM2DWpOGZboE14=;
- b=gsryIB0ZaDpmsG/DuiHww0I/AgDvGfXNmpkgnJC3mTDI+knJsaKPg3DX2vvkLRGyd2
- UCpiuBtamP1yHfmzomROuhclwGJILIg1HP+T9vr46RA87v5LDRiNdHl32eB5gA5x0SBz
- tvgeJaOaHlP7o4Ce8R0AQStnHcAAy7t5AnvRb+qN7InXCcAW7fGQG8YTcCr/5NjRrUMb
- pTvlO07GdiFvcSFu8hPdp09/GlfPuD9E0fboStzPmIlQn1CP8/W1hiJ2qHfn4aAUQoF+
- HqtgFLzR/0/TmJTckJNWIpeIFIuqpXlA7aN7frfRaH5qDrlNnyPO1t2XOYK8IpqweYhI
- 5VFg==
-X-Gm-Message-State: AOJu0Ywj+eKf2JGdqV2wSWzSt4R3h2X/LYmrdfIEkvxHjub+ZoLvX3Hh
- AY+Q7vDLdO8uZS/wyZvOA6jxqe5W1rkQQTsWb+ydbJ9OUSLo+8kTNUEnABse
-X-Google-Smtp-Source: AGHT+IEO2xuHetm402eRD3DRkRiS4Wyhwqpf67gCN3luprEsiHe2qPimPrjXxBt7iuYIbn6K3jCSpw==
-X-Received: by 2002:a50:ab13:0:b0:566:f60:1b0 with SMTP id
- s19-20020a50ab13000000b005660f6001b0mr1382422edc.11.1709991670151; 
- Sat, 09 Mar 2024 05:41:10 -0800 (PST)
-Received: from archlinux.. (dynamic-078-054-250-034.78.54.pool.telefonica.de.
- [78.54.250.34]) by smtp.gmail.com with ESMTPSA id
- b2-20020aa7c902000000b00564e489ce9asm906157edt.12.2024.03.09.05.41.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 09 Mar 2024 05:41:09 -0800 (PST)
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 0/2] Make PAMMemoryRegion less Intel-specific
-Date: Sat,  9 Mar 2024 14:40:54 +0100
-Message-ID: <20240309134056.1605-1-shentey@gmail.com>
-X-Mailer: git-send-email 2.44.0
-Content-Type: text/plain; charset="utf-8"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1709991673; x=1741527673;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=9R801M/RKXLR9NN8MIzCPaJSfWkUAq02qrdBXSRAmWc=;
+ b=U3dvfSyNSBdxsJw6umYSdIMDpBG5B0fDrUs9cIjBBNMjSpG9N+vI+jBy
+ APhfD7Ig1gRK8Wm/matvZUd6UOjvb99MgiXPhddes9vAHCDE+WJFsbD9o
+ X3CrP6DaragwbaTNiNlIydEXp3LSnjbvUhOrmSkY0cyJ/cbXSEulVODUB
+ f8LVTkTR67mCEiEdxAV9B/5zZF9NCW/OGpc7scrLJlFj8a4ZlKW8MRcaO
+ xi1fXN460iiEYLyXuuch5F2zU/5SQUKMtyrKnmzBQ12hzqt6aSCNEDKPY
+ ji8qY85Owt9xqMK428rbVofzJmWA9ILv9OZFO3rS3t5UZdzl5TtFYHfYM g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11007"; a="8524674"
+X-IronPort-AV: E=Sophos;i="6.07,112,1708416000"; 
+   d="scan'208";a="8524674"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Mar 2024 05:41:11 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,112,1708416000"; d="scan'208";a="15432603"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.125.243.127])
+ ([10.125.243.127])
+ by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Mar 2024 05:41:06 -0800
+Message-ID: <85cb99a6-dc91-4e62-aa7f-341280d5928d@intel.com>
+Date: Sat, 9 Mar 2024 21:41:05 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 07/21] i386/cpu: Use APIC ID info get NumSharingCache
+ for CPUID[0x8000001D].EAX[bits 25:14]
+Content-Language: en-US
+To: Zhao Liu <zhao1.liu@linux.intel.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Zhuocheng Ding <zhuocheng.ding@intel.com>, Babu Moger <babu.moger@amd.com>,
+ Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
+References: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
+ <20240227103231.1556302-8-zhao1.liu@linux.intel.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20240227103231.1556302-8-zhao1.liu@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.14; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.277, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,30 +96,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series makes pam_update() more self-contained by removing some Intel=0D
-assumptions. As a result, the purpose of PAMMemoryRegion becomes clearer an=
-d, as=0D
-a side effect, makes it reusable for northbridges other than Intel, e.g. VI=
-A.=0D
-=0D
-Testing done:=0D
-* `make check`=0D
-* `make check-avocado`=0D
-* This series is sent from a VM implementing this series.=0D
-=0D
-Bernhard Beschow (2):=0D
-  hw/pci-host/pam: Free PAMMemoryRegion from Intel-specific bit handling=0D
-  hw/pci-host/pam: Remove northbridge-specific PAM_REGIONS_COUNT=0D
-=0D
- include/hw/pci-host/i440fx.h |  4 +++-=0D
- include/hw/pci-host/pam.h    |  9 +++------=0D
- include/hw/pci-host/q35.h    |  4 +++-=0D
- hw/pci-host/i440fx.c         |  7 +++++--=0D
- hw/pci-host/pam.c            | 14 +++++++-------=0D
- hw/pci-host/q35.c            |  7 ++++---=0D
- 6 files changed, 25 insertions(+), 20 deletions(-)=0D
-=0D
--- =0D
-2.44.0=0D
-=0D
+On 2/27/2024 6:32 PM, Zhao Liu wrote:
+> From: Zhao Liu <zhao1.liu@intel.com>
+> 
+> The commit 8f4202fb1080 ("i386: Populate AMD Processor Cache Information
+> for cpuid 0x8000001D") adds the cache topology for AMD CPU by encoding
+> the number of sharing threads directly.
+> 
+>  From AMD's APM, NumSharingCache (CPUID[0x8000001D].EAX[bits 25:14])
+> means [1]:
+> 
+> The number of logical processors sharing this cache is the value of
+> this field incremented by 1. To determine which logical processors are
+> sharing a cache, determine a Share Id for each processor as follows:
+> 
+> ShareId = LocalApicId >> log2(NumSharingCache+1)
+> 
+> Logical processors with the same ShareId then share a cache. If
+> NumSharingCache+1 is not a power of two, round it up to the next power
+> of two.
+> 
+>  From the description above, the calculation of this field should be same
+> as CPUID[4].EAX[bits 25:14] for Intel CPUs. So also use the offsets of
+> APIC ID to calculate this field.
+> 
+> [1]: APM, vol.3, appendix.E.4.15 Function 8000_001Dh--Cache Topology
+>       Information
+> 
+> Cc: Babu Moger <babu.moger@amd.com>
+> Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+
+> ---
+> Changes since v7:
+>   * Moved this patch after CPUID[4]'s similar change ("i386/cpu: Use APIC
+>     ID offset to encode cache topo in CPUID[4]"). (Xiaoyao)
+>   * Dropped Michael/Babu's Acked/Reviewed/Tested tags since the code
+>     change due to the rebase.
+>   * Re-added Yongwei's Tested tag For his re-testing (compilation on
+>     Intel platforms).
+> 
+> Changes since v3:
+>   * Rewrote the subject. (Babu)
+>   * Deleted the original "comment/help" expression, as this behavior is
+>     confirmed for AMD CPUs. (Babu)
+>   * Renamed "num_apic_ids" (v3) to "num_sharing_cache" to match spec
+>     definition. (Babu)
+> 
+> Changes since v1:
+>   * Renamed "l3_threads" to "num_apic_ids" in
+>     encode_cache_cpuid8000001d(). (Yanan)
+>   * Added the description of the original commit and add Cc.
+> ---
+>   target/i386/cpu.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index c77bcbc44d59..df56c7a449c8 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -331,7 +331,7 @@ static void encode_cache_cpuid8000001d(CPUCacheInfo *cache,
+>                                          uint32_t *eax, uint32_t *ebx,
+>                                          uint32_t *ecx, uint32_t *edx)
+>   {
+> -    uint32_t l3_threads;
+> +    uint32_t num_sharing_cache;
+>       assert(cache->size == cache->line_size * cache->associativity *
+>                             cache->partitions * cache->sets);
+>   
+> @@ -340,11 +340,11 @@ static void encode_cache_cpuid8000001d(CPUCacheInfo *cache,
+>   
+>       /* L3 is shared among multiple cores */
+>       if (cache->level == 3) {
+> -        l3_threads = topo_info->cores_per_die * topo_info->threads_per_core;
+> -        *eax |= (l3_threads - 1) << 14;
+> +        num_sharing_cache = 1 << apicid_die_offset(topo_info);
+>       } else {
+> -        *eax |= ((topo_info->threads_per_core - 1) << 14);
+> +        num_sharing_cache = 1 << apicid_core_offset(topo_info);
+>       }
+> +    *eax |= (num_sharing_cache - 1) << 14;
+>   
+>       assert(cache->line_size > 0);
+>       assert(cache->partitions > 0);
+
 
