@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDEB9C54791
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 18:30:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE4FFC54791
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 18:41:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rj1Ry-0007f3-Q2; Sat, 09 Mar 2024 13:29:38 -0500
+	id 1rj1cD-0001YO-50; Sat, 09 Mar 2024 13:40:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj1Rw-0007eJ-KN
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 13:29:36 -0500
-Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rj1cA-0001Xw-0c
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 13:40:10 -0500
+Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj1Ru-0002D9-N0
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 13:29:36 -0500
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-5131c48055cso3476435e87.1
- for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 10:29:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rj1c7-0004SJ-Q3
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 13:40:09 -0500
+Received: by mail-oi1-x235.google.com with SMTP id
+ 5614622812f47-3c1a2f7e1d2so1199820b6e.1
+ for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 10:40:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710008972; x=1710613772; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710009605; x=1710614405; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=MQLfKzox0LylrQcC/ff7e41doMo+4bqjXiBE4hhr1pU=;
- b=WOK+nSkOR1ZASFPWTuBLcn4uS2BZEI+DsPL7rx7LLak/99Q3Gq7uQ0OfdoZUhTHVTa
- XThty1BeoxvVLdtE90uf06BhJl8TWeCqyuswAkP18polsg88fLWa0S/VREpedHps6OQ+
- SDKUCHoOLJKF4+N65fD3Bqr1ILL5W8mfne5KgO2Jxj+EhA7GW91/Nd4doS6fjP5h6/kW
- b+koAu4mYnuu7lU/bfxPDcUklRxksZHlwSg0fnt8wmczUoplJgby5xu/8IE3aVIIA6nI
- ujmI/jx0oBhw0DmR4BYBZDk0NNzaPXDI4uwHSM/Mb4E/iTWwZrbtaElpCzIy0mqvc9Lj
- 0Zng==
+ bh=X1jJ8ENU4eG2Qk7hUuKetGnXnJJ8M4ZJe0brbMLOUWc=;
+ b=YuAVLVs16TruAJDv30lK3mlIdsxQmM2+zuNQHbxZGMdVjhzzjHWSdg6c/nof1eGWPX
+ yMNErCw5NV67Zk/xpgK9ZcONx4adNkhgVb8LpDP7IcorjwIhSsIydKn/HQ/EELA3D9a4
+ uCgnQO9G/KXlit/xQ/3wTiTfQA24LX/4kotGetSmA6mYlsmJ9OU/C1MVdzbonRGGygj/
+ LamuiBmxq+W2ZT0qlXRnTPCNQMP94Phz8GTSvcZrbARTPR4FMxZnd8fP2dSARY52YyHe
+ k2xGPo1uD/m3GoVeyAy9lsBArAez/vzLuYS44uSZyz6F/w98QvdmC6QJBC5ykZtxhmsp
+ vl6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710008972; x=1710613772;
+ d=1e100.net; s=20230601; t=1710009605; x=1710614405;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MQLfKzox0LylrQcC/ff7e41doMo+4bqjXiBE4hhr1pU=;
- b=HnYbvRhbkw2lOshWRUumQhPUZV2EX7/+gSuRafJz3+YzCtobxSC52spGlVlviRrokr
- ONlbkhULgmlRMb/hhJ/CL8KD9rD5Ek1RiXesu4u0snjU887VbrxgQ5gV9r5ap3vSW0mw
- PJxiqmSaFc+X4Gu8caJkbfPOHtqOgSdhxSEoYikNScUcW4p1dvemWZRMfEVZvBkjcFsA
- 3T3CgAAe9bW7pOrttV2yOZRMV0aI2XM3D6UhqcW0KogRHiKCSx3hE2O18WwF7s8U1PoB
- +Tb8w2y+8sVG3I5YD3eVd0HUVi7nj5vdKOY3ivTWCZY1g5F53w2ygOhxBtgLtVxJACbc
- tacA==
+ bh=X1jJ8ENU4eG2Qk7hUuKetGnXnJJ8M4ZJe0brbMLOUWc=;
+ b=FplZ6c069XT1b/Q572SfL7IItWOADA+2oFcqZHQzGSPabSo6I9GCqYSf7GzrhAQx5q
+ HhYrIEU9iTFRRrMEj2gpDrn/ZUkouA5nyz3p04hjmCCmZ8YVNy5lB4TtxmyM6RZQ7kMh
+ SZBavcnFXhEOITuJh9kGeeZTmDpn9YGghz8WKK/Ytlzj73aYnW0nsHmaSoqzypexo5yd
+ aXY26mwYi/MNsYM6nxfC978VPwMN48Xw2L5F9iHQ98QEaOP97n1phgdhLO6hzJhNNI0n
+ wS90i8jDtIJ76hhhBBaX2+EA6YpN5/eRNtFo7stzgFtngum3zSOGFfMX617S6oOzVW5C
+ yBPw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWggv1R65jRZ1l0KUed7qt8rirXz60VH/nNVxaB9F+K6v1xhq/kuPJomZrh3kR2QyrCRroDcbAa4K9KOue8H53YbUCEJoY=
-X-Gm-Message-State: AOJu0YzYYN11nBmBK49Bfh42nW5EEo3vfGtZkrauEmaZnfe/xo2UkdAE
- mQWorVtzYYp2BL/1wnhjmrcd3psu/0UurQh3mDdVNXuuPDJ00tUkZEOHxj4fxFc=
-X-Google-Smtp-Source: AGHT+IHdo3kLqgzSDF8SfsCyouROPfHHgXPea6zfqA1b/ABxrv1hg5ylnZWvu+LMIbxZQOzd4wllDA==
-X-Received: by 2002:ac2:5f8b:0:b0:513:2004:43e4 with SMTP id
- r11-20020ac25f8b000000b00513200443e4mr1516769lfe.36.1710008972025; 
- Sat, 09 Mar 2024 10:29:32 -0800 (PST)
-Received: from [192.168.69.100] ([176.176.181.237])
- by smtp.gmail.com with ESMTPSA id
- cf12-20020a0564020b8c00b005664afd1185sm1102837edb.17.2024.03.09.10.29.30
+ AJvYcCWwDjpj5qQPu4fv9QeImmAQ0g62dw2truoq2/H7UIntT+aj5yt6rn9a87ChZIj16DjC16sVqdEEJwJ7Q3daJQASTxUlyiY=
+X-Gm-Message-State: AOJu0Yyxb7aJDllvFeV3daBijrVB5RJ/5wRLzwY6njJO8ofyVTO5R46L
+ JlydjpC+MdzRXM3jU0OTAYlP4O8bBfCHJlAjge8bNjPxSInbg6npZODFLtMbsuY=
+X-Google-Smtp-Source: AGHT+IHoGkkdfgDIZOMsXaU266tFSm/S/kg6SiDlelB/vI8agXEm+aa2tV623wGR9XtO7wwkr6vYnQ==
+X-Received: by 2002:a05:6808:201a:b0:3c2:3e2b:73c7 with SMTP id
+ q26-20020a056808201a00b003c23e2b73c7mr2538640oiw.3.1710009605695; 
+ Sat, 09 Mar 2024 10:40:05 -0800 (PST)
+Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
+ [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
+ n6-20020a170903110600b001db717ed294sm1602328plh.120.2024.03.09.10.40.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 09 Mar 2024 10:29:31 -0800 (PST)
-Message-ID: <f31b2eaf-aa04-46ed-995d-67c785be167f@linaro.org>
-Date: Sat, 9 Mar 2024 19:29:29 +0100
+ Sat, 09 Mar 2024 10:40:05 -0800 (PST)
+Message-ID: <04ebf149-d735-46b0-9885-7e5972813e23@linaro.org>
+Date: Sat, 9 Mar 2024 08:40:01 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] docs/conf.py: Remove usage of distutils
+Subject: Re: [PATCH v8 02/10] target/riscv: handle vstart >= vl in
+ vext_set_tail_elems_1s()
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, qemu-stable@nongnu.org
-References: <20240304130403.129543-1-thuth@redhat.com>
- <CAFEAcA8rac2nEzrVWUWfRHAWYLmC6dSDMK=j6msD_SdPpn6ZtA@mail.gmail.com>
- <3262c873-b845-4286-a71f-a53b96bbc8a9@redhat.com>
- <ZeYNQdqW2bBA4gNL@redhat.com>
- <86d80d62-8c82-4ec5-ab67-50c83041f979@redhat.com>
- <CAFEAcA8X6hR+GfnREQkWNqiOBk40r4o_dWPOiyfVT3n7YJqRVA@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA8X6hR+GfnREQkWNqiOBk40r4o_dWPOiyfVT3n7YJqRVA@mail.gmail.com>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ philmd@linaro.org
+References: <20240308215402.117405-1-dbarboza@ventanamicro.com>
+ <20240308215402.117405-3-dbarboza@ventanamicro.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240308215402.117405-3-dbarboza@ventanamicro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::235;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x235.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,66 +101,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/24 18:27, Peter Maydell wrote:
-> On Tue, 5 Mar 2024 at 10:39, Thomas Huth <thuth@redhat.com> wrote:
->>
->> On 04/03/2024 19.04, Daniel P. Berrangé wrote:
->>> On Mon, Mar 04, 2024 at 06:11:58PM +0100, Thomas Huth wrote:
->>>> On 04/03/2024 17.56, Peter Maydell wrote:
->>>>> On Mon, 4 Mar 2024 at 13:04, Thomas Huth <thuth@redhat.com> wrote:
->>>>>>
->>>>>> The macOS jobs in our CI recently started failing, complaining that
->>>>>> the distutils module is not available anymore. And indeed, according to
->>>>>> https://peps.python.org/pep-0632/ it's been deprecated since a while
->>>>>> and now likely got removed in recent Python versions.
->>>>>
->>>>> This doesn't seem to be sufficient to fix the macos CI:
->>>>> something in glib seems to still be using it.
->>>>>
->>>>> https://gitlab.com/qemu-project/qemu/-/jobs/6313212803
->>>>>
->>>>> [281/6553] Generating ui/dbus-display gdbus-codegen with a custom command
->>>>> FAILED: ui/dbus-display1.h ui/dbus-display1.c
->>>>> /opt/homebrew/Cellar/glib/2.78.4/bin/gdbus-codegen
->>>>> ui/dbus-display1.xml --glib-min-required 2.64 --output-directory
->>>>> /private/var/folders/xc/tpssff9959345bnqq4c6tlww0000gn/T/cirrus-ci-build/build/ui
->>>>> --interface-prefix org.qemu. --c-namespace QemuDBus --generate-c-code
->>>>> dbus-display1
->>>> ...
->>>>> ModuleNotFoundError: No module named 'distutils'
->>>>
->>>> Looking at the glib sources, I think this has been fixed here:
->>>>
->>>>    https://gitlab.gnome.org/GNOME/glib/-/commit/6ef967a0f930ce37a8c9b5aff96969
->>>>
->>>> The fix will be in glib 2.79, unfortunately homebrew still seems to use glib
->>>> 2.78 ...
->>>>
->>>> We could maybe temporarily work-around the problem by disabling the dbus
->>>> code in the CI job? Or just wait for homebrew to update the package?
->>>
->>> File a bug against homebrew. IME they are very quick (1-3 days) at
->>> putting out fixes for things like this, especially if you point them
->>> to the upstream solution.
->>
->> Ok, while I was writing my mail, I was looking at https://brew.sh/ and
->> didn't see a link to a bug tracker there ... but now I realized that they
->> are simply using the github tracker, so I went ahead and filed a bug there:
->>
->>    https://github.com/Homebrew/brew/issues/16823
->>
->> Let's see how it goes...
-> 
-> Seems to be going slowly. I notice that there's a comment in there
-> saying that "brew install python-setuptools" is a workaround to
-> get glib 2.78 working -- that seems like it would be good to get
-> our CI back to green. Is there a way to test changes to the cirrus
-> config short of committing it and seeing if it helps? I don't see
-> the jobs available on a pipeline in my personal gitlab repo...
+On 3/8/24 11:53, Daniel Henrique Barboza wrote:
+> +static void vext_set_tail_elems_1s(CPURISCVState *env, void *vd,
+> +                                   uint32_t desc, uint32_t esz,
+> +                                   uint32_t max_elems)
+>   {
+>       uint32_t vta = vext_vta(desc);
+> +    uint32_t nf = vext_nf(desc);
+>       int k;
+>   
+> -    if (vta == 0) {
+> +    /*
+> +     * Section 5.4 of the RVV spec mentions:
+> +     * "When vstart ≥ vl, there are no body elements, and no
+> +     *  elements are updated in any destination vector register
+> +     *  group, including that no tail elements are updated
+> +     *  with agnostic values."
+> +     */
+> +    if (vta == 0 || env->vstart >= env->vl) {
+>           return;
+>       }
 
-Yes, but you need to grant cirrus-ci some permissions you weren't
-ready to give last time.
+This isn't going to work for ...
 
-I just tested it and it is still failing for me:
-https://gitlab.com/philmd/qemu/-/jobs/6357526794
+> @@ -222,9 +230,8 @@ vext_ldst_stride(void *vd, void *v0, target_ulong base,
+>               k++;
+>           }
+>       }
+> +    vext_set_tail_elems_1s(env, vd, desc, esz, max_elems);
+>       env->vstart = 0;
+
+... ldst, because we also need to increment vstart in the load loop, for consumption by 
+the exception path.
+
+You'll need to structure the helper as
+
+     if (vstart >= vl) {
+        vstart = 0;
+        return;
+     }
+     for (i = vstart; i < vl; vstart = ++i) {
+         ...
+     }
+     set_tail_elems(...);
+     vstart = 0;
+
+
+r~
 
