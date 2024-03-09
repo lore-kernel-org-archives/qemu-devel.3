@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 409C5C54E60
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 19:24:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3200C54791
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 19:26:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rj2H4-00008M-EC; Sat, 09 Mar 2024 14:22:26 -0500
+	id 1rj2J2-00040e-PW; Sat, 09 Mar 2024 14:24:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2H2-00007p-P0
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:22:24 -0500
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2J0-0003oT-Re
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:24:26 -0500
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2H1-0002R1-69
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:22:24 -0500
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a45f257b81fso194791266b.0
- for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 11:22:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2Iy-0002mV-CT
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:24:26 -0500
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2d382a78c38so36700091fa.1
+ for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 11:24:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710012141; x=1710616941; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710012262; x=1710617062; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AJ+tmUmaxk1VpVXptMjtzEM2Kqe3+MxYTD28YtS2upg=;
- b=fvCZl1qzhpAzWfi5gSdtuZaioWkP82AO+e2X1JVsKWcbp5Syc3VSbo3NtQzv6XkRFM
- CG0K4Mv5xVwR4kePOt+oBVAzUfjPFk/Qx52DdJNGEQUaMLbMHW7e349pVTJjlb1O1q0+
- eDYpMmn1rdh40T/e1o9CilmGi+80uV47xGcdDrw7bw8EC6/quSvWZBFncK4OY7SGdvYi
- wjmHtsfV/ZYbXlp2rhHk+5Tnqjb1hLnEb3iONv4GMMQLuc/D5IZCreRA60kJ5Q4Eunc8
- VqxWkhRQ4COQP6qB6CgPO8iRybNyv/3a5JJKASycc/5n2UY5FSWDIvy4nzWhW+BdArx9
- QPyg==
+ bh=gNfhZGSEMDNFGE0Bt1N9Am3VGUZ7rx8bc74P/nXROpw=;
+ b=ne1rZ2Vf3nDTNU1KeRP3pQ0Lt+fHPTUsppkIg+7v1TPYIUOiMcBQXh6XwMaUTYVhVd
+ RMJfoLOozhUJTEGaj+XOBH4Ry/zMU9JYd30J3FLYBWOqOFJNyo6APzniQP8MJtDYnCmE
+ 02+SQsQmgQk69x9Qz7GfydSlp3iZlxgD5SCpSd9ehFL3KKbvtP6Kico/FFA4WjYdIPZg
+ BjX8lQKkKxZUjhsJ1NCAB2+bNrwbcY37axSFYxl66KVESr6oMs5Gc8EOp8SaqZbuV6Nh
+ uJVNBOcP4aFnNkihA3/ejWlspGhk02ondPBcgPvRz8fVfBmzjizdfZZw5WyZApNZDjsx
+ 4vxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710012141; x=1710616941;
+ d=1e100.net; s=20230601; t=1710012262; x=1710617062;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AJ+tmUmaxk1VpVXptMjtzEM2Kqe3+MxYTD28YtS2upg=;
- b=XnlGAGvk5x+QytgnJXNEWpWgR5TokQNVF+hm2DmSdyAfRJsZO5bWfAZ0+tvLhbCwsJ
- FUIm57PwTpTJzoEOGIreUK/i+W/1sj1QRHU4dRzO0E/cG/DMiEoAE9FiMbSBC+wwOclM
- Gce8P4A35H9YIgLOBTRGgwTbG4p8fkQwoYLKtD8GQYRd4erK/EfJWNbAIC0W+YS/Q3b+
- umWsaI/il/bqtVjtPnAvYcjspnwUJLXAU7vt8DLqfjA6Hq3yfmhTyJewIr9Fa98O4lfZ
- 2tsMbplyRRy+ZOqYL/N4Lvdnyr+Mw9EyLj9Edm17rbTwoCy+JLmbwWjjdANSlWAvCd1o
- 1StA==
-X-Gm-Message-State: AOJu0YzVz21vvA+JZ9JxoT7ZH3eYX9mDjeqvFG2FiZlri3uYManocttk
- slfCLFFYUm4VJqG+wHqm7tJ4RrZ8kjMCtHr5QbLupnFsGmor81atuML4Jdqn6f4OxFgH6/DjcrX
- P
-X-Google-Smtp-Source: AGHT+IE66itJxflVZocCe80286+eXvG5IMQn5qkdouVWUYXYnbCypWRxLwZmJyuxo1eR2ZHoySbZqg==
-X-Received: by 2002:a17:907:a4c1:b0:a46:172c:e9cf with SMTP id
- vq1-20020a170907a4c100b00a46172ce9cfmr223212ejc.61.1710012141400; 
- Sat, 09 Mar 2024 11:22:21 -0800 (PST)
+ bh=gNfhZGSEMDNFGE0Bt1N9Am3VGUZ7rx8bc74P/nXROpw=;
+ b=Jnz8+X5qauhyNFMItKW4YYZX4zmdutuDqS9ZKcWbAyO7k1+s9iqXPUB/aZNRjENQHW
+ CQA9vdw1ywBTGLelFdR0/SvZc6kYWqzeyWwmeOB+q+2jde2iemJLBO2vXn4slXuA3PdV
+ Tg6UO6QDKI4FU2pqPj7UJDjBDwhc3ndcMpQsMD3BC7lr4SE7+eWUEXfK2A8NM8ZxV2Ok
+ SFMWkdGIPas1LHD1Yj0DKDHqifFp/uAb0S59Vw++FD/4ihqitCStVakngSH/v6vfPk1x
+ yNXwpJehiTYLeYbFKVUKXFSzFfW0l5JwR8JEqrF84rdQRnbd2bxVNkrk4MhnwOtJ2sOZ
+ 5fFA==
+X-Gm-Message-State: AOJu0Yzu/VwPKZG7OF3qCQPNQLtM4l64znpEnTeAn4+OqBX9gGEuWBAo
+ jQ/LyE4CtHJgHPMXmS01EAR5no4SUhtopZTJ4I3z7+dcePYRxCEknqU6VkWsBtZ4QQSLyRka0e1
+ 8
+X-Google-Smtp-Source: AGHT+IH6VnIz1HhzZeWVzNFZZ81KnZan2vqiOitrnrYT+7W7ejewWsh1Bm28ZWgBPoyVvTrmJWk+3w==
+X-Received: by 2002:ac2:484a:0:b0:513:3741:7357 with SMTP id
+ 10-20020ac2484a000000b0051337417357mr1595051lfy.56.1710012262092; 
+ Sat, 09 Mar 2024 11:24:22 -0800 (PST)
 Received: from m1x-phil.lan ([176.176.181.237])
  by smtp.gmail.com with ESMTPSA id
- qk2-20020a170906d9c200b00a3fb9f1f10csm1162016ejb.161.2024.03.09.11.22.19
+ l6-20020a1709060e0600b00a42ea946917sm1177309eji.130.2024.03.09.11.24.20
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 09 Mar 2024 11:22:21 -0800 (PST)
+ Sat, 09 Mar 2024 11:24:21 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 01/43] hw/i386: Rename kvmvapic.c -> vapic.c
-Date: Sat,  9 Mar 2024 20:21:28 +0100
-Message-ID: <20240309192213.23420-2-philmd@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 21/43] hw/i386/pc: Remove 'host_type' argument from pc_init1()
+Date: Sat,  9 Mar 2024 20:21:48 +0100
+Message-ID: <20240309192213.23420-22-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240309192213.23420-1-philmd@linaro.org>
 References: <20240309192213.23420-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,57 +98,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-vAPIC isn't KVM specific, so having its name prefixed 'kvm'
-is misleading. Rename it simply 'vapic'. Rename the single
-function prefixed 'kvm'.
+All callers use host_type=TYPE_I440FX_PCI_HOST_BRIDGE.
+Directly use this definition within pc_init1().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20230905145159.7898-1-philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240301185936.95175-4-philmd@linaro.org>
 ---
- hw/i386/{kvmvapic.c => vapic.c} | 5 ++---
- hw/i386/meson.build             | 2 +-
- 2 files changed, 3 insertions(+), 4 deletions(-)
- rename hw/i386/{kvmvapic.c => vapic.c} (99%)
+ hw/i386/pc_piix.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/hw/i386/kvmvapic.c b/hw/i386/vapic.c
-similarity index 99%
-rename from hw/i386/kvmvapic.c
-rename to hw/i386/vapic.c
-index 61a65ef2ab..f5b1db7e5f 100644
---- a/hw/i386/kvmvapic.c
-+++ b/hw/i386/vapic.c
-@@ -747,8 +747,7 @@ static void do_vapic_enable(CPUState *cs, run_on_cpu_data data)
-     s->state = VAPIC_ACTIVE;
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index ed777e3d61..e14dce951d 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -101,8 +101,7 @@ static void piix_intx_routing_notifier_xen(PCIDevice *dev)
  }
  
--static void kvmvapic_vm_state_change(void *opaque, bool running,
--                                     RunState state)
-+static void vapic_vm_state_change(void *opaque, bool running, RunState state)
+ /* PC hardware initialisation */
+-static void pc_init1(MachineState *machine,
+-                     const char *host_type, const char *pci_type)
++static void pc_init1(MachineState *machine, const char *pci_type)
  {
-     MachineState *ms = MACHINE(qdev_get_machine());
-     VAPICROMState *s = opaque;
-@@ -793,7 +792,7 @@ static int vapic_post_load(void *opaque, int version_id)
+     PCMachineState *pcms = PC_MACHINE(machine);
+     PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+@@ -194,7 +193,7 @@ static void pc_init1(MachineState *machine,
+         memory_region_init(pci_memory, NULL, "pci", UINT64_MAX);
+         rom_memory = pci_memory;
  
-     if (!s->vmsentry) {
-         s->vmsentry =
--            qemu_add_vm_change_state_handler(kvmvapic_vm_state_change, s);
-+            qemu_add_vm_change_state_handler(vapic_vm_state_change, s);
-     }
-     return 0;
+-        phb = OBJECT(qdev_new(host_type));
++        phb = OBJECT(qdev_new(TYPE_I440FX_PCI_HOST_BRIDGE));
+         object_property_add_child(OBJECT(machine), "i440fx", phb);
+         object_property_set_link(phb, PCI_HOST_PROP_RAM_MEM,
+                                  OBJECT(ram_memory), &error_fatal);
+@@ -451,7 +450,7 @@ static void pc_compat_2_0_fn(MachineState *machine)
+ #ifdef CONFIG_ISAPC
+ static void pc_init_isa(MachineState *machine)
+ {
+-    pc_init1(machine, TYPE_I440FX_PCI_HOST_BRIDGE, TYPE_I440FX_PCI_DEVICE);
++    pc_init1(machine, TYPE_I440FX_PCI_DEVICE);
  }
-diff --git a/hw/i386/meson.build b/hw/i386/meson.build
-index b9c1ca39cb..d8b70ef3e9 100644
---- a/hw/i386/meson.build
-+++ b/hw/i386/meson.build
-@@ -1,7 +1,7 @@
- i386_ss = ss.source_set()
- i386_ss.add(files(
-   'fw_cfg.c',
--  'kvmvapic.c',
-+  'vapic.c',
-   'e820_memory_layout.c',
-   'multiboot.c',
-   'x86.c',
+ #endif
+ 
+@@ -461,9 +460,7 @@ static void pc_xen_hvm_init_pci(MachineState *machine)
+     const char *pci_type = xen_igd_gfx_pt_enabled() ?
+                 TYPE_IGD_PASSTHROUGH_I440FX_PCI_DEVICE : TYPE_I440FX_PCI_DEVICE;
+ 
+-    pc_init1(machine,
+-             TYPE_I440FX_PCI_HOST_BRIDGE,
+-             pci_type);
++    pc_init1(machine, pci_type);
+ }
+ 
+ static void pc_xen_hvm_init(MachineState *machine)
+@@ -488,8 +485,7 @@ static void pc_xen_hvm_init(MachineState *machine)
+         if (compat) { \
+             compat(machine); \
+         } \
+-        pc_init1(machine, TYPE_I440FX_PCI_HOST_BRIDGE, \
+-                 TYPE_I440FX_PCI_DEVICE); \
++        pc_init1(machine, TYPE_I440FX_PCI_DEVICE); \
+     } \
+     DEFINE_PC_MACHINE(suffix, name, pc_init_##suffix, optionfn)
+ 
 -- 
 2.41.0
 
