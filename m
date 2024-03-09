@@ -4,64 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DAFFC54E41
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 08:08:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE60DC54798
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 08:13:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rirkp-0002kS-Qb; Sat, 09 Mar 2024 03:08:27 -0500
+	id 1rirpT-0003i7-Is; Sat, 09 Mar 2024 03:13:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hao.xiang@linux.dev>)
- id 1rirkm-0002k5-G8
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 03:08:24 -0500
-Received: from out-182.mta1.migadu.com ([95.215.58.182])
+ id 1rirpQ-0003hv-VQ
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 03:13:12 -0500
+Received: from out-170.mta0.migadu.com ([91.218.175.170])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hao.xiang@linux.dev>)
- id 1rirki-0002Pa-DG
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 03:08:23 -0500
+ id 1rirpO-00039M-2Y
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 03:13:12 -0500
 MIME-Version: 1.0
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1709971696;
+ t=1709971987;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zxuIhPrqwGO/zr8VPVlrgYVea/+/Q9YViFFiUKFpqds=;
- b=w0kKOCkv3wgUnoH6UO/c1qG/ISW5yjJdIpGRNcp3Te3OqdJLVYJbl8Crz8dOi/dr0V7p4Y
- R8CdtBDy//kOgdenZp4cG8fwCOaN03ULk8XTrfpu/b1T57Qy37CeyaTfxQccL/xv5Cw+OE
- 1TvsOLtlbtrMUa8wdC+XiD9Sfli2TFQ=
-Date: Sat, 09 Mar 2024 08:08:14 +0000
+ bh=4MURCzuU0jK4I6zwysWHLwAE69RRVIw8Yj9eSsyth3k=;
+ b=rqDRCdwUcSrda/wlHJGlsKMyvtZ+EgGC3tdGMoUBkDlOGzOa3hyesqadcMpaUeidLuynFb
+ xg9543QJSrljRfUZFHh+7IqgKdoIv7kzgh9i7ZSEsD3wj8aKpb9ZmV/G9iBvETsGdUQBZZ
+ 2ZVlIEMEGVQVpQFHn+eh1lvl+/rdESg=
+Date: Sat, 09 Mar 2024 08:13:04 +0000
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
  include these headers.
 From: hao.xiang@linux.dev
-Message-ID: <93c343ff6b1ec22490994cfb8b61c42418c34c1e@linux.dev>
+Message-ID: <676191b98cee7581bce88a328d4eca7cc22d55f8@linux.dev>
 TLS-Required: No
-Subject: Re: [PATCH v4 2/7] migration/multifd: Implement zero  page
- transmission on the multifd thread.
-To: farosas@suse.de, peterx@redhat.com
+Subject: Re: [PATCH v4 7/7] Update maintainer contact for migration multifd
+ zero page checking acceleration.
+To: peterx@redhat.com
 Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
- eblake@redhat.com, armbru@redhat.com, thuth@redhat.com,
+ farosas@suse.de, eblake@redhat.com, armbru@redhat.com, thuth@redhat.com,
  lvivier@redhat.com, jdenemar@redhat.com, marcel.apfelbaum@gmail.com,
  philmd@linaro.org, wangyanan55@huawei.com, qemu-devel@nongnu.org
-In-Reply-To: <CAAYibXiLLztnPnKkGZKgXpD8HfSsFqdmhUGcETpzQDUoURRNwg@mail.gmail.com>
+In-Reply-To: <CAAYibXjoji3GY7TW_USFsuT3YyVnv_kGFXpvBgK_kf9i1S1VSw@mail.gmail.com>
 References: <20240301022829.3390548-1-hao.xiang@bytedance.com>
- <20240301022829.3390548-3-hao.xiang@bytedance.com>
- <ZeV1TrOvERHN_LOo@x1n> <878r2ynnky.fsf@suse.de>
- <87r0gp97p6.fsf@suse.de>
- <CAAYibXiLLztnPnKkGZKgXpD8HfSsFqdmhUGcETpzQDUoURRNwg@mail.gmail.com>
+ <20240301022829.3390548-8-hao.xiang@bytedance.com>
+ <ZeV5g8nuP2NpYQ5v@x1n>
+ <CAAYibXjoji3GY7TW_USFsuT3YyVnv_kGFXpvBgK_kf9i1S1VSw@mail.gmail.com>
 X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=95.215.58.182; envelope-from=hao.xiang@linux.dev;
- helo=out-182.mta1.migadu.com
+Received-SPF: pass client-ip=91.218.175.170; envelope-from=hao.xiang@linux.dev;
+ helo=out-170.mta0.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,155 +76,109 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 >=20
->=20On Mon, Mar 4, 2024 at 10:24 AM Fabiano Rosas <farosas@suse.de> wrote=
-:
->=20
->=20=20
->=20
->=20=20
->=20
->  Fabiano Rosas <farosas@suse.de> writes:
->=20
->=20=20
->=20
->  Peter Xu <peterx@redhat.com> writes:
->=20
->=20=20
->=20
->  On Fri, Mar 01, 2024 at 02:28:24AM +0000, Hao Xiang wrote:
->=20
->=20=20
->=20
->  -GlobalProperty hw_compat_8_2[] =3D {};
->=20
->=20=20
->=20
->  +GlobalProperty hw_compat_8_2[] =3D {
->=20
->=20=20
->=20
->  + { "migration", "zero-page-detection", "legacy"},
->=20
->=20=20
->=20
->  +};
->=20
->=20=20
->=20
->  I hope we can make it for 9.0, then this (and many rest places) can be=
- kept
->=20
->=20=20
->=20
->  as-is. Let's see.. soft-freeze is March 12th.
->=20
->=20=20
->=20
->  One thing to mention is I just sent a pull which has mapped-ram featur=
-e
->=20
->=20=20
->=20
->  merged. You may need a rebase onto that, and hopefully mapped-ram can =
-also
->=20
->=20=20
->=20
->  use your feature too within the same patch when you repost.
->=20
->=20=20
->=20
->  The key points are:
->=20
->=20=20
->=20
->  - The socket migration is under "use_packets", the mapped-ram is under
->=20
->=20=20
->=20
->  "!use_packets" always.
->=20
->=20=20
->=20
->  - mapped-ram doesn't trasmit zero-pages, it just clears the
->=20
->=20=20
->=20
->  corresponding bit in block->file_bmap.
->=20
->=20=20
->=20
->  https://lore.kernel.org/all/20240229153017.2221-1-farosas@suse.de/
->=20
->=20=20
->=20
->  That rebase may or may not need much caution, I apologize for that:
->=20
->=20=20
->=20
->  mapped-ram as a feature was discussed 1+ years, so it was a plan to me=
-rge
->=20
->=20=20
->=20
->  it (actually still partly of it) into QEMU 9.0.
->=20
->=20=20
->=20
->  I started doing that rebase last week and saw issues with a sender
->=20
->=20=20
->=20
->  thread always getting -EPIPE at the sendmsg() on the regular socket
->=20
->=20=20
->=20
->  migration. Let's hope it was just me being tired.
->=20
->=20=20
->=20
->  I'll try to get something ready this week.
->=20
->=20=20
->=20
->  @Hao Xiang:
->=20
->=20=20
->=20
->  Here's a branch with the rebase. Please include the first two commits
->=20
->=20=20
->=20
->  when you repost:
->=20
->=20=20
->=20
->  migration/multifd: Allow clearing of the file_bmap from multifd
->=20
->=20=20
->=20
->  migration/multifd: Allow zero pages in file migration
->=20
->=20=20
->=20
->  There are also two small additions and some conflict resolution at the
->=20
->=20=20
->=20
->  "Implement zero page..." commit. Make sure you don't miss them.
->=20
->=20=20
->=20
->  https://gitlab.com/farosas/qemu/-/commits/migration-multifd-zero-page
->=20
->=20=20
->=20
->=20 Let me know if you encounter any issues.
->=20
+>=20On Sun, Mar 3, 2024 at 11:34 PM Peter Xu <peterx@redhat.com> wrote:
+>=20
+>=20>=20
+>=20> On Fri, Mar 01, 2024 at 02:28:29AM +0000, Hao Xiang wrote:
+> >=20
+>=20>  Add myself to maintain multifd zero page checking acceleration fun=
+ction.
+> >=20
+>=20>  Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
+> >=20
+>=20>  ---
+> >=20
+>=20>  MAINTAINERS | 5 +++++
+> >=20
+>=20>  1 file changed, 5 insertions(+)
+> >=20
+>=20>  diff --git a/MAINTAINERS b/MAINTAINERS
+> >=20
+>=20>  index 65dfdc9677..b547918e4d 100644
+> >=20
+>=20>  --- a/MAINTAINERS
+> >=20
+>=20>  +++ b/MAINTAINERS
+> >=20
+>=20>  @@ -3414,6 +3414,11 @@ F: tests/migration/
+> >=20
+>=20>  F: util/userfaultfd.c
+> >=20
+>=20>  X: migration/rdma*
+> >=20
+>=20>  +Migration multifd zero page checking acceleration
+> >=20
+>=20>  +M: Hao Xiang <hao.xiang@bytedance.com>
+> >=20
+>=20>  +S: Maintained
+> >=20
+>=20>  +F: migration/multifd-zero-page.c
+> >=20
+>=20>  +
+> >=20
+>=20>  Firstly appreciate a lot for volunteering!
+> >=20
+>=20>  My fault to not have made it clear. This file alone so far will ne=
+ed to be
+> >=20
+>=20>  closely related to the multifd core, so whoever maintains migratio=
+n should
+> >=20
+>=20>  look after this. It's also slightly weird to have a separate entry=
+ for a
+> >=20
+>=20>  file that is tens of LOC if it's already covered by another upper =
+entry.
+> >=20
+>=20>  What I worry is about vendor/library specific parts that will be h=
+arder to
+> >=20
+>=20>  maintain, and migration maintainers (no matter who does the job in=
+ the
+> >=20
+>=20>  future) may not always cover those areas. So I was expecting we co=
+uld have
+> >=20
+>=20>  volunteers covering e.g. QAT / DSA / IAA accelerators. Since all t=
+hese
+> >=20
+>=20>  accelerators will all be part of Intel's new chips, there's also o=
+ne way
+> >=20
+>=20>  that we have "Intel accelerators" section to cover vendor specific=
+ codes
+> >=20
+>=20>  and then cover all those areas no matter it's zero detect accelera=
+tor or HW
+> >=20
+>=20>  compressors.
+> >=20
+>=20>  I'd suggest we discuss this with Intel people to check out a solid=
+ plan
+> >=20
+>=20>  later when we start to merge HW/LIB specific codes. For now I sugg=
+est we
+> >=20
+>=20>  can drop this patch and stick with the feature implementation, to =
+see
+> >=20
+>=20>  whether it can catch the train for 9.0. IMHO this is a good featur=
+e even
+> >=20
+>=20>  without HW accelerators (and I think it's close to ready), so I ho=
+pe it can
+> >=20
+> >  still make it.
+> >=20
+>=20>  Thanks,
 
-Sorry=20about the delay. I have rebased and pulled in the two commits you=
- mentioned. Test works fine. I just sent out a new version.
+No worries. I misunderstood you. We can talk about maintenance later on w=
+hen we have the accelerator changes ready.
 
-I removed the zero/zero-bytes interface changes out of this patchset but =
-will follow up with a separate one.
+> >=20
+>=20>  --
+> >=20
+>=20>  Peter Xu
+> >
+>
 
