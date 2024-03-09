@@ -4,68 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25A85C54791
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 19:27:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF934C54791
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 19:27:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rj2HT-0000JL-5n; Sat, 09 Mar 2024 14:22:51 -0500
+	id 1rj2IT-0001kb-79; Sat, 09 Mar 2024 14:23:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2HR-0000IJ-Pp
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:22:49 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2IS-0001dB-0l
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:23:52 -0500
 Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2HO-0002UO-Nw
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:22:49 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2IO-0002e8-TJ
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:23:51 -0500
 Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a3122b70439so407739366b.3
- for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 11:22:46 -0800 (PST)
+ a640c23a62f3a-a44f2d894b7so410841866b.1
+ for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 11:23:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710012165; x=1710616965; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710012226; x=1710617026; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dvPLYlBQAWmf1NvUY3LgRzjhJOxAzzfQLYDmKAk6+Eg=;
- b=uDPoWynIu2dvzNt3Ckd9UUX7TWwWMjKS5raMiqoWEz+PbBQJhFDo7WwtXUI6CdYlt8
- gZ39MX/Yvedvd8FgIbGYtlt7KxB8Z0uV7I1pph3F4mv1Tx3lNwZmgO7NLSG0L5l9y6dj
- 6x+VMRCRdD3Ew7kx9Zll3o3qS2qtalPXpu5kD8e10HuGg/tgdPpYLIyTdDEKdEi4DBIg
- nB50eprbzaaIQp5tpddjTOpJxveydBA0zsJqstwSbfMq2SONQ0HZN+/7c6FyWNlWy50P
- mNqfmIFp+hOzPSEuqdPPPUy/qZ8aqmZ/B2WUhEmO65Z+vZxduzgjS9NWoKhLxSTgaYoy
- WONA==
+ bh=ZjbUGqOjGDJ48BD/FCrBKjFot720kk8N7cpG04DHyuw=;
+ b=cEFkM32oD0RRrFmm3ezWC4f/6Ro69Bk3Y2eijHCMbyThd3+mkkvOuxCUxwy+uPWwsW
+ swfgcQA4cY4aHghj5zdS1EgxqQLf3Au0sZuadPK+LldR1Df4up2bnlKloPS9XoSy6CJQ
+ Vlw0L7J3PdqRE5wj2zNX8NTxLbwmuhLGSRt8vR5wdCgi+3GsENyRQB+lZRecDNjvTLvC
+ 8asWNO2CUvVTew0msoj7d7d/cwZwabrIbe/xU0hA5BaNU568f6bznJy8YWbNuK20KnOj
+ 9YVFm4DyLcJ22JxDWMj8v87AMsqdQnvNjAYgP16wi1oKvjh9tLG0KOJS8uK7jfMeNlib
+ FZIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710012165; x=1710616965;
+ d=1e100.net; s=20230601; t=1710012227; x=1710617027;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dvPLYlBQAWmf1NvUY3LgRzjhJOxAzzfQLYDmKAk6+Eg=;
- b=aDPNRI91dKi/6gjiT0p+gJJsxLnQ0TEbVtVLKY7qfZXHGhy3fumOKBSoRJOA/IlaUS
- lhz5es16XDrQqz9hFZ/Ukwe0R3ODl+Qy0Bi+o3i+cOyrAF7pVo81eI/++IOE06UWzENs
- smf9vfxrDUMW9J5n9YpwLpl+3Go6be5sq9rRLgRlD4sV5N0LoS7AqaRMw++jeOl9JUPv
- ViL83s1bdfiJiytYuM1yjKsMlyzn3l5XSlU+VfIql7zMMKBizXgv9d06eK6a004LFDlR
- 5jTh8mo+RVdLFjBSCgFOqOwsqAhbNbBpxNginGA8Btozpsl/08xEV+4+u8VHzzIN9FGU
- Mu3g==
-X-Gm-Message-State: AOJu0YyHDNQtbQ0s1tGLvi0HksoCI5nrILKcdChuizB9bZ5LLtQzXUYk
- tMYDOqS5vKCdQfbhJyg6xlhoIrr6eTdOBCu3Nd3n0zzd8jLw7Lca0uBrF+3TRY4OjvxDN8p/0R+
- 8
-X-Google-Smtp-Source: AGHT+IGN8k3Sm6baTXPm79wHAuc6ayShgYcEDLvukc8XhwEnOb6ThROAcunL2w6kbhV8Y4RYVCKWXg==
-X-Received: by 2002:a17:906:c2d2:b0:a43:f22e:57a6 with SMTP id
- ch18-20020a170906c2d200b00a43f22e57a6mr1137454ejb.67.1710012164856; 
- Sat, 09 Mar 2024 11:22:44 -0800 (PST)
+ bh=ZjbUGqOjGDJ48BD/FCrBKjFot720kk8N7cpG04DHyuw=;
+ b=pF4kWPCRTuRUV6YfQpJ5AcXIKQcY+1PaRao6z4d+sq8k1q2tdSrL5mW2hxThn7i0iv
+ 5von888oANDKTgX6c2/yAE6WZhRHrlWJb+JVYMaGkkn7kNBUVRTBc7Z4FzWe0jxbvqyI
+ M2+1O2kHVbtLNc83Yvo+tUcj1atLsLYtI9jcsFtGlVj9lVynMXnEGX5rZkkWRmOO7mju
+ cBHxqmH4uxXpGwKjgUWOtPuk0QL978V67V4f/908j49Uc5GPjVUmRBgSziy+VoJSUgqR
+ kFi6jvXs/qyiiUIkDHYDoSXmIcujw/NUEGlmEdRPZ7tPQd98WsiT7JWkRdkxXpXtU/pc
+ MfOQ==
+X-Gm-Message-State: AOJu0Yww1cvlLX6gh7r6K1M6kHb1TukU0BFFCoQ0lgXoxf/IKVdblT+l
+ fyYFoWqA6UmhjxJ02Rr9LjxYZGc21QbkwvvZWBaw6K21l83dnIiXLJSmTBAE3FbZ/wyZ++FSYq/
+ l
+X-Google-Smtp-Source: AGHT+IHsirtIOeTRkWpIs3e5yCTD71AujDzccS4QPk7Rv1bmDdnDigFagjmowzpwOIomavcvEpokKQ==
+X-Received: by 2002:a17:906:b0d0:b0:a44:8c1b:8877 with SMTP id
+ bk16-20020a170906b0d000b00a448c1b8877mr1523044ejb.50.1710012226664; 
+ Sat, 09 Mar 2024 11:23:46 -0800 (PST)
 Received: from m1x-phil.lan ([176.176.181.237])
  by smtp.gmail.com with ESMTPSA id
- o23-20020a1709062e9700b00a44cf710cc3sm1170300eji.182.2024.03.09.11.22.43
+ lt10-20020a170906fa8a00b00a45ab830eabsm1179687ejb.51.2024.03.09.11.23.45
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 09 Mar 2024 11:22:44 -0800 (PST)
+ Sat, 09 Mar 2024 11:23:46 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
+Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- David Woodhouse <dwmw@amazon.co.uk>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 05/43] hw/pci/msi: Restrict xen_is_pirq_msi() call to Xen
-Date: Sat,  9 Mar 2024 20:21:32 +0100
-Message-ID: <20240309192213.23420-6-philmd@linaro.org>
+ xen-devel@lists.xenproject.org
+Subject: [PULL 15/43] hw/char/xen_console: Fix missing ERRP_GUARD() for
+ error_prepend()
+Date: Sat,  9 Mar 2024 20:21:42 +0100
+Message-ID: <20240309192213.23420-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240309192213.23420-1-philmd@linaro.org>
 References: <20240309192213.23420-1-philmd@linaro.org>
@@ -96,39 +100,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Similarly to the restriction in hw/pci/msix.c (see commit
-e1e4bf2252 "msix: fix msix_vector_masked"), restrict the
-xen_is_pirq_msi() call in msi_is_masked() to Xen.
+From: Zhao Liu <zhao1.liu@intel.com>
 
-No functional change intended.
+As the comment in qapi/error, passing @errp to error_prepend() requires
+ERRP_GUARD():
 
+* = Why, when and how to use ERRP_GUARD() =
+*
+* Without ERRP_GUARD(), use of the @errp parameter is restricted:
+...
+* - It should not be passed to error_prepend(), error_vprepend() or
+*   error_append_hint(), because that doesn't work with &error_fatal.
+* ERRP_GUARD() lifts these restrictions.
+*
+* To use ERRP_GUARD(), add it right at the beginning of the function.
+* @errp can then be used without worrying about the argument being
+* NULL or &error_fatal.
+
+ERRP_GUARD() could avoid the case when @errp is the pointer of
+error_fatal, the user can't see this additional information, because
+exit() happens in error_setg earlier than information is added [1].
+
+The xen_console_connect() passes @errp to error_prepend() without
+ERRP_GUARD().
+
+There're 2 places will call xen_console_connect():
+ - xen_console_realize(): the @errp is from DeviceClass.realize()'s
+			  parameter.
+ - xen_console_frontend_changed(): the @errp points its caller's
+                                   @local_err.
+
+To avoid the issue like [1] said, add missing ERRP_GUARD() at the
+beginning of xen_console_connect().
+
+[1]: Issue description in the commit message of commit ae7c80a7bd73
+     ("error: New macro ERRP_GUARD()").
+
+Cc: Stefano Stabellini <sstabellini@kernel.org>
+Cc: Anthony Perard <anthony.perard@citrix.com>
+Cc: Paul Durrant <paul@xen.org>
+Cc: "Marc-André Lureau" <marcandre.lureau@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Acked-by: Anthony PERARD <anthony.perard@citrix.com>
+Message-ID: <20240228163723.1775791-15-zhao1.liu@linux.intel.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: David Woodhouse <dwmw@amazon.co.uk>
-Message-Id: <20231114143816.71079-7-philmd@linaro.org>
 ---
- hw/pci/msi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/char/xen_console.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/pci/msi.c b/hw/pci/msi.c
-index 041b0bdbec..8104ac1d91 100644
---- a/hw/pci/msi.c
-+++ b/hw/pci/msi.c
-@@ -23,6 +23,7 @@
- #include "hw/xen/xen.h"
- #include "qemu/range.h"
- #include "qapi/error.h"
-+#include "sysemu/xen.h"
+diff --git a/hw/char/xen_console.c b/hw/char/xen_console.c
+index 5cbee2f184..683c92aca1 100644
+--- a/hw/char/xen_console.c
++++ b/hw/char/xen_console.c
+@@ -206,6 +206,7 @@ static bool con_event(void *_xendev)
  
- #include "hw/i386/kvm/xen_evtchn.h"
- 
-@@ -308,7 +309,7 @@ bool msi_is_masked(const PCIDevice *dev, unsigned int vector)
-     }
- 
-     data = pci_get_word(dev->config + msi_data_off(dev, msi64bit));
--    if (xen_is_pirq_msi(data)) {
-+    if (xen_enabled() && xen_is_pirq_msi(data)) {
-         return false;
-     }
+ static bool xen_console_connect(XenDevice *xendev, Error **errp)
+ {
++    ERRP_GUARD();
+     XenConsole *con = XEN_CONSOLE_DEVICE(xendev);
+     unsigned int port, limit;
  
 -- 
 2.41.0
