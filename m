@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C817C54E4A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED6DDC54798
 	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 07:59:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rirbG-00063c-KU; Sat, 09 Mar 2024 02:58:34 -0500
+	id 1rirbF-000632-Sk; Sat, 09 Mar 2024 02:58:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hao.xiang@linux.dev>)
- id 1rirbE-00062o-VQ
+ id 1rirbE-00062h-Pa
  for qemu-devel@nongnu.org; Sat, 09 Mar 2024 02:58:32 -0500
-Received: from out-181.mta1.migadu.com ([2001:41d0:203:375::b5])
+Received: from out-172.mta1.migadu.com ([95.215.58.172])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hao.xiang@linux.dev>)
- id 1rirbD-00010x-A4
+ id 1rirbD-000115-C7
  for qemu-devel@nongnu.org; Sat, 09 Mar 2024 02:58:32 -0500
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
  include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1709971106;
+ t=1709971109;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SXSrRNKG2y6mw2kCVZivpNphMeBgf6+dzpwgsitq+4E=;
- b=P5oHATd+QOsFFZ9jzWI8MhfzRbhODIDTc5y7AZbS4t1ivzdoZdkQSclmAqLl9XGu1zrZm/
- /sdXClSXS9qypSgewFLEoK9UDKqhI4bXQeij4gO/116zvKwBdULC8c3b67xEoI4WCse05l
- GcM56ZIGImJXKe7vlBBj/j9CFqeKgSM=
+ bh=wiWWspnbi7Q0vNoPD9xXbXnmFAa8r696Hl2OxFjqnzs=;
+ b=o/p1rxAWK6f4X8iNK1bH6qYJOIByuZx7ER8vWQvUmqZ76KcqAeZObPSH9GzBwBQWakAq6H
+ 5YJA2MqiBzfnWXfK0n5vYosrF55Mb1BFdNyEk7VTsXmd6crBvkpJ33cwMjiCqyOCxeoY0s
+ K2h43aXmwtchpK89bF837OFZry/eHgI=
 From: Hao Xiang <hao.xiang@linux.dev>
 To: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
  peterx@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
  thuth@redhat.com, lvivier@redhat.com, jdenemar@redhat.com,
  marcel.apfelbaum@gmail.com, philmd@linaro.org, wangyanan55@huawei.com,
  qemu-devel@nongnu.org
-Subject: [PATCH v5 1/7] migration/multifd: Allow zero pages in file migration
-Date: Sat,  9 Mar 2024 07:57:22 +0000
-Message-Id: <20240309075728.1487211-2-hao.xiang@linux.dev>
+Subject: [PATCH v5 2/7] migration/multifd: Allow clearing of the file_bmap
+ from multifd
+Date: Sat,  9 Mar 2024 07:57:23 +0000
+Message-Id: <20240309075728.1487211-3-hao.xiang@linux.dev>
 In-Reply-To: <20240309075728.1487211-1-hao.xiang@linux.dev>
 References: <20240309075728.1487211-1-hao.xiang@linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=2001:41d0:203:375::b5;
- envelope-from=hao.xiang@linux.dev; helo=out-181.mta1.migadu.com
+Received-SPF: pass client-ip=95.215.58.172; envelope-from=hao.xiang@linux.dev;
+ helo=out-172.mta1.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -71,32 +72,67 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Fabiano Rosas <farosas@suse.de>
 
-Currently, it's an error to have no data pages in the multifd file
-migration because zero page detection is done in the migration thread
-and zero pages don't reach multifd. This is enforced with the
-pages->num assert.
+We currently only need to clear the mapped-ram file bitmap from the
+migration thread during save_zero_page.
 
-We're about to add zero page detection on the multifd thread. Fix the
-file_write_ramblock_iov() to stop considering p->iovs_num=0 an error.
+We're about to add support for zero page detection on the multifd
+thread, so allow ramblock_set_file_bmap_atomic() to also clear the
+bits.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/file.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ migration/multifd.c | 2 +-
+ migration/ram.c     | 8 ++++++--
+ migration/ram.h     | 3 ++-
+ 3 files changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/migration/file.c b/migration/file.c
-index 164b079966..5075f9526f 100644
---- a/migration/file.c
-+++ b/migration/file.c
-@@ -159,7 +159,7 @@ void file_start_incoming_migration(FileMigrationArgs *file_args, Error **errp)
- int file_write_ramblock_iov(QIOChannel *ioc, const struct iovec *iov,
-                             int niov, RAMBlock *block, Error **errp)
+diff --git a/migration/multifd.c b/migration/multifd.c
+index d4a44da559..6b8a78e4ca 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -115,7 +115,7 @@ static void multifd_set_file_bitmap(MultiFDSendParams *p)
+     assert(pages->block);
+ 
+     for (int i = 0; i < p->pages->num; i++) {
+-        ramblock_set_file_bmap_atomic(pages->block, pages->offset[i]);
++        ramblock_set_file_bmap_atomic(pages->block, pages->offset[i], true);
+     }
+ }
+ 
+diff --git a/migration/ram.c b/migration/ram.c
+index 003c28e133..f4abc47bbf 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -3150,9 +3150,13 @@ static void ram_save_file_bmap(QEMUFile *f)
+     }
+ }
+ 
+-void ramblock_set_file_bmap_atomic(RAMBlock *block, ram_addr_t offset)
++void ramblock_set_file_bmap_atomic(RAMBlock *block, ram_addr_t offset, bool set)
  {
--    ssize_t ret = -1;
-+    ssize_t ret = 0;
-     int i, slice_idx, slice_num;
-     uintptr_t base, next, offset;
-     size_t len;
+-    set_bit_atomic(offset >> TARGET_PAGE_BITS, block->file_bmap);
++    if (set) {
++        set_bit_atomic(offset >> TARGET_PAGE_BITS, block->file_bmap);
++    } else {
++        clear_bit_atomic(offset >> TARGET_PAGE_BITS, block->file_bmap);
++    }
+ }
+ 
+ /**
+diff --git a/migration/ram.h b/migration/ram.h
+index b9ac0da587..08feecaf51 100644
+--- a/migration/ram.h
++++ b/migration/ram.h
+@@ -75,7 +75,8 @@ bool ram_dirty_bitmap_reload(MigrationState *s, RAMBlock *rb, Error **errp);
+ bool ramblock_page_is_discarded(RAMBlock *rb, ram_addr_t start);
+ void postcopy_preempt_shutdown_file(MigrationState *s);
+ void *postcopy_preempt_thread(void *opaque);
+-void ramblock_set_file_bmap_atomic(RAMBlock *block, ram_addr_t offset);
++void ramblock_set_file_bmap_atomic(RAMBlock *block, ram_addr_t offset,
++                                   bool set);
+ 
+ /* ram cache */
+ int colo_init_ram_cache(void);
 -- 
 2.30.2
 
