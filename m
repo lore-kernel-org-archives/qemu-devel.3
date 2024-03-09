@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07DCAC54E66
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 19:29:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51166C54E60
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 19:29:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rj2Lg-0000qg-GW; Sat, 09 Mar 2024 14:27:12 -0500
+	id 1rj2Lf-0000gQ-0d; Sat, 09 Mar 2024 14:27:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2K7-0007Fm-HD
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:25:39 -0500
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2KJ-0007NN-Gk
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:25:54 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2K2-0003Kx-5B
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:25:34 -0500
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a449c5411e1so409072966b.1
- for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 11:25:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2KF-0003Mf-Jb
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:25:45 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-563bb51c36eso3383410a12.2
+ for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 11:25:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710012328; x=1710617128; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710012339; x=1710617139; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=E1R5kgOTA3lFvXSZnN7vgERJPXvNPz5gmsixt+yKpBc=;
- b=J3+6eU/PUwZW9aQ96ujTS6hvGa3rP7nq8miwGloalQ8rrKMJ95FjgCbcts9Cra58lk
- +JHRrnjp+82MalvBHSMDOvcMDP3e1Ba816NJLTRXVurC623MX9LFi/YCdkzLNN+iuKYD
- P1xqRacEG5pfplCPl2nltSyilXUxwIVNiJLQQLxlbE1qIHyrXmk3iecj2qqxLVA+RxDO
- XgqItcnazo+1nqt1IBWwcPdc1pf16Cd8MxaYmgVm8gqBvJjEOZ/ib3KixMueAKD5ntGQ
- HoGCR80UK21t6B2HcpcOJ12OdKePHGGY6KtcARgaUqWhCxoAjypn7xFq1RW6scO/NOIk
- 9fjg==
+ bh=4izzVDpY+AQ8hh1OPoQkok5+Cmay4u8VvPo/ani8Qjo=;
+ b=N/fn7alnSp9IdsX0dSZWScKpNNh+gwvaIuz+GllWqNE40p3+nUzNYUMqxxGqLDsBkW
+ SY4L09EcM/AswTVjPfQlsbDbkgs3tq4fTnR+qjD6Sk2Qhm0okiO2PfRYbxmOxEPItX2V
+ X9zNZZu6Fro9VLEaELA14czQ8KPOunIX+7N2/XDxFUYwAwCV0Pg3zW3o8a6s5bJ+/Xzf
+ vMAqCm2IhnAF66GvjFAWhbxddPopXFaDbcRKHOngPoBWfjXlEHwesucX+Tfvl2prRX0z
+ JMBZovSm9AWUzezluT4LMTjGIJ+O0Z+nLtvnLFwVIJ6K4XR+XP7+UiyBD6udqWwi9Ywi
+ 9lQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710012328; x=1710617128;
+ d=1e100.net; s=20230601; t=1710012339; x=1710617139;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=E1R5kgOTA3lFvXSZnN7vgERJPXvNPz5gmsixt+yKpBc=;
- b=XHWOIJWjhBEhdOgY4oXuEbRRVQxumy33o72U5uE5HOUit2sr8raUN/ochEIKG1QsBk
- qf0oGNO8488Vi5gXtq6iC2FihL993kC4uho6l7yCyVjEk1XHTwYD6oMieo7IFoQhtP+s
- a4b8Z1M+5enSCscU5DZ7zimfSkQ8miZ2Dbd/XNGGTTRcQshCvPaXAzpv6uJMilRofGoo
- bmZKpKI+TEFJCeXY4q7pbQhz6j4FQb9nG6wbVOV9j61jPe+3MX4MZX8DgTh45hShU51M
- tNVQM1XFR7ViRTBHLsPaYXcpZHSl/UgsJDT4JslVDcvPnn4M/K08R71kCJdMfsSKkVV7
- BTvQ==
-X-Gm-Message-State: AOJu0Yyg/lFuh8ofoCEZSrIyalmeLETF4oprRTszFYYJRrCuNt4zY380
- S19uUhjRP5BPfeVq0E57e8rNdaif7zmlr0LCCapc5N1juEutB1+VT2Q4gY54NchmtvkxUiEUbeG
- 4
-X-Google-Smtp-Source: AGHT+IHnJt8M27LNZsdWUZYAmOdG9O1rxorvjpIsHoYwysnj44GwFfZ16OKHYnr5YK+sg37ilhTTRg==
-X-Received: by 2002:a17:907:7644:b0:a43:eb29:a293 with SMTP id
- kj4-20020a170907764400b00a43eb29a293mr1284262ejc.5.1710012327713; 
- Sat, 09 Mar 2024 11:25:27 -0800 (PST)
+ bh=4izzVDpY+AQ8hh1OPoQkok5+Cmay4u8VvPo/ani8Qjo=;
+ b=n0wmNcK4Jvl0XcjqN0fl20z3FjeN6tyhvhpkLBqOjYLV8eVyySO3HB1jO1rfw2J0vs
+ iviTq6atbEHhYJ90tEPogepAaS/bEki/7IqZyQ/r3cBLbitE5nwniWoLXxzQSoD5XrZx
+ ckWrXIj7+diqNPti0tMidvyq03+bHiTbeCqYIPIFj/xEFVhXCltQuQAM6KxXVFrODpPd
+ T9M5zM89r3HyHSl7XGEGNCH/6SAyDtb+FgT7UtGlCZu0cyAONmi6QbgH9Yzk58umn039
+ JEa0i42pSjWLTw1hax9j9/7UHP8ZxRuoYp9zrfYWpHvMXbW1zaxrU9gMFCTLvR6M7Gvk
+ /ZoQ==
+X-Gm-Message-State: AOJu0YxgZgDXxnRPBwazW/HX6U9OCBpz5F/Nk+U6BOM1j01UYzczfC4c
+ 3OTZkvSfq+mBbUSV5HbUZXM3d5MLGw7VcnBCwxlOly9WXd5qmKMhUpMfxNZgBMc7f6QWj0G3YFQ
+ g
+X-Google-Smtp-Source: AGHT+IHYQn/wV3sAEi0VFsI5hwT2XA7fxKADL4Tdvyqkbq1LXxwkEtcQ4rc7snCEpBUGrqzK3CV7Sw==
+X-Received: by 2002:a50:cd45:0:b0:568:2578:f520 with SMTP id
+ d5-20020a50cd45000000b005682578f520mr1778835edj.35.1710012339700; 
+ Sat, 09 Mar 2024 11:25:39 -0800 (PST)
 Received: from m1x-phil.lan ([176.176.181.237])
  by smtp.gmail.com with ESMTPSA id
- hq31-20020a1709073f1f00b00a45c09107d6sm1182777ejc.29.2024.03.09.11.25.26
+ n1-20020aa7c441000000b0056452477a5esm1183979edr.24.2024.03.09.11.25.38
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 09 Mar 2024 11:25:27 -0800 (PST)
+ Sat, 09 Mar 2024 11:25:39 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ Xiaoling Song <xiaoling.song@intel.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Yanan Wang <wangyanan55@huawei.com>
-Subject: [PULL 32/43] hw/core/machine-smp: Calculate total CPUs once in
- machine_parse_smp_config()
-Date: Sat,  9 Mar 2024 20:21:59 +0100
-Message-ID: <20240309192213.23420-33-philmd@linaro.org>
+Subject: [PULL 34/43] tests/unit/test-smp-parse: Use CPU number macros in
+ invalid topology case
+Date: Sat,  9 Mar 2024 20:22:01 +0100
+Message-ID: <20240309192213.23420-35-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240309192213.23420-1-philmd@linaro.org>
 References: <20240309192213.23420-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,56 +101,61 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-In machine_parse_smp_config(), the number of total CPUs is calculated
-by:
-
-    drawers * books * sockets * dies * clusters * cores * threads
-
-To avoid missing the future new topology level, use a local variable to
-cache the calculation result so that total CPUs are only calculated
-once.
+Use MAX_CPUS/MIN_CPUS macros in invalid topology case. This gives us the
+flexibility to change the maximum and minimum CPU limits.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240308160148.3130837-4-zhao1.liu@linux.intel.com>
+Tested-by: Xiaoling Song <xiaoling.song@intel.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20240308160148.3130837-6-zhao1.liu@linux.intel.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/core/machine-smp.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tests/unit/test-smp-parse.c | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
-index 50a5a40dbc..27864c9507 100644
---- a/hw/core/machine-smp.c
-+++ b/hw/core/machine-smp.c
-@@ -91,6 +91,7 @@ void machine_parse_smp_config(MachineState *ms,
-     unsigned cores   = config->has_cores ? config->cores : 0;
-     unsigned threads = config->has_threads ? config->threads : 0;
-     unsigned maxcpus = config->has_maxcpus ? config->maxcpus : 0;
-+    unsigned total_cpus;
+diff --git a/tests/unit/test-smp-parse.c b/tests/unit/test-smp-parse.c
+index 1874bea086..84e3422774 100644
+--- a/tests/unit/test-smp-parse.c
++++ b/tests/unit/test-smp-parse.c
+@@ -323,15 +323,21 @@ static const struct SMPTestData data_generic_invalid[] = {
+                         "sockets (2) * cores (4) * threads (2) "
+                         "== maxcpus (16) < smp_cpus (18)",
+     }, {
+-        /* config: -smp 1
+-         * should tweak the supported min CPUs to 2 for testing */
+-        .config = SMP_CONFIG_GENERIC(T, 1, F, 0, F, 0, F, 0, F, 0),
++        /*
++         * config: -smp 1
++         * The test machine should tweak the supported min CPUs to
++         * 2 (MIN_CPUS + 1) for testing.
++         */
++        .config = SMP_CONFIG_GENERIC(T, MIN_CPUS, F, 0, F, 0, F, 0, F, 0),
+         .expect_error = "Invalid SMP CPUs 1. The min CPUs supported "
+                         "by machine '" SMP_MACHINE_NAME "' is 2",
+     }, {
+-        /* config: -smp 512
+-         * should tweak the supported max CPUs to 511 for testing */
+-        .config = SMP_CONFIG_GENERIC(T, 512, F, 0, F, 0, F, 0, F, 0),
++        /*
++         * config: -smp 512
++         * The test machine should tweak the supported max CPUs to
++         * 511 (MAX_CPUS - 1) for testing.
++         */
++        .config = SMP_CONFIG_GENERIC(T, MAX_CPUS, F, 0, F, 0, F, 0, F, 0),
+         .expect_error = "Invalid SMP CPUs 512. The max CPUs supported "
+                         "by machine '" SMP_MACHINE_NAME "' is 511",
+     },
+@@ -575,8 +581,8 @@ static void machine_generic_invalid_class_init(ObjectClass *oc, void *data)
+     MachineClass *mc = MACHINE_CLASS(oc);
  
-     /*
-      * Specified CPU topology parameters must be greater than zero,
-@@ -211,8 +212,8 @@ void machine_parse_smp_config(MachineState *ms,
-         }
-     }
+     /* Force invalid min CPUs and max CPUs */
+-    mc->min_cpus = 2;
+-    mc->max_cpus = 511;
++    mc->min_cpus = MIN_CPUS + 1;
++    mc->max_cpus = MAX_CPUS - 1;
+ }
  
--    maxcpus = maxcpus > 0 ? maxcpus : drawers * books * sockets * dies *
--                                      clusters * cores * threads;
-+    total_cpus = drawers * books * sockets * dies * clusters * cores * threads;
-+    maxcpus = maxcpus > 0 ? maxcpus : total_cpus;
-     cpus = cpus > 0 ? cpus : maxcpus;
- 
-     ms->smp.cpus = cpus;
-@@ -228,8 +229,7 @@ void machine_parse_smp_config(MachineState *ms,
-     mc->smp_props.has_clusters = config->has_clusters;
- 
-     /* sanity-check of the computed topology */
--    if (drawers * books * sockets * dies * clusters * cores * threads !=
--        maxcpus) {
-+    if (total_cpus != maxcpus) {
-         g_autofree char *topo_msg = cpu_hierarchy_to_string(ms);
-         error_setg(errp, "Invalid CPU topology: "
-                    "product of the hierarchy must match maxcpus: "
+ static void machine_with_dies_class_init(ObjectClass *oc, void *data)
 -- 
 2.41.0
 
