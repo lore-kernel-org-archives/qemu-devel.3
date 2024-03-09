@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E85DBC54E41
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 16:00:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00582C54798
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 16:00:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riz5O-0007RT-R8; Sat, 09 Mar 2024 10:58:10 -0500
+	id 1riz5O-0007RS-Kn; Sat, 09 Mar 2024 10:58:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1riz5J-0007PX-CF; Sat, 09 Mar 2024 10:58:06 -0500
+ id 1riz5E-0007Lq-MV; Sat, 09 Mar 2024 10:58:01 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1riz5H-0004Jt-3O; Sat, 09 Mar 2024 10:58:05 -0500
+ id 1riz5C-0004Iu-JR; Sat, 09 Mar 2024 10:58:00 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2C4A654533;
- Sat,  9 Mar 2024 18:58:40 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8682F54531;
+ Sat,  9 Mar 2024 18:58:38 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id AFE37944C5;
- Sat,  9 Mar 2024 18:57:43 +0300 (MSK)
-Received: (nullmailer pid 1694677 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 08292944C3;
+ Sat,  9 Mar 2024 18:57:41 +0300 (MSK)
+Received: (nullmailer pid 1694671 invoked by uid 1000);
  Sat, 09 Mar 2024 15:57:29 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>, qemu-trivial@nongnu.org,
+Cc: Thomas Huth <thuth@redhat.com>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 11/11] docs/acpi/bits: add some clarity and details while also
- improving formating
-Date: Sat,  9 Mar 2024 18:57:29 +0300
-Message-Id: <20240309155729.1694607-12-mjt@tls.msk.ru>
+Subject: [PULL 09/11] hw/pci-bridge/cxl_upstream: Fix problem with
+ g_steal_pointer()
+Date: Sat,  9 Mar 2024 18:57:27 +0300
+Message-Id: <20240309155729.1694607-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240309155729.1694607-1-mjt@tls.msk.ru>
 References: <20240309155729.1694607-1-mjt@tls.msk.ru>
@@ -62,103 +62,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ani Sinha <anisinha@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 
-Update bios-bits docs to add more details on why a pre-OS environment for
-testing bioses is useful. Add author's FOSDEM talk link. Also improve the
-formating of the document while at it.
+When setting GLIB_VERSION_MAX_ALLOWED to GLIB_VERSION_2_58 or higher,
+glib adds type safety checks to the g_steal_pointer() macro. This
+triggers errors in the build_cdat_table() function which uses the
+g_steal_pointer() for type-casting from one pointer type to the other
+(which also looks quite weird since the local pointers have all been
+declared with g_autofree though they are never freed here). Let's fix
+it by using a proper typecast instead. For making this possible, we
+have to remove the QEMU_PACKED attribute from some structs since GCC
+otherwise complains that the source and destination pointer might
+have different alignment restrictions. Removing the QEMU_PACKED should
+be fine here since the structs are already naturally aligned. Anyway,
+add some QEMU_BUILD_BUG_ON() statements to make sure that we've got
+the right sizes (without padding in the structs).
 
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- docs/devel/acpi-bits.rst | 55 ++++++++++++++++++++++++++++------------
- 1 file changed, 39 insertions(+), 16 deletions(-)
+ hw/pci-bridge/cxl_upstream.c | 8 ++++----
+ include/hw/cxl/cxl_cdat.h    | 8 +++++---
+ 2 files changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/docs/devel/acpi-bits.rst b/docs/devel/acpi-bits.rst
-index 9677b0098f..1ec394f5fb 100644
---- a/docs/devel/acpi-bits.rst
-+++ b/docs/devel/acpi-bits.rst
-@@ -1,26 +1,48 @@
- =============================================================================
- ACPI/SMBIOS avocado tests using biosbits
- =============================================================================
--
-+************
-+Introduction
-+************
- Biosbits is a software written by Josh Triplett that can be downloaded
- from https://biosbits.org/. The github codebase can be found
--`here <https://github.com/biosbits/bits/tree/master>`__. It is a software that executes
--the bios components such as acpi and smbios tables directly through acpica
--bios interpreter (a freely available C based library written by Intel,
-+`here <https://github.com/biosbits/bits/tree/master>`__. It is a software that
-+executes the bios components such as acpi and smbios tables directly through
-+acpica bios interpreter (a freely available C based library written by Intel,
- downloadable from https://acpica.org/ and is included with biosbits) without an
--operating system getting involved in between.
-+operating system getting involved in between. Bios-bits has python integration
-+with grub so actual routines that executes bios components can be written in
-+python instead of bash-ish (grub's native scripting language).
- There are several advantages to directly testing the bios in a real physical
--machine or VM as opposed to indirectly discovering bios issues through the
--operating system. For one thing, the OSes tend to hide bios problems from the
--end user. The other is that we have more control of what we wanted to test
--and how by directly using acpica interpreter on top of the bios on a running
--system. More details on the inspiration for developing biosbits and its real
--life uses can be found in [#a]_ and [#b]_.
-+machine or in a VM as opposed to indirectly discovering bios issues through the
-+operating system (the OS). Operating systems tend to bypass bios problems and
-+hide them from the end user. We have more control of what we wanted to test and
-+how by being as close to the bios on a running system as possible without a
-+complicated software component such as an operating system coming in between.
-+Another issue is that we cannot exercise bios components such as ACPI and
-+SMBIOS without being in the highest hardware privilege level, ring 0 for
-+example in case of x86. Since the OS executes from ring 0 whereas normal user
-+land software resides in unprivileged ring 3, operating system must be modified
-+in order to write our test routines that exercise and test the bios. This is
-+not possible in all cases. Lastly, test frameworks and routines are preferably
-+written using a high level scripting language such as python. OSes and
-+OS modules are generally written using low level languages such as C and
-+low level assembly machine language. Writing test routines in a low level
-+language makes things more cumbersome. These and other reasons makes using
-+bios-bits very attractive for testing bioses. More details on the inspiration
-+for developing biosbits and its real life uses can be found in [#a]_ and [#b]_.
-+
- For QEMU, we maintain a fork of bios bits in gitlab along with all the
--dependent submodules here: https://gitlab.com/qemu-project/biosbits-bits
-+dependent submodules `here <https://gitlab.com/qemu-project/biosbits-bits>`__.
- This fork contains numerous fixes, a newer acpica and changes specific to
- running this avocado QEMU tests using bits. The author of this document
--is the sole maintainer of the QEMU fork of bios bits repo.
-+is the sole maintainer of the QEMU fork of bios bits repository. For more
-+information, please see author's `FOSDEM talk on this bios-bits based test
-+framework <https://fosdem.org/2024/schedule/event/fosdem-2024-2262-exercising-qemu-generated-acpi-smbios-tables-using-biosbits-from-within-a-guest-vm-/>`__.
-+
-+*********************************
-+Description of the test framework
-+*********************************
+diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
+index e87eb40177..537f9affb8 100644
+--- a/hw/pci-bridge/cxl_upstream.c
++++ b/hw/pci-bridge/cxl_upstream.c
+@@ -192,8 +192,8 @@ enum {
  
- Under the directory ``tests/avocado/``, ``acpi-bits.py`` is a QEMU avocado
- test that drives all this.
-@@ -120,8 +142,9 @@ Under ``tests/avocado/`` as the root we have:
-        (b) Add a SPDX license header.
-        (c) Perform modifications to the test.
+ static int build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
+ {
+-    g_autofree CDATSslbis *sslbis_latency = NULL;
+-    g_autofree CDATSslbis *sslbis_bandwidth = NULL;
++    CDATSslbis *sslbis_latency;
++    CDATSslbis *sslbis_bandwidth;
+     CXLUpstreamPort *us = CXL_USP(priv);
+     PCIBus *bus = &PCI_BRIDGE(us)->sec_bus;
+     int devfn, sslbis_size, i;
+@@ -270,8 +270,8 @@ static int build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
+     *cdat_table = g_new0(CDATSubHeader *, CXL_USP_CDAT_NUM_ENTRIES);
  
--   Commits (a), (b) and (c) should go under separate commits so that the original
--   test script and the changes we have made are separated and clear.
-+   Commits (a), (b) and (c) preferably should go under separate commits so that
-+   the original test script and the changes we have made are separated and
-+   clear. (a) and (b) can sometimes be combined into a single step.
+     /* Header always at start of structure */
+-    (*cdat_table)[CXL_USP_CDAT_SSLBIS_LAT] = g_steal_pointer(&sslbis_latency);
+-    (*cdat_table)[CXL_USP_CDAT_SSLBIS_BW] = g_steal_pointer(&sslbis_bandwidth);
++    (*cdat_table)[CXL_USP_CDAT_SSLBIS_LAT] = (CDATSubHeader *)sslbis_latency;
++    (*cdat_table)[CXL_USP_CDAT_SSLBIS_BW] = (CDATSubHeader *)sslbis_bandwidth;
  
-    The test framework will then use your modified test script to run the test.
-    No further changes would be needed. Please check the logs to make sure that
-@@ -141,4 +164,4 @@ References:
- -----------
- .. [#a] https://blog.linuxplumbersconf.org/2011/ocw/system/presentations/867/original/bits.pdf
- .. [#b] https://www.youtube.com/watch?v=36QIepyUuhg
--
-+.. [#c] https://fosdem.org/2024/schedule/event/fosdem-2024-2262-exercising-qemu-generated-acpi-smbios-tables-using-biosbits-from-within-a-guest-vm-/
+     return CXL_USP_CDAT_NUM_ENTRIES;
+ }
+diff --git a/include/hw/cxl/cxl_cdat.h b/include/hw/cxl/cxl_cdat.h
+index 8e3d094608..b44cefaad6 100644
+--- a/include/hw/cxl/cxl_cdat.h
++++ b/include/hw/cxl/cxl_cdat.h
+@@ -130,7 +130,8 @@ typedef struct CDATSslbisHeader {
+     uint8_t data_type;
+     uint8_t reserved[3];
+     uint64_t entry_base_unit;
+-} QEMU_PACKED CDATSslbisHeader;
++} CDATSslbisHeader;
++QEMU_BUILD_BUG_ON(sizeof(CDATSslbisHeader) != 16);
+ 
+ #define CDAT_PORT_ID_USP 0x100
+ /* Switch Scoped Latency and Bandwidth Entry - CDAT Table 10 */
+@@ -139,12 +140,13 @@ typedef struct CDATSslbe {
+     uint16_t port_y_id;
+     uint16_t latency_bandwidth;
+     uint16_t reserved;
+-} QEMU_PACKED CDATSslbe;
++} CDATSslbe;
++QEMU_BUILD_BUG_ON(sizeof(CDATSslbe) != 8);
+ 
+ typedef struct CDATSslbis {
+     CDATSslbisHeader sslbis_header;
+     CDATSslbe sslbe[];
+-} QEMU_PACKED CDATSslbis;
++} CDATSslbis;
+ 
+ typedef struct CDATEntry {
+     void *base;
 -- 
 2.39.2
 
