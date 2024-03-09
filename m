@@ -4,95 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B71FC54798
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 15:14:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FF57C54E41
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 15:33:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riyOH-00050p-Pc; Sat, 09 Mar 2024 10:13:37 -0500
+	id 1riyhF-0001bl-VQ; Sat, 09 Mar 2024 10:33:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1riyOG-00050h-RS
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 10:13:36 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1riyOE-0005vP-U0
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 10:13:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709997212;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FvEnEn61qIGzBx5HDcABGdI1hanTCJMH/wO4hbvbsTk=;
- b=iaQw1FcGeLbPWXCutzQ+GE6GxkLpNxFauINLILmNLctISYflJefRAYz2ZVJ6UdeURhkDIQ
- m8SU5m6DXZ1Oj2GmXBl3tZgmN5G2i8PzxkIZP/qDu6f3c+jfAAa5zsoFtk/UnmSUs7Lvjb
- Km435dlaiEPlUZSOQUC4wDKCMLAD4fU=
-Received: from mail-il1-f198.google.com (mail-il1-f198.google.com
- [209.85.166.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-608-PGIFR_f9NfWx1HSMtYY_cQ-1; Sat, 09 Mar 2024 10:13:30 -0500
-X-MC-Unique: PGIFR_f9NfWx1HSMtYY_cQ-1
-Received: by mail-il1-f198.google.com with SMTP id
- e9e14a558f8ab-36643c99612so58395ab.3
- for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 07:13:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <isaacwoods.home@gmail.com>)
+ id 1riyZw-0000H8-BI
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 10:25:42 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <isaacwoods.home@gmail.com>)
+ id 1riyZs-0007vx-V4
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 10:25:38 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-412fc5f5152so22444745e9.0
+ for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 07:25:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1709997926; x=1710602726; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=p8duqk3DQZ4pwtbBPDMsGhD+I9fcYJiGxlPhWsv3q6Y=;
+ b=YeJxoT8g1ukdv0joldVS46VSyLqruuwFa/j1KIyvvqmSS5U4xTGBjs2Q7Zg+hgHFYQ
+ ja+1y3mtZvhbYAEF9ac6kK9p9WdsB9rclkYKXTGSAJoEI3IcIm8GnxTIPZ7e66ecylcF
+ vgBqvso+0eV4hEuk145KIJOZnYVzt8KJ1KpOxAygzPSrih5Vg3ogDuLbouRooIZJii+H
+ ldMpZjBV1gGy+z7JQ8RFH1Xz/hoDKU3oQFcHqfUOclSjXT5xjnKrXucf1UmOI6aZtCMM
+ 8aTSl6ZQcXNiDp+Q70rlMlf0ZmuBkgFcmcorEoM88oUCXhOsodIaIHRtCYrhTDQbmn84
+ p7wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709997210; x=1710602010;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=FvEnEn61qIGzBx5HDcABGdI1hanTCJMH/wO4hbvbsTk=;
- b=rsWAKQZoIrAx9t+clfLUozn0IGcZOevF8P+MhKoRZNPnrPJzy+KHHkzcObmHAKOcpn
- a4eLDafB9OAFCgWeLeqvdjRQaKfNRElYLlPjXMj/8ngJR38KzQqxN4hEwjFx5iYPuqH0
- qCu9dBgP1KwmD0+9QxwG+rxwBp5YEEq85rEV/rNj0uOY+duwYHDJAdTbJtK4d1ZSmsr1
- j2FwwjleH0RdYqTqPfiyBgYWs8oewas3iUbcD6KO8TRGDS7AXd4HKAo4iePgWPJJyHqy
- 1BL/0254yiBmWpNtPnWmIXmEzcPCnjkxoU6W3+pNKIYOkUkCShWVnjt+ogthWpViaqU4
- 3vLw==
-X-Gm-Message-State: AOJu0YzB3uv+uhjDM3dnvhnhcPF/a54DKqOMzKttaIXw6tB3uU9IMy72
- AHTVTheQLi59P+A0Y+N1hLOowj43Y77sfdBkw4/QxLXvpth7KoZkllAALhC2zqmrQj5nVXUP1Ma
- Os6ymI1z92qdZbI0jV/Ak62gMYuBHZIbKXPvb80iNc/oNhdzARfK3
-X-Received: by 2002:a05:6e02:1cab:b0:365:21a0:781f with SMTP id
- x11-20020a056e021cab00b0036521a0781fmr2457888ill.16.1709997210027; 
- Sat, 09 Mar 2024 07:13:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFp1hr4hZ0t1wb+EJVnd+1U43AiKxx/jvryN7SP0adYWpNOW8Qsu99kGMg5QBofUef/8vnwFw==
-X-Received: by 2002:a05:6e02:1cab:b0:365:21a0:781f with SMTP id
- x11-20020a056e021cab00b0036521a0781fmr2457871ill.16.1709997209778; 
- Sat, 09 Mar 2024 07:13:29 -0800 (PST)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- g9-20020a05663816c900b00476ca242b77sm459093jat.53.2024.03.09.07.13.28
+ d=1e100.net; s=20230601; t=1709997926; x=1710602726;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=p8duqk3DQZ4pwtbBPDMsGhD+I9fcYJiGxlPhWsv3q6Y=;
+ b=dfK+22YO+UjSo6OgxZBWE3zfXGmFEYU5pHectx/+yfZOr/ERzAex/VZN7xwc3gPlcJ
+ yeieACOQWzcmNIGOdlrzmPAJ2Co26mS4urIq55TRdDmTA7MI10PeYFRVIsrAHdHGzrW8
+ FNbPEgK5L/mdPO8qB7J96x/+01ekqFuJkI6IM2qR8MQH1db93hKqXWcwbS1RkjZvn7RK
+ m1nFrhFcD/K+dknjH9cVXviDhAQlZnzb/6gl30a7DfiwCa9Mj81A4vHrginaBetUNBLp
+ BKx9gE6bRMjHWwBJBQJ6UfX4e2kiK32EHZiWahKKXM99AWelVwuUq8Zz+e57hfsfvFst
+ 2bBA==
+X-Gm-Message-State: AOJu0Yy6tl7AFqp43uJf1ypu8GbT84sutYSO/dqtjpTVbP2roy7VMwPT
+ xpKDgimOcmSkgil+K4cX6pbPGA1PT4zdMF10z0fp9CgYEf8X3soy6sHc7S+4/SY=
+X-Google-Smtp-Source: AGHT+IGJv20BhtepCG4TLGuqnAhJKZLpD11MZ4BgQFpzAxfpVP9PauGJyERuOPocWdxKGaw7dAWk2A==
+X-Received: by 2002:a05:600c:5020:b0:412:dc02:9824 with SMTP id
+ n32-20020a05600c502000b00412dc029824mr2025487wmr.9.1709997925480; 
+ Sat, 09 Mar 2024 07:25:25 -0800 (PST)
+Received: from localhost.localdomain (25.58.198.146.dyn.plus.net.
+ [146.198.58.25]) by smtp.gmail.com with ESMTPSA id
+ v9-20020a05600c470900b0041312e8ef2bsm2842322wmo.26.2024.03.09.07.25.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 09 Mar 2024 07:13:29 -0800 (PST)
-Date: Sat, 9 Mar 2024 08:13:27 -0700
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, Eduardo
- Habkost <eduardo@habkost.net>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?=
- <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>
-Subject: Re: [PATCH 0/2] Revert "hw/i386/pc: Confine system flash handling
- to pc_sysfw"
-Message-ID: <20240309081327.7eb35acf.alex.williamson@redhat.com>
-In-Reply-To: <20240226215909.30884-1-shentey@gmail.com>
-References: <20240226215909.30884-1-shentey@gmail.com>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
+ Sat, 09 Mar 2024 07:25:25 -0800 (PST)
+From: Isaac Woods <isaacwoods.home@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: isaacwoods.home@gmail.com,
+	kraxel@redhat.com
+Subject: [PATCH] usb: add support for sending MSIs from EHCI PCI devices
+Date: Sat,  9 Mar 2024 15:10:32 +0000
+Message-ID: <20240309151031.29417-2-isaacwoods.home@gmail.com>
+X-Mailer: git-send-email 2.44.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=alex.williamson@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=isaacwoods.home@gmail.com; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sat, 09 Mar 2024 10:33:12 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -107,34 +92,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 26 Feb 2024 22:59:07 +0100
-Bernhard Beschow <shentey@gmail.com> wrote:
+Signed-off-by: Isaac Woods <isaacwoods.home@gmail.com>
+---
+ hw/usb/hcd-ehci-pci.c    | 27 +++++++++++++++++++++++++++
+ hw/usb/hcd-ehci-sysbus.c |  7 +++++++
+ hw/usb/hcd-ehci.c        |  2 +-
+ hw/usb/hcd-ehci.h        |  2 ++
+ 4 files changed, 37 insertions(+), 1 deletion(-)
 
-> As reported by Volker [1], commit 6f6ad2b24582 "hw/i386/pc: Confine system
-> flash handling to pc_sysfw" causes a regression when specifying the property
-> `-M pflash0` in the PCI PC machines:
->   qemu-system-x86_64: Property 'pc-q35-9.0-machine.pflash0' not found
-> Revert the commit for now until a solution is found.
-> 
-> Best regards,
-> Bernhard
-> 
-> [1] https://lore.kernel.org/qemu-devel/9e82a04b-f2c1-4e34-b4b6-46a0581b572f@t-online.de/
-> 
-> Bernhard Beschow (2):
->   Revert "hw/i386/pc_sysfw: Inline pc_system_flash_create() and remove
->     it"
->   Revert "hw/i386/pc: Confine system flash handling to pc_sysfw"
-> 
->  include/hw/i386/pc.h |  2 ++
->  hw/i386/pc.c         |  1 +
->  hw/i386/pc_piix.c    |  1 +
->  hw/i386/pc_sysfw.c   | 17 +++++++++++++----
->  4 files changed, 17 insertions(+), 4 deletions(-)
-> 
-
-Please apply this, the original commits break my existing VMs.
-
-Tested-by: Alex Williamson <alex.williamson@redhat.com>
+diff --git a/hw/usb/hcd-ehci-pci.c b/hw/usb/hcd-ehci-pci.c
+index 3ff54edf62..8a714b6733 100644
+--- a/hw/usb/hcd-ehci-pci.c
++++ b/hw/usb/hcd-ehci-pci.c
+@@ -21,6 +21,8 @@
+ #include "migration/vmstate.h"
+ #include "qemu/module.h"
+ #include "qemu/range.h"
++#include "hw/pci/msi.h"
++#include "qapi/error.h"
+ 
+ typedef struct EHCIPCIInfo {
+     const char *name;
+@@ -30,11 +32,27 @@ typedef struct EHCIPCIInfo {
+     bool companion;
+ } EHCIPCIInfo;
+ 
++static void ehci_pci_intr_update(EHCIState *ehci, bool enable)
++{
++    EHCIPCIState *s = container_of(ehci, EHCIPCIState, ehci);
++    PCIDevice *pci_dev = PCI_DEVICE(s);
++
++    if (msi_enabled(pci_dev)) {
++        if (enable) {
++            msi_notify(pci_dev, 0);
++        }
++    } else {
++        pci_set_irq(pci_dev, enable);
++    }
++}
++
+ static void usb_ehci_pci_realize(PCIDevice *dev, Error **errp)
+ {
+     EHCIPCIState *i = PCI_EHCI(dev);
+     EHCIState *s = &i->ehci;
+     uint8_t *pci_conf = dev->config;
++    Error *err = NULL;
++    int ret;
+ 
+     pci_set_byte(&pci_conf[PCI_CLASS_PROG], 0x20);
+ 
+@@ -68,8 +86,17 @@ static void usb_ehci_pci_realize(PCIDevice *dev, Error **errp)
+     s->irq = pci_allocate_irq(dev);
+     s->as = pci_get_address_space(dev);
+ 
++    s->intr_update = ehci_pci_intr_update;
++
+     usb_ehci_realize(s, DEVICE(dev), NULL);
+     pci_register_bar(dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY, &s->mem);
++
++    ret = msi_init(dev, 0x70, 1, true, false, &err);
++    if (ret) {
++        error_propagate(errp, err);
++    } else {
++        error_free(err);
++    }
+ }
+ 
+ static void usb_ehci_pci_init(Object *obj)
+diff --git a/hw/usb/hcd-ehci-sysbus.c b/hw/usb/hcd-ehci-sysbus.c
+index fe1dabd0bb..e08c856e2b 100644
+--- a/hw/usb/hcd-ehci-sysbus.c
++++ b/hw/usb/hcd-ehci-sysbus.c
+@@ -38,6 +38,11 @@ static Property ehci_sysbus_properties[] = {
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
++static void usb_ehci_sysbus_intr_update(EHCIState *ehci, bool level)
++{
++    qemu_set_irq(s->irq, level);
++}
++
+ static void usb_ehci_sysbus_realize(DeviceState *dev, Error **errp)
+ {
+     SysBusDevice *d = SYS_BUS_DEVICE(dev);
+@@ -70,6 +75,8 @@ static void ehci_sysbus_init(Object *obj)
+     s->portnr = sec->portnr;
+     s->as = &address_space_memory;
+ 
++    s->intr_update = usb_ehci_sysbus_intr_update;
++
+     usb_ehci_init(s, DEVICE(obj));
+     sysbus_init_mmio(d, &s->mem);
+ }
+diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c
+index 01864d4649..e1f71dc445 100644
+--- a/hw/usb/hcd-ehci.c
++++ b/hw/usb/hcd-ehci.c
+@@ -209,7 +209,7 @@ static inline void ehci_update_irq(EHCIState *s)
+     }
+ 
+     trace_usb_ehci_irq(level, s->frindex, s->usbsts, s->usbintr);
+-    qemu_set_irq(s->irq, level);
++    (s->intr_update)(s, level);
+ }
+ 
+ /* flag interrupt condition */
+diff --git a/hw/usb/hcd-ehci.h b/hw/usb/hcd-ehci.h
+index 56a1c09d1f..bc017aec79 100644
+--- a/hw/usb/hcd-ehci.h
++++ b/hw/usb/hcd-ehci.h
+@@ -305,6 +305,8 @@ struct EHCIState {
+     EHCIQueueHead aqueues;
+     EHCIQueueHead pqueues;
+ 
++    void (*intr_update)(EHCIState *s, bool enable);
++
+     /* which address to look at next */
+     uint32_t a_fetch_addr;
+     uint32_t p_fetch_addr;
+-- 
+2.44.0
 
 
