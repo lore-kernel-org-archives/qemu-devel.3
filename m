@@ -4,79 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB961C54791
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 19:24:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 695E7C54791
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 19:24:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rj2IY-0001uc-4T; Sat, 09 Mar 2024 14:23:58 -0500
+	id 1rj2ID-0000uz-FZ; Sat, 09 Mar 2024 14:23:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2IW-0001tb-WD
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:23:57 -0500
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2I8-0000lj-0L
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:23:33 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2IU-0002fj-IB
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:23:56 -0500
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a45c006ab82so385732766b.3
- for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 11:23:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2I5-0002bd-Mt
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:23:31 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5682ecd1f81so2170412a12.0
+ for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 11:23:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710012233; x=1710617033; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710012208; x=1710617008; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0qhkX9N0f7mv4U6Enm7PREVuXkmrXKzBrsiRapOf0sE=;
- b=D45f31p6YZNSPGyEI0JMwiP7W9vLR7q+9eAsn+HmAteLYhMy49YrwCppbmSS+Ik4kb
- Xq9enhSzrG7H5a1LfkOA5r0oW5dNhXOYwO1bGjkSu3ScXXkFWjdr2bntvDHhqTGobGlI
- N5eTJ4f49MJ2l2BKEkI2sN3FmoV2XN2cvOwWdvtnT0/hnLpReLwK0JBLsBKyHPS6floa
- dnYHW5JJKP2XoPR4pJ6DwtAdU1mmRi75oMhpxwxpkSepGw45x9GQthFbf9lBCLMAxHIT
- 18T8/IYJy8Nh8q5pjZbY5OWgHqSRMv5TpdDb9GI8vloYRI7hQhTtFDFtKq5EUKg5KDE+
- 9KWw==
+ bh=yLHD9GT6b5p3TJG9MYP2E7Mrw1kvuaLUPhHVHq70H4k=;
+ b=VWo6lxN8yLys8ueQbO7F1V6Bgnp4UmrW/FJ0ZVFxeWgvRGre5Ao6i6Yh7J1FIxGfSl
+ +kg8zqjiL2gDeSUZlsLTOfEr+x/MD/1UG551bdcqauSMyVWOdCCDXcnYy8oiK1ZiLXhr
+ DUCIxsB2f1QJAIYqYXS/49Y1/DhxXWQWNV5z2XwcuHgg5YcH2LfzELWmmJM+d6c9cQiM
+ NcrTbDjRVePdpLJ9lq+VrO8R20+sUgUIEiC4/UdgoQq8qO/nTmvPbZS6zxIfzcknNV6D
+ A59rlmlpJDzJY4OZ9yAbi6EcvFMYQRYanGzuWfQCdPZOyRuOA1x58wG/pcoRtGAobv+X
+ KsLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710012233; x=1710617033;
+ d=1e100.net; s=20230601; t=1710012208; x=1710617008;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0qhkX9N0f7mv4U6Enm7PREVuXkmrXKzBrsiRapOf0sE=;
- b=twUggYnfnQHZFBSOQSi8z74EOZTpEQ/VkzmAbzh5edU8YT0ZEKikZVvWxVDdapX/kU
- 8dSrr8TT0nf5nIKyypKCfHiT7hB9ah0qfENGS0oETf9w1sK1wrDgGmHCfne6htRWvesI
- XLvjoFWXqB2KN7gPvd8u903/OHECsq7GMaOjhqG0KMmvvfMGYIcuJTu+7DzVP/3zLtf6
- m50tQXuYY35Y/dn4l6mB/c0Bd3xT3EVX/pfSyHtQGa5BlKOX2W/pEMRDIEY81NKavyoK
- EoIHd91M/gdiPvbXBkVnOxvgmRuMWiqtyV21LHwVkIEXbN6nHHUWq9E5e1PIWFqkqxVR
- ugLw==
-X-Gm-Message-State: AOJu0Yy6yaZqpAjlY7CnJYI7TjS5VevLiDg2ku5InZD3JxMBoPqK+AIw
- EKTB4DGEyYcRxkx5QfNkTokMibXRXQf7ASzNVOdQqChmCKmg4b00fSime/+FCNKZpkgby20P+6g
- P
-X-Google-Smtp-Source: AGHT+IE0pC1PtPPUFeJGmL9nn03Tms40CF9fkNhPdedtB8UjjmtZf/tpA8FjVipfHktzZdaLWkMqpQ==
-X-Received: by 2002:a17:907:c28a:b0:a43:900a:31c5 with SMTP id
- tk10-20020a170907c28a00b00a43900a31c5mr1698253ejc.4.1710012232757; 
- Sat, 09 Mar 2024 11:23:52 -0800 (PST)
+ bh=yLHD9GT6b5p3TJG9MYP2E7Mrw1kvuaLUPhHVHq70H4k=;
+ b=Tri4MHX9BRHOOA7gAia0V0MJLLfYqgpEGxPnBozryywGbUkFXpJdQqdDB3I8ePstgc
+ RaVPh/K5/Fg8c+Wfm+t6WkU4YvVh1ZdkVn4P4V+GnFhPSAAL+sEj5OhfA/3JOcbD9RKj
+ UjUfnZcw7njp54jn7DH84ZwrH72uasfp+uIIeMYPnJo3icsLAW/NAUIy55rfmzTLLQhS
+ TlkF2PizCK2AKcQwx6kEb2a35UDx+55l1MdlgIcM2rgsAB7ibgQug8TrmIg8xTuwYEnd
+ y7wIbOV4AVVdqhOXhntTxeNfIUXaOKzZQmfq79Vd9Gv1sq0LB9X5uZIb5qLVsNV6fXyf
+ OoSA==
+X-Gm-Message-State: AOJu0YwabIfotfhriSTzlOWroYe4gIeZXk5b7dH7y80k6kxUuY4vyOdj
+ mBb+Ouuet2zoLj84r3dcmZ3wj6607OWOmDNXFu0/t0TMyKJtlPSVby51W1uGNVyg7ikTUe1nObu
+ u
+X-Google-Smtp-Source: AGHT+IElag8KDyPQHd/yd7cCq1cSr3wdf4BCFyMPlhbecbflegKHRhCxKpfa2+2S5Xx9q4YSEt6pXw==
+X-Received: by 2002:a50:9fc9:0:b0:568:1b94:fb88 with SMTP id
+ c67-20020a509fc9000000b005681b94fb88mr1660926edf.23.1710012208009; 
+ Sat, 09 Mar 2024 11:23:28 -0800 (PST)
 Received: from m1x-phil.lan ([176.176.181.237])
  by smtp.gmail.com with ESMTPSA id
- k5-20020a170906578500b00a449ebf3d58sm1178448ejq.85.2024.03.09.11.23.51
+ d18-20020a50fb12000000b0056486eaa669sm1182154edq.50.2024.03.09.11.23.26
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 09 Mar 2024 11:23:52 -0800 (PST)
+ Sat, 09 Mar 2024 11:23:27 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Stefano Stabellini <sstabellini@kernel.org>,
  Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
- Jason Wang <jasowang@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  xen-devel@lists.xenproject.org
-Subject: [PULL 16/43] hw/net/xen_nic: Fix missing ERRP_GUARD() for
- error_prepend()
-Date: Sat,  9 Mar 2024 20:21:43 +0100
-Message-ID: <20240309192213.23420-17-philmd@linaro.org>
+Subject: [PULL 12/43] hw/xen/hvm: Inline TARGET_PAGE_ALIGN() macro
+Date: Sat,  9 Mar 2024 20:21:39 +0100
+Message-ID: <20240309192213.23420-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240309192213.23420-1-philmd@linaro.org>
 References: <20240309192213.23420-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,62 +103,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+Use TARGET_PAGE_SIZE to calculate TARGET_PAGE_ALIGN.
 
-As the comment in qapi/error, passing @errp to error_prepend() requires
-ERRP_GUARD():
-
-* = Why, when and how to use ERRP_GUARD() =
-*
-* Without ERRP_GUARD(), use of the @errp parameter is restricted:
-...
-* - It should not be passed to error_prepend(), error_vprepend() or
-*   error_append_hint(), because that doesn't work with &error_fatal.
-* ERRP_GUARD() lifts these restrictions.
-*
-* To use ERRP_GUARD(), add it right at the beginning of the function.
-* @errp can then be used without worrying about the argument being
-* NULL or &error_fatal.
-
-ERRP_GUARD() could avoid the case when @errp is the pointer of
-error_fatal, the user can't see this additional information, because
-exit() happens in error_setg earlier than information is added [1].
-
-The xen_netdev_connect() passes @errp to error_prepend(), and its @errp
-parameter is from xen_device_frontend_changed().
-
-Though its @errp points to @local_err of xen_device_frontend_changed(),
-to follow the requirement of @errp, add missing ERRP_GUARD() at the
-beginning of this function.
-
-[1]: Issue description in the commit message of commit ae7c80a7bd73
-     ("error: New macro ERRP_GUARD()").
-
-Cc: Stefano Stabellini <sstabellini@kernel.org>
-Cc: Anthony Perard <anthony.perard@citrix.com>
-Cc: Paul Durrant <paul@xen.org>
-Cc: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Acked-by: Anthony PERARD <anthony.perard@citrix.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20240229143914.1977550-3-zhao1.liu@linux.intel.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-Id: <20231114163123.74888-2-philmd@linaro.org>
 ---
- hw/net/xen_nic.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/i386/xen/xen-hvm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/net/xen_nic.c b/hw/net/xen_nic.c
-index 453fdb9819..89487b49ba 100644
---- a/hw/net/xen_nic.c
-+++ b/hw/net/xen_nic.c
-@@ -351,6 +351,7 @@ static bool net_event(void *_xendev)
+diff --git a/hw/i386/xen/xen-hvm.c b/hw/i386/xen/xen-hvm.c
+index 1ae943370b..8235782ef7 100644
+--- a/hw/i386/xen/xen-hvm.c
++++ b/hw/i386/xen/xen-hvm.c
+@@ -678,7 +678,7 @@ void arch_xen_set_memory(XenIOState *state, MemoryRegionSection *section,
+     trace_xen_client_set_memory(start_addr, size, log_dirty);
  
- static bool xen_netdev_connect(XenDevice *xendev, Error **errp)
- {
-+    ERRP_GUARD();
-     XenNetDev *netdev = XEN_NET_DEVICE(xendev);
-     unsigned int port, rx_copy;
+     start_addr &= TARGET_PAGE_MASK;
+-    size = TARGET_PAGE_ALIGN(size);
++    size = ROUND_UP(size, TARGET_PAGE_SIZE);
  
+     if (add) {
+         if (!memory_region_is_rom(section->mr)) {
 -- 
 2.41.0
 
