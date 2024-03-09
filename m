@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65E44C54E66
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 19:31:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A25EC54E60
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 19:31:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rj2JD-00056m-OP; Sat, 09 Mar 2024 14:24:39 -0500
+	id 1rj2Iv-0003Rz-Uv; Sat, 09 Mar 2024 14:24:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2JB-0004pU-Mu
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:24:37 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2Iu-0003Ki-Hv
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:24:20 -0500
 Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2J9-0002rw-F9
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:24:37 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2Ir-0002lL-R5
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:24:20 -0500
 Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a28a6cef709so272739066b.1
- for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 11:24:35 -0800 (PST)
+ a640c23a62f3a-a293f2280c7so503146466b.1
+ for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 11:24:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710012274; x=1710617074; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710012256; x=1710617056; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=b9ZBcWCorweFf+2JD84jMS2xk8ntDrtFmiyqB/cRtXw=;
- b=JrP5/veXhnTCbopgrBHIatDR4Kk0YJftX+qGahmc3Ocyr7/S3jvI4RsyTKVmVJzXXh
- mvVaNYbflIiy0XlwwO3vkttCT/MDByIO9FlndAOqfhsENaqVhVVjVhR67vRWEHXA9tfM
- ZbQUyDB6d1hemZlBEdZkohNwUbycuWQuOCZnA+1yOuSNU7ucP0j19ZscIOg8+G4NuzTU
- REkapdV68Fplq6VaElHzFhyWa1PIXdFawAfc4sVl+IMPgVBbOChB/rLpc5mCcLqEneoT
- rZY3RbntcrnFWL7Vk54NseDG+0/zNgkQ8auTJsHzJ03+T7WeJpjTn6bHDScgJXGTT4Uu
- GCKw==
+ bh=97WMuYDRb3w8xARFK/GrtRAFlIvridMB6pm6DUjdKys=;
+ b=RW1+ZiNnMgLzrLGBaoUUPSwngxaNdd3W+WXdEhzOXZOWCy+yZcdobHSaXJ+zldWyTS
+ oGaMmb3fGBcRz0r8bZEFWshEt5SaC3h8hCe3P12d6WDYKfm4CmO+DvdYHSxoZCyHxlxh
+ w3QLC/LTMKMwc0nmImY0x6A28KOL49ikbvt7PZYYfNzKQ9Y/jxAFblXggbQnGWMvF18R
+ N1s/58tvUAU0pi4GiOMGpus95CSRR0lH7Vyfg+dtubUjISF+dzPZEHJUAUZXssAhE40o
+ 44v7ffVBpilwvuoRwMnOf2mBdV6ECRduBL1w4aHZFyio1NXPU6CxLgH0MwuHbV+LkGXH
+ mRGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710012274; x=1710617074;
+ d=1e100.net; s=20230601; t=1710012256; x=1710617056;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=b9ZBcWCorweFf+2JD84jMS2xk8ntDrtFmiyqB/cRtXw=;
- b=kvoQmQMTPbNY7QkTLeW/xPCbc90aLmP82actt7vVJsCJsXo+fNvnyZ3OGyV3duZevQ
- YXGxUuyJ2PcPrBM90LSjPVp42pCqQYzlzrHLomfUOrgoJFlt9eHBUh77ttNEdBrER8+X
- U68XY6QPhfM7u6YxHdvvvn+MoYr4d11IvuS0z1Jy4/3fB3cn2yrf3R71T4T3AeAocCJR
- jwwvAllwWC7wOP3tTh3o9V9T86ELub53edSTLWPIR2gkygakZl0vd7N9MtYc1ERL2i+v
- PfWN8TjFGfRhGDEtC/WVoFY9F2Iz/wOp+ARRR2BgXWPr+2v7R3ivcv77AyjrWYHP+ThV
- YUzA==
-X-Gm-Message-State: AOJu0YwJleDyk2QAw5LZQwebxTqFZTUQSmQDpTTSfRIVnZm82emtKELv
- EnZXejH1wk8IdQ0dxPjpD+YIf3LbucciW8HTQL+RXpcTZYId/Duqo0E4NvUZ3dtx8kGXbuNf0Un
- W
-X-Google-Smtp-Source: AGHT+IHgEf1VoGYbP8PX+uBQFBOrcqcJuu3+uWJK8B0gZBS4Ndlr4ufNHMEDWth1nZW5Ltal/PnjAQ==
-X-Received: by 2002:a17:906:9c8e:b0:a43:b50d:1074 with SMTP id
- fj14-20020a1709069c8e00b00a43b50d1074mr1601200ejc.23.1710012273937; 
- Sat, 09 Mar 2024 11:24:33 -0800 (PST)
+ bh=97WMuYDRb3w8xARFK/GrtRAFlIvridMB6pm6DUjdKys=;
+ b=nyAYjVtqXijPiJC0AqRlthce9uJhPAbhFETSOYSkenhjpoZrr6//6RSXGruvGXY7RY
+ A/T0r8k7Viha1IWcwaNeYIzMoUBS/EvSADkDIfc80iN/IiUdcZT2xVgIhTEAOaCduJ6X
+ ZkXsXoH22Y7n5ezU6yH6t7AMeIzwNbOeT8fRDO41+UpyHhwLgaJP1S7KEUcr/mEf35Nq
+ 4rCFr0G7TyUQsR6lcOo6xC9TMzSeSq0B2cMPjIAfINSqs+X8bpqu7F36TUWV/K+NHGif
+ 4PNNP9Bq2mJU19G5CNJRRxFK9DcdtTSCbLm05Y0gEMzLu5Vl9213qIdj4FFF5cs0zfHC
+ Uykg==
+X-Gm-Message-State: AOJu0YyvIssTxKA1dX6WiCGyPjfEX+gbm/Y3lE0aAoUqgEQi6JhPuEP4
+ fg/X0XDKh8a2ejUTyn+QOTJjRG5L4m8XgOSs1wxLYHF0onZP2GSdsZUmCwj/Q9VuF82j9F5aPJC
+ 8
+X-Google-Smtp-Source: AGHT+IHu5x1rS7vf33hD/x5FbZhOzPD/xRWv1qGkw9cFC8XfZuY6JIqWN/Q1RZ95WsBkgIm3l4ycIw==
+X-Received: by 2002:a17:906:ba87:b0:a45:f262:bc2f with SMTP id
+ cu7-20020a170906ba8700b00a45f262bc2fmr1624704ejd.5.1710012256103; 
+ Sat, 09 Mar 2024 11:24:16 -0800 (PST)
 Received: from m1x-phil.lan ([176.176.181.237])
  by smtp.gmail.com with ESMTPSA id
- gh16-20020a170906e09000b00a45380dfd09sm1168535ejb.105.2024.03.09.11.24.32
+ l23-20020a170906a41700b00a440ec600e3sm1176464ejz.121.2024.03.09.11.24.14
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 09 Mar 2024 11:24:33 -0800 (PST)
+ Sat, 09 Mar 2024 11:24:15 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Bui Quang Minh <minhquangbui99@gmail.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PULL 23/43] hw/intc/apic: fix memory leak
-Date: Sat,  9 Mar 2024 20:21:50 +0100
-Message-ID: <20240309192213.23420-24-philmd@linaro.org>
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+Subject: [PULL 20/43] hw/i386/pc: Use generated NotifyVmexitOption_str()
+Date: Sat,  9 Mar 2024 20:21:47 +0100
+Message-ID: <20240309192213.23420-21-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240309192213.23420-1-philmd@linaro.org>
 References: <20240309192213.23420-1-philmd@linaro.org>
@@ -98,62 +98,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+NotifyVmexitOption_str() is QAPI-generated in
+"qapi/qapi-types-run-state.h", which "sysemu/runstate.h"
+already includes.
 
-deliver_bitmask is allocated on the heap in apic_deliver(), but there
-are many paths in the function that return before the corresponding
-g_free() is reached.  Fix this by switching to g_autofree and, while at
-it, also switch to g_new.  Do the same in apic_deliver_irq() as well
-for consistency.
-
-Fixes: b5ee0468e9d ("apic: add support for x2APIC mode", 2024-02-14)
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Bui Quang Minh <minhquangbui99@gmail.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-ID: <20240304224133.267640-1-pbonzini@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240301185936.95175-3-philmd@linaro.org>
 ---
- hw/intc/apic.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ hw/i386/pc_piix.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/hw/intc/apic.c b/hw/intc/apic.c
-index 1d887d66b8..4186c57b34 100644
---- a/hw/intc/apic.c
-+++ b/hw/intc/apic.c
-@@ -291,14 +291,13 @@ static void apic_deliver_irq(uint32_t dest, uint8_t dest_mode,
-                              uint8_t delivery_mode, uint8_t vector_num,
-                              uint8_t trigger_mode)
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index e123458bbc..ed777e3d61 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -61,6 +61,7 @@
+ #include "hw/xen/xen.h"
+ #include "migration/global_state.h"
+ #include "migration/misc.h"
++#include "sysemu/runstate.h"
+ #include "sysemu/numa.h"
+ #include "hw/hyperv/vmbus-bridge.h"
+ #include "hw/mem/nvdimm.h"
+@@ -383,9 +384,6 @@ static const QEnumLookup PCSouthBridgeOption_lookup = {
+     .size = PC_SOUTH_BRIDGE_OPTION_MAX
+ };
+ 
+-#define NotifyVmexitOption_str(val) \
+-    qapi_enum_lookup(&NotifyVmexitOption_lookup, (val))
+-
+ static int pc_get_south_bridge(Object *obj, Error **errp)
  {
--    uint32_t *deliver_bitmask = g_malloc(max_apic_words * sizeof(uint32_t));
-+    g_autofree uint32_t *deliver_bitmask = g_new(uint32_t, max_apic_words);
- 
-     trace_apic_deliver_irq(dest, dest_mode, delivery_mode, vector_num,
-                            trigger_mode);
- 
-     apic_get_delivery_bitmask(deliver_bitmask, dest, dest_mode);
-     apic_bus_deliver(deliver_bitmask, delivery_mode, vector_num, trigger_mode);
--    g_free(deliver_bitmask);
- }
- 
- bool is_x2apic_mode(DeviceState *dev)
-@@ -662,7 +661,7 @@ static void apic_deliver(DeviceState *dev, uint32_t dest, uint8_t dest_mode,
-     APICCommonState *s = APIC(dev);
-     APICCommonState *apic_iter;
-     uint32_t deliver_bitmask_size = max_apic_words * sizeof(uint32_t);
--    uint32_t *deliver_bitmask = g_malloc(deliver_bitmask_size);
-+    g_autofree uint32_t *deliver_bitmask = g_new(uint32_t, max_apic_words);
-     uint32_t current_apic_id;
- 
-     if (is_x2apic_mode(dev)) {
-@@ -708,7 +707,6 @@ static void apic_deliver(DeviceState *dev, uint32_t dest, uint8_t dest_mode,
-     }
- 
-     apic_bus_deliver(deliver_bitmask, delivery_mode, vector_num, trigger_mode);
--    g_free(deliver_bitmask);
- }
- 
- static bool apic_check_pic(APICCommonState *s)
+     PCMachineState *pcms = PC_MACHINE(obj);
 -- 
 2.41.0
 
