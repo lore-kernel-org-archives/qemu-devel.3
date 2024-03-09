@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB3F0C54E41
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 13:42:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3388C54E41
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 13:42:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riwwx-0005ci-46; Sat, 09 Mar 2024 08:41:19 -0500
+	id 1riwwy-0005dp-1b; Sat, 09 Mar 2024 08:41:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1riwwt-0005bd-Hs
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 08:41:15 -0500
-Received: from mgamail.intel.com ([198.175.65.14])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1riwwr-0004cg-G0
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 08:41:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709991673; x=1741527673;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=9R801M/RKXLR9NN8MIzCPaJSfWkUAq02qrdBXSRAmWc=;
- b=U3dvfSyNSBdxsJw6umYSdIMDpBG5B0fDrUs9cIjBBNMjSpG9N+vI+jBy
- APhfD7Ig1gRK8Wm/matvZUd6UOjvb99MgiXPhddes9vAHCDE+WJFsbD9o
- X3CrP6DaragwbaTNiNlIydEXp3LSnjbvUhOrmSkY0cyJ/cbXSEulVODUB
- f8LVTkTR67mCEiEdxAV9B/5zZF9NCW/OGpc7scrLJlFj8a4ZlKW8MRcaO
- xi1fXN460iiEYLyXuuch5F2zU/5SQUKMtyrKnmzBQ12hzqt6aSCNEDKPY
- ji8qY85Owt9xqMK428rbVofzJmWA9ILv9OZFO3rS3t5UZdzl5TtFYHfYM g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11007"; a="8524674"
-X-IronPort-AV: E=Sophos;i="6.07,112,1708416000"; 
-   d="scan'208";a="8524674"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Mar 2024 05:41:11 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,112,1708416000"; d="scan'208";a="15432603"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.125.243.127])
- ([10.125.243.127])
- by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Mar 2024 05:41:06 -0800
-Message-ID: <85cb99a6-dc91-4e62-aa7f-341280d5928d@intel.com>
-Date: Sat, 9 Mar 2024 21:41:05 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 07/21] i386/cpu: Use APIC ID info get NumSharingCache
- for CPUID[0x8000001D].EAX[bits 25:14]
-Content-Language: en-US
-To: Zhao Liu <zhao1.liu@linux.intel.com>,
- Eduardo Habkost <eduardo@habkost.net>,
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1riwwu-0005cC-PW
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 08:41:16 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1riwws-0004dC-KU
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 08:41:16 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-565b434f90aso3599446a12.3
+ for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 05:41:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1709991672; x=1710596472; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KXU17ruymLLc6lSn7drp5OcQjoUr1KAP7ri2ERYsk4A=;
+ b=OMsyEAZfvEt8v6M8mLY/V/HwOxgFNQ7Q5MB/7rFNQb8L3262nAEfgSLJW/NzoainuS
+ SPdPEMex/nSiu2Fn7tusHRtQJGaEupQN5Rc2ZyXvkpd35nfeqs26tv/Tl4/5N7+fLk9t
+ N2ZnXtPpUn1usUUCDPlqp5+zs45aKbE+zCAM0B+5j1j5uIBmfiCudAqA1eq86ISusSvX
+ nRwIvyyw7WhgTBPoI3iWgLb9eM6qEfsOHf95vval/JR1lu4ZNQAR100Pwb5fYHxpeHtl
+ HLmRKgrsz1eeLaIyO1N05z3lVzC3PTri7B5AaIQDwByXX9sVSAza0+zbEDDHVfvZMHpm
+ Bl+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709991672; x=1710596472;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=KXU17ruymLLc6lSn7drp5OcQjoUr1KAP7ri2ERYsk4A=;
+ b=SL1auS5toKR4fpqFOeFjI5BFxW6EosxzIsgUqbWCXh5aO2VhvfWDZZIFHICdxKsPkm
+ w1vn4fIbaefYNLUkqrNAGjUIvdjJFtSp6f4+tGefWc9lvm3mlgVK3x0vNr8a/JIBedtb
+ uvhH+FEHEEJS9avw4KOtfZ1FVBcWhcGWCj3wpCuWZ+H1eH1AKbWRi9KGLCcdHgfdZMgE
+ JfTDHxPuQf36StEvPnPyAFyDkEuH3V0VB+6mrEanVT0CL5m2rxjP7sky8aE/oYjsNoDx
+ UlEouYPaxJB+HYHFxC8iUVIMMUd6zDENaoEzDqlFqXJ6D5iXIzBOBaILihk7X9o7cxTD
+ mnMQ==
+X-Gm-Message-State: AOJu0Yz8z/b6iX8Q2vLvz+BGXKTnsm7SuKQzVqn2iNPKcxWX8cDmyNpy
+ x8AHB6RP7w27NVhXaWcPn1JMvTYzB8dZCmxOJjql5QjE/MJ78hIU5BHMwFh0
+X-Google-Smtp-Source: AGHT+IH0IOZxP5W1euoVZEcK7sOce4YVWAV592bgYJCeC7LR8inBEkPFcS6tJNpk5gNf35uU6l8K6g==
+X-Received: by 2002:a50:8e12:0:b0:568:17c0:54dd with SMTP id
+ 18-20020a508e12000000b0056817c054ddmr1535247edw.35.1709991672099; 
+ Sat, 09 Mar 2024 05:41:12 -0800 (PST)
+Received: from archlinux.. (dynamic-078-054-250-034.78.54.pool.telefonica.de.
+ [78.54.250.34]) by smtp.gmail.com with ESMTPSA id
+ b2-20020aa7c902000000b00564e489ce9asm906157edt.12.2024.03.09.05.41.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 09 Mar 2024 05:41:11 -0800 (PST)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Zhuocheng Ding <zhuocheng.ding@intel.com>, Babu Moger <babu.moger@amd.com>,
- Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-References: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
- <20240227103231.1556302-8-zhao1.liu@linux.intel.com>
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20240227103231.1556302-8-zhao1.liu@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.14; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.58,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.277, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH 2/2] hw/pci-host/pam: Remove northbridge-specific
+ PAM_REGIONS_COUNT
+Date: Sat,  9 Mar 2024 14:40:56 +0100
+Message-ID: <20240309134056.1605-3-shentey@gmail.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240309134056.1605-1-shentey@gmail.com>
+References: <20240309134056.1605-1-shentey@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,90 +94,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/27/2024 6:32 PM, Zhao Liu wrote:
-> From: Zhao Liu <zhao1.liu@intel.com>
-> 
-> The commit 8f4202fb1080 ("i386: Populate AMD Processor Cache Information
-> for cpuid 0x8000001D") adds the cache topology for AMD CPU by encoding
-> the number of sharing threads directly.
-> 
->  From AMD's APM, NumSharingCache (CPUID[0x8000001D].EAX[bits 25:14])
-> means [1]:
-> 
-> The number of logical processors sharing this cache is the value of
-> this field incremented by 1. To determine which logical processors are
-> sharing a cache, determine a Share Id for each processor as follows:
-> 
-> ShareId = LocalApicId >> log2(NumSharingCache+1)
-> 
-> Logical processors with the same ShareId then share a cache. If
-> NumSharingCache+1 is not a power of two, round it up to the next power
-> of two.
-> 
->  From the description above, the calculation of this field should be same
-> as CPUID[4].EAX[bits 25:14] for Intel CPUs. So also use the offsets of
-> APIC ID to calculate this field.
-> 
-> [1]: APM, vol.3, appendix.E.4.15 Function 8000_001Dh--Cache Topology
->       Information
-> 
-> Cc: Babu Moger <babu.moger@amd.com>
-> Tested-by: Yongwei Ma <yongwei.ma@intel.com>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+PAM_REGIONS_COUNT being 13 seems to be Intel-specific. There are VIA 82cXX
+northbridges having only 10, for example. Communicate this by having
+northbridge-specific constants.
 
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 
-> ---
-> Changes since v7:
->   * Moved this patch after CPUID[4]'s similar change ("i386/cpu: Use APIC
->     ID offset to encode cache topo in CPUID[4]"). (Xiaoyao)
->   * Dropped Michael/Babu's Acked/Reviewed/Tested tags since the code
->     change due to the rebase.
->   * Re-added Yongwei's Tested tag For his re-testing (compilation on
->     Intel platforms).
-> 
-> Changes since v3:
->   * Rewrote the subject. (Babu)
->   * Deleted the original "comment/help" expression, as this behavior is
->     confirmed for AMD CPUs. (Babu)
->   * Renamed "num_apic_ids" (v3) to "num_sharing_cache" to match spec
->     definition. (Babu)
-> 
-> Changes since v1:
->   * Renamed "l3_threads" to "num_apic_ids" in
->     encode_cache_cpuid8000001d(). (Yanan)
->   * Added the description of the original commit and add Cc.
-> ---
->   target/i386/cpu.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index c77bcbc44d59..df56c7a449c8 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -331,7 +331,7 @@ static void encode_cache_cpuid8000001d(CPUCacheInfo *cache,
->                                          uint32_t *eax, uint32_t *ebx,
->                                          uint32_t *ecx, uint32_t *edx)
->   {
-> -    uint32_t l3_threads;
-> +    uint32_t num_sharing_cache;
->       assert(cache->size == cache->line_size * cache->associativity *
->                             cache->partitions * cache->sets);
->   
-> @@ -340,11 +340,11 @@ static void encode_cache_cpuid8000001d(CPUCacheInfo *cache,
->   
->       /* L3 is shared among multiple cores */
->       if (cache->level == 3) {
-> -        l3_threads = topo_info->cores_per_die * topo_info->threads_per_core;
-> -        *eax |= (l3_threads - 1) << 14;
-> +        num_sharing_cache = 1 << apicid_die_offset(topo_info);
->       } else {
-> -        *eax |= ((topo_info->threads_per_core - 1) << 14);
-> +        num_sharing_cache = 1 << apicid_core_offset(topo_info);
->       }
-> +    *eax |= (num_sharing_cache - 1) << 14;
->   
->       assert(cache->line_size > 0);
->       assert(cache->partitions > 0);
+--
+
+Do we need the constants or can we omit them, given they're just used once?
+---
+ include/hw/pci-host/i440fx.h | 4 +++-
+ include/hw/pci-host/pam.h    | 2 --
+ include/hw/pci-host/q35.h    | 4 +++-
+ hw/pci-host/q35.c            | 2 +-
+ 4 files changed, 7 insertions(+), 5 deletions(-)
+
+diff --git a/include/hw/pci-host/i440fx.h b/include/hw/pci-host/i440fx.h
+index c988f70890..9e9b252660 100644
+--- a/include/hw/pci-host/i440fx.h
++++ b/include/hw/pci-host/i440fx.h
+@@ -22,12 +22,14 @@
+ 
+ OBJECT_DECLARE_SIMPLE_TYPE(PCII440FXState, I440FX_PCI_DEVICE)
+ 
++#define I440FX_HOST_PAM_REGIONS_COUNT 13
++
+ struct PCII440FXState {
+     /*< private >*/
+     PCIDevice parent_obj;
+     /*< public >*/
+ 
+-    PAMMemoryRegion pam_regions[PAM_REGIONS_COUNT];
++    PAMMemoryRegion pam_regions[I440FX_HOST_PAM_REGIONS_COUNT];
+     MemoryRegion smram_region;
+     MemoryRegion smram, low_smram;
+ };
+diff --git a/include/hw/pci-host/pam.h b/include/hw/pci-host/pam.h
+index b9b33aecc8..25dbe6feaf 100644
+--- a/include/hw/pci-host/pam.h
++++ b/include/hw/pci-host/pam.h
+@@ -79,8 +79,6 @@
+ #define SMRAM_C_BASE_SEG_MASK  ((uint8_t)0x7)
+ #define SMRAM_C_BASE_SEG       ((uint8_t)0x2)  /* hardwired to b010 */
+ 
+-#define PAM_REGIONS_COUNT       13
+-
+ typedef struct PAMMemoryRegion {
+     MemoryRegion alias[4];  /* index = mode value */
+     uint8_t mode;
+diff --git a/include/hw/pci-host/q35.h b/include/hw/pci-host/q35.h
+index bafcbe6752..618ecf05f4 100644
+--- a/include/hw/pci-host/q35.h
++++ b/include/hw/pci-host/q35.h
+@@ -35,6 +35,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(Q35PCIHost, Q35_HOST_DEVICE)
+ #define TYPE_MCH_PCI_DEVICE "mch"
+ OBJECT_DECLARE_SIMPLE_TYPE(MCHPCIState, MCH_PCI_DEVICE)
+ 
++#define MCH_HOST_PAM_REGIONS_COUNT 13
++
+ struct MCHPCIState {
+     /*< private >*/
+     PCIDevice parent_obj;
+@@ -44,7 +46,7 @@ struct MCHPCIState {
+     MemoryRegion *pci_address_space;
+     MemoryRegion *system_memory;
+     MemoryRegion *address_space_io;
+-    PAMMemoryRegion pam_regions[PAM_REGIONS_COUNT];
++    PAMMemoryRegion pam_regions[MCH_HOST_PAM_REGIONS_COUNT];
+     MemoryRegion smram_region, open_high_smram;
+     MemoryRegion smram, low_smram, high_smram;
+     MemoryRegion tseg_blackhole, tseg_window;
+diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+index 947d9aa9c4..6782bf4216 100644
+--- a/hw/pci-host/q35.c
++++ b/hw/pci-host/q35.c
+@@ -329,7 +329,7 @@ static void mch_update_pam(MCHPCIState *mch)
+     int i;
+ 
+     memory_region_transaction_begin();
+-    for (i = 0; i < 13; i++) {
++    for (i = 0; i < ARRAY_SIZE(mch->pam_regions); i++) {
+         uint8_t reg = pd->config[MCH_HOST_BRIDGE_PAM0 + DIV_ROUND_UP(i, 2)];
+         pam_update(&mch->pam_regions[i],
+                    (reg >> ((!(i & 1)) * 4)) & MCH_HOST_BRIDGE_PAM_MASK);
+-- 
+2.44.0
 
 
