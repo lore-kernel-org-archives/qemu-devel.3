@@ -4,87 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE4FFC54791
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 18:41:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDBB1C54791
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 18:41:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rj1cD-0001YO-50; Sat, 09 Mar 2024 13:40:13 -0500
+	id 1rj1cx-0001lI-3M; Sat, 09 Mar 2024 13:40:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rj1cA-0001Xw-0c
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 13:40:10 -0500
-Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rj1c7-0004SJ-Q3
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 13:40:09 -0500
-Received: by mail-oi1-x235.google.com with SMTP id
- 5614622812f47-3c1a2f7e1d2so1199820b6e.1
- for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 10:40:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710009605; x=1710614405; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=X1jJ8ENU4eG2Qk7hUuKetGnXnJJ8M4ZJe0brbMLOUWc=;
- b=YuAVLVs16TruAJDv30lK3mlIdsxQmM2+zuNQHbxZGMdVjhzzjHWSdg6c/nof1eGWPX
- yMNErCw5NV67Zk/xpgK9ZcONx4adNkhgVb8LpDP7IcorjwIhSsIydKn/HQ/EELA3D9a4
- uCgnQO9G/KXlit/xQ/3wTiTfQA24LX/4kotGetSmA6mYlsmJ9OU/C1MVdzbonRGGygj/
- LamuiBmxq+W2ZT0qlXRnTPCNQMP94Phz8GTSvcZrbARTPR4FMxZnd8fP2dSARY52YyHe
- k2xGPo1uD/m3GoVeyAy9lsBArAez/vzLuYS44uSZyz6F/w98QvdmC6QJBC5ykZtxhmsp
- vl6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710009605; x=1710614405;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=X1jJ8ENU4eG2Qk7hUuKetGnXnJJ8M4ZJe0brbMLOUWc=;
- b=FplZ6c069XT1b/Q572SfL7IItWOADA+2oFcqZHQzGSPabSo6I9GCqYSf7GzrhAQx5q
- HhYrIEU9iTFRRrMEj2gpDrn/ZUkouA5nyz3p04hjmCCmZ8YVNy5lB4TtxmyM6RZQ7kMh
- SZBavcnFXhEOITuJh9kGeeZTmDpn9YGghz8WKK/Ytlzj73aYnW0nsHmaSoqzypexo5yd
- aXY26mwYi/MNsYM6nxfC978VPwMN48Xw2L5F9iHQ98QEaOP97n1phgdhLO6hzJhNNI0n
- wS90i8jDtIJ76hhhBBaX2+EA6YpN5/eRNtFo7stzgFtngum3zSOGFfMX617S6oOzVW5C
- yBPw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWwDjpj5qQPu4fv9QeImmAQ0g62dw2truoq2/H7UIntT+aj5yt6rn9a87ChZIj16DjC16sVqdEEJwJ7Q3daJQASTxUlyiY=
-X-Gm-Message-State: AOJu0Yyxb7aJDllvFeV3daBijrVB5RJ/5wRLzwY6njJO8ofyVTO5R46L
- JlydjpC+MdzRXM3jU0OTAYlP4O8bBfCHJlAjge8bNjPxSInbg6npZODFLtMbsuY=
-X-Google-Smtp-Source: AGHT+IHoGkkdfgDIZOMsXaU266tFSm/S/kg6SiDlelB/vI8agXEm+aa2tV623wGR9XtO7wwkr6vYnQ==
-X-Received: by 2002:a05:6808:201a:b0:3c2:3e2b:73c7 with SMTP id
- q26-20020a056808201a00b003c23e2b73c7mr2538640oiw.3.1710009605695; 
- Sat, 09 Mar 2024 10:40:05 -0800 (PST)
-Received: from [192.168.6.128] (098-147-055-211.res.spectrum.com.
- [98.147.55.211]) by smtp.gmail.com with ESMTPSA id
- n6-20020a170903110600b001db717ed294sm1602328plh.120.2024.03.09.10.40.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 09 Mar 2024 10:40:05 -0800 (PST)
-Message-ID: <04ebf149-d735-46b0-9885-7e5972813e23@linaro.org>
-Date: Sat, 9 Mar 2024 08:40:01 -1000
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rj1cs-0001jD-KG; Sat, 09 Mar 2024 13:40:55 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rj1cq-0004fe-AA; Sat, 09 Mar 2024 13:40:54 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 9771F5457B;
+ Sat,  9 Mar 2024 21:41:44 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id DF3D39458E;
+ Sat,  9 Mar 2024 21:40:47 +0300 (MSK)
+Message-ID: <ffe7207d-c88f-444f-804f-a3597976ee3e@tls.msk.ru>
+Date: Sat, 9 Mar 2024 21:40:47 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 02/10] target/riscv: handle vstart >= vl in
- vext_set_tail_elems_1s()
+Subject: Re: [PATCH v2] target/arm: Fix 32-bit SMOPA
 Content-Language: en-US
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- philmd@linaro.org
-References: <20240308215402.117405-1-dbarboza@ventanamicro.com>
- <20240308215402.117405-3-dbarboza@ventanamicro.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240308215402.117405-3-dbarboza@ventanamicro.com>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-stable@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Zhuojia Shen <chaosdefinition@hotmail.com>
+References: <20240305163931.242795-1-richard.henderson@linaro.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240305163931.242795-1-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::235;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x235.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,51 +86,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/8/24 11:53, Daniel Henrique Barboza wrote:
-> +static void vext_set_tail_elems_1s(CPURISCVState *env, void *vd,
-> +                                   uint32_t desc, uint32_t esz,
-> +                                   uint32_t max_elems)
->   {
->       uint32_t vta = vext_vta(desc);
-> +    uint32_t nf = vext_nf(desc);
->       int k;
+05.03.2024 19:39, Richard Henderson wrote:
+> While the 8-bit input elements are sequential in the input vector,
+> the 32-bit output elements are not sequential in the output matrix.
+> Do not attempt to compute 2 32-bit outputs at the same time.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: 23a5e3859f5 ("target/arm: Implement SME integer outer product")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2083
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+
+...
+> diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
+> index cded1d01fc..ea3e232e65 100644
+> --- a/tests/tcg/aarch64/Makefile.target
+> +++ b/tests/tcg/aarch64/Makefile.target
+> @@ -67,7 +67,7 @@ endif
 >   
-> -    if (vta == 0) {
-> +    /*
-> +     * Section 5.4 of the RVV spec mentions:
-> +     * "When vstart ≥ vl, there are no body elements, and no
-> +     *  elements are updated in any destination vector register
-> +     *  group, including that no tail elements are updated
-> +     *  with agnostic values."
-> +     */
-> +    if (vta == 0 || env->vstart >= env->vl) {
->           return;
->       }
+>   # SME Tests
+>   ifneq ($(CROSS_AS_HAS_ARMV9_SME),)
+> -AARCH64_TESTS += sme-outprod1
+> +AARCH64_TESTS += sme-outprod1 sme-smopa-1 sme-smopa-2
+>   endif
 
-This isn't going to work for ...
+I tried to pick this one up for stable-7.2 (since the fix is for older commit),
+and faced a fun issue in this change to tests/tcg/aarch64/Makefile.target,
+since 7.2. doesn't have CROSS_AS_HAS_ARMV9_SME yet.  I went on and found out
+that the following commits:
 
-> @@ -222,9 +230,8 @@ vext_ldst_stride(void *vd, void *v0, target_ulong base,
->               k++;
->           }
->       }
-> +    vext_set_tail_elems_1s(env, vd, desc, esz, max_elems);
->       env->vstart = 0;
+v7.2.0-374-gbc6bd20ee3  target/arm: align exposed ID registers with Linux
+v8.0.0-2358-g3dc2afeab2 tests/tcg/aarch64/sysregs.c: Use S syntax for id_aa64zfr0_el1
+                         and id_aa64smfr0_el1
+v8.0.0-2361-g1f51573f79 target/arm: Fix SME full tile indexing
 
-... ldst, because we also need to increment vstart in the load loop, for consumption by 
-the exception path.
+applies to 7.2, and lets this "Fix 32-bit SMOPA" change to apply cleanly,
+including this very change in Makefile.target.
 
-You'll need to structure the helper as
+Now, 1f51573f79 "Fix SME full tile indexing" is Cc'd qemu-stable already, but
+it is not in 7.2.x for some reason which I don't remember anymore, so it is
+a good one to pick up already.  3dc2afeab is tests-only.
 
-     if (vstart >= vl) {
-        vstart = 0;
-        return;
-     }
-     for (i = vstart; i < vl; vstart = ++i) {
-         ...
-     }
-     set_tail_elems(...);
-     vstart = 0;
+And bc6bd20ee3 (from Dec-2022) seems like a good candidate too, is it not?
 
+I'm picking up all the bunch for now, let's see..
 
-r~
+Thanks,
+
+/mjt
 
