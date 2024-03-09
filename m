@@ -4,90 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14A89C54E41
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 12:02:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92F5CC54798
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 13:41:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rivOh-0006Jm-4r; Sat, 09 Mar 2024 07:01:51 -0500
+	id 1riww1-0005Gp-Lm; Sat, 09 Mar 2024 08:40:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rivOd-0006Ip-HR
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 07:01:47 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rivOc-00031s-1v
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 07:01:47 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-568241f40e9so2088993a12.0
- for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 04:01:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1709985704; x=1710590504; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=RJqc3GVHJNhinJapfRd05vALzWAJlTFCioGI0MWgKzc=;
- b=cyLx2cEagYfZmi4mfB37w0mBr5RQLOF1gDiq+oKM/X2DZThtcuYQYDvHDpVKA/F8vn
- Pboy3pbJD/IPLuBCINL0VdaVEaUc2+Y4vup/dSkf5yrRRf0uV8t9miR4LZbL8hinFJv+
- ScjS0EsxutRa9MbqlZ6UExBeQC8DnRuyUlbt9amGHq0hx5CVRtuyM1L5uCF5uLrtuCjo
- 3A0GuRjsPzFoj8utQcxJiOixza+gbdeTq7XdK2FrnluwKoANoYCfYh85r+L5valYDDUn
- ZBRNm2M0HCtKuH46bEwOWmHbLt7iZPf4b7iEXNsnfRlkm9WPK6JeK8TyI5inplEHrVVc
- Q8Nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709985704; x=1710590504;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RJqc3GVHJNhinJapfRd05vALzWAJlTFCioGI0MWgKzc=;
- b=mXWDwH4rW62oaaG44DeV9VWs+0pwvHV7Kac88eLF9m08yzsXE4gARDWOpV2O+vKbJI
- 0/sQAvN1yMlKjn749sHgRTZ+grzBaGjZEWBH8wWuyh9FieGt8kdH6tE/9tbUBQ5Wiyib
- iaNdDxnr18fKA9SlFZyA/3Jfps9YQi8Cu3j4T7zBlldDMSIjK0VNwvGNpqjXxd8DOCCh
- 6gZQgs7xwxgSfWO2xBzUcTgJ1lFlqrU/6+E/zMvFZKJc5BuBIIH+W2TXktfGRQFA1Vn9
- 3iEU0frRsXQfxAwPXkFTe6o6+wK91yrgQRxE3pgGb+bJ1XZstXx/vupqV6VfJPsa967+
- E3og==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXzI11VoqhaytVDE9BFKgJju/iuzpnln0V7f7VZ9p+F4dKKNbao+iCXP3OfMxIWGkBlDYRahMeSe3aYvNnOP1RKAAYpOoI=
-X-Gm-Message-State: AOJu0YzhQgSKirmQzd2AMaQANBZH3XPBIWb2qKzhfJC56/+wNuFxYyda
- TrSV3qCdWJsQJI8kcuf14zVgLFMhpAgSFRXAh6q5Oyz0TulMxBLIz7XUxvZKwmg=
-X-Google-Smtp-Source: AGHT+IEDSOSVCuoeolmQ50TK9YE2xZ8nTwcSl3/X5EjvSAuecZAGLp4x3E9QSi1uLGwnSNCY6mn9yA==
-X-Received: by 2002:a50:f681:0:b0:566:c388:ceb4 with SMTP id
- d1-20020a50f681000000b00566c388ceb4mr1268630edn.28.1709985703676; 
- Sat, 09 Mar 2024 04:01:43 -0800 (PST)
-Received: from localhost (cst2-173-16.cust.vodafone.cz. [31.30.173.16])
- by smtp.gmail.com with ESMTPSA id
- 9-20020a0564021f4900b00567e27c72c4sm798372edz.62.2024.03.09.04.01.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 09 Mar 2024 04:01:42 -0800 (PST)
-Date: Sat, 9 Mar 2024 13:01:36 +0100
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Richard Bagley <rbagley@ventanamicro.com>
-Cc: Palmer Dabbelt <palmer@rivosinc.com>, qemu-devel@nongnu.org, 
- qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>,
- bmeng@tinylab.org, 
- liweiwei@iscas.ac.cn, zhiwei_liu@linux.alibaba.com, dbarboza@ventanamicro.com
-Subject: Re: [PATCH] disas/riscv: Further correction to LUI disassembly
-Message-ID: <20240309-ee813e971e7c5850d652b295@orel>
-References: <20230810-c9e1f2783168b48bc07a1aa2@orel>
- <mhng-a6344a0c-8820-41b5-a015-b82b261b463d@palmer-ri-x1c9>
- <20230810-e160f9edae60ded9d2606b8b@orel>
- <20230811-bc15b48d336b79d9ec1f0936@orel>
- <20230811-52e2c90dc3b91e108eb5e4e8@orel>
- <CAARkPA-P1U7xyLpdx+XD1M3Ji2NUfTb+88+GKUk8R2aFsOCMRw@mail.gmail.com>
- <CAARkPA-dOxOWsR0VS+S8p4fDmNR5X5Jjmo5pQTaurWLYsc9vsw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1riwvs-0005GN-63
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 08:40:13 -0500
+Received: from mgamail.intel.com ([198.175.65.14])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1riwvo-0004Ca-Sg
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 08:40:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1709991609; x=1741527609;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=Wh5X3xK6drDmmUuz18/g5Tmd8p4VQW/BOReFTAX5vV4=;
+ b=Y5/ahDMVhw2BzVFGZKvAnm9u+A/MgSMdbJSWSqCiR9DikF8WSkGgFmUt
+ QQoLczcJ+02dKTH+XfxeYeKSxMxS++aD7mVR36Xrga2D/x2PlHG/NKcvS
+ b8/XY49hzfz1KPiF9Y5GWGF6T8h694ObyltI1v62b+wNGh33yvTEskU/a
+ D9iEr/OpOm0bEnXVU61heaWhT/c86/s88L2SUveWwRM3kGyGbs1WkBysn
+ Xs8ng2Oo6w2KSr10V/s1hIdSfuHrSTnoVFt8LcY9dzFl+F4uMytUBSbhD
+ vm2r2EVRJRYH3qYAKbkydvrsuW7Z2USnCFjGQMgkfTMbIrz7kjbT36uBD Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11007"; a="8524610"
+X-IronPort-AV: E=Sophos;i="6.07,112,1708416000"; 
+   d="scan'208";a="8524610"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Mar 2024 05:40:04 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,112,1708416000"; d="scan'208";a="15432355"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.125.243.127])
+ ([10.125.243.127])
+ by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Mar 2024 05:39:58 -0800
+Message-ID: <c88ee253-f212-4aa7-9db9-e90a99a9a1e3@intel.com>
+Date: Sat, 9 Mar 2024 21:39:55 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAARkPA-dOxOWsR0VS+S8p4fDmNR5X5Jjmo5pQTaurWLYsc9vsw@mail.gmail.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=ajones@ventanamicro.com; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 06/21] i386/cpu: Use APIC ID info to encode cache topo
+ in CPUID[4]
+Content-Language: en-US
+To: Zhao Liu <zhao1.liu@linux.intel.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Zhuocheng Ding <zhuocheng.ding@intel.com>, Babu Moger <babu.moger@amd.com>,
+ Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Robert Hoo <robert.hu@linux.intel.com>
+References: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
+ <20240227103231.1556302-7-zhao1.liu@linux.intel.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20240227103231.1556302-7-zhao1.liu@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.14; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.277, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,32 +97,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 08, 2024 at 08:22:01PM -0800, Richard Bagley wrote:
-> post-nack, one further comment:
+On 2/27/2024 6:32 PM, Zhao Liu wrote:
+> From: Zhao Liu <zhao1.liu@intel.com>
 > 
-> One could argue that this change also aligns QEMU with supporting tools (as
-> Andrew observed), and it makes sense to merge this change into QEMU until
-> those tools update to supporting signed decimal numbers with immediates.
+> Refer to the fixes of cache_info_passthrough ([1], [2]) and SDM, the
+> CPUID.04H:EAX[bits 25:14] and CPUID.04H:EAX[bits 31:26] should use the
+> nearest power-of-2 integer.
 > 
-> As it is, both GNU assembler and the LLVM integrated assembler (or llvm-mc)
-> throws an error with examples such as
-> auipc s0, -17
+> The nearest power-of-2 integer can be calculated by pow2ceil() or by
+> using APIC ID offset/width (like L3 topology using 1 << die_offset [3]).
 > 
-> On the other hand, I have only seen this problem with the output of the
-> COLLECT plug-in, not (as yet) with QEMU execution proper.
-> If the problem is confined to COLLECT, perhaps the argument for aligning
-> with other tools is not as strong.
+> But in fact, CPUID.04H:EAX[bits 25:14] and CPUID.04H:EAX[bits 31:26]
+> are associated with APIC ID. For example, in linux kernel, the field
+> "num_threads_sharing" (Bits 25 - 14) is parsed with APIC ID. And for
+> another example, on Alder Lake P, the CPUID.04H:EAX[bits 31:26] is not
+> matched with actual core numbers and it's calculated by:
+> "(1 << (pkg_offset - core_offset)) - 1".
 > 
-> In the meantime, I have adjusted my change locally to include AUIPC, and
-> written a substantive, and I hope, clear commit description.
-> If you would like me to resubmit a patch with this updated change, please
-> let me know.
+> Therefore the topology information of APIC ID should be preferred to
+> calculate nearest power-of-2 integer for CPUID.04H:EAX[bits 25:14] and
+> CPUID.04H:EAX[bits 31:26]:
+> 1. d/i cache is shared in a core, 1 << core_offset should be used
+>     instead of "cs->nr_threads" in encode_cache_cpuid4() for
+>     CPUID.04H.00H:EAX[bits 25:14] and CPUID.04H.01H:EAX[bits 25:14].
+> 2. L2 cache is supposed to be shared in a core as for now, thereby
+>     1 << core_offset should also be used instead of "cs->nr_threads" in
+>     encode_cache_cpuid4() for CPUID.04H.02H:EAX[bits 25:14].
+> 3. Similarly, the value for CPUID.04H:EAX[bits 31:26] should also be
+>     calculated with the bit width between the package and SMT levels in
+>     the APIC ID (1 << (pkg_offset - core_offset) - 1).
+> 
+> In addition, use APIC ID bits calculations to replace "pow2ceil()" for
+> cache_info_passthrough case.
+> 
+> [1]: efb3934adf9e ("x86: cpu: make sure number of addressable IDs for processor cores meets the spec")
+> [2]: d7caf13b5fcf ("x86: cpu: fixup number of addressable IDs for logical processors sharing cache")
+> [3]: d65af288a84d ("i386: Update new x86_apicid parsing rules with die_offset support")
+> 
+> Fixes: 7e3482f82480 ("i386: Helpers to encode cache information consistently")
+> Suggested-by: Robert Hoo <robert.hu@linux.intel.com>
+> Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+> Changes since v7:
+>   * Fixed calculations in cache_info_passthrough case. (Xiaoyao)
+>   * Renamed variables as *_width. (Xiaoyao)
+>   * Unified variable names for encoding cache_info_passthrough case and
+>     non-cache_info_passthrough case as addressable_cores_width and
+>     addressable_threads_width.
+>   * Fixed typos in commit message. (Xiaoyao)
+>   * Dropped Michael/Babu's ACKed/Tested tags since the code change.
+>   * Re-added Yongwei's Tested tag For his re-testing.
+> 
+> Changes since v3:
+>   * Fixed compile warnings. (Babu)
+>   * Fixed spelling typo.
+> 
+> Changes since v1:
+>   * Used APIC ID offset to replace "pow2ceil()" for cache_info_passthrough
+>     case. (Yanan)
+>   * Split the L1 cache fix into a separate patch.
+>   * Renamed the title of this patch (the original is "i386/cpu: Fix number
+>     of addressable IDs in CPUID.04H").
+> ---
+>   target/i386/cpu.c | 37 ++++++++++++++++++++++++++++---------
+>   1 file changed, 28 insertions(+), 9 deletions(-)
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 81d9046167e8..c77bcbc44d59 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -6014,7 +6014,6 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>   {
+>       X86CPU *cpu = env_archcpu(env);
+>       CPUState *cs = env_cpu(env);
+> -    uint32_t die_offset;
+>       uint32_t limit;
+>       uint32_t signature[3];
+>       X86CPUTopoInfo topo_info;
+> @@ -6086,7 +6085,10 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>                  (cpuid2_cache_descriptor(env->cache_info_cpuid2.l1i_cache) <<  8) |
+>                  (cpuid2_cache_descriptor(env->cache_info_cpuid2.l2_cache));
+>           break;
+> -    case 4:
+> +    case 4: {
+> +        int addressable_cores_width;
+> +        int addressable_threads_width;
+> +
+>           /* cache info: needed for Core compatibility */
+>           if (cpu->cache_info_passthrough) {
+>               x86_cpu_get_cache_cpuid(index, count, eax, ebx, ecx, edx);
+> @@ -6098,39 +6100,55 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>                   int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
+>                   int vcpus_per_socket = cs->nr_cores * cs->nr_threads;
+>                   if (cs->nr_cores > 1) {
+> +                    addressable_cores_width = apicid_pkg_offset(&topo_info) -
+> +                                              apicid_core_offset(&topo_info);
+> +
+>                       *eax &= ~0xFC000000;
+> -                    *eax |= (pow2ceil(cs->nr_cores) - 1) << 26;
+> +                    *eax |= ((1 << addressable_cores_width) - 1) << 26;
+>                   }
+>                   if (host_vcpus_per_cache > vcpus_per_socket) {
+> +                    /* Share the cache at package level. */
+> +                    addressable_threads_width = apicid_pkg_offset(&topo_info);
+> +
+>                       *eax &= ~0x3FFC000;
+> -                    *eax |= (pow2ceil(vcpus_per_socket) - 1) << 14;
+> +                    *eax |= ((1 << addressable_threads_width) - 1) << 14;
+>                   }
+>               }
+>           } else if (cpu->vendor_cpuid_only && IS_AMD_CPU(env)) {
+>               *eax = *ebx = *ecx = *edx = 0;
+>           } else {
+>               *eax = 0;
+> +            addressable_cores_width = apicid_pkg_offset(&topo_info) -
+> +                                      apicid_core_offset(&topo_info);
+> +
+>               switch (count) {
+>               case 0: /* L1 dcache info */
+> +                addressable_threads_width = apicid_core_offset(&topo_info);
+>                   encode_cache_cpuid4(env->cache_info_cpuid4.l1d_cache,
+> -                                    cs->nr_threads, cs->nr_cores,
+> +                                    (1 << addressable_threads_width),
+> +                                    (1 << addressable_cores_width),
+>                                       eax, ebx, ecx, edx);
+>                   break;
+>               case 1: /* L1 icache info */
+> +                addressable_threads_width = apicid_core_offset(&topo_info);
+>                   encode_cache_cpuid4(env->cache_info_cpuid4.l1i_cache,
+> -                                    cs->nr_threads, cs->nr_cores,
+> +                                    (1 << addressable_threads_width),
+> +                                    (1 << addressable_cores_width),
+>                                       eax, ebx, ecx, edx);
+>                   break;
+>               case 2: /* L2 cache info */
+> +                addressable_threads_width = apicid_core_offset(&topo_info);
+>                   encode_cache_cpuid4(env->cache_info_cpuid4.l2_cache,
+> -                                    cs->nr_threads, cs->nr_cores,
+> +                                    (1 << addressable_threads_width),
+> +                                    (1 << addressable_cores_width),
+>                                       eax, ebx, ecx, edx);
+>                   break;
+>               case 3: /* L3 cache info */
+> -                die_offset = apicid_die_offset(&topo_info);
+>                   if (cpu->enable_l3_cache) {
+> +                    addressable_threads_width = apicid_die_offset(&topo_info);
 
-Since the patch is ready for posting, then it might as well be posted
-(even if it may not get merged right away). If the issue arises again,
-then we can refer to the latest proposed patch, which will be preserved
-in the mail archives.
+Please get rid of the local variable @addressable_threads_width.
 
-Thanks,
-drew
+It is truly confusing. In this patch, it is assigned to
+  - apicid_pkg_offset(&topo_info);
+  - apicid_core_offset(&topo_info);
+  - apicid_die_offset(&topo_info);
+
+in different cases.
+
+I only suggested the name of addressable_core_width in v7, which is 
+apicid_pkg_offset(&topo_info) - apicid_core_offset(&topo_info); 
+
+And it is straightforward that it means the number of bits in x2APICID 
+to encode different addressable cores.
+
+But it is not similar to addressable_threads_width, the semantic changes 
+per different cache level. In fact, you want something like 
+bit_width_of_addressable_threads_sharing_this_level_of_cache.
+
+So I suggest stop using the variable of "address_therads_width". Instead 
+just apicid_*_offset() directly.
+
+
+With above fixed, feel free to add my
+
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+
+>                       encode_cache_cpuid4(env->cache_info_cpuid4.l3_cache,
+> -                                        (1 << die_offset), cs->nr_cores,
+> +                                        (1 << addressable_threads_width),
+> +                                        (1 << addressable_cores_width),
+>                                           eax, ebx, ecx, edx);
+>                       break;
+>                   }
+> @@ -6141,6 +6159,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>               }
+>           }
+>           break;
+> +    }
+>       case 5:
+>           /* MONITOR/MWAIT Leaf */
+>           *eax = cpu->mwait.eax; /* Smallest monitor-line size in bytes */
+
 
