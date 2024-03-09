@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1F5AC54E60
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 19:26:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C877C54791
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 19:26:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rj2KI-0007DT-At; Sat, 09 Mar 2024 14:25:54 -0500
+	id 1rj2Jb-0006n3-4E; Sat, 09 Mar 2024 14:25:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2Jc-0006pH-T1
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:25:07 -0500
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2JV-0006T4-9m
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:24:57 -0500
+Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2JX-00035R-JQ
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:25:02 -0500
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-a460185d1a7so75719966b.0
- for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 11:24:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rj2JS-00034W-4L
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 14:24:56 -0500
+Received: by mail-lj1-x22f.google.com with SMTP id
+ 38308e7fff4ca-2d269b2ff48so48618121fa.3
+ for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 11:24:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710012298; x=1710617098; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710012292; x=1710617092; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LXk2FBAU/I+Gq91SQ8W6u6cQEBqnEw8TniXn77xAtfE=;
- b=hW/y+TVQNEGOV3R6xUfA6rbqvDgFVTmeyaeKF6nw4CdPPoWGD+YUtJ8uUeHtiSXO66
- Cs4lDp+wXeSNo6TvLWGy7bwR2U0tYGpFudeQ5osJ1nWOQ3I4D7CfbXmVHrHxjQUcln9J
- Joc48+Ki03C4j1Q24MnT9V5pwWHlZHoaTfPlQpZnnC+dYEuQjXF/OeUgUDIC6dRI4k0K
- uiPE1x6fypUQNsMoVcatwmuv53xrDWbnP2xCKz0vmNNJE9nD7Du/f/cGQxOsN8UcAKlu
- iy+1dHnqHFQubWdYPdt0bRL1H6ds8enlTXVFDGAYFJIKb5wvc3uaimWr75QWEkt8KKqK
- ip0g==
+ bh=sOxMDvWG7fYCMvOESgkL1lEMXJ1JQ08vQMhMIpxGM9I=;
+ b=J38xq4PGGwtuqZGaJYM1qDPUggGtv+n5tzGS4pYERNsyVkqA7CDjhVHDXk31MW16bc
+ hhHWlc90iduw8WwVaHM32aJEIMcPLDc6O9Rf80Uu/llk9p4QamSL8FWHc17uyQ3P28Ej
+ OMNYvEfRbWivCBJ9bu8OEdfIZ5uG3vYlTsAaxqUw5LD2QS/nlcvRDDlzTJv4e3fsyY+5
+ KhVEBGQgZddbuwf2iD8L3jPXwPYgtB7sKt72wM/5lqcZhTvMmWBWVWe7nnc7ZDciE/cf
+ JMi6fPQ8nMpSBq+SyEZQF6kgDd7w5KWK2pPp60Bd3Pg/Eeg/YyaD38bu0ax94ZqrfFd/
+ ZKVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710012298; x=1710617098;
+ d=1e100.net; s=20230601; t=1710012292; x=1710617092;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LXk2FBAU/I+Gq91SQ8W6u6cQEBqnEw8TniXn77xAtfE=;
- b=KNpY2RF7NMrfweWKolJNx5xKfK66KlMjAfUIr/0cV3SgU0CRG3cF2gJglTY/588xaX
- RF5XZAMb4QYyuRTtYWqU/C4pNVPr+6JxtsmcktCOb+q+wTzpb+NT3A9VdFX/wR5kkFIP
- bnwfq6uSUEO7h0aCqYdXmejWsF4FOYB+Wcbd273Ah6zto06LjqxE3O3t/8b1zx6Sl5n3
- lw/tPI7BARUtntJYrHAUj0+lfWqwZDrlWD3Zt4D5uqJ0roz9BDhD0mflqq5LjeLRv8zz
- PKfUrST0w5s+8i+/l1qJKonC3MFF/sCcX0LPvvNOAUZKQoMfR5ilcCTxH2CMRwmiEL0q
- 4A8A==
-X-Gm-Message-State: AOJu0Yy0nX9MBAl5yw6KH+sySnUC7U3BPh40Qx9zViKg3f4awQOaqjPZ
- UxW/umJd5lFtvh7g67E1u8QSfDCz+Z78q9PBp0rkCr9IpsHVBOvV/DBow2Vr0tA+/lHK9GUe8AP
- a
-X-Google-Smtp-Source: AGHT+IEBzyj8x5j88N4i5jH/viOl5H6aPx6/nwZq2TgA2iE6c8rg5hdcZ88xN/9OgOJKqQObdvKRMg==
-X-Received: by 2002:a17:906:310f:b0:a43:dc5f:f271 with SMTP id
- 15-20020a170906310f00b00a43dc5ff271mr1326849ejx.42.1710012297770; 
- Sat, 09 Mar 2024 11:24:57 -0800 (PST)
+ bh=sOxMDvWG7fYCMvOESgkL1lEMXJ1JQ08vQMhMIpxGM9I=;
+ b=AnQH+jBjzRnaVfg9W5NU/8OP9wyR9iJQkBhHalxYRKiSCYqWVHzQ9xNJIDZhW/Asa+
+ 1m13kTr7zUlDjNh3n8ZeiTB100A/5AlmrZK/5q9yhnI/gX8wyjJn/vA/NzxQUzJ17K+F
+ DlJrD/hwJqkst2vS91kNbjBUEd+Imw8HTuYN14zwQXAbw/6Jcs33DkJS04SdAxnhD2FK
+ ROWj9mgOUTgKnHA1rI+EyfIVZZYWDybI1UmwvT3o/JNmzUfMXe7jvvY2x4rCQBY7H4ZF
+ ctE08OtPPEpkVxL2o8Rc9WZZNfWM/GG8P0Yl0/5up3o30ZLKXVGzfWE2z9gMiur+z473
+ J4Ag==
+X-Gm-Message-State: AOJu0YxOo33x5k9ef4I3bEH5awjw0Z6AO3YCmUyuixfbpeevwjfIggR7
+ hKWH65Rzw6G2/nOylfaItFqBLw16q5QnX9w3DR/zcAOpO3xur2kXmR89YzgIpM6kLvVL+PvEeoG
+ Z
+X-Google-Smtp-Source: AGHT+IEnx0UAhxsWu3vMT5zFaVAqvYzcPHl1DIzHmPysNIU33oUo3sm7kvUgkXVueeIazkYyYxJspA==
+X-Received: by 2002:a2e:9b8e:0:b0:2d3:fa6b:9104 with SMTP id
+ z14-20020a2e9b8e000000b002d3fa6b9104mr1393478lji.20.1710012292045; 
+ Sat, 09 Mar 2024 11:24:52 -0800 (PST)
 Received: from m1x-phil.lan ([176.176.181.237])
  by smtp.gmail.com with ESMTPSA id
- r1-20020a170906364100b00a4320e22b31sm1195761ejb.19.2024.03.09.11.24.56
+ n10-20020aa7d04a000000b0056826248468sm1156009edo.89.2024.03.09.11.24.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 09 Mar 2024 11:24:57 -0800 (PST)
+ Sat, 09 Mar 2024 11:24:51 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
- =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Frederic Konrad <konrad.frederic@yahoo.fr>
-Subject: [PULL 27/43] hw/intc/grlib_irqmp: abort realize when ncpus value is
- out of range
-Date: Sat,  9 Mar 2024 20:21:54 +0100
-Message-ID: <20240309192213.23420-28-philmd@linaro.org>
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 26/43] mac_newworld: change timebase frequency from 100MHz to
+ 25MHz for mac99 machine
+Date: Sat,  9 Mar 2024 20:21:53 +0100
+Message-ID: <20240309192213.23420-27-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240309192213.23420-1-philmd@linaro.org>
 References: <20240309192213.23420-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,33 +96,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Clément Chigot <chigot@adacore.com>
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-Even if the error is set, the build is not aborted when the ncpus value
-is wrong, the return is missing.
+MacOS X uses multiple techniques for calibrating timers depending upon the detected
+hardware. One of these calibration routines compares the change in the timebase
+against the KeyLargo timer and uses this to recalculate the clock frequency,
+timebase frequency and bus frequency if the calibration exceeds certain limits.
+This recalibration occurs despite the correct values being passed via the device
+tree, and is likely due to buggy firmware on some hardware.
 
-Signed-off-by: Clément Chigot <chigot@adacore.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Fixes: 6bf1478543 ("hw/intc/grlib_irqmp: add ncpus property")
+The timebase frequency of 100MHz was set way back in 2005 by commit fa296b0fb4
+("PIC fix - changed back TB frequency to 100 MHz") and with this value on a
+mac99,via=pmu machine the OSX 10.2 timer calibration incorrectly calculates the
+bus frequency as 400MHz instead of 100MHz. The most noticeable side-effect is
+the UI appears sluggish and not very responsive for normal use.
+
+Change the timebase frequency from 100MHz to 25MHz which matches that of a real
+G4 AGP machine (the closest match to QEMU's mac99 machine) and allows OSX 10.2
+to correctly detect all of the clock frequency, timebase frequency and bus
+frequency.
+
+Tested on various MacOS images from OS 9.2 through to OSX 10.4, along with Linux
+and NetBSD and I was unable to find any regressions from this change.
+
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240308152719.591232-1-chigot@adacore.com>
+Message-ID: <20240304073548.2098806-1-mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/intc/grlib_irqmp.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/ppc/mac_newworld.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/intc/grlib_irqmp.c b/hw/intc/grlib_irqmp.c
-index 144b121d48..c6c51a349c 100644
---- a/hw/intc/grlib_irqmp.c
-+++ b/hw/intc/grlib_irqmp.c
-@@ -356,6 +356,7 @@ static void grlib_irqmp_realize(DeviceState *dev, Error **errp)
-         error_setg(errp, "Invalid ncpus properties: "
-                    "%u, must be 0 < ncpus =< %u.", irqmp->ncpus,
-                    IRQMP_MAX_CPU);
-+        return;
-     }
+diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
+index 3e796d2f6d..ff9e490c4e 100644
+--- a/hw/ppc/mac_newworld.c
++++ b/hw/ppc/mac_newworld.c
+@@ -77,7 +77,7 @@
  
-     qdev_init_gpio_in(dev, grlib_irqmp_set_irq, MAX_PILS);
+ #define MAX_IDE_BUS 2
+ #define CFG_ADDR 0xf0000510
+-#define TBFREQ (100UL * 1000UL * 1000UL)
++#define TBFREQ (25UL * 1000UL * 1000UL)
+ #define CLOCKFREQ (900UL * 1000UL * 1000UL)
+ #define BUSFREQ (100UL * 1000UL * 1000UL)
+ 
 -- 
 2.41.0
 
