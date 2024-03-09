@@ -4,71 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D8D3C54E4A
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 14:59:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B71FC54798
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 15:14:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riyAE-0001sj-AB; Sat, 09 Mar 2024 09:59:06 -0500
+	id 1riyOH-00050p-Pc; Sat, 09 Mar 2024 10:13:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1riyAC-0001sZ-Fo
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 09:59:04 -0500
-Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1riyAA-000287-Sr
- for qemu-devel@nongnu.org; Sat, 09 Mar 2024 09:59:04 -0500
-Received: by mail-lj1-x233.google.com with SMTP id
- 38308e7fff4ca-2d382a78c38so34849161fa.1
- for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 06:59:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709996341; x=1710601141; darn=nongnu.org;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=MUQMuURryrg2KG8fH7PIMcqoDO+ibKRgQeiWlNR7HyM=;
- b=Z++wjVeO/JPVhMpsKVW2A7Fk0ImkheR0c4XUETe80BYgekuQqyW0G+AkCWI4jzlb0d
- xrMRx5vTI9SuJtXJGgs111gqcK0sJTzPTNQ5MPtfWfYIJimlI4Tj2vhZS18jjkDmeIAO
- EZV4W8dPctoMrsgzUSaHUZBrdE233huZodnOeC1bazxyLXwYh96773HDJMGl41w155Q+
- F5xe+ewG4g+uXagGu80uG9oHKGEQuEMIOlSKKiwMR+BdvQUHUkw+e3q7RUdtmHH4ssIn
- vq/kDlpSNpzKj3I6G4bUt6erbOWILCOTzH9nJEQuulYR8qjbeB2pZGDU7lClHOoLynJk
- pBLA==
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1riyOG-00050h-RS
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 10:13:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1riyOE-0005vP-U0
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 10:13:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709997212;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FvEnEn61qIGzBx5HDcABGdI1hanTCJMH/wO4hbvbsTk=;
+ b=iaQw1FcGeLbPWXCutzQ+GE6GxkLpNxFauINLILmNLctISYflJefRAYz2ZVJ6UdeURhkDIQ
+ m8SU5m6DXZ1Oj2GmXBl3tZgmN5G2i8PzxkIZP/qDu6f3c+jfAAa5zsoFtk/UnmSUs7Lvjb
+ Km435dlaiEPlUZSOQUC4wDKCMLAD4fU=
+Received: from mail-il1-f198.google.com (mail-il1-f198.google.com
+ [209.85.166.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-608-PGIFR_f9NfWx1HSMtYY_cQ-1; Sat, 09 Mar 2024 10:13:30 -0500
+X-MC-Unique: PGIFR_f9NfWx1HSMtYY_cQ-1
+Received: by mail-il1-f198.google.com with SMTP id
+ e9e14a558f8ab-36643c99612so58395ab.3
+ for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 07:13:30 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709996341; x=1710601141;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MUQMuURryrg2KG8fH7PIMcqoDO+ibKRgQeiWlNR7HyM=;
- b=hFnFmFvV2F2ug8A+DbaTHaJ2AA8Vj8I0brLJYxUhFmAsou24f2fuXcUF2fDg9yhGJt
- OecVT0aiilOhcZ7BDsc4eycvgcKW0N3WbeDjGQ5/o1vUyDQBRMz2vcohmt/es269Ynfe
- 07pwOcdhyNLd8FqJUk3vtPVqEhC8A7pBRotke5GZ47uVkBmNS0U6JPfNph2npEwd3L0S
- hLC4T7ufHbBAtvstTVhGLzUCGZ08fBEAIwL0V6Jqg9VjFuIq5ryffhhWZYDGOflSS6MA
- r8sijfsRXiM8+Lv6xkTSugs18w8D0zZN3oFrqFMNTOAciR03RzLis0BngItueA+MENqY
- /GuA==
-X-Gm-Message-State: AOJu0YyBUHyAx9n90PbVUSXj8YZgxGyQm6CJE7aByXbkIMmo0afIdH6F
- P0mkdZFY2qkmBnjGtxiAESY4obDVHxO47xiCyILjCkWQRX/Jqo3/YT6999XyaUGTmLF1Pk//8Af
- 9J51ZvnrC3gJHnX/TQuk0cDC9SxS568Q8S1MlmLgpfEqK5J1x
-X-Google-Smtp-Source: AGHT+IFZjRu253mY44roJ6kRG7Lyb/H9cw7FKMlCWBbLTZ1LT5VxgYb/fzDxBQTmhIxt2U/5L2ou/Ch9CRLW7QyZj10=
-X-Received: by 2002:a05:651c:1a12:b0:2d4:27b0:1712 with SMTP id
- by18-20020a05651c1a1200b002d427b01712mr1450217ljb.11.1709996341117; Sat, 09
- Mar 2024 06:59:01 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709997210; x=1710602010;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=FvEnEn61qIGzBx5HDcABGdI1hanTCJMH/wO4hbvbsTk=;
+ b=rsWAKQZoIrAx9t+clfLUozn0IGcZOevF8P+MhKoRZNPnrPJzy+KHHkzcObmHAKOcpn
+ a4eLDafB9OAFCgWeLeqvdjRQaKfNRElYLlPjXMj/8ngJR38KzQqxN4hEwjFx5iYPuqH0
+ qCu9dBgP1KwmD0+9QxwG+rxwBp5YEEq85rEV/rNj0uOY+duwYHDJAdTbJtK4d1ZSmsr1
+ j2FwwjleH0RdYqTqPfiyBgYWs8oewas3iUbcD6KO8TRGDS7AXd4HKAo4iePgWPJJyHqy
+ 1BL/0254yiBmWpNtPnWmIXmEzcPCnjkxoU6W3+pNKIYOkUkCShWVnjt+ogthWpViaqU4
+ 3vLw==
+X-Gm-Message-State: AOJu0YzB3uv+uhjDM3dnvhnhcPF/a54DKqOMzKttaIXw6tB3uU9IMy72
+ AHTVTheQLi59P+A0Y+N1hLOowj43Y77sfdBkw4/QxLXvpth7KoZkllAALhC2zqmrQj5nVXUP1Ma
+ Os6ymI1z92qdZbI0jV/Ak62gMYuBHZIbKXPvb80iNc/oNhdzARfK3
+X-Received: by 2002:a05:6e02:1cab:b0:365:21a0:781f with SMTP id
+ x11-20020a056e021cab00b0036521a0781fmr2457888ill.16.1709997210027; 
+ Sat, 09 Mar 2024 07:13:30 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFp1hr4hZ0t1wb+EJVnd+1U43AiKxx/jvryN7SP0adYWpNOW8Qsu99kGMg5QBofUef/8vnwFw==
+X-Received: by 2002:a05:6e02:1cab:b0:365:21a0:781f with SMTP id
+ x11-20020a056e021cab00b0036521a0781fmr2457871ill.16.1709997209778; 
+ Sat, 09 Mar 2024 07:13:29 -0800 (PST)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ g9-20020a05663816c900b00476ca242b77sm459093jat.53.2024.03.09.07.13.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 09 Mar 2024 07:13:29 -0800 (PST)
+Date: Sat, 9 Mar 2024 08:13:27 -0700
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, Eduardo
+ Habkost <eduardo@habkost.net>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?=
+ <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, Richard Henderson
+ <richard.henderson@linaro.org>
+Subject: Re: [PATCH 0/2] Revert "hw/i386/pc: Confine system flash handling
+ to pc_sysfw"
+Message-ID: <20240309081327.7eb35acf.alex.williamson@redhat.com>
+In-Reply-To: <20240226215909.30884-1-shentey@gmail.com>
+References: <20240226215909.30884-1-shentey@gmail.com>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-References: <20240308155015.3637663-1-peter.maydell@linaro.org>
-In-Reply-To: <20240308155015.3637663-1-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 9 Mar 2024 14:58:50 +0000
-Message-ID: <CAFEAcA-mCWWXkMY1h1R_fidM4DZ13vY-3zEvyZKUV7=rXj2RjA@mail.gmail.com>
-Subject: Re: [PULL 00/14] target-arm queue
-To: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::233;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x233.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=alex.williamson@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.58,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,32 +107,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 8 Mar 2024 at 15:50, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> The following changes since commit 8f6330a807f2642dc2a3cdf33347aa28a4c00a87:
->
->   Merge tag 'pull-maintainer-updates-060324-1' of https://gitlab.com/stsquad/qemu into staging (2024-03-06 16:56:20 +0000)
->
-> are available in the Git repository at:
->
->   https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20240308
->
-> for you to fetch changes up to bbf6c6dbead82292a20951eb1204442a6b838de9:
->
->   target/arm: Move v7m-related code from cpu32.c into a separate file (2024-03-08 14:45:03 +0000)
->
-> ----------------------------------------------------------------
-> target-arm queue:
->  * Implement FEAT_ECV
->  * STM32L4x5: Implement GPIO device
->  * Fix 32-bit SMOPA
->  * Refactor v7m related code from cpu32.c into its own file
->  * hw/rtc/sun4v-rtc: Relicense to GPLv2-or-later
+On Mon, 26 Feb 2024 22:59:07 +0100
+Bernhard Beschow <shentey@gmail.com> wrote:
 
-Applied, thanks.
+> As reported by Volker [1], commit 6f6ad2b24582 "hw/i386/pc: Confine system
+> flash handling to pc_sysfw" causes a regression when specifying the property
+> `-M pflash0` in the PCI PC machines:
+>   qemu-system-x86_64: Property 'pc-q35-9.0-machine.pflash0' not found
+> Revert the commit for now until a solution is found.
+> 
+> Best regards,
+> Bernhard
+> 
+> [1] https://lore.kernel.org/qemu-devel/9e82a04b-f2c1-4e34-b4b6-46a0581b572f@t-online.de/
+> 
+> Bernhard Beschow (2):
+>   Revert "hw/i386/pc_sysfw: Inline pc_system_flash_create() and remove
+>     it"
+>   Revert "hw/i386/pc: Confine system flash handling to pc_sysfw"
+> 
+>  include/hw/i386/pc.h |  2 ++
+>  hw/i386/pc.c         |  1 +
+>  hw/i386/pc_piix.c    |  1 +
+>  hw/i386/pc_sysfw.c   | 17 +++++++++++++----
+>  4 files changed, 17 insertions(+), 4 deletions(-)
+> 
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
-for any user-visible changes.
+Please apply this, the original commits break my existing VMs.
 
--- PMM
+Tested-by: Alex Williamson <alex.williamson@redhat.com>
+
 
