@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A54AEC5475B
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 02:07:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F210C54E58
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 02:38:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rim6s-0000sB-U9; Fri, 08 Mar 2024 21:06:50 -0500
+	id 1rimam-0004HA-Jv; Fri, 08 Mar 2024 21:37:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hao.xiang@linux.dev>)
- id 1rim6j-0000q9-R6
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 21:06:43 -0500
-Received: from out-188.mta1.migadu.com ([95.215.58.188])
+ id 1rimak-0004FJ-HQ
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 21:37:42 -0500
+Received: from out-184.mta1.migadu.com ([95.215.58.184])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hao.xiang@linux.dev>)
- id 1rim6g-0007o9-R0
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 21:06:41 -0500
+ id 1rimah-0005OT-4W
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 21:37:42 -0500
 MIME-Version: 1.0
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1709949996;
+ t=1709951856;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Pd08xPQhVaQ6pGBKUUmd8iemC2yjD7nMIhgWZ3CZ5CE=;
- b=kdBR5uKEU7u+hN5Hj/hcSUpq+tkPMjN8q5p9cqsq0VNyAgR4nWHDQglH1BrL6cwxz1h/K4
- lSWSnKuxlf5WlLWEMwxBwUz9WwdIqci0ZjVQ1QNTPT6j5IkuVUkG4/eEC9HTWbTcyd4tNH
- 6GLo+T3poKbsg3dJIef4/3qCSu0eDvM=
-Date: Sat, 09 Mar 2024 02:06:33 +0000
+ bh=SHS5X+1zWiQc/yiIZPjW+gVtxCeSbG1iEW2UMZXfVYI=;
+ b=Lm0AejwdL1gVoWMSiMFN/4xUoC1/SJulWRaK6UAQOA9FTsM/Jl+yEPbHwlD79LDfRjKXe5
+ uqvjRN3d2Rs/i/lCxx+AId07yVIbmE1YoSWz7CZvRmGnIGUPfNHUs+sL5r1ZK3RvO5+s9N
+ c/OTkhh1rduG4YDVC3J84XYQOUYnRQU=
+Date: Sat, 09 Mar 2024 02:37:33 +0000
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
  include these headers.
 From: hao.xiang@linux.dev
-Message-ID: <821fba91ac7c0d4cd481d91b8fc91c94304a677f@linux.dev>
+Message-ID: <28e2ade8ee733b3dc602a78bde47e2df43960706@linux.dev>
 TLS-Required: No
-Subject: Re: [PATCH v4 3/7] migration/multifd: Implement
- ram_save_target_page_multifd to handle multifd version of
- MigrationOps::ram_save_target_page.
+Subject: Re: [External] Re: [PATCH v4 2/7] migration/multifd: Implement zero
+ page transmission on the multifd thread.
 To: peterx@redhat.com
 Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
  farosas@suse.de, eblake@redhat.com, armbru@redhat.com, thuth@redhat.com,
  lvivier@redhat.com, jdenemar@redhat.com, marcel.apfelbaum@gmail.com,
  philmd@linaro.org, wangyanan55@huawei.com, qemu-devel@nongnu.org
-In-Reply-To: <CAAYibXhCzozRhHxp2Dk3L9BMhFhZtqyvgbwkj+8ZGMCHURZGug@mail.gmail.com>
+In-Reply-To: <CAAYibXi0xjpwayO1u8P4skjpeOuUteyuRmrhFHmjFwoRF2JWJg@mail.gmail.com>
 References: <20240301022829.3390548-1-hao.xiang@bytedance.com>
- <20240301022829.3390548-4-hao.xiang@bytedance.com>
- <ZeV8WaKyKEfw-em-@x1n>
- <CAAYibXhCzozRhHxp2Dk3L9BMhFhZtqyvgbwkj+8ZGMCHURZGug@mail.gmail.com>
+ <20240301022829.3390548-3-hao.xiang@bytedance.com>
+ <ZeV1TrOvERHN_LOo@x1n>
+ <CAAYibXi0xjpwayO1u8P4skjpeOuUteyuRmrhFHmjFwoRF2JWJg@mail.gmail.com>
 X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=95.215.58.188; envelope-from=hao.xiang@linux.dev;
- helo=out-188.mta1.migadu.com
+Received-SPF: pass client-ip=95.215.58.184; envelope-from=hao.xiang@linux.dev;
+ helo=out-184.mta1.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -77,95 +76,85 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 >=20
->=20On Sun, Mar 3, 2024 at 11:46 PM Peter Xu <peterx@redhat.com> wrote:
+>=20On Sun, Mar 3, 2024 at 11:16 PM Peter Xu <peterx@redhat.com> wrote:
 >=20
 >=20>=20
->=20> On Fri, Mar 01, 2024 at 02:28:25AM +0000, Hao Xiang wrote:
+>=20> On Fri, Mar 01, 2024 at 02:28:24AM +0000, Hao Xiang wrote:
 > >=20
->=20>  1. Add a dedicated handler for MigrationOps::ram_save_target_page =
-in
+>=20>  -GlobalProperty hw_compat_8_2[] =3D {};
 > >=20
->=20>  multifd live migration.
+>=20>  +GlobalProperty hw_compat_8_2[] =3D {
 > >=20
->=20>  2. Refactor ram_save_target_page_legacy so that the legacy and mul=
-tifd
+>=20>  + { "migration", "zero-page-detection", "legacy"},
 > >=20
->=20>  handlers don't have internal functions calling into each other.
+>=20>  +};
 > >=20
->=20>  Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
+>=20>  I hope we can make it for 9.0, then this (and many rest places) ca=
+n be kept
 > >=20
->=20>  Reviewed-by: Fabiano Rosas <farosas@suse.de>
+>=20>  as-is. Let's see.. soft-freeze is March 12th.
 > >=20
->=20>  Message-Id: <20240226195654.934709-4-hao.xiang@bytedance.com>
+>=20>  One thing to mention is I just sent a pull which has mapped-ram fe=
+ature
 > >=20
->=20>  ---
+>=20>  merged. You may need a rebase onto that, and hopefully mapped-ram =
+can also
 > >=20
->=20>  migration/ram.c | 43 ++++++++++++++++++++++++++++++-------------
+>=20>  use your feature too within the same patch when you repost.
 > >=20
->=20>  1 file changed, 30 insertions(+), 13 deletions(-)
+>=20>  https://lore.kernel.org/all/20240229153017.2221-1-farosas@suse.de/
 > >=20
->=20>  diff --git a/migration/ram.c b/migration/ram.c
+>=20>  That rebase may or may not need much caution, I apologize for that=
+:
 > >=20
->=20>  index e1fa229acf..f9d6ea65cc 100644
+>=20>  mapped-ram as a feature was discussed 1+ years, so it was a plan t=
+o merge
 > >=20
->=20>  --- a/migration/ram.c
-> >=20
->=20>  +++ b/migration/ram.c
-> >=20
->=20>  @@ -1122,10 +1122,6 @@ static int save_zero_page(RAMState *rs, Pag=
-eSearchStatus *pss,
-> >=20
->=20>  QEMUFile *file =3D pss->pss_channel;
-> >=20
->=20>  int len =3D 0;
-> >=20
->=20>  - if (migrate_zero_page_detection() =3D=3D ZERO_PAGE_DETECTION_NON=
-E) {
-> >=20
->=20>  - return 0;
-> >=20
->=20>  - }
-> >=20
->=20>  We need to keep this to disable zero-page-detect on !multifd?
+>=20>  it (actually still partly of it) into QEMU 9.0.
 
-So if multifd is enabled, the new parameter takes effect. If multifd is n=
-ot enabled, zero page checking will always be done in the main thread, wh=
-ich is exactly the behavior it is now. I thought legacy migration is a de=
-precated feature so I am trying to not add new stuff to it.
+Let's see if we can catch that.
 
 > >=20
->=20>  -
+>=20>  [...]
 > >=20
->=20>  if (!buffer_is_zero(p, TARGET_PAGE_SIZE)) {
+>=20>  +static bool multifd_zero_page(void)
 > >=20
->=20>  return 0;
+>=20>  multifd_zero_page_enabled()?
+
+Changed.
+
 > >=20
->=20>  }
+>=20>  +{
 > >=20
->=20>  @@ -2045,7 +2041,6 @@ static bool save_compress_page(RAMState *rs,=
- PageSearchStatus *pss,
+>=20>  + return migrate_zero_page_detection() =3D=3D ZERO_PAGE_DETECTION_=
+MULTIFD;
 > >=20
->=20>  */
+>=20>  +}
 > >=20
->=20>  static int ram_save_target_page_legacy(RAMState *rs, PageSearchSta=
-tus *pss)
+>=20>  +
 > >=20
->=20>  {
+>=20>  +static void swap_page_offset(ram_addr_t *pages_offset, int a, int=
+ b)
 > >=20
->=20>  - RAMBlock *block =3D pss->block;
+>=20>  +{
 > >=20
->=20>  ram_addr_t offset =3D ((ram_addr_t)pss->page) << TARGET_PAGE_BITS;
+>=20>  + ram_addr_t temp;
 > >=20
->=20>  int res;
+>=20>  +
 > >=20
->=20>  @@ -2061,17 +2056,34 @@ static int ram_save_target_page_legacy(RAM=
-State *rs, PageSearchStatus *pss)
+>=20>  + if (a =3D=3D b) {
 > >=20
->=20>  return 1;
+>=20>  + return;
 > >=20
->=20>  }
+>=20>  + }
 > >=20
->=20>  + return ram_save_page(rs, pss);
+>=20>  +
+> >=20
+>=20>  + temp =3D pages_offset[a];
+> >=20
+>=20>  + pages_offset[a] =3D pages_offset[b];
+> >=20
+>=20>  + pages_offset[b] =3D temp;
 > >=20
 >=20>  +}
 > >=20
@@ -173,115 +162,89 @@ State *rs, PageSearchStatus *pss)
 > >=20
 >=20>  +/**
 > >=20
->=20>  + * ram_save_target_page_multifd: send one target page to multifd =
-workers
+>=20>  + * multifd_send_zero_page_check: Perform zero page detection on a=
+ll pages.
 > >=20
 >=20>  + *
 > >=20
->=20>  + * Returns 1 if the page was queued, -1 otherwise.
+>=20>  + * Sorts normal pages before zero pages in p->pages->offset and u=
+pdates
+> >=20
+>=20>  + * p->pages->normal_num.
 > >=20
 >=20>  + *
 > >=20
->=20>  + * @rs: current RAM state
+>=20>  + * @param p A pointer to the send params.
 > >=20
->=20>  + * @pss: data about the page we want to send
+>=20>  Nit: the majority of doc style in QEMU (it seems to me) is:
+> >=20
+>=20>  @p: pointer to @MultiFDSendParams.
 > >=20
 >=20>  + */
 > >=20
->=20>  +static int ram_save_target_page_multifd(RAMState *rs, PageSearchS=
-tatus *pss)
+>=20>  +void multifd_send_zero_page_check(MultiFDSendParams *p)
+> >=20
+>=20>  multifd_send_zero_page_detect()?
+> >=20
+>=20>  This patch used "check" on both sides, but neither of them is a pu=
+re check
+> >=20
+>=20>  to me. For the other side, maybe multifd_recv_zero_page_process()?=
+ As
+> >=20
+>=20>  that one applies the zero pages.
+
+
+Renamed.
+
 > >=20
 >=20>  +{
 > >=20
->=20>  + RAMBlock *block =3D pss->block;
+>=20>  + MultiFDPages_t *pages =3D p->pages;
 > >=20
->=20>  + ram_addr_t offset =3D ((ram_addr_t)pss->page) << TARGET_PAGE_BIT=
-S;
+>=20>  + RAMBlock *rb =3D pages->block;
 > >=20
->=20>  +
+>=20>  + int i =3D 0;
 > >=20
->=20>  /*
-> >=20
->=20>  - * Do not use multifd in postcopy as one whole host page should b=
-e
-> >=20
->=20>  - * placed. Meanwhile postcopy requires atomic update of pages, so=
- even
-> >=20
->=20>  - * if host page size =3D=3D guest page size the dest guest during=
- run may
-> >=20
->=20>  - * still see partially copied pages which is data corruption.
-> >=20
->=20>  + * Backward compatibility support. While using multifd live
-> >=20
->=20>  We can also avoid mentioning "compatibility support" here - it's a
-> >=20
->=20>  parameter, user can legally set it to anything.
-
-Will drop that.
-
-> >=20
->=20>  + * migration, we still need to handle zero page checking on the
-> >=20
->=20>  + * migration main thread.
-> >=20
->=20>  */
-> >=20
->=20>  - if (migrate_multifd() && !migration_in_postcopy()) {
-> >=20
->=20>  - return ram_save_multifd_page(block, offset);
-> >=20
->=20>  + if (migrate_zero_page_detection() =3D=3D ZERO_PAGE_DETECTION_LEG=
-ACY) {
-> >=20
->=20>  + if (save_zero_page(rs, pss, offset)) {
-> >=20
->=20>  + return 1;
-> >=20
->=20>  + }
-> >=20
->=20>  }
-> >=20
->=20>  - return ram_save_page(rs, pss);
-> >=20
->=20>  + return ram_save_multifd_page(block, offset);
-> >=20
->=20>  }
-> >=20
->=20>  /* Should be called before sending a host page */
-> >=20
->=20>  @@ -2983,7 +2995,12 @@ static int ram_save_setup(QEMUFile *f, void=
- *opaque)
-> >=20
->=20>  }
-> >=20
->=20>  migration_ops =3D g_malloc0(sizeof(MigrationOps));
-> >=20
->=20>  - migration_ops->ram_save_target_page =3D ram_save_target_page_leg=
-acy;
+>=20>  + int j =3D pages->num - 1;
 > >=20
 >=20>  +
 > >=20
->=20>  + if (migrate_multifd()) {
+>=20>  + /*
 > >=20
->=20>  + migration_ops->ram_save_target_page =3D ram_save_target_page_mul=
-tifd;
+>=20>  + * QEMU older than 9.0 don't understand zero page
 > >=20
->=20>  + } else {
+>=20>  + * on multifd channel. This switch is required to
 > >=20
->=20>  + migration_ops->ram_save_target_page =3D ram_save_target_page_leg=
-acy;
+>=20>  + * maintain backward compatibility.
+> >=20
+>=20>  + */
+> >=20
+>=20>  IMHO we can drop this comment; it is not accurate as the user can =
+disable
+> >=20
+>=20>  it explicitly through the parameter, then it may not always about =
+compatibility.
+
+Dropped.
+
+> >=20
+> >  + if (multifd_zero_page()) {
+> >=20
+>=20>  Shouldn't this be "!multifd_zero_page_enabled()"?
+
+Thanks for catching this! My bad. Fixed.
+
+> >=20
+>=20>  + pages->normal_num =3D pages->num;
+> >=20
+>=20>  + return;
 > >=20
 >=20>  + }
 > >=20
->=20>  bql_unlock();
+>=20>  The rest looks all sane.
 > >=20
->=20>  ret =3D multifd_send_sync_main();
-> >=20
->=20>  --
-> >=20
->=20>  2.30.2
+>=20>  Thanks,
 > >=20
 >=20>  --
 > >=20
