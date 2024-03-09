@@ -4,91 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDD71C5475B
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 02:46:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0940EC54E5C
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 03:11:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rimj1-0005de-Nw; Fri, 08 Mar 2024 21:46:15 -0500
+	id 1rin6j-0000vA-Uo; Fri, 08 Mar 2024 22:10:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=791ae7193=derekmn@amazon.com>)
- id 1rimiz-0005dM-Gc
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 21:46:13 -0500
-Received: from smtp-fw-52003.amazon.com ([52.119.213.152])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=791ae7193=derekmn@amazon.com>)
- id 1rimir-0007Xa-El
- for qemu-devel@nongnu.org; Fri, 08 Mar 2024 21:46:10 -0500
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1rin6W-0000tM-ME
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 22:10:35 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1rin6P-00045l-QG
+ for qemu-devel@nongnu.org; Fri, 08 Mar 2024 22:10:31 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1dd10ae77d8so22904155ad.0
+ for <qemu-devel@nongnu.org>; Fri, 08 Mar 2024 19:10:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1709952366; x=1741488366;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=FaGxOMw8hAeHVyQkCVZb0DCHhnDYyHKuxNIwAvfWDWA=;
- b=UiGeFX4VXOFm9itDRjwetd6/yiALuc0NFJw+jipkVRc7gm01QbbkXvw/
- HL2YdoQKn1lgM/vqMgu9TatXVeoS5Szgn/iZJ0rSikhQncoOAgzLLaSYq
- VcX2WWTFMayj1JEejNCOPO0Xk8SxBca7atw9fss8C2vAGTyM4bXgrQqkN c=;
-X-IronPort-AV: E=Sophos;i="6.07,111,1708387200"; d="scan'208";a="643486831"
-Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO
- smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.6])
- by smtp-border-fw-52003.iad7.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Mar 2024 02:46:02 +0000
-Received: from EX19MTAUWC002.ant.amazon.com [10.0.7.35:58391]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.58.222:2525]
- with esmtp (Farcaster)
- id 8be3daf9-db1b-4473-aca9-d0c64320ade8; Sat, 9 Mar 2024 02:46:01 +0000 (UTC)
-X-Farcaster-Flow-ID: 8be3daf9-db1b-4473-aca9-d0c64320ade8
-Received: from EX19D003UWC002.ant.amazon.com (10.13.138.169) by
- EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1258.28; Sat, 9 Mar 2024 02:46:01 +0000
-Received: from [192.168.12.128] (10.106.101.5) by
- EX19D003UWC002.ant.amazon.com (10.13.138.169) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1258.28; Sat, 9 Mar 2024 02:45:59 +0000
-Message-ID: <8e3c2b45-356d-4ca9-bebc-012505235142@amazon.com>
-Date: Fri, 8 Mar 2024 19:45:57 -0700
+ d=linaro.org; s=google; t=1709953823; x=1710558623; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=SakRcwnp8Yh1EyT2Wa8Byn2WbR8UlACvso8EHydivPE=;
+ b=DEeRhSxUHyFQfWXl9Ojid6TbdRVAtTHFVmbuz60aU8wN0ytfV/uFP+7SUV66u6RIt8
+ VtDR4+ALSn2haQVVffpSBoAeK1jlMPOP/sKb2EnFiXrYnBLbC0Mc77FNrNkFgyDffqy9
+ y7wpbY+MA2WlBFQ0y0JDtiiE+xsDS3NDFPRTxp+0qtF7WNIBfhkLyDzg3ntu5y0CzAcn
+ Rf1Ax65UT2h6vBQ89xK0fkIYhxDbEGLC9g7tPubBFAZ19H4pDb82PGWB6I0PgdbZ4hsu
+ io8vlkYXQEU1eLVw3MRbH8Zuhjnq0IDDZ4C8eJOw6LLEJexUFN5pIpvM197Z+nNrLkif
+ FPJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709953823; x=1710558623;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=SakRcwnp8Yh1EyT2Wa8Byn2WbR8UlACvso8EHydivPE=;
+ b=NvkUZAUMqp9xpScGdHsdyqgl7CrQ6Fs5telavc/PvYAOw3csVO7QM++2wjPNnzCIQq
+ v+zIGvjHFnEQN35SdT7QYQVsNV+v9nTQjoX7cZRs9ioGJumg7ozUoZs9H6kqWT6w8hzX
+ X0ZZyF/0UQYbrRab8gAMP6xOaAU4AAWRt2DeqEyV+INL7oCqHBRrtIVAEz37a5vod8T7
+ u4vXXW9JAqr2Z9kE7Q+w11qjaartfusCtqlBGIELUdR5AcIvN+NnqjN3oRh9G6FgfGj7
+ SxiBeXf3IdQ58n1RbXU8LGgIrtHkj+NshCLH+r774+Ap5tmVrBCXCQDvZfF2KK5Eiuao
+ dQ8Q==
+X-Gm-Message-State: AOJu0Yx1VcEMtbm9Q6ZQOk+UVGdmEB6pQ2NRYVGsUJISE+S91SSDYjkZ
+ L2I4BgzLWG4977EOpW04/9xVhq5lvOeMkQMKbxuEw7FmGlvu/y8EjajNeQZ8o3Mgi1yNR6gKjK1
+ XCIs=
+X-Google-Smtp-Source: AGHT+IGTVFpbZKQm3z8F5WEDmpelCCRVqy0pP5R5VYb2aBYWp/aqQCNCJnzk01wz6z7ZRQENjD3iGw==
+X-Received: by 2002:a17:902:e884:b0:1dd:7e2b:ab39 with SMTP id
+ w4-20020a170902e88400b001dd7e2bab39mr28859plg.33.1709953822893; 
+ Fri, 08 Mar 2024 19:10:22 -0800 (PST)
+Received: from amd.. ([2804:7f0:b401:7e8e:3e7c:3fff:fe7a:e83b])
+ by smtp.gmail.com with ESMTPSA id
+ w13-20020a170902d3cd00b001dd707d5fe6sm349566plb.158.2024.03.08.19.10.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 08 Mar 2024 19:10:22 -0800 (PST)
+From: Gustavo Romero <gustavo.romero@linaro.org>
+To: qemu-devel@nongnu.org,
+	richard.henderson@linaro.org
+Cc: alex.bennee@linaro.org, peter.maydell@linaro.org, laurent@vivier.eu,
+ philmd@linaro.org, gustavo.romero@linaro.org
+Subject: [PATCH v3 0/5] Add stub to handle Xfer:siginfo:read query
+Date: Sat,  9 Mar 2024 03:08:56 +0000
+Message-Id: <20240309030901.1726211-1-gustavo.romero@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Unmapping KVM Guest Memory from Host Kernel
-Content-Language: en-US
-To: David Matlack <dmatlack@google.com>, Brendan Jackman <jackmanb@google.com>
-CC: "Gowans, James" <jgowans@amazon.com>, "seanjc@google.com"
- <seanjc@google.com>, "akpm@linux-foundation.org" <akpm@linux-foundation.org>, 
- "Roy, Patrick" <roypat@amazon.co.uk>, "chao.p.peng@linux.intel.com"
- <chao.p.peng@linux.intel.com>, "rppt@kernel.org" <rppt@kernel.org>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>, "Woodhouse, David"
- <dwmw@amazon.co.uk>, "Kalyazin, Nikita" <kalyazin@amazon.co.uk>,
- "lstoakes@gmail.com" <lstoakes@gmail.com>, "Liam.Howlett@oracle.com"
- <Liam.Howlett@oracle.com>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "kirill.shutemov@linux.intel.com" <kirill.shutemov@linux.intel.com>,
- "vbabka@suse.cz" <vbabka@suse.cz>, "mst@redhat.com" <mst@redhat.com>,
- "somlo@cmu.edu" <somlo@cmu.edu>, "Graf (AWS), Alexander" <graf@amazon.de>,
- "kvm@vger.kernel.org" <kvm@vger.kernel.org>, "linux-coco@lists.linux.dev"
- <linux-coco@lists.linux.dev>, <kvmarm@lists.linux.dev>, <tabba@google.com>,
- <qperret@google.com>, <jason.cj.chen@intel.com>
-References: <cc1bb8e9bc3e1ab637700a4d3defeec95b55060a.camel@amazon.com>
- <CA+i-1C34VT5oFQL7en1n+MdRrO7AXaAMdNVvjFPxOaTDGXu9Dw@mail.gmail.com>
- <CALzav=fO2hpaErSRHGCJCKTrJKD7b9F5oEg7Ljhb0u1gB=VKwg@mail.gmail.com>
-From: "Manwaring, Derek" <derekmn@amazon.com>
-In-Reply-To: <CALzav=fO2hpaErSRHGCJCKTrJKD7b9F5oEg7Ljhb0u1gB=VKwg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.106.101.5]
-X-ClientProxiedBy: EX19D042UWA003.ant.amazon.com (10.13.139.44) To
- EX19D003UWC002.ant.amazon.com (10.13.138.169)
-Received-SPF: pass client-ip=52.119.213.152;
- envelope-from=prvs=791ae7193=derekmn@amazon.com; helo=smtp-fw-52003.amazon.com
-X-Spam_score_int: -124
-X-Spam_score: -12.5
-X-Spam_bar: ------------
-X-Spam_report: (-12.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.572,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01, UNPARSEABLE_RELAY=0.001,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,34 +94,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024-03-08 10:36-0700, David Matlack wrote:
-> On Fri, Mar 8, 2024 at 8:25 AM Brendan Jackman <jackmanb@google.com> wrote:
-> > On Fri, 8 Mar 2024 at 16:50, Gowans, James <jgowans@amazon> wrote:
-> > > Our goal is to more completely address the class of issues whose leak
-> > > origin is categorized as "Mapped memory" [1].
-> >
-> > Did you forget a link below? I'm interested in hearing about that
-> > categorisation.
+Xfer:siginfo:read query is received, usually, when GDB catches a signal
+and needs additional info about it, like the si_code and the si_addr, so
+GDB can show the user interesting info about the signal. This query can
+also be received when an user explicitly asks for more information via
+printing GBD's special purpose variable '$_siginfo'.
 
-The paper from Hertogh, et al. is https://download.vusec.net/papers/quarantine_raid23.pdf
-specifically Table 1.
+This series adds the stub to handle Xfer:siginfo:read queries.
 
-> > It's perhaps a bigger hammer than you are looking for, but the
-> > solution we're working on at Google is "Address Space Isolation" (ASI)
-> > - the latest posting about that is [2].
->
-> I think what James is looking for (and what we are also interested
-> in), is _eliminating_ the ability to access guest memory from the
-> direct map entirely.
+To achieve this, it is first necessary to stash the target-specific
+siginfo in the gdbstub server state struct when handling a signal, so it
+requires modifying the gdb_handlesig function to accept the target's
+siginfo struct and its length.
 
-Actually, just preventing speculation of guest memory through the
-direct map is sufficient for our current focus.
+Later, when replying to a Xfer:siginfo:read query (i.e., after a
+signal is caught), the query handler utilizes the stashed siginfo to
+form the packet for replying to the query.
 
-Brendan,
-I will look into the general ASI approach, thank you. Did you consider
-memfd_secret or a guest_memfd-based approach for Userspace-ASI? Based on
-Sean's earlier reply to James it sounds like the vision of guest_memfd
-aligns with ASI's goals.
+Finally, a test is added to check if the stub correctly responds to the
+query when a simple binary causes a SIGSEGV. Since the si_addr must be
+available in the case of a SIGSEGV, the value of si_addr is checked
+against the expected faulting address, corresponding to the dereferenced
+pointer value in the binary.
 
-Derek
+v1:
+https://lists.gnu.org/archive/html/qemu-devel/2024-03/msg00423.html
+
+v2:
+https://lists.gnu.org/archive/html/qemu-devel/2024-03/msg01858.html
+
+
+Cheers,
+Gustavo
+
+Gustavo Romero (5):
+  gdbstub: Rename back gdb_handlesig
+  linux-user: Move tswap_siginfo out of target code
+  gdbstub: Save target's siginfo
+  gdbstub: Add Xfer:siginfo:read stub
+  tests/tcg: Add multiarch test for Xfer:siginfo:read stub
+
+ bsd-user/main.c                               |  2 +-
+ bsd-user/signal.c                             |  5 +-
+ gdbstub/gdbstub.c                             |  8 ++++
+ gdbstub/internals.h                           |  1 +
+ gdbstub/user.c                                | 46 +++++++++++++++++--
+ include/gdbstub/user.h                        | 19 +++-----
+ linux-user/aarch64/signal.c                   |  2 +-
+ linux-user/alpha/signal.c                     |  2 +-
+ linux-user/arm/signal.c                       |  2 +-
+ linux-user/hexagon/signal.c                   |  2 +-
+ linux-user/hppa/signal.c                      |  2 +-
+ linux-user/i386/signal.c                      |  6 +--
+ linux-user/loongarch64/signal.c               |  2 +-
+ linux-user/m68k/signal.c                      |  4 +-
+ linux-user/main.c                             |  2 +-
+ linux-user/microblaze/signal.c                |  2 +-
+ linux-user/mips/signal.c                      |  4 +-
+ linux-user/nios2/signal.c                     |  2 +-
+ linux-user/openrisc/signal.c                  |  2 +-
+ linux-user/ppc/signal.c                       |  4 +-
+ linux-user/riscv/signal.c                     |  2 +-
+ linux-user/s390x/signal.c                     |  2 +-
+ linux-user/sh4/signal.c                       |  2 +-
+ linux-user/signal-common.h                    |  2 -
+ linux-user/signal.c                           | 15 ++++--
+ linux-user/sparc/signal.c                     |  2 +-
+ linux-user/xtensa/signal.c                    |  2 +-
+ tests/tcg/multiarch/Makefile.target           | 10 +++-
+ .../gdbstub/test-qxfer-siginfo-read.py        | 26 +++++++++++
+ tests/tcg/multiarch/segfault.c                | 14 ++++++
+ 30 files changed, 147 insertions(+), 49 deletions(-)
+ create mode 100644 tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py
+ create mode 100644 tests/tcg/multiarch/segfault.c
+
+-- 
+2.34.1
+
 
