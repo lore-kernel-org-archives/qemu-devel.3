@@ -4,57 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFB46C54798
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 11:36:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 291F5C54798
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 Mar 2024 11:44:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1riuzo-0007rs-Hd; Sat, 09 Mar 2024 06:36:09 -0500
+	id 1riv6k-00023x-K4; Sat, 09 Mar 2024 06:43:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1riuzf-0007hd-3D; Sat, 09 Mar 2024 06:36:01 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1riuzd-0006rb-Cs; Sat, 09 Mar 2024 06:35:58 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id F2E584E6005;
- Sat,  9 Mar 2024 12:35:55 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id Zo3aDm1HTuTy; Sat,  9 Mar 2024 12:35:54 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 0529D4E6004; Sat,  9 Mar 2024 12:35:54 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 036697456B4;
- Sat,  9 Mar 2024 12:35:54 +0100 (CET)
-Date: Sat, 9 Mar 2024 12:35:53 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Nicholas Piggin <npiggin@gmail.com>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>, clg@kaod.org
-Subject: Re: [PATCH v7 02/10] target/ppc: Readability improvements in exception
- handlers
-In-Reply-To: <CZH89WQ98O1R.2TJ4GB7EWZ1Q8@wheely>
-Message-ID: <be9650de-ff67-87fb-f041-d95bc627ad8a@eik.bme.hu>
-References: <cover.1709045654.git.balaton@eik.bme.hu>
- <a06f6259d7a37aa88145fb13e4bce153ff763f86.1709045654.git.balaton@eik.bme.hu>
- <CAFEAcA_6R2wLaLOoOBQ0-Z_QydAEgxANmNPdKaAF=iiroFEhmA@mail.gmail.com>
- <ab46d0f9-19cc-bb34-2a8e-0c4d3d8592ea@eik.bme.hu>
- <7ad2aec9-1631-6350-869f-f5f97ae97096@eik.bme.hu>
- <CZH89WQ98O1R.2TJ4GB7EWZ1Q8@wheely>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1riv6j-00023k-4M
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 06:43:17 -0500
+Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1riv6h-0007ZD-I4
+ for qemu-devel@nongnu.org; Sat, 09 Mar 2024 06:43:16 -0500
+Received: by mail-lf1-x131.google.com with SMTP id
+ 2adb3069b0e04-513a08f2263so136481e87.3
+ for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 03:43:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709984593; x=1710589393; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RJaT4B/QpFAlTGoh6hDEgmFijrM/ZmigxmzihzfUq88=;
+ b=q7iqnJeXkVap0Xg+1SsxtBswbCrKxnIOkF/cPUD5iCKFmfH0ZUh1V1Xr/tC3szDDp2
+ SX1suXDF2Qco8JW2M9aQTRxRf4D4Oa7/+R3evCnYAOltEpUoM7bs00DTqonicjdWCqy3
+ SgWds6mm4IEj0dvLytS3tpbC1PcA8sfuGedGyyEh5YP2ximydTrERgxs6SFbYURjD4Dp
+ Bd025AvKrqnhv31lzaPlCOzzi/HxqPmR3Kp0ay4P0kfVwnZm83NPnzmPspwG7jeb4HWj
+ Y8P7/SGMDkZKmhuUBaCM3k3pmkMZqsopL2/Wq5gHgdYcTeVEc9I4jnv7LG9o2EOV6FIQ
+ BCOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709984593; x=1710589393;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=RJaT4B/QpFAlTGoh6hDEgmFijrM/ZmigxmzihzfUq88=;
+ b=quKi+aFDKYIuSvN/o+PNfdhiNasoTecvLhNTAe5cZ687WFXPo7E7mIATV0INbgpSTs
+ etXkLEXfXueEoX9KTglHSEOlgtlRReeIFz4Wx3p8ZhCs5DKqR08nbe32pa6g01UVDvn+
+ UaBQJPlcmlb8qmtH1VzOG2vSGvhZ8yu0kNsTFp3D7918Z/hAa04iVr6EaxZK+afeHIbv
+ 3xVTBhisy3puTyJUnsnCRFo/DpvjXcCDf3I3mQnQpl9dES5g8bbubabsaj8psWM9hFmF
+ 7MtsNq0sAtcxnIlxI+osbl6Y5qBT8PNUnwt3DO2fhpcE2Ap1P//kMHZWmU3RNtZfP63F
+ a83w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU0ajkRcJ5+Qj5N8rDhXfL7XuJ5dbNolqHWg7IVQCkVOWSQmV9wL8ibW5w7A58btFYOKWktg/yWJFQQ62kw7Mr7lzVQOU8=
+X-Gm-Message-State: AOJu0Yw1AVL8FHPt2mIyVlxt0xXKyxAkn766sOaGKzvi4hxDNAKj3HI+
+ c+Bg+qCQWAOXuEltFQWMxgLNHU70Fs3HiqliaNydR5VdqmQMB8143Il0sNtf6Vs=
+X-Google-Smtp-Source: AGHT+IESxozk2PeCXLxleGQTsSVR6Yb4/7Uu/IYHEub0mRs7QFB79hxO6BGwFPzxR6dTP00fAnIl+Q==
+X-Received: by 2002:a05:6512:32b8:b0:513:2985:5e05 with SMTP id
+ q24-20020a05651232b800b0051329855e05mr1121626lfe.57.1709984593398; 
+ Sat, 09 Mar 2024 03:43:13 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ w10-20020a5d680a000000b0033e0dd83be1sm1659842wru.91.2024.03.09.03.43.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 09 Mar 2024 03:43:12 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 89F715F756;
+ Sat,  9 Mar 2024 11:43:12 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Gustavo Romero <gustavo.romero@linaro.org>,  qemu-devel@nongnu.org,
+ peter.maydell@linaro.org,  laurent@vivier.eu,  philmd@linaro.org
+Subject: Re: [PATCH v2 3/5] gdbstub: Save target's siginfo
+In-Reply-To: <bb7823f4-2c8f-4b0e-b76f-19de1b22c0b4@linaro.org> (Richard
+ Henderson's message of "Fri, 8 Mar 2024 14:41:08 -1000")
+References: <20240307182623.1450717-1-gustavo.romero@linaro.org>
+ <20240307182623.1450717-3-gustavo.romero@linaro.org>
+ <637e4407-4519-4d87-981a-acd9b5124970@linaro.org>
+ <87y1atu0y8.fsf@draig.linaro.org>
+ <9fea440d-f0c5-0a7c-a60e-b75e4dcf73c3@linaro.org>
+ <87h6hgttjq.fsf@draig.linaro.org>
+ <bb7823f4-2c8f-4b0e-b76f-19de1b22c0b4@linaro.org>
+User-Agent: mu4e 1.12.1; emacs 29.1
+Date: Sat, 09 Mar 2024 11:43:12 +0000
+Message-ID: <871q8jd41b.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::131;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,57 +106,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 29 Feb 2024, Nicholas Piggin wrote:
-> On Wed Feb 28, 2024 at 6:24 AM AEST, BALATON Zoltan wrote:
->> On Tue, 27 Feb 2024, BALATON Zoltan wrote:
->>> On Tue, 27 Feb 2024, Peter Maydell wrote:
->>>> On Tue, 27 Feb 2024 at 15:10, BALATON Zoltan <balaton@eik.bme.hu> wrote:
->>>>>
->>>>> Improve readability by shortening some long comments, removing
->>>>> comments that state the obvious and dropping some empty lines so they
->>>>> don't distract when reading the code.
->>>>>
->>>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->>>>> Acked-by: Nicholas Piggin <npiggin@gmail.com>
->>>>
->>>>
->>>>> -    /*
->>>>> -     * new interrupt handler msr preserves existing ME unless
->>>>> -     * explicitly overridden.
->>>>> -     */
->>>>> +    /* new interrupt handler msr preserves ME unless explicitly overriden
->>>>> */
->>>>
->>>> Minor typo introduced here: should be "overridden".
->>>>
->>>>>      new_msr = env->msr & (((target_ulong)1 << MSR_ME));
->>>>
->>>>> @@ -575,16 +558,10 @@ static void powerpc_excp_6xx(PowerPCCPU *cpu, int
->>>>> excp)
->>>>>      /* new srr1 value excluding must-be-zero bits */
->>>>>      msr = env->msr & ~0x783f0000ULL;
->>>>>
->>>>> -    /*
->>>>> -     * new interrupt handler msr preserves existing ME unless
->>>>> -     * explicitly overridden
->>>>> -     */
->>>>> +    /* new interrupt handler msr preserves ME unless explicitly overriden
->>>>> */
->>>>
->>>> Ditto, and similarly for other instances later in the patch.
->>>
->>> Huh, sorry, don't know how I've lost that letter. It also seems that the last
->>> patch gone missing from the series somehow so if it does not turn up, I can
->>> resend it with these fixed.
->>
->> As the last patch did not turn up I've resent just that to complete this
->> v7 series. Do I need to send v8 or if these typos are the only change
->> needed maybe they could be fixed up during merge.
+Richard Henderson <richard.henderson@linaro.org> writes:
+
+> On 3/8/24 09:25, Alex Benn=C3=A9e wrote:
+>>    make vm-build-[open|net|free]bsd
+>> see make vm-help for details.
 >
-> I should be okay to do it.
+> That won't build freebsd user.
+> Something I've mentioned to you before...
 
-Was this merged then? If not then ping as well.
+  make vm-build-freebsd BUILD_TARGET=3Dall
 
-Regards,
-BALATON Zoltan
+I guess the default "check" target doesn't work due to the missing cross
+compilers meaning we have no check-tcg target in the default check list.
+
+>
+>
+> r~
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
