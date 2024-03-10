@@ -4,51 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4B54C54791
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 Mar 2024 14:28:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04875C54791
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 Mar 2024 15:05:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjK9H-0004s9-N9; Sun, 10 Mar 2024 10:27:35 -0400
+	id 1rjKjZ-0003M7-PL; Sun, 10 Mar 2024 11:05:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rjK9F-0004qT-BQ; Sun, 10 Mar 2024 10:27:33 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rjKjX-0003Lq-GM
+ for qemu-devel@nongnu.org; Sun, 10 Mar 2024 11:05:03 -0400
+Received: from todd.t-8ch.de ([2a01:4f8:c010:41de::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rjK9D-0006rr-NG; Sun, 10 Mar 2024 10:27:33 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 57F104E601B;
- Sun, 10 Mar 2024 15:27:25 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id n0zamS6Q7mQr; Sun, 10 Mar 2024 15:27:23 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 5EBB64E6005; Sun, 10 Mar 2024 15:27:23 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 5A4417456B4;
- Sun, 10 Mar 2024 15:27:23 +0100 (CET)
-Date: Sun, 10 Mar 2024 15:27:23 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH] hw/ide/ahci: Rename ahci_internal.h to ahci-internal.h
-In-Reply-To: <00a87926-49bf-4945-94fd-99f5c3a73bb0@linaro.org>
-Message-ID: <a1a9cdfd-8c54-dc8c-6512-9c59b63cdcdf@eik.bme.hu>
-References: <20240227131310.C24EB4E6005@zero.eik.bme.hu>
- <00a87926-49bf-4945-94fd-99f5c3a73bb0@linaro.org>
+ (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rjKjU-00040s-DZ
+ for qemu-devel@nongnu.org; Sun, 10 Mar 2024 11:05:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=t-8ch.de; s=mail;
+ t=1710083092; bh=zY+X/BwY+jBK5l1E95pXPBkev8OC8i1y85k3OHugqbg=;
+ h=From:Date:Subject:To:Cc:From;
+ b=ELlxwtiaYoaOlqNZZs2hZwKULBtcLlbWTqdofp/yH6YR5DZ9kKSXjPsZ0RpQhapq/
+ bikFHUcShHUEYsE3fmJjZPyzOSA+MtBLMBt0DkWvinMe6kYTE7tfU7eP7JmLMLV/LY
+ dBQ9COMOAnnRR6w9gO7Pus1WjuGztzx+OYUGxMug=
+From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
+Date: Sun, 10 Mar 2024 16:04:51 +0100
+Subject: [PATCH] docs/specs/pvpanic: document shutdown event
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1950503917-1710080843=:22453"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20240310-pvpanic-shutdown-spec-v1-1-b258e182ce55@t-8ch.de>
+X-B4-Tracking: v=1; b=H4sIABLM7WUC/x3MSwqFMAxA0a1IxgbaqOh7WxEHpUbNpJbGH4h7t
+ zg8g3tvUE7CCv/ihsSHqKwhw5YF+MWFmVHGbCBDtamswXhEF8SjLvs2rmdAjeyxZke2pYZ+3EF
+ uY+JJru/bD8/zAhQLYmRnAAAA
+To: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Arnd Bergmann <arnd@arndb.de>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1710083091; l=1536;
+ i=thomas@t-8ch.de; s=20221212; h=from:subject:message-id;
+ bh=zY+X/BwY+jBK5l1E95pXPBkev8OC8i1y85k3OHugqbg=;
+ b=Xg0vzViBtk9I/aZzFRtokvs+FxCyPuTHfOu9cZZ2MNsh7N/q+qag/RUtTa9Ip3oqffnVPHEr2
+ 8Ebb9wBNtygCKk4vvjOHtQY5ilAS4zuJysC812tKOzK6jLtzNN1o0D1
+X-Developer-Key: i=thomas@t-8ch.de; a=ed25519;
+ pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
+Received-SPF: pass client-ip=2a01:4f8:c010:41de::1;
+ envelope-from=thomas@t-8ch.de; helo=todd.t-8ch.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -65,32 +70,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Shutdown requests are normally hardware dependent.
+By extending pvpanic to also handle shutdown requests, guests can
+submit such requests with an easily implementable and cross-platform
+mechanism.
 
---3866299591-1950503917-1710080843=:22453
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
+---
+This patch was split out from my earlier pvpanic-shutdown series [0].
+The original series dropped the usage of the linux/pvpanic.h UAPI
+header.
+As we decided to keep the linux header [1] this first commit only adds
+the spec definition.
+Then a patch to Linux will add the new events to linux/pvpanic.h.
+After this the rest of the changes to QEMU will be submitted again.
 
-On Tue, 27 Feb 2024, Philippe Mathieu-Daudé wrote:
-> On 27/2/24 14:13, BALATON Zoltan wrote:
->> Other headers now use dash instead of underscore. Rename
->> ahci_internal.h accordingly for consistency.
->> 
->> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->> ---
->>   hw/ide/{ahci_internal.h => ahci-internal.h} | 0
->>   hw/ide/ahci.c                               | 2 +-
->>   hw/ide/ich.c                                | 2 +-
->>   3 files changed, 2 insertions(+), 2 deletions(-)
->>   rename hw/ide/{ahci_internal.h => ahci-internal.h} (100%)
->
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+[0] https://lore.kernel.org/qemu-devel/20240208-pvpanic-shutdown-v6-0-965580ac057b@t-8ch.de/
+[1] https://lore.kernel.org/lkml/20240213053953-mutt-send-email-mst@kernel.org/
+---
+ docs/specs/pvpanic.rst | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Was this also queued somewhere? I haven't seen it merged neither with the 
-trivial nor the misc-hw pull requests.
+diff --git a/docs/specs/pvpanic.rst b/docs/specs/pvpanic.rst
+index f894bc19555f..61a80480edb8 100644
+--- a/docs/specs/pvpanic.rst
++++ b/docs/specs/pvpanic.rst
+@@ -29,6 +29,8 @@ bit 1
+   a guest panic has happened and will be handled by the guest;
+   the host should record it or report it, but should not affect
+   the execution of the guest.
++bit 2
++  a regular guest shutdown has happened and should be processed by the host
+ 
+ PCI Interface
+ -------------
 
-Regards,
-BALATON Zoltan
---3866299591-1950503917-1710080843=:22453--
+---
+base-commit: f901bf11b3ddf852e591593b09b8aa7a177f9a0b
+change-id: 20240310-pvpanic-shutdown-spec-4ea2172529e8
+
+Best regards,
+-- 
+Thomas Weißschuh <thomas@t-8ch.de>
+
 
