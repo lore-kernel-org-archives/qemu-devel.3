@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FA15C54791
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 Mar 2024 09:51:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EEB0C54791
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 Mar 2024 10:18:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjFp9-0001ei-HG; Sun, 10 Mar 2024 05:50:31 -0400
+	id 1rjGFo-0005jN-7i; Sun, 10 Mar 2024 06:18:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rjFp5-0001eH-Un
- for qemu-devel@nongnu.org; Sun, 10 Mar 2024 05:50:28 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1rjGFk-0005iG-4h
+ for qemu-devel@nongnu.org; Sun, 10 Mar 2024 06:18:00 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rjFp3-0002pH-JO
- for qemu-devel@nongnu.org; Sun, 10 Mar 2024 05:50:27 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1dd5df90170so22797195ad.0
- for <qemu-devel@nongnu.org>; Sun, 10 Mar 2024 01:50:24 -0800 (PST)
+ id 1rjGFh-0006WF-FI
+ for qemu-devel@nongnu.org; Sun, 10 Mar 2024 06:17:59 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-6e64a9df6c3so2826065b3a.3
+ for <qemu-devel@nongnu.org>; Sun, 10 Mar 2024 03:17:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1710064223; x=1710669023; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=ventanamicro.com; s=google; t=1710065874; x=1710670674; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=CwzpLY81HI4d1/yIIF7dQdqkkcfAtKxiOLFJ5W/E8fw=;
- b=iRUDabig0BrEGLaxjanQ0UKSBJrJ2U3wFQx7Eno8MdB3/wQNhCCr3B7CxMGi6SfLKB
- LkiHW4V4VZpBDfMjx6+3DShsOjKXuTSNtaTrY/pL+azs8fs5PdvUrZGnsCnVI2M6kiYH
- mk+Ph9+RKBiS2tHQ7fKNeen3280zHZKVOpwkGW7ALq/Be0Al54jS92xFHjjsVJxbioAf
- ijgsoTHrODh9G297wXMoJgFc63yAjfCYle4rn5Uw5mdmMP07uzJprXoWkya0Ml/mk/Kt
- ehBdQtKOpYfKpK8+AZ4OE4ZL5K7j0O8smLa1fdmMEm5Fe5TVL64HoK81u7HyknWfzTGw
- rkiA==
+ bh=azdffTNh6udvmP3cv3bOT+TTLL69mPC4GDh7DQC14+A=;
+ b=iqDug+rah4G5gzt8HUEDpGdSxEaXFDLUKydYpDYt3cA8TJyU09Gpkt8p4j/bRFOtCZ
+ 6+Kw514Z/iAlGuAc41Z6H0deW9F2IPR/5sll7xGlYTaG3Iz8VM8+lz7z43w76/Unmgyx
+ BUXx519ZZX+ZwIQBF9Qt9hsiHJGZ7pBvtV3OMQqFuGNJA+t/yTYxaLtAIPRIeI0Totrm
+ rW4kHDz03gKxy3x+0SSjI9IA2nk5DItEMn7pUzEFw8hcumbQk6aPNDw+hvIHnU6djvaQ
+ T8Ec48TMbj0A+aqFQMsW8XiXxKfhnYKd03OPuNe+a3peJz9VMSnUeaYHgJ/Q2OMRIDDS
+ g5XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710064223; x=1710669023;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1710065874; x=1710670674;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CwzpLY81HI4d1/yIIF7dQdqkkcfAtKxiOLFJ5W/E8fw=;
- b=uV/y34PGJqAE3kYYaAszqChH15zKmWkPpfY/awJSvKUMqBhi5U6niEmFjEPncRbTo9
- PpQQOnxamx4e0VIe9q6Y9fBM8FujChFMC3o9G5r/YeOesjO8zqukvtBhrC1UEWI2YeXU
- kK0JzpXGwwrm0iyQWdDPTRxk/vxzlKeGnxh5OSbJzTfIGE+4KY/fvR7NWcRTEkRoJYTa
- ec/DNTSIQeD7xPDROTVkwhe2oM4UB9rI1op/VoDjUAT85GcjqgriW4FgvPnKMCqT5g6o
- HZLV3XJeym7KrcWq1FBgti8TKf/QkjXykwmYkWY1wliaSaAVAcG/eijJZ5KXzV0lnc8z
- mp8Q==
+ bh=azdffTNh6udvmP3cv3bOT+TTLL69mPC4GDh7DQC14+A=;
+ b=KXxZFHdzAoCjWwHkHEnh+zsFunHrSmutEmZkdodtM6utTxBpKJTE2RDAikwtO8oWSt
+ 5kmR9iDSJgX8FUd9er2nWpUe7npPeEJtOCfCwtlgcFgY+LOz/PKZNkGyNfctXm0JjhTb
+ zKKDZNgREqfCulNuIoN/OpVO1Jt10YK79btVYc0s8LTIcVOpfZThCBc8k6sBEPj/3ovG
+ /m5vdq39G8awYMDgrZ7vOA+UBTYu1OB2uOBIKElkuaDcYN9ESolJ16QtEzgCc3d9108z
+ pIJxpfH/rX90bSsARPS44z4rtAMFeC1J1ZLWH3gNqQH25HRk37wyuIVYuLMmgS7KKwhe
+ PR5w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXzLnbcjzb22rkF2mAjh3V6/A7HWvTGQ03ZMDtFdIvCKubg233WesCkNbThz/50MVIaDQN8tCjLgXa3gp0cJ3iLF/wj0K4=
-X-Gm-Message-State: AOJu0YxvRM4drttcWUwDUhCUo6gge59Cs38LFJd6jW/vYB/q7by7mQgu
- lwvIp3OicMGo1yXK2ov57K7Pe0YsU+4u78w/gNDbzZfWLIgJqL6KONFyU1hGpOI=
-X-Google-Smtp-Source: AGHT+IG4rzBicypNT9mCq5uZGIEz0Ja9E2MAdkHOrZuTjHtEt5FOZGs9g1IjFtQ5SaA25mb7+OCqhQ==
-X-Received: by 2002:a17:903:585:b0:1dd:54a6:6401 with SMTP id
- jv5-20020a170903058500b001dd54a66401mr3756069plb.17.1710064223370; 
- Sun, 10 Mar 2024 01:50:23 -0800 (PST)
+ AJvYcCXpuT6HDrWio/7mLLC8EOlq6P8DRDextrP0VRq/WaLpk0D7FsW3y5k2AFjom4gDLQDFN1H65sM+4SDozrmoQTytV38bDYw=
+X-Gm-Message-State: AOJu0Yzb8gqQwSTubhvBZHVANY8Bhtqb6PvG+4C1zpsF/AC03Rgva/D/
+ 5lest0aedWMZE4d+SoE26JFPo2tjK45zn+1ixO5trUnKfOnFcJRoy4j2qrx4oSw=
+X-Google-Smtp-Source: AGHT+IG5e6rELQTRHMxIqKsCJQlM0w+o+pmxQ8+0eWVF8j7Dz2PAVkpQggFvSV8w0ELOe4UBQ1Z7Rw==
+X-Received: by 2002:a05:6a00:98e:b0:6e5:fb97:ed05 with SMTP id
+ u14-20020a056a00098e00b006e5fb97ed05mr6384580pfg.25.1710065874417; 
+ Sun, 10 Mar 2024 03:17:54 -0700 (PDT)
 Received: from [192.168.68.110] ([177.94.15.159])
  by smtp.gmail.com with ESMTPSA id
- j8-20020a170903024800b001dcc2847655sm2436042plh.176.2024.03.10.01.50.20
+ o26-20020a056a001b5a00b006e66894df88sm2335300pfv.195.2024.03.10.03.17.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 10 Mar 2024 01:50:22 -0800 (PST)
-Message-ID: <fe4a7631-699c-41c2-96d4-dcc3133437e2@ventanamicro.com>
-Date: Sun, 10 Mar 2024 06:50:18 -0300
+ Sun, 10 Mar 2024 03:17:53 -0700 (PDT)
+Message-ID: <93e34ed6-9876-4a1c-897b-b0bc59831a01@ventanamicro.com>
+Date: Sun, 10 Mar 2024 07:17:50 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 04/10] target/riscv/vector_helper.c: update tail with
- vext_set_tail_elems_1s()
+Subject: Re: [PATCH v9 09/10] target/riscv: Clear vstart_qe_zero flag
+Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- philmd@linaro.org
+ philmd@linaro.org, Ivan Klokov <ivan.klokov@syntacore.com>
 References: <20240309204347.174251-1-dbarboza@ventanamicro.com>
- <20240309204347.174251-5-dbarboza@ventanamicro.com>
- <888ec29d-4c93-4a3a-8882-3db690ae0f40@linaro.org>
-Content-Language: en-US
+ <20240309204347.174251-10-dbarboza@ventanamicro.com>
+ <a3765207-28bb-44fd-b207-58327516a6cc@linaro.org>
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <888ec29d-4c93-4a3a-8882-3db690ae0f40@linaro.org>
+In-Reply-To: <a3765207-28bb-44fd-b207-58327516a6cc@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,36 +103,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 3/10/24 04:41, Richard Henderson wrote:
+On 3/10/24 04:47, Richard Henderson wrote:
 > On 3/9/24 10:43, Daniel Henrique Barboza wrote:
->> Change all code that updates tail elems to use vext_set_tail_elems_1s()
->> instead of vext_set_elems_1s().
+>> From: Ivan Klokov <ivan.klokov@syntacore.com>
 >>
->> Setting 'env->vstart=0' needs to be the very last thing a helper does
->> because env->vstart is being checked by vext_set_tail_elems_1s().
+>> The vstart_qe_zero flag is set at the beginning of the translation
 > 
-> I did wonder if it would be worth doing the vstart = 0 in vext_set_tail_elems_1s, allowing that to be the very last thing in each helper, and could be tail called.
+> Here and subject, s/qe/ne/.
 
+Hmmmm  ... the flag name is correct - vstart_qe_zero. But the patch isn't
+clearing it at the end of insns, the patch is setting it.
 
-Some insns don't update tail, e.g. vext_ldst_whole(), and we would need to
-clear vstart explicitly in them regardless. Might as well deal with clearing
-vstart in every helper to make them consistent.
+I'll change the subject to "enable vstart_eq_zero in the end of insns".
+
+And in this first quote I'll change 'set' to 'updated':
+
+"The vstart_qe_zero flag is updated at the beginning of the translation (...)"
+
+Because 'flag is set' can give the impression that we're enabling it. 'flag is
+updated' is more in line with what happens: vstart_eq_zero will track the result
+of vstart = 0.
 
 
 Thanks,
 
+
 Daniel
 
-> 
->>
->> A side effect of this change is that a lot of 'vta' local variables got
->> unused. The reason is that 'vta' was being fetched to be used with
->> vext_set_elems_1s() but vext_set_tail_elems_1s() doesn't use it - 'vta' is
->> retrieve inside the helper using 'desc'.
->>
->> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+
+
+
 > 
 > 
 > r~
