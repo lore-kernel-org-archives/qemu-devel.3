@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C7FAC54E60
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 Mar 2024 07:38:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DB3BC54791
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 Mar 2024 07:42:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjDlS-0006CA-RJ; Sun, 10 Mar 2024 03:38:34 -0400
+	id 1rjDoe-0007k5-6P; Sun, 10 Mar 2024 03:41:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rjDlP-00067V-LQ
- for qemu-devel@nongnu.org; Sun, 10 Mar 2024 03:38:32 -0400
-Received: from mail-oa1-x2e.google.com ([2001:4860:4864:20::2e])
+ id 1rjDoa-0007j6-R3
+ for qemu-devel@nongnu.org; Sun, 10 Mar 2024 03:41:48 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rjDlO-0007jk-AN
- for qemu-devel@nongnu.org; Sun, 10 Mar 2024 03:38:31 -0400
-Received: by mail-oa1-x2e.google.com with SMTP id
- 586e51a60fabf-221a4f9557dso1454937fac.2
- for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 23:38:28 -0800 (PST)
+ id 1rjDoZ-0008Pe-BW
+ for qemu-devel@nongnu.org; Sun, 10 Mar 2024 03:41:48 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1dbd32cff0bso25292425ad.0
+ for <qemu-devel@nongnu.org>; Sat, 09 Mar 2024 23:41:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710056307; x=1710661107; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710056505; x=1710661305; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=z6TCgbNYQpuO+Dsqw18a9VTRlG0kaLjLAMqEEdqRkfE=;
- b=aKZ1kzwW3wubLTIpqe2Lp5fN74YIfsU0w/PxVnnFI2vkoc6YiVmkhG99wAQM6AysHA
- QK+qUq4zyVXCAKs2daaSoVJ/GqbEVkAoEU401I8QKIVZa/9SvxNSCJ42lIGEZhUDT2sG
- M/qbHw5gUM1ZXrqjuGYzDI+VsmZYyteUaFIpzqUZMze7u6KHTzOWQNWglt8fY8njYYVP
- c4oorhoZ2VJEV+FU51PynV4TostAzo5lU7rXSVUPTGfgjazEzSx7BI4v6MY/Y5fM5CG/
- EfKwV6jsQFUAmfBuaGhfn0gHyAL8MHTTf3y9NRR0tBdon0mi5pxumd7A0v47zIoMWK/e
- GCqw==
+ bh=yT8n7hViftibxzRJ/aOMANn3BMVrVHS7W7Ne2nLAaO0=;
+ b=HkgLSmJFtuWH5TSBDNcmjnH9t206vIgAB+k6w7AxImx3Ha4rz85DhbSWWoN+IuBrbE
+ Be9QBXkbCtlb6OZ60zvRN01hXYstsqEWRY0kp/akoLcSz2rHNfyHRHeXZ9qT1wkI00eY
+ NiMmRbXk+/2qMcKuneHVgVDHJGuZFbDS+C/2mOC8m7L0bKP13iEIkq/QmcW+4hy5zQF6
+ PC5KNOEXhAijymrV9Txf0HqG6Z1G1OZumM5xac1q2QeqvZGkT45GVcDp5ErFq5SN0TVG
+ Kjbj2Kh513YpoQK/nJSrhhKSXxwr79Di4yppjirSzKBVHvYVnJxwsFX2vyrhcBRle1m7
+ nKng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710056307; x=1710661107;
+ d=1e100.net; s=20230601; t=1710056505; x=1710661305;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=z6TCgbNYQpuO+Dsqw18a9VTRlG0kaLjLAMqEEdqRkfE=;
- b=wpuCC2x9ilR8ottVojXVUeXf5TLnA7fjqd3DpUe5Td0w+X9XovwNXrOIjUpJ+rYJTA
- 7eOniF+uBkhHyevA40Gw1iBeM+jJPq91OEOvDfBYsdv4dmkbmD0RcRg1KQY5aqcyXKHt
- ZCdRTWLCDf04OAz4hkRCFFv8bqUxyG8U82U3l+TCPI6HK3BlzmStJjT+N5SSqPPANP4u
- 2msZs2Ui+KDESKav2jl2FewubyBSQ3poDXq3DcMGt/Fvf4zWLncul3n0BHw3jo2Rwnfz
- 6GK1O9yEjEJE5ER6GDsHo6HCnZxJ9gD1Y0ZOKlW+WF91EXWFKpVdymbPVqHjtsETpyV/
- xwTg==
+ bh=yT8n7hViftibxzRJ/aOMANn3BMVrVHS7W7Ne2nLAaO0=;
+ b=wP7dEjSkCq4zrXpb7z8IXLNanaXmTDcOgcVgsdN8mIDaMQ1f6GgUOEJU8dGjJF94qd
+ t68ItGUKfTK4Lm00/f9M+ksfyOZc6zTHM4VM6z+kw1MR4c2UQE2/6cW9MIcxMBHbTcpF
+ 99AlCcHqgN4bN39akgDERfnENn9rpy/6SEUgouPf+jGkcs85hAFqSIPExrxaqCrwWbSF
+ ac6FUJYR/pYD45fPwK9SvMt6hXAzcqXmDEl94atO13R7rDIvid7yF7Wu36fthSk6UDLX
+ vaLNN8pFbhwlw9LtNTvS7llMpLfwEsp4G0I0quG6Nymd4eNMX0igCN9o5SvIfUz8rVvO
+ bPLw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXxObmNGddBomus5QbnvhHOgHWPEye08Di8vAp+s/hx5gGI6rlSJDZXb9/geUkvifMbCANa1KEWS8Tn6jvquopwPL1xdWk=
-X-Gm-Message-State: AOJu0YwTSLQf0Pq83NIdGoLwt6CNdoJHH0B/geiIzYH7/C965UMj957y
- JBslGs5Dk6Qag38quP+bXXg/G0AYnmlXDU1BU8fcAiYMWVBYEwaBM6mXTmH5+DY=
-X-Google-Smtp-Source: AGHT+IGWiMp32gWz+WN7OSLa9lZqKkN7qDiA5xIlMOkDts+8ns9caRDiVO9oTT9lR2fMc/7KUzBShw==
-X-Received: by 2002:a05:6870:5250:b0:221:45a1:b72a with SMTP id
- o16-20020a056870525000b0022145a1b72amr3786573oai.35.1710056307417; 
- Sat, 09 Mar 2024 23:38:27 -0800 (PST)
+ AJvYcCUky5eNJMb+FxnTDodydAF5r1I2QF6EOAyhvPmjMu9hiWJVw3hhEqrf1K+Sp3NjaR5RCbYEHjpd8OW1+XYEvudYy3WPPvE=
+X-Gm-Message-State: AOJu0YzpbjETyWEtjZm5Wj1TeYqz2JkZeoe+Pb06VEvQ+d2sQr1PJfOm
+ zDXmlBEdML3HaU6eP+pDYJ0XrC/Vaj4jB0GTH3l7mpgTkAZ7HVfHdScsqYCmpDMxa/Eg3QpIRCh
+ G
+X-Google-Smtp-Source: AGHT+IHVHNcZZQpQ8hRl0OBGeRarSd6qs5M1RI7Csj//88U81bb/VoZF3p/ExIDyl7YJ3nOOypgrBw==
+X-Received: by 2002:a17:902:b596:b0:1dc:1379:2152 with SMTP id
+ a22-20020a170902b59600b001dc13792152mr2280156pls.56.1710056505416; 
+ Sat, 09 Mar 2024 23:41:45 -0800 (PST)
 Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
  [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- e30-20020a63745e000000b005dc832ed816sm2211455pgn.59.2024.03.09.23.38.25
+ y15-20020a17090264cf00b001d9b537ad0bsm2316216pli.275.2024.03.09.23.41.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 09 Mar 2024 23:38:26 -0800 (PST)
-Message-ID: <88e5ceca-1036-4579-99f4-4fcea748d8a4@linaro.org>
-Date: Sat, 9 Mar 2024 21:38:24 -1000
+ Sat, 09 Mar 2024 23:41:45 -0800 (PST)
+Message-ID: <888ec29d-4c93-4a3a-8882-3db690ae0f40@linaro.org>
+Date: Sat, 9 Mar 2024 21:41:41 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 03/10] target/riscv/vector_helper.c: do vstart=0 after
- updating tail
+Subject: Re: [PATCH v9 04/10] target/riscv/vector_helper.c: update tail with
+ vext_set_tail_elems_1s()
 Content-Language: en-US
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
  philmd@linaro.org
 References: <20240309204347.174251-1-dbarboza@ventanamicro.com>
- <20240309204347.174251-4-dbarboza@ventanamicro.com>
+ <20240309204347.174251-5-dbarboza@ventanamicro.com>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240309204347.174251-4-dbarboza@ventanamicro.com>
+In-Reply-To: <20240309204347.174251-5-dbarboza@ventanamicro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2e;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,21 +103,25 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/9/24 10:43, Daniel Henrique Barboza wrote:
-> vext_vv_rm_1() and vext_vv_rm_2() are setting vstart = 0 before their
-> respective callers (vext_vv_rm_2 and  vext_vx_rm_2) update the tail
-> elements.
+> Change all code that updates tail elems to use vext_set_tail_elems_1s()
+> instead of vext_set_elems_1s().
 > 
-> This is benign now, but we'll convert the tail updates to use
-> vext_set_tail_elems_1s(), and this function is sensitive to vstart
-> changes. Do vstart = 0 after vext_set_elems_1s() now to make the
-> conversion easier.
+> Setting 'env->vstart=0' needs to be the very last thing a helper does
+> because env->vstart is being checked by vext_set_tail_elems_1s().
+
+I did wonder if it would be worth doing the vstart = 0 in vext_set_tail_elems_1s, allowing 
+that to be the very last thing in each helper, and could be tail called.
+
 > 
-> Signed-off-by: Daniel Henrique Barboza<dbarboza@ventanamicro.com>
-> ---
->   target/riscv/vector_helper.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+> A side effect of this change is that a lot of 'vta' local variables got
+> unused. The reason is that 'vta' was being fetched to be used with
+> vext_set_elems_1s() but vext_set_tail_elems_1s() doesn't use it - 'vta' is
+> retrieve inside the helper using 'desc'.
+> 
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 r~
 
