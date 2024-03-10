@@ -4,93 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 296E5C54791
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 Mar 2024 11:13:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6000C54E58
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 Mar 2024 11:54:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjH6z-00013o-6B; Sun, 10 Mar 2024 07:13:01 -0400
+	id 1rjHkD-0007hW-M9; Sun, 10 Mar 2024 07:53:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1rjH6s-00011C-4p; Sun, 10 Mar 2024 07:12:54 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1rjH6m-0006d1-Qm; Sun, 10 Mar 2024 07:12:53 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
- by mailout.nyi.internal (Postfix) with ESMTP id C82075C003B;
- Sun, 10 Mar 2024 07:12:42 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute1.internal (MEProxy); Sun, 10 Mar 2024 07:12:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm3; t=1710069162; x=
- 1710155562; bh=rmhVH6ZbmNgHsyIvlpQKufN3edNaF6XuDxNGrDyKWQI=; b=I
- yWtJ139nrIwGf+xWArsOEXdx07rteXOaQDJvzEpJHXXgROb3lgWwvNKxB2vTg0kt
- 0SmynlEdf3U921Xt2mXoFt7JlHz2bKxlRIKjwjsRLnf2RWgh5zRHrYDug499C+2i
- FxYT32vH343yea6hL8W2eU9yNpn/lkjSopcXDLt3T60XifyLwDwMR46us4X2AXbB
- gzj0Gbdoi5Hv948ux7yK43fLbpJ+3DoiQqmjeT3Gt74zz2B64/u8Ii/XXfim652r
- DKu8Ta/RgcdOhV14/QuASc45ZUWTmpVKoINGgz9YcAH++mj3H0lH7bmX6crY0SRD
- EnpmpRiZ0GPjXsA3G4TPw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm1; t=1710069162; x=1710155562; bh=rmhVH6ZbmNgHsyIvlpQKufN3edNa
- F6XuDxNGrDyKWQI=; b=ASorf88x72LEnMN3ahObwCNV7Dt2CWNGEnpH4XTS/5tU
- zu6G8BAWFjiv7853Ultl/xAUEs7Yrxsn5t9cLXB1SIS4ySnfBXBEx/dx3CSpGYS0
- l7SdVcSo5GFgfT5Gj+j79heNn3fcm+EpQvGk6wTEqADNrhhWNtDDHKH9/w3Z8cso
- AqhFVc1MVGFnuwCZ8fmBYlMNoBV5pMAIzIXwAbuto36G9B9GFVoHLBbAnzQl5jV1
- f0OYprMyAEH2BRYdYumoHirCIwL+LAZhdN/eIp9fs/UUkB91mued9BF30QEPkB81
- cvhdGui/hx7T7lIBYdRQmALhCSxAPerANWFaLPytYw==
-X-ME-Sender: <xms:qpXtZWMSCiT__TryBiYWximyCT4TaPjrwtgQCvgIXHmCfCTB9u8Aww>
- <xme:qpXtZU_iCHr6-VU5H4FrD-i5kgTD2-074T8aAt8qoJbRWX9TBCJVJgw0bw2BtyrUE
- NBjSzl9yuxL-KeFEmw>
-X-ME-Received: <xmr:qpXtZdStTwtowonwnw1y3O8CDCblw7b5hzATmW3Hm6t2aiuEqzOwm1yTGg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrieelgddvhecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefmlhgruhhs
- ucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrughkqeenucggtffrrghtth
- gvrhhnpeejgfejfeffvdeuhfeifefhgffgueelhedukeevjeevtdduudegieegteffffej
- veenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehith
- hssehirhhrvghlvghvrghnthdrughk
-X-ME-Proxy: <xmx:qpXtZWvnbMMS30kexSB95HCGzWqIks5xcZ8qqSaUJP94f3MCLnqMkA>
- <xmx:qpXtZeduMGpkv4dw_f9WjN5WTiFFrngvwjQkM295-7fFhfP0Ip3lkQ>
- <xmx:qpXtZa1eHcpQkW6RlvQr34DeDpaT1uuYE5Q3crTSKubIgmGOk9Qa8A>
- <xmx:qpXtZe64BpKjurea-6y2AmvP1kSFSvFyDn92xTWmboxuItiOftHxiQ>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 10 Mar 2024 07:12:41 -0400 (EDT)
-Date: Sun, 10 Mar 2024 12:12:35 +0100
-From: Klaus Jensen <its@irrelevant.dk>
-To: Keith Busch <kbusch@kernel.org>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>
-Cc: Julien Grall <julien@xen.org>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org, Klaus Jensen <k.jensen@samsung.com>
-Subject: Re: [PATCH 0/2] hw/nvme: fix hibernation-based migration
-Message-ID: <Ze2Vo_RhXCjtLwkp@cormorant.local>
-References: <20240310-fix-msix-exclusive-bar-v1-0-4483205ae22e@samsung.com>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rjHk5-0007fc-Qz
+ for qemu-devel@nongnu.org; Sun, 10 Mar 2024 07:53:26 -0400
+Received: from mail-oi1-x234.google.com ([2607:f8b0:4864:20::234])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rjHk3-0003zp-VX
+ for qemu-devel@nongnu.org; Sun, 10 Mar 2024 07:53:25 -0400
+Received: by mail-oi1-x234.google.com with SMTP id
+ 5614622812f47-3c1a2f7e1d2so1518558b6e.1
+ for <qemu-devel@nongnu.org>; Sun, 10 Mar 2024 04:53:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1710071602; x=1710676402; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=PJK7zmRK0isVONsw2EtFl149ztLVuN2NCZzyZby+04I=;
+ b=HVxrOSzvFWjf0efj/7txLNRtXESAUsusxkUa0NWxhT3ZRimp9v8rUAicLvYwDnmcag
+ Nw+IrvnmTg83Gm16vRlhsTlWRcV9syGR0Ic6YmXiKwPsMINmiGF9k5yw35TPhXnwboJw
+ 1/dBynX17Ys6OuLIgH9tBu17FzF5Y7utfiZbSDwC0fWgiqSEk6nOuyeuTqGnISixsDXG
+ XDN6zsPuKdNRxdEOhjau/2jDbAS6Q6rBeXy1D5WCWqDsoPFzIzerArIcpyJHd4SMPsZq
+ riw8FXEUEm0SaHJ2m2w8fA9z27aaLe1Zx/JEMjHgkMr6FDowx52FgKDNR8HrApWW9VYd
+ wARQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710071602; x=1710676402;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=PJK7zmRK0isVONsw2EtFl149ztLVuN2NCZzyZby+04I=;
+ b=h19nUwCK5GwiAM0lhlJJA0y92+rNfcf47BpdJjsAexorsbeh72ZWOdJ9bI3hmn+n0Y
+ /Kf4fjXn/mFfosUqtC/LCJLWNpNeAt/NtxJBTljSrl32Fw1I6mPdM7f5+5rwnW4uS4Ru
+ Ug5IGlSR32a84MiIUUANZlQbeK7LkkOFVRaH3dI/0pLJQv2kUAh5tQi1HErMolw7hAjd
+ iyXzAiIfee6TDhjAowVpMLK3IGTtJHYqCksglAkMH4xTq2SUaFQdZygLw2ofLpp4kSso
+ +Qy8grI4zzn83G0epHn5qGO2lLrA2ULFjrTjXFlGD+tHWuB9EEZaDbBjnE/RSXcvD2Jq
+ ubTQ==
+X-Gm-Message-State: AOJu0YxkfpoePHJlHh6IMDecF2Am4P/PRHxv9FKX5g1SmKv+pHun/sYZ
+ i4GmVg+Xd9N7+t9GP6jfDsdzFSR78dREkT3d+ZySSALPLxxdNjyG+SLDe2V/x4vgaIyuUFsOhtG
+ +
+X-Google-Smtp-Source: AGHT+IFY5xa65U3IjrZKT6Lofh+OR8YsjQ9SskIwjFL4KQm8uBa2zIvJB/Z83UYLzuv+cDHKuX1lBA==
+X-Received: by 2002:a05:6808:96:b0:3c2:1f28:2482 with SMTP id
+ s22-20020a056808009600b003c21f282482mr4196828oic.29.1710071601840; 
+ Sun, 10 Mar 2024 04:53:21 -0700 (PDT)
+Received: from grind.. ([177.94.15.159]) by smtp.gmail.com with ESMTPSA id
+ g22-20020aa78196000000b006e647059cccsm2449253pfi.33.2024.03.10.04.53.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 10 Mar 2024 04:53:21 -0700 (PDT)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ richard.henderson@linaro.org, philmd@linaro.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH v10 00/10] riscv: set vstart_eq_zero on mark_vs_dirty
+Date: Sun, 10 Mar 2024 08:53:04 -0300
+Message-ID: <20240310115315.187283-1-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.43.2
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="X5f41pQnLb1Pct7V"
-Content-Disposition: inline
-In-Reply-To: <20240310-fix-msix-exclusive-bar-v1-0-4483205ae22e@samsung.com>
-Received-SPF: pass client-ip=66.111.4.25; envelope-from=its@irrelevant.dk;
- helo=out1-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::234;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-oi1-x234.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,59 +94,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi,
 
---X5f41pQnLb1Pct7V
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This version has changes in the wording on patch 9 subject and commit
+msg. The previous subject, "target/riscv: Clear vstart_qe_zero flag",
+isn't accurate. We're not clearing (i.e. setting to false/zero) the
+flag, we're setting the flag to 'true' in the end of each insns.
 
-On Mar 10 12:07, Klaus Jensen wrote:
-> Julien Grall, in #2184, reported that hibernation-based migration with
-> hw/nvme is broken when suspending on a pre 6.0 QEMU and resuming on a
-> more recent one. This is because the BAR layout was changed in 6.0.
->=20
-> Fix this by adding a machine compatibility parameter that restores the
-> old behavior.
->=20
-> Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-> ---
-> Klaus Jensen (2):
->       hw/nvme: generalize the mbar size helper
->       hw/nvme: add machine compatibility parameter to enable msix exclusi=
-ve bar
->=20
->  hw/core/machine.c |  1 +
->  hw/nvme/ctrl.c    | 73 ++++++++++++++++++++++++++++++++++++-------------=
-------
->  hw/nvme/nvme.h    |  1 +
->  3 files changed, 50 insertions(+), 25 deletions(-)
-> ---
-> base-commit: f901bf11b3ddf852e591593b09b8aa7a177f9a0b
-> change-id: 20240310-fix-msix-exclusive-bar-d65564414a2c
->=20
-> Best regards,
-> --=20
-> Klaus Jensen <k.jensen@samsung.com>
->=20
+The first paragraph of the commit msg was changed a bit for more clarity
+too.
 
-Whoops, forgot Fixes: and Resolves: tags.
+No other changes made.
 
-Will add that on the pull.
+Series based on master since RISC-V latest PR was merged.
 
---X5f41pQnLb1Pct7V
-Content-Type: application/pgp-signature; name="signature.asc"
+All patches acked/reviewed.
 
------BEGIN PGP SIGNATURE-----
+Changes from v9:
+- patch 9:
+  - changed subject to
+    "enable 'vstart_qe_zero' in the end of insns"
+  - changed first line of the commit msg from:
+    "The vstart_qe_zero flag is set at the beginning of the translation"
+     to:
+    "The vstart_qe_zero flag is updated at the beginning of the translation"
+- v9 link: https://lore.kernel.org/qemu-riscv/20240309204347.174251-1-dbarboza@ventanamicro.com/
 
-iQEzBAEBCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmXtlaMACgkQTeGvMW1P
-Dencggf/W9qwf0XUiscVRlRCxFKTZ5ISgtEe/uvSzU+7n3heUy5Cr6rxkr65qGbv
-PugEk95/0X5lz+INpXFkpAOIPSDukp7yFe5K6Mx3/qNcXO4lnbUqt9ci4EKrD2ON
-jh0Msuwa9jcs3GETn0Ru83wIzDj2ncJNDdaNN3rWBLwezKSpnUFO/Eeg+HaJAXzq
-Bkn8X3YrNv8pwJr9JjOIsB4LDT2zi7ePoQsV4pSmmPJgHrHtDzgjSfE8Q21IDMO+
-05ZFuIoQgC2Ro6GSG/q2bkweUDLTE75kULOYY5utLYDcuD8zBTrL7we6RKmHzGb2
-4PrVL3EqMngOObToKi/2YwaIw/9jtQ==
-=N+dP
------END PGP SIGNATURE-----
 
---X5f41pQnLb1Pct7V--
+Daniel Henrique Barboza (9):
+  target/riscv/vector_helper.c: set vstart = 0 in GEN_VEXT_VSLIDEUP_VX()
+  target/riscv: handle vstart >= vl in vext_set_tail_elems_1s()
+  target/riscv/vector_helper.c: do vstart=0 after updating tail
+  target/riscv/vector_helper.c: update tail with
+    vext_set_tail_elems_1s()
+  target/riscv: use vext_set_tail_elems_1s() in vcrypto insns
+  trans_rvv.c.inc: set vstart = 0 in int scalar move insns
+  target/riscv: remove 'over' brconds from vector trans
+  trans_rvv.c.inc: remove redundant mark_vs_dirty() calls
+  target/riscv/vector_helper.c: optimize loops in ldst helpers
+
+Ivan Klokov (1):
+  target/riscv: enable 'vstart_qe_zero' in the end of insns
+
+ target/riscv/insn_trans/trans_rvbf16.c.inc |  18 +-
+ target/riscv/insn_trans/trans_rvv.c.inc    | 198 +++++----------------
+ target/riscv/insn_trans/trans_rvvk.c.inc   |  30 +---
+ target/riscv/translate.c                   |   6 +
+ target/riscv/vcrypto_helper.c              |  63 +++----
+ target/riscv/vector_helper.c               | 192 +++++++++-----------
+ target/riscv/vector_internals.c            |  29 +++
+ target/riscv/vector_internals.h            |   4 +
+ 8 files changed, 207 insertions(+), 333 deletions(-)
+
+-- 
+2.43.2
+
 
