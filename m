@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D71A8C54E58
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 Mar 2024 11:55:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CDB2C54E58
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 Mar 2024 11:55:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjHka-0007pT-DO; Sun, 10 Mar 2024 07:53:56 -0400
+	id 1rjHkf-0007tm-5b; Sun, 10 Mar 2024 07:54:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rjHkO-0007lo-F6
- for qemu-devel@nongnu.org; Sun, 10 Mar 2024 07:53:48 -0400
-Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
+ id 1rjHkc-0007rf-Fo
+ for qemu-devel@nongnu.org; Sun, 10 Mar 2024 07:53:58 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rjHkM-00043O-4k
- for qemu-devel@nongnu.org; Sun, 10 Mar 2024 07:53:44 -0400
-Received: by mail-oi1-x22f.google.com with SMTP id
- 5614622812f47-3c19aaedfdaso1565396b6e.2
- for <qemu-devel@nongnu.org>; Sun, 10 Mar 2024 04:53:40 -0700 (PDT)
+ id 1rjHkZ-00045S-N9
+ for qemu-devel@nongnu.org; Sun, 10 Mar 2024 07:53:58 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-6e5dddd3b95so2519652b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 10 Mar 2024 04:53:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1710071619; x=1710676419; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1710071633; x=1710676433; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UkZttwzbGfcxGdm/nXSRZp+cW9ikJaFZ7Cn5052rX+I=;
- b=DcOpGhPZgVJgSfjnvfZgLL5QWi5P/efWcQQYTVYfPRjed9pfkxiqvXfDP4oCdWBQrO
- ZxZLlRFPR4+KXDb0ZCqiDFeZzgYX6tIG+36/reGWVfFtoDUdcUXD+8+xy9u9EjeeKZRO
- xkJtAwlfkfig5nBjJQQMRdH9R5tOf6WdOFBYTLCuTVxywYuPcLy6NhAB5/s9ipAd+WAk
- kYT//2HcE9TjWahgMUhC6fpm9XkpC5ZaNzoX0NIk9ibIr+RuQErzwvcMy/OZF5gZzwXg
- SAZ0G8ylcbKocezTh0CwwD94Y5giqz7ttxUkmxeVDUenGls4j92VUJAuJcOhwwR9j00I
- rvEg==
+ bh=clxLarVfm96FQhFWe3+r/40YYNIvZDUOLCoWs9HtyxY=;
+ b=aws87+E+q9iCAZ6Ij0AtYNWUaPWUPU2EsTZRPwyHeVAfs0IpV9R7yEjxCOUhEG8o0E
+ 5dX3V4IOBmtbcSSr1yWv+cRQbLkfDZVnyD+q5lY+TMIFinM/1vp5Vql1c4O8sjZF6XIS
+ QQNydc0P5CSKgljw33b709qi2CYmVdqYgphEOU4PmH0VgBFvQEhOsYJ0qpZcEZ9eqYqz
+ CjicSK0vooXNMGv6lmOc3TQf0wnvQylUpUqWwg0MuVKOyHsL4Rav3PA7VMLyeIuPRMF4
+ QPptlvEX44owEpKat7ZIb1vHbHh63B8SyeQlmnibei/PsAq6/wRdSucCfJJeVHIE2OqJ
+ Djwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710071619; x=1710676419;
+ d=1e100.net; s=20230601; t=1710071633; x=1710676433;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UkZttwzbGfcxGdm/nXSRZp+cW9ikJaFZ7Cn5052rX+I=;
- b=NyIu4WzvMIBscuJ80cycFJG5prV60zl7sCim6Lq4el8sihktI3Q/lWT0XbCaQ/wOD0
- hX83nNsPCmG7o/jaP7doga5I97rdcxT2Ku7nS+1PZnhvLQaCzxffcmCANNzDqnij9INv
- 9ENH6PBhoX1mIwnPVVTi5N15/DdURIPIAPlL/ALu+ojrkUfB5EYwLJqdO45RBRqgQsWl
- HP6zHqQNsiZl1z44JWqtMXe8dC2QpzhIDbgJMcfICeNoiZPc3dQRSFW+WZAHuRYYJRvQ
- JUrQ5vCrDLrY/sd/chsKSOG1SeNVoP7FpviliA0YNskQNXeDvOprbKeSfC5U3g51oIfs
- YJaw==
-X-Gm-Message-State: AOJu0YwNt2IIpdQ99welByWlHc67JUNXS8q/QvanHqAVEuzcHA62Rg2v
- D7a7sh68i1GyllcOs8PSYCTBY+dXWzA+hxRAJb69Ucb8Il9r2A4/2DPIjFWdNESLmK75zkL0zHW
- m
-X-Google-Smtp-Source: AGHT+IGbs6X6DctJfeBcfmk2lKwdPd9GitOZkFmrkHDDSAuyPi7KdwQ+If5A1ILO98uj6oi/wOKi0g==
-X-Received: by 2002:a05:6808:2e89:b0:3c2:3b0e:b830 with SMTP id
- gt9-20020a0568082e8900b003c23b0eb830mr6492658oib.25.1710071619273; 
- Sun, 10 Mar 2024 04:53:39 -0700 (PDT)
+ bh=clxLarVfm96FQhFWe3+r/40YYNIvZDUOLCoWs9HtyxY=;
+ b=OnM4sBlt7ioWbtDC4hHFuiOIQk0n4kj5AwwQcCkBXMmagtbkkMj/bot/8ZCSSk3i9z
+ Xuk4R1H7RhrbLcEx0wbHCj2zESVwHaOGG34/Z5pRwiApv3baQXev0sCBK/oy3yDBon5p
+ gezpHabu5qrGWpp/gxFhR5S9N7qGvRvQ+UTSorrodndbD38xtkIMywSEdoyIYH5shyk4
+ m4czp3nIDu1urcX81S1EAl4RlvbwG+TeuM7ScFwj3wqJMaBoISoc+YJTeUgRwBLw7MhQ
+ edSA5gMo/guTnajBXebLag79xh/FXo7U0lUKwQR9OqCWNP2P1rvYsWGjdWV99xIrFEyr
+ UaYQ==
+X-Gm-Message-State: AOJu0YxXZFLTwKcJSNXmF+Y0FF/BTa+f6BP4mxOk/0iNTuTnaZOkw3F3
+ 4lphSmZKjTAkB75QVE/zUkafca+FSBhnHhXZIq3ANBfLV9+jSdBRinxp6XtJQzBzj9/kJYNlf8f
+ v
+X-Google-Smtp-Source: AGHT+IFScVmCozFgPJyT4vfSbawFNnfGwQ1oRPu/nIrqbPPwzXHcBXhjbv6iaA89tuerddQwT+wPvQ==
+X-Received: by 2002:a05:6a00:6c9c:b0:6e6:5291:1779 with SMTP id
+ jc28-20020a056a006c9c00b006e652911779mr6991406pfb.6.1710071633262; 
+ Sun, 10 Mar 2024 04:53:53 -0700 (PDT)
 Received: from grind.. ([177.94.15.159]) by smtp.gmail.com with ESMTPSA id
- g22-20020aa78196000000b006e647059cccsm2449253pfi.33.2024.03.10.04.53.36
+ g22-20020aa78196000000b006e647059cccsm2449253pfi.33.2024.03.10.04.53.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 10 Mar 2024 04:53:38 -0700 (PDT)
+ Sun, 10 Mar 2024 04:53:52 -0700 (PDT)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
  richard.henderson@linaro.org, philmd@linaro.org,
+ Ivan Klokov <ivan.klokov@syntacore.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v10 05/10] target/riscv: use vext_set_tail_elems_1s() in
- vcrypto insns
-Date: Sun, 10 Mar 2024 08:53:09 -0300
-Message-ID: <20240310115315.187283-6-dbarboza@ventanamicro.com>
+Subject: [PATCH v10 09/10] target/riscv: enable 'vstart_qe_zero' in the end of
+ insns
+Date: Sun, 10 Mar 2024 08:53:13 -0300
+Message-ID: <20240310115315.187283-10-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240310115315.187283-1-dbarboza@ventanamicro.com>
 References: <20240310115315.187283-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-oi1-x22f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,397 +98,527 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vcrypto insns should also use the same helper the regular vector insns
-uses to update the tail elements.
+From: Ivan Klokov <ivan.klokov@syntacore.com>
 
-Move vext_set_tail_elems_1s() to vector_internals.c and make it public.
-Use it in vcrypto_helper.c to set tail elements instead of
-vext_set_elems_1s(). Helpers must set env->vstart = 0 after setting the
-tail.
+The vstart_qe_zero flag is updated at the beginning of the translation
+phase from the env->vstart variable. During the execution phase all
+functions will set env->vstart = 0 after a successful execution, but the
+vstart_eq_zero flag remains the same as at the start of the block. This
+will wrongly cause SIGILLs in translations that requires env->vstart = 0
+and might be reading vstart_eq_zero = false.
 
+This patch adds a new finalize_rvv_inst() helper that is called at the
+end of each vector instruction that will both update vstart_eq_zero and
+do a mark_vs_dirty().
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1976
+Signed-off-by: Ivan Klokov <ivan.klokov@syntacore.com>
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/vcrypto_helper.c   | 63 ++++++++++++---------------------
- target/riscv/vector_helper.c    | 30 ----------------
- target/riscv/vector_internals.c | 29 +++++++++++++++
- target/riscv/vector_internals.h |  4 +++
- 4 files changed, 56 insertions(+), 70 deletions(-)
+ target/riscv/insn_trans/trans_rvbf16.c.inc |  6 +-
+ target/riscv/insn_trans/trans_rvv.c.inc    | 83 ++++++++++++----------
+ target/riscv/insn_trans/trans_rvvk.c.inc   | 12 ++--
+ target/riscv/translate.c                   |  6 ++
+ 4 files changed, 59 insertions(+), 48 deletions(-)
 
-diff --git a/target/riscv/vcrypto_helper.c b/target/riscv/vcrypto_helper.c
-index e2d719b13b..66d449c274 100644
---- a/target/riscv/vcrypto_helper.c
-+++ b/target/riscv/vcrypto_helper.c
-@@ -218,9 +218,7 @@ static inline void xor_round_key(AESState *round_state, AESState *round_key)
-     void HELPER(NAME)(void *vd, void *vs2, CPURISCVState *env,            \
-                       uint32_t desc)                                      \
-     {                                                                     \
--        uint32_t vl = env->vl;                                            \
-         uint32_t total_elems = vext_get_total_elems(env, desc, 4);        \
--        uint32_t vta = vext_vta(desc);                                    \
-                                                                           \
-         for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {        \
-             AESState round_key;                                           \
-@@ -233,18 +231,16 @@ static inline void xor_round_key(AESState *round_state, AESState *round_key)
-             *((uint64_t *)vd + H8(i * 2 + 0)) = round_state.d[0];         \
-             *((uint64_t *)vd + H8(i * 2 + 1)) = round_state.d[1];         \
-         }                                                                 \
--        env->vstart = 0;                                                  \
-         /* set tail elements to 1s */                                     \
--        vext_set_elems_1s(vd, vta, vl * 4, total_elems * 4);              \
-+        vext_set_tail_elems_1s(env, vd, desc, 4, total_elems);            \
-+        env->vstart = 0;                                                  \
+diff --git a/target/riscv/insn_trans/trans_rvbf16.c.inc b/target/riscv/insn_trans/trans_rvbf16.c.inc
+index a842e76a6b..0a9cd1ec31 100644
+--- a/target/riscv/insn_trans/trans_rvbf16.c.inc
++++ b/target/riscv/insn_trans/trans_rvbf16.c.inc
+@@ -83,7 +83,7 @@ static bool trans_vfncvtbf16_f_f_w(DisasContext *ctx, arg_vfncvtbf16_f_f_w *a)
+                            ctx->cfg_ptr->vlenb,
+                            ctx->cfg_ptr->vlenb, data,
+                            gen_helper_vfncvtbf16_f_f_w);
+-        mark_vs_dirty(ctx);
++        finalize_rvv_inst(ctx);
+         return true;
+     }
+     return false;
+@@ -108,7 +108,7 @@ static bool trans_vfwcvtbf16_f_f_v(DisasContext *ctx, arg_vfwcvtbf16_f_f_v *a)
+                            ctx->cfg_ptr->vlenb,
+                            ctx->cfg_ptr->vlenb, data,
+                            gen_helper_vfwcvtbf16_f_f_v);
+-        mark_vs_dirty(ctx);
++        finalize_rvv_inst(ctx);
+         return true;
+     }
+     return false;
+@@ -135,7 +135,7 @@ static bool trans_vfwmaccbf16_vv(DisasContext *ctx, arg_vfwmaccbf16_vv *a)
+                            ctx->cfg_ptr->vlenb,
+                            ctx->cfg_ptr->vlenb, data,
+                            gen_helper_vfwmaccbf16_vv);
+-        mark_vs_dirty(ctx);
++        finalize_rvv_inst(ctx);
+         return true;
+     }
+     return false;
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index b0f19dcd85..b3d467a874 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -167,7 +167,7 @@ static bool do_vsetvl(DisasContext *s, int rd, int rs1, TCGv s2)
+ 
+     gen_helper_vsetvl(dst, tcg_env, s1, s2);
+     gen_set_gpr(s, rd, dst);
+-    mark_vs_dirty(s);
++    finalize_rvv_inst(s);
+ 
+     gen_update_pc(s, s->cur_insn_len);
+     lookup_and_goto_ptr(s);
+@@ -187,7 +187,7 @@ static bool do_vsetivli(DisasContext *s, int rd, TCGv s1, TCGv s2)
+ 
+     gen_helper_vsetvl(dst, tcg_env, s1, s2);
+     gen_set_gpr(s, rd, dst);
+-    mark_vs_dirty(s);
++    finalize_rvv_inst(s);
+     gen_update_pc(s, s->cur_insn_len);
+     lookup_and_goto_ptr(s);
+     s->base.is_jmp = DISAS_NORETURN;
+@@ -657,6 +657,7 @@ static bool ldst_us_trans(uint32_t vd, uint32_t rs1, uint32_t data,
+         tcg_gen_mb(TCG_MO_ALL | TCG_BAR_LDAQ);
      }
  
- #define GEN_ZVKNED_HELPER_VS(NAME, ...)                                   \
-     void HELPER(NAME)(void *vd, void *vs2, CPURISCVState *env,            \
-                       uint32_t desc)                                      \
-     {                                                                     \
--        uint32_t vl = env->vl;                                            \
-         uint32_t total_elems = vext_get_total_elems(env, desc, 4);        \
--        uint32_t vta = vext_vta(desc);                                    \
-                                                                           \
-         for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {        \
-             AESState round_key;                                           \
-@@ -257,9 +253,9 @@ static inline void xor_round_key(AESState *round_state, AESState *round_key)
-             *((uint64_t *)vd + H8(i * 2 + 0)) = round_state.d[0];         \
-             *((uint64_t *)vd + H8(i * 2 + 1)) = round_state.d[1];         \
-         }                                                                 \
--        env->vstart = 0;                                                  \
-         /* set tail elements to 1s */                                     \
--        vext_set_elems_1s(vd, vta, vl * 4, total_elems * 4);              \
-+        vext_set_tail_elems_1s(env, vd, desc, 4, total_elems);            \
-+        env->vstart = 0;                                                  \
++    finalize_rvv_inst(s);
+     return true;
+ }
+ 
+@@ -812,6 +813,7 @@ static bool ldst_stride_trans(uint32_t vd, uint32_t rs1, uint32_t rs2,
+ 
+     fn(dest, mask, base, stride, tcg_env, desc);
+ 
++    finalize_rvv_inst(s);
+     return true;
+ }
+ 
+@@ -913,6 +915,7 @@ static bool ldst_index_trans(uint32_t vd, uint32_t rs1, uint32_t vs2,
+ 
+     fn(dest, mask, base, index, tcg_env, desc);
+ 
++    finalize_rvv_inst(s);
+     return true;
+ }
+ 
+@@ -1043,7 +1046,7 @@ static bool ldff_trans(uint32_t vd, uint32_t rs1, uint32_t data,
+ 
+     fn(dest, mask, base, tcg_env, desc);
+ 
+-    mark_vs_dirty(s);
++    finalize_rvv_inst(s);
+     return true;
+ }
+ 
+@@ -1100,6 +1103,7 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
+ 
+     fn(dest, base, tcg_env, desc);
+ 
++    finalize_rvv_inst(s);
+     return true;
+ }
+ 
+@@ -1189,7 +1193,7 @@ do_opivv_gvec(DisasContext *s, arg_rmrr *a, GVecGen3Fn *gvec_fn,
+                            tcg_env, s->cfg_ptr->vlenb,
+                            s->cfg_ptr->vlenb, data, fn);
      }
+-    mark_vs_dirty(s);
++    finalize_rvv_inst(s);
+     return true;
+ }
  
- GEN_ZVKNED_HELPER_VV(vaesef_vv, aesenc_SB_SR_AK(&round_state,
-@@ -301,9 +297,7 @@ void HELPER(vaeskf1_vi)(void *vd_vptr, void *vs2_vptr, uint32_t uimm,
- {
-     uint32_t *vd = vd_vptr;
-     uint32_t *vs2 = vs2_vptr;
--    uint32_t vl = env->vl;
-     uint32_t total_elems = vext_get_total_elems(env, desc, 4);
--    uint32_t vta = vext_vta(desc);
+@@ -1240,7 +1244,7 @@ static bool opivx_trans(uint32_t vd, uint32_t rs1, uint32_t vs2, uint32_t vm,
  
-     uimm &= 0b1111;
-     if (uimm > 10 || uimm == 0) {
-@@ -337,9 +331,9 @@ void HELPER(vaeskf1_vi)(void *vd_vptr, void *vs2_vptr, uint32_t uimm,
-         vd[i * 4 + H4(2)] = rk[6];
-         vd[i * 4 + H4(3)] = rk[7];
+     fn(dest, mask, src1, src2, tcg_env, desc);
+ 
+-    mark_vs_dirty(s);
++    finalize_rvv_inst(s);
+     return true;
+ }
+ 
+@@ -1265,7 +1269,7 @@ do_opivx_gvec(DisasContext *s, arg_rmrr *a, GVecGen2sFn *gvec_fn,
+         gvec_fn(s->sew, vreg_ofs(s, a->rd), vreg_ofs(s, a->rs2),
+                 src1, MAXSZ(s), MAXSZ(s));
+ 
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
      }
--    env->vstart = 0;
-     /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vta, vl * 4, total_elems * 4);
-+    vext_set_tail_elems_1s(env, vd, desc, 4, total_elems);
-+    env->vstart = 0;
+     return opivx_trans(a->rd, a->rs1, a->rs2, a->vm, fn, s);
+@@ -1398,7 +1402,7 @@ static bool opivi_trans(uint32_t vd, uint32_t imm, uint32_t vs2, uint32_t vm,
+ 
+     fn(dest, mask, src1, src2, tcg_env, desc);
+ 
+-    mark_vs_dirty(s);
++    finalize_rvv_inst(s);
+     return true;
  }
  
- void HELPER(vaeskf2_vi)(void *vd_vptr, void *vs2_vptr, uint32_t uimm,
-@@ -347,9 +341,7 @@ void HELPER(vaeskf2_vi)(void *vd_vptr, void *vs2_vptr, uint32_t uimm,
- {
-     uint32_t *vd = vd_vptr;
-     uint32_t *vs2 = vs2_vptr;
--    uint32_t vl = env->vl;
-     uint32_t total_elems = vext_get_total_elems(env, desc, 4);
--    uint32_t vta = vext_vta(desc);
- 
-     uimm &= 0b1111;
-     if (uimm > 14 || uimm < 2) {
-@@ -394,9 +386,9 @@ void HELPER(vaeskf2_vi)(void *vd_vptr, void *vs2_vptr, uint32_t uimm,
-         vd[i * 4 + H4(2)] = rk[10];
-         vd[i * 4 + H4(3)] = rk[11];
+@@ -1412,7 +1416,7 @@ do_opivi_gvec(DisasContext *s, arg_rmrr *a, GVecGen2iFn *gvec_fn,
+     if (a->vm && s->vl_eq_vlmax && !(s->vta && s->lmul < 0)) {
+         gvec_fn(s->sew, vreg_ofs(s, a->rd), vreg_ofs(s, a->rs2),
+                 extract_imm(s, a->rs1, imm_mode), MAXSZ(s), MAXSZ(s));
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
      }
--    env->vstart = 0;
-     /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vta, vl * 4, total_elems * 4);
-+    vext_set_tail_elems_1s(env, vd, desc, 4, total_elems);
-+    env->vstart = 0;
- }
- 
- static inline uint32_t sig0_sha256(uint32_t x)
-@@ -455,7 +447,6 @@ void HELPER(vsha2ms_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
-     uint32_t sew = FIELD_EX64(env->vtype, VTYPE, VSEW);
-     uint32_t esz = sew == MO_32 ? 4 : 8;
-     uint32_t total_elems;
--    uint32_t vta = vext_vta(desc);
- 
-     for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {
-         if (sew == MO_32) {
-@@ -469,7 +460,7 @@ void HELPER(vsha2ms_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
+     return opivi_trans(a->rd, a->rs1, a->rs2, a->vm, fn, s, imm_mode);
+@@ -1471,7 +1475,7 @@ static bool do_opivv_widen(DisasContext *s, arg_rmrr *a,
+                            tcg_env, s->cfg_ptr->vlenb,
+                            s->cfg_ptr->vlenb,
+                            data, fn);
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
      }
-     /* set tail elements to 1s */
-     total_elems = vext_get_total_elems(env, desc, esz);
--    vext_set_elems_1s(vd, vta, env->vl * esz, total_elems * esz);
-+    vext_set_tail_elems_1s(env, vd, desc, esz, total_elems);
-     env->vstart = 0;
+     return false;
+@@ -1543,7 +1547,7 @@ static bool do_opiwv_widen(DisasContext *s, arg_rmrr *a,
+                            vreg_ofs(s, a->rs2),
+                            tcg_env, s->cfg_ptr->vlenb,
+                            s->cfg_ptr->vlenb, data, fn);
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -1611,7 +1615,7 @@ static bool opivv_trans(uint32_t vd, uint32_t vs1, uint32_t vs2, uint32_t vm,
+     tcg_gen_gvec_4_ptr(vreg_ofs(s, vd), vreg_ofs(s, 0), vreg_ofs(s, vs1),
+                        vreg_ofs(s, vs2), tcg_env, s->cfg_ptr->vlenb,
+                        s->cfg_ptr->vlenb, data, fn);
+-    mark_vs_dirty(s);
++    finalize_rvv_inst(s);
+     return true;
  }
  
-@@ -570,7 +561,6 @@ void HELPER(vsha2ch32_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
- {
-     const uint32_t esz = 4;
-     uint32_t total_elems;
--    uint32_t vta = vext_vta(desc);
+@@ -1744,7 +1748,7 @@ do_opivx_gvec_shift(DisasContext *s, arg_rmrr *a, GVecGen2sFn32 *gvec_fn,
+         gvec_fn(s->sew, vreg_ofs(s, a->rd), vreg_ofs(s, a->rs2),
+                 src1, MAXSZ(s), MAXSZ(s));
  
-     for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {
-         vsha2c_32(((uint32_t *)vs2) + 4 * i, ((uint32_t *)vd) + 4 * i,
-@@ -579,7 +569,7 @@ void HELPER(vsha2ch32_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
- 
-     /* set tail elements to 1s */
-     total_elems = vext_get_total_elems(env, desc, esz);
--    vext_set_elems_1s(vd, vta, env->vl * esz, total_elems * esz);
-+    vext_set_tail_elems_1s(env, vd, desc, esz, total_elems);
-     env->vstart = 0;
- }
- 
-@@ -588,7 +578,6 @@ void HELPER(vsha2ch64_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
- {
-     const uint32_t esz = 8;
-     uint32_t total_elems;
--    uint32_t vta = vext_vta(desc);
- 
-     for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {
-         vsha2c_64(((uint64_t *)vs2) + 4 * i, ((uint64_t *)vd) + 4 * i,
-@@ -597,7 +586,7 @@ void HELPER(vsha2ch64_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
- 
-     /* set tail elements to 1s */
-     total_elems = vext_get_total_elems(env, desc, esz);
--    vext_set_elems_1s(vd, vta, env->vl * esz, total_elems * esz);
-+    vext_set_tail_elems_1s(env, vd, desc, esz, total_elems);
-     env->vstart = 0;
- }
- 
-@@ -606,7 +595,6 @@ void HELPER(vsha2cl32_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
- {
-     const uint32_t esz = 4;
-     uint32_t total_elems;
--    uint32_t vta = vext_vta(desc);
- 
-     for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {
-         vsha2c_32(((uint32_t *)vs2) + 4 * i, ((uint32_t *)vd) + 4 * i,
-@@ -615,7 +603,7 @@ void HELPER(vsha2cl32_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
- 
-     /* set tail elements to 1s */
-     total_elems = vext_get_total_elems(env, desc, esz);
--    vext_set_elems_1s(vd, vta, env->vl * esz, total_elems * esz);
-+    vext_set_tail_elems_1s(env, vd, desc, esz, total_elems);
-     env->vstart = 0;
- }
- 
-@@ -624,7 +612,6 @@ void HELPER(vsha2cl64_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
- {
-     uint32_t esz = 8;
-     uint32_t total_elems;
--    uint32_t vta = vext_vta(desc);
- 
-     for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {
-         vsha2c_64(((uint64_t *)vs2) + 4 * i, ((uint64_t *)vd) + 4 * i,
-@@ -633,7 +620,7 @@ void HELPER(vsha2cl64_vv)(void *vd, void *vs1, void *vs2, CPURISCVState *env,
- 
-     /* set tail elements to 1s */
-     total_elems = vext_get_total_elems(env, desc, esz);
--    vext_set_elems_1s(vd, vta, env->vl * esz, total_elems * esz);
-+    vext_set_tail_elems_1s(env, vd, desc, esz, total_elems);
-     env->vstart = 0;
- }
- 
-@@ -653,7 +640,6 @@ void HELPER(vsm3me_vv)(void *vd_vptr, void *vs1_vptr, void *vs2_vptr,
- {
-     uint32_t esz = memop_size(FIELD_EX64(env->vtype, VTYPE, VSEW));
-     uint32_t total_elems = vext_get_total_elems(env, desc, esz);
--    uint32_t vta = vext_vta(desc);
-     uint32_t *vd = vd_vptr;
-     uint32_t *vs1 = vs1_vptr;
-     uint32_t *vs2 = vs2_vptr;
-@@ -672,7 +658,7 @@ void HELPER(vsm3me_vv)(void *vd_vptr, void *vs1_vptr, void *vs2_vptr,
-             vd[(i * 8) + j] = bswap32(w[H4(j + 16)]);
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return opivx_trans(a->rd, a->rs1, a->rs2, a->vm, fn, s);
+@@ -1801,7 +1805,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)             \
+                            s->cfg_ptr->vlenb,                      \
+                            s->cfg_ptr->vlenb, data,                \
+                            fns[s->sew]);                           \
+-        mark_vs_dirty(s);                                          \
++        finalize_rvv_inst(s);                                      \
+         return true;                                               \
+     }                                                              \
+     return false;                                                  \
+@@ -2004,7 +2008,7 @@ static bool trans_vmv_v_v(DisasContext *s, arg_vmv_v_v *a)
+                                s->cfg_ptr->vlenb, data,
+                                fns[s->sew]);
          }
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
      }
--    vext_set_elems_1s(vd_vptr, vta, env->vl * esz, total_elems * esz);
-+    vext_set_tail_elems_1s(env, vd_vptr, desc, esz, total_elems);
-     env->vstart = 0;
- }
- 
-@@ -752,7 +738,6 @@ void HELPER(vsm3c_vi)(void *vd_vptr, void *vs2_vptr, uint32_t uimm,
- {
-     uint32_t esz = memop_size(FIELD_EX64(env->vtype, VTYPE, VSEW));
-     uint32_t total_elems = vext_get_total_elems(env, desc, esz);
--    uint32_t vta = vext_vta(desc);
-     uint32_t *vd = vd_vptr;
-     uint32_t *vs2 = vs2_vptr;
-     uint32_t v1[8], v2[8], v3[8];
-@@ -767,7 +752,7 @@ void HELPER(vsm3c_vi)(void *vd_vptr, void *vs2_vptr, uint32_t uimm,
-             vd[i * 8 + k] = bswap32(v1[H4(k)]);
+     return false;
+@@ -2049,7 +2053,7 @@ static bool trans_vmv_v_x(DisasContext *s, arg_vmv_v_x *a)
+             fns[s->sew](dest, s1_i64, tcg_env, desc);
          }
+ 
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
      }
--    vext_set_elems_1s(vd_vptr, vta, env->vl * esz, total_elems * esz);
-+    vext_set_tail_elems_1s(env, vd_vptr, desc, esz, total_elems);
-     env->vstart = 0;
- }
- 
-@@ -777,7 +762,6 @@ void HELPER(vghsh_vv)(void *vd_vptr, void *vs1_vptr, void *vs2_vptr,
-     uint64_t *vd = vd_vptr;
-     uint64_t *vs1 = vs1_vptr;
-     uint64_t *vs2 = vs2_vptr;
--    uint32_t vta = vext_vta(desc);
-     uint32_t total_elems = vext_get_total_elems(env, desc, 4);
- 
-     for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {
-@@ -805,7 +789,7 @@ void HELPER(vghsh_vv)(void *vd_vptr, void *vs1_vptr, void *vs2_vptr,
-         vd[i * 2 + 1] = brev8(Z[1]);
-     }
-     /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vta, env->vl * 4, total_elems * 4);
-+    vext_set_tail_elems_1s(env, vd, desc, 4, total_elems);
-     env->vstart = 0;
- }
- 
-@@ -814,7 +798,6 @@ void HELPER(vgmul_vv)(void *vd_vptr, void *vs2_vptr, CPURISCVState *env,
- {
-     uint64_t *vd = vd_vptr;
-     uint64_t *vs2 = vs2_vptr;
--    uint32_t vta = vext_vta(desc);
-     uint32_t total_elems = vext_get_total_elems(env, desc, 4);
- 
-     for (uint32_t i = env->vstart / 4; i < env->vl / 4; i++) {
-@@ -839,7 +822,7 @@ void HELPER(vgmul_vv)(void *vd_vptr, void *vs2_vptr, CPURISCVState *env,
-         vd[i * 2 + 1] = brev8(Z[1]);
-     }
-     /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vta, env->vl * 4, total_elems * 4);
-+    vext_set_tail_elems_1s(env, vd, desc, 4, total_elems);
-     env->vstart = 0;
- }
- 
-@@ -881,9 +864,9 @@ void HELPER(vsm4k_vi)(void *vd, void *vs2, uint32_t uimm5, CPURISCVState *env,
+     return false;
+@@ -2083,7 +2087,7 @@ static bool trans_vmv_v_i(DisasContext *s, arg_vmv_v_i *a)
+             tcg_gen_addi_ptr(dest, tcg_env, vreg_ofs(s, a->rd));
+             fns[s->sew](dest, s1, tcg_env, desc);
          }
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
      }
+     return false;
+@@ -2231,7 +2235,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)             \
+                            s->cfg_ptr->vlenb,                      \
+                            s->cfg_ptr->vlenb, data,                \
+                            fns[s->sew - 1]);                       \
+-        mark_vs_dirty(s);                                          \
++        finalize_rvv_inst(s);                                      \
+         return true;                                               \
+     }                                                              \
+     return false;                                                  \
+@@ -2265,7 +2269,7 @@ static bool opfvf_trans(uint32_t vd, uint32_t rs1, uint32_t vs2,
  
--    env->vstart = 0;
-     /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vext_vta(desc), env->vl * esz, total_elems * esz);
-+    vext_set_tail_elems_1s(env, vd, desc, esz, total_elems);
-+    env->vstart = 0;
+     fn(dest, mask, t1, src2, tcg_env, desc);
+ 
+-    mark_vs_dirty(s);
++    finalize_rvv_inst(s);
+     return true;
  }
  
- static void do_sm4_round(uint32_t *rk, uint32_t *buf)
-@@ -930,9 +913,9 @@ void HELPER(vsm4r_vv)(void *vd, void *vs2, CPURISCVState *env, uint32_t desc)
+@@ -2340,7 +2344,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)           \
+                            s->cfg_ptr->vlenb,                    \
+                            s->cfg_ptr->vlenb, data,              \
+                            fns[s->sew - 1]);                     \
+-        mark_vs_dirty(s);                                        \
++        finalize_rvv_inst(s);                                    \
+         return true;                                             \
+     }                                                            \
+     return false;                                                \
+@@ -2411,7 +2415,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)             \
+                            s->cfg_ptr->vlenb,                      \
+                            s->cfg_ptr->vlenb, data,                \
+                            fns[s->sew - 1]);                       \
+-        mark_vs_dirty(s);                                          \
++        finalize_rvv_inst(s);                                      \
+         return true;                                               \
+     }                                                              \
+     return false;                                                  \
+@@ -2523,7 +2527,7 @@ static bool do_opfv(DisasContext *s, arg_rmr *a,
+                            vreg_ofs(s, a->rs2), tcg_env,
+                            s->cfg_ptr->vlenb,
+                            s->cfg_ptr->vlenb, data, fn);
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -2633,7 +2637,7 @@ static bool trans_vfmv_v_f(DisasContext *s, arg_vfmv_v_f *a)
+ 
+             fns[s->sew - 1](dest, t1, tcg_env, desc);
          }
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
      }
+     return false;
+@@ -2705,7 +2709,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmr *a)              \
+                            s->cfg_ptr->vlenb,                      \
+                            s->cfg_ptr->vlenb, data,                \
+                            fns[s->sew - 1]);                       \
+-        mark_vs_dirty(s);                                          \
++        finalize_rvv_inst(s);                                      \
+         return true;                                               \
+     }                                                              \
+     return false;                                                  \
+@@ -2753,7 +2757,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmr *a)              \
+                            s->cfg_ptr->vlenb,                      \
+                            s->cfg_ptr->vlenb, data,                \
+                            fns[s->sew]);                           \
+-        mark_vs_dirty(s);                                          \
++        finalize_rvv_inst(s);                                      \
+         return true;                                               \
+     }                                                              \
+     return false;                                                  \
+@@ -2817,7 +2821,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmr *a)              \
+                            s->cfg_ptr->vlenb,                      \
+                            s->cfg_ptr->vlenb, data,                \
+                            fns[s->sew - 1]);                       \
+-        mark_vs_dirty(s);                                          \
++        finalize_rvv_inst(s);                                      \
+         return true;                                               \
+     }                                                              \
+     return false;                                                  \
+@@ -2863,7 +2867,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmr *a)              \
+                            s->cfg_ptr->vlenb,                      \
+                            s->cfg_ptr->vlenb, data,                \
+                            fns[s->sew]);                           \
+-        mark_vs_dirty(s);                                          \
++        finalize_rvv_inst(s);                                      \
+         return true;                                               \
+     }                                                              \
+     return false;                                                  \
+@@ -2949,7 +2953,7 @@ static bool trans_##NAME(DisasContext *s, arg_r *a)                \
+                            vreg_ofs(s, a->rs2), tcg_env,           \
+                            s->cfg_ptr->vlenb,                      \
+                            s->cfg_ptr->vlenb, data, fn);           \
+-        mark_vs_dirty(s);                                          \
++        finalize_rvv_inst(s);                                      \
+         return true;                                               \
+     }                                                              \
+     return false;                                                  \
+@@ -3048,7 +3052,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmr *a)              \
+                            tcg_env, s->cfg_ptr->vlenb,             \
+                            s->cfg_ptr->vlenb,                      \
+                            data, fn);                              \
+-        mark_vs_dirty(s);                                          \
++        finalize_rvv_inst(s);                                      \
+         return true;                                               \
+     }                                                              \
+     return false;                                                  \
+@@ -3087,7 +3091,7 @@ static bool trans_viota_m(DisasContext *s, arg_viota_m *a)
+                            vreg_ofs(s, a->rs2), tcg_env,
+                            s->cfg_ptr->vlenb,
+                            s->cfg_ptr->vlenb, data, fns[s->sew]);
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -3114,7 +3118,7 @@ static bool trans_vid_v(DisasContext *s, arg_vid_v *a)
+                            tcg_env, s->cfg_ptr->vlenb,
+                            s->cfg_ptr->vlenb,
+                            data, fns[s->sew]);
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -3271,7 +3275,7 @@ static bool trans_vmv_x_s(DisasContext *s, arg_vmv_x_s *a)
+         tcg_gen_trunc_i64_tl(dest, t1);
+         gen_set_gpr(s, a->rd, dest);
+         tcg_gen_movi_tl(cpu_vstart, 0);
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -3300,7 +3304,7 @@ static bool trans_vmv_s_x(DisasContext *s, arg_vmv_s_x *a)
+         vec_element_storei(s, a->rd, 0, t1);
+         gen_set_label(over);
+         tcg_gen_movi_tl(cpu_vstart, 0);
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -3328,7 +3332,7 @@ static bool trans_vfmv_f_s(DisasContext *s, arg_vfmv_f_s *a)
  
--    env->vstart = 0;
-     /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vext_vta(desc), env->vl * esz, total_elems * esz);
-+    vext_set_tail_elems_1s(env, vd, desc, esz, total_elems);
-+    env->vstart = 0;
- }
+         mark_fs_dirty(s);
+         tcg_gen_movi_tl(cpu_vstart, 0);
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -3354,9 +3358,10 @@ static bool trans_vfmv_s_f(DisasContext *s, arg_vfmv_s_f *a)
+         do_nanbox(s, t1, cpu_fpr[a->rs1]);
  
- void HELPER(vsm4r_vs)(void *vd, void *vs2, CPURISCVState *env, uint32_t desc)
-@@ -964,7 +947,7 @@ void HELPER(vsm4r_vs)(void *vd, void *vs2, CPURISCVState *env, uint32_t desc)
+         vec_element_storei(s, a->rd, 0, t1);
++
+         gen_set_label(over);
+         tcg_gen_movi_tl(cpu_vstart, 0);
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -3462,7 +3467,7 @@ static bool trans_vrgather_vx(DisasContext *s, arg_rmrr *a)
+ 
+         tcg_gen_gvec_dup_i64(s->sew, vreg_ofs(s, a->rd),
+                              MAXSZ(s), MAXSZ(s), dest);
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+     } else {
+         static gen_helper_opivx * const fns[4] = {
+             gen_helper_vrgather_vx_b, gen_helper_vrgather_vx_h,
+@@ -3490,7 +3495,7 @@ static bool trans_vrgather_vi(DisasContext *s, arg_rmrr *a)
+                                  endian_ofs(s, a->rs2, a->rs1),
+                                  MAXSZ(s), MAXSZ(s));
          }
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+     } else {
+         static gen_helper_opivx * const fns[4] = {
+             gen_helper_vrgather_vx_b, gen_helper_vrgather_vx_h,
+@@ -3535,7 +3540,7 @@ static bool trans_vcompress_vm(DisasContext *s, arg_r *a)
+                            tcg_env, s->cfg_ptr->vlenb,
+                            s->cfg_ptr->vlenb, data,
+                            fns[s->sew]);
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
      }
+     return false;
+@@ -3560,7 +3565,7 @@ static bool trans_##NAME(DisasContext *s, arg_##NAME * a)               \
+             tcg_gen_gvec_2_ptr(vreg_ofs(s, a->rd), vreg_ofs(s, a->rs2), \
+                                tcg_env, maxsz, maxsz, 0, gen_helper_vmvr_v); \
+         }                                                               \
+-        mark_vs_dirty(s);                                               \
++        finalize_rvv_inst(s);                                           \
+         return true;                                                    \
+     }                                                                   \
+     return false;                                                       \
+@@ -3631,7 +3636,7 @@ static bool int_ext_op(DisasContext *s, arg_rmr *a, uint8_t seq)
+                        s->cfg_ptr->vlenb,
+                        s->cfg_ptr->vlenb, data, fn);
  
--    env->vstart = 0;
-     /* set tail elements to 1s */
--    vext_set_elems_1s(vd, vext_vta(desc), env->vl * esz, total_elems * esz);
-+    vext_set_tail_elems_1s(env, vd, desc, esz, total_elems);
-+    env->vstart = 0;
- }
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index b174ddeae8..4fe8752eea 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -174,36 +174,6 @@ GEN_VEXT_ST_ELEM(ste_h, int16_t, H2, stw)
- GEN_VEXT_ST_ELEM(ste_w, int32_t, H4, stl)
- GEN_VEXT_ST_ELEM(ste_d, int64_t, H8, stq)
- 
--/*
-- * This function is sensitive to env->vstart changes since
-- * it'll be a no-op if vstart >= vl. Do not clear env->vstart
-- * before calling it unless you're certain that vstart < vl.
-- */
--static void vext_set_tail_elems_1s(CPURISCVState *env, void *vd,
--                                   uint32_t desc, uint32_t esz,
--                                   uint32_t max_elems)
--{
--    uint32_t vta = vext_vta(desc);
--    uint32_t nf = vext_nf(desc);
--    int k;
--
--    /*
--     * Section 5.4 of the RVV spec mentions:
--     * "When vstart ≥ vl, there are no body elements, and no
--     *  elements are updated in any destination vector register
--     *  group, including that no tail elements are updated
--     *  with agnostic values."
--     */
--    if (vta == 0 || env->vstart >= env->vl) {
--        return;
--    }
--
--    for (k = 0; k < nf; ++k) {
--        vext_set_elems_1s(vd, vta, (k * max_elems + env->vl) * esz,
--                          (k * max_elems + max_elems) * esz);
--    }
--}
--
- /*
-  * stride: access vector element from strided memory
-  */
-diff --git a/target/riscv/vector_internals.c b/target/riscv/vector_internals.c
-index 12f5964fbb..bf3e9e2370 100644
---- a/target/riscv/vector_internals.c
-+++ b/target/riscv/vector_internals.c
-@@ -33,6 +33,35 @@ void vext_set_elems_1s(void *base, uint32_t is_agnostic, uint32_t cnt,
-     memset(base + cnt, -1, tot - cnt);
+-    mark_vs_dirty(s);
++    finalize_rvv_inst(s);
+     return true;
  }
  
-+/*
-+ * This function is sensitive to env->vstart changes since
-+ * it'll be a no-op if vstart >= vl. Do not clear env->vstart
-+ * before calling it unless you're certain that vstart < vl.
-+ */
-+void vext_set_tail_elems_1s(CPURISCVState *env, void *vd, uint32_t desc,
-+                            uint32_t esz, uint32_t max_elems)
+diff --git a/target/riscv/insn_trans/trans_rvvk.c.inc b/target/riscv/insn_trans/trans_rvvk.c.inc
+index 6d640e4596..ae1f40174a 100644
+--- a/target/riscv/insn_trans/trans_rvvk.c.inc
++++ b/target/riscv/insn_trans/trans_rvvk.c.inc
+@@ -174,7 +174,7 @@ GEN_OPIVX_GVEC_TRANS_CHECK(vandn_vx, andcs, zvkb_vx_check)
+                                vreg_ofs(s, a->rs2), tcg_env,               \
+                                s->cfg_ptr->vlenb, s->cfg_ptr->vlenb,       \
+                                data, fns[s->sew]);                         \
+-            mark_vs_dirty(s);                                              \
++            finalize_rvv_inst(s);                                          \
+             return true;                                                   \
+         }                                                                  \
+         return false;                                                      \
+@@ -266,7 +266,7 @@ GEN_OPIVI_WIDEN_TRANS(vwsll_vi, IMM_ZX, vwsll_vx, vwsll_vx_check)
+             tcg_gen_addi_ptr(rd_v, tcg_env, vreg_ofs(s, a->rd));              \
+             tcg_gen_addi_ptr(rs2_v, tcg_env, vreg_ofs(s, a->rs2));            \
+             gen_helper_##NAME(rd_v, rs2_v, tcg_env, desc);                    \
+-            mark_vs_dirty(s);                                                 \
++            finalize_rvv_inst(s);                                             \
+             return true;                                                      \
+         }                                                                     \
+         return false;                                                         \
+@@ -341,7 +341,7 @@ GEN_V_UNMASKED_TRANS(vaesem_vs, vaes_check_vs, ZVKNED_EGS)
+             tcg_gen_addi_ptr(rd_v, tcg_env, vreg_ofs(s, a->rd));              \
+             tcg_gen_addi_ptr(rs2_v, tcg_env, vreg_ofs(s, a->rs2));            \
+             gen_helper_##NAME(rd_v, rs2_v, uimm_v, tcg_env, desc);            \
+-            mark_vs_dirty(s);                                                 \
++            finalize_rvv_inst(s);                                             \
+             return true;                                                      \
+         }                                                                     \
+         return false;                                                         \
+@@ -405,7 +405,7 @@ GEN_VI_UNMASKED_TRANS(vaeskf2_vi, vaeskf2_check, ZVKNED_EGS)
+                                s->cfg_ptr->vlenb, s->cfg_ptr->vlenb,          \
+                                data, gen_helper_##NAME);                      \
+                                                                               \
+-            mark_vs_dirty(s);                                                 \
++            finalize_rvv_inst(s);                                             \
+             return true;                                                      \
+         }                                                                     \
+         return false;                                                         \
+@@ -457,7 +457,7 @@ static bool trans_vsha2cl_vv(DisasContext *s, arg_rmrr *a)
+             s->sew == MO_32 ?
+                 gen_helper_vsha2cl32_vv : gen_helper_vsha2cl64_vv);
+ 
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -488,7 +488,7 @@ static bool trans_vsha2ch_vv(DisasContext *s, arg_rmrr *a)
+             s->sew == MO_32 ?
+                 gen_helper_vsha2ch32_vv : gen_helper_vsha2ch64_vv);
+ 
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index ea5d52b2ef..9d57089fcc 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -676,6 +676,12 @@ static void mark_vs_dirty(DisasContext *ctx)
+ static inline void mark_vs_dirty(DisasContext *ctx) { }
+ #endif
+ 
++static void finalize_rvv_inst(DisasContext *ctx)
 +{
-+    uint32_t vta = vext_vta(desc);
-+    uint32_t nf = vext_nf(desc);
-+    int k;
-+
-+    /*
-+     * Section 5.4 of the RVV spec mentions:
-+     * "When vstart ≥ vl, there are no body elements, and no
-+     *  elements are updated in any destination vector register
-+     *  group, including that no tail elements are updated
-+     *  with agnostic values."
-+     */
-+    if (vta == 0 || env->vstart >= env->vl) {
-+        return;
-+    }
-+
-+    for (k = 0; k < nf; ++k) {
-+        vext_set_elems_1s(vd, vta, (k * max_elems + env->vl) * esz,
-+                          (k * max_elems + max_elems) * esz);
-+    }
++    mark_vs_dirty(ctx);
++    ctx->vstart_eq_zero = true;
 +}
 +
- void do_vext_vv(void *vd, void *v0, void *vs1, void *vs2,
-                 CPURISCVState *env, uint32_t desc,
-                 opivv2_fn *fn, uint32_t esz)
-diff --git a/target/riscv/vector_internals.h b/target/riscv/vector_internals.h
-index 842765f6c1..c5a2bc4bf3 100644
---- a/target/riscv/vector_internals.h
-+++ b/target/riscv/vector_internals.h
-@@ -117,6 +117,10 @@ static inline uint32_t vext_get_total_elems(CPURISCVState *env, uint32_t desc,
- void vext_set_elems_1s(void *base, uint32_t is_agnostic, uint32_t cnt,
-                        uint32_t tot);
- 
-+void vext_set_tail_elems_1s(CPURISCVState *env, void *vd,
-+                            uint32_t desc, uint32_t esz,
-+                            uint32_t max_elems);
-+
- /* expand macro args before macro */
- #define RVVCALL(macro, ...)  macro(__VA_ARGS__)
- 
+ static void gen_set_rm(DisasContext *ctx, int rm)
+ {
+     if (ctx->frm == rm) {
 -- 
 2.43.2
 
