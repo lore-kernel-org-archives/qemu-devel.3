@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB30CC54791
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 Mar 2024 13:31:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F941C54E58
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 Mar 2024 14:11:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjJG1-0008I9-Bf; Sun, 10 Mar 2024 09:30:29 -0400
+	id 1rjJt7-0007yo-4H; Sun, 10 Mar 2024 10:10:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjJG0-0008Hx-8Y
- for qemu-devel@nongnu.org; Sun, 10 Mar 2024 09:30:28 -0400
-Received: from mgamail.intel.com ([198.175.65.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjJFy-0004uw-Mu
- for qemu-devel@nongnu.org; Sun, 10 Mar 2024 09:30:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710077427; x=1741613427;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=T3AsQLCTzlvB6x76yxRW5FOo6r7+SB2qVULan5I1YpQ=;
- b=QnWHJoYf1UI1mS4AQKRa+fOLWaTr7I+Vz6JVQiArqcd0P6eL1vjGMPWU
- JwXrrv0c8sNZaJttHCekFzRQsf+5adv62sZBrBLmvAr3y1dBf6olh5ef7
- jJDNrS1hQUWH3japaf0J+BSy5dS6xjj4rO/rc6UFdie/llklEEL8zXvye
- h54lnf179etmOSfdhVB7N2VF3O6W4UT/MzbAw1M1ieOhTMCP98LIkeeQr
- Ph7WPsh/YVOcf4RCAViAnlSers3BEpjyYYOnBGYMkJlI9i4lp+cDq5H5S
- LPUG2ntrdx4T0JCh7KH0GC39Iygm416n4DXhROue1AbyHU4tqNLtYKQTj A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11008"; a="4670920"
-X-IronPort-AV: E=Sophos;i="6.07,114,1708416000"; 
-   d="scan'208";a="4670920"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2024 06:30:25 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,114,1708416000"; d="scan'208";a="41898789"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa001.fm.intel.com with ESMTP; 10 Mar 2024 06:30:20 -0700
-Date: Sun, 10 Mar 2024 21:44:08 +0800
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Zhuocheng Ding <zhuocheng.ding@intel.com>,
- Babu Moger <babu.moger@amd.com>, Yongwei Ma <yongwei.ma@intel.com>,
- Zhao Liu <zhao1.liu@intel.com>, Robert Hoo <robert.hu@linux.intel.com>
-Subject: Re: [PATCH v9 08/21] i386/cpu: Consolidate the use of topo_info in
- cpu_x86_cpuid()
-Message-ID: <Ze25KAEvahnO2oGF@intel.com>
-References: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
- <20240227103231.1556302-9-zhao1.liu@linux.intel.com>
- <89ed09f2-c139-46b1-b76a-8fa3522cc1ed@intel.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rjJt4-0007ya-Kg
+ for qemu-devel@nongnu.org; Sun, 10 Mar 2024 10:10:50 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rjJsz-0004Wa-MA
+ for qemu-devel@nongnu.org; Sun, 10 Mar 2024 10:10:50 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5673b5a356eso3703551a12.0
+ for <qemu-devel@nongnu.org>; Sun, 10 Mar 2024 07:10:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710079843; x=1710684643; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=5aJgfiwLS4lEoCfT7DlAT39Mgy1LwmxYtfwl8u9ZmXE=;
+ b=NFF2UdeqBMjOc9E/3lEwlD7T/M+/VdvNWLAan9OYrO2ZwwPudOMwtLiEA7RcP1V7Fk
+ crFrzSf5s5h2T/14IWYMuOURDropWIoDjAylqfaFpaIjCai8QG1C0pZDqL14k0dClpPw
+ JRqMjWIY7aaLXBECdMz7Pf/I2DUQDQSf7QP5M+J3fPlFrhufMs/oIzNSgMjZbh3T5f2Y
+ XPHPQn90m2TEd5n1rTJ8nOnu/EogkQ66DSj3UlddNbHZQhznZLbyhftFIHv3VR3AXLM1
+ zWu0ZNHBuZNqeO03iu6M0zb6TOhpl6DvSQuWeygfWHvSaO+Ha5NY/uzelEjlBbJJSKAZ
+ wYBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710079843; x=1710684643;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5aJgfiwLS4lEoCfT7DlAT39Mgy1LwmxYtfwl8u9ZmXE=;
+ b=bS16mPIh39fbdwaRIZyKsAxyE/qGMwqQ9ziyoBU7GH216mgDdxg8v+PH93H5QiMkF/
+ t3BIYQSUXIB0T7aNT5O0TapRyQ7q07rbRtgoNlVaIi+vv6G8QOZyJT138f4c/seWfTDM
+ +MqBa4oQS7DX6XMhU5PW300B+1cJciRKlcw3r/wzFwN0z56GTfsELHMv5MTrFDKMWoKE
+ bEWEsVuCfiik4DBnAPo0rR+bwsxIqHbUHLvXFIhYKd2Vf1ybVZTNO9pi4Ei5bpziQpId
+ 15utTXNyMx/D2ggKU4us+WFkjNBYivlkWrEnRlujXu+Vfh9SuLIEJjk68NIrkCjuMjCT
+ ehSA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXS/pUq7+biZHHValb6Phf9kTyrkwVaSTEXPKdYE6tMFG72/zo62AsM69sx4krFSLkdbIwZRr+IWVvU1KvsjRXfMmc1Q4c=
+X-Gm-Message-State: AOJu0YysQmVjiVlG+mPlXulVGuKORMnmjTohfjFo01mgkQoQze2vmXVP
+ u6mR/3XE4XoY2LoIulkaHVQgZmjK9Y9urRddazCbq4pMiuxSgPGiLIvMYmAH/BY2CjSSQt2tSgY
+ UKjWXes76arAkf9hWHpys5MgmV98I1vw1VL5gUg==
+X-Google-Smtp-Source: AGHT+IEL8+tQ+fg+muPf9bdxCrFdXGvAw0+9KbHRljQx4uD/nQ48GPLkOADC8AWhnDwz7nFR5b07bepu4d7+NHcx+rs=
+X-Received: by 2002:a50:ab1e:0:b0:565:ff64:33b0 with SMTP id
+ s30-20020a50ab1e000000b00565ff6433b0mr2578638edc.22.1710079843242; Sun, 10
+ Mar 2024 07:10:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <89ed09f2-c139-46b1-b76a-8fa3522cc1ed@intel.com>
-Received-SPF: none client-ip=198.175.65.21;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.945,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240304130403.129543-1-thuth@redhat.com>
+ <CAFEAcA8rac2nEzrVWUWfRHAWYLmC6dSDMK=j6msD_SdPpn6ZtA@mail.gmail.com>
+ <3262c873-b845-4286-a71f-a53b96bbc8a9@redhat.com>
+ <ZeYNQdqW2bBA4gNL@redhat.com>
+ <86d80d62-8c82-4ec5-ab67-50c83041f979@redhat.com>
+ <CAFEAcA8X6hR+GfnREQkWNqiOBk40r4o_dWPOiyfVT3n7YJqRVA@mail.gmail.com>
+In-Reply-To: <CAFEAcA8X6hR+GfnREQkWNqiOBk40r4o_dWPOiyfVT3n7YJqRVA@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sun, 10 Mar 2024 14:10:31 +0000
+Message-ID: <CAFEAcA8Ooah-iCup=MOaqzr4UK47qwJqFwLNWHibN54KTLbh0Q@mail.gmail.com>
+Subject: Re: [PATCH v2] docs/conf.py: Remove usage of distutils
+To: Thomas Huth <thuth@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,34 +95,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Xiaoyao,
+On Sat, 9 Mar 2024 at 17:27, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Tue, 5 Mar 2024 at 10:39, Thomas Huth <thuth@redhat.com> wrote:
+> > Ok, while I was writing my mail, I was looking at https://brew.sh/ and
+> > didn't see a link to a bug tracker there ... but now I realized that they
+> > are simply using the github tracker, so I went ahead and filed a bug there:
+> >
+> >   https://github.com/Homebrew/brew/issues/16823
+> >
+> > Let's see how it goes...
+>
+> Seems to be going slowly.
 
-On Sat, Mar 09, 2024 at 09:48:34PM +0800, Xiaoyao Li wrote:
-> Date: Sat, 9 Mar 2024 21:48:34 +0800
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: Re: [PATCH v9 08/21] i386/cpu: Consolidate the use of topo_info in
->  cpu_x86_cpuid()
-> 
-> On 2/27/2024 6:32 PM, Zhao Liu wrote:
-> > From: Zhao Liu<zhao1.liu@intel.com>
-> > 
-> > In cpu_x86_cpuid(), there are many variables in representing the cpu
-> > topology, e.g., topo_info, cs->nr_cores and cs->nr_threads.
-> > 
-> > Since the names of cs->nr_cores/cs->nr_threads does not accurately
-> 
-> Again as in v7, please changes to "cs->nr_cores and cs->nr_threads",
-> 
-> "cs->nr_cores/cs->nr_threads" looks like a single variable of division
-> 
+...but they've just rolled out the glib 2.80 version, so our
+CI job is passing again now. Yay!
 
-I missed to change this.
-
-Though, TBH, legitimate division operations are going to add spaces
-around "/". It's also common practice to represent "or" by "/" w/t
-spaces. But I'll change it in the next version to make you happy!
-
-Thanks,
-Zhao
-
+-- PMM
 
