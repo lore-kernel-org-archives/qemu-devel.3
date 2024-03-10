@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 757FEC54791
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 Mar 2024 13:25:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB30CC54791
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 Mar 2024 13:31:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjJAR-00073p-4c; Sun, 10 Mar 2024 09:24:43 -0400
+	id 1rjJG1-0008I9-Bf; Sun, 10 Mar 2024 09:30:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjJAP-00073J-D3
- for qemu-devel@nongnu.org; Sun, 10 Mar 2024 09:24:41 -0400
+ id 1rjJG0-0008Hx-8Y
+ for qemu-devel@nongnu.org; Sun, 10 Mar 2024 09:30:28 -0400
 Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjJAN-0004Bg-5N
- for qemu-devel@nongnu.org; Sun, 10 Mar 2024 09:24:41 -0400
+ id 1rjJFy-0004uw-Mu
+ for qemu-devel@nongnu.org; Sun, 10 Mar 2024 09:30:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710077079; x=1741613079;
+ t=1710077427; x=1741613427;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=Gt/euky25A9+T2umyqp+SyRRMY1VLZnpUw+PY3Wm2U8=;
- b=mzCRTUaIzBdiovmvmXT0m19gHvp5Fr/qV857PhwP6VqL8GSuUCgbS3xB
- NH0d5gEigKQ3TvXWlJhKKm1iYw0ogykJS6jFnEoZOOu/vNbj78gK97l8j
- tMkmDNrx0w6hps7JsYR4MXFfnpbnMh90XPZmnonOkaxJ6leEySKzpwBXx
- hvgfrron5bYenlySbx4+zJN+q6/V/9mWMmZP+m6/CK0IdNEbVhnGsPJIQ
- KKNlCFlxWt36t9dVM22+11XACgEfutU65tgSmWhh5VVVMh18VR0NQrsMS
- zgVsRhKcNAXkeIcpFW2Y5drnVWqF8irOmwNk6PSdaElkPaO1uoiHCuRyg Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11008"; a="4670773"
+ bh=T3AsQLCTzlvB6x76yxRW5FOo6r7+SB2qVULan5I1YpQ=;
+ b=QnWHJoYf1UI1mS4AQKRa+fOLWaTr7I+Vz6JVQiArqcd0P6eL1vjGMPWU
+ JwXrrv0c8sNZaJttHCekFzRQsf+5adv62sZBrBLmvAr3y1dBf6olh5ef7
+ jJDNrS1hQUWH3japaf0J+BSy5dS6xjj4rO/rc6UFdie/llklEEL8zXvye
+ h54lnf179etmOSfdhVB7N2VF3O6W4UT/MzbAw1M1ieOhTMCP98LIkeeQr
+ Ph7WPsh/YVOcf4RCAViAnlSers3BEpjyYYOnBGYMkJlI9i4lp+cDq5H5S
+ LPUG2ntrdx4T0JCh7KH0GC39Iygm416n4DXhROue1AbyHU4tqNLtYKQTj A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11008"; a="4670920"
 X-IronPort-AV: E=Sophos;i="6.07,114,1708416000"; 
-   d="scan'208";a="4670773"
+   d="scan'208";a="4670920"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2024 06:24:36 -0700
+ 10 Mar 2024 06:30:25 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,114,1708416000"; d="scan'208";a="41898226"
+X-IronPort-AV: E=Sophos;i="6.07,114,1708416000"; d="scan'208";a="41898789"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by fmviesa001.fm.intel.com with ESMTP; 10 Mar 2024 06:24:31 -0700
-Date: Sun, 10 Mar 2024 21:38:19 +0800
+ by fmviesa001.fm.intel.com with ESMTP; 10 Mar 2024 06:30:20 -0700
+Date: Sun, 10 Mar 2024 21:44:08 +0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Xiaoyao Li <xiaoyao.li@intel.com>
 Cc: Eduardo Habkost <eduardo@habkost.net>,
@@ -61,16 +61,16 @@ Cc: Eduardo Habkost <eduardo@habkost.net>,
  Zhuocheng Ding <zhuocheng.ding@intel.com>,
  Babu Moger <babu.moger@amd.com>, Yongwei Ma <yongwei.ma@intel.com>,
  Zhao Liu <zhao1.liu@intel.com>, Robert Hoo <robert.hu@linux.intel.com>
-Subject: Re: [PATCH v9 06/21] i386/cpu: Use APIC ID info to encode cache topo
- in CPUID[4]
-Message-ID: <Ze23y7UzGxnsyo6O@intel.com>
+Subject: Re: [PATCH v9 08/21] i386/cpu: Consolidate the use of topo_info in
+ cpu_x86_cpuid()
+Message-ID: <Ze25KAEvahnO2oGF@intel.com>
 References: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
- <20240227103231.1556302-7-zhao1.liu@linux.intel.com>
- <c88ee253-f212-4aa7-9db9-e90a99a9a1e3@intel.com>
+ <20240227103231.1556302-9-zhao1.liu@linux.intel.com>
+ <89ed09f2-c139-46b1-b76a-8fa3522cc1ed@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <c88ee253-f212-4aa7-9db9-e90a99a9a1e3@intel.com>
+In-Reply-To: <89ed09f2-c139-46b1-b76a-8fa3522cc1ed@intel.com>
 Received-SPF: none client-ip=198.175.65.21;
  envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
 X-Spam_score_int: -29
@@ -97,41 +97,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi Xiaoyao,
 
-> >               case 3: /* L3 cache info */
-> > -                die_offset = apicid_die_offset(&topo_info);
-> >                   if (cpu->enable_l3_cache) {
-> > +                    addressable_threads_width = apicid_die_offset(&topo_info);
+On Sat, Mar 09, 2024 at 09:48:34PM +0800, Xiaoyao Li wrote:
+> Date: Sat, 9 Mar 2024 21:48:34 +0800
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
+> Subject: Re: [PATCH v9 08/21] i386/cpu: Consolidate the use of topo_info in
+>  cpu_x86_cpuid()
 > 
-> Please get rid of the local variable @addressable_threads_width.
+> On 2/27/2024 6:32 PM, Zhao Liu wrote:
+> > From: Zhao Liu<zhao1.liu@intel.com>
+> > 
+> > In cpu_x86_cpuid(), there are many variables in representing the cpu
+> > topology, e.g., topo_info, cs->nr_cores and cs->nr_threads.
+> > 
+> > Since the names of cs->nr_cores/cs->nr_threads does not accurately
 > 
-> It is truly confusing.
+> Again as in v7, please changes to "cs->nr_cores and cs->nr_threads",
+> 
+> "cs->nr_cores/cs->nr_threads" looks like a single variable of division
+> 
 
-There're several reasons for this:
+I missed to change this.
 
-1. This commit is trying to use APIC ID topology layout to decode 2
-cache topology fields in CPUID[4], CPUID.04H:EAX[bits 25:14] and
-CPUID.04H:EAX[bits 31:26]. When there's a addressable_cores_width to map
-to CPUID.04H:EAX[bits 31:26], it's more clear to also map
-CPUID.04H:EAX[bits 25:14] to another variable.
-
-2. All these 2 variables are temporary in this commit, and they will be
-replaed by 2 helpers in follow-up cleanup of this series.
-
-3. Similarly, to make it easier to clean up later with the helper and
-for more people to review, it's neater to explicitly indicate the
-CPUID.04H:EAX[bits 25:14] with a variable here.
-
-4. I call this field as addressable_threads_width since it's "Maximum
-number of addressable IDs for logical processors sharing this cache".
-
-Its own name is long, but given the length, only individual words could
-be selected as names.
-
-TBH, "addressable" deserves more emphasis than "sharing". The former
-emphasizes the fact that the number of threads chosen here is based on
-the APIC ID layout and does not necessarily correspond to actual threads.
-
-Therefore, this variable is needed here.
+Though, TBH, legitimate division operations are going to add spaces
+around "/". It's also common practice to represent "or" by "/" w/t
+spaces. But I'll change it in the next version to make you happy!
 
 Thanks,
 Zhao
