@@ -4,64 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12774C54E49
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 Mar 2024 20:26:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10FD3C54791
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 Mar 2024 21:08:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjPjg-0006Qw-OQ; Sun, 10 Mar 2024 16:25:32 -0400
+	id 1rjQOl-0004QY-0W; Sun, 10 Mar 2024 17:07:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <viktor.prutyanov@phystech.edu>)
- id 1rjPjd-0006Qd-FZ
- for qemu-devel@nongnu.org; Sun, 10 Mar 2024 16:25:30 -0400
-Received: from forward501c.mail.yandex.net ([2a02:6b8:c03:500:1:45:d181:d501])
+ (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
+ id 1rjQOj-0004Q2-Ol
+ for qemu-devel@nongnu.org; Sun, 10 Mar 2024 17:07:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <viktor.prutyanov@phystech.edu>)
- id 1rjPja-0004tB-L2
- for qemu-devel@nongnu.org; Sun, 10 Mar 2024 16:25:29 -0400
-Received: from mail-nwsmtp-mxback-production-main-412.sas.yp-c.yandex.net
- (mail-nwsmtp-mxback-production-main-412.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c11:3f8a:0:640:ecc1:0])
- by forward501c.mail.yandex.net (Yandex) with ESMTPS id DC42360B50;
- Sun, 10 Mar 2024 23:25:20 +0300 (MSK)
-Received: from mail.yandex.ru (2a02:6b8:c08:b694:0:640:811:0
- [2a02:6b8:c08:b694:0:640:811:0])
- by mail-nwsmtp-mxback-production-main-412.sas.yp-c.yandex.net (mxback/Yandex)
- with HTTP id 9PrTUj3OuSw0-kPknSCVz; Sun, 10 Mar 2024 23:25:20 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phystech.edu;
- s=mail; t=1710102320;
- bh=LdFG0r+zvZ5+yz03RPyuR3PHz4I0I2LcOuUQ3Z5dtIk=;
- h=Message-Id:References:Date:Cc:Subject:In-Reply-To:To:From;
- b=nG1iblURlHox2eO+hDL24iqxewvYPr5Ako/TUJDACgPPuGWK8i8xewclNQ3ndwKok
- 24oKtqUGjB2NF6bzg8ci5O6mzHpfy+eJbMiCOPtKb+WTNWVg1WtZzyQcvCs8m0C7zD
- fNo2eEKndYeIYvYVnIvuRmCIdVShVc9LZeHZrcHY=
-Authentication-Results: mail-nwsmtp-mxback-production-main-412.sas.yp-c.yandex.net;
- dkim=pass header.i=@phystech.edu
-Received: by 24jwihnks63ygbra.sas.yp-c.yandex.net with HTTP;
- Sun, 10 Mar 2024 23:25:19 +0300
-From: Viktor Prutyanov <viktor.prutyanov@phystech.edu>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-devel@nongnu.org,
-	Peter Maydell <peter.maydell@linaro.org>
-In-Reply-To: <20240307-elf2dmp-v4-0-4f324ad4d99d@daynix.com>
-References: <20240307-elf2dmp-v4-0-4f324ad4d99d@daynix.com>
-Subject: Re: [PATCH v4 00/19] contrib/elf2dmp: Improve robustness
+ (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
+ id 1rjQOi-0003Px-6f
+ for qemu-devel@nongnu.org; Sun, 10 Mar 2024 17:07:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710104873;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5KNtg2ETgvivPOVUzLPwYiwtr0bLxnHEKHq7C69R8+A=;
+ b=DXd+oOjl60f/gMhASDvZ2W1k3FMbmxe3k3aWsbCJnCp0T67LXFdXQndsMXFyP3eBxtl+b/
+ 3UEz5n0eIEmboG0gt5RSG+CmmyCxoRtwemJ9VjNeKWMxRTv2skeNNE8T3nLrWacdpSYSJJ
+ zfzzaeTyyroDjjsd/JKI0vpkvGdJ9b8=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-155-bbRRWY1HMZOp03A2TG948g-1; Sun, 10 Mar 2024 17:07:51 -0400
+X-MC-Unique: bbRRWY1HMZOp03A2TG948g-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 587CB81CF30;
+ Sun, 10 Mar 2024 21:07:51 +0000 (UTC)
+Received: from angien.pipo.sk (unknown [10.45.242.5])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 6DA42492BD0;
+ Sun, 10 Mar 2024 21:07:47 +0000 (UTC)
+Date: Sun, 10 Mar 2024 22:07:45 +0100
+From: Peter Krempa <pkrempa@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, eblake@redhat.com, hreitz@redhat.com,
+ jsnow@redhat.com, den@virtuozzo.com, t.lamprecht@proxmox.com,
+ alexander.ivanov@virtuozzo.com
+Subject: Re: [PATCH v2 00/10] mirror: allow switching from background to
+ active mode
+Message-ID: <Ze4hIfIwXPUPPMFK@angien.pipo.sk>
+References: <a5c48627-0bef-46cd-9426-587b358fe32d@yandex-team.ru>
+ <993bfa5d-1a91-4b32-9bd8-165b7abba4f0@proxmox.com>
+ <99dd287b-816b-4f4f-b156-32f94bbb62c2@yandex-team.ru>
+ <87o7gbyy8w.fsf@pond.sub.org> <ZUTffE0wfjLH2u+e@redhat.com>
+ <87cywqn84g.fsf@pond.sub.org>
+ <1310efb0-e211-46f5-b166-d7d529507a43@yandex-team.ru>
+ <ZeWnFhLKCamlP97y@redhat.com> <ZeWr3ZGrRUrciHH4@angien.pipo.sk>
+ <65f517cd-3a1b-41bd-b326-e509cb208b92@yandex-team.ru>
 MIME-Version: 1.0
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date: Sun, 10 Mar 2024 23:25:19 +0300
-Message-Id: <3653711710102319@24jwihnks63ygbra.sas.yp-c.yandex.net>
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain
-Received-SPF: pass client-ip=2a02:6b8:c03:500:1:45:d181:d501;
- envelope-from=viktor.prutyanov@phystech.edu; helo=forward501c.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <65f517cd-3a1b-41bd-b326-e509cb208b92@yandex-team.ru>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pkrempa@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.945,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -78,92 +93,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Mar 07, 2024 at 22:42:56 +0300, Vladimir Sementsov-Ogievskiy wrote:
+> On 04.03.24 14:09, Peter Krempa wrote:
+> > On Mon, Mar 04, 2024 at 11:48:54 +0100, Kevin Wolf wrote:
+> > > Am 28.02.2024 um 19:07 hat Vladimir Sementsov-Ogievskiy geschrieben:
+> > > > On 03.11.23 18:56, Markus Armbruster wrote:
+> > > > > Kevin Wolf<kwolf@redhat.com>  writes:
 
+[...]
 
-> elf2dmp sometimes fails to work with partially corrupted dumps, and also
-> emits warnings when sanitizers are in use. This series are collections
-> of changes to improve the situation.
 > 
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
-> Changes in v4:
-> - Remove unnecessary !! idiom (Peter Maydell)
-> - Link to v3: https://lore.kernel.org/r/20240306-elf2dmp-v3-0-d74e6c3da49c@daynix.com
+> I only see the following differencies:
 > 
-> Changes in v3:
-> - Split patch "contrib/elf2dmp: Conform to the error reporting pattern".
-> (Peter Maydell)
-> - Stated that the relevant value is little-endian in patch
-> "contrib/elf2dmp: Use lduw_le_p() to read PDB".
-> - Added a message saying "Build it only for little endian hosts until
-> they are fixed." for patch "contrib/elf2dmp: Build only for little
-> endian host".
-> - Added patch "contrib/elf2dmp: Ensure phdrs fit in file" to fix
-> https://gitlab.com/qemu-project/qemu/-/issues/2202 as patch
-> "contrib/elf2dmp: Clamp QEMU note to file size" was not really fixing
-> the crash.
-> - Link to v2: https://lore.kernel.org/r/20240305-elf2dmp-v2-0-86ff2163ad32@daynix.com
+> 1. block-job-complete documents that it completes the job synchronously.. But looking at mirror code I see it just set s->should_complete = true, which will be then handled asynchronously.. So I doubt that documentation is correct.
 > 
-> Changes in v2:
-> - Added patch "contrib/elf2dmp: Remove unnecessary err flags".
-> - Added patch "contrib/elf2dmp: Assume error by default".
-> - Added patch "contrib/elf2dmp: Conform to the error reporting pattern".
-> - Added patch "contrib/elf2dmp: Build only for little endian host".
-> - Added patch "contrib/elf2dmp: Use GPtrArray".
-> - Added patch "contrib/elf2dmp: Clamp QEMU note to file size".
-> - Changed error handling in patch "contrib/elf2dmp: Ensure segment fits
-> in file" (Peter Maydell)
-> - Added a comment to fill_context() that it continues on failure.
-> (Peter Maydell)
-> - Link to v1: https://lore.kernel.org/r/20240303-elf2dmp-v1-0-bea6649fe3e6@daynix.com
+> 2. block-job-complete will trigger final graph changes. block-job-cancel will not.
 > 
-> ---
-> Akihiko Odaki (19):
-> contrib/elf2dmp: Remove unnecessary err flags
-> contrib/elf2dmp: Assume error by default
-> contrib/elf2dmp: Continue even contexts are lacking
-> contrib/elf2dmp: Change pa_space_create() signature
-> contrib/elf2dmp: Fix error reporting style in addrspace.c
-> contrib/elf2dmp: Fix error reporting style in download.c
-> contrib/elf2dmp: Fix error reporting style in pdb.c
-> contrib/elf2dmp: Fix error reporting style in qemu_elf.c
-> contrib/elf2dmp: Fix error reporting style in main.c
-> contrib/elf2dmp: Always check for PA resolution failure
-> contrib/elf2dmp: Always destroy PA space
-> contrib/elf2dmp: Ensure segment fits in file
-> contrib/elf2dmp: Use lduw_le_p() to read PDB
-> contrib/elf2dmp: Use rol64() to decode
-> MAINTAINERS: Add Akihiko Odaki as a elf2dmp reviewer
-> contrib/elf2dmp: Build only for little endian host
-> contrib/elf2dmp: Use GPtrArray
-> contrib/elf2dmp: Clamp QEMU note to file size
-> contrib/elf2dmp: Ensure phdrs fit in file
+> Is [2] really useful? Seems yes: in case of some failure before starting migration target, we'd like to continue executing source. So, no reason to break block-graph in source, better keep it unchanged.
 > 
-> MAINTAINERS | 1 +
-> contrib/elf2dmp/addrspace.h | 6 +-
-> contrib/elf2dmp/download.h | 2 +-
-> contrib/elf2dmp/pdb.h | 2 +-
-> contrib/elf2dmp/qemu_elf.h | 2 +-
-> contrib/elf2dmp/addrspace.c | 63 ++++++++++-------
-> contrib/elf2dmp/download.c | 12 ++--
-> contrib/elf2dmp/main.c | 168 ++++++++++++++++++++------------------------
-> contrib/elf2dmp/pdb.c | 61 +++++++---------
-> contrib/elf2dmp/qemu_elf.c | 150 ++++++++++++++++++++++-----------------
-> contrib/elf2dmp/meson.build | 2 +-
-> 11 files changed, 238 insertions(+), 231 deletions(-)
-> ---
-> base-commit: bfe8020c814a30479a4241aaa78b63960655962b
-> change-id: 20240301-elf2dmp-1a6a551f8663
-> 
-> Best regards,
-> 
-> --
-> Akihiko Odaki <akihiko.odaki@daynix.com>
+> But I think, such behavior better be setup by mirror-job start parameter, rather then by special option for cancel (or even compelete) command, useful only for mirror.
 
-Hi,
+Libvirt's API design was based on the qemu quirk and thus we allow users
+to do the decision after starting the job, thus anything you pick needs
+to allow us to do this at "completion" time.
 
-I've tested the series with Windows Server 2022 Standard (Build 20348), 4GiB, 4 vCPUs.
-
-Tested-by: Viktor Prutyanov <viktor.prutyanov@phystech.edu>
+Libvirt can adapt to any option that will give us the above semantics
+(extra parameter at completion time, different completion command or
+extra command to switch job properties right before completion), but to
+be honest all of these feel like they would be more hassle than keeping
+'block-job-cancel' around from qemu's side.
 
 
