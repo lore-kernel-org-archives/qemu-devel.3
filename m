@@ -4,72 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 588F0C54791
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 Mar 2024 12:54:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 757FEC54791
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 Mar 2024 13:25:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjIgf-0000rX-CF; Sun, 10 Mar 2024 08:54:02 -0400
+	id 1rjJAR-00073p-4c; Sun, 10 Mar 2024 09:24:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjIgD-0000qq-Hm
- for qemu-devel@nongnu.org; Sun, 10 Mar 2024 08:53:31 -0400
-Received: from mgamail.intel.com ([192.198.163.10])
+ id 1rjJAP-00073J-D3
+ for qemu-devel@nongnu.org; Sun, 10 Mar 2024 09:24:41 -0400
+Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjIfu-0006W4-JW
- for qemu-devel@nongnu.org; Sun, 10 Mar 2024 08:53:16 -0400
+ id 1rjJAN-0004Bg-5N
+ for qemu-devel@nongnu.org; Sun, 10 Mar 2024 09:24:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710075191; x=1741611191;
+ t=1710077079; x=1741613079;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=TYTcQj1A/fM7oNSSxxcY/WHjT95T4Jq6+zVNKfGrpZw=;
- b=KVs3aASMdNBUudzugqWdiyQM2PJu05BLQqK7/YMvEyLRV15vk5xjz5fI
- 8JMe1P85ori8xCsLG8DYVXkbmzRa4G6PhFJ65efMo0r8Nq21g0hWY8eoy
- b22PX8yHktqFAdEyI071jER4F2ZJUeJ0yy9GeDR8AMUADKsaNtdSCLdAq
- 3KKAAfQldECaJD3guQDTe/qbbdGwymr4iqni6DiCz1DyZd4KyTNWx83qt
- WtN9DUKC1CxNTBnyOWCJqpLtbhke+tdy3awRcTSvVFsp90GMrhJQmlMWr
- EvoPKZUzpQVj2BFEztdzhBF2CjGUYXdtSkk600u/tg9npk6qQSMgvbqoV g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11008"; a="16151827"
-X-IronPort-AV: E=Sophos;i="6.07,114,1708416000"; d="scan'208";a="16151827"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2024 05:53:08 -0700
+ bh=Gt/euky25A9+T2umyqp+SyRRMY1VLZnpUw+PY3Wm2U8=;
+ b=mzCRTUaIzBdiovmvmXT0m19gHvp5Fr/qV857PhwP6VqL8GSuUCgbS3xB
+ NH0d5gEigKQ3TvXWlJhKKm1iYw0ogykJS6jFnEoZOOu/vNbj78gK97l8j
+ tMkmDNrx0w6hps7JsYR4MXFfnpbnMh90XPZmnonOkaxJ6leEySKzpwBXx
+ hvgfrron5bYenlySbx4+zJN+q6/V/9mWMmZP+m6/CK0IdNEbVhnGsPJIQ
+ KKNlCFlxWt36t9dVM22+11XACgEfutU65tgSmWhh5VVVMh18VR0NQrsMS
+ zgVsRhKcNAXkeIcpFW2Y5drnVWqF8irOmwNk6PSdaElkPaO1uoiHCuRyg Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11008"; a="4670773"
+X-IronPort-AV: E=Sophos;i="6.07,114,1708416000"; 
+   d="scan'208";a="4670773"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Mar 2024 06:24:36 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,114,1708416000"; d="scan'208";a="11348901"
+X-IronPort-AV: E=Sophos;i="6.07,114,1708416000"; d="scan'208";a="41898226"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by orviesa007.jf.intel.com with ESMTP; 10 Mar 2024 05:53:03 -0700
-Date: Sun, 10 Mar 2024 21:06:51 +0800
+ by fmviesa001.fm.intel.com with ESMTP; 10 Mar 2024 06:24:31 -0700
+Date: Sun, 10 Mar 2024 21:38:19 +0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
 Cc: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  Yanan Wang <wangyanan55@huawei.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Zhuocheng Ding <zhuocheng.ding@intel.com>,
  Babu Moger <babu.moger@amd.com>, Yongwei Ma <yongwei.ma@intel.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v9 00/21] Introduce smp.modules for x86 in QEMU
-Message-ID: <Ze2wa7YH+eVRyaTL@intel.com>
+ Zhao Liu <zhao1.liu@intel.com>, Robert Hoo <robert.hu@linux.intel.com>
+Subject: Re: [PATCH v9 06/21] i386/cpu: Use APIC ID info to encode cache topo
+ in CPUID[4]
+Message-ID: <Ze23y7UzGxnsyo6O@intel.com>
 References: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
- <17444096-9602-43e1-9042-2a7ce02b5e79@linaro.org>
- <ZeuyN8Eacq1Twsvg@intel.com>
- <d58b22bb-43b4-42aa-8ed2-1975beb1f31c@linaro.org>
+ <20240227103231.1556302-7-zhao1.liu@linux.intel.com>
+ <c88ee253-f212-4aa7-9db9-e90a99a9a1e3@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d58b22bb-43b4-42aa-8ed2-1975beb1f31c@linaro.org>
-Received-SPF: none client-ip=192.198.163.10;
+In-Reply-To: <c88ee253-f212-4aa7-9db9-e90a99a9a1e3@intel.com>
+Received-SPF: none client-ip=198.175.65.21;
  envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
 X-Spam_score_int: -29
 X-Spam_score: -3.0
@@ -93,16 +95,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> I dropped this 4 patches in favor of "Cleanup on SMP and its test"
-> v2 (https://lore.kernel.org/qemu-devel/20240308160148.3130837-1-zhao1.liu@linux.intel.com/)
-> which seems more important, to get the "parameter=0" deprecation
-> in the next release. (Patch 2 diverged).
->
+Hi Xiaoyao,
 
-Thanks! This series will continue to be refreshed and rebased on the new
-master code base.
+> >               case 3: /* L3 cache info */
+> > -                die_offset = apicid_die_offset(&topo_info);
+> >                   if (cpu->enable_l3_cache) {
+> > +                    addressable_threads_width = apicid_die_offset(&topo_info);
+> 
+> Please get rid of the local variable @addressable_threads_width.
+> 
+> It is truly confusing.
 
-Regards,
+There're several reasons for this:
+
+1. This commit is trying to use APIC ID topology layout to decode 2
+cache topology fields in CPUID[4], CPUID.04H:EAX[bits 25:14] and
+CPUID.04H:EAX[bits 31:26]. When there's a addressable_cores_width to map
+to CPUID.04H:EAX[bits 31:26], it's more clear to also map
+CPUID.04H:EAX[bits 25:14] to another variable.
+
+2. All these 2 variables are temporary in this commit, and they will be
+replaed by 2 helpers in follow-up cleanup of this series.
+
+3. Similarly, to make it easier to clean up later with the helper and
+for more people to review, it's neater to explicitly indicate the
+CPUID.04H:EAX[bits 25:14] with a variable here.
+
+4. I call this field as addressable_threads_width since it's "Maximum
+number of addressable IDs for logical processors sharing this cache".
+
+Its own name is long, but given the length, only individual words could
+be selected as names.
+
+TBH, "addressable" deserves more emphasis than "sharing". The former
+emphasizes the fact that the number of threads chosen here is based on
+the APIC ID layout and does not necessarily correspond to actual threads.
+
+Therefore, this variable is needed here.
+
+Thanks,
 Zhao
 
 
