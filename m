@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7C37C54791
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 Mar 2024 15:37:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B810CC54E58
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 Mar 2024 15:49:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjLDj-00087J-4e; Sun, 10 Mar 2024 11:36:15 -0400
+	id 1rjLPy-0003I1-Oa; Sun, 10 Mar 2024 11:48:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rjLDf-00086e-BD
- for qemu-devel@nongnu.org; Sun, 10 Mar 2024 11:36:11 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rjLPx-0003HP-27; Sun, 10 Mar 2024 11:48:53 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rjLDZ-0000kP-1o
- for qemu-devel@nongnu.org; Sun, 10 Mar 2024 11:36:08 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rjLPv-0002kK-C9; Sun, 10 Mar 2024 11:48:52 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CDF3954826;
- Sun, 10 Mar 2024 18:36:58 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A32DF5482D;
+ Sun, 10 Mar 2024 18:49:43 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 34FB8950AC;
- Sun, 10 Mar 2024 18:36:00 +0300 (MSK)
-Message-ID: <353bf0b3-abd2-4468-a4db-d83483dbe0e5@tls.msk.ru>
-Date: Sun, 10 Mar 2024 18:35:59 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 03FBE950B7;
+ Sun, 10 Mar 2024 18:48:44 +0300 (MSK)
+Message-ID: <446379f5-cb35-4a63-8c46-4a599672f6d5@tls.msk.ru>
+Date: Sun, 10 Mar 2024 18:48:44 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] hw/scsi/lsi53c895a: add timer to scripts processing
+Subject: Re: [PATCH 1/2] tcg/aarch64: Fix tcg_out_cmp for test comparisons
 Content-Language: en-US
-To: Sven Schnelle <svens@stackframe.org>, Paolo Bonzini
- <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, deller@gmx.de, BALATON Zoltan <balaton@eik.bme.hu>
-References: <20240304163727.2320861-1-svens@stackframe.org>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, peter.maydell@linaro.org, qemu-stable@nongnu.org
+References: <20240309175102.726332-1-richard.henderson@linaro.org>
+ <20240309175102.726332-2-richard.henderson@linaro.org>
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
@@ -60,7 +59,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240304163727.2320861-1-svens@stackframe.org>
+In-Reply-To: <20240309175102.726332-2-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -86,27 +85,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-04.03.2024 19:37, Sven Schnelle :
-> HP-UX 10.20 seems to make the lsi53c895a spinning on a memory location
-> under certain circumstances. As the SCSI controller and CPU are not
-> running at the same time this loop will never finish. After some
-> time, the check loop interrupts with a unexpected device disconnect.
-> This works, but is slow because the kernel resets the scsi controller.
-> Instead of signaling UDC, start a timer and exit the loop. Until the
-> timer fires, the CPU can process instructions which might change the
-> memory location.
+09.03.2024 20:51, Richard Henderson wrote:
+> Pass the type to tcg_out_logicali; remove the assert, duplicated
+> at the start of tcg_out_logicali.
 > 
-> The limit of instructions is also reduced because scripts running on
-> the SCSI processor are usually very short. This keeps the time until
-> the loop is exited short.
+> Cc: qemu-stable@nongnu.org
+> Fixes: 339adf2f38e ("tcg/aarch64: Support TCG_COND_TST{EQ,NE}")
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-This one is a bit large(ish), yet, - is it okay for -stable?  From the
-description it feels like it should be picked up, and it applies cleanly
-to 7.2.x too (after picking up the forgotten 8b09b7fe47082c692
-"hw/scsi/lsi53c895a: add missing decrement of reentrancy counter" there).
+v8.2.0-1139-g339adf2f38 isn't in any released version and hasn't been picked
+up for stable either, so neither of the two changes has to go to stable.
+Still, thank you for remembering to Cc qemu-stable@, - it is better to have
+extra there and reject what's not needed than to miss something important.
 
-Thanks,
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 
-/mjt
+> ---
+>   tcg/aarch64/tcg-target.c.inc | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
+> index dec8ecc1b6..38446c167e 100644
+> --- a/tcg/aarch64/tcg-target.c.inc
+> +++ b/tcg/aarch64/tcg-target.c.inc
+> @@ -1388,8 +1388,7 @@ static void tcg_out_cmp(TCGContext *s, TCGType ext, TCGCond cond, TCGReg a,
+>           if (!const_b) {
+>               tcg_out_insn(s, 3510, ANDS, ext, TCG_REG_XZR, a, b);
+>           } else {
+> -            tcg_debug_assert(is_limm(b));
+> -            tcg_out_logicali(s, I3404_ANDSI, 0, TCG_REG_XZR, a, b);
+> +            tcg_out_logicali(s, I3404_ANDSI, ext, TCG_REG_XZR, a, b);
+>           }
+>       } else {
+>           if (!const_b) {
 
 
