@@ -4,125 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 167D9C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 16:21:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B19EC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 16:58:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjiO9-0006Nw-Ij; Mon, 11 Mar 2024 12:20:33 -0400
+	id 1rjiy0-00056G-Ac; Mon, 11 Mar 2024 12:57:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjiO6-0006NQ-Ig
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 12:20:31 -0400
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1rjixz-00054C-0p
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 12:57:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjiO5-0007Cm-0g
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 12:20:30 -0400
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1rjixx-0005zf-E9
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 12:57:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710174027;
+ s=mimecast20190719; t=1710176252;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qX7RvFLNPtu0xPfhbm8eVB68J7JTBFDte2eiXpMQlpc=;
- b=GvwW1R2SVzG7m6pHjbCFHtKZRKDz29uEFzzrwkYhqqDqCaUtHzX+f4dmzh3GSmNuyJEE75
- NHGqnwUqdGTru3PzclwhfOS0YTJOPKmNkGF6dTnfcG/6Wu8Iu/US/cNucJA7vkSaaFk3wh
- f3UI1/sTyfk4gp18myao6v0u/TDmKgY=
-Received: from mail-vk1-f197.google.com (mail-vk1-f197.google.com
- [209.85.221.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=9d+LTN83r2rY7ixxhzwmhw6wv45EVmHvQQDqrHorbps=;
+ b=b5ypW+GaLNnf0Q3Lt53qoxnhJTRMdyYoUeFfvXUHVHuH3MmC05LjneLwenwE2f4sogCc3C
+ YMaXYeGlO4h5X0gOBNOwg1R2C7JvdV7mQsXXMf/ZQO4HGxsT8mOOdLqB8/n130pOe9zRhq
+ 0COYOzDTW4TgCHvjCpNC5G+dJ/TFxrA=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-213-3VZKPIG3PUmehSIZgzV4cQ-1; Mon, 11 Mar 2024 12:20:25 -0400
-X-MC-Unique: 3VZKPIG3PUmehSIZgzV4cQ-1
-Received: by mail-vk1-f197.google.com with SMTP id
- 71dfb90a1353d-4d3d1368d03so544949e0c.0
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 09:20:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710174025; x=1710778825;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qX7RvFLNPtu0xPfhbm8eVB68J7JTBFDte2eiXpMQlpc=;
- b=HsOSqwYItmQ/uwNkmPYEvLY1KX+fsjaTMORMBxsDdJMDDKfnF0v0wl6FMGeJySGGB6
- vSawQl4njCjQCgJsd4yetKpECykB7sKxzClTgBVxtpZwrPHh/A0RDz5Ihpu/NsWIx6vy
- G8TUtCtor8PRWn7I2w+aL4Wg7IVAbqNuwBXBnnmN8aXGxHjn0Jgyky6jE/yn0nCZuDXP
- 7mD1NRvh1OFsujVqrOTPGhjjeKCAGuWO/L0OVUTzG6q9g76S77VnTPvY5kDIeemTmF9m
- YIomeC96Wms0q++J62YGHRjeF0cNFw5Si4MT70NJChRcsoBInjRG2SnUoREfl7hRqkap
- qi5w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX3/BLPX04gk+VEn9juwNKMmoBPKzb96GVbF1+9/Mj8NXdF1sSGmwIbOeaoVbz7LDwu28vYtQFn2VdANX4/NAwwbvbezNU=
-X-Gm-Message-State: AOJu0YyG0ikCG3xFpnyLDFxLAZR/ILOdqNMXITQ4ownkduGocEr3odo6
- lrgYtHRNkmTOas9qmClRIlO02DQc7t17HuYZnARoAj49XppIApdty0E+plX3KR4CDgPO9N9mGj2
- 5I/+lPdEF88N+TG1/nH0nbDbecfgGVKFiSZLYaJp5xRlfX5epPlBsY+RhMK4I
-X-Received: by 2002:a05:6122:c96:b0:4d3:4aad:37f6 with SMTP id
- ba22-20020a0561220c9600b004d34aad37f6mr4164622vkb.0.1710174024924; 
- Mon, 11 Mar 2024 09:20:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH3YbTRt8/6MwNry/fT9sP/U0knVmJAAdsEeRj02w+vFcmAc+aU7xnuEF9rfRf5jkqyaZxVuw==
-X-Received: by 2002:a05:6122:c96:b0:4d3:4aad:37f6 with SMTP id
- ba22-20020a0561220c9600b004d34aad37f6mr4164530vkb.0.1710174023170; 
- Mon, 11 Mar 2024 09:20:23 -0700 (PDT)
-Received: from [192.168.0.9] (ip-109-43-178-151.web.vodafone.de.
- [109.43.178.151]) by smtp.gmail.com with ESMTPSA id
- fc11-20020ad44f2b000000b00690cd39da04sm1404036qvb.32.2024.03.11.09.20.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Mar 2024 09:20:22 -0700 (PDT)
-Message-ID: <211263fc-db3d-4fa9-aefa-17df0a8f63f1@redhat.com>
-Date: Mon, 11 Mar 2024 17:20:21 +0100
+ us-mta-15-hJGUVA3GPtWOsZbDXTzDCg-1; Mon, 11 Mar 2024 12:57:29 -0400
+X-MC-Unique: hJGUVA3GPtWOsZbDXTzDCg-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 494318007A2;
+ Mon, 11 Mar 2024 16:57:29 +0000 (UTC)
+Received: from srv1.redhat.com (unknown [10.45.224.122])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 4E73D10F43;
+ Mon, 11 Mar 2024 16:57:28 +0000 (UTC)
+From: Konstantin Kostiuk <kkostiuk@redhat.com>
+To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 1/3] qga/commands-win32: Declare const qualifier before type
+Date: Mon, 11 Mar 2024 18:57:22 +0200
+Message-ID: <20240311165724.176168-2-kkostiuk@redhat.com>
+In-Reply-To: <20240311165724.176168-1-kkostiuk@redhat.com>
+References: <20240311165724.176168-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] crypto: report which ciphers are being skipped during
- tests
-Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-References: <20240311121929.212472-1-berrange@redhat.com>
- <20240311121929.212472-5-berrange@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240311121929.212472-5-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -146,32 +81,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/03/2024 13.19, Daniel P. Berrangé wrote:
-> Since the ciphers can be dynamically disabled at runtime, when running
-> unit tests it is helpful to report which ciphers we can skipped for
-> testing.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   tests/unit/test-crypto-cipher.c | 4 ++++
->   1 file changed, 4 insertions(+)
-> 
-> diff --git a/tests/unit/test-crypto-cipher.c b/tests/unit/test-crypto-cipher.c
-> index d0ea7b4d8e..f5152e569d 100644
-> --- a/tests/unit/test-crypto-cipher.c
-> +++ b/tests/unit/test-crypto-cipher.c
-> @@ -821,6 +821,10 @@ int main(int argc, char **argv)
->       for (i = 0; i < G_N_ELEMENTS(test_data); i++) {
->           if (qcrypto_cipher_supports(test_data[i].alg, test_data[i].mode)) {
->               g_test_add_data_func(test_data[i].path, &test_data[i], test_cipher);
-> +        } else {
-> +            g_printerr("# skip unsupported %s:%s\n",
-> +                       QCryptoCipherAlgorithm_str(test_data[i].alg),
-> +                       QCryptoCipherMode_str(test_data[i].mode));
->           }
->       }
->   
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Most of the code base use the 'const' qualifier *before*
+the type being qualified. Use the same style to unify.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240222152835.72095-2-philmd@linaro.org>
+Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+Reviewed-by: Yan Vugenfirer <yvugenfi@redhat.com>
+Link: https://lore.kernel.org/r/20240304134532.28506-2-kkostiuk@redhat.com
+Signed-off-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+---
+ qga/commands-win32.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/qga/commands-win32.c b/qga/commands-win32.c
+index a1015757d8..79b5a580c9 100644
+--- a/qga/commands-win32.c
++++ b/qga/commands-win32.c
+@@ -2120,11 +2120,11 @@ GuestUserList *qmp_guest_get_users(Error **errp)
+ typedef struct _ga_matrix_lookup_t {
+     int major;
+     int minor;
+-    char const *version;
+-    char const *version_id;
++    const char *version;
++    const char *version_id;
+ } ga_matrix_lookup_t;
+ 
+-static ga_matrix_lookup_t const WIN_VERSION_MATRIX[2][7] = {
++static const ga_matrix_lookup_t WIN_VERSION_MATRIX[2][7] = {
+     {
+         /* Desktop editions */
+         { 5, 0, "Microsoft Windows 2000",   "2000"},
+@@ -2148,18 +2148,18 @@ static ga_matrix_lookup_t const WIN_VERSION_MATRIX[2][7] = {
+ 
+ typedef struct _ga_win_10_0_t {
+     int first_build;
+-    char const *version;
+-    char const *version_id;
++    const char *version;
++    const char *version_id;
+ } ga_win_10_0_t;
+ 
+-static ga_win_10_0_t const WIN_10_0_SERVER_VERSION_MATRIX[4] = {
++static const ga_win_10_0_t WIN_10_0_SERVER_VERSION_MATRIX[4] = {
+     {14393, "Microsoft Windows Server 2016",    "2016"},
+     {17763, "Microsoft Windows Server 2019",    "2019"},
+     {20344, "Microsoft Windows Server 2022",    "2022"},
+     {0, 0}
+ };
+ 
+-static ga_win_10_0_t const WIN_10_0_CLIENT_VERSION_MATRIX[3] = {
++static const ga_win_10_0_t WIN_10_0_CLIENT_VERSION_MATRIX[3] = {
+     {10240, "Microsoft Windows 10",    "10"},
+     {22000, "Microsoft Windows 11",    "11"},
+     {0, 0}
+@@ -2185,16 +2185,16 @@ static void ga_get_win_version(RTL_OSVERSIONINFOEXW *info, Error **errp)
+     return;
+ }
+ 
+-static char *ga_get_win_name(OSVERSIONINFOEXW const *os_version, bool id)
++static char *ga_get_win_name(const OSVERSIONINFOEXW *os_version, bool id)
+ {
+     DWORD major = os_version->dwMajorVersion;
+     DWORD minor = os_version->dwMinorVersion;
+     DWORD build = os_version->dwBuildNumber;
+     int tbl_idx = (os_version->wProductType != VER_NT_WORKSTATION);
+-    ga_matrix_lookup_t const *table = WIN_VERSION_MATRIX[tbl_idx];
+-    ga_win_10_0_t const *win_10_0_table = tbl_idx ?
++    const ga_matrix_lookup_t *table = WIN_VERSION_MATRIX[tbl_idx];
++    const ga_win_10_0_t *win_10_0_table = tbl_idx ?
+         WIN_10_0_SERVER_VERSION_MATRIX : WIN_10_0_CLIENT_VERSION_MATRIX;
+-    ga_win_10_0_t const *win_10_0_version = NULL;
++    const ga_win_10_0_t *win_10_0_version = NULL;
+     while (table->version != NULL) {
+         if (major == 10 && minor == 0) {
+             while (win_10_0_table->version != NULL) {
+-- 
+2.44.0
 
 
