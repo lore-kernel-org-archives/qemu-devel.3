@@ -4,53 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B429C54E60
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:25:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A920C5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:26:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjWHT-0005YQ-LG; Sun, 10 Mar 2024 23:24:51 -0400
+	id 1rjWHh-0005bb-Ts; Sun, 10 Mar 2024 23:25:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWHR-0005XP-J8; Sun, 10 Mar 2024 23:24:49 -0400
+ id 1rjWHc-0005al-8m; Sun, 10 Mar 2024 23:25:00 -0400
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWHQ-0007qJ-24; Sun, 10 Mar 2024 23:24:49 -0400
+ id 1rjWHa-0007rZ-NN; Sun, 10 Mar 2024 23:25:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710127488; x=1741663488;
+ t=1710127498; x=1741663498;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Ku/zdz8Cve9RNOFOIfrMmxPdZkjkIFoafU6wceTFb3Q=;
- b=Z9IMVOIn7eZBNdVUO8W2jCM9Hbe79eSb27gCwXNUxPB1Y51XTIvBUKh4
- K8/N4ZwiHibzVPHb1PTIrYqdFFB8tFU+svkCpu32lRaz/GgdsvEVU+F8v
- oUGoTlSZbTg04ZyVlB36hcT3xoNAczw4AGGm1Sfz92y/2QrIaQMMK33tN
- SBwn/34vqhrc3vjtHxFrJdcaQy0+6ZAAmh5egqx5bAmSZCyWPG9lO0ygH
- tERAdOLeMiJUMA5pFv2aGwxoOcBqFph9ZA3OmISs7lWOIisJbVdD9ivHY
- 0Lg4nuvcbKdhUwXFvfEixPyDI6a22Gax57XEty3cWTrT2lW3NKmo5sKnd A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229581"
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229581"
+ bh=Ka71Ek3PnNyeK5aeuQsU7hwBRQ4pWyZd0PGtwm5w0L0=;
+ b=FagtFR01lYjFIyS+Ap2N5He/OIEJ3GaDP3gSdLg2ivJNt+FopcWsLbgO
+ rqHF0PSxRGOw0mSUPhKe3WmDQVDSVYnrzm8Z5ChxtKBBXfh5A49VkSWls
+ D3L9MCyETU2gXDIvo+OrUPofzFVw9KbRN4YMSwf8zkxKNSgIxVzZgywdL
+ /QhrAJuM8iS0HQQdC235q8waXTcfaJnFnIfaq+xEi4XZBYUDpO/mzIiIG
+ xn01SzuXNzcvYI17QWlSTr8Eto9W/vF1pV1Hk6YqonU7hbIVVJoJXDmXE
+ FDG70zAinYnXjqueo5rNIDGojB6640toRLC4vQ5/aY6wREhisNNf5oJsK Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229607"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229607"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2024 20:24:46 -0700
+ 10 Mar 2024 20:24:57 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15593716"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15593743"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:24:44 -0700
+ by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:24:54 -0700
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, Michael Tokarev <mjt@tls.msk.ru>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v2 02/29] backends/iommufd: Fix missing ERRP_GUARD() for
+ Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org
+Subject: [PATCH v2 05/29] block/nbd: Fix missing ERRP_GUARD() for
  error_prepend()
-Date: Mon, 11 Mar 2024 11:37:55 +0800
-Message-Id: <20240311033822.3142585-3-zhao1.liu@linux.intel.com>
+Date: Mon, 11 Mar 2024 11:37:58 +0800
+Message-Id: <20240311033822.3142585-6-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
 References: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
@@ -101,34 +103,37 @@ ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
 can't see this additional information, because exit() happens in
 error_setg earlier than information is added [1].
 
-The iommufd_backend_set_fd() passes @errp to error_prepend(), to avoid
-the above issue, add missing ERRP_GUARD() at the beginning of this
-function.
+The nbd_co_do_receive_one_chunk() passes @errp to error_prepend()
+without ERRP_GUARD(), and though its @errp parameter points to its
+caller's local_err, to follow the requirement of @errp, add missing
+ERRP_GUARD() at the beginning of this function.
 
 [1]: Issue description in the commit message of commit ae7c80a7bd73
      ("error: New macro ERRP_GUARD()").
 
-Cc: Yi Liu <yi.l.liu@intel.com>
-Cc: Eric Auger <eric.auger@redhat.com>
-Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Cc: Eric Blake <eblake@redhat.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Kevin Wolf <kwolf@redhat.com>
+Cc: Hanna Reitz <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- backends/iommufd.c | 1 +
+ block/nbd.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index 1ef683c7b080..62a79fa6b049 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -43,6 +43,7 @@ static void iommufd_backend_finalize(Object *obj)
- 
- static void iommufd_backend_set_fd(Object *obj, const char *str, Error **errp)
+diff --git a/block/nbd.c b/block/nbd.c
+index b9d4f935e017..ef05f7cdfd65 100644
+--- a/block/nbd.c
++++ b/block/nbd.c
+@@ -852,6 +852,7 @@ static coroutine_fn int nbd_co_do_receive_one_chunk(
+         BDRVNBDState *s, uint64_t cookie, bool only_structured,
+         int *request_ret, QEMUIOVector *qiov, void **payload, Error **errp)
  {
 +    ERRP_GUARD();
-     IOMMUFDBackend *be = IOMMUFD_BACKEND(obj);
-     int fd = -1;
- 
+     int ret;
+     int i = COOKIE_TO_INDEX(cookie);
+     void *local_payload = NULL;
 -- 
 2.34.1
 
