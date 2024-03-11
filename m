@@ -4,83 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12F46C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 15:38:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2915C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 15:40:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjhik-0006lF-UN; Mon, 11 Mar 2024 11:37:46 -0400
+	id 1rjhlF-0007eO-B7; Mon, 11 Mar 2024 11:40:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1rjhic-0006kn-Pq
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 11:37:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rjhlD-0007e8-KV
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 11:40:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1rjhiZ-0006r3-8F
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 11:37:38 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rjhlB-0007UI-SJ
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 11:40:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710171449;
+ s=mimecast20190719; t=1710171616;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=MMzHO3xqviHTt8kaOIGgBnITRujcbe5aeyx3hCRQVrk=;
- b=PusZeM3o39LRpmxJx81bkwNoVhmF2SOk7rUMLAbBTAM7NisIY3BmwQkAL5VyPtWAUwjmga
- OS7r+oJ4gwtbUFEwwZnIpSMvXQ+WAbg9CuEhdRFX3r032XBK25DHcJ/Pdz/kuVaT6+RdkX
- kcVnkXHY9kTm3YhVIl1ZCkT9SE9JjWQ=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-108-wOayNvbtOh2M83YTGsBs0Q-1; Mon, 11 Mar 2024 11:37:27 -0400
-X-MC-Unique: wOayNvbtOh2M83YTGsBs0Q-1
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-51321a5bfadso3469237e87.2
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 08:37:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710171446; x=1710776246;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MMzHO3xqviHTt8kaOIGgBnITRujcbe5aeyx3hCRQVrk=;
- b=YVLbTNyfnNCwqYUcxxz/TYbt1+WaL+ufqgnHeJXum6ej9z0HBxL9V+tYOAGgoQYAaH
- XxSHAx4xcHy7AZmOWAmbEQBbNZ79vCB5gcpjMrpkdSjtdHyv09cU97r/J12DdFttSH5b
- ZzFBrze0FZgO5X2NXB1QJDT8v9IRXBMTKOEWlssY1OIsGBy1SUGWGPq35HLkB+PiJs/o
- 1tNSj4ceJpM1Gd6bZy9MAYIgasYt49go34FSoN2SwgvQkl/YZDTiaWg/zn2V43v7djY2
- oHt3JJbcioQnG5ez4NsN1mXgq+kmBOeZEgkw5stzmHv1SeQicPKaqbsIgq859pbVIBuI
- Edrw==
-X-Gm-Message-State: AOJu0YwNbBgSJ6/D9vFXLOKsW07QYjgbIUfLnEX2v1QZCTUOsS1oYPUM
- elmc5wXjYx0+HY/FL6mYag1zbOc/7jzsQDG38F/sP+u8R/i3xNiP8E3G/CTmuJsAr5Tsqu0ckOO
- 9N7FxaKdn++3lyCjRqJ+FhVr+aHuViR7Fh5XMnzNhMSkUPXccVgXyTeC0fTLHjL3AdEthsf3dSx
- HQsmMReYNAbi/+1YfdeYudb2SgH4s=
-X-Received: by 2002:a19:5e1d:0:b0:512:c8f0:1954 with SMTP id
- s29-20020a195e1d000000b00512c8f01954mr4097800lfb.0.1710171446351; 
- Mon, 11 Mar 2024 08:37:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF9JxfaJJKjwZj/URPUTZFAshd1PYGGEvy4QH9e0oVAR+l5IRltVX1JYNfJDiAlvN+YveNxEHRcQKbv7dXEI1Q=
-X-Received: by 2002:a19:5e1d:0:b0:512:c8f0:1954 with SMTP id
- s29-20020a195e1d000000b00512c8f01954mr4097788lfb.0.1710171446002; Mon, 11 Mar
- 2024 08:37:26 -0700 (PDT)
+ bh=QI6nAQnl1KYFDj169Yn3zr50d67w33gak1crerE+Qxg=;
+ b=YzcKm6zLXydWpqvmGU1rfW5zgZeYI8casMRH/V3TagS94OvJfC2z4qVGKAvODau1n6wgnN
+ uEKWPQr1AuoDzwGBpTFfje9zHabVFuJDMI66k4+TQZQWnIbDknSFiUhBIEz5bDyEbil6bS
+ R0P/9v/sUMM4nncO1DKHPxK6VbRcc3M=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-155-r0WrAGjxP-umSmR0gaqbHA-1; Mon,
+ 11 Mar 2024 11:40:09 -0400
+X-MC-Unique: r0WrAGjxP-umSmR0gaqbHA-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 366003CBDF6A;
+ Mon, 11 Mar 2024 15:40:09 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.193.204])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 6400C2166AE4;
+ Mon, 11 Mar 2024 15:40:06 +0000 (UTC)
+Date: Mon, 11 Mar 2024 16:40:05 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Prasad Pandit <ppandit@redhat.com>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org, Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v2] linux-aio: add IO_CMD_FDSYNC command support
+Message-ID: <Ze8l1fzr0oxIFxO1@redhat.com>
+References: <20240311054333.1264776-1-ppandit@redhat.com>
+ <20240311130908.GA327967@fedora>
 MIME-Version: 1.0
-References: <20240227113921.236097-1-armbru@redhat.com>
-In-Reply-To: <20240227113921.236097-1-armbru@redhat.com>
-From: Konstantin Kostiuk <kkostiuk@redhat.com>
-Date: Mon, 11 Mar 2024 17:37:14 +0200
-Message-ID: <CAPMcbCoWbZ+x6BA-xje-VoZfV=i82NiNExD0gScTtG_YyHrYPA@mail.gmail.com>
-Subject: Re: [PATCH 00/13] Subject: [PATCH 00/15] qapi: Improve command
- response documentation
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, michael.roth@amd.com, jsnow@redhat.com, 
- eblake@redhat.com
-Content-Type: multipart/alternative; boundary="0000000000008b60fb0613645140"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="xuyqRwusJGxmgjxR"
+Content-Disposition: inline
+In-Reply-To: <20240311130908.GA327967@fedora>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
 X-Spam_bar: ---
 X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,181 +81,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000008b60fb0613645140
-Content-Type: text/plain; charset="UTF-8"
+
+--xuyqRwusJGxmgjxR
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi Markus,
+Am 11.03.2024 um 14:09 hat Stefan Hajnoczi geschrieben:
+> On Mon, Mar 11, 2024 at 11:13:33AM +0530, Prasad Pandit wrote:
+> > From: Prasad Pandit <pjp@fedoraproject.org>
+> >=20
+> > Libaio defines IO_CMD_FDSYNC command to sync all outstanding
+> > asynchronous I/O operations, by flushing out file data to the
+> > disk storage.
+> >=20
+> > Enable linux-aio to submit such aio request. This helps to
+> > reduce latency induced via pthread_create calls by
+> > thread-pool (aio=3Dthreads).
+> >=20
+> > Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
+> > ---
+> >  block/file-posix.c | 12 ++++++++++++
+> >  block/linux-aio.c  |  5 ++++-
+> >  2 files changed, 16 insertions(+), 1 deletion(-)
+> >=20
+> > v2: if IO_CMD_FDSYNC is not supported by the kernel,
+> >     fallback on thread-pool flush.
+> >   -> https://lists.nongnu.org/archive/html/qemu-devel/2024-03/msg01986.=
+html
+> >=20
+> > diff --git a/block/file-posix.c b/block/file-posix.c
+> > index 35684f7e21..4f2195d01d 100644
+> > --- a/block/file-posix.c
+> > +++ b/block/file-posix.c
+> > @@ -2599,6 +2599,18 @@ static int coroutine_fn raw_co_flush_to_disk(Blo=
+ckDriverState *bs)
+> >      if (raw_check_linux_io_uring(s)) {
+> >          return luring_co_submit(bs, s->fd, 0, NULL, QEMU_AIO_FLUSH);
+> >      }
+> > +#endif
+> > +#ifdef CONFIG_LINUX_AIO
+> > +    if (raw_check_linux_aio(s)) {
+> > +        ret =3D laio_co_submit(s->fd, 0, NULL, QEMU_AIO_FLUSH, 0);
+> > +        if (ret >=3D 0) {
+> > +            /*
+> > +             * if AIO_FLUSH is supported return
+> > +             * else fallback on thread-pool flush.
+> > +             */
+> > +            return ret;
+> > +        }
+>=20
+> Falling back every time on an older host kernel might be a noticeable
+> performance regression. That can be avoided with a variable that keeps
+> track of whether -EINVAL was seen before and skips Linux AIO in that
+> case.
+>=20
+> However, it appears that popular distributions starting from Debian 10,
+> Ubuntu 20.04, Fedora 27, CentOS 8, and OpenSUSE Leap 15.5 have the
+> necessary minimum Linux 4.18 kernel:
+> https://repology.org/project/linux/versions
+>=20
+> Fallback should be very rare, so I don't think it needs to be optimized:
+>=20
+> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-I will merge qga-related patches in my PULL.
+We might need this approach for a different reason: This is an
+io_submit() error, so while we retry the flush with the fallback path,
+other requests in the same batch may incorrectly return errors. This
+probably explains the errors Prasad saw in the guest when the kernel
+doesn't have support for flush in Linux AIO.
 
-Best Regards,
-Konstantin Kostiuk.
+So in order to avoid this, we'll probably have to send one flush just to
+probe (while making sure that no other request is pending - maybe
+immediately when opening the image?) and then remember whether it
+worked.
 
+Or we'd have to change the error handling around io_submit(), so that we
+don't always fail the first request in the batch, but first fail any
+flushes and only then the rest of the requests.
 
-On Tue, Feb 27, 2024 at 1:39=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
-m> wrote:
+Kevin
 
-> We use doc comment "Returns" sections both for success and error
-> response.  This series moves the latter to new "Errors" sections.
-> Enables some cleanup, visible in the diffstat.q
->
-> Markus Armbruster (13):
->   qapi: Memorize since & returns sections
->   qapi: Slightly clearer error message for invalid "Returns" section
->   qapi: New documentation section tag "Errors"
->   qapi: Move error documentation to new "Errors" sections
->   qapi: Delete useless "Returns" sections
->   qapi: Clean up "Returns" sections
->   qapi/yank: Tweak @yank's error description for consistency
->   qga/qapi-schema: Move error documentation to new "Errors" sections
->   qga/qapi-schema: Delete useless "Returns" sections
->   qga/qapi-schema: Clean up "Returns" sections
->   qga/qapi-schema: Tweak documentation of fsfreeze commands
->   qga/qapi-schema: Fix guest-set-memory-blocks documentation
->   qapi: Reject "Returns" section when command doesn't return anything
->
->  docs/devel/qapi-code-gen.rst               |  6 +-
->  qapi/block-core.json                       | 74 ++++++++--------------
->  qapi/block-export.json                     | 23 ++++---
->  qapi/block.json                            | 10 ++-
->  qapi/char.json                             |  6 --
->  qapi/dump.json                             |  2 -
->  qapi/machine-target.json                   | 37 ++++++-----
->  qapi/machine.json                          | 19 ++----
->  qapi/migration.json                        | 26 --------
->  qapi/misc-target.json                      |  3 -
->  qapi/misc.json                             | 25 +++-----
->  qapi/net.json                              | 17 +++--
->  qapi/qdev.json                             |  3 +-
->  qapi/qom.json                              |  6 +-
->  qapi/run-state.json                        |  5 +-
->  qapi/tpm.json                              |  2 -
->  qapi/transaction.json                      |  5 +-
->  qapi/ui.json                               | 17 +----
->  qapi/yank.json                             |  5 +-
->  qga/qapi-schema.json                       | 72 +++++++++------------
->  scripts/qapi/parser.py                     | 50 ++++++++++-----
->  tests/qapi-schema/doc-good.json            |  2 +
->  tests/qapi-schema/doc-good.out             |  2 +
->  tests/qapi-schema/doc-good.txt             |  6 ++
->  tests/qapi-schema/doc-invalid-return.err   |  2 +-
->  tests/qapi-schema/doc-invalid-return2.err  |  1 +
->  tests/qapi-schema/doc-invalid-return2.json |  7 ++
->  tests/qapi-schema/doc-invalid-return2.out  |  0
->  tests/qapi-schema/meson.build              |  1 +
->  29 files changed, 189 insertions(+), 245 deletions(-)
->  create mode 100644 tests/qapi-schema/doc-invalid-return2.err
->  create mode 100644 tests/qapi-schema/doc-invalid-return2.json
->  create mode 100644 tests/qapi-schema/doc-invalid-return2.out
->
-> --
-> 2.43.0
->
->
+--xuyqRwusJGxmgjxR
+Content-Type: application/pgp-signature; name="signature.asc"
 
---0000000000008b60fb0613645140
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNATURE-----
 
-<div dir=3D"ltr"><div>Hi Markus,</div><div><br></div><div>I will merge qga-=
-related patches in my PULL.<br></div><div><br></div><div><div><div><div><di=
-v><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signat=
-ure"><div dir=3D"ltr"><div>Best Regards,</div><div>Konstantin Kostiuk.</div=
-></div></div></div><br></div></div></div></div></div><br><div class=3D"gmai=
-l_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Feb 27, 2024 at 1:39=
-=E2=80=AFPM Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com">armb=
-ru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" sty=
-le=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddi=
-ng-left:1ex">We use doc comment &quot;Returns&quot; sections both for succe=
-ss and error<br>
-response.=C2=A0 This series moves the latter to new &quot;Errors&quot; sect=
-ions.<br>
-Enables some cleanup, visible in the diffstat.q<br>
-<br>
-Markus Armbruster (13):<br>
-=C2=A0 qapi: Memorize since &amp; returns sections<br>
-=C2=A0 qapi: Slightly clearer error message for invalid &quot;Returns&quot;=
- section<br>
-=C2=A0 qapi: New documentation section tag &quot;Errors&quot;<br>
-=C2=A0 qapi: Move error documentation to new &quot;Errors&quot; sections<br=
->
-=C2=A0 qapi: Delete useless &quot;Returns&quot; sections<br>
-=C2=A0 qapi: Clean up &quot;Returns&quot; sections<br>
-=C2=A0 qapi/yank: Tweak @yank&#39;s error description for consistency<br>
-=C2=A0 qga/qapi-schema: Move error documentation to new &quot;Errors&quot; =
-sections<br>
-=C2=A0 qga/qapi-schema: Delete useless &quot;Returns&quot; sections<br>
-=C2=A0 qga/qapi-schema: Clean up &quot;Returns&quot; sections<br>
-=C2=A0 qga/qapi-schema: Tweak documentation of fsfreeze commands<br>
-=C2=A0 qga/qapi-schema: Fix guest-set-memory-blocks documentation<br>
-=C2=A0 qapi: Reject &quot;Returns&quot; section when command doesn&#39;t re=
-turn anything<br>
-<br>
-=C2=A0docs/devel/qapi-code-gen.rst=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0|=C2=A0 6 +-<br>
-=C2=A0qapi/block-core.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 74 ++++++++--------------<br>
-=C2=A0qapi/block-export.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 23 ++++---<br>
-=C2=A0qapi/block.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 10 ++-<br>
-=C2=A0qapi/char.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 6 --<br>
-=C2=A0qapi/dump.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 2 -<br>
-=C2=A0qapi/machine-target.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0| 37 ++++++-----<br>
-=C2=A0qapi/machine.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 19 ++----<br>
-=C2=A0qapi/migration.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 26 --------<br>
-=C2=A0qapi/misc-target.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 3 -<br>
-=C2=A0qapi/misc.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 25 +++-----<br>
-=C2=A0qapi/net.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 17 +++--<br>
-=C2=A0qapi/qdev.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 3 +-<br>
-=C2=A0qapi/qom.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 6 +-<br>
-=C2=A0qapi/run-state.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 5 +-<br>
-=C2=A0qapi/tpm.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 2 -<br>
-=C2=A0qapi/transaction.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 5 +-<br>
-=C2=A0qapi/ui.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 17 +----<br>
-=C2=A0qapi/yank.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 5 +-<br>
-=C2=A0qga/qapi-schema.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 72 +++++++++------------<br>
-=C2=A0scripts/qapi/parser.py=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 50 ++++++++++-----<br>
-=C2=A0tests/qapi-schema/doc-good.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 |=C2=A0 2 +<br>
-=C2=A0tests/qapi-schema/doc-good.out=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0|=C2=A0 2 +<br>
-=C2=A0tests/qapi-schema/doc-good.txt=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0|=C2=A0 6 ++<br>
-=C2=A0tests/qapi-schema/doc-invalid-return.err=C2=A0 =C2=A0|=C2=A0 2 +-<br>
-=C2=A0tests/qapi-schema/doc-invalid-return2.err=C2=A0 |=C2=A0 1 +<br>
-=C2=A0tests/qapi-schema/doc-invalid-return2.json |=C2=A0 7 ++<br>
-=C2=A0tests/qapi-schema/doc-invalid-return2.out=C2=A0 |=C2=A0 0<br>
-=C2=A0tests/qapi-schema/meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 |=C2=A0 1 +<br>
-=C2=A029 files changed, 189 insertions(+), 245 deletions(-)<br>
-=C2=A0create mode 100644 tests/qapi-schema/doc-invalid-return2.err<br>
-=C2=A0create mode 100644 tests/qapi-schema/doc-invalid-return2.json<br>
-=C2=A0create mode 100644 tests/qapi-schema/doc-invalid-return2.out<br>
-<br>
--- <br>
-2.43.0<br>
-<br>
-</blockquote></div>
+iQIzBAEBCAAdFiEE3D3rFZqa+V09dFb+fwmycsiPL9YFAmXvJdUACgkQfwmycsiP
+L9Z8wQ/+ITchV432x8ZwZQYJaNkgVYrUSEhfgI2Jp+72kJqikSUaFNmRwW2JHBU1
+fkn+eKH8ebSwFVWUpklWvXvWLLdOurQUw6LB8gmhIdkeeijbYAqqBWs547FdpDjA
+7R1rxvdRtts19qLu25e7s/A1FZhQ0TFsswIUr4qbUR2dhhSK6OT26NxBR4FCa8nM
+B4sry4GMBfGudbypoxpc9LPXI7RrQvPNWTuPg1di/aojd6GMj9ElDPKy1C7uOffw
+f1GIWH7LvA/Y+F3vkvUjOtXDOJUScknvip1gvn2yDaf9PgZMn74BDosgR7klNsOs
+VwffOKh1Tb3z6a2Eis4dQrxh4Pnrdx/hECgihbiNdcCf1+kFMfK9iskgu1uT1McI
+DLxCWLr4qJ5pQPb97l4VoMwuEe0YeShUKTGgr72XZyjyaIFw8XydBONwLAH2AftY
+ohCLJeRw4/KPedNH4ybHyrtlg3n5dyiCd52OtSq66Mv+VUBTD67tTTaqRzV6dthc
+fuF2HCWqCfr5pQytiQe6nr7kYbBDAFEPUWdGPaE2Y5V8QVtmF+yD/l/qfgepprlb
+RIViXQQ2fgXIzD8FZyrrFixbkKlqN+xePoaBbvZXRRa6lVeFZ/FNfhTnwvT/XD2o
+EziA8/UYAu7dqRBrcmPNmbPMIip4o+pU6xArVOtYvL39mXEulBo=
+=6+lZ
+-----END PGP SIGNATURE-----
 
---0000000000008b60fb0613645140--
+--xuyqRwusJGxmgjxR--
 
 
