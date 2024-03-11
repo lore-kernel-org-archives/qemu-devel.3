@@ -4,70 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CF66C5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 12:04:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7D98C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 12:04:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjeNq-0004uP-E5; Mon, 11 Mar 2024 08:03:58 -0400
+	id 1rjeO7-0005B8-S1; Mon, 11 Mar 2024 08:04:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rjeNn-0004sf-Rt
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 08:03:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1rjeO0-00057w-Jp
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 08:04:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rjeNl-0005HR-SG
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 08:03:55 -0400
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1rjeNu-0005I7-Sh
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 08:04:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710158630;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=dCa70XiU7NBWIRy7Prh481jt0xh2wAhsXUxJWoSN0DQ=;
- b=H7EjtapJr6eT197UPq/uAZFxQlb6haYqPw5CrU23zTCkU+iL8VxvMqbNul6Uu9xt3f2duo
- 3XKHma/+Lj3s6yLTYzs/ALUeKpmRw9oFDcRjNP+IZYGQBkR0Z/lL1NZpxYGwG90PTkGrcQ
- +4NGlWTsmVLZcxzEsqhNJV3RFfsarzk=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-83-hqS_GTgDMuWH3H5nJyFiEQ-1; Mon,
- 11 Mar 2024 08:03:45 -0400
-X-MC-Unique: hqS_GTgDMuWH3H5nJyFiEQ-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C2E022801583;
- Mon, 11 Mar 2024 12:03:44 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.132])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id F1BE8C4F9A0;
- Mon, 11 Mar 2024 12:03:43 +0000 (UTC)
-Date: Mon, 11 Mar 2024 12:03:41 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: peterx@redhat.com
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Prasad Pandit <ppandit@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PULL 25/27] migration/multifd: Add mapped-ram support to fd: URI
-Message-ID: <Ze7zHaHBaCRO8qKu@redhat.com>
-References: <20240304012634.95520-1-peterx@redhat.com>
- <20240304012634.95520-26-peterx@redhat.com>
+ s=mimecast20190719; t=1710158641;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=T2ijriOUscBduP8XMUrQHkASSXRp/fhKTcLofPcteR4=;
+ b=emekGOscxjibD52foWwN96DGYURuNK+Wn9WH6UcC5pcSDJc3kD+jB9Jyv0t8/UsWWq8Z9j
+ FTxQj2rE42vVQ2FFopfvDrpICeETv+jgjWF8JtrLRrbg266TRI5bkJH/0YfyrMyCMg9EeB
+ r5psSO91Qdrx4W8wwx2HhXmnFWLHw4U=
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-256-YgSeAdhdNN6vF7qp-vJRBQ-1; Mon, 11 Mar 2024 08:03:59 -0400
+X-MC-Unique: YgSeAdhdNN6vF7qp-vJRBQ-1
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-5c6245bc7caso2516346a12.3
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 05:03:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710158638; x=1710763438;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=T2ijriOUscBduP8XMUrQHkASSXRp/fhKTcLofPcteR4=;
+ b=fxm0BtKjKD5ln4gu2psnVM06mVOcHxwH1ttQbrYgojddmVqE8+hTfTgHOO5wRyEYso
+ mqcvn1Fceh8j/Xrsbm4YdwDII83O6r0RJaFWPt1lAbA2HC2ikLPz4Lurd5V/WnR6Frvp
+ 257BCs7DmvUe3RsnFUBh1+k2gYPH7N3jglr7mwc4ztYAqZuZxaeFLQ5AL+CrohkTmCce
+ h1MPEJuego9rwx9qe0nwiB64mzPF7L6quPK5+xqinHDhy/nhtFYMQp7PgCl4tSpI/tuH
+ H+8eubcqb4OOruaV7wzSoKaX/S16PH6sqZNCzkxAHOtLSstj0EzeY/rlYqtQhi6IjKdK
+ +28w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUZSiisPDWxKFP/0XrQa8Ccvd6UHUHMT+kgSDEXjGkTJXHic1ddHV6RPyzlWBVAiCtWqgTNBf4AglqMdJZyJ03CVI58QAs=
+X-Gm-Message-State: AOJu0YyojMn4kaqTy10hPAiJvEz2uTgNjTB7cABxEsT6Hzs8W6hyPGzE
+ trLeplbDvZOAQ2fAKFnHrYyfPc+HdMKagPe4cAEO3mkJ7VkZZVU3M1fZwzCgl22yF58WiSKtxsW
+ zKHvCxw0gBStkEf4L448OYALewHi+RGnLCM2SNe/21fT1wv3tq2eh
+X-Received: by 2002:a05:6a20:8f0a:b0:1a1:6978:fd6f with SMTP id
+ b10-20020a056a208f0a00b001a16978fd6fmr4036590pzk.5.1710158638505; 
+ Mon, 11 Mar 2024 05:03:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE5vHO//NowsbzBM2k7ZE97NHrDhttrlD6TvbMTL376G2ygrHB2t7wsHuHQL6cD62U3kYQt2g==
+X-Received: by 2002:a05:6a20:8f0a:b0:1a1:6978:fd6f with SMTP id
+ b10-20020a056a208f0a00b001a16978fd6fmr4036556pzk.5.1710158638099; 
+ Mon, 11 Mar 2024 05:03:58 -0700 (PDT)
+Received: from fc37-ani.redhat.com ([115.96.143.99])
+ by smtp.googlemail.com with ESMTPSA id
+ h7-20020a632107000000b005d8be4c125csm4040968pgh.80.2024.03.11.05.03.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 Mar 2024 05:03:57 -0700 (PDT)
+From: Ani Sinha <anisinha@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Ani Sinha <anisinha@redhat.com>, qemu-trivial@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH] docs: update copyright date to the year 2024
+Date: Mon, 11 Mar 2024 17:33:46 +0530
+Message-Id: <20240311120346.9596-1-anisinha@redhat.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240304012634.95520-26-peterx@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,76 +98,47 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 04, 2024 at 09:26:32AM +0800, peterx@redhat.com wrote:
-> From: Fabiano Rosas <farosas@suse.de>
-> 
-> If we receive a file descriptor that points to a regular file, there's
-> nothing stopping us from doing multifd migration with mapped-ram to
-> that file.
-> 
-> Enable the fd: URI to work with multifd + mapped-ram.
-> 
-> Note that the fds passed into multifd are duplicated because we want
-> to avoid cross-thread effects when doing cleanup (i.e. close(fd)). The
-> original fd doesn't need to be duplicated because monitor_get_fd()
-> transfers ownership to the caller.
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> Reviewed-by: Peter Xu <peterx@redhat.com>
-> Link: https://lore.kernel.org/r/20240229153017.2221-23-farosas@suse.de
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  migration/fd.h        |  2 ++
->  migration/fd.c        | 44 +++++++++++++++++++++++++++++++++++++++++++
->  migration/file.c      | 18 ++++++++++++------
->  migration/migration.c |  4 ++++
->  migration/multifd.c   |  2 ++
->  5 files changed, 64 insertions(+), 6 deletions(-)
-> 
+We are already in the third month of 2024 but the copyright notices still refer
+to 2023. Update the date to 2024 in documentation and help texts.
 
-> @@ -73,4 +98,23 @@ void fd_start_incoming_migration(const char *fdname, Error **errp)
->                                 fd_accept_incoming_migration,
->                                 NULL, NULL,
->                                 g_main_context_get_thread_default());
-> +
-> +    if (migrate_multifd()) {
-> +        int channels = migrate_multifd_channels();
-> +
-> +        while (channels--) {
-> +            ioc = QIO_CHANNEL(qio_channel_file_new_fd(dup(fd)));
-> +
-> +            if (QIO_CHANNEL_FILE(ioc)->fd == -1) {
-> +                error_setg(errp, "Failed to duplicate fd %d", fd);
-> +                return;
-> +            }
+Cc: peter.maydell@linaro.org
+Cc: qemu-trivial@nongnu.org
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
+---
+ docs/conf.py              | 2 +-
+ include/qemu/help-texts.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-I'd suggest that Peter's comment about failure checks be fixed
-by introducing a new constructor that handles the dup + error
-reporting.
-
-   QIOChannel *qio_channel_file_new_dupfd(int fd, Error **errp;)
-
-so we're not repeating the error reporting multiple places.
-
-> +
-> +            qio_channel_set_name(ioc, "migration-fd-incoming");
-> +            qio_channel_add_watch_full(ioc, G_IO_IN,
-> +                                       fd_accept_incoming_migration,
-> +                                       NULL, NULL,
-> +                                       g_main_context_get_thread_default());
-> +        }
-> +    }
->  }
-
-With regards,
-Daniel
+diff --git a/docs/conf.py b/docs/conf.py
+index 1b2afa241c..aae0304ac6 100644
+--- a/docs/conf.py
++++ b/docs/conf.py
+@@ -88,7 +88,7 @@
+ 
+ # General information about the project.
+ project = u'QEMU'
+-copyright = u'2023, The QEMU Project Developers'
++copyright = u'2024, The QEMU Project Developers'
+ author = u'The QEMU Project Developers'
+ 
+ # The version info for the project you're documenting, acts as replacement for
+diff --git a/include/qemu/help-texts.h b/include/qemu/help-texts.h
+index d0359f82e0..353ab2ad8b 100644
+--- a/include/qemu/help-texts.h
++++ b/include/qemu/help-texts.h
+@@ -2,7 +2,7 @@
+ #define QEMU_HELP_TEXTS_H
+ 
+ /* Copyright string for -version arguments, About dialogs, etc */
+-#define QEMU_COPYRIGHT "Copyright (c) 2003-2023 " \
++#define QEMU_COPYRIGHT "Copyright (c) 2003-2024 " \
+     "Fabrice Bellard and the QEMU Project developers"
+ 
+ /* Bug reporting information for --help arguments, About dialogs, etc */
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.39.2
 
 
