@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1452BC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:42:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5994C5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:42:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjje6-0002RQ-Us; Mon, 11 Mar 2024 13:41:07 -0400
+	id 1rjjdm-0002Pt-Oi; Mon, 11 Mar 2024 13:40:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjjdr-0002Qr-ON
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:40:55 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjjdk-0002PQ-56
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:40:45 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjjdq-0007Em-2V
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:40:51 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-6e617b39877so3315635b3a.3
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 10:40:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjjdh-00079p-4x
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:40:43 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-6e5a232fe80so3135031b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 10:40:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710178848; x=1710783648; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SLLsOmMfH6Hic0UmOy3GbMHG10bAawMzfOEyo9niiZA=;
- b=cN8XEqtXy53TKbiqAz9A4LdMOxqZ4fWU+Kble8POdw8i4HXZv8ISZG2ahxZxJPoMIy
- lJa3P4j1CNthpLl9UNqF1YjQ46jhr0Riz4yD0MMRFhiLsB81Ocxb3mq6TfO45wG13gH5
- y898Oc3yB0F4g4yCxRDFmAvKRscF6WstS/Ih+tQAR3/O0LWMHWhVf0C7rUwg+0DHM/lV
- 6PpHVy1jrBKVWoYgvllS0+bAO3ScXE+q6LA9boICELxxOOaOmVuz6ryodQrgcABZf1EO
- hj8JQWG6tOGdT04avO32/1/lgBR98ga0pSqjs0gdmmkH7fVvOJeoQyLeMPQNI/2c171S
- z0jQ==
+ d=gmail.com; s=20230601; t=1710178838; x=1710783638; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=HsCaEMKCnbNOVqyHg/O2IxFK4K/IVuc67DpDBDgJ5L0=;
+ b=nZHUaDGqUGFIloXG8Ee7Sdvcpyn24vtPLuoyMi6szVruRPB4GCko6sYPEdeCIue5P2
+ +3PeVoonUDUYCua+EMm72LdIRT8W18Q7ha7BEAStxtmDfl11Icmc7MaO/v6NI8Z130/C
+ nTrw7camZHtEyTtkihQtm3UgJR8jjOhhizYmnojOhTfS7lWpMtsEkrnS6EafWhvNcNfy
+ 7C9NF2ixuaCyGuby13PjaKT1qOFedQR+kLbameiulfZ8A7hfAzasntoTpHtSNb1zBuG6
+ g5P3XTX9PpHTCsw/O6fVhowBdgvub9LNUfdPsH7mgn6STKEIOAwDz+GycntEPxfETbY1
+ TIUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710178848; x=1710783648;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=SLLsOmMfH6Hic0UmOy3GbMHG10bAawMzfOEyo9niiZA=;
- b=ul9ryb8rqUgxBabSimYM5UOiRyoWZ4qp6Qbm5i/X6QcK+U8w6QcxZKwsVzhDcju1kt
- gmeqrPC1Vu9Lqg0KRv7hppDl+ck3ZZgZ9T5Ec1DvgyYJc697+FuPTwwklb+ggkkeMX0a
- USbGuwiJPix2w5VBnnGt0xM+99qixw2uCFK3v4l0zdgTlJrESvB9cnqk1IhGt8ygiTTQ
- CbMzQ3hXCfu7Iy64nA2hs35T9NbO6vCFh7hA3RdK5PjRm5cTneWVEwXda5ggns9vs6g1
- cdu5RozNc+05G5U+IUx9MS6FxS7GNRMvPPVr72nmiD1/MtZY0NMeZmiRojIkN+ZgNIqM
- gG1g==
-X-Gm-Message-State: AOJu0YwtPmIKkryQOkH2yiICGRtC7JplcNBB7aGZr4GWpbtsqahxVCoY
- RPfdFjWzPRxe8U/fq+cT6J4Iz21g+FQSAiWPSbhEp5eTC8VYTyKlYIprIk9h8+s=
-X-Google-Smtp-Source: AGHT+IHDM362me8XuQ5UtEkx6swaUt2CjXepH7skR6Fvw1xUz7/hB84F3jlJID+WEBOiEailxWB7Tw==
-X-Received: by 2002:a05:6a20:729c:b0:1a3:1595:d3dc with SMTP id
- o28-20020a056a20729c00b001a31595d3dcmr3265715pzk.46.1710178848307; 
- Mon, 11 Mar 2024 10:40:48 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710178838; x=1710783638;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HsCaEMKCnbNOVqyHg/O2IxFK4K/IVuc67DpDBDgJ5L0=;
+ b=v3QBUjJXe5iI/aXAWp1cqt7GUO4RYcA28lpEDV8T5XLo55gQprt8HgtL4lonOEcWd3
+ OBZx0TZsbRjU5FPIGkdey94u2E7tETPLsjXNDT01nTfXyVlP9+hfcu2wEUOuFhQClgPr
+ sHtVHnr1DnFE8IrCxdl5FC0Iei+XQw4Rnskpj7Rrtyi3svnwA7j8ZDC2HNT2UPBfhQp/
+ guq9vKWmP5c72YCnWGWmtXVOskNE0wDH9UHte8TVnTiRRknlOV1UmuTo39AcjWt+Hk26
+ LwbR6aAfq6h61MOWcaqx9mx+Fctp6hMG/JQ7LRrzkI1pevLCZbtott1Aghue27/LrTjh
+ f8Zw==
+X-Gm-Message-State: AOJu0Yxh3RNnlR8N+T1lzwxxQdagxDXpjP1itaJWBjcf3PcrvdqqV95z
+ RXXnHSwfuBNz8E5ISTwVbkBRd+LKk4mGLUJRFbWlolUHrhnqLQnAwf6d50Xwhcs=
+X-Google-Smtp-Source: AGHT+IHVBtX9Jr+V/dEo59TqwgJhARsbSK/WVJOKzvSsdnhdmzt2bPoLWzqG0kQghnFtYofVZkyE0g==
+X-Received: by 2002:a05:6a00:92aa:b0:6e6:66b1:654f with SMTP id
+ jw42-20020a056a0092aa00b006e666b1654fmr11626343pfb.15.1710178837839; 
+ Mon, 11 Mar 2024 10:40:37 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- a18-20020a62d412000000b006e67b4d7b74sm4593187pfh.197.2024.03.11.10.40.43
+ a18-20020a62d412000000b006e67b4d7b74sm4593187pfh.197.2024.03.11.10.40.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 10:40:48 -0700 (PDT)
+ Mon, 11 Mar 2024 10:40:37 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -67,18 +66,15 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Cleber Rosa <crosa@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Beraldo Leal <bleal@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH v4 02/24] scripts/replay-dump.py: rejig decoders in event
- number order
-Date: Tue, 12 Mar 2024 03:40:04 +1000
-Message-ID: <20240311174026.2177152-3-npiggin@gmail.com>
+Subject: [PATCH v4 00/24] replay: fixes and new test cases
+Date: Tue, 12 Mar 2024 03:40:02 +1000
+Message-ID: <20240311174026.2177152-1-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20240311174026.2177152-1-npiggin@gmail.com>
-References: <20240311174026.2177152-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,103 +97,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sort decoder functions to be ascending in order of event number,
-same as the decoder tables.
+Since v3,
 
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- scripts/replay-dump.py | 56 +++++++++++++++++++++---------------------
- 1 file changed, 28 insertions(+), 28 deletions(-)
+* Attacked the replay_linux.py bugs and found a bunch of gaps
+  in networking that was causing the hangs.
+* And several powerpc bugs that were also causing problems on
+  pseries.
+* Added ppc test to replay_linux.py now that it's working.
+* Found several crash bugs in record/replay vs migration.
+* Added snapshot and more stepping tests to reverse_debugging.py
+* Addressed comments in auto-snapshot code.
+* Added auto-snapshot test case.
+* "Solved" x86-64 issues in test cases by switching to q35, which
+  seems to have less problems.
 
-diff --git a/scripts/replay-dump.py b/scripts/replay-dump.py
-index 419ee3257b..b82659cfb6 100755
---- a/scripts/replay-dump.py
-+++ b/scripts/replay-dump.py
-@@ -139,6 +139,19 @@ def swallow_bytes(eid, name, dumpfile, nr):
-     """Swallow nr bytes of data without looking at it"""
-     dumpfile.seek(nr, os.SEEK_CUR)
- 
-+total_insns = 0
-+
-+def decode_instruction(eid, name, dumpfile):
-+    global total_insns
-+    ins_diff = read_dword(dumpfile)
-+    total_insns += ins_diff
-+    print_event(eid, name, "+ %d -> %d" % (ins_diff, total_insns))
-+    return True
-+
-+def decode_interrupt(eid, name, dumpfile):
-+    print_event(eid, name)
-+    return True
-+
- def decode_exception(eid, name, dumpfile):
-     print_event(eid, name)
-     return True
-@@ -198,15 +211,6 @@ def decode_async_net(eid, name, dumpfile):
-     print_event(eid, name, "net:%x flags:%x bytes:%d" % (net_id, flags, size))
-     return True
- 
--total_insns = 0
--
--def decode_instruction(eid, name, dumpfile):
--    global total_insns
--    ins_diff = read_dword(dumpfile)
--    total_insns += ins_diff
--    print_event(eid, name, "+ %d -> %d" % (ins_diff, total_insns))
--    return True
--
- def decode_shutdown(eid, name, dumpfile):
-     print_event(eid, name)
-     return True
-@@ -222,6 +226,21 @@ def decode_audio_out(eid, name, dumpfile):
-     print_event(eid, name, "%d" % (audio_data))
-     return True
- 
-+def decode_random(eid, name, dumpfile):
-+    ret = read_dword(dumpfile)
-+    size = read_dword(dumpfile)
-+    swallow_bytes(eid, name, dumpfile, size)
-+    if (ret):
-+        print_event(eid, name, "%d bytes (getrandom failed)" % (size))
-+    else:
-+        print_event(eid, name, "%d bytes" % (size))
-+    return True
-+
-+def decode_clock(eid, name, dumpfile):
-+    clock_data = read_qword(dumpfile)
-+    print_event(eid, name, "0x%x" % (clock_data))
-+    return True
-+
- def __decode_checkpoint(eid, name, dumpfile, old):
-     """Decode a checkpoint.
- 
-@@ -252,25 +271,6 @@ def decode_checkpoint_init(eid, name, dumpfile):
-     print_event(eid, name)
-     return True
- 
--def decode_interrupt(eid, name, dumpfile):
--    print_event(eid, name)
--    return True
--
--def decode_clock(eid, name, dumpfile):
--    clock_data = read_qword(dumpfile)
--    print_event(eid, name, "0x%x" % (clock_data))
--    return True
--
--def decode_random(eid, name, dumpfile):
--    ret = read_dword(dumpfile)
--    size = read_dword(dumpfile)
--    swallow_bytes(eid, name, dumpfile, size)
--    if (ret):
--        print_event(eid, name, "%d bytes (getrandom failed)" % (size))
--    else:
--        print_event(eid, name, "%d bytes" % (size))
--    return True
--
- def decode_end(eid, name, dumpfile):
-     print_event(eid, name)
-     return False
+The last 3 patches I will take in the ppc tree, but included here
+because powerpc is the only one that survives the record-replay test
+with auto-snapshots at the moment.
+
+Thanks,
+Nick
+
+Since v2, here fixes became less minor so I rename the series.
+
+https://lore.kernel.org/qemu-devel/20240125160835.480488-1-npiggin@gmail.com/#r)
+
+* Found several more bugs (patches 5-8).
+* Enable the rr avocado test on pseries and aarch64 virt since they're
+  passing here (and on gitlab, e.g.,
+  https://gitlab.com/npiggin/qemu/-/jobs/6253787216,
+  https://gitlab.com/npiggin/qemu/-/jobs/6253787218).
+* Updated replay-dump script to John's feedback.
+
+x86-64 still has issues with replay and reverse debugging tests.
+replay_kernel.py seems to be timing dependent -- after patch 5 I
+had it pass 30/30 runs, then the following day 0/30 and I realized
+I had several other QEMU instances hogging the CPU which probably
+changed timings. So the first thing I would look at is timers and
+clocks. pseries had some rounding issues in time calculations that meant
+clock/timer were not replayed exactly as they were recorded, which
+caused hangs.
+
+Thanks,
+Nick
+
+Nicholas Piggin (24):
+  scripts/replay-dump.py: Update to current rr record format
+  scripts/replay-dump.py: rejig decoders in event number order
+  tests/avocado: excercise scripts/replay-dump.py in replay tests
+  replay: allow runstate shutdown->running when replaying trace
+  Revert "replay: stop us hanging in rr_wait_io_event"
+  chardev: set record/replay on the base device of a muxed device
+  replay: Fix migration use of clock
+  replay: Fix migration replay_mutex locking
+  virtio-net: Use replay_schedule_bh_event for bhs that affect machine
+    state
+  virtio-net: Use virtual time for RSC timers
+  net: Use virtual time for net announce
+  savevm: Fix load_snapshot error path crash
+  tests/avocado: replay_linux.py remove the timeout expected guards
+  tests/avocado/reverse_debugging.py: mark aarch64 and pseries as not
+    flaky
+  tests/avocado: reverse_debugging.py add test for x86-64 q35 machine
+  tests/avocado: reverse_debugging.py verify addresses between record
+    and replay
+  tests/avocado: reverse_debugging.py stop VM before sampling icount
+  tests/avocado: reverse_debugging reverse-step at the end of the trace
+  tests/avocado: reverse_debugging.py add snapshot testing
+  replay: simple auto-snapshot mode for record
+  tests/avocado: reverse_debugging.py test auto-snapshot mode
+  target/ppc: fix timebase register reset state
+  spapr: Fix vpa dispatch count for record-replay
+  tests/avocado: replay_linux.py add ppc64 pseries test
+
+ docs/system/replay.rst             |   5 +
+ include/hw/ppc/spapr_cpu_core.h    |   3 +
+ include/sysemu/replay.h            |  16 ++-
+ include/sysemu/runstate.h          |   1 +
+ accel/tcg/tcg-accel-ops-rr.c       |   2 +-
+ chardev/char.c                     |  71 ++++++++----
+ hw/net/virtio-net.c                |  17 +--
+ hw/ppc/ppc.c                       |  11 +-
+ hw/ppc/spapr.c                     |  36 +-----
+ hw/ppc/spapr_hcall.c               |  33 ++++++
+ hw/ppc/spapr_rtas.c                |   1 +
+ migration/migration.c              |  17 ++-
+ migration/savevm.c                 |   1 +
+ net/announce.c                     |   2 +-
+ replay/replay-snapshot.c           |  57 ++++++++++
+ replay/replay.c                    |  50 ++++----
+ system/runstate.c                  |  31 ++++-
+ system/vl.c                        |   9 ++
+ target/ppc/machine.c               |   4 +
+ qemu-options.hx                    |   9 +-
+ scripts/replay-dump.py             | 167 ++++++++++++++++++---------
+ tests/avocado/replay_kernel.py     |  11 ++
+ tests/avocado/replay_linux.py      |  97 +++++++++++++++-
+ tests/avocado/reverse_debugging.py | 176 ++++++++++++++++++++++++-----
+ 24 files changed, 635 insertions(+), 192 deletions(-)
+
 -- 
 2.42.0
 
