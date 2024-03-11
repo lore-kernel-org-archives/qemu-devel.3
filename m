@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3B7FC5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 22:01:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A26F5C5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 22:01:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjngJ-0000Bq-4L; Mon, 11 Mar 2024 17:59:39 -0400
+	id 1rjngp-0000kl-4U; Mon, 11 Mar 2024 18:00:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjngH-0000BA-Lj
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 17:59:37 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjngb-0000XZ-65
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 17:59:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjngF-0003y8-Tg
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 17:59:37 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjngZ-00042c-GC
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 17:59:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710194375;
+ s=mimecast20190719; t=1710194394;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fgD8Hj1BkAhj8rZZ5gxcPG2OyHSFcGpD603UIiwTf/s=;
- b=ZZEIiedu6TLxiG76RPImfWhwuWVKtzVMmUBWkecjHNHZ3oqKZML49JmyBa1URhvkU5G1eg
- ktzGYl6agBvyGrGcjN19RboSqWxkSbZPSJgyOy+YTGtcrVFa+zUt0iVc7aFkgJnNs470rO
- 2NDqaJkLTdCneM+vpz+Xno0xUKq8Ek8=
-Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com
- [209.85.222.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=LdiPgufqKfGIeW6VzqT6zIl2qsu21GpUL7tBaZiFfOE=;
+ b=BJKkRQGCdpZkaprjUv6R6t5oObcweoAc56PH9tezIWMaHFxLuVezbjtTZbmjCKDIVKLSaf
+ VOMOhJ6w4vJuvBFEMr+o7xo0o/9myMGwqhIUPJOc3ImrOXqLP01PfdmkN3cB95+LGFzMt+
+ 3XTA73Cijx41yBdGHWJ0e/bZQ6xiFw8=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-62-10zwMXv3Piy4pF5EbOqIFQ-1; Mon, 11 Mar 2024 17:59:34 -0400
-X-MC-Unique: 10zwMXv3Piy4pF5EbOqIFQ-1
-Received: by mail-ua1-f69.google.com with SMTP id
- a1e0cc1a2514c-7dadf2f724aso283616241.1
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 14:59:34 -0700 (PDT)
+ us-mta-668--flSIQIvPHaymtQ6WrMl9g-1; Mon, 11 Mar 2024 17:59:52 -0400
+X-MC-Unique: -flSIQIvPHaymtQ6WrMl9g-1
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-690ab2b0de1so15044076d6.0
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 14:59:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710194373; x=1710799173;
+ d=1e100.net; s=20230601; t=1710194392; x=1710799192;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fgD8Hj1BkAhj8rZZ5gxcPG2OyHSFcGpD603UIiwTf/s=;
- b=MEpnCZxh0zj8ouIscwrBZSjbsYaU7ewojB/Hn1gP/sF92IaOgn6YC9Z/BnZXUt4R69
- scKZUR05B2f+GQzkwo5kUf41AKyp5aUYWX2IafaQUSieKiNus9AcPIykAoKsuOhiVdym
- BaSGQKyMkwe6O7xU1cFWVDE21D4+4CPdxl5s61T2R8sDYa77h2O3d4c0cSiTPymN++V6
- WH/FO8F1h3spdp2knANLdCPPaETgpvRARWS24KDNCxv5o8AMl9B0WRcYryNBlrecQnfh
- pSZT7ck8GPTI6iIuu53USJofBhFvGdQcEbM1lIrDLrKA6zZRiSEHmwfVV4k+44kBk2Hh
- TDMg==
-X-Gm-Message-State: AOJu0YxuE9L0cpWF1c9M0iBwB/4piP8lLOcJvnpQM+/5Y253BVRKaZU6
- gFwrp4og/3NVNvHf7WtPdAGN+4UWpGY5E0Z58+1NlMggxvqlWEjUQvLskEXs9nR/m5eFsgrRfXR
- Kte2xUqj2QJ9nRc3Ruo99N+tOp3kDuvNZCpOxtxQBfj0OD2Ggd0boZDYDQ0EJNwVu80I5kwnjdK
- KccrdRmGGB52zLpf9SeQnbpJhuQ8Qu8lgKtA==
-X-Received: by 2002:a05:6102:4187:b0:472:e88d:6839 with SMTP id
- cd7-20020a056102418700b00472e88d6839mr4628840vsb.3.1710194373568; 
- Mon, 11 Mar 2024 14:59:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEbnSImJ380TOrwkmT2l3GIUpyxYn/MMIhuun7lyslKJ+TgvEM6Sn10ZLMcXrpE7YCWdCiK7g==
-X-Received: by 2002:a05:6102:4187:b0:472:e88d:6839 with SMTP id
- cd7-20020a056102418700b00472e88d6839mr4628823vsb.3.1710194373097; 
- Mon, 11 Mar 2024 14:59:33 -0700 (PDT)
+ bh=LdiPgufqKfGIeW6VzqT6zIl2qsu21GpUL7tBaZiFfOE=;
+ b=LqY5dse8pQ56MXgIdH2GcOfj8ZcoKs+8QbzKWWVSxWCSOOwWt33BJPX7CV5seNR12+
+ frdjILeoNBLz2QKur9ZrtdFaDxg5zezP3HrwxfHK2iu7074y41PjAQ4afjSsur+BHtBB
+ im/mxNjS5ph6RoylixDgyoLfHMi1+Y4Bm8yWli/7ASBm+iZtaPK8zeLKHAUbASn1ekEB
+ 5tt+RyXbOeQwbkz8Xib0ENbGMNbUfiqIH88xVuXGO2TJuyCUbjoLeRk3fR/ldjbHDS2N
+ c8mV5RfCXeAK8+HJCsgg7u2/5q6GGCldM7FhCgs9WVrxq2XKfBuEESB5F4rW2t8Cs1XG
+ Bfuw==
+X-Gm-Message-State: AOJu0Yw9QDZwFszSAvByFcUVUAg/tOo9y3Z9dN6DkLgKnhzmbGyDpNxD
+ LU5E8f0rfVxlnNLcG+CWEtkeNcmI71+UKJlSDOyKowjqmwOI2hrSvnlE4WyRBPiYIXNPb1BOkcL
+ 0BCJwhUkTEU+zA8+ef71JC8DxgTPRxOSVO8IpO5JuoSR6+pnqhrAuTCZu5TxZfDTaFmeOJMlmMZ
+ I+xiqxydw2mSDe7ltH5fIeLyxR13bLY8vo5w==
+X-Received: by 2002:a0c:ea50:0:b0:690:c345:369b with SMTP id
+ u16-20020a0cea50000000b00690c345369bmr182983qvp.0.1710194391939; 
+ Mon, 11 Mar 2024 14:59:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEHFQKS5O5FHgxznSgb3d70/N9RWf8Zv5DqjPVpCRxfdS5XAAlmNU1/g29PL1gzNNmMlrMeiQ==
+X-Received: by 2002:a0c:ea50:0:b0:690:c345:369b with SMTP id
+ u16-20020a0cea50000000b00690c345369bmr182952qvp.0.1710194391450; 
+ Mon, 11 Mar 2024 14:59:51 -0700 (PDT)
 Received: from x1n.. (cpe688f2e2cb7c3-cm688f2e2cb7c0.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d6-20020a0ce446000000b00690cec16254sm1541932qvm.68.2024.03.11.14.59.31
+ d6-20020a0ce446000000b00690cec16254sm1541932qvm.68.2024.03.11.14.59.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 14:59:32 -0700 (PDT)
+ Mon, 11 Mar 2024 14:59:51 -0700 (PDT)
 From: peterx@redhat.com
 To: qemu-devel@nongnu.org,
 	Peter Maydell <peter.maydell@linaro.org>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, peterx@redhat.com,
  Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
  Prasad Pandit <ppandit@redhat.com>,
- Maksim Davydov <davydov-max@yandex-team.ru>
-Subject: [PULL 04/34] migration/ram: add additional check
-Date: Mon, 11 Mar 2024 17:58:55 -0400
-Message-ID: <20240311215925.40618-5-peterx@redhat.com>
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PULL 17/34] migration: remove migration.h references
+Date: Mon, 11 Mar 2024 17:59:08 -0400
+Message-ID: <20240311215925.40618-18-peterx@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240311215925.40618-1-peterx@redhat.com>
 References: <20240311215925.40618-1-peterx@redhat.com>
@@ -104,36 +104,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Maksim Davydov <davydov-max@yandex-team.ru>
+From: Steve Sistare <steven.sistare@oracle.com>
 
-If a migration stream is broken, the address and flag reading can return
-zero. Thus, an irrelevant flag error will be returned instead of EIO.
-It can be fixed by additional check after the reading.
+Remove migration.h from files that no longer need it due to
+previous commits.
 
-Signed-off-by: Maksim Davydov <davydov-max@yandex-team.ru>
-Link: https://lore.kernel.org/r/20240304144203.158477-1-davydov-max@yandex-team.ru
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Link: https://lore.kernel.org/r/1710179338-294359-2-git-send-email-steven.sistare@oracle.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/ram.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ hw/vfio/container.c        | 1 -
+ hw/virtio/vhost-user.c     | 1 -
+ hw/virtio/virtio-balloon.c | 1 -
+ system/qdev-monitor.c      | 1 -
+ target/loongarch/kvm/kvm.c | 1 -
+ tests/unit/test-vmstate.c  | 1 -
+ 6 files changed, 6 deletions(-)
 
-diff --git a/migration/ram.c b/migration/ram.c
-index 003c28e133..2cd936d9ce 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -4214,6 +4214,12 @@ static int ram_load_precopy(QEMUFile *f)
-         i++;
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index bd25b9fbad..ff081a12c2 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -32,7 +32,6 @@
+ #include "sysemu/reset.h"
+ #include "trace.h"
+ #include "qapi/error.h"
+-#include "migration/migration.h"
+ #include "pci.h"
  
-         addr = qemu_get_be64(f);
-+        ret = qemu_file_get_error(f);
-+        if (ret) {
-+            error_report("Getting RAM address failed");
-+            break;
-+        }
-+
-         flags = addr & ~TARGET_PAGE_MASK;
-         addr &= TARGET_PAGE_MASK;
+ VFIOGroupList vfio_group_list =
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index a1eea8547e..1af8621481 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -26,7 +26,6 @@
+ #include "qemu/sockets.h"
+ #include "sysemu/runstate.h"
+ #include "sysemu/cryptodev.h"
+-#include "migration/migration.h"
+ #include "migration/postcopy-ram.h"
+ #include "trace.h"
+ #include "exec/ramblock.h"
+diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
+index a59ff172bd..609e39a821 100644
+--- a/hw/virtio/virtio-balloon.c
++++ b/hw/virtio/virtio-balloon.c
+@@ -31,7 +31,6 @@
+ #include "trace.h"
+ #include "qemu/error-report.h"
+ #include "migration/misc.h"
+-#include "migration/migration.h"
  
+ #include "hw/virtio/virtio-bus.h"
+ #include "hw/virtio/virtio-access.h"
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index 09e07cab9b..c1243891c3 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -38,7 +38,6 @@
+ #include "qemu/option_int.h"
+ #include "sysemu/block-backend.h"
+ #include "migration/misc.h"
+-#include "migration/migration.h"
+ #include "qemu/cutils.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/clock.h"
+diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+index c19978a970..11a69a3b4e 100644
+--- a/target/loongarch/kvm/kvm.c
++++ b/target/loongarch/kvm/kvm.c
+@@ -22,7 +22,6 @@
+ #include "hw/irq.h"
+ #include "qemu/log.h"
+ #include "hw/loader.h"
+-#include "migration/migration.h"
+ #include "sysemu/runstate.h"
+ #include "cpu-csr.h"
+ #include "kvm_loongarch.h"
+diff --git a/tests/unit/test-vmstate.c b/tests/unit/test-vmstate.c
+index c4f9faa273..63f28f26f4 100644
+--- a/tests/unit/test-vmstate.c
++++ b/tests/unit/test-vmstate.c
+@@ -24,7 +24,6 @@
+ 
+ #include "qemu/osdep.h"
+ 
+-#include "../migration/migration.h"
+ #include "migration/vmstate.h"
+ #include "migration/qemu-file-types.h"
+ #include "../migration/qemu-file.h"
 -- 
 2.44.0
 
