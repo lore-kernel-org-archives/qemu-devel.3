@@ -4,59 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C8C3C5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 18:04:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C652C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 18:04:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjjzV-0006be-3G; Mon, 11 Mar 2024 14:03:13 -0400
+	id 1rjjxu-0005Km-JH; Mon, 11 Mar 2024 14:01:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hao.xiang@linux.dev>)
- id 1rjjzS-0006T6-1E
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 14:03:11 -0400
-Received: from out-177.mta0.migadu.com ([2001:41d0:1004:224b::b1])
+ id 1rjjxs-0005K1-A9
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 14:01:32 -0400
+Received: from out-176.mta0.migadu.com ([2001:41d0:1004:224b::b0])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hao.xiang@linux.dev>)
- id 1rjjzQ-00039r-EO
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 14:03:09 -0400
-MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1710180185;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=532Bly24dAkPDfCh/ajEVhrTnlO4X5i2GXHVVlk7cuE=;
- b=pSjkLRS0CO1d0SJ3z3N4jvpr30OGuQYXNGNIoNJi1W0WuYdz7tuOqecdDqRsVMfSGKaR67
- traekH6tYbSsMAt8JnEnWMCq6tAa3M98iyJYCQbUT1CRYN6beIIUF7+h0IIvZs3WVqW/qp
- h+3seZ/bNfRSDgC443Ir9uiyYljFeKI=
-Date: Mon, 11 Mar 2024 18:02:58 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+ id 1rjjxl-0002s9-Gb
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 14:01:32 -0400
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
  include these headers.
-From: hao.xiang@linux.dev
-Message-ID: <02ab6d811c5022b049f5dbea15396dca0c21b28d@linux.dev>
-TLS-Required: No
-Subject: Re: [PATCH v4 3/7] migration/multifd: Implement
- ram_save_target_page_multifd to handle multifd version of
- MigrationOps::ram_save_target_page.
-To: "Peter Xu" <peterx@redhat.com>
-Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
- farosas@suse.de, eblake@redhat.com, armbru@redhat.com, thuth@redhat.com,
- lvivier@redhat.com, jdenemar@redhat.com, marcel.apfelbaum@gmail.com,
- philmd@linaro.org, wangyanan55@huawei.com, qemu-devel@nongnu.org
-In-Reply-To: <Ze8FDnvkPtYNjCbk@x1n>
-References: <20240301022829.3390548-1-hao.xiang@bytedance.com>
- <20240301022829.3390548-4-hao.xiang@bytedance.com>
- <ZeV8WaKyKEfw-em-@x1n>
- <CAAYibXhCzozRhHxp2Dk3L9BMhFhZtqyvgbwkj+8ZGMCHURZGug@mail.gmail.com>
- <821fba91ac7c0d4cd481d91b8fc91c94304a677f@linux.dev>
- <Ze8FDnvkPtYNjCbk@x1n>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1710180082;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SXSrRNKG2y6mw2kCVZivpNphMeBgf6+dzpwgsitq+4E=;
+ b=OmoKMN/pJoQe3ezf8C042F5Dz8kLxxBQAVZ/vTUV4KQI3ThfrYy2VF8llIrdZghKVmytb4
+ 9JkExX7fS/5Ab4VXtyJPMmDbuns7dUUsgBCryOWDEmrkmLPqNh2jobd/hxz5MEvT+OSzbk
+ Ft0rULCDzA36x9EyWCQyAcNvBLDltao=
+From: Hao Xiang <hao.xiang@linux.dev>
+To: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
+ peterx@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com, jdenemar@redhat.com,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org, wangyanan55@huawei.com,
+ qemu-devel@nongnu.org
+Subject: [PATCH v6 1/7] migration/multifd: Allow zero pages in file migration
+Date: Mon, 11 Mar 2024 18:00:09 +0000
+Message-Id: <20240311180015.3359271-2-hao.xiang@linux.dev>
+In-Reply-To: <20240311180015.3359271-1-hao.xiang@linux.dev>
+References: <20240311180015.3359271-1-hao.xiang@linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=2001:41d0:1004:224b::b1;
- envelope-from=hao.xiang@linux.dev; helo=out-177.mta0.migadu.com
+Received-SPF: pass client-ip=2001:41d0:1004:224b::b0;
+ envelope-from=hao.xiang@linux.dev; helo=out-176.mta0.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -78,70 +69,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-March 11, 2024 at 6:20 AM, "Peter Xu" <peterx@redhat.com> wrote:
+From: Fabiano Rosas <farosas@suse.de>
 
+Currently, it's an error to have no data pages in the multifd file
+migration because zero page detection is done in the migration thread
+and zero pages don't reach multifd. This is enforced with the
+pages->num assert.
 
+We're about to add zero page detection on the multifd thread. Fix the
+file_write_ramblock_iov() to stop considering p->iovs_num=0 an error.
 
->=20
->=20On Sat, Mar 09, 2024 at 02:06:33AM +0000, hao.xiang@linux.dev wrote:
->=20
->=20>=20
->=20> > @@ -1122,10 +1122,6 @@ static int save_zero_page(RAMState *rs, Pa=
-geSearchStatus *pss,
-> >=20
->=20>  > QEMUFile *file =3D pss->pss_channel;
-> >=20
->=20>  > int len =3D 0;
-> >=20
->=20>  >
-> >=20
->=20>  > - if (migrate_zero_page_detection() =3D=3D ZERO_PAGE_DETECTION_N=
-ONE) {
-> >=20
->=20>  > - return 0;
-> >=20
->=20>  > - }
-> >=20
->=20>  >=20
->=20>=20
->=20>  > We need to keep this to disable zero-page-detect on !multifd?
-> >=20
->=20>=20=20
->=20>=20
->=20>  So if multifd is enabled, the new parameter takes effect. If multi=
-fd is
-> >=20
->=20>  not enabled, zero page checking will always be done in the main th=
-read,
-> >=20
->=20>  which is exactly the behavior it is now. I thought legacy migratio=
-n is a
-> >=20
->=20>  deprecated feature so I am trying to not add new stuff to it.
-> >=20
->=20
-> There's no plan to deprecate legacy migrations, I think there was a pla=
-n to
->=20
->=20make multifd the default, but I don't yet think it all thorougly yet,=
- and
->=20
->=20even if it happens it doesn't mean we'll remove legacy migration code=
-.
->=20
->=20When repost please still make sure this parameter works for both mult=
-ifd
->=20
->=20and !multifd.
->=20
->=20Thanks,
->=20
->=20--=20
->=20
-> Peter Xu
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ migration/file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/migration/file.c b/migration/file.c
+index 164b079966..5075f9526f 100644
+--- a/migration/file.c
++++ b/migration/file.c
+@@ -159,7 +159,7 @@ void file_start_incoming_migration(FileMigrationArgs *file_args, Error **errp)
+ int file_write_ramblock_iov(QIOChannel *ioc, const struct iovec *iov,
+                             int niov, RAMBlock *block, Error **errp)
+ {
+-    ssize_t ret = -1;
++    ssize_t ret = 0;
+     int i, slice_idx, slice_num;
+     uintptr_t base, next, offset;
+     size_t len;
+-- 
+2.30.2
 
-Sure. Fixed the issue now and reposted a new patchset.
-
->
 
