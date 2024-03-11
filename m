@@ -4,58 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A68A3C5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:29:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55EC1C5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:38:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjWJN-0002Vw-T3; Sun, 10 Mar 2024 23:26:49 -0400
+	id 1rjWTm-0008Rc-RD; Sun, 10 Mar 2024 23:37:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWJM-0002Kd-M9; Sun, 10 Mar 2024 23:26:48 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
+ id 1rjWTj-0008Qg-Nb; Sun, 10 Mar 2024 23:37:31 -0400
+Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWJK-00084P-Td; Sun, 10 Mar 2024 23:26:48 -0400
+ id 1rjWTi-0002G3-4N; Sun, 10 Mar 2024 23:37:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710127607; x=1741663607;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=ptTuy2ckiHWNEI7SVUGTBp2K5fyc5nf3WiWP/pqmio0=;
- b=KPQnVflc96/GzjCWQURLWNKGvP+GJQc2f2subItWCeJ2Ise0x5CEGWdr
- Vk3iIWlcaU9usqUXeKqRjC17nLwoaEO0Ym6HSQNpKWbQVVmcN+DacN4ed
- OBMcJ/m1eC0y8b2fGVPz4lUJ9MkRKLSmyvHBkyB6uT89q/d+FlqAJVxMl
- 1vUj3vZJMMtcerfVJHxA6o4tQYB+4UGCsORjMl8xT8PDvcvQq7VgvAQdh
- 5TunE73e7pVhimBgrlXPCz7fVSSvM/v1r49NziddDVePRtznKf3BDzDxV
- UyS/2v7vnSi85xNNcVtzJ+vDIwEfK1lRfNB9TR0QjH02hE7vehwvgUdiG g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229850"
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229850"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2024 20:26:02 -0700
+ t=1710128250; x=1741664250;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=THIQtj0cbhzBX/YSSKPVHrTAk3FEp8UrxmNkNvkosx0=;
+ b=ZuPK7RIVL/18lorpQ3CkpQ2ftbDMh1FOTNo7nGmQUiJLVVP0cVWl9Hlf
+ 7X7nlJYkFklpwX61y0p0bIgibX56U4ymLqYqt74HyGVg1V0PMC0BHJWsi
+ igr0y3Qje3iCSmLvA+HnvFsd2A+W5ji7zPns2By7Qls80vdov0I/rhWoQ
+ o7Ha+i9fV8pv5CHnb0cW/IaJQmukFDmUXZ5UviEbF3up0WbhFFZqfglpr
+ jxEM2b439hIt0gANrGJ2gPGeja+O1vyDA8hsqzq76zV+Ir459Z/9VgIZf
+ uuIWKI0blZ5WTQ6arxSp8ngzBf3OnrMHzJQS8FqI5XESV20c4Rec8tVs2 A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="15912653"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15912653"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Mar 2024 20:37:27 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15594090"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:26:00 -0700
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="11468176"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa007.jf.intel.com with ESMTP; 10 Mar 2024 20:37:23 -0700
+Date: Mon, 11 Mar 2024 11:51:11 +0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Michael Roth <michael.roth@amd.com>, Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v2 27/29] migration/option: Fix missing ERRP_GUARD() for
- error_prepend()
-Date: Mon, 11 Mar 2024 11:38:20 +0800
-Message-Id: <20240311033822.3142585-28-zhao1.liu@linux.intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
-References: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
+To: Michael Tokarev <mjt@tls.msk.ru>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Fan Ni <fan.ni@samsung.com>, Laurent Vivier <laurent@vivier.eu>,
+ Alistair Francis <alistair@alistair23.me>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, qemu-trivial@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v2 0/7] Cleanup and fix @errp dereference
+Message-ID: <Ze5/r5EW9YsqVwtS@intel.com>
+References: <20240223085653.1255438-1-zhao1.liu@linux.intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=198.175.65.10;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240223085653.1255438-1-zhao1.liu@linux.intel.com>
+Received-SPF: none client-ip=198.175.65.13;
  envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
 X-Spam_score_int: -29
 X-Spam_score: -3.0
@@ -79,62 +89,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+Hi Michael & Philippe,
 
-As the comment in qapi/error, passing @errp to error_prepend() requires
-ERRP_GUARD():
+Could this series catch the last train of next releases? ;-)
 
-* = Why, when and how to use ERRP_GUARD() =
-*
-* Without ERRP_GUARD(), use of the @errp parameter is restricted:
-...
-* - It should not be passed to error_prepend(), error_vprepend() or
-*   error_append_hint(), because that doesn't work with &error_fatal.
-* ERRP_GUARD() lifts these restrictions.
-*
-* To use ERRP_GUARD(), add it right at the beginning of the function.
-* @errp can then be used without worrying about the argument being
-* NULL or &error_fatal.
+Thanks,
+Zhao
 
-ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
-can't see this additional information, because exit() happens in
-error_setg earlier than information is added [1].
-
-The migrate_params_check() passes @errp to error_prepend() without
-ERRP_GUARD(), and it could be called from migration_object_init(),
-where the passed @errp points to @error_fatal.
-
-Therefore, the error message echoed in error_prepend() will be lost
-because of the above issue.
-
-To fix this, add missing ERRP_GUARD() at the beginning of this function.
-
-[1]: Issue description in the commit message of commit ae7c80a7bd73
-     ("error: New macro ERRP_GUARD()").
-
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Acked-by: Peter Xu <peterx@redhat.com>
----
- migration/options.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/migration/options.c b/migration/options.c
-index 40eb9309401c..caff0a271dff 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -1085,6 +1085,8 @@ void migrate_params_init(MigrationParameters *params)
-  */
- bool migrate_params_check(MigrationParameters *params, Error **errp)
- {
-+    ERRP_GUARD();
-+
-     if (params->has_compress_level &&
-         (params->compress_level > 9)) {
-         error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "compress_level",
--- 
-2.34.1
-
+On Fri, Feb 23, 2024 at 04:56:46PM +0800, Zhao Liu wrote:
+> Date: Fri, 23 Feb 2024 16:56:46 +0800
+> From: Zhao Liu <zhao1.liu@linux.intel.com>
+> Subject: [PATCH v2 0/7] Cleanup and fix @errp dereference
+> X-Mailer: git-send-email 2.34.1
+> 
+> From: Zhao Liu <zhao1.liu@intel.com>
+> 
+> Hi all,
+> 
+> This is my v2 series to clean and fix @errp dereference.
+> 
+> Introduction
+> ============
+> 
+> The patches 1-6 fix the cases that deference @errp without
+> ERRP_GUARD(), and they are based on my previsous v1 [1].
+> 
+> The patch 7 is merged in this series from another single patch [2].
+> 
+> Based on v1, v2 mainly add more description about problematic codes to
+> make review easier (with Markus' suggestion) and avoid dereferencing
+> @errp in patch 3's special case.
+> 
+> 
+> Future Work
+> ===========
+> 
+> Additionally, I realized that my journey to fix @errp with ERRP_GUARD()
+> is still not over, because @errp's second restriction said:
+> 
+> * Without ERRP_GUARD(), use of the @errp parameter is restricted:
+> ...
+> * - It should not be passed to error_prepend() or
+> *   error_append_hint(), because that doesn't work with &error_fatal.
+> * ERRP_GUARD() lifts these restrictions.
+> 
+> With this restrication, there're still many places need to add missing
+> ERRP_GUARD().
+> 
+> [1]: https://lore.kernel.org/qemu-devel/20240221094317.994454-1-zhao1.liu@linux.intel.com/
+> [2]: https://lore.kernel.org/qemu-devel/20240221073948.768828-1-zhao1.liu@linux.intel.com/
+> 
+> Thanks and Best Regards,
+> Zhao
+> 
+> ---
+> Zhao Liu (7):
+>   hw/cxl/cxl-host: Fix missing ERRP_GUARD() in
+>     cxl_fixed_memory_window_config()
+>   hw/display/macfb: Fix missing ERRP_GUARD() in macfb_nubus_realize()
+>   hw/mem/cxl_type3: Fix missing ERRP_GUARD() in ct3_realize()
+>   hw/misc/xlnx-versal-trng: Check returned bool in
+>     trng_prop_fault_event_set()
+>   hw/pci-bridge/cxl_upstream: Fix missing ERRP_GUARD() in
+>     cxl_usp_realize()
+>   hw/vfio/iommufd: Fix missing ERRP_GUARD() in iommufd_cdev_getfd()
+>   hw/intc: Check @errp to handle the error of
+>     IOAPICCommonClass.realize()
+> 
+>  hw/cxl/cxl-host.c            | 1 +
+>  hw/display/macfb.c           | 1 +
+>  hw/intc/ioapic_common.c      | 4 ++++
+>  hw/mem/cxl_type3.c           | 1 +
+>  hw/misc/xlnx-versal-trng.c   | 3 +--
+>  hw/pci-bridge/cxl_upstream.c | 1 +
+>  hw/vfio/iommufd.c            | 1 +
+>  7 files changed, 10 insertions(+), 2 deletions(-)
+> 
+> -- 
+> 2.34.1
+> 
+> 
 
