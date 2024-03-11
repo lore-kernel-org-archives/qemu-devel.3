@@ -4,96 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 014D8C5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 13:21:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E52FC54E60
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 13:29:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjfZs-0002yt-LK; Mon, 11 Mar 2024 09:20:28 -0400
+	id 1rjfiI-0004uC-Js; Mon, 11 Mar 2024 09:29:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjfZm-0002y1-Hv
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 09:20:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rjfi3-0004tG-7c
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 09:28:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjfZk-000430-GB
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 09:20:22 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rjfi0-0005u6-TU
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 09:28:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710163219;
+ s=mimecast20190719; t=1710163731;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Bmoo97+WWTU9JFPbqk1LqEvQWwY/6pvTm6p8bVu9eUA=;
- b=SiPDGkqIuYWi+qJ/XK3D7P/IbfsSQJJbBpFGwBWAzXPIo3TmB8ljngNywSwd7IHBG7rgyO
- Uqa8EZKxpnxyos5nQPYhglF5e2gcVUuqPek4e/n/hkXEmiDjhz2vovCIrun8AGhC96pEep
- 2lmmEtMmiUDK3pe4pyeyCp6kBTu07WY=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FrOWhWrfjQsd9LIq/h6+YYfsw9AMsXC8hG+IAKQuQIE=;
+ b=H125Q1AuY7yEQAIgQ+9hVeccuSU17EmSwWFZWQQEWjj7qr3UOw1uTx9ja5vFSD697mMK/Q
+ nuS+p4iKb4J1jyFe23jZb+jfo/nWqmUOcCu6We3VKsQDZKqE6avLTidpHx3I82XrgvDbDo
+ 3i3YKP5uRAZxch2LoDy0xr4eKhZevSc=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-413-w6hmiL84NkmguobHIL1mbw-1; Mon, 11 Mar 2024 09:20:17 -0400
-X-MC-Unique: w6hmiL84NkmguobHIL1mbw-1
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-78313358d3bso263913185a.0
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 06:20:17 -0700 (PDT)
+ us-mta-466-2gR3eWwMM9uYIGEzliTf3w-1; Mon, 11 Mar 2024 09:28:50 -0400
+X-MC-Unique: 2gR3eWwMM9uYIGEzliTf3w-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-40d62d3ae0cso15561645e9.2
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 06:28:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710163217; x=1710768017;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Bmoo97+WWTU9JFPbqk1LqEvQWwY/6pvTm6p8bVu9eUA=;
- b=vQfNf5ZxwYIlchDp3f31pk2If1fb5utTf1fLdYPBykXs3dehP4PPro9h2rpFy/QEc1
- vtv2d+sqx2D+BbUhOzFzFhdzcrST3zhRNeCcqQG2aPkSvuaqXq3VgW5mYfywdJcjRm4G
- kmyMjkKOb8qM9Lot6UnlNXeKEaCi4AI6NnfUv6cBbnhrH1CdAh0vDWUMJu3BX+tQTEA6
- B8I9v+UlPoDiHxmHJeVviciy8qghI5luDXqsfiPE1pnMU4h2BrXHY1vLJpCikhzOyQYU
- AI4WCy1GeC0pXUnTC4r0Ly5ecrNeeBSS06bOCKAHJUW7Szezjq4XqEwlPHCN7viIpVsW
- 8/sQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVWYE9Qhxi8mdC+eGQNrWEYjqWV2PwwE90eWuRhbhQckPmJDwB092MpJslVD90OAsiWPO2fR5SMZvFS5KWnLxsRnb93RvU=
-X-Gm-Message-State: AOJu0YyPmBM/FjXylVc3xrTw8X+oNaaoe7mAV7F+fIjcMiLXymPhke24
- N+N3UC/6+mZyEeywzAW27gYezxHRlmUBTLEt8Vmj/aqHyH7076P/uZfxdsze1BL25NByvb7s1a+
- KIftYXi8e6OAs2lew5BP0rM4KtbMNuMtZlUMNzf+dYt/4/HBfdtfd
-X-Received: by 2002:a05:6214:b8e:b0:690:d02f:f5df with SMTP id
- fe14-20020a0562140b8e00b00690d02ff5dfmr2665773qvb.5.1710163217057; 
- Mon, 11 Mar 2024 06:20:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFDjoF6NhlCTmMyPExHfZwBowXzMrHgbAMraOlcYFSC3eBag5/X+DDqa9fJdDThnXUn8g30jw==
-X-Received: by 2002:a05:6214:b8e:b0:690:d02f:f5df with SMTP id
- fe14-20020a0562140b8e00b00690d02ff5dfmr2665754qvb.5.1710163216666; 
- Mon, 11 Mar 2024 06:20:16 -0700 (PDT)
-Received: from x1n (cpe688f2e2cb7c3-cm688f2e2cb7c0.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- h13-20020a0cf8cd000000b00690d74d073asm617999qvo.9.2024.03.11.06.20.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 06:20:16 -0700 (PDT)
-Date: Mon, 11 Mar 2024 09:20:14 -0400
-From: Peter Xu <peterx@redhat.com>
-To: hao.xiang@linux.dev
-Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
- farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
- thuth@redhat.com, lvivier@redhat.com, jdenemar@redhat.com,
- marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 3/7] migration/multifd: Implement
- ram_save_target_page_multifd to handle multifd version of
- MigrationOps::ram_save_target_page.
-Message-ID: <Ze8FDnvkPtYNjCbk@x1n>
-References: <20240301022829.3390548-1-hao.xiang@bytedance.com>
- <20240301022829.3390548-4-hao.xiang@bytedance.com>
- <ZeV8WaKyKEfw-em-@x1n>
- <CAAYibXhCzozRhHxp2Dk3L9BMhFhZtqyvgbwkj+8ZGMCHURZGug@mail.gmail.com>
- <821fba91ac7c0d4cd481d91b8fc91c94304a677f@linux.dev>
+ d=1e100.net; s=20230601; t=1710163728; x=1710768528;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=FrOWhWrfjQsd9LIq/h6+YYfsw9AMsXC8hG+IAKQuQIE=;
+ b=RwNr67buI6rsaAXSUip+cl2uMptrh0nvQf5Ozo+zyJqOolfV6P7iA2ovjvZlt5fL8n
+ 4HyEigWEVjZookE+J6I72IHKn9UmUyr55zhqtH2oOJy/+2pCA1H7L5H0x4wO8+XyOS/m
+ qzC/Y0Z1C6ZkAnzgJPZrm8DCaKp3Rry7ER7We8dI8DIqRbkFLh7Op5LY4hw/XzSNXhQo
+ cv3E4NLcmX+P8etAFpEP3pZN/UCqBsbb1WsKnYph85PRG147wesDy8AZMGiFJRo7Xiq1
+ NAYfDLTQrSckXaZNJXgP5EOO2C5TP6iJ+46UUuwqOk6hnCUJ4SD50+Bl59ph+YMVahyF
+ Tfbg==
+X-Gm-Message-State: AOJu0YyUmqBEgFuiGbgFfC/E8XDi5KRBRPSxt3U/7OHhT3y+f+ZfznWf
+ F8wAFdLEn0ZIVI82U+nlMH5qESyNoRgf+UqCqfudkZ+MgIrSEJWAa+22g/SDyGT8KIhIaySKS3B
+ NdjZ2aQC2yyaYeQc8HznSsrlbBX/1JtaPBm4xbRgU2ktKbAFzdfabszEIebgbELAYVHJcJoMriG
+ KJ6HGmJYy7YE8SLaDS6i0f95eSUss=
+X-Received: by 2002:a05:600c:3485:b0:413:3048:5d68 with SMTP id
+ a5-20020a05600c348500b0041330485d68mr241836wmq.20.1710163728707; 
+ Mon, 11 Mar 2024 06:28:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHTLUOWctNYlGT0yb+cuRyEHrP6pdKm4kmz16/UzCYq1uXQ3daClVE4+eQOzP7/z42bb3U2sPAq36/tvK3pe3E=
+X-Received: by 2002:a05:600c:3485:b0:413:3048:5d68 with SMTP id
+ a5-20020a05600c348500b0041330485d68mr241825wmq.20.1710163728423; Mon, 11 Mar
+ 2024 06:28:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <821fba91ac7c0d4cd481d91b8fc91c94304a677f@linux.dev>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+References: <20240305105233.617131-1-kraxel@redhat.com>
+ <20240305105233.617131-3-kraxel@redhat.com>
+ <CABgObfZ13WEHaGNzjy0GVE2EAZ=MHOSNHS_1iTOuBduOt5q_3g@mail.gmail.com>
+ <q6zckxcxwke2kdlootdq3s7m2ctcy7juuv3fsezhpw3nqyewxo@sqku62f25gdc>
+In-Reply-To: <q6zckxcxwke2kdlootdq3s7m2ctcy7juuv3fsezhpw3nqyewxo@sqku62f25gdc>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 11 Mar 2024 14:28:35 +0100
+Message-ID: <CABgObfZtUKcNH8HF2Sey29c7kfm9HPreyMxzVwtbPHaWYiJcFg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] kvm: add support for guest physical bits
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org, Tom Lendacky <thomas.lendacky@amd.com>, 
+ Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,32 +101,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Mar 09, 2024 at 02:06:33AM +0000, hao.xiang@linux.dev wrote:
-> > >  @@ -1122,10 +1122,6 @@ static int save_zero_page(RAMState *rs, PageSearchStatus *pss,
-> > >  QEMUFile *file = pss->pss_channel;
-> > >  int len = 0;
-> > >
-> > >  - if (migrate_zero_page_detection() == ZERO_PAGE_DETECTION_NONE) {
-> > >  - return 0;
-> > >  - }
-> > > 
-> > >  We need to keep this to disable zero-page-detect on !multifd?
-> 
-> So if multifd is enabled, the new parameter takes effect. If multifd is
-> not enabled, zero page checking will always be done in the main thread,
-> which is exactly the behavior it is now. I thought legacy migration is a
-> deprecated feature so I am trying to not add new stuff to it.
+On Mon, Mar 11, 2024 at 12:59=E2=80=AFPM Gerd Hoffmann <kraxel@redhat.com> =
+wrote:
+>
+>   Hi,
+>
+> > > diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> > > index 952174bb6f52..d427218827f6 100644
+> > > --- a/target/i386/cpu.h
+> > > +++ b/target/i386/cpu.h
+> > > +    guest_phys_bits =3D kvm_get_guest_phys_bits(cs->kvm_state);
+> > > +    if (guest_phys_bits &&
+> > > +        (cpu->guest_phys_bits =3D=3D 0 ||
+> > > +         cpu->guest_phys_bits > guest_phys_bits)) {
+> > > +        cpu->guest_phys_bits =3D guest_phys_bits;
+> > > +    }
+> >
+> > Like Xiaoyao mentioned, the right place for this is kvm_cpu_realizefn,
+> > after host_cpu_realizefn returns. It should also be conditional on
+> > cpu->host_phys_bits.
+>
+> Ok.
+>
+> > It also makes sense to:
+> >
+> > - make kvm_get_guest_phys_bits() return bits 7:0 if bits 23:16 are zero
+> >
+> > - here, set cpu->guest_phys_bits only if it is not equal to
+> > cpu->phys_bits (this undoes the previous suggestion, but I think it's
+> > cleaner)
+>
+> Not sure about that.
+>
+> I think it would be good to have a backward compatibility story.
+> Currently neither the kernel nor qemu set guest_phys_bits.  So if the
+> firmware finds guest_phys_bits =3D=3D 0 it does not know whenever ...
+>
+>   (a) kernel or qemu being too old, or
+>   (b) no restrictions apply, it is safe to go with phys_bits.
+>
+> One easy option would be to always let qemu pass through guest_phys_bits
+> from the kernel, even in case it is equal to phys_bits.
 
-There's no plan to deprecate legacy migrations, I think there was a plan to
-make multifd the default, but I don't yet think it all thorougly yet, and
-even if it happens it doesn't mean we'll remove legacy migration code.
+Ah, I see - you would like to be able to use all 52 bits (instead of
+going for a safer 46 or 48) and therefore you need to have nonzero
+guest_phys_bits even if it's equal to phys_bits. While on an old
+kernel, you would pass forward 0.
 
-When repost please still make sure this parameter works for both multifd
-and !multifd.
+> > - add a property in x86_cpu_properties[] to allow configuration with TC=
+G.
+>
+> Was thinking about configuration too.  Not sure it is a good idea to
+> add yet another phys-bits config option to the mix of options we already
+> have ...
 
-Thanks,
+I think it's nice that you can use TCG to test various cases, which
+requires a new property.
 
--- 
-Peter Xu
+> In case host_phys_bits=3Dtrue qemu could simply use
+> min(kernel guest-phys-bits,host-phys-bits-limit)
+
+Yes, that works.
+
+Paolo
+
+> For the host_phys_bits=3Dfalse case it would probably be best to just
+> not set guest_phys_bits.
 
 
