@@ -4,133 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7E7AC5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 11:03:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44E20C5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 11:15:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjdQ7-00030V-ED; Mon, 11 Mar 2024 07:02:15 -0400
+	id 1rjdc6-00006G-Qj; Mon, 11 Mar 2024 07:14:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjdQ6-00030B-4a
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 07:02:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjdQ3-00085Z-Ml
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 07:02:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710154927;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=YcrmkoX3+N/0pJPLUIQHW2Xm3f2KIf85wsWvCsToQIg=;
- b=gHoglenhRlcuiVGLJQ74Qf+/4at+iCuiqxF1jPRW2llxSu/44zdPUtBUEMYC4op0t9PgLH
- MwKSuBh2MuS8uRrHeFEy4Wr8N9ongrq/7O0TfYtmEegWUdToxjE3GBWA4vArXkv03CwY1l
- Fe1TKBHblUkITUc3ampKByFMTABCuJc=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-503-fe3LavjiNE-Y3vEJaUYEgw-1; Mon, 11 Mar 2024 07:02:06 -0400
-X-MC-Unique: fe3LavjiNE-Y3vEJaUYEgw-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a4455ae71fcso256340366b.3
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 04:02:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yu.zhang@ionos.com>)
+ id 1rjdc5-00005t-48
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 07:14:37 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yu.zhang@ionos.com>)
+ id 1rjdc2-0002fK-22
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 07:14:36 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-a45f257b81fso325961666b.0
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 04:14:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ionos.com; s=google; t=1710155670; x=1710760470; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=X0jl//txZHXm3OVJ5i2uBXEaRNUf/z4I+WlJoPzQYQ4=;
+ b=HVaYGIfS/uxdWzMu7J1nKpwHSqKiTP4EIjCv2xzz4JC5xN08llVuPSM2gIjh3EwLLX
+ Rp6hHmvIncgboUPySaDDyp4FWXI8y0NuUm5ODMJygKml8NvFD99tn5ZkqZcJvUVXQIIN
+ PTEZLn82NJiOs5DoreQwN6vmfDq3PP/vrHzQFqpl+bTc21XJHJ5L7pgekfj8QtE6xWeR
+ LbM8m2tmQM/kxLSu1sqQFF8DbYiIVJ8XULw827lbymP3HEziFI9RpAzP3vO2BUpNLwkn
+ LuRkK+7WvrcxyRvheN2ILuybaRfpAc7/JoEscoxyDMn8/mOKVuY7dfCPyYqbIWY/IY5B
+ QMlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710154925; x=1710759725;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YcrmkoX3+N/0pJPLUIQHW2Xm3f2KIf85wsWvCsToQIg=;
- b=Jo8wdIFMsncdT08hNuo0sYi8s1+zqwqIf6tw0BxXocdY+ifDJr3qzCU7rUQZCusz7J
- qi8daMsCm+cRt6VAN+Z71mEHcGqXcC9u0fGn4kVUwm+Dxchpt7B3etxPt1QYAyaEeqG3
- KanXT3Cgxo07nYKGNTO2veYdzN9HWBKTm16WLDlPL0A00cihR1YxBfnzBlhx4/B3xRbl
- zH4vebjF9k9YhVLZFmW7aQwrByP8CCw9ziYccusvuMRtpUK80nu81FB6Fb0SAnqf4/1X
- GgfkiWxzl5D7qag5uaoEtM8A2fSYZ8DWp7sd8OZkFq16aZsZVRRmcioOah4Dv9w4bwKm
- dYJA==
+ d=1e100.net; s=20230601; t=1710155670; x=1710760470;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=X0jl//txZHXm3OVJ5i2uBXEaRNUf/z4I+WlJoPzQYQ4=;
+ b=vMBvMf2yAyO8/YPKNLneBn6feeVCu+tqE5K5deNUo1obnFBpMxwGA6ujLqxUP83RWA
+ e/ckaijAl1rWSP0qxf2lyCdGXEI+XLGOzWEBx+xcVHw4lq2gKSZkkXbP91g2IPcmregz
+ 33Qdo838MFaSIiFNiH5zb0hZJROcWT5wSnxRw4tKvY+MWM7zYcIegdKaXP0OSU0M9viy
+ SJqCFy7eWvPIc+gTjST4fynS4uvDBqpBtUrkJOcA7ISwjdDlcvw+D2z9ZNKFVh4iJcag
+ TVqt5MCSxrYyiYvomZtopZyGzQdIMjAoshh8tYvAbcspLchlf6UYAMQfMoz1clEjUgGA
+ 3pyQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXSSYXvG1VtP7CVc+EYYWofCvxvES4MoRsdociQC3TI8bWjTrgRiiLdN4K0rvAKRcv5lXArZhma+Zbo3/k6n38a4OLHZkc=
-X-Gm-Message-State: AOJu0YwwpJ1lKSSomeJl3tW3IELgPw7/UW85/EtTaNB8B4h9i3ayf9Fa
- y1N6iIQpVSQkYsRaTqHVF3uisk3sHrYo51lPgJMI4mverwZF97iazXqmMGUsqDTtosikm3wEijm
- TGYGZxZMFEILe9LMCher4/Jhf394/43BcmMTki6ciqNKgbG3pLS7F
-X-Received: by 2002:a17:907:a091:b0:a45:f24a:7df8 with SMTP id
- hu17-20020a170907a09100b00a45f24a7df8mr4469879ejc.27.1710154924461; 
- Mon, 11 Mar 2024 04:02:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHajrIRhlp0YBdqH+M8yC9/w3+3UJ+pC1En80HDf8+oANf/9KvNLabpnVBy7IXqSKE/ys/S+w==
-X-Received: by 2002:a17:907:a091:b0:a45:f24a:7df8 with SMTP id
- hu17-20020a170907a09100b00a45f24a7df8mr4469860ejc.27.1710154924115; 
- Mon, 11 Mar 2024 04:02:04 -0700 (PDT)
-Received: from [192.168.0.9] (ip-109-43-178-151.web.vodafone.de.
- [109.43.178.151]) by smtp.gmail.com with ESMTPSA id
- bo14-20020a170906d04e00b00a454438091fsm2733249ejb.70.2024.03.11.04.02.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Mar 2024 04:02:03 -0700 (PDT)
-Message-ID: <9db53a92-42bd-4bd4-9b68-31b923f7fc9c@redhat.com>
-Date: Mon, 11 Mar 2024 12:02:02 +0100
+ AJvYcCVbMF12iSiNAEHYBo1zdN3NLur+Y2/eGY6QtwdSnOH2Fb5yIUkCElg3kEBYM2JQJuCc/kwJt1cGyxezkCEqG3BP5D1amBA=
+X-Gm-Message-State: AOJu0YyDwI+KvXvwPilwexiOY3t/r095VVYEP7w6o+4Q2ZXlH4h0j4ip
+ /YGsvMzkKyYGMRwBvvlS9E9E/wd8kbr3EvRs5TiWqnsRZLWB3Wwiu9NRNVPbD6SQDUScUvZGtYF
+ U3hsIIQLA1M4C87wJG/wTeKj8Y0c0Csp5gnAAuw==
+X-Google-Smtp-Source: AGHT+IHwvyumka3GqgjzraLY2jdm6YJO5mbxj1oa4+zXMgLjQfzD3XXBvQ26qirY8ZiyC+ROI5YiHZ6bG+6jQWO9cYY=
+X-Received: by 2002:a17:907:6d1e:b0:a46:2232:1ae7 with SMTP id
+ sa30-20020a1709076d1e00b00a4622321ae7mr2454361ejc.13.1710155669722; Mon, 11
+ Mar 2024 04:14:29 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 26/29] disas: introduce show_opcodes
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <20240306144041.3787188-1-alex.bennee@linaro.org>
- <20240306144041.3787188-27-alex.bennee@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240306144041.3787188-27-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.945,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <CAHEcVy7HXSwn4Ow_Kog+Q+TN6f_kMeiCHevz1qGM-fbxBPp1hQ@mail.gmail.com>
+ <04da4267-8fe8-4653-90a2-f64e3be64037@linaro.org>
+ <a0d9e2c2-3687-4b7d-8fac-887ce262c38a@fujitsu.com>
+ <Zek2UFoAyVrC7yh6@x1n>
+ <CAHEcVy4L_D6tuhJ8h=xLR4WaPaprJE3nnxZAEyUnoTrxQ6CF5w@mail.gmail.com>
+ <CAOQbQt0+UbfZNPrticjLD4X+S2KR4r+yWPATnhEhTRuxbwvGiQ@mail.gmail.com>
+ <CAHEcVy78iCXVGmwr-2snpFwOyCxv3wxYrYJonK6nZF9UfbX_bw@mail.gmail.com>
+In-Reply-To: <CAHEcVy78iCXVGmwr-2snpFwOyCxv3wxYrYJonK6nZF9UfbX_bw@mail.gmail.com>
+From: Yu Zhang <yu.zhang@ionos.com>
+Date: Mon, 11 Mar 2024 12:14:18 +0100
+Message-ID: <CAHEcVy7kun92b8drEdDZndcWBBT7uvjOpHfqvVbqP0MqvJO01w@mail.gmail.com>
+Subject: Re: Problem with migration/rdma
+To: Peter Xu <peterx@redhat.com>,
+ "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Het Gala <het.gala@nutanix.com>, Fabiano Rosas <farosas@suse.de>, 
+ qemu-devel <qemu-devel@nongnu.org>
+Cc: Jinpu Wang <jinpu.wang@ionos.com>,
+ Alexei Pastuchov <alexei.pastuchov@ionos.com>, 
+ Elmar Gerdes <elmar.gerdes@ionos.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: permerror client-ip=2a00:1450:4864:20::62e;
+ envelope-from=yu.zhang@ionos.com; helo=mail-ej1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,52 +103,272 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06/03/2024 15.40, Alex Bennée wrote:
-> For plugins we don't expect the raw opcodes in the disassembly. We
-> already deal with this by hand crafting our capstone call but for
-> other diassemblers we need a flag. Introduce show_opcodes which
-> defaults to off.
-> 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> Message-Id: <20240305121005.3528075-27-alex.bennee@linaro.org>
-> 
-> diff --git a/include/disas/dis-asm.h b/include/disas/dis-asm.h
-> index 2324f6b1a46..b26867b6417 100644
-> --- a/include/disas/dis-asm.h
-> +++ b/include/disas/dis-asm.h
-> @@ -396,6 +396,14 @@ typedef struct disassemble_info {
->     /* Command line options specific to the target disassembler.  */
->     char * disassembler_options;
->   
-> +  /*
-> +   * When true instruct the disassembler it may preface the
-> +   * disassembly with the opcodes values if it wants to. This is
-> +   * mainly for the benefit of the plugin interface which doesn't want
-> +   * that.
-> +   */
-> +  bool show_opcodes;
-> +
->     /* Field intended to be used by targets in any way they deem suitable.  */
->     void *target_info;
->   
-> diff --git a/disas/disas.c b/disas/disas.c
-> index 0d2d06c2ecc..17170d291ec 100644
-> --- a/disas/disas.c
-> +++ b/disas/disas.c
-> @@ -299,6 +299,7 @@ void disas(FILE *out, const void *code, size_t size)
->       s.info.buffer = code;
->       s.info.buffer_vma = (uintptr_t)code;
->       s.info.buffer_length = size;
-> +    s.info.show_opcodes = true;
->   
->       if (s.info.cap_arch >= 0 && cap_disas_host(&s.info, code, size)) {
->           return;
+Hello Peter and Zhijian,
 
-I know it's too late now for a patch review, but anyway: What about the 
-other spots that set up a "CPUDebug" struct? Like monitor_disas() or 
-target_disas() ? Shouldn't we initialize the new struct member there, too?
+I created a MR in gitlab. You may have a look and let me know whether
+it's fine for you.
+    https://gitlab.com/qemu/qemu/-/merge_requests/4
 
-  Thomas
+Best regards,
+Yu Zhang @ IONOS Compute Platform
+11.03.2024
 
+On Fri, Mar 8, 2024 at 10:13=E2=80=AFAM Yu Zhang <yu.zhang@ionos.com> wrote=
+:
+>
+> Hallo Alexei,
+>
+> vielen Dank! Habe probiert, aber auch an Permission Problem gesto=C3=9Fen=
+.
+> Ich versuche, Google Application-specific password zu erstellen f=C3=BCr =
+Zukunft.
+>
+> QEMU Upstream bietet diese L=C3=B6sung f=C3=BCr kleinen Patch an im Notfa=
+ll.
+> Sie werden es behanden.
+>
+> Viele Gr=C3=BC=C3=9Fe
+> Yu
+>
+> On Fri, Mar 8, 2024 at 8:09=E2=80=AFAM Alexei Pastuchov
+> <alexei.pastuchov@ionos.com> wrote:
+> >
+> > Hi Yu, I think you could create a pull request to the project
+> > https://github.com/qemu/qemu for the purpose.
+> > Best,
+> > Alexei
+> >
+> > On Fri, Mar 8, 2024 at 7:28=E2=80=AFAM Yu Zhang <yu.zhang@ionos.com> wr=
+ote:
+> > >
+> > > Hello Zhijian and Peter,
+> > >
+> > > Thank you so much for testing and confirming it.
+> > > I created a patch in the email format, unfortunately got an issue for
+> > > setting up the
+> > > "Application-specific Password" in Gmail. It seems that in my gmail
+> > > account there
+> > > is no option at all for selecting "mail" before creating the
+> > > application password.
+> > >
+> > > As it's tiny, I attached it in this email at this time (not elegant.)=
+,
+> > > so that it can get
+> > > included before the soft freezing.
+> > >
+> > > Really sorry for this inconvenience.
+> > > --------------
+> > > From c9fb6a6debfbd5e103aa90f30e9a028316449104 Mon Sep 17 00:00:00 200=
+1
+> > > From: Yu Zhang <yu.zhang@ionos.com>
+> > > Date: Wed, 6 Mar 2024 09:06:54 +0100
+> > > Subject: [PATCH] migration/rdma: Fix a memory issue for migration
+> > >
+> > > In commit 3fa9642ff7 change was made to convert the RDMA backend to
+> > > accept MigrateAddress struct. However, the assignment of "host" leads
+> > > to data corruption on the target host and the failure of migration.
+> > >
+> > >     isock->host =3D rdma->host;
+> > >
+> > > By allocating the memory explicitly for it with g_strdup_printf(), th=
+e
+> > > issue is fixed and the migration doesn't fail any more.
+> > >
+> > > Fixes: 3fa9642ff7 ("migration: convert rdma backend to accept Migrate=
+Address")
+> > > Cc: qemu-stable <qemu-stable@nongnu.org>
+> > > Cc: Li Zhijian <lizhijian@fujitsu.com>
+> > > Cc: Peter Xu <peterx@redhat.com>
+> > > Signed-off-by: Yu Zhang <yu.zhang@ionos.com>
+> > > ---
+> > >  migration/rdma.c | 2 +-
+> > >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > >
+> > > diff --git a/migration/rdma.c b/migration/rdma.c
+> > > index a355dcea89..d6abe718b5 100644
+> > > --- a/migration/rdma.c
+> > > +++ b/migration/rdma.c
+> > > @@ -3357,7 +3357,7 @@ static int qemu_rdma_accept(RDMAContext *rdma)
+> > >          goto err_rdma_dest_wait;
+> > >      }
+> > >
+> > > -    isock->host =3D rdma->host;
+> > > +    isock->host =3D g_strdup_printf("%s", rdma->host);
+> > >      isock->port =3D g_strdup_printf("%d", rdma->port);
+> > >
+> > >      /*
+> > > --
+> > > 2.25.1
+> > > --------------
+> > >
+> > > Best regards,
+> > > Yu Zhang @ IONOS Compute Platform
+> > > 08.03.2024
+> > >
+> > > On Thu, Mar 7, 2024 at 4:37=E2=80=AFAM Peter Xu <peterx@redhat.com> w=
+rote:
+> > > >
+> > > > On Thu, Mar 07, 2024 at 02:41:37AM +0000, Zhijian Li (Fujitsu) via =
+wrote:
+> > > > > Yu,
+> > > > >
+> > > > >
+> > > > > On 07/03/2024 00:30, Philippe Mathieu-Daud=C3=A9 wrote:
+> > > > > > Cc'ing RDMA migration reviewers/maintainers:
+> > > > > >
+> > > > > > $ ./scripts/get_maintainer.pl -f migration/rdma.c
+> > > > > > Li Zhijian <lizhijian@fujitsu.com> (reviewer:RDMA Migration)
+> > > > > > Peter Xu <peterx@redhat.com> (maintainer:Migration)
+> > > > > > Fabiano Rosas <farosas@suse.de> (maintainer:Migration)
+> > > > > >
+> > > > > > On 5/3/24 22:32, Yu Zhang wrote:
+> > > > > >> Hello Het and all,
+> > > > > >>
+> > > > > >> while I was testing qemu-8.2, I saw a lot of our migration tes=
+t cases failed.
+> > > > > >> After debugging the commits of the 8.2 branch, I saw the issue=
+ and mad a diff:
+> > > > > >>
+> > > > > >> diff --git a/migration/rdma.c b/migration/rdma.c
+> > > > > >> index 6a29e53daf..f10d56f556 100644
+> > > > > >> --- a/migration/rdma.c
+> > > > > >> +++ b/migration/rdma.c
+> > > > > >> @@ -3353,9 +3353,9 @@ static int qemu_rdma_accept(RDMAContext =
+*rdma)
+> > > > > >>           goto err_rdma_dest_wait;
+> > > > > >>       }
+> > > > > >>
+> > > > > >> -    isock->host =3D rdma->host;
+> > > > > >> +    isock->host =3D g_strdup_printf("%s", rdma->host);
+> > > > > >>       isock->port =3D g_strdup_printf("%d", rdma->port);
+> > > > >
+> > > > >
+> > > > > Thanks for your analysis.
+> > > > >
+> > > > > It will be great if you send this as a patch.
+> > > > >
+> > > > >
+> > > > > isock is defined as a _autoptr VVV
+> > > > > 3333 _autoptr(InetSocketAddress) isock =3D g_new0(InetSocketAddre=
+ss, 1);
+> > > > >
+> > > > > I'm surprised that it seems the auto free scheme will free the me=
+mber of isock as well
+> > > > > see below valrind log. That will cause a double free.
+> > > >
+> > > > Right, all the QAPI-free is a deep one.  Thanks for checking this u=
+p,
+> > > > Zhijian.
+> > > >
+> > > > Yu, would you please send a formal patch (better before this week e=
+nds) so
+> > > > that I can include it for the last pull for 9.0 soft-freeze (March =
+12th)?
+> > > > As 8.2 affected, please also attach proper tags:
+> > > >
+> > > > Cc: qemu-stable <qemu-stable@nongnu.org>
+> > > > Fixes: 3fa9642ff7 ("migration: convert rdma backend to accept Migra=
+teAddress")
+> > > >
+> > > > >
+> > > > > =3D=3D809138=3D=3D Invalid free() / delete / delete[] / realloc()
+> > > > > =3D=3D809138=3D=3D    at 0x483A9F5: free (vg_replace_malloc.c:538=
+)
+> > > > > =3D=3D809138=3D=3D    by 0x598F70C: g_free (in /usr/lib64/libglib=
+-2.0.so.0.6600.8)
+> > > > > =3D=3D809138=3D=3D    by 0x79B6AD: qemu_rdma_cleanup (rdma.c:2432=
+)
+> > > > > =3D=3D809138=3D=3D    by 0x79CEE6: qio_channel_rdma_close_rcu (rd=
+ma.c:3108)
+> > > > > =3D=3D809138=3D=3D    by 0xC2E339: call_rcu_thread (rcu.c:301)
+> > > > > =3D=3D809138=3D=3D    by 0xC2116A: qemu_thread_start (qemu-thread=
+-posix.c:541)
+> > > > > =3D=3D809138=3D=3D    by 0x72683F8: ??? (in /usr/lib64/libpthread=
+-2.32.so)
+> > > > > =3D=3D809138=3D=3D    by 0x73824C2: clone (in /usr/lib64/libc-2.3=
+2.so)
+> > > > > =3D=3D809138=3D=3D  Address 0x13daa070 is 0 bytes inside a block =
+of size 14 free'd
+> > > > > =3D=3D809138=3D=3D    at 0x483A9F5: free (vg_replace_malloc.c:538=
+)
+> > > > > =3D=3D809138=3D=3D    by 0x598F70C: g_free (in /usr/lib64/libglib=
+-2.0.so.0.6600.8)
+> > > > > =3D=3D809138=3D=3D    by 0xC058CF: qapi_dealloc_type_str (qapi-de=
+alloc-visitor.c:68)
+> > > > > =3D=3D809138=3D=3D    by 0xC09EF3: visit_type_str (qapi-visit-cor=
+e.c:349)
+> > > > > =3D=3D809138=3D=3D    by 0xBDDECC: visit_type_InetSocketAddressBa=
+se_members (qapi-visit-sockets.c:29)
+> > > > > =3D=3D809138=3D=3D    by 0xBDE055: visit_type_InetSocketAddress_m=
+embers (qapi-visit-sockets.c:67)
+> > > > > =3D=3D809138=3D=3D    by 0xBDE30D: visit_type_InetSocketAddress (=
+qapi-visit-sockets.c:119)
+> > > > > =3D=3D809138=3D=3D    by 0xBDDB38: qapi_free_InetSocketAddress (q=
+api-types-sockets.c:51)
+> > > > > =3D=3D809138=3D=3D    by 0x792351: glib_autoptr_clear_InetSocketA=
+ddress (qapi-types-sockets.h:109)
+> > > > > =3D=3D809138=3D=3D    by 0x79236F: glib_autoptr_cleanup_InetSocke=
+tAddress (qapi-types-sockets.h:109)
+> > > > > =3D=3D809138=3D=3D    by 0x79D956: qemu_rdma_accept (rdma.c:3341)
+> > > > > =3D=3D809138=3D=3D    by 0x79F05A: rdma_accept_incoming_migration=
+ (rdma.c:4041)
+> > > > > =3D=3D809138=3D=3D  Block was alloc'd at
+> > > > > =3D=3D809138=3D=3D    at 0x4839809: malloc (vg_replace_malloc.c:3=
+07)
+> > > > > =3D=3D809138=3D=3D    by 0x5992BB8: g_malloc (in /usr/lib64/libgl=
+ib-2.0.so.0.6600.8)
+> > > > > =3D=3D809138=3D=3D    by 0x59A7FE3: g_strdup (in /usr/lib64/libgl=
+ib-2.0.so.0.6600.8)
+> > > > > =3D=3D809138=3D=3D    by 0x79C2A8: qemu_rdma_data_init (rdma.c:27=
+31)
+> > > > > =3D=3D809138=3D=3D    by 0x79F183: rdma_start_incoming_migration =
+(rdma.c:4081)
+> > > > > =3D=3D809138=3D=3D    by 0x76F200: qemu_start_incoming_migration =
+(migration.c:581)
+> > > > > =3D=3D809138=3D=3D    by 0x77193A: qmp_migrate_incoming (migratio=
+n.c:1735)
+> > > > > =3D=3D809138=3D=3D    by 0x74B3D3: qmp_x_exit_preconfig (vl.c:271=
+8)
+> > > > > =3D=3D809138=3D=3D    by 0x74DB6F: qemu_init (vl.c:3753)
+> > > > > =3D=3D809138=3D=3D    by 0xA14F3F: main (main.c:47)
+> > > >
+> > > > --
+> > > > Peter Xu
+> > > >
+> >
+> >
+> >
+> > --
+> >
+> > Alexei Pastuchov
+> >
+> > Senior Linux Systems Developer
+> > Compute Platform Development Cloud
+> >
+> > IONOS SE | Revaler Str. 28-31 | 10245 Berlin | Deutschland
+> > E-Mail: alexei.pastuchov@ionos.com | Web: www.ionos.de
+> >
+> > Hauptsitz Montabaur, Amtsgericht Montabaur, HRB 24498
+> >
+> > Vorstand: H=C3=BCseyin Dogan, Claudia Frese, Arthur Mai, Dr. Markus Nog=
+a,
+> > Dr. Jens-Christian Reich, Britta Schmidt, Achim Wei=C3=9F
+> > Aufsichtsratsvorsitzender: Sven Fritz
+> >
+> > Member of United Internet
+> >
+> > Diese E-Mail kann vertrauliche und/oder gesetzlich gesch=C3=BCtzte
+> > Informationen enthalten. Wenn Sie nicht der bestimmungsgem=C3=A4=C3=9Fe=
+ Adressat
+> > sind oder diese E-Mail irrt=C3=BCmlich erhalten haben, unterrichten Sie
+> > bitte den Absender und vernichten Sie diese E-Mail. Anderen als dem
+> > bestimmungsgem=C3=A4=C3=9Fen Adressaten ist untersagt, diese E-Mail zu
+> > speichern, weiterzuleiten oder ihren Inhalt auf welche Weise auch
+> > immer zu verwenden.
+> >
+> > This e-mail may contain confidential and/or privileged information. If
+> > you are not the intended recipient of this e-mail, you are hereby
+> > notified that saving, distribution or use of the content of this
+> > e-mail in any way is prohibited. If you have received this e-mail in
+> > error, please notify the sender and delete the e-mail.
 
