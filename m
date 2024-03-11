@@ -4,134 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9324DC5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 10:53:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 903CFC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 10:56:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjdGd-0008Qt-Cg; Mon, 11 Mar 2024 06:52:27 -0400
+	id 1rjdJw-00014P-4Q; Mon, 11 Mar 2024 06:55:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjdGa-0008Qh-S1
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 06:52:24 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rjdJu-00014D-Dj
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 06:55:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjdGZ-0006QH-0u
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 06:52:24 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rjdJj-0006hu-VL
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 06:55:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710154341;
+ s=mimecast20190719; t=1710154539;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ieJQOyR1PvjQcFlXEfu4jdHG+bxrhJkvdTkgV6smMgo=;
- b=U2p32eQ8V9e6W0585gnfJVGsEj8wK93PiTBl3xrVknwAmuC7GscDXvd1qgCZk89z6mDHP0
- QGDPVNvtF802rvEfNiLEjB2C5IBrF9pY4fHcbfvOoHSUo2b78DFB3Btn2OqFrBXHmetzz9
- Hxv1jQGRgQRXDkROudBxYiEs+bgRLWY=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=EKLfNinsugPgo1c9nFFEWQfwl4qtOWnF6NPRgJPm0tE=;
+ b=GUtKbCYtVuVEtv413hLstnFDNdgk+74xmB7zxdhKf7rkXTkqkO2lyfLOnz+d5BFtRURvgD
+ SBmfCNgKjDKX4NzwVQw2cbhAjluMFVU/BRPNNwDF8kgFIkxLFMQByJiV5nWzyhTFQbseFx
+ gnJ2cy87Q+n25qDwdJrrqHeCivQnFgU=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-413-oqWeru8mNi-tELNhif2LSw-1; Mon, 11 Mar 2024 06:52:20 -0400
-X-MC-Unique: oqWeru8mNi-tELNhif2LSw-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-41312565bd4so19296355e9.2
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 03:52:19 -0700 (PDT)
+ us-mta-169-x1dmJ9jMMUSnyoKJ2sFGTg-1; Mon, 11 Mar 2024 06:55:37 -0400
+X-MC-Unique: x1dmJ9jMMUSnyoKJ2sFGTg-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-33e705fb2abso1755596f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 03:55:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710154339; x=1710759139;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ieJQOyR1PvjQcFlXEfu4jdHG+bxrhJkvdTkgV6smMgo=;
- b=lD0yPnI5gpEnLbnOaO8cL/w4RykFHZa9yrR8vtLpnVDd0SAf5oQPIXA5SkIKGKAyik
- Jh5z7HO8nvpyjK+UHgFhZhNTnsO+3DNU3YVrGixWX9gmgAp3fAlE8cKgN9HXBIAuPllH
- lpf8oFQ6wBhrHBeW0ge+Hlrvm7U68lgejnSeT+LwlYl908PwMUoT+R3okgVNRxuZmMrV
- iiT80Ztot/uwke932N20Ed9m4GxokCFzUu1dlclUNZ67dkTQVln0U/wgNs1FtGRCVBh6
- xgRDgFkCA/qfikR4/nyFOU2BXvVgWxE9rcH8aJoT56KLs1tiiON4KbDlP/R/gGjeXEhU
- fsSQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXLgLMpGtS1WZ4dOHjADSf2yXtuYFUTo6+xRsZJwQsZCZIxjy8Kg5gKSsWyCai2xw1CFOCAxBOcztbTAy6B4FO4igABso8=
-X-Gm-Message-State: AOJu0YxaC1TtZM75CZXNRsGMtCkCAeAq3g1oYjnjXT4Et11A0R88tWml
- NHxoQzd3ggB4kSfD3XyAHUUse5nTvCKLPyVlefCX7wu8n4647yy3/1NA7dGSV+CuvFfWZPwAIP9
- EZFb29IX3h2LNVWqnTm70rnnG/ne0Uj4uu9iNSZ/1K5aCIuPGndYd
-X-Received: by 2002:a05:600c:5253:b0:412:ea32:e7b0 with SMTP id
- fc19-20020a05600c525300b00412ea32e7b0mr2128wmb.40.1710154339082; 
- Mon, 11 Mar 2024 03:52:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEuKfrON+N8lLy46p/UuA8sK7l+gCxFodh7QXyGlaIMV5gnfWQ+Vn3vks53HtERE9KJgl6bsA==
-X-Received: by 2002:a05:600c:5253:b0:412:ea32:e7b0 with SMTP id
- fc19-20020a05600c525300b00412ea32e7b0mr2117wmb.40.1710154338691; 
- Mon, 11 Mar 2024 03:52:18 -0700 (PDT)
-Received: from [192.168.0.9] (ip-109-43-178-151.web.vodafone.de.
- [109.43.178.151]) by smtp.gmail.com with ESMTPSA id
- l18-20020a05600c1d1200b004132f3ace5csm543297wms.37.2024.03.11.03.52.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Mar 2024 03:52:17 -0700 (PDT)
-Message-ID: <600bae74-e8b9-4455-95b0-3166da233c8f@redhat.com>
-Date: Mon, 11 Mar 2024 11:52:16 +0100
+ d=1e100.net; s=20230601; t=1710154536; x=1710759336;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=EKLfNinsugPgo1c9nFFEWQfwl4qtOWnF6NPRgJPm0tE=;
+ b=iTTWfd9TyKTnWIfnXvPKpHkVc2eQzqp7OYLVbYG0goRFC2b864gsEESc2E5rnNFcrl
+ swB/ui+9TZwCec2wu2JmgQPgJuokkfoFRpqmCS3Ft76EiXcvrDEL6qNQO/0Jk0d4U96u
+ mfkMWXjyOflLVNPttmphaHU8qSY4H1tDXScEf89lBqdH1dc/1wHncIGtMBmsFsrPyTp/
+ 4hQvENgs56abszdaP946xApppb42cNqRUJeER6nZ9rKQMKOrnqTDEHMN7xwDewTyR2PX
+ W+nGEhyNFppB0+KzAUPzed/fy0IQOKKhzLxK2nIad+oDG4Kl3un8xRp6F9CpOrZ27Ud9
+ cyYg==
+X-Gm-Message-State: AOJu0YzlEyeLHRVfqcPtHkla+bLt3q9wubjNyNkJjNTA8JRUS5zC0S36
+ FsG0Zxscn9QCfbI+3z8X7k7F7TJvkM9P4uZ+ZrwIvLdYl8fHsWSLIadzJPWwdSZ2NchAVyEmeUY
+ nWuhGyrRCb6rIVmOc4Lf7d/Mt218RtxDZHMPvHPNQj67m0EfKhswMuLS0S6W6EspSsimp9Vo0IH
+ c15H2Urfdg3PszBrNZCZNPhy1kIp7YGDCQEGrCJg==
+X-Received: by 2002:a5d:4561:0:b0:33e:78d2:7f7 with SMTP id
+ a1-20020a5d4561000000b0033e78d207f7mr4004273wrc.55.1710154536315; 
+ Mon, 11 Mar 2024 03:55:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IELvTkNiWzZC7Zkz0N4AKIUHVo/Xeko8sEFJTK5TnsT3SHw1+nxSrBrSR/dQ6A7wyj0Hnlad5BFyTNR/YlN+o0=
+X-Received: by 2002:a5d:4561:0:b0:33e:78d2:7f7 with SMTP id
+ a1-20020a5d4561000000b0033e78d207f7mr4004260wrc.55.1710154536013; Mon, 11 Mar
+ 2024 03:55:36 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2] tests/vm: avoid re-building the VM images all the
- time
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>
-References: <20240226195003.467135-1-alex.bennee@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240226195003.467135-1-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+References: <20240305105233.617131-1-kraxel@redhat.com>
+ <20240305105233.617131-3-kraxel@redhat.com>
+In-Reply-To: <20240305105233.617131-3-kraxel@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 11 Mar 2024 11:55:23 +0100
+Message-ID: <CABgObfZ13WEHaGNzjy0GVE2EAZ=MHOSNHS_1iTOuBduOt5q_3g@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] kvm: add support for guest physical bits
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org, Tom Lendacky <thomas.lendacky@amd.com>, 
+ Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
 X-Spam_bar: ---
 X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.945,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -148,55 +98,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/02/2024 20.50, Alex Bennée wrote:
-> The main problem is that "check-venv" is a .PHONY target will always
-> evaluate and trigger a full re-build of the VM images. While its
-> tempting to drop it from the dependencies that does introduce a
-> breakage on freshly configured builds.
-> 
-> Fortunately we do have the otherwise redundant --force flag for the
-> script which up until now was always on. If we make the usage of
-> --force conditional on dependencies other than check-venv triggering
-> the update we can avoid the costly rebuild and still run cleanly on a
-> fresh checkout.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2118
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+On Tue, Mar 5, 2024 at 11:52=E2=80=AFAM Gerd Hoffmann <kraxel@redhat.com> w=
+rote:
+>
+> Query kvm for supported guest physical address bits, in cpuid
+> function 80000008, eax[23:16].  Usually this is identical to host
+> physical address bits.  With NPT or EPT being used this might be
+> restricted to 48 (max 4-level paging address space size) even if
+> the host cpu supports more physical address bits.
+>
+> When set pass this to the guest, using cpuid too.  Guest firmware
+> can use this to figure how big the usable guest physical address
+> space is, so PCI bar mapping are actually reachable.
+>
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 > ---
->   tests/vm/Makefile.include | 2 +-
->   tests/vm/basevm.py        | 4 ++--
->   2 files changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/tests/vm/Makefile.include b/tests/vm/Makefile.include
-> index bf12e0fa3c5..ac56824a87d 100644
-> --- a/tests/vm/Makefile.include
-> +++ b/tests/vm/Makefile.include
-> @@ -102,7 +102,7 @@ $(IMAGES_DIR)/%.img:	$(SRC_PATH)/tests/vm/% \
->   		$(if $(LOG_CONSOLE),--log-console) \
->   		--source-path $(SRC_PATH) \
->   		--image "$@" \
-> -		--force \
-> +		$(if $(filter-out check-venv, $?), --force) \
->   		--build-image $@, \
->   		"  VM-IMAGE $*")
->   
-> diff --git a/tests/vm/basevm.py b/tests/vm/basevm.py
-> index c0d62c08031..f8fd751eb14 100644
-> --- a/tests/vm/basevm.py
-> +++ b/tests/vm/basevm.py
-> @@ -646,9 +646,9 @@ def main(vmcls, config=None):
->           vm = vmcls(args, config=config)
->           if args.build_image:
->               if os.path.exists(args.image) and not args.force:
-> -                sys.stderr.writelines(["Image file exists: %s\n" % args.image,
-> +                sys.stderr.writelines(["Image file exists, skipping build: %s\n" % args.image,
->                                         "Use --force option to overwrite\n"])
-> -                return 1
-> +                return 0
->               return vm.build_image(args.image)
->           if args.build_qemu:
->               vm.add_source_dir(args.build_qemu)
+>  target/i386/cpu.h     |  1 +
+>  target/i386/cpu.c     |  1 +
+>  target/i386/kvm/kvm.c | 17 +++++++++++++++++
+>  3 files changed, 19 insertions(+)
+>
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 952174bb6f52..d427218827f6 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> +    guest_phys_bits =3D kvm_get_guest_phys_bits(cs->kvm_state);
+> +    if (guest_phys_bits &&
+> +        (cpu->guest_phys_bits =3D=3D 0 ||
+> +         cpu->guest_phys_bits > guest_phys_bits)) {
+> +        cpu->guest_phys_bits =3D guest_phys_bits;
+> +    }
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Like Xiaoyao mentioned, the right place for this is kvm_cpu_realizefn,
+after host_cpu_realizefn returns. It should also be conditional on
+cpu->host_phys_bits. It also makes sense to:
+
+- make kvm_get_guest_phys_bits() return bits 7:0 if bits 23:16 are zero
+
+- here, set cpu->guest_phys_bits only if it is not equal to
+cpu->phys_bits (this undoes the previous suggestion, but I think it's
+cleaner)
+
+- add a property in x86_cpu_properties[] to allow configuration with TCG.
+
+Paolo
+
+> +
+>      /*
+>       * kvm_hyperv_expand_features() is called here for the second time i=
+n case
+>       * KVM_CAP_SYS_HYPERV_CPUID is not supported. While we can't possibl=
+y handle
+> --
+> 2.44.0
+>
 
 
