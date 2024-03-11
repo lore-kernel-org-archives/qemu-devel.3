@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2FB5C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:43:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42F17C5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:43:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjjeK-0002WU-Ia; Mon, 11 Mar 2024 13:41:20 -0400
+	id 1rjjef-0002bi-S3; Mon, 11 Mar 2024 13:41:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjjeI-0002Vm-TJ
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:41:18 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjjee-0002Zc-B9
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:41:40 -0400
+Received: from mail-oi1-x22c.google.com ([2607:f8b0:4864:20::22c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjjeH-0007M4-9F
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:41:18 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-5d4d15ec7c5so4060141a12.1
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 10:41:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjjec-0007Nc-PZ
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:41:40 -0400
+Received: by mail-oi1-x22c.google.com with SMTP id
+ 5614622812f47-3bd4e6a7cb0so3004484b6e.3
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 10:41:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710178874; x=1710783674; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1710178896; x=1710783696; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PCWjPm6O2sZUf84fzY2+POh+rCGK8+L6glbo6RMshm0=;
- b=mB1n85aSaOXTnFSC2rk2VEp1vhGMlVEQKzYQnapI2fIIwyCbbGgjGmM7SAJe9ZNfdB
- 79gCUlfEKFlSR3K1XRcaqRv9mhG3NV15mwGutDtVQ52MlSnNjKGcg6uy+VRo/hRf6cG8
- xNbLN0rexiZXkzJQpc/On1lZcwZrxyqme7NwkFaRwlGHZSl+0k7lIjpH/70sXnLiRXpU
- MSgAbSLGyfTMSt7DX0iTFFpeJiEwXi9letief63QoR4pMJucpJNitqe57vOrBKGyJ22c
- r08U0rGOg+I+vi8T5pRcprZ71yPtq3ZH+tf2RMEF13KVAV5XDn0rhj8nTKsQEnU1Pn5y
- A+lg==
+ bh=ypjlmGRHzY0uruaNOcG3LohKyREVxpMddX9iaQbvl0I=;
+ b=Sm/MyGhYAs5i2hfbYnbqYbsyYTP1xMjoaYA3ayweCX4BsscU+g3cUVr+wP7ck6NZ+z
+ LQ9LpCC/cNyXAPBKYXMN6K1C22KxuzbtMQnRjwuUapRpjz6SF1IY+OgT+xpjhiiiNUw4
+ ldSra8493YjnIbRvv2vTWhX9U2POfOdleNk6rVMM2Vmt+44OjwyzNYx32tsvy+t6BX6F
+ Wn5DgHzYTWEgXVTpw1fnMI4eYLNsN82FXsnvzEw+ESjhcqy8mvmmEQtSCsi12wplEIOX
+ UTf04zUblu6QplheGKgIkG200iKLFxiv4JvSUmns/dKXL9wZXbxOQZij6PrI7mGghRGq
+ jFdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710178874; x=1710783674;
+ d=1e100.net; s=20230601; t=1710178896; x=1710783696;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PCWjPm6O2sZUf84fzY2+POh+rCGK8+L6glbo6RMshm0=;
- b=ey9951eivi3iER6qegCGj7Cv2kbRls99uz9UyxTCYCqUW4ToXJZPJPXFuxnm0eIydF
- 2EdYOGSRMNDt4vRFePBPjUK6EzIsxF8jDvZWecLSpCxejwtRQ8DZgDawb/olbLkj8q0e
- Y6INlzNWWRUD6gj6lt/TrLlYlBm2iNGiW9R3Z2gweRncZO4KyzSOB5quRP8bABkLGkbh
- qJVwt0pMT9DI7lNDiaugFDZOv+VnSbGaRbwF8h+jc9notFtIJ894HkzX6DRG4mmsNglS
- o2cJhnyTCuNNQOSeFfLfYyAasM4a36fZDa3x1H06T7+ujNkVHE8EjZqY3LT0fPtMVbb/
- bTEQ==
-X-Gm-Message-State: AOJu0Yw2TXjo57zBckImK6hMkXzfWyQ4elIOFHlQchOAv3YU5OLpoQ50
- OxnTpV4G1Rdcrlj/wfdfpQzIQhE/UnB5AbglbpMexLL2hGlcXV3NSVF/TnviCQM=
-X-Google-Smtp-Source: AGHT+IHQBGyuI0PNkFMEaTgllzTwa4TPWe5n+d7d1RG6Pyc/HDM56oFNYNpSexglzhk1h25RW0q5Cg==
-X-Received: by 2002:a05:6a21:788f:b0:1a1:3ecb:5316 with SMTP id
- bf15-20020a056a21788f00b001a13ecb5316mr9034133pzc.0.1710178874472; 
- Mon, 11 Mar 2024 10:41:14 -0700 (PDT)
+ bh=ypjlmGRHzY0uruaNOcG3LohKyREVxpMddX9iaQbvl0I=;
+ b=gWUgYZWHacAcJNthbgQW1Q8R76ZOtUr+won9bIF6S+wRtB/a25bHWXOPohoC4cra/+
+ jFqUhcey8i4NG6H2C0+Bn18phhxOMIVXnwYrm8xgHWc86Z6Azm0oUjCQ5bEnmFI/mHoP
+ WyVe3mbKajwAcvEFlGu3FR0kd1VP+JIiydoIOwJtFQCwNi2VDiL+Z8y81EjP1JSUMiG2
+ 8ccFqp9fC7DSxwXxf7/GRj57bin2QNMbEtIHor4txa2Hig0jYAes/ph8rENbwGJQmxwA
+ 8DjtpeixBlQZkToK2q1QBw4xUaRdRxE00lHcA1rCgl4ohnwDQcweHGDDwUaCqZclFFmS
+ Lwwg==
+X-Gm-Message-State: AOJu0YyoJmWqLhmHqU9VMsRqC0WT0zk0pKSr0fMThOiqEVZJ5oqZRAOq
+ eI3iyUZDMJy4hqWTLWeEnfPoxJxgjzvXlgkZaKI7XZOGzny50HBF/3F8adDd9aU=
+X-Google-Smtp-Source: AGHT+IEc5s2/zyTKI8pG6Ai5VuVN1ci5ub1RvUw+Ry01K4ZqbVzzZFBLE9rQ65EOas04vid1hk18Zw==
+X-Received: by 2002:a05:6808:384d:b0:3c2:3fc6:a05a with SMTP id
+ ej13-20020a056808384d00b003c23fc6a05amr1804850oib.33.1710178896206; 
+ Mon, 11 Mar 2024 10:41:36 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- a18-20020a62d412000000b006e67b4d7b74sm4593187pfh.197.2024.03.11.10.41.09
+ a18-20020a62d412000000b006e67b4d7b74sm4593187pfh.197.2024.03.11.10.41.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 10:41:14 -0700 (PDT)
+ Mon, 11 Mar 2024 10:41:35 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -67,16 +67,16 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Cleber Rosa <crosa@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Beraldo Leal <bleal@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH v4 07/24] replay: Fix migration use of clock
-Date: Tue, 12 Mar 2024 03:40:09 +1000
-Message-ID: <20240311174026.2177152-8-npiggin@gmail.com>
+Subject: [PATCH v4 11/24] net: Use virtual time for net announce
+Date: Tue, 12 Mar 2024 03:40:13 +1000
+Message-ID: <20240311174026.2177152-12-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240311174026.2177152-1-npiggin@gmail.com>
 References: <20240311174026.2177152-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22c;
+ envelope-from=npiggin@gmail.com; helo=mail-oi1-x22c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,56 +99,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Migration reads host clocks when not holding the replay_mutex, which
-asserts when recording a trace. It seems that these migration times
-should be host times like other statistics in MigrationState. These
-do not require the replay_mutex.
+Using virtual time for announce ensures that guest visible effects
+are deterministic and don't break replay.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- migration/migration.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/announce.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index a49fcd53ee..86093b34bf 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -3405,7 +3405,7 @@ static void *migration_thread(void *opaque)
+diff --git a/net/announce.c b/net/announce.c
+index 9e99044422..70b5d5e822 100644
+--- a/net/announce.c
++++ b/net/announce.c
+@@ -187,7 +187,7 @@ static void qemu_announce_self_once(void *opaque)
+ 
+ void qemu_announce_self(AnnounceTimer *timer, AnnounceParameters *params)
  {
-     MigrationState *s = opaque;
-     MigrationThread *thread = NULL;
--    int64_t setup_start = qemu_clock_get_ms(QEMU_CLOCK_HOST);
-+    int64_t setup_start = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
-     MigThrError thr_error;
-     bool urgent = false;
- 
-@@ -3457,7 +3457,7 @@ static void *migration_thread(void *opaque)
-     qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
-                                MIGRATION_STATUS_ACTIVE);
- 
--    s->setup_time = qemu_clock_get_ms(QEMU_CLOCK_HOST) - setup_start;
-+    s->setup_time = qemu_clock_get_ms(QEMU_CLOCK_REALTIME) - setup_start;
- 
-     trace_migration_thread_setup_complete();
- 
-@@ -3536,7 +3536,7 @@ static void *bg_migration_thread(void *opaque)
- 
-     migration_rate_set(RATE_LIMIT_DISABLED);
- 
--    setup_start = qemu_clock_get_ms(QEMU_CLOCK_HOST);
-+    setup_start = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
-     /*
-      * We want to save vmstate for the moment when migration has been
-      * initiated but also we want to save RAM content while VM is running.
-@@ -3569,7 +3569,7 @@ static void *bg_migration_thread(void *opaque)
-     qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
-                                MIGRATION_STATUS_ACTIVE);
- 
--    s->setup_time = qemu_clock_get_ms(QEMU_CLOCK_HOST) - setup_start;
-+    s->setup_time = qemu_clock_get_ms(QEMU_CLOCK_REALTIME) - setup_start;
- 
-     trace_migration_thread_setup_complete();
- 
+-    qemu_announce_timer_reset(timer, params, QEMU_CLOCK_REALTIME,
++    qemu_announce_timer_reset(timer, params, QEMU_CLOCK_VIRTUAL,
+                               qemu_announce_self_once, timer);
+     if (params->rounds) {
+         qemu_announce_self_once(timer);
 -- 
 2.42.0
 
