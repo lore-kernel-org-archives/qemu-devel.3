@@ -4,93 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE623C5475B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEC45C54E66
 	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 22:04:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjngb-0000XQ-Ik; Mon, 11 Mar 2024 17:59:57 -0400
+	id 1rjniX-0003ZG-Iz; Mon, 11 Mar 2024 18:01:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjngV-0000PR-FJ
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 17:59:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjnh7-00018Y-9L
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 18:00:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjngS-00040F-RH
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 17:59:50 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjngy-0004Ic-FA
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 18:00:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710194388;
+ s=mimecast20190719; t=1710194418;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yRGPg/czG58tLUCGpqFBbCYEw31JuRNr9OOpCiRQjy0=;
- b=ENQRDMj4Ie3GFkd3xiuyrKENvwAyDbTbJGE9TRJJu42zZE15pZIk0oALZWKcrzGt8yVmWJ
- aukyXLZRnSqvn5/zDPMHqFNFW6jO0ju4I9HI178LCCtvdq8dV+SJDzu7Reg2jE3qFtLKEn
- 9YKx8hjyVj0+oMyT5rwHDqp28Bd6pf4=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=W5D9hPe7YI8HTKjr9lPVCdDiZ9GlallD+BW1Y4cBBB8=;
+ b=K2ZfXuiZE1lhCAog60PgBCgQ27/Vy0kJ/SDUt7fuF8HSz8SGmCt3Sqg0JcoSNtDvouFlZa
+ +/+eXq+6HRmZUaMtS00IPGqO2Ihi2hyueEdBBPDG8y5t+CvGbIqAeudFhvz3Ezv4SpFENF
+ zr2dQBrRRkQ8pOPAZyD9RFEt9cwOAOw=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-168-cFrAhoSZNYyDt_qie4EeQg-1; Mon, 11 Mar 2024 17:59:45 -0400
-X-MC-Unique: cFrAhoSZNYyDt_qie4EeQg-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-690d3f5af86so4505506d6.0
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 14:59:45 -0700 (PDT)
+ us-mta-307-OgqGKICIP0KCmXAq9CS5Jg-1; Mon, 11 Mar 2024 18:00:17 -0400
+X-MC-Unique: OgqGKICIP0KCmXAq9CS5Jg-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-68fba33cae0so6801206d6.1
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 15:00:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710194385; x=1710799185;
+ d=1e100.net; s=20230601; t=1710194416; x=1710799216;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yRGPg/czG58tLUCGpqFBbCYEw31JuRNr9OOpCiRQjy0=;
- b=W1KvWT2tRY0wWw0nKTNivoH9rluTGl2dnttD38+yCPGFzSC64WbSNPEdfcDfV6Ty87
- pkcUbBHq1ydnYf1mDuUdyP3OgR396y/GbkAJY5WSKBxLcjIhXq2PeC0jOMpFUqQHVqrT
- teJyU4unVwBEm48O2B2GpsM6f1eSN/Jw0kW11zptYs/K25NJJzhf0vo8AJnr4wQ+9+Cg
- PKMAyavqEEKS+APd23nxFau9IV7OsXhImN3o8eTDsnzSENoGb2DU9h1/KNC8fSi7a0oo
- lkisOGK3+Hj8M0QUMtHh8yzDNJmQS4tmHuTh4r3DP7qWAfuL2NfNW8NOJLoku5aUtuu4
- W33A==
-X-Gm-Message-State: AOJu0YyOnHx/mTVBsl9/e0Bodin2QmniUFEGZKJaRX2/Od7qHaNnyjfR
- JeyTeTmAkO9v6jKT4kLXZ2Y6EAqxPi1nNgI3x42Br+9QJoE2Tk3h5pKuA7fP3N8HEzizpeC1Q4S
- 6JRXMa8Dzh4kKlxKxlx9mcql1j1QdnxSeHYsVEpicD7yk68qZ4MAyTlfwKI60F6hszzhbsNHToI
- 1nw6mDWcOQ2Rw7ThWP8O3320CJ7WWr36f3tA==
-X-Received: by 2002:ad4:5bec:0:b0:690:e47c:9bee with SMTP id
- k12-20020ad45bec000000b00690e47c9beemr406381qvc.4.1710194384861; 
- Mon, 11 Mar 2024 14:59:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFmNZoMikAaOW0gfJu6qy88OFt8U8twruAvieSn9O7B5S8Qzesk6AuVk9ZsOoQsvcC7OVnGCg==
-X-Received: by 2002:ad4:5bec:0:b0:690:e47c:9bee with SMTP id
- k12-20020ad45bec000000b00690e47c9beemr406360qvc.4.1710194384389; 
- Mon, 11 Mar 2024 14:59:44 -0700 (PDT)
+ bh=W5D9hPe7YI8HTKjr9lPVCdDiZ9GlallD+BW1Y4cBBB8=;
+ b=RY1ZkPFmANNMqlkOuc1/nvRRBEMO43WcrcHHAJ9y4XvdJt9IrfybpV2TdpmRQ0czS7
+ R31Kpv9WrzFhV80EYt6ueyCZpsQS17eRjx9vNBwpD/IPDAyfREHd7FCdutX9MvLWAuKu
+ NXmGiBcYjm4DF/PKmxwRNbUCih8pph6L77JXWn8HK6B3RSDzU8PhpoKkAtga0Q0N2iUQ
+ jKFLZaelQjTt/tz/8dC5mBM/SMViVnorqplv/GIy3+CPaTwqBNknP0N7d1aHHuOLGORe
+ Zj8PdEdropiY1tg5nfgizIXK76rfQ1K38TxagyEt5Zrn/Lz8tr3TN0uLvWP+5UCQ9Ygq
+ 0AcQ==
+X-Gm-Message-State: AOJu0YzKEO+4+jAnOvYPABM6jXBX+gd+q6U6sJ3ia1uAl8rx1KnbZFAy
+ Z9NngqdlBy7WAU84oAlWrLlAP+uxktfQGq4vESAvJHh7PamR9uld8MR6g1cvWNF6nWsx2HYH7zz
+ 3P9R0noNHYaPB42EIA1SVJmDZArLzhcTJziffQiiXNSbc82XLflIfx6WuZ/B4YOkc4MFD/Xj5Xo
+ QJ4FSkOh68uDD0Bkecij3d0gG4a/gdzn5muA==
+X-Received: by 2002:a05:6214:2dc7:b0:690:e44b:d739 with SMTP id
+ nc7-20020a0562142dc700b00690e44bd739mr413654qvb.1.1710194416258; 
+ Mon, 11 Mar 2024 15:00:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFXoiC4BlHAsGMjWzzkFWN55R4QoVKd6jom1q838J8px5fzau2GybR2f78afPLw+3NymwX9NA==
+X-Received: by 2002:a05:6214:2dc7:b0:690:e44b:d739 with SMTP id
+ nc7-20020a0562142dc700b00690e44bd739mr413608qvb.1.1710194415717; 
+ Mon, 11 Mar 2024 15:00:15 -0700 (PDT)
 Received: from x1n.. (cpe688f2e2cb7c3-cm688f2e2cb7c0.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d6-20020a0ce446000000b00690cec16254sm1541932qvm.68.2024.03.11.14.59.43
+ d6-20020a0ce446000000b00690cec16254sm1541932qvm.68.2024.03.11.15.00.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 14:59:43 -0700 (PDT)
+ Mon, 11 Mar 2024 15:00:15 -0700 (PDT)
 From: peterx@redhat.com
 To: qemu-devel@nongnu.org,
 	Peter Maydell <peter.maydell@linaro.org>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, peterx@redhat.com,
  Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
- Prasad Pandit <ppandit@redhat.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 12/34] physmem: Reduce local variable scope in
- flatview_read/write_continue()
-Date: Mon, 11 Mar 2024 17:59:03 -0400
-Message-ID: <20240311215925.40618-13-peterx@redhat.com>
+ Prasad Pandit <ppandit@redhat.com>, Hao Xiang <hao.xiang@bytedance.com>
+Subject: [PULL 33/34] migration/multifd: Enable multifd zero page checking by
+ default.
+Date: Mon, 11 Mar 2024 17:59:24 -0400
+Message-ID: <20240311215925.40618-34-peterx@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240311215925.40618-1-peterx@redhat.com>
 References: <20240311215925.40618-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
 X-Spam_bar: ---
 X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,119 +103,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Hao Xiang <hao.xiang@bytedance.com>
 
-Precursor to factoring out the inner loops for reuse.
+1. Set default "zero-page-detection" option to "multifd". Now
+zero page checking can be done in the multifd threads and this
+becomes the default configuration.
+2. Handle migration QEMU9.0 -> QEMU8.2 compatibility. We provide
+backward compatibility where zero page checking is done from the
+migration main thread.
 
+Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/r/20240307153710.30907-3-Jonathan.Cameron@huawei.com
+Link: https://lore.kernel.org/r/20240311180015.3359271-7-hao.xiang@linux.dev
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- system/physmem.c | 40 ++++++++++++++++++++--------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+ qapi/migration.json | 6 +++---
+ hw/core/machine.c   | 4 +++-
+ migration/options.c | 2 +-
+ 3 files changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/system/physmem.c b/system/physmem.c
-index e92bed50a6..e35aa29343 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2688,10 +2688,7 @@ static MemTxResult flatview_write_continue(FlatView *fv, hwaddr addr,
-                                            hwaddr len, hwaddr mr_addr,
-                                            hwaddr l, MemoryRegion *mr)
- {
--    uint8_t *ram_ptr;
--    uint64_t val;
-     MemTxResult result = MEMTX_OK;
--    bool release_lock = false;
-     const uint8_t *buf = ptr;
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 2684e4e9ac..aa1b39bce1 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -909,7 +909,7 @@
+ #        (Since 8.2)
+ #
+ # @zero-page-detection: Whether and how to detect zero pages.
+-#     See description in @ZeroPageDetection.  Default is 'legacy'.
++#     See description in @ZeroPageDetection.  Default is 'multifd'.
+ #     (since 9.0)
+ #
+ # Features:
+@@ -1106,7 +1106,7 @@
+ #        (Since 8.2)
+ #
+ # @zero-page-detection: Whether and how to detect zero pages.
+-#     See description in @ZeroPageDetection.  Default is 'legacy'.
++#     See description in @ZeroPageDetection.  Default is 'multifd'.
+ #     (since 9.0)
+ #
+ # Features:
+@@ -1339,7 +1339,7 @@
+ #        (Since 8.2)
+ #
+ # @zero-page-detection: Whether and how to detect zero pages.
+-#     See description in @ZeroPageDetection.  Default is 'legacy'.
++#     See description in @ZeroPageDetection.  Default is 'multifd'.
+ #     (since 9.0)
+ #
+ # Features:
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 9ac5d5389a..0e9d646b61 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -32,7 +32,9 @@
+ #include "hw/virtio/virtio-net.h"
+ #include "audio/audio.h"
  
-     for (;;) {
-@@ -2699,7 +2696,9 @@ static MemTxResult flatview_write_continue(FlatView *fv, hwaddr addr,
-             result |= MEMTX_ACCESS_ERROR;
-             /* Keep going. */
-         } else if (!memory_access_is_direct(mr, true)) {
--            release_lock |= prepare_mmio_access(mr);
-+            uint64_t val;
-+            bool release_lock = prepare_mmio_access(mr);
-+
-             l = memory_access_size(mr, l, mr_addr);
-             /* XXX: could force current_cpu to NULL to avoid
-                potential bugs */
-@@ -2717,18 +2716,21 @@ static MemTxResult flatview_write_continue(FlatView *fv, hwaddr addr,
-             val = ldn_he_p(buf, l);
-             result |= memory_region_dispatch_write(mr, mr_addr, val,
-                                                    size_memop(l), attrs);
-+            if (release_lock) {
-+                bql_unlock();
-+            }
-+
-+
-         } else {
-             /* RAM case */
--            ram_ptr = qemu_ram_ptr_length(mr->ram_block, mr_addr, &l, false);
-+
-+            uint8_t *ram_ptr = qemu_ram_ptr_length(mr->ram_block, mr_addr, &l,
-+                                                   false);
-+
-             memmove(ram_ptr, buf, l);
-             invalidate_and_set_dirty(mr, mr_addr, l);
-         }
+-GlobalProperty hw_compat_8_2[] = {};
++GlobalProperty hw_compat_8_2[] = {
++    { "migration", "zero-page-detection", "legacy"},
++};
+ const size_t hw_compat_8_2_len = G_N_ELEMENTS(hw_compat_8_2);
  
--        if (release_lock) {
--            bql_unlock();
--            release_lock = false;
--        }
--
-         len -= l;
-         buf += l;
-         addr += l;
-@@ -2767,10 +2769,7 @@ MemTxResult flatview_read_continue(FlatView *fv, hwaddr addr,
-                                    hwaddr len, hwaddr mr_addr, hwaddr l,
-                                    MemoryRegion *mr)
- {
--    uint8_t *ram_ptr;
--    uint64_t val;
-     MemTxResult result = MEMTX_OK;
--    bool release_lock = false;
-     uint8_t *buf = ptr;
+ GlobalProperty hw_compat_8_1[] = {
+diff --git a/migration/options.c b/migration/options.c
+index 8f2a3a2fa5..9ed2fe4bee 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -181,7 +181,7 @@ Property migration_properties[] = {
+                       MIG_MODE_NORMAL),
+     DEFINE_PROP_ZERO_PAGE_DETECTION("zero-page-detection", MigrationState,
+                        parameters.zero_page_detection,
+-                       ZERO_PAGE_DETECTION_LEGACY),
++                       ZERO_PAGE_DETECTION_MULTIFD),
  
-     fuzz_dma_read_cb(addr, len, mr);
-@@ -2780,7 +2779,9 @@ MemTxResult flatview_read_continue(FlatView *fv, hwaddr addr,
-             /* Keep going. */
-         } else if (!memory_access_is_direct(mr, false)) {
-             /* I/O case */
--            release_lock |= prepare_mmio_access(mr);
-+            uint64_t val;
-+            bool release_lock = prepare_mmio_access(mr);
-+
-             l = memory_access_size(mr, l, mr_addr);
-             result |= memory_region_dispatch_read(mr, mr_addr, &val,
-                                                   size_memop(l), attrs);
-@@ -2796,17 +2797,16 @@ MemTxResult flatview_read_continue(FlatView *fv, hwaddr addr,
-                    (l == 8 && len >= 8));
- #endif
-             stn_he_p(buf, l, val);
-+            if (release_lock) {
-+                bql_unlock();
-+            }
-         } else {
-             /* RAM case */
--            ram_ptr = qemu_ram_ptr_length(mr->ram_block, mr_addr, &l, false);
-+            uint8_t *ram_ptr = qemu_ram_ptr_length(mr->ram_block, mr_addr, &l,
-+                                                   false);
-             memcpy(buf, ram_ptr, l);
-         }
- 
--        if (release_lock) {
--            bql_unlock();
--            release_lock = false;
--        }
--
-         len -= l;
-         buf += l;
-         addr += l;
+     /* Migration capabilities */
+     DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
 -- 
 2.44.0
 
