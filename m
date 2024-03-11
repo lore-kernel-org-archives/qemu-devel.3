@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D8E2C5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 18:25:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56397C5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 18:26:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjkGH-0006D7-9g; Mon, 11 Mar 2024 14:20:33 -0400
+	id 1rjkIV-0000IA-NO; Mon, 11 Mar 2024 14:22:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander.ivanov@virtuozzo.com>)
- id 1rjkFA-0005ab-CB; Mon, 11 Mar 2024 14:19:27 -0400
-Received: from mail-vi1eur05on20701.outbound.protection.outlook.com
- ([2a01:111:f403:2613::701]
- helo=EUR05-VI1-obe.outbound.protection.outlook.com)
+ id 1rjkFG-0005cc-66; Mon, 11 Mar 2024 14:19:31 -0400
+Received: from mail-am6eur05on20700.outbound.protection.outlook.com
+ ([2a01:111:f403:2612::700]
+ helo=EUR05-AM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander.ivanov@virtuozzo.com>)
- id 1rjkF0-0006sL-Nz; Mon, 11 Mar 2024 14:19:24 -0400
+ id 1rjkFD-0006sy-RV; Mon, 11 Mar 2024 14:19:29 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=HH/X8u0NbQZo69dcStYyUS8/Yro7i2XPOIZalIeOx2A1MF52ZcsRgFuJfar4y2VGssZ/eFT0g5uBU2pkX+4yyRPOwxqtdjCiMBMbRZkLGtbAnvLApPgUXQ5ctaD4JRlItcqLpUbIZz4h1DBT7fN36pnmIUM60y7zwlr0ucnHifW8ZCI1MiClbLu9k9vtYk7yfKAFuAbbpq4Sd6eVdYTgfOetvILHoUJkgPYtluUq8MEwFzeGNP1tjAph+BuL1+v5XaYOT7dA8b3GsO952W4dIWUNP4hCyi5+/XaskV56Lrr2COrRuiiItQZ5cRgPr/8lsb0g/Rd5hrg4pm+8/CvDGg==
+ b=mO5hDO+/UWOWFb7Hhwsm3knqLcgEUjXZ2z+k5l9FhjCDAYULBPcRH2Mx7GHl3NkIR5YLx5l4OzXLldG+016bz3plpnRcy9SQUPbjFMnIxw9FoUTNLednCxitU5eU2CnxqoLnv0C/gwbOu93+iYc3h0shFPGvNV8eI4HD3llm3vY5o0OlQFg7ARgsbtf7V3ZuDEpOj9J9NEuoOrypHacs2z1qqP56ZDpBS5aUYXTSKlUTNBV6K2JMFqqgY3lDsnDKoDgI/pRsIMt2BjcURPt3S1K2qDujBg/wWWj4CxuNbz6XIa1O0bwF3XDwAMPmvrq0WHzYjM0CbvSeolyJheVpZQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5v3lk9kk3kz6DdNPd4PEnGQOTX7Wrrj6wO5h3hqQqvc=;
- b=IbDnrgsrrZ15/Du8itpL9ot756WDrB546ao+P2AlVK++9cIKfSls+UtIDgAWib4Iw/kRUla0obIYuIYJKsnY16on3dzhC+v5syJoFNOEW77Qilg6Zyl9QEIlZP5xEQIJhn2Lq2AGAByXJMLa/xvkz8sWFC8pAERamImaPwcSGFrCEIiXFIOpGj0srYuJFDOpabsRiWY9Rca+dkV/AaJWnAu0JAoccLu4P3/XDhofISA9SyepIsKiSsNuqVo1V8YbdkttbY6tNqxtCZ+WD6K183EW7t7mfBSp6e5tg4SJncdps6vmP47dK/ZHkvMlDDr92GPasjs4VF9aCqCuvFMEAg==
+ bh=+DeEOhLB6J2Ik27zCD+EZAyNpNW6luKkLi1HhunJyH8=;
+ b=NWTU+f2JN5b3/0BLit0ncsDAuxSFzVtTD7DiDAyL5qtTU0tVDD88ZRVLdes64CrQ+XPpumYb249PCJtPWyW51x/6Uu5jZEqCZZtsLZYMeJ4Wr6ydj40Z+Vd/YZ/btzlNW8qtXdMGh7PM5/nZGCamVHj0dTp+6DuWowIIe7/Pw4bD/t3Dz4Z8y5aSlsP/BGM4zdWX8zwZEIQ3CEuyZ01hVPbqyIMyGEoJdUw1oiQ8mFnxfb0sH8jFztpU4NUlK/3n3P1NOecdI1Oh/HfAN2NJWd0ffSEFeWsnEYmiAmJNF/uuyQ3nIoT3obK5xGt8XwirMAGxYcdf4HuC7HCg7e2/rA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
  header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5v3lk9kk3kz6DdNPd4PEnGQOTX7Wrrj6wO5h3hqQqvc=;
- b=VHeSwO5e9ZdvPpNxfbC17YEiLx4Kbvf4rUoNn8wWHy8soLh3ifxdjpxIvDD8RAABoNQoK/dx50crITHEemrnN9yA1/WkdbzC/Y4m1q2ZQgKvPAw4avMph0EIm+6GMgcxfda5mO4n8+WLmHNz/uyPJmeitGO2Mk3j6WSKAJ7PaptNuIY5rKHmQcb2QhhBnUaXnIvAYX5FaDsW7KCzjZT0hlxibKmU0g2rdmxnV30HDX/TK23MNqPry0J7jk+lo7hfptTokcUG0kyXwrNaBaIHvQLHK+KAKGvNFCtYDxAv69cvgxXNmgCPeLGMFGKlAwPF3BSEUQp7pW7qdOEmnN9iHQ==
+ bh=+DeEOhLB6J2Ik27zCD+EZAyNpNW6luKkLi1HhunJyH8=;
+ b=BFNzxBeRG7jYIdzRDLguqJifLlgBcYr/hP0ZQ3YoMS8VrAENiHpfmYw/gImrMsV5LeNkUyLvr8ITUh3f35l4hxpUcMJ1mUgnfirNe8t8YQPnz6XOibLs2oyTkaqvaWRgtmSJ+TvtkIg0fGCCOglRRsGY9ti78g1ad6RL9Otj+PPxGQlz7M+BYloVZxJFrjkrzAt+hjLGbK17FFQwPpcUIPSr92Wwam6RBfJryauLVbmEwbUg7hDbe2MR8xVQF6Pgw8IxTzPiQmCWwRmtjEcNkKvjJ/uR8pzSf9kgWi6dcvOflHroHwsNrnMbMIO+IQmTRnkMbjSCOvV/i+mMNEgl4g==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=virtuozzo.com;
 Received: from DBBPR08MB10721.eurprd08.prod.outlook.com (2603:10a6:10:530::22)
- by DBAPR08MB5653.eurprd08.prod.outlook.com (2603:10a6:10:1a9::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.35; Mon, 11 Mar
- 2024 18:19:00 +0000
+ by GVXPR08MB10762.eurprd08.prod.outlook.com (2603:10a6:150:152::9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.33; Mon, 11 Mar
+ 2024 18:19:08 +0000
 Received: from DBBPR08MB10721.eurprd08.prod.outlook.com
  ([fe80::fe49:a4b:7387:3fde]) by DBBPR08MB10721.eurprd08.prod.outlook.com
  ([fe80::fe49:a4b:7387:3fde%3]) with mapi id 15.20.7362.031; Mon, 11 Mar 2024
- 18:19:00 +0000
+ 18:19:08 +0000
 From: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, den@virtuozzo.com, stefanha@redhat.com,
  vsementsov@yandex-team.ru, kwolf@redhat.com, hreitz@redhat.com
-Subject: [PATCH v5 05/22] parallels: Add parallels_mark_unused() helper
-Date: Mon, 11 Mar 2024 19:18:33 +0100
-Message-Id: <20240311181850.73013-6-alexander.ivanov@virtuozzo.com>
+Subject: [PATCH v5 16/22] parallels: Make a loaded dirty bitmap persistent
+Date: Mon, 11 Mar 2024 19:18:44 +0100
+Message-Id: <20240311181850.73013-17-alexander.ivanov@virtuozzo.com>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20240311181850.73013-1-alexander.ivanov@virtuozzo.com>
 References: <20240311181850.73013-1-alexander.ivanov@virtuozzo.com>
@@ -63,57 +63,57 @@ X-ClientProxiedBy: FR4P281CA0230.DEUP281.PROD.OUTLOOK.COM
  (2603:10a6:10:530::22)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DBBPR08MB10721:EE_|DBAPR08MB5653:EE_
-X-MS-Office365-Filtering-Correlation-Id: bf3e09ce-d6e6-440f-517d-08dc41f7b9b1
+X-MS-TrafficTypeDiagnostic: DBBPR08MB10721:EE_|GVXPR08MB10762:EE_
+X-MS-Office365-Filtering-Correlation-Id: f0192423-1ba4-41df-06c8-08dc41f7be69
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: DFvfqNXbWwKWbQVwS0tWrD2M/gPEjBU83+6L0DqtU/U+OrCxIf5NBtNhcEPS3yEntGCbyUDqwiUmTMATY35y8IF3o6kv4SUa1a7kRz36sPxzuupx4U+yVrazOunkEhWI1ATB1E28f3Amc65a7xMd0grGfxEuPLyhc6pPICT1RVYsT0czMboAr+Bi29arndlLBIZ0tZjCozrfI1I8r6ZJbELkByi6XbE9GwYHMMGCmd92uItgzIWf0Qg09GI/bjkpgtoS9fMQsNQp6fAG4nS1V/daEK7fCuVq3Yu6i/NMunJZG07uatpP/d4RXzfgCXYjBgVNmVwnN2KRmZ08ugNGG4MImd/BFdRxQ+eC5M3mPj5aVsD/Tj7JF7/wO2abfU3Ff5h7kGlE+dHCP+ZutCCv/NeUUuBMFQNIckHViteWhePkz6RqlEmH4CQPnCOy5gJOjFhzcV7nKJcQ1haP6wIWzsgmodjKt7FYZELRKzEwYFAnwiffyopq9c94SOqYZNAdKH1xtQPLSW4k+EQIw4z41J7EwVgQz0083F28VXByGEGc1d+8JRraXfIYTAIjm0vRjyTX94+noj0Zi9TQu8viF82PXhDUzgdyPM01FPKS5Eb/8PabZ4Os2a2LKJgbnzAptIOZR9kxCmblsCO8/f4bMazA8cVMtyVLqqgyfE39pe5mVkoy56Mbizy8To95avItLvU1DUYCltiTWdM8AvYlYUmVmGzIIzD86tfXrAZSPaE=
+X-Microsoft-Antispam-Message-Info: 8KNPOvJ8OVekN4M+NShjp8490RFVGm/CjE17Bxm0pgasY4QFniGL9GnOQo3Z+Px8vRmX306vSvdnXkgTy/IIC7ioUcnv2YxtdKc/mY6mtOFwqE+5mObmAymq8idFKryyF4atzhGmbreFBRN/f3tQ57z54j2WeAZKhSmMESi8fyNUTE35kri05emijL6M17FhEvZf0XRJRx15F6LehY7hBFfRNUjKjffS1Zyg8M1LAsNt7svBBexLe5N2M6wOrBKKvYPZgM4o6EiwdpT3T/uJh66PymapQmUMw4fi+A1GOm4mYtWZKYc5HYPp6Uq77LIeOnjXwDl5yQtcabJfaBGHwD3frGGcIByIkcWE5b7vQnxOTkkvfinyk64mUlxF/9NGTSE/mierCShs9US3x9L7ClSQEUI1PkF6iICf5WDhVxaEeLYql+BDiCLyipP8RgF+WvYNGelyOvEkwL+vmF4FXLA0e7so+09z3FOWfBclbanxaSsbGfUHBJuYGS4Eq/Ea/3x1060997FokBVDX3zlczPXYj25OecRElyyXejlnExhAz24zT1JoNvXlGT+YacfrzfpAg7Yy1vcPaiwIysHpRfst8w7ZiRExgaRNWwRMnZtVaK2ap50LoBl7g2vmkDM77WCvGshB4p4ShUsvkl8+zKtxbP49kX5OZvIx+rw0yAj/zm3hoIfDeBADgwn/VbnqZZQdB0yVsmAwTwdjDGB+g==
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:DBBPR08MB10721.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(52116005)(376005)(1800799015)(38350700005); DIR:OUT; SFP:1102; 
+ SFS:(13230031)(1800799015)(376005)(52116005)(38350700005); DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?gYjy4zQlQDJHtZgUg1HSH0bdg1dqBEIdhx/mhjvdbpavqFYpRgouVtGVOqBj?=
- =?us-ascii?Q?nVmU8K2jwn3LUfMgukaPXN6OhfazWiiLv82oGQCchL2bVGoXz0QFeOp7+AiG?=
- =?us-ascii?Q?fMbhr0ma4x8p27m6lZb0rwP2INcyNw+5L5D43NC4qWlIqSf8V2ofVsFrREod?=
- =?us-ascii?Q?QQFa3bSBCQqCslcpiiMBZtt3SQGLImkErcHrW/Dh9qdYoKhd6N5KWb9eQ1hb?=
- =?us-ascii?Q?w2zs2b0GtRaXUfAv7/TzjTTxgJSfJ7rRyS2b+b3IRMUkfxpuXOJ1LuL6l0fM?=
- =?us-ascii?Q?LgNrwaVOINlfZefyNmX/7uTbKIqFl7MT7UtlSntp88eLhkdNnMP5uXvVOXQS?=
- =?us-ascii?Q?ZQ8elCsE6XVwSd4LtoWbLqPmi8yV0pwUyfN1IxXpWiy1YNTlmjohqFLwwsdp?=
- =?us-ascii?Q?jQzG8t22HzagTKY2bfICjeteH6jAA49clX356irOKPotT1fyCPCTbQPIYMEC?=
- =?us-ascii?Q?TQpBiISn/tQc3asRpoGSfrPVvBoxPFl9tsjCUBLMqQ3EJW/OdW+JINE5snqe?=
- =?us-ascii?Q?8pfz3P7mwm7CgOuoatsKP04eShIXTrZtfN3yUPouJTc5G7v3VrBI18BUS9SO?=
- =?us-ascii?Q?PVNf9W4zwtjPDt//f92/V5INNfhfPbJVmDI6OSnj4Be34lCH4ajMcWTBA6Mz?=
- =?us-ascii?Q?e16t0UNOycy1NJWa3LNXZsM3gvsOcp2Az/89kxr2hS9eGS3zUaOJBQocNPz8?=
- =?us-ascii?Q?9Mw9DK8SnRNPaYCuRzLpr2GrR2iVESJID+X4/KMCU/+j0idAp0JaXyTIgC7D?=
- =?us-ascii?Q?FMit80Aija0tpC22c6iObVty1FIbOdZJ0Uhftw3nzXNNJ9lmrigytCZNZgR+?=
- =?us-ascii?Q?ZH936kjAeJOoQkiBQ0hWyOf7PvXoCNBT+nDUc0/QuzQFTb8+2Xh84I72QEh5?=
- =?us-ascii?Q?e129GhM5Zt+8M+9FX76/dXyfYukjHkg0BXydxRzppt1WBiZ3IO7E32E3beY1?=
- =?us-ascii?Q?UpOtu5qMqrkF/yBCL3NbIpnSNCGwWg1jnnNwKLBrYVOGXFUcidTjqGlFrqVq?=
- =?us-ascii?Q?jQrZhSZm5KGRW+eebMkU4cWpp0RwC6VAr5AanfXnKN3hs3equlOyhQgZSrrW?=
- =?us-ascii?Q?MIaQ9/8xBb+f8AG7io2SohE+a2SD3jtLq6ZIlggv53NSRMSTAl7QeGVgxV2i?=
- =?us-ascii?Q?9g1xkXpx+7SZS4HJlm2oVytSWmnrNZRJrh8TOFSrkKLoPpG+BqO0dpTRepdJ?=
- =?us-ascii?Q?iG0G2KNVJdIxSUxzNVPLrHgQAsGwjzCqFel5zplR8WBVllhyZR/HwmEMS2qV?=
- =?us-ascii?Q?c+L4bfhVwp/E4WwuOgHLK3P91kURntcGe2VGrHqii/y/biNcxBgAFfACLs8b?=
- =?us-ascii?Q?K4NaaL29HsFPT7OeOOYAgmOAaiV4nD/CNZWyFWyOlR9A8kG7RhBtihWpP57R?=
- =?us-ascii?Q?f7dOZQd+iN2Hk5ZJPyduSrbhO2pxP2xlLqdQLXZwD6mp94J11CwsgYMR6dgm?=
- =?us-ascii?Q?TNbZF3DKemyVdF0gAIbW7cTFjGg3mNoTzmmatckb7fgf++zDvO4wgdRlN9YT?=
- =?us-ascii?Q?l8by5dfNf9zejYw6CTbW/I/W96jGuAn6kyV75qKMU8TKsQjQTAXQ1MZCkP2L?=
- =?us-ascii?Q?ZRFHbFQ73jeZoNdxM5J8LtwedklouGITQXAoxhMAbOeRwB3exVm9eMYhmQCr?=
- =?us-ascii?Q?539oXXTWMBM6oY9nXft3TkY=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?2oqnzCws9stCXvu8CO57jpuhtprQvO78cG7Zdpo/Dld7QF8tPR7NciV6Z7OF?=
+ =?us-ascii?Q?TG8hXasw3Pj0mT6uxq0GjPcTGVtl6Mt867xSzYSyA9/F9lp0w46oZMYqMzio?=
+ =?us-ascii?Q?Ze8XCTzlQGPq2uEfOzdzO/D1d3kexQ47Ig5FiHEEsOt1O1ojwk+sdjF8t6Zp?=
+ =?us-ascii?Q?Vl/o0flxzrZfuauCCCYovtyWg3yh4PceBjoc0kd0sAMsAd+zggwsDhqUfl13?=
+ =?us-ascii?Q?x6hajcf75iUAV3sATNc3AmUaBLVOWEocbUnhSuhOXrg8GCspWdn+hFQ49vYw?=
+ =?us-ascii?Q?f1pmhhtx96Vj9MK6jTyf0MmrtcD/z4n9YCZS84gs4L5KU1Vb+L0uNquZZ5a2?=
+ =?us-ascii?Q?WumCmf2zmr/os3NYyRj4+O/4i4TwApMqDoeMOaa4KpoZzMbXHWNh6gb9ntdN?=
+ =?us-ascii?Q?5TmKF94MMSyea8ktlW8Pqr78MSOfDRebozGtScGz1j9iWE5R0X4Q8XF+gtbL?=
+ =?us-ascii?Q?CbhBBxS5eWLuawrGkn6ZJUnB0dpdsYeINbuq1TvVjHKUmXX3IJIEjwQnj5m8?=
+ =?us-ascii?Q?55TlMtZVnSYw1DDfWK5kVwuVUrHvqK+jXwXPvjIcdONTalFdRgQtrkDAx8K2?=
+ =?us-ascii?Q?1jWjLeW8LczE7ZoHmm0e9ahpn9sCHRfoH5p5MHwmCg7IFunXUxpcL9k8QNo4?=
+ =?us-ascii?Q?3Y50T23No0YoV/PcE214bGLPzsXBGVAXFMIKm24p8l4zd0fF9tfZ/Z0wM2a/?=
+ =?us-ascii?Q?vF2pCb8lD1LxafT133UrTMQXXqH26Hls7pxb12oOggOQ+w4bU8yE8pysoVbl?=
+ =?us-ascii?Q?YTMkvTtFZbhiKpNTkiDpSH1oCbWj9smxM7bvbov3+zPA4bA3a5pz1PkOljW/?=
+ =?us-ascii?Q?kB0YaRhjBtP7W/8EG+548yuOBH8gLsw8gDG3Sp0zLuf24Vsj7rBNR/i/Rvf4?=
+ =?us-ascii?Q?bgUyOsg/0d1XkGqqWcxrAhypQGEoWuEDO6vJ84qsRmy5ri+SsJPZiZO7ghDX?=
+ =?us-ascii?Q?snAeNZJP/pm61S3Fb4UrQ7HdPF4B2Kbdd8pAzVu/xbCPXZ1pdDRxXjZBPuXG?=
+ =?us-ascii?Q?Miq7iL+RbZqDJy2wNrAj7333/cQURBY9iYPS8vQ/LjXHldXjzsXBoRYPqi8Y?=
+ =?us-ascii?Q?ZvJTHlJOvqbygP8KhLlMkNQGgJg46Z+SlIxL4EuyrmiYYSW/wo4WKcYpuM9r?=
+ =?us-ascii?Q?GTiKcHPsqXEyrvFf7hSX3kNMAELaAtm7j4RFBq5yP+KHIpy3lin+JhN9dn1p?=
+ =?us-ascii?Q?o00j+tcYCIk39gB1zDbnEBt1+iQOonk+hpuHjAWzW159eKxG/bFjsqN9kbQ3?=
+ =?us-ascii?Q?QPiTzf2RdNiAiJeYR7dvHQ7TwFqmyIbgQzfxyE+BCgHCsh7NzjtsgnlczKw4?=
+ =?us-ascii?Q?cLw4AN6y7ICeAlYeLxzxFKyb/utd/jbzohNdKG87zqRNHexGGf6QP/ctiGSE?=
+ =?us-ascii?Q?3JeAWqItYnHC6TMlD46FBZ5km2ajuuXn9SjsmY97mgorZ/SkUXV/d35uVmE2?=
+ =?us-ascii?Q?Yy7wo9IwE8jbustejhaDC+7xiUxnzENEkw6xarWZk/CQDw7qMV1tcsBlt2h8?=
+ =?us-ascii?Q?v+2u0GfeJT17ugBzvyuiB4AEPE9S7k+1T8r3dizgouna7tfJ0wevXOZBhGbM?=
+ =?us-ascii?Q?0njL+IDXTeCeukGKX2lJ6Qwtv5ejJejrRCTFq+9KIU/DYkW/3HHB2Man5Ly4?=
+ =?us-ascii?Q?qQ9blyXSwozJJsSZlIkcWuA=3D?=
 X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bf3e09ce-d6e6-440f-517d-08dc41f7b9b1
+X-MS-Exchange-CrossTenant-Network-Message-Id: f0192423-1ba4-41df-06c8-08dc41f7be69
 X-MS-Exchange-CrossTenant-AuthSource: DBBPR08MB10721.eurprd08.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Mar 2024 18:19:00.8969 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Mar 2024 18:19:08.8577 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TSv5s4PHQ4Il+R9NHFBQtBDYVeR4P6d4vCURN3VqNVAYb+ATWt79rhLienqL834RS5MSrjnPrrBdXlDO+E1LpkgNRGssur+7kpmoYQ8t7s4=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBAPR08MB5653
-Received-SPF: pass client-ip=2a01:111:f403:2613::701;
+X-MS-Exchange-CrossTenant-UserPrincipalName: dh/ZcqnHUHo8i/wX+6NKtnuvLgp27CO+HzV5yj7xQ5j3DIt8lDeBFeayIgp3BHgL5A2KF+zffV8z5rZvYFDFZO77cVY1QZX8SpFP16lTFEk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVXPR08MB10762
+Received-SPF: pass client-ip=2a01:111:f403:2612::700;
  envelope-from=alexander.ivanov@virtuozzo.com;
- helo=EUR05-VI1-obe.outbound.protection.outlook.com
+ helo=EUR05-AM6-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -135,57 +135,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a helper to set unused areas in the used bitmap.
+After bitmap loading the bitmap is not persistent and is removed on image
+saving. Set bitmap persistence to true.
 
 Signed-off-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
 Reviewed-by: Denis V. Lunev <den@openvz.org>
 ---
- block/parallels.c | 18 ++++++++++++++++++
- block/parallels.h |  2 ++
- 2 files changed, 20 insertions(+)
+ block/parallels-ext.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/block/parallels.c b/block/parallels.c
-index 4470519656..13726fb3d5 100644
---- a/block/parallels.c
-+++ b/block/parallels.c
-@@ -196,6 +196,24 @@ int parallels_mark_used(BlockDriverState *bs, unsigned long *bitmap,
-     return 0;
- }
+diff --git a/block/parallels-ext.c b/block/parallels-ext.c
+index 67fa3b73c2..0816b9dc07 100644
+--- a/block/parallels-ext.c
++++ b/block/parallels-ext.c
+@@ -278,6 +278,7 @@ parallels_parse_format_extension(BlockDriverState *bs, int64_t ext_off,
+             if (!bitmap) {
+                 goto fail;
+             }
++            bdrv_dirty_bitmap_set_persistence(bitmap, true);
+             bitmaps = g_slist_append(bitmaps, bitmap);
+             break;
  
-+int parallels_mark_unused(BlockDriverState *bs, unsigned long *bitmap,
-+                          uint32_t bitmap_size, int64_t off, uint32_t count)
-+{
-+    BDRVParallelsState *s = bs->opaque;
-+    uint32_t cluster_end, cluster_index = host_cluster_index(s, off);
-+    unsigned long next_unused;
-+    cluster_end = cluster_index + count;
-+    if (cluster_end > bitmap_size) {
-+        return -E2BIG;
-+    }
-+    next_unused = find_next_zero_bit(bitmap, cluster_end, cluster_index);
-+    if (next_unused < cluster_end) {
-+        return -EINVAL;
-+    }
-+    bitmap_clear(bitmap, cluster_index, count);
-+    return 0;
-+}
-+
- /*
-  * Collect used bitmap. The image can contain errors, we should fill the
-  * bitmap anyway, as much as we can. This information will be used for
-diff --git a/block/parallels.h b/block/parallels.h
-index 68077416b1..02b857b4a4 100644
---- a/block/parallels.h
-+++ b/block/parallels.h
-@@ -92,6 +92,8 @@ typedef struct BDRVParallelsState {
- 
- int parallels_mark_used(BlockDriverState *bs, unsigned long *bitmap,
-                         uint32_t bitmap_size, int64_t off, uint32_t count);
-+int parallels_mark_unused(BlockDriverState *bs, unsigned long *bitmap,
-+                          uint32_t bitmap_size, int64_t off, uint32_t count);
- 
- int GRAPH_RDLOCK
- parallels_read_format_extension(BlockDriverState *bs, int64_t ext_off,
 -- 
 2.40.1
 
