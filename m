@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5994C5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:42:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 139D9C54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:42:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjjdm-0002Pt-Oi; Mon, 11 Mar 2024 13:40:46 -0400
+	id 1rjjf9-0003XU-JN; Mon, 11 Mar 2024 13:42:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjjdk-0002PQ-56
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:40:45 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjjf0-0003Ix-Rk
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:42:03 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjjdh-00079p-4x
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:40:43 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-6e5a232fe80so3135031b3a.0
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 10:40:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjjey-0007Qm-3t
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:42:02 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-6e5dddd3b95so3381944b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 10:41:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710178838; x=1710783638; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=HsCaEMKCnbNOVqyHg/O2IxFK4K/IVuc67DpDBDgJ5L0=;
- b=nZHUaDGqUGFIloXG8Ee7Sdvcpyn24vtPLuoyMi6szVruRPB4GCko6sYPEdeCIue5P2
- +3PeVoonUDUYCua+EMm72LdIRT8W18Q7ha7BEAStxtmDfl11Icmc7MaO/v6NI8Z130/C
- nTrw7camZHtEyTtkihQtm3UgJR8jjOhhizYmnojOhTfS7lWpMtsEkrnS6EafWhvNcNfy
- 7C9NF2ixuaCyGuby13PjaKT1qOFedQR+kLbameiulfZ8A7hfAzasntoTpHtSNb1zBuG6
- g5P3XTX9PpHTCsw/O6fVhowBdgvub9LNUfdPsH7mgn6STKEIOAwDz+GycntEPxfETbY1
- TIUA==
+ d=gmail.com; s=20230601; t=1710178918; x=1710783718; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/eazafKsUh9Gq+1jlyAtlIIMsQVJTUKsjooFoPTkUTU=;
+ b=EEz2UXclFZjsyfOBXgsGm4vyGiwoeo4+eSsPrX9ENO1CgfQEwcdlXWF19m14kWJ+DK
+ WEPy7VYaUK6yLDW6xZM9LYioYdD3MwSE9dL+emCL7pEeatEwG6fc+ty8uQpez//NV5wI
+ q5YDkEal92XHVJ1OpznwHSj0eMFaNkF5VlFdDkTuoPIIh16GDVu0hqGwO+2EB02M84mO
+ htVkKrzu/pEibjv/FAN77Ncugg/0/WmjpTiqYWDT3LdyI1WOKEfc/RuCvlbKB8CHTrJh
+ 6km5SAVlGO+hHnYzmFZCYEfUhg45NHFZKO5MIq4meKLMpwoRhGr4zOuukaI/sDej3UnU
+ LpxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710178838; x=1710783638;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HsCaEMKCnbNOVqyHg/O2IxFK4K/IVuc67DpDBDgJ5L0=;
- b=v3QBUjJXe5iI/aXAWp1cqt7GUO4RYcA28lpEDV8T5XLo55gQprt8HgtL4lonOEcWd3
- OBZx0TZsbRjU5FPIGkdey94u2E7tETPLsjXNDT01nTfXyVlP9+hfcu2wEUOuFhQClgPr
- sHtVHnr1DnFE8IrCxdl5FC0Iei+XQw4Rnskpj7Rrtyi3svnwA7j8ZDC2HNT2UPBfhQp/
- guq9vKWmP5c72YCnWGWmtXVOskNE0wDH9UHte8TVnTiRRknlOV1UmuTo39AcjWt+Hk26
- LwbR6aAfq6h61MOWcaqx9mx+Fctp6hMG/JQ7LRrzkI1pevLCZbtott1Aghue27/LrTjh
- f8Zw==
-X-Gm-Message-State: AOJu0Yxh3RNnlR8N+T1lzwxxQdagxDXpjP1itaJWBjcf3PcrvdqqV95z
- RXXnHSwfuBNz8E5ISTwVbkBRd+LKk4mGLUJRFbWlolUHrhnqLQnAwf6d50Xwhcs=
-X-Google-Smtp-Source: AGHT+IHVBtX9Jr+V/dEo59TqwgJhARsbSK/WVJOKzvSsdnhdmzt2bPoLWzqG0kQghnFtYofVZkyE0g==
-X-Received: by 2002:a05:6a00:92aa:b0:6e6:66b1:654f with SMTP id
- jw42-20020a056a0092aa00b006e666b1654fmr11626343pfb.15.1710178837839; 
- Mon, 11 Mar 2024 10:40:37 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710178918; x=1710783718;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/eazafKsUh9Gq+1jlyAtlIIMsQVJTUKsjooFoPTkUTU=;
+ b=AefF9+z+vcmIOaBnBPA8ir8fNUaDrOQh2t39NhJPszs2BanFo1XGaEVwa62/exvliS
+ zonN7m4DezhRu5gHBXwxgrmuhoDV7lxzYPhwQQt7yOVGH0Q4UW0awJ5gNFy1zbA7YHX8
+ lZugg6+ViG5yUOiU5uLb6fKbl3JU2DZDAEOOV2ILaheOwq7VvSVlg59mgO2bjy0Cg8ao
+ f/qcNHU+h+11p7UEzlcgItst9QXL+q/Lp/6T0K8/6+cbYgzdKzuupmRD+uHKyi+CYpXJ
+ 98x8Zoq4oMiaLU7gS2Kv5ONdBA5MKEJc+Ok75G336NkF5EcnVuV2VP2LXkZkQLpZXuR7
+ R84A==
+X-Gm-Message-State: AOJu0Ywe0c/jOFqpKenJoTBiQqilRmhm43dOiwn6/oRfmoelzfFgN2Lo
+ Qb2KAoMCxNCYym98ZgBX8NdHRoc8Kj1o/NTwkKlUQ6yUV25G86jeY+koPWM424U=
+X-Google-Smtp-Source: AGHT+IEwlmUuf3SMj1mN5Cry6+I5wPwFa1oeWtT5/HJBaYKr8kLP4c7r1U9FAggNX1PtQ+mN7DZp4g==
+X-Received: by 2002:a05:6a00:1309:b0:6e6:6e12:493f with SMTP id
+ j9-20020a056a00130900b006e66e12493fmr8739960pfu.2.1710178917635; 
+ Mon, 11 Mar 2024 10:41:57 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- a18-20020a62d412000000b006e67b4d7b74sm4593187pfh.197.2024.03.11.10.40.33
+ a18-20020a62d412000000b006e67b4d7b74sm4593187pfh.197.2024.03.11.10.41.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 10:40:37 -0700 (PDT)
+ Mon, 11 Mar 2024 10:41:57 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -66,15 +67,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Cleber Rosa <crosa@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Beraldo Leal <bleal@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH v4 00/24] replay: fixes and new test cases
-Date: Tue, 12 Mar 2024 03:40:02 +1000
-Message-ID: <20240311174026.2177152-1-npiggin@gmail.com>
+Subject: [PATCH v4 15/24] tests/avocado: reverse_debugging.py add test for
+ x86-64 q35 machine
+Date: Tue, 12 Mar 2024 03:40:17 +1000
+Message-ID: <20240311174026.2177152-16-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20240311174026.2177152-1-npiggin@gmail.com>
+References: <20240311174026.2177152-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,105 +100,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v3,
+The x86-64 pc machine has a problem with record/replay. q35 seems
+to work well. Add a new q35 test and update the flaky message for
+pc.
 
-* Attacked the replay_linux.py bugs and found a bunch of gaps
-  in networking that was causing the hangs.
-* And several powerpc bugs that were also causing problems on
-  pseries.
-* Added ppc test to replay_linux.py now that it's working.
-* Found several crash bugs in record/replay vs migration.
-* Added snapshot and more stepping tests to reverse_debugging.py
-* Addressed comments in auto-snapshot code.
-* Added auto-snapshot test case.
-* "Solved" x86-64 issues in test cases by switching to q35, which
-  seems to have less problems.
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ tests/avocado/reverse_debugging.py | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-The last 3 patches I will take in the ppc tree, but included here
-because powerpc is the only one that survives the record-replay test
-with auto-snapshots at the moment.
-
-Thanks,
-Nick
-
-Since v2, here fixes became less minor so I rename the series.
-
-https://lore.kernel.org/qemu-devel/20240125160835.480488-1-npiggin@gmail.com/#r)
-
-* Found several more bugs (patches 5-8).
-* Enable the rr avocado test on pseries and aarch64 virt since they're
-  passing here (and on gitlab, e.g.,
-  https://gitlab.com/npiggin/qemu/-/jobs/6253787216,
-  https://gitlab.com/npiggin/qemu/-/jobs/6253787218).
-* Updated replay-dump script to John's feedback.
-
-x86-64 still has issues with replay and reverse debugging tests.
-replay_kernel.py seems to be timing dependent -- after patch 5 I
-had it pass 30/30 runs, then the following day 0/30 and I realized
-I had several other QEMU instances hogging the CPU which probably
-changed timings. So the first thing I would look at is timers and
-clocks. pseries had some rounding issues in time calculations that meant
-clock/timer were not replayed exactly as they were recorded, which
-caused hangs.
-
-Thanks,
-Nick
-
-Nicholas Piggin (24):
-  scripts/replay-dump.py: Update to current rr record format
-  scripts/replay-dump.py: rejig decoders in event number order
-  tests/avocado: excercise scripts/replay-dump.py in replay tests
-  replay: allow runstate shutdown->running when replaying trace
-  Revert "replay: stop us hanging in rr_wait_io_event"
-  chardev: set record/replay on the base device of a muxed device
-  replay: Fix migration use of clock
-  replay: Fix migration replay_mutex locking
-  virtio-net: Use replay_schedule_bh_event for bhs that affect machine
-    state
-  virtio-net: Use virtual time for RSC timers
-  net: Use virtual time for net announce
-  savevm: Fix load_snapshot error path crash
-  tests/avocado: replay_linux.py remove the timeout expected guards
-  tests/avocado/reverse_debugging.py: mark aarch64 and pseries as not
-    flaky
-  tests/avocado: reverse_debugging.py add test for x86-64 q35 machine
-  tests/avocado: reverse_debugging.py verify addresses between record
-    and replay
-  tests/avocado: reverse_debugging.py stop VM before sampling icount
-  tests/avocado: reverse_debugging reverse-step at the end of the trace
-  tests/avocado: reverse_debugging.py add snapshot testing
-  replay: simple auto-snapshot mode for record
-  tests/avocado: reverse_debugging.py test auto-snapshot mode
-  target/ppc: fix timebase register reset state
-  spapr: Fix vpa dispatch count for record-replay
-  tests/avocado: replay_linux.py add ppc64 pseries test
-
- docs/system/replay.rst             |   5 +
- include/hw/ppc/spapr_cpu_core.h    |   3 +
- include/sysemu/replay.h            |  16 ++-
- include/sysemu/runstate.h          |   1 +
- accel/tcg/tcg-accel-ops-rr.c       |   2 +-
- chardev/char.c                     |  71 ++++++++----
- hw/net/virtio-net.c                |  17 +--
- hw/ppc/ppc.c                       |  11 +-
- hw/ppc/spapr.c                     |  36 +-----
- hw/ppc/spapr_hcall.c               |  33 ++++++
- hw/ppc/spapr_rtas.c                |   1 +
- migration/migration.c              |  17 ++-
- migration/savevm.c                 |   1 +
- net/announce.c                     |   2 +-
- replay/replay-snapshot.c           |  57 ++++++++++
- replay/replay.c                    |  50 ++++----
- system/runstate.c                  |  31 ++++-
- system/vl.c                        |   9 ++
- target/ppc/machine.c               |   4 +
- qemu-options.hx                    |   9 +-
- scripts/replay-dump.py             | 167 ++++++++++++++++++---------
- tests/avocado/replay_kernel.py     |  11 ++
- tests/avocado/replay_linux.py      |  97 +++++++++++++++-
- tests/avocado/reverse_debugging.py | 176 ++++++++++++++++++++++++-----
- 24 files changed, 635 insertions(+), 192 deletions(-)
-
+diff --git a/tests/avocado/reverse_debugging.py b/tests/avocado/reverse_debugging.py
+index 8fe76ff921..e76cf54ad7 100644
+--- a/tests/avocado/reverse_debugging.py
++++ b/tests/avocado/reverse_debugging.py
+@@ -206,8 +206,7 @@ def get_pc(self, g):
+             + self.get_reg_le(g, self.REG_CS) * 0x10
+ 
+     # unidentified gitlab timeout problem
+-    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
+-
++    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'pc machine is unstable with replay')
+     def test_x86_64_pc(self):
+         """
+         :avocado: tags=arch:x86_64
+@@ -216,6 +215,14 @@ def test_x86_64_pc(self):
+         # start with BIOS only
+         self.reverse_debugging()
+ 
++    def test_x86_64_q35(self):
++        """
++        :avocado: tags=arch:x86_64
++        :avocado: tags=machine:q35
++        """
++        # start with BIOS only
++        self.reverse_debugging()
++
+ class ReverseDebugging_AArch64(ReverseDebugging):
+     """
+     :avocado: tags=accel:tcg
 -- 
 2.42.0
 
