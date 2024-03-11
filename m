@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0DEEC5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 20:01:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7616C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 20:02:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjlpc-00015O-9f; Mon, 11 Mar 2024 16:01:08 -0400
+	id 1rjlqa-000250-IP; Mon, 11 Mar 2024 16:02:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rbagley@ventanamicro.com>)
- id 1rjlpM-0000oG-7P
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 16:01:01 -0400
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rbagley@ventanamicro.com>)
- id 1rjlpE-0000sv-Av
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 16:00:51 -0400
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-2d29111272eso77541161fa.0
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 13:00:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1710187242; x=1710792042; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=l+yO87h2Ei1vz2fQlzVyep68f9aqisqvE95jng9eQho=;
- b=ixKFG6ja2ndu1qINNOY6uqiwCW3aVBjLY3bWLcbzGBNQkWTLbgZjG4zR/NddDlcC1F
- B7t/5dRed9TJhgHTxDvpGRYn15Cdfyssgvhd00hjpT+Z8iG3RZSMI0kZWNuChkc2J3zK
- GUM1PjJzRK/+JHgSxKVTV+vtunMduJiZHW1jIE+wAfH1/PoPxfidxrG1n0BxIoD5vGbq
- ANoD/jhpLIGFCFBLEu7uMyYny4ZPthDU1taWibdoSlUVApaSMRlhwRyYTSj8Yeat6Dqx
- fFWeTSUJfiIawdnxqrog2G2uVLNuuRQqbYAgeHwIywUtjGvPQti1rGV4GFaW/ou4d94j
- UI8g==
+ (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
+ id 1rjlqW-0001zB-4E
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 16:02:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
+ id 1rjlqT-00015K-Vp
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 16:02:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710187320;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kS5y5yApovlta2J1vXw2ITU+KivOgFdnNOOazYCNpDs=;
+ b=BxpTTQkfNTtlMIj04Yk9b6Qw2xulLGVWDXjwE5wmWlryG8pKhGtLUpW305gZOzp7eV6tUt
+ 13j2wP4pgjzfT+iaWI2FEAWiDm/K4g049IBMtiLw+Tu+gCXiLpxHqFi9gBC6ec6BbHo5Zf
+ vI9UV4fIuoPk9acR/Uaa9VZroh0CWYo=
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
+ [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-202-QvoWazcGMoOde9c9Ns_Dcg-1; Mon, 11 Mar 2024 16:00:40 -0400
+X-MC-Unique: QvoWazcGMoOde9c9Ns_Dcg-1
+Received: by mail-lj1-f200.google.com with SMTP id
+ 38308e7fff4ca-2d33e6f838dso39442821fa.0
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 13:00:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710187242; x=1710792042;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=l+yO87h2Ei1vz2fQlzVyep68f9aqisqvE95jng9eQho=;
- b=feHSufc9A3QB+ZJmkdVwTjhi5RRZseQm0p0R8lal1EnXc4KTKo2QgUPZn8kv5DagBJ
- NychBKu5Q3ydtNQq67A/eRtBFVv/0MnIWhlWaTxTIVrwlBZm3P2bOk3VUJPXJdgprlii
- x8pTsxjsqvTiZmJ0uH/+lD+DD6El599tX/TuzeJCPWtMmKramZFgtUeaonRcspVpjSPs
- qHW87AV4e4TlkEIwijYrvKDeuzNfnYWgq8BvPlnmBvxJWXGIP7R5aRMt2d5ZHQ1jLMgw
- AqlPcMHyZlGSv4kfgtZ9aky4o0otiLtzv9J9/AbHDdFP7gU5x+Jwk5vNcBxxoUqrCCDq
- 25Mw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV4DGNiYo4UH9zsgEMShLYQ9mZc5rjiM5yU4uijIhhRL/37+nXa4cjbCoV9+P7HDjKPYkD5k6TyR/tTjjn2bqmzsSvXupI=
-X-Gm-Message-State: AOJu0Yz9OksKHgLn72t0Rcp5/21lpi2jQBCcHB3/pUhnNZHcylVsbynT
- 4Npk8jwcKZZA/sq9DLCh90vUISq33n10NiiCwVgnO4KjIWoxVtvs3tseZf8ZPHRZmccIdeYn0gt
- tXIUtzzFTFsE11iwkSXI3/S20msKagbHaFiBzjg==
-X-Google-Smtp-Source: AGHT+IEkWW72t3AM1ZSb0xM6OpIyO+NIXf2g7lSGAHzHxFOpDr+G0OqrycTsCYyVtOfKLhea4p6L4WHxmOi0+3zof5I=
-X-Received: by 2002:ac2:528a:0:b0:513:3f24:28d8 with SMTP id
- q10-20020ac2528a000000b005133f2428d8mr4538449lfm.34.1710187241603; Mon, 11
- Mar 2024 13:00:41 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710187238; x=1710792038;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=kS5y5yApovlta2J1vXw2ITU+KivOgFdnNOOazYCNpDs=;
+ b=sH147BY62wqqkWI9mWo9i1RfQ42ZBIulTLrEWYnAYEdH8qkHWFrWQNR/Ddmy14/GAX
+ bfs1XMfyb4/B3lmZqm2eRFKsVsP0p+xz+qOhze6tAbsEO3bfcjMYUhLaZvbX7LLtqoz8
+ xZNOR7z8GTB2Q31kIKh+cevui0qKFUE1wbunV0K++waKHh9JX9iYbNFntoRLRMKxTvuf
+ qkS6GBE+HvEEybNdjBbPiSQS4AWnv0xPS5sikFLrhmbPhh4TpWQRHQofc5SdmwarlznH
+ 2WYNzPJNuTBKHi3v1twUbT8iZipnYUzijDcg1QmppZKmxrTvtRHJ6X16cutXU+of61bw
+ hvkA==
+X-Gm-Message-State: AOJu0Yy1/YgBpDbpe8wMwBpZbNz0CquNaWpVrhm6KCqU3QQlL6mgMx2/
+ GccGlTLJQtFGBUKegSExEISTkTFp7XlARvsV3n81ElJ0rXwzmKEGykGyYQwztK+IUhwaZdoXEnG
+ 9VebS2mS/Asn0D5nFVA+O7eujcN/I+97BN9L1YOjPA1zxn4QuqQhnwGW0lLdTj5LozNSY3DJmY1
+ d9FATxFSfLldRVr22Oxf6lng1dzOU=
+X-Received: by 2002:a2e:9ed9:0:b0:2d3:3305:c37d with SMTP id
+ h25-20020a2e9ed9000000b002d33305c37dmr1029885ljk.2.1710187238704; 
+ Mon, 11 Mar 2024 13:00:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEQ3r09nKglKeLTlzmLwp36e+C/X5D6MYWz8Aesy9/yR2AJss3XQOAvUs3qYQLQ2BRQk2JJjkHIOMMRrlmAW8s=
+X-Received: by 2002:a2e:9ed9:0:b0:2d3:3305:c37d with SMTP id
+ h25-20020a2e9ed9000000b002d33305c37dmr1029870ljk.2.1710187238349; Mon, 11 Mar
+ 2024 13:00:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230810-c9e1f2783168b48bc07a1aa2@orel>
- <mhng-a6344a0c-8820-41b5-a015-b82b261b463d@palmer-ri-x1c9>
- <20230810-e160f9edae60ded9d2606b8b@orel>
- <20230811-bc15b48d336b79d9ec1f0936@orel>
- <20230811-52e2c90dc3b91e108eb5e4e8@orel>
- <CAARkPA-P1U7xyLpdx+XD1M3Ji2NUfTb+88+GKUk8R2aFsOCMRw@mail.gmail.com>
- <CAARkPA-dOxOWsR0VS+S8p4fDmNR5X5Jjmo5pQTaurWLYsc9vsw@mail.gmail.com>
- <20240309-ee813e971e7c5850d652b295@orel>
- <CAARkPA_8zSZK-4oOTcJO2KinWSadxZYZztwRP-UvNNkDjmyexw@mail.gmail.com>
-In-Reply-To: <CAARkPA_8zSZK-4oOTcJO2KinWSadxZYZztwRP-UvNNkDjmyexw@mail.gmail.com>
-From: Richard Bagley <rbagley@ventanamicro.com>
-Date: Mon, 11 Mar 2024 13:00:28 -0700
-Message-ID: <CAARkPA_fYPQ2KXMe3nNcaKi+fTz36gTrF88-RkK7ha5vXNLgcA@mail.gmail.com>
-Subject: Re: [PATCH] disas/riscv: Further correction to LUI disassembly
-To: Andrew Jones <ajones@ventanamicro.com>
-Cc: Palmer Dabbelt <palmer@rivosinc.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, 
- Alistair Francis <Alistair.Francis@wdc.com>, bmeng@tinylab.org,
- liweiwei@iscas.ac.cn, 
- zhiwei_liu@linux.alibaba.com, dbarboza@ventanamicro.com
-Content-Type: multipart/alternative; boundary="000000000000092cb2061367ff3e"
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=rbagley@ventanamicro.com; helo=mail-lj1-x231.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+References: <20240214151701.29906-1-david@redhat.com>
+In-Reply-To: <20240214151701.29906-1-david@redhat.com>
+From: Mario Casquero <mcasquer@redhat.com>
+Date: Mon, 11 Mar 2024 21:00:27 +0100
+Message-ID: <CAMXpfWv2Pdn8ThtQFQgL0BUX4KHWvaZixaAc1C6STL06Gqx6og@mail.gmail.com>
+Subject: Re: [PATCH v2 00/14] libvhost-user: support more memslots and cleanup
+ memslot handling code
+To: David Hildenbrand <david@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
+ Germano Veit Michel <germano@redhat.com>,
+ Raphael Norwitz <raphael.norwitz@nutanix.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mcasquer@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,173 +102,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000092cb2061367ff3e
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+This series has been successfully tested by QE. Start the
+qemu-storage-daemon in the background with a rhel 9.5 image and
+vhost-user-blk. After that, boot up a VM with virtio-mem and
+vhost-user-blk-pci. Check with the HMP command 'info mtree' that
+virtio-mem is making use of multiple memslots.
 
-LUI and AUIPC would naturally be used to build an address.
-If you want to supply a signed decimal number to build an immediate, there
-is always the pseudo-instruction LI.
 
-On Mon, Mar 11, 2024 at 11:56=E2=80=AFAM Richard Bagley <rbagley@ventanamic=
-ro.com>
-wrote:
-
-> I have realized that *the patch is indeed a fix*, not a workaround.
->
-> In fact, the argument to LUI and AUIPC in assembly *must* be a number
-> between [0x0, 0xfffff].
-> RISC-V Assembly Programmer's Manual : Load Upper Immediate's Immediate
-> <https://github.com/riscv-non-isa/riscv-asm-manual/blob/master/riscv-asm.=
-md#load-upper-immediates-immediate>
-> Signed decimal numbers are programmed as their two's complement.
->
-> I checked: neither GCC nor LLVM will assemble
->
->> lui x1, -4
->
-> The LLVM compiled models the arguments to LUI and AUIPC as UIMM (unsigned
-> immediate) or UIMM20 (20 bit unsigned immediate).
->
-> I should have checked this from the start. I jumped to the conclusion tha=
-t
-> both formats (signed decimal, two's complement) for negative arguments
-> should be supported, and that I was encountering a bug.
-> I apologize to all for the unnecessary back-and-forth.
->
-> I don't yet see a reason why llvm and gcc could not support a signed
-> number in decimal format, perhaps requiring a pseudo-instruction.
-> This might be desirable, if only in support of assembly programming.
-> On the other hand, it is easy to make the conversion to a two's-complemen=
-t
-> number.
->
-> Richard
->
-> On Sat, Mar 9, 2024 at 4:01=E2=80=AFAM Andrew Jones <ajones@ventanamicro.=
-com>
+On Wed, Feb 14, 2024 at 4:18=E2=80=AFPM David Hildenbrand <david@redhat.com=
 > wrote:
 >
->> On Fri, Mar 08, 2024 at 08:22:01PM -0800, Richard Bagley wrote:
->> > post-nack, one further comment:
->> >
->> > One could argue that this change also aligns QEMU with supporting tool=
-s
->> (as
->> > Andrew observed), and it makes sense to merge this change into QEMU
->> until
->> > those tools update to supporting signed decimal numbers with immediate=
-s.
->> >
->> > As it is, both GNU assembler and the LLVM integrated assembler (or
->> llvm-mc)
->> > throws an error with examples such as
->> > auipc s0, -17
->> >
->> > On the other hand, I have only seen this problem with the output of th=
-e
->> > COLLECT plug-in, not (as yet) with QEMU execution proper.
->> > If the problem is confined to COLLECT, perhaps the argument for aligni=
-ng
->> > with other tools is not as strong.
->> >
->> > In the meantime, I have adjusted my change locally to include AUIPC, a=
-nd
->> > written a substantive, and I hope, clear commit description.
->> > If you would like me to resubmit a patch with this updated change,
->> please
->> > let me know.
->>
->> Since the patch is ready for posting, then it might as well be posted
->> (even if it may not get merged right away). If the issue arises again,
->> then we can refer to the latest proposed patch, which will be preserved
->> in the mail archives.
->>
->> Thanks,
->> drew
->>
+> This series adds support for more memslots (509) to libvhost-user, to
+> make it fully compatible with virtio-mem that uses up to 256 memslots
+> accross all memory devices in "dynamic-memslot" mode (more details
+> in patch #2).
+>
+> With that in place, this series optimizes and extends memory region
+> handling in libvhost-user:
+> * Heavily deduplicate and clean up the memory region handling code
+> * Speeds up GPA->VA translation with many memslots using binary search
+> * Optimize mmap_offset handling to use it as fd_offset for mmap()
+> * Avoid ring remapping when adding a single memory region
+> * Avoid dumping all guest memory, possibly allocating memory in sparse
+>   memory mappings when the process crashes
+>
+> I'm being very careful to not break some weird corner case that modern
+> QEMU might no longer trigger, but older one could have triggered or some
+> other frontend might trigger.
+>
+> The only thing where I am not careful is to forbid memory regions that
+> overlap in GPA space: it doesn't make any sense.
+>
+> With this series, virtio-mem (with dynamic-memslots=3Don) +
+> qemu-storage-daemon works flawlessly and as expected in my tests.
+>
+> v1 -> v2:
+> * Drop "libvhost-user: Fix msg_region->userspace_addr computation"
+>  -> Not actually required
+> * "libvhost-user: Factor out adding a memory region"
+>  -> Make debug output more consistent (add missing ":")
+> * "libvhost-user: Use most of mmap_offset as fd_offset"
+>  -> get_fd_pagesize -> get_fd_hugepagesize; remove getpagesize()
+>  -> "mmap_offset:" to "old mmap_offset:" in debug message
+>  -> "adj mmap_offset:" to "new mmap_offset:" in debug message
+>  -> Use "(unsigned int)fs.f_type"; the man page of fstatfs() calls out
+>     that the type of f_type can vary depending on the architecture.
+>     "unsigned int" is sufficient here.
+>  -> Updated patch description
+> * Added RBs+ACKs
+> * Did a Gitlab CI run, seems to be happy reagrding libvhost-user
+>
+> Cc: Michael S. Tsirkin <mst@redhat.com>
+> Cc: Jason Wang <jasowang@redhat.com>
+> Cc: Stefan Hajnoczi <stefanha@redhat.com>
+> Cc: Stefano Garzarella <sgarzare@redhat.com>
+> Cc: Germano Veit Michel <germano@redhat.com>
+> Cc: Raphael Norwitz <raphael.norwitz@nutanix.com>
+>
+> David Hildenbrand (14):
+>   libvhost-user: Dynamically allocate memory for memory slots
+>   libvhost-user: Bump up VHOST_USER_MAX_RAM_SLOTS to 509
+>   libvhost-user: Factor out removing all mem regions
+>   libvhost-user: Merge vu_set_mem_table_exec_postcopy() into
+>     vu_set_mem_table_exec()
+>   libvhost-user: Factor out adding a memory region
+>   libvhost-user: No need to check for NULL when unmapping
+>   libvhost-user: Don't zero out memory for memory regions
+>   libvhost-user: Don't search for duplicates when removing memory
+>     regions
+>   libvhost-user: Factor out search for memory region by GPA and simplify
+>   libvhost-user: Speedup gpa_to_mem_region() and vu_gpa_to_va()
+>   libvhost-user: Use most of mmap_offset as fd_offset
+>   libvhost-user: Factor out vq usability check
+>   libvhost-user: Dynamically remap rings after (temporarily?) removing
+>     memory regions
+>   libvhost-user: Mark mmap'ed region memory as MADV_DONTDUMP
+>
+>  subprojects/libvhost-user/libvhost-user.c | 595 ++++++++++++----------
+>  subprojects/libvhost-user/libvhost-user.h |  10 +-
+>  2 files changed, 334 insertions(+), 271 deletions(-)
+>
+> --
+> 2.43.0
+>
 >
 
---000000000000092cb2061367ff3e
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">LUI and AUIPC would naturally be used to build an address.=
-<br>If you want to supply a signed decimal number to build an immediate, th=
-ere is always the pseudo-instruction LI.</div><br><div class=3D"gmail_quote=
-"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Mar 11, 2024 at 11:56=E2=80=
-=AFAM Richard Bagley &lt;<a href=3D"mailto:rbagley@ventanamicro.com">rbagle=
-y@ventanamicro.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote=
-" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
-padding-left:1ex"><div dir=3D"ltr"><font face=3D"verdana, sans-serif">I hav=
-e realized that <b>the patch is indeed a fix</b>, not a workaround.</font><=
-div><font face=3D"verdana, sans-serif"><br>In fact, the argument to LUI and=
- AUIPC in assembly=C2=A0<b>must</b>=C2=A0be a number between=C2=A0<span sty=
-le=3D"color:rgb(31,35,40)">[0x0, 0xfffff]</span><span style=3D"color:rgb(31=
-,35,40);font-size:16px">.</span><br><a href=3D"https://github.com/riscv-non=
--isa/riscv-asm-manual/blob/master/riscv-asm.md#load-upper-immediates-immedi=
-ate" target=3D"_blank">RISC-V Assembly Programmer&#39;s Manual : Load Upper=
- Immediate&#39;s Immediate</a><br>Signed decimal numbers are programmed as =
-their two&#39;s complement.</font></div><div><span style=3D"font-family:ver=
-dana,sans-serif"><br></span></div><div><span style=3D"font-family:verdana,s=
-ans-serif">I checked: neither GCC nor LLVM will assemble <br></span><blockq=
-uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1p=
-x solid rgb(204,204,204);padding-left:1ex"><span style=3D"font-family:verda=
-na,sans-serif">lui x1, -4</span></blockquote><font face=3D"verdana, sans-se=
-rif">The LLVM compiled models the arguments to=C2=A0LUI and AUIPC as UIMM (=
-unsigned immediate) or UIMM20 (20 bit unsigned immediate).<br><br>I should =
-have checked this from the start. I jumped to the conclusion that both form=
-ats (signed decimal, two&#39;s complement) for negative arguments should be=
- supported, and that I was encountering=C2=A0a bug.</font></div><div><font =
-face=3D"verdana, sans-serif">I apologize to all for the unnecessary back-an=
-d-forth.<br><br>I don&#39;t yet see a=C2=A0reason why llvm and gcc could no=
-t support a signed number in decimal format, perhaps requiring a pseudo-ins=
-truction. <br>This might be desirable, if only in support of assembly progr=
-amming. <br>On the other hand, it is easy to make the conversion to a two&#=
-39;s-complement number.<br><br>Richard</font></div></div><br><div class=3D"=
-gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, Mar 9, 2024 at 4=
-:01=E2=80=AFAM Andrew Jones &lt;<a href=3D"mailto:ajones@ventanamicro.com" =
-target=3D"_blank">ajones@ventanamicro.com</a>&gt; wrote:<br></div><blockquo=
-te class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px =
-solid rgb(204,204,204);padding-left:1ex">On Fri, Mar 08, 2024 at 08:22:01PM=
- -0800, Richard Bagley wrote:<br>
-&gt; post-nack, one further comment:<br>
-&gt; <br>
-&gt; One could argue that this change also aligns QEMU with supporting tool=
-s (as<br>
-&gt; Andrew observed), and it makes sense to merge this change into QEMU un=
-til<br>
-&gt; those tools update to supporting signed decimal numbers with immediate=
-s.<br>
-&gt; <br>
-&gt; As it is, both GNU assembler and the LLVM integrated assembler (or llv=
-m-mc)<br>
-&gt; throws an error with examples such as<br>
-&gt; auipc s0, -17<br>
-&gt; <br>
-&gt; On the other hand, I have only seen this problem with the output of th=
-e<br>
-&gt; COLLECT plug-in, not (as yet) with QEMU execution proper.<br>
-&gt; If the problem is confined to COLLECT, perhaps the argument for aligni=
-ng<br>
-&gt; with other tools is not as strong.<br>
-&gt; <br>
-&gt; In the meantime, I have adjusted my change locally to include AUIPC, a=
-nd<br>
-&gt; written a substantive, and I hope, clear commit description.<br>
-&gt; If you would like me to resubmit a patch with this updated change, ple=
-ase<br>
-&gt; let me know.<br>
-<br>
-Since the patch is ready for posting, then it might as well be posted<br>
-(even if it may not get merged right away). If the issue arises again,<br>
-then we can refer to the latest proposed patch, which will be preserved<br>
-in the mail archives.<br>
-<br>
-Thanks,<br>
-drew<br>
-</blockquote></div>
-</blockquote></div>
-
---000000000000092cb2061367ff3e--
 
