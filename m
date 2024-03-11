@@ -4,53 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B359C5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:29:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A68A3C5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:29:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjWHz-0005du-FX; Sun, 10 Mar 2024 23:25:23 -0400
+	id 1rjWJN-0002Vw-T3; Sun, 10 Mar 2024 23:26:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWHr-0005dJ-Ul; Sun, 10 Mar 2024 23:25:16 -0400
+ id 1rjWJM-0002Kd-M9; Sun, 10 Mar 2024 23:26:48 -0400
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWHq-00084P-4E; Sun, 10 Mar 2024 23:25:15 -0400
+ id 1rjWJK-00084P-Td; Sun, 10 Mar 2024 23:26:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710127514; x=1741663514;
+ t=1710127607; x=1741663607;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=UApyMmGs7NxGJ7nyTsQeSlDiPd1XDqLXAIr9okAi3X4=;
- b=CtWF06wf2siRU7dLKa9HDjeWKuZm5uxaIo/qgRS6mEzfGX4dVBggBsnw
- gKoC/f2BHsqis1AL5E6FKS0B+RyzNNuOq0uRmnMYzwdDLuqQL2YdTx/ux
- HfsDX3oh/8r9qjSpq+5yhYHPJcBTW8SKEvakyDVSgqQXssvIUfv7y3rhu
- L6EDglclgqG2YbURr1evb+7pY6adrSGyJggbkJ+XwnKoex5A3tMrPfnwo
- g4+uGwu/CpQH31RbqSJtPomvNl/oxb4qdN3uYuI4G+4gV9TCp0pK3zCO8
- WvtnvzXJfBhtAWNs21+wEZeJRPVzB0J1fb0PWsJtMh5IgIiQm008RnMJ4 g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229633"
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229633"
+ bh=ptTuy2ckiHWNEI7SVUGTBp2K5fyc5nf3WiWP/pqmio0=;
+ b=KPQnVflc96/GzjCWQURLWNKGvP+GJQc2f2subItWCeJ2Ise0x5CEGWdr
+ Vk3iIWlcaU9usqUXeKqRjC17nLwoaEO0Ym6HSQNpKWbQVVmcN+DacN4ed
+ OBMcJ/m1eC0y8b2fGVPz4lUJ9MkRKLSmyvHBkyB6uT89q/d+FlqAJVxMl
+ 1vUj3vZJMMtcerfVJHxA6o4tQYB+4UGCsORjMl8xT8PDvcvQq7VgvAQdh
+ 5TunE73e7pVhimBgrlXPCz7fVSSvM/v1r49NziddDVePRtznKf3BDzDxV
+ UyS/2v7vnSi85xNNcVtzJ+vDIwEfK1lRfNB9TR0QjH02hE7vehwvgUdiG g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229850"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229850"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2024 20:25:07 -0700
+ 10 Mar 2024 20:26:02 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15593784"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15594090"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:25:04 -0700
+ by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:26:00 -0700
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, Michael Tokarev <mjt@tls.msk.ru>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>
-Subject: [PATCH v2 08/29] block/qcow2: Fix missing ERRP_GUARD() for
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: [PATCH v2 27/29] migration/option: Fix missing ERRP_GUARD() for
  error_prepend()
-Date: Mon, 11 Mar 2024 11:38:01 +0800
-Message-Id: <20240311033822.3142585-9-zhao1.liu@linux.intel.com>
+Date: Mon, 11 Mar 2024 11:38:20 +0800
+Message-Id: <20240311033822.3142585-28-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
 References: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
@@ -101,54 +100,40 @@ ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
 can't see this additional information, because exit() happens in
 error_setg earlier than information is added [1].
 
-In block/qcow2.c, there are 2 functions passing @errp to error_prepend()
-without ERRP_GUARD():
- - qcow2_co_create()
- - qcow2_co_truncate()
+The migrate_params_check() passes @errp to error_prepend() without
+ERRP_GUARD(), and it could be called from migration_object_init(),
+where the passed @errp points to @error_fatal.
 
-There are too many possible callers to check the impact of the defect;
-it may or may not be harmless. Thus it is necessary to protect @errp with
-ERRP_GUARD().
+Therefore, the error message echoed in error_prepend() will be lost
+because of the above issue.
 
-Therefore, to avoid the issue like [1] said, add missing ERRP_GUARD() at
-their beginning.
+To fix this, add missing ERRP_GUARD() at the beginning of this function.
 
 [1]: Issue description in the commit message of commit ae7c80a7bd73
      ("error: New macro ERRP_GUARD()").
 
-Cc: Kevin Wolf <kwolf@redhat.com>
-Cc: Hanna Reitz <hreitz@redhat.com>
-Cc: qemu-block@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Acked-by: Peter Xu <peterx@redhat.com>
 ---
-v2:
- * Use Markus' sentence to polish commit message. (Markus)
- * Fix typo. (Eric)
----
- block/qcow2.c | 2 ++
+ migration/options.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/block/qcow2.c b/block/qcow2.c
-index 204f5854cff2..956128b40948 100644
---- a/block/qcow2.c
-+++ b/block/qcow2.c
-@@ -3483,6 +3483,7 @@ static uint64_t qcow2_opt_get_refcount_bits_del(QemuOpts *opts, int version,
- static int coroutine_fn GRAPH_UNLOCKED
- qcow2_co_create(BlockdevCreateOptions *create_options, Error **errp)
+diff --git a/migration/options.c b/migration/options.c
+index 40eb9309401c..caff0a271dff 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -1085,6 +1085,8 @@ void migrate_params_init(MigrationParameters *params)
+  */
+ bool migrate_params_check(MigrationParameters *params, Error **errp)
  {
 +    ERRP_GUARD();
-     BlockdevCreateOptionsQcow2 *qcow2_opts;
-     QDict *options;
- 
-@@ -4283,6 +4284,7 @@ static int coroutine_fn GRAPH_RDLOCK
- qcow2_co_truncate(BlockDriverState *bs, int64_t offset, bool exact,
-                   PreallocMode prealloc, BdrvRequestFlags flags, Error **errp)
- {
-+    ERRP_GUARD();
-     BDRVQcow2State *s = bs->opaque;
-     uint64_t old_length;
-     int64_t new_l1_size;
++
+     if (params->has_compress_level &&
+         (params->compress_level > 9)) {
+         error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "compress_level",
 -- 
 2.34.1
 
