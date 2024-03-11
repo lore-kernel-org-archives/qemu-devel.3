@@ -4,54 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDCBFC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:28:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 836E6C54E67
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:28:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjWK2-0007CV-4f; Sun, 10 Mar 2024 23:27:30 -0400
+	id 1rjWJM-0002MK-UW; Sun, 10 Mar 2024 23:26:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWJy-0006gf-F7; Sun, 10 Mar 2024 23:27:26 -0400
+ id 1rjWJL-00028z-EH; Sun, 10 Mar 2024 23:26:47 -0400
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWJr-00084P-Qo; Sun, 10 Mar 2024 23:27:26 -0400
+ id 1rjWJJ-0008EJ-Bg; Sun, 10 Mar 2024 23:26:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710127639; x=1741663639;
+ t=1710127605; x=1741663605;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=FUBNZoVYFulMqFdKGFhCzM+sKaGWCnMsBZAUCnXGKvA=;
- b=Js5ntsC+jF5IUyJ3jA8/875ojawdxu6kmPnggRQboD54D+MLAO3iy/6Z
- pbFF3doq6H9u/xeZkQUC44GQuPle0Xx3KlsbpjGpmSzMTooWNvx7+p12r
- 2CEK4QaA0kD2ilJ6oJqWUeltlPiBzMEfj63K5Y7Qwivm4QglAzFCpAsg2
- Up8b/r1X6tLJVxJzfGnz5+hZETjTBbZDoanw7mqfJgc5cpyxC14MGztmb
- KrpJiwud/yEMIfOCxogZXzXRqIHsvl+4lewX2NUwX6PP/uDsaqal0u4pC
- SZx1ljvh/iwMd0WzGXDe9Na/Fo/EkJDXC+VtGbXgxpVT/4ZRRLdGxEPAw g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229864"
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229864"
+ bh=9ayhOJuCQ4MJTTJHMLUMPI61IaoZ8oXaXLwtDkGmbN8=;
+ b=PwJ4PQBXi1NFG4TskEQ3mWzSn52z9AAjMKwI0d+vybsYwr9RKuYmu4tW
+ 1BaEuC//wlmVbh3CUm7s5JRjlPwS9kVTY65esWYtT1shJZUsZlBofUib3
+ biKoE8V7TDbX9gBWlE428xXPsZiN2a3iqaEiRoMfrF0YCYRmkZFX7tM+v
+ 0UCacIsbua4KeuEUXwR9DRP6spsgI9WimiXmohxXoKvdO5zc0HvEdTZyU
+ ekgPwXaDO3R6NEPAPMT2N3OO8tJ8FvUoPZ7s+bpRmwDmIDDAc+/T5R3q4
+ PcT1vnxIAjiWLVkbTfIi99UkT4Y+1yOqt+cEwm8u+NT/Cc78Na9TKbX+R Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229835"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229835"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2024 20:26:08 -0700
+ 10 Mar 2024 20:25:57 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15594103"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15594080"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:26:05 -0700
+ by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:25:55 -0700
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, Michael Tokarev <mjt@tls.msk.ru>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- David Hildenbrand <david@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, qemu-s390x@nongnu.org
-Subject: [PATCH v2 29/29] target/s390x/cpu_models: Fix missing ERRP_GUARD()
- for error_prepend()
-Date: Mon, 11 Mar 2024 11:38:22 +0800
-Message-Id: <20240311033822.3142585-30-zhao1.liu@linux.intel.com>
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH v2 25/29] hw/virtio/vhost-vsock: Fix missing ERRP_GUARD() for
+ error_prepend()
+Date: Mon, 11 Mar 2024 11:38:18 +0800
+Message-Id: <20240311033822.3142585-26-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
 References: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
@@ -102,48 +100,35 @@ ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
 can't see this additional information, because exit() happens in
 error_setg earlier than information is added [1].
 
-In target/s390x/cpu_models.c, there are 2 functions passing @errp to
-error_prepend() without ERRP_GUARD():
-- check_compatibility()
-- s390_realize_cpu_model()
+The vhost_vsock_device_realize() passes @errp to error_prepend(), and as
+a VirtioDeviceClass.realize method, its @errp is from
+DeviceClass.realize so that there is no guarantee that the @errp won't
+point to @error_fatal.
 
-Though both their @errp parameters point to their callers' local @err
-virables and don't cause the issue as [1] said, to follow the
-requirement of @errp, also add missing ERRP_GUARD() at their beginning.
+To avoid the issue like [1] said, add missing ERRP_GUARD() at the
+beginning of this function.
 
 [1]: Issue description in the commit message of commit ae7c80a7bd73
      ("error: New macro ERRP_GUARD()").
 
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: qemu-s390x@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/s390x/cpu_models.c | 2 ++
- 1 file changed, 2 insertions(+)
+ hw/virtio/vhost-vsock.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
-index a63d990e4e8e..1a1c09612271 100644
---- a/target/s390x/cpu_models.c
-+++ b/target/s390x/cpu_models.c
-@@ -503,6 +503,7 @@ static void error_prepend_missing_feat(const char *name, void *opaque)
- static void check_compatibility(const S390CPUModel *max_model,
-                                 const S390CPUModel *model, Error **errp)
+diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
+index d5ca0b5a1055..3d4a5a97f484 100644
+--- a/hw/virtio/vhost-vsock.c
++++ b/hw/virtio/vhost-vsock.c
+@@ -121,6 +121,7 @@ static const VMStateDescription vmstate_virtio_vhost_vsock = {
+ 
+ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
  {
 +    ERRP_GUARD();
-     S390FeatBitmap missing;
- 
-     if (model->def->gen > max_model->def->gen) {
-@@ -566,6 +567,7 @@ S390CPUModel *get_max_cpu_model(Error **errp)
- 
- void s390_realize_cpu_model(CPUState *cs, Error **errp)
- {
-+    ERRP_GUARD();
-     Error *err = NULL;
-     S390CPUClass *xcc = S390_CPU_GET_CLASS(cs);
-     S390CPU *cpu = S390_CPU(cs);
+     VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
+     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+     VHostVSock *vsock = VHOST_VSOCK(dev);
 -- 
 2.34.1
 
