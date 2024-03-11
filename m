@@ -4,65 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB381C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 05:44:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13FF7C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 06:06:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjYRw-0007c0-B6; Mon, 11 Mar 2024 01:43:48 -0400
+	id 1rjYmq-0002SI-LN; Mon, 11 Mar 2024 02:05:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1rjYRt-0007bE-ML
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 01:43:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1rjYRr-0002iX-Pa
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 01:43:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710135822;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=IEAFON+hr5+n1awEgCwMEXAzM+U05ZCkmeleR6HDrlU=;
- b=HcyWgtO++1EefDyNfHcIKkxNzyeQkAUj0E3y1xld9w/ePhaqWzg22Ngprw3TCn6rpe77dK
- Cwin5Nql9RjxdVpPsQ+6PV2GcBcbo+KMUPCY2sZMZ6ciEbkq87Ut64snXcUy4ooIEmxud6
- F8F9XrB4h2KCnLhxDBxnmtr/2SUSwIA=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-68-NfF8E6MEP6igM5QSH257xA-1; Mon,
- 11 Mar 2024 01:43:40 -0400
-X-MC-Unique: NfF8E6MEP6igM5QSH257xA-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7A9D13801F5B;
- Mon, 11 Mar 2024 05:43:40 +0000 (UTC)
-Received: from kaapi.redhat.com (unknown [10.67.24.5])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id E21F2C017A2;
- Mon, 11 Mar 2024 05:43:37 +0000 (UTC)
-From: Prasad Pandit <ppandit@redhat.com>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, kwolf@redhat.com, stefanha@redhat.com,
- Prasad Pandit <pjp@fedoraproject.org>
-Subject: [PATCH v2] linux-aio: add IO_CMD_FDSYNC command support
-Date: Mon, 11 Mar 2024 11:13:33 +0530
-Message-ID: <20240311054333.1264776-1-ppandit@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1rjYmm-0002Ry-Ou
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 02:05:22 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1rjYmi-0007ry-NV
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 02:05:19 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-41312232c7aso18977575e9.0
+ for <qemu-devel@nongnu.org>; Sun, 10 Mar 2024 23:05:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710137114; x=1710741914; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=T7wM/S+LBXC4hmfzLEA4Q2Vo+vH3NsQdY3B+yanN870=;
+ b=OsWquVG3HOmrc/qhbLFIHmwU40dJ3zRKLE9wFYa2vjs04+gaptLuwWhkQAmXKBsWhS
+ W/LQUdj1d3gswyYxFp68HjLpmr80q8sFCgO6hTbKl2edSbmqt2FgVLBv2pAZDabp2r+c
+ pCOHC2CCfeoWVcL3S0kWSE3Pv1gwaVx2yyr45tMst5Ied1aN1VGsiGM0Rf4YuNpYnpEV
+ XGaAz2y7zYlXJTP93yxj5N6I8s0atR/UVqgQBstp195xF2KOgi73QLgg308tTOO1MOWT
+ O+pmn1GgzmHEp35l/yWwnS9J/yijvaHXvzqCC6CrdVXkDnuPQHIAbt9G7cGc4AQ/IjqV
+ aFCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710137114; x=1710741914;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=T7wM/S+LBXC4hmfzLEA4Q2Vo+vH3NsQdY3B+yanN870=;
+ b=ObgqNleAvmQBeI/QL/H1eSyUWaAkgoRsK+eJtIMivtGwG+a7GmMkcJG0ov+xjfVBrw
+ CDQVae8YfxXmrskcQ19UNRf2KCCSyDySh7y9q6sB2ivWFJNgDsYwGFqXIahNKnU2KuFJ
+ jA6xxitpEqjSamKid64gVWVS9i7/sALqy+Hndw9Fg46B8ctM94gkebCKWDluxLPDj4wA
+ 3KyfoE5AT5OZ+3jYD5IKvG3fjVSWg4RNm3TNM50Ys0rioybP7Ivwj1Bff63vM5lyHGJa
+ jDAO0Vqm6UVUi/rPtbGdyjI/l6F+op+aBxz528JC33kTZxSkgmhLo6ttbKUH72mv8c7a
+ M2FA==
+X-Gm-Message-State: AOJu0Yxl2iMm2CI4DAv92CrvPzAzh6KGpOovR24d9L40PO8qsrvPvSJ3
+ SOccudqLZuaLx4be8ICRbzIJBHtyOO9pRkvCbL89dtWwN3S6VNJudzmMIGXicKuoXdcAo6TtFT9
+ aAuM=
+X-Google-Smtp-Source: AGHT+IFOrB0vYyxtTj2hReSNOpyLclogf8LbOyR766pQdpiEtTAeuplC0nRrQVLERmyv+Q7F9fBVXQ==
+X-Received: by 2002:adf:c089:0:b0:33e:7620:7288 with SMTP id
+ d9-20020adfc089000000b0033e76207288mr6531710wrf.20.1710137113703; 
+ Sun, 10 Mar 2024 23:05:13 -0700 (PDT)
+Received: from linaro.. ([102.35.208.160]) by smtp.gmail.com with ESMTPSA id
+ i6-20020adffdc6000000b0033b66c2d61esm5450044wrs.48.2024.03.10.23.05.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 10 Mar 2024 23:05:13 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH] plugins/howvec: fix use-after-free
+Date: Mon, 11 Mar 2024 10:04:56 +0400
+Message-Id: <20240311060456.218190-1-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.945,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,73 +93,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Prasad Pandit <pjp@fedoraproject.org>
-
-Libaio defines IO_CMD_FDSYNC command to sync all outstanding
-asynchronous I/O operations, by flushing out file data to the
-disk storage.
-
-Enable linux-aio to submit such aio request. This helps to
-reduce latency induced via pthread_create calls by
-thread-pool (aio=threads).
-
-Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
+reported by coverity scan
 ---
- block/file-posix.c | 12 ++++++++++++
- block/linux-aio.c  |  5 ++++-
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ contrib/plugins/howvec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-v2: if IO_CMD_FDSYNC is not supported by the kernel,
-    fallback on thread-pool flush.
-  -> https://lists.nongnu.org/archive/html/qemu-devel/2024-03/msg01986.html
-
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 35684f7e21..4f2195d01d 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -2599,6 +2599,18 @@ static int coroutine_fn raw_co_flush_to_disk(BlockDriverState *bs)
-     if (raw_check_linux_io_uring(s)) {
-         return luring_co_submit(bs, s->fd, 0, NULL, QEMU_AIO_FLUSH);
-     }
-+#endif
-+#ifdef CONFIG_LINUX_AIO
-+    if (raw_check_linux_aio(s)) {
-+        ret = laio_co_submit(s->fd, 0, NULL, QEMU_AIO_FLUSH, 0);
-+        if (ret >= 0) {
-+            /*
-+             * if AIO_FLUSH is supported return
-+             * else fallback on thread-pool flush.
-+             */
-+            return ret;
-+        }
-+    }
- #endif
-     return raw_thread_pool_submit(handle_aiocb_flush, &acb);
+diff --git a/contrib/plugins/howvec.c b/contrib/plugins/howvec.c
+index 2d10c87e0fb..5be91f6fc5c 100644
+--- a/contrib/plugins/howvec.c
++++ b/contrib/plugins/howvec.c
+@@ -168,8 +168,8 @@ static void free_record(gpointer data)
+ {
+     InsnExecCount *rec = (InsnExecCount *) data;
+     g_free(rec->insn);
+-    g_free(rec);
+     qemu_plugin_scoreboard_free(rec->count.score);
++    g_free(rec);
  }
-diff --git a/block/linux-aio.c b/block/linux-aio.c
-index ec05d946f3..d940d029e3 100644
---- a/block/linux-aio.c
-+++ b/block/linux-aio.c
-@@ -384,6 +384,9 @@ static int laio_do_submit(int fd, struct qemu_laiocb *laiocb, off_t offset,
-     case QEMU_AIO_READ:
-         io_prep_preadv(iocbs, fd, qiov->iov, qiov->niov, offset);
-         break;
-+    case QEMU_AIO_FLUSH:
-+        io_prep_fdsync(iocbs, fd);
-+        break;
-     /* Currently Linux kernel does not support other operations */
-     default:
-         fprintf(stderr, "%s: invalid AIO request type 0x%x.\n",
-@@ -412,7 +415,7 @@ int coroutine_fn laio_co_submit(int fd, uint64_t offset, QEMUIOVector *qiov,
-     AioContext *ctx = qemu_get_current_aio_context();
-     struct qemu_laiocb laiocb = {
-         .co         = qemu_coroutine_self(),
--        .nbytes     = qiov->size,
-+        .nbytes     = qiov ? qiov->size : 0,
-         .ctx        = aio_get_linux_aio(ctx),
-         .ret        = -EINPROGRESS,
-         .is_read    = (type == QEMU_AIO_READ),
+ 
+ static void plugin_exit(qemu_plugin_id_t id, void *p)
 -- 
-2.44.0
+2.39.2
 
 
