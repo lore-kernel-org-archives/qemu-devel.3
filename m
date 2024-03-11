@@ -4,87 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4395CC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 18:57:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6216EC5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 19:04:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjkpg-0007ON-6U; Mon, 11 Mar 2024 14:57:08 -0400
+	id 1rjkw4-00048R-HO; Mon, 11 Mar 2024 15:03:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rbagley@ventanamicro.com>)
- id 1rjkpZ-00076i-4U
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 14:57:04 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rjkw0-00046C-DF
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 15:03:40 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rbagley@ventanamicro.com>)
- id 1rjkpV-0005i9-It
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 14:57:00 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-56647babfe6so5110865a12.3
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 11:56:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1710183414; x=1710788214; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=0APSuVrlhCEdL75DcSxQTcjROoDKcEIqv9B8wfMiy+o=;
- b=EK8jWGZ+aCYG+24UZdv3SFb72D/Qt0xdqYCli95Kbvq1qeikrrTnxZjJuDUI+OcFFJ
- xwVx+GC7WnObI0UFYMzYiYVDoBWgl1+z1yL+KJJIh6OeUc++FihvFCyO+S1J1XyYbYrv
- wjtqQvgGFDw+88w4+1OKVH5VvSsGaJaIT5106csomU+seI3Epmb0a0bGdjgNU4ZCqYQ2
- WbIn+ArF65NzxP8ME+Aymu8T+FoA/Xd7Y2K5kKnIVs0z9jd4aU8VJDpcFyj6GEM+4gX+
- oFlt8nojcGnKeKzYpLmbaNyCTHwbUiIIXRTU1VmkV/EcE3CqACB6GMRrXIrH5Hnc5txB
- Xi9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710183414; x=1710788214;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0APSuVrlhCEdL75DcSxQTcjROoDKcEIqv9B8wfMiy+o=;
- b=mhoAZytKxWVKPuOcRAxqSJKhjFIvYgccL/J6CeKojw2h9tSKUyqZ10DR3rt7kaH4ba
- s0hybIaOvrh/fXQc5sJKIekiVl5hEYOBW+hhJv2eCXVzFHHErwa5amQhKDn22rFjzUVQ
- oePkjq/6VYQTgJhXKkhd5STseT5vQmErsm/QW8FAUE4Vyq6/lmfuWHqJPU6hwQogGZXV
- 8IXv6lda/YXl0SKxK4+zvcJFd91oMqmmDffqeKhS80cAH282/7FXm3jctHCl0nRwlSYc
- XhpyCn095JiN3jLoKA42KoIpodv5orbHqVeDxfWfxNuUzXO6XdQARClFvfRji7SFC58J
- M4hA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVkho/aX7hqCf6762Xxq2kCF3y57Ddz1d1p29QzQoQ9jkB0x/JtZVsh20wLLzgi7YMeyuo7yX9UZ3gEFJqYtNRy1XvXcfY=
-X-Gm-Message-State: AOJu0YznXwpysDrFXkItw/ivilLlJbyqF8/oV2LPDszwHA48ca6m6XEV
- HUG/n+UerGqalZLEKFsysqWSwOrJlFMIvxpwy8OcFJvnxkX1vO59Qs1HEptqEhlbdNKrENlF7iJ
- owEoTCRARsTX5/7fYKf5n/CjPnK+Eic1Yn4Myag==
-X-Google-Smtp-Source: AGHT+IHur+eZ0uA5K7EIEQBiOo6NOb+CNFg5Wb2OpB7Rp/TrRnpf2MOKJRnREJk/rZ41X9uSkjlH99chAE+OH9z3Pb4=
-X-Received: by 2002:a50:9f25:0:b0:565:7b61:4c82 with SMTP id
- b34-20020a509f25000000b005657b614c82mr5093009edf.5.1710183414057; Mon, 11 Mar
- 2024 11:56:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rjkvt-0006iL-JM
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 15:03:40 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 8E63234FA6;
+ Mon, 11 Mar 2024 19:03:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1710183809; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sp9X9Yf0QtFaRRMtzfXBmSIFZpytHd7jrlhmbkJ2xeo=;
+ b=rJcAvero5mWLO3WMg6NFeLWDmoX3EuiuRlNEP/aQKhfQGCSm12pmWvtlCSe+xBeLz6szSU
+ B3dcCPxoxPViuQwiMrCSmdP0/xfku4Lal0/oy6BJ8ckOQjr6r/3V3+Az548o4iTOnp41Lg
+ ehYI1bxL0TDEgQtfgEbrlEPKns0IUak=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1710183809;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sp9X9Yf0QtFaRRMtzfXBmSIFZpytHd7jrlhmbkJ2xeo=;
+ b=sni563FGtNC6tLd+lu8zyiVZzNJKpCJdbozx3Rvma8ECHv+YXZO6nOSg7CZJC+dUEVRpuH
+ e56IefNXSV4LlKBA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1710183809; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sp9X9Yf0QtFaRRMtzfXBmSIFZpytHd7jrlhmbkJ2xeo=;
+ b=rJcAvero5mWLO3WMg6NFeLWDmoX3EuiuRlNEP/aQKhfQGCSm12pmWvtlCSe+xBeLz6szSU
+ B3dcCPxoxPViuQwiMrCSmdP0/xfku4Lal0/oy6BJ8ckOQjr6r/3V3+Az548o4iTOnp41Lg
+ ehYI1bxL0TDEgQtfgEbrlEPKns0IUak=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1710183809;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sp9X9Yf0QtFaRRMtzfXBmSIFZpytHd7jrlhmbkJ2xeo=;
+ b=sni563FGtNC6tLd+lu8zyiVZzNJKpCJdbozx3Rvma8ECHv+YXZO6nOSg7CZJC+dUEVRpuH
+ e56IefNXSV4LlKBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3E86213695;
+ Mon, 11 Mar 2024 19:03:27 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id N12bM39V72XiRgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 11 Mar 2024 19:03:27 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Alex Williamson
+ <alex.williamson@redhat.com>, Avihai Horon <avihaih@nvidia.com>, Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Markus Armbruster
+ <armbru@redhat.com>, Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v4 10/25] migration: Add Error** argument to
+ qemu_savevm_state_setup()
+In-Reply-To: <1566715b-a9a5-4df6-8e64-f4f912e2ea2f@redhat.com>
+References: <20240306133441.2351700-1-clg@redhat.com>
+ <20240306133441.2351700-11-clg@redhat.com> <87plw44wps.fsf@suse.de>
+ <1566715b-a9a5-4df6-8e64-f4f912e2ea2f@redhat.com>
+Date: Mon, 11 Mar 2024 16:03:14 -0300
+Message-ID: <87le6omw0d.fsf@suse.de>
 MIME-Version: 1.0
-References: <20230810-c9e1f2783168b48bc07a1aa2@orel>
- <mhng-a6344a0c-8820-41b5-a015-b82b261b463d@palmer-ri-x1c9>
- <20230810-e160f9edae60ded9d2606b8b@orel>
- <20230811-bc15b48d336b79d9ec1f0936@orel>
- <20230811-52e2c90dc3b91e108eb5e4e8@orel>
- <CAARkPA-P1U7xyLpdx+XD1M3Ji2NUfTb+88+GKUk8R2aFsOCMRw@mail.gmail.com>
- <CAARkPA-dOxOWsR0VS+S8p4fDmNR5X5Jjmo5pQTaurWLYsc9vsw@mail.gmail.com>
- <20240309-ee813e971e7c5850d652b295@orel>
-In-Reply-To: <20240309-ee813e971e7c5850d652b295@orel>
-From: Richard Bagley <rbagley@ventanamicro.com>
-Date: Mon, 11 Mar 2024 11:56:42 -0700
-Message-ID: <CAARkPA_8zSZK-4oOTcJO2KinWSadxZYZztwRP-UvNNkDjmyexw@mail.gmail.com>
-Subject: Re: [PATCH] disas/riscv: Further correction to LUI disassembly
-To: Andrew Jones <ajones@ventanamicro.com>
-Cc: Palmer Dabbelt <palmer@rivosinc.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, 
- Alistair Francis <Alistair.Francis@wdc.com>, bmeng@tinylab.org,
- liweiwei@iscas.ac.cn, 
- zhiwei_liu@linux.alibaba.com, dbarboza@ventanamicro.com
-Content-Type: multipart/alternative; boundary="000000000000e5693e0613671aae"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=rbagley@ventanamicro.com; helo=mail-ed1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=rJcAvero;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=sni563FG
+X-Spamd-Result: default: False [-3.31 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ URIBL_BLOCKED(0.00)[suse.de:dkim]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MIME_GOOD(-0.10)[text/plain]; BAYES_HAM(-3.00)[100.00%];
+ RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ RCPT_COUNT_SEVEN(0.00)[8];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]
+X-Rspamd-Queue-Id: 8E63234FA6
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,150 +132,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e5693e0613671aae
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+C=C3=A9dric Le Goater <clg@redhat.com> writes:
 
-I have realized that *the patch is indeed a fix*, not a workaround.
-
-In fact, the argument to LUI and AUIPC in assembly *must* be a number
-between [0x0, 0xfffff].
-RISC-V Assembly Programmer's Manual : Load Upper Immediate's Immediate
-<https://github.com/riscv-non-isa/riscv-asm-manual/blob/master/riscv-asm.md=
-#load-upper-immediates-immediate>
-Signed decimal numbers are programmed as their two's complement.
-
-I checked: neither GCC nor LLVM will assemble
-
-> lui x1, -4
-
-The LLVM compiled models the arguments to LUI and AUIPC as UIMM (unsigned
-immediate) or UIMM20 (20 bit unsigned immediate).
-
-I should have checked this from the start. I jumped to the conclusion that
-both formats (signed decimal, two's complement) for negative arguments
-should be supported, and that I was encountering a bug.
-I apologize to all for the unnecessary back-and-forth.
-
-I don't yet see a reason why llvm and gcc could not support a signed number
-in decimal format, perhaps requiring a pseudo-instruction.
-This might be desirable, if only in support of assembly programming.
-On the other hand, it is easy to make the conversion to a two's-complement
-number.
-
-Richard
-
-On Sat, Mar 9, 2024 at 4:01=E2=80=AFAM Andrew Jones <ajones@ventanamicro.co=
-m> wrote:
-
-> On Fri, Mar 08, 2024 at 08:22:01PM -0800, Richard Bagley wrote:
-> > post-nack, one further comment:
-> >
-> > One could argue that this change also aligns QEMU with supporting tools
-> (as
-> > Andrew observed), and it makes sense to merge this change into QEMU unt=
-il
-> > those tools update to supporting signed decimal numbers with immediates=
-.
-> >
-> > As it is, both GNU assembler and the LLVM integrated assembler (or
-> llvm-mc)
-> > throws an error with examples such as
-> > auipc s0, -17
-> >
-> > On the other hand, I have only seen this problem with the output of the
-> > COLLECT plug-in, not (as yet) with QEMU execution proper.
-> > If the problem is confined to COLLECT, perhaps the argument for alignin=
-g
-> > with other tools is not as strong.
-> >
-> > In the meantime, I have adjusted my change locally to include AUIPC, an=
-d
-> > written a substantive, and I hope, clear commit description.
-> > If you would like me to resubmit a patch with this updated change, plea=
-se
-> > let me know.
+> On 3/8/24 15:36, Fabiano Rosas wrote:
+>> C=C3=A9dric Le Goater <clg@redhat.com> writes:
+>>=20
+>>> This prepares ground for the changes coming next which add an Error**
+>>> argument to the .save_setup() handler. Callers of qemu_savevm_state_set=
+up()
+>>> now handle the error and fail earlier setting the migration state from
+>>> MIGRATION_STATUS_SETUP to MIGRATION_STATUS_FAILED.
+>>>
+>>> In qemu_savevm_state(), move the cleanup to preserve the error
+>>> reported by .save_setup() handlers.
+>>>
+>>> Since the previous behavior was to ignore errors at this step of
+>>> migration, this change should be examined closely to check that
+>>> cleanups are still correctly done.
+>>>
+>>> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
+>>> ---
+>>>
+>>>   Changes in v4:
+>>>=20=20=20
+>>>   - Merged cleanup change in qemu_savevm_state()
+>>>=20=20=20=20=20
+>>>   Changes in v3:
+>>>=20=20=20
+>>>   - Set migration state to MIGRATION_STATUS_FAILED
+>>>   - Fixed error handling to be done under lock in bg_migration_thread()
+>>>   - Made sure an error is always set in case of failure in
+>>>     qemu_savevm_state_setup()
+>>>=20=20=20=20=20
+>>>   migration/savevm.h    |  2 +-
+>>>   migration/migration.c | 27 ++++++++++++++++++++++++---
+>>>   migration/savevm.c    | 26 +++++++++++++++-----------
+>>>   3 files changed, 40 insertions(+), 15 deletions(-)
+>>>
+>>> diff --git a/migration/savevm.h b/migration/savevm.h
+>>> index 74669733dd63a080b765866c703234a5c4939223..9ec96a995c93a42aad62159=
+5f0ed58596c532328 100644
+>>> --- a/migration/savevm.h
+>>> +++ b/migration/savevm.h
+>>> @@ -32,7 +32,7 @@
+>>>   bool qemu_savevm_state_blocked(Error **errp);
+>>>   void qemu_savevm_non_migratable_list(strList **reasons);
+>>>   int qemu_savevm_state_prepare(Error **errp);
+>>> -void qemu_savevm_state_setup(QEMUFile *f);
+>>> +int qemu_savevm_state_setup(QEMUFile *f, Error **errp);
+>>>   bool qemu_savevm_state_guest_unplug_pending(void);
+>>>   int qemu_savevm_state_resume_prepare(MigrationState *s);
+>>>   void qemu_savevm_state_header(QEMUFile *f);
+>>> diff --git a/migration/migration.c b/migration/migration.c
+>>> index a49fcd53ee19df1ce0182bc99d7e064968f0317b..6d1544224e96f5edfe56939=
+a9c8395d88ef29581 100644
+>>> --- a/migration/migration.c
+>>> +++ b/migration/migration.c
+>>> @@ -3408,6 +3408,8 @@ static void *migration_thread(void *opaque)
+>>>       int64_t setup_start =3D qemu_clock_get_ms(QEMU_CLOCK_HOST);
+>>>       MigThrError thr_error;
+>>>       bool urgent =3D false;
+>>> +    Error *local_err =3D NULL;
+>>> +    int ret;
+>>>=20=20=20
+>>>       thread =3D migration_threads_add("live_migration", qemu_get_threa=
+d_id());
+>>>=20=20=20
+>>> @@ -3451,9 +3453,17 @@ static void *migration_thread(void *opaque)
+>>>       }
+>>>=20=20=20
+>>>       bql_lock();
+>>> -    qemu_savevm_state_setup(s->to_dst_file);
+>>> +    ret =3D qemu_savevm_state_setup(s->to_dst_file, &local_err);
+>>>       bql_unlock();
+>>>=20=20=20
+>>> +    if (ret) {
+>>> +        migrate_set_error(s, local_err);
+>>> +        error_free(local_err);
+>>> +        migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
+>>> +                          MIGRATION_STATUS_FAILED);
+>>> +        goto out;
+>>> +     }
+>>> +
+>>>       qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
+>>>                                  MIGRATION_STATUS_ACTIVE);
+>>=20
+>> This^ should be before the new block it seems:
+>>=20
+>> GOOD:
+>> migrate_set_state new state setup
+>> migrate_set_state new state wait-unplug
+>> migrate_fd_cancel
+>> migrate_set_state new state cancelling
+>> migrate_fd_cleanup
+>> migrate_set_state new state cancelled
+>> migrate_fd_cancel
+>> ok 1 /x86_64/failover-virtio-net/migrate/abort/wait-unplug
+>>=20
+>> BAD:
+>> migrate_set_state new state setup
+>> migrate_fd_cancel
+>> migrate_set_state new state cancelling
+>> migrate_fd_cleanup
+>> migrate_set_state new state cancelled
+>> qemu-system-x86_64: ram_save_setup failed: Input/output error
+>> **
+>> ERROR:../tests/qtest/virtio-net-failover.c:1203:test_migrate_abort_wait_=
+unplug:
+>> assertion failed (status =3D=3D "cancelling"): ("cancelled" =3D=3D "canc=
+elling")
+>>=20
+>> Otherwise migration_iteration_finish() will schedule the cleanup BH and
+>> that will run concurrently with migrate_fd_cancel() issued by the test
+>> and bad things happens.
 >
-> Since the patch is ready for posting, then it might as well be posted
-> (even if it may not get merged right away). If the issue arises again,
-> then we can refer to the latest proposed patch, which will be preserved
-> in the mail archives.
+> This hack makes things work :
 >
-> Thanks,
-> drew
+> @@ -3452,6 +3452,9 @@ static void *migration_thread(void *opaq
+>           qemu_savevm_send_colo_enable(s->to_dst_file);
+>       }
+>=20=20=20
+> +    qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
+> +                            MIGRATION_STATUS_SETUP);
+> +
+
+Why move it all the way up here? Has moving the wait_unplug before the
+'if (ret)' block not worked for you?
+
+>       bql_lock();
+>       ret =3D qemu_savevm_state_setup(s->to_dst_file, &local_err);
+>       bql_unlock();
 >
+> We should fix the test instead :) Unless waiting for failover devices
+> to unplug before the save_setup handlers and not after is ok.
+>
+> commit c7e0acd5a3f8 ("migration: add new migration state wait-unplug")
+> is not clear about the justification.:
+>
+>      This patch adds a new migration state called wait-unplug.  It is ent=
+ered
+>      after the SETUP state if failover devices are present. It will trans=
+ition
+>      into ACTIVE once all devices were succesfully unplugged from the gue=
+st.
 
---000000000000e5693e0613671aae
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+This is not clear indeed, but to me it seems having the wait-unplug
+after setup was important.
 
-<div dir=3D"ltr"><font face=3D"verdana, sans-serif">I have realized that <b=
->the patch is indeed a fix</b>, not a workaround.</font><div><font face=3D"=
-verdana, sans-serif"><br>In fact, the argument to LUI and AUIPC in assembly=
-=C2=A0<b>must</b>=C2=A0be a number between=C2=A0<span style=3D"color:rgb(31=
-,35,40)">[0x0, 0xfffff]</span><span style=3D"color:rgb(31,35,40);font-size:=
-16px">.</span><br><a href=3D"https://github.com/riscv-non-isa/riscv-asm-man=
-ual/blob/master/riscv-asm.md#load-upper-immediates-immediate">RISC-V Assemb=
-ly Programmer&#39;s Manual : Load Upper Immediate&#39;s Immediate</a><br>Si=
-gned decimal numbers are programmed as their two&#39;s complement.</font></=
-div><div><span style=3D"font-family:verdana,sans-serif"><br></span></div><d=
-iv><span style=3D"font-family:verdana,sans-serif">I checked: neither GCC no=
-r LLVM will assemble <br></span><blockquote class=3D"gmail_quote" style=3D"=
-margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-lef=
-t:1ex"><span style=3D"font-family:verdana,sans-serif">lui x1, -4</span></bl=
-ockquote><font face=3D"verdana, sans-serif">The LLVM compiled models the ar=
-guments to=C2=A0LUI and AUIPC as UIMM (unsigned immediate) or UIMM20 (20 bi=
-t unsigned immediate).<br><br>I should have checked this from the start. I =
-jumped to the conclusion that both formats (signed decimal, two&#39;s compl=
-ement) for negative arguments should be supported, and that I was encounter=
-ing=C2=A0a bug.</font></div><div><font face=3D"verdana, sans-serif">I apolo=
-gize to all for the unnecessary back-and-forth.<br><br>I don&#39;t yet see =
-a=C2=A0reason why llvm and gcc could not support a signed number in decimal=
- format, perhaps requiring a pseudo-instruction. <br>This might be desirabl=
-e, if only in support of assembly programming. <br>On the other hand, it is=
- easy to make the conversion to a two&#39;s-complement number.<br><br>Richa=
-rd</font></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=
-=3D"gmail_attr">On Sat, Mar 9, 2024 at 4:01=E2=80=AFAM Andrew Jones &lt;<a =
-href=3D"mailto:ajones@ventanamicro.com">ajones@ventanamicro.com</a>&gt; wro=
-te:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
-0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Fri, Mar =
-08, 2024 at 08:22:01PM -0800, Richard Bagley wrote:<br>
-&gt; post-nack, one further comment:<br>
-&gt; <br>
-&gt; One could argue that this change also aligns QEMU with supporting tool=
-s (as<br>
-&gt; Andrew observed), and it makes sense to merge this change into QEMU un=
-til<br>
-&gt; those tools update to supporting signed decimal numbers with immediate=
-s.<br>
-&gt; <br>
-&gt; As it is, both GNU assembler and the LLVM integrated assembler (or llv=
-m-mc)<br>
-&gt; throws an error with examples such as<br>
-&gt; auipc s0, -17<br>
-&gt; <br>
-&gt; On the other hand, I have only seen this problem with the output of th=
-e<br>
-&gt; COLLECT plug-in, not (as yet) with QEMU execution proper.<br>
-&gt; If the problem is confined to COLLECT, perhaps the argument for aligni=
-ng<br>
-&gt; with other tools is not as strong.<br>
-&gt; <br>
-&gt; In the meantime, I have adjusted my change locally to include AUIPC, a=
-nd<br>
-&gt; written a substantive, and I hope, clear commit description.<br>
-&gt; If you would like me to resubmit a patch with this updated change, ple=
-ase<br>
-&gt; let me know.<br>
-<br>
-Since the patch is ready for posting, then it might as well be posted<br>
-(even if it may not get merged right away). If the issue arises again,<br>
-then we can refer to the latest proposed patch, which will be preserved<br>
-in the mail archives.<br>
-<br>
-Thanks,<br>
-drew<br>
-</blockquote></div>
+>
+>
+>> =3D=3D=3D=3D=3D
+>> PS: I guess the next level in our Freestyle Concurrency video-game is to
+>> make migrate_fd_cancel() stop setting state and poking files and only
+>> set a flag that's tested in the other parts of the code.
+>
+> Is that a new item on the TODO list?
 
---000000000000e5693e0613671aae--
+Yep, I'll add it to the wiki.
+
 
