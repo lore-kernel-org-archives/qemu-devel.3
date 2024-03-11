@@ -4,58 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1303FC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:46:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8091AC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:46:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjjfT-0003sg-Ep; Mon, 11 Mar 2024 13:42:31 -0400
+	id 1rjjfr-0006In-6Z; Mon, 11 Mar 2024 13:42:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjjf2-0003UZ-A6
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:42:04 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rjjfn-0005zZ-Mm; Mon, 11 Mar 2024 13:42:51 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjjes-0007QQ-JI
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:42:04 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-6e55b33ad14so2449205b3a.1
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 10:41:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rjjfl-0007W9-Qd; Mon, 11 Mar 2024 13:42:51 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-6e5eb3dd2f8so3336585b3a.2; 
+ Mon, 11 Mar 2024 10:42:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710178912; x=1710783712; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1710178966; x=1710783766; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iM8ZZscE7pj+Z7J5S93rTnFI05PsMASFwHURBr43Ioo=;
- b=OyPfJ8c2aIWh9NlUHSrYkHL6C+9EEQpZn0JIlsrKIY96l8tfqN5/d6QH6mvBe3aPx7
- KGjTeZNWKD1ZCeyliC/j1a1vOgly9MqQK49/SBad0GH477n9d+3F+z60oJJdtu9NezHR
- xvrTQb8KlLl/z47oi4mag4al01lVfek/ioy7xUNhyfMEDdwvcoWasSdtdCroVGcVoYL5
- tSHuPhe58bHcOqPOj5sfd6C1Q8RwD1VnH298SjwGxEZa+yW9eg+GH5AEda5yWdR2dwW9
- k+AM8weY5TYv5fp/XtF3YO08rfnvJGRHgh7yQ6zRZBFrmU/ZT/LQUpU0caaHKlLxdc1M
- Y2Vg==
+ bh=cJYmS7//KWqwEUzntf/7pcjsXnd3DRaeR+mHw8GRlas=;
+ b=XLgJLyZTgLL3dJgOO0vZ6LZKegh2SUg2zr4VZjCWUV1C3gPqfhy8YjzoO7ZvdEcaHl
+ gRIDaQSLY9oK1KOdlf+LvCRyYWu8/kqivhYhK8ji0pH5GB2H6rPe6pvFBeaApEL8d+YP
+ MM0baCr3HDSRaEWIif7FF7gu0a9ShYi69pcn/b8gQgDwanlS3uxKOpjdGr7T//bZVqn8
+ 389DgGM0PHQyL7OJRdn4R/bD0R2ChczL8hfmqzx1T9YsHjiiNFzmVjxYoUKaLvr7SI/2
+ 5TKX8tag50VVvNMMxuVWoSl7Id1AHUGo60MwsrOuB+pVWPCJ0gIk3BdPkSLwmQcqXZXj
+ m7cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710178912; x=1710783712;
+ d=1e100.net; s=20230601; t=1710178966; x=1710783766;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iM8ZZscE7pj+Z7J5S93rTnFI05PsMASFwHURBr43Ioo=;
- b=ipScIiHlG1K1HBuiIvEmYwUpECHQLyPzbaoU1XZHWmlmISYEm8TTzaUSkzW6kT1XSf
- UrZQt/S+1Lyk5eEKkim7HH5wegqo7yUmoveEkQqPmS0/xB6eb0B11mWVfHG06mnOHjiY
- NQeh3p7ih1gqfWoVM1YrgE3AemLeASLHHs06M2nGGRXhx8aEEEmYjmFdysoVZdArObD9
- U+h+P3tQhkgbFotls1C3kS7t1C8qIVgSmspzAiskz6kDmqnU0VT5RrpBIW41ipFLpWw6
- F6JtHKVdv5LZv5A9DLKBK5bQe9LvtFbvSZByAmd6ynjxz9Y5TF1PLCHN71ex8e9EC+vJ
- 61iA==
-X-Gm-Message-State: AOJu0YzKQYdf8jNmuXoaAKyQDAM4WK8kvELlGMnC6bk4oIvt7zGxi/3r
- WW1xEGUx/F1IpJ8hHQzr7uXScvyJaf/Fn5w+oW3gGFTY+mQjK/aTRt3ER+4WmUQ=
-X-Google-Smtp-Source: AGHT+IFimX/UevUYrOT5oEXpcXelUbnXSjgNGLHNF4s8AJb8uIw0Ck8Un2l/8dHsxwDid5ss5Q2fYw==
-X-Received: by 2002:a05:6a00:1988:b0:6e5:ec63:95dd with SMTP id
- d8-20020a056a00198800b006e5ec6395ddmr7492844pfl.21.1710178911957; 
- Mon, 11 Mar 2024 10:41:51 -0700 (PDT)
+ bh=cJYmS7//KWqwEUzntf/7pcjsXnd3DRaeR+mHw8GRlas=;
+ b=jLKWkqMdeGrfkbTsO6Xy7fGqJCpvw/EkIDNCiuGYMWJbs2/BqqtCzDVLqdCyrxHYMd
+ kt/gQPzy1FUX/NfBRicdJHxzuvSbS4jGhqxsaApPk75q+WqOHsDynyuMobmLuxAdjF2j
+ 0lmzfmNizdJH/MdL8R7qQBXyCdIIPlIuI98lywZGKr/VyV7D3Af5AJRHWzECWGpA87z8
+ YVzQUMK+TLmt8LyfIgePraiC9tuoVxe8YaOnggx7E493yi9kps/XW/STj8/af7WbcyaF
+ dsylE2RacaM3ctmXspH68EhlSyDXsr10xD54355tRsfL9ycIVNowLK4Zm8Ke7ex4WCWz
+ 5LFA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW7Rd11U9KSUYNHacGk9GTcNR9ZLcSBXJRCJkgyqBjOolaOSgGMXef1LAdL5iqgbJ035O/uHSsG2hInVi6X3g0B2rG7
+X-Gm-Message-State: AOJu0YzelVHyzd/d+IXBGI0QkfYAKPKBNfHwy6qIs8Z5WxZBjIbqr9Nf
+ 30iFQvfUMT4o9uQ7u4PdST078cl6CqCo50yx7Fmkov6aZlUAFCTXoIyvbHKZaYo=
+X-Google-Smtp-Source: AGHT+IEuu6OMiP1EpBRtnn7qfNBbuxCvPVJwjj8e5BkI/v/tyS+D/utoINnLeC5mM6WfM1e9siMTPA==
+X-Received: by 2002:a05:6a20:3553:b0:1a1:82fc:94e2 with SMTP id
+ f19-20020a056a20355300b001a182fc94e2mr3627211pze.44.1710178965704; 
+ Mon, 11 Mar 2024 10:42:45 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- a18-20020a62d412000000b006e67b4d7b74sm4593187pfh.197.2024.03.11.10.41.47
+ a18-20020a62d412000000b006e67b4d7b74sm4593187pfh.197.2024.03.11.10.42.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 10:41:51 -0700 (PDT)
+ Mon, 11 Mar 2024 10:42:45 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -66,19 +68,18 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
  Cleber Rosa <crosa@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH v4 14/24] tests/avocado/reverse_debugging.py: mark aarch64 and
- pseries as not flaky
-Date: Tue, 12 Mar 2024 03:40:16 +1000
-Message-ID: <20240311174026.2177152-15-npiggin@gmail.com>
+ Beraldo Leal <bleal@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
+ qemu-ppc@nongnu.org
+Subject: [PATCH v4 24/24] tests/avocado: replay_linux.py add ppc64 pseries test
+Date: Tue, 12 Mar 2024 03:40:26 +1000
+Message-ID: <20240311174026.2177152-25-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240311174026.2177152-1-npiggin@gmail.com>
 References: <20240311174026.2177152-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,57 +102,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These seem to be quite solid, including on several gitlab CI runs.
-Enabling them should help catch breakage in future.
+Add a ppc64 pseries test. IO in SLOF is very slow when running in
+record-replay modes, so this this uses guestfish to extract the
+kernel and initrd and boot them directly.
 
-And update the powernv comment -- gitlab isn't the problem, there are
-known gaps in implementation.
-
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Cc: qemu-ppc@nongnu.org
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- tests/avocado/reverse_debugging.py | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+The test takes about double the length of time of aarch64 and
+x86 tests (800s to 400s) for some reason. Not profiled it yet.
 
-diff --git a/tests/avocado/reverse_debugging.py b/tests/avocado/reverse_debugging.py
-index 92855a02a5..8fe76ff921 100644
---- a/tests/avocado/reverse_debugging.py
-+++ b/tests/avocado/reverse_debugging.py
-@@ -223,9 +223,6 @@ class ReverseDebugging_AArch64(ReverseDebugging):
+ tests/avocado/replay_linux.py | 78 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 77 insertions(+), 1 deletion(-)
+
+diff --git a/tests/avocado/replay_linux.py b/tests/avocado/replay_linux.py
+index c0e50bb52b..1c11e48043 100644
+--- a/tests/avocado/replay_linux.py
++++ b/tests/avocado/replay_linux.py
+@@ -11,8 +11,9 @@
+ import os
+ import logging
+ import time
++import subprocess
  
-     REG_PC = 32
+-from avocado import skipUnless
++from avocado import skipIf, skipUnless
+ from avocado_qemu import BUILD_DIR
+ from avocado.utils import cloudinit
+ from avocado.utils import network
+@@ -55,11 +56,14 @@ def vm_add_disk(self, vm, path, id, device):
+             '%s,drive=disk%s-rr%s' % (device, id, bus_string))
  
--    # unidentified gitlab timeout problem
--    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
--
-     def test_aarch64_virt(self):
-         """
-         :avocado: tags=arch:aarch64
-@@ -248,14 +245,10 @@ class ReverseDebugging_ppc64(ReverseDebugging):
+     def vm_add_cdrom(self, vm, path, id, device):
++        vm.add_args('-device',
++            '%s,drive=disk%s' % (device, id))
+         vm.add_args('-drive', 'file=%s,id=disk%s,if=none,media=cdrom' % (path, id))
  
-     REG_PC = 0x40
- 
--    # unidentified gitlab timeout problem
--    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
--
-     def test_ppc64_pseries(self):
-         """
-         :avocado: tags=arch:ppc64
-         :avocado: tags=machine:pseries
--        :avocado: tags=flaky
-         """
-         # SLOF branches back to its entry point, which causes this test
-         # to take the 'hit a breakpoint again' path. That's not a problem,
-@@ -264,7 +257,7 @@ def test_ppc64_pseries(self):
-         self.reverse_debugging()
- 
-     # See https://gitlab.com/qemu-project/qemu/-/issues/1992
--    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
-+    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'powernv migration support is incomplete so rr debugging is flaky')
- 
-     def test_ppc64_powernv(self):
-         """
+     def launch_and_wait(self, record, args, shift):
+         self.require_netdev('user')
+         vm = self.get_vm()
++        vm.add_args('-s')
+         vm.add_args('-smp', '1')
+         vm.add_args('-m', '1024')
+         vm.add_args('-netdev', 'user,id=vnet,hostfwd=:127.0.0.1:0-:22',
+@@ -207,3 +211,75 @@ def test_virt_gicv3(self):
+         self.run_rr(shift=3,
+                     args=(*self.get_common_args(),
+                           "-machine", "virt,gic-version=3"))
++
++# ppc64 pseries test.
++#
++# This machine tends to fail replay and hang very close to the end of the
++# trace, with missing events, which is still an open issue.
++#
++# spapr-scsi IO driven by SLOF/grub is extremely slow in record/replay mode,
++# so jump through some hoops to boot the kernel directly. With this, the test
++# runs in about 5 minutes (modulo hang), which suggests other machines may
++# have similar issues and could benefit from bypassing bootloaders.
++#
++ppc_deps = ["guestfish"] # dependent tools needed in the test setup/box.
++
++def which(tool):
++    """ looks up the full path for @tool, returns None if not found
++        or if @tool does not have executable permissions.
++    """
++    paths=os.getenv('PATH')
++    for p in paths.split(os.path.pathsep):
++        p = os.path.join(p, tool)
++        if os.path.exists(p) and os.access(p, os.X_OK):
++            return p
++    return None
++
++def ppc_missing_deps():
++    """ returns True if any of the test dependent tools are absent.
++    """
++    for dep in ppc_deps:
++        if which(dep) is None:
++            return True
++    return False
++
++class ReplayLinuxPPC64(ReplayLinux):
++    """
++    :avocado: tags=arch:ppc64
++    :avocado: tags=accel:tcg
++    """
++
++    hdd = 'virtio-blk-pci'
++    cd = 'scsi-cd'
++    bus = None
++
++    def setUp(self):
++        super().setUp()
++
++        if not ppc_missing_deps():
++            # kernel, initramfs, and kernel cmdline are all taken by hand from
++            # the Fedora image.
++            self.kernel="vmlinuz-5.3.7-301.fc31.ppc64le"
++            self.initramfs="initramfs-5.3.7-301.fc31.ppc64le.img"
++            cmd = "guestfish --ro -a %s run " ": mount /dev/sda2 / " ": copy-out /boot/%s %s " ": copy-out /boot/%s %s " % (self.boot_path, self.kernel, self.workdir, self.initramfs, self.workdir)
++            subprocess.run(cmd.split())
++
++    @skipIf(ppc_missing_deps(), 'dependencies (%s) not installed' % ','.join(ppc_deps))
++    def test_pseries(self):
++        """
++        :avocado: tags=machine:pseries
++        """
++        kernel=os.path.normpath(os.path.join(self.workdir, self.kernel))
++        initramfs=os.path.normpath(os.path.join(self.workdir, self.initramfs))
++        cmdline="root=UUID=8a409ee6-3cb3-4b06-a266-39e2dae3e5fa ro no_timer_check net.fnames=0 console=tty1 console=ttyS0,115200n8"
++        self.run_rr(shift=3, args=("-device", "spapr-vscsi",
++                                   "-machine", "x-vof=on",
++                                   "-kernel", kernel,
++                                   "-initrd", initramfs,
++                                   "-append", cmdline))
++
++    # minimise the number of tests run by default because they are slow
++    # SLOF block IO is extremely slow when going through the blkreplay driver
++    @skipUnless(os.getenv('SPEED') == 'slow', 'runtime limited')
++    def test_pseries_slof(self):
++        self.run_rr(shift=3, args=("-device", "spapr-vscsi"))
 -- 
 2.42.0
 
