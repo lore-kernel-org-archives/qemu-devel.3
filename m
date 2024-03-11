@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9B91C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:27:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D26BC5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:27:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjWIv-00082A-Ms; Sun, 10 Mar 2024 23:26:21 -0400
+	id 1rjWJ1-0008QC-TP; Sun, 10 Mar 2024 23:26:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWIu-0007vj-32; Sun, 10 Mar 2024 23:26:20 -0400
+ id 1rjWIy-0008Ca-Ih; Sun, 10 Mar 2024 23:26:24 -0400
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWIs-0008BV-0b; Sun, 10 Mar 2024 23:26:19 -0400
+ id 1rjWIt-0008EJ-JH; Sun, 10 Mar 2024 23:26:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710127578; x=1741663578;
+ t=1710127579; x=1741663579;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=TFnB2T5AZHrD3WQA9yPndxMlq2vhIpqQTeZDm9Rn2z4=;
- b=a7dOTpSF2TNOKADHGhu67C+tnWrf4JJ0m1ZafYkHRk/0zwynlBYa8nrF
- k3rE83zD13UScB5Q/HmAvYKBUlOgWXG3RQZIqvrZK816L5If5AN8J6b5q
- sIiQiJxPtKe2RDzifKgtyNyheF1zrEXEHzIEWUpoqMOj9KV2fY5tB2vqq
- m1YM7MPELFqh2Mi4/ioH+dn2ZEnJo0r7xV1kgrAuKK9K1bY39r4yjIXjC
- qjnXAFXrqnnQB9vMx+MoPC3MIdYsq3sKnc+8akTrJco2N4JrzLitl5YTw
- 9USdUE94njLOoWBhji73GLPIuiartX+2pB0MXOVJlq4SkV090zBrey0y/ Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229772"
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229772"
+ bh=afLKbE/iqvhvdNRjIYrME9QDTzP57P9JV3IjhSBD68c=;
+ b=ZMZMosg4WIJRlRx05pQUpTumF9bB2piYbIc/QIimkGN8VIhjfIc5vBYJ
+ 9LVOP/XdMyPnBR2fNHGsLwxN9/gyCfBO15lgkP/vqYZaseepOq4ARbVAr
+ wuw/cWjPptmPVNk6vxcgNGRJN+ne5Y9IF0tVfq+OlgMsb9h46dgS+Npnd
+ bi5ftKO62KF7DhZe4azhDx/oLJ9BO/BHQrUIEZRoY0cLi53zWVcqP+F9U
+ SELrSczo+QMhw05VC7jBngXpQPxOPa669ddXi10CnFbucFaqvGpbFteN5
+ vOmViUNpgPrI3yR0qA1zSZD12j7ZUy9dSpEgZNQhea9fq8r5g9AQQnZ6n Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229819"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229819"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2024 20:25:46 -0700
+ 10 Mar 2024 20:25:56 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15594046"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15594055"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:25:44 -0700
+ by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:25:47 -0700
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, Michael Tokarev <mjt@tls.msk.ru>,
@@ -47,10 +47,10 @@ To: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v2 21/29] hw/vfio/iommufd: Fix missing ERRP_GUARD() for
+Subject: [PATCH v2 22/29] hw/vfio/pci-quirks: Fix missing ERRP_GUARD() for
  error_prepend()
-Date: Mon, 11 Mar 2024 11:38:14 +0800
-Message-Id: <20240311033822.3142585-22-zhao1.liu@linux.intel.com>
+Date: Mon, 11 Mar 2024 11:38:15 +0800
+Message-Id: <20240311033822.3142585-23-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
 References: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
@@ -59,13 +59,13 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: none client-ip=198.175.65.10;
  envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.945,
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.945,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,10 +102,14 @@ ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
 can't see this additional information, because exit() happens in
 error_setg earlier than information is added [1].
 
-The iommufd_cdev_getfd() passes @errp to error_prepend(). Its @errp is
-from vfio_attach_device(), and there are too many possible callers to
-check the impact of this defect; it may or may not be harmless. Thus it
-is necessary to protect @errp with ERRP_GUARD().
+In hw/vfio/pci-quirks.c, there are 2 functions passing @errp to
+error_prepend() without ERRP_GUARD():
+- vfio_add_nv_gpudirect_cap()
+- vfio_add_vmd_shadow_cap()
+
+There are too many possible callers to check the impact of this defect;
+it may or may not be harmless. Thus it is necessary to protect their
+@errp with ERRP_GUARD().
 
 To avoid the issue like [1] said, add missing ERRP_GUARD() at the
 beginning of this function.
@@ -120,21 +124,29 @@ Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
 v2: Use Markus' sentence to polish commit message. (Markus)
 ---
- hw/vfio/iommufd.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/vfio/pci-quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 9bfddc136089..7baf49e6ee9e 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -116,6 +116,7 @@ static void iommufd_cdev_unbind_and_disconnect(VFIODevice *vbasedev)
+diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
+index 84b1a7b9485c..496fd1ee86bd 100644
+--- a/hw/vfio/pci-quirks.c
++++ b/hw/vfio/pci-quirks.c
+@@ -1538,6 +1538,7 @@ static bool is_valid_std_cap_offset(uint8_t pos)
  
- static int iommufd_cdev_getfd(const char *sysfs_path, Error **errp)
+ static int vfio_add_nv_gpudirect_cap(VFIOPCIDevice *vdev, Error **errp)
  {
 +    ERRP_GUARD();
-     long int ret = -ENOTTY;
-     char *path, *vfio_dev_path = NULL, *vfio_path = NULL;
-     DIR *dir = NULL;
+     PCIDevice *pdev = &vdev->pdev;
+     int ret, pos;
+     bool c8_conflict = false, d4_conflict = false;
+@@ -1630,6 +1631,7 @@ static int vfio_add_nv_gpudirect_cap(VFIOPCIDevice *vdev, Error **errp)
+ #define VMD_SHADOW_CAP_LEN 24
+ static int vfio_add_vmd_shadow_cap(VFIOPCIDevice *vdev, Error **errp)
+ {
++    ERRP_GUARD();
+     uint8_t membar_phys[16];
+     int ret, pos = 0xE8;
+ 
 -- 
 2.34.1
 
