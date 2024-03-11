@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC15AC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:28:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A22DC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:29:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjWIw-000848-PD; Sun, 10 Mar 2024 23:26:22 -0400
+	id 1rjWI4-0005hs-B4; Sun, 10 Mar 2024 23:25:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWIt-0007tI-Eg; Sun, 10 Mar 2024 23:26:19 -0400
+ id 1rjWI0-0005fZ-9n; Sun, 10 Mar 2024 23:25:24 -0400
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWIr-00084P-Lh; Sun, 10 Mar 2024 23:26:19 -0400
+ id 1rjWHq-00085e-L9; Sun, 10 Mar 2024 23:25:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710127577; x=1741663577;
+ t=1710127514; x=1741663514;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=RzsS+Q7k5xI37YwrtN7D37ccOEKmtvC2L46segGR2TU=;
- b=QYc0b9blufhyfuziL175gVo+wOptCGFlmyJBskaxug44Rrj957aYR0kw
- eLoSn/xuRl+BNzjRfUe895l3rfQjl1D5K62VYt4or6boLG96EhyhTqFBK
- QVEfP049yM7OLuOgDPPFVqYPsHcFqhqvImPYLJ4WS09XtoY8QsimVTpMI
- GIxetdl9HMP0INk1G+eTt4w7swBZqF3UbeBwEtu7Azq/dYHg7YFfqyz6Y
- 8+Ngu4FFeYWDdagxvpPMdp2NGwpR5PTBcWC8FTxdw53bWc3QDsQEBUiDR
- a4/OKkE5Pu76M863ZhyCwSZI/N1tNjJVZX5dZsmVm2WJl1NvuSusgO8k2 g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229754"
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229754"
+ bh=rXT52kQTMV0QpLJDW1r5yUbIXX8ae4g4UM9QXgujzJA=;
+ b=ih4eZi2hAgF3vWPHRsXFf5zspbF0yHQh8OvF+SK+Dq3lcODT/N0WPNJ8
+ +UyBnfZsSxY2SEjK2fQEnyOU428rI5kprnlFX4LzMnhHqi4u7aVibGCHL
+ wIVrI6P8NrGv7N2Fh0ppICCOnszVLRmaUzbCAmoRUT5UBA09fMWoB5jFC
+ C19e9ZacnWs/DNcVnBOeoioAEeilmeYA+ZgUmx/+LGtdbJ5wIxo1wW32g
+ guss+R0gfSAsIY17IuVcyPtyZwKwW7NkcG3r4kbfeyPz3Iu/pqWBQ+Dri
+ yvCCTpTOVrDxd2H/8NxQvj1BrP4GmQbw5ZmBFrgbLZVqeYNeLzmvO0bbI Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229640"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229640"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2024 20:25:40 -0700
+ 10 Mar 2024 20:25:10 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15593999"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15593791"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:25:38 -0700
+ by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:25:07 -0700
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, Michael Tokarev <mjt@tls.msk.ru>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v2 19/29] hw/vfio/container: Fix missing ERRP_GUARD() for
+ Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
+Subject: [PATCH v2 09/29] block/qed: Fix missing ERRP_GUARD() for
  error_prepend()
-Date: Mon, 11 Mar 2024 11:38:12 +0800
-Message-Id: <20240311033822.3142585-20-zhao1.liu@linux.intel.com>
+Date: Mon, 11 Mar 2024 11:38:02 +0800
+Message-Id: <20240311033822.3142585-10-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
 References: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: none client-ip=198.175.65.10;
  envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
@@ -63,9 +62,8 @@ X-Spam_score_int: -29
 X-Spam_score: -3.0
 X-Spam_bar: ---
 X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.945,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,40 +100,39 @@ ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
 can't see this additional information, because exit() happens in
 error_setg earlier than information is added [1].
 
-The vfio_get_group() passes @errp to error_prepend(). Its @errp is
-from vfio_attach_device(), and there are too many possible callers to
-check the impact of this defect; it may or may not be harmless. Thus it
-is necessary to protect @errp with ERRP_GUARD().
+The bdrv_qed_co_invalidate_cache() passes @errp to error_prepend()
+without ERRP_GUARD().
 
-To avoid the issue like [1] said, add missing ERRP_GUARD() at the
+Though it is a BlockDriver.bdrv_co_invalidate_cache() method, and
+currently its @errp parameter only points to callers' local_err, to
+follow the requirement of @errp, add missing ERRP_GUARD() at the
 beginning of this function.
 
 [1]: Issue description in the commit message of commit ae7c80a7bd73
      ("error: New macro ERRP_GUARD()").
 
-Cc: Alex Williamson <alex.williamson@redhat.com>
-Cc: "Cédric Le Goater" <clg@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>
+Cc: Hanna Reitz <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
-v2: Use Markus' sentence to polish commit message. (Markus)
----
- hw/vfio/container.c | 1 +
+ block/qed.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index bd25b9fbad2e..f66bb01f5b18 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -719,6 +719,7 @@ static void vfio_disconnect_container(VFIOGroup *group)
- 
- static VFIOGroup *vfio_get_group(int groupid, AddressSpace *as, Error **errp)
+diff --git a/block/qed.c b/block/qed.c
+index bc2f0a61c0a9..fa5bc1108552 100644
+--- a/block/qed.c
++++ b/block/qed.c
+@@ -1579,6 +1579,7 @@ bdrv_qed_co_change_backing_file(BlockDriverState *bs, const char *backing_file,
+ static void coroutine_fn GRAPH_RDLOCK
+ bdrv_qed_co_invalidate_cache(BlockDriverState *bs, Error **errp)
  {
 +    ERRP_GUARD();
-     VFIOGroup *group;
-     char path[32];
-     struct vfio_group_status status = { .argsz = sizeof(status) };
+     BDRVQEDState *s = bs->opaque;
+     int ret;
+ 
 -- 
 2.34.1
 
