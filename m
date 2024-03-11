@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E92C6C5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 19:12:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41A22C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 19:13:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjl3a-0001nr-Aq; Mon, 11 Mar 2024 15:11:30 -0400
+	id 1rjl3e-0001ol-1O; Mon, 11 Mar 2024 15:11:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1rjl3Y-0001mm-1c; Mon, 11 Mar 2024 15:11:28 -0400
+ id 1rjl3b-0001nx-Ro; Mon, 11 Mar 2024 15:11:31 -0400
 Received: from wfhigh7-smtp.messagingengine.com ([64.147.123.158])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1rjl3W-0000EV-Es; Mon, 11 Mar 2024 15:11:27 -0400
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
- by mailfhigh.west.internal (Postfix) with ESMTP id F1B43180008B;
- Mon, 11 Mar 2024 15:11:22 -0400 (EDT)
+ id 1rjl3a-0000F3-9S; Mon, 11 Mar 2024 15:11:31 -0400
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+ by mailfhigh.west.internal (Postfix) with ESMTP id 7A45F180009E;
+ Mon, 11 Mar 2024 15:11:27 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute7.internal (MEProxy); Mon, 11 Mar 2024 15:11:24 -0400
+ by compute5.internal (MEProxy); Mon, 11 Mar 2024 15:11:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm3; t=1710184282; x=
- 1710270682; bh=13jK2IFXNV4aTtLcfKWBEUfG4qVN5gepwxltR43I56A=; b=N
- eBw+O9Q0OO+wPdLZyok5rqRDdjGDC24TTdXE2AxTirW78wYXiA1uN0SoLZgug+4r
- oC9xJtSY2doEDFTHiIVejtP3+imPmWarXIHfEJ+lviloS7+nRnTOpqz5omq3OUob
- Tm6WKiHpypw1Mj6yLSFoEhaJAog4wfoV4utVVqcH/RtHbevRNKGFLRlXkgiYAMTE
- bngMOPkFTNWYOom7L+E4aVH46DKVfmIvj42vo0yEYqJAhB8HJazI91CUjM9Tm1o7
- pTaacmwQMiLIHIlMHQgbvblnks6uJc8FeKrc4PjmoXBujgSOPifa0utgbVx7Hnxq
- tHvhfIqkwSkLOjP6yu92Q==
+ :reply-to:subject:subject:to:to; s=fm3; t=1710184287; x=
+ 1710270687; bh=yzwycJF1YoesaBUmclU+Ge6urJCZcxStE+/F83YbfiM=; b=k
+ KUr6P1D0psBQwHvdkrVfB/MusGaEbsWCSAd9UmADdE8GVh4XAZGDI2C+3CobGpxT
+ Dufz7XAmGkvs6i48g+zEt/NdVBYhWrd5ZLVYP5CXWNp6wqMlBLKXT2alJBz+zIRe
+ lTkDIu959j7ok4MzgxlxVQe4LFzbZ5kUNb6wjnb8roQMN0ZGJf4zE4Pwvthv2Plu
+ MadhrpLfPdOVBFbeMF9EM0UvmqTIieHAm8mOXp79/N1nKG/LaYvoSgxk3UBVAhYe
+ rZYZP1TZrcA/Iayt02t6P36s7W+FCV0vOK2nnoZMs2j7OqOh33J5xvu9mbQHQrcL
+ qyd2D3qHyjIHbmSaveMxQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1710184282; x=
- 1710270682; bh=13jK2IFXNV4aTtLcfKWBEUfG4qVN5gepwxltR43I56A=; b=e
- TJ7UKXP0se+Th7OJBMKN6YvkCA4woZ1fQmOtUH6VIb8FX/XiUZe4P5Z6g+IePpa+
- qHcuouuzDYXZPycHdno+/qEj8kZFb3Y32Nqn6Pt+qm0AwSC/jMlx77FDxtSLSiFb
- AarUpcOxYvkfEI3ZPQLsBH/1zgSV025M7tKKuWJjo+6BrZeKvHEkKpWz2xEC15qq
- BuKGkn/US6G3or5LuSCXKJeBOE5KTJMwNux4/kggdpDIV1xJAIa9ngqcIUbOyLGU
- 3KfgJwK0sxm2qtuVKa06J3mWjmR/zqlJWzMP88mkWkgDW+rGx7vYL1V2nPxqhCHZ
- OLa2UMrEUuuFM1BGm+80w==
-X-ME-Sender: <xms:WlfvZaYHRMj5IupAyviJrt8bL4xcpxA0-fQDiSi_xm7rNrFuJbieYA>
- <xme:WlfvZdaB1KxAU0YtNG5sEH8ovaIf3D1Hiw0QljI0qoHamrcAZiDG8jPWFfzVJc71F
- RZ0CiXCnB76e4i-xwQ>
-X-ME-Received: <xmr:WlfvZU_kyb-k1k8ajASAXClVjTx_-uCJpVn44O77Lz65tAL6TvT2bdOt4Y3TIZjVvXJemKvVzw>
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1710184287; x=
+ 1710270687; bh=yzwycJF1YoesaBUmclU+Ge6urJCZcxStE+/F83YbfiM=; b=X
+ 34rP4Qm2pAM5T+o6ZVXS4RJsdZUDyZyZT64rq1XdYm3i0xTV1rKsMo/0z40X8bqM
+ kPa/PyuOJjP8OwTjb2YWSBfiqnox8jdtZ2QTWk2H5KOis+tzohRzPlXDOyGQuIuK
+ Ziuetp6W0jVa9KVJYjmOFM2E9rLXFaQnLpXdWqFe1aVGgfzToX80pzUVGt35+ApF
+ 6G7T0896YqWJm2qw4YAdudMWoBQe7Bkdvj5DBaPE7/OejZsQ0ai08D1FhH5TnC9k
+ xl4S3j+sLvWLIm4nH30NFAjq6dp7fyciu6/NNVvJ9zxEh/mKbHCKQA0xe45kuyFT
+ RpMO5xhcBj6A1g0RBxhlw==
+X-ME-Sender: <xms:XlfvZVbdb3VWhlz3IKHTIcnNAKJ-_XT4X8kb0igBnccJkqsHGi18xQ>
+ <xme:XlfvZcadumgnvtW9hzFdEjvyG9lSwRFrHVqfMQZbnYSl6WQzgTewFSi1_5v2OYbBE
+ 4ZXR_1HuezkpW-mOlQ>
+X-ME-Received: <xmr:XlfvZX9pHV9iu3O05K5XrHFPmBDRgZWQcol7ewXPbnbr3OPy5kZjYhR_vl6j1ELPIx3GaIWxvg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrjedugdduvddvucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
@@ -59,13 +59,13 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrjedugdduvddvucetufdoteggod
  htvghrnhepjefgieelgfeiveehkeeuveehheekfeevgeeigfehfefgjeejhefffeegudej
  udegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepih
  htshesihhrrhgvlhgvvhgrnhhtrdgukh
-X-ME-Proxy: <xmx:WlfvZcqbzEvdxMlzITEIPrvuKepPC7gdWV82ZTXLPhpm3w6rwa7U3g>
- <xmx:WlfvZVqVkSCfSvsf0YXC4IQv3kpyKdkGgoHz5PDhe-NupHXRNgKOFw>
- <xmx:WlfvZaQPCuaJ6cFGnkFjzAUdKuoB8kGT2DyEp_7AvrB4NebIQUJVgw>
- <xmx:WlfvZW78P9oV52G7WGe-RaaoVHPCz_Xh9xgo5TM9dKL-0VNVxvR9EFuQd6w>
+X-ME-Proxy: <xmx:XlfvZTpxRZTm-9GS12IAf3Rq-cezMzQog7g8wlNSN7kKvhdwqJ-RXg>
+ <xmx:XlfvZQoWB2_PdpEkZHxnMndtuhvrOpL_jIwe6hWs38L2xhfUBuqnuA>
+ <xmx:XlfvZZT67yHOy752YiGlCc4MkAEyY7qlSRtmEqnFkvt7ynOReKGlqg>
+ <xmx:X1fvZVTaicdSQrLUT3xsPdATUfIAWR6-V71i2fbNRvzP50NBYLPXVtlp36Q>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Mar 2024 15:11:19 -0400 (EDT)
+ 11 Mar 2024 15:11:24 -0400 (EDT)
 From: Klaus Jensen <its@irrelevant.dk>
 To: Peter Maydell <peter.maydell@linaro.org>,
 	qemu-devel@nongnu.org
@@ -74,24 +74,23 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Jesper Devantier <foss@defmacro.it>, Yanan Wang <wangyanan55@huawei.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Eduardo Habkost <eduardo@habkost.net>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org,
- Minwoo Im <minwoo.im@samsung.com>
-Subject: [PULL 2/6] hw/nvme: fix invalid check on mcl
-Date: Mon, 11 Mar 2024 20:11:08 +0100
-Message-ID: <20240311191105.35224-10-its@irrelevant.dk>
+ Klaus Jensen <k.jensen@samsung.com>
+Subject: [PULL 3/6] MAINTAINERS: add Jesper as reviewer on hw/nvme
+Date: Mon, 11 Mar 2024 20:11:09 +0100
+Message-ID: <20240311191105.35224-11-its@irrelevant.dk>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240311191105.35224-8-its@irrelevant.dk>
 References: <20240311191105.35224-8-its@irrelevant.dk>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1006; i=k.jensen@samsung.com;
- h=from:subject; bh=29IW2qUZendh/4uF6O1NNuOeOuNodGl0+hczTMx8y10=;
- b=owJ4nAFtAZL+kA0DAAoBTeGvMW1PDekByyZiAGXvV0q3MM2YL4haIMM0TcnKl5nI/enGn4KRx
- 98LSvMfPETdkYkBMwQAAQoAHRYhBFIoM6p14tzmokdmwE3hrzFtTw3pBQJl71dKAAoJEE3hrzFt
- Tw3plLMH/2niDmHuQ5okyCT6X2puLO9AZqkInlgSowAZUmwSbesqfkl7Ks2wdXBAevYa9ZrgNhZ
- afUIT6rLOHLfeMkFHlob+LREbukx8Upy2l242Nc7uqc3/uVA+EigKlCkhL9Dkh1Q2yHbyO+5BgL
- SsiUCGhVj4BjkdINvEWsku9mon3rvewwqYRrVhLbijEjn2aDDtJh8BxVtm4B45/KqhhjrV/DR5j
- 0m9nXWrmTcou/yMjfSLp2LiAgFcbgUEU55ymcCmZpPJg5dE5St4lFynb4TXnmk1Xa2no1TfuJjl
- XD8M5Lcuc2iaCgFRaFfjWd6q9Ir/85hcX0FZk9MfOnPlkiHORZMW5akP
+X-Developer-Signature: v=1; a=openpgp-sha256; l=709; i=k.jensen@samsung.com;
+ h=from:subject; bh=KwZk2OfOX/c12vcnmuOOH6UBK2IEVxYGtINXXuDLU/s=;
+ b=owJ4nJvAy8zAxej7cL1hrj/vS8bTakkMqe/DvZTtuv9uu/VqwrO3shV7fu9TWx6iXbZ/p57HJ
+ t05B2qjdV93MhqzMDByMciKKbIEaRivKn1059ki97QDMINYmUCmMHBxCsBEslw4GBoz5P3e6y7e
+ Oo+BY/9vbt1N5X+POe11PqP7ttVTR2Ta7p3PfXjrX5t1e1tJh27p6Lk8pyI+20W3IuQkN5Pphss
+ zi8LWMHg2WOw5tpPnxAEhlanhkXbvb25+mBQk4pJ0MfhiofR1boPeEy+jxb4vsNON+REnEfEhse
+ 5Skpjn4bg1R4xU1P9yyq1u+67oXWmSvv2AZviHhudZt0zb6/LKw6ov5sQtf18g/WyFvd++E0bXr
+ dapFvhXb1y9fqtpw125Zl6D/TGiChmCvlHW2+el3j5caKo+kTmq9Mj7FcsmnPfotIqb8OT9Oktf
+ bnE185r69V4B3fNe1cRZtjouLm3vulrOwWFvMWNT+QRn7R8AR26i4A==
 X-Developer-Key: i=k.jensen@samsung.com; a=openpgp;
  fpr=DDCA4D9C9EF931CC3468427263D56FC5E55DA838
 Content-Transfer-Encoding: 8bit
@@ -121,31 +120,28 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Klaus Jensen <k.jensen@samsung.com>
 
-The number of logical blocks within a source range is converted into a
-1s based number at the time of parsing. However, when verifying the copy
-length we add one again, causing the check against MCL to fail in error.
+My colleague, Jesper, will be assiting with hw/nvme related reviews. Add
+him with R: so he gets automatically bugged going forward.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 381ab99d8587 ("hw/nvme: check maximum copy length (MCL) for COPY")
-Reviewed-by: Minwoo Im <minwoo.im@samsung.com>
+Cc: Jesper Devantier <foss@defmacro.it>
+Acked-by: Jesper Devantier <foss@defmacro.it>
 Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
 ---
- hw/nvme/ctrl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 94ef63945725..abc0387f2ca8 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -2855,7 +2855,7 @@ static inline uint16_t nvme_check_copy_mcl(NvmeNamespace *ns,
-         uint32_t nlb;
-         nvme_copy_source_range_parse(iocb->ranges, idx, iocb->format, NULL,
-                                      &nlb, NULL, NULL, NULL);
--        copy_len += nlb + 1;
-+        copy_len += nlb;
-     }
- 
-     if (copy_len > ns->id_ns.mcl) {
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 4d96f855de5c..e21e18e93c63 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2407,6 +2407,7 @@ F: docs/system/devices/virtio-snd.rst
+ nvme
+ M: Keith Busch <kbusch@kernel.org>
+ M: Klaus Jensen <its@irrelevant.dk>
++R: Jesper Devantier <foss@defmacro.it>
+ L: qemu-block@nongnu.org
+ S: Supported
+ F: hw/nvme/*
 -- 
 2.44.0
 
