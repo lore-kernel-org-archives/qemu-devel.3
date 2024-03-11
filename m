@@ -4,134 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F03AC5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 11:34:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C12AAC5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 11:41:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjdvE-0007E4-Tw; Mon, 11 Mar 2024 07:34:24 -0400
+	id 1rje1l-00009r-Fq; Mon, 11 Mar 2024 07:41:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjdvB-0007DK-RR
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 07:34:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjdvA-0008Hn-AF
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 07:34:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710156859;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=K+bdi9hJxOcf9pQU7ESn1m8NsFhPiSlqAjfEoajhX8s=;
- b=Fum+M7M692b6nbEt1mi1BvmEZR59DdyDKAaWI0EZ2HzNJX6ylE8ofy+TDLLZeHVWZ6btCF
- vYF2twUxS6EcdK0QDmALI5zq7TmzOm34R6KxMJpVPJ9Qx1BTTB9ARABksnBkN4VRfAcIHD
- 9x+mYy1oj2s9mqp2Meb9Z3gst7YIUSk=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-578-lplnB3u6PcySeh3ZLRv_iw-1; Mon, 11 Mar 2024 07:34:17 -0400
-X-MC-Unique: lplnB3u6PcySeh3ZLRv_iw-1
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-42f07cd400cso45066391cf.0
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 04:34:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rje1h-000099-N6
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 07:41:07 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rje1e-0000xq-8S
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 07:41:04 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-33e162b1b71so4051081f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 04:41:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710157260; x=1710762060; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=R8vUd5KfbFoBaAiliTWUqGyk2zBH1QdVhLKHsod/A1c=;
+ b=PivpBQHsWX3niIxd15GVislZ4LDxuCUScIB5AbahRflP1Mn1oMS9cecGWlI+8pw6jD
+ Ab/SdPPTGBf5X4tllhRfoMtM3fC09z+oHuGDvYuiVFUmagoCIRYrU9R921LbMmXaBSqw
+ CDeIwb/Bte6JtvhozQ5ZpNkPqvvCAsABFqP1kA0f3M7h7MqT9wlX7mB2n50J8Uz5wn4r
+ fytyx8kgeUmgEwmMf+TCUJgm0vkwpfMwhk49DgJEhAHPtkgvoZ6lowwsFVqDw2e54LDw
+ qjRgcFps0HnyKqWL46ygqGsc5ApaKXFjrE/obur3Cqoqru3mkpwLW9ftP6SNM4+Rg1hg
+ NQfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710156857; x=1710761657;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1710157260; x=1710762060;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=K+bdi9hJxOcf9pQU7ESn1m8NsFhPiSlqAjfEoajhX8s=;
- b=pj1dpeKlR/S50McgD0yU3gFNPLe+3Y0y97vwclUkR/JCKZdTADZoacmg0Qx94X07e6
- FnydtpX4IM8J9mDzpiyw0kuiAorynBBOoaf0rPM2xprPI/nPKXTtGXByjybFUp2nggeq
- gYWh1ysuAU1Zk65bvo0OeqwdwnOiI9ZIVUT3caHjplsw2TyQsOVtqMr2Lriqb96OBKmD
- Y6By0riceIi5Z/38aoG3rWMr2k7Usb4jCZL007WBK7ZO1QvBN8eAQdokFfYD28Q5lUjc
- mJbGJttpMw2m6P7oUqd5pvXvryu01PyQ/Do2kDg/03+AczfUwJczstP4Dj2JMiiecBj7
- Cx4Q==
+ bh=R8vUd5KfbFoBaAiliTWUqGyk2zBH1QdVhLKHsod/A1c=;
+ b=OIwdnNb6Q75oh9iOhcuZSoyXkjPlbzVEw4B3hQmYOA2y1TnwxF3tHyjq14lemCwxZT
+ 3PGWORYMD+LCInO/KuMwIWLLMdWd1c7E/cyjKMFrRWhT7AiEWHnooK9pbsjR7JyDe4Q0
+ bWytXcbBa9Pq7zHNUtlRrW2CP0MF7eF7uQZU51wgR8p/rjtTULiy5DEwOEF86efItPZo
+ d8a33FjZxOdVrBvEYez4LHrR/1T6aYtTPgmguBtQMe02S84LX5xs0DmRMCj1jLk1UBfP
+ BgMxANjeXqv/r53zv91k5WJET66P5NAUGBYv3/sTifCSlqxqwQY8wC8AtIjQB4sU2nYc
+ pLkw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUy+P9PhZLvwwzt4Pn8VVcEVjWNp6lK7Netv6FEwTjM1KNhxwVq8+F514Q0tgIucV/14NNKzj/mEbubchRXhHfnRlhkZkU=
-X-Gm-Message-State: AOJu0Yzb82OBwfmf54dIbQt+nb2HeynFHzxVSijmV5nUfLegiuv1++S9
- YJcYCNCzHi6FmbZjCj3SO1DeU/gy/9bJGyO/h9NgdhIT2Rd3lbEPzbYYITi1Ir/XbzGQ7qDU8Zr
- Of1g9cNBY21CL2/vNR8t0TLxR6NKeyaVJr/1KiEoSIvqow6lAW/TQ
-X-Received: by 2002:a05:622a:1496:b0:42e:ce6d:bef1 with SMTP id
- t22-20020a05622a149600b0042ece6dbef1mr8236069qtx.13.1710156857394; 
- Mon, 11 Mar 2024 04:34:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFEyEbv9nth01P6rVhehalB0Swc8X2fehK+qqdeRy33hCjWQZwOcZVrrDURNFfo8FBV761gXw==
-X-Received: by 2002:a05:622a:1496:b0:42e:ce6d:bef1 with SMTP id
- t22-20020a05622a149600b0042ece6dbef1mr8236049qtx.13.1710156857096; 
- Mon, 11 Mar 2024 04:34:17 -0700 (PDT)
-Received: from [192.168.0.9] (ip-109-43-178-151.web.vodafone.de.
- [109.43.178.151]) by smtp.gmail.com with ESMTPSA id
- g20-20020ac85814000000b0042f3830ef2csm2410785qtg.33.2024.03.11.04.34.15
+ AJvYcCWKwDWDoDM3WwzQDkzyakO4bkxj331Llc0pcL9TNprcpxknU8Uky7Ycy3jloI82CTShxzY+4rMyE/U7EVxP2xqBdiGIK7c=
+X-Gm-Message-State: AOJu0YyT649oAp31cbETyN3k+jkjFyTZxecRb2ErpFSKm7Ho/kGIHUk8
+ fOFnoZstDDUx4hsmXtW4IuhSWO5mphR4bqY83fJ2+DpDpWQ1Xo85J6GIV0iLRZQ=
+X-Google-Smtp-Source: AGHT+IEjZ3Yf7EfRPpzCaekWi5FOzfI3wEn76u4T6MPidEeEpBMEKmruuzHxyNxznlb+6afnK+9JKw==
+X-Received: by 2002:adf:ea50:0:b0:33e:48f9:169d with SMTP id
+ j16-20020adfea50000000b0033e48f9169dmr4389996wrn.31.1710157260108; 
+ Mon, 11 Mar 2024 04:41:00 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.167.228])
+ by smtp.gmail.com with ESMTPSA id
+ s12-20020a5d424c000000b0033e48db23bdsm6239299wrr.100.2024.03.11.04.40.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Mar 2024 04:34:16 -0700 (PDT)
-Message-ID: <51d46af0-d58b-474c-99a4-c231318beeef@redhat.com>
-Date: Mon, 11 Mar 2024 12:34:13 +0100
+ Mon, 11 Mar 2024 04:40:59 -0700 (PDT)
+Message-ID: <2b81b7be-f3ee-49f0-a01c-2b5121865ddf@linaro.org>
+Date: Mon, 11 Mar 2024 12:40:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] gitlab: aggressively avoid extra GIT data
+Subject: Re: [PATCH v3 0/3] hw/core: Cleanup and reorder headers
 Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+To: Zhao Liu <zhao1.liu@linux.intel.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
  qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>
-References: <20240308150748.894699-1-alex.bennee@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240308150748.894699-1-alex.bennee@linaro.org>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+References: <20240311075621.3224684-1-zhao1.liu@linux.intel.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240311075621.3224684-1-zhao1.liu@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -148,48 +100,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/03/2024 16.07, Alex Bennée wrote:
-> This avoids fetching blobs and tree references for branches we are not
-> going to worry about. Also skip tag references which are similarly not
-> useful and keep the default --prune. This keeps the .git data to
-> around 100M rather than the ~400M even a shallow clone takes.
-> 
-> So we can check the savings we also run a quick du while setting up
-> the build.
-> 
-> We also have to have special settings of GIT_FETCH_EXTRA_FLAGS for the
-> Windows build (git too old?) and the migration legacy test where we
-> build an older QEMU alongside the main one.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+On 11/3/24 08:56, Zhao Liu wrote:
+
 > ---
->   .gitlab-ci.d/base.yml               | 4 ++++
->   .gitlab-ci.d/buildtest-template.yml | 1 +
->   .gitlab-ci.d/buildtest.yml          | 2 ++
->   .gitlab-ci.d/windows.yml            | 2 ++
->   4 files changed, 9 insertions(+)
-> 
-> diff --git a/.gitlab-ci.d/base.yml b/.gitlab-ci.d/base.yml
-> index ef173a34e6..7cb800fc3b 100644
-> --- a/.gitlab-ci.d/base.yml
-> +++ b/.gitlab-ci.d/base.yml
-> @@ -24,6 +24,10 @@ variables:
->       # Each script line from will be in a collapsible section in the job output
->       # and show the duration of each line.
->       FF_SCRIPT_SECTIONS: 1
-> +    # The project has a fairly fat GIT repo so we try and avoid bringing in things
-> +    # we don't need. The --filter options avoid blobs and tree references we aren't going to use
-> +    # and we also avoid fetching tags.
-> +    GIT_FETCH_EXTRA_FLAGS: --filter=blob:none --filter=tree:0 --no-tags --prune
+> Zhao Liu (3):
+>    hw/core: Cleanup unused included headers in cpu-common.c
+>    hw/core: Cleanup unused included header in machine-qmp-cmds.c
+>    hw/core: Cleanup unused included headers in numa.c
 
-The original settings included --quiet according to the docs:
-
- 
-https://docs.gitlab.com/ee/ci/runners/configure_runners.html#git-fetch-extra-flags
-
-Should we include --quite here, too?
-
-  Thomas
-
-
+Thanks, series queued.
 
