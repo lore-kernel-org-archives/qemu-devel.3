@@ -4,69 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 218D2C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:10:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D273C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:14:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjj9n-0001zg-98; Mon, 11 Mar 2024 13:09:47 -0400
+	id 1rjjDs-0002rz-QJ; Mon, 11 Mar 2024 13:14:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rjj9k-0001z8-9k
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:09:45 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rjjDq-0002q8-0v
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:13:58 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rjj9g-0000Gf-T1
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:09:43 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-55a179f5fa1so6137174a12.0
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 10:09:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rjjDl-0001Be-7c
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:13:56 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-6e64997a934so3603698b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 10:13:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710176979; x=1710781779; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=5+atn9B3k6GCR2P47c0TyLerksbvp/JaJLuNOJ5IHBs=;
- b=AXiLZ1QV/mSOvnDRaDdjNqpzZxDH2XvtAFyU951YZviZjn6moZclVsxVI7TmgcYfmN
- P0z8L8dJ3tfjGpFGQXd8Ud9Uixhks/y24+/1FYQaDIYsmt6xNefMEbh5utSdiz1f7OsW
- Ve3SK2ZoJ2DphWtaFkTPxOaUPdLF2cIqYEkUdqxAeKCHJY3D2a8E8/b7vt4FVuIipAKb
- fl2w2UdsA3u4CljaRRZqT1++Xz0oKcxGBwN3HcQlIrmz3fJxde1RX9k0EWHbvGdDPX1h
- dUGDkkYkeDNb3Xm+2YLpk2Ni7eoZyZ7FBFF7QHa/E6JkKbVkwneyfVYR+APS8wkhIsg/
- mCXg==
+ d=linaro.org; s=google; t=1710177231; x=1710782031; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/gvBsmeDiq6oCHyIO7NASEo/+7Is5cIMsD5RC/jrJwc=;
+ b=vFvKo0rz/IcWMQ6ZfUKqagzSaX1YH8dyPy8p37wxs1/TLT+xgOP7xnz7Pw+2mduGFG
+ Btgb/smYpu4t3mPYYAh4Ui0Xf8OlDZ/vPfApPM9h8yXbMSWOS/TIxggKigk0+uAx5DTt
+ LMhQNXfxTUKFXm8dZbLbCXHvvZpCpmVNvK0g3qp3qYvLMISTEfYtdVRjJILCuAu7KH6M
+ 40wFedqGttYzkInEceXUKv5MBuh77wJgPyxBDWiDW0kyOGf+TrUNfzGc7rBfgNrsiIPS
+ EAo66JCBdbyJ/1FFBgTErJ9d7GSKDrLNcoM8Gvgv9g70TEvuCpnQR2SUR1sApqf4QThA
+ 9IqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710176979; x=1710781779;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=5+atn9B3k6GCR2P47c0TyLerksbvp/JaJLuNOJ5IHBs=;
- b=awMzblV8y1Kdp3i+aTc4s2Kii+ZZ08LuvddppjeJQc8rcx7lu/JO91OujhGpRhbhGM
- J7+xnwzFqsxRs3zzBeUPDbZYoBfg/u4nYiXPwPQ1S9joP5cUTNO5ib9rLNGq2oy+aZqN
- WNwSeJFUpDQSWSGEbKjEMKQ5mBXjs6hHZ1k3nHBgFNPNvCeUqHpI0BRDnNA3pDnDfxoj
- qcDkTMHVdx8eLTOhtp6hHFrekjg7CHaH0AGA53x9Q4Cb7uxxshWka3mdJ2ivbkfaSIrb
- kdvbYIxDpQEESWboVf8U+Ve4eWWJvwrXiKvw2T1oyNE4HJk0XkZ02pAhn847Oa3If/st
- EodQ==
+ d=1e100.net; s=20230601; t=1710177231; x=1710782031;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/gvBsmeDiq6oCHyIO7NASEo/+7Is5cIMsD5RC/jrJwc=;
+ b=abgKxFJ/qErHNN5b88NLYDKeO2o/xvqKSENc2rc0nuDguvNXJnADHoNJroVk8/z4lL
+ T4bZERrSUKuxeUdM+6kjTYTedQuPA30hBfRsTvu1/gvh8k/DGbe4hKi7zACclM7bqmYC
+ sE61VCBBVIShQ2EN6WyIYZaLwveA99nH0RyHvlg37arFOAPJV6QS250wggAnB403vqVt
+ bDZ7RmaK8Dhv/GI/yiulIG/Nhu1iZsYmrWmehtdIK79REA3GcKp/e2mhDP6Hvxc+gHSC
+ SatfATlvg5uS2EYrqUmR6euU1mPxE31tryaY+KY/dFTbq27O5MmndQpZbHJAu4w9hFWv
+ XqIA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVTYri8NfsYomVkcSn4D2bjMynGY+VOoWW9bAqG112/7MReyPiEfzS3r5bltZvnPrVIEOTd7Nh78GKjnwlQK0BtTovYZhk=
-X-Gm-Message-State: AOJu0YxKRaMuuonek+u7xgKQVyTZN1Yt8CiHO8jHgCTtraCqiTzMC4yQ
- rQ5XIROuBkQu8BL9m3bWEXKORFCn+LrlO/gL3pKpDTmturnkidDKYYoljRZXnmciCERDxr/gPco
- j/ET7Qfvy7/UNU8/L3vbUltZxESC0x8PqG28L2Q==
-X-Google-Smtp-Source: AGHT+IFfrjxfuip2SxkEjrG72qEazSt07c7smC1BISZChoQXKvSKzT8ClBj3Wg/llcxCXwwdSaZg9B6HB7aar0/9poY=
-X-Received: by 2002:a50:9e25:0:b0:567:a37a:4c95 with SMTP id
- z34-20020a509e25000000b00567a37a4c95mr4539140ede.42.1710176979079; Mon, 11
- Mar 2024 10:09:39 -0700 (PDT)
+ AJvYcCWycA3ji+jUPgLJZOcT0q7fLrQOcbDREoDrz2CvjVifXKVJJ4FABX9IbFCqA6AvnSqK/gPfhnZkg1k8T7RLtRnh22rf1es=
+X-Gm-Message-State: AOJu0YxIaaSp8jA4bgRCTDsV15T5x7pIyTHUJAGYeD130d0OtNIoBTTT
+ BA721NfJbzhGIgRlh5Y9/m3o0g08E1ZXVXYBjYJ+lyAG6Uw4U/qUsoBDmnVfJSg=
+X-Google-Smtp-Source: AGHT+IEtJJXJpMviRJvxIwRvTfDzDmzBRxW9POpWApvYxRNXzhK4EVhklaIO7HfYb7J4yy3oFHOZYA==
+X-Received: by 2002:a05:6a00:9389:b0:6e6:721d:f46b with SMTP id
+ ka9-20020a056a00938900b006e6721df46bmr1167577pfb.25.1710177231297; 
+ Mon, 11 Mar 2024 10:13:51 -0700 (PDT)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ gx20-20020a056a001e1400b006e65726ab93sm4699700pfb.143.2024.03.11.10.13.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 Mar 2024 10:13:50 -0700 (PDT)
+Message-ID: <1cae03c0-7506-4dda-8ad4-dec865a11a7f@linaro.org>
+Date: Mon, 11 Mar 2024 07:13:47 -1000
 MIME-Version: 1.0
-References: <20240307-elf2dmp-v4-0-4f324ad4d99d@daynix.com>
-In-Reply-To: <20240307-elf2dmp-v4-0-4f324ad4d99d@daynix.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 11 Mar 2024 17:09:27 +0000
-Message-ID: <CAFEAcA9M8UcYgafbmcrrYpLgD6v_uGxVd1Re5G_4bjd3vHNR1A@mail.gmail.com>
-Subject: Re: [PATCH v4 00/19] contrib/elf2dmp: Improve robustness
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Viktor Prutyanov <viktor.prutyanov@phystech.edu>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 3/7] target/riscv/vector_helpers: do early exit when
+ vstart >= vl
+Content-Language: en-US
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ philmd@linaro.org
+References: <20240311135855.225578-1-dbarboza@ventanamicro.com>
+ <20240311135855.225578-4-dbarboza@ventanamicro.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240311135855.225578-4-dbarboza@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,28 +101,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 7 Mar 2024 at 10:20, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->
-> elf2dmp sometimes fails to work with partially corrupted dumps, and also
-> emits warnings when sanitizers are in use. This series are collections
-> of changes to improve the situation.
->
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+On 3/11/24 03:58, Daniel Henrique Barboza wrote:
+> We're going to make changes that will required each helper to be
+> responsible for the 'vstart' management, i.e. we will relieve the
+> 'vstart < vl' assumption that helpers have today.
+> 
+> Helpers are usually able to deal with vstart >= vl, i.e. doing nothing
+> aside from setting vstart = 0 at the end, but the tail update functions
+> will update the tail regardless of vstart being valid or not.
+> 
+> Unifying the tail update process in a single function that would handle
+> the vstart >= vl case isn't trivial. We have 2 functions that are used
+> to update tail: vext_set_tail_elems_1s() and vext_set_elems_1s(). The
+> latter is a more generic function that is also used to mask elements.
+> There's no easy way of making all callers using vext_set_tail_elems_1s()
+> because we're not encoding NF properly in all cases [1].
+> 
+> This patch takes a blunt approach: do an early exit in every single
+> vector helper if vstart >= vl. We can worry about unifying the tail
+> update process later.
+> 
+> [1]https://lore.kernel.org/qemu-riscv/1590234b-0291-432a-a0fa-c5a6876097bc@linux.alibaba.com/
+> 
+> Signed-off-by: Daniel Henrique Barboza<dbarboza@ventanamicro.com>
 > ---
+>   target/riscv/vcrypto_helper.c   | 32 ++++++++++++
+>   target/riscv/vector_helper.c    | 90 +++++++++++++++++++++++++++++++++
+>   target/riscv/vector_internals.c |  4 ++
+>   target/riscv/vector_internals.h |  9 ++++
+>   4 files changed, 135 insertions(+)
 
-Thanks for this -- I've taken it via target-arm.next since I
-want to make another pullreq for softfreeze anyway.
+This does seem like the only viable short-term solution.
 
-I didn't take the "Build only for little endian host" patch. I thought
-about it, and decided that on balance it was probably best not to:
-in practice we haven't had anybody say "I tried to run this on a BE
-host and it didn't work" (unsurprising, most users especially of Windows
-VMs will be on LE hosts), and if we do stop building it for BE this
-seems like it might well create work for downstream distros who might
-have to make their package creation deal with "this binary doesn't
-get built on these hosts" (and then remove that handling again in future
-if we ever fix the endianness bugs).
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-thanks
--- PMM
+r~
 
