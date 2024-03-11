@@ -4,88 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65DBBC5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 06:42:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D2ADC5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 06:44:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjZMA-0002oJ-Kz; Mon, 11 Mar 2024 02:41:54 -0400
+	id 1rjZOn-0003rc-W9; Mon, 11 Mar 2024 02:44:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1rjZM8-0002ne-LL
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 02:41:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rjZOG-0003nE-Lz
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 02:44:12 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1rjZM6-0000LX-QJ
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 02:41:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710139309;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0kZE+bK6s76pYCqdRXYkstSAEcGHqNQ3/tLJbOV3oNk=;
- b=BFozGtXWAIqn1Cgz5otpaRZmRuTzIRNKdGowjwyd3gPvs4ubKvoCb/3CknBFKNIumfMFcp
- tfNo3hbQUB1Erm4TqUiI1cnxvbC3GeTxps3JsnwQ8zUC5KUm4Vab1P5Qo2mfLHSD/ZArv0
- eiI780BBkWs2JHti8INpdKqOVHwmQb4=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-93-TelJ3jLKPKOTuIxEQK_f8w-1; Mon, 11 Mar 2024 02:41:47 -0400
-X-MC-Unique: TelJ3jLKPKOTuIxEQK_f8w-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-33e7ef510aaso1007520f8f.0
- for <qemu-devel@nongnu.org>; Sun, 10 Mar 2024 23:41:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710139306; x=1710744106;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0kZE+bK6s76pYCqdRXYkstSAEcGHqNQ3/tLJbOV3oNk=;
- b=VJKpsWFfm7M87iuj2smO3HTL3KQxliN06lVhXzksTTBUueB0WwpL2KAxcyg8tcFbh3
- xc85K/BlEFsBqzMdxcGZC9aGb9Kv0lsSDLtszakbvUTw2JuKmncWulVOutjOXbVW9OzZ
- sB6EJjzoN8yUmOBAxXn8pOzY3s0snA27Ug+5p84Tw1bt7joTKj/rm1mTQ/VxrwZiGl5d
- lEPwEbfmluaks5DwlVWIrraiuUKoL2/74ZCzfqiAni8L4z9RM7NUsYKHRIYxDmqlzJu9
- lWPE/p5PJ+qQSkaWz6zsclnKEZv81SpwOYFXLCWh7deQcUtTy7yLJMLtSbHCdy+WOZr0
- ajrw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUBLzCWEZDRQyYJ26Bn3YRXClgIBgoz+eG0IUv5dLReacBbIy6gqiZTvrMR/WT9NibDUicGKIh3SZIMHtTlOr98vmSDcko=
-X-Gm-Message-State: AOJu0YyByzW9NwMrcTtQ7Fe2UYZ93AT9+LkziufD/Er4zkA6FWOSPCTJ
- bkv1nbMuFsJjbL2hJkl2qAd5/YmVkqrVOX4EijgfxxzPRf055OtlurMXpacnXS1i7svGiKqo6L1
- 9HkoxfMmU/uNoHryGtrqUiun6uUh9rbQXDw1lrElGOpmwVIaLh8pfdb5MKZlLc6wcM+Cjc2rYQq
- vff4AJeAcpVBtunzUziJFPH2SC/kI=
-X-Received: by 2002:a05:6000:1b05:b0:33d:5a6f:a856 with SMTP id
- f5-20020a0560001b0500b0033d5a6fa856mr3633821wrz.30.1710139306544; 
- Sun, 10 Mar 2024 23:41:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG57ErgfsnCuvhWxwUQrlx54UZJJ/2kGIZgtvwWWAZqkc4e4azbzaSisWLSSY4rePpy4ir+vRGRoHC/CblOZaQ=
-X-Received: by 2002:a05:6000:1b05:b0:33d:5a6f:a856 with SMTP id
- f5-20020a0560001b0500b0033d5a6fa856mr3633815wrz.30.1710139306119; Sun, 10 Mar
- 2024 23:41:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rjZO7-0000qp-BG
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 02:44:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
+ Message-Id:Date:To:From:Sender:Reply-To:Cc:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=A8QX9v10FACgPccHhMrGRm3x9vZG8mtPh75idLSNa/c=; b=aNh+6PI6uDSLBPfg2eO0vbCne4
+ HiQKDeD05Dq11ZySiFXkg4vLani0OsAwqX5JqcDJSQ+nsPYydhNzWp2J7OW+B0Ox7wOIL7leX0kR5
+ /KluNz9G9yEVCoSTaCcba/FTNWWdZiENErI6e1MWELSsuEXMTOYsxV8qkfKskvZAnNGbpxdV3P8Yq
+ kRLaQrmNu+lab4AOUFOVsSu6X3aTqa7jnh6tckwZnxyS/OdZV7DUke9wiZBVPgb00gHhzOPHAmNvE
+ dgLr0ejLA0AaICZGGAS4yjKVdrgveUTlWfXAv2I5L0bCvGYdyHbGTD1vZS0q10gqjaWTu78YwC379
+ JhKyV/8DWXF5m9REIuWLP8wu9d8pMPfS+bR4hJkYGJ27lGofbEHeXr6+2AKoRe3a5K7kjQkSmG4IL
+ cG0zdr084zbxMesgTbSBQb5qk7u+LnOHaEZVLHHDECbtNX7eEHcanJMoDXKVAPdJT2JTLzNxW98yp
+ 4GB5FlzpS2bS7cvoKHII7HqMCFqszrQmuWpAg/012SKEAtecKrGpzqQWFf8Qx9njEo8yWLz3v2/si
+ +0nUQ1kg4T0SeemywUheqFbN/D57ewcscVgURNX9HbmWnOBpphvpBPGNPAbiIhUV3WnWffuzCzLTX
+ dZ7exs0xJBybJG4+rsjZ6cFaFXG22i9/AcEfRwlmM=;
+Received: from [2a00:23c4:8bb3:800:fe57:b8b5:ee67:e0c6]
+ (helo=localhost.localdomain)
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rjZNF-0003K7-8I
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 06:43:05 +0000
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+To: qemu-devel@nongnu.org
+Date: Mon, 11 Mar 2024 06:43:45 +0000
+Message-Id: <20240311064345.2531197-1-mark.cave-ayland@ilande.co.uk>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-References: <20240307114744.1135711-1-ppandit@redhat.com>
- <ZenGQZE4hlOR6J4V@redhat.com>
- <CAE8KmOzQVFrK3kh6M3-TAm_=hsGB7KP+wjN8synRotd68A_O-Q@mail.gmail.com>
- <ZerU1a6U8Xx0_R6s@redhat.com>
- <CAE8KmOyzt+dhfeJ2ZM=kmy1zFOnhqi74AeGUFsRLAcBYcX8CzQ@mail.gmail.com>
-In-Reply-To: <CAE8KmOyzt+dhfeJ2ZM=kmy1zFOnhqi74AeGUFsRLAcBYcX8CzQ@mail.gmail.com>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Mon, 11 Mar 2024 12:11:29 +0530
-Message-ID: <CAE8KmOyiRDJd6LYJ4g9PrepBr2BKcu+kG7gP2FGYNC29S0RdAA@mail.gmail.com>
-Subject: Re: [PATCH] linux-aio: add IO_CMD_FDSYNC command support
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, 
- Stefan Hajnoczi <stefanha@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.945,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb3:800:fe57:b8b5:ee67:e0c6
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: [PATCH] sun4u: remap ebus BAR0 to use unassigned_io_ops instead of
+ alias to PCI IO space
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,38 +78,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Kevin,
+During kernel startup OpenBSD accesses addresses mapped by BAR0 of the ebus device
+but at offsets where no IO devices exist. Before commit 4aa07e8649 ("hw/sparc64/ebus:
+Access memory regions via pci_address_space_io()") BAR0 was mapped to legacy IO
+space which allows accesses to unmapped devices to succeed, but afterwards these
+accesses to unmapped PCI IO space cause a memory fault which prevents OpenBSD from
+booting.
 
-On Fri, 8 Mar 2024 at 17:38, Prasad Pandit <ppandit@redhat.com> wrote:
-> I'm trying to test it against the Fedora-26 kernel, which was < 4.13.0, and did not support the AIO_FDSYNC call.
+Since no devices are mapped at the addresses accessed by OpenBSD, change ebus BAR0
+from a PCI IO space alias to an IO memory region using unassigned_io_ops which allows
+these accesses to succeed and so allows OpenBSD to boot once again.
 
-[PATCH v2] -> https://lists.nongnu.org/archive/html/qemu-devel/2024-03/msg02495.html
-
-* I've sent v2 of this patch which checks the return value from
-'laio_co_submit' function and returns if it is >= zero(0).
-
-* I tested this and previous version of this patch on host kernels
-which support IO_CMD_FDSYNC and which don't.
-    1) When kernel supports IO_CMD_FDSYNC, everything works well. No issues.
-
-   2) When kernel does _not_ support IO_CMD_FDSYNC
-        - With [PATCH v1], guest does not boot, instead it opens a rescue shell
-        - With [PATCH v2], guest boots and seems to work fine. But
-after some time guest kernel threads seem to hang and show traces like
-===
-            INFO: task kworker/u2:0:9 blocked for more than 245 seconds.
-            INFO: task (tmpfiles):482 blocked for more than 123 seconds.
-            INFO: task (tmpfiles):482 blocked for more than 368 seconds.
-            INFO: task systemd-random-:477 blocked for more than 368 seconds.
-            [  492.932383]       Not tainted 6.6.7-100.fc37.x86_64 #1
-            [  492.935404] "echo 0 >
-/proc/sys/kernel/hung_task_timeout_secs" disables this message.
-===
-
-* I'm not yet sure how to fix this. I'd appreciate if you've suggestions.
-
-Thank you.
+Fixes: 4aa07e8649 ("hw/sparc64/ebus: Access memory regions via pci_address_space_io()")
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
-  - Prasad
+
+[MCA: I'd like to merge this for 9.0 since I've been carrying various local workarounds
+to allow OpenBSD to boot on SPARC64 for some time.]
+
+ hw/sparc64/sun4u.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
+index eda9b58a21..cff6d5abaf 100644
+--- a/hw/sparc64/sun4u.c
++++ b/hw/sparc64/sun4u.c
+@@ -360,8 +360,13 @@ static void ebus_realize(PCIDevice *pci_dev, Error **errp)
+     pci_dev->config[0x09] = 0x00; // programming i/f
+     pci_dev->config[0x0D] = 0x0a; // latency_timer
+ 
+-    memory_region_init_alias(&s->bar0, OBJECT(s), "bar0",
+-                             pci_address_space_io(pci_dev), 0, 0x1000000);
++    /*
++     * BAR0 is accessed by OpenBSD but not for ebus device access: allow any
++     * memory access to this region to succeed which allows the OpenBSD kernel
++     * to boot.
++     */
++    memory_region_init_io(&s->bar0, OBJECT(s), &unassigned_io_ops, s,
++                          "bar0", 0x1000000);
+     pci_register_bar(pci_dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY, &s->bar0);
+     memory_region_init_alias(&s->bar1, OBJECT(s), "bar1",
+                              pci_address_space_io(pci_dev), 0, 0x8000);
+-- 
+2.39.2
 
 
