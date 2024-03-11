@@ -4,70 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0C23C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 07:10:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAC4DC5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 07:20:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjZnZ-0000WC-BA; Mon, 11 Mar 2024 03:10:13 -0400
+	id 1rjZws-0002ZA-Ku; Mon, 11 Mar 2024 03:19:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d.sharikhin@yadro.com>)
- id 1rjZnX-0000W0-H9
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 03:10:11 -0400
-Received: from mta-04.yadro.com ([89.207.88.248])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rjZwr-0002Yy-BR
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 03:19:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d.sharikhin@yadro.com>)
- id 1rjZnS-0007ao-II
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 03:10:11 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com BD0BCC0002
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yadro.com; s=mta-04;
- t=1710140995; bh=VHLIoeIBKixZfRq69lC5AyT/CxiPVrcG8b6PD0NnrWM=;
- h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:From;
- b=Ie5PpJ6YaUnT9wrgQA85mcBCH4VWp0kd409cBq/y2Zx0vCNdZQrQnod3yCrXdz7yk
- Ma4B7Ob/OuiSulb2HHW46IEU1QGvoTKuWfurYv3MQSZ90w+ZeItYPlQ9GqlxOj4nXD
- Tr7r8Y0aH/GH8X0M96O3Nh8zTuPbDZZnlc2XBkrgpPIiDT1F9blVMOAqeaVWpnXkrO
- 79U8EB5jrRsNQzbiFNfA2+U+jVxGzVb2rK8b7APuLLJUbqo0yIZv8xURY9BPrikUmb
- OBMgLsA/nAM5S4d66o6jB68T8XWr6fcnUHm+t+yiZVEIavq07w6Y74KPCY6YXFO6j5
- Onxm23pR8vaAw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yadro.com; s=mta-03;
- t=1710140995; bh=VHLIoeIBKixZfRq69lC5AyT/CxiPVrcG8b6PD0NnrWM=;
- h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:From;
- b=hFVpaFBN7tueofD9V82M+fVtUrM6upDreIhBXcYRA3r4wkzucv154X1hGDgQg2P9Z
- 1xchEwaF9eC6ZTXLJ9xerUvUfCEmLDq7zd3DSllbaKBWS6X/5pznKygts+uBVhaB3W
- 3/T1dfrm5PzXnLmZK6t0h8qr4BemKr6tYIGgJQ1kM9CSfOzeAsdwVQxr18wk2X7UAO
- 9xMWpTo7aXxlJ9Rg9Wp86GD9UHebTbmOvaE/IWLAf4Z0U+x79LGf2Gv4nyHO/wq+Fs
- wxKdXouUCJ4r0GSUSdfowkK0O4GOSDI/ND5ybpnQvDhRWNVtQUa0jWRz5i8jiTQ5Dx
- MVUHzRJPEOPpw==
-From: Dmitriy Sharikhin <d.sharikhin@yadro.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: Igor Kononenko <i.kononenko@yadro.com>, "Alexander A. Filippov"
- <a.filippov@yadro.com>, Alexander Amelkin <a.amelkin@yadro.com>,
- "philmd@linaro.org" <philmd@linaro.org>
-Subject: [PATCH v2] hw: gpio: introduce pcf8574 driver
-Thread-Topic: [PATCH v2] hw: gpio: introduce pcf8574 driver
-Thread-Index: AQHac4MejGvP5o2kLE24WSmT4U5j9w==
-Date: Mon, 11 Mar 2024 07:09:54 +0000
-Message-ID: <56678f4f0c1e526b7b5a04104171e4feb372e7c2.camel@yadro.com>
-References: <ee386866ca7ba80add0c428b59efb936fd7ce797.camel@yadro.com>
- <0cbde20b-db66-4894-b498-8360b8006693@linaro.org>
-In-Reply-To: <0cbde20b-db66-4894-b498-8360b8006693@linaro.org>
-Accept-Language: ru-RU, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Content-Type: text/plain; charset="utf-7"
-Content-ID: <C9F5385A5F1B0441A912B9EFFE139B97@yadro.com>
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rjZwp-00011h-M5
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 03:19:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710141586;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=KzmgNmvdgICSA1NYTbStaHOdkDJR2rq7jAMYhzhcMos=;
+ b=I+lC2JLK6xhYCbnZ+MB2CGqiSPXHDr24LWk0VUlQqKJcH78f2y16fOK8ovYkO8QZZDji5Y
+ 6Xn7Gu/IPDcsvSZKYIEx4P8ty6cXHliYONPQ8fUABGb8+VvSqvy/x/ne1V5nwP30HiYuts
+ qHWRsIdvbWk+q9NZylMBey1dtytsqvg=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-533-r3vqO6KEOmuA7R-NVAsR8g-1; Mon,
+ 11 Mar 2024 03:19:42 -0400
+X-MC-Unique: r3vqO6KEOmuA7R-NVAsR8g-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B893628116A4;
+ Mon, 11 Mar 2024 07:19:41 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.138])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 45E543C23;
+ Mon, 11 Mar 2024 07:19:41 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 1A6EA21E6A24; Mon, 11 Mar 2024 08:19:40 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,  David Hildenbrand
+ <david@redhat.com>,  Igor Mammedov <imammedo@redhat.com>,  Eduardo Habkost
+ <eduardo@habkost.net>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Yanan Wang
+ <wangyanan55@huawei.com>,  "Michael S. Tsirkin" <mst@redhat.com>,  Richard
+ Henderson <richard.henderson@linaro.org>,  Ani Sinha
+ <anisinha@redhat.com>,  Peter Xu <peterx@redhat.com>,  Cornelia Huck
+ <cohuck@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Eric
+ Blake <eblake@redhat.com>,  Marcelo Tosatti <mtosatti@redhat.com>,
+ kvm@vger.kernel.org,  qemu-devel@nongnu.org,  Michael Roth
+ <michael.roth@amd.com>,  Claudio Fontana <cfontana@suse.de>,  Gerd
+ Hoffmann <kraxel@redhat.com>,  Isaku Yamahata <isaku.yamahata@gmail.com>,
+ Chenyi Qiang <chenyi.qiang@intel.com>
+Subject: Re: [PATCH v5 30/65] i386/tdx: Support user configurable
+ mrconfigid/mrowner/mrownerconfig
+In-Reply-To: <5f426c46-1a8b-426d-bd7f-aeee95cc5219@intel.com> (Xiaoyao Li's
+ message of "Mon, 11 Mar 2024 09:25:24 +0800")
+References: <20240229063726.610065-1-xiaoyao.li@intel.com>
+ <20240229063726.610065-31-xiaoyao.li@intel.com>
+ <87edcv1x9j.fsf@pond.sub.org>
+ <f9774e89-399c-42ad-8fa8-dd4050ee46da@intel.com>
+ <871q8vxuzx.fsf@pond.sub.org>
+ <4602df24-029e-4a40-bdec-1b0a6aa30a3c@intel.com>
+ <87v85yv3j9.fsf@pond.sub.org>
+ <0f3df4b7-ffb9-4fc5-90eb-8a1d6fea5786@intel.com>
+ <87ttli87sw.fsf@pond.sub.org>
+ <5f426c46-1a8b-426d-bd7f-aeee95cc5219@intel.com>
+Date: Mon, 11 Mar 2024 08:19:40 +0100
+Message-ID: <87v85tutf7.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Received-SPF: pass client-ip=89.207.88.248; envelope-from=d.sharikhin@yadro.com;
- helo=mta-04.yadro.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.945,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,270 +104,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-NXP PCF8574 and compatible ICs are simple I2C GPIO expanders.
-PCF8574 incorporates quasi-bidirectional IO, and simple
-communication protocol, when IO read is I2C byte read, and
-IO write is I2C byte write. User can think of it as
-open-drain port, when line high state is input and line low
-state is output.
+Xiaoyao Li <xiaoyao.li@intel.com> writes:
 
-Signed-off-by: Dmitrii Sharikhin +ADw-d.sharikhin+AEA-yadro.com+AD4-
----
- MAINTAINERS               +AHw-   6 +-+-
- hw/gpio/Kconfig           +AHw-   4 +-
- hw/gpio/meson.build       +AHw-   1 +-
- hw/gpio/pcf8574.c         +AHw- 162 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-=
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
- include/hw/gpio/pcf8574.h +AHw-  15 +-+-+-+-
- 5 files changed, 188 insertions(+-)
- create mode 100644 hw/gpio/pcf8574.c
- create mode 100644 include/hw/gpio/pcf8574.h
+> On 3/7/2024 9:56 PM, Markus Armbruster wrote:
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 65dfdc9677..bb1981d02e 100644
---- a/MAINTAINERS
-+-+-+- b/MAINTAINERS
-+AEAAQA- -2499,6 +-2499,12 +AEAAQA- S: Maintained
- F: hw/i2c/i2c+AF8-mux+AF8-pca954x.c
- F: include/hw/i2c/i2c+AF8-mux+AF8-pca954x.h
-=20
-+-pcf8574
-+-M: Dmitrii Sharikhin +ADw-d.sharikhin+AEA-yadro.com+AD4-
-+-S: Maintained
-+-F: hw/gpio/pcf8574.c
-+-F: include/gpio/pcf8574.h
-+-
- Generic Loader
- M: Alistair Francis +ADw-alistair+AEA-alistair23.me+AD4-
- S: Maintained
-diff --git a/hw/gpio/Kconfig b/hw/gpio/Kconfig
-index d2cf3accc8..bb731ff4ce 100644
---- a/hw/gpio/Kconfig
-+-+-+- b/hw/gpio/Kconfig
-+AEAAQA- -16,3 +-16,7 +AEAAQA- config GPIO+AF8-PWR
-=20
- config SIFIVE+AF8-GPIO
-     bool
-+-
-+-config PCF8574
-+-    bool
-+-    depends on I2C
-diff --git a/hw/gpio/meson.build b/hw/gpio/meson.build
-index 8a8d03d885..c0d9a3c757 100644
---- a/hw/gpio/meson.build
-+-+-+- b/hw/gpio/meson.build
-+AEAAQA- -15,3 +-15,4 +AEAAQA- system+AF8-ss.add(when: 'CONFIG+AF8-RASPI', =
-if+AF8-true: files(
- ))
- system+AF8-ss.add(when: 'CONFIG+AF8-ASPEED+AF8-SOC', if+AF8-true: files('a=
-speed+AF8-gpio.c'))
- system+AF8-ss.add(when: 'CONFIG+AF8-SIFIVE+AF8-GPIO', if+AF8-true: files('=
-sifive+AF8-gpio.c'))
-+-system+AF8-ss.add(when: 'CONFIG+AF8-PCF8574', if+AF8-true: files('pcf8574=
-.c'))
-diff --git a/hw/gpio/pcf8574.c b/hw/gpio/pcf8574.c
-new file mode 100644
-index 0000000000..d37909e2ad
---- /dev/null
-+-+-+- b/hw/gpio/pcf8574.c
-+AEAAQA- -0,0 +-1,162 +AEAAQA-
-+-/+ACo- SPDX-License-Identifier: GPL-2.0-only +ACo-/
-+-
-+-/+ACo-
-+- +ACo- NXP PCF8574 8-port I2C GPIO expansion chip.
-+- +ACo- Copyright (c) 2024 KNS Group (YADRO).
-+- +ACo- Written by Dmitrii Sharikhin +ADw-d.sharikhin+AEA-yadro.com+AD4-
-+- +ACo-/
-+-
-+-+ACM-include +ACI-qemu/osdep.h+ACI-
-+-+ACM-include +ACI-hw/i2c/i2c.h+ACI-
-+-+ACM-include +ACI-hw/gpio/pcf8574.h+ACI-
-+-+ACM-include +ACI-hw/irq.h+ACI-
-+-+ACM-include +ACI-migration/vmstate.h+ACI-
-+-+ACM-include +ACI-qemu/log.h+ACI-
-+-+ACM-include +ACI-qemu/module.h+ACI-
-+-+ACM-include +ACI-qom/object.h+ACI-
-+-
-+-/+ACo-
-+- +ACo- PCF8574 and compatible chips incorporate quasi-bidirectional
-+- +ACo- IO. Electrically it means that device sustain pull-up to line
-+- +ACo- unless IO port is configured as output +AF8-and+AF8- driven low.
-+- +ACo-
-+- +ACo- IO access is implemented as simple I2C single-byte read
-+- +ACo- or write operation. So, to configure line to input user write 1
-+- +ACo- to corresponding bit. To configure line to output and drive it low
-+- +ACo- user write 0 to corresponding bit.
-+- +ACo-
-+- +ACo- In essence, user can think of quasi-bidirectional IO as
-+- +ACo- open-drain line, except presence of builtin rising edge accelerati=
-on
-+- +ACo- embedded in PCF8574 IC
-+- +ACo-
-+- +ACo- PCF8574 has interrupt request line, which is being pulled down whe=
-n
-+- +ACo- port line state differs from last read. Port read operation clears
-+- +ACo- state and INT line returns to high state via pullup.
-+- +ACo-/
-+-
-+-OBJECT+AF8-DECLARE+AF8-SIMPLE+AF8-TYPE(PCF8574State, PCF8574)
-+-
-+-+ACM-define PORTS+AF8-COUNT (8)
-+-
-+-struct PCF8574State +AHs-
-+-    I2CSlave parent+AF8-obj+ADs-
-+-    uint8+AF8-t  lastrq+ADs-     /+ACo- Last requested state. If changed =
-- assert irq +ACo-/
-+-    uint8+AF8-t  input+ADs-      /+ACo- external electrical line state +A=
-Co-/
-+-    uint8+AF8-t  output+ADs-     /+ACo- Pull-up (1) or drive low (0) on b=
-it +ACo-/
-+-    qemu+AF8-irq handler+AFs-PORTS+AF8-COUNT+AF0AOw-
-+-    qemu+AF8-irq intrq+ADs-      /+ACo- External irq request +ACo-/
-+-+AH0AOw-
-+-
-+-static void pcf8574+AF8-reset(DeviceState +ACo-dev)
-+-+AHs-
-+-    PCF8574State +ACo-s +AD0- PCF8574(dev)+ADs-
-+-    s-+AD4-lastrq +AD0- MAKE+AF8-64BIT+AF8-MASK(0, PORTS+AF8-COUNT)+ADs-
-+-    s-+AD4-input  +AD0- MAKE+AF8-64BIT+AF8-MASK(0, PORTS+AF8-COUNT)+ADs-
-+-    s-+AD4-output +AD0- MAKE+AF8-64BIT+AF8-MASK(0, PORTS+AF8-COUNT)+ADs-
-+-+AH0-
-+-
-+-static inline uint8+AF8-t pcf8574+AF8-line+AF8-state(PCF8574State +ACo-s)
-+-+AHs-
-+-    /+ACo- we driving line low or external circuit does that +ACo-/
-+-    return s-+AD4-input +ACY- s-+AD4-output+ADs-
-+-+AH0-
-+-
-+-static uint8+AF8-t pcf8574+AF8-rx(I2CSlave +ACo-i2c)
-+-+AHs-
-+-    PCF8574State +ACo-s +AD0- PCF8574(i2c)+ADs-
-+-    uint8+AF8-t linestate +AD0- pcf8574+AF8-line+AF8-state(s)+ADs-
-+-    if (s-+AD4-lastrq +ACEAPQ- linestate) +AHs-
-+-        s-+AD4-lastrq +AD0- linestate+ADs-
-+-        if (s-+AD4-intrq) +AHs-
-+-            qemu+AF8-set+AF8-irq(s-+AD4-intrq, 1)+ADs-
-+-        +AH0-
-+-    +AH0-
-+-    return linestate+ADs-
-+-+AH0-
-+-
-+-static int pcf8574+AF8-tx(I2CSlave +ACo-i2c, uint8+AF8-t data)
-+-+AHs-
-+-    PCF8574State +ACo-s +AD0- PCF8574(i2c)+ADs-
-+-    uint8+AF8-t prev+ADs-
-+-    uint8+AF8-t diff+ADs-
-+-    uint8+AF8-t actual+ADs-
-+-    int line +AD0- 0+ADs-
-+-
-+-    prev +AD0- pcf8574+AF8-line+AF8-state(s)+ADs-
-+-    s-+AD4-output +AD0- data+ADs-
-+-    actual +AD0- pcf8574+AF8-line+AF8-state(s)+ADs-
-+-
-+-    for (diff +AD0- (actual +AF4- prev)+ADs- diff+ADs- diff +ACYAPQ- +AH4=
--(1 +ADwAPA- line)) +AHs-
-+-        line +AD0- ctz32(diff)+ADs-
-+-        if (s-+AD4-handler+AFs-line+AF0-) +AHs-
-+-            qemu+AF8-set+AF8-irq(s-+AD4-handler+AFs-line+AF0-, (actual +A=
-D4APg- line) +ACY- 1)+ADs-
-+-        +AH0-
-+-    +AH0-
-+-
-+-    if (s-+AD4-intrq) +AHs-
-+-        qemu+AF8-set+AF8-irq(s-+AD4-intrq, actual +AD0APQ- s-+AD4-lastrq)=
-+ADs-
-+-    +AH0-
-+-
-+-    return 0+ADs-
-+-+AH0-
-+-
-+-static const VMStateDescription vmstate+AF8-pcf8574 +AD0- +AHs-
-+-    .name               +AD0- +ACI-pcf8574+ACI-,
-+-    .version+AF8-id         +AD0- 0,
-+-    .minimum+AF8-version+AF8-id +AD0- 0,
-+-    .fields +AD0- (VMStateField+AFsAXQ-) +AHs-
-+-        VMSTATE+AF8-I2C+AF8-SLAVE(parent+AF8-obj, PCF8574State),
-+-        VMSTATE+AF8-UINT8(lastrq, PCF8574State),
-+-        VMSTATE+AF8-UINT8(input,  PCF8574State),
-+-        VMSTATE+AF8-UINT8(output, PCF8574State),
-+-        VMSTATE+AF8-END+AF8-OF+AF8-LIST()
-+-    +AH0-
-+-+AH0AOw-
-+-
-+-static void pcf8574+AF8-gpio+AF8-set(void +ACo-opaque, int line, int leve=
-l)
-+-+AHs-
-+-    PCF8574State +ACo-s +AD0- (PCF8574State +ACo-) opaque+ADs-
-+-    assert(line +AD4APQ- 0 +ACYAJg- line +ADw- ARRAY+AF8-SIZE(s-+AD4-hand=
-ler))+ADs-
-+-
-+-    if (level) +AHs-
-+-        s-+AD4-input +AHwAPQ-  (1 +ADwAPA- line)+ADs-
-+-    +AH0- else +AHs-
-+-        s-+AD4-input +ACYAPQ- +AH4-(1 +ADwAPA- line)+ADs-
-+-    +AH0-
-+-
-+-    if (pcf8574+AF8-line+AF8-state(s) +ACEAPQ- s-+AD4-lastrq +ACYAJg- s-+=
-AD4-intrq) +AHs-
-+-        qemu+AF8-set+AF8-irq(s-+AD4-intrq, 0)+ADs-
-+-    +AH0-
-+-+AH0-
-+-
-+-static void pcf8574+AF8-realize(DeviceState +ACo-dev, Error +ACoAKg-errp)
-+-+AHs-
-+-    PCF8574State +ACo-s +AD0- PCF8574(dev)+ADs-
-+-
-+-    qdev+AF8-init+AF8-gpio+AF8-in(dev, pcf8574+AF8-gpio+AF8-set, ARRAY+AF=
-8-SIZE(s-+AD4-handler))+ADs-
-+-    qdev+AF8-init+AF8-gpio+AF8-out(dev, s-+AD4-handler, ARRAY+AF8-SIZE(s-=
-+AD4-handler))+ADs-
-+-    qdev+AF8-init+AF8-gpio+AF8-out+AF8-named(dev, +ACY-s-+AD4-intrq, +ACI=
--nINT+ACI-, 1)+ADs-
-+-+AH0-
-+-
-+-static void pcf8574+AF8-class+AF8-init(ObjectClass +ACo-klass, void +ACo-=
-data)
-+-+AHs-
-+-    DeviceClass   +ACo-dc +AD0- DEVICE+AF8-CLASS(klass)+ADs-
-+-    I2CSlaveClass +ACo-k  +AD0- I2C+AF8-SLAVE+AF8-CLASS(klass)+ADs-
-+-
-+-    k-+AD4-recv     +AD0- pcf8574+AF8-rx+ADs-
-+-    k-+AD4-send     +AD0- pcf8574+AF8-tx+ADs-
-+-    dc-+AD4-realize +AD0- pcf8574+AF8-realize+ADs-
-+-    dc-+AD4-reset   +AD0- pcf8574+AF8-reset+ADs-
-+-    dc-+AD4-vmsd    +AD0- +ACY-vmstate+AF8-pcf8574+ADs-
-+-+AH0-
-+-
-+-static const TypeInfo pcf8574+AF8-infos+AFsAXQ- +AD0- +AHs-
-+-    +AHs-
-+-        .name          +AD0- TYPE+AF8-PCF8574,
-+-        .parent        +AD0- TYPE+AF8-I2C+AF8-SLAVE,
-+-        .instance+AF8-size +AD0- sizeof(PCF8574State),
-+-        .class+AF8-init    +AD0- pcf8574+AF8-class+AF8-init,
-+-    +AH0-
-+-+AH0AOw-
-+-
-+-DEFINE+AF8-TYPES(pcf8574+AF8-infos)+ADs-
-diff --git a/include/hw/gpio/pcf8574.h b/include/hw/gpio/pcf8574.h
-new file mode 100644
-index 0000000000..3291d7dbbc
---- /dev/null
-+-+-+- b/include/hw/gpio/pcf8574.h
-+AEAAQA- -0,0 +-1,15 +AEAAQA-
-+-/+ACo- SPDX-License-Identifier: GPL-2.0-only +ACo-/
-+-
-+-/+ACo-
-+- +ACo- NXP PCF8574 8-port I2C GPIO expansion chip.
-+- +ACo-
-+- +ACo- Copyright (c) 2024 KNS Group (YADRO).
-+- +ACo- Written by Dmitrii Sharikhin +ADw-d.sharikhin+AEA-yadro.com+AD4-
-+- +ACo-/
-+-
-+-+ACM-ifndef +AF8-HW+AF8-GPIO+AF8-PCF8574
-+-+ACM-define +AF8-HW+AF8-GPIO+AF8-PCF8574
-+-
-+-+ACM-define TYPE+AF8-PCF8574 +ACI-pcf8574+ACI-
-+-
-+-+ACM-endif /+ACo- +AF8-HW+AF8-GPIO+AF8-PCF8574 +ACo-/
+[...]
+
+>> Alright, the doc comment is not the place to educate me about TDX.
+>
+> I'm pleased to help you (on or off the maillist) if you have any question on TDX. :)
+
+I can't possibly become knowledgable about QEMU's entire external
+interface, it's simply too much.  Where I'm ignorant, I try to learn
+just enough to ensure the documentation is useful.
+
+I appreciate your kind & patient help with that.
+
+>> Perhaps we can go with
+>> # @mrconfigid: ID for non-owner-defined configuration of the guest TD,
+>> #     e.g., run-time or OS configuration (base64 encoded SHA384 digest).
+>> #     Defaults to all zeroes.
+>> 
+>
+> I will update to this in next version.
+> Huge thanks for your help!
+
+You're welcome!
 
 
