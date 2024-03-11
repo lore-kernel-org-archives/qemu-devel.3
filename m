@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E247C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:46:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70BFFC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:46:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjjfa-0004Sq-6X; Mon, 11 Mar 2024 13:42:38 -0400
+	id 1rjjeA-0002T0-Kf; Mon, 11 Mar 2024 13:41:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjjfV-00041w-S9
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:42:35 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjjdy-0002Rd-SG
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:41:04 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjjfS-0007TN-So
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:42:32 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-6e6381df003so4061662b3a.0
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 10:42:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjjdv-0007Gi-Dz
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:40:56 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-6e5760eeb7aso3333514b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 10:40:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710178949; x=1710783749; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1710178854; x=1710783654; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=B/XlsIofD/wjudMNjmydpE++GM2AoH7AyjDFCwRpOIY=;
- b=dKdExSpyAo4Vhr7tHH27ytmWMj+M+xBGOpsQWILHSyYs19GbBhiSdJtu+l1X9x1EeH
- /ZjuH72ahjw7xapcArzM4SbtEVMFP5b2JdDRMcMi3YJOplFQ6XLcECEClqxnQ8jfw7CY
- 4uc7EhBH8/zO9SvqaSkPdqxpKUtz8SCT33hcSpuoWLAQ0+jzeGZ9KoX7O109u20/C/SU
- VLmrzZsFaK3hlWyBO0i1NsufYLqqizzmn+pQci4/fcCF8jNZv9tjhCAxL9f3B+beXCCo
- ZMKtqRJK1udEtU9aawbyAVTQT+9IeMYdK18sopHB8PITo+Bzz31qFnLiwcWtJza73oF3
- +18Q==
+ bh=t8pTdHOu/KkX0pwRoNGA2mZXJ19/ldsaYMuXilqmIPg=;
+ b=JelzcW+ML4w6Uiiftu3se+PVGmF1mQhgmO6nyYYe5fis0fUrfzECcEFsR3voqU8ryh
+ 1x6ubPqRRv8LJ8PqG81ecfOMIRzoWDJN3/2H5c8FTpIqofk6yvNlKQmuNKpDkfMb0m2P
+ 1QI3Vym/Vhrzu/9XPhdvsqNmd/2EeO8n+RrSmRS3ftjj0BQgt42cl9JeoPqENC7qW3rO
+ 6HGiJAXpSjrHILolduFsGFbqMMOCMzjPYt+wapnyaejHKJWKAEu8QRkNLSeu21yup9zz
+ sa1JhH9mdcAUG2ux6ToS71H9qKyqE+WZ2Zv8twr+fFjwdQYO0zs0ocstnJyrFxgnS1w6
+ /Hpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710178949; x=1710783749;
+ d=1e100.net; s=20230601; t=1710178854; x=1710783654;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=B/XlsIofD/wjudMNjmydpE++GM2AoH7AyjDFCwRpOIY=;
- b=rM4SnzpUaONQeHv32aVxrjo6JCZu4ypM65xKOZgLhdoovxxPyEtlFp0jGM9WH/Yt4x
- NLa3f+EdsKkKJVxBedbkEMRlsBj53M3p7fcmBuBCNLOpUxLPySeZxSXxJLfsjTKBezO0
- HFnrFxKnRDHKG8R0nDskA2IeFAWEVNXl5Xl0oBnWav4i5awgnWJ5JqB2caIPTHbOxHoI
- EFffN6FK4qPyVMYOxa9idm4FdL1lXz+SurOcL294Ml9kPn7VWVpm2Jt3I6WuZXXrB+lP
- Ol6YXc7YjNOEybq1lEHdN2TSWIi9tix7vLNh5TkU3WRw1Md2S5FNf32v8cmuLCDDwPd4
- 6GZw==
-X-Gm-Message-State: AOJu0Yx+tWGWQsNIchoePQSGdV0oY5lzcclR5OXaCQRNxeWjtMlaNg5W
- Q86pYZcX8WsMITwEXlEednTmbcA7ibs7Ix8usY3l6eAMky0MVMEyp/4TOWfBKzI=
-X-Google-Smtp-Source: AGHT+IF27GH2svtB2AKfHjQECJ98Nk3FJalKkgFnfyhrJpQ12c7nv8jDjsv/9cMHTZT89BAqbdEjEg==
-X-Received: by 2002:a05:6a20:914c:b0:1a1:8bdc:9dc2 with SMTP id
- x12-20020a056a20914c00b001a18bdc9dc2mr8921709pzc.31.1710178949094; 
- Mon, 11 Mar 2024 10:42:29 -0700 (PDT)
+ bh=t8pTdHOu/KkX0pwRoNGA2mZXJ19/ldsaYMuXilqmIPg=;
+ b=sb67ZqeuKclQM63cO1ZQC6qjtSmhuvluE+JC58UVCP0QKL0sclfapAiSy7UWpEalMd
+ o5FcGMlvrJwEn9goE+UNnDAEv0zar2/rj6m6OVcXnzbsMbaTss1WaDBfSxMNBx/ghOHU
+ K+XH6Tqm6zHsUQrV1j4oLu3RHue8xVZ57ljTrFGxldBh0gI1vOVc7d1W/up61QydreEj
+ 2Mt5S17F6Z+NYic6YZjd50Rv1vlD0nMLwQN3H9xSsQNyah1gKpjOlX4fU1A65rdYDLFF
+ IWUQcB1TbHwxBsHxCGqARdba6Z4A9VSM/bPeudsjSguNA1YJ+PqLGRrefpsK5WM0ntb8
+ sqUA==
+X-Gm-Message-State: AOJu0Ywa59yma8Uq94jeXcK4ywnnQShFKndJfdSA/Db112Q94HlXub7M
+ exxiu2PE0A1rxe8Fvnn2GO3ONGmhUWEur79tnz6GkIgZvl5vvFXi3+nJoUsotws=
+X-Google-Smtp-Source: AGHT+IGh2TZiYexDEXrWEPDhN2KGU3JWtYh+3S9FbRP4OEpZ3EaImwFAwix38Ra+7QCfRql1bNKRAQ==
+X-Received: by 2002:a05:6a21:1a0:b0:1a1:8c28:c4a0 with SMTP id
+ le32-20020a056a2101a000b001a18c28c4a0mr8694629pzb.30.1710178853701; 
+ Mon, 11 Mar 2024 10:40:53 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- a18-20020a62d412000000b006e67b4d7b74sm4593187pfh.197.2024.03.11.10.42.24
+ a18-20020a62d412000000b006e67b4d7b74sm4593187pfh.197.2024.03.11.10.40.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 10:42:28 -0700 (PDT)
+ Mon, 11 Mar 2024 10:40:53 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -67,17 +67,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Cleber Rosa <crosa@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Beraldo Leal <bleal@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH v4 21/24] tests/avocado: reverse_debugging.py test
- auto-snapshot mode
-Date: Tue, 12 Mar 2024 03:40:23 +1000
-Message-ID: <20240311174026.2177152-22-npiggin@gmail.com>
+Subject: [PATCH v4 03/24] tests/avocado: excercise scripts/replay-dump.py in
+ replay tests
+Date: Tue, 12 Mar 2024 03:40:05 +1000
+Message-ID: <20240311174026.2177152-4-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240311174026.2177152-1-npiggin@gmail.com>
 References: <20240311174026.2177152-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,82 +100,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This runs the recording phase with a periodic auto-snapshot.
+This runs replay-dump.py after recording a trace, and fails the test if
+the script fails.
 
-It also runs the machine for 5 seconds after creating the initial
-address map, so as to alow time for a some auto snapshots to be
-taken.
+replay-dump.py is modified to exit with non-zero if an error is
+encountered while parsing, to support this.
 
-In the replay mode a reverse-debugging sequence is added where the
-test is run to the end, and reverse-stepped from there. This should
-load the last auto-snapshot taken.
-
-The test hangs on x86-64 and aarch64 with autosnapshots, so it is
-disabled for them.
-
+Reviewed-by: Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- tests/avocado/reverse_debugging.py | 24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ scripts/replay-dump.py         |  6 ++++--
+ tests/avocado/replay_kernel.py | 11 +++++++++++
+ tests/avocado/replay_linux.py  | 10 ++++++++++
+ 3 files changed, 25 insertions(+), 2 deletions(-)
 
-diff --git a/tests/avocado/reverse_debugging.py b/tests/avocado/reverse_debugging.py
-index 4bf4e6e1e5..67b72ce519 100644
---- a/tests/avocado/reverse_debugging.py
-+++ b/tests/avocado/reverse_debugging.py
-@@ -32,9 +32,11 @@ class ReverseDebugging(LinuxKernelTest):
-     that the execution is stopped at the last of them.
-     """
+diff --git a/scripts/replay-dump.py b/scripts/replay-dump.py
+index b82659cfb6..4ce7ff51cc 100755
+--- a/scripts/replay-dump.py
++++ b/scripts/replay-dump.py
+@@ -21,6 +21,7 @@
+ import argparse
+ import struct
+ import os
++import sys
+ from collections import namedtuple
+ from os import path
  
--    timeout = 20
-+    timeout = 30
-     STEPS = 10
-     endian_is_le = True
-+    # x86-64 and aarch64 hang with autosnapshot so turn it off by default
-+    autosnapshot = False
+@@ -100,7 +101,7 @@ def call_decode(table, index, dumpfile):
+         print("Could not decode index: %d" % (index))
+         print("Entry is: %s" % (decoder))
+         print("Decode Table is:\n%s" % (table))
+-        return False
++        raise(Exception("unknown event"))
+     else:
+         return decoder.fn(decoder.eid, decoder.name, dumpfile)
  
-     def run_vm(self, record, shift, args, replay_path, image_path, port):
+@@ -121,7 +122,7 @@ def print_event(eid, name, string=None, event_count=None):
+ def decode_unimp(eid, name, _unused_dumpfile):
+     "Unimplemented decoder, will trigger exit"
+     print("%s not handled - will now stop" % (name))
+-    return False
++    raise(Exception("unhandled event"))
+ 
+ def decode_plain(eid, name, _unused_dumpfile):
+     "Plain events without additional data"
+@@ -434,6 +435,7 @@ def decode_file(filename):
+                                     dumpfile)
+     except Exception as inst:
+         print(f"error {inst}")
++        sys.exit(1)
+ 
+     finally:
+         print(f"Reached {dumpfile.tell()} of {dumpsize} bytes")
+diff --git a/tests/avocado/replay_kernel.py b/tests/avocado/replay_kernel.py
+index 10d99403a4..2b61ed21d8 100644
+--- a/tests/avocado/replay_kernel.py
++++ b/tests/avocado/replay_kernel.py
+@@ -13,6 +13,7 @@
+ import shutil
+ import logging
+ import time
++import subprocess
+ 
+ from avocado import skip
+ from avocado import skipUnless
+@@ -63,6 +64,8 @@ def run_vm(self, kernel_path, kernel_command_line, console_pattern,
+             vm.shutdown()
+             logger.info('finished the recording with log size %s bytes'
+                         % os.path.getsize(replay_path))
++            self.run_replay_dump(replay_path)
++            logger.info('successfully tested replay-dump.py')
+         else:
+             vm.wait()
+             logger.info('successfully finished the replay')
+@@ -70,6 +73,14 @@ def run_vm(self, kernel_path, kernel_command_line, console_pattern,
+         logger.info('elapsed time %.2f sec' % elapsed)
+         return elapsed
+ 
++    def run_replay_dump(self, replay_path):
++        try:
++            subprocess.check_call(["./scripts/replay-dump.py",
++                                   "-f", replay_path],
++                                  stdout=subprocess.DEVNULL)
++        except subprocess.CalledProcessError:
++            self.fail('replay-dump.py failed')
++
+     def run_rr(self, kernel_path, kernel_command_line, console_pattern,
+                shift=7, args=None):
+         replay_path = os.path.join(self.workdir, 'replay.bin')
+diff --git a/tests/avocado/replay_linux.py b/tests/avocado/replay_linux.py
+index f3a43dc98c..b3b91ddd9a 100644
+--- a/tests/avocado/replay_linux.py
++++ b/tests/avocado/replay_linux.py
+@@ -94,6 +94,8 @@ def launch_and_wait(self, record, args, shift):
+             vm.shutdown()
+             logger.info('finished the recording with log size %s bytes'
+                 % os.path.getsize(replay_path))
++            self.run_replay_dump(replay_path)
++            logger.info('successfully tested replay-dump.py')
+         else:
+             vm.event_wait('SHUTDOWN', self.timeout)
+             vm.wait()
+@@ -108,6 +110,14 @@ def run_rr(self, args=None, shift=7):
          logger = logging.getLogger('replay')
-@@ -47,9 +49,14 @@ def run_vm(self, record, shift, args, replay_path, image_path, port):
-             logger.info('replaying the execution...')
-             mode = 'replay'
-         vm.add_args('-gdb', 'tcp::%d' % port, '-S')
--        vm.add_args('-icount', 'shift=%s,rr=%s,rrfile=%s,rrsnapshot=init' %
--                    (shift, mode, replay_path),
--                    '-net', 'none')
-+        if self.autosnapshot:
-+            vm.add_args('-icount', 'shift=%s,rr=%s,rrfile=%s,rrsnapshot=init'
-+                                   ',rrsnapmode=periodic,rrsnapcount=10,'
-+                                   'rrsnaptime=1' % (shift, mode, replay_path))
-+        else:
-+            vm.add_args('-icount', 'shift=%s,rr=%s,rrfile=%s,rrsnapshot=init'
-+                                   % (shift, mode, replay_path))
-+        vm.add_args('-net', 'none')
-         vm.add_args('-drive', 'file=%s,if=none,id=disk0' % image_path)
-         if args:
-             vm.add_args(*args)
-@@ -184,8 +191,12 @@ def reverse_debugging(self, shift=7, args=None, x86_workaround=False):
-         logger.info('continue running')
-         self.gdb_cont_nowait(g)
+         logger.info('replay overhead {:.2%}'.format(t2 / t1 - 1))
  
--        logger.info('running for 1s...')
--        time.sleep(1)
-+        if self.autosnapshot:
-+            logger.info('running for 5s...')
-+            time.sleep(5)
-+        else:
-+            logger.info('running for 1s...')
-+            time.sleep(1)
-         logger.info('stopping to read final icount')
-         vm.qmp('stop')
-         self.gdb_break(g)
-@@ -365,6 +376,7 @@ def test_ppc64_pseries(self):
-         # to take the 'hit a breakpoint again' path. That's not a problem,
-         # just slightly different than the other machines.
-         self.endian_is_le = False
-+        self.autosnapshot = True
-         self.reverse_debugging()
- 
-     # See https://gitlab.com/qemu-project/qemu/-/issues/1992
++    def run_replay_dump(self, replay_path):
++        try:
++            subprocess.check_call(["./scripts/replay-dump.py",
++                                   "-f", replay_path],
++                                  stdout=subprocess.DEVNULL)
++        except subprocess.CalledProcessError:
++            self.fail('replay-dump.py failed')
++
+ @skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
+ class ReplayLinuxX8664(ReplayLinux):
+     """
 -- 
 2.42.0
 
