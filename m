@@ -4,100 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DFFCC5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 18:44:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52056C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 18:45:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjkdG-0007cO-7R; Mon, 11 Mar 2024 14:44:18 -0400
+	id 1rjkdo-00085A-5R; Mon, 11 Mar 2024 14:44:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rjkdE-0007c6-MQ
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 14:44:16 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rjkdD-0003RR-5S
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 14:44:16 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 7D6845CA4A;
- Mon, 11 Mar 2024 18:44:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1710182653; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rjkdj-00081a-RG
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 14:44:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rjkdi-0003YH-0S
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 14:44:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710182684;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QSmHWcJQsMgD78VcJ165p7kZKIO2Q+T3NIa+geM7v7Q=;
- b=RzeJwPvQYoAqBWASk985bQeTFhtOyH8HIJy5KiboXwYNcb56YTYteRYK2IKjyWtMNwxOoy
- jlQmGVBb1dtRsZ4L90VGa/657iObwUyqngeFIXOfAQ1FbP/4ksqnywEX0fSaj4qOb61m81
- XJWC0yKByfdrfZS3wbEC4OGC49u9hMg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1710182653;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=QSmHWcJQsMgD78VcJ165p7kZKIO2Q+T3NIa+geM7v7Q=;
- b=qOLi4DLcHV133c7fGlDkFmRxO0ZPjtrIo3Cnt5gUaTm0fXhACZz1WwwXnw2Zg0Jb5S1Tm3
- NbP/4EKXTCbXDyDw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1710182652; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=QSmHWcJQsMgD78VcJ165p7kZKIO2Q+T3NIa+geM7v7Q=;
- b=SdQ2bxjWbnqWFHC883OiOFtFXIUJxJ1bCHgmhahOl8jJbAzDDqFWlJ+ijp+SPbKXUgFaav
- 7Aq6KEPWbKSr35ko0ctdWiwyYOGeNvvSFwrL0uKypS+olYzsdc4bAkA/NMypqm25uIM5r1
- 9yx6fUpCXnzzWxTk8xkMQFWYSZQvUhE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1710182652;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=QSmHWcJQsMgD78VcJ165p7kZKIO2Q+T3NIa+geM7v7Q=;
- b=Y1FLUKXa3R/qakrZMlKRvn5xDIJndhZuLyjx33AVVzFz54nVMS8Orpuh5WCuYEEBJ2HOV9
- XLfyETr9ExNLsWDA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 05DFF13695;
- Mon, 11 Mar 2024 18:44:11 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id NERLLvtQ72UdQQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 11 Mar 2024 18:44:11 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Het Gala <het.gala@nutanix.com>, qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, thuth@redhat.com, lvivier@redhat.com,
- pbonzini@redhat.com, Het Gala <het.gala@nutanix.com>
-Subject: Re: [PATCH v4 6/8] Add channels parameter in migrate_qmp
-In-Reply-To: <20240308205951.111747-7-het.gala@nutanix.com>
-References: <20240308205951.111747-1-het.gala@nutanix.com>
- <20240308205951.111747-7-het.gala@nutanix.com>
-Date: Mon, 11 Mar 2024 15:44:09 -0300
-Message-ID: <87o7bkmww6.fsf@suse.de>
+ bh=Sw3GeKk39KyNMMZmj4VnbSwyDIiOAbCZcbkxdviJ2fE=;
+ b=diD9acexDG6CNcEUNOAjjDG2hwCWuHR90tSncHDxLKpxto4DDP2cVuP3eVSZGOKOJ8iWII
+ //H+hkipUfIvzcAbFSm1dBSEDqpY6zbg44LkLsZP5agId0LTG9zse6RcasEOANHiqxCO7t
+ 7G7VKoGNSax3UAkkGJQUrnLEvIPsXzU=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-202-rTG2fkLXNTON0gejDGt-_g-1; Mon, 11 Mar 2024 14:44:43 -0400
+X-MC-Unique: rTG2fkLXNTON0gejDGt-_g-1
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-29bda2d3ea3so1981437a91.3
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 11:44:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710182682; x=1710787482;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Sw3GeKk39KyNMMZmj4VnbSwyDIiOAbCZcbkxdviJ2fE=;
+ b=VdBgbv0vfMWGIVC874c3HiNUO8i7Y310O1kGyUOrqcQjy+PVEhdMXwIgJIDKXf09B3
+ rUi2Bix0QTGVUBmFKEp7H3R3fyyf3jw9D+rrUGuUT/8uppY69Wpct68aUOfxMTZ1d9gw
+ 0AK0VRlCUT0YiiTrhZQ+5pS4xWZDfeJ69tE98aUa04XjNBRHa4bGhVQu0ZjGqQ3b3eHH
+ W6cil/8hIE/v/cswT9MIU4AisCNrzh+HwxC77L4c/UHRsFdzSPZFkLIfCSpLKXLcJSbc
+ gyu0W3XadEETTPrqc6DFuVyftxXs4rnF7JEBQfxxz5OeIJBErH356KN2EnirlF3pCse+
+ SS4w==
+X-Gm-Message-State: AOJu0Yy/6CdLVT+iEOMKlOhM7Nd/vBYrTEN+VisqAHuRRP6Xa3kIR7sn
+ +zVDQwvyXtkIZjx6KyR1H+9m1rk5eR3blUTu+BwpWC+FKrCYoNhsf5iicRPZQW3kHmRosGsHX5I
+ bW2j0IuuQVhiRI7tzKsYxBOIbacYDtenxLRDMQSZFM9QTWVACJvJSrFMWX6qGCPdyiHzb1L1wA1
+ qb0bokXRMBDuzkKetzleRNEOqKxvs=
+X-Received: by 2002:a17:90b:3804:b0:29b:aea0:1883 with SMTP id
+ mq4-20020a17090b380400b0029baea01883mr5579552pjb.2.1710182681811; 
+ Mon, 11 Mar 2024 11:44:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IErBmjQO5nd5/J7CZBnwYSMGmv6/G6ZznOZxARSmnJvRnH1U13d5MGjAlENEnD8hMfjt0qhoNH/EcN8mSHcmJU=
+X-Received: by 2002:a17:90b:3804:b0:29b:aea0:1883 with SMTP id
+ mq4-20020a17090b380400b0029baea01883mr5579540pjb.2.1710182681504; Mon, 11 Mar
+ 2024 11:44:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spamd-Result: default: False [-4.07 / 50.00]; RCVD_VIA_SMTP_AUTH(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_THREE(0.00)[3];
- NEURAL_HAM_SHORT(-0.13)[-0.658]; RCPT_COUNT_SEVEN(0.00)[7];
- FROM_EQ_ENVFROM(0.00)[]; MIME_TRACE(0.00)[0:+];
- MID_RHS_MATCH_FROM(0.00)[]; BAYES_HAM(-2.84)[99.31%];
- ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- MIME_GOOD(-0.10)[text/plain];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DBL_BLOCKED_OPENRESOLVER(0.00)[nutanix.com:email,suse.de:email];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20240201224246.39480-1-jsnow@redhat.com>
+ <20240201224246.39480-11-jsnow@redhat.com>
+ <87h6i35fmj.fsf@pond.sub.org>
+In-Reply-To: <87h6i35fmj.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Mon, 11 Mar 2024 14:44:29 -0400
+Message-ID: <CAFn=p-Y38th3qn+xFU-5eiQXVhtgjzzD662eKSrEXY=0+aZtbw@mail.gmail.com>
+Subject: Re: [PATCH v3 10/20] qapi: use schema.resolve_type instead of
+ schema.lookup_type
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
+ Michael Roth <michael.roth@amd.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,15 +99,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Het Gala <het.gala@nutanix.com> writes:
-
-> Alter migrate_qmp() to allow use of channels parameter, but only
-> fill the uri with correct port number if there are no channels.
-> Here we don't want to allow the wrong cases of having both or
-> none (ex: migrate_qmp_fail).
+On Tue, Feb 20, 2024 at 10:18=E2=80=AFAM Markus Armbruster <armbru@redhat.c=
+om> wrote:
 >
-> Signed-off-by: Het Gala <het.gala@nutanix.com>
-> Suggested-by: Fabiano Rosas <farosas@suse.de>
+> John Snow <jsnow@redhat.com> writes:
+>
+> > the function lookup_type() is capable of returning None, but some
+> > callers aren't prepared for that and assume it will always succeed. For
+> > static type analysis purposes, this creates problems at those callsites=
+.
+> >
+> > Modify resolve_type() - which already cannot ever return None - to allo=
+w
+> > 'info' and 'what' parameters to be elided, which infers that the type
+> > lookup is a built-in type lookup.
+> >
+> > Change several callsites to use the new form of resolve_type to avoid
+> > the more laborious strictly-typed error-checking scaffolding:
+> >
+> >   ret =3D lookup_type("foo")
+> >   assert ret is not None
+> >   typ: QAPISchemaType =3D ret
+> >
+> > which can be replaced with the simpler:
+> >
+> >   typ =3D resolve_type("foo")
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > ---
+> >  scripts/qapi/introspect.py | 4 ++--
+> >  scripts/qapi/schema.py     | 5 ++---
+> >  2 files changed, 4 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/scripts/qapi/introspect.py b/scripts/qapi/introspect.py
+> > index 67c7d89aae0..c38df61a6d5 100644
+> > --- a/scripts/qapi/introspect.py
+> > +++ b/scripts/qapi/introspect.py
+> > @@ -227,10 +227,10 @@ def _use_type(self, typ: QAPISchemaType) -> str:
+> >
+> >          # Map the various integer types to plain int
+> >          if typ.json_type() =3D=3D 'int':
+> > -            typ =3D self._schema.lookup_type('int')
+> > +            typ =3D self._schema.resolve_type('int')
+> >          elif (isinstance(typ, QAPISchemaArrayType) and
+> >                typ.element_type.json_type() =3D=3D 'int'):
+> > -            typ =3D self._schema.lookup_type('intList')
+> > +            typ =3D self._schema.resolve_type('intList')
+> >          # Add type to work queue if new
+> >          if typ not in self._used_types:
+> >              self._used_types.append(typ)
+> > diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
+> > index 573be7275a6..074897ee4fb 100644
+> > --- a/scripts/qapi/schema.py
+> > +++ b/scripts/qapi/schema.py
+> > @@ -650,8 +650,7 @@ def check(self, schema, seen):
+> >                      "discriminator '%s' is not a member of %s"
+> >                      % (self._tag_name, base))
+> >              # Here we do:
+> > -            base_type =3D schema.lookup_type(self.tag_member.defined_i=
+n)
+> > -            assert base_type
+> > +            base_type =3D schema.resolve_type(self.tag_member.defined_=
+in)
+> >              if not base_type.is_implicit():
+> >                  base =3D "base type '%s'" % self.tag_member.defined_in
+> >              if not isinstance(self.tag_member.type, QAPISchemaEnumType=
+):
+> > @@ -1001,7 +1000,7 @@ def lookup_type(self, name):
+> >          assert typ is None or isinstance(typ, QAPISchemaType)
+> >          return typ
+> >
+> > -    def resolve_type(self, name, info, what):
+> > +    def resolve_type(self, name, info=3DNone, what=3DNone):
+> >          typ =3D self.lookup_type(name)
+> >          if not typ:
+> >              assert info and what  # built-in types must not fail looku=
+p
+>
+> I still dislike this, but I don't think discussing this more will help.
+> I can either accept it as the price of all your other work, or come up
+> with my own solution.
+>
+> Let's focus on the remainder of the series.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+You're absolutely more than welcome to take the series and fork it to
+help bring it home - as long as it passes type checking at the end, I
+won't really mind what happens to it in the interim :)
+
+Sorry if that comes across as being stubborn, it's more the case that
+I genuinely don't think I see your point of view, and feel unable to
+target it.
+
+(Sorry.)
+
+--js
+
 
