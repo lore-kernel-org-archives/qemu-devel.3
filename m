@@ -4,89 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58CCCC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 20:37:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A773C5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 20:41:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjmOp-0005m1-Fe; Mon, 11 Mar 2024 16:37:31 -0400
+	id 1rjmSZ-0006rb-0Z; Mon, 11 Mar 2024 16:41:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rjmOo-0005lX-Hv; Mon, 11 Mar 2024 16:37:30 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjmSR-0006rL-Qn
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 16:41:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rjmOm-0006pH-Pl; Mon, 11 Mar 2024 16:37:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=znsB1Ez6Cl2L+HBnbaqqKreNYUZ7qL0SSzNAoGyoZP4=; b=MOhhFEr16OGjAFBeUdEgXY8IzT
- bmdipQsi5mRUK3NdfZ2ND5VtY+Hlr6VlHWCDA4UcHfrpebMV1oNj4Vmc36AfGXovCRPEFSwj7Pc96
- lGV3TKwva2ioVp1S3ej2SgfC57EWhaVrHzl21KAKaJ5Q77jfdLpgTHi4qtOUIkavL4Xg9MXYtd/Ww
- H9vpc2hjVzzIA03uvv5uZoIiwRhthpZS06dZ3grk3vGY8gIO/ZmiKjaZtW6BlPh0fNcc4XB0q3p33
- WXrmYPfe5VTCFfPj6BazCMBj5J1d6vxZgQGTkDXja4hCyp+PENMMKy6Gi8NTjfbGa7spdujAzuacO
- opoFJOnnb+hZSIZt4LLCMOOnzuGJOhpAvZVo1lsG0EjW2Z7VrISfdbfRaddYVIdKZH/N0BKiqADNM
- ClWKgl5M04gSOIp2oZ8tdGYIiM5EEkRv8Qqw9jQ1/QDMoBIUU8XWLUABIVOV7LwzhWqQD23AcPmYU
- 5xAsvJAPnODzpX9Ew7xZifEv8GKii9MT2RLSL6qVAHB1FP9zR9V6cRn/QtRL6V4nLbrEiSQWT2tIW
- qNc7MeQdMAFFnA1IyjEM32rZPtqZu8SHXfFzswAxMIYbSD3xiLcWZkc/+0eSGbTRjCH8pW5LZ+ENd
- J0ZPCYNXz2dn0Ynwupgh4yBmy9IoLKPqjJfl/BRrw=;
-Received: from [2a00:23c4:8bb3:1000:a445:b8f9:4282:afb2]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rjmNr-0009nx-7x; Mon, 11 Mar 2024 20:36:35 +0000
-Message-ID: <8b954aba-e340-44a6-81a8-13892685c187@ilande.co.uk>
-Date: Mon, 11 Mar 2024 20:37:14 +0000
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjmSQ-0007Sc-72
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 16:41:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710189673;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=l+RV8dYpqTTiVgnTg7dhL7/X+F1rhrBz2l6Y2pht9LU=;
+ b=Cmqrw2Zhnr8x84ACleb0xOTkWzNncOw/QKh46+mYeqvQxicFqY8/hcNH1g/3Lqc4NeK0yG
+ 7UmSsCtZwXcgSlFQ9EIKu6AITk7eLQWiwP7q5ghlW0wNKyRz9H3ubIIX+Cu1rtbUOpi0vD
+ iWGA9aNPkMAwId1UI+ha/RK9hqVape8=
+Received: from mail-oa1-f72.google.com (mail-oa1-f72.google.com
+ [209.85.160.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-126-Tr_sF7iIOsmUwaUaAxsL9A-1; Mon, 11 Mar 2024 16:41:10 -0400
+X-MC-Unique: Tr_sF7iIOsmUwaUaAxsL9A-1
+Received: by mail-oa1-f72.google.com with SMTP id
+ 586e51a60fabf-221d6a92312so1025681fac.1
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 13:41:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710189670; x=1710794470;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=l+RV8dYpqTTiVgnTg7dhL7/X+F1rhrBz2l6Y2pht9LU=;
+ b=Oe1bEoxpnT0Ai6TdXYLVOjbIRYyz2Ap2UIaRPieK/5NPOibQsHm3JqZ9v/t6YuY38Q
+ iunob11xhm7ZjDqjGhgPjHdKXj981CUUn3W4RJBbtk+/slU/Z+5D/D85K5VHghV+GYYP
+ s6ZSjr9DBtvb6OSWWYgNun7iVjIy0eE3S2JhwJMHor3SyPlKh6+pjYjhZ2QrZVzS66pa
+ WxBv31wbDSbpmVswKjYDFBnBUNuuJLJsIAdWn6zTp9VwAVqJP7UOhl2heBxqyY+6IFcQ
+ 8kT55GwoJttKVp2tN1FMJ1L8dKGyp7cw33/iueQHFiURSwQm0rr6t7UKwwMOBKt0vu69
+ s+VA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVXpw32zIZGkAA4ZrYXl9Ti3wvVS6MT9zC1AWBWbERmYtlF7xU9G6wkI+bSP9NCqQn3Q597hL9jHwdeHICaMDXWBYG7GJM=
+X-Gm-Message-State: AOJu0YyTVBkwHTMVGVMlF6JKQhCJm8pZtZmAnXUL/COajHfh4TTS/CHx
+ QF+Ra0e578BuwUp7QuaXHEaTZGSZqk84aZkr+T9nzgkDISO/CJtOr+h35qdIiMFR4q0Kh3BTn5N
+ W1sjmy2uwWUE8l0rjsjrHgy1us7MuXxbCP9V2WxBClLeo2ohZGnO8
+X-Received: by 2002:a05:6870:b14a:b0:221:731a:1f67 with SMTP id
+ a10-20020a056870b14a00b00221731a1f67mr7359400oal.4.1710189669842; 
+ Mon, 11 Mar 2024 13:41:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFYRWTjLNEpr1zd10iLY2rN3VqdUjm+hTepCw1JoUn3a7Iz+LA/ErN/Z3pcg5FPE4Y6/GIsXQ==
+X-Received: by 2002:a05:6870:b14a:b0:221:731a:1f67 with SMTP id
+ a10-20020a056870b14a00b00221731a1f67mr7359374oal.4.1710189669506; 
+ Mon, 11 Mar 2024 13:41:09 -0700 (PDT)
+Received: from x1n (cpe688f2e2cb7c3-cm688f2e2cb7c0.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ c18-20020a05620a0cf200b007871bac855fsm3014544qkj.47.2024.03.11.13.41.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 Mar 2024 13:41:08 -0700 (PDT)
+Date: Mon, 11 Mar 2024 16:41:05 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Hao Xiang <hao.xiang@linux.dev>
+Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
+ farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com, jdenemar@redhat.com,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, qemu-devel@nongnu.org,
+ Hao Xiang <hao.xiang@bytedance.com>
+Subject: Re: [PATCH v6 6/7] migration/multifd: Enable multifd zero page
+ checking by default.
+Message-ID: <Ze9sYV3pjfsP2_Lw@x1n>
+References: <20240311180015.3359271-1-hao.xiang@linux.dev>
+ <20240311180015.3359271-7-hao.xiang@linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20240311075806.668555-1-pbonzini@redhat.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20240311075806.668555-1-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb3:1000:a445:b8f9:4282:afb2
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH] target/i386: fix direction of "32-bit MMU" test
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240311180015.3359271-7-hao.xiang@linux.dev>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,58 +107,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/03/2024 07:58, Paolo Bonzini wrote:
-
-> The low bit of MMU indices for x86 TCG indicates whether the processor is
-> in 32-bit mode and therefore linear addresses have to be masked to 32 bits.
-> However, the index was computed incorrectly, leading to possible conflicts
-> in the TLB for any address above 4G.
+On Mon, Mar 11, 2024 at 06:00:14PM +0000, Hao Xiang wrote:
+> From: Hao Xiang <hao.xiang@bytedance.com>
 > 
-> Analyzed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-> Fixes: b1661801c18 ("target/i386: Fix physical address truncation", 2024-02-28)
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2206
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   target/i386/cpu.h | 2 +-
->   target/i386/cpu.c | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
+> 1. Set default "zero-page-detection" option to "multifd". Now
+> zero page checking can be done in the multifd threads and this
+> becomes the default configuration.
+> 2. Handle migration QEMU9.0 -> QEMU8.2 compatibility. We provide
+> backward compatibility where zero page checking is done from the
+> migration main thread.
 > 
-> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index 952174bb6f5..6b057380791 100644
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
-> @@ -2334,7 +2334,7 @@ static inline bool is_mmu_index_32(int mmu_index)
->   
->   static inline int cpu_mmu_index_kernel(CPUX86State *env)
->   {
-> -    int mmu_index_32 = (env->hflags & HF_LMA_MASK) ? 1 : 0;
-> +    int mmu_index_32 = (env->hflags & HF_LMA_MASK) ? 0 : 1;
->       int mmu_index_base =
->           !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP64_IDX :
->           ((env->hflags & HF_CPL_MASK) < 3 && (env->eflags & AC_MASK)) ? MMU_KNOSMAP64_IDX : MMU_KSMAP64_IDX;
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 2666ef38089..78524bc6073 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -7735,7 +7735,7 @@ static bool x86_cpu_has_work(CPUState *cs)
->   static int x86_cpu_mmu_index(CPUState *cs, bool ifetch)
->   {
->       CPUX86State *env = cpu_env(cs);
-> -    int mmu_index_32 = (env->hflags & HF_CS64_MASK) ? 1 : 0;
-> +    int mmu_index_32 = (env->hflags & HF_CS64_MASK) ? 0 : 1;
->       int mmu_index_base =
->           (env->hflags & HF_CPL_MASK) == 3 ? MMU_USER64_IDX :
->           !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP64_IDX :
+> Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
 
-LGTM. I've just done a few quick Windows boot tests, and all of Win98SE, WinXP and 
-Win7 64-bit now appear to be working fine with this patch so:
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Tested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-
-
-ATB,
-
-Mark.
+-- 
+Peter Xu
 
 
