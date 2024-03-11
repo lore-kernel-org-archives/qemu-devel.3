@@ -4,55 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39188C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:26:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9C17C54E60
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:26:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjWHR-0005Wp-Fc; Sun, 10 Mar 2024 23:24:49 -0400
+	id 1rjWIY-0006VS-SH; Sun, 10 Mar 2024 23:25:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWHP-0005W9-FV; Sun, 10 Mar 2024 23:24:47 -0400
+ id 1rjWIP-00066h-9I; Sun, 10 Mar 2024 23:25:50 -0400
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWHM-0007pt-SU; Sun, 10 Mar 2024 23:24:47 -0400
+ id 1rjWIN-00084P-ET; Sun, 10 Mar 2024 23:25:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710127484; x=1741663484;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=JAM6+G4yDz8y4QcV7DPPrucHLoQHW4LHLnC6OjZkHA8=;
- b=cknS6WIQKQxr873/aR/A9frsp7HlyXFL8z3P/Yw3al6nfWmIalPgwKgU
- RkC9eZIITVBz3zoMHTOs7qSqgAeM5CblCp7sy0RzfCcETg6v2dlw9y9a5
- uA0PLsyH8iFlcGqz8XRa1dGvy/ze6Mh2Kr/bXQz7O6OiI7EhIPCzxWR+r
- LylUnAsSqBduoBKfY4ZOqkBSlHXNFxfS4Op1IGTYV2r3j+Hk4/ot4jKzF
- 64N8bFDzv6XNKz6nve9Zf169giXs9e0P3pN/b5BNLQ16/vU6cL+Md9Kys
- h1CRCVtjvrhvtWcQu9dHyWdgWmVXlekFH+SOpKOJOblXbjFylfi0Y94HL A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229571"
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229571"
+ t=1710127547; x=1741663547;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=dhYFu9CpNh5doFmSCgCFqfnCRHrzDYVeD6p8TJhW+Hc=;
+ b=lA7i23TDW3Pgw2mpmtmDQr6hlLthdoofXSBGTtzN70o6iet6agJF8ar7
+ 9xR+bbf90/NajZnhfr2bj9VIs4RL14l4QeJD0M7qKsnqlu2lk4r/g0bx7
+ 3C78E0j4zuE0XZXd0arfDG6oGHBFPdS2u15fYK0UUBhdTnCeIqfJC8M5r
+ x/aELWdQKhfMt3CiIGK/pju0ajycvGptJOa4YXds0CUUZKwqImoGBRRtN
+ Qbes+x8IoEPjIVhhIXE0KPwgZpwKr/hytni8Sd1NjCN/MJnuUeFuKCJPJ
+ t0e7Vs4Aj2/osMIK70dCekw7lyRwigbawn6UOMlcM5sFeZZuyHCwraIVT A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229698"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229698"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2024 20:24:41 -0700
+ 10 Mar 2024 20:25:25 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15593702"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15593888"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:24:39 -0700
+ by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:25:23 -0700
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, Michael Tokarev <mjt@tls.msk.ru>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org,
-	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 00/29] Cleanup up to fix missing ERRP_GUARD() for
+Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ Paul Burton <paulburton@kernel.org>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
+Subject: [PATCH v2 14/29] hw/core/loader-fit: Fix missing ERRP_GUARD() for
  error_prepend()
-Date: Mon, 11 Mar 2024 11:37:53 +0800
-Message-Id: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
+Date: Mon, 11 Mar 2024 11:38:07 +0800
+Message-Id: <20240311033822.3142585-15-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
+References: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: none client-ip=198.175.65.10;
  envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
@@ -80,102 +82,66 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-Hi,
+As the comment in qapi/error, passing @errp to error_prepend() requires
+ERRP_GUARD():
 
-This series is the v2 to add missing ERRP_GUARD() for error_prepend(),
-which collects the previous v1 part 1 [1] and v1 part 2 (and excludes
-the 4 patches that have already been merged).
-
-The @errp's second restriction (in qapi/error) said:
-
+* = Why, when and how to use ERRP_GUARD() =
+*
 * Without ERRP_GUARD(), use of the @errp parameter is restricted:
 ...
-* - It should not be passed to error_prepend() or
+* - It should not be passed to error_prepend(), error_vprepend() or
 *   error_append_hint(), because that doesn't work with &error_fatal.
 * ERRP_GUARD() lifts these restrictions.
+*
+* To use ERRP_GUARD(), add it right at the beginning of the function.
+* @errp can then be used without worrying about the argument being
+* NULL or &error_fatal.
 
-With this series, all error_prepend() will follow the above usage rules.
+ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
+can't see this additional information, because exit() happens in
+error_setg earlier than information is added [1].
 
-In this series, 2 cases of error_prepend() with &error_fatal are
-recognized (patch 30 & patch 31).
+In hw/core/loader-fit.c, there are 2 functions passing @errp to
+error_prepend() without ERRP_GUARD():
+ - fit_load_kernel()
+ - fit_load_fdt()
 
-And there are some remaining TODOs:
-* follow-up cleanup for related @err use cases. (Suggested by Thomas)
-* continue to cleanup error_append_hint().
+Their @errp parameters are both the pointers of the local @err virable
+in load_fit().
 
+Though they don't cause the issue like [1] said, to follow the
+requirement of @errp, add missing ERRP_GUARD() at their beginning.
 
-The cleanup looks very trivial and thanks for your review!
+[1]: Issue description in the commit message of commit ae7c80a7bd73
+     ("error: New macro ERRP_GUARD()").
 
-[1]: https://lore.kernel.org/qemu-devel/20240228163723.1775791-1-zhao1.liu@linux.intel.com/
-[2]: https://lore.kernel.org/qemu-devel/20240229143914.1977550-1-zhao1.liu@linux.intel.com/
-
-Thanks and Best Regards,
-Zhao
-
+Cc: Paul Burton <paulburton@kernel.org>
+Cc: Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Zhao Liu (29):
-  error: Add error_vprepend() in comment of ERRP_GUARD() rules
-  backends/iommufd: Fix missing ERRP_GUARD() for error_prepend()
-  block: Fix missing ERRP_GUARD() for error_prepend()
-  block/copy-before-write: Fix missing ERRP_GUARD() for error_prepend()
-  block/nbd: Fix missing ERRP_GUARD() for error_prepend()
-  block/nvme: Fix missing ERRP_GUARD() for error_prepend()
-  block/qcow2-bitmap: Fix missing ERRP_GUARD() for error_prepend()
-  block/qcow2: Fix missing ERRP_GUARD() for error_prepend()
-  block/qed: Fix missing ERRP_GUARD() for error_prepend()
-  block/snapshot: Fix missing ERRP_GUARD() for error_prepend()
-  block/vdi: Fix missing ERRP_GUARD() for error_prepend()
-  block/vmdk: Fix missing ERRP_GUARD() for error_prepend()
-  block/virtio-blk: Fix missing ERRP_GUARD() for error_prepend()
-  hw/core/loader-fit: Fix missing ERRP_GUARD() for error_prepend()
-  hw/core/qdev-properties-system: Fix missing ERRP_GUARD() for
-    error_prepend()
-  hw/misc/ivshmem: Fix missing ERRP_GUARD() for error_prepend()
-  hw/scsi/vhost-scsi: Fix missing ERRP_GUARD() for error_prepend()
-  hw/vfio/ap: Fix missing ERRP_GUARD() for error_prepend()
-  hw/vfio/container: Fix missing ERRP_GUARD() for error_prepend()
-  hw/vfio/helpers: Fix missing ERRP_GUARD() for error_prepend()
-  hw/vfio/iommufd: Fix missing ERRP_GUARD() for error_prepend()
-  hw/vfio/pci-quirks: Fix missing ERRP_GUARD() for error_prepend()
-  hw/vfio/pci: Fix missing ERRP_GUARD() for error_prepend()
-  hw/vfio/platform: Fix missing ERRP_GUARD() for error_prepend()
-  hw/virtio/vhost-vsock: Fix missing ERRP_GUARD() for error_prepend()
-  hw/virtio/vhost: Fix missing ERRP_GUARD() for error_prepend()
-  migration/option: Fix missing ERRP_GUARD() for error_prepend()
-  net/vhost-vdpa: Fix missing ERRP_GUARD() for error_prepend()
-  target/s390x/cpu_models: Fix missing ERRP_GUARD() for error_prepend()
+ hw/core/loader-fit.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
- backends/iommufd.c               | 1 +
- block.c                          | 4 ++++
- block/copy-before-write.c        | 1 +
- block/nbd.c                      | 1 +
- block/nvme.c                     | 3 +++
- block/qcow2-bitmap.c             | 1 +
- block/qcow2.c                    | 2 ++
- block/qed.c                      | 1 +
- block/snapshot.c                 | 2 ++
- block/vdi.c                      | 1 +
- block/vmdk.c                     | 1 +
- hw/block/virtio-blk.c            | 1 +
- hw/core/loader-fit.c             | 2 ++
- hw/core/qdev-properties-system.c | 1 +
- hw/misc/ivshmem.c                | 1 +
- hw/scsi/vhost-scsi.c             | 1 +
- hw/vfio/ap.c                     | 1 +
- hw/vfio/container.c              | 1 +
- hw/vfio/helpers.c                | 3 +++
- hw/vfio/iommufd.c                | 1 +
- hw/vfio/pci-quirks.c             | 2 ++
- hw/vfio/pci.c                    | 2 ++
- hw/vfio/platform.c               | 1 +
- hw/virtio/vhost-vsock.c          | 1 +
- hw/virtio/vhost.c                | 2 ++
- include/qapi/error.h             | 2 +-
- migration/options.c              | 2 ++
- net/vhost-vdpa.c                 | 1 +
- target/s390x/cpu_models.c        | 2 ++
- 29 files changed, 44 insertions(+), 1 deletion(-)
-
+diff --git a/hw/core/loader-fit.c b/hw/core/loader-fit.c
+index b7c7b3ba94d4..9f20007dbb51 100644
+--- a/hw/core/loader-fit.c
++++ b/hw/core/loader-fit.c
+@@ -120,6 +120,7 @@ static int fit_load_kernel(const struct fit_loader *ldr, const void *itb,
+                            int cfg, void *opaque, hwaddr *pend,
+                            Error **errp)
+ {
++    ERRP_GUARD();
+     const char *name;
+     const void *data;
+     const void *load_data;
+@@ -178,6 +179,7 @@ static int fit_load_fdt(const struct fit_loader *ldr, const void *itb,
+                         int cfg, void *opaque, const void *match_data,
+                         hwaddr kernel_end, Error **errp)
+ {
++    ERRP_GUARD();
+     Error *err = NULL;
+     const char *name;
+     const void *data;
 -- 
 2.34.1
 
