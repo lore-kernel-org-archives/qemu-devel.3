@@ -4,87 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7678BC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:47:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F261C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:49:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjjjq-0000NS-Vk; Mon, 11 Mar 2024 13:47:03 -0400
+	id 1rjjm0-0001yN-Uz; Mon, 11 Mar 2024 13:49:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjjjo-0000AK-Hz
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:47:00 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjjjm-0008CG-I7
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:47:00 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-41330a62bf7so2435885e9.1
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 10:46:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710179216; x=1710784016; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=P94mp/Nb4ucHV343Y/FMYqLBRS0gkHikA9l9AmQ9xAU=;
- b=NjYzZU+G+5vJYYpfaaFALbFcQitXUsgJYoF/oEqnMw31eq4mbjw/BL66W+JkRzPzQo
- 1nx7+P6QdcWv0OBo4Y4EEhbWhIJnDjk5saTCho7/0Qh+qxkOdKi7AUDtqazYYDbwd8Yc
- bfyOFtUZ6djoD9CFd2ZqZqi1L3a+Q2yxqsDM6G5ZACdeWlYLY0fYf8mPAWbwzVSSu2CY
- YVsV8ragKwdV+mDS4mPZnXAKPRsNpxSWnDXSA2LDEdaEnFVlL8/hRndIL7RBhkYw5DJn
- y4sij1Fw+0szByjFD63RSYzY5ZhU8Yzk402++qQgHFRTR7fDV3D2Exku/7pZWY8CZRXg
- NINQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710179216; x=1710784016;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=P94mp/Nb4ucHV343Y/FMYqLBRS0gkHikA9l9AmQ9xAU=;
- b=Gt2P9eyUrPi9jI9mYeb8mMYFV/9QFpVItrR1H5AFFbKe+w7qurO79IVPC+nbqk4Fjk
- 7I/KuR0ycF/+NaFR4ChFG3v+3UE6P8E1cKHAbrHXRa1QfsOBDkAGdN6Nbzozthi+Jszd
- tsiSzpvMSoVSIEsxMF7PgLoTp2n1bAtscyLLU5gCZCnH3/h/4UarMQ3217wQ9mLVlQXf
- RpX5fvXb1W2NP5+u2sexlJjoIHLMf9GhHCqGRPUP8m0oxQ1dX6QD2tklRUub7C/pexZ5
- U08T3ecDRZHJ+A5h0XRzjGSlfxPWg3n9p9mqKPgy5udBIaWDdaU4KUNDtyvhcOsQYSxH
- m7aw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWaXSp10PcpF40umyup5CrOppHuUlFJR8I1gHmL+PSoMZoZoF8brR5eo5BooyVhIUQb4e9Ff+iBEA2SidOgTOMVotjia8o=
-X-Gm-Message-State: AOJu0Yzo1253OJMTiOTyCxYinaeEJuO0jZ5EtdgzHHxCYJ/FqHfJFovM
- 2YP++xvQmQy30ACBoMSsvwT8gSiZRbQrWQR8r8yLaK/MzSvLQBPOBjpyFuwgtiE=
-X-Google-Smtp-Source: AGHT+IHX8xsUK9pPrZ5EnewxvgqZZqABTtW9DDerb/e17+fkvakSFIdqYI/qsmRuziL8cvRHmSxOiA==
-X-Received: by 2002:a05:600c:45c9:b0:413:1f65:ec19 with SMTP id
- s9-20020a05600c45c900b004131f65ec19mr5250885wmo.37.1710179215983; 
- Mon, 11 Mar 2024 10:46:55 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.167.228])
- by smtp.gmail.com with ESMTPSA id
- q27-20020a056000137b00b0033e72e104c5sm6945438wrz.34.2024.03.11.10.46.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Mar 2024 10:46:55 -0700 (PDT)
-Message-ID: <f3e1fefc-0df3-4339-8373-7648597a78d0@linaro.org>
-Date: Mon, 11 Mar 2024 18:46:53 +0100
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1rjjlz-0001xs-Te
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:49:15 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1rjjlx-0008Ub-QK
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:49:15 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42BG3pdt020981; Mon, 11 Mar 2024 17:49:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
+ h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-type : content-transfer-encoding; s=corp-2023-11-20;
+ bh=gxgLnnp934i6FDmq9Wme3lEwAj4uQvZ6UCowlpA+g+g=;
+ b=RRsWT9RZ5011ziiTukroXzHu6R2ctC2PkdqSwWlKgyO77GY6Yl3YQ1NDMwxNUamiPItK
+ Q0tyX8ChxN9NvZV5NSgSTGvS7XHQkuXY71LbRn7yohqd0IIVEVx/RPQE6TEvBhtgFwKW
+ kfaEQuehKrc2N4MlZ4T6E2kNHUlDN2bC7BMJ4AEhnv0nHx57cXXq1WjB/1SE6gv5li3V
+ h8vD5muXTp0NqMnfXJRz2h5ctiv2TO9FcafhiSaRToyGWRz1cb6+PCRy/S96HFfpZrE6
+ IquMVCfotohDscluY4K7dVH1tsh9VEqoYFLNqjST9yJKpByoaK93le2bOYcgCouy8qzX Tg== 
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wrfcuc0yu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 11 Mar 2024 17:49:05 +0000
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 42BHexvJ028568; Mon, 11 Mar 2024 17:49:04 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 3wre763339-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 11 Mar 2024 17:49:04 +0000
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42BHlHci020033;
+ Mon, 11 Mar 2024 17:49:04 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
+ ESMTP id 3wre763302-3; Mon, 11 Mar 2024 17:49:04 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Zhang Chen <chen.zhang@intel.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ Jason Wang <jasowang@redhat.com>, Hyman Huang <yong.huang@smartx.com>,
+ Song Gao <gaosong@loongson.cn>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V2 02/11] migration: export migration_is_setup_or_active
+Date: Mon, 11 Mar 2024 10:48:49 -0700
+Message-Id: <1710179338-294359-3-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1710179338-294359-1-git-send-email-steven.sistare@oracle.com>
+References: <1710179338-294359-1-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] spapr: Tag pseries-2.1 - 2.11 machines as deprecated
-Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Nicholas Piggin <npiggin@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Thomas Huth <thuth@redhat.com>
-Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-References: <20231214181723.1520854-1-clg@kaod.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20231214181723.1520854-1-clg@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-11_10,2024-03-11_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ bulkscore=0 adultscore=0
+ mlxscore=0 phishscore=0 spamscore=0 suspectscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
+ definitions=main-2403110136
+X-Proofpoint-ORIG-GUID: o2O7xd7zDaSiYlxho-6rYlDt6kyJNJll
+X-Proofpoint-GUID: o2O7xd7zDaSiYlxho-6rYlDt6kyJNJll
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,44 +110,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Delete the MigrationState parameter from migration_is_setup_or_active
+and move it to the public API in misc.h.
 
-On 14/12/23 19:17, Cédric Le Goater wrote:
-> pseries machines before version 2.11 have undergone many changes to
-> correct issues, mostly regarding migration compatibility. This is
-> obfuscating the code uselessly and makes maintenance more difficult.
-> Remove them and only keep the last version of the 2.x series, 2.12,
-> still in use by old distros.
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/vfio/common.c         |  2 +-
+ include/migration/misc.h |  1 +
+ migration/migration.c    | 12 ++++++------
+ migration/migration.h    |  1 -
+ migration/ram.c          |  5 ++---
+ net/vhost-vdpa.c         |  3 +--
+ 6 files changed, 11 insertions(+), 13 deletions(-)
 
-By the time we get to QEMU v9.2, will pseries-2.12 still be used
-by old distros? (which ones btw?)
-
-What about also deprecating pseries-2.12 and pseries-2.12-sxxm
-which both set pre_3_0_migration, and suggest to use pseries-3.0
-instead?
-
-> 
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Cédric Le Goater <clg@kaod.org>
-> ---
->   docs/about/deprecated.rst | 7 +++++++
->   hw/ppc/spapr.c            | 1 +
->   2 files changed, 8 insertions(+)
-> 
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 2e1504024658..c0e22b2b568f 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -269,6 +269,13 @@ Nios II ``10m50-ghrd`` and ``nios2-generic-nommu`` machines (since 8.2)
->   
->   The Nios II architecture is orphan.
->   
-> +``pseries-2.1`` up to ``pseries-2.11`` (since 9.0)
-> +''''''''''''''''''''''''''''''''''''''''''''''''''
-> +
-> +Older pseries machines before version 2.12 have undergone many changes
-> +to correct issues, mostly regarding migration compatibility. These are
-> +no longer maintained and removing them will make the code easier to
-> +read and maintain. Use versions 2.12 and above as a replacement.
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index 059bfdc..896eab8 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -152,7 +152,7 @@ static void vfio_set_migration_error(int err)
+ {
+     MigrationState *ms = migrate_get_current();
+ 
+-    if (migration_is_setup_or_active(ms->state)) {
++    if (migration_is_setup_or_active()) {
+         WITH_QEMU_LOCK_GUARD(&ms->qemu_file_lock) {
+             if (ms->to_dst_file) {
+                 qemu_file_set_error(ms->to_dst_file, err);
+diff --git a/include/migration/misc.h b/include/migration/misc.h
+index 4c226a4..79cff62 100644
+--- a/include/migration/misc.h
++++ b/include/migration/misc.h
+@@ -61,6 +61,7 @@ void migration_object_init(void);
+ void migration_shutdown(void);
+ bool migration_is_idle(void);
+ bool migration_is_active(MigrationState *);
++bool migration_is_setup_or_active(void);
+ bool migrate_mode_is_cpr(MigrationState *);
+ 
+ typedef enum MigrationEventType {
+diff --git a/migration/migration.c b/migration/migration.c
+index a49fcd5..af21403 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1081,9 +1081,11 @@ void migrate_send_rp_resume_ack(MigrationIncomingState *mis, uint32_t value)
+  * Return true if we're already in the middle of a migration
+  * (i.e. any of the active or setup states)
+  */
+-bool migration_is_setup_or_active(int state)
++bool migration_is_setup_or_active(void)
+ {
+-    switch (state) {
++    MigrationState *s = current_migration;
++
++    switch (s->state) {
+     case MIGRATION_STATUS_ACTIVE:
+     case MIGRATION_STATUS_POSTCOPY_ACTIVE:
+     case MIGRATION_STATUS_POSTCOPY_PAUSED:
+@@ -1601,10 +1603,8 @@ bool migration_incoming_postcopy_advised(void)
+ 
+ bool migration_in_bg_snapshot(void)
+ {
+-    MigrationState *s = migrate_get_current();
+-
+     return migrate_background_snapshot() &&
+-            migration_is_setup_or_active(s->state);
++           migration_is_setup_or_active();
+ }
+ 
+ bool migration_is_idle(void)
+@@ -2297,7 +2297,7 @@ static void *source_return_path_thread(void *opaque)
+     trace_source_return_path_thread_entry();
+     rcu_register_thread();
+ 
+-    while (migration_is_setup_or_active(ms->state)) {
++    while (migration_is_setup_or_active()) {
+         trace_source_return_path_thread_loop_top();
+ 
+         header_type = qemu_get_be16(rp);
+diff --git a/migration/migration.h b/migration/migration.h
+index 65c0b61..736460a 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -479,7 +479,6 @@ bool migrate_has_error(MigrationState *s);
+ 
+ void migrate_fd_connect(MigrationState *s, Error *error_in);
+ 
+-bool migration_is_setup_or_active(int state);
+ bool migration_is_running(int state);
+ 
+ int migrate_init(MigrationState *s, Error **errp);
+diff --git a/migration/ram.c b/migration/ram.c
+index c79e3de..b8a5b67 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -2909,10 +2909,9 @@ void qemu_guest_free_page_hint(void *addr, size_t len)
+     RAMBlock *block;
+     ram_addr_t offset;
+     size_t used_len, start, npages;
+-    MigrationState *s = migrate_get_current();
+ 
+     /* This function is currently expected to be used during live migration */
+-    if (!migration_is_setup_or_active(s->state)) {
++    if (!migration_is_setup_or_active()) {
+         return;
+     }
+ 
+@@ -3257,7 +3256,7 @@ static int ram_save_iterate(QEMUFile *f, void *opaque)
+ 
+ out:
+     if (ret >= 0
+-        && migration_is_setup_or_active(migrate_get_current()->state)) {
++        && migration_is_setup_or_active()) {
+         if (migrate_multifd() && migrate_multifd_flush_after_each_section() &&
+             !migrate_mapped_ram()) {
+             ret = multifd_send_sync_main();
+diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+index e6bdb45..8564817 100644
+--- a/net/vhost-vdpa.c
++++ b/net/vhost-vdpa.c
+@@ -26,7 +26,6 @@
+ #include <err.h>
+ #include "standard-headers/linux/virtio_net.h"
+ #include "monitor/monitor.h"
+-#include "migration/migration.h"
+ #include "migration/misc.h"
+ #include "hw/virtio/vhost.h"
+ 
+@@ -355,7 +354,7 @@ static int vhost_vdpa_net_data_start(NetClientState *nc)
+     assert(nc->info->type == NET_CLIENT_DRIVER_VHOST_VDPA);
+ 
+     if (s->always_svq ||
+-        migration_is_setup_or_active(migrate_get_current()->state)) {
++        migration_is_setup_or_active()) {
+         v->shadow_vqs_enabled = true;
+     } else {
+         v->shadow_vqs_enabled = false;
+-- 
+1.8.3.1
 
 
