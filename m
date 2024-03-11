@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F71CC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 19:05:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 604C7C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 19:06:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjkxh-00057p-Us; Mon, 11 Mar 2024 15:05:26 -0400
+	id 1rjkyh-0006Jg-UC; Mon, 11 Mar 2024 15:06:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjkxZ-0004xZ-QV
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 15:05:21 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjkxN-00076a-Om
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 15:05:17 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-33e93514a6aso929470f8f.1
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 12:05:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710183903; x=1710788703; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=aBu6Z/9NiuMN0S4Fo9aAmP5R+cJTYf431HkrmOHAp2Q=;
- b=iSfBcGmmXNRwvG576+jJVSPn5cLDEPrpxEbW6172KDAYrlGYABez1nTkcHSrK01ccm
- lf+cGQcd7OimZpNF2FD5p77oYqxl3GawFJn0LYOf8HCw81ygP+itW23+ZVJdNdNdrEdI
- aPsYAz/m27V24Jbus2Ot9VDeM10BIZp64+6Sv1K/LWeLTzAPaRAcGBRakyhmVoCGuCZL
- Jjrcdp7AKBI9Btkxk83eRKuNJOgC1IrbALjFzZPULgh4EY+oKbyF7W0YlUHRHDOlI9mr
- D7ohWRFrODwqtH8yLhxT2ufTTcGf6aQTypZe0hCiBpNOX9wazJGXa3gVws0Bsd0P4qTy
- FfnA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjkyb-0006Il-UL
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 15:06:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjkyZ-0007ZC-96
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 15:06:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710183977;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=BIKvu3ksgAr7Ew6XiMy6KBPhNXS4mfK2bzvOL0IRCeE=;
+ b=BqlF17ZqJPq7YsHpSaqijJy/ImepQv513RYPILxiLSWEY1Wt9rk+GduhoGxRjbAI4Ig4Id
+ wa/NEsDRK4ca6/dab5yz4HQuDj0AZpPHb4Wbna8IlPQfITZ3pH3sumH+qxRiQmYvIxssQe
+ 0tAMQTGFbU4IoJVfs2WysDsKXkY1yiw=
+Received: from mail-oa1-f69.google.com (mail-oa1-f69.google.com
+ [209.85.160.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-674-eXFmP7pHM9iFqQBp3wB54w-1; Mon, 11 Mar 2024 15:06:16 -0400
+X-MC-Unique: eXFmP7pHM9iFqQBp3wB54w-1
+Received: by mail-oa1-f69.google.com with SMTP id
+ 586e51a60fabf-221994722b9so1072400fac.1
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 12:06:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710183903; x=1710788703;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=aBu6Z/9NiuMN0S4Fo9aAmP5R+cJTYf431HkrmOHAp2Q=;
- b=mMaqBoEzrKHO4Gxd29XX4KrUky4pS9KnU3iGA130/oG69ICre7sEkVRZ/6XcoBVYWe
- +Z0J00PLKNX77ACflUOAndtQTAZIov8Is1X3xeQk82Qa9no/Xsrw+vjey4vuTjKUxPpJ
- TNe/06pnnmEAIN3hCpP/Ok2Cp2YIQtBD/pxOP+ZT87aBCflTkOB1ycnzUtUF0UKlJXLr
- W9JvfUQu+9KDLZBWDw3R18X1f91G4xDgorxwRcaNSFF9EkEfZ+IPcj8qvhedmdQRCNxF
- +FclIAyw8V3K9dg2ak8sZP+k5qp5DHXwvGQDzbArN5im4xIBq62A3diWgpTYcMq1WhBd
- /WoA==
-X-Gm-Message-State: AOJu0YyXza1I+zUOFFb+kCZe8CEJe3j9lwzSre41nF0r9e/QsTq7nIkB
- 9KpfnD+xMny9wa2zUPp2wktf7GMdxXoAVW7a/u2amKirFjwalZ8yG+qygHSUwnTBdtwOJD8cXFR
- P
-X-Google-Smtp-Source: AGHT+IGZjKPMo1dg4RxKgCog2zkJ16EJHJE8chv8ghZgBBASj7YIgXzjM70NVkc4NyjnuTaY4Onpig==
-X-Received: by 2002:a5d:45c5:0:b0:33e:790f:5f83 with SMTP id
- b5-20020a5d45c5000000b0033e790f5f83mr5066012wrs.47.1710183902817; 
- Mon, 11 Mar 2024 12:05:02 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.167.228])
- by smtp.gmail.com with ESMTPSA id
- r13-20020adff10d000000b0033b278cf5fesm7053712wro.102.2024.03.11.12.05.01
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 11 Mar 2024 12:05:02 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, qemu-ppc@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, devel@lists.libvirt.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.0] docs: Deprecate the pseries-2.12 machines
-Date: Mon, 11 Mar 2024 20:04:59 +0100
-Message-ID: <20240311190459.66334-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
+ d=1e100.net; s=20230601; t=1710183975; x=1710788775;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BIKvu3ksgAr7Ew6XiMy6KBPhNXS4mfK2bzvOL0IRCeE=;
+ b=Ds4rrq3nfJBmXusGXXC3swEkLv7qY+H4BLGvXi4BN5klsKtk19Q6CfbsleWSzIZucU
+ VahOUP1A4wyq+XMHxrhnCZWva0qimdpjnBqlmBzbSaphXUSulUx+ut4My5lmGP/dq4M6
+ 8wU3GEgMlN+codkP+7/Qb/xYvczdttkCQcY4hBOMfnqZDAokVwbGU8lzSyk93iAkai2a
+ AyvtUCX/FfjBuUGfiwZR6J0KiQ6wTyW2yZJ/RozyDMzSfnOucY8esQ9xrzJkpT6L5/1C
+ kZXKUQTLBaVT0NbjTgH3OdlbxdgbvjYXT751QZYwx97Rii8z8bZfy7LRGvjw4+mp85nk
+ 9yhw==
+X-Gm-Message-State: AOJu0YwBCo27t6X/QKJiJ+4S4ZPhpFy0+Sxt4xJqn/ZkevGnCH/Ke8gr
+ d12SlozawACY36/OaL+mhfZVSeCLxkEyKB7MbIYMTlmRjza4Hk8eCyc24k0xiHPS66t2xaeqUbM
+ I4w6FLGY76oKOUhS7oSYaaeMB/iocZWPg8Ybn29Y+dYQh89ITISRT
+X-Received: by 2002:a05:6359:4ca4:b0:178:f482:6e59 with SMTP id
+ kk36-20020a0563594ca400b00178f4826e59mr8200798rwc.3.1710183975578; 
+ Mon, 11 Mar 2024 12:06:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHFA68OtAZgUmkV1WRqCh34a4PkJ+3hfeR4Cr4oQ+k7n2y6CQhOislmOVYusOoIx35WYZap3A==
+X-Received: by 2002:a05:6359:4ca4:b0:178:f482:6e59 with SMTP id
+ kk36-20020a0563594ca400b00178f4826e59mr8200779rwc.3.1710183975275; 
+ Mon, 11 Mar 2024 12:06:15 -0700 (PDT)
+Received: from x1n (cpe688f2e2cb7c3-cm688f2e2cb7c0.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ q9-20020a05622a030900b0042ed641c9besm2941467qtw.62.2024.03.11.12.06.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 Mar 2024 12:06:14 -0700 (PDT)
+Date: Mon, 11 Mar 2024 15:06:12 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Leonardo Bras <leobras@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V3] migration: export fewer options
+Message-ID: <Ze9WJMOMlQBGA0Xq@x1n>
+References: <1710179319-294320-1-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1710179319-294320-1-git-send-email-steven.sistare@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,44 +99,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-pSeries machines before 3.0 have complex migration back
-compatibility code we'd like to get ride of. The last
-one is 2.12, which is 6 years old. We just deprecated up
-to the 2.11 machine in commit 1392617d35 ("spapr: Tag
-pseries-2.1 - 2.11 machines as deprecated").
-Take to opportunity to also deprecate the 2.12 machines.
+On Mon, Mar 11, 2024 at 10:48:39AM -0700, Steve Sistare wrote:
+> A small number of migration options are accessed by migration clients,
+> but to see them clients must include all of options.h, which is mostly
+> for migration core code.  migrate_mode() in particular will be needed by
+> multiple clients.
+> 
+> Refactor the option declarations so clients can see the necessary few via
+> misc.h, which already exports a portion of the client API.
+> 
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-In 2025 I'd like to get ride of the code related to:
+Queued, thanks.
 
-  include/hw/ppc/spapr_cpu_core.h:31:    bool pre_3_0_migration; /* older machine don't know about SpaprCpuState */
----
- docs/about/deprecated.rst | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index dfd681cd02..65111513cc 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -237,13 +237,13 @@ The Nios II architecture is orphan.
- The machine is no longer in existence and has been long unmaintained
- in QEMU. This also holds for the TC51828 16MiB flash that it uses.
- 
--``pseries-2.1`` up to ``pseries-2.11`` (since 9.0)
-+``pseries-2.1`` up to ``pseries-2.12`` (since 9.0)
- ''''''''''''''''''''''''''''''''''''''''''''''''''
- 
--Older pseries machines before version 2.12 have undergone many changes
-+Older pseries machines before version 3.0 have undergone many changes
- to correct issues, mostly regarding migration compatibility. These are
- no longer maintained and removing them will make the code easier to
--read and maintain. Use versions 2.12 and above as a replacement.
-+read and maintain. Use versions 3.0 and above as a replacement.
- 
- Backend options
- ---------------
 -- 
-2.41.0
+Peter Xu
 
 
