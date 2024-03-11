@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBA8CC54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 22:04:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF50CC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 22:04:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjngS-0000MY-AI; Mon, 11 Mar 2024 17:59:48 -0400
+	id 1rjngV-0000PJ-F2; Mon, 11 Mar 2024 17:59:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjngR-0000Ia-0l
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjngR-0000JS-Rx
  for qemu-devel@nongnu.org; Mon, 11 Mar 2024 17:59:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjngP-0003zk-HN
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 17:59:46 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjngP-0003zp-V0
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 17:59:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710194384;
+ s=mimecast20190719; t=1710194385;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=WuLmlhgoVqShMS6Vnf3dIC6HEgpMPj5YMMqJlGYRLLc=;
- b=jN8EGyeSyV/sUKUzPKi0pJoTv06jbL8vxEG+QEtbN14MaTACtS0qkdeGdWNmmiijWNI0By
- x+QlPwrG0piWWj/nOHo4UXKKndSDUCT1kOdGjJvbCdlON5v2LY/SyI0hj3YaAU5TFYt3Y6
- 0fYqTnZ0SQwVhJhQYmdgviJP2XptZSY=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=fORkuH4iwhGbcpUM2sVmTdxDf+BTT9cK7aj0xk3UAko=;
+ b=UJIJrSWuXGreveEez2e1i1yVjbIRxluuivHRxDrVV8NvplMocNQzhINnBd/T8TQ2vFVN4b
+ UK5f9rd7bAGtpensIs7zPjDSJyNf7ROKjt3odnC4RggQqFte7E6bhP3OaNkZqgyyJTvACO
+ JKXmQuX+35P1Y797mSvJW70V5P0nsxc=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-102-91rwVLG_OSKl7W1GJoTj2Q-1; Mon, 11 Mar 2024 17:59:42 -0400
-X-MC-Unique: 91rwVLG_OSKl7W1GJoTj2Q-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-690ab2b0de1so15043856d6.0
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 14:59:42 -0700 (PDT)
+ us-mta-558--Qy2BHw6MdanaiylZR3Ppw-1; Mon, 11 Mar 2024 17:59:44 -0400
+X-MC-Unique: -Qy2BHw6MdanaiylZR3Ppw-1
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6818b8cb840so15027036d6.1
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 14:59:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710194381; x=1710799181;
+ d=1e100.net; s=20230601; t=1710194383; x=1710799183;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WuLmlhgoVqShMS6Vnf3dIC6HEgpMPj5YMMqJlGYRLLc=;
- b=LA5TXWkG/PRv4z5a1FU/2JjMqDVdzzW0TqnZB0CCLR2lEGX6MrtDEOh+1S6i0YbiWi
- 6eyWEMNMsvoSCGAesT258vAebEV2pKjkEPsrt7mqZXgqMN3S3ClR38rmUPswxuunHHzV
- iADhl/VcIsly767d2FMVcNCDl7KT6HBrfFJ39kuWGWS3iI3OQPRGh5/+m7K62iP3hEX5
- oqxPbGX6UQh4roJXXkFZslTFWRUEZF4omWcJbg01DgXY4BhRgGFd/5NnTAR5PTyZnk+l
- Y0eHpMH/qrS/C5zNF2CWZxKc9sI3zdy7L+oMOY+wFm2lMRsdtqKYFSCmc5QhsSKBHcIE
- st+w==
-X-Gm-Message-State: AOJu0YxmIrXvQ38jMQnZ7tMH2YsBxzLGxmTUWItIY9sOwIs3uT5FPs8A
- dqrXPd7euCrKrd/lk6StBorVXtyDsbs5NZlN+LdK8mrRwleO55UK3IZbny5i3u1zAkZJjhocfby
- VGDe52PS6Q3324jbx2BMvEvTpAdG2PX/E/tNplbfq7k6kMyAmVcxbMDkYcZ+nn6KiurK+koIePy
- 3mBwLO5Z59ujzRhCRC+lMnQNKZncxieI2pTQ==
-X-Received: by 2002:ad4:44af:0:b0:690:cdd5:ea47 with SMTP id
- n15-20020ad444af000000b00690cdd5ea47mr130720qvt.4.1710194381590; 
- Mon, 11 Mar 2024 14:59:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEv8d12NTCRvvsNd9wzrQScou0t1spnOSAsponO2Hhy5fuiAC1GN9sG08iGDSGNcIwuXZPIhQ==
-X-Received: by 2002:ad4:44af:0:b0:690:cdd5:ea47 with SMTP id
- n15-20020ad444af000000b00690cdd5ea47mr130701qvt.4.1710194381131; 
- Mon, 11 Mar 2024 14:59:41 -0700 (PDT)
+ bh=fORkuH4iwhGbcpUM2sVmTdxDf+BTT9cK7aj0xk3UAko=;
+ b=I/a/K00dDoa1swJlMXp1x4ExiARvAhAklVEJk+sZMB9m/77v5+dLL6SoOgT1k8MuSK
+ pHAgrKMA9awp4RKa6LnKDDjqGmL5PPD/KlSqLkoviuaI7Luohii2kKJSGTS82OVH7Bz1
+ QuC7TqzNCL0UTlmONdcYFbLxzi5usfuUT2azA4rKFgkhCNmlJv+Obah3a7wrTkrSXVfX
+ iGHO6rIWcABIMmUXSL9IEl/tYeRQT7dyDJPTqw47hOogxqIWRaW9554rsO8KY6+xQFyH
+ sVkJrIzQEryked/8TzKg8Ev/tnaHV1T+Hh6WjByVCBtAui9iOnSp/5C7BXQdQTRE7jxS
+ B/sg==
+X-Gm-Message-State: AOJu0YyuIiNOfXq0xv7WImGkDNagnwHf3c6jLPfH3YMt/heVcJLiLew/
+ EqSPOKXFtz29eH2UW18W38QvJok/JMgg1oZD3Mhvz5P3xFCkOPZWyNJflVog6I4lTMTqmgwwuNO
+ 7PC2XL+xmUDV8jG+2U3NZdBbMdkSyjLcTUHkkIp95MGLXtgT+vBRXPw9LaqUxZWcgBWWxyTUlYw
+ beo2gI2Qt2xBTkkveiU1wz9oU/i9TUfNmNKA==
+X-Received: by 2002:a0c:fa91:0:b0:690:d74d:7e6d with SMTP id
+ o17-20020a0cfa91000000b00690d74d7e6dmr3080639qvn.3.1710194383292; 
+ Mon, 11 Mar 2024 14:59:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEmdq+BOAUDzA64mgLIx0/PUFj+sclgG3c+haYlxJyrE3DpgckObm3ja+I7jM1qU9HKSAqrzg==
+X-Received: by 2002:a0c:fa91:0:b0:690:d74d:7e6d with SMTP id
+ o17-20020a0cfa91000000b00690d74d7e6dmr3080610qvn.3.1710194382810; 
+ Mon, 11 Mar 2024 14:59:42 -0700 (PDT)
 Received: from x1n.. (cpe688f2e2cb7c3-cm688f2e2cb7c0.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d6-20020a0ce446000000b00690cec16254sm1541932qvm.68.2024.03.11.14.59.40
+ d6-20020a0ce446000000b00690cec16254sm1541932qvm.68.2024.03.11.14.59.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 14:59:40 -0700 (PDT)
+ Mon, 11 Mar 2024 14:59:41 -0700 (PDT)
 From: peterx@redhat.com
 To: qemu-devel@nongnu.org,
 	Peter Maydell <peter.maydell@linaro.org>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, peterx@redhat.com,
  Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
- Prasad Pandit <ppandit@redhat.com>, Yu Zhang <yu.zhang@ionos.com>,
- qemu-stable <qemu-stable@nongnu.org>, Li Zhijian <lizhijian@fujitsu.com>
-Subject: [PULL 10/34] migration/rdma: Fix a memory issue for migration
-Date: Mon, 11 Mar 2024 17:59:01 -0400
-Message-ID: <20240311215925.40618-11-peterx@redhat.com>
+ Prasad Pandit <ppandit@redhat.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PULL 11/34] physmem: Rename addr1 to more informative mr_addr in
+ flatview_read/write() and similar
+Date: Mon, 11 Mar 2024 17:59:02 -0400
+Message-ID: <20240311215925.40618-12-peterx@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240311215925.40618-1-peterx@redhat.com>
 References: <20240311215925.40618-1-peterx@redhat.com>
@@ -88,7 +89,7 @@ X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,41 +105,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yu Zhang <yu.zhang@ionos.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-In commit 3fa9642ff7 change was made to convert the RDMA backend to
-accept MigrateAddress struct. However, the assignment of "host" leads
-to data corruption on the target host and the failure of migration.
+The calls to flatview_read/write[_continue]() have parameters addr and
+addr1 but the names give no indication of what they are addresses of.
+Rename addr1 to mr_addr to reflect that it is the translated address
+offset within the MemoryRegion returned by flatview_translate().
+Similarly rename the parameter in address_space_read/write_cached_slow()
 
-    isock->host = rdma->host;
-
-By allocating the memory explicitly for it with g_strdup_printf(), the
-issue is fixed and the migration doesn't fail any more.
-
-Fixes: 3fa9642ff7 ("migration: convert rdma backend to accept MigrateAddress")
-Cc: qemu-stable <qemu-stable@nongnu.org>
-Cc: Li Zhijian <lizhijian@fujitsu.com>
-Link: https://lore.kernel.org/r/CAHEcVy4L_D6tuhJ8h=xLR4WaPaprJE3nnxZAEyUnoTrxQ6CF5w@mail.gmail.com
-Signed-off-by: Yu Zhang <yu.zhang@ionos.com>
-[peterx: use g_strdup() instead of g_strdup_printf(), per Zhijian]
+Suggested-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Link: https://lore.kernel.org/r/20240307153710.30907-2-Jonathan.Cameron@huawei.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/rdma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ system/physmem.c | 50 ++++++++++++++++++++++++------------------------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/migration/rdma.c b/migration/rdma.c
-index a355dcea89..855753c671 100644
---- a/migration/rdma.c
-+++ b/migration/rdma.c
-@@ -3357,7 +3357,7 @@ static int qemu_rdma_accept(RDMAContext *rdma)
-         goto err_rdma_dest_wait;
+diff --git a/system/physmem.c b/system/physmem.c
+index 6e9ed97597..e92bed50a6 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -2685,7 +2685,7 @@ static bool flatview_access_allowed(MemoryRegion *mr, MemTxAttrs attrs,
+ static MemTxResult flatview_write_continue(FlatView *fv, hwaddr addr,
+                                            MemTxAttrs attrs,
+                                            const void *ptr,
+-                                           hwaddr len, hwaddr addr1,
++                                           hwaddr len, hwaddr mr_addr,
+                                            hwaddr l, MemoryRegion *mr)
+ {
+     uint8_t *ram_ptr;
+@@ -2695,12 +2695,12 @@ static MemTxResult flatview_write_continue(FlatView *fv, hwaddr addr,
+     const uint8_t *buf = ptr;
+ 
+     for (;;) {
+-        if (!flatview_access_allowed(mr, attrs, addr1, l)) {
++        if (!flatview_access_allowed(mr, attrs, mr_addr, l)) {
+             result |= MEMTX_ACCESS_ERROR;
+             /* Keep going. */
+         } else if (!memory_access_is_direct(mr, true)) {
+             release_lock |= prepare_mmio_access(mr);
+-            l = memory_access_size(mr, l, addr1);
++            l = memory_access_size(mr, l, mr_addr);
+             /* XXX: could force current_cpu to NULL to avoid
+                potential bugs */
+ 
+@@ -2715,13 +2715,13 @@ static MemTxResult flatview_write_continue(FlatView *fv, hwaddr addr,
+                    (l == 8 && len >= 8));
+ #endif
+             val = ldn_he_p(buf, l);
+-            result |= memory_region_dispatch_write(mr, addr1, val,
++            result |= memory_region_dispatch_write(mr, mr_addr, val,
+                                                    size_memop(l), attrs);
+         } else {
+             /* RAM case */
+-            ram_ptr = qemu_ram_ptr_length(mr->ram_block, addr1, &l, false);
++            ram_ptr = qemu_ram_ptr_length(mr->ram_block, mr_addr, &l, false);
+             memmove(ram_ptr, buf, l);
+-            invalidate_and_set_dirty(mr, addr1, l);
++            invalidate_and_set_dirty(mr, mr_addr, l);
+         }
+ 
+         if (release_lock) {
+@@ -2738,7 +2738,7 @@ static MemTxResult flatview_write_continue(FlatView *fv, hwaddr addr,
+         }
+ 
+         l = len;
+-        mr = flatview_translate(fv, addr, &addr1, &l, true, attrs);
++        mr = flatview_translate(fv, addr, &mr_addr, &l, true, attrs);
      }
  
--    isock->host = rdma->host;
-+    isock->host = g_strdup(rdma->host);
-     isock->port = g_strdup_printf("%d", rdma->port);
+     return result;
+@@ -2749,22 +2749,22 @@ static MemTxResult flatview_write(FlatView *fv, hwaddr addr, MemTxAttrs attrs,
+                                   const void *buf, hwaddr len)
+ {
+     hwaddr l;
+-    hwaddr addr1;
++    hwaddr mr_addr;
+     MemoryRegion *mr;
  
-     /*
+     l = len;
+-    mr = flatview_translate(fv, addr, &addr1, &l, true, attrs);
++    mr = flatview_translate(fv, addr, &mr_addr, &l, true, attrs);
+     if (!flatview_access_allowed(mr, attrs, addr, len)) {
+         return MEMTX_ACCESS_ERROR;
+     }
+     return flatview_write_continue(fv, addr, attrs, buf, len,
+-                                   addr1, l, mr);
++                                   mr_addr, l, mr);
+ }
+ 
+ /* Called within RCU critical section.  */
+ MemTxResult flatview_read_continue(FlatView *fv, hwaddr addr,
+                                    MemTxAttrs attrs, void *ptr,
+-                                   hwaddr len, hwaddr addr1, hwaddr l,
++                                   hwaddr len, hwaddr mr_addr, hwaddr l,
+                                    MemoryRegion *mr)
+ {
+     uint8_t *ram_ptr;
+@@ -2775,14 +2775,14 @@ MemTxResult flatview_read_continue(FlatView *fv, hwaddr addr,
+ 
+     fuzz_dma_read_cb(addr, len, mr);
+     for (;;) {
+-        if (!flatview_access_allowed(mr, attrs, addr1, l)) {
++        if (!flatview_access_allowed(mr, attrs, mr_addr, l)) {
+             result |= MEMTX_ACCESS_ERROR;
+             /* Keep going. */
+         } else if (!memory_access_is_direct(mr, false)) {
+             /* I/O case */
+             release_lock |= prepare_mmio_access(mr);
+-            l = memory_access_size(mr, l, addr1);
+-            result |= memory_region_dispatch_read(mr, addr1, &val,
++            l = memory_access_size(mr, l, mr_addr);
++            result |= memory_region_dispatch_read(mr, mr_addr, &val,
+                                                   size_memop(l), attrs);
+ 
+             /*
+@@ -2798,7 +2798,7 @@ MemTxResult flatview_read_continue(FlatView *fv, hwaddr addr,
+             stn_he_p(buf, l, val);
+         } else {
+             /* RAM case */
+-            ram_ptr = qemu_ram_ptr_length(mr->ram_block, addr1, &l, false);
++            ram_ptr = qemu_ram_ptr_length(mr->ram_block, mr_addr, &l, false);
+             memcpy(buf, ram_ptr, l);
+         }
+ 
+@@ -2816,7 +2816,7 @@ MemTxResult flatview_read_continue(FlatView *fv, hwaddr addr,
+         }
+ 
+         l = len;
+-        mr = flatview_translate(fv, addr, &addr1, &l, false, attrs);
++        mr = flatview_translate(fv, addr, &mr_addr, &l, false, attrs);
+     }
+ 
+     return result;
+@@ -2827,16 +2827,16 @@ static MemTxResult flatview_read(FlatView *fv, hwaddr addr,
+                                  MemTxAttrs attrs, void *buf, hwaddr len)
+ {
+     hwaddr l;
+-    hwaddr addr1;
++    hwaddr mr_addr;
+     MemoryRegion *mr;
+ 
+     l = len;
+-    mr = flatview_translate(fv, addr, &addr1, &l, false, attrs);
++    mr = flatview_translate(fv, addr, &mr_addr, &l, false, attrs);
+     if (!flatview_access_allowed(mr, attrs, addr, len)) {
+         return MEMTX_ACCESS_ERROR;
+     }
+     return flatview_read_continue(fv, addr, attrs, buf, len,
+-                                  addr1, l, mr);
++                                  mr_addr, l, mr);
+ }
+ 
+ MemTxResult address_space_read_full(AddressSpace *as, hwaddr addr,
+@@ -3348,15 +3348,15 @@ MemTxResult
+ address_space_read_cached_slow(MemoryRegionCache *cache, hwaddr addr,
+                                    void *buf, hwaddr len)
+ {
+-    hwaddr addr1, l;
++    hwaddr mr_addr, l;
+     MemoryRegion *mr;
+ 
+     l = len;
+-    mr = address_space_translate_cached(cache, addr, &addr1, &l, false,
++    mr = address_space_translate_cached(cache, addr, &mr_addr, &l, false,
+                                         MEMTXATTRS_UNSPECIFIED);
+     return flatview_read_continue(cache->fv,
+                                   addr, MEMTXATTRS_UNSPECIFIED, buf, len,
+-                                  addr1, l, mr);
++                                  mr_addr, l, mr);
+ }
+ 
+ /* Called from RCU critical section. address_space_write_cached uses this
+@@ -3366,15 +3366,15 @@ MemTxResult
+ address_space_write_cached_slow(MemoryRegionCache *cache, hwaddr addr,
+                                     const void *buf, hwaddr len)
+ {
+-    hwaddr addr1, l;
++    hwaddr mr_addr, l;
+     MemoryRegion *mr;
+ 
+     l = len;
+-    mr = address_space_translate_cached(cache, addr, &addr1, &l, true,
++    mr = address_space_translate_cached(cache, addr, &mr_addr, &l, true,
+                                         MEMTXATTRS_UNSPECIFIED);
+     return flatview_write_continue(cache->fv,
+                                    addr, MEMTXATTRS_UNSPECIFIED, buf, len,
+-                                   addr1, l, mr);
++                                   mr_addr, l, mr);
+ }
+ 
+ #define ARG1_DECL                MemoryRegionCache *cache
 -- 
 2.44.0
 
