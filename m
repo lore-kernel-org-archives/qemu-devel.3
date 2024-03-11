@@ -4,85 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8E47C54E49
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 01:29:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F250CC54791
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 02:23:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjUTF-0005aN-Cz; Sun, 10 Mar 2024 21:28:53 -0400
+	id 1rjVJ6-0004CI-Iw; Sun, 10 Mar 2024 22:22:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rjUTD-0005Zw-Nh
- for qemu-devel@nongnu.org; Sun, 10 Mar 2024 21:28:51 -0400
-Received: from mgamail.intel.com ([192.198.163.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rjUTC-0006xd-0M
- for qemu-devel@nongnu.org; Sun, 10 Mar 2024 21:28:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710120530; x=1741656530;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=BZyyCiYR0UjspFIqdj1irv2all9tyd7KB68o6I992zY=;
- b=k2AwW/k2SuK41Zam5iEQxXulbl9BKRsewI198y3BsQJzwVMquhv9CjSr
- VGuVr9OlWaOW4YDYmaJR5maOLQE+NC4ZCbaiHV1+bb4tlanNcoenjpe9F
- cCVUxrXtIJGf1OlOBvNmfW672/5iq9ob9dBErcE+rx23USI2DHSekX9Y6
- p8zC8Ugsu9PQicZAIhjNEEf1oP/wRe+tYNd6YEJNazPtL9kj5Pf9nq6UG
- f4ycxDna9R1E1GOCoShB8hKcQku6T67YwmC6TF3yQqiCjjpDxSEzeLX66
- gHgjlPqiffTr0gmALdjVvXKr+rAPoOuHsj4ZDLjGOAM3/n1FnEK+KDZj3 w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="15409285"
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15409285"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2024 18:28:48 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15502450"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.125.243.127])
- ([10.125.243.127])
- by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2024 18:28:40 -0700
-Message-ID: <95e623e1-ccf3-4d8f-9751-7767db100e2b@intel.com>
-Date: Mon, 11 Mar 2024 09:28:37 +0800
+ (Exim 4.90_1) (envelope-from <zltjiangshi@gmail.com>)
+ id 1rjVJ4-0004Bw-1W
+ for qemu-devel@nongnu.org; Sun, 10 Mar 2024 22:22:26 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zltjiangshi@gmail.com>)
+ id 1rjVJ2-0002Ul-Au
+ for qemu-devel@nongnu.org; Sun, 10 Mar 2024 22:22:25 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a45fd0a0980so163111866b.2
+ for <qemu-devel@nongnu.org>; Sun, 10 Mar 2024 19:22:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1710123741; x=1710728541; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wwQXXkfBYFlzBnINcq/CDorygVn5cKNzlrBlbGaNdtA=;
+ b=P0j+MaGzNxSeAXm09x1hw1S25DESemTyGaDVIm7hEnkWe0HjbjRU6+dyDkZ39nIyOj
+ L4W85vaaqmLZCgtRxfhRFV6VdHzy2CPXmYuRlpucY/V4srumhg5XTjVMzLHeOmBLHryD
+ B0sfXS0BSdfhRAS3SsmUxGqXO8xk298TLawxN9+2h3k7j5cfKgq448xdXZEwDEW1mis7
+ YfYQ0RcINrbU9CEYP5nraGCwuKwvFCugHFEqQss5Pm/cwBsyJnvuPrb1/Kg7q7ABnLhY
+ ado6jJVpswS6n4Mn1x6Tif3stBfMYVISWKz8zoUNnaItODqvPyZj19th12rMVIwbJAbJ
+ WUJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710123741; x=1710728541;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wwQXXkfBYFlzBnINcq/CDorygVn5cKNzlrBlbGaNdtA=;
+ b=SwM2X6TkMMROK9AbX2iMCyKVZugJ3u0pDsFTfb4Uvdy8edMLdgXOMHgURoLcc0LvdW
+ X3X9Fl0MzMzlgJ4aUqbhrY+FraNEHpTZ0Mn2QRANMq6rCWuuAFfGqVVi5scq6+I6Dgs9
+ 2vbJZmK9J6m/wl3F8BcZNTmsNON6Qu91Hf1ZsBD65fQU2+bIdqaFZoIrdQomEBqCuuL8
+ UEBo1MwLQcERAkQ6qU1lsoTOCePATMluqCDC/DwTmsmg5Hr2rV70U0tq8prf6ZFBYmZW
+ vrOjNC1hLv956e8LMUvNdYJrDih927BAke2oLu9kkEoQxZ25FVrGMKYIBkGRTOrFjUjh
+ r4GA==
+X-Gm-Message-State: AOJu0YwO6bqQ51biWebfGyXnfoIcA78wZQsc9ATTzm1CJhd66mly/Fa2
+ spPwScmGmteuecJ9B7SZApBJlWqajhQwYCWsoHYJQCx2BGxxxO7upnnKPpQ+9K55CPtkeNolAZK
+ VCzZ7kTK8U9OEqFWBwBN30BWUjpo=
+X-Google-Smtp-Source: AGHT+IEALs3jbYeu13XNM9kdXS/SVi/OKq/nKGnB0z07ucahcBOyogd92uwUb0QuP+xHLcgg/QcGDWX+7+7PT64Y7wI=
+X-Received: by 2002:a17:907:a0ce:b0:a45:ed7f:265c with SMTP id
+ hw14-20020a170907a0ce00b00a45ed7f265cmr4035422ejc.0.1710123740974; Sun, 10
+ Mar 2024 19:22:20 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 52/65] i386/tdx: Wire TDX_REPORT_FATAL_ERROR with
- GuestPanic facility
-Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand
- <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ani Sinha <anisinha@redhat.com>, Peter Xu <peterx@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eric Blake <eblake@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
- Claudio Fontana <cfontana@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
- Isaku Yamahata <isaku.yamahata@gmail.com>,
- Chenyi Qiang <chenyi.qiang@intel.com>
-References: <20240229063726.610065-1-xiaoyao.li@intel.com>
- <20240229063726.610065-53-xiaoyao.li@intel.com> <874jdr1wmt.fsf@pond.sub.org>
- <d5cb6e5e-0bc1-40bd-8fc1-50a03f42e9cf@intel.com>
- <87y1au881k.fsf@pond.sub.org>
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <87y1au881k.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.11; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
+References: <20240307152835.299233-1-gaosong@loongson.cn>
+ <20240307152835.299233-4-gaosong@loongson.cn>
+In-Reply-To: <20240307152835.299233-4-gaosong@loongson.cn>
+From: chen huacai <zltjiangshi@gmail.com>
+Date: Mon, 11 Mar 2024 10:22:10 +0800
+Message-ID: <CABDp7Vq7z+euAfdTD10vC14MRebw3sSyLpmNBFr4wiZAexa=GQ@mail.gmail.com>
+Subject: Re: [PULL v2 03/17] hw/loongarch: Add slave cpu boot_code
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=zltjiangshi@gmail.com; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.945,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,143 +90,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/7/2024 9:51 PM, Markus Armbruster wrote:
-> Xiaoyao Li <xiaoyao.li@intel.com> writes:
-> 
->> On 2/29/2024 4:51 PM, Markus Armbruster wrote:
->>> Xiaoyao Li <xiaoyao.li@intel.com> writes:
->>>
->>>> Integrate TDX's TDX_REPORT_FATAL_ERROR into QEMU GuestPanic facility
->>>>
->>>> Originated-from: Isaku Yamahata <isaku.yamahata@intel.com>
->>>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->>>> ---
->>>> Changes in v5:
->>>> - mention additional error information in gpa when it presents;
->>>> - refine the documentation; (Markus)
->>>>
->>>> Changes in v4:
->>>> - refine the documentation; (Markus)
->>>>
->>>> Changes in v3:
->>>> - Add docmentation of new type and struct; (Daniel)
->>>> - refine the error message handling; (Daniel)
->>>> ---
->>>>    qapi/run-state.json   | 31 +++++++++++++++++++++--
->>>>    system/runstate.c     | 58 +++++++++++++++++++++++++++++++++++++++++++
->>>>    target/i386/kvm/tdx.c | 24 +++++++++++++++++-
->>>>    3 files changed, 110 insertions(+), 3 deletions(-)
->>>>
->>>> diff --git a/qapi/run-state.json b/qapi/run-state.json
->>>> index dd0770b379e5..b71dd1884eb6 100644
->>>> --- a/qapi/run-state.json
->>>> +++ b/qapi/run-state.json
->>>> @@ -483,10 +483,12 @@
->>>>   #
->>>>   # @s390: s390 guest panic information type (Since: 2.12)
->>>>   #
->>>> +# @tdx: tdx guest panic information type (Since: 9.0)
->>>> +#
->>>>   # Since: 2.9
->>>>   ##
->>>>   { 'enum': 'GuestPanicInformationType',
->>>> -  'data': [ 'hyper-v', 's390' ] }
->>>> +  'data': [ 'hyper-v', 's390', 'tdx' ] }
->>>>      ##
->>>> # @GuestPanicInformation:
->>>> @@ -501,7 +503,8 @@
->>>>     'base': {'type': 'GuestPanicInformationType'},
->>>>     'discriminator': 'type',
->>>>     'data': {'hyper-v': 'GuestPanicInformationHyperV',
->>>> -          's390': 'GuestPanicInformationS390'}}
->>>> +          's390': 'GuestPanicInformationS390',
->>>> +          'tdx' : 'GuestPanicInformationTdx'}}
->>>>   ##
->>>>   # @GuestPanicInformationHyperV:
->>>> @@ -564,6 +567,30 @@
->>>>              'psw-addr': 'uint64',
->>>>              'reason': 'S390CrashReason'}}
->>>> +##
->>>> +# @GuestPanicInformationTdx:
->>>> +#
->>>> +# TDX Guest panic information specific to TDX, as specified in the
->>>> +# "Guest-Hypervisor Communication Interface (GHCI) Specification",
->>>> +# section TDG.VP.VMCALL<ReportFatalError>.
->>>> +#
->>>> +# @error-code: TD-specific error code
->>>> +#
->>>> +# @message: Human-readable error message provided by the guest. Not
->>>> +#     to be trusted.
->>>> +#
->>>> +# @gpa: guest-physical address of a page that contains more verbose
->>>> +#     error information, as zero-terminated string.  Present when the
->>>> +#     "GPA valid" bit (bit 63) is set in @error-code.
->>>
->>> Uh, peeking at GHCI Spec section 3.4 TDG.VP.VMCALL<ReportFatalError>, I
->>> see operand R12 consists of
->>>
->>>       bits    name                        description
->>>       31:0    TD-specific error code      TD-specific error code
->>>                                           Panic – 0x0.
->>>                                           Values – 0x1 to 0xFFFFFFFF
->>>                                           reserved.
->>>       62:32   TD-specific extended        TD-specific extended error code.
->>>               error code                  TD software defined.
->>>       63      GPA Valid                   Set if the TD specified additional
->>>                                           information in the GPA parameter
->>>                                           (R13).
->>> Is @error-code all of R12, or just bits 31:0?
->>> If it's all of R12, description of @error-code as "TD-specific error
->>> code" is misleading.
->>
->> We pass all of R12 to @error_code.
->>
->> Here it wants to use "error_code" as generic as the whole R12. Do you have any better description of it ?
-> 
-> Sadly, the spec is of no help: it doesn't name the entire thing, only
-> the three sub-fields TD-specific error code, TD-specific extended error
-> code, GPA valid.
-> 
-> We could take the hint, and provide the sub-fields instead:
-> 
-> * @error-code contains the TD-specific error code (bits 31:0)
-> 
-> * @extended-error-code contains the TD-specific extended error code
->    (bits 62:32)
-> 
-> * we don't need @gpa-valid, because it's the same as "@gpa is present"
-> 
-> If we decide to keep the single member, we do need another name for it.
-> @error-codes (plural) doesn't exactly feel wonderful, but it gives at
-> least a subtle hint that it's not just *the* error code.
+On Thu, Mar 7, 2024 at 11:35=E2=80=AFPM Song Gao <gaosong@loongson.cn> wrot=
+e:
+>
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> Message-Id: <20240301093839.663947-4-gaosong@loongson.cn>
+> ---
+>  hw/loongarch/boot.c | 70 ++++++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 69 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+> index 3075c276d4..2f398260af 100644
+> --- a/hw/loongarch/boot.c
+> +++ b/hw/loongarch/boot.c
+> @@ -14,6 +14,54 @@
+>  #include "qemu/error-report.h"
+>  #include "sysemu/reset.h"
+>
+> +static const unsigned int slave_boot_code[] =3D {
+> +                  /* Configure reset ebase.         */
+> +    0x0400302c,   /* csrwr      $r12,0xc            */
+Use reg-names may be a little better than reg-nums.
 
-The reason we only defined one single member, is that the 
-extended-error-code is not used now, and I believe it won't be used in 
-the near future.
+Huacai
+> +
+> +                  /* Disable interrupt.             */
+> +    0x0380100c,   /* ori        $r12,$r0,0x4        */
+> +    0x04000180,   /* csrxchg    $r0,$r12,0x0        */
+> +
+> +                  /* Clear mailbox.                 */
+> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
+> +    0x038081ad,   /* ori        $r13,$r13,0x20      */
+> +    0x06481da0,   /* iocsrwr.d  $r0,$r13            */
+> +
+> +                  /* Enable IPI interrupt.          */
+> +    0x1400002c,   /* lu12i.w    $r12,1(0x1)         */
+> +    0x0400118c,   /* csrxchg    $r12,$r12,0x4       */
+> +    0x02fffc0c,   /* addi.d     $r12,$r0,-1(0xfff)  */
+> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
+> +    0x038011ad,   /* ori        $r13,$r13,0x4       */
+> +    0x064819ac,   /* iocsrwr.w  $r12,$r13           */
+> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
+> +    0x038081ad,   /* ori        $r13,$r13,0x20      */
+> +
+> +                  /* Wait for wakeup  <.L11>:       */
+> +    0x06488000,   /* idle       0x0                 */
+> +    0x03400000,   /* andi       $r0,$r0,0x0         */
+> +    0x064809ac,   /* iocsrrd.w  $r12,$r13           */
+> +    0x43fff59f,   /* beqz       $r12,-12(0x7ffff4) # 48 <.L11> */
+> +
+> +                  /* Read and clear IPI interrupt.  */
+> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
+> +    0x064809ac,   /* iocsrrd.w  $r12,$r13           */
+> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
+> +    0x038031ad,   /* ori        $r13,$r13,0xc       */
+> +    0x064819ac,   /* iocsrwr.w  $r12,$r13           */
+> +
+> +                  /* Disable  IPI interrupt.        */
+> +    0x1400002c,   /* lu12i.w    $r12,1(0x1)         */
+> +    0x04001180,   /* csrxchg    $r0,$r12,0x4        */
+> +
+> +                  /* Read mail buf and jump to specified entry */
+> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
+> +    0x038081ad,   /* ori        $r13,$r13,0x20      */
+> +    0x06480dac,   /* iocsrrd.d  $r12,$r13           */
+> +    0x00150181,   /* move       $r1,$r12            */
+> +    0x4c000020,   /* jirl       $r0,$r1,0           */
+> +};
+> +
+>  static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
+>  {
+>      return addr & MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
+> @@ -110,8 +158,15 @@ static void loongarch_firmware_boot(LoongArchMachine=
+State *lams,
+>      fw_cfg_add_kernel_info(info, lams->fw_cfg);
+>  }
+>
+> +static void init_boot_rom(struct loongarch_boot_info *info, void *p)
+> +{
+> +    memcpy(p, &slave_boot_code, sizeof(slave_boot_code));
+> +    p +=3D sizeof(slave_boot_code);
+> +}
+> +
+>  static void loongarch_direct_kernel_boot(struct loongarch_boot_info *inf=
+o)
+>  {
+> +    void  *p, *bp;
+>      int64_t kernel_addr =3D 0;
+>      LoongArchCPU *lacpu;
+>      CPUState *cs;
+> @@ -123,11 +178,24 @@ static void loongarch_direct_kernel_boot(struct loo=
+ngarch_boot_info *info)
+>          exit(1);
+>      }
+>
+> +    /* Load 'boot_rom' at [0 - 1MiB] */
+> +    p =3D g_malloc0(1 * MiB);
+> +    bp =3D p;
+> +    init_boot_rom(info, p);
+> +    rom_add_blob_fixed("boot_rom", bp, 1 * MiB, 0);
+> +
+>      CPU_FOREACH(cs) {
+>          lacpu =3D LOONGARCH_CPU(cs);
+>          lacpu->env.load_elf =3D true;
+> -        lacpu->env.elf_address =3D kernel_addr;
+> +        if (cs =3D=3D first_cpu) {
+> +            lacpu->env.elf_address =3D kernel_addr;
+> +        } else {
+> +            lacpu->env.elf_address =3D 0;
+> +        }
+> +        lacpu->env.boot_info =3D info;
+>      }
+> +
+> +    g_free(bp);
+>  }
+>
+>  void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info =
+*info)
+> --
+> 2.34.1
+>
+>
 
-If no objection from others, I will use @error-codes (plural) in the 
-next version.
 
->>> If it's just bits 31:0, then 'Present when the "GPA valid" bit (bit 63)
->>> is set in @error-code' is wrong.  Could go with 'Only present when the
->>> guest provides this information'.
->>>
->>>> +#
->>>> +#
->>>
->>> Drop one of these two lines, please.
->>>
->>>> +# Since: 9.0
->>>> +##
->>>> +{'struct': 'GuestPanicInformationTdx',
->>>> + 'data': {'error-code': 'uint64',
->>>> +          'message': 'str',
->>>> +          '*gpa': 'uint64'}}
->>>> +
->>>>    ##
->>>>    # @MEMORY_FAILURE:
->>>>    #
->>>
-> 
-
+--=20
+Huacai Chen
 
