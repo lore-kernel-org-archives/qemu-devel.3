@@ -4,73 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A70ABC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:51:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9EA2C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:52:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjjmb-0002M5-P0; Mon, 11 Mar 2024 13:49:53 -0400
+	id 1rjjm5-00020M-OD; Mon, 11 Mar 2024 13:49:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1rjjmC-00027t-B7
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:49:31 -0400
+ id 1rjjm4-0001zV-1Y
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:49:20 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1rjjm8-00004z-SY
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:49:26 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ id 1rjjlo-0008Tj-Fa
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:49:19 -0400
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42BG40h5008069; Mon, 11 Mar 2024 17:49:18 GMT
+ 42BG46gs011922; Mon, 11 Mar 2024 17:49:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
  h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=corp-2023-11-20;
- bh=8oG64oy8rob4doeu1Jctk8IZLA0fas24YY+2pZ6MU/Q=;
- b=bLZLRH0FW2jixS8d2KlmZBuW//74PC4naGGDG5L3QpfzKdV/6d4bBAbFINBSPWP8pt8z
- F3Gcj+69oVyZoQtawZWWdtxeqV2PnSLoaCQ/jnbICQpBNB7cnEhxU/WG4KpeRQsB2KQ6
- cwyiXdEVkpUXQq9E4oG6x9KC9fw0QMDTh0MjHSqv5isksq+VUFCPUc2rhEQk4QXylb3n
- yR+zGThFMfYj9ptDK8vHUQNLl+qIedkCLrzjUFVLwVGBK95AkZKHR7ZYiuv0rAJ7/kEG
- QUDnYxSuv/1scmlxdgZkh5UJwAVyUJ4o4AgJckR+CM521siIuA/TQAztea3gRj0+SZiB vg== 
+ subject : date : message-id; s=corp-2023-11-20;
+ bh=6y8I3EaPx19dsJG+yzx2YDiAWapdAcWTjFgfCVHmZEo=;
+ b=c0M03AnLxiWOWQ7oUn1yhYA2Ev+Pao/X8m5OF8e7HH1IQDTXvEivzzO89DT8akgafNN9
+ FuH/Z9aVQe6om/NUAzDl1jL6HSjQpl1oSV5+d3R7O+n4EG6Y2fIu2/7AexXU2m1Ntb3r
+ T+YSTpRsQ4Ojn4tMwuH3rATNq1KMw5JLkmzENapuk3ylszLOsWqg+u82ZeKG6jBOPdRq
+ 04SCveTiTODZsoodFNvcypdlEiBQ6fI6maEbmmVWStkmRg18nU+boOzuXeILolhPprTM
+ TwhdJQorgdPXmOeL5jAUD7tkXgmkxE7Ybh3Ql3/vkvQflUT6IP9I20mLsAZRVvvrEHEh cw== 
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wrftdc23c-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wre6ec0xv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 11 Mar 2024 17:49:18 +0000
+ Mon, 11 Mar 2024 17:49:00 +0000
 Received: from pps.filterd
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 42BHkjb8028544; Mon, 11 Mar 2024 17:49:17 GMT
+ with ESMTP id 42BHIji1028602; Mon, 11 Mar 2024 17:48:44 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 3wre7633c0-1
+ 3wre7632qn-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 11 Mar 2024 17:49:17 +0000
+ Mon, 11 Mar 2024 17:48:44 +0000
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42BHlHcw020033;
- Mon, 11 Mar 2024 17:49:17 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42BHmhbU024177;
+ Mon, 11 Mar 2024 17:48:43 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 3wre763302-10; Mon, 11 Mar 2024 17:49:17 +0000
+ ESMTP id 3wre7632me-1; Mon, 11 Mar 2024 17:48:43 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Hailiang Zhang <zhanghailiang@xfusion.com>,
- Zhang Chen <chen.zhang@intel.com>, Li Zhijian <lizhijian@fujitsu.com>,
- Jason Wang <jasowang@redhat.com>, Hyman Huang <yong.huang@smartx.com>,
- Song Gao <gaosong@loongson.cn>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Leonardo Bras <leobras@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V2 09/11] migration: privatize colo interfaces
-Date: Mon, 11 Mar 2024 10:48:56 -0700
-Message-Id: <1710179338-294359-10-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V3] migration: export fewer options
+Date: Mon, 11 Mar 2024 10:48:39 -0700
+Message-Id: <1710179319-294320-1-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1710179338-294359-1-git-send-email-steven.sistare@oracle.com>
-References: <1710179338-294359-1-git-send-email-steven.sistare@oracle.com>
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-03-11_10,2024-03-11_01,2023-05-22_02
@@ -79,18 +70,17 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
  mlxscore=0 phishscore=0 spamscore=0 suspectscore=0 mlxlogscore=999
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
  definitions=main-2403110136
-X-Proofpoint-ORIG-GUID: BnpMYTt_lkeVcdCB-Oe9F6fGBYj40-3u
-X-Proofpoint-GUID: BnpMYTt_lkeVcdCB-Oe9F6fGBYj40-3u
+X-Proofpoint-GUID: 1ljBWEZLoNVrrs-PN31tPVKIN_8ZjAUj
+X-Proofpoint-ORIG-GUID: 1ljBWEZLoNVrrs-PN31tPVKIN_8ZjAUj
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,109 +96,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove private migration interfaces from net/colo-compare.c and push them
-to migration/colo.c.
+A small number of migration options are accessed by migration clients,
+but to see them clients must include all of options.h, which is mostly
+for migration core code.  migrate_mode() in particular will be needed by
+multiple clients.
+
+Refactor the option declarations so clients can see the necessary few via
+misc.h, which already exports a portion of the client API.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- migration/colo.c   | 17 +++++++++++------
- net/colo-compare.c |  3 +--
- stubs/colo.c       |  1 -
- 3 files changed, 12 insertions(+), 9 deletions(-)
+Changes in V3:
+  * rebase to migration-next
+---
+---
+ hw/vfio/migration.c                |  1 -
+ hw/virtio/virtio-balloon.c         |  1 -
+ include/migration/client-options.h | 24 ++++++++++++++++++++++++
+ include/migration/misc.h           |  1 +
+ migration/options.h                |  6 +-----
+ system/dirtylimit.c                |  1 -
+ 6 files changed, 26 insertions(+), 8 deletions(-)
+ create mode 100644 include/migration/client-options.h
 
-diff --git a/migration/colo.c b/migration/colo.c
-index 315e31f..84632a6 100644
---- a/migration/colo.c
-+++ b/migration/colo.c
-@@ -63,9 +63,9 @@ static bool colo_runstate_is_stopped(void)
-     return runstate_check(RUN_STATE_COLO) || !runstate_is_running();
- }
- 
--static void colo_checkpoint_notify(void *opaque)
-+static void colo_checkpoint_notify(void)
- {
--    MigrationState *s = opaque;
-+    MigrationState *s = migrate_get_current();
-     int64_t next_notify_time;
- 
-     qemu_event_set(&s->colo_checkpoint_event);
-@@ -74,10 +74,15 @@ static void colo_checkpoint_notify(void *opaque)
-     timer_mod(s->colo_delay_timer, next_notify_time);
- }
- 
-+static void colo_checkpoint_notify_timer(void *opaque)
-+{
-+    colo_checkpoint_notify();
-+}
-+
- void colo_checkpoint_delay_set(void)
- {
-     if (migration_in_colo_state()) {
--        colo_checkpoint_notify(migrate_get_current());
-+        colo_checkpoint_notify();
-     }
- }
- 
-@@ -162,7 +167,7 @@ static void primary_vm_do_failover(void)
-      * kick COLO thread which might wait at
-      * qemu_sem_wait(&s->colo_checkpoint_sem).
-      */
--    colo_checkpoint_notify(s);
-+    colo_checkpoint_notify();
- 
-     /*
-      * Wake up COLO thread which may blocked in recv() or send(),
-@@ -518,7 +523,7 @@ out:
- 
- static void colo_compare_notify_checkpoint(Notifier *notifier, void *data)
- {
--    colo_checkpoint_notify(data);
-+    colo_checkpoint_notify();
- }
- 
- static void colo_process_checkpoint(MigrationState *s)
-@@ -642,7 +647,7 @@ void migrate_start_colo_process(MigrationState *s)
-     bql_unlock();
-     qemu_event_init(&s->colo_checkpoint_event, false);
-     s->colo_delay_timer =  timer_new_ms(QEMU_CLOCK_HOST,
--                                colo_checkpoint_notify, s);
-+                                colo_checkpoint_notify_timer, NULL);
- 
-     qemu_sem_init(&s->colo_exit_sem, 0);
-     colo_process_checkpoint(s);
-diff --git a/net/colo-compare.c b/net/colo-compare.c
-index f2dfc0e..c4ad0ab 100644
---- a/net/colo-compare.c
-+++ b/net/colo-compare.c
-@@ -28,7 +28,6 @@
- #include "sysemu/iothread.h"
- #include "net/colo-compare.h"
- #include "migration/colo.h"
--#include "migration/migration.h"
- #include "util.h"
- 
- #include "block/aio-wait.h"
-@@ -189,7 +188,7 @@ static void colo_compare_inconsistency_notify(CompareState *s)
-         notify_remote_frame(s);
-     } else {
-         notifier_list_notify(&colo_compare_notifiers,
--                             migrate_get_current());
-+                             NULL);
-     }
- }
- 
-diff --git a/stubs/colo.c b/stubs/colo.c
-index 08c9f98..f8c069b 100644
---- a/stubs/colo.c
-+++ b/stubs/colo.c
-@@ -2,7 +2,6 @@
- #include "qemu/notify.h"
- #include "net/colo-compare.h"
- #include "migration/colo.h"
--#include "migration/migration.h"
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index 50140ed..5d4a23c 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -18,7 +18,6 @@
+ #include "sysemu/runstate.h"
+ #include "hw/vfio/vfio-common.h"
+ #include "migration/migration.h"
+-#include "migration/options.h"
+ #include "migration/savevm.h"
+ #include "migration/vmstate.h"
+ #include "migration/qemu-file.h"
+diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
+index 89f853f..a59ff17 100644
+--- a/hw/virtio/virtio-balloon.c
++++ b/hw/virtio/virtio-balloon.c
+@@ -32,7 +32,6 @@
  #include "qemu/error-report.h"
- #include "qapi/qapi-commands-migration.h"
+ #include "migration/misc.h"
+ #include "migration/migration.h"
+-#include "migration/options.h"
  
+ #include "hw/virtio/virtio-bus.h"
+ #include "hw/virtio/virtio-access.h"
+diff --git a/include/migration/client-options.h b/include/migration/client-options.h
+new file mode 100644
+index 0000000..887fea1
+--- /dev/null
++++ b/include/migration/client-options.h
+@@ -0,0 +1,24 @@
++/*
++ * QEMU public migration capabilities
++ *
++ * Copyright (c) 2012-2023 Red Hat Inc
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
++
++#ifndef QEMU_MIGRATION_CLIENT_OPTIONS_H
++#define QEMU_MIGRATION_CLIENT_OPTIONS_H
++
++/* capabilities */
++
++bool migrate_background_snapshot(void);
++bool migrate_dirty_limit(void);
++bool migrate_postcopy_ram(void);
++bool migrate_switchover_ack(void);
++
++/* parameters */
++
++MigMode migrate_mode(void);
++
++#endif
+diff --git a/include/migration/misc.h b/include/migration/misc.h
+index 5d1aa59..4c226a4 100644
+--- a/include/migration/misc.h
++++ b/include/migration/misc.h
+@@ -17,6 +17,7 @@
+ #include "qemu/notify.h"
+ #include "qapi/qapi-types-migration.h"
+ #include "qapi/qapi-types-net.h"
++#include "migration/client-options.h"
+ 
+ /* migration/ram.c */
+ 
+diff --git a/migration/options.h b/migration/options.h
+index 6ddd8da..b6b69c2 100644
+--- a/migration/options.h
++++ b/migration/options.h
+@@ -16,6 +16,7 @@
+ 
+ #include "hw/qdev-properties.h"
+ #include "hw/qdev-properties-system.h"
++#include "migration/client-options.h"
+ 
+ /* migration properties */
+ 
+@@ -24,12 +25,10 @@ extern Property migration_properties[];
+ /* capabilities */
+ 
+ bool migrate_auto_converge(void);
+-bool migrate_background_snapshot(void);
+ bool migrate_block(void);
+ bool migrate_colo(void);
+ bool migrate_compress(void);
+ bool migrate_dirty_bitmaps(void);
+-bool migrate_dirty_limit(void);
+ bool migrate_events(void);
+ bool migrate_mapped_ram(void);
+ bool migrate_ignore_shared(void);
+@@ -38,11 +37,9 @@ bool migrate_multifd(void);
+ bool migrate_pause_before_switchover(void);
+ bool migrate_postcopy_blocktime(void);
+ bool migrate_postcopy_preempt(void);
+-bool migrate_postcopy_ram(void);
+ bool migrate_rdma_pin_all(void);
+ bool migrate_release_ram(void);
+ bool migrate_return_path(void);
+-bool migrate_switchover_ack(void);
+ bool migrate_validate_uuid(void);
+ bool migrate_xbzrle(void);
+ bool migrate_zero_blocks(void);
+@@ -84,7 +81,6 @@ uint8_t migrate_max_cpu_throttle(void);
+ uint64_t migrate_max_bandwidth(void);
+ uint64_t migrate_avail_switchover_bandwidth(void);
+ uint64_t migrate_max_postcopy_bandwidth(void);
+-MigMode migrate_mode(void);
+ int migrate_multifd_channels(void);
+ MultiFDCompression migrate_multifd_compression(void);
+ int migrate_multifd_zlib_level(void);
+diff --git a/system/dirtylimit.c b/system/dirtylimit.c
+index b5607eb..774ff44 100644
+--- a/system/dirtylimit.c
++++ b/system/dirtylimit.c
+@@ -26,7 +26,6 @@
+ #include "trace.h"
+ #include "migration/misc.h"
+ #include "migration/migration.h"
+-#include "migration/options.h"
+ 
+ /*
+  * Dirtylimit stop working if dirty page rate error
 -- 
 1.8.3.1
 
