@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A871C5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 15:35:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12F46C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 15:38:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjhfo-0005gP-Ma; Mon, 11 Mar 2024 11:34:44 -0400
+	id 1rjhik-0006lF-UN; Mon, 11 Mar 2024 11:37:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rjhfm-0005ex-Ox
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 11:34:42 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rjhfk-0006EO-G3
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 11:34:42 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-413183f5e11so17575855e9.1
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 08:34:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710171279; x=1710776079; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=CBncdoSZmTUoP5BilG527cTjiARGsoRXwBhFtFEzxqY=;
- b=tcoo2OUnpRmQRk4IzWMBrxL05nq4aR0cMWdn3rSVkxRoC2qs1LJ3nHYOnDGrC6+UPn
- khY1azxY4nlLWoFAsBNWI3DAcrKeqeKuod45vafneex4OaZ6r4qmgKmJWt//+X3nO1YB
- TMbem/RjWZJ4RzZeGlHRpZsn4/a+kPCd5q1wiMQnSuTjHDXa7Pck8dFz9JG2krZMNRXS
- 8RIr8UafF0zK82HYdN5dJKcvtWVqi/6Ji3/QAk5chox/GWF8U35+Dxx8+zlE1X/KL4MK
- 9HFN7dPf84+zCcAQyRenqDgCpKkZ4DXnnwVFmZ7UO/PaAQbcKxJkDfRVsPDxkyLz6Tct
- YSyg==
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1rjhic-0006kn-Pq
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 11:37:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1rjhiZ-0006r3-8F
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 11:37:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710171449;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=MMzHO3xqviHTt8kaOIGgBnITRujcbe5aeyx3hCRQVrk=;
+ b=PusZeM3o39LRpmxJx81bkwNoVhmF2SOk7rUMLAbBTAM7NisIY3BmwQkAL5VyPtWAUwjmga
+ OS7r+oJ4gwtbUFEwwZnIpSMvXQ+WAbg9CuEhdRFX3r032XBK25DHcJ/Pdz/kuVaT6+RdkX
+ kcVnkXHY9kTm3YhVIl1ZCkT9SE9JjWQ=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-108-wOayNvbtOh2M83YTGsBs0Q-1; Mon, 11 Mar 2024 11:37:27 -0400
+X-MC-Unique: wOayNvbtOh2M83YTGsBs0Q-1
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-51321a5bfadso3469237e87.2
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 08:37:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710171279; x=1710776079;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1710171446; x=1710776246;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=CBncdoSZmTUoP5BilG527cTjiARGsoRXwBhFtFEzxqY=;
- b=N4TD00BB8vmKXiTIOjDR56XmDqoRaQ2X/iduEGwx/1ygEhQKX8nuurJWjhRgY4h2mf
- Mi/ltfSVVQgHTqDx6vPFSBgH+oq+HIXSA1mhb3sP8qpO0tO38ArKKCrF78JiIGjvdAL5
- KSVWfqOYj/FVLf6YHm2yV2nyjAr9zi6gTc0ACmV02nfCOoe4E4iEz2mvZF4vZP1BqMv7
- cd3iCzCqtkRXxCNHKX4ZViL+18ppK4Mct3+wkKZWC/2K8sjDzxk2W2MMjddzV/wYC/ee
- pp/H9cJQn8t+h8TIqd3vmTQGJrdY13oQYwPuFLCVfi3cTFwmHqeHO9LSTKOZShB36Yju
- uzoQ==
-X-Gm-Message-State: AOJu0Yx9hNjoqdbGQbMtq0YvCxWmwCZ0CKOp2bG0s5/XYWLQziiz6eMd
- Yu+8CthWYgr6LLZESDUp8SzXHJ2VjRwRAyo8MssCXBwm6BKg7SZBq3yaNunzlTtJp9gAicMw+kC
- x
-X-Google-Smtp-Source: AGHT+IE8x6Ca28rK0rydyGQSbjS2MLYbNTpOZRXkseIO4M6M+gBXygpAINDXVTbZ5cE5fQiY6GNxxA==
-X-Received: by 2002:a05:600c:1991:b0:413:2704:a1c1 with SMTP id
- t17-20020a05600c199100b004132704a1c1mr4046582wmq.11.1710171278702; 
- Mon, 11 Mar 2024 08:34:38 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- c10-20020a05600c0a4a00b004132f8c2ac1sm1157989wmq.14.2024.03.11.08.34.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 08:34:38 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0B0775F88D;
- Mon, 11 Mar 2024 15:34:38 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [RFC PATCH] contrib/plugins: control flow plugin (WIP!)
-Date: Mon, 11 Mar 2024 15:34:32 +0000
-Message-Id: <20240311153432.1395190-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.2
+ bh=MMzHO3xqviHTt8kaOIGgBnITRujcbe5aeyx3hCRQVrk=;
+ b=YVLbTNyfnNCwqYUcxxz/TYbt1+WaL+ufqgnHeJXum6ej9z0HBxL9V+tYOAGgoQYAaH
+ XxSHAx4xcHy7AZmOWAmbEQBbNZ79vCB5gcpjMrpkdSjtdHyv09cU97r/J12DdFttSH5b
+ ZzFBrze0FZgO5X2NXB1QJDT8v9IRXBMTKOEWlssY1OIsGBy1SUGWGPq35HLkB+PiJs/o
+ 1tNSj4ceJpM1Gd6bZy9MAYIgasYt49go34FSoN2SwgvQkl/YZDTiaWg/zn2V43v7djY2
+ oHt3JJbcioQnG5ez4NsN1mXgq+kmBOeZEgkw5stzmHv1SeQicPKaqbsIgq859pbVIBuI
+ Edrw==
+X-Gm-Message-State: AOJu0YwNbBgSJ6/D9vFXLOKsW07QYjgbIUfLnEX2v1QZCTUOsS1oYPUM
+ elmc5wXjYx0+HY/FL6mYag1zbOc/7jzsQDG38F/sP+u8R/i3xNiP8E3G/CTmuJsAr5Tsqu0ckOO
+ 9N7FxaKdn++3lyCjRqJ+FhVr+aHuViR7Fh5XMnzNhMSkUPXccVgXyTeC0fTLHjL3AdEthsf3dSx
+ HQsmMReYNAbi/+1YfdeYudb2SgH4s=
+X-Received: by 2002:a19:5e1d:0:b0:512:c8f0:1954 with SMTP id
+ s29-20020a195e1d000000b00512c8f01954mr4097800lfb.0.1710171446351; 
+ Mon, 11 Mar 2024 08:37:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF9JxfaJJKjwZj/URPUTZFAshd1PYGGEvy4QH9e0oVAR+l5IRltVX1JYNfJDiAlvN+YveNxEHRcQKbv7dXEI1Q=
+X-Received: by 2002:a19:5e1d:0:b0:512:c8f0:1954 with SMTP id
+ s29-20020a195e1d000000b00512c8f01954mr4097788lfb.0.1710171446002; Mon, 11 Mar
+ 2024 08:37:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20240227113921.236097-1-armbru@redhat.com>
+In-Reply-To: <20240227113921.236097-1-armbru@redhat.com>
+From: Konstantin Kostiuk <kkostiuk@redhat.com>
+Date: Mon, 11 Mar 2024 17:37:14 +0200
+Message-ID: <CAPMcbCoWbZ+x6BA-xje-VoZfV=i82NiNExD0gScTtG_YyHrYPA@mail.gmail.com>
+Subject: Re: [PATCH 00/13] Subject: [PATCH 00/15] qapi: Improve command
+ response documentation
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, michael.roth@amd.com, jsnow@redhat.com, 
+ eblake@redhat.com
+Content-Type: multipart/alternative; boundary="0000000000008b60fb0613645140"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,407 +97,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a simple control flow tracking plugin that uses the latest
-inline and conditional operations to detect and track control flow
-changes. It is currently an exercise at seeing how useful the changes
-are.
+--0000000000008b60fb0613645140
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Based-on: 20240229055359.972151-1-pierrick.bouvier@linaro.org
-Cc: Gustavo Romero <gustavo.romero@linaro.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Hi Markus,
 
----
-This is a work in progress. It looks like I've found a bug in the
-processing of udata (see fprintf) because I see:
+I will merge qga-related patches in my PULL.
 
-vcpu_tb_trans: 0x41717c
-vcpu_tb_branched_exec: 0x5620a598e8a0
-vcpu_tb_trans: 0x417194
-vcpu_tb_trans: 0x409af0
-vcpu_tb_branched_exec: 0x5620a598e8a0
-vcpu_tb_trans: 0x409afc
-vcpu_tb_trans: 0x423920
-vcpu_tb_branched_exec: 0x5620a598e8a0
-collected 1429 destination nodes in the hash table
-  addr: 0x4046a4 b.hs #0x4046c8
-    branches 1
-      to 0xa598e8a0 (0)
-  addr: 0x4019c0 bl #0x400944
-    branches 12
-      to 0xa598e8a0 (11)
-  addr: 0x445da8 b.eq #0x445df8
+Best Regards,
+Konstantin Kostiuk.
 
-so it looks like udata is always junk.
----
- contrib/plugins/cflow.c  | 344 +++++++++++++++++++++++++++++++++++++++
- contrib/plugins/Makefile |   1 +
- 2 files changed, 345 insertions(+)
- create mode 100644 contrib/plugins/cflow.c
 
-diff --git a/contrib/plugins/cflow.c b/contrib/plugins/cflow.c
-new file mode 100644
-index 0000000000..f3ad6fd20f
---- /dev/null
-+++ b/contrib/plugins/cflow.c
-@@ -0,0 +1,344 @@
-+/*
-+ * Control Flow plugin
-+ *
-+ * This plugin will track changes to control flow and detect where
-+ * instructions fault.
-+ *
-+ * Copyright (c) 2024 Linaro Ltd
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <glib.h>
-+#include <inttypes.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <unistd.h>
-+
-+#include <qemu-plugin.h>
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
-+
-+/* Temp hack, works for Aarch64 */
-+#define INSN_WIDTH 4
-+
-+typedef enum {
-+    SORT_HOTDEST,  /* hottest branch */
-+    SORT_EARLY,    /* most early exits */
-+    SORT_POPDEST,  /* most destinations */
-+} ReportType;
-+
-+ReportType report = SORT_HOTDEST;
-+int topn = 10;
-+
-+typedef struct {
-+    uint64_t daddr;
-+    uint64_t dcount;
-+} DestData;
-+
-+/* A node is an address where we can go to multiple places */
-+typedef struct {
-+    GMutex lock;
-+    /* address of the branch point */
-+    uint64_t addr;
-+    /* array of DestData */
-+    GArray *dests;
-+    /* early exit count */
-+    uint64_t early_exit;
-+    /* jump destination count */
-+    uint64_t dest_count;
-+    /* instruction data */
-+    char *insn_disas;
-+    /* times translated as last in block? */
-+    int last_count;
-+    /* times translated in the middle of block? */
-+    int mid_count;
-+} NodeData;
-+
-+/* We use this to track the current execution state */
-+typedef struct {
-+    /* address of start of block */
-+    uint64_t block_start;
-+    /* address of end of block */
-+    uint64_t block_end;
-+    /* address of last executed PC */
-+    uint64_t last_pc;
-+} VCPUScoreBoard;
-+
-+static GMutex node_lock;
-+static GHashTable *nodes;
-+struct qemu_plugin_scoreboard *state;
-+
-+/* SORT_HOTDEST */
-+static gint hottest(gconstpointer a, gconstpointer b)
-+{
-+    NodeData *na = (NodeData *) a;
-+    NodeData *nb = (NodeData *) b;
-+
-+    return na->dest_count > nb->dest_count ? -1 :
-+        na->dest_count == nb->dest_count ? 0 : 1;
-+}
-+
-+static gint early(gconstpointer a, gconstpointer b)
-+{
-+    NodeData *na = (NodeData *) a;
-+    NodeData *nb = (NodeData *) b;
-+
-+    return na->early_exit > nb->early_exit ? -1 :
-+        na->early_exit == nb->early_exit ? 0 : 1;
-+}
-+
-+static gint popular(gconstpointer a, gconstpointer b)
-+{
-+    NodeData *na = (NodeData *) a;
-+    NodeData *nb = (NodeData *) b;
-+
-+    return na->dests->len > nb->dests->len ? -1 :
-+        na->dests->len == nb->dests->len ? 0 : 1;
-+}
-+
-+static void plugin_exit(qemu_plugin_id_t id, void *p)
-+{
-+    g_autoptr(GString) result = g_string_new("collected ");
-+    GList *data;
-+    GCompareFunc sort = &hottest;
-+    int n = 0;
-+
-+    g_mutex_lock(&node_lock);
-+    g_string_append_printf(result, "%d destination nodes in the hash table\n",
-+                           g_hash_table_size(nodes));
-+
-+    data = g_hash_table_get_values(nodes);
-+
-+    switch (report) {
-+    case SORT_HOTDEST:
-+        sort = &hottest;
-+        break;
-+    case SORT_EARLY:
-+        sort = &early;
-+        break;
-+    case SORT_POPDEST:
-+        sort = &popular;
-+        break;
-+    }
-+
-+    data = g_list_sort(data, sort);
-+
-+    for (GList *l = data;
-+         l != NULL && n < topn;
-+         l = l->next, n++) {
-+        NodeData *n = l->data;
-+        g_string_append_printf(result, "  addr: 0x%"PRIx64 " %s\n",
-+                               n->addr, n->insn_disas);
-+        if (n->early_exit) {
-+            g_string_append_printf(result, "    early exits %"PRId64"\n",
-+                                   n->early_exit);
-+        }
-+        g_string_append_printf(result, "    branches %"PRId64"\n",
-+                               n->dest_count);
-+        for (int j = 0; j < n->dests->len; j++ ) {
-+            DestData *dd = &g_array_index(n->dests, DestData, j);
-+            g_string_append_printf(result, "      to 0x%"PRIx64" (%"PRId64")\n",
-+                                   dd->daddr, dd->dcount);
-+        }
-+    }
-+
-+    qemu_plugin_outs(result->str);
-+
-+    g_mutex_unlock(&node_lock);
-+}
-+
-+static void plugin_init(void)
-+{
-+    g_mutex_init(&node_lock);
-+    nodes = g_hash_table_new(NULL, g_direct_equal);
-+    state = qemu_plugin_scoreboard_new(sizeof(VCPUScoreBoard));
-+}
-+
-+static NodeData *create_node(uint64_t addr)
-+{
-+    NodeData *node = g_new0(NodeData, 1);
-+    g_mutex_init(&node->lock);
-+    node->addr = addr;
-+    node->dests = g_array_new(true, true, sizeof(DestData));
-+    return node;
-+}
-+
-+static NodeData *fetch_node(uint64_t addr, bool create_if_not_found)
-+{
-+    NodeData *node = NULL;
-+
-+    g_mutex_lock(&node_lock);
-+    node = (NodeData *) g_hash_table_lookup(nodes, (gconstpointer) addr);
-+    if (!node && create_if_not_found) {
-+        node = create_node(addr);
-+        g_hash_table_insert(nodes, (gpointer) addr, (gpointer) node);
-+    }
-+    g_mutex_unlock(&node_lock);
-+    return node;
-+}
-+
-+/* Called when we detect an early exit from a block */
-+static void vcpu_tb_early_exit_exec(unsigned int cpu_index, void *udata)
-+{
-+    qemu_plugin_u64 last_pc_entry = qemu_plugin_scoreboard_u64_in_struct(state, VCPUScoreBoard, last_pc);
-+    uint64_t last_pc = qemu_plugin_u64_get(last_pc_entry, cpu_index);
-+    NodeData *node = fetch_node(last_pc, true);
-+    g_mutex_lock(&node->lock);
-+    node->early_exit++;
-+    if (!node->mid_count) {
-+        /* count now as we've only just allocated */
-+        node->mid_count++;
-+    }
-+    g_mutex_unlock(&node->lock);
-+}
-+
-+/* Called when we detect a non-linear execution */
-+static void vcpu_tb_branched_exec(unsigned int cpu_index, void *udata)
-+{
-+    qemu_plugin_u64 last_pc_entry = qemu_plugin_scoreboard_u64_in_struct(state, VCPUScoreBoard, last_pc);
-+    uint64_t last_pc = qemu_plugin_u64_get(last_pc_entry, cpu_index);
-+
-+    /* return early for address 0 */
-+    if (!last_pc) {
-+        return;
-+    }
-+
-+    uint64_t current_pc = GPOINTER_TO_UINT(udata);
-+    NodeData *node = fetch_node(last_pc, true);
-+    DestData *data = NULL;
-+    GArray *dests;
-+
-+    /* BUG? */
-+    fprintf(stderr, "%s: %p\n", __func__, udata);
-+
-+    g_mutex_lock(&node->lock);
-+    dests = node->dests;
-+    for (int i = 0; i < dests->len; i++) {
-+        if (g_array_index(dests, DestData, i).daddr == current_pc) {
-+            data = &g_array_index(dests, DestData, i);
-+        }
-+    }
-+
-+    /* we've never seen this before, allocate a new entry */
-+    if (!data) {
-+        DestData new_entry = { .daddr = current_pc };
-+        g_array_append_val(dests, new_entry);
-+        data = &g_array_index(dests, DestData, dests->len);
-+    }
-+
-+    data->dcount++;
-+    node->dest_count++;
-+
-+    g_mutex_unlock(&node->lock);
-+}
-+
-+/*
-+ * At the start of each block we need to resolve two things:
-+ *
-+ *  - is last_pc == block_end, if not we had an early exit
-+ *  - is start of block last_pc + insn width, if not we jumped
-+ *
-+ * Once those are dealt with we can instrument the rest of the
-+ * instructions for their execution.
-+ *
-+ */
-+static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-+{
-+    uint64_t pc = qemu_plugin_tb_vaddr(tb);
-+    size_t insns = qemu_plugin_tb_n_insns(tb);
-+
-+    /* score board declarations */
-+    qemu_plugin_u64 start_block = qemu_plugin_scoreboard_u64_in_struct(state, VCPUScoreBoard, block_start);
-+    qemu_plugin_u64 end_block = qemu_plugin_scoreboard_u64_in_struct(state, VCPUScoreBoard, block_end);
-+    qemu_plugin_u64 last_pc = qemu_plugin_scoreboard_u64_in_struct(state, VCPUScoreBoard, last_pc);
-+
-+    /*
-+     * check for last_pc != block_end
-+     */
-+    /* qemu_plugin_register_vcpu_tb_exec_cond_cb( */
-+    /*     tb, vcpu_tb_early_exit_exec, QEMU_PLUGIN_CB_NO_REGS, */
-+    /*     QEMU_PLUGIN_COND_NEQ, last_pc, /\* block_end *\/, GUINT_TO_POINTER(pc)); */
-+
-+    /*
-+     * check for pc == last_pc + insn_width
-+     */
-+    uint64_t pc_minus = pc - INSN_WIDTH;
-+    gpointer udata = GUINT_TO_POINTER(pc);
-+    /* BUG? udata getting corrupted */
-+    fprintf(stderr, "%s: %p\n", __func__, udata);
-+    qemu_plugin_register_vcpu_tb_exec_cond_cb(
-+        tb, vcpu_tb_branched_exec, QEMU_PLUGIN_CB_NO_REGS,
-+        QEMU_PLUGIN_COND_NE, last_pc, pc_minus, udata);
-+
-+    /*
-+     * Now we can set start/end for this block so the next block can
-+     * check where we are at.
-+     */
-+    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(tb,
-+                                                      QEMU_PLUGIN_INLINE_STORE_U64,
-+                                                      start_block, pc);
-+    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(tb,
-+                                                      QEMU_PLUGIN_INLINE_STORE_U64,
-+                                                      end_block, pc + (INSN_WIDTH * insns));
-+
-+    for (int idx = 0; idx < qemu_plugin_tb_n_insns(tb); ++idx) {
-+        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, idx);
-+        uint64_t ipc = qemu_plugin_insn_vaddr(insn);
-+        bool last_insn = idx == (insns - 1);
-+        /*
-+         * If this is a potential branch point check if we could grab
-+         * the disassembly for it. If it is the last instruction
-+         * always create an entry.
-+         */
-+        NodeData *node = fetch_node(ipc, last_insn);
-+        if (node) {
-+            g_mutex_lock(&node->lock);
-+            if (!node->insn_disas) {
-+                node->insn_disas = qemu_plugin_insn_disas(insn);
-+            }
-+            if (last_insn) {
-+                node->last_count++;
-+            } else {
-+                node->mid_count++;
-+            }
-+            g_mutex_unlock(&node->lock);
-+        }
-+
-+        /* Store the PC of what we are about to execute */
-+        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(insn,
-+                                                            QEMU_PLUGIN_INLINE_STORE_U64,
-+                                                            last_pc, ipc);
-+    }
-+}
-+
-+QEMU_PLUGIN_EXPORT
-+int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
-+                        int argc, char **argv)
-+{
-+    for (int i = 0; i < argc; i++) {
-+        char *opt = argv[i];
-+        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
-+        if (g_strcmp0(tokens[0], "sort") == 0) {
-+            if (g_strcmp0(tokens[1], "hottest") == 0) {
-+                report = SORT_HOTDEST;
-+            } else if (g_strcmp0(tokens[1], "early") == 0) {
-+                report = SORT_EARLY;
-+            } else if (g_strcmp0(tokens[1], "popular") == 0) {
-+                report = SORT_POPDEST;
-+            } else {
-+                fprintf(stderr, "failed to parse: %s\n", tokens[1]);
-+                return -1;
-+            }
-+        } else {
-+            fprintf(stderr, "option parsing failed: %s\n", opt);
-+            return -1;
-+        }
-+    }
-+
-+    plugin_init();
-+
-+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
-+    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
-+    return 0;
-+}
-diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
-index 0b64d2c1e3..78dc7407a5 100644
---- a/contrib/plugins/Makefile
-+++ b/contrib/plugins/Makefile
-@@ -27,6 +27,7 @@ endif
- NAMES += hwprofile
- NAMES += cache
- NAMES += drcov
-+NAMES += cflow
- 
- ifeq ($(CONFIG_WIN32),y)
- SO_SUFFIX := .dll
--- 
-2.39.2
+On Tue, Feb 27, 2024 at 1:39=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+
+> We use doc comment "Returns" sections both for success and error
+> response.  This series moves the latter to new "Errors" sections.
+> Enables some cleanup, visible in the diffstat.q
+>
+> Markus Armbruster (13):
+>   qapi: Memorize since & returns sections
+>   qapi: Slightly clearer error message for invalid "Returns" section
+>   qapi: New documentation section tag "Errors"
+>   qapi: Move error documentation to new "Errors" sections
+>   qapi: Delete useless "Returns" sections
+>   qapi: Clean up "Returns" sections
+>   qapi/yank: Tweak @yank's error description for consistency
+>   qga/qapi-schema: Move error documentation to new "Errors" sections
+>   qga/qapi-schema: Delete useless "Returns" sections
+>   qga/qapi-schema: Clean up "Returns" sections
+>   qga/qapi-schema: Tweak documentation of fsfreeze commands
+>   qga/qapi-schema: Fix guest-set-memory-blocks documentation
+>   qapi: Reject "Returns" section when command doesn't return anything
+>
+>  docs/devel/qapi-code-gen.rst               |  6 +-
+>  qapi/block-core.json                       | 74 ++++++++--------------
+>  qapi/block-export.json                     | 23 ++++---
+>  qapi/block.json                            | 10 ++-
+>  qapi/char.json                             |  6 --
+>  qapi/dump.json                             |  2 -
+>  qapi/machine-target.json                   | 37 ++++++-----
+>  qapi/machine.json                          | 19 ++----
+>  qapi/migration.json                        | 26 --------
+>  qapi/misc-target.json                      |  3 -
+>  qapi/misc.json                             | 25 +++-----
+>  qapi/net.json                              | 17 +++--
+>  qapi/qdev.json                             |  3 +-
+>  qapi/qom.json                              |  6 +-
+>  qapi/run-state.json                        |  5 +-
+>  qapi/tpm.json                              |  2 -
+>  qapi/transaction.json                      |  5 +-
+>  qapi/ui.json                               | 17 +----
+>  qapi/yank.json                             |  5 +-
+>  qga/qapi-schema.json                       | 72 +++++++++------------
+>  scripts/qapi/parser.py                     | 50 ++++++++++-----
+>  tests/qapi-schema/doc-good.json            |  2 +
+>  tests/qapi-schema/doc-good.out             |  2 +
+>  tests/qapi-schema/doc-good.txt             |  6 ++
+>  tests/qapi-schema/doc-invalid-return.err   |  2 +-
+>  tests/qapi-schema/doc-invalid-return2.err  |  1 +
+>  tests/qapi-schema/doc-invalid-return2.json |  7 ++
+>  tests/qapi-schema/doc-invalid-return2.out  |  0
+>  tests/qapi-schema/meson.build              |  1 +
+>  29 files changed, 189 insertions(+), 245 deletions(-)
+>  create mode 100644 tests/qapi-schema/doc-invalid-return2.err
+>  create mode 100644 tests/qapi-schema/doc-invalid-return2.json
+>  create mode 100644 tests/qapi-schema/doc-invalid-return2.out
+>
+> --
+> 2.43.0
+>
+>
+
+--0000000000008b60fb0613645140
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi Markus,</div><div><br></div><div>I will merge qga-=
+related patches in my PULL.<br></div><div><br></div><div><div><div><div><di=
+v><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signat=
+ure"><div dir=3D"ltr"><div>Best Regards,</div><div>Konstantin Kostiuk.</div=
+></div></div></div><br></div></div></div></div></div><br><div class=3D"gmai=
+l_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Feb 27, 2024 at 1:39=
+=E2=80=AFPM Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com">armb=
+ru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" sty=
+le=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddi=
+ng-left:1ex">We use doc comment &quot;Returns&quot; sections both for succe=
+ss and error<br>
+response.=C2=A0 This series moves the latter to new &quot;Errors&quot; sect=
+ions.<br>
+Enables some cleanup, visible in the diffstat.q<br>
+<br>
+Markus Armbruster (13):<br>
+=C2=A0 qapi: Memorize since &amp; returns sections<br>
+=C2=A0 qapi: Slightly clearer error message for invalid &quot;Returns&quot;=
+ section<br>
+=C2=A0 qapi: New documentation section tag &quot;Errors&quot;<br>
+=C2=A0 qapi: Move error documentation to new &quot;Errors&quot; sections<br=
+>
+=C2=A0 qapi: Delete useless &quot;Returns&quot; sections<br>
+=C2=A0 qapi: Clean up &quot;Returns&quot; sections<br>
+=C2=A0 qapi/yank: Tweak @yank&#39;s error description for consistency<br>
+=C2=A0 qga/qapi-schema: Move error documentation to new &quot;Errors&quot; =
+sections<br>
+=C2=A0 qga/qapi-schema: Delete useless &quot;Returns&quot; sections<br>
+=C2=A0 qga/qapi-schema: Clean up &quot;Returns&quot; sections<br>
+=C2=A0 qga/qapi-schema: Tweak documentation of fsfreeze commands<br>
+=C2=A0 qga/qapi-schema: Fix guest-set-memory-blocks documentation<br>
+=C2=A0 qapi: Reject &quot;Returns&quot; section when command doesn&#39;t re=
+turn anything<br>
+<br>
+=C2=A0docs/devel/qapi-code-gen.rst=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0|=C2=A0 6 +-<br>
+=C2=A0qapi/block-core.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 74 ++++++++--------------<br>
+=C2=A0qapi/block-export.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 23 ++++---<br>
+=C2=A0qapi/block.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 10 ++-<br>
+=C2=A0qapi/char.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 6 --<br>
+=C2=A0qapi/dump.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 2 -<br>
+=C2=A0qapi/machine-target.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0| 37 ++++++-----<br>
+=C2=A0qapi/machine.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 19 ++----<br>
+=C2=A0qapi/migration.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 26 --------<br>
+=C2=A0qapi/misc-target.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 3 -<br>
+=C2=A0qapi/misc.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 25 +++-----<br>
+=C2=A0qapi/net.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 17 +++--<br>
+=C2=A0qapi/qdev.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 3 +-<br>
+=C2=A0qapi/qom.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 6 +-<br>
+=C2=A0qapi/run-state.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 5 +-<br>
+=C2=A0qapi/tpm.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 2 -<br>
+=C2=A0qapi/transaction.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 5 +-<br>
+=C2=A0qapi/ui.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 17 +----<br>
+=C2=A0qapi/yank.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 5 +-<br>
+=C2=A0qga/qapi-schema.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 72 +++++++++------------<br>
+=C2=A0scripts/qapi/parser.py=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 50 ++++++++++-----<br>
+=C2=A0tests/qapi-schema/doc-good.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 |=C2=A0 2 +<br>
+=C2=A0tests/qapi-schema/doc-good.out=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0|=C2=A0 2 +<br>
+=C2=A0tests/qapi-schema/doc-good.txt=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0|=C2=A0 6 ++<br>
+=C2=A0tests/qapi-schema/doc-invalid-return.err=C2=A0 =C2=A0|=C2=A0 2 +-<br>
+=C2=A0tests/qapi-schema/doc-invalid-return2.err=C2=A0 |=C2=A0 1 +<br>
+=C2=A0tests/qapi-schema/doc-invalid-return2.json |=C2=A0 7 ++<br>
+=C2=A0tests/qapi-schema/doc-invalid-return2.out=C2=A0 |=C2=A0 0<br>
+=C2=A0tests/qapi-schema/meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 |=C2=A0 1 +<br>
+=C2=A029 files changed, 189 insertions(+), 245 deletions(-)<br>
+=C2=A0create mode 100644 tests/qapi-schema/doc-invalid-return2.err<br>
+=C2=A0create mode 100644 tests/qapi-schema/doc-invalid-return2.json<br>
+=C2=A0create mode 100644 tests/qapi-schema/doc-invalid-return2.out<br>
+<br>
+-- <br>
+2.43.0<br>
+<br>
+</blockquote></div>
+
+--0000000000008b60fb0613645140--
 
 
