@@ -4,117 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B405C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 12:21:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E00EC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 12:35:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjeec-0005Gy-Fe; Mon, 11 Mar 2024 08:21:18 -0400
+	id 1rjery-0000rN-2o; Mon, 11 Mar 2024 08:35:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vkale@nvidia.com>) id 1rjeea-00054U-52
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 08:21:16 -0400
-Received: from mail-mw2nam04on2078.outbound.protection.outlook.com
- ([40.107.101.78] helo=NAM04-MW2-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vkale@nvidia.com>) id 1rjeeW-0008Lt-1w
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 08:21:15 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=CdFIPWZbW35cnjoWZxVS/lcsWz3PCbDlY8cXZrWAA67UGR9nYFWOBTx55t7x+mnpks1PQbqNbTRFmQ2u73R9uPkJkJ+riaIeoJw9/rZKr5kH873NfxIbWmFKl1Xifj5TT6C7oWGvLCusMHov+hY+2cMg9x2fm1GmYF7gDvKYqd64c4mEvp5YwSfjTjYeV2juWHdJGbKZldg2nWYK4OwNz8Ih+SKA13qrLbQlDzHc6VyJ9BfS1VgUwmyvLPIMK+fpjoQUNCWqEJCpyBjHiHPdmSDf5/FevpJ7COVgcqIUGNBQz65RTQaoconcZCM9IJ5OkmorLDBVCCZ2Oc5MLGtRKQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tnYlo/jpCzeKmtItcUAolkia80g+SLSC9y26UXblya4=;
- b=NjH8huwgq90mOy1TjhaO7fvbW/liNmLCgN0sRhhHMP93Vn141IeRc3QbzDfdufXQIs/hlWwaR05+G5acPk7aw0NA6/q+Qr8eMsxfEyejteMVnYGLTrA1LxbxgS+vIWl86jjGHIgCYxghqLV4HhRoshVSK9dH61KthsUT3BhIOig1BxdAqfuaPMDq//ZTHIvldRSS3nrV3BE91WXAFn78FDhbrO8mXdayneioAllCNFvcqvbNiid7ldvcqaw4Fv+EWJAdSfWqI1ILfhAjD0CzxkjQeP6XWrfETPY54OJvimKCMDwqG06C9f3CLQQSiNjyOi/T93tMPhe+CBsIlJ7CVA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.233) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tnYlo/jpCzeKmtItcUAolkia80g+SLSC9y26UXblya4=;
- b=s0czAKY7and0gp6ScASvukO9okw370PvrQJhBGOjlld3YqG3W2KVcUAk4tScx97h5ORWLp2YZ9/Mzj4aKYT9cIf7QUy4XLVgdis/uNliLO0EuiQw9PV6sOlTL8SH3cpIEBpc11i3++KiVpkiI5jYA6ctng196CubXUcBRlXLsC47jGNDHL/HSpHXe1r8PT3OMfb8DLc5IrWdPyLphzHqx6y/imJrPxdtn85yTwYAHUJxQYdeJeahITVE4via4idFk2vjyUhgc+ZibAoVYNVDzlQb4Icuh5eoyNEI/ZzqaxojNBgW0ls4AZOWYSIMxTj0y2a3Y7M5aKtQgwCSxR+FnA==
-Received: from BN9P223CA0014.NAMP223.PROD.OUTLOOK.COM (2603:10b6:408:10b::19)
- by BY5PR12MB4306.namprd12.prod.outlook.com (2603:10b6:a03:206::17)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.35; Mon, 11 Mar
- 2024 12:16:05 +0000
-Received: from BN2PEPF000044A6.namprd04.prod.outlook.com
- (2603:10b6:408:10b:cafe::4d) by BN9P223CA0014.outlook.office365.com
- (2603:10b6:408:10b::19) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.35 via Frontend
- Transport; Mon, 11 Mar 2024 12:16:05 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.233) by
- BN2PEPF000044A6.mail.protection.outlook.com (10.167.243.100) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7386.12 via Frontend Transport; Mon, 11 Mar 2024 12:16:05 +0000
-Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
- (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 11 Mar
- 2024 05:15:53 -0700
-Received: from drhqmail201.nvidia.com (10.126.190.180) by
- drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1258.12; Mon, 11 Mar 2024 05:15:52 -0700
-Received: from vkale-dev-linux.nvidia.com (10.127.8.10) by mail.nvidia.com
- (10.126.190.180) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12 via Frontend
- Transport; Mon, 11 Mar 2024 05:15:49 -0700
-From: Vinayak Kale <vkale@nvidia.com>
-To: <qemu-devel@nongnu.org>
-CC: <alex.williamson@redhat.com>, <mst@redhat.com>,
- <marcel.apfelbaum@gmail.com>, <avihaih@nvidia.com>, <acurrid@nvidia.com>,
- <cjia@nvidia.com>, <zhiw@nvidia.com>, <targupta@nvidia.com>,
- <kvm@vger.kernel.org>, Vinayak Kale <vkale@nvidia.com>
-Subject: [PATCH v2] vfio/pci: migration: Skip config space check for vendor
- specific capability during restore/load
-Date: Mon, 11 Mar 2024 17:45:19 +0530
-Message-ID: <20240311121519.1481732-1-vkale@nvidia.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <anthony.perard@cloud.com>)
+ id 1rjerw-0000qt-Fb
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 08:35:04 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <anthony.perard@cloud.com>)
+ id 1rjert-0002uu-TX
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 08:35:04 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4132a436086so5034865e9.2
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 05:35:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=citrix.com; s=google; t=1710160499; x=1710765299; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=rlPMa/qxborM8s490ri7DT2VZROhH4ERuCvOsPfS7eM=;
+ b=nebDNmtvU+MUtZa0vwbQWpiRKlEScf6PZDcA9E7h/VqFsHROdTOxhtYXeccjkobvGl
+ iHy6c3UQ0aryo3MYSiprVqW2KtD0lN/AerOXNe3foVZtDVjcbvlKLvyaYUAvg1CCBoaz
+ Kt347vb0ucoyRoMwvPkUndKLIsIzKxz/On8rY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710160499; x=1710765299;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rlPMa/qxborM8s490ri7DT2VZROhH4ERuCvOsPfS7eM=;
+ b=lXT3zmI7aU7kr4V+Elp2C5WOLZq/BlzH7sPZyPEKd9EGpMBPjGu7CSClRaLNJwh6Q1
+ iRnvsu+umFosI5YmVJdXu1LEpX9JtOVOdd7r0n5pFdhi23bg/LrT91h8SPBZyTXK3g8L
+ 6FTJANeu4g7dTzBtEPjc69/1mxlfqASaaQVuM0/aArx0bzWHS0NA1OQJi0g+BeI8hqUR
+ iVRQWn14dptpfxABL51FvQTc0vvJsX8WvbFfUR91bRuSPfb5MeyHrFcFx3yqFdx4QKc4
+ KdbSM8dtjfh7ZKqtV1yNjj+V3CyE86BnZZl1yspGdDfV9ZF5rlaA2WDZ2nCJJhkOGrNK
+ N80A==
+X-Gm-Message-State: AOJu0Yx//8vGhp/q9uM/RvEyHAUjmC0E9Xdn+cwBMks3QeXN2U/SYK3k
+ eg5LIGtOFll3OgLU+/h94gWkM9KX/NCGJPRwoqRgFcCCNoBdY37Mfl8lpj5IbKaTYtl7TLa0USk
+ k
+X-Google-Smtp-Source: AGHT+IGNVDb7sZG1ocbqJS/Hcf9B2VYTyLUFbrcHqEdOixXYj4DfOL6lzVnqAqkk11Sq1GbhwaJIAw==
+X-Received: by 2002:a05:600c:3f90:b0:413:28ee:22e5 with SMTP id
+ fs16-20020a05600c3f9000b0041328ee22e5mr2266589wmb.23.1710160499262; 
+ Mon, 11 Mar 2024 05:34:59 -0700 (PDT)
+Received: from localhost.localdomain
+ (cpc92320-cmbg19-2-0-cust35.5-4.cable.virginm.net. [82.13.64.36])
+ by smtp.gmail.com with ESMTPSA id
+ c6-20020a05600c0a4600b00412f2136793sm15792639wmq.44.2024.03.11.05.34.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 Mar 2024 05:34:58 -0700 (PDT)
+From: Anthony PERARD <anthony.perard@citrix.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: [PATCH] migration: Fix format in error message
+Date: Mon, 11 Mar 2024 12:34:39 +0000
+Message-Id: <20240311123439.16844-1-anthony.perard@citrix.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-X-NVConfidentiality: public
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN2PEPF000044A6:EE_|BY5PR12MB4306:EE_
-X-MS-Office365-Filtering-Correlation-Id: 53078364-ad67-4d3d-1441-08dc41c50684
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: NXXpz8nRrLWeXJ3x4b+r5erAp2lUoRh+h8LJQ2iGL+8xQUm3ToCF6fEi72Qv1cO2UQEHOTt6tU1L324sYWylGVCogg4AXkwAzzJFtBIFNvEzNscdnPtcRQpycBx5M9j0CnrsUJHDYkyKQfuFPX9SrkX5F55Zn9xG2tCeUX6B5cMyybZ7P7YlWtKR8xM5U+dnM7m+UmPsleiiBIIpJXE9GhsgJ9FYwDNJuqhmebebGnK4ukgKwrDuaOLCU1p9MdbUYCils5aXAFsIObc6KxSUNTMcjAA7IkNyZE9j0mEbMl0NYSj1ZoToa+K0NdrY36XUe+wUUNSt0aa4Ye1yxrWPqf+NOsgmOcpO2+/jVgfbrEZN2kjd3EDDPL+IxkYsJJWSFORBnwzv1CAXg6FHO+uqPJWu+SsQkM+1bvR3NLxGX3bSfj52p3gEI07PHQvEpehdOKMGvgqQw+uaqKlheyvXKaxhcUiZaasAF2uB5H3+8lUELxN0qR3xsbneLTaRLSwkcGH3ZN1wOYZTjUPGcYFIld0roESEjSqXdgl3S8s/qy5xHDJeHg3w+jqyWKixMlxyEi7492zzkmYVV7nk/pJzi8MC6QAi3WHaet1UDq21OeLsWMDYfHHwnfpULFcdqwaGQI9bQlrcfwHFI8rgkLW9FJGMVTNS4GFRtCyUSe2zHdNqxm+NR93TvLt+sE/3QsqpOds2u8k17yHq6DiKn5D/YXk6oUhbM5/vVKJj7BUJzK81Faj8xHq5msWOLOd6XSLy
-X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
- SFS:(13230031)(82310400014)(376005)(1800799015)(36860700004); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Mar 2024 12:16:05.1574 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 53078364-ad67-4d3d-1441-08dc41c50684
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF000044A6.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4306
-Received-SPF: softfail client-ip=40.107.101.78; envelope-from=vkale@nvidia.com;
- helo=NAM04-MW2-obe.outbound.protection.outlook.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=anthony.perard@cloud.com; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,67 +91,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In case of migration, during restore operation, qemu checks config space of the
-pci device with the config space in the migration stream captured during save
-operation. In case of config space data mismatch, restore operation is failed.
+From: Anthony PERARD <anthony.perard@citrix.com>
 
-config space check is done in function get_pci_config_device(). By default VSC
-(vendor-specific-capability) in config space is checked.
+In file_write_ramblock_iov(), "offset" is "uintptr_t" and not
+"ram_addr_t". While usually they are both equivalent, this is not the
+case with CONFIG_XEN_BACKEND.
 
-Ideally qemu should not check VSC for VFIO-PCI device during restore/load as
-qemu is not aware of VSC ABI.
+Use the right format. This will fix build on 32-bit.
 
-This patch skips the check for VFIO-PCI device by clearing pdev->cmask[] for VSC
-offsets. If cmask[] is not set for an offset, then qemu skips config space check
-for that offset.
-
-Signed-off-by: Vinayak Kale <vkale@nvidia.com>
+Fixes: f427d90b9898 ("migration/multifd: Support outgoing mapped-ram stream format")
+Signed-off-by: Anthony PERARD <anthony.perard@citrix.com>
 ---
-Version History
-v1->v2:
-    - Limited scope of change to vfio-pci devices instead of all pci devices.
+ migration/file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- hw/vfio/pci.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
-
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index d7fe06715c..9edaff4b37 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2132,6 +2132,22 @@ static void vfio_check_af_flr(VFIOPCIDevice *vdev, uint8_t pos)
-     }
- }
- 
-+static int vfio_add_vendor_specific_cap(VFIOPCIDevice *vdev, int pos,
-+                                        uint8_t size, Error **errp)
-+{
-+    PCIDevice *pdev = &vdev->pdev;
-+
-+    pos = pci_add_capability(pdev, PCI_CAP_ID_VNDR, pos, size, errp);
-+    if (pos < 0) {
-+        return pos;
-+    }
-+
-+    /* Exempt config space check for VSC during restore/load  */
-+    memset(pdev->cmask + pos, 0, size);
-+
-+    return pos;
-+}
-+
- static int vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
- {
-     PCIDevice *pdev = &vdev->pdev;
-@@ -2199,6 +2215,9 @@ static int vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
-         vfio_check_af_flr(vdev, pos);
-         ret = pci_add_capability(pdev, cap_id, pos, size, errp);
-         break;
-+    case PCI_CAP_ID_VNDR:
-+        ret = vfio_add_vendor_specific_cap(vdev, pos, size, errp);
-+        break;
-     default:
-         ret = pci_add_capability(pdev, cap_id, pos, size, errp);
-         break;
+diff --git a/migration/file.c b/migration/file.c
+index 164b079966..5054a60851 100644
+--- a/migration/file.c
++++ b/migration/file.c
+@@ -191,7 +191,7 @@ int file_write_ramblock_iov(QIOChannel *ioc, const struct iovec *iov,
+          */
+         offset = (uintptr_t) iov[slice_idx].iov_base - (uintptr_t) block->host;
+         if (offset >= block->used_length) {
+-            error_setg(errp, "offset " RAM_ADDR_FMT
++            error_setg(errp, "offset %" PRIxPTR
+                        "outside of ramblock %s range", offset, block->idstr);
+             ret = -1;
+             break;
 -- 
-2.34.1
+Anthony PERARD
 
 
