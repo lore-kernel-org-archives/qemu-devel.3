@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C4FBC5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 18:53:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77A4CC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 18:53:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjklJ-0005Cs-UT; Mon, 11 Mar 2024 14:52:37 -0400
+	id 1rjklB-00055f-Fx; Mon, 11 Mar 2024 14:52:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rjklB-000551-6P; Mon, 11 Mar 2024 14:52:29 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1rjkl5-0004yi-MD; Mon, 11 Mar 2024 14:52:24 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rjkl9-0004za-Kt; Mon, 11 Mar 2024 14:52:28 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-6e66da40b18so2020018b3a.0; 
- Mon, 11 Mar 2024 11:52:26 -0700 (PDT)
+ id 1rjkl3-0004yx-SG; Mon, 11 Mar 2024 14:52:23 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-1dc49b00bdbso25425075ad.3; 
+ Mon, 11 Mar 2024 11:52:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710183145; x=1710787945; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1710183138; x=1710787938; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3Czg2StR8XjybUCCLbM84Bm4x8Sx+Jf8gI13TFlmrKA=;
- b=j+qJRGihdBYT+g0tkxn5bn95h+NGeuFOybzOKIrPADRLv79pAjOdIH45k9nHpfp6l/
- Zb71RZ8HQVWGupfTFBry9tgy6IjZ8TxY/9XJdJhwBVL3R+gB+Udvm8HxmTIOZ0sebBA0
- +cP45IDwEn8sJZ5te5NAt3UGkRCWlzgMh/T5PJ9JIG25GD5tGVP+KdmwNcYjLnAKSKNM
- tTMWJZ8X/P1Ry5swWqAkF5Pxp2JMxG8W/NtrlJ3CDW0Y4eK+aTcImKysoPQeab1i2fBp
- DP/43kjkdobgVJi9pmixLZDMeQCbBSEmKH/8fmXJ3FW+2mZ6OC3RUJYe8801x6ey7Sd0
- GDjA==
+ bh=m4I3uk5RgxokOhWwxSwUTZCQpUL3SWxu7Fy5Fxqrf1U=;
+ b=KURUuVHQ3wh4+E/F/HZhSGZWq7338xSG85S3IbftsXBL6AxVs8Q4o2cW6a0de7tglD
+ TYNd9JBZc2mtUCy3bKfVI+WiHYrUXhypNMU4tt6/3pIf3+UGGOe+LbNNcKIdioMkZ33N
+ 4oNE9Gvw00SG3okSXPDtea27Mp8/NEnXtUaWLsLEpncUmpcVNbpA9fEMDzK5HaJ/Vmfu
+ gYtRuwblb2UYAydfjga9eGVWJ2Plu9ncXo4o3lxATNYKhGaFvNBb1D8UxSqkSvwKRtFI
+ WTib8lHd2zhft9TUstl4rbq1IQpwCAx/UTcnEyCVKolEgXjmhkKUIZEDoiLuXR/U3QoH
+ a1xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710183145; x=1710787945;
+ d=1e100.net; s=20230601; t=1710183138; x=1710787938;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3Czg2StR8XjybUCCLbM84Bm4x8Sx+Jf8gI13TFlmrKA=;
- b=veUTo3P9KCJfTR0jAnN3Py1ID5Y9UXnaf5qqUO9dz2FZYEMLHBVcKtmR+QnLhYPJEf
- eqNYkmbi4rmHb87KN60XhXtz+QBMZdOc0hLIBCDN+y3h6JCol+vCwGhK5CLr0ewKsNi2
- VJVRjZ0C4WZ3I/jtBGo0HKP4P1a7DaHe9gNOovuVdT2EcRZX2eccxpqOa3sN+DuYZEao
- hBzRfNhJR8UIY5PjvOvaBxg7sQnz7G9HBV+OuEe9om9Xwk6dqtwBWjpFMlNAQ2Rmt7yZ
- Ea4mreMqts0akVdkvM7oMjoizrSsVCIscbqcZpI7IauL2y5KTYPkeQgcmq53CnHZtSZ6
- 1kXQ==
+ bh=m4I3uk5RgxokOhWwxSwUTZCQpUL3SWxu7Fy5Fxqrf1U=;
+ b=vvGYlrX0L04OEFbTHRWiKYOqwc+3SLS+Hdl8UXiuX8S/nUmehhzfqV3HZpovG9MmYU
+ D8rj2kH7T8xuNL2/ZwdMG8gFosTEtF7jJTvUpMxz+QDKTId9S9LBTsTavR5FJK6GC/t2
+ tCK7FRLhCsYRT+JyMh9CosLM5X28ZZ/Sa1odaWRFo5+AYfyfeSYT0E+qIBBDfPSTlLle
+ DrYPIFZVKS0y0Jiie4PEQNGoPVdiRApQhMnYj2jzfxGAyWOGSxLKHaLiEjVVfFKEZMNi
+ 1dqtpblvnyvba00sMwMKcESYrVbW9ifLEAtstM4tBbvjmFK+nVpwrNIRmmjPU3sVAkyx
+ pNsg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXCQLfBxx6DzcNwq7FQby1LoOMyjrI2KGt5aRJjBtXim4TO7U3bGyVoOGwOo5FHQ9l8mOnAsc2iiItdL6TV1PVvnPss9LE=
-X-Gm-Message-State: AOJu0YwAXPSbcl43M0JGmqcAQYein6guw7CtepnqxhL2BUZaUKOMRhtt
- 3RMFZSkpGkyFqydU3RTvOYA2o31ibtE77Wp4HpPNeM75mMADuBqtVtaK3LpWS5o=
-X-Google-Smtp-Source: AGHT+IE9GrKU41IPOzDNyNMBypUE/SDHbqY2egNUWA6P0FV9BY3m3xepWiiBOKzavqH9v2dpa5c+Rg==
-X-Received: by 2002:a05:6a21:a585:b0:1a1:6a75:143b with SMTP id
- gd5-20020a056a21a58500b001a16a75143bmr5658313pzc.5.1710183145223; 
- Mon, 11 Mar 2024 11:52:25 -0700 (PDT)
+ AJvYcCVdcHYw0HD29Yu7fhKYvI9I6XHKReFS24TbP9Q0P0A7KuuvsSboAZ4608+//gxv6cj+vuykEiFRUfiD9J/JMoeSM0dKtrc=
+X-Gm-Message-State: AOJu0YzGtmDbBHDMGtcQ60gJvJT3MORdWroGAihqHd5vDV1Ju8vuDjmU
+ vVVg+EGboZ9E07q0H3C8J27SY/i8xObmaOD6XxH6WTAo1Ix9zRLVeIhPo9tpFEw=
+X-Google-Smtp-Source: AGHT+IGBsYLDmYSnyMPdfLEAm02/vjJmNAq+OuGOyKb+L9jpXu6qb9qRrmAmQ/oMnFYaGfJDjqS1RA==
+X-Received: by 2002:a17:902:ccc5:b0:1dd:9263:c3bd with SMTP id
+ z5-20020a170902ccc500b001dd9263c3bdmr4110899ple.12.1710183138573; 
+ Mon, 11 Mar 2024 11:52:18 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- z2-20020a170903018200b001dd7d00f7afsm4843887plg.18.2024.03.11.11.52.22
+ z2-20020a170903018200b001dd7d00f7afsm4843887plg.18.2024.03.11.11.52.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 11:52:24 -0700 (PDT)
+ Mon, 11 Mar 2024 11:52:18 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  David Gibson <david@gibson.dropbear.id.au>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PATCH 05/13] ppc/spapr: Adjust ibm,pa-features for POWER9
-Date: Tue, 12 Mar 2024 04:51:47 +1000
-Message-ID: <20240311185200.2185753-6-npiggin@gmail.com>
+Subject: [PATCH 03/13] ppc/spapr|pnv: Remove SAO from pa-features
+Date: Tue, 12 Mar 2024 04:51:45 +1000
+Message-ID: <20240311185200.2185753-4-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240311185200.2185753-1-npiggin@gmail.com>
 References: <20240311185200.2185753-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,39 +96,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"MMR" and "SPR SO" are not implemented in POWER9, so clear those bits.
-HTM is not set by default, and only later if the cap is set, so remove
-the comment that suggests otherwise.
+SAO is a page table attribute that strengthens the memory ordering of
+accesses. QEMU with MTTCG does not implement this, so clear it in
+ibm,pa-features. This is an obscure feature that has been removed from
+POWER10 ISA v3.1, there isn't much concern with removing it.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/spapr.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ hw/ppc/pnv.c   |  2 +-
+ hw/ppc/spapr.c | 14 ++++++++++----
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 0b47b92baa..aa9786e970 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -150,7 +150,7 @@ static void pnv_dt_core(PnvChip *chip, PnvCore *pc, void *fdt)
+     uint32_t page_sizes_prop[64];
+     size_t page_sizes_prop_size;
+     const uint8_t pa_features[] = { 24, 0,
+-                                    0xf6, 0x3f, 0xc7, 0xc0, 0x80, 0xf0,
++                                    0xf6, 0x3f, 0xc7, 0xc0, 0x00, 0xf0,
+                                     0x80, 0x00, 0x00, 0x00, 0x00, 0x00,
+                                     0x00, 0x00, 0x00, 0x00, 0x80, 0x00,
+                                     0x80, 0x00, 0x80, 0x00, 0x80, 0x00 };
 diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 7d7da30f60..247f920f07 100644
+index 55263f0815..5099f12cc6 100644
 --- a/hw/ppc/spapr.c
 +++ b/hw/ppc/spapr.c
-@@ -248,14 +248,14 @@ static void spapr_dt_pa_features(SpaprMachineState *spapr,
+@@ -234,16 +234,16 @@ static void spapr_dt_pa_features(SpaprMachineState *spapr,
+                                  void *fdt, int offset)
+ {
+     uint8_t pa_features_206[] = { 6, 0,
+-        0xf6, 0x1f, 0xc7, 0x00, 0x80, 0xc0 };
++        0xf6, 0x1f, 0xc7, 0x00, 0x00, 0xc0 };
+     uint8_t pa_features_207[] = { 24, 0,
+-        0xf6, 0x1f, 0xc7, 0xc0, 0x80, 0xf0,
++        0xf6, 0x1f, 0xc7, 0xc0, 0x00, 0xf0,
+         0x80, 0x00, 0x00, 0x00, 0x00, 0x00,
+         0x00, 0x00, 0x00, 0x00, 0x80, 0x00,
+         0x80, 0x00, 0x80, 0x00, 0x00, 0x00 };
+     uint8_t pa_features_300[] = { 66, 0,
+         /* 0: MMU|FPU|SLB|RUN|DABR|NX, 1: fri[nzpm]|DABRX|SPRG3|SLB0|PP110 */
+-        /* 2: VPM|DS205|PPR|DS202|DS206, 3: LSD|URG, SSO, 5: LE|CFAR|EB|LSQ */
+-        0xf6, 0x1f, 0xc7, 0xc0, 0x80, 0xf0, /* 0 - 5 */
++        /* 2: VPM|DS205|PPR|DS202|DS206, 3: LSD|URG, 5: LE|CFAR|EB|LSQ */
++        0xf6, 0x1f, 0xc7, 0xc0, 0x00, 0xf0, /* 0 - 5 */
+         /* 6: DS207 */
          0x80, 0x00, 0x00, 0x00, 0x00, 0x00, /* 6 - 11 */
          /* 16: Vector */
-         0x00, 0x00, 0x00, 0x00, 0x80, 0x00, /* 12 - 17 */
--        /* 18: Vec. Scalar, 20: Vec. XOR, 22: HTM */
-+        /* 18: Vec. Scalar, 20: Vec. XOR */
-         0x80, 0x00, 0x80, 0x00, 0x00, 0x00, /* 18 - 23 */
-         /* 24: Ext. Dec, 26: 64 bit ftrs, 28: PM ftrs */
-         0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 24 - 29 */
--        /* 30: MMR, 32: LE atomic, 34: EBB + ext EBB */
--        0x80, 0x00, 0x80, 0x00, 0xC0, 0x00, /* 30 - 35 */
--        /* 36: SPR SO, 40: Radix MMU */
--        0x80, 0x00, 0x00, 0x00, 0x80, 0x00, /* 36 - 41 */
-+        /* 32: LE atomic, 34: EBB + ext EBB */
-+        0x00, 0x00, 0x80, 0x00, 0xC0, 0x00, /* 30 - 35 */
-+        /* 40: Radix MMU */
-+        0x00, 0x00, 0x00, 0x00, 0x80, 0x00, /* 36 - 41 */
-         /* 42: PM, 44: PC RA, 46: SC vec'd */
-         0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 42 - 47 */
-         /* 48: SIMD, 50: QP BFP, 52: String */
+@@ -284,6 +284,12 @@ static void spapr_dt_pa_features(SpaprMachineState *spapr,
+         return;
+     }
+ 
++    /*
++     * SSO (SAO) ordering is supported on KVM and thread=single hosts,
++     * but not MTTCG, so disable it. To advertise it, a cap would have
++     * to be added, or support implemented for MTTCG.
++     */
++
+     if (ppc_hash64_has(cpu, PPC_HASH64_CI_LARGEPAGE)) {
+         /*
+          * Note: we keep CI large pages off by default because a 64K capable
 -- 
 2.42.0
 
