@@ -4,56 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0211C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:27:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9B91C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:27:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjWJL-0002BH-Nl; Sun, 10 Mar 2024 23:26:47 -0400
+	id 1rjWIv-00082A-Ms; Sun, 10 Mar 2024 23:26:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWJK-0001zx-7k; Sun, 10 Mar 2024 23:26:46 -0400
+ id 1rjWIu-0007vj-32; Sun, 10 Mar 2024 23:26:20 -0400
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWJH-00084P-W6; Sun, 10 Mar 2024 23:26:45 -0400
+ id 1rjWIs-0008BV-0b; Sun, 10 Mar 2024 23:26:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710127604; x=1741663604;
+ t=1710127578; x=1741663578;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=EmFbIY6Qn3mloQQLOMmHVbYM6zm0hNI5fLAvwGdEegc=;
- b=CaovXFTrego+dUblqRoGrPSyUyeKem1k7AQHt4E9AW+wqffiOiLPVrq7
- Vp24Jhj3VYjCGHNeBc9tDbkIC6HnYX8Ij3vVMEKsDYe3F/xNXGYwPrlOr
- j5DAdc/RcYsM7iU8WMWrRZclfHYI5KygnNUKoqa/lJXs2mYch/sFOhoGh
- C2TrwPXvpvOQfpbNBj4HdtqZyNgmr9EJXuP5GiLdXdRnoa4DfcQZpH2x4
- 4HG1uoTU9L3qH08zU3WaFEq0cg4zEuVYyiKslQyb96Pi1HdmJ8vLSoxq0
- 3hAWCGkxjeBBpdA5ZmxrnkV7Cy7O3hapJVaGaUSbU9uK459qXB88Z8LAH A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229844"
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229844"
+ bh=TFnB2T5AZHrD3WQA9yPndxMlq2vhIpqQTeZDm9Rn2z4=;
+ b=a7dOTpSF2TNOKADHGhu67C+tnWrf4JJ0m1ZafYkHRk/0zwynlBYa8nrF
+ k3rE83zD13UScB5Q/HmAvYKBUlOgWXG3RQZIqvrZK816L5If5AN8J6b5q
+ sIiQiJxPtKe2RDzifKgtyNyheF1zrEXEHzIEWUpoqMOj9KV2fY5tB2vqq
+ m1YM7MPELFqh2Mi4/ioH+dn2ZEnJo0r7xV1kgrAuKK9K1bY39r4yjIXjC
+ qjnXAFXrqnnQB9vMx+MoPC3MIdYsq3sKnc+8akTrJco2N4JrzLitl5YTw
+ 9USdUE94njLOoWBhji73GLPIuiartX+2pB0MXOVJlq4SkV090zBrey0y/ Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229772"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229772"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2024 20:26:00 -0700
+ 10 Mar 2024 20:25:46 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15594086"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15594046"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:25:57 -0700
+ by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:25:44 -0700
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, Michael Tokarev <mjt@tls.msk.ru>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v2 26/29] hw/virtio/vhost: Fix missing ERRP_GUARD() for
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v2 21/29] hw/vfio/iommufd: Fix missing ERRP_GUARD() for
  error_prepend()
-Date: Mon, 11 Mar 2024 11:38:19 +0800
-Message-Id: <20240311033822.3142585-27-zhao1.liu@linux.intel.com>
+Date: Mon, 11 Mar 2024 11:38:14 +0800
+Message-Id: <20240311033822.3142585-22-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
 References: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: none client-ip=198.175.65.10;
  envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
@@ -100,47 +102,39 @@ ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
 can't see this additional information, because exit() happens in
 error_setg earlier than information is added [1].
 
-In hw/virtio/vhost.c, there are 2 functions passing @errp to
-error_prepend() without ERRP_GUARD():
-- vhost_save_backend_state()
-- vhost_load_backend_state()
+The iommufd_cdev_getfd() passes @errp to error_prepend(). Its @errp is
+from vfio_attach_device(), and there are too many possible callers to
+check the impact of this defect; it may or may not be harmless. Thus it
+is necessary to protect @errp with ERRP_GUARD().
 
-Their @errp both points to callers' @local_err. However, as the APIs
-defined in include/hw/virtio/vhost.h, it is necessary to protect their
-@errp with ERRP_GUARD().
-
-To follow the requirement of @errp, add missing ERRP_GUARD() at their
-beginning.
+To avoid the issue like [1] said, add missing ERRP_GUARD() at the
+beginning of this function.
 
 [1]: Issue description in the commit message of commit ae7c80a7bd73
      ("error: New macro ERRP_GUARD()").
 
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>
+Cc: "Cédric Le Goater" <clg@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/virtio/vhost.c | 2 ++
- 1 file changed, 2 insertions(+)
+v2: Use Markus' sentence to polish commit message. (Markus)
+---
+ hw/vfio/iommufd.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 2c9ac794680e..2e4e040db87a 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -2199,6 +2199,7 @@ int vhost_check_device_state(struct vhost_dev *dev, Error **errp)
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 9bfddc136089..7baf49e6ee9e 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -116,6 +116,7 @@ static void iommufd_cdev_unbind_and_disconnect(VFIODevice *vbasedev)
  
- int vhost_save_backend_state(struct vhost_dev *dev, QEMUFile *f, Error **errp)
+ static int iommufd_cdev_getfd(const char *sysfs_path, Error **errp)
  {
 +    ERRP_GUARD();
-     /* Maximum chunk size in which to transfer the state */
-     const size_t chunk_size = 1 * 1024 * 1024;
-     g_autofree void *transfer_buf = NULL;
-@@ -2291,6 +2292,7 @@ fail:
- 
- int vhost_load_backend_state(struct vhost_dev *dev, QEMUFile *f, Error **errp)
- {
-+    ERRP_GUARD();
-     size_t transfer_buf_size = 0;
-     g_autofree void *transfer_buf = NULL;
-     g_autoptr(GError) g_err = NULL;
+     long int ret = -ENOTTY;
+     char *path, *vfio_dev_path = NULL, *vfio_path = NULL;
+     DIR *dir = NULL;
 -- 
 2.34.1
 
