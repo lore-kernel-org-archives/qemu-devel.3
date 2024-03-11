@@ -4,92 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C9FAC5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:54:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B363C5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:55:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjjm4-0001zU-1e; Mon, 11 Mar 2024 13:49:20 -0400
+	id 1rjjrU-0001eQ-5n; Mon, 11 Mar 2024 13:54:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1rjjm1-0001yw-MF
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:49:17 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1rjjrQ-0001bs-Cs
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:54:52 -0400
+Received: from mout.kundenserver.de ([212.227.17.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1rjjly-0008Ux-U1
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:49:16 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42BG40VH008055; Mon, 11 Mar 2024 17:49:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
- h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=corp-2023-11-20;
- bh=IVKZLe22DQsufeVB6WmtLdyngoZnPDBPar2qUtXJ1t0=;
- b=kQPzX53cls/VsFNd40+K3UcRaee+PjWnHcY90Hk0cWUhg/0q0xyRJv16LFO1JLZWxyUy
- LMGIsyXRoU2pV9JmrrlJc7zSW9vYupsitOVE8quktbbcz3Z9/6SxcWBQ7puTvao6VfHL
- IS9nmlIIEs6N794yxJODsWIgA4TZW2jzXzQ2vKK9/Eme31XklsHBqQT+Dfyl4r7qvaMN
- gP3jaGqyZm0P2TWVpjaminCK14VLx58iVt4QJNHT49k8dWl7I4UrN/UZmyJyCziLZ7V5
- DNZ15zMVhF1k4l7+/DZcSlSzOHl5NXVDVYMHP1WkCIQwn9tETnk91/WddTmKPYrE4lRe Vg== 
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wrftdc22x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 11 Mar 2024 17:49:09 +0000
-Received: from pps.filterd
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 42BHcAAA028515; Mon, 11 Mar 2024 17:49:08 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 3wre76335h-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 11 Mar 2024 17:49:08 +0000
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42BHlHcm020033;
- Mon, 11 Mar 2024 17:49:07 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 3wre763302-5; Mon, 11 Mar 2024 17:49:07 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1rjjrM-0001G6-Kz
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:54:51 -0400
+Received: from quad ([82.142.8.70]) by mrelayeu.kundenserver.de (mreue107
+ [212.227.15.183]) with ESMTPSA (Nemesis) id 1MHFwM-1rfOGf47Tk-00DDrN; Mon, 11
+ Mar 2024 18:54:42 +0100
+From: Laurent Vivier <laurent@vivier.eu>
 To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Hailiang Zhang <zhanghailiang@xfusion.com>,
- Zhang Chen <chen.zhang@intel.com>, Li Zhijian <lizhijian@fujitsu.com>,
- Jason Wang <jasowang@redhat.com>, Hyman Huang <yong.huang@smartx.com>,
- Song Gao <gaosong@loongson.cn>,
- Alistair Francis <alistair.francis@wdc.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V2 04/11] migration: export migration_is_running
-Date: Mon, 11 Mar 2024 10:48:51 -0700
-Message-Id: <1710179338-294359-5-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1710179338-294359-1-git-send-email-steven.sistare@oracle.com>
-References: <1710179338-294359-1-git-send-email-steven.sistare@oracle.com>
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-11_10,2024-03-11_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- bulkscore=0 adultscore=0
- mlxscore=0 phishscore=0 spamscore=0 suspectscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
- definitions=main-2403110136
-X-Proofpoint-ORIG-GUID: HoiCUWpiS3xV9YqQM1q4V9FzplbRid1M
-X-Proofpoint-GUID: HoiCUWpiS3xV9YqQM1q4V9FzplbRid1M
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Cc: Laurent Vivier <laurent@vivier.eu>
+Subject: [PULL 0/1] M68k for 9.0 patches
+Date: Mon, 11 Mar 2024 18:54:39 +0100
+Message-ID: <20240311175440.305912-1-laurent@vivier.eu>
+X-Mailer: git-send-email 2.43.2
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:IRVDsMdHJnTnyGUDns1aN7Jkxi9iZwcSvQobSeD8aorD3D0dVYL
+ rmCoa2W+MwHnv67cvkSCN+TtLaWvcWkZGk05eewzFvczMw+zOhuz4cMSE6Q3X8TqhDGxpX+
+ dMAlZPyU3yIoo5nIaz3OhMXAWbwWwyFIr+ni2Gh4AY7xSiX2YuQ8nU8BW2cmE5DAKwPHmA/
+ lnmgFSWvyClHM5zfRDljQ==
+UI-OutboundReport: notjunk:1;M01:P0:7QsDzB6yECQ=;llXe7Dpo3ewWDWVxpn4vUWikJP6
+ vkzA074d0QASn1c/Yz27cE+2xw0l0arfqtWysaSbteh9XkrMMqWfDpUX/E91kLqNlQxY57Mxd
+ pb3SMcs8DayBYAOS1HaMNvq9GWDK50Xnc7lRDMA09u4Kdkr+xTUy465+m08eK6MrptRTDbnvb
+ z42DEwYe0fQY1sipfMoJlVHj2BVFRW3O2Pbexkm8QvZRupk7URIdH3j6nFBb/wM0S6bw24UYY
+ q8C3lsRvaMURoy8VAyKcqaFejRiwL/8yrePR4GGKh5r9fJlQK9yBzw4UfKjS+APVYzwlK0BS+
+ +WyE83n69zyxoTKJiVeFDT7mucLC5to6vWM4jucKtQ8YM/wigxHNusji7q873c45HPDXRLyM3
+ Atty3mI7RDi1IsKmpCGB28SWi4G8r5/SiN+Stay+wRi/AhB5VeXb+GuakSE33Jcgf4MTAM8Jm
+ ZXis4CWo2BSVY5VvHXHJCciVS47wCE9Xr0xAOV25ZE0yKemOqU/pIe6UG3ePL8B1mxWy5LCdG
+ vwKvMyqvoIkvH21qn1f54m3aqC2Mrxve/vwiQy8nrFlg4kbm4FAtdnWF1IAeOL5SuEfXqMEvi
+ f+ROqrmJD3hQGpxKH7XxOX/aoOuFHFe779+NR3u3tKM0N6K3pzum3on9vnsGdrlAI3H5FaI7L
+ 7IbI+MMy6emWF8ZM79VKsNPcar5cbQEPt+YWW39tr9e20OE9idJ887nCKgns0GfhZuVCv6kkz
+ nwt4r+Lp8n7L4OqB0+NBvsfcoMVRnHJjSxwX6N9r2jsKFbbmvlIGOE=
+Received-SPF: pass client-ip=212.227.17.10; envelope-from=laurent@vivier.eu;
+ helo=mout.kundenserver.de
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,152 +70,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Delete the MigrationState parameter from migration_is_running and move
-it to the public API in misc.h.
+The following changes since commit 7489f7f3f81dcb776df8c1b9a9db281fc21bf05f:
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
----
- include/migration/misc.h   |  1 +
- migration/migration.c      | 10 ++++++----
- migration/migration.h      |  2 --
- migration/options.c        |  4 ++--
- migration/savevm.c         |  2 +-
- system/dirtylimit.c        |  2 +-
- target/riscv/kvm/kvm-cpu.c |  4 ++--
- 7 files changed, 13 insertions(+), 12 deletions(-)
+  Merge tag 'hw-misc-20240309' of https://github.com/philmd/qemu into staging (2024-03-09 20:12:21 +0000)
 
-diff --git a/include/migration/misc.h b/include/migration/misc.h
-index e1f1bf8..7526977 100644
---- a/include/migration/misc.h
-+++ b/include/migration/misc.h
-@@ -106,6 +106,7 @@ int migration_call_notifiers(MigrationState *s, MigrationEventType type,
- bool migration_in_setup(MigrationState *);
- bool migration_has_finished(MigrationState *);
- bool migration_has_failed(MigrationState *);
-+bool migration_is_running(void);
- /* ...and after the device transmission */
- /* True if incoming migration entered POSTCOPY_INCOMING_DISCARD */
- bool migration_in_incoming_postcopy(void);
-diff --git a/migration/migration.c b/migration/migration.c
-index 17859cb..546ba86 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1103,9 +1103,11 @@ bool migration_is_setup_or_active(void)
-     }
- }
- 
--bool migration_is_running(int state)
-+bool migration_is_running(void)
- {
--    switch (state) {
-+    MigrationState *s = current_migration;
-+
-+    switch (s->state) {
-     case MIGRATION_STATUS_ACTIVE:
-     case MIGRATION_STATUS_POSTCOPY_ACTIVE:
-     case MIGRATION_STATUS_POSTCOPY_PAUSED:
-@@ -1477,7 +1479,7 @@ static void migrate_fd_cancel(MigrationState *s)
- 
-     do {
-         old_state = s->state;
--        if (!migration_is_running(old_state)) {
-+        if (!migration_is_running()) {
-             break;
-         }
-         /* If the migration is paused, kick it out of the pause */
-@@ -1962,7 +1964,7 @@ static bool migrate_prepare(MigrationState *s, bool blk, bool blk_inc,
-         return true;
-     }
- 
--    if (migration_is_running(s->state)) {
-+    if (migration_is_running()) {
-         error_setg(errp, QERR_MIGRATION_ACTIVE);
-         return false;
-     }
-diff --git a/migration/migration.h b/migration/migration.h
-index 736460a..e4983db 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -479,8 +479,6 @@ bool migrate_has_error(MigrationState *s);
- 
- void migrate_fd_connect(MigrationState *s, Error *error_in);
- 
--bool migration_is_running(int state);
--
- int migrate_init(MigrationState *s, Error **errp);
- bool migration_is_blocked(Error **errp);
- /* True if outgoing migration has entered postcopy phase */
-diff --git a/migration/options.c b/migration/options.c
-index 40eb930..642cfb0 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -681,7 +681,7 @@ bool migrate_cap_set(int cap, bool value, Error **errp)
-     MigrationState *s = migrate_get_current();
-     bool new_caps[MIGRATION_CAPABILITY__MAX];
- 
--    if (migration_is_running(s->state)) {
-+    if (migration_is_running()) {
-         error_setg(errp, QERR_MIGRATION_ACTIVE);
-         return false;
-     }
-@@ -725,7 +725,7 @@ void qmp_migrate_set_capabilities(MigrationCapabilityStatusList *params,
-     MigrationCapabilityStatusList *cap;
-     bool new_caps[MIGRATION_CAPABILITY__MAX];
- 
--    if (migration_is_running(s->state) || migration_in_colo_state()) {
-+    if (migration_is_running() || migration_in_colo_state()) {
-         error_setg(errp, QERR_MIGRATION_ACTIVE);
-         return;
-     }
-diff --git a/migration/savevm.c b/migration/savevm.c
-index dc1fb9c..71974b6 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -1705,7 +1705,7 @@ static int qemu_savevm_state(QEMUFile *f, Error **errp)
-     MigrationState *ms = migrate_get_current();
-     MigrationStatus status;
- 
--    if (migration_is_running(ms->state)) {
-+    if (migration_is_running()) {
-         error_setg(errp, QERR_MIGRATION_ACTIVE);
-         return -EINVAL;
-     }
-diff --git a/system/dirtylimit.c b/system/dirtylimit.c
-index 051e031..1622bb7 100644
---- a/system/dirtylimit.c
-+++ b/system/dirtylimit.c
-@@ -451,7 +451,7 @@ static bool dirtylimit_is_allowed(void)
- {
-     MigrationState *ms = migrate_get_current();
- 
--    if (migration_is_running(ms->state) &&
-+    if (migration_is_running() &&
-         (!qemu_thread_is_self(&ms->thread)) &&
-         migrate_dirty_limit() &&
-         dirtylimit_in_service()) {
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 422e4f1..cf046db 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -44,7 +44,7 @@
- #include "kvm_riscv.h"
- #include "sbi_ecall_interface.h"
- #include "chardev/char-fe.h"
--#include "migration/migration.h"
-+#include "migration/misc.h"
- #include "sysemu/runstate.h"
- #include "hw/riscv/numa.h"
- 
-@@ -700,7 +700,7 @@ static void kvm_riscv_put_regs_timer(CPUState *cs)
-      * frequency. Therefore, we should check whether they are the same here
-      * during the migration.
-      */
--    if (migration_is_running(migrate_get_current()->state)) {
-+    if (migration_is_running()) {
-         KVM_RISCV_GET_TIMER(cs, frequency, reg);
-         if (reg != env->kvm_timer_frequency) {
-             error_report("Dst Hosts timer frequency != Src Hosts");
+are available in the Git repository at:
+
+  https://github.com/vivier/qemu-m68k.git tags/m68k-for-9.0-pull-request
+
+for you to fetch changes up to e39a0809b99bbbe5f0ec432fdd9e8c943ba24936:
+
+  virt: set the CPU type in BOOTINFO (2024-03-11 09:38:08 +0100)
+
+----------------------------------------------------------------
+Pull request for m68k 20240311
+
+----------------------------------------------------------------
+
+Laurent Vivier (1):
+  virt: set the CPU type in BOOTINFO
+
+ hw/m68k/virt.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
+
 -- 
-1.8.3.1
+2.43.2
 
 
