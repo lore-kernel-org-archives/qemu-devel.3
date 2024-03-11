@@ -4,50 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B363C5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:55:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 887F2C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:55:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjjrU-0001eQ-5n; Mon, 11 Mar 2024 13:54:56 -0400
+	id 1rjjrd-0001g2-HT; Mon, 11 Mar 2024 13:55:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1rjjrQ-0001bs-Cs
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1rjjrQ-0001bz-QY
  for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:54:52 -0400
-Received: from mout.kundenserver.de ([212.227.17.10])
+Received: from mout.kundenserver.de ([217.72.192.73])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1rjjrM-0001G6-Kz
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:54:51 -0400
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1rjjrM-0001GC-L4
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:54:52 -0400
 Received: from quad ([82.142.8.70]) by mrelayeu.kundenserver.de (mreue107
- [212.227.15.183]) with ESMTPSA (Nemesis) id 1MHFwM-1rfOGf47Tk-00DDrN; Mon, 11
+ [212.227.15.183]) with ESMTPSA (Nemesis) id 1MdeKd-1rAP2Z3Ah7-00ZeQq; Mon, 11
  Mar 2024 18:54:42 +0100
 From: Laurent Vivier <laurent@vivier.eu>
 To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>
-Subject: [PULL 0/1] M68k for 9.0 patches
-Date: Mon, 11 Mar 2024 18:54:39 +0100
-Message-ID: <20240311175440.305912-1-laurent@vivier.eu>
+Cc: Laurent Vivier <laurent@vivier.eu>, Daniel Palmer <daniel@0x0f.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: [PULL 1/1] virt: set the CPU type in BOOTINFO
+Date: Mon, 11 Mar 2024 18:54:40 +0100
+Message-ID: <20240311175440.305912-2-laurent@vivier.eu>
 X-Mailer: git-send-email 2.43.2
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20240311175440.305912-1-laurent@vivier.eu>
+References: <20240311175440.305912-1-laurent@vivier.eu>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:IRVDsMdHJnTnyGUDns1aN7Jkxi9iZwcSvQobSeD8aorD3D0dVYL
- rmCoa2W+MwHnv67cvkSCN+TtLaWvcWkZGk05eewzFvczMw+zOhuz4cMSE6Q3X8TqhDGxpX+
- dMAlZPyU3yIoo5nIaz3OhMXAWbwWwyFIr+ni2Gh4AY7xSiX2YuQ8nU8BW2cmE5DAKwPHmA/
- lnmgFSWvyClHM5zfRDljQ==
-UI-OutboundReport: notjunk:1;M01:P0:7QsDzB6yECQ=;llXe7Dpo3ewWDWVxpn4vUWikJP6
- vkzA074d0QASn1c/Yz27cE+2xw0l0arfqtWysaSbteh9XkrMMqWfDpUX/E91kLqNlQxY57Mxd
- pb3SMcs8DayBYAOS1HaMNvq9GWDK50Xnc7lRDMA09u4Kdkr+xTUy465+m08eK6MrptRTDbnvb
- z42DEwYe0fQY1sipfMoJlVHj2BVFRW3O2Pbexkm8QvZRupk7URIdH3j6nFBb/wM0S6bw24UYY
- q8C3lsRvaMURoy8VAyKcqaFejRiwL/8yrePR4GGKh5r9fJlQK9yBzw4UfKjS+APVYzwlK0BS+
- +WyE83n69zyxoTKJiVeFDT7mucLC5to6vWM4jucKtQ8YM/wigxHNusji7q873c45HPDXRLyM3
- Atty3mI7RDi1IsKmpCGB28SWi4G8r5/SiN+Stay+wRi/AhB5VeXb+GuakSE33Jcgf4MTAM8Jm
- ZXis4CWo2BSVY5VvHXHJCciVS47wCE9Xr0xAOV25ZE0yKemOqU/pIe6UG3ePL8B1mxWy5LCdG
- vwKvMyqvoIkvH21qn1f54m3aqC2Mrxve/vwiQy8nrFlg4kbm4FAtdnWF1IAeOL5SuEfXqMEvi
- f+ROqrmJD3hQGpxKH7XxOX/aoOuFHFe779+NR3u3tKM0N6K3pzum3on9vnsGdrlAI3H5FaI7L
- 7IbI+MMy6emWF8ZM79VKsNPcar5cbQEPt+YWW39tr9e20OE9idJ887nCKgns0GfhZuVCv6kkz
- nwt4r+Lp8n7L4OqB0+NBvsfcoMVRnHJjSxwX6N9r2jsKFbbmvlIGOE=
-Received-SPF: pass client-ip=212.227.17.10; envelope-from=laurent@vivier.eu;
+X-Provags-ID: V03:K1:sIypDfsU2Q1A68rSltQe1d6u1RkwrEZG4NSsTRy3yNYtPaMwKvq
+ 9jW07FXkXPFdOcRzivd8H1PuC9kg1RoePuqcnRzoK6/5yVQhfHGAM+5eW6Dk8uqOGN7W2Vd
+ JmYswFoBcwF3wJFqfYOz2D7V4ctEfbuLlYBnCuxE/itn3j5tu+1pcd+cS2ka3w/MgYP3KiI
+ b+P71VNFnS0pk7tNIl55w==
+UI-OutboundReport: notjunk:1;M01:P0:R+nmviD4gQc=;nQ1dHwIorWIdUAALSNj0GcgEUFA
+ Kh376QrSQWEqHZIUn0uQh39vOCsr7rAH177bW1PjtLPe1uOW5RZZylpQcy90pOGO7e3Iomsgo
+ otFZqp1zh53zVqR9M/FmOuEnN8ig4xP39sKeH5aQfxMySTkayJE2Ts/k0rPOqJTlArwZJzX37
+ /ydhA1oQ9bdQv1p2vCnV3+s1FYi+ob4iqpy7l9VKmwSmWsXJlgAoVlMMSqCNeAMZiv+TpEGxZ
+ WR8QpOjRINIF7OOfEcXbK2dDCp99eEueSqekiv3oPKbH+AhThBUFjGaCLGET4NKQmkTEZWN2a
+ FpgTWOgsIzF63+Jc/DIi+3a6XgRJtrF8dXhZihqMRdlz8/3y7i+SAOgNlggEglKqwr1nAWWbm
+ SsbQGD7ZcKuRl3x1QeXyOnTF7WtI9lNa1QVrg/cXtqHsSSEkx1W1mcsQKs4RJagE5WAEkwhbL
+ qG1JHzMsqaoMYwvSHXBp9kEGxbvSCmWfvNPXKXLjBax4B9BgegoFD6WbQbAtNVaLSxse4J+jy
+ 4t33mtjM6y5IO6fLITV7c+0iZOpfpYwQ/zMNwnm/tCn7butYmZg5iIjX9iiuMyabfBDVEYLpL
+ EIqrBfOCjPMCAr9DuC8sc5G4F1WlyDDpCK5LuFcgSFX7NQkBbt15O3DUC+Z2RMS/fFQHQSoGs
+ LlLvcQq1xs/TzptR5eMVwlTx1okX8sCu8ntqZ8H5a+isajmccnJC/oM47spj93rM4rIZ+dBKk
+ qiV0/APYbG4XVWUAo10WxYq+f7XwuYM291gg3uKWm5X4NbYBN9jYt8=
+Received-SPF: pass client-ip=217.72.192.73; envelope-from=laurent@vivier.eu;
  helo=mout.kundenserver.de
 X-Spam_score_int: -18
 X-Spam_score: -1.9
@@ -70,29 +72,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 7489f7f3f81dcb776df8c1b9a9db281fc21bf05f:
+BI_CPUTYPE/BI_MMUTYPE/BI_FPUTYPE were statically assigned to the
+68040 information.
+This patch changes the code to set in bootinfo the information
+provided by the command line '-cpu' parameter.
 
-  Merge tag 'hw-misc-20240309' of https://github.com/philmd/qemu into staging (2024-03-09 20:12:21 +0000)
-
-are available in the Git repository at:
-
-  https://github.com/vivier/qemu-m68k.git tags/m68k-for-9.0-pull-request
-
-for you to fetch changes up to e39a0809b99bbbe5f0ec432fdd9e8c943ba24936:
-
-  virt: set the CPU type in BOOTINFO (2024-03-11 09:38:08 +0100)
-
-----------------------------------------------------------------
-Pull request for m68k 20240311
-
-----------------------------------------------------------------
-
-Laurent Vivier (1):
-  virt: set the CPU type in BOOTINFO
-
+Bug: https://gitlab.com/qemu-project/qemu/-/issues/2091
+Reported-by: Daniel Palmer <daniel@0x0f.com>
+Signed-off-by: Laurent Vivier <laurent@vivier.eu>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Message-ID: <20240223155742.2790252-1-laurent@vivier.eu>
+---
  hw/m68k/virt.c | 17 ++++++++++++++---
  1 file changed, 14 insertions(+), 3 deletions(-)
 
+diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
+index e2792ef46d93..b8e5e102e6b9 100644
+--- a/hw/m68k/virt.c
++++ b/hw/m68k/virt.c
+@@ -239,9 +239,20 @@ static void virt_init(MachineState *machine)
+         param_ptr = param_blob;
+ 
+         BOOTINFO1(param_ptr, BI_MACHTYPE, MACH_VIRT);
+-        BOOTINFO1(param_ptr, BI_FPUTYPE, FPU_68040);
+-        BOOTINFO1(param_ptr, BI_MMUTYPE, MMU_68040);
+-        BOOTINFO1(param_ptr, BI_CPUTYPE, CPU_68040);
++        if (m68k_feature(&cpu->env, M68K_FEATURE_M68020)) {
++            BOOTINFO1(param_ptr, BI_CPUTYPE, CPU_68020);
++        } else if (m68k_feature(&cpu->env, M68K_FEATURE_M68030)) {
++            BOOTINFO1(param_ptr, BI_MMUTYPE, MMU_68030);
++            BOOTINFO1(param_ptr, BI_CPUTYPE, CPU_68030);
++        } else if (m68k_feature(&cpu->env, M68K_FEATURE_M68040)) {
++            BOOTINFO1(param_ptr, BI_FPUTYPE, FPU_68040);
++            BOOTINFO1(param_ptr, BI_MMUTYPE, MMU_68040);
++            BOOTINFO1(param_ptr, BI_CPUTYPE, CPU_68040);
++        } else if (m68k_feature(&cpu->env, M68K_FEATURE_M68060)) {
++            BOOTINFO1(param_ptr, BI_FPUTYPE, FPU_68060);
++            BOOTINFO1(param_ptr, BI_MMUTYPE, MMU_68060);
++            BOOTINFO1(param_ptr, BI_CPUTYPE, CPU_68060);
++        }
+         BOOTINFO2(param_ptr, BI_MEMCHUNK, 0, ram_size);
+ 
+         BOOTINFO1(param_ptr, BI_VIRT_QEMU_VERSION,
 -- 
 2.43.2
 
