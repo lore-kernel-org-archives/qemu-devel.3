@@ -4,137 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 020A7C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 12:01:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15B2FC5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 12:03:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjeLJ-0002pw-RT; Mon, 11 Mar 2024 08:01:21 -0400
+	id 1rjeNN-0004gr-Rr; Mon, 11 Mar 2024 08:03:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjeKb-0002Xx-TX
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 08:00:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjeKY-0004c7-5U
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 08:00:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710158432;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=OlgcVNfaSaMNOKULnTpDZzoKo+bpzQsC3Zl5sNB2xas=;
- b=VgFNBOJ+AFP9P/AslW/2YmzWHYNSelZB90L2Ycka6Sf184tBucSoEiB2Bu1yEeLnhDO+l+
- cdUVU2JnXB5tUB9cwGsKOTHKF0X3tq4LooI6EojEeBKdp/9Bpu9rSpaU3coRsFiIqKLJvX
- T0GIbFrteToNJoCFvbpjJ3t1oL1RTFk=
-Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
- [209.85.161.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-30-c_MGmgelOLCq3Orkmz9pNg-1; Mon, 11 Mar 2024 08:00:29 -0400
-X-MC-Unique: c_MGmgelOLCq3Orkmz9pNg-1
-Received: by mail-oo1-f71.google.com with SMTP id
- 006d021491bc7-5a112a333ceso3159528eaf.0
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 05:00:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjeNJ-0004f1-9u
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 08:03:26 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjeNH-0005Ec-Hz
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 08:03:25 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-33e92b3b5c9so1277029f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 05:03:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710158602; x=1710763402; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=dV5UyBtfTTwJ57CNR7ZwV91eZXWHKrV3a0l3VoK3FYI=;
+ b=OZLavTV/xMOfKwQe5IbNpWB7jXKFT79MHbHeZIn68XnpUlKWDJJzijr3TKJnH4aH55
+ AtXnXKUe92YABWKzKMqIyHKwzHIB6IL4aL0CLe4xC8C2y+UCmm3dtst/TJA4EsTquPj0
+ Ot6yUdXsyt/w2JKM3qYKboyJ3QclwuirP+KNIBqJnv452koTF0BYHGYwkuv5Jt68DwuP
+ zG0fsqSE8S5r/H5SlAsoy+7ELSgGs9qK9YkbRhsGGmFJHSNHbGaXaeDh2LRrUM3ZhMP4
+ idfm/YR81Dg0JqCl6plxQPS1P36nXH2aGijd3Z4Q16HUvzu75Xijmf1hc4f9Hh0zh2aN
+ ppcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710158429; x=1710763229;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+ d=1e100.net; s=20230601; t=1710158602; x=1710763402;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OlgcVNfaSaMNOKULnTpDZzoKo+bpzQsC3Zl5sNB2xas=;
- b=nmY6prA846A/i7BXbBiRhzbXF8veOKwKeNuwekZ/3rc8puPlqqBxBcE8zbujm0YrDC
- 9dpxvmDEZYF59DEZ6j31259Oh8z+nWGv9tosuAN9m+zrLH9H7WJ6nyG+cHrGfrKBCbB2
- t/q7OCbiGk5UYQtL5sqRcwC4d7dPkDaU0hctoG/JjbqPWlWwyx7qxNGXFCeuLmYcSd42
- C2DCQ/iuO/exa4Q7HUHXMnlMAnmKZJO8R97vpRKxYvxRWFiYz7roZwblcZCOOwJE5e++
- K4lmzj04ss+F4qxdegtnUnYWQC2xHhcJ0obJb6qNXyAmu9zVsXcLcTU+3Mw2L2NW5+L+
- 0Ebg==
+ bh=dV5UyBtfTTwJ57CNR7ZwV91eZXWHKrV3a0l3VoK3FYI=;
+ b=UphLY+2+JaMmorzeRjRtfB/8iBucIpxuervLH6yty5IxxBiyv7BGPcTdJx1aF87vmj
+ cI067JDMSSwWPH4rUPmVfsvIsBGzhYWJtCYt+K3i9MGPL9YIvMy71p6iomOC4KELUdCz
+ oqd0mcTX03F3q1cvCSm6i850KDWvplAERIKqXpmf2uck4TuRv4u/YeSigt1dHtDreRUL
+ vsNH9UVCPe9TjJ3PK/81N1U4UGzrMURY/xaBRxWSexGkQrXMYkkSAKv0Epa5c+KjnzCx
+ CD+hn1WtpS3jeCTETvATc+D1KDJn5Yx/uRJtdcdQlJ6E/YR25DqT/p5DlYl3UJA4lerq
+ Iq0g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUM9q6P4cVv5RTLMGenwQQU7ot/hpO/AOBFCPiySWU53s4os4MBoczr3gcdKqGE+L7R7qvPVAMYDXJVoN0tBJ8Qg94Gpt4=
-X-Gm-Message-State: AOJu0YwvkswO7ENAjbrAbvr7IK68UjGe/VsinYQjXdmmDsq3JlDphHju
- pwicGMyad0oxwbY6h+VYwy54LRNp9TTLsGLsvnDdL4ov2LMuIO2zutlVsEBNvC9KPDZK/uRMbIx
- /bDX+PUXoLMqnsheugvIOU03eAWfk0YvVEHznpKDc+v7uH7pNAsPo
-X-Received: by 2002:a05:6358:561b:b0:17c:263a:5b8e with SMTP id
- b27-20020a056358561b00b0017c263a5b8emr6623211rwf.14.1710158429115; 
- Mon, 11 Mar 2024 05:00:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHoFGymcm/yCAcEXzXXsmjeeX+Fs1IldS/wF6FFttNQnURTeZ8GnelLPyh5pHMJNeHhLKyC/A==
-X-Received: by 2002:a05:6358:561b:b0:17c:263a:5b8e with SMTP id
- b27-20020a056358561b00b0017c263a5b8emr6623190rwf.14.1710158428768; 
- Mon, 11 Mar 2024 05:00:28 -0700 (PDT)
-Received: from [192.168.0.9] (ip-109-43-178-151.web.vodafone.de.
- [109.43.178.151]) by smtp.gmail.com with ESMTPSA id
- v11-20020ae9e30b000000b00788419961f1sm2616827qkf.35.2024.03.11.05.00.26
+ AJvYcCUG4BwFxL05/w2wMgmvs7Pu30Sy2J5c2CS6pTRJuGrx1liGgZq1OWdnUf7HTkA/zJ61WwmNTe9PhlbxU6kZQqWqr/J0FeQ=
+X-Gm-Message-State: AOJu0Yzw1CvvhfOTli1fME8YCp3cD1QhjgR+mrncQM9/UTxT6ppuZ/FK
+ P/gGa4/5ubkQAdTAjrQb5+oAkBInHfnUnesbwvRYTEyV6ZLeXLKtmA7TFb4z8wx0bbGFzsOB0be
+ z
+X-Google-Smtp-Source: AGHT+IHGRgPxaNb2OXRXi66p2l7v68iVE6maUO0oPpI1Si0YI0QNQuKxLXEldTpkKoKIkfAelhRUVQ==
+X-Received: by 2002:a05:6000:cc:b0:33d:226e:3769 with SMTP id
+ q12-20020a05600000cc00b0033d226e3769mr4174610wrx.55.1710158601759; 
+ Mon, 11 Mar 2024 05:03:21 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.167.228])
+ by smtp.gmail.com with ESMTPSA id
+ bj28-20020a0560001e1c00b0033e7de97214sm6355145wrb.40.2024.03.11.05.03.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Mar 2024 05:00:28 -0700 (PDT)
-Message-ID: <2a8d4e86-1e33-424d-bc13-b1ce5323cb0c@redhat.com>
-Date: Mon, 11 Mar 2024 13:00:24 +0100
+ Mon, 11 Mar 2024 05:03:21 -0700 (PDT)
+Message-ID: <e7dc81df-1a51-4e0d-b865-5741803fb8cf@linaro.org>
+Date: Mon, 11 Mar 2024 13:03:19 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6] crypto: Introduce SM4 symmetric cipher algorithm
+Subject: Re: [PATCH v3] hw: gpio: introduce pcf8574 driver
 Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Hyman Huang <yong.huang@smartx.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <95b77afe68b898c95d381c9aa039c16b54d2e525.1701963950.git.yong.huang@smartx.com>
- <ac13ac70-9894-48b2-97a9-ddb7a8077ac7@redhat.com>
- <Ze7PsJV7eQar1hNe@redhat.com> <Ze7Zomg9YrhvrN2J@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <Ze7Zomg9YrhvrN2J@redhat.com>
+To: Dmitriy Sharikhin <d.sharikhin@yadro.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: Igor Kononenko <i.kononenko@yadro.com>,
+ "Alexander A. Filippov" <a.filippov@yadro.com>,
+ Alexander Amelkin <a.amelkin@yadro.com>
+References: <f1552d822276e878d84c01eba2cf2c7c9ebdde00.camel@yadro.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <f1552d822276e878d84c01eba2cf2c7c9ebdde00.camel@yadro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -151,39 +99,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/03/2024 11.14, Daniel P. Berrangé wrote:
-> On Mon, Mar 11, 2024 at 09:32:32AM +0000, Daniel P. Berrangé wrote:
->> On Fri, Mar 08, 2024 at 09:30:52PM +0100, Thomas Huth wrote:
->>> On 07/12/2023 16.47, Hyman Huang wrote:
->>>> Introduce the SM4 cipher algorithms (OSCCA GB/T 32907-2016).
->>>>
->>>> SM4 (GBT.32907-2016) is a cryptographic standard issued by the
->>>> Organization of State Commercial Administration of China (OSCCA)
->>>> as an authorized cryptographic algorithms for the use within China.
->>>>
->>>> Detect the SM4 cipher algorithms and enable the feature silently
->>>> if it is available.
->>>>
->>>> Signed-off-by: Hyman Huang <yong.huang@smartx.com>
->>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> ---
->>>
->>> FYI, starting with this commit, tests/unit/test-crypto-cipher is now failing
->>> on s390x hosts (i.e. big endian machines)... could be that there is maybe an
->>> endianess issue somewhere in here...
->>
->> Or more worringly the issue could be in nettle's impl of SM4, as
->> I'm not seeing an obvious place in this QEMU glue layer which
->> could cause endianness mistakes.
+On 11/3/24 10:58, Dmitriy Sharikhin wrote:
+> NXP PCF8574 and compatible ICs are simple I2C GPIO expanders.
+> PCF8574 incorporates quasi-bidirectional IO, and simple
+> communication protocol, when IO read is I2C byte read, and
+> IO write is I2C byte write. User can think of it as
+> open-drain port, when line high state is input and line low
+> state is output.
 > 
-> This is not a s390x problem in fact, it happens on all arches.
+> Signed-off-by: Dmitrii Sharikhin <d.sharikhin@yadro.com>
 
-Agreed, I can reproduce it on x86 on RHEL as well, so it's indeed a problem 
-with the libgcrypt there.
+If a patch is reviewed, please carry reviewers' tag:
+https://www.qemu.org/docs/master/devel/submitting-a-patch.html#proper-use-of-reviewed-by-tags-can-aid-review
 
-I guess we need a test in "configure" to make sure that SM4 is really available?
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-  Thomas
-
+> ---
+>   MAINTAINERS               |   6 ++
+>   hw/gpio/Kconfig           |   4 +
+>   hw/gpio/meson.build       |   1 +
+>   hw/gpio/pcf8574.c         | 162 ++++++++++++++++++++++++++++++++++++++
+>   include/hw/gpio/pcf8574.h |  15 ++++
+>   5 files changed, 188 insertions(+)
+>   create mode 100644 hw/gpio/pcf8574.c
+>   create mode 100644 include/hw/gpio/pcf8574.h
 
 
