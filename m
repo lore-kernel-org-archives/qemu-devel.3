@@ -4,79 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E52FC54E60
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B370C5475B
 	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 13:29:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjfiI-0004uC-Js; Mon, 11 Mar 2024 09:29:10 -0400
+	id 1rjfig-0004ym-Uv; Mon, 11 Mar 2024 09:29:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rjfi3-0004tG-7c
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 09:28:59 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rjfie-0004wR-5I
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 09:29:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rjfi0-0005u6-TU
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 09:28:54 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rjfic-0005y8-LS
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 09:29:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710163731;
+ s=mimecast20190719; t=1710163770;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FrOWhWrfjQsd9LIq/h6+YYfsw9AMsXC8hG+IAKQuQIE=;
- b=H125Q1AuY7yEQAIgQ+9hVeccuSU17EmSwWFZWQQEWjj7qr3UOw1uTx9ja5vFSD697mMK/Q
- nuS+p4iKb4J1jyFe23jZb+jfo/nWqmUOcCu6We3VKsQDZKqE6avLTidpHx3I82XrgvDbDo
- 3i3YKP5uRAZxch2LoDy0xr4eKhZevSc=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NvsPLZxLOo0hDGdoMNhwDVp1snudMwZWU0E3lxulGjc=;
+ b=MqMxd6kjPz+FVv6x6f1iqGKv2/aFx360M+MKXTS96sAtu/1UAHGY/bdn01Bb+rmtOV4ZJA
+ hfSe54jdm8WiYlUkbY/pQ21GUi1LR0DYszS0r+zNicrqvna0hIRLCEV6W7UPPFmZAb95P8
+ alNwykGu/RU5DXrKvifoinaRHYdKHUQ=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-466-2gR3eWwMM9uYIGEzliTf3w-1; Mon, 11 Mar 2024 09:28:50 -0400
-X-MC-Unique: 2gR3eWwMM9uYIGEzliTf3w-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-40d62d3ae0cso15561645e9.2
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 06:28:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710163728; x=1710768528;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=FrOWhWrfjQsd9LIq/h6+YYfsw9AMsXC8hG+IAKQuQIE=;
- b=RwNr67buI6rsaAXSUip+cl2uMptrh0nvQf5Ozo+zyJqOolfV6P7iA2ovjvZlt5fL8n
- 4HyEigWEVjZookE+J6I72IHKn9UmUyr55zhqtH2oOJy/+2pCA1H7L5H0x4wO8+XyOS/m
- qzC/Y0Z1C6ZkAnzgJPZrm8DCaKp3Rry7ER7We8dI8DIqRbkFLh7Op5LY4hw/XzSNXhQo
- cv3E4NLcmX+P8etAFpEP3pZN/UCqBsbb1WsKnYph85PRG147wesDy8AZMGiFJRo7Xiq1
- NAYfDLTQrSckXaZNJXgP5EOO2C5TP6iJ+46UUuwqOk6hnCUJ4SD50+Bl59ph+YMVahyF
- Tfbg==
-X-Gm-Message-State: AOJu0YyUmqBEgFuiGbgFfC/E8XDi5KRBRPSxt3U/7OHhT3y+f+ZfznWf
- F8wAFdLEn0ZIVI82U+nlMH5qESyNoRgf+UqCqfudkZ+MgIrSEJWAa+22g/SDyGT8KIhIaySKS3B
- NdjZ2aQC2yyaYeQc8HznSsrlbBX/1JtaPBm4xbRgU2ktKbAFzdfabszEIebgbELAYVHJcJoMriG
- KJ6HGmJYy7YE8SLaDS6i0f95eSUss=
-X-Received: by 2002:a05:600c:3485:b0:413:3048:5d68 with SMTP id
- a5-20020a05600c348500b0041330485d68mr241836wmq.20.1710163728707; 
- Mon, 11 Mar 2024 06:28:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHTLUOWctNYlGT0yb+cuRyEHrP6pdKm4kmz16/UzCYq1uXQ3daClVE4+eQOzP7/z42bb3U2sPAq36/tvK3pe3E=
-X-Received: by 2002:a05:600c:3485:b0:413:3048:5d68 with SMTP id
- a5-20020a05600c348500b0041330485d68mr241825wmq.20.1710163728423; Mon, 11 Mar
- 2024 06:28:48 -0700 (PDT)
+ us-mta-144-K30M33plP2WPSzDjWl4-Ew-1; Mon, 11 Mar 2024 09:29:27 -0400
+X-MC-Unique: K30M33plP2WPSzDjWl4-Ew-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A9074101CC6D;
+ Mon, 11 Mar 2024 13:29:26 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.138])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 516761C060A4;
+ Mon, 11 Mar 2024 13:29:26 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4798721E6A24; Mon, 11 Mar 2024 14:29:25 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Kashyap Chamarthy <kchamart@redhat.com>,
+ qemu-devel@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Czenczek <hreitz@redhat.com>
+Subject: Re: [PATCH v3 1/3] docs/interop/firmware.json: add new enum
+ FirmwareFormat
+In-Reply-To: <20240311-qapi-firmware-json-v3-1-ceea6e35eb4a@linutronix.de>
+ ("Thomas =?utf-8?Q?Wei=C3=9Fschuh=22's?= message of "Mon, 11 Mar 2024
+ 12:46:58 +0100")
+References: <20240311-qapi-firmware-json-v3-0-ceea6e35eb4a@linutronix.de>
+ <20240311-qapi-firmware-json-v3-1-ceea6e35eb4a@linutronix.de>
+Date: Mon, 11 Mar 2024 14:29:25 +0100
+Message-ID: <87wmq8sxqi.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20240305105233.617131-1-kraxel@redhat.com>
- <20240305105233.617131-3-kraxel@redhat.com>
- <CABgObfZ13WEHaGNzjy0GVE2EAZ=MHOSNHS_1iTOuBduOt5q_3g@mail.gmail.com>
- <q6zckxcxwke2kdlootdq3s7m2ctcy7juuv3fsezhpw3nqyewxo@sqku62f25gdc>
-In-Reply-To: <q6zckxcxwke2kdlootdq3s7m2ctcy7juuv3fsezhpw3nqyewxo@sqku62f25gdc>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 11 Mar 2024 14:28:35 +0100
-Message-ID: <CABgObfZtUKcNH8HF2Sey29c7kfm9HPreyMxzVwtbPHaWYiJcFg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] kvm: add support for guest physical bits
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org, Tom Lendacky <thomas.lendacky@amd.com>, 
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -101,71 +91,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 11, 2024 at 12:59=E2=80=AFPM Gerd Hoffmann <kraxel@redhat.com> =
-wrote:
->
->   Hi,
->
-> > > diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> > > index 952174bb6f52..d427218827f6 100644
-> > > --- a/target/i386/cpu.h
-> > > +++ b/target/i386/cpu.h
-> > > +    guest_phys_bits =3D kvm_get_guest_phys_bits(cs->kvm_state);
-> > > +    if (guest_phys_bits &&
-> > > +        (cpu->guest_phys_bits =3D=3D 0 ||
-> > > +         cpu->guest_phys_bits > guest_phys_bits)) {
-> > > +        cpu->guest_phys_bits =3D guest_phys_bits;
-> > > +    }
-> >
-> > Like Xiaoyao mentioned, the right place for this is kvm_cpu_realizefn,
-> > after host_cpu_realizefn returns. It should also be conditional on
-> > cpu->host_phys_bits.
->
-> Ok.
->
-> > It also makes sense to:
-> >
-> > - make kvm_get_guest_phys_bits() return bits 7:0 if bits 23:16 are zero
-> >
-> > - here, set cpu->guest_phys_bits only if it is not equal to
-> > cpu->phys_bits (this undoes the previous suggestion, but I think it's
-> > cleaner)
->
-> Not sure about that.
->
-> I think it would be good to have a backward compatibility story.
-> Currently neither the kernel nor qemu set guest_phys_bits.  So if the
-> firmware finds guest_phys_bits =3D=3D 0 it does not know whenever ...
->
->   (a) kernel or qemu being too old, or
->   (b) no restrictions apply, it is safe to go with phys_bits.
->
-> One easy option would be to always let qemu pass through guest_phys_bits
-> from the kernel, even in case it is equal to phys_bits.
+Thomas Wei=C3=9Fschuh <thomas.weissschuh@linutronix.de> writes:
 
-Ah, I see - you would like to be able to use all 52 bits (instead of
-going for a safer 46 or 48) and therefore you need to have nonzero
-guest_phys_bits even if it's equal to phys_bits. While on an old
-kernel, you would pass forward 0.
-
-> > - add a property in x86_cpu_properties[] to allow configuration with TC=
-G.
+> Only a small subset of all blockdev drivers make sense for firmware
+> images. Introduce and use a new enum to represent this.
 >
-> Was thinking about configuration too.  Not sure it is a good idea to
-> add yet another phys-bits config option to the mix of options we already
-> have ...
+> This also reduces the dependency of firmware.json on the global qapi
+> definitions.
+>
+> Suggested-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Signed-off-by: Thomas Wei=C3=9Fschuh <thomas.weissschuh@linutronix.de>
+> ---
+>  docs/interop/firmware.json | 18 ++++++++++++++++--
+>  1 file changed, 16 insertions(+), 2 deletions(-)
+>
+> diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
+> index 54a1fc6c1041..0e619e8780e7 100644
+> --- a/docs/interop/firmware.json
+> +++ b/docs/interop/firmware.json
+> @@ -15,7 +15,11 @@
+>  ##
+>=20=20
+>  { 'include' : 'machine.json' }
+> -{ 'include' : 'block-core.json' }
+> +
+> +{ 'pragma': {
+> +    'documentation-exceptions': [
+> +        'FirmwareFormat'
+> +    ] } }
 
-I think it's nice that you can use TCG to test various cases, which
-requires a new property.
+Necessary because ...
+>=20=20
+>  ##
+>  # @FirmwareOSInterface:
+> @@ -200,6 +204,16 @@
+>               'enrolled-keys', 'requires-smm', 'secure-boot',
+>               'verbose-dynamic', 'verbose-static' ] }
+>=20=20
+> +##
+> +# @FirmwareFormat:
+> +#
+> +# Formats that are supported for firmware images.
+> +#
 
-> In case host_phys_bits=3Dtrue qemu could simply use
-> min(kernel guest-phys-bits,host-phys-bits-limit)
+... we don't document the members here.  Documenting them would be
+nicer.  We'd do that if we could steal it from BlockdevDriver, but
+there's nothing to steal there.
 
-Yes, that works.
+Mere observation; I'm not asking you to come up with documentation
+BlockdevDriver doesn't have.
 
-Paolo
+> +# Since: 8.3
+> +##
+> +{ 'enum': 'FirmwareFormat',
+> +  'data': [ 'raw', 'qcow2' ] }
 
-> For the host_phys_bits=3Dfalse case it would probably be best to just
-> not set guest_phys_bits.
+@raw or @file?  Kevin or Hanna, thoughts?
+
+> +
+>  ##
+>  # @FirmwareFlashFile:
+>  #
+> @@ -219,7 +233,7 @@
+>  ##
+>  { 'struct' : 'FirmwareFlashFile',
+>    'data'   : { 'filename' : 'str',
+> -               'format'   : 'BlockdevDriver' } }
+> +               'format'   : 'FirmwareFormat' } }
+>=20=20
+>=20=20
+>  ##
 
 
