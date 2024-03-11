@@ -4,79 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26348C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 18:54:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FF04C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 18:55:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjklO-0005Kp-1O; Mon, 11 Mar 2024 14:52:42 -0400
+	id 1rjklZ-0005fV-Hy; Mon, 11 Mar 2024 14:52:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rjklM-0005HZ-Bo; Mon, 11 Mar 2024 14:52:40 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1rjklX-0005Yb-J5; Mon, 11 Mar 2024 14:52:51 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rjklK-00055e-JF; Mon, 11 Mar 2024 14:52:40 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1dc3b4b9b62so28310665ad.1; 
- Mon, 11 Mar 2024 11:52:37 -0700 (PDT)
+ id 1rjklV-00058W-W3; Mon, 11 Mar 2024 14:52:51 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1dd9568fc51so12800985ad.2; 
+ Mon, 11 Mar 2024 11:52:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710183157; x=1710787957; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1710183167; x=1710787967; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=F/yrQzhJLI/Jn8GVOzppekfGS+uQs1Mw+hwRyOvugg8=;
- b=VeBNyY5LSMz/dVPTYPJK6IHbZL9geZtI23rzmaEOwVibC/viSXPiIGw2GVwqlEW41l
- CS1/Za6sECY5vAPPvj8iy5+8vLPxHI7tw0yIk+ACvyx7VMOg5KaG+uXdpAml8yWeCiy8
- PJMFAD7Dl3OvBwLc9NtA4mNH8ILwvRTd5gkWE6wdqhoskYYrK2tzq2nH10vrZjl3K+3q
- mWG8/ExfWHUkftzBm45CTQdwXA53TmEBfoOW26BM8lPOtkr+NIEPbDqSZjAOQO/fkhkV
- n5fnjj+whiAwjD0gWzCPleU0s29hVDTy0AEeYe3f3CAYuXUqOmgjV0LNl0K5Ohczkwok
- qbzA==
+ bh=yW7L9Z7tkLffGlK67l1yTKsB0/citIESoZVxrL0mhNE=;
+ b=YvzKgxW0ZlXEkAirxmN/wSuuA+4f6YHXKmy7u5unY8/T5C335DcvN82ipJm7p86tEH
+ 1Tn3p65TX9e7C1nRs6W8kvKr6H06MfZQNHw8D/ddFlNs5W8xBmdS2fNhTOcCrE8ivF+S
+ 2+6osjgoMxYYoYaKRWXJihwlCp27vNLqTOqY6B69YGNXIWzjIFvrkmxzXprX1kj7O2+4
+ HjJ9akzJAkilSIhrNWoBqrk/OBgHu/Hgn2SGCwBrsoFgyQgmGwRSi1/rOlExEkaHBwSn
+ cN1g14FLKpzP9UPTRcuCqeq/kYgp+nxrRdbv4bF+SMu8kwyrIX20q7Va0EW84eyR2ppN
+ r+3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710183157; x=1710787957;
+ d=1e100.net; s=20230601; t=1710183167; x=1710787967;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=F/yrQzhJLI/Jn8GVOzppekfGS+uQs1Mw+hwRyOvugg8=;
- b=hig6+wbgqyRbI0uaDJiY3HZJQ4e9p589xnwhIFLGp3ADXOQVosxw65aMCGlm5Z+5sm
- yfWyOj4UkjYF2F6gqumbBNyxhYtV0MStBSsJy31W/6aemqD702KKkgro8QmjABTkHbHl
- 8fqtkomxhjr7CcM7QFSuLzeRJwU6W4EJbs3N36nk8xxoPBbiYvFojGqdj+BB+L7iTBi+
- JtQSLakuPe471+CcQaYeeym5s3swOIf4MG/v7b0CKXGrOaX7J/3TP7z7n1vGKB0Bi2NG
- 7RTyPnnkRFe1i+HyHMQGXnwuEjTA9c/byOpD9pRfqqsUgRw5kDt8xWvvGpdAl04qWl5+
- h9sQ==
+ bh=yW7L9Z7tkLffGlK67l1yTKsB0/citIESoZVxrL0mhNE=;
+ b=N0/zN7JymCtjj8l3KOJYQvR+V7TZdaDeafh3zgKN2/g/9g84Z8WNCXyS5BNdkLIR9R
+ 6KmPoJ2ms52reu0UFXRe319zJmYJveggVx/464LBhp12KIph7lU8ZdhgxEr/4KmBcvnQ
+ 1dcnfCSg4BBjBC4iHWaxRKnKhT+4nqYWVKka3NkpMcAk5cm/OUVCy6evhNNvYK7B1q9b
+ YzzzCUMFZsn7MLgmNlDrwLegbN0e/IvEx6OejGqzKp4dO9QiPZHxByN1qIv/dizuky9C
+ quQq6GmFlAudF34TRj8I4mKXpdXW/ypLcsAWrDAllb+1ylSfJpT317Ea56hdsdAIfhBp
+ EeBg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX8zBHZngWWBzxYKrJGyqxFGs4JFSD7G6OxUNOtkMUDVqZ7XWISstlmpTCiBzHkdW+Xc1iCIihy0DITrpliBGHm1dd6Wjo=
-X-Gm-Message-State: AOJu0YxC1648R0CUPJcAz++RyqzTl6yI2/CDMDonpLbeFlTlNULwho//
- U9v0idZj611sESUeKsBYje6cajSxwA95442UzW4naSDBc3mPmgfudwkiR76ugtE=
-X-Google-Smtp-Source: AGHT+IEuMP5ki5kp3PbVLO4i//6Ao7tFBZQqYcPjfsfflboTLhuycR4r+8Is4sBmMsF3kJZYCYD+Wg==
-X-Received: by 2002:a17:902:f24b:b0:1dd:63db:b35f with SMTP id
- j11-20020a170902f24b00b001dd63dbb35fmr6756365plc.33.1710183156683; 
- Mon, 11 Mar 2024 11:52:36 -0700 (PDT)
+ AJvYcCWbiwUdnLOdK8aG5YnuHTGxZp4qMIfYC7J5vyDsx2YzSEFAxMKTdUdUM+N2s47GnGB4vtLFHmuTsVpNCn4r0Sk5pMVIn9w=
+X-Gm-Message-State: AOJu0Yyms0q2hM7rX9m2D0OTqQiLFmxbO0TeEPCBpyXuzhWfCSsZjpJF
+ MzsCDkXa1HZ9sA/Z/6DmVD3t1NWCimS2NkhmHYp8hKFf2rGwS/xUYvmqMUwZKTY=
+X-Google-Smtp-Source: AGHT+IF5YjC8dOtA+fkuZXtmS/aNNk2q7cCKjmDP5O7I3W7EHjLnN2W6qj6L3NLqLTbTf9dmf/d4CA==
+X-Received: by 2002:a17:902:7403:b0:1dc:518e:45b7 with SMTP id
+ g3-20020a170902740300b001dc518e45b7mr6920200pll.49.1710183167034; 
+ Mon, 11 Mar 2024 11:52:47 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- z2-20020a170903018200b001dd7d00f7afsm4843887plg.18.2024.03.11.11.52.33
+ z2-20020a170903018200b001dd7d00f7afsm4843887plg.18.2024.03.11.11.52.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 11:52:36 -0700 (PDT)
+ Mon, 11 Mar 2024 11:52:46 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>
-Subject: [PATCH 08/13] ppc/pnv: Set POWER9, POWER10 ibm,pa-features bits
-Date: Tue, 12 Mar 2024 04:51:50 +1000
-Message-ID: <20240311185200.2185753-9-npiggin@gmail.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PATCH 11/13] target/ppc: Make checkstop actually stop the system
+Date: Tue, 12 Mar 2024 04:51:53 +1000
+Message-ID: <20240311185200.2185753-12-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240311185200.2185753-1-npiggin@gmail.com>
 References: <20240311185200.2185753-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,128 +96,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Copy the pa-features arrays from spapr, adjusting slightly as
-described in comments.
+checkstop state does not halt the system, interrupts continue to be
+serviced, and other CPUs run. Make it stop the machine with
+qemu_system_guest_panicked.
 
-Cc: "Cédric Le Goater" <clg@kaod.org>
-Cc: "Frédéric Barrat" <fbarrat@linux.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/pnv.c   | 67 ++++++++++++++++++++++++++++++++++++++++++++++++--
- hw/ppc/spapr.c |  1 +
- 2 files changed, 66 insertions(+), 2 deletions(-)
+ target/ppc/excp_helper.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 52d964f77a..3e30c08420 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -332,6 +332,35 @@ static void pnv_chip_power8_dt_populate(PnvChip *chip, void *fdt)
+diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+index 98952de267..9aca4a1489 100644
+--- a/target/ppc/excp_helper.c
++++ b/target/ppc/excp_helper.c
+@@ -19,6 +19,8 @@
+ #include "qemu/osdep.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/log.h"
++#include "sysemu/sysemu.h"
++#include "sysemu/runstate.h"
+ #include "cpu.h"
+ #include "exec/exec-all.h"
+ #include "internal.h"
+@@ -432,15 +434,22 @@ static void powerpc_mcheck_checkstop(CPUPPCState *env)
+         return;
      }
+ 
++    /*
++     * This stops the machine and logs CPU state without killing QEMU
++     * (like cpu_abort()) so the machine can still be debugged (because
++     * it is often a guest error).
++     */
++
+     /* Machine check exception is not enabled. Enter checkstop state. */
+     fprintf(stderr, "Machine check while not allowed. "
+             "Entering checkstop state\n");
+     if (qemu_log_separate()) {
+         qemu_log("Machine check while not allowed. "
+                  "Entering checkstop state\n");
+-    }
+-    cs->halted = 1;
+-    cpu_interrupt_exittb(cs);
++
++    qemu_system_guest_panicked(NULL);
++
++    cpu_loop_exit_noexc(cs);
  }
  
-+/*
-+ * Same as spapr pa_features_300 except pnv always enables CI largepages bit.
-+ */
-+static const uint8_t pa_features_300[] = { 66, 0,
-+    /* 0: MMU|FPU|SLB|RUN|DABR|NX, 1: CILRG|fri[nzpm]|DABRX|SPRG3|SLB0|PP110 */
-+    /* 2: VPM|DS205|PPR|DS202|DS206, 3: LSD|URG, 5: LE|CFAR|EB|LSQ */
-+    0xf6, 0x3f, 0xc7, 0xc0, 0x00, 0xf0, /* 0 - 5 */
-+    /* 6: DS207 */
-+    0x80, 0x00, 0x00, 0x00, 0x00, 0x00, /* 6 - 11 */
-+    /* 16: Vector */
-+    0x00, 0x00, 0x00, 0x00, 0x80, 0x00, /* 12 - 17 */
-+    /* 18: Vec. Scalar, 20: Vec. XOR, 22: HTM */
-+    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 18 - 23 */
-+    /* 24: Ext. Dec, 26: 64 bit ftrs, 28: PM ftrs */
-+    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 24 - 29 */
-+    /* 32: LE atomic, 34: EBB + ext EBB */
-+    0x00, 0x00, 0x80, 0x00, 0xC0, 0x00, /* 30 - 35 */
-+    /* 40: Radix MMU */
-+    0x00, 0x00, 0x00, 0x00, 0x80, 0x00, /* 36 - 41 */
-+    /* 42: PM, 44: PC RA, 46: SC vec'd */
-+    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 42 - 47 */
-+    /* 48: SIMD, 50: QP BFP, 52: String */
-+    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 48 - 53 */
-+    /* 54: DecFP, 56: DecI, 58: SHA */
-+    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 54 - 59 */
-+    /* 60: NM atomic, 62: RNG */
-+    0x80, 0x00, 0x80, 0x00, 0x00, 0x00, /* 60 - 65 */
-+};
-+
- static void pnv_chip_power9_dt_populate(PnvChip *chip, void *fdt)
- {
-     static const char compat[] = "ibm,power9-xscom\0ibm,xscom";
-@@ -349,7 +378,7 @@ static void pnv_chip_power9_dt_populate(PnvChip *chip, void *fdt)
-         offset = pnv_dt_core(chip, pnv_core, fdt);
- 
-         _FDT((fdt_setprop(fdt, offset, "ibm,pa-features",
--                           pa_features_207, sizeof(pa_features_207))));
-+                           pa_features_300, sizeof(pa_features_300))));
-     }
- 
-     if (chip->ram_size) {
-@@ -359,6 +388,40 @@ static void pnv_chip_power9_dt_populate(PnvChip *chip, void *fdt)
-     pnv_dt_lpc(chip, fdt, 0, PNV9_LPCM_BASE(chip), PNV9_LPCM_SIZE);
- }
- 
-+/*
-+ * Same as spapr pa_features_31 except pnv always enables CI largepages bit,
-+ * always disables copy/paste.
-+ */
-+static const uint8_t pa_features_31[] = { 74, 0,
-+    /* 0: MMU|FPU|SLB|RUN|DABR|NX, 1: CILRG|fri[nzpm]|DABRX|SPRG3|SLB0|PP110 */
-+    /* 2: VPM|DS205|PPR|DS202|DS206, 3: LSD|URG, 5: LE|CFAR|EB|LSQ */
-+    0xf6, 0x3f, 0xc7, 0xc0, 0x00, 0xf0, /* 0 - 5 */
-+    /* 6: DS207 */
-+    0x80, 0x00, 0x00, 0x00, 0x00, 0x00, /* 6 - 11 */
-+    /* 16: Vector */
-+    0x00, 0x00, 0x00, 0x00, 0x80, 0x00, /* 12 - 17 */
-+    /* 18: Vec. Scalar, 20: Vec. XOR */
-+    0x80, 0x00, 0x80, 0x00, 0x00, 0x00, /* 18 - 23 */
-+    /* 24: Ext. Dec, 26: 64 bit ftrs, 28: PM ftrs */
-+    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 24 - 29 */
-+    /* 32: LE atomic, 34: EBB + ext EBB */
-+    0x00, 0x00, 0x80, 0x00, 0xC0, 0x00, /* 30 - 35 */
-+    /* 40: Radix MMU */
-+    0x00, 0x00, 0x00, 0x00, 0x80, 0x00, /* 36 - 41 */
-+    /* 42: PM, 44: PC RA, 46: SC vec'd */
-+    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 42 - 47 */
-+    /* 48: SIMD, 50: QP BFP, 52: String */
-+    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 48 - 53 */
-+    /* 54: DecFP, 56: DecI, 58: SHA */
-+    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 54 - 59 */
-+    /* 60: NM atomic, 62: RNG */
-+    0x80, 0x00, 0x80, 0x00, 0x00, 0x00, /* 60 - 65 */
-+    /* 68: DEXCR[SBHE|IBRTPDUS|SRAPD|NPHIE|PHIE] */
-+    0x00, 0x00, 0xce, 0x00, 0x00, 0x00, /* 66 - 71 */
-+    /* 72: [P]HASHCHK */
-+    0x80, 0x00,                         /* 72 - 73 */
-+};
-+
- static void pnv_chip_power10_dt_populate(PnvChip *chip, void *fdt)
- {
-     static const char compat[] = "ibm,power10-xscom\0ibm,xscom";
-@@ -376,7 +439,7 @@ static void pnv_chip_power10_dt_populate(PnvChip *chip, void *fdt)
-         offset = pnv_dt_core(chip, pnv_core, fdt);
- 
-         _FDT((fdt_setprop(fdt, offset, "ibm,pa-features",
--                           pa_features_207, sizeof(pa_features_207))));
-+                           pa_features_31, sizeof(pa_features_31))));
-     }
- 
-     if (chip->ram_size) {
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 128bfe11a8..b53c13e037 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -233,6 +233,7 @@ static void spapr_dt_pa_features(SpaprMachineState *spapr,
-                                  PowerPCCPU *cpu,
-                                  void *fdt, int offset)
- {
-+    /* These should be kept in sync with pnv */
-     uint8_t pa_features_206[] = { 6, 0,
-         0xf6, 0x1f, 0xc7, 0x00, 0x00, 0xc0 };
-     uint8_t pa_features_207[] = { 24, 0,
+ static void powerpc_excp_40x(PowerPCCPU *cpu, int excp)
 -- 
 2.42.0
 
