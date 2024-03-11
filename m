@@ -4,86 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C042C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:44:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE8FAC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:44:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjjeP-0002Xy-2g; Mon, 11 Mar 2024 13:41:25 -0400
+	id 1rjjeC-0002U4-6C; Mon, 11 Mar 2024 13:41:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjjeN-0002Xe-JK
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:41:23 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjjeL-0007MR-IS
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:41:23 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-6e617b39877so3316088b3a.3
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 10:41:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710178880; x=1710783680; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AMEZpjRyPRfKkDXLG/bfNm8VyDDx9klR1nHqEDUL4Y4=;
- b=NoG47XadnOeegq3RUZtOGPpnxz2ibQKaDIjj6ngl1xiocb/mfzTmWrC77WdUxyuo7b
- 5l+FBtckOf2s5pbKDI3TIMhO5yB5whBwANCIvwh31Ygxoe8jWIgzSdlr4v6LTYc1W8Gh
- PXyhupP+EDUm4xy80c8nEc6vF8pSNSogUkfPbmKPFl5e0U+yYom/GH/RLbIpDC8j6Fwj
- U5KGd+QwIssgZL3DbSTfKzLi5cIQSDvWc9mN9WRHnZ5qJK1o2ZRr1XSSKVjxRslFwmPM
- nM5hZdGd/hXFAaPtndCPcjVvHupFMSFFFfhR+W5c0h+hi/cegBjy5yAeNkVHKrJ2QKAc
- ZmuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710178880; x=1710783680;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=AMEZpjRyPRfKkDXLG/bfNm8VyDDx9klR1nHqEDUL4Y4=;
- b=WYovVl/VEjb2kUSKvci4Xt+9dvALeDrMHR3/CPFWAYB4fb1d+JROJPx93EK7gxEVOf
- 5jc06R9mpjUNtdaTMNbVNqf82qmSVk6iIdPKEwp1RUy5shRIpif4zvcROxHtuIva7IQL
- OcLejSlcfaps+LGwTJupeYkqLAhReKFnOVWTBP3lQLTZkVx6UXxmrOaRBXXxwzcHNu9v
- 1HEROQ5IVCr/P5md6/ud1CUUcML2U1/1iwD06p/b/bnpn1PihiWmADiYVTtI3869I67m
- 7z3JYtBbHA9jZOeeMOHmLlBXCksAC/BTJDYeNQc07tyQ6t4xFRUIeEVqtyrK7v1dj3GL
- xJJg==
-X-Gm-Message-State: AOJu0YzOMsqi0SJQliphQnZ6HpH2DFRD6nQ7c4wskJuEio8I0AYsrqOE
- pIgLvH/Sch52xlUyApSFhd0aOJsaycuSHahAbMGW9qCC0qjKwJy4oW4zcy3GDSk=
-X-Google-Smtp-Source: AGHT+IFSbzNsqPBt7WGMkK6pNoGKFww4ClleaAgRSG4GH7Y42cpjHhdZ9x236KQgswFfYshqns8Feg==
-X-Received: by 2002:a05:6a21:33a1:b0:1a1:6c6c:97d with SMTP id
- yy33-20020a056a2133a100b001a16c6c097dmr5344619pzb.57.1710178879905; 
- Mon, 11 Mar 2024 10:41:19 -0700 (PDT)
-Received: from wheely.local0.net ([118.208.155.46])
- by smtp.gmail.com with ESMTPSA id
- a18-20020a62d412000000b006e67b4d7b74sm4593187pfh.197.2024.03.11.10.41.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 10:41:19 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <alexander.ivanov@virtuozzo.com>)
+ id 1rjjeA-0002T2-MG; Mon, 11 Mar 2024 13:41:10 -0400
+Received: from mail-am6eur05on20701.outbound.protection.outlook.com
+ ([2a01:111:f403:2612::701]
+ helo=EUR05-AM6-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alexander.ivanov@virtuozzo.com>)
+ id 1rjje0-0007Gj-Ar; Mon, 11 Mar 2024 13:41:10 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=O73+mssJaK7Vex5HwZKDtiI6Z88A663FHoTWuqPFgGq31C3++35kM0kIbNsbJ5qgWL2zYdQFiZiAJb32lBDZLfVAgZdRpsZsYEQrPy1ssqyM1rZPl2TnDeziw4k8PKUHeTLSrcJifEj7n4Y13Gkty4EDBdKfTsaKOPmWMsdYIUAKkEuaiVHIfgtJss6zjO5sbUR56R65L/6sd16+wlhIBHQyWdT42lEKddkNMBMRrHYSzYZXfl2k21jOvZf9pq+veWCJRhQKkOSbCKje2zoj++7LUmbybJksC3vTmeBmPnsRmD4S94PKAUPc4F7iQnQDfAiaFc+6pPW1beIN0KL71A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tK2Cj6njlDAyGObEKdX2inmYPA18t0n4TwcjCXYyBa0=;
+ b=j3iPSA3b0ULtEozkjfCsjNM5YZlFw8V39a4GqLtFIdCttw4ReZDWRO/2HCt+wFflZFP8dzQI2KQ3f2fDPJB+HBCSGYV7q5O7h/eUTuyb6uvbvXS71p8IzFQBv1kdcYvqUt2VjjQG4cSp1TiKMIxmXJ9qF7A3O+56x+rIfWi6zEOd+x3+MrQoNLqXUlB2SqGAA9AP2JNoGYogCWC1sNscmYbLLRpWjhd1M4vJEaVl1btIcIbiS0FNl1SmPsfk6Fi99Xv1D68YlA22ULMNZ5TRMPaHbZWsq6YQUMGOPDqYPL46ys4K4TlK5kgbVSP+v1IuQFRdnWMuuF58axvUaiZn1A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tK2Cj6njlDAyGObEKdX2inmYPA18t0n4TwcjCXYyBa0=;
+ b=URbQtf0wXuvh15X+X6tC5FSP6HDjCWf107/ls2ffQeG2Cbcx9Kc5LGrWNWeaN7zG7y5K4pp1mor9VRZDuFETXSUT/dbfvVo+oFJ0aHRgSAw9yprSvEaEWw/4jeyvdSYXtAX8jRCpH2ZhxZv6JusTnoEppsWzcuvJqLTZtZ4ooOkqBp1UxH7xubbhuxb2CfZ1UTgYfpkBtAhrJSreiIGM94VM2FYyHD3BiiAnB++ZqKzyj53Xk3GgLUFDpK0ik8a8JCGpwvZ5dmiB3C/bzTbFii4tNMlv7rCMg6NZQFqU8Yngq6fgIzhmmrsWrP830tFAeSuXJxti9Han+ihvrU50jQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from DBBPR08MB10721.eurprd08.prod.outlook.com (2603:10a6:10:530::22)
+ by AS2PR08MB10322.eurprd08.prod.outlook.com (2603:10a6:20b:5ff::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.35; Mon, 11 Mar
+ 2024 17:40:52 +0000
+Received: from DBBPR08MB10721.eurprd08.prod.outlook.com
+ ([fe80::fe49:a4b:7387:3fde]) by DBBPR08MB10721.eurprd08.prod.outlook.com
+ ([fe80::fe49:a4b:7387:3fde%3]) with mapi id 15.20.7362.031; Mon, 11 Mar 2024
+ 17:40:52 +0000
+From: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
 To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
- Cleber Rosa <crosa@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH v4 08/24] replay: Fix migration replay_mutex locking
-Date: Tue, 12 Mar 2024 03:40:10 +1000
-Message-ID: <20240311174026.2177152-9-npiggin@gmail.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20240311174026.2177152-1-npiggin@gmail.com>
-References: <20240311174026.2177152-1-npiggin@gmail.com>
-MIME-Version: 1.0
+Cc: qemu-block@nongnu.org, den@virtuozzo.com, andrey.drobyshev@virtuozzo.com,
+ jsnow@redhat.com, vsementsov@yandex-team.ru, kwolf@redhat.com,
+ hreitz@redhat.com
+Subject: [PATCH] block: Use LVM tools for LV block device truncation
+Date: Mon, 11 Mar 2024 18:40:44 +0100
+Message-Id: <20240311174044.67094-1-alexander.ivanov@virtuozzo.com>
+X-Mailer: git-send-email 2.40.1
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x430.google.com
+Content-Type: text/plain
+X-ClientProxiedBy: VI1PR03CA0069.eurprd03.prod.outlook.com
+ (2603:10a6:803:50::40) To DBBPR08MB10721.eurprd08.prod.outlook.com
+ (2603:10a6:10:530::22)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DBBPR08MB10721:EE_|AS2PR08MB10322:EE_
+X-MS-Office365-Filtering-Correlation-Id: a38f4eab-e176-4858-ba70-08dc41f2659a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: M+EvtvhI6MF59Z383udXtguhxgfawVbKV7g4HvCgoMAI63tbtOsJZlsDlBEZJFg6ayyPuoLJUXDw9aag99rzaB5iDEZDOSmgfFjQDHeBtiArmh6WUxRDqRc0aYs+A91Sr7m/9uhuxprdX8XCpBHLStaZXMCHmVWGmCOdnI4vqcE800pIxxHmigK2o4zKZDckc4wfDlTnzgnI73QdiOE7735XnnBWa/E2nNZnX9vTvlNG5ELKtorStvkgPmHXV0gRrguZWe5wWML4QzydV9rBrEC0bL+pzbZstIdjAoN2FSbc3DKPb+GNOqchxp6vxsquGbivnvbBmFS7BHR7w5Zbs90uorqSn9rZTnkeuoYcbCTdtDzBLEL70GfDTNGLXfXlEXD5+z1/lnT1OGxyxIhj1ZpiyTdup3GEgUBzZWKotewpkbVnGTBQTy9/fs+g+Ap2VtgxyAoWvxaUu88WmmUZxOhQSZMXHv0aUT94oROt6SIURKe1f0h3nd0lIud0uxsQXGfSdBpwIQZETQrlTEfJgf84fJZXzEaZKWhe35hXBPyRJHf7t7eiwQjIZs/ObShhuglyMz3BtSDjFlVlUkMMqA9bawIg6RBpbEl2vxwo975DzI+cOn8RW/0bQTRm6kIx0bvSOYpXI4vwYq2NakrOVk58SsMH2auaPjQI3luETpmeUJ1qLmcM5xXpGsgMQ51ttXK/9wfKlWGlFl/uYfdwVAoPWf7sk8l3rzgcp44VUMM=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DBBPR08MB10721.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(1800799015)(52116005)(376005)(38350700005); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?68L6UDfHi7tdjHC2wtBFXDnEH8WxLSd87ajl2UKfb9XqrLd7MJizMFoOldlo?=
+ =?us-ascii?Q?tkzCKg+wPUxYI8x4A8pLsuL7WYdtdvvaXnHrjvH2qDkcV+5FYbcRRtNpacy7?=
+ =?us-ascii?Q?PImex5pZ8ZS4do8HPgC9sT1MkLpVjAInTG9eiC5P5AMtusqJd6oCca8IptWb?=
+ =?us-ascii?Q?e0VRuFDiAcZ1Qs/qUKAm4EjHgKants9eaE2MNtolecIxtMZJtrZqHOui3x1E?=
+ =?us-ascii?Q?fbs0nlDl7EBHG0bXVVZ8eErDlACEWxINOQ3zJRLQlTTGEu9ZCND2Hx82oUmm?=
+ =?us-ascii?Q?Gnzzhb683oMHHjYv+KenCRbnC7osvtR241iaeJx1iFWRw40TyvHr36XLc1AV?=
+ =?us-ascii?Q?Y+UiNxHCI+JFuvHv9lVYmV7cfa8gaaGz88iqTAjkbv1bg82lgYoduL4x57GP?=
+ =?us-ascii?Q?ySdzZOHAeot8nNZLa4rLjJwxNwKyr9wdeXpuKySO/10WjEne7eSU4X7ifTL2?=
+ =?us-ascii?Q?tCvfEjuhw3AgFNuI+BwtuJu9Y/+jTuhUm2/QSl60nj0WHHwYogYVu9od7cyC?=
+ =?us-ascii?Q?8PYD12JPS0BD0S6ncGanuWMY5B1oFbDeAH58mJavMI0gwhNQtNdUih3yXk4t?=
+ =?us-ascii?Q?UYesrayiZaxbBaR3NB/ayrqx9bpR3S43Nf93YbP/uTJdY08+wgmyEl5+EKqY?=
+ =?us-ascii?Q?or2lCqbQ+qVvrBnCHQXQW4q4TKzPbD0uA38E/aax5ixXpa3sG5sSN7bsr5H6?=
+ =?us-ascii?Q?CEn0gQsbtLZv6gWiyc515QTMXf7jlDqnRs2GD/geZUQrpKEQF4c6v5PmZ8kb?=
+ =?us-ascii?Q?NqRKA6ls106z/uJnoRIJCEjyQyMFqJaSZt/nTfPw8O14rCLb0LQizSRo8mhA?=
+ =?us-ascii?Q?IWffB8UB8UDu/LPa/M5M5VpkkmyYDjen6nNItqFwgYGmZENn/WYEUt27X7QZ?=
+ =?us-ascii?Q?4in7IBFbbDwXXKaIvWkd+ge/trLdt/kiJdBHsFSAYL/H5nEZmln0OmoTJ/Xg?=
+ =?us-ascii?Q?yVelBs5tZOUkw+r4rMF4LE73Lji9r1hoGP0lV2+v34wy2s8Mrg9UzqKWWZt1?=
+ =?us-ascii?Q?BU08PbsspVObUT3VlDgPFYdgCTBNkhFBbUQYbUx9ztBT9ELVtd4YkFADijOZ?=
+ =?us-ascii?Q?oB1hXTnBR+hXrGAPf1EO4RHpI/WuZirAkw2ORQPzrRwMtV+n7iw3e8j+7a+K?=
+ =?us-ascii?Q?TL9m/KXSlewW0T/OTiYgRozIuTevrWGWQ+grmfhdaW5XNZ7LT8CJy77iL/rJ?=
+ =?us-ascii?Q?QrM2Twugcbz/rO2hkZgb4Sz/BXDYrHuoKfmmwb3rFVXrFMjjvTEGAAMjE5o6?=
+ =?us-ascii?Q?z7i6Acob+WKlHFS8Zzq4o98HeDKfvD4m8yUguTWjJ8LyOk/twTvnFSSG1iZO?=
+ =?us-ascii?Q?cwxHhzHyztD5GTcxbFQw44Amv4iYMQF9HBFH/27FmNtayeuc8CCqHvM1smz0?=
+ =?us-ascii?Q?8rqaxYf/8/darYGKjjRlpq0BsMz5u+AzJ6dQuEGnTJ/CwvMi+O2xCv9C+x3h?=
+ =?us-ascii?Q?+mIlqG1oM+nzYOm0OFxNGChiCFSW1EwAvz2pTGz9d0DQL5PnR5PLerKfD2+q?=
+ =?us-ascii?Q?FloGZLL/svvewCPThpuuUHelanm7QIRLxAoDKhnUs6dmD65askwpxvTzlV3R?=
+ =?us-ascii?Q?kBkqUSGG0ODx7OJM61mzhjZlqkcmZrxQwPYxco2FX2OuwrFbdxiS6sAzy6sO?=
+ =?us-ascii?Q?LWAcxm5h1mlBpihVVgPZ+Fs=3D?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a38f4eab-e176-4858-ba70-08dc41f2659a
+X-MS-Exchange-CrossTenant-AuthSource: DBBPR08MB10721.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Mar 2024 17:40:52.3697 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: qocuhjB1p0JTPRtPmLWopu25QxxCIKSqY4ISXfC897DzUC3YIzL2WpdwSpMnYh5QzEVsED+9NgToNh9ulqg9HP/xg/fJrU8VzofK2gNTnmQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS2PR08MB10322
+Received-SPF: pass client-ip=2a01:111:f403:2612::701;
+ envelope-from=alexander.ivanov@virtuozzo.com;
+ helo=EUR05-AM6-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,95 +135,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Migration causes a number of events that need to go in the replay
-trace, such as vm state transitions. The replay_mutex lock needs to
-be held for these.
+If a block device is an LVM logical volume we can resize it using
+standard LVM tools.
 
-The simplest approach seems to be just take it up-front when taking
-the bql.
+In raw_co_truncate() check if the block device is a LV using lvdisplay
+and resize it executing lvresize.
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
 ---
- migration/migration.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ block/file-posix.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index 86093b34bf..7a24f94425 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -24,6 +24,7 @@
- #include "socket.h"
- #include "sysemu/runstate.h"
- #include "sysemu/sysemu.h"
-+#include "sysemu/replay.h"
- #include "sysemu/cpu-throttle.h"
- #include "rdma.h"
- #include "ram.h"
-@@ -2525,6 +2526,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
-     }
+diff --git a/block/file-posix.c b/block/file-posix.c
+index 35684f7e21..cf8a04e6f7 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -2670,6 +2670,33 @@ static int coroutine_fn raw_co_truncate(BlockDriverState *bs, int64_t offset,
+     if (S_ISCHR(st.st_mode) || S_ISBLK(st.st_mode)) {
+         int64_t cur_length = raw_getlength(bs);
  
-     trace_postcopy_start();
-+    replay_mutex_lock();
-     bql_lock();
-     trace_postcopy_start_set_run();
- 
-@@ -2630,6 +2632,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
-     migration_downtime_end(ms);
- 
-     bql_unlock();
-+    replay_mutex_unlock();
- 
-     if (migrate_postcopy_ram()) {
-         /*
-@@ -2671,6 +2674,7 @@ fail:
-     }
-     migration_call_notifiers(ms, MIG_EVENT_PRECOPY_FAILED, NULL);
-     bql_unlock();
-+    replay_mutex_unlock();
-     return -1;
- }
- 
-@@ -2722,6 +2726,7 @@ static int migration_completion_precopy(MigrationState *s,
- {
-     int ret;
- 
-+    replay_mutex_lock();
-     bql_lock();
- 
-     if (!migrate_mode_is_cpr(s)) {
-@@ -2747,6 +2752,7 @@ static int migration_completion_precopy(MigrationState *s,
-                                              s->block_inactive);
- out_unlock:
-     bql_unlock();
-+    replay_mutex_unlock();
-     return ret;
- }
- 
-@@ -3573,6 +3579,7 @@ static void *bg_migration_thread(void *opaque)
- 
-     trace_migration_thread_setup_complete();
- 
-+    replay_mutex_lock();
-     bql_lock();
- 
-     if (migration_stop_vm(s, RUN_STATE_PAUSED)) {
-@@ -3606,6 +3613,7 @@ static void *bg_migration_thread(void *opaque)
-      */
-     migration_bh_schedule(bg_migration_vm_start_bh, s);
-     bql_unlock();
-+    replay_mutex_unlock();
- 
-     while (migration_is_active(s)) {
-         MigIterateState iter_state = bg_migration_iteration_run(s);
-@@ -3635,6 +3643,7 @@ fail:
-         migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
-                 MIGRATION_STATUS_FAILED);
-         bql_unlock();
-+        replay_mutex_unlock();
-     }
- 
-     bg_migration_iteration_finish(s);
++        /*
++         * Check if the device is an LVM logical volume and try to resize
++         * it using LVM tools.
++         */
++        if (S_ISBLK(st.st_mode) && offset > 0) {
++            char cmd[PATH_MAX + 32];
++
++            snprintf(cmd, sizeof(cmd), "lvdisplay %s > /dev/null",
++                     bs->filename);
++            ret = system(cmd);
++            if (ret != 0) {
++                error_setg(errp, "lvdisplay returned %d error for '%s'",
++                           ret, bs->filename);
++                return ret;
++            }
++
++            snprintf(cmd, sizeof(cmd), "lvresize -f -L %ldB %s > /dev/null",
++                     offset, bs->filename);
++            ret = system(cmd);
++            if (ret != 0) {
++                error_setg(errp, "lvresize returned %d error for '%s'",
++                           ret, bs->filename);
++            }
++
++            return ret;
++        }
++
+         if (offset != cur_length && exact) {
+             error_setg(errp, "Cannot resize device files");
+             return -ENOTSUP;
 -- 
-2.42.0
+2.40.1
 
 
