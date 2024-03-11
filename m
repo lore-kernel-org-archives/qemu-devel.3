@@ -4,147 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81163C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 21:56:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A6ECC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 22:00:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjnbf-0002yX-Q4; Mon, 11 Mar 2024 17:54:51 -0400
+	id 1rjngG-0000AV-Fn; Mon, 11 Mar 2024 17:59:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
- id 1rjnbQ-0002th-9d
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 17:54:36 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjngF-00009z-7k
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 17:59:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
- id 1rjnbM-0003Bb-Ep
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 17:54:35 -0400
-Received: from pps.filterd (m0127842.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id
- 42BD9aGl009722; Mon, 11 Mar 2024 14:54:30 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- from:to:cc:subject:date:message-id:in-reply-to:references
- :content-transfer-encoding:content-type:mime-version; s=
- proofpoint20171006; bh=3l3bMBC8Trpkn7vCOkiQAOET6Cayivg6A4Sma1s+Y
- Nc=; b=sW96tFvuiMSkHJ7URTxEpe0r8IfdOa9TKfKesLGl5nmPOF3Y9ygR7t5Dz
- 006DQBxWuRv2GdTIaolgqkERcVsbN7wLCMnfrTNcMblkVHxTAwvPo600TST2csiJ
- cHJTIdLDcokDW2sAltZ6L9DLcBKAAZbRIPGTNjbbnEx2T5wM46vLHlP0gVPQS5uD
- Fz8OzNzKZ06v9XuJeoa49fxCjVjzrQKoiXfmrLxK8Rw6iunMXXxiuMVJ5bZ41DFo
- b/B/I1DHEkvkM6yGvO0Db8vi2qhRcql+/dPhvd0Ob/ZagdMMs1s4cQ1g6HUijUX3
- a15unuIqjsy4zM0xM3yNAJrx9jb7w==
-Received: from nam10-mw2-obe.outbound.protection.outlook.com
- (mail-mw2nam10lp2101.outbound.protection.outlook.com [104.47.55.101])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 3wrqygmc7y-4
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 11 Mar 2024 14:54:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ZWO1T1vVDtk7fQ3hRg6l+p1hAjsKBu1ux0t+qmP+Cy6LyPUZk1MmLT6y6qLsdOicPBnKdpyhiIv/az0xwRFvlQ51+BWNcX4Pdr+ndYmeGA5lg+PA/dk4k8FxoxHwZkViM+s+jRMHXmnaD3Kc1cX8Fd3MYrL09MAzUpht7PddHZLYIDLN95Sb0StafWSL+hvCAbqfagcqnKjRmv9Zmx1Ks0o53SSyvirmOL5QetEewiafOgeLpUWC+ayCIbDceGI0BrAtj/jH04FXFRCcXkwXA1rd8jqbXXOjt0xMTX7ua3OMSv9kyrrAIt+M9lP1PHqMjTqBRPs1Hns0N/UM8xiNRQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3l3bMBC8Trpkn7vCOkiQAOET6Cayivg6A4Sma1s+YNc=;
- b=ReTPAfI5335jekHJDVcaNvi+TQvNEynXzMTD3xonFncjWWOXaMEKwfSS2qsOJTFI1Q/p7mJFVyM7XwnKuVYjKkhOX9dYudsokh04AemIE0gRMtlVPI254I53k/qVyiGfeIKFT7uKvRjfE0mRUO0ocJfH91p7SwMDcqPxa/pZdtM8jtj+2K6BVXT96UmBkzNu4Jt5zlg3NHnHzBc4LspeD1aPg38Pba3C1fTKrEKc05LGxuXikBy5b9w8rTmsWsX5ytLdrtm+cRUtvI1H5DAoLzxYQGYzou+dUmaKmDjVSLDnlI6AgPJYleJx6eLpHzp841Dv4oBGilouQv1XTVdVtw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3l3bMBC8Trpkn7vCOkiQAOET6Cayivg6A4Sma1s+YNc=;
- b=db58QKwRqQkQTzTzCNAIASOXaJZXnsqOnMT0PI+3DN4mUb8H4jsprP94vlJLbr4w66WlqRklY5xOMtgS2Fs8vLIr37ZHTn4PFo6kIxZE+yu0NYpIW/93VOkkpj8aX6nV8NvhmnbIP/xyhES1+oOhtSJ+n0Ny3a/u/uTMUw3Qq3EU6/nHEGKgG7dyUqm0+Bh4cRJ5DX9s1zvKdMkPKqjI47Ktq4SfWVCCyo7SeW8f4NjvZ/2ROggmIovHUqoewSKs11prHnc289UCt7ByP3/DQD1tLs5WpeBjZc4z70lAAY9abK/woJy/TSKiN7njyMHUyi+KE7eJimB0l6OBO79yDQ==
-Received: from SJ2PR02MB9955.namprd02.prod.outlook.com (2603:10b6:a03:55f::16)
- by BY5PR02MB6849.namprd02.prod.outlook.com (2603:10b6:a03:20c::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.35; Mon, 11 Mar
- 2024 21:54:25 +0000
-Received: from SJ2PR02MB9955.namprd02.prod.outlook.com
- ([fe80::225c:2edd:87e:7cf0]) by SJ2PR02MB9955.namprd02.prod.outlook.com
- ([fe80::225c:2edd:87e:7cf0%7]) with mapi id 15.20.7362.035; Mon, 11 Mar 2024
- 21:54:25 +0000
-From: Het Gala <het.gala@nutanix.com>
-To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, thuth@redhat.com, lvivier@redhat.com,
- pbonzini@redhat.com, peterx@redhat.com, farosas@suse.de,
- Het Gala <het.gala@nutanix.com>
-Subject: [PATCH v5 5/8] Add migrate_set_ports into migrate_qmp to update
- migration port value
-Date: Mon, 11 Mar 2024 21:53:55 +0000
-Message-Id: <20240311215358.27476-6-het.gala@nutanix.com>
-X-Mailer: git-send-email 2.22.3
-In-Reply-To: <20240311215358.27476-1-het.gala@nutanix.com>
-References: <20240311215358.27476-1-het.gala@nutanix.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: PH2PEPF0000385C.namprd17.prod.outlook.com
- (2603:10b6:518:1::6a) To SJ2PR02MB9955.namprd02.prod.outlook.com
- (2603:10b6:a03:55f::16)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjngB-0003xD-0j
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 17:59:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710194370;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=uMS+nCF2NuJY5wFKbMCyMEHpALuR7K278nrHqjHzHBY=;
+ b=S9AzYOnnD4ZIPIRvpDkl/obrFXp5ivZexF9OYpP0WGG1WqOlw3SOrhyhzJZ2fZ1EbEAdPP
+ i2ADUIGQNQV55j3gcsAcWY8QC5EvmR2bQR/rpLJlfWZVRBzq7OyDJpBGF222IHutwCeBDC
+ 8yC/fvzWwue5B6k1+gDcV9UnP/3D8Vo=
+Received: from mail-ot1-f71.google.com (mail-ot1-f71.google.com
+ [209.85.210.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-70-EWVrUBjyOamtsevBRwcUMw-1; Mon, 11 Mar 2024 17:59:28 -0400
+X-MC-Unique: EWVrUBjyOamtsevBRwcUMw-1
+Received: by mail-ot1-f71.google.com with SMTP id
+ 46e09a7af769-6e4e54fb7b4so2273591a34.0
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 14:59:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710194368; x=1710799168;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=uMS+nCF2NuJY5wFKbMCyMEHpALuR7K278nrHqjHzHBY=;
+ b=FKkigx1g+Z16/R/R5UlHuJH5xSJHihWEP0FGSGk5Ki5kqmb8YSFDqFJAEDudWuSG60
+ ze/SqEHbCeo33acW4pA90DAtyIMr2B848fmIrs02N3KJe577N8NACoLaS0REogXvnrnn
+ w7DiEl5fiZYGzmL5mkL4sX3QbrGaAr+CvAUKNUZ9trfIGJ2qsw8BgwAmgQxHh0tNdZfL
+ GYshP/UWT5qMIegO68OmMatxIgEdjOeoBaWAKkBJZHIZdjGC9AoqU5/8yy9LHz8GHp5h
+ 1Kwl77d972AQOncZLn4/k80b9Ce5oYpK41VzHJVoUv/AYYyuyt7YvZxX6wiX2UOhMqU9
+ f6hw==
+X-Gm-Message-State: AOJu0Yw1Y4ijPgGojYszaZhCo/stK09h2OzeZWIEGdLAwvlZCki2rkbQ
+ fm2V4eT4MpqRwGKGb4TLCeP8RnJQiQ8EbQ8N3vP614xxXn4QJWlvIDeT/Nld40aeamcmrOVSJBH
+ 8U6S0ixRV/Kl/NMIVBt/w0NPiyQSAJsfKSwkUcpjWtfZTff0MSk/yJWll0la7R36jgZqwOeUzjR
+ zvkE6x38omatyMUA3MwHt1ByrMlrKoiv5vSA==
+X-Received: by 2002:a05:6808:178c:b0:3c2:4a71:7084 with SMTP id
+ bg12-20020a056808178c00b003c24a717084mr282192oib.2.1710194367777; 
+ Mon, 11 Mar 2024 14:59:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGEeVDP6mIlrm2uMldGt/xygLxLZ7+vY5V/rVXG/lGErvYmO1SzfMW7NA89yxgL2kM2N67guQ==
+X-Received: by 2002:a05:6808:178c:b0:3c2:4a71:7084 with SMTP id
+ bg12-20020a056808178c00b003c24a717084mr282174oib.2.1710194367314; 
+ Mon, 11 Mar 2024 14:59:27 -0700 (PDT)
+Received: from x1n.. (cpe688f2e2cb7c3-cm688f2e2cb7c0.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ d6-20020a0ce446000000b00690cec16254sm1541932qvm.68.2024.03.11.14.59.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 Mar 2024 14:59:27 -0700 (PDT)
+From: peterx@redhat.com
+To: qemu-devel@nongnu.org,
+	Peter Maydell <peter.maydell@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, peterx@redhat.com,
+ Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
+ Prasad Pandit <ppandit@redhat.com>
+Subject: [PULL 00/34] Migration 20240311 patches
+Date: Mon, 11 Mar 2024 17:58:51 -0400
+Message-ID: <20240311215925.40618-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.44.0
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR02MB9955:EE_|BY5PR02MB6849:EE_
-X-MS-Office365-Filtering-Correlation-Id: 45723cbf-840b-4de2-e314-08dc4215cc94
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 63S+XIIqxVkMpGkAFJOmN8oOQXAbQXGNkNJNj7mjRiEADatKZMitC3AueLyCcMlDNlU7UrrhuLPUIY5DrVmjjLzLcgk/Yqw5XvuwpZcl88mZgf7dp3MLDWMcVKbN5lIkPmj8rsQ6KYR/9jazlE64mx+hpWJR23D04q9KMpB8GPhrtXnGMQYcuCAjmT1zLi4uDURysES0WxQCOSm2GpkxDzAPUolU0FZr4/fTf3TGOL2ys+BVeAomorAsi2k16lcs42tU6hpQzoPCUOSrtd+OiZhPZH2doXM5uCkbzdZgl6tFEZCpY3HVaXsFpEiQHzE4hYFmq5gWdfeNATzb22ubQFqxmxLWr5YZhD8yP3diGjAIG6RYFSBBI0eIPWS51NvjmKbejlBiGPwMbn41l5Qmxd3tXHeAvnHRGo+n2M5BH9d8yz1BCk4Uj6MjnxUw+7EZMCORHOfH/Xl2gdpQtRVZOyv+BzjQjcNZkz4f/vlCRqxTqDMPcT2h4vlEUm+0vE1c0BF1pE+Ap5MQqEoEtil8E3nMXCRtO4UGgaSGgccRC+XHH9MYY43DANELZWRol5HF+m1u2VQuFypwrtkIYb/88Am/Hx0CcF15m/kFMIfLUt24AR9gJXRdvYE0EEzBAsYOCbPAh4LAxF6LIsOueiv3xcdrI9A/jEslqqARxXQEOQGCRmAy6ZMfegPHdjE09i1I/QvFyXEUOPeR6ozSZUcTCYS3qnjTvnqZjc5PLJ1pKPA=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ2PR02MB9955.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(52116005)(1800799015)(376005)(38350700005); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?WEqSHnJbFq5CrbmuRIV7yh+BXtq5AMshqAx8+Tnj+X3KASzB02446TEK5KDG?=
- =?us-ascii?Q?6ZVtGE7at7LaWjL2Bxx6OOC/yPuheeo5TBdjpS0LvQkS2V8ZPxey+UyeAy9U?=
- =?us-ascii?Q?B4WpxUBh2EVmHYszUVX0PZNJMCeFmlzUlMlKQXehcn3bcq0aZM0fumj7qLHg?=
- =?us-ascii?Q?PSGjTuJQlGI8MYPH444Dy7B6fgOEJejsSO2nkLzqivXjvlAVN6GLDIf/EyZi?=
- =?us-ascii?Q?sEH31vb67rHQM6X7h9shHIC/UPxbSS5Ypp1YybJ3f6K1fYGR1ReqhlH7XsPD?=
- =?us-ascii?Q?IA6YETqyM4ARE89+dLzdr11TV8aztyFGuFfBQRkgP1ENjJHPyg+t/n0+DyTt?=
- =?us-ascii?Q?Fr+KHgsW5VxNla07ZotlRr3RG1hI/PggD5WR5HVipUt/8Js6O6sz0sNHlPgh?=
- =?us-ascii?Q?cwejftqDyXMSswWAAovo4iKCg+7iRCTjK4imATnaG6tuDNSkw5Oy9pfwRVOx?=
- =?us-ascii?Q?X4HsjiOlKWvxRVDCAfrorfP5vLd+X43ohA0NkRuuHRvEq/LsS3lDPHvLADge?=
- =?us-ascii?Q?uKsvaxZS2RxvR/TUn40B4iVTgORiGN7K27m8kKXDisnbHGWBIPJ6kUVD5H+p?=
- =?us-ascii?Q?k1uuR74C4DF9r1Gn5EgX2poIaWA4fSNb0uITsu4frs+DLtTCqUGo1NbewGw+?=
- =?us-ascii?Q?4zx/1jelWhyQORSIbv/PNQ3iE+MaEJ39DoKRekXFY43zeRheP45yO+hjW7QQ?=
- =?us-ascii?Q?o+Cy71PC85VaTemmQt/RZWsMIpnA7sZTtWB7wtnlDJ1P48Iqap7TgluYJ4sk?=
- =?us-ascii?Q?T5AbcklpJcrnq9xG3oaRdaYBCk8Qf5DO4fdeFkeQNY60Vz7g3w4TVFSZHpF9?=
- =?us-ascii?Q?S6EQe5n0G978RCgVKz0KBcahlaYPvUbgsp7RCcBKBVDMiKY9TI4UUOG6+8I+?=
- =?us-ascii?Q?Jj/21Kv23Hgaq6HZg9vWnAxoRN6Lv4loETwgDptWuFpbvzUZValkyra8ESUp?=
- =?us-ascii?Q?lF3k4WA9jdeHuVNShRnYq4Xb9IERTsG/+e66diVfY9vzCnmparK+n4au7757?=
- =?us-ascii?Q?KFWs003hE/d3ukI3FFdApPobw8WLJ+TlGRWlYKTG8zvX3d+DqN5YJ53OOlbK?=
- =?us-ascii?Q?lxWIuDHrAngCCgjB0LXG3Leyhgb1663aMM29U12LmREjWrs60vW20nzJMjVV?=
- =?us-ascii?Q?88wn+KS2F1ZtVm9631/ZvWBrvqi0OnHQTK6nlh+pV5CN+8Ays9AV65caSi+T?=
- =?us-ascii?Q?1AokcjShY9m47NvwNNAQEuAbtJ4yzLPNSk2zkrTQyqNvogUDNKamKFnjxbib?=
- =?us-ascii?Q?YKMkNTsepfytEjo6/Epu7WW/cCrVj9e4pzffd6mb7db+oQ9LpI1JbK4NfkxF?=
- =?us-ascii?Q?bA0rDVnjnPiY7MsaSDD7iuhHYdfXlnWHZuAI75KSTImfBa6GIi8gijS8Y4+l?=
- =?us-ascii?Q?H3gP5pvc/WwnILkyJGG2iiKXcv4hZHn+LwxOYrthgkOA7FSOhrl8YZ+J7YHO?=
- =?us-ascii?Q?FBnH0kLbaDMoxwjfTfoPXoPFIP66yt5piWs7FIRXMANAywH9uRq8xwv6//un?=
- =?us-ascii?Q?s2qIb7D+59Tf6TNtuzCIX1ms5u10RofRNUT/jCZX4tmflsUwWTlniX3MJ7a9?=
- =?us-ascii?Q?5IgsqBDpJLwAbpdStKVoIFrosa7D/eYJlYKb5Q7pjDC1HuDoHek/AtLZGNkd?=
- =?us-ascii?Q?6Q=3D=3D?=
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 45723cbf-840b-4de2-e314-08dc4215cc94
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR02MB9955.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Mar 2024 21:54:17.4894 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: MwhWh9b45yJOcVK314flVbVxbH6s8BOVHZwlM+iow0s+A3dz8Rb9/f6BXXMbfwY38+75epuVwCDxzlt3EKzS3g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR02MB6849
-X-Proofpoint-ORIG-GUID: QwciuwYm2-31GiieWL44xC9qEYtYs2TK
-X-Proofpoint-GUID: QwciuwYm2-31GiieWL44xC9qEYtYs2TK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-11_11,2024-03-11_01,2023-05-22_02
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12; envelope-from=het.gala@nutanix.com;
- helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,132 +101,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-migrate_get_connect_qdict gets qdict with the dst QEMU parameters.
+From: Peter Xu <peterx@redhat.com>
 
-migrate_set_ports() from list of channels reads each QDict for port,
-and fills the port with correct value in case it was 0 in the test.
+The following changes since commit 7489f7f3f81dcb776df8c1b9a9db281fc21bf05f:
 
-Signed-off-by: Het Gala <het.gala@nutanix.com>
-Suggested-by: Fabiano Rosas <farosas@suse.de>
----
- tests/qtest/migration-helpers.c | 75 +++++++++++++++++++++++++++++++++
- 1 file changed, 75 insertions(+)
+  Merge tag 'hw-misc-20240309' of https://github.com/philmd/qemu into staging (2024-03-09 20:12:21 +0000)
 
-diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
-index f215f44467..ed8d812e9d 100644
---- a/tests/qtest/migration-helpers.c
-+++ b/tests/qtest/migration-helpers.c
-@@ -16,6 +16,8 @@
- #include "qapi/qapi-visit-sockets.h"
- #include "qapi/qobject-input-visitor.h"
- #include "qapi/error.h"
-+#include "qapi/qmp/qlist.h"
-+#include "qemu/cutils.h"
- 
- #include "migration-helpers.h"
- 
-@@ -48,6 +50,37 @@ static char *SocketAddress_to_str(SocketAddress *addr)
-     }
- }
- 
-+static QDict *SocketAddress_to_qdict(SocketAddress *addr)
-+{
-+    QDict *dict = qdict_new();
-+
-+    switch (addr->type) {
-+    case SOCKET_ADDRESS_TYPE_INET:
-+        qdict_put_str(dict, "type", "inet");
-+        qdict_put_str(dict, "host", addr->u.inet.host);
-+        qdict_put_str(dict, "port", addr->u.inet.port);
-+        break;
-+    case SOCKET_ADDRESS_TYPE_UNIX:
-+        qdict_put_str(dict, "type", "unix");
-+        qdict_put_str(dict, "path", addr->u.q_unix.path);
-+        break;
-+    case SOCKET_ADDRESS_TYPE_FD:
-+        qdict_put_str(dict, "type", "fd");
-+        qdict_put_str(dict, "str", addr->u.fd.str);
-+        break;
-+    case SOCKET_ADDRESS_TYPE_VSOCK:
-+        qdict_put_str(dict, "type", "vsock");
-+        qdict_put_str(dict, "cid", addr->u.vsock.cid);
-+        qdict_put_str(dict, "port", addr->u.vsock.port);
-+        break;
-+    default:
-+        g_assert_not_reached();
-+        break;
-+    }
-+
-+    return dict;
-+}
-+
- static SocketAddress *migrate_get_socket_address(QTestState *who)
- {
-     QDict *rsp;
-@@ -81,6 +114,46 @@ migrate_get_connect_uri(QTestState *who)
-     return connect_uri;
- }
- 
-+static QDict *
-+migrate_get_connect_qdict(QTestState *who)
-+{
-+    SocketAddress *addrs;
-+    QDict *connect_qdict;
-+
-+    addrs = migrate_get_socket_address(who);
-+    connect_qdict = SocketAddress_to_qdict(addrs);
-+
-+    qapi_free_SocketAddress(addrs);
-+    return connect_qdict;
-+}
-+
-+static void migrate_set_ports(QTestState *to, QList *channel_list)
-+{
-+    QDict *addr;
-+    QListEntry *entry;
-+    g_autofree const char *addr_port = NULL;
-+
-+    if (channel_list == NULL) {
-+        return;
-+    }
-+
-+    addr = migrate_get_connect_qdict(to);
-+
-+    QLIST_FOREACH_ENTRY(channel_list, entry) {
-+        QDict *channel = qobject_to(QDict, qlist_entry_obj(entry));
-+        QDict *addrdict = qdict_get_qdict(channel, "addr");
-+
-+        if (qdict_haskey(addrdict, "port") &&
-+            qdict_haskey(addr, "port") &&
-+            (strcmp(qdict_get_str(addrdict, "port"), "0") == 0)) {
-+                addr_port = qdict_get_str(addr, "port");
-+                qdict_put_str(addrdict, "port", addr_port);
-+        }
-+    }
-+
-+    qobject_unref(addr);
-+}
-+
- bool migrate_watch_for_events(QTestState *who, const char *name,
-                               QDict *event, void *opaque)
- {
-@@ -139,6 +212,7 @@ void migrate_qmp(QTestState *who, QTestState *to, const char *uri,
- {
-     va_list ap;
-     QDict *args;
-+    QList *channel_list = NULL;
-     g_autofree char *connect_uri = NULL;
- 
-     va_start(ap, fmt);
-@@ -149,6 +223,7 @@ void migrate_qmp(QTestState *who, QTestState *to, const char *uri,
-     if (!uri) {
-         connect_uri = migrate_get_connect_uri(to);
-     }
-+    migrate_set_ports(to, channel_list);
-     qdict_put_str(args, "uri", uri ? uri : connect_uri);
- 
-     qtest_qmp_assert_success(who,
+are available in the Git repository at:
+
+  https://gitlab.com/peterx/qemu.git tags/migration-20240311-pull-request
+
+for you to fetch changes up to 1815338df00fd0a3fe25085564c6966f74c8f43d:
+
+  migration/multifd: Add new migration test cases for legacy zero page checking. (2024-03-11 16:57:09 -0400)
+
+----------------------------------------------------------------
+Migration pull request
+
+- Avihai's fix to allow vmstate iterators to not starve for VFIO
+- Maksim's fix on additional check on precopy load error
+- Fabiano's fix on fdatasync() hang in mapped-ram
+- Jonathan's fix on vring cached access over MMIO regions
+- Cedric's cleanup patches 1-4 out of his error report series
+- Yu's fix for RDMA migration (which used to be broken even for 8.2)
+- Anthony's small cleanup/fix on err message
+- Steve's patches on privatize migration.h
+- Xiang's patchset to enable zero page detections in multifd threads
+
+----------------------------------------------------------------
+
+Anthony PERARD (1):
+  migration: Fix format in error message
+
+Avihai Horon (3):
+  migration: Don't serialize devices in qemu_savevm_state_iterate()
+  vfio/migration: Refactor vfio_save_state() return value
+  vfio/migration: Add a note about migration rate limiting
+
+Cédric Le Goater (4):
+  migration: Report error when shutdown fails
+  migration: Remove SaveStateHandler and LoadStateHandler typedefs
+  migration: Add documentation for SaveVMHandlers
+  migration: Do not call PRECOPY_NOTIFY_SETUP notifiers in case of error
+
+Fabiano Rosas (3):
+  migration/multifd: Don't fsync when closing QIOChannelFile
+  migration/multifd: Allow zero pages in file migration
+  migration/multifd: Allow clearing of the file_bmap from multifd
+
+Hao Xiang (5):
+  migration/multifd: Add new migration option zero-page-detection.
+  migration/multifd: Implement zero page transmission on the multifd
+    thread.
+  migration/multifd: Implement ram_save_target_page_multifd to handle
+    multifd version of MigrationOps::ram_save_target_page.
+  migration/multifd: Enable multifd zero page checking by default.
+  migration/multifd: Add new migration test cases for legacy zero page
+    checking.
+
+Jonathan Cameron (4):
+  physmem: Rename addr1 to more informative mr_addr in
+    flatview_read/write() and similar
+  physmem: Reduce local variable scope in flatview_read/write_continue()
+  physmem: Factor out body of flatview_read/write_continue() loop
+  physmem: Fix wrong address in large
+    address_space_read/write_cached_slow()
+
+Maksim Davydov (1):
+  migration/ram: add additional check
+
+Steve Sistare (12):
+  migration: export fewer options
+  migration: remove migration.h references
+  migration: export migration_is_setup_or_active
+  migration: export migration_is_active
+  migration: export migration_is_running
+  migration: export vcpu_dirty_limit_period
+  migration: migration_thread_is_self
+  migration: migration_is_device
+  migration: migration_file_set_error
+  migration: privatize colo interfaces
+  migration: delete unused accessors
+  migration: purge MigrationState from public interface
+
+Yu Zhang (1):
+  migration/rdma: Fix a memory issue for migration
+
+ docs/devel/migration/main.rst       |   3 +-
+ qapi/migration.json                 |  38 +++-
+ include/hw/qdev-properties-system.h |   4 +
+ include/migration/client-options.h  |  25 +++
+ include/migration/misc.h            |  18 +-
+ include/migration/register.h        | 267 +++++++++++++++++++++++++---
+ include/qemu/typedefs.h             |   2 -
+ migration/migration.h               |   7 +-
+ migration/multifd.h                 |  23 ++-
+ migration/options.h                 |   7 +-
+ migration/ram.h                     |   3 +-
+ hw/core/machine.c                   |   4 +-
+ hw/core/qdev-properties-system.c    |  10 ++
+ hw/vfio/common.c                    |  17 +-
+ hw/vfio/container.c                 |   1 -
+ hw/vfio/migration.c                 |  24 ++-
+ hw/virtio/vhost-user.c              |   1 -
+ hw/virtio/virtio-balloon.c          |   2 -
+ io/channel-file.c                   |   5 -
+ migration/colo.c                    |  17 +-
+ migration/file.c                    |   4 +-
+ migration/migration-hmp-cmds.c      |   9 +
+ migration/migration.c               |  67 ++++---
+ migration/multifd-zero-page.c       |  87 +++++++++
+ migration/multifd-zlib.c            |  21 ++-
+ migration/multifd-zstd.c            |  20 ++-
+ migration/multifd.c                 | 120 ++++++++++---
+ migration/options.c                 |  32 +++-
+ migration/qemu-file.c               |   5 +-
+ migration/ram.c                     |  62 +++++--
+ migration/rdma.c                    |   2 +-
+ migration/savevm.c                  |  23 +--
+ net/colo-compare.c                  |   3 +-
+ net/vhost-vdpa.c                    |   3 +-
+ stubs/colo.c                        |   1 -
+ system/dirtylimit.c                 |  13 +-
+ system/physmem.c                    | 260 +++++++++++++++++----------
+ system/qdev-monitor.c               |   1 -
+ target/loongarch/kvm/kvm.c          |   1 -
+ target/riscv/kvm/kvm-cpu.c          |   4 +-
+ tests/qtest/migration-test.c        |  52 ++++++
+ tests/unit/test-vmstate.c           |   1 -
+ migration/meson.build               |   1 +
+ migration/trace-events              |   8 +-
+ 44 files changed, 981 insertions(+), 297 deletions(-)
+ create mode 100644 include/migration/client-options.h
+ create mode 100644 migration/multifd-zero-page.c
+
 -- 
-2.22.3
+2.44.0
 
 
