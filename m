@@ -4,68 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40EADC5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 07:44:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E940FC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 07:44:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjaJ8-0006oL-Mz; Mon, 11 Mar 2024 03:42:50 -0400
+	id 1rjaIs-0006ed-7v; Mon, 11 Mar 2024 03:42:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjaJ3-0006mQ-4s
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 03:42:47 -0400
-Received: from mgamail.intel.com ([198.175.65.12])
+ (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
+ id 1rjaIr-0006e9-6L
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 03:42:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjaJ1-0006O0-Lf
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 03:42:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710142963; x=1741678963;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=cdkipYG8gT3vw8zhnJLXFox5OUOd0vNDUg2QN7WEIMY=;
- b=f9K504nCzYa4OfY4rofkxo7G4ZC7p6zmfsrZn0rreme1dTtP/5f6H6uy
- IqtvqDJ75d2ECqtgeFA923zw/7NaXn0emZoLnrj4rSFSwBIlJiCbPySFX
- OMrri5/b5ubwNP25MR/QSFbT3dJrYnRAdKVQhzO24jsTRG7El7WSGMP6m
- kmhhdpH9y4/pdSkzb5HqM4IsCU8DKCGuJFRH2BoJt0bf9iEa0T5kSXtEC
- yexwJdOgeAl4M7Zz2aaeP9Scy61sQciOHrEu5YsOL4JGpZelLay04bKNJ
- vnFCAl257LcIO13cBzg7fffrB9VMH52VmtBslTU0lpK+em02uBO3EzGRz g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="16229088"
-X-IronPort-AV: E=Sophos;i="6.07,116,1708416000"; d="scan'208";a="16229088"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Mar 2024 00:42:42 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,116,1708416000"; d="scan'208";a="34215938"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa002.fm.intel.com with ESMTP; 11 Mar 2024 00:42:40 -0700
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v3 3/3] hw/core: Cleanup unused included headers in numa.c
-Date: Mon, 11 Mar 2024 15:56:21 +0800
-Message-Id: <20240311075621.3224684-4-zhao1.liu@linux.intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240311075621.3224684-1-zhao1.liu@linux.intel.com>
-References: <20240311075621.3224684-1-zhao1.liu@linux.intel.com>
+ (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
+ id 1rjaId-0006JB-Cz
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 03:42:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710142938;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=NdKaBwIYTS5kAgFX4EAlzXqT8OITpef6c+klwQHgjk8=;
+ b=PZvq3kev1fkubX4GY1tBNBfrwGrUOKTrqy6AlKuPUvYN/uziLW7t2uyo5bvGZ6FXDd2fzn
+ kfqf5u/ZyK4gzhl6tmnMLnpFLlypaFvMUyQiiz2kA+GQvYSkS1dutBUAz8I4+GC8Vz+7oN
+ QAb0bZQhdDI1W/5Di9GHO52kidOEqTM=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-125-ZBpkOo2sN8KzB-llBNOFzA-1; Mon, 11 Mar 2024 03:42:16 -0400
+X-MC-Unique: ZBpkOo2sN8KzB-llBNOFzA-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4132cf5b950so1162745e9.0
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 00:42:16 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710142935; x=1710747735;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=NdKaBwIYTS5kAgFX4EAlzXqT8OITpef6c+klwQHgjk8=;
+ b=Tie8icDBENQj3TqEnKzDWBrTJzm1AaeUE9VYIoDkaXb5UhjSem4wpbH370WF4ZLXGE
+ blgE7PRb2XMadxDLmksHMtTmRIWgKqzbw9CakLQ/sQ294L/5JaNN+kW0uhh5EUSrd86n
+ CJyFpziZTmxDKaq19RNO7BBTqqwYSaAg8Awnn4GkUMr5VNbqEinoALnQK+xXzj0XpAfJ
+ loFkr2Ro7lNRaLbPHO8oecy2LbKub/ghI7JGXpNsO444ou6mUYOojTD9AxQO3L+1fb/0
+ jfiQ58rzw0nnGGc3FANMp00fE5ohxmvZCQ9RMPt+JjiJGsWouhhcBkahJvEEANFW9KhP
+ tWMg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWTc5biTHzJjK+9H0PzdWFZ/SSnh9fPk5Rxm36k3PQM2cG3YS/OccpJE/ld/M19ZO+tZkUVSb075bYPowis/rk9IXZbBek=
+X-Gm-Message-State: AOJu0YxCpr18iUGe+wr3hKluFlBKUcbgHE7Bo/0n3JhnkANYun91CjHN
+ uK6sJ7+kkGv1qAFkVlVDsmuVmhDVBj858J46CXWhjIBSXrOw0GlyQJh8xu6bs+zyrzeOO9GHtDV
+ HlTaAJPJv218882VO97JQQzAbWh3BsXpVvR5C1Au8levGhfpSsFST
+X-Received: by 2002:a05:600c:4f50:b0:412:ee33:db93 with SMTP id
+ m16-20020a05600c4f5000b00412ee33db93mr5147968wmq.3.1710142935823; 
+ Mon, 11 Mar 2024 00:42:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHaC+vmNUs5IeDU5nUBD1wW16ZGHUDGeZPHVSeY+NX35mFIgdWI8bksTsuSE/th1aPIErPZAw==
+X-Received: by 2002:a05:600c:4f50:b0:412:ee33:db93 with SMTP id
+ m16-20020a05600c4f5000b00412ee33db93mr5147942wmq.3.1710142935527; 
+ Mon, 11 Mar 2024 00:42:15 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ m38-20020a05600c3b2600b00412b6fbb9b5sm14797294wms.8.2024.03.11.00.42.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 Mar 2024 00:42:15 -0700 (PDT)
+Message-ID: <8c190ff9-137e-4f1e-ba74-b4beaaa90e7f@redhat.com>
+Date: Mon, 11 Mar 2024 08:42:12 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 29/29] target/s390x/cpu_models: Fix missing
+ ERRP_GUARD() for error_prepend()
+Content-Language: en-US, fr
+To: Zhao Liu <zhao1.liu@linux.intel.com>, Thomas Huth <thuth@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Michael Tokarev <mjt@tls.msk.ru>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ David Hildenbrand <david@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, qemu-s390x@nongnu.org
+References: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
+ <20240311033822.3142585-30-zhao1.liu@linux.intel.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>
+In-Reply-To: <20240311033822.3142585-30-zhao1.liu@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=198.175.65.12;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clegoate@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
 X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.945,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.945,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,47 +113,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+On 3/11/24 04:38, Zhao Liu wrote:
+> From: Zhao Liu <zhao1.liu@intel.com>
+> 
+> As the comment in qapi/error, passing @errp to error_prepend() requires
+> ERRP_GUARD():
+> 
+> * = Why, when and how to use ERRP_GUARD() =
+> *
+> * Without ERRP_GUARD(), use of the @errp parameter is restricted:
+> ...
+> * - It should not be passed to error_prepend(), error_vprepend() or
+> *   error_append_hint(), because that doesn't work with &error_fatal.
+> * ERRP_GUARD() lifts these restrictions.
+> *
+> * To use ERRP_GUARD(), add it right at the beginning of the function.
+> * @errp can then be used without worrying about the argument being
+> * NULL or &error_fatal.
+> 
+> ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
+> can't see this additional information, because exit() happens in
+> error_setg earlier than information is added [1].
+> 
+> In target/s390x/cpu_models.c, there are 2 functions passing @errp to
+> error_prepend() without ERRP_GUARD():
+> - check_compatibility()
+> - s390_realize_cpu_model()
+> 
+> Though both their @errp parameters point to their callers' local @err
+> virables and don't cause the issue as [1] said, to follow the
+> requirement of @errp, also add missing ERRP_GUARD() at their beginning.
+> 
+> [1]: Issue description in the commit message of commit ae7c80a7bd73
+>       ("error: New macro ERRP_GUARD()").
+> 
+> Cc: David Hildenbrand <david@redhat.com>
+> Cc: Thomas Huth <thuth@redhat.com>
+> Cc: Richard Henderson <richard.henderson@linaro.org>
+> Cc: Ilya Leoshkevich <iii@linux.ibm.com>
+> Cc: qemu-s390x@nongnu.org
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
 
-Remove unused header in numa.c:
-* qemu/bitmap.h
-* migration/vmstate.h
 
-Note: Though parse_numa_hmat_lb() has the variable named "bitmap_copy",
-it doesn't use the normal bitmap ops so that it's safe to exclude
-qemu/bitmap.h header.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Tested by "./configure" and then "make".
+Thanks,
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
-v3: Re-included hw/core/cpu.h since CPU_UNSET_NUMA_NODE_ID is defined
-    in this header.
----
- hw/core/numa.c | 2 --
- 1 file changed, 2 deletions(-)
+C.
 
-diff --git a/hw/core/numa.c b/hw/core/numa.c
-index f08956ddb0ff..81d21243498e 100644
---- a/hw/core/numa.c
-+++ b/hw/core/numa.c
-@@ -28,7 +28,6 @@
- #include "sysemu/numa.h"
- #include "exec/cpu-common.h"
- #include "exec/ramlist.h"
--#include "qemu/bitmap.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "qapi/opts-visitor.h"
-@@ -36,7 +35,6 @@
- #include "sysemu/qtest.h"
- #include "hw/core/cpu.h"
- #include "hw/mem/pc-dimm.h"
--#include "migration/vmstate.h"
- #include "hw/boards.h"
- #include "hw/mem/memory-device.h"
- #include "qemu/option.h"
--- 
-2.34.1
 
 
