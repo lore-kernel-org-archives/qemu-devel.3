@@ -4,87 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B2B1C5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 08:27:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78A31C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 08:28:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjazn-0002Jf-K9; Mon, 11 Mar 2024 04:26:55 -0400
+	id 1rjb1Y-0003WK-98; Mon, 11 Mar 2024 04:28:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rjazj-0002JF-3z
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 04:26:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rjazV-0008JJ-Ru
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 04:26:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710145597;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=jPTNsNYlyuoCf/nljvZGZg2h6owx+osOv81jUJ76EfM=;
- b=WrnajpoOICYYKm97VZVZyT8Cv+sRHVhJnlFWoQUMeIGv6k+uv9s82scZhLsjO635Q6LYsk
- xTFgyLjF2w8n34S50rOWBT8cribJnUho1u6DTfdkDkRpiyYtvZaSf3X2q58NoQGoaxJrgj
- dnk0fBj7uwaOrDMRB43ztXi8XS7Bzkw=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-161-iXJJu7lFPcWepVpUbfL69w-1; Mon, 11 Mar 2024 04:26:35 -0400
-X-MC-Unique: iXJJu7lFPcWepVpUbfL69w-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a45ac612a4dso532721366b.0
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 01:26:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjb1W-0003W3-BP
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 04:28:42 -0400
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjb1Q-0000Fz-Tq
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 04:28:41 -0400
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-513a81b717cso760104e87.0
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 01:28:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710145715; x=1710750515; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=kvo1sjEmvcnkJBb64dekgahp1yIbA/J8h4vl+AZ/xmg=;
+ b=j908vjmS35kJ2ZgUgXcwbyLKbIwRsgnPoHtd+YquzrfHBDzieVqEsmzg3eq5XrbyCs
+ 12ZQrx72vCPdP5pI7pp50+RGKWMDIAYeAPsiIEpfUeoj44eZR/yr3Th0MR3sUE0gMiL/
+ oBawPqqKCxII9MP+tIbkJcBEaTsdokfdkS+5tmnFrAtGoLvwQ8GkbknfUvjliaLcREz6
+ S4d0figEAC1xocE0OH+XkuubYZRAHhuxj4L5cWLWhNyJaDJVgl5JVLsgtgmzoNSQjecp
+ N4OSs1gfRqoOXSM3yt9XPwgNxwwCYpdya8eyfXT7EPN47ujKXCkSNs8RuttEt8SV4iVa
+ Zhbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710145594; x=1710750394;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jPTNsNYlyuoCf/nljvZGZg2h6owx+osOv81jUJ76EfM=;
- b=CVjFL3RwJryY346LeD/T2jPwT8bIjY/DitkTgqm/rz2Imurg441v5HHQ+Ix+i//7OH
- rFC/dD+O4evY9nsqLitgFzM1QmlkgYpeV+kQEf0Fsf8XbizgMcPeYp6P6UN0UX2c7sBW
- AVa6oDg7klOvOZnMngkWH+Se9vRcFPrxhOmKvH6LhXEYeCuyR7x/UcdX82vC2q8WLvjc
- KKLtbSE9V1XxT66zJa0Fz9x2TyccUg7/BqnFClU7Kq+DQ0xngEhFeoSMxs/xNETdvx5f
- Z5UhnSdzDLv0ZYQ7GvVhjBOJnp/bMl/PWloYT2UYqV3hRhIxBaVi1MawGp2q1m1E2wAQ
- lGMA==
-X-Gm-Message-State: AOJu0Yzg3AImaIvmeosqha9JRWR0Xgp3uec9uWHNqhGsmBkw96lHGddC
- UykZqC4H+Z1oQrzWhlPNAqh2LsZF9KBCKuP5kgiai780Rna/KS4S33xJViZ/G/qCGcUxEf8/jqb
- 2GGG8ZWsw5PhgvXDoDJppyj+XsmOkUnt6qsHRI2EZr/v85wndNQt3dRIMJx5vkIeQHnSPmzQwv9
- Zcz4GxUy6WQXuasbvbiCmFN0SJN/sH4uXN8aIW
-X-Received: by 2002:a17:907:6d0e:b0:a46:2e1c:2a6f with SMTP id
- sa14-20020a1709076d0e00b00a462e1c2a6fmr1378682ejc.2.1710145593969; 
- Mon, 11 Mar 2024 01:26:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFMON1WTLCytqCh/hpBNuQ5jbRhIo0rQjPGv80ymxuy6X5g/+8OTqBKwAjokAKnmFRjzmWAGA==
-X-Received: by 2002:a17:907:6d0e:b0:a46:2e1c:2a6f with SMTP id
- sa14-20020a1709076d0e00b00a462e1c2a6fmr1378669ejc.2.1710145593590; 
- Mon, 11 Mar 2024 01:26:33 -0700 (PDT)
-Received: from [192.168.10.118] ([151.49.77.21])
+ d=1e100.net; s=20230601; t=1710145715; x=1710750515;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kvo1sjEmvcnkJBb64dekgahp1yIbA/J8h4vl+AZ/xmg=;
+ b=ftPkuUJgKlWaMns8HB8VeCwydbkHgXp/+DE0e5HMFwqQKID7NY02UvdnBesd/BHwe9
+ 1Zv/RsBAkt+Li4fDZWsyQtx1D4VjW/XrgBEHuQ1Fay0Dhq4wG6RrSRkMCishZKg1Lt6L
+ Q2dZ73CFGr/scvWOaq7+8cGq7/4LtRiCK3eEtBlorP/088w0/figuM5hFbtB5d/0mmpS
+ ci+pmDSEkNPTiKxpdzHcd4VE6wRvc8rcjmfBM9vVxsIdYAI1EwRIziiQW8Af2wLKMDe6
+ J8jcK6tyXHtog8e5cja1lCTbUxN0gC5BaqpnGteaM9OiMHL9UpCjbOJ8oHS247xy2h8K
+ RgHw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVDWFnoXpVEPEGGBdnl/zQtCtFU/4KYw0nHmWsqK8TmD5uSkH6Tv18gGKdKMT+2QEHvDMFqQSCUorHurvTLrQUa2MkWbfc=
+X-Gm-Message-State: AOJu0YwXcla2aPn+WhB+ChNnXLvumsbuAZBPugEQFnDH/pPiGqzYo9Lb
+ nWVp5fZ4+y12zcODw7/TuCMj0y4T+bAsXvDPkY/Ik55KRUZnOcPyvF7J9cKZ2ximFmjT0LBMLK7
+ k
+X-Google-Smtp-Source: AGHT+IGdLG5XgowrX72xaw/ggMZNYqYFTthNbRUKhBQUF74NpBWa6lvUEMprEER9ylfNib+I/A2zKg==
+X-Received: by 2002:a05:6512:118e:b0:513:23be:e924 with SMTP id
+ g14-20020a056512118e00b0051323bee924mr4559558lfr.59.1710145714605; 
+ Mon, 11 Mar 2024 01:28:34 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.167.228])
  by smtp.gmail.com with ESMTPSA id
- mm5-20020a170906cc4500b00a3d11feb32esm2635201ejb.186.2024.03.11.01.26.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 01:26:33 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH] tcg/aarch64: fix assertion failure on TSTxx of UINT32_MAX
-Date: Mon, 11 Mar 2024 09:26:32 +0100
-Message-ID: <20240311082632.671163-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.43.2
+ az19-20020adfe193000000b0033e9d9f891csm457925wrb.58.2024.03.11.01.28.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 Mar 2024 01:28:34 -0700 (PDT)
+Message-ID: <eadc337e-7575-4756-ab8d-9c951cdde644@linaro.org>
+Date: Mon, 11 Mar 2024 09:28:32 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] sun4u: remap ebus BAR0 to use unassigned_io_ops instead
+ of alias to PCI IO space
+Content-Language: en-US
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org
+References: <20240311064345.2531197-1-mark.cave-ayland@ilande.co.uk>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240311064345.2531197-1-mark.cave-ayland@ilande.co.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.945,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,30 +96,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These are translated to CBZ and CBNZ instructions, and the code generation part
-of tcg_out_brcond checks that c is one of TCG_COND_EQ or TCG_COND_NE.
+On 11/3/24 07:43, Mark Cave-Ayland wrote:
+> During kernel startup OpenBSD accesses addresses mapped by BAR0 of the ebus device
+> but at offsets where no IO devices exist. Before commit 4aa07e8649 ("hw/sparc64/ebus:
+> Access memory regions via pci_address_space_io()") BAR0 was mapped to legacy IO
+> space which allows accesses to unmapped devices to succeed, but afterwards these
+> accesses to unmapped PCI IO space cause a memory fault which prevents OpenBSD from
+> booting.
+> 
+> Since no devices are mapped at the addresses accessed by OpenBSD, change ebus BAR0
+> from a PCI IO space alias to an IO memory region using unassigned_io_ops which allows
+> these accesses to succeed and so allows OpenBSD to boot once again.
+> 
+> Fixes: 4aa07e8649 ("hw/sparc64/ebus: Access memory regions via pci_address_space_io()")
+> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-Fixes: 34aff3c2e06 ("tcg/aarch64: Generate CBNZ for TSTNE of UINT32_MAX", 2024-02-03)
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- tcg/aarch64/tcg-target.c.inc | 1 +
- 1 file changed, 1 insertion(+)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
-index dec8ecc1b65..6ed174bd172 100644
---- a/tcg/aarch64/tcg-target.c.inc
-+++ b/tcg/aarch64/tcg-target.c.inc
-@@ -1465,6 +1465,7 @@ static void tcg_out_brcond(TCGContext *s, TCGType ext, TCGCond c, TCGArg a,
-     case TCG_COND_TSTNE:
-         /* tst xN,0xffffffff; b.ne L -> cbnz wN,L */
-         if (b_const && b == UINT32_MAX) {
-+            c = (c == TCG_COND_TSTEQ ? TCG_COND_EQ : TCG_COND_NE);
-             ext = TCG_TYPE_I32;
-             need_cmp = false;
-             break;
--- 
-2.43.2
+> ---
+> 
+> [MCA: I'd like to merge this for 9.0 since I've been carrying various local workarounds
+> to allow OpenBSD to boot on SPARC64 for some time.]
+
+Sure.
+
+>   hw/sparc64/sun4u.c | 9 +++++++--
+>   1 file changed, 7 insertions(+), 2 deletions(-)
 
 
