@@ -4,54 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DCD4C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:28:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21FC2C5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:28:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjWHp-0005cY-82; Sun, 10 Mar 2024 23:25:13 -0400
+	id 1rjWJJ-0001uj-Jj; Sun, 10 Mar 2024 23:26:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWHh-0005bT-MA; Sun, 10 Mar 2024 23:25:05 -0400
+ id 1rjWJH-0001g5-53; Sun, 10 Mar 2024 23:26:43 -0400
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWHe-0007rZ-TW; Sun, 10 Mar 2024 23:25:05 -0400
+ id 1rjWJE-00084P-ET; Sun, 10 Mar 2024 23:26:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710127503; x=1741663503;
+ t=1710127600; x=1741663600;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=n7x/NGlcrymeFElMS75k5Vxzn/ea0m2ZkbkONubxDgw=;
- b=dyNOyScc6vDSdBb0T4JLgOycc0jWe6bXh20BSswPl05oVpk/DUGz+NY/
- G79064ppSmx4if8gKEgF00TaEhnVv1p5o/Cej1LHr2urMge0K1YM6p0Om
- hi3fg53aRVq6t7+3dztqvJZb1SfYCd/w+aTzw61kaD9iQ1/j+JgjoajLl
- JVLRmCJVuqWUqNAdPrINkQRQgiAKpehM0MsxT5dSpB9g0HBD+G4Chbd1n
- CLwXFno1Ro/v306UyRKalp0MnoT9U3ho+EhSPxi1BvWY/atifjCWVEYUr
- 0XoNWCZAq8/pzk+jT5a+21tZQYTnfVd0gcZajToYJgSF0EqRgLcOeL7mN g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229615"
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229615"
+ bh=DRmA9H8ISXlVE6l62evXpMS/+COxZZyFF9roexvNfSY=;
+ b=E0ssjBz69Hhcx/d5ethT5xS0qiH2vSSb5d36nUkLXApFLMyKOKtWS62l
+ bZRwV0Cojzeh8hzlmtREyqpXPGNgBR7a5zesqGsN7A6LwxhRLiQa9WlKB
+ ekocKweJlqlmdEy1lsTLeSXqDARILagU0ja9wWGrp+ZYiBwsclPbInHW3
+ RP3zt2as6MDnX72bBj5kCN1wVho5I/RwxSQmIbLvOMyyBvoLryV3Qzh5P
+ BgiNcM9vNYXHP/gORd/p363shll8pEA7WOP8gcNpEf8fGKd9bCNC2N264
+ 1f8tqzHbR0TMU4PZK6SoP6OOt5rlCyVT+kqxzRSum5K4F/MLTuML8bTO9 w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229826"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229826"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2024 20:25:00 -0700
+ 10 Mar 2024 20:25:57 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15593759"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15594064"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:24:57 -0700
+ by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:25:49 -0700
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, Michael Tokarev <mjt@tls.msk.ru>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng <fam@euphon.net>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org
-Subject: [PATCH v2 06/29] block/nvme: Fix missing ERRP_GUARD() for
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v2 23/29] hw/vfio/pci: Fix missing ERRP_GUARD() for
  error_prepend()
-Date: Mon, 11 Mar 2024 11:37:59 +0800
-Message-Id: <20240311033822.3142585-7-zhao1.liu@linux.intel.com>
+Date: Mon, 11 Mar 2024 11:38:16 +0800
+Message-Id: <20240311033822.3142585-24-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
 References: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
@@ -103,63 +102,50 @@ ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
 can't see this additional information, because exit() happens in
 error_setg earlier than information is added [1].
 
-In nvme.c, there are 3 functions passing @errp to error_prepend()
+In hw/vfio/pci.c, there are 2 functions passing @errp to error_prepend()
 without ERRP_GUARD():
-- nvme_init_queue()
-- nvme_create_queue_pair()
-- nvme_identify()
+- vfio_add_std_cap()
+- vfio_realize()
 
-All these 3 functions take their @errp parameters from the
-nvme_file_open(), which is a BlockDriver.bdrv_nvme() method and its
-@errp points to its caller's local_err.
+The @errp of vfio_add_std_cap() is also from vfio_realize(). And
+vfio_realize(), as a PCIDeviceClass.realize method, its @errp is from
+DeviceClass.realize so that there is no guarantee that the @errp won't
+point to @error_fatal.
 
-Though these 3 cases haven't trigger the issue like [1] said, to
-follow the requirement of @errp, add missing ERRP_GUARD() at their
+To avoid the issue like [1] said, add missing ERRP_GUARD() at their
 beginning.
 
 [1]: Issue description in the commit message of commit ae7c80a7bd73
      ("error: New macro ERRP_GUARD()").
 
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Fam Zheng <fam@euphon.net>
-Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org>
-Cc: Kevin Wolf <kwolf@redhat.com>
-Cc: Hanna Reitz <hreitz@redhat.com>
-Cc: qemu-block@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>
+Cc: "Cédric Le Goater" <clg@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- block/nvme.c | 3 +++
- 1 file changed, 3 insertions(+)
+ hw/vfio/pci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/block/nvme.c b/block/nvme.c
-index 0a0a0a6b36cd..3a3c6da73d29 100644
---- a/block/nvme.c
-+++ b/block/nvme.c
-@@ -168,6 +168,7 @@ static QemuOptsList runtime_opts = {
- static bool nvme_init_queue(BDRVNVMeState *s, NVMeQueue *q,
-                             unsigned nentries, size_t entry_bytes, Error **errp)
- {
-+    ERRP_GUARD();
-     size_t bytes;
-     int r;
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index a1522a011aa5..64780d1b7933 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -2136,6 +2136,7 @@ static void vfio_check_af_flr(VFIOPCIDevice *vdev, uint8_t pos)
  
-@@ -221,6 +222,7 @@ static NVMeQueuePair *nvme_create_queue_pair(BDRVNVMeState *s,
-                                              unsigned idx, size_t size,
-                                              Error **errp)
+ static int vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
  {
 +    ERRP_GUARD();
-     int i, r;
-     NVMeQueuePair *q;
-     uint64_t prp_list_iova;
-@@ -535,6 +537,7 @@ static int nvme_admin_cmd_sync(BlockDriverState *bs, NvmeCmd *cmd)
- /* Returns true on success, false on failure. */
- static bool nvme_identify(BlockDriverState *bs, int namespace, Error **errp)
+     PCIDevice *pdev = &vdev->pdev;
+     uint8_t cap_id, next, size;
+     int ret;
+@@ -2942,6 +2943,7 @@ static void vfio_unregister_req_notifier(VFIOPCIDevice *vdev)
+ 
+ static void vfio_realize(PCIDevice *pdev, Error **errp)
  {
 +    ERRP_GUARD();
-     BDRVNVMeState *s = bs->opaque;
-     bool ret = false;
-     QEMU_AUTO_VFREE union {
+     VFIOPCIDevice *vdev = VFIO_PCI(pdev);
+     VFIODevice *vbasedev = &vdev->vbasedev;
+     char *tmp, *subsys;
 -- 
 2.34.1
 
