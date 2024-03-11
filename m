@@ -4,68 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33F6FC5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 12:00:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 095C8C5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 12:01:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjeJo-0001zf-CY; Mon, 11 Mar 2024 07:59:48 -0400
+	id 1rjeLJ-0002q4-Rp; Mon, 11 Mar 2024 08:01:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rjeJn-0001zG-5U
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 07:59:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rjeJl-000487-Oy
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 07:59:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710158383;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=uRyEkCKNkPVnOj3uensDQWTBZOHL7iOI9MqexSDkxoM=;
- b=WhCcHBjgIX35ULgmyKutxD8/YlSHzF/zNMR6LUtW5D+x4xuM44EP367H+vUa0kGOBycfUA
- PCuz+F9tyzrQu0h436tAhTZCMMojeOS5SWnehtVgGPCKMoOcK8FnpAhQglCPlpyS+/EWtB
- n90hS9j9dSQw8uZwgc/O+1HPRVNTA+I=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-393-pzQ_R8s9N2264nbHyKsxiA-1; Mon,
- 11 Mar 2024 07:59:30 -0400
-X-MC-Unique: pzQ_R8s9N2264nbHyKsxiA-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E97BE1C04330;
- Mon, 11 Mar 2024 11:59:29 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.39.192.160])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id C60DB492BC4;
- Mon, 11 Mar 2024 11:59:29 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 8FBC91801A82; Mon, 11 Mar 2024 12:59:28 +0100 (CET)
-Date: Mon, 11 Mar 2024 12:59:28 +0100
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Tom Lendacky <thomas.lendacky@amd.com>, 
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] kvm: add support for guest physical bits
-Message-ID: <q6zckxcxwke2kdlootdq3s7m2ctcy7juuv3fsezhpw3nqyewxo@sqku62f25gdc>
-References: <20240305105233.617131-1-kraxel@redhat.com>
- <20240305105233.617131-3-kraxel@redhat.com>
- <CABgObfZ13WEHaGNzjy0GVE2EAZ=MHOSNHS_1iTOuBduOt5q_3g@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rjeKp-0002au-8a
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 08:00:54 -0400
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rjeKi-0004g9-SQ
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 08:00:49 -0400
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-51344bebe2fso2781399e87.2
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 05:00:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710158443; x=1710763243; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uGAQ9vkbliJvxZscO7R8k+WrJmN8Sgb45sar6P183j4=;
+ b=q7P8pE7CTUlsJQdW/OA9FlhVceZ3MDbHlAPtdpgq7ydp5pQJkVoi9OcsP1sOTt2X8T
+ v+x7gEF2RXuTDGu7ndY81d536AYz8P4kFlNLQEpIe+Ge3vdG8lUS+4ypUaxdYxIr0NRZ
+ 83Nct+UKkRGQdDXtgftRr/Tl9+sj8gwvWJE9dKMXx6aUG8dJr9y825YiuHX2XTN/nbLx
+ GK2n+g10/ClRfsr3XAdOk9OhOKPOcEZ6PB6XbB0jH3jKgVEp6ewpOZQzrzRTuoHF8o2g
+ k2vZ6Ny/rS0w2Vc9rjRLgoB2R0tiKvP7l2lvUpyOs2nimrd2v78G3v/p/HVz/w/PKXOd
+ Ppng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710158443; x=1710763243;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=uGAQ9vkbliJvxZscO7R8k+WrJmN8Sgb45sar6P183j4=;
+ b=fE31Wiv/CS9RKXLCGinyKfbpYpVX3ezaL9dbD9KwbCEEGx/hjgyLwai6fqtDzJ/Rcp
+ /wF1zrxh5RZ9wdZijHHgkH0jvuYhcRfSFkjlf524hCwtflAnh+LSdgaYHDbGxypZPsqw
+ J19OwKcGMSYrLiHpBGg7mFJiODpCVpNAUTXjcqrg+Gi+hacztllCwHIFyCldd+4OPDit
+ l2wij8fX6Y7WYOXEOXzZO5E8b5EZZATzfNJmaKgcQH0e3SMQxHc9hKB8034C0ru6ucjt
+ Ni2Bqvs3DUADQRkAxc+9Ta09yGWO6b8jgGdQyydU9drh5AUtvhd1T5e9tt4mE6tndLO2
+ hgNg==
+X-Gm-Message-State: AOJu0YzAlH1XlQKEZFpDMN5lww1PDp7ouWSI9OQcnQ4pgCTkSgYpAIVR
+ +FQkGss4Pwa0z50dBZ+lkHFIQChWvLO/vh+Nu/557mPRE9HKV8UOjsa5sZ9Z+zQ=
+X-Google-Smtp-Source: AGHT+IEmNn6OBuOTVD+1Krn29J+oCHK/DUpZ2xMNpOYAMmUZuwIDpUaB4++aPnou20qv7NCZu/53JA==
+X-Received: by 2002:a19:f703:0:b0:513:572f:88ea with SMTP id
+ z3-20020a19f703000000b00513572f88eamr3453294lfe.19.1710158442633; 
+ Mon, 11 Mar 2024 05:00:42 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ p12-20020a05600c468c00b004130378fb77sm15625368wmo.6.2024.03.11.05.00.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 Mar 2024 05:00:42 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 0B4ED5F88A;
+ Mon, 11 Mar 2024 12:00:41 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org,  Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PULL 26/29] disas: introduce show_opcodes
+In-Reply-To: <9db53a92-42bd-4bd4-9b68-31b923f7fc9c@redhat.com> (Thomas Huth's
+ message of "Mon, 11 Mar 2024 12:02:02 +0100")
+References: <20240306144041.3787188-1-alex.bennee@linaro.org>
+ <20240306144041.3787188-27-alex.bennee@linaro.org>
+ <9db53a92-42bd-4bd4-9b68-31b923f7fc9c@redhat.com>
+User-Agent: mu4e 1.12.1; emacs 29.1
+Date: Mon, 11 Mar 2024 12:00:41 +0000
+Message-ID: <875xxtq8pi.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CABgObfZ13WEHaGNzjy0GVE2EAZ=MHOSNHS_1iTOuBduOt5q_3g@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x12d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -83,58 +99,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  Hi,
+Thomas Huth <thuth@redhat.com> writes:
 
-> > diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> > index 952174bb6f52..d427218827f6 100644
-> > --- a/target/i386/cpu.h
-> > +++ b/target/i386/cpu.h
-> > +    guest_phys_bits = kvm_get_guest_phys_bits(cs->kvm_state);
-> > +    if (guest_phys_bits &&
-> > +        (cpu->guest_phys_bits == 0 ||
-> > +         cpu->guest_phys_bits > guest_phys_bits)) {
-> > +        cpu->guest_phys_bits = guest_phys_bits;
-> > +    }
-> 
-> Like Xiaoyao mentioned, the right place for this is kvm_cpu_realizefn,
-> after host_cpu_realizefn returns. It should also be conditional on
-> cpu->host_phys_bits.
+> On 06/03/2024 15.40, Alex Benn=C3=A9e wrote:
+>> For plugins we don't expect the raw opcodes in the disassembly. We
+>> already deal with this by hand crafting our capstone call but for
+>> other diassemblers we need a flag. Introduce show_opcodes which
+>> defaults to off.
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> Message-Id: <20240305121005.3528075-27-alex.bennee@linaro.org>
+>> diff --git a/include/disas/dis-asm.h b/include/disas/dis-asm.h
+>> index 2324f6b1a46..b26867b6417 100644
+>> --- a/include/disas/dis-asm.h
+>> +++ b/include/disas/dis-asm.h
+>> @@ -396,6 +396,14 @@ typedef struct disassemble_info {
+>>     /* Command line options specific to the target disassembler.  */
+>>     char * disassembler_options;
+>>   +  /*
+>> +   * When true instruct the disassembler it may preface the
+>> +   * disassembly with the opcodes values if it wants to. This is
+>> +   * mainly for the benefit of the plugin interface which doesn't want
+>> +   * that.
+>> +   */
+>> +  bool show_opcodes;
+>> +
+>>     /* Field intended to be used by targets in any way they deem suitabl=
+e.  */
+>>     void *target_info;
+>>   diff --git a/disas/disas.c b/disas/disas.c
+>> index 0d2d06c2ecc..17170d291ec 100644
+>> --- a/disas/disas.c
+>> +++ b/disas/disas.c
+>> @@ -299,6 +299,7 @@ void disas(FILE *out, const void *code, size_t size)
+>>       s.info.buffer =3D code;
+>>       s.info.buffer_vma =3D (uintptr_t)code;
+>>       s.info.buffer_length =3D size;
+>> +    s.info.show_opcodes =3D true;
+>>         if (s.info.cap_arch >=3D 0 && cap_disas_host(&s.info, code,
+>> size)) {
+>>           return;
+>
+> I know it's too late now for a patch review, but anyway: What about
+> the other spots that set up a "CPUDebug" struct? Like monitor_disas()
+> or target_disas() ? Shouldn't we initialize the new struct member
+> there, too?
 
-Ok.
+Hmm maybe. I can post some follow up fixes.
 
-> It also makes sense to:
-> 
-> - make kvm_get_guest_phys_bits() return bits 7:0 if bits 23:16 are zero
-> 
-> - here, set cpu->guest_phys_bits only if it is not equal to
-> cpu->phys_bits (this undoes the previous suggestion, but I think it's
-> cleaner)
+>
+>  Thomas
 
-Not sure about that.
-
-I think it would be good to have a backward compatibility story.
-Currently neither the kernel nor qemu set guest_phys_bits.  So if the
-firmware finds guest_phys_bits == 0 it does not know whenever ...
-
-  (a) kernel or qemu being too old, or
-  (b) no restrictions apply, it is safe to go with phys_bits.
-
-One easy option would be to always let qemu pass through guest_phys_bits
-from the kernel, even in case it is equal to phys_bits.
-
-> - add a property in x86_cpu_properties[] to allow configuration with TCG.
-
-Was thinking about configuration too.  Not sure it is a good idea to
-add yet another phys-bits config option to the mix of options we already
-have ...
-
-In case host_phys_bits=true qemu could simply use
-min(kernel guest-phys-bits,host-phys-bits-limit)
-
-For the host_phys_bits=false case it would probably be best to just
-not set guest_phys_bits.
-
-take care,
-  Gerd
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
