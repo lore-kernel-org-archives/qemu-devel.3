@@ -4,22 +4,22 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56BA4C54E58
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66009C5475B
 	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 11:48:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rje7l-0002fI-A5; Mon, 11 Mar 2024 07:47:21 -0400
+	id 1rje7l-0002fJ-7d; Mon, 11 Mar 2024 07:47:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <t-8ch@linutronix.de>)
- id 1rje7j-0002bV-9z
+ id 1rje7j-0002bo-Bl
  for qemu-devel@nongnu.org; Mon, 11 Mar 2024 07:47:19 -0400
 Received: from galois.linutronix.de ([193.142.43.55])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <t-8ch@linutronix.de>)
- id 1rje7h-00020S-JK
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 07:47:18 -0400
+ id 1rje7h-00020R-JO
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 07:47:19 -0400
 From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
  s=2020; t=1710157621;
@@ -27,28 +27,27 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=n+1CumBR5I1VKf7ct0/vCUjKk29R1fI/pfV+LJH6q3k=;
- b=t9qIXCEvhL9/qkiSufsD9EAQ8zqiDZIN5CFMdd2RsM6PipWhBD9Ei+muCbdZLfoBdhjiDY
- bNplayuam/cS+GQBafm2fjeEmcr9Vf04f62H7dhWrJCmjNzT5m6K3sUBvshPtkEKOSCVLt
- cmtVAnFxaCGzvezMUF9aSzdj14Jq+ID2cjuhXqKXCEIC6S2fCpN0aClhta6aUnA3QU3Sq6
- E+03vxUp4mwFoTphKvoGFnQPHRLE73DEQ/eJvfJkja2+7H1OG0mfDOnbL0TokJGCzpBNsw
- Xhy8cRiYNxaQdSPpVDafR/TvQqnShmmj5s9kL1dZU1aS8NpLJh3MyM2oLIlcGA==
+ bh=Hh8LY9SFh1cJe50bavbUhMkEhXra+MC2tsZynx59ktA=;
+ b=s8XRrXs2WGt9JfKa6XmN2aZEyKDbQvCrYSgIxDgY5qzCUgzXuMAxE5JrLGQo9vGtKDvyo0
+ wIdpX/uP3VfeYedQZNqh78Ybd7PHT7H9xJ5ppIwx+8DB62sdG835I9JmUji+s2l/eIIlAL
+ cFzkazKAgrnR6oLuBSiKdnCPMqIGPPOXjVBCcwA0v7cnjZ/vN1vRbpXJ9jzneMuCukjab4
+ pCIEWOliK70nbPE3MzdTJ0SzfQnJUA4di/YYmFpb3SrSkYAgUJlt4G7WKtOdH4M1sro/TZ
+ Ho+nRLyYysGcTxAf5Z8i24BMDOcIRqrirX6exWY4CccpQYQMGtczEYtuVrad0Q==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
  s=2020e; t=1710157621;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=n+1CumBR5I1VKf7ct0/vCUjKk29R1fI/pfV+LJH6q3k=;
- b=+nDdStU5TWqDCBYuLYTI3WN0PehRGGtC9py7gNkA0tNjoNrV8h0+0ikUDFKRThVw2H+kHq
- NQg41AbMaycBZiBQ==
-Date: Mon, 11 Mar 2024 12:46:59 +0100
-Subject: [PATCH v3 2/3] docs/interop/firmware.json: add new enum
- FirmwareArchitecture
+ bh=Hh8LY9SFh1cJe50bavbUhMkEhXra+MC2tsZynx59ktA=;
+ b=f/xFY5IJWWi+IZLPqQQU2nDvFMC+nC8KmOhzHIT67lIz5nDz4N3MNn4R1IdnHJPlCYexSl
+ vWwIcwJ+L9irkJBg==
+Date: Mon, 11 Mar 2024 12:47:00 +0100
+Subject: [PATCH v3 3/3] docs: add test for firmware.json QAPI
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20240311-qapi-firmware-json-v3-2-ceea6e35eb4a@linutronix.de>
+Message-Id: <20240311-qapi-firmware-json-v3-3-ceea6e35eb4a@linutronix.de>
 References: <20240311-qapi-firmware-json-v3-0-ceea6e35eb4a@linutronix.de>
 In-Reply-To: <20240311-qapi-firmware-json-v3-0-ceea6e35eb4a@linutronix.de>
 To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
@@ -56,11 +55,11 @@ To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Kashyap Chamarthy <kchamart@redhat.com>
 Cc: qemu-devel@nongnu.org, 
  =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1710157619; l=1620;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1710157619; l=892;
  i=thomas.weissschuh@linutronix.de; s=20240209; h=from:subject:message-id;
- bh=0xHVxXWzD7VXqa5T4/TbmKlq8x2ymLkKndr+ZaAbuaQ=;
- b=x8vyiRjC6r+u1kSuZboX7dsEEmNEdAiZf+0YvX2VDlcwVr1wr479wzULc3tZ76lEUDSUZI/jA
- SIc0RRG+d6xCBuHz9hHqoLz0s3q3AlytlSFpJHgZlDqFtmmI+mScXP1
+ bh=ZTPnmxO3GaQAbwRnHrwYEOYFCggyLqxrMW5WVuKlvxY=;
+ b=k9ddL7p/xeTXn+KMCe4E3KSByLVc3b/hKSMaRM7vfxSx+mM6O6fIT/Je0t3StXkoa1RHBi2ak
+ Rfsp7CJGyGmAXROtgMQjIcSmzbEFzbBBfPysvJYkqOllKS9fcNG3K8r
 X-Developer-Key: i=thomas.weissschuh@linutronix.de; a=ed25519;
  pk=pfvxvpFUDJV2h2nY0FidLUml22uGLSjByFbM6aqQQws=
 Received-SPF: pass client-ip=193.142.43.55; envelope-from=t-8ch@linutronix.de;
@@ -87,66 +86,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Only a small subset of all architectures supported by qemu make use of
-firmware files. Introduce and use a new enum to represent this.
+To make sure that the QAPI description stays valid add a testcase.
 
-This also removes the dependency of firmware.json on the global qapi
-definitions.
-
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/d9ce0234-4beb-4b90-b14c-76810d3b81d7@linaro.org/
 Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 ---
- docs/interop/firmware.json | 20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ docs/meson.build | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
-index 0e619e8780e7..54cae6a51b43 100644
---- a/docs/interop/firmware.json
-+++ b/docs/interop/firmware.json
-@@ -14,11 +14,13 @@
- # = Firmware
- ##
- 
--{ 'include' : 'machine.json' }
--
- { 'pragma': {
-     'documentation-exceptions': [
-+        'FirmwareArchitecture',
-         'FirmwareFormat'
-+    ],
-+    'member-name-exceptions': [
-+        'FirmwareArchitecture'
-     ] } }
- 
- ##
-@@ -64,6 +66,18 @@
- { 'enum' : 'FirmwareDevice',
-   'data' : [ 'flash', 'kernel', 'memory' ] }
- 
-+##
-+# @FirmwareArchitecture:
-+#
-+# Enumerations of architectures for which Qemu uses additional firmware files.
-+# The values are a subset of the enum SysEmuTarget.
-+#
-+# Since: 8.3
-+##
-+{ 'enum' : 'FirmwareArchitecture',
-+  'data' : [ 'aarch64', 'arm', 'i386', 'loongarch64', 'x86_64' ] }
+diff --git a/docs/meson.build b/docs/meson.build
+index 9040f860ae1a..bcca45a342a3 100644
+--- a/docs/meson.build
++++ b/docs/meson.build
+@@ -99,3 +99,8 @@ if build_docs
+   alias_target('html', sphinxdocs)
+   alias_target('man', sphinxmans)
+ endif
 +
-+
- ##
- # @FirmwareTarget:
- #
-@@ -85,7 +99,7 @@
- # Since: 3.0
- ##
- { 'struct' : 'FirmwareTarget',
--  'data'   : { 'architecture' : 'SysEmuTarget',
-+  'data'   : { 'architecture' : 'FirmwareArchitecture',
-                'machines'     : [ 'str' ] } }
- 
- ##
++test('QAPI firmware.json regression tests', python,
++     args: [qapi_gen.full_path(), '-o', meson.current_build_dir() / 'qapi',
++            meson.current_source_dir() / 'interop/firmware.json'],
++     env: test_env, suite: ['qapi-schema', 'qapi-interop'])
 
 -- 
 2.44.0
