@@ -4,82 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19DBBC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 11:41:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0066DC5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 11:44:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rje1S-000089-CM; Mon, 11 Mar 2024 07:40:50 -0400
+	id 1rje56-0001XU-HP; Mon, 11 Mar 2024 07:44:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rje1Q-00007n-JX
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 07:40:48 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
+ id 1rje52-0001X6-TN
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 07:44:33 -0400
+Received: from mail-io1-xd30.google.com ([2607:f8b0:4864:20::d30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rje1O-0000wd-50
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 07:40:48 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-33e8e9a4edaso1847740f8f.2
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 04:40:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
+ id 1rje50-0001NZ-E4
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 07:44:32 -0400
+Received: by mail-io1-xd30.google.com with SMTP id
+ ca18e2360f4ac-7c870863216so109923739f.2
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 04:44:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710157243; x=1710762043; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ZfOtYV9hdCVRM7UBgjaaMiBQl3+zit+nVokq7wgPBbA=;
- b=riStKX3HwLfIBW5Me6sM3FXm93OvFzTvEHCzcIgYJpakigOP1W7fa5McRNyKnIi5hu
- 6l2nmPBmjbpn6TWPwub0e/ukyMSVE46HyilwtwzNxcNOvbzUd8QVFE875TuMZCTNr/X9
- F53uLgQBpCxfP9heWwarQGvLRxMCAq+0STguJta8+GKuIkLPV47mrm32eHEu4R+b8MEj
- dS6F7iGOTBpyFgT477rGgZUlV9bqRa8ndO/jR/qpbgxmtiNIWWkPx3R7HNRI8L29GCDu
- 0OfbX2soQM82Uc7F268DXD6XxjqJa2tF1eFGU6GvdjqCikduf26//MZ9EhW7HD0RvuuU
- gfpQ==
+ d=linaro.org; s=google; t=1710157468; x=1710762268; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HiC8dDOnGUBNkMoleq+4j10j0htoG8uRfyRHYF7pbKs=;
+ b=C9IXY2KXkIDRJZ9kr4nzPuOapCCZlnmAM5UzKtvh8YS/KHgE3x7RDGGdlZTYNm/5ho
+ ugFP3dj3QLR0qFRWD9gE2mpRIhzKdMFjDvTBPEW6zeZQW5yQSqtRZEPeTcc8Z8839YU9
+ mziygkqzCP0IpTgSLnl6MxU0HCweAjsWt1I3pu2svicGE1nUKSKVqNpxPTqquuurFj4m
+ DqijeOkzFLLt6+Z31yGTXLRU2zdXQii3xdHfrkgGp1kE/J5aWatTlg7PhuQYhVTSvo22
+ i2cXAcokEBlhsZls1g8SlRoPR1D/11umXNjl3uYMYRyBkfvY26DEHzThepC/KNHzeP1E
+ EHHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710157243; x=1710762043;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZfOtYV9hdCVRM7UBgjaaMiBQl3+zit+nVokq7wgPBbA=;
- b=c30FJEYl/dffOfWLkRvOwsidPuGNW60M12GXg3Hy0H+ISkHYRymoHjquK1lvia2xUi
- C2juLu+QoRxhO10mwgppq4n1bteKxpTmD4z2lLdP8j1WdPir/paLkkdBoHDW0KVj+Czi
- cyJcKfziSFGiw742bd/5zIhj6cGue0nms3TeKllAKb6haunbtDAgGXCXDZ0fmfTO+x4R
- +CacnaZWy5mThOvjMjPCrzB+FELImku0HTXvGgV7yHpVhP9kfXs7NG8RKXddO1wNP36w
- jXK64GOrj3e8gmkZLXmicXrCNGT3SDobVWtDdwqa7uGzUhKUWhiymYkXMTMC9qOFyvNT
- FQrg==
+ d=1e100.net; s=20230601; t=1710157468; x=1710762268;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HiC8dDOnGUBNkMoleq+4j10j0htoG8uRfyRHYF7pbKs=;
+ b=f0eQ8isundLidXKpFhDf8Vyh59sOQg/4iyizLgSJNXJVdqQc8OKg1SDe6jxDeMvEBA
+ V5QvTTSZLZjhztptZOCrEd/YWfWMm0L0VopGXzoS3H9BK56zHcdqz/npRmeDU+5DJs2z
+ gIPkKcWFvAkQT94hphBavieiHDEIGjX7yBknBcWSkLJh0XdV6gseI3b+2p5rQlXd56HZ
+ aK8dAN1eYKTS4mzpBhL39TOjZTpHTLL1EZhYledbgb9bmJDXH9AhtBsJ0t4IabwgKrXy
+ Fof4830XjzSGRLoDW4XNiXGuj3hzgDt/1aEYW/+jL7Sgky+fvxCDFbb9K7R7JymdR3Ax
+ kQzQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVRbLMBP1yeCAOiqOUKxSkslGmLivpMvrEVJBgFDabazXBs6xxEDypkx+l8gRmmwuWyMEt3p7WjQOAQz2pp+5lklVy5yU0=
-X-Gm-Message-State: AOJu0YzRX7fyYxPqeMgUaie3AKzCGP+w08oJe2gsgCicGSqt/xjbj2oG
- dCY3xh9dkKhD+OgxmSguV9/zyixgbsMKMw6vvFGG8PijzK3zKOumE/8YJIIC4UQ=
-X-Google-Smtp-Source: AGHT+IG3YGgId1XF2QpslQhgj7JAXWJDY1lC5nHZsMjZn6WjxxIPfDv2wKJCKCQrBMBsesTyLNEopA==
-X-Received: by 2002:a5d:404d:0:b0:33d:d15b:9789 with SMTP id
- w13-20020a5d404d000000b0033dd15b9789mr87405wrp.65.1710157242727; 
- Mon, 11 Mar 2024 04:40:42 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.167.228])
- by smtp.gmail.com with ESMTPSA id
- s12-20020a5d424c000000b0033e48db23bdsm6239299wrr.100.2024.03.11.04.40.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Mar 2024 04:40:42 -0700 (PDT)
-Message-ID: <752e3d2b-1834-4f6d-9764-3d7e951409c4@linaro.org>
-Date: Mon, 11 Mar 2024 12:40:23 +0100
+ AJvYcCWilW7mO3EVjpen6Jd6E4ITOpvSSvsVLy71fB3S00Lj1W8VYEC5tCJVkE5dvbnRvf42f8R1OovKfptk2g0nh8di3A9hUr4=
+X-Gm-Message-State: AOJu0YxlrEGKN0l+7k0UwFopkgpez+EX0xRic2nv731b8rYXbRKxGgPp
+ yr96YbdesZTQjRpGAzEa+VTq91B8TE9wSrJZZ26uvN61OXA670BM6OQl+FuJHVD+xhWgdbVrTD3
+ g6jAmB46qIJczGZFDztCLo0ELftGCOecW+Yk+XQ==
+X-Google-Smtp-Source: AGHT+IEkwVaNp1yErUlt0b4o9hZkremMfYmnXW/1dHZ6kTqUQbUSZmLKnKFtyoTmHNvnYwh/blwVM1/LPco3ZDcDZJw=
+X-Received: by 2002:a6b:c910:0:b0:7c8:b76a:84d3 with SMTP id
+ z16-20020a6bc910000000b007c8b76a84d3mr3117876iof.0.1710157468263; Mon, 11 Mar
+ 2024 04:44:28 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] hw/core: Cleanup unused included headers in
- cpu-common.c
-Content-Language: en-US
-To: Zhao Liu <zhao1.liu@linux.intel.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Peter Maydell
- <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
 References: <20240311075621.3224684-1-zhao1.liu@linux.intel.com>
  <20240311075621.3224684-2-zhao1.liu@linux.intel.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240311075621.3224684-2-zhao1.liu@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+ <752e3d2b-1834-4f6d-9764-3d7e951409c4@linaro.org>
+In-Reply-To: <752e3d2b-1834-4f6d-9764-3d7e951409c4@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Date: Mon, 11 Mar 2024 12:44:15 +0100
+Message-ID: <CAPMQPE+7sjNxpYc5qe3k5aoMST=WDACeFogF912ZpbYfH_WK_g@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] hw/core: Cleanup unused included headers in
+ cpu-common.c
+To: Zhao Liu <zhao1.liu@linux.intel.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d30;
+ envelope-from=philippe.mathieu-daude@linaro.org; helo=mail-io1-xd30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,64 +98,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/3/24 08:56, Zhao Liu wrote:
-> From: Zhao Liu <zhao1.liu@intel.com>
-> 
-> Remove unused headers in cpu-common.c:
-> * qemu/notify.h
-> * exec/cpu-common.h
-> * qemu/error-report.h
-> * qemu/qemu-print.h
-> 
-> Tested by "./configure" and then "make".
+On Mon, 11 Mar 2024 at 12:40, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> On 11/3/24 08:56, Zhao Liu wrote:
+> > From: Zhao Liu <zhao1.liu@intel.com>
+> >
+> > Remove unused headers in cpu-common.c:
+> > * qemu/notify.h
+> > * exec/cpu-common.h
+> > * qemu/error-report.h
+> > * qemu/qemu-print.h
+> >
+> > Tested by "./configure" and then "make".
+>
+> This isn't often enough. The safest way to catch implicit
+> includes is to add #error in them and compile the source.
+>
+> >
+> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> > ---
+> >   hw/core/cpu-common.c | 4 ----
+> >   1 file changed, 4 deletions(-)
+> >
+> > diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+> > index 0108fb11dbc8..4bd9c70a83f1 100644
+> > --- a/hw/core/cpu-common.c
+> > +++ b/hw/core/cpu-common.c
+> > @@ -22,14 +22,10 @@
+> >   #include "qapi/error.h"
+> >   #include "hw/core/cpu.h"
+> >   #include "sysemu/hw_accel.h"
+> > -#include "qemu/notify.h"
+> >   #include "qemu/log.h"
+> >   #include "qemu/main-loop.h"
+> >   #include "exec/log.h"
+> > -#include "exec/cpu-common.h"
+>
+> Watch out, "exec/cpu-common.h" is implicitly included:
+>
+> $ git diff -U0
+> diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+> index 6346df17ce..27961bacc6 100644
+> --- a/include/exec/cpu-common.h
+> +++ b/include/exec/cpu-common.h
+> @@ -2,0 +3 @@
+> +#error
+>
+> $ ninja libcommon.fa.p/hw_core_cpu-common.c.o
+> In file included from ../../hw/core/cpu-common.c:34:
+> In file included from include/hw/boards.h:6:
+> In file included from include/exec/memory.h:19:
+> include/exec/cpu-common.h:3:2: error:
+> #error
+>
+> I'll keep it for now. No need to repost.
 
-This isn't often enough. The safest way to catch implicit
-includes is to add #error in them and compile the source.
-
-> 
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
->   hw/core/cpu-common.c | 4 ----
->   1 file changed, 4 deletions(-)
-> 
-> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-> index 0108fb11dbc8..4bd9c70a83f1 100644
-> --- a/hw/core/cpu-common.c
-> +++ b/hw/core/cpu-common.c
-> @@ -22,14 +22,10 @@
->   #include "qapi/error.h"
->   #include "hw/core/cpu.h"
->   #include "sysemu/hw_accel.h"
-> -#include "qemu/notify.h"
->   #include "qemu/log.h"
->   #include "qemu/main-loop.h"
->   #include "exec/log.h"
-> -#include "exec/cpu-common.h"
-
-Watch out, "exec/cpu-common.h" is implicitly included:
-
-$ git diff -U0
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index 6346df17ce..27961bacc6 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -2,0 +3 @@
-+#error
-
-$ ninja libcommon.fa.p/hw_core_cpu-common.c.o
-In file included from ../../hw/core/cpu-common.c:34:
-In file included from include/hw/boards.h:6:
-In file included from include/exec/memory.h:19:
-include/exec/cpu-common.h:3:2: error:
-#error
-
-I'll keep it for now. No need to repost.
-
->   #include "exec/gdbstub.h"
-> -#include "qemu/error-report.h"
-> -#include "qemu/qemu-print.h"
->   #include "sysemu/tcg.h"
->   #include "hw/boards.h"
->   #include "hw/qdev-properties.h"
-
+Forgot:
+Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
