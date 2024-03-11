@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69D81C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:16:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32015C5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:21:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjjF6-0003dd-JS; Mon, 11 Mar 2024 13:15:16 -0400
+	id 1rjjKC-0005oF-ME; Mon, 11 Mar 2024 13:20:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rjjF5-0003d7-6e
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:15:15 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1rjjKA-0005nZ-SG
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:20:30 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rjjEy-0001Yp-Sh
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:15:13 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-6e62c65865cso3893436b3a.2
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 10:15:07 -0700 (PDT)
+ id 1rjjK9-0002a4-1C
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:20:30 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-1dd9568fc51so11946115ad.2
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 10:20:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710177306; x=1710782106; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710177627; x=1710782427; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=GVf3MZ1UMLge6oTb9AjZ/BCsVdGEYCghjxu/ZhXFYpM=;
- b=weN61TvBwDsL7pO9QDR16nN9S7KorUANnDL1YPA71OJx6+xc8RTd0o3pszhGUPw/N2
- Ag81N4r5eZ6niGN4Kf7H3IXCBDujPjjmtid9TAbQAMEKmHAvd1wa5afk+nN+TwNEQpiH
- 9vSeqphyUBveXlDFsk48QYu/Zw7/YZQnWI4SLaImGPCXKckkVw5F3Bh+tuwdf7xNZd2k
- vpZ+sUG2uVL/AcDYN6btYuCfWU1OINhWGUfwyHlT+mElQA3wB6WZWaJDLeBK5o8tDcCv
- MTiEjifY6WbRWT9xReFQ4JflOBmWO196swsU8AzN4uuAW6pkuEwDrSLYqeSAicPrEsoj
- 6Z0Q==
+ bh=SH0MqLC0cHU38VY046EXrct59yvA2WSjP64lUzesW9M=;
+ b=C/cmtKox+4r2UnKCpyQnfb7cvpjKpUvV/BVBrUeLPcBniuiy93UIS0ytp1egmzguhm
+ vbKok8Nns6bsqiUYl6/C8AJxhpYHdod7BZFVwPT1kOQ4gJSG1fL184podfYUUceHYGX9
+ pd1Jw8q5en0LSFjnTd68clrV8jGIUxj1Z4NG8tD/Ixa5oZoEUyv9xZQdmwrsNYMh4hei
+ yUDNkk103wjxusHCCoKgU7+wnIoRUEp/hW2QNiAXuWqK4zo1DePT8J1D816MHkOJ5gwB
+ Kq2uuE4oc15JeOCA8HpGbBfgIVad+Ye0bE3Qcem0Gwb7d2DbzKIhQRWITQ06rQ3v6yJ1
+ BTUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710177306; x=1710782106;
+ d=1e100.net; s=20230601; t=1710177627; x=1710782427;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GVf3MZ1UMLge6oTb9AjZ/BCsVdGEYCghjxu/ZhXFYpM=;
- b=DnnflTK6KKZdmjgSWii+ZK+bApkeFwQVgxtCbdzV8BCbw3n6mx+4j7UIcOGX+giriI
- WwXGvocB/n6oMptLjiIykgmbmZU/eCTAgWYQI58rGQXxGXvUIhU+uWjq5cBwjT2Tf65h
- W6drghYjovyDePkQv9Rbgh50BMLj2rqaswpEZ2paml8Bb+L25JhPbWuDy8NN7SoIgsBu
- 8gmWnCb8+bqZWyq0OzLKXicF94XnGXnHaqgIVvhI4yZyYKzEfwQy//pPAAbjyGxX6g8e
- DW2enjZpalVVTfCznt3g1Ck0ZTQHAPc2FwvrNeb3N+5BJyKFWlJjurG2TqwL2eACwvZq
- Chig==
+ bh=SH0MqLC0cHU38VY046EXrct59yvA2WSjP64lUzesW9M=;
+ b=MsO1lhi4/i0sXYbzPoT3qRXKdoZ+cO+CLLcDO2t4CKe+eIE97RCsitUooZd2JTP+oh
+ nZJDFJ8UXkxdImZxH8+998rhIERShWrKaxVnB8FdfA0KmeLG9im8tKYoCybgUshjBEB8
+ fETYfxTTZMUejI1ML4vurgnVQK6NWXfeVd0C3cQrwhbCXxZvpr5c2VsV4nFv+gNGSw6v
+ P6CwyitReQfzO8QfCeNzNWv/8vLXw9rWvEpUd4MVz1JW+gfCdM40gTnwudrRzjtrN0Ps
+ HywTKcxD90CBklOMnV0yi5sB+rj4yPaI2bhNJrxsxUp/gQuBW4PKD1iqAgXqSzrYP9IW
+ Y3mw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUBtdupM/d4aGKeXvutSwi2IK2fy+A9m+svN+LBPXY/R4IFTp7ma2RagmVuRfLpuFLxUWFUsmwpZBp70rkYV5KyBPp2RlE=
-X-Gm-Message-State: AOJu0Yw+Fr5fXGuE62KXt2iX9GtUb8lcr0IF5caL40XmqMznUOoz4Wn5
- 8hAS1oHZW6MNG2ntG0w7I6i95oBnNXGrSv5j9y6XlktbtmOW+BFO3s8Gr1K/JSM=
-X-Google-Smtp-Source: AGHT+IFc+Oxl7Oj00oC6P2AT1s8Ik7QkG3Uo0Zqzo2RTqB3SBxnpdmULdEnbRG5r/eS1rV/xGem1AQ==
-X-Received: by 2002:a05:6a20:7d88:b0:1a3:c87:a862 with SMTP id
- v8-20020a056a207d8800b001a30c87a862mr8089376pzj.7.1710177306409; 
- Mon, 11 Mar 2024 10:15:06 -0700 (PDT)
+ AJvYcCUFiRbYbdo9btl50C8kUvWRJty/CK4IXmgws3ZTOcj0DL5dyhy4r4dnaREL9VHMUgZC7RWjsN/shFGeA/tvVp4+iMemN1A=
+X-Gm-Message-State: AOJu0Yw43xaGy6i0ktH7tXnfhCWVwsHDvCA33aQwTb7vhpI/Aoqwpm5p
+ ku/veDc/K5+pR+uIHT6NNTZ6svrQ214w4GUFa0EbAbBQZcNXjzlxymbI3vVQOMo=
+X-Google-Smtp-Source: AGHT+IFq10BIr8tjqG/BCo6ia0emhdkAXQtG1W6pKXqcxVoVAWDTsXz0rmZ2ATTHC9tOqWL1lJlLuw==
+X-Received: by 2002:a17:902:dac9:b0:1d9:d341:b150 with SMTP id
+ q9-20020a170902dac900b001d9d341b150mr7776582plx.40.1710177627372; 
+ Mon, 11 Mar 2024 10:20:27 -0700 (PDT)
 Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
  [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- gx20-20020a056a001e1400b006e65726ab93sm4699700pfb.143.2024.03.11.10.15.04
+ lo7-20020a170903434700b001dc01efaec2sm5009131plb.168.2024.03.11.10.20.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Mar 2024 10:15:05 -0700 (PDT)
-Message-ID: <6ced24cd-657e-48d2-b273-1e5fc471415e@linaro.org>
-Date: Mon, 11 Mar 2024 07:15:03 -1000
+ Mon, 11 Mar 2024 10:20:26 -0700 (PDT)
+Message-ID: <687c5fe9-e539-4cc5-b0fc-aaeab4ee56d3@linaro.org>
+Date: Mon, 11 Mar 2024 07:20:23 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 4/7] target/riscv: remove 'over' brconds from vector
- trans
+Subject: Re: [PATCH v3 3/5] gdbstub: Save target's siginfo
 Content-Language: en-US
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, peter.maydell@linaro.org, laurent@vivier.eu,
  philmd@linaro.org
-References: <20240311135855.225578-1-dbarboza@ventanamicro.com>
- <20240311135855.225578-5-dbarboza@ventanamicro.com>
+References: <20240309030901.1726211-1-gustavo.romero@linaro.org>
+ <20240309030901.1726211-4-gustavo.romero@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240311135855.225578-5-dbarboza@ventanamicro.com>
+In-Reply-To: <20240309030901.1726211-4-gustavo.romero@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,35 +99,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/11/24 03:58, Daniel Henrique Barboza wrote:
-> Most of the vector translations has this following pattern at the start:
+On 3/8/24 17:08, Gustavo Romero wrote:
+> Save target's siginfo into gdbserver_state so it can be used later, for
+> example, in any stub that requires the target's si_signo and si_code.
 > 
->      TCGLabel *over = gen_new_label();
->      tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
+> This change affects only linux-user mode.
 > 
-> And then right at the end:
-> 
->       gen_set_label(over);
->       return true;
-> 
-> This means that if vstart >= vl we'll not set vstart = 0 at the end of
-> the insns - this is done inside the helper that is being skipped.  The
-> reason why this pattern hasn't been a bigger problem is because the
-> conditional vstart >= vl is very rare.
-> 
-> Checking all the helpers in vector_helper.c we see all of them with a
-> pattern like this:
-> 
->      for (i = env->vstart; i < vl; i++) {
->          (...)
->      }
->      env->vstart = 0;
-> 
-> Thus they can handle vstart >= vl case gracefully, with the benefit of
-> setting env->vstart = 0 during the process.
+> Signed-off-by: Gustavo Romero<gustavo.romero@linaro.org>
+> Suggested-by: Richard Henderson<richard.henderson@linaro.org>
+> ---
+>   bsd-user/main.c        |  2 +-
+>   bsd-user/signal.c      |  5 ++++-
+>   gdbstub/user.c         | 23 +++++++++++++++++++----
+>   include/gdbstub/user.h |  6 +++++-
+>   linux-user/main.c      |  2 +-
+>   linux-user/signal.c    |  5 ++++-
+>   6 files changed, 34 insertions(+), 9 deletions(-)
 
-You'll want to update this comment for VSTART_CHECK_EARLY_EXIT
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
