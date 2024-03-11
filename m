@@ -4,171 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE1C0C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 11:55:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9D06C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 11:58:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjeFq-0007qD-J5; Mon, 11 Mar 2024 07:55:45 -0400
+	id 1rjeIc-0001HN-3k; Mon, 11 Mar 2024 07:58:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fei2.wu@intel.com>)
- id 1rjeFh-0007nD-BL; Mon, 11 Mar 2024 07:55:33 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rjeIb-0001HE-Gb
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 07:58:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fei2.wu@intel.com>)
- id 1rjeFc-0003FV-31; Mon, 11 Mar 2024 07:55:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710158128; x=1741694128;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=vhUCePKn0r5Mqz6FO9/bHsGV+X7S0SlMtaMYCJlZ1fo=;
- b=QUax7QlrM6DPMsotc7gQ/tbhOJeaL1qpU0SeI59NSS8u/JAfSuA2kwnT
- M2lewzqpvcP0VBitGWEMyhggFEtxBhSyRVKnSz5yMf73NLEY1sjSgfGab
- +qXrFgjP8z9g4RSfQGVZWrb3ajs/uxWEHTnAHqeSdu7y1/B9Gj0aguSK1
- 4NDpjtb2WL9tIHo79kkPe/44j+WraihAY53TvOOh+JVH/xjaFXsq5SB6P
- ocnk0/tBG+PsJhQM+qkn/vQTqz5x6hNjBl1ge+/LvXvBIJMHrtlsBjf4D
- G/MUOahW3IlPEnoApsYpoCEGMTBYZoTIzG+oNslt+X/ihdfOawsFe+pKI Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22268507"
-X-IronPort-AV: E=Sophos;i="6.07,116,1708416000"; d="scan'208";a="22268507"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Mar 2024 04:55:23 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,116,1708416000"; d="scan'208";a="11056075"
-Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
- by fmviesa010.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 11 Mar 2024 04:55:22 -0700
-Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
- ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Mon, 11 Mar 2024 04:55:21 -0700
-Received: from orsmsx603.amr.corp.intel.com (10.22.229.16) by
- ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Mon, 11 Mar 2024 04:55:21 -0700
-Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
- orsmsx603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Mon, 11 Mar 2024 04:55:21 -0700
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (104.47.55.168)
- by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Mon, 11 Mar 2024 04:55:21 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=a+A9ejLyk5hJEbh1BNIiCEJb7TREgWrowLaNFpyVr5D8IgYH77E259tEeklhU+20evFDPJQQj+g5dVo+HVbXPAO5X65qykpPyGv3JWe56q8WzzhrwPUGk2LCSB9kouZZzT6XZJbtu5qmmNcD+tFLDe218kIzZyMXynnbIgJcEr/iq/C8fKkbJwIcDrokjfq6OBIZhmzWDgHnBLU2iibnkK9kSP2+hwTOF10gu5qlPdkvP1TZ8s2T0LqQRZOfwRSa33h5QxSW8ueO7ot2Ru0mXf+aXRwQKDWY4ARPRiW5AOJk06kHfO8CzEgLW2qgR0H2lLBhghGiDCghooxcg+GNuQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kgjoVrXM3skTAPv19aosmtHdKZGd5D2L5nIC3TM50G0=;
- b=PFfzinnSYyB+5gA/1GFqKE0V/gUG4ZW9sWbq1x7yFLpu/b98qHOuMA8E9yYXWqqXs5Gq9pf6bWccpFQf50pXznogP7Ugtk6+IyIg0+aS1MJ0wsO21GozLyKfRjxZHGpSjSCNtqxdH5dG8mAQLOKWuLF7CRHQe+fVee6Pd0Nq97MWEIl2LsfeTHz33+3sRqUqXCF+UnCLduqzokw46/Iltr025JfC8yEPi8hM1N29dAJhu53n8nXIcr3KQXL5XwYPlusJ1crtk7aInDM46ZKZ6a4RoEwEwpxe22oaVvpndGHZSyBup3HQMWTItS3FG0cWorJ1VCG/dQo3/BBKSqG6Gw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from CH3PR11MB7895.namprd11.prod.outlook.com (2603:10b6:610:12f::12)
- by SN7PR11MB7467.namprd11.prod.outlook.com (2603:10b6:806:34f::16)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.17; Mon, 11 Mar
- 2024 11:55:18 +0000
-Received: from CH3PR11MB7895.namprd11.prod.outlook.com
- ([fe80::8ff0:84de:f95c:5261]) by CH3PR11MB7895.namprd11.prod.outlook.com
- ([fe80::8ff0:84de:f95c:5261%4]) with mapi id 15.20.7386.015; Mon, 11 Mar 2024
- 11:55:17 +0000
-Message-ID: <fee8e89a-7d87-43b8-bc87-af76a67c4317@intel.com>
-Date: Mon, 11 Mar 2024 19:55:05 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RISC-V][tech-server-platform] [RFC 1/2] hw/riscv: Add server
- platform reference machine
-Content-Language: en-US
-To: Andrew Jones <ajones@ventanamicro.com>
-CC: Alistair Francis <alistair23@gmail.com>, Atish Kumar Patra
- <atishp@rivosinc.com>, <pbonzini@redhat.com>, <palmer@dabbelt.com>,
- <alistair.francis@wdc.com>, <bin.meng@windriver.com>, <liwei1518@gmail.com>,
- <dbarboza@ventanamicro.com>, <zhiwei_liu@linux.alibaba.com>,
- <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>,
- <andrei.warkentin@intel.com>, <shaolin.xie@alibaba-inc.com>,
- <ved@rivosinc.com>, <sunilvl@ventanamicro.com>, <haibo1.xu@intel.com>,
- <evan.chai@intel.com>, <yin.wang@intel.com>,
- <tech-server-platform@lists.riscv.org>, <tech-server-soc@lists.riscv.org>
-References: <20240304102540.2789225-1-fei2.wu@intel.com>
- <20240304102540.2789225-2-fei2.wu@intel.com>
- <CAKmqyKMQyDjLkeo+aU58rE6_Vb84QeeZP3FUafw5GuWpk1JmZQ@mail.gmail.com>
- <8f5d6664-c075-4d31-bf33-ce24ceeb9b13@intel.com>
- <CAHBxVyHP1hgGWg6EByX6XzqmTm_Tr0uw7tk65KWcytNYsKdw8w@mail.gmail.com>
- <CAKmqyKM08RwR7RybMGaN6CpmbHJrLwx0DSjz_A1w6h0AkW12rQ@mail.gmail.com>
- <18efc373-b98b-4a9f-96c5-c6821793138f@intel.com>
- <20240308-48ff9db3408048d387d6cfa4@orel>
-From: "Wu, Fei" <fei2.wu@intel.com>
-In-Reply-To: <20240308-48ff9db3408048d387d6cfa4@orel>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SI2PR01CA0025.apcprd01.prod.exchangelabs.com
- (2603:1096:4:192::10) To CH3PR11MB7895.namprd11.prod.outlook.com
- (2603:10b6:610:12f::12)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rjeIZ-0003qJ-Ag
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 07:58:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710158309;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nluu8/6lBq6Fh/Vq9/l2CaasEkbrWaMBya0wa6GdKNk=;
+ b=NRXcTUxXc/+CWxIqicVu9gAAfiF/7c8knTlf5hjus4KBRO5k8igfWVtSVAE3qqjcUKi+Bv
+ OSuUx7Qwd0jINflRq5DqKELecqpswCyc02nO9riK54GZNb2SU0h3SfraUdRfVsHWiZaLlP
+ l56TKEphQ0k/k25EP1nEKmFEnWD1ehc=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-343-ZD14C03TO7a4mXjaK06FRQ-1; Mon,
+ 11 Mar 2024 07:58:26 -0400
+X-MC-Unique: ZD14C03TO7a4mXjaK06FRQ-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B9C6029ABA03;
+ Mon, 11 Mar 2024 11:58:25 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.132])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 9C9C03C20;
+ Mon, 11 Mar 2024 11:58:24 +0000 (UTC)
+Date: Mon, 11 Mar 2024 11:58:22 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Tim Wiederhake <twiederh@redhat.com>
+Cc: qemu-devel@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH v3 0/5] Generate x86 cpu features
+Message-ID: <Ze7x3tXu8-UtV58c@redhat.com>
+References: <20240206134739.15345-1-twiederh@redhat.com>
+ <ZecplxvAjp07vnQ_@redhat.com>
+ <f34bb533082099120ea35315bd70552820db9c57.camel@redhat.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR11MB7895:EE_|SN7PR11MB7467:EE_
-X-MS-Office365-Filtering-Correlation-Id: 882f5b7d-398d-4b39-519e-08dc41c21e73
-X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: rzuWqjrTQnNLQwwGl2Y3c/CNrTaDcQ/yNPgjAorxifmfzwocaLn3h76G0TKsTH8FHmzXpgUe+tBR2F3/13/5b0dOlOdanATLEMGcjiPuYWvDA0BvLN4hOtPv7nVewQiMt0vdDcmpNLpWOIATHUepbTFtYVv56B+Zmu0kqaTl+BP76Dpzcu9C2PS/zymSaH9W++06lp2WpyJr7VjXWxVJVqHkY1de13aRiriqjryaiCi34A4OM6p/fFxv9E/ZpJPlTr1ZEiWoH9bdM2snPmPwocnotsPt2gwjz27AzjpuRqrHewVN9xJyFj3Zyljg7tyUw8oTqEL+LD9Tf8GSUiaj1B7QqsV31R7SOmTQH8rszZuPvIIxrVBzdc/Jy5cTm/LkPdTm7aATMnEFEnPuooq3ee32pvZbeAAMtHxgW8LZMUsbypn8jWh/s5UDka+reT2Kl4yG01qXOGWerKlvf8Y6D4tgny9R9/dJNmHGZI3vdx00R/1OfOXckx8gN/vbIZoEV5xaJUaI8yT6FcFzDrCGKgVHGWXtRMA05qwfsfadYWl4hiRn4C31q31WHUnWnH0PuMTrnI9aBXqw3rom7Vg6Z5IsZScMj8TI4aBAxn8/YKqXvp9inbqE28j0e5535YBC
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR11MB7895.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(1800799015)(376005)(7416005); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dC9QS0oyaXNtbGcxb1FSbjE5dU5hQlMwSklLTlI2VzJCUVplTzA5SmxEbWNW?=
- =?utf-8?B?WDNTakQ4Nm5Jcmp6VnZobU1KWlIwY0dGMmo1SURuekNXR1RCaTI1di9aeVZw?=
- =?utf-8?B?NitGdXZGVmliMkVYQXBWUWNBbm5MZDZQcDcyckgrM3hWUG5pdUNmOGVTaHkv?=
- =?utf-8?B?bkw0VWZqN3g0UllUMUFCRm5DdE1SbnZrciszQlJ6N2lYODMvOVZiemxsNmlz?=
- =?utf-8?B?NXdHNE93ZUpxaFY0QStCYThvb25HVFNCcDV3Z05oMklCVHRCNmNjYnF0c0FO?=
- =?utf-8?B?RXNQRmtld1UrenJWalVQNnA3Z3cyL3d5U3J3Lzh2ZEwzYld1T1phbGZXMUpM?=
- =?utf-8?B?UE9yNDFtYysyV1BpTDRvOUFmMXZnY3pyTmNLb2RHOWJrK1JPVTltQ0x3Rld1?=
- =?utf-8?B?YWMzSnNBQXdQSitscXd0aUdGcGRPN3d1eVNmRDVCTHhIVUpOczdzU2lrbHNC?=
- =?utf-8?B?OWdobTNjZFpxTTU4ZWIxUEREaXNIMVZUTUVCS0dWckEvenJ3M0dMMDJ6OHZC?=
- =?utf-8?B?dkdJSjI4NWRhaTF3MUFRcVNRUzhnSldIM09Dbng1L01xaHplU0Z1dENlTkRr?=
- =?utf-8?B?dVRQanAxWUdRSldmVjBZQ1FTUjk0Z2w1UER6U2FSUGRRU0NNVGxUaTM0R1oz?=
- =?utf-8?B?OTgyU2pEeWhUUDZvSDhjN0VvR3dUNkFjWk9maWRRMSt5RUdyV25xMzE2R042?=
- =?utf-8?B?eGorWlR5cEJ4L0tlYWRYbFlDR3QveTJoQ2VBYnBtRHMrajN2a2Jra0YyNW5P?=
- =?utf-8?B?WXdOaCtreVhXVllvVlRPUXRReGNLL0puT3oxSHl2ZXhDYkY1TktqVlo4Ujcy?=
- =?utf-8?B?bzZjZW9BREFVVll3Q3hrcGNaS1prTWxwdEN2M2lPT1locFU4TXRMdlYvaEVF?=
- =?utf-8?B?RWdlTTIwUGxCV2pmbmlsdVpUYWsyOGRvYXJjSHZqaEVvb091Y2ZRUFlMV01i?=
- =?utf-8?B?akNPR3F5eTVITmhFSDdtbmhZTldjcXUrLzdWY3MydEY1M0JxaVFieEpjK0Z2?=
- =?utf-8?B?MDE0OTZabk9KN3ZaRktJL0Q2ZWRObTMvS3NDSzVmd2x0d0J4VkZtdXRFUFpm?=
- =?utf-8?B?anBuSXRzU1VVYWVWYlp2SDdzb0FDNTZFRUdmc1A0V3FWcVlHVitTZU5rM1Aw?=
- =?utf-8?B?dHRUOTBxQ0V0b3JXNGxuemtzNURidDZzY05zWXFCMTNTVm1kOXlaSVJHekRw?=
- =?utf-8?B?M01wdWJNTTRwT2lnRkplS2hCMkRtUFNCeWVNNnJNZ1p3UGRwRDdBWnRrR2M5?=
- =?utf-8?B?UGZRek0xeHIwQWR4bDdJTmd5MGpoSWdXaTdZcHBjM1R4Nm15a3RGWUlOOE1U?=
- =?utf-8?B?bHVQa3RvanBpZFVydEh5MXFUUmp4SzFmcVduN2daQ3poeTUwTFdEcHlpQ0ll?=
- =?utf-8?B?ZkhnR0xiYXU0c1VsdWM5Yk5DKzNSNHhEdHlJNWJDTUFHM3lMMDZ2Q3VjU1Fx?=
- =?utf-8?B?RG53UmloYVpsR0VLdmZaUWJzcmdld3F5aVhRVGNvYUxjVjdZbnVOc3piUEJD?=
- =?utf-8?B?TlhGRmNpMGxIVDBBOVpJOFoyZkVUQ2s1L08wL0tLRnRkRVdtOUUwVll1QTVv?=
- =?utf-8?B?cEdEM2x5S3M3cTFaVkZVRGovREZQWlFVVkVPamFhOEZzd1hYT014eEtxWVM3?=
- =?utf-8?B?VDBrV0xCM0hYODJuczFyN0YvRVprdjZ0WFpUZ1V1MDZzZ0VmYlNPb1RsbWl6?=
- =?utf-8?B?MjFGUDNHaCs0MUVnaHgvcTBac3psVmJnQm9vS2xhaXFqc3JYWWthMWdBUWN2?=
- =?utf-8?B?TGVGU0lKSWY5eGJjRDZNN2UxS3NpcHZwWitHTnI0ODF0emxNRk95dVFsd2Jm?=
- =?utf-8?B?THhlQ1dTWHF2UE4xTXJqWWlNMkFvVjdMWEFkQXUvZm9WNlR2czREZ2MwQ004?=
- =?utf-8?B?SjJLYmg2R1VJK0lxemNVWFhPNmM1QWh5T1ZuNlB3VllhUEg0K0NwdGFzNTBh?=
- =?utf-8?B?TStpck5US2RrNlpQV0hVak9ZOVJsUktzM1E0b2hPVUxMeUNMdHBiS3p2YSt1?=
- =?utf-8?B?aTR2ZUMrVndqTVQ5Y1JMSlc1K1pKdDROR3IybUpTQmJCVTh2NkE3V3B2QlBW?=
- =?utf-8?B?N1FmTkZuVFUyUzlRdlFRQ0dEakZXcnZ3UVkyaGp2Q0xlbjl2NDJzN1JyZEhQ?=
- =?utf-8?Q?CWOWmRt2QuutBpRjk0iX+JsM1?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 882f5b7d-398d-4b39-519e-08dc41c21e73
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR11MB7895.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Mar 2024 11:55:17.3653 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 1GxC9Vq38Gs5SgiqNG2LjxS5+5vl5jvt+8/QGtQAc34lFohxqzkVwUsZlfUWJiZIGyYlkWxuOOZKGqYssMZS/g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB7467
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=fei2.wu@intel.com;
- helo=mgamail.intel.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <f34bb533082099120ea35315bd70552820db9c57.camel@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
 X-Spam_bar: ---
@@ -188,100 +85,140 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/8/2024 5:20 PM, Andrew Jones wrote:
-> On Thu, Mar 07, 2024 at 02:26:18PM +0800, Wu, Fei wrote:
->> On 3/7/2024 8:48 AM, Alistair Francis wrote:
->>> On Thu, Mar 7, 2024 at 5:13 AM Atish Kumar Patra <atishp@rivosinc.com> wrote:
->>>>
->>>> On Wed, Mar 6, 2024 at 4:56 AM Wu, Fei <fei2.wu@intel.com> wrote:
->>>>>
->>>>> On 3/6/2024 8:19 AM, Alistair Francis wrote:
->>>>>> On Mon, Mar 4, 2024 at 8:28 PM Fei Wu <fei2.wu@intel.com> wrote:
-> ...
->>>>>>> +config SERVER_PLATFORM_REF
->>>>>>> +    bool
->>>>>>> +    select RISCV_NUMA
->>>>>>> +    select GOLDFISH_RTC
->>>>>>> +    select PCI
->>>>>>> +    select PCI_EXPRESS_GENERIC_BRIDGE
->>>>>>> +    select PFLASH_CFI01
->>>>>>> +    select SERIAL
->>>>>>> +    select RISCV_ACLINT
->>>>>>> +    select RISCV_APLIC
->>>>>>> +    select RISCV_IMSIC
->>>>>>> +    select SIFIVE_TEST
->>>>>>
->>>>>> Do we really need SiFive Test in the server platform?
->>>>>>
->>>>> It's used to reset the system, is there any better choice?
->>>
->>> If we add this now we are stuck with it forever (or at least a long
->>> time). So it'd be nice to think about these and decide if these really
->>> are the best way to do things. We don't have to just copy the existing
->>> virt machine.
->>>
->> We need a solution to poweroff/reboot, and sifive test is one of the
->> hardware implementations, so in general I think it's okay. But I agree
->> Sifive test looks a device for testing only.
->>
->>> There must be a more standard way to do this then MMIO mapped SiFive hardware?
->>>
->> The mapped MMIO mechanism leveraged by Sifive test by itself is kinda
->> generic, the sbsa_ec for sbsa-ref is also an MMIO mapped device. These
->> two devices look very similar except different encodings of the
->> shutdown/reboot command.
->>
->> Probably we can have a generic shutdown/reboot device in QEMU for both
->> sifive test and sbsa_ec, and likely more (not in this patch series). In
->> this way, sifive test device will be replaced by this more generic
->> device. Any suggestions?
+On Mon, Mar 11, 2024 at 12:32:03PM +0100, Tim Wiederhake wrote:
+> On Tue, 2024-03-05 at 14:17 +0000, Daniel P. Berrangé wrote:
+> > > Looking at this fresh, I'm left wondering why I didn't suggested
+> > > using 'QMP' to expose this information when reviewing the earlier
+> > > versions. I see Igor did indeed suggest this:
+> > > 
+> > >   
+> > > https://lists.nongnu.org/archive/html/qemu-devel/2023-09/msg03905.html
+> > > 
+> > > Your commentry that "qom-list-properties" doesn't distinguish
+> > > between CPU features and other random QOM properties is bang
+> > > on the money.
+> > > 
+> > > I think what this highlights, is that 'qom-list-properties'
+> > > is a very poor design/fit for the problem that management apps
+> > > need to solve in this regard.
+> > > 
+> > > Libvirt should not need to manually exclude non-feature properties
+> > > like 'check' 'enforce' 'migratable' etc.
+> > > 
+> > > QEMU already has this knowledge, as IIUC, 'query-cpu-model-
+> > > expansion'
+> > > can distinguish this:
+> > > 
+> > > query-cpu-model-expansion type=static model={'name':'Nehalem'}
+> > > {
+> > >     "return": {
+> > >         "model": {
+> > >             "name": "base",
+> > >             "props": {
+> > >                 "3dnow": false,
+> > >                 ...snip...
+> > >                 "xtpr": false
+> > >             }
+> > >         }
+> > >     }
+> > > }
+> > > 
+> > > We still have the problem that we're not exposing the CPUID/MSR
+> > > leafs/register bits. So query-cpu-model-expansion isn't a fit
+> > > for the problem.
+> > > 
+> > > Rather than try to design something super general purpose, I'd
+> > > suggest we take a short cut and design something entirley x86
+> > > specific, and simply mark the QMP command as "unstable"
+> > > eg a 'x-query-x86-cpu-model-features', and then basically
+> > > report all the information libvirt needs there.
+> > > 
+> > > This is functionally equivalent to what you expose in the YAML
+> > > file, while still using QEMU's formal 'QMP' API mechanism, so
+> > > we avoid inventing a new API concept via YAML.
+> > > 
+> > > I think this would avoid need to have a code generator refactor
+> > > the CPU definitions too. We just need to expose the values of
+> > > the existing CPUID_xxx constants against each register.
+>
+> I do not see the patches and your proposed x-query-x86-cpu-model-
+> features QMP command being mutually exclusive.
 > 
-> Operating systems shouldn't need to implement odd-ball device drivers to
-> function on a reference of a standard platform. So the reference platform
-> should only be comprised of devices which have specifications and already,
-> or will, have DT bindings. Generic devices would be best, but I don't
-> think it should be a problem to use devices from multiple vendors. The
-> devices just need to allow GPL drivers to be written. With all that in
-> mind, what about adding a generic GPIO controller or using SiFive's GPIO
-> controller. Then, we could add gpio-restart and gpio-poweroff.
-> 
-I agree with most of what you said. Regarding generic devices, syscon
-looks a better choice than gpio in the current situation.
+> In fact, I'd advocate for merging this patches still, as they provide a
+> solution (albeit not through QMP) already whereas the QMP command would
+> still need to be written.
 
-Linux kernel has these configurations enabled for virt, and I'm not
-going to add a new soc for this new board currently, we can use the same
-syscon interface for power, and it has already well supported.
+I would not class this as an advantage for QEMU in merging this
+series. It is defining what amounts to a new externally consumable
+interface for QEMU, which is intended to be used by libvirt. Even
+if it not consumed at runtime, it is still implying API guarantees.
+QEMU really does not want to be adding new interfaces, as there is
+a strong desire to reduce all external interaction with QEMU to
+exclusively be QMP based.
 
-config SOC_VIRT
-	bool "QEMU Virt Machine"
-	select CLINT_TIMER if RISCV_M_MODE
-	select POWER_RESET
-	select POWER_RESET_SYSCON
-	select POWER_RESET_SYSCON_POWEROFF
-	select GOLDFISH
+>                           Additionally, there are more benefits to the
+> generate-code approach, as the code generator can be extended to also
+> generate the feature bits "#define CPUID_* (1U << ...)" in cpu.h,
+> removing one more source of errors. And with the generated
+> `feature_word_info` structure being virtually identical to the current
+> version, I see no downsides: If the generator does become obsolete in
+> the future, simply remove the python script and the yaml file, and all
+> that is left is the original feature_word_info code, but better
+> formatted.
 
-For the qemu part, we can remove device 'sifive_test' and manage that
-memory region directly with MemoryRegionOps, similar to what
-hw/mips/boston.c does.
+If we external usage, then we're left with a pretty weak justification
+for introducing a new custom code generator here IMHO.
 
-Thanks,
-Fei.
+In terms of the CPUID_ constants, I think what would make more sense
+from QEMU's POV is to define them all as a QAPI enum.
 
-> Thanks,
-> drew
-> 
-> 
-> -=-=-=-=-=-=-=-=-=-=-=-
-> Links: You receive all messages sent to this group.
-> View/Reply Online (#50): https://lists.riscv.org/g/tech-server-platform/message/50
-> Mute This Topic: https://lists.riscv.org/mt/104719372/7152971
-> Group Owner: tech-server-platform+owner@lists.riscv.org
-> Unsubscribe: https://lists.riscv.org/g/tech-server-platform/unsub [fei2.wu@intel.com]
-> -=-=-=-=-=-=-=-=-=-=-=-
-> 
-> 
+eg
+
+  { 'enum': 'CPUID',
+    'data': [
+        'fpu', 'vme', 'de', 'pse', 'tsc',
+	.....
+    ] }
+
+which will result in QAPI generating constants
+
+    CPUID_VME
+    CPUID_FPU
+    CPUID_DE
+    ...etc
+
+along with a constant <-> string conversion table.
+
+The feature words could use the constants directly instead of their
+string form
+
+FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+    [FEAT_1_EDX] = {
+        .type = CPUID_FEATURE_WORD,
+        .features = {
+	    [0] = CPUID_FPU,
+    	    [1] = CPUID_VME,
+	    [2] = CPUID_DE,
+            ...etc...
+        },
+        .cpuid = {.eax = 1, .reg = R_EDX, },
+        .tcg_features = TCG_FEATURES,
+        .no_autoenable_flags = CPUID_HT,
+    },
+
+
+which I think encodes the information just as effectively as the yaml
+file does.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
