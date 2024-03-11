@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A9B8C54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 22:00:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28661C5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 22:00:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjngH-0000B9-MW; Mon, 11 Mar 2024 17:59:37 -0400
+	id 1rjngd-0000YR-M7; Mon, 11 Mar 2024 18:00:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjngG-0000AM-2N
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 17:59:36 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjngX-0000Vq-QZ
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 17:59:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjngE-0003xg-2j
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 17:59:35 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjngV-00040b-NK
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 17:59:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710194373;
+ s=mimecast20190719; t=1710194391;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4TJ0h7ZMVfo2zcsyyzL/oW195rR/axwQDT3wJxhwttk=;
- b=AUc0+x7yMvGEKO70CkvmsfwWCr+bkG28rOor6l8icirOvMjlWBUKkO8kztNOmPOkBrc8XP
- QFCdmNylz46C7uH/qHrcuThweMTaZk0KzcDZavKVurZIBWyDOFXPS/cKeUqcs/UOaU9sky
- TQJy35aQi7w93RQcS9rti/35p50owCg=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XAW4kNcipci25Ftdw678I9V9K89A2Ws6lDYWYUOgtX4=;
+ b=ZUoxYQRW7bVQ8ESAgVrIjreUkx3ov2HIH4T5w5R+MC2id5yuaJPAvhJW6MFGDZeTybceJd
+ eXS13H1/DGMft+uhnSomn0pLA+bOlzRHVse8SNRLCAJamuNRUibXF6/9/kB9govWfstZkS
+ 0uKc4HlM5VajyRfgdHTzGMez+20qE9Y=
+Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com
+ [209.85.222.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-471-wCeX326cOMurQZvGDF7Z_Q-1; Mon, 11 Mar 2024 17:59:31 -0400
-X-MC-Unique: wCeX326cOMurQZvGDF7Z_Q-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-690becce69eso10936526d6.1
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 14:59:31 -0700 (PDT)
+ us-mta-311-jOP7hcuSPSC3P7IoR2LPcg-1; Mon, 11 Mar 2024 17:59:49 -0400
+X-MC-Unique: jOP7hcuSPSC3P7IoR2LPcg-1
+Received: by mail-ua1-f69.google.com with SMTP id
+ a1e0cc1a2514c-7dc10e68417so93139241.0
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 14:59:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710194371; x=1710799171;
+ d=1e100.net; s=20230601; t=1710194388; x=1710799188;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4TJ0h7ZMVfo2zcsyyzL/oW195rR/axwQDT3wJxhwttk=;
- b=NhBlXXT9h/aUejgCM8ZIlwNO6Y9uzC24ZG7QFFaB6LuSnrfm5RYo1/RqTRuJhHHZlQ
- df1kWZBj4eQe+8reLU4Q47aoWLNhH8zv2obDl+x7r6FowgmFsX+9PqaQjOWjnPAQB2vX
- NCkRKX72wec2A4iB3tr+WpAlskTc1uWdhPqqlI83Nl+9p7VpzKOGGSSv6F0O25IZLv2b
- DTw890IUiwxWRO3Lo/5txHFf31zRPEgv5AQHjs864Siz0oAB/RnRIsq66JR8KKAz7BBO
- fURK7e3RiK6Ya5Uzw76v5Lt6Oz9pqGHZI4Rgg3gXslK/LsOt1sDNERU3LHi9eykDxw5M
- TB/A==
-X-Gm-Message-State: AOJu0YxejqTMXD8UvFdo4rH9O7HFnBw/asb8YBUy8StKnD98eKHFMmo6
- +n8UEon71ZaAJLT9cZkPOTqlcWXLOIH5aQuu9PI0MDc78UjzbfxgxWs6nhjLHiWdDV3PFXWuLyS
- 83C/F1YG07nDTrKbIEbmrch/XXRuZqhfrH5NvQ2M2E7cPZBh58OJafI9O7tRFuHBBUD4GIZ6CyK
- 7pnimzJmRwbwVG9y43Pm1SupA+EHBqdD+Cjg==
-X-Received: by 2002:a0c:fc10:0:b0:690:b5a9:84f1 with SMTP id
- z16-20020a0cfc10000000b00690b5a984f1mr7585190qvo.1.1710194370740; 
- Mon, 11 Mar 2024 14:59:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHGZ9XVkV0tZBQ1ickch4q5CoKHbNhHKlJ9Blyvyu7wlZIm52bMY6pK7Qr6N9S0JMG1cp2zKw==
-X-Received: by 2002:a0c:fc10:0:b0:690:b5a9:84f1 with SMTP id
- z16-20020a0cfc10000000b00690b5a984f1mr7585166qvo.1.1710194370305; 
- Mon, 11 Mar 2024 14:59:30 -0700 (PDT)
+ bh=XAW4kNcipci25Ftdw678I9V9K89A2Ws6lDYWYUOgtX4=;
+ b=kFYgDLJp4ni+urjoDAE6UQEy8h6V6bUJeNLWVsVM2hoqDgWZuMQn4ErknmGqN+7wJn
+ pblqsYGNycjP6E+MQOkGZ0llo1JSpok9eFcV8v7+nwAoGlqp7gg4kZKZHpPLLxE4XqBB
+ H5+4WQBPfnQd+0A9bUsPpiF0Dboza4PDulMKGiX8NcmKrh32rtLfDFrg7HxsFy/ap0BE
+ PcPBTnNrCwAHP7ZkCqhRhqaZ5aLW/r5H3Wtc985jhitLTlmGRd95qP+Mn50MwvGB5RzI
+ 0vRBK6WeLLzJcj6/ewV4W5gPEKm6cAFo+oGBxBHXEL1x1vvPAb5pHuKCMXafLOhpD8HS
+ Tbbg==
+X-Gm-Message-State: AOJu0YzRBXP/CWx1uVfLeM+qL1olPufO3EqKVWVZ45DHCH9Mncku7a9g
+ iP94XzGOMkjZQOSYGTm8h7E4+lMt8GLuHhJHqQE9OtLEvgcHJtl5hHPKXuQb7S7E5AgsdFNpLKq
+ VuXI2o9xpzPRmWqUm0kh1kzSXuI3MnA/BolQnaaZF4WkKWJM4AC2GctnLtiJzamQVM/w4At9SVf
+ I/TllVRHDrAjgglNX+bGyY8fjVJCskndimXA==
+X-Received: by 2002:a05:6102:3667:b0:473:240f:36b9 with SMTP id
+ bg7-20020a056102366700b00473240f36b9mr3694363vsb.1.1710194388155; 
+ Mon, 11 Mar 2024 14:59:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE+3+LK98FLCI/uSUmdZukHEWonLNFKhMsYvtB6u7kOyQt/iv/MoaUDFp56HNLXUVJax8598w==
+X-Received: by 2002:a05:6102:3667:b0:473:240f:36b9 with SMTP id
+ bg7-20020a056102366700b00473240f36b9mr3694342vsb.1.1710194387675; 
+ Mon, 11 Mar 2024 14:59:47 -0700 (PDT)
 Received: from x1n.. (cpe688f2e2cb7c3-cm688f2e2cb7c0.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d6-20020a0ce446000000b00690cec16254sm1541932qvm.68.2024.03.11.14.59.28
+ d6-20020a0ce446000000b00690cec16254sm1541932qvm.68.2024.03.11.14.59.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 14:59:29 -0700 (PDT)
+ Mon, 11 Mar 2024 14:59:46 -0700 (PDT)
 From: peterx@redhat.com
 To: qemu-devel@nongnu.org,
 	Peter Maydell <peter.maydell@linaro.org>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, peterx@redhat.com,
  Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
- Prasad Pandit <ppandit@redhat.com>, Avihai Horon <avihaih@nvidia.com>
-Subject: [PULL 02/34] vfio/migration: Refactor vfio_save_state() return value
-Date: Mon, 11 Mar 2024 17:58:53 -0400
-Message-ID: <20240311215925.40618-3-peterx@redhat.com>
+ Prasad Pandit <ppandit@redhat.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PULL 14/34] physmem: Fix wrong address in large
+ address_space_read/write_cached_slow()
+Date: Mon, 11 Mar 2024 17:59:05 -0400
+Message-ID: <20240311215925.40618-15-peterx@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240311215925.40618-1-peterx@redhat.com>
 References: <20240311215925.40618-1-peterx@redhat.com>
@@ -102,44 +104,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Avihai Horon <avihaih@nvidia.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-Currently, vfio_save_state() returns 1 regardless of whether there is
-more data to send or not. This was done to prevent a fast changing VFIO
-device from potentially blocking other devices from sending their data,
-as qemu_savevm_state_iterate() serialized devices.
+If the access is bigger than the MemoryRegion supports,
+flatview_read/write_continue() will attempt to update the Memory Region.
+but the address passed to flatview_translate() is relative to the cache, not
+to the FlatView.
 
-Now that qemu_savevm_state_iterate() no longer serializes devices, there
-is no need for that.
+On arm/virt with interleaved CXL memory emulation and virtio-blk-pci this
+lead to the first part of descriptor being read from the CXL memory and the
+second part from PA 0x8 which happens to be a blank region
+of a flash chip and all ffs on this particular configuration.
+Note this test requires the out of tree ARM support for CXL, but
+the problem is more general.
 
-Refactor vfio_save_state() to return 0 if more data is available and 1
-if no more data is available.
+Avoid this by adding new address_space_read_continue_cached()
+and address_space_write_continue_cached() which share all the logic
+with the flatview versions except for the MemoryRegion lookup which
+is unnecessary as the MemoryRegionCache only covers one MemoryRegion.
 
-Signed-off-by: Avihai Horon <avihaih@nvidia.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20240304105339.20713-3-avihaih@nvidia.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://lore.kernel.org/r/20240307153710.30907-5-Jonathan.Cameron@huawei.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- hw/vfio/migration.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ system/physmem.c | 63 +++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 57 insertions(+), 6 deletions(-)
 
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 50140eda87..0af783a589 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -529,11 +529,7 @@ static int vfio_save_iterate(QEMUFile *f, void *opaque)
-     trace_vfio_save_iterate(vbasedev->name, migration->precopy_init_size,
-                             migration->precopy_dirty_size);
- 
--    /*
--     * A VFIO device's pre-copy dirty_bytes is not guaranteed to reach zero.
--     * Return 1 so following handlers will not be potentially blocked.
--     */
--    return 1;
-+    return !migration->precopy_init_size && !migration->precopy_dirty_size;
+diff --git a/system/physmem.c b/system/physmem.c
+index 737869a3f5..6cfb7a80ab 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3370,6 +3370,59 @@ static inline MemoryRegion *address_space_translate_cached(
+     return section.mr;
  }
  
- static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
++/* Called within RCU critical section.  */
++static MemTxResult address_space_write_continue_cached(MemTxAttrs attrs,
++                                                       const void *ptr,
++                                                       hwaddr len,
++                                                       hwaddr mr_addr,
++                                                       hwaddr l,
++                                                       MemoryRegion *mr)
++{
++    MemTxResult result = MEMTX_OK;
++    const uint8_t *buf = ptr;
++
++    for (;;) {
++        result |= flatview_write_continue_step(attrs, buf, len, mr_addr, &l,
++                                               mr);
++
++        len -= l;
++        buf += l;
++        mr_addr += l;
++
++        if (!len) {
++            break;
++        }
++
++        l = len;
++    }
++
++    return result;
++}
++
++/* Called within RCU critical section.  */
++static MemTxResult address_space_read_continue_cached(MemTxAttrs attrs,
++                                                      void *ptr, hwaddr len,
++                                                      hwaddr mr_addr, hwaddr l,
++                                                      MemoryRegion *mr)
++{
++    MemTxResult result = MEMTX_OK;
++    uint8_t *buf = ptr;
++
++    for (;;) {
++        result |= flatview_read_continue_step(attrs, buf, len, mr_addr, &l, mr);
++        len -= l;
++        buf += l;
++        mr_addr += l;
++
++        if (!len) {
++            break;
++        }
++        l = len;
++    }
++
++    return result;
++}
++
+ /* Called from RCU critical section. address_space_read_cached uses this
+  * out of line function when the target is an MMIO or IOMMU region.
+  */
+@@ -3383,9 +3436,8 @@ address_space_read_cached_slow(MemoryRegionCache *cache, hwaddr addr,
+     l = len;
+     mr = address_space_translate_cached(cache, addr, &mr_addr, &l, false,
+                                         MEMTXATTRS_UNSPECIFIED);
+-    return flatview_read_continue(cache->fv,
+-                                  addr, MEMTXATTRS_UNSPECIFIED, buf, len,
+-                                  mr_addr, l, mr);
++    return address_space_read_continue_cached(MEMTXATTRS_UNSPECIFIED,
++                                              buf, len, mr_addr, l, mr);
+ }
+ 
+ /* Called from RCU critical section. address_space_write_cached uses this
+@@ -3401,9 +3453,8 @@ address_space_write_cached_slow(MemoryRegionCache *cache, hwaddr addr,
+     l = len;
+     mr = address_space_translate_cached(cache, addr, &mr_addr, &l, true,
+                                         MEMTXATTRS_UNSPECIFIED);
+-    return flatview_write_continue(cache->fv,
+-                                   addr, MEMTXATTRS_UNSPECIFIED, buf, len,
+-                                   mr_addr, l, mr);
++    return address_space_write_continue_cached(MEMTXATTRS_UNSPECIFIED,
++                                               buf, len, mr_addr, l, mr);
+ }
+ 
+ #define ARG1_DECL                MemoryRegionCache *cache
 -- 
 2.44.0
 
