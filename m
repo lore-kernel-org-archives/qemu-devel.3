@@ -4,86 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF14BC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 07:59:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29F4BC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 08:06:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjaYB-0004Vg-LT; Mon, 11 Mar 2024 03:58:23 -0400
+	id 1rjafQ-0006EW-JU; Mon, 11 Mar 2024 04:05:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rjaY3-0004V7-El
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 03:58:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rjafN-0006EB-1s
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 04:05:49 -0400
+Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rjaY2-0001PW-0m
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 03:58:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710143892;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=XjC5bz/hkAEhannpJoBtgr6jB3+kTcrlWgLxuWtXWGw=;
- b=UNLIlqy54QRf5b1L2IqvhxN7tOUoZVpjy9VuQpws8J2JoPNIkE9z0ZT2J5Vid+3LFEOZWS
- 6EPIjSkWy2ZeJv42ELVQ1atzU3xJcpzlUQeuY0WLSYouMK93Urn8/2myvnLnmHuac7ORX9
- UH7ie/AerpMmx0aMezSROVuXarQsQ+s=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-643-UYSogrp5MFyKQZL46-UbfQ-1; Mon, 11 Mar 2024 03:58:10 -0400
-X-MC-Unique: UYSogrp5MFyKQZL46-UbfQ-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a448cfe2266so324997366b.2
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 00:58:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710143888; x=1710748688;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XjC5bz/hkAEhannpJoBtgr6jB3+kTcrlWgLxuWtXWGw=;
- b=uZXGmrNLi/5JNM/yCHlHy1xTZakGt0rYTn6YpqRIUErVV0jyoWHy1pCxaIMH823zfI
- J7cl/qZbTsQZA+blOTWu/S+9c2YqaKaqObDiNHzYP5KfhHZbZSnIjMNT9293rqTKfHnj
- Zf3cXnXSxfy7d5FTedr7dWptAh9lhUD9U2TLnXRoLus7lIzYstOEbzixQzUMywpCLRDr
- E9K7WBVMChOC2RXWOO/Gxp9iA/Nrr1TzPMC80uqkgwaHTizgynTUkzHgxtW0j02AHj4E
- fTisyBilBzZnm1kbkP2HDbQgGUoUbJzIdLHh/MaMtTN04fIU7RGqGyUvFiHMGTeOl3c3
- XVBQ==
-X-Gm-Message-State: AOJu0YwPjC2DVUqXY6ADpP1bEtHclKyaWnwdZX45ddC8vC0hEldmcMIi
- yqB+PJIhPhhhqv6A/w/5/7KvY5ERrZynp1dF/E/JX9AduCwBymVTpchoyVPltWyHpojq8eIJxdC
- k5YslQGO+LJVJHkEublj7xuzy4jPyG31QUkPiGfp7TWPlJEAAvULbhIKpkIWziP9MUq87bTPXxw
- rwRqzLtK+21tEACpw9m2td626JEJw1yXHM4cq6
-X-Received: by 2002:a17:906:a14c:b0:a45:432:cacc with SMTP id
- bu12-20020a170906a14c00b00a450432caccmr3060869ejb.61.1710143888493; 
- Mon, 11 Mar 2024 00:58:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG74FTQp0LwMAB8+X3EK2PTCYHZZUx6dcToJE7q02YveAhpKzL8Uxp2k44swd48YeAwWss3vw==
-X-Received: by 2002:a17:906:a14c:b0:a45:432:cacc with SMTP id
- bu12-20020a170906a14c00b00a450432caccmr3060860ejb.61.1710143888113; 
- Mon, 11 Mar 2024 00:58:08 -0700 (PDT)
-Received: from [192.168.10.118] ([151.49.77.21])
- by smtp.gmail.com with ESMTPSA id
- ho30-20020a1709070e9e00b00a3edb758561sm2597692ejc.129.2024.03.11.00.58.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 00:58:07 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
-	qemu-stable@nongnu.org
-Subject: [PATCH] target/i386: fix direction of "32-bit MMU" test
-Date: Mon, 11 Mar 2024 08:58:06 +0100
-Message-ID: <20240311075806.668555-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.43.2
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rjafL-0003F1-0Q
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 04:05:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1710144347; x=1741680347;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=F/IuLV+s9yUiWzJMY+p2Y7SPDRn/5q14hfmZENra7ig=;
+ b=UbZSxrISLJZaOEY6MNahbJNiQzYPtQ6ApHoyKtse87JzB1c6D7y+Dhdp
+ RTwMpBoJsMWKXNoHpuv2u5RzUjsf0qRoxHzZYKOPUsnZlX5T1rgztR7Vy
+ FTx+sCB/IJcgyhQtXcNWqu58+HuZy9fQ7ar5n8Wk0GvYymez5zMW8j1rb
+ BNasBISByFmzcW4BzHv5RyL9JnnAuO9Agm3mv4nowxWimN5MjwuFuGK1d
+ hujASL1AjEqz5IkZe8DIpeGIL+6XJeQc07/T1CPrOuAzNt4Z/W09jxtUI
+ /wcPYanhlpy/T3KME1Tc2ZV7vVCv3FSQduKXxRS6P+Sa+DMDmZsld8kln A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="4716423"
+X-IronPort-AV: E=Sophos;i="6.07,116,1708416000"; 
+   d="scan'208";a="4716423"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Mar 2024 01:05:44 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,116,1708416000"; d="scan'208";a="15687880"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa004.fm.intel.com with ESMTP; 11 Mar 2024 01:05:40 -0700
+Date: Mon, 11 Mar 2024 16:19:28 +0800
+From: Zhao Liu <zhao1.liu@linux.intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Zhuocheng Ding <zhuocheng.ding@intel.com>,
+ Babu Moger <babu.moger@amd.com>, Yongwei Ma <yongwei.ma@intel.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v9 09/21] i386/cpu: Introduce bitmap to cache available
+ CPU topology levels
+Message-ID: <Ze6+kCvWklX8JxSE@intel.com>
+References: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
+ <20240227103231.1556302-10-zhao1.liu@linux.intel.com>
+ <770fe9ab-c9cc-4062-b841-180036a3d050@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <770fe9ab-c9cc-4062-b841-180036a3d050@intel.com>
+Received-SPF: none client-ip=198.175.65.21;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
 X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.945,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.945,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,48 +95,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The low bit of MMU indices for x86 TCG indicates whether the processor is
-in 32-bit mode and therefore linear addresses have to be masked to 32 bits.
-However, the index was computed incorrectly, leading to possible conflicts
-in the TLB for any address above 4G.
+On Mon, Mar 11, 2024 at 02:28:17PM +0800, Xiaoyao Li wrote:
+> Date: Mon, 11 Mar 2024 14:28:17 +0800
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
+> Subject: Re: [PATCH v9 09/21] i386/cpu: Introduce bitmap to cache available
+>  CPU topology levels
+> 
+> On 2/27/2024 6:32 PM, Zhao Liu wrote:
+> > From: Zhao Liu <zhao1.liu@intel.com>
+> > 
+> > Currently, QEMU checks the specify number of topology domains to detect
+> > if there's extended topology levels (e.g., checking nr_dies).
+> > 
+> > With this bitmap, the extended CPU topology (the levels other than SMT,
+> > core and package) could be easier to detect without touching the
+> > topology details.
+> > 
+> > This is also in preparation for the follow-up to decouple CPUID[0x1F]
+> > subleaf with specific topology level.
+> > 
+> > Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> 
+> 
+> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 
-Analyzed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Fixes: b1661801c18 ("target/i386: Fix physical address truncation", 2024-02-28)
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2206
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/cpu.h | 2 +-
- target/i386/cpu.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Thanks for your review! 
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 952174bb6f5..6b057380791 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2334,7 +2334,7 @@ static inline bool is_mmu_index_32(int mmu_index)
- 
- static inline int cpu_mmu_index_kernel(CPUX86State *env)
- {
--    int mmu_index_32 = (env->hflags & HF_LMA_MASK) ? 1 : 0;
-+    int mmu_index_32 = (env->hflags & HF_LMA_MASK) ? 0 : 1;
-     int mmu_index_base =
-         !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP64_IDX :
-         ((env->hflags & HF_CPL_MASK) < 3 && (env->eflags & AC_MASK)) ? MMU_KNOSMAP64_IDX : MMU_KSMAP64_IDX;
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 2666ef38089..78524bc6073 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -7735,7 +7735,7 @@ static bool x86_cpu_has_work(CPUState *cs)
- static int x86_cpu_mmu_index(CPUState *cs, bool ifetch)
- {
-     CPUX86State *env = cpu_env(cs);
--    int mmu_index_32 = (env->hflags & HF_CS64_MASK) ? 1 : 0;
-+    int mmu_index_32 = (env->hflags & HF_CS64_MASK) ? 0 : 1;
-     int mmu_index_base =
-         (env->hflags & HF_CPL_MASK) == 3 ? MMU_USER64_IDX :
-         !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP64_IDX :
--- 
-2.43.2
+Regrads,
+Zhao
 
 
