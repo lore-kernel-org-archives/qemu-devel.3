@@ -4,93 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9F7AC5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 20:59:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D9E0C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 21:09:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjmk6-0004BD-91; Mon, 11 Mar 2024 16:59:30 -0400
+	id 1rjmsZ-0006fp-Jl; Mon, 11 Mar 2024 17:08:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjmk4-0004An-08
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 16:59:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rjmsV-0006eq-JG; Mon, 11 Mar 2024 17:08:12 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjmk0-0002H3-9R
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 16:59:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710190763;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/K3C8TuRfpDeOBNpL4v8l7VTrDgv3xinfvZHdaQszlI=;
- b=V8SOTDc0UpWBdpFFUG1mg6pj6JqyOw9V22+QLRKXeg18x5MI7aDRfQE/kl5X0rZCytCuhF
- gIrGQwsEVVLkbFkfTjR0siZ1s9FuWbcWwX/4u7LSY/h+v87d9mH7rbcr8qsfoVVdQYbh40
- NIrbxEJWWznXLO3Pn359KOgjRWQ22bw=
-Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
- [209.85.161.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-401-HBY2SzHKNgWzvnFf78uxSw-1; Mon, 11 Mar 2024 16:59:21 -0400
-X-MC-Unique: HBY2SzHKNgWzvnFf78uxSw-1
-Received: by mail-oo1-f71.google.com with SMTP id
- 006d021491bc7-5a18efe7905so1188966eaf.1
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 13:59:21 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710190761; x=1710795561;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/K3C8TuRfpDeOBNpL4v8l7VTrDgv3xinfvZHdaQszlI=;
- b=emDg5vwyx7dBjXkd34+0K1b+gpJ9DTJA70ZOjem4BscoaJvEsKU0XcjZeyZzbrN9jh
- TZrkHuP3RYaxpdVScRDQ+Om0twkJ38sKzaBGiKTJ+OGC0BdP0oC5aqvIZXMwlps9XaNb
- Q6eRoW0cX5teRd2u4x9GoSzlOhOD69KEoQcl3XmiOc4GmvX+Psk3mKg9oVa79SvXAX10
- upqQVhTLeSKuBWyvGHXJyQzaejtF+ULdMgdc94099gWCKl1OT8xjJMQF4Iq85hiBidTH
- tfaP0UJo56p9gZnpNUI03Ug6F1RzzEY/2tdWt6xBmTK158F2DSCduiJ0YBuyc7cXYFEJ
- Rgkg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUm1FEelx8Bo1xwY6qAa43Ra+ojOgSAG+DwpapYkF2B6fUxolSV2DH1R91Q0nM+Q5c9lrYXatraY1eFRr8MyV0EmsIRF+4=
-X-Gm-Message-State: AOJu0Yxgo7Ks3oc81+BugS2QIVKX8YEfkRrh/lQm4IrE79n0eP/rl769
- AKgww0Bcue6KP+lPdTfr3B0XIErPF6xaIXV8eLv53kkzS4TMGDWvI28ZYde8mFySfNLzeTyqtBQ
- IGKtc1IO/vsVgagBgWojsD9EAjaXZEbjqF4LdSIpPMjqnWifpu+Jw
-X-Received: by 2002:a05:6358:528f:b0:178:8c44:aa8b with SMTP id
- g15-20020a056358528f00b001788c44aa8bmr8101210rwa.3.1710190761184; 
- Mon, 11 Mar 2024 13:59:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGNl9R2w9Ws2Rjd0Vhh0UEoFXi64UnHKaTcbHNtuanls51Tm9rvXf/HGMrxCteW5yPSXZCYFQ==
-X-Received: by 2002:a05:6358:528f:b0:178:8c44:aa8b with SMTP id
- g15-20020a056358528f00b001788c44aa8bmr8101183rwa.3.1710190760872; 
- Mon, 11 Mar 2024 13:59:20 -0700 (PDT)
-Received: from x1n (cpe688f2e2cb7c3-cm688f2e2cb7c0.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- j29-20020ac84c9d000000b0042dfa55a3d5sm3029773qtv.25.2024.03.11.13.59.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 13:59:20 -0700 (PDT)
-Date: Mon, 11 Mar 2024 16:59:18 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Hao Xiang <hao.xiang@linux.dev>
-Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
- farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
- thuth@redhat.com, lvivier@redhat.com, jdenemar@redhat.com,
- marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, qemu-devel@nongnu.org,
- Hao Xiang <hao.xiang@bytedance.com>
-Subject: Re: [PATCH v6 7/7] migration/multifd: Add new migration test cases
- for legacy zero page checking.
-Message-ID: <Ze9wphQ7HMyAjuJT@x1n>
-References: <20240311180015.3359271-1-hao.xiang@linux.dev>
- <20240311180015.3359271-8-hao.xiang@linux.dev>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rjmsQ-0003go-JT; Mon, 11 Mar 2024 17:08:10 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 639694E601F;
+ Mon, 11 Mar 2024 22:07:59 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id 6DM-IeAD8Ze7; Mon, 11 Mar 2024 22:07:57 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 63B934E6012; Mon, 11 Mar 2024 22:07:57 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 61A147456B4;
+ Mon, 11 Mar 2024 22:07:57 +0100 (CET)
+Date: Mon, 11 Mar 2024 22:07:57 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org, 
+ qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>, 
+ David Gibson <david@gibson.dropbear.id.au>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Benjamin Gray <bgray@linux.ibm.com>
+Subject: Re: [PATCH 06/13] ppc/spapr: Add pa-features for POWER10 machines
+In-Reply-To: <020a53d8-3b90-4b30-b0c7-862951fbef43@linaro.org>
+Message-ID: <ef4c48d1-9e11-d6af-d4cc-3ae6c567f098@eik.bme.hu>
+References: <20240311185200.2185753-1-npiggin@gmail.com>
+ <20240311185200.2185753-7-npiggin@gmail.com>
+ <020a53d8-3b90-4b30-b0c7-862951fbef43@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240311180015.3359271-8-hao.xiang@linux.dev>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-835033333-1710191277=:50025"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,27 +69,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 11, 2024 at 06:00:15PM +0000, Hao Xiang wrote:
-> From: Hao Xiang <hao.xiang@bytedance.com>
-> 
-> Now that zero page checking is done on the multifd sender threads by
-> default, we still provide an option for backward compatibility. This
-> change adds a qtest migration test case to set the zero-page-detection
-> option to "legacy" and run multifd migration with zero page checking on the
-> migration main thread.
-> 
-> Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
-> Reviewed-by: Peter Xu <peterx@redhat.com>
-> Message-Id: <20240301022829.3390548-6-hao.xiang@bytedance.com>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-We don't need to attach message-id when posting patches.  I'll attach them
-when queuing patches to make sure the link points to the exact version that
-we merged.
+--3866299591-835033333-1710191277=:50025
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-I'll drop this line and the other one (in patch 3).  No action needed from
-your side; just a heads-up for the future.
+On Mon, 11 Mar 2024, Philippe Mathieu-Daudé wrote:
+> On 11/3/24 19:51, Nicholas Piggin wrote:
+>> From: Benjamin Gray <bgray@linux.ibm.com>
+>> 
+>> Add POWER10 pa-features entry.
+>> 
+>> Notably DEXCR and and [P]HASHST/[P]HASHCHK instruction support is
+>> advertised. Each DEXCR aspect is allocated a bit in the device tree,
+>> using the 68--71 byte range (inclusive). The functionality of the
+>> [P]HASHST/[P]HASHCHK instructions is separately declared in byte 72,
+>> bit 0 (BE).
+>> 
+>> Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
+>> [npiggin: reword title and changelog, adjust a few bits]
+>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+>> ---
+>>   hw/ppc/spapr.c | 34 ++++++++++++++++++++++++++++++++++
+>>   1 file changed, 34 insertions(+)
+>> 
+>> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+>> index 247f920f07..128bfe11a8 100644
+>> --- a/hw/ppc/spapr.c
+>> +++ b/hw/ppc/spapr.c
+>> @@ -265,6 +265,36 @@ static void spapr_dt_pa_features(SpaprMachineState 
+>> *spapr,
+>>           /* 60: NM atomic, 62: RNG */
+>>           0x80, 0x00, 0x80, 0x00, 0x00, 0x00, /* 60 - 65 */
+>>       };
+>> +    /* 3.1 removes SAO, HTM support */
+>> +    uint8_t pa_features_31[] = { 74, 0,
+>
+> Nitpicking because pre-existing, all these arrays could be static const.
 
--- 
-Peter Xu
+If we are at it then maybe also s/0x00/   0/ because having a stream of 
+0x80 and 0x00 is not the most readable.
 
+Regards,
+BALATON Zoltan
+
+>> +        /* 0: MMU|FPU|SLB|RUN|DABR|NX, 1: fri[nzpm]|DABRX|SPRG3|SLB0|PP110 
+>> */
+>> +        /* 2: VPM|DS205|PPR|DS202|DS206, 3: LSD|URG, 5: LE|CFAR|EB|LSQ */
+>> +        0xf6, 0x1f, 0xc7, 0xc0, 0x00, 0xf0, /* 0 - 5 */
+>> +        /* 6: DS207 */
+>> +        0x80, 0x00, 0x00, 0x00, 0x00, 0x00, /* 6 - 11 */
+>> +        /* 16: Vector */
+>> +        0x00, 0x00, 0x00, 0x00, 0x80, 0x00, /* 12 - 17 */
+>> +        /* 18: Vec. Scalar, 20: Vec. XOR */
+>> +        0x80, 0x00, 0x80, 0x00, 0x00, 0x00, /* 18 - 23 */
+>> +        /* 24: Ext. Dec, 26: 64 bit ftrs, 28: PM ftrs */
+>> +        0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 24 - 29 */
+>> +        /* 32: LE atomic, 34: EBB + ext EBB */
+>> +        0x00, 0x00, 0x80, 0x00, 0xC0, 0x00, /* 30 - 35 */
+>> +        /* 40: Radix MMU */
+>> +        0x00, 0x00, 0x00, 0x00, 0x80, 0x00, /* 36 - 41 */
+>> +        /* 42: PM, 44: PC RA, 46: SC vec'd */
+>> +        0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 42 - 47 */
+>> +        /* 48: SIMD, 50: QP BFP, 52: String */
+>> +        0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 48 - 53 */
+>> +        /* 54: DecFP, 56: DecI, 58: SHA */
+>> +        0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 54 - 59 */
+>> +        /* 60: NM atomic, 62: RNG */
+>> +        0x80, 0x00, 0x80, 0x00, 0x00, 0x00, /* 60 - 65 */
+>> +        /* 68: DEXCR[SBHE|IBRTPDUS|SRAPD|NPHIE|PHIE] */
+>> +        0x00, 0x00, 0xce, 0x00, 0x00, 0x00, /* 66 - 71 */
+>> +        /* 72: [P]HASHCHK */
+>> +        0x80, 0x00,                         /* 72 - 73 */
+>> +    };
+>>       uint8_t *pa_features = NULL;
+>>       size_t pa_size;
+>>   @@ -280,6 +310,10 @@ static void spapr_dt_pa_features(SpaprMachineState 
+>> *spapr,
+>>           pa_features = pa_features_300;
+>>           pa_size = sizeof(pa_features_300);
+>>       }
+>> +    if (ppc_check_compat(cpu, CPU_POWERPC_LOGICAL_3_10, 0, 
+>> cpu->compat_pvr)) {
+>> +        pa_features = pa_features_31;
+>> +        pa_size = sizeof(pa_features_31);
+>> +    }
+>>       if (!pa_features) {
+>>           return;
+>>       }
+>
+>
+>
+--3866299591-835033333-1710191277=:50025--
 
