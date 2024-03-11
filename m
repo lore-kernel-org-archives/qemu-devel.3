@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF554C5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 14:17:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ABF9C5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 14:18:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjgRd-0005TN-HB; Mon, 11 Mar 2024 10:16:01 -0400
+	id 1rjgT6-0006CL-PD; Mon, 11 Mar 2024 10:17:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjgRc-0005TE-PY
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 10:16:00 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjgT5-0006By-By
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 10:17:31 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjgRb-0007Mo-9S
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 10:16:00 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4132a5b38fbso4646155e9.0
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 07:15:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjgT3-0007Uu-MG
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 10:17:31 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-33e6aca1ca9so4203224f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 07:17:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710166558; x=1710771358; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710166648; x=1710771448; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=43jNDHBzdy1gIxQ/6CNhvNbAa8Yb9cT8Zs1tCMJRK0k=;
- b=r4gm+veMe2hYYE/8CPGYsSDJU1uS6Gk4EsttF/RW1SLTgqpP3zoG7FtxBuRSzkYrI9
- W4dsuUUze2CIfNFUvaSDBM8jNLYltt68RNKdBNe5bxok+evs0xXDO4PAKjmMJy3dTkTj
- YiFDQDGa056qJQHloY2qOR5auwZz8OtQRW0j6O5DFwcE3opskMR8rkY2NS00KTknLiec
- rLVST/PKpA6BogwaubU1GP3JlOJga09goZCA2y29FFtOCSIIEh5NVU/7mKDMdxbODEMw
- bD6G2ZwvaMak9fkDJbjXp2GGo8wQATKvKpVuZrJcAHfkdoxxVxairkAFsme2tQEh3QPa
- xnHA==
+ bh=4PjyGUcpb4+797tvwMwm1vie3TWgtIa7ruEj6TvdiQQ=;
+ b=XH3yTGKZjovsm2d9Me6wGoXkvbxJnH09upiMLLOFDPuKuikHF0JGn8t+fDeMUAcEre
+ sTI66k4m0ZNV23KoE08ytINkXA5rU07xP/nDtkU4CLvfd6gyDQ4XGQhrbogrz4u4UCdq
+ te7Wi/IUilmg71rmZ9arbA8rc1Ymiz4KQi36PrG7FeuXS4h2RMZeLJ0lnS/DN9Ctabok
+ KbzRN5eD2pE7xUk7UzbmLwCluZ30kfEyLNPszsWVy4H1G1s2PwaARaXVIdE7QhWMoTFi
+ zr0EMFK0DE1svDTgyMLnfRCXTEkBoHIG0pEmvQVxj2F5GZsRJxZHl2U7O+oyS9Og9epm
+ ocgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710166558; x=1710771358;
+ d=1e100.net; s=20230601; t=1710166648; x=1710771448;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=43jNDHBzdy1gIxQ/6CNhvNbAa8Yb9cT8Zs1tCMJRK0k=;
- b=OAaIUO8ZbNO3Q9dUjiJftXuTKtZ99G/hjqk2lBWrS3YGjM5Oe+5ZIF37tzD5u9XBID
- M0kfseQqgsjO5IBk+yR6foTgMuT5MSAYwHvZsds4exWl30Rtn+Y7U1AyLf7i+CHWg1CN
- OepKEeGlHEGBBj03+wirKIIXJ1goWFYsWiy6Mt4DD8oBnPkzXCqyj9hxtNq7Ay+kGz03
- ItF2B3OZGA6v91pHeMxgb5EHPTlS5gB/nd6HGhtAju61h1pfwjM+AWBtHtoUzJGWQpKJ
- 3B/ER5pn1+14cSnBcjv4iCBbLu2qFfN8jSfsSxSjFP4WifNK4L15z0VNALDTlJrL6rjz
- 6Wdg==
+ bh=4PjyGUcpb4+797tvwMwm1vie3TWgtIa7ruEj6TvdiQQ=;
+ b=EkAJYz4NgE8vnnm8Gl+xPBbUx/CGMykzVx/8QD2ot1U12QqA2a4Ar8zjz0HVfo7qvT
+ A2pS9mQlC6UcxlU/eQtIT1Pw68kNptFxGRfhhsLl350O2p48m/3FjIKw+W3t6503Hr7v
+ mc4ChkcDva7JXsEzF9WMW3+r+LA3QYzJDFdo93M9h24UG/uxcamY1l4Lsd6km5mxDbpc
+ m5RmyzmR7N8xiY0YRaopwnITXFb+ov07xPWCciHYq0I8fJ73sUOREgu7on6iRyVcEqjD
+ aEn+wA+mbygdLnUgGTZei/juXfg72A7c44iMcuJpQundIrBv8ZjiBhqdpqSytTRf2Raw
+ lUTA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU6PzxA8N3pwDmGypLhkVeOevoPEs9riUfGqSmHOLBhvJl7hqF/JK3dus9kvLukD22SrVXJGU1ZoMoVuEPSq69JynM2jMM=
-X-Gm-Message-State: AOJu0Yw7J6ET6zhbjqieyMsiG75Fk4v9HH/B08dsyySlaePn8DZLE+GJ
- Uq3ZBt662ACW8XxQ4Ipw25Un0E2S+noLwmhEv9tI6cEk/Svcvk6SWAIf82jHge3XZfOyrkDaSHU
- e
-X-Google-Smtp-Source: AGHT+IGwN/d77FeTuHz8IQ4LFm5ExjGtTZ+PVaotTWIYWLspNiItMnQWBFsDTSXa8QhPdJ08BcJcgg==
-X-Received: by 2002:a05:600c:45d0:b0:413:2641:c44b with SMTP id
- s16-20020a05600c45d000b004132641c44bmr3046459wmo.28.1710166557769; 
- Mon, 11 Mar 2024 07:15:57 -0700 (PDT)
+ AJvYcCU07CkmAINSjeVOB9Svmf74xTNvmVUorUCoz5gsKrHw63SuPVCGdAq+RN+7KWIMwcW/FEP1R3o6eMRueVri9fcUG1YxWCI=
+X-Gm-Message-State: AOJu0YywbUNh8V+dARMHFWXjBBMi0ot7L+25KeEOST4ggFviC8QMXZBR
+ JxbmW3AvH31Wq25io+TBj/hEMgh1fb5wl+GqkDRkq41lpfxBo3j4hFl+prOptbk=
+X-Google-Smtp-Source: AGHT+IGiyce0PnPC+hlyoH3fR7nN/yQ6omaEIlzuwTit4zHAN+Yc+6UkjOpqfhws8oo5DrY5cwUCaA==
+X-Received: by 2002:adf:fa8d:0:b0:33e:64f3:65a5 with SMTP id
+ h13-20020adffa8d000000b0033e64f365a5mr5446420wrr.52.1710166648099; 
+ Mon, 11 Mar 2024 07:17:28 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.167.228])
  by smtp.gmail.com with ESMTPSA id
- u12-20020a5d6acc000000b0033e7a499deasm4334460wrw.109.2024.03.11.07.15.56
+ u12-20020a5d6acc000000b0033e7a499deasm4334460wrw.109.2024.03.11.07.17.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Mar 2024 07:15:57 -0700 (PDT)
-Message-ID: <f74c870a-c2f0-4c30-bb17-cf3d0602b7cb@linaro.org>
-Date: Mon, 11 Mar 2024 15:15:55 +0100
+ Mon, 11 Mar 2024 07:17:27 -0700 (PDT)
+Message-ID: <91bf8d9f-1a60-4280-a44d-25b6339d11e9@linaro.org>
+Date: Mon, 11 Mar 2024 15:17:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] crypto: handle gcrypt ciphers being disabled
+Subject: Re: [PATCH] meson.build: Always require an objc compiler on macos
+ hosts
 Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>
-References: <20240311121929.212472-1-berrange@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20240311133334.3991537-1-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240311121929.212472-1-berrange@redhat.com>
+In-Reply-To: <20240311133334.3991537-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,17 +99,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/3/24 13:19, Daniel P. Berrangé wrote:
-> This fixes testing on RHEL with libgcrypt cipher backends
+On 11/3/24 14:33, Peter Maydell wrote:
+> We currently only insist that an ObjectiveC compiler is present on
+> macos hosts if we're building the Cocoa UI.  However, since then
+> we've added some other parts of QEMU which are also written in ObjC:
+> the coreaudio audio backend, and the vmnet net backend.  This means
+> that if you try to configure QEMU on macos with --disable-cocoa the
+> build will fail:
 > 
-> Daniel P. Berrangé (4):
->    crypto: factor out conversion of QAPI to gcrypt constants
->    crypto: query gcrypt for cipher availability
->    crypto: use error_abort for unexpected failures
->    crypto: report which ciphers are being skipped during tests
+> ../meson.build:3741:13: ERROR: No host machine compiler for 'audio/coreaudio.m'
+> 
+> Since in practice any macos host will have an ObjC compiler
+> available, rather than trying to gate the compiler detection on an
+> increasingly complicated list of every bit of QEMU that uses ObjC,
+> just require it unconditionally on macos hosts.
+> 
+> Resolves https://gitlab.com/qemu-project/qemu/-/issues/2138
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> Per the commit message, in theory we could allow a no-objc
+> build and disable coreaudio, vmnet, etc. But I didn't really see
+> a reason why that would be useful, and it's bound to keep
+> breaking unless we actively defend it in CI. So I preferred
+> to simply require ObjC on macos.
+> 
+>   meson.build | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Series:
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
 
 
