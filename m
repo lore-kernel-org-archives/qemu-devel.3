@@ -4,80 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7BB4C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:55:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A73E9C54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 18:02:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjjrf-0001jt-FS; Mon, 11 Mar 2024 13:55:07 -0400
+	id 1rjjxv-0005LF-Vq; Mon, 11 Mar 2024 14:01:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rjjrS-0001eH-Aq; Mon, 11 Mar 2024 13:54:54 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rjjrK-0001GJ-7R; Mon, 11 Mar 2024 13:54:53 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-1dc49b00bdbso24836325ad.3; 
- Mon, 11 Mar 2024 10:54:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710179684; x=1710784484; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=O+pOrOM6lySZTVYddKbxBUhvRTRmJUmOI75S/suUw9o=;
- b=Ho+DUe7afCi/8CR5/5MIKjkgoju499FLceQRExsrw1iizyFjXiWp/MKG7Qofue/F4D
- VVXWbFn+IwGgLvTUXxgy3k6Yt0j11BvS5YK019e4kJhROs0rWiFbGb3v8muxybmtEJai
- nr14wAo5a7rt212EP3vhiUkbANu69e/QWxE3STZNiKeBnvYXKFTjS2k0x59RkEFaHwtQ
- daRvd6ITqVX4Nj1NMi6rD/UN++VNIoq7DvdGnXwvopMkkURyOF5r3eRitIAJlCHrt7KC
- fVTX1UmlEdWsKfD1qX3xP2Ojov2a1vl+Gvhftsq0vCw1yK0UmNM/RkhWGpTAx/aSAzGl
- no7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710179684; x=1710784484;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=O+pOrOM6lySZTVYddKbxBUhvRTRmJUmOI75S/suUw9o=;
- b=GSdNiw6UzOZF2Ih7ebr/2a7x9LeQsCDsrpjrIPlf1LgyMTl0hrcQXOh7ehHfmGrHq+
- q5GaAPJzXPxcBGqcXGGIAQ+kei6QLoLujaTIX2JdBraBiqhEwJyA6fazgiBPoIoFNhs2
- 1yvDQlrKYs5atZcVQQ0E0uwyu72B9Eao3OovPlhdJHHRtygCG1y8cePBi2COL1/QS5mU
- U3aircIR+e+Q2/mfQP7mXT3bHebPhuG5eHtf2bFNzZCo7WT55xMkXMxuRyKzfcsNBB0N
- xZnQkacIn2CH+uAB8UZ+0Vv5bCoMbs9iwHMGENEHtnDdYuwl+8/+MFYrQskS1gZuUjky
- iEWg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUc0ZC2fO4P8313b1LRIRrBZE+LTWZtVo/F+3EqDQkGnJJu5S+Zpvo2OnGXlTPp8dy/foV0wTeF+2SiDsAM7aKJsXfLGFk=
-X-Gm-Message-State: AOJu0YxAe8qcShTn681wYy/hoazYYvOqzmpKsyIxmi9fX5pHxiFAPv38
- BnWbjQsgbV8xCxuSIo/Atv/FBcbnrX3Cd9lP3OKbiL0LZibDJuEOho00cXICwKw=
-X-Google-Smtp-Source: AGHT+IHrpExRCzc3O37GAx5iLgfdWyGBBe7IvfgUVF9mGoQLrf5axjiKEEPjG3fip286QkC8dZqOKQ==
-X-Received: by 2002:a17:902:b784:b0:1dc:4199:a31d with SMTP id
- e4-20020a170902b78400b001dc4199a31dmr6348590pls.53.1710179684310; 
- Mon, 11 Mar 2024 10:54:44 -0700 (PDT)
-Received: from wheely.local0.net ([118.208.155.46])
- by smtp.gmail.com with ESMTPSA id
- u8-20020a17090341c800b001dd8b248aa1sm3688427ple.81.2024.03.11.10.54.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 10:54:43 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH] target/ppc: Fix GDB SPR regnum indexing
-Date: Tue, 12 Mar 2024 03:54:37 +1000
-Message-ID: <20240311175437.2177587-1-npiggin@gmail.com>
-X-Mailer: git-send-email 2.42.0
+ (Exim 4.90_1) (envelope-from <hao.xiang@linux.dev>)
+ id 1rjjxt-0005K9-0F
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 14:01:33 -0400
+Received: from out-186.mta0.migadu.com ([2001:41d0:1004:224b::ba])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hao.xiang@linux.dev>)
+ id 1rjjxn-0002sT-P2
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 14:01:32 -0400
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1710180084;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=wiWWspnbi7Q0vNoPD9xXbXnmFAa8r696Hl2OxFjqnzs=;
+ b=CAXgY7PJ3HNNxGOFDn2NPIdL48DzZO9eescmSsIqLFEWmLdSJd4/+rJWOXrliJ2Whcubbh
+ nE0N/mR9HHJloY19U+9WHqq+npyteZDsJ+4uZ75FMg7+/zG75QrD67UP24Jpof7h2BaaFC
+ qpBP6MAi7mY9kcU4Zn3B9qBD1WWhywA=
+From: Hao Xiang <hao.xiang@linux.dev>
+To: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
+ peterx@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com, jdenemar@redhat.com,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org, wangyanan55@huawei.com,
+ qemu-devel@nongnu.org
+Subject: [PATCH v6 2/7] migration/multifd: Allow clearing of the file_bmap
+ from multifd
+Date: Mon, 11 Mar 2024 18:00:10 +0000
+Message-Id: <20240311180015.3359271-3-hao.xiang@linux.dev>
+In-Reply-To: <20240311180015.3359271-1-hao.xiang@linux.dev>
+References: <20240311180015.3359271-1-hao.xiang@linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x629.google.com
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=2001:41d0:1004:224b::ba;
+ envelope-from=hao.xiang@linux.dev; helo=out-186.mta0.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,42 +70,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix an off by one bug.
+From: Fabiano Rosas <farosas@suse.de>
 
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Alex Bennée <alex.bennee@linaro.org>
-Fixes: 1b53948ff8f70 ("target/ppc: Use GDBFeature for dynamic XML")
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+We currently only need to clear the mapped-ram file bitmap from the
+migration thread during save_zero_page.
+
+We're about to add support for zero page detection on the multifd
+thread, so allow ramblock_set_file_bmap_atomic() to also clear the
+bits.
+
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- target/ppc/gdbstub.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ migration/multifd.c | 2 +-
+ migration/ram.c     | 8 ++++++--
+ migration/ram.h     | 3 ++-
+ 3 files changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/target/ppc/gdbstub.c b/target/ppc/gdbstub.c
-index 122ea9d0c0..80a2e7990b 100644
---- a/target/ppc/gdbstub.c
-+++ b/target/ppc/gdbstub.c
-@@ -324,6 +324,9 @@ static void gdb_gen_spr_feature(CPUState *cs)
-             continue;
-         }
+diff --git a/migration/multifd.c b/migration/multifd.c
+index d4a44da559..6b8a78e4ca 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -115,7 +115,7 @@ static void multifd_set_file_bitmap(MultiFDSendParams *p)
+     assert(pages->block);
  
-+        gdb_feature_builder_append_reg(&builder, g_ascii_strdown(spr->name, -1),
-+                                       TARGET_LONG_BITS, num_regs,
-+                                       "int", "spr");
-         /*
-          * GDB identifies registers based on the order they are
-          * presented in the XML. These ids will not match QEMU's
-@@ -334,10 +337,6 @@ static void gdb_gen_spr_feature(CPUState *cs)
-          */
-         spr->gdb_id = num_regs;
-         num_regs++;
--
--        gdb_feature_builder_append_reg(&builder, g_ascii_strdown(spr->name, -1),
--                                       TARGET_LONG_BITS, num_regs,
--                                       "int", "spr");
+     for (int i = 0; i < p->pages->num; i++) {
+-        ramblock_set_file_bmap_atomic(pages->block, pages->offset[i]);
++        ramblock_set_file_bmap_atomic(pages->block, pages->offset[i], true);
      }
+ }
  
-     gdb_feature_builder_end(&builder);
+diff --git a/migration/ram.c b/migration/ram.c
+index 003c28e133..f4abc47bbf 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -3150,9 +3150,13 @@ static void ram_save_file_bmap(QEMUFile *f)
+     }
+ }
+ 
+-void ramblock_set_file_bmap_atomic(RAMBlock *block, ram_addr_t offset)
++void ramblock_set_file_bmap_atomic(RAMBlock *block, ram_addr_t offset, bool set)
+ {
+-    set_bit_atomic(offset >> TARGET_PAGE_BITS, block->file_bmap);
++    if (set) {
++        set_bit_atomic(offset >> TARGET_PAGE_BITS, block->file_bmap);
++    } else {
++        clear_bit_atomic(offset >> TARGET_PAGE_BITS, block->file_bmap);
++    }
+ }
+ 
+ /**
+diff --git a/migration/ram.h b/migration/ram.h
+index b9ac0da587..08feecaf51 100644
+--- a/migration/ram.h
++++ b/migration/ram.h
+@@ -75,7 +75,8 @@ bool ram_dirty_bitmap_reload(MigrationState *s, RAMBlock *rb, Error **errp);
+ bool ramblock_page_is_discarded(RAMBlock *rb, ram_addr_t start);
+ void postcopy_preempt_shutdown_file(MigrationState *s);
+ void *postcopy_preempt_thread(void *opaque);
+-void ramblock_set_file_bmap_atomic(RAMBlock *block, ram_addr_t offset);
++void ramblock_set_file_bmap_atomic(RAMBlock *block, ram_addr_t offset,
++                                   bool set);
+ 
+ /* ram cache */
+ int colo_init_ram_cache(void);
 -- 
-2.42.0
+2.30.2
 
 
