@@ -4,52 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5B77C5475B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE646C54E5D
 	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:25:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjWHS-0005Xp-3F; Sun, 10 Mar 2024 23:24:50 -0400
+	id 1rjWHb-0005aN-Tu; Sun, 10 Mar 2024 23:24:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWHP-0005W8-E3; Sun, 10 Mar 2024 23:24:47 -0400
+ id 1rjWHY-0005Zm-Ig; Sun, 10 Mar 2024 23:24:56 -0400
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWHN-0007qJ-DL; Sun, 10 Mar 2024 23:24:47 -0400
+ id 1rjWHW-0007rZ-Vu; Sun, 10 Mar 2024 23:24:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710127485; x=1741663485;
+ t=1710127495; x=1741663495;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=9u2qpUQw+97M2ytR4D9PH0ERtHP9EM+bxi7PUz1J0MM=;
- b=f+5F5Oh0AUwUKO3ZQFnhLZRafbXONiq4LZ7t91ncgJXDQFeujqgaUtCZ
- C8O2k3loJlSr86qOk9EjZqd2pfKV2mcokdlcUAhTiNiw/WZcaZbYgQssN
- Wdtd0JxQTU1F84hki38zLPApLk1MU482a2s/Hb46TTW1AzAPA65sud+l8
- pRsKldQP7BK8jL8Wm3qJ6QgaJnOf1h8UzeUaWjoGGb9Gpxq5H8N/IebZX
- Lut5YmP9PMUv4/PRTqJ+PxWYRmAeWzjwa8EsLJbBZzLwn6W2GlNO4YcrH
- cdvA7YtIpD7B5t/xQQ/alEGAcugpnKfZOeoB7XgivDv7yAjfMLK6pjzTP A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229576"
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229576"
+ bh=5dgSOzTTA45itG0zhwcLx2J6Kw1BqasX3E9AuDV3aEc=;
+ b=i7rzigj8ulSjEVKl4jBdVTSK1E2pxGBSjAqEvg4nC1O6iAP8u+QvuVh2
+ WkbFU0Nm19jD/ZW2Qg1ramCfBzIcEuyzstaIa0Qc38KTBvLDXfWkI68ZC
+ uGx0LLTGCuWXtLmGmFhO9tfLDu3yK4GhNtnc1F7exIy1hmjiHFdJjK+ut
+ p1jCTd+9t1uiV9PurHFtuUG/NVq2PAsO8Y7Wls9XIFMxk0jzy4P2AC9gR
+ h/Jo8nWp6HHogL7F9Dcc3VyXUf36JAmTK3PASgNO71J2cuPiKASOzagNp
+ 8GWW/2gqebM0CnvZzLBzBjqdLTFFoBUhZ21nkpPmt83hIrxB2hOADw+2R Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229598"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229598"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2024 20:24:43 -0700
+ 10 Mar 2024 20:24:53 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15593711"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15593732"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:24:42 -0700
+ by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:24:50 -0700
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, Michael Tokarev <mjt@tls.msk.ru>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org,
-	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 01/29] error: Add error_vprepend() in comment of
- ERRP_GUARD() rules
-Date: Mon, 11 Mar 2024 11:37:54 +0800
-Message-Id: <20240311033822.3142585-2-zhao1.liu@linux.intel.com>
+Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ John Snow <jsnow@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org
+Subject: [PATCH v2 04/29] block/copy-before-write: Fix missing ERRP_GUARD()
+ for error_prepend()
+Date: Mon, 11 Mar 2024 11:37:57 +0800
+Message-Id: <20240311033822.3142585-5-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
 References: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
@@ -81,39 +84,58 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-The error_vprepend() should use ERRP_GUARD() just as the documentation
-of ERRP_GUARD() says:
+As the comment in qapi/error, passing @errp to error_prepend() requires
+ERRP_GUARD():
 
-> It must be used when the function dereferences @errp or passes
-> @errp to error_prepend(), error_vprepend(), or error_append_hint().
+* = Why, when and how to use ERRP_GUARD() =
+*
+* Without ERRP_GUARD(), use of the @errp parameter is restricted:
+...
+* - It should not be passed to error_prepend(), error_vprepend() or
+*   error_append_hint(), because that doesn't work with &error_fatal.
+* ERRP_GUARD() lifts these restrictions.
+*
+* To use ERRP_GUARD(), add it right at the beginning of the function.
+* @errp can then be used without worrying about the argument being
+* NULL or &error_fatal.
 
-Considering that error_vprepend() is also an API provided in error.h,
-it is necessary to add it to the description of the rules for using
-ERRP_GUARD().
+ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
+can't see this additional information, because exit() happens in
+error_setg earlier than information is added [1].
 
-Cc: Markus Armbruster <armbru@redhat.com>
-Cc: Michael Roth <michael.roth@amd.com>
+The cbw_open() passes @errp to error_prepend() without ERRP_GUARD().
+
+Though it is the BlockDriver.bdrv_open() method, and currently its
+@errp parameter only points to callers' local_err, to follow the
+requirement of @errp, add missing ERRP_GUARD() at the beginning of this
+function.
+
+[1]: Issue description in the commit message of commit ae7c80a7bd73
+     ("error: New macro ERRP_GUARD()").
+
+Cc: John Snow <jsnow@redhat.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Kevin Wolf <kwolf@redhat.com>
+Cc: Hanna Reitz <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
-v2: Add a comma after error_vprepend(). (Markus)
----
- include/qapi/error.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/copy-before-write.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/qapi/error.h b/include/qapi/error.h
-index f21a231bb1a6..71f8fb2c50ee 100644
---- a/include/qapi/error.h
-+++ b/include/qapi/error.h
-@@ -207,7 +207,7 @@
-  *
-  * Without ERRP_GUARD(), use of the @errp parameter is restricted:
-  * - It must not be dereferenced, because it may be null.
-- * - It should not be passed to error_prepend() or
-+ * - It should not be passed to error_prepend(), error_vprepend(), or
-  *   error_append_hint(), because that doesn't work with &error_fatal.
-  * ERRP_GUARD() lifts these restrictions.
-  *
+diff --git a/block/copy-before-write.c b/block/copy-before-write.c
+index 0842a1a6dfbe..8aba27a71d6d 100644
+--- a/block/copy-before-write.c
++++ b/block/copy-before-write.c
+@@ -407,6 +407,7 @@ out:
+ static int cbw_open(BlockDriverState *bs, QDict *options, int flags,
+                     Error **errp)
+ {
++    ERRP_GUARD();
+     BDRVCopyBeforeWriteState *s = bs->opaque;
+     BdrvDirtyBitmap *bitmap = NULL;
+     int64_t cluster_size;
 -- 
 2.34.1
 
