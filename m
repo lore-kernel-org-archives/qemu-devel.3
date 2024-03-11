@@ -4,78 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B6C5C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 14:00:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88E15C54E60
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 14:01:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjgBb-0005FY-Vf; Mon, 11 Mar 2024 09:59:28 -0400
+	id 1rjgBP-0005Ao-Ga; Mon, 11 Mar 2024 09:59:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rjgBY-0005Cw-MH
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 09:59:25 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1rjgBJ-00059g-Ko
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 09:59:09 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rjgBX-0003fP-5V
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 09:59:24 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-5e4f79007ffso1637454a12.2
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 06:59:22 -0700 (PDT)
+ id 1rjgBH-0003ax-BA
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 09:59:09 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-29baec5f751so2026991a91.0
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 06:59:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1710165561; x=1710770361; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=M1pgxbL4ext+eLfj8GE9V3VngjTMGW2LA/FcQ0QZgQg=;
- b=gkb6oqd/sz129hj/+aGAQVVazaIJTsJsUvcVIrgDw+2ZQNxl7VO7q93081ia4IDCwm
- VbopaVLwchd6WPss/G8RArZCAzZbNenHcHqze4o5XQLny/87+MEgQJx6KETb56HChZA/
- M6zZ8wIB+R85IaKnRdJLS8xsxvT0oGZz8l7HF8gLAmEhtWFW3WZQcZL4y6nwUtKtq+Ke
- y6NyKEOL2jEit4yuIyQvkpjZR/KHPdOAiUZTCcPVuxgrr1nvyCvotbow1O50cbLtrbxX
- EJO64jBBGUDfetYlGb1PvgIh8p76Nse9m08gZN81DyUQKzirNlS34Bx37kehmo/9mO/K
- MfDg==
+ d=ventanamicro.com; s=google; t=1710165545; x=1710770345; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=nG1z1j5EYE/lIKY0fj2u8vHOJM10LttW3eQfJYDOipw=;
+ b=YN4jeHHG7VgVjMWSBDNpV2rhvWfG/490KXOVjF+uLzHuhvdDP60jn6eLDF44Ek+sBF
+ hR7VusBXD9VQ9jHxrCELkft4Hz++M8XmZOxIP6jK4jU0iQ3163Sjeg35jHpSVh4fQT39
+ Rdg50Jgw34hziS1Ip8e5IIvp/2LGTFHtc9s5yC7rB72GZgm/MEkw0nEfYCANqQhjqP+F
+ bMFe8PcxUPUaRWFl/GdlNug3/hvaxZiW9YOqN4k7QFqUYN/xAdAPlp+oHdsa0Rjuydbv
+ ORKH72NdQBeVIQZ85D1e9d4Dh+HGkRXNj9c+sITaUK+dXaCOxOWhTHFK4z+vz3qvUC6l
+ YdBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710165561; x=1710770361;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=M1pgxbL4ext+eLfj8GE9V3VngjTMGW2LA/FcQ0QZgQg=;
- b=ZMDOf1jlWpQqzLB7Rqh47QdSlSqMbg6H7iCSd7JSKr51NYGeGcVdBEbuETEIvjwLyM
- ueUJQbAqy6tiff/NP6/hzyqPqDpV4nGCTavGqd7exACGoA4EI9TTtXsGCpH163UFAFJQ
- Nnbev5AkTk93hq6sb+7n/YH1+5JyF2E5vMF4rrWruXzTxbFnHlVrhuIvKbXVKVhSKNp0
- H3mlEqrlNmirvkoa9tVE5L5KoIVjJChXTwV6qAK2eq17ywAw5nZNZrgeLTlAqqArfZkv
- 1a7SrsYnAFxFVjYj7hx/gqQN2AnifRWYfaQ9jFlNRCDjx8sztmQJoh+oKJIVMf12T8vG
- 1vug==
-X-Gm-Message-State: AOJu0YwDLhUj1WNuy/OEMeV4LHCxNzYtup5aFc7ESPUoRZtDpaOah5Ea
- /AiNP1Esx0oRSP92Vhdn359tVu/Egb8PxT8jOKwmRPvw8vg3zqvNKb0ZL1+lIeftSYiPQZdl07W
- B
-X-Google-Smtp-Source: AGHT+IHBBcv+5sQ1SWjKA6FHNq9VnvR1huuFwmW+rlo6uzUmjiJtXFQDjmm3ziVmwWax5tRtei9lcg==
-X-Received: by 2002:a17:90b:4c41:b0:29b:f981:1363 with SMTP id
- np1-20020a17090b4c4100b0029bf9811363mr2690831pjb.5.1710165561111; 
- Mon, 11 Mar 2024 06:59:21 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710165545; x=1710770345;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nG1z1j5EYE/lIKY0fj2u8vHOJM10LttW3eQfJYDOipw=;
+ b=Cv47fZmFS1FTw2Yp0p/rnNpuqW8PxWm0KD6f/1sHfO+915j5KhVQLAS4gjllPqTyt4
+ cXAflbPlWQIhB59cukMAW0/offq6Y5DcpvzCuOPNyjcM05hvqfSJWXHQbMQbFl98vqyU
+ DQ7v1YkUlwJ4zFS91QKT5RLAQdNNRZf09eIjEoWs1b47sE1hAFCcLaQBK4du8xWSTXne
+ wI8C7DwCYavCNN2NtoScN0berOxUMzBRiYjf3LRm02oH03Kem6LJ9XCwZTXh22wBwq3C
+ veJs7hrntIKefHeTv290yBgceySSHKjmnW/cM0qgri+mvN1MV+5bWiJf0ZlKhmiEZl7r
+ /JUQ==
+X-Gm-Message-State: AOJu0Yy9h5Ewc1bvphBJnvgfzkRJglKrbemxc/CW5sQJAzvwGoaDzFPU
+ rumrdN6EOCb/rvwRlxAQz1DqjYizLNAlFgwbip46dZI7TAeh8+Do9jTbTtPUSvvEibil3sWQIXy
+ n
+X-Google-Smtp-Source: AGHT+IGDyHCFL6uZDrLc8TS+ZG+Sdfhl4AhYsTR1Okv7JTsZb50nPgbjoF1obUKxMqDyGJcnsAXDoQ==
+X-Received: by 2002:a17:90a:578c:b0:29b:fb23:863e with SMTP id
+ g12-20020a17090a578c00b0029bfb23863emr4403697pji.17.1710165544785; 
+ Mon, 11 Mar 2024 06:59:04 -0700 (PDT)
 Received: from grind.. ([177.94.15.159]) by smtp.gmail.com with ESMTPSA id
- nm3-20020a17090b19c300b0029c12fa64b9sm1324920pjb.4.2024.03.11.06.59.18
+ nm3-20020a17090b19c300b0029c12fa64b9sm1324920pjb.4.2024.03.11.06.59.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 06:59:20 -0700 (PDT)
+ Mon, 11 Mar 2024 06:59:04 -0700 (PDT)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
  richard.henderson@linaro.org, philmd@linaro.org,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v11 5/7] trans_rvv.c.inc: remove redundant mark_vs_dirty()
- calls
-Date: Mon, 11 Mar 2024 10:58:53 -0300
-Message-ID: <20240311135855.225578-6-dbarboza@ventanamicro.com>
+Subject: [PATCH v11 0/7] riscv: set vstart_eq_zero on vector insns
+Date: Mon, 11 Mar 2024 10:58:48 -0300
+Message-ID: <20240311135855.225578-1-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240311135855.225578-1-dbarboza@ventanamicro.com>
-References: <20240311135855.225578-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,76 +94,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-trans_vmv_v_i , trans_vfmv_v_f and the trans_##NAME macro from
-GEN_VMV_WHOLE_TRANS() are calling mark_vs_dirty() in both branches of
-their 'ifs'. conditionals.
+Hi,
 
-Call it just once in the end like other functions are doing.
+In this new version, after the comments from LIU Zhiwei in v9 [1], I
+decided to ditch all the patches that were trying to integrate the tail
+update process in a single function. Handling the right value for NF for
+every single function is out of the scope for this bug fix. The patches
+might be useful in the future if we decide that such integration adds
+value, but for now it's too much.
 
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/riscv/insn_trans/trans_rvv.c.inc | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+For this bug fix I decided to bring a sledgehammer and inserted an early
+exist in every vector helper if vstart >= vl. This will make the whole
+helper a no-op if vstart is out of bounds, and make it trivial for us to
+proceed with removing brconds and so on.
 
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 4c1a064cf6..b0f19dcd85 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -2065,7 +2065,6 @@ static bool trans_vmv_v_i(DisasContext *s, arg_vmv_v_i *a)
-         if (s->vl_eq_vlmax && !(s->vta && s->lmul < 0)) {
-             tcg_gen_gvec_dup_imm(s->sew, vreg_ofs(s, a->rd),
-                                  MAXSZ(s), MAXSZ(s), simm);
--            mark_vs_dirty(s);
-         } else {
-             TCGv_i32 desc;
-             TCGv_i64 s1;
-@@ -2083,9 +2082,8 @@ static bool trans_vmv_v_i(DisasContext *s, arg_vmv_v_i *a)
-                                               s->cfg_ptr->vlenb, data));
-             tcg_gen_addi_ptr(dest, tcg_env, vreg_ofs(s, a->rd));
-             fns[s->sew](dest, s1, tcg_env, desc);
--
--            mark_vs_dirty(s);
-         }
-+        mark_vs_dirty(s);
-         return true;
-     }
-     return false;
-@@ -2612,7 +2610,6 @@ static bool trans_vfmv_v_f(DisasContext *s, arg_vfmv_v_f *a)
- 
-             tcg_gen_gvec_dup_i64(s->sew, vreg_ofs(s, a->rd),
-                                  MAXSZ(s), MAXSZ(s), t1);
--            mark_vs_dirty(s);
-         } else {
-             TCGv_ptr dest;
-             TCGv_i32 desc;
-@@ -2635,9 +2632,8 @@ static bool trans_vfmv_v_f(DisasContext *s, arg_vfmv_v_f *a)
-             tcg_gen_addi_ptr(dest, tcg_env, vreg_ofs(s, a->rd));
- 
-             fns[s->sew - 1](dest, t1, tcg_env, desc);
--
--            mark_vs_dirty(s);
-         }
-+        mark_vs_dirty(s);
-         return true;
-     }
-     return false;
-@@ -3560,12 +3556,11 @@ static bool trans_##NAME(DisasContext *s, arg_##NAME * a)               \
-         if (s->vstart_eq_zero) {                                        \
-             tcg_gen_gvec_mov(s->sew, vreg_ofs(s, a->rd),                \
-                              vreg_ofs(s, a->rs2), maxsz, maxsz);        \
--            mark_vs_dirty(s);                                           \
-         } else {                                                        \
-             tcg_gen_gvec_2_ptr(vreg_ofs(s, a->rd), vreg_ofs(s, a->rs2), \
-                                tcg_env, maxsz, maxsz, 0, gen_helper_vmvr_v); \
--            mark_vs_dirty(s);                                           \
-         }                                                               \
-+        mark_vs_dirty(s);                                               \
-         return true;                                                    \
-     }                                                                   \
-     return false;                                                       \
+I also took the opportunity to fix the flag name in patch 9 from v10,
+now patch 6.
+
+Series based on master. 
+
+Patches missing review: patch 3
+
+Changes from v10:
+- patches 2, 3, 4, 5 from v10: dropped
+- patch 3 (new):
+  - do an early exit in vector helpers if vstart >= vl
+- patch 6 (former patch 9):
+  - fix 'vstart_qe_zero' commit msg references to 'vstart_eq_zero' 
+- v10 link: https://lore.kernel.org/qemu-riscv/20240310115315.187283-1-dbarboza@ventanamicro.com/
+
+Daniel Henrique Barboza (6):
+  target/riscv/vector_helper.c: set vstart = 0 in GEN_VEXT_VSLIDEUP_VX()
+  trans_rvv.c.inc: set vstart = 0 in int scalar move insns
+  target/riscv/vector_helpers: do early exit when vstart >= vl
+  target/riscv: remove 'over' brconds from vector trans
+  trans_rvv.c.inc: remove redundant mark_vs_dirty() calls
+  target/riscv/vector_helper.c: optimize loops in ldst helpers
+
+Ivan Klokov (1):
+  target/riscv: enable 'vstart_eq_zero' in the end of insns
+
+ target/riscv/insn_trans/trans_rvbf16.c.inc |  18 +-
+ target/riscv/insn_trans/trans_rvv.c.inc    | 198 +++++----------------
+ target/riscv/insn_trans/trans_rvvk.c.inc   |  30 +---
+ target/riscv/translate.c                   |   6 +
+ target/riscv/vcrypto_helper.c              |  32 ++++
+ target/riscv/vector_helper.c               |  97 +++++++++-
+ target/riscv/vector_internals.c            |   4 +
+ target/riscv/vector_internals.h            |   9 +
+ 8 files changed, 202 insertions(+), 192 deletions(-)
+
 -- 
 2.43.2
 
