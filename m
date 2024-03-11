@@ -4,103 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 029D9C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 15:48:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E6B0C5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 15:52:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjhsd-0002ol-1E; Mon, 11 Mar 2024 11:47:59 -0400
+	id 1rjhw3-00041d-8L; Mon, 11 Mar 2024 11:51:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rjhs1-0002es-SD
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 11:47:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rjhvz-00040d-Kk; Mon, 11 Mar 2024 11:51:28 -0400
+Received: from forwardcorp1c.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rjhry-0000cx-Sf
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 11:47:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710172037;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WjmQZzDFACeoU2oayorDV0oWe9R9owuxVswF22wwuD8=;
- b=ELABB0BdnzQ403xh0OcgN7owg3DRO6QFOy7/UQnZfh5Ky8TDHEbr3cYFmLdDUBBxoLSAmQ
- cB242guo/v9crBCseipbz2DmeQxRUTLQYhmSwEoQo1mRnEmC5bER4FACtSAweCeOYjRAuL
- BloRmSbpb8vyufphnzMLonOBtFLA03U=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-638-_8MDs-AXNNyDC2gPWICl0Q-1; Mon, 11 Mar 2024 11:47:15 -0400
-X-MC-Unique: _8MDs-AXNNyDC2gPWICl0Q-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-412e992444eso19442155e9.3
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 08:47:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710172034; x=1710776834;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WjmQZzDFACeoU2oayorDV0oWe9R9owuxVswF22wwuD8=;
- b=WgEj57Pp6Pt2mirrdirSt47JdV6ufoe4opx6lOY+lNehRuiKvpz2kRznNhm/1ddqsd
- JfalWuMxSg9gXIGTGyrferigbxzjhD4S8P9MV9tXvJhbfZxC/3m6sVGG14m/LsKcoow+
- 2PVCsuDxtXDWxAyevoc3RS37OLirK+r8kb0TGB6tB5tg00m5u7+JaSO/KAI8QPKIf+V8
- X3DtqUgAdpTOdG+6p7lwSg8U4CW9W2Za0EvY25U8/MaOmAJVApbqQ4l+uujj96dHoLTY
- XPRrFB2R+0cS+1lToBlzng7O+cDM3Q+baK0Qal58VTqljhU9V5wcSjgZZOfkyY8pfKBF
- KFXA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVbNJltUqdNESipIvQfv85o8dHUBMwjPi54AUGWj2q/v+giJdeg/vW3WlS25g5QuGl2MV5b0HQfQCBFWdPDZI/YRuh0cB0=
-X-Gm-Message-State: AOJu0YxicjRJh3AmU34M8Xdty515WAscHbc4F41ZOsa4sL79kSOeejgH
- mJPZFWBuePquNevAu/lFS8qdLswVHsubdu7nQRc+7nIC3mK1FrwS3ufSwxs+PzQgAWC0gx3mXWs
- Dog8Qom4NK0XupOcdHuKmgymC8S/jsBCNlrS1IqAcWd5B6LuwSokP
-X-Received: by 2002:a05:600c:5011:b0:413:2bcf:de2c with SMTP id
- n17-20020a05600c501100b004132bcfde2cmr1676881wmr.9.1710172034404; 
- Mon, 11 Mar 2024 08:47:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFjtKXfByZD0Wjo8MO3ViqbZqdmvZNzLButYRAZlxc7X86skDZ2T6f5EBgwbnH1y98ekwc/1w==
-X-Received: by 2002:a05:600c:5011:b0:413:2bcf:de2c with SMTP id
- n17-20020a05600c501100b004132bcfde2cmr1676847wmr.9.1710172033837; 
- Mon, 11 Mar 2024 08:47:13 -0700 (PDT)
-Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- iv17-20020a05600c549100b00413160baa9bsm13204524wmb.10.2024.03.11.08.47.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 08:47:13 -0700 (PDT)
-Date: Mon, 11 Mar 2024 11:47:08 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: Eugenio Perez Martin <eperezma@redhat.com>, qemu-devel@nongnu.org,
- jasowang@redhat.com, si-wei.liu@oracle.com,
- boris.ostrovsky@oracle.com, raphael@enfabrica.net, kwolf@redhat.com,
- hreitz@redhat.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, thuth@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com,
- cohuck@redhat.com, pbonzini@redhat.com, fam@euphon.net,
- stefanha@redhat.com, qemu-block@nongnu.org, qemu-s390x@nongnu.org,
- virtio-fs@lists.linux.dev
-Subject: Re: [PATCH v1 2/8] virtio-pci: Lock ioeventfd state with
- VIRTIO_F_NOTIFICATION_DATA
-Message-ID: <20240311114638-mutt-send-email-mst@kernel.org>
-References: <20240304194612.611660-1-jonah.palmer@oracle.com>
- <20240304194612.611660-3-jonah.palmer@oracle.com>
- <20240308115951-mutt-send-email-mst@kernel.org>
- <CAJaqyWcRDjSXbgxMHbdPy_YO4boQthu_4_9zKYX3S5t-G1ju2g@mail.gmail.com>
- <bf6e9625-0fc3-4bbb-9e36-fe6571aca8cb@oracle.com>
- <20240308141907-mutt-send-email-mst@kernel.org>
- <fc09c190-ff37-47a0-96a2-6b364e04d334@oracle.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rjhvw-0001Vo-4f; Mon, 11 Mar 2024 11:51:27 -0400
+Received: from mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
+ [IPv6:2a02:6b8:c12:30ad:0:640:87bc:0])
+ by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id 30E9E60A5E;
+ Mon, 11 Mar 2024 18:51:19 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:b4b7::1:11] (unknown
+ [2a02:6b8:b081:b4b7::1:11])
+ by mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id IpnGGq0IbqM0-plzqaxoZ; Mon, 11 Mar 2024 18:51:18 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1710172278;
+ bh=L/jD759x9ycSc5ltZpGJiZQYbCiwgkN2lTGBjdVvK5E=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=pt/8G3G844J6AOrYzg+RgIjiFlmHoX6ox025pc3m7XSdczPzdGYnOhphcnZeftO4r
+ oDn7fZXtwy4cgjbbKh9qayGLyYiMfaDoPE61HJZk1n40njvHUTgV1s70AsdC27VhM4
+ E/k0OMZhgH/mwT2Rh4PNXl9+B/XAEFZrba9ekQE8=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <76223a28-cbb5-4c54-8138-178239c32caa@yandex-team.ru>
+Date: Mon, 11 Mar 2024 18:51:18 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <fc09c190-ff37-47a0-96a2-6b364e04d334@oracle.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/10] mirror: allow switching from background to
+ active mode
+Content-Language: en-US
+To: Peter Krempa <pkrempa@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, eblake@redhat.com, hreitz@redhat.com,
+ jsnow@redhat.com, den@virtuozzo.com, t.lamprecht@proxmox.com,
+ alexander.ivanov@virtuozzo.com
+References: <a5c48627-0bef-46cd-9426-587b358fe32d@yandex-team.ru>
+ <993bfa5d-1a91-4b32-9bd8-165b7abba4f0@proxmox.com>
+ <99dd287b-816b-4f4f-b156-32f94bbb62c2@yandex-team.ru>
+ <87o7gbyy8w.fsf@pond.sub.org> <ZUTffE0wfjLH2u+e@redhat.com>
+ <87cywqn84g.fsf@pond.sub.org>
+ <1310efb0-e211-46f5-b166-d7d529507a43@yandex-team.ru>
+ <ZeWnFhLKCamlP97y@redhat.com> <ZeWr3ZGrRUrciHH4@angien.pipo.sk>
+ <65f517cd-3a1b-41bd-b326-e509cb208b92@yandex-team.ru>
+ <Ze4hIfIwXPUPPMFK@angien.pipo.sk>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <Ze4hIfIwXPUPPMFK@angien.pipo.sk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,95 +87,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 11, 2024 at 10:53:25AM -0400, Jonah Palmer wrote:
+On 11.03.24 00:07, Peter Krempa wrote:
+> On Thu, Mar 07, 2024 at 22:42:56 +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> On 04.03.24 14:09, Peter Krempa wrote:
+>>> On Mon, Mar 04, 2024 at 11:48:54 +0100, Kevin Wolf wrote:
+>>>> Am 28.02.2024 um 19:07 hat Vladimir Sementsov-Ogievskiy geschrieben:
+>>>>> On 03.11.23 18:56, Markus Armbruster wrote:
+>>>>>> Kevin Wolf<kwolf@redhat.com>  writes:
 > 
+> [...]
 > 
-> On 3/8/24 2:19 PM, Michael S. Tsirkin wrote:
-> > On Fri, Mar 08, 2024 at 12:45:13PM -0500, Jonah Palmer wrote:
-> > > 
-> > > 
-> > > On 3/8/24 12:36 PM, Eugenio Perez Martin wrote:
-> > > > On Fri, Mar 8, 2024 at 6: 01 PM Michael S. Tsirkin <mst@ redhat. com>
-> > > > wrote: > > On Mon, Mar 04, 2024 at 02: 46: 06PM -0500, Jonah Palmer
-> > > > wrote: > > Prevent ioeventfd from being enabled/disabled when a
-> > > > virtio-pci > > device
-> > > > ZjQcmQRYFpfptBannerStart
-> > > > This Message Is From an External Sender
-> > > > This message came from outside your organization.
-> > > > Report Suspicious
-> > > > <https://us-phishalarm-ewt.proofpoint.com/EWT/v1/ACWV5N9M2RV99hQ!Op20OCZE8kFi__wOXJ_Z0URZ2e_9fdaYz2tejZvKqiDgOm6ijq_imUptzxsrej_4riwCrBGeKmQ9VKXqnbV1ujbfiOV5-E2e1s3pKqpqUL-gRIuMQLDLygRD1hoX3Q$>
-> > > > ZjQcmQRYFpfptBannerEnd
-> > > > 
-> > > > On Fri, Mar 8, 2024 at 6:01 PM Michael S. Tsirkin <mst@redhat.com> wrote:
-> > > > > 
-> > > > > On Mon, Mar 04, 2024 at 02:46:06PM -0500, Jonah Palmer wrote:
-> > > > > > Prevent ioeventfd from being enabled/disabled when a virtio-pci
-> > > > > > device has negotiated the VIRTIO_F_NOTIFICATION_DATA transport
-> > > > > > feature.
-> > > > > > 
-> > > > > > Due to ioeventfd not being able to carry the extra data associated with
-> > > > > > this feature, the ioeventfd should be left in a disabled state for
-> > > > > > emulated virtio-pci devices using this feature.
-> > > > > > 
-> > > > > > Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
-> > > > > > Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
-> > > > > 
-> > > > > I thought hard about this. I propose that for now,
-> > > > > instead of disabling ioevetfd silently we error out unless
-> > > > > user disabled it for us.
-> > > > > WDYT?
-> > > > > 
-> > > > 
-> > > > Yes, error is a better plan than silently disabling it. In the
-> > > > (unlikely?) case we are able to make notification data work with
-> > > > eventfd in the future, it makes the change more evident.
-> > > > 
-> > > 
-> > > Will do in v2. I assume we'll also make this the case for virtio-mmio and
-> > > virtio-ccw?
-> > 
-> > Guess so. Pls note freeze is imminent.
+>>
+>> I only see the following differencies:
+>>
+>> 1. block-job-complete documents that it completes the job synchronously.. But looking at mirror code I see it just set s->should_complete = true, which will be then handled asynchronously.. So I doubt that documentation is correct.
+>>
+>> 2. block-job-complete will trigger final graph changes. block-job-cancel will not.
+>>
+>> Is [2] really useful? Seems yes: in case of some failure before starting migration target, we'd like to continue executing source. So, no reason to break block-graph in source, better keep it unchanged.
+>>
+>> But I think, such behavior better be setup by mirror-job start parameter, rather then by special option for cancel (or even compelete) command, useful only for mirror.
 > 
-> Got it. Also, would you mind elaborating a bit more on "error out"? E.g. do
-> we want to prevent the Qemu from starting at all if a device is attempting
-> to use both VIRTIO_F_NOTIFICATION_DATA and ioeventfd? Or do you mean
-> something like still keep ioeventfd disabled but also log an error message
-> unless it was explicitly disabled by the user?
+> Libvirt's API design was based on the qemu quirk and thus we allow users
+> to do the decision after starting the job, thus anything you pick needs
+> to allow us to do this at "completion" time.
+> 
 
+OK, this means that simply switch to an option at job-start is not enough.
 
-my preference would be to block device instance from being created.
+> Libvirt can adapt to any option that will give us the above semantics
+> (extra parameter at completion time, different completion command or
+> extra command to switch job properties right before completion), but to
+> be honest all of these feel like they would be more hassle than keeping
+> 'block-job-cancel' around from qemu's side.
+> 
 
-> > > > > 
-> > > > > > ---
-> > > > > >   hw/virtio/virtio-pci.c | 6 ++++--
-> > > > > >   1 file changed, 4 insertions(+), 2 deletions(-)
-> > > > > > 
-> > > > > > diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> > > > > > index d12edc567f..287b8f7720 100644
-> > > > > > --- a/hw/virtio/virtio-pci.c
-> > > > > > +++ b/hw/virtio/virtio-pci.c
-> > > > > > @@ -417,13 +417,15 @@ static void virtio_ioport_write(void *opaque, uint32_t addr, uint32_t val)
-> > > > > >           }
-> > > > > >           break;
-> > > > > >       case VIRTIO_PCI_STATUS:
-> > > > > > -        if (!(val & VIRTIO_CONFIG_S_DRIVER_OK)) {
-> > > > > > +        if (!(val & VIRTIO_CONFIG_S_DRIVER_OK) &&
-> > > > > > +            !virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
-> > > > > >               virtio_pci_stop_ioeventfd(proxy);
-> > > > > >           }
-> > > > > > 
-> > > > > >           virtio_set_status(vdev, val & 0xFF);
-> > > > > > 
-> > > > > > -        if (val & VIRTIO_CONFIG_S_DRIVER_OK) {
-> > > > > > +        if ((val & VIRTIO_CONFIG_S_DRIVER_OK) &&
-> > > > > > +            !virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
-> > > > > >               virtio_pci_start_ioeventfd(proxy);
-> > > > > >           }
-> > > > > > 
-> > > > > > --
-> > > > > > 2.39.3
-> > > > > 
-> > > > 
-> > 
+I understand. But still, it would be good to finally resolve the duplication between job-* and block-job-* APIs. We can keep old quirk working for a long time even after making a new consistent API.
+
+-- 
+Best regards,
+Vladimir
 
 
