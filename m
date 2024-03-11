@@ -4,85 +4,163 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ABF9C5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 14:18:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6011C5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 14:32:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjgT6-0006CL-PD; Mon, 11 Mar 2024 10:17:32 -0400
+	id 1rjggp-0000JJ-3m; Mon, 11 Mar 2024 10:31:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjgT5-0006By-By
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 10:17:31 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjgT3-0007Uu-MG
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 10:17:31 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-33e6aca1ca9so4203224f8f.2
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 07:17:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710166648; x=1710771448; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4PjyGUcpb4+797tvwMwm1vie3TWgtIa7ruEj6TvdiQQ=;
- b=XH3yTGKZjovsm2d9Me6wGoXkvbxJnH09upiMLLOFDPuKuikHF0JGn8t+fDeMUAcEre
- sTI66k4m0ZNV23KoE08ytINkXA5rU07xP/nDtkU4CLvfd6gyDQ4XGQhrbogrz4u4UCdq
- te7Wi/IUilmg71rmZ9arbA8rc1Ymiz4KQi36PrG7FeuXS4h2RMZeLJ0lnS/DN9Ctabok
- KbzRN5eD2pE7xUk7UzbmLwCluZ30kfEyLNPszsWVy4H1G1s2PwaARaXVIdE7QhWMoTFi
- zr0EMFK0DE1svDTgyMLnfRCXTEkBoHIG0pEmvQVxj2F5GZsRJxZHl2U7O+oyS9Og9epm
- ocgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710166648; x=1710771448;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4PjyGUcpb4+797tvwMwm1vie3TWgtIa7ruEj6TvdiQQ=;
- b=EkAJYz4NgE8vnnm8Gl+xPBbUx/CGMykzVx/8QD2ot1U12QqA2a4Ar8zjz0HVfo7qvT
- A2pS9mQlC6UcxlU/eQtIT1Pw68kNptFxGRfhhsLl350O2p48m/3FjIKw+W3t6503Hr7v
- mc4ChkcDva7JXsEzF9WMW3+r+LA3QYzJDFdo93M9h24UG/uxcamY1l4Lsd6km5mxDbpc
- m5RmyzmR7N8xiY0YRaopwnITXFb+ov07xPWCciHYq0I8fJ73sUOREgu7on6iRyVcEqjD
- aEn+wA+mbygdLnUgGTZei/juXfg72A7c44iMcuJpQundIrBv8ZjiBhqdpqSytTRf2Raw
- lUTA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU07CkmAINSjeVOB9Svmf74xTNvmVUorUCoz5gsKrHw63SuPVCGdAq+RN+7KWIMwcW/FEP1R3o6eMRueVri9fcUG1YxWCI=
-X-Gm-Message-State: AOJu0YywbUNh8V+dARMHFWXjBBMi0ot7L+25KeEOST4ggFviC8QMXZBR
- JxbmW3AvH31Wq25io+TBj/hEMgh1fb5wl+GqkDRkq41lpfxBo3j4hFl+prOptbk=
-X-Google-Smtp-Source: AGHT+IGiyce0PnPC+hlyoH3fR7nN/yQ6omaEIlzuwTit4zHAN+Yc+6UkjOpqfhws8oo5DrY5cwUCaA==
-X-Received: by 2002:adf:fa8d:0:b0:33e:64f3:65a5 with SMTP id
- h13-20020adffa8d000000b0033e64f365a5mr5446420wrr.52.1710166648099; 
- Mon, 11 Mar 2024 07:17:28 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.167.228])
- by smtp.gmail.com with ESMTPSA id
- u12-20020a5d6acc000000b0033e7a499deasm4334460wrw.109.2024.03.11.07.17.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Mar 2024 07:17:27 -0700 (PDT)
-Message-ID: <91bf8d9f-1a60-4280-a44d-25b6339d11e9@linaro.org>
-Date: Mon, 11 Mar 2024 15:17:26 +0100
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
+ id 1rjggi-0000IW-LH
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 10:31:39 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
+ id 1rjggX-0001a5-Hq
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 10:31:36 -0400
+Received: from pps.filterd (m0127843.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id
+ 42BBacLl030345; Mon, 11 Mar 2024 07:30:21 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ message-id:date:subject:to:cc:references:from:in-reply-to
+ :content-type:content-transfer-encoding:mime-version; s=
+ proofpoint20171006; bh=XoTrRwdNMKz8DvUO03iwZGwc6VRsYxW4/01Ih4SA8
+ 5E=; b=SqRyixKBgipmMtSUYVUrwGBFlLldOKb0XDLhYs8EYt0c/nQDlylpexJ64
+ v57vcadhClbX1gfTbWzF4s1f3dFUQV9JkQTWf45DSHUvSGoKqW87NXXhJMatW+JW
+ Z+wQIpW0J1kyYQIh4iH3Wn3pLf7c0P3VJ4U/lkrhzROeqfqm7TUCQPNaKF0UFMRM
+ GbLiJ6rwfrrRwLdt3nV0npamEIDGEAwIB03cSsi7XoM4zrjQZoiNoFBPdWvYKeKB
+ PI1YQpTSbx3Ze93hBXH7M2ppoHuL+3Jf0cHaGbPrYR9tzgETDWV+UVHbWBBouVA2
+ P6mXhCeQE/jCb3mt8Rfe8wBRC9clQ==
+Received: from nam12-dm6-obe.outbound.protection.outlook.com
+ (mail-dm6nam12lp2169.outbound.protection.outlook.com [104.47.59.169])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 3wrprkkecf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 11 Mar 2024 07:30:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=H3jRf9NJ0nq37QUqzzrH3vHiU3Tr1K7OE1mM6G76nHIJFPRdhCOnIlcnAEMis0kPWlHm7JiwP4GdbpLdO/J7knq45ibRaVMInkuqYDMAhPKqCyNw6KKDpY5G5phBClQGi/RQFS4zVaU2YlIs5Wrgxh5HS7JdpE//fv1DT2w0j/nihXS1Y55fYNknClFq8oNAikfUHlORTsiq3z1U1zN4RLSBtLFU2UhFi7TCBdtoKSIY4jSmsFJVtkXWfcfEAAjlTZ9cfaH9j++jSYwAwkNn9grf/p/YliJ48ibqrlQjUG5d6xNnhA8DGE9f76CwGpxghvfFm8byHi0mlGa/EsQR9A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=XoTrRwdNMKz8DvUO03iwZGwc6VRsYxW4/01Ih4SA85E=;
+ b=juQ4yIXJXC1XHxQF7iwlqIHEctH04hAL8/icDccn616ARaha7Mtf6OLMCW1i3qeej1chmCKX1Jcp/Vz9iOx9BxiTMl+uaEB/q+d7JKIh4OoJzzA0GTAEwyNJStnFvUdUM6br85r9REY00Vc8OyhjCAx8Hr0+2ZQziID+8mni3/WbEuEAhNYt2YR46duNiAGQD5QaPWdDwfGMCk9ZDu40w92ItSrMLdf73VcRrX02TBnX/bNlUhvRIhqRBIRrLmhxzMPVBQVC4ABuB4G9mgaC3jaR0LyRyX2t9ilqMsM+WWIampZXK03CUf4xcz7x1ILxbNEPE+TLZY+gnUyxdWiFAw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=XoTrRwdNMKz8DvUO03iwZGwc6VRsYxW4/01Ih4SA85E=;
+ b=AsSzJ/fwFH6GsvIMAYq5E9EYqPTSjFFrZG+9g7m/xR5NsWlpzc5tshmO3uc+G0AOwVDvQ4ZCW46PZkiU3vf7Pp9sQMUKeo8x4zUUCCk1szxbobwZao2jTJyEn4GmhBMQNw2db7UAZ0jnmGNZZ7UnU0c4ZVjseRFNZV/KVYZEEPWJFToStyoNah2tkyzikOOskU9/HWVhhZ8B+7a30TxP50ENWy5FQXdp3S4knySKfGMIbdJ+gAvu8uL9eyAwQ5ZkYbLxlA/56jKyisSXrRjLktIqEFFDK21Lc9Stu9upp0K1WiITYZX1OdIuDzXYvnrJz2gCbb7tcidfsrw8oxOBwA==
+Received: from SJ2PR02MB9955.namprd02.prod.outlook.com (2603:10b6:a03:55f::16)
+ by SA2PR02MB7834.namprd02.prod.outlook.com (2603:10b6:806:14e::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.35; Mon, 11 Mar
+ 2024 14:30:15 +0000
+Received: from SJ2PR02MB9955.namprd02.prod.outlook.com
+ ([fe80::225c:2edd:87e:7cf0]) by SJ2PR02MB9955.namprd02.prod.outlook.com
+ ([fe80::225c:2edd:87e:7cf0%7]) with mapi id 15.20.7362.035; Mon, 11 Mar 2024
+ 14:30:15 +0000
+Message-ID: <a5d4b5fb-e3fa-44c9-b7fb-37c3d1ab2bb3@nutanix.com>
+Date: Mon, 11 Mar 2024 20:00:06 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] meson.build: Always require an objc compiler on macos
- hosts
+Subject: Re: Problem with migration/rdma
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20240311133334.3991537-1-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240311133334.3991537-1-peter.maydell@linaro.org>
+To: Yu Zhang <yu.zhang@ionos.com>, Peter Xu <peterx@redhat.com>,
+ "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, qemu-devel <qemu-devel@nongnu.org>
+Cc: Jinpu Wang <jinpu.wang@ionos.com>,
+ Alexei Pastuchov <alexei.pastuchov@ionos.com>,
+ Elmar Gerdes <elmar.gerdes@ionos.com>
+References: <CAHEcVy7HXSwn4Ow_Kog+Q+TN6f_kMeiCHevz1qGM-fbxBPp1hQ@mail.gmail.com>
+ <04da4267-8fe8-4653-90a2-f64e3be64037@linaro.org>
+ <a0d9e2c2-3687-4b7d-8fac-887ce262c38a@fujitsu.com> <Zek2UFoAyVrC7yh6@x1n>
+ <CAHEcVy4L_D6tuhJ8h=xLR4WaPaprJE3nnxZAEyUnoTrxQ6CF5w@mail.gmail.com>
+ <CAOQbQt0+UbfZNPrticjLD4X+S2KR4r+yWPATnhEhTRuxbwvGiQ@mail.gmail.com>
+ <CAHEcVy78iCXVGmwr-2snpFwOyCxv3wxYrYJonK6nZF9UfbX_bw@mail.gmail.com>
+ <CAHEcVy7kun92b8drEdDZndcWBBT7uvjOpHfqvVbqP0MqvJO01w@mail.gmail.com>
+From: Het Gala <het.gala@nutanix.com>
+In-Reply-To: <CAHEcVy7kun92b8drEdDZndcWBBT7uvjOpHfqvVbqP0MqvJO01w@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-ClientProxiedBy: MA0PR01CA0037.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:81::7) To SJ2PR02MB9955.namprd02.prod.outlook.com
+ (2603:10b6:a03:55f::16)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ2PR02MB9955:EE_|SA2PR02MB7834:EE_
+X-MS-Office365-Filtering-Correlation-Id: 184a6780-7b61-4fac-38a9-08dc41d7c472
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: +k6G/rVgQufPY9khrQTk6ZhWpRUCEkIkshQrv79NsLOSrTfULbuc8RDzJyQbkCJ5bVWtI2aYWVAjRoMw7qGOj9eJ7h7QvRFCEt8GXOwtxllFUUGUjHhVVRbmMWe4ZOVCZKwVX2HPFWo8XvVGtrAtlIetb9psNbO+9QTU7h0WFdQWzoX/HRkvTYMfNm9qWrGrF8AnmDTV0S2Xu2XAX4e1YdRNjogTuPK1jB/9vpxXgyrYgWM4SB6vSoKmfYs/KQNlkYjKP/Ekon+ojeS/W3WZigyLpItgP+0uyHpjZPvKxoO0VAuK/pqd5AmD4HxXNttvnONC/1uv9K1WflSXXwiG/ZYkQ/kZE14B2/f4K/21y2c+ZtK5hTSwaqQ9Sqff1MKJkI/4DdkQ3a6fX4LURCFKnXndPYj/j+cMdtP+ElYMp7SfoBObHJCJ6o0oVUP6SDdjXWI44YTS1lV6e83WBRfLU+rYyCgBromran+YoNUslDExOWRRSDJE+bOmeIEUWHerAPIFflH1kaq3tzk2ENVkj8B90c2S91bSpmkQu/mWrBS7sIAaygtjcPAbk84Pafn7byMts/efeRKtuaP1ESXBYmI5o1tqvOiOE36KvuH9Zh0=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ2PR02MB9955.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(1800799015)(376005); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MkFQUFlaNlBuYW9uOVBUZkpYNit2NmdVZVpzeXl5Nk4zS0Q5ZWJMSVRmQW1X?=
+ =?utf-8?B?THZnNjhMQUFwWHhtVWhaUEcwREtLV3BWU1d1RUx2VzhRQzdHT1RMNVh2akNT?=
+ =?utf-8?B?Z202ZTg2VSsxVE9nN3NaNDVoOC9sbkFOZDlVd3pRR2JWdlhneDVFdFFJdlR1?=
+ =?utf-8?B?QTgzRjhHVE9zMW5WUUJzbkN3RVhBMFM2T1B5K213akJTQ0tFanM2Rm9xZm8y?=
+ =?utf-8?B?cmJKcnZieEoyOHFGbGt1M2FXRVkyNzZVY2l2V1g3NTFkQTBpUjdyRkhRZGZ1?=
+ =?utf-8?B?RzZQTTllMlgvNjFwQlkySFhLcTJkWGVWd0ROektrS0lISytlU0pUUENySDUy?=
+ =?utf-8?B?RHBTaTNwQjE3UlMxbUZib2RwVXdWQUdqNE43YlBIbXJxZFMwaG9BK01ackVx?=
+ =?utf-8?B?Ly80eXo0dkZ4b082eTZJS29SWDhNVFJMZHVNWEhpMmkxK0dTcjhBQW5lUi9X?=
+ =?utf-8?B?dU5jWGxIc3BiYjlBSDN5UWZrUzFVNlhWNEh6ZXJ6V3puZFhnaS9tZ3hPNHhj?=
+ =?utf-8?B?UXFEdmJJbTRrVFRVejJZbHZvb2JFWEI4WHg3WFJvU0t2Y3d5S0ZRSWpOdnd6?=
+ =?utf-8?B?RDhnQ2RlYmNuSjVMZ2pvZWUxcTZ1bkl5QjdQM1N4K0QwWDRmc1N6dmwxQlc3?=
+ =?utf-8?B?MFdwVUhyNXYvUnA2L0RuRFdycFFLazZ1SFJRUVdKUTN0bWVZbE9oSWhDSGlS?=
+ =?utf-8?B?azBRYk55Z2hTZUhGcGhJV1FhTXZEeFp6Tk1kdGttOWppTGxZU2kxY0kvK2FC?=
+ =?utf-8?B?cmdLTlQzb3BHVXgyMUU1aHpKdGpzZldaK3RaT2VjS0JYdGRpalYwM0x1NFBn?=
+ =?utf-8?B?Tlg2eFY3ZnorOXkxbGFGNDRlT1o0WmZXenpqUk8vYmo4dWIxdGtNeHFNMjlN?=
+ =?utf-8?B?Zng1K3A3SkpXc3NMSEg3T0xFbEJDMktCc1RaZllpR0VxZWpDWFI1VEt2Smhl?=
+ =?utf-8?B?eDBZQUdkd2wyUUVka3JSOVZKYW5JQVRwakdCVlZmNUJhZFFkVnIyeEZqbFRL?=
+ =?utf-8?B?K0YrenVmdzhKei9id2VtdEE0a01hSzlrQWxjSVhjaTVPZFppK3RpYVExQzc5?=
+ =?utf-8?B?YVp5d2RoOVIyZ3hyNUFCMlVxazJJODdTUjlzbmFCZUh3OVpDRTRFejRuZ2RL?=
+ =?utf-8?B?RU5LYk81R2kvQmx4WUNKcVVJaW8vYnpYcWpvNFhHWFRqb29CdzcrTFdyaHZp?=
+ =?utf-8?B?eXdkQlZXdFl6RnBnV09Eb1IrMjNpbURLRTZnbU9VcXpTNGwrSW1kSkdsUTlD?=
+ =?utf-8?B?Zzh0NU5yNjBtd3pIS0JYU0wwekp0cmlSOEhYQzNyUmJBSzJrb0JWdURxVm9j?=
+ =?utf-8?B?SkpLUUdhV1FRQnFWbURKZk9kQ3RtU25MbjdxZlI5MlB0SVRMdDNpREhqVzU5?=
+ =?utf-8?B?K0lmczIzc3lDSTQ2Snk0RnQ5UkxCSlFSMUxObDBtbDJ2S3c3a0tIVERDZkJE?=
+ =?utf-8?B?VDk4VURpNEhGSXRuNlJpOXFVeWkwZDBqR2xWNktHa1BKcUFSYk9mZ1FsWU4r?=
+ =?utf-8?B?VmROenIrVTU5QmxKN0l2a21XcFI3bnVjWWZvOVZLU1pDWXN3SGIreWhJQkhC?=
+ =?utf-8?B?NlUvY0dGMCs4SWNocHBvZFZlWUhOb0FPWjBTMDZFb25TU0l5WlBzQzh6bFVx?=
+ =?utf-8?B?dWViZlQwVktodjZDREdJb09RM3d2VGpHcE4vL0oyUGJ3M0x5djFqUHoraWtx?=
+ =?utf-8?B?ekw3SXJoem9ONW5zaE9xeHVWc1JxSXJUc3FOSFBERmZJbUlOYWRCc3hVdTFK?=
+ =?utf-8?B?SUM3cm5MTkdDV3dwSzFqeVhUSGd2STNsWHpPMGhhZGNhSDdHbzVWZUhTOW9C?=
+ =?utf-8?B?a1BLdEpFSGF6Rk45bVZLenZPd2ZuYUMrdGFzbGNQUDgyWmNaZ1VmTklaUmpF?=
+ =?utf-8?B?R3dSTjZhdTVnUVE3UmRzR2xsVGhucVNwSTNqZkdJQjFyTVRmZUVxUEFaSDYr?=
+ =?utf-8?B?dFZldUFjMGVJWW1WRlVLamNZWFpmZFhvL1ZWdjh6VDdXaGNObWNpci9PVmVS?=
+ =?utf-8?B?MVFVbDFWWmppa2h4Slc4TUpwSmVrZ3k4RENLendCVnRzaWJuSU5oMHhSeUpB?=
+ =?utf-8?B?NzIwZzZHMUVhbE1mMnlVZFltOWo5UDNrUmVhRHB1cFE4Y1c1NzE1SnU3dXJv?=
+ =?utf-8?Q?RBSGzei8HuVWl/x67eXkzQDpN?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 184a6780-7b61-4fac-38a9-08dc41d7c472
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR02MB9955.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Mar 2024 14:30:15.2416 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: UtmQwoCMK5KY0EPtUtV0vsiD+V05Q7yXvdQB66EysXeI4+9UeQXJ+bnIYyWpe3s+DYjc19rjYZx4Auqf5vvnZg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR02MB7834
+X-Proofpoint-GUID: wqb-hftH0uuPzrFB3g09mUAEBkBSGXte
+X-Proofpoint-ORIG-GUID: wqb-hftH0uuPzrFB3g09mUAEBkBSGXte
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-11_08,2024-03-06_01,2023-05-22_02
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12; envelope-from=het.gala@nutanix.com;
+ helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,33 +177,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/3/24 14:33, Peter Maydell wrote:
-> We currently only insist that an ObjectiveC compiler is present on
-> macos hosts if we're building the Cocoa UI.  However, since then
-> we've added some other parts of QEMU which are also written in ObjC:
-> the coreaudio audio backend, and the vmnet net backend.  This means
-> that if you try to configure QEMU on macos with --disable-cocoa the
-> build will fail:
-> 
-> ../meson.build:3741:13: ERROR: No host machine compiler for 'audio/coreaudio.m'
-> 
-> Since in practice any macos host will have an ObjC compiler
-> available, rather than trying to gate the compiler detection on an
-> increasingly complicated list of every bit of QEMU that uses ObjC,
-> just require it unconditionally on macos hosts.
-> 
-> Resolves https://gitlab.com/qemu-project/qemu/-/issues/2138
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> Per the commit message, in theory we could allow a no-objc
-> build and disable coreaudio, vmnet, etc. But I didn't really see
-> a reason why that would be useful, and it's bound to keep
-> breaking unless we actively defend it in CI. So I preferred
-> to simply require ObjC on macos.
-> 
->   meson.build | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+Let me send a proper patch to qemu devel mailing list and cc all the 
+people involved.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+I have reviewed and tested the change. Have tweaked the commit message 
+accordingly.
+I hope that's okay with you Yu Zhang :)
+
+On 11/03/24 4:44 pm, Yu Zhang wrote:
+> Hello Peter and Zhijian,
+>
+> I created a MR in gitlab. You may have a look and let me know whether
+> it's fine for you.
+>      https://urldefense.proofpoint.com/v2/url?u=https-3A__gitlab.com_qemu_qemu_-2D_merge-5Frequests_4&d=DwIFaQ&c=s883GpUCOChKOHiocYtGcg&r=-qwZZzrw4EKSsq0BK7MBd3wW1WEpXmJeng3ZUT5uBCg&m=BBbf8F-Z4S5Gg9uS4sGrM2VjND752LeFYFQa4wRG27sLihZCc3Pot0NzTBxor1IK&s=1GBQqozpModsL-VR_THJwca1SMdWBo8pznn1un5RsPo&e=
+>
+> Best regards,
+> Yu Zhang @ IONOS Compute Platform
+> 11.03.2024
+>
+> On Fri, Mar 8, 2024 at 10:13 AM Yu Zhang <yu.zhang@ionos.com> wrote:
+>> Hallo Alexei,
+>>
+>> vielen Dank! Habe probiert, aber auch an Permission Problem gestoßen.
+>> Ich versuche, Google Application-specific password zu erstellen für Zukunft.
+>>
+>> QEMU Upstream bietet diese Lösung für kleinen Patch an im Notfall.
+>> Sie werden es behanden.
+>>
+>> Viele Grüße
+>> Yu
+>>
+>> On Fri, Mar 8, 2024 at 8:09 AM Alexei Pastuchov
+>> <alexei.pastuchov@ionos.com> wrote:
+>>>
+Regards,
+
+Het Gala
 
 
