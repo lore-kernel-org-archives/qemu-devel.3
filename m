@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 836E6C54E67
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79B13C5475B
 	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:28:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjWJM-0002MK-UW; Sun, 10 Mar 2024 23:26:48 -0400
+	id 1rjWHW-0005ZC-VV; Sun, 10 Mar 2024 23:24:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWJL-00028z-EH; Sun, 10 Mar 2024 23:26:47 -0400
+ id 1rjWHV-0005Yo-TL; Sun, 10 Mar 2024 23:24:53 -0400
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWJJ-0008EJ-Bg; Sun, 10 Mar 2024 23:26:47 -0400
+ id 1rjWHU-0007rZ-7b; Sun, 10 Mar 2024 23:24:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710127605; x=1741663605;
+ t=1710127492; x=1741663492;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=9ayhOJuCQ4MJTTJHMLUMPI61IaoZ8oXaXLwtDkGmbN8=;
- b=PwJ4PQBXi1NFG4TskEQ3mWzSn52z9AAjMKwI0d+vybsYwr9RKuYmu4tW
- 1BaEuC//wlmVbh3CUm7s5JRjlPwS9kVTY65esWYtT1shJZUsZlBofUib3
- biKoE8V7TDbX9gBWlE428xXPsZiN2a3iqaEiRoMfrF0YCYRmkZFX7tM+v
- 0UCacIsbua4KeuEUXwR9DRP6spsgI9WimiXmohxXoKvdO5zc0HvEdTZyU
- ekgPwXaDO3R6NEPAPMT2N3OO8tJ8FvUoPZ7s+bpRmwDmIDDAc+/T5R3q4
- PcT1vnxIAjiWLVkbTfIi99UkT4Y+1yOqt+cEwm8u+NT/Cc78Na9TKbX+R Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229835"
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229835"
+ bh=Df8TZAiYBeLcQdJvojI1ZKKv4azS1j0SO2PFl2TxogE=;
+ b=K6bM2Kz7eZsM83IaZTznFuzrnP6Mef06H7QopGDVja4iZ9ByPivy0/zA
+ oTp3Qo8PHsp/IOLlvCF5zFeKKGRDd1yfuweB3eQA/bOgmp29JmqwI/lke
+ 6aIsnRZle6pncrPKuA0txUgy5ZbIz0vlhBRL6IynpjXLrxhHxfaMjRpsE
+ vYKZaOXSrOp/uk6rSSH6kSZ9nw5RxlPU3QucGREXrd+gURUCxysSiDUwT
+ dU4AqPewHpS7MkAl2IrSxhg57G5resg2UBV4GUzK32A9cwIiL1GbSAFKh
+ FvNZ7IJDfrASaHyQq/A4gCRbsgR9zWp03M1sJIeSkyCWnG4lcTrx7ZGzn A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229589"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229589"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2024 20:25:57 -0700
+ 10 Mar 2024 20:24:50 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15594080"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15593723"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:25:55 -0700
+ by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:24:47 -0700
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, Michael Tokarev <mjt@tls.msk.ru>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v2 25/29] hw/virtio/vhost-vsock: Fix missing ERRP_GUARD() for
- error_prepend()
-Date: Mon, 11 Mar 2024 11:38:18 +0800
-Message-Id: <20240311033822.3142585-26-zhao1.liu@linux.intel.com>
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>
+Subject: [PATCH v2 03/29] block: Fix missing ERRP_GUARD() for error_prepend()
+Date: Mon, 11 Mar 2024 11:37:56 +0800
+Message-Id: <20240311033822.3142585-4-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
 References: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
@@ -100,35 +100,75 @@ ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
 can't see this additional information, because exit() happens in
 error_setg earlier than information is added [1].
 
-The vhost_vsock_device_realize() passes @errp to error_prepend(), and as
-a VirtioDeviceClass.realize method, its @errp is from
-DeviceClass.realize so that there is no guarantee that the @errp won't
-point to @error_fatal.
+In block.c, there are 4 functions passing @errp to error_prepend()
+without ERRP_GUARD():
+ - bdrv_co_create_opts_simple()
+ - parse_json_filename()
+ - bdrv_open_backing_file()
+ - bdrv_append_temp_snapshot()
 
-To avoid the issue like [1] said, add missing ERRP_GUARD() at the
-beginning of this function.
+bdrv_co_create_opts_simple(), is an implementation of
+BlockDriver.bdrv_co_create_opts(). There are too many possible callers
+to check the impact of this defect; it may or may not be harmless. Thus
+it is necessary to protect @errp with ERRP_GUARD().
+
+Though the @errp parameters passed to parse_json_filename(),
+bdrv_open_backing_file() and bdrv_append_temp_snapshot() points to their
+callers' local_err, to follow the requirement of @errp, also add missing
+ERRP_GUARD() at their beginning.
 
 [1]: Issue description in the commit message of commit ae7c80a7bd73
      ("error: New macro ERRP_GUARD()").
 
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>
+Cc: Hanna Reitz <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
 ---
- hw/virtio/vhost-vsock.c | 1 +
- 1 file changed, 1 insertion(+)
+v2:
+ * Use Markus' sentence to polish commit message. (Markus)
+ * Fix typo. (Eric)
+---
+ block.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
-index d5ca0b5a1055..3d4a5a97f484 100644
---- a/hw/virtio/vhost-vsock.c
-+++ b/hw/virtio/vhost-vsock.c
-@@ -121,6 +121,7 @@ static const VMStateDescription vmstate_virtio_vhost_vsock = {
- 
- static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+diff --git a/block.c b/block.c
+index 1ed9214f66ed..cf66c767a011 100644
+--- a/block.c
++++ b/block.c
+@@ -633,6 +633,7 @@ int coroutine_fn bdrv_co_create_opts_simple(BlockDriver *drv,
+                                             QemuOpts *opts,
+                                             Error **errp)
  {
 +    ERRP_GUARD();
-     VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VHostVSock *vsock = VHOST_VSOCK(dev);
+     BlockBackend *blk;
+     QDict *options;
+     int64_t size = 0;
+@@ -1998,6 +1999,7 @@ fail_opts:
+ 
+ static QDict *parse_json_filename(const char *filename, Error **errp)
+ {
++    ERRP_GUARD();
+     QObject *options_obj;
+     QDict *options;
+     int ret;
+@@ -3585,6 +3587,7 @@ int bdrv_set_backing_hd(BlockDriverState *bs, BlockDriverState *backing_hd,
+ int bdrv_open_backing_file(BlockDriverState *bs, QDict *parent_options,
+                            const char *bdref_key, Error **errp)
+ {
++    ERRP_GUARD();
+     char *backing_filename = NULL;
+     char *bdref_key_dot;
+     const char *reference = NULL;
+@@ -3851,6 +3854,7 @@ static BlockDriverState *bdrv_append_temp_snapshot(BlockDriverState *bs,
+                                                    QDict *snapshot_options,
+                                                    Error **errp)
+ {
++    ERRP_GUARD();
+     g_autofree char *tmp_filename = NULL;
+     int64_t total_size;
+     QemuOpts *opts = NULL;
 -- 
 2.34.1
 
