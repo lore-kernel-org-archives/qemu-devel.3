@@ -4,92 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4396C5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 15:03:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60F48C5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 15:17:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjhBG-0004WM-WB; Mon, 11 Mar 2024 11:03:11 -0400
+	id 1rjhNr-0006mD-7y; Mon, 11 Mar 2024 11:16:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1rjhB6-0004Vt-0c
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 11:03:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rjhNo-0006ls-PZ; Mon, 11 Mar 2024 11:16:09 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1rjhB4-0007xK-Bi
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 11:02:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710169376;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=P3k4Q7Tm466fEItdGrwmYPATdJiQXiuGrp52WUVmVRY=;
- b=HwAZp7SWdcfWEq7xMw5/ZwMlIltJm4dJdULGaMXC1hSyZdv8xZSHgEfo2uzvPZ7P93jYzm
- ep6vGpYRk9jISdu4gU478NMIoQHlKR5Rw0i2vJVILE7nyExGLwTLBL30jqBzWO4qpxP0tF
- rrnxceJRJtS0/vA6bXIuWbtCVmm46TY=
-Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
- [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-442-IwT7PyYHMcqg9znhkYOHrw-1; Mon, 11 Mar 2024 11:02:44 -0400
-X-MC-Unique: IwT7PyYHMcqg9znhkYOHrw-1
-Received: by mail-io1-f69.google.com with SMTP id
- ca18e2360f4ac-7c8ab56c88cso135659339f.1
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 08:02:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710169364; x=1710774164;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=P3k4Q7Tm466fEItdGrwmYPATdJiQXiuGrp52WUVmVRY=;
- b=o7BM/svzOlDDBwMXGeOcfbdZ4d8vREj9zLtJ3jgHArJpK5/JfuS3dXZy3N6HGPLFaB
- gSS6HCIEn6AuGV9HWgI0j3JE9DJzJgCtqwz1DABzpkF1xmlhslCZ+MFgRSqQe34oDbpV
- y3ow2ZXIotl1XkPEYHmgfG3X21+GeAKMh8yfEuwQsAQViAb6MNooHWv8tloKOyhC7e82
- /SuUtf+HDuv5ndhZVqPvq1GOLGfZpdV3iPrwW4cHNANNJmDqE+ervoKC7D05dwAr3rZG
- aESSeUQdHFulm00FWTuIm5j+e5Si3YPx+MuHTXllMo6zAUOAWUyONa5/Wg43DxWbBjy7
- 0W4w==
-X-Gm-Message-State: AOJu0YwS5bOnZcN4NbYhuyx2rE24Ikz9yyt6TzwGIEVe+2XlJSFQMUiU
- M4z1CErdGdVimmJPqDMFyHoZSfE1dmxQjpjhQ529Z7im0sB6FBIKF7+6G74MW7eXKFsaei3FoiW
- lV53oMe/e3mfJGQ6uIAqwPPPyFEiLAPChcs9WGyIkeV9hTm5CTDva
-X-Received: by 2002:a05:6e02:1808:b0:366:3686:5356 with SMTP id
- a8-20020a056e02180800b0036636865356mr9315833ilv.5.1710169364056; 
- Mon, 11 Mar 2024 08:02:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFinSAzKcScCZNQtVdABTq4pR7MYQjZQekD0tQNEa3ddytF0vBXhjuvG3HxHH4HlCFQNBYCKQ==
-X-Received: by 2002:a05:6e02:1808:b0:366:3686:5356 with SMTP id
- a8-20020a056e02180800b0036636865356mr9315785ilv.5.1710169363628; 
- Mon, 11 Mar 2024 08:02:43 -0700 (PDT)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- b22-20020a026f56000000b00474782f85d3sm1756018jae.94.2024.03.11.08.02.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 08:02:43 -0700 (PDT)
-Date: Mon, 11 Mar 2024 09:02:42 -0600
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Vinayak Kale <vkale@nvidia.com>
-Cc: <qemu-devel@nongnu.org>, <mst@redhat.com>, <marcel.apfelbaum@gmail.com>,
- <avihaih@nvidia.com>, <acurrid@nvidia.com>, <cjia@nvidia.com>,
- <zhiw@nvidia.com>, <targupta@nvidia.com>, <kvm@vger.kernel.org>
-Subject: Re: [PATCH v2] vfio/pci: migration: Skip config space check for
- vendor specific capability during restore/load
-Message-ID: <20240311090242.229b80ec.alex.williamson@redhat.com>
-In-Reply-To: <20240311121519.1481732-1-vkale@nvidia.com>
-References: <20240311121519.1481732-1-vkale@nvidia.com>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rjhNl-0002Sa-Em; Mon, 11 Mar 2024 11:16:08 -0400
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c08:8793:0:640:b059:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 77E5160CE1;
+ Mon, 11 Mar 2024 18:15:55 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:b4b7::1:11] (unknown
+ [2a02:6b8:b081:b4b7::1:11])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id rFnBRS1GbiE0-EzKEgFnE; Mon, 11 Mar 2024 18:15:54 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1710170154;
+ bh=PYCn/vq3YLwylrWckOV27rt8blxsCz/twJV0cNzKauc=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=1ihGbM+iJSzVSEHZtFJV1UTjgP87LNsCI3u08w4domam5gRQ+xKQiCOpuTVv6WDd0
+ FHK/taV8jobQb3w9O7h0pFPaG7RfNVPmFwv/9Fd/3UtgpolpFqhBSGN4CpzY6tz6M1
+ YTS1ceXbaPvj1nnZQPinA3PgxvsBX0UybuytF0gI=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <306d2ca4-de7d-4318-b461-a06354e3b975@yandex-team.ru>
+Date: Mon, 11 Mar 2024 18:15:53 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/10] mirror: allow switching from background to
+ active mode
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Peter Krempa <pkrempa@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, eblake@redhat.com, hreitz@redhat.com,
+ jsnow@redhat.com, den@virtuozzo.com, t.lamprecht@proxmox.com,
+ alexander.ivanov@virtuozzo.com
+References: <a5c48627-0bef-46cd-9426-587b358fe32d@yandex-team.ru>
+ <993bfa5d-1a91-4b32-9bd8-165b7abba4f0@proxmox.com>
+ <99dd287b-816b-4f4f-b156-32f94bbb62c2@yandex-team.ru>
+ <87o7gbyy8w.fsf@pond.sub.org> <ZUTffE0wfjLH2u+e@redhat.com>
+ <87cywqn84g.fsf@pond.sub.org>
+ <1310efb0-e211-46f5-b166-d7d529507a43@yandex-team.ru>
+ <ZeWnFhLKCamlP97y@redhat.com> <ZeWr3ZGrRUrciHH4@angien.pipo.sk>
+ <65f517cd-3a1b-41bd-b326-e509cb208b92@yandex-team.ru>
+ <ZerRzZj-NrDZUeAF@redhat.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <ZerRzZj-NrDZUeAF@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=alex.williamson@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,85 +87,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 11 Mar 2024 17:45:19 +0530
-Vinayak Kale <vkale@nvidia.com> wrote:
-
-> In case of migration, during restore operation, qemu checks config space of the
-> pci device with the config space in the migration stream captured during save
-> operation. In case of config space data mismatch, restore operation is failed.
+On 08.03.24 11:52, Kevin Wolf wrote:
+> Am 07.03.2024 um 20:42 hat Vladimir Sementsov-Ogievskiy geschrieben:
+>> On 04.03.24 14:09, Peter Krempa wrote:
+>>> On Mon, Mar 04, 2024 at 11:48:54 +0100, Kevin Wolf wrote:
+>>>> Am 28.02.2024 um 19:07 hat Vladimir Sementsov-Ogievskiy geschrieben:
+>>>>> On 03.11.23 18:56, Markus Armbruster wrote:
+>>>>>> Kevin Wolf<kwolf@redhat.com>  writes:
+>>>
+>>> [...]
+>>>
+>>>>>> Is the job abstraction a failure?
+>>>>>>
+>>>>>> We have
+>>>>>>
+>>>>>>        block-job- command      since   job- command    since
+>>>>>>        -----------------------------------------------------
+>>>>>>        block-job-set-speed     1.1
+>>>>>>        block-job-cancel        1.1     job-cancel      3.0
+>>>>>>        block-job-pause         1.3     job-pause       3.0
+>>>>>>        block-job-resume        1.3     job-resume      3.0
+>>>>>>        block-job-complete      1.3     job-complete    3.0
+>>>>>>        block-job-dismiss       2.12    job-dismiss     3.0
+>>>>>>        block-job-finalize      2.12    job-finalize    3.0
+>>>>>>        block-job-change        8.2
+>>>>>>        query-block-jobs        1.1     query-jobs
+>>>
+>>> [...]
+>>>
+>>>> I consider these strictly optional. We don't really have strong reasons
+>>>> to deprecate these commands (they are just thin wrappers), and I think
+>>>> libvirt still uses block-job-* in some places.
+>>>
+>>> Libvirt uses 'block-job-cancel' because it has different semantics from
+>>> 'job-cancel' which libvirt documented as the behaviour of the API that
+>>> uses it. (Semantics regarding the expectation of what is written to the
+>>> destination node at the point when the job is cancelled).
+>>>
+>>
+>> That's the following semantics:
+>>
+>>    # Note that if you issue 'block-job-cancel' after 'drive-mirror' has
+>>    # indicated (via the event BLOCK_JOB_READY) that the source and
+>>    # destination are synchronized, then the event triggered by this
+>>    # command changes to BLOCK_JOB_COMPLETED, to indicate that the
+>>    # mirroring has ended and the destination now has a point-in-time copy
+>>    # tied to the time of the cancellation.
+>>
+>> Hmm. Looking at this, it looks for me, that should probably a
+>> 'block-job-complete" command (as leading to BLOCK_JOB_COMPLETED).
 > 
-> config space check is done in function get_pci_config_device(). By default VSC
-> (vendor-specific-capability) in config space is checked.
+> Yes, it's just a different completion mode.
 > 
-> Ideally qemu should not check VSC for VFIO-PCI device during restore/load as
-> qemu is not aware of VSC ABI.
+>> Actually, what is the difference between block-job-complete and
+>> block-job-cancel(force=false) for mirror in ready state?
+>>
+>> I only see the following differencies:
+>>
+>> 1. block-job-complete documents that it completes the job
+>>     synchronously.. But looking at mirror code I see it just set
+>>     s->should_complete = true, which will be then handled
+>>     asynchronously..  So I doubt that documentation is correct.
+>>
+>> 2. block-job-complete will trigger final graph changes.
+>>     block-job-cancel will not.
+>>
+>> Is [2] really useful? Seems yes: in case of some failure before
+>> starting migration target, we'd like to continue executing source. So,
+>> no reason to break block-graph in source, better keep it unchanged.
+>>
+>> But I think, such behavior better be setup by mirror-job start
+>> parameter, rather then by special option for cancel (or even
+>> compelete) command, useful only for mirror.
+> 
+> I'm not sure, having the option on the complete command makes more sense
+> to me than having it in blockdev-mirror.
+> 
+> I do see the challenge of representing this meaningfully in QAPI,
+> though. Semantically it should be a union with job-specific options and
+> only mirror adds the graph-changes option. But the union variant
+> can't be directly selected from another option - instead we have a job
+> ID, and the variant is the job type of the job with this ID.
 
-It's disappointing that we can't seem to have a discussion about why
-it's not the responsibility of the underlying migration support in the
-vfio-pci variant driver to make the vendor specific capability
-consistent across migration.
+We already have such command: block-job-change. Which has id and type parameters, so user have to pass both, to identify the job itself and pick corresponding variant of the union type.
 
-Also, for future maintenance, specifically what device is currently
-broken by this and under what conditions?
+That would be good to somehow teach QAPI to get the type automatically from the job itself...
+
+
+Probably, best way is to utilize the new "change" command?
+
+So, to avoid final graph change, user should either set graph-change=false in blockdev-mirror, or just call job-change(graph-change=false) before job-complete?
+
+
+Still having the option for job-complete looks nicer. But right, we either have to add type parameter like in block-job-change, or add a common option, which would be irrelevant to some jobs.
 
 > 
-> This patch skips the check for VFIO-PCI device by clearing pdev->cmask[] for VSC
-> offsets. If cmask[] is not set for an offset, then qemu skips config space check
-> for that offset.
+> Practically speaking, we would probably indeed end up with an optional
+> field in the existing completion command.
 > 
-> Signed-off-by: Vinayak Kale <vkale@nvidia.com>
-> ---
-> Version History
-> v1->v2:
->     - Limited scope of change to vfio-pci devices instead of all pci devices.
+>> So, what about the following substitution for block-job-cancel:
+>>
+>> block-job-cancel(force=true)  -->  use job-cancel
+>>
+>> block-job-cancel(force=false) for backup, stream, commit  -->  use job-cancel
+>>
+>> block-job-cancel(force=false) for mirror in ready mode  -->
+>>
+>>    instead, use block-job-complete. If you don't need final graph
+>>    modification which mirror job normally does, use graph-change=false
+>>    parameter for blockdev-mirror command.
 > 
->  hw/vfio/pci.c | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
+> Apart from the open question where to put the option, agreed.
 > 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index d7fe06715c..9edaff4b37 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -2132,6 +2132,22 @@ static void vfio_check_af_flr(VFIOPCIDevice *vdev, uint8_t pos)
->      }
->  }
->  
-> +static int vfio_add_vendor_specific_cap(VFIOPCIDevice *vdev, int pos,
-> +                                        uint8_t size, Error **errp)
-> +{
-> +    PCIDevice *pdev = &vdev->pdev;
-> +
-> +    pos = pci_add_capability(pdev, PCI_CAP_ID_VNDR, pos, size, errp);
-> +    if (pos < 0) {
-> +        return pos;
-> +    }
-> +
-> +    /* Exempt config space check for VSC during restore/load  */
-> +    memset(pdev->cmask + pos, 0, size);
+>> (I can hardly remember, that we've already discussed something like
+>> this long time ago, but I don't remember the results)
+> 
+> I think everyone agreed that this is how things should be, and nobody
+> did anything to achieve it.
+> 
+>> I also a bit unsure about active commit soft-cancelling semantics. Is
+>> it actually useful? If yes, block-commit command will need similar
+>> option.
+> 
+> Hm... That would commit everything down to the lower layer and then keep
+> the old overlays still around?
+> 
+> I could see a limited use case for committing into the immediate backing
+> file and then keep using the overlay to accumulate new changes (would be
+> more useful if we discarded the old content). Once you have intermediate
+> backing files, I don't think it makes any sense any more.
+> 
+> Kevin
+> 
 
-This excludes the entire capability from comparison, including the
-capability ID, next pointer, and capability length.  Even if the
-contents of the capability are considered volatile vendor information,
-the header is spec defined ABI which must be consistent.  Thanks,
-
-Alex
-
-> +
-> +    return pos;
-> +}
-> +
->  static int vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
->  {
->      PCIDevice *pdev = &vdev->pdev;
-> @@ -2199,6 +2215,9 @@ static int vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
->          vfio_check_af_flr(vdev, pos);
->          ret = pci_add_capability(pdev, cap_id, pos, size, errp);
->          break;
-> +    case PCI_CAP_ID_VNDR:
-> +        ret = vfio_add_vendor_specific_cap(vdev, pos, size, errp);
-> +        break;
->      default:
->          ret = pci_add_capability(pdev, cap_id, pos, size, errp);
->          break;
+-- 
+Best regards,
+Vladimir
 
 
