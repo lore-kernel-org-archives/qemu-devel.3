@@ -4,74 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60F48C5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 15:17:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED854C5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 15:17:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjhNr-0006mD-7y; Mon, 11 Mar 2024 11:16:11 -0400
+	id 1rjhOm-0007IQ-T2; Mon, 11 Mar 2024 11:17:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rjhNo-0006ls-PZ; Mon, 11 Mar 2024 11:16:09 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rjhNl-0002Sa-Em; Mon, 11 Mar 2024 11:16:08 -0400
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c08:8793:0:640:b059:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 77E5160CE1;
- Mon, 11 Mar 2024 18:15:55 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:b4b7::1:11] (unknown
- [2a02:6b8:b081:b4b7::1:11])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id rFnBRS1GbiE0-EzKEgFnE; Mon, 11 Mar 2024 18:15:54 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1710170154;
- bh=PYCn/vq3YLwylrWckOV27rt8blxsCz/twJV0cNzKauc=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=1ihGbM+iJSzVSEHZtFJV1UTjgP87LNsCI3u08w4domam5gRQ+xKQiCOpuTVv6WDd0
- FHK/taV8jobQb3w9O7h0pFPaG7RfNVPmFwv/9Fd/3UtgpolpFqhBSGN4CpzY6tz6M1
- YTS1ceXbaPvj1nnZQPinA3PgxvsBX0UybuytF0gI=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <306d2ca4-de7d-4318-b461-a06354e3b975@yandex-team.ru>
-Date: Mon, 11 Mar 2024 18:15:53 +0300
+ (Exim 4.90_1) (envelope-from <yu.zhang@ionos.com>)
+ id 1rjhOb-0007Bj-Fc
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 11:16:58 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yu.zhang@ionos.com>)
+ id 1rjhON-0002WL-GJ
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 11:16:56 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-a460185d1a7so261849466b.0
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 08:16:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ionos.com; s=google; t=1710170200; x=1710775000; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=i/DJJRBIU158DTlaQwv1AqQAnPuatDTe4xV2ENqB9VM=;
+ b=JrNCp1YIyoy8F9jVgKCUcLJZnG4r+aXR7qWXVqckS5aZzmfGHcZvBH24+03nFlcIIZ
+ cjWw/aQ6l1Ns/Tl88REG1fvpjPtq0Y9mjPquIX6lA9fkpQ6Wo3eBSDTmTSltzv0vud9T
+ 8epV83dSWgOubr+vtOb4XYCUBMpS32+3LuKzC1kPXwvpixcznhNwk5k5Bf9FmvnjVgsE
+ kYXYo1ibwxSFYS/9a6ewY4M6tVP0A4IbODQiSTxy9pG7uRAfph1ZxAFQLCK4Ga1YIV8n
+ KIP3UKR5J5DJVYjA3kFDj2aNiLzdN5bDdu+h5FdtlaEZ6PBPOjSYteAxYWJhdsNk36If
+ KDCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710170200; x=1710775000;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=i/DJJRBIU158DTlaQwv1AqQAnPuatDTe4xV2ENqB9VM=;
+ b=iTb/PNlXQqC9kMa6qeOaTl9TwQVUpvHi0Wiq236+h54L4TPCO5Ub+8NKXuQ4jKDvIS
+ eE7uDgBg5005VxzmBBEqf5+z9mThJ983Ol4RTdNYjGTZhscKrbzToDeqoTfXfrVxKkxO
+ 7YR/MYuRAEWgmZNVC/HlTcZ5PEGGvDSLfFlpcGVi2SQAHxnz0U5vml46wc3OkpqQZOJj
+ o5NdT/fp0UvQ4bQ1B65vHnEHV29NfUjd75UUaV5xDNV9d5bccZFn2Ce+yNpiO/31OrOb
+ BzSb3STTDhzeRsH0stCqbQ0IjG+P4EiJqGudtvkMU3ZxCsrVNbQfS7CDu+I25G9bnGVl
+ IPng==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVo6/Kkpc3JWyIassItZGKepvMVyXY8V3rFB9ZGHWKa73tr8mqOs7lIsGB2FTsWOmsHWGLT6f9oKQPouyAHaBHj3gJIEWI=
+X-Gm-Message-State: AOJu0YwtMTMXwASZxAVaWOqjDgPImCS4i6/vsAs3shrEkiETcwh9EDEf
+ 21uZ0Ki/uh6tzpMepJRS9LNmZGYg0Kr/Ai0R/eN6XQngsnKyQtrzs/uHxcizVbzeGUkhWACU2dL
+ JP+wAmVSARB69Z4kxbaUOw3TkRfbwIs6XZ8/dOg==
+X-Google-Smtp-Source: AGHT+IESazEy5+/gDByjCjlGUhZbaPzDsuU4qRRHAJQ/SBzM7yy7NFSXvftXINlPT0KdlPOVfTJhpCnOIWaAEnBu8MU=
+X-Received: by 2002:a17:907:c001:b0:a46:17d6:c094 with SMTP id
+ ss1-20020a170907c00100b00a4617d6c094mr3592611ejc.4.1710170200361; Mon, 11 Mar
+ 2024 08:16:40 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/10] mirror: allow switching from background to
- active mode
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: Peter Krempa <pkrempa@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, eblake@redhat.com, hreitz@redhat.com,
- jsnow@redhat.com, den@virtuozzo.com, t.lamprecht@proxmox.com,
- alexander.ivanov@virtuozzo.com
-References: <a5c48627-0bef-46cd-9426-587b358fe32d@yandex-team.ru>
- <993bfa5d-1a91-4b32-9bd8-165b7abba4f0@proxmox.com>
- <99dd287b-816b-4f4f-b156-32f94bbb62c2@yandex-team.ru>
- <87o7gbyy8w.fsf@pond.sub.org> <ZUTffE0wfjLH2u+e@redhat.com>
- <87cywqn84g.fsf@pond.sub.org>
- <1310efb0-e211-46f5-b166-d7d529507a43@yandex-team.ru>
- <ZeWnFhLKCamlP97y@redhat.com> <ZeWr3ZGrRUrciHH4@angien.pipo.sk>
- <65f517cd-3a1b-41bd-b326-e509cb208b92@yandex-team.ru>
- <ZerRzZj-NrDZUeAF@redhat.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <ZerRzZj-NrDZUeAF@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+References: <CAHEcVy7HXSwn4Ow_Kog+Q+TN6f_kMeiCHevz1qGM-fbxBPp1hQ@mail.gmail.com>
+ <04da4267-8fe8-4653-90a2-f64e3be64037@linaro.org>
+ <a0d9e2c2-3687-4b7d-8fac-887ce262c38a@fujitsu.com>
+ <Zek2UFoAyVrC7yh6@x1n>
+ <CAHEcVy4L_D6tuhJ8h=xLR4WaPaprJE3nnxZAEyUnoTrxQ6CF5w@mail.gmail.com>
+ <CAOQbQt0+UbfZNPrticjLD4X+S2KR4r+yWPATnhEhTRuxbwvGiQ@mail.gmail.com>
+ <CAHEcVy78iCXVGmwr-2snpFwOyCxv3wxYrYJonK6nZF9UfbX_bw@mail.gmail.com>
+ <CAHEcVy7kun92b8drEdDZndcWBBT7uvjOpHfqvVbqP0MqvJO01w@mail.gmail.com>
+ <a5d4b5fb-e3fa-44c9-b7fb-37c3d1ab2bb3@nutanix.com> <Ze8ZOnWad7_otUX-@x1n>
+ <9731d9fc-9d0d-4358-8286-e8ddb21f44f7@nutanix.com>
+In-Reply-To: <9731d9fc-9d0d-4358-8286-e8ddb21f44f7@nutanix.com>
+From: Yu Zhang <yu.zhang@ionos.com>
+Date: Mon, 11 Mar 2024 16:16:29 +0100
+Message-ID: <CAHEcVy6xyL9EBT-nK1Jc5=Cx7F9XBMj6JLMxZKj-he9qRyCc+Q@mail.gmail.com>
+Subject: Re: Problem with migration/rdma
+To: Het Gala <het.gala@nutanix.com>, Peter Xu <peterx@redhat.com>, 
+ "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>, Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel <qemu-devel@nongnu.org>
+Cc: Jinpu Wang <jinpu.wang@ionos.com>,
+ Alexei Pastuchov <alexei.pastuchov@ionos.com>, 
+ Elmar Gerdes <elmar.gerdes@ionos.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: permerror client-ip=2a00:1450:4864:20::634;
+ envelope-from=yu.zhang@ionos.com; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,141 +105,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08.03.24 11:52, Kevin Wolf wrote:
-> Am 07.03.2024 um 20:42 hat Vladimir Sementsov-Ogievskiy geschrieben:
->> On 04.03.24 14:09, Peter Krempa wrote:
->>> On Mon, Mar 04, 2024 at 11:48:54 +0100, Kevin Wolf wrote:
->>>> Am 28.02.2024 um 19:07 hat Vladimir Sementsov-Ogievskiy geschrieben:
->>>>> On 03.11.23 18:56, Markus Armbruster wrote:
->>>>>> Kevin Wolf<kwolf@redhat.com>  writes:
->>>
->>> [...]
->>>
->>>>>> Is the job abstraction a failure?
->>>>>>
->>>>>> We have
->>>>>>
->>>>>>        block-job- command      since   job- command    since
->>>>>>        -----------------------------------------------------
->>>>>>        block-job-set-speed     1.1
->>>>>>        block-job-cancel        1.1     job-cancel      3.0
->>>>>>        block-job-pause         1.3     job-pause       3.0
->>>>>>        block-job-resume        1.3     job-resume      3.0
->>>>>>        block-job-complete      1.3     job-complete    3.0
->>>>>>        block-job-dismiss       2.12    job-dismiss     3.0
->>>>>>        block-job-finalize      2.12    job-finalize    3.0
->>>>>>        block-job-change        8.2
->>>>>>        query-block-jobs        1.1     query-jobs
->>>
->>> [...]
->>>
->>>> I consider these strictly optional. We don't really have strong reasons
->>>> to deprecate these commands (they are just thin wrappers), and I think
->>>> libvirt still uses block-job-* in some places.
->>>
->>> Libvirt uses 'block-job-cancel' because it has different semantics from
->>> 'job-cancel' which libvirt documented as the behaviour of the API that
->>> uses it. (Semantics regarding the expectation of what is written to the
->>> destination node at the point when the job is cancelled).
->>>
->>
->> That's the following semantics:
->>
->>    # Note that if you issue 'block-job-cancel' after 'drive-mirror' has
->>    # indicated (via the event BLOCK_JOB_READY) that the source and
->>    # destination are synchronized, then the event triggered by this
->>    # command changes to BLOCK_JOB_COMPLETED, to indicate that the
->>    # mirroring has ended and the destination now has a point-in-time copy
->>    # tied to the time of the cancellation.
->>
->> Hmm. Looking at this, it looks for me, that should probably a
->> 'block-job-complete" command (as leading to BLOCK_JOB_COMPLETED).
-> 
-> Yes, it's just a different completion mode.
-> 
->> Actually, what is the difference between block-job-complete and
->> block-job-cancel(force=false) for mirror in ready state?
->>
->> I only see the following differencies:
->>
->> 1. block-job-complete documents that it completes the job
->>     synchronously.. But looking at mirror code I see it just set
->>     s->should_complete = true, which will be then handled
->>     asynchronously..  So I doubt that documentation is correct.
->>
->> 2. block-job-complete will trigger final graph changes.
->>     block-job-cancel will not.
->>
->> Is [2] really useful? Seems yes: in case of some failure before
->> starting migration target, we'd like to continue executing source. So,
->> no reason to break block-graph in source, better keep it unchanged.
->>
->> But I think, such behavior better be setup by mirror-job start
->> parameter, rather then by special option for cancel (or even
->> compelete) command, useful only for mirror.
-> 
-> I'm not sure, having the option on the complete command makes more sense
-> to me than having it in blockdev-mirror.
-> 
-> I do see the challenge of representing this meaningfully in QAPI,
-> though. Semantically it should be a union with job-specific options and
-> only mirror adds the graph-changes option. But the union variant
-> can't be directly selected from another option - instead we have a job
-> ID, and the variant is the job type of the job with this ID.
+>> I have reviewed and tested the change. Have tweaked the commit message
+>> accordingly.
+>> I hope that's okay with you Yu Zhang :)
+it's okay for me. As it's a tiny fix, you may modify or include it in
+your own commits.
 
-We already have such command: block-job-change. Which has id and type parameters, so user have to pass both, to identify the job itself and pick corresponding variant of the union type.
-
-That would be good to somehow teach QAPI to get the type automatically from the job itself...
-
-
-Probably, best way is to utilize the new "change" command?
-
-So, to avoid final graph change, user should either set graph-change=false in blockdev-mirror, or just call job-change(graph-change=false) before job-complete?
-
-
-Still having the option for job-complete looks nicer. But right, we either have to add type parameter like in block-job-change, or add a common option, which would be irrelevant to some jobs.
-
-> 
-> Practically speaking, we would probably indeed end up with an optional
-> field in the existing completion command.
-> 
->> So, what about the following substitution for block-job-cancel:
->>
->> block-job-cancel(force=true)  -->  use job-cancel
->>
->> block-job-cancel(force=false) for backup, stream, commit  -->  use job-cancel
->>
->> block-job-cancel(force=false) for mirror in ready mode  -->
->>
->>    instead, use block-job-complete. If you don't need final graph
->>    modification which mirror job normally does, use graph-change=false
->>    parameter for blockdev-mirror command.
-> 
-> Apart from the open question where to put the option, agreed.
-> 
->> (I can hardly remember, that we've already discussed something like
->> this long time ago, but I don't remember the results)
-> 
-> I think everyone agreed that this is how things should be, and nobody
-> did anything to achieve it.
-> 
->> I also a bit unsure about active commit soft-cancelling semantics. Is
->> it actually useful? If yes, block-commit command will need similar
->> option.
-> 
-> Hm... That would commit everything down to the lower layer and then keep
-> the old overlays still around?
-> 
-> I could see a limited use case for committing into the immediate backing
-> file and then keep using the overlay to accumulate new changes (would be
-> more useful if we discarded the old content). Once you have intermediate
-> backing files, I don't think it makes any sense any more.
-> 
-> Kevin
-> 
-
--- 
 Best regards,
-Vladimir
+Yu Zhang
+11.03.2024
 
+On Mon, Mar 11, 2024 at 3:57=E2=80=AFPM Het Gala <het.gala@nutanix.com> wro=
+te:
+>
+>
+> On 11/03/24 8:16 pm, Peter Xu wrote:
+> > On Mon, Mar 11, 2024 at 08:00:06PM +0530, Het Gala wrote:
+> >> Let me send a proper patch to qemu devel mailing list and cc all the p=
+eople
+> >> involved.
+> >>
+> >> I have reviewed and tested the change. Have tweaked the commit message
+> >> accordingly.
+> >> I hope that's okay with you Yu Zhang :)
+> > Het - don't worry, I've had it in my queue.  Thanks,
+> Okay. Thanks
+> >
+> > =3D=3D=3D=3D=3D
+> >  From 694451b89b21b3b67c404cbcfa2b84e3afae0c5d Mon Sep 17 00:00:00 2001
+> > From: Yu Zhang <yu.zhang@ionos.com>
+> > Date: Wed, 6 Mar 2024 09:06:54 +0100
+> > Subject: [PATCH] migration/rdma: Fix a memory issue for migration
+> >
+> > In commit 3fa9642ff7 change was made to convert the RDMA backend to
+> > accept MigrateAddress struct. However, the assignment of "host" leads
+> > to data corruption on the target host and the failure of migration.
+> >
+> >      isock->host =3D rdma->host;
+>
+> Regards,
+>
+> Het Gala
+>
 
