@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CA6AC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 18:54:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1BE1C5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 18:54:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjklA-00053E-Mn; Mon, 11 Mar 2024 14:52:28 -0400
+	id 1rjklE-000569-2j; Mon, 11 Mar 2024 14:52:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rjkl0-0004uI-U7; Mon, 11 Mar 2024 14:52:20 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1rjkl8-00050W-Ee; Mon, 11 Mar 2024 14:52:26 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rjkkx-0004yd-47; Mon, 11 Mar 2024 14:52:17 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1d944e8f367so36504795ad.0; 
- Mon, 11 Mar 2024 11:52:12 -0700 (PDT)
+ id 1rjkl6-0004zB-T0; Mon, 11 Mar 2024 14:52:26 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1dc13fb0133so22956155ad.3; 
+ Mon, 11 Mar 2024 11:52:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710183131; x=1710787931; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1710183142; x=1710787942; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nmMv63TVrq95FfXDjo4ojFa+1yY/QOY9ONxqne1eyHA=;
- b=fdI3vaP/plDDlRnE8Gjbc0VXjoTzFOftN3FETrEA2G7crI3+tlD/SgsY+lEundBkar
- 5MWjBLvOCsUf0WBjcDxVDImpuWbAaw/T+Zj9t9bM52osnn19Ap7xC4BeG2KmkeoAYEya
- izjnXl6UR/DfHmRJbowhuA/VmeD4z3GHQH3+jbrZnwhUI3CsZOga+GLRuWwlwiTKCSBc
- 9AM2ZVjaFGrdCmyUOSdmLrAadqAXpXAG7fYd72v0QGFzDVO7v8Pjt1YDbTxR/OKZQolY
- tvKiEOnySiEivU6g0DaQEwbDPTYipqyfDCsGwsfK/2wjtDox3fm/BeuUE3CaVRjHclnd
- CdTw==
+ bh=sjddpjQMRodyz1bme4Hz/UgueNOKq2MtYowaHWD7sjM=;
+ b=EvKuwDrM5pnjMbv6JD2s/w+PAPZWJLncgklGi/m4igP8SmnDd99vw39MZI9Vm/YjHX
+ DkCC77wZRFDhlVPVy9u3V+idI5Qilx5FFGc8oWxwks4IxbFLk1yG7i13ufSw64ERU7r0
+ 0puq1qJRgZsfoKNExcbVDSPfSc7WGfjjLN1UMY0c2pVF8da/ZnT7dY8i5bIdizyaKcVG
+ VsX6DQJskXLoechSZnTtQEsW3SYARIF7Wh7CRqMw3UbeqUQi2lTVl+uVeSCMhM68tnqc
+ vuY2HUu4XwssxtaN4kbmtDf/UZXB2eKImMzHkkRVcvpxpIsIFCA5Qc2MGVSHXJ5WEgxt
+ E1gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710183131; x=1710787931;
+ d=1e100.net; s=20230601; t=1710183142; x=1710787942;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nmMv63TVrq95FfXDjo4ojFa+1yY/QOY9ONxqne1eyHA=;
- b=m1aEfzUepgmMoQDzoh+bvv1SmlYRnPAYkn++HtDOTFdJfXI37nHeogMVhofp+zuyDc
- u7d1PNOkfR4GUfBA0+PkbJZtVo3jKXN6op6uBOLo2GxC6LiwdySqT9R7lZYHCUhQdaGo
- 7BvDnim7up7/fl4J52iaTaON8eiGuhNSeF2gsuhdHN/D4hgcr57132yBRqu1I7SU3jbf
- dPYTR3iwnr89qCUd7Pmw957EYFfS3inj7o1hj12dK4UpT1PDGaVR4FeeXwBkZqLf/qaY
- mnqfs8IZSvfgG/J5eqJZgHLNhaRlPjw6nDaxi1otH+EIO5AtV2en50RXe/D8r3RxEWZb
- SuIA==
+ bh=sjddpjQMRodyz1bme4Hz/UgueNOKq2MtYowaHWD7sjM=;
+ b=KIPqjIl6pBq3IXhmZn2bqdsBo0szARvVxoYCqTY52zqcMUQzchKx6T2zrzhDdXSqZV
+ idjNsY00yOczw6Li0UsIx6ECS+yU2xycjgByOwL4cC/dX1pECNei0zNa9j52uTb7eX3w
+ 91Rqny1Ts7hURsFm9NNdkOgvNS3jLDuYe1RlUkcgWOj30x9Jp/Xd40yLucuKeVV0oIDW
+ sKlcdWm18XLf1ZU/TPJ/koFZfPluMuWcNpAsB4baQrlYGwqoJuhK870oWWHe/MdBqmne
+ iizszJxs8l13osjvTiGOKe2TEafL1qutn4CrJAgBunayfzYhZwHKDfzn+oBAhHwzvd3n
+ ZrHQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWclKD2+kOyawohi2H/kqJFf7rLpOad8UnDK89rfU+WVrdoaBYYLFrR+pfKQ4D0nNxnuRmmQixkRPNDv18uMba9jLgr+UQ=
-X-Gm-Message-State: AOJu0YzFNwcHwaSiRp2vayx7mwmNhrJJWJIliaQSTl72K2KJbW8YDtZS
- sIdZ+ipZ9yEQw0ZEgZ2jGidJtA62mD0PzzJEUMHei66sXb0j/HGJqzj9IqvKn/Q=
-X-Google-Smtp-Source: AGHT+IGVzfZQSd6isgkbpEak6b0ZOrB50Pe8S/Ykk/DUzIRfv2pPU3JYpuGVtaTGZTazDgEkGOCszw==
-X-Received: by 2002:a17:903:1209:b0:1dc:af70:9f78 with SMTP id
- l9-20020a170903120900b001dcaf709f78mr6227729plh.46.1710183131455; 
- Mon, 11 Mar 2024 11:52:11 -0700 (PDT)
+ AJvYcCXb6WbFmMMkhxlufeygdx/Gxq+PrwSllth/Hgdi5fyMYkqh6yX2DcyUbMDiy+7urPEDw+nH2GWBr7UKWh/XHRgtWVFJIK4=
+X-Gm-Message-State: AOJu0YzJmUsojuA9mwUeJqADuyVk2MsWQ+7e4V0PYX4JmAzxrmXlYWsl
+ ikjhjB+Yqrml/0Vae2YvbA9pH81kaZ/SfQxIp9xjzSYYqJIT/qkiixnZSFoiJY4=
+X-Google-Smtp-Source: AGHT+IFVBWjV6DiWYepNhx7IKIeHV4GNP70xnPzt96shPQpfBzLSygfQs8aYSZoIFxk6oP76jrjHgA==
+X-Received: by 2002:a17:902:ea01:b0:1db:55cc:d226 with SMTP id
+ s1-20020a170902ea0100b001db55ccd226mr7000362plg.66.1710183141958; 
+ Mon, 11 Mar 2024 11:52:21 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- z2-20020a170903018200b001dd7d00f7afsm4843887plg.18.2024.03.11.11.52.08
+ z2-20020a170903018200b001dd7d00f7afsm4843887plg.18.2024.03.11.11.52.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 11:52:11 -0700 (PDT)
+ Mon, 11 Mar 2024 11:52:21 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  David Gibson <david@gibson.dropbear.id.au>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PATCH 01/13] ppc: Drop support for POWER9 and POWER10 DD1 chips
-Date: Tue, 12 Mar 2024 04:51:43 +1000
-Message-ID: <20240311185200.2185753-2-npiggin@gmail.com>
+Subject: [PATCH 04/13] ppc/spapr: Remove copy-paste from pa-features
+Date: Tue, 12 Mar 2024 04:51:46 +1000
+Message-ID: <20240311185200.2185753-5-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240311185200.2185753-1-npiggin@gmail.com>
 References: <20240311185200.2185753-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,98 +96,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The POWER9 DD1 and POWER10 DD1 chips are not public and are no longer of
-any use in QEMU. Remove them.
+TCG does not support copy/paste instructions. Remove it from
+ibm,pa-features. This has never been implemented under TCG or
+practically usable under KVM, so it won't be missed.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/spapr_cpu_core.c |  2 --
- target/ppc/cpu-models.c |  4 ----
- target/ppc/cpu_init.c   |  7 ++-----
- target/ppc/kvm.c        | 11 -----------
- 4 files changed, 2 insertions(+), 22 deletions(-)
+ hw/ppc/spapr.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
-index 40b7c52f7f..50523ead25 100644
---- a/hw/ppc/spapr_cpu_core.c
-+++ b/hw/ppc/spapr_cpu_core.c
-@@ -394,10 +394,8 @@ static const TypeInfo spapr_cpu_core_type_infos[] = {
-     DEFINE_SPAPR_CPU_CORE_TYPE("power8_v2.0"),
-     DEFINE_SPAPR_CPU_CORE_TYPE("power8e_v2.1"),
-     DEFINE_SPAPR_CPU_CORE_TYPE("power8nvl_v1.0"),
--    DEFINE_SPAPR_CPU_CORE_TYPE("power9_v1.0"),
-     DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.0"),
-     DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.2"),
--    DEFINE_SPAPR_CPU_CORE_TYPE("power10_v1.0"),
-     DEFINE_SPAPR_CPU_CORE_TYPE("power10_v2.0"),
- #ifdef CONFIG_KVM
-     DEFINE_SPAPR_CPU_CORE_TYPE("host"),
-diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
-index 36e465b390..f2301b43f7 100644
---- a/target/ppc/cpu-models.c
-+++ b/target/ppc/cpu-models.c
-@@ -728,14 +728,10 @@
-                 "POWER8 v2.0")
-     POWERPC_DEF("power8nvl_v1.0", CPU_POWERPC_POWER8NVL_v10,         POWER8,
-                 "POWER8NVL v1.0")
--    POWERPC_DEF("power9_v1.0",   CPU_POWERPC_POWER9_DD1,             POWER9,
--                "POWER9 v1.0")
-     POWERPC_DEF("power9_v2.0",   CPU_POWERPC_POWER9_DD20,            POWER9,
-                 "POWER9 v2.0")
-     POWERPC_DEF("power9_v2.2",   CPU_POWERPC_POWER9_DD22,            POWER9,
-                 "POWER9 v2.2")
--    POWERPC_DEF("power10_v1.0",  CPU_POWERPC_POWER10_DD1,            POWER10,
--                "POWER10 v1.0")
-     POWERPC_DEF("power10_v2.0",  CPU_POWERPC_POWER10_DD20,           POWER10,
-                 "POWER10 v2.0")
- #endif /* defined (TARGET_PPC64) */
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 1d3d1db7c3..572cbdf25f 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -6350,10 +6350,7 @@ static bool ppc_pvr_match_power9(PowerPCCPUClass *pcc, uint32_t pvr, bool best)
-         return false;
-     }
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 5099f12cc6..7d7da30f60 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -254,8 +254,8 @@ static void spapr_dt_pa_features(SpaprMachineState *spapr,
+         0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 24 - 29 */
+         /* 30: MMR, 32: LE atomic, 34: EBB + ext EBB */
+         0x80, 0x00, 0x80, 0x00, 0xC0, 0x00, /* 30 - 35 */
+-        /* 36: SPR SO, 38: Copy/Paste, 40: Radix MMU */
+-        0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 36 - 41 */
++        /* 36: SPR SO, 40: Radix MMU */
++        0x80, 0x00, 0x00, 0x00, 0x80, 0x00, /* 36 - 41 */
+         /* 42: PM, 44: PC RA, 46: SC vec'd */
+         0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 42 - 47 */
+         /* 48: SIMD, 50: QP BFP, 52: String */
+@@ -288,6 +288,10 @@ static void spapr_dt_pa_features(SpaprMachineState *spapr,
+      * SSO (SAO) ordering is supported on KVM and thread=single hosts,
+      * but not MTTCG, so disable it. To advertise it, a cap would have
+      * to be added, or support implemented for MTTCG.
++     *
++     * Copy/paste is not supported by TCG, so it is not advertised. KVM
++     * can execute them but it has no accelerator drivers which are usable,
++     * so there isn't much need for it anyway.
+      */
  
--    if ((pvr & 0x0f00) == 0x100) {
--        /* DD1.x always matches power9_v1.0 */
--        return true;
--    } else if ((pvr & 0x0f00) == 0x200) {
-+    if ((pvr & 0x0f00) == 0x200) {
-         if ((pvr & 0xf) < 2) {
-             /* DD2.0, DD2.1 match power9_v2.0 */
-             if ((pcc->pvr & 0xf) == 0) {
-@@ -6536,7 +6533,7 @@ static bool ppc_pvr_match_power10(PowerPCCPUClass *pcc, uint32_t pvr, bool best)
-     }
- 
-     if ((pvr & 0x0f00) == (pcc->pvr & 0x0f00)) {
--        /* Major DD version matches to power10_v1.0 and power10_v2.0 */
-+        /* Major DD version matches power10_v2.0 */
-         return true;
-     }
- 
-diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-index bcf30a5400..525fbe3892 100644
---- a/target/ppc/kvm.c
-+++ b/target/ppc/kvm.c
-@@ -2369,17 +2369,6 @@ static void kvmppc_host_cpu_class_init(ObjectClass *oc, void *data)
- 
- #if defined(TARGET_PPC64)
-     pcc->radix_page_info = kvmppc_get_radix_page_info();
--
--    if ((pcc->pvr & 0xffffff00) == CPU_POWERPC_POWER9_DD1) {
--        /*
--         * POWER9 DD1 has some bugs which make it not really ISA 3.00
--         * compliant.  More importantly, advertising ISA 3.00
--         * architected mode may prevent guests from activating
--         * necessary DD1 workarounds.
--         */
--        pcc->pcr_supported &= ~(PCR_COMPAT_3_00 | PCR_COMPAT_2_07
--                                | PCR_COMPAT_2_06 | PCR_COMPAT_2_05);
--    }
- #endif /* defined(TARGET_PPC64) */
- }
- 
+     if (ppc_hash64_has(cpu, PPC_HASH64_CI_LARGEPAGE)) {
 -- 
 2.42.0
 
