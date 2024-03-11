@@ -4,53 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9DD3C5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:26:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 192CAC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:27:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjWIc-0006mo-8x; Sun, 10 Mar 2024 23:26:02 -0400
+	id 1rjWIc-0006qI-Om; Sun, 10 Mar 2024 23:26:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWIU-0006M5-RL; Sun, 10 Mar 2024 23:25:55 -0400
+ id 1rjWIV-0006Nk-Q9; Sun, 10 Mar 2024 23:25:56 -0400
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWIS-00084P-1V; Sun, 10 Mar 2024 23:25:54 -0400
+ id 1rjWIU-0008EJ-18; Sun, 10 Mar 2024 23:25:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710127552; x=1741663552;
+ t=1710127554; x=1741663554;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=+OGEjCDgDWgrBkE40f0La/lOl+AzgU5g8D4hjhE/uhg=;
- b=anylCoxq+7KSOofTGG8ZbvhE7yosnErIHidsxF72bmWZBIMAnkI83doL
- Ww46AD3cNV6Am1DJ6UxBIsPrtwmWjJDkJLQAUgo+4KXQ4DScF9m35ZpZU
- xlpOuip/UwlNZ1GCjA5ShW5KZthUZeP/tuqyqgEWnWiZ4sYrABd1176nl
- Nwrdq6pqEefvgxLEFFIusgCIOIyVYe87Mrwep2MU7W9Jw26xgYwpvX/qq
- i79B6Yl4MTMqLf2ckRvMU8/Vi0OGn0X/lS45ZpKN35jaa7vPV3hV62Nmy
- Cuq2GnfNiczgNUAEos5BCL9/AmZ0CkSDTEAGXANVWzX7W+mQld3KxaIDV w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229737"
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229737"
+ bh=Vhjy1DpbGaIvfiMMR/WA6udExEgCFb+nLNgH2lQLdrI=;
+ b=dtZYsyCvDkt/CYvo7HWzYUkngUEh3Ia/SND6eu66Fw0Xe08XNAeMPrdV
+ YhRn/eFoULpYhwWSh/aFbqv+xMSHTsTl1qmj00rPUjb2RDSM05fr92EwI
+ z9Jd7lA+hinGGcp+ifX2kZiCZv9KOkgoQgg47udZbn3Abkn84yBjXER6O
+ Qu4nQUycRgskoHmZTPZ2MEUaaUw0WKSOrx+zrnqrLanhZ4nuPWfka911c
+ RCc1+XlYL5BujwQcT2S/pvbEM4iss+kZkrN03t/QnXdFzPsB9yIput7rX
+ rMqh6MyMbVbyShfitqh0QiSzlKynGF/DcvvLK90moTY6/oWhKWpnMvo4D Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229726"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229726"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2024 20:25:34 -0700
+ 10 Mar 2024 20:25:31 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15593972"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15593950"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:25:32 -0700
+ by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:25:29 -0700
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, Michael Tokarev <mjt@tls.msk.ru>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v2 17/29] hw/scsi/vhost-scsi: Fix missing ERRP_GUARD() for
+ Juan Quintela <quintela@trasno.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Michael Galaxy <mgalaxy@akamai.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH v2 16/29] hw/misc/ivshmem: Fix missing ERRP_GUARD() for
  error_prepend()
-Date: Mon, 11 Mar 2024 11:38:10 +0800
-Message-Id: <20240311033822.3142585-18-zhao1.liu@linux.intel.com>
+Date: Mon, 11 Mar 2024 11:38:09 +0800
+Message-Id: <20240311033822.3142585-17-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
 References: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
@@ -101,10 +103,10 @@ ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
 can't see this additional information, because exit() happens in
 error_setg earlier than information is added [1].
 
-The vhost_scsi_realize() passes @errp to error_prepend(), and as a
-VirtioDeviceClass.realize method, its @errp is from DeviceClass.realize
-so that there is no guarantee that the @errp won't point to
-@error_fatal.
+The ivshmem_common_realize() passes @errp to error_prepend(), and as a
+DeviceClass.realize method, there are too many possible callers to check
+the impact of this defect; it may or may not be harmless. Thus it is
+necessary to protect @errp with ERRP_GUARD().
 
 To avoid the issue like [1] said, add missing ERRP_GUARD() at the
 beginning of this function.
@@ -112,26 +114,29 @@ beginning of this function.
 [1]: Issue description in the commit message of commit ae7c80a7bd73
      ("error: New macro ERRP_GUARD()").
 
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Fam Zheng <fam@euphon.net>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Juan Quintela <quintela@trasno.org>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: Michael Galaxy <mgalaxy@akamai.com>
+Cc: Steve Sistare <steven.sistare@oracle.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/scsi/vhost-scsi.c | 1 +
+v2: Use Markus' sentence to polish commit message. (Markus)
+---
+ hw/misc/ivshmem.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
-index 58a00336c2db..ae26bc19a457 100644
---- a/hw/scsi/vhost-scsi.c
-+++ b/hw/scsi/vhost-scsi.c
-@@ -220,6 +220,7 @@ static int vhost_scsi_set_workers(VHostSCSICommon *vsc, bool per_virtqueue)
+diff --git a/hw/misc/ivshmem.c b/hw/misc/ivshmem.c
+index a2fd0bc36544..de49d1b8a826 100644
+--- a/hw/misc/ivshmem.c
++++ b/hw/misc/ivshmem.c
+@@ -832,6 +832,7 @@ static void ivshmem_write_config(PCIDevice *pdev, uint32_t address,
  
- static void vhost_scsi_realize(DeviceState *dev, Error **errp)
+ static void ivshmem_common_realize(PCIDevice *dev, Error **errp)
  {
 +    ERRP_GUARD();
-     VirtIOSCSICommon *vs = VIRTIO_SCSI_COMMON(dev);
-     VHostSCSICommon *vsc = VHOST_SCSI_COMMON(dev);
+     IVShmemState *s = IVSHMEM_COMMON(dev);
      Error *err = NULL;
+     uint8_t *pci_conf;
 -- 
 2.34.1
 
