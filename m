@@ -4,59 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E4EEC5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 04:02:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78D00C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 04:50:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjWrQ-0003ro-Gy; Mon, 11 Mar 2024 00:02:05 -0400
+	id 1rjXb5-0000qt-Nj; Mon, 11 Mar 2024 00:49:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rjWqk-0003nL-4l; Mon, 11 Mar 2024 00:01:21 -0400
-Received: from szxga05-in.huawei.com ([45.249.212.191])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rjWqK-0007H9-T3; Mon, 11 Mar 2024 00:01:10 -0400
-Received: from mail.maildlp.com (unknown [172.19.88.214])
- by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4TtNKQ4tz3z1h1sd;
- Mon, 11 Mar 2024 11:58:02 +0800 (CST)
-Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id B8DEC1A016E;
- Mon, 11 Mar 2024 12:00:27 +0800 (CST)
-Received: from [10.67.109.254] (10.67.109.254) by
- kwepemi500008.china.huawei.com (7.221.188.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Mon, 11 Mar 2024 12:00:27 +0800
-Message-ID: <c57f3338-0f38-1768-7c9f-d2b00a0cb158@huawei.com>
-Date: Mon, 11 Mar 2024 12:00:26 +0800
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rjXb1-0000px-N8
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 00:49:08 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rjXaz-0008Ip-Bq
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 00:49:07 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-29bc1c64a98so1142311a91.1
+ for <qemu-devel@nongnu.org>; Sun, 10 Mar 2024 21:49:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710132544; x=1710737344; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/e4wRTuByfzJr5hJ+kzcrOqf+rLyOL7Yw+rLf16X83U=;
+ b=Zf1Ee0JwMaDc9Ip4aOl7WvQ0ZBy2Q3HTPxu3XTAwGYowegz5HdoD6QbyFbuVPZPHaW
+ So1AwxURPQKOUsgcDozr2rpdWeThZ3oGEnfyevCfL/5kZFgNJCJ9b4Laxdb3MeJCZje4
+ B9FN6X90ZLYuxTNLiZZyg5ZX6O6Gugi98ekjMnYBIGvPftynL5TNSESrlPh2c7AGMnnA
+ YoUw3M9uvPEKEuO5CY6/TwdIFy4j5sjNPfj9ex8Zwe9PdoswxMgLTLxeP322Zok7zxe8
+ e0xcEAzFmJAIgrS7d9iFv8lhALm+FM1q2CtVO+nNPoEcASfEjLNaZiZzws0s3Lx8yjVK
+ OAuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710132544; x=1710737344;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/e4wRTuByfzJr5hJ+kzcrOqf+rLyOL7Yw+rLf16X83U=;
+ b=oCTzlmzTL3AmyRKgR/Yrn+kLLx2Ye/qA6WEg9fimyR3adxLtzlpvNgWVw21BU2Q1um
+ uIZ2Wos4Gq5CExuHKQVrHaQvXHXCCe5QGNoVreMdbhTgeaL+mdEXW89lGwy4gDZjyoNJ
+ TnVR6xfFscpG2v9UMSconrF2XoyNllDXnqa9zIvVKdG2A4Qhl9//Pd2KfXMToXN/oV9B
+ neKkBpuWcUJIMlWnjxCS+cokDUc8ADv4taAamV/uo5Bghr4VP63T/XvasQCt9xRhYGj5
+ VwP8oLyNOaSA0ZgCo6sBeAxB7+A29YmcLBnIiP0dsgac1bgIKcOfOWwpFqsjmYgfoioy
+ nyVA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUW7rafmB2eSyzVu/WZ3Le2tXkX/Mkj7FAEkFeEk8I+f8fE6aTX6XRQjKr0GWG5+3nYiBgdqGkhjA7455CbSZTFI1PFiyI=
+X-Gm-Message-State: AOJu0YxJOTephkKVqUR7Kbhkz6j5xoRqL/Y4SAzuB6Cmcn0QwScud3GF
+ W7AoT++EXVN9/IFczYXwflBGhuOMeuJcrHufcrJyNZ5RpnnZ2FPwA2gze+enqI4=
+X-Google-Smtp-Source: AGHT+IHi5dTtiBEUbQyd+afWu5XBC2/G3mzVlT6gQRc/iyhwfy8P6b2rBgPAiGdB0cby0wJhMBpyFg==
+X-Received: by 2002:a17:90a:db8c:b0:29b:aec3:6de7 with SMTP id
+ h12-20020a17090adb8c00b0029baec36de7mr3087186pjv.1.1710132543593; 
+ Sun, 10 Mar 2024 21:49:03 -0700 (PDT)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ i22-20020a17090a7e1600b0029be7922b32sm1861144pjl.26.2024.03.10.21.49.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 10 Mar 2024 21:49:03 -0700 (PDT)
+Message-ID: <e0954d6d-3d46-4620-875a-bdffebaf0a81@linaro.org>
+Date: Sun, 10 Mar 2024 18:48:58 -1000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.0
-Subject: Re: [RFC PATCH v7 00/23] target/arm: Implement FEAT_NMI and
- FEAT_GICv3_NMI
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] target/riscv: raise an exception when CSRRS/CSRRC
+ writes a read-only CSR
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>,
- <peter.maydell@linaro.org>, <eduardo@habkost.net>,
- <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
- <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-References: <20240306035721.2333531-1-ruanjinjie@huawei.com>
- <fd515ea4-ca4b-4d54-9d9b-59683ccd683e@linaro.org>
-In-Reply-To: <fd515ea4-ca4b-4d54-9d9b-59683ccd683e@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.67.109.254]
-X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
- kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.191;
- envelope-from=ruanjinjie@huawei.com; helo=szxga05-in.huawei.com
-X-Spam_score_int: -62
-X-Spam_score: -6.3
-X-Spam_bar: ------
-X-Spam_report: (-6.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.099,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+To: Yu-Ming Chang <yumin686@andestech.com>, palmer@dabbelt.com,
+ alistair.francis@wdc.com, bin.meng@windriver.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+References: <20240311030852.53831-1-yumin686@andestech.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240311030852.53831-1-yumin686@andestech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,51 +97,29 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
-From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping.
+On 3/10/24 17:08, Yu-Ming Chang via wrote:
+> Both CSRRS and CSRRC always read the addressed CSR and cause any read side
+> effects regardless of rs1 and rd fields. Note that if rs1 specifies a register
+> holding a zero value other than x0, the instruction will still attempt to write
+> the unmodified value back to the CSR and will cause any attendant side effects.
+> 
+> So if CSRRS or CSRRC tries to write a read-only CSR with rs1 which specifies
+> a register holding a zero value, an illegal instruction exception should be
+> raised.
+> 
+> Signed-off-by: Yu-Ming Chang<yumin686@andestech.com>
+> ---
+> This incorporated the comments from Richard. Thank you.
+> 
+>   target/riscv/cpu.h       |  2 ++
+>   target/riscv/csr.c       | 17 ++++++++++++++---
+>   target/riscv/op_helper.c |  2 +-
+>   3 files changed, 17 insertions(+), 4 deletions(-)
 
-On 2024/3/6 12:22, Richard Henderson wrote:
-> On 3/5/24 17:56, Jinjie Ruan via wrote:
->> This patch set implements FEAT_NMI and FEAT_GICv3_NMI for armv8. These
->> introduce support for a new category of interrupts in the architecture
->> which we can use to provide NMI like functionality.
->>
->> There are two modes for using this FEAT_NMI. When PSTATE.ALLINT or
->> PSTATE.SP & SCTLR_ELx.SCTLR_SPINTMASK is set, any entry to ELx causes all
->> interrupts including those with superpriority to be masked on entry to
->> ELn
->> until the mask is explicitly removed by software or hardware.
->> PSTATE.ALLINT
->> can be managed by software using the new register control ALLINT.ALLINT.
->> Independent controls are provided for this feature at each EL, usage
->> at EL1
->> should not disrupt EL2 or EL3.
->>
->> I have tested it with the following linux patches which try to support
->> FEAT_NMI in linux kernel:
->>
->>     https://lore.kernel.org/linux-arm-kernel/Y4sH5qX5bK9xfEBp@lpieralisi/T/#mb4ba4a2c045bf72c10c2202c1dd1b82d3240dc88
->>
->> In the test, SGI, PPI and SPI interrupts can all be set to have super
->> priority
->> to be converted to a hardware NMI interrupt. The SGI is tested with
->> kernel
->> IPI as NMI framework, softlockup, hardlockup and kgdb test cases, and
->> the PPI
->> interrupt is tested with "perf top" command with hardware NMI enabled,
->> and
->> the SPI interrupt is tested with a custom test module, in which NMI
->> interrupts
->> can be received and sent normally.
-> 
-> As far as I can see, this patch set is good to go.  I'm fairly confident
-> of the CPU side of the equation, but the GIC could use a second set of
-> eyes.
-> 
-> 
-> r~
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
 
