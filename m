@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AACECC5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 15:44:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2FF2C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 15:46:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjhoa-0000Eo-M3; Mon, 11 Mar 2024 11:43:48 -0400
+	id 1rjhqU-0000yw-8U; Mon, 11 Mar 2024 11:45:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rjhoY-0000Ea-SF
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 11:43:46 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1rjhqM-0000yX-OY
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 11:45:39 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rjhoX-00086q-2C
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 11:43:46 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-41329a665a8so6203425e9.3
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 08:43:43 -0700 (PDT)
+ id 1rjhqJ-0000FR-Qm
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 11:45:37 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-412f55695d1so32636695e9.0
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 08:45:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710171822; x=1710776622; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710171934; x=1710776734; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=q3Y3zS9CQ8NaFfD/jftOGx3sdvZq7h1i3dnbj28ehbg=;
- b=MlPJadPPBrARQtK1eWkciWJiCHG24/TKRmQO19aXeJkWxsBnIFoM0X9AHc8gFTnKOk
- 5trHQYYQ4NOO61AlYG9mbbbYp6q7N/hlyzG+0//BHSyi0gMjoLV2ueHz/N4xrix/HYzR
- ntXhJRwLijTt2eHuNg7YLV2NP/yqo+LdBt2o3i2YB4BPph8bTqRTxsaqB7bzJavFxwqs
- mkjndDlgEkXZinmWvomllRu+qrwcodPXKSCjgruNxJPa9inJBq41m/nMpCFh4PEyQjYq
- GfmSieqtKg8XGalzpkRpa5FbzfqF1O6Fi2jtEMadvyW9ntJjEyQWhUxmME4J9GY9Sjmj
- fE8g==
+ bh=cujt6V1A/XvR6NaGuI706u7cr0TAQ/6i6YLDHIasSDo=;
+ b=fLDBiMH/QpSczE6QAnDvNAbIqa8NIIjXuDXFa2Xv6/vOUlRSs9Rr7cozNHQiicD/lP
+ 5KHsvp02Z2sGKSpdixeVE3ufEvzpZydWZhjPSCkSRoE9w67SQKA6DEPhJ/0IxYu7ymR7
+ S6CNbXHD6TcxNH/gEV3l9TgcJ6R9MxnNbpDGt2xQMsToQ++Omq5WiTDl7NU1JKDZKWV9
+ GJ3tNgnOWApbb1YuJMsSHVezJebrGmJGyU9YX07/2MvNPVTv9pqdEz4VCM2NHk26t1ib
+ tp8zWlbHiAgXNpQAtFRwi5XtIEtIchSllYZAMbatTIToNpfZS6Ax2QK1OvNrtxb7UftP
+ CHZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710171822; x=1710776622;
+ d=1e100.net; s=20230601; t=1710171934; x=1710776734;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=q3Y3zS9CQ8NaFfD/jftOGx3sdvZq7h1i3dnbj28ehbg=;
- b=EMYCwLsHfAS5RX7zy/fvZ9FXYe8pI0YUup8zgmDOE9Fk9yt4I7eOqq7iHRknZQCveD
- jtjQvF/moRUNpxBwX8ETzkxb6Ooh5CVgbMFUUCJNd+hE3egg7axG09ntUy6fd32ZY+tJ
- ilnabSP0NJE1Sib/FljuOFxQ8bmGdQfqXnrAVp5hUwJTd4x5YMkv44lZxuxOQDx9YLS2
- wa6Zd0vGIrnND4YXj4Peu8NPT1UeY6EfoyKkaEaO7IPgqpajn9FivwfMCzVqah0bBZ5F
- W7sqpf9XCvuUnexptEcF15VL/cQUOjkBmiAxQKkoRmhS/SV52l+HzA6qb6gfMa5hUi9H
- CZLw==
-X-Gm-Message-State: AOJu0YzBTCXjuiG/yud6Dd6lWJDNqacHl5LeaAZH0g/pzXJb3dmN2a9t
- N4Nm3b2bi+udOwXagJAxouC4Q40VEyAy3ahzur2HMi9ws3nLLy5Qg5qOaDYGl10=
-X-Google-Smtp-Source: AGHT+IFG6zhvjdPEW/eNVnuNK0KYTM65QNAbz/Yk3UX8a2FI6Z7/wf+IPqASZ75ZOcHIdlQgtYCq1A==
-X-Received: by 2002:a05:600c:1e21:b0:413:2f40:1a8f with SMTP id
- ay33-20020a05600c1e2100b004132f401a8fmr565235wmb.28.1710171822140; 
- Mon, 11 Mar 2024 08:43:42 -0700 (PDT)
+ bh=cujt6V1A/XvR6NaGuI706u7cr0TAQ/6i6YLDHIasSDo=;
+ b=RXUlvxD6A0c5/Pu8NJ1aBNQNJqCzUxVOcBniozo274mB2gk96xPE83O87GyHfBbCqz
+ /cgA7q6PrZ4poKSMdK9v9Xpfgzt8hpIAStaKFwdqMsfm4gID4uFiAsuo10zahkCrl76e
+ JtLPZefBCOs7xW+9ufanNCtSQHxZt02lYCYkcgjCthO6EsJC9WqN5CwLpJSZuy58l9td
+ HYKf3JnEemrMWs9+vkgEXBeTWvG8NIMJbp/F+skihI4Jh/2ZqqgPpoNDd4vMxJ6AAurE
+ JzmuJph7OVb/4DQUYN+4arM17Av53BAiLsrX/bdliEM7asLBq2VzGlMT89YhzKePBs8G
+ oIHw==
+X-Gm-Message-State: AOJu0YybUHyi1525H8dcvURuREMzWI/E4XNxQtjLASdi+Jdn5o8uStBx
+ duLN9iX6v8tr9Wroe5bZUrITadXe/u1AHkRro3FB0lGqgkF1WjJanwUz65g58eNBohCcL2Qur8J
+ P
+X-Google-Smtp-Source: AGHT+IEX+ao8TTZ2HndQFfIhbB6OIpJgilxWL4O0pNrIBIufbfWXmQBeEQHKDyMjBl6c+k7PzABLlQ==
+X-Received: by 2002:a05:600c:45cb:b0:412:d0ab:a34a with SMTP id
+ s11-20020a05600c45cb00b00412d0aba34amr5079478wmo.31.1710171934179; 
+ Mon, 11 Mar 2024 08:45:34 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- fl7-20020a05600c0b8700b004132b28209asm2944949wmb.24.2024.03.11.08.43.41
+ bg13-20020a05600c3c8d00b00412fe0eb806sm15993561wmb.14.2024.03.11.08.45.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 08:43:41 -0700 (PDT)
+ Mon, 11 Mar 2024 08:45:33 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6F7585F756;
- Mon, 11 Mar 2024 15:43:41 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 8447F5F756;
+ Mon, 11 Mar 2024 15:45:33 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  Mahmoud Mandour <ma.mandourr@gmail.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Alexandre Iooss <erdnaxe@crans.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH 4/5] plugins: conditional callbacks
-In-Reply-To: <20240229055359.972151-5-pierrick.bouvier@linaro.org> (Pierrick
- Bouvier's message of "Thu, 29 Feb 2024 09:53:58 +0400")
-References: <20240229055359.972151-1-pierrick.bouvier@linaro.org>
- <20240229055359.972151-5-pierrick.bouvier@linaro.org>
+To: Gustavo Romero <gustavo.romero@linaro.org>
+Cc: qemu-devel@nongnu.org,  richard.henderson@linaro.org,
+ peter.maydell@linaro.org,  laurent@vivier.eu,  philmd@linaro.org
+Subject: Re: [PATCH v3 0/5] Add stub to handle Xfer:siginfo:read query
+In-Reply-To: <20240309030901.1726211-1-gustavo.romero@linaro.org> (Gustavo
+ Romero's message of "Sat, 9 Mar 2024 03:08:56 +0000")
+References: <20240309030901.1726211-1-gustavo.romero@linaro.org>
 User-Agent: mu4e 1.12.1; emacs 29.1
-Date: Mon, 11 Mar 2024 15:43:41 +0000
-Message-ID: <87zfv4pydu.fsf@draig.linaro.org>
+Date: Mon, 11 Mar 2024 15:45:33 +0000
+Message-ID: <87ttlcpyaq.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,75 +99,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+Gustavo Romero <gustavo.romero@linaro.org> writes:
 
-> Extend plugins API to support callback called with a given criteria
-> (evaluated inline).
->
-> Added functions:
-> - qemu_plugin_register_vcpu_tb_exec_cond_cb
-> - qemu_plugin_register_vcpu_insn_exec_cond_cb
->
-> They expect as parameter a condition, a qemu_plugin_u64_t (op1) and an
-> immediate (op2). Callback is called if op1 |cond| op2 is true.
->
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-<snip>
->=20=20
-> +static TCGCond plugin_cond_to_tcgcond(enum qemu_plugin_cond cond)
-> +{
-> +    switch (cond) {
-> +    case QEMU_PLUGIN_COND_EQ:
-> +        return TCG_COND_EQ;
-> +    case QEMU_PLUGIN_COND_NE:
-> +        return TCG_COND_NE;
-> +    case QEMU_PLUGIN_COND_LT:
-> +        return TCG_COND_LTU;
-> +    case QEMU_PLUGIN_COND_LE:
-> +        return TCG_COND_LEU;
-> +    case QEMU_PLUGIN_COND_GT:
-> +        return TCG_COND_GTU;
-> +    case QEMU_PLUGIN_COND_GE:
-> +        return TCG_COND_GEU;
-> +    default:
-> +        /* ALWAYS and NEVER conditions should never reach */
-> +        g_assert_not_reached();
-> +    }
-> +}
-> +
-> +static TCGOp *append_cond_udata_cb(const struct qemu_plugin_dyn_cb *cb,
-> +                                   TCGOp *begin_op, TCGOp *op, int *cb_i=
-dx)
-> +{
-> +    char *ptr =3D cb->cond_cb.entry.score->data->data;
-> +    size_t elem_size =3D g_array_get_element_size(
-> +        cb->cond_cb.entry.score->data);
-> +    size_t offset =3D cb->cond_cb.entry.offset;
-> +    /* Condition should be negated, as calling the cb is the "else" path=
- */
-> +    TCGCond cond =3D tcg_invert_cond(plugin_cond_to_tcgcond(cb->cond_cb.=
-cond));
-> +
-> +    op =3D copy_const_ptr(&begin_op, op, ptr);
-> +    op =3D copy_ld_i32(&begin_op, op);
-> +    op =3D copy_mul_i32(&begin_op, op, elem_size);
-> +    op =3D copy_ext_i32_ptr(&begin_op, op);
-> +    op =3D copy_const_ptr(&begin_op, op, ptr + offset);
-> +    op =3D copy_add_ptr(&begin_op, op);
-> +    op =3D copy_ld_i64(&begin_op, op);
-> +    op =3D copy_brcondi_i64(&begin_op, op, cond, cb->cond_cb.imm);
-> +    op =3D copy_call(&begin_op, op, cb->f.vcpu_udata, cb_idx);
-> +    op =3D copy_set_label(&begin_op, op);
-> +    return op;
+> Xfer:siginfo:read query is received, usually, when GDB catches a signal
+> and needs additional info about it, like the si_code and the si_addr, so
+> GDB can show the user interesting info about the signal. This query can
+> also be received when an user explicitly asks for more information via
+> printing GBD's special purpose variable '$_siginfo'.
 
-I think we are missing something here to ensure that udata is set
-correctly for the callback, see my RFC:
-
-  Subject: [RFC PATCH] contrib/plugins: control flow plugin (WIP!)
-  Date: Mon, 11 Mar 2024 15:34:32 +0000
-  Message-Id: <20240311153432.1395190-1-alex.bennee@linaro.org>
-
-which is seeing the same value every time in the callback.
+Queued to gdbstub/next, thanks.
 
 --=20
 Alex Benn=C3=A9e
