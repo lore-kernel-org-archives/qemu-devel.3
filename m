@@ -4,58 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9B68C5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:44:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47816C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 17:45:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjjez-0002zE-AY; Mon, 11 Mar 2024 13:42:01 -0400
+	id 1rjjfj-0005MH-96; Mon, 11 Mar 2024 13:42:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjjej-0002j7-6v
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:41:45 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rjjfa-0004YZ-MH; Mon, 11 Mar 2024 13:42:38 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjjeh-0007PR-Ji
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 13:41:44 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-6e5d7f1f25fso2087367b3a.0
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 10:41:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rjjfY-0007Tr-SZ; Mon, 11 Mar 2024 13:42:38 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-6e64a9df6c3so3792408b3a.3; 
+ Mon, 11 Mar 2024 10:42:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710178902; x=1710783702; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1710178955; x=1710783755; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TRcl63k4Enolg0XIOUbcFz2ceM8wzscJs4qT96hKv3M=;
- b=gaXKD3ThBCJDUQqQpmtGnxqQtrdY8TNmvgQyI9NhOTG6cOrH42EfVTotCwhDQ1eA0t
- ceWmXvGLUdRQRkEPa3hPnuXnmUu0AwYb5z6h5hLoS2K0990ouOIvwMdcfHd7l8WPWmb3
- EIkj86UUTgvZhWYWRp0DA+tq4I8Zjj9DSFz9hVw0FWZavzgqAPYl40wfMl5q8ofEOcmp
- HRW3s0h8Tbe6Uw5oUctUw4D2ypopiHiLUUkR+w+Xjn6ls6N/jlvYKOLyZzds5NfvjUI1
- iSIBwC/2nCiMaYLafNiPkGk8hg4co0mTFO26+Rg49AndlpWeWYV2vPgAK/SJcwm5mh7C
- lo3g==
+ bh=lDxLWuCdYHq+0UxHzHGZvZ93wYuuHZ500ruO/QvykEw=;
+ b=d4hS2BuTrkMMrc2JAmESC6/CAFonk0Zvenlutp5CXGUxBwJtSUJFKYhJXdW49m4eH1
+ Sxe+JX0+eSYh5IfOciLsAl1t2Obmz0gsjKcC6w1eIuRhqhaGMnOf9j5rqxWmoxEo832J
+ 9e6/W2TClAzfeCk66EOiwPvN0MStT3VgJplZZNQhyx6NGlS07iDYWpqGu9nw+qkRa/zo
+ Uj6mWpeArMNXZTwriNgCNn0WA7tNoKeHJW+Y35iVCFr0VPOrzAltEYXS7kh0c3bowDV3
+ MbFiWlqAIHp4m2HKubD6Br73M4Xk5PuXuPpszI1IF03V3JF4nUyHsfvqonfVmKyZCCiY
+ cw1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710178902; x=1710783702;
+ d=1e100.net; s=20230601; t=1710178955; x=1710783755;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TRcl63k4Enolg0XIOUbcFz2ceM8wzscJs4qT96hKv3M=;
- b=LNaIDoPoR7JwxQqmw893MbVjKvXw+4MD9jiAo7hEk1xPmUI18R+gZaz6MMt7KSjRjc
- KBniZBXBvbf5/3ywC+SUoWR9jGQxfx1kuAhFsO36kRPKu5A9wQl3jE/kOUvL8KezgETv
- yl5Un1jVPb/Tk0gMl1fCkJgqgqN6GynmPTfdyUffYS4Syfh+jeWGO18fxfJIHMbt2vKF
- Kt+//kGFHjkUtDbc/av3kIxSsbIXpY9Vgr9fXigERayb8AUvGgEnNQHtyzLuPw6bFWTL
- VpAPQ7+moJ3EKHaSt0ed1teyVz5cwq8SJpbXuCtkqBX5orX3yu02iILLNLHUtE6WiERx
- EmAw==
-X-Gm-Message-State: AOJu0Yxv4/iEt2lpOuQj9qXIvyimpiS5edsC5efbgXlkx4kaBp5nPvEJ
- 2TA/tUEOF0cQomYeJYwlqBWONElJhI2pPWtwT2gDOaSOK7HGxhhXxSCLl18E+dw=
-X-Google-Smtp-Source: AGHT+IHwg71O/unBd/fPFI8XRs5TXQrJKcPahM8orTDTp4kUgbr5FfeBfckNcFfpp0nJYyeiKBuCbg==
-X-Received: by 2002:a05:6a00:27a0:b0:6e5:dff8:6e5f with SMTP id
- bd32-20020a056a0027a000b006e5dff86e5fmr7645519pfb.34.1710178901589; 
- Mon, 11 Mar 2024 10:41:41 -0700 (PDT)
+ bh=lDxLWuCdYHq+0UxHzHGZvZ93wYuuHZ500ruO/QvykEw=;
+ b=reiTlCuYTOoSp3cLT27+EfmaE9aOlFVa1nrT5qh6B9Xfmy6/15Q19Xu12fjToI1B2m
+ WcpZDuAWDqkA1X/GkzBpjGwAQPt7LP89PRwNokK/3z5vMZ1+J83DP5tjcjd8+HVPRuGy
+ qnEqj5z1GPAyJwKFK5eIsEaWykoRugqKaPOZ7L7GENriHdMB0Zku0NPGn/IYkPlt2MLX
+ gLsPQCqQuRO5rgTMDd8KAT4jTky32k9fWYje5gPkT3OIZQRQKKOD5j2sFNbW5JIxo9QQ
+ 8+71xlglWFCxfpSSSMVdlXKzdA34uRX03k3r077a+gE9yvz3NTLabPMib0fhj9INvKkg
+ YijA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVh7CWtbwELgXIF7aPNSQYA+vPOf5bBCdFqMPXoJtTp0RvfD40wP5CjgwrBz0FDgGqMNOj+DXlZ3PvmJU2UYMtVn7tQ
+X-Gm-Message-State: AOJu0YwE/5nlkQUxM9gSyNv9oClzhTMNtyps23tI8zSggc7OCRyE6uQr
+ KQkdoWA+YSnsuLeUhl7ClV/+9Po5cPhlx5tpyfm+5qTbsFMgRGW+cozg3OKQZkI=
+X-Google-Smtp-Source: AGHT+IHLaZL2JscYhnGsK2pqMh8r6LSnh3vkWR9vWi0hxg7lKDfVoNfqVjyPzEUxES7b4ytZbGmZ9g==
+X-Received: by 2002:a05:6a00:22d2:b0:6e6:800f:9f84 with SMTP id
+ f18-20020a056a0022d200b006e6800f9f84mr9211371pfj.11.1710178954731; 
+ Mon, 11 Mar 2024 10:42:34 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- a18-20020a62d412000000b006e67b4d7b74sm4593187pfh.197.2024.03.11.10.41.36
+ a18-20020a62d412000000b006e67b4d7b74sm4593187pfh.197.2024.03.11.10.42.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 10:41:41 -0700 (PDT)
+ Mon, 11 Mar 2024 10:42:34 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -66,17 +68,18 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
  Cleber Rosa <crosa@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH v4 12/24] savevm: Fix load_snapshot error path crash
-Date: Tue, 12 Mar 2024 03:40:14 +1000
-Message-ID: <20240311174026.2177152-13-npiggin@gmail.com>
+ Beraldo Leal <bleal@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
+ qemu-ppc@nongnu.org
+Subject: [PATCH v4 22/24] target/ppc: fix timebase register reset state
+Date: Tue, 12 Mar 2024 03:40:24 +1000
+Message-ID: <20240311174026.2177152-23-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240311174026.2177152-1-npiggin@gmail.com>
 References: <20240311174026.2177152-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,25 +102,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-An error path missed setting *errp, which can cause a NULL deref.
+(H)DEC and PURR get reset before icount does, which causes them to be
+skewed and not match the init state. This can cause replay to not
+match the recorded trace exactly. For DEC and HDEC this is usually not
+noticable since they tend to get programmed before affecting the
+target machine. PURR has been observed to cause replay bugs when
+running Linux.
 
+Fix this by resetting using a time of 0.
+
+Cc: qemu-ppc@nongnu.org
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- migration/savevm.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/ppc/ppc.c         | 11 ++++++++---
+ target/ppc/machine.c |  4 ++++
+ 2 files changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/migration/savevm.c b/migration/savevm.c
-index dc1fb9c0d3..fee9318c06 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -3259,6 +3259,7 @@ bool load_snapshot(const char *name, const char *vmstate,
-     /* Don't even try to load empty VM states */
-     ret = bdrv_snapshot_find(bs_vm_state, &sn, name);
-     if (ret < 0) {
-+        error_setg(errp, "Snapshot can not be found");
-         return false;
-     } else if (sn.vm_state_size == 0) {
-         error_setg(errp, "This is a disk-only snapshot. Revert to it "
+diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
+index fadb8f5239..f22321779e 100644
+--- a/hw/ppc/ppc.c
++++ b/hw/ppc/ppc.c
+@@ -1112,16 +1112,21 @@ void cpu_ppc_tb_reset(CPUPPCState *env)
+         timer_del(tb_env->hdecr_timer);
+         ppc_set_irq(cpu, PPC_INTERRUPT_HDECR, 0);
+         tb_env->hdecr_next = 0;
++        _cpu_ppc_store_hdecr(cpu, 0, 0, 0, 64);
+     }
+ 
+     /*
+      * There is a bug in Linux 2.4 kernels:
+      * if a decrementer exception is pending when it enables msr_ee at startup,
+      * it's not ready to handle it...
++     *
++     * On machine reset, in this is called before icount is reset, so
++     * for icount-mode, setting TB registers using now=qemu_clock_get_ns
++     * results in them being skewed when icount does get reset. Use an
++     * explicit 0 to get a consistent reset state.
+      */
+-    cpu_ppc_store_decr(env, -1);
+-    cpu_ppc_store_hdecr(env, -1);
+-    cpu_ppc_store_purr(env, 0x0000000000000000ULL);
++    _cpu_ppc_store_decr(cpu, 0, 0, -1, 64);
++    _cpu_ppc_store_purr(env, 0, 0);
+ }
+ 
+ void cpu_ppc_tb_free(CPUPPCState *env)
+diff --git a/target/ppc/machine.c b/target/ppc/machine.c
+index 203fe28e01..4c4294eafe 100644
+--- a/target/ppc/machine.c
++++ b/target/ppc/machine.c
+@@ -215,6 +215,8 @@ static int cpu_pre_save(void *opaque)
+          * it here.
+          */
+         env->spr[SPR_DECR] = cpu_ppc_load_decr(env);
++        printf("cpu_ppc_pre_save  TB:0x%016lx\n", cpu_ppc_load_tbl(env));
++        printf("cpu_ppc_pre_save DEC:0x%016lx\n", cpu_ppc_load_decr(env));
+     }
+ 
+     return 0;
+@@ -333,6 +335,8 @@ static int cpu_post_load(void *opaque, int version_id)
+          * triggered types (including HDEC) would need to carry more state.
+          */
+         cpu_ppc_store_decr(env, env->spr[SPR_DECR]);
++        printf("cpu_ppc_post_ld   TB:0x%016lx\n", cpu_ppc_load_tbl(env));
++        printf("cpu_ppc_post_ld  DEC:0x%016lx\n", cpu_ppc_load_decr(env));
+         pmu_mmcr01_updated(env);
+     }
+ 
 -- 
 2.42.0
 
