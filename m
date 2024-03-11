@@ -4,59 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 192CAC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:27:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4326EC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:27:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjWIc-0006qI-Om; Sun, 10 Mar 2024 23:26:02 -0400
+	id 1rjWIe-0006yd-Eg; Sun, 10 Mar 2024 23:26:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWIV-0006Nk-Q9; Sun, 10 Mar 2024 23:25:56 -0400
+ id 1rjWIT-00069u-7a; Sun, 10 Mar 2024 23:25:53 -0400
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWIU-0008EJ-18; Sun, 10 Mar 2024 23:25:55 -0400
+ id 1rjWIP-0008BV-Sg; Sun, 10 Mar 2024 23:25:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710127554; x=1741663554;
+ t=1710127549; x=1741663549;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Vhjy1DpbGaIvfiMMR/WA6udExEgCFb+nLNgH2lQLdrI=;
- b=dtZYsyCvDkt/CYvo7HWzYUkngUEh3Ia/SND6eu66Fw0Xe08XNAeMPrdV
- YhRn/eFoULpYhwWSh/aFbqv+xMSHTsTl1qmj00rPUjb2RDSM05fr92EwI
- z9Jd7lA+hinGGcp+ifX2kZiCZv9KOkgoQgg47udZbn3Abkn84yBjXER6O
- Qu4nQUycRgskoHmZTPZ2MEUaaUw0WKSOrx+zrnqrLanhZ4nuPWfka911c
- RCc1+XlYL5BujwQcT2S/pvbEM4iss+kZkrN03t/QnXdFzPsB9yIput7rX
- rMqh6MyMbVbyShfitqh0QiSzlKynGF/DcvvLK90moTY6/oWhKWpnMvo4D Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229726"
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229726"
+ bh=+pGEfYcYehQQMgpVVFM6aL50Te9K+jPhcZ13DzXq8Lg=;
+ b=G48RjoMLMIto6RLg7MdH8Ssz3zVcT0Fg5wf6p4RT/N8ZZM5GFiNtUZRB
+ VNuz5hQMNnDXd4JpRJ8GXh60oV1kCsRItTYBJUCpNrjkk7ZEH1QbGBjvE
+ NMt25tTEaV+Cwuj8penvC6csqhIuSenAI8MYwzU2qDALdmoJTLWqz+BhD
+ NEDGQ8p0JFS83FwH1JTwvBHnyNvIzOi1sHdUaHZXH5sSBtAq9/13c7+22
+ UhWWiIsgRQ8+y5+zfArQGQPityDqQh4zV3f7nKJaMLtPwesfYrHXGj8GE
+ 3DnGu84LJY9T8todTtYmxIdcf+05SDrLSQWMWSMW4B/cqHGhOw2J0ubLm w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229715"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229715"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2024 20:25:31 -0700
+ 10 Mar 2024 20:25:28 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15593950"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15593910"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:25:29 -0700
+ by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:25:26 -0700
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, Michael Tokarev <mjt@tls.msk.ru>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Juan Quintela <quintela@trasno.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Michael Galaxy <mgalaxy@akamai.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH v2 16/29] hw/misc/ivshmem: Fix missing ERRP_GUARD() for
- error_prepend()
-Date: Mon, 11 Mar 2024 11:38:09 +0800
-Message-Id: <20240311033822.3142585-17-zhao1.liu@linux.intel.com>
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH v2 15/29] hw/core/qdev-properties-system: Fix missing
+ ERRP_GUARD() for error_prepend()
+Date: Mon, 11 Mar 2024 11:38:08 +0800
+Message-Id: <20240311033822.3142585-16-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
 References: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: none client-ip=198.175.65.10;
  envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
@@ -103,10 +101,11 @@ ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
 can't see this additional information, because exit() happens in
 error_setg earlier than information is added [1].
 
-The ivshmem_common_realize() passes @errp to error_prepend(), and as a
-DeviceClass.realize method, there are too many possible callers to check
-the impact of this defect; it may or may not be harmless. Thus it is
-necessary to protect @errp with ERRP_GUARD().
+The set_chr() passes @errp to error_prepend() without ERRP_GUARD().
+
+As a PropertyInfo.set method, there are too many possible callers to
+check the impact of this defect; it may or may not be harmless. Thus it
+is necessary to protect @errp with ERRP_GUARD().
 
 To avoid the issue like [1] said, add missing ERRP_GUARD() at the
 beginning of this function.
@@ -114,29 +113,29 @@ beginning of this function.
 [1]: Issue description in the commit message of commit ae7c80a7bd73
      ("error: New macro ERRP_GUARD()").
 
-Cc: Juan Quintela <quintela@trasno.org>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: Michael Galaxy <mgalaxy@akamai.com>
-Cc: Steve Sistare <steven.sistare@oracle.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: "Daniel P. Berrangé" <berrange@redhat.com
+Cc: Eduardo Habkost <eduardo@habkost.net>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 ---
 v2: Use Markus' sentence to polish commit message. (Markus)
 ---
- hw/misc/ivshmem.c | 1 +
+ hw/core/qdev-properties-system.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/hw/misc/ivshmem.c b/hw/misc/ivshmem.c
-index a2fd0bc36544..de49d1b8a826 100644
---- a/hw/misc/ivshmem.c
-+++ b/hw/misc/ivshmem.c
-@@ -832,6 +832,7 @@ static void ivshmem_write_config(PCIDevice *pdev, uint32_t address,
- 
- static void ivshmem_common_realize(PCIDevice *dev, Error **errp)
+diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+index b45e90edb2a2..00c968f4f52b 100644
+--- a/hw/core/qdev-properties-system.c
++++ b/hw/core/qdev-properties-system.c
+@@ -242,6 +242,7 @@ static void get_chr(Object *obj, Visitor *v, const char *name, void *opaque,
+ static void set_chr(Object *obj, Visitor *v, const char *name, void *opaque,
+                     Error **errp)
  {
 +    ERRP_GUARD();
-     IVShmemState *s = IVSHMEM_COMMON(dev);
-     Error *err = NULL;
-     uint8_t *pci_conf;
+     Property *prop = opaque;
+     CharBackend *be = object_field_prop_ptr(obj, prop);
+     Chardev *s;
 -- 
 2.34.1
 
