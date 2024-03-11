@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4CA4C5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:26:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C375C5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 03:26:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjWI3-0005hc-Mq; Sun, 10 Mar 2024 23:25:27 -0400
+	id 1rjWI0-0005g1-Vi; Sun, 10 Mar 2024 23:25:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWHr-0005dC-O6; Sun, 10 Mar 2024 23:25:15 -0400
+ id 1rjWHt-0005df-9g; Sun, 10 Mar 2024 23:25:17 -0400
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjWHi-0007rZ-Sc; Sun, 10 Mar 2024 23:25:14 -0400
+ id 1rjWHr-0007rZ-OP; Sun, 10 Mar 2024 23:25:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710127506; x=1741663506;
+ t=1710127515; x=1741663515;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=1emxAnpuDpfq0H+rINlWwFRw8yLAOk+zf7VvnHFfjxo=;
- b=ffeHGHuEynlGQtXgyl4vMEKiaXSJe896t8PRAhoAwklhFLN1ZDt/K0jU
- 2Z5pdWGFWdkWD45JXcoKDtv4/5Gq2SQMkj3Ill/CPQFMjdgkdLaK8kVQs
- 6CW7p52ZgYi5i+U1E0QADj279yjnJ5TEZEVDXcM5aNmq0AZR0kbnt6aQj
- YWP2YvuW7pQKiWe/FqlrR/p7Fp27BQL5RaPoPG7bD49Va0G1nlEkY8IaP
- saS9KKqEuOQBFWoA+StFB6nMgEwkRh8RljLY/QZuol6B/3oZRbRnbHfH9
- qJ54js5TMgJDiRurSJduw4MUczRxaXkfeH0T03TjZngIkdnZtwhwJYMvr w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229624"
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229624"
+ bh=WjnL/LJyxGY93zRzyLMMGq6wyNW54EH5AJWek80Hj5k=;
+ b=JPmjFOXBHLCXxmqGiwdHcObN4GIO5wInWG/mtW2x5nvboPkgI8AtClDg
+ 42uEBBQeSd4RmrryrxInx1nP5JRHzYGLZWtXRWSXvW1ViQRz8WRito9qB
+ 3LekPGE5NX6GVebIlDdoRtUlao/68W2G2+MW86Jmq3JnFU+AY/iozvyXu
+ Px2oiOQQCaNWQZz8Bq3PgGK6IjjooA0YuKmFazt/jBTHQHbPaNbXWvRoe
+ +VuLYlVLivWEOyBKn3OKGu0nQyiw2HUhNJwst7YI+rZz1kqJIN6yBtE9f
+ 93q7iP4DioBDImmfsPbFNFTAeA9/ss4m0fuzthYOHWdT3rXgRe7jM390e w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11009"; a="22229649"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="22229649"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2024 20:25:04 -0700
+ 10 Mar 2024 20:25:13 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15593770"
+X-IronPort-AV: E=Sophos;i="6.07,115,1708416000"; d="scan'208";a="15593801"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:25:00 -0700
+ by fmviesa003.fm.intel.com with ESMTP; 10 Mar 2024 20:25:10 -0700
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, Michael Tokarev <mjt@tls.msk.ru>,
@@ -46,13 +46,11 @@ To: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>, qemu-block@nongnu.org
-Subject: [PATCH v2 07/29] block/qcow2-bitmap: Fix missing ERRP_GUARD() for
+ qemu-block@nongnu.org
+Subject: [PATCH v2 10/29] block/snapshot: Fix missing ERRP_GUARD() for
  error_prepend()
-Date: Mon, 11 Mar 2024 11:38:00 +0800
-Message-Id: <20240311033822.3142585-8-zhao1.liu@linux.intel.com>
+Date: Mon, 11 Mar 2024 11:38:03 +0800
+Message-Id: <20240311033822.3142585-11-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
 References: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
@@ -60,13 +58,13 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: none client-ip=198.175.65.10;
  envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
-X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.945,
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.945,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,44 +101,48 @@ ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
 can't see this additional information, because exit() happens in
 error_setg earlier than information is added [1].
 
-The qcow2_co_can_store_new_dirty_bitmap() passes @errp to
-error_prepend(). As a BlockDriver.bdrv_co_can_store_new_dirty_bitmap
-method, it's called by bdrv_co_can_store_new_dirty_bitmap().
+In block/snapshot.c, there are 2 functions passing @errp to
+error_prepend() without ERRP_GUARD():
+ - bdrv_all_delete_snapshot()
+ - bdrv_all_goto_snapshot()
 
-Its caller is not being called anywhere, but as the API in
-include/block/block-io.h, we can't ensure what kind of @errp future
-users will pass in.
+As the APIs exposed in include/block/snapshot.h, they could be called
+by other modules.
 
 To avoid potential issues as [1] said, add missing ERRP_GUARD() at the
-beginning of qcow2_co_can_store_new_dirty_bitmap().
+beginning of these 2 functions.
 
 [1]: Issue description in the commit message of commit ae7c80a7bd73
      ("error: New macro ERRP_GUARD()").
 
 Cc: Kevin Wolf <kwolf@redhat.com>
 Cc: Hanna Reitz <hreitz@redhat.com>
-Cc: Eric Blake <eblake@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: John Snow <jsnow@redhat.com>
 Cc: qemu-block@nongnu.org
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- block/qcow2-bitmap.c | 1 +
- 1 file changed, 1 insertion(+)
+ block/snapshot.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/block/qcow2-bitmap.c b/block/qcow2-bitmap.c
-index 0e567ed588d7..874ea5694851 100644
---- a/block/qcow2-bitmap.c
-+++ b/block/qcow2-bitmap.c
-@@ -1710,6 +1710,7 @@ bool coroutine_fn qcow2_co_can_store_new_dirty_bitmap(BlockDriverState *bs,
-                                                       uint32_t granularity,
-                                                       Error **errp)
+diff --git a/block/snapshot.c b/block/snapshot.c
+index 8694fc0a3eba..8242b4abac41 100644
+--- a/block/snapshot.c
++++ b/block/snapshot.c
+@@ -566,6 +566,7 @@ int bdrv_all_delete_snapshot(const char *name,
+                              bool has_devices, strList *devices,
+                              Error **errp)
  {
 +    ERRP_GUARD();
-     BDRVQcow2State *s = bs->opaque;
-     BdrvDirtyBitmap *bitmap;
-     uint64_t bitmap_directory_size = 0;
+     g_autoptr(GList) bdrvs = NULL;
+     GList *iterbdrvs;
+ 
+@@ -605,6 +606,7 @@ int bdrv_all_goto_snapshot(const char *name,
+                            bool has_devices, strList *devices,
+                            Error **errp)
+ {
++    ERRP_GUARD();
+     g_autoptr(GList) bdrvs = NULL;
+     GList *iterbdrvs;
+     int ret;
 -- 
 2.34.1
 
