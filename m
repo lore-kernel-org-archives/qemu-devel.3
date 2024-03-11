@@ -4,67 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 892A8C5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 10:00:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37677C5475B
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 10:09:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjcRI-0008PM-CM; Mon, 11 Mar 2024 05:59:24 -0400
+	id 1rjcaV-0003hW-59; Mon, 11 Mar 2024 06:08:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d.sharikhin@yadro.com>)
- id 1rjcQx-0008HI-0t
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 05:59:08 -0400
-Received: from mta-04.yadro.com ([89.207.88.248])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d.sharikhin@yadro.com>)
- id 1rjcQX-0002fr-SM
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 05:59:02 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com 2F293C0003
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yadro.com; s=mta-04;
- t=1710151112; bh=48r+OmcVNv61eDUBdgnRCAe1Mk4A0ie2SyiJZO/jMsI=;
- h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:From;
- b=tTF8uNOshqre/A7xdae08a494JIGSlfy5NghSB/vDtis9KcuHjl/83MCM05fT7Y7k
- LZN0/z+8s8n0LNN43JAd0/zvCz+QryOiEMDRUQpJl4S2OpGmcgffxyrwaCmMX22H8Y
- Psr3ptavfLl7l+PLhFWtVXSLaMvkDEaF1wBFrYm/3BwYCkIQ+IMxh/k+zA7s3/r78d
- 3Ps32JJC5Y5ok8c90iDH8J4giuhdJIQfp7vSipMubnBDK3N0WoD8cRBOeYVrTc+X39
- U8bCLQtelARRNx8LlFxOm7ogwm6glf43cdsv16zZq5CHSoMMC1PpxMFuq5OA2HMx4R
- h66Z7F7eynEqA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yadro.com; s=mta-03;
- t=1710151112; bh=48r+OmcVNv61eDUBdgnRCAe1Mk4A0ie2SyiJZO/jMsI=;
- h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:From;
- b=fgrXB2pkdC/+sSY/FRbTq3edxAHZBkugyQk9pv8VuLD13n8QJ/NCvWAeOTlcsFaNv
- 2Xmf+OSs+LL5KmHsGdpCNbAkuzfyiD6laa50XhXwmqW89iCsxqSFAeY3euXror1D3c
- vXsLkG1J/tSKk2ydSbtiOH8rVbTAvD0H5QbspEo/3aR/R/1NZR8Yu//G2mR1T1GiVy
- ixjoMO0eUqF1hmTh6RJ+wbhlDLNdZw7A+8qRh0K5vVqPB27jSfCU39booCh6EiuhmB
- rNQqMR6ktKw3LtzzSL7wZ0KN3CYWd4pErp8iYFFSEzDk7Z9CLeWoyP5EBRcTUms0yP
- tuxn25rmXslvA==
-From: Dmitriy Sharikhin <d.sharikhin@yadro.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: Igor Kononenko <i.kononenko@yadro.com>, "Alexander A. Filippov"
- <a.filippov@yadro.com>, Alexander Amelkin <a.amelkin@yadro.com>,
- "philmd@linaro.org" <philmd@linaro.org>
-Subject: [PATCH v3] hw: gpio: introduce pcf8574 driver
-Thread-Topic: [PATCH v3] hw: gpio: introduce pcf8574 driver
-Thread-Index: AQHac5qsW7YpATGLKkSWCq/H0/dwHg==
-Date: Mon, 11 Mar 2024 09:58:31 +0000
-Message-ID: <f1552d822276e878d84c01eba2cf2c7c9ebdde00.camel@yadro.com>
-Accept-Language: ru-RU, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Content-Type: text/plain; charset="utf-7"
-Content-ID: <F0EAB8CA4D9AC54DB7A9DFF01687A28E@yadro.com>
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rjcaU-0003hN-2N
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 06:08:54 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rjcaR-0006RI-8S
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 06:08:53 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-33e94de1f34so481307f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 03:08:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710151729; x=1710756529; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aAffEftEc8IpOEy4lvt93IdrpKRsIswtaYEqc2sfn8Y=;
+ b=ELyrZ4BQz4BGGHKfWeVPU0mOcZv3vTKNKEzvmbnN6g4LbDWWhV8NsA5UaU6S6ctv0x
+ jnoUv9Q2mlMFdcyJp7rj4UsDatYqIBh7F9Hq4SleeShJEarnHtU/wwOa2U/MXf+MH+cX
+ msupmLq13DBzryvShFAA3ihIQ1QMz5IYcHk2+6s3qDSz/F4zu6SWs7GVBBmJmv0sEZwH
+ kyKejLoyymHdkUiN4ntu6RqMXBYLbgTLibWqgITCJm28hlumyNeKHSYrEU+M/INBa74n
+ dIWXrFt9QHK+DeQP7qZX6ByK+l33CI9g/HoLBxtqp7aEsmUbUSCepWbcWFu5ko64pFp+
+ eF+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710151729; x=1710756529;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=aAffEftEc8IpOEy4lvt93IdrpKRsIswtaYEqc2sfn8Y=;
+ b=NlaKtwpBrVCi1tLu+j59BKDOZhzKF2xiNr+5imCEDsFA58LlYlARK+kI82aN6HMTuY
+ h6KdAumSNae+AXGZ5+Gj6MYuaRXO3j4AamW7itYhsQVtVSmpLXN7/jIeqhf+DF617aqy
+ 0nCkbOM2l8kghx1Cw0GVria8ijVE2IisbPpBr97C3ffUgKAEa5qCHg33Z78Ym7Avg3aw
+ laBMbT8/UKeANfNiuEbQzGD7OTMppn736sg/3Cni1x8sIA/ebARJvFZ51YY9EAulxMM0
+ 0WpfL4iIdQQOvj7YDSPG6n6kUjhzZGLdA4dft1RFcTFBBVVIHh2kkU9CaPiZCtyvbzQ/
+ w8yg==
+X-Gm-Message-State: AOJu0YxwLBLiJ4ktChocSjl9w/EigsqMb5piHt/+Kzz33eOka/Nn7bF5
+ pGtbXe2n1F1MUFjDz5w6lTRTAbPaHqzeN6fEehpp8CCL58U+TtK4F2plH9RpObc=
+X-Google-Smtp-Source: AGHT+IGY0YXrOC1xeXWThQ0S8LSOK7vd9m2lMd0skwuE8vH2fPGgthXHhk49UiSIpCm3skBsSpfx8Q==
+X-Received: by 2002:a5d:4b51:0:b0:33e:6faf:7740 with SMTP id
+ w17-20020a5d4b51000000b0033e6faf7740mr4495405wrs.13.1710151728450; 
+ Mon, 11 Mar 2024 03:08:48 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ z4-20020adff744000000b0033e7910ae23sm6038908wrp.49.2024.03.11.03.08.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 Mar 2024 03:08:47 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 738385F78F;
+ Mon, 11 Mar 2024 10:08:47 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,  Mahmoud Mandour <ma.mandourr@gmail.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Alexandre Iooss <erdnaxe@crans.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 4/5] plugins: conditional callbacks
+In-Reply-To: <20240229055359.972151-5-pierrick.bouvier@linaro.org> (Pierrick
+ Bouvier's message of "Thu, 29 Feb 2024 09:53:58 +0400")
+References: <20240229055359.972151-1-pierrick.bouvier@linaro.org>
+ <20240229055359.972151-5-pierrick.bouvier@linaro.org>
+User-Agent: mu4e 1.12.1; emacs 29.1
+Date: Mon, 11 Mar 2024 10:08:47 +0000
+Message-ID: <87bk7lqdw0.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=89.207.88.248; envelope-from=d.sharikhin@yadro.com;
- helo=mta-04.yadro.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,270 +100,673 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-NXP PCF8574 and compatible ICs are simple I2C GPIO expanders.
-PCF8574 incorporates quasi-bidirectional IO, and simple
-communication protocol, when IO read is I2C byte read, and
-IO write is I2C byte write. User can think of it as
-open-drain port, when line high state is input and line low
-state is output.
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-Signed-off-by: Dmitrii Sharikhin +ADw-d.sharikhin+AEA-yadro.com+AD4-
----
- MAINTAINERS               +AHw-   6 +-+-
- hw/gpio/Kconfig           +AHw-   4 +-
- hw/gpio/meson.build       +AHw-   1 +-
- hw/gpio/pcf8574.c         +AHw- 162 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-=
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
- include/hw/gpio/pcf8574.h +AHw-  15 +-+-+-+-
- 5 files changed, 188 insertions(+-)
- create mode 100644 hw/gpio/pcf8574.c
- create mode 100644 include/hw/gpio/pcf8574.h
+> Extend plugins API to support callback called with a given criteria
+> (evaluated inline).
+>
+> Added functions:
+> - qemu_plugin_register_vcpu_tb_exec_cond_cb
+> - qemu_plugin_register_vcpu_insn_exec_cond_cb
+>
+> They expect as parameter a condition, a qemu_plugin_u64_t (op1) and an
+> immediate (op2). Callback is called if op1 |cond| op2 is true.
+>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>  include/qemu/plugin.h        |   7 ++
+>  include/qemu/qemu-plugin.h   |  76 +++++++++++++++
+>  plugins/plugin.h             |   8 ++
+>  accel/tcg/plugin-gen.c       | 174 ++++++++++++++++++++++++++++++++++-
+>  plugins/api.c                |  51 ++++++++++
+>  plugins/core.c               |  19 ++++
+>  plugins/qemu-plugins.symbols |   2 +
+>  7 files changed, 334 insertions(+), 3 deletions(-)
+>
+> diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
+> index d92d64744e6..056102b2361 100644
+> --- a/include/qemu/plugin.h
+> +++ b/include/qemu/plugin.h
+> @@ -74,6 +74,8 @@ enum plugin_dyn_cb_type {
+>  enum plugin_dyn_cb_subtype {
+>      PLUGIN_CB_REGULAR,
+>      PLUGIN_CB_REGULAR_R,
+> +    PLUGIN_CB_COND,
+> +    PLUGIN_CB_COND_R,
+>      PLUGIN_CB_INLINE_ADD_U64,
+>      PLUGIN_CB_INLINE_STORE_U64,
+>      PLUGIN_N_CB_SUBTYPES,
+> @@ -97,6 +99,11 @@ struct qemu_plugin_dyn_cb {
+>              enum qemu_plugin_op op;
+>              uint64_t imm;
+>          } inline_insn;
+> +        struct {
+> +            qemu_plugin_u64 entry;
+> +            enum qemu_plugin_cond cond;
+> +            uint64_t imm;
+> +        } cond_cb;
+>      };
+>  };
+>=20=20
+> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+> index c5cac897a0b..337de25ece7 100644
+> --- a/include/qemu/qemu-plugin.h
+> +++ b/include/qemu/qemu-plugin.h
+> @@ -262,6 +262,29 @@ enum qemu_plugin_mem_rw {
+>      QEMU_PLUGIN_MEM_RW,
+>  };
+>=20=20
+> +/**
+> + * enum qemu_plugin_cond - condition to enable callback
+> + *
+> + * @QEMU_PLUGIN_COND_NEVER: false
+> + * @QEMU_PLUGIN_COND_ALWAYS: true
+> + * @QEMU_PLUGIN_COND_EQ: is equal?
+> + * @QEMU_PLUGIN_COND_NE: is not equal?
+> + * @QEMU_PLUGIN_COND_LT: is less than?
+> + * @QEMU_PLUGIN_COND_LE: is less than or equal?
+> + * @QEMU_PLUGIN_COND_GT: is greater than?
+> + * @QEMU_PLUGIN_COND_GE: is greater than or equal?
+> + */
+> +enum qemu_plugin_cond {
+> +    QEMU_PLUGIN_COND_NEVER,
+> +    QEMU_PLUGIN_COND_ALWAYS,
+> +    QEMU_PLUGIN_COND_EQ,
+> +    QEMU_PLUGIN_COND_NE,
+> +    QEMU_PLUGIN_COND_LT,
+> +    QEMU_PLUGIN_COND_LE,
+> +    QEMU_PLUGIN_COND_GT,
+> +    QEMU_PLUGIN_COND_GE,
+> +};
+> +
+>  /**
+>   * typedef qemu_plugin_vcpu_tb_trans_cb_t - translation callback
+>   * @id: unique plugin id
+> @@ -301,6 +324,32 @@ void qemu_plugin_register_vcpu_tb_exec_cb(struct qem=
+u_plugin_tb *tb,
+>                                            enum qemu_plugin_cb_flags flag=
+s,
+>                                            void *userdata);
+>=20=20
+> +/**
+> + * qemu_plugin_register_vcpu_tb_exec_cond_cb() - register conditional ca=
+llback
+> + * @tb: the opaque qemu_plugin_tb handle for the translation
+> + * @cb: callback function
+> + * @cond: condition to enable callback
+> + * @entry: first operand for condition
+> + * @imm: second operand for condition
+> + * @flags: does the plugin read or write the CPU's registers?
+> + * @userdata: any plugin data to pass to the @cb?
+> + *
+> + * The @cb function is called when a translated unit executes if
+> + * entry @cond imm is true.
+> + * If condition is QEMU_PLUGIN_COND_ALWAYS, condition is never interpret=
+ed and
+> + * this function is equivalent to qemu_plugin_register_vcpu_tb_exec_cb.
+> + * If condition QEMU_PLUGIN_COND_NEVER, condition is never interpreted a=
+nd
+> + * callback is never installed.
+> + */
+> +QEMU_PLUGIN_API
+> +void qemu_plugin_register_vcpu_tb_exec_cond_cb(struct qemu_plugin_tb *tb,
+> +                                               qemu_plugin_vcpu_udata_cb=
+_t cb,
+> +                                               enum qemu_plugin_cb_flags=
+ flags,
+> +                                               enum qemu_plugin_cond con=
+d,
+> +                                               qemu_plugin_u64 entry,
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 4d96f855de..72c23e3682 100644
---- a/MAINTAINERS
-+-+-+- b/MAINTAINERS
-+AEAAQA- -2503,6 +-2503,12 +AEAAQA- S: Maintained
- F: hw/i2c/i2c+AF8-mux+AF8-pca954x.c
- F: include/hw/i2c/i2c+AF8-mux+AF8-pca954x.h
-=20
-+-pcf8574
-+-M: Dmitrii Sharikhin +ADw-d.sharikhin+AEA-yadro.com+AD4-
-+-S: Maintained
-+-F: hw/gpio/pcf8574.c
-+-F: include/gpio/pcf8574.h
-+-
- Generic Loader
- M: Alistair Francis +ADw-alistair+AEA-alistair23.me+AD4-
- S: Maintained
-diff --git a/hw/gpio/Kconfig b/hw/gpio/Kconfig
-index 712940b8e0..19c97cc823 100644
---- a/hw/gpio/Kconfig
-+-+-+- b/hw/gpio/Kconfig
-+AEAAQA- -19,3 +-19,7 +AEAAQA- config SIFIVE+AF8-GPIO
-=20
- config STM32L4X5+AF8-GPIO
-     bool
-+-
-+-config PCF8574
-+-    bool
-+-    depends on I2C
-diff --git a/hw/gpio/meson.build b/hw/gpio/meson.build
-index 3454b503ae..791e93a97b 100644
---- a/hw/gpio/meson.build
-+-+-+- b/hw/gpio/meson.build
-+AEAAQA- -16,3 +-16,4 +AEAAQA- system+AF8-ss.add(when: 'CONFIG+AF8-RASPI', =
-if+AF8-true: files(
- system+AF8-ss.add(when: 'CONFIG+AF8-STM32L4X5+AF8-SOC', if+AF8-true: files=
-('stm32l4x5+AF8-gpio.c'))
- system+AF8-ss.add(when: 'CONFIG+AF8-ASPEED+AF8-SOC', if+AF8-true: files('a=
-speed+AF8-gpio.c'))
- system+AF8-ss.add(when: 'CONFIG+AF8-SIFIVE+AF8-GPIO', if+AF8-true: files('=
-sifive+AF8-gpio.c'))
-+-system+AF8-ss.add(when: 'CONFIG+AF8-PCF8574', if+AF8-true: files('pcf8574=
-.c'))
-diff --git a/hw/gpio/pcf8574.c b/hw/gpio/pcf8574.c
-new file mode 100644
-index 0000000000..d37909e2ad
---- /dev/null
-+-+-+- b/hw/gpio/pcf8574.c
-+AEAAQA- -0,0 +-1,162 +AEAAQA-
-+-/+ACo- SPDX-License-Identifier: GPL-2.0-only +ACo-/
-+-
-+-/+ACo-
-+- +ACo- NXP PCF8574 8-port I2C GPIO expansion chip.
-+- +ACo- Copyright (c) 2024 KNS Group (YADRO).
-+- +ACo- Written by Dmitrii Sharikhin +ADw-d.sharikhin+AEA-yadro.com+AD4-
-+- +ACo-/
-+-
-+-+ACM-include +ACI-qemu/osdep.h+ACI-
-+-+ACM-include +ACI-hw/i2c/i2c.h+ACI-
-+-+ACM-include +ACI-hw/gpio/pcf8574.h+ACI-
-+-+ACM-include +ACI-hw/irq.h+ACI-
-+-+ACM-include +ACI-migration/vmstate.h+ACI-
-+-+ACM-include +ACI-qemu/log.h+ACI-
-+-+ACM-include +ACI-qemu/module.h+ACI-
-+-+ACM-include +ACI-qom/object.h+ACI-
-+-
-+-/+ACo-
-+- +ACo- PCF8574 and compatible chips incorporate quasi-bidirectional
-+- +ACo- IO. Electrically it means that device sustain pull-up to line
-+- +ACo- unless IO port is configured as output +AF8-and+AF8- driven low.
-+- +ACo-
-+- +ACo- IO access is implemented as simple I2C single-byte read
-+- +ACo- or write operation. So, to configure line to input user write 1
-+- +ACo- to corresponding bit. To configure line to output and drive it low
-+- +ACo- user write 0 to corresponding bit.
-+- +ACo-
-+- +ACo- In essence, user can think of quasi-bidirectional IO as
-+- +ACo- open-drain line, except presence of builtin rising edge accelerati=
-on
-+- +ACo- embedded in PCF8574 IC
-+- +ACo-
-+- +ACo- PCF8574 has interrupt request line, which is being pulled down whe=
-n
-+- +ACo- port line state differs from last read. Port read operation clears
-+- +ACo- state and INT line returns to high state via pullup.
-+- +ACo-/
-+-
-+-OBJECT+AF8-DECLARE+AF8-SIMPLE+AF8-TYPE(PCF8574State, PCF8574)
-+-
-+-+ACM-define PORTS+AF8-COUNT (8)
-+-
-+-struct PCF8574State +AHs-
-+-    I2CSlave parent+AF8-obj+ADs-
-+-    uint8+AF8-t  lastrq+ADs-     /+ACo- Last requested state. If changed =
-- assert irq +ACo-/
-+-    uint8+AF8-t  input+ADs-      /+ACo- external electrical line state +A=
-Co-/
-+-    uint8+AF8-t  output+ADs-     /+ACo- Pull-up (1) or drive low (0) on b=
-it +ACo-/
-+-    qemu+AF8-irq handler+AFs-PORTS+AF8-COUNT+AF0AOw-
-+-    qemu+AF8-irq intrq+ADs-      /+ACo- External irq request +ACo-/
-+-+AH0AOw-
-+-
-+-static void pcf8574+AF8-reset(DeviceState +ACo-dev)
-+-+AHs-
-+-    PCF8574State +ACo-s +AD0- PCF8574(dev)+ADs-
-+-    s-+AD4-lastrq +AD0- MAKE+AF8-64BIT+AF8-MASK(0, PORTS+AF8-COUNT)+ADs-
-+-    s-+AD4-input  +AD0- MAKE+AF8-64BIT+AF8-MASK(0, PORTS+AF8-COUNT)+ADs-
-+-    s-+AD4-output +AD0- MAKE+AF8-64BIT+AF8-MASK(0, PORTS+AF8-COUNT)+ADs-
-+-+AH0-
-+-
-+-static inline uint8+AF8-t pcf8574+AF8-line+AF8-state(PCF8574State +ACo-s)
-+-+AHs-
-+-    /+ACo- we driving line low or external circuit does that +ACo-/
-+-    return s-+AD4-input +ACY- s-+AD4-output+ADs-
-+-+AH0-
-+-
-+-static uint8+AF8-t pcf8574+AF8-rx(I2CSlave +ACo-i2c)
-+-+AHs-
-+-    PCF8574State +ACo-s +AD0- PCF8574(i2c)+ADs-
-+-    uint8+AF8-t linestate +AD0- pcf8574+AF8-line+AF8-state(s)+ADs-
-+-    if (s-+AD4-lastrq +ACEAPQ- linestate) +AHs-
-+-        s-+AD4-lastrq +AD0- linestate+ADs-
-+-        if (s-+AD4-intrq) +AHs-
-+-            qemu+AF8-set+AF8-irq(s-+AD4-intrq, 1)+ADs-
-+-        +AH0-
-+-    +AH0-
-+-    return linestate+ADs-
-+-+AH0-
-+-
-+-static int pcf8574+AF8-tx(I2CSlave +ACo-i2c, uint8+AF8-t data)
-+-+AHs-
-+-    PCF8574State +ACo-s +AD0- PCF8574(i2c)+ADs-
-+-    uint8+AF8-t prev+ADs-
-+-    uint8+AF8-t diff+ADs-
-+-    uint8+AF8-t actual+ADs-
-+-    int line +AD0- 0+ADs-
-+-
-+-    prev +AD0- pcf8574+AF8-line+AF8-state(s)+ADs-
-+-    s-+AD4-output +AD0- data+ADs-
-+-    actual +AD0- pcf8574+AF8-line+AF8-state(s)+ADs-
-+-
-+-    for (diff +AD0- (actual +AF4- prev)+ADs- diff+ADs- diff +ACYAPQ- +AH4=
--(1 +ADwAPA- line)) +AHs-
-+-        line +AD0- ctz32(diff)+ADs-
-+-        if (s-+AD4-handler+AFs-line+AF0-) +AHs-
-+-            qemu+AF8-set+AF8-irq(s-+AD4-handler+AFs-line+AF0-, (actual +A=
-D4APg- line) +ACY- 1)+ADs-
-+-        +AH0-
-+-    +AH0-
-+-
-+-    if (s-+AD4-intrq) +AHs-
-+-        qemu+AF8-set+AF8-irq(s-+AD4-intrq, actual +AD0APQ- s-+AD4-lastrq)=
-+ADs-
-+-    +AH0-
-+-
-+-    return 0+ADs-
-+-+AH0-
-+-
-+-static const VMStateDescription vmstate+AF8-pcf8574 +AD0- +AHs-
-+-    .name               +AD0- +ACI-pcf8574+ACI-,
-+-    .version+AF8-id         +AD0- 0,
-+-    .minimum+AF8-version+AF8-id +AD0- 0,
-+-    .fields +AD0- (VMStateField+AFsAXQ-) +AHs-
-+-        VMSTATE+AF8-I2C+AF8-SLAVE(parent+AF8-obj, PCF8574State),
-+-        VMSTATE+AF8-UINT8(lastrq, PCF8574State),
-+-        VMSTATE+AF8-UINT8(input,  PCF8574State),
-+-        VMSTATE+AF8-UINT8(output, PCF8574State),
-+-        VMSTATE+AF8-END+AF8-OF+AF8-LIST()
-+-    +AH0-
-+-+AH0AOw-
-+-
-+-static void pcf8574+AF8-gpio+AF8-set(void +ACo-opaque, int line, int leve=
-l)
-+-+AHs-
-+-    PCF8574State +ACo-s +AD0- (PCF8574State +ACo-) opaque+ADs-
-+-    assert(line +AD4APQ- 0 +ACYAJg- line +ADw- ARRAY+AF8-SIZE(s-+AD4-hand=
-ler))+ADs-
-+-
-+-    if (level) +AHs-
-+-        s-+AD4-input +AHwAPQ-  (1 +ADwAPA- line)+ADs-
-+-    +AH0- else +AHs-
-+-        s-+AD4-input +ACYAPQ- +AH4-(1 +ADwAPA- line)+ADs-
-+-    +AH0-
-+-
-+-    if (pcf8574+AF8-line+AF8-state(s) +ACEAPQ- s-+AD4-lastrq +ACYAJg- s-+=
-AD4-intrq) +AHs-
-+-        qemu+AF8-set+AF8-irq(s-+AD4-intrq, 0)+ADs-
-+-    +AH0-
-+-+AH0-
-+-
-+-static void pcf8574+AF8-realize(DeviceState +ACo-dev, Error +ACoAKg-errp)
-+-+AHs-
-+-    PCF8574State +ACo-s +AD0- PCF8574(dev)+ADs-
-+-
-+-    qdev+AF8-init+AF8-gpio+AF8-in(dev, pcf8574+AF8-gpio+AF8-set, ARRAY+AF=
-8-SIZE(s-+AD4-handler))+ADs-
-+-    qdev+AF8-init+AF8-gpio+AF8-out(dev, s-+AD4-handler, ARRAY+AF8-SIZE(s-=
-+AD4-handler))+ADs-
-+-    qdev+AF8-init+AF8-gpio+AF8-out+AF8-named(dev, +ACY-s-+AD4-intrq, +ACI=
--nINT+ACI-, 1)+ADs-
-+-+AH0-
-+-
-+-static void pcf8574+AF8-class+AF8-init(ObjectClass +ACo-klass, void +ACo-=
-data)
-+-+AHs-
-+-    DeviceClass   +ACo-dc +AD0- DEVICE+AF8-CLASS(klass)+ADs-
-+-    I2CSlaveClass +ACo-k  +AD0- I2C+AF8-SLAVE+AF8-CLASS(klass)+ADs-
-+-
-+-    k-+AD4-recv     +AD0- pcf8574+AF8-rx+ADs-
-+-    k-+AD4-send     +AD0- pcf8574+AF8-tx+ADs-
-+-    dc-+AD4-realize +AD0- pcf8574+AF8-realize+ADs-
-+-    dc-+AD4-reset   +AD0- pcf8574+AF8-reset+ADs-
-+-    dc-+AD4-vmsd    +AD0- +ACY-vmstate+AF8-pcf8574+ADs-
-+-+AH0-
-+-
-+-static const TypeInfo pcf8574+AF8-infos+AFsAXQ- +AD0- +AHs-
-+-    +AHs-
-+-        .name          +AD0- TYPE+AF8-PCF8574,
-+-        .parent        +AD0- TYPE+AF8-I2C+AF8-SLAVE,
-+-        .instance+AF8-size +AD0- sizeof(PCF8574State),
-+-        .class+AF8-init    +AD0- pcf8574+AF8-class+AF8-init,
-+-    +AH0-
-+-+AH0AOw-
-+-
-+-DEFINE+AF8-TYPES(pcf8574+AF8-infos)+ADs-
-diff --git a/include/hw/gpio/pcf8574.h b/include/hw/gpio/pcf8574.h
-new file mode 100644
-index 0000000000..3291d7dbbc
---- /dev/null
-+-+-+- b/include/hw/gpio/pcf8574.h
-+AEAAQA- -0,0 +-1,15 +AEAAQA-
-+-/+ACo- SPDX-License-Identifier: GPL-2.0-only +ACo-/
-+-
-+-/+ACo-
-+- +ACo- NXP PCF8574 8-port I2C GPIO expansion chip.
-+- +ACo-
-+- +ACo- Copyright (c) 2024 KNS Group (YADRO).
-+- +ACo- Written by Dmitrii Sharikhin +ADw-d.sharikhin+AEA-yadro.com+AD4-
-+- +ACo-/
-+-
-+-+ACM-ifndef +AF8-HW+AF8-GPIO+AF8-PCF8574
-+-+ACM-define +AF8-HW+AF8-GPIO+AF8-PCF8574
-+-
-+-+ACM-define TYPE+AF8-PCF8574 +ACI-pcf8574+ACI-
-+-
-+-+ACM-endif /+ACo- +AF8-HW+AF8-GPIO+AF8-PCF8574 +ACo-/
+Is this a fixed entry or part of a scoreboard?
+
+I'm trying to write a control flow plugin with a structure like:
+
+  /* We use this to track the current execution state */
+  typedef struct {
+      /* address of start of block */
+      uint64_t block_start;
+      /* address of end of block */
+      uint64_t block_end;
+      /* address of last executed PC */
+      uint64_t last_pc;
+  } VCPUScoreBoard;
+
+And I want to check to see if last_pc (set by STORE_U64 for each insn) =3D=
+=3D block_end
+(set at start of TB with what we know).
+
+Is this something I need to get with:
+
+   last_pc =3D qemu_plugin_scoreboard_u64_in_struct(state, VCPUScoreBoard, =
+last_pc);
+
+?
+
+> +                                               uint64_t imm,
+> +                                               void *userdata);
+> +
+>  /**
+>   * enum qemu_plugin_op - describes an inline op
+>   *
+> @@ -344,6 +393,33 @@ void qemu_plugin_register_vcpu_insn_exec_cb(struct q=
+emu_plugin_insn *insn,
+>                                              enum qemu_plugin_cb_flags fl=
+ags,
+>                                              void *userdata);
+>=20=20
+> +/**
+> + * qemu_plugin_register_vcpu_insn_exec_cond_cb() - conditional insn exec=
+ution cb
+> + * @insn: the opaque qemu_plugin_insn handle for an instruction
+> + * @cb: callback function
+> + * @flags: does the plugin read or write the CPU's registers?
+> + * @cond: condition to enable callback
+> + * @entry: first operand for condition
+> + * @imm: second operand for condition
+> + * @userdata: any plugin data to pass to the @cb?
+> + *
+> + * The @cb function is called when an instruction executes if
+> + * entry @cond imm is true.
+> + * If condition is QEMU_PLUGIN_COND_ALWAYS, condition is never interpret=
+ed and
+> + * this function is equivalent to qemu_plugin_register_vcpu_insn_exec_cb.
+> + * If condition QEMU_PLUGIN_COND_NEVER, condition is never interpreted a=
+nd
+> + * callback is never installed.
+> + */
+> +QEMU_PLUGIN_API
+> +void qemu_plugin_register_vcpu_insn_exec_cond_cb(
+> +    struct qemu_plugin_insn *insn,
+> +    qemu_plugin_vcpu_udata_cb_t cb,
+> +    enum qemu_plugin_cb_flags flags,
+> +    enum qemu_plugin_cond cond,
+> +    qemu_plugin_u64 entry,
+> +    uint64_t imm,
+> +    void *userdata);
+> +
+>  /**
+>   * qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu() - insn exec inl=
+ine op
+>   * @insn: the opaque qemu_plugin_insn handle for an instruction
+> diff --git a/plugins/plugin.h b/plugins/plugin.h
+> index 696b1fa38b0..118cc99bb2a 100644
+> --- a/plugins/plugin.h
+> +++ b/plugins/plugin.h
+> @@ -94,6 +94,14 @@ plugin_register_dyn_cb__udata(GArray **arr,
+>                                qemu_plugin_vcpu_udata_cb_t cb,
+>                                enum qemu_plugin_cb_flags flags, void *uda=
+ta);
+>=20=20
+> +void
+> +plugin_register_dyn_cond_cb__udata(GArray **arr,
+> +                                   qemu_plugin_vcpu_udata_cb_t cb,
+> +                                   enum qemu_plugin_cb_flags flags,
+> +                                   enum qemu_plugin_cond cond,
+> +                                   qemu_plugin_u64 entry,
+> +                                   uint64_t imm,
+> +                                   void *udata);
+>=20=20
+>  void plugin_register_vcpu_mem_cb(GArray **arr,
+>                                   void *cb,
+> diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
+> index 02c894106e2..15762a26439 100644
+> --- a/accel/tcg/plugin-gen.c
+> +++ b/accel/tcg/plugin-gen.c
+> @@ -46,6 +46,7 @@
+>  #include "qemu/plugin.h"
+>  #include "cpu.h"
+>  #include "tcg/tcg.h"
+> +#include "tcg/tcg-cond.h"
+>  #include "tcg/tcg-internal.h"
+>  #include "tcg/tcg-op.h"
+>  #include "tcg/tcg-temp-internal.h"
+> @@ -82,6 +83,8 @@ enum plugin_gen_from {
+>  enum plugin_gen_cb {
+>      PLUGIN_GEN_CB_UDATA,
+>      PLUGIN_GEN_CB_UDATA_R,
+> +    PLUGIN_GEN_CB_COND_UDATA,
+> +    PLUGIN_GEN_CB_COND_UDATA_R,
+>      PLUGIN_GEN_CB_INLINE_ADD_U64,
+>      PLUGIN_GEN_CB_INLINE_STORE_U64,
+>      PLUGIN_GEN_CB_MEM,
+> @@ -119,16 +122,58 @@ static void gen_empty_udata_cb(void (*gen_helper)(T=
+CGv_i32, TCGv_ptr))
+>      tcg_temp_free_i32(cpu_index);
+>  }
+>=20=20
+> +static void gen_empty_cond_udata_cb(void (*gen_helper)(TCGv_i32, TCGv_pt=
+r))
+> +{
+> +    TCGv_i32 cpu_index =3D tcg_temp_ebb_new_i32();
+> +    TCGv_i32 cpu_offset =3D tcg_temp_ebb_new_i32();
+> +    TCGv_ptr cpu_index_as_ptr =3D tcg_temp_ebb_new_ptr();
+> +    TCGv_i64 val =3D tcg_temp_ebb_new_i64();
+> +    TCGv_ptr ptr =3D tcg_temp_ebb_new_ptr();
+> +    TCGv_ptr udata =3D tcg_temp_ebb_new_ptr();
+> +    TCGLabel *after_cb =3D gen_new_label();
+> +
+> +    tcg_gen_movi_ptr(udata, 0);
+> +    tcg_gen_ld_i32(cpu_index, tcg_env,
+> +                   -offsetof(ArchCPU, env) + offsetof(CPUState, cpu_inde=
+x));
+> +    /* second operand will be replaced by immediate value */
+> +    tcg_gen_mul_i32(cpu_offset, cpu_index, cpu_index);
+> +    tcg_gen_ext_i32_ptr(cpu_index_as_ptr, cpu_offset);
+> +    tcg_gen_movi_ptr(ptr, 0);
+> +    tcg_gen_add_ptr(ptr, ptr, cpu_index_as_ptr);
+> +    tcg_gen_ld_i64(val, ptr, 0);
+> +
+> +    tcg_gen_brcondi_i64(TCG_COND_EQ, val, 0, after_cb);
+> +    gen_helper(cpu_index, udata);
+> +    gen_set_label(after_cb);
+> +
+> +    tcg_temp_free_ptr(udata);
+> +    tcg_temp_free_ptr(ptr);
+> +    tcg_temp_free_i64(val);
+> +    tcg_temp_free_ptr(cpu_index_as_ptr);
+> +    tcg_temp_free_i32(cpu_offset);
+> +    tcg_temp_free_i32(cpu_index);
+> +}
+> +
+>  static void gen_empty_udata_cb_no_wg(void)
+>  {
+>      gen_empty_udata_cb(gen_helper_plugin_vcpu_udata_cb_no_wg);
+>  }
+>=20=20
+> +static void gen_empty_cond_udata_cb_no_wg(void)
+> +{
+> +    gen_empty_cond_udata_cb(gen_helper_plugin_vcpu_udata_cb_no_wg);
+> +}
+> +
+>  static void gen_empty_udata_cb_no_rwg(void)
+>  {
+>      gen_empty_udata_cb(gen_helper_plugin_vcpu_udata_cb_no_rwg);
+>  }
+>=20=20
+> +static void gen_empty_cond_udata_cb_no_rwg(void)
+> +{
+> +    gen_empty_cond_udata_cb(gen_helper_plugin_vcpu_udata_cb_no_rwg);
+> +}
+> +
+>  static void gen_empty_inline_cb_add_u64(void)
+>  {
+>      TCGv_i32 cpu_index =3D tcg_temp_ebb_new_i32();
+> @@ -248,6 +293,10 @@ static void plugin_gen_empty_callback(enum plugin_ge=
+n_from from)
+>                      gen_empty_inline_cb_store_u64);
+>          gen_wrapped(from, PLUGIN_GEN_CB_UDATA, gen_empty_udata_cb_no_rwg=
+);
+>          gen_wrapped(from, PLUGIN_GEN_CB_UDATA_R, gen_empty_udata_cb_no_w=
+g);
+> +        gen_wrapped(from, PLUGIN_GEN_CB_COND_UDATA,
+> +                    gen_empty_cond_udata_cb_no_rwg);
+> +        gen_wrapped(from, PLUGIN_GEN_CB_COND_UDATA_R,
+> +                    gen_empty_cond_udata_cb_no_wg);
+>          break;
+>      default:
+>          g_assert_not_reached();
+> @@ -456,6 +505,29 @@ static TCGOp *copy_call(TCGOp **begin_op, TCGOp *op,=
+ void *func, int *cb_idx)
+>      return op;
+>  }
+>=20=20
+> +static TCGOp *copy_brcondi_i64(TCGOp **begin_op, TCGOp *op, TCGCond cond,
+> +                               uint64_t imm)
+> +{
+> +    if (TCG_TARGET_REG_BITS =3D=3D 32) {
+> +        op =3D copy_op(begin_op, op, INDEX_op_brcond2_i32);
+> +        /* low(arg1), high(arg1), 32(arg2), 32(arg2 >> 32), cond, label =
+*/
+> +        op->args[2] =3D tcgv_i32_arg(tcg_constant_i32(imm));
+> +        op->args[3] =3D tcgv_i32_arg(tcg_constant_i32(imm >> 32));
+> +        op->args[4] =3D cond;
+> +    } else {
+> +        op =3D copy_op(begin_op, op, INDEX_op_brcond_i64);
+> +        /* arg1, arg2, cond, label */
+> +        op->args[1] =3D tcgv_i64_arg(tcg_constant_i64(imm));
+> +        op->args[2] =3D cond;
+> +    }
+> +    return op;
+> +}
+> +
+> +static TCGOp *copy_set_label(TCGOp **begin_op, TCGOp *op)
+> +{
+> +    return copy_op(begin_op, op, INDEX_op_set_label);
+> +}
+> +
+>  /*
+>   * When we append/replace ops here we are sensitive to changing patterns=
+ of
+>   * TCGOps generated by the tcg_gen_FOO calls when we generated the
+> @@ -482,6 +554,50 @@ static TCGOp *append_udata_cb(const struct qemu_plug=
+in_dyn_cb *cb,
+>      return op;
+>  }
+>=20=20
+> +static TCGCond plugin_cond_to_tcgcond(enum qemu_plugin_cond cond)
+> +{
+> +    switch (cond) {
+> +    case QEMU_PLUGIN_COND_EQ:
+> +        return TCG_COND_EQ;
+> +    case QEMU_PLUGIN_COND_NE:
+> +        return TCG_COND_NE;
+> +    case QEMU_PLUGIN_COND_LT:
+> +        return TCG_COND_LTU;
+> +    case QEMU_PLUGIN_COND_LE:
+> +        return TCG_COND_LEU;
+> +    case QEMU_PLUGIN_COND_GT:
+> +        return TCG_COND_GTU;
+> +    case QEMU_PLUGIN_COND_GE:
+> +        return TCG_COND_GEU;
+> +    default:
+> +        /* ALWAYS and NEVER conditions should never reach */
+> +        g_assert_not_reached();
+> +    }
+> +}
+> +
+> +static TCGOp *append_cond_udata_cb(const struct qemu_plugin_dyn_cb *cb,
+> +                                   TCGOp *begin_op, TCGOp *op, int *cb_i=
+dx)
+> +{
+> +    char *ptr =3D cb->cond_cb.entry.score->data->data;
+> +    size_t elem_size =3D g_array_get_element_size(
+> +        cb->cond_cb.entry.score->data);
+> +    size_t offset =3D cb->cond_cb.entry.offset;
+> +    /* Condition should be negated, as calling the cb is the "else" path=
+ */
+> +    TCGCond cond =3D tcg_invert_cond(plugin_cond_to_tcgcond(cb->cond_cb.=
+cond));
+> +
+> +    op =3D copy_const_ptr(&begin_op, op, ptr);
+> +    op =3D copy_ld_i32(&begin_op, op);
+> +    op =3D copy_mul_i32(&begin_op, op, elem_size);
+> +    op =3D copy_ext_i32_ptr(&begin_op, op);
+> +    op =3D copy_const_ptr(&begin_op, op, ptr + offset);
+> +    op =3D copy_add_ptr(&begin_op, op);
+> +    op =3D copy_ld_i64(&begin_op, op);
+> +    op =3D copy_brcondi_i64(&begin_op, op, cond, cb->cond_cb.imm);
+> +    op =3D copy_call(&begin_op, op, cb->f.vcpu_udata, cb_idx);
+> +    op =3D copy_set_label(&begin_op, op);
+> +    return op;
+> +}
+> +
+>  static TCGOp *append_inline_cb_add_u64(const struct qemu_plugin_dyn_cb *=
+cb,
+>                                         TCGOp *begin_op, TCGOp *op,
+>                                         int *unused)
+> @@ -601,6 +717,12 @@ inject_udata_cb(const GArray *cbs, TCGOp *begin_op)
+>      inject_cb_type(cbs, begin_op, append_udata_cb, op_ok);
+>  }
+>=20=20
+> +static void
+> +inject_cond_udata_cb(const GArray *cbs, TCGOp *begin_op)
+> +{
+> +    inject_cb_type(cbs, begin_op, append_cond_udata_cb, op_ok);
+> +}
+> +
+>  static void
+>  inject_inline_cb_add_u64(const GArray *cbs, TCGOp *begin_op, op_ok_fn ok)
+>  {
+> @@ -654,7 +776,7 @@ static void inject_mem_enable_helper(struct qemu_plug=
+in_tb *ptb,
+>                                       struct qemu_plugin_insn *plugin_ins=
+n,
+>                                       TCGOp *begin_op)
+>  {
+> -    GArray *cbs[3];
+> +    GArray *cbs[4];
+>      GArray *arr;
+>      size_t n_cbs, i;
+>=20=20
+> @@ -662,6 +784,7 @@ static void inject_mem_enable_helper(struct qemu_plug=
+in_tb *ptb,
+>      cbs[0] =3D plugin_insn->cbs[PLUGIN_CB_MEM][PLUGIN_CB_INLINE_ADD_U64];
+>      cbs[1] =3D plugin_insn->cbs[PLUGIN_CB_MEM][PLUGIN_CB_INLINE_STORE_U6=
+4];
+>      cbs[2] =3D plugin_insn->cbs[PLUGIN_CB_MEM][PLUGIN_CB_REGULAR];
+> +    cbs[3] =3D plugin_insn->cbs[PLUGIN_CB_MEM][PLUGIN_CB_COND];
+>=20=20
+>      n_cbs =3D 0;
+>      for (i =3D 0; i < ARRAY_SIZE(cbs); i++) {
+> @@ -727,6 +850,18 @@ static void plugin_gen_tb_udata_r(const struct qemu_=
+plugin_tb *ptb,
+>      inject_udata_cb(ptb->cbs[PLUGIN_CB_REGULAR_R], begin_op);
+>  }
+>=20=20
+> +static void plugin_gen_tb_cond_udata(const struct qemu_plugin_tb *ptb,
+> +                                     TCGOp *begin_op)
+> +{
+> +    inject_cond_udata_cb(ptb->cbs[PLUGIN_CB_COND], begin_op);
+> +}
+> +
+> +static void plugin_gen_tb_cond_udata_r(const struct qemu_plugin_tb *ptb,
+> +                                       TCGOp *begin_op)
+> +{
+> +    inject_cond_udata_cb(ptb->cbs[PLUGIN_CB_COND_R], begin_op);
+> +}
+> +
+>  static void plugin_gen_tb_inline_add_u64(const struct qemu_plugin_tb *pt=
+b,
+>                                           TCGOp *begin_op)
+>  {
+> @@ -745,7 +880,6 @@ static void plugin_gen_insn_udata(const struct qemu_p=
+lugin_tb *ptb,
+>                                    TCGOp *begin_op, int insn_idx)
+>  {
+>      struct qemu_plugin_insn *insn =3D g_ptr_array_index(ptb->insns, insn=
+_idx);
+> -
+>      inject_udata_cb(insn->cbs[PLUGIN_CB_INSN][PLUGIN_CB_REGULAR], begin_=
+op);
+>  }
+>=20=20
+> @@ -753,10 +887,23 @@ static void plugin_gen_insn_udata_r(const struct qe=
+mu_plugin_tb *ptb,
+>                                      TCGOp *begin_op, int insn_idx)
+>  {
+>      struct qemu_plugin_insn *insn =3D g_ptr_array_index(ptb->insns, insn=
+_idx);
+> -
+>      inject_udata_cb(insn->cbs[PLUGIN_CB_INSN][PLUGIN_CB_REGULAR_R], begi=
+n_op);
+>  }
+>=20=20
+> +static void plugin_gen_insn_cond_udata(const struct qemu_plugin_tb *ptb,
+> +                                       TCGOp *begin_op, int insn_idx)
+> +{
+> +    struct qemu_plugin_insn *insn =3D g_ptr_array_index(ptb->insns, insn=
+_idx);
+> +    inject_cond_udata_cb(insn->cbs[PLUGIN_CB_INSN][PLUGIN_CB_COND], begi=
+n_op);
+> +}
+> +
+> +static void plugin_gen_insn_cond_udata_r(const struct qemu_plugin_tb *pt=
+b,
+> +                                    TCGOp *begin_op, int insn_idx)
+> +{
+> +    struct qemu_plugin_insn *insn =3D g_ptr_array_index(ptb->insns, insn=
+_idx);
+> +    inject_cond_udata_cb(insn->cbs[PLUGIN_CB_INSN][PLUGIN_CB_COND_R], be=
+gin_op);
+> +}
+> +
+>  static void plugin_gen_insn_inline_add_u64(const struct qemu_plugin_tb *=
+ptb,
+>                                             TCGOp *begin_op, int insn_idx)
+>  {
+> @@ -843,6 +990,15 @@ static void pr_ops(void)
+>              case PLUGIN_GEN_CB_UDATA:
+>                  type =3D "udata";
+>                  break;
+> +            case PLUGIN_GEN_CB_UDATA_R:
+> +                type =3D "udata (read)";
+> +                break;
+> +            case PLUGIN_GEN_CB_COND_UDATA:
+> +                type =3D "cond udata";
+> +                break;
+> +            case PLUGIN_GEN_CB_COND_UDATA_R:
+> +                type =3D "cond udata (read)";
+> +                break;
+>              case PLUGIN_GEN_CB_INLINE_ADD_U64:
+>                  type =3D "inline add u64";
+>                  break;
+> @@ -897,6 +1053,12 @@ static void plugin_gen_inject(struct qemu_plugin_tb=
+ *plugin_tb)
+>                  case PLUGIN_GEN_CB_UDATA_R:
+>                      plugin_gen_tb_udata_r(plugin_tb, op);
+>                      break;
+> +                case PLUGIN_GEN_CB_COND_UDATA:
+> +                    plugin_gen_tb_cond_udata(plugin_tb, op);
+> +                    break;
+> +                case PLUGIN_GEN_CB_COND_UDATA_R:
+> +                    plugin_gen_tb_cond_udata_r(plugin_tb, op);
+> +                    break;
+>                  case PLUGIN_GEN_CB_INLINE_ADD_U64:
+>                      plugin_gen_tb_inline_add_u64(plugin_tb, op);
+>                      break;
+> @@ -919,6 +1081,12 @@ static void plugin_gen_inject(struct qemu_plugin_tb=
+ *plugin_tb)
+>                  case PLUGIN_GEN_CB_UDATA_R:
+>                      plugin_gen_insn_udata_r(plugin_tb, op, insn_idx);
+>                      break;
+> +                case PLUGIN_GEN_CB_COND_UDATA:
+> +                    plugin_gen_insn_cond_udata(plugin_tb, op, insn_idx);
+> +                    break;
+> +                case PLUGIN_GEN_CB_COND_UDATA_R:
+> +                    plugin_gen_insn_cond_udata_r(plugin_tb, op, insn_idx=
+);
+> +                    break;
+>                  case PLUGIN_GEN_CB_INLINE_ADD_U64:
+>                      plugin_gen_insn_inline_add_u64(plugin_tb, op, insn_i=
+dx);
+>                      break;
+> diff --git a/plugins/api.c b/plugins/api.c
+> index 4a033c16f83..f24d68d7a68 100644
+> --- a/plugins/api.c
+> +++ b/plugins/api.c
+> @@ -113,6 +113,31 @@ void qemu_plugin_register_vcpu_tb_exec_cb(struct qem=
+u_plugin_tb *tb,
+>      }
+>  }
+>=20=20
+> +void qemu_plugin_register_vcpu_tb_exec_cond_cb(struct qemu_plugin_tb *tb,
+> +                                               qemu_plugin_vcpu_udata_cb=
+_t cb,
+> +                                               enum qemu_plugin_cb_flags=
+ flags,
+> +                                               enum qemu_plugin_cond con=
+d,
+> +                                               qemu_plugin_u64 entry,
+> +                                               uint64_t imm,
+> +                                               void *udata)
+> +{
+> +    if (cond =3D=3D QEMU_PLUGIN_COND_NEVER || tb->mem_only) {
+> +        return;
+> +    }
+> +    if (cond =3D=3D QEMU_PLUGIN_COND_ALWAYS) {
+> +        qemu_plugin_register_vcpu_tb_exec_cb(tb, cb, flags, udata);
+> +        return;
+> +    }
+> +    int index =3D flags =3D=3D QEMU_PLUGIN_CB_R_REGS ||
+> +                flags =3D=3D QEMU_PLUGIN_CB_RW_REGS ?
+> +                PLUGIN_CB_COND_R : PLUGIN_CB_COND;
+> +
+> +    plugin_register_dyn_cond_cb__udata(&tb->cbs[index],
+> +                                       cb, flags,
+> +                                       cond, entry, imm,
+> +                                       udata);
+> +}
+> +
+>  void qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
+>      struct qemu_plugin_tb *tb,
+>      enum qemu_plugin_op op,
+> @@ -141,6 +166,32 @@ void qemu_plugin_register_vcpu_insn_exec_cb(struct q=
+emu_plugin_insn *insn,
+>      }
+>  }
+>=20=20
+> +void qemu_plugin_register_vcpu_insn_exec_cond_cb(
+> +    struct qemu_plugin_insn *insn,
+> +    qemu_plugin_vcpu_udata_cb_t cb,
+> +    enum qemu_plugin_cb_flags flags,
+> +    enum qemu_plugin_cond cond,
+> +    qemu_plugin_u64 entry,
+> +    uint64_t imm,
+> +    void *udata)
+> +{
+> +    if (cond =3D=3D QEMU_PLUGIN_COND_NEVER || insn->mem_only) {
+> +        return;
+> +    }
+> +    if (cond =3D=3D QEMU_PLUGIN_COND_ALWAYS) {
+> +        qemu_plugin_register_vcpu_insn_exec_cb(insn, cb, flags, udata);
+> +        return;
+> +    }
+> +    int index =3D flags =3D=3D QEMU_PLUGIN_CB_R_REGS ||
+> +                flags =3D=3D QEMU_PLUGIN_CB_RW_REGS ?
+> +                PLUGIN_CB_COND_R : PLUGIN_CB_COND;
+> +
+> +    plugin_register_dyn_cond_cb__udata(&insn->cbs[PLUGIN_CB_INSN][index],
+> +                                       cb, flags,
+> +                                       cond, entry, imm,
+> +                                       udata);
+> +}
+> +
+>  void qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+>      struct qemu_plugin_insn *insn,
+>      enum qemu_plugin_op op,
+> diff --git a/plugins/core.c b/plugins/core.c
+> index 11f72594229..82d5f17438e 100644
+> --- a/plugins/core.c
+> +++ b/plugins/core.c
+> @@ -347,6 +347,25 @@ void plugin_register_dyn_cb__udata(GArray **arr,
+>      dyn_cb->type =3D PLUGIN_CB_REGULAR;
+>  }
+>=20=20
+> +void plugin_register_dyn_cond_cb__udata(GArray **arr,
+> +                                        qemu_plugin_vcpu_udata_cb_t cb,
+> +                                        enum qemu_plugin_cb_flags flags,
+> +                                        enum qemu_plugin_cond cond,
+> +                                        qemu_plugin_u64 entry,
+> +                                        uint64_t imm,
+> +                                        void *udata)
+> +{
+> +    struct qemu_plugin_dyn_cb *dyn_cb =3D plugin_get_dyn_cb(arr);
+> +
+> +    dyn_cb->userp =3D udata;
+> +    /* Note flags are discarded as unused. */
+> +    dyn_cb->f.vcpu_udata =3D cb;
+> +    dyn_cb->type =3D PLUGIN_CB_COND;
+> +    dyn_cb->cond_cb.cond =3D cond;
+> +    dyn_cb->cond_cb.entry =3D entry;
+> +    dyn_cb->cond_cb.imm =3D imm;
+> +}
+> +
+>  void plugin_register_vcpu_mem_cb(GArray **arr,
+>                                   void *cb,
+>                                   enum qemu_plugin_cb_flags flags,
+> diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
+> index a9fac056c7f..aa0a77a319f 100644
+> --- a/plugins/qemu-plugins.symbols
+> +++ b/plugins/qemu-plugins.symbols
+> @@ -27,6 +27,7 @@
+>    qemu_plugin_register_vcpu_idle_cb;
+>    qemu_plugin_register_vcpu_init_cb;
+>    qemu_plugin_register_vcpu_insn_exec_cb;
+> +  qemu_plugin_register_vcpu_insn_exec_cond_cb;
+>    qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu;
+>    qemu_plugin_register_vcpu_mem_cb;
+>    qemu_plugin_register_vcpu_mem_inline_per_vcpu;
+> @@ -34,6 +35,7 @@
+>    qemu_plugin_register_vcpu_syscall_cb;
+>    qemu_plugin_register_vcpu_syscall_ret_cb;
+>    qemu_plugin_register_vcpu_tb_exec_cb;
+> +  qemu_plugin_register_vcpu_tb_exec_cond_cb;
+>    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu;
+>    qemu_plugin_register_vcpu_tb_trans_cb;
+>    qemu_plugin_reset;
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
