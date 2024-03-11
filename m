@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45F8BC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 22:03:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5F0AC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 22:03:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjngX-0000Uu-NU; Mon, 11 Mar 2024 17:59:53 -0400
+	id 1rjngG-0000AG-0R; Mon, 11 Mar 2024 17:59:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjngV-0000Pc-IW
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 17:59:51 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjngE-00009q-Kn
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 17:59:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjngT-00040L-8f
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 17:59:51 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rjngB-0003xS-UX
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 17:59:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710194388;
+ s=mimecast20190719; t=1710194371;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZYSgvTN7t6/1mUzIu1ZJuxJpeE9c58Iqz1Li8XbeIy4=;
- b=KKTDBxKP9w1swh+96f3iWCgnaXYD1IwHoVgyzaNB4bRAe2a9rCYxiXuysTNlv9z/hSDBnC
- UNq8sbAo6Sui651+6VYmUUT76AZgWdCSA0kt/Pu1G1/CG3ZLiYxSnFTS1/5x2PCVMahOr6
- zCdnkhl1i8aJd19cjVuP/FNjSlu5OcU=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jw41KY+8uC9noF71Dt+JCbXCA+1c3J79mVTzi6ld/Go=;
+ b=CJyPON0hZCSgAmRV7F8B2Andq4uIizRkRY83HEa96TUOJlztCKO1eb9QUSXzJrtvHZnYq+
+ fZocGElDoIMyMit12Xvu2iB3oGzU9QnNipNaPSpvgbuzB/9PVzjkO59/KBM+shCi+r9T4d
+ 8lS6f0yC0d2hOWmUL+xbfB9ctKq0QFo=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-608-Q6qJFhJuMdqhnQ7aF5jtYQ-1; Mon, 11 Mar 2024 17:59:47 -0400
-X-MC-Unique: Q6qJFhJuMdqhnQ7aF5jtYQ-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-690ab2b0de1so15043976d6.0
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 14:59:47 -0700 (PDT)
+ us-mta-228-XnCpQiNFNgeJGX9n1SoPJg-1; Mon, 11 Mar 2024 17:59:30 -0400
+X-MC-Unique: XnCpQiNFNgeJGX9n1SoPJg-1
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-42f30752eb4so14718431cf.1
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 14:59:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710194386; x=1710799186;
+ d=1e100.net; s=20230601; t=1710194369; x=1710799169;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZYSgvTN7t6/1mUzIu1ZJuxJpeE9c58Iqz1Li8XbeIy4=;
- b=M276jH+59TL7jDehxmzzBveTBDSTPL2QOQE7c4v/lps7Mamv0gBaCLBWWGNNT7gK6o
- gpCYmGDQEJEYShDl7feOiSinMSFpC/4jOttvNXCydiKVPnBt1t1jL95MnS4h65HwXsBN
- qeLcj1SBrU81VKJnykGr7n7UVf05fAa9up7r2c2GX2b3oQPF8E4ka83uTqG9HyHrTg3t
- uhRIFUSfdOLHX525fbCtvt/GzC0fBNyb3UgJjVDrnn+WgjTcVlDQMgvaX5AhkrzR7qjz
- XQKubzshNDN1Z7N9iFoqHnOtiUZ3r1kjCERRRi+HIuW/Jg7LUNlJ3MfHblZvgkQBOfiV
- Gxjw==
-X-Gm-Message-State: AOJu0Yyd8gw9eQthwvvGy2rPIIyEj/liwfrZ3Tw4TvWqegfGgABUuemj
- o6lG9E1bUE6qG6xpI0lfOCLfXLv2pr/Ld5G1WaGrBGQzR7p+b7r+2UkHf6543nIaaSRiGuFmvPs
- WOW/kz8zC/TcXAXoqD83LCx4sEjcEMhJ/e2GvBX0wpQtT2RQlPaTMOGiz667BRHHFw9LL5YPByB
- c6hE4r1d2c4eOej9XWuR2WdPom4Ah3c8o0+A==
-X-Received: by 2002:a0c:eb83:0:b0:68f:e779:70f2 with SMTP id
- x3-20020a0ceb83000000b0068fe77970f2mr136347qvo.3.1710194386549; 
- Mon, 11 Mar 2024 14:59:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEEq9hjgHMwGjne1kqoTLcdFTY7SEPw50PVak5JmXopJTgKo+USkUHX9sc6GXJ1EBqsSqdrBA==
-X-Received: by 2002:a0c:eb83:0:b0:68f:e779:70f2 with SMTP id
- x3-20020a0ceb83000000b0068fe77970f2mr136314qvo.3.1710194385967; 
- Mon, 11 Mar 2024 14:59:45 -0700 (PDT)
+ bh=jw41KY+8uC9noF71Dt+JCbXCA+1c3J79mVTzi6ld/Go=;
+ b=ZlkbBvQvBJp7rjP8fJhe5Y0i5Pg9LMpbJv8YEus3363XgoCQDjq7AIZBWnyNAubaDc
+ jhvmswv7RgMnT4346NdV5L/nwnZqj5Obal6uj5np8pIExq9He7xoYDIjwFJxKXKpfObp
+ EC2BHZgAoYuHMiueBRlZOIqr+1tv62EEfZVWEI+akoggsBF9awOA4+VZWaZR4HKSbA2f
+ bFHt84jIWgw+fqjTv7MbfHvu5FUHcLTd/SqSey2VpspWqSg/yhYbP0mDf8s/2IbesW3U
+ Nj8Dp1b744hTlpUAfWjG1JU1fXQfW8jq/xVGgZDiLajIM/4AHBTwI8StVwRX5GDZiGYo
+ FPwQ==
+X-Gm-Message-State: AOJu0YyS7E6cDVunPEEVj+53EEeAwSF0kHPNW5zMAkyNFpk3OtFv8lpu
+ npYsBgvpGocV6oChfc2gruD44ugbuvw0ckER51n1tq0pdwQwGGLJsinpgk/Y0wtt0CgWVaj7J24
+ WqVbCxzIAS2xP/ofSgUI682/yThvRdcoOxDqZeKvklrSzmNdMkfh8BO7Ji+q1XHUOKX7JMBhqUe
+ i72lPohgYrAK1dowqh5epvBJs79dQ/+UwwUQ==
+X-Received: by 2002:a05:622a:1aa6:b0:42e:f7aa:834f with SMTP id
+ s38-20020a05622a1aa600b0042ef7aa834fmr9939863qtc.0.1710194369278; 
+ Mon, 11 Mar 2024 14:59:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFck49NC9NEODTXKIL/BjC6AljEr9ux2q/N4yBgMcaansN8+EXXhmxyU28U6E4f87DDuvogeQ==
+X-Received: by 2002:a05:622a:1aa6:b0:42e:f7aa:834f with SMTP id
+ s38-20020a05622a1aa600b0042ef7aa834fmr9939842qtc.0.1710194368788; 
+ Mon, 11 Mar 2024 14:59:28 -0700 (PDT)
 Received: from x1n.. (cpe688f2e2cb7c3-cm688f2e2cb7c0.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d6-20020a0ce446000000b00690cec16254sm1541932qvm.68.2024.03.11.14.59.44
+ d6-20020a0ce446000000b00690cec16254sm1541932qvm.68.2024.03.11.14.59.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Mar 2024 14:59:45 -0700 (PDT)
+ Mon, 11 Mar 2024 14:59:28 -0700 (PDT)
 From: peterx@redhat.com
 To: qemu-devel@nongnu.org,
 	Peter Maydell <peter.maydell@linaro.org>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, peterx@redhat.com,
  Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
- Prasad Pandit <ppandit@redhat.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PULL 13/34] physmem: Factor out body of
- flatview_read/write_continue() loop
-Date: Mon, 11 Mar 2024 17:59:04 -0400
-Message-ID: <20240311215925.40618-14-peterx@redhat.com>
+ Prasad Pandit <ppandit@redhat.com>, Avihai Horon <avihaih@nvidia.com>
+Subject: [PULL 01/34] migration: Don't serialize devices in
+ qemu_savevm_state_iterate()
+Date: Mon, 11 Mar 2024 17:58:52 -0400
+Message-ID: <20240311215925.40618-2-peterx@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240311215925.40618-1-peterx@redhat.com>
 References: <20240311215925.40618-1-peterx@redhat.com>
@@ -105,223 +104,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Avihai Horon <avihaih@nvidia.com>
 
-This code will be reused for the address_space_cached accessors
-shortly.
+Commit 90697be8896c ("live migration: Serialize vmstate saving in stage
+2") introduced device serialization in qemu_savevm_state_iterate(). The
+rationale behind it was to first complete migration of slower changing
+block devices and only then migrate the RAM, to avoid sending fast
+changing RAM pages over and over.
 
-Also reduce scope of result variable now we aren't directly
-calling this in the loop.
+This commit was added a long time ago, and while it was useful back
+then, it is not the case anymore:
+1. Block migration is deprecated, see commit 66db46ca83b8 ("migration:
+   Deprecate block migration").
+2. Today there are other iterative devices besides RAM and block, such
+   as VFIO, which are registered for migration after RAM. With current
+   serialization behavior, a fast changing device can block other
+   devices from sending their data, which may prevent migration from
+   converging in some cases.
 
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Link: https://lore.kernel.org/r/20240307153710.30907-4-Jonathan.Cameron@huawei.com
+The issue described in item 2 was observed in several VFIO migration
+scenarios with switchover-ack capability enabled, where some workload on
+the VM prevented RAM from ever reaching a hard zero, thus blocking VFIO
+initial pre-copy data from being sent. Hence, destination could not ack
+switchover and migration could not converge.
+
+Fix that by not serializing iterative devices in
+qemu_savevm_state_iterate().
+
+Note that this still doesn't fully prevent device starvation. As
+correctly pointed out by Peter [1], a fast changing device might
+constantly consume all allocated bandwidth and block the following
+devices. However, this scenario is more likely to happen only if
+max-bandwidth is low.
+
+[1] https://lore.kernel.org/qemu-devel/Zd6iw9dBhW6wKNxx@x1n/
+
+Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/r/20240304105339.20713-2-avihaih@nvidia.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- system/physmem.c | 169 +++++++++++++++++++++++++++--------------------
- 1 file changed, 99 insertions(+), 70 deletions(-)
+ migration/savevm.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/system/physmem.c b/system/physmem.c
-index e35aa29343..737869a3f5 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2681,6 +2681,56 @@ static bool flatview_access_allowed(MemoryRegion *mr, MemTxAttrs attrs,
-     return false;
+diff --git a/migration/savevm.c b/migration/savevm.c
+index dc1fb9c0d3..e84b26e1c8 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -1390,7 +1390,8 @@ int qemu_savevm_state_resume_prepare(MigrationState *s)
+ int qemu_savevm_state_iterate(QEMUFile *f, bool postcopy)
+ {
+     SaveStateEntry *se;
+-    int ret = 1;
++    bool all_finished = true;
++    int ret;
+ 
+     trace_savevm_state_iterate();
+     QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
+@@ -1431,16 +1432,12 @@ int qemu_savevm_state_iterate(QEMUFile *f, bool postcopy)
+                          "%d(%s): %d",
+                          se->section_id, se->idstr, ret);
+             qemu_file_set_error(f, ret);
+-        }
+-        if (ret <= 0) {
+-            /* Do not proceed to the next vmstate before this one reported
+-               completion of the current stage. This serializes the migration
+-               and reduces the probability that a faster changing state is
+-               synchronized over and over again. */
+-            break;
++            return ret;
++        } else if (!ret) {
++            all_finished = false;
+         }
+     }
+-    return ret;
++    return all_finished;
  }
  
-+static MemTxResult flatview_write_continue_step(MemTxAttrs attrs,
-+                                                const uint8_t *buf,
-+                                                hwaddr len, hwaddr mr_addr,
-+                                                hwaddr *l, MemoryRegion *mr)
-+{
-+    if (!flatview_access_allowed(mr, attrs, mr_addr, *l)) {
-+        return MEMTX_ACCESS_ERROR;
-+    }
-+
-+    if (!memory_access_is_direct(mr, true)) {
-+        uint64_t val;
-+        MemTxResult result;
-+        bool release_lock = prepare_mmio_access(mr);
-+
-+        *l = memory_access_size(mr, *l, mr_addr);
-+        /*
-+         * XXX: could force current_cpu to NULL to avoid
-+         * potential bugs
-+         */
-+
-+        /*
-+         * Assure Coverity (and ourselves) that we are not going to OVERRUN
-+         * the buffer by following ldn_he_p().
-+         */
-+#ifdef QEMU_STATIC_ANALYSIS
-+        assert((*l == 1 && len >= 1) ||
-+               (*l == 2 && len >= 2) ||
-+               (*l == 4 && len >= 4) ||
-+               (*l == 8 && len >= 8));
-+#endif
-+        val = ldn_he_p(buf, *l);
-+        result = memory_region_dispatch_write(mr, mr_addr, val,
-+                                              size_memop(*l), attrs);
-+        if (release_lock) {
-+            bql_unlock();
-+        }
-+
-+        return result;
-+    } else {
-+        /* RAM case */
-+        uint8_t *ram_ptr = qemu_ram_ptr_length(mr->ram_block, mr_addr, l,
-+                                               false);
-+
-+        memmove(ram_ptr, buf, *l);
-+        invalidate_and_set_dirty(mr, mr_addr, *l);
-+
-+        return MEMTX_OK;
-+    }
-+}
-+
- /* Called within RCU critical section.  */
- static MemTxResult flatview_write_continue(FlatView *fv, hwaddr addr,
-                                            MemTxAttrs attrs,
-@@ -2692,44 +2742,8 @@ static MemTxResult flatview_write_continue(FlatView *fv, hwaddr addr,
-     const uint8_t *buf = ptr;
- 
-     for (;;) {
--        if (!flatview_access_allowed(mr, attrs, mr_addr, l)) {
--            result |= MEMTX_ACCESS_ERROR;
--            /* Keep going. */
--        } else if (!memory_access_is_direct(mr, true)) {
--            uint64_t val;
--            bool release_lock = prepare_mmio_access(mr);
--
--            l = memory_access_size(mr, l, mr_addr);
--            /* XXX: could force current_cpu to NULL to avoid
--               potential bugs */
--
--            /*
--             * Assure Coverity (and ourselves) that we are not going to OVERRUN
--             * the buffer by following ldn_he_p().
--             */
--#ifdef QEMU_STATIC_ANALYSIS
--            assert((l == 1 && len >= 1) ||
--                   (l == 2 && len >= 2) ||
--                   (l == 4 && len >= 4) ||
--                   (l == 8 && len >= 8));
--#endif
--            val = ldn_he_p(buf, l);
--            result |= memory_region_dispatch_write(mr, mr_addr, val,
--                                                   size_memop(l), attrs);
--            if (release_lock) {
--                bql_unlock();
--            }
--
--
--        } else {
--            /* RAM case */
--
--            uint8_t *ram_ptr = qemu_ram_ptr_length(mr->ram_block, mr_addr, &l,
--                                                   false);
--
--            memmove(ram_ptr, buf, l);
--            invalidate_and_set_dirty(mr, mr_addr, l);
--        }
-+        result |= flatview_write_continue_step(attrs, buf, len, mr_addr, &l,
-+                                               mr);
- 
-         len -= l;
-         buf += l;
-@@ -2763,6 +2777,52 @@ static MemTxResult flatview_write(FlatView *fv, hwaddr addr, MemTxAttrs attrs,
-                                    mr_addr, l, mr);
- }
- 
-+static MemTxResult flatview_read_continue_step(MemTxAttrs attrs, uint8_t *buf,
-+                                               hwaddr len, hwaddr mr_addr,
-+                                               hwaddr *l,
-+                                               MemoryRegion *mr)
-+{
-+    if (!flatview_access_allowed(mr, attrs, mr_addr, *l)) {
-+        return MEMTX_ACCESS_ERROR;
-+    }
-+
-+    if (!memory_access_is_direct(mr, false)) {
-+        /* I/O case */
-+        uint64_t val;
-+        MemTxResult result;
-+        bool release_lock = prepare_mmio_access(mr);
-+
-+        *l = memory_access_size(mr, *l, mr_addr);
-+        result = memory_region_dispatch_read(mr, mr_addr, &val, size_memop(*l),
-+                                             attrs);
-+
-+        /*
-+         * Assure Coverity (and ourselves) that we are not going to OVERRUN
-+         * the buffer by following stn_he_p().
-+         */
-+#ifdef QEMU_STATIC_ANALYSIS
-+        assert((*l == 1 && len >= 1) ||
-+               (*l == 2 && len >= 2) ||
-+               (*l == 4 && len >= 4) ||
-+               (*l == 8 && len >= 8));
-+#endif
-+        stn_he_p(buf, *l, val);
-+
-+        if (release_lock) {
-+            bql_unlock();
-+        }
-+        return result;
-+    } else {
-+        /* RAM case */
-+        uint8_t *ram_ptr = qemu_ram_ptr_length(mr->ram_block, mr_addr, l,
-+                                               false);
-+
-+        memcpy(buf, ram_ptr, *l);
-+
-+        return MEMTX_OK;
-+    }
-+}
-+
- /* Called within RCU critical section.  */
- MemTxResult flatview_read_continue(FlatView *fv, hwaddr addr,
-                                    MemTxAttrs attrs, void *ptr,
-@@ -2774,38 +2834,7 @@ MemTxResult flatview_read_continue(FlatView *fv, hwaddr addr,
- 
-     fuzz_dma_read_cb(addr, len, mr);
-     for (;;) {
--        if (!flatview_access_allowed(mr, attrs, mr_addr, l)) {
--            result |= MEMTX_ACCESS_ERROR;
--            /* Keep going. */
--        } else if (!memory_access_is_direct(mr, false)) {
--            /* I/O case */
--            uint64_t val;
--            bool release_lock = prepare_mmio_access(mr);
--
--            l = memory_access_size(mr, l, mr_addr);
--            result |= memory_region_dispatch_read(mr, mr_addr, &val,
--                                                  size_memop(l), attrs);
--
--            /*
--             * Assure Coverity (and ourselves) that we are not going to OVERRUN
--             * the buffer by following stn_he_p().
--             */
--#ifdef QEMU_STATIC_ANALYSIS
--            assert((l == 1 && len >= 1) ||
--                   (l == 2 && len >= 2) ||
--                   (l == 4 && len >= 4) ||
--                   (l == 8 && len >= 8));
--#endif
--            stn_he_p(buf, l, val);
--            if (release_lock) {
--                bql_unlock();
--            }
--        } else {
--            /* RAM case */
--            uint8_t *ram_ptr = qemu_ram_ptr_length(mr->ram_block, mr_addr, &l,
--                                                   false);
--            memcpy(buf, ram_ptr, l);
--        }
-+        result |= flatview_read_continue_step(attrs, buf, len, mr_addr, &l, mr);
- 
-         len -= l;
-         buf += l;
+ static bool should_send_vmdesc(void)
 -- 
 2.44.0
 
