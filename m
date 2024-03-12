@@ -4,105 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE558C54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:59:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41C66C54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 12:00:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk0me-00079P-Dk; Tue, 12 Mar 2024 07:59:04 -0400
+	id 1rk0n8-0007SP-Pz; Tue, 12 Mar 2024 07:59:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rk0mc-00078W-2E; Tue, 12 Mar 2024 07:59:02 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1rk0n4-0007LZ-Nt; Tue, 12 Mar 2024 07:59:31 -0400
+Received: from wfhigh1-smtp.messagingengine.com ([64.147.123.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rk0mZ-0007aj-Ko; Tue, 12 Mar 2024 07:59:01 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42CBqEJ5008103; Tue, 12 Mar 2024 11:58:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=p+LCNvpWeZabLjSPp2HKTGcFSmMAyKmNdIC1Fj+Yh/Y=;
- b=thlnnm7OQPKyaIgAY99gN/WWtXmOrmIG0oiSN7mAeVsSeVrxFeQZvJRb2ow9797P4xEg
- vSkCei7f/L6vlpjZ6WHXpoKeV+jspkE+/7MVw5AEUgUKP4gnaOrn6odDCrtKXQfK7jtv
- wKm0OOSKZ7k6HKVodxqjuOk5hZwi9oaxzZASaOEf7rQqkhlwlLOsmOepBOmc3QXAJLVX
- FkLzEjHYMQ4+3r1LY0TsOjXHwQ4bi3e31Iamli+YQc5Mt99elhTtPr5w7xp4NA+rumgj
- 6FyQQT32shib++QjspyBHZT+tX9wap+UMIt9zWVoVsPF0eNFJ6mt+5XsYJLaGduIaGiA aQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wtpj6040q-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 Mar 2024 11:58:51 +0000
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42CBwpvo023664;
- Tue, 12 Mar 2024 11:58:51 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wtpj6040d-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 Mar 2024 11:58:50 +0000
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42C8jDg6015492; Tue, 12 Mar 2024 11:58:49 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ws2fypycn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 Mar 2024 11:58:49 +0000
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 42CBwkYc45548012
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 12 Mar 2024 11:58:48 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A526258068;
- Tue, 12 Mar 2024 11:58:46 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C90415805A;
- Tue, 12 Mar 2024 11:58:41 +0000 (GMT)
-Received: from [9.171.18.209] (unknown [9.171.18.209])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 12 Mar 2024 11:58:41 +0000 (GMT)
-Message-ID: <57b0c81b-17d0-4697-aa26-6074290fbd1c@linux.ibm.com>
-Date: Tue, 12 Mar 2024 17:28:39 +0530
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1rk0n1-0007ej-6K; Tue, 12 Mar 2024 07:59:30 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+ by mailfhigh.west.internal (Postfix) with ESMTP id AA7D61800095;
+ Tue, 12 Mar 2024 07:59:22 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute1.internal (MEProxy); Tue, 12 Mar 2024 07:59:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm3; t=1710244762; x=
+ 1710331162; bh=SKqiTgnwHhQV6z4MG4++MabXEo+dEqnV3j4/j3vMjYg=; b=I
+ gjQfXp4tkmOqLVlnL3d6IpVNkXNyAL+33nOKn9VTdIdFW2pSO/HAkCRUw5z1QuVG
+ FqHX/57buHAq4WD8vEU+d3cI1GnyJmKtcSf9+eMH28Tr61pHSfl31iZVdIqtQaiv
+ waTk3WEVfhmj/BYP5WBZ8dzNo+wq+LGq7vpIQsvMiS/l8GnhlLuLLAunJUtuvPLR
+ jLvV4bYWa8DrfXX1ZSM5ruU+bGATOIdBgcLI05PEiD4tp7V/v5A4DmYlkuN0iVkH
+ G57svZQh92XMu8MzB9RaAE1pO06IoguEwwfw4li28l/z5D0luH99KqpUI64uxQE8
+ rkU05eSH4k6bZc4x99hQg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm1; t=1710244762; x=1710331162; bh=SKqiTgnwHhQV6z4MG4++MabXEo+d
+ EqnV3j4/j3vMjYg=; b=odR948ZEbu8qTMFoa90usz8Ho5IB5L0SPLW7EB/KI/pi
+ bRAMuBStN/n/yX/YcFuthcEmynaDGwmwpefGtQIDW09cunHKGMuV50Tm1wBpZM+6
+ zSvtiETzU8fJjgZaEg9nE5zD/m7BN9SZyvK3KGhlwOI8g4PmMPRxWBYMaWQP5uaK
+ Mh3b758/U/TJtfGywZ9VO890iv9HyfvMZCkhK1CFyAXe5XhQiXJ0JJ0Q3L2u4Yl+
+ bCaNogtJiVNo1GRl+Lt+uIvi55KpeA0V23lNxpCq9jC7FhmXR41WyumvMiyOtm9z
+ pyqE7Oh67a0YTaj38fN5jtRz/4Kiyry2OtaFi0qXkQ==
+X-ME-Sender: <xms:mEPwZbIAooXGLO2YD5c1PUUOXnmJ00Wrpztbdqr5-7ybyeacRdNmfA>
+ <xme:mEPwZfJTqLq0T630iLccH18xUcHgviVMpSDuWZUWbYAKhNP2EplIRfTUSswD6OE2D
+ dLLx8fnp7bXQYwDS2k>
+X-ME-Received: <xmr:mEPwZTuCj-tkO12_nG6PmL85721-QJlRpAhdmrUXntXnUIKc_vj5rkx9vg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrjeefgdefgecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefmlhgruhhs
+ ucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrughkqeenucggtffrrghtth
+ gvrhhnpedufeelgfevvdekfffhuedtudduheehfffhgefhkedvjeelvdevudelieeihefg
+ gfenucffohhmrghinhepghhithhhuhgsrdgtohhmpdhgihhtlhgrsgdrtghomhenucevlh
+ hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehithhssehirhhr
+ vghlvghvrghnthdrughk
+X-ME-Proxy: <xmx:mEPwZUbhYrhEKSFFS0URRon21zj4jfJVNsWzNbf9iojbKYtObydKUA>
+ <xmx:mEPwZSaTSvWfyh-uGZPBugf8YG8l30rxKQ1vPMoHr8Nu4JU-wI3Qmg>
+ <xmx:mEPwZYBn44z9P2RsihrlffPGa75NNQ_mNA9GjYW6AevfjuRIU3Hl6w>
+ <xmx:mEPwZQajbSgnEb1BdhbRCgh3fPaYb9mwSb_g3MYzcD8Rv09mYvs_Ww>
+ <xmx:mkPwZeRwgOSIcse5RnewtXurry-L7zuO_AHJfJhxqNQB3qWGgVTkIbsjDY8>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 12 Mar 2024 07:59:19 -0400 (EDT)
+Date: Tue, 12 Mar 2024 12:59:10 +0100
+From: Klaus Jensen <its@irrelevant.dk>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-block@nongnu.org, Jesper Devantier <foss@defmacro.it>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <k.jensen@samsung.com>
+Subject: Re: [PULL 0/6] hw/nvme updates
+Message-ID: <ZfBDjktm3b7a4sWN@cormorant.local>
+References: <20240311191105.35224-8-its@irrelevant.dk>
+ <CAFEAcA_FC+FtfLHVy7=ekBH2SJCYpuPrg8rVg45XFZwO6r1+Lw@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 12/14] spapr: nested: Use correct source for parttbl
- info for nested PAPR API.
-Content-Language: en-US
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: clg@kaod.org, mikey@neuling.org, amachhiw@linux.vnet.ibm.com,
- vaibhav@linux.ibm.com, sbhat@linux.ibm.com, danielhb413@gmail.com,
- qemu-devel@nongnu.org
-References: <20240308111940.1617660-1-harshpb@linux.ibm.com>
- <20240308111940.1617660-13-harshpb@linux.ibm.com>
- <CZRQSJXJRBEV.3LTQFO71EUU1O@wheely>
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <CZRQSJXJRBEV.3LTQFO71EUU1O@wheely>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 37Mz64eWFShew6M7UA1aur96WIAg-mLv
-X-Proofpoint-ORIG-GUID: LuvFdJVZerGwsRM_tXBk66PzXfMc65Om
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-12_08,2024-03-12_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0
- mlxscore=0 phishscore=0 malwarescore=0 impostorscore=0 mlxlogscore=801
- priorityscore=1501 bulkscore=0 lowpriorityscore=0 spamscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2403120091
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="Fy1y4iAdjgqcQxKT"
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA_FC+FtfLHVy7=ekBH2SJCYpuPrg8rVg45XFZwO6r1+Lw@mail.gmail.com>
+Received-SPF: pass client-ip=64.147.123.152; envelope-from=its@irrelevant.dk;
+ helo=wfhigh1-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,171 +111,103 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+--Fy1y4iAdjgqcQxKT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 3/12/24 17:11, Nicholas Piggin wrote:
-> On Fri Mar 8, 2024 at 9:19 PM AEST, Harsh Prateek Bora wrote:
->> For nested PAPR API, we use SpaprMachineStateNestedGuest struct to store
->> partition table info, use the same in spapr_get_pate_nested() via
->> helper.
->>
->> Signed-off-by: Michael Neuling <mikey@neuling.org>
->> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
->> ---
->>   include/hw/ppc/spapr_nested.h |  4 ++++
->>   hw/ppc/spapr.c                |  6 ++++--
->>   hw/ppc/spapr_nested.c         | 22 +++++++++++++++++++++-
->>   3 files changed, 29 insertions(+), 3 deletions(-)
->>
->> diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
->> index bd43c6b6ef..152019fe3d 100644
->> --- a/include/hw/ppc/spapr_nested.h
->> +++ b/include/hw/ppc/spapr_nested.h
->> @@ -518,4 +518,8 @@ bool spapr_get_pate_nested_hv(SpaprMachineState *spapr, PowerPCCPU *cpu,
->>                                 target_ulong lpid, ppc_v3_pate_t *entry);
->>   uint8_t spapr_nested_api(SpaprMachineState *spapr);
->>   void spapr_nested_gsb_init(void);
->> +bool spapr_get_pate_nested_papr(SpaprMachineState *spapr, PowerPCCPU *cpu,
->> +                                target_ulong lpid, ppc_v3_pate_t *entry);
->> +SpaprMachineStateNestedGuest *spapr_get_nested_guest(SpaprMachineState *spapr,
->> +                                                     target_ulong lpid);
-> 
-> Why is this made non-static? Doesn't seem to be needed in later patches
-> either? Other than that,
-> 
-> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-> 
+On Mar 12 11:34, Peter Maydell wrote:
+> On Mon, 11 Mar 2024 at 19:11, Klaus Jensen <its@irrelevant.dk> wrote:
+> >
+> > From: Klaus Jensen <k.jensen@samsung.com>
+> >
+> > Hi,
+> >
+> > The following changes since commit 7489f7f3f81dcb776df8c1b9a9db281fc21b=
+f05f:
+> >
+> >   Merge tag 'hw-misc-20240309' of https://github.com/philmd/qemu into s=
+taging (2024-03-09 20:12:21 +0000)
+> >
+> > are available in the Git repository at:
+> >
+> >   https://gitlab.com/birkelund/qemu.git tags/nvme-next-pull-request
+> >
+> > for you to fetch changes up to a1505d799232939bf90c1b3e1fc20e81cd398404:
+> >
+> >   hw/nvme: add machine compatibility parameter to enable msix exclusive=
+ bar (2024-03-11 20:07:41 +0100)
+> >
+> > ----------------------------------------------------------------
+> > hw/nvme updates
+> > -----BEGIN PGP SIGNATURE-----
+> >
+> > iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmXvVsYACgkQTeGvMW1P
+> > DemWtwf9HU3cjtvCp8AeHGoPFTwp8/Vx3cQlQ6ilADKSDm44up2+M504xE/Mdviv
+> > 6y3PTPe1yiEpg/MbjWTX/df5lo+VdNoCuCyjph9mea0s1QAjCfVpl+KLMUVF/Oj5
+> > y1Iz9PQqOVDJ3O4xlgmPTfd8NXE/frNJaiXAjFuBxF2+4lilD5kMxpyu7DXbLiy2
+> > Szd1I3DhFAEOLEbrSSRDI3Fpy0KBdRzdKuUfmRdrHzbmhzHJefW7wnZ3aAiDboaD
+> > Ny7y/aovmjGymMp9GrBKWhUFPfSUtJ8l8j4Z7acQs+VDxg8lcAHCJKOyqCBTspUL
+> > PSnDe6E/CRyjrG2fUVXTLb6YW1eibQ=3D=3D
+> > =3DLd7a
+> > -----END PGP SIGNATURE-----
+>=20
+> Hi; I'm afraid this fails to build for some jobs, eg
+> https://gitlab.com/qemu-project/qemu/-/jobs/6373091994
+> https://gitlab.com/qemu-project/qemu/-/jobs/6373091978
+> https://gitlab.com/qemu-project/qemu/-/jobs/6373091975
+>=20
+> ../hw/nvme/ctrl.c: In function =E2=80=98nvme_realize=E2=80=99:
+> ../hw/nvme/ctrl.c:8146:15: error: =E2=80=98msix_pba_offset=E2=80=99 may b=
+e used
+> uninitialized in this function [-Werror=3Dmaybe-uninitialized]
+> 8146 | ret =3D msix_init(pci_dev, n->params.msix_qsize,
+>      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> 8147 | &n->bar0, 0, msix_table_offset,
+>      | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> 8148 | &n->bar0, 0, msix_pba_offset, 0, errp);
+>      | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> ../hw/nvme/ctrl.c:8099:33: note: =E2=80=98msix_pba_offset=E2=80=99 was de=
+clared here
+> 8099 | unsigned msix_table_offset, msix_pba_offset;
+>      | ^~~~~~~~~~~~~~~
+> ../hw/nvme/ctrl.c:8135:9: error: =E2=80=98msix_table_offset=E2=80=99 may =
+be used
+> uninitialized in this function [-Werror=3Dmaybe-uninitialized]
+> 8135 | memory_region_init_io(&n->iomem, OBJECT(n), &nvme_mmio_ops, n, "nv=
+me",
+>      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~
+> 8136 | msix_table_offset);
+>      | ~~~~~~~~~~~~~~~~~~
+> ../hw/nvme/ctrl.c:8099:14: note: =E2=80=98msix_table_offset=E2=80=99 was =
+declared here
+> 8099 | unsigned msix_table_offset, msix_pba_offset;
+>      | ^~~~~~~~~~~~~~~~~
+> cc1: all warnings being treated as errors
+>=20
+>=20
+> I think this is because the compiler notices that nvme_mbar_size() has
+> an early-exit code path which never initializes *msix_table_offset
+> and *msix-pba_offset.
+>=20
 
-You're right, looks like I missed it in v5, but kindly squash in below
-incremental update with this patch, just relocating static helper above
-caller?
+Crap, yeah. I'll fix it up. Thanks!
 
-regards,
-Harsh
+--Fy1y4iAdjgqcQxKT
+Content-Type: application/pgp-signature; name="signature.asc"
 
-diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
-index 152019fe3d..3a36ba446b 100644
---- a/include/hw/ppc/spapr_nested.h
-+++ b/include/hw/ppc/spapr_nested.h
-@@ -520,6 +520,4 @@ uint8_t spapr_nested_api(SpaprMachineState *spapr);
-  void spapr_nested_gsb_init(void);
-  bool spapr_get_pate_nested_papr(SpaprMachineState *spapr, PowerPCCPU *cpu,
-                                  target_ulong lpid, ppc_v3_pate_t *entry);
--SpaprMachineStateNestedGuest *spapr_get_nested_guest(SpaprMachineState 
-*spapr,
--                                                     target_ulong lpid);
-  #endif /* HW_SPAPR_NESTED_H */
-diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
-index 8db9dc19e3..df22bd69bd 100644
---- a/hw/ppc/spapr_nested.c
-+++ b/hw/ppc/spapr_nested.c
-@@ -60,6 +60,15 @@ bool spapr_get_pate_nested_hv(SpaprMachineState 
-*spapr, PowerPCCPU *cpu,
-      return true;
-  }
+-----BEGIN PGP SIGNATURE-----
 
-+static SpaprMachineStateNestedGuest 
-*spapr_get_nested_guest(SpaprMachineState *spapr,
-+                                                     target_ulong guestid)
-+{
-+    SpaprMachineStateNestedGuest *guest;
-+
-+    guest = g_hash_table_lookup(spapr->nested.guests, 
-GINT_TO_POINTER(guestid));
-+    return guest;
-+}
-+
-  bool spapr_get_pate_nested_papr(SpaprMachineState *spapr, PowerPCCPU *cpu,
-                                  target_ulong lpid, ppc_v3_pate_t *entry)
-  {
-@@ -549,15 +558,6 @@ static void spapr_exit_nested_hv(PowerPCCPU *cpu, 
-int excp)
-      address_space_unmap(CPU(cpu)->as, regs, len, len, true);
-  }
+iQEzBAEBCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmXwQ40ACgkQTeGvMW1P
+DellcggArkeBg5t841F6zkYo+X302MXgWlH1pL94D41XYNKcoMrbiP6sZKTCiDnY
+bIYFqlx5vSjSzxJiaEZ9lxpOCSDkyTxdC9P9n45o7KloEenMmZstxKEnQOA3vUFe
+hzNgWaYyF0NL6kQkG2dsBsYJAFc7mQXgdyP6QKmy6XdaIIezSGDMeSfZmAevU0AY
+wz8KjPr5ueYWPzjhALpAl7u4fyUCUb0ds0btS+9X6EXIcmMVfnRkg1TfUaDwyR01
+EdZBiVVa+Q7rDQHFuC/dv3VnDPblXd+MRTOkOEnNmcX38OQCrtxSRc0Wfat5/4+F
++8ik0wc1U+VsRMPzXRINBtVre1y7lQ==
+=D9eA
+-----END PGP SIGNATURE-----
 
--SpaprMachineStateNestedGuest *spapr_get_nested_guest(SpaprMachineState 
-*spapr,
--                                                     target_ulong guestid)
--{
--    SpaprMachineStateNestedGuest *guest;
--
--    guest = g_hash_table_lookup(spapr->nested.guests, 
-GINT_TO_POINTER(guestid));
--    return guest;
--}
--
-  static bool spapr_nested_vcpu_check(SpaprMachineStateNestedGuest *guest,
-                                      target_ulong vcpuid, bool inoutbuf)
-  {
-
-
-
->>   #endif /* HW_SPAPR_NESTED_H */
->> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
->> index a08ffe55b6..54fc01e462 100644
->> --- a/hw/ppc/spapr.c
->> +++ b/hw/ppc/spapr.c
->> @@ -1376,11 +1376,13 @@ static bool spapr_get_pate(PPCVirtualHypervisor *vhyp, PowerPCCPU *cpu,
->>           entry->dw1 = spapr->patb_entry;
->>           return true;
->>       } else {
->> -        assert(spapr_nested_api(spapr));
->>           if (spapr_nested_api(spapr) == NESTED_API_KVM_HV) {
->>               return spapr_get_pate_nested_hv(spapr, cpu, lpid, entry);
->> +        } else if (spapr_nested_api(spapr) == NESTED_API_PAPR) {
->> +            return spapr_get_pate_nested_papr(spapr, cpu, lpid, entry);
->> +        } else {
->> +            g_assert_not_reached();
->>           }
->> -        return false;
->>       }
->>   }
->>   
->> diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
->> index ca99805ce8..e0b234c786 100644
->> --- a/hw/ppc/spapr_nested.c
->> +++ b/hw/ppc/spapr_nested.c
->> @@ -58,6 +58,21 @@ bool spapr_get_pate_nested_hv(SpaprMachineState *spapr, PowerPCCPU *cpu,
->>       return true;
->>   }
->>   
->> +bool spapr_get_pate_nested_papr(SpaprMachineState *spapr, PowerPCCPU *cpu,
->> +                                target_ulong lpid, ppc_v3_pate_t *entry)
->> +{
->> +    SpaprMachineStateNestedGuest *guest;
->> +    assert(lpid != 0);
->> +    guest = spapr_get_nested_guest(spapr, lpid);
->> +    if (!guest) {
->> +        return false;
->> +    }
->> +
->> +    entry->dw0 = guest->parttbl[0];
->> +    entry->dw1 = guest->parttbl[1];
->> +    return true;
->> +}
->> +
->>   #define PRTS_MASK      0x1f
->>   
->>   static target_ulong h_set_ptbl(PowerPCCPU *cpu,
->> @@ -540,7 +555,6 @@ void spapr_exit_nested(PowerPCCPU *cpu, int excp)
->>       }
->>   }
->>   
->> -static
->>   SpaprMachineStateNestedGuest *spapr_get_nested_guest(SpaprMachineState *spapr,
->>                                                        target_ulong guestid)
->>   {
->> @@ -1585,6 +1599,12 @@ bool spapr_get_pate_nested_hv(SpaprMachineState *spapr, PowerPCCPU *cpu,
->>       return false;
->>   }
->>   
->> +bool spapr_get_pate_nested_papr(SpaprMachineState *spapr, PowerPCCPU *cpu,
->> +                                target_ulong lpid, ppc_v3_pate_t *entry)
->> +{
->> +    return false;
->> +}
->> +
->>   void spapr_register_nested_papr(void)
->>   {
->>       /* DO NOTHING */
-> 
+--Fy1y4iAdjgqcQxKT--
 
