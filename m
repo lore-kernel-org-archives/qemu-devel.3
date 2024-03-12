@@ -4,94 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1F58C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:28:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A213EC54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:29:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkAbJ-0000Pl-Nj; Tue, 12 Mar 2024 18:28:03 -0400
+	id 1rkAbj-0002Bc-TD; Tue, 12 Mar 2024 18:28:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAap-0007ZR-M7
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAbH-0000Rx-QC
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAao-0004Oy-5E
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:31 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAbF-0004U3-1q
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710282449;
+ s=mimecast20190719; t=1710282476;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DBULQTyw/cBuXLWadxHOJ8GjlhZzF81MHpi5mkmgU0I=;
- b=WUvAHO5XM7ThL5C0mM54i06sZrjpqRqDxUUXd+9A7o5k9fYwymI6GoAVH7WZwoNX2eJkn1
- V6IHK3t1aNAK56hqwy7wl+nslw2ZKs/VfTFVjYxho5G9KTC40kXux5W8K6R0yY7kDowYJZ
- ep+THSmh0JpmnivH0sb5MFQazkL7fmk=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=BVAzYUdYDXeS1BjbLwTo4D9WpXNY+EQLjqjS51o2N6Q=;
+ b=dyeOiIPaaJs1SJrXaolOdlEYq1SGkqvNo3TDI0Nz2WS/LmHIkt3Re6IeTB0uAl7S53+K4A
+ I6KVB3Yoiu6RZDaxhB+E9TcV5xfAuYChrTBuvgf79iV6QsPnNoUwRuWpuKcgXvRNjRIvk1
+ hsXL0dGiisQGm5sU8EJxSoZZ2Hzhls4=
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
+ [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-290-eGKl3PvKP2We7xRUD4-1hQ-1; Tue, 12 Mar 2024 18:27:28 -0400
-X-MC-Unique: eGKl3PvKP2We7xRUD4-1hQ-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2d468f7779cso3600881fa.3
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:27:27 -0700 (PDT)
+ us-mta-15-MaE45JF1ObmG0yAQj-e9VA-1; Tue, 12 Mar 2024 18:27:54 -0400
+X-MC-Unique: MaE45JF1ObmG0yAQj-e9VA-1
+Received: by mail-lj1-f200.google.com with SMTP id
+ 38308e7fff4ca-2d45ce4457eso10603441fa.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:27:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710282446; x=1710887246;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DBULQTyw/cBuXLWadxHOJ8GjlhZzF81MHpi5mkmgU0I=;
- b=kojqw2up9N16bC+nOP6L24JxPw4tqFOoIgvLlAgFJQ+G0zlRl5v85zIAsLEwvbH8Xs
- 0mMJC3O1S5sr1F1R9wpJFrX/Xcv1W3eOjiTII81p0ZcCcyA2rjDQdZrPj9lSIMVDekgL
- Rc2XqdNLmEr2VLKDomeAb4JTA4xRTiVUxAvNpsYA2WPkfbmTlpAWngozq69jNUHz99ZE
- XjEh0ISlCyaK5UcEfcvMi7TsivjYi9MdXOTI/2jSVHesjgy8GJt+L5I5iA6dYqkTGo/T
- lj9OzpetJoWtRuWKZySNUAZ3Lzfu3pFLvgkQgOEERD5VWvgsngoQdPpGeFr7UG22YSky
- DkVw==
-X-Gm-Message-State: AOJu0YxjDPWyD0gbQyUAn0SNfr3SWHl3eNaOhq2odgJ+QuVJYjL7RS3x
- QC1nHOdQBS4s3swA/gi30946tcEs+eLIOQtrpUjtVeTn6gR9kKCD3cQe8yQzTQe76As7c3jdO7m
- 4HVrnMl2cbYvCbOi7siPy5xfMlImlMU5qQqTWjxzTkyhUQcprQw4QYagO3yWdTVtdJN1bvh4wi6
- TIE8OP3xqkrJy+FrRUwYzsmE90dZWYYhe4
-X-Received: by 2002:a05:6512:ac1:b0:513:27a1:24cb with SMTP id
- n1-20020a0565120ac100b0051327a124cbmr1220494lfu.51.1710282446264; 
- Tue, 12 Mar 2024 15:27:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEBJlRJm45tw8nSf3m96fIX0dBg9+ATVRCHcfVPcXIrv3z5nzZBbV0/mkZh64QXI68PAG9kbA==
-X-Received: by 2002:a05:6512:ac1:b0:513:27a1:24cb with SMTP id
- n1-20020a0565120ac100b0051327a124cbmr1220469lfu.51.1710282445684; 
- Tue, 12 Mar 2024 15:27:25 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710282473; x=1710887273;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BVAzYUdYDXeS1BjbLwTo4D9WpXNY+EQLjqjS51o2N6Q=;
+ b=WoxXyDY90gM4984Mwu1QbpcsBrj7xPx8JQk6NCuSNnaEZiukBxeozUQKOqnjyVpmdI
+ 4GaOB398cHwC+g6LLJRWbVXuFeRHe037UFNhqcOA+jr4zHSKw91bWy+B39GmZBVeqH7Z
+ hrC+GIMC2pfCcxYtUx0oYOdQ31MtG9LsxygBag6C/KGBsbWdhElgRlu4ZTUeSz2O3kkX
+ m4rRdceVVujgxRceWZD2mmwGeT2UvE3R4RpbrrlsPNckcyu2KlvTHaJ8onplbxY+BUH0
+ MplCVbW46Cs+BjQ/TzEjBI5GFZHKCxLIb8mGZRjPrinU8boocrEfQxjDzUpJ9k/Fq/i3
+ fFNg==
+X-Gm-Message-State: AOJu0Yxgyz475RQjDnmwexwUvBfdlkQza2NdbMDBmrHsK513dfRYavH9
+ tlVQRRGL33KHMXfih/uYClzZ9mD3F7amfv7JMb6w7CFXWNkI2P14B0zZYpONn1GMKGxD50CwnXg
+ ImwohoaCmFaO40vAFdA9tiTvfS/iAGPeIO0kn9Ox74VcyN9WY5SkEre3a9vzjwcjJWg6LMyfxfa
+ 1fJiLvsxMeWlkUwPT94PWuKykckAMeWidB
+X-Received: by 2002:a05:651c:19a9:b0:2d4:2b05:a671 with SMTP id
+ bx41-20020a05651c19a900b002d42b05a671mr7668447ljb.32.1710282472818; 
+ Tue, 12 Mar 2024 15:27:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFaakUsdseKRtUZRtuj29cuQXD8qIflaps60yPx+hhLx32+EVGLUZdyRhKZBfmHXm9/KF77LQ==
+X-Received: by 2002:a05:651c:19a9:b0:2d4:2b05:a671 with SMTP id
+ bx41-20020a05651c19a900b002d42b05a671mr7668417ljb.32.1710282472155; 
+ Tue, 12 Mar 2024 15:27:52 -0700 (PDT)
 Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- hg22-20020a1709072cd600b00a463c821e4dsm1260636ejc.10.2024.03.12.15.27.24
+ f8-20020a056402004800b00568550a0762sm2805826edu.6.2024.03.12.15.27.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 15:27:25 -0700 (PDT)
-Date: Tue, 12 Mar 2024 18:27:22 -0400
+ Tue, 12 Mar 2024 15:27:51 -0700 (PDT)
+Date: Tue, 12 Mar 2024 18:27:48 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
- Markus Armbruster <armbru@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-arm@nongnu.org
-Subject: [PULL 36/68] hw/misc/xlnx-versal-trng: Check returned bool in
- trng_prop_fault_event_set()
-Message-ID: <305446015848f0b5d71b817b53e7e02b08c36ede.1710282274.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-block@nongnu.org
+Subject: [PULL 44/68] pcie_sriov: Reset SR-IOV extended capability
+Message-ID: <c8bc4db403e17663b69d811e69f88c9dfc6f7be2.1710282274.git.mst@redhat.com>
 References: <cover.1710282274.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1710282274.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,64 +105,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-As the comment in qapi/error, dereferencing @errp requires
-ERRP_GUARD():
+pcie_sriov_pf_disable_vfs() is called when resetting the PF, but it only
+disables VFs and does not reset SR-IOV extended capability, leaking the
+state and making the VF Enable register inconsistent with the actual
+state.
 
-* = Why, when and how to use ERRP_GUARD() =
-*
-* Without ERRP_GUARD(), use of the @errp parameter is restricted:
-* - It must not be dereferenced, because it may be null.
-...
-* ERRP_GUARD() lifts these restrictions.
-*
-* To use ERRP_GUARD(), add it right at the beginning of the function.
-* @errp can then be used without worrying about the argument being
-* NULL or &error_fatal.
-*
-* Using it when it's not needed is safe, but please avoid cluttering
-* the source with useless code.
+Replace pcie_sriov_pf_disable_vfs() with pcie_sriov_pf_reset(), which
+does not only disable VFs but also resets the capability.
 
-But in trng_prop_fault_event_set, @errp is dereferenced without
-ERRP_GUARD():
-
-visit_type_uint32(v, name, events, errp);
-if (*errp) {
-    return;
-}
-
-Currently, since trng_prop_fault_event_set() doesn't get the NULL @errp
-parameter as a "set" method of object property, it hasn't triggered the
-bug that dereferencing the NULL @errp.
-
-And since visit_type_uint32() returns bool, check the returned bool
-directly instead of dereferencing @errp, then we needn't the add missing
-ERRP_GUARD().
-
-Suggested-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Message-Id: <20240223085653.1255438-5-zhao1.liu@linux.intel.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20240228-reuse-v8-3-282660281e60@daynix.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
 ---
- hw/misc/xlnx-versal-trng.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ include/hw/pci/pcie_sriov.h |  4 ++--
+ hw/net/igb.c                |  2 +-
+ hw/nvme/ctrl.c              |  2 +-
+ hw/pci/pcie_sriov.c         | 26 ++++++++++++++++++--------
+ 4 files changed, 22 insertions(+), 12 deletions(-)
 
-diff --git a/hw/misc/xlnx-versal-trng.c b/hw/misc/xlnx-versal-trng.c
-index b8111b8b66..6495188dc7 100644
---- a/hw/misc/xlnx-versal-trng.c
-+++ b/hw/misc/xlnx-versal-trng.c
-@@ -644,8 +644,7 @@ static void trng_prop_fault_event_set(Object *obj, Visitor *v,
-     Property *prop = opaque;
-     uint32_t *events = object_field_prop_ptr(obj, prop);
+diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
+index 095fb0c9ed..b77eb7bf58 100644
+--- a/include/hw/pci/pcie_sriov.h
++++ b/include/hw/pci/pcie_sriov.h
+@@ -58,8 +58,8 @@ void pcie_sriov_pf_add_sup_pgsize(PCIDevice *dev, uint16_t opt_sup_pgsize);
+ void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
+                              uint32_t val, int len);
  
--    visit_type_uint32(v, name, events, errp);
--    if (*errp) {
-+    if (!visit_type_uint32(v, name, events, errp)) {
-         return;
+-/* Reset SR/IOV VF Enable bit to unregister all VFs */
+-void pcie_sriov_pf_disable_vfs(PCIDevice *dev);
++/* Reset SR/IOV */
++void pcie_sriov_pf_reset(PCIDevice *dev);
+ 
+ /* Get logical VF number of a VF - only valid for VFs */
+ uint16_t pcie_sriov_vf_number(PCIDevice *dev);
+diff --git a/hw/net/igb.c b/hw/net/igb.c
+index 0b5c31a58b..9345506f81 100644
+--- a/hw/net/igb.c
++++ b/hw/net/igb.c
+@@ -493,7 +493,7 @@ static void igb_qdev_reset_hold(Object *obj)
+ 
+     trace_e1000e_cb_qdev_reset_hold();
+ 
+-    pcie_sriov_pf_disable_vfs(d);
++    pcie_sriov_pf_reset(d);
+     igb_core_reset(&s->core);
+ }
+ 
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 2860a9bed1..447c4de6fd 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -7116,7 +7116,7 @@ static void nvme_ctrl_reset(NvmeCtrl *n, NvmeResetType rst)
+             }
+ 
+             if (rst != NVME_RESET_CONTROLLER) {
+-                pcie_sriov_pf_disable_vfs(pci_dev);
++                pcie_sriov_pf_reset(pci_dev);
+             }
+         }
+ 
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index da209b7f47..51b66d1bb3 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -249,16 +249,26 @@ void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
+ }
+ 
+ 
+-/* Reset SR/IOV VF Enable bit to trigger an unregister of all VFs */
+-void pcie_sriov_pf_disable_vfs(PCIDevice *dev)
++/* Reset SR/IOV */
++void pcie_sriov_pf_reset(PCIDevice *dev)
+ {
+     uint16_t sriov_cap = dev->exp.sriov_cap;
+-    if (sriov_cap) {
+-        uint32_t val = pci_get_byte(dev->config + sriov_cap + PCI_SRIOV_CTRL);
+-        if (val & PCI_SRIOV_CTRL_VFE) {
+-            val &= ~PCI_SRIOV_CTRL_VFE;
+-            pcie_sriov_config_write(dev, sriov_cap + PCI_SRIOV_CTRL, val, 1);
+-        }
++    if (!sriov_cap) {
++        return;
++    }
++
++    pci_set_word(dev->config + sriov_cap + PCI_SRIOV_CTRL, 0);
++    unregister_vfs(dev);
++
++    /*
++     * Default is to use 4K pages, software can modify it
++     * to any of the supported bits
++     */
++    pci_set_word(dev->config + sriov_cap + PCI_SRIOV_SYS_PGSIZE, 0x1);
++
++    for (uint16_t i = 0; i < PCI_NUM_REGIONS; i++) {
++        pci_set_quad(dev->config + sriov_cap + PCI_SRIOV_BAR + i * 4,
++                     dev->exp.sriov_pf.vf_bar_type[i]);
      }
+ }
  
 -- 
 MST
