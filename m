@@ -4,56 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89F95C54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 14:52:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12E07C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 14:54:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk3UN-0004ZY-NT; Tue, 12 Mar 2024 10:52:23 -0400
+	id 1rk3W6-0006PQ-H1; Tue, 12 Mar 2024 10:54:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rk3UJ-0004Qn-5Q; Tue, 12 Mar 2024 10:52:19 -0400
-Received: from mgamail.intel.com ([198.175.65.9])
+ id 1rk3W1-0006Od-Ov; Tue, 12 Mar 2024 10:54:05 -0400
+Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rk3U9-0001iG-6Z; Tue, 12 Mar 2024 10:52:18 -0400
+ id 1rk3W0-0001wV-94; Tue, 12 Mar 2024 10:54:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710255129; x=1741791129;
+ t=1710255244; x=1741791244;
  h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=lDWM2FfxXBXMH53kKBnxakVPcpbq+vdHWHLhQQkXZ7E=;
- b=WJpunZ/wpJPjsR9KNdChveblGvbD8PkhB/V1EGHERh/t92vZ+gMq4mpL
- E4EXRG6MmUtSwBeoajQwFp2GGE0CkkXSTY3lMq41vY4/oaNyCZI14TwfL
- X/wPfBiD5DQTMZunrz4Xs82+Gy9ipkVPvstZSHY5LJ6Htf7I9ssAOLkDR
- UUgqmlpyMEswhmmKGofdNtM2PRrJsIQVyZ3FBB1zCNTfg1aFI6eRi1nc+
- +ckZi4u3zZ6AL+eSPTRZ763TK/PGaYDHx9l6smnA+rJb0fmDIaZyiiOvb
- CW9LrTuc6HqYIrbZfwNCEggpYjwhOZ+oXT0a6hWQ/jWW8FdD3Ocbnx0Ll w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11011"; a="27440755"
-X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; d="scan'208";a="27440755"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Mar 2024 07:51:58 -0700
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=DzgERaZDWu4zEfwlGhUbDxUiUa6LjKkWjzjFdhZ7GKs=;
+ b=kGf+h9gBupZM1lxBC6+7N2yICf0A28+/uN/kmqdDB40CrtY/7tsktkWT
+ v/Fp18JTVWGtgPFkqzpTINCdBMT4XfoAdwo9McfLiYU3ofjB1rRVjaszo
+ syJKL9RquSv6vCw/FvOLRaUeFlh3zTJz1PEFgLLPNoTWnp+XEqfuO9XkK
+ 6CqC62itfwDSQRwD1KmFat7sGjwdIoJgErCoGcuO/ww69CEqB+ZOTy+2D
+ Ip4VU4poA9MV+p3kQvjc/6ku9cT4/0tOfk9vluufohrBRKiDPQ42RrhzJ
+ x7xu1mWioAJqDQcXbjvgqUMOqflcvwo5JtcjwzXKNJjEwqhMkZMwKICa6 g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11011"; a="5094239"
+X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; 
+   d="scan'208";a="5094239"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Mar 2024 07:54:00 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; d="scan'208";a="16219037"
+X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; d="scan'208";a="12162419"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by orviesa003.jf.intel.com with ESMTP; 12 Mar 2024 07:51:56 -0700
-Date: Tue, 12 Mar 2024 23:05:44 +0800
+ by orviesa008.jf.intel.com with ESMTP; 12 Mar 2024 07:53:59 -0700
+Date: Tue, 12 Mar 2024 23:07:47 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-block@nongnu.org,
- philmd@linaro.org
-Subject: Re: [PATCH 01/10] error: Drop superfluous #include "qapi/qmp/qerror.h"
-Message-ID: <ZfBvSMlvfTPJdepi@intel.com>
+ philmd@linaro.org, =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>
+Subject: Re: [PATCH 02/10] qapi: Inline and remove QERR_BUS_NO_HOTPLUG
+ definition
+Message-ID: <ZfBvwziqeqiYMtnx@intel.com>
 References: <20240312141343.3168265-1-armbru@redhat.com>
- <20240312141343.3168265-2-armbru@redhat.com>
+ <20240312141343.3168265-3-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20240312141343.3168265-2-armbru@redhat.com>
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240312141343.3168265-3-armbru@redhat.com>
+Received-SPF: pass client-ip=198.175.65.18; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -77,19 +80,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 12, 2024 at 03:13:34PM +0100, Markus Armbruster wrote:
-> Date: Tue, 12 Mar 2024 15:13:34 +0100
+On Tue, Mar 12, 2024 at 03:13:35PM +0100, Markus Armbruster wrote:
+> Date: Tue, 12 Mar 2024 15:13:35 +0100
 > From: Markus Armbruster <armbru@redhat.com>
-> Subject: [PATCH 01/10] error: Drop superfluous #include "qapi/qmp/qerror.h"
+> Subject: [PATCH 02/10] qapi: Inline and remove QERR_BUS_NO_HOTPLUG
+>  definition
 > 
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+> Address the comment added in commit 4629ed1e98
+> ("qerror: Finally unused, clean up"), from 2015:
+> 
+>   /*
+>    * These macros will go away, please don't use
+>    * in new code, and do not add new ones!
+>    */
+> 
+> Mechanical transformation using sed, and manual cleanup.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Cédric Le Goater <clg@kaod.org>
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
->  backends/iommufd.c | 1 -
->  chardev/char-fe.c  | 1 -
->  system/rtc.c       | 1 -
->  3 files changed, 3 deletions(-)
-> 
+>  include/qapi/qmp/qerror.h | 3 ---
+>  hw/ppc/spapr_pci.c        | 5 ++---
+>  system/qdev-monitor.c     | 8 +++++---
+>  3 files changed, 7 insertions(+), 9 deletions(-)
+>
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
- 
+
 
