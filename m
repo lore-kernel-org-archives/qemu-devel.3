@@ -4,95 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D10FDC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 16:50:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00628C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 16:56:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk5KE-0006UM-MF; Tue, 12 Mar 2024 12:50:02 -0400
+	id 1rk5Pv-0001ed-LI; Tue, 12 Mar 2024 12:55:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk5K8-0006RN-PG
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 12:49:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk5Pj-0001bq-0k
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 12:55:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk5K7-00060O-97
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 12:49:56 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk5Pg-00078c-C0
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 12:55:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710262194;
+ s=mimecast20190719; t=1710262538;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OBrUc9CSjuXZlhAeYSidqucYNOwWcfcqUYSZYyb2E94=;
- b=XlefbBfjaB3C7RiK5NtTcjneGV8kCDNoPnErf+hKjiGOfl/AeI6rrbSSXy5yg2djxiQ07/
- vXGYKIadQSHFM47LhuanKWgi0uISW2fKx0mLUg0vKDdMnorEYAl062euKqIupoxc1U8hp3
- wKRqOdWgWlrDb7wOiQW1OV4na8bogFU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hSQdOV9+UFl6iHdm2F0NdvdWTdVRmAMr8rskNMI3LbM=;
+ b=GG6ZYYtX/VaMQsn8Ua5P8OupfetV9/KsxJ1Zoi3j+fqJ0bHo1kV+R41eYfVU8ytbsS2NtJ
+ HTsBBmcawk8HgUFOvwXPW9HOjE5ClZxvOyYhsCFiGrCnQzSfbHJD311YmB7eF8itz8mQXQ
+ 3DVzXkLd8RZyaYKkwp4QIwO95a3p74c=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-300-1rR_YwdHNseAg8rkja_xfg-1; Tue, 12 Mar 2024 12:49:53 -0400
-X-MC-Unique: 1rR_YwdHNseAg8rkja_xfg-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-413185181f6so22335725e9.3
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 09:49:52 -0700 (PDT)
+ us-mta-511-43B8yaCyOqyj-2wRigKd7g-1; Tue, 12 Mar 2024 12:55:36 -0400
+X-MC-Unique: 43B8yaCyOqyj-2wRigKd7g-1
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-60a20c33f0bso47192787b3.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 09:55:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710262173; x=1710866973;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OBrUc9CSjuXZlhAeYSidqucYNOwWcfcqUYSZYyb2E94=;
- b=W4MCil4DS0FX1pFyiP1AUd622PETrQ9IR/Ve2onUeRMN/NwVq6EXsSjn0b1iA5ihGT
- i/Wlv68cLswmw4+3/yKaUqw8W8IHS9YZV/B6yaOmEV+hC8OLbw2PB2TlUVb9wY7rJWpT
- W8yAq8ffcj9krfMnoIBm1FSDHITgg7NqqTL4NKnSKKTR+h/rZ/sD8W+AbeQ24npMMq8O
- 0rk+D1bK3E2mjAoc//GVvgar5wP1BLAZaDyl9+shpBhtBjT3UwSfVIuPTQ1ZbltvoUO/
- pwLVNDYjJ0LXt03vRaCNwtu0mngcxCLYXvtJt4z8AW/mEL0W0/y2I1mmxbpgLToOu5Y5
- xs5w==
-X-Gm-Message-State: AOJu0YxD7QDVzThKOKWpA5IiHZCatUNEJAoqF25I2tVIYmYl9GcSQhXi
- iWTO2CIcmkm2YI2Lp258uZ7zMc5WJDP2yjNQJroXyaa6SgW9ozRU5HH5IuV0DmlJtcGgTRLX67J
- ZwYlJHN7Sh0w0F3A2zQp9btrwVcQ50xxKvBvfHNg2xJ94w2gYOlCc
-X-Received: by 2002:a05:600c:4709:b0:412:8fef:7f with SMTP id
- v9-20020a05600c470900b004128fef007fmr8458898wmo.1.1710262172632; 
- Tue, 12 Mar 2024 09:49:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEQenJKObtjUcq65acCzRYcz1IkbD8b24K9+4XiPEtqPMr1rMXE/JbnGZOBAxIpeDBb4HmFcA==
-X-Received: by 2002:a05:600c:4709:b0:412:8fef:7f with SMTP id
- v9-20020a05600c470900b004128fef007fmr8458875wmo.1.1710262172042; 
- Tue, 12 Mar 2024 09:49:32 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710262531; x=1710867331;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hSQdOV9+UFl6iHdm2F0NdvdWTdVRmAMr8rskNMI3LbM=;
+ b=kLdbtw1TEErDDEznIhLzC99P8mCZTSyEUSHIgiAu9gnv7kKw0xaNeoegydacG1N52x
+ QoIOVN4rTEljpQFpoOIbI6znOl6e4HWmb/cRSoLwHm97aSRuK4d3nJOYbaMuBLzeR5f7
+ pjB47SjPtWMELRjp1wPBCUarn2Zv0qIJh9wbck9T8xNJ4w/GO0/wYmrBEr4FxvD8GBFf
+ F57JBupzLWwdcioby5kZVVPajgpXuIUJQz5BK5K0IPqX4Hx54Rs3kJgUphIn23eS137R
+ +SiMDaiu2eGn21EN/aP7IY+PvxoD3G8aG7wBNhz+433bDylLZLz3sjFwR93inkLwW0vT
+ 5knw==
+X-Gm-Message-State: AOJu0YwJqVhwFccfv+i0jWYVUpLvhHLfuUunoIvgKSHv3XKhQNoBcb2g
+ TrM6pjEXCboU1ZW80yuOo1apsOO3hcXp5A+IPY2Cw7/B9uD54Mdlqgi31Ue8RLzk1G22Xi6N66S
+ 8g3OSsOY1F4tCJTF0vk2XpfnKJpG0Lp28FIf9sgjEo/zkXq/Cyvb5
+X-Received: by 2002:a0d:dd13:0:b0:60a:66d3:bce9 with SMTP id
+ g19-20020a0ddd13000000b0060a66d3bce9mr29494ywe.26.1710262530631; 
+ Tue, 12 Mar 2024 09:55:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFf52igNZqyES828bI419taaYqwCTwHwVgV6u4HFx8yE4+6g4wyvZlZastB7ssp2DGcqvCwmw==
+X-Received: by 2002:a0d:dd13:0:b0:60a:66d3:bce9 with SMTP id
+ g19-20020a0ddd13000000b0060a66d3bce9mr29467ywe.26.1710262530123; 
+ Tue, 12 Mar 2024 09:55:30 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f0:532c:5ae4:fce6:76e1:fa1a])
  by smtp.gmail.com with ESMTPSA id
- r13-20020adff10d000000b0033b278cf5fesm9380752wro.102.2024.03.12.09.49.28
+ o16-20020a0dcc10000000b0060a4371759bsm973829ywd.52.2024.03.12.09.55.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 09:49:31 -0700 (PDT)
-Date: Tue, 12 Mar 2024 12:49:26 -0400
+ Tue, 12 Mar 2024 09:55:29 -0700 (PDT)
+Date: Tue, 12 Mar 2024 12:55:22 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
- Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Ani Sinha <anisinha@redhat.com>, qemu-block@nongnu.org,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, John Snow <jsnow@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: Re: [PATCH v2 00/15] hw/southbridge: Extract ICH9 QOM container model
-Message-ID: <20240312124845-mutt-send-email-mst@kernel.org>
-References: <20240226111416.39217-1-philmd@linaro.org>
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com, clg@redhat.com,
+ eric.auger@redhat.com, peterx@redhat.com, jasowang@redhat.com,
+ jgg@nvidia.com, nicolinc@nvidia.com, joao.m.martins@oracle.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, yi.y.sun@intel.com,
+ chao.p.peng@intel.com, Yi Sun <yi.y.sun@linux.intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: Re: [PATCH v1 09/11] hw/pci: Introduce
+ pci_device_set/unset_iommu_device()
+Message-ID: <20240312125422-mutt-send-email-mst@kernel.org>
+References: <20240228035900.1085727-1-zhenzhong.duan@intel.com>
+ <20240228035900.1085727-10-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240226111416.39217-1-philmd@linaro.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+In-Reply-To: <20240228035900.1085727-10-zhenzhong.duan@intel.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,99 +104,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 26, 2024 at 12:13:59PM +0100, Philippe Mathieu-Daudé wrote:
-> Since v1 [1]:
-> - Rebased on top of Bernhard patches
-> - Rename files with 'ich9_' prefix (Bernhard)
+On Wed, Feb 28, 2024 at 11:58:58AM +0800, Zhenzhong Duan wrote:
+> From: Yi Liu <yi.l.liu@intel.com>
 > 
-> Hi,
+> This adds pci_device_set/unset_iommu_device() to set/unset
+> HostIOMMUDevice for a given PCIe device. Caller of set
+> should fail if set operation fails.
 > 
-> I have a long standing southbridge QOM rework branches. Since
-> Bernhard is actively working on the PIIX, I'll try to refresh
-> and post. This is also motivated by the Dynamic Machine work
-> where we are trying to figure the ideal DSL for QEMU, so having
-> complex models well designed help.
+> Extract out pci_device_get_iommu_bus_devfn() to facilitate
+> implementation of pci_device_set/unset_iommu_device().
 > 
-> Here we introduce the ICH9 'southbridge' as a QOM container.
-> Since the chipset comes as a whole, we shouldn't instantiate
-> its components separately. However in order to maintain old
-> code we expose some properties to configure the container and
-> not introduce any change for the Q35 machine. There is no
-> migration change, only QOM objects moved around.
+> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>  include/hw/pci/pci.h | 38 ++++++++++++++++++++++++++-
+>  hw/pci/pci.c         | 62 +++++++++++++++++++++++++++++++++++++++++---
+>  2 files changed, 96 insertions(+), 4 deletions(-)
 > 
-> More work remain in the LPC function (more code to remove from
-> Q35). Maybe worth doing in parallel with the PIIX to clean both
-> PC machines.
+> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+> index fa6313aabc..8fe6f746d7 100644
+> --- a/include/hw/pci/pci.h
+> +++ b/include/hw/pci/pci.h
+> @@ -3,6 +3,7 @@
+>  
+>  #include "exec/memory.h"
+>  #include "sysemu/dma.h"
+> +#include "sysemu/host_iommu_device.h"
+>  
+>  /* PCI includes legacy ISA access.  */
+>  #include "hw/isa/isa.h"
+> @@ -384,10 +385,45 @@ typedef struct PCIIOMMUOps {
+>       *
+>       * @devfn: device and function number
+>       */
+> -   AddressSpace * (*get_address_space)(PCIBus *bus, void *opaque, int devfn);
+> +    AddressSpace * (*get_address_space)(PCIBus *bus, void *opaque, int devfn);
+> +    /**
+> +     * @set_iommu_device: attach a HostIOMMUDevice to a vIOMMU
+> +     *
+> +     * Optional callback, if not implemented in vIOMMU, then vIOMMU can't
+> +     * retrieve host information from the associated HostIOMMUDevice.
+> +     *
+> +     * Return true if HostIOMMUDevice is attached, or else return false
+> +     * with errp set.
+> +     *
+> +     * @bus: the #PCIBus of the PCI device.
+> +     *
+> +     * @opaque: the data passed to pci_setup_iommu().
+> +     *
+> +     * @devfn: device and function number of the PCI device.
+> +     *
+> +     * @dev: the data structure representing host IOMMU device.
+> +     *
+> +     */
+> +    int (*set_iommu_device)(PCIBus *bus, void *opaque, int devfn,
+> +                            HostIOMMUDevice *dev, Error **errp);
+> +    /**
+> +     * @unset_iommu_device: detach a HostIOMMUDevice from a vIOMMU
+> +     *
+> +     * Optional callback.
+> +     *
+> +     * @bus: the #PCIBus of the PCI device.
+> +     *
+> +     * @opaque: the data passed to pci_setup_iommu().
+> +     *
+> +     * @devfn: device and function number of the PCI device.
+> +     */
+> +    void (*unset_iommu_device)(PCIBus *bus, void *opaque, int devfn);
+>  } PCIIOMMUOps;
 
-Bernhard had some comments so I hope you'll address them so
-I can merge - after the release presumably.
+
+So I expected someone to implement these new callbacks but I see
+no implementation in this patchset.
+
+Is this just infrastructure that will be used later?
+A bit hard to judge without a user ...
 
 
-> Also we'd need to decouple the cpu_interrupt() calls between hw/
-> and target/.
-> 
-> Note that GSI is currently broken [2]. Once the LPC/ISA part is
-> done, it might be easier to fix it.
-> 
-> [1] https://lore.kernel.org/qemu-devel/20240219163855.87326-1-philmd@linaro.org/
-> [2] https://lore.kernel.org/qemu-devel/cd0e13c6-c03d-411f-83a5-1d4d28ea4345@linaro.org/
-> 
-> Philippe Mathieu-Daudé (15):
->   MAINTAINERS: Add 'ICH9 South Bridge' section
->   hw/i386/q35: Add local 'lpc_obj' variable
->   hw/acpi/ich9: Restrict definitions from 'hw/southbridge/ich9.h'
->   hw/acpi/ich9_tco: Include 'ich9' in names
->   hw/acpi/ich9_tco: Restrict ich9_generate_smi() declaration
->   hw/ide: Rename ich.c -> ich9_ahci.c
->   hw/i2c/smbus: Extract QOM ICH9 definitions to 'ich9_smbus.h'
->   hw/pci-bridge: Extract QOM ICH definitions to 'ich9_dmi.h'
->   hw/southbridge/ich9: Introduce TYPE_ICH9_SOUTHBRIDGE stub
->   hw/southbridge/ich9: Add the DMI-to-PCI bridge
->   hw/southbridge/ich9: Add a AHCI function
->   hw/southbridge/ich9: Add the SMBus function
->   hw/southbridge/ich9: Add the USB EHCI/UHCI functions
->   hw/southbridge/ich9: Extract LPC definitions to 'hw/isa/ich9_lpc.h'
->   hw/southbridge/ich9: Add the LPC / ISA bridge function
-> 
->  MAINTAINERS                               |  21 +-
->  include/hw/acpi/ich9.h                    |  15 ++
->  include/hw/acpi/ich9_tco.h                |   6 +-
->  include/hw/i2c/ich9_smbus.h               |  25 +++
->  include/hw/isa/ich9_lpc.h                 | 166 +++++++++++++++
->  include/hw/pci-bridge/ich9_dmi.h          |  20 ++
->  include/hw/southbridge/ich9.h             | 235 +---------------------
->  hw/acpi/ich9.c                            |   9 +-
->  hw/acpi/ich9_tco.c                        |   5 +-
->  hw/i2c/{smbus_ich9.c => ich9_smbus.c}     |  36 +++-
->  hw/i386/acpi-build.c                      |   1 +
->  hw/i386/pc_q35.c                          | 126 +++---------
->  hw/ide/{ich.c => ich9_ahci.c}             |   0
->  hw/isa/{lpc_ich9.c => ich9_lpc.c}         |  37 +++-
->  hw/pci-bridge/{i82801b11.c => ich9_dmi.c} |  11 +-
->  hw/southbridge/ich9.c                     | 213 ++++++++++++++++++++
->  tests/qtest/tco-test.c                    |   2 +-
->  hw/Kconfig                                |   1 +
->  hw/i2c/meson.build                        |   2 +-
->  hw/i386/Kconfig                           |   3 +-
->  hw/ide/meson.build                        |   2 +-
->  hw/isa/meson.build                        |   2 +-
->  hw/meson.build                            |   1 +
->  hw/pci-bridge/meson.build                 |   2 +-
->  hw/southbridge/Kconfig                    |  11 +
->  hw/southbridge/meson.build                |   3 +
->  26 files changed, 587 insertions(+), 368 deletions(-)
->  create mode 100644 include/hw/i2c/ich9_smbus.h
->  create mode 100644 include/hw/isa/ich9_lpc.h
->  create mode 100644 include/hw/pci-bridge/ich9_dmi.h
->  rename hw/i2c/{smbus_ich9.c => ich9_smbus.c} (77%)
->  rename hw/ide/{ich.c => ich9_ahci.c} (100%)
->  rename hw/isa/{lpc_ich9.c => ich9_lpc.c} (95%)
->  rename hw/pci-bridge/{i82801b11.c => ich9_dmi.c} (95%)
->  create mode 100644 hw/southbridge/ich9.c
->  create mode 100644 hw/southbridge/Kconfig
->  create mode 100644 hw/southbridge/meson.build
-> 
+
+>  AddressSpace *pci_device_iommu_address_space(PCIDevice *dev);
+> +int pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *base_dev,
+> +                                Error **errp);
+> +void pci_device_unset_iommu_device(PCIDevice *dev);
+>  
+>  /**
+>   * pci_setup_iommu: Initialize specific IOMMU handlers for a PCIBus
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index 76080af580..8078307963 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+> @@ -2672,11 +2672,14 @@ static void pci_device_class_base_init(ObjectClass *klass, void *data)
+>      }
+>  }
+>  
+> -AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
+> +static void pci_device_get_iommu_bus_devfn(PCIDevice *dev,
+> +                                           PCIBus **aliased_bus,
+> +                                           PCIBus **piommu_bus,
+> +                                           int *aliased_devfn)
+>  {
+>      PCIBus *bus = pci_get_bus(dev);
+>      PCIBus *iommu_bus = bus;
+> -    uint8_t devfn = dev->devfn;
+> +    int devfn = dev->devfn;
+>  
+>      while (iommu_bus && !iommu_bus->iommu_ops && iommu_bus->parent_dev) {
+>          PCIBus *parent_bus = pci_get_bus(iommu_bus->parent_dev);
+> @@ -2717,13 +2720,66 @@ AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
+>  
+>          iommu_bus = parent_bus;
+>      }
+> -    if (!pci_bus_bypass_iommu(bus) && iommu_bus->iommu_ops) {
+> +
+> +    assert(0 <= devfn && devfn < PCI_DEVFN_MAX);
+> +    assert(iommu_bus);
+> +
+> +    if (pci_bus_bypass_iommu(bus) || !iommu_bus->iommu_ops) {
+> +        iommu_bus = NULL;
+> +    }
+> +
+> +    *piommu_bus = iommu_bus;
+> +
+> +    if (aliased_bus) {
+> +        *aliased_bus = bus;
+> +    }
+> +
+> +    if (aliased_devfn) {
+> +        *aliased_devfn = devfn;
+> +    }
+> +}
+> +
+> +AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
+> +{
+> +    PCIBus *bus;
+> +    PCIBus *iommu_bus;
+> +    int devfn;
+> +
+> +    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
+> +    if (iommu_bus) {
+>          return iommu_bus->iommu_ops->get_address_space(bus,
+>                                   iommu_bus->iommu_opaque, devfn);
+>      }
+>      return &address_space_memory;
+>  }
+>  
+> +int pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *base_dev,
+> +                                Error **errp)
+> +{
+> +    PCIBus *iommu_bus;
+> +
+> +    pci_device_get_iommu_bus_devfn(dev, NULL, &iommu_bus, NULL);
+> +    if (iommu_bus && iommu_bus->iommu_ops->set_iommu_device) {
+> +        return iommu_bus->iommu_ops->set_iommu_device(pci_get_bus(dev),
+> +                                                      iommu_bus->iommu_opaque,
+> +                                                      dev->devfn, base_dev,
+> +                                                      errp);
+> +    }
+> +    return 0;
+> +}
+> +
+> +void pci_device_unset_iommu_device(PCIDevice *dev)
+> +{
+> +    PCIBus *iommu_bus;
+> +
+> +    pci_device_get_iommu_bus_devfn(dev, NULL, &iommu_bus, NULL);
+> +    if (iommu_bus && iommu_bus->iommu_ops->unset_iommu_device) {
+> +        return iommu_bus->iommu_ops->unset_iommu_device(pci_get_bus(dev),
+> +                                                        iommu_bus->iommu_opaque,
+> +                                                        dev->devfn);
+> +    }
+> +}
+> +
+>  void pci_setup_iommu(PCIBus *bus, const PCIIOMMUOps *ops, void *opaque)
+>  {
+>      /*
 > -- 
-> 2.41.0
+> 2.34.1
 
 
