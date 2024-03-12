@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 992EBC54E6A
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:06:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31AB4C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:06:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk5Wb-0002Wc-Te; Tue, 12 Mar 2024 13:02:50 -0400
+	id 1rk5Wa-00020J-2S; Tue, 12 Mar 2024 13:02:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk5Uk-0006Q8-M4; Tue, 12 Mar 2024 13:00:57 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1rk5Un-0006Ta-8S; Tue, 12 Mar 2024 13:00:59 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk5Uh-0008Tt-Tp; Tue, 12 Mar 2024 13:00:53 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-6e6ac00616cso652559b3a.0; 
- Tue, 12 Mar 2024 10:00:50 -0700 (PDT)
+ id 1rk5Uk-0008UL-QA; Tue, 12 Mar 2024 13:00:56 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-6e6ab012eb1so791126b3a.3; 
+ Tue, 12 Mar 2024 10:00:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710262849; x=1710867649; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1710262852; x=1710867652; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qr9X/khHCq5RJj3YA08mgEJxiJTU11rgfAwzxF4mODk=;
- b=RXr2t3Ep3lPUtqd27aDRuMzfnFZ9nWKRs2Srlsullw1xqu2UMAMI8NM1IDbQ5QcAOZ
- 2Ic0J7htH948rat5JhOj9SEJ8kJJwKbzx5HjbP7lGTIkJObh3OCG9hD+Sm2MZwuGU+iH
- TDmaaLG4AnCKSvKzAqJecfuLY5i4/+g0XsAV6W+pqIBUyCFg7t6u0S6O69RbFx0napNa
- 0qYrPIdZmUAmB0A9BsVuV5f1MjSi+n16u/r+LRKUjQN5OPyZS3h6UniLYGUQGuEWyrFu
- nWV2dt66vOR1yJHQwNDn01etIwperahKruB0bjnXj+vnvgSmVWX5fRa1ZvnOX2jgDgif
- fWXg==
+ bh=D823XPpwMiJ34nimbNh5Jem7KoFIgSxF2nxMRNRXUM0=;
+ b=X3MefoNFDB8j3+WSp9f38md6wuBNqrGvOZ+FRDeq+PU/cKGY/Zf328DKvfgjVyy4LU
+ hLKgkiGLUqgIsepvLoRHs/tcLn8w64Cx/91ns6BR5cHtLZiUK6qAW/u+I1pkm9J0LB/X
+ X+YnvCKSTTYvTXoa5GUGhQGjMnpAUzj56QTXkxM4fjf0lWWdJCUBOHKcK/oZssmjbV7I
+ EXUOgi1NSTrypwXGn00baEynWJl2HIP28LGSHjAtWWxYH/+SuiRGCHlCQ/gpKcCwCzaQ
+ xXZUDGlXxoeehA0tcqyDl4x1Z/IUcnYJPtV9lToXbZ06YwTxrqCAW13NndSg09EHDSD5
+ AoQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710262849; x=1710867649;
+ d=1e100.net; s=20230601; t=1710262852; x=1710867652;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qr9X/khHCq5RJj3YA08mgEJxiJTU11rgfAwzxF4mODk=;
- b=fDdiH49Qg21cqnFOs3nGBP2J60g89Gn8LfspMW8kPAfj3jQ2RtXePKWfob5Fy3f/W7
- sPJli2H9IjM4bsUw3NJbEYScxiLVQihXy2f+yTVhmpy/oRIGdrmsRBehdTmD5aySCrsD
- Nzzgh/X3jv9OsgsK1I2UaI/oIQqcsLh23YzdFYCMQYHcI8V/0fi7QxYuqn7mO7g6kD6v
- xzKBuDA4QQg9VjOvcIncCwAYBNoOVlvznzvaUtbNili+s/Dm/tFjE2igj81dgWLeunlo
- A8j38tCkB01NgDENlSKedC9uj7yvU/SMh6fh6v64XxIBwCGogrUxywr/dK6t+aOTJsMo
- XyAg==
+ bh=D823XPpwMiJ34nimbNh5Jem7KoFIgSxF2nxMRNRXUM0=;
+ b=HsSlACGk/Ev+beS25JJWZZjJvmyP/vgp9e2GmO5RwW9xvDFlbybzqn1f+/76PS4WAv
+ Ss+LidzRD5ryzYquuGmqiZ92H/i5M0tgEKMYs7jJbc3YuHGrv18WySjdGFQSwJjQunzm
+ VZPPU3cOCYeEinxiS4bPkf/GBEszqd1htu8O4dtJmJMpUe7iuie0vxc5SrNvMZvR3Usz
+ Uv+G9MyBfE1pb7Apd+OGlaI+mw7EjOaKQ9Y6xl3X7kCfg1iHdwdRLQ2AinMLMSy7pN65
+ yItYoqnIticzEJF/2AivnJxAKLrpdhzJJrYe0YKxfFMo6llDwLDbvXhtD2ZhZMKPFBZe
+ QrtQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW9nOEe4TofKvnJATDvfTlCwhZYD1xVIQZDLn51PmWtfNXgzi4A2xMk5BuEEuWDF1D25oN7wa10vaMLA0EyXO2Yg+Ir
-X-Gm-Message-State: AOJu0YydW/WyGMC8tkDCXA6EF3HP/gLXUukGEeXWgvO0SydhKB53zvAQ
- fPEKaKgiHB/WqCUQyFT4pk1s9C9hR0XCiIiIetW+DumA6aCZvijjR2JWXzKpgzQ=
-X-Google-Smtp-Source: AGHT+IHemoe2+FCjItln5gMGjhCxQ9LURgsjtF/MnwwPbVx8kfykepSpZEoMHtulyqoVhm12Vjy+HQ==
-X-Received: by 2002:a05:6a00:8cd:b0:6e2:d162:6315 with SMTP id
- s13-20020a056a0008cd00b006e2d1626315mr5941pfu.29.1710262848147; 
- Tue, 12 Mar 2024 10:00:48 -0700 (PDT)
+ AJvYcCXn1B/w+RVro71djlB91O9qEWzCfg4NWmHdjjabLn+60LA5w47Bly9wmF6PzKr1gWbiva+absHrRGOLc0FxHn5XUw9j
+X-Gm-Message-State: AOJu0YxTUFoE+kR2VOqct+COBOs4b1/3Rajy1MjX40FALOEHImH7QB/f
+ qFLsXoI+xFJfeNhb0UpqyqJsAW+CgJ735D3dUnWY9ae/RifJG5YGxISEvi5Sse0=
+X-Google-Smtp-Source: AGHT+IGmiOiDuQdNm+F5+HoovQ+uw/LYqQR0k3LM1nwb67XW4ps2rTzUdBGljuGpdB/JxYOptTT97Q==
+X-Received: by 2002:a05:6a00:801:b0:6e6:a3b3:923c with SMTP id
+ m1-20020a056a00080100b006e6a3b3923cmr54942pfk.6.1710262852028; 
+ Tue, 12 Mar 2024 10:00:52 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- t34-20020a056a0013a200b006e6a684a6ddsm1362330pfg.220.2024.03.12.10.00.44
+ t34-20020a056a0013a200b006e6a684a6ddsm1362330pfg.220.2024.03.12.10.00.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 10:00:47 -0700 (PDT)
+ Tue, 12 Mar 2024 10:00:51 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Michael Neuling <mikey@neuling.org>
-Subject: [PULL 29/38] spapr: nested: Document Nested PAPR API
-Date: Wed, 13 Mar 2024 02:58:40 +1000
-Message-ID: <20240312165851.2240242-30-npiggin@gmail.com>
+ Michael Neuling <mikey@neuling.org>,
+ Amit Machhiwal <amachhiw@linux.vnet.ibm.com>
+Subject: [PULL 30/38] spapr: nested: Introduce H_GUEST_[GET|SET]_CAPABILITIES
+ hcalls.
+Date: Wed, 13 Mar 2024 02:58:41 +1000
+Message-ID: <20240312165851.2240242-31-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240312165851.2240242-1-npiggin@gmail.com>
 References: <20240312165851.2240242-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,144 +100,234 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 
-Adding initial documentation about Nested PAPR API to describe the set
-of APIs and its usage. Also talks about the Guest State Buffer elements
-and it's format which is used between L0/L1 to communicate L2 state.
+Introduce the nested PAPR hcalls:
+ - H_GUEST_GET_CAPABILITIES which is used to query the capabilities
+   of the API and the L2 guests it provides.
+ - H_GUEST_SET_CAPABILITIES which is used to set the Guest API
+   capabilities that the Host Partition supports and may use.
+
+[amachhiw: support for p9 compat mode and return register bug fixes]
 
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Michael Neuling <mikey@neuling.org>
+Signed-off-by: Amit Machhiwal <amachhiw@linux.vnet.ibm.com>
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- docs/devel/nested-papr.txt | 119 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 119 insertions(+)
- create mode 100644 docs/devel/nested-papr.txt
+ hw/ppc/spapr_nested.c         | 115 ++++++++++++++++++++++++++++++++++
+ include/hw/ppc/spapr.h        |   7 ++-
+ include/hw/ppc/spapr_nested.h |  12 ++++
+ 3 files changed, 133 insertions(+), 1 deletion(-)
 
-diff --git a/docs/devel/nested-papr.txt b/docs/devel/nested-papr.txt
-new file mode 100644
-index 0000000000..90943650db
---- /dev/null
-+++ b/docs/devel/nested-papr.txt
-@@ -0,0 +1,119 @@
-+Nested PAPR API (aka KVM on PowerVM)
-+====================================
+diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
+index 12fdbe2aba..c35acee51f 100644
+--- a/hw/ppc/spapr_nested.c
++++ b/hw/ppc/spapr_nested.c
+@@ -7,6 +7,7 @@
+ #include "hw/ppc/spapr_cpu_core.h"
+ #include "hw/ppc/spapr_nested.h"
+ #include "mmu-book3s-v3.h"
++#include "cpu-models.h"
+ 
+ void spapr_nested_reset(SpaprMachineState *spapr)
+ {
+@@ -16,6 +17,7 @@ void spapr_nested_reset(SpaprMachineState *spapr)
+         spapr_register_nested_hv();
+     } else {
+         spapr->nested.api = 0;
++        spapr->nested.capabilities_set = false;
+     }
+ }
+ 
+@@ -432,6 +434,93 @@ void spapr_exit_nested(PowerPCCPU *cpu, int excp)
+     }
+ }
+ 
++static target_ulong h_guest_get_capabilities(PowerPCCPU *cpu,
++                                             SpaprMachineState *spapr,
++                                             target_ulong opcode,
++                                             target_ulong *args)
++{
++    CPUPPCState *env = &cpu->env;
++    target_ulong flags = args[0];
 +
-+This API aims at providing support to enable nested virtualization with
-+KVM on PowerVM. While the existing support for nested KVM on PowerNV was
-+introduced with cap-nested-hv option, however, with a slight design change,
-+to enable this on papr/pseries, a new cap-nested-papr option is added. eg:
++    if (flags) { /* don't handle any flags capabilities for now */
++        return H_PARAMETER;
++    }
 +
-+  qemu-system-ppc64 -cpu POWER10 -machine pseries,cap-nested-papr=true ...
++    /* P10 capabilities */
++    if (ppc_check_compat(cpu, CPU_POWERPC_LOGICAL_3_10, 0,
++        spapr->max_compat_pvr)) {
++        env->gpr[4] |= H_GUEST_CAPABILITIES_P10_MODE;
++    }
 +
-+Work by:
-+    Michael Neuling <mikey@neuling.org>
-+    Vaibhav Jain <vaibhav@linux.ibm.com>
-+    Jordan Niethe <jniethe5@gmail.com>
-+    Harsh Prateek Bora <harshpb@linux.ibm.com>
-+    Shivaprasad G Bhat <sbhat@linux.ibm.com>
-+    Kautuk Consul <kconsul@linux.vnet.ibm.com>
++    /* P9 capabilities */
++    if (ppc_check_compat(cpu, CPU_POWERPC_LOGICAL_3_00, 0,
++        spapr->max_compat_pvr)) {
++        env->gpr[4] |= H_GUEST_CAPABILITIES_P9_MODE;
++    }
 +
-+Below taken from the kernel documentation:
++    return H_SUCCESS;
++}
 +
-+Introduction
-+============
++static target_ulong h_guest_set_capabilities(PowerPCCPU *cpu,
++                                             SpaprMachineState *spapr,
++                                             target_ulong opcode,
++                                              target_ulong *args)
++{
++    CPUPPCState *env = &cpu->env;
++    target_ulong flags = args[0];
++    target_ulong capabilities = args[1];
++    env->gpr[4] = 0;
 +
-+This document explains how a guest operating system can act as a
-+hypervisor and run nested guests through the use of hypercalls, if the
-+hypervisor has implemented them. The terms L0, L1, and L2 are used to
-+refer to different software entities. L0 is the hypervisor mode entity
-+that would normally be called the "host" or "hypervisor". L1 is a
-+guest virtual machine that is directly run under L0 and is initiated
-+and controlled by L0. L2 is a guest virtual machine that is initiated
-+and controlled by L1 acting as a hypervisor. A significant design change
-+wrt existing API is that now the entire L2 state is maintained within L0.
++    if (flags) { /* don't handle any flags capabilities for now */
++        return H_PARAMETER;
++    }
 +
-+Existing Nested-HV API
-+======================
++    if (capabilities & H_GUEST_CAPABILITIES_COPY_MEM) {
++        env->gpr[4] = 1;
++        return H_P2; /* isn't supported */
++    }
 +
-+Linux/KVM has had support for Nesting as an L0 or L1 since 2018
++    /*
++     * If there are no capabilities configured, set the R5 to the index of
++     * the first supported Power Processor Mode
++     */
++    if (!capabilities) {
++        env->gpr[4] = 1;
 +
-+The L0 code was added::
++        /* set R5 to the first supported Power Processor Mode */
++        if (ppc_check_compat(cpu, CPU_POWERPC_LOGICAL_3_10, 0,
++                             spapr->max_compat_pvr)) {
++            env->gpr[5] = H_GUEST_CAP_P10_MODE_BMAP;
++        } else if (ppc_check_compat(cpu, CPU_POWERPC_LOGICAL_3_00, 0,
++                                    spapr->max_compat_pvr)) {
++            env->gpr[5] = H_GUEST_CAP_P9_MODE_BMAP;
++        }
 +
-+   commit 8e3f5fc1045dc49fd175b978c5457f5f51e7a2ce
-+   Author: Paul Mackerras <paulus@ozlabs.org>
-+   Date:   Mon Oct 8 16:31:03 2018 +1100
-+   KVM: PPC: Book3S HV: Framework and hcall stubs for nested virtualization
++        return H_P2;
++    }
 +
-+The L1 code was added::
++    /*
++     * If an invalid capability is set, R5 should contain the index of the
++     * invalid capability bit
++     */
++    if (capabilities & ~H_GUEST_CAP_VALID_MASK) {
++        env->gpr[4] = 1;
 +
-+   commit 360cae313702cdd0b90f82c261a8302fecef030a
-+   Author: Paul Mackerras <paulus@ozlabs.org>
-+   Date:   Mon Oct 8 16:31:04 2018 +1100
-+   KVM: PPC: Book3S HV: Nested guest entry via hypercall
++        /* Set R5 to the index of the invalid capability */
++        env->gpr[5] = 63 - ctz64(capabilities);
 +
-+This API works primarily using a signal hcall h_enter_nested(). This
-+call made by the L1 to tell the L0 to start an L2 vCPU with the given
-+state. The L0 then starts this L2 and runs until an L2 exit condition
-+is reached. Once the L2 exits, the state of the L2 is given back to
-+the L1 by the L0. The full L2 vCPU state is always transferred from
-+and to L1 when the L2 is run. The L0 doesn't keep any state on the L2
-+vCPU (except in the short sequence in the L0 on L1 -> L2 entry and L2
-+-> L1 exit).
++        return H_P2;
++    }
 +
-+The only state kept by the L0 is the partition table. The L1 registers
-+it's partition table using the h_set_partition_table() hcall. All
-+other state held by the L0 about the L2s is cached state (such as
-+shadow page tables).
++    if (!spapr->nested.capabilities_set) {
++        spapr->nested.capabilities_set = true;
++        spapr->nested.pvr_base = env->spr[SPR_PVR];
++        return H_SUCCESS;
++    } else {
++        return H_STATE;
++    }
++}
 +
-+The L1 may run any L2 or vCPU without first informing the L0. It
-+simply starts the vCPU using h_enter_nested(). The creation of L2s and
-+vCPUs is done implicitly whenever h_enter_nested() is called.
+ void spapr_register_nested_hv(void)
+ {
+     spapr_register_hypercall(KVMPPC_H_SET_PARTITION_TABLE, h_set_ptbl);
+@@ -447,6 +536,21 @@ void spapr_unregister_nested_hv(void)
+     spapr_unregister_hypercall(KVMPPC_H_TLB_INVALIDATE);
+     spapr_unregister_hypercall(KVMPPC_H_COPY_TOFROM_GUEST);
+ }
 +
-+In this document, we call this existing API the v1 API.
++void spapr_register_nested_papr(void)
++{
++    spapr_register_hypercall(H_GUEST_GET_CAPABILITIES,
++                             h_guest_get_capabilities);
++    spapr_register_hypercall(H_GUEST_SET_CAPABILITIES,
++                             h_guest_set_capabilities);
++}
 +
-+New PAPR API
-+===============
++void spapr_unregister_nested_papr(void)
++{
++    spapr_unregister_hypercall(H_GUEST_GET_CAPABILITIES);
++    spapr_unregister_hypercall(H_GUEST_SET_CAPABILITIES);
++}
 +
-+The new PAPR API changes from the v1 API such that the creating L2 and
-+associated vCPUs is explicit. In this document, we call this the v2
-+API.
+ #else
+ void spapr_exit_nested(PowerPCCPU *cpu, int excp)
+ {
+@@ -468,4 +572,15 @@ bool spapr_get_pate_nested_hv(SpaprMachineState *spapr, PowerPCCPU *cpu,
+ {
+     return false;
+ }
 +
-+h_enter_nested() is replaced with H_GUEST_VCPU_RUN().  Before this can
-+be called the L1 must explicitly create the L2 using h_guest_create()
-+and any associated vCPUs() created with h_guest_create_vCPU(). Getting
-+and setting vCPU state can also be performed using h_guest_{g|s}et
-+hcall.
++void spapr_register_nested_papr(void)
++{
++    /* DO NOTHING */
++}
 +
-+The basic execution flow is for an L1 to create an L2, run it, and
-+delete it is:
++void spapr_unregister_nested_papr(void)
++{
++    /* DO NOTHING */
++}
 +
-+- L1 and L0 negotiate capabilities with H_GUEST_{G,S}ET_CAPABILITIES()
-+  (normally at L1 boot time).
+ #endif
+diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+index 0eb01ea6fd..2906d59137 100644
+--- a/include/hw/ppc/spapr.h
++++ b/include/hw/ppc/spapr.h
+@@ -364,6 +364,7 @@ struct SpaprMachineState {
+ #define H_NOOP            -63
+ #define H_UNSUPPORTED     -67
+ #define H_OVERLAP         -68
++#define H_STATE           -75
+ #define H_UNSUPPORTED_FLAG -256
+ #define H_MULTI_THREADS_ACTIVE -9005
+ 
+@@ -583,8 +584,10 @@ struct SpaprMachineState {
+ #define H_RPT_INVALIDATE        0x448
+ #define H_SCM_FLUSH             0x44C
+ #define H_WATCHDOG              0x45C
++#define H_GUEST_GET_CAPABILITIES 0x460
++#define H_GUEST_SET_CAPABILITIES 0x464
+ 
+-#define MAX_HCALL_OPCODE        H_WATCHDOG
++#define MAX_HCALL_OPCODE         H_GUEST_SET_CAPABILITIES
+ 
+ /* The hcalls above are standardized in PAPR and implemented by pHyp
+  * as well.
+@@ -1033,5 +1036,7 @@ void spapr_watchdog_init(SpaprMachineState *spapr);
+ void spapr_register_nested_hv(void);
+ void spapr_unregister_nested_hv(void);
+ void spapr_nested_reset(SpaprMachineState *spapr);
++void spapr_register_nested_papr(void);
++void spapr_unregister_nested_papr(void);
+ 
+ #endif /* HW_SPAPR_H */
+diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
+index bf3a7b8d89..73687e03e4 100644
+--- a/include/hw/ppc/spapr_nested.h
++++ b/include/hw/ppc/spapr_nested.h
+@@ -7,8 +7,20 @@ typedef struct SpaprMachineStateNested {
+     uint64_t ptcr;
+     uint8_t api;
+ #define NESTED_API_KVM_HV  1
++    bool capabilities_set;
++    uint32_t pvr_base;
+ } SpaprMachineStateNested;
+ 
++/* Nested PAPR API related macros */
++#define H_GUEST_CAPABILITIES_COPY_MEM 0x8000000000000000
++#define H_GUEST_CAPABILITIES_P9_MODE  0x4000000000000000
++#define H_GUEST_CAPABILITIES_P10_MODE 0x2000000000000000
++#define H_GUEST_CAP_VALID_MASK        (H_GUEST_CAPABILITIES_P10_MODE | \
++                                       H_GUEST_CAPABILITIES_P9_MODE)
++#define H_GUEST_CAP_COPY_MEM_BMAP     0
++#define H_GUEST_CAP_P9_MODE_BMAP      1
++#define H_GUEST_CAP_P10_MODE_BMAP     2
 +
-+- L1 requests the L0 to create an L2 with H_GUEST_CREATE() and receives a token
-+
-+- L1 requests the L0 to create an L2 vCPU with H_GUEST_CREATE_VCPU()
-+
-+- L1 and L0 communicate the vCPU state using the H_GUEST_{G,S}ET() hcall
-+
-+- L1 requests the L0 to run the vCPU using H_GUEST_RUN_VCPU() hcall
-+
-+- L1 deletes L2 with H_GUEST_DELETE()
-+
-+For more details, please refer:
-+
-+[1] Linux Kernel documentation (upstream documentation commit):
-+
-+commit 476652297f94a2e5e5ef29e734b0da37ade94110
-+Author: Michael Neuling <mikey@neuling.org>
-+Date:   Thu Sep 14 13:06:00 2023 +1000
-+
-+    docs: powerpc: Document nested KVM on POWER
-+
-+    Document support for nested KVM on POWER using the existing API as well
-+    as the new PAPR API. This includes the new HCALL interface and how it
-+    used by KVM.
-+
-+    Signed-off-by: Michael Neuling <mikey@neuling.org>
-+    Signed-off-by: Jordan Niethe <jniethe5@gmail.com>
-+    Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-+    Link: https://msgid.link/20230914030600.16993-12-jniethe5@gmail.com
+ /*
+  * Register state for entering a nested guest with H_ENTER_NESTED.
+  * New member must be added at the end.
 -- 
 2.42.0
 
