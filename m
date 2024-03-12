@@ -4,77 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0236AC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 15:20:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E2D9C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 15:20:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk3v5-0000qj-VQ; Tue, 12 Mar 2024 11:20:07 -0400
+	id 1rk3vI-0000uo-70; Tue, 12 Mar 2024 11:20:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rk3ur-0000fN-6c
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk3ur-0000fO-7u
  for qemu-devel@nongnu.org; Tue, 12 Mar 2024 11:19:53 -0400
-Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rk3uo-0006Yh-2m
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 11:19:43 -0400
-Received: by mail-lj1-x235.google.com with SMTP id
- 38308e7fff4ca-2d2ab9c5e83so511521fa.2
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 08:19:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710256779; x=1710861579; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=CxCUXgQp1yQbNg8+9a4J36TH+/bY+7NI/iLkDlba7Xo=;
- b=dcWuPvvIiF8gDkp0bRPZHtAla8Y0cM4YnUUdXYNp23ZoA9ew9LiYakeOQ9CGePa/JE
- uIKj4dkp1xKgexFrI+2mVbsIETMaJOjJCyTcJX3KjzOL4H8e1M7pZ25Dzlx4ry81kR2U
- Nbb77jL6QY8KYk+sF+kN5k6+cdqqjQEN5eJ3mXTXGVUn1PqflgZ09lmjhUskqqY3Bizx
- zzye5cAhwQUfDTRp1htqj7gG5lbWI9WHlEHmIkSP+kN0iI9TbzbcbVWBjmMrk4y2bQev
- wS+RLxD/m5UYeXT4p8e9wXmcF2wt/hnVd9xk6UdkWlUMjWuAQ1QsctarCJYEpY46BI2s
- GvDw==
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk3ue-0006YQ-TQ
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 11:19:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710256772;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RVTpY6oFEC2fEXaS5YHpTjsOtKEzldhRiPAvuynfycI=;
+ b=KDhNEpo4y+Epq8qmVnE57Lv6PxuahWO+M173fbxVfYQfrH+dsTdhhdg3MxS8i3wsCZsdAK
+ Uz3ChbwoSqch1Vfm/ubFuqhQysigNsnM7oxw4r3Yj+NtbQwo6HrxqX9jY7EOLc0lmF1uxh
+ ZlXF9J2t6ZlhclU7V/UrJifgniB7TGQ=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-557-fEOFNXkEPaeS7zLoNjllzg-1; Tue, 12 Mar 2024 11:19:30 -0400
+X-MC-Unique: fEOFNXkEPaeS7zLoNjllzg-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-33e8abc8aeaso2084056f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 08:19:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710256779; x=1710861579;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=CxCUXgQp1yQbNg8+9a4J36TH+/bY+7NI/iLkDlba7Xo=;
- b=Lcl5pcCLn6oKzfaoAzRqolTJ8sAF3DBDGb28fbIN940lX+u0nASopGtC2UhqR1uK2s
- Te8tjUJRjnwMu+BhUhy0N/p4IkzS5mHyKfbDcSL6Mj7v4+OaSXwTCLCOKajuGSAaN/vw
- eEaIQZXZRGGB1WvC0UU5Rr0bMXdGbxeGwgt6yg7RYsz1Lv0u6DiYhjDLOJkt7U/vltU6
- vwvWb0tB7WlIYSAWYwH2pQ2A310zgY3JGrO67nvXEiauQ74FKbs5I/azwbMA6Wb0NtgW
- JhUOYqk8Np3aS8Id/hqH1dk1BqdS4rIKJVxL4AdDXfZXzy61q7fb91hWjMpxcKNs2Jd+
- zFgw==
-X-Gm-Message-State: AOJu0Yzwacj8T2dNv8dCTphL2vVhWupuN+4pMQdo60/4LP+I7h2QV5cb
- nY7dvdeM5cUYQzU4/9PUyJrLRivrFoJTK+uuyudWw4uCp/6WYVBau986WhBB05QlI0QlEM0YQAq
- EINGlvXDGkpHjrroYp09d2fTCS8muKoPa7GLWrQ==
-X-Google-Smtp-Source: AGHT+IEn8+WMg53gbdF9+OQ2scgjALsmwyDKaF9SV3BhnbUMdaMvMKllyePFt23xNruPSsT0qfaGWTVHeqKlg0j8mJA=
-X-Received: by 2002:a2e:9985:0:b0:2d4:4f9d:b0e8 with SMTP id
- w5-20020a2e9985000000b002d44f9db0e8mr1986261lji.33.1710256779450; Tue, 12 Mar
- 2024 08:19:39 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710256769; x=1710861569;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RVTpY6oFEC2fEXaS5YHpTjsOtKEzldhRiPAvuynfycI=;
+ b=mXXvNShwyEsL5JgFDjjI8seLGhBcE8lusQ4wtCe2JkQTKzfUiL7u9ctsjXL19ZXo4x
+ VDHnhbHii/h9+mJQoz3MGqCTHk32xNgp71Md7k3fv4ejVw8GHE5SWpLbPRnILQJnaPvj
+ kVvXdev+6ybkOyMyTIX+sxh8YGC1z+DC2a1VJTDkqTyEkN/kvm6Ew8pNk+ejK2mKNASM
+ 5Nj7SfbJd6Ko0edir4awxQTYpcNXM6x7sHPJ5e0fwMGZcBtl7vnuNWlFwy5Mz8zL3XgK
+ /F2zWVgIAYc8Fj4qRddso/kXKcrFq5jkCcygJhjbh7XyFrRqKLmhQc3MNlC7OAEpHxPF
+ svGA==
+X-Gm-Message-State: AOJu0YyNOEuFgPpDGykX6E1PKbOM/6FxcKFqa+MG8H3UCHCKZ1UtP/1E
+ LvfRoER2D11491USMk8DbHpOwed3xczxAgH2k6z3NvvYeEs+fg1v1XiAGalYN2cPMfL1iqx2IjL
+ EXib9m/EE3WaD8d9bNrWmQuLjD2ivO3oeku/OU8eobwLtw8fxGaYk7rH1L5KP86U=
+X-Received: by 2002:a05:6000:114f:b0:33e:7ae7:29fa with SMTP id
+ d15-20020a056000114f00b0033e7ae729famr440387wrx.1.1710256768627; 
+ Tue, 12 Mar 2024 08:19:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFpIIqNyiFH6TrHPz266yFWV2hmFuPMW6vK4prgynyMU2O5YLukUPRXJXqqMchWQudlli/c5A==
+X-Received: by 2002:a05:6000:114f:b0:33e:7ae7:29fa with SMTP id
+ d15-20020a056000114f00b0033e7ae729famr440373wrx.1.1710256768141; 
+ Tue, 12 Mar 2024 08:19:28 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:1f0:532c:5ae4:fce6:76e1:fa1a])
+ by smtp.gmail.com with ESMTPSA id
+ a8-20020a5d53c8000000b0033e745b8bcfsm9302956wrw.88.2024.03.12.08.19.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 Mar 2024 08:19:27 -0700 (PDT)
+Date: Tue, 12 Mar 2024 11:19:24 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Lukas Stockner <lstockner@genesiscloud.com>
+Cc: qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH] pcie: Support PCIe Gen5/Gen6 link speeds
+Message-ID: <20240312111631-mutt-send-email-mst@kernel.org>
+References: <20240215012326.3272366-1-lstockner@genesiscloud.com>
 MIME-Version: 1.0
-References: <20240312112532.1558319-1-alex.bennee@linaro.org>
- <CAFEAcA_Vok6GcphdFv_NZv7iCeLpebS9JWZW5yHeRx1w9EY00g@mail.gmail.com>
- <87jzm7o5or.fsf@draig.linaro.org>
-In-Reply-To: <87jzm7o5or.fsf@draig.linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 12 Mar 2024 15:19:28 +0000
-Message-ID: <CAFEAcA_q_wUUVNtNV4=twx2jp7E9DaAfgdM34i7xvRkm7L9gzA@mail.gmail.com>
-Subject: Re: [PULL for 9.0 0/8] final maintainer updates (testing, gdbstub)
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::235;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x235.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240215012326.3272366-1-lstockner@genesiscloud.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,22 +98,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 12 Mar 2024 at 15:01, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
-> That's annoying - I thought I had the s390 jobs in my matrix but it
-> seems they don't appear anymore. That said I see:
->
->   root@qemu01 ~# cat /etc/lsb-release
->   DISTRIB_ID=3DUbuntu
->   DISTRIB_RELEASE=3D20.04
->   DISTRIB_CODENAME=3Dfocal
->   DISTRIB_DESCRIPTION=3D"Ubuntu 20.04.6 LTS"
->
-> And as 24.04 is just round the corner maybe its time I update the system
-> to a more recent ubuntu (with I assume a more recent git)?
+On Thu, Feb 15, 2024 at 02:23:26AM +0100, Lukas Stockner wrote:
+> diff --git a/qapi/common.json b/qapi/common.json
+> index f1bb841951..867a9ad9b0 100644
+> --- a/qapi/common.json
+> +++ b/qapi/common.json
+> @@ -107,10 +107,14 @@
+>  #
+>  # @16: 16.0GT/s
+>  #
+> +# @32: 32.0GT/s
+> +#
+> +# @64: 64.0GT/s
+> +#
+>  # Since: 4.0
+>  ##
+>  { 'enum': 'PCIELinkSpeed',
+> -  'data': [ '2_5', '5', '8', '16' ] }
+> +  'data': [ '2_5', '5', '8', '16', '32', '64' ] }
+>  
+>  ##
+>  # @PCIELinkWidth:
+> -- 
 
-Not until after we release 9.0, please.
 
-thanks
--- PMM
+I'll merge this but I really don't know how one documents
+that some enum options have been added since some version
+of qemu.
+
+
+> 2.43.1
+
 
