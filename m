@@ -4,65 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1450EC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 02:04:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED3F5C5475B
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 02:04:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjrTn-0000FA-T1; Mon, 11 Mar 2024 22:03:00 -0400
+	id 1rjrUx-0001oZ-VH; Mon, 11 Mar 2024 22:04:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1rjrTP-0008DP-Jz; Mon, 11 Mar 2024 22:02:37 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rjrUh-0001a9-90
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 22:03:58 -0400
+Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1rjrTN-0004mp-Rq; Mon, 11 Mar 2024 22:02:35 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TtxjL2f1Cz6JBW4;
- Tue, 12 Mar 2024 10:02:14 +0800 (CST)
-Received: from lhrpeml500001.china.huawei.com (unknown [7.191.163.213])
- by mail.maildlp.com (Postfix) with ESMTPS id E71A6140A35;
- Tue, 12 Mar 2024 10:02:30 +0800 (CST)
-Received: from A190218597.china.huawei.com (10.48.148.5) by
- lhrpeml500001.china.huawei.com (7.191.163.213) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Tue, 12 Mar 2024 02:02:13 +0000
-To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
- <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
- <peter.maydell@linaro.org>, <richard.henderson@linaro.org>,
- <imammedo@redhat.com>, <andrew.jones@linux.dev>, <david@redhat.com>,
- <philmd@linaro.org>, <eric.auger@redhat.com>, <oliver.upton@linux.dev>,
- <pbonzini@redhat.com>, <mst@redhat.com>, <will@kernel.org>,
- <gshan@redhat.com>, <rafael@kernel.org>, <alex.bennee@linaro.org>,
- <linux@armlinux.org.uk>, <darren@os.amperecomputing.com>,
- <ilkka@os.amperecomputing.com>, <vishnu@os.amperecomputing.com>,
- <karl.heubaum@oracle.com>, <miguel.luis@oracle.com>,
- <salil.mehta@opnsrc.net>, <zhukeqian1@huawei.com>,
- <wangxiongfeng2@huawei.com>, <wangyanan55@huawei.com>,
- <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
- <linuxarm@huawei.com>
-Subject: [PATCH V8 6/8] physmem: Add helper function to destroy CPU
- AddressSpace
-Date: Tue, 12 Mar 2024 01:59:58 +0000
-Message-ID: <20240312020000.12992-7-salil.mehta@huawei.com>
-X-Mailer: git-send-email 2.8.3
-In-Reply-To: <20240312020000.12992-1-salil.mehta@huawei.com>
-References: <20240312020000.12992-1-salil.mehta@huawei.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rjrUf-00050z-32
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 22:03:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1710209033; x=1741745033;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=MEB913NrOfqDnqcPmnsKtC58zKmU31DU2o82RSFQV9M=;
+ b=jtZpOLx5CetXtikkHsGKua55oOVMXS+PJQ56m4yiSVRUw4DdYcqpEdd2
+ 7OZYV3N6KF/ssma0XAhJTcEPdE3ub7gjnwyCQlo5cRP4bXh5oZihLFv57
+ ZDdgGk+seSLyizbVpHFFhWAvejDS8ntivDr17qWPnwsPir9D7VUTfp7JC
+ HEQtEIIfjmX9S+TTNwf1nrYdU4fd8YCnm5xaxcOnXvndLWI+j25v4sQaz
+ bXzuUamsiYSF5olIq+Iz0vv81TqC7PssXTMq88qhunXPDTKJEUWVj6H/r
+ jgTQ5dQEdQUFnuNCR2f4eEBEL9S17SP5z1552A7U+UMjMtlRHG5pmfQhm A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11010"; a="16303325"
+X-IronPort-AV: E=Sophos;i="6.07,118,1708416000"; d="scan'208";a="16303325"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Mar 2024 19:03:43 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,118,1708416000"; d="scan'208";a="42284160"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa002.jf.intel.com with ESMTP; 11 Mar 2024 19:03:40 -0700
+Date: Tue, 12 Mar 2024 10:17:29 +0800
+From: Zhao Liu <zhao1.liu@linux.intel.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v3 1/3] hw/core: Cleanup unused included headers in
+ cpu-common.c
+Message-ID: <Ze+7OTO9BTe/WSSf@intel.com>
+References: <20240311075621.3224684-1-zhao1.liu@linux.intel.com>
+ <20240311075621.3224684-2-zhao1.liu@linux.intel.com>
+ <752e3d2b-1834-4f6d-9764-3d7e951409c4@linaro.org>
+ <Ze8m4YvRQrWFlFpN@intel.com>
+ <0297cf9b-4591-4622-96b0-83dae349dc1f@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.48.148.5]
-X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
- lhrpeml500001.china.huawei.com (7.191.163.213)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0297cf9b-4591-4622-96b0-83dae349dc1f@linaro.org>
+Received-SPF: none client-ip=192.198.163.10;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,106 +84,43 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Salil Mehta <salil.mehta@huawei.com>
-From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Virtual CPU Hot-unplug leads to unrealization of a CPU object. This also
-involves destruction of the CPU AddressSpace. Add common function to help
-destroy the CPU AddressSpace.
+> > Thanks for helpping me verify this!!
+> > 
+> > EMM, but I'm still not understanding how this approach distinguishes
+> > whether hw/core/cpu-common.c needs the header (include/exec/cpu-common.h)
+> > directly or just include/exec/memory.h needs that header? For the latter,
+> > the header needn't be included in .c file.
+> 
+> Yes, you are right, it might not be necessary.
+> 
+> For all other headers in your series I checked that no function /
+> definition is used in the source, but "exec/cpu-common.h" is too
+> big to do that manually.
 
-Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-Tested-by: Xianglai Li <lixianglai@loongson.cn>
-Tested-by: Miguel Luis <miguel.luis@oracle.com>
-Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
----
- include/exec/cpu-common.h |  8 ++++++++
- include/hw/core/cpu.h     |  1 +
- system/physmem.c          | 29 +++++++++++++++++++++++++++++
- 3 files changed, 38 insertions(+)
+Thanks! I checked manually as well... In the future I'll also think
+about if there's a more elegant way to do it.
 
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index 6346df17ce..a427d80340 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -123,6 +123,14 @@ size_t qemu_ram_pagesize_largest(void);
-  */
- void cpu_address_space_init(CPUState *cpu, int asidx,
-                             const char *prefix, MemoryRegion *mr);
-+/**
-+ * cpu_address_space_destroy:
-+ * @cpu: CPU for which address space needs to be destroyed
-+ * @asidx: integer index of this address space
-+ *
-+ * Note that with KVM only one address space is supported.
-+ */
-+void cpu_address_space_destroy(CPUState *cpu, int asidx);
- 
- void cpu_physical_memory_rw(hwaddr addr, void *buf,
-                             hwaddr len, bool is_write);
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index ec14f74ce5..e975b8085f 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -493,6 +493,7 @@ struct CPUState {
-     QSIMPLEQ_HEAD(, qemu_work_item) work_list;
- 
-     CPUAddressSpace *cpu_ases;
-+    int cpu_ases_count;
-     int num_ases;
-     AddressSpace *as;
-     MemoryRegion *memory;
-diff --git a/system/physmem.c b/system/physmem.c
-index 6e9ed97597..61b32ac4f2 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -761,6 +761,7 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
- 
-     if (!cpu->cpu_ases) {
-         cpu->cpu_ases = g_new0(CPUAddressSpace, cpu->num_ases);
-+        cpu->cpu_ases_count = cpu->num_ases;
-     }
- 
-     newas = &cpu->cpu_ases[asidx];
-@@ -774,6 +775,34 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
-     }
- }
- 
-+void cpu_address_space_destroy(CPUState *cpu, int asidx)
-+{
-+    CPUAddressSpace *cpuas;
-+
-+    assert(cpu->cpu_ases);
-+    assert(asidx >= 0 && asidx < cpu->num_ases);
-+    /* KVM cannot currently support multiple address spaces. */
-+    assert(asidx == 0 || !kvm_enabled());
-+
-+    cpuas = &cpu->cpu_ases[asidx];
-+    if (tcg_enabled()) {
-+        memory_listener_unregister(&cpuas->tcg_as_listener);
-+    }
-+
-+    address_space_destroy(cpuas->as);
-+    g_free_rcu(cpuas->as, rcu);
-+
-+    if (asidx == 0) {
-+        /* reset the convenience alias for address space 0 */
-+        cpu->as = NULL;
-+    }
-+
-+    if (--cpu->cpu_ases_count == 0) {
-+        g_free(cpu->cpu_ases);
-+        cpu->cpu_ases = NULL;
-+    }
-+}
-+
- AddressSpace *cpu_get_address_space(CPUState *cpu, int asidx)
- {
-     /* Return the AddressSpace corresponding to the specified index */
--- 
-2.34.1
+> I mostly skipped it because it is odd to
+> have cpu-common.c not including the header with the same name...
 
+Yes, I think the "cpu-common.c" is the related .c file of
+exec/cpu-common.h.
+
+And the related header of "hw/core/cpu-common.c" should be
+"hw/core/cpu.h".
+
+Could we rename "hw/core/cpu-common.c" to "hw/core/cpu.c"? Then the
+relationship could be clear.
+
+> Also, in another series I split / reworked "exec/cpu-common.h" and
+> IIRC a part of it will be included here. Bah, I'll stop writing
+> and take your patch unmodified.
+
+Many thanks!
+
+Regards,
+Zhao
 
