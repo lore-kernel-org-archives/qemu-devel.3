@@ -4,143 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CF7DC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 10:40:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 366F3C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 10:40:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjzY7-0005dY-CD; Tue, 12 Mar 2024 06:39:59 -0400
+	id 1rjzYR-0005hK-Ga; Tue, 12 Mar 2024 06:40:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjzY5-0005dK-84
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 06:39:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjzXt-0007ac-TT
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 06:39:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710239983;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=et5Uje11bZaT7gWbvP/juN1LLlgzevBdIHvM/JA7Lnw=;
- b=EyC7mlMvP9t+FbQyHA9h+Ac0PVmAMvNEHN2WtZxpbhjVMvKoFX3mpEGkmB86fUoC3ODENo
- NSg8KxsxG9z6npcIXIKylwX8OOZsXu/fgAJkvoObtA8xTEVwDqDRw9gI5t4QVjmp46qg7K
- soelIlIUTPSMS5m3qJjnLMvWG7cl64c=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-611-zDAFhVNdOVeN2RSI7nwbTA-1; Tue, 12 Mar 2024 06:39:42 -0400
-X-MC-Unique: zDAFhVNdOVeN2RSI7nwbTA-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-33e6aca1bb0so3458388f8f.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 03:39:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rjzYJ-0005gS-UV; Tue, 12 Mar 2024 06:40:12 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rjzYG-0007dc-2C; Tue, 12 Mar 2024 06:40:11 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-6e56787e691so4229353b3a.0; 
+ Tue, 12 Mar 2024 03:40:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1710240006; x=1710844806; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0wkh5vlrIpHi2cSd3fiQ4H0ke18IWyPO1yxkqyO4Vvo=;
+ b=EJoufWE+uLfmOCajG+wOocIkbGcwJO7sFRc/mhTubv47meyywsiQFYLmkVp166pBa0
+ LUfhlO09mgbXNPXBJlztznH4d+Jg0ZQ2v8jQwSJXx+0MNvgywuzZZW0CE9ve16FunaxJ
+ uTcXx+xtToMORtORMSJeFPmGfpnrH7syj2+ExpUEbzhx95X/f0a5VQwPCq5eXnVqHAB6
+ znqXf7QDyC1BuqDqjPNUG8LrEQ71yn+9c04IT6wqRglc05RnxcZ23Cf6G0n+D1fvR4bl
+ E6XIbpa3AM3Qez+h8SI+E4TPMVh015ES9gCCngKupdyr8NifYsMGLm2Ayp/hCjo9mHDq
+ 1wWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710239981; x=1710844781;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=et5Uje11bZaT7gWbvP/juN1LLlgzevBdIHvM/JA7Lnw=;
- b=naUu+mixNCdxYkBC9H8peZWmZfhz+Sj1rkeCiV9SBbTQCkllv0XJ7bafxVFzBB6azF
- MMcF3w1OvuYOuBhNFVLvX+fwDadVwb3LK1E8W08ASzWFlTCgQT/TrpwMJaMi+esHAs3S
- b04aR4fE4GZK+7gpRDujg19ZzpwaE/xqbsKKSXTFHYtVrXCtBEYteK01c/hsVhqyyEdP
- RlCG/bllt6CsFQEWU1Uni6ISrmtZpUiYf6KZchsNKXlqAd2t4o7xXep+PXyPZj2huEL8
- WmtNq0nXuLQDNjotXk68HN1nIb7jzEd0OaVmdbsdiVSDbJHy2pV8BtKHJH6Ly3A1WIy4
- 8Klg==
-X-Gm-Message-State: AOJu0Yz6Rk+FEU6dKVt+STGh5DQlyofFZ2tFp7w1nqrBIZhlqN+y+Cfz
- lAYijLDMuHcf/LxGtePog4eGaZzhyJSDbAJqMpBPLZAY/0EzgeLaadyv4NJgeBmsXiAFvBfcWOE
- YOKQkePh8q5pX/rAgbp3E4AHXV5dDBO+RIhiuSSD3Ajn8IQiZ/8/x
-X-Received: by 2002:adf:f7ce:0:b0:33e:a1e3:87b3 with SMTP id
- a14-20020adff7ce000000b0033ea1e387b3mr2019729wrq.41.1710239981074; 
- Tue, 12 Mar 2024 03:39:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEtvK4BHlXf38/mj69Utmko7XSqwLnA7Lif63XTsquTC4/grAhE7Gp9u5yM0KCjwPYLtq2zrQ==
-X-Received: by 2002:adf:f7ce:0:b0:33e:a1e3:87b3 with SMTP id
- a14-20020adff7ce000000b0033ea1e387b3mr2019706wrq.41.1710239980753; 
- Tue, 12 Mar 2024 03:39:40 -0700 (PDT)
-Received: from [192.168.0.9] (ip-109-43-177-86.web.vodafone.de.
- [109.43.177.86]) by smtp.gmail.com with ESMTPSA id
- i5-20020adfb645000000b0033e87c6bcb2sm7582116wre.8.2024.03.12.03.39.39
+ d=1e100.net; s=20230601; t=1710240006; x=1710844806;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=0wkh5vlrIpHi2cSd3fiQ4H0ke18IWyPO1yxkqyO4Vvo=;
+ b=KzGKtkTmIPbdMZYLxrzcp6YUcfsu+Cf6aOZyEWNXRUHIEIYEuxGK5TrHogpftA41ky
+ kAUQN5W8hYCe1EICJRpdNCVwd6TaDzqah0QT4C8GqRlhGEH8wY13Z8OsQGk3Y1a10bCG
+ 8Znjg6Ye4i1hV/h18k95lv2YuWCBUU+V2acv5IJa758U2ca6XZb0DDnqDbhMYbwJA4Mt
+ CltyqNYIhLXM0OEH830L07LBZ7JloTRKb3WYKGkMqfJr12DcoFZEoLk6Qldbpm/pVFWx
+ 4xqPo5quyR8OYfWq/k/TTp/xF8UV03rF7OEug5KQaFvr87OJrpCx6yT7nYOUqYXWdjGN
+ mR4g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVRWQdal5ptQlMbmwgqzK/3KksyAOGbE6QFo+XOtuoXgG6F2Q+oqnEvX/OnJTKqBQnHWq9xzFrrh+eKREsQ0+KQQ37O
+X-Gm-Message-State: AOJu0Yz2b8Dg/xTTZu58c3VodqAZIkY9K1vUNUQnM/V35vBM5YsO9HRw
+ 6aVyKXYiz4aJhhVLg4TVfk9hADMRIUAMEjSbItkzxfU0Nmx4peEbikvNvvUCAWA=
+X-Google-Smtp-Source: AGHT+IF3r0EOGZ2xvC6JwAdlubqOdclTbbgkwPKcI849uyzp6oeDLep3OX/nj+mIJ46nwwP7E6eOxw==
+X-Received: by 2002:a05:6a20:a128:b0:1a3:1514:3e4 with SMTP id
+ q40-20020a056a20a12800b001a3151403e4mr8059230pzk.20.1710240006100; 
+ Tue, 12 Mar 2024 03:40:06 -0700 (PDT)
+Received: from localhost ([118.208.155.46]) by smtp.gmail.com with ESMTPSA id
+ 16-20020a631650000000b005b458aa0541sm5727181pgw.15.2024.03.12.03.40.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 03:39:40 -0700 (PDT)
-Message-ID: <5c84e9e9-8beb-4357-ace7-96f44973e15c@redhat.com>
-Date: Tue, 12 Mar 2024 11:39:38 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/7] hw/pci-bridge/cxl_upstream: Fix missing
- ERRP_GUARD() in cxl_usp_realize()
-Content-Language: en-US
-To: Zhao Liu <zhao1.liu@linux.intel.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>,
- Laurent Vivier <laurent@vivier.eu>, Alistair Francis
- <alistair@alistair23.me>, "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-trivial@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>
-References: <20240223085653.1255438-1-zhao1.liu@linux.intel.com>
- <20240223085653.1255438-6-zhao1.liu@linux.intel.com>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240223085653.1255438-6-zhao1.liu@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ Tue, 12 Mar 2024 03:40:05 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 12 Mar 2024 20:40:01 +1000
+Message-Id: <CZRPHE6EOXQI.24XEVX89QPMHT@wheely>
+Cc: <qemu-devel@nongnu.org>, "BALATON Zoltan" <balaton@eik.bme.hu>, "David
+ Gibson" <david@gibson.dropbear.id.au>, "Daniel Henrique Barboza"
+ <danielhb413@gmail.com>
+Subject: Re: [PATCH] spapr: avoid overhead of finding vhyp class in critical
+ operations
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Harsh Prateek Bora" <harshpb@linux.ibm.com>, <qemu-ppc@nongnu.org>
+X-Mailer: aerc 0.15.2
+References: <20240224073359.1025835-1-npiggin@gmail.com>
+ <a465cc07-17ee-48ea-95e6-14c15697ab09@linux.ibm.com>
+ <CZRN44HD20CR.33XSLDXL84FZH@wheely>
+ <672bd14a-235c-40e3-a859-d822f1b063cd@linux.ibm.com>
+In-Reply-To: <672bd14a-235c-40e3-a859-d822f1b063cd@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,68 +99,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/02/2024 09.56, Zhao Liu wrote:
-> From: Zhao Liu <zhao1.liu@intel.com>
-> 
-> As the comment in qapi/error, dereferencing @errp requires
-> ERRP_GUARD():
-> 
-> * = Why, when and how to use ERRP_GUARD() =
-> *
-> * Without ERRP_GUARD(), use of the @errp parameter is restricted:
-> * - It must not be dereferenced, because it may be null.
-> ...
-> * ERRP_GUARD() lifts these restrictions.
-> *
-> * To use ERRP_GUARD(), add it right at the beginning of the function.
-> * @errp can then be used without worrying about the argument being
-> * NULL or &error_fatal.
-> *
-> * Using it when it's not needed is safe, but please avoid cluttering
-> * the source with useless code.
-> 
-> But in cxl_usp_realize(), @errp is dereferenced without ERRP_GUARD():
-> 
-> cxl_doe_cdat_init(cxl_cstate, errp);
-> if (*errp) {
->      goto err_cap;
-> }
-> 
-> Here we check *errp, because cxl_doe_cdat_init() returns void. And since
-> cxl_usp_realize() - as a PCIDeviceClass.realize() method - doesn't get
-> the NULL @errp parameter, it hasn't triggered the bug that dereferencing
-> the NULL @errp.
-> 
-> To follow the requirement of @errp, add missing ERRP_GUARD() in
-> cxl_usp_realize().
-> 
-> Suggested-by: Markus Armbruster <armbru@redhat.com>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
-> ---
-> Suggested by credit:
->   Markus: Referred his explanation about ERRP_GUARD().
-> ---
-> v2:
->   * Add the @errp dereference code in commit message to make review
->     easier. (Markus)
-> ---
->   hw/pci-bridge/cxl_upstream.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
-> index e87eb4017713..03d123cca0ef 100644
-> --- a/hw/pci-bridge/cxl_upstream.c
-> +++ b/hw/pci-bridge/cxl_upstream.c
-> @@ -289,6 +289,7 @@ static void free_default_cdat_table(CDATSubHeader **cdat_table, int num,
->   
->   static void cxl_usp_realize(PCIDevice *d, Error **errp)
->   {
-> +    ERRP_GUARD();
->       PCIEPort *p = PCIE_PORT(d);
->       CXLUpstreamPort *usp = CXL_USP(d);
->       CXLComponentState *cxl_cstate = &usp->cxl_cstate;
+On Tue Mar 12, 2024 at 6:56 PM AEST, Harsh Prateek Bora wrote:
+>
+>
+> On 3/12/24 14:18, Nicholas Piggin wrote:
+> > On Tue Mar 12, 2024 at 4:38 PM AEST, Harsh Prateek Bora wrote:
+> >> Hi Nick,
+> >>
+> >> One minor comment below:
+> >>
+> >> On 2/24/24 13:03, Nicholas Piggin wrote:
+> >>> PPC_VIRTUAL_HYPERVISOR_GET_CLASS is used in critical operations like
+> >>> interrupts and TLB misses and is quite costly. Running the
+> >>> kvm-unit-tests sieve program with radix MMU enabled thrashes the TCG
+> >>> TLB and spends a lot of time in TLB and page table walking code. The
+> >>> test takes 67 seconds to complete with a lot of time being spent in
+> >>> code related to finding the vhyp class:
+> >>>
+> >>>      12.01%  [.] g_str_hash
+> >>>       8.94%  [.] g_hash_table_lookup
+> >>>       8.06%  [.] object_class_dynamic_cast
+> >>>       6.21%  [.] address_space_ldq
+> >>>       4.94%  [.] __strcmp_avx2
+> >>>       4.28%  [.] tlb_set_page_full
+> >>>       4.08%  [.] address_space_translate_internal
+> >>>       3.17%  [.] object_class_dynamic_cast_assert
+> >>>       2.84%  [.] ppc_radix64_xlate
+> >>>
+> >>> Keep a pointer to the class and avoid this lookup. This reduces the
+> >>> execution time to 40 seconds.
+> >>>
+> >>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> >>> ---
+> >>> This feels a bit ugly, but the performance problem of looking up the
+> >>> class in fast paths can't be ignored. Is there a "nicer" way to get t=
+he
+> >>> same result?
+> >>>
+> >>> Thanks,
+> >>> Nick
+> >>>
+> >>>    target/ppc/cpu.h           |  3 ++-
+> >>>    target/ppc/mmu-book3s-v3.h |  4 +---
+> >>>    hw/ppc/pegasos2.c          |  1 +
+> >>>    target/ppc/cpu_init.c      |  9 +++------
+> >>>    target/ppc/excp_helper.c   | 16 ++++------------
+> >>>    target/ppc/kvm.c           |  4 +---
+> >>>    target/ppc/mmu-hash64.c    | 16 ++++------------
+> >>>    target/ppc/mmu-radix64.c   |  4 +---
+> >>>    8 files changed, 17 insertions(+), 40 deletions(-)
+> >>>
+> >>> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+> >>> index ec14574d14..eb85d9aa71 100644
+> >>> --- a/target/ppc/cpu.h
+> >>> +++ b/target/ppc/cpu.h
+> >>> @@ -1437,6 +1437,7 @@ struct ArchCPU {
+> >>>        int vcpu_id;
+> >>>        uint32_t compat_pvr;
+> >>>        PPCVirtualHypervisor *vhyp;
+> >>> +    PPCVirtualHypervisorClass *vhyp_class;
+> >>>        void *machine_data;
+> >>>        int32_t node_id; /* NUMA node this CPU belongs to */
+> >>>        PPCHash64Options *hash64_opts;
+> >>> @@ -1535,7 +1536,7 @@ DECLARE_OBJ_CHECKERS(PPCVirtualHypervisor, PPCV=
+irtualHypervisorClass,
+> >>>   =20
+> >>>    static inline bool vhyp_cpu_in_nested(PowerPCCPU *cpu)
+> >>>    {
+> >>> -    return PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp)->cpu_in_neste=
+d(cpu);
+> >>> +    return cpu->vhyp_class->cpu_in_nested(cpu);
+> >>>    }
+> >>>    #endif /* CONFIG_USER_ONLY */
+> >>>   =20
+> >>> diff --git a/target/ppc/mmu-book3s-v3.h b/target/ppc/mmu-book3s-v3.h
+> >>> index 674377a19e..f3f7993958 100644
+> >>> --- a/target/ppc/mmu-book3s-v3.h
+> >>> +++ b/target/ppc/mmu-book3s-v3.h
+> >>> @@ -108,9 +108,7 @@ static inline hwaddr ppc_hash64_hpt_mask(PowerPCC=
+PU *cpu)
+> >>>        uint64_t base;
+> >>>   =20
+> >>>        if (cpu->vhyp) {
+> >>
+> >> All the checks for cpu->vhyp needs to be changed to check for
+> >> cpu->vhyp_class now, for all such instances.
+> >=20
+> > It wasn't supposed to, because vhyp !=3D NULL implies vhyp_class !=3D N=
+ULL.
+> > It's supposed to be an equivalent transformation just changing the
+> > lookup function.
+>
+> I agree, but not just it appears a bit odd, my only worry is if a future
+> change cause vhyp_class to be NULL before the control reaches here, this
+> check wont really serve the purpose. Anyways, not a mandatory
+> requirement for now, so I shall leave it to your choice.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+It does look like it should be the other way around without context
+of s/PPC_V_H_G_C(cpu->vhyp)/cpu->vhyp_class/
 
+We'll never have a vhyp !=3D NULL && vhyp_class =3D=3D NULL though, so
+should be okay.
+
+Thanks,
+Nick
 
