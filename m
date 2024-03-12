@@ -4,76 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4A4DC54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:35:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F322C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:36:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkAbm-0002CK-14; Tue, 12 Mar 2024 18:28:30 -0400
+	id 1rkAe7-0006OK-Ri; Tue, 12 Mar 2024 18:30:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAbJ-0000ST-5t
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:01 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAcC-0002qv-Ji
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAbH-0004UG-OG
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:00 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAc2-0004bN-9l
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710282478;
+ s=mimecast20190719; t=1710282525;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uONnc8dalxn5KqbUxXF6SkXpgxsJrMvte59h3sp2Ce0=;
- b=Z5Fn5NM2CpWCeNfmsKgZdQWBR+V2a6bwdXpHBfjl+KR7ZhamzpF7fQ17PmvqHyXCAaq+qN
- 2FPmVQeoH0oVsc38UrvshBr339ST58qaZRTfj3YsGQcS4GSODknvBAM38Mxbksc6BG57Gp
- PM0GZUpgvJGmP8n/k4UY/ki89fd7jjQ=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=eKrjNhHTN2bPQP/9cRYriG9FH7mBRIe1f63zB2PVbVw=;
+ b=ES5cmuHfO73k3iFI8yPrTMLcY/4OoS0NoxuCUnzzNUr2A/TcdV3cU3x6XCsSTqMbfPBvEU
+ o89iSH14TCf5VCdaA4vX68zu0Twnfu35RBz78WpnDvxLDWFGChBHZFJzukJeQMaC5cabuG
+ forRJxAk0RJ/igyu1W2BHW7E58tG5FQ=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-564-FAGwaPCOMVCHc5b0TfKkSA-1; Tue, 12 Mar 2024 18:27:57 -0400
-X-MC-Unique: FAGwaPCOMVCHc5b0TfKkSA-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-568647e6d9dso197027a12.3
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:27:57 -0700 (PDT)
+ us-mta-672-gCok1JwIMdS2QJvfDSsfpQ-1; Tue, 12 Mar 2024 18:28:44 -0400
+X-MC-Unique: gCok1JwIMdS2QJvfDSsfpQ-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-558aafe9bf2so4144768a12.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:28:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710282476; x=1710887276;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uONnc8dalxn5KqbUxXF6SkXpgxsJrMvte59h3sp2Ce0=;
- b=YBId2Zn3M7eTr3oM8U+tguCmZjw/y782ykQWFoZNrv+25M7WPGkGgvFJPTbCRU5FOA
- +8OFR/8Jb5eAysOJo5/mbQ2yDnMxdgd54jiR5ZBpWP2n8Q7dVKqqoyCJG8xB1OQqFMlu
- 1DnxPiSkvY90KHeACczx6iy7s9nFjyXuuwEkkUbT6sjWUQ/q4piOUIYtRBS8W0yf/SFB
- kq59mkCong3knQ48p1SzGHOE3crSshkcIeoqIoY9F78oRKen2KBPS2reJNrovCoDc6Yc
- WlG8qtZupGXP1PY7qmo38NoPFNwpLeIh/A1+LQlCCxuWXxNHUoE12cSta2EvigwoBrwJ
- 0gTg==
-X-Gm-Message-State: AOJu0YyJtNVJydLosu1dbVW6ZXXznPIIPGT49GqlGvV5wm4h0CV+JHaQ
- 2eRni/+65zl4DbZS5aD0V/9KXlhWBT214wkDQgCIghvUkBuEcKKmLyHr4XKYeo/AksSSnG15cBc
- U9tDWb9eQaVc3hIs1DMs2DhQEQZladiGqUlthhHA9uzzr265gCGsKlwRScuzOOEr3j09Psd935s
- Sl+QEXq/UiTDLqBwq65wawi/8H7gfZJl8P
-X-Received: by 2002:a50:d594:0:b0:565:b4ca:72f3 with SMTP id
- v20-20020a50d594000000b00565b4ca72f3mr3862904edi.35.1710282476023; 
- Tue, 12 Mar 2024 15:27:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFf9Hz0rZaiQCY9cfMLdqVUs/oKzdSOXs1K3kKi7oFgeYUQa01wvwwDvM0E3MT5+nTFW8PvKA==
-X-Received: by 2002:a50:d594:0:b0:565:b4ca:72f3 with SMTP id
- v20-20020a50d594000000b00565b4ca72f3mr3862885edi.35.1710282475466; 
- Tue, 12 Mar 2024 15:27:55 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710282523; x=1710887323;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=eKrjNhHTN2bPQP/9cRYriG9FH7mBRIe1f63zB2PVbVw=;
+ b=N23n0FrTGjt/JjIuij4rere5Q+1IdpdSXPdVgwx892F+XCjb+rWmhACYBAzv8T0Hq+
+ ZHdsQ8v9nMRIotwHLhn6Y8hvTgp8yktKegym6MAbgdU4P8tlMA5dHsBQo5nVxIXxo6eH
+ BmhapBZsYbRPXr+rWCQn+wk5Pkp5kdb6pCerkhhI3L7jIuLM5jIeh9idhX4KYTdHUd/s
+ Sh1fspns5s+Ptf+fn5wAEfdSHlxEJX7qUVXEe1i6JXMsrq4Ds00XW++K5yIvYOnoZhGg
+ 8zou2aem1E60VzWO2JeQasMl+meznlW3sdumgrW80YvGfPSAXhVqA+cQPDa4f0v8GQtI
+ +fgQ==
+X-Gm-Message-State: AOJu0Yy6SS7hRlHcB5xvr8HTDYO1zDri8DqP4xHWKmUzbLXGK2ih/jY3
+ AgOzfat4okGa9TXb5LH/wnrVTEvSpawtlq15PnMLk8QolY5/s4lMA6loNsKjMwNCyWEyttnBXyW
+ UIGL6nhmJWiv9VF6bSUN159mTwrYDlpeeR4QzahJGdEKVv/TVjSdCS2zcfq/erT/kL8uVdCUAVC
+ xwpEpJzihkUEyzk/AK5h0uNR+RLQTEO1On
+X-Received: by 2002:a50:ab48:0:b0:566:825b:98 with SMTP id
+ t8-20020a50ab48000000b00566825b0098mr1245567edc.6.1710282522958; 
+ Tue, 12 Mar 2024 15:28:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHHsKh62kUegGSPD66dBTmSIcnTJFZISZxwV9K1n6JmG5gn76XpggUKe4TMUIWl1pS9MDTy3w==
+X-Received: by 2002:a50:ab48:0:b0:566:825b:98 with SMTP id
+ t8-20020a50ab48000000b00566825b0098mr1245547edc.6.1710282522417; 
+ Tue, 12 Mar 2024 15:28:42 -0700 (PDT)
 Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- o23-20020aa7c7d7000000b005686b5c3c1asm1463352eds.22.2024.03.12.15.27.54
+ cn19-20020a0564020cb300b0056828004c75sm4397850edb.51.2024.03.12.15.28.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 15:27:55 -0700 (PDT)
-Date: Tue, 12 Mar 2024 18:27:52 -0400
+ Tue, 12 Mar 2024 15:28:41 -0700 (PDT)
+Date: Tue, 12 Mar 2024 18:28:39 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 45/68] pcie_sriov: Do not reset NumVFs after disabling VFs
-Message-ID: <63eb76dda237843582f3616f4403ae795e471e17.1710282274.git.mst@redhat.com>
+ Eric Auger <eric.auger@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>
+Subject: [PULL 58/68] virtio-iommu: Change the default granule to the host
+ page size
+Message-ID: <9dd5e808fc17ac92180965178a6e867c1e96ac57.1710282274.git.mst@redhat.com>
 References: <cover.1710282274.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1710282274.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -102,43 +109,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Eric Auger <eric.auger@redhat.com>
 
-The spec does not NumVFs is reset after disabling VFs except when
-resetting the PF. Clearing it is guest visible and out of spec, even
-though Linux doesn't rely on this value being preserved, so we never
-noticed.
+We used to set the default granule to 4KB but with VFIO assignment
+it makes more sense to use the actual host page size.
 
-Fixes: 7c0fa8dff811 ("pcie: Add support for Single Root I/O Virtualization (SR/IOV)")
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20240228-reuse-v8-4-282660281e60@daynix.com>
+Indeed when hotplugging a VFIO device protected by a virtio-iommu
+on a 64kB/64kB host/guest config, we current get a qemu crash:
+
+"vfio: DMA mapping failed, unable to continue"
+
+This is due to the hot-attached VFIO device calling
+memory_region_iommu_set_page_size_mask() with 64kB granule
+whereas the virtio-iommu granule was already frozen to 4KB on
+machine init done.
+
+Set the granule property to "host" and introduce a new compat.
+The page size mask used before 9.0 was qemu_target_page_mask().
+Since the virtio-iommu currently only supports x86_64 and aarch64,
+this matched a 4KB granule.
+
+Note that the new default will prevent 4kB guest on 64kB host
+because the granule will be set to 64kB which would be larger
+than the guest page size. In that situation, the virtio-iommu
+driver fails on viommu_domain_finalise() with
+"granule 0x10000 larger than system page size 0x1000".
+
+In that case the workaround is to request 4K granule.
+
+The current limitation of global granule in the virtio-iommu
+should be removed and turned into per domain granule. But
+until we get this upgraded, this new default is probably
+better because I don't think anyone is currently interested in
+running a 4KB page size guest with virtio-iommu on a 64KB host.
+However supporting 64kB guest on 64kB host with virtio-iommu and
+VFIO looks a more important feature.
+
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Message-Id: <20240307134445.92296-4-eric.auger@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/pci/pcie_sriov.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/core/machine.c        | 5 ++++-
+ hw/virtio/virtio-iommu.c | 2 +-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index 51b66d1bb3..e9b23221d7 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -215,7 +215,6 @@ static void unregister_vfs(PCIDevice *dev)
-     g_free(dev->exp.sriov_pf.vf);
-     dev->exp.sriov_pf.vf = NULL;
-     dev->exp.sriov_pf.num_vfs = 0;
--    pci_set_word(dev->config + dev->exp.sriov_cap + PCI_SRIOV_NUM_VF, 0);
- }
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 9ac5d5389a..6bd09d4592 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -30,9 +30,12 @@
+ #include "exec/confidential-guest-support.h"
+ #include "hw/virtio/virtio-pci.h"
+ #include "hw/virtio/virtio-net.h"
++#include "hw/virtio/virtio-iommu.h"
+ #include "audio/audio.h"
  
- void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
-@@ -260,6 +259,8 @@ void pcie_sriov_pf_reset(PCIDevice *dev)
-     pci_set_word(dev->config + sriov_cap + PCI_SRIOV_CTRL, 0);
-     unregister_vfs(dev);
+-GlobalProperty hw_compat_8_2[] = {};
++GlobalProperty hw_compat_8_2[] = {
++    { TYPE_VIRTIO_IOMMU_PCI, "granule", "4k" },
++};
+ const size_t hw_compat_8_2_len = G_N_ELEMENTS(hw_compat_8_2);
  
-+    pci_set_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF, 0);
-+
-     /*
-      * Default is to use 4K pages, software can modify it
-      * to any of the supported bits
+ GlobalProperty hw_compat_8_1[] = {
+diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+index 84d6819d3b..aab97e1527 100644
+--- a/hw/virtio/virtio-iommu.c
++++ b/hw/virtio/virtio-iommu.c
+@@ -1543,7 +1543,7 @@ static Property virtio_iommu_properties[] = {
+                      TYPE_PCI_BUS, PCIBus *),
+     DEFINE_PROP_BOOL("boot-bypass", VirtIOIOMMU, boot_bypass, true),
+     DEFINE_PROP_GRANULE_MODE("granule", VirtIOIOMMU, granule_mode,
+-                             GRANULE_MODE_4K),
++                             GRANULE_MODE_HOST),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
 -- 
 MST
 
