@@ -4,73 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 660CAC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:41:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DD4EC54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:41:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkAdI-0005O2-5O; Tue, 12 Mar 2024 18:30:04 -0400
+	id 1rkAdV-0006GM-8k; Tue, 12 Mar 2024 18:30:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAcY-0002vl-OO
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAca-0002wp-1Q
  for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:29:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAcU-0004eN-F7
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAcU-0004eV-Im
  for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:29:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710282553;
+ s=mimecast20190719; t=1710282554;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=2oYq0iZXaQr5DMI6kVH19Up4p/ecK9SPws94ZnuK5Hw=;
- b=Wxlq23ngghDveUN5llanCGgTuJ40glV6WazUDlpNlyRloGyR0hLFsXSifN5H/chFlwmNwt
- nQIruKlT1pQGbJ8mOv3iaX+g3tW1B9aBBH9fVF3iOMJ+WLL03AwFBy5z/AoGo3L8SUYhjn
- Z6gGUflS5o4Zam4V/g+/Q+WxbizAm04=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9Q3ZMhxuiBKQgwWVuadLMzxaLaVsdjhfX4rDv2UGsEo=;
+ b=Rt8tTZ6k2tXTHHFO1N39I2xLVWGCx2JCYVhMNLalH1HoWvmNj3/q60BJchiJhacE3R4oFt
+ xNyOIU5JNOLNAsGri6ItnqJAJhDnUw/Ksw0vk3uiQMitIt7mnm8jevGfV7h3JTmfvwb/Gy
+ KIfCjWdsxH4HgWgORl14AYNAZTY//9s=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-208-asIaeoxHNsqQv5wm1YCzMA-1; Tue, 12 Mar 2024 18:29:10 -0400
-X-MC-Unique: asIaeoxHNsqQv5wm1YCzMA-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a44143c8908so28013366b.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:29:09 -0700 (PDT)
+ us-mta-226-BJLYu9CHOcOKtr9LNGA8zg-1; Tue, 12 Mar 2024 18:29:12 -0400
+X-MC-Unique: BJLYu9CHOcOKtr9LNGA8zg-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a45acc7f191so403167666b.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:29:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710282548; x=1710887348;
+ d=1e100.net; s=20230601; t=1710282551; x=1710887351;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2oYq0iZXaQr5DMI6kVH19Up4p/ecK9SPws94ZnuK5Hw=;
- b=e4/5gVMN0ecta4M6klHfdVCCraMmVe2mzWIJaF+CWrWRfFGTeN9cYKGizOFuVIDw1B
- t/duJZo3ccDFLN8te7ciQrAJgfg+B1xv4mrGXe6yua5ebiaCfT9nQDOArhqG19lokyCQ
- 3BbgW5NhKnzb35D+lhlHFXA1Ire4FCxS4UqT4u6qYeMWAgV9lYfXjmmfGCJphWpHjznT
- HhRQguyYp3tnGHNbYx23NmV94nRb70fnyYPgMpK7tJiOelVHg9oq4EToVhz3M/E0nIqQ
- KHEsAZoTXn66KmjPPWBxh5RWx6iqZpnlhW2bu+kZbG1O6mSAIcRT1IwI5St7FGYZeo0D
- /yTQ==
-X-Gm-Message-State: AOJu0YyC+Ipq/jDddud5aQVLRf7Yql1umhlqmSsvT+BfmoJzgqvLrs1q
- 6PvfWf4XaOTxNWnl5KK3aIL3azidLrpmBDBXLRtMtlY2dhZGSUZM1JymyIw1AwhmxpF2RQA3glL
- 5gOo7KxntbFATmD2MoMdzECMREq4+bVpRF/PlE8BXIiD7NfPWGVoWqU+QM7ako5yQ1xiZr8z5p7
- LxPrLzOvlyifCUTq0Lj24WYM7K/rBGcU6I
-X-Received: by 2002:a17:906:c00a:b0:a46:4fc1:c9fe with SMTP id
- e10-20020a170906c00a00b00a464fc1c9femr688800ejz.27.1710282548395; 
- Tue, 12 Mar 2024 15:29:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHsCZTemK7QdO83y+cy6XCnKxRfZWuO0Db+MI2RJ4EjaTptmWAseH4bdsysjaZg3Xa0Jp441Q==
-X-Received: by 2002:a17:906:c00a:b0:a46:4fc1:c9fe with SMTP id
- e10-20020a170906c00a00b00a464fc1c9femr688769ejz.27.1710282547683; 
- Tue, 12 Mar 2024 15:29:07 -0700 (PDT)
+ bh=9Q3ZMhxuiBKQgwWVuadLMzxaLaVsdjhfX4rDv2UGsEo=;
+ b=gTZq3IPy7K1X+LD0Lti+eUyYBhVN+Zkl3hjLzHRTWblmF+2Ymslr6l15NPPtwXM+OH
+ pj8cRiA0ePdmHIT+yaA2dOmLaMCEd9vv7UiGl6KxLaHxHBw+OxaH3/6L54iA6i+gaYoY
+ uaGGyOxRUAJ3K/p0Eq/3c1M6Tfh4ha9d9oPaAHI2DyFrqwm0iO3jWj2xPQ9sSHN7FMVI
+ BeB8Iu0AzGNUlHzMEqAy04bn7qy8oDudYA9rIG6BhQEU0xu/QnDer0LtOImGGY6F1L6/
+ VMuIlN24bZ4xEifqrZZuEXSFtemEMFC3FeDzO6HfLpwTuVhIj2ZXvc9fPgU2hmkFCUvq
+ Hz8A==
+X-Gm-Message-State: AOJu0YyxZymH5oyYnfQt3YAVNyOO7jXldaasYmuh0c0Y+e6dD4/FjL0a
+ /PYoETNXJKONtYttLAmo4LlDl+moAUJW4n0DnntEMAAALLJ4QtVfWIkfWGrdZfz2YEa1RrA6sNS
+ jDFIEMW4m4CsaWqrVmA4WI0bqTboIBD/NQYgBclmf5EyuatrG1X/mMDIpp30Rlwnhhp8Qpc9YyJ
+ /9MovYzu4l8mT2NxhMTg7I4jQnFbHh/9j0
+X-Received: by 2002:a17:907:8749:b0:a46:2b07:5334 with SMTP id
+ qo9-20020a170907874900b00a462b075334mr4717116ejc.48.1710282551071; 
+ Tue, 12 Mar 2024 15:29:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGQ07Jy5RT2nxEDcvs+D9Txc5FhbTkeaabAnwIDZRnVrBlgpFrUvVI6LAQOJjHu1D1i5W47bA==
+X-Received: by 2002:a17:907:8749:b0:a46:2b07:5334 with SMTP id
+ qo9-20020a170907874900b00a462b075334mr4717103ejc.48.1710282550623; 
+ Tue, 12 Mar 2024 15:29:10 -0700 (PDT)
 Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- kn22-20020a170906aa5600b00a45200fe2b5sm4242271ejb.224.2024.03.12.15.29.06
+ gh16-20020a170906e09000b00a45380dfd09sm4218155ejb.105.2024.03.12.15.29.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 15:29:07 -0700 (PDT)
-Date: Tue, 12 Mar 2024 18:29:04 -0400
+ Tue, 12 Mar 2024 15:29:10 -0700 (PDT)
+Date: Tue, 12 Mar 2024 18:29:07 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 66/68] hmat acpi: Fix out of bounds access due to missing use
- of indirection
-Message-ID: <74e2845c5f95b0c139c79233ddb65bb17f2dd679.1710282274.git.mst@redhat.com>
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
+Subject: [PULL 67/68] hw/cxl: Fix missing reserved data in CXL Device DVSEC
+Message-ID: <bfc2f7a6caa6843e50019ee2511ad11cd5582711.1710282274.git.mst@redhat.com>
 References: <cover.1710282274.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -105,59 +103,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-With a numa set up such as
+The r3.1 specification introduced a new 2 byte field, but
+to maintain DWORD alignment, a additional 2 reserved bytes
+were added. Forgot those in updating the structure definition
+but did include them in the size define leading to a buffer
+overrun.
 
--numa nodeid=0,cpus=0 \
--numa nodeid=1,memdev=mem \
--numa nodeid=2,cpus=1
+Also use the define so that we don't duplicate the value.
 
-and appropriate hmat_lb entries the initiator list is correctly
-computed and writen to HMAT as 0,2 but then the LB data is accessed
-using the node id (here 2), landing outside the entry_list array.
-
-Stash the reverse lookup when writing the initiator list and use
-it to get the correct array index index.
-
-Fixes: 4586a2cb83 ("hmat acpi: Build System Locality Latency and Bandwidth Information Structure(s)")
+Fixes: Coverity ID 1534095 buffer overrun
+Fixes: 8700ee15de ("hw/cxl: Standardize all references on CXL r3.1 and minor updates")
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20240307160326.31570-3-Jonathan.Cameron@huawei.com>
+Message-Id: <20240308143831.6256-1-Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/acpi/hmat.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ include/hw/cxl/cxl_pci.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/acpi/hmat.c b/hw/acpi/hmat.c
-index 8ea240878a..9b1662b6b8 100644
---- a/hw/acpi/hmat.c
-+++ b/hw/acpi/hmat.c
-@@ -78,6 +78,7 @@ static void build_hmat_lb(GArray *table_data, HMAT_LB_Info *hmat_lb,
-                           uint32_t *initiator_list)
- {
-     int i, index;
-+    uint32_t initiator_to_index[MAX_NODES] = {};
-     HMAT_LB_Data *lb_data;
-     uint16_t *entry_list;
-     uint32_t base;
-@@ -121,6 +122,8 @@ static void build_hmat_lb(GArray *table_data, HMAT_LB_Info *hmat_lb,
-     /* Initiator Proximity Domain List */
-     for (i = 0; i < num_initiator; i++) {
-         build_append_int_noprefix(table_data, initiator_list[i], 4);
-+        /* Reverse mapping for array possitions */
-+        initiator_to_index[initiator_list[i]] = i;
-     }
+diff --git a/include/hw/cxl/cxl_pci.h b/include/hw/cxl/cxl_pci.h
+index 265db6c407..d0855ed78b 100644
+--- a/include/hw/cxl/cxl_pci.h
++++ b/include/hw/cxl/cxl_pci.h
+@@ -92,8 +92,9 @@ typedef struct CXLDVSECDevice {
+     uint32_t range2_base_hi;
+     uint32_t range2_base_lo;
+     uint16_t cap3;
++    uint16_t resv;
+ } QEMU_PACKED CXLDVSECDevice;
+-QEMU_BUILD_BUG_ON(sizeof(CXLDVSECDevice) != 0x3A);
++QEMU_BUILD_BUG_ON(sizeof(CXLDVSECDevice) != PCIE_CXL_DEVICE_DVSEC_LENGTH);
  
-     /* Target Proximity Domain List */
-@@ -132,7 +135,8 @@ static void build_hmat_lb(GArray *table_data, HMAT_LB_Info *hmat_lb,
-     entry_list = g_new0(uint16_t, num_initiator * num_target);
-     for (i = 0; i < hmat_lb->list->len; i++) {
-         lb_data = &g_array_index(hmat_lb->list, HMAT_LB_Data, i);
--        index = lb_data->initiator * num_target + lb_data->target;
-+        index = initiator_to_index[lb_data->initiator] * num_target +
-+            lb_data->target;
- 
-         entry_list[index] = (uint16_t)(lb_data->data / hmat_lb->base);
-     }
+ /*
+  * CXL r3.1 Section 8.1.5: CXL Extensions DVSEC for Ports
 -- 
 MST
 
