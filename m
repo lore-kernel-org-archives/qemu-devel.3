@@ -4,91 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FDE0C54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 21:04:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9970CC54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 21:05:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk9Ht-0002ez-U8; Tue, 12 Mar 2024 17:03:53 -0400
+	id 1rk9Iv-0003On-69; Tue, 12 Mar 2024 17:04:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rk9Hj-0002eI-Q0
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 17:03:45 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rk9Hh-0005S8-N7
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 17:03:43 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-413e8f1e002so230565e9.2
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 14:03:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710277420; x=1710882220; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hd+RboktKNiO7q9GvgK60P+ZsZlpCe+ghjUbd3EGIKQ=;
- b=Ux09GW1pOfbarpy1Pdvlnb7NlEtkV7n9FQDvVPqs6gdEfYsDcn/69OejloPses66Sg
- ZJnvFMLu34/fhsICD8eCPkW7lH5+ucuDeugbRBVLPZ07QgVOgw8LYI0jPYAC5iZys7+H
- esKTPnE3S49iXRninOJzPhhPCNwN/T4UY4jLZlBTJ3BiFPYAThg0Xj2Cer/HtMaThzKg
- J4Zsuj4XKqd/KmRDs6LeN04SlwaYxdIjIMFuzxKfgaBGVgFjcXWd84yR63NpRZHYxlCo
- zxBIyshW7/GwevW/W7Ruc+y6jAr7NE2jrPDnuVBLK4TsNjL0WSNoFCekYS5g9dzgbNW6
- pvyQ==
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rk9It-0003O4-Hl
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 17:04:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rk9Ir-0005Z7-EM
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 17:04:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710277491;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cH8teo+mlmEzIzYAPkrD2P4DvAuQ/xYWJSImlRLo00M=;
+ b=EIczIlyUUay8fIRJcAiNUeheEp/FdXwsDskyckZDc/iDJIEqU/oagooTSBymFUqrFXElRx
+ X6cz+3wS41TnKTHlInn6z9jlHfx5YvjQFI1CGxNM0hPhowQo3HfQeqWrJYrHRxl3hc3urw
+ M5o5hW7D5bqB9k+HCcHXCJ3pFalGygY=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-187-Uq7fkkRfOI2_smjcC-lk4w-1; Tue, 12 Mar 2024 17:04:50 -0400
+X-MC-Unique: Uq7fkkRfOI2_smjcC-lk4w-1
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-29baacab848so208450a91.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 14:04:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710277420; x=1710882220;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=hd+RboktKNiO7q9GvgK60P+ZsZlpCe+ghjUbd3EGIKQ=;
- b=vwoQbHOiDIRwSt58qEXblk070WKZjp9C6UHxQQrSorwBpbo/Oz7oV/Ollf5md9KWUk
- z6dLm+3rhHVHpwx7UaWFr35u5v8xbNvz1byWEW5sPKM6Ehl+scakDBs+gHvhjJ6hPiqK
- M35BodtLK+8sAsH0rsGsNDsROYzKlzoX+H/T/Q8uoZqkDjYJP95AJyK5SUFOHinYNt10
- bSW9j/99DmS7SjX2ymeAEJXROKlzIzsjnEMB1wh2hM/YGjFt7gSOaozmQu3N93z8qvfz
- 5iXKNJOMk0tsfdd4i3KRhKAGoFbalZ+EQ4Eovdws5WHs47yAM/uvDIBN4l3HshmyDqoF
- xdbg==
-X-Gm-Message-State: AOJu0YxGh/xSA8EVQkPGPVhovw1qCLv+iazl1BGjASKnhpJmc44vHrM/
- MXxu2s0Qa5BxQh3ylFLeasxoRG+XloaDCMeL8kXsGIOxzH8B//gRuPE4+aqCnwQ=
-X-Google-Smtp-Source: AGHT+IFDmuoBzSfuw/Z+/bihDPS8kezAPEBY3Q6j+ueuYoImxtl5Un2QEv9/k96QJiNjYtnaUo4+Ew==
-X-Received: by 2002:a05:600c:4e8a:b0:413:16e1:eac1 with SMTP id
- f10-20020a05600c4e8a00b0041316e1eac1mr8201091wmq.33.1710277419628; 
- Tue, 12 Mar 2024 14:03:39 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- he13-20020a05600c540d00b00413331845a6sm89798wmb.13.2024.03.12.14.03.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 14:03:39 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B591E5F794;
- Tue, 12 Mar 2024 21:03:38 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: "Nicholas Piggin" <npiggin@gmail.com>
-Cc: <qemu-devel@nongnu.org>,  "Pavel Dovgalyuk" <Pavel.Dovgalyuk@ispras.ru>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  "Richard
- Henderson"
- <richard.henderson@linaro.org>,  "Paolo Bonzini" <pbonzini@redhat.com>,
- "John Snow" <jsnow@redhat.com>,  "Cleber Rosa" <crosa@redhat.com>,
- "Wainer dos Santos Moschetta" <wainersm@redhat.com>,  "Beraldo Leal"
- <bleal@redhat.com>,  "Michael Tokarev" <mjt@tls.msk.ru>
-Subject: Re: [PATCH v4 05/24] Revert "replay: stop us hanging in
- rr_wait_io_event"
-In-Reply-To: <CZRTTCV604Z3.3MT5MR0P5FWQK@wheely> (Nicholas Piggin's message of
- "Wed, 13 Mar 2024 00:03:43 +1000")
-References: <20240311174026.2177152-1-npiggin@gmail.com>
- <20240311174026.2177152-6-npiggin@gmail.com>
- <87v85ro9qt.fsf@draig.linaro.org> <CZRTTCV604Z3.3MT5MR0P5FWQK@wheely>
-User-Agent: mu4e 1.12.1; emacs 29.1
-Date: Tue, 12 Mar 2024 21:03:38 +0000
-Message-ID: <87a5n3mac5.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1710277489; x=1710882289;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cH8teo+mlmEzIzYAPkrD2P4DvAuQ/xYWJSImlRLo00M=;
+ b=CrdoS3dwI7/h97CcgUYQHJvW/VRSlk0UIIUajB3VW6k+Al8VYg6i060Mpybk1jgggv
+ d29GdE11G1gzbFhW3CxpG4Rh0mtsIOar6PyrRzHDQJp9abOBvNY+2P8rxF0ofMdAyDeS
+ JPlaqGLxO1mrv8BBQYgpW4NqCEJ6AasZxYmEHfhHEIwaE07TfwqBQr3gsXJQSsKhYCA2
+ I4lEnGZ4nOiltY1IHMpIzEI9JnzFWFIxQqvm/OSutcGJueDGOcO++jLVQxzavR1jLfyq
+ 4LBPe6T55ktRZTDjhqDsLCKuW8LPoMuw8ze0SougQ927gW1hdnd7wWBfygs0hwA9jRx0
+ dF2w==
+X-Gm-Message-State: AOJu0YwokApYSqEyQ8w7dZxg+z01tFnruMFv8MM3GUQfKbRVLgt5dxy3
+ 4+Wi0IVlK9GP4cDnv0lN1xbrvU651vkajfJClYh521oAzjEsNZdo6G8yBLE2MZtV+0Ud47AiBon
+ a1Z9jsLcik+RKf29VpYFjtbDTWE9v4xmZpYGqLt+B0DbdS0eU5g7WE7E8WcdHo6vooNfdoiDzRx
+ kn+66FzSQdwdbVZemVEYgs+yIWleU=
+X-Received: by 2002:a17:903:40d2:b0:1dd:c18f:1886 with SMTP id
+ t18-20020a17090340d200b001ddc18f1886mr1924427pld.65.1710277489117; 
+ Tue, 12 Mar 2024 14:04:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGHU1TTCz8GPm1naYFkejl2fVBcKzxSbMeQTmLhY5CXEo3YwzbJiHiFrjvdlAO2RcHv+PdZJacmqycTVn7UAjo=
+X-Received: by 2002:a17:903:40d2:b0:1dd:c18f:1886 with SMTP id
+ t18-20020a17090340d200b001ddc18f1886mr1924407pld.65.1710277488815; Tue, 12
+ Mar 2024 14:04:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20240201224246.39480-1-jsnow@redhat.com>
+ <20240201224246.39480-14-jsnow@redhat.com>
+ <87cysr9scs.fsf@pond.sub.org>
+In-Reply-To: <87cysr9scs.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Tue, 12 Mar 2024 17:04:37 -0400
+Message-ID: <CAFn=p-ZBPeqQr7oPxpXBuU8jr8+zzY96757Ctc33qJPDVLKiOQ@mail.gmail.com>
+Subject: Re: [PATCH v3 13/20] qapi/schema: split "checked" field into
+ "checking" and "checked"
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
+ Michael Roth <michael.roth@amd.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,150 +98,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Nicholas Piggin" <npiggin@gmail.com> writes:
+On Tue, Feb 20, 2024 at 8:29=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+>
+> John Snow <jsnow@redhat.com> writes:
+>
+> > Instead of using the None value for the members field, use a dedicated
+> > "checking" value to detect recursive misconfigurations.
+> >
+> > This is intended to assist with subsequent patches which will seek to
+> > remove the "None" value from the members field (which can never be set
+> > legally after the final call to check()) in order to simplify static
+> > typing of that field, by avoiding needing assertions littered at many
+> > callsites.
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > ---
+> >  scripts/qapi/schema.py | 13 ++++++++-----
+> >  1 file changed, 8 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
+> > index d4d3c3bbcee..a459016e148 100644
+> > --- a/scripts/qapi/schema.py
+> > +++ b/scripts/qapi/schema.py
+> > @@ -458,19 +458,21 @@ def __init__(self, name, info, doc, ifcond, featu=
+res,
+> >          self.local_members =3D local_members
+> >          self.variants =3D variants
+> >          self.members =3D None
+> > +        self._checking =3D False
+> >
+> >      def check(self, schema):
+> >          # This calls another type T's .check() exactly when the C
+> >          # struct emitted by gen_object() contains that T's C struct
+> >          # (pointers don't count).
+> > -        if self.members is not None:
+> > -            # A previous .check() completed: nothing to do
+> > -            return
+> > -        if self._checked:
+> > +        if self._checking:
+> >              # Recursed: C struct contains itself
+> >              raise QAPISemError(self.info,
+> >                                 "object %s contains itself" % self.name=
+)
+> > +        if self._checked:
+> > +            # A previous .check() completed: nothing to do
+> > +            return
+>
+> The diff would be easier to read if you could keep the order...  You
+> don't due to the subtle change of the state predicates.  More on that
+> below.
+>
+> >
+> > +        self._checking =3D True
+> >          super().check(schema)
+> >          assert self._checked and self.members is None
+> >
+> > @@ -495,7 +497,8 @@ def check(self, schema):
+> >              self.variants.check(schema, seen)
+> >              self.variants.check_clash(self.info, seen)
+> >
+> > -        self.members =3D members  # mark completed
+> > +        self.members =3D members
+> > +        self._checking =3D False  # mark completed
+> >
+> >      # Check that the members of this type do not cause duplicate JSON =
+members,
+> >      # and update seen to track the members seen so far. Report any err=
+ors
+>
+> We .check() entities on after the other.  *Except*
+> QAPISchemaObjectType.check() "calls another type T's .check() exactly
+> when the C struct emitted by gen_object() contains that T's C struct".
+> If the recursion loops, the schema asks for C structs containing
+> themselves.  To catch this, we have QAPISchemaType objects go through
+> three states:
+>
+> 1. Not yet checked.
+>
+> 2. Being checked; object.check() is on the call stack.
+>
+> 3. Checked, i.e. object.check() completed.
+>
+> How to recognize the states before the patch:
+>
+> 1. not ._checked and .members is None
+>
+> 2. ._checked and .members is None
+>
+> 3. ._checked and .members is not None
+>
+>    Since .members is not None implies .checked, we simply use
+>    .members is not None.
+>
+> We go from state 1. to 2. in super().check().
+>
+> We go from state 2. to 3. at # mark completed.
+>
+> Note that .checked becomes true well before we finish checking.  This is
+> admittedly confusing.  If you can think of a less confusing name, ...
 
-> On Tue Mar 12, 2024 at 11:33 PM AEST, Alex Benn=C3=A9e wrote:
->> Nicholas Piggin <npiggin@gmail.com> writes:
->>
->> > This reverts commit 1f881ea4a444ef36a8b6907b0b82be4b3af253a2.
->> >
->> > That commit causes reverse_debugging.py test failures, and does
->> > not seem to solve the root cause of the problem x86-64 still
->> > hangs in record/replay tests.
->>
->> I'm still finding the reverse debugging tests failing with this series.
->
-> :(
->
-> In gitlab CI or your own testing? What are you running exactly?
+"checking", of course ;)
 
-My own - my mistake I didn't get a clean build because of the format
-bug. However I'm seeing new failures:
-
-  env QEMU_TEST_FLAKY_TESTS=3D1 AVOCADO_TIMEOUT_EXPECTED=3D1 ./pyvenv/bin/a=
-vocado run ./tests/avocado/reverse_debugging.py
-  Fetching asset from ./tests/avocado/reverse_debugging.py:ReverseDebugging=
-_AArch64.test_aarch64_virt
-  JOB ID     : bd4b29f7afaa24dc6e32933ea9bc5e46bbc3a5a4
-  JOB LOG    : /home/alex/avocado/job-results/job-2024-03-12T20.58-bd4b29f/=
-job.log
-   (1/5) ./tests/avocado/reverse_debugging.py:ReverseDebugging_X86_64.test_=
-x86_64_pc: PASS (4.49 s)
-   (2/5) ./tests/avocado/reverse_debugging.py:ReverseDebugging_X86_64.test_=
-x86_64_q35: PASS (4.50 s)
-   (3/5) ./tests/avocado/reverse_debugging.py:ReverseDebugging_AArch64.test=
-_aarch64_virt: FAIL: Invalid PC (read ffff2d941e4d7f28 instead of ffff2d941=
-e4d7f2c) (3.06 s)
-   (4/5) ./tests/avocado/reverse_debugging.py:ReverseDebugging_ppc64.test_p=
-pc64_pseries: PASS (16.48 s)
-   (5/5) ./tests/avocado/reverse_debugging.py:ReverseDebugging_ppc64.test_p=
-pc64_powernv: FAIL: Invalid PC (read 30020210 instead of 30020214) (2.80 s)
-  RESULTS    : PASS 3 | ERROR 0 | FAIL 2 | SKIP 0 | WARN 0 | INTERRUPT 0 | =
-CANCEL 0
-  JOB TIME   : 32.18 s
+I won't change it here, but... that's what I'd be drawn to ...
 
 >
-> I found 440fx must have some bug becaues it's quite bad, but
-> q35 was more stable.
+> The patch's aim is to avoid use of .members, to enable the next patch.
 >
->>
->> > The problem with short-cutting the iowait that was taken during
->> > record phase is that related events will not get consumed at the
->> > same points (e.g., reading the clock).
->> >
->> > A hang with zero icount always seems to be a symptom of an earlier
->> > problem that has caused the recording to become out of synch with
->> > the execution and consumption of events by replay.
->>
->> Would it be possible to still detect the failure mode rather than a full
->> revert?
+> I don't doubt that your solution works, but trying to understand how it
+> works makes my tired brain go owww!
 >
-> I'm not actually sure exactly how this patch causes test failures
-> (or how it was fixing the ones you saw). If I can reproduce the
-> ones you see I could look a bit deeper at it.
+> State invariants (I think):
 >
-> I have been looking at some ways to try detect/report record/replay
-> errors more sanely because it can be very hard to debug them at
-> the moment. No patches quite ready to post yet, but yes if there's
-> something we could do here to help we should.
+> 1. not ._checked and .members is None and not ._checking
 >
-> Thanks,
-> Nick
+> 2. ._checked and .members is None and ._checking
 >
->>
->> >
->> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
->> > ---
->> >  include/sysemu/replay.h      |  5 -----
->> >  accel/tcg/tcg-accel-ops-rr.c |  2 +-
->> >  replay/replay.c              | 21 ---------------------
->> >  3 files changed, 1 insertion(+), 27 deletions(-)
->> >
->> > diff --git a/include/sysemu/replay.h b/include/sysemu/replay.h
->> > index f229b2109c..8102fa54f0 100644
->> > --- a/include/sysemu/replay.h
->> > +++ b/include/sysemu/replay.h
->> > @@ -73,11 +73,6 @@ int replay_get_instructions(void);
->> >  /*! Updates instructions counter in replay mode. */
->> >  void replay_account_executed_instructions(void);
->> >=20=20
->> > -/**
->> > - * replay_can_wait: check if we should pause for wait-io
->> > - */
->> > -bool replay_can_wait(void);
->> > -
->> >  /* Processing clocks and other time sources */
->> >=20=20
->> >  /*! Save the specified clock */
->> > diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr=
-.c
->> > index 894e73e52c..a942442a33 100644
->> > --- a/accel/tcg/tcg-accel-ops-rr.c
->> > +++ b/accel/tcg/tcg-accel-ops-rr.c
->> > @@ -109,7 +109,7 @@ static void rr_wait_io_event(void)
->> >  {
->> >      CPUState *cpu;
->> >=20=20
->> > -    while (all_cpu_threads_idle() && replay_can_wait()) {
->> > +    while (all_cpu_threads_idle()) {
->> >          rr_stop_kick_timer();
->> >          qemu_cond_wait_bql(first_cpu->halt_cond);
->> >      }
->> > diff --git a/replay/replay.c b/replay/replay.c
->> > index b8564a4813..895fa6b67a 100644
->> > --- a/replay/replay.c
->> > +++ b/replay/replay.c
->> > @@ -451,27 +451,6 @@ void replay_start(void)
->> >      replay_enable_events();
->> >  }
->> >=20=20
->> > -/*
->> > - * For none/record the answer is yes.
->> > - */
->> > -bool replay_can_wait(void)
->> > -{
->> > -    if (replay_mode =3D=3D REPLAY_MODE_PLAY) {
->> > -        /*
->> > -         * For playback we shouldn't ever be at a point we wait. If
->> > -         * the instruction count has reached zero and we have an
->> > -         * unconsumed event we should go around again and consume it.
->> > -         */
->> > -        if (replay_state.instruction_count =3D=3D 0 && replay_state.h=
-as_unread_data) {
->> > -            return false;
->> > -        } else {
->> > -            replay_sync_error("Playback shouldn't have to iowait");
->> > -        }
->> > -    }
->> > -    return true;
->> > -}
->> > -
->> > -
->> >  void replay_finish(void)
->> >  {
->> >      if (replay_mode =3D=3D REPLAY_MODE_NONE) {
+> 3. ._checked and .members is not None and not ._checking
+>
+> We can then recognize states without use of .members:
+>
+> 1. not ._checked and not ._checking
+>
+>    Since not ._checked implies not .checking, we can simply use
+>    not ._checked.
+>
+> 2. ._checked and ._checking
+>
+>    A deliciously confusing predicate, isn't it?
+>
+> 3. ._checked and not ._checking
+>
+> Deep breath...  alright, here's the stupidest replacement for use of
+> .members that could possibly work: add a flag, ensure it's True exactly
+> when .members is not None.  Like this:
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+OK, sure. As long as the next patch also shakes out just fine...
+
+>
+> diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
+> index d4d3c3bbce..095831baf2 100644
+> --- a/scripts/qapi/schema.py
+> +++ b/scripts/qapi/schema.py
+> @@ -458,12 +458,13 @@ def __init__(self, name, info, doc, ifcond, feature=
+s,
+>          self.local_members =3D local_members
+>          self.variants =3D variants
+>          self.members =3D None
+> +        self._check_complete =3D False
+>
+>      def check(self, schema):
+>          # This calls another type T's .check() exactly when the C
+>          # struct emitted by gen_object() contains that T's C struct
+>          # (pointers don't count).
+> -        if self.members is not None:
+> +        if self._check_complete:
+>              # A previous .check() completed: nothing to do
+>              return
+>          if self._checked:
+> @@ -495,7 +496,8 @@ def check(self, schema):
+>              self.variants.check(schema, seen)
+>              self.variants.check_clash(self.info, seen)
+>
+> -        self.members =3D members  # mark completed
+> +        self.members =3D members
+> +        self._check_complete =3D True  # mark completed
+>
+>      # Check that the members of this type do not cause duplicate JSON me=
+mbers,
+>      # and update seen to track the members seen so far. Report any error=
+s
+>
+>
+> Thoughts?
+>
+
 
