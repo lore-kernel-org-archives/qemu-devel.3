@@ -4,89 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00628C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 16:56:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A9C1C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 16:59:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk5Pv-0001ed-LI; Tue, 12 Mar 2024 12:55:55 -0400
+	id 1rk5TG-0004Zi-2z; Tue, 12 Mar 2024 12:59:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk5Pj-0001bq-0k
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 12:55:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk5Pg-00078c-C0
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 12:55:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710262538;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hSQdOV9+UFl6iHdm2F0NdvdWTdVRmAMr8rskNMI3LbM=;
- b=GG6ZYYtX/VaMQsn8Ua5P8OupfetV9/KsxJ1Zoi3j+fqJ0bHo1kV+R41eYfVU8ytbsS2NtJ
- HTsBBmcawk8HgUFOvwXPW9HOjE5ClZxvOyYhsCFiGrCnQzSfbHJD311YmB7eF8itz8mQXQ
- 3DVzXkLd8RZyaYKkwp4QIwO95a3p74c=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-511-43B8yaCyOqyj-2wRigKd7g-1; Tue, 12 Mar 2024 12:55:36 -0400
-X-MC-Unique: 43B8yaCyOqyj-2wRigKd7g-1
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-60a20c33f0bso47192787b3.2
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 09:55:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rk5T3-0004WO-Kf; Tue, 12 Mar 2024 12:59:09 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rk5T1-0007uI-Lw; Tue, 12 Mar 2024 12:59:09 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-6e649a2548cso4017740b3a.3; 
+ Tue, 12 Mar 2024 09:59:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1710262745; x=1710867545; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=vB/tXVL4GK4kgvODQSwg7p24l5SVJznS/b4/tkZTlvg=;
+ b=Adf12ePbQ09tLR57qnDQIYgBAAj+ebLMb1FxjDt3jwXIPFVW/cZ3TI1g8vbcbbDRiZ
+ ka170oWve+5iFG+TarzYfT2LhVJL2V1Rhk4aDoYHATAEdw/6cLWgSBzCEr6n9oY5pDt4
+ IweheLuzos59qPdzqFbZ/Huk6bK33LW//RmvPDV1NPz5qJ+hB5qThF+RWoS6KnuRUT3r
+ 02qMn+/jYJDFGXvJSwmr7bc9XsKP7Gbr9L80bwIQmZVP9a5hBhLdib2wwkMkzhvJC0rz
+ fQ2xSMABSdENYU5tE5j+tQe6DRyFUtzQ7D1vJTLpbGOdmiog2dkw4+fyYn4SwIMLr2L2
+ O5eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710262531; x=1710867331;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hSQdOV9+UFl6iHdm2F0NdvdWTdVRmAMr8rskNMI3LbM=;
- b=kLdbtw1TEErDDEznIhLzC99P8mCZTSyEUSHIgiAu9gnv7kKw0xaNeoegydacG1N52x
- QoIOVN4rTEljpQFpoOIbI6znOl6e4HWmb/cRSoLwHm97aSRuK4d3nJOYbaMuBLzeR5f7
- pjB47SjPtWMELRjp1wPBCUarn2Zv0qIJh9wbck9T8xNJ4w/GO0/wYmrBEr4FxvD8GBFf
- F57JBupzLWwdcioby5kZVVPajgpXuIUJQz5BK5K0IPqX4Hx54Rs3kJgUphIn23eS137R
- +SiMDaiu2eGn21EN/aP7IY+PvxoD3G8aG7wBNhz+433bDylLZLz3sjFwR93inkLwW0vT
- 5knw==
-X-Gm-Message-State: AOJu0YwJqVhwFccfv+i0jWYVUpLvhHLfuUunoIvgKSHv3XKhQNoBcb2g
- TrM6pjEXCboU1ZW80yuOo1apsOO3hcXp5A+IPY2Cw7/B9uD54Mdlqgi31Ue8RLzk1G22Xi6N66S
- 8g3OSsOY1F4tCJTF0vk2XpfnKJpG0Lp28FIf9sgjEo/zkXq/Cyvb5
-X-Received: by 2002:a0d:dd13:0:b0:60a:66d3:bce9 with SMTP id
- g19-20020a0ddd13000000b0060a66d3bce9mr29494ywe.26.1710262530631; 
- Tue, 12 Mar 2024 09:55:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFf52igNZqyES828bI419taaYqwCTwHwVgV6u4HFx8yE4+6g4wyvZlZastB7ssp2DGcqvCwmw==
-X-Received: by 2002:a0d:dd13:0:b0:60a:66d3:bce9 with SMTP id
- g19-20020a0ddd13000000b0060a66d3bce9mr29467ywe.26.1710262530123; 
- Tue, 12 Mar 2024 09:55:30 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1f0:532c:5ae4:fce6:76e1:fa1a])
+ d=1e100.net; s=20230601; t=1710262745; x=1710867545;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=vB/tXVL4GK4kgvODQSwg7p24l5SVJznS/b4/tkZTlvg=;
+ b=Nv+CzxlrowcEsbAYDNQSKQvBI+0eXInGaFFjq/2hsnehOOjs9A40EreAbacjQbXsTH
+ /6txIdiZflTJij9YckrAWLEBJDM12iH3bhlTuw9TW+ktjJwMZKkNyGkQJsTCS1Os+aIm
+ s9LC6ReK4/bGWZB7IaJWklkVT4qb4sB8CcYZnJYcxMtLmWBI4yqTbrDixjE7PbEKXf6x
+ TPaJRUZZLrTG+B2WuGlKRebTPp53ruMDfjFKhzwr97rfd36SYHBkBzyVJmZ7iKlBUU31
+ pA1x/FSDRj659bb9eli0ehR5ATpIHeoaXNZX3misrlV+gMLNoJtgW/pTsCI0Leb3j1HJ
+ 684g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWIyWjFDsqllmkfOUz5fY5cyt1ARNSEcQ2tGF6KiUagV+CqTI8MeAWwqoLWcUwJzQaSsauDyAGhAQyh0OkTLqG2h0e+
+X-Gm-Message-State: AOJu0YwjFtz6huhw8sDWxNPJaMS8KWiG7MdXAE1xUMomwH++7G5vCLkW
+ FzSsYFOLL5dOczTtZ4jq9/cVly5Mm8stCeCD9x08LfI5U1OQJR8PW+gMDDVeONw=
+X-Google-Smtp-Source: AGHT+IE4TfgGYa3uXa7dlDTsogiB3zGs2t1hjj3KJjmRoLpTMjQxjxSAJnb2u8aEI1eM0h8Ky5ShYQ==
+X-Received: by 2002:a05:6a20:9c8e:b0:1a3:1b95:7cf with SMTP id
+ mj14-20020a056a209c8e00b001a31b9507cfmr992569pzb.56.1710262744505; 
+ Tue, 12 Mar 2024 09:59:04 -0700 (PDT)
+Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- o16-20020a0dcc10000000b0060a4371759bsm973829ywd.52.2024.03.12.09.55.24
+ t34-20020a056a0013a200b006e6a684a6ddsm1362330pfg.220.2024.03.12.09.59.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 09:55:29 -0700 (PDT)
-Date: Tue, 12 Mar 2024 12:55:22 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com, clg@redhat.com,
- eric.auger@redhat.com, peterx@redhat.com, jasowang@redhat.com,
- jgg@nvidia.com, nicolinc@nvidia.com, joao.m.martins@oracle.com,
- kevin.tian@intel.com, yi.l.liu@intel.com, yi.y.sun@intel.com,
- chao.p.peng@intel.com, Yi Sun <yi.y.sun@linux.intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: [PATCH v1 09/11] hw/pci: Introduce
- pci_device_set/unset_iommu_device()
-Message-ID: <20240312125422-mutt-send-email-mst@kernel.org>
-References: <20240228035900.1085727-1-zhenzhong.duan@intel.com>
- <20240228035900.1085727-10-zhenzhong.duan@intel.com>
+ Tue, 12 Mar 2024 09:59:04 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PULL 00/38] ppc-for-9.0-2 queue
+Date: Wed, 13 Mar 2024 02:58:11 +1000
+Message-ID: <20240312165851.2240242-1-npiggin@gmail.com>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240228035900.1085727-10-zhenzhong.duan@intel.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,183 +93,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 28, 2024 at 11:58:58AM +0800, Zhenzhong Duan wrote:
-> From: Yi Liu <yi.l.liu@intel.com>
-> 
-> This adds pci_device_set/unset_iommu_device() to set/unset
-> HostIOMMUDevice for a given PCIe device. Caller of set
-> should fail if set operation fails.
-> 
-> Extract out pci_device_get_iommu_bus_devfn() to facilitate
-> implementation of pci_device_set/unset_iommu_device().
-> 
-> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->  include/hw/pci/pci.h | 38 ++++++++++++++++++++++++++-
->  hw/pci/pci.c         | 62 +++++++++++++++++++++++++++++++++++++++++---
->  2 files changed, 96 insertions(+), 4 deletions(-)
-> 
-> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-> index fa6313aabc..8fe6f746d7 100644
-> --- a/include/hw/pci/pci.h
-> +++ b/include/hw/pci/pci.h
-> @@ -3,6 +3,7 @@
->  
->  #include "exec/memory.h"
->  #include "sysemu/dma.h"
-> +#include "sysemu/host_iommu_device.h"
->  
->  /* PCI includes legacy ISA access.  */
->  #include "hw/isa/isa.h"
-> @@ -384,10 +385,45 @@ typedef struct PCIIOMMUOps {
->       *
->       * @devfn: device and function number
->       */
-> -   AddressSpace * (*get_address_space)(PCIBus *bus, void *opaque, int devfn);
-> +    AddressSpace * (*get_address_space)(PCIBus *bus, void *opaque, int devfn);
-> +    /**
-> +     * @set_iommu_device: attach a HostIOMMUDevice to a vIOMMU
-> +     *
-> +     * Optional callback, if not implemented in vIOMMU, then vIOMMU can't
-> +     * retrieve host information from the associated HostIOMMUDevice.
-> +     *
-> +     * Return true if HostIOMMUDevice is attached, or else return false
-> +     * with errp set.
-> +     *
-> +     * @bus: the #PCIBus of the PCI device.
-> +     *
-> +     * @opaque: the data passed to pci_setup_iommu().
-> +     *
-> +     * @devfn: device and function number of the PCI device.
-> +     *
-> +     * @dev: the data structure representing host IOMMU device.
-> +     *
-> +     */
-> +    int (*set_iommu_device)(PCIBus *bus, void *opaque, int devfn,
-> +                            HostIOMMUDevice *dev, Error **errp);
-> +    /**
-> +     * @unset_iommu_device: detach a HostIOMMUDevice from a vIOMMU
-> +     *
-> +     * Optional callback.
-> +     *
-> +     * @bus: the #PCIBus of the PCI device.
-> +     *
-> +     * @opaque: the data passed to pci_setup_iommu().
-> +     *
-> +     * @devfn: device and function number of the PCI device.
-> +     */
-> +    void (*unset_iommu_device)(PCIBus *bus, void *opaque, int devfn);
->  } PCIIOMMUOps;
+The following changes since commit 35ac6831d98e18e2c78c85c93e3a6ca1f1ae3e58:
 
+  Merge tag 'net-pull-request' of https://github.com/jasowang/qemu into staging (2024-03-12 13:42:57 +0000)
 
-So I expected someone to implement these new callbacks but I see
-no implementation in this patchset.
+are available in the Git repository at:
 
-Is this just infrastructure that will be used later?
-A bit hard to judge without a user ...
+  https://gitlab.com/npiggin/qemu.git tags/pull-ppc-for-9.0-2-20240313
 
+for you to fetch changes up to e1617b845104032f0aaad9b91dcda56c7c437998:
 
+  spapr: nested: Introduce cap-nested-papr for Nested PAPR API (2024-03-13 02:47:04 +1000)
 
->  AddressSpace *pci_device_iommu_address_space(PCIDevice *dev);
-> +int pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *base_dev,
-> +                                Error **errp);
-> +void pci_device_unset_iommu_device(PCIDevice *dev);
->  
->  /**
->   * pci_setup_iommu: Initialize specific IOMMU handlers for a PCIBus
-> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> index 76080af580..8078307963 100644
-> --- a/hw/pci/pci.c
-> +++ b/hw/pci/pci.c
-> @@ -2672,11 +2672,14 @@ static void pci_device_class_base_init(ObjectClass *klass, void *data)
->      }
->  }
->  
-> -AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
-> +static void pci_device_get_iommu_bus_devfn(PCIDevice *dev,
-> +                                           PCIBus **aliased_bus,
-> +                                           PCIBus **piommu_bus,
-> +                                           int *aliased_devfn)
->  {
->      PCIBus *bus = pci_get_bus(dev);
->      PCIBus *iommu_bus = bus;
-> -    uint8_t devfn = dev->devfn;
-> +    int devfn = dev->devfn;
->  
->      while (iommu_bus && !iommu_bus->iommu_ops && iommu_bus->parent_dev) {
->          PCIBus *parent_bus = pci_get_bus(iommu_bus->parent_dev);
-> @@ -2717,13 +2720,66 @@ AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
->  
->          iommu_bus = parent_bus;
->      }
-> -    if (!pci_bus_bypass_iommu(bus) && iommu_bus->iommu_ops) {
-> +
-> +    assert(0 <= devfn && devfn < PCI_DEVFN_MAX);
-> +    assert(iommu_bus);
-> +
-> +    if (pci_bus_bypass_iommu(bus) || !iommu_bus->iommu_ops) {
-> +        iommu_bus = NULL;
-> +    }
-> +
-> +    *piommu_bus = iommu_bus;
-> +
-> +    if (aliased_bus) {
-> +        *aliased_bus = bus;
-> +    }
-> +
-> +    if (aliased_devfn) {
-> +        *aliased_devfn = devfn;
-> +    }
-> +}
-> +
-> +AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
-> +{
-> +    PCIBus *bus;
-> +    PCIBus *iommu_bus;
-> +    int devfn;
-> +
-> +    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
-> +    if (iommu_bus) {
->          return iommu_bus->iommu_ops->get_address_space(bus,
->                                   iommu_bus->iommu_opaque, devfn);
->      }
->      return &address_space_memory;
->  }
->  
-> +int pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *base_dev,
-> +                                Error **errp)
-> +{
-> +    PCIBus *iommu_bus;
-> +
-> +    pci_device_get_iommu_bus_devfn(dev, NULL, &iommu_bus, NULL);
-> +    if (iommu_bus && iommu_bus->iommu_ops->set_iommu_device) {
-> +        return iommu_bus->iommu_ops->set_iommu_device(pci_get_bus(dev),
-> +                                                      iommu_bus->iommu_opaque,
-> +                                                      dev->devfn, base_dev,
-> +                                                      errp);
-> +    }
-> +    return 0;
-> +}
-> +
-> +void pci_device_unset_iommu_device(PCIDevice *dev)
-> +{
-> +    PCIBus *iommu_bus;
-> +
-> +    pci_device_get_iommu_bus_devfn(dev, NULL, &iommu_bus, NULL);
-> +    if (iommu_bus && iommu_bus->iommu_ops->unset_iommu_device) {
-> +        return iommu_bus->iommu_ops->unset_iommu_device(pci_get_bus(dev),
-> +                                                        iommu_bus->iommu_opaque,
-> +                                                        dev->devfn);
-> +    }
-> +}
-> +
->  void pci_setup_iommu(PCIBus *bus, const PCIIOMMUOps *ops, void *opaque)
->  {
->      /*
-> -- 
-> 2.34.1
+----------------------------------------------------------------
+* PAPR nested hypervisor host implementation for spapr TCG
+* excp_helper.c code cleanups and improvements
+* Move more ops to decodetree
+* Deprecate pseries-2.12 machines and P9 and P10 DD1.0 CPUs
+* Document running Linux on AmigaNG
+* Update dt feature advertising POWER CPUs.
+* Add P10 PMU SPRs
+* Improve pnv topology calculation for SMT8 CPUs.
+* Various bug fixes.
 
+----------------------------------------------------------------
+BALATON Zoltan (8):
+      docs/system/ppc: Document running Linux on AmigaNG machines
+      target/ppc: Use env_cpu for cpu_abort in excp_helper
+      target/ppc: Readability improvements in exception handlers
+      target/ppc: Add gen_exception_err_nip() function
+      target/ppc: Clean up ifdefs in excp_helper.c, part 1
+      target/ppc: Clean up ifdefs in excp_helper.c, part 2
+      target/ppc: Clean up ifdefs in excp_helper.c, part 3
+      target/ppc: Remove interrupt handler wrapper functions
+
+Benjamin Gray (1):
+      ppc/spapr: Add pa-features for POWER10 machines
+
+Caleb Schlossin (1):
+      ppc/pnv: Improve pervasive topology calculation for big-core
+
+Chinmay Rath (1):
+      target/ppc: Move add and subf type fixed-point arithmetic instructions to decodetree
+
+Cédric Le Goater (1):
+      MAINTAINERS: Remove myself as reviewer from PPC
+
+Harsh Prateek Bora (14):
+      spapr: nested: register nested-hv api hcalls only for cap-nested-hv
+      spapr: nested: move nested part of spapr_get_pate into spapr_nested.c
+      spapr: nested: Introduce SpaprMachineStateNested to store related info.
+      spapr: nested: keep nested-hv related code restricted to its API.
+      spapr: nested: Document Nested PAPR API
+      spapr: nested: Introduce H_GUEST_[GET|SET]_CAPABILITIES hcalls.
+      spapr: nested: Introduce H_GUEST_[CREATE|DELETE] hcalls.
+      spapr: nested: Introduce H_GUEST_CREATE_VCPU hcall.
+      spapr: nested: Extend nested_ppc_state for nested PAPR API
+      spapr: nested: Initialize the GSB elements lookup table.
+      spapr: nested: Introduce H_GUEST_[GET|SET]_STATE hcalls.
+      spapr: nested: Use correct source for parttbl info for nested PAPR API.
+      spapr: nested: Introduce H_GUEST_RUN_VCPU hcall.
+      spapr: nested: Introduce cap-nested-papr for Nested PAPR API
+
+Madhavan Srinivasan (1):
+      target/ppc: Add power10 pmu SPRs
+
+Nicholas Piggin (10):
+      target/ppc: Fix GDB SPR regnum indexing
+      target/ppc: Prevent supervisor from modifying MSR[ME]
+      spapr: set MSR[ME] and MSR[FP] on client entry
+      ppc: Drop support for POWER9 and POWER10 DD1 chips
+      target/ppc: POWER10 does not have transactional memory
+      ppc/spapr|pnv: Remove SAO from pa-features
+      ppc/spapr: Remove copy-paste from pa-features
+      ppc/spapr: Adjust ibm,pa-features for POWER9
+      ppc/pnv: Permit ibm,pa-features set per machine variant
+      ppc/pnv: Set POWER9, POWER10 ibm,pa-features bits
+
+Philippe Mathieu-Daudé (1):
+      docs: Deprecate the pseries-2.12 machines
+
+ MAINTAINERS                                |    4 +-
+ docs/about/deprecated.rst                  |    6 +-
+ docs/devel/nested-papr.txt                 |  119 +++
+ docs/system/ppc/amigang.rst                |  161 +++
+ docs/system/target-ppc.rst                 |    1 +
+ hw/ppc/pnv.c                               |  175 +++-
+ hw/ppc/pnv_core.c                          |    8 +-
+ hw/ppc/ppc.c                               |   10 +
+ hw/ppc/spapr.c                             |   98 +-
+ hw/ppc/spapr_caps.c                        |   54 +
+ hw/ppc/spapr_cpu_core.c                    |    8 +-
+ hw/ppc/spapr_hcall.c                       |   24 +-
+ hw/ppc/spapr_nested.c                      | 1556 +++++++++++++++++++++++++++-
+ include/hw/ppc/pnv_chip.h                  |    2 +-
+ include/hw/ppc/pnv_core.h                  |    1 +
+ include/hw/ppc/spapr.h                     |   27 +-
+ include/hw/ppc/spapr_nested.h              |  427 +++++++-
+ target/ppc/cpu-models.c                    |    4 -
+ target/ppc/cpu.h                           |   11 +
+ target/ppc/cpu_init.c                      |   46 +-
+ target/ppc/excp_helper.c                   |  418 +++-----
+ target/ppc/gdbstub.c                       |    7 +-
+ target/ppc/helper_regs.c                   |    5 +
+ target/ppc/insn32.decode                   |   26 +
+ target/ppc/kvm.c                           |   11 -
+ target/ppc/misc_helper.c                   |    3 -
+ target/ppc/translate.c                     |  164 +--
+ target/ppc/translate/fixedpoint-impl.c.inc |   70 ++
+ 28 files changed, 2883 insertions(+), 563 deletions(-)
+ create mode 100644 docs/devel/nested-papr.txt
+ create mode 100644 docs/system/ppc/amigang.rst
 
