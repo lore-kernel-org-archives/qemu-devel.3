@@ -4,71 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1B50C54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:09:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E6C4C54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:10:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjzzd-0000tT-FR; Tue, 12 Mar 2024 07:08:25 -0400
+	id 1rk015-0002V7-Lq; Tue, 12 Mar 2024 07:09:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rjzzZ-0000s1-75
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:08:22 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1rk013-0002Uq-BP
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:09:53 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rjzzW-0005b1-Ar
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:08:19 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-33e959d8bc0so1920577f8f.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 04:08:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1rk00z-00068j-Qx
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:09:52 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-413328344acso4774625e9.3
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 04:09:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710241697; x=1710846497; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=QHUmaWQn0ldrlIK8tQw5bpDJbHvqza+98v6FJpbFdXg=;
- b=c4Bg7vd2YcdpuAVzFwtJLSfM5t1SzqW8lIKaTfbnVr9gUYdOlEEtZ61Rply2CEdYNS
- 5RQeNBvsRhq8AKFXXTetGIpWYrtpwnINaBZnOb/pp7BkU0zVleVqUaNPp+/lmOwoKyyk
- rH8dhJbNbNh/ZniWrQAxSCsq1yuUKqnMwiKPlH64g5TlumYguf3bhl6+dvZwUpZhfrnT
- DEbMjL674N3SDAMFLIF2WM8gPbOlH9L0jit3X+dwV4U3yl5WqswlVS4yYCaQ2o6bKpkH
- Y6ulat6EhUZ8D1ZL/bjd1t7CHHUT1L5Sz4MV44zVbpvMWJcWrgyTgc6e8u4o7qd2jCwn
- dAzg==
+ d=ventanamicro.com; s=google; t=1710241788; x=1710846588; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=PqiaaurzWNdfKOWSZkIN5iavG9IXyQNAktGYPfEgC/Q=;
+ b=McKLY0fU1Cnx9+Cxto1X1RTSN/ZXr4vmfSmRJzQoNE8hHkzJiSJCbl93g/FLcwMC/U
+ nLwTNaKVckvlUgbeVTKGgLYST23JzYgwtr1fVQu6t8GnOscqGRSSfBIW0TBsUypEH8jx
+ yFBlpaZuSlEVexeb0vNGmgu63mZioHEN//WMhgJOVIK7w/7Up1imtlHijWHaAyGmu9QG
+ 8PJVUrD9yO71yVcWAAcMcMxgPKt4FtwmCKhzuLUr36y+H45M5cxSM1VqjkR/oFyyXOnC
+ xVtPzomffVdbmTC8HId/0EUjOPunZJmjqOWSbAyCP//ueFXVUUTkpVpdcKI1by1AF8+9
+ 7DiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710241697; x=1710846497;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QHUmaWQn0ldrlIK8tQw5bpDJbHvqza+98v6FJpbFdXg=;
- b=Es5WbpOR9p9pFgNp0yymjt0eQEi2sKJcSknFyu3i9eETPMVNlYSWUIKsnpBcL4nohZ
- VDPxk/oXEL2N4njEIBV6g39AT97ZJNDWUQOK8Dyp1JLhbstNn1GC/LjHjCe0OApOLu3O
- RLEMmj1ByATZpdoaFRmO6CWI68PL+x1R0E6QhpsPZRAYknnN3k3LFjBy+6cNrJWYuKPc
- Ae/RqXJMfJXwH6tjXcl7GzwXdTs0lKRJSEkCHC7fSCAcRyv36hAPFrPpTpsjl77zJR0B
- kJaQkGWfTFOzN2I82q0EI3yqMoERh9CfWvrMBuagkP7WhKo6ujEMYdoelhGSuOX1orlh
- fK5Q==
-X-Gm-Message-State: AOJu0YyjQjfF1BDOirK5cf07Wp8cOZK+MgfObdFyorga16kkKfzORulP
- nUQH3xwZ8nAeyQZ/2rCWy53iymmI8Y0cSKun/KtvgvNQtoKzMei9ATxmc26l1PshBgABaLzmrLV
- y
-X-Google-Smtp-Source: AGHT+IFEGTRbbaHEZ5tXNkASgM4NDARvHLeJdsiC3pHdjaEBkguaCOTf/KiWBRvEHN+7LTWtjpyjIA==
-X-Received: by 2002:adf:a390:0:b0:33d:27d4:2fec with SMTP id
- l16-20020adfa390000000b0033d27d42fecmr6121078wrb.35.1710241696682; 
- Tue, 12 Mar 2024 04:08:16 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ d=1e100.net; s=20230601; t=1710241788; x=1710846588;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PqiaaurzWNdfKOWSZkIN5iavG9IXyQNAktGYPfEgC/Q=;
+ b=S4xLvcqZOE+OMeE/kaiRoYZ0H4ST/86N32lzyGy0+8qN73HbCoDssTjDdUpToaAsgK
+ rpHyK32BWAD8bUMmGMJEWiYcxBiH0UzhwdvAm4IyemUCyMLesle9ix105OZBTouNbmvx
+ O3wbOoqh4XUuCuDa8s3eMVwWmNsKVQs/a1bY4vrW8V/MtH5+6/9PsyTa+4UJjwmsML70
+ Wi28qjwX49bZ2EHymRpl2mNn5yjqK66YUxwfXbUpOCe3lxFakX7xKr0qs7vH7lMSo3xE
+ zPItrIalCOS1Xee0A6uj/4McdWNh9Hmnh3J9qnXIakopE2YyKg94g1JJRA1YBiPjKy+P
+ 86Fg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVbAp1ktB1CjRONUuKvf27oTHeqTzUM3seoUi+ZQYpE7qjj2V+jROsI2VKHueUUFrhvyMqv62n/zZf3kcJ8+tJQiW7lPIY=
+X-Gm-Message-State: AOJu0YzrRIBdq7B5orJYEiWL3hQIuFNweSpiQOgdgPV7YpTzf3Rqjx0U
+ w4C5GPLQOEp08A7lWR4JJbsY28j2HkXKS8ibCVRPEYbso5EHLTi6WOVQS6fZ+WM=
+X-Google-Smtp-Source: AGHT+IHPr4ZLvTxDo9A3jom7PS7mM0ZFunDgHHvFvHmfxd+mUDYPq5u5fOL/PNczDIfRVoxvkK/KXA==
+X-Received: by 2002:a05:600c:3149:b0:413:19ac:2a06 with SMTP id
+ h9-20020a05600c314900b0041319ac2a06mr6608050wmo.28.1710241788128; 
+ Tue, 12 Mar 2024 04:09:48 -0700 (PDT)
+Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
+ [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
  by smtp.gmail.com with ESMTPSA id
- w10-20020a5d680a000000b0033e0dd83be1sm8770431wru.91.2024.03.12.04.08.16
+ bi6-20020a05600c3d8600b004133802cf8csm1713932wmb.38.2024.03.12.04.09.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 04:08:16 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-Subject: [PATCH] tests: Raise timeouts for bufferiszero and crypto-tlscredsx509
-Date: Tue, 12 Mar 2024 11:08:15 +0000
-Message-Id: <20240312110815.116992-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ Tue, 12 Mar 2024 04:09:47 -0700 (PDT)
+Date: Tue, 12 Mar 2024 12:09:46 +0100
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Richard Bagley <rbagley@ventanamicro.com>
+Cc: Palmer Dabbelt <palmer@rivosinc.com>, qemu-devel@nongnu.org, 
+ qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>,
+ bmeng@tinylab.org, 
+ liweiwei@iscas.ac.cn, zhiwei_liu@linux.alibaba.com, dbarboza@ventanamicro.com
+Subject: Re: [PATCH] disas/riscv: Further correction to LUI disassembly
+Message-ID: <20240312-ed806a55958fd3526ec0f01a@orel>
+References: <20230810-c9e1f2783168b48bc07a1aa2@orel>
+ <mhng-a6344a0c-8820-41b5-a015-b82b261b463d@palmer-ri-x1c9>
+ <20230810-e160f9edae60ded9d2606b8b@orel>
+ <20230811-bc15b48d336b79d9ec1f0936@orel>
+ <20230811-52e2c90dc3b91e108eb5e4e8@orel>
+ <CAARkPA-P1U7xyLpdx+XD1M3Ji2NUfTb+88+GKUk8R2aFsOCMRw@mail.gmail.com>
+ <CAARkPA-dOxOWsR0VS+S8p4fDmNR5X5Jjmo5pQTaurWLYsc9vsw@mail.gmail.com>
+ <20240309-ee813e971e7c5850d652b295@orel>
+ <CAARkPA_8zSZK-4oOTcJO2KinWSadxZYZztwRP-UvNNkDjmyexw@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
+In-Reply-To: <CAARkPA_8zSZK-4oOTcJO2KinWSadxZYZztwRP-UvNNkDjmyexw@mail.gmail.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,35 +108,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On our gcov CI job, the bufferiszero and crypto-tlscredsx509
-tests time out occasionally, making the job flaky. Double the
-timeout on these two tests.
+On Mon, Mar 11, 2024 at 11:56:42AM -0700, Richard Bagley wrote:
+> I have realized that *the patch is indeed a fix*, not a workaround.
+> 
+> In fact, the argument to LUI and AUIPC in assembly *must* be a number
+> between [0x0, 0xfffff].
+> RISC-V Assembly Programmer's Manual : Load Upper Immediate's Immediate
+> <https://github.com/riscv-non-isa/riscv-asm-manual/blob/master/riscv-asm.md#load-upper-immediates-immediate>
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2221
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-cc stable just because it probably helps CI reliability there too
----
- tests/unit/meson.build | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+I think that's just documenting the current behavior, but the behavior
+(not accepting a signed decimal number for a signed immediate) doesn't
+appear to be justified, so I think my suggestion in [1] still stands.
+That said, I don't really have much of a horse in this race so if
+somebody comes along and closes that BZ with a simple justification of
+"we, the people that work on this stuff, agreed we prefer the range
+[0x0, 0xfffff]", then I won't argue.
 
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index cae925c1325..30db3c418fa 100644
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -173,8 +173,9 @@ test_env.set('G_TEST_BUILDDIR', meson.current_build_dir())
- 
- slow_tests = {
-   'test-aio-multithread' : 120,
-+  'test-bufferiszero': 60,
-   'test-crypto-block' : 300,
--  'test-crypto-tlscredsx509': 45,
-+  'test-crypto-tlscredsx509': 90,
-   'test-crypto-tlssession': 45,
-   'test-replication': 60,
- }
--- 
-2.34.1
+[1] https://sourceware.org/bugzilla/show_bug.cgi?id=30746
 
+Thanks,
+drew
+
+> Signed decimal numbers are programmed as their two's complement.
+> 
+> I checked: neither GCC nor LLVM will assemble
+> 
+> > lui x1, -4
+> 
+> The LLVM compiled models the arguments to LUI and AUIPC as UIMM (unsigned
+> immediate) or UIMM20 (20 bit unsigned immediate).
+> 
+> I should have checked this from the start. I jumped to the conclusion that
+> both formats (signed decimal, two's complement) for negative arguments
+> should be supported, and that I was encountering a bug.
+> I apologize to all for the unnecessary back-and-forth.
+> 
+> I don't yet see a reason why llvm and gcc could not support a signed number
+> in decimal format, perhaps requiring a pseudo-instruction.
+> This might be desirable, if only in support of assembly programming.
+> On the other hand, it is easy to make the conversion to a two's-complement
+> number.
+> 
+> Richard
+> 
+> On Sat, Mar 9, 2024 at 4:01 AM Andrew Jones <ajones@ventanamicro.com> wrote:
+> 
+> > On Fri, Mar 08, 2024 at 08:22:01PM -0800, Richard Bagley wrote:
+> > > post-nack, one further comment:
+> > >
+> > > One could argue that this change also aligns QEMU with supporting tools
+> > (as
+> > > Andrew observed), and it makes sense to merge this change into QEMU until
+> > > those tools update to supporting signed decimal numbers with immediates.
+> > >
+> > > As it is, both GNU assembler and the LLVM integrated assembler (or
+> > llvm-mc)
+> > > throws an error with examples such as
+> > > auipc s0, -17
+> > >
+> > > On the other hand, I have only seen this problem with the output of the
+> > > COLLECT plug-in, not (as yet) with QEMU execution proper.
+> > > If the problem is confined to COLLECT, perhaps the argument for aligning
+> > > with other tools is not as strong.
+> > >
+> > > In the meantime, I have adjusted my change locally to include AUIPC, and
+> > > written a substantive, and I hope, clear commit description.
+> > > If you would like me to resubmit a patch with this updated change, please
+> > > let me know.
+> >
+> > Since the patch is ready for posting, then it might as well be posted
+> > (even if it may not get merged right away). If the issue arises again,
+> > then we can refer to the latest proposed patch, which will be preserved
+> > in the mail archives.
+> >
+> > Thanks,
+> > drew
+> >
 
