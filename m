@@ -4,73 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5622C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 13:16:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3A02C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 13:16:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk1xw-00080e-Ag; Tue, 12 Mar 2024 09:14:48 -0400
+	id 1rk1y0-00083L-Fg; Tue, 12 Mar 2024 09:14:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk1xm-0007s4-KF; Tue, 12 Mar 2024 09:14:39 -0400
-Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
+ id 1rk1xx-00080x-NO; Tue, 12 Mar 2024 09:14:49 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk1xf-0006n3-Jx; Tue, 12 Mar 2024 09:14:37 -0400
-Received: by mail-oa1-x33.google.com with SMTP id
- 586e51a60fabf-21e45ece781so3203669fac.0; 
- Tue, 12 Mar 2024 06:14:29 -0700 (PDT)
+ id 1rk1xw-0006q5-3R; Tue, 12 Mar 2024 09:14:49 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-5ce2aada130so4682577a12.1; 
+ Tue, 12 Mar 2024 06:14:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710249268; x=1710854068; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=U8mUkOfDMMvwgfB6KZK+pbHjVX8aCyYauBRRcWhOhYU=;
- b=JNXYhXNYZaUxoGy0xx9tZzgLh/FHnPf4Jx+BnRlHoPyGTtXGUtah2cliDhTf8cLo4S
- vLQ03cYiEBfUyExEKR+tf3OnFEhz49pdjKrR7raymVBUKS6vrmjDlVAXcUy/JNm34bxi
- a6ssdzqo/DbLRcbspkonNStnVFxgb1KP5OUgnC/ZjjCDJjokH++BJEZB0dm7zupl5v1E
- 5i95VL+ai+yuEM7pcWC4s4oeGlgVlNYhKEzYXm6bqtJgAXfJ/E7hzK7I2SVDUbQB1p14
- 4tagkGz330ltoXOH7qRDGQ7Mbs67gnaxLS50bqCWFTnR3BeZeOBXHPvogjBd+26WN05K
- qUxg==
+ d=gmail.com; s=20230601; t=1710249285; x=1710854085; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PcqLLu3u5PZ1llo42lrjUzLPqI0T1odBfRlVjyR5kEI=;
+ b=LObvG6SSUM1JfYe6lIp5JeczvkffgRr0jtMeyFLxwj9J9Jt5lODlTrEp8DcxWHVyAS
+ by+70Vpr5cqJV58D5H2Z+lvX2rRBCUmBjLxgnzLRitulm97V5sQHiMODS5Cigqu6va6J
+ 4K9J22p0aoUMM51iegs6CD+vXzqZx671CcMzIlVqyncyV8Q6Z3lgsCLMdcv6DKCqjjF7
+ LQzbxLqx0Xz+iEoEWXUj9yOxXlz+lyCiv8VD2WBH47WdiZ2jDeDn1oHVOKF6vgCRIq/r
+ 9NJj/qPt3O9nhcpSFsFII3suoK1T9AQe+tb0+9lNSzo56iVvYjnkVqSAlCXVTaViuNYf
+ qXng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710249268; x=1710854068;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=U8mUkOfDMMvwgfB6KZK+pbHjVX8aCyYauBRRcWhOhYU=;
- b=HwjwfrgHfYYZaz4x9s082gWwzJ3ekJ0L8hf6ycWXgOWjUhlExm/G5NEEvzCgyUAlXT
- MtrP8A/v/DL9vLB1rfycKU/EhTketXLPtE/kSzSZYhjt0j0AaEAVBwfMGtsvySaptP3P
- X+4/o1t5ktj24okeEnEMmdJWIZB7brUEOFhUjE0ywvdou5xQV51ak3n4pixV5CD4Mx2n
- 3E7yj/pkldQYlCelJIa7Qig8Z3zGN+lrg6vW7ztkFsLrIK+vhGXYm5iTU8LX0UAPvC+9
- GIMiq+BhWGTIpx5mjxPYsRQy6VmDUjZYADXdv7HfRYYMNCFcCsRttNb4jgPGU79ppfaL
- YI5A==
+ d=1e100.net; s=20230601; t=1710249285; x=1710854085;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=PcqLLu3u5PZ1llo42lrjUzLPqI0T1odBfRlVjyR5kEI=;
+ b=cVZ5xvopIodAPb7l9188yl+DTWbRmFyjPhMFqVagN1Vmso5Ipl7n43CJ5XgR9ioz1s
+ hVvcA0jVTDa5cwuqEx77w8O0FcdesPYpYF9A8WzaENX/IoPmuvtVasDTBWydjgHYUKpQ
+ Ryv5vhBe+7C4ZsDueU5SAJijr/y+LFroSZuebo0THj9Gpon9hZe/6g2BBd+j9SxQQv4j
+ frVl2WgonJXI25oX/NLjrD8LeVGr0vWDzaeNMaJ8YjBe1HbbB83QdIkvxcTNPa38JFV8
+ 6MmUNkIg51159BkD9nE1qwFMnZBPq97Aj/8q5uSHrO5yr2qptj3eMvU26uiPsCqzdz4N
+ zrSQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXmBx7Ar66lu8ktDyG/9yCrva3DViHEdFWPBelyck7lcc3x7FHT0qen6SC4hMj80POJnKfn1bfPLG6ttvbtyGfzczymkcA=
-X-Gm-Message-State: AOJu0YzbyTfs3+wViJBeCk0mg5zrcWeBdizFGKzO+i9jqCMOiClxB9Ri
- FbsNnLEPvAbu4sW8Rew/1CcylfQ8l1Mx/Ais8OoI7oU4rgNU7VwhNOMLRMYHxbQ=
-X-Google-Smtp-Source: AGHT+IEcZLIfBXl1e6/VwdnhDvZ1Kvuk7+hgFhQFvJL9bPxlxO4IlBai8dv8Q/CuDKLzfEpLpwL0zQ==
-X-Received: by 2002:a05:6870:32ce:b0:21e:df09:fbb6 with SMTP id
- r14-20020a05687032ce00b0021edf09fbb6mr10281836oac.41.1710249268616; 
- Tue, 12 Mar 2024 06:14:28 -0700 (PDT)
+ AJvYcCWxnIYV9OLMJVTYwfADpDFziDpynIcUrV0zUV1bgUwHL2zVF6DdKD0kfANnmmgzxqW8x9fx6vMG8xdIdirdtyNCXm50YXk=
+X-Gm-Message-State: AOJu0YyVGr1eWTTPWJYf+TqFUdqd9eW6RCqDlrAVINtGp8TjaGC1R/aq
+ VTDa3+tGK6zsVz8WNwOoHE7T6/2st9MHHERlZ2XOACwVZNY9x/E9VH/X9lKEjOo=
+X-Google-Smtp-Source: AGHT+IHIqkGQN7alVJE2tBmGwDOFv4IWM9iNJIQZKFYVbfKYYAeqjuulbXif2ArixTPllbBU0WMKFQ==
+X-Received: by 2002:a05:6a20:7b01:b0:1a1:501e:814c with SMTP id
+ s1-20020a056a207b0100b001a1501e814cmr2769845pzh.29.1710249285568; 
+ Tue, 12 Mar 2024 06:14:45 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- r15-20020aa78b8f000000b006e64f75c947sm6066084pfd.46.2024.03.12.06.14.25
+ r15-20020aa78b8f000000b006e64f75c947sm6066084pfd.46.2024.03.12.06.14.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 06:14:28 -0700 (PDT)
+ Tue, 12 Mar 2024 06:14:45 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  David Gibson <david@gibson.dropbear.id.au>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PATCH v2 00/10] misc ppc patches
-Date: Tue, 12 Mar 2024 23:14:09 +1000
-Message-ID: <20240312131419.2196845-1-npiggin@gmail.com>
+Subject: [PATCH v2 05/10] ppc/spapr: Adjust ibm,pa-features for POWER9
+Date: Tue, 12 Mar 2024 23:14:14 +1000
+Message-ID: <20240312131419.2196845-6-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20240312131419.2196845-1-npiggin@gmail.com>
+References: <20240312131419.2196845-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::33;
- envelope-from=npiggin@gmail.com; helo=mail-oa1-x33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,36 +96,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This accounts for comments from v1, and drops the attn and
-checkstop patches. Will try again next release for those since
-they probably fell off peoples' radar this time.
+"MMR" and "SPR SO" are not implemented in POWER9, so clear those bits.
+HTM is not set by default, and only later if the cap is set, so remove
+the comment that suggests otherwise.
 
-Thanks,
-Nick
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ hw/ppc/spapr.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-Benjamin Gray (1):
-  ppc/spapr: Add pa-features for POWER10 machines
-
-Nicholas Piggin (9):
-  ppc: Drop support for POWER9 and POWER10 DD1 chips
-  target/ppc: POWER10 does not have transactional memory
-  ppc/spapr|pnv: Remove SAO from pa-features
-  ppc/spapr: Remove copy-paste from pa-features
-  ppc/spapr: Adjust ibm,pa-features for POWER9
-  ppc/pnv: Permit ibm,pa-features set per machine variant
-  ppc/pnv: Set POWER9, POWER10 ibm,pa-features bits
-  target/ppc: Prevent supervisor from modifying MSR[ME]
-  spapr: set MSR[ME] and MSR[FP] on client entry
-
- hw/ppc/pnv.c             | 104 ++++++++++++++++++++++++++++++++++-----
- hw/ppc/spapr.c           |  63 ++++++++++++++++++++----
- hw/ppc/spapr_cpu_core.c  |   8 +--
- target/ppc/cpu-models.c  |   4 --
- target/ppc/cpu_init.c    |  12 ++---
- target/ppc/helper_regs.c |   5 ++
- target/ppc/kvm.c         |  11 -----
- 7 files changed, 160 insertions(+), 47 deletions(-)
-
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 4192cd8d6c..5bbd0d7a04 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -258,14 +258,14 @@ static void spapr_dt_pa_features(SpaprMachineState *spapr,
+         0x80, 0x00, 0x00, 0x00, 0x00, 0x00, /* 6 - 11 */
+         /* 16: Vector */
+         0x00, 0x00, 0x00, 0x00, 0x80, 0x00, /* 12 - 17 */
+-        /* 18: Vec. Scalar, 20: Vec. XOR, 22: HTM */
++        /* 18: Vec. Scalar, 20: Vec. XOR */
+         0x80, 0x00, 0x80, 0x00, 0x00, 0x00, /* 18 - 23 */
+         /* 24: Ext. Dec, 26: 64 bit ftrs, 28: PM ftrs */
+         0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 24 - 29 */
+-        /* 30: MMR, 32: LE atomic, 34: EBB + ext EBB */
+-        0x80, 0x00, 0x80, 0x00, 0xC0, 0x00, /* 30 - 35 */
+-        /* 36: SPR SO, 40: Radix MMU */
+-        0x80, 0x00, 0x00, 0x00, 0x80, 0x00, /* 36 - 41 */
++        /* 32: LE atomic, 34: EBB + ext EBB */
++        0x00, 0x00, 0x80, 0x00, 0xC0, 0x00, /* 30 - 35 */
++        /* 40: Radix MMU */
++        0x00, 0x00, 0x00, 0x00, 0x80, 0x00, /* 36 - 41 */
+         /* 42: PM, 44: PC RA, 46: SC vec'd */
+         0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 42 - 47 */
+         /* 48: SIMD, 50: QP BFP, 52: String */
 -- 
 2.42.0
 
