@@ -4,70 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C8CDC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 18:39:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08620C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 18:40:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk711-0003N1-3C; Tue, 12 Mar 2024 14:38:20 -0400
+	id 1rk71D-0003VW-0M; Tue, 12 Mar 2024 14:38:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rk70x-0003MR-HN
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:38:15 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1rk70y-0003MZ-N7
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:38:17 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rk70v-0000c5-Fp
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:38:15 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-41331166961so8584225e9.1
+ id 1rk70v-0000cB-R1
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:38:16 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-41329b6286bso14727745e9.0
  for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 11:38:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710268691; x=1710873491; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=4gPCByx8mAmPa3WgEs07nx3Ff/naJHLFmK+kpZLMiRY=;
- b=bTP0Ep5b0C4QE5i4b/f9ebCKKS6ilIrhQJHrSePMYIviVi95d3/gWeVCOg6clt3MJp
- xO2DbkjuqxVBkzlXdvx/qI5X2NUErt5T37dPqTLxciGYhk8v5Vy7aM4Vn01mkvtLq14K
- Asa1WtLb53TLAfmqeWotiuvJV6Dbcr2jiJ5mjy0SwO9dPAI7VDmUDA/aO37Pp8T1BxWB
- P/X2edtreZPc0zU2DydJjtMKmzQwpYpEqJloThD6caqXn2fkBrw0wWhLuzRm62SCFALH
- c6O5zp3KgLXt8TwFCDGQ09Z77ZuavOQ8H0VwoxpBLxWX03fnCwXu4DKS1xStsFnj0fFF
- 4qjw==
+ d=linaro.org; s=google; t=1710268692; x=1710873492; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=09aQF63pPHOllcqpbcVLj8Q606SuNrCw0WJNZs+4sLY=;
+ b=dL20NEt8U99+WpjLVmbF2fkkSD7tFmqjoeMGHuH6mTpcXSr0VZ7GZob7jK/E0ajq+E
+ pgHi9+t0JEvNwFUBJ5YAPXW21n63uEFv2VgX8AiErBSLdMAOV0+qqsqAKqniPrjbeW+A
+ acwZlA7iXwjlLvv0A1DZDqDzidp25/+FWGXAHo63DcRbUCU9YgUwEXsA5p6qASxeu7aQ
+ JLGS/rqgUPSM/ZsWSkQzosoeGCzHbDcaCNXYxZsWX+G8eidZOdw0Q8nkdSrTOmN8Ge8W
+ 1k2O2MUtvJ3ADHmUn4jYgfolLg80IJRjQNwVOwFQxljKHyLeJFsthO0sfq3wBwfoj7eS
+ Kv9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710268691; x=1710873491;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4gPCByx8mAmPa3WgEs07nx3Ff/naJHLFmK+kpZLMiRY=;
- b=Cl+rY1WEH9W5zZnNLHq/yGWQYJPW6vebisLiz4QEdRaTwuAMgBYfgfz4AxFXOd9emT
- gZH8RgEpVIuqNexg48uUOkVAWMPgGXIImEsdc+S3KJOsV+m5QmxhjnS9n0fenqaMrgDR
- JEqIz5x1fKiHNR+DIMu5I84KIh3JepNMKZikPVkC9x8qnr60gSjMDVZ4SWeca7m5p1MZ
- i6AtiQxBb+mWsruyw5OAmCr8n+MQffwZuuon/R9EuPTAsFaJkCFy0sRCKxNQL0prwqe6
- dLXuM429o4srgxjNq60ZHkSFg8GWEYczWlKGlza5W2jQMtANMUzRPcZ5y5S+AZh3QU0C
- vkAg==
-X-Gm-Message-State: AOJu0Yz+7O1RPFW83enZXqYFxeYO5kUAKANH90ivJm85hCslex92FJVn
- 0pJMEC6oXMvxowh5xB/A24xOQJYXL+JCYcP+vgGBmIDZX+au3Q1olWK7MquWSMPALaEnhxSWZhq
- 0
-X-Google-Smtp-Source: AGHT+IFUxPtrSeS1JwpdHjPdCXG99JnFmcVMrZnTpJ5WIQGPZs/hN4gN1iCUx9vYvcOtyfsZLf02ng==
-X-Received: by 2002:a05:600c:1d0e:b0:412:f6ce:8152 with SMTP id
- l14-20020a05600c1d0e00b00412f6ce8152mr7656123wms.31.1710268691506; 
- Tue, 12 Mar 2024 11:38:11 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710268692; x=1710873492;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=09aQF63pPHOllcqpbcVLj8Q606SuNrCw0WJNZs+4sLY=;
+ b=DsEKRj89b2GnHfBr3C96Sycg63s2rAMyxR+Cn0nwnJvw7t/jiL3Yz2EshqvYZe9wM+
+ capSidjQMYsmwXLShSYpW+At+9xcT1jImj4Rd/uQw9AUz60sgqjdSSzXlew4ifnbykp0
+ iwwUViVi6Ibu2uk/9u/HUIsDU3pxS0HmhIWNYhEMXpBc5gGZab7FMVxHuBFujK8IaopR
+ klTV6ktsA9W7jpJI5oGUOrW4PH7tW5AYhc6+iPE51iXxZ2S2AUDM7SAhkVkXPONpMrZ1
+ HDlLdaiFjLxZEndfzHLCVx0ev7kFuP6YrD/IZsRtvVC8JOR0qGeqZn2L48E5zY20iMNF
+ RKvA==
+X-Gm-Message-State: AOJu0YzffBMYgnuUu3p93WRwXCl5ufa8KqA5tN5n1RHuMYm/3Ujynu09
+ 1ae/fZPynsHxMSV0s9tH2HCnUGcwbbHr7Ou9mJ7IHydy4+gYk50nOy3DM4qdqHuIU5o0+XApxX0
+ b
+X-Google-Smtp-Source: AGHT+IFcPmXgLbxw2ogGFg5MI9T/giG3aT3005B5qv1ibPNKlJ9Q5r8VGlh+3MXoVKMbNF18A9IhOQ==
+X-Received: by 2002:a05:600c:548c:b0:413:271a:1e5e with SMTP id
+ iv12-20020a05600c548c00b00413271a1e5emr691533wmb.38.1710268692473; 
+ Tue, 12 Mar 2024 11:38:12 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- v17-20020a05600c471100b00412ee8e2f2asm19836337wmo.9.2024.03.12.11.38.11
+ v17-20020a05600c471100b00412ee8e2f2asm19836337wmo.9.2024.03.12.11.38.12
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 11:38:11 -0700 (PDT)
+ Tue, 12 Mar 2024 11:38:12 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 0/7] various: 7 minor Coverity fixes
-Date: Tue, 12 Mar 2024 18:38:03 +0000
-Message-Id: <20240312183810.557768-1-peter.maydell@linaro.org>
+Subject: [PATCH 2/7] tests/unit/socket-helpers: Don't close(-1)
+Date: Tue, 12 Mar 2024 18:38:05 +0000
+Message-Id: <20240312183810.557768-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240312183810.557768-1-peter.maydell@linaro.org>
+References: <20240312183810.557768-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,37 +93,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset fixes seven minor Coverity issues:
- * four minor nits in test code
- * a happens-once memory leak in the af-xdp netdev
- * a harmless wrong-bounds-check in pca9554
- * add a report-write-errors-to-user in mac_nvram
+In socket_check_afunix_support() we call socket(PF_UNIX, SOCK_STREAM, 0)
+to see if it works, but we call close() on the result whether it
+worked or not. Only close the fd if the socket() call succeeded.
+Spotted by Coverity.
 
-I don't think any of these are worth backporting to stable;
-I just picked them as easy fixes that reduce the number of open
-Coverity issues we have.
+Resolves: Coverity CID 1497481
 
-thanks
--- PMM
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ tests/unit/socket-helpers.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Peter Maydell (7):
-  tests/qtest/npcm7xx_emc_test: Don't leak cmd_line
-  tests/unit/socket-helpers: Don't close(-1)
-  net/af-xdp.c: Don't leak sock_fds array in net_init_af_xdp()
-  hw/misc/pca9554: Correct error check bounds in get/set pin functions
-  hw/nvram/mac_nvram: Report failure to write data
-  tests/unit/test-throttle: Avoid unintended integer division
-  tests/qtest/libqtest.c: Check for g_setenv() failure
-
- hw/misc/pca9554.c              | 4 ++--
- hw/nvram/mac_nvram.c           | 5 ++++-
- net/af-xdp.c                   | 3 +--
- tests/qtest/libqtest.c         | 6 +++++-
- tests/qtest/npcm7xx_emc-test.c | 4 ++--
- tests/unit/socket-helpers.c    | 4 +++-
- tests/unit/test-throttle.c     | 4 ++--
- 7 files changed, 19 insertions(+), 11 deletions(-)
-
+diff --git a/tests/unit/socket-helpers.c b/tests/unit/socket-helpers.c
+index 6de27baee2e..f3439cc4e52 100644
+--- a/tests/unit/socket-helpers.c
++++ b/tests/unit/socket-helpers.c
+@@ -160,7 +160,6 @@ void socket_check_afunix_support(bool *has_afunix)
+     int fd;
+ 
+     fd = socket(PF_UNIX, SOCK_STREAM, 0);
+-    close(fd);
+ 
+ #ifdef _WIN32
+     *has_afunix = (fd != (int)INVALID_SOCKET);
+@@ -168,5 +167,8 @@ void socket_check_afunix_support(bool *has_afunix)
+     *has_afunix = (fd >= 0);
+ #endif
+ 
++    if (*has_afunix) {
++        close(fd);
++    }
+     return;
+ }
 -- 
 2.34.1
 
