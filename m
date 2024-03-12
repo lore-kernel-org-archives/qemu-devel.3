@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D311C54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 14:41:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF7BCC54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 14:41:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk3HN-0003Vw-MO; Tue, 12 Mar 2024 10:38:57 -0400
+	id 1rk3Hz-0003co-GJ; Tue, 12 Mar 2024 10:39:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rk3HL-0003V3-KR
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:38:55 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ id 1rk3HZ-0003XI-9Z
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:39:09 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rk3HD-0007iL-Qb
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:38:55 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-5dc949f998fso5126932a12.3
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 07:38:47 -0700 (PDT)
+ id 1rk3HI-0007jl-41
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:39:04 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-29c23f53eabso1171708a91.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 07:38:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710254325; x=1710859125; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710254329; x=1710859129; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+H4gb0JZklIT8hGflGjARBk523KJUlTbHGv63Qa3NVo=;
- b=L5VtP5TBMzfW6z190PqZObdPrXZIvMQGknkJRBgCmYZ8hK4Gh3GItTE6o0YsZFraWe
- hS3Mhk6SqH8rtEsrOiq7yaMabTkogJn7OT04tqudTAyu/C/cKtUIueKQXwaN9LZqP7S/
- TeXW/y6wvandxsE5gtQ6AneyuQSazMOq3ULbkIiGPygZzvy9NRai0OXnqbEc7c64DOBx
- thyOoPEIpjc2qTbf4ejw6OgCGHF9ShnOvSnk6eiUQ3iz4KDeVBjWG9XRRPc7PFnkwqF4
- 5t3H2Ca6unZ63//zI/E5c5Hod/OoYsLf1ISjOebfxggWrPelL1WQK9/e96Fu7I8nOBRj
- XFAw==
+ :reply-to; bh=nauksK2e7Q6WDYDd+VxmoOkYOzpKhwUNqATghqi1W1o=;
+ b=cE6362RLwa/WE8xuQF2uNmluduGAju8nq8RxX3QebsxMR0Wni059khizwMYdrTmVux
+ A1pDsv/3e3uRmopE+bmWvYTq/uPmmNwTkT/aCigN6xzCVLprbLencDchEe2RFb3v1G8m
+ Aopgz9aG6x/SW/RkjA02udf+6965mX4qxsJJ92lAEERxBCc7r836XX6/HZUKYv4KPBpl
+ xhxrOO4DNzDriWJ2v0o1JV7HK89v1k9Bw3rn2dwO9aM69pnrowtsMr8Q8uEz+wl7vwOC
+ iPx+uMWm9S0Dz7fUybjV5mxc+RZ5BLrmDOGSVu8BVFXQziHrXCHm/jWHhCTpC3rlU5vx
+ +9NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710254325; x=1710859125;
+ d=1e100.net; s=20230601; t=1710254329; x=1710859129;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+H4gb0JZklIT8hGflGjARBk523KJUlTbHGv63Qa3NVo=;
- b=FiSMXem3GjD6O8DKgIkFYUBZ322j2p2zFcETEMmXc3cdF00XKX8AX+lfosjB1UsVn2
- PqlYYc1zPW94It7JmTrBqVN9t4+4KoQp+qSA0Gw2i2886ft6ThR4y9jW48T5G9TouMQU
- 6kZDiiHc3ig4dviLkuBqMpTpPMgjPq69sXBbOAOqdPa2SifjwHbcJhVTNiiL5HYwwNWT
- 1uLa/GopWsqIWTwHL7/lP75h3so3j5/Kdv02BXAvktz1/0xEBey7KqyO4ZUp43SGZ+yV
- YAmoQAOPUy77uz8bZKWNhb5CTBOS2Ee3AngYIBlyLC2QsJjA2JslIgdh6X+6voizM5FH
- LTKg==
-X-Gm-Message-State: AOJu0YyI5uZ6dleuaSu6hNhcF9mtZOyx5TQc5sg8pvkPAX1zeRnxxUQm
- Uf0G1ND3YAQ23REZqGDWMGgCf1IMLQRabKnyfzp47EgT0SbH/CP+mc5RKtbCORf77oCNvl4WUAy
- A
-X-Google-Smtp-Source: AGHT+IGTpWip/BLsisPEtx6zSjrRYDA9hCDrR8obtFb2GrDS7YZvoENFAVJrNYKU8yoxignOJ8dS9Q==
-X-Received: by 2002:a17:90a:390c:b0:29b:a509:30aa with SMTP id
- y12-20020a17090a390c00b0029ba50930aamr2148609pjb.14.1710254324815; 
- Tue, 12 Mar 2024 07:38:44 -0700 (PDT)
+ bh=nauksK2e7Q6WDYDd+VxmoOkYOzpKhwUNqATghqi1W1o=;
+ b=FyFa7ZcnnFMrnCN1lKxZchzG/Z5ZWRgE7GEZvbUkrDw9CSQa8pmGSb0dT0hLg2YHzZ
+ jwYwIXkcGWFXd02c2TJloSnbHpYIWD4IK1qFS7+x40oUIR0CRj7p/At5PNJ2rcaUrPSe
+ T5g9aLhz/wMeHm0a8QCvhc0GcGaA3ovGhFWxyVXxRfP3FEYx7NbCFPvZO5cjMPsPmUGj
+ vI7XU4E2U/ugC13olFzCqXKEr/zGWP/XUQ6dHxxhiss0GbrL5j1fRLs8DWriB7fXyyZV
+ ToBjcu8vzQMolUZwBY9yCfsr033IR0GlEMfmrwlDXP226x8IGauCeqOkkWgMviNSGhpM
+ ZMaQ==
+X-Gm-Message-State: AOJu0Yz8H4HaOu419awcjAOKg0wGq81yU9i2xx58znP/iAe+6ta6PFE3
+ lWdMRH/7LPXQtT6vLhdu/I2vGzr3wk60HFEI2H3xrjZ2E0u6xAFxnD5BqSahpTZwjztIcUe9ZjQ
+ W
+X-Google-Smtp-Source: AGHT+IGvpCf77yTRFxhE+2188kmtd9jaKw2/y0ZdzkVlBxpLo+6Sa4+H4AKsqiuLHfNY6EhB6flTsQ==
+X-Received: by 2002:a17:90a:e60a:b0:29b:9f14:e18e with SMTP id
+ j10-20020a17090ae60a00b0029b9f14e18emr6881687pjy.40.1710254329236; 
+ Tue, 12 Mar 2024 07:38:49 -0700 (PDT)
 Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
  by smtp.gmail.com with ESMTPSA id
- jx15-20020a17090b46cf00b0029baa0b1a6csm7492214pjb.24.2024.03.12.07.38.43
+ jx15-20020a17090b46cf00b0029baa0b1a6csm7492214pjb.24.2024.03.12.07.38.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 07:38:44 -0700 (PDT)
+ Tue, 12 Mar 2024 07:38:48 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 01/15] tcg/optimize: Fold andc with immediate to and
-Date: Tue, 12 Mar 2024 04:38:25 -1000
-Message-Id: <20240312143839.136408-2-richard.henderson@linaro.org>
+Subject: [PATCH 04/15] tcg/i386: Do not accept immediate operand for andc
+Date: Tue, 12 Mar 2024 04:38:28 -1000
+Message-Id: <20240312143839.136408-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240312143839.136408-1-richard.henderson@linaro.org>
 References: <20240312143839.136408-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,48 +93,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The transformation of andc with immediate to and is now
+done generically and need not be handled by the backend.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/optimize.c | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ tcg/i386/tcg-target-con-set.h |  3 +--
+ tcg/i386/tcg-target-con-str.h |  1 -
+ tcg/i386/tcg-target.c.inc     | 20 +++++---------------
+ 3 files changed, 6 insertions(+), 18 deletions(-)
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index 752cc5c56b..2ec52df368 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -1324,17 +1324,23 @@ static bool fold_andc(OptContext *ctx, TCGOp *op)
+diff --git a/tcg/i386/tcg-target-con-set.h b/tcg/i386/tcg-target-con-set.h
+index e24241cfa2..69d2d38570 100644
+--- a/tcg/i386/tcg-target-con-set.h
++++ b/tcg/i386/tcg-target-con-set.h
+@@ -40,11 +40,10 @@ C_O1_I2(r, 0, r)
+ C_O1_I2(r, 0, re)
+ C_O1_I2(r, 0, reZ)
+ C_O1_I2(r, 0, ri)
+-C_O1_I2(r, 0, rI)
+ C_O1_I2(r, L, L)
++C_O1_I2(r, r, r)
+ C_O1_I2(r, r, re)
+ C_O1_I2(r, r, ri)
+-C_O1_I2(r, r, rI)
+ C_O1_I2(x, x, x)
+ C_N1_I2(r, r, r)
+ C_N1_I2(r, r, rW)
+diff --git a/tcg/i386/tcg-target-con-str.h b/tcg/i386/tcg-target-con-str.h
+index cc22db227b..0c766eac7e 100644
+--- a/tcg/i386/tcg-target-con-str.h
++++ b/tcg/i386/tcg-target-con-str.h
+@@ -27,7 +27,6 @@ REGS('s', ALL_BYTEL_REGS & ~SOFTMMU_RESERVE_REGS)    /* qemu_st8_i32 data */
+  * CONST(letter, TCG_CT_CONST_* bit set)
+  */
+ CONST('e', TCG_CT_CONST_S32)
+-CONST('I', TCG_CT_CONST_I32)
+ CONST('T', TCG_CT_CONST_TST)
+ CONST('W', TCG_CT_CONST_WSZ)
+ CONST('Z', TCG_CT_CONST_U32)
+diff --git a/tcg/i386/tcg-target.c.inc b/tcg/i386/tcg-target.c.inc
+index c6ba498623..ed70524864 100644
+--- a/tcg/i386/tcg-target.c.inc
++++ b/tcg/i386/tcg-target.c.inc
+@@ -130,9 +130,8 @@ static TCGReg tcg_target_call_oarg_reg(TCGCallReturnKind kind, int slot)
+ /* Constants we accept.  */
+ #define TCG_CT_CONST_S32 0x100
+ #define TCG_CT_CONST_U32 0x200
+-#define TCG_CT_CONST_I32 0x400
+-#define TCG_CT_CONST_WSZ 0x800
+-#define TCG_CT_CONST_TST 0x1000
++#define TCG_CT_CONST_WSZ 0x400
++#define TCG_CT_CONST_TST 0x800
  
-     z1 = arg_info(op->args[1])->z_mask;
+ /* Registers used with L constraint, which are the first argument
+    registers on x86_64, and two random call clobbered registers on
+@@ -203,8 +202,7 @@ static bool tcg_target_const_match(int64_t val, int ct,
+         return 1;
+     }
+     if (type == TCG_TYPE_I32) {
+-        if (ct & (TCG_CT_CONST_S32 | TCG_CT_CONST_U32 |
+-                  TCG_CT_CONST_I32 | TCG_CT_CONST_TST)) {
++        if (ct & (TCG_CT_CONST_S32 | TCG_CT_CONST_U32 | TCG_CT_CONST_TST)) {
+             return 1;
+         }
+     } else {
+@@ -214,9 +212,6 @@ static bool tcg_target_const_match(int64_t val, int ct,
+         if ((ct & TCG_CT_CONST_U32) && val == (uint32_t)val) {
+             return 1;
+         }
+-        if ((ct & TCG_CT_CONST_I32) && ~val == (int32_t)~val) {
+-            return 1;
+-        }
+         /*
+          * This will be used in combination with TCG_CT_CONST_S32,
+          * so "normal" TESTQ is already matched.  Also accept:
+@@ -2666,12 +2661,7 @@ static inline void tcg_out_op(TCGContext *s, TCGOpcode opc,
+         break;
  
--    /*
--     * Known-zeros does not imply known-ones.  Therefore unless
--     * arg2 is constant, we can't infer anything from it.
--     */
-     if (arg_is_const(op->args[2])) {
--        uint64_t z2 = ~arg_info(op->args[2])->z_mask;
--        ctx->a_mask = z1 & ~z2;
--        z1 &= z2;
--    }
--    ctx->z_mask = z1;
-+        uint64_t val = ~arg_info(op->args[2])->val;
+     OP_32_64(andc):
+-        if (const_a2) {
+-            tcg_out_mov(s, rexw ? TCG_TYPE_I64 : TCG_TYPE_I32, a0, a1);
+-            tgen_arithi(s, ARITH_AND + rexw, a0, ~a2, 0);
+-        } else {
+-            tcg_out_vex_modrm(s, OPC_ANDN + rexw, a0, a2, a1);
+-        }
++        tcg_out_vex_modrm(s, OPC_ANDN + rexw, a0, a2, a1);
+         break;
  
-+        /* Fold andc r,x,i to and r,x,~i. */
-+        op->opc = (ctx->type == TCG_TYPE_I32
-+                   ? INDEX_op_and_i32 : INDEX_op_and_i64);
-+        op->args[2] = arg_new_constant(ctx, val);
-+
-+        /*
-+         * Known-zeros does not imply known-ones.  Therefore unless
-+         * arg2 is constant, we can't infer anything from it.
-+         */
-+        ctx->a_mask = z1 & ~val;
-+        z1 &= val;
-+    }
-+
-+    ctx->z_mask = z1;
-     ctx->s_mask = arg_info(op->args[1])->s_mask
-                 & arg_info(op->args[2])->s_mask;
-     return fold_masks(ctx, op);
+     OP_32_64(mul):
+@@ -3442,7 +3432,7 @@ static TCGConstraintSetIndex tcg_target_op_def(TCGOpcode op)
+ 
+     case INDEX_op_andc_i32:
+     case INDEX_op_andc_i64:
+-        return C_O1_I2(r, r, rI);
++        return C_O1_I2(r, r, r);
+ 
+     case INDEX_op_shl_i32:
+     case INDEX_op_shl_i64:
 -- 
 2.34.1
 
