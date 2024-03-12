@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94DF0C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:32:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54574C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:38:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk5yl-000075-Fk; Tue, 12 Mar 2024 13:31:55 -0400
+	id 1rk64c-0002Bj-Lx; Tue, 12 Mar 2024 13:37:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk5yj-000061-4G
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:31:53 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk64U-0002AP-GP
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:37:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk5yg-0006ch-89
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:31:52 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk64S-0007en-H9
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:37:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710264708;
+ s=mimecast20190719; t=1710265066;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=//SyssXISUCq4C1aYS1ELFQuOov804BdxJx3R7Jq0VE=;
- b=jVd39KwBhifgQyhevz+XMeSDljoMJU1I0omFCglGn9XbFt6n67WuhiDuHFKTi0iZcNsFTt
- zCKFDfIjDQoAwxarao7QvhxmMa0P7afXEvgAkAM2cAFHTB4P1CXnmnCyon8kiuyKmSo9h5
- JOPJ6wxtAhXcpdcLy90ckhHOfFuS68U=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=GMxyfUPTkwLMk4UHIQVI4jHKCYQHz5KGpUGPZqappI8=;
+ b=TZQs0eNfv4pWyTatj2a1yZKN20LnIC/9xKmhEjuLFanAmd7tSfgIHNTGqojDcXdMiSM1Od
+ QepAw4bOvnfjaOPoGEXFe6KvIalmyVthy2frB/h0nW7ibkPWslgr/xhCriAWW/E1oT1bEL
+ 1sn9DbV0iL9B70tbjhbgFMR9ghJizkY=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-190-XBDOWzf1ORGCl3cUWMJMIQ-1; Tue, 12 Mar 2024 13:31:46 -0400
-X-MC-Unique: XBDOWzf1ORGCl3cUWMJMIQ-1
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-513b2e92c19so2379059e87.3
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 10:31:46 -0700 (PDT)
+ us-mta-632-1fiJnHaUMwObkkeufDaj6g-1; Tue, 12 Mar 2024 13:37:45 -0400
+X-MC-Unique: 1fiJnHaUMwObkkeufDaj6g-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4131b4161dcso21099445e9.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 10:37:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710264704; x=1710869504;
+ d=1e100.net; s=20230601; t=1710265063; x=1710869863;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=//SyssXISUCq4C1aYS1ELFQuOov804BdxJx3R7Jq0VE=;
- b=MNf5i+c6cLt63emW7Z1RXWkbBpTMLF/m380aks4pE9HAf83e+jvtSsCcSnjtURGEg3
- g1CyUKiR6tYWkz9sHAfhW6rMZEytz8Kj8dSjlTzqqxQhkFJME/Y1XYt6dvpkMW6MY2iJ
- jd6wq8ThJxhSrqamUdC27qPvhkcSbSCDVmj82D3d79ppsMOSAjAOGfbnTs069Z+eXNSK
- mGb2gQ0txLYuyqcXJZ7iWrkGARGttGVOkGl5S7Z4+mH+QGZ/Q4FiiSa5QTVRI7vyxwJ0
- iMWR1fmv14GYlA9T81sYLtpv6YpVbd4BCnV6N28v+5xk2Rj3tNtFgVlkUOXYT0XfD5MI
- 4TVw==
-X-Gm-Message-State: AOJu0YyKfJLGzc4lDOm6avLpu89zFtXtRrwkUVAysKcMj4XIzO0bACQS
- gmX1K28GtOai8lvEyqHZNvuy3VM5SLRg9PPr+vu0OpfEdH8xixvlvu+R0zT1OPiaCrtki4rn3UF
- 7QxRyY/ZcNYLshxdQCNuzxEzkmHbu8NGsvQ3GIcVG71ipQyPzCWZ8y4Yf/MKuEuk=
-X-Received: by 2002:a05:6512:3d09:b0:513:8a39:e0d9 with SMTP id
- d9-20020a0565123d0900b005138a39e0d9mr9092573lfv.64.1710264703865; 
- Tue, 12 Mar 2024 10:31:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF97KVZ4NJsSPklkW8hw8fji0fjotp8zVLmMTD0nAlh7ZF69wRbKYwr/aQc4wtGKSNvch3WxA==
-X-Received: by 2002:a05:6512:3d09:b0:513:8a39:e0d9 with SMTP id
- d9-20020a0565123d0900b005138a39e0d9mr9092548lfv.64.1710264703241; 
- Tue, 12 Mar 2024 10:31:43 -0700 (PDT)
+ bh=GMxyfUPTkwLMk4UHIQVI4jHKCYQHz5KGpUGPZqappI8=;
+ b=IBK4hK3BCcaPErY4wh2XQMHTruf2PL8ynrvLb+JLr+Ku+CDZauFYrtLkScW72TwmdC
+ ohc2/sN3nlpC/wv6E1LDJEeAectLOY5q6EIZzL0LF1jM9VhaAZCgy8L21DS99CxmgQo6
+ JpQeQlAROAHhZKBBkPVmRICOhNCYIDw+ebNoolyHn5X+ZsoMtOToPkTKxSSpBM059MUM
+ +V1jotu20C/blhL0t5KbT41obAZA6VxcjcyJkQsJ96bCY1T5t/jE4QYKlCrONYNN4R0n
+ YVTFTjC5+48Xox0tUdUzmOHzdmRFns0M0mj0TMcJwx9pXJIFO+dVT+1heewi7SMDHyt0
+ h7Fw==
+X-Gm-Message-State: AOJu0YzgByslq+C9qU1OqQ/K1NY9aJ1sGua0rmJlpSvK+uGBA2sridSU
+ S3kVU/wQ9q3iQF4goPFur59ZTLolMEBtkhe6mR7mCNzBf1Nz5CzOeh9BpPebkL3EcStvVIk+ON5
+ iBpNcwgaKJq1UIoeelku+SyzzQl0YEDoUy0RUYCddxLF+U+6XoGtM5RF+6iZIokU=
+X-Received: by 2002:a05:600c:4709:b0:412:8fef:7f with SMTP id
+ v9-20020a05600c470900b004128fef007fmr8552596wmo.1.1710265063228; 
+ Tue, 12 Mar 2024 10:37:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IExojlzYXZGJ8NHT2Vlrz43+6jdl33jwBYIwLfProONydshwjBs/S17wriHq+e7PIleU6HChQ==
+X-Received: by 2002:a05:600c:4709:b0:412:8fef:7f with SMTP id
+ v9-20020a05600c470900b004128fef007fmr8552580wmo.1.1710265062709; 
+ Tue, 12 Mar 2024 10:37:42 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f0:532c:5ae4:fce6:76e1:fa1a])
  by smtp.gmail.com with ESMTPSA id
- r11-20020a05600c35cb00b004127057d6b9sm19619010wmq.35.2024.03.12.10.31.41
+ c17-20020a5d5291000000b0033d2ae84fafsm9500611wrv.52.2024.03.12.10.37.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 10:31:42 -0700 (PDT)
-Date: Tue, 12 Mar 2024 13:31:39 -0400
+ Tue, 12 Mar 2024 10:37:42 -0700 (PDT)
+Date: Tue, 12 Mar 2024 13:37:38 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: Igor Mammedov <imammedo@redhat.com>
 Cc: qemu-devel@nongnu.org
 Subject: Re: [PATCH v3 00/20] Workaround Windows failing to find 64bit SMBIOS
  entry point with SeaBIOS
-Message-ID: <20240312133056-mutt-send-email-mst@kernel.org>
+Message-ID: <20240312133702-mutt-send-email-mst@kernel.org>
 References: <20240312161050.2248814-1-imammedo@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -116,11 +116,9 @@ On Tue, Mar 12, 2024 at 05:10:30PM +0100, Igor Mammedov wrote:
 >        smbios: build legacy mode code only for 'pc' machine
 >    * pick up acks
 
-thanks!
-of course this conflicts with
-SMBIOS type 9
-and I am trying to figure out how to resolve this again.
-Do you ack SMBIOS type 9 btw?
+I think I'll do this after the freeze, it's a bugfix so ok to do then.
+Will probably need a rebase, too.
+
 
 > Windows (10) bootloader when running on top of SeaBIOS, fails to find            
 > SMBIOSv3 entry point. Tracing it shows that it looks for v2 anchor markers       
