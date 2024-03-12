@@ -4,78 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D95DCC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 08:26:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A220C54E67
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 08:26:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjxPN-0005Q9-3w; Tue, 12 Mar 2024 04:22:49 -0400
+	id 1rjxQv-0007ZT-8X; Tue, 12 Mar 2024 04:24:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxPK-0005P7-MS
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:22:47 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxQb-0006xF-1b
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:24:08 -0400
+Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxPI-00014f-NH
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:22:46 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-412f1961101so39739925e9.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 01:22:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxQX-0001Iy-Os
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:24:04 -0400
+Received: by mail-lf1-x12e.google.com with SMTP id
+ 2adb3069b0e04-51344bebe2fso3943224e87.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 01:24:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710231763; x=1710836563; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=9ThlkXWuH/LZwgUYhcSMxtjhxxhNUZ7hP3Buj6LguH0=;
- b=bhfa8VBqBmsjIWEjgspU4nAA85uO9SGQ4eQmzry3Li3gBA44GzSHj9GFjL0iYZ0IP/
- M5mOlQvHyyLwAIVF7YsYNPv7ZfSgyiHqFy//T6h5wuOU9SdyI4Irkp1WAXyBbWf/7sVg
- LKqrNsGcmBKurFTbDfgkj8ogtCm2lH8tVgB9UAp8xsZVlZvVIPywb/QTc505piQA2QOU
- 2QZrh39Fj7Z8+yj8qamRZswftWpWwF338CX9fIdJhdsgei/hvYIKoCJnJz2uYUd2XyKP
- +GlwEf6t4LdpEBSlRVPK5o/fvCfN+olqVUsgUIJpKb02LbEq3hzoYoCwBLtLTDNW2+1b
- 9Q8Q==
+ d=linaro.org; s=google; t=1710231839; x=1710836639; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6MhT9qADAUndB9gfklgv3b9HSVnHfN7uCmsIepMqwLg=;
+ b=xWL/6C/BEhhR51C6D4BIFCZ9he3dZhe3h8yGjAGuPxPUynaUstIjNGhv3hfM8WHMUr
+ IpbDVflnh/lI4PFxfYZU/he+8bdUBvD73vaVLh5IodJ7TY/9dfloteeu8sIVgfk4d0t4
+ XogbT/MWRl16O9NXDorttmePUj9RV1xsKVWPSsbNCAClCvbTDYmBE8rPVj8lUBg5kZIn
+ 6DaVzbTaZTDAubClBWVxE7QTrD9gjqKu6WOid3UV/ZAwbcHOP+9YDtIv0QyNLEY+8NEX
+ TigUGhlb6D04q+t5fA2n+DLe5Z+CeoUhVf6+z1S/Mm5qllXInkRPPCw0+qR3Z25Du7r4
+ v1YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710231763; x=1710836563;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9ThlkXWuH/LZwgUYhcSMxtjhxxhNUZ7hP3Buj6LguH0=;
- b=OZUclel1b8AiHkeTk+9oWTNI2QthfDRIWmLNlyCh87D1on5VzJSTNk4dVwiQlRcXli
- gu49i5QK2T/wMa03WyBz8X1G+pJ1b0j2jDxxkC0b8giwyC+HydCFGOKkIRHsGLliw41/
- hZDW7QEulXd67+YUCoWiGxISOf1DLBaG5FdliNGCyKRYN5Hp/EW6zA7k4ATF42GZvNS+
- /C2/Wel+eWf76gm/sNir0ShqP1hvWQhKQzMtyrMeU0DfdZJweaTa42gHjRM7v7A+g305
- lah/kTY4z6YVwhKvKTrLavaIs6HQ0EgINz3PsX5tUA+2kRuvnO3LuzJhRwLrJKlQGvak
- RKZw==
-X-Gm-Message-State: AOJu0YwGt8DUbWKRp8MJU73Vns+TQfNoeWUg/I/pO058qiADui0DYsPc
- UgvNEcVIaI7Hr2WFHdoft1wkARzplKsIzYUlsNWL2sXlGSPheosJU+YTxnFBexGe/QBFl2ofXbH
- W
-X-Google-Smtp-Source: AGHT+IF4KEp8l5BZo2YsWhHu5YcT1lZyrsV8gPnzRWxahkhIpd51aj2XtPgtBakIL0si3nUsKO7x0Q==
-X-Received: by 2002:a05:600c:518b:b0:413:38f6:c62c with SMTP id
- fa11-20020a05600c518b00b0041338f6c62cmr609523wmb.1.1710231762803; 
- Tue, 12 Mar 2024 01:22:42 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710231839; x=1710836639;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6MhT9qADAUndB9gfklgv3b9HSVnHfN7uCmsIepMqwLg=;
+ b=cjrlnKiXSlcwPi6waP3ZU18JxsQMffMdBOc/Dq+CzLO7QWk3AlstSyrTg12OyiBlcd
+ yNsg0MT+wbEMkd43By/C4iY/x8CvXWq/Z+UOLD15UKKVlwx4ycPXiPjbVIP9zQwLOhOD
+ 8QgzzzLQhhygNxvDMFqFHf2mDtHWn35EK79Lig3n8/YniXNf5AcgC6sVMKLLcj1C9AZb
+ wCz/4ZueVESers9GgxIfXfgveN+agxhUq2puXw+H59Ho/v833U1VOY9+YoSd2O/UwFZ2
+ Sq26TivOEclqr3836xAs6xQPJbukfLh/DhAmSLeQ04XyDzj2vLaszsMVUoOh2t0k/0co
+ A3Mg==
+X-Gm-Message-State: AOJu0YyDjXGJcwIF0EIXlJUfwKjtcgsa9FHc6o6P4LCiqb6HcS9lHLLK
+ JcRwcRbZGauZpfeZy0HeeevFS61uL+PZzaABjrtWGBcpPSvtn1YnHyJ4Rfmx8Mw5Z7bZNHA03mO
+ N
+X-Google-Smtp-Source: AGHT+IHoqlh31+dI74u90bk1+IwHt2YR/TWPB1r4Y+swRDaL9d/DUXa3yzuFzikZXHElZo/cUxSlGQ==
+X-Received: by 2002:ac2:42c8:0:b0:512:d78e:90fa with SMTP id
+ n8-20020ac242c8000000b00512d78e90famr5379719lfl.15.1710231839612; 
+ Tue, 12 Mar 2024 01:23:59 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.206.139])
  by smtp.gmail.com with ESMTPSA id
- i17-20020a05600c355100b00413079f9065sm11717694wmq.8.2024.03.12.01.22.41
+ l5-20020a056000022500b0033e712b1d9bsm8482375wrz.77.2024.03.12.01.23.57
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 12 Mar 2024 01:22:42 -0700 (PDT)
+ Tue, 12 Mar 2024 01:23:59 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, qemu-block@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 00/13] Misc HW patches for 2024-03-12
-Date: Tue, 12 Mar 2024 09:22:25 +0100
-Message-ID: <20240312082239.69696-1-philmd@linaro.org>
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PULL 12/13] meson.build: Always require an objc compiler on macos
+ hosts
+Date: Tue, 12 Mar 2024 09:22:37 +0100
+Message-ID: <20240312082239.69696-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240312082239.69696-1-philmd@linaro.org>
+References: <20240312082239.69696-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,87 +100,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 7489f7f3f81dcb776df8c1b9a9db281fc21bf05f:
+From: Peter Maydell <peter.maydell@linaro.org>
 
-  Merge tag 'hw-misc-20240309' of https://github.com/philmd/qemu into staging (2024-03-09 20:12:21 +0000)
+We currently only insist that an ObjectiveC compiler is present on
+macos hosts if we're building the Cocoa UI.  However, since then
+we've added some other parts of QEMU which are also written in ObjC:
+the coreaudio audio backend, and the vmnet net backend.  This means
+that if you try to configure QEMU on macos with --disable-cocoa the
+build will fail:
 
-are available in the Git repository at:
+../meson.build:3741:13: ERROR: No host machine compiler for 'audio/coreaudio.m'
 
-  https://github.com/philmd/qemu.git tags/hw-misc-20240312
+Since in practice any macos host will have an ObjC compiler
+available, rather than trying to gate the compiler detection on an
+increasingly complicated list of every bit of QEMU that uses ObjC,
+just require it unconditionally on macos hosts.
 
-for you to fetch changes up to afc8b05cea14b2eea6f1eaa640f74b21486fca48:
+Resolves https://gitlab.com/qemu-project/qemu/-/issues/2138
 
-  docs/about/deprecated.rst: Move SMP configurations item to system emulator section (2024-03-12 09:19:04 +0100)
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20240311133334.3991537-1-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-----------------------------------------------------------------
-Misc HW patch queue
-
-- Rename hw/ide/ahci-internal.h for consistency (Zoltan)
-- More convenient PCI hotplug trace events (Vladimir)
-- Short CLI option to add drives for sam460ex machine (Zoltan)
-- More missing ERRP_GUARD() macros (Zhao)
-- Avoid faulting when unmapped I/O BAR is accessed on SPARC EBUS (Mark)
-- Remove unused includes in hw/core/ (Zhao)
-- New PCF8574 GPIO over I2C model (Dmitriy)
-- Require ObjC on Darwin macOS by default (Peter)
-- Corrected "-smp parameter=1" placement in docs/ (Zhao)
-
-----------------------------------------------------------------
-
-BALATON Zoltan (2):
-  hw/ide/ahci: Rename ahci_internal.h to ahci-internal.h
-  hw/ppc/sam460ex: Support short options for adding drives
-
-Dmitriy Sharikhin (1):
-  hw/gpio: introduce pcf8574 driver
-
-Mark Cave-Ayland (1):
-  sun4u: remap ebus BAR0 to use unassigned_io_ops instead of alias to
-    PCI IO space
-
-Peter Maydell (1):
-  meson.build: Always require an objc compiler on macos hosts
-
-Vladimir Sementsov-Ogievskiy (1):
-  hw/pci: add some convenient trace-events for pcie and shpc hotplug
-
-Zhao Liu (7):
-  hw/core/loader-fit: Fix missing ERRP_GUARD() for error_prepend()
-  hw/core/qdev-properties-system: Fix missing ERRP_GUARD() for
-    error_prepend()
-  hw/misc/ivshmem: Fix missing ERRP_GUARD() for error_prepend()
-  hw/core: Cleanup unused included headers in cpu-common.c
-  hw/core: Cleanup unused included header in machine-qmp-cmds.c
-  hw/core: Cleanup unused included headers in numa.c
-  docs/about/deprecated.rst: Move SMP configurations item to system
-    emulator section
-
- MAINTAINERS                                 |   6 +
- docs/about/deprecated.rst                   |  20 +--
- meson.build                                 |   2 +-
- hw/ide/{ahci_internal.h => ahci-internal.h} |   0
- include/hw/gpio/pcf8574.h                   |  15 ++
- hw/core/cpu-common.c                        |   4 -
- hw/core/loader-fit.c                        |   2 +
- hw/core/machine-qmp-cmds.c                  |   1 -
- hw/core/numa.c                              |   2 -
- hw/core/qdev-properties-system.c            |   1 +
- hw/gpio/pcf8574.c                           | 162 ++++++++++++++++++++
- hw/ide/ahci.c                               |   2 +-
- hw/ide/ich.c                                |   2 +-
- hw/misc/ivshmem.c                           |   1 +
- hw/pci/pcie.c                               |  56 +++++++
- hw/pci/shpc.c                               |  46 ++++++
- hw/ppc/sam460ex.c                           |  24 ++-
- hw/sparc64/sun4u.c                          |   9 +-
- hw/gpio/Kconfig                             |   4 +
- hw/gpio/meson.build                         |   1 +
- hw/pci/trace-events                         |   6 +
- 21 files changed, 339 insertions(+), 27 deletions(-)
- rename hw/ide/{ahci_internal.h => ahci-internal.h} (100%)
- create mode 100644 include/hw/gpio/pcf8574.h
- create mode 100644 hw/gpio/pcf8574.c
-
+diff --git a/meson.build b/meson.build
+index f9dbe7634e..e3fab8ce9f 100644
+--- a/meson.build
++++ b/meson.build
+@@ -66,7 +66,7 @@ if host_os == 'windows' and add_languages('cpp', required: false, native: false)
+   cxx = meson.get_compiler('cpp')
+ endif
+ if host_os == 'darwin' and \
+-   add_languages('objc', required: get_option('cocoa'), native: false)
++   add_languages('objc', required: true, native: false)
+   all_languages += ['objc']
+   objc = meson.get_compiler('objc')
+ endif
 -- 
 2.41.0
 
