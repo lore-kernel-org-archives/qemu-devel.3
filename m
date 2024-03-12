@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A66E8C54E66
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:37:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90A63C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:38:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkAdO-00062v-Dk; Tue, 12 Mar 2024 18:30:12 -0400
+	id 1rkAZc-0004Xe-2q; Tue, 12 Mar 2024 18:26:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAc6-0002pt-Tq
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAZI-0004Q2-PW
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:26:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAbz-0004b4-Px
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:45 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAZG-0004Db-Un
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:25:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710282522;
+ s=mimecast20190719; t=1710282354;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uqNCLYNUFKo35EsbQeEwK2046y6pYoTM2WTmQ8XGtVc=;
- b=bW61fXtJUwJ3TPMd1wE/r5o2/CCdKLz5SvOC/DXFJD0I7Y3I0/aT2eay6xpY3XmIAU+VeX
- DBC/OLNyWRkHoEi9hshfQWSWwxq5lSZ0CbjJfPDC/eEiK/jrYLVlavb3LwL7UPtUvDIwJ1
- Lj/emQH6MVkk48e9R9V7NT86z9K/SeQ=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qJIP+mB13E58BkNpHusyPXxmrUBHtsi0jjjQcT0sAlM=;
+ b=U4UTsKf84WWKljM4LFNn8TuPYBCdxGw9AQrYH/NedOiod33sQegOTw4zDv/WNpUhj85RfB
+ N5RYupBiYzthFxYte+783wZ9+p9j6fScnD5xGCiznkFeBwrqRwVnotZmgCgLYqYlaPOaTT
+ pMdxrAL7VqCIhhKmdr9GRLnMYNx+s18=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-80-dejjTPj8PBipPYfHgC-W2Q-1; Tue, 12 Mar 2024 18:28:41 -0400
-X-MC-Unique: dejjTPj8PBipPYfHgC-W2Q-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a448cfe2266so494065866b.2
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:28:41 -0700 (PDT)
+ us-mta-511-5b6rj8n4Pq-H_-OO4i8aBA-1; Tue, 12 Mar 2024 18:25:52 -0400
+X-MC-Unique: 5b6rj8n4Pq-H_-OO4i8aBA-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a44143c8908so27787166b.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:25:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710282520; x=1710887320;
+ d=1e100.net; s=20230601; t=1710282351; x=1710887151;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uqNCLYNUFKo35EsbQeEwK2046y6pYoTM2WTmQ8XGtVc=;
- b=u7J9UqDd2MZQ5SgPn+JpC0lmQ0DYhmDWSzB7x3mwH4nkPucmMdygorIQa/pST8+slt
- T3gB8h/ebEcsQZQR0QuauEjZmUiUiI1ijeUnMWqVsYtPQzEatyvteCqj3Lq+JrM2R2w6
- O+bu0DzABT1yCo8q/jo8yiuSIMPC8k0h3TdaB8WuVz8C82qrD7/rp1KiWCG97SHpCfER
- N6R6n6C9vJG16YbHc9/P/x0/B5vPhh92rGWHFS1vETRxUKRnDhxJRBm02xX+S2Y8sIAv
- zHSdXlEWtrmmiuiAspEzZkXLE+2Kl+Ha5k18zpV9QmcrhPsXExftXqyMXRT1TXzghIyp
- CX+A==
-X-Gm-Message-State: AOJu0YwmOvLP8Dph7uUsOjZXDn9kxVdnGlcr9Kzh4OA1ZFOCJwMyIEJv
- KnCanPfuJPhff8VSJTj4mp+4PttXtVa2u69TVRZ/Hp64aXBcNtjiRdkuMlPFyunda7UGXTjZ5cd
- 0b604wIa/2PtkDkVcpAtGB5mtjyiAnnvcopZokor7uX0NtRSMJ1H1CpsdGtEkWB4vuWAnLu9oHK
- PmK5Vg6gtMZFaWkBh5tW0HCWLmpEVB89xD
-X-Received: by 2002:a17:907:a0ce:b0:a45:ed7f:265c with SMTP id
- hw14-20020a170907a0ce00b00a45ed7f265cmr9062359ejc.0.1710282519585; 
- Tue, 12 Mar 2024 15:28:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH/S/BqBM2V7Jrt2QdHmO7PZKEbCOG4ZawwTRy9y4f2ruoDpWpdeaAnfaxeyxperd+aZE7hBA==
-X-Received: by 2002:a17:907:a0ce:b0:a45:ed7f:265c with SMTP id
- hw14-20020a170907a0ce00b00a45ed7f265cmr9062346ejc.0.1710282519093; 
- Tue, 12 Mar 2024 15:28:39 -0700 (PDT)
+ bh=qJIP+mB13E58BkNpHusyPXxmrUBHtsi0jjjQcT0sAlM=;
+ b=PhRLLR+1kDdRf3SPazv07vkQ7yqKSsf00NJSFtIsi+/+DXPRDS6UX8wEPXGFZxL402
+ 7rXvNoNpDxUBeit9GgqFYsFFab786SZR6PoyDGqdch+74DI8XqXvXpantI9wLLyIRlDF
+ OaQ6eAy+k4aREaAtPavcAADhBuyYnktFRMVeagtgQI3yWoOL8rBSIeQ3gCcgyKE+1VXD
+ s65gwKN2B2Q40gnoPbJpkyhZwDg89LpRbDWVEfKuMebaLbfHNxXRnGou/MxgRW6iULRj
+ 49hrhhoJL5YvnfMDCpOAkaVAMpGCLAZ6e1O5g6T/zx5ESvTr0+EoP5hwWFOveUbHIljL
+ rxcw==
+X-Gm-Message-State: AOJu0YzOoNudehGTMhb1GuQv3GqIELR3EHdnrhnfiDVyIRqzGep6x0PG
+ zFGk5teXcNRXy/rdw2EeDewdxzD1jdOYc+YD3ZexNmcAv/bcdb+Pn+TvP0uhpGPXPRlVG1mDue8
+ hzXiGFB9yXo3NXbNzDFDazDV4N8FlF0Q/2FHPzgH8LfxCvMfYHy5oy9nnyHlyjtfVeX0AG4Eh20
+ OBncxHU+SFFFh7Obbb1N1LR0boHU7VHL+V
+X-Received: by 2002:a17:907:1b0e:b0:a46:4ea8:9df5 with SMTP id
+ mp14-20020a1709071b0e00b00a464ea89df5mr1010792ejc.5.1710282351064; 
+ Tue, 12 Mar 2024 15:25:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFzPloPYs+h7K6vPtgWVfpz0mMmWbvHAanSG3iRRGLaGPPKaLQTLd3hVZpqL+8xMzTra38J1w==
+X-Received: by 2002:a17:907:1b0e:b0:a46:4ea8:9df5 with SMTP id
+ mp14-20020a1709071b0e00b00a464ea89df5mr1010768ejc.5.1710282350442; 
+ Tue, 12 Mar 2024 15:25:50 -0700 (PDT)
 Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- h16-20020a1709067cd000b00a45f63d2959sm4221145ejp.210.2024.03.12.15.28.37
+ bn23-20020a170906c0d700b00a462e4d7216sm2028670ejb.76.2024.03.12.15.25.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 15:28:38 -0700 (PDT)
-Date: Tue, 12 Mar 2024 18:28:36 -0400
+ Tue, 12 Mar 2024 15:25:49 -0700 (PDT)
+Date: Tue, 12 Mar 2024 18:25:47 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eric Auger <eric.auger@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PULL 57/68] virtio-iommu: Add a granule property
-Message-ID: <294ac5fef3aa78111de07357734285744103f47c.1710282274.git.mst@redhat.com>
+ Si-Wei Liu <si-wei.liu@oracle.com>,
+ Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>,
+ Jason Wang <jasowang@redhat.com>
+Subject: [PULL 06/68] vdpa: add vhost_vdpa_set_dev_vring_base trace for svq
+ mode
+Message-ID: <19a060bce17316d9ff7d8b3637fb391010be8144.1710282274.git.mst@redhat.com>
 References: <cover.1710282274.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -80,15 +81,14 @@ Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1710282274.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,107 +105,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Si-Wei Liu <si-wei.liu@oracle.com>
 
-This allows to choose which granule will be used by
-default by the virtio-iommu. Current page size mask
-default is qemu_target_page_mask so this translates
-into a 4k granule on ARM and x86_64 where virtio-iommu
-is supported.
+For better debuggability and observability.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-
-Message-Id: <20240307134445.92296-3-eric.auger@redhat.com>
+Message-Id: <1707910082-10243-8-git-send-email-si-wei.liu@oracle.com>
+Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/virtio/virtio-iommu.h |  2 ++
- hw/virtio/virtio-iommu.c         | 28 +++++++++++++++++++++++++---
- 2 files changed, 27 insertions(+), 3 deletions(-)
+ hw/virtio/vhost-vdpa.c | 5 ++++-
+ hw/virtio/trace-events | 2 +-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/virtio/virtio-iommu.h b/include/hw/virtio/virtio-iommu.h
-index 781ebaea8f..67ea5022af 100644
---- a/include/hw/virtio/virtio-iommu.h
-+++ b/include/hw/virtio/virtio-iommu.h
-@@ -24,6 +24,7 @@
- #include "hw/virtio/virtio.h"
- #include "hw/pci/pci.h"
- #include "qom/object.h"
-+#include "qapi/qapi-types-virtio.h"
- 
- #define TYPE_VIRTIO_IOMMU "virtio-iommu-device"
- #define TYPE_VIRTIO_IOMMU_PCI "virtio-iommu-pci"
-@@ -66,6 +67,7 @@ struct VirtIOIOMMU {
-     bool boot_bypass;
-     Notifier machine_done;
-     bool granule_frozen;
-+    GranuleMode granule_mode;
- };
- 
- #endif
-diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-index 86623d55a5..84d6819d3b 100644
---- a/hw/virtio/virtio-iommu.c
-+++ b/hw/virtio/virtio-iommu.c
-@@ -29,6 +29,7 @@
- #include "sysemu/reset.h"
- #include "sysemu/sysemu.h"
- #include "qemu/reserved-region.h"
-+#include "qemu/units.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "trace.h"
-@@ -1115,8 +1116,8 @@ static int virtio_iommu_notify_flag_changed(IOMMUMemoryRegion *iommu_mr,
+diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+index c7271093dd..fc84cf6ec6 100644
+--- a/hw/virtio/vhost-vdpa.c
++++ b/hw/virtio/vhost-vdpa.c
+@@ -970,7 +970,10 @@ static int vhost_vdpa_get_config(struct vhost_dev *dev, uint8_t *config,
+ static int vhost_vdpa_set_dev_vring_base(struct vhost_dev *dev,
+                                          struct vhost_vring_state *ring)
+ {
+-    trace_vhost_vdpa_set_vring_base(dev, ring->index, ring->num);
++    struct vhost_vdpa *v = dev->opaque;
++
++    trace_vhost_vdpa_set_dev_vring_base(dev, ring->index, ring->num,
++                                        v->shadow_vqs_enabled);
+     return vhost_vdpa_call(dev, VHOST_SET_VRING_BASE, ring);
  }
  
- /*
-- * The default mask (TARGET_PAGE_MASK) is the smallest supported guest granule,
-- * for example 0xfffffffffffff000. When an assigned device has page size
-+ * The default mask depends on the "granule" property. For example, with
-+ * 4k granule, it is -(4 * KiB). When an assigned device has page size
-  * restrictions due to the hardware IOMMU configuration, apply this restriction
-  * to the mask.
-  */
-@@ -1313,8 +1314,27 @@ static void virtio_iommu_device_realize(DeviceState *dev, Error **errp)
-      * in vfio realize
-      */
-     s->config.bypass = s->boot_bypass;
--    s->config.page_size_mask = qemu_target_page_mask();
-     s->config.input_range.end = UINT64_MAX;
-+
-+    switch (s->granule_mode) {
-+    case GRANULE_MODE_4K:
-+        s->config.page_size_mask = -(4 * KiB);
-+        break;
-+    case GRANULE_MODE_8K:
-+        s->config.page_size_mask = -(8 * KiB);
-+        break;
-+    case GRANULE_MODE_16K:
-+        s->config.page_size_mask = -(16 * KiB);
-+        break;
-+    case GRANULE_MODE_64K:
-+        s->config.page_size_mask = -(64 * KiB);
-+        break;
-+    case GRANULE_MODE_HOST:
-+        s->config.page_size_mask = qemu_real_host_page_mask();
-+        break;
-+    default:
-+        error_setg(errp, "Unsupported granule mode");
-+    }
-     s->config.domain_range.end = UINT32_MAX;
-     s->config.probe_size = VIOMMU_PROBE_SIZE;
- 
-@@ -1522,6 +1542,8 @@ static Property virtio_iommu_properties[] = {
-     DEFINE_PROP_LINK("primary-bus", VirtIOIOMMU, primary_bus,
-                      TYPE_PCI_BUS, PCIBus *),
-     DEFINE_PROP_BOOL("boot-bypass", VirtIOIOMMU, boot_bypass, true),
-+    DEFINE_PROP_GRANULE_MODE("granule", VirtIOIOMMU, granule_mode,
-+                             GRANULE_MODE_4K),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
+diff --git a/hw/virtio/trace-events b/hw/virtio/trace-events
+index 28d6d78380..20577aa584 100644
+--- a/hw/virtio/trace-events
++++ b/hw/virtio/trace-events
+@@ -57,7 +57,7 @@ vhost_vdpa_dev_start(void *dev, bool started) "dev: %p started: %d"
+ vhost_vdpa_set_log_base(void *dev, uint64_t base, unsigned long long size, int refcnt, int fd, void *log) "dev: %p base: 0x%"PRIx64" size: %llu refcnt: %d fd: %d log: %p"
+ vhost_vdpa_set_vring_addr(void *dev, unsigned int index, unsigned int flags, uint64_t desc_user_addr, uint64_t used_user_addr, uint64_t avail_user_addr, uint64_t log_guest_addr) "dev: %p index: %u flags: 0x%x desc_user_addr: 0x%"PRIx64" used_user_addr: 0x%"PRIx64" avail_user_addr: 0x%"PRIx64" log_guest_addr: 0x%"PRIx64
+ vhost_vdpa_set_vring_num(void *dev, unsigned int index, unsigned int num) "dev: %p index: %u num: %u"
+-vhost_vdpa_set_vring_base(void *dev, unsigned int index, unsigned int num) "dev: %p index: %u num: %u"
++vhost_vdpa_set_dev_vring_base(void *dev, unsigned int index, unsigned int num, bool svq) "dev: %p index: %u num: %u svq: %d"
+ vhost_vdpa_get_vring_base(void *dev, unsigned int index, unsigned int num, bool svq) "dev: %p index: %u num: %u svq: %d"
+ vhost_vdpa_set_vring_kick(void *dev, unsigned int index, int fd) "dev: %p index: %u fd: %d"
+ vhost_vdpa_set_vring_call(void *dev, unsigned int index, int fd) "dev: %p index: %u fd: %d"
 -- 
 MST
 
