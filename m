@@ -4,80 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18261C54E66
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 132FBC54E5D
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:41:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkAeP-0006hT-1K; Tue, 12 Mar 2024 18:31:13 -0400
+	id 1rkAbO-0000Wi-Eo; Tue, 12 Mar 2024 18:28:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAcO-0002sX-3X
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:29:08 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAb3-000847-Ct
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAcB-0004cR-8G
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:56 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAb1-0004Rs-1v
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710282534;
+ s=mimecast20190719; t=1710282462;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fScw+GbeSb7Y/URvyjrtWLndZz8ykgk7NaxW0WCLA+8=;
- b=b6lJdB7RTbPoKIpwqvo9kC/d1BCPDE+Ve/0RPT4p/GBlsZ2nUcrrQKjQ4klod9i3WRNKGr
- ZYQiNRIpqjYUrTGY5FbvQzpNVv33+zDL+Be6w+qoewGU9krdoeKWHskxc6e6UMZwj0hAE9
- NnRD0lAMEshCDrgsvYrzcVB4MPxQTUQ=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=GTX598p9HArzTLuFOxLRmny//KCE0d5V+ZWq2MLzXgc=;
+ b=QxS+FDY/zP7uIwQub2R6AkEb4Erxop61k1p+mJzWeC5I4LRsUGb8uv4NsAytCikPCaSgqG
+ eqriYXGIhOxLyvKH6DFHY4m1M/JkaEgAXEUXqqY5f4Qjp6wREafjX8R1/1wU5pArKtmUhQ
+ n4q8xl/ivfLobCii4rToRYO/lKM8GYs=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-182-OqxLRk_fPCWq0SEIBN2z4A-1; Tue, 12 Mar 2024 18:28:53 -0400
-X-MC-Unique: OqxLRk_fPCWq0SEIBN2z4A-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a45190fd2fcso278651666b.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:28:53 -0700 (PDT)
+ us-mta-640-hw04cfAjPsmqkqFyvvBt6w-1; Tue, 12 Mar 2024 18:27:41 -0400
+X-MC-Unique: hw04cfAjPsmqkqFyvvBt6w-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-5684b85e0c9so296076a12.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:27:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710282532; x=1710887332;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fScw+GbeSb7Y/URvyjrtWLndZz8ykgk7NaxW0WCLA+8=;
- b=fucTjwYQuESfLjfJSe10oU5xYduBWtLp9uaC7mqEbeM5c0whVzn/ZMqOo4DVOyv7XH
- wVc3y+63Pn/2Q30JpRchgoUrfKo5E5+k4fc2H14LrZdevJxY6zTzc+FNK/uVEgWoTGgd
- 3i+STeMbpdic7bYBa4B45IaAjT8R/ExHTvS9pMAAqVy3L0za5wtihSw0TRDrZlOs4Ne3
- yyhgQD5+fKo/h+7+Ho7Thdzt7oZWjfSDWe6YMXuSAtAZjP2TDyklKZz981lNapLWmS+3
- WPRqd+pVFUMYCTObnm7IDDbJrxzIrwHWkLv0sQlQrSxgcCZ5mxmKs7RMJq883kzic60J
- XNQA==
-X-Gm-Message-State: AOJu0Ywbnc1X3XJ+4O4L/47mnj5cNFRrNuObBMkEnhWePSdFHk9oVl/R
- UAPcVFSZ+dcayT3Dq3wKiuuWd70XjWSwwTfGXwsykWa6MjXgDjd1iTAN2EhJmLhrEYM2NDJWUOD
- QMZOdAj8unCLv3ae0p3LT+n/glyvRIlpC65DlfVBQwH/BodHvKyrdaA+rY80XzTQlvyPZA0sJC0
- venhBrygPNOj9xg+HBnaz2aLoOZdsY53Qk
-X-Received: by 2002:a17:907:7d9e:b0:a46:30f4:6321 with SMTP id
- oz30-20020a1709077d9e00b00a4630f46321mr5098891ejc.58.1710282531877; 
- Tue, 12 Mar 2024 15:28:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEvzpcqEL0CG+1pobs8bJpTj9boPaW9IzYrExRw17aftRGIy7teSuOAfCNdc63I+EFuN7Mylw==
-X-Received: by 2002:a17:907:7d9e:b0:a46:30f4:6321 with SMTP id
- oz30-20020a1709077d9e00b00a4630f46321mr5098879ejc.58.1710282531463; 
- Tue, 12 Mar 2024 15:28:51 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710282459; x=1710887259;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GTX598p9HArzTLuFOxLRmny//KCE0d5V+ZWq2MLzXgc=;
+ b=WD+9/4v42lRgC5qIck+mLZhMhBxPeWU4NmlViPBzi36V4aAeedoz9naPsvFoMdCIvu
+ uJ6VPTNZWGV2N9wzF5+Dk/gtP5C/QuB+xo0qgoOj2jnp/pSuO+yD1a0J20JRxHzUK0WK
+ or8W+JLShiP4vUOTQy1E/R8BrASV2838HymJYZwqyNlp/HgsvC2YESMD7lUNwU1nP2Mu
+ /i/NZfvxml3ivkWZBtvGLreVived0gfauZJKwfs8+L05YXpKu2kZWoWF1y8lKNxtwRtz
+ hGTdUXYtrQzk/yhgABnOTWLfPFf0mnNocTK2TjfRER/qitt+2hltDOpt2PnKYAt/0wjk
+ yPPA==
+X-Gm-Message-State: AOJu0YyZVlD9OWyiK93sqlPkVzIgK8aJBlP6bAV7XaDu3sJ4PVKVq9bM
+ Q1uy1dffXpHku2s0bc2zJOIz9tUKii+WhILBSzDBE4cmO2s5gyX2V/BGdPEQNweNmrZYqVWibwo
+ qfm9dtNvbq+mGCsUA+i0ezrhu5Z13HRkDk7K/XZ1kFAxWC/JeruYCfzDwsfJPyJzlSd+w/Yj1m9
+ X7GTNSDmyzNHiLDQ3bPzB4/cS7XxZXejxW
+X-Received: by 2002:a50:cc89:0:b0:566:d083:df68 with SMTP id
+ q9-20020a50cc89000000b00566d083df68mr707136edi.21.1710282459418; 
+ Tue, 12 Mar 2024 15:27:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGa5S5keexVi6Dkun5xvRgm/rGhpB0nN6qsiA5dFpVWMgHBQyZQ3SAvwwblUKBHQFX95crq8Q==
+X-Received: by 2002:a50:cc89:0:b0:566:d083:df68 with SMTP id
+ q9-20020a50cc89000000b00566d083df68mr707095edi.21.1710282458418; 
+ Tue, 12 Mar 2024 15:27:38 -0700 (PDT)
 Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- l19-20020a170906231300b00a449d6184dasm4213363eja.6.2024.03.12.15.28.49
+ m26-20020aa7c2da000000b005682d4f12b4sm4339184edp.45.2024.03.12.15.27.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 15:28:51 -0700 (PDT)
-Date: Tue, 12 Mar 2024 18:28:48 -0400
+ Tue, 12 Mar 2024 15:27:38 -0700 (PDT)
+Date: Tue, 12 Mar 2024 18:27:35 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: [PULL 61/68] virtio-iommu: Add an option to define the input range
- width
-Message-ID: <01e7e4921ccebb81cebc69eb648040a57be4f5ff.1710282274.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Felix Wu <flwu@google.com>,
+ Nabih Estefan <nabihestefan@google.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 40/68] Implement base of SMBIOS type 9 descriptor.
+Message-ID: <735eee07d1f963635d3c3bf9f5e4bf1bc000870e.1710282274.git.mst@redhat.com>
 References: <cover.1710282274.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1710282274.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -106,61 +102,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Felix Wu <flwu@google.com>
 
-aw-bits is a new option that allows to set the bit width of
-the input address range. This value will be used as a default for
-the device config input_range.end. By default it is set to 64 bits
-which is the current value.
+Version 2.1+.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Message-Id: <20240307134445.92296-7-eric.auger@redhat.com>
+Signed-off-by: Felix Wu <flwu@google.com>
+Signed-off-by: Nabih Estefan <nabihestefan@google.com>
+Message-Id: <20240221170027.1027325-2-nabihestefan@google.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/virtio/virtio-iommu.h | 1 +
- hw/virtio/virtio-iommu.c         | 8 +++++++-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ include/hw/firmware/smbios.h | 13 +++++
+ hw/smbios/smbios.c           | 99 ++++++++++++++++++++++++++++++++++++
+ qemu-options.hx              |  3 ++
+ 3 files changed, 115 insertions(+)
 
-diff --git a/include/hw/virtio/virtio-iommu.h b/include/hw/virtio/virtio-iommu.h
-index 67ea5022af..83a52cc446 100644
---- a/include/hw/virtio/virtio-iommu.h
-+++ b/include/hw/virtio/virtio-iommu.h
-@@ -68,6 +68,7 @@ struct VirtIOIOMMU {
-     Notifier machine_done;
-     bool granule_frozen;
-     GranuleMode granule_mode;
-+    uint8_t aw_bits;
+diff --git a/include/hw/firmware/smbios.h b/include/hw/firmware/smbios.h
+index 6e514982d4..9ab114aea2 100644
+--- a/include/hw/firmware/smbios.h
++++ b/include/hw/firmware/smbios.h
+@@ -211,6 +211,19 @@ struct smbios_type_8 {
+     uint8_t port_type;
+ } QEMU_PACKED;
+ 
++/* SMBIOS type 9 - System Slots (v2.1+) */
++struct smbios_type_9 {
++    struct smbios_structure_header header;
++    uint8_t slot_designation;
++    uint8_t slot_type;
++    uint8_t slot_data_bus_width;
++    uint8_t current_usage;
++    uint8_t slot_length;
++    uint16_t slot_id;
++    uint8_t slot_characteristics1;
++    uint8_t slot_characteristics2;
++} QEMU_PACKED;
++
+ /* SMBIOS type 11 - OEM strings */
+ struct smbios_type_11 {
+     struct smbios_structure_header header;
+diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
+index a3c4e52ce9..38b3ea172c 100644
+--- a/hw/smbios/smbios.c
++++ b/hw/smbios/smbios.c
+@@ -121,6 +121,16 @@ struct type8_instance {
+ };
+ static QTAILQ_HEAD(, type8_instance) type8 = QTAILQ_HEAD_INITIALIZER(type8);
+ 
++/* type 9 instance for parsing */
++struct type9_instance {
++    const char *slot_designation;
++    uint8_t slot_type, slot_data_bus_width, current_usage, slot_length,
++            slot_characteristics1, slot_characteristics2;
++    uint16_t slot_id;
++    QTAILQ_ENTRY(type9_instance) next;
++};
++static QTAILQ_HEAD(, type9_instance) type9 = QTAILQ_HEAD_INITIALIZER(type9);
++
+ static struct {
+     size_t nvalues;
+     char **values;
+@@ -380,6 +390,54 @@ static const QemuOptDesc qemu_smbios_type8_opts[] = {
+     { /* end of list */ }
  };
  
- #endif
-diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-index aab97e1527..1326c6ec41 100644
---- a/hw/virtio/virtio-iommu.c
-+++ b/hw/virtio/virtio-iommu.c
-@@ -1314,7 +1314,12 @@ static void virtio_iommu_device_realize(DeviceState *dev, Error **errp)
-      * in vfio realize
-      */
-     s->config.bypass = s->boot_bypass;
--    s->config.input_range.end = UINT64_MAX;
-+    if (s->aw_bits < 32 || s->aw_bits > 64) {
-+        error_setg(errp, "aw-bits must be within [32,64]");
-+        return;
++static const QemuOptDesc qemu_smbios_type9_opts[] = {
++    {
++        .name = "type",
++        .type = QEMU_OPT_NUMBER,
++        .help = "SMBIOS element type",
++    },
++    {
++        .name = "slot_designation",
++        .type = QEMU_OPT_STRING,
++        .help = "string number for reference designation",
++    },
++    {
++        .name = "slot_type",
++        .type = QEMU_OPT_NUMBER,
++        .help = "connector type",
++    },
++    {
++        .name = "slot_data_bus_width",
++        .type = QEMU_OPT_NUMBER,
++        .help = "port type",
++    },
++    {
++        .name = "current_usage",
++        .type = QEMU_OPT_NUMBER,
++        .help = "current usage",
++    },
++    {
++        .name = "slot_length",
++        .type = QEMU_OPT_NUMBER,
++        .help = "system slot length",
++    },
++    {
++        .name = "slot_id",
++        .type = QEMU_OPT_NUMBER,
++        .help = "system slot id",
++    },
++    {
++        .name = "slot_characteristics1",
++        .type = QEMU_OPT_NUMBER,
++        .help = "slot characteristics1, see the spec",
++    },
++    {
++        .name = "slot_characteristics2",
++        .type = QEMU_OPT_NUMBER,
++        .help = "slot characteristics2, see the spec",
++    },
++};
++
+ static const QemuOptDesc qemu_smbios_type11_opts[] = {
+     {
+         .name = "type",
+@@ -609,6 +667,7 @@ bool smbios_skip_table(uint8_t type, bool required_table)
+ #define T2_BASE 0x200
+ #define T3_BASE 0x300
+ #define T4_BASE 0x400
++#define T9_BASE 0x900
+ #define T11_BASE 0xe00
+ 
+ #define T16_BASE 0x1000
+@@ -807,6 +866,28 @@ static void smbios_build_type_8_table(void)
+     }
+ }
+ 
++static void smbios_build_type_9_table(void)
++{
++    unsigned instance = 0;
++    struct type9_instance *t9;
++
++    QTAILQ_FOREACH(t9, &type9, next) {
++        SMBIOS_BUILD_TABLE_PRE(9, T9_BASE + instance, true);
++
++        SMBIOS_TABLE_SET_STR(9, slot_designation, t9->slot_designation);
++        t->slot_type = t9->slot_type;
++        t->slot_data_bus_width = t9->slot_data_bus_width;
++        t->current_usage = t9->current_usage;
++        t->slot_length = t9->slot_length;
++        t->slot_id = t9->slot_id;
++        t->slot_characteristics1 = t9->slot_characteristics1;
++        t->slot_characteristics2 = t9->slot_characteristics2;
++
++        SMBIOS_BUILD_TABLE_POST;
++        instance++;
 +    }
-+    s->config.input_range.end =
-+        s->aw_bits == 64 ? UINT64_MAX : BIT_ULL(s->aw_bits) - 1;
++}
++
+ static void smbios_build_type_11_table(void)
+ {
+     char count_str[128];
+@@ -1126,6 +1207,7 @@ void smbios_get_tables(MachineState *ms,
+         }
  
-     switch (s->granule_mode) {
-     case GRANULE_MODE_4K:
-@@ -1544,6 +1549,7 @@ static Property virtio_iommu_properties[] = {
-     DEFINE_PROP_BOOL("boot-bypass", VirtIOIOMMU, boot_bypass, true),
-     DEFINE_PROP_GRANULE_MODE("granule", VirtIOIOMMU, granule_mode,
-                              GRANULE_MODE_HOST),
-+    DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 64),
-     DEFINE_PROP_END_OF_LIST(),
- };
+         smbios_build_type_8_table();
++        smbios_build_type_9_table();
+         smbios_build_type_11_table();
+ 
+ #define MAX_DIMM_SZ (16 * GiB)
+@@ -1460,6 +1542,23 @@ void smbios_entry_add(QemuOpts *opts, Error **errp)
+             t8_i->port_type = qemu_opt_get_number(opts, "port_type", 0);
+             QTAILQ_INSERT_TAIL(&type8, t8_i, next);
+             return;
++        case 9: {
++            if (!qemu_opts_validate(opts, qemu_smbios_type9_opts, errp)) {
++                return;
++            }
++            struct type9_instance *t;
++            t = g_new0(struct type9_instance, 1);
++            save_opt(&t->slot_designation, opts, "slot_designation");
++            t->slot_type = qemu_opt_get_number(opts, "slot_type", 0);
++            t->slot_data_bus_width = qemu_opt_get_number(opts, "slot_data_bus_width", 0);
++            t->current_usage = qemu_opt_get_number(opts, "current_usage", 0);
++            t->slot_length = qemu_opt_get_number(opts, "slot_length", 0);
++            t->slot_id = qemu_opt_get_number(opts, "slot_id", 0);
++            t->slot_characteristics1 = qemu_opt_get_number(opts, "slot_characteristics1", 0);
++            t->slot_characteristics2 = qemu_opt_get_number(opts, "slot_characteristics2", 0);
++            QTAILQ_INSERT_TAIL(&type9, t, next);
++            return;
++        }
+         case 11:
+             if (!qemu_opts_validate(opts, qemu_smbios_type11_opts, errp)) {
+                 return;
+diff --git a/qemu-options.hx b/qemu-options.hx
+index ac4a30fa83..7da9235b08 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -2718,6 +2718,9 @@ SRST
+ ``-smbios type=4[,sock_pfx=str][,manufacturer=str][,version=str][,serial=str][,asset=str][,part=str][,processor-family=%d][,processor-id=%d]``
+     Specify SMBIOS type 4 fields
+ 
++``-smbios type=9[,slot_designation=str][,slot_type=%d][,slot_data_bus_width=%d][,current_usage=%d][,slot_length=%d][,slot_id=%d][,slot_characteristics1=%d][,slot_characteristics12=%d]``
++    Specify SMBIOS type 9 fields
++
+ ``-smbios type=11[,value=str][,path=filename]``
+     Specify SMBIOS type 11 fields
  
 -- 
 MST
