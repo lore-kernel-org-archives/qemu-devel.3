@@ -4,146 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2FE3C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 16:22:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEF2CC54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 16:29:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk4rv-0003Kf-Up; Tue, 12 Mar 2024 12:20:47 -0400
+	id 1rk4yb-0002aX-7I; Tue, 12 Mar 2024 12:27:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
- id 1rk4ru-0003KD-Gm
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 12:20:46 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
- id 1rk4rs-0000jZ-Va
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 12:20:46 -0400
-Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id
- 42CDUwRs012926; Tue, 12 Mar 2024 09:20:44 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- from:to:cc:subject:date:message-id:in-reply-to:references
- :content-transfer-encoding:content-type:mime-version; s=
- proofpoint20171006; bh=UcXjmmQKyF9Gv4JJ8NiRj8iz+yLNYuK0TF5QsuoPQ
- 6w=; b=XhCyfX0xJc6oehh3YGZLFNGb6gimi+0Warh730CC5ZvtyuAX23nFkQZxG
- M1K/PZ9zdDpm3TZct+FUy6AzOeHDWzPmq4lt4AM4yD3Yy95xRlYVDcyk1502PYWk
- 2wDyL3h2QAExbblQ7smABFRMvMwHCge0JGTzToSp+cQSybCAc6w20dTsWnNe9Smp
- oIf6vQQahdmh3Bb3wQlZGMpcHX3CFPeN2f7PZOHFTDmoM5ol3/HrBVeYDfl9vnId
- vGFUxwV/F+Rp1K4qUmEbGhlSvQfJCtqT52uyoYlX5jRJKRCtExrkW5VIkjhIci0/
- 8mIJbwwBFHYn2lW3G1RO55LMQFZvw==
-Received: from nam12-dm6-obe.outbound.protection.outlook.com
- (mail-dm6nam12lp2168.outbound.protection.outlook.com [104.47.59.168])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 3wrr63pa3e-2
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 Mar 2024 09:20:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=aIG+CtPenaJC9b9HWTTR1hcE6hRNnFotTeyXA5csLLJTVVp6uyGxfIrRR3kTHwlKFZ7co9K0HsudhRLfWZItMzcMlswzMfXmhYfinIg5fkTuk0SJ8d5+PhMtAiOz2fAwaWS6PWq8sVrEXUamIQfN/utnF4xiV8WtI5Ip4v3Gp4NxiJqNpmgg9dK/toMIj7sbGwp3mBV0d18vDGz4feHNQPnQac/eKrTdd5Kesv+pw+yDl7HYnTUZyTJw6TeezNYSEHZaz2hm30TA1dO4BXYV3rjQ2Jj963HLyOxSSacqwQzLHBprX+o4JjQ394M97C5XTG+yBqZHs5buNcwdQwoNlw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UcXjmmQKyF9Gv4JJ8NiRj8iz+yLNYuK0TF5QsuoPQ6w=;
- b=N39vSA58ZKSRMbcvAhuLDNAGW7+fOEi5u3YG0Y6SQQ4b4PM4BgB90m28hlhgYZqvMgtVCX98ilQOMDLuqLykdoI7MaqHuLg5yH7p+nA4ekBbxtkN3kIyqfkEYnGQRDx0Jm/Q0tgUdYxufX+HSxMRHdc+LKAYK3q2PdcootFucUa9MxerTOKkP8fyvSCoIbuQs5yRI+J6fWbZUcE/vRFxt+lY3BgxZqfv0aw2IXWlebEol1g1HQL4FO8upyW64T3LK3I2tK/b1qbyWcr/MFczO0ZnOoVnMvXos0yHZLLLvA03TvSn7HiwEGLhzo/U5lNu7JkW7oLDZzet0Kp5mWp1qw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UcXjmmQKyF9Gv4JJ8NiRj8iz+yLNYuK0TF5QsuoPQ6w=;
- b=Qsy7UHPorXjjfELfvvG088fHvbgXj2SeKgAtqIMPaA6szypCPmj5bT/MRWaYy1kjo27bEaTFZJvuJGL5dlVhSOLDRRrNaf/8uaXNxkbjyJi0ehnrCG4glOE6cQaB2mIfcMOK+QBPr3VEZKdpHk42Imqe9oueLUDpMUuAu/Ei+GAvwiUxsNjf3vEqvCRYPuiilCAIlvhdYPQVwv4RseFPMU8lSPAgl2cT4007F2qYHmIMUhDt0+iw3kag7KW/ttPiGS1GDwZM9d6g6MjorXt3vF9OUkS/fMR3crCmytU0yhP7WOt5JO6zgm+pyprf0p346hFqnMVHn4WwHhoMcViYJg==
-Received: from SJ2PR02MB9955.namprd02.prod.outlook.com (2603:10b6:a03:55f::16)
- by CO6PR02MB7570.namprd02.prod.outlook.com (2603:10b6:303:a7::23)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.35; Tue, 12 Mar
- 2024 16:20:42 +0000
-Received: from SJ2PR02MB9955.namprd02.prod.outlook.com
- ([fe80::225c:2edd:87e:7cf0]) by SJ2PR02MB9955.namprd02.prod.outlook.com
- ([fe80::225c:2edd:87e:7cf0%7]) with mapi id 15.20.7362.035; Tue, 12 Mar 2024
- 16:20:42 +0000
-From: Het Gala <het.gala@nutanix.com>
-To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, thuth@redhat.com, lvivier@redhat.com,
- pbonzini@redhat.com, peterx@redhat.com, farosas@suse.de,
- Het Gala <het.gala@nutanix.com>
-Subject: [PATCH v6 7/8] Add multifd_tcp_plain test using list of channels
- instead of uri
-Date: Tue, 12 Mar 2024 16:20:24 +0000
-Message-Id: <20240312162025.44212-8-het.gala@nutanix.com>
-X-Mailer: git-send-email 2.22.3
-In-Reply-To: <20240312162025.44212-1-het.gala@nutanix.com>
-References: <20240312162025.44212-1-het.gala@nutanix.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: PH7PR10CA0011.namprd10.prod.outlook.com
- (2603:10b6:510:23d::12) To SJ2PR02MB9955.namprd02.prod.outlook.com
- (2603:10b6:a03:55f::16)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1rk4yT-0002Z5-Ik
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 12:27:34 -0400
+Received: from mail-io1-xd32.google.com ([2607:f8b0:4864:20::d32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1rk4yR-0001qY-BC
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 12:27:33 -0400
+Received: by mail-io1-xd32.google.com with SMTP id
+ ca18e2360f4ac-7c8ae30bf8fso47403939f.3
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 09:27:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1710260848; x=1710865648; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=q55MnN0LvCb2kgiAr/MJm3d1SpDTvR8LT65JmJCoZ8s=;
+ b=K5xskOm+/OADXEETKCvim+/2qC3tYqbyxq/szx9/sapIsOrP4f2GICzhPvZKDjXJp7
+ bSbju5CtGYkjyx7b10sus7ozrtVzSHhsiehMfwa6xtTWiHih/p0pYJIX/dTdi/m8btFa
+ 8O8WSGurbtYX98mUTUL+RvmMXqAku4Nf1cNpO7Aqd2jSddc7vNI9rBJtDPDnuIMCGsKE
+ c5TpERPxynnAPHpNLnBrkI+VSMUg8cl32tNw1FW7ZOezuDD397BdSfrEfPmZsvX9rN2A
+ i0FeqRKo5uyyKlneszMSFIo7w56j4mQMmruJmlo5LiCtRBVrMWNQu5YCCNH6v955GPcJ
+ 2bmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710260848; x=1710865648;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=q55MnN0LvCb2kgiAr/MJm3d1SpDTvR8LT65JmJCoZ8s=;
+ b=lsT7OcPT11Nyr3Hl9yjD2hXO4VQwzu6qbIJZ2T7xjav1UR2szWp1XRs5q3xL8Ak8er
+ d/D3uoLJImNX4NOSkCgg24i8eu79Sij94dUh7sCk3AhEcgxe4tksQ+Eqa4NcifMQ07qo
+ vUjbl1kuNtKFhhqZ+uym9NJ9U/s8C12Dcy6B/sTjqSduND4t0BRq5XUdNyDVVRaxbKAz
+ wQRPqJYTyRwh+0Z/x6evOscxgMkgIJuQN1rnZznB8y3TT4tnkurMqU7MuM9e8t6h8OYs
+ 6quYWl3nzFiGlf/WHDdvM8QhCVADpnTydM491eBq2BDAK3DnRc6l+UYPFydeQJ/N3bT5
+ 2rPA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUMz1JSZabAI7HUpXOZ9tUVlYN/wd4yKuB2op7t60u4+i7RH2kcJQLno7l+VedjvpNWWRKD8LwtJFjJfCL2Y5XC+4X+0iI=
+X-Gm-Message-State: AOJu0Yyg0skBSCXc02oyMrpmh5GRJFhGHTD0h84K7Sb9dLQT5henYXMv
+ QQZQ6ijVkt0gkXmlNXM+F6QOZJleVDG5YHsdsvHaaOvDUJ+VNtNh
+X-Google-Smtp-Source: AGHT+IFg1zgxj0wdk8rTzy0XoCXK6YPLGLeQvgI8jQb6fEEi9suzWVyC+RtajJZm45LxWxsl8UQ1/Q==
+X-Received: by 2002:a5d:8b09:0:b0:7c8:c659:b951 with SMTP id
+ k9-20020a5d8b09000000b007c8c659b951mr4596389ion.7.1710260847974; 
+ Tue, 12 Mar 2024 09:27:27 -0700 (PDT)
+Received: from debian ([50.205.20.42]) by smtp.gmail.com with ESMTPSA id
+ h14-20020a02cd2e000000b00474d68c24e6sm2343499jaq.120.2024.03.12.09.27.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 Mar 2024 09:27:27 -0700 (PDT)
+From: fan <nifan.cxl@gmail.com>
+X-Google-Original-From: fan <fan@debian>
+Date: Tue, 12 Mar 2024 09:27:05 -0700
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: fan <nifan.cxl@gmail.com>, qemu-devel@nongnu.org,
+ linux-cxl@vger.kernel.org, gregory.price@memverge.com,
+ ira.weiny@intel.com, dan.j.williams@intel.com,
+ a.manzanares@samsung.com, dave@stgolabs.net,
+ nmtadam.samsung@gmail.com, jim.harris@samsung.com,
+ Jorgen.Hansen@wdc.com, wj28.lee@gmail.com, Fan Ni <fan.ni@samsung.com>
+Subject: Re: [PATCH v5 09/13] hw/cxl/events: Add qmp interfaces to
+ add/release dynamic capacity extents
+Message-ID: <ZfCCWboh4w3NNVe4@debian>
+References: <20240304194331.1586191-1-nifan.cxl@gmail.com>
+ <20240304194331.1586191-10-nifan.cxl@gmail.com>
+ <20240306174811.000029fd@Huawei.com> <Zej5EuQXytgeWGfj@debian>
+ <20240307124555.00001408@Huawei.com> <ZevnKbzBOy_9sjeg@debian>
+ <20240312123723.0000420d@Huawei.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR02MB9955:EE_|CO6PR02MB7570:EE_
-X-MS-Office365-Filtering-Correlation-Id: f990b275-2fcc-47f0-6c35-08dc42b05ce6
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: amn30WcNBx4EL7qs7nDq/C6hiVVE7UBhK+ifayp1+FudPkxmZn4i8unpxgbcM6oXZuFzy/jb63n8Z0+XsfGqoOsPM29I/B4jt0LH8iXQ/ER3jKHbv05LssCL+KHOV7lQH9NNpxRR0k5UPv/dHNcC/AdfQj9f3islIoKpqUvJnzImtCKm3FraGndcDOh6hp4M87XEsP1gyOi9SpYOY5W3sdJxjzPjgJ3UYermntJe561RT9MnpJH9XVi7fsC9LiZh4A/06WaHG8f/k8W3eTF7aZ0iBudktaqq84qJG5OaZSe7PMCc3j6PSQ/Aijndsw/izKJMrZrBCTBFH3qnTuBNhsrqx8VIDapZLFKNHkwa84L2aiFGhMx9CBa6k3Y30HzXDyNNK/eRTAHacixpQUamHigq5APAM2Qsp21Yc7gYHuxldEcecbe+7/68fK8tfdoE/Z58UYiQA0uvNc4gSJnk0Sj6cMvyCYCu/58GMA5FJAi58U2mhVXC91mKlYx90BDhnBzb+Wq9hU8/7u3pEy6LrS3WDNow3iCJmDTGBT/egUJ+CGaJNsjGTNfZ0e/d4uqGjQIQXy39vmAHeXRhXK4MvzuqtbePqrKfgp/zCuIUBJXwEKANLGzDzZCwsFZ6EThoAp1FIWcOeWl1bMbkMZrDfdXdVU1jLBKRY6tnqlkItfDhNnwVogPuoyPJ3Jx9/u9q2Vo7Sh7FBtKif1we5UZGfH8VEYJDWAxdwzoI2dWIjVY=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ2PR02MB9955.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(1800799015)(52116005)(376005)(38350700005); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?i8knzySP5V7PeVuEZ1GyQdIDu+C0Bq9JCWfAtVP1O7jIl7O/tfAIDgz7fech?=
- =?us-ascii?Q?UmhQQHkzehXlP/EcXa9FYr579wQPI9R5i+8vW5BzyfMNPDOLiNdQLgrH3W+2?=
- =?us-ascii?Q?mAWsGwDMH7B90tX7fPJTGEjD6gzMsgk5qQwLZoo+jJg/hlhBulxyqE1xUlYP?=
- =?us-ascii?Q?opIspICYPMMcrYWptf0AWm11qKBYI48bc8B2WI/rsCKwcoC0NPft4vHsrhHo?=
- =?us-ascii?Q?O0eFv2SziSjE0yBrm61ldsMac7Txe2qj3hq++Fj6AhDvwdsK70wNwWPW+Yl7?=
- =?us-ascii?Q?8atgpc/NUb/uIqUV5EcSS5I96fY3Ee1J9ibvwIxgynEBmuujSVSqrSz0cayV?=
- =?us-ascii?Q?tsgnUx1ieyGOTx9YfPkzny/lPeG3QDBvJKxtWzxmB7y9jWwvdZuPknAwUpX5?=
- =?us-ascii?Q?vTXdF56mFN9DYrIhh4l9veErN554deCrHi3nME3gMyM+lqq/S7NqifvFRZ5U?=
- =?us-ascii?Q?TueD7hnjQ5gdER2IYpUy96v+tBzWA2Ul4Ta76Y2/j88St7+XlD6jUJFJcllA?=
- =?us-ascii?Q?ZPgDo+O3LqhUfO3IoXQ6c3k0nQ0sWAN6SFuKKV2vu89TpQz2DKYaGn+zQ2oR?=
- =?us-ascii?Q?Bspg+ZXPL5IdrhSVFa2klnDgT3OdxIupCZezLupIFFgIGO9PpVghzFP7igtj?=
- =?us-ascii?Q?rbRN/otROuEd1CvArJIfhfz8QkBPLhXTnNTdw17V1+FNq7zrXX/WeCpv8Wu9?=
- =?us-ascii?Q?/U+Bq6DDTnfI19neEL4RmbMdRSRqi6PmstVpKHk2FosYMcGg8w3zWkYNKO7V?=
- =?us-ascii?Q?pE4IoYNiGmMm8XBC8/DCxOHqFZ8zni/N4oP2LC/KYV+NOz/bd633KXYA4m7v?=
- =?us-ascii?Q?gS6t5ScwFpmvE2WDik1rQX0wCwdERo22TDxx8kNYVxl96p4naRlEdN9WAG1F?=
- =?us-ascii?Q?T7+ucsXTXJoTizSIi83dqPkkmPxn9zhSU18fkHfQuG1dmNfqI/u+xmLMd0pO?=
- =?us-ascii?Q?us0SRbjYoeaS57LCvAq0Lo2xUPqnei2RktSnhNWjokJr9a47wj+Hh2eHc0bI?=
- =?us-ascii?Q?KUYWhpKJ+fwhSHPgVeKdu8VK7VUwvzoG9NgJgJ4TmnqnuamZgSa3n5ZMf9Oi?=
- =?us-ascii?Q?s19xJp6Xa926wj2xuX8mpVuq0u3IrjDNzS7Mp8wVrt5Hx3Uj2S6s9Cezjh7W?=
- =?us-ascii?Q?aUfMCy97WRhvmJIPOtQIt6Z5OtfwT5oOlwxfizoNoI5v8EXMuEh3gDxl6mXZ?=
- =?us-ascii?Q?vhD4lilk6bEWKK6BG2PktuQFWFf6iLHbVLk6lmM/wQlDY0Amz4pcD8Mc49wB?=
- =?us-ascii?Q?T2erT8pGowFEa5TBBuSAp0TVajx0UgtFcZunu+TZ12rZEUVEo+XOBocTDgxv?=
- =?us-ascii?Q?J1jxc6qTK4k/nILyQCHScCum7hJ89Zgn75ozdBkcK7O765yoeXawNrvFck+l?=
- =?us-ascii?Q?KdRP2Cn3yhX67gfRB/wfQYke7IxDhSJU0zCg9C8N9IL8SQJ2NBT3mvrEJs9d?=
- =?us-ascii?Q?QTHAYSMFPttvUWcgT42a0GVdXFzbV0AHZQafNhd5Q6ow0cJu6uHLV86wdDEz?=
- =?us-ascii?Q?IWvyVrpDNBHTCHjQ2W18Ri0hgTGfZGd84DMpk3aVyoTuR07TfUy0UegqqClc?=
- =?us-ascii?Q?SfyT8iG2E8aWh7dk417tDREr62TfniCiUEnaU+GRpvqA1eKlnwvMghPI/1f4?=
- =?us-ascii?Q?qg=3D=3D?=
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f990b275-2fcc-47f0-6c35-08dc42b05ce6
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR02MB9955.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Mar 2024 16:20:42.1750 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Gk8NeSx8St4I85NV0gZHqNCqTc9WQkT8A9qw8DQPDajZyGYNNr9PulC3mZM7SZ1+hGERDgkCRYhQZDSYArTpQA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO6PR02MB7570
-X-Proofpoint-GUID: 7t7UQKIb_nUlwMuuCBj-gw1wxfcD947L
-X-Proofpoint-ORIG-GUID: 7t7UQKIb_nUlwMuuCBj-gw1wxfcD947L
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-12_10,2024-03-12_01,2023-05-22_02
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12; envelope-from=het.gala@nutanix.com;
- helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240312123723.0000420d@Huawei.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d32;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-io1-xd32.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -160,79 +104,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a positive test to check multifd live migration but this time
-using list of channels (restricted to 1) as the starting point
-instead of simple uri string.
+On Tue, Mar 12, 2024 at 12:37:23PM +0000, Jonathan Cameron wrote:
+> On Fri, 8 Mar 2024 20:35:53 -0800
+> fan <nifan.cxl@gmail.com> wrote:
+> 
+> > On Thu, Mar 07, 2024 at 12:45:55PM +0000, Jonathan Cameron wrote:
+> > > ...
+> > >   
+> > > > > > +    list = records;
+> > > > > > +    extents = g_new0(CXLDCExtentRaw, num_extents);
+> > > > > > +    while (list) {
+> > > > > > +        CXLDCExtent *ent;
+> > > > > > +        bool skip_extent = false;
+> > > > > > +
+> > > > > > +        offset = list->value->offset;
+> > > > > > +        len = list->value->len;
+> > > > > > +
+> > > > > > +        extents[i].start_dpa = offset + dcd->dc.regions[rid].base;
+> > > > > > +        extents[i].len = len;
+> > > > > > +        memset(extents[i].tag, 0, 0x10);
+> > > > > > +        extents[i].shared_seq = 0;
+> > > > > > +
+> > > > > > +        if (type == DC_EVENT_RELEASE_CAPACITY ||
+> > > > > > +            type == DC_EVENT_FORCED_RELEASE_CAPACITY) {
+> > > > > > +            /*
+> > > > > > +             *  if the extent is still pending to be added to the host,    
+> > > > > 
+> > > > > Odd spacing.
+> > > > >     
+> > > > > > +             * remove it from the pending extent list, so later when the add
+> > > > > > +             * response for the extent arrives, the device can reject the
+> > > > > > +             * extent as it is not in the pending list.
+> > > > > > +             */
+> > > > > > +            ent = cxl_dc_extent_exists(&dcd->dc.extents_pending_to_add,
+> > > > > > +                        &extents[i]);
+> > > > > > +            if (ent) {
+> > > > > > +                QTAILQ_REMOVE(&dcd->dc.extents_pending_to_add, ent, node);
+> > > > > > +                g_free(ent);
+> > > > > > +                skip_extent = true;
+> > > > > > +            } else if (!cxl_dc_extent_exists(&dcd->dc.extents, &extents[i])) {
+> > > > > > +                /* If the exact extent is not in the accepted list, skip */
+> > > > > > +                skip_extent = true;
+> > > > > > +            }    
+> > > > > I think we need to reject case of some extents skipped and others not.
+> > > > > That's not supported yet so we need to complain if we get it at least. Maybe we need
+> > > > > to do two passes so we know this has happened early (or perhaps this is a later
+> > > > > patch in which case a todo here would help).    
+> > > > 
+> > > > Skip here does not mean the extent is invalid, it just means the extent
+> > > > is still pending to add, so remove them from pending list would be
+> > > > enough to reject the extent, no need to release further. That is based
+> > > > on your feedback on v4.  
+> > > 
+> > > Ah. I'd missunderstood.  
+> > 
+> > Hi Jonathan,
+> > 
+> > I think we should not allow to release extents that are still pending to
+> > add. 
+> > If we allow it, there is a case that will not work.
+> > Let's see the following case (time order):
+> > 1. Send request to add extent A to host; (A --> pending list)
+> > 2. Send request to release A from the host; (Delete A from pending list,
+> > hoping the following add response for A will fail as there is not a matched
+> > extent in the pending list).
+> 
+> Definitely not allow the host to release something it hasn't accepted.
+> Should allow QMP to release such entrees though (and same for fmapi when
+> we get there). Any such requested from host should be treated as whatever
+> it says to do if you release an extent that you don't have.
 
-Signed-off-by: Het Gala <het.gala@nutanix.com>
-Suggested-by: Fabiano Rosas <farosas@suse.de>
----
- tests/qtest/migration-test.c | 30 +++++++++++++++++++++++++++---
- 1 file changed, 27 insertions(+), 3 deletions(-)
+Not sure how it works here. If we allow QMP to release such extents and
+clear the pending list entrees accordingly, later if the host response with
+empty extent list, how can the device figure out which request the response is
+for. The spec assumes the response comes in order, so the head of the
+pending list should be removed from the pending list, however, if QMP
+process already removed it.
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index bf27766eb0..392d5d0b62 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -655,6 +655,13 @@ typedef struct {
-      */
-     const char *connect_uri;
- 
-+    /*
-+     * Optional: JSON-formatted list of src QEMU URIs. If a port is
-+     * defined as '0' in any QDict key a value of '0' will be
-+     * automatically converted to the correct destination port.
-+     */
-+    const char *connect_channels;
-+
-     /* Optional: callback to run at start to set migration parameters */
-     TestMigrateStartHook start_hook;
-     /* Optional: callback to run at finish to cleanup */
-@@ -2740,7 +2747,7 @@ test_migrate_precopy_tcp_multifd_zstd_start(QTestState *from,
- }
- #endif /* CONFIG_ZSTD */
- 
--static void test_multifd_tcp_none(void)
-+static void test_multifd_tcp_uri_none(void)
- {
-     MigrateCommon args = {
-         .listen_uri = "defer",
-@@ -2755,6 +2762,21 @@ static void test_multifd_tcp_none(void)
-     test_precopy_common(&args);
- }
- 
-+static void test_multifd_tcp_channels_none(void)
-+{
-+    MigrateCommon args = {
-+        .listen_uri = "defer",
-+        .start_hook = test_migrate_precopy_tcp_multifd_start,
-+        .live = true,
-+        .connect_channels = "[ { 'channel-type': 'main',"
-+                            "    'addr': { 'transport': 'socket',"
-+                            "              'type': 'inet',"
-+                            "              'host': '127.0.0.1',"
-+                            "              'port': '0' } } ]",
-+    };
-+    test_precopy_common(&args);
-+}
-+
- static void test_multifd_tcp_zlib(void)
- {
-     MigrateCommon args = {
-@@ -3664,8 +3686,10 @@ int main(int argc, char **argv)
-                                test_migrate_dirty_limit);
-         }
-     }
--    migration_test_add("/migration/multifd/tcp/plain/none",
--                       test_multifd_tcp_none);
-+    migration_test_add("/migration/multifd/tcp/uri/plain/none",
-+                       test_multifd_tcp_uri_none);
-+    migration_test_add("/migration/multifd/tcp/channels/plain/none",
-+                       test_multifd_tcp_channels_none);
-     migration_test_add("/migration/multifd/tcp/plain/cancel",
-                        test_multifd_tcp_cancel);
-     migration_test_add("/migration/multifd/tcp/plain/zlib",
--- 
-2.22.3
+The key problem here is for empty updated extent list, we do not have a way to
+figure out the corresponding request as there is no DPA info to look
+into.
 
+> 
+> > 3. Host send response to the device for the add request, however, for
+> > some reason, it does not accept any of it, so updated list is empty,
+> > spec allows it. Based on the spec, we need to drop the extent at the
+> > head of the event log. Now we have problem. Since extent A is already
+> > dropped from the list, we either cannot drop as the list is empty, which
+> > is not the worst. If we have more extents in the list, we may drop the
+> > one following A, which is for another request. If this happens, all the
+> > following extents will be acked incorrectly as the order has been
+> > shifted.
+> >  
+> > Does the above reasoning make sense to you?
+> Absolutely.  I got confused here on who was doing release.
+> Host definitely can't release stuff it hasn't successfully accepted.
+> 
+> Jonathan
+> 
+
+The assumption here is FM first initiates the request to add some
+extents to the hosts, and later FM initiates to release the extents
+while the extents has not been accepted by the host yet. 
+
+Fan
+> > 
+> > Fan
+> > 
+> > >   
+> > > > 
+> > > > The loop here is only to collect the extents to sent to the event log. 
+> > > > But as you said, we need one pass before updating pending list.
+> > > > Actually if we do not allow the above case where extents to release is
+> > > > still in the pending to add list, we can just return here with error, no
+> > > > extra dry run needed. 
+> > > > 
+> > > > What do you think?  
+> > > 
+> > > I think we need a way to back out extents from the pending to add list
+> > > so we can create the race where they are offered to the OS and it takes
+> > > forever to accept and by the time it does we've removed them.
+> > >   
+> > > >   
+> > > > >     
+> > > > > > +        
+> > > > > > +
+> > > > > > +        /* No duplicate or overlapped extents are allowed */
+> > > > > > +        if (test_any_bits_set(blk_bitmap, offset / block_size,
+> > > > > > +                              len / block_size)) {
+> > > > > > +            error_setg(errp, "duplicate or overlapped extents are detected");
+> > > > > > +            return;
+> > > > > > +        }
+> > > > > > +        bitmap_set(blk_bitmap, offset / block_size, len / block_size);
+> > > > > > +
+> > > > > > +        list = list->next;
+> > > > > > +        if (!skip_extent) {
+> > > > > > +            i++;    
+> > > > > Problem is if we skip one in the middle the records will be wrong below.    
+> > > > 
+> > > > Why? Only extents passed the check will be stored in variable extents and
+> > > > processed further and i be updated. 
+> > > > For skipped ones, since i is not updated, they will be
+> > > > overwritten by following valid ones.  
+> > > Ah. I'd missed the fact you store into the extent without a check on validity
+> > > but only move the index on if they were valid. Then rely on not passing a trailing
+> > > entry at the end.
+> > > If would be more readable I think if local variables were used for the parameters
+> > > until we've decided not to skip and the this ended with
+> > > 
+> > >         if (!skip_extent) {
+> > >             extents[i] = (DCXLDCExtentRaw) {
+> > >                 .start_dpa = ...
+> > > 	        ...
+> > >             };
+> > >             i++
+> > >         }
+> > > We have local len already so probably just need
+> > > uint64_t start_dpa = offset + dcd->dc.regions[rid].base;
+> > > 
+> > > Also maybe skip_extent_evlog or something like that to explain we are only
+> > > skipping that part. 
+> > > Helps people like me who read it completely wrong!
+> > > 
+> > > Jonathan
+> > > 
+> > >  
+> > >   
+> 
 
