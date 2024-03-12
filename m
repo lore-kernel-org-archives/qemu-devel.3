@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B209C54E68
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:39:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8131DC54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:39:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkAeK-0006ad-Bm; Tue, 12 Mar 2024 18:31:08 -0400
+	id 1rkAaf-0006Sr-66; Tue, 12 Mar 2024 18:27:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAcV-0002ui-Nd
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:29:18 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAaU-0005FT-01
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAcI-0004d5-Gj
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:29:03 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAaP-0004LL-SF
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710282541;
+ s=mimecast20190719; t=1710282425;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=MKkSDazDM8plKzOrprMyap3/frHtZRjZMB1Z0hTsQYk=;
- b=IOKkATASqWqUwtw6agW+2i8If2heOjtkf/fKTi0CP/QL5chScubz+YDkbQ9Ht5u/LDZRVe
- BeTyB/aQQ+Y6E8iOk+p1hNII6wYpXE/fqx/Wp5hPUCd7CfXO5swXEkuYkaWXHCwgVbxX6Y
- KZat2U69udO3oQ7ljaXFPENblm2uJRQ=
-Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
- [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Fp9mS7QfM+i2wlqzdpjfyEOvEAobNn6YKxIWUVqj07Y=;
+ b=f2nDNgNCLqkpLr1JCfwC/b3KEjUIu32fdTYNzLc6A1+pjylvinp6VmOckFOgAnFj3uopI1
+ r2BuHlttTEiFZ3WjKAz3YrFgQHwEFL622tF80fXyE2TX2xUlSeJECcEUMstvu9CgmLuWk6
+ DgZ9IgXCUQoXsbNOw7/BX/tDWtPj7Yk=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-416-18JZP0X8N4eGzur0fMTOHw-1; Tue, 12 Mar 2024 18:29:00 -0400
-X-MC-Unique: 18JZP0X8N4eGzur0fMTOHw-1
-Received: by mail-lj1-f197.google.com with SMTP id
- 38308e7fff4ca-2d45c84435eso10091791fa.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:29:00 -0700 (PDT)
+ us-mta-684-UX_qX2bnNyqpzBH8LA0_gA-1; Tue, 12 Mar 2024 18:27:04 -0400
+X-MC-Unique: UX_qX2bnNyqpzBH8LA0_gA-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a4488afb812so23111366b.3
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:27:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710282538; x=1710887338;
+ d=1e100.net; s=20230601; t=1710282423; x=1710887223;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MKkSDazDM8plKzOrprMyap3/frHtZRjZMB1Z0hTsQYk=;
- b=XpLq1rk0CCuAWWTtBSKBrmebnpMkvbxmEFQDsk8j7T29pmIg2p+6AdQJBc5rpAYyYv
- jnVxUlhElSJ0xSKD6VGD2oSszGAIN+4MlkamTAvEIpgdSYwCh5ejG7HQpYZlQvExuMPE
- 0L+dHI1SogGENgtUEIjTav6pf4arB8kBjijgiShG4x9WmglJptRUpiJiEh5EO6ugmg6R
- BTdNVOPHWMteBSfK33xV7JxnytUJFty0tr3xr8Ty7b6JsIdwRa3kGlW5bV7HsG3gsSyv
- Rt9jriRR0lN22SEuKkGsoSL1rsY0oDoUQDBYlZ4H6p0af97cMxMzZRDcaJh9xNXDveq9
- tRJA==
-X-Gm-Message-State: AOJu0YyRR8kyJP7qxpMxsdlqi22l7X37DL5rDM/j5GpgPk+soVghkgiW
- JdCh0nJp8bVDVW0Eu0DuZJUg9wzwrySEhMWwCuAP+Q4YYVy6iGsy259bJmrf6wjW88W3lWIkf3i
- keZjoWpmXJgbh9NG6HCbIiT1xCJsAE5DAI/eOcgjsNp6eaDgkXIPW61mBQ8RE18/z/1nnGd0gr4
- UfOAR+NVotDKMovemllFziggAZciajZjQK
-X-Received: by 2002:a2e:720b:0:b0:2d4:49d1:38e with SMTP id
- n11-20020a2e720b000000b002d449d1038emr3547950ljc.28.1710282538507; 
- Tue, 12 Mar 2024 15:28:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGTHwlpwOhQH8XRXj1WIhU77gbrM669UAtKbXGhtG3RKMWI4lBcPnVPheexgEOdZeeNAnMX2w==
-X-Received: by 2002:a2e:720b:0:b0:2d4:49d1:38e with SMTP id
- n11-20020a2e720b000000b002d449d1038emr3547935ljc.28.1710282537949; 
- Tue, 12 Mar 2024 15:28:57 -0700 (PDT)
+ bh=Fp9mS7QfM+i2wlqzdpjfyEOvEAobNn6YKxIWUVqj07Y=;
+ b=Kaj4R5oW0XZxVWsbnWKTdj6WJqcrvJLJrOEA/eeYkwmTf8R3vFJvVjEHT+hOyKBzLZ
+ zVczOMRwTZiJDT1AMblJVzseniHo6V/brNEP6XjxumHN5zv2QHH8WOcGUH52zh/qW1UC
+ Xs18PPr2lixW28zOK9Cmv3dOrsCWukF91gCa3jHaLH38SoO0qG/qbuDbSgImfIdYyXCq
+ +oNP5sSqfrHjjMBuxtWyq9l0jgS+g1HECxsJCFhpqVn2Q5+2V39kwEXX9WOVSVp/d30m
+ pXtqPZOfcmfZkr9im2kB1Y5Ey29BmKUu/X0dxPVZtALVzF3NOIHy6tNWZ389kwvcSltd
+ +sAg==
+X-Gm-Message-State: AOJu0YxQhX1sNFKOVB2Q+c0r8t7CmdjAyEi1Daza+gaVEM7FX2XAAq6V
+ 3OYpb8vLhDwfyMwKrpCcY5vqRPZmHm/oQPm8leHEIGCepCNMd8PAqNXUL0NLDGwJZWr1yFDbjzT
+ G7bSjOmB02pV4JHe3JAoGZyriDb4d3jtPAr2UpP7ZqYg04Tx/FKRTCzpKrOiJ+ty3YE0zmHrF+G
+ /Uj+KEpn+uasMO30EVlgOKDT6b/IQhjBmt
+X-Received: by 2002:a17:906:6b97:b0:a46:5277:79b0 with SMTP id
+ l23-20020a1709066b9700b00a46527779b0mr358970ejr.21.1710282422667; 
+ Tue, 12 Mar 2024 15:27:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEMxoGdSAd7PH+l40CgdNm6iIezqlbzyxoxMV/n5yoxszf5Y1pTfDtct88ikFByTxy+KBcZ1Q==
+X-Received: by 2002:a17:906:6b97:b0:a46:5277:79b0 with SMTP id
+ l23-20020a1709066b9700b00a46527779b0mr358954ejr.21.1710282422088; 
+ Tue, 12 Mar 2024 15:27:02 -0700 (PDT)
 Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- d34-20020a056402402200b005687e7b0cd2sm388946eda.40.2024.03.12.15.28.56
+ o23-20020a1709062e9700b00a44cf710cc3sm4213832eji.182.2024.03.12.15.27.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 15:28:57 -0700 (PDT)
-Date: Tue, 12 Mar 2024 18:28:55 -0400
+ Tue, 12 Mar 2024 15:27:01 -0700 (PDT)
+Date: Tue, 12 Mar 2024 18:26:59 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <Zhenzhong.duan@intel.com>, qemu-arm@nongnu.org
-Subject: [PULL 63/68] hw/arm/virt: Set virtio-iommu aw-bits default value to 48
-Message-ID: <62d776002c990d5b6fd4a2b6809ab2956c6e1ff0.1710282274.git.mst@redhat.com>
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Fan Ni <fan.ni@samsung.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 29/68] hw/pci-bridge/pxb-cxl: Drop RAS capability from host
+ bridge.
+Message-ID: <3a95f572112ab4c789d66af666644adcdb2b45a6.1710282274.git.mst@redhat.com>
 References: <cover.1710282274.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -102,55 +103,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-On ARM we set 48b as a default (matching SMMUv3 SMMU_IDR5.VAX == 0).
+This CXL component isn't allowed to have a RAS capability.
+Whilst this should be harmless as software is not expected to look
+here, good to clean it up.
 
-hw_compat_8_2 is used to handle the compatibility for machine types
-before 9.0 (default was 64 bits).
-
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Zhenzhong Duan <Zhenzhong.duan@intel.com>
-Message-Id: <20240307134445.92296-9-eric.auger@redhat.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Message-Id: <20240215155206.2736-1-Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/arm/virt.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ include/hw/cxl/cxl_component.h      |  1 +
+ hw/cxl/cxl-component-utils.c        | 21 +++++++++++++++++----
+ hw/pci-bridge/pci_expander_bridge.c |  2 +-
+ 3 files changed, 19 insertions(+), 5 deletions(-)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 0af1943697..e5cd935232 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -85,11 +85,28 @@
- #include "hw/char/pl011.h"
- #include "qemu/guest-random.h"
+diff --git a/include/hw/cxl/cxl_component.h b/include/hw/cxl/cxl_component.h
+index 0e5d35c263..5012fab6f7 100644
+--- a/include/hw/cxl/cxl_component.h
++++ b/include/hw/cxl/cxl_component.h
+@@ -25,6 +25,7 @@ enum reg_type {
+     CXL2_TYPE3_DEVICE,
+     CXL2_LOGICAL_DEVICE,
+     CXL2_ROOT_PORT,
++    CXL2_RC,
+     CXL2_UPSTREAM_PORT,
+     CXL2_DOWNSTREAM_PORT,
+     CXL3_SWITCH_MAILBOX_CCI,
+diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
+index 84ab503325..cd116c0401 100644
+--- a/hw/cxl/cxl-component-utils.c
++++ b/hw/cxl/cxl-component-utils.c
+@@ -297,6 +297,7 @@ void cxl_component_register_init_common(uint32_t *reg_state,
+         caps = 3;
+         break;
+     case CXL2_ROOT_PORT:
++    case CXL2_RC:
+         /* + Extended Security, + Snoop */
+         caps = 5;
+         break;
+@@ -326,8 +327,19 @@ void cxl_component_register_init_common(uint32_t *reg_state,
+                        CXL_##reg##_REGISTERS_OFFSET);                         \
+     } while (0)
  
-+static GlobalProperty arm_virt_compat[] = {
-+    { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
-+};
-+static const size_t arm_virt_compat_len = G_N_ELEMENTS(arm_virt_compat);
-+
-+/*
-+ * This cannot be called from the virt_machine_class_init() because
-+ * TYPE_VIRT_MACHINE is abstract and mc->compat_props g_ptr_array_new()
-+ * only is called on virt non abstract class init.
-+ */
-+static void arm_virt_compat_set(MachineClass *mc)
-+{
-+    compat_props_add(mc->compat_props, arm_virt_compat,
-+                     arm_virt_compat_len);
-+}
-+
- #define DEFINE_VIRT_MACHINE_LATEST(major, minor, latest) \
-     static void virt_##major##_##minor##_class_init(ObjectClass *oc, \
-                                                     void *data) \
-     { \
-         MachineClass *mc = MACHINE_CLASS(oc); \
-+        arm_virt_compat_set(mc); \
-         virt_machine_##major##_##minor##_options(mc); \
-         mc->desc = "QEMU " # major "." # minor " ARM Virtual Machine"; \
-         if (latest) { \
++    switch (type) {
++    case CXL2_DEVICE:
++    case CXL2_TYPE3_DEVICE:
++    case CXL2_LOGICAL_DEVICE:
++    case CXL2_ROOT_PORT:
++    case CXL2_UPSTREAM_PORT:
++    case CXL2_DOWNSTREAM_PORT:
+     init_cap_reg(RAS, 2, CXL_RAS_CAPABILITY_VERSION);
+-    ras_init_common(reg_state, write_msk);
++        ras_init_common(reg_state, write_msk);
++        break;
++    default:
++        break;
++    }
+ 
+     init_cap_reg(LINK, 4, CXL_LINK_CAPABILITY_VERSION);
+ 
+@@ -335,9 +347,10 @@ void cxl_component_register_init_common(uint32_t *reg_state,
+         return;
+     }
+ 
+-    init_cap_reg(HDM, 5, CXL_HDM_CAPABILITY_VERSION);
+-    hdm_init_common(reg_state, write_msk, type);
+-
++    if (type != CXL2_ROOT_PORT) {
++        init_cap_reg(HDM, 5, CXL_HDM_CAPABILITY_VERSION);
++        hdm_init_common(reg_state, write_msk, type);
++    }
+     if (caps < 5) {
+         return;
+     }
+diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
+index 535889f7c2..0411ad31ea 100644
+--- a/hw/pci-bridge/pci_expander_bridge.c
++++ b/hw/pci-bridge/pci_expander_bridge.c
+@@ -290,7 +290,7 @@ static void pxb_cxl_dev_reset(DeviceState *dev)
+     uint32_t *write_msk = cxl_cstate->crb.cache_mem_regs_write_mask;
+     int dsp_count = 0;
+ 
+-    cxl_component_register_init_common(reg_state, write_msk, CXL2_ROOT_PORT);
++    cxl_component_register_init_common(reg_state, write_msk, CXL2_RC);
+     /*
+      * The CXL specification allows for host bridges with no HDM decoders
+      * if they only have a single root port.
 -- 
 MST
 
