@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AF5AC54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 21:32:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CBDCC54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 21:32:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk9iw-00073y-CG; Tue, 12 Mar 2024 17:31:50 -0400
+	id 1rk9jQ-0007DW-Ry; Tue, 12 Mar 2024 17:32:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rk9it-00073n-AS
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 17:31:47 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1rk9jH-0007BF-9P
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 17:32:12 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rk9iq-00028S-9h
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 17:31:47 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5684073ab38so474613a12.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 14:31:43 -0700 (PDT)
+ id 1rk9jE-0002GO-QU
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 17:32:10 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5683247fd0fso6480149a12.3
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 14:32:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710279101; x=1710883901; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710279127; x=1710883927; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=nBGIxGZozN2jOMcn9yMxjJO8Vemj+hmUE7ibwK8C38A=;
- b=ro8wx6C5GZC67fBh+cPy64YSqBmRq1t3LTZM4w6EUOzQId5WWopoRmWa69uFNpSx1n
- GR1+ITMh5uYW0Rxz3sEXkGxXmGjTGexjNBDwPXD0011zbwhD/NkU06/Rp2ecDidRa9In
- Of6z/t3e0LlkZ9uJmWA+/oHQYYww0Kwn99VlpoLyUAimyMqaoGHBcmYFOIYo1lTKOUOw
- RxxDkDNCTnf5LC9s/8qF4ypXSmP43rAjhXeD5uwTd/Ahj9Y01KdeTpCHkBUdacUdrvHB
- 1kCIuPjL+VNdyMQ9dTpqAeAF77BqOWTXF1m9AZMGqn/0z57ooE631OIQg/jx/rTlPDFk
- r8bQ==
+ bh=E23866kkTNeMhUHhjcQjmnegffW0A45/R4YW6bGH2I8=;
+ b=cgVV8SwrynQqPdwuuYwJhrGqMXqtQ608ZM0L+SRcW9valGvwL45mNk9jN2Jb0iemIS
+ R/BeBcD0DE4PXFsww7vMJanLo8jTS/T7UJnU+gMq+uHC6A4b7d44tW1wC9fDM1o5NbYm
+ x4xFV6HDiHcHseZeKljXKBTR4hHOrs4peDAODBfRuGn4dTvI6WzbzZTfiu1ob7OGqoPv
+ VE5bS29exO2FioWoAZqb88kvdDlna6ROOGjv8FG+RwHFW8orwx9Ohp2/KYBiyhexBnHk
+ J4YLsih/rhMNLX0x2aUBK5HKsVP0+I6QWCzuGxjB6WLafhwS05oQ8l/878p9hdarGMfi
+ o7Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710279101; x=1710883901;
+ d=1e100.net; s=20230601; t=1710279127; x=1710883927;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=nBGIxGZozN2jOMcn9yMxjJO8Vemj+hmUE7ibwK8C38A=;
- b=r6u4CHkusdti77X0XgGct2cQuvQnLXTgy3KTYS2ZHitOUPDzNHddcWQthuQjD4dc0o
- df0iUWrilnrt9G2xf/zi91aC0FdZ1IzXh0KECMF1Jm5O0fugmC+8FEI9BjJc3CAmL+Q0
- qT2XQxLMU1qswnRJ78ny7d9WsooIZ9Kti3CYmar/gdCYNQ324EVQGMtQBjDZoUyyzkag
- 3AenuNkAybjjx5aQo5UkYf4pHzU1n/BvE5OIUuWc8XGAVzuGsf7RMeeQMEtbi0M/jv5b
- jkgWTVRRqlOXG8CdYb22ajvwkGgNYWIsvkd6LW7sn2cMnpk2lQeg2ZCWIWvV8ctptvk8
- ncGg==
-X-Gm-Message-State: AOJu0Yz1SLy1Vs32YgebYU0pQendUyHrlTP0wBQQLBa6Vl0WkLIve/jq
- Wu+IPLx8FlzoB4vUBaSM8UnIs/5f6di4NMwum1LZtS4j2U5pxuj29Iq5gzhry5VxLOweY/3xGzt
- ROEax9Ci4NTXLBvC7HLG2mgXtCVJDq5ioAZ/hjZxC3Js/Ad+K
-X-Google-Smtp-Source: AGHT+IFp+gwLvF3terttK3oYszaLIaNZJcL+/AHg/Qkfhu1z0Z2zNhxVgEvnjseF/DtVwg/j1bB0nBd1JFiiPYeIXf0=
-X-Received: by 2002:a50:d5de:0:b0:565:4b37:4578 with SMTP id
- g30-20020a50d5de000000b005654b374578mr761871edj.14.1710279101636; Tue, 12 Mar
- 2024 14:31:41 -0700 (PDT)
+ bh=E23866kkTNeMhUHhjcQjmnegffW0A45/R4YW6bGH2I8=;
+ b=iZD7qU4NbicXpyGDOTDDLiV6PlFmgQgSTGjo7bqxHnz3JAlKaXyJh5xiVKz7+Iwknz
+ nPYPRtDcAGN++7EIUVW5nPBXx6SjLF0pc1sxk2Tey2VVxXnxu4xVFkBIZWmzQyLQ8hQk
+ YEvl1w5hX5dv8xsQWEnUoxykGKa+Lt7v/gOYPidI2+Q1o7QQ+xnLdpwhZG/Lb0bEuRSk
+ Azkh1gK/86Q8bTcq0dyD5Mi4LvHqopqwYvhGmgjP8on2gg1LIrEjC9zJ/Mq7UPYSCjxv
+ yeMVNRy21o2CAWY1yhf3UeIBf2qDLt9SoVLEn0CDDu5PWHk3sfj9UJDwsxgvmNv1Ort4
+ jUaQ==
+X-Gm-Message-State: AOJu0YxW8VWRaOpBsz2zcYvYdljbdP0c7bDPlvHxRN0ekgDcRvp7Udfj
+ s46uvFEToNebvuXVdlw0axGjz8YOvT4rkwiz1z/0qWPo13oUNdQt9vgf84nUNczdSxVdrM/v2Qm
+ T7vPI9hYM3BBklFOfeaAGu/ku5nY+HsZ/7Lhz58StsokQrdes
+X-Google-Smtp-Source: AGHT+IFNZM4UZAgWr6K5unCkxxo5I2GJQ4eMPFze9qhTnmtaqRw7RPtNL7g1jl73gxH1dBcOtXH6lXExDjjlLaUKnoI=
+X-Received: by 2002:a50:9315:0:b0:565:1049:c013 with SMTP id
+ m21-20020a509315000000b005651049c013mr7338401eda.10.1710279126783; Tue, 12
+ Mar 2024 14:32:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240312124339.761630-1-thuth@redhat.com>
-In-Reply-To: <20240312124339.761630-1-thuth@redhat.com>
+References: <20240312134108.3030801-1-armbru@redhat.com>
+In-Reply-To: <20240312134108.3030801-1-armbru@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 12 Mar 2024 21:31:30 +0000
-Message-ID: <CAFEAcA8tH0ZmN_5it6tuaMCsksdJ1vrgHVmXmK4qr97NwsJVuQ@mail.gmail.com>
-Subject: Re: [PULL 00/55] Misc ERRP_GUARD() and cpu_env() patches
-To: Thomas Huth <thuth@redhat.com>
+Date: Tue, 12 Mar 2024 21:31:55 +0000
+Message-ID: <CAFEAcA-Z11HvR0TmHHvaf0ezi+eK33eLgD4yN8gR4=FtvbaqXQ@mail.gmail.com>
+Subject: Re: [PULL 0/4] Error reporting patches for 2024-03-12
+To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,23 +87,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 12 Mar 2024 at 12:43, Thomas Huth <thuth@redhat.com> wrote:
+On Tue, 12 Mar 2024 at 13:41, Markus Armbruster <armbru@redhat.com> wrote:
 >
-> The following changes since commit 7489f7f3f81dcb776df8c1b9a9db281fc21bf05f:
+> The following changes since commit 05ec974671200814fa5c1d5db710e0e4b88a40af:
 >
->   Merge tag 'hw-misc-20240309' of https://github.com/philmd/qemu into staging (2024-03-09 20:12:21 +0000)
+>   Merge tag 'm68k-for-9.0-pull-request' of https://github.com/vivier/qemu-m68k into staging (2024-03-11 18:42:53 +0000)
 >
 > are available in the Git repository at:
 >
->   https://gitlab.com/thuth/qemu.git tags/pull-request-2024-03-12
+>   https://repo.or.cz/qemu/armbru.git tags/pull-error-2024-03-12
 >
-> for you to fetch changes up to 42e62aadfdcc44215482a85da55dc4758775d790:
+> for you to fetch changes up to 28054406715a90e3fab96d4a29190e8857e57fbc:
 >
->   user: Prefer fast cpu_env() over slower CPU QOM cast macro (2024-03-12 12:04:25 +0100)
+>   target/loongarch: Fix query-cpu-model-expansion to reject props (2024-03-12 14:03:37 +0100)
 >
 > ----------------------------------------------------------------
-> * Add missing ERRP_GUARD() statements in functions that need it
-> * Prefer fast cpu_env() over slower CPU QOM cast macro
+> Error reporting patches for 2024-03-12
+>
+> ----------------------------------------------------------------
+> Markus Armbruster (4):
+>       target: Simplify type checks for CpuModelInfo member @props
+>       target/i386: Fix query-cpu-model-expansion to reject props
+>       target: Improve error reporting for CpuModelInfo member @props
+>       target/loongarch: Fix query-cpu-model-expansion to reject props
 >
 
 
