@@ -4,83 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C482CC54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:38:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F0CDC54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:38:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk0SN-0008LO-9M; Tue, 12 Mar 2024 07:38:07 -0400
+	id 1rk0Rz-0007a1-Q0; Tue, 12 Mar 2024 07:37:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk0Rt-0007Y1-Uj; Tue, 12 Mar 2024 07:37:38 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk0Rr-0003Mx-87; Tue, 12 Mar 2024 07:37:37 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-5d3907ff128so4314049a12.3; 
- Tue, 12 Mar 2024 04:37:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710243453; x=1710848253; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Z0/I/LU6brttqKK883f77TI6HGfavfutp9oA7ZCasWY=;
- b=Cjw4S+B22tCxphznOPZOCu1yNMUh1NmYdhFYvPZvegDBJbmUWPkR0Cr3d0/X2v23iw
- zmXoaVpcxYBhts/mxcS2yrnzN4zDURIqmIII/atICyQhNlh+DJtPYWNPytAW5b/9Td24
- 9DR5MrbNKGtj23M8G2lUJLG8/+2A5k4PeX5++7mzkrCBZM2GR8aQ6rwHZNb+kJNrKTg4
- x//P7sBBz0ejHd+vY0OCLQvG+az6xmhQ46G93vrLZ6YORGaMidimdSqHpszCFLYDljuI
- 8vxjkgZOrAro+5MCEnOOudMptPG+FkNZzorID8im0U1PnRDbbJP6PWl3leYuYg/AJFIt
- 75TQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710243453; x=1710848253;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=Z0/I/LU6brttqKK883f77TI6HGfavfutp9oA7ZCasWY=;
- b=oAFPF3S5kHVjyFIgGs3LpeN6glYwXq5LSu4Sy2WuKRGx9b6UQDvzr7JnU3mA/EqTHJ
- MEoEHOAQzNNyNnLrBdacNCDIKgTVN17BwVNcd42jkju+n41rVtwaVcBaA7Fm9xZxpJtO
- Lp91cz4t8sqNvJsgZeRRz669zMabk/SIaz2KV9ISMyRYzhci1+Qi8ep/0qAJa98DW0MM
- 606FYMwtwyoUmA1uE2FxB6cGCS42MFIfVUS48/L9uK/xCT7/frFGAO/KiXLJRvnRIB/e
- MAbw7RzDZK3W34GJbKHYi1y4Iv3qYOv3Z+o4wsw0/jcWeW8cNhWmfo/5hCIUGI8zb68k
- kOAw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVEoOlwAchE97oSN4yYiKyUCsm+cpucMYx47mciFIHJD5LtajaUp5KNVzHGOiqEfKRyAJ5/s3HUOnHQ+Sfr01UxhR5l2dtdp7V3nPPl75Iq5yjEuTzzM1TDoXU=
-X-Gm-Message-State: AOJu0YxyQoDXCRMDJ1ieDZ5hlQCXeNMicwHemQVSro4zJ+1TVQlVwgof
- +1SvFX9pp7Nmq1xvQtUoislWjhFbWNmj2bhn4kW+AT+OiP2r0+uKb+LA4FIrgWg=
-X-Google-Smtp-Source: AGHT+IHacUi7c0gkM9zjRcqj9WpNdE7ukg1Atp+43lVkhppScoMiNI52dRC8i1w5B7wugD/r6IrSHw==
-X-Received: by 2002:a17:90a:9084:b0:29b:b854:db with SMTP id
- j4-20020a17090a908400b0029bb85400dbmr7293893pjo.27.1710243453318; 
- Tue, 12 Mar 2024 04:37:33 -0700 (PDT)
-Received: from localhost ([118.208.155.46]) by smtp.gmail.com with ESMTPSA id
- gt17-20020a17090af2d100b00298cc4c56cdsm8993816pjb.22.2024.03.12.04.37.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 04:37:33 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 12 Mar 2024 21:37:27 +1000
-Message-Id: <CZRQPDENSPD6.YZDD9KM4G1E6@wheely>
-Cc: <clg@kaod.org>, <mikey@neuling.org>, <amachhiw@linux.vnet.ibm.com>,
- <vaibhav@linux.ibm.com>, <sbhat@linux.ibm.com>, <danielhb413@gmail.com>,
- <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v5 09/14] spapr: nested: Extend nested_ppc_state for
- nested PAPR API
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Harsh Prateek Bora" <harshpb@linux.ibm.com>, <qemu-ppc@nongnu.org>
-X-Mailer: aerc 0.15.2
-References: <20240308111940.1617660-1-harshpb@linux.ibm.com>
- <20240308111940.1617660-10-harshpb@linux.ibm.com>
-In-Reply-To: <20240308111940.1617660-10-harshpb@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rk0RV-0007Im-BQ
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:37:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rk0RS-0003Dj-AM
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:37:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710243427;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rTtijyupYiiTV5NIPOZ/TQjw6REJpyYtK3TlVNAoSkg=;
+ b=BbQnBqwMEhNo23Tv80Ym3T5aspV9MdDtdhrmbxFj2BJd3TVHnynvLhLDubKWqOcCM9kqgY
+ MlmezkZ59oSQtQ5VOeTvhlNVhORQd0MF3GVbxvTP+K0yJIBvvxs4zOaSGZ2r00MTL28/1z
+ God5M9by4wAExkpGHaCn55iI132r6+s=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-568-KYbJ8U10MPugjQsVagJPNw-1; Tue, 12 Mar 2024 07:37:05 -0400
+X-MC-Unique: KYbJ8U10MPugjQsVagJPNw-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id BCD09101A56C;
+ Tue, 12 Mar 2024 11:37:04 +0000 (UTC)
+Received: from localhost.localdomain (unknown [10.72.112.61])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id A4F86492BC6;
+ Tue, 12 Mar 2024 11:37:02 +0000 (UTC)
+From: Jason Wang <jasowang@redhat.com>
+To: qemu-devel@nongnu.org,
+	peter.maydell@linaro.org
+Cc: Andrew Melnychenko <andrew@daynix.com>,
+	Jason Wang <jasowang@redhat.com>
+Subject: [PULL 7/8] qmp: Added new command to retrieve eBPF blob.
+Date: Tue, 12 Mar 2024 19:36:41 +0800
+Message-ID: <20240312113642.36862-8-jasowang@redhat.com>
+In-Reply-To: <20240312113642.36862-1-jasowang@redhat.com>
+References: <20240312113642.36862-1-jasowang@redhat.com>
+MIME-Version: 1.0
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,257 +84,345 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri Mar 8, 2024 at 9:19 PM AEST, Harsh Prateek Bora wrote:
-> Currently, nested_ppc_state stores a certain set of registers and works
-> with nested_[load|save]_state() for state transfer as reqd for nested-hv =
-API.
-> Extending these with additional registers state as reqd for nested PAPR A=
-PI.
->
-> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> Suggested-by: Nicholas Piggin <npiggin@gmail.com>
+From: Andrew Melnychenko <andrew@daynix.com>
 
-I still have concerns with exactly how registers are saved and restored,
-but it's not necessarily a new problem with v2, and not so much
-fundamental design flow more of verifying details so I'm inclined to take
-this for now.
+Now, the binary objects may be retrieved by id.
+It would require for future qmp commands that may require specific
+eBPF blob.
 
-Acked-by: Nicholas Piggin <npiggin@gmail.com>
+Added command "request-ebpf". This command returns
+eBPF program encoded base64. The program taken from the
+skeleton and essentially is an ELF object that can be
+loaded in the future with libbpf.
 
-> ---
->  include/hw/ppc/spapr_nested.h |  50 ++++++++++++++++
->  target/ppc/cpu.h              |   2 +
->  hw/ppc/spapr_nested.c         | 106 ++++++++++++++++++++++++++++++++++
->  3 files changed, 158 insertions(+)
->
-> diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.=
-h
-> index 2ac3076fac..d232014ccb 100644
-> --- a/include/hw/ppc/spapr_nested.h
-> +++ b/include/hw/ppc/spapr_nested.h
-> @@ -7,6 +7,7 @@ typedef struct SpaprMachineStateNested {
->      uint64_t ptcr;
->      uint8_t api;
->  #define NESTED_API_KVM_HV  1
-> +#define NESTED_API_PAPR    2
->      bool capabilities_set;
->      uint32_t pvr_base;
->      GHashTable *guests;
-> @@ -121,6 +122,55 @@ struct nested_ppc_state {
->      uint64_t ppr;
-> =20
->      int64_t tb_offset;
-> +    /* Nested PAPR API */
-> +    uint64_t amor;
-> +    uint64_t dawr0;
-> +    uint64_t dawrx0;
-> +    uint64_t ciabr;
-> +    uint64_t purr;
-> +    uint64_t spurr;
-> +    uint64_t ic;
-> +    uint64_t vtb;
-> +    uint64_t hdar;
-> +    uint64_t hdsisr;
-> +    uint64_t heir;
-> +    uint64_t asdr;
-> +    uint64_t dawr1;
-> +    uint64_t dawrx1;
-> +    uint64_t dexcr;
-> +    uint64_t hdexcr;
-> +    uint64_t hashkeyr;
-> +    uint64_t hashpkeyr;
-> +    ppc_vsr_t vsr[64] QEMU_ALIGNED(16);
-> +    uint64_t ebbhr;
-> +    uint64_t tar;
-> +    uint64_t ebbrr;
-> +    uint64_t bescr;
-> +    uint64_t iamr;
-> +    uint64_t amr;
-> +    uint64_t uamor;
-> +    uint64_t dscr;
-> +    uint64_t fscr;
-> +    uint64_t pspb;
-> +    uint64_t ctrl;
-> +    uint64_t vrsave;
-> +    uint64_t dar;
-> +    uint64_t dsisr;
-> +    uint64_t pmc1;
-> +    uint64_t pmc2;
-> +    uint64_t pmc3;
-> +    uint64_t pmc4;
-> +    uint64_t pmc5;
-> +    uint64_t pmc6;
-> +    uint64_t mmcr0;
-> +    uint64_t mmcr1;
-> +    uint64_t mmcr2;
-> +    uint64_t mmcra;
-> +    uint64_t sdar;
-> +    uint64_t siar;
-> +    uint64_t sier;
-> +    uint32_t vscr;
-> +    uint64_t fpscr;
->  };
-> =20
->  typedef struct SpaprMachineStateNestedGuestVcpu {
-> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> index 0133da4e07..4cffd46c79 100644
-> --- a/target/ppc/cpu.h
-> +++ b/target/ppc/cpu.h
-> @@ -1755,9 +1755,11 @@ void ppc_compat_add_property(Object *obj, const ch=
-ar *name,
->  #define SPR_PSPB              (0x09F)
->  #define SPR_DPDES             (0x0B0)
->  #define SPR_DAWR0             (0x0B4)
-> +#define SPR_DAWR1             (0x0B5)
->  #define SPR_RPR               (0x0BA)
->  #define SPR_CIABR             (0x0BB)
->  #define SPR_DAWRX0            (0x0BC)
-> +#define SPR_DAWRX1            (0x0BD)
->  #define SPR_HFSCR             (0x0BE)
->  #define SPR_VRSAVE            (0x100)
->  #define SPR_USPRG0            (0x100)
-> diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
-> index 4c0e2e91e1..09ebf42a57 100644
-> --- a/hw/ppc/spapr_nested.c
-> +++ b/hw/ppc/spapr_nested.c
-> @@ -108,6 +108,7 @@ static target_ulong h_copy_tofrom_guest(PowerPCCPU *c=
-pu,
->  static void nested_save_state(struct nested_ppc_state *save, PowerPCCPU =
-*cpu)
->  {
->      CPUPPCState *env =3D &cpu->env;
-> +    SpaprMachineState *spapr =3D SPAPR_MACHINE(qdev_get_machine());
-> =20
->      memcpy(save->gpr, env->gpr, sizeof(save->gpr));
-> =20
-> @@ -134,6 +135,58 @@ static void nested_save_state(struct nested_ppc_stat=
-e *save, PowerPCCPU *cpu)
->      save->pidr =3D env->spr[SPR_BOOKS_PID];
->      save->ppr =3D env->spr[SPR_PPR];
-> =20
-> +    if (spapr_nested_api(spapr) =3D=3D NESTED_API_PAPR) {
-> +        save->pvr =3D env->spr[SPR_PVR];
-> +        save->amor =3D env->spr[SPR_AMOR];
-> +        save->dawr0 =3D env->spr[SPR_DAWR0];
-> +        save->dawrx0 =3D env->spr[SPR_DAWRX0];
-> +        save->ciabr =3D env->spr[SPR_CIABR];
-> +        save->purr =3D env->spr[SPR_PURR];
-> +        save->spurr =3D env->spr[SPR_SPURR];
-> +        save->ic =3D env->spr[SPR_IC];
-> +        save->vtb =3D env->spr[SPR_VTB];
-> +        save->hdar =3D env->spr[SPR_HDAR];
-> +        save->hdsisr =3D env->spr[SPR_HDSISR];
-> +        save->heir =3D env->spr[SPR_HEIR];
-> +        save->asdr =3D env->spr[SPR_ASDR];
-> +        save->dawr1 =3D env->spr[SPR_DAWR1];
-> +        save->dawrx1 =3D env->spr[SPR_DAWRX1];
-> +        save->dexcr =3D env->spr[SPR_DEXCR];
-> +        save->hdexcr =3D env->spr[SPR_HDEXCR];
-> +        save->hashkeyr =3D env->spr[SPR_HASHKEYR];
-> +        save->hashpkeyr =3D env->spr[SPR_HASHPKEYR];
-> +        memcpy(save->vsr, env->vsr, sizeof(save->vsr));
-> +        save->ebbhr =3D env->spr[SPR_EBBHR];
-> +        save->tar =3D env->spr[SPR_TAR];
-> +        save->ebbrr =3D env->spr[SPR_EBBRR];
-> +        save->bescr =3D env->spr[SPR_BESCR];
-> +        save->iamr =3D env->spr[SPR_IAMR];
-> +        save->amr =3D env->spr[SPR_AMR];
-> +        save->uamor =3D env->spr[SPR_UAMOR];
-> +        save->dscr =3D env->spr[SPR_DSCR];
-> +        save->fscr =3D env->spr[SPR_FSCR];
-> +        save->pspb =3D env->spr[SPR_PSPB];
-> +        save->ctrl =3D env->spr[SPR_CTRL];
-> +        save->vrsave =3D env->spr[SPR_VRSAVE];
-> +        save->dar =3D env->spr[SPR_DAR];
-> +        save->dsisr =3D env->spr[SPR_DSISR];
-> +        save->pmc1 =3D env->spr[SPR_POWER_PMC1];
-> +        save->pmc2 =3D env->spr[SPR_POWER_PMC2];
-> +        save->pmc3 =3D env->spr[SPR_POWER_PMC3];
-> +        save->pmc4 =3D env->spr[SPR_POWER_PMC4];
-> +        save->pmc5 =3D env->spr[SPR_POWER_PMC5];
-> +        save->pmc6 =3D env->spr[SPR_POWER_PMC6];
-> +        save->mmcr0 =3D env->spr[SPR_POWER_MMCR0];
-> +        save->mmcr1 =3D env->spr[SPR_POWER_MMCR1];
-> +        save->mmcr2 =3D env->spr[SPR_POWER_MMCR2];
-> +        save->mmcra =3D env->spr[SPR_POWER_MMCRA];
-> +        save->sdar =3D env->spr[SPR_POWER_SDAR];
-> +        save->siar =3D env->spr[SPR_POWER_SIAR];
-> +        save->sier =3D env->spr[SPR_POWER_SIER];
-> +        save->vscr =3D ppc_get_vscr(env);
-> +        save->fpscr =3D env->fpscr;
-> +    }
-> +
->      save->tb_offset =3D env->tb_env->tb_offset;
->  }
-> =20
-> @@ -141,6 +194,7 @@ static void nested_load_state(PowerPCCPU *cpu, struct=
- nested_ppc_state *load)
->  {
->      CPUState *cs =3D CPU(cpu);
->      CPUPPCState *env =3D &cpu->env;
-> +    SpaprMachineState *spapr =3D SPAPR_MACHINE(qdev_get_machine());
-> =20
->      memcpy(env->gpr, load->gpr, sizeof(env->gpr));
-> =20
-> @@ -167,6 +221,58 @@ static void nested_load_state(PowerPCCPU *cpu, struc=
-t nested_ppc_state *load)
->      env->spr[SPR_BOOKS_PID] =3D load->pidr;
->      env->spr[SPR_PPR] =3D load->ppr;
-> =20
-> +    if (spapr_nested_api(spapr) =3D=3D NESTED_API_PAPR) {
-> +        env->spr[SPR_PVR] =3D load->pvr;
-> +        env->spr[SPR_AMOR] =3D load->amor;
-> +        env->spr[SPR_DAWR0] =3D load->dawr0;
-> +        env->spr[SPR_DAWRX0] =3D load->dawrx0;
-> +        env->spr[SPR_CIABR] =3D load->ciabr;
-> +        env->spr[SPR_PURR] =3D load->purr;
-> +        env->spr[SPR_SPURR] =3D load->purr;
-> +        env->spr[SPR_IC] =3D load->ic;
-> +        env->spr[SPR_VTB] =3D load->vtb;
-> +        env->spr[SPR_HDAR] =3D load->hdar;
-> +        env->spr[SPR_HDSISR] =3D load->hdsisr;
-> +        env->spr[SPR_HEIR] =3D load->heir;
-> +        env->spr[SPR_ASDR] =3D load->asdr;
-> +        env->spr[SPR_DAWR1] =3D load->dawr1;
-> +        env->spr[SPR_DAWRX1] =3D load->dawrx1;
-> +        env->spr[SPR_DEXCR] =3D load->dexcr;
-> +        env->spr[SPR_HDEXCR] =3D load->hdexcr;
-> +        env->spr[SPR_HASHKEYR] =3D load->hashkeyr;
-> +        env->spr[SPR_HASHPKEYR] =3D load->hashpkeyr;
-> +        memcpy(env->vsr, load->vsr, sizeof(env->vsr));
-> +        env->spr[SPR_EBBHR] =3D load->ebbhr;
-> +        env->spr[SPR_TAR] =3D load->tar;
-> +        env->spr[SPR_EBBRR] =3D load->ebbrr;
-> +        env->spr[SPR_BESCR] =3D load->bescr;
-> +        env->spr[SPR_IAMR] =3D load->iamr;
-> +        env->spr[SPR_AMR] =3D load->amr;
-> +        env->spr[SPR_UAMOR] =3D load->uamor;
-> +        env->spr[SPR_DSCR] =3D load->dscr;
-> +        env->spr[SPR_FSCR] =3D load->fscr;
-> +        env->spr[SPR_PSPB] =3D load->pspb;
-> +        env->spr[SPR_CTRL] =3D load->ctrl;
-> +        env->spr[SPR_VRSAVE] =3D load->vrsave;
-> +        env->spr[SPR_DAR] =3D load->dar;
-> +        env->spr[SPR_DSISR] =3D load->dsisr;
-> +        env->spr[SPR_POWER_PMC1] =3D load->pmc1;
-> +        env->spr[SPR_POWER_PMC2] =3D load->pmc2;
-> +        env->spr[SPR_POWER_PMC3] =3D load->pmc3;
-> +        env->spr[SPR_POWER_PMC4] =3D load->pmc4;
-> +        env->spr[SPR_POWER_PMC5] =3D load->pmc5;
-> +        env->spr[SPR_POWER_PMC6] =3D load->pmc6;
-> +        env->spr[SPR_POWER_MMCR0] =3D load->mmcr0;
-> +        env->spr[SPR_POWER_MMCR1] =3D load->mmcr1;
-> +        env->spr[SPR_POWER_MMCR2] =3D load->mmcr2;
-> +        env->spr[SPR_POWER_MMCRA] =3D load->mmcra;
-> +        env->spr[SPR_POWER_SDAR] =3D load->sdar;
-> +        env->spr[SPR_POWER_SIAR] =3D load->siar;
-> +        env->spr[SPR_POWER_SIER] =3D load->sier;
-> +        ppc_store_vscr(env, load->vscr);
-> +        ppc_store_fpscr(env, load->fpscr);
-> +    }
-> +
->      env->tb_env->tb_offset =3D load->tb_offset;
-> =20
->      /*
+The reason to use the command to provide the eBPF object
+instead of a separate artifact was to avoid issues related
+to finding the eBPF itself. eBPF object is an ELF binary
+that contains the eBPF program and eBPF map description(BTF).
+Overall, eBPF object should contain the program and enough
+metadata to create/load eBPF with libbpf. As the eBPF
+maps/program should correspond to QEMU, the eBPF can't
+be used from different QEMU build.
+
+The first solution was a helper that comes with QEMU
+and loads appropriate eBPF objects. And the issue is
+to find a proper helper if the system has several
+different QEMUs installed and/or built from the source,
+which helpers may not be compatible.
+
+Another issue is QEMU updating while there is a running
+QEMU instance. With an updated helper, it may not be
+possible to hotplug virtio-net device to the already
+running QEMU. Overall, requesting the eBPF object from
+QEMU itself solves possible failures with acceptable effort.
+
+Links:
+[PATCH 3/5] qmp: Added the helper stamp check.
+https://lore.kernel.org/all/20230219162100.174318-4-andrew@daynix.com/
+
+Signed-off-by: Andrew Melnychenko <andrew@daynix.com>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+---
+ ebpf/ebpf.c           | 69 +++++++++++++++++++++++++++++++++++++++++++
+ ebpf/ebpf.h           | 29 ++++++++++++++++++
+ ebpf/ebpf_rss.c       | 11 ++++---
+ ebpf/meson.build      |  2 +-
+ ebpf/trace.h          |  1 -
+ qapi/ebpf.json        | 66 +++++++++++++++++++++++++++++++++++++++++
+ qapi/meson.build      |  1 +
+ qapi/qapi-schema.json |  1 +
+ 8 files changed, 172 insertions(+), 8 deletions(-)
+ create mode 100644 ebpf/ebpf.c
+ create mode 100644 ebpf/ebpf.h
+ delete mode 100644 ebpf/trace.h
+ create mode 100644 qapi/ebpf.json
+
+diff --git a/ebpf/ebpf.c b/ebpf/ebpf.c
+new file mode 100644
+index 0000000000..2d73beb479
+--- /dev/null
++++ b/ebpf/ebpf.c
+@@ -0,0 +1,69 @@
++/*
++ * QEMU eBPF binary declaration routine.
++ *
++ * Developed by Daynix Computing LTD (http://www.daynix.com)
++ *
++ * Authors:
++ *  Andrew Melnychenko <andrew@daynix.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/queue.h"
++#include "qapi/error.h"
++#include "qapi/qapi-commands-ebpf.h"
++#include "ebpf/ebpf.h"
++
++typedef struct ElfBinaryDataEntry {
++    int id;
++    const void *data;
++    size_t datalen;
++
++    QSLIST_ENTRY(ElfBinaryDataEntry) node;
++} ElfBinaryDataEntry;
++
++static QSLIST_HEAD(, ElfBinaryDataEntry) ebpf_elf_obj_list =
++                                            QSLIST_HEAD_INITIALIZER();
++
++void ebpf_register_binary_data(int id, const void *data, size_t datalen)
++{
++    struct ElfBinaryDataEntry *dataentry = NULL;
++
++    dataentry = g_new0(struct ElfBinaryDataEntry, 1);
++    dataentry->data = data;
++    dataentry->datalen = datalen;
++    dataentry->id = id;
++
++    QSLIST_INSERT_HEAD(&ebpf_elf_obj_list, dataentry, node);
++}
++
++const void *ebpf_find_binary_by_id(int id, size_t *sz, Error **errp)
++{
++    struct ElfBinaryDataEntry *it = NULL;
++    QSLIST_FOREACH(it, &ebpf_elf_obj_list, node) {
++        if (id == it->id) {
++            *sz = it->datalen;
++            return it->data;
++        }
++    }
++
++    error_setg(errp, "can't find eBPF object with id: %d", id);
++
++    return NULL;
++}
++
++EbpfObject *qmp_request_ebpf(EbpfProgramID id, Error **errp)
++{
++    EbpfObject *ret = NULL;
++    size_t size = 0;
++    const void *data = ebpf_find_binary_by_id(id, &size, errp);
++    if (!data) {
++        return NULL;
++    }
++
++    ret = g_new0(EbpfObject, 1);
++    ret->object = g_base64_encode(data, size);
++
++    return ret;
++}
+diff --git a/ebpf/ebpf.h b/ebpf/ebpf.h
+new file mode 100644
+index 0000000000..378d4e9c70
+--- /dev/null
++++ b/ebpf/ebpf.h
+@@ -0,0 +1,29 @@
++/*
++ * QEMU eBPF binary declaration routine.
++ *
++ * Developed by Daynix Computing LTD (http://www.daynix.com)
++ *
++ * Authors:
++ *  Andrew Melnychenko <andrew@daynix.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef EBPF_H
++#define EBPF_H
++
++
++void ebpf_register_binary_data(int id, const void *data,
++                               size_t datalen);
++const void *ebpf_find_binary_by_id(int id, size_t *sz,
++                                   struct Error **errp);
++
++#define ebpf_binary_init(id, fn)                                           \
++static void __attribute__((constructor)) ebpf_binary_init_ ## fn(void)     \
++{                                                                          \
++    size_t datalen = 0;                                                    \
++    const void *data = fn(&datalen);                                       \
++    ebpf_register_binary_data(id, data, datalen);                          \
++}
++
++#endif /* EBPF_H */
+diff --git a/ebpf/ebpf_rss.c b/ebpf/ebpf_rss.c
+index 150aa40813..2e506f9743 100644
+--- a/ebpf/ebpf_rss.c
++++ b/ebpf/ebpf_rss.c
+@@ -13,6 +13,8 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
++#include "qapi/qapi-types-misc.h"
++#include "qapi/qapi-commands-ebpf.h"
+ 
+ #include <bpf/libbpf.h>
+ #include <bpf/bpf.h>
+@@ -21,7 +23,7 @@
+ 
+ #include "ebpf/ebpf_rss.h"
+ #include "ebpf/rss.bpf.skeleton.h"
+-#include "trace.h"
++#include "ebpf/ebpf.h"
+ 
+ void ebpf_rss_init(struct EBPFRSSContext *ctx)
+ {
+@@ -53,21 +55,18 @@ static bool ebpf_rss_mmap(struct EBPFRSSContext *ctx)
+                                    PROT_READ | PROT_WRITE, MAP_SHARED,
+                                    ctx->map_configuration, 0);
+     if (ctx->mmap_configuration == MAP_FAILED) {
+-        trace_ebpf_error("eBPF RSS", "can not mmap eBPF configuration array");
+         return false;
+     }
+     ctx->mmap_toeplitz_key = mmap(NULL, qemu_real_host_page_size(),
+                                    PROT_READ | PROT_WRITE, MAP_SHARED,
+                                    ctx->map_toeplitz_key, 0);
+     if (ctx->mmap_toeplitz_key == MAP_FAILED) {
+-        trace_ebpf_error("eBPF RSS", "can not mmap eBPF toeplitz key");
+         goto toeplitz_fail;
+     }
+     ctx->mmap_indirections_table = mmap(NULL, qemu_real_host_page_size(),
+                                    PROT_READ | PROT_WRITE, MAP_SHARED,
+                                    ctx->map_indirections_table, 0);
+     if (ctx->mmap_indirections_table == MAP_FAILED) {
+-        trace_ebpf_error("eBPF RSS", "can not mmap eBPF indirection table");
+         goto indirection_fail;
+     }
+ 
+@@ -109,14 +108,12 @@ bool ebpf_rss_load(struct EBPFRSSContext *ctx)
+ 
+     rss_bpf_ctx = rss_bpf__open();
+     if (rss_bpf_ctx == NULL) {
+-        trace_ebpf_error("eBPF RSS", "can not open eBPF RSS object");
+         goto error;
+     }
+ 
+     bpf_program__set_type(rss_bpf_ctx->progs.tun_rss_steering_prog, BPF_PROG_TYPE_SOCKET_FILTER);
+ 
+     if (rss_bpf__load(rss_bpf_ctx)) {
+-        trace_ebpf_error("eBPF RSS", "can not load RSS program");
+         goto error;
+     }
+ 
+@@ -261,3 +258,5 @@ void ebpf_rss_unload(struct EBPFRSSContext *ctx)
+     ctx->map_toeplitz_key = -1;
+     ctx->map_indirections_table = -1;
+ }
++
++ebpf_binary_init(EBPF_PROGRAMID_RSS, rss_bpf__elf_bytes)
+diff --git a/ebpf/meson.build b/ebpf/meson.build
+index 2f627d6c7d..c5bf9295a2 100644
+--- a/ebpf/meson.build
++++ b/ebpf/meson.build
+@@ -1 +1 @@
+-system_ss.add(when: libbpf, if_true: files('ebpf_rss.c'), if_false: files('ebpf_rss-stub.c'))
++common_ss.add(when: libbpf, if_true: files('ebpf.c', 'ebpf_rss.c'), if_false: files('ebpf_rss-stub.c'))
+diff --git a/ebpf/trace.h b/ebpf/trace.h
+deleted file mode 100644
+index abefc46ab1..0000000000
+--- a/ebpf/trace.h
++++ /dev/null
+@@ -1 +0,0 @@
+-#include "trace/trace-ebpf.h"
+diff --git a/qapi/ebpf.json b/qapi/ebpf.json
+new file mode 100644
+index 0000000000..f413d00154
+--- /dev/null
++++ b/qapi/ebpf.json
+@@ -0,0 +1,66 @@
++# -*- Mode: Python -*-
++# vim: filetype=python
++#
++# This work is licensed under the terms of the GNU GPL, version 2 or later.
++# See the COPYING file in the top-level directory.
++
++##
++# = eBPF Objects
++#
++# eBPF object is an ELF binary that contains the eBPF
++# program and eBPF map description(BTF). Overall, eBPF
++# object should contain the program and enough metadata
++# to create/load eBPF with libbpf. As the eBPF maps/program
++# should correspond to QEMU, the eBPF can't be used from
++# different QEMU build.
++#
++# Currently, there is a possible eBPF for receive-side scaling (RSS).
++#
++##
++
++##
++# @EbpfObject:
++#
++# An eBPF ELF object.
++#
++# @object: the eBPF object encoded in base64
++#
++# Since: 9.0
++##
++{ 'struct': 'EbpfObject',
++  'data': {'object': 'str'},
++  'if': 'CONFIG_EBPF' }
++
++##
++# @EbpfProgramID:
++#
++# The eBPF programs that can be gotten with request-ebpf.
++#
++# @rss: Receive side scaling, technology that allows steering traffic
++#     between queues by calculation hash.  Users may set up
++#     indirection table and hash/packet types configurations.  Used
++#     with virtio-net.
++#
++# Since: 9.0
++##
++{ 'enum': 'EbpfProgramID',
++  'if': 'CONFIG_EBPF',
++  'data': [ { 'name': 'rss' } ] }
++
++##
++# @request-ebpf:
++#
++# Retrieve an eBPF object that can be loaded with libbpf.  Management
++# applications (g.e. libvirt) may load it and pass file descriptors to
++# QEMU, so they can run running QEMU without BPF capabilities.
++#
++# @id: The ID of the program to return.
++#
++# Returns: eBPF object encoded in base64.
++#
++# Since: 9.0
++##
++{ 'command': 'request-ebpf',
++  'data': { 'id': 'EbpfProgramID' },
++  'returns': 'EbpfObject',
++  'if': 'CONFIG_EBPF' }
+diff --git a/qapi/meson.build b/qapi/meson.build
+index f81a37565c..375d564277 100644
+--- a/qapi/meson.build
++++ b/qapi/meson.build
+@@ -33,6 +33,7 @@ qapi_all_modules = [
+   'crypto',
+   'cxl',
+   'dump',
++  'ebpf',
+   'error',
+   'introspect',
+   'job',
+diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
+index c01ec335e6..8304d45625 100644
+--- a/qapi/qapi-schema.json
++++ b/qapi/qapi-schema.json
+@@ -53,6 +53,7 @@
+ { 'include': 'char.json' }
+ { 'include': 'dump.json' }
+ { 'include': 'net.json' }
++{ 'include': 'ebpf.json' }
+ { 'include': 'rdma.json' }
+ { 'include': 'rocker.json' }
+ { 'include': 'tpm.json' }
+-- 
+2.42.0
 
 
